@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E13C55838
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9D6C55ABF
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 13:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrEzp-0004wh-6F; Tue, 04 Aug 2026 09:15:55 -0400
+	id 1wrEzp-0004we-4h; Tue, 04 Aug 2026 09:15:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qiandongyan@loongson.cn>)
- id 1wr5sY-0008Am-JO
+ id 1wr5sZ-0008At-3N
  for qemu-devel@nongnu.org; Mon, 03 Aug 2026 23:31:47 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <qiandongyan@loongson.cn>) id 1wr5sV-0002VO-IB
- for qemu-devel@nongnu.org; Mon, 03 Aug 2026 23:31:45 -0400
+ (envelope-from <qiandongyan@loongson.cn>) id 1wr5sW-0002VP-Mi
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 23:31:46 -0400
 Received: from loongson.cn (unknown [10.2.9.245])
- by gateway (Coremail) with SMTP id _____8BxHJsYXXFqHygKAA--.9978S3;
- Tue, 04 Aug 2026 11:31:36 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxNqAXXXFqGSgKAA--.9974S3;
+ Tue, 04 Aug 2026 11:31:35 +0800 (CST)
 Received: from code-server.gen (unknown [10.2.9.245])
- by front1 (Coremail) with SMTP id qMiowJCxLcUXXXFq7fEiAA--.44786S4;
+ by front1 (Coremail) with SMTP id qMiowJCxLcUXXXFq7fEiAA--.44786S2;
  Tue, 04 Aug 2026 11:31:35 +0800 (CST)
 From: Dongyan Qian <qiandongyan@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  jiaxun.yang@flygoat.com
-Subject: [PATCH 2/3] hw/loongarch/virt: Set MADT revision to 6
-Date: Tue,  4 Aug 2026 11:30:35 +0800
-Message-Id: <20260804033036.2614008-3-qiandongyan@loongson.cn>
+Subject: [PATCH 0/3] hw/loongarch: Fix virt MADT revision
+Date: Tue,  4 Aug 2026 11:30:33 +0800
+Message-Id: <20260804033036.2614008-1-qiandongyan@loongson.cn>
 X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20260804033036.2614008-1-qiandongyan@loongson.cn>
-References: <20260804033036.2614008-1-qiandongyan@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxLcUXXXFq7fEiAA--.44786S4
+X-CM-TRANSID: qMiowJCxLcUXXXFq7fEiAA--.44786S2
 X-CM-SenderInfo: htld0v5rqj5t3q6o00pqjv00gofq/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,42 +63,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The LoongArch virt machine emits Core PIC, EIO PIC, MSI PIC and BIO PIC
-subtables, but advertises MADT revision 1. Revision 1 predates these
-LoongArch interrupt controller structures.
+The LoongArch virt machine emits interrupt controller structures
+introduced by ACPI 6.5 while advertising MADT revision 1.
 
-ACPI 6.5 introduced the LoongArch interrupt controller structures and
-defined MADT revision 6. ACPI 6.6 raises the MADT revision to 7 for the
-additional RISC-V interrupt controller structures, while leaving the
-LoongArch structures unchanged.
+Set the MADT revision to 6, the minimum revision covering the emitted
+LoongArch structures, and update the corresponding ACPI test data.
 
-Since the virt machine emits only the LoongArch structures defined by
-ACPI 6.5, set the MADT header revision to 6, the minimum revision that
-describes the table contents.
+Patch 1 prepares the ACPI allowed-diff list, patch 2 fixes the table
+revision, and patch 3 updates the golden binaries and clears the
+allowed-diff entries.
 
-ACPI specifications:
-https://uefi.org/specs/ACPI/6.5/
-https://uefi.org/specs/ACPI/6.6/
+The generated APIC tables differ only in Header.Revision and Checksum.
+Their lengths and interrupt controller subtables remain unchanged.
 
-Fixes: 735143f10d3 ("hw/loongarch: Add acpi ged support")
-Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
----
- hw/loongarch/virt-acpi-build.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Tests:
+- LoongArch bios-tables-test: 5/5 passed
+- QEMU checkpatch: passed
+- git diff --check: passed
+- ACPI checksums verified
 
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index a0b445f297..600ef60fc5 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -128,7 +128,7 @@ build_madt(GArray *table_data, BIOSLinker *linker,
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     const CPUArchIdList *arch_ids = mc->possible_cpu_arch_ids(ms);
-     int i, arch_id, flags;
--    AcpiTable table = { .sig = "APIC", .rev = 1, .oem_id = lvms->oem_id,
-+    AcpiTable table = { .sig = "APIC", .rev = 6, .oem_id = lvms->oem_id,
-                         .oem_table_id = lvms->oem_table_id };
- 
-     acpi_table_begin(&table, table_data);
+Dongyan Qian (3):
+  tests/acpi: Allow LoongArch virt MADT changes
+  hw/loongarch/virt: Set MADT revision to 6
+  tests/acpi: Update LoongArch virt MADT
+
+ hw/loongarch/virt-acpi-build.c                 |   2 +-
+ tests/data/acpi/loongarch64/virt/APIC          | Bin 108 -> 108 bytes
+ tests/data/acpi/loongarch64/virt/APIC.topology | Bin 153 -> 153 bytes
+ 3 files changed, 1 insertion(+), 1 deletion(-)
+
 -- 
 2.43.0
 
