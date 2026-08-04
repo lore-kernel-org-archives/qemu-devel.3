@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F54C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377E8C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrGuP-0006fm-7p; Tue, 04 Aug 2026 11:18:25 -0400
+	id 1wrGuP-0006fy-Po; Tue, 04 Aug 2026 11:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGuI-0006eb-CE
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:18 -0400
+ id 1wrGuL-0006f5-R1
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:23 -0400
 Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGuG-0004md-TN
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:18 -0400
+ id 1wrGuI-0004md-LF
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hXdEVZ8TupaoY+Jo7adyvBuwGy8oGWNllIwnrJltOpd13FIL/kCzc0ZMMUDZjNhgsuN/o0ARp1KuiWk29gRZft2Qwv1+nC1Dvs4fkqnhcHvO10sFPqayHcmT5OTX1guGXy43XQoIDL+GUz5iCcZGg2iFCunG7Lc3Gy8Xdf6xgTG3QdauaKx/Xi8NV5gy1uqD4M6jAh6KiKwMByrPw3/83ZG46T9Sgw4mj+QC2nwCFv9SQrvvoP1WtRbZNp7u5CDmO2xKUA55vyMxIMUj1P1Xd1ExkkbKo8j4RDCfsjYzUYbziaFvvbUjvCnnv9eRGWhwRmutGDPRxusVazwElpgB3Q==
+ b=bOSan/rIzhg+SoQ95FA+J7AV63vJxiwuThaT50z7jVk46kEAByNXut5mcGxXb9rF9jB3cfDS94bM9PnZGUGrxKTZj4zUkmYwZ47mlvAOxF+1MzJ0p+C89poK71lBAsm7hUCl/XDm1wBRSDy5XJ+wBvSyDmH8lvL2iS513laZVmyXr1KJ4Y4NKueppqnitl0efwYAL1H/tKW5cViYd68S6FwI1hLFwOKigl6R92/0iwxpIW33m+W8dLBAiekprOhSy0BJ65YCqK1ZOyyUAH3qwRz4HSD95IIBjbM8kYlKxBJ6xQHeudy+kVB7WlI7aWqPxtkzCFCrarN8cEKesQfI5Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AKo5yPpDHi8R1HQqiYlwipcvXSS1RvgcoYohPZOp04U=;
- b=VdKHds0W2/aumi5su4VfH0xqSMdEAvFfOpwXmJ0MesksTnET6AeHb+XY4B6sPl+/TQDlkif/eEwdJ32wDRfcmzZ4CfkQYNIUfeQ9zJ0G/MlEbwmzxcp/uQ3j/B8WruGgch0f7TvUzlE1zNZ0l1IhGiPgvILtQ0aburHXiz2+z8gW+RQKp4JM4BLhBEeRRgv4CcNp/9m85BXyv/wwjWmOPsV/U8ALys0ZTjV2BXvUfVQzE2A3vIlGiVQorktin1eMKAkwyN0w55ZMFIvMwHeqPXJakMDZIDLjZtlEu8+vLUZpVHunlRDKvJVeqiBX/6ZDJeQeceAwT8nQ9PtPumj3tA==
+ bh=llIjZRimUjn75xGNJcp5N0ySW/EWYaWzILlqXl18SmU=;
+ b=S0zzE1l79VaARqRHEQoyzOPitNl1fRLQRqkiclswY4vYp6If0dCskB/3Bc8EG2fLuikfMXX42wgUBEAvGGLH982nuDXfsD+Nz1Rw5V3kvFFKetVKDXskaelOENQV3RlxDpP+WsYgB+O2yWAx5puPiXNnxnmrR4mO0Zkqlcvgzdx7H2cBt49WJPhrnBYAFlmCSA1qQgXA3a7778PBuyZNtBfLDt/cSAvOeTaWnssexYPMC6u4t6leo33r87XIBPcyaT9pEMO+VCsHCgXoCX5S7YEa364CjmESmcmePH7XA0PefhO9oFJd9IVwqrsTwCkkcKAmyHKM+zy3Egh4tamYEQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AKo5yPpDHi8R1HQqiYlwipcvXSS1RvgcoYohPZOp04U=;
- b=r2u8CtfvRNFxoQz9QU4qehffwMm7uQMmKJAuceVdY7KIZhp1qUKlmDUJSfP9AVWU+xofpkRV6Hos8MFpXxpfwXz2mFGH0lu8ppFQRdnlrV9tbsXBublAQEFVNI2zuj91+DIt3gcPEo/mMG/A8sMakFAd+FzXRWplixm5I5DSGOE8jAv+YHpb2UToctCBHHW6Pv6omXZTKjrdjAd+6mT4Y3gxrxUQF6dzPguhTpsOM3IG5G1kqdkGup3u28R/FLiKDCPAe2flODIFzu4fTF+hXzsr/kaHhs8G88o5zml/bjk8HLLbTcWpEbmqYk6JTqqvh6Uaf25HrbjPnSppR7+d1w==
+ bh=llIjZRimUjn75xGNJcp5N0ySW/EWYaWzILlqXl18SmU=;
+ b=SA+yrhWS11GQdhhQycqXGq0p9EinazYoY+wIjVYFlaZ6ofIZTfo/GnV/VuSIG9Oe9T1vmn6T5JEjJcQJ8RCvBgoimFNc7tW7M4iwzAGv+wl1MvfL+jImfbI0eyPBFWkhwVdfWbjDjgY0+eimVoAhd2fMzTFTJhXiXRrbLHvURaHJvPKN5HZYbptcYLU7yhY5GJCsdeXVAJNFYSz3zgQw9aGscDi0bDA7f4ocIWJLNbrqnY8Vy25DSqMlbp6612trrY7tjtUQ0ZVt8gZSLryM4ajFdgkkUbdAua7wah77iB+cBc60S9LdJH5uEGKiot4zhk6ygPjVb4d7/gdnOT4xzg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by PAWPR08MB10317.eurprd08.prod.outlook.com
  (2603:10a6:102:330::20) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.15; Tue, 4 Aug
- 2026 15:17:58 +0000
+ 2026 15:17:59 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0270.016; Tue, 4 Aug 2026
@@ -51,10 +51,10 @@ From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com, kwolf@redhat.com, peterx@redhat.com,
  andrey.drobyshev@virtuozzo.com
-Subject: [PATCH 8/9] scripts/qemugdb: coroutine: Speed up coroutine lookup in
- a coredump
-Date: Tue,  4 Aug 2026 18:17:42 +0300
-Message-ID: <20260804151743.937694-9-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH 9/9] scripts/qemugdb: coroutine: Don't touch the coredump for
+ a plain backtrace
+Date: Tue,  4 Aug 2026 18:17:43 +0300
+Message-ID: <20260804151743.937694-10-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
 References: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
@@ -66,56 +66,56 @@ X-ClientProxiedBy: VI1PR09CA0148.eurprd09.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAWPR08MB10317:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04aaf308-f678-4f23-cbc0-08def23b90dd
+X-MS-Office365-Filtering-Correlation-Id: fa30f3c0-b036-4499-d3be-08def23b913d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|52116014|1800799024|376014|23010399003|366016|38350700014|6133799003|5023799004|10067099003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: AJQuKKxC+KOzp5YNBzvfyt6C/Y/seB32ltzVpCnV3aMPGlogHjbNl0O0BQ0ZfLcTCve37EBKclsFsP1R/L5x+iq1brNUtIi8op1IeNwu5W32BvNs4toLQVITzw5157J6Ba48KQSiv+7bbM1ub+YckIEj95tzyUJP9Ztc3tV3lEJLbH5fgMTrHWKMaY/+8AK02cC7ixBMHTzEIsWWzTjoTcAO9HO6dx+HP7T5kDqUnVDKIlYEanuAr7vOH7M8AVN0F9bHJO/OQah6Ezjt0q5YYOu20/Yj5JmyvqA8CB73N69W22jpSvDV7gntfbnxa7JLNW7G28+JjLDjahXKvsaDT2SRn/EdOwTNu6pZVq3i4TU7BMikT5zGVastQwPsAV6vepUTqeW9szZGIhovbyJQOA5owj2bLC8xbq7Tm3nKzpxq5b4a64AeyR3dKicYqte8fpsVYMocqECvvXmcLA1bDT0+vgtECp6M+e7ojPqPQbo/ecjIOPV/VB953zKV6VWcmZBcnc91XkZnbcUp1Yv92lMTKYi/pkgIsiT3N/LhxWRh+SdHJyOkkafl7BbYaCFTj+ThhB+7dQydvtUqHj9VTpCvL6JaiDEOndomJtc4AzTEQgpyszUE9FGjwVWflc9YqAUp6HhRumYshp0gkW86GSSTqkKlMmCZUQtXfxVfBOO83nA+uIWIUPQ9aI5KpdrqmqwIPbPp+5K4DOs7OZEr1CYYGUCI+LQbO44Y8r3jIu0=
+X-Microsoft-Antispam-Message-Info: xrfgjym89CMphXABJ8AMfoKGEpGsdb2dFTgXKSSEAZTCYJ4Zv6BpO80PKDcMJ/kzsuIrYuoenwixKnraEbj2Lh4uR68KKOVAQT0gSk8pTVsgMGa4zBkKyWja6e6HZ+0xYBFuFt0sT+NO9f4cb8GJyqjcBeFnrPOshhsl4T58kPHszfok5V4UX69YQ4OHACUBnyiB8O91/viQdceK3rDECUCN5OS+kVcV9Bqy6qFzgB7kVlUCICe3/79oA0XVCQgU6Y+eU4vM76Sbb/7KAR5SYBGE+5o+0SSHoLSNSpL77WbYCr+XdJEnRh9/UwdcDK76IZCjfm8jRaSSK3o+vQWuV/eUwBcmwSoskEHhjs9qB1CvY21q9tOM50qkYDhf/Kf/3P8a8zUtDxp9W+CAfr+ksg0habKkNvI//sJhXpBXlMdu9X2F0Mx9kFwRsuoFZzJzJCEQZbgDqU0hTMZq63swcdb11S837F+W0OV9oh/nrt1Y0UCoEXbCNKXkToun2iK2dNM7valuk6nkXtk4NhlLqgSZWGOA4d/pHQgziD0qbxZ7NjQGYMuzpo1THUtZPN1F3vlfogdKW61XaYqy3tkJTNRjWQvwmRRGedYpRwlZ87kfhm+RS0hl3eATjfG2BvrE43KaRV1K7nYUtOav846RriYO2iYq9vMwO3TJL5ArWitdem3VqwQasppbtYh+MZ4F5IHglPB9ICBhLwL4mnkLPszzWH895e61fIkP66a46HQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(52116014)(1800799024)(376014)(23010399003)(366016)(38350700014)(6133799003)(5023799004)(10067099003)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4sxX3Z+DUP6K6s0cLpkV9MRtOAnghbnVHAgN8n/OgZ2YQutZh9mRNPP74cQz?=
- =?us-ascii?Q?nResDIBHcEUUcurFkj7UkU0BWoRCB+YdO0gX/EFFMhYuVX7ZFdM2tSuSiIal?=
- =?us-ascii?Q?fH191u1fUX+2vIYn5Bk8sl8uFP+jJnE6j1g5lW84gHNeLOQrfW3sGwvUtZ0f?=
- =?us-ascii?Q?bXYul1ziUxr+Ukyjz63CgPspI4Sm5f/aUzyPRiMRQl5zVND+yNwNTE2PWr6X?=
- =?us-ascii?Q?BTnjgCkmX1bgR/FC/6EqiMECFgbRcVZDxRxHgA7hOkiFvcxrkMO0+9Db29rC?=
- =?us-ascii?Q?ZYJ9gvnXG0KqBKkdQYyTgxiwa9iSV2yNUrfyRiXWmtYGJoG7bFUQYIPe24KI?=
- =?us-ascii?Q?iIAHUcScKn2BTu7N+efpv7d3HSeRfVBrA3K1SAqYedPFe/pWwP7LdJZdU8Pm?=
- =?us-ascii?Q?2RrT2/pOkn4v2EFimOYPBVQoyZGO5bNv9W7M6r2F7EA+cb4QBURFyKvYrKOE?=
- =?us-ascii?Q?N0YulFfGOUQNKsX8k4wt1vg3PZx5gUbLs5zG+eTpy25Ki/1thuzdbwGrd8Jd?=
- =?us-ascii?Q?zZg/7ReQ0DChKskYth+kNnWZt0G5ujdjARea3/DPMjKe6USuI8f93FRUzDZh?=
- =?us-ascii?Q?UzTyBBkc41do99gWFuoNLHrg8Io1pWvOcpCHTllXLm1OOSaOUamJvgbBVnnv?=
- =?us-ascii?Q?XtTG0KJVjtAEy6G1QlJmwSdm15u2jDBswTsWBQEhXJFOzpBp7IyVmUw2+2KH?=
- =?us-ascii?Q?J13GvMwEUk6AlwALZVypziN+CA5fB1sN9klkMtuvbZ2/tKqe+/0bHuoPA+vI?=
- =?us-ascii?Q?yqywiS3jGG6QdkxJdTNg9cK4KaNSYc2EbeeYMhtrSgsNWe5K4JNv5z77VHa3?=
- =?us-ascii?Q?sQCYv23W+hdZksNjTcjOJJARP82qHswpJ4DGLTPuLQ7aq3ma33OJosrY6+B0?=
- =?us-ascii?Q?5gqWPII0ZWWmqRrqddFfzj9sTrcHF8/+n0BlvZTqGQD6tRUilHBhti0lOKYr?=
- =?us-ascii?Q?Uah3K4P/NxiBup4ySEmFVxY8cFJkqB5Sby6mDKCiKqHj+fS2y0YFGFnnIwaA?=
- =?us-ascii?Q?fqjKVIUWHsbM93zhCmf4/or8Vs9hM21NMZ5J4t/YmEeBD5ofWUUeeMZ4s3co?=
- =?us-ascii?Q?lbzUlNgF18cMZ+5vkHxvOExRczG3CBGOZyLnYvjAls8yaQaCbQw4UfI+y2XD?=
- =?us-ascii?Q?nE2GexZgKuU1WakaWIv1dW8gq9Ql0V/3zr14vce8BQnRAfNtg6d2+iacFHVj?=
- =?us-ascii?Q?hFSkT8905c2mTPwLYoqjtoRZFKZ8YX/XHq2eWDOWIM9zNHdSkRxijSx39lDi?=
- =?us-ascii?Q?yEUTj5+uMTqkNpbAdnuNpf2j2jjribzLQ2lKbZpDP2o5CCH/LJ2emotU1dxf?=
- =?us-ascii?Q?ZMwQ0BX/FH/G8Mbh+MRiGsO7n4oYHJx+ArxsdPQZ8TY5cDLDR1CMi8p1b5am?=
- =?us-ascii?Q?TLMMeexc/6GpWfncnv8xyXOAUXBuLxL4+LUGABo6gCPcymrcqLPjy3HWyYqn?=
- =?us-ascii?Q?OrUOFayMviQYSyGRDcY29aV60oyGFSHH955a2MN8r6BQkybNIfKumhavB8Ze?=
- =?us-ascii?Q?mKe/KRf0LsfVgIQ9jbWqNg1kz7mvHDqEdLdXNA7pQYevaKB9xuCEmPDBoXo2?=
- =?us-ascii?Q?5iMirbMvTChi8HmwX+ImN5amDJ+jk//hQcXMhULIWkMu7/R8hxS9YNGbt2o/?=
- =?us-ascii?Q?D4zFgP8JTl2mEJbVMQNWO3To0HBXuUb7pvYvCzvkK+jnk7V1wf5+br3qoLDC?=
- =?us-ascii?Q?SUpX5tBfVuW2QzcYHbjE2u6luh/8Z/VsHBbaiip4qM1JFNGhQbHB5WXCKAeP?=
- =?us-ascii?Q?cTkZOmN4LA816w+QvMBW/nDIH9Iyi8Q=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gbc1zDKgBoWDN6O7MPCpwCSM1J2MiapbRsWp59/45eNEIZScwRh30/D+bNjD?=
+ =?us-ascii?Q?3k+jDwGtzyQzV2zogWQ7MdeavmyP1RE6naAnKA/+VDXIx+WWQsLItwLkjMlt?=
+ =?us-ascii?Q?RGuOFVlIue5A3RkNtpKtnvUEvEK+3rIkPPcWQK2FbXZ183ff9K/RnWBhS4ch?=
+ =?us-ascii?Q?jv7OorFaV7NHOT3m6PsKCt+DS3YYiMjmRh/eJdKMHR0FjqAGHU80KCCLu+5+?=
+ =?us-ascii?Q?DONxM5z9rDNB0IW/fs5aKoeSHB7bYO4iXcskymaE32ECvCBzI5rrjXrHy7IE?=
+ =?us-ascii?Q?vYtQ64WpOVfbawcpc0CUSSYraJjDc9ef3BOUziDfk3FnCmvKTpQrxm2NFQHv?=
+ =?us-ascii?Q?RnBbG5J3g79BxhlPKzLRBXt91dNyhD7lbpOCFowIwoxh0C+lBqSAdxJ9OwBy?=
+ =?us-ascii?Q?HIw94cjVZhYK9wYZ0Qr/J305vlvLTb9/+EUlX87/G0CFSx9utRVHnZNxOlum?=
+ =?us-ascii?Q?ZOBtT4HGNfY/xPmh1Vcis4QrXiGUoXSMKD7uedGhExgnE0VZFrjin/YM5wzJ?=
+ =?us-ascii?Q?7mlcudZyzZexTTItoxTuNrRAvEXNuBZkh6o9wdyW0ca7lT0+ifOZ4I9n3B8F?=
+ =?us-ascii?Q?KCP9/G8K2l55k249NC+YDXvsOAIubu3OtmBlCYV6BC8YSZ2aTQfIRW2jbrlM?=
+ =?us-ascii?Q?bVjlXYAbwicazPValQoe+sgkZyR5XL0LzYaZkKaQN6PVZ/GFXpyNbjbuwh7S?=
+ =?us-ascii?Q?BlUr4oetYsBKESMT3W5iOG3Vm2t4ZLMm47Nj+AU3l2pmqVddsF70FYtqkuyJ?=
+ =?us-ascii?Q?GDZEW83OSjAHe9yPpEvdiYVD/7vDiaR7+9kAyQ1Lot8WinX+Xl3uDxAyrZhZ?=
+ =?us-ascii?Q?QDbVoAW1rLmJ/kTCn4ejHQ47CuDGoYvb/EL2eZJW88bR3OTOLn2eO1V4waQO?=
+ =?us-ascii?Q?rjfzb3hPiLb9jFPpPYTjLXthaEUoo9VCG5pgsYRb9d+TDLrFhfTiWtA2QsXk?=
+ =?us-ascii?Q?MMLUmguTK4P4+EkMLTYgFsI691VeAYQT+j2sTKjGI+kynKEFVIQBxYHFs23P?=
+ =?us-ascii?Q?MRC59bRzDtNlV6p57sFBGud01J5D9V8Impyl4MvzlDh9zob59Eon6ynU+Vwt?=
+ =?us-ascii?Q?YM7qTKTBSC00Wl/ekuMCk2N3KPCJNH2wEKtjRMf6CG0mS83St5K4d5Cak2T5?=
+ =?us-ascii?Q?cTF+zl/mg0kfqu4FRXokypLsCWtV+7v3mT8p8a9vTcmuXWA1zmnFOryp03Vg?=
+ =?us-ascii?Q?BptOP9mgvrcv27e6nhF/YOw8vqP1QhDz9tzBc0sZe7RW+ZYinXkxXZ/MR6vO?=
+ =?us-ascii?Q?hfTvCjCv9dpqDqSa3B1k7yKrG18kOPF6pnfGcUJbrS9RI+1PDXi3HTshh0XA?=
+ =?us-ascii?Q?8an1htO5RYCbBjngJPSKEGSKrLiBwPOvMD1rXR7SCM+FV2ZC8IHB34tDAm1y?=
+ =?us-ascii?Q?VuYYTLoGQfljNkbesdLkJ/4MZ1A50FzUKhvlEzRhBbFTy4hoCXVNi9JM81cf?=
+ =?us-ascii?Q?qHN3r/Rtsi2J36wDFH3Bde7Lw4tLb0Nt5UEhevGHjhORX6bjdAi2w7R3Afus?=
+ =?us-ascii?Q?hMkJ9hvXv2MuJUvYIKsSyZ2CGAzyEQLX0N3sYk1fZ9UCBGVqLG4mOmBleiDq?=
+ =?us-ascii?Q?fDGjKI1PRWYdJpOCMN9KDoJunPTR39nI6fyZg7wNALnXG9cO1jPZ0b+z3W+y?=
+ =?us-ascii?Q?Pd5wWcPYXatzpCBl22rndIuxN7GWWVuPFNGSswedOXZfSTL9PNMpCFfD6bzJ?=
+ =?us-ascii?Q?NvLAtm7FW2VQYfz4gIcXGwJJ2Kn9rcPvHpDe9VRyUlHnHX9TeTgAD+sP1xSe?=
+ =?us-ascii?Q?4sw3hUY4OXKVU0jSS0/oL/oigcwjlj8=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04aaf308-f678-4f23-cbc0-08def23b90dd
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa30f3c0-b036-4499-d3be-08def23b913d
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:17:58.2820 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:17:58.8597 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jx1TzKoDyouzp+i3bCLvrMJfik5ZZv3KnvDQHt3OzhEs6sA4ZZbSqWcl+dH1C77qirYFB/jFbMdqrgKzk85yN6X9FkVmjrc0wPXHlckmx/g=
+X-MS-Exchange-CrossTenant-UserPrincipalName: B06VveUPodAGV0DiXBlF7q3tvoYDYgCN8bm3+u0qpYeOo4Ht3XOUDJ8REg5isjayCq1zhTD0Od3wBrZU8BQIN4AEzOwmRslDTGcgbLTsPS8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB10317
 Received-SPF: pass client-ip=2a01:111:f403:c200::1;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -142,55 +142,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'qemu bt' on a coredump takes significant time before the first
-coroutine frame is even printed.  The bulk of the delay is resolving a
-name.
+init_coredump() creates a Coredump object for every coredump session.  That
+implies opening and scanning the actual coredump file.   For non-detailed
+'qemu bt' invocation we don't really need it.
 
-co_tls_current is a file static variable, and CoroutineUContext is defined
-in the same compilation unit, so resolving either of them by name makes gdb
-expand every symtab in the binary.
+Les't only create the object when the core is about to be patched, i.e.
+for '--detailed'.
 
-Look the static up with gdb.lookup_static_symbol(), which is served from
-the gdb's in-memory index, and scope the type lookup to the symtab that
-comes with it.  This significantly speeds up 'qemu bt' processing.
-
+Fixes: 42f3c143c3a0 ("scripts/qemugdb: coroutine: Add option for obtaining detailed trace in coredump")
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- scripts/qemugdb/coroutine.py | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ scripts/qemugdb/coroutine.py | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-index 3e0b37b73ea..21ed7cbaab8 100644
+index 21ed7cbaab8..edc1f3cc69f 100644
 --- a/scripts/qemugdb/coroutine.py
 +++ b/scripts/qemugdb/coroutine.py
-@@ -313,7 +313,16 @@ def bt_jmpbuf(jmpbuf, is_coredump, detailed=False):
-         dump_backtrace(regs)
- 
- def co_cast(co):
--    return co.cast(gdb.lookup_type('CoroutineUContext').pointer())
-+    # Unscoped type lookup expands every symtab in the binary.
-+    # Better scope it to the symtab of the ucontext backend
-+    sym = gdb.lookup_static_symbol('co_tls_current')
-+    if sym is not None:
-+        co_type = gdb.lookup_type('CoroutineUContext',
-+                                  sym.symtab.static_block())
-+    else:
-+        co_type = gdb.lookup_type('CoroutineUContext')
-+
-+    return co.cast(co_type.pointer())
- 
- def coroutine_to_jmpbuf(co):
+@@ -328,7 +328,7 @@ def coroutine_to_jmpbuf(co):
      coroutine_pointer = co_cast(co)
-@@ -416,7 +425,8 @@ def invoke(self, arg, from_tty):
-             co_ptr = gdb.parse_and_eval("qemu_coroutine_self()")
-         else:
-             # Fallback to use hard-coded ucontext vars if it's coredump
--            co_ptr = gdb.parse_and_eval("co_tls_current")
-+            sym = gdb.lookup_static_symbol("co_tls_current")
-+            co_ptr = sym.value() if sym else gdb.parse_and_eval("co_tls_current")
+     return coroutine_pointer['env']['__jmpbuf']
  
-         if co_ptr == False:
+-def init_coredump():
++def init_coredump(detailed=False):
+     global coredump
+ 
+     files = gdb.execute('info files', False, True)
+@@ -337,7 +337,8 @@ def init_coredump():
+     if match is None:
+         return False
+ 
+-    if coredump is None:
++    # The object is only needed to patch the coredump
++    if detailed and coredump is None:
+         coredump = Coredump(match.group(1), gdb.current_progspace().filename)
+ 
+     return True
+@@ -372,7 +373,7 @@ def invoke(self, arg, from_tty):
+         if gdb.selected_thread() is None:
+             raise gdb.GdbError('No stack.')
+ 
+-        is_coredump = init_coredump()
++        is_coredump = init_coredump(detailed)
+         if detailed and not is_coredump:
+             gdb.write('--detailed is only valid when debugging core dumps\n')
              return
+@@ -381,7 +382,7 @@ def invoke(self, arg, from_tty):
+             bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])),
+                       is_coredump, detailed=detailed)
+         finally:
+-            if is_coredump:
++            if coredump is not None:
+                 coredump.restore_regs()
+ 
+ class CoroutineBt(gdb.Command):
+@@ -413,7 +414,7 @@ def invoke(self, arg, from_tty):
+         if gdb.selected_thread() is None:
+             raise gdb.GdbError('No stack.')
+ 
+-        is_coredump = init_coredump()
++        is_coredump = init_coredump(detailed)
+         if detailed and not is_coredump:
+             gdb.write('--detailed is only valid when debugging core dumps\n')
+             return
+@@ -441,7 +442,7 @@ def invoke(self, arg, from_tty):
+                 bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), is_coredump,
+                           detailed=detailed)
+         finally:
+-            if is_coredump:
++            if coredump is not None:
+                 coredump.restore_regs()
+ 
+ class CoroutineSPFunction(gdb.Function):
 -- 
 2.47.1
 
