@@ -4,68 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872FAC55172
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 06:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FA3C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 06:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr8ua-0004LO-91; Tue, 04 Aug 2026 02:46:04 -0400
+	id 1wr908-00055z-DN; Tue, 04 Aug 2026 02:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr8uZ-0004L7-4c
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:46:03 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr906-00055p-9I
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:51:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr8uX-0006Ol-PR
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:46:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr905-0006sh-3s
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:51:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785825960;
+ s=mimecast20190719; t=1785826304;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0Til7dJ+LBxYd932gQSxYw4R3kFQ/CW4QMe0aradBus=;
- b=MpBZgyLa4EiBQ4k255ZrYhe9h6P14Eb/DAb49Eh/GCNsEpq7tAld34FzOXettWcjn2mBi2
- dnrdR311L3ZBUXYm6enusF2JDmetN7aymJ8CivZgx6MMS8k/+1OL3yGnSpYCoGgI+H/GaI
- 0Ffvt0hnLRLuktQxlEHXR2LauHnDGxY=
+ bh=qvuUynhwJ6vmk6JmexBa8fUitav45tNUKh63gEre9Hk=;
+ b=NWjNXJ6jFHNku9MuvGIDtccOaNmts2sTEVDGP+c1GMuNIbxaa7yiLKf3bBR+8Z5D+NM8pk
+ R5uTmxX1hqXmlJjkJKTTvXWCNXs+DkGs2gCxUQxOoJW5CfHedIgTpoeDDHpSeqd5FCprO/
+ 1fwxQrJKpOA9CfuUt8WZd5W10FgaBbQ=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-SV9xW_IvNheFpOtuyKHrYA-1; Tue,
- 04 Aug 2026 02:45:57 -0400
-X-MC-Unique: SV9xW_IvNheFpOtuyKHrYA-1
-X-Mimecast-MFC-AGG-ID: SV9xW_IvNheFpOtuyKHrYA_1785825955
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-zwZISMpYNv6NtVLFfprXbw-1; Tue,
+ 04 Aug 2026 02:51:25 -0400
+X-MC-Unique: zwZISMpYNv6NtVLFfprXbw-1
+X-Mimecast-MFC-AGG-ID: zwZISMpYNv6NtVLFfprXbw_1785826283
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 408171956048; Tue,  4 Aug 2026 06:45:54 +0000 (UTC)
+ id 0243719560B5; Tue,  4 Aug 2026 06:51:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51EB641C; Tue,  4 Aug 2026 06:45:53 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EBCB180044F; Tue,  4 Aug 2026 06:51:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BEBB521E6920; Tue, 04 Aug 2026 08:45:50 +0200 (CEST)
+ id E317621E6920; Tue, 04 Aug 2026 08:51:19 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  kvmarm@lists.linux.dev,
- eric.auger@redhat.com,  cohuck@redhat.com,  peter.maydell@linaro.org,
- richard.henderson@linaro.org,  maz@kernel.org,  oliver.upton@linux.dev,
- berrange@redhat.com,  abologna@redhat.com,  jdenemar@redhat.com,
- gshan@redhat.com,  skolothumtho@nvidia.com,  sebott@redhat.com,
- philmd@linaro.org,  yangjinqian1@huawei.com,  shaju.abraham@nutanix.com,
- mark.caveayland@nutanix.com,  prerna.saxena@nutanix.com
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>,  "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,  "cohuck@redhat.com"
+ <cohuck@redhat.com>,  "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>,  "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>,  "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,  "berrange@redhat.com"
+ <berrange@redhat.com>,  "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>,  "gshan@redhat.com"
+ <gshan@redhat.com>,  "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "sebott@redhat.com" <sebott@redhat.com>,  "philmd@linaro.org"
+ <philmd@linaro.org>,  "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,  Mark Cave-Ayland
+ <mark.caveayland@nutanix.com>,  Prerna Saxena <prerna.saxena@nutanix.com>
 Subject: Re: [RFC PATCH v3 16/19] qmp: add query-cpu-props-info command
-In-Reply-To: <20260716213858.609699-17-khushit.shah@nutanix.com> (Khushit
- Shah's message of "Thu, 16 Jul 2026 21:38:55 +0000")
+In-Reply-To: <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com> (Khushit
+ Shah's message of "Tue, 4 Aug 2026 06:30:22 +0000")
 References: <20260716213858.609699-1-khushit.shah@nutanix.com>
  <20260716213858.609699-17-khushit.shah@nutanix.com>
-Date: Tue, 04 Aug 2026 08:45:50 +0200
-Message-ID: <878q6m5qox.fsf@pond.sub.org>
+ <87y0f5u78t.fsf@pond.sub.org>
+ <6AA3BD42-9596-476B-9F64-AB09372821B9@nutanix.com>
+ <87tspa5skn.fsf@pond.sub.org>
+ <FD805FA0-9323-450C-9D79-319C0883F05E@nutanix.com>
+ <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com>
+Date: Tue, 04 Aug 2026 08:51:19 +0200
+Message-ID: <8733wu5qfs.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 4
@@ -92,28 +104,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Khushit Shah <khushit.shah@nutanix.com> writes:
 
-> Introduce the 'query-cpu-props-info' QMP command. For CPU model
-> properties it reports the type (boolean or number) and the set of values
-> supported under the active accelerator and host.
->
-> For numbers the supported values are expressed as a list of inclusive
-> {min, max} ranges; for booleans as the list of allowed true/false
-> values.
->
-> The command and its return types (CpuPropertyType, CpuPropertyInfo and
-> friends) are defined in qapi/machine.json rather than an Arm-specific
-> schema, since the concept applies to other targets (e.g. x86, riscv)
-> too. Target that do not implement it return an error.
->
-> The Arm/KVM implementation spins up a scratch "host" vCPU object,
-> walks its QOM properties: SYSREG_ ID-register fields become 'number'
-> properties whose ranges come from arm_field_get_supported_values(),
-> and the advertised feature toggles become 'boolean' properties.
->
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+[...]
 
-This explains what the command does and how it's implemented.  It's
-silent on the most important aspect: why do we want the command?  What
-is its intended purpose?
+> Stub file was missing on arm user builds. 
+>
+> I have fixed this on the private branch if you want to take a look.
+
+I'm willing to pull an update to v3, assuming it's a small fix.
+
+> I also understand if you want to wait for proper v4 with the fix.
+
+Eventually.
+
+> Again, sorry for this, should have checked all configs before
+> sending the patch.
+
+Mistakes happen, and then we learn from them :)
+
+[...]
 
 
