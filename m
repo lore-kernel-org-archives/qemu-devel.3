@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B39C5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB25C5518F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrIVL-00006m-GD; Tue, 04 Aug 2026 13:00:39 -0400
+	id 1wrIVH-0008VW-FH; Tue, 04 Aug 2026 13:00:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVJ-000051-Aw
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:37 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIV7-0008Tv-VR
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:26 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVH-0000ib-Oc
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:37 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-47f633e6058so27619f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 10:00:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIV6-0000gy-BC
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:25 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-47fecbbafdaso4380f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 10:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1785862834; x=1786467634; darn=nongnu.org;
+ d=openvz.org; s=google; t=1785862822; x=1786467622; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=agLMlyUmxtwx6g/99v7O2aIN4trfNG9SmIE8yPzBwqA=;
- b=PwahHVmGkSIjcWIKyUnEygn8lE0VlB06XDTb3/ZVyig+rKqgD9TiDHU70iJtCAcmlu
- W6a5GNVoRvmWDoZq/EjM4axwzNvlqtBbFOzPBTF2rc5b+bCDAVE/e4zh68qAmBc4EC5U
- ZyvfDG0pEAhYJl1cze7BzauVUfaLEEC2a+Orz28j0x4HBZ19pgeEvW18bN2wGSt9ns4/
- Ef7lMucKyxfqk1yKOx72mdXru8niN7VEBXaUJUkhtWJuyDkytxdp2cApIMdkiwa+/w2a
- 4wVkRY9+oRQU9cLKf2eaYhPyXsuVTB70hrUckKXba42CXMC/voBkk147Mi813H3Dbrlr
- BESg==
+ bh=cF/zvKp9V5nTLdLrbCLO9LIP5tYkEtz26Z+Uxc6lVP8=;
+ b=P0Av0vUmAsTmLJpMdcZd3xEhwxxcF+5yPE2VjdiLTKs6Zjxt2nDQohxU8CkfdjPJEF
+ bfTbJCMcDg01nqNiyOdzTxWK1gPQIcv0ud6mssBYpL6UMCub7vldlNagzUGQiJa73Vd7
+ LMHprgRb6IsFpuXaL9r6+doeM/5E3gSgYyeaXo7Q4XCP3F4Vatdmz3p6GIsT5PHRqMD5
+ EJKMxyS4CyyMJQqK5fRIRIclzmZAgXSItdlyL5J02rQoiLZZtXAwBVNBfMGSrVhEnHXT
+ ZW5ntEE37Fc4+vL1EhdBEJXDx1Re9K6Nzyk8498Z6jDKRI+rQWR9Gj4N0mJtdK1Og3xD
+ YarA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785862834; x=1786467634;
+ d=1e100.net; s=20251104; t=1785862822; x=1786467622;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=agLMlyUmxtwx6g/99v7O2aIN4trfNG9SmIE8yPzBwqA=;
- b=ipA8fgHOHO64P7WOi2uVj1IqIoapVbXcU40ztKfl00/FBtnBU/pCZ+CwUqykxhUA+3
- bn9ew3UUDrJleJiq42PipVZPNHTL1NEgGUWLCFPu0LSIINU1BE4JysCBVmRbbbs/E9wE
- eop3y361BSlwDWsVQhPJVBXVPGnUhjdEEwsMZ06msSIZRhQDJ6KZzCMFtUcMPGy37Aay
- 4CKB9xbLfjPOqZxRLU96qyp4JkjcIHBLXAppFiIuthC8l9Fao6Telc1Ue7Knt5k6bXLi
- WFeCYkX7hxN2jl97irqXnMC+FlQzHDKfbgT0tw6SAZ4alfU3H8SUbCX4XcxxiRCkn4Ms
- MVPQ==
-X-Gm-Message-State: AOJu0YxpixMsJepmKnriAgdDk8RGDgjD1hevdDA1xlpoQ6/5xSZZNWMm
- 8VXNlBZfywNweTvjcjaGbB8LSzn9jW6hCDxsA900O2vKo5FWTn+BARyPv7qVmbtClkXHWUWwwGC
- r4/Ac
-X-Gm-Gg: AR+sD11pF44kXFdETA/Hu4KtVdGw2Q0ju/GPWJOEfVjkg0vtO+92VJxpveH6Zg7UfkY
- Q69lrjNCV4IIInVyzAUY6AvRtZiB5sCPO3+sQIx7WUQniRgLQHAgVvtno05dbzu09Nn8GXgo3YM
- CW3375lDgTokVUCcjuSD3qhpj8jF5c2B6kaX0zGPW7kdq9topQIuQqjAtlc/OVlfK5ToOCWbg4j
- eBN4M03OfKNx75sj2/K/1e2e5fZ5vsFmNXNxT0YLRUEks7Pq9u7gGX6eSu/T6Awhrqmq7kHsHyg
- GtK8p07P3M76ohnhqybIOLVusXxGD+9hNfe09qUIIY7ZNaCCQYYqK4XlIBhJukQ+7sJkikDwr4e
- yLIdbg7fosvrNLiguQn1t0twiNK5i0vr6vw9ki0wlWUMG6thUN8E+WsJ7NcnWI5f3sOPKJhbgtc
- ZjCv3RGdI90HiYc6Qv50SOYEOrJhU9oDE=
-X-Received: by 2002:a05:6000:3113:b0:47f:80f0:8d33 with SMTP id
- ffacd0b85a97d-47fec6457camr980429f8f.30.1785862824261; 
- Tue, 04 Aug 2026 10:00:24 -0700 (PDT)
+ bh=cF/zvKp9V5nTLdLrbCLO9LIP5tYkEtz26Z+Uxc6lVP8=;
+ b=YSOQQB0zIHLsAZnK9oAgnAzx56Jjcp1ArmuqDwUk3q40JpMAcx5fB+VEDzWJHu+6Tp
+ 9WE9F6QqR/ZIHxIwarCb1ujAYjjO0+weLuDETLI09CmW0aagm1Nw2N8h2A+BIPq9tCRj
+ HjnkuOFLnPqGR2G09qd2KhrWYQtWZZjqqr2QJYt4n82zw+AVBwVCkrqBND0jNIzY2ykU
+ okjBttUdKKjw68A1Vyi5h3he4ltjJSIxN5Ek2KiOQr3PYxWdLZ8cF8w+IPN8RC9aiOD7
+ 0lq2mOR6Ru2hCXxJHFjpBvhKR7uxbSYVhzoKdJgnab54/LYCsWQpIoM3nljxZzo4zP3Y
+ k1UQ==
+X-Gm-Message-State: AOJu0YwlWL6pDtynu1H8n2b1tuOV1oPNyvkfgYO13qxjtvPvqxCRRcyQ
+ 1tXRcxtBCE5nvWiFGdJjHAY2DGFhyt/Hlz1Jk89XbCDtLXTT71xinG6Zv1EtKH5ikHIVbo1jOI3
+ Gvcxe
+X-Gm-Gg: AR+sD13E74UPuAO9bIOMLnYzixtF0Vi6bADy3NHahx/qdFsuvphO/6mmNtRmcDDrHp8
+ BEhgoMyeOs0+cLXWQldKjWe8vsrVp/v2CaM0eSkRYjdMxxnXrV7sgX+TekNz8t2TKk+95SB84pS
+ umdNsR/fR3auj/xzvMnuKHoJjz78JnEKLhmvkoKvrQFzStHg9pqK3XOXnW0+eYEGPXp2KHaCN6r
+ 7Vx6gHUKFcUbfJwb1y7f542kcFFFCtaaZqou0yLwRsketwjvyKox4qJOfzj0jJ0Mzy7aJ76i9If
+ 4Ep1bm8JAXvYPL82rOERZiSgjIPjFBZIJ6d3lZYNB2utUOs4HbMd/g/4Esz+931dURGrA+g6UBg
+ jBAiJvyXWYLBxqV+Ms8pccOIZKBWUoVCeViJWw1nduKW31iVRjt7vVtRmOGY3ieFjIiHtQ8ADBZ
+ dUcPxYSY7OyVOkQbxK+CCWC0X/M3OrnfoVanxRZYMz1itvLQ==
+X-Received: by 2002:a05:6000:2913:b0:47f:973b:71c8 with SMTP id
+ ffacd0b85a97d-47fec62e4eamr909420f8f.21.1785862821108; 
+ Tue, 04 Aug 2026 10:00:21 -0700 (PDT)
 Received: from athena ([213.133.28.44]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fec23ec3asm1234116f8f.31.2026.08.04.10.00.23
+ ffacd0b85a97d-47fec23ec3asm1234116f8f.31.2026.08.04.10.00.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Aug 2026 10:00:23 -0700 (PDT)
+ Tue, 04 Aug 2026 10:00:20 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  "Denis V. Lunev" <den@openvz.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL v2 4/7] tests/qtest/libqos/ahci: support raw (2352-byte) READ CD
-Date: Tue,  4 Aug 2026 19:00:11 +0200
-Message-ID: <20260804170015.3128363-5-den@openvz.org>
+Subject: [PULL v2 2/7] tests/qtest/ide-test: add a multi-sector ATAPI DMA read
+ test
+Date: Tue,  4 Aug 2026 19:00:09 +0200
+Message-ID: <20260804170015.3128363-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260804170015.3128363-1-den@openvz.org>
 References: <20260804170015.3128363-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=den@openvz.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ahci_exec() always builds ATAPI commands with a 2048-byte logical
-sector size, so it cannot drive a READ CD that returns full 2352-byte
-raw sectors. Add an atapi_raw option that sets the READ CD
-field-selector to 0xf8 and the command's sector size to 2352 before
-the transfer is sized, so the derived block count stays correct while
-the buffer and byte counts cover the raw sectors.
+test_cdrom_pio_large() already exercises a multi-sector PIO read.
+Add the DMA counterpart through the same cdrom_read_impl() helper so
+the multi-block ATAPI DMA read path gets equivalent coverage.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Stefan Hajnoczi <stefanha@redhat.com>
 CC: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/qtest/libqos/ahci.c | 5 +++++
- tests/qtest/libqos/ahci.h | 2 ++
- 2 files changed, 7 insertions(+)
+ tests/qtest/ide-test.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 0621a6c477..e3019a1eca 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -707,6 +707,11 @@ void ahci_exec(AHCIQState *ahci, uint8_t port,
-     if (opts->atapi) {
-         uint16_t bcl = opts->set_bcl ? opts->bcl : ATAPI_SECTOR_SIZE;
-         cmd = ahci_atapi_command_create(op, bcl, opts->atapi_dma);
-+        if (opts->atapi_raw) {
-+            /* request full 2352-byte raw sectors; sector_size must match */
-+            cmd->atapi_cmd[9] = 0xf8;
-+            cmd->sector_size = ATAPI_RAW_SECTOR_SIZE;
-+        }
-     } else {
-         cmd = ahci_command_create(op);
-     }
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index a0487a1557..2a48a7523d 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -242,6 +242,7 @@
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index c97bc17b67..6e59197566 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -1158,6 +1158,11 @@ static void test_cdrom_dma(void)
+     cdrom_read_impl(1, CDROM_DMA);
+ }
  
- #define AHCI_SECTOR_SIZE                (512)
- #define ATAPI_SECTOR_SIZE              (2048)
-+#define ATAPI_RAW_SECTOR_SIZE          (2352)
++static void test_cdrom_dma_large(void)
++{
++    cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_DMA);
++}
++
+ int main(int argc, char **argv)
+ {
+     const char *base;
+@@ -1217,6 +1222,7 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/cdrom/pio", test_cdrom_pio);
+     qtest_add_func("/ide/cdrom/pio_large", test_cdrom_pio_large);
+     qtest_add_func("/ide/cdrom/dma", test_cdrom_dma);
++    qtest_add_func("/ide/cdrom/dma_large", test_cdrom_dma_large);
  
- #define AHCI_SIGNATURE_CDROM     (0xeb140101)
- #define AHCI_SIGNATURE_DISK      (0x00000101)
-@@ -485,6 +486,7 @@ typedef struct AHCIOpts {
-     uint64_t buffer;    /* Pointer to source or destination guest buffer */
-     bool atapi;         /* ATAPI command? */
-     bool atapi_dma;     /* Use DMA for ATAPI? */
-+    bool atapi_raw;     /* READ CD returning 2352-byte raw sectors */
-     bool error;
-     int (*pre_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
-     int (*mid_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
+     ret = g_test_run();
+ 
 -- 
 2.53.0
 
