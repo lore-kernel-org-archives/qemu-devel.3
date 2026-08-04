@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E1DC55ABA
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AF1C5518F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrAQ2-0000AT-Vc; Tue, 04 Aug 2026 04:22:39 -0400
+	id 1wrATm-0002HF-JZ; Tue, 04 Aug 2026 04:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrAQ0-00007r-VR; Tue, 04 Aug 2026 04:22:36 -0400
+ id 1wrATh-0002DM-TU; Tue, 04 Aug 2026 04:26:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrAPy-0007kO-Me; Tue, 04 Aug 2026 04:22:36 -0400
+ id 1wrATf-00089x-Gw; Tue, 04 Aug 2026 04:26:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785831745; bh=RmwZ/dHioiXLjW1AdHtl012vVBqcCBgpDM8BCVaEzRA=;
+ t=1785831972; bh=dkg8hgIJeFbBwwsz8ZL+1ZnVW+CCNN1frG3ve3yUisg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=b/QryuxnDTXTqXPVW+mZ4g2++XhOuiT7koNu2ZCcrc++VyJVvnPtLXEgnCXiTEryQ
- 8gt+jwKvye3a5YLIBCjLUiEIhxjZT89X27Y/3Pbo81sM8SHdDp3sjwQtKW79Uslj8P
- QoebYcvX9LukcDrGk32PjmbjcGzzxJnW/mERbwVpw8mXnAmg93DRzDt+pKr1ENRYuh
- Qp8+6ZHU8G8SrPvmE+0t/dhibOCrJk3UWEr9Kf8s+kBx7LzJOKXQiNqDLovkh5hJnn
- 1iKU4sKWnveTI6GpOAw2GeGKSCEQEPdsxhK2wsLsB91u0uBKXvxl6T0uEkmgIDv0ff
- d8wT/0WxeiVug==
+ b=yGNffRI65ZrlMPUTv8tPUjRhr3l49jS30Xzx+1QcvUzBukDjjl7ehASW0we9BV6fA
+ KCFc0EsbAgQXkebHDqoOYN4Cx05C6SK0FSfRSEeKz90YAKw5/89r7sqwgLALSd7TdC
+ BDnhfQ+8i5FOvOVCU97kTRIW6UMdRMIA3sNU/Ms5osgXpvTKGfsWt+EidATu1HmYM6
+ UwQI8Cw8wKEFOQqOJzmNLm8iz4lK3DdJ41mI40JcMmFq9KS4d4OmI68VxL1NumNNpX
+ 9zRmjJ5mCJ0n7NK1k93Fw1bwzYfyc5c3NZgKSQDm8vmK/pDHASAkk1XPr/OSwGUDlq
+ QGX2tbqolAKvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 04A471C823F;
- Tue, 04 Aug 2026 11:22:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BB5091C8246;
+ Tue, 04 Aug 2026 11:26:12 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3BD1A400942;
- Tue, 04 Aug 2026 11:22:31 +0300 (MSK)
-Message-ID: <5c1d4eec-bf5d-4c61-9857-f02fde4e8e38@tls.msk.ru>
-Date: Tue, 4 Aug 2026 11:22:12 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F00E9400950;
+ Tue, 04 Aug 2026 11:26:18 +0300 (MSK)
+Message-ID: <6b03fac6-1b3c-4a7c-951e-9d46888a1640@tls.msk.ru>
+Date: Tue, 4 Aug 2026 11:26:00 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] qcow2: do not try to clear the dirty bit on a
- read-only node
+Subject: Re: [PATCH v2 0/3] block/accounting: fix unlocked latency histogram
+ reconfiguration races
 To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20260716153552.3376009-1-den@openvz.org>
+References: <20260724111311.4086859-1-den@openvz.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +91,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260716153552.3376009-1-den@openvz.org>
+In-Reply-To: <20260724111311.4086859-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,22 +117,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/16/26 18:35, Denis V. Lunev wrote:
-> qcow2_do_close() -> qcow2_inactivate() clears the dirty bit with a
-> plain write to bs->file, unconditionally. A read-only node can still
-> be dirty, inherited from an earlier writable session, and that write
-> then hits a missing BLK_PERM_WRITE and asserts in
-> bdrv_co_write_req_prepare() (block/io.c) on an entirely ordinary
-> close -- closing is expected, the dirty bit on a read-only node
-> is not.
+On 7/24/26 14:13, Denis V. Lunev wrote:
+> block_latency_histogram_set() and block_latency_histograms_clear()
+> replace BlockLatencyHistogram's nbins/boundaries/bins without taking
+> stats->lock, while block_account_one_io() reads those same fields
+> under that lock from whatever iothread completes the I/O. A histogram
+> reconfiguration (block-latency-histogram-set QMP command, monitor
+> thread) racing an in-flight completion can therefore observe those
+> fields torn, hitting assert(pos != NULL) in
+> block_latency_histogram_account(), or corrupting the heap outright.
+> This showed up as a qemu-kvm SIGABRT on a customer's virtio-blk guest.
 > 
-> Skip the clear for read-only nodes, same as read access already does.
-> Any other still-dirty node keeps the unguarded write: it is expected
-> to hold write permission, and a missing one there is a bug worth
-> seeing.
+> Regression test is added for illustrative purpose but I am unsure that
+> it is viable long term. Feel free to drop.
 
-This seems to be another qmeu-stable material.
-Please don't forget to Cc: qemu-stable@ on applicable changes.
+I'm picking this up for qemu-stable too.
+Please let me know if I shouldn't.
+
+And please remember to add Cc: qemu-stable@ for future changes which
+are applicable for the stable series, to avoid this extra round-trip :)
 
 Thanks,
 
