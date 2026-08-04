@@ -4,94 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEA4C55184
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Aug 2026 22:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E6BC55182
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 01:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr1PD-0005Iy-C6; Mon, 03 Aug 2026 18:45:11 -0400
+	id 1wr3Yg-0003cw-6P; Mon, 03 Aug 2026 21:03:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wr1PB-0005Dm-8Z; Mon, 03 Aug 2026 18:45:09 -0400
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wr1P9-00057b-7W; Mon, 03 Aug 2026 18:45:09 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id 1EB81EC00F8;
- Mon,  3 Aug 2026 18:45:06 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Mon, 03 Aug 2026 18:45:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1785797106; x=
- 1785883506; bh=tswvNfYH4AJpc79MQDqgtGTxdPbU+FUqD4Y4hrIGJL4=; b=l
- YYx0wbNMTJWIqtMJwNy1MMwgv2GKz3VVOC5aH/QBnyilIrkqlrUvZVjXyLzq+ErW
- UmA2YTOT+RTU9nhLumhKDICpWfuPRKiU8UGyCs1pYgW4yx4fdXZCMEmgHSry9g8f
- gNdefImoHN3MGTqdUHNZbGBXKCrahqYN4THRCczBJJElOmaQPVu6sc/pHCRxTWPm
- qUyV5ZNFAm3MyFvQBiYdtILnEigT6dsJq32VIrSUk1sIVuPG+V4bQaFgTW70pUfG
- cisnFI+ckurYatZKhh106CHd6nKOyODvO9rnZL6mPNjveg8lhuZjB0KxO6CLzmy8
- RsYO3txjHQ6s3xCqgEonA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1785797106; x=1785883506; bh=t
- swvNfYH4AJpc79MQDqgtGTxdPbU+FUqD4Y4hrIGJL4=; b=GMq+B4/kZ2RIGrtek
- WKa4IsF098dxSwnej440x99yetDZJmRW9lAOs0YWZqffAwupgiIoKQIaUn8OGCwZ
- zVaAB3bCRm/wLuDg9lSP8vLHGcztrX3F63+knQ+eDOczh48CcJNwN4t0QnWTUIce
- w6+89xbuAOK/7jL5Fom8Q0toHqAOZRdUF9FZgMRlZgOnOsS55LxAKCTyeFeiAJCF
- j2uyGR/7D9Nq7L1MPN/tnmr3WTwM1jikEmnIHny6emmvz/ddFgpG/+Ol8rrpK9AO
- ClGaHcdWjei8N5ccmmjmmXWzKafZ0qsOyUWs8ImP7YMwvN0Qnhw49UbAPVvzhuAu
- 3IQMg==
-X-ME-Sender: <xms:8hlxasVUamhLuRXzDKtaYryrVkJx_cVFzKIifMSjBB-329oSnyQilQ>
- <xme:8hlxahDMrApdVUEEfTl7qv5D_YIse8QxQC5-GfYNiyg6P7JESYT6huuMFBOSWWilg
- DFVrcl11MpLylk0eUM5h2T32jGMp19kXDDB6wtN3BqMXZ5qL-1HL5Y>
-X-ME-Received: <xmr:8hlxahE_sJINjgNhTH0LqcRW2GhxZwMSHiJgWBhE-wxsbGpV0tbu9NLXH1gjrY_CtrvjyuPJDJl0MHcltRE4GWrVhL1Qj7VFof1NjRFtjo9SGg>
-X-ME-Proxy-Cause: dmFkZTFtqVo6kF7gYj7UH29WRVRgnHsa7j0SPqjL6nyeOfplmNT/oInijOEL4gWZBU35KZ
- jNX/Hnnpa35lzSHSRuXuiR5/snxpi+qMrooSjWr3bYdtlh7Gaw2Uwpm5PcVs8lI/E/bgXU
- Wi4CKrXL9QDJBC5DeUYID3tGKXnBSi4DDno05kypn/P0z890IYpJstjUn2OBGmUx7dqFgQ
- R/HPPULFJC8odpjYvicCQSMuGH5a/A6XYvWSlk3f1tJSPi1u1+69IxnXIhts38fZYE6R/q
- 36A+hKxCkaEl1KlFs/ftxXbbOERXSMsfg4hXj3xCjKssQgU4qslE9xgGpwIjoBvt0HjZds
- sxWZBOtE03IqUQpaolaJaMTskwW7a6SgHws+R/r8Kzf4yqi29VM4cDk0zrDPizk2/h4oeR
- JtdKIT5GFmq2xgx5UgqDnU+FkUTZsm9Ra2XgspXTJBtx1Z72uFLYRzYs63DMmDztAwjYDp
- Tu+1i8qWjig4sWAE3ob5IlOeqO2eg6m7ybqleysffaI7llcShM+MH2MkgSaahavR+VHyrn
- WL9sccUy/MfXTd2r1RKXmkRCK3bEyjpvC+0PXGkBr7cMEptqJV7rsXKoeNpquokGoQU8b1
- buAiiqQRD7qAjcnRiuNPFiwcr92wHaPZkJtGOayO6fSo65fm5xBlApyaZ3tA
-X-ME-Proxy: <xmx:8hlxai4HLCcaU3XZgNoLVm3JJ-yBR_PEECefHTgBVex9b7WgUo7_vw>
- <xmx:8hlxanmbQDJcKQ_YL7XSFzIIqLqBaSiFHmBXSPWKHeg8Ezc4GZbHTQ>
- <xmx:8hlxat7pMeN4SxI7qGFy2tyCDE0wnxqv9Crk2yYvSS-LE2J5yVQKRQ>
- <xmx:8hlxaoTfIw1mgFjc0HvbFxllxdq2mr35uPHLcBQs6c4CSW7UUpDoXw>
- <xmx:8hlxarjOi3NpmNZiqGqBdGFrQln-364rj83qTG39gKY3S5oIAF7OrNyg>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Aug 2026 18:45:00 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Minwoo Im <minwoo.im.dev@gmail.com>, qemu-stable@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Subject: [PULL 3/4] hw/nvme: cancel inflight requests on controller reset
-Date: Mon,  3 Aug 2026 15:44:34 -0700
-Message-ID: <20260803224436.38768-4-its@irrelevant.dk>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260803224436.38768-1-its@irrelevant.dk>
-References: <20260803224436.38768-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1wr3Ye-0003cf-3j
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 21:03:04 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1wr3Yc-00021p-18
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 21:03:03 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-38dc69c74b8so3808084a91.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 18:02:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785805379; cv=none;
+ d=google.com; s=arc-20260327;
+ b=qBvhaeulH6ltqbzIWKSwu+ntNzZtkRWENmfzz5hcrE5cUHrbXJfCOa/amIQ7N0wLpA
+ LxWFjH/5fx41nZuVbi7VrMUK8D+i7HOc9bR0n1XjqzfdPpYvtTCzmhYbi68zKh5T3dgr
+ lDRxwNf5rO100HT8i0TkVpxXz6+DJkocrCsCpu2oN1Z+ANm/XA5TJFJovr2C7j7yLdaI
+ EszPsDb5Zi1pA8edJOuFJEuzZs8CQYuoUnemoUaTGhDJK2w6fcwkPk9cwTdopXkklheK
+ LrN2QYHb5wlU6IDoV7kszpCVAbV2CZWimyNnRZgofeMS5s0aiv3bgeLCQouqzG2JnYIX
+ md0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=i4yv0zG3BKoGqiguuGl1GNvdP+/h3GSYFOvweP0Wh+I=;
+ fh=v+HurI/0nM74mwkwa2YFxsg5B348u7sJ0X5dx84z3DY=;
+ b=VQtNWu1s1vrn83+lxc0lgluV8bgz06Ft/BaaoD0aMyO3yTYPY4d5B5y+2qoF5jI2r6
+ 10A7Zl9bJvIGpKPaEJOcvDvTMxSlFPcrboaZxCz/7smJhlrBJ3fHGLxj5JaGEMsvgJGg
+ koPKHVmfmh3nUQig7IdUzqFUL3nA7dcMDKF2uj0BDLLRBHm3nb4v24rd15/CUz9Fbhf+
+ G4DD5y3Z+0T7k+JGMlCl96yqd20Ti0W+hMS0escbKSt8xAO1/d2flB8oUCv3/OKEtnaq
+ wxcgdabsvRJI2m4u5xkZVjpwu5kN/5p1OHzFPUdT1j8o0/AGDrPJOQph4KPgjKHLxzsv
+ g/pg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785805379; x=1786410179; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=i4yv0zG3BKoGqiguuGl1GNvdP+/h3GSYFOvweP0Wh+I=;
+ b=iWkmL3Fi7t90S4MfM11GaGaPsqcZzZKoyV7xuD2O3Ey+Dy6nVimD1pOSyylb9Ej6gr
+ AaBUXPA8PyuhVBNG3Zu6tl4Xk2W6q+GYxV9YsF9Ua2coW6xtELUAPtdkiyBRg4KX+dMM
+ EQdThavPhJnx2YUUPhHWeML0900xTD5NglUcE4uRuGMDUwwVvRkiq7XU4gKSEKDHrQn6
+ PbZqGfEJ+hNSjr8ji+Y/ggsAIJa7T2yUuNMzuyYvWcZ0Czrp2nq0uI3uqXA7JQyBaFwi
+ 5KexH9etkPz7Fon/C898rlzy4k6YrJPqSVY2FtY9raRsAlAPcYje0YdAaIQx2IuF/ZR6
+ xyLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785805379; x=1786410179;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=i4yv0zG3BKoGqiguuGl1GNvdP+/h3GSYFOvweP0Wh+I=;
+ b=WMH8DHg7PbNqQe+6+T4oPxNzjW7RuD131VIJ9ahEPbc5j+DDdNIHmPcYMVGS13Fn5x
+ SlMVaK1h2yb+Xo/wtNbOcK7aWugNdZaYzll5ppkFES+xO6hONmv//GmpEpI30d3xEo16
+ YfQznfIQJtjW54glewsLizWePHQDLYHj1dg9GmfP4AyGSoJNVkgsyJq/MtD4rF4Ucdxw
+ QgsTGNCoH+6spzn5SLeIJ/3h/qigiaT6HqpYlCSaUn7xMn3WFeyfkrHw8ugptEu45xPH
+ MC0V6NUsM6RjL/wULXLRJyT21Cq0BRwm2OaUzPcUnD3q87TFcXI7lJpmIHZqEtXVvhqq
+ QMFA==
+X-Gm-Message-State: AOJu0Yz+A2PMZyq+kXBUHgY1+wQq0YoD2gLzbftRQ4wEJMoqUb/n+VUF
+ GBlZhBeXNMybMqQQ+iU5Wm4sSfRBDOmhkvPIY2Wo4m8tEiYaaK6A207lgs820ayHwQbEbCjPwio
+ SDo/iMaiCiZOLMM73iOEAAhqQ7cSgMqaXzXUQ
+X-Gm-Gg: AR+sD123ulmTsHCdMjtSrAAnbUyzVT6jvUtFc/d5sNJAgRjMBsgw9aTgFqU5B9qmr+x
+ f+zjiVUAoud/PZWI/Qgg44ROY9KadokP+5IzHyq6VHFqwPa0KhHzg+5n8P6T1386t5yRsy7jdAD
+ YsknfdRIfCvU2LhwE4anG/aBwcQ2PYEntt5xuH4m4+woeiFPk5iEG1Gd1XgOYT71hIlc/tjMztm
+ e99SbZKHcO4lnJ4n369hFEmgUrX1q8fj7joAuY2BdYWq9dNtzvQKt8ZA1fn9/Qgt5GSwfbTdtLN
+ 5cY9hTrX/LA3F21twWxtvkczFQg8D+NTGvW+j8+o6UUurPJ9iX8867TUVu43AVecgbaBQdXSUX2
+ MO2ig9hX0Ug==
+X-Received: by 2002:a17:90b:2dc4:b0:38f:bbc:6a0f with SMTP id
+ 98e67ed59e1d1-38fbc3ff292mr11345848a91.1.1785805378561; Mon, 03 Aug 2026
+ 18:02:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260803180700.367388-1-stefanha@redhat.com>
+ <CAJSP0QVzgmN1uBmB+9Bj1GqYfcW0iGq2E0Qg9JTuLKe1+5+-Qg@mail.gmail.com>
+In-Reply-To: <CAJSP0QVzgmN1uBmB+9Bj1GqYfcW0iGq2E0Qg9JTuLKe1+5+-Qg@mail.gmail.com>
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Date: Tue, 4 Aug 2026 10:02:46 +0900
+X-Gm-Features: AUfX_mz_5l51cLN0xKdXCy-JdXrjVujENW3pTa_2hH2CK0KmDH_VgI8QJxpEK-Y
+Message-ID: <CAEDrbUYt5-ue4qz+brByixSYsVKqVzYgNPjXZywa0KpcKJ+L3w@mail.gmail.com>
+Subject: Re: [PATCH] tests/docker: use stable URLs for zlib tarballs
+To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000003a2b5e06582e37f0"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,60 +119,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im.dev@gmail.com>
+--0000000000003a2b5e06582e37f0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-nvme_ctrl_reset() freed every SQ/CQ right after nvme_ns_drain(), which
-only waits out requests on a per-namespace BlockBackend. That is safe
-as long as the guest first tore down I/O queues gracefully (Delete
-I/O SQ/CQ), since nvme_del_sq() already cancels and waits for
-anything left on a queue before freeing it.
+Hi Stefan,
 
-A reset that happens without that graceful sequence first (e.g. an
-abrupt/asynchronous controller reset) can still have commands
-inflight on blk_aio_*. Freeing sq/cq before those complete leaves
-their completion callbacks (nvme_rw_cb() and friends) to run against
-already-freed NvmeRequest/NvmeSQueue/NvmeCQueue memory via
-nvme_enqueue_req_completion(), causing a use-after-free/segfault.
+> The tarballs at https://zlib.net/zlib-X.Y.Z.tar.xz become unavailable
+> when a new release is made. This breaks the emsdk-wasm64-cross.docker
+> file that fetches the tarball and builds zlib from source.
+>
+> There is actually an archive available with a stable URL. Use that
+> instead. This does require switching from xz to gzip since xz tarballs
+> are not available in the archive.
+>
+> The upshot is that the emsdk-wasm64-cross Docker image build will
+> continue working into the future without causing CI breakage when the
+> zlib project makes a new release.
+>
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+> v2:
+> - Fix "bzip2 to gzip since bzip2" typo. It should have been xz instead
+>   of bzip2. [danpb]
+>
+>  tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> index c04a741b0e5..4f26ce7a269 100644
+> --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> +++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> @@ -56,8 +56,8 @@ EOF
+>  FROM build-base AS zlib-dev
+>  ARG ZLIB_VERSION
+>  RUN mkdir -p /zlib
+> -RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
+> -    tar xJC /zlib --strip-components=3D1
+> +RUN curl -Ls https://zlib.net/fossils/zlib-$ZLIB_VERSION.tar.gz | \
+> +    tar xzC /zlib --strip-components=3D1
+>  WORKDIR /zlib
+>  RUN emconfigure ./configure --prefix=3D$TARGET --static
+>  RUN emmake make install -j$(nproc)
 
-Run nvme_sq_cancel_inflight() over every queue in nvme_ctrl_reset()
-before the free loops, so no in-flight blk_aio_* callback can fire
-after sq/cq memory is freed.
+Thank you for the fix.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3398
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3883
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4068
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4072
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e355c256a561..8461b6fbdeae 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8040,6 +8040,18 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-         nvme_ns_drain(ns);
-     }
- 
-+    /*
-+     * Cancel and wait out every inflight command on every queue first. A
-+     * reset is not required to be preceded by the guest's graceful
-+     * Delete I/O SQ/CQ sequence, so sq/cq must not be freed below while a
-+     * blk_aio_* completion for them could still be in flight.
-+     */
-+    for (i = 0; i < n->num_queues; i++) {
-+        if (n->sq[i] != NULL) {
-+            nvme_sq_cancel_inflight(n->sq[i], NVME_CMD_ABORT_SQ_DEL);
-+        }
-+    }
-+
-     for (i = 0; i < n->num_queues; i++) {
-         if (n->sq[i] != NULL) {
-             nvme_free_sq(n->sq[i], n);
--- 
-2.53.0
+Regards,
+Kohei Tokunaga
 
+--0000000000003a2b5e06582e37f0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Stefan,<br><br>&gt; The tarballs at <a=
+ href=3D"https://zlib.net/zlib-X.Y.Z.tar.xz">https://zlib.net/zlib-X.Y.Z.ta=
+r.xz</a> become unavailable<br>&gt; when a new release is made. This breaks=
+ the emsdk-wasm64-cross.docker<br>&gt; file that fetches the tarball and bu=
+ilds zlib from source.<br>&gt; <br>&gt; There is actually an archive availa=
+ble with a stable URL. Use that<br>&gt; instead. This does require switchin=
+g from xz to gzip since xz tarballs<br>&gt; are not available in the archiv=
+e.<br>&gt; <br>&gt; The upshot is that the emsdk-wasm64-cross Docker image =
+build will<br>&gt; continue working into the future without causing CI brea=
+kage when the<br>&gt; zlib project makes a new release.<br>&gt; <br>&gt; Re=
+ported-by: Michael Tokarev &lt;<a href=3D"mailto:mjt@tls.msk.ru">mjt@tls.ms=
+k.ru</a>&gt;<br>&gt; Suggested-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"m=
+ailto:berrange@redhat.com">berrange@redhat.com</a>&gt;<br>&gt; Reviewed-by:=
+ Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrang=
+e@redhat.com</a>&gt;<br>&gt; Signed-off-by: Stefan Hajnoczi &lt;<a href=3D"=
+mailto:stefanha@redhat.com">stefanha@redhat.com</a>&gt;<br>&gt; ---<br>&gt;=
+ v2:<br>&gt; - Fix &quot;bzip2 to gzip since bzip2&quot; typo. It should ha=
+ve been xz instead<br>&gt; =C2=A0 of bzip2. [danpb]<br>&gt; <br>&gt; =C2=A0=
+tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 4 ++--<br>&gt; =C2=A01=
+ file changed, 2 insertions(+), 2 deletions(-)<br>&gt; <br>&gt; diff --git =
+a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerf=
+iles/emsdk-wasm64-cross.docker<br>&gt; index c04a741b0e5..4f26ce7a269 10064=
+4<br>&gt; --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker<br>&gt; =
++++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker<br>&gt; @@ -56,8 +=
+56,8 @@ EOF<br>&gt; =C2=A0FROM build-base AS zlib-dev<br>&gt; =C2=A0ARG ZLI=
+B_VERSION<br>&gt; =C2=A0RUN mkdir -p /zlib<br>&gt; -RUN curl -Ls <a href=3D=
+"https://zlib.net/zlib-$ZLIB_VERSION.tar.xz">https://zlib.net/zlib-$ZLIB_VE=
+RSION.tar.xz</a> | \<br>&gt; - =C2=A0 =C2=A0tar xJC /zlib --strip-component=
+s=3D1<br>&gt; +RUN curl -Ls <a href=3D"https://zlib.net/fossils/zlib-$ZLIB_=
+VERSION.tar.gz">https://zlib.net/fossils/zlib-$ZLIB_VERSION.tar.gz</a> | \<=
+br>&gt; + =C2=A0 =C2=A0tar xzC /zlib --strip-components=3D1<br>&gt; =C2=A0W=
+ORKDIR /zlib<br>&gt; =C2=A0RUN emconfigure ./configure --prefix=3D$TARGET -=
+-static<br>&gt; =C2=A0RUN emmake make install -j$(nproc)<br><br>Thank you f=
+or the fix.<br><br>Reviewed-by: Kohei Tokunaga &lt;<a href=3D"mailto:ktokun=
+aga.mail@gmail.com">ktokunaga.mail@gmail.com</a>&gt;<br><br>Regards,<br>Koh=
+ei Tokunaga<br><br></div></div>
+
+--0000000000003a2b5e06582e37f0--
 
