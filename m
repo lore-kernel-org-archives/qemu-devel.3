@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BADC5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BB7C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr9Rs-0001Pc-TR; Tue, 04 Aug 2026 03:20:28 -0400
+	id 1wr9S7-0001zM-Cv; Tue, 04 Aug 2026 03:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9Rr-0001FF-1i
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:27 -0400
+ id 1wr9Ry-0001tp-0q
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9Rp-0001Tv-AI
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:26 -0400
+ id 1wr9Rw-0001UK-A2
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785828024;
+ s=mimecast20190719; t=1785828031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t13M/Czg5AHMi5OAxhOkC6Djts0zl5Cej5RLjx8EdFY=;
- b=ZQzE3tP0jXNTPozns09LnFoU6k7fqP1+m+1H0NTOQYpn5AspCnOQ0CzFmpnnDUQVvy8CG1
- KlYsyYA+XopDmf/yLRV4M5uv5wdwfZsQnAOLhmfOg01Kb22r7L2KUZRJ0c8G8vBEHb02yq
- FVr7JA6fOhg/oisNNAB/IwlgPctwotU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JBuZeH/hyIo3fbh1PQfwbL8P51yWnlk8B0Vwt9xpvUY=;
+ b=G5Az2VB5MIeLUz208DoE2W1YV+Y8nsQd4LfXV1W8s8nkDCuBiwQepbqJi2siErYOVrwRTD
+ qplgf73nXT5y8AgufVnr8C226Sj9bgiSBmNyS+2r996npFu35i/IWU4Zs3vf3IAmWLcxTb
+ Qwct1MpCki0s09OtBffCDG50TFfG4JQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-tTevSrokPwKncktPVLUFMw-1; Tue,
- 04 Aug 2026 03:20:18 -0400
-X-MC-Unique: tTevSrokPwKncktPVLUFMw-1
-X-Mimecast-MFC-AGG-ID: tTevSrokPwKncktPVLUFMw_1785828017
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-V2GN3pU_MJuAXzrr380JHQ-1; Tue,
+ 04 Aug 2026 03:20:28 -0400
+X-MC-Unique: V2GN3pU_MJuAXzrr380JHQ-1
+X-Mimecast-MFC-AGG-ID: V2GN3pU_MJuAXzrr380JHQ_1785828027
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FD3C1956096
- for <qemu-devel@nongnu.org>; Tue,  4 Aug 2026 07:20:17 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6848D195608F; Tue,  4 Aug 2026 07:20:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 189B3195608E; Tue,  4 Aug 2026 07:20:09 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 14B6E300019F; Tue,  4 Aug 2026 07:20:22 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 04 Aug 2026 11:18:52 +0400
-Subject: [GIT PULL 3/9] vhost-user-gpu: fix integer overflow in buffer
- allocation
+Date: Tue, 04 Aug 2026 11:18:53 +0400
+Subject: [GIT PULL 4/9] hw/display/virtio-gpu: fix offset wraparound in
+ scanout_blob_to_fb
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260804-fix-v1-3-0c2be5390809@redhat.com>
+Message-Id: <20260804-fix-v1-4-0c2be5390809@redhat.com>
 References: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 In-Reply-To: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3614;
+Cc: stefanha@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2466;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=uJQIwrzvbpkpuaroaHRi5aMKPCT+/mMRyL4Qh11QYyg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdLGljg4fi2alpWuoAkCr+K86gyCbys3luU
- Zq4mxXUcXCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
- 5fn+EACnXui2/m4AHPCropVSoD3dgTb3oydDi7qPnEIhumEoZ5INPKc/zdKFvcOUWXl6zsh6jlC
- 7T/L3GZrWoF5AyW2B4Vgk47Cty+X9f25azPd/DnD+AWGl32/ZrR2pI2FsUxY7o1Oqld7Nyi1KMV
- q0o05c7niRQ5NpbGCzYmiKQr537hLC5VhnzOadvvPyCc6kJk9/zHrzIdp1G4irgpTb6FKKPV9sJ
- 45OOOYxDtJZ5j9AmPmarmrD7v7guZ4wLgTXPen0xJzyqiVNl6+Hsd7R2OxNY2TrboJRupbCpgBn
- 9BRD6S26avpE9VCGa28axJxcaENAmz0gPJJahXa/O6OVRJLYHdup1AZWFLfTiSQz/nn6R6v+pJK
- qLXtcwjUzcOwK1ELkd5YkXwlRpvRenOikGrw9y8vGEnzRfxyZFLfOymr6C33JisSfqVXTxAS2I7
- Yucnv9pvnpUt2ATrtVhaJyK0ZwWFAUw+UPD6yG+bLE7FO8GfMqwpuKr6oZ/R8u+r5d79qlrz2mx
- cDgH1ERNYsICRZcYbzcSbNbug2WOHxm6ter0w/9xR5Ieg36G3kVAjXYqzhlygMFexPrGYrMf00A
- M+t9rJMFfdlB0s7AEfqGybfRMBiVHJG2VuvGG7GLcUGd4rfJwZNZGRN0rJy5elvYWpvhQqv7cXn
- +64oACdg+f7kv1w==
+ bh=FfMPC0vcyAbfCBx4BJKAkGllsY7YFmvTU8YJxb5Uii8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdknx46SRrL+go+Q6GJlcGkJAZrSCEH0sbE
+ PovTyIPX/yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
+ 5XvoD/9qE/VNgE8DJ8jkyKIbgetYIt+jNWhdxAuhEh8nCkV/Qir53lxoT/0AEsBkEgM5d1Bq32W
+ evHhqGVJNyoS8MFc6rKYiUOFtlibhpLBYTK94oRtDCegJCD36eQAii9zbwONlgEHP5g/OB86ZE2
+ FgE+ZeiDuCqx7Bo0HWPr3IUe54NDbdE/Vb8/cid/1k2oaLBhQn5Snpf7X8+ZDgMf8djBnVvieeN
+ DutxeH4NmwUJpbYSZifqLcAuI5CqrjLO3plr3QKf8Rp42MuqQBSku2Ixqf034icQ5csUd12cf4U
+ JLZzP3rpe6Xg965zrYxkqMynfYZ5N3DMwn5Jg4oc6CLQMsstNhtAaJutzmIMzNXGLPfVZ9CrO8J
+ DurQOP59iwzafy6olKgpWabmSUkaxcYm/WORek/7bMt+J+eiV9BYLt8tksR6db2iGN5BvO/bv83
+ jt8LrmLAKCz+D4KUGvZLCVd0XEnjxKDXr5UTL5Jrzh34iquq4yzzfzAQhSYZXbdxze4eK2UzZvi
+ 7OeSRSQ/pwbKGKvkG2DbOFUf3oczy7bOT18J/7T8hdB4TmufyHLMvhmrS3qtG3kCdYbriIG8a9x
+ s4lCYKAtNLwGbmVGNnhNQaLoAJC5qxKhZDFyqmUIpMnEwenjO2ExcUBmSDW+qo8Bk8h0VZGBM4V
+ sjl+PJ2UP+7XI+w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,90 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A malicious guest can trigger a heap buffer overflow in the
-vhost-user-gpu backend by sending a VIRTIO_GPU_CMD_RESOURCE_CREATE_2D
-with large width and height values (e.g. 65537x65537). The allocation
-size width * height * 4 silently wraps in uint32_t arithmetic,
-resulting in a much smaller allocation than expected. Subsequent
-VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D writes past the heap buffer.
+virtio_gpu_scanout_blob_to_fb() computes the framebuffer offset from
+guest-controlled offsets[0], r.x, r.y and stride using uint32_t
+arithmetic. When the sum exceeds UINT32_MAX, silent wraparound lets
+the guest steer the scanout to an arbitrary in-bounds region of the
+blob instead of the intended rectangle.
 
-The in-tree virtio-gpu device (hw/display/virtio-gpu.c) already handles
-this via calc_image_hostmem() with uint64_t arithmetic and an overflow
-check. Apply the same approach to the vhost-user-gpu contrib backend:
+Compute the offset in uint64_t, reject values exceeding UINT32_MAX
+(the width of fb->offset), and only store into fb->offset once both
+range checks pass.
 
-- Add an overflow check in vugbm_buffer_create() rejecting dimensions
-  where width * height * 4 exceeds UINT32_MAX
-- Promote the size arithmetic to uint64_t in mem_alloc_bo() and
-  udmabuf_get_size()
-- Check the return value of vugbm_buffer_create() in
-  vg_resource_create_2d(), which was previously ignored
+("[PATCH] hw/display/virtio-gpu: Remove the bytes_pp field")
 
-Fixes: CVE-2026-15264
-Reported-by: "Vulnerability Report" <vr@darknavy.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3940
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260710134720.2317856-1-marcandre.lureau@redhat.com>
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3871
+Based-on: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+Reported-by: Cyber_black <Cyberblackk@proton.me>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725122734.1775774-1-marcandre.lureau@redhat.com>
 ---
- contrib/vhost-user-gpu/vhost-user-gpu.c |  8 +++++++-
- contrib/vhost-user-gpu/vugbm.c          | 11 +++++++++--
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index bb41758e3454..ee9858c397ce 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -388,7 +388,13 @@ vg_resource_create_2d(VuGpu *g,
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-         return;
-     }
--    vugbm_buffer_create(&res->buffer, &g->gdev, c2d.width, c2d.height);
-+    if (!vugbm_buffer_create(&res->buffer, &g->gdev, c2d.width, c2d.height)) {
-+        g_critical("%s: buffer creation failed %d %d %d",
-+                   __func__, c2d.resource_id, c2d.width, c2d.height);
-+        g_free(res);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     res->image = pixman_image_create_bits(pformat,
-                                           c2d.width,
-                                           c2d.height,
-diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-index 503d0a4566f8..710d54529779 100644
---- a/contrib/vhost-user-gpu/vugbm.c
-+++ b/contrib/vhost-user-gpu/vugbm.c
-@@ -13,7 +13,7 @@
- static bool
- mem_alloc_bo(struct vugbm_buffer *buf)
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 0206910cc377..51592b49c21e 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -777,7 +777,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+                                    struct virtio_gpu_set_scanout_blob *ss,
+                                    uint64_t blob_size)
  {
--    buf->mmap = g_malloc(buf->width * buf->height * 4);
-+    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-     buf->stride = buf->width * 4;
+-    uint64_t fbend;
++    uint64_t fbend, offset;
+     uint32_t bytes_pp;
+ 
+     fb->format = virtio_gpu_get_pixman_format(ss->format);
+@@ -807,18 +807,20 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+         return false;
+     }
+ 
+-    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
++    offset = (uint64_t)ss->offsets[0] + (uint64_t)ss->r.x * bytes_pp +
++             (uint64_t)ss->r.y * fb->stride;
+ 
+-    fbend = fb->offset;
+-    fbend += (uint64_t) fb->stride * ss->r.height;
++    fbend = offset + (uint64_t)fb->stride * ss->r.height;
+ 
+-    if (fbend > blob_size) {
++    if (offset > UINT32_MAX || fbend > blob_size) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: fb end out of range\n",
++                      "%s: invalid fb bounds\n",
+                       __func__);
+         return false;
+     }
+ 
++    fb->offset = offset;
++
      return true;
  }
-@@ -53,7 +53,8 @@ struct udmabuf_create {
- static size_t
- udmabuf_get_size(struct vugbm_buffer *buf)
- {
--    return ROUND_UP(buf->width * buf->height * 4, qemu_real_host_page_size());
-+    return ROUND_UP((uint64_t)buf->width * buf->height * 4,
-+                    qemu_real_host_page_size());
- }
  
- static bool
-@@ -293,6 +294,12 @@ bool
- vugbm_buffer_create(struct vugbm_buffer *buffer, struct vugbm_device *dev,
-                     uint32_t width, uint32_t height)
- {
-+    uint64_t size = (uint64_t)width * height * 4;
-+    if (size > UINT32_MAX) {
-+        g_warning("buffer dimensions too large: %ux%u", width, height);
-+        return false;
-+    }
-+
-     buffer->dev = dev;
-     buffer->width = width;
-     buffer->height = height;
 
 -- 
 2.55.0
