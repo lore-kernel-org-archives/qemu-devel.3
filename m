@@ -4,113 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7848BC5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F83C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr9aK-0005nr-Pv; Tue, 04 Aug 2026 03:29:12 -0400
+	id 1wr9bT-0006MY-1S; Tue, 04 Aug 2026 03:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wr9aJ-0005nO-U6
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:29:11 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wr9aH-00022q-Sl
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:29:11 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-84862b0d5f8so3629582b3a.3
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 00:29:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785828548; cv=none;
- d=google.com; s=arc-20260327;
- b=Mk0mLYp9jyBlcFG/Ara/wF7ARBF8AVnHfPxB3K0xp8TU5TfohV5EDNkbPIH2gFZhTB
- V6TOhpSz0QygjVzqVQ9NTQINzpGARSghrfM2R32GmWJPhG78TFA8zcaf7IEBYLcYq4yz
- 1s7kcMcb0WgZqreOMwuFtPCZIuLILGuc+hdbxQCWSUCsTReJZT0r4NB6Xv0GUjbT7p0X
- 3YqC6SxQn1uAMuoYEoWbYdcyE8y88BDrUBd3vE7xcg4nLYaAxWb1fHSGkYKDyGcwiNFV
- go1+/72yTFI/MmydbdfthOR6oGK9bR1tg7r38td6o6QUy5EdhlSBqobG3VE+KAjRWFGk
- ez8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=V0DJXecxi3oQ3rey5GamuVRAfAYOv70e2YKWCtfrL4Y=;
- fh=lg/v0/3wnAa9ceqIkFU7669+4Dmh84nZtHnS4FvNR98=;
- b=HxrCUS1NsJ1qWuYnEOF+QMt7Ban+5wb8YaLx8fOTsz0sevbM7NhnLJ+PA1buyN86Yu
- TQ+j5mOKGc/LnZeHODhQPkS8XG70jdHNE4O55AEDt/L4k2NpfhBAJj0k4DcM8mWi3T4N
- TKYvWroLNVf4ZpuTeDh+aO7dU4efa5hGZXggtUv46ENzB7lZQ04a/DZ8d9UPBkty+1+v
- BAMAblC4UN7XhttV1CV0XTvAN4vQZgK25pO4Y+ONAVzOz/F+C3v2gmPmXhXyHrxpO6ks
- cWW2XYox2TS194qOIQmK1oOwgF1uKAM2oTbMFNvMAxLqvUF8HEwthcgBYi+5PYaSTH4t
- 3rRA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785828548; x=1786433348; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=V0DJXecxi3oQ3rey5GamuVRAfAYOv70e2YKWCtfrL4Y=;
- b=OiUHHyK+SqQ6vikR7nZ4BabHhado3wximMSto2czv30B5lMEsIbyQLl9mMYtNTwrlX
- xjtGW5BX9b+Pd7v9Xn+25zvFKwkC+XP342oXfe1YGaabzJtQJ7/wdJYXWQtVaTpNrM5g
- yKqIrdu1xjlYEvUq9Q5PNim7lJtR4UeNvIy0AfczFRHZVtVBwZ2WU7z6iAR3cyk0UtfS
- 41rsA77UZ0C+HCi9yzoTp8M45wwCE7iONHnlUhMVYaE032B3uve0ze6ChvcINm/8GPYd
- 401Q381Fcv5wiwvMjC+8D2OhvkFFW5ib4Lwv9oWFqpuhBYJGvU3vewaybmBsfa5NRCCc
- eVCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785828548; x=1786433348;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=V0DJXecxi3oQ3rey5GamuVRAfAYOv70e2YKWCtfrL4Y=;
- b=T7VmU+8YZQ4X0UZqNblUb24FwfeCIzimbMP/KrLwnGv2hVJpqIz5w3bWCzYLmt/K5T
- P3XKrXeSvACCO3Gtg86NIfBfGVZjLL7ir8+1WdsieD549k09UbNqI9Q90HAJ3tplOJOe
- M8TwaB8d6ohq4BSrnC0oAerd6jtlXxobK6ylU6Amr3vv21QVTKlJGTCWztwjWBLpmnOC
- x0LBtmJHpoX2yK2w/9UelS+s5c3QVOrMwHuMyJgrEjH6e7ZaBWzqcHbKgGjFVqZm35fd
- alNFTJy//3e7zBcBoz9mpLevZmbUd11+8dYCV1a1ZbYVt8WZXQe93lRrMcEQ9yiQqvDm
- uNcA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoMHuuNt98EdX1grd9ntFnIdZCyj1sC12bLuOGNRet+cUs3OWVY9+92O2SAqiEiATsol5jKe9+AAqP9@nongnu.org
-X-Gm-Message-State: AOJu0YzVcLhG/QZRwasMiprPTYECgGahuNzGY6DVYNrVe3bN20CH0nN6
- 6wRAzsXzEOiGY5tKH9s+rvOye3uJ8p1wt/BgEvDmtqSgSMXnsXUrtjDQ5rnKCNXOeJ/bEPKhw2p
- TsibbJTPU/s/linJ0NM8UtctRSGiSzB4=
-X-Gm-Gg: AR+sD12rLqPx977/iE/HgRSevYTG7iEs7Tkb56jQ1b6WcJcinRCwcegUTnXqlYFvTMO
- Ml+n8i2YGlxMUBPxX+foZZDhaWZF7zgcRAVXTytyNJmhXkxQc9kjJU31tVHgbS/eMqQnRtx8v8h
- q4aj6HR8ct6qc4X2qZ7A3RLASOITm3TbE5wNasmBSTCyZy3QwNu/vWXttii9pRbUO8XebUK1pkW
- hCsmQgHV0b94eRlzmaiEFodcAhG1TqDeVsehQVzZ29ukdN+B84jri3Uv8HCHVVhj2EwRMXJyE51
- ZhdhagHqLnO+AymN3Ek4ThKvlnDZf/EOeJvWqjdaVXz3LxeZoWrAntIAtM0/tBAIsSEdpu+wjsP
- 1
-X-Received: by 2002:a05:6a20:9e0e:b0:3bf:6237:4d4a with SMTP id
- adf61e73a8af0-3c92a7fc9a4mr14056196637.24.1785828548333; Tue, 04 Aug 2026
- 00:29:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1wr9bP-0006LS-8P; Tue, 04 Aug 2026 03:30:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1wr9bN-000279-CE; Tue, 04 Aug 2026 03:30:18 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6741J4at3633768; Tue, 4 Aug 2026 07:30:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=VAzdkY0FhVatErfRtKHtfpFZ4GJe9P
+ Ao5SAMhtPg3dk=; b=qDdKuz2YpnsKMpYjBNQnYWLGfNgvYOZJzdnKJCFn9UxpeI
+ 9oh/+SH8CSxLn4969LJx0Zh1n4q+nUi1Ju9TDxg4rkCc7VKI+RBOrtllNTQ/iJYS
+ aA18EkOQSj77+CN0rn8VXghPlvWHg/GqE+9EbRmMJ1HfNI38X8/ZdOu7trDjwsn2
+ VUrHYCwzXwT7Dtsha+A39PsUWbuWP9bP8gN4Jdr/ocrpJahOi5mZzKzCVFsxp7pk
+ k87cGGcKmilsAFyQTs7Vmo/VsezG2AepniGV1ciyCR2yqw5KEs6twW1gkieW1ClF
+ oHQvP3xSw+5li6C4frqCEHqepWh33F9DWXnWaQAQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8a3vp83-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Aug 2026 07:30:13 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6747QMbN016408;
+ Tue, 4 Aug 2026 07:30:12 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsugw11n5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 04 Aug 2026 07:30:12 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6747U8Rq31785304
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 4 Aug 2026 07:30:08 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0AD5F2004D;
+ Tue,  4 Aug 2026 07:30:08 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA51420043;
+ Tue,  4 Aug 2026 07:30:03 +0000 (GMT)
+Received: from Unknown_32:98:3c:96:ca:91 (unknown [9.39.29.19])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue,  4 Aug 2026 07:30:03 +0000 (GMT)
+Date: Tue, 4 Aug 2026 13:00:00 +0530
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: Amit Machhiwal <amachhiw@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 0/3] ppc/kvm: Handle CPU compatibility mode correctly
+ for nested guests
+Message-ID: <anGU-FnmEcxvXOsZ@Unknown_32:98:3c:96:ca:91>
+References: <20260701052341.62289-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
- <e4313c26-fff3-470b-ab9e-8b90cdc98a43@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <e4313c26-fff3-470b-ab9e-8b90cdc98a43@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 4 Aug 2026 11:28:55 +0400
-X-Gm-Features: AUfX_mwq1tWUhVscYoPNw5vp5tKRoFZiru3WselZx-fWN36GS2GW20EIsZkb7S4
-Message-ID: <CAJ+F1CK-cfC0zfZEEkdhuVdNwsuLQ9tLqAts-R9==voGVOyMBg@mail.gmail.com>
-Subject: Re: [PATCH v3] virtio-gpu: reject requests with short/truncated
- control headers
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Ankur Saini <ankur98saini@gmail.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.248,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260701052341.62289-1-amachhiw@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=E6P9Y6dl c=1 sm=1 tr=0 ts=6a719505 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=B_FdNE4XmUi8kz3hM70A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: 3vyM7DjiShDHmGkLCUf6-rgjguqOm3Jn
+X-Proofpoint-GUID: Tc8di1H-Yy-fJ89SG5CDPY3qWhzA9YJu
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDA1NyBTYWx0ZWRfXyZKodADTpNu0
+ GSrOHIhV1Moi6rNX46AcbhWQrMBUg5oM1Pk2dG4GR7ZGTcyVUlxJyOSJmvyCLM6rm43Wkhzsu7p
+ Nx6X6wLXHuK00x4oktxB5eRyFwZiRao=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDA1NyBTYWx0ZWRfX4Ci6mcPP5Fb/
+ ffjDtXbeG2g+BQS72lPCMDsg3Svt7rl8hywT4v6g1TPVuHSOCboZLV6QXw+xnDw0N5b+L1AD2Bl
+ A7r0Uhi1/RFaOdj2rNqjATsffamK5MnSWhozd/BG/kOEJJKATLFADDNIUAWK5Ggf7IRpNSok1fw
+ /YkpEfW1Fy61IjgxPz4dXsrr+zckspkd7MbGLvluOEM88ojT4wshW/eEVGVN4ejel1i7LX4w3o2
+ HoedvijwTZlcvitaV5R3SlZnemTNWbXiJINQCMAy66xD4bC7M0olTTH0rFJeZ8FlL4l+aivV0//
+ y2ZA/1yoAAYe9c6CS8BJLzxQboAH19kGtb5Rrr5kElBvljecrl85cVfLutkkKQAsJ4eAH5t/cjB
+ KPFAQ3dpLKw9I4QO/iSTOEeySOI2eGrKimSs8RmzXMkvD9RQ4bH3e8qLtSuSKr0gxJ7t2K8WBCh
+ 0+tDp64uhOKD8/F7N+g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-04_01,2026-08-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608040057
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,149 +126,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+I tested this series with different compat mode settings for KVM on LPAR
+and KVM on PowerNV.
 
-On Tue, Aug 4, 2026 at 9:59=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> On 2026/08/04 2:09, Ankur Saini wrote:
-> > A short control request can leave command data partially initialized.
-> > For the common header, guest-controlled flags can then cause stale fenc=
-e
-> > metadata to be returned to the guest.
-> >
-> > The command fill helpers detect a short copy but only log and return,
-> > leaving the malformed request without an error or completion. Make
-> > VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete th=
-e
-> > request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the sa=
-me
-> > error through the existing vhost-user-gpu dispatcher. This also rejects
-> > truncated type-specific commands.
->
-> One small correction: this says the malformed request is left without
-> completion, but virtio_gpu_simple_process_cmd() and vg_process_cmd()
-> actually complete them, though its response type is
-> VIRTIO_GPU_RESP_OK_NODATA.
->
-> With that addressed,
->
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
 
-I queued this patch and updated the commit message
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
->
-> Regards,
-> Akihiko Odaki
->
-> >
-> > The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
-> > clear it and complete the request directly when that copy is short.
-> >
-> > Fixes: CVE-2026-18054
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
-> > Reported-by: Ankur Saini <ankur98saini@gmail.com>
-> > Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> > Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
-> > ---
-> > Changes in v3:
-> > - Handle short copies in VIRTIO_GPU_FILL_CMD() and VUGPU_FILL_CMD(),
-> >    also rejecting truncated type-specific commands.
-> > - Clear partially copied QEMU command data before completing the error.
-> > - Keep vhost-user-gpu's explicit common-header check and drop the
-> >    redundant virtio_gpu_process_cmdq() check.
-> > - Rebase onto current master.
-> > - Link to v2: https://lore.kernel.org/qemu-devel/20260729-virtio-gpu-sh=
-ort-header-v2-1-18036a97219a@gmail.com
-> >
-> > Changes in v2:
-> > - Also reject short/truncated control headers in vhost-user-gpu.
-> > - Expand the commit message to describe both affected paths.
-> > - Link to v1: https://lore.kernel.org/qemu-devel/20260728-virtio-gpu-sh=
-ort-header-v1-1-af19a00b100d@gmail.com
-> > ---
-> >   contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
-> >   contrib/vhost-user-gpu/vugpu.h          |  1 +
-> >   include/hw/virtio/virtio-gpu.h          |  3 +++
-> >   3 files changed, 16 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-us=
-er-gpu/vhost-user-gpu.c
-> > index bb41758e34..8149834745 100644
-> > --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-> > +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-> > @@ -924,16 +924,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-> >           if (len !=3D sizeof(cmd->cmd_hdr)) {
-> >               g_warning("%s: command size incorrect %zu vs %zu\n",
-> >                         __func__, len, sizeof(cmd->cmd_hdr));
-> > -        }
-> > -
-> > -        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-> > -        g_debug("%d %s\n", cmd->cmd_hdr.type,
-> > -                vg_cmd_to_string(cmd->cmd_hdr.type));
-> > -
-> > -        if (vg->virgl) {
-> > -            vg_virgl_process_cmd(vg, cmd);
-> > +            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-> > +            vg_ctrl_response_nodata(
-> > +                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-> >           } else {
-> > -            vg_process_cmd(vg, cmd);
-> > +            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-> > +            g_debug("%d %s\n", cmd->cmd_hdr.type,
-> > +                    vg_cmd_to_string(cmd->cmd_hdr.type));
-> > +
-> > +            if (vg->virgl) {
-> > +                vg_virgl_process_cmd(vg, cmd);
-> > +            } else {
-> > +                vg_process_cmd(vg, cmd);
-> > +            }
-> >           }
-> >
-> >           if (cmd->state !=3D VG_CMD_STATE_FINISHED) {
-> > diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vu=
-gpu.h
-> > index 2374eb90cb..aaf2870cb2 100644
-> > --- a/contrib/vhost-user-gpu/vugpu.h
-> > +++ b/contrib/vhost-user-gpu/vugpu.h
-> > @@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
-> >           if (vugpufillcmd_s_ !=3D sizeof(out)) {                   \
-> >               g_critical("%s: command size incorrect %zu vs %zu", \
-> >                          __func__, vugpufillcmd_s_, sizeof(out)); \
-> > +            cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
-> >               return;                                             \
-> >           }                                                       \
-> >       } while (0)
-> > diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-=
-gpu.h
-> > index 2f60c72078..f965defa6b 100644
-> > --- a/include/hw/virtio/virtio-gpu.h
-> > +++ b/include/hw/virtio/virtio-gpu.h
-> > @@ -315,6 +315,9 @@ struct VirtIOGPURutabaga {
-> >               qemu_log_mask(LOG_GUEST_ERROR,                           =
-   \
-> >                             "%s: command size incorrect %zu vs %zu\n", =
-   \
-> >                             __func__, virtiogpufillcmd_s_, sizeof(out))=
-;  \
-> > +            memset(&out, 0, sizeof(out));                             =
-  \
-> > +            virtio_gpu_ctrl_response_nodata(                          =
-  \
-> > +                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);       =
-  \
-> >               return;                                                  =
-   \
-> >           }                                                            =
-   \
-> >       } while (0)
-> >
-> > ---
-> > base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
-> > change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
-> >
-> > Best regards,
->
->
+Thanks,
+Gautam
 
