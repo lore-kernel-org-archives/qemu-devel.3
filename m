@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B168C55822
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5F8C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:23:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrGuI-0006ef-T1; Tue, 04 Aug 2026 11:18:18 -0400
+	id 1wrGyt-0001b7-DU; Tue, 04 Aug 2026 11:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGuD-0006ds-9f
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:13 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ id 1wrGyr-0001aY-U4
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:23:01 -0400
+Received: from mail-swedencentralazon11023103.outbound.protection.outlook.com
+ ([52.101.83.103] helo=GVXPR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wrGuB-0004md-Pw
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:18:13 -0400
+ id 1wrGyq-0005Lb-Di
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:23:01 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pX/kfOmgAhYSuaWQkoVPrJPjb0bTkWlXheXzkkRstxQ6dvwqQ81Oiw/vF8BehADIgbtl5ZvHh+LHNU9GzOGprdCQz5J6JXcCFszDUYZ81cxGLFUvxW2JRSAfBS6V0G+Ar2fxG93ZYNjDUP0ugJqolQM1anCJFUOGfYY//crulV/YMwH1dfm4uCnqY7z3hljuuvC6eOcj0s8kPmnNNHDUBAVA6zOPlkvBiyzGF5YRRGxXhKX5XGTjhKG5CqX0ZFukk8KSTEljMaYv8KlSpW7zhc++Y0JW5iHQFKQimDKXy9Mr93SrkV1ejftHzfdvErI3jdE/vhfLxkzDVZwm0xX3IA==
+ b=P0eccT6+YUbX731RUBWob2siz1hu7BLjqKtAVlzH9eiJG8PbhEJvl9oJCwa8y33MA8BX3oDLYWizgarihKmaGrvNyf1fAOXB3gnzv5+SoJW+XyWqm2G81POhzrPN0bHoep0v1udukyM7/2krQ6o8rw+yf7arNTmKYZF2DTSQCmUO2u5U/U+821BDbrO73VTh/zd2lCSqyO1d+WILjlYSznjwFLZSLqe7UUpEaRjBLX0gbcnXD4qTsN9xpm0rld6TpNX2ozVncNKH4TAhURkWFt3X+Y8qxGXqWV7mn7tQfJtSIFwuQguqX61mMXpNbPpEiIbtaWbuMtRSH8QZCY+WEg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kpjDBV7Cz0re1cZiaLvg8YGfeD5P98KQfzvF2HLGiCE=;
- b=xfJaumBih13qkSOCKLINPZcONesuq7N2S2AhI2xpe7PXVS/azcaRyQMZ6l+Slco2WdTfz/ogoxPg84kY/CX7ZBTp+UvI/LW9OCuTOKxBG4szvBuS23ND43HvIEpg842NQaxap8QbVjl+BgUIpW9s0JZRJGrmhhruraZbu4TOLPVvxt+Z0INsvZGWbrbZ1opGWGXPjiGbczqe9H50qwKwhkw32veDbaPAw7hXTfDap+mI5h2yzrZ3OMumOaiwOXiBE5UGoPNwYLXW1CysHsYXgV8RVihrHfjjmcPp+4L/xGTCEhqju4d1hl6eEv9dypRReGj3bD0igoJckgiyxQjNFw==
+ bh=0JKt7Fv6D8ktmtyfDf8FIxaMiq78r4n0C8q3HHoz7ag=;
+ b=CQChImUMtEO+LQJ9m1A8SM1IJRMWzB47pE22dM13w5m+pPCcAXZbb2uvgfKItduyPGbsfhfMIKJbd74CaNIiympejYs+vNTryej+bZHGNLYvc5noAfnCq47PZhroTjFvfY0CC8Bf28qWVv8a63whMTYd8BouNThW833AJQpBQlXFNKVjRwEP126iEkTvfAOrKZ6187O2B6K4OGOMS36W0wG/AP57cbZKG8jajUQNlr0fVXiDXJRJ5wB43iyaUq6/PA5gX4C7TVEg7TQ0NJk9clv6mKHR4MrOz1U+y2YfjjYLSYepihFX+9AfY8Kpb1GYsoJvWfCBhJfq7EksX/+llw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kpjDBV7Cz0re1cZiaLvg8YGfeD5P98KQfzvF2HLGiCE=;
- b=PRNUdeVz/01caLAsu1YnPktuhcBXyDhzxxVBckgVYo/1lUcdZmQIwIf+om8JhS82azv/ouK+kCLwzCqQ4x69acLuSb37V9FOIXNMlsZKH5T10vbGUZtUQ9zP7v9iAxQELfbZl5wpxw2hj++GHUp3Amc6Z70m6BmbkcF8vO+vW/nveAOzqrDjQ2OdUuMAX8rCUcBl/L5ESIioknM27t6S9NN2+3zUlgen2u7bu1n942SWCjmXRUWHpHTkSY/BX2vGgu+EiVP0LbtpAUJ+d+8OFt0N5vDomaeqel7OvAq3Y/2p2bN3a//TcWJJ90PcUeEXCMLxrDw+r8gmEdSxbu//2w==
+ bh=0JKt7Fv6D8ktmtyfDf8FIxaMiq78r4n0C8q3HHoz7ag=;
+ b=l20DJOujEb1jhi2cQYaokIWH9V5l6OO08onqcrkc6Q2UHVn1i42xw/UCbOhTvilCTFnFxvqzC3D3XqybOj+5B6w54L6FeoJyanzqbQxIKm50DkBxoWD+yH78xD2l8x206GWJlQqkJ/meLK9ONsTmFQ5gLRuTiHOCvb1lAJNjv/S4rnAq2ciOnJYrnJyIl2dsIsU8IGhi4hiHHOkl3p5ZbFA2jr/cjFIK5NY0K6h6tX8vUTbLZ57KS0wgh7eZm0jUBCm4EkecmsuEUmsj7AQDp2GfAX31cZrYX/Khkx/ODRdnnZQDgH++his94kSwm0hkeP07gjKS+uf/gjLtOvWGLw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by PAWPR08MB10317.eurprd08.prod.outlook.com
  (2603:10a6:102:330::20) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.15; Tue, 4 Aug
- 2026 15:17:57 +0000
+ 2026 15:17:55 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0270.016; Tue, 4 Aug 2026
- 15:17:57 +0000
+ 15:17:54 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com, kwolf@redhat.com, peterx@redhat.com,
  andrey.drobyshev@virtuozzo.com
-Subject: [PATCH 7/9] scripts/qemugdb: coroutine: Handle target absence
- gracefully
-Date: Tue,  4 Aug 2026 18:17:41 +0300
-Message-ID: <20260804151743.937694-8-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH 3/9] scripts/qemugdb: coroutine: Only attempt to restore regs
+ in coredump
+Date: Tue,  4 Aug 2026 18:17:37 +0300
+Message-ID: <20260804151743.937694-4-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
 References: <20260804151743.937694-1-andrey.drobyshev@virtuozzo.com>
@@ -66,66 +66,66 @@ X-ClientProxiedBy: VI1PR09CA0148.eurprd09.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAWPR08MB10317:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7f25e7fb-701d-49ea-2883-08def23b9061
+X-MS-Office365-Filtering-Correlation-Id: ea9980d7-64ce-4a82-b7c6-08def23b8ec1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|52116014|1800799024|376014|23010399003|366016|38350700014|6133799003|5023799004|10067099003|56012099006|3023799007|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 4Qz4O1pWrMU6QA1tEsn6+2if7nu9TSb5oOmcEVX7MBdzPENyK+uWGhiSk5Ut0p/Zc8Tij3cKu27pcKKwHcqeXJQHQbfqBJ0gAKCeW5Bn+oEXJxeCV4PUHY6IoZmrwN4iyDD84B6mzWxtQ+fQP3mIC0n3F2HkM7ie1JFMDOqZ2Uhwx8GAq4xjrUUjJik8CWXG3aQekooUPr5QFIhJ1wCD0H/crZ1b2feA/zKEWvHc0uYkdhH+sNfh5FLS3idTd6Pl2Ph8l461Sjozjzj+EFmASgXat95uhVsU1AuFowhruAcXmPjp0ddoUvvV2jLurXszCsIHoWKRE9CU4hoM0tTT4s4gRQtQzB+y4UycAp+jTVmoXjKzex4RSGbtXIPY5H8i9rVgQu0IcjtxNABQ9EA/kbV4d8MWzneD6yeoeS7cS/bLSKBfjHl97mfduXvmaib7czpEY/Bpfkp3vBWzCXaTJPrfH1oJIs1JwDK8RxFAHSuGdMmQJyknvYs3A9ZfvfxZ9TIGkGfguc0LJya8JigFVuxgiYqe7FGiZwK+fCemfIJ4OuN+jJ/l8Sp8CURyXT3BBnWy93CXB1Tn8OPfZIpUVmf9JuEVzfLsExral+3DM37T7nD+f/2YcIsisAz8FidYPxk0C0vNWzMlJq5PLXUkLUZy613AXAqBjTF2K0sjmBbzoUTW36NOlE3o66OTp95zikek3uvGgUT5f370Qj53UzCbXXweV09W4PQhzTcQD8o=
+X-Microsoft-Antispam-Message-Info: KmGXX9sTFCoLkaEpGpannaMugpSiKQdnOroiE05191K0jBa07quLgf8LoWL8b+67XSraqiFjOcRYFzcy5yi7XoJeS1lmdREbVBmdeBEGApATzUs3aarYot2NQHyZRtK7WE1h81cjHQGpTwmTpcnTuxMfpY787JLbtOrrhlUtFtqa4/cSj9u/oQiTBmKBbD9KBo5vcpvl4AsrnOadheD0gXcDtaY9UUDinYtLoAW+WrL9/d3aoLv0sGjPrdlzxixwffiSJd5nAm0APThqlQ8Nevb+P1wPk4IoOTRnWVZ5P5zDzAvCOEE4j0eFHqgDQC+PCtDWRC5i333gbO+pEb7QcNIem3eFUnQqh6CuW4Aw2ttwQkFcBZc68I5NI3V8paenuCQ/UC8OMTHVu96xoEizY4mhkHhnQmnHHZm9ge7YGHkZ5/cuLsRJDOuhW1ZPTm5z7j863u81ARCDtjw1uwu+K56UM+BgsB+LF2qi4W240l5LxAuddXGP+8Iz2cnMahN3Q9BOB6I0eo3wkRNGvdAJ3eIu0pNQxCzEUDSBH7itdkG07kKd9esIqqG6/65t26qCEgkC1qmpOhkJjMwQ9CrCPuhKnX6e7uEb1WK4JERDMW0JZnOk/nQkKHRWea/Z4FSjIPZT+L/Annr6IgM3GafCTzOCKPlts5/uXRzAtrVa5VKdXV8Jjw5QfqYoqEa8ahVnbFrnKxA1lrcZHRfZ1NQGrBhNG/3gqaFJN61OA0X+fnI=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(52116014)(1800799024)(376014)(23010399003)(366016)(38350700014)(6133799003)(5023799004)(10067099003)(56012099006)(3023799007)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?OtLqh+hNcELeHp+cPlKOe0UI88SwMpQsj0zdh5iKwEAeoTi5NkAL9Ic6/lMv?=
- =?us-ascii?Q?HVIoixqHL44R/WD5jyNTEdOZc3NKoR85lPveQecC568tg4/uIu3KznARvlD6?=
- =?us-ascii?Q?uCNKG52igUT1R4B9odfUAom2hzuTS/g4Z5bXIc6YZyx33ef0Qm1zwfzMn171?=
- =?us-ascii?Q?Ngtz9/c8adA1ZquqO7iYCe3kE0+JmuBxdhkmGLOfLbkPzK9Ah/8bqdJ1Lvj7?=
- =?us-ascii?Q?vja9Ekb95y6u7lHPMkI9/sCNELZo3LQl9U1JltU1VpQdVLzQT4hL7Bq4h0f5?=
- =?us-ascii?Q?1RvZwTv3jmWTqk6Gyk5dp2Qlwt64OwJ2ngCzatnmxUBGxD83X+P6U7PSkLWN?=
- =?us-ascii?Q?20Xc+1zm2s9KWfpy8l17sUZHASITtT5tuFVoPaE7ElkJUGNhHZu8C4svfCcb?=
- =?us-ascii?Q?IXwA6c8/ZikCgA1JFWDt2Ewd8Bj+iDrYNsHgd+dUFR/9JKYFPNuir8hNhLCA?=
- =?us-ascii?Q?/2z2kYwZ/f5n0GxiM64L1vRKnlJkX1SuR0umOIB1mh6pP7YvmUArs9htLxvD?=
- =?us-ascii?Q?Uvyy/Zz9GjQy6nW/OuXqvDhJ1pv1tbOqDdF63SyvrVb6WT/WLxwHEM770DY7?=
- =?us-ascii?Q?/rSCbkV3OeIp9/rTin5keD5r+CHHUAOY8ft/vFJ+k1H6+NuzuruFtxQ99x7k?=
- =?us-ascii?Q?2yYe+YrZdmSFpoNIMhlb2P1jg8rsXM3/Fg6O/W5rCCwcPFgPGyOt2nJ+KZua?=
- =?us-ascii?Q?5Ece0dAhaWdiaQRWNFSodnU13EPL8I1QqRT0l4JNxn/ePS2ztClrim/6qNet?=
- =?us-ascii?Q?SwxKfos7blrUt46hoVue20wDtORtuDhVY/EIWW0O1inLaxHPufKJ+dKlHIzM?=
- =?us-ascii?Q?yopeGuvXDjHUMHTk1N9rw1ePykNIb9JPt0DsWwUvGjd+dsd1rJi8lso5KBd9?=
- =?us-ascii?Q?9t6HYPNMnNQGHTGfg+P29NFMU3vvy2yIJs650eGtA0mSKklGXOpC3uIrZOuK?=
- =?us-ascii?Q?uXNdu8DL8EE0wvi9JoXpr23ofMbSZY5WasxJH2Ug8c84JJzh7HBTQu+39UnM?=
- =?us-ascii?Q?DMyXwTQ4P7k0Fuzuwvp/IFVd5dNe5Y6aKxA0kmAIE6snkpVeKPzKToI2Ond5?=
- =?us-ascii?Q?fu7CrkoeeaMzheATGlgpjh1SaxHTk/b3ZNxthBbiUOww8+ROU7OwQ548DD1O?=
- =?us-ascii?Q?WsWpVauDYc6ZMmDaLxQoB0He3BUtCKxgFR3ZcKH8WNeSnr/YLgZ3nAYmIKkP?=
- =?us-ascii?Q?yLw0sQD5TbWoqZiWLQvhenTnGagjEYLC7xEnvBSYlUK3avQrHLqpFyMLM3jj?=
- =?us-ascii?Q?y38Pl7pLSIM6rtzCL+jsOhvoii/UXPSxZUM3haPW4fpGAc8lZ5uHCqCNamUS?=
- =?us-ascii?Q?y63KaFpUn+LVE+V3g3C1msQaJVPdcx1qy06P1kEsNxPOODp0CO18bwulQa0+?=
- =?us-ascii?Q?x7H3iLXYhxPKIIShvz7Q1eUqufLmSbYAY2bfT0zZqEjpbCYsW7CC0Xj/HhMQ?=
- =?us-ascii?Q?AiFZI2E/MJYj2OKYKmE2tztbBvs9hNhvS9i0LoCv5sDCmWFDqBkDAdOfiK4i?=
- =?us-ascii?Q?cddxfe1hG/6b85mj46oEOhlbNuvIw/MvsYGm3OHNIe/AMQ9i9DzY0X3GisM3?=
- =?us-ascii?Q?m3iGTY+IMzGNYQpO6uXylJIcOU7LhawhrCUdQmU2B96irYZWmKqi1dzmJdmC?=
- =?us-ascii?Q?HYBZjs1ZqnClPcLGNl4n1RPvY3/vD6WaCy7tIrmTlPcNBznZKHtv5hpR8EqO?=
- =?us-ascii?Q?ify/Nkd4fFinV/wp0wMKRTOqUIqcH4GaFeKuKdcvHCIWmNGkF4X+0hjgYTjo?=
- =?us-ascii?Q?Jwt43zWEkqXchPLrZ2WtlE21nHWGZ7Q=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?F68RnJZwS6ndnCgjt6pFJ2CDfNhZpdPb89Y+zu5zyFY74OfRfpn9YAwJL9BJ?=
+ =?us-ascii?Q?Ea2JybqAqDRyhmRZoisTfRJxGfBwjIf/0MBpgk2f5o72IM9Y7uw9VsUbvXho?=
+ =?us-ascii?Q?0V27+g9Qu2Rb12QFaamUyvVchS4V9h+VOW/akRy+Pt6jbiwo3SfTkeR1hJnG?=
+ =?us-ascii?Q?47ptktziL4TAmRC2zfSLy0DWUpE/hGDtaLFgqmonBlIXL31qfxqG+p+N4t+c?=
+ =?us-ascii?Q?gfdHQvhvYOEGr2qV8YrUUWrrOf+/WFN3iv/PsWsS1E0iePNNsiHasPJva5y7?=
+ =?us-ascii?Q?XOaoLZj63nMRxdpTM6/acPWTgz9K4g0O4QvvkJ2HObojcInVvbpKgMqYxi4F?=
+ =?us-ascii?Q?YFyk0u9M8AWOC3Gf+PA+qWAuuRCw9XU+62ChbjmRUyXu/AdHVEBKawhWa3Gj?=
+ =?us-ascii?Q?rkSF4AjxEGcES9Tz618u9aQOq0C41SLQVkOFkP75qXvDw5APDll3O8CHt6mv?=
+ =?us-ascii?Q?UN59ucCfmpBTt1/O2sahQ7L0j0IeSN6ptioQ86yDBJ4naa/bBfJxLOqlFIIB?=
+ =?us-ascii?Q?En9KiR6EP5x6ZBhEYYZHCuG2fBCu/f7VDHZ3gmfEIHy0/f32GFZh417OoL0S?=
+ =?us-ascii?Q?tGXC6MlCO41fr99Uz3KNwvJm++Hg9dxRQtn+RqSLY+D/5LyeS3y2ky8KLTgl?=
+ =?us-ascii?Q?hSic839eFNDuFF0h0Smd6D5MdSNtyFD+xE78zt8fO3levT4/6BHOTZEgcLvK?=
+ =?us-ascii?Q?HGFpsHpPl48WtHwlZONLRvBbypKlf9nGOY+8K32TUnzTCKc8GBwNzt7TT5ng?=
+ =?us-ascii?Q?7UrPOrXcj5/uM1fWSlmCHEprHBmXXWV83xr3GzUY6MDqjcoIit/EHjWVL7/3?=
+ =?us-ascii?Q?J4N+KfTH1F3+fJIKuDD0qHVNqSzKMoEx5vCY2xf8uxMPbgt5I1S9PyCud0Jy?=
+ =?us-ascii?Q?TriAjffuyHcEtzP3hDIy1yNyCFr+6cuecj/lz5jWiT2nsggG8465vp0+rEA0?=
+ =?us-ascii?Q?tuLErPuyJQ75bziji9nLceWKsQVZ1VG0023DoVm8pPSskqg7FN1/dYECCt+O?=
+ =?us-ascii?Q?4QDjtBv9AHN45tz0Qn6wbEg4tq3fY7bnpaVibiC/4+I/uwoVEDiNzVSR3iGI?=
+ =?us-ascii?Q?9f/piBdJGoDQL/nwDcv+p96vfUTydNVfD2IYp1TAMmBcPmWUYH/Vk+dcKlpP?=
+ =?us-ascii?Q?2dLzyLfyZmvAaICz8Ult11yY47fyK6oNjR2abi94dKilY451/HmNWu8LotdY?=
+ =?us-ascii?Q?wceNBwBFOZ7tKPhRFDhaBrprKOm9sem+/t7KORTmq8/jBL8OG2DN4VfievF4?=
+ =?us-ascii?Q?PzXfy55RpbqIjR81gueTDPV8ldttETQaQ2YTJqzE/cDr+eaARmb5pSK0nbwo?=
+ =?us-ascii?Q?zw9dcK1E4qwK3Cfea5w+z5Ud54xzskhQ+F0uxFXJMkHEtzlkcgccaSOm/FS5?=
+ =?us-ascii?Q?xPgwyWKBriUZ2E+xaZXHOq15CJN/60YeaoWEOVytiu4sTKAz8R5KImRrIUn3?=
+ =?us-ascii?Q?kdm/gnrHD+MBzfi/MnlRih8s1WPYda8q9mnEd3bvZNLbSyErzkoxyVgbQEpL?=
+ =?us-ascii?Q?ewxXZIFcxhqhSXciaB1yUCQX/tEfoLBTsmh7vEeqURVVoqDQrmJ0TEoaEhWa?=
+ =?us-ascii?Q?MCWfrPfJKHIBsYayNwJYKE+a/z/b/c1Jepm3hLL5o4CoYrVf2BX7A/XVldFk?=
+ =?us-ascii?Q?88Ngq8sud13ksJ9S4tXBjhTOvYSSrHE+hs9XOBR8NCjFSGYBHocSU+C+xI8Y?=
+ =?us-ascii?Q?vVw7g/F7ZsB78bb8bgiIIMvjSH7mhJVHAkAgyOPTgiqAaPstLoo7gfQkIO/6?=
+ =?us-ascii?Q?9GFRuBoMVT2mwLZBes4p4arzyhO251U=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7f25e7fb-701d-49ea-2883-08def23b9061
+X-MS-Exchange-CrossTenant-Network-Message-Id: ea9980d7-64ce-4a82-b7c6-08def23b8ec1
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:17:57.6376 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Aug 2026 15:17:54.7386 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VWIb3pXNZ/QjDwpGesBlibp7BB296p3zhZRICrX6xHwK45JpFy0w9BXvfbcKNAJ8z4lLm8xJdvhW/KBTy+5N36X+9aiL2GYB/3Wcu1Wjhf0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: Gw+8ycRuYaf5QHLd+eYS4ZttRr9WMG2Aj63aGvOXK2DW7lQ2+tnwZb5xrk8u1pd+ubvbUKBB8/jAbyweQu/oMrnEn2ntBIQdlBVs8dJjqZI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB10317
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+Received-SPF: pass client-ip=52.101.83.103;
  envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
+ helo=GVXPR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,73 +142,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-init_coredump() picks the core dump and the executable out of fixed lines
-of 'info files' output.  With no target loaded that output is empty, and
-'qemu bt' dies with:
+When calling 'qemu bt' / 'qemu coroutine' in a live process, we get:
 
-    IndexError: list index out of range
+    AttributeError: 'NoneType' object has no attribute 'restore_regs'
 
-Search the whole output for the core dump file instead, and take the
-executable from gdb.current_progspace(), which doesn't need parsing at
-all.  Neither can raise if the pattern isn't there, so an unexpected
-output format now just means "not a coredump" rather than a traceback.
-
-That alone only moves the problem to gdb.execute("bt"), whose gdb.error
-escapes invoke() and still gets reported as a python traceback.  At the
-same time plain 'bt' just prints 'No stack.'.  Let's mimick this
-behaviour and simply report an error if there's no selected thread.
+That's because for both commands finally: blocks attempt to restore
+patched regs unconditionally.  Fix this by guarding regs restoration by
+'if is_coredump'.
 
 Fixes: 42f3c143c3a0 ("scripts/qemugdb: coroutine: Add option for obtaining detailed trace in coredump")
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- scripts/qemugdb/coroutine.py | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ scripts/qemugdb/coroutine.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-index 9148264de3c..3e0b37b73ea 100644
+index d3f31bab9fe..649579378db 100644
 --- a/scripts/qemugdb/coroutine.py
 +++ b/scripts/qemugdb/coroutine.py
-@@ -322,16 +322,14 @@ def coroutine_to_jmpbuf(co):
- def init_coredump():
-     global coredump
+@@ -354,7 +354,8 @@ def invoke(self, arg, from_tty):
+             bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])),
+                       is_coredump, detailed=detailed)
+         finally:
+-            coredump.restore_regs()
++            if is_coredump:
++                coredump.restore_regs()
  
--    files = gdb.execute('info files', False, True).split('\n')
-+    files = gdb.execute('info files', False, True)
+ class CoroutineBt(gdb.Command):
+     __doc__ = textwrap.dedent("""\
+@@ -409,7 +410,8 @@ def invoke(self, arg, from_tty):
+                 bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), is_coredump,
+                           detailed=detailed)
+         finally:
+-            coredump.restore_regs()
++            if is_coredump:
++                coredump.restore_regs()
  
--    if not 'core dump' in files[1]:
-+    match = re.search(r"core dump file:\s*`([^']+)'", files)
-+    if match is None:
-         return False
- 
--    core_path = re.search("`(.*)'", files[2]).group(1)
--    exec_path = re.match('^Symbols from "(.*)".$', files[0]).group(1)
--
-     if coredump is None:
--        coredump = Coredump(core_path, exec_path)
-+        coredump = Coredump(match.group(1), gdb.current_progspace().filename)
- 
-     return True
- 
-@@ -362,6 +360,9 @@ def invoke(self, arg, from_tty):
-             return self._usage()
-         detailed = True if argc == 2 else False
- 
-+        if gdb.selected_thread() is None:
-+            raise gdb.GdbError('No stack.')
-+
-         is_coredump = init_coredump()
-         if detailed and not is_coredump:
-             gdb.write('--detailed is only valid when debugging core dumps\n')
-@@ -400,6 +401,9 @@ def invoke(self, arg, from_tty):
-             return self._usage()
-         detailed = True if argc == 1 else False
- 
-+        if gdb.selected_thread() is None:
-+            raise gdb.GdbError('No stack.')
-+
-         is_coredump = init_coredump()
-         if detailed and not is_coredump:
-             gdb.write('--detailed is only valid when debugging core dumps\n')
+ class CoroutineSPFunction(gdb.Function):
+     def __init__(self):
 -- 
 2.47.1
 
