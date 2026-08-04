@@ -4,103 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89CBDC55838
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 11:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D69C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 11:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrDVx-0003ct-OS; Tue, 04 Aug 2026 07:40:57 -0400
+	id 1wrDbI-0004f4-CX; Tue, 04 Aug 2026 07:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wrDVw-0003ce-8n
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 07:40:56 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wrDVu-0004of-Nv
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 07:40:56 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6688a2dceb8so2859710d50.3
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 04:40:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785843653; cv=none;
- d=google.com; s=arc-20260327;
- b=ZM0ceHiwsEzAr0XNbrBf+7QuyiuCD0Hb5LFdIzDRe98NIPtTcQHi+1UChtXQui7XAe
- jx28m0r3ANJ54FBsDOPQsG8IhbY/u4N5c9/EgSGttf49aO51RTRkm/ZTcjMLL683BQSR
- jt/rl4jpQmr8IlWdrc21JsbrsInxxXjkjlt+t9VhYqRhRWL8bUGNrhehVXyPMYnT0JgP
- k2qgHERK2Fb0Ws+6JxVVsS3/nzp+KAytW5kREtUI3TCOhGBs1xVB6uGeF3itz8NaYfsv
- ofACQptu6QZJXOH8hsoxzyzBOVn6FqVH5bnUT+LlBbNb1w+0+lge6DJgLloVcWf3RQOQ
- fzzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=N03HRKNejbgTa+F3mtvkpF1/AI/l56Ox/GYbQr7puFw=;
- fh=KE3wEp9BzDHz6wDa2zPlp0X2UcazmsfwKriOK7opl3U=;
- b=fwwgxJpVWXcP0szkdQmB5lZmhjcuUSVFzniVXvgLRMeX/2ydyk4frrhZ6A6ed3J4CV
- njCHLTvXlnpM0mnYcs+NG4Sj5srQYCvG9OdYLQ/g5ThavOE4T3y82muyjKzWNTga7eGk
- HSxAg2RvtJ3xouwmfD9HGYY7KhysNGpcFiIHBwi1kvBygWLJHI6PnEttCpbVFcCFx3Mq
- mVJXYMx+y3hWlwtvqXhKLCx2nRXh9RwYa3V5mh0k1E01zKSPbKH1knPNhE0+S0a+tqbN
- xfs50mgoQCWf4O8QLwlri9UTJNftRDPaalqGz5eBVIjvxdeH0iGj4YEOalzXwW/Zw/Oc
- 24DQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wrDbH-0004ew-G9
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 07:46:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wrDbG-0005Kp-1s
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 07:46:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785843984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RydKQD+AWojSUXW7szxPRLcbNtBFBTnZRdNs4Z+UpSU=;
+ b=gjdsoslMqPlr3k7sV6FfUWOTIL8fCY/kLNq4D/o3zh7bg/fHZJYKTFxbAPS/JSEK7PpkKN
+ I6xVbkfCAbyMF45J1v9rBZ+K9SnR8TApCb54Lcl4UkTGOy4AgvccmkJ+lhAMOYdSPLY8c7
+ 7Fgs2NS/2WE1ivglU2emxayAs5pfSdE=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-253-DKF3vXqpMh-BkcyIxqVtQQ-1; Tue, 04 Aug 2026 07:46:13 -0400
+X-MC-Unique: DKF3vXqpMh-BkcyIxqVtQQ-1
+X-Mimecast-MFC-AGG-ID: DKF3vXqpMh-BkcyIxqVtQQ_1785843972
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4956c1655c3so19038745e9.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 04:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785843653; x=1786448453; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=N03HRKNejbgTa+F3mtvkpF1/AI/l56Ox/GYbQr7puFw=;
- b=YsxHP9ZqGusB9S+YZGvaHfpwd8SrBzkrq7T1WXXU40DJStZqhYAD3Rb82Q+EoJkI9r
- aDHrsIE9c6Wr8bY4Uw5szyrIOLb4pwHdlvJBcWLrEoLUwczbToFFv5Ig9ZdWLrDqgcam
- MHHhc9y/n5X4vk0dQ7S1NWZs5oqBGFcDxss4ffwpZPwdfQIOyn0KtZ2s4n8Bj9Mo3L1H
- 59vb6FjLAqf8YiK1diU25l2qb28m4WPflqIoAsKcXhNnEKtajVlhN6ZAS7IqZ3dBghwo
- mC/uibHGlSITAHD8oCYtxHU5Up1KNJiY5TYLQK6NuFphWgnmC/KPYMib24UScx2+i0ZJ
- I18Q==
+ d=redhat.com; s=google; t=1785843972; x=1786448772; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=RydKQD+AWojSUXW7szxPRLcbNtBFBTnZRdNs4Z+UpSU=;
+ b=FxKjyFqAu46t+usHnXpniZsgDDCdwX6N+Xu1ZGZRK2+wNKtPyVyBTMt4jrdbTgQVdN
+ bnDY/Jtifl/hKIMVin3a4bkMQYPwRhXjfOk072S7UM8Q7WASsFcVHHAZTVS3XLyWpXbF
+ YedbF23WjPo7vVjA3/sG0FyJqvv5pnoC0zGf6R7kFNmpl6rlGu4gt7b/AKbGiHhC3rvD
+ SrUnruhHB2x9VSuQ2PO1EKNAvMySyKhEBU1pYdWPd0Ks4ORzcQOipuyo+tocMh3Pz5Nw
+ QHQ7qtU1aLRhPknzXRr5WY1YeOK+vknvKzvdCV4kxn284fSpK4DPAr8X/bp6EQlaxnkz
+ 8YvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785843653; x=1786448453;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=N03HRKNejbgTa+F3mtvkpF1/AI/l56Ox/GYbQr7puFw=;
- b=C0BaI19X0a6+ADaDDPAMRZvOqnawjTAKEk+az/F75URR68ZEqAHucjGUvmvHNXfx2j
- eeXLhoYVPaso9sTmE21KwHkjCbLagD/n5FL3fApwMUtDdasGU0GE8EIl3owrJyiG8zZb
- UdaYv64L5b7JgjaDkOFIOTKdHn4hmsYBhT2jKE/GaeLvYj5dss+D9Qo6rCKJd2RiD3TE
- 8PyS8P05XPcLXZxowRal0/MimrKWAxqwK1g/5TwGqQKA8OlC2cyu6lt9+FbdK6OPNLr/
- 9CP8kCP8EWsqR0LQRrFkS4uDXnaB0TMu3jq2ib8ox/JyQfl377OEq+MuyL/Tq/UVRKmM
- wg/w==
-X-Gm-Message-State: AOJu0YxlmUIgIpjnpP+wZD/34COpySJKamOqdPUHL0U0DlsEkH2Z29eI
- ycCs7Gk4S4vY9S7uiqWzduRJek6xNGBih34XqTVkLe7fMlbDeWKI3mapJ1MTBfih3Q+zF9w06T8
- 0Nkuj/9ap3iUL456KOwjTjbA6B5HG05U=
-X-Gm-Gg: AR+sD12BJzhB2qCTwWf/rgLJFTKSqPcaWXTHWbiMjwaM0UN2QyYN6sk5b6e03skdcPt
- XTNaWqNUjgyo9aY3Na9YUehyS1cwRdjNMqmWHpKgl+N1QCitxWmhQaPQMM0N9/R5dpmKk5EORnt
- vh0T6APtZD7wj9EV6h4ZfWgYhgHdbClY1q+ZJg7SyEaoUBPPhtICxLFYvvknJLgmTv1DyMQ3HEP
- 3FLDkIrPnf2qZ8wfq3Xo4L5dgcRy3d3FcMsOyenvUpeC0Hc2PKK7jkQAw2DUdvxVdJRLXWBrnYB
- qsabOV81+ODLifEmMQlpfgCLFUlwGnl49wbRlbVh4CmoSCBRz/34ij0=
-X-Received: by 2002:a05:690e:440d:b0:669:4843:f2e2 with SMTP id
- 956f58d0204a3-6694f1b7275mr12839803d50.36.1785843652908; Tue, 04 Aug 2026
- 04:40:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785843972; x=1786448772;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RydKQD+AWojSUXW7szxPRLcbNtBFBTnZRdNs4Z+UpSU=;
+ b=RQYsX0SqDQ0XOH930sbihlh5p/fK/LMswJo+/YOC9ukNne1Phrir5EieChDDoYEHjS
+ QDeMaRaPTKgisFk3MytZLgHstOrv7PVEGJsEf1ZKwg1/D4DO9FQpErjAWxP+2CNCgtR5
+ Vc9spqWVMzCC+2O9Yhd6sB1xmjah/oZUPosRulw61/UT9WvURzePQjifJZmYaf52Prlz
+ 51j7eLYmoyx2HBX4UPfZ8SWq4TNxhPipaEm/bm8mUH2dXqzJ7VLFuKC9wkrakIUz389d
+ Yqbdqs7u7au+o/awwmaAfoHg4fZi7GegFi0XaqyfQHY8Yic4gcvkyK8fS2hExHxLkNJE
+ PiRQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqHcu1IwBYgXkxQigvi5lrwj9R2sf3OrGjiec12Plu40Em+aT7IzwKIlHCLAU6JGsDEYJlor5ZcsSRp@nongnu.org
+X-Gm-Message-State: AOJu0YyD+aALONO3rf1nqDYJXED5SGXQMftfYhXfTgauT8+b728xec51
+ 3aKn6z5UByEu6AR0ElzweKbfLmEgcftjuHksupJe3Z44UhTJ48dbJR1dc1JlPWt40Jq2DWLY6XB
+ 4rMAXo1BJ8WA7leqH5B/UjMPeZrQVqO1TUZoswxRfPLD9LeppGpO2PgGZ
+X-Gm-Gg: AR+sD10hvnl2L8u32O9sveSbLqLG3NRMUmB2r5WKNa8iDCdfcJArRzR45Hupj6zGPYl
+ tiNYDg2TPbdln1sWuhpQjzfoYtD6+GICeVmsQ8jEtTDicDauBNPP2uKh6B/3KyXRcAPeMiUZY1P
+ kqFuwKK0wdmfLiWIrw7g6RJ/zbeJssYlXnD3iESIfP0+2eTtmuzinJX32kiiONWBPdaaxaIlADk
+ 1XKo97AOxQbJqdT8lBdR7A3DjiCiP164ZgLCvNQcf3NjRCthLJQmDJ8NQPAVE47WLJnhuZ/ACpG
+ YXcKOgdV1twTgdTE1Mrl0/d5sSIRWNy7SuLq0c/OBjgNSQ17y1STdjpHzYwyaUE4MA9JhumTnJg
+ R3Ra7hHzm7lKCx2NaKZ5ueh0tMsg3CKwg8WZPF1aO/9NBoORBadRGcenoUmBD/0HnHOCdgAmeQe
+ 7Gixoee0l4Aq/bLJS6qEZ3XnE07yQqtQ==
+X-Received: by 2002:a05:600c:840f:b0:496:c361:fb96 with SMTP id
+ 5b1f17b1804b1-4980c600ce6mr280556305e9.0.1785843971661; 
+ Tue, 04 Aug 2026 04:46:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:840f:b0:496:c361:fb96 with SMTP id
+ 5b1f17b1804b1-4980c600ce6mr280555705e9.0.1785843971194; 
+ Tue, 04 Aug 2026 04:46:11 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d73d:54bb:1189:33b6:6950:ef97?
+ (p200300cfd73d54bb118933b66950ef97.dip0.t-ipconnect.de.
+ [2003:cf:d73d:54bb:1189:33b6:6950:ef97])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49807b84fb2sm200552435e9.1.2026.08.04.04.46.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Aug 2026 04:46:10 -0700 (PDT)
+Message-ID: <9be3c3bb-8c41-4f9b-b396-0010cce0d75e@redhat.com>
+Date: Tue, 4 Aug 2026 13:46:09 +0200
 MIME-Version: 1.0
-References: <20260804081459.8007-1-wafgo01@gmail.com>
-In-Reply-To: <20260804081459.8007-1-wafgo01@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Tue, 4 Aug 2026 19:40:39 +0800
-X-Gm-Features: AUfX_mwSBdtdBDxbPjghhMQ_fxBZjTrhlQG-mFtAc86QZeHjEX1yv5IJUsSeup4
-Message-ID: <CAEUhbmVOkPeMzZGpgJ6WMk07xmf9oGL25jp7uw3uQtPt4LE93g@mail.gmail.com>
-Subject: Re: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor
- chains in one pass
-To: Wadim Mueller <wafgo01@gmail.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] iotests/108: skip test if cannot access /dev/fuse
+To: Eric Farman <farman@linux.ibm.com>, Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260728192644.2879028-1-farman@linux.ibm.com>
+ <20260728192644.2879028-2-farman@linux.ibm.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260728192644.2879028-2-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.795,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,47 +126,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Wadim,
-
-On Tue, Aug 4, 2026 at 4:15=E2=80=AFPM Wadim Mueller <wafgo01@gmail.com> wr=
-ote:
+On 28.07.26 21:26, Eric Farman wrote:
+> This test might fail if the user is not root (or sudo'd):
 >
-> sdhci_do_adma() processes at most SDHC_ADMA_DESCS_PER_DELAY descriptors
-> per invocation and then reschedules itself SDHC_TRANSFER_DELAY ns later
-> on QEMU_CLOCK_VIRTUAL.  For a large bulk transfer this spreads the DMA
-> across hundreds of virtual-clock round-trips, advancing the guest's
-> virtual time between descriptor batches.
+>    fusermount3: failed to open .../scratch/qcow2-file-108/fuse-export: Permission denied
 >
-> A guest that bounds the transfer with its own data/status timeout
-> (counted in guest time) can then see that timeout expire mid-transfer.
-> Concretely, U-Boot on a TI AM64x reading a ~28 MiB image with a single
-> CMD18 multi-block ADMA2 read intermittently aborts with "Timeout for
-> status update" and falls back to (failing) distro boot.  The transfer
-> itself is correct; only the artificial per-batch pacing triggers the
-> guest timeout.
+> A check exists to try to cover for this, but there are
+> two potential error messages that signal this case
+> (per the comment block associated with the check) and
+> only a skip for one of them.
 >
-> Run a descriptor chain that carries no SDHC_ADMA_ATTR_INT attribute to
-> completion within a single call.  Chains that do request a DMA-boundary
-> interrupt still deliver it and reschedule exactly as before, so a guest
-> relying on that pacing is unaffected.
+> Update the common fuse check to include this message,
+> and update test 108 to utilize it.
 >
-> Now that the per-call bound is gone, cap the number of descriptors
-> processed per call so that a malformed or circular descriptor list (a
-> self-referencing link, or a persistently faulting non-END/non-INT
-> descriptor) cannot spin the calling thread forever; on overflow, break
-> to the existing reschedule path so the main loop stays responsive.
->
-> Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
+> Fixes: 9ffd6d646d ("iotests/108: Test new refcount rebuild algorithm")
+> Based-on: <20260715103451.1930909-1-den@openvz.org>
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
 > ---
->  hw/sd/sdhci-internal.h |  9 +++++++++
->  hw/sd/sdhci.c          | 23 +++++++++++++++++++++--
->  2 files changed, 30 insertions(+), 2 deletions(-)
+>   tests/qemu-iotests/108       | 5 +----
+>   tests/qemu-iotests/common.rc | 1 +
+>   2 files changed, 2 insertions(+), 4 deletions(-)
 >
+> diff --git a/tests/qemu-iotests/108 b/tests/qemu-iotests/108
+> index bf808b3512..5d91e58943 100755
+> --- a/tests/qemu-iotests/108
+> +++ b/tests/qemu-iotests/108
+> @@ -69,10 +69,7 @@ else
+>       # or "Invalid parameter 'fuse'", depending on whether there is
+>       # FUSE support or not.
+>       error=$($QSD --export fuse 2>&1)
+> -    if [[ $error = *"'fuse'"* ]]; then
+> -        _notrun 'Passwordless sudo for losetup or FUSE support required, but' \
+> -                'neither is available'
+> -    fi
+> +    _notrun_on_fuse_error "$error"
+>   fi
+>   
+>   echo
+> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+> index bcb1ec50a9..844c19d15a 100644
+> --- a/tests/qemu-iotests/common.rc
+> +++ b/tests/qemu-iotests/common.rc
+> @@ -986,6 +986,7 @@ _require_drivers()
+>   _notrun_on_fuse_error()
+>   {
+>       case "$1" in
+> +        *"Parameter 'id' is missing"* | \
+>           *"Parameter 'type' does not accept value 'fuse'"*)
+>               _notrun "No FUSE support"
+>               ;;
 
-Would you please try this series to see if this fixes the issue you
-saw on TI AM64x?
-https://patchwork.ozlabs.org/project/qemu-devel/list/?series=3D515264
+Is “Parameter 'id' is missing” not the expected error message when there 
+*is* FUSE support? At least for the case above in test 108.
 
-Regards,
-Bin
+Hanna
+
 
