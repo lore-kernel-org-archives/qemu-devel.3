@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FA3C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 06:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32014C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:19:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr908-00055z-DN; Tue, 04 Aug 2026 02:51:48 -0400
+	id 1wr9Qm-0000nO-GT; Tue, 04 Aug 2026 03:19:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr906-00055p-9I
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:51:46 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wr9Qk-0000nF-AE
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:19:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wr905-0006sh-3s
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:51:46 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wr9Qh-0001Dx-85
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:19:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785826304;
+ s=mimecast20190719; t=1785827953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qvuUynhwJ6vmk6JmexBa8fUitav45tNUKh63gEre9Hk=;
- b=NWjNXJ6jFHNku9MuvGIDtccOaNmts2sTEVDGP+c1GMuNIbxaa7yiLKf3bBR+8Z5D+NM8pk
- R5uTmxX1hqXmlJjkJKTTvXWCNXs+DkGs2gCxUQxOoJW5CfHedIgTpoeDDHpSeqd5FCprO/
- 1fwxQrJKpOA9CfuUt8WZd5W10FgaBbQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JEgmvsw4PP9ogy+qSkqv4cF1yXqw+trW3wDXt1uXIr0=;
+ b=ShEJ84vP/CqNhOOKHsbuqn4ISYQtQMLLOQ1LoSUMXmm4tqJpagLsmwTwpK/pM4FOzy1xp4
+ ldZC1cBUIa4xHpEfnih2cxoKdQ/1osyg2bfdTM5/w/vLp+GiRgzcDFzKbMQVT8jUSdaBPJ
+ Kia2PBrlrjPg50Fvagl7JDsI4qU7758=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-zwZISMpYNv6NtVLFfprXbw-1; Tue,
- 04 Aug 2026 02:51:25 -0400
-X-MC-Unique: zwZISMpYNv6NtVLFfprXbw-1
-X-Mimecast-MFC-AGG-ID: zwZISMpYNv6NtVLFfprXbw_1785826283
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-lOJVYDd3P2yKGF4tv3dpSg-1; Tue,
+ 04 Aug 2026 03:19:06 -0400
+X-MC-Unique: lOJVYDd3P2yKGF4tv3dpSg-1
+X-Mimecast-MFC-AGG-ID: lOJVYDd3P2yKGF4tv3dpSg_1785827945
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0243719560B5; Tue,  4 Aug 2026 06:51:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EBCB180044F; Tue,  4 Aug 2026 06:51:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E317621E6920; Tue, 04 Aug 2026 08:51:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>,  "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,  "cohuck@redhat.com"
- <cohuck@redhat.com>,  "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>,  "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>,  "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,  "berrange@redhat.com"
- <berrange@redhat.com>,  "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>,  "gshan@redhat.com"
- <gshan@redhat.com>,  "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "sebott@redhat.com" <sebott@redhat.com>,  "philmd@linaro.org"
- <philmd@linaro.org>,  "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- Shaju Abraham <shaju.abraham@nutanix.com>,  Mark Cave-Ayland
- <mark.caveayland@nutanix.com>,  Prerna Saxena <prerna.saxena@nutanix.com>
-Subject: Re: [RFC PATCH v3 16/19] qmp: add query-cpu-props-info command
-In-Reply-To: <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com> (Khushit
- Shah's message of "Tue, 4 Aug 2026 06:30:22 +0000")
-References: <20260716213858.609699-1-khushit.shah@nutanix.com>
- <20260716213858.609699-17-khushit.shah@nutanix.com>
- <87y0f5u78t.fsf@pond.sub.org>
- <6AA3BD42-9596-476B-9F64-AB09372821B9@nutanix.com>
- <87tspa5skn.fsf@pond.sub.org>
- <FD805FA0-9323-450C-9D79-319C0883F05E@nutanix.com>
- <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com>
-Date: Tue, 04 Aug 2026 08:51:19 +0200
-Message-ID: <8733wu5qfs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4138F195609E
+ for <qemu-devel@nongnu.org>; Tue,  4 Aug 2026 07:19:05 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B5A1D1800480; Tue,  4 Aug 2026 07:19:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: [GIT PULL 0/9] Fixes for 11.1-rc
+Message-Id: <20260804-fix-v1-0-0c2be5390809@redhat.com>
+Date: Tue, 04 Aug 2026 11:18:49 +0400
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1988;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=sx5HYVJev6pTbLV4henfhvXdEmJ1OT6cK4po/XlKyj8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJcWzWRKy68LerroPkL+CqSCs/owHXpBAWy6
+ 800wdLw/gqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXAAKCRDa6OEJdZac
+ 5d80D/sFKUjvX7cPaNx3MZbYvXpoKRlYy8xI5ZvG8pTdDP3PFif70VIWNAIvC+5L18A541EE6ns
+ CRvftTiP1RTs2l/MySU3LSVGe3KDUvpAlvviqpRBO/5RI0ROKRFM/Rc/MS2dzHmRWNsI0cGNZAF
+ RmlZK7ghE56aqH30QH5eKTaZ+1vcLdOdUyKcNFRoftOS8f6JL5dIPL5m/uv2OIy2i2fjsioZ7E3
+ gsBwVy4ir2jrvJDKPxB9b6sfWHvOcy7RAtZsDfX09f3LI7S0K6zCt/znCl+4fNr9TimBM4u64rC
+ E3W0GPq+jjmdDNXkjpybUHkwwQnUQcBD8X2cZO9f/KZBBd9qm7IXCwI6nrrgoBVulUom5Rrq7JY
+ c3O5S/Ww0kKa7F7fg/1zwa7IdPVhQ4+Da0wviQPKzZGWbAwxasHCKaVkn26aqKZMhh/soPkwOph
+ KqcTZ9xKk/hPcYRrsin432wXdtyOJteCE18Rind8IYmAucc+vjIiSZYpOOeaA1HgI3Jgq5RrpSU
+ iGywCnraktCDsHEU0Kra1zj5YtXulIBcbsH4gRkZTgnUF0IgTC3wFtNlCwhzYTjGrjgv3czeKFS
+ W076GxbvpDNbfEjz8RwDqc85cE9bDRb8cXmKIhO0OceeZVFdA2tqPe015RDcLji+TEePIMsI0Zw
+ mOQi8ZQ7PKjmq7w==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
@@ -102,25 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Khushit Shah <khushit.shah@nutanix.com> writes:
+The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
 
-[...]
+  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
 
-> Stub file was missing on arm user builds. 
->
-> I have fixed this on the private branch if you want to take a look.
+are available in the Git repository at:
 
-I'm willing to pull an update to v3, assuming it's a small fix.
+  https://gitlab.com/marcandre.lureau/qemu.git tags/fix-pr-v1
 
-> I also understand if you want to wait for proper v4 with the fix.
+for you to fetch changes up to 8876b366d7cac1f65978b8f8472725b980a1abfb:
 
-Eventually.
+  qapi/dump: add allowed-by-guest feature to win-dmp (2026-08-04 11:18:43 +0400)
 
-> Again, sorry for this, should have checked all configs before
-> sending the patch.
+----------------------------------------------------------------
+Fixes for 11.1-rc
 
-Mistakes happen, and then we learn from them :)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-[...]
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      hw/display/virtio-gpu: Always reject invalid scanout bounds
+
+Ankur Saini (1):
+      virtio-gpu: reject requests with short/truncated control headers
+
+Bin Guo (1):
+      hw/display/virtio-gpu: Unmap DMA regions on reset
+
+Denis V. Lunev (1):
+      qapi/dump: add allowed-by-guest feature to win-dmp
+
+Marc-André Lureau (5):
+      hw/display/virtio-gpu: validate blob iov size
+      hw/display/vga: fix panning_buf OOB after text/graphics switch
+      vhost-user-gpu: fix integer overflow in buffer allocation
+      hw/display/virtio-gpu: fix offset wraparound in scanout_blob_to_fb
+      hw/display/virtio-gpu: drop redundant node->value NULL checks
+
+ qapi/dump.json                          |  9 +++-
+ contrib/vhost-user-gpu/vugpu.h          |  1 +
+ include/hw/virtio/virtio-gpu.h          |  8 ++++
+ contrib/vhost-user-gpu/vhost-user-gpu.c | 29 +++++++-----
+ contrib/vhost-user-gpu/vugbm.c          | 11 ++++-
+ hw/display/vga.c                        |  7 +--
+ hw/display/virtio-gpu-base.c            |  4 +-
+ hw/display/virtio-gpu-rutabaga.c        |  6 +++
+ hw/display/virtio-gpu-virgl.c           | 20 ++++-----
+ hw/display/virtio-gpu.c                 | 80 ++++++++++++++++++++++++---------
+ 10 files changed, 126 insertions(+), 49 deletions(-)
 
 
