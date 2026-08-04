@@ -4,50 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2527C55184
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 13:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5A6C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 14:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrF0a-000598-R1; Tue, 04 Aug 2026 09:16:40 -0400
+	id 1wrGHg-0000fL-DC; Tue, 04 Aug 2026 10:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jacobly@ziglang.org>)
- id 1wr8eV-00016b-SF
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:29:27 -0400
-Received: from mail.ziglang.org ([108.61.23.47])
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wrGHc-0000f7-Ki
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:38:20 -0400
+Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jacobly@ziglang.org>)
- id 1wr8eU-0004bY-GQ
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:29:27 -0400
-From: Jacob Young <jacobly@ziglang.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ziglang.org; s=mail;
- t=1785824965; bh=gc84vgb2W4xTObRjAYWW1Xv+TZyjLcRjlC87tPKM4Pg=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=WNGXwkWhKlZmA8AQ3b3l/6goj/0HGetckY+S2RbB9q06O0LjHSU+ja1q3Ax34LROg
- 9qyyqsCmQ0/M0n6U4M/61njE+mJlLlnOLvlUEdgFxt5KSZe8nUE/S8LrbA/TRQYKR2
- aLGxaKwmmrPmAkPKL1PMkhFvlPWYebW/7m+M+ax8=
-Date: Tue, 04 Aug 2026 02:27:23 -0400
-Subject: [PATCH] tcg/optimize: Fix s_mask computation for shifts
+ (Exim 4.90_1) (envelope-from <lyndra@linux.alibaba.com>)
+ id 1wrGHU-0008S0-PG
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:38:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1785854266; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=ZmTMd2/iXkXfubc4u2eOyilowVn0BJ/PBdpB44bui3w=;
+ b=uhQhlQHmGHgGHEpigVQHCtptFIC4huYFwaDo/NHlv78atWSUga0ihiUIlf77nL+ZdfHAyS16LURdEoAwpdrEp2w3x/5Yqfi4sGbMps/vsA8z7B/EHFmfLpSixJWIA5B7WGL8lEEdbJxnOlQ0UDrn1EIYd7+1m9zFOssDZIDt4og=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R371e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=lyndra@linux.alibaba.com; NM=1; PH=DS; RN=2; SR=0;
+ TI=SMTPD_---0X8OZEmn_1785854261; 
+Received: from
+ riscv-project-v011122129236.ea134.tbsite.net(mailfrom:lyndra@linux.alibaba.com
+ fp:SMTPD_---0X8OZEmn_1785854261 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 04 Aug 2026 22:37:45 +0800
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
+Date: Tue, 04 Aug 2026 22:37:19 +0800
+Subject: [PATCH] scripts/checkpatch: Match paths beginning with hw/
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260804-fix-shift-smask-v1-1-8ce16b4000d1@ziglang.org>
-References: <20260804-fix-shift-smask-v1-0-8ce16b4000d1@ziglang.org>
-In-Reply-To: <20260804-fix-shift-smask-v1-0-8ce16b4000d1@ziglang.org>
+Message-Id: <20260804-b4-checkpatch-hw-path-v1-1-91b88679f2d9@linux.alibaba.com>
+X-B4-Tracking: v=1; b=H4sIAB75cWoC/x2MQQqEMAwAvyI5b6BqteJXFg82RhMElVZUEP9u8
+ TZzmLkhclCO0GY3BD406rokyX8ZkPTLxKhDcihMUZvGWPQWSZjmrd9JUE5MIEiDdc5XZeV8A6n
+ dAo96fd9/9zwvwu1mS2cAAAA=
+X-Change-ID: 20260804-b4-checkpatch-hw-path-cd477b5357b8
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- Jacob Young <jacobly@ziglang.org>
-Received-SPF: pass client-ip=108.61.23.47; envelope-from=jacobly@ziglang.org;
- helo=mail.ziglang.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: Chao Liu <chao.liu@processmission.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1785854265; l=3426;
+ i=lyndra@linux.alibaba.com; s=20250909; h=from:subject:message-id;
+ bh=iTvSziGfbs1n3Wk6FJsyWV76mMrDxG85MgpEkilKO7I=;
+ b=Mf7+34hRYdn8GvDG8GACRL9gZg+6it7KZhJHl5Yfm/8xellf209wCS2P0Peyv4QWqQGioqj3l
+ W8q7a2gUWk0AlnLtQg9adXg08wZBLnc+r7yGM3o9uUd9lyy/vRkR1t8
+X-Developer-Key: i=lyndra@linux.alibaba.com; a=ed25519;
+ pk=GQh4uOSLVucXGkaZfEuQ956CrYS14cn1TA3N8AiIjBw=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=lyndra@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 04 Aug 2026 09:15:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,57 +81,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, we would produce an incorrect smask in this case:
+Patch mode strips the leading a/ and b/ components from file paths,
+leaving repository-relative paths such as hw/riscv/foo.c.  The checks
+for qemu_bh_new() and aio_bh_new() currently require /hw/ in $realfile,
+so they miss paths beginning with hw/ in both normal Git patches and
+--file mode.
 
-    t1.smask = 0xffffffff80000000
-    shr_i32 t0,t1,$0x1
-    t0.smask = 0xffffffffc0000000
+Match either the start of $realfile or a slash before hw/, making
+patch and file modes consistent while preserving nested /hw/ matches.
 
-because `do_constant_folding` would produce `smask = 0x40000000` which
-was passed unchanged to `fold_masks_zos` which would then update with
-`s_mask |= INT32_MIN;`, producing the incorrect result above.
-
-Reproducer (i386 assembly):
-
-        .text
-        .globl  _start
-    _start:
-        movw    $0x4000, %ax
-        addw    %ax, %ax
-        cwtl
-        shrl    %eax
-        xorl    %ebx, %ebx
-        cmpw    $-0x3fff, %ax
-        setnl   %bl
-        movl    $1, %eax
-        int     $0x80
-
-Signed-off-by: Jacob Young <jacobly@ziglang.org>
+Fixes: ef56ffbdd6b0 ("checkpatch: add qemu_bh_new/aio_bh_new checks")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 ---
- tcg/optimize.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+The checks for qemu_bh_new() and aio_bh_new() introduced by
+ef56ffbdd6b0 are intended to cover files under hw/.  In patch mode,
+checkpatch removes Git's leading a/ and b/ path components before
+setting $realfile.  A file under the repository's hw/ directory is
+therefore represented as hw/foo.c.  Since the checks require /hw/,
+they do not recognize that path.  The same false negative occurs in
+--file mode when given a repository-relative path such as
+hw/misc/i2c-echo.c.
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index fcdef25bee..96f7841afa 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2658,6 +2658,14 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
-         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
-         s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
- 
-+        /*
-+         * If the bit shifted into the result sign was not in the
-+         * input s_mask, then no bits are known to match it.
-+         */
-+        if ((int64_t)s_mask >= 0) {
-+            s_mask = 0;
-+        }
-+
-         return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
-     }
- 
+The problem can be reproduced from an unmodified upstream QEMU checkout
+at the series base:
 
+  $ git show b14037f37f9 -- hw/misc/i2c-echo.c |
+      scripts/checkpatch.pl --patch \
+          --test-only=aio_bh_new_guarded --no-summary -
+  Your patch has no obvious style problems and is ready for submission.
+
+Commit b14037f37f9 adds a qemu_bh_new() call under hw/, so that result is
+a false negative.  Repository-relative file mode reproduces the issue:
+
+  $ scripts/checkpatch.pl --file hw/misc/i2c-echo.c \
+      --test-only=aio_bh_new_guarded --no-summary
+  hw/misc/i2c-echo.c has no obvious style problems and is ready for
+  submission.
+
+Before this patch, both invocations succeed without reporting the call.
+After this patch, both report:
+
+  ERROR: use aio_bh_new_guarded() instead of qemu_bh_new*() to avoid
+  reentrancy problems
+
+and return failure as expected.  The analogous aio_bh_new() check was
+verified with hw/i386/kvm/xen_evtchn.c.
+---
+ scripts/checkpatch.pl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 03f35e75012c8c7a00b67f036e4befb2ea162d4a..9ae7693a4f388597dc11a58a85736d511fbcc62c 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -3223,11 +3223,13 @@ sub process {
+ 			ERROR("use sigaction to establish signal handlers; signal is not portable\n" . $herecurr);
+ 		}
+ # recommend aio_bh_new_guarded instead of legacy qemu_bh_new / qemu_bh_new_guarded
+-        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\bqemu_bh_new(_guarded)?\s*\(/) {
++		if ($realfile =~ m{(?:^|/)hw/} &&
++		    $line =~ /\bqemu_bh_new(_guarded)?\s*\(/) {
+ 			ERROR("use aio_bh_new_guarded() instead of qemu_bh_new*() to avoid reentrancy problems\n" . $herecurr);
+ 		}
+ # recommend aio_bh_new_guarded instead of aio_bh_new
+-        if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\baio_bh_new\s*\(/) {
++		if ($realfile =~ m{(?:^|/)hw/} &&
++		    $line =~ /\baio_bh_new\s*\(/) {
+ 			ERROR("use aio_bh_new_guarded() instead of aio_bh_new() to avoid reentrancy problems\n" . $herecurr);
+ 		}
+ # check for DEVICE_NATIVE_ENDIAN, use explicit endianness instead
+
+---
+base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
+change-id: 20260804-b4-checkpatch-hw-path-cd477b5357b8
+
+Best regards,
 -- 
-2.55.0
+TANG Tiancheng <lyndra@linux.alibaba.com>
 
 
