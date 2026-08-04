@@ -4,92 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60060C55822
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 05:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A85C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 05:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr7pD-0005zn-B4; Tue, 04 Aug 2026 01:36:27 -0400
+	id 1wr8A7-000802-0a; Tue, 04 Aug 2026 01:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wr7pB-0005zK-OZ
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 01:36:25 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wr7p9-00072b-BM
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 01:36:25 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cfbbdfa60bso32339945ad.3
- for <qemu-devel@nongnu.org>; Mon, 03 Aug 2026 22:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785821782; x=1786426582; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XjUlHMDmEYRww5GYz+xDw+QZQfEX6f4KXeW2pr+vdtc=;
- b=Hqq0gHqLDVg2XFVDj477kxF6uVMWJnfeYHerGeNmwWCEXpnjCKiJ+vtw9NAC2cMVRt
- lSKotsAxsMrI0VIMhuwWLRoWJo+hsfomYgYFokQWWwXrqwsUo35f03nvEyejdGgKnFkP
- ZoQnYdjMllAlFlVQPCh12hnFqOo/u7l78t+OxqTW05pndFWz/kS0Hi0UmGa9fMPIB8/s
- EBp9QZKlS9VUbhxApParwVa2DvqCLr0xb5h9jinNB//5uuDkgjyemqCzqZ6cMyLDhXYp
- d6rKApYtdOwG9bDWfnXMyKh3zG4bWsGIIMLzIXw49vfIfQ3HbuyegZevJPqqBxfzntR3
- iFUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785821782; x=1786426582;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=XjUlHMDmEYRww5GYz+xDw+QZQfEX6f4KXeW2pr+vdtc=;
- b=kU2oorshsNo8101mprmpPjn22TflHbsHX4qdyjxMJ3RzIYQ1Wz9CZtaZty/AJu7JyE
- gzNkolkQSIF03JpzXAywUl2YbUWewkBH/j3Vn6HfkxAYGs/O0r9S0ZBEplYZrKv5awGT
- xyJttX6g61rZsp39fRaGYYD4vu0v030ml0RxbKBX/P5W91bLxlTiqFrK8/oMfiJX0RaH
- VSWfe5TStmtfgBgj5VuJvG1GGHYq9nMwabJ16N4B95Xb3ZKwdbZOODGYAroN40KV+OKH
- AHC7FhnI+5eUTe/U6iNf0VhRQz7Y1jwp4x8+cVGT/lpmMva9+MakxnYw0RonBfChj0TA
- 9qMg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp+/7tA3Y9xPzPY26sya0lvkfSO4Qyv0HTsF0JrwQLI/GlLAS4qcWUUSFtm5KkNXIbYzvJfgHKtJv+W@nongnu.org
-X-Gm-Message-State: AOJu0YwU3WdLcpVKCLOaHmVYW4W1l5sIFv9SdOuQ2Xv519VeAioIN8YN
- IqpVBDnTlxXyFLy07J/PJw0YFd5EMWOhd94fYLkDn4qgXx0UTbvDGr34
-X-Gm-Gg: AR+sD120rlDqNsnrz+axsv/AjKWsinvEEW16jYEpqfUoOAJ6SNmSgAZDtNlzG+irgCM
- 4Dm9cEmEssPpnBFuysvXvQb2NB1/CA0wJH7vg2ha+dN9lqVEHGf+nZwjJg+/7dwxk59woFe23Bp
- UYq+34naZ2lKhRGCjvt+hSz/pFnnB/xjpwX+e6Bq4kU3FolB3vxVHYsznQ6PgblJkkiWaxFFDki
- D88oRtU6w8HKL/hwnkzRJmpGF2MXcVnoYaqP5lex3Xhb3DA2gFYUxhbeeGg3YKAe1Hj6Etgt382
- R/63dJxbc6w6vPcEYkpPmHNBnXNuQMO8iKfa0tY6tcP41XrsZYXI6pxMbqt9YYaBpEI6/xx09j4
- THA2yrMxodeCHgKDgG2FoncLPqepGswKRYsF2ZB8cy4ssHibaIxvVJIFlVUiFUIocGFP23iWCkn
- EV1WaYBOK2cfWvynajnvWnrgC3l2w38OMTTosmZ2twMHkgNt8kwA0GIZLg04GNNtggHlDHRyVCy
- pf0bZC+AKsz4pHARXDt1oZGQQ==
-X-Received: by 2002:a17:903:388b:b0:2c9:b48c:fdde with SMTP id
- d9443c01a7336-2d05229828cmr131854415ad.26.1785821781545; 
- Mon, 03 Aug 2026 22:36:21 -0700 (PDT)
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d04aea2514sm46648275ad.37.2026.08.03.22.36.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Aug 2026 22:36:21 -0700 (PDT)
-Message-ID: <0ebb6351-48ac-4a28-ac51-9861627361b6@gmail.com>
-Date: Tue, 4 Aug 2026 14:36:20 +0900
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wr8A4-0007zr-Le
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 01:58:00 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wr89y-0000fu-S8
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 01:57:58 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6745vm7O059906
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 4 Aug 2026 14:57:48 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=cA2CC/uled0cbxwh0gZqeRlEWw0/VNY2NMPluFyQce4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1785823068; v=1;
+ b=RxDjCvpr4gkayoR35jzY0x6s4aS0bT4Ok9lf+c+e29+NsS66u/w/ADubmxHqsE01
+ JTP1rFWOLaK0fWBDz3n/s8BjwSrrjUheJJb3ne+4UwQbvC5eTlBh4MBhT1iaIvEx
+ G/lpOVEO5kzYDbSg++5Pvi4BGj22U1qn5xZIUOSp7KNqaKByotLFCA4CKj/Bz1B2
+ Qg8FFnet1F1j6Jh689ZBoY1UYPFi2JjZfEfcsXj61vPC7SGKqzN+Io4Z7IHLTmGl
+ 8JOMtiOUH15wJeN1xSTr+nXUUDEpPwu65IjRm2JUgTA2cqvnvi0GO86Zg/k15lBI
+ zwfMOXG+ZJFtONVvi1nV4Q==
+Message-ID: <e4313c26-fff3-470b-ab9e-8b90cdc98a43@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 4 Aug 2026 14:57:47 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/display/qxl: validate primary surface stride
- against width
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260725122411.1769492-1-marcandre.lureau@redhat.com>
- <4f2961e4-1670-4e1a-8d60-4238ee7fd731@gmail.com>
+Subject: Re: [PATCH v3] virtio-gpu: reject requests with short/truncated
+ control headers
+To: Ankur Saini <ankur98saini@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
 Content-Language: en-US
-In-Reply-To: <4f2961e4-1670-4e1a-8d60-4238ee7fd731@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,285 +77,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/04 13:54, Akihiko Odaki wrote:
-> Sorry for a late review; I missed this patch.
+On 2026/08/04 2:09, Ankur Saini wrote:
+> A short control request can leave command data partially initialized.
+> For the common header, guest-controlled flags can then cause stale fence
+> metadata to be returned to the guest.
 > 
-> On 2026/07/25 21:24, marcandre.lureau@redhat.com wrote:
->> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> The existing validation in qxl_create_guest_primary() checks that
->> abs(stride) * height fits in vgamem_size and that stride is 4-byte
->> aligned, but never checks that abs(stride) is large enough to hold one
->> row of pixels for the declared width and format.
->>
->> A malicious guest can create a primary surface with a stride much
->> smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
->> surface). The spice server rejects this via red_validate_surface(), but
->> the return is void and QEMU unconditionally proceeds to set up the local
->> rendering state. On the next display refresh, VNC or SDL reads width *
->> bytes_pp per scanline from a region backed by only stride bytes per
->> row, causing a host-side out-of-bounds read.
->>
->> Add three checks in qxl_create_guest_primary() before creating the
->> surface:
->>   - reject unknown surface formats
->>   - reject zero width or height
->>   - reject surfaces where abs(stride) < width * bytes_per_pixel
->>
->> Also fix three related issues in qxl-render.c:
->>   - qxl_blit() used abs_stride to advance the dst pointer into the
->>     DisplaySurface, but when stride is negative the DisplaySurface is a
->>     packed buffer whose stride may be smaller. Use surface_stride()
->>     instead.
->>   - qxl_render_update_area_unlocked() uses guest_head0_width (set via
->>     QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
->>     abs_stride, bypassing the new validation. Clamp the effective width
->>     to abs_stride / bytes_pp to prevent out-of-bounds access while
->>     tolerating the normal transient where the monitor config arrives
->>     before the primary surface is resized to match.
->>   - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
->>     validation. Without clamping, abs_stride * height can overrun
->>     vgamem_size, and the product can also overflow 32 bits (e.g.
->>     abs_stride=16 MiB, height=256 wraps to zero), defeating the
->>     qxl_phys2virt() bounds check. Clamp height to
->>     vgamem_size / abs_stride to prevent both.
+> The command fill helpers detect a short copy but only log and return,
+> leaving the malformed request without an error or completion. Make
+> VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete the
+> request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the same
+> error through the existing vhost-user-gpu dispatcher. This also rejects
+> truncated type-specific commands.
 
-With negative strides, qxl_blit() walks src scanlines in reverse order. 
-The starting point is determined with guest_primary.surface.height. So 
-it will overrun if:
+One small correction: this says the malformed request is left without 
+completion, but virtio_gpu_simple_process_cmd() and vg_process_cmd() 
+actually complete them, though its response type is 
+VIRTIO_GPU_RESP_OK_NODATA.
 
-     guest_primary.surface.height
-          < guest_head0_height
-          <= vgamem_size / abs_stride
->>
->> Fixes: CVE-2026-16271
->> Fixes: 3761abb16784 ("hw/display/qxl: fix signed to unsigned comparison")
+With that addressed,
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Regards,
+Akihiko Odaki
+
 > 
-> The Fixes: 3761abb16784 tag is incorrect. That commit only repaired 
-> overflow in an existing total-size check; short-stride surfaces were 
-> already accepted. The vulnerable local renderer originated in 
-> a19cbfb34642, while the monitor-dimension bypass came from 979f7ef8966b 
-> and the overflowable qxl_phys2virt() size expression from 
-> 8efec0ef8bbc/6dbbf055148c.
+> The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
+> clear it and complete the request directly when that copy is short.
 > 
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
->> Reported-by: huntr bubble
->> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
->> ---
->> v2:
->>   - also clamp height
->>   - factor out qxl_format_bpp() helper
->> ---
->>   hw/display/qxl.h        |  2 ++
->>   hw/display/qxl-render.c | 46 ++++++++++++++++----------------
->>   hw/display/qxl.c        | 59 +++++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 84 insertions(+), 23 deletions(-)
->>
->> diff --git a/hw/display/qxl.h b/hw/display/qxl.h
->> index 48d664f77736..6f5b96fe86cc 100644
->> --- a/hw/display/qxl.h
->> +++ b/hw/display/qxl.h
->> @@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
->>   void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
->>   void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
->>   void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
->> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
->> +                    uint32_t *bytes_pp, uint32_t *bits_pp);
->>   /* qxl-logger.c */
->>   int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int 
->> group_id);
->> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
->> index 4799c9e8befd..b0a71a95ad66 100644
->> --- a/hw/display/qxl-render.c
->> +++ b/hw/display/qxl-render.c
->> @@ -27,6 +27,7 @@
->>   static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
->>   {
->>       DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
->> +    int dst_stride = surface_stride(surface);
->>       uint8_t *dst = surface_data(surface);
->>       uint8_t *src;
->>       int len, i;
->> @@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect 
->> *rect)
->>       } else {
->>           src += rect->top * qxl->guest_primary.abs_stride;
->>       }
->> -    dst += rect->top  * qxl->guest_primary.abs_stride;
->> +    dst += rect->top  * dst_stride;
->>       src += rect->left * qxl->guest_primary.bytes_pp;
->>       dst += rect->left * qxl->guest_primary.bytes_pp;
->>       len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
->>       for (i = rect->top; i < rect->bottom; i++) {
->>           memcpy(dst, src, len);
->> -        dst += qxl->guest_primary.abs_stride;
->> +        dst += dst_stride;
->>           src += qxl->guest_primary.qxl_stride;
->>       }
->>   }
->> @@ -64,27 +65,9 @@ void qxl_render_resize(PCIQXLDevice *qxl)
->>       qxl->guest_primary.qxl_stride = sc->stride;
->>       qxl->guest_primary.abs_stride = abs(sc->stride);
->>       qxl->guest_primary.resized++;
->> -    switch (sc->format) {
->> -    case SPICE_SURFACE_FMT_16_555:
->> -        qxl->guest_primary.bytes_pp = 2;
->> -        qxl->guest_primary.bits_pp = 15;
->> -        break;
->> -    case SPICE_SURFACE_FMT_16_565:
->> -        qxl->guest_primary.bytes_pp = 2;
->> -        qxl->guest_primary.bits_pp = 16;
->> -        break;
->> -    case SPICE_SURFACE_FMT_32_xRGB:
->> -    case SPICE_SURFACE_FMT_32_ARGB:
->> -        qxl->guest_primary.bytes_pp = 4;
->> -        qxl->guest_primary.bits_pp = 32;
->> -        break;
->> -    default:
->> -        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
->> -                qxl->guest_primary.surface.format);
->> -        qxl->guest_primary.bytes_pp = 4;
->> -        qxl->guest_primary.bits_pp = 32;
->> -        break;
->> -    }
->> +    /* fallback to default bpp if format is unknown */
->> +    qxl_format_bpp(qxl, sc->format, &qxl->guest_primary.bytes_pp,
->> +                   &qxl->guest_primary.bits_pp);
->>   }
->>   static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
->> @@ -103,6 +86,23 @@ static void 
->> qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
->>       int height = qxl->guest_head0_height ?: qxl- 
->> >guest_primary.surface.height;
->>       int i;
->> +    if (width <= 0 || height <= 0) {
->> +        qxl_set_guest_bug(qxl, "%s: invalid dimension %dx%d",
->> +                          __func__, width, height);
->> +        goto end;
->> +    }
+> Fixes: CVE-2026-18054
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
+> Reported-by: Ankur Saini <ankur98saini@gmail.com>
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
+> ---
+> Changes in v3:
+> - Handle short copies in VIRTIO_GPU_FILL_CMD() and VUGPU_FILL_CMD(),
+>    also rejecting truncated type-specific commands.
+> - Clear partially copied QEMU command data before completing the error.
+> - Keep vhost-user-gpu's explicit common-header check and drop the
+>    redundant virtio_gpu_process_cmdq() check.
+> - Rebase onto current master.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260729-virtio-gpu-short-header-v2-1-18036a97219a@gmail.com
 > 
-> The new dimension check runs before the existing !guest_primary.data 
-> exit. A qxl device starts in QXL_MODE_UNDEFINED with a zeroed primary 
-> surface, and qxl_render_update() explicitly calls this function in that 
-> state. Thus a host refresh—GTK, VNC, or screendump—sees 0×0 and calls 
-> qxl_set_guest_bug().
+> Changes in v2:
+> - Also reject short/truncated control headers in vhost-user-gpu.
+> - Expand the commit message to describe both affected paths.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260728-virtio-gpu-short-header-v1-1-af19a00b100d@gmail.com
+> ---
+>   contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
+>   contrib/vhost-user-gpu/vugpu.h          |  1 +
+>   include/hw/virtio/virtio-gpu.h          |  3 +++
+>   3 files changed, 16 insertions(+), 9 deletions(-)
 > 
-> Below is an LLM-generated reproducer:
+> diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+> index bb41758e34..8149834745 100644
+> --- a/contrib/vhost-user-gpu/vhost-user-gpu.c
+> +++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+> @@ -924,16 +924,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
+>           if (len != sizeof(cmd->cmd_hdr)) {
+>               g_warning("%s: command size incorrect %zu vs %zu\n",
+>                         __func__, len, sizeof(cmd->cmd_hdr));
+> -        }
+> -
+> -        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
+> -        g_debug("%d %s\n", cmd->cmd_hdr.type,
+> -                vg_cmd_to_string(cmd->cmd_hdr.type));
+> -
+> -        if (vg->virgl) {
+> -            vg_virgl_process_cmd(vg, cmd);
+> +            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
+> +            vg_ctrl_response_nodata(
+> +                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
+>           } else {
+> -            vg_process_cmd(vg, cmd);
+> +            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
+> +            g_debug("%d %s\n", cmd->cmd_hdr.type,
+> +                    vg_cmd_to_string(cmd->cmd_hdr.type));
+> +
+> +            if (vg->virgl) {
+> +                vg_virgl_process_cmd(vg, cmd);
+> +            } else {
+> +                vg_process_cmd(vg, cmd);
+> +            }
+>           }
+>   
+>           if (cmd->state != VG_CMD_STATE_FINISHED) {
+> diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
+> index 2374eb90cb..aaf2870cb2 100644
+> --- a/contrib/vhost-user-gpu/vugpu.h
+> +++ b/contrib/vhost-user-gpu/vugpu.h
+> @@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
+>           if (vugpufillcmd_s_ != sizeof(out)) {                   \
+>               g_critical("%s: command size incorrect %zu vs %zu", \
+>                          __func__, vugpufillcmd_s_, sizeof(out)); \
+> +            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
+>               return;                                             \
+>           }                                                       \
+>       } while (0)
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 2f60c72078..f965defa6b 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -315,6 +315,9 @@ struct VirtIOGPURutabaga {
+>               qemu_log_mask(LOG_GUEST_ERROR,                              \
+>                             "%s: command size incorrect %zu vs %zu\n",    \
+>                             __func__, virtiogpufillcmd_s_, sizeof(out));  \
+> +            memset(&out, 0, sizeof(out));                               \
+> +            virtio_gpu_ctrl_response_nodata(                            \
+> +                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);         \
+>               return;                                                     \
+>           }                                                               \
+>       } while (0)
 > 
-> qemu-system-x86_64 -machine q35 -nodefaults -device qxl,id=qxl0 \
-> -display none -S -qmp stdio -trace enable=qxl_set_guest_bug <<'EOF'
-> {"execute":"qmp_capabilities"}
-> {"execute":"screendump","arguments":{"filename":"/dev/ 
-> null","device":"qxl0","format":"ppm"}}
-> {"execute":"quit"}
-> EOF
+> ---
+> base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
+> change-id: 20260728-virtio-gpu-short-header-476aa1dae4f7
 > 
-> Regards,
-> Akihiko Odaki
-> 
->> +
->> +    if (qxl->guest_primary.bytes_pp > 0) {
->> +        int max_width = qxl->guest_primary.abs_stride
->> +                        / qxl->guest_primary.bytes_pp;
->> +        width = MIN(width, max_width);
->> +    }
->> +
->> +    if (qxl->guest_primary.abs_stride > 0) {
->> +        int max_height = qxl->vgamem_size / qxl- 
->> >guest_primary.abs_stride;
->> +        height = MIN(height, max_height);
->> +    }
->> +
->>       if (qxl->guest_primary.resized) {
->>           qxl->guest_primary.resized = 0;
->>           qxl->guest_primary.data = qxl_phys2virt(qxl,
->> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
->> index b7d871b9ee33..384b8767b8e6 100644
->> --- a/hw/display/qxl.c
->> +++ b/hw/display/qxl.c
->> @@ -1489,6 +1489,47 @@ static void 
->> qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
->>       qxl_render_resize(qxl);
->>   }
->> +/*
->> + * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
->> + *
->> + * Only valid for surface suitable for rendering.
->> + */
->> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
->> +                    uint32_t *bytes_pp, uint32_t *bits_pp)
->> +{
->> +    uint32_t bypp = 4;
->> +    uint32_t bipp = 32;
->> +    bool ret = true;
->> +
->> +    switch (format) {
->> +    case SPICE_SURFACE_FMT_16_555:
->> +        bypp = 2;
->> +        bipp = 15;
->> +        break;
->> +    case SPICE_SURFACE_FMT_16_565:
->> +        bypp = 2;
->> +        bipp = 16;
->> +        break;
->> +    case SPICE_SURFACE_FMT_32_xRGB:
->> +    case SPICE_SURFACE_FMT_32_ARGB:
->> +        bypp = 4;
->> +        bipp = 32;
->> +        break;
->> +    default:
->> +        ret = false;
->> +        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, 
->> format);
->> +    }
->> +
->> +    if (bytes_pp != NULL) {
->> +        *bytes_pp = bypp;
->> +    }
->> +    if (bits_pp != NULL) {
->> +        *bits_pp = bipp;
->> +    }
->> +
->> +    return ret;
->> +}
->> +
->>   static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
->>                                        qxl_async_io async)
->>   {
->> @@ -1496,6 +1537,7 @@ static void 
->> qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
->>       QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
->>       uint32_t requested_height = le32_to_cpu(sc->height);
->>       int requested_stride = le32_to_cpu(sc->stride);
->> +    uint32_t bytes_pp;
->>       if (requested_stride == INT32_MIN ||
->>           abs(requested_stride) * (uint64_t)requested_height
->> @@ -1532,6 +1574,23 @@ static void 
->> qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
->>           return;
->>       }
->> +    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
->> +        return;
->> +    }
->> +
->> +    if (surface.width == 0 || surface.height == 0) {
->> +        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
->> +                          __func__, surface.width, surface.height);
->> +        return;
->> +    }
->> +
->> +    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
->> +        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
->> +                          " stride %d width %u bpp %u",
->> +                          __func__, surface.stride, surface.width, 
->> bytes_pp);
->> +        return;
->> +    }
->> +
->>       surface.mouse_mode = true;
->>       surface.group_id   = MEMSLOT_GROUP_GUEST;
->>       if (loadvm) {
-> 
-> 
+> Best regards,
 
 
