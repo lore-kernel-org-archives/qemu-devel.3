@@ -4,111 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5D6C561E6
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 18:31:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDA4C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 18:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrJua-0006TB-JL; Tue, 04 Aug 2026 14:30:54 -0400
+	id 1wrK2u-0000GO-Vw; Tue, 04 Aug 2026 14:39:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wrJto-0006DV-Rl; Tue, 04 Aug 2026 14:30:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wrJtk-0004hV-Fu; Tue, 04 Aug 2026 14:29:59 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 674Fm7X91193111; Tue, 4 Aug 2026 18:29:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=7EYGMmd7kqUAEEq9m
- hYmfBLDxz7ll8IbeSAUpIJFvyk=; b=pPmPMgLOTp8HePbcS0kB57+7WjzcklN/Z
- hi/UFj9I48X6vAGc518QB/RfdAsvrR4tLqwfs883c10+dt0oEkhcJmqhfM4NpDut
- FidmbgJx7bkp9l6M3N9i0DYH81jMpPWxngTIjuk5SF/DhcZMKw/SSmppngLysgsI
- N3Fe8OMxBm8ZkNA0JSPOtzJDHhvLp+6kLrSpNn3NC9FhsK8Nff27bNZ4eVcjIBoh
- V1vxHC2ADr/xwNjjMqv9Rm0k8vcZ+yjzdFpmGMdmBwpgUfxTNyCPISOpmhehNd+a
- ZBTYCa6oiaH7UkwACSDlqJM99wmne2ZhAX9E45nKEkaPvAcbr6oxg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs67hq75p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 04 Aug 2026 18:29:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 674IQOwI025207;
- Tue, 4 Aug 2026 18:29:53 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsugw3b2y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 04 Aug 2026 18:29:53 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 674ITnQL31916356
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 4 Aug 2026 18:29:49 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38D032004B;
- Tue,  4 Aug 2026 18:29:49 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8513620043;
- Tue,  4 Aug 2026 18:29:46 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.39.28.45])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  4 Aug 2026 18:29:46 +0000 (GMT)
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Vaibhav Jain <vaibhav@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Gautam Menghani <gautam@linux.ibm.com>
-Subject: [PATCH v5 3/3] target/ppc/kvm: Use host compatibility mode for nested
- guests
-Date: Tue,  4 Aug 2026 23:59:14 +0530
-Message-ID: <20260804182914.83091-4-amachhiw@linux.ibm.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260804182914.83091-1-amachhiw@linux.ibm.com>
-References: <20260804182914.83091-1-amachhiw@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wrK2o-0000FN-2Q
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 14:39:18 -0400
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wrK2i-0006FN-D5
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 14:39:15 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-7ee4399c3abso161344a34.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 11:39:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1785868750; x=1786473550; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9S1Or6J5d6w+G6TdMrXTpjfNSzXm21vs6J6CZKNQiMw=;
+ b=H6SEKn12cgbdVoloW393JnLOQWWZTmueVlyvaiZoTDBCiS6PNtBCXdahhjyUM/XROb
+ 3fwFxWKnTuBtH6tnK6G9YiURAkQXJdFNNwrzbq8nrZKqiGqHkul12K8PVk4wZ5mTvBXJ
+ OhWv0Os9w6Qkw/TLdM7+s/vORDDCJmZwxy5VRJZAGvGCgA+LXzKBCgC6uHJ2TUDNXVNQ
+ jPtwJsezl3l+miQ68X0shUKOg1dXRFMooSrkGrvy6U9k9lmeXWQZJ0soS1XrCNpq4num
+ q6qd+2ijkgCzqlg4vzNhskH7t4ZFiXhzOiW5kPaTcVlecHyUFoDCTClmPuEMzr9nbLPX
+ xU8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785868750; x=1786473550;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=9S1Or6J5d6w+G6TdMrXTpjfNSzXm21vs6J6CZKNQiMw=;
+ b=Pc28aJpDcIwrgPOXsl/wFRhetScPYdJ+jECnBC8t880YorX3KEmCvXY9m11f80uB35
+ CJHbtXLpvGiTlSM3WMlRogIvsNbHW4toXxXVEmDG/2FeFxftA1gQFQUD/oWOg9Z75PqM
+ x992bCOdKHPGeuiirVa8GRgBmTihXPWfsT33ei24d77pNhuEG0qu7g6WuluJzAxB3KMY
+ rYiMPjHOsmlhlPaIn9flSsdD/x0ftJbQfZliNcnD44gvApw8VLafCcyUTIJW4IuJgHJm
+ OVhO9iBAk2HFD9KJdig2Gqazwl+SOEmwJOe0XNJiRXX9JFbNggNjcVs7/LU18yCXdfUU
+ ijfA==
+X-Gm-Message-State: AOJu0YyPUDsNm+e7bsZkLe1EurHIUDOytYqBdQTUPt1p40R5JQKoncz9
+ Y1IGRGXlb+NzSMKHi0HIH4u9kYlChk6iJtbrTGG7PNyxDk1SoXPvE4uTTKUWXi56Aps=
+X-Gm-Gg: AR+sD136L3fpJx6vm7DLzncdc/CvjAszJWLnWLeCTv4ET1hJWeYCEPTtuvBVt8qMgXN
+ dT1gFY7Ck/D/Yu5SrGew4YXv498NyEfyF1sLtr65b+g5M7sQLKmPrR/CehWaN8MirJST0gcyit4
+ VvW2EGa2ArDE+yelimNu4oj9neFOyMxBep+5firl8e0IJmYG54Ia4yVkPVGXvaxREoF9TX1onq1
+ s7yYFVyTPXg+BndwoWCDaw6fuuHmxgsuAPgqCvB64ZYemV0DuY3GQfdbz0HLiz1Jz/27HII89Xn
+ ydX9UU2lwsnOOtMAX1NbEEDehEIQ/sXU1+NHhW8CTB/9x8WoKbtYo8jOwpQUoSOAh9gdBDLYdie
+ VNsoxuMzaqkXbM9LeglpMiVoahCYq7JH5tP0dLpxJ///5aq7H0UCvQSI6SquiiYT9XYBbATtoH8
+ Cp2pMLfrTBY1Gp4Z5lh1auCtcNsyrbg+TX9C8RmIk/evoV1M55JxDwCIiK/JeJZqdu4aM6vQQ7X
+ mxvt2yzKovL5bo2Mr9+gFaaG75e
+X-Received: by 2002:a05:6830:6d25:b0:7e9:e8ae:7049 with SMTP id
+ 46e09a7af769-7f1e5d2f8b8mr813867a34.7.1785868750170; 
+ Tue, 04 Aug 2026 11:39:10 -0700 (PDT)
+Received: from toolbox ([12.55.13.134]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7f1df33da38sm1432132a34.7.2026.08.04.11.39.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Aug 2026 11:39:09 -0700 (PDT)
+Date: Tue, 4 Aug 2026 13:38:47 -0500
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+To: Kangjie Huang <flamboyant.h.01@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v2 1/5] hw/ssi: Add Synopsys DesignWare SSI standard PIO
+ controller
+Message-ID: <itp7xmctqnac4c7kytqyrrs3xbfnbjprem6ezlltc6b5ncdpdn@6pypq3e7lbog>
+References: <20260801192848.30606-1-flamboyant.h.01@gmail.com>
+ <20260801192848.30606-2-flamboyant.h.01@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA0MDE0OCBTYWx0ZWRfX2ScZHXhVWXc5
- +ALiFxk4iLmoogDqKWzIm+9RPN9Ic+o71p5EgvtJLwQawbBQ89uYCIgs8FKs8o5tmrIAnyN1UHQ
- Q381LZxyaQEkDsJ03NSYWEeABrtb56o=
-X-Authority-Analysis: v=2.4 cv=I7VVgtgg c=1 sm=1 tr=0 ts=6a722fa2 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=NAVjuql5Xawbq67qXdQA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA0MDE0OCBTYWx0ZWRfX0KR+z6rI+01u
- U+se/0WNA1gltH347NGxQleXYQYR44YUH++ck4Li5yjnn5FhbdIobvCxrEjG5DgWOdJrTNBm/o6
- sUO8r7mVm/wfj73SUpZxidEdz7Tndmta7PBKXLQdBC3hGOSxK2cIV4CoDkEOjCjYztP7IALzZ0h
- 5n7hbip0HE1TbG3lOSZ7HAJ9ykWTnuHh3mR22uDwfo8qMO//NEId2jZf+0EFNI/x6+HS7RjLmU3
- v0B2i/iBSnZSU8xmn6oakJFUq2/wSEBdb1LoC5QJt83nK3Zg3jkq5C3aikk2NNR3CsIoibAammJ
- BQ/+RgB9aPmecYJAR+AlqdwZzbIx0Po1aDis/cYm8aOKK3kdTianS1g/nbepG8YcTSG+Y3VgpSG
- xd9D3cFXrn73slat/RPYjvv5dZGK4yA1Td/YaRs7ymy+ZBxtGhzwnEn3b6nihvOcmloEY+6TVu6
- m83K21IegXky4uSqLVw==
-X-Proofpoint-ORIG-GUID: FvG5BO6OQH1aXPddXezUvY0mC7OfENBt
-X-Proofpoint-GUID: UYnpPv7MwYERSKvNnWujV9Tam59bsni1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-04_03,2026-08-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608040148
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260801192848.30606-2-flamboyant.h.01@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,57 +110,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On POWER systems, the host CPU may run in a compatibility mode (e.g.,
-a Power11 processor operating in Power10 compatibility mode). When
-running nested KVM guests, QEMU currently derives the host CPU type
-using mfpvr(), which reflects the physical processor version. This can
-result in a mismatch between the CPU model used by QEMU and the
-compatibility mode enforced by the host, leading to guest boot failures
-such as "KVM-NESTEDv2: couldn't set guest wide elements".
+On Sun, Aug 02, 2026 at 03:28:44AM +0800, Kangjie Huang wrote:
+> Add a reusable SysBus model for the Synopsys DesignWare SSI controller.
+> 
+> Implement the Standard SPI register subset, configurable chip-select and
+> FIFO resources, the four Standard PIO transfer modes, reset handling,
+> chip-select GPIOs, and RAZ/WI handling for unsupported enhanced, DMA,
+> and XIP registers.
+> 
+> Add num-cs, fifo-depth, and imr-reset properties. Save only Standard PIO
+> state in VMState and reject migration between devices with different
+> resource profiles.
+> 
+> The controller is not instantiated by this patch.
+> 
+> Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
 
-Update kvm_ppc_get_host_cpu_class() to check if the host is running in
-a compatibility mode using kvm_ppc_host_compat_pvr(). When available,
-use the compatibility PVR instead of the raw hardware PVR when selecting
-the CPU model. This ensures that QEMU selects a CPU model consistent
-with the host compatibility mode, allowing nested guests to boot
-correctly.
+<snip>
 
-The guard uses #if defined(TARGET_PPC64) to prevent build breakage on
-ppc32 targets where the POWER9/10/11 PVR constants are not defined.
+> ---
+>  hw/ssi/Kconfig          |   4 +
+>  hw/ssi/dw_ssi.c         | 956 ++++++++++++++++++++++++++++++++++++++++
+>  hw/ssi/meson.build      |   1 +
+>  include/hw/ssi/dw_ssi.h |  62 +++
+>  4 files changed, 1023 insertions(+)
+>  create mode 100644 hw/ssi/dw_ssi.c
+>  create mode 100644 include/hw/ssi/dw_ssi.h
+> 
+> diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+> index 1bd56463c1..c48cd2ff6d 100644
+> --- a/hw/ssi/Kconfig
+> +++ b/hw/ssi/Kconfig
+> @@ -6,6 +6,10 @@ config SIFIVE_SPI
+>      bool
+>      select SSI
+>  
+> +config DW_SSI
+> +    bool
+> +    select SSI
+> +
+>  config SSI
+>      bool
+>  
+> diff --git a/hw/ssi/dw_ssi.c b/hw/ssi/dw_ssi.c
+> new file mode 100644
+> index 0000000000..f9f0e23730
+> --- /dev/null
+> +++ b/hw/ssi/dw_ssi.c
+> @@ -0,0 +1,956 @@
+> +/*
+> + * Synopsys DesignWare SSI
+> + *
+> + * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Emulates the DesignWare SSI controller in Standard SPI mode,
+> + * covering the PIO/FIFO data path and chip selects.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/core/registerfields.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/core/irq.h"
+> +#include "hw/ssi/dw_ssi.h"
+> +#include "migration/vmstate.h"
+> +#include "qapi/error.h"
+> +#include "qemu/bitops.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +
+> +/* DWC SSI 1.03 derivative (TRM v0.3.1 section 12.3). */
+> +#define DW_SSI_CTRLR0_RESET            0x00004007
+> +#define DW_SSI_SR_RESET                0x00000006
+> +#define DW_SSI_IDR_RESET               0xa1b2c3d5
+> +#define DW_SSI_VERSION                 0x3130332a
+> +#define DW_SSI_PIO_TX_BATCH            64
+> +
+> +enum {
+> +    DW_SSI_TMOD_TR,
+> +    DW_SSI_TMOD_TO,
+> +    DW_SSI_TMOD_RO,
+> +    DW_SSI_TMOD_EEPROM_READ,
+> +};
+> +
+> +REG32(CTRLR0, 0x000)
+> +    FIELD(CTRLR0, DFS, 0, 5)
+> +    FIELD(CTRLR0, FRF, 6, 2)
+> +    FIELD(CTRLR0, SCPH, 8, 1)
+> +    FIELD(CTRLR0, SCPOL, 9, 1)
+> +    FIELD(CTRLR0, TMOD, 10, 2)
 
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
----
-No changes in this version.
+There are 2 variants of designware spi, one is called dw-apb-ssi and
+another is called dwc-ssi. If you look at their u-boot drivers, you can
+see that they differ in the location of the TMOD bits in the CTRLR0.
+dw-apb-ssi has it at bits 8 and 9, while dwc-ssi has it at 10/11.
+This implementation is for the dwc-ssi version (which is the newer one).
 
- target/ppc/kvm.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Would it be possible to have the naming be consistent (DWC_SSI,
+dwc_ssi.c) everywhere? There are some places throught the series where
+the file names/Kconfig symbols/function names are named dw_ssi.
 
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index d4c5601a00c4..aa8269186a1a 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2682,6 +2682,18 @@ PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
-     uint32_t host_pvr = mfpvr();
-     PowerPCCPUClass *pvr_pcc;
- 
-+#if defined(TARGET_PPC64)
-+#ifndef CONFIG_KVM
-+#error "CONFIG_KVM is not enabled"
-+#endif
-+    uint32_t compat_host_pvr;
-+
-+    compat_host_pvr = kvm_ppc_host_compat_pvr();
-+    if (compat_host_pvr) {
-+        host_pvr = compat_host_pvr;
-+    }
-+#endif /* TARGET_PPC64 */
-+
-     pvr_pcc = ppc_cpu_class_by_pvr(host_pvr);
-     if (pvr_pcc == NULL) {
-         pvr_pcc = ppc_cpu_class_by_pvr_mask(host_pvr);
--- 
-2.50.1 (Apple Git-155)
+One could argue that this model could retain the generic designware spi
+name and support both versions, but I don't think that's necessary.
 
+Regards
+Anirudh Srinivasan
 
