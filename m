@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47DAC55822
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 16:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69CEC55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrIPJ-0007GO-PA; Tue, 04 Aug 2026 12:54:25 -0400
+	id 1wrIVM-00006s-4P; Tue, 04 Aug 2026 13:00:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wrIPJ-0007GG-5G
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 12:54:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wrIPH-00083I-Fx
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 12:54:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785862461;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=CtzzvXkyrYWBS7h1wUGsGeGcIxg7SwuqbUot9EQyZ5I=;
- b=cciEfUHysyL13P33Fw6NXfpNBm4/GCUowDYg0m7y0P2Hs9HU9620TIqzEI/hT7yyD6h2UD
- hWGiC1GRLrqDvPcii11RSg+lhqvwAQ+7gJrgwWaVZ2ctCLfGj/a3wChEbM7rF5mI8VrOh6
- vNVnXxH6gyKy79K6rxqHX4XYN/dXsx8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-CH3ONSewNNecL9yXq5YiIw-1; Tue,
- 04 Aug 2026 12:54:17 -0400
-X-MC-Unique: CH3ONSewNNecL9yXq5YiIw-1
-X-Mimecast-MFC-AGG-ID: CH3ONSewNNecL9yXq5YiIw_1785862456
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8445F1956056; Tue,  4 Aug 2026 16:54:16 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.106])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 04DEC195608E; Tue,  4 Aug 2026 16:54:15 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVK-00006A-O3
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:38 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wrIVI-0000ii-Kj
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:00:38 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-47fe89fb333so16868f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 10:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1785862835; x=1786467635; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=0oNDH01FbQte7UkYHPhvNcB6113WA9wPSR1l+l/ks+A=;
+ b=Xv9eARI5x6MHTER8wpyJKJ4MANuGRlkshUC2ZvHmMDxpGhBClW0rxLrNuCHe41YYsz
+ 1gy631tLsOV36a4wcaTnFbuPBNvpDsTZsV7xrIK421C+/exGLVFXPJ6ioG7NZdl+IM+Q
+ ++HnCcH6dVxdvfykfj1oA5JDhhr3ZvXE31Z0yLIGU53bOnkrFGnwR0anyYGBUIQPl2Lj
+ Zfn90o9xCayLSRfujyxUmbMka0BqomxYyEmoC3pxazE3DENT/phDhsneV886UkGxv+/W
+ BAZoRh+xYZsoTtNkZ/nO5bj/Nhewyqsn19Lh0xbEJg1pi+cGEKyFgbEynXGYRXRJz+yj
+ qUbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785862835; x=1786467635;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0oNDH01FbQte7UkYHPhvNcB6113WA9wPSR1l+l/ks+A=;
+ b=Kxh/+Lku22SYDVbT6T+7l1CHCckwbZYagn9me5sjN8P7Yaiop8E9ofRMyy1m53ZWR2
+ fEEqegDmDfbkIMqTtR+u/kmm8q4ggqJP9dJQlb2tJsV/IEnhgn8Z3hSxNZ6PiFJvSCEP
+ Rq+2cSz4tuOpYmWW2MVvOjlzRdX3A8DBrxPS538v2RVt74/lxK94R9al1w2VdAfb9fuM
+ Tr21NmOwUEJo6ORuCl7ZihkPUorS+dgsoARyw9U/q2wKwvRzQ6Uz2lUjoa0wNcJ4aL7X
+ galzMoK1CybrRLAxJ+iSfaqLt6i6FpTNjpHM/eCe+VnAab/6m4NDLNZAKeTVaMdu/F4J
+ 4Hsg==
+X-Gm-Message-State: AOJu0YxIdEZ+76d3Wi2A5YggcoH64oG+dFyUEiJs2BLmSUAN/n2Uf7Nz
+ 5YI3AVWuGb97cmr9DVn8FAhTFDUjCJe/lT72sC66sYs1JRHqu3E+N/i7rPU98v6pAAlQ6kdYu8d
+ m1UkI
+X-Gm-Gg: AR+sD12Eemp/0RRrrmK2k8lF2COGFt7uRnPRhq6YeWMLHcAkR/LEA+bWG1qZCqsOIP3
+ aQPeT+tmEEDTYAjfOEg7chGyE0LhnBHysfQlF3XmK2KQh9eyzn5rA/Bh1Mgxca++MMrAC3GZejE
+ BX/eqxibQ08SAh+Qlq1FAYa+2Ct4a6GlqukdHtrUotiJ656yqxfIZv/QoKeoRVMC8lNtll+3R7i
+ hZYvzbOmp++aOv+MeGbTwg9WxVCVfJ2DF0mQHUHN1Ar4lpqMTswgnNgxlhcn7DK2rNLvzBA/ps6
+ cy13st85kNKTnotfTbsi/1gd0zRCY1tAXrkdCzNdSEA+2UkJcIb+ctWakqqht71WLr7L6EyA1J0
+ 8zRfcCDuJsl75VyuyR77PD42Ap8cLAoLjMOVKGvHWBD4hp7j2A7wIUVrH+V5OcXDsJAMo5qO8Lz
+ fO513bCox+hviGwmBA0yul/IPnOjFSnJtuRFJNeqi96Zipuw==
+X-Received: by 2002:a05:6000:299b:20b0:462:e086:35f with SMTP id
+ ffacd0b85a97d-47fec52b1aamr1021141f8f.21.1785862835001; 
+ Tue, 04 Aug 2026 10:00:35 -0700 (PDT)
+Received: from athena ([213.133.28.44]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-47fec23ec3asm1234116f8f.31.2026.08.04.10.00.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Aug 2026 10:00:34 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH for-11.1] gitlab: disable provenance attestations to work
- around CI bug
-Date: Tue,  4 Aug 2026 12:54:14 -0400
-Message-ID: <20260804165414.480435-1-stefanha@redhat.com>
+Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL v2 5/7] tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
+Date: Tue,  4 Aug 2026 19:00:12 +0200
+Message-ID: <20260804170015.3128363-6-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260804170015.3128363-1-den@openvz.org>
+References: <20260804170015.3128363-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.795,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,56 +101,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU's CI pipeline involves building container images that will be used
-to run builds and tests. A recent Docker change triggered the following
-error:
+Add /ahci/cdrom/{pio,dma}/raw: read several sectors with READ CD in
+raw mode (atapi_raw), so the ATAPI 2352-byte unpack path is exercised
+through the AHCI delivery, which IDE coverage does not reach. Each
+sector's 2048-byte payload is verified at its in-sector offset.
 
-  $ docker push "$TAG"
-  ...
-  error from registry: blob unknown to registry - sha256:4401f6f779caf8841cafd5f483e642fcac56a23a4e4a59523231e101c890dad9
+The PIO case uses a byte-count limit of one raw sector per DRQ burst:
+libqos asserts a one-sector PIO transfer, and the multi-sector unpack
+loop is already covered by the IDE raw test.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/15701875927#L2372
-
-This happens because Docker now pushes out-of-order and the GitLab
-Container Registry rejects due to an unknown reference:
-https://forum.gitlab.com/t/started-yesterday-docker-push-error-from-registry-blob-unknown-to-registry/134733/5
-
-It is unclear at this point whether GitLab will modify the behavior of
-Container Registry or whether Docker will ship a fix.
-
-The current workaround is to disable the provenance attestation that is
-involved in this issue. QEMU's CI pipeline container images are used
-internally for testing and are not widely distributed. Provenance
-attestation can be disabled as there are no external consumers of these
-images. Expect to revert this commit in the future when GitLab or Docker
-have released their own fixes.
-
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
-Note that this is an urgent patch so that the CI will pass again and I
-can tag v11.1.0-rc3 later today. Currently it is failing due to this
-issue!
+ tests/qtest/ahci-test.c | 68 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
- .gitlab-ci.d/container-template.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
-index 8c7311cca57..88317d650e2 100644
---- a/.gitlab-ci.d/container-template.yml
-+++ b/.gitlab-ci.d/container-template.yml
-@@ -14,7 +14,7 @@
-     - echo "TAG:$TAG"
-     - echo "COMMON_TAG:$COMMON_TAG"
-     - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
--      --build-arg BUILDKIT_INLINE_CACHE=1
-+      --build-arg BUILDKIT_INLINE_CACHE=1 --provenance=false
-       -f "tests/docker/dockerfiles/$NAME.docker" "."
-     - docker push "$TAG"
-   after_script:
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 44799eea15..58bc04b3ef 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1565,6 +1565,31 @@ static int ahci_cb_cmp_buff(AHCIQState *ahci, AHCICommand *cmd,
+     return 0;
+ }
+ 
++static int ahci_cb_cmp_raw(AHCIQState *ahci, AHCICommand *cmd,
++                           const AHCIOpts *opts)
++{
++    unsigned char *tx = opts->opaque;
++    unsigned char *rx;
++    unsigned i, nsectors;
++
++    if (!opts->size) {
++        return 0;
++    }
++
++    nsectors = opts->size / ATAPI_RAW_SECTOR_SIZE;
++    rx = g_malloc0(opts->size);
++    qtest_bufread(ahci->parent->qts, opts->buffer, rx, opts->size);
++    /* Each raw sector carries its 2048-byte payload past a 16-byte header. */
++    for (i = 0; i < nsectors; i++) {
++        g_assert_cmphex(memcmp(rx + i * ATAPI_RAW_SECTOR_SIZE + 16,
++                               tx + i * ATAPI_SECTOR_SIZE,
++                               ATAPI_SECTOR_SIZE), ==, 0);
++    }
++    g_free(rx);
++
++    return 0;
++}
++
+ static void ahci_test_cdrom(int nsectors, bool dma, uint8_t cmd,
+                             bool override_bcl, uint16_t bcl)
+ {
+@@ -1625,6 +1650,47 @@ static void test_cdrom_pio_multi(void)
+     ahci_test_cdrom_read10(3, false);
+ }
+ 
++static void ahci_test_cdrom_raw(int nsectors, bool dma)
++{
++    AHCIQState *ahci;
++    unsigned char *tx;
++    char *iso;
++    int fd;
++    AHCIOpts opts = {
++        .size = (uint64_t)ATAPI_RAW_SECTOR_SIZE * nsectors,
++        .atapi = true,
++        .atapi_dma = dma,
++        .atapi_raw = true,
++        .set_bcl = true,
++        .bcl = ATAPI_RAW_SECTOR_SIZE, /* one raw sector per DRQ burst */
++        .post_cb = ahci_cb_cmp_raw,
++    };
++    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * (nsectors + 1);
++
++    fd = prepare_iso(iso_size, &tx, &iso);
++    opts.opaque = tx;
++
++    ahci = ahci_boot_and_enable("-drive if=none,id=drive0,file=%s,format=raw "
++                                "-M q35 "
++                                "-device ide-cd,drive=drive0 ", iso);
++
++    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_CD, &opts);
++
++    g_free(tx);
++    ahci_shutdown(ahci);
++    remove_iso(fd, iso);
++}
++
++static void test_cdrom_dma_raw(void)
++{
++    ahci_test_cdrom_raw(3, true);
++}
++
++static void test_cdrom_pio_raw(void)
++{
++    ahci_test_cdrom_raw(3, false);
++}
++
+ /*
+  * Regression test: a buffered ATAPI read completing after a command
+  * engine restart must not dereference the cleared cur_cmd. Cover both
+@@ -2100,8 +2166,10 @@ int main(int argc, char **argv)
+ 
+     qtest_add_func("/ahci/cdrom/dma/single", test_cdrom_dma);
+     qtest_add_func("/ahci/cdrom/dma/multi", test_cdrom_dma_multi);
++    qtest_add_func("/ahci/cdrom/dma/raw", test_cdrom_dma_raw);
+     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
+     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
++    qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
+ 
+     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
+     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
 -- 
-2.55.0
+2.53.0
 
 
