@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C814C55ABA
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A03C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr9SM-0002h6-SN; Tue, 04 Aug 2026 03:20:58 -0400
+	id 1wr9SZ-00037J-4j; Tue, 04 Aug 2026 03:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9SL-0002gc-2j
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wr9SX-00031I-Hj
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wr9SJ-0001Wc-B4
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:20:56 -0400
+ id 1wr9SU-0001XF-RT
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 03:21:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785828054;
+ s=mimecast20190719; t=1785828066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n7JJ+hcyRyV7L2E2biokXg6Kr5R0fBx2vtTrODZON80=;
- b=ILkKrUlhcZ+H6ep4NTpDbvqjGNYOF98IpYxnEroyTwmPtmEtHE5jchEmmJKI1pr3I4l3+V
- rHllIKx1NkWlwOlnjLcXZlrtsR3dtZr3MhbQtUEwl1mjwrAcdcQGZr/nTXmZ0lXfSv//HF
- qMnCo4g7JossK6RMc0HI2UJywgV8Cwc=
+ bh=aULtpVcVtyCMV62+QOgZRcxVB09PF0BdgKmsWwfe87k=;
+ b=TYeBL8bn3CbG0DeU2pcfp7Ne9bp1GjuAVDhUJ1puS98NEuTpzL0UOCU0LI86LbFIcmWMDg
+ +6TGYRbqEsdySGwTdhpL04QTf48gmMnzLhFmLCRTt9eEG9WSdnIy7MVgoxdTsnuJ72bT1r
+ arr8jhCAugen4Dc8Z+aJ5FgmGzX//Ug=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-paC-8cn6P-6AlyyqpTPjIw-1; Tue,
- 04 Aug 2026 03:20:46 -0400
-X-MC-Unique: paC-8cn6P-6AlyyqpTPjIw-1
-X-Mimecast-MFC-AGG-ID: paC-8cn6P-6AlyyqpTPjIw_1785828045
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-cyhT4iOePwmBvpSmIOaEiw-1; Tue,
+ 04 Aug 2026 03:20:54 -0400
+X-MC-Unique: cyhT4iOePwmBvpSmIOaEiw-1
+X-Mimecast-MFC-AGG-ID: cyhT4iOePwmBvpSmIOaEiw_1785828053
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3506719560A6; Tue,  4 Aug 2026 07:20:45 +0000 (UTC)
+ id BF54C195608E; Tue,  4 Aug 2026 07:20:53 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0D834300019F; Tue,  4 Aug 2026 07:20:40 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B57041956087; Tue,  4 Aug 2026 07:20:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 04 Aug 2026 11:18:55 +0400
-Subject: [GIT PULL 6/9] virtio-gpu: reject requests with short/truncated
- control headers
+Date: Tue, 04 Aug 2026 11:18:56 +0400
+Subject: [GIT PULL 7/9] hw/display/virtio-gpu: Always reject invalid
+ scanout bounds
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260804-fix-v1-6-0c2be5390809@redhat.com>
+Message-Id: <20260804-fix-v1-7-0c2be5390809@redhat.com>
 References: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 In-Reply-To: <20260804-fix-v1-0-0c2be5390809@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+Cc: stefanha@redhat.com, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4438;
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7071;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=jaPJDGwWA1VqGu8rJHjZKo+J8zwGDTWWnz8+PwcussU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdkawZFC1DxpoYxe1QO3j4jERQaNl82iL4+
- R5H7IVYGSWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
- 5VFLD/45u7rauyNFSyU5veO6KTXPT5U0Wo6ZBIFYThDa1oa0StSzSI7hEef25sHQoFilsMHvDMw
- rPRhcSAlhNt1aMfzN9QoSLVXBcS8UlrpKHzMkAAR3lK/7eGUdmdwg1J8iiBWEcdgsh1gCUmoVQq
- uXmQAUQZAdezP6sRpRUiXzajS0hl6apLzfMd4sqYCnA8p9JVQtoi969ODobn56HqB4E0tgJAivv
- n/wrj1Lb25bWLieXxv9PfceTVtHF2lH+JRV1e0oueTKSBm5u3y8CMbRnFJ5hn/2z2e6MxDOelc0
- 4Dq3EyzZZvrqnw2lN/QobsPyT/loMYRwh9mjbRVDcSBECjUqw7tr2l7d27aMkqgv/iFtOf3XHAN
- jn0y8c+7JfsPgOerAfQL/GKVoTlFriZqVgXhQdfqNLT3su3qdAlUT3TNrU+lKlPwSbLGBQvCT6M
- pWZhIKpKm5V1AFdViT3ipEjxfZJ1N/PNrnO7xXiJFD5Gee3ZaV64n7w/alpwn3l7Qh5BEGNTA5l
- vJpkJt2aP49w32znMFAbXKtJj3bqOL3zsaXdPR6n1Uv2yJLMkoVZOpEf2651cXMQpsk8LCquOC3
- Z5qAVspbyycY19+YcnykLMLGqD7PIvPP5X2RRMEiW5xG5AsR5kI5y6N6cK39I8eBufIHSafMPfk
- ibz48jA+cmcGveQ==
+ bh=lPEGPLPQO9o4Iq92ww7DSP/izILyow8FYE5uhd9yQZc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcZJdNehPbOYPJ7RAof/TVteawEb+DYMeuqiEn
+ HMT57VOO/SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanGSXQAKCRDa6OEJdZac
+ 5SLvD/9YtGwf3H6wzGaZuctb5OEJgHhF0Ve4wYJ4RKlWMPGRWRrPqZRgajgCfhSGDTx8Z2SxZAR
+ Nrs7ndEUcz+uokx883j4ORQGy82CuwcwRlN3G1WGJveaQhngb9HS7BvJ7Qm7fICkwIWQdyuVAuA
+ 8OtPzrHCkhqEFb+uxPqI08IiVSaiYqFyfWPqj6d8qomz4Ql/SakdbEwyQTvC16UdBi7Pr0uZZov
+ hyh04SZieTPwML2lhl3WtcYzsV+Nr2T+KFBWcofMxC3ms5aAjxnu/vKQFlmBwSDjoFCp1Ok1Etx
+ oJFYjZgJjoJrBz8ovWTfur0ggOq1nAh7GLv3SUtEWuoWb1AF0vZ9CoSjNuDq7tZdIZBMhWEvbHz
+ pSOrcAs7NO1kJwFSgRVF2RGq8u6tfwHgbKNP01bazWOPB0TiL3Bfvdce19C6/87ATp1KHYGnIFR
+ Ij5jJ5BrCfNqnBB0xohOFhZYXP/DVFaHmjqwy0USgqulrEDPLJ2VwwlKLzhs5BO4XJyDCGPEZIO
+ 0bFZgabzWN0ofbuGr4Ipb1HkpuRdXZPy923K7GMK+NB9v+3anaUfm2wvCXr6D/nVI7zJngR7o5c
+ m06l3J0lQsQvEFFFj6ZqPXmzaXR9yyvtSoUR4a10u0dxTf5DCAxTaLjy/fWVyeYUuTW5Gu/2sB4
+ znssjHff/nmgo9A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 4
@@ -90,9 +89,8 @@ X-Spam_score: 0.4
 X-Spam_bar: /
 X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.811,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,97 +106,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ankur Saini <ankur98saini@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-A short control request can leave command data partially initialized.
-For the common header, guest-controlled flags can then cause stale fence
-metadata to be returned to the guest.
+virtio-gpu does not consistently check scanout bounds with wraparound
+handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
+reach qemu_console_resize(), qemu_create_displaysurface(), and
+ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
+invalid rectangle can terminate QEMU. Implement a check with proper
+wraparound handling and apply it consistently.
 
-The command fill helpers detect a short copy but only log and return.
-For the common header this leaves the request without any completion;
-for type-specific commands the caller still completes the request but
-reports VIRTIO_GPU_RESP_OK_NODATA, masking the error. Make
-VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete the
-request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the same
-error through the existing vhost-user-gpu dispatcher. This also rejects
-truncated type-specific commands.
-
-The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
-clear it and complete the request directly when that copy is short.
-
-Fixes: CVE-2026-66021
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
-Reported-by: Ankur Saini <ankur98saini@gmail.com>
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
+Message-ID: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
 ---
- contrib/vhost-user-gpu/vugpu.h          |  1 +
- include/hw/virtio/virtio-gpu.h          |  3 +++
- contrib/vhost-user-gpu/vhost-user-gpu.c | 21 ++++++++++++---------
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ include/hw/virtio/virtio-gpu.h   |  5 +++++
+ hw/display/virtio-gpu-rutabaga.c |  6 ++++++
+ hw/display/virtio-gpu-virgl.c    | 20 +++++++++-----------
+ hw/display/virtio-gpu.c          | 36 ++++++++++++++++++++++--------------
+ 4 files changed, 42 insertions(+), 25 deletions(-)
 
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index 2374eb90cb9b..aaf2870cb24d 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
-         if (vugpufillcmd_s_ != sizeof(out)) {                   \
-             g_critical("%s: command size incorrect %zu vs %zu", \
-                        __func__, vugpufillcmd_s_, sizeof(out)); \
-+            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
-             return;                                             \
-         }                                                       \
-     } while (0)
 diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 2f60c72078b3..f965defa6b25 100644
+index f965defa6b25..220231ec9d43 100644
 --- a/include/hw/virtio/virtio-gpu.h
 +++ b/include/hw/virtio/virtio-gpu.h
-@@ -315,6 +315,9 @@ struct VirtIOGPURutabaga {
-             qemu_log_mask(LOG_GUEST_ERROR,                              \
-                           "%s: command size incorrect %zu vs %zu\n",    \
-                           __func__, virtiogpufillcmd_s_, sizeof(out));  \
-+            memset(&out, 0, sizeof(out));                               \
-+            virtio_gpu_ctrl_response_nodata(                            \
-+                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);         \
-             return;                                                     \
-         }                                                               \
-     } while (0)
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index ee9858c397ce..786488150932 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -930,16 +930,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-         if (len != sizeof(cmd->cmd_hdr)) {
-             g_warning("%s: command size incorrect %zu vs %zu\n",
-                       __func__, len, sizeof(cmd->cmd_hdr));
--        }
--
--        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
--        g_debug("%d %s\n", cmd->cmd_hdr.type,
--                vg_cmd_to_string(cmd->cmd_hdr.type));
--
--        if (vg->virgl) {
--            vg_virgl_process_cmd(vg, cmd);
-+            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-+            vg_ctrl_response_nodata(
-+                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-         } else {
--            vg_process_cmd(vg, cmd);
-+            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-+            g_debug("%d %s\n", cmd->cmd_hdr.type,
-+                    vg_cmd_to_string(cmd->cmd_hdr.type));
-+
-+            if (vg->virgl) {
-+                vg_virgl_process_cmd(vg, cmd);
-+            } else {
-+                vg_process_cmd(vg, cmd);
-+            }
-         }
+@@ -366,6 +366,11 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+                                    struct virtio_gpu_scanout *s,
+                                    uint32_t resource_id);
  
-         if (cmd->state != VG_CMD_STATE_FINISHED) {
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error);
++
+ /**
+  * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
+  * fb: the frame-buffer descriptor to fill out
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index e28aad94eead..a054f8117f14 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -315,6 +315,12 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+     res = virtio_gpu_find_resource(g, ss.resource_id);
+     CHECK(res, cmd);
+ 
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         res->width, res->height, &ss.r,
++                                         &cmd->error)) {
++        return;
++    }
++
+     if (!res->image) {
+         pixman_format_code_t pformat;
+         pformat = virtio_gpu_get_pixman_format(res->format);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index d9e5b0110497..6e298f997d66 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -560,7 +560,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+     }
+     g->parent_obj.enable = 1;
+ 
+-    if (ss.resource_id && ss.r.width && ss.r.height) {
++    if (ss.resource_id) {
+         struct virgl_renderer_resource_info info;
+         void *d3d_tex2d = NULL;
+ 
+@@ -581,6 +581,11 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+             return;
+         }
++        if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                             info.width, info.height, &ss.r,
++                                             &cmd->error)) {
++            return;
++        }
+         qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
+                             ss.r.width, ss.r.height);
+         virgl_renderer_force_ctx_0();
+@@ -987,16 +992,9 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (ss.width < 16 ||
+-        ss.height < 16 ||
+-        ss.r.x + ss.r.width > ss.width ||
+-        ss.r.y + ss.r.height > ss.height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, ss.scanout_id, ss.resource_id,
+-                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
+-                      ss.width, ss.height);
+-        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         ss.width, ss.height, &ss.r,
++                                         &cmd->error)) {
+         return;
+     }
+ 
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 51592b49c21e..c15d4b527d0e 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -633,6 +633,26 @@ static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
+     return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
+ }
+ 
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error)
++{
++    if (r->width < 16 ||
++        r->height < 16 ||
++        (uint64_t)r->x + r->width > width ||
++        (uint64_t)r->y + r->height > height) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
++                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
++                      __func__, scanout_id, resource_id, width, height,
++                      r->x, r->y, r->width, r->height);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
++    }
++
++    return true;
++}
++
+ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+                                       uint32_t scanout_id,
+                                       struct virtio_gpu_framebuffer *fb,
+@@ -646,20 +666,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+ 
+     scanout = &g->parent_obj.scanout[scanout_id];
+ 
+-    if (r->x > fb->width ||
+-        r->y > fb->height ||
+-        r->width < 16 ||
+-        r->height < 16 ||
+-        r->width > fb->width ||
+-        r->height > fb->height ||
+-        r->x + r->width > fb->width ||
+-        r->y + r->height > fb->height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, scanout_id, res->resource_id,
+-                      r->x, r->y, r->width, r->height,
+-                      fb->width, fb->height);
+-        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
++                                         fb->width, fb->height, r, error)) {
+         return false;
+     }
+ 
 
 -- 
 2.55.0
