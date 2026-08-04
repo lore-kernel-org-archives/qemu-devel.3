@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8FCC5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:14:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07114C55172
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrAH3-0003XS-GK; Tue, 04 Aug 2026 04:13:21 -0400
+	id 1wrAJ6-0004Fa-Ig; Tue, 04 Aug 2026 04:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrAH1-0003XA-Ng; Tue, 04 Aug 2026 04:13:20 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrAGy-0006NM-Ps; Tue, 04 Aug 2026 04:13:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785831176; bh=fpD7Tnqy53gAj9XpESoWShxNmrgaI+qkTgxeyi6fv4U=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=HFMXCY0Mrihdq/N35lKFxwIxE6YMMsmyWW+cHBJyk+2fyJ4cO/H/dOq2+V3UNuias
- pC/uDmPaagP5v3yBd16SUeLDoZVTGsL/9LuAT1GrjkAlio94/Uq0AIwIljBWqwkCTK
- +74IzXap4GQGQ0kntCA6SauG4h5EVA/UVQzRCBGLrlBOZU7j7gBHB0VNKAYwqBbxYw
- RAFjAclmfjZPSRNzXg1IzLh7SESlnBmwj+9MowXEjdrkRcMMnvokx7GjNZdMq4ptMa
- PPtm+HoyV5gc+/ZbrQ7svBbE57uR/sHbZx5wwdzvBSDHWlgaYGFF+rUsBRm2LTAHX2
- Ciwona/+eUQlA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3F1E51C8230;
- Tue, 04 Aug 2026 11:12:56 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CA9CA400934;
- Tue, 04 Aug 2026 11:13:01 +0300 (MSK)
-Message-ID: <2a5970d6-d65f-4024-8d01-8d6b067c7599@tls.msk.ru>
-Date: Tue, 4 Aug 2026 11:12:43 +0300
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrAIt-0004Eo-Nw
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 04:15:17 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrAIq-0006hz-6R
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 04:15:13 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c1fbe461f59so612169266b.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 01:15:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785831310; x=1786436110; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=l1ywmDlSnsyVnFY+j1dUg7E6denwEEGi/Oe/GulMPr8=;
+ b=HQU3y45SeJu7RjZcOuPy7u8ZtcUNlESBhb1HhAHV35waMt560Pdg9H4RI5hRO1n3c4
+ RRc98ygBP5tsLSBf1Rz2zXo8y/yLzupXic7hC1FWHe6Hs+sOPpO5dsXF7SU05YQiHjQa
+ zyf5IZVEd3OpRIiU8yrqmivAY5eP4581N9LMQ02kEz9R2jSj8R5E3JTDcNE/44MrolbA
+ jvLdBPvSd4ZxTcrI2EcI3kLMVl0+R4GdFmyDXE6ckqzuoWg1/Qr6dUzAKodOh+CtLzO6
+ K58kz+39iOMm/Qu0I8BMI2BtcPElB67xZ3TGBlypIKuupWVKSGBCp+yogoTO1GRY0MZ/
+ h5kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785831310; x=1786436110;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=l1ywmDlSnsyVnFY+j1dUg7E6denwEEGi/Oe/GulMPr8=;
+ b=n5aCNPK2NwlCmbU63DZPzOlGPbgjYZhvjBTGoA7MzqiXDuIPGbL/K2vSdr7o9rXjbL
+ /4i0jzUI3iO01CnTTthlQ2KxiMR/cUJQ/vDShogsWzsbxiv3pUm7TXaUHG9FPoi/UH39
+ AZ7EhxL+L6/T6qX5/hFomi11KItYlp89FhkEtEEH6Z8PnYXv3TphVAzk6SpCo4vlGDvz
+ ZMYPXBDNjZL7FmP9X7p0QQtUGci3w54r7YJLrgxhNgIHMpcE2W+LcqE8AgrVlhOfgUC6
+ 6BLUM+Ao2MurLVe4GMiFrtqqPylfcUCOrS6nws0C2KDJk02uuWoStykH6TGy6VvZlei4
+ bWnQ==
+X-Gm-Message-State: AOJu0YwiagEuZhM2gHBArY4FOVPFVPfmZim50aDK4tL+vcUnEj+uA7a4
+ AA34yrGHj0Ccmo2AFp39Yj6EfVtmQkFhhfVu620uXgE7XVtDL2sYo6E2gihDfwAC
+X-Gm-Gg: AR+sD11uwtOQ+HlWDgFUK6g1V19lNrbSkMl5HU1P5zT38L8AVJULWel6wu4W+DxO3qF
+ aibU4goQkg6D3SW0rfu6utAuM4UgkZI1XltkcxT6nsi7ddvl0GL4rW5BYEEQkkwE9WI/yBj/1vW
+ YsOxmOho60wbDq/uaXg/+DkeJuy2E4GFizAuCfsDjzI1OQIg1khVQLfeBPW6t9siJCDC4Dk9/71
+ VbeSGLD3C9DjfVLra+q+Dw+k8dGlLpylZTwUUBzMhr1UIbw+3FvQLls5tKHN+i2fCh5C+/9Sv5q
+ UgOzloe7zDl4Nu3WofzgM++o+8UKvQ1AhlO/YsL0CHIYKgjtEi9g6bJ69KApeFpVUYWQp7bfHgN
+ 1du995KuFgCKPjHAf+2mZyyMD9YBj4BZWmofOGnRrdK9tKu35HYbj0na8Syh6EoTyRX/ZQqsuW2
+ nwzpl0zH/SjrnGF5Yl6KP0xskqRhFzJnLH3hv+ZduhNlPiCu2c4Zsrm4YlJiB4FdAwfIRqU3knp
+ d1lvVHXphQ=
+X-Received: by 2002:a17:907:fd0b:b0:c1c:332b:74a1 with SMTP id
+ a640c23a62f3a-c1fe7f59914mr1053443566b.28.1785831309886; 
+ Tue, 04 Aug 2026 01:15:09 -0700 (PDT)
+Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c201265eb75sm204521566b.3.2026.08.04.01.15.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Aug 2026 01:15:09 -0700 (PDT)
+From: Wadim Mueller <wafgo01@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, bmeng.cn@gmail.com, qemu-block@nongnu.org,
+ Wadim Mueller <wafgo01@gmail.com>
+Subject: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor chains in
+ one pass
+Date: Tue,  4 Aug 2026 10:14:59 +0200
+Message-ID: <20260804081459.8007-1-wafgo01@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/8] IDE patches
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260730081325.1816193-1-den@openvz.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260730081325.1816193-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=wafgo01@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,25 +98,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/26 11:13, Denis V. Lunev wrote:
+sdhci_do_adma() processes at most SDHC_ADMA_DESCS_PER_DELAY descriptors
+per invocation and then reschedules itself SDHC_TRANSFER_DELAY ns later
+on QEMU_CLOCK_VIRTUAL.  For a large bulk transfer this spreads the DMA
+across hundreds of virtual-clock round-trips, advancing the guest's
+virtual time between descriptor batches.
 
-> IDE patches
-> 
-> - fix a main-loop deadlock when an ATAPI PIO read spanning several
->    sectors is in flight while a drain starts: the nested sector fetch
->    was issued synchronously from inside the completion of the first
->    read and queued behind the drain, which then never finished
-> - read the whole ATAPI elementary transfer in one asynchronous
->    request instead, removing cd_read_sector_sync()
-> - extend the IDE/AHCI qtest coverage of ATAPI CD reads: parametrized
->    read helper, multi-sector DMA, raw 2352-byte READ CD on both
->    delivery paths, and a regression test for the deadlock above
+A guest that bounds the transfer with its own data/status timeout
+(counted in guest time) can then see that timeout expire mid-transfer.
+Concretely, U-Boot on a TI AM64x reading a ~28 MiB image with a single
+CMD18 multi-block ADMA2 read intermittently aborts with "Timeout for
+status update" and falls back to (failing) distro boot.  The transfer
+itself is correct; only the artificial per-batch pacing triggers the
+guest timeout.
 
-It looks like this whole pull request should be picked up for the
-currently active qemu stable series (both the fixes and the tests).
-Please let me know if something has to be left out.
+Run a descriptor chain that carries no SDHC_ADMA_ATTR_INT attribute to
+completion within a single call.  Chains that do request a DMA-boundary
+interrupt still deliver it and reschedule exactly as before, so a guest
+relying on that pacing is unaffected.
 
-Thanks,
+Now that the per-call bound is gone, cap the number of descriptors
+processed per call so that a malformed or circular descriptor list (a
+self-referencing link, or a persistently faulting non-END/non-INT
+descriptor) cannot spin the calling thread forever; on overflow, break
+to the existing reschedule path so the main loop stays responsive.
 
-/mjt
+Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
+---
+ hw/sd/sdhci-internal.h |  9 +++++++++
+ hw/sd/sdhci.c          | 23 +++++++++++++++++++++--
+ 2 files changed, 30 insertions(+), 2 deletions(-)
+
+diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
+index 9f768c418e..bb586a9666 100644
+--- a/hw/sd/sdhci-internal.h
++++ b/hw/sd/sdhci-internal.h
+@@ -278,6 +278,15 @@ FIELD(SDHC_MAXCURR, V18_VDD2,         32, 8); /* since v4.20 */
+ #define SDHC_INSERTION_DELAY            (NANOSECONDS_PER_SECOND)
+ #define SDHC_TRANSFER_DELAY             100
+ #define SDHC_ADMA_DESCS_PER_DELAY       5
++/*
++ * Upper bound on ADMA2 descriptors handled in a single sdhci_do_adma()
++ * call, as a safety valve against a malformed or circular descriptor
++ * list. A well-formed transfer terminates far below this via END or
++ * blkcnt == 0 (even a 4 GiB transfer built from 64 KiB TRAN descriptors
++ * is only ~64K descriptors); the bound merely guarantees the loop makes
++ * a decision instead of spinning forever.
++ */
++#define SDHC_ADMA_MAX_DESCRIPTORS       (1 << 20)
+ #define SDHC_CMD_RESPONSE               (3 << 0)
+ 
+ enum {
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 89b595ce4a..e8e8928b4f 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -779,7 +779,6 @@ static void sdhci_do_adma(SDHCIState *s)
+     const MemTxAttrs attrs = { .memory = true };
+     ADMADescr dscr = {};
+     MemTxResult res = MEMTX_ERROR;
+-    int i;
+ 
+     if (s->trnmod & SDHC_TRNS_BLK_CNT_EN && !s->blkcnt) {
+         /* Stop Multiple Transfer */
+@@ -787,7 +786,27 @@ static void sdhci_do_adma(SDHCIState *s)
+         return;
+     }
+ 
+-    for (i = 0; i < SDHC_ADMA_DESCS_PER_DELAY; ++i) {
++    /*
++     * Process the descriptor chain to completion (END or blkcnt == 0),
++     * yielding to the guest only for a descriptor carrying the INT
++     * attribute (a DMA-boundary interrupt, handled at the end of the loop).
++     *
++     * Historically at most SDHC_ADMA_DESCS_PER_DELAY descriptors were
++     * handled per call before rescheduling SDHC_TRANSFER_DELAY ns later on
++     * QEMU_CLOCK_VIRTUAL. That pacing is only needed so a guest can observe
++     * the intermediate DMA-interrupt state; a bulk transfer that requests
++     * no interrupt does not need slicing, and throttling it across many
++     * virtual-clock round-trips can make it race a guest-side transfer
++     * timeout. Run such chains to completion in one call instead.
++     *
++     * SDHC_ADMA_MAX_DESCRIPTORS bounds the loop so a malformed or circular
++     * chain cannot spin here forever; on overflow, break to the reschedule
++     * path so the main loop stays responsive.
++     */
++    for (unsigned int adma_descs = 0; ; adma_descs++) {
++        if (adma_descs >= SDHC_ADMA_MAX_DESCRIPTORS) {
++            break;
++        }
+         s->admaerr &= ~SDHC_ADMAERR_LENGTH_MISMATCH;
+ 
+         get_adma_description(s, &dscr);
+-- 
+2.43.0
+
 
