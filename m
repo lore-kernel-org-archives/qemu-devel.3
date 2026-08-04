@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C071FC5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 14:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8758AC55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 15:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrGPX-0002T7-Ht; Tue, 04 Aug 2026 10:46:32 -0400
+	id 1wrGlS-0005Ew-5P; Tue, 04 Aug 2026 11:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1wrGPQ-0002Rm-6y
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:46:25 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <huang.botsz@gmail.com>)
- id 1wrGPN-00013Z-EV
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 10:46:23 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3900e39d935so589617a91.0
- for <qemu-devel@nongnu.org>; Tue, 04 Aug 2026 07:46:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785854777; x=1786459577; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CSa5gtZjReAy+ibyYVDzpszBYSW7M8VPvzqtePKDMK8=;
- b=M5eU3tydIEteeYCtiY/u8UDe39/Y6fZb92YdpZTCVMXCc7QJBqSiNl4a2uM9cb4lS8
- L9jvjSV62MOi5njKsx+ybSCoP9+CihBqg3LEPXlqg679ZB+06pAsbZK6pXkA5CqIP1u5
- ZkMaNic5JzF+TfDYJQlUzJWjxFJ5qDyuNTEzQRAKie5Yfkm7jpi8xp786l74kOdxJYfN
- hrLD0qD2vYOAyI6z+4Kjqg2GbkkQ59WPD7U3dTcqG7/nGks5Z9NUz2oVnq+MsB3MwAx/
- 2sQHTf9WvryyabYIU1vdAYVjz+lNQNeFShXMHPvUErQ8sTPjGAbVdjX8xB+5LgeUTK+i
- 0uwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785854777; x=1786459577;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=CSa5gtZjReAy+ibyYVDzpszBYSW7M8VPvzqtePKDMK8=;
- b=OsjyP+iaxAFhtkygHbfVOQdFRC6Z86GuY2SzMqeq3XK1mu5+aV+RXYpPxB700Ka9gw
- a8RqY8LOMjPxnRe3qv06L3Soh9iwlsYMjRgdQzO4kQJi0pGgH4njfeASXiQq495GY04T
- DAJ7LKYQh9V2fpG8mgykRYIghTBus31NlNwiSqHlTDfBZJ7omJW8w6xsp6JL2wVL/j0G
- 1swFXGSWycGnvxnLmhonq2jdkqptRRw608K+a1C11YmFzUmTmXTk5/dplFs5xMlUYF15
- Q7Q1SAXdTsWzvZWaK7m9EgmQ/1LUKz++YK0Rrh+2uvWKhxbrbAtoBnYp75rAE+jmNAst
- C1RQ==
-X-Gm-Message-State: AOJu0YyeuSzwDNAKsPOLxmDDa1CTr1NGck9qfMz0iqmoKuaeI9vy35Ds
- GXImhaKVTKTebS40z2ziGaUcWHN3KJhT+Kw7yBJbQIi0dhxiQjBz6BTXmXMx9w==
-X-Gm-Gg: AR+sD114r2floZTxwWyLzWpKv64Ps3m75/QDQ3HKsygsNnQsq8IScTCwtavJBYMHBRl
- LQ6YUqGAo0hk4xiEXCFNcnySfoB8Lt7h+qGyiT3aP9PAGnrlV8yVn9kBqLiu+TlnOlS1zq7W5WU
- QGwU1kuYaD24wQI/2Lm79n42Bi96/XQuj01S2U0pM6hstmg8338397pMZCfB9u5G/OJWwOfN7i3
- e2N88dWyDjSpd93x6wjLNux871vjgiPQ+BFk8LTjnTtKwsFImZq+bngi5bGDlTszY+f98rEM9mE
- pM/ci0fYVdfF15CBCVDBrkPsGF9voR+ThjENj5P+fBNubOK/CAlv4E12E8owv8Q5vZLnUr8/hJR
- rrnNIe5PM7v3yFEaS45cO5HZjnqCPPXeFewvFkgYNmf7lK+gOARQNiEm8upOrKI7HO2Db6a8+Uh
- 7pC+FFoOWY2Xja9jOE73R2LXNb3VioFjm7XFpKTlp2ajscs3cfpuIHXQoZajAqjGev/60t+ymKe
- u9xAfAeOdQ+x2bjjGz/EcQWAKAevpp/4REWNzjjTCSMv0ldVWeg3FIwCGn9zqtFKDiIV1+29AlS
- 8ej6Y+2VlE/Wo5uBmMM9KOfB5XtNYXkYiZ5N5bhlODPUKQ==
-X-Received: by 2002:a17:90b:3852:b0:38e:5964:97a8 with SMTP id
- 98e67ed59e1d1-38fbc46d032mr12071305a91.16.1785854776683; 
- Tue, 04 Aug 2026 07:46:16 -0700 (PDT)
-Received: from botszhome.. (118-171-39-160.dynamic-ip.hinet.net.
- [118.171.39.160]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38febffb36dsm1553009a91.7.2026.08.04.07.46.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Aug 2026 07:46:16 -0700 (PDT)
-From: botszhuang <huang.botsz@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@mailo.com, qemu-arm@nongnu.org,
- sef1548@gmail.com, botszhuang <huang.botsz@gmail.com>
-Subject: [PATCH] hw/i2c/bcm2835_i2c: Correct iomem size
-Date: Tue,  4 Aug 2026 22:46:11 +0800
-Message-ID: <20260804144611.31735-1-huang.botsz@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wrGlQ-0005El-K3
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:09:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wrGlO-0003lw-Tc
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 11:09:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785856145;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7ooNk3J88Yef+4kPByDdOpH2PfApg9c2g82CGaKBk+g=;
+ b=V4Y+EYMHa84DdOQIHrluPTD7mAl1GFwfptarvGttNHg4t/dvPzNsgguhhZufHzZrN7AlVV
+ r5qyKKZFaoGXbJNmjSmtMZKwjLHBpYp02+sagzWDC0Jrb1RIYakLojMQdoe0wjHDLbI54z
+ L9YfBkupzdjZjQoD5Q6lV7qzzcLU8M0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-4USHDBZ0OSep_mKmGdUHig-1; Tue,
+ 04 Aug 2026 11:09:02 -0400
+X-MC-Unique: 4USHDBZ0OSep_mKmGdUHig-1
+X-Mimecast-MFC-AGG-ID: 4USHDBZ0OSep_mKmGdUHig_1785856141
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 251631800BC2; Tue,  4 Aug 2026 15:08:54 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.33.216])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8EB641956088; Tue,  4 Aug 2026 15:08:52 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	stefanha@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL v4 00/17] Block layer patches
+Date: Tue,  4 Aug 2026 17:08:48 +0200
+Message-ID: <20260804150848.256125-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=huang.botsz@gmail.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.795,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,32 +80,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The last valid register is the Clock Stretch Timeout (CLKT) at
-offset 0x1c. Since it is a 32-bit register, the total memory
-region size should be 0x1c + 4 = 0x20.
+The following changes since commit b428fe036233cbd15d37e3c027ab6ca4d3661a80:
 
-Update the size parameter in memory_region_init_io() from 0x24
-to 0x20 to accurately reflect the hardware specification.
+  Merge tag 'pull-target-arm-20260731' of https://gitlab.com/pm215/qemu into staging (2026-07-31 16:19:04 -0400)
 
-Signed-off-by: botszhuang <huang.botsz@gmail.com>
----
- hw/i2c/bcm2835_i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
-index 34de1f36e5..5f6093087d 100644
---- a/hw/i2c/bcm2835_i2c.c
-+++ b/hw/i2c/bcm2835_i2c.c
-@@ -222,7 +222,7 @@ static void bcm2835_i2c_realize(DeviceState *dev, Error **errp)
-     s->bus = i2c_init_bus(dev, NULL);
- 
-     memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
--                          TYPE_BCM2835_I2C, 0x24);
-+                          TYPE_BCM2835_I2C, 0x20);
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-     sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
- }
--- 
-2.43.0
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
+
+for you to fetch changes up to 29922afeae84a6c51f35d569da97c0b8c8fcc165:
+
+  iotests: increase timeouts for tests to 5 minutes (2026-08-04 16:30:45 +0200)
+
+----------------------------------------------------------------
+Block layer patches
+
+- Fix missing locking in latency histogram setters
+- coroutine: fix lost wakeup in qemu_co_sleep_wake()
+- floppy: Fix READ/WRITE/FORMAT/READ ID behaviour with missing medium
+- qcow2: Fix crash on closing a read-only image with dirty bit set
+- cloop: fix integer overflow in total_sectors calculation
+- dmg: Fix out of bounds accesses (CVE-2026-65929, CVE-2026-65928)
+- FUSE export: fix regression with O_TRUNC when export is not growable
+- iotests: Various small fixes
+
+----------------------------------------------------------------
+Christian Quante (2):
+      hw/block/fdc: select the drive named by the READ ID command
+      hw/block/fdc: report a missing address mark on an empty drive
+
+Daniel P. Berrangé (1):
+      iotests: increase timeouts for tests to 5 minutes
+
+Denis V. Lunev (8):
+      block/accounting: take stats->lock in latency histogram setters
+      block/qapi: take stats->lock when reading BlockAcctStats for query-blockstats
+      tests/unit: add reproducer for BlockAcctStats histogram locking race
+      qcow2: do not try to clear the dirty bit on a read-only node
+      iotests: run the test pool with the 'fork' start method
+      iotests: skip FUSE tests when FUSE is not usable
+      iotests/migrate-bitmaps-postcopy-test: replace the timing assertion with a content check
+      coroutine: fix lost wakeup in qemu_co_sleep_wake()
+
+Fiona Ebner (2):
+      block/export/fuse: fix regression with O_TRUNC when export is not growable
+      iotests: test O_TRUNC behavior for fuse exports
+
+Stefan Hajnoczi (3):
+      dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
+      dmg: refuse to open files with no chunks
+      dmg: reject inconsistent UDRW chunk sector count and length (CVE-2026-65928)
+
+malike (1):
+      block/cloop: fix integer overflow in total_sectors calculation
+
+ include/block/accounting.h                         |   1 +
+ include/qemu/coroutine.h                           |  17 +-
+ block/accounting.c                                 |  11 +-
+ block/cloop.c                                      |   3 +-
+ block/dmg.c                                        |  36 ++++-
+ block/export/fuse.c                                |  12 ++
+ block/qapi.c                                       |   3 +
+ block/qcow2.c                                      |   6 +-
+ hw/block/fdc.c                                     |  55 ++++++-
+ tests/qtest/fdc-test.c                             |  70 ++++++++-
+ tests/unit/test-block-accounting.c                 | 115 ++++++++++++++
+ tests/unit/test-coroutine.c                        |  53 +++++++
+ util/qemu-coroutine-sleep.c                        |  53 +++++--
+ tests/qemu-iotests/testrunner.py                   |   4 +-
+ tests/qemu-iotests/039                             |  11 ++
+ tests/qemu-iotests/039.out                         |   3 +
+ tests/qemu-iotests/common.rc                       |  14 ++
+ tests/qemu-iotests/meson.build                     |  15 +-
+ tests/qemu-iotests/tests/file-io-error             |   4 +-
+ tests/qemu-iotests/tests/fuse-allow-other          |   2 +
+ tests/qemu-iotests/tests/fuse-mmap-shared          |   9 +-
+ tests/qemu-iotests/tests/fuse-truncate             | 171 +++++++++++++++++++++
+ tests/qemu-iotests/tests/fuse-truncate.out         |   5 +
+ .../tests/migrate-bitmaps-postcopy-test            |  15 +-
+ tests/unit/meson.build                             |   1 +
+ 25 files changed, 633 insertions(+), 56 deletions(-)
+ create mode 100644 tests/unit/test-block-accounting.c
+ create mode 100755 tests/qemu-iotests/tests/fuse-truncate
+ create mode 100644 tests/qemu-iotests/tests/fuse-truncate.out
 
 
