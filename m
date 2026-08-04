@@ -4,74 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF73C55822
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 17:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDB0C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 18:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrJ7x-0000Bd-PY; Tue, 04 Aug 2026 13:40:38 -0400
+	id 1wrJhs-0003g5-2F; Tue, 04 Aug 2026 14:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wrJ7n-00009W-Oi
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:40:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wrJhe-0003er-4q
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 14:17:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wrJ7l-00069R-AT
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 13:40:22 -0400
+ id 1wrJhc-0002ht-JN
+ for qemu-devel@nongnu.org; Tue, 04 Aug 2026 14:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785865219;
+ s=mimecast20190719; t=1785867442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fHFNQRMkSw1O5vgqcxFkJTsLjm4VTVfbvR4N+kXACrg=;
- b=f37JCM2Jjr6jvJ4ekVw0NeUvxV45j1MFUOX432ewAsaW7mJHKHuzdo5tnVhu9KDQE/CWAX
- 3KNynEQL7USjUOa6dFqpbxalwQs/LLZbYf2shweestfIFZlrAQmnBwrlz1Ri+QYbrYFKKN
- CZZ8D6D3Ea+k6uo2VFYyEdPuZoa8YJU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PW24GpLjdxocxVmbrxYcONmZtLw2HMPyNF1/hlL8Uo4=;
+ b=BfX6q72f7tsi9c9FTn88sqdBCAQlM1ptMt9EY4Q171Ye9QsxhlDYkmjcyUCGDCdQ3d8itR
+ CRw6PXeyb7ITEzb/VzHlkPxowYPraPfK29/Ob3l4NLFnQ4+Pzm/kcs+u5ztxYgMNJLoPeM
+ ts0D27bxPn9/+x/MKZlmzk1r+jYIt2s=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-Hein4XdGPnKCht55WnhWWA-1; Tue,
- 04 Aug 2026 13:40:16 -0400
-X-MC-Unique: Hein4XdGPnKCht55WnhWWA-1
-X-Mimecast-MFC-AGG-ID: Hein4XdGPnKCht55WnhWWA_1785865215
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-itBefzPcPV2eoo6VCQb6Fw-1; Tue,
+ 04 Aug 2026 14:17:07 -0400
+X-MC-Unique: itBefzPcPV2eoo6VCQb6Fw-1
+X-Mimecast-MFC-AGG-ID: itBefzPcPV2eoo6VCQb6Fw_1785867425
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E88A81964CCC; Tue,  4 Aug 2026 17:40:11 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9B17195605E; Tue,  4 Aug 2026 18:17:03 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.106])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D35C19539A8; Tue,  4 Aug 2026 17:40:11 +0000 (UTC)
-Date: Tue, 4 Aug 2026 13:40:07 -0400
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82CDD1956087; Tue,  4 Aug 2026 18:17:00 +0000 (UTC)
+Date: Tue, 4 Aug 2026 14:16:59 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH for-11.1] gitlab: disable provenance attestations to work
- around CI bug
-Message-ID: <20260804174007.GA488200@fedora>
-References: <20260804165414.480435-1-stefanha@redhat.com>
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC 11/15] hw/virtio/vhost-user: create isolation region
+Message-ID: <20260804181659.GB488200@fedora>
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-11-6b97c439eb28@gmail.com>
+ <20260728175931.GI371693@fedora>
+ <CA+spn3qkZ-2=4q2nn_6-wp85U4Xv3oaDAmCHEP_yB=N4aZSceg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="CweOObyvg/XZHcDT"
+ protocol="application/pgp-signature"; boundary="CCi6ZsUm/3bY9z1X"
 Content-Disposition: inline
-In-Reply-To: <20260804165414.480435-1-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <CA+spn3qkZ-2=4q2nn_6-wp85U4Xv3oaDAmCHEP_yB=N4aZSceg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 4
 X-Spam_score: 0.4
 X-Spam_bar: /
 X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.795,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,70 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---CweOObyvg/XZHcDT
-Content-Type: text/plain; charset=iso-8859-1
+--CCi6ZsUm/3bY9z1X
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 04, 2026 at 12:54:14PM -0400, Stefan Hajnoczi wrote:
-> QEMU's CI pipeline involves building container images that will be used
-> to run builds and tests. A recent Docker change triggered the following
-> error:
+On Mon, Aug 03, 2026 at 11:26:29AM -0700, Connor Kite wrote:
+> On Tue, Jul 28, 2026 at 10:59=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat=
+=2Ecom> wrote:
+> > >
+> > > +typedef struct IsolationRegion {
+> > > +    uint64_t base_addr;
+> > > +    uint64_t vring_base_addr;
+> > > +    uint64_t size;
+> > > +    int iso_fd;
+> > > +} IsolationRegion;
+> >
+> > The purpose of the base_addr and vring_base_addr fields is not obvious.
+> > I suggest adjusting the types, names, and adding comments to make the
+> > purpose clearer:
+> >
+> >   typedef struct {
+> >       void *mem;           /* mapped shared memory */
+> >       size_t size;
+> >       uint64_t vring_iova;
+> >       int fd;              /* shared memory fd */
+> >   } IsolationRegion;
+> >
 >=20
->   $ docker push "$TAG"
->   ...
->   error from registry: blob unknown to registry - sha256:4401f6f779caf884=
-1cafd5f483e642fcac56a23a4e4a59523231e101c890dad9
->=20
-> https://gitlab.com/qemu-project/qemu/-/jobs/15701875927#L2372
->=20
-> This happens because Docker now pushes out-of-order and the GitLab
-> Container Registry rejects due to an unknown reference:
-> https://forum.gitlab.com/t/started-yesterday-docker-push-error-from-regis=
-try-blob-unknown-to-registry/134733/5
->=20
-> It is unclear at this point whether GitLab will modify the behavior of
-> Container Registry or whether Docker will ship a fix.
->=20
-> The current workaround is to disable the provenance attestation that is
-> involved in this issue. QEMU's CI pipeline container images are used
-> internally for testing and are not widely distributed. Provenance
-> attestation can be disabled as there are no external consumers of these
-> images. Expect to revert this commit in the future when GitLab or Docker
-> have released their own fixes.
->=20
-> Cc: Alex Benn=E9e <alex.bennee@linaro.org>
-> Cc: Daniel P. Berrang=E9 <berrange@redhat.com>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
-> Note that this is an urgent patch so that the CI will pass again and I
-> can tag v11.1.0-rc3 later today. Currently it is failing due to this
-> issue!
->=20
->  .gitlab-ci.d/container-template.yml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Agreed on adding clarification.  Is there a reason to change from uint64_t
+> to void * for referencing the shared memory region address?  Most uses of
+> that variable expect uint64_t currently.  Here's what I am currently thin=
+king:
 
-Thanks, applied to my staging tree:
-https://gitlab.com/stefanha/qemu/commits/staging
+The shared memory region address is a C pointer where the shared memory
+is mmapped and the type for an arbitrary C pointer is void *. The casts
+needed around qemu_memfd_alloc() and qemu_memfd_free() suggest that
+uint64_t is not the natural type for this.
 
-Stefan
+Keeping this as a C pointer helps differentiate the address from an
+IOVA, making the code clearer.
 
---CweOObyvg/XZHcDT
+Also, with the comments about base_addr below addressed, the
+hwaddr/uint64_t uses will be reduced.
+
+--CCi6ZsUm/3bY9z1X
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpyI/cACgkQnKSrs4Gr
-c8iB3QgAuKPO6Ng2t4o7Gmy1p7BHX7wByo15bTGk6trzeux6gxmfYNmWxefix36z
-g3XPzO75Rip7lilWY56FLD4uxif8eB3w02t9W5vUbecBtm8CZDtTv7TyMtN3yRDK
-T2LcTQbcANr7xdorqC5cKRL/cPn+iR8fp7PolBZ5ykQs8xGPyNm9tJfBysPSLEW7
-1+xVNESHsXQgnO7SrTbUtPAND/sEOG7fmnR+rMy+ahn4Ixmbflbur0QGHVcI8Yta
-G0NMzBNGNgx4yg/lflEGDP6Mx5MEwBjliMqZi2qOkiD41QEAFGlzJ+RMiBgO38SU
-G2frMFEbJFWhfH7UYkC195G+As2Mvg==
-=/+vt
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmpyLJsACgkQnKSrs4Gr
+c8hsiAf+O8eM6Cm6J6F5SQQRKO0xloi/SxDmc8rg8+3ejKgi0Op58cDsYH1QmPSs
+Uht7u5Rl2m+Ams45gEXKW+IFfGgc1hZVW1IxqGdJ2FIgcfdUADQojWUoCmUF1MHR
+o7J6tJHssUOpbLYuob6Lms2+K1LOVQabsvgCo1ZlRAMIvv5keZFcEtAj63G9S9tq
+LKZQSNZpkhCa78yguOzWMgQxuTBxbSvgPyzkQP5Md6aKq+Dqui7i8O59qyvXQS/1
+YGD24AAEtT96qzl5N5/wtowy4J13gIQTJmgnfGo0pUF9dxtn+oxiXD2gdZTraGWX
+/Y/2w+Ik+ph8gDiOqQQoHbzXR0b8Fg==
+=42sH
 -----END PGP SIGNATURE-----
 
---CweOObyvg/XZHcDT--
+--CCi6ZsUm/3bY9z1X--
 
 
