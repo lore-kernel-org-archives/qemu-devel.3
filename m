@@ -4,56 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E646C5518F
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 07:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B8FCC5518F
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 08:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wr9gA-0007hj-VK; Tue, 04 Aug 2026 03:35:14 -0400
+	id 1wrAH3-0003XS-GK; Tue, 04 Aug 2026 04:13:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wr9g7-0007hN-Dv; Tue, 04 Aug 2026 03:35:11 -0400
-Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wrAH1-0003XA-Ng; Tue, 04 Aug 2026 04:13:20 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wr9g1-0002XS-LT; Tue, 04 Aug 2026 03:35:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1785828888; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=ghYyasCtF8FEQCbtw+bhe9K0ie0uWwUdVzgB8nhIMt4=;
- b=Jvur6lQND80tFPB9eirgCuT1bjh1PJ/yUYap5aFsajHcI8CYGNqzeorLngAW92DJcHjKvas06atpVg4U9GhWBnI0ECT/PiRg1Ky5X/ilvW79LRAlC7uuyNPGxXEBuF1h0H52aiRqeMGIMTFl4oJngH5MGyByKQbAw4w9NiZdYU0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X8N7IzC_1785828886; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X8N7IzC_1785828886 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 04 Aug 2026 15:34:47 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-stable@nongnu.org
-Subject: [PATCH] hw/intc/loongarch_pch_pic: Validate htmsi_vector before
- indexing parent_irq
-Date: Tue,  4 Aug 2026 15:34:45 +0800
-Message-ID: <20260804073445.55612-1-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wrAGy-0006NM-Ps; Tue, 04 Aug 2026 04:13:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1785831176; bh=fpD7Tnqy53gAj9XpESoWShxNmrgaI+qkTgxeyi6fv4U=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=HFMXCY0Mrihdq/N35lKFxwIxE6YMMsmyWW+cHBJyk+2fyJ4cO/H/dOq2+V3UNuias
+ pC/uDmPaagP5v3yBd16SUeLDoZVTGsL/9LuAT1GrjkAlio94/Uq0AIwIljBWqwkCTK
+ +74IzXap4GQGQ0kntCA6SauG4h5EVA/UVQzRCBGLrlBOZU7j7gBHB0VNKAYwqBbxYw
+ RAFjAclmfjZPSRNzXg1IzLh7SESlnBmwj+9MowXEjdrkRcMMnvokx7GjNZdMq4ptMa
+ PPtm+HoyV5gc+/ZbrQ7svBbE57uR/sHbZx5wwdzvBSDHWlgaYGFF+rUsBRm2LTAHX2
+ Ciwona/+eUQlA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F1E51C8230;
+ Tue, 04 Aug 2026 11:12:56 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CA9CA400934;
+ Tue, 04 Aug 2026 11:13:01 +0300 (MSK)
+Message-ID: <2a5970d6-d65f-4024-8d01-8d6b067c7599@tls.msk.ru>
+Date: Tue, 4 Aug 2026 11:12:43 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
-Received-SPF: pass client-ip=115.124.30.112;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/8] IDE patches
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260730081325.1816193-1-den@openvz.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260730081325.1816193-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,66 +115,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
-index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
-the array, but only 32 are used by the virt machine) causes an out-of-bounds
-read and a guest-triggerable QEMU crash.
+On 7/30/26 11:13, Denis V. Lunev wrote:
 
-Validate the vector before calling qemu_set_irq() in both the raise and lower
-paths and log a guest error if it is out of range.
+> IDE patches
+> 
+> - fix a main-loop deadlock when an ATAPI PIO read spanning several
+>    sectors is in flight while a drain starts: the nested sector fetch
+>    was issued synchronously from inside the completion of the first
+>    read and queued behind the drain, which then never finished
+> - read the whole ATAPI elementary transfer in one asynchronous
+>    request instead, removing cd_read_sector_sync()
+> - extend the IDE/AHCI qtest coverage of ATAPI CD reads: parametrized
+>    read helper, multi-sector DMA, raw 2352-byte READ CD on both
+>    delivery paths, and a regression test for the deadlock above
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- hw/intc/loongarch_pch_pic.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+It looks like this whole pull request should be picked up for the
+currently active qemu stable series (both the fixes and the tests).
+Please let me know if something has to be left out.
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 82e16be391..e87c7497c1 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
- {
-     uint64_t val;
-     int irq;
-+    uint8_t vector;
- 
-     if (level) {
-         val = mask & s->intirr & ~s->int_mask;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr |= MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
-+            qemu_set_irq(s->parent_irq[vector], 1);
-         }
-     } else {
-         /*
-@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
-         val = mask & s->intisr & ~s->intirr;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
-+            qemu_set_irq(s->parent_irq[vector], 0);
-         }
-     }
- }
--- 
-2.50.1 (Apple Git-155)
+Thanks,
 
+/mjt
 
