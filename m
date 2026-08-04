@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B885FC55822
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 13:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE53C55184
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Aug 2026 13:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrEzy-0004ya-JN; Tue, 04 Aug 2026 09:16:08 -0400
+	id 1wrEzu-0004yZ-Lw; Tue, 04 Aug 2026 09:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jacobly@ziglang.org>)
- id 1wr8dZ-00012B-Gx
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:28:29 -0400
-Received: from mail.ziglang.org ([108.61.23.47])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jacobly@ziglang.org>)
- id 1wr8dY-0004Mz-30
- for qemu-devel@nongnu.org; Tue, 04 Aug 2026 02:28:29 -0400
-From: Jacob Young <jacobly@ziglang.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ziglang.org; s=mail;
- t=1785824904; bh=ul7VNU7/HibLwmPtfzc1doZXoMM7nU7NsFps/KhH5ww=;
- h=From:Subject:Date:To:Cc;
- b=jxDCl3RVwLX5ThQMhQpoddbDnLgt57hPfElQ/3Ya0fbTknMeQwcU21/NOYNxULZTB
- im9mrqIsztPTg1jF8AGPv/UfTuZygqnEq5uM/ctkYnNr/WCc+uvkttyQXTC09O7aU5
- /LyREgkJtsgS7TvpRkM5d1+qWl5vHvGDNevYlnDY=
-Subject: [PATCH] tcg/optimize: computes incorrect smask for some shifts
-Date: Tue, 04 Aug 2026 02:27:22 -0400
-Message-Id: <20260804-fix-shift-smask-v1-0-8ce16b4000d1@ziglang.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMSwqEMBCE4atIr21IIojOVcSFj1JbGWdIqwji3
- Y26/KDqP0jhBUqf6CCPTVR+c4CNI2qGau7B0gaTMy41mUm4k511kG5h/VY6cWaRpDVyZ+EovP4
- eYfIUi/K1rvWIZrkzdJ4XkUx1o3MAAAA=
-X-Change-ID: 20260803-fix-shift-smask-81e36be921e2
+ (Exim 4.90_1) (envelope-from <qiandongyan@loongson.cn>)
+ id 1wr5sY-0008An-JY
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 23:31:47 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <qiandongyan@loongson.cn>) id 1wr5sV-0002VS-Rn
+ for qemu-devel@nongnu.org; Mon, 03 Aug 2026 23:31:45 -0400
+Received: from loongson.cn (unknown [10.2.9.245])
+ by gateway (Coremail) with SMTP id _____8CxKqgXXXFqHCgKAA--.10056S3;
+ Tue, 04 Aug 2026 11:31:35 +0800 (CST)
+Received: from code-server.gen (unknown [10.2.9.245])
+ by front1 (Coremail) with SMTP id qMiowJCxLcUXXXFq7fEiAA--.44786S3;
+ Tue, 04 Aug 2026 11:31:35 +0800 (CST)
+From: Dongyan Qian <qiandongyan@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- Jacob Young <jacobly@ziglang.org>
-Received-SPF: pass client-ip=108.61.23.47; envelope-from=jacobly@ziglang.org;
- helo=mail.ziglang.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+ jiaxun.yang@flygoat.com
+Subject: [PATCH 1/3] tests/acpi: Allow LoongArch virt MADT changes
+Date: Tue,  4 Aug 2026 11:30:34 +0800
+Message-Id: <20260804033036.2614008-2-qiandongyan@loongson.cn>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <20260804033036.2614008-1-qiandongyan@loongson.cn>
+References: <20260804033036.2614008-1-qiandongyan@loongson.cn>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxLcUXXXFq7fEiAA--.44786S3
+X-CM-SenderInfo: htld0v5rqj5t3q6o00pqjv00gofq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=qiandongyan@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 04 Aug 2026 09:15:48 -0400
@@ -64,48 +65,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We were getting test failures in the Zig project test suite that only
-occurred when running the test binary under qemu-i386 without passing
--one-insn-per-tb, suggesting a tcg bug.  I reduced the behavioral
-difference down to:
+The LoongArch virt MADT revision will be corrected to match the
+interrupt controller structures it contains.
 
-        .globl  _start
-    _start:
-        movw    $0x4000, %ax
-        addw    %ax, %ax
-        cwtl
-        shrl    %eax
-        xorl    %ebx, %ebx
-        cmpw    $-0x3fff, %ax
-        setnl   %bl
-        movl    $1, %eax
-        int     $0x80
+Allow the APIC and APIC.topology test data to change so that the source
+change can be reviewed separately from the regenerated binary tables.
 
-which reproduces the bug and is fixed by this patch:
-
-    $ as --32 repro.s -o repro.o; ld -m elf_i386 repro.o -o repro
-    $ ./repro; echo $?
-    0
-    $ qemu-i386 -one-insn-per-tb ./repro; echo $?
-    0
-    $ qemu-i386 ./repro; echo $?
-    1
-    $ ../qemu/build/qemu-i386 ./repro; echo $?
-    0
-
-Signed-off-by: Jacob Young <jacobly@ziglang.org>
+Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
 ---
-Jacob Young (1):
-      tcg/optimize: Fix s_mask computation for shifts
+ tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
- tcg/optimize.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
----
-base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
-change-id: 20260803-fix-shift-smask-81e36be921e2
-
-Best regards,
---  
-Jacob Young <jacobly@ziglang.org>
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..0e18673fcd 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,3 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/loongarch64/virt/APIC",
++"tests/data/acpi/loongarch64/virt/APIC.topology",
+-- 
+2.43.0
 
 
