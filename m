@@ -4,105 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E133C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 12:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9800FC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 12:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wraVs-0001ky-Tx; Wed, 05 Aug 2026 08:14:26 -0400
+	id 1wraak-0002VF-Kr; Wed, 05 Aug 2026 08:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wraVU-0001jr-B4
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:14:00 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wraVS-0001ZA-QG
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:14:00 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-6680ae2031fso861410d50.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 05:13:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785932037; cv=none;
- d=google.com; s=arc-20260327;
- b=CVXHVt7YsKygQlEAFrnXLJFYhLVmKIH7dN5auxFaWtuBQM/DBodi/E5q9TkdpNuNUp
- SQY5mt9ojK0afYShWcUK8CYfAJpntXkOq+8U2/RAXhUfz44vgqcOlhRnMyD5obew+TRy
- meo+zXfOSRi8mpRd0rhyBT3fpEHsvLvBXarFrUrMXZr+GwqtTVL0TquwKziB05GcoBrw
- nbrNCT1Av9GwFDlFt2k71YkR/bN4nW7mQofJAJAl9cyFdHCDywGfXwCqVdeKYsCOi5uR
- z64dmHUyb9phANJj97ATFFwaN/8iCrzxP1Nc56hWtXWtv/LH38x+WbYqoxJJuYBmX0QX
- XrOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XFNVZxblF4wD0KOyU3Ptz6pFM3BFf3v/ZY+DhVpmGoI=;
- fh=qUOFTwWG+G+YmxTz+HxoQUPJX6AFWbaPYrnquSe1BBk=;
- b=WJv3Vf6eeoGYq9y3FMZSzqwV/JVRkvy2TQbQy/90pCHgRU5uQ9qhqikDerT2YlTStb
- SWx3rN6gg9l2TjqTNE7QYDo65Wc54KGPP4KatGdVg4CzfNyuC47tx6azGLGNT2mjw8G4
- GXND/Sa8Fk+UeK+7zxq9fxDuKyIml2v6srIx0CkHrc5GvaqGO3lRzCVZrcxBnshR5nMX
- 8t/MYaWRzLIIso7/aCLGK6T+qLIwhsrd5KtE4KCGFDJ0FOt8yqnV3V1udXqcX2VQJRk7
- r8GVG10KyEzU7/d72vUdyvwzGIpVishb961DcXwjXl0OUUtsgKFcLBiK//W4NdDA7cs1
- 5o4g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785932037; x=1786536837; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XFNVZxblF4wD0KOyU3Ptz6pFM3BFf3v/ZY+DhVpmGoI=;
- b=jaZLWOwvwIwfzsVOVN2yQCk6JJZMzmwmegjKBmhUYnDDiMWQsuXLOGC1ex6sJJOkqX
- zUnYLdmIVlnIQew8wVlKnVEPh4F/Goqn8MJy0JQR1ZPMCbpPqbaEHi+w3lOPJI32ff0Y
- +hB/Cx8VhOlE26XaUK5cMVLfjfVErRie7ez7CDKzPDEZY9EkGw+9r+2PA+omCPTLBj5K
- Y9A90Vwe8cDrxtvGEUiCRu9rUfDL5rP97+dTlNFYKTICmSe8OEuybRPCxiIiHue7A8SR
- RunsFFHQ2A2IAEhr2wn+Nc9/lx8w/WQbaXZk7GRsAksjPdi8nZjmieblwHdF/BD6QbxC
- af+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785932037; x=1786536837;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XFNVZxblF4wD0KOyU3Ptz6pFM3BFf3v/ZY+DhVpmGoI=;
- b=tDhqA/7YxiTFXTdkRb7PK8t/kJhWh50MVbSicccMUX1ACx7R2Ct6eNpVXQPcy1wHCC
- F7jl25QarAYYyBwB0ptPLKH3aDWpg7jlGcVtw/6NX8Rp6Pn3j8++J5ZUhXGS0qS/SWJm
- g7CX6CdVFWmYW93KYjWk01SEf5lufXifwD8vRclBYq5aNW3NKPlcL6PNIqT6x3n99DSa
- ekVwW3VTx4GBjL1uEdaXhFWOj7PtYnihZE4oXKrAidFqD+rjyethkW+yY/7SyEtnB1Pm
- bT+xzoq766VU/IGeCUnL9A41WlqYhlKEmk3B3dRAlqarzc4CvHUsg00exJ4twNEUW5Zq
- +Evw==
-X-Gm-Message-State: AOJu0YwnL6Cn94Edkv7ZMAlnwwGbcxvtJ6TBpfAx3D+nwlzJuvmeDu9r
- ILsJ2kw0SvRhgjyz0IQii4xBKJCAs2W45/A7m7JND3shIRXm+V8qonw1kalCzYYQ1zF+7jwc/9R
- 8a+/ZK0ThcwqQt6a3lCL4PfPGXjr+ppgtKoHR
-X-Gm-Gg: AR+sD13WNUd0xMutViPtQKQ2eKOPWqhT9/Zz7iXDU66T4WzAjaI5Q1VjEmXw3QPQSD2
- dFc3sSr+GQ9MblrLJB99DCYXq34qFyUL164PST6Sur3RYgNcFgLJuYScRz3E5u3PFWa8fOfZyb9
- peU9X6PZhtqSDi6ZtOeSO5c+7RvUEV2Q5MUYl1EAfcXCPnE13xP8bPOjzsX/dFiVfWn8037rzGk
- hKdPdWOWxDHn0s3UNpt3jZy3JM9Ws5KETWbNE0ShfRpur1B9UDQvFZyzYurqml15sCC5GM3D4QY
- /iDxF2eWfmvFumIZWJo++HNiVTNOYWuO5spBVAJVLQUjE5iY9roxircaCABftg+1nPoNHkJ0XpP
- KBpqzzsus5g/3C9EFfJ6+YRaGdfeQHg8=
-X-Received: by 2002:a53:d88a:0:b0:667:89c0:71b1 with SMTP id
- 956f58d0204a3-6699aa98fd5mr2679588d50.31.1785932037172; Wed, 05 Aug 2026
- 05:13:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1wraaQ-0002UV-F8; Wed, 05 Aug 2026 08:19:06 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1wraaO-0002Gl-Qj; Wed, 05 Aug 2026 08:19:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GrFADuZNwEte5q18wUp4kzI/D/BJzk+8Ck0iOIFnGSjvvzJ3xFaY4y+JdF9r3nHC2jLmdvyDddvHBydrBoAvG7lfdmq5jOzes7S/grTNJxeEM8Gaxcf5C5K0j8HZQ8ALVqIB+z1k6tRJ3noaWQKgjDDYmUR6fhmJNNk7IzXiZYjVsT/KLfuA1RHY3zvre/MLXBN4WVNOjkVVkq8ev1sxEppxuQEVZQdfQ3ur0W+ubqlV/oAt1mNtgnz69UfUzboTUcpiOWcYl37oiaq9aOjLCxNOkCg/F9RBuv4tM84FuSv+CI9n/j1voQltuudKqNKWJJY23SHBANaxKmYAu7NEuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SS2wnso62R2aKl0jGfRjBNM7mc1S6+9mvulWXM+NFpI=;
+ b=GOKXO4R9IhpDl2ljB5ZJT3gCAxcJG5z6r02FBkTrnpPrpOHGwHMeUIpsvaqVbKUc+fq7IAez/nsSLX+KREFKKTOL30OHnc7+NJF5WXGRFgungeGRbTJu5b3pG3nTnYELLqYml59s8Q5cLyXxswyxT50wYjKLuq/3CfJ14Flmnc0r0bxnAMWz4h/a54jbjUwrLCG18R9yU856BzPTrzKRnF8e+qSZo5XpZUp/WmKfDX32Jw6h2EK9RCDcZEag0pzsPDcFdTBmcXA3lk9Fl1Tu4ExM5Tm/6xBFju66vYI8NsKY6F5GS+pPi/u+BvvFG3FEvYRBuVv4RszCXHJQwGjrqQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SS2wnso62R2aKl0jGfRjBNM7mc1S6+9mvulWXM+NFpI=;
+ b=lOSk2u8bxfMNf9KXtTeJfWNSdJLe4LPERP5H9aOMVXJGNrnvcvrsMuDTBnrEv6ap1tLPAhgEszMJ3hXyWdbPf5UK0xU97imjH4M5KEijMOP90WBd5HFfOpZF/F0lGAuWmUVSCtBLU0c8gjJwDLVtlQnxDEpEBu7r+2IoHwJssOI0OOhtEEkLGyLiQ8gJAWgwG3OznzgqNjRimerNMZMA+4ruJI3WVU5FBPfydruGR5tg9Wumj4dW04KszxACoQSi3RXn/lpOtpt/9o2P5lB5wWppKFXKezNVfn4C+KODPznkBodJyxYlhIKpHJf6m9t57s7WNo+EVR9evs9fPjElZg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SA1PR12MB7175.namprd12.prod.outlook.com (2603:10b6:806:2b2::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Wed, 5 Aug
+ 2026 12:18:54 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0292.015; Wed, 5 Aug 2026
+ 12:18:54 +0000
+Date: Wed, 5 Aug 2026 09:18:52 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+Cc: Gavin Shan <gshan@redhat.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ Nicolin Chen <nicolinc@nvidia.com>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "vivek.kasireddy@intel.com" <vivek.kasireddy@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>,
+ "meshetty@redhat.com" <meshetty@redhat.com>
+Subject: Re: [PATCH v4 3/3] hw/vfio/region: Create dmabuf for PCI BAR per
+ region
+Message-ID: <20260805121852.GN27883@nvidia.com>
+References: <20260121114111.34045-1-skolothumtho@nvidia.com>
+ <20260121114111.34045-4-skolothumtho@nvidia.com>
+ <aa45597c-aed8-49a0-b9bd-3c637c154ee5@redhat.com>
+ <SJ0PR12MB86148329F85C2A4A22D0C67FABD32@SJ0PR12MB8614.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SJ0PR12MB86148329F85C2A4A22D0C67FABD32@SJ0PR12MB8614.namprd12.prod.outlook.com>
+X-ClientProxiedBy: YT4P288CA0082.CANP288.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d0::12) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 MIME-Version: 1.0
-References: <20260625155613.192643-1-scherer.simon89@gmail.com>
-In-Reply-To: <20260625155613.192643-1-scherer.simon89@gmail.com>
-From: Simon Scherer <scherer.simon89@gmail.com>
-Date: Wed, 5 Aug 2026 14:13:45 +0200
-X-Gm-Features: AUfX_myiMw2rXiduOsMaWMCPKNpD0xDMNCxlPwXY_7--iy3Tn_aqB5hH6BDkdi8
-Message-ID: <CAEQwQt+3vmH6Vd47mpV-ZB2KhqWgPXUvLczFU3dYKO4rx+PXUA@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=scherer.simon89@gmail.com; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA1PR12MB7175:EE_
+X-MS-Office365-Filtering-Correlation-Id: d7312406-32aa-46ea-116f-08def2ebb73c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|23010399003|366016|1800799024|10067099003|11063799006|56012099006|4143699003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 2yYNRxbkzxGRvbo9rSiez0chGAj93ufWiHGI/sVx+XHEi/GAr9rW4JKnK/cTY+4lcwzgoAZFNSWKyomvzEngipOOf2TCPbHpza5i7kELJT2UBanVmHJDXIfcuHU5BsSSeY5nyBrC4eMIOJ2fYjkNiPjYiB7KaSe/mDCXq1qEqmB7Nf0LgIBuqlk4zbxPwwNqSeNwfyMphWUCBaWSoYErxTjl3zazArgfNrSc7yWfVYytYz4iBFznjXk2GmSvfsRwWZ59C+8EaAflr39lAMbqtAEWwKuAulR7HIzf5yUeCZt0YWyJVPF8keQ6KvP4tuNx0c4JmdsrPLyhDuYIo/4DdPuiYMknRr22FC5MMzGuRgyyPCj+8fO7Oz2H+UBD9W1w5FfwEXo5Fp1XzRpDBhuzXdvuEvWiGk9BL5gc1xwImuW5GRqRcKfiBEayxp0xOzlKcLDgvUA0c+zq03lJsDA2kXSaH7qjni0bb/JFrj19Hes5gWI77x/4FXw0RdbWIJ8jFc8M/KK7eOtJAvOlx/cKyi8NJ7T6bKE8Zr/A7ajix+3TtdHzXKR5tEeuh7F1rwys801uSw1L1KJUaeUCnaaNcuHMJW+suFnhthpVFt+SBUJKmO0KOEYWhyjZi0pVH0AAzdNVsdPRM1eLoudAuYXVO9kcTbferbv2kXB3HZA+H0g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV8PR12MB9620.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(10067099003)(11063799006)(56012099006)(4143699003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vGtqBNkncHAf4EKWlTm3/j6K2blXi7zZfpEUZw5X2AnI02Lwnpxo58oaNDOK?=
+ =?us-ascii?Q?6ruZK+r4IUSH6jcjSdvja8vidkdepKVSfbO4OjkEyCqZ3h0dtApqtcKgaeFp?=
+ =?us-ascii?Q?QmmN+ZcxhRcF+9zjD4jQrYzLRUJttwaCCl3fsvFxve6p1qs0o0nFts71jXMj?=
+ =?us-ascii?Q?ZAc3a8Ms+494uFMrK0lBBrEqj+OT8imAKtGZrXPKWgvSfKbKyLghRtYZyWct?=
+ =?us-ascii?Q?O6DZdVI9mrS0EwPGx415IWCREAc437o4oRBndbbYZ0V66dykNb6tS8v+aVZ5?=
+ =?us-ascii?Q?HQMy9c4Z2NuY5SYnPwsxfukNfqBX/M92R7tiUq3Ut44pc0GcCHvxsUemvbMk?=
+ =?us-ascii?Q?Lw+zaHBBr2o4xiafTS/UPNaa0V2FqvfVI4ZVApKY8wuDSDHmoETnh/RpsTIs?=
+ =?us-ascii?Q?OGHJoSnjI1vvto37DE0dVmzY2jfBB/kmEpwIHR7827NUAcDtERPXrxKm7x/p?=
+ =?us-ascii?Q?8NfZ5IjicsKGD515te6kgXihUzj/4R7LGf4V8HRirPfOosdPh63PCYBZc2Rx?=
+ =?us-ascii?Q?336xcOOIUojQ666jxCJ0cDWEom+O2xtsxp62cVGrqBl5CdcLpDhyB0FgzZOm?=
+ =?us-ascii?Q?7hOSLEbE+JCQe8k6XGm3U9KYgpg7Lt7csJog0Rz/IfnufXRM12IEjU0jS80p?=
+ =?us-ascii?Q?oaF/PNQjEhonTbkl1MBAUaCvRfEuu4jI7OJX2QJPg9UZaQDzjv+MHanTRUMs?=
+ =?us-ascii?Q?BH5wkseCuF+hvVg3867iHN5kS91YhHHgSU+oa8w8FuyIab4ipunRPZU3wqPM?=
+ =?us-ascii?Q?Lu//U95ncDZ1NOdUnXv9342x12hL5GZOEXNM8eohuQYvePEcPKyNFZV6cNAg?=
+ =?us-ascii?Q?YVcpz21XaA3qpuX1OWI/xq/gqfyAwbv4QEk0RMTa7uBX4Vk0xji7ULhAQyE6?=
+ =?us-ascii?Q?+sdmWVkysKZmNhIQ4txPjIgdrz1rXTsnv/m9R7fxG63Me47808TWjrr3TvEK?=
+ =?us-ascii?Q?Iw/mfotvVqqzupW8GKUa3z4PZPCTSQ+hIyBBPtRNVRhJ+NB3c7JmOnaLq69O?=
+ =?us-ascii?Q?wPGaFd+Jm2KoOHEe5gkQymx0Wo+U/bABhkj768M1BZFX3SLbJPIBFgOI7YUt?=
+ =?us-ascii?Q?AWWnlR4/7RvKJBosYyjpg0ZyOtIvVCwEYPa8EVhaCf/xDYtksPu3lpUwJUo0?=
+ =?us-ascii?Q?EWD0YSKtAj0kIis0wO7JCarAXFxikK7sUD9wsnUISdGcxXrozN+bM0R0jLuq?=
+ =?us-ascii?Q?ajZfo9jZ5mzf0/8D8phXxnBj/TBfMltw3m7G7CVNAzl3M2lweyoDMHFna4PB?=
+ =?us-ascii?Q?XEc4gGgJVX5MtZEKQ5XJAMcEnlE2jmOvNJ0cRqrGv5bLdueMSsreEIDW6dVK?=
+ =?us-ascii?Q?AK/fGHP28z37cc8FOmrIW3LE+wWGIw99DuEk/+MIyIMlS6ogHrRVHg/Oidk4?=
+ =?us-ascii?Q?IL7UFaHQnXzQMCgs/JnEJ+W/8RRWYl4zCTor7S74tt646CQ7w7Qh6r5uNRzV?=
+ =?us-ascii?Q?iQkMLvSh2SCHe9/S2DpXvaQy34rsu99VuHp37KweYYRhxN80PqUdvWEVPAEU?=
+ =?us-ascii?Q?2e99E+IZFgp+s+TOHk7QsE+Ud/joWJet6Gk9WBokmW0qLT49IsV+8NDylq1w?=
+ =?us-ascii?Q?yPGbZvC3uz5ay9l0KnIWrrZiPNlJQqfJi9dw2A+P3HDoylaSE4WQ+ItFUpLr?=
+ =?us-ascii?Q?c+CdaXxOIgpfr2D8W4/4oWT4QyuToQ6e9cvZpzXcnrfZGj0pyBmcR9lqhlOF?=
+ =?us-ascii?Q?U2yfHLfWgZyRi//S30ZhHm2OQaS0uMU+4ThCOqz1wcESbTD866xcgEl09Vv6?=
+ =?us-ascii?Q?DMRRIvwBqg=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7312406-32aa-46ea-116f-08def2ebb73c
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 12:18:54.2307 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QoxNLhteQDF78I/8ERVzfOpzuZsTXBzvghIBT/SUY0KbuXKxeywazWCfvM7EbZa9
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7175
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=jgg@nvidia.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,51 +152,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping. Just checking if this patch might have been missed, or if anyone
-has time to take a look. Please let me know if any changes are needed!
+On Wed, Aug 05, 2026 at 08:33:06AM +0000, Shameer Kolothum Thodi wrote:
+> > > +    dma_buf = (void *)feature->data;
+> > > +    *dma_buf = (struct vfio_device_feature_dma_buf) {
+> > > +        .region_index = region->nr,
+> > > +        .open_flags = O_RDWR,
+> > > +        .nr_ranges = region->nr_mmaps,
+> > > +    };
+> > > +
+> > > +    for (i = 0; i < region->nr_mmaps; i++) {
+> > > +        dma_buf->dma_ranges[i].offset = region->mmaps[i].offset;
+> > > +        dma_buf->dma_ranges[i].length = region->mmaps[i].size;
+> > > +    }
+> > > +
+> > 
+> > Shall we check if @offset and @size is aligned to PAGE_SIZE? If they're not,
+> > I guess we need to skip populating DMA buffer instead of preventing the
+> > device from being passed through to the guest.
+> 
+> Hmm..does it prevent passthrough in this case? The intention was not to do that.
+> vfio_region_mmap() returns 0 irrespective of dma-buf outcome.
 
-On Thu, Jun 25, 2026 at 5:56=E2=80=AFPM Simon Scherer <scherer.simon89@gmai=
-l.com> wrote:
->
-> The decoding of the extrq instruction with an immediate operand (EXTRQ_i)=
- is
-> incorrect. Per the AMD manual the instruction encoding looks as follows:
->
-> EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
->
-> The /0 indicates that the "Reg" field of the ModR/M byte must be equal
-> to 0 and the XMM register operand is specified by the "R/M" field.
-> However, qemu incorrectly uses the "Reg" field to extract the register op=
-erand.
->
-> This patch instead extracts the XMM register operand from the "R/M"
-> field.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> ---
->  target/i386/tcg/decode-new.c.inc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-ne=
-w.c.inc
-> index ac181308ca..acb300457c 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -605,7 +605,7 @@ static void decode_0F78(DisasContext *s, CPUX86State =
-*env, X86OpEntry *entry, ui
->  {
->      static const X86OpEntry opcodes_0F78[4] =3D {
->          {},
-> -        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A))=
-, /* AMD extension */
-> +        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A))=
-, /* AMD extension */
->          {},
->          X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A))=
-, /* AMD extension */
->      };
-> --
-> 2.53.0
->
+I think you should always be able to create a dmabuf, even with
+irregular offsets and sizes.
+
+The resulting dmabuf may not be mmap'able though.
+
+Jason
 
