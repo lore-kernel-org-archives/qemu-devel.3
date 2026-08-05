@@ -4,109 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF185C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 09:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5011C55822
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 09:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrXZQ-00084v-FN; Wed, 05 Aug 2026 05:05:52 -0400
+	id 1wrXaS-0008IG-2a; Wed, 05 Aug 2026 05:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wrXZO-00084A-CC; Wed, 05 Aug 2026 05:05:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
+ id 1wrXaO-0008Dc-4m
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 05:06:52 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wrXZM-0007u6-G3; Wed, 05 Aug 2026 05:05:50 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6758ldZb3387329; Wed, 5 Aug 2026 09:05:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=IHb83t0hiOgZvto0/2AyxyEB88ehl+IaMzPPojza3
- QM=; b=tjrqDK70dsZ5DYmYzbk9AqMR0rS9Xb/f9E1IHrzfcOLIyUumhIIH6kyq1
- FeqEpmuYoF6bqbn9s4M1KL690WHQinquEAxMOKA1x8oWFK0OWP1VKIN7j+FhGNH3
- 4EqFKMNjfRy5wH9BbY2uAYmlwPvvt8+8CJwsT19vbLSNPpZIJTxTXyw3Uc42tNSv
- BUg8A1QeMqcG9kHKHuFFFEX4fCqmcogzOgvnQmH4w4NDszugdk9JrNes1Y3uai3F
- cfNjdvpAXTWjUG+jE1tKIyRW9s0D2DT5wauIIAmfxM5qo6PB9zqwsMpMNuIkL4TQ
- 2eeYhlI9FTzRwr9g4H6KucGsVDI2w==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8h528e6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 09:05:43 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6758uIYF013100;
- Wed, 5 Aug 2026 09:05:42 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsv4k5u0x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 09:05:42 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67595cv349283364
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 5 Aug 2026 09:05:38 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E2662004B;
- Wed,  5 Aug 2026 09:05:38 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D388A20043;
- Wed,  5 Aug 2026 09:05:34 +0000 (GMT)
-Received: from li-609d1fcc-36b3-11b2-a85c-cc82146838dd.bl1-in.ibm.com (unknown
- [9.123.10.251]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  5 Aug 2026 09:05:34 +0000 (GMT)
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: qemu-stable@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, harshpb@linux.ibm.com,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Subject: [PATCH] hw/pci-host/pnv_phb4: fix guest-triggerable abort on 8-byte
- config access
-Date: Wed,  5 Aug 2026 14:35:30 +0530
-Message-ID: <20260805090530.1333997-1-nikhilks@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
+ id 1wrXaJ-0007zx-7f
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 05:06:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1785920794; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+ bh=sygwba2kjAC5Ez7zrabINvDmdl0Q24z0iBwvz7PqhoI=;
+ b=QAu048KZbswb/VVahFfTjxvxGgegr8uPAUNGQlc3+0oGM4zmZywKLr7U3XESZZ2/cI0I+YpIy+61ongzwOp1AU3dK1/0W5BmVUK4L3dnfqRwmpUtUNEZ/7DV5qwPpT3WJBbDGuzD3oAH+Z/usHUoYdgEVDUTf2gD8mXirk7xyRY=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
+ TI=SMTPD_---0X8Qnhnk_1785920788; 
+Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
+ fp:SMTPD_---0X8Qnhnk_1785920788 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 05 Aug 2026 17:06:33 +0800
+From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@daynix.com, viktor.prutyanov@phystech.edu,
+ zhengrong_li@linux.alibaba.com
+Subject: [PATCH v2 2/3] dump: add crash_occurred flag to QEMUCPUState
+Date: Wed, 05 Aug 2026 17:05:58 +0800
+Message-ID: <178592075881.15274.5708870107372539268@linux.alibaba.com>
+In-Reply-To: <178592075881.15274.7510279315190894277@linux.alibaba.com>
+References: <178592075881.15274.7510279315190894277@linux.alibaba.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDA2OSBTYWx0ZWRfX537rSq9stxyI
- Ghf36l4A9wKxdRz9GIcD8+9TxWhsEb4Dgr5Khm9E+zPnI6SmZjJbxaE0QghesvLSzvH1NrNpl78
- GPNKwybZ4HrV1Wvv55ANmb9SVLaEKsg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDA2OSBTYWx0ZWRfX4B+jQiPHAlNw
- 6/ohCCVxF6nSMVC/GoDtNSe//cuUOMacrfZIvzvkwTzIfaPKuUuWG1kSTIN0esSjLVYlKsn/XRd
- ftDsgM3rV/sMnlmwRuEtt15pQX8tnnS+l0iRaz/Zl3xtsIt5rfAANW3gLQ4jjI/tbzeqBCQ3PmV
- OKydcbSeLPQOXeAiJEke26Y/h7UOqgbBiBgeGirnog+euhclM95sxRM9jugNhWVFhbAsIxA3Nxd
- BSAtYjK+0VdFXWEgJ0kUlMlHv0noxpRLBhZdv6PfumLvdKD4xgxAAQBKk6rvpg97mqu22hUBCFJ
- PgUSpnEI7C1Sj37JRhAo7c+tbeNhWWHCfAOu6NV0JYGwoiXlfb/EhLf2UIiPBf0wXImCEHQBMIh
- Sm40qUZEozG9n/kyz5Th0fKro+rm/vaQEN+MLBJPidT5WJxKpkwHqTN5paQS04HGb90xpqjXh7e
- aQZSk3vVZrrNywe8RVw==
-X-Authority-Analysis: v=2.4 cv=SI1ykuvH c=1 sm=1 tr=0 ts=6a72fce7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8
- a=cZ2jSh9J2h8rrMqNVj0A:9
-X-Proofpoint-ORIG-GUID: yq4mZ8KCXRgbi4nomDd92rs8L4n5BaXK
-X-Proofpoint-GUID: R_YltPP5-irqzjUg65z_DdiKn3BNPBLz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_03,2026-08-04_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0
- phishscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608050069
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=zhengrong_li@linux.alibaba.com;
+ helo=out30-99.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,77 +71,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest-triggerable assertion crash (DoS) exists in pnv_phb4_config_write()
-and pnv_phb4_config_read(). When a guest performs an 8-byte access to
-PHB_CONFIG_DATA (offset 0x130), QEMU aborts because the switch(size)
-statement in the config accessors only handles 1, 2, and 4-byte accesses,
-hitting g_assert_not_reached() in the default case.
+Add is_crash_occurred_cpu field to QEMUCPUState so that
+dump-guest-memory can record which CPU triggered the guest
+panic.
 
-Since guest input is untrusted, an invalid access size should not crash
-the host. Fix this by adding a size > 4 guard in pnv_phb4_reg_write() and
-pnv_phb4_reg_read() before the config accessor calls, and by replacing
-the g_assert_not_reached() in pnv_phb4_config_write() and
-pnv_phb4_config_read() with phb_error() to cover any other callers.
-Invalid reads now return ~0ull, maintaining PCI conventions.
+The new field is appended after kernel_gs_base, so existing
+tools that check the 'size' field can safely ignore it when
+reading older dumps.
 
-Fixes: 4f9924c4d4cf ("ppc/pnv: Add models for POWER9 PHB4 PCIe Host bridge")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3591
-Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+Changes since v1:
+  - Revert QEMUCPUSTATE_VERSION bump (not needed, tools check size)
+  - Move crash_occurred check outside #ifdef TARGET_X86_64 to fix
+    -Werror=3Dunused-variable on i386 builds (reported by Akihiko Odaki)
+  - Use linux.alibaba.com identity
+
+Signed-off-by: Zhengrong Li <zhengrong_li@linux.alibaba.com>
 ---
- hw/pci-host/pnv_phb4.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ contrib/elf2dmp/qemu_elf.h | 2 ++
+ target/i386/arch_dump.c    | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 705a5bcf07..02ca2f978c 100644
---- a/hw/pci-host/pnv_phb4.c
-+++ b/hw/pci-host/pnv_phb4.c
-@@ -84,7 +84,9 @@ static void pnv_phb4_config_write(PnvPHB4 *phb, unsigned off,
-         val = bswap32(val);
-         break;
-     default:
--        g_assert_not_reached();
-+        phb_error(phb, "invalid config write size %u at offset 0x%x\n",
-+                  size, off);
-+        return;
-     }
-     pci_host_config_write_common(pdev, cfg_addr, limit, val, size);
+diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
+index adc50238b4..3b28332e67 100644
+--- a/contrib/elf2dmp/qemu_elf.h
++++ b/contrib/elf2dmp/qemu_elf.h
+@@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
+     QEMUCPUSegment ldt, tr, gdt, idt;
+     uint64_t cr[5];
+     uint64_t kernel_gs_base;
++    uint8_t  is_crash_occurred_cpu;
++    uint8_t  pad[7];
+ } QEMUCPUState;
+=20
+ int is_system(QEMUCPUState *s);
+diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+index 16e47c4747..8ce2c7e9bb 100644
+--- a/target/i386/arch_dump.c
++++ b/target/i386/arch_dump.c
+@@ -264,6 +264,8 @@ struct QEMUCPUState {
+      * by checking 'size' field.
+      */
+     uint64_t kernel_gs_base;
++    uint8_t  is_crash_occurred_cpu;
++    uint8_t  pad[7];
+ };
+=20
+ typedef struct QEMUCPUState QEMUCPUState;
+@@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache =
+*s)
+=20
+ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+ {
++    CPUState *cs =3D env_cpu(env);
+     memset(s, 0, sizeof(QEMUCPUState));
+=20
+     s->version =3D QEMUCPUSTATE_VERSION;
+@@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86Stat=
+e *env)
+ #ifdef TARGET_X86_64
+     s->kernel_gs_base =3D env->kernelgsbase;
+ #endif
++    if (cs->crash_occurred) {
++        s->is_crash_occurred_cpu =3D 1;
++    }
  }
-@@ -119,7 +121,9 @@ static uint64_t pnv_phb4_config_read(PnvPHB4 *phb, unsigned off,
-     case 4:
-         return bswap32(val);
-     default:
--        g_assert_not_reached();
-+        phb_error(phb, "invalid config read size %u at offset 0x%x\n",
-+                  size, off);
-+        return ~0ull;
-     }
- }
- 
-@@ -507,6 +511,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
- 
-     /* Special case outbound configuration data */
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb_error(phb, "invalid config write size %u at 0x%"PRIx64"\n",
-+                      size, off);
-+            return;
-+        }
-         pnv_phb4_config_write(phb, off & 0x3, size, val);
-         return;
-     }
-@@ -644,6 +653,11 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-     uint64_t val;
- 
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb_error(phb, "invalid config read size %u at 0x%"PRIx64"\n",
-+                      size, off);
-+            return ~0ull;
-+        }
-         return pnv_phb4_config_read(phb, off & 0x3, size);
-     }
- 
--- 
-2.54.0
+=20
+ static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
+--=20
+2.43.0
 
 
