@@ -4,140 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB60C55ABF
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD68C56203
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wravR-0006qq-8h; Wed, 05 Aug 2026 08:40:49 -0400
+	id 1wrbFw-00044d-Ov; Wed, 05 Aug 2026 09:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1wravP-0006qZ-GA
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:40:47 -0400
-Received: from mail-japaneastazon11023111.outbound.protection.outlook.com
- ([52.101.127.111] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wrbFu-00044R-Nh
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:01:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1wravN-0005NF-6Y
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:40:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q+u0I6Y+HoTicy6J/je9lLbozPrPjfUAzrazN6k1CJh0xRqpujbAz03BVwx1QAc2uoZemauS+t/Q1vG50GEM7qvO/Kr1RWyjGMsmPF01ZbkQq5P8BzcvVPW+rFllXOOGylX0WQ+UjxO5oY3IGtIlk5cZKTvjeRRkLkF3GLHFrMNi7I8Z+aOlPF/pxRFDqbACryYfl9A+eiMZAPZ54g4IQBU32rBuCGs1JZ7KMejPWas/19HKG5uhzR6hflnh/GSeo4QLfg3REXTOWnDDR+r4mH9ZTyReQixBdDCTjW+VBDqCIMC21ykBuRluEmXK57mswxa+UaTSTKB9hTeva7DRgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UYNDbWSVlZSLtboEWnYDhIbEPlvqOTcGqkbUkyXHDUg=;
- b=utE2LksnzDBldVs9NQ41D3dKC64Kv886vMlfkGaaLR6fvHsmi8V4qw2W8TOHW8NMTYzCCs3IMaI5a/+W3kRhXX+4YSW0rl7DIRu7gde6tqoCi5ccdrYT/7bXSvBEdgcvp68gt4NyH8x2m5iTaSfwzYgm2aOG3HluWc036IfkpH90C2l/56eRYExcvfMM5fBQoDk18ORmSj8r89auUE3oSgguILQXy9H32ePPKUiOAinU9dw+6/le41y8qTWFnMKwJMN+DC8EmggfdUVkAUebu7XFMtuIupvdKGFNqrzNcFkeV6M3+Hx9fGtuW274ukjYQnmpMi2DuGaf9bRme7gkaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
- dkim=pass header.d=linumiz.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=linumiz.com;
-Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
- by TY2PPFBE94497F1.apcprd06.prod.outlook.com (2603:1096:408::7a5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.270.16; Wed, 5 Aug
- 2026 12:35:35 +0000
-Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
- ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
- ([fe80::30b6:5b0d:1b00:5a01%5]) with mapi id 15.21.0292.018; Wed, 5 Aug 2026
- 12:35:35 +0000
-Message-ID: <20b525e7-4ee0-4db8-9314-e30dafce439f@linumiz.com>
-Date: Wed, 5 Aug 2026 14:35:31 +0200
-User-Agent: Mozilla Thunderbird
-Cc: parthiban@linumiz.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- christoph.seitz@infineon.com, David Brenken <david.brenken@efs-auto.de>,
- Andreas Konopik <andreas.konopik@efs-auto.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 00/10] target/tricore: MPU, peripherals, tc39x SoC
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
- <9f3952f1-1794-414d-bf7b-db7a5094ed22@linumiz.com>
- <cfdde0d6-77fa-4216-92ac-bdf9b9b26087@linumiz.com>
- <1ecb1dd7-5d47-4304-a0f0-bfec305fb859@oss.qualcomm.com>
-Content-Language: en-US
-From: Parthiban <parthiban@linumiz.com>
-Organization: Linumiz
-In-Reply-To: <1ecb1dd7-5d47-4304-a0f0-bfec305fb859@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wrbFs-000321-73
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:01:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785934913;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=woYGaBGfgHz4AceQ3q5fOBMOdc8sEH2yW/Sj656EI/0=;
+ b=iwUAvLvgKxh9BuDaQlKiXfNSseccA/w1EaJLFs7+vmYGI4//VZ1+TPVVIC6Za5tTPfTaeZ
+ X/nX9HkN2+WsY7GaTZOWtQYfpKeJzDaHgV3Q113BpJdfDD76ucZ0+MUaXuzx53fnT4tV2B
+ ckzr0dsLDUIdkTe84cZlCGjp14P8puA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-6BcGwEFzNreJ3yjkbeZGFg-1; Wed,
+ 05 Aug 2026 09:01:49 -0400
+X-MC-Unique: 6BcGwEFzNreJ3yjkbeZGFg-1
+X-Mimecast-MFC-AGG-ID: 6BcGwEFzNreJ3yjkbeZGFg_1785934908
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A44319560AF; Wed,  5 Aug 2026 13:01:47 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4016A1800346; Wed,  5 Aug 2026 13:01:44 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH v5] virtio-gpu: use g_try_malloc to avoid guest-triggered abort
+Date: Wed,  5 Aug 2026 17:01:41 +0400
+Message-ID: <20260805130141.211398-1-marcandre.lureau@redhat.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MA0PR01CA0002.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:80::8) To TYZPR06MB6935.apcprd06.prod.outlook.com
- (2603:1096:405:3c::9)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|TY2PPFBE94497F1:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9edefe31-df7b-4038-c1ac-08def2ee0bc9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|23010399003|56012099006|4143699003|10067099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: zwhopUQj3hG33jGZsNsmxuIltl/SWulx4Nj5JTGhdlCkhXqfkM0RWNAVdgJnenGd2f/+KC/ZjyvHkb1JhnMBj+VLiCdpe24vk5Ri/68DA1Jhc45DZW8TDC/WUKcymhR4a5X8k2yybzzOCk5LniR1kC0cN0glf9/tV9j3JlI6H3Oi5A9nWI1XX491hTJ2CejU2rsO+WLu0CYnu3j0ZEFrRztFzxRlN4RrJtFICN6Ta4ruB+Y98aQHZoK6YlCAzia9hb4ltp2Me5wnfYYxz6esxDl4TFs/XbD4uxuaYzJjP5nNM4r99LGEzEFkObhZXm3tkFYgVT6XVWCYm27GAFELLuVD8oS49ebc4eRYV/n/bTAo0puEnPrk3HK1j17Gry02ZLzt17j7mvLHF/JVQnecJLO+n9UUsU8lgXVAgBPBsWz0hfEF+QJnPF+QwPM6pdRdX/hgngGuAqeg3AlnpdDfu9fFLeL+hYMJ3AtwWEtWDKDDOQeEaUYvtkU+VWI4kmY5ByVjE1Ko8YPxoIIC9WzTKYZJCRu9DhNP707yaMeT6tjlGFcyERh0uJIWYtCZMb/PUCb1bEnvpQhTmMv1TTdeCm3VqnSq7T1V8YS2nejEma4AGX4Wp1SNzFfu9mSINxS1JKIBXr3h59oe77g11NubGh3yajVzHMBACFVpFmx2RzA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(56012099006)(4143699003)(10067099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?alBzL2FZc0VlazZiTHBSKzNSdjRad1ZuYVZhT3BkbE80dHFyQUIrdnBlakxy?=
- =?utf-8?B?a2FyVEY5eVFIMkZHMG5ab3JoNzFrSWJQUjVmSXBRRTEzWThWcTlFejh0K2Zx?=
- =?utf-8?B?bFZ3WDNkZXJac2JDQTVxV3ltQUFkdXVSNmRnbVoyY05keXZiajFSQk54UElr?=
- =?utf-8?B?REQyZ1ZtV1BOY2psTVNNQW1oVnpNSHJwSmxCMzMyeVkzSVJQRmVpaVFadzgz?=
- =?utf-8?B?UXZ4bWtOOTlQWVhrNTFScUt6UmY3MjZZUjA5SlBHMjR6T1ZuSzhqOXp5VnBS?=
- =?utf-8?B?TFRzTGgwL1J4N2UxbEVvK05WZE1aTkZpWnFGbm5NSy80cWxqZlJvWHdvc0Vn?=
- =?utf-8?B?amU0T2dabTIwdG80aTdZMmN2ckRtblFYN2dXTGpMZDhmQ3l6K1IvNmdjbHlS?=
- =?utf-8?B?SU4rUlp5bGhmcG4zK3VTbzh2Q1Z6MHFRK1FLUXIrNXFqRmNnaW5iaE8wbG5t?=
- =?utf-8?B?NmxHMU55SWEzNDUwSlphYnJNaWZhK2xlNFFuaFVybEpaY0EwM0JjSFY2cjM3?=
- =?utf-8?B?aWp4cHY0akt4UVkxdmxFUHFhYi9PVHhhZGlVR3YrUExYM1NCYVVRTVIzVnFX?=
- =?utf-8?B?WXhEQThUa1RMdkpFc1c2RGpOdUhsbVZtQTNQN3E2OFQ5UVVhQ244RmczSTVM?=
- =?utf-8?B?aFZjTG5wYXo3RElTUG9KUS9NSnorWU1ucXBncWFjSkZwdVplRTFEbTI4Yzcw?=
- =?utf-8?B?aVhJZ0VqM3hVcFFZT2xpa1grQy9zOG9Zb3cwb3RvTU1DYVNYWDNDRmluQ2h6?=
- =?utf-8?B?S3dHNVZ2aHJSTWdGYnRyeWVrbS9HUmRrN1ZWSVdxQnFLQ014K0kzRUYyME1k?=
- =?utf-8?B?bWh6aFJ5eVNGZ0xBY0ZmblIwcmxSN3NvRWpYcUVIVWlQUHY2V2FXUU5yRml5?=
- =?utf-8?B?NXZiNDlGNTBJcUMyUGNhbFduc3doRnA4NmpZV3FHN2NaaGVBRkdzT3VVMEEr?=
- =?utf-8?B?VUI2anFJU3dsY3FVTDh1UzNwTXFnSDFCdUlWRGVpd1R2NTBVTG9MTzZ3Zmg4?=
- =?utf-8?B?ay9sbEZZTDVCYlJ0Um1GQmJEZkFpL0trR1JVeWNnczEzRStRR1NGZzIvNUox?=
- =?utf-8?B?OEVPZENiM0VXVkJQbXhBRXRhOTdpQjB6ZnlZZW1aVjYvRjlJMlFaQzA3SFBS?=
- =?utf-8?B?NW5kUUd4S2pOcE5HTFZHVE42RW9veEp6bnpKUENscEhjUllMeU1SL281amQ5?=
- =?utf-8?B?c0IwRWtxdjFDN2xsUmJ4QVhIK2VkYk1WUDd5SUtoKzBheTArTlZza3p5NXBM?=
- =?utf-8?B?TldJajU0SlRoeSt6RE8vZUtWb3NQajZYcXk0SzZ1d241bE4yaFpnMkpabTJ5?=
- =?utf-8?B?WUd5V1UwNHRpdU9MK1lpd1lNUWNlSklrWjlza1VKR3RLUk4zQkxDYzJJRXIv?=
- =?utf-8?B?S2hETzV2dWJKNi9BNnVqTDJLOWNaa3JHK2dBSXBpN0hPVm1SZmtVRjU5b0Rs?=
- =?utf-8?B?cUkvMXpVTUdva0dDYThhdGpESXlDa1h4ejdRQ01rMklxL1VtbTFFMWVqWWx1?=
- =?utf-8?B?bEFRRXdxQ052UmFKS3VKMlNlNllYcHd1RDg4ZENDa2tyQmZLY2xGZDltZzRP?=
- =?utf-8?B?L3VqdU0zWlIrOHBJSEpWckVrMkVnQ2hiQVJYaHR6eUg2enB0TFIvYlpUV1pY?=
- =?utf-8?B?am1hLy8vRUlxN1NibHo3T1VHZFhiQU1WMHNCQmN5dXY1bWNSUFlqWEpQczJ1?=
- =?utf-8?B?TE8wYWpzN3pOM1FndTcwcGhFZnIrVkF4SC9RT3QzQW53NkJiTmdsY2ZXaEYz?=
- =?utf-8?B?YmpiRUxTQ1BNOXcya09QOUFSK3g3UTZ2RnRsWWZnTnZabkExY25SZjJNclRS?=
- =?utf-8?B?UGNnaW52WjhYcUpabHV2VUYydHdlcUMwN0dnNlgzZ0JIZmMzdDYrTE5rZmxW?=
- =?utf-8?B?MmF2TUFNZGRCNnN2Vmx4c0VnMnlCT1liRllnaWpleDRvU2x4TmkrY0hUQWho?=
- =?utf-8?B?TEV2VmdjZE9vcVJYaVMxRXNmQVRGdW1QSGtENkM0bUN2YVh6L1J0b0pSWTc0?=
- =?utf-8?B?Z2F5aENQZGMzb05qV0V4Sm1SNTBSazdRQ3pxVmhpN0VUOUN3Y3M3clFiNnVn?=
- =?utf-8?B?MEF5OXFHTEFxV0FJZUoyaWZtN1p3NnlwUHdYNWEvQmpQZHMzZCtURU16VVR3?=
- =?utf-8?B?azFCM0l4Yi91OTZ6VDgyZmJQQ2E3WXlDbjJvaDlQMHoxV1JscDhlVk5HT0NJ?=
- =?utf-8?B?N25QTkJhdFpBSVVzUDg4c1BVSnNMR29TcTh5dnZISFNEQTNWRG9YR090R2cv?=
- =?utf-8?B?dUJtNlUzcXFmQ2xLZnVmeWpTZmdYcS9vMm5wbEpPbUlDL0lHcmt6V1VUdGZ3?=
- =?utf-8?B?QWZhUVo3UGJJUWhMQlEweTJvVHc4ckVMQndScEtTczJUVzdqZjF3Zz09?=
-X-OriginatorOrg: linumiz.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9edefe31-df7b-4038-c1ac-08def2ee0bc9
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 12:35:35.1792 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jO8a+fBOVP3/HXShWrLUX7WGY0ErlBdnk9uu4SVCmiyQEzSnk4w7v3zE8BisM6mAlMSG48VIN/6278Yue9qD2Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPFBE94497F1
-Received-SPF: pass client-ip=52.101.127.111;
- envelope-from=parthiban@linumiz.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,46 +88,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On 7/7/26 10:12 PM, Philippe Mathieu-Daudé wrote:
-> Hi Parthiban,
-> 
-> On 7/7/26 20:16, Parthiban wrote:
->> On 6/15/26 3:13 PM, Parthiban wrote:
->>> On 5/31/26 11:30 AM, Parthiban Nallathambi wrote:
->>>> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
->>>> ---
->>>> Parthiban Nallathambi (10):
->>>>        target/tricore: replace legacy DPM/CPM CSFRs with CPXE/DPRE/DPWE
->>>>        target/tricore: implement memory protection in get_physical_address
->>>>        target/tricore: add tc39x CPU model
->>>>        hw/intc: add TriCore interrupt router
->>>>        hw/char: add TriCore ASCLIN UART controller
->>>>        hw/timer: add TriCore System Timer Module (STM)
->>>>        hw/tricore: add System Control Unit (SCU) device
->>>>        hw/tricore: wire peripherals into tc27x SoC
->>>>        MAINTAINERS: take over TriCore and add peripheral file paths
->>>>        hw/tricore: add tc39xb SoC and KIT_AURIX_TC397_TRB machine
->>>
->>> Good evening, Ping for review. I know TriCore lags active maintainers.
->>> Looking forward to know how to handle it. I have few follow-up patch series
->>> which handles additional models and also newer cores.
->>
->> Ping and looking forward for initial reviews for TriCore.
-> 
-> I have this series tagged for review, but I couldn't dedicate enough
-> time / focus / energy to start reviewing it... :S Unfortunately it
-> missed the next release, but it will likely be in the following one!
+Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
+returns an error to the guest rather than crashing the host (glib
+behaviour).
 
-Thanks and looking forward for initial reviews.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+v5:
+ - also fail gracefully in virtio_gpu_create_udmabuf()
+---
+ contrib/vhost-user-gpu/vhost-user-gpu.c | 25 ++++++++++-----
+ contrib/vhost-user-gpu/virgl.c          |  6 +++-
+ contrib/vhost-user-gpu/vugbm.c          |  5 ++-
+ hw/display/virtio-gpu-rutabaga.c        | 14 +++++++--
+ hw/display/virtio-gpu-udmabuf.c         |  7 +++--
+ hw/display/virtio-gpu-virgl.c           |  6 +++-
+ hw/display/virtio-gpu.c                 | 42 ++++++++++++++++++-------
+ 7 files changed, 79 insertions(+), 26 deletions(-)
 
-Thanks,
-Parthiban
-
-> 
-> Regards,
-> 
-> Phil.
-> 
+diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
+index 786488150932..933bdbb671c0 100644
+--- a/contrib/vhost-user-gpu/vhost-user-gpu.c
++++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
+@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
+                       struct virtio_gpu_ctrl_command *cmd,
+                       struct iovec **iov)
+ {
+-    struct virtio_gpu_mem_entry *ents;
++    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
+     size_t esize, s;
+     int i;
+ 
+@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
+     }
+ 
+     esize = sizeof(*ents) * ab->nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(*ab), ents, esize);
+     if (s != esize) {
+         g_critical("%s: command data size incorrect %zu vs %zu",
+                    __func__, s, esize);
+-        g_free(ents);
+         return -1;
+     }
+ 
+-    *iov = g_new0(struct iovec, ab->nr_entries);
++    *iov = g_try_new0(struct iovec, ab->nr_entries);
++    if (!*iov && ab->nr_entries) {
++        return -1;
++    }
+     for (i = 0; i < ab->nr_entries; i++) {
+         uint64_t len = ents[i].length;
+         (*iov)[i].iov_len = ents[i].length;
+@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
+             g_critical("%s: resource %d element %d",
+                        __func__, ab->resource_id, i);
+             g_free(*iov);
+-            g_free(ents);
+             *iov = NULL;
+             return -1;
+         }
+     }
+-    g_free(ents);
+     return 0;
+ }
+ 
+@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
+                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
+             size_t size = width * height * bpp;
+ 
+-            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
+-                               sizeof(VhostUserGpuUpdate) + size);
++            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
++                                   sizeof(VhostUserGpuUpdate) + size);
++            if (!p) {
++                pixman_region_fini(&region);
++                pixman_region_fini(&finalregion);
++                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++                break;
++            }
+             VhostUserGpuMsg *msg = p;
+             msg->request = VHOST_USER_GPU_UPDATE;
+             msg->size = sizeof(VhostUserGpuUpdate) + size;
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index 550fd03bf5c4..20bae57d0fe4 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
+index 710d54529779..e2d8385fd857 100644
+--- a/contrib/vhost-user-gpu/vugbm.c
++++ b/contrib/vhost-user-gpu/vugbm.c
+@@ -13,7 +13,10 @@
+ static bool
+ mem_alloc_bo(struct vugbm_buffer *buf)
+ {
+-    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
++    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
++    if (!buf->mmap && buf->width && buf->height) {
++        return false;
++    }
+     buf->stride = buf->width * 4;
+     return true;
+ }
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index a054f8117f14..041216a10d04 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -366,10 +366,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_new0(uint8_t, cs.size);
++    buf = g_try_new0(uint8_t, cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+-    CHECK(s == cs.size, cmd);
++    if (s != cs.size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: size mismatch (%zu/%u)\n",
++                      __func__, s, cs.size);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return;
++    }
+ 
+     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
+     rutabaga_cmd.cmd = buf;
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 5f08c855dde1..816f52a51457 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -39,8 +39,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+         return;
+     }
+ 
+-    list = g_malloc0(sizeof(struct udmabuf_create_list) +
+-                     sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
++                         sizeof(struct udmabuf_create_item) * res->iov_cnt);
++    if (!list) {
++        return;
++    }
+ 
+     for (i = 0; i < res->iov_cnt; i++) {
+         rcu_read_lock();
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 6e298f997d66..9bda572426b2 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -620,7 +620,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    buf = g_malloc(cs.size);
++    buf = g_try_malloc(cs.size);
++    if (!buf && cs.size) {
++        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
++        return;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    sizeof(cs), buf, cs.size);
+     if (s != cs.size) {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index fbb6fec7a0ad..9eb010082d0d 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+     }
+ 
+     esize = sizeof(*ents) * nr_entries;
+-    ents = g_malloc(esize);
++    ents = g_try_malloc(esize);
++    if (!ents && esize) {
++        return -1;
++    }
+     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
+                    offset, ents, esize);
+     if (s != esize) {
+@@ -913,6 +916,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+         hwaddr len;
+         void *map;
+ 
++        /* TODO: a common DMA map SG helper */
+         do {
+             len = l;
+             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+@@ -921,20 +925,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
+-                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
+-                g_free(ents);
+-                *iov = NULL;
+-                if (addr) {
+-                    g_free(*addr);
+-                    *addr = NULL;
+-                }
+-                return -1;
++                goto err;
+             }
+ 
+             if (!(v % 16)) {
+-                *iov = g_renew(struct iovec, *iov, v + 16);
++                struct iovec *new_iov;
++                new_iov = g_try_renew(struct iovec, *iov, v + 16);
++                if (!new_iov) {
++                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                     DMA_DIRECTION_TO_DEVICE, len);
++                    goto err;
++                }
++                *iov = new_iov;
+                 if (addr) {
+-                    *addr = g_renew(uint64_t, *addr, v + 16);
++                    uint64_t *new_addr;
++                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
++                    if (!new_addr) {
++                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
++                                         DMA_DIRECTION_TO_DEVICE, len);
++                        goto err;
++                    }
++                    *addr = new_addr;
+                 }
+             }
+             (*iov)[v].iov_base = map;
+@@ -952,6 +963,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+     g_free(ents);
+     return 0;
++
++err:
++    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
++    *iov = NULL;
++    if (addr) {
++        g_clear_pointer(addr, g_free);
++    }
++    g_free(ents);
++    return -1;
+ }
+ 
+ void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+-- 
+2.55.0
 
 
