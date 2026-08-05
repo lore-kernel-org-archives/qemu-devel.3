@@ -4,83 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E44DC56203
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF34C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:37:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrdZg-0005rL-Ij; Wed, 05 Aug 2026 11:30:32 -0400
+	id 1wrdfu-0002M7-1V; Wed, 05 Aug 2026 11:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrdZV-0005o9-VG
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:23 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wrdfr-0002LL-VO
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:36:55 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrdZR-0007do-OF
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:20 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-495b27007d0so727899b6e.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:30:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wrdfq-0000MZ-JT
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:36:55 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66771ded50aso1644271d50.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:36:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785944213; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Y/H1bSxMREEcDWOrIZlVCR4l6hCO7w1HXeXwdzSpZDRWwDq4U/adDHhhGMoLfSZ0Px
+ 8ZupvL68fO/gQYJ8gL9RjCa2CuJPJe5LrISs+54sMi+9brQr1T1ElN8WFBkLgkIX8vGj
+ e5VrpB25HpBAP7gStdhrLqsYRBfLpzS89JRVRujfPlTRyJw8L4JgKWoRwMmGGS/xoB/3
+ +4oPObidKhHxK0HayDXxgWVj0KEeMn/eO1IKNkcVxBMJqkXXEkBhfo1Kie7griKoR1MC
+ YDVABduEm6EPUJaVKNlOQN32ks4fXoKlJ47sTo84iTGwYCeVoYkvfC6jNIlxoTQqG0No
+ NvzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=dcVDqOBD+RYP8gAP5Yk2CFuORvHnd74U/mYR1CF/7zE=;
+ fh=qCGCLWECMPJt00xO2lmEnyKMUwUmgfeLlFh3mWJKEqU=;
+ b=jcz5SapstTU49ej+FiNbtIGRQHR5gPjbDhfpBdhmxUwjNSvYbsem0mpL9n4PfiJy3C
+ 4sEIvi1M4OCcRbRagv5Yu1TXuyhP+whvUlfhdjFROHdHn6FfkRD4Nae2RLFh002POf+r
+ feEYflML9mXhB67pQ85hyU9Ty5ujCg+CZgrmQQMvwCZECnja5mreGC2GDG/PPKqaNpje
+ ytbBMn4vbJMOD6ylfcl/SmrCQGjzHpZMh2SbJ7xBCvcbxAAxS1UAJDvtM3A2/Q2egZq5
+ 6RwfvtD6FVEyEuBWzo/NGT00eKXQAWabKHB8HxvArOvhAg3qzBKdV1/oeEaGsLH6Rmvc
+ T6OA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785943816; x=1786548616; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=k9yZcr4UWJCAebKRS40Pd2Dm5YZ9z3Ekl/CFHK6Os1I=;
- b=QrlwnLafuaqnM55PR5Sjk7qN5KVbc7Cc7/eX89eEd0CUzPxX9W02emAJKbIt6O05l7
- ldSuGtu12QKd2oCukkaFiwVIEFsgB8WrI8stJ+qb5D6T1nkS4TH6fiwiL85pwCH2rckd
- sK+WnoF2JR55LUq1Glekd26OpwE5TfyaQtIHJ0q/c2zA82sNycTxUNRKQzGAGYgQbcyA
- rGhhnwWespxqmqqMHNwf85xpjnR7u2U5CLvD+TM9LaKxXmaALfmw1sGaXlZxSYmmybF1
- Qu4i43xMdI4HQotYJ0X449OyDa4ijK8SzDeNmJgkIQn1WUV6sMQHCOqEAi4sLIYuawbU
- JZ6w==
+ d=gmail.com; s=20251104; t=1785944213; x=1786549013; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=dcVDqOBD+RYP8gAP5Yk2CFuORvHnd74U/mYR1CF/7zE=;
+ b=EFCUV2I7MYdMGiOlnv/6KzenXyfMd1ne5s9/qHgbuXfxirWY4aO6mSUjlCe7GmlcI8
+ I/LSwNNxocmjBstDYb8hHWEpES+Sjqz7xhfp2x2GObJfz2cQq1T5J9V5+rrOyUsZ2aof
+ f6Qv1DtQH71iZFUzN79Fc1aM63g67wSwpEVa7mP1Z0ISjQd4Lb5ZoOrjahV0Xnbsvogi
+ 2ZFtJT3MWwnHgd6YA37oKeBN9+mCNI8FsL1V7oWf05fGy/tNd5x4LCUkCty0Dwf749AX
+ 6Mv2nAjzOVlI4+NXOM3Gv7CdGWrmKUcZVoWWrUWLPgxaFVP7kDsHDAk04xVbepbKrBXy
+ vN7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785943816; x=1786548616;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=k9yZcr4UWJCAebKRS40Pd2Dm5YZ9z3Ekl/CFHK6Os1I=;
- b=AdHPpX1hQcTjA0rbc24qglrvWDRT32BWvLiWwnDKqI5oIxsIA3NXi/dBAWWzPDHEoF
- aeknEdc+nsuyfGXWPh7/pp987RUsPc5SxCw9MeVykclF8x9DxxiVkecGB/FPHHBvhU/D
- 34Kzx1n5ouWY8bZ5M8eRi/CNyu7ZP+cRRJALRMTWaUx5CLoi0ryaj1kMfeRaiKFblDG0
- +MvTilko8WOHRMxJw2aGAhLYtglFwjfJ+Yq2zMRCwrmUj1DS1AJNm9tAkwPB7DQR/V75
- uK+jEDzhOlYf41HbpuSajht9UtrDFtO2kxu34OvOzNXhBv8xHAsNWENpw2K1h8MmIfgt
- w71w==
-X-Gm-Message-State: AOJu0Yw3ukZFwPFobLJNC4Jpjb+TX2HAl9f7okoeI3U1/Pn+EOmW3p6U
- Ez/gpO4kr4Ad5k5MZyoSvxi7eh2QhyN6ihlbB1/lVBgooY3jXSrJ/zG6/bcGo8Iy
-X-Gm-Gg: AR+sD13nK1xJggbeCUlXZmfg4rLRZVJn5Dk2XR9qiwtvuOFYh114PL2x6okgQUIOwIs
- 9Uy7vPxFQY1GaW1/rNi3o4ATaqhTiwE54QMFydRBIyLu0xeaaKGe+EU4dtLvWC3rZr7jYvaHMxJ
- qJ+V5fsj1xD3Kl6HtPZ9RfGnAtQWJaXRhns6HC7O3VUkgJZeS/8fNohkhBTwZngc+KAx0URG51y
- 4Pp9irmjuEiYu8eoJK08z7NgsqPG/OE2hxfHQ5v2rTR3BqE1xDMUkUk05UCmd44ZRjn2vtLjC4G
- RoNYWkB8cJ3i+tTwrbn6ZL0NUEArXMjyFhuM4PmkB5FO95YeUC1wZ955Wib6OLlCgapBt//HYhu
- wYG2gq42O03a6w2sIlKZLCZq3c041zS5GL9esiM+EWa3+lSwd2/47kS++mceB1/RbXYIJjW9syg
- QML9Vg/mf5QJKVwmFvAzXq5tucZgnMexgY9ITLfLcK8j7SGOg0w+uRdZBIYXuu2QjjNlEhX6DwZ
- Z/+Hcr/b4QE
-X-Received: by 2002:a05:6808:3985:b0:494:18ad:8a5b with SMTP id
- 5614622812f47-4afae0171a6mr4579392b6e.17.1785943815737; 
- Wed, 05 Aug 2026 08:30:15 -0700 (PDT)
-Received: from HPE-2MQ6131DV6.ams.hpecorp.net ([170.85.99.9])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4afae75ce1bsm2185614b6e.15.2026.08.05.08.30.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 08:30:15 -0700 (PDT)
-From: Simon Xu <simonxhy0404@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Owen Giles <owen.giles@hpe.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Robert Elliott <elliott@hpe.com>, Simon Xu <simonxhy0404@gmail.com>
-Subject: [PATCH v2 6/9] hw/misc/iotkit-secctl.c: use GNU C case ranges
-Date: Wed,  5 Aug 2026 10:30:02 -0500
-Message-ID: <20260805153005.9989-7-simonxhy0404@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260805153005.9989-1-simonxhy0404@gmail.com>
-References: <20260805153005.9989-1-simonxhy0404@gmail.com>
+ d=1e100.net; s=20251104; t=1785944213; x=1786549013;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=dcVDqOBD+RYP8gAP5Yk2CFuORvHnd74U/mYR1CF/7zE=;
+ b=orVjANXJSu/sRWk1+0lUeBoHKIilxdN98aG3VK98ozPv+wbqTVk/2xQZyKddEse7fX
+ l1dUV6lEL+F9v4G9Bln95yIAwvaNHJhbwFS5cY5T8pYnvSmIVJeFh4QfKX9QgfeqLyDi
+ 32bNLOJcUP4MfGNcQpnoYwSCpenKlW8LEjUV3lJNvVu38+A58PtvwqtIq2CGMo9SgVwy
+ po3+87cXsHjIUZGvOhDnV3kBlnzQra43xcpZokjMvMS8lc1DEQls9vUBWuB9CHdjZu1U
+ t7ofczxvJyoApScXU1hvyr1+gcwz8ZBVyEtvd5qLYgwKqx47+YUi6Bir6sJLAEdEcjKI
+ 1xRQ==
+X-Gm-Message-State: AOJu0YyySAEWewfJK03pSZnQCwXJEwt2keJhTEKIo52XU17/KXAFgWAp
+ 0Myf0GOUkTsotMHA567zTwKpskcrkuCCeoMdprEWNYMAEsZSYr/NVjikkrm4FMW7o2vREfkTs9S
+ iuREPC5qbLKODV/RvN//N9pxsD4Hp/Sc=
+X-Gm-Gg: AR+sD11nqn9o7UO7Etkm3CsvBW0wLKk/9NGzEJe2WVfn+JOzDRpKk44OHKlnE2WVRjv
+ qKEQj9szuLtKn9ii1DS9IZrxCVjEiCPux4TI/x8tUEDlmAHSzIFjWgZpuTqY0Nlltm/x4MaFHoI
+ ZzK45WfFS3+yEbFQ+RMBC3qA7Wx6LQghhkCGLrFOZixq8h3WamfcbBFafZ0rAeb9fh/Q+ezUIJI
+ IctH4LNP5Ws5r2IV9eEDE8EAWyFjBT+LjS4g1ADLllIyMr6LqrAvPHwQm1kcTHnmSJksBOd227g
+ Hgbk7uKbVWVfnuPdpwdZB3Vm+PDZjRsKkRU/Ygenug==
+X-Received: by 2002:a05:690e:408d:b0:667:c09c:4a40 with SMTP id
+ 956f58d0204a3-6699ab8eaf8mr4761596d50.51.1785944213312; Wed, 05 Aug 2026
+ 08:36:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x231.google.com
+References: <20260801192848.30606-1-flamboyant.h.01@gmail.com>
+ <20260801192848.30606-2-flamboyant.h.01@gmail.com>
+ <itp7xmctqnac4c7kytqyrrs3xbfnbjprem6ezlltc6b5ncdpdn@6pypq3e7lbog>
+ <CAAW0U4a-nG-ck4g8w0_Vt1Jbu5dNcYEDjJNR-YvGEiHa9G4Rdw@mail.gmail.com>
+ <CAEev2e8UcXn46OoyqTXpx8-_PzUNyGJDVF094J+boLUSqQ3VLw@mail.gmail.com>
+In-Reply-To: <CAEev2e8UcXn46OoyqTXpx8-_PzUNyGJDVF094J+boLUSqQ3VLw@mail.gmail.com>
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+Date: Wed, 5 Aug 2026 23:36:42 +0800
+X-Gm-Features: AUfX_mwtx1eBucGDkJh-NGFymJ5SHIWUBRX65d3a40fABZXcAO7IOIUNzhBuP9s
+Message-ID: <CAAW0U4a95WEHCY87mN7WncHg9buiiw0YsdO4VFTroONe3XWFbA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] hw/ssi: Add Synopsys DesignWare SSI standard PIO
+ controller
+To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Kangjie Huang <flamboyant.h.01@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,228 +132,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace case fall throughs with case ranges when register addresses
-are continous.
-
-Reviewed-by: Owen Giles <owen.giles@hpe.com>
-Reviewed-by: Robert Elliott <elliott@hpe.com>
-Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
----
-v1 -> v2
-	Make long case statemens consistent with other iotkit files
----
- hw/misc/iotkit-secctl.c | 112 ++++++----------------------------------
- 1 file changed, 16 insertions(+), 96 deletions(-)
-
-diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
-index 9f6fb81088..2d06d6f80f 100644
---- a/hw/misc/iotkit-secctl.c
-+++ b/hw/misc/iotkit-secctl.c
-@@ -187,36 +187,24 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
-     case A_BRGINTEN:
-         r = s->brginten;
-         break;
--    case A_AHBNSPPCEXP0:
--    case A_AHBNSPPCEXP1:
--    case A_AHBNSPPCEXP2:
--    case A_AHBNSPPCEXP3:
-+    case A_AHBNSPPCEXP0 ... A_AHBNSPPCEXP3:
-         r = s->ahbexp[offset_to_ppc_idx(offset)].ns;
-         break;
-     case A_APBNSPPC0:
-     case A_APBNSPPC1:
-         r = s->apb[offset_to_ppc_idx(offset)].ns;
-         break;
--    case A_APBNSPPCEXP0:
--    case A_APBNSPPCEXP1:
--    case A_APBNSPPCEXP2:
--    case A_APBNSPPCEXP3:
-+    case A_APBNSPPCEXP0 ... A_APBNSPPCEXP3:
-         r = s->apbexp[offset_to_ppc_idx(offset)].ns;
-         break;
--    case A_AHBSPPPCEXP0:
--    case A_AHBSPPPCEXP1:
--    case A_AHBSPPPCEXP2:
--    case A_AHBSPPPCEXP3:
-+    case A_AHBSPPPCEXP0 ... A_AHBSPPPCEXP3:
-         r = s->ahbexp[offset_to_ppc_idx(offset)].sp;
-         break;
-     case A_APBSPPPC0:
-     case A_APBSPPPC1:
-         r = s->apb[offset_to_ppc_idx(offset)].sp;
-         break;
--    case A_APBSPPPCEXP0:
--    case A_APBSPPPCEXP1:
--    case A_APBSPPPCEXP2:
--    case A_APBSPPPCEXP3:
-+    case A_APBSPPPCEXP0 ... A_APBSPPPCEXP3:
-         r = s->apbexp[offset_to_ppc_idx(offset)].sp;
-         break;
-     case A_SECMSCINTSTAT:
-@@ -228,18 +216,7 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
-     case A_NSMSCEXP:
-         r = s->nsmscexp;
-         break;
--    case A_PID4:
--    case A_PID5:
--    case A_PID6:
--    case A_PID7:
--    case A_PID0:
--    case A_PID1:
--    case A_PID2:
--    case A_PID3:
--    case A_CID0:
--    case A_CID1:
--    case A_CID2:
--    case A_CID3:
-+    case A_PID4 ... A_CID3:
-         switch (s->sse_version) {
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_s_sse300_idregs[(offset - A_PID4) / 4];
-@@ -389,10 +366,7 @@ static MemTxResult iotkit_secctl_s_write(void *opaque, hwaddr addr,
-     case A_BRGINTEN:
-         s->brginten = value & 0xffff0000;
-         break;
--    case A_AHBNSPPCEXP0:
--    case A_AHBNSPPCEXP1:
--    case A_AHBNSPPCEXP2:
--    case A_AHBNSPPCEXP3:
-+    case A_AHBNSPPCEXP0 ... A_AHBNSPPCEXP3:
-         ppc = &s->ahbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_ns_write(ppc, value);
-         break;
-@@ -401,17 +375,11 @@ static MemTxResult iotkit_secctl_s_write(void *opaque, hwaddr addr,
-         ppc = &s->apb[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_ns_write(ppc, value);
-         break;
--    case A_APBNSPPCEXP0:
--    case A_APBNSPPCEXP1:
--    case A_APBNSPPCEXP2:
--    case A_APBNSPPCEXP3:
-+    case A_APBNSPPCEXP0 ... A_APBNSPPCEXP3:
-         ppc = &s->apbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_ns_write(ppc, value);
-         break;
--    case A_AHBSPPPCEXP0:
--    case A_AHBSPPPCEXP1:
--    case A_AHBSPPPCEXP2:
--    case A_AHBSPPPCEXP3:
-+    case A_AHBSPPPCEXP0 ... A_AHBSPPPCEXP3:
-         ppc = &s->ahbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_sp_write(ppc, value);
-         break;
-@@ -420,10 +388,7 @@ static MemTxResult iotkit_secctl_s_write(void *opaque, hwaddr addr,
-         ppc = &s->apb[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_sp_write(ppc, value);
-         break;
--    case A_APBSPPPCEXP0:
--    case A_APBSPPPCEXP1:
--    case A_APBSPPPCEXP2:
--    case A_APBSPPPCEXP3:
-+    case A_APBSPPPCEXP0 ... A_APBSPPPCEXP3:
-         ppc = &s->apbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_sp_write(ppc, value);
-         break;
-@@ -444,18 +409,7 @@ static MemTxResult iotkit_secctl_s_write(void *opaque, hwaddr addr,
-     case A_BRGINTSTAT:
-     case A_AHBNSPPC0:
-     case A_AHBSPPPC0:
--    case A_PID4:
--    case A_PID5:
--    case A_PID6:
--    case A_PID7:
--    case A_PID0:
--    case A_PID1:
--    case A_PID2:
--    case A_PID3:
--    case A_CID0:
--    case A_CID1:
--    case A_CID2:
--    case A_CID3:
-+    case A_PID4 ... A_CID3:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "IoTKit SecCtl S block write: "
-                       "read-only offset 0x%x\n", offset);
-@@ -482,34 +436,17 @@ static MemTxResult iotkit_secctl_ns_read(void *opaque, hwaddr addr,
-     case A_AHBNSPPPC0:
-         r = 0;
-         break;
--    case A_AHBNSPPPCEXP0:
--    case A_AHBNSPPPCEXP1:
--    case A_AHBNSPPPCEXP2:
--    case A_AHBNSPPPCEXP3:
-+    case A_AHBNSPPPCEXP0 ... A_AHBNSPPPCEXP3:
-         r = s->ahbexp[offset_to_ppc_idx(offset)].nsp;
-         break;
-     case A_APBNSPPPC0:
-     case A_APBNSPPPC1:
-         r = s->apb[offset_to_ppc_idx(offset)].nsp;
-         break;
--    case A_APBNSPPPCEXP0:
--    case A_APBNSPPPCEXP1:
--    case A_APBNSPPPCEXP2:
--    case A_APBNSPPPCEXP3:
-+    case A_APBNSPPPCEXP0 ... A_APBNSPPPCEXP3:
-         r = s->apbexp[offset_to_ppc_idx(offset)].nsp;
-         break;
--    case A_PID4:
--    case A_PID5:
--    case A_PID6:
--    case A_PID7:
--    case A_PID0:
--    case A_PID1:
--    case A_PID2:
--    case A_PID3:
--    case A_CID0:
--    case A_CID1:
--    case A_CID2:
--    case A_CID3:
-+    case A_PID4 ... A_CID3:
-         switch (s->sse_version) {
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_ns_sse300_idregs[(offset - A_PID4) / 4];
-@@ -560,10 +497,7 @@ static MemTxResult iotkit_secctl_ns_write(void *opaque, hwaddr addr,
-     }
- 
-     switch (offset) {
--    case A_AHBNSPPPCEXP0:
--    case A_AHBNSPPPCEXP1:
--    case A_AHBNSPPPCEXP2:
--    case A_AHBNSPPPCEXP3:
-+    case A_AHBNSPPPCEXP0 ... A_AHBNSPPPCEXP3:
-         ppc = &s->ahbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_nsp_write(ppc, value);
-         break;
-@@ -572,26 +506,12 @@ static MemTxResult iotkit_secctl_ns_write(void *opaque, hwaddr addr,
-         ppc = &s->apb[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_nsp_write(ppc, value);
-         break;
--    case A_APBNSPPPCEXP0:
--    case A_APBNSPPPCEXP1:
--    case A_APBNSPPPCEXP2:
--    case A_APBNSPPPCEXP3:
-+    case A_APBNSPPPCEXP0 ... A_APBNSPPPCEXP3:
-         ppc = &s->apbexp[offset_to_ppc_idx(offset)];
-         iotkit_secctl_ppc_nsp_write(ppc, value);
-         break;
-     case A_AHBNSPPPC0:
--    case A_PID4:
--    case A_PID5:
--    case A_PID6:
--    case A_PID7:
--    case A_PID0:
--    case A_PID1:
--    case A_PID2:
--    case A_PID3:
--    case A_CID0:
--    case A_CID1:
--    case A_CID2:
--    case A_CID3:
-+    case A_PID4 ... A_CID3:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "IoTKit SecCtl NS block write: "
-                       "read-only offset 0x%x\n", offset);
--- 
-2.53.0
-
+Hi,
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com> =E4=BA=8E2026=E5=B9=B4=
+8=E6=9C=885=E6=97=A5=E5=91=A8=E4=B8=89 23:15=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Sounds good. I wouldn't worry about supporting dw-apb-ssi.
+     Thank you. I will fix  in the next version.
+Regards,
+Kangjie
 
