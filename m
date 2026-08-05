@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0526DC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 23:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F4B6C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 23:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrlGf-0002mr-06; Wed, 05 Aug 2026 19:43:25 -0400
+	id 1wrlJM-0003YR-GK; Wed, 05 Aug 2026 19:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wrlGd-0002mR-5f
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:43:23 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ id 1wrlJK-0003Xw-Ty
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:46:10 -0400
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wrlGb-0005W9-RW
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:43:22 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-517dc520840so11171421cf.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 16:43:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785973400; cv=none;
+ id 1wrlJJ-0005ql-K4
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:46:10 -0400
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-51c04bf4711so14292231cf.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 16:46:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785973568; cv=none;
  d=google.com; s=arc-20260327;
- b=dxM9fpmFaZCTHszmrLYjG3/M4P/ptSyRUj2pi+U9sjqR4fe25FCJcLpeT9ri0H3ZWf
- F8cQeRl6s499ZhL+gsLBhANfhdqFkEA+jtXeimjwalqzFuElUCTSIT4XAvRe9cnAVsPr
- zpXmw2GvgB6IJoS1RWVTvKhkbCixnB00+d5S5CD7y6kesQgNWhTPjfSyuzHmAPVMPjA4
- tQxpGKIkZTN+FFL2Qan18ILnpqDIMpCvUJzggoZaDycydACJgXZFZ+uz+mWfjCVxcIfH
- v2eEq8eOYYddng5gV/6Z/PID3XMDqTxyDMRo+GUA6xp2bfB7Tq9I5FXKfGmPAKvJ2V70
- HjzA==
+ b=RJMfuUn3/xqE0iv17O0J3YO6UrYK2ZyqmnG80XLHAzapqgypfgZdq/7vXpB7TLUZAu
+ HMZAa73JUL9mASSIQoWgjEojuWkpRQDP8n7E0M1TTrHbCw23CcQVDKaGnvPDqQsQ9iHy
+ mtCglAulAJwrxa1IPQWXbT+VDVOuQLWCEzkPu72qUXGXKYqFkq2TvjhJ8omps1tK5w3M
+ skPYkPd6GAotFRLthuPw/i0SE7/Qw3qQKvfnUrNjtMfD1S8LSExCtvXJCwkvKTK3+uvs
+ t5DfTPHhHPDv6X7k9AlFGOn2rHs3KlWNQQRE3bMaynlx7LW7PR8kJk7CxZbWHveAUaMe
+ v5jw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
+ bh=bBoUgyuLcxLRQy3pxTBFtiWOKZu+vFLM2ROsWki0jc8=;
  fh=azakwI4Xb9f6DnAcztET+ugSHXzSSw4voANLU4fk32Q=;
- b=dPhFiGoKS+odhbV6a5HpH3vC2H1fOHVC31DM8AAER1UUP7RzRAk+i6BDdhvFdqpjkj
- 6jHFP9eVyE3iASpfcAfoVU5yA7+4stZgNJZ0Oe2V+OLXuh9lEhiXKt8W2DQEIc3AFbuO
- J8EisZsJjvP0pyD3g6YhVt9SS735NyFwEoZSiwGc46D6vIaulz/itXSz03S56V96vbDI
- RsE+aPW7u7Fk4PUnpEkYY6JRq0Tl7nSO3rIruBwK6kHnwsn6WRBJ0jQpf29nzD/GgtHl
- W27KvVUogOa39cP51v9TXOU574KFTuz6l7yRDlxEZUEe2yDjmdj8KjtQlWF+0KZZF9zH
- akPw==; darn=nongnu.org
+ b=pVF92D/3cORcHT3+7hBc4s93QORNRpUJ9QW9agqhA3q5rXYqTNUvu+5kXVri8uKq5F
+ Jrqg20jlfTGz8/NDzRJVvz+qc3nCENnTfD5Ds20UU2Pkrg/R4XFkCAuVP9oPaxXERYXe
+ kjCFpCPF5JkFl0meUYSSxkhDmb34i5F294lSWxgBJCKujYyQq2JgClL79lC8DDSLZFuN
+ ypNHEwSLKJV2Ut2b2Q+5zbqpH4XNiDqQqokPb2A12wjIsUt6Bs1o+l/hLlcGj4w3L1Gc
+ myQXHLFqnUt6C9r4E2xjXKSaPEF6nMRyk4AgoStSLf2mK7qqGN9/wltQKCAmkuL4H6C0
+ aMGw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785973400; x=1786578200; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785973568; x=1786578368; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
- b=JmfdaNyJXIRoqg/UfZhCNwChHt5+/dNu+EULp+TYWgergGSPNd7JrOJspYiog1tZCQ
- MycS9bZtv6GG113u0CB7t8SFVtga/KkYXU2YDdAkYVDy71WuaxcJCO6oSnzTMrKa3IjA
- rP5pa2hAGM0wXyd3k+Q0AAUKn9DScHOuHYN2fsBNU+jLrswdW0Q6YL1tNct1KdmetpjT
- sLS4QSEYxWq9pPed8O3Fu9fhComzvjNNFd8Ei8/mlc5N1W/1sy3GT9RkNSMuLJcCdhJv
- 8mTpnmHjDoWt4RJdbXAewPzjtw7DFsXm4cSSwjLLsPRCVuuPt7TDRMwl7HBIsZsb3IEa
- huMA==
+ bh=bBoUgyuLcxLRQy3pxTBFtiWOKZu+vFLM2ROsWki0jc8=;
+ b=fw2qaW+RLzXrZog0ZY91EvFkos0jw/EVUU31D4wxrTSt858YlPjKgYtYoJTeFW7qJq
+ USHvXKul+Nf+Uw/eJSItLLitO/QOHT8pboySN8WzAIovH9w+hb0Di3kj68X4E+0dXaos
+ jVkdCRDwjvFLch3I/5lnVsuyxcEGmpmLwVAuG5r4wpKv8XXsTFTx5snmBHQQMKUC/s2x
+ z88mLPunnoE8Wyx7gHlcDO3CcniFPv5iA29Poc4csYmQhgrmzjDtg6/3pLwNZj5EugAk
+ AFgBfF5OKyg45gtqev+Kin5rKPUjLqtvwz8PVo0VhEoWTI/mmTJ/4KzYnwIMTU9eL/kp
+ bdYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785973400; x=1786578200;
+ d=1e100.net; s=20251104; t=1785973568; x=1786578368;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
- b=XKsDYSNxsNOxBLnq/o6bgTWWB2jOjU8k8iJroMCsfWtaRD7qOVyWaJ37Gk5KFTSycw
- A6Y7OVBwYX+9Rom2l+40Ex2lKBZLUJA98hUfPoFpTNoTxab8/jp4hYsscspt+Co4J8H9
- QiSfn4nZG0AgDa6ryRtnGIntO2sxdptHLcWmTjneX0wA/NVGxWEWf1ECXV7lGV/rC9tf
- /tZFh8IxDjP5sXvjuxdzXQoPQdAjduZhS6XE2KXCqyGzu85IwlqkN4py4dbDVWZZ/avb
- XxlGcqptQoGIeJEa9tgZYXRD4WkXhs2/bjbrFQDbNMapvnWmWiMyjzvZRqnDlI9QUUOr
- T9eg==
-X-Gm-Message-State: AOJu0YxOiEMZiy+oZEjxFUZDuM/XattiTK0puXE3aaSxYO7FRpHTO+i9
- 4Zjlx6qcZfvuXKeeYJlvU4MSQGPgZgB4xVGNg24wwjB7RniUbeLbdlCO+7NEaw+InTBc/0XN0tK
- 9FM8uvh5izwHPWSXtepyAlW/E7Dxu8GU=
-X-Gm-Gg: AR+sD10qpQR5LU1aTCneuwDJFO267gXZZRp5+RQQloT/0r+l5pEdk718KwqW1pk9i6S
- r+VVS1iJ2Tub7cYmx+fj2oPAELH1OsGSUwY5VKRK5jsjJF2PkzD2/FTzxJpjxH2fVkGIiok/neJ
- gxLAhOwO0HNnPiZVOezwa1YUHqgH+pMDBAhg95skvTPddpBTcjOP1NPymSQDy+EtkuohJvnLmRb
- BwrYj9AhQQlIdGGyFRq8c2a1J33DO9IbaEewi40e5lacqTxOVC2torRD99sYMsqD0Dm3IX0c5mD
- ejdRLuLfapZDqcx0JUqbtBFDf14pmUHQ0QFXidk4NJhj/uSEEqdeW34h10D85NWr3OgMBxU3dxL
- AEl8=
-X-Received: by 2002:ac8:5a91:0:b0:51c:1ff:2512 with SMTP id
- d75a77b69052e-52ce61a411cmr105675181cf.33.1785973400069; Wed, 05 Aug 2026
- 16:43:20 -0700 (PDT)
+ bh=bBoUgyuLcxLRQy3pxTBFtiWOKZu+vFLM2ROsWki0jc8=;
+ b=k0jAhJL7NtYR0770kP/RqCK/2Nn0UGtMsiIfXTI3oniu54WkfpDSOfpP5AlTATmJKk
+ Qd4b+i8ChReqO8yEDacGYc08rpCLvP4O3Fu019X55VAkKY2b2FjEJnkeTj8fT2QU/77M
+ NOU3eNjX+6AT/LT5szTJ4FpkC+SYQSKaPKPcAMWj2lgYhUgZwyh8QcMLr46A1dkQr/Wd
+ KTAnX/YV3o76WUR6l8MVqM1G09iQmiSl4bjuFqNnvak2nZ48U+g7fQ6VeU0KPdEF+OTH
+ Mv3NJiX9uUoknepgFPCrAkqL+5bh26Nxxr4KasTtmYDXRIKqBKVlnVfwt/DFK3JBtzt/
+ /yHA==
+X-Gm-Message-State: AOJu0YwW52nScU7U4XpBvtgsr/bir0XpwZB7N/a3wPPrUorEXtchMuZl
+ cUtDcujAkFfiJrIaHpf4t6SrKcXSrrw0A8wSlw5Sex5IeszDEhJdo/exWByumbGVkM1GKqFgtDq
+ 2BMvRgcCYra4vsQPhT07O5qRkV90QcGo=
+X-Gm-Gg: AR+sD13n2+pEqTl/p/pitE+rUDauWG0DCIwn/WffA8pq9leptvsQOhyI5PakFkAdhL4
+ 2IyiiUctpU9Qp0+cEzDgRwOrOolqWJTG813BviGdBlAihmbgv0nDdCU9g26721XTKZO3MWzAQLJ
+ CHj+g1Q+mxhMiVso4Tpq1mwzrGhLbkluPZTRO08CPFm+AE4muwXXJ8/rPCnsvGUCS0yzyqnEAGl
+ jOFsosJEXNt9tTeGOsTtR39Jz0mlC7ibyZLos6KN3+tHc0Te/gX04vOpd5XxwkDgzC9ufWg4Qhd
+ ImZGAANX+z7SMyKf3LVpqs78qjPou49Kr3ZJgbma3bGINx8pB+e8jyucxdxtMhO9cM8gtnau20t
+ a58w=
+X-Received: by 2002:a05:620a:6406:b0:934:946d:599d with SMTP id
+ af79cd13be357-936491c0d2amr1089166785a.33.1785973563793; Wed, 05 Aug 2026
+ 16:46:03 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-4-6b97c439eb28@gmail.com>
- <6f915ae4-f9b7-4e27-9c3a-3a99917b499f@redhat.com>
-In-Reply-To: <6f915ae4-f9b7-4e27-9c3a-3a99917b499f@redhat.com>
+ <20260723-vhost-user-isolated-memory-v1-5-6b97c439eb28@gmail.com>
+ <e40ea812-8774-46c3-aee6-511c6fbd07cc@redhat.com>
+In-Reply-To: <e40ea812-8774-46c3-aee6-511c6fbd07cc@redhat.com>
 From: Connor Kite <connorkite@gmail.com>
-Date: Wed, 5 Aug 2026 16:43:08 -0700
-X-Gm-Features: AUfX_mxPQyAbn0_F9JssL-jejkCyVtJEtgg98Zlrxpmii0NR7zZ1YyRDcPcZAPA
-Message-ID: <CA+spn3oXmgk7_LMP+hZRDPRTQX8qm0uBGAyztsq+Yu4_d4_ZKg@mail.gmail.com>
-Subject: Re: [PATCH RFC 04/15] net/vhost-user: add memory isolation
+Date: Wed, 5 Aug 2026 16:45:51 -0700
+X-Gm-Features: AUfX_mzXgSOHiICY1ddqK-TuDzFkaEE3jBELqqIvC9vbvc2AV0fuGlTf_pfRFfA
+Message-ID: <CA+spn3ouZF2kRnvsBrasxdCwfmuXfK25mqgCcvpe0Oc3Y_aRwA@mail.gmail.com>
+Subject: Re: [PATCH RFC 05/15] vhost-user: add memory_isolation to
+ VhostUserState
 To: Hanna Czenczek <hreitz@redhat.com>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>,
@@ -114,15 +115,15 @@ Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x833.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x831.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,41 +139,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 27, 2026 at 11:48=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
->
->
-> This is dead code (hence G_GNUC_UNUSED) and is harder to review because
-> we don't know how it will be used until later in the patch series. I
-> guess vhost_user_init() and net_passt_vhost_user_init() will gain a
-> memory_isolation argument in a future patch.
->
-> Linear reviews of the patch series are easiest for reviewers. Please
-> reorder this so that vhost_user_init() and net_pass_vhost_user_init()
-> are changed first. You can hardcode the argument to false in those
-> patches. This patch can be moved afterwards so that memory_isolation is
-> never dead code.
-
-Now fixed for the next rev.  This and the previous patch are swapped,
-with hardcoded values of memory_isolation used until the property is added
-to net.json.
-
-On Mon, Aug 3, 2026 at 5:27=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
+On Mon, Aug 3, 2026 at 5:29=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
 rote:
 >
+> > -           netdev->u.passt.memory_isolation) {
+> > +            netdev->u.passt.memory_isolation) {
+> >               memory_isolation =3D true;
+> >           }
 >
-> I have a gut feeling there ought to be a better way to add an option the
-> only works for vhost-user, but maybe not. I certainly don=E2=80=99t have =
-a
-> constructive suggestions. :)
->
-> (Apart from that, my only comments would be the QAPI =E2=80=9Csince=E2=80=
-=9D field
-> missing, as Markus noted on the previous patch, and the patch ordering
-> Stefan has noted.)
+> I think this part of the hunk should be squashed into HEAD^.
 >
 > Hanna
 >
 
-Added "Since 11.2" to both locations in net.json.
+And squashed!  This patch has also been swapped with the previous one to
+avoid dead code.
 
