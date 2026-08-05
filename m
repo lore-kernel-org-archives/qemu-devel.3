@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691B2C56203
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 16:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4145C561E6
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 16:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrein-0008Hy-2o; Wed, 05 Aug 2026 12:44:01 -0400
+	id 1wreiu-0008Jx-0w; Wed, 05 Aug 2026 12:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wreil-0008HT-T0
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 12:43:59 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wreis-0008Jg-7m
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 12:44:06 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wreik-0001vv-Aq
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 12:43:59 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-382ef647e20so1353672a91.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 09:43:57 -0700 (PDT)
+ id 1wreip-0001xw-Pv
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 12:44:05 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c9fe3c9bd5fso51597a12.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 09:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1785948237; x=1786553037; darn=nongnu.org;
+ d=sifive.com; s=google; t=1785948242; x=1786553042; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZpEZ+qwUWzKX/pdopbU/v27JKSx+5w4HgXw/8RsqiZk=;
- b=QJ5DqNqLgNejK8+G0tfozXLapG8MxUjKNQ0AxzAuMnnH+pApTj8tAm4wQWByGc6/A4
- GlHYPqfx+h/i+1G4zhDqNu1pbztls4vOo9IRhxo7t2ye6PZAJO4UsW7hMlQ/zXzdUEVe
- bM/Rk/X2j4IkGbG10HVf4LD2dcCbMHmajAotj0XhtYSxk+ENPHv+4uvCErT63SZjvCn3
- hKItCYcURE2KVnA3/RaffpACqU5k5xFSvm0P5o6bqnQvkityY8yCOHLfDRbLAj8sqK//
- bXlJg0Rh9If+OSGl/f6SbTOxRH779hs4IJ7n0UU/Egt0okdPEiTb0/5J/l88+WBypLtC
- Mo/Q==
+ bh=l24jeh6mL402UPS1PQ1PqKY5L+GWjbvAW1P9ttSr/yU=;
+ b=iws64pnaAVNrGkNF8T9kUiQnzyT62oVma39VGLsZLtLO9YJrRp0tjC6ANBemLKtRPg
+ D7+I6bx2+3bYLuycmLy4TECUg94AbbR0MoMjlKGTTMxLP1k47ujxSrk6B0v4/qIah3O4
+ x0+dx0yvbuOuvZ/Q2l/CXD0i6ENOQIudUfn4Dbf91QwOlow+Ne9V3ibFUG4WmbE8ZzN3
+ hZCmHIN5EArr/2nD18bLSdnlhWf381xgiQkLmmD2mgeiyvbCu0ZjY5jY6oqG6TX9/qA6
+ UnTN2OstSY4UYQUOXwUBAfN+irWM7FezQkp6qZl+EzTa5EA7ImNB7Y84oUVZRvlUs4pe
+ CMSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785948237; x=1786553037;
+ d=1e100.net; s=20251104; t=1785948242; x=1786553042;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZpEZ+qwUWzKX/pdopbU/v27JKSx+5w4HgXw/8RsqiZk=;
- b=DLiRAGXxHccwQBeg88QBaZSbeiolxuwBGUqxU769uhQUl+GrFPohVToexe0eVVXFw6
- 57MLZ8UvxXsxCGJaiK5pM6dMeMHJ3pq3F0vOyhS0W+XaZt9lETr7XtQNzF/iEGQfoTUN
- NTmEUWI263UiR+R6GYjRxSRQTobYv0LQCnRiK6JEwHAsle7tI4iEE9oSUCa5PpIfcydi
- 6rh/nrfZ/1avoJp48NRTNmFgYy9O9sBtRX2va6UToxo0G6AZgtFoN/JFEwI0ICswx1gF
- fCxlgHLUKd07LASwKN7XbTBOeRDBeyUp55mcf7Xt13HrOym7vNoiAffzGnQYtRWtqCtR
- Ppmw==
-X-Gm-Message-State: AOJu0Yz18g+nVn6X0Ulc5f7FXsOV5r5x8dgmGHiEthN9uFIIBbAGG/Iz
- 0L3L1Nyr1r8f2uaCME4fVKWTKK0Fe6RAprEVwWr3/QFDVvVhfiH5vkg8G5K7PbfAyuwOIlK/C2z
- zL+xUSkyxPQhBBFG35aalAhoruJKHLqbR8QKct3i2n0dLbb/ZUsK9GVCADUV3uPm43EfONGQPo3
- QG5E/4Cp0DPPRkJsEYgmUQlkdvyUKK8y0/ir/7gc0ReuyHSM93
-X-Gm-Gg: AR+sD116CAc9f3tdEyS0LuAcBWJMqmuFjrqNK/uOZatqs9tCRnrqteyc5YnjHKRLoBM
- KLmmm0w7hckwC+Clx210XSnRmTZNTEs6FlQ0yB5NHOpu5681DZ7/zeApvrakU3feS8CUIOkMrwu
- lo+o+gG4CoGWqV1pWC5ge5V9ZjuW1/pn4ji2ykAE+QGXfzNK1BZeuIWo01BIa4TEeHdyduq/lpl
- lfyUIqDNUJtAV5qFOdak7dCgV8uAhmOWmylpbsva96G9wMym7+DiC8pr0FNE3aGxTAByJYnqjIx
- dwtENnRv6BZg+65Gj0APQXDU11z55WUshwbWiZwCwYc+mkNhEhyBatURzAKmpZDWLxCwN6nwHNQ
- +aClyYEFyJU75l6JCBfHomeMV67jAiQBGpv49m+C683lDzfKp4CHR0NhPWZFm1Zzp/K7F/ibb9G
- ssjw0npcncVKVOyGDk07xCRBY44w26w61tc6mKTug51qRQ+o+US23GzwsLp+ffgugkXJWw6ccjx
- jZocs1x7IOvQqI=
-X-Received: by 2002:a17:90b:53cf:b0:38e:5964:97a8 with SMTP id
- 98e67ed59e1d1-3903c5bf453mr9300636a91.16.1785948236783; 
- Wed, 05 Aug 2026 09:43:56 -0700 (PDT)
+ bh=l24jeh6mL402UPS1PQ1PqKY5L+GWjbvAW1P9ttSr/yU=;
+ b=N1papmjMYyF0iaRaYWyLc3j6htsCeXNjvD+MKMqj0dHsjFN3J1wp2UjOzeEyWZCvSg
+ VzKFwsjPwERFxrGTlpotZuz2fOBd0GMCt+4UZrslcIbcey1C7Y1A8/Gr/Donn41jDCMJ
+ EA5MWte0El50TNtYjvFVpv8pg9At1D4hBGfVFgV7+2XmsJpEsB7KorCajWeeJbwAP4tz
+ GYb6U2KRY3BL2tH+ePaOC8jnIgZs4r+iSysknFuWs3YpS8QmPBKUjoQqQ6W4goo2oMH4
+ YP+v9ZPAa4zO83iHv81zYa2wRxfP3m1x2T/e1qxy8f4zJSm++WkIvDzO7OshR+bYypPS
+ 8Pyg==
+X-Gm-Message-State: AOJu0YztcbkqHTJgktDpXpowXOZdUUeAPhUcmJ3QBjba5PJivR59FxZ2
+ iCix4I97lfpOnzFC8TbUF7hW3JjgRhJocHswXoKX9+E5eFVdRqIjh0GW4Se51QQaqiDMP9oqvEm
+ zh0aWCwXRdtNUB41/Rf+QuXABdJEfhrvC/EMSx7HjrXygL2qCOL64tJIK1CQ5iAGRQviQzhszVy
+ BAfRlFihDD0kOWeteQmK16VKAoIucF+xz2+ra3gBpnfkyKfK2y
+X-Gm-Gg: AR+sD133qbMOmefvnVVsybS27+SyTJo+QYK+tMglCaGWBpYoLhphkn5/h6m83E8MriA
+ iPPEQJwqzd8t0ZyeeEb7VRPkBTUZoEgf8odY4QGGLkFPH8PtPYlb9a8xGqkWLJCWCAAEAp+W0Lm
+ tPywDfpZ7nO38HoATIuufod6ES5BjcM8PijwBcCjdpciOr6ckjPqKFd07bOZimbk6EF5hwiCB60
+ lMPd0N47gYLxuZDV+qjkEcBe/q6/khH+TtecucKSFX/dzeJEsnI/Guc2M9qai3HpGC0lIN7w9TS
+ /6eJ224TzXA+T1r1G6fd8MSjWWjQ55aVJXJHsMEor0S026Os7t3RhDE6dU2GCgJ5OwEp+aJ//pM
+ KhZ2HpBzHRmEYTpQaU7notIPSY6n/1wJdwnVENbx1hMwEglI6jYoDbHu6bR/2jvZaK4gSKV76N+
+ k9pwpIsfO3g7frFTTl6PVA1u20GmcZNRlr+pxVPisbmcnnjRnlYSzOXMH/ZwxBFlN3RiEptguBX
+ L+37803mBhM6F8=
+X-Received: by 2002:a05:6a21:6e97:b0:3b4:6af4:bdd5 with SMTP id
+ adf61e73a8af0-3cb9c2374dfmr509366637.15.1785948242361; 
+ Wed, 05 Aug 2026 09:44:02 -0700 (PDT)
 Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3158644a195sm16719065eec.13.2026.08.05.09.43.54
+ 5a478bee46e88-3158644a195sm16719065eec.13.2026.08.05.09.43.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 09:43:56 -0700 (PDT)
+ Wed, 05 Aug 2026 09:44:01 -0700 (PDT)
 From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <Alistair.Francis@wdc.com>,
@@ -75,18 +75,19 @@ Cc: Alistair Francis <Alistair.Francis@wdc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>,
  qemu-riscv@nongnu.org (open list:SiFive Machines),
- Frank Chang <frank.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v7 2/8] target/riscv: Enable Zicclsm for the compatible CPUs
-Date: Thu,  6 Aug 2026 00:43:39 +0800
-Message-ID: <20260805164345.698208-3-frank.chang@sifive.com>
+Subject: [PATCH v7 4/8] target/riscv: Support raising misaligned exceptions
+ for scalar loads/stores
+Date: Thu,  6 Aug 2026 00:43:41 +0800
+Message-ID: <20260805164345.698208-5-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260805164345.698208-1-frank.chang@sifive.com>
 References: <20260805164345.698208-1-frank.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=frank.chang@sifive.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=frank.chang@sifive.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,84 +112,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frank Chang <frank.chang@sifive.com>
 
-To support Zicclsm, let's enable Zicclsm for the following compatible
-CPUs:
-
-- Base 32 CPU (to be backward compatible)
-- Base 64 CPU (to be backward compatible)
-- XuanTie (T-Head) C908
-- Tenstorrent Ascalon
-- Ventana Veyron V1
-- XiangShan Kunminghu
-- MIPS P8700 (ISA doesn't include Zicclsm, but their datasheet claims that
-  it has unaligned load/store support in hardware)
+When the Zicclsm extension is not enabled, raise misaligned load/store
+exceptions for misaligned accesses from scalar load/store instructions.
 
 Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5a82e6563bf..7ee89f6fc4b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3268,6 +3268,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zicbom = true,
-         .cfg.ext_zicbop = true,
-         .cfg.ext_zicboz = true,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zicntr = true,
-         .cfg.ext_zicsr = true,
-         .cfg.ext_zifencei = true,
-@@ -3340,6 +3341,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zicbom = true,
-         .cfg.ext_zicbop = true,
-         .cfg.ext_zicboz = true,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zicntr = true,
-         .cfg.ext_zicsr = true,
-         .cfg.ext_zifencei = true,
-@@ -3426,6 +3428,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zbs = true,
-         .cfg.ext_zkt = true,
-         .cfg.ext_zbkc = true,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zicsr = true,
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zihintpause = true,
-@@ -3469,6 +3472,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zicbom = true,
-         .cfg.ext_zicbop = true,
-         .cfg.ext_zicboz = true,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zicntr = true,
-         .cfg.ext_zicond = true,
-         .cfg.ext_zicsr = true,
-@@ -3518,6 +3522,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- 
-         /* ISA extensions */
-         .cfg.mmu = true,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
-         .cfg.pmp = true,
-@@ -3577,6 +3582,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-      * The RISC-V Instruction Set Manual: Volume I
-      * Unprivileged Architecture
-      */
-+    .cfg.ext_zicclsm = true,
-     .cfg.ext_zicntr = true,
-     .cfg.ext_zihpm = true,
-     .cfg.ext_zihintntl = true,
-@@ -3633,6 +3639,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-         .priv_spec = PRIV_VERSION_1_12_0,
-         .cfg.max_satp_mode = VM_1_10_SV48,
-+        .cfg.ext_zicclsm = true,
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
-         .cfg.mmu = true,
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index e47b16a7fa2..cc1b5dbbadc 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -413,6 +413,9 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
++    if (!ctx->cfg_ptr->ext_zicclsm) {
++        memop |= MO_ALIGN;
++    }
+     decode_save_opc(ctx, 0);
+     if (get_xl(ctx) == MXL_RV128) {
+         out = gen_load_i128(ctx, a, memop);
+@@ -524,6 +527,9 @@ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
++    if (!ctx->cfg_ptr->ext_zicclsm) {
++        memop |= MO_ALIGN;
++    }
+     decode_save_opc(ctx, 0);
+     if (get_xl(ctx) == MXL_RV128) {
+         return gen_store_i128(ctx, a, memop);
 -- 
 2.43.0
 
