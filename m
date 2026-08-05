@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDD2C55ABA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E002DC561E6
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfD0-00042j-GD; Wed, 05 Aug 2026 13:15:14 -0400
+	id 1wrfDE-000478-95; Wed, 05 Aug 2026 13:15:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfCy-00042X-QD
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:12 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1wrfD9-000466-Hf
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:24 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfCx-0006Ew-Ac
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:12 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-81f36179d72so18875057b3.2
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:10 -0700 (PDT)
+ id 1wrfD7-0006Ge-OZ
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:22 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-81dfdbd86d1so14138557b3.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950110; x=1786554910; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zBJkHE/+507IdXzI3/EkOVxmNpC2MjtV85OlC39+S8E=;
- b=K2omkSrk44KvRQUTZi4eSNp9gqYiqlLHjHSwDbM/H5zIoIlctOtJY0/AltyPNLytYl
- LRYN7SRBuQa/xJ6y7aKVY35ClHh733xENmJ7OY8qX+pSBu2Gati2oh/eNiSm48+xyn4x
- Co6h5AnKWI9bXD7/WZrzaIQL4vBADVDOR3jtX8VzkEIFBihkkNZdcp7MvOGfMth1S3ii
- xEO8muziwcqEgWLQmbxHipmFDjP0EhKAqEoTP9c7tPFP/9fkMGdZK7OTVv3l9sqGs8Jg
- cJJg9lfDSRaMw0+XQdk/7jqy//FpE5fI8AsrrtnpBL1GRWODfNL8jpVIkXf1NyKTLNxz
- 6vFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950110; x=1786554910;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1785950119; x=1786554919; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zBJkHE/+507IdXzI3/EkOVxmNpC2MjtV85OlC39+S8E=;
- b=Aqxh5LJ9SP9skG4Dx5O6n0e5jW2xkvOSR6ga4sllfTpOIoBprfivfkR2LDej5Ij4eS
- xnVRIly6kOGD68IyxDs6mg+u8NExas0IIDwJJjgqfq0HQc5elZgcnfFe6UVPANHZDpq4
- t9vqUt+fCP4QiBtSPyfn3Cvtz3S74pV8v+mSFjPmqwCaor0pv5ZTMImkVVJZ+7fTHeuU
- zKwBof/6fm8cSC9FsejiZUYGdMb2NlLIlxFwzlZnGIg2lv5yc35UY655P1U/inw59ben
- lHnZSs04yAwdw/F90YGrmvOx0CGPxBb5ZfCLpZBFRyv/TLzuMyeHpwQMcEtfxZit99Cj
- qHgA==
-X-Gm-Message-State: AOJu0Yw0mOgHHMHGyfxePuAjMHrbjCYcLIpxEQ7QgTNHnq07CXyNilAX
- G+wWaLNFvXMI550lLNhKtOTeka7uhV0giLmBlkf88Vg+gqhL/gJVMqqodLDFQi/zSnc=
-X-Gm-Gg: AR+sD11gUODg5He3sRjyyELIMWq/uVJiEEcIwT1waR9L3XYlllMpydCennQylDgmQYC
- DDKSQ2lAVLnN+FLpK+7edYOSmKjA2zfWEn36P8UiL5UGt5sLrXRPQrPeb9mgTU68497BVr+YRhg
- f6+mYMH3XEYcYfwnGSNb8zCwkZf7Fsr4PuEhdw5/WfMcFTUv1FqmveBfeR4wuPcSOZMBotQeVfQ
- PlStE33pF6RvT7t6rG2d3U+Jye/mIeltteD4wh4sfFSYItDp4v1K5vPUM2n90uqp/y2cZoWQuXT
- cr6IQ8FGQBGcTuMH+YLMKQAThvuMT7BjT5iR3muUxYc8NOnh8mq9SqwpvGr+nObhkh1669lSdcc
- vIGfMuCZeQUhDUbS5feyXg5TsvPGcaE5TJPzDRaBxIpcb32KNxdmlv+jCOhr04Oo021bmgY4dsW
- 3kBpM6USWQWAFHXKKRRPxH4SK86H40mvxP7zA/x0IoucJlet28j3yqed9A62iD
-X-Received: by 2002:a05:690c:6887:b0:80e:38c5:bc17 with SMTP id
- 00721157ae682-8201f0bcaf5mr44853357b3.7.1785950109822; 
- Wed, 05 Aug 2026 10:15:09 -0700 (PDT)
+ bh=HgJmxQG/lgNq5flxOHBgvkaSPD2nZexEe+ywvhh6NXw=;
+ b=FD3m5cVdXG7MLSMaBPUaV2nfDRLMZD5SyFjP3K9hoZJwamrA8b9CcjkQinEoEKjjYE
+ Xr6DDufc4HH1m6EqMR00DeOLXtp2wsdMREtvXTocTLq5d8RkiD1ePsPVLpi+9YzHMUS5
+ I1y4RT7Gm6O9bQ2F8J8YAEMJY2cN4nBjUEsbN+MP4GlVZrqZID8p6k7aDkA+7t1Ws80E
+ 2TXR4TsEZbRU4V0H3yEnQXmOoH6UY0kq8slPTmwwW5+8aoZSQWQZzcNpyuxSjk4+o3S+
+ kY8LmPJA1dWiIjxJKfquDrK3hnD3ZX1bJpPiiDE4Sc/gwd7jIBoTadSjrDpO+s9wetE5
+ tt4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785950119; x=1786554919;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HgJmxQG/lgNq5flxOHBgvkaSPD2nZexEe+ywvhh6NXw=;
+ b=stT+3r7NSbtQU4XNrg+MCH3wVEnOziKoh95O/RcMbSdKR8LuNevvb2gYw3qdqulISy
+ wHGRmtB6XVEXsx91Sv5mKoLTHFqQHZMaJT+lXJDZX905G+IZsc6vzUJ5hwzYBmbu7aLn
+ 0HFZ46ulVnZDMVaJigMxM6ZPsP0jHxOsHtVn/TW1LWjTsIuu0xyj43quas3pP/Uma+ok
+ Zc/ya0+SMh6/23ClT7dTxbI6jZh8JFpXoa3HGvxHPys6p1uKnDlwaj/K9xtRi3EnEUyV
+ OQyleGvcDT9cnODmwIWnzO1upnIDocoaoFgfqVgQxNwlWirZGbYsfFusO0PkduLJpQq1
+ IKKg==
+X-Gm-Message-State: AOJu0YxbcVo30jq+BxOZTG2CRfGRRitygVBetICbrVgyCzJittorxyRG
+ oDoU2GyKsDV4mP3RLMui9KziaAgbYROTrAxRzpRPddzYKBEhL6oXLSy+nT34m9QuGPE=
+X-Gm-Gg: AR+sD12nN1vCSE/vXAwPyMV7o5dcTebYhj6sYiskts8LGuTLqxW1cTcxwAjqTRYk9ss
+ QetLmJ669bwGLocAwgIwNI1vkVt9O5v3cKGoWvztmU0Y1aCSZfI2sg3HRo3mkfoo8OiMI6OW2Aa
+ EOLyuEcB9zarjENyUudLhIVgBI0KjLAO2GeIL1kaBKP7n2fCtUrFSUnKJQMMp6QnsWvoJLhqiyB
+ T3DwYBipUoXAkEGlRSMm00ZjGjo2jxYZ+KSHS2IMovi/unJhX3DJuHOVOh4loTAY3kxGQG4QKZK
+ EMwcf9ZlJ6lfF+IdQQjFnyxoNFdZYULsGseN9AZyUoA7ZmmIj5v7rR5xmeZwQDxDCdhofPSmS/D
+ ouX9i2MIJ0oVyb1rD5hsMu1DVwv4mVCb2Rrd+yKmkFFLUE3DsRDw/mWPluol8dmEZJYPbv7Eqej
+ OZjnmvX4+eFx5hbEbWIZ62sO2hI7y3oBU+Wz3S70ku+L2O7uwDG6gTlTnAz8kQ8ExH9DqRgBk=
+X-Received: by 2002:a05:690c:630d:b0:812:996f:176d with SMTP id
+ 00721157ae682-8202230782fmr49443117b3.9.1785950119381; 
+ Wed, 05 Aug 2026 10:15:19 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-820132385dbsm24591967b3.16.2026.08.05.10.15.08
+ 00721157ae682-8201341ca2dsm24371757b3.25.2026.08.05.10.15.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:15:08 -0700 (PDT)
+ Wed, 05 Aug 2026 10:15:17 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 1/5] linux-user/alpha: write the floating-point registers to a
+Subject: [PATCH 5/5] linux-user/sh4: write the floating-point registers to a
  core dump
-Date: Wed,  5 Aug 2026 13:15:03 -0400
-Message-ID: <20260805171507.3119442-1-mattst88@gmail.com>
+Date: Wed,  5 Aug 2026 13:15:07 -0400
+Message-ID: <20260805171507.3119442-5-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
+References: <20260805171507.3119442-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,63 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest core carried only the general-purpose registers, so a debugger
-opening one reported every floating-point register as unavailable --
-including the arguments of the function that crashed.
-
-Implement HAVE_ELF_CORE_FPREGS for Alpha: define target_elf_fpregset_t
-to match the kernel's layout ($f0-$f30 plus the control register in the
-slot $f31 would occupy) and fill it from elf_core_copy_fpregs().
-
-Checked with lldb on a core from a program that faults with live values
-in $f16 and $f17: both read back correctly, as does the control register.
+Write an NT_FPREGSET note for SH4, matching struct user_fpu_struct
+from arch/sh/include/asm/user.h: fr0-fr15, xf0-xf15, fpscr, fpul.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/alpha/elfload.c    | 10 ++++++++++
- linux-user/alpha/target_elf.h | 11 +++++++++++
- 2 files changed, 21 insertions(+)
+ linux-user/sh4/elfload.c    | 10 ++++++++++
+ linux-user/sh4/target_elf.h | 12 ++++++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git ./linux-user/alpha/elfload.c ./linux-user/alpha/elfload.c
-index 7be9e466b6..c2517516ad 100644
---- ./linux-user/alpha/elfload.c
-+++ ./linux-user/alpha/elfload.c
-@@ -32,3 +32,13 @@ const char *get_elf_cpu_model(uint32_t eflags)
- {
-     return "ev67";
+diff --git ./linux-user/sh4/elfload.c ./linux-user/sh4/elfload.c
+index f03ce49e7d..41601626ca 100644
+--- ./linux-user/sh4/elfload.c
++++ ./linux-user/sh4/elfload.c
+@@ -52,6 +52,16 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+     return hwcap;
  }
-+
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUAlphaState *env)
+ 
++void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUSH4State *env)
 +{
-+    int i;
-+
-+    for (i = 0; i < 31; i++) {
-+        r->fpr[i] = tswap64(env->fir[i]);
++    for (int i = 0; i < 16; i++) {
++        r->fpregs[i] = tswap32(env->fregs[i]);
++        r->xfpregs[i] = tswap32(env->fregs[16 + i]);
 +    }
-+    r->fpcr = tswap64(cpu_alpha_load_fpcr((CPUAlphaState *)env));
++    r->fpscr = tswap32(env->fpscr);
++    r->fpul = tswap32(env->fpul);
 +}
-diff --git ./linux-user/alpha/target_elf.h ./linux-user/alpha/target_elf.h
-index dd90c6f783..5efe7f3174 100644
---- ./linux-user/alpha/target_elf.h
-+++ ./linux-user/alpha/target_elf.h
-@@ -19,6 +19,17 @@
-  *   r0-r30 at indices 0-30, pc at 31, ps at 32.
-  * r31 (hardwired zero) is not stored; pc occupies index 31.
-  */
-+/*
-+ * The floating-point note holds $f0 through $f30 and then the control
-+ * register in the slot $f31 would occupy; $f31 reads as zero.
-+ */
++
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUSH4State *env)
+ {
+     for (int i = 0; i < 16; i++) {
+diff --git ./linux-user/sh4/target_elf.h ./linux-user/sh4/target_elf.h
+index 3fcb63d409..5923022036 100644
+--- ./linux-user/sh4/target_elf.h
++++ ./linux-user/sh4/target_elf.h
+@@ -25,4 +25,16 @@ typedef struct target_elf_gregset_t {
+     struct target_pt_regs pt;
+ } target_elf_gregset_t;
+ 
 +#define HAVE_ELF_CORE_FPREGS    1
 +
++/*
++ * Matches struct user_fpu_struct from arch/sh/include/asm/user.h.
++ */
 +typedef struct target_elf_fpregset_t {
-+    uint64_t fpr[31];    /* $f0-$f30 */
-+    uint64_t fpcr;       /* the slot for $f31 */
++    uint32_t fpregs[16];
++    uint32_t xfpregs[16];
++    uint32_t fpscr;
++    uint32_t fpul;
 +} target_elf_fpregset_t;
 +
- typedef struct target_elf_gregset_t {
-     abi_ulong regs[31];  /* integer registers r0-r30  [0..30] */
-     abi_ulong pc;        /* program counter           [31]    */
+ #endif
 -- 
 2.54.0
 
