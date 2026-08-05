@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B900C55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4017CC56201
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrZQP-0000kH-EH; Wed, 05 Aug 2026 07:04:41 -0400
+	id 1wrZQS-0000mo-I8; Wed, 05 Aug 2026 07:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <snambakam@linux.microsoft.com>)
- id 1wrZQM-0000il-7E
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:04:39 -0400
+ id 1wrZQO-0000jX-9q
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:04:40 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <snambakam@linux.microsoft.com>) id 1wrZQI-0000AD-Sb
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:04:37 -0400
+ (envelope-from <snambakam@linux.microsoft.com>) id 1wrZQL-0000CA-Vg
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:04:39 -0400
 Received: from fedora.hsd1.wa.comcast.net (unknown [52.148.140.42])
- by linux.microsoft.com (Postfix) with ESMTPSA id F403420B7169;
- Wed,  5 Aug 2026 04:04:12 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com F403420B7169
+ by linux.microsoft.com (Postfix) with ESMTPSA id 8876620B716B;
+ Wed,  5 Aug 2026 04:04:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8876620B716B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1785927853;
- bh=mBopCGB9U0UQQPrdHpzVGND3qjL34aJmORw3g1OLW1w=;
- h=From:To:Cc:Subject:Date:From;
- b=mPHn30/Wp0dlRDuCM3epRYEhPWX+7eoxi4ijvSauJLHBLwB1rcsfIPH6Y2iwV/Cmx
- fn9T/i7UAYfcfkQQQZDqI1C9ECUhtcOcSVeOgzv9086mDz8dBk4k+c77pYPEqbCf3I
- ZuyZOYxTsPQyrjltD2TFFTXEautQinPZWvAkEF5s=
+ s=default; t=1785927855;
+ bh=04q3RI9A0fv9Xv+CMnIW2+ug2+E5td90cLNjC3O338o=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=cf09I0XR8R2W07hl3fGLpXOq8j1M18pEWCZofQxc9vmvmSLxgtUn+ohS7Ly05r0k5
+ +7J6dgvhRxSV9AglW/1olZyReiSLgZXYcNMVByExMl164o5vbtXAF2ZsCBiqmHGEIQ
+ lAj+OnfnXZ9OHS2TG1RcsFqokEsXpA7J62eI3n2o=
 From: Sriram Nambakam <snambakam@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org
-Subject: [RFC PATCH v1 0/5] VBS/VSM-on-KVM: QEMU support for the secure VM
- plane
-Date: Wed,  5 Aug 2026 04:04:27 -0700
-Message-ID: <20260805110432.25167-1-snambakam@linux.microsoft.com>
+Subject: [RFC PATCH v1 2/5] vm_planes: Add VBS VTL call handling and plane
+ memory sealing
+Date: Wed,  5 Aug 2026 04:04:29 -0700
+Message-ID: <20260805110432.25167-3-snambakam@linux.microsoft.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260805110432.25167-1-snambakam@linux.microsoft.com>
+References: <20260805110432.25167-1-snambakam@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -63,74 +65,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This RFC adds the QEMU support needed to run a Virtualization-Based
-Security (VBS), or Hyper-V VSM-style, secure environment using KVM VM
-Planes.  It is the QEMU counterpart to the Linux VBS/VSM-on-KVM series.
+Wire up the VBS inter-plane communication and memory protection
+infrastructure on the QEMU side.
 
-The five patches in this mail series are authored by me and add:
+Memory sealing (plane activate path):
+  After plane-1 boots and its vCPU threads are running, seal
+  plane-1's memory from plane-0 access:
+  1. Issue KVM_SET_PLANE_MEMORY_ATTRIBUTES to set NO_WRITE|NO_EXEC
+     on plane-0's EPT for the GPA range occupied by plane-1.
+  2. Clear ps->host_addr so QEMU userspace can no longer access
+     the region.
 
-  - userspace handlers for VM Plane and VBS VTL-call exits from KVM;
-  - the VBS VTL hypercall definitions from the Linux UAPI;
-  - loading and running the secure-plane kernel in-kernel; and
-  - plane configuration access through the QEMU address-space API.
+VBS VTL hypercall handler:
+  Handle KVM_HC_VBS_VTL_CALL (hypercall 15) exits from the guest.
+  The plane-0 VBS subsystem passes the GPA of a shared calling-area
+  (CAA) page; QEMU reads the call_id from the page, logs it, and
+  returns -ENOSYS for now (plane-1 responder not yet implemented).
+  Enable the hypercall in kvm_enable_hypercall() alongside the
+  existing VM planes hypercalls.
 
-This series depends on the QEMU VM Planes infrastructure from Joerg
-Roedel and related prerequisite work.  Those patches are not duplicated
-in this mail series.  The integrated QEMU branch linked below contains
-the complete tree, including Joerg's patches and the other prerequisites,
-used for development and testing.
+Header sync:
+  - linux-headers/linux/kvm.h: Add KVM_MEMORY_ATTRIBUTE_NO_WRITE,
+    KVM_MEMORY_ATTRIBUTE_NO_EXEC, struct kvm_plane_memory_attributes,
+    and KVM_SET_PLANE_MEMORY_ATTRIBUTES ioctl definition.
+  - include/standard-headers/linux/kvm_para.h: Add KVM_HC_VBS_VTL_CALL.
 
-The complete implementation is available in three repositories under the
-safe-tee organization:
+(cherry picked from commit 414016c40ec8226b0f5d4cbd5eed0589b7c1689e)
+---
+ linux-headers/linux/kvm.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-  QEMU support and complete integrated tree:
-  https://github.com/safe-tee/qemu/tree/qemu-planes-v11.1.0-rc1
-
-  Linux and KVM support:
-  https://github.com/safe-tee/linux/tree/kvm-planes-v7.2-rc5
-
-  Build, test, and integration tooling:
-  https://github.com/safe-tee/lvbs
-
-Current build and run instructions are maintained in the lvbs repository:
-
-  https://github.com/safe-tee/lvbs/blob/main/docs/how-to/how-to-build.md
-
-This is prototype code and is not yet intended for production use.
-Feedback on the QEMU integration, VTL-call handling, and division of
-responsibility between QEMU and the in-kernel VM Plane implementation
-would be appreciated.
-
-Acknowledgments
-===============
-
-This work stands on top of, and is indebted to, several prior efforts:
-
-  - Joerg Roedel, whose QEMU and KVM VM Planes work provides the
-    infrastructure that the VBS/VSM secure plane relies on.
-
-  - Paolo Bonzini, whose "[RFC PATCH 00/29] KVM: VM planes" introduced
-    the VM Plane concept to KVM as a common in-kernel model for AMD VMPLs,
-    Intel TDX partitions, Hyper-V VTLs, and Arm CCA planes.
-    https://lwn.net/Articles/1016113/
-
-  - James Bottomley and James Morris, for their ongoing VSM-on-KVM work,
-    which informed the design and direction of this series.
-
-Sriram Nambakam (5):
-  kvm: add userspace handlers for VM planes and VBS VTL calls
-  vm_planes: Add VBS VTL call handling and plane memory sealing
-  linux-headers: sync kvm_para.h VBS VTL hypercalls
-  target/i386/kvm: run the secure plane in-kernel (Option B)
-  target/i386/kvm: read plane config via address_space API
-
- accel/kvm/kvm-all.c                       |  18 +
- include/standard-headers/linux/kvm_para.h |   7 +-
- include/system/kvm_int.h                  |  18 +
- linux-headers/linux/kvm.h                 |  16 +
- target/i386/kvm/kvm.c                     | 561 ++++++++++++++++++++++
- 5 files changed, 619 insertions(+), 1 deletion(-)
-
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index d66ce6d272..9dbd3824e9 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -1653,6 +1653,19 @@ struct kvm_memory_attributes {
+ };
+ 
+ #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
++#define KVM_MEMORY_ATTRIBUTE_NO_WRITE          (1ULL << 4)
++#define KVM_MEMORY_ATTRIBUTE_NO_EXEC           (1ULL << 5)
++
++/* Set memory attributes on a specific plane's address space. */
++struct kvm_plane_memory_attributes {
++	__u32 plane;
++	__u32 flags;
++	__u64 address;
++	__u64 size;
++	__u64 attributes;
++};
++
++#define KVM_SET_PLANE_MEMORY_ATTRIBUTES	_IOW(KVMIO, 0xd6, struct kvm_plane_memory_attributes)
+ 
+ #define KVM_MEMORY_ATTRIBUTE_NO_WRITE          (1ULL << 4)
+ #define KVM_MEMORY_ATTRIBUTE_NO_EXEC           (1ULL << 5)
 -- 
 2.55.0
 
