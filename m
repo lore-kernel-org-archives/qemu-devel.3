@@ -4,116 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95DBC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B64C561E6
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrdKf-0008If-Nu; Wed, 05 Aug 2026 11:15:01 -0400
+	id 1wrdLd-0000Ew-Qo; Wed, 05 Aug 2026 11:16:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1wrdKc-0008IE-Db
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:14:58 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
- id 1wrdKa-0003vg-2J
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:14:57 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-6682259cb3dso2063883d50.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:14:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785942895; cv=none;
- d=google.com; s=arc-20260327;
- b=CYjePdJNASsoAOXpzyYqIf6moaeZqQZhk46xClJMpJ6vpT81Tx16kE4eWpNyM24+8T
- u3hnYJfeWG3IvlbLM9cAW18tTWAqI9ky0TvCJ0lKmmGPODqdegDI/2AwiFLO6HkWrp8B
- /FSiubqdvXsF5teEtLu6MHV+70reo7ikhJ5ygaXDZ4n91ZFfhi2GBwxReDGXrVs5oSKJ
- zOAa4BVhpWTlhccCfCeSJiB+6fNz8CowyA+tO3Z0+go8jHfM/U63DZlUIi8xErNCgDDF
- QWQ4vvVGm0Eg+Du0PUptb5gbxH4lHwtu9sGiQtHorK6BOR4et1zfM5aOlK5uv61J8NsT
- G/aQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
- fh=MrC4L7+H7Lh0dpszqHFglF7qoDz5PPfvwAWpuV8Tsgo=;
- b=TyZ907Kxdc3Yu7HiAdIvxtZsqO4k/WcJzApVScewOxwv85Jpa7iVItk9L6ZhJPJpFa
- F+225/gL+WLPyEvRgcNV3zZrhWEE4njIQSByHZef9wvED8cOheiDKwNEar6lggN8FimU
- uHYoMRP/yffs2SDmC3LB2GcN22S7Hoquz4udD3rrMvlYs145uy9NND96PoWbPkxmw9I/
- mAia84y/y/l4DOJAmrrcsyWp5s7M48wqLtFkLAEKSOtjqNFhsx17MvraXMOVx4LUZ+d8
- wZACFrbWMF1PfWAOAORiDapviFQ7qOFAcAVgK5Q+oKb0USvL1lfTfmVtWhUZWgBntXkV
- 5Z3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1785942895; x=1786547695; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
- b=LuWq3jdb3mEAef1Wdr5jbTbaR+Dw8bS1DAIEEVu3W81QtfXyL1lXUMuET+GNMNL73U
- T+uudS+Jc8vt3d92RRWkg7Isur8S1weoZVQR/6F4bkymWxvipAx+Fgj7w/6e8ztjIk+1
- sAokELTC2Cm7Yp/lm1w8w/9UbWWMDWT15c6m5Y7ov8U92gDmROQiOvWf2SA0BC3aSP+m
- XqorMtgyIP7qfyXj4y7g+OJFbzpRuVDwXCaNK+XxLVH0JmC4+e7zK341x5Kocwqc1Ecr
- T/I38QG3UfNiU9tVmMw/bVbi8ecKiZWxbf6MNhf5AV+xHo4JsjRrnuDUQntz5HieUki9
- miqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785942895; x=1786547695;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
- b=NhESlBRBpZWJiH64YzlSkFs6XU9SSyt4pr+nuyz1+Agf5GDCLzyyQIpg/rHnVrOh7Q
- oDOeZzVsGIwNmKxQcp2NVovLzpfel5p0PofC9t52+lBDGRs3hsJhlnubjyYK8YSuE1T/
- ARGWIp77B1y7uCrHxApY6AxZZevSxRngTHCzU81yFm2o6cXrrO4yzCSMZiGF9M70bDmD
- dOJuRyZBDbbd6lXP/8CesCNzpcLK7a6/heoQn/woEzRbYyanmgZWj7ONo1sHVd+MjqUL
- G/vztRKppTvlFmu2ckz06P7/rHP9r6SLNglwmYDweEYAZFS3U8mdda+/5mbdaVpgpTfV
- ATiQ==
-X-Gm-Message-State: AOJu0YyePa6RfXdbrqXQar6sC3sIxa4nKeV0TX9b67CfUEyZVl9tMJb9
- ug2FH2ZgozrAhgXDIbLZeCiuE85VIiI864+ZUdvmdaSRYONj7IZ4ekB9D4eGZvMisXx1TULS/PM
- iREFxGDfQmVkAxn9a1mhSpsWNAmlfcaYs0cB+oSXT1A==
-X-Gm-Gg: AR+sD113RnAZBiokZG66ScaTOf5PKucMvVuKJ99i3BzAzGVpxw62Pj2Mfi7tUndwGCR
- d8qA7SW85F9e2zZUpXBrJdXj+Ue2a+A2grCIcutWhcMAG7GJGY99ueYByHBOyVrtPGdDlb9qxwe
- 26DCgjhwyaPA/wxXR/rn80Hvvq7CghcGJFxyXlrwpT+6rWOrYsjfE+mi8pwE75QoGp8KmIMwxt7
- 3PEUmMk2sI1gaTaLvxy5cAzu3jnRQ+Pk82GnzghrtptNzcXigEvYE6u2Z6p+7R7lDSgA8D4c0js
- f2sEWuV0bnP2bCERFKxuloDekPOxlveBciK1GtIN92E9D0oZ+w/XK3OyMQdn+qlmXjaRlgU7gGI
- =
-X-Received: by 2002:a53:d94a:0:b0:668:14a7:d00d with SMTP id
- 956f58d0204a3-66985a1e70dmr6122636d50.2.1785942894673; Wed, 05 Aug 2026
- 08:14:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <guochun.wang@foxmail.com>)
+ id 1wrdLI-0008Uq-Fm
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:15:44 -0400
+Received: from out203-205-221-209.mail.qq.com ([203.205.221.209])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guochun.wang@foxmail.com>)
+ id 1wrdLD-00049K-56
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:15:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1785942925;
+ bh=iTPytU5dyaV1hpS4WYZk97uj/XpbO2GAedrjVNZhASk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=vMSiljme4vy4uoQTWhJKIcMwLDNYIqpqBzn0ttqUPV95gKIV/Jr+iWSBDpnyG2+AS
+ 6ui34m0+Uj9UijN6RDAoz9+B9fOx/KV5crkdEX4XY4i3phE6Ad9E53teapiwCsTcbi
+ AaHHo2WLAqJ2/ppuFdd0jKZfpoelHpIyNHhjMqGc=
+Received: from DESKTOP-8MIQOKD.localdomain ([117.13.168.66])
+ by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
+ id 3D43DC51; Wed, 05 Aug 2026 23:15:20 +0800
+X-QQ-mid: xmsmtpt1785942922tul61fxqg
+Message-ID: <tencent_7080159426F5C824AE07916CF4FF9944EB08@qq.com>
+X-QQ-XMAILINFO: Nm45YswcjhU8NZvlVMDT1qnHTIcf7yxGb2XZp3hCARZeY4f1carM2K34+eSTO5
+ CYyQObep9wGZSgDStedFj+nLED286dYP7+NEHpr1UDMrToB1WamG68FvfVHxupEScnuOI5j9IDoI
+ 7KOGIH+GjU03hDJ2hJ6fskbHPdA0Paf4XQDqKRcvLBrh44ZSRefv5rTnHrHKxv+L6fOyZflARRKy
+ EMnAf2dfB3T6P0DzzF3xmU9xis0NJFmPoQL4fko6XB0UokNN7hLCEKIIA4SwBTkkwPtXRBjbrqeY
+ pdPVFtZwZNeezH5E0EAp/ANBBWA2y8Ni43NEMnbv0AzkyMLEcDN+kOTEZilWMmD5wsyIdQbHe+Wz
+ 2IeJZTsk9KOINh4kTgP68UF0RqFaOQy3BqK+bfSnhdmwB+l34U2UwX1Hszul2m0p+j6MtLmAHhrj
+ UEQb7tA+9l/2syZwdFFBm2aaXzG5FZ8ZGBXAqfEFBXQ+XtUja3bPLO7QZ8XBQeN/UGLgyrnGTegN
+ I0CcLDZ0VTBCQDWgG0tSPPl/OQQkLnv92G/8wvyXiQvM/u5nKkr5/oZPL7tzlAWCdjx2uPslyKtY
+ uEOfub2micbZQkiwkxKY5OnpYWHuPlGeBGa2RGpjQPae5ZvETcZPpoW31yHnikOo7KhAvhPlBhN3
+ kztyKzXTOw403DX+MsuxgEBKs27doQQ811Jqfw6ZaID/IamRp0mY3xGVAzIkpXzOzA/4MB3AZxwu
+ cKM6c2qDAmw17EgdOrU1U5X5wv2IfqiqU85Jb/zSXg2tfhOKwuJQcKYLlSLNps/H3pqBphug8wUJ
+ OsH1J6rsSDLSH3UhMWRMpLmeDtleKH6y1aZ1CeMqDudGureLvZ2uvx+ZFbWsZagdzVirEv715QsU
+ 8Oo0WdA1c2VGHc3XsnQU610pBQ6ExifvXxvAVaaIVdNcMtdh3hnHb2/0jwoWxI0iNymgYQ46E2T1
+ PIp/6MFpPKilJ/WBzIvqcybNE1f39GqU75pG3w+96caFEDoeICT+yvTDUfSB95lDQm7Vy3GV0n3z
+ Dw8osXPoedqBppKKoYLGsvfNOz5LQl7ecn3p2vSlgEiLExKee78ra/dWonFIfGrANT6EZdL4H/E1
+ 6815oKAO042YrMyUUOP4ge0mWXka7MGYAK71x3izvjjE3PpVV8evaXHfcpVd/mGKkhTU576zwBj9
+ jquJ2EnuvsChWRx++FtZeU8t3X7OZ0D/0Q/S9LVkkmq9Mm/w==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+From: guochun.wang@foxmail.com
+To: qemu-devel@nongnu.org
+Cc: chao.liu@processmission.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, pbonzini@redhat.com, farosas@suse.de,
+ lvivier@redhat.com, qemu-riscv@nongnu.org,
+ guochun wang <guochun.wang@foxmail.com>
+Subject: [PATCH v2 1/2] hw/gpio: add K230 GPIO controller model
+Date: Wed,  5 Aug 2026 23:14:54 +0800
+X-OQ-MSGID: <20260805151455.99076-2-guochun.wang@foxmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260805151455.99076-1-guochun.wang@foxmail.com>
+References: <20260805151455.99076-1-guochun.wang@foxmail.com>
 MIME-Version: 1.0
-References: <20260801192848.30606-1-flamboyant.h.01@gmail.com>
- <20260801192848.30606-2-flamboyant.h.01@gmail.com>
- <itp7xmctqnac4c7kytqyrrs3xbfnbjprem6ezlltc6b5ncdpdn@6pypq3e7lbog>
- <CAAW0U4a-nG-ck4g8w0_Vt1Jbu5dNcYEDjJNR-YvGEiHa9G4Rdw@mail.gmail.com>
-In-Reply-To: <CAAW0U4a-nG-ck4g8w0_Vt1Jbu5dNcYEDjJNR-YvGEiHa9G4Rdw@mail.gmail.com>
-From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Date: Wed, 5 Aug 2026 10:14:43 -0500
-X-Gm-Features: AUfX_mzuYq7HsXggprpqj-z-yCsBYQMdwg_Kf8bKB4H-h0AZUPzYce_eCFbtZyc
-Message-ID: <CAEev2e8UcXn46OoyqTXpx8-_PzUNyGJDVF094J+boLUSqQ3VLw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] hw/ssi: Add Synopsys DesignWare SSI standard PIO
- controller
-To: Kangjie Huang <flamboyant.h.01@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=203.205.221.209;
+ envelope-from=guochun.wang@foxmail.com; helo=out203-205-221-209.mail.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,49 +89,644 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: guochun wang <guochun.wang@foxmail.com>
 
-On Tue, Aug 4, 2026 at 10:57=E2=80=AFPM Kangjie Huang <flamboyant.h.01@gmai=
-l.com> wrote:
->
-> Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com> =E4=BA=8E2026=E5=B9=
-=B48=E6=9C=885=E6=97=A5=E5=91=A8=E4=B8=89 02:39=E5=86=99=E9=81=93=EF=BC=9A
->
-> > There are 2 variants of designware spi, one is called dw-apb-ssi and
-> > another is called dwc-ssi. If you look at their u-boot drivers, you can
-> > see that they differ in the location of the TMOD bits in the CTRLR0.
-> > dw-apb-ssi has it at bits 8 and 9, while dwc-ssi has it at 10/11.
-> > This implementation is for the dwc-ssi version (which is the newer one)=
-.
-> >
-> > Would it be possible to have the naming be consistent (DWC_SSI,
-> > dwc_ssi.c) everywhere? There are some places throught the series where
-> > the file names/Kconfig symbols/function names are named dw_ssi.
-> >
-> > One could argue that this model could retain the generic designware spi
-> > name and support both versions, but I don't think that's necessary.
->
-> I will make the naming consistently use dwc_ssi throughout the
-> next revision of the series.
->
-> I compared the dw-apb-ssi and dwc-ssi , as well as their Linux
-> and U-Boot driver implementations, and confirmed that the two variants
-> have distinct guest-visible register ABIs. As you note, CTRLR0.TMOD is
-> located at bits [9:8] in dw-apb-ssi and at bits [11:10] in DWC SSI. Also,=
-The
-> layouts and supported ranges of other fields, including DFS, FRF and
-> SCPH/SCPOL, also differ. Linux and U-Boot likewise use explicit
-> capability checks to select the appropriate register field encodings.
->
-> Supporting dw-apb-ssi would require variant-specific register handling
-> and tests. But QEMU currently has no concrete dw-apb-ssi machine/SoC
-> consumer, my understanding is that this series should remain focused on
-> dwc-ssi, with dw-apb-ssi support added together with a concrete consumer
-> and its tests in the future. Please let me know if I have misunderstood.
+Implement a K230 SoC APB GPIO controller model for QEMU, derived from
+the Synopsys DesignWare APB GPIO (the Linux gpio-k230 driver is based
+on gpio-dwapb.c and shares the same register layout), with a
+Canaan-specific compatible ("canaan,k230-apb-gpio") and hardlock
+integration. The model is capable of running the Linux gpio-k230 driver
+and driving external input/output lines. Behaviour follows the K230
+Technical Reference Manual v0.3.1.
 
-Sounds good. I wouldn't worry about supporting dw-apb-ssi.
+Implemented:
+  - Port A registers: SWPORTA_DR/DDR/CTL, EXT_PORTA, INTEN, INTMASK,
+    INTTYPE_LEVEL, INT_POLARITY, INTSTATUS, RAW_INTSTATUS, DEBOUNCE,
+    LS_SYNC, INT_BOTHEDGE, PORTA_EOI, ID_CODE, VER_ID_CODE,
+    CONFIG_REG1/2
+  - Software control mode: DR drives output pad, DDR selects direction,
+    EXT_PORTA multiplexes external input vs. DR by DDR
+  - Per-pin IRQ output lines (single interrupt scheme), 32 per group
+  - Edge detection: rising / falling / both-edge via INT_BOTHEDGE
+  - Level-sensitive interrupts: active-high / active-low
+  - PORTA_EOI clears edge interrupts only; level interrupts cleared by
+    source removal or INTMASK
+  - INTMASK masking and INTEN gating
+  - DDR/CTL mode switching: no new interrupts while output/hardware mode,
+    pending interrupts preserved; on switch back to input/software mode,
+    level interrupts re-evaluated against current ext level, edge left
+    untouched, per TRM v0.3.1
+  - Three-phase Resettable API (enter/hold); VMState migration
 
->
-> Regards,
-> Kangjie
+Not implemented (no observable effect under QEMU):
+  - Hardware control mode (aux_porta_out/en/in signals, single-ctl params)
+  - Debounce logic (dbclk, glitch filtering, both-edge debounce timing)
+  - Combined interrupt output (gpio_intr_flag OR of all lines)
+  - Clock-domain synchronization (pclk_intr, ls_sync metastability
+    registers, gpio_intrclk_en output)
+  - Config-time parameters GPIO_PA_SYNC_EXT_DATA / GPIO_PA_SYNC_INTERRUPTS
+    / GPIO_INT_BOTH_EDGE / GPIO_PORTX_SINGLE_CTL
+
+Two controllers are instantiated in the K230 SoC (gpio0 at 0x9140B000,
+gpio1 at 0x9140C000), replacing the previous unimplemented-device
+placeholders. Each controller exposes 32 per-pin IRQ lines connected
+to the PLIC:
+  - GPIO0: PLIC sources 32..63
+  - GPIO1: PLIC sources 64..95
+
+Signed-off-by: guochun wang <guochun.wang@foxmail.com>
+---
+ MAINTAINERS                 |   2 +
+ hw/gpio/Kconfig             |   3 +
+ hw/gpio/k230_gpio.c         | 362 ++++++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build         |   1 +
+ hw/riscv/Kconfig            |   1 +
+ hw/riscv/k230.c             |  27 ++-
+ include/hw/gpio/k230_gpio.h |  73 ++++++++
+ include/hw/riscv/k230.h     |   5 +
+ 8 files changed, 468 insertions(+), 6 deletions(-)
+ create mode 100644 hw/gpio/k230_gpio.c
+ create mode 100644 include/hw/gpio/k230_gpio.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 902db77218..4301d29f7e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1827,8 +1827,10 @@ M: Chao Liu <chao.liu@processmission.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: docs/system/riscv/k230.rst
++F: hw/gpio/k230_gpio.c
+ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
++F: include/hw/gpio/k230_gpio.h
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
+ F: tests/functional/riscv64/test_k230.py
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index a209294c20..2d37a8bb6f 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -16,6 +16,9 @@ config SIFIVE_GPIO
+ config STM32L4X5_GPIO
+     bool
+ 
++config K230_GPIO
++    bool
++
+ config PCA9552
+     bool
+     depends on I2C
+diff --git a/hw/gpio/k230_gpio.c b/hw/gpio/k230_gpio.c
+new file mode 100644
+index 0000000000..a589d94712
+--- /dev/null
++++ b/hw/gpio/k230_gpio.c
+@@ -0,0 +1,362 @@
++/*
++ * QEMU K230 GPIO Controller
++ *
++ * Copyright (c) 2025 Wang Guochun <wdasn99@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18), section 12.5 GPIO
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ */
++
++#include "hw/gpio/k230_gpio.h"
++#include "hw/core/irq.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++
++static void k230_gpio_update_int(K230GPIOState *s)
++{
++    uint32_t masked_status = s->raw_intstatus & ~s->intmask & s->inten;
++    for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++        if (s->irq[i]) {
++            qemu_set_irq(s->irq[i], extract32(masked_status, i, 1));
++        }
++    }
++}
++
++static void k230_gpio_set_int_line(K230GPIOState *s, int line, int level)
++{
++    if (line >= K230_GPIO_PINS_PER_GROUP) {
++        return;
++    }
++
++    uint32_t prev_level = extract32(s->ext_porta, line, 1);
++    uint32_t curr_level = level;
++
++    s->ext_porta = deposit32(s->ext_porta, line, 1, curr_level);
++
++    if (extract32(s->swporta_ddr, line, 1)) {
++        return;
++    }
++
++    if (extract32(s->swporta_ctl, line, 1)) {
++        return;
++    }
++
++    uint32_t pol = extract32(s->int_polarity, line, 1);
++    uint32_t both = extract32(s->int_bothedge, line, 1);
++    uint32_t is_level = !extract32(s->inttype_level, line, 1);
++
++    if (both) {
++        if (prev_level != curr_level) {
++            s->raw_intstatus |= (1U << line);
++        }
++    } else if (is_level) {
++        if (curr_level == pol) {
++            s->raw_intstatus |= (1U << line);
++        } else {
++            s->raw_intstatus &= ~(1U << line);
++        }
++    } else {
++        if (prev_level != curr_level && curr_level == pol) {
++            s->raw_intstatus |= (1U << line);
++        }
++    }
++}
++
++static void k230_gpio_set(void *opaque, int line, int level)
++{
++    K230GPIOState *s = K230_GPIO(opaque);
++
++    k230_gpio_set_int_line(s, line, level);
++    k230_gpio_update_int(s);
++}
++
++static void k230_gpio_set_all_output_lines(K230GPIOState *s)
++{
++    int i;
++
++    for (i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++        if (extract32(s->swporta_ddr, i, 1) && s->output[i]) {
++            qemu_set_irq(s->output[i], extract32(s->swporta_dr, i, 1));
++        }
++    }
++}
++
++static uint64_t k230_gpio_read(void *opaque, hwaddr offset, unsigned size)
++{
++    K230GPIOState *s = K230_GPIO(opaque);
++
++    switch (offset) {
++    case K230_GPIO_SWPORTA_DR:
++        return s->swporta_dr;
++    case K230_GPIO_SWPORTA_DDR:
++        return s->swporta_ddr;
++    case K230_GPIO_SWPORTA_CTL:
++        return s->swporta_ctl;
++    case K230_GPIO_INTEN:
++        return s->inten;
++    case K230_GPIO_INTMASK:
++        return s->intmask;
++    case K230_GPIO_INTTYPE_LEVEL:
++        return s->inttype_level;
++    case K230_GPIO_INT_POLARITY:
++        return s->int_polarity;
++    case K230_GPIO_INTSTATUS:
++        return s->raw_intstatus & ~s->intmask;
++    case K230_GPIO_RAW_INTSTATUS:
++        return s->raw_intstatus;
++    case K230_GPIO_DEBOUNCE:
++        return s->debounce;
++    case K230_GPIO_EXT_PORTA:
++        return (s->ext_porta & ~s->swporta_ddr) |
++               (s->swporta_dr & s->swporta_ddr);
++    case K230_GPIO_LS_SYNC:
++        return s->ls_sync;
++    case K230_GPIO_ID_CODE:
++        return s->id_code;
++    case K230_GPIO_INT_BOTHEDGE:
++        return s->int_bothedge;
++    case K230_GPIO_VER_ID_CODE:
++        return s->ver_id_code;
++    case K230_GPIO_CONFIG_REG2:
++        return s->config_reg2;
++    case K230_GPIO_CONFIG_REG1:
++        return s->config_reg1;
++    case K230_GPIO_PORTA_EOI:
++        return 0;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_K230_GPIO, __func__, offset);
++        return 0;
++    }
++}
++
++static void k230_gpio_write(void *opaque, hwaddr offset, uint64_t value,
++                            unsigned size)
++{
++    K230GPIOState *s = K230_GPIO(opaque);
++
++    switch (offset) {
++    case K230_GPIO_SWPORTA_DR:
++        s->swporta_dr = value;
++        k230_gpio_set_all_output_lines(s);
++        break;
++    case K230_GPIO_SWPORTA_DDR: {
++        uint32_t prev_ddr = s->swporta_ddr;
++        s->swporta_ddr = value;
++        k230_gpio_set_all_output_lines(s);
++        for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++            /* Skip pins whose direction did not change */
++            if (extract32(prev_ddr, i, 1) == extract32(s->swporta_ddr, i, 1)) {
++                continue;
++            }
++            /*
++             * When switching back to input mode (and still in software
++             * control), re-evaluate level-sensitive interrupts. Edge
++             * interrupts are left untouched, matching the manual TRM v0.3.1.
++             */
++            if (!extract32(s->swporta_ddr, i, 1) &&
++                !extract32(s->swporta_ctl, i, 1)) {
++                uint32_t is_level = !extract32(s->inttype_level, i, 1);
++                if (is_level) {
++                    uint32_t curr_level = extract32(s->ext_porta, i, 1);
++                    uint32_t pol = extract32(s->int_polarity, i, 1);
++                    if (curr_level == pol) {
++                        s->raw_intstatus |= (1U << i);
++                    } else {
++                        s->raw_intstatus &= ~(1U << i);
++                    }
++                }
++            }
++        }
++        k230_gpio_update_int(s);
++        break;
++    }
++    case K230_GPIO_SWPORTA_CTL: {
++        uint32_t prev_ctl = s->swporta_ctl;
++        s->swporta_ctl = value;
++        for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++            /* Skip pins whose control mode did not change */
++            if (extract32(prev_ctl, i, 1) == extract32(s->swporta_ctl, i, 1)) {
++                continue;
++            }
++            /*
++             * When switching back from hardware to software control (and DDR
++             * is input), re-evaluate level-sensitive interrupts. Edge
++             * interrupts are left untouched, matching the manual TRM v0.3.1.
++             */
++            if (!extract32(s->swporta_ddr, i, 1) &&
++                !extract32(s->swporta_ctl, i, 1)) {
++                uint32_t is_level = !extract32(s->inttype_level, i, 1);
++                if (is_level) {
++                    uint32_t curr_level = extract32(s->ext_porta, i, 1);
++                    uint32_t pol = extract32(s->int_polarity, i, 1);
++                    if (curr_level == pol) {
++                        s->raw_intstatus |= (1U << i);
++                    } else {
++                        s->raw_intstatus &= ~(1U << i);
++                    }
++                }
++            }
++        }
++        k230_gpio_update_int(s);
++        break;
++    }
++    case K230_GPIO_INTEN:
++        s->inten = value;
++        k230_gpio_update_int(s);
++        break;
++    case K230_GPIO_INTMASK:
++        s->intmask = value;
++        k230_gpio_update_int(s);
++        break;
++    case K230_GPIO_INTTYPE_LEVEL:
++        s->inttype_level = value;
++        break;
++    case K230_GPIO_INT_POLARITY:
++        s->int_polarity = value;
++        break;
++    case K230_GPIO_DEBOUNCE:
++        s->debounce = value;
++        break;
++    case K230_GPIO_PORTA_EOI:
++        for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++            if (extract32(value, i, 1) && extract32(s->inttype_level, i, 1)) {
++                s->raw_intstatus = deposit32(s->raw_intstatus, i, 1, 0);
++            }
++        }
++        k230_gpio_update_int(s);
++        break;
++    case K230_GPIO_LS_SYNC:
++        s->ls_sync = value;
++        break;
++    case K230_GPIO_ID_CODE:
++        break;
++    case K230_GPIO_INT_BOTHEDGE:
++        s->int_bothedge = value;
++        break;
++    case K230_GPIO_VER_ID_CODE:
++        break;
++    case K230_GPIO_CONFIG_REG2:
++        break;
++    case K230_GPIO_CONFIG_REG1:
++        break;
++    case K230_GPIO_INTSTATUS:
++        break;
++    case K230_GPIO_RAW_INTSTATUS:
++        break;
++    case K230_GPIO_EXT_PORTA:
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_K230_GPIO, __func__, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps k230_gpio_ops = {
++    .read = k230_gpio_read,
++    .write = k230_gpio_write,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static const VMStateDescription vmstate_k230_gpio = {
++    .name = TYPE_K230_GPIO,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(swporta_dr, K230GPIOState),
++        VMSTATE_UINT32(swporta_ddr, K230GPIOState),
++        VMSTATE_UINT32(swporta_ctl, K230GPIOState),
++        VMSTATE_UINT32(inten, K230GPIOState),
++        VMSTATE_UINT32(intmask, K230GPIOState),
++        VMSTATE_UINT32(inttype_level, K230GPIOState),
++        VMSTATE_UINT32(int_polarity, K230GPIOState),
++        VMSTATE_UINT32(intstatus, K230GPIOState),
++        VMSTATE_UINT32(raw_intstatus, K230GPIOState),
++        VMSTATE_UINT32(debounce, K230GPIOState),
++        VMSTATE_UINT32(ext_porta, K230GPIOState),
++        VMSTATE_UINT32(ls_sync, K230GPIOState),
++        VMSTATE_UINT32(int_bothedge, K230GPIOState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void k230_gpio_enter_reset(Object *obj, ResetType type)
++{
++    K230GPIOState *s = K230_GPIO(obj);
++
++    s->swporta_dr = 0;
++    s->swporta_ddr = 0;
++    s->swporta_ctl = 0;
++    s->inten = 0;
++    s->intmask = 0;
++    s->inttype_level = 0;
++    s->int_polarity = 0;
++    s->intstatus = 0;
++    s->raw_intstatus = 0;
++    s->debounce = 0;
++    s->porta_eoi = 0;
++    s->ext_porta = 0;
++    s->ls_sync = 0;
++    s->id_code = 0;
++    s->int_bothedge = 0;
++    s->ver_id_code = 0;
++    s->config_reg2 = 0;
++    s->config_reg1 = 0;
++}
++
++static void k230_gpio_hold_reset(Object *obj, ResetType type)
++{
++    K230GPIOState *s = K230_GPIO(obj);
++
++    k230_gpio_update_int(s);
++}
++
++static void k230_gpio_realize(DeviceState *dev, Error **errp)
++{
++    K230GPIOState *s = K230_GPIO(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    int i;
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &k230_gpio_ops, s,
++                          TYPE_K230_GPIO, K230_GPIO_MEM_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++
++    qdev_init_gpio_in(DEVICE(s), k230_gpio_set, K230_GPIO_PINS_PER_GROUP);
++    qdev_init_gpio_out(DEVICE(s), s->output, K230_GPIO_PINS_PER_GROUP);
++
++    for (i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++        sysbus_init_irq(sbd, &s->irq[i]);
++    }
++}
++
++static void k230_gpio_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = k230_gpio_realize;
++    rc->phases.enter = k230_gpio_enter_reset;
++    rc->phases.hold = k230_gpio_hold_reset;
++    dc->vmsd = &vmstate_k230_gpio;
++    dc->desc = "K230 GPIO controller";
++}
++
++static const TypeInfo k230_gpio_info = {
++    .name = TYPE_K230_GPIO,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(K230GPIOState),
++    .class_init = k230_gpio_class_init,
++};
++
++static void k230_gpio_register_types(void)
++{
++    type_register_static(&k230_gpio_info);
++}
++
++type_init(k230_gpio_register_types)
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 6a67ee958f..94b5d9e2fa 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
+ system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
++system_ss.add(when: 'CONFIG_K230_GPIO', if_true: files('k230_gpio.c'))
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index de37c08cae..410877425c 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -162,3 +162,4 @@ config K230
+     select SERIAL_MM
+     select UNIMP
+     select K230_WDT
++    select K230_GPIO
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 656f28190c..62967a67d0 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -110,6 +110,8 @@ static void k230_soc_init(Object *obj)
+     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
+     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
+     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
++    object_initialize_child(obj, "k230-gpio0", &s->gpio[0], TYPE_K230_GPIO);
++    object_initialize_child(obj, "k230-gpio1", &s->gpio[1], TYPE_K230_GPIO);
+ 
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+@@ -206,6 +208,25 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
+                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
+ 
++    /* GPIO */
++    sysbus_realize(SYS_BUS_DEVICE(&s->gpio[0]), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[0]), 0,
++                    memmap[K230_DEV_GPIO0].base);
++    for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[0]), i,
++                           qdev_get_gpio_in(DEVICE(s->c908_plic),
++                                            K230_GPIO0_IRQ_BASE + i));
++    }
++
++    sysbus_realize(SYS_BUS_DEVICE(&s->gpio[1]), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[1]), 0,
++                    memmap[K230_DEV_GPIO1].base);
++    for (int i = 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[1]), i,
++                           qdev_get_gpio_in(DEVICE(s->c908_plic),
++                                            K230_GPIO1_IRQ_BASE + i));
++    }
++
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
+@@ -322,12 +343,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("pwm", memmap[K230_DEV_PWM].base,
+                                 memmap[K230_DEV_PWM].size);
+ 
+-    create_unimplemented_device("gpio0", memmap[K230_DEV_GPIO0].base,
+-                                memmap[K230_DEV_GPIO0].size);
+-
+-    create_unimplemented_device("gpio1", memmap[K230_DEV_GPIO1].base,
+-                                memmap[K230_DEV_GPIO1].size);
+-
+     create_unimplemented_device("adc", memmap[K230_DEV_ADC].base,
+                                 memmap[K230_DEV_ADC].size);
+ 
+diff --git a/include/hw/gpio/k230_gpio.h b/include/hw/gpio/k230_gpio.h
+new file mode 100644
+index 0000000000..2e52bbf760
+--- /dev/null
++++ b/include/hw/gpio/k230_gpio.h
+@@ -0,0 +1,73 @@
++/*
++ * QEMU K230 GPIO Controller
++ *
++ * Copyright (c) 2025 Wang Guochun <wdasn99@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18), section 12.5 GPIO
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ */
++
++#ifndef HW_K230_GPIO_H
++#define HW_K230_GPIO_H
++
++#include "qemu/osdep.h"
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_K230_GPIO "k230.gpio"
++OBJECT_DECLARE_SIMPLE_TYPE(K230GPIOState, K230_GPIO)
++
++#define K230_GPIO_MEM_SIZE 0x1000
++
++#define K230_GPIO_SWPORTA_DR      0x00
++#define K230_GPIO_SWPORTA_DDR     0x04
++#define K230_GPIO_SWPORTA_CTL     0x08
++#define K230_GPIO_INTEN           0x30
++#define K230_GPIO_INTMASK         0x34
++#define K230_GPIO_INTTYPE_LEVEL   0x38
++#define K230_GPIO_INT_POLARITY    0x3c
++#define K230_GPIO_INTSTATUS       0x40
++#define K230_GPIO_RAW_INTSTATUS   0x44
++#define K230_GPIO_DEBOUNCE        0x48
++#define K230_GPIO_PORTA_EOI       0x4c
++#define K230_GPIO_EXT_PORTA       0x50
++#define K230_GPIO_LS_SYNC         0x60
++#define K230_GPIO_ID_CODE         0x64
++#define K230_GPIO_INT_BOTHEDGE    0x68
++#define K230_GPIO_VER_ID_CODE     0x6c
++#define K230_GPIO_CONFIG_REG2     0x70
++#define K230_GPIO_CONFIG_REG1     0x74
++
++#define K230_GPIO_PINS_PER_GROUP 32
++
++struct K230GPIOState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
++
++    uint32_t swporta_dr;
++    uint32_t swporta_ddr;
++    uint32_t swporta_ctl;
++    uint32_t inten;
++    uint32_t intmask;
++    uint32_t inttype_level;
++    uint32_t int_polarity;
++    uint32_t intstatus;
++    uint32_t raw_intstatus;
++    uint32_t debounce;
++    uint32_t porta_eoi;
++    uint32_t ext_porta;
++    uint32_t ls_sync;
++    uint32_t id_code;
++    uint32_t int_bothedge;
++    uint32_t ver_id_code;
++    uint32_t config_reg2;
++    uint32_t config_reg1;
++
++    qemu_irq irq[K230_GPIO_PINS_PER_GROUP];
++    qemu_irq output[K230_GPIO_PINS_PER_GROUP];
++};
++
++#endif
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index 592e1c26bf..5fccea7fd5 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -18,6 +18,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/watchdog/k230_wdt.h"
++#include "hw/gpio/k230_gpio.h"
+ 
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -33,6 +34,7 @@ typedef struct K230SoCState {
+     RISCVHartArrayState c908_cpu; /* Small core */
+ 
+     K230WdtState wdt[2];
++    K230GPIOState gpio[2];
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+@@ -127,8 +129,11 @@ enum {
+     K230_UART2_IRQ  = 18,
+     K230_UART3_IRQ  = 19,
+     K230_UART4_IRQ  = 20,
++    K230_GPIO0_IRQ_BASE  = 32,
++    K230_GPIO1_IRQ_BASE  = 64,
+     K230_WDT0_IRQ   = 107,
+     K230_WDT1_IRQ   = 108,
++
+ };
+ 
+ #define K230_UART_COUNT 5
+-- 
+2.43.0
+
 
