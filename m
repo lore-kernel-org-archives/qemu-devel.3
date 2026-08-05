@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F35C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 19:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19875C56201
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 19:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrh31-00089J-8N; Wed, 05 Aug 2026 15:13:03 -0400
+	id 1wrh34-0008BG-GB; Wed, 05 Aug 2026 15:13:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrh2z-00088n-PN
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 15:13:01 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
+ id 1wrh32-0008AH-KJ
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 15:13:04 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrh2y-0005a8-1r
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 15:13:01 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-4518ad44e83so883159fac.0
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 12:12:59 -0700 (PDT)
+ id 1wrh30-0005av-UA
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 15:13:04 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-45837e52d8aso495496fac.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 12:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785957178; x=1786561978; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=P+/zS48YlBPvLSJbKrbixNLAeu6upOPlmlNFBogrFVw=;
- b=DnFAgWQRSwIu6meDTeWv5Ss+mRCjHvTosf9E4j4Nzdh3mnRoraVlBYK6RXaPvOtcqn
- J8TedNfw+4Xf67UqATBGVz2WqyMBD9hvvqRL4avt87fuv8Sfxc5bdVlbtWZGg3veWq3i
- XVpxz6jaJzz6OEdLnXp7zP0gBAj1vu5nT+Onl38GPhpNDKG65iNyzaiSuFKyeyYT1AGu
- KTbA8RoPxwyNSM6CiRElzPZALzSqIY7AKytfmNpwg664g7+P0ZeIGMDvdddH1QxXlJka
- vjZGvg/NT9V2RK/WQSpbJ0I1rqrkjs1blzFmctppKBiDCfOyaqGejdLw/Vvwk1hdCd6g
- ZnSg==
+ d=gmail.com; s=20251104; t=1785957182; x=1786561982; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cSWHrmCcIoLctcWRNjW/E1tItpOgQeoCmZgvnENNjRY=;
+ b=K74EL5SQ3n0IHQxYoJQlWkPA5QkZHKfpy79cKx8I3XYTIvHKGy6NepiORDpp7n2uGn
+ kHhAbrxhhdEN9DV5Q9/ToMZhvf7AaCKWBYV3QVozksT9+FgNGiw0kpncgDxQie8VHkNc
+ jOSESHqBlSFVwesm6Y52M9MuGPrGchkEBYpnNFPzVPI5YsYGFt42m2kUs9cr4IhUPMhZ
+ l6HZ3EgC0D1UFuVktAP4rwq+1QQHXDJ5trI/6DW0EqFzBjyC4+w5jy5NKyb68+awpH9n
+ qtEqeAobEWhUByNAc6fFaWxqPdc5oSktFTcZggI0TsUnB4yMO+ir7Xlv91ee+KQwE3go
+ vSfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785957178; x=1786561978;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=P+/zS48YlBPvLSJbKrbixNLAeu6upOPlmlNFBogrFVw=;
- b=D4JlW2tjWAjf+9MsIxbyGZEV8NfPWDnaAE7OlcL4gFwd+Pm0JhkspH+1RXgxAWRsMw
- ZDMNth7JNebVpk45qVlTlj6dvO1cCnSlGtzvlLcoZJLOTNgh3GyfSAKQDyqAYgBBgOYw
- Ss/tMvQ1DB87IcGb/W+mJvu1dIsKmCZHdB8utGp6yC4jb529oE3HQsDRTUYBHwv18i7g
- mqZOIUoAtSwMlyQO/HWOIyAxzetKXAPJO3d6gckSMCJx7spzdBh+KaaqXEnr3/+2S0Tr
- uUHc+8PRWuonBdBhzZodV7FU5KeuO8TDa+nZ48QEXx7XJVWlopaHSqvzA5NDTn2PazUc
- cuPg==
-X-Gm-Message-State: AOJu0YwGJBnDG6FsmvwdvSetltRYCBY1j5OrrK9D3Bun3aeSrFwxxnfT
- HB3OpYgrwPK/0vdushGuchgTFcY6jgGgcIbqyGEC8UvW3eSvw9QYgKYEV1YXoza/
-X-Gm-Gg: AR+sD12ktZniHItpLBdT7E4TYdwpFjXdkWKvYPr83D/aIRl8xfRI78vZQ0dNwYhAT6p
- nM2SdUiPP9Cntr1HK+x4wjx7vjgRd4CQKZdmvMmqoGi6P1Z906EQ0xFTY5+qqKKE8tatq6pT2oe
- lM/wU0M5cY4rFTH1O0x58iT/t1QTGuvjkNMtPnEpPkk+wd1xl1zoYQa5P+a47fC5M+zqonGBrof
- J/gKMJwEtqCn7L7J4KoK2g/BP89eZjPOjFQ7ZwDLo89ucy6mK2rWSTYQBkunZRhcPzIbOuqE1SK
- Lfd9NMmvBTQl16X0qY2K39auQogJ0cSIEFoTFyJbqQ8b9rZsx3b87TYbpyjjwTRGhI/40xEzn2M
- x+Eo++cJo2LcIThbF38+cUtuDAHxxMHcysn6IMNImicfA2SWlfGkOLwntQymJcUypNh2N24h8IO
- c2m1ftoo+dzk3250g/3JBY3rGwqK389dx69X5cf5kFKXfqDSkT7oBRbeSAoyTJWn+jPyBKs4rrC
- 21xKuO3WGz3t1c=
-X-Received: by 2002:a05:6870:2249:b0:448:3eb2:8c8c with SMTP id
- 586e51a60fabf-4599eb81db8mr4509912fac.6.1785957178503; 
- Wed, 05 Aug 2026 12:12:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785957182; x=1786561982;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cSWHrmCcIoLctcWRNjW/E1tItpOgQeoCmZgvnENNjRY=;
+ b=JHNtcWz9EuCRbRON1WjQ/CQhZb1yPd66gN6ANPfFMLcKGM6qROIVbTNtP4viphy+CQ
+ 3mXVyr8ttceUuIVeYayGAKyTUbydCok+GIMMMGKCQVWdM4PwfXXfPPD0x1arQNme7yKu
+ 4bgcWY1lMTVimRPjaJRJtoDCOLbuqwZRsHlVCHSw6rDq+ZOMjE0Eu+wWVzpv0NxWZxyR
+ Wj0GUJrIbQBnDnrii9uIy7x9jthLHaorEQyzvD3IUib+GCFvZVmMnaghxJUmLlB+kM0E
+ 0zIRThhUN0zpJLPP32OpceV1oLpLbyHGFJXmePyPNRXEpIiu/VyMuiS0r/BmE1+fsQgS
+ du8Q==
+X-Gm-Message-State: AOJu0YyY+33WpAPcMPhU9pgZm+mxSr44YEkWG1Ht8yCUKrYZAYLpqwyl
+ y5llglUWOJz4P5B0hGGN8xlpoO8wf46pYhL7b36A8Ryx6aH54vcsC1kwPTrGsKDD
+X-Gm-Gg: AR+sD12Icp6Ur4BRy4QltH/TRz5RdeDXdim0soTYlUxlicjj9k4Lr4QivF5onyHvmdz
+ 9uf61fg6oSIlj16fR3dAtR6g4M0ijjvjOfOlzyiIwomvUonLXC1Kna209I+iLhK/fUkLzTyg4I1
+ Ykk1wTIW0eRjnik0A7Q3g8pHTDCDIsOwPsOPtzHYpxriht+fxRkbZkHM8V24CEAi66pGnCE1BSf
+ xk3cfWiO4KORlAavcAfnTs4QfEuRHTBegsMxJGXy16tDOyepI03j5uRa9v5+sK8aL3nfVjvRX4z
+ Zhg71H3II9kmyQq5UUX165aOgh2BgpXr5Tq24lgvG9oAhdEhUk+zJvCgN2aWzkOGeB9CBIIXyxg
+ WMHC0AbXhjb4yECX+nXLLFcTzUu0UcFFcUi4Cqd9swzPKKLbmF15VDG67/+7Gp/zUDSLBYV2AKG
+ X/7tD5+PV3vn+H8TvGlJz7ovxJCtLVU7ZwgGOd0f0UIHauRMBJMNwz/HP577LYR+FXaAh11VJNl
+ gF1sQCVdzLD/5o=
+X-Received: by 2002:a05:6870:d40d:b0:456:55f3:b8b with SMTP id
+ 586e51a60fabf-4599ec98ec6mr4665684fac.5.1785957181797; 
+ Wed, 05 Aug 2026 12:13:01 -0700 (PDT)
 Received: from HPE-2MQ6131DV6.ams.hpecorp.net ([170.85.98.248])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4599dd615ecsm3494867fac.0.2026.08.05.12.12.57
+ 586e51a60fabf-4599dd615ecsm3494867fac.0.2026.08.05.12.13.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 12:12:58 -0700 (PDT)
+ Wed, 05 Aug 2026 12:13:01 -0700 (PDT)
 From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Simon Xu <simonxhy0404@gmail.com>
-Subject: [PATCH 0/4] hw/arm: bugfixes for Arm SSE-300 and AN547 models
-Date: Wed,  5 Aug 2026 14:12:53 -0500
-Message-ID: <20260805191257.11303-1-simonxhy0404@gmail.com>
+Subject: [PATCH 4/4] hw/arm/mps2-tz.c: add AN547 AHB PPC EXP1 DMA ports
+Date: Wed,  5 Aug 2026 14:12:57 -0500
+Message-ID: <20260805191257.11303-5-simonxhy0404@gmail.com>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260805191257.11303-1-simonxhy0404@gmail.com>
+References: <20260805191257.11303-1-simonxhy0404@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=simonxhy0404@gmail.com; helo=mail-oa1-x34.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,26 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series fixes bugs found in another patch series and more:
-	SSE-300 SLOWCLK Secure Watchdog address was in non-secure region
-	SSE-300 PPU addresses were copied from SSE-200 and not correct
-	AN547 MPC ports were not correct
-	AN547 was missing the DMA ports on AHB PPC EXP1
+Page 42 of the AN547 TRM defines the AHB PPC EXP1 ports with DMA 1-3
 
-https://patchew.org/QEMU/20260723233605.805-1-simonxhy0404@gmail.com/
+AN547 TRM: https://developer.arm.com/documentation/dai0547/latest/
 
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+---
+ hw/arm/mps2-tz.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Simon Xu (4):
-  hw/arm/armsse.c: fix SSE-300 s32kwatchdog address
-  hw/arm/armsse.c: fix SSE-300 PPU addresses
-  hw/arm/mps2-tz.c: fix AN547 APB PPC EXP0 MPC ports
-  hw/arm/mps2-tz.c: add AN547 AHB PPC EXP1 DMA ports
-
- hw/arm/armsse.c  |  8 ++++----
- hw/arm/mps2-tz.c | 21 +++++++++++++++++++++
- 2 files changed, 25 insertions(+), 4 deletions(-)
-
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index 81e64a91de..d6d178642b 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -1113,6 +1113,14 @@ static void mps2tz_common_init(MachineState *machine)
+                 { /* port 7 USER AHB interface 3 */ },
+                 { "eth-usb", make_eth_usb, NULL, 0x41400000, 0x200000, { 49 } },
+             },
++        }, {
++            .name = "ahb_ppcexp1",
++            .ports = {
++                { /* port 0 reserved */ },
++                { "dma1", make_dma, &mms->dma[1], 0x41201000, 0x1000, { 62, 60, 61 } },
++                { "dma2", make_dma, &mms->dma[2], 0x41202000, 0x1000, { 65, 63, 64 } },
++                { "dma3", make_dma, &mms->dma[3], 0x41203000, 0x1000, { 68, 66, 67 } },
++            },
+         },
+     };
+ 
 -- 
 2.53.0
 
