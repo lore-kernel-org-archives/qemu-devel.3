@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD68C56203
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47881C55ABA
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrbFw-00044d-Ov; Wed, 05 Aug 2026 09:02:00 -0400
+	id 1wrb0Q-0007qQ-Sj; Wed, 05 Aug 2026 08:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wrbFu-00044R-Nh
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:01:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wrbFs-000321-73
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:01:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785934913;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=woYGaBGfgHz4AceQ3q5fOBMOdc8sEH2yW/Sj656EI/0=;
- b=iwUAvLvgKxh9BuDaQlKiXfNSseccA/w1EaJLFs7+vmYGI4//VZ1+TPVVIC6Za5tTPfTaeZ
- X/nX9HkN2+WsY7GaTZOWtQYfpKeJzDaHgV3Q113BpJdfDD76ucZ0+MUaXuzx53fnT4tV2B
- ckzr0dsLDUIdkTe84cZlCGjp14P8puA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-6BcGwEFzNreJ3yjkbeZGFg-1; Wed,
- 05 Aug 2026 09:01:49 -0400
-X-MC-Unique: 6BcGwEFzNreJ3yjkbeZGFg-1
-X-Mimecast-MFC-AGG-ID: 6BcGwEFzNreJ3yjkbeZGFg_1785934908
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A44319560AF; Wed,  5 Aug 2026 13:01:47 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4016A1800346; Wed,  5 Aug 2026 13:01:44 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: akihiko.odaki@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH v5] virtio-gpu: use g_try_malloc to avoid guest-triggered abort
-Date: Wed,  5 Aug 2026 17:01:41 +0400
-Message-ID: <20260805130141.211398-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wrb05-0007nl-Kz
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:45:38 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wrb00-0006dx-Mj
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 08:45:36 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-47f611b3af9so139457f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 05:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785933931; x=1786538731; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8QybmKXsQqLSM3yBhrdsFkkm4/OY/6jMO66xFzPollQ=;
+ b=hO6LfnTSiRVp+LZHX3BIyOMt5HP49q4VYjjvBmo3wBtaVQ/KGXEWjOcOq9McZjOPEr
+ 13cInFEpvlxE6uf5zk7MX/EIOW1dlJWQPFItEeqBTXw2rWZ8NIxlMZU72CrNhLQCLtLG
+ aJmDcz9eZFQL3owBIYdmQpIHfAXtAQVMQGzO0gpzZZSA94CmMRyj98VkUaVjJmpJQ9zr
+ D/b9LnaYAp5mewNK1B8aqwoyJJiN15UU+FBuHm0COtFdt+9MvLwmIxSldXPXi6PvGahp
+ 1VZlJImHN9uMAvSwQsPZbG1sJjD8MN1S4egsqc5QK++9jAj2eCQMQhaU1ebVud3Kb+Ub
+ 3xkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785933931; x=1786538731;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8QybmKXsQqLSM3yBhrdsFkkm4/OY/6jMO66xFzPollQ=;
+ b=Qgx7yDzCCL9bjKPisFZ8MFBsvwjEnEFDrLPTYcGIpSZGmSpGpkRys5cWC3k/5ABTKS
+ 5ZsX9fiqUWchNDh5/3E41Gi/YlerQLdTT14w+WJV6ExQ7+5VKCBHFlUnTjvWPba1BHni
+ Ea0NZbv/lkXr0EOddN3jHFi4Rnl/1THXGgfnbgr6ItbZNrOXPGiI9qaF7qMtoAoKIUB5
+ Uet2wx//dXzlKjH7dZIUhuJLz93f76IsoDCX7DwOLfHIPRpklhVVjkMo+3DaRbMWwMBL
+ Ex1Bskb9oR8u09ND3Avc8OHGnmryipKMhFwtTFJ1TAtJmRl6/KBouvNDmXXVcivTiiu/
+ K99w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr11Bqvkp2SB9Br6RK6V+/p4dmXzbkfKQbEsqHoS5w88GT5j6KdNzMkr2srbAumKWEZOF7MBNQME3NW@nongnu.org
+X-Gm-Message-State: AOJu0YwyLaIbk4vQSRbfL2GewXyjjTv98H+rIp+VVMnX+g2Gp7/LQ19E
+ WcS/D4mf62OsGqYiuWm87x/LPgKeaEA0pGTH5d8zHM+Qz2X5ttPVBiFQ
+X-Gm-Gg: AR+sD13OqrQ1z5lfoEWu1M//tFIhDjDMJIGKnFcXNSrGVECtjjpfCNLdlksK0sUTlhR
+ GVyiCxvImSoUCpM6i+2Rr/Tg/xMIuZWWESwkjWBm1Y+sR/R2krB8pF6a1ZP3KRCtDXETk74gfpF
+ L7ODlMjiv/hK1cZTMwvTkhZbPfSp5oz9c0Iyxp2zjB2QPHUPWLooxs8lPoAUfXpDomckUyscQ4z
+ trMMvFeBB+byYdcABC+pfFJ2s3g5O0LNIOjw4YGTceMWB3EYaULQm9+OhKR/UUCeLylRPL4TpFD
+ 2oCvncC3ANA0kDIMkSFp2VOiGItKWmmPEbqTdmh9Mzm4jQB2Iz5TQlOh8C5s0R4GJmrTd1w9Rtx
+ SkeY2iiik5Ez4mIWmamEKoSOX4TWbHswfi21HoMkbwaZv9aBiaSwgkI89avR8OWPrgy2ff5Ys4F
+ Sd7lIFYAi/8osLPoAX4Aoo6+1zzvTBlPa7dBYY8LES6EUOjs7e/V8MiMMfTQw=
+X-Received: by 2002:a05:600c:1393:b0:495:650b:4c61 with SMTP id
+ 5b1f17b1804b1-4994e7d0166mr45279285e9.3.1785933930865; 
+ Wed, 05 Aug 2026 05:45:30 -0700 (PDT)
+Received: from AtiePC ([79.116.13.250]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4994a100e14sm166453775e9.14.2026.08.05.05.45.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Aug 2026 05:45:30 -0700 (PDT)
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Daniel Paziyski <danielpaziyski@gmail.com>, qemu-stable@nongnu.org,
+ Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org (open list:nvme),
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH 2/3] hw/nvme: fix memory leak on sr-iov capable nvme
+ controller removal
+Date: Wed,  5 Aug 2026 14:45:17 +0200
+Message-ID: <20260805124519.30054-3-danielpaziyski@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260805124519.30054-1-danielpaziyski@gmail.com>
+References: <20260805124519.30054-1-danielpaziyski@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,269 +105,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+If a nvme controller is SR-IOV capable, its list of secondary controllers
+(virtual functions) is stored in the sec_ctrl_list dynamically allocated
+array, located in the NvmeCtrl struct.
 
-Use g_try_malloc/g_try_new0 for guest-controlled allocation, so failure
-returns an error to the guest rather than crashing the host (glib
-behaviour).
+Free the secondary controller list after destroying the virtual functions and
+freeing their controller IDs.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3898
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+QEMU command line (boot with a hotunplug-aware OS, such as Linux):
+
+    qemu-system-x86_64 -M q35 -device pcie-root-port,id=rp -monitor stdio \
+    -device nvme-subsys,id=subsys0 \
+    -device nvme,subsys=subsys0,serial=ctrl0,sriov_max_vfs=1,\
+sriov_vq_flexible=2,sriov_vi_flexible=1,max_ioqpairs=4,msix_qsize=2,bus=rp,id=ctrl0
+
+In the QEMU monitor:
+
+    device_del ctrl0
+    quit
+
+ASAN splat:
+
+==78982==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x7fcbab32bea9 in calloc (/usr/lib/libasan.so.8+0x12bea9) (BuildId: 7f2845989b820f536270e19ec47df085ae89a675)
+    #1 0x7fcbaa2a34b2 in g_malloc0 (/usr/lib/libglib-2.0.so.0+0x694b2) (BuildId: cb17d184459352a7985a010f1cd3acef4a4f90d8)
+    #2 0x559c531fff4b in nvme_subsys_register_ctrl ../hw/nvme/subsys.c:65
+    #3 0x559c531d715e in nvme_init_subsys ../hw/nvme/ctrl.c:9582
+    #4 0x559c531d7a7d in nvme_realize ../hw/nvme/ctrl.c:9637
+    #5 0x559c5323c0da in pci_qdev_realize ../hw/pci/pci.c:2316
+    #6 0x559c54001e88 in device_set_realized ../hw/core/qdev.c:514
+    #7 0x559c5402462e in property_set_bool ../qom/object.c:2484
+    #8 0x559c5401dbd2 in object_property_set ../qom/object.c:1548
+    #9 0x559c5402b76c in object_property_set_qobject ../qom/qom-qobject.c:28
+    #10 0x559c5401e24c in object_property_set_bool ../qom/object.c:1618
+    #11 0x559c53fffd77 in qdev_realize ../hw/core/qdev.c:277
+    #12 0x559c53934166 in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+    #13 0x559c53934272 in qdev_device_add ../system/qdev-monitor.c:758
+    #14 0x559c538867c8 in device_init_func ../system/vl.c:1217
+    #15 0x559c5487236a in qemu_opts_foreach ../util/qemu-option.c:1148
+    #16 0x559c53891205 in qemu_create_cli_devices ../system/vl.c:2762
+    #17 0x559c53891968 in qmp_x_exit_preconfig ../system/vl.c:2822
+    #18 0x559c53898108 in qemu_init ../system/vl.c:3862
+    #19 0x559c545efabf in main ../system/main.c:71
+    #20 0x7fcba7627780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #21 0x7fcba76278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #22 0x559c524df1f4 in _start (BuildId: 35402cb4fc46114b7a4102258726bbdec82cd9bc)
+
+Cc: qemu-stable@nongnu.org
+Fixes: c6159d0e384f ("hw/nvme: Allocate sec-ctrl-list as a dynamic array")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
 ---
-v5:
- - also fail gracefully in virtio_gpu_create_udmabuf()
----
- contrib/vhost-user-gpu/vhost-user-gpu.c | 25 ++++++++++-----
- contrib/vhost-user-gpu/virgl.c          |  6 +++-
- contrib/vhost-user-gpu/vugbm.c          |  5 ++-
- hw/display/virtio-gpu-rutabaga.c        | 14 +++++++--
- hw/display/virtio-gpu-udmabuf.c         |  7 +++--
- hw/display/virtio-gpu-virgl.c           |  6 +++-
- hw/display/virtio-gpu.c                 | 42 ++++++++++++++++++-------
- 7 files changed, 79 insertions(+), 26 deletions(-)
+ hw/nvme/ctrl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index 786488150932..933bdbb671c0 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -487,7 +487,7 @@ vg_create_mapping_iov(VuGpu *g,
-                       struct virtio_gpu_ctrl_command *cmd,
-                       struct iovec **iov)
- {
--    struct virtio_gpu_mem_entry *ents;
-+    g_autofree struct virtio_gpu_mem_entry *ents = NULL;
-     size_t esize, s;
-     int i;
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index b726c13a56..284f3964e3 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9682,6 +9682,10 @@ static void nvme_exit(PCIDevice *pci_dev)
  
-@@ -498,17 +498,22 @@ vg_create_mapping_iov(VuGpu *g,
-     }
+     nvme_subsys_unregister_ctrl(n->subsys, n);
  
-     esize = sizeof(*ents) * ab->nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
++    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
++        g_free(n->sec_ctrl_list);
 +    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(*ab), ents, esize);
-     if (s != esize) {
-         g_critical("%s: command data size incorrect %zu vs %zu",
-                    __func__, s, esize);
--        g_free(ents);
-         return -1;
-     }
- 
--    *iov = g_new0(struct iovec, ab->nr_entries);
-+    *iov = g_try_new0(struct iovec, ab->nr_entries);
-+    if (!*iov && ab->nr_entries) {
-+        return -1;
-+    }
-     for (i = 0; i < ab->nr_entries; i++) {
-         uint64_t len = ents[i].length;
-         (*iov)[i].iov_len = ents[i].length;
-@@ -517,12 +522,10 @@ vg_create_mapping_iov(VuGpu *g,
-             g_critical("%s: resource %d element %d",
-                        __func__, ab->resource_id, i);
-             g_free(*iov);
--            g_free(ents);
-             *iov = NULL;
-             return -1;
-         }
-     }
--    g_free(ents);
-     return 0;
- }
- 
-@@ -828,8 +831,14 @@ vg_resource_flush(VuGpu *g,
-                 PIXMAN_FORMAT_BPP(pixman_image_get_format(res->image)) / 8;
-             size_t size = width * height * bpp;
- 
--            void *p = g_malloc(VHOST_USER_GPU_HDR_SIZE +
--                               sizeof(VhostUserGpuUpdate) + size);
-+            void *p = g_try_malloc(VHOST_USER_GPU_HDR_SIZE +
-+                                   sizeof(VhostUserGpuUpdate) + size);
-+            if (!p) {
-+                pixman_region_fini(&region);
-+                pixman_region_fini(&finalregion);
-+                cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+                break;
-+            }
-             VhostUserGpuMsg *msg = p;
-             msg->request = VHOST_USER_GPU_UPDATE;
-             msg->size = sizeof(VhostUserGpuUpdate) + size;
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index 550fd03bf5c4..20bae57d0fe4 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -209,7 +209,11 @@ virgl_cmd_submit_3d(VuGpu *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/contrib/vhost-user-gpu/vugbm.c b/contrib/vhost-user-gpu/vugbm.c
-index 710d54529779..e2d8385fd857 100644
---- a/contrib/vhost-user-gpu/vugbm.c
-+++ b/contrib/vhost-user-gpu/vugbm.c
-@@ -13,7 +13,10 @@
- static bool
- mem_alloc_bo(struct vugbm_buffer *buf)
- {
--    buf->mmap = g_malloc((uint64_t)buf->width * buf->height * 4);
-+    buf->mmap = g_try_malloc((uint64_t)buf->width * buf->height * 4);
-+    if (!buf->mmap && buf->width && buf->height) {
-+        return false;
-+    }
-     buf->stride = buf->width * 4;
-     return true;
- }
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index a054f8117f14..041216a10d04 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -366,10 +366,20 @@ rutabaga_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_new0(uint8_t, cs.size);
-+    buf = g_try_new0(uint8_t, cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
--    CHECK(s == cs.size, cmd);
-+    if (s != cs.size) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: size mismatch (%zu/%u)\n",
-+                      __func__, s, cs.size);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
- 
-     rutabaga_cmd.ctx_id = cs.hdr.ctx_id;
-     rutabaga_cmd.cmd = buf;
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 5f08c855dde1..816f52a51457 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -39,8 +39,11 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-         return;
-     }
- 
--    list = g_malloc0(sizeof(struct udmabuf_create_list) +
--                     sizeof(struct udmabuf_create_item) * res->iov_cnt);
-+    list = g_try_malloc0(sizeof(struct udmabuf_create_list) +
-+                         sizeof(struct udmabuf_create_item) * res->iov_cnt);
-+    if (!list) {
-+        return;
-+    }
- 
-     for (i = 0; i < res->iov_cnt; i++) {
-         rcu_read_lock();
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 6e298f997d66..9bda572426b2 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -620,7 +620,11 @@ static void virgl_cmd_submit_3d(VirtIOGPU *g,
-         return;
-     }
- 
--    buf = g_malloc(cs.size);
-+    buf = g_try_malloc(cs.size);
-+    if (!buf && cs.size) {
-+        cmd->error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+        return;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    sizeof(cs), buf, cs.size);
-     if (s != cs.size) {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index fbb6fec7a0ad..9eb010082d0d 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -892,7 +892,10 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-     }
- 
-     esize = sizeof(*ents) * nr_entries;
--    ents = g_malloc(esize);
-+    ents = g_try_malloc(esize);
-+    if (!ents && esize) {
-+        return -1;
-+    }
-     s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
-                    offset, ents, esize);
-     if (s != esize) {
-@@ -913,6 +916,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-         hwaddr len;
-         void *map;
- 
-+        /* TODO: a common DMA map SG helper */
-         do {
-             len = l;
-             map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-@@ -921,20 +925,27 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-             if (!map) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
-                               " element %d\n", __func__, e);
--                virtio_gpu_cleanup_mapping_iov(g, *iov, v);
--                g_free(ents);
--                *iov = NULL;
--                if (addr) {
--                    g_free(*addr);
--                    *addr = NULL;
--                }
--                return -1;
-+                goto err;
-             }
- 
-             if (!(v % 16)) {
--                *iov = g_renew(struct iovec, *iov, v + 16);
-+                struct iovec *new_iov;
-+                new_iov = g_try_renew(struct iovec, *iov, v + 16);
-+                if (!new_iov) {
-+                    dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                     DMA_DIRECTION_TO_DEVICE, len);
-+                    goto err;
-+                }
-+                *iov = new_iov;
-                 if (addr) {
--                    *addr = g_renew(uint64_t, *addr, v + 16);
-+                    uint64_t *new_addr;
-+                    new_addr = g_try_renew(uint64_t, *addr, v + 16);
-+                    if (!new_addr) {
-+                        dma_memory_unmap(VIRTIO_DEVICE(g)->dma_as, map, len,
-+                                         DMA_DIRECTION_TO_DEVICE, len);
-+                        goto err;
-+                    }
-+                    *addr = new_addr;
-                 }
-             }
-             (*iov)[v].iov_base = map;
-@@ -952,6 +963,15 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
- 
-     g_free(ents);
-     return 0;
 +
-+err:
-+    virtio_gpu_cleanup_mapping_iov(g, *iov, v);
-+    *iov = NULL;
-+    if (addr) {
-+        g_clear_pointer(addr, g_free);
-+    }
-+    g_free(ents);
-+    return -1;
- }
- 
- void virtio_gpu_cleanup_mapping_iov(VirtIOGPU *g,
+     g_free(n->cq);
+     g_free(n->sq);
+     g_free(n->aer_reqs);
 -- 
 2.55.0
 
