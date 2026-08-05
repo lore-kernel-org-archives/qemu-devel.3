@@ -4,129 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD032C55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 18:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C313C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 18:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrgJW-00009g-3w; Wed, 05 Aug 2026 14:26:02 -0400
+	id 1wrgJU-00009b-Fy; Wed, 05 Aug 2026 14:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wrgIz-0008VY-1L
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:29 -0400
+ id 1wrgIu-0008VN-9G
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:28 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wrgIw-0007fx-68
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:27 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wrgIq-0007ea-IE
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:23 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 675HSIS83889922
- for <qemu-devel@nongnu.org>; Wed, 5 Aug 2026 18:25:25 GMT
+ 675HS6Kc3888539
+ for <qemu-devel@nongnu.org>; Wed, 5 Aug 2026 18:25:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=blTv4mizGpD
- GEZidjgr/H7vbQ68dRdp26PLrvP7to6A=; b=A07+AXgPi0qXTgKScvJC/Ll+ByC
- m0T97M3Oos517xUQuGt/d5M8w6Ogc840vSuVUHwxfPbVNXhUog0k7z1DY6v0ncJP
- dA6GkpV0fU8I81It2LHoWcYK0jJD6mS0RV6YD4npHSFHtoEOcEAoIuOtXQ8g3Gi4
- 8fFWaCkUlnoyXBb5bonomjEprlPUOg8As+//HrnDhiFVE9/oFTX7d5Emh1vhT5bB
- fIBPJmTK/A0wvC7jnGytsKnlXs6GO8Hf8Jelb8aARShwP4nmioLu4mzLyMXn0gOv
- Pz//A5UZTtHwFDexXOavoDM2XymlZB92zt3MlUq9YV+mh/W2VyNLqzeDnKg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv14waxam-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=zpTq8m8yans
+ XiuzePHJBQKT4ihkudLV2rjyap1lEZfQ=; b=FfP94iKZKYomcRKfZancagW0xjU
+ gU7yhJEx+eVtes6b4vnVmQ48XqyV2gfwp7S/geEB7d5gly5ZDAeGZzTNaxu9K3Yw
+ Ox/DBb4fZV7D5sLnOysdHQd6Qm8QUunRtXTygqzs9FEih3WrAAc6nMyue1PuL3ft
+ RSxA2a8CpJtWhHnAtixCpV/J4bgmkGEWjrTo4T69DiazX3nuI0XywixkznnWziOk
+ +g7GMeh0a+m/27buZoPrVMsiv10h3KZ3UHx0cvaW77F4ScLlI7xSQurxYeT7FvJZ
+ 7A5ARfVS5ebjj2k3Lx+woUd6EJDGe8sLMZvDuLPRsE34z/OKnNg3sSwRv0A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv5x5sh5u-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 18:25:24 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-930dda91cbdso218758385a.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 11:25:24 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 18:25:19 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-930edb4362dso106774085a.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 11:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1785954324; x=1786559124; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1785954319; x=1786559119; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=blTv4mizGpDGEZidjgr/H7vbQ68dRdp26PLrvP7to6A=;
- b=AcjDD7e0cdIsVjtD4HoFiY/gJwIuJULqJMoFq/E6cchOcNShKqO8OebktPCoeNng1y
- gUjoISVDc9nArg2eWXnn8pTDE7JCmUhsg4PS6j2lSymVIVaJ7cJBTZ9BVv/EgISsOGdc
- rviB7+PRc4q1Y2/ZH7HBBaHmmSU54m+DQ/5yRJMoZ0xgL42xvaCu4zPvQnUUWVu1SDq0
- zc71YJlYi+GeSp21Ac1xqCg9jKhrboFVS0Aminj48Z3vxfXhD62lL6tiElfo0FmeNqXe
- bG8QjlaBQ+dWkgXd2ibAq92v+uctbiQiClpD+cRZC7HHCAsX0gFlrswRww5anVDHaccS
- B57A==
+ bh=zpTq8m8yansXiuzePHJBQKT4ihkudLV2rjyap1lEZfQ=;
+ b=SXzWHXCh3fz8jQFVrbxYoUgWYZMcOq0pvFuLn/4iFrbWErIMZtuDsbbhqtxwyVo6Rh
+ ePDt3NYo9VzoTJpmJJIODSIi89tvWwRIDq2myFm85LXcP1v2sCDBgWrx2XKRHBLpp1iQ
+ P6C7v0h34bJJRupTjd6nATzbFbXSGGXQ60d3LKJgZGx/JFWBri9il4ImgxDgtgYt2HZC
+ Sxahu8hiGa9GDPaAHhCfke4I/EV/g4nVq8ubnPf99F+NeNC9RbvScHrAN/6tooDb5BFX
+ nrAHMn8IiW7t2C/mdCVUyRDFNi0fUAqlgB1Fg/8bB50BgF/tcU7qS3F2bneFhc6S3MW6
+ NeWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785954324; x=1786559124;
+ d=1e100.net; s=20251104; t=1785954319; x=1786559119;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=blTv4mizGpDGEZidjgr/H7vbQ68dRdp26PLrvP7to6A=;
- b=fiEnNUi8ppK8v0f5/LAT4sdj3tQpDnMK16ttNVciAgGTnZyKhMe7lB4P29Y31Q+JBM
- biGYj4yOmi+AU3/JR/wA26ejM2qq3YbHY2MAPTtGRlsRSYC7FZ2OHL8xdO45esI5L+Fq
- P0oGWG4ZkIRlpWWqqbcGvHz2HoSdM01nKJfyvTxl5vy7tMNHxy9bIPAn6tsBQ/Cd2aj2
- 28iIY4k3njAGzui9RbCb0m9AVcwgILH/xd9U+m564Av/rKJutPIw/sPC7NjJMVHq82U8
- vqSdPF+g0KL2Vvs+dRvwxPliER94SlgUw96/Urn+Yz6epM1gUV9R+whFKeFrE5HTcxgA
- 3c0g==
-X-Gm-Message-State: AOJu0Yz6MCfxHGzkhDlpzTDUKqCrKpmK+QwJ1O5k62eeLO/m1r+zTpz8
- b6rak+IKwpL322XFI8NcMkUVSuGElcbjUdN/1wYxiiGsiUkF9wgcq/nGpx+QiC74ZqfeU1paTU7
- Mhd0kexq1U+ZyN97I8At4NAtWzXa8FZto2U3l4e9YP8nSAl7KJhvL3q3O1w8flfNdaQ==
-X-Gm-Gg: AR+sD11FTQhGUYc+03LzdNVOsf/QKnbvZ39hCgz9m7ulzkTHUaWU/pGS8sJ80LWNaoL
- wmXkfM5r3hQv5W6l0hn440Ke+QARvLEq7jORVZuw8k3Lhl24fYpFSEL1fnw7hdAK9n6g0f6LKun
- NyuyBq6sjhVOnRzHnQcH9KWL9WWnm8bc34pof50UaYRt3fOjHnHI8lqFJI0e9v9Hcs0vra3k0S9
- PdY9BKSTbQfNY2JNWDuzK5UTzp7hD79vCSunqoo35L+fLf5JT7imhtqcj/h4GMeISmUdi5q9bwc
- WHLk8t4ow1/FkuGCwPhckB/NE5O+9qWCAELwijXWJOPpfc//MsJcjbo95BQs/5oGwwR03HlrXkY
- wfWJ5xM4lb/8OsU1iIZOreYg/eSGRw3q7S929rA==
-X-Received: by 2002:a05:620a:8807:b0:92f:362:8097 with SMTP id
- af79cd13be357-936490579c2mr937407885a.8.1785954324260; 
- Wed, 05 Aug 2026 11:25:24 -0700 (PDT)
-X-Received: by 2002:a05:620a:8807:b0:92f:362:8097 with SMTP id
- af79cd13be357-936490579c2mr937400585a.8.1785954323742; 
- Wed, 05 Aug 2026 11:25:23 -0700 (PDT)
+ bh=zpTq8m8yansXiuzePHJBQKT4ihkudLV2rjyap1lEZfQ=;
+ b=DsqOgZiovvugKssRICrm5jt5aLsVIsXCxrdJxem3CpEp9A1/Vq439ibwU1rCPKyvWs
+ HzfKg45/86xJXaEFh6OSlXxofAVQl2rNqcIEmlwaWrqBi7F0GjZ20Lvk1DTjVn4IdN7n
+ WlkxH6Ntu+ojVUufC8dciRMP4VAbUhjUby5D2Au3H7J+NumDJwUsuRjkdEQeHwi3Ynod
+ xYbJfMbKBEEMslOBked6hGV4WSM5cNB45DvrTMLfrFCk8O+ueW42aHQvy6GlWxKzTZ6G
+ ZHSGrLRWVGw+Nmueydwox2pa59VnLTuEWLZ800x51OJWadIZMvx7KGRrySDMvEnC/QOo
+ lyeg==
+X-Gm-Message-State: AOJu0Yye5R1pyYV6hrUlWYTJQnrDRC2cyJduEyJSF/6wpIVUr1soelZq
+ 2z/AF0biWRH56ZcLv8b+WLVd0qmzhUxX1In04+FHOaiaH2SMO2+wIw3XZlokmCrZdmrFlgrj5tD
+ yhTW7x32iNs3ZHC7O2Vyq4GW9K0qWEU42U2fV7RAltQ/x7fQyOYEOa2MoPAT6ACuihA==
+X-Gm-Gg: AR+sD13c3hZdC41VGB8pQ/CyOD4FmTKTbxq0ECT9J/S448IGvozg5+APmhOelwWxIxJ
+ zxIC0h8Ec2MqsPMaJjIKyYKDpJmEYsjHicxWVZ0EOh1z7eu06W//Jkq0gHjPZLV7cEBZVbxp+Kr
+ ETgYquhnyDI1vcW4SqkB5YtjotfEieHBN4SRnPraa4tYbBCE/qD7iQq1z9YG5dXZrjP4UDQEPGf
+ +CTexgdeeOVgi8QYzoTJiPZWmlOBHrtKFWGDdp4kiKQV7BDH5yUCot4RI3cgdzTaLUaJQi2Bzw7
+ hOVBmpWxts20GkMvJF/jFsACwaudogBpBuF5YJNECjiyG30baaSLUKCI4EfIto08/kWmjqSERZq
+ lPdLOfb6lKfFxIZp6YjcCuwt9cvoPhs7tTOpaNA==
+X-Received: by 2002:a05:620a:2616:b0:92e:4927:1ff9 with SMTP id
+ af79cd13be357-936491302dcmr860161885a.40.1785954318857; 
+ Wed, 05 Aug 2026 11:25:18 -0700 (PDT)
+X-Received: by 2002:a05:620a:2616:b0:92e:4927:1ff9 with SMTP id
+ af79cd13be357-936491302dcmr860150985a.40.1785954317968; 
+ Wed, 05 Aug 2026 11:25:17 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([187.11.154.152])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9364a3fc901sm209387885a.6.2026.08.05.11.25.21
+ af79cd13be357-9364a3fc901sm209387885a.6.2026.08.05.11.25.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 11:25:22 -0700 (PDT)
+ Wed, 05 Aug 2026 11:25:17 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 4/5] target/riscv/tcg/debug: set tinfo version if sdtrig
- enabled
-Date: Wed,  5 Aug 2026 15:25:05 -0300
-Message-ID: <20260805182506.2943757-5-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 2/5] target/riscv/tcg/debug.c: add Debug 1.0 'pending' bit
+Date: Wed,  5 Aug 2026 15:25:03 -0300
+Message-ID: <20260805182506.2943757-3-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260805182506.2943757-1-daniel.barboza@oss.qualcomm.com>
 References: <20260805182506.2943757-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfX5LXZmibsapzb
- sCZ1MF5kTyVvIRKiHXhsduJ3M18fVkww8/TGAaxW818bm9GjgV1OqVWawm+CoHraKa9rmObyA9c
- LB/eQ1bcbtHRMNYfoIkix5Xf5bqBCCg=
-X-Proofpoint-ORIG-GUID: zyblSl9PWidiuqFLo2uJ32C_NGejuBfe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfX2RjrmzqIUEOq
- aSwY//rcS93oAyM/42tkqCONK2jBGQfhy36iDFj4Iqu8KmJMzpX9B1ip1/SbGJZGvPk3ReDwKH+
- COx7UncRixzK4v0QCnTGchF6sC06sURs3o+1Lxa99RQx9kSkrb4R5Imz/JwjHVAf+AUeecRv4EM
- QwToL54FT8dF4ylsLHskfK0bTV5q9aVFIbTy373qcq6OlLS7zRPAtT5mHE01EiMBXUA1ufVDDYv
- puSA2g4kPmztOxEzonisxiioeuq25ZeESvKqfOCjC26i/LFHmbJ5dif8sQCfPBR1+2XloxUmmut
- SpI18jTcqoE5qg3EPjhDZDq+1kBe6VIVB1bwKnrY8ViCKcmGHIplD5IclKk/WJzJkhpXRS1o5hZ
- R6YpBOpImjDuDpSZ95pRMD3EFRzdXwhTe9FuibOWrLX5GtcYhAh2XE+8HSf4p8yqPwtiUkB/NNH
- ZQXi4H+X37kVUd6Ifvg==
-X-Proofpoint-GUID: zyblSl9PWidiuqFLo2uJ32C_NGejuBfe
-X-Authority-Analysis: v=2.4 cv=Cu+PtH4D c=1 sm=1 tr=0 ts=6a738014 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
+X-Authority-Analysis: v=2.4 cv=Xea5Co55 c=1 sm=1 tr=0 ts=6a73800f cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
- a=9MmTmf_e1JsxRL0EyGgA:9 a=PEH46H7Ffwr30OY-TuGO:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=MeNw4mndUgOD9sKrnOsA:9 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: 0DllCkLaz15FbG6IdDyHM2XdSVx0NFtk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfXy0NcTuKjrxqk
+ XNN7f6q8ec7+Dgtv9IStqX/C/hWx2v1m4dGPSV/8PRNcaYG6dYF/SWHGGGcMPBTZNcNOzXDw5Kw
+ vaNwy3ohff3pPieH/w7JQ37BvOE5vhnGb5s7PPk3x4MxBR1gFbZ5Ehno8IXQ/gR9oRX6pTeC+0J
+ vKc+wLKCapvXEHIRLUQW0LaNiHxUG9lXqZ5bLx0QRJjTuAfZgxbSqV2bHUX/UsaRFdgFCQLx1WT
+ BKB2uVAmDpFj9rdQH3Dc+K7KFOBW0DkDH4OCR2LizVatvWlTcyH//yeq3iUyuhW9t/It2k3wWvQ
+ K004Mf3A7/ofHcIckRaQFg+9Cm5ODgHJ49H4B5NuQRs4Zh2kfivxBL4ed0s6FamV3xfUeko7ZSH
+ OPSjpkTbNzD1lYJZyoKuAZs7MH/cwJ5kzoPNCC4DqF3bMWDnH2qff5SYozEPQzF0SLz34Af5JGa
+ HaNZSFalRGb4VCsHM/Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfX0T13YN9iIsmQ
+ gOt/r3khhLqPOFdgNoKgmbnhb+irVlwPeTbQhhYxcJpH9CcDG/KfvERWstAGmyXRooe4xQl4ydz
+ aUxh6noWO9ZciXMqr6GnS0B7ywWy9kc=
+X-Proofpoint-ORIG-GUID: 0DllCkLaz15FbG6IdDyHM2XdSVx0NFtk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-05_05,2026-08-05_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
- bulkscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608050151
+ impostorscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050151
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -135,7 +133,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,50 +149,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set 'version' to 1 if we're running Debug 1.0.
+We need to set the 'pending' bit when 'count' reaches 0, clearing it right
+after the trigger fires.
+
+This is 1.0 exclusive behavior so no changes are needed when running Debug
+0.13.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- target/riscv/tcg/debug.c | 11 ++++++++---
- target/riscv/tcg/debug.h |  3 +++
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ target/riscv/tcg/debug.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
 diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-index 8b23c8d045..06573c7b3f 100644
+index 3c0fe70101..2191928761 100644
 --- a/target/riscv/tcg/debug.c
 +++ b/target/riscv/tcg/debug.c
-@@ -957,9 +957,14 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+@@ -77,6 +77,11 @@ static int access_size[SIZE_NUM] = {
+     [6 ... 15] = -1,
+ };
  
- target_ulong tinfo_csr_read(CPURISCVState *env)
++static bool debug_trigger_version_1_0(CPURISCVState *env)
++{
++    return riscv_cpu_cfg(env)->ext_sdtrig;
++}
++
+ static inline target_ulong extract_trigger_type(CPURISCVState *env,
+                                                 target_ulong tdata1)
  {
--    /* assume all triggers support the same types of triggers */
--    return BIT(TRIGGER_TYPE_AD_MATCH) |
--           BIT(TRIGGER_TYPE_AD_MATCH6);
-+    target_ulong val = BIT(TRIGGER_TYPE_AD_MATCH) |
-+                       BIT(TRIGGER_TYPE_AD_MATCH6);
-+
-+    if (debug_trigger_version_1_0(env)) {
-+        val = deposit64(val, TINFO_VERSION_OFFSET, TINFO_VERSION_LEN, 1);
-+    }
-+
-+    return val;
+@@ -684,6 +689,17 @@ itrigger_set_count(CPURISCVState *env, int index, int value)
+                                    ITRIGGER_COUNT, value);
  }
  
- void riscv_cpu_debug_excp_handler(CPUState *cs)
-diff --git a/target/riscv/tcg/debug.h b/target/riscv/tcg/debug.h
-index eb635bc277..fcd92b768c 100644
---- a/target/riscv/tcg/debug.h
-+++ b/target/riscv/tcg/debug.h
-@@ -45,6 +45,9 @@ typedef enum {
-     TRIGGER_TYPE_NUM
- } trigger_type_t;
- 
-+#define TINFO_VERSION_OFFSET 24
-+#define TINFO_VERSION_LEN     8
++static inline void
++itrigger_set_pending(CPURISCVState *env, int index, int val)
++{
++    if (!debug_trigger_version_1_0(env)) {
++        return;
++    }
 +
- /* actions */
- typedef enum {
-     DBG_ACTION_NONE = -1,           /* sentinel value */
++    env->tdata1[index] = set_field(env->tdata1[index],
++                                   ITRIGGER_PENDING, val);
++}
++
+ static bool check_itrigger_priv(CPURISCVState *env, int index)
+ {
+     target_ulong tdata1 = env->tdata1[index];
+@@ -735,8 +751,25 @@ void helper_itrigger_match(CPURISCVState *env)
+         }
+         itrigger_set_count(env, i, count--);
+         if (!count) {
++            /*
++             * From the 1.0 spec: "When pending is set, the trigger
++             * fires just before any further instructions are executed
++             * in a mode where the trigger is enabled. As the trigger
++             * fires, pending is cleared."
++             *
++             * And: "This bit becomes set when count is decremented
++             * from 1 to 0. It is cleared when the trigger fires,
++             * which will happen just before executing the next
++             * instruction in one of the enabled modes".
++             *
++             * Note that itrigger_set_pending() is a no-op if we're
++             * running debug 0.13.
++             */
++            itrigger_set_pending(env, i, 1);
++
+             env->itrigger_enabled = riscv_itrigger_enabled(env);
+             do_trigger_action(env, i);
++            itrigger_set_pending(env, i, 0);
+         }
+     }
+ }
 -- 
 2.43.0
 
