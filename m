@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 729D0C561E6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7294DC55ABA
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfE3-0004lS-OQ; Wed, 05 Aug 2026 13:16:19 -0400
+	id 1wrfD6-00044x-0r; Wed, 05 Aug 2026 13:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfDv-0004ep-Ax
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:16:11 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1wrfD0-00042q-ML
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:14 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfDt-0006KB-K5
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:16:11 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8200b55dc47so17890947b3.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:16:09 -0700 (PDT)
+ id 1wrfCz-0006FB-5v
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:14 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-81f3b227a4aso20286007b3.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950168; x=1786554968; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZxK2wYRYXP/raSMAV2obkROqgTG/P9VKDs+8YIBq+6k=;
- b=Hp9mgD4ME2iyezccWEzaTozOVcXWS+/uSlMEKg1D0IXEoPuRFOUPufDBHV+4BxacQO
- 1IWfP3seaYZ56WfOnNgL5IzAw08cjHj9HumkCmO4rS4rjFXe7OrQe4ZoL5NORiwud9ML
- aVsP4QbYnTK9aiTM7LRpx/pGoikZS6cBiMHnRqrhiBnKxQUBxH2lPOQgbbZxo12lNnvg
- kG1yEnToutBicH5DJIKSMte8P8ZqzDIAz+fpu1t2anDk12yRtRzbIeUH94neYHhQccf8
- ONaE85u2kDb9GMNftvLvRgb1ZeFKVQLZINP16DqZGjBp1+9hgOy9uClhSvc7IMrYnjGw
- xBhg==
+ d=gmail.com; s=20251104; t=1785950112; x=1786554912; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=urriLtqPEl/gKuko2XbipDGuuTKCURnorwcdL1mLq/8=;
+ b=WFf/fioVWUtOI7i5hJpSRlqCSvYkIouMsRQkVftFvtobKyHbH/s9/sXy76ebT25z0f
+ DLijDySVpQU1PnuhFrpD4wcH7d+ft1xHA75cPPWze8N/CDu68GEhIvkXaJROlpFmSX7K
+ SIR2LXFqE2nWoD4c4VpiJzRj6+dwpWgYOz9icEatBkR/u5jdk3HUn8a9zZnvieMegqhX
+ +KOzmWlDf9r/Zld1Z6MgimEYKFHMY7eoVCCLwMU0P1Ubk4qLB6RgIv9iVW4Qd1vRGQXO
+ xOurz5pCSzh/lfrnYetUpbpsa/8D4FunYwSFJhPvywkG9Mr7AaJ0zHPyew5+qh5EWWcE
+ ZwUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950168; x=1786554968;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZxK2wYRYXP/raSMAV2obkROqgTG/P9VKDs+8YIBq+6k=;
- b=gctRn+qARPBzn0V+is3GZF4S3LAQAik7Gv601iAMij/77yQpo4Zyz3nMS3pEBbfmVm
- Mui8R4MMauxAP7BND9qQ3bKjGKmXg6izw4Pf96pTbOewdKGveHFFOW+byL69cJDCze9d
- +USH6nikYWCwXHFoEQ83AbkFvwoLvrhN5FBXTuKq7nGDsoRV6D68KmuGvLbAmk9ZP3ry
- g+skxcoOx6sIPyVX6oDb3vQDSMXKT06BxNfDOZPT+HuwrPicjvL5MuOltrSmB310rMtr
- nwbHFoJSDH0LFs7vzEQdXzL1yeCTcSTyF56WjbY8l0HxRPD/AiXkeFlYpHhiD2c0SbUZ
- H3XQ==
-X-Gm-Message-State: AOJu0Yxfwq9jCs/vQzC+XWBTSKf6+6k2YeoYNNEI3iQBqIp6l2PzFb+5
- e9H3fNsfuPTzAd3AILqW9JB3gnplTphI8wo1r+5O5A2ZMh5Pn0BttBzoVj4A7hZnEQA=
-X-Gm-Gg: AR+sD13WWYPiDpTdpJ3Nt5XXb6NFrjWOuABisDfj5HFVOREOvl52K5lJ4SGj11A4PAq
- /7nD0S4nbODzpYOadpwRyAXWW82rxKGWKp38+cNhP8cEorgJ71Bbp8ojcWWYZrL/7CBiGXqUxuC
- 5Z6lHWyiW/Qi+fo83BYJHheHU8HejSqwJcpiHGS4kW7fWE6L97PJwO908xy/s8VNtbZN7NVG8YZ
- el7SmDC2hfBwgpOpwkGJAbULszLZIa+KHLoyaNSyjiCDA1xaO2W95ZyGNWswUBw6m/CAFGioRPb
- TBVdyLCJNrJ3vEwiAG6DWpa4GivXs0q1zkCU9dl9DgQdi/JTTAgUqwzDNWWJMHoY4Hu2jWUBdAb
- L4oWwjw0oK4SI4TK9GeBMRtWdNqRZze7sr2lQqNipps1tuC273YuX3wu6FPtYFBSBgac0GRZ1nf
- oDFG24QUx23IDKFojUYUHKMgBi1ME3sPjz1UEV/XrfQ9Jexuu4x5gIji7hHKwl
-X-Received: by 2002:a05:690c:6188:b0:81e:a471:e8b2 with SMTP id
- 00721157ae682-8201f0c1830mr53462357b3.2.1785950168176; 
- Wed, 05 Aug 2026 10:16:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785950112; x=1786554912;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=urriLtqPEl/gKuko2XbipDGuuTKCURnorwcdL1mLq/8=;
+ b=KSaiurPTwHgYPdOmIySKFx+/V1TJ51Lwzu2Nboah51EnMMYv36D9Gf7A8U+APSpdMN
+ 9jO+K/9+tcQh0wihI2I1/BeZ/EuIoD7dCCsJPG6FS7olMVrD9lJQCiRh5JiWGfWROD85
+ Es+g4sY6nehnPUOXLepQVc7sP7RYYd2zMjhBGfUYzCYS3q7GGrlMZja0UfiokqQ2c9RT
+ DbqJ5u904HwJJ4a9VjS6a36MYfGa8sMpX/qXzpl3qEScixjF7AVdpu26an8f7FGkqYCM
+ fvSFwUPtUU9yoNs1bCWDLVLg82chYKxhCZASViNaSzXisaRmMyeAr5ISiXaaX0LkNkW1
+ AQ8g==
+X-Gm-Message-State: AOJu0Yy16Oz805Ec6ndtfizf1FS68QPrgAHLnMAFCt4HtaSuHqh7RhIU
+ AFd3AYgK5oGgQPO9oZjily+nzc+vqbbi3zWkKW3N7nxVkq/90E/qrnOtWbF6coVhI0U=
+X-Gm-Gg: AR+sD10Npxnnk9fZtqYctZqDHfTDhIKtakZVsaG0zb2wegJZ78Gg1fVUv2i6S5jab2l
+ FqMtNmjcyFyVuhngYeGktjas+1vapLb+80ZA1wD0TecvWJ/bEEj1eAkQ3/FkW6UkMFjsZnJtUac
+ CTOhfrq1qUsA4fn7Nchh5NpcrhDPb1geZkBX0l4efi6Wq13G/9X10TAPASremBm3yvNAREVcGR2
+ DaU14VnPlKmEFaxqlz3UylLSkxUTKS76j0XApTHJHTk+2pWoktDZ5PYwyabAXkGGL+wH8//HAAQ
+ XQRKC/PPscvTLZ8Tbmwrm05xnD0t9ciAvTk+ciWFYoteqJ1QKZlT7j/uk1PB8W9gKk2S4Z8uj9e
+ V6cI+v9D82JEWMvJY23Vt6HA2ASuCaj9sK4/wO2h+6N6bie12SwOL4WXRGCn7IzwwYc4Eugb9KX
+ 6aguL2DOIC/LmCSaGjOTQvKFlRsPP3ZV/3E3CceJ3g//CQ/HLt4UeR4PqjXKGd
+X-Received: by 2002:a05:690c:9a12:b0:81f:6503:701a with SMTP id
+ 00721157ae682-8201f0b1331mr49017727b3.9.1785950112023; 
+ Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8210f9f94b1sm4320497b3.22.2026.08.05.10.16.05
+ 00721157ae682-8201341ddedsm24938817b3.23.2026.08.05.10.15.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:16:06 -0700 (PDT)
+ Wed, 05 Aug 2026 10:15:10 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] linux-user: implement mount_setattr(2)
-Date: Wed,  5 Aug 2026 13:16:05 -0400
-Message-ID: <20260805171605.3119981-1-mattst88@gmail.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 2/5] linux-user/mips: write the floating-point registers to a
+ core dump
+Date: Wed,  5 Aug 2026 13:15:04 -0400
+Message-ID: <20260805171507.3119442-2-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
+References: <20260805171507.3119442-1-mattst88@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,119 +107,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mount_setattr() was in the syscall tables but had no implementation, so
-guests always got -ENOSYS. systemd uses it when setting up per-unit
-credential mounts, which fails the affected units with EXIT_CREDENTIALS.
-
-struct mount_attr is an extensible struct like open_how, so handle it the
-same way openat2() does: reject sizes smaller than the ver0 struct and
-require any unknown trailing bytes to be zero. All of its fields are
-64-bit, and the MOUNT_ATTR_* and MS_* propagation values are identical on
-every target, so only the byte order needs fixing up.
+Write an NT_FPREGSET note for MIPS and MIPS64, matching the kernel's
+elf_fpregset_t layout (ELF_NFPREG = 33): fpr[0..31] hold f0-f31, and
+fcsr occupies the low 32 bits of slot 32.  The pad field rounds the
+struct to 33 × 8 bytes = 264 bytes.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/strace.list    |  3 +++
- linux-user/syscall.c      | 44 +++++++++++++++++++++++++++++++++++++++
- linux-user/syscall_defs.h | 13 ++++++++++++
- 3 files changed, 60 insertions(+)
+ linux-user/mips/elfload.c      |  8 ++++++++
+ linux-user/mips/target_elf.h   | 13 +++++++++++++
+ linux-user/mips64/target_elf.h | 13 +++++++++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git ./linux-user/strace.list ./linux-user/strace.list
-index 25ace05187..e952f15d20 100644
---- ./linux-user/strace.list
-+++ ./linux-user/strace.list
-@@ -1737,3 +1737,6 @@
- #ifdef TARGET_NR_fspick
- { TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_mount_setattr
-+{ TARGET_NR_mount_setattr, "mount_setattr", "%s(%d,%s,%d,%p,%d)", NULL, NULL },
-+#endif
-diff --git ./linux-user/syscall.c ./linux-user/syscall.c
-index dc028686f4..cfa68dfbdb 100644
---- ./linux-user/syscall.c
-+++ ./linux-user/syscall.c
-@@ -9735,6 +9735,13 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
+diff --git ./linux-user/mips/elfload.c ./linux-user/mips/elfload.c
+index ce2c4514f3..1d62ae0a4d 100644
+--- ./linux-user/mips/elfload.c
++++ ./linux-user/mips/elfload.c
+@@ -130,6 +130,14 @@ const char *get_elf_base_platform(CPUState *cs)
  
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+#define __NR_sys_mount_setattr __NR_mount_setattr
-+_syscall5(int, sys_mount_setattr, int, dfd, const char *, path,
-+          unsigned int, flags, struct mount_attr_ver0 *, uattr,
-+          size_t, usize)
-+#endif
-+
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
-@@ -14480,6 +14487,43 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
+ #undef MATCH_PLATFORM_INSN
  
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+    case TARGET_NR_mount_setattr:
-+        {
-+            struct mount_attr_ver0 attr = {};
-+            abi_ulong usize = arg5;
++void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUMIPSState *env)
++{
++    for (int i = 0; i < 32; i++) {
++        r->fpr[i] = tswap64(env->active_fpu.fpr[i].d);
++    }
++    r->fcsr = tswap32(env->active_fpu.fcr31);
++}
 +
-+            if (usize < sizeof(struct target_mount_attr_ver0)) {
-+                return -TARGET_EINVAL;
-+            }
-+            ret = copy_struct_from_user(&attr, sizeof(attr), arg4, usize);
-+            if (ret) {
-+                if (ret == -TARGET_E2BIG) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "Unimplemented mount_setattr mount_attr "
-+                                  "size: " TARGET_ABI_FMT_lu "\n", usize);
-+                }
-+                return ret;
-+            }
-+            /*
-+             * MOUNT_ATTR_* and the MS_* propagation flags have the same
-+             * values on all targets, so only byte order needs fixing up.
-+             */
-+            attr.attr_set = tswap64(attr.attr_set);
-+            attr.attr_clr = tswap64(attr.attr_clr);
-+            attr.propagation = tswap64(attr.propagation);
-+            attr.userns_fd = tswap64(attr.userns_fd);
+ /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
+ #ifndef TARGET_MIPS64
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+diff --git ./linux-user/mips/target_elf.h ./linux-user/mips/target_elf.h
+index 157306f7a0..426f905d3a 100644
+--- ./linux-user/mips/target_elf.h
++++ ./linux-user/mips/target_elf.h
+@@ -26,4 +26,17 @@ typedef struct target_elf_gregset_t {
+     };
+ } target_elf_gregset_t;
+ 
++#define HAVE_ELF_CORE_FPREGS    1
 +
-+            p = lock_user_string(arg2);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(sys_mount_setattr(arg1, p, arg3, &attr,
-+                                              sizeof(attr)));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-diff --git ./linux-user/syscall_defs.h ./linux-user/syscall_defs.h
-index e033c7db34..e28853c93b 100644
---- ./linux-user/syscall_defs.h
-+++ ./linux-user/syscall_defs.h
-@@ -2770,6 +2770,19 @@ struct target_open_how_ver0 {
-     abi_ullong mode;
-     abi_ullong resolve;
- };
-+/* from kernel's include/uapi/linux/mount.h */
-+struct mount_attr_ver0 {
-+    uint64_t attr_set;
-+    uint64_t attr_clr;
-+    uint64_t propagation;
-+    uint64_t userns_fd;
-+};
-+struct target_mount_attr_ver0 {
-+    abi_ullong attr_set;
-+    abi_ullong attr_clr;
-+    abi_ullong propagation;
-+    abi_ullong userns_fd;
-+};
- #ifndef RESOLVE_NO_MAGICLINKS
- #define RESOLVE_NO_MAGICLINKS   0x02
++/*
++ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
++ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
++ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
++ */
++typedef struct target_elf_fpregset_t {
++    uint64_t fpr[32];
++    uint32_t fcsr;
++    uint32_t pad;
++} target_elf_fpregset_t;
++
+ #endif
+diff --git ./linux-user/mips64/target_elf.h ./linux-user/mips64/target_elf.h
+index 061471a0f1..efb5d97563 100644
+--- ./linux-user/mips64/target_elf.h
++++ ./linux-user/mips64/target_elf.h
+@@ -32,4 +32,17 @@ typedef struct target_elf_gregset_t {
+     };
+ } target_elf_gregset_t;
+ 
++#define HAVE_ELF_CORE_FPREGS    1
++
++/*
++ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
++ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
++ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
++ */
++typedef struct target_elf_fpregset_t {
++    uint64_t fpr[32];
++    uint32_t fcsr;
++    uint32_t pad;
++} target_elf_fpregset_t;
++
  #endif
 -- 
 2.54.0
