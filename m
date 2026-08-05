@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A42DC55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20899C56203
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrdZg-0005qy-1d; Wed, 05 Aug 2026 11:30:32 -0400
+	id 1wrdZX-0005oC-Rj; Wed, 05 Aug 2026 11:30:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrdZZ-0005pJ-MQ
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:25 -0400
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ id 1wrdZR-0005n3-WE
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:18 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1wrdZV-0007eu-Ko
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:23 -0400
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-495c63c4141so656804b6e.2
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:30:20 -0700 (PDT)
+ id 1wrdZN-0007cp-N6
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:15 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-495c49f8eccso753206b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785943819; x=1786548619; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785943812; x=1786548612; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fU96bK353k5ADv3CzrrtydkHbKOwXgwzsqMVSvU+exo=;
- b=gISDWt2D5HE+I4am/QWlUJXU5nxmaqig2VEP43pgS1WDbjF7GJBSMh7M/Zv/Nyyjg5
- IuN7Vcise94j8XZKqNkFcrMmNESyHAlYqzHh6pxfakw4q+sLQDQqvv/wYLiYbHutui4o
- GjMhUXi5j4yXaiCCQCL0WAmNpEodSOYc8EM44QUrx4iD/9vGON53Thb0dBtQFtOEBaKl
- wxBT19EvlZWfGkun3gHu+hVhrH6V93XB/Kg6JNb8vV32CLq/5aBUMlbw0cRmcwA/dPuE
- mznZxerSWmhRWSqQGlxiTtM/d/Vmf1jh2pWWO8WBjK9vZwL6ynX7Yy2iYB3wLtHU43Wd
- Bb/A==
+ bh=U5wniPKlQoQZB3yHDOIaDg0QUeR+XLP5hn1xDhtt0jA=;
+ b=BPYFNxeqA6p1iRAMX2RfvW7CCbRSWJ4ND7VvN4++CCZFGm+Kb8FUh7T4rn7HUisLhK
+ 1zD+MbQuDSL8DLCXejHNsaYfOLlFNhXH8QexJmhiO+zj3KG95LYciKLUfqDjUTSg0OqC
+ 6LFoeOxurCYqr2AwgohzX/NlDXd7ZoC2RfWrvLMFrmtdxoJEqbUi1pIVmiWp/DxM3s0X
+ gxYYN+6iH/8mkUuz3PQgrd2/Dh3IBH32KBAV5QPwrZH/zH2BHZDymLigH1j6/7lq/kuM
+ Fr+9ZdS2TszXLy3OG7uDWScz8gR2aWZm1Zi+bknnlZrVviPUdey/v12HJU5mv5aAoyPC
+ wyZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785943819; x=1786548619;
+ d=1e100.net; s=20251104; t=1785943812; x=1786548612;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fU96bK353k5ADv3CzrrtydkHbKOwXgwzsqMVSvU+exo=;
- b=P2ZA/k5u0nHtnbEAbQNx2ozsMhaAycQ+iS5JBtbVSZGRrCKY8nDnP0FlQYy/yf46mJ
- zif1QhCJKt9j8Lvh7xjDj6k2kaRObsOfQys9bOE/4NFiK6Rk6eTCIjXcf7O4oRdcuPAw
- 1+MPe6mxVpfcoB5fW246KL8vvKRZnhmFFPf/aPSk1VjWvXjgVdjoa7SofmM6ag+WVzPs
- r33VQ5l7o8sl2u2UPBoBf/D/aJ9FsjI3vvvWQpPuAvOsTrJUNP/yhRMuRBMyy3DZBB5g
- nA4ACcve6v5cd/zhPItDPhzjmGDtiP6uzneIM2SUt7r39/ZWq3E8mQFA7dSiCO3KE9UO
- VZpg==
-X-Gm-Message-State: AOJu0Yx60eD/dMy+hdhpI0S8wpsIx/dhxcHXhn6NWJYh92bcqeKtgLmt
- UHQaH0fAE9dBJE5kVVi2hk9UqaTrJedseci/TkIpJwzevULLC//9X/bAel5wcd0D
-X-Gm-Gg: AR+sD11nWt+OYMULssgL73ZxAPlg/mL+VqzczxifQzxU2Utum1TzGxXb9bYBpr1Ldyg
- a04rRTyXtOu+lt9iqweWdIZFO81dXZ/zr5EnGxWV3qqO1a93yLG3S+Z0/TT0b9QnceyrdF0CbtT
- 0amuepsixKISYnVJ8P2SI2dcXcrij23UYcru/1GWM/8SnwCn4g1aXuQMmeKfcNkRiGKFFAgFQuI
- Igkicy0khm67DFG18QwpB4W1019Z5dAyimXE1i+pXQm6K0uIcdNODPKnvo0SgjdCkaqATVafGwm
- D0HtgEs3fL7ygg0QUWgRgV8A6ltH5SanscfDgvc0n7BW8QjTPPYoEdFSR6s16SLfZKB9bJjfZJe
- LrmMQCeHFwo33FX79vyht1APddEc2KdwerCRTYjDqDbCdTCoYxGalo93yPjas02sKOBDE01ReN8
- n6s9VRIlY47zc3eWMZ1hZsutcMM1zL86TMsFU+WbwLvM4unSlimMnJpeOyHnKwizM/Nw5XGGJRT
- 09c4m1eM+hs
-X-Received: by 2002:a05:6808:2227:b0:495:d7ec:b6ae with SMTP id
- 5614622812f47-4afae16981emr4950546b6e.16.1785943818680; 
- Wed, 05 Aug 2026 08:30:18 -0700 (PDT)
+ bh=U5wniPKlQoQZB3yHDOIaDg0QUeR+XLP5hn1xDhtt0jA=;
+ b=XnvnknXlEN4hK0KJqCY33ejtf6fDDg5aUIyQ89lWFr/diCuUAMDXPBRYU9h/r70H13
+ YusAVF1XpCw6KRytY+u2sO5Fs6FtnGNZtlZwaZA7rm/eMjDJnH6yplmrjc6z+oSvSFt3
+ Gq1Tra9IAVpDOS99itwEkLfZKPMYGl/uxzTvVHYRMp8OCruuml5JhB1HCVMPM7dMarw+
+ LRcjWrbgVxoU20y3a1krcwg9yhfM5puGbswk4pwlrc300IPlKjNNGUBmL3wCdXeYDtXj
+ XRDnMjG7x5I/fsppRvRIVIwqgX7+wVu/pDGli4ZI/DO+bZ+fXZARNYG/DiP7pZxwDCQB
+ GrjA==
+X-Gm-Message-State: AOJu0YxAMwy4p2n5gvR1xisZFlJeeFsmfMTGpq0tUUTEFDvDwDxb61Kb
+ OGKbXBjdv6g1A2thdFiH29WI0DVKI0Gp7M7/xPf2UuESYuq7MSJ+sOWneFP37Hjj
+X-Gm-Gg: AR+sD13TZe0ja7FWm1iXfr21fUAxk8k4ctAY5/QdDLdD4PHnjxb5fFXy1J7x79REV+J
+ B/6MN9uIQWL56lCbv1X+JdA4Vc/HevlyAWCiEV21GXOD3CgA5RVIlVM9AXs5Fe7HGw7cACK8yOc
+ GzFQ7HorNaZCpfxC/Ig1qXmn1oevXnUeEa3gfa2NfGRR3E6TZD0VM4e9Enl8pSyFS30kUr/l77T
+ wkU0GapHre8mF8baifmvJFPAbOI6dRGEGzsfSjYEKkdbKyshoDFxgXI7b+mwyuZrF8OqbU45ryh
+ 694BKsHwmxs0HM7mKVMn8CizRM357xpzPHXswBhUVmjy08NHHxSVZLlHSYtCUAmtTuN2idndnsD
+ d7w5c6M7mcLcneICdeNZf5+QVwJ2FevAXsXd/O85rOXAT9lL3WzW3Zs9nlhrexGG4u3Q8zzAsWA
+ Zu9Sx8S5cj9uhj3fslOXPxGC353m4zBRcIFBv64ZmmRyClY314gCoWrocfqWAkbXzd/DKkFMXFg
+ jTzt2dh7LAfWg==
+X-Received: by 2002:a05:6808:6907:b0:479:ead7:2a5b with SMTP id
+ 5614622812f47-4afae0e3e59mr4066940b6e.16.1785943812197; 
+ Wed, 05 Aug 2026 08:30:12 -0700 (PDT)
 Received: from HPE-2MQ6131DV6.ams.hpecorp.net ([170.85.99.9])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4afae75ce1bsm2185614b6e.15.2026.08.05.08.30.17
+ 5614622812f47-4afae75ce1bsm2185614b6e.15.2026.08.05.08.30.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 08:30:18 -0700 (PDT)
+ Wed, 05 Aug 2026 08:30:11 -0700 (PDT)
 From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Owen Giles <owen.giles@hpe.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Robert Elliott <elliott@hpe.com>, Simon Xu <simonxhy0404@gmail.com>
-Subject: [PATCH v2 9/9] hw/misc/mps2-fpgaio.c: add GPIOALT2 register
-Date: Wed,  5 Aug 2026 10:30:05 -0500
-Message-ID: <20260805153005.9989-10-simonxhy0404@gmail.com>
+Subject: [PATCH v2 3/9] hw/misc/iotkit-sysctl.c: add SSE-310 support
+Date: Wed,  5 Aug 2026 10:29:59 -0500
+Message-ID: <20260805153005.9989-4-simonxhy0404@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260805153005.9989-1-simonxhy0404@gmail.com>
 References: <20260805153005.9989-1-simonxhy0404@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x229.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -88,7 +88,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,142 +104,412 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GPIOALT2 register for new an555 board.
-Implement register access as RW with LOG_UNIMP for writes.
-Add "has-gpioalt2" property to make each board configurable.
+Add SSE-310 case statements for reads and writes.
+Add new SSE-310 PIDR and CLIDR values.
+Add new SSE-310 PPUINTSTAT register as RAZ with LOG_UMIMP on reads and
+RO on writes.
 
 Reviewed-by: Owen Giles <owen.giles@hpe.com>
 Reviewed-by: Robert Elliott <elliott@hpe.com>
 Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
 ---
- hw/arm/mps2-tz.c              |  7 +++++++
- hw/misc/mps2-fpgaio.c         | 13 +++++++++++++
- include/hw/misc/mps2-fpgaio.h |  2 ++
- 3 files changed, 22 insertions(+)
+v1 -> v2
+	Add PPUINTSTAT register
+	Make sure comments don't separate case statements
+---
+ hw/misc/iotkit-sysctl.c         | 89 ++++++++++++++++++++++++++++++---
+ include/hw/misc/iotkit-sysctl.h |  1 +
+ 2 files changed, 82 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
-index 2cb461ca71..d9f64880f8 100644
---- a/hw/arm/mps2-tz.c
-+++ b/hw/arm/mps2-tz.c
-@@ -131,6 +131,7 @@ struct MPS2TZMachineClass {
-     uint32_t fpgaio_num_leds; /* Number of LEDs in FPGAIO LED0 register */
-     bool fpgaio_has_switches; /* Does FPGAIO have SWITCH register? */
-     bool fpgaio_has_dbgctrl; /* Does FPGAIO have DBGCTRL register? */
-+    bool fpgaio_has_gpioalt2; /* Does FPGAIO have GPIOALT2 register? */
-     int numirq; /* Number of external interrupts */
-     int uart_overflow_irq; /* number of the combined UART overflow IRQ */
-     uint32_t init_svtor; /* init-svtor setting for SSE */
-@@ -515,6 +516,7 @@ static MemoryRegion *make_fpgaio(MPS2TZMachineState *mms, void *opaque,
-     qdev_prop_set_uint32(DEVICE(fpgaio), "num-leds", mmc->fpgaio_num_leds);
-     qdev_prop_set_bit(DEVICE(fpgaio), "has-switches", mmc->fpgaio_has_switches);
-     qdev_prop_set_bit(DEVICE(fpgaio), "has-dbgctrl", mmc->fpgaio_has_dbgctrl);
-+    qdev_prop_set_bit(DEVICE(fpgaio), "has-gpioalt2", mmc->fpgaio_has_gpioalt2);
-     sysbus_realize(SYS_BUS_DEVICE(fpgaio), &error_fatal);
-     return sysbus_mmio_get_region(SYS_BUS_DEVICE(fpgaio), 0);
- }
-@@ -1433,6 +1435,7 @@ static void mps2tz_an505_class_init(ObjectClass *oc, const void *data)
-     mmc->fpgaio_num_leds = 2;
-     mmc->fpgaio_has_switches = false;
-     mmc->fpgaio_has_dbgctrl = false;
-+    mmc->fpgaio_has_gpioalt2 = false;
-     mmc->numirq = 92;
-     mmc->uart_overflow_irq = 47;
-     mmc->init_svtor = 0x10000000;
-@@ -1467,6 +1470,7 @@ static void mps2tz_an521_class_init(ObjectClass *oc, const void *data)
-     mmc->fpgaio_num_leds = 2;
-     mmc->fpgaio_has_switches = false;
-     mmc->fpgaio_has_dbgctrl = false;
-+    mmc->fpgaio_has_gpioalt2 = false;
-     mmc->numirq = 92;
-     mmc->uart_overflow_irq = 47;
-     mmc->init_svtor = 0x10000000;
-@@ -1501,6 +1505,7 @@ static void mps3tz_an524_class_init(ObjectClass *oc, const void *data)
-     mmc->fpgaio_num_leds = 10;
-     mmc->fpgaio_has_switches = true;
-     mmc->fpgaio_has_dbgctrl = false;
-+    mmc->fpgaio_has_gpioalt2 = false;
-     mmc->numirq = 95;
-     mmc->uart_overflow_irq = 47;
-     mmc->init_svtor = 0x10000000;
-@@ -1540,6 +1545,7 @@ static void mps3tz_an547_class_init(ObjectClass *oc, const void *data)
-     mmc->fpgaio_num_leds = 10;
-     mmc->fpgaio_has_switches = true;
-     mmc->fpgaio_has_dbgctrl = true;
-+    mmc->fpgaio_has_gpioalt2 = false;
-     mmc->numirq = 96;
-     mmc->uart_overflow_irq = 48;
-     mmc->init_svtor = 0x00000000;
-@@ -1575,6 +1581,7 @@ static void mps3tz_an555_class_init(ObjectClass *oc, const void *data)
-     mmc->fpgaio_num_leds = 10;
-     mmc->fpgaio_has_switches = true;
-     mmc->fpgaio_has_dbgctrl = true;
-+    mmc->fpgaio_has_gpioalt2 = true;
-     mmc->numirq = 96;
-     mmc->uart_overflow_irq = 48;
-     mmc->init_svtor = 0x00000000;
-diff --git a/hw/misc/mps2-fpgaio.c b/hw/misc/mps2-fpgaio.c
-index da78cb6070..6696384a25 100644
---- a/hw/misc/mps2-fpgaio.c
-+++ b/hw/misc/mps2-fpgaio.c
-@@ -31,6 +31,7 @@
- REG32(LED0, 0)
- REG32(DBGCTRL, 4)
- REG32(BUTTON, 8)
-+REG32(GPIOALT2, 0xc)
- REG32(CLK1HZ, 0x10)
- REG32(CLK100HZ, 0x14)
- REG32(COUNTER, 0x18)
-@@ -142,6 +143,9 @@ static uint64_t mps2_fpgaio_read(void *opaque, hwaddr offset, unsigned size)
-          */
-         r = 0;
-         break;
-+    case A_GPIOALT2:
-+        r = s->gpioalt2;
-+        break;
-     case A_PRESCALE:
-         r = s->prescale;
-         break;
-@@ -210,6 +214,14 @@ static void mps2_fpgaio_write(void *opaque, hwaddr offset, uint64_t value,
-                       "MPS2 FPGAIO: DBGCTRL unimplemented\n");
-         s->dbgctrl = value;
-         break;
-+    case A_GPIOALT2:
-+        if (!s->has_gpioalt2) {
-+            goto bad_offset;
-+        }
-+        qemu_log_mask(LOG_UNIMP,
-+                      "MPS2 FPGAIO: GPIOALT2 unimplemented\n");
-+        s->gpioalt2 = value;
-+        break;
-     case A_PRESCALE:
-         resync_counter(s);
-         s->prescale = value;
-@@ -326,6 +338,7 @@ static const Property mps2_fpgaio_properties[] = {
-     DEFINE_PROP_UINT32("num-leds", MPS2FPGAIO, num_leds, 2),
-     DEFINE_PROP_BOOL("has-switches", MPS2FPGAIO, has_switches, false),
-     DEFINE_PROP_BOOL("has-dbgctrl", MPS2FPGAIO, has_dbgctrl, false),
-+    DEFINE_PROP_BOOL("has-gpioalt2", MPS2FPGAIO, has_gpioalt2, false),
+diff --git a/hw/misc/iotkit-sysctl.c b/hw/misc/iotkit-sysctl.c
+index dff89c677f..bdf59b5f85 100644
+--- a/hw/misc/iotkit-sysctl.c
++++ b/hw/misc/iotkit-sysctl.c
+@@ -51,6 +51,7 @@ REG32(CPUWAIT, 0x118)
+ REG32(NMI_ENABLE, 0x11c) /* BUSWAIT in IoTKit */
+ REG32(WICCTRL, 0x120)
+ REG32(EWCTRL, 0x124)
++REG32(PPUINTSTAT, 0x128)
+ REG32(PWRCTRL, 0x1fc)
+     FIELD(PWRCTRL, PPU_ACCESS_UNLOCK, 0, 1)
+     FIELD(PWRCTRL, PPU_ACCESS_FILTER, 1, 1)
+@@ -87,6 +88,12 @@ static const int sse200_sysctl_id[] = {
+     0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
  };
  
- static void mps2_fpgaio_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/misc/mps2-fpgaio.h b/include/hw/misc/mps2-fpgaio.h
-index edd9f23121..7512686616 100644
---- a/include/hw/misc/mps2-fpgaio.h
-+++ b/include/hw/misc/mps2-fpgaio.h
-@@ -40,11 +40,13 @@ struct MPS2FPGAIO {
-     uint32_t num_leds;
-     bool has_switches;
-     bool has_dbgctrl;
-+    bool has_gpioalt2;
++static const int sse310_sysctl_id[] = {
++    0x04, 0x00, 0x00, 0x00, /* PID4..PID7 */
++    0x54, 0xb8, 0x4b, 0x00, /* PID0..PID3 */
++    0x0d, 0xf0, 0x05, 0xb1, /* CID0..CID3 */
++};
++
+ /*
+  * Set the initial secure vector table offset address for the core.
+  * This will take effect when the CPU next resets.
+@@ -118,6 +125,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->scsecctrl;
+             break;
+         default:
+@@ -130,6 +138,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->fclk_div;
+             break;
+         default:
+@@ -142,6 +151,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->sysclk_div;
+             break;
+         default:
+@@ -154,6 +164,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->clock_force;
+             break;
+         default:
+@@ -180,6 +191,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->initsvtor1;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -192,6 +204,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->cpuwait;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             /* In SSE300 this is reserved (for INITSVTOR2) */
+             goto bad_offset;
+         default:
+@@ -208,6 +221,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->nmi_enable;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             /* In SSE300 this is reserved (for INITSVTOR3) */
+             goto bad_offset;
+         default:
+@@ -221,7 +235,8 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->wicctrl;
+             break;
+         case ARMSSE_SSE300:
+-            /* In SSE300 this offset is CPUWAIT */
++        case ARMSSE_SSE310:
++            /* In SSE300 and SSE310 this offset is CPUWAIT */
+             r = s->cpuwait;
+             break;
+         default:
+@@ -236,19 +251,36 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->ewctrl;
+             break;
+         case ARMSSE_SSE300:
+-            /* In SSE300 this offset is NMI_ENABLE */
++        case ARMSSE_SSE310:
++            /* In SSE300 and SSE310 this offset is NMI_ENABLE */
+             r = s->nmi_enable;
+             break;
+         default:
+             g_assert_not_reached();
+         }
+         break;
++    case A_PPUINTSTAT:
++        switch (s->sse_version) {
++        case ARMSSE_IOTKIT:
++        case ARMSSE_SSE200:
++        case ARMSSE_SSE300:
++            goto bad_offset;
++        case ARMSSE_SSE310:
++            qemu_log_mask(LOG_UNIMP,
++                          "IoTKit SysCtl PPUINTSTAT unimplemented\n");
++            r = s->ppuintstat;
++            break;
++        default:
++            g_assert_not_reached();
++        }
++        break;
+     case A_PWRCTRL:
+         switch (s->sse_version) {
+         case ARMSSE_IOTKIT:
+         case ARMSSE_SSE200:
+             goto bad_offset;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->pwrctrl;
+             break;
+         default:
+@@ -261,6 +293,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->pdcm_pd_sys_sense;
+             break;
+         default:
+@@ -273,7 +306,8 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+         case ARMSSE_SSE200:
+             goto bad_offset;
+         case ARMSSE_SSE300:
+-            r = s->pdcm_pd_cpu0_sense;
++        case ARMSSE_SSE310:
++            r = s->pdcm_pd_cpu0_sense;            
+             break;
+         default:
+             g_assert_not_reached();
+@@ -287,6 +321,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->pdcm_pd_sram0_sense;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -300,6 +335,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->pdcm_pd_sram1_sense;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -313,6 +349,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->pdcm_pd_sram2_sense;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->pdcm_pd_vmr0_sense;
+             break;
+         default:
+@@ -327,6 +364,7 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+             r = s->pdcm_pd_sram3_sense;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             r = s->pdcm_pd_vmr1_sense;
+             break;
+         default:
+@@ -342,6 +380,9 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
+         case ARMSSE_SSE300:
+             r = sse200_sysctl_id[(offset - A_PID4) / 4];
+             break;
++        case ARMSSE_SSE310:
++            r = sse310_sysctl_id[(offset - A_PID4) / 4];
++            break;
+         default:
+             g_assert_not_reached();
+         }
+@@ -367,7 +408,8 @@ static uint64_t iotkit_sysctl_read(void *opaque, hwaddr offset,
  
-     uint32_t led0;
-     uint32_t prescale;
-     uint32_t misc;
-     uint32_t dbgctrl;
-+    uint32_t gpioalt2;
+ static void cpuwait_write(IoTKitSysCtl *s, uint32_t value)
+ {
+-    int num_cpus = (s->sse_version == ARMSSE_SSE300) ? 1 : 2;
++    int num_cpus = (s->sse_version == ARMSSE_SSE300 ||
++                    s->sse_version == ARMSSE_SSE310) ? 1 : 2;
+     int i;
  
-     /* QEMU_CLOCK_VIRTUAL time at which counter and pscntr were last synced */
-     int64_t pscntr_sync_ticks;
+     for (i = 0; i < num_cpus; i++) {
+@@ -418,7 +460,8 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+     case A_INITSVTOR0:
+         switch (s->sse_version) {
+         case ARMSSE_SSE300:
+-            /* SSE300 has a LOCK bit which prevents further writes when set */
++        case ARMSSE_SSE310:
++            /* SSE300 and SSE310 have a LOCK bit which prevents further writes */
+             if (s->initsvtor0 & R_INITSVTOR0_LOCK_MASK) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                               "IoTKit INITSVTOR0 write when register locked\n");
+@@ -443,6 +486,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             cpuwait_write(s, value);
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             /* In SSE300 this is reserved (for INITSVTOR2) */
+             goto bad_offset;
+         default:
+@@ -457,7 +501,8 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->wicctrl = value;
+             break;
+         case ARMSSE_SSE300:
+-            /* In SSE300 this offset is CPUWAIT */
++        case ARMSSE_SSE310:
++            /* In SSE300 and SSE310 this offset is CPUWAIT */
+             cpuwait_write(s, value);
+             break;
+         default:
+@@ -485,6 +530,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP, "IoTKit SysCtl SCSECCTRL unimplemented\n");
+             s->scsecctrl = value;
+             break;
+@@ -498,6 +544,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP, "IoTKit SysCtl FCLK_DIV unimplemented\n");
+             s->fclk_div = value;
+             break;
+@@ -511,6 +558,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP, "IoTKit SysCtl SYSCLK_DIV unimplemented\n");
+             s->sysclk_div = value;
+             break;
+@@ -524,6 +572,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP, "IoTKit SysCtl CLOCK_FORCE unimplemented\n");
+             s->clock_force = value;
+             break;
+@@ -540,6 +589,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             set_init_vtor(1, s->initsvtor1);
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -554,7 +604,8 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->ewctrl = value;
+             break;
+         case ARMSSE_SSE300:
+-            /* In SSE300 this offset is NMI_ENABLE */
++        case ARMSSE_SSE310:
++            /* In SSE300 and SSE310 this offset is NMI_ENABLE */
+             qemu_log_mask(LOG_UNIMP, "IoTKit SysCtl NMI_ENABLE unimplemented\n");
+             s->nmi_enable = value;
+             break;
+@@ -562,12 +613,25 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             g_assert_not_reached();
+         }
+         break;
++    case A_PPUINTSTAT:
++        switch (s->sse_version) {
++        case ARMSSE_IOTKIT:
++        case ARMSSE_SSE200:
++        case ARMSSE_SSE300:
++            goto bad_offset;
++        case ARMSSE_SSE310:
++            goto ro_offset;
++        default:
++            g_assert_not_reached();
++        }
++        break;
+     case A_PWRCTRL:
+         switch (s->sse_version) {
+         case ARMSSE_IOTKIT:
+         case ARMSSE_SSE200:
+             goto bad_offset;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             if (!(s->pwrctrl & R_PWRCTRL_PPU_ACCESS_UNLOCK_MASK)) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                               "IoTKit PWRCTRL write when register locked\n");
+@@ -585,6 +649,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             goto bad_offset;
+         case ARMSSE_SSE200:
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP,
+                           "IoTKit SysCtl PDCM_PD_SYS_SENSE unimplemented\n");
+             s->pdcm_pd_sys_sense = value;
+@@ -599,6 +664,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+         case ARMSSE_SSE200:
+             goto bad_offset;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP,
+                           "IoTKit SysCtl PDCM_PD_CPU0_SENSE unimplemented\n");
+             s->pdcm_pd_cpu0_sense = value;
+@@ -617,6 +683,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->pdcm_pd_sram0_sense = value;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -632,6 +699,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->pdcm_pd_sram1_sense = value;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             goto bad_offset;
+         default:
+             g_assert_not_reached();
+@@ -647,6 +715,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->pdcm_pd_sram2_sense = value;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP,
+                           "IoTKit SysCtl PDCM_PD_VMR0_SENSE unimplemented\n");
+             s->pdcm_pd_vmr0_sense = value;
+@@ -665,6 +734,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->pdcm_pd_sram3_sense = value;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             qemu_log_mask(LOG_UNIMP,
+                           "IoTKit SysCtl PDCM_PD_VMR1_SENSE unimplemented\n");
+             s->pdcm_pd_vmr1_sense = value;
+@@ -683,6 +753,7 @@ static void iotkit_sysctl_write(void *opaque, hwaddr offset,
+             s->nmi_enable = value;
+             break;
+         case ARMSSE_SSE300:
++        case ARMSSE_SSE310:
+             /* In SSE300 this is reserved (for INITSVTOR3) */
+             goto bad_offset;
+         default:
+@@ -734,6 +805,7 @@ static void iotkit_sysctl_reset(DeviceState *dev)
+     s->clock_force = 0;
+     s->nmi_enable = 0;
+     s->ewctrl = 0;
++    s->ppuintstat = 0;
+     s->pwrctrl = 0x3;
+     s->pdcm_pd_sys_sense = 0x7f;
+     s->pdcm_pd_sram0_sense = 0;
+@@ -769,7 +841,8 @@ static bool sse300_needed(void *opaque)
+ {
+     IoTKitSysCtl *s = IOTKIT_SYSCTL(opaque);
+ 
+-    return s->sse_version == ARMSSE_SSE300;
++    return s->sse_version == ARMSSE_SSE300 ||
++           s->sse_version == ARMSSE_SSE310;
+ }
+ 
+ static const VMStateDescription iotkit_sysctl_sse300_vmstate = {
+diff --git a/include/hw/misc/iotkit-sysctl.h b/include/hw/misc/iotkit-sysctl.h
+index ce72258a84..8e1cf0012d 100644
+--- a/include/hw/misc/iotkit-sysctl.h
++++ b/include/hw/misc/iotkit-sysctl.h
+@@ -53,6 +53,7 @@ struct IoTKitSysCtl {
+     uint32_t initsvtor1;
+     uint32_t nmi_enable;
+     uint32_t ewctrl;
++    uint32_t ppuintstat;
+     uint32_t pwrctrl;
+     uint32_t pdcm_pd_sys_sense;
+     uint32_t pdcm_pd_sram0_sense;
 -- 
 2.53.0
 
