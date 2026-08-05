@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E002DC561E6
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6CCC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfDE-000478-95; Wed, 05 Aug 2026 13:15:28 -0400
+	id 1wrfD6-000458-C4; Wed, 05 Aug 2026 13:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfD9-000466-Hf
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:24 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1wrfD3-000444-J6
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:18 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfD7-0006Ge-OZ
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:22 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-81dfdbd86d1so14138557b3.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:20 -0700 (PDT)
+ id 1wrfD1-0006Fc-Nz
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:17 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6680ae2031fso1242964d50.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950119; x=1786554919; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785950114; x=1786554914; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HgJmxQG/lgNq5flxOHBgvkaSPD2nZexEe+ywvhh6NXw=;
- b=FD3m5cVdXG7MLSMaBPUaV2nfDRLMZD5SyFjP3K9hoZJwamrA8b9CcjkQinEoEKjjYE
- Xr6DDufc4HH1m6EqMR00DeOLXtp2wsdMREtvXTocTLq5d8RkiD1ePsPVLpi+9YzHMUS5
- I1y4RT7Gm6O9bQ2F8J8YAEMJY2cN4nBjUEsbN+MP4GlVZrqZID8p6k7aDkA+7t1Ws80E
- 2TXR4TsEZbRU4V0H3yEnQXmOoH6UY0kq8slPTmwwW5+8aoZSQWQZzcNpyuxSjk4+o3S+
- kY8LmPJA1dWiIjxJKfquDrK3hnD3ZX1bJpPiiDE4Sc/gwd7jIBoTadSjrDpO+s9wetE5
- tt4Q==
+ bh=6sMuktQUriti/FzTn7dvyAmebqh+5sPjlYwFRIl8IhM=;
+ b=CUxGFouOsqGoHoxITvGZQtCVkF9YdBf+Pm49mdLj0H1t6QNxAPn3zGKCToQKTxJ0j0
+ 0YuFNIlSPSwQjzbHVlRFZ6I2OeQ4h3CwlRKwJZY0kSyMh3LW3MVBtYLK5wX01OYEqiEw
+ z6euSEWmmAA0Spop1ZrRxM9OVvLYCi6ZwN3Wjv6sOGk9d8BeEUmb71w1DPhbFboExUt6
+ mXyewelgDvYrbALhjDDLWd8XI3nD1TKLThUDc25OIyp4lmkjczK8IPZL7/kQUFrz6sYT
+ zFq0A99cgAAyC9NR9YOxVA+TQbiL4HyMSMhjiYbpVsRjvcqIPw/pBG6XIvKaNU6RFHIN
+ OvLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950119; x=1786554919;
+ d=1e100.net; s=20251104; t=1785950114; x=1786554914;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HgJmxQG/lgNq5flxOHBgvkaSPD2nZexEe+ywvhh6NXw=;
- b=stT+3r7NSbtQU4XNrg+MCH3wVEnOziKoh95O/RcMbSdKR8LuNevvb2gYw3qdqulISy
- wHGRmtB6XVEXsx91Sv5mKoLTHFqQHZMaJT+lXJDZX905G+IZsc6vzUJ5hwzYBmbu7aLn
- 0HFZ46ulVnZDMVaJigMxM6ZPsP0jHxOsHtVn/TW1LWjTsIuu0xyj43quas3pP/Uma+ok
- Zc/ya0+SMh6/23ClT7dTxbI6jZh8JFpXoa3HGvxHPys6p1uKnDlwaj/K9xtRi3EnEUyV
- OQyleGvcDT9cnODmwIWnzO1upnIDocoaoFgfqVgQxNwlWirZGbYsfFusO0PkduLJpQq1
- IKKg==
-X-Gm-Message-State: AOJu0YxbcVo30jq+BxOZTG2CRfGRRitygVBetICbrVgyCzJittorxyRG
- oDoU2GyKsDV4mP3RLMui9KziaAgbYROTrAxRzpRPddzYKBEhL6oXLSy+nT34m9QuGPE=
-X-Gm-Gg: AR+sD12nN1vCSE/vXAwPyMV7o5dcTebYhj6sYiskts8LGuTLqxW1cTcxwAjqTRYk9ss
- QetLmJ669bwGLocAwgIwNI1vkVt9O5v3cKGoWvztmU0Y1aCSZfI2sg3HRo3mkfoo8OiMI6OW2Aa
- EOLyuEcB9zarjENyUudLhIVgBI0KjLAO2GeIL1kaBKP7n2fCtUrFSUnKJQMMp6QnsWvoJLhqiyB
- T3DwYBipUoXAkEGlRSMm00ZjGjo2jxYZ+KSHS2IMovi/unJhX3DJuHOVOh4loTAY3kxGQG4QKZK
- EMwcf9ZlJ6lfF+IdQQjFnyxoNFdZYULsGseN9AZyUoA7ZmmIj5v7rR5xmeZwQDxDCdhofPSmS/D
- ouX9i2MIJ0oVyb1rD5hsMu1DVwv4mVCb2Rrd+yKmkFFLUE3DsRDw/mWPluol8dmEZJYPbv7Eqej
- OZjnmvX4+eFx5hbEbWIZ62sO2hI7y3oBU+Wz3S70ku+L2O7uwDG6gTlTnAz8kQ8ExH9DqRgBk=
-X-Received: by 2002:a05:690c:630d:b0:812:996f:176d with SMTP id
- 00721157ae682-8202230782fmr49443117b3.9.1785950119381; 
- Wed, 05 Aug 2026 10:15:19 -0700 (PDT)
+ bh=6sMuktQUriti/FzTn7dvyAmebqh+5sPjlYwFRIl8IhM=;
+ b=AX0DIPl+6Ikru1oqo9TFPmtdQNj108GA1VgccLtzNxLyILtXJEUTMZ7M0DIpsnhK6D
+ yB1mS87qVwlrBgqFSdxqKc/XG6pCAYzJn1dWXUPSWjwHauOkzMsttaJY0zX+MknJL21q
+ S22r8doz/3FWCvplMaZ1P3AKvcQARNbcDHwvDGyvKDwpJnAXXKw7w8xneMRtupyk0Udo
+ tILEXjz/G50lxKMcYpXvOpZW36siAjLGDzuLfla/gm+tF+1Y0c7HlVeSWVB5mlp39H1M
+ www9K7lrEw4YrwJoErazA4O1YItk8DhG5hIKLTT6SBv66Q3eBoWTr5q0FpqdViLPgp68
+ Lk3Q==
+X-Gm-Message-State: AOJu0YwdznRg/YXmiPrNM2DQ48DXw7/LqWvrmHXWvb7HZ3q3XG5Mennu
+ 2w4tBATFrjNyU8R2WdATulMf5zCt51dU8eJdIi40BcsomMFjL/3R6KVccWrBgjoYFL4=
+X-Gm-Gg: AR+sD11KXI/0zP0g+cg01nPRHHNx+2OhpzyMf35KlVgfv3s2JTFypPvMUj7epeLZf9g
+ xb1TKnlaw31ojLSXuxIuugy/S3aW8JMJnAJP0APkhffxiy/bfl25R28wMpopR/fBGr5jr9OFk7A
+ am0ATaWRX/IfBVK4h/RPa753D2E20L+ovtIrdlhmQCqo490T/pko+cw3kLYyrGsE/O9OtKdMWxs
+ YsmjK/jnOpCVV06LdEXj5oqD94gZR60tifY7ec2oL/qE7yiT7YZPfbprsliFPinR/5yo1GmpTrI
+ EnyicVq3FDXuorOU+hk5cssKPfskJB9l3DCVGPRi5Lo+NQwW2fb4zOetHqo1BrH15aXiegNB0DK
+ 5F5spTCcdeo759sXoPFg11c9kgPqc9l6F4NnJpo9cLrGD8YNlHiHlsw47O1g6No81pLZr5eOuS1
+ GOvtKDNZoaLDAfKOLOd52fknelPRyTqZB29s3M29IjliErg1EgOgiE53RIOYzi
+X-Received: by 2002:a05:690e:130e:b0:667:e2e1:44 with SMTP id
+ 956f58d0204a3-6699a93b621mr4205083d50.22.1785950114205; 
+ Wed, 05 Aug 2026 10:15:14 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8201341ca2dsm24371757b3.25.2026.08.05.10.15.17
+ 956f58d0204a3-6699136af82sm3554926d50.3.2026.08.05.10.15.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:15:17 -0700 (PDT)
+ Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 5/5] linux-user/sh4: write the floating-point registers to a
+Subject: [PATCH 3/5] linux-user/hppa: write the floating-point registers to a
  core dump
-Date: Wed,  5 Aug 2026 13:15:07 -0400
-Message-ID: <20260805171507.3119442-5-mattst88@gmail.com>
+Date: Wed,  5 Aug 2026 13:15:05 -0400
+Message-ID: <20260805171507.3119442-3-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
 References: <20260805171507.3119442-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,54 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Write an NT_FPREGSET note for SH4, matching struct user_fpu_struct
-from arch/sh/include/asm/user.h: fr0-fr15, xf0-xf15, fpscr, fpul.
+Write an NT_FPREGSET note for HPPA, matching the kernel's
+elf_fpregset_t layout (ELF_NFPREG = 32): fr0-fr31 as 64-bit values.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/sh4/elfload.c    | 10 ++++++++++
- linux-user/sh4/target_elf.h | 12 ++++++++++++
- 2 files changed, 22 insertions(+)
+ linux-user/hppa/elfload.c    | 7 +++++++
+ linux-user/hppa/target_elf.h | 9 +++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git ./linux-user/sh4/elfload.c ./linux-user/sh4/elfload.c
-index f03ce49e7d..41601626ca 100644
---- ./linux-user/sh4/elfload.c
-+++ ./linux-user/sh4/elfload.c
-@@ -52,6 +52,16 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     return hwcap;
+diff --git ./linux-user/hppa/elfload.c ./linux-user/hppa/elfload.c
+index ff4301b2ed..dd5b0b380e 100644
+--- ./linux-user/hppa/elfload.c
++++ ./linux-user/hppa/elfload.c
+@@ -17,6 +17,13 @@ const char *get_elf_platform(CPUState *cs)
+     return "PARISC";
  }
  
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUSH4State *env)
++void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUArchState *env)
 +{
-+    for (int i = 0; i < 16; i++) {
-+        r->fpregs[i] = tswap32(env->fregs[i]);
-+        r->xfpregs[i] = tswap32(env->fregs[16 + i]);
++    for (int i = 0; i < 32; i++) {
++        r->fpr[i] = tswap64(env->fr[i]);
 +    }
-+    r->fpscr = tswap32(env->fpscr);
-+    r->fpul = tswap32(env->fpul);
 +}
 +
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUSH4State *env)
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
  {
-     for (int i = 0; i < 16; i++) {
-diff --git ./linux-user/sh4/target_elf.h ./linux-user/sh4/target_elf.h
-index 3fcb63d409..5923022036 100644
---- ./linux-user/sh4/target_elf.h
-+++ ./linux-user/sh4/target_elf.h
-@@ -25,4 +25,16 @@ typedef struct target_elf_gregset_t {
-     struct target_pt_regs pt;
- } target_elf_gregset_t;
+     int i;
+diff --git ./linux-user/hppa/target_elf.h ./linux-user/hppa/target_elf.h
+index 22547b1437..4357873aff 100644
+--- ./linux-user/hppa/target_elf.h
++++ ./linux-user/hppa/target_elf.h
+@@ -39,4 +39,13 @@ typedef struct target_elf_gregset_t {
+ #define STACK_ALIGNMENT         64
+ #define VDSO_HEADER             "vdso.c.inc"
  
 +#define HAVE_ELF_CORE_FPREGS    1
 +
 +/*
-+ * Matches struct user_fpu_struct from arch/sh/include/asm/user.h.
++ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 32): fr0-fr31.
 + */
 +typedef struct target_elf_fpregset_t {
-+    uint32_t fpregs[16];
-+    uint32_t xfpregs[16];
-+    uint32_t fpscr;
-+    uint32_t fpul;
++    uint64_t fpr[32];
 +} target_elf_fpregset_t;
 +
  #endif
