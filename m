@@ -4,114 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 341A3C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 22:02:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0526DC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 23:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrjgn-0006qE-4W; Wed, 05 Aug 2026 18:02:17 -0400
+	id 1wrlGf-0002mr-06; Wed, 05 Aug 2026 19:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wrjgk-0006pZ-KU; Wed, 05 Aug 2026 18:02:14 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wrjgi-0007Uu-MX; Wed, 05 Aug 2026 18:02:14 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 675HlYot315362; Wed, 5 Aug 2026 22:02:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3oS6ib
- wQuAtqA2115uOEFcpvfquvAuZxs9/Vg4AzP2I=; b=RoNfFntw0hKeATw74sGruB
- wdYaJJ4roqHihsXeSUVSi0gr7fHeEHDJCnQutjNffblfnKUdbL9kAb/jhLbTs0t6
- SOIZDtz6yeRQYdf67HIsf2VF/cFw+iznYTEqjC+sUjbZaNPCiaa+8BJ7wUC12Dff
- eCFJHJXZfRzWZUoMXwtJ9QrbUqPYsBxIf4RqSG+esRx9tK3ihScCkdD6IkBo5QxP
- yKZ9AUaC+3//lE/TyeZbmbdvYzErgersxDqFl6AhjZIzWPdeg52dD+779MuKHRmx
- mVseT5XZtQMGnJVdBbg8HVbBvfdSsNAiVNHT7x3/1Pwbun9GdWUo1Js4SkJo+SBw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8a4592y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 22:02:06 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 675LuKvl002937;
- Wed, 5 Aug 2026 22:02:05 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsv4k8ha4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 22:02:05 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 675M24Nt61473036
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 5 Aug 2026 22:02:04 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 59D8158062;
- Wed,  5 Aug 2026 22:02:04 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F32C58056;
- Wed,  5 Aug 2026 22:02:03 +0000 (GMT)
-Received: from [9.61.249.77] (unknown [9.61.249.77])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  5 Aug 2026 22:02:03 +0000 (GMT)
-Message-ID: <b3bd5351-c51b-42fb-a1dc-09eb998befa9@linux.ibm.com>
-Date: Wed, 5 Aug 2026 15:02:02 -0700
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wrlGd-0002mR-5f
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:43:23 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wrlGb-0005W9-RW
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 19:43:22 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-517dc520840so11171421cf.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 16:43:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785973400; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dxM9fpmFaZCTHszmrLYjG3/M4P/ptSyRUj2pi+U9sjqR4fe25FCJcLpeT9ri0H3ZWf
+ F8cQeRl6s499ZhL+gsLBhANfhdqFkEA+jtXeimjwalqzFuElUCTSIT4XAvRe9cnAVsPr
+ zpXmw2GvgB6IJoS1RWVTvKhkbCixnB00+d5S5CD7y6kesQgNWhTPjfSyuzHmAPVMPjA4
+ tQxpGKIkZTN+FFL2Qan18ILnpqDIMpCvUJzggoZaDycydACJgXZFZ+uz+mWfjCVxcIfH
+ v2eEq8eOYYddng5gV/6Z/PID3XMDqTxyDMRo+GUA6xp2bfB7Tq9I5FXKfGmPAKvJ2V70
+ HjzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
+ fh=azakwI4Xb9f6DnAcztET+ugSHXzSSw4voANLU4fk32Q=;
+ b=dPhFiGoKS+odhbV6a5HpH3vC2H1fOHVC31DM8AAER1UUP7RzRAk+i6BDdhvFdqpjkj
+ 6jHFP9eVyE3iASpfcAfoVU5yA7+4stZgNJZ0Oe2V+OLXuh9lEhiXKt8W2DQEIc3AFbuO
+ J8EisZsJjvP0pyD3g6YhVt9SS735NyFwEoZSiwGc46D6vIaulz/itXSz03S56V96vbDI
+ RsE+aPW7u7Fk4PUnpEkYY6JRq0Tl7nSO3rIruBwK6kHnwsn6WRBJ0jQpf29nzD/GgtHl
+ W27KvVUogOa39cP51v9TXOU574KFTuz6l7yRDlxEZUEe2yDjmdj8KjtQlWF+0KZZF9zH
+ akPw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785973400; x=1786578200; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
+ b=JmfdaNyJXIRoqg/UfZhCNwChHt5+/dNu+EULp+TYWgergGSPNd7JrOJspYiog1tZCQ
+ MycS9bZtv6GG113u0CB7t8SFVtga/KkYXU2YDdAkYVDy71WuaxcJCO6oSnzTMrKa3IjA
+ rP5pa2hAGM0wXyd3k+Q0AAUKn9DScHOuHYN2fsBNU+jLrswdW0Q6YL1tNct1KdmetpjT
+ sLS4QSEYxWq9pPed8O3Fu9fhComzvjNNFd8Ei8/mlc5N1W/1sy3GT9RkNSMuLJcCdhJv
+ 8mTpnmHjDoWt4RJdbXAewPzjtw7DFsXm4cSSwjLLsPRCVuuPt7TDRMwl7HBIsZsb3IEa
+ huMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785973400; x=1786578200;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=xIJW997ztiLIhHGWA4IExsY472xyxS4LNfDtfQost7I=;
+ b=XKsDYSNxsNOxBLnq/o6bgTWWB2jOjU8k8iJroMCsfWtaRD7qOVyWaJ37Gk5KFTSycw
+ A6Y7OVBwYX+9Rom2l+40Ex2lKBZLUJA98hUfPoFpTNoTxab8/jp4hYsscspt+Co4J8H9
+ QiSfn4nZG0AgDa6ryRtnGIntO2sxdptHLcWmTjneX0wA/NVGxWEWf1ECXV7lGV/rC9tf
+ /tZFh8IxDjP5sXvjuxdzXQoPQdAjduZhS6XE2KXCqyGzu85IwlqkN4py4dbDVWZZ/avb
+ XxlGcqptQoGIeJEa9tgZYXRD4WkXhs2/bjbrFQDbNMapvnWmWiMyjzvZRqnDlI9QUUOr
+ T9eg==
+X-Gm-Message-State: AOJu0YxOiEMZiy+oZEjxFUZDuM/XattiTK0puXE3aaSxYO7FRpHTO+i9
+ 4Zjlx6qcZfvuXKeeYJlvU4MSQGPgZgB4xVGNg24wwjB7RniUbeLbdlCO+7NEaw+InTBc/0XN0tK
+ 9FM8uvh5izwHPWSXtepyAlW/E7Dxu8GU=
+X-Gm-Gg: AR+sD10qpQR5LU1aTCneuwDJFO267gXZZRp5+RQQloT/0r+l5pEdk718KwqW1pk9i6S
+ r+VVS1iJ2Tub7cYmx+fj2oPAELH1OsGSUwY5VKRK5jsjJF2PkzD2/FTzxJpjxH2fVkGIiok/neJ
+ gxLAhOwO0HNnPiZVOezwa1YUHqgH+pMDBAhg95skvTPddpBTcjOP1NPymSQDy+EtkuohJvnLmRb
+ BwrYj9AhQQlIdGGyFRq8c2a1J33DO9IbaEewi40e5lacqTxOVC2torRD99sYMsqD0Dm3IX0c5mD
+ ejdRLuLfapZDqcx0JUqbtBFDf14pmUHQ0QFXidk4NJhj/uSEEqdeW34h10D85NWr3OgMBxU3dxL
+ AEl8=
+X-Received: by 2002:ac8:5a91:0:b0:51c:1ff:2512 with SMTP id
+ d75a77b69052e-52ce61a411cmr105675181cf.33.1785973400069; Wed, 05 Aug 2026
+ 16:43:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 14/15] s390x/pci: Implement migration for emulated
- devices
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260804024443.56445-1-kshk@linux.ibm.com>
- <20260804024443.56445-15-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260804024443.56445-15-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=E6P9Y6dl c=1 sm=1 tr=0 ts=6a73b2de cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=W118-njQ60ViCOaqzc4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: v_at3GInW_q4XiFBjQ3au49vyrqxSnnH
-X-Proofpoint-GUID: v_at3GInW_q4XiFBjQ3au49vyrqxSnnH
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE3OSBTYWx0ZWRfX8e8wyEsSZv8R
- 7CozNTdLZDIDqyvpuKuHdtG0keUaG0jcpa7iZshLwqDEpdIUFK3W82nbJB0U8BoFW+rq66Euqyk
- eTtM78LvYpNKsZnkk5zIPp0eAqaDev8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE3OSBTYWx0ZWRfXzAqRz5yi4rEV
- fNRHyxRIlXX70bzSLIfXLUVhlo+Tp+UbQ2xmCfS11FeyIW8Y36tTnkp10Kthi5NtWLQu0RZrtFx
- DVfV/CvwmM8DpPRJ0xpP3yX++a/TNtZWIPyEDJ1NtaFRoiOcGD+rCs4nYAWji+HZsJnxu0kIc9g
- xE7AnK79+G4bm+gpEuFvHeWYBClJqluUMRz5hiqmuUeBmi89rApqN77ttithrzhcxNAV7FvRWEo
- o6+g1lLsnFDHOQ/E2LE2nQMfzH3DvsTT1pV1UmTjIYtR5m3IoeqLihysx7tWts2zucNLLf2mqf8
- 0F/xQERvpmLfTYWcfvDAy80h8obeb9dfKGJNjFrtD5ZCPMshqzuUbBHLWsn4JgFjGodM+geFYgd
- 5TlmVjSbimeRhhhavVguxRLDtXRkb/0ww870ilWrd2kM3IRfT4KvTeLFuA9Lodkt0ZVgtjrftQ5
- LrX+ag0qzdU+lWCUqGw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_05,2026-08-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608050179
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-4-6b97c439eb28@gmail.com>
+ <6f915ae4-f9b7-4e27-9c3a-3a99917b499f@redhat.com>
+In-Reply-To: <6f915ae4-f9b7-4e27-9c3a-3a99917b499f@redhat.com>
+From: Connor Kite <connorkite@gmail.com>
+Date: Wed, 5 Aug 2026 16:43:08 -0700
+X-Gm-Features: AUfX_mxPQyAbn0_F9JssL-jejkCyVtJEtgg98Zlrxpmii0NR7zZ1YyRDcPcZAPA
+Message-ID: <CA+spn3oXmgk7_LMP+hZRDPRTQX8qm0uBGAyztsq+Yu4_d4_ZKg@mail.gmail.com>
+Subject: Re: [PATCH RFC 04/15] net/vhost-user: add memory isolation
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,84 +138,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 8/3/2026 7:44 PM, Konstantin Shkolnyy wrote:
-> Implement zPCI device state migration, consequently enabling migration
-> of VMs that have emulated PCI devices, whether virtio or not.
-> Migration is allowed for devices whose function handle has the
-> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
-> state of its zPCI emulator.
+On Mon, Jul 27, 2026 at 11:48=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
 >
-> This will enable emulated PCI migration starting with s390-ccw-virtio-11.1.
 >
-> Passthrough devices will continue to block migration.
+> This is dead code (hence G_GNUC_UNUSED) and is harder to review because
+> we don't know how it will be used until later in the patch series. I
+> guess vhost_user_init() and net_passt_vhost_user_init() will gain a
+> memory_isolation argument in a future patch.
 >
-> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c         | 189 +++++++++++++++++++++++++++++++-
->   hw/s390x/s390-pci-inst.c        |   2 +-
->   hw/s390x/s390-virtio-ccw.c      |   4 +
->   include/hw/s390x/s390-pci-bus.h |   4 +
->   4 files changed, 193 insertions(+), 6 deletions(-)
+> Linear reviews of the patch series are easiest for reviewers. Please
+> reorder this so that vhost_user_init() and net_pass_vhost_user_init()
+> are changed first. You can hardcode the argument to false in those
+> patches. This patch can be moved afterwards so that memory_isolation is
+> never dead code.
+
+Now fixed for the next rev.  This and the previous patch are swapped,
+with hardcoded values of memory_isolation used until the property is added
+to net.json.
+
+On Mon, Aug 3, 2026 at 5:27=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
+rote:
 >
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index a94e24a2ac..9441c80ef4 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -26,6 +26,7 @@
->   #include "hw/pci/pci_bridge.h"
->   #include "hw/pci/msi.h"
->   #include "exec/cpu-common.h"
-> +#include "migration/blocker.h"
->   #include "qemu/error-report.h"
->   #include "qemu/module.h"
->   #include "system/physmem.h"
-> @@ -34,6 +35,11 @@
->   
->   #include "trace.h"
->   
-> +static const Property phb_props[] = {
-> +    DEFINE_PROP_BOOL("x-zpci-emul-dev-migr-enabled", S390pciState,
-> +                     emul_dev_migr_enabled, true),
-> +};
-> +
->   S390pciState *s390_get_phb(void)
->   {
->       static S390pciState *phb;
-> @@ -917,6 +923,23 @@ static void set_pbdev_info(S390PCIBusDevice *pbdev)
->       pbdev->pci_group = s390_group_find(ZPCI_DEFAULT_FN_GRP);
->   }
->   
-> +static int s390_set_emul_dev_migration_blocker(S390pciState *s, Error **errp)
-> +{
-> +    if (s->emul_dev_migr_enabled) {
-> +        return 0;
-> +    }
-> +    error_setg(&s->emul_dev_migr_blocker,
-> +               "Migration disabled for emulated zPCI devices on this machine type");
-> +    return migrate_add_blocker(&s->emul_dev_migr_blocker, errp);
-> +}
-> +
-I was trying to test this patch series, and something i tried was doing 
-was a save/restore of a VM with just CCW devices. But with this patch 
-the save/restore of the VM fails with error:
+>
+> I have a gut feeling there ought to be a better way to add an option the
+> only works for vhost-user, but maybe not. I certainly don=E2=80=99t have =
+a
+> constructive suggestions. :)
+>
+> (Apart from that, my only comments would be the QAPI =E2=80=9Csince=E2=80=
+=9D field
+> missing, as Markus noted on the previous patch, and the patch ordering
+> Stefan has noted.)
+>
+> Hanna
+>
 
-error: Requested operation is not valid: cannot migrate domain: 
-Migration disabled for emulated zPCI devices on this machine type
-
-I think this is a regression, as the save/restore works with the same 
-guest definition with current master branch. I also think this may break 
-live migration for guest with just CCW devices. Something to also note, 
-by default libvirt auto adds a pci-root controller to the guest 
-definition [1]. So i wonder if that's tripping up the migration blocker?
-
-
-[1] 
-https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-guest_virtual_machine_device_configuration-configuring_device_controllers 
-
-
-Thanks
-
-Farhan
-
+Added "Since 11.2" to both locations in net.json.
 
