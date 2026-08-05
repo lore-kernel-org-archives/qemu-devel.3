@@ -4,90 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD61BC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACACC561E6
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 18:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfTQ-0000gJ-C0; Wed, 05 Aug 2026 13:32:12 -0400
+	id 1wrgJT-00008p-8f; Wed, 05 Aug 2026 14:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1wrfCw-0003yz-8x
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:10 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
- id 1wrfCu-0006Cd-Al
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:09 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2ccdce28edeso1958745ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wrgIw-0008VQ-Ll
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wrgIs-0007fM-UV
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 14:25:24 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 675HSHsu3889901
+ for <qemu-devel@nongnu.org>; Wed, 5 Aug 2026 18:25:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Fo9WcDAG0XW
+ YO36L1JlqsbMEVdpKaz9zVMY7ExGggkc=; b=ao8eh9FgDGFGYs/9DW2QV5Ajvpd
+ EovEcxvfFB4m9ZWfMaWLx1BmohsJVRgWFT6w3L6YqqNEJ+/5+NYEdNed/NdZLq6D
+ chPAjmjv5uGbZJRmKsQRMNyt5MmyE+oQpIXjnS+5STF5LyzcqQXufZ0oJS7tTSB9
+ PK4iXMoVAxQp8eSYhCmTKAT4euqTFAYCJZDi16CTr8zBWPN7x1m9XyCxjXYTCQhP
+ WwZ6Y/10dUG5Gol1Yq5ku1Qu88lGRnPzH5Fm71U5O3yTQnyw7b702hBiTr5Kb8h4
+ +Czf+14uugOW5ILCkdDXukfhbjNzgFcoHbWoaqDPyvSTxWdM2gLS8JfvHsw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv14waxab-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 18:25:21 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9309af14fd7so132844685a.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 11:25:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950106; x=1786554906; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=oILwzWuvctpkqfsV14fEATGnSgvAGf1HgOWFjcVoTqg=;
- b=ZVgkwA/vHIZSP6YeeINfb6puXhwolIBS5WPcE18e/LFtfbLLvJ49l+gkkMXEjAxMZG
- qlwIknXLhZs6DDb5D6ZZjn1JlYPeui0DyVKaTTx5b8HVzWfdefYtTb2/uMvb7/atpg+T
- Aw5MlBR5pTYieSbgbbij1ojzMOcGVpWZUzjEG0bU1z/XAGloyP++fY9CAc3RJgISjw2t
- iknooYicwhc3HFgb+lppKhRAicxNijSm2sDcqjitA4D4zJY8mCyEE46prNur1vYCEhZB
- DvJ/wRlsSJgNfVYUzGGoyVdGDFWrlWKaj7MPhi6kLqtOAYDqqC/3zJb5GyBAZhdWrqf8
- biTw==
+ d=oss.qualcomm.com; s=google; t=1785954321; x=1786559121; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Fo9WcDAG0XWYO36L1JlqsbMEVdpKaz9zVMY7ExGggkc=;
+ b=kuJ8gVZT/9xNcBIywXyFmM7CjgMejWH4w7WeO703X3MHBpEAdOkJ9kGnL+hPZ846Rk
+ DX14MiZsBxPpYLSZxBWGM4ROYNTwNBlOEDf5IxGi5h195KPw7ZQKX62qZJHYkRoQvjAP
+ Bi0YE9gUvSjig6fYYj2eXUY3BsiQ/rxJsF594pmcCI7iOBqA5YoghkTxuJu5hdcPiSg+
+ sCMY4bazMZ4ozVsbjtG+WRD8A0qmwyB4YYUa4EfBlzSwxGU0znOcT9BcVj6XZaqSB1yu
+ LqB+/QBc/Tx2agC3bIKFps/J3oluPFhf1aNg2/dlGj/J9YkcjT5US5jXkRXRtyPKNPhP
+ g/zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950106; x=1786554906;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oILwzWuvctpkqfsV14fEATGnSgvAGf1HgOWFjcVoTqg=;
- b=NDMxcPe12IUjujdKfUtFs6rgcbXqdHInaDRsvVpKdXP0ruEtW3OE6LkOLykI2qHwd0
- 5JYQC9FO7xII1PxDbDyApJdjMplkCcGmgdckEw0VS8U0Dgtk9jUYP6OpL6zVOUXLuw1I
- HhwyZ5PJWI6HnMZV8Ge/xUAUGicK371BKYnjBsTc0wJiJGJ+0at+pOeRwqX94Mj7UVuy
- qyCqmZIqZN60q4MH/47yQBdpGfUA23E9S/3MAo4sTR3Vi1sGpv89t7LXUH0G30IMwGg2
- 4F4VXIkBBMP15RqK8QZFCcubymrIgNN3l0jIOV3ft7/fohGqlDU1e/YvxwHD/SwjiZlv
- oYxg==
-X-Gm-Message-State: AOJu0Yyg2OVaOnt01S/XRvbazFr0UiAFbVpJmBy1c2thKTvfJuRk2vZl
- wOZro55tIYq7as/fBrYc/maaT8Bfw2Cb1SCZ92AWqMv3i3wyNNYV3n9dNjebuBEI
-X-Gm-Gg: AR+sD13mC8vSWsBd4tSucS+TDAJca3GqNeRRQ9PSCjNx+nS7/JMf27KZUb8QuRrNBh3
- wRC4LBiMsK/c6rH/ZkOX9oNgbyK7D1IrbdUdp2xWkKfmrS1chin4Kd0qw4LAqxLmuhsfia4sz3k
- IKruzJExFsFFMuALF9a5U2KnJMppdtnTMGhKwXlumVuaH8C0HuWBX0m+7vRQ7mMuboafI9jyDCq
- YchQ0KSi4MxBeXdKClMKTJGeILU7i2kNglwvJjHAXVNqc0rayxaDl8Bj3MNTqobHlkXsQ3yj5bI
- /dBmtq0OhNPDBKFmZn8vkRrcqRyHbnO3ooRIlTdIx7wkDAKTPaItgxhqCrM/3kBPIjpTqAmGmVD
- Og/hcOeF+s76K1BFRQgS4MBGk7fUeU3jwFIde+M/wSIBGDWux49ua7I+YX0e98UEBWDC7Xug9tL
- mT9Ne0fUsE3Eos6/lW0D0V6ZF0Y/9fWTem6tO6l/GrCljaF34wCdkmYhPZugPoIiFWIBTt270+7
- tcoWZGCi9gJykc=
-X-Received: by 2002:a17:902:dac3:b0:2c9:b96a:2855 with SMTP id
- d9443c01a7336-2d0ca158b88mr64499605ad.0.1785950105505; 
- Wed, 05 Aug 2026 10:15:05 -0700 (PDT)
-Received: from fedora ([2402:e280:2177:35:a77f:15f7:4845:1af9])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2d0d118a2dfsm6202185ad.28.2026.08.05.10.15.01
+ d=1e100.net; s=20251104; t=1785954321; x=1786559121;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Fo9WcDAG0XWYO36L1JlqsbMEVdpKaz9zVMY7ExGggkc=;
+ b=fIiFmrYzCnQv1rZwjnJ5dK8i3Zfbeha+o7UiIDUj9hhqgI9YdfW9/kyrVtOCEY4gpR
+ DKL8HIVdgeig3cU3PmSDpbgOMQ2W9TQy6OZ2Xamjxy731REf4iiBO+tBsH18D7Cw3EWM
+ BMvH42XvNROFMdZGMnMclRps/8aS3EYzKLT1ANdmLt15uUXwt8y23jleDtlYwWIUhqIP
+ uqxcfHtRrh6mnqxdq01ALU8+aAX7oCBGivlbk87GFta68vk19ZJps8GVX/bNuQjqVojd
+ Aa9L5K7y/Nrn004uiU9Di4+xFflpx8+Q2oTxzysz3SGlLpb7KMNlNOdvSACgTOJemt/E
+ UpEQ==
+X-Gm-Message-State: AOJu0Yxm4+fs1dGjmsBrDJqWxUzulXgUncpWeh7WkMYOqJMHhDRqRFhk
+ A1msX0n1QsB6zSy9wfKP6XZ5I40rkNs/jhdgAvuplJQX1Eh3q2/nK/NwIe+sY9XqXL3o8je6f5E
+ 2SGPJ8WjKScrUhKexSLUV/+plr4Iq3BKycg2RRd0KBaWOyp7rQS4nIE31CMMajlliew==
+X-Gm-Gg: AR+sD10aSV15vTMcnBSMHSENQlRq2vxNCxcCaLXLW0PknD0j0skBwfO2ZhdlPKlC5aD
+ QcGnfG1vqBsd6Q+p3L0SQi8zhxiZrG0sfcBLk1Jl3Qf3GOYC8TujEMWUupHRMg+ejiHrqgc88kr
+ NGCIYOCJSm1CYIr/3zHJoO++powmKoHQCE7XkyLzicFDO3dLeIk3OhRTBF2laLwKPXbbom7FVz5
+ mZK/UJb+wsp+jsp+3loHwYKUzCaVqY2nWy0I+/fHQqU3GiwWoHCVJiJodWMnEy4v2BW8GCT6Rud
+ 2rYt5qLiAma11ELRUxdJoRTbARBpDieh/rijxzFV5Wn+SzlsZMvCZTu+AOHZXloZCkt+xWvfiie
+ AuqzeZpnh1+7mz1KmwuxJtAxSEWq7/3fnKQE3mw==
+X-Received: by 2002:a05:620a:260a:b0:934:9a26:eae9 with SMTP id
+ af79cd13be357-9364910ad88mr902662585a.17.1785954321324; 
+ Wed, 05 Aug 2026 11:25:21 -0700 (PDT)
+X-Received: by 2002:a05:620a:260a:b0:934:9a26:eae9 with SMTP id
+ af79cd13be357-9364910ad88mr902657285a.17.1785954320860; 
+ Wed, 05 Aug 2026 11:25:20 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([187.11.154.152])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9364a3fc901sm209387885a.6.2026.08.05.11.25.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:15:04 -0700 (PDT)
-From: Yogesh Vyas <yvyas1991@gmail.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, richard.henderson@linaro.org,
- pbonzini@redhat.com
-Cc: rathc@linux.ibm.com, anushree.mathur@linux.ibm.com, npiggin@gmail.com,
- harshpb@linux.ibm.com
-Subject: [PATCH 1/1] tcg: defer tb_flush when initial region alloc fails
-Date: Wed,  5 Aug 2026 22:44:53 +0530
-Message-ID: <20260805171453.25940-1-yvyas1991@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ Wed, 05 Aug 2026 11:25:20 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 3/5] target/riscv/tcg/debug: adjust 'timing' bit for Debug 1.0
+Date: Wed,  5 Aug 2026 15:25:04 -0300
+Message-ID: <20260805182506.2943757-4-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260805182506.2943757-1-daniel.barboza@oss.qualcomm.com>
+References: <20260805182506.2943757-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=yvyas1991@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfX2A1LjiIRXRV/
+ 9E6MOsSrPOo8/uVeCC+cJs7nUOlm999aPGIYfZTxuH5TMDpygB+EKFrcTHuJLKRInYt0uIlyfGL
+ 02ecvZ3SQ0AoYnYfikj4ViKuApPg53k=
+X-Proofpoint-ORIG-GUID: OORPBCGb3cNjoWUQPk1ySfHyqbA7VLE2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE1MSBTYWx0ZWRfXxxtEd3wro7je
+ tvdvZqGYksCf1hKEOC3RWNz/oT3mDXC6G7n0bJhemqnHnJXNAYYij0LDbSB6bMYwCfXP36wuQIE
+ vqso11A7w/Y6GNCerFhLCbnlqnD1cqCj4cM1UQqFywXdOeieOYoaX2a+gYRLyeB0y0P+aVsuz8l
+ v6sLCL4dzhDAdCjNogs09LdjaDLWS8iYAuorRU1cUZw6iZUuerNx1S23JZlTerx/iV3H5UuXjSZ
+ cdfWo3a3YC7tu4OP3/tr56sYGHvwXL1mZqB8E1ZyDqm8VFxD+Jx05ljm8fgaoL04vGkg0J9VtJ8
+ +9E+HaOY5ycHIncA5UZPMQXHEEWJS+iHvCvrLOBUDCwB5AF1Mv8CQQr1GvtGwfwTu2FheZKlVOb
+ HAS45ioWplrzM05sY8UsQ1eoTFjY5ULbhYt+is213Gb/8oz45/iuJBSfH4KRAtb4z4k2UQbZ9IU
+ idbUvWrtRotil+HQOBA==
+X-Proofpoint-GUID: OORPBCGb3cNjoWUQPk1ySfHyqbA7VLE2
+X-Authority-Analysis: v=2.4 cv=Cu+PtH4D c=1 sm=1 tr=0 ts=6a738011 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
+ a=hcgX7uFSkN2IqaP9zZIA:9 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_05,2026-08-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608050151
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 05 Aug 2026 13:32:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,97 +150,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Under MTTCG, busy vCPUs can temporarily exhaust the fixed code-gen
-region pool by holding multiple regions. A newly registered vCPU
-thread that then fails tcg_region_initial_alloc() currently hits
-g_assert and aborts QEMU — seen during vCPU hotplug on ppc64 TCG
-(virt-type=qemu) with a large maxcpus.
-Instead of asserting, mark the context with tb_flush_pending. The
-first tcg_tb_alloc() returns NULL so the existing tb_gen_code path
-queues a tb_flush; tcg_region_reset_all() then repacks the pool and
-the new thread obtains a region on retry.
-This mirrors the graceful exhaustion handling already used by the
-runtime tcg_region_alloc() path.
+Version 1.0 changed the 'timing' bit.  It is now bit 18.
 
-Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/2984
-Signed-off-by: Yogesh Vyas <yvyas1991@gmail.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- include/tcg/tcg.h |  9 +++++++++
- tcg/region.c      | 15 ++++++++++++++-
- tcg/tcg.c         | 12 ++++++++++++
- 3 files changed, 35 insertions(+), 1 deletion(-)
+ target/riscv/tcg/debug.c | 7 ++++++-
+ target/riscv/tcg/debug.h | 3 ++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 7669dc1c2d..8a05e3af7b 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -381,6 +381,15 @@ struct TCGContext {
-     /* Threshold to flush the translated code buffer.  */
-     void *code_gen_highwater;
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 2191928761..8b23c8d045 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -584,10 +584,15 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
+     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
+     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
+     warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
+-    warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
+     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
+     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
  
-+    /*
-+     * Set when this context (a newly registered vCPU thread) could not be
-+     * given an initial code-gen region because the region pool was
-+     * momentarily exhausted by other busy vCPUs. Rather than aborting, the
-+     * thread defers a tb_flush: the next tcg_tb_alloc() forces a flush +
-+     * retry, which resets the region pool and reclaims slack for this thread.
-+     */
-+    bool tb_flush_pending;
-+
-     /* Track which vCPU triggers events */
-     CPUState *cpu;                      /* *_trans */
- 
-diff --git a/tcg/region.c b/tcg/region.c
-index 5d4be1453b..1200947385 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -393,7 +393,20 @@ bool tcg_region_alloc(TCGContext *s)
- static void tcg_region_initial_alloc__locked(TCGContext *s)
- {
-     bool err = tcg_region_alloc__locked(s);
--    g_assert(!err);
-+
-+    /*
-+     * The region pool can be momentarily exhausted when many busy vCPUs have
-+     * each grabbed several regions during translation. A newly started vCPU
-+     * thread that cannot get its initial region must not abort QEMU: instead
-+     * flag a deferred tb_flush. The thread's first tcg_tb_alloc() will force a
-+     * flush + retry (tcg_region_reset_all() resets region.current and
-+     * re-packs the live contexts), which reclaims that slack and assigns this
-+     * context a region. This mirrors the graceful runtime path in
-+     * tcg_tb_alloc()/tcg_region_alloc().
-+     */
-+    if (err) {
-+        s->tb_flush_pending = true;
-+    }
- }
- 
- void tcg_region_initial_alloc(TCGContext *s)
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 1e77f2365a..ea66fb6f84 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1830,6 +1830,18 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-     TranslationBlock *tb;
-     void *next;
- 
-+    /*
-+     * A newly started vCPU thread that could not obtain its initial region
-+     * (region pool momentarily exhausted) deferred a flush. Trigger it now:
-+     * returning NULL makes the caller queue a tb_flush and retry, which
-+     * resets the region pool and gives this context a valid region. Do this
-+     * before touching code_gen_ptr, which is not yet valid for this context.
-+     */
-+    if (unlikely(s->tb_flush_pending)) {
-+        s->tb_flush_pending = false;
-+        return NULL;
++    if (debug_trigger_version_1_0(env)) {
++        warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
++    } else {
++        warn_always_zero_bit(ctrl, TYPE6_TIMING_0_13, "timing");
 +    }
 +
-  retry:
-     tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
-     next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
+     /* validate size encoding */
+     size = extract32(ctrl, 16, 4);
+     if (access_size[size] == -1) {
+diff --git a/target/riscv/tcg/debug.h b/target/riscv/tcg/debug.h
+index a25d099b37..eb635bc277 100644
+--- a/target/riscv/tcg/debug.h
++++ b/target/riscv/tcg/debug.h
+@@ -98,7 +98,8 @@ typedef enum {
+ #define TYPE6_CHAIN     BIT(11)
+ #define TYPE6_ACTION    (0xf << 12)
+ #define TYPE6_SIZE      (0xf << 16)
+-#define TYPE6_TIMING    BIT(20)
++#define TYPE6_TIMING       BIT(18)
++#define TYPE6_TIMING_0_13  BIT(20)
+ #define TYPE6_SELECT    BIT(21)
+ #define TYPE6_HIT       BIT(22)
+ #define TYPE6_VU        BIT(23)
 -- 
-2.54.0
+2.43.0
 
 
