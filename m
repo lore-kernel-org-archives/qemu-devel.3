@@ -4,115 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208DAC55822
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 07:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA89C55822
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 08:06:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrWQd-0005X3-D3; Wed, 05 Aug 2026 03:52:43 -0400
+	id 1wrWdI-00074Y-1p; Wed, 05 Aug 2026 04:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wrWQb-0005WG-Lk; Wed, 05 Aug 2026 03:52:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wrWQZ-0005bm-Si; Wed, 05 Aug 2026 03:52:41 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6755lm5V1121570; Wed, 5 Aug 2026 07:52:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=ioKdZWyckejtrlcHZnvwqyj3Ij+1jW7743/yv+pAAso=; b=VltvAfsiCZgz
- LJUwXaeYdjf8w6tPdNeApDHN8s/Ks3xqvxANwB7KGxIQDNBtmU0CSiAqm26n1rKN
- 8ncwsZ9M1Dbii8GBCosoYtFipDBt/ijM/XS8peIpOOUqZ25ttE7nL02TSyViPM66
- IKF8vLMK8M8VAiFW5etQEAS4ASJkUnydHaoNxlAJStMIl9h8MgWkyO+gX6xj1IWf
- yTxL/Cv8BcmyZG5IVMqeAOli5WZAAdZ3u5JUA+Ghyn/w9nLtdpfc/Smub40KpWwn
- 82OV8b8Den4wGUsSRhCcTu9PksWBlN1PDWM5B4RDTV0dNVDM4MJrmeIT6gGFevm5
- zB/bueHc4g==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqsvrm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 07:52:32 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6757pwYe032540;
- Wed, 5 Aug 2026 07:52:32 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswbgddc4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 05 Aug 2026 07:52:32 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6757qUVM17891936
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 5 Aug 2026 07:52:30 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 340E55805A;
- Wed,  5 Aug 2026 07:52:30 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F6135803F;
- Wed,  5 Aug 2026 07:52:29 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  5 Aug 2026 07:52:29 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrWdG-00073w-48
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 04:05:46 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wrWdE-0007Y0-EQ
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 04:05:45 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-c15e03c2763so149316266b.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 01:05:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785917143; x=1786521943; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OSQz8cl/kbv4E/ljGHzlVr+FqNT8OBNIrd2dy+lAbXY=;
+ b=FXbPKP2FA3bqfu49SK2Whyrbqnmm25fztIru5xpCaFBGd8ZnGBPo380kP/grd5WBmu
+ l/ZeM5Z56PAdgf7ORnVMZHXWm+MRxvdJEAXmrmri10hQGdCNWpt8+w1sMEoDm7ul/MWK
+ JzDUZApdrId/I34JRY/e5hLiSeb/Z6JFo7xE85OTmQCf2uSSSNQAB4FtYKM4OrA9Dpkf
+ 7R5myklGwr2s2BLo9x2I0IYPWMePNtxWwlXZK2JhE4NN2kSwpUfn6cqMOUPzwEXKlLm8
+ z0PRfdwlT9JCo7/FXulj/ZqmqgVL1Qtm8vEy75FpVCwVP7d+d2Fw4lQLAIeivv0O3gkK
+ Hffg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785917143; x=1786521943;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=OSQz8cl/kbv4E/ljGHzlVr+FqNT8OBNIrd2dy+lAbXY=;
+ b=YlDFTrI/s7oL8678I0rXDCXvvgnaln2wvP9iR0PIEXNsX6DrTPdn90H6jsn7qmxMlj
+ ds3RFeBAMsWwphImIlNZ1AgmUbIhPBFCoc/vj8jS6lBv1a0qKYMVPTNDcCWT38db98dP
+ 7Co+mRwCaRyVSskRWxwWwM/zOcFeWUPkpWj1ML0HvAV2N8dyeHt1u3hiNBJ9c9wgWZJG
+ 3XDknvW3wrVbA/mmWnGkfFRoCnP5aAjmYH8bBY3uvEHvmszkJWHo5XFsWp+/COEFuw0G
+ 2hA1p3LgHIzOYpAvTKXOlSyeaveyztg2MzKzsSE/3JN7cIUPm0vnSwbFEd6ZqIXiS+tL
+ oxWA==
+X-Gm-Message-State: AOJu0YyQyxabvb49ZwQJQE5Kuz6GQ4xYN5DFQ4LKALhf2e5JhxvE4NfX
+ PUCzpY9vG8WTNwTtRWp7baGOzuWEIfDHInJ2mu16tzDwqi6h1b6P3g0r
+X-Gm-Gg: AR+sD12/gbKErZjfwaJVOCJVNp1PCDPsMjaW9v9O2wHXlb1U78DTPnlYrMqiP9dk4eh
+ 3Rn6aMK7V+s/Iyk9zGtmnox21l0CPS5QpDwEFxzgNslrjunYwVz5H1NpE7kK0BjsACRNLxFBpvC
+ xoQ44veyMa52H4NmFMq7USUQsFVUWYnFA+LgSSDJ3OcbIG0AJ/0OWH6hUClMSbWdoq8ZX4Yl7Gw
+ 5vo+rxLabL6YCGv/se1HiN/VbfGQbXf0gYmI26SIXXV/VH6Vnr+mjv6InSJ+kcIyronEDQT710Q
+ 99Hu7kphktQcRP32Wes9bLxGmSwuiyiX3lNYk0Oz9yqYw6a2/ExKs/47/+CY2/9DXF543En+pa5
+ VbhhTD05Tpkqn1m+qnxWlIOaeM6/f7WdOWWgUboIVVAfuyFVIRHfGV28CiJM/CghA55+WSXHaC+
+ 8VrGbJwM+qRufKIcDehgwkvqePxcVLgvcPx8Bh6fBzyukp8E7dzlfNiAAr795oOtanMCgcwRyS1
+ Tkw1DuOQy79
+X-Received: by 2002:a17:907:d12:b0:c15:ee17:47a with SMTP id
+ a640c23a62f3a-c202488d435mr717813866b.15.1785917142395; 
+ Wed, 05 Aug 2026 01:05:42 -0700 (PDT)
+Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a1462c5d4bsm1498323a12.30.2026.08.05.01.05.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Aug 2026 01:05:42 -0700 (PDT)
+From: Wadim Mueller <wafgo01@gmail.com>
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	qemu-block@nongnu.org
+Subject: Re: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor
+ chains in one pass
+Date: Wed,  5 Aug 2026 10:05:23 +0200
+Message-ID: <20260805080540.323431-1-wafgo01@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAEUhbmVOkPeMzZGpgJ6WMk07xmf9oGL25jp7uw3uQtPt4LE93g@mail.gmail.com>
+References: <20260804081459.8007-1-wafgo01@gmail.com>
+ <CAEUhbmVOkPeMzZGpgJ6WMk07xmf9oGL25jp7uw3uQtPt4LE93g@mail.gmail.com>
 MIME-Version: 1.0
-Date: Wed, 05 Aug 2026 09:52:29 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v13 01/18] target/s390x: Rework s390 cpacf implementations
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <59cb2b9b-06ed-49a9-bf54-0921e25d275a@linux.ibm.com>
-References: <20260803161235.228704-1-freude@linux.ibm.com>
- <20260803161235.228704-2-freude@linux.ibm.com>
- <59cb2b9b-06ed-49a9-bf54-0921e25d275a@linux.ibm.com>
-Message-ID: <50bc5c3447f43d6df3e4329dae8f176f@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: t7zqKaD_z_BGbYWwflaOs3exI-xAWtzq
-X-Proofpoint-ORIG-GUID: t7zqKaD_z_BGbYWwflaOs3exI-xAWtzq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDA2MCBTYWx0ZWRfXzj3va73FGeXG
- iAxEPx60g8s4YdiW/YMj8q6ww0VntCfhSBWJZAopBMoNNrIYfosSfCGBumFfri446f0gS4S/X4r
- nYUCCyfhZQn7E0pPuRqcd72bDt3BURw=
-X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a72ebc1 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=Y9c9uQpRRzBNGCtdfwIA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDA2MCBTYWx0ZWRfX7+yHNvUEN0KF
- MCSDQXdGQ/pyoRIAfv9Bq6s+RM3KK01DZrZeTcEjWQ6IGsR+/oJ2jIJ9a4C6/L1gTWUpYEGW++I
- wtIkCZ6MjXPxM62/RokwDsNYB9MQ/1EPBDDKujjcBNmMP72pjllYGY2Z/vx2d+asjxkwQm/z/7+
- PhBZ3prwjZMo/BiPu0QfBl5QSEnbjcLpsojflJssVlLmixA6b9rMI4sqoBuE5Jr09c8QPY0+Xpv
- 3iKPqPl08blD0T92FUq77X9Kjx6hGhEavBI8usnCGMO8pXwfdfDNsLUskccueSVLWssOL4y6mX1
- fKC/QmqTjqrz+gVh/03T9fwvJqC27j7BZNu2tu8/JKqaZM94Pc5hVAG1LFtG+zPzV9NZPzciDjd
- mJdOzZh4DPwj8phbWPAQ+tN9AjA0i/ss1kFAK7/JmkhMG82ukEaclqan9hhTbU4QWJoylEbdRDa
- QKka6Zx/L+koLR+0zew==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_02,2026-08-04_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050060
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=wafgo01@gmail.com; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,56 +100,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-05 00:23, Ilya Leoshkevich wrote:
-> On 8/3/26 18:12, Harald Freudenberger wrote:
->> Fix missing parts for MSA 9 kdsa and rework the cpacf handling code
->> so that further extensions can be made in a clean and structured way.
->> 
->> Introduce a new header file to hold defines, structs and function
->> prototypes around s390 cpacf. Use the cpcaf function defines in the
->> existing code.
->> 
->> Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
->> Tested-by: Holger Dengler <dengler@linux.ibm.com>
->> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->> ---
->>   target/s390x/tcg/cpacf.h         | 226 
->> +++++++++++++++++++++++++++++++
->>   target/s390x/tcg/crypto_helper.c |  90 ++++++++++--
->>   target/s390x/tcg/insn-data.h.inc |   1 +
->>   target/s390x/tcg/translate.c     |   2 +
->>   4 files changed, 306 insertions(+), 13 deletions(-)
->>   create mode 100644 target/s390x/tcg/cpacf.h
->> 
->> diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
->> new file mode 100644
->> index 0000000000..49496d39ed
->> --- /dev/null
->> +++ b/target/s390x/tcg/cpacf.h
-> 
-> [...]
-> 
->> +/*
->> + * Function codes for the PCKMO instruction
->> + */
->> +#define CPACF_PCKMO_QUERY                      0x00
->> +#define CPACF_PCKMO_ENC_DES_KEY                0x01
->> +#define CPACF_PCKMO_ENC_TDES_128_KEY           0x02
->> +#define CPACF_PCKMO_ENC_TDES_192_KEY           0x03
->> +#define CPACF_PCKMO_ENC_AES_128_KEY            0x12
->> +#define CPACF_PCKMO_ENC_AES_192_KEY            0x13
->> +#define CPACF_PCKMO_ENC_AES_256_KEY            0x14
->> +#define CPACF_PCKMO_ENC_AES_XTS_128_DOUBLE_KEY 0x14
-> 
-> 0x14 repeats twice, should it be 0x15?
-> 
-> [...]
+Hi Bin,
 
-Yes, the double should be a 0x15. See kernel header file
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/s390/include/asm/cpacf.h
+Thanks a lot for the pointer -- I gave it a go. Let me share what I saw,
+with a couple of caveats up front, since I'm not sure I tested it fairly.
+
+Caveat 1: series 515264 doesn't apply on the tree I'm on -- it seems to
+build on earlier SD/SDHCI rework I don't have yet (e.g.
+SDHCIState.sdma_boundary_paused, sdhci_sdma_transfer_active, the Host
+Control 2 migration), so patches 07-11 and 13 didn't build against my
+base. So I couldn't test the series as-is.
+
+Caveat 2: to still get a data point I hand-applied only what I understood
+to be the core idea of patch 12 -- driving ADMA purely from the transfer
+timer and no longer resuming it from MMIO reads/writes -- on top of my
+AM64x tree. That's my approximation of your change, so I may well be
+misrepresenting it; please correct me if so.
+
+With that approximation, over 15 hands-off boots each of the same
+unmodified image (a ~28 MiB CMD18 ADMA2-64 read), counting the U-Boot
+"Timeout for status update" failures:
+
+  baseline (sliced sdhci_do_adma, ADMA resumed from MMIO):    7/15 time out
+  patch-12 approximation (ADMA timer-only, MMIO-decoupled):  10/15 time out
+  my patch (complete non-INT chains in one pass):             0/15
+
+I don't want to read too much into 7 vs 10 (small sample, overlapping),
+but what I take from it is that the timer-only approximation still timed
+out in most boots here, i.e. it doesn't seem to cover this particular
+failure, whereas completing the chain in one pass avoided it in every run.
+
+My guess as to why -- and this is only a guess -- is that the two things
+might be different facets of the same symptom:
+
+ - Your patch, as I understand it, targets a status *read* itself
+   executing a pending ADMA batch and thus returning late.
+
+ - What bites us on AM64x looks more like the *batched* transfer racing a
+   guest-side timeout: sdhci_do_adma still does only
+   SDHC_ADMA_DESCS_PER_DELAY descriptors per call and reschedules
+   SDHC_TRANSFER_DELAY ns later on QEMU_CLOCK_VIRTUAL, so a big transfer
+   is spread over many virtual-clock round-trips and U-Boot's timeout (in
+   guest time) can expire mid-transfer. If that's right, keeping the
+   per-batch reschedule would leave that race in place, which might be why
+   the approximation didn't help here.
+
+So my hunch is the two changes may be complementary rather than
+alternatives -- but I could easily be wrong about your patch given I only
+approximated it. Would it help if I rebased onto a base with the
+prerequisite SD rework and tested the actual series, or if I shared the
+AM64x reproducer? Whatever's most useful to you.
+
+Thanks again,
+Wadim
 
