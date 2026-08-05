@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D89C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF51C561E6
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrdNs-000234-Ly; Wed, 05 Aug 2026 11:18:20 -0400
+	id 1wrdZb-0005qb-S7; Wed, 05 Aug 2026 11:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wrdNr-00022w-IW
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:18:19 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
+ id 1wrdZU-0005nQ-26
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:20 -0400
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
- id 1wrdNp-0004UN-QQ
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:18:19 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4954d29264cso5924375e9.2
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:18:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
+ id 1wrdZR-0007dJ-NT
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:30:18 -0400
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-4896ae35be9so384412b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785943096; x=1786547896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IxGtx7jkjvRW+jALrr9QepDi17RseShRN6FfJzo8guM=;
- b=XoOBXMGSNyZM/AzIjjU/lSTy6m6FOxd47nkl/fvHkG+nPZ3jGNs21XXXYbXT3YUPHF
- C4Vn+gyBeC7kTXVKmyyNrHZybo/U/SDh7T4z/35FIZqVhs0Vh2MG1/O6opqGCkIvqixq
- lHT1zRL6AtM9k6u/WtdJ7tseGUy0pdCp/2vsSv5qyAyRCj7lfm0f9R6eKEx+XoGzJaQe
- wpiMn7h+OEtbabyz5oAJVsEFCwYSzEAH6imcKlbOuNtPDAf29lLi26Zb+yfdkug7ZVJQ
- htNs7cwfindURi1rAvvAIpsSXndaF/2HVA8TGQ52wsGk5uTyHO4eIBicb8f5+FT6Cp8H
- wt5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785943096; x=1786547896;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1785943814; x=1786548614; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IxGtx7jkjvRW+jALrr9QepDi17RseShRN6FfJzo8guM=;
- b=ZKio7nGoe5CQAOATfjd1a+X8IUXcpLr36Cn9/r36XF6JgeUj3U4ROKk06iIg7/oWut
- YH/UGF9HsM/A2q46wHAvRkOpJWD5uCpgNXfWMz7viPlPUl+DqmpLbNKutsVG+GDgDWXJ
- JzHJkSe/ysp6/nhtfMK198dEpFUbQzfs5RCzSF02x00nMP8eLz2ubqjalTgzcGgDXApI
- zhudfPRDuRSxmXYO5kxDydUbctX7yhXV4RETwDKTQcvpIapNpftOEl6KBLjJZXPDKKIv
- Ck848jpUNamq4nfgux0a38FNopjTkxwR6YJosxDi3InT4a9GOiD/e3asNUjpeuXVpkRZ
- tzxw==
-X-Gm-Message-State: AOJu0Yx0WZyt792Jb826Qxf5s5XlfTmqu6icuckq4bMvs62LvCHOIUGH
- WT6rdqmjv23EWfRsYarmVaRyXAviOOTKPkztZcvdOpSUILxlowaahyz0jLa0ylQHB0Y=
-X-Gm-Gg: AR+sD13odR37rqbkXNNwkAXuQ1E3Jtn11q2nGi5Q77/XAf9gHCaeJMz2GjD4HjaQsYr
- Mjcd9GrIkyaWz2aR/hihBBc6/bzcL5Ea65KqdXOJNz0BeYhK3AlRXhraiLCob6p22P30NJYI/Pw
- QvcwFaN1tVzCatvJ2HfYf+Tv30uooNt5P1hLgaWP227zvYYxtIzaLBMiz0x2tLIwuc641oY+Wtw
- YLW5DWQO1j9H5u2EtdVtwXmGj8GaUIOGwD/rtf0b1uSwZsUTqlgBf5rPI7XyCjdv4/QStqT75/C
- MlLPTmXdpQkLbsNoMV1DNcmiLSjOeoNsTXL3F9emP32exj3lsJ/KQQMQ34xwD15nfwfPQ7HhJ1F
- 84QnCGTzjQH4CEjI9ez2YYYhIM/h3I2XGA0cq9QDiTxEbc5RM0iFA6OStsIA+StjFMN+PJlp3B0
- sjqBpSRj5NBwUAih7kgWXOx4pkz1ozI+gTi11sG2Yrug2ELxj10LLFvTmhi6RsYWfLQnRFhjB+j
- iWZEFXAst0De6csqyX08AYvgeeRGA+t1p4c2oGilNKFO7kaiikiG9yMnZY49t/k0NCLdoITfG+J
- 7jL4cszF/GHlJ8mo5w85dajO04IqF0JExsf5RH0=
-X-Received: by 2002:a05:600c:19cd:b0:498:519:e660 with SMTP id
- 5b1f17b1804b1-4994e72f7b6mr91328785e9.4.1785943093585; 
- Wed, 05 Aug 2026 08:18:13 -0700 (PDT)
-Received: from simon-macbookpro.tugraz.local (tug-swl-c122.tugraz.at.
- [129.27.234.122]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4994e536a14sm53090885e9.1.2026.08.05.08.18.12
+ bh=PoXfMDRAQIj+y4/BPWtH1Tl3SZCP6UaSej1RFcIEr2g=;
+ b=POHWM1ewxHIkMhmxdfM22pg2ttz9Ev9AfgMMQUhQIcl7XJMSmMSNM7LJymWjQbCZTX
+ o2b1dCWY5JUrPACdC2aLHw8wc7HtkOoenaPKsGkXIMYi9YEg3dBJqb4P+yH7rQc8u7yK
+ Lg8C2lEQsJFZatl5INmaKmCPcyQMHe0FpK/TteAVA0dGNJEH7nZwWDWt8NIowAhaMOhM
+ 1GLeJE9uG6TPTjOsaRkxYE27AQhuY55Nh4g0Eh3N9G7CcDanRUc5U+QgF0Ge+T5zNS65
+ IHCk3M5m9kIIgaCMA2PzcfWKnuqGImadSYd7bSWqI0LgRqBmcxW9jWrvgPcRXYQ0LucN
+ p8cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785943814; x=1786548614;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PoXfMDRAQIj+y4/BPWtH1Tl3SZCP6UaSej1RFcIEr2g=;
+ b=FUgapa/uCiwEbsk5Q8CJIx6uYRoX61aIl1FttZSBUaUsft5GXbnWAYHVqI1Sid9hJZ
+ FDxgWYT42DKuymaHLjhT2b2/1VAgpM8l5yPlJBq37ckkfeWzKB7CBcyiu2/si5DgQeZQ
+ C5PjOLNo69+5L4i51vXuj6m6jtpOJELuA3ZG0RzqCgodRqW1Wq/RHLK09h8lAS7WUYy0
+ zfA7ZzdONTJqsXR9gLHNT/Do4o8ZahfR8e6YOnx2COEMEsEMbrUqqYpjphBOrPVNfyUK
+ /us1wwCqfEgA/N/2d4i7cyouFZ1EEC+PYsuB8OtgR2FAnWOzHShTqve8HV/yI0Qh/hsh
+ StKA==
+X-Gm-Message-State: AOJu0YxKBZlw/SHExQB349xvopxW+zXhcYq8Z76I75KnlKOaYssW4jFH
+ DMmjKhANMq5r2lO2yfC+28hEkzf004PVEgF56PvlNzVfzUg9s/SVAid4IJ0ezerQ
+X-Gm-Gg: AR+sD13Wtoi8bj63I2gs/BfWPc6NTlxFh9D6I1bYwQ1zoKU4H9X/UbrOLrlQPiTe2gO
+ F0JqGZxYmTwP/doFih8DpcYW2OYMLQcobWoGmRBxC2boJ52K7+pIY1BAuQufWPhzOqQELRqeEBo
+ 1ILxt2iTQ3TevbaUPC+PlTM6yS3nUSeG2AhT1+scN9cAGagMuGUmo7j/2CfVCBgjOz6fz6aoeRT
+ ATdFPUceihicJrZkGIGvcauFh/Ho8N/bizTEKTlJjHvuwre6xjmKc7O1evWkmBPyKey6KQA488V
+ vtm+QBUqCC4E2LV7NzNhOybk7Z+xYoEjMYtNQAHbEqkPsBvP4BywEb6BtTb8ub9RRf5a2iffHSr
+ UJ9IQBCXVMVIP1BXmnSfQTtqcZt4wvJBmECgep8l4R/hQI+jSG9SqbcQnROMQqV/UmMDzy+YPuC
+ tF6LlNf6MwN+dFNDE1L/OKZXFxJsiPLaHv7HcjLAe+RjPcMnp7J0Bs+GeGOrHDdW5YT4imhkR4I
+ olxC5nfqZC2
+X-Received: by 2002:a05:6808:444c:b0:4ab:6662:4e97 with SMTP id
+ 5614622812f47-4afae1e8f4fmr3995544b6e.16.1785943813687; 
+ Wed, 05 Aug 2026 08:30:13 -0700 (PDT)
+Received: from HPE-2MQ6131DV6.ams.hpecorp.net ([170.85.99.9])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-4afae75ce1bsm2185614b6e.15.2026.08.05.08.30.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 08:18:13 -0700 (PDT)
-From: Simon Scherer <scherer.simon89@gmail.com>
+ Wed, 05 Aug 2026 08:30:12 -0700 (PDT)
+From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- Simon Scherer <scherer.simon89@gmail.com>
-Subject: [PATCH] target/i386: do not zero-extend BSR/BSF dest when source is
- zero
-Date: Wed,  5 Aug 2026 17:18:10 +0200
-Message-ID: <20260805151810.369643-1-scherer.simon89@gmail.com>
+Cc: qemu-arm@nongnu.org, Owen Giles <owen.giles@hpe.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Robert Elliott <elliott@hpe.com>, Simon Xu <simonxhy0404@gmail.com>
+Subject: [PATCH v2 4/9] hw/misc/iotkit-secctl.c: fix AHB secure read
+Date: Wed,  5 Aug 2026 10:30:00 -0500
+Message-ID: <20260805153005.9989-5-simonxhy0404@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260805153005.9989-1-simonxhy0404@gmail.com>
+References: <20260805153005.9989-1-simonxhy0404@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=scherer.simon89@gmail.com; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,69 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the bsr and bsf instructions per the Intel SDM: "If the content
-of the source operand is 0, the content of the destination operand
-is undefined." The AMD64 Architecture Programmer's Manual is more
-specific: it states the destination operand remains unchanged when
-the source is zero. Testing on real hardware (multiple Intel and
-AMD systems) confirms that when the source operand is zero, the CPU
-leaves the entire 64-bit destination register untouched, including
-the upper 32 bits, even when executing the 32-bit form of the
-instruction (e.g. "bsr edx, ecx") in 64-bit mode.
+Fix AHB secure privilege to read AHB instead of APB.
 
-gen_BSF()/gen_BSR() already encode this intent (see the existing
-comment) by arranging for T0 to hold the correct full-width
-passthrough value when the source is zero. However, that correct
-value was then handed to the generic register writeback path
-(gen_writeback), which for a 32-bit destination unconditionally
-applies tcg_gen_ext32u_tl() and clears the upper 32 bits regardless
-of what gen_BSF()/gen_BSR() had just computed.
-
-This patch bypasses the generic writeback for this specific case
-(64-bit mode, 32-bit operand size) and writes the already-correct
-value directly to the register instead.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4132
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Fixes: b3717c23e1c0 ("hw/misc/iotkit-secctl: Add handling for PPCs")
+Reviewed-by: Owen Giles <owen.giles@hpe.com>
+Reviewed-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
 ---
- target/i386/tcg/emit.c.inc | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+v1 -> v2
+	Noticed this bug in the secure read function
+---
+ hw/misc/iotkit-secctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 473f415766..c555ef49aa 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1409,6 +1409,17 @@ static void gen_BSF(DisasContext *s, X86DecodedInsn *decode)
-      * by passing the output as the value to return upon zero.
-      */
-     tcg_gen_ctz_tl(s->T0, s->T0, s->T1);
-+
-+    /*
-+     * Bypass the gen_writeback: for a 32-bit destination in 64-bit
-+     * mode it would zero-extend the upper 32 bits, but T0 already holds
-+     * the exact final register value for both the zero- and non-zero-
-+     * source cases (see comment above).
-+     */
-+    if (CODE64(s) && ot == MO_32) {
-+        tcg_gen_mov_tl(cpu_regs[decode->op[0].n], s->T0);
-+        decode->op[0].unit = X86_OP_SKIP;
-+    }
- }
- 
- /* Non-standard convention - on entry T0 is zero-extended input, T1 is the output.  */
-@@ -1431,6 +1442,12 @@ static void gen_BSR(DisasContext *s, X86DecodedInsn *decode)
-     tcg_gen_xori_tl(s->T1, s->T1, TARGET_LONG_BITS - 1);
-     tcg_gen_clz_tl(s->T0, s->T0, s->T1);
-     tcg_gen_xori_tl(s->T0, s->T0, TARGET_LONG_BITS - 1);
-+
-+    /* See gen_BSF() above. */
-+    if (CODE64(s) && ot == MO_32) {
-+        tcg_gen_mov_tl(cpu_regs[decode->op[0].n], s->T0);
-+        decode->op[0].unit = X86_OP_SKIP;
-+    }
- }
- 
- static void gen_BSWAP(DisasContext *s, X86DecodedInsn *decode)
+diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
+index 54bfe1ba59..93753c2ced 100644
+--- a/hw/misc/iotkit-secctl.c
++++ b/hw/misc/iotkit-secctl.c
+@@ -195,7 +195,7 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
+     case A_AHBSPPPCEXP1:
+     case A_AHBSPPPCEXP2:
+     case A_AHBSPPPCEXP3:
+-        r = s->apbexp[offset_to_ppc_idx(offset)].sp;
++        r = s->ahbexp[offset_to_ppc_idx(offset)].sp;
+         break;
+     case A_APBSPPPC0:
+     case A_APBSPPPC1:
 -- 
 2.53.0
 
