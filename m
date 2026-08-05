@@ -4,91 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A976C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 14:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95DBC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 15:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrd3f-0005wr-S4; Wed, 05 Aug 2026 10:57:27 -0400
+	id 1wrdKf-0008If-Nu; Wed, 05 Aug 2026 11:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wrd3d-0005wU-8P
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 10:57:25 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wrdKc-0008IE-Db
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:14:58 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wrd3b-0001RV-PI
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 10:57:25 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-382ef647e20so1196878a91.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 07:57:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wrdKa-0003vg-2J
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 11:14:57 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-6682259cb3dso2063883d50.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 08:14:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785942895; cv=none;
+ d=google.com; s=arc-20260327;
+ b=CYjePdJNASsoAOXpzyYqIf6moaeZqQZhk46xClJMpJ6vpT81Tx16kE4eWpNyM24+8T
+ u3hnYJfeWG3IvlbLM9cAW18tTWAqI9ky0TvCJ0lKmmGPODqdegDI/2AwiFLO6HkWrp8B
+ /FSiubqdvXsF5teEtLu6MHV+70reo7ikhJ5ygaXDZ4n91ZFfhi2GBwxReDGXrVs5oSKJ
+ zOAa4BVhpWTlhccCfCeSJiB+6fNz8CowyA+tO3Z0+go8jHfM/U63DZlUIi8xErNCgDDF
+ QWQ4vvVGm0Eg+Du0PUptb5gbxH4lHwtu9sGiQtHorK6BOR4et1zfM5aOlK5uv61J8NsT
+ G/aQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
+ fh=MrC4L7+H7Lh0dpszqHFglF7qoDz5PPfvwAWpuV8Tsgo=;
+ b=TyZ907Kxdc3Yu7HiAdIvxtZsqO4k/WcJzApVScewOxwv85Jpa7iVItk9L6ZhJPJpFa
+ F+225/gL+WLPyEvRgcNV3zZrhWEE4njIQSByHZef9wvED8cOheiDKwNEar6lggN8FimU
+ uHYoMRP/yffs2SDmC3LB2GcN22S7Hoquz4udD3rrMvlYs145uy9NND96PoWbPkxmw9I/
+ mAia84y/y/l4DOJAmrrcsyWp5s7M48wqLtFkLAEKSOtjqNFhsx17MvraXMOVx4LUZ+d8
+ wZACFrbWMF1PfWAOAORiDapviFQ7qOFAcAVgK5Q+oKb0USvL1lfTfmVtWhUZWgBntXkV
+ 5Z3Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1785941841; x=1786546641; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=PEwLXYgFZx+vhHrnfxaBLboM/doum9NiGmpkLXjutGI=;
- b=pypxqBtt5ufXuM0Kyu7SwVory2z6SFfdcnDP7Pqqc6ZZrBksa7aVyZlrRvzee3uubg
- Io8X3JZkAYF4kiAOqkxQi/KYW/K+ygnzmKa2oWxtkeaZI2978h312IyW4N97wKFMu6Mo
- wzYCNXcTWtcdVwgw9vzq/kshrgiLL+YsX5ftUPjSdJFap3EAgbWqkU0saXD+dSt2Ok5/
- SGphq0bq7sH9na3InBGb1Dv3s2r8IHHSSgy1CFH8JeG6QDDXE56SJyoRINdAMyihLvMp
- zdoc/Fc3m0gRHWYfkXkHdra7vNnRvqcUbVYOamJpRvfDEOlq8pmN31RpW7b/Nm+Rn5no
- VoPg==
+ d=tenstorrent.com; s=google; t=1785942895; x=1786547695; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
+ b=LuWq3jdb3mEAef1Wdr5jbTbaR+Dw8bS1DAIEEVu3W81QtfXyL1lXUMuET+GNMNL73U
+ T+uudS+Jc8vt3d92RRWkg7Isur8S1weoZVQR/6F4bkymWxvipAx+Fgj7w/6e8ztjIk+1
+ sAokELTC2Cm7Yp/lm1w8w/9UbWWMDWT15c6m5Y7ov8U92gDmROQiOvWf2SA0BC3aSP+m
+ XqorMtgyIP7qfyXj4y7g+OJFbzpRuVDwXCaNK+XxLVH0JmC4+e7zK341x5Kocwqc1Ecr
+ T/I38QG3UfNiU9tVmMw/bVbi8ecKiZWxbf6MNhf5AV+xHo4JsjRrnuDUQntz5HieUki9
+ miqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785941841; x=1786546641;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PEwLXYgFZx+vhHrnfxaBLboM/doum9NiGmpkLXjutGI=;
- b=AWYcMMk9dee3kbIwwdyKeZy0i+VaK3odyRHabFN+3oIlVsYWdfyqaHKK4J0Jl05pcX
- rmlJ0avC6LO8dS0vO2qj2LKwCPqyyXOEyFUG+FU04eAOO5mry1n7nnh0oAPUczHNENqa
- wYSRKeLmjqPgNmGK4EkrtFaLwXhZMsg6NjLHLgun6tAp6EpsA23kmUtqj9hKzI2Fu6bn
- krkrOSfrCGPEncBwBF/b/abERGOxFaNb11Asf9e8iaJlsYMaptFeYBgcp0W1oxyI9KWO
- vW72DT+U7uQyAqAy4yq4I8WMxsWzFqPeQi5t7D0hKSuDbaL/g4qw0PCdG73wdhhO5Qs5
- 8LYg==
-X-Gm-Message-State: AOJu0YzxIzTLK6QK9uS4v87lK2xnDRhBtg+MXjXvWN8fk1DgBWWZv2XL
- sNPj76Rxt0Wqe4ZeKmZdtBiUMDxBXaye8hHE5gvVqfzgYnlNGnc4tBHliViorLCBZ4c=
-X-Gm-Gg: AR+sD12SgG84Z7fzzQEKTvnaxml+tkjOXG+I6Mpr4HmVDxNIboA4/ECuFuDGHFRxnR7
- IdpK8BMhf+yDTI82+e4zq+YOaZMUKuqY8CcYmGnf3niehJSCJknFScnZl4eB+ozJE1D9u1FgUY4
- 9ETzF1+VoPuVCbi40o0QH9XPnrDNklczIOrJiP0+hjm40vlreeB1jhN5EygBdiiXnoTaWiw9Bzx
- 9JBCZcMikyUVxn/FulLhEBrmTxOdPpwoBR0JH9csghahMiU+0pCqdUOw9gvDBUDaQEN0XwmoMCD
- rVILRcT7oS9CmDDL/F3dKuC7yy6umO8yT61vDiXtVZ815xN4EiecjFfhTG5MBqBnIczQxMcIYWJ
- KLe3aSD2Ayzf7OxArbbWzvf8ioRCdWTdfw/Z/qqgbvvadZhtltLchmeGSNoEICjy/0LvTsr37qs
- 6qI5YnoYQOWeilhaiNZY3x08RYx6lRnXicQhZy1qIey5YqVE+U7moNu1XvAW0tIc2V4tFVA6e/K
- FPgnzYuvyZt/13sYdv272bdeFQ/
-X-Received: by 2002:a17:90b:2782:b0:36a:8240:2477 with SMTP id
- 98e67ed59e1d1-3903c60c488mr7752217a91.19.1785941841519; 
- Wed, 05 Aug 2026 07:57:21 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-38feda512f3sm4956665a91.11.2026.08.05.07.56.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Aug 2026 07:57:21 -0700 (PDT)
-Message-ID: <841905d0-6967-4560-b07f-d040e992f4fa@linaro.org>
-Date: Wed, 5 Aug 2026 07:56:48 -0700
+ d=1e100.net; s=20251104; t=1785942895; x=1786547695;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pdZ+H8C4aO6k24qQRRfn0WLFF2X3tDY9A21qNVIwjII=;
+ b=NhESlBRBpZWJiH64YzlSkFs6XU9SSyt4pr+nuyz1+Agf5GDCLzyyQIpg/rHnVrOh7Q
+ oDOeZzVsGIwNmKxQcp2NVovLzpfel5p0PofC9t52+lBDGRs3hsJhlnubjyYK8YSuE1T/
+ ARGWIp77B1y7uCrHxApY6AxZZevSxRngTHCzU81yFm2o6cXrrO4yzCSMZiGF9M70bDmD
+ dOJuRyZBDbbd6lXP/8CesCNzpcLK7a6/heoQn/woEzRbYyanmgZWj7ONo1sHVd+MjqUL
+ G/vztRKppTvlFmu2ckz06P7/rHP9r6SLNglwmYDweEYAZFS3U8mdda+/5mbdaVpgpTfV
+ ATiQ==
+X-Gm-Message-State: AOJu0YyePa6RfXdbrqXQar6sC3sIxa4nKeV0TX9b67CfUEyZVl9tMJb9
+ ug2FH2ZgozrAhgXDIbLZeCiuE85VIiI864+ZUdvmdaSRYONj7IZ4ekB9D4eGZvMisXx1TULS/PM
+ iREFxGDfQmVkAxn9a1mhSpsWNAmlfcaYs0cB+oSXT1A==
+X-Gm-Gg: AR+sD113RnAZBiokZG66ScaTOf5PKucMvVuKJ99i3BzAzGVpxw62Pj2Mfi7tUndwGCR
+ d8qA7SW85F9e2zZUpXBrJdXj+Ue2a+A2grCIcutWhcMAG7GJGY99ueYByHBOyVrtPGdDlb9qxwe
+ 26DCgjhwyaPA/wxXR/rn80Hvvq7CghcGJFxyXlrwpT+6rWOrYsjfE+mi8pwE75QoGp8KmIMwxt7
+ 3PEUmMk2sI1gaTaLvxy5cAzu3jnRQ+Pk82GnzghrtptNzcXigEvYE6u2Z6p+7R7lDSgA8D4c0js
+ f2sEWuV0bnP2bCERFKxuloDekPOxlveBciK1GtIN92E9D0oZ+w/XK3OyMQdn+qlmXjaRlgU7gGI
+ =
+X-Received: by 2002:a53:d94a:0:b0:668:14a7:d00d with SMTP id
+ 956f58d0204a3-66985a1e70dmr6122636d50.2.1785942894673; Wed, 05 Aug 2026
+ 08:14:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/sh4: Deliver SIGILL on invalid instruction
-To: Mikulas Patocka <mpatocka@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>
-Cc: qemu-devel@nongnu.org
-References: <2a3f1f1e-459e-5d36-0c1c-e56568cced9c@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <2a3f1f1e-459e-5d36-0c1c-e56568cced9c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260801192848.30606-1-flamboyant.h.01@gmail.com>
+ <20260801192848.30606-2-flamboyant.h.01@gmail.com>
+ <itp7xmctqnac4c7kytqyrrs3xbfnbjprem6ezlltc6b5ncdpdn@6pypq3e7lbog>
+ <CAAW0U4a-nG-ck4g8w0_Vt1Jbu5dNcYEDjJNR-YvGEiHa9G4Rdw@mail.gmail.com>
+In-Reply-To: <CAAW0U4a-nG-ck4g8w0_Vt1Jbu5dNcYEDjJNR-YvGEiHa9G4Rdw@mail.gmail.com>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Wed, 5 Aug 2026 10:14:43 -0500
+X-Gm-Features: AUfX_mzuYq7HsXggprpqj-z-yCsBYQMdwg_Kf8bKB4H-h0AZUPzYce_eCFbtZyc
+Message-ID: <CAEev2e8UcXn46OoyqTXpx8-_PzUNyGJDVF094J+boLUSqQ3VLw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] hw/ssi: Add Synopsys DesignWare SSI standard PIO
+ controller
+To: Kangjie Huang <flamboyant.h.01@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +129,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/26 12:42, Mikulas Patocka wrote:
-> On invalid instruction, deliver SIGILL rather than crashing the whole
-> process unconditionally.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-> 
-> ---
->   linux-user/sh4/cpu_loop.c |    4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> Index: qemu/linux-user/sh4/cpu_loop.c
-> ===================================================================
-> --- qemu.orig/linux-user/sh4/cpu_loop.c	2026-08-02 19:02:25.000000000 +0200
-> +++ qemu/linux-user/sh4/cpu_loop.c	2026-08-02 19:06:40.000000000 +0200
-> @@ -64,6 +64,10 @@ void cpu_loop(CPUSH4State *env)
->               cpu_exec_step_atomic(cs);
->               arch_interrupt = false;
->               break;
-> +        case 0x180:
-> +            /* Illegal instruction */
-> +            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC, env->pc);
-> +            break;
->           default:
->               fprintf(stderr, "Unhandled trap: 0x%x\n", trapnr);
->               cpu_dump_state(cs, stderr, 0);
-> 
+Hi,
 
-Missing 0x1a0, from helper_raise_slot_illegal_instruction.
+On Tue, Aug 4, 2026 at 10:57=E2=80=AFPM Kangjie Huang <flamboyant.h.01@gmai=
+l.com> wrote:
+>
+> Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com> =E4=BA=8E2026=E5=B9=
+=B48=E6=9C=885=E6=97=A5=E5=91=A8=E4=B8=89 02:39=E5=86=99=E9=81=93=EF=BC=9A
+>
+> > There are 2 variants of designware spi, one is called dw-apb-ssi and
+> > another is called dwc-ssi. If you look at their u-boot drivers, you can
+> > see that they differ in the location of the TMOD bits in the CTRLR0.
+> > dw-apb-ssi has it at bits 8 and 9, while dwc-ssi has it at 10/11.
+> > This implementation is for the dwc-ssi version (which is the newer one)=
+.
+> >
+> > Would it be possible to have the naming be consistent (DWC_SSI,
+> > dwc_ssi.c) everywhere? There are some places throught the series where
+> > the file names/Kconfig symbols/function names are named dw_ssi.
+> >
+> > One could argue that this model could retain the generic designware spi
+> > name and support both versions, but I don't think that's necessary.
+>
+> I will make the naming consistently use dwc_ssi throughout the
+> next revision of the series.
+>
+> I compared the dw-apb-ssi and dwc-ssi , as well as their Linux
+> and U-Boot driver implementations, and confirmed that the two variants
+> have distinct guest-visible register ABIs. As you note, CTRLR0.TMOD is
+> located at bits [9:8] in dw-apb-ssi and at bits [11:10] in DWC SSI. Also,=
+The
+> layouts and supported ranges of other fields, including DFS, FRF and
+> SCPH/SCPOL, also differ. Linux and U-Boot likewise use explicit
+> capability checks to select the appropriate register field encodings.
+>
+> Supporting dw-apb-ssi would require variant-specific register handling
+> and tests. But QEMU currently has no concrete dw-apb-ssi machine/SoC
+> consumer, my understanding is that this series should remain focused on
+> dwc-ssi, with dw-apb-ssi support added together with a concrete consumer
+> and its tests in the future. Please let me know if I have misunderstood.
 
-r~
+Sounds good. I wouldn't worry about supporting dw-apb-ssi.
+
+>
+> Regards,
+> Kangjie
 
