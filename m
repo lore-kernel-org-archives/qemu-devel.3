@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFA9C55ABF
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE5BC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wraA5-0004gC-Qz; Wed, 05 Aug 2026 07:51:53 -0400
+	id 1wraA3-0004fN-CQ; Wed, 05 Aug 2026 07:51:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraA3-0004fY-VK
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:51:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wraA1-0004eo-1U
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:51:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraA2-0006jT-7G
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:51:51 -0400
+ id 1wra9z-0006j9-FN
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:51:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785930709;
+ s=mimecast20190719; t=1785930706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hCRmnSWXK6YF43RdUv6ID/tYdpsLJqbm/2L6HherxKo=;
- b=iwyxaCSiUFVSYqWLjv+gP3e8pwETmflYca2UaBGdAqD9IDFEHwi9L+lmOKG35fXZMckUY5
- P5NukPKNb77Zg5yr4y7kdXsFEdL+k8Gkw/N7bqtEOplN2KVV4gb0v3VN1YbTq/bjGlklXO
- YQoQ+vDfjy9elDGaHVR0IVTuDzmXk0Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=32hlOoxGcOHc+TuHMabHzUMn9fLw1XdnOt4vvPs+mgc=;
+ b=GCNkcsFsmJJ2jwc12hamaJUYNw/vttT2kmc5s7ipiBOM36BB+XtD4rVY7xVwBFtZVvv4ng
+ i9ypcq9Zy2WYxJheXLvCEKK2AzL2TPLMWFzyFXciEXnuYsXEYHh88N6Ig9+Sfehxr+w99b
+ U7MVzqjXj9o4qEQA3/Np9tvsqAkQW1o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-wwD4HWDiPymAFZBnJn_ofg-1; Wed,
- 05 Aug 2026 07:51:48 -0400
-X-MC-Unique: wwD4HWDiPymAFZBnJn_ofg-1
-X-Mimecast-MFC-AGG-ID: wwD4HWDiPymAFZBnJn_ofg_1785930707
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-V5sGPF6xPRaSKfF0rpQNng-1; Wed,
+ 05 Aug 2026 07:51:39 -0400
+X-MC-Unique: V5sGPF6xPRaSKfF0rpQNng-1
+X-Mimecast-MFC-AGG-ID: V5sGPF6xPRaSKfF0rpQNng_1785930698
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7AD141800614
- for <qemu-devel@nongnu.org>; Wed,  5 Aug 2026 11:51:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F06A1955F2D; Wed,  5 Aug 2026 11:51:38 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 94138434; Wed,  5 Aug 2026 11:51:45 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 98CE41956094; Wed,  5 Aug 2026 11:51:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 05 Aug 2026 15:50:53 +0400
-Subject: [PATCH 03/27] hw/usb/dev-smartcard-reader: fix assert on pending
- answers overflow
+Date: Wed, 05 Aug 2026 15:50:52 +0400
+Subject: [PATCH 02/27] hw/usb/dev-smartcard-reader: fix OOB read from
+ pending bulk-in ring
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260805-smartcard-fixes-v1-3-187ee9122441@redhat.com>
+Message-Id: <20260805-smartcard-fixes-v1-2-187ee9122441@redhat.com>
 References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 In-Reply-To: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1948;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Warisjeet Singh <sinxx198@gmail.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2224;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=8r1WrMY8qvKHYq+sLpf/U+GdQK/1XkWNkVF/NDHIznQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOrW6lTCHcKxj571Xaq3/3c0uLdUT6C9Onoc
- OX5Q6ELouCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjqwAKCRDa6OEJdZac
- 5fcoEACWByCum7kJvBFX/QeQ20/SleprKetoGWyUOpJwR3d7YCdUwK/YXbeUhQhjOajgbtztfdl
- t3hp0TU8dY4q5z6fDZLJMtZq2ZfDt6kVerhaNkErHDVEn0rDIWmJSLuzYjl0q1MxCSi5Y9fM1ZF
- /Ccqu8Nt9aM42QLRigUfTARGKfYFowtRPhXy8BUTVpGzVzf8O72nvtMkTMr8m+u4X1+4gr3b97n
- xbpzciO0X4h1d7tWLadB0+3nZ7/VrkpXiKiVO/CmKly4R75/6G8KYICJCpX+49TyvxO3nlpzVMb
- auHmz2CHhenLeFKgeav/KXaopOvYZD1yISfayoLkdJB3wjqSU3IX2TO3lWcETGm3ZKoQdwU1JtO
- 576/iRgl8yuqIi2htcGCsKdwayGIltVYpsOPcwrBnjk0QGgMf8az9Qyj/p5UCjthuHRKxUUrLg6
- QgWkFHWH8aKR6rVz6R5VOrOUJgsBTZKOHW8nyrLcEdYuce1mRlna8og6HOOFiQPrR2R3OtHjAFh
- 0M0dchlRLQFfbugLl/3dxFyk7xLwLLUtDYHPravGaG+M9WOk/IWOOuCF7/EU8dZK9jXnG9c+nw/
- CcZT7BbyJnQW4ncB/y7vXS+rTqPmyTXdDJm+MP+O1/w8JBMWcpZgTy9CjiDMrtWpqIOSDVGiypK
- dUEKW9Xk2QbB3vQ==
+ bh=g51vDtQSsX4MUh7GbI6yZjnSsCXHFNXZm1WmNeBdFT4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOrxtC07a9LGJRB2lYReVpDllIPRMeRTA0fA
+ 35TDWIk+EuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjqwAKCRDa6OEJdZac
+ 5fswD/oDXdxLo6gvuIhvFRnY7vqAO9IUzoMepLXE/cev6ziMkdp6J7fiz8i6v0nw6Dv2dHWGMlF
+ MwUFE/E6xfuqnrS/ORtyjsqTCR6LlFbD9M0fujlK93XvG0PF+ynuE/ijl6vp2H2B14RUQuF6T8P
+ 3vkdAoGB5ziwynjoYQeGE2Bz9u4fIjZ41Av+SJxBP7RjIgeke9rcjrW+r3gQf/42FHFNj6qpplH
+ nBMqLLO+Qm9jvWuhq0yoUut/wCVb1AyzXcVYCdNrZ3mHTAaT2geBPuFDzZ6WEUzL5cd9Bi0UvQ5
+ ywrPgLYjRbrbBYW41UnIzOBmshJGVpK/61CJG//tm4OkUKVt2cZDk8IdHtnt14khqxRfx6kTX9b
+ m1LiS6mSrX83hTgaaN7RYgWuz7tmxCHSdItxtamNIeetHehtnQpTnafMPDfArn5bi/Lil71j5S5
+ nOi3dVbFjPrsvtU2yqFxepDGbye77ebonOp9k9/zg0sq6J8oSh7XKpRCx3ONIqdBNC1QX8s1Wk2
+ dxyVoha1dHIIpvqQR81Q8HzWiEHox9JnuJdexHYGv+32hYqCVbmaIAo8Ko5AE9Tfwa4uqwSvqL9
+ uAwMhWgaWqYhTR8afECbPy2DKuUbYIPaOy8ubE+ThSKuTfHGur/yZqf1nsmyieEWcBcVdQ4k7FK
+ Ud5RrdUoZovKeEA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,53 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest can send PC_to_RDR_XfrBlock USB messages faster than the async
-card backend can process them. When the pending_answers ring buffer
-(128 entries) fills, ccid_add_pending_answer() hits an assert() and
-crashes QEMU.
+ccid_bulk_in_get() decrements bulk_in_pending_num when a slot becomes
+active, but the slot is only truly free after ccid_bulk_in_release().
+A guest can fill all 8 ring slots, partially read one (leaving pos
+non-zero), then send another command whose response reuses the active
+slot. The stale pos > new len makes the uint32_t subtraction in
+ccid_bulk_in_copy_to_guest() wrap, reading past data[].
 
-The CCID spec (section 4) states that a slot can only accept one
-command at a time. A second command to a busy slot must be rejected
-with CMD_SLOT_BUSY (section 6.2.6).
+Move the decrement to ccid_bulk_in_release() so the slot stays busy
+until then. Add an assert(pos <= len) before the subtraction.
 
-Enforce this by checking pending_answers_num before queuing a new
-APDU. When the slot is already busy, report ERROR_CMD_SLOT_BUSY and
-send a DataBlock error response back to the guest.
+In practice, the device advertises bMaxCCIDBusySlots=1, so a conforming
+host never has more than one command in flight and the ring never fills.
 
-Fixes: CVE-2026-18410
+Fixes: CVE-2026-18204
 Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3997
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4086
+Reported-by: Warisjeet Singh <sinxx198@gmail.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/usb/dev-smartcard-reader.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/usb/dev-smartcard-reader.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 8241cd07648d..9fc6bbca0f2d 100644
+index bba97a2b19e6..8241cd07648d 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -166,6 +166,7 @@ enum {
-     ERROR_XFR_PARITY_ERROR  = -3,
-     ERROR_XFR_OVERRUN       = -4,
-     ERROR_HW_ERROR          = -5,
-+    ERROR_CMD_SLOT_BUSY     = -32,
- };
+@@ -580,6 +580,7 @@ static void ccid_bulk_in_release(USBCCIDState *s)
+     assert(s->current_bulk_in != NULL);
+     s->current_bulk_in->pos = 0;
+     s->current_bulk_in = NULL;
++    s->bulk_in_pending_num--;
+ }
  
- /* 6.2.6 RDR_to_PC_SlotStatus definitions */
-@@ -945,6 +946,13 @@ static void ccid_on_apdu_from_guest(USBCCIDState *s, CCID_XferBlock *recv)
-         ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
+ static void ccid_bulk_in_get(USBCCIDState *s)
+@@ -587,8 +588,6 @@ static void ccid_bulk_in_get(USBCCIDState *s)
+     if (s->current_bulk_in != NULL || s->bulk_in_pending_num == 0) {
          return;
      }
-+    if (s->pending_answers_num > 0) {
-+        DPRINTF(s, D_WARN,
-+                "usb-ccid: slot already busy, rejecting apdu\n");
-+        ccid_report_error_failed(s, ERROR_CMD_SLOT_BUSY);
-+        ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
-+        return;
-+    }
-     len = le32_to_cpu(recv->hdr.dwLength);
-     DPRINTF(s, 1, "%s: seq %d, len %u\n", __func__,
-                 recv->hdr.bSeq, len);
+-    assert(s->bulk_in_pending_num > 0);
+-    s->bulk_in_pending_num--;
+     s->current_bulk_in =
+         &s->bulk_in_pending[(s->bulk_in_pending_start++) % BULK_IN_PENDING_NUM];
+ }
+@@ -1078,6 +1077,7 @@ static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
+ 
+     ccid_bulk_in_get(s);
+     if (s->current_bulk_in != NULL) {
++        assert(s->current_bulk_in->pos <= s->current_bulk_in->len);
+         len = MIN(s->current_bulk_in->len - s->current_bulk_in->pos,
+                   p->iov.size);
+         if (len) {
 
 -- 
 2.55.0
