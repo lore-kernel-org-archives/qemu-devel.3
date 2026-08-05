@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ECAEC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6514C55ABA
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wraAg-0005fT-Kw; Wed, 05 Aug 2026 07:52:30 -0400
+	id 1wraBC-0007UK-Tm; Wed, 05 Aug 2026 07:53:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraAe-0005Vs-EA
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:52:28 -0400
+ id 1wraBB-0007Me-Eo
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraAc-0006u1-Iz
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:52:28 -0400
+ id 1wraB9-0007EG-VA
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785930745;
+ s=mimecast20190719; t=1785930779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3cKC1Q443HkKmBCPK6f7y7gcM49z2DQPieEv1+CLUjM=;
- b=KYU79/yL2OBOaWIm1eY8rAQ+BKMmANuaEwi7dKJZ25gplsu3oU/GKbllhnyQ+yY+ZZnE43
- TnJhKENqIL5LutmXt1R1avjA7UzXxmSU0xleylNV25yrOegmdmsSTjFnf5+zeAT06vn42G
- bFQ7mLmlTUQ6yfiYtFKu50lmE9bEn/A=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EMibH8iba3oSpJwO21+PI+MpXq9PANZk1NviI0MLeWA=;
+ b=YN1K818cKVdcHoFZGewuiWan5VEE4BxBb2vOH95zGzouh/SzAJJ7n3BbXQGLc+EVFW7eDb
+ +hdtLEby6vhCmd4pQZyh2ScF0sAMJq/a6Oef4U40hrpo851YeUrpWqLUD3dhggIoN9NGhM
+ V8pnj0n5nbiqDKkzCca38yGr084Av/o=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-QEfGZ37aOBGWu5afr_wqFQ-1; Wed,
- 05 Aug 2026 07:52:19 -0400
-X-MC-Unique: QEfGZ37aOBGWu5afr_wqFQ-1
-X-Mimecast-MFC-AGG-ID: QEfGZ37aOBGWu5afr_wqFQ_1785930739
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-EoirwjjVMkWgyhvHmnVxQA-1; Wed,
+ 05 Aug 2026 07:52:53 -0400
+X-MC-Unique: EoirwjjVMkWgyhvHmnVxQA-1
+X-Mimecast-MFC-AGG-ID: EoirwjjVMkWgyhvHmnVxQA_1785930772
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F09EF19560B5
- for <qemu-devel@nongnu.org>; Wed,  5 Aug 2026 11:52:18 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44A2A19560A2
+ for <qemu-devel@nongnu.org>; Wed,  5 Aug 2026 11:52:52 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6B08F180034C; Wed,  5 Aug 2026 11:52:15 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 72B9C180049F; Wed,  5 Aug 2026 11:52:49 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 05 Aug 2026 15:50:56 +0400
-Subject: [PATCH 06/27] hw/usb/dev-smartcard-reader: fix OOB read in
- atr_get_protocol_num()
+Date: Wed, 05 Aug 2026 15:50:59 +0400
+Subject: [PATCH 09/27] hw/usb/dev-smartcard-reader: validate migrated
+ fields in post_load
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260805-smartcard-fixes-v1-6-187ee9122441@redhat.com>
+Message-Id: <20260805-smartcard-fixes-v1-9-187ee9122441@redhat.com>
 References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 In-Reply-To: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1018;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1304;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cVmgGekfR/ZikK6JZqR1e4rXKDxXKSJXVIK7Fe/G53Y=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOsCUFhx+zKw2vsNZV98dACxp3uRUeXp8py1
- wqwJRvQhWyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjrAAKCRDa6OEJdZac
- 5QlgD/0RoJqNnAKyAghvGR/i1ixiAqGDeYC3RTLDdYyl4z0rKSQgo7C1GcELfkGuEtym1m75fn8
- nNTNy1V2qaQEmEekslCns83GbfAwMH9DeljyNmjnOCfAx1NsPuwIg7dqUrj0qh9pjV4Sclvhb6E
- eq4/vPjRdGmtJ/oQm/xDDF0DVBpciKt5CqMHZOZbfRL0HWFiN1QBwiZ8mCnlmlj1v+gr2IqcnXj
- HUQCLyN80Uy42rH0Ij8dJh04Frl0pDR5cMUbJER9pEWEc0fDIj0V/KGVUMWX+wo0ZOhu5TQPciK
- o3fULeKDc0H3bN5PMrv5BHzHlKSKdfDeDAVgTkCRw1YLjjJhpJfkp4B7vRMQgQFOVxebY5wnSwY
- nQ3OuS2lI2/8G/gVwbQ/8hmAX/PyC7HkIDu+Nwi8PpAUino1WsYnIEJEDvSwsu8uZ9zsWra4BRG
- SeTTh7eSHSfxS7bULL+ua4KNQN+lMiPSjx30d8JIwTR40QVafkIgxUqIfibZJohp/VShI4YZ7bY
- xOPi0Ev5UXsD8aBVtVy51gufteIGtNxMCvqOXAmTwrNr/cfTaT9OwuudyPQnX2vmAowRqdaT2X2
- 0zdWHVZgWAYqj6cac0AENM/oqdiFOrACtuB3eyT582vd1hFVEU5VStNEjqT3WAsONcC5QATJ9xZ
- fcAocM6y4Or3yvg==
+ bh=vf6q3ker/6skkfLofV3IYMweVoha2qg+51FmyI3g6NE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOs2Fhl/j6IJoOofsW2hKw5OgMNnituTOvlc
+ gIS+QeyawSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjrAAKCRDa6OEJdZac
+ 5RsaD/97AaM+S452u3iRaTaImX8PikeJNedRl7gW4LoRjRgzGE+gzjddnzivsb1eLY7ODmO28dN
+ 6c7e0+Zx7DPud/PSoPoaFWq0WfM3bMz2z6Pw4+cLdQLC+OwfONmXcv5MKP0k80soB8xQPyWndmT
+ 7wC/D8ct1+GS3VIxee5SE6+M0TqGvbN1uKgHKiDTKLlmV02Y0KbP9y+vA83gcvqKbsFyrXzmeXd
+ 8vDlZMMWQ9R7EAHMsBK+7o/ymqPhx1AseEXYWCJLp/D4yoWKhxuBvlUvm9f2xh83NssUb2uWpba
+ SqMPug5QweTZOBmd8iytVNRKFd/LJSalEHpsSmCKzmvCRg89vqnQxU6RahxHSk9keHRlWJ10mFO
+ DIzW0S3Ikyu3+K8j+Rnhhpi+0uW/L2yKhj9e/jN3INMxw5i1tyWJ+DsCJMKsJo52/iXnun3biKj
+ SQCnjaVMBkj49VP3UkB5JaZ4Oqpl+KNBW7g8MR7fpqCzxrZXDLv53hpFkx93eStZJRYKhBgGc6n
+ S7z2hjqcjangH1Re76Kjej5Voz5u2N52tv3eQkqHnptyNnonmiMhj9bQKBOUGdDE40m/351AOb4
+ R+YCRANyMOKXwAJEmUhRlV/G3in7DJLGiMYJzZ/T4cC4v1gWk0yoqIaFreSq3YmIhGtfiIyT6tt
+ jAvyRDpGUt5VUgA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,34 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-atr_get_protocol_num() computes the TD1 offset from the T0 presence bits
-without checking that the byte exists in the ATR buffer. A truncated ATR
-causes an out-of-bounds read.
+Validate fields loaded from the migration stream to reject crafted or
+corrupt data before it can cause harm.
 
-Validate the offset before dereferencing and fall back to T=0.
-
-This is only triggerable by a buggy backend.
-
-Fixes: 2f8f916b6d44 ("dev-smartcard-reader: copy atr protocol to ccid parameters")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/usb/dev-smartcard-reader.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/usb/dev-smartcard-reader.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index a14062948071..a147cd19f388 100644
+index c6a9faf00d6f..bed641be4512 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -836,6 +836,9 @@ static uint8_t atr_get_protocol_num(const uint8_t *atr, uint32_t len)
-     }
-     i = 1 + !!(atr[1] & 0x10) + !!(atr[1] & 0x20) + !!(atr[1] & 0x40);
-     i += !!(atr[1] & 0x80);
-+    if (i >= len) {
-+        return 0;
+@@ -1364,6 +1364,26 @@ static void ccid_realize(USBDevice *dev, Error **errp)
+ static int ccid_post_load(void *opaque, int version_id)
+ {
+     USBCCIDState *s = opaque;
++    int i;
++
++    if (s->bulk_in_pending_end - s->bulk_in_pending_start > BULK_IN_PENDING_NUM) {
++        return -EINVAL;
 +    }
-     return atr[i] & 0x0f;
- }
++
++    if (s->pending_answers_num > PENDING_ANSWERS_NUM) {
++        return -EINVAL;
++    }
++
++    if (s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
++        return -EINVAL;
++    }
++
++    for (i = 0; i < BULK_IN_PENDING_NUM; i++) {
++        if (s->bulk_in_pending[i].len > BULK_IN_BUF_SIZE ||
++            s->bulk_in_pending[i].pos > s->bulk_in_pending[i].len) {
++            return -EINVAL;
++        }
++    }
  
+     /*
+      * This must be done after usb_device_attach, which sets state to ATTACHED,
 
 -- 
 2.55.0
