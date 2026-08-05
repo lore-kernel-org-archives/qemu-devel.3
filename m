@@ -4,110 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B4CC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED13C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 13:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrbhZ-00082Q-58; Wed, 05 Aug 2026 09:30:33 -0400
+	id 1wrbvC-0002Ip-78; Wed, 05 Aug 2026 09:44:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wrbhW-0007zv-Rh
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:30:30 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wrbhU-0006DU-Oe
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:30:30 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6a10b20634fso1692303a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 06:30:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1785936627; cv=none;
- d=google.com; s=arc-20260327;
- b=SaMssPwlvu7h6JExZ5At+Hb4dyI/xH8hs1Y9bqb+jVhVUo76+/CrEF4vAxe49BOGTg
- 3lprnQ80AkmrAtRx5DJsHXpANzXz/FiHGMiJvnH1Ok6maYSyA2IEIU2XoEtyW8RY/A+U
- YkT2uXfaWhfRbG97AGltAt8zEvC5KbNd/XqXF74jGC0PBcYCnCYGzJA+RzHDxIyypuuw
- MqiL1bw08I8DwKwT1WCQ/nmH1kFMWPsUUz5Aa8aJvmwG+lC9k/wHpmYMNRRMAFt7lZbS
- KUNmujnZ8hWiwVnnHeVRguwYxQr4dxYyMsyR+7sRTAvPzCjs8o28NSVMsjwfSUwqEaTq
- cskA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ul+bEM2cOS0fH17TffqT3LRkSX+Tmw6wVbSUQ/vxJP4=;
- fh=9mwyWOpK54iJC8aLtzCKDeGN9smrR+H4CobDsaMoCBU=;
- b=Zsi27FfmENqNOsT97sywFjQ6iUycQlaaK2ctosA8mQvFG/2y2Erx3E8n099V0VEwru
- 6gdnbYNe0KpfcmfwZ6hHKsW5w4Jld6Ap2q3P2x8BpiTWE4LnyyKYxbnK5tirNthQxeER
- 5j5T26O/VE9SucSm1QCnHI8uBjEMMu2K1oO/LS3yNgKE01xKwslhrO5ay8tuYua5+l5S
- qzXb1hDdENFcdn8fVj9cS6lo1+j6ojSmkFKTSto1r/ZTDso4CwmlkeB4REWjQ4ovxRPt
- WfrM0fTjhi6vg7EX7jnp4qhh9wNzhLUGuTnak3ia91/eGk+/3yCPf7CHFHQ6itTSlt7c
- +HRA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785936627; x=1786541427; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ul+bEM2cOS0fH17TffqT3LRkSX+Tmw6wVbSUQ/vxJP4=;
- b=Uq0K5OYjdixpcylaPtig8khWHR0FtbIOiWXDoiYj9N9QW0+5VOhWj+2qLTgnuWk9dd
- 1Zw7LyoCHEGJMwq6xfcbVPguc2tMB1bOqKpSHLHCJWd6ENPpoVZXR4HkaLBfttvQ8OAs
- 7+ZCQm5wUzBkuysG1WLoBufiAeLy5KeQY68xHyOvdy9qak/1pg0D/dWrXhHgasXemd3N
- 0oXQXkilk+90YexuBkoKdUvOS8XHahdC4N5YsClpa8aV2Kz6tksBW7pR7ptenSm3101r
- UaqZ7ZrfpDq7J11Bv5cbseA7X9fGZzuqBp+RJ5ddkdtkG+hwnIUC2+Zrpp//KXbazHv5
- uQLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785936627; x=1786541427;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ul+bEM2cOS0fH17TffqT3LRkSX+Tmw6wVbSUQ/vxJP4=;
- b=PBVeZ/QMYxWzeLK4FaRqp/vDh7VhOB/WfoXl3xx8KXwC2LUC7BrEI087fJRJAHJ8Ld
- /GSksoXDH0heMI/r81nIzPlsPj6N1FRk3nsBgqXinXrUJX+aelypnVASZhsOpN8ugoHV
- 6rblyA8BUOrBYH1hY11sdJrPZelWt9l6krfk8D5hBhpcEW9YtuTKUuO0eavvF3v9c46+
- HI4Vm6VL/s48qzXwc0Q4rATTnFSGfhAi8J33UqVzBI0MdjcgbatJuO37QIGhaemLWdMO
- DimuPeAiGWBOtMOG/DbHh86LiYYwt9jAodXLO3gwPOCDCKHJEtTVea60mX0MU5BRj210
- vzWA==
-X-Gm-Message-State: AOJu0Yz/eRNszXMlpjBVFLC6wqF4Neh6jE+5xv/qAxx1Vy7dgUvTsZiM
- i1d7mNc1n5VxXdCYZ4icpolbDJIw96sFtES4yTV+/3vHxeyvyLxeFqb4obCBspMRbOtoZRPvPZv
- MncCg7BdvYFzgofV9whwD/HvtQI/t6WA=
-X-Gm-Gg: AR+sD11rFLUPWnAAP/3WDiaSDk5+iwI0W0u8m8uWPkmOZnVu3PJ6CcNTMgoRlWaEVRP
- YP1+UPZhu0Mr+45YVcJDiU6oM92AMpC5lwAst4SboacXxaBiUqag/G3BalGwMgMAudZ8SGrWzxS
- o7mvW5iLXwZp8v5UPXxvSxV3npr3X9/Ku6PaL7Ps/GVbZkODXVKw143uXJJI/JvIqiG7AJx3XPu
- vWRuRf0k8P3WaQtQiuaRDrrJKkuBAMQnk8VoUJCNBiKA50NWJhgiRnGeIHPfDiHfDDC0tjEtYw/
- bd1dbPAPNCY8sr5C7t6e+kZ9xHjdVjnOasSPUd8oK0srfQ==
-X-Received: by 2002:a05:6402:5416:b0:699:fbe4:16d5 with SMTP id
- 4fb4d7f45d1cf-6a14f07bde3mr4085934a12.1.1785936626400; Wed, 05 Aug 2026
- 06:30:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wrbvB-0002Id-Af
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:44:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wrbv8-0000Jo-Kc
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 09:44:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1785937473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DuazKRPwCQG3gdJEcNwpRFs5Vs2ng54NRKJ3FuTsgTE=;
+ b=a9kAB5UBL3UyDKVrP3sPP5re2TYsEKn7GNcd5CnINt6Lb8TZRZd0osnlso+bowvIcdY0aQ
+ cuCxioyQah+8WJcI/RX8NV33bAIw6LVrnHG+WMkMzjuPYtqnPJTJrhgjsAe+tFn9OVHola
+ xcuOQoLLOyhf1lnGPUYktVUScM3DhOg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-394-shBLKlsPNweEeslWgwLqJw-1; Wed,
+ 05 Aug 2026 09:44:31 -0400
+X-MC-Unique: shBLKlsPNweEeslWgwLqJw-1
+X-Mimecast-MFC-AGG-ID: shBLKlsPNweEeslWgwLqJw_1785937470
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A73B1800646; Wed,  5 Aug 2026 13:44:30 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 00E7E30001A2; Wed,  5 Aug 2026 13:44:28 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v4] hw/display/qxl: validate primary surface stride against
+ width
+Date: Wed,  5 Aug 2026 17:44:24 +0400
+Message-ID: <20260805134425.249695-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
- <56625144-c2fe-4017-90ed-473e570fa35d@oss.qualcomm.com>
-In-Reply-To: <56625144-c2fe-4017-90ed-473e570fa35d@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Wed, 5 Aug 2026 21:30:12 +0800
-X-Gm-Features: AUfX_myW-51VdwsXko_-FnUn5AsElZcpa6tQp8UY-NdvtrrOq-GunwWyWs0os04
-Message-ID: <CAE2XoE_-amik0TXZFTKiL2o1hOd-Qo0zkBHrdrSGnasLxA6q3g@mail.gmail.com>
-Subject: Re: [PATCH 00/27] single-binary: implement dynamic filtering for
- machine types
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, 
- Anton Johansson <anjo@rev.ng>, Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: multipart/alternative; boundary="0000000000003540b306584cc64f"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,190 +80,252 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003540b306584cc64f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On Fri, Jul 31, 2026 at 1:34=E2=80=AFAM Pierrick Bouvier <
-pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 7/23/2026 5:09 PM, Pierrick Bouvier wrote:
-> > Now that we can link a single-binary with at least two targets (arm,
-aarch64),
-> > we want to make sure that we expose the same set of machines (later
-devices and
-> > cpus) than target binaries. For that, we implemented a static filtering
-based on
-> > target interfaces that each machine will implement to declare which
-targets have
-> > this machine.
-> >
-> > However, we discovered that this static filtering is not enough.
-Indeed, some
-> > machines and devices do not depend only on target, and their presence
-can depend
-> > on Kconfig or host/target combination. Thus, our static approach can't
-work, and
-> > we need something more flexible.
-> >
-> > This series adds a new TYPE_TARGET_SPECIFIC, that declare a single
-function
-> > bool is_available(void). From there, any machine type (and later
-devices and
-> > cpus) can implement it to override their presence for each target.
-> > We first replace the existing static mechanism with this, and once
-done, we
-> > cleanup all the old interface. One nice benefit is that we can get rid
-of
-> > config/targets/*.c files, which saves duplication.
-> >
-> > This series was tested by comparing list of machines for all qemu syste=
-m
-> > binaries, before and after this change, to make sure we don't introduce
-a
-> > regression.
-> >
+The existing validation in qxl_create_guest_primary() checks that
+abs(stride) * height fits in vgamem_size and that stride is 4-byte
+aligned, but never checks that abs(stride) is large enough to hold one
+row of pixels for the declared width and format.
 
-I am also tracing for this. So what's the shape of the final command line?
+A malicious guest can create a primary surface with a stride much
+smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+surface). The spice server rejects this via red_validate_surface(), but
+the return is void and QEMU unconditionally proceeds to set up the local
+rendering state. On the next display refresh, VNC or SDL reads width *
+bytes_pp per scanline from a region backed by only stride bytes per
+row, causing a host-side out-of-bounds read.
 
-Maybe we can at least get arm/arm64/riscv32/risv64/riscv32-be/risv64-be to
-be in a single binary.
+Add three checks in qxl_create_guest_primary() before creating the
+surface:
+ - reject unknown surface formats
+ - reject zero width or height
+ - reject surfaces where abs(stride) < width * bytes_per_pixel
 
-The -be is needed because gdbstub would need this to get gdb working fine.
-so the endian mode is important. arm/arm64 have nothing about be support
-yet, even though in spec also have
+Also fix three related issues in qxl-render.c:
+ - qxl_blit() used abs_stride to advance the dst pointer into the
+   DisplaySurface, but when stride is negative the DisplaySurface is a
+   packed buffer whose stride may be smaller. Use surface_stride()
+   instead.
+ - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+   QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+   abs_stride, bypassing the new validation. Clamp the effective width
+   to abs_stride / bytes_pp to prevent out-of-bounds access while
+   tolerating the normal transient where the monitor config arrives
+   before the primary surface is resized to match.
+ - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
+   validation. Without clamping, abs_stride * height can overrun
+   vgamem_size, and the product can also overflow 32 bits (e.g.
+   abs_stride=16 MiB, height=256 wraps to zero), defeating the
+   qxl_phys2virt() bounds check. Clamp height to
+   vgamem_size / abs_stride to prevent both.
 
+Fixes: CVE-2026-16271
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: 979f7ef8966b ("qxl: use guest_monitor_config for local renderer.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+Reported-by: huntr bubble
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+---
+v4:
+ - do not flag zero dimensions as guest bug in render path,
+   since QXL_MODE_UNDEFINED starts with a zeroed primary surface
+ - clamp negative-stride to the surface height, so qxl_blit()
+   cannot walk before it
+ - tweak commit message
+---
+ hw/display/qxl.h        |  2 ++
+ hw/display/qxl-render.c | 49 ++++++++++++++++++----------------
+ hw/display/qxl.c        | 59 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+), 23 deletions(-)
 
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index 48d664f77736..6f5b96fe86cc 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
+ void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
+ void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
+ void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp);
+ 
+ /* qxl-logger.c */
+ int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_id);
+diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+index 4799c9e8befd..57820f211fe6 100644
+--- a/hw/display/qxl-render.c
++++ b/hw/display/qxl-render.c
+@@ -27,6 +27,7 @@
+ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+ {
+     DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
++    int dst_stride = surface_stride(surface);
+     uint8_t *dst = surface_data(surface);
+     uint8_t *src;
+     int len, i;
+@@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+     } else {
+         src += rect->top * qxl->guest_primary.abs_stride;
+     }
+-    dst += rect->top  * qxl->guest_primary.abs_stride;
++    dst += rect->top  * dst_stride;
+     src += rect->left * qxl->guest_primary.bytes_pp;
+     dst += rect->left * qxl->guest_primary.bytes_pp;
+     len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+ 
+     for (i = rect->top; i < rect->bottom; i++) {
+         memcpy(dst, src, len);
+-        dst += qxl->guest_primary.abs_stride;
++        dst += dst_stride;
+         src += qxl->guest_primary.qxl_stride;
+     }
+ }
+@@ -64,27 +65,9 @@ void qxl_render_resize(PCIQXLDevice *qxl)
+     qxl->guest_primary.qxl_stride = sc->stride;
+     qxl->guest_primary.abs_stride = abs(sc->stride);
+     qxl->guest_primary.resized++;
+-    switch (sc->format) {
+-    case SPICE_SURFACE_FMT_16_555:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 15;
+-        break;
+-    case SPICE_SURFACE_FMT_16_565:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 16;
+-        break;
+-    case SPICE_SURFACE_FMT_32_xRGB:
+-    case SPICE_SURFACE_FMT_32_ARGB:
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    default:
+-        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
+-                qxl->guest_primary.surface.format);
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    }
++    /* fallback to default bpp if format is unknown */
++    qxl_format_bpp(qxl, sc->format, &qxl->guest_primary.bytes_pp,
++                   &qxl->guest_primary.bits_pp);
+ }
+ 
+ static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
+@@ -103,6 +86,26 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
+     int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
+     int i;
+ 
++    if (width <= 0 || height <= 0) {
++        goto end;
++    }
++
++    if (qxl->guest_primary.bytes_pp > 0) {
++        int max_width = qxl->guest_primary.abs_stride
++                        / qxl->guest_primary.bytes_pp;
++        width = MIN(width, max_width);
++    }
++
++    if (qxl->guest_primary.qxl_stride < 0) {
++        /* qxl_blit() uses the primary height to find the first scanline. */
++        height = MIN(height, (int)qxl->guest_primary.surface.height);
++    }
++
++    if (qxl->guest_primary.abs_stride > 0) {
++        int max_height = qxl->vgamem_size / qxl->guest_primary.abs_stride;
++        height = MIN(height, max_height);
++    }
++
+     if (qxl->guest_primary.resized) {
+         qxl->guest_primary.resized = 0;
+         qxl->guest_primary.data = qxl_phys2virt(qxl,
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b7d871b9ee33..384b8767b8e6 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1489,6 +1489,47 @@ static void qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
+     qxl_render_resize(qxl);
+ }
+ 
++/*
++ * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
++ *
++ * Only valid for surface suitable for rendering.
++ */
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp)
++{
++    uint32_t bypp = 4;
++    uint32_t bipp = 32;
++    bool ret = true;
++
++    switch (format) {
++    case SPICE_SURFACE_FMT_16_555:
++        bypp = 2;
++        bipp = 15;
++        break;
++    case SPICE_SURFACE_FMT_16_565:
++        bypp = 2;
++        bipp = 16;
++        break;
++    case SPICE_SURFACE_FMT_32_xRGB:
++    case SPICE_SURFACE_FMT_32_ARGB:
++        bypp = 4;
++        bipp = 32;
++        break;
++    default:
++        ret = false;
++        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, format);
++    }
++
++    if (bytes_pp != NULL) {
++        *bytes_pp = bypp;
++    }
++    if (bits_pp != NULL) {
++        *bits_pp = bipp;
++    }
++
++    return ret;
++}
++
+ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+                                      qxl_async_io async)
+ {
+@@ -1496,6 +1537,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+     uint32_t requested_height = le32_to_cpu(sc->height);
+     int requested_stride = le32_to_cpu(sc->stride);
++    uint32_t bytes_pp;
+ 
+     if (requested_stride == INT32_MIN ||
+         abs(requested_stride) * (uint64_t)requested_height
+@@ -1532,6 +1574,23 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+         return;
+     }
+ 
++    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
++        return;
++    }
++
++    if (surface.width == 0 || surface.height == 0) {
++        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
++                          __func__, surface.width, surface.height);
++        return;
++    }
++
++    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
++        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
++                          " stride %d width %u bpp %u",
++                          __func__, surface.stride, surface.width, bytes_pp);
++        return;
++    }
++
+     surface.mouse_mode = true;
+     surface.group_id   = MEMSLOT_GROUP_GUEST;
+     if (loadvm) {
+-- 
+2.55.0
 
-> > Pierrick Bouvier (27):
-> >   include/qemu/target-info-qom.h: declare TYPE_TARGET_SPECIFIC interfac=
-e
-> >   hw/arm: implement TYPE_TARGET_SPECIFIC
-> >   target-info: add target_riscv32 and target_base_riscv
-> >   hw/riscv: implement TYPE_TARGET_SPECIFIC
-> >   target-info: add target_config_multiprocess
-> >   hw/remote/machine: remove unsupported arm target
-> >   hw/remote/machine: implement TYPE_TARGET_SPECIFIC
-> >   target-info: add target_config_xen
-> >   hw/arm/xen-pvh: implement TYPE_TARGET_SPECIFIC
-> >   hw/xenpv/xen_machine_pv: implement TYPE_TARGET_SPECIFIC
-> >   target-info: add target_config_nitro
-> >   hw/nitro/machine: implement TYPE_TARGET_SPECIFIC
-> >   target-info-qom: implement new machine filtering per target
-> >   target-info-qom: use TYPE_MACHINE instead of target_machine_typename
-> >   target-info: remove target_machine_typename
-> >   target-info-qom: add type_target_specific
-> >   hw/arm: remove TYPE_TARGET_{AARCH64,ARM}_MACHINE
-> >   hw/arm: remove {arm,arm_aarch64,aarch64}_machine_interfaces
-> >   include/hw/core/boards.h: add DEFINE_MACHINE_TARGET_SPECIFIC
-> >   hw/arm: remove DEFINE_MACHINE_{AARCH64,ARM}
-> >   hw/arm: remove machines-qom.h
-> >   hw/riscv: remove TYPE_TARGET_{RISCV32,RISCV64}_MACHINE
-> >   hw/riscv: remove {riscv32,riscv32_64,riscv64}_machine_interfaces
-> >   hw/riscv: remove DEFINE_MACHINE_{RISCV32,RISCV64}
-> >   hw/riscv: remove machines-qom.h
-> >   configs/targets: remove target info definitions
-
-> >   target-info: rename target-info-stub.c in target-info-def.c
-
-Does that mean  target-info-def.c would be compiled N-times. N is the
-target list count and finally linkage into a single binary?
-How to choose this target-info?
-
-
-> >
->
-> Gentle ping after a week.
-> You're welcome to review only your architecture if time is limited, and
-> validate the global approach.
->
-> Regards,
-> Pierrick
->
-
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---0000000000003540b306584cc64f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Fri, Jul 31, 2026 at 1:34=E2=80=AFAM Pierrick B=
-ouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.bo=
-uvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; On 7/23/2026 5:09 PM,=
- Pierrick Bouvier wrote:<br>&gt; &gt; Now that we can link a single-binary =
-with at least two targets (arm, aarch64),<br>&gt; &gt; we want to make sure=
- that we expose the same set of machines (later devices and<br>&gt; &gt; cp=
-us) than target binaries. For that, we implemented a static filtering based=
- on<br>&gt; &gt; target interfaces that each machine will implement to decl=
-are which targets have<br>&gt; &gt; this machine.<br>&gt; &gt;<br>&gt; &gt;=
- However, we discovered that this static filtering is not enough. Indeed, s=
-ome<br>&gt; &gt; machines and devices do not depend only on target, and the=
-ir presence can depend<br>&gt; &gt; on Kconfig or host/target combination. =
-Thus, our static approach can&#39;t work, and<br>&gt; &gt; we need somethin=
-g more flexible.<br>&gt; &gt;<br>&gt; &gt; This series adds a new TYPE_TARG=
-ET_SPECIFIC, that declare a single function<br>&gt; &gt; bool is_available(=
-void). From there, any machine type (and later devices and<br>&gt; &gt; cpu=
-s) can implement it to override their presence for each target.<br>&gt; &gt=
-; We first replace the existing static mechanism with this, and once done, =
-we<br>&gt; &gt; cleanup all the old interface. One nice benefit is that we =
-can get rid of<br>&gt; &gt; config/targets/*.c files, which saves duplicati=
-on.<br>&gt; &gt;<br>&gt; &gt; This series was tested by comparing list of m=
-achines for all qemu system<br>&gt; &gt; binaries, before and after this ch=
-ange, to make sure we don&#39;t introduce a<br>&gt; &gt; regression.<br>&gt=
-; &gt;<div><br></div><div>I am also tracing for this. So what&#39;s the sha=
-pe of the final command line?=C2=A0</div><div><br></div><div>Maybe we can a=
-t least get arm/arm64/riscv32/risv64/riscv32-be/risv64-be to be in a single=
- binary.</div><div><br></div><div>The -be is needed because gdbstub would n=
-eed this to get gdb working fine. so the endian mode is important. arm/arm6=
-4 have nothing about be support yet, even though in spec also have</div><di=
-v>=C2=A0</div><div><br></div><div><br>&gt; &gt; Pierrick Bouvier (27):<br>&=
-gt; &gt; =C2=A0 include/qemu/target-info-qom.h: declare TYPE_TARGET_SPECIFI=
-C interface<br>&gt; &gt; =C2=A0 hw/arm: implement TYPE_TARGET_SPECIFIC<br>&=
-gt; &gt; =C2=A0 target-info: add target_riscv32 and target_base_riscv<br>&g=
-t; &gt; =C2=A0 hw/riscv: implement TYPE_TARGET_SPECIFIC<br>&gt; &gt; =C2=A0=
- target-info: add target_config_multiprocess<br>&gt; &gt; =C2=A0 hw/remote/=
-machine: remove unsupported arm target<br>&gt; &gt; =C2=A0 hw/remote/machin=
-e: implement TYPE_TARGET_SPECIFIC<br>&gt; &gt; =C2=A0 target-info: add targ=
-et_config_xen<br>&gt; &gt; =C2=A0 hw/arm/xen-pvh: implement TYPE_TARGET_SPE=
-CIFIC<br>&gt; &gt; =C2=A0 hw/xenpv/xen_machine_pv: implement TYPE_TARGET_SP=
-ECIFIC<br>&gt; &gt; =C2=A0 target-info: add target_config_nitro<br>&gt; &gt=
-; =C2=A0 hw/nitro/machine: implement TYPE_TARGET_SPECIFIC<br>&gt; &gt; =C2=
-=A0 target-info-qom: implement new machine filtering per target<br>&gt; &gt=
-; =C2=A0 target-info-qom: use TYPE_MACHINE instead of target_machine_typena=
-me<br>&gt; &gt; =C2=A0 target-info: remove target_machine_typename<br>&gt; =
-&gt; =C2=A0 target-info-qom: add type_target_specific<br>&gt; &gt; =C2=A0 h=
-w/arm: remove TYPE_TARGET_{AARCH64,ARM}_MACHINE<br>&gt; &gt; =C2=A0 hw/arm:=
- remove {arm,arm_aarch64,aarch64}_machine_interfaces<br>&gt; &gt; =C2=A0 in=
-clude/hw/core/boards.h: add DEFINE_MACHINE_TARGET_SPECIFIC<br>&gt; &gt; =C2=
-=A0 hw/arm: remove DEFINE_MACHINE_{AARCH64,ARM}<br>&gt; &gt; =C2=A0 hw/arm:=
- remove machines-qom.h<br>&gt; &gt; =C2=A0 hw/riscv: remove TYPE_TARGET_{RI=
-SCV32,RISCV64}_MACHINE<br>&gt; &gt; =C2=A0 hw/riscv: remove {riscv32,riscv3=
-2_64,riscv64}_machine_interfaces<br>&gt; &gt; =C2=A0 hw/riscv: remove DEFIN=
-E_MACHINE_{RISCV32,RISCV64}<br>&gt; &gt; =C2=A0 hw/riscv: remove machines-q=
-om.h<br>&gt; &gt; =C2=A0 configs/targets: remove target info definitions</d=
-iv><div><br>&gt; &gt; =C2=A0 target-info: rename target-info-stub.c in targ=
-et-info-def.c</div><div><br></div><div>Does that mean=C2=A0<span style=3D"b=
-ackground-color:transparent">=C2=A0</span><span style=3D"background-color:t=
-ransparent">target-info-def.c would be compiled N-times. N is the target li=
-st count and finally linkage into a single binary?</span></div><div><span s=
-tyle=3D"background-color:transparent">How to choose this target-info?</span=
-></div><div><br></div><div><br>&gt; &gt;<br>&gt;<br>&gt; Gentle ping after =
-a week.<br>&gt; You&#39;re welcome to review only your architecture if time=
- is limited, and<br>&gt; validate the global approach.<br>&gt;<br>&gt; Rega=
-rds,<br>&gt; Pierrick<br>&gt;<br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>You=
-rs<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div></div>
-
---0000000000003540b306584cc64f--
 
