@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B16C55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0B0C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 11:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wraBM-0007ud-OV; Wed, 05 Aug 2026 07:53:12 -0400
+	id 1wraBp-0008VZ-4A; Wed, 05 Aug 2026 07:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraBL-0007uN-WC
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:12 -0400
+ id 1wraBi-0008UN-On
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wraBK-0007JR-I9
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:11 -0400
+ id 1wraBh-0007LX-AD
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 07:53:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785930790;
+ s=mimecast20190719; t=1785930812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7PMTkvaIVO4jhh0ZLegntqLtMpH+bSV5zE9b/jru5SI=;
- b=ecV6u7lk2h3GgvEh2lpdMUkWd/BiHULAIOb3h8v9QpF6IC88TqaaSkFFzJZzQ1mkjGKiJ5
- jaP4SXzqDR1bKKJtACTIOwGXPeqOn25gG3n0vEwscK2OtT07VVkn5ZOMENdFVsSs7yIp65
- uA8CJ3C6zRR3YSi+StYG64CGaJUL4lo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9wAdE8mr2uX8uSw90JvEGg/kSqNlIlm9Tunja/FKeME=;
+ b=bCymij6Y1E7tm3oWW8QkLnPZoY2TezXn/tTptAfixclTaDbp1ojn5G6Ps8ibDIYLQA+vue
+ IvUp3tRli746MTbxflSAGjGm40GvuiKF7v6FiR+7rVU/q1zRn6Q/zUQFUpBPNNhH+65L7O
+ IWPZktDZLYwIqv4oI12t+fyj7pASwXs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-v9HxG4iZNoO8CIW_g-9Flg-1; Wed,
- 05 Aug 2026 07:53:08 -0400
-X-MC-Unique: v9HxG4iZNoO8CIW_g-9Flg-1
-X-Mimecast-MFC-AGG-ID: v9HxG4iZNoO8CIW_g-9Flg_1785930788
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-mz0zlP3VMS25EJMjdoXRUg-1; Wed,
+ 05 Aug 2026 07:53:19 -0400
+X-MC-Unique: mz0zlP3VMS25EJMjdoXRUg-1
+X-Mimecast-MFC-AGG-ID: mz0zlP3VMS25EJMjdoXRUg_1785930798
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 079C519560AA
- for <qemu-devel@nongnu.org>; Wed,  5 Aug 2026 11:53:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A1611955F2C
+ for <qemu-devel@nongnu.org>; Wed,  5 Aug 2026 11:53:18 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6CD3180049F; Wed,  5 Aug 2026 11:53:04 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5C871422; Wed,  5 Aug 2026 11:53:15 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 05 Aug 2026 15:51:00 +0400
-Subject: [PATCH 10/27] hw/usb/dev-smartcard-reader: reset all I/O state on
- device reset
+Date: Wed, 05 Aug 2026 15:51:01 +0400
+Subject: [PATCH 11/27] hw/usb/dev-smartcard-reader: apply backpressure to
+ bulk-out
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260805-smartcard-fixes-v1-10-187ee9122441@redhat.com>
+Message-Id: <20260805-smartcard-fixes-v1-11-187ee9122441@redhat.com>
 References: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 In-Reply-To: <20260805-smartcard-fixes-v1-0-187ee9122441@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3274;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4307;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=PUVI70oyctTz1sag9yfTLK9ruJyZ7AFi1cPL+bm/MWE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOtQjv4bSKqQGnitCXc1gOq+O4OcFALNHb3g
- 17FIU9PZfGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjrQAKCRDa6OEJdZac
- 5YeyD/9Pd903+XcETamlodI78G5D9tJxOEjCsE1yblGkIT4sAxXJehPZ4iBShWDgAvNxCtW8Wbv
- 4beADbBdH27vJ9ZUNB8DMqZnyNriJs924zPOXHoOFB+AM6BF43XVTaamK5XgWPfDcFFb+SSyJ2Y
- NjIy559EBSd3R2kmN7hUdP4RBmGxAwFkMHbSkI6GvgPdnSkDQGSOKcvHtqRWkcKu9Hf9T6db/FH
- P7AxF2haKB7ixaQY3IGNeYEpKybEbKG0Q7JLUVLD9bz6QyxBc/w4lzn1yNGGiDukhc1qkIDflO9
- +y7ypjESTylUT6WoZt80RGe5uxxVIn2r+n22i1a/ciOvhTyUd3MmZG17D/8iTkzQN+nx4SBBHyB
- 56XyejvNOjAbymeeoo5MmzvyC3rEotPcTThRWD491wP5jq60oNBv0iwbyPPSjczIKsgccy7nZm7
- AMzCjUI3WXYI6gVPhgNKLmhfMHwGTpw01dgGX6+P+9G6oPoQ5YFzf73S1Cto6SZsa42voKOuPwk
- mZ3c0zRX0FqUrgXSya7R1OOQvy8CZQ54gFnkTew5brWGA2pf/0gpbESCsKHVEl8XOks0ieP1QJg
- R3cEDVIHEoDViKrquPphxdanv6nU0gkZD+0QkA7PAzWe1+NRru9CHqoZw8GwqzCN9E5d7Gl9ORj
- lZbLgEpOOVTJtBA==
+ bh=Q7YR25/KA+jsIIkKs7kge1uoqYzd+HF+D6BFaDNCJ6I=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqcyOtPFQpI28iSr62gUaQvbhu2QSpUffWXK6FG
+ D6zS0b7eVqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanMjrQAKCRDa6OEJdZac
+ 5ZTBD/93flWdfxbUD8ROC6oQtE5kB2e12gx19+dVy1uJ1EkruHLLrOHnPrT2sOrHDKiZaq5luF+
+ ehPeHdRQQhf0+EbcP8AVcmH8AxMXlOdjKYt90JJqEqHy79K3AZiSy5jw3RDUj3Ugw6nODw2vEB5
+ Q+VtgCd5tPsLglqHGX1XExVy8caOYQAbTJKXeW40mGbYQWqX0EmVqmLkwiheE2uZs0PLyvLT42W
+ w+V4q4MjyuYKRGPnRKlQ8Rohd+w+WtbvSMdhYnKRmoRQx1MIWrcBjWrejXGOdxZDsRLKnksphRV
+ KukfGaBRlwI16FOkuf5+zlwasc00pIZOUI3mXWsAF3koMj33VDGMtSc1DKsXVI+C343rTG2qBYB
+ R0tWdPaHY/yEuMyWXItPsJ7ezHWS0W/h8TBwEC56HD8whgj9fSeBfu9Lz15koZFwcnAO9/Rux4r
+ 7AnPd8cdomq0ElejcIQjY/bp1LnoGQWLVtKrDAAWpp4+5cQu7yaXXyvAI6Dr0OUwpHxmqVathrt
+ fn3uxuBhGLYTYp8LuEJ3VkOJrZhCUshF6XozaaSvCPrX1K8A7XqBoPd+6NIJGIx3YpuuV+nyBH1
+ fuUlYux40C+fbiSBMbpXNH1PDgp66alFyuJS3owUwaDu6jvETs+Uein3+EATuXrpAx60uYItJak
+ T8ORmVvW2cQBUkA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,116 +104,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clear bulk-in entries (len/pos), current_bulk_in pointer, bulk-out
-position, error status, and protocol parameters during reset. Previously
-only the bulk-in ring buffer indices and pending answers were cleared,
-leaving stale state that could corrupt subsequent transfers.
+A guest can send bulk-out commands faster than the card backend produces
+responses. Each XfrBlock adds a pending answer slot, and other commands
+immediately allocate a bulk_in_pending entry. Once all
+BULK_IN_PENDING_NUM slots are full, ccid_reserve_recv_buf() returns NULL
+and responses are silently dropped.
 
-Move ccid_reset() after its callees to avoid forward declarations.
+NAK the bulk-out endpoint at message boundaries when bulk_in_pending_num
++ pending_answers_num >= BULK_IN_PENDING_NUM, so the guest retries
+later, giving the response pipeline time to drain.
 
-Drop redundant initialization from realize() since it calls reset().
+Change ccid_write_data_block_answer() to peek the next answer before
+attempting to write the data block: if the bulk-in ring is full, the
+pending answer is preserved for retry rather than being consumed and
+lost. Update ccid_flush_pending_answers() to break on failure so it does
+not loop forever when the ring is full.
 
 Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/usb/dev-smartcard-reader.c | 60 +++++++++++++++++++++++--------------------
- 1 file changed, 32 insertions(+), 28 deletions(-)
+ hw/usb/dev-smartcard-reader.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
 diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index bed641be4512..12c82c8f6458 100644
+index 12c82c8f6458..279fef03652b 100644
 --- a/hw/usb/dev-smartcard-reader.c
 +++ b/hw/usb/dev-smartcard-reader.c
-@@ -574,9 +574,16 @@ static void ccid_remove_pending_answer(USBCCIDState *s,
+@@ -765,13 +765,13 @@ static void ccid_write_parameters(USBCCIDState *s, CCID_Header *recv)
+     usb_wakeup(s->bulk, 0);
+ }
  
- static void ccid_bulk_in_clear(USBCCIDState *s)
+-static void ccid_write_data_block(USBCCIDState *s, uint8_t slot, uint8_t seq,
++static bool ccid_write_data_block(USBCCIDState *s, uint8_t slot, uint8_t seq,
+                                   const uint8_t *data, uint32_t len)
  {
-+    int i;
+     CCID_DataBlock *p = ccid_reserve_recv_buf(s, sizeof(*p) + len);
+ 
+     if (p == NULL) {
+-        return;
++        return false;
+     }
+     p->b.hdr.bMessageType = CCID_MESSAGE_TYPE_RDR_to_PC_DataBlock;
+     p->b.hdr.dwLength = cpu_to_le32(len);
+@@ -788,6 +788,7 @@ static void ccid_write_data_block(USBCCIDState *s, uint8_t slot, uint8_t seq,
+     }
+     ccid_reset_error_status(s);
+     usb_wakeup(s->bulk, 0);
++    return true;
+ }
+ 
+ static void ccid_report_error_failed(USBCCIDState *s, uint8_t error)
+@@ -796,19 +797,26 @@ static void ccid_report_error_failed(USBCCIDState *s, uint8_t error)
+     s->bError = error;
+ }
+ 
+-static void ccid_write_data_block_answer(USBCCIDState *s,
+-    const uint8_t *data, uint32_t len)
++static Answer *ccid_peek_next_answer(USBCCIDState *s);
 +
-+    for (i = 0; i < BULK_IN_PENDING_NUM; i++) {
-+        s->bulk_in_pending[i].len = 0;
-+        s->bulk_in_pending[i].pos = 0;
++static bool ccid_write_data_block_answer(USBCCIDState *s,
++                                         const uint8_t *data, uint32_t len)
+ {
+-    uint8_t seq;
+     uint8_t slot;
++    uint8_t seq;
++    Answer *answer;
+ 
+     if (!ccid_has_pending_answers(s)) {
+         DPRINTF(s, D_WARN, "error: no pending answer to return to guest\n");
+         ccid_report_error_failed(s, ERROR_ICC_MUTE);
+-        return;
++        return false;
 +    }
-     s->bulk_in_pending_start = 0;
-     s->bulk_in_pending_end = 0;
-     s->bulk_in_pending_num = 0;
-+    s->current_bulk_in = NULL;
++    answer = ccid_peek_next_answer(s);
++    if (!ccid_write_data_block(s, answer->slot, answer->seq, data, len)) {
++        return false;
+     }
+     ccid_remove_pending_answer(s, &slot, &seq);
+-    ccid_write_data_block(s, slot, seq, data, len);
++    return true;
  }
  
- static void ccid_bulk_in_release(USBCCIDState *s)
-@@ -621,26 +628,6 @@ static void *ccid_reserve_recv_buf(USBCCIDState *s, uint16_t len)
-     return bulk_in->data;
- }
+ static uint8_t atr_get_protocol_num(const uint8_t *atr, uint32_t len)
+@@ -1008,6 +1016,18 @@ static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
+     CCID_Header *ccid_header;
+     uint32_t payload_len;
  
--static void ccid_reset(USBCCIDState *s)
--{
--    ccid_bulk_in_clear(s);
--    ccid_clear_pending_answers(s);
--}
--
--static void ccid_detach(USBCCIDState *s)
--{
--    ccid_reset(s);
--}
--
--static void ccid_handle_reset(USBDevice *dev)
--{
--    USBCCIDState *s = USB_CCID_DEV(dev);
--
--    DPRINTF(s, 1, "Reset\n");
--
--    ccid_reset(s);
--}
--
- static const char *ccid_control_to_str(USBCCIDState *s, int request)
++    /*
++     * Every accepted command either queues a response immediately or commits a
++     * slot to a later APDU response. Apply backpressure before consuming the
++     * first packet when all response slots are committed.
++     */
++    if (s->bulk_out_pos == 0 && /* start of message */
++        s->bulk_in_pending_num + s->pending_answers_num >=
++            BULK_IN_PENDING_NUM) {
++        p->status = USB_RET_NAK;
++        return;
++    }
++
+     if (p->iov.size + s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
+         goto err;
+     }
+@@ -1190,7 +1210,9 @@ static void ccid_unrealize(USBDevice *dev)
+ static void ccid_flush_pending_answers(USBCCIDState *s)
  {
-     switch (request) {
-@@ -918,6 +905,31 @@ static void ccid_reset_parameters(USBCCIDState *s)
-    s->abProtocolDataStructure = defaultProtocolDataStructure;
+     while (ccid_has_pending_answers(s)) {
+-        ccid_write_data_block_answer(s, NULL, 0);
++        if (!ccid_write_data_block_answer(s, NULL, 0)) {
++            break;
++        }
+     }
  }
  
-+static void ccid_reset(USBCCIDState *s)
-+{
-+    ccid_bulk_in_clear(s);
-+    ccid_clear_pending_answers(s);
-+    s->bulk_out_pos = 0;
-+    s->last_answer_error = 0;
-+    s->notify_slot_change = false;
-+    ccid_reset_error_status(s);
-+    ccid_reset_parameters(s);
-+}
-+
-+static void ccid_detach(USBCCIDState *s)
-+{
-+    ccid_reset(s);
-+}
-+
-+static void ccid_handle_reset(USBDevice *dev)
-+{
-+    USBCCIDState *s = USB_CCID_DEV(dev);
-+
-+    DPRINTF(s, 1, "Reset\n");
-+
-+    ccid_reset(s);
-+}
-+
- /* NOTE: only a single slot is supported (SLOT_0) */
- static void ccid_on_slot_change(USBCCIDState *s, bool full)
- {
-@@ -1349,14 +1361,6 @@ static void ccid_realize(USBDevice *dev, Error **errp)
-     s->dev.speedmask = USB_SPEED_MASK_FULL;
-     s->notify_slot_change = false;
-     s->powered = true;
--    s->pending_answers_num = 0;
--    s->last_answer_error = 0;
--    s->bulk_in_pending_start = 0;
--    s->bulk_in_pending_end = 0;
--    s->current_bulk_in = NULL;
--    ccid_reset_error_status(s);
--    s->bulk_out_pos = 0;
--    ccid_reset_parameters(s);
-     ccid_reset(s);
-     s->debug = parse_debug_env("QEMU_CCID_DEBUG", D_VERBOSE, s->debug);
- }
 
 -- 
 2.55.0
