@@ -4,63 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8939C55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 09:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98434C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 09:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrXir-0002gF-8U; Wed, 05 Aug 2026 05:15:39 -0400
+	id 1wrXkN-0003U2-Uh; Wed, 05 Aug 2026 05:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <17746591750@163.com>)
- id 1wrXih-0002cr-LR
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 05:15:27 -0400
-Received: from m16.mail.163.com ([220.197.31.2])
+ id 1wrXkL-0003Ta-3L; Wed, 05 Aug 2026 05:17:09 -0400
+Received: from m16.mail.163.com ([117.135.210.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <17746591750@163.com>)
- id 1wrXie-0001Jv-W2
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 05:15:27 -0400
+ id 1wrXkI-0001c9-JY; Wed, 05 Aug 2026 05:17:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
  s=s110527; h=Subject:To:From:Message-ID:Date:MIME-Version:
- Content-Type; bh=VHK4R5sOJaa5f5je9RWMe008Ueyis2JygboSIDHlaMU=;
- b=bIHzQi8xqAz6NBq7T7khQcrsA1aypnP0+lm6buMTA1fYizdxHzAjAxS+PPC2D8
- Ev1FE01eQE3qwlB3DHkaHJpBU2FOn6saKKPqbeApQdwIGrJfQ4mmqordvuoULKPP
- XRnhEbBaUFhqPJkNYWl7wTbUSB/Nkq37KGujppSWRM2KE=
+ Content-Type; bh=o4AcxqBXkMiZ5V39uzOdJvd3jICysuZnmI6FDiYwNIs=;
+ b=cJw22flsHROwnvmJuCEStziNGe6FWsMNcyJIoUp8pR4gdIlbG/ZUtLScEDEHZY
+ TS5LQz5c/QIBjBI6QXss2O4xkq7CWS/riCgLdr+5sx28ndcWisvho1uFtx2vZ37F
+ WaljOiFL68Sim8HMFfDv7ZGZfnmb5L+swgAKSTdqdgJ10=
 Received: from [10.2.10.30] (unknown [])
- by gzsmtp1 (Coremail) with SMTP id PCgvCgBH_ZAU_3JqLAYeJQ--.57085S2;
- Wed, 05 Aug 2026 17:15:02 +0800 (CST)
-Subject: Re: [PATCH v6 057/103] tests/tcg/loongarch64: system tests
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Brian Cain
- <brian.cain@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728044248.137626-58-pierrick.bouvier@oss.qualcomm.com>
+ by gzsmtp2 (Coremail) with SMTP id PSgvCgAnCoJ+_3JqWVGmJw--.22431S2;
+ Wed, 05 Aug 2026 17:16:47 +0800 (CST)
+Subject: Re: [PATCH 04/11] target/loongarch: Use generic tcg_gen_revbit*
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: anjo@rev.ng, qemu-arm@nongnu.org, git@xen0n.name, maobibo@loongson.cn,
+ lixianglai@loongson.cn, philmd@mailo.com
+References: <20260731000503.170446-1-richard.henderson@linaro.org>
+ <20260731000503.170446-5-richard.henderson@linaro.org>
 From: Song Gao <17746591750@163.com>
-Message-ID: <968d727e-35ea-81c1-ff99-75f7c6095677@163.com>
-Date: Wed, 5 Aug 2026 17:15:00 +0800
+Message-ID: <443ed820-8ae6-80f0-f3cc-211e103076f5@163.com>
+Date: Wed, 5 Aug 2026 17:16:46 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260728044248.137626-58-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260731000503.170446-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: PCgvCgBH_ZAU_3JqLAYeJQ--.57085S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGw1UJry7GFW5GF15tF1xAFb_yoWrAF13p3
- 4akF4rKr4kJFy7Jr1xKa45uF4rJrs7C3W7Za43Kr18ZFW7CF1jqr1fKrW5JFy3t3s29w4S
- vwnYkrya9F1DJa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRrwIPUUUUU=
+X-CM-TRANSID: PSgvCgAnCoJ+_3JqWVGmJw--.22431S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxGF4UZw15try3CrWfJr4Dtwb_yoW5uryrpF
+ W7Cr1UKr48XrZ3ZrZ7Z3s0gF1DArsrKw47Xa1xGr909w43XryIqr40y3y3KF1UJ3WUXr48
+ Z3ZYkryjvayUX3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRPku-UUUUU=
 X-Originating-IP: [114.242.206.180]
-X-CM-SenderInfo: jprxlkywvzilivq6il2tof0z/xtbCzxY8RWpy-xY4qAAA3B
-Received-SPF: pass client-ip=220.197.31.2; envelope-from=17746591750@163.com;
+X-CM-SenderInfo: jprxlkywvzilivq6il2tof0z/xtbC0B9WX2py-39IxgAA3Q
+Received-SPF: pass client-ip=117.135.210.2; envelope-from=17746591750@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
@@ -68,9 +58,8 @@ X-Spam_bar: ----
 X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, NICE_REPLY_A=-2.999, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FROM_LOCAL_HEX=0.006, NICE_REPLY_A=-2.999, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,123 +76,77 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-在 2026/7/28 下午12:42, Pierrick Bouvier 写道:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+在 2026/7/31 上午8:04, Richard Henderson 写道:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tests/tcg/loongarch64/Makefile.softmmu-target | 33 -------------
->   tests/tcg/loongarch64/meson.build             |  2 +
->   tests/tcg/loongarch64/system/meson.build      | 47 +++++++++++++++++++
->   3 files changed, 49 insertions(+), 33 deletions(-)
->   delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
->   create mode 100644 tests/tcg/loongarch64/system/meson.build
+>   target/loongarch/tcg/helper.h                   |  2 --
+>   target/loongarch/tcg/op_helper.c                | 10 ----------
+>   target/loongarch/tcg/insn_trans/trans_bit.c.inc |  9 +++++++--
+>   3 files changed, 7 insertions(+), 14 deletions(-)
 Reviewed-by:  Song Gao <17746591750@163.com>
 
 Thanks.
 Song Gao
-> diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-> deleted file mode 100644
-> index 6d4a20fde73..00000000000
-> --- a/tests/tcg/loongarch64/Makefile.softmmu-target
-> +++ /dev/null
-> @@ -1,33 +0,0 @@
-> -#
-> -# Loongarch64 system tests
-> -#
-> -
-> -LOONGARCH64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/loongarch64/system
-> -VPATH+=$(LOONGARCH64_SYSTEM_SRC)
-> -
-> -# These objects provide the basic boot code and helper functions for all tests
-> -CRT_OBJS=boot.o
-> -
-> -LOONGARCH64_TEST_SRCS=$(wildcard $(LOONGARCH64_SYSTEM_SRC)/*.c)
-> -LOONGARCH64_TESTS = $(patsubst $(LOONGARCH64_SYSTEM_SRC)/%.c, %, $(LOONGARCH64_TEST_SRCS))
-> -
-> -CRT_PATH=$(LOONGARCH64_SYSTEM_SRC)
-> -LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
-> -LDFLAGS=-Wl,-T$(LINK_SCRIPT)
-> -TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
-> -CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
-> -LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
-> -
-> -# building head blobs
-> -.PRECIOUS: $(CRT_OBJS)
-> -
-> -%.o: $(CRT_PATH)/%.S
-> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
-> -
-> -# Build and link the tests
-> -%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-> -
-> -memory: CFLAGS+=-DCHECK_UNALIGNED=0
-> -# Running
-> -QEMU_OPTS+=-serial chardev:output -kernel
-> diff --git a/tests/tcg/loongarch64/meson.build b/tests/tcg/loongarch64/meson.build
-> index 209179fd96c..1d62de64ed6 100644
-> --- a/tests/tcg/loongarch64/meson.build
-> +++ b/tests/tcg/loongarch64/meson.build
-> @@ -2,6 +2,8 @@ cc = 'loongarch64-unknown-linux-gnu-gcc'
->   cc_dockerfile = 'debian-loongarch-cross'
->   cc_docker_host_arch = ['x86_64']
+> diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+> index 8a6c62f116..4b0fc81db6 100644
+> --- a/target/loongarch/tcg/helper.h
+> +++ b/target/loongarch/tcg/helper.h
+> @@ -5,8 +5,6 @@
 >   
-> +subdir('system')
-> +
->   tests = []
+>   DEF_HELPER_2(raise_exception, noreturn, env, i32)
 >   
->   tests += tcg_tests['multiarch-linux-user']['tests']
-> diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
-> new file mode 100644
-> index 00000000000..b46d2234032
-> --- /dev/null
-> +++ b/tests/tcg/loongarch64/system/meson.build
-> @@ -0,0 +1,47 @@
-> +tests = []
+> -DEF_HELPER_FLAGS_1(bitrev_w, TCG_CALL_NO_RWG_SE, tl, tl)
+> -DEF_HELPER_FLAGS_1(bitrev_d, TCG_CALL_NO_RWG_SE, tl, tl)
+>   DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+>   
+>   DEF_HELPER_FLAGS_3(asrtle_d, TCG_CALL_NO_WG, void, env, tl, tl)
+> diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+> index e63ac66daa..37afa8e92d 100644
+> --- a/target/loongarch/tcg/op_helper.c
+> +++ b/target/loongarch/tcg/op_helper.c
+> @@ -22,16 +22,6 @@ void helper_raise_exception(CPULoongArchState *env, uint32_t exception)
+>       do_raise_exception(env, exception, GETPC());
+>   }
+>   
+> -target_ulong helper_bitrev_w(target_ulong rj)
+> -{
+> -    return (int32_t)revbit32(rj);
+> -}
+> -
+> -target_ulong helper_bitrev_d(target_ulong rj)
+> -{
+> -    return revbit64(rj);
+> -}
+> -
+>   target_ulong helper_bitswap(target_ulong v)
+>   {
+>       v = ((v >> 1) & (target_ulong)0x5555555555555555ULL) |
+> diff --git a/target/loongarch/tcg/insn_trans/trans_bit.c.inc b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+> index ee5fa003ce..3d24e320ce 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+> @@ -178,6 +178,11 @@ static void gen_masknez(TCGv dest, TCGv src1, TCGv src2)
+>       tcg_gen_movcond_tl(TCG_COND_NE, dest, src2, zero, zero, src1);
+>   }
+>   
+> +static void gen_bitrev_w(TCGv dest, TCGv src)
+> +{
+> +    tcg_gen_revbit32_tl(dest, src, TCG_BSWAP_OS);
+> +}
 > +
-> +minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-> +minilib_printf = files(minilib_dir / 'printf.c')[0]
-> +link_script = files('kernel.ld')[0]
-> +boot = files('boot.S')[0]
-> +cflags = ['-nostdlib',
-> +          '-Wa,--noexecstack',
-> +          '-I', minilib_dir, minilib_printf, boot,
-> +          '-Wl,-T', link_script,
-> +          '-march=loongarch64',
-> +          '-mabi=lp64d',
-> +          '-Wl,--no-warn-rwx-segments',
-> +          '-lgcc']
-> +qemu_def_args = ['-display', 'none',
-> +                 '-serial', 'stdio',
-> +                 '-kernel']
-> +
-> +# Multi arch tests
-> +multi_src = []
-> +foreach t: tcg_tests['multiarch-softmmu']['tests']
-> +  foreach src, setup: t
-> +    new_cflags = cflags
-> +    if fs.stem(src) == 'memory'
-> +      new_cflags += '-DCHECK_UNALIGNED=0'
-> +    endif
-> +    if src not in multi_src
-> +      setup += {'cflags': [new_cflags]}
-> +      multi_src += src
-> +    endif
-> +    tests += {src: setup + {'qemu_args': qemu_def_args}}
-> +  endforeach
-> +endforeach
-> +
-> +if 'qemu-system-loongarch64' in emulators
-> +  tcg_tests += {
-> +    'loongarch64-softmmu': {
-> +      'cc': cc,
-> +      'cc_dockerfile': cc_dockerfile,
-> +      'cc_docker_host_arch': cc_docker_host_arch,
-> +      'folder': 'loongarch64/system',
-> +      'gdb_arch': 'loongarch64',
-> +      'qemu': emulators['qemu-system-loongarch64'],
-> +      'tests': tests,
-> +    }
-> +  }
-> +endif
+>   TRANS(ext_w_h, ALL, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_ext16s_tl)
+>   TRANS(ext_w_b, ALL, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_ext8s_tl)
+>   TRANS(clo_w, ALL, gen_rr, EXT_NONE, EXT_NONE, gen_clo_w)
+> @@ -196,8 +201,8 @@ TRANS(revh_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_2w)
+>   TRANS(revh_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_d)
+>   TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_bitswap)
+>   TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitswap)
+> -TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_SIGN, gen_helper_bitrev_w)
+> -TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitrev_d)
+> +TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_NONE, gen_bitrev_w)
+> +TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_revbit64_i64)
+>   TRANS(maskeqz, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_maskeqz)
+>   TRANS(masknez, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_masknez)
+>   TRANS(bytepick_w, ALL, gen_rrr_sa, EXT_NONE, EXT_NONE, gen_bytepick_w)
 
 
