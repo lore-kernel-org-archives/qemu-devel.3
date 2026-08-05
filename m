@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6CCC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 729D0C561E6
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfD6-000458-C4; Wed, 05 Aug 2026 13:15:20 -0400
+	id 1wrfE3-0004lS-OQ; Wed, 05 Aug 2026 13:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfD3-000444-J6
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:18 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wrfDv-0004ep-Ax
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:16:11 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfD1-0006Fc-Nz
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:17 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6680ae2031fso1242964d50.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:15 -0700 (PDT)
+ id 1wrfDt-0006KB-K5
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:16:11 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-8200b55dc47so17890947b3.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950114; x=1786554914; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6sMuktQUriti/FzTn7dvyAmebqh+5sPjlYwFRIl8IhM=;
- b=CUxGFouOsqGoHoxITvGZQtCVkF9YdBf+Pm49mdLj0H1t6QNxAPn3zGKCToQKTxJ0j0
- 0YuFNIlSPSwQjzbHVlRFZ6I2OeQ4h3CwlRKwJZY0kSyMh3LW3MVBtYLK5wX01OYEqiEw
- z6euSEWmmAA0Spop1ZrRxM9OVvLYCi6ZwN3Wjv6sOGk9d8BeEUmb71w1DPhbFboExUt6
- mXyewelgDvYrbALhjDDLWd8XI3nD1TKLThUDc25OIyp4lmkjczK8IPZL7/kQUFrz6sYT
- zFq0A99cgAAyC9NR9YOxVA+TQbiL4HyMSMhjiYbpVsRjvcqIPw/pBG6XIvKaNU6RFHIN
- OvLQ==
+ d=gmail.com; s=20251104; t=1785950168; x=1786554968; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZxK2wYRYXP/raSMAV2obkROqgTG/P9VKDs+8YIBq+6k=;
+ b=Hp9mgD4ME2iyezccWEzaTozOVcXWS+/uSlMEKg1D0IXEoPuRFOUPufDBHV+4BxacQO
+ 1IWfP3seaYZ56WfOnNgL5IzAw08cjHj9HumkCmO4rS4rjFXe7OrQe4ZoL5NORiwud9ML
+ aVsP4QbYnTK9aiTM7LRpx/pGoikZS6cBiMHnRqrhiBnKxQUBxH2lPOQgbbZxo12lNnvg
+ kG1yEnToutBicH5DJIKSMte8P8ZqzDIAz+fpu1t2anDk12yRtRzbIeUH94neYHhQccf8
+ ONaE85u2kDb9GMNftvLvRgb1ZeFKVQLZINP16DqZGjBp1+9hgOy9uClhSvc7IMrYnjGw
+ xBhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950114; x=1786554914;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6sMuktQUriti/FzTn7dvyAmebqh+5sPjlYwFRIl8IhM=;
- b=AX0DIPl+6Ikru1oqo9TFPmtdQNj108GA1VgccLtzNxLyILtXJEUTMZ7M0DIpsnhK6D
- yB1mS87qVwlrBgqFSdxqKc/XG6pCAYzJn1dWXUPSWjwHauOkzMsttaJY0zX+MknJL21q
- S22r8doz/3FWCvplMaZ1P3AKvcQARNbcDHwvDGyvKDwpJnAXXKw7w8xneMRtupyk0Udo
- tILEXjz/G50lxKMcYpXvOpZW36siAjLGDzuLfla/gm+tF+1Y0c7HlVeSWVB5mlp39H1M
- www9K7lrEw4YrwJoErazA4O1YItk8DhG5hIKLTT6SBv66Q3eBoWTr5q0FpqdViLPgp68
- Lk3Q==
-X-Gm-Message-State: AOJu0YwdznRg/YXmiPrNM2DQ48DXw7/LqWvrmHXWvb7HZ3q3XG5Mennu
- 2w4tBATFrjNyU8R2WdATulMf5zCt51dU8eJdIi40BcsomMFjL/3R6KVccWrBgjoYFL4=
-X-Gm-Gg: AR+sD11KXI/0zP0g+cg01nPRHHNx+2OhpzyMf35KlVgfv3s2JTFypPvMUj7epeLZf9g
- xb1TKnlaw31ojLSXuxIuugy/S3aW8JMJnAJP0APkhffxiy/bfl25R28wMpopR/fBGr5jr9OFk7A
- am0ATaWRX/IfBVK4h/RPa753D2E20L+ovtIrdlhmQCqo490T/pko+cw3kLYyrGsE/O9OtKdMWxs
- YsmjK/jnOpCVV06LdEXj5oqD94gZR60tifY7ec2oL/qE7yiT7YZPfbprsliFPinR/5yo1GmpTrI
- EnyicVq3FDXuorOU+hk5cssKPfskJB9l3DCVGPRi5Lo+NQwW2fb4zOetHqo1BrH15aXiegNB0DK
- 5F5spTCcdeo759sXoPFg11c9kgPqc9l6F4NnJpo9cLrGD8YNlHiHlsw47O1g6No81pLZr5eOuS1
- GOvtKDNZoaLDAfKOLOd52fknelPRyTqZB29s3M29IjliErg1EgOgiE53RIOYzi
-X-Received: by 2002:a05:690e:130e:b0:667:e2e1:44 with SMTP id
- 956f58d0204a3-6699a93b621mr4205083d50.22.1785950114205; 
- Wed, 05 Aug 2026 10:15:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1785950168; x=1786554968;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZxK2wYRYXP/raSMAV2obkROqgTG/P9VKDs+8YIBq+6k=;
+ b=gctRn+qARPBzn0V+is3GZF4S3LAQAik7Gv601iAMij/77yQpo4Zyz3nMS3pEBbfmVm
+ Mui8R4MMauxAP7BND9qQ3bKjGKmXg6izw4Pf96pTbOewdKGveHFFOW+byL69cJDCze9d
+ +USH6nikYWCwXHFoEQ83AbkFvwoLvrhN5FBXTuKq7nGDsoRV6D68KmuGvLbAmk9ZP3ry
+ g+skxcoOx6sIPyVX6oDb3vQDSMXKT06BxNfDOZPT+HuwrPicjvL5MuOltrSmB310rMtr
+ nwbHFoJSDH0LFs7vzEQdXzL1yeCTcSTyF56WjbY8l0HxRPD/AiXkeFlYpHhiD2c0SbUZ
+ H3XQ==
+X-Gm-Message-State: AOJu0Yxfwq9jCs/vQzC+XWBTSKf6+6k2YeoYNNEI3iQBqIp6l2PzFb+5
+ e9H3fNsfuPTzAd3AILqW9JB3gnplTphI8wo1r+5O5A2ZMh5Pn0BttBzoVj4A7hZnEQA=
+X-Gm-Gg: AR+sD13WWYPiDpTdpJ3Nt5XXb6NFrjWOuABisDfj5HFVOREOvl52K5lJ4SGj11A4PAq
+ /7nD0S4nbODzpYOadpwRyAXWW82rxKGWKp38+cNhP8cEorgJ71Bbp8ojcWWYZrL/7CBiGXqUxuC
+ 5Z6lHWyiW/Qi+fo83BYJHheHU8HejSqwJcpiHGS4kW7fWE6L97PJwO908xy/s8VNtbZN7NVG8YZ
+ el7SmDC2hfBwgpOpwkGJAbULszLZIa+KHLoyaNSyjiCDA1xaO2W95ZyGNWswUBw6m/CAFGioRPb
+ TBVdyLCJNrJ3vEwiAG6DWpa4GivXs0q1zkCU9dl9DgQdi/JTTAgUqwzDNWWJMHoY4Hu2jWUBdAb
+ L4oWwjw0oK4SI4TK9GeBMRtWdNqRZze7sr2lQqNipps1tuC273YuX3wu6FPtYFBSBgac0GRZ1nf
+ oDFG24QUx23IDKFojUYUHKMgBi1ME3sPjz1UEV/XrfQ9Jexuu4x5gIji7hHKwl
+X-Received: by 2002:a05:690c:6188:b0:81e:a471:e8b2 with SMTP id
+ 00721157ae682-8201f0c1830mr53462357b3.2.1785950168176; 
+ Wed, 05 Aug 2026 10:16:08 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-6699136af82sm3554926d50.3.2026.08.05.10.15.12
+ 00721157ae682-8210f9f94b1sm4320497b3.22.2026.08.05.10.16.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
+ Wed, 05 Aug 2026 10:16:06 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 3/5] linux-user/hppa: write the floating-point registers to a
- core dump
-Date: Wed,  5 Aug 2026 13:15:05 -0400
-Message-ID: <20260805171507.3119442-3-mattst88@gmail.com>
+Subject: [PATCH] linux-user: implement mount_setattr(2)
+Date: Wed,  5 Aug 2026 13:16:05 -0400
+Message-ID: <20260805171605.3119981-1-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
-References: <20260805171507.3119442-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,50 +99,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Write an NT_FPREGSET note for HPPA, matching the kernel's
-elf_fpregset_t layout (ELF_NFPREG = 32): fr0-fr31 as 64-bit values.
+mount_setattr() was in the syscall tables but had no implementation, so
+guests always got -ENOSYS. systemd uses it when setting up per-unit
+credential mounts, which fails the affected units with EXIT_CREDENTIALS.
+
+struct mount_attr is an extensible struct like open_how, so handle it the
+same way openat2() does: reject sizes smaller than the ver0 struct and
+require any unknown trailing bytes to be zero. All of its fields are
+64-bit, and the MOUNT_ATTR_* and MS_* propagation values are identical on
+every target, so only the byte order needs fixing up.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- linux-user/hppa/elfload.c    | 7 +++++++
- linux-user/hppa/target_elf.h | 9 +++++++++
- 2 files changed, 16 insertions(+)
+ linux-user/strace.list    |  3 +++
+ linux-user/syscall.c      | 44 +++++++++++++++++++++++++++++++++++++++
+ linux-user/syscall_defs.h | 13 ++++++++++++
+ 3 files changed, 60 insertions(+)
 
-diff --git ./linux-user/hppa/elfload.c ./linux-user/hppa/elfload.c
-index ff4301b2ed..dd5b0b380e 100644
---- ./linux-user/hppa/elfload.c
-+++ ./linux-user/hppa/elfload.c
-@@ -17,6 +17,13 @@ const char *get_elf_platform(CPUState *cs)
-     return "PARISC";
- }
+diff --git ./linux-user/strace.list ./linux-user/strace.list
+index 25ace05187..e952f15d20 100644
+--- ./linux-user/strace.list
++++ ./linux-user/strace.list
+@@ -1737,3 +1737,6 @@
+ #ifdef TARGET_NR_fspick
+ { TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
+ #endif
++#ifdef TARGET_NR_mount_setattr
++{ TARGET_NR_mount_setattr, "mount_setattr", "%s(%d,%s,%d,%p,%d)", NULL, NULL },
++#endif
+diff --git ./linux-user/syscall.c ./linux-user/syscall.c
+index dc028686f4..cfa68dfbdb 100644
+--- ./linux-user/syscall.c
++++ ./linux-user/syscall.c
+@@ -9735,6 +9735,13 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
+            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
+ #endif
  
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUArchState *env)
-+{
-+    for (int i = 0; i < 32; i++) {
-+        r->fpr[i] = tswap64(env->fr[i]);
-+    }
-+}
++#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
++#define __NR_sys_mount_setattr __NR_mount_setattr
++_syscall5(int, sys_mount_setattr, int, dfd, const char *, path,
++          unsigned int, flags, struct mount_attr_ver0 *, uattr,
++          size_t, usize)
++#endif
 +
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUArchState *env)
- {
-     int i;
-diff --git ./linux-user/hppa/target_elf.h ./linux-user/hppa/target_elf.h
-index 22547b1437..4357873aff 100644
---- ./linux-user/hppa/target_elf.h
-+++ ./linux-user/hppa/target_elf.h
-@@ -39,4 +39,13 @@ typedef struct target_elf_gregset_t {
- #define STACK_ALIGNMENT         64
- #define VDSO_HEADER             "vdso.c.inc"
+ #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+ #define __NR_sys_fsopen __NR_fsopen
+ _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
+@@ -14480,6 +14487,43 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+ #endif
  
-+#define HAVE_ELF_CORE_FPREGS    1
++#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
++    case TARGET_NR_mount_setattr:
++        {
++            struct mount_attr_ver0 attr = {};
++            abi_ulong usize = arg5;
 +
-+/*
-+ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 32): fr0-fr31.
-+ */
-+typedef struct target_elf_fpregset_t {
-+    uint64_t fpr[32];
-+} target_elf_fpregset_t;
++            if (usize < sizeof(struct target_mount_attr_ver0)) {
++                return -TARGET_EINVAL;
++            }
++            ret = copy_struct_from_user(&attr, sizeof(attr), arg4, usize);
++            if (ret) {
++                if (ret == -TARGET_E2BIG) {
++                    qemu_log_mask(LOG_UNIMP,
++                                  "Unimplemented mount_setattr mount_attr "
++                                  "size: " TARGET_ABI_FMT_lu "\n", usize);
++                }
++                return ret;
++            }
++            /*
++             * MOUNT_ATTR_* and the MS_* propagation flags have the same
++             * values on all targets, so only byte order needs fixing up.
++             */
++            attr.attr_set = tswap64(attr.attr_set);
++            attr.attr_clr = tswap64(attr.attr_clr);
++            attr.propagation = tswap64(attr.propagation);
++            attr.userns_fd = tswap64(attr.userns_fd);
 +
++            p = lock_user_string(arg2);
++            if (!p) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(sys_mount_setattr(arg1, p, arg3, &attr,
++                                              sizeof(attr)));
++            unlock_user(p, arg2, 0);
++        }
++        return ret;
++#endif
+ #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+     case TARGET_NR_fsopen:
+         {
+diff --git ./linux-user/syscall_defs.h ./linux-user/syscall_defs.h
+index e033c7db34..e28853c93b 100644
+--- ./linux-user/syscall_defs.h
++++ ./linux-user/syscall_defs.h
+@@ -2770,6 +2770,19 @@ struct target_open_how_ver0 {
+     abi_ullong mode;
+     abi_ullong resolve;
+ };
++/* from kernel's include/uapi/linux/mount.h */
++struct mount_attr_ver0 {
++    uint64_t attr_set;
++    uint64_t attr_clr;
++    uint64_t propagation;
++    uint64_t userns_fd;
++};
++struct target_mount_attr_ver0 {
++    abi_ullong attr_set;
++    abi_ullong attr_clr;
++    abi_ullong propagation;
++    abi_ullong userns_fd;
++};
+ #ifndef RESOLVE_NO_MAGICLINKS
+ #define RESOLVE_NO_MAGICLINKS   0x02
  #endif
 -- 
 2.54.0
