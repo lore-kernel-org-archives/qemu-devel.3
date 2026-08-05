@@ -4,101 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A7DC55174
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 05:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208C6C55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 05:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrU6u-0001px-0x; Wed, 05 Aug 2026 01:24:12 -0400
+	id 1wrUF6-0002vq-Eu; Wed, 05 Aug 2026 01:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrU6s-0001pe-Jv; Wed, 05 Aug 2026 01:24:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wrUF4-0002vK-4K
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 01:32:38 -0400
+Received: from mail-eastusazon11011032.outbound.protection.outlook.com
+ ([52.101.52.32] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wrU6q-0006V8-81; Wed, 05 Aug 2026 01:24:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1785907435; bh=BGzMjSrVwosG+cUgGbJZb3NUAldVTw72uZQydIJdVS4=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ZvnMVRO8ZC62+KLGc6WXNXjDSCYvexKif73JQjmmZ0VbA+TZYlbYuthbbOzVOQZdU
- JNJ8L1vA6xhXfiG6Wc47oCgGBAEL9ZXrZy94njIrC/IcVgjwX3eqW/4Z5FVq9Li9J7
- 49l3zSPYKSxzdi76bXXbgq5n04mtQxY26qJ1GmJK9LOESCWwYabb6d46caxc46+iMg
- RbrBW/UgT93ymPaDmcP5HFPjNKFTXy1Q67rsWvxQ95RPGJOTwNN9LTpGjoPHIk0jAe
- P3+zVi+StZUzzPWQ+5EPI6lMGnT5C8UcST8AG4KernO0ICL3JafNba3oVnijjyZNBD
- etDu9IGoVNY0w==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 505DD1C84BD;
- Wed, 05 Aug 2026 08:23:55 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 342F5401984;
- Wed, 05 Aug 2026 08:24:03 +0300 (MSK)
-Message-ID: <c8ae41c7-5562-46ed-9531-3deaf4aa2e67@tls.msk.ru>
-Date: Wed, 5 Aug 2026 08:23:44 +0300
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wrUF2-0007Xo-2S
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 01:32:37 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vUIhDr0P2zEH7KJpJf3ZDHyc2k84JFqZ6awhZo/Er3VKiNWN1IGJMqTOwyklesbA8bbIKxY5ADhgr9qG3VadNK3ud0DR+o5AqRVt9qxNjbY6a+rEViEgQAhFWHFu2WQVFAoxMvw6uA6KPfXwh7CmdkWPeyb+mliseOaJ5rLmdH70347nNHQ74INjWQpYNuaYZP1vDDnK5rxaWr7gFnyUWH2BPWDiJvshSZ+bmKIDQQcvfsVD0h2W6Xud6IZbiu5cN0vuESC4vQwIm353myIsfapYX5m7XiWvFEy0E3nDJrDlK/gUn2Z10Ib47YN5FlGkeeI3Rz97B22dZ/Zs0PIHhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=E/X3j+vLBycBqra0d59r8vxbnNUi3Klkubhz67O4PTY=;
+ b=XyEWQaRVR1u68A3e5OviNXFkEtg402ACHSm64CVNrAnI07E01ncctTrzQto/6XL1YnysXR2rWs+XeOxf9qqWVEErC8hmxasJ+lw1j6JCezNz/vlmt/QC/xGbaRbca94nvBrnMX1aNPUrL3Q7NFt6ew9dDSx65JHQY9vl7C8WorR3aoVTmA3X6hcbDL/FlK8k4TlWv6AeXub8EjZCbly85XJTMgzYDl9CEYjMxhBn9vnPPgmmy+8ruvEiw6vfOlExl7uV17xYnlN0FvULI82BaxtTxJuu/3J4lU5EYqHthBahthrmUQ5lMLUGmU7mkWvNxXrXMTH52xJIk6GQlb6Ctw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=E/X3j+vLBycBqra0d59r8vxbnNUi3Klkubhz67O4PTY=;
+ b=je5PJT27QMl0w0JKoAr8eAL8tjMi3WUAe3uWVX3fDK7RqD4GADAXyURUZAfWbesCZRsQJUnbczsKBlJjevkDuwgG3VFjV6yQxTJ31732joPkMtgw34xGyCt0wusLraEmU7GGPQMk+Fx40swkxWByS6GfFk4cvy3naWl4zsDj5K0=
+Received: from MW4PR03CA0089.namprd03.prod.outlook.com (2603:10b6:303:b6::34)
+ by PH7PR12MB6635.namprd12.prod.outlook.com (2603:10b6:510:210::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.15; Wed, 5 Aug
+ 2026 05:27:28 +0000
+Received: from MWH0EPF000A672F.namprd04.prod.outlook.com
+ (2603:10b6:303:b6:cafe::5f) by MW4PR03CA0089.outlook.office365.com
+ (2603:10b6:303:b6::34) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.16 via Frontend Transport; Wed, 5
+ Aug 2026 05:27:28 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ MWH0EPF000A672F.mail.protection.outlook.com (10.167.249.21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.292.8 via Frontend Transport; Wed, 5 Aug 2026 05:27:27 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 5 Aug
+ 2026 00:27:26 -0500
+Received: from xirengwts12.xilinx.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Wed, 5 Aug 2026 00:27:25 -0500
+From: Neal Frager <neal.frager@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <sstabellini@kernel.org>, <anthony@xenproject.org>,
+ <edgar.iglesias@gmail.com>, <xen-devel@lists.xenproject.org>,
+ <stefano.stabellini@amd.com>, <micheal.saleab@amd.com>,
+ <stewart.hildebrand@amd.com>, <john.ernberg@actia.se>,
+ <matthew.l.weber3@boeing.com>, <vincent.stehle@arm.com>, Neal Frager
+ <neal.frager@amd.com>
+Subject: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade include-order
+ assertion to warning
+Date: Wed, 5 Aug 2026 06:27:22 +0100
+Message-ID: <20260805052723.2823538-1-neal.frager@amd.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/vfio: Fix liveness check in
- vfio_connect_kvm_msi_virq()
-To: Tycho Andersen <tycho@kernel.org>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Steve Sistare <steven.sistare@oracle.com>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260727150038.2684512-1-tycho@kernel.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260727150038.2684512-1-tycho@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A672F:EE_|PH7PR12MB6635:EE_
+X-MS-Office365-Filtering-Correlation-Id: 94bc0f2d-cca2-446a-818b-08def2b23d1e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|36860700016|23010399003|18002099003|11063799006|13003099007|6133799003|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info: /Z3P7akN7im+GzxTWp5kAYnL6QyZsZVIz+otKjWhGN4R2w16LIhEReH5uNR9ylFsaJk0eFYoUByBaCShjyv0N9KzbJdjKC6AR2dLUPoocgBLJv7ULlc9e4NBpZ9jqxcZDJH0H9MUP0las13iP0fPvri+lf70uFfvvkESeLTN0JAVMCQmG5R5HoN45tOe2PChyULr2dQ0224CkDWrGqDVt/FSM5g/xjSQw5stAZqb64Z2MxS6KEbqmk2ErtHUYNbUwhxqoHduYxd6fMIhxRmOkqUuKusp2tkkUihpTc5zOGu8219LGathe24rifqnM/MDaUGtFH12VplOmJDvuoApTGQl6esVRP6ecuoJue18CSlWLrsT/YFrM7LgzntQPYCeu9dJo9B3WM6FJKFWXHDeWWVAf/nEOJzSQX2scX7MnrLSsxge4Q2PS5KX2CU6q5l/WytV8OhTTvb13UhzjHHoYfuScmZJQu6SupNHsZAOVdlYgy8wl0Ctdit69pGHD/G7i39c833OGt5IKEkaqyjMKrZL7eBF6mL6d8ePdntEbAExgaKVx+zdkX1i6VWyCo2VSKbOzZBfbse1f2SFPVArYnbw1Ju/yr+vTQhHSTallgldsZB4LNfseGGnlmA2JBE1Ep8RRBrwoACRx2eMpJontEpPkEkeZNOhZiCbFhiVbfDzgYiSWUayxwFrIlaRTEcLGnv8o5U4xgh/oP2GcEXyxw==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700016)(23010399003)(18002099003)(11063799006)(13003099007)(6133799003)(10067099003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 1K/A2tkKp6+CpEoquoBIHfxeiKXkfVqGeCjGN/vbUqV5HAKBcHh3k2Y7FPCZZ3yHyOwpCKuoaEoI7IH3HzJb9op9h9gllhpnznz9x6hz6nb1OOJ0anUmCqKrR/cCcJc9GG2hpW8PsrLaRMBiWbXUnUwvzOE0/pqjhcg0nPurWcfr4efk39Doo8d/N3rxV0krmeqEpEzABSXGf6sF26+rS5gtME3mKjJXA+aiUnXQ41aGPj6EUNOE1qhRrLdGpGw6T7qO621E6vA9ZdFsvqcfgV93OjaaXL4QTRPjTsIDqTHYBmtaB894WongnuDCThZo3W9oN59ayNV/FiPZDX28zR6x/CghuvgJv3nSVzY42Cv1XDCfPOKMNxrmB2D0gpg+4OgIFfEiHjZ9uWMHrMJAUe56FGlFxiN9H33K0ufe+I6gTdzo0BVLzOestAF0cJQA
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2026 05:27:27.5347 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94bc0f2d-cca2-446a-818b-08def2b23d1e
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672F.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6635
+Received-SPF: permerror client-ip=52.101.52.32;
+ envelope-from=neal.frager@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.795,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,24 +129,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/27/26 18:00, Tycho Andersen wrote:
-> From: "Tycho Andersen (AMD)" <tycho@kernel.org>
-> 
-> While working on savevm/loadvm for a new vfio device, I encountered the
-> crash below. Since vfio_connect_kvm_msi_virq() didn't check the ->use flag
-> for the vector, it would pass an unused vector down to
-> vfio_cpr_load_vector_fd() which would crash.
-> 
-> Fix this by checking the ->use flag along with the virq number to detect
-> whether a vector is valid or not.
-> 
-> Thread 1 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
-[...]
+The -I$(XEN_ROOT)/tools/include added to QEMU's extra-cflags causes
+__XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included,
+triggering an include-order assertion. Downgrade to a warning since the
+version is consistent in cross-compile.
+Ref: https://github.com/qemu/qemu/commit/e2abfe5ec6
 
-I'm picking this one up for qemu 11.0.x stable series.
-Please let me know if I should not.
+Signed-off-by: Neal Frager <neal.frager@amd.com>
+Signed-off-by: Vincent Stehlé <vincent.stehle@arm.com>
+---
+ include/hw/xen/xen_native.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
+diff --git a/include/hw/xen/xen_native.h b/include/hw/xen/xen_native.h
+index 5caf91a616..3e1137efc1 100644
+--- a/include/hw/xen/xen_native.h
++++ b/include/hw/xen/xen_native.h
+@@ -2,7 +2,7 @@
+ #define QEMU_HW_XEN_NATIVE_H
+ 
+ #ifdef __XEN_INTERFACE_VERSION__
+-#error In Xen native files, include xen_native.h before other Xen headers
++#warning In Xen native files, include xen_native.h before other Xen headers
+ #endif
+ 
+ /*
+-- 
+2.43.0
 
-/mjt
 
