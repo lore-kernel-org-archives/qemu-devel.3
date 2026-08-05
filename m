@@ -4,113 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBA4C55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1221BC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:13:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrf4j-0002VL-No; Wed, 05 Aug 2026 13:06:41 -0400
+	id 1wrfAn-0003SR-DG; Wed, 05 Aug 2026 13:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wrf4i-0002Um-7D
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:06:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <philippe.mathieu-daude@oss.qualcomm.com>)
+ id 1wrfAl-0003SH-5X
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:12:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wrf4g-0004qy-9p
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:06:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1785949596;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aj9NoEJZPsIHGe466zl47eTvqENcTxsPftBJefv4usc=;
- b=BAF/2ahE5FPp7w+1+X2dHZUnWc5qmqiHzIZncnfvUDKefwOQesB3aOTnpBZrAzSphdoRKn
- nHF+TLTNzHhnZk4rNgP3tVcySEeaTFAMWkl0F2ZA4tYbJTKP+lutpvQLzF4dFGmigNJWuk
- duDzRAcd6+JtSrRRJKkn6Yb5l5wIcQI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-J5hxVgB_Oh6PAqUpkuFY8Q-1; Wed, 05 Aug 2026 13:06:34 -0400
-X-MC-Unique: J5hxVgB_Oh6PAqUpkuFY8Q-1
-X-Mimecast-MFC-AGG-ID: J5hxVgB_Oh6PAqUpkuFY8Q_1785949593
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f835ac1aeso803758f8f.3
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:06:34 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <philippe.mathieu-daude@oss.qualcomm.com>)
+ id 1wrfAi-0005sA-TP
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:12:54 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 675FVL9E3356561
+ for <qemu-devel@nongnu.org>; Wed, 5 Aug 2026 17:12:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:reply-to:subject:to; s=qcppdkim1; bh=NdFbojcB9LM2J
+ jG+j1evYrTT1rQlZNFl6v2gu9MwArc=; b=mSYBgVnZODIxMwRPd/Ma5bGmGHs7T
+ kd+PRu26c9jtR6FzE622nyUXx0kKmRmcwJE6OInPCaymJpkbb5inFT8OnvUT3xDF
+ 50/vJB2IM6ZaPWqqy2nT5x/XFux5iGbPRMPx/i9UwXx9HDgyKXX1Qcm/3kpspuuW
+ g27TE9ziP31QzOfAfDvIFg4fNdjpBkhoJbYeWUqlodaeXUnFmW+JdsHv2+1XlDWf
+ sJLLhHcdICZ8iJJGyQDoCBZ7LBgT7eVS7iY6couPKkR4AhhDQNWrizJmq3FixP3R
+ +KYByFxAdpjEgM4rZKEF2ePmq8idpBDaSl2pOq1U0IkPzXShI/92nEp0Q==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fv2r622a2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 17:12:48 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-976cb36b375so234349241.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:12:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785949968; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oaYeCf+BrYyd3nUfLf+MIgEvxi9/wCjigZZPJXSc+Il4varDpu8eI0BSoFdbuAEt8A
+ Ona9WDolydh0NsOZgIB6V66Hgo84fltd8PeoJoC8lFWQL5pSZJiL8lK2/5eK3qIiBnpo
+ axl5HZUlNqn9yrQ+oi4Z1RVxiffdMvJlWYXFf/C1Po5ELA478B8gmj+L4+5HFb4sGkzU
+ iSNbcCZOBGh0SLGrSczyPbYF6GMZuTJhXq4xzyBsJLu3vynhel1S8RHfHZ45QL/Iajnk
+ VyK8qlbsgRBqtPJBvhPEPzkDfOjtI+IHva+rDYRBnZ4mgBwfar4HF/xLIT3hSfpvkbMy
+ es/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:mime-version:dkim-signature;
+ bh=NdFbojcB9LM2JjG+j1evYrTT1rQlZNFl6v2gu9MwArc=;
+ fh=61BSukYk6bgvj4GpJ3Prd4H5hOhQKozIhcO1l4pnlxs=;
+ b=Paob0Ic6Hs/xob7zB4qMK/dTqQbYBRtPAZ+Ujfw/OXl7PlLiDezT59F9CpxqAgfBSr
+ qGDJGrxd43mBuVeHV7Bfp+8sS7eOorIbGpIdR4xtxU6kabgySGS6D8sZ3e7IvgzOwGXS
+ 4t5B4ko3zDB+ity8sqQB664QycJh+JelNMCMgn1fnIZUt4xpsyf7Ds74u3Pm78HqbWMV
+ 2Ah4jP1hAzwyduW/msYCGKSRSWyyZp7BQh75xjvhONGvGxvK3JEMX+r9K29Zo5h+LuuB
+ FRzrc2STKwtqx+uIok0bxn0gSGgB6aOHVR0ZBMu3iHwFgJd06zUliDZSRBHsYw3baIfe
+ 3AzA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1785949593; x=1786554393; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=aj9NoEJZPsIHGe466zl47eTvqENcTxsPftBJefv4usc=;
- b=YiJvfGe8gquSkgUOyBRuXTaydg6OCpKy8JWmzWn1+DXeJJM9GksjMX50AlaftvqxY0
- k7mSoEBIaXAQopb4rkDGSMGiOl3jvTaeTCTPjDF7VeIesGIo/T8JdqhDsTOZ8DhZtDYZ
- WtjwLDM3vVpaZRHsCpKnT45TwUQgvyoUwFHkTEh19mhphrPaCBk8rpOE9z8PdfGuGdZc
- DEgnmIPQneqtIajlVE7YoNnjmhRtXT4LhYcpsMG6JZ/rtd01/J8wjwiEQap0+xdY4ydO
- A2p/9inNnAav7upx2NIh7C0lAbMneapABL4QlI/pOfdfHl0N1spK3B0x+y2d45x0rtPK
- ST+w==
+ d=oss.qualcomm.com; s=google; t=1785949968; x=1786554768; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:mime-version:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=NdFbojcB9LM2JjG+j1evYrTT1rQlZNFl6v2gu9MwArc=;
+ b=SUiGID5nij4Gl2s3Nv6a32YXGoo7jw7TPR7Ktas/3AA1K7Sn21nRsXFKNvdp2SXWgF
+ fWSJb4zhdVhoc7diu5X0PUtFND2GnnqHJDhVA2dG6qH/25/dzvAWSG9pWq+rOX19TKst
+ 7LtAV++Vp/0K2u+gQ4zx+rm/bm74YMtzfJ6xmgB7F/4GlVqunBJlKktjmLQv+62Q5xTq
+ BcNhmsteEA+B0smAH5SgLy+2eydxOWwyxp3vs0DyKTDhpWvye9N9g8/dQl7GPONh0Lc0
+ XX0LGYAPYhqnYt74rCxB8wwK4jCMtKCbIIdddaJeiVz20S9gmgbC/RoPVNErI3L+8j8d
+ Wdfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785949593; x=1786554393;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aj9NoEJZPsIHGe466zl47eTvqENcTxsPftBJefv4usc=;
- b=GWxqh+0oUwNyjMLHZZ9O1VSKaYhmhbejeB6jsu4siCNOqmjM91u5ibJsn/OhXSF/FM
- Pc/KeAAH9jB0GA9c9sRRGLo12ybq6klPFyB0rXD8eH01WKW0/0JBiTgcV5UzjHLXBjiP
- XzvhXTwAE3HF3FmR1VMxeUe6haVWh9BQgkJaHPl9/77nJ44m8wzHaYesq0pA/E+Q8Ikb
- 6wnftPFDmIxzxTm75vvm/HWP5CGp+Eg/QdbamVrB9WmdbqojbLfuwb8Uf2XCz1RNOCzY
- SnTTdcV2fXoqKc/+rrxwirRKPHSpZO4WNItcfnaFfJf40pd3t1+wdp2XIGY60VEgNqJ/
- TECw==
+ d=1e100.net; s=20251104; t=1785949968; x=1786554768;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:mime-version:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=NdFbojcB9LM2JjG+j1evYrTT1rQlZNFl6v2gu9MwArc=;
+ b=E5xoa+JihjG0jIF+3QUf/WEFL3qte0rUwPADbi8IdkiL7TGXSlUX7jGcCWZ6KGvBOr
+ FBjtGtjtYy2e9MT36No5AhfUEHgGuClYSVB+c+jYt2YneQxnEeQ/ugjvnFiGvBRsC5Nc
+ lJkx5j7jkInToKH0nWpIBthHs6WDcMJQqHHTk7AA2x3De3ZN42zeO7lcPjjImkz86QpA
+ w+zWmLc+z37SkH6OIr+zs+3CkJvvgBylY/6CdtK6TPD6KYiQuTQ4lQ8yROS6kBtio3GR
+ XDksGLhppEMaMniUrVu0z9z6ddvxDsm7E18bspist0OivSYw3fNnbwKg81EbTgo0oBjm
+ ktVg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrNzqsnFSZfmkzXa6Fhidi5YpoZH4wMB+m8psjgl9Vg0LXaQDYJ/tnOwELkctqGX5H3HXyHGRvlFegp@nongnu.org
-X-Gm-Message-State: AOJu0YwM6IzNCu4l/O/9DaHy9Sedjm09DLvTONQF7ylmnkOR/GP3tT6+
- N4Yo1KQJHX4lqn6QS0UZIVBpfTBVkTXjZgvUy8TKmnH5kGxih6UGn+yH7DLz2QfE3rWA1qCU1/9
- CKpFD8DM52/xjiumi6SPGLbgrKoCMuaYsKa5j9legEex16Sp2oKt3ne6v
-X-Gm-Gg: AR+sD13fV5O2iHObcYOGi391QRO3f2OuMWLCTKspfuWbN+lkSJQHKCgq+VQFmHW7Qaq
- 33ora1nltiTqhz28dWFKU/pK0Hp64iS+ZzR8Awcpqz7wtJ10wCe+9sHzAnNetwtEqWmoKg5lAg2
- vBqAWVKULwSP0Z8pbIluZ7KKY58T2yq+qH6JaoRtLEWMKihvupy0OZinm8ftdvN9OKR2dy+ZWQt
- ZhzWvmROCAELUHz969S4VyU/88lnBw3tYARXpQa7PO8aQuEBFQs/0Yan7XxRiyy4DgDyUAmG/ph
- 13kvf4Kqme/TJtrF8ORw0BN6P6MoXbJ1k/+MPJuxxaRAt1zTgs4jLhOEA26Ox9vi9AZ1eKEjPOG
- /jqSp2Xv0o6L6N40pFyjqz/mKu457vJlRgx/Vt5CKcfwpf2ymYvdQPh3mEphW6kUbVUk/60Z0wL
- 2lm0LT4HLI8HWe2sTNCdzjeooW
-X-Received: by 2002:adf:ea89:0:b0:47f:9751:cb3d with SMTP id
- ffacd0b85a97d-47fec4f229bmr12291794f8f.8.1785949592979; 
- Wed, 05 Aug 2026 10:06:32 -0700 (PDT)
-X-Received: by 2002:adf:ea89:0:b0:47f:9751:cb3d with SMTP id
- ffacd0b85a97d-47fec4f229bmr12291715f8f.8.1785949592538; 
- Wed, 05 Aug 2026 10:06:32 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d706:f1f0:10e1:24f6:18:83f2?
- (p200300cfd706f1f010e124f6001883f2.dip0.t-ipconnect.de.
- [2003:cf:d706:f1f0:10e1:24f6:18:83f2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-47fec23e533sm10367934f8f.28.2026.08.05.10.06.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Aug 2026 10:06:31 -0700 (PDT)
-Message-ID: <9f9dcb50-aab4-43ab-8563-63a9559f7d11@redhat.com>
-Date: Wed, 5 Aug 2026 19:06:30 +0200
+ AHgh+RrDBAgqEQY3q/oFSBS3QFiLZi28rJcU+/jcmk1qB+aeIjXDKLae6dPxaSX86TinB2jwNrvb0IgU5D5J@nongnu.org
+X-Gm-Message-State: AOJu0YwY/XZq65jtJW8t5a4Q4UJRef2vpjcwLNL38CBir71t5bWPyJxm
+ 8ZvnXwTL/KrvOcUUhWNu1jlC/EPISMpPomwgQTjZ+VmNI4FS1qr/MK1jkhoPZePvKYroqzbcirW
+ RhR4Go847TBGjK2XPERZRaaGD6vj17ZKHQpJ2dD3MZ9DXlr7lWvy30zWgTMHb2ZC5+jPh85szPB
+ TIs+QYeuE35ffRtHP85Zi2BrZtD0WNaHG8
+X-Gm-Gg: AR+sD10m9BNNgWPB6X8aiimLhq8B3beeBujBhN3d+J95iGxRSuC9NFvSjR6GBATwOmA
+ VybYguihe/uekIGdlHO0O+T+6hUJsB5NDIBhIXAFONeRT3ki2IpkTy0/FZXQC52+Y1yyWCeopDY
+ IhQ18QLQpyVtWewpmb4Kru/SmY7QDRiwqA4ptfBIr6HX9h1aUN7WoQLIDf05M=
+X-Received: by 2002:a05:6102:6a85:b0:739:5f55:3c3c with SMTP id
+ ada2fe7eead31-760ed284196mr1983318137.13.1785949967684; 
+ Wed, 05 Aug 2026 10:12:47 -0700 (PDT)
+X-Received: by 2002:a05:6102:6a85:b0:739:5f55:3c3c with SMTP id
+ ada2fe7eead31-760ed284196mr1983301137.13.1785949967208; Wed, 05 Aug 2026
+ 10:12:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qcow2: repair a dirty image when it becomes writable
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>
-References: <20260731220039.1765584-1-den@openvz.org>
- <20260731220039.1765584-3-den@openvz.org>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260731220039.1765584-3-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Philippe Mathieu-Daude <philmd@oss.qualcomm.com>
+Date: Wed, 5 Aug 2026 19:12:35 +0200
+X-Gm-Features: AUfX_mz17nNt8eocfxqjFVae9trD5RMucwdEb1BrN3DPOFE-KhPTAj7U9raaJ_c
+Message-ID: <CANWQopVRj=Uogwhf=MTGrs3-Hk3HrE+X6aU5Zmtq8zyCiNciWg@mail.gmail.com>
+Subject: Re: [PATCH 1/6] host-utils: fix ssub32/64_saturate return type and
+ clamp direction
+To: Brian Cain <brian.cain@oss.qualcomm.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=WrIb99fv c=1 sm=1 tr=0 ts=6a736f10 cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=gowsoOTTUOVcmtlkKump:22 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
+ a=4YZXNOiDV-AFHUgz1FwA:9 a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: OdfDlY-3jOjK44fbTD0Bz16fcdKhFVwT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE0MSBTYWx0ZWRfX2IwNl5da2uHw
+ 0XLvKIAzInaFCsYF1HYfXl0baCXosU+9YxvxLLjJRc/rbh4Sue7USLdIEvjkRqHBpsgt3qJsCQY
+ FloQyJ0kM0UJLIoGL+MJkKhIobS1Ky8=
+X-Proofpoint-ORIG-GUID: OdfDlY-3jOjK44fbTD0Bz16fcdKhFVwT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE0MSBTYWx0ZWRfX6G7cBLpjFa3N
+ pl/hrzPj7IypfSrhqid0HNThsKOuVBybR5Amzn0cUtoOyLpHVwLyyf/E6gYq13tNWe3/W3gS4/9
+ mDSoL12RQbcI03MtOmWaA7RVFDQ+cZ0qqZO9f77RdFAB2/xPjzJeT7Lmr4QSuf0ta1gcw5tBrVe
+ edqVFUhXBxPEgSrg7lyDReu1vCxhyUQtQCwSsMF2MxWl1ALMvvIak4naaUxAw0fKYSyoUydCxBX
+ UFlKAcvB34UR+LLM8uMxPRPNhuMx71cjIJDzU92DbqBt5w87xJaXeXEyiaO89CAfzaM9e92cOVZ
+ SpcNcLd1ZpkRBubHmnz5PWsbBuVvKNYumi1mGnhLVN5k+pszBiTyk9abrszJJx0Bn4Ul7ZCpIgK
+ t+GBETtzln9OBH+kWSvo8UJngZUHrJ+cE+HrmZeAna3iPvYWVLkkO3cznX0u6F3YlMPEdQL74Df
+ OOCyM/0hK3go4YKI4Gg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_05,2026-08-04_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050141
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philippe.mathieu-daude@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,73 +166,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: philmd@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.08.26 00:00, Denis V. Lunev wrote:
-> A dirty image must be repaired before anything allocates a cluster in
-> it. qcow2_do_open() does that, but only for a node that is writable
-> from the start. A node opened read-only skips it, and nothing revisits
-> the question once that node becomes writable, which block-commit does
-> routinely: commit_active_start() and commit_start() reopen the base
-> read-write for the duration of the job.
+On 5/8/26 18:52, Brian Cain wrote:
+> ssub32_saturate() and ssub64_saturate() were declared to return bool
+> instead of int32_t/int64_t, and clamped to the wrong bound on overflow.
 >
-> With lazy refcounts the on-disk refcount block then still accounts for
-> the metadata clusters only, so the allocator restarts at the front of
-> the image and hands out clusters that L2 entries point at. Two guest
-> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
-> stays clear, and a clean close clears the dirty bit, so no later open
-> repairs the image either.
->
-> Do the repair in qcow2_reopen_commit_post(). bdrv_reopen_prepare() runs
-> before bdrv_list_refresh_perms(), so it holds no BLK_PERM_WRITE and,
-> with auto-read-only, bs->file may still have an O_RDONLY descriptor.
-> commit_post cannot reject the reopen, so signal corruption if the
-> repair fails rather than let writes alias live clusters. An inactive
-> node is skipped: bdrv_activate() calls qcow2_do_open() again through
-> qcow2_co_invalidate_cache().
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
+
+Cc: qemu-stable@nongnu.org
+Fixes: 16495533131 ("host-utils: Introduce signed saturation primitives")
+
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   block/qcow2.c              | 14 ++++++++++++++
->   tests/qemu-iotests/039     | 24 ++++++++++++++++++++++++
->   tests/qemu-iotests/039.out | 17 +++++++++++++++++
->   3 files changed, 55 insertions(+)
+>   include/qemu/host-utils.h | 20 ++++++++++----------
+>   1 file changed, 10 insertions(+), 10 deletions(-)
 >
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 1543255eba..e660655a0d 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -2147,8 +2147,22 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
->   
->   static void qcow2_reopen_commit_post(BDRVReopenState *state)
+> diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
+> index 2e8da7fb3d0..291bb198b65 100644
+> --- a/include/qemu/host-utils.h
+> +++ b/include/qemu/host-utils.h
+> @@ -610,7 +610,7 @@ static inline bool umul64_overflow(uint64_t x, uint64=
+_t y, uint64_t *ret)
+>    * sadd32_saturate - addition with saturation
+
+While here, "32-bit signed addition with saturation".
+
+>    * @x, @y: addends
+>    *
+> - * Computes @x + @y, and saturates rathern than truncating the result.
+> + * Computes @x + @y, and saturates rather than truncating the result.
+>    */
+>   static inline int32_t sadd32_saturate(int32_t x, int32_t y)
 >   {
-> +    BDRVQcow2State *s = state->bs->opaque;
-> +
->       GRAPH_RDLOCK_GUARD_MAINLOOP();
->   
-> +    if (bdrv_is_writable(state->bs) &&
-> +        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
-> +        BdrvCheckResult result = {0};
-> +        int ret;
-> +
-> +        ret = bdrv_check(state->bs, &result, BDRV_FIX_ERRORS | BDRV_FIX_LEAKS);
-> +        if (ret < 0 || result.check_errors) {
-> +            qcow2_signal_corruption(state->bs, true, -1, -1,
-> +                                    "Could not repair dirty image");
-> +        }
+> @@ -625,7 +625,7 @@ static inline int32_t sadd32_saturate(int32_t x, int3=
+2_t y)
+>    * sadd64_saturate - addition with saturation
 
-Should we return here? I don’t think we should go on into the 
-`qcow2_reopen_bitmaps_rw()` path.
+Also  "64-bit signed addition with saturation", etc.
 
-Hanna
+>    * @x, @y: addends
+>    *
+> - * Computes @x + @y, and saturates rathern than truncating the result.
+> + * Computes @x + @y, and saturates rather than truncating the result.
+>    */
+>   static inline int64_t sadd64_saturate(int64_t x, int64_t y)
+>   {
+> @@ -638,30 +638,30 @@ static inline int64_t sadd64_saturate(int64_t x, in=
+t64_t y)
+>
+>   /**
+>    * ssub32_saturate - subtraction with saturation
+> - * @x, @y: addends
+> + * @x, @y: minuend and subtrahend
 
-> +    }
-> +
->       if (state->flags & BDRV_O_RDWR) {
->           Error *local_err = NULL;
->   
+Eh? "addends" is a good description. If you rather:
 
+  * @x: first addend
+  * @y: second addend
+
+>    *
+> - * Computes @x + @y, and saturates rathern than truncating the result.
+> + * Computes @x - @y, and saturates rather than truncating the result.
+>    */
+> -static inline bool ssub32_saturate(int32_t x, int32_t y)
+> +static inline int32_t ssub32_saturate(int32_t x, int32_t y)
+>   {
+>       int32_t ret;
+>       if (ssub32_overflow(x, y, &ret)) {
+> -        ret =3D x < 0 ? INT32_MAX : INT32_MIN;
+> +        ret =3D x < 0 ? INT32_MIN : INT32_MAX;
+>       }
+>       return ret;
+>   }
+>
+>   /**
+>    * ssub64_saturate - subtraction with saturation
+> - * @x, @y: addends
+> + * @x, @y: minuend and subtrahend
+>    *
+> - * Computes @x + @y, and saturates rathern than truncating the result.
+> + * Computes @x - @y, and saturates rather than truncating the result.
+>    */
+
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
