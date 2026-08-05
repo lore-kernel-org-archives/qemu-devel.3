@@ -4,93 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7294DC55ABA
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927FEC55174
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Aug 2026 17:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrfD6-00044x-0r; Wed, 05 Aug 2026 13:15:20 -0400
+	id 1wrfFq-0006KL-PU; Wed, 05 Aug 2026 13:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfD0-00042q-ML
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:14 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wrfCz-0006FB-5v
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 13:15:14 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-81f3b227a4aso20286007b3.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785950112; x=1786554912; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=urriLtqPEl/gKuko2XbipDGuuTKCURnorwcdL1mLq/8=;
- b=WFf/fioVWUtOI7i5hJpSRlqCSvYkIouMsRQkVftFvtobKyHbH/s9/sXy76ebT25z0f
- DLijDySVpQU1PnuhFrpD4wcH7d+ft1xHA75cPPWze8N/CDu68GEhIvkXaJROlpFmSX7K
- SIR2LXFqE2nWoD4c4VpiJzRj6+dwpWgYOz9icEatBkR/u5jdk3HUn8a9zZnvieMegqhX
- +KOzmWlDf9r/Zld1Z6MgimEYKFHMY7eoVCCLwMU0P1Ubk4qLB6RgIv9iVW4Qd1vRGQXO
- xOurz5pCSzh/lfrnYetUpbpsa/8D4FunYwSFJhPvywkG9Mr7AaJ0zHPyew5+qh5EWWcE
- ZwUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785950112; x=1786554912;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=urriLtqPEl/gKuko2XbipDGuuTKCURnorwcdL1mLq/8=;
- b=KSaiurPTwHgYPdOmIySKFx+/V1TJ51Lwzu2Nboah51EnMMYv36D9Gf7A8U+APSpdMN
- 9jO+K/9+tcQh0wihI2I1/BeZ/EuIoD7dCCsJPG6FS7olMVrD9lJQCiRh5JiWGfWROD85
- Es+g4sY6nehnPUOXLepQVc7sP7RYYd2zMjhBGfUYzCYS3q7GGrlMZja0UfiokqQ2c9RT
- DbqJ5u904HwJJ4a9VjS6a36MYfGa8sMpX/qXzpl3qEScixjF7AVdpu26an8f7FGkqYCM
- fvSFwUPtUU9yoNs1bCWDLVLg82chYKxhCZASViNaSzXisaRmMyeAr5ISiXaaX0LkNkW1
- AQ8g==
-X-Gm-Message-State: AOJu0Yy16Oz805Ec6ndtfizf1FS68QPrgAHLnMAFCt4HtaSuHqh7RhIU
- AFd3AYgK5oGgQPO9oZjily+nzc+vqbbi3zWkKW3N7nxVkq/90E/qrnOtWbF6coVhI0U=
-X-Gm-Gg: AR+sD10Npxnnk9fZtqYctZqDHfTDhIKtakZVsaG0zb2wegJZ78Gg1fVUv2i6S5jab2l
- FqMtNmjcyFyVuhngYeGktjas+1vapLb+80ZA1wD0TecvWJ/bEEj1eAkQ3/FkW6UkMFjsZnJtUac
- CTOhfrq1qUsA4fn7Nchh5NpcrhDPb1geZkBX0l4efi6Wq13G/9X10TAPASremBm3yvNAREVcGR2
- DaU14VnPlKmEFaxqlz3UylLSkxUTKS76j0XApTHJHTk+2pWoktDZ5PYwyabAXkGGL+wH8//HAAQ
- XQRKC/PPscvTLZ8Tbmwrm05xnD0t9ciAvTk+ciWFYoteqJ1QKZlT7j/uk1PB8W9gKk2S4Z8uj9e
- V6cI+v9D82JEWMvJY23Vt6HA2ASuCaj9sK4/wO2h+6N6bie12SwOL4WXRGCn7IzwwYc4Eugb9KX
- 6aguL2DOIC/LmCSaGjOTQvKFlRsPP3ZV/3E3CceJ3g//CQ/HLt4UeR4PqjXKGd
-X-Received: by 2002:a05:690c:9a12:b0:81f:6503:701a with SMTP id
- 00721157ae682-8201f0b1331mr49017727b3.9.1785950112023; 
- Wed, 05 Aug 2026 10:15:12 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8201341ddedsm24938817b3.23.2026.08.05.10.15.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Aug 2026 10:15:10 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 2/5] linux-user/mips: write the floating-point registers to a
- core dump
-Date: Wed,  5 Aug 2026 13:15:04 -0400
-Message-ID: <20260805171507.3119442-2-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
-References: <20260805171507.3119442-1-mattst88@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wrfFp-0006K5-Qv; Wed, 05 Aug 2026 13:18:09 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wrfFn-0006o7-UF; Wed, 05 Aug 2026 13:18:09 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 675FljeA2398087; Wed, 5 Aug 2026 17:18:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rCzNif
+ giIc0vzX3W59L5RJS+DyQRrUzDtgEmaO5kVVc=; b=GAGykhh5+rYXwWOF7VNpZx
+ 2CZAbxO0QnaUnGa7Vpmu71JnegcFQqPfWL8OkrMVdX8vkEzQRJmoJL+NJ2JwufEV
+ WY/pOWqoTDmHeaShIXoNQWd8V6bCM52XzSlFDCK6g3cxeSfwF/iPqJEAXzbEhNzf
+ E4A6YUzaPaOV9HnY/T1WtCCAr3I8fCWyBSPiweekj1P0BjRmvANL+kgREQkxmp04
+ B4kPui9Y/YzqYptrj8mSS7qOsUQoXJOsNTUeThUvMyXlyq+6nhG4itQa93IjuYeU
+ BkizJHFYcj6a9Dkve+/lf0uuBJbzgyywKPQsEtRi2QwGo2ox2GWkZkLORMl753XA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fqv4mb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 05 Aug 2026 17:18:02 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 675HBIij005624;
+ Wed, 5 Aug 2026 17:18:01 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fsvmhff3k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 05 Aug 2026 17:18:01 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 675HI0eo33751688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 5 Aug 2026 17:18:00 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ECB925804E;
+ Wed,  5 Aug 2026 17:17:59 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BEB395803F;
+ Wed,  5 Aug 2026 17:17:58 +0000 (GMT)
+Received: from [9.61.23.247] (unknown [9.61.23.247])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  5 Aug 2026 17:17:58 +0000 (GMT)
+Message-ID: <f2d2181e-a399-4faf-90ec-a7e38803f72f@linux.ibm.com>
+Date: Wed, 5 Aug 2026 13:17:58 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] target/s390x: Allow 2G hugepages guest backing
+To: Claudio Imbrenda <imbrenda@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, borntraeger@de.ibm.com, frankja@linux.ibm.com,
+ pasic@linux.ibm.com, mhartmay@linux.ibm.com, david@kernel.org,
+ farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ cohuck@redhat.com
+References: <20260805103728.97602-1-imbrenda@linux.ibm.com>
+ <20260805103728.97602-2-imbrenda@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260805103728.97602-2-imbrenda@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: H3-JyiFO5dip2Jj-d5kEnYb1hSLYG7zT
+X-Proofpoint-ORIG-GUID: H3-JyiFO5dip2Jj-d5kEnYb1hSLYG7zT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA1MDE0MSBTYWx0ZWRfX2/xcGsB/5sTy
+ LnVjMCifXOVtRd4v/EoLmkcDzbq3JhtCztE2xCgTM7uyP7t6deVG3MjV9ZviTEVVybzCIjkAMBY
+ Zk+qy/aI+hns5tjBOTEnUul/wjiBlqk=
+X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a73704a cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=lTBg_gQgYjYnJuI21ZsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA1MDE0MSBTYWx0ZWRfX1vhjnvHvAs7d
+ iHIAkx7aCvKD3bMDsReeu9F/kozPjujovM0Bw9x+iVy+UkMNHAsID5BQp8wZgT7HyGk/+1nGi/F
+ krsIXwnI92u/N8pNR3D/M3SgsA9oJmr0MaxETe+8NPY2z3BTO2L6heDSIkcxJNDb/WZSn31Uwf2
+ CqRnxumUnB2/SySpil/hxGnl2cCsQgjDxXegyygPGO/BNXd7wsrQwri09Ft7mv8U6OPgUg9g6NZ
+ HLuwYuLx2O+9VQhaaH3H2fJJYre859uSwRsAnSXNKLfXu8FYm6O2WrqRIUOY6w5L6E3+8RFlbiL
+ kBWhYVHccgHVChvgb2zj3ztuwjRzS28Pb39G/y9Q6Uxrw/PqVxglypED2dSTz7DmtDtkl5LM2hI
+ hDIGVt+6Gygrvdbq9Xx28TUMYldynciqswkBy0STJ1ST/z6R8R6x4anm80/raApJ6cNezt0tSk2
+ TqC6If+VeJgZEQCUstQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-05_05,2026-08-04_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608050141
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,82 +126,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Write an NT_FPREGSET note for MIPS and MIPS64, matching the kernel's
-elf_fpregset_t layout (ELF_NFPREG = 33): fpr[0..31] hold f0-f31, and
-fcsr occupies the low 32 bits of slot 32.  The pad field rounds the
-struct to 33 × 8 bytes = 264 bytes.
+On 8/5/26 6:37 AM, Claudio Imbrenda wrote:
+> Allow mapping guest with 2G hugepages on hosts that support it.
+> 
+> Rename kvm_s390_get_hpage_1m() to kvm_s390_get_hpage() to reflect that
+> it is not anymore limited only to 1m hpages.
+> 
+> Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
----
- linux-user/mips/elfload.c      |  8 ++++++++
- linux-user/mips/target_elf.h   | 13 +++++++++++++
- linux-user/mips64/target_elf.h | 13 +++++++++++++
- 3 files changed, 34 insertions(+)
-
-diff --git ./linux-user/mips/elfload.c ./linux-user/mips/elfload.c
-index ce2c4514f3..1d62ae0a4d 100644
---- ./linux-user/mips/elfload.c
-+++ ./linux-user/mips/elfload.c
-@@ -130,6 +130,14 @@ const char *get_elf_base_platform(CPUState *cs)
- 
- #undef MATCH_PLATFORM_INSN
- 
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUMIPSState *env)
-+{
-+    for (int i = 0; i < 32; i++) {
-+        r->fpr[i] = tswap64(env->active_fpu.fpr[i].d);
-+    }
-+    r->fcsr = tswap32(env->active_fpu.fcr31);
-+}
-+
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
- #ifndef TARGET_MIPS64
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-diff --git ./linux-user/mips/target_elf.h ./linux-user/mips/target_elf.h
-index 157306f7a0..426f905d3a 100644
---- ./linux-user/mips/target_elf.h
-+++ ./linux-user/mips/target_elf.h
-@@ -26,4 +26,17 @@ typedef struct target_elf_gregset_t {
-     };
- } target_elf_gregset_t;
- 
-+#define HAVE_ELF_CORE_FPREGS    1
-+
-+/*
-+ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
-+ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
-+ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
-+ */
-+typedef struct target_elf_fpregset_t {
-+    uint64_t fpr[32];
-+    uint32_t fcsr;
-+    uint32_t pad;
-+} target_elf_fpregset_t;
-+
- #endif
-diff --git ./linux-user/mips64/target_elf.h ./linux-user/mips64/target_elf.h
-index 061471a0f1..efb5d97563 100644
---- ./linux-user/mips64/target_elf.h
-+++ ./linux-user/mips64/target_elf.h
-@@ -32,4 +32,17 @@ typedef struct target_elf_gregset_t {
-     };
- } target_elf_gregset_t;
- 
-+#define HAVE_ELF_CORE_FPREGS    1
-+
-+/*
-+ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
-+ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
-+ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
-+ */
-+typedef struct target_elf_fpregset_t {
-+    uint64_t fpr[32];
-+    uint32_t fcsr;
-+    uint32_t pad;
-+} target_elf_fpregset_t;
-+
- #endif
--- 
-2.54.0
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
 
