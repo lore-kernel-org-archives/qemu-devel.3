@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95771C55ABF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957B7C56203
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrtmw-0004G9-V9; Thu, 06 Aug 2026 04:49:18 -0400
+	id 1wrtmw-0004FC-GH; Thu, 06 Aug 2026 04:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrtmt-0004FB-W0
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:16 -0400
-Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ id 1wrtms-0004Ev-Li
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:14 -0400
+Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrtmm-0001NM-Rq
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:15 -0400
+ id 1wrtmn-0001Ne-S6
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1786006129; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
- bh=aVrtlsA7Jg/Ha9/qbJG0kFJ5A7fFXUivVpxYdndNPFs=;
- b=I5nrtSqamcyFMjRkAoasv6/J2xXOUir3Ohhe27zMpfTkwZvQLW1FI8zuKm2hhd+uDonGutQ10rkSfUbAgBj/yvRt3v7UrlJC2i2Ped7sr+5Cr60JSkoTl8QxssRM/INS5XlDEOyi7+uhEqCVsP+GZPL7udG9QQD+qlRttPW8gzg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R831e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ t=1786006135; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+ bh=NT6gSRJ0N5NlgtHEp7zRxfcB9RS16InktidXXB3lk+o=;
+ b=f48JOnwOCbP8FDjJ5TmTmjMnp2OQv/Dmx/pgBaI3Txz3cgF5tKraquBEVZ2cPTXF3LL8c+6+BVAtH3+UYuqfSj0ShJQRetWhtFYR15t0l7F0RaEGJmWCNdA/5wZoiR6t2ykIEn3cfmCrpMpOLpQzfVHQv1On/C+dnJ+M57uMcWA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R791e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X8TQ57R_1786006123; 
+ TI=SMTPD_---0X8TNAfU_1786006129; 
 Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
- fp:SMTPD_---0X8TQ57R_1786006123 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 06 Aug 2026 16:48:49 +0800
+ fp:SMTPD_---0X8TNAfU_1786006129 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 06 Aug 2026 16:48:55 +0800
 From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: akihiko.odaki@gmail.com, philmd@qualcomm.com, pbonzini@redhat.com,
  viktor.prutyanov@phystech.edu, zhengrong_li@linux.alibaba.com
-Subject: [PATCH v3 1/3] runstate: set crash_occurred on guest crashloaded
+Subject: [PATCH v3 2/3] dump: add crash_occurred flag to QEMUCPUState
 Date: Thu, 06 Aug 2026 16:47:41 +0800
-Message-ID: <178600606177.41696.1952897016467970943@linux.alibaba.com>
+Message-ID: <178600606177.41696.17514250023045302941@linux.alibaba.com>
 In-Reply-To: <178600606177.41696.3160576684819885412@linux.alibaba.com>
 References: <178600606177.41696.3160576684819885412@linux.alibaba.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
-Received-SPF: pass client-ip=115.124.30.111;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
+Received-SPF: pass client-ip=115.124.30.110;
  envelope-from=zhengrong_li@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-110.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -71,36 +71,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Windows pvpanic driver writes PVPANIC_CRASH_LOADED (bit 1) on
-bugcheck, not PVPANIC_PANICKED (bit 0). As a result,
-qemu_system_guest_panicked() is never called and crash_occurred
-stays false for Windows guests.
+Add is_crash_occurred_cpu field to the local QEMUCPUState in
+arch_dump.c so that dump-guest-memory can record which CPU
+triggered the guest panic.
 
-Set crash_occurred in qemu_system_guest_crashloaded() as well,
-so the faulting CPU can be identified in the guest dump.
+The new field is appended after kernel_gs_base, so existing
+tools that check the 'size' field can safely ignore it when
+reading older dumps.
 
 Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
 ---
- system/runstate.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/arch_dump.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 08acf801b0..c7961cc1df 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -724,6 +724,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *i=
-nfo)
- void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+index 16e47c4747..8ce2c7e9bb 100644
+--- a/target/i386/arch_dump.c
++++ b/target/i386/arch_dump.c
+@@ -264,6 +264,8 @@ struct QEMUCPUState {
+      * by checking 'size' field.
+      */
+     uint64_t kernel_gs_base;
++    uint8_t  is_crash_occurred_cpu;
++    uint8_t  pad[7];
+ };
+=20
+ typedef struct QEMUCPUState QEMUCPUState;
+@@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache =
+*s)
+=20
+ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
  {
-     qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded");
-+
-+    if (current_cpu) {
-+        current_cpu->crash_occurred =3D true;
++    CPUState *cs =3D env_cpu(env);
+     memset(s, 0, sizeof(QEMUCPUState));
+=20
+     s->version =3D QEMUCPUSTATE_VERSION;
+@@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86Stat=
+e *env)
+ #ifdef TARGET_X86_64
+     s->kernel_gs_base =3D env->kernelgsbase;
+ #endif
++    if (cs->crash_occurred) {
++        s->is_crash_occurred_cpu =3D 1;
 +    }
-+
-     qapi_event_send_guest_crashloaded(GUEST_PANIC_ACTION_RUN, info);
-     qapi_free_GuestPanicInformation(info);
  }
+=20
+ static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
 --=20
 2.43.0
 
