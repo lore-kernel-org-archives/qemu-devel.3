@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEC4C56208
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 16:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D7CC56205
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 16:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws18J-0006nC-Ek; Thu, 06 Aug 2026 12:39:52 -0400
+	id 1ws18J-0006mp-9q; Thu, 06 Aug 2026 12:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws18E-0006kX-Qp
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:39:46 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1ws18F-0006kc-7u
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:39:48 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws18C-0000ID-QP
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:39:46 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2d02b4c3601so28540055ad.3
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 09:39:44 -0700 (PDT)
+ id 1ws18D-0000Id-Pk
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:39:47 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2cfbbdfa60bso23476135ad.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 09:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786034383; x=1786639183; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786034384; x=1786639184; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ncF+VrF48oEXQiurXrwt2lRSm4bmf+7Q7x/Xk+zd/VY=;
- b=wD1izkqW66PD1sIIOvGvC+rm0AUcCZ42M5yhfO7ueI/2BKiMhHC4gAy85vpSfKJYbT
- f1r84qdSndwwwAdBws4jblLOO+3mxYtB7PdclYHqeRwlATAmlCZEQS/wOSSznwmhYZux
- gp16AqIsY06EPBQVlpnAzXCuKMJVWiDM01BTuSVEGILU+dpAEK84cIn5GEdVm6JYlBJf
- DGCklNamlTgkuubZ+uB6vDF8+QNQum98TwlgGrZCAPun+10jcQy9qg8Nt8frJry1nyP8
- 5056Asz8wwPyaQNmBb7Z20Bs8iwQXl+gBz95CoxhQAJ/uM2Ab9LlOOIdsu1UTsaIaFg/
- ENvA==
+ bh=EkXaE1LdHjxR5+SLCaE45VZ8+LEX5aQ8OT/h3czPRdQ=;
+ b=Dk0219ORsXC3x5e9ZVgx2K2UTAg2aQyiXAj58ZEub/ifZ7kCTvpHlBmP6rbWJwH3xp
+ OfMFnZHIE6NVvDkWPKyw0YbqXUvb5rM5K6n0rOCV8OngSW0xMvyET9o2jd63ccOa8Y9+
+ zFqiwVUqWalxu8nlYLxS6c5ApckarXNgVLsTOIEw4kUXpQJhsquFV/0kcIpOIteMuNIs
+ kmgM6lV4RIzNFRE6z26RrG4qp2MXmxQH324vcSdbiMYNU4dv4C/FSvV9qdjWMSpscB2L
+ xVPMP7JzSSTZ53doVKuMLIe/NApq5+tKYSx30JGa6riMt+8uK2cFdkmggPkHARWZWFDY
+ ezRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786034383; x=1786639183;
+ d=1e100.net; s=20251104; t=1786034384; x=1786639184;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ncF+VrF48oEXQiurXrwt2lRSm4bmf+7Q7x/Xk+zd/VY=;
- b=iG4C10OWU41PHloCtvk+Fxp1avG5onZHbGKARy/5HPmD409ya2nzz0hHQM27VC9ocb
- +NLb3JxJ0vngCi963hgW7mKSIzLLItU8n4A2r9XhJQ2Dg+/6TsEpVjVgW3UlFH9ww4l+
- YZ84o6a4KnNEf08hps94s07u3HzzIbQcqwN+Jd/DMpjfq8sl9Ob9DNS9AoQpQy9zZTF0
- UNqYpCQ2Aqjz5mqmTKU6wryMcmX6NS0DTAdXizz5tNxjDkX+cUahxj2HqPmr7FmzMyvj
- E36IQAtbYBYlD4QQGxB2/CRSYmU6MFeY5HSvk2ycdSwqZC+ClFKzI+dxdGiiuSR/L+5i
- pySA==
-X-Gm-Message-State: AOJu0Yynes7VYVvDaX1cGxWBrWfZqGkC2QalNp9JSBZwqi3Ofvqw/amR
- +uHHBXcyxcv8hCSBtoCCjd3hFFwkFHtOc2bMZxTq0FEqKlBPqKUMxHVBO5NNHOOG+fmnLkTJscR
- GaG0i
-X-Gm-Gg: AR+sD13iBBzeyVU5BtnsXdspwpQLhTfMQg3vAS+ZlJYiRApD0VHhERZZ20EHW4HSmsO
- IQKad+8emqGieEpNUrJLxym8UXEOnXij5ARcr8r8icAvZ9N9jn4z97FS7ImeWnli4ksKQCy2+eF
- /woQAp/o/6DowZeSyOll5DJn1PSp8KewK8Zd6HAuj509JGrzTAcRUvFNntD/owFlfkNN5Pw1XKH
- +OSFNLJ/or9pjItIF2rD7Q5iycVxzRybiFNToY0SWcIE5mUpbSMN+X5WG2gHfka/3FBnAytqlqn
- HnYBtF5rwew8r+7IWSGdKO1XFx7P2WW8ZPCPdkhDAv4wwMmwSScyvhkRhsiJYwJBV6vgv/Dp4mi
- 2VWwPy6DmB6DmiTTp/D+JDOl6ybVef5r8aguV1F/onFa87cwWgOidJo9AjkJQHTGawM7Bu4BIWr
- 53bLiJ3/VpPnL9gaxEiChuVVPY2mW1muviB9/wbgAsl+bsMnTUKJNGDcqMrazGkYWdNxfpOIBTB
- g1mDN/HC2RUefJW2J8K
-X-Received: by 2002:a17:903:1746:b0:2cf:afe8:b722 with SMTP id
- d9443c01a7336-2d0ca761e0amr184406025ad.11.1786034383201; 
- Thu, 06 Aug 2026 09:39:43 -0700 (PDT)
+ bh=EkXaE1LdHjxR5+SLCaE45VZ8+LEX5aQ8OT/h3czPRdQ=;
+ b=spQSawp8//67SLn8nJ4u9xFt3IkGkr7iXzUEJmIIhbj11EJ7HmZJp2OdZjOp1i2kM9
+ N2Odr6drMHkjx1GlEhtImN1rSinEHh2JClbBtbKUDyIkyMtj+fx6jx9fOr3DVlnvuQfR
+ GvSFlFJAsVWVfMX3DjkGF/I40+fPRIjPGrZQ5Dly06mK+K6OnZnUqyp2PJ7wTsvz9jOI
+ UY+M4kzKHxRYkx1WWw7uZx5pmamYwgetTxaEn3jrUo2UXSmT1AKYOujzlV3IHrnSG0rQ
+ E1Oo7NiodUYTX01hfZ73jZ4mQnS65LuG2G70RPWSzgJJPMRJhrSKHzZ1nToCeUMmChlE
+ 3DSg==
+X-Gm-Message-State: AOJu0YwYM6hC4pR9OO66VevTZ5QDXa+wDk0Gl00uMh+Yhp5mpx3VflyA
+ 790FooDiCrOMC0foAa1H99EqHyncpYrmS0/ODwDX4AfopD32n8f/UY/5n7O6b+JvZVFif7cehoz
+ qHP6+
+X-Gm-Gg: AR+sD10AG9HSte25kbDJLvq2vbd8oOnr6uOb0BdtxoTjD6MYN5eeO0le08Fv1U1EK20
+ ZhwDsW3RHNbVjtFoCUV/i3KJT459C0/xuMY0O8iyGil2zBZuWiXeiWxDatE0bHHWvXvxPkjaHJb
+ ntwWvl3JPQbfHFkBolkUKoW5J8uGrYtvQOYcqXUxrahinOspOWjPYEunby3ZVjZSVY5Yfso3701
+ cgKq14IWRd5I9c7SdEcjyuZg+5ppIF6aIVnItIBt2lXhig4TsJTYCyMopBgMvitvtJNEM7+I9QT
+ AsKc0G3o1Wwi6QkwE6+PJ981yTlJNY/p6S3ZgHyvKV3cAn7nDUJ7nydyrXyVV3ugJYSLug+Pq/p
+ B8e6bphndfZMCB2m/frH4Bsb6PyMJ71R2LQRxOkPQn5IFTyzoEw0U6c0PKkVwQIcwIYJWSjXRQT
+ Ovzcxo9mIXgBYHeb+ytD4Q43VfUJPBMoVQYBw54c5uCk55GIlhM21oj1ooctv2s8DRC80VPyY0j
+ xaI9qZMVJdFlqm5xac1
+X-Received: by 2002:a17:903:90b:b0:2ca:ce92:6e44 with SMTP id
+ d9443c01a7336-2d0ca7b0926mr202890265ad.8.1786034384336; 
+ Thu, 06 Aug 2026 09:39:44 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d0aa4ec8c7sm34280735ad.80.2026.08.06.09.39.42
+ d9443c01a7336-2d0aa4ec8c7sm34280735ad.80.2026.08.06.09.39.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Aug 2026 09:39:42 -0700 (PDT)
+ Thu, 06 Aug 2026 09:39:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 3/7] target/arm: Pass aarch64_enabled to aarch64_aa32_a57_init
-Date: Thu,  6 Aug 2026 09:39:35 -0700
-Message-ID: <20260806163939.328201-4-richard.henderson@linaro.org>
+Subject: [PATCH 4/7] target/arm: Sink aarch64_aa32_a57_init into
+ aarch64_max_tcg_initfn
+Date: Thu,  6 Aug 2026 09:39:36 -0700
+Message-ID: <20260806163939.328201-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260806163939.328201-1-richard.henderson@linaro.org>
 References: <20260806163939.328201-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,66 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert aa32_only argument to what is actually used.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h | 2 +-
- target/arm/cpu-max.c   | 5 ++---
- target/arm/cpu64.c     | 2 +-
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ target/arm/cpu-max.c   | 3 +--
+ target/arm/tcg/cpu64.c | 2 ++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 9c9196475b..5e7f41a50d 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1813,7 +1813,7 @@ void aarch64_max_tcg_initfn(Object *obj);
- void aarch64_add_pauth_properties(Object *obj);
- void aarch64_add_sve_properties(Object *obj);
- void aarch64_add_sme_properties(Object *obj);
--void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa32_only);
-+void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa64_enabled);
- void aarch64_host_initfn(Object *obj);
- 
- /* Return true if the gdbstub is presenting an AArch64 CPU */
 diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index d7f2500353..bdacfb21d3 100644
+index bdacfb21d3..cfcc46eb9d 100644
 --- a/target/arm/cpu-max.c
 +++ b/target/arm/cpu-max.c
-@@ -16,10 +16,9 @@
- #include "target/arm/internals.h"
- #include "target/arm/cpregs.h"
- 
--void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa32_only)
-+void aarch64_aa32_a57_init(ARMCPU *cpu, bool aarch64_enabled)
- {
-     ARMISARegisters *isar = &cpu->isar;
--    const bool aarch64_enabled = !aa32_only;
- 
-     cpu->dtb_compatible = "arm,cortex-a57";
-     set_feature(&cpu->env, ARM_FEATURE_V8);
-@@ -204,7 +203,7 @@ static void cpu_max_initfn(Object *obj)
+@@ -203,9 +203,8 @@ static void cpu_max_initfn(Object *obj)
  
      assert(tcg_enabled() || qtest_enabled());
  
--    aarch64_aa32_a57_init(cpu, !aarch64_enabled);
-+    aarch64_aa32_a57_init(cpu, aarch64_enabled);
- 
+-    aarch64_aa32_a57_init(cpu, aarch64_enabled);
+-
      if (!aarch64_enabled) {
++        aarch64_aa32_a57_init(cpu, false);
          aa32_max_features(cpu);
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index e3ee0253a0..faaf3ab879 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -688,7 +688,7 @@ void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
+ #ifdef CONFIG_USER_ONLY
+         /*
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 8a3ebf6321..2c0b7c1be4 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1167,6 +1167,8 @@ void aarch64_max_tcg_initfn(Object *obj)
+     uint64_t t;
+     uint32_t u;
  
- static void aarch64_a57_initfn(Object *obj)
- {
--    aarch64_aa32_a57_init(ARM_CPU(obj), false);
-+    aarch64_aa32_a57_init(ARM_CPU(obj), true);
- }
- 
- static void aarch64_a53_initfn(Object *obj)
++    aarch64_aa32_a57_init(cpu, true);
++
+     SET_IDREG(isar, CLIDR, 0x8200123);
+     /* 64KB L1 dcache */
+     cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
 -- 
 2.43.0
 
