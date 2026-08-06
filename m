@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE749C56205
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 17:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE11C5AC7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 17:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws1sP-0001ZI-33; Thu, 06 Aug 2026 13:27:29 -0400
+	id 1ws1wI-0004lG-IY; Thu, 06 Aug 2026 13:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws1sJ-0001WO-L8
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:27:23 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1ws1wH-0004kV-Cg
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:31:29 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws1sF-0000dU-Bf
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:27:22 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-84867f07d63so2994798b3a.2
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 10:27:16 -0700 (PDT)
+ id 1ws1wF-0001eQ-Ct
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:31:29 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-382ef647e20so2702316a91.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 10:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786037236; x=1786642036; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oy99RyrEu1jSUfJW8xguDFPe+YqKeZ3KOkALn5syMjw=;
- b=bbYuiyhDpXhidmIQ2GjmjDJmfDSyqI4w50F3SIXveQ4gIzBz31xNfbTULcU8V3GO2F
- AY1Z0HODda3yNjN0r76fJDLSZ4fPTegZWSbFLDENBH4JYtZWip0tmBj2UbUO2FlkN5J1
- SimnZAXL0+gl6ElzwSkBItcvRgF3jNZp8KEno5HwuMPxoXI25u3mJvDQEIBz8aQYx6F2
- tEE+R8+mGNCbquXu+njL1uduY5Ma+1X/HOR5mYLt+wSAAMhb7PBZOPTg9N4Xyz+1Qg8i
- gKJVCYgBMA0B6jH44KpZZEABEZNXIw7P+4VJd9zxTK9APQvww9eDQJoxzXUrS2V8ToOt
- PypQ==
+ d=linaro.org; s=google; t=1786037486; x=1786642286; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fLSidquFtzkmrlA4AxhDV8k9o/vrgWYTWzw/anpyq3A=;
+ b=GEO4JW19f5orfVhiTQffJQdVj6nYQ3ewk4V2azSHfVhKZb6A2/bHH6f0MKP1sv5Kgx
+ 0PEQcKfxXrYtRkFTAHQ08LYND/PKKjHK2r5O73KjyKFZUBJB6aw5pKl8Z+xIcF/34gBx
+ RhW/nK3qJifNk3biiBg0ZVuciS3mHQq7nLL4vZZcpaRwRHIzgfWZWYI+IZdVz7F88tqZ
+ C4T7nvrTKF1J6bHu9UVT1yIAMQZH+pJY8rsTdEg1RUdAKCiKBlSTgm1Y+zDBqs0ZYrll
+ a3d8XlBqfckf7eUV39YJUpAhgq9djL1JHuTtZT2DXn7ayeoa7FfhWnSRKP6tsC+IVIUX
+ oQzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786037236; x=1786642036;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oy99RyrEu1jSUfJW8xguDFPe+YqKeZ3KOkALn5syMjw=;
- b=gs9BgTrAq8pDpT33loo8hQ6vB1Qvr/NOpDQiQphU3mZE0JGNLMxmgDrab2iYzxoEi+
- MmlriqE3knJgjgmdlUQLB38+1BzXnXOdDA2s9fjek6W7WV/ou7roW+JjijYSqGIt2POc
- YsuykrBnTSU4lxIruscVm7bHYt3anQg9f3wOTQ62fvbNq1wLxgpdXxN1Xx4jroWAL1QN
- k2HUpBHM3/R5o4KEXUDFwkwfnFco/+BJc9OWSOUSjIDf+9AOkdbOX85Zvb/YIPwwn4D1
- Z0LRxwYRMMuwb6/ZB/HRq+NpJFm3lpAf3G7+LB7ZUdMg3WI1BGTbHY6+/pPhDbBdNnNW
- LwIQ==
-X-Gm-Message-State: AOJu0YxA25I9A0FBgfazEsvEt8udUHCTEypW6nIxDYAbok65RSLJdc0M
- xDfKmpP33AHiV1Qal1tjy7aZk8qf/UiMLjPvrl80TzwQLfTJ5Yfer84AH1f3henVBas57uCX80Z
- GtR6A
-X-Gm-Gg: AR+sD11FaALGwxgUVN0L0BUwREBvxO7D093/quNpZ7FSqwAvUyMNNQryWdl33E59Ei7
- eAXUbOSRBzuDDHgEd69EV8AZbXtikZ39+wzUtSz9yn7gweb2CDvNtsuEeSdPhqDdX3oEypUHOMO
- 4R+p/UyHuy4YCINll6o6l1UMRl+BQVRBzqTCcVGM/lmmj/yTsHz6A10HtYPKJ3IwqgX6UBJUvJw
- Wv0nxmo2zXikx8WolmLvwxLyxbmFYnACOugREyIaCmrzGrdbbEod+4K1XONPbeGsatfNiA0qKxu
- 9N3i02ixuWVTWDRX/XojGMdIHH8tmm77cdZORWuhk7ui9A/uZuRIqxANQfrW8tRQLYAlIqKmBf+
- 6QulHcbxoKhknlAyEYgLVIGjP0ZoqRK9OQLSIh4Fqcutdzn5BWN3zyhaLTqNmWAt4vdi01sBNIA
- +jacibrl7N3EhTgW7HCdtUeg2DH4ssBz7chY272/N9/tYuQaWuBUlmR7SQ+7mnprbwlpz2828L3
- xSMUxDTndaMNvZx6bUeWg==
-X-Received: by 2002:a05:6a00:348d:b0:842:6849:2180 with SMTP id
- d2e1a72fcca58-84f2e0ccc45mr18569452b3a.37.1786037235448; 
- Thu, 06 Aug 2026 10:27:15 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786037486; x=1786642286;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fLSidquFtzkmrlA4AxhDV8k9o/vrgWYTWzw/anpyq3A=;
+ b=HuSDshJz+WkH+0He4HoMlWdpk+Up/o4nMS9ogjrjcHPE21elJcWtwf9Cx8KsItOrag
+ 2EoxDnUH+w5M5uEgeVTAuhhf+Rh7CzaMp4f7wXPdwE+cOrTxsThNtA+p8ZvbCFWFdEOh
+ EUGWtQOo1+Vv2BCcpkY+qilsUOMMsGWf8KAaGpqgocBbr/qIAqANMLISwF7NFAFPrn3O
+ YJ9XG7mloYGg4xQH7wFQ76ggAIybmDxq1poszxjlSdosQN9CUyEkk1cIfQL8go5TYsu9
+ OKlXI9u6+kH2ILB+xpaOdfrwIDBvWGVD/boZwuvQpE3xjZkKVCaZSTDrs8N7DwjHdl2f
+ tdlQ==
+X-Gm-Message-State: AOJu0YyBqZjBB5ADiiq84d5CqpYsEycwSsxmyNif3WJwXJR1TuLL0HcA
+ mxo4TOiuF0so6iccmjPseTRS7Oq51qndq8SVdh9azKTWAORNW6/BzB9oStX9YhMlljXjmCNVx+C
+ vN3zJ
+X-Gm-Gg: AR+sD13C3Qn6O2Mh6q1w2KvnjTQEUZHyvjKa1+7C3UKzw3Z/P8iaxIT6XYkd7cKJjdd
+ c1wleKlVo26uAZBRdzhETObMUmaLx/bPOoe/aFdwmdKAUAHVTTPOuf03TLpBTi6AJo6E39PgkqD
+ qBrHfuNdQLVWIZAKSzOFY1pbSZOyb42HjniBbkRpd4KKDG8eV6kdClAwoqqJc9WdZrjqdX79CmF
+ hsLcEzA6LN87VfNTqh5C670vheRrrET0kKyGFm/vI6Ne4g8LnJEMfOwYm9Uk8/VnBy96BbuQ266
+ I1YYFeJrAbqXqj14Lh+JH7AKYU4YkoxB6GA4vq33aywhPWk9T7gkhRo7c70QM+GrJMFkRYikPSl
+ YiJhI0F6Qslkn/rO9oxlCf19/iMn5DtJlQQhOhUShQibPfPDRvk+aSjkHKJqL1SJmT3N9XmFoW9
+ COU2IT4S6XpUrjONmP5f67E6CBykvE0z4lOPCchSFjgGauwQBdt1WClnouM+CyZI03KxYUWcM8a
+ 0TjckmNu0cX+6mZcRKV8s40SslOiwJv
+X-Received: by 2002:a17:90b:2745:b0:381:3b5d:30f4 with SMTP id
+ 98e67ed59e1d1-3903c535d84mr18421785a91.1.1786037485868; 
+ Thu, 06 Aug 2026 10:31:25 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84f45389e68sm1803272b3a.4.2026.08.06.10.27.14
+ 98e67ed59e1d1-39085e4a2a5sm1983711a91.14.2026.08.06.10.31.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Aug 2026 10:27:14 -0700 (PDT)
+ Thu, 06 Aug 2026 10:31:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 4/6] target/arm: Implement FGWTE3 traps
-Date: Thu,  6 Aug 2026 10:27:07 -0700
-Message-ID: <20260806172709.333300-5-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 1/6] target/arm: Rename isar_feature_aa64_idst
+Date: Thu,  6 Aug 2026 10:31:18 -0700
+Message-ID: <20260806173123.333423-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260806172709.333300-1-richard.henderson@linaro.org>
-References: <20260806172709.333300-1-richard.henderson@linaro.org>
+In-Reply-To: <20260806173123.333423-1-richard.henderson@linaro.org>
+References: <20260806173123.333423-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,112 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Rename from isar_feature_aa64_ids to match the feature name: FEAT_IDST.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/op_helper.c     | 40 +++++++++++++++++++++++-----------
- target/arm/tcg/translate-a64.c | 16 +++++++++++++-
- 2 files changed, 42 insertions(+), 14 deletions(-)
+ target/arm/cpu-features.h      | 2 +-
+ target/arm/tcg/op_helper.c     | 2 +-
+ target/arm/tcg/translate-a64.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 75f0fc4169..d6f8b4d065 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1397,7 +1397,7 @@ static inline bool isar_feature_aa64_fwb(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, FWB) != 0;
+ }
+ 
+-static inline bool isar_feature_aa64_ids(const ARMISARegisters *id)
++static inline bool isar_feature_aa64_idst(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, IDS) != 0;
+ }
 diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index c4433be2ed..73cae9b9ad 100644
+index 73cae9b9ad..9fc4f86825 100644
 --- a/target/arm/tcg/op_helper.c
 +++ b/target/arm/tcg/op_helper.c
-@@ -1066,13 +1066,15 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-      * Fine-grained traps also are lower priority than undef-to-EL1,
-      * higher priority than trap-to-EL3, and we don't care about priority
-      * order with other EL2 traps because the syndrome value is the same.
-+     *
-+     * FGWTE3 traps are exclusively traps to EL3 on registers that are
-+     * only accessible to EL3, so there's no possibility of a trap to EL2.
-+     * So we can handle these checks here too.
-      */
--    if (arm_fgt_active(env, arm_current_el(env))) {
-+    if (ri->fgt) {
-         uint64_t trapword = 0;
-         unsigned int idx = FIELD_EX32(ri->fgt, FGT, IDX);
-         unsigned int bitpos = FIELD_EX32(ri->fgt, FGT, BITPOS);
--        bool rev = FIELD_EX32(ri->fgt, FGT, REV);
--        bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
-         bool trapbit;
- 
-         if (ri->fgt & FGT_EXEC) {
-@@ -1085,19 +1087,31 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
-             assert(idx < ARRAY_SIZE(env->cp15.fgt_write));
-             trapword = env->cp15.fgt_write[idx];
-         }
-+        trapbit = extract64(trapword, bitpos, 1);
- 
--        if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
-+        if ((ri->access & ~PL3_RW) == 0) {
+@@ -1139,7 +1139,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+         break;
+     case CP_ACCESS_UNDEFINED:
+         /* CP_ACCESS_UNDEFINED is never direct to a specified EL */
+-        if (cpu_isar_feature(aa64_ids, cpu) && isread &&
++        if (cpu_isar_feature(aa64_idst, cpu) && isread &&
+             arm_cpreg_in_idspace(ri)) {
              /*
--             * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
--             * TLBI maintenance insns does *not* apply to the nXS variant.
-+             * EL3 cpreg -- must be FGWTE3, and FGWTE3_EL3 can only be
-+             * set from AArch64, and if the feature is enabled.
-              */
--            trapbit = 0;
--        } else {
--            trapbit = extract64(trapword, bitpos, 1);
--        }
--        if (trapbit != rev) {
--            res = CP_ACCESS_TRAP_EL2;
--            goto fail;
-+            if (trapbit) {
-+                res = CP_ACCESS_TRAP_EL3;
-+                goto fail;
-+            }
-+        } else if (arm_fgt_active(env, arm_current_el(env))) {
-+            bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
-+            bool rev = FIELD_EX32(ri->fgt, FGT, REV);
-+            if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
-+                /*
-+                 * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
-+                 * TLBI maintenance insns does *not* apply to the nXS variant.
-+                 */
-+                trapbit = 0;
-+            }
-+            if (trapbit != rev) {
-+                res = CP_ACCESS_TRAP_EL2;
-+                goto fail;
-+            }
-         }
-     }
- 
+              * FEAT_IDST says this should be reported as EC_SYSTEMREGISTERTRAP,
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 1780490065..0931c92307 100644
+index 0931c92307..8c7a0294ee 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -2886,6 +2886,7 @@ static void handle_sys(DisasContext *s, bool isread,
- {
-     uint32_t key = ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2);
-     const ARMCPRegInfo *ri = get_arm_cp_reginfo(s->cp_regs, key);
-+    bool need_helper = false;
-     bool need_exit_tb = false;
-     bool nv_trap_to_el2 = false;
-     bool nv_redirect_reg = false;
-@@ -2999,7 +3000,20 @@ static void handle_sys(DisasContext *s, bool isread,
-         ri = redirect_cpreg(s, key, isread);
-     }
+@@ -2675,7 +2675,7 @@ static void gen_sysreg_undef(DisasContext *s, bool isread,
+      */
+     uint32_t syndrome;
  
--    if (ri->accessfn || (ri->fgt && s->fgt_active)) {
-+    if (ri->accessfn) {
-+        need_helper = true;
-+    } else if (ri->fgt) {
-+       /*
-+        * EL3-only access means this must be an FGWTE3 trap (which are
-+        * always active); otherwise it's an FGT trap to EL2.
-+        */
-+        if ((ri->access & ~PL3_RW) == 0) {
-+            need_helper = dc_isar_feature(aa64_fgwte3, s);
-+        } else {
-+            need_helper = s->fgt_active;
-+        }
-+    }
-+    if (need_helper) {
-         /* Emit code to perform further access permissions checks at
-          * runtime; this may result in an exception.
-          */
+-    if (isread && dc_isar_feature(aa64_ids, s) &&
++    if (isread && dc_isar_feature(aa64_idst, s) &&
+         arm_cpreg_encoding_in_idspace(op0, op1, op2, crn, crm)) {
+         syndrome = syn_aa64_sysregtrap(op0, op1, op2, crn, crm, rt, isread);
+     } else {
 -- 
 2.43.0
 
