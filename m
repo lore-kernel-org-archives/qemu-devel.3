@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E765C55ABA
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 03:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDE8C55ABF
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 03:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wroc4-0002LS-DL; Wed, 05 Aug 2026 23:17:44 -0400
+	id 1wroiI-00031p-Vy; Wed, 05 Aug 2026 23:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wroby-0002L7-Ku
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:17:39 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1wroiC-00031V-RG
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:24:06 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wrobu-0004YA-Kr
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:17:36 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2cf452def93so3901265ad.1
- for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 20:17:33 -0700 (PDT)
+ id 1wroiA-0004tg-Qw
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:24:04 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2cab973140bso23877885ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 20:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1785986252; x=1786591052; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1785986641; x=1786591441; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=DbH+0Fhd+wH7wzNXEzv2L0k2Fb2kYsTWq1qtZw/sO2I=;
- b=K/aiWGLoIGhB2F6ndgAE5LjVDyXmBplIBV5Zdl088Rd6OEDVKtzGZAGX7WO7Kvs5qR
- QQnOchb3wEJUX872uehgErNPBEDtNoVjVgez+xlOC6k1gJbJYR9uAd/NYYJElZKaikVC
- Ei6vXXR1NhVr/Xy4Q5+4mvzfaN1wgKGql2GRIUT/kfJXD8bWXvSy/RJI48vyWXapg14D
- djSsEXnmdbMUUVRUqisR6hGzJytXEtyU8SbIXtUTs8BkhnnvIcPeA42hNhruFWcOEa7I
- 7Mmp5/RDksB1gAeUfT49gCXZhuiiXsHUSXksOAKDAcjWpT2op6eN6wxWVW8FXHQukAo3
- xKnw==
+ bh=/SWxSCaJyl727Gqx6oYVD/kNJxNTwYMs6DIpfVsRm0A=;
+ b=iS1Ie813Shks3LHG18AXnqRBmQ8MW61hU/MDFrcaE8Oh4sBfJhvTndnWRcYJc+rsFl
+ ssDPt9PL16gnyDD6E7zM0D7tmOIUKdWPm6wOazo+6GpTgftUJldIcPkHSNMUk7ZvTCE3
+ S0yXLR0p5EZA1vhDKQ7J1pCySSsyQb/mN4SQ3CXm1ZAZYZ/s+6eZNcZAiRctOzrjaCDs
+ HV3szc0jUyqbNW9x4ggRZrIfiBYgvWtwMeVnupmS2SNuWn4saFefwdj2BpORgwGEBtpv
+ 2X8lvQ8+J/A1osgjmEnUlZlTQ68Q12sY0XQotWVb2mZHNsmANL0WTjWmxAPgTA+t5mtD
+ HrMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1785986252; x=1786591052;
+ d=1e100.net; s=20251104; t=1785986641; x=1786591441;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=DbH+0Fhd+wH7wzNXEzv2L0k2Fb2kYsTWq1qtZw/sO2I=;
- b=ddzdH0EjwNS7nVySIg0LdX26cjSvffmEotsXNhsb/M0UGwdVC1i04X0rD1Zmt0s3Zt
- ZclJjTvRYLx96FqwAlodYxzJVzGe/axwPYaEPB/l0VSyG4p1pdgluoU1atB8RpBT9hN7
- yzOzUOLsAu3lAB9wTfWQ8MRFmiWmKn4CtPCWTfiEz4gHR6v9oA4q5QTYeKiC5i+dP3Ur
- VbDNOFZDTrIPMivgWanKXWb+8/UbOC78DPBPk6GSf6o9SaRrQBKo0znfHpNjrPsUY9cT
- ywkoSJeFz6NBJ4Fg2AvjvIlJ98nYcnwXwKGfOinfE0MoWVkAQM811ymO+r3oQKUA8Oaq
- ZBQQ==
+ bh=/SWxSCaJyl727Gqx6oYVD/kNJxNTwYMs6DIpfVsRm0A=;
+ b=M2XsjEVQJNWTTwhNg5HALyoiTISc+zD6PEQfeXlEV74inCZEAiaBRpU54ZfG2Ly09M
+ adzNfRQAZ96hlNg1Lllaydppe7kUnweIApofMY0M5Tm1P3/akK0LAFg/jPEolQ46evUf
+ 87kZiMrAmdIlEzH3aibaMrtwppxy7S5m0670F1+/MphOvL9F/3q+7p/DJ/77VnPZihU2
+ BIldOp4EO/r3HmNFMadO+XQk61XCgykE1Aj3wYXoGW1RbIQThdP6y7AJZJ619bU/4JyL
+ kZtoqgvJsVz5f0C+u6zoeTDhAgTs+zJiPt7LhrMxrxmNWBha+/lvH3OVgs5nIH/KkQGd
+ D2aw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro8hhD11IWo40V5jTnYb1U1nxP46MTMay6SlQME/egIscyRsc/zBMcF3IMJnnvdTKOCSP+RFbTph2hx@nongnu.org
-X-Gm-Message-State: AOJu0Yxr9LAWrGO2A4Cx5fBMT3u0Ksa3ADWkprtAgbq93qUDi/eAFk5H
- T9yiTPMSGXhG9g9aoSBGwJpvrK304O3PzzHWj4kkQ8lEheDevT1h3hYX
-X-Gm-Gg: AR+sD13+YRWDBxSuygRg61/cVoF2t5caddOvXbJIjD45tkv4NxWyBzf8HGzhDfgj5f5
- tXu0c3v7qJdgNFTIJwYKlK8QppJmSicMqiRu61H+b30QHeFsmotUOaH5nLR6dgTC+fpk5zmw4H+
- waDmd6A2uaW3YdeP/aWub4RLPIu7t7ZqKJhc8nxgxQMAF0sLEtHfs8BZG9ZRmFofV+KaDxZ1At4
- gTCF9qCKuZUH3oBEx7O4dPnMmvB+FqBjQgJIZw5XJyHg66tDzcQHm5APDu/OHhI+/r5+xmtVKMF
- hkrRoIHpUamx2H7wffq5EUdIAhWdDTFEDuBWmgbz8sW4/Rvoc2VAwHB5Ctx+AxJwTclloTs1Fyj
- nAzJHXDh/qG5xYl8W+s6f0XKN3Iqt8e2n1Gh0M4nKsuwagiM0iU2N6tmdrFFgNWXHjJIJDXijwc
- 64EfKkjTE7S1voelu22NpPwCc9qSIn6+2E3bmJp5K81vMir6z1nhSiAmDw7eBoG7hw8LNB+Wouu
- Xnzmny0gVPQP0UyIFJ5HcW6NTI=
-X-Received: by 2002:a17:90b:4d0a:b0:38e:c232:9d2c with SMTP id
- 98e67ed59e1d1-3908972cd26mr578868a91.2.1785986251980; 
- Wed, 05 Aug 2026 20:17:31 -0700 (PDT)
+ AHgh+RppBZuWv2XAi/1+6VCqjoD4swWDxFUEJ7BbdgFFXMY/Xv6A8Iec5eF/+w9RWW5/nMLxxZ5tg40fS+lK@nongnu.org
+X-Gm-Message-State: AOJu0YzE7T7WkAOt1WDXERSYEPxK7fwz7jOOe0LmXS/kmkFxnKHsQyHD
+ lfsyvAPu4oBv/mrZy2Cbkr8cqAf25eKF4DLefKScPkUqwmWnbnBdcOKxvpG4L6B7
+X-Gm-Gg: AR+sD13JoXl8t4iNPvWAcZ6reUvH+CAlZjcNvpAxVH8f6fKiqicz4l/B6A9bv7lsS/V
+ ru5mlMuQLEC9EHqyfeoqfOgO+dIwbYvkGPNLlb1HnPaXaiwcEPZucS6DMZ7MS3MwugwA8ULSM1U
+ 1PQTqT3+bajedyGIxdM5xyNVCEnSkyI2xqbnSc276SelcLKOHWqyK8AtAaOHR7PRZbDeewhrGy0
+ KOs+1dqSEoHmixuiksMiC4MzVHLaHYADUtJc2y4udbZD/YSXl58folGQ6bwM5rS0WJx3Fu4RSgD
+ /N1le3C6INFJXnC7WeKrngRGRoAqUEv3NZaHFf/cn/cOZOOFdR/c7eD/fdoLsYxkA6Ym6/igKdY
+ u7ynduzW2hpZBkYw3r2Z8TGNQbJYs0rhv0MpwLxuZlhp8iL8e99ZeQtX7J8464UPJXXyutrBLaA
+ ZndW9fwmxhLzuW3TeU8Sf0as9nRbHmO0EqUXFAQO3ernBIU/KJJzgzHLxUz+gy+XimohrVjMkzM
+ TjayJaxIJlT2RwGPvl89USLCII=
+X-Received: by 2002:a17:902:e54f:b0:2cc:1452:a014 with SMTP id
+ d9443c01a7336-2d0ca9fe7d3mr134443245ad.18.1785986641018; 
+ Wed, 05 Aug 2026 20:24:01 -0700 (PDT)
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39085f2b2fdsm554421a91.12.2026.08.05.20.17.30
+ d9443c01a7336-2d0aa4d9c77sm22894385ad.73.2026.08.05.20.23.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Aug 2026 20:17:31 -0700 (PDT)
+ Wed, 05 Aug 2026 20:24:00 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@gmail.com>
 X-Google-Original-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <c7994cf1-dce2-4017-acff-bdd54c6ee658@daynix.com>
-Date: Thu, 6 Aug 2026 12:17:29 +0900
+Message-ID: <e173dbb1-d7e7-4a71-b1a0-765f11052283@daynix.com>
+Date: Thu, 6 Aug 2026 12:23:59 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] dump: add crash_occurred flag to QEMUCPUState
+Subject: Re: [PATCH v2 3/3] elf2dmp: fill ContextBuffer with faulting CPU
+ context
 To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: viktor.prutyanov@phystech.edu
 References: <178592075881.15274.7510279315190894277@linux.alibaba.com>
- <178592075881.15274.5708870107372539268@linux.alibaba.com>
+ <178592075881.15274.12721897603002325817@linux.alibaba.com>
 Content-Language: en-US
-In-Reply-To: <178592075881.15274.5708870107372539268@linux.alibaba.com>
+In-Reply-To: <178592075881.15274.12721897603002325817@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,82 +109,198 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/08/05 18:05, Zhengrong Li wrote:
-> Add is_crash_occurred_cpu field to QEMUCPUState so that
-> dump-guest-memory can record which CPU triggered the guest
-> panic.
+> When is_crash_occurred_cpu is set in QEMUCPUState, copy that CPU's
+> context into WinDumpHeader64 ContextBuffer so WinDbg opens on the
+> faulting CPU instead of CPU 0.
 > 
-> The new field is appended after kernel_gs_base, so existing
-> tools that check the 'size' field can safely ignore it when
-> reading older dumps.
+> Also extract KiBugCheckData from the guest kernel to populate
+> BugcheckCode and BugcheckParameters in the dump header.
 > 
 > Changes since v1:
->    - Revert QEMUCPUSTATE_VERSION bump (not needed, tools check size)
->    - Move crash_occurred check outside #ifdef TARGET_X86_64 to fix
->      -Werror=unused-variable on i386 builds (reported by Akihiko Odaki)
+>    - Add size-based field detection in init_states() for forward compatibility
+>    - Use has_is_crash_occurred_cpu flag instead of version check
+>    - Set header context before best-effort guest memory operations to avoid
+>      losing faulting CPU context on partial dump failures
+>    - Use LIVE_SYSTEM_DUMP when BugcheckCode is zero
+>    - Use PRIx32 for BugcheckCode format specifier
 >    - Use linux.alibaba.com identity
 > 
 > Signed-off-by: Zhengrong Li <zhengrong_li@linux.alibaba.com>
 > ---
->   contrib/elf2dmp/qemu_elf.h | 2 ++
->   target/i386/arch_dump.c    | 6 ++++++
->   2 files changed, 8 insertions(+)
+>   contrib/elf2dmp/kdbg.h     |  9 +++++++
+>   contrib/elf2dmp/main.c     | 50 ++++++++++++++++++++++++++++++++++++--
+>   contrib/elf2dmp/qemu_elf.c | 20 +++++++++------
+>   contrib/elf2dmp/qemu_elf.h |  1 +
+>   4 files changed, 71 insertions(+), 9 deletions(-)
 > 
-> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
-> index adc50238b4..3b28332e67 100644
-> --- a/contrib/elf2dmp/qemu_elf.h
-> +++ b/contrib/elf2dmp/qemu_elf.h
-> @@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
->       QEMUCPUSegment ldt, tr, gdt, idt;
->       uint64_t cr[5];
->       uint64_t kernel_gs_base;
-> +    uint8_t  is_crash_occurred_cpu;
-> +    uint8_t  pad[7];
+> diff --git a/contrib/elf2dmp/kdbg.h b/contrib/elf2dmp/kdbg.h
+> index 002e3d0cd5..15e4fb1140 100644
+> --- a/contrib/elf2dmp/kdbg.h
+> +++ b/contrib/elf2dmp/kdbg.h
+> @@ -195,4 +195,13 @@ typedef struct KDDEBUGGER_DATA64 {
+>       uint16_t OffsetPrcbContext;
+>   } KDDEBUGGER_DATA64;
+>   
+> +typedef struct KIBUGCHECK_INFO {
+> +    uint32_t BugcheckCode;
+> +    uint32_t unused0;
+> +    uint64_t BugcheckParameter1;
+> +    uint64_t BugcheckParameter2;
+> +    uint64_t BugcheckParameter3;
+> +    uint64_t BugcheckParameter4;
+> +} KIBUGCHECK_INFO;
+> +
+>   #endif /* KDBG_H */
+> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+> index a62abadcc0..59ffc0f2e8 100644
+> --- a/contrib/elf2dmp/main.c
+> +++ b/contrib/elf2dmp/main.c
+> @@ -338,11 +338,26 @@ static bool fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+>    * A dump may still contain valuable information even if it lacks contexts of
+>    * some CPUs due to dump corruption or a failure before starting CPUs.
+>    */
+> -static void fill_context(KDDEBUGGER_DATA64 *kdbg,
+> +static void fill_context(WinDumpHeader64 *hdr, KDDEBUGGER_DATA64 *kdbg,
+>                            struct va_space *vs, QEMU_Elf *qe)
+>   {
+>       int i;
+> +    int fault_cpu = -1;
+>   
+> +    /* First pass: identify faulting CPU and set header context early */
+> +    for (i = 0; i < qe->state_nr; i++) {
+> +        QEMUCPUState *s = qe->state[i];
+> +        if (qe->has_is_crash_occurred_cpu && s->is_crash_occurred_cpu) {
+> +            WinContext64 ctx;
+> +            win_context_init_from_qemu_cpu_state(&ctx, s);
+> +            memcpy(hdr->ContextBuffer, &ctx, sizeof(ctx));
+> +            fault_cpu = i;
 
-Growing QEMUCPUState from 440 to 448 bytes confuses init_states() in 
-contrib/elf2dmp/qemu_elf.c and makes valid version-1 notes appear to 
-lack kernel_gs_base, despite that field occupying bytes 432–439.
+fault_cpu is assigned but never read. Consequently:
 
-Patch 3 fixes homogeneous old dumps, but that field-specific size 
-detection belongs in this patch for bisectability and to support its 
-compatibility claim. Please see docs/devel/submitting-a-patch.rst for 
-the bisect requirement.
+     error: variable ‘fault_cpu’ set but not used
+            [-Werror=unused-but-set-variable]
+
+make -j8 contrib/elf2dmp/elf2dmp fails.
+
+> +            printf("Faulting CPU identified: #%d\n", i);
+> +            break;
+> +        }
+> +    }
+> +
+> +    /* Second pass: fill context for all CPUs (best-effort) */
+>       for (i = 0; i < qe->state_nr; i++) {
+>           uint64_t Prcb;
+>           uint64_t Context;
+> @@ -512,6 +527,7 @@ int main(int argc, char *argv[])
+>       uint64_t KdVersionBlock;
+>       bool kernel_found = false;
+>       OMFSignatureRSDS rsds;
+> +    uint64_t KiBugCheckData;
+>   
+>       if (argc != 3) {
+>           eprintf("usage:\n\t%s elf_file dmp_file\n", argv[0]);
+> @@ -611,7 +627,37 @@ int main(int argc, char *argv[])
+>           goto out_kdbg;
+>       }
+>   
+> -    fill_context(kdbg, &vs, &qemu_elf);
+> +    if (!SYM_RESOLVE(KernBase, &pdb, KiBugCheckData)) {
+> +        eprintf("Failed to get KiBugCheckData.\n");
+> +    } else {
+> +        KIBUGCHECK_INFO data = { 0 };
+> +        if (va_space_rw(&vs, KiBugCheckData, &data, sizeof(data), 0)) {
+> +            header.BugcheckCode = data.BugcheckCode;
+> +            header.BugcheckParameter1 = data.BugcheckParameter1;
+> +            header.BugcheckParameter2 = data.BugcheckParameter2;
+> +            header.BugcheckParameter3 = data.BugcheckParameter3;
+> +            header.BugcheckParameter4 = data.BugcheckParameter4;
+> +
+> +            /*
+> +             * If BugcheckCode wasn't saved, we consider guest OS as alive.
+> +             */
+> +            if (!header.BugcheckCode) {
+> +                header.BugcheckCode = LIVE_SYSTEM_DUMP;
+> +            }
+> +
+> +            printf("KiBugCheckData: 0x%016" PRIx64
+> +                   ", BugcheckCode: 0x%08" PRIx32 ", Args:"
+> +                   " 0x%016" PRIx64 " 0x%016" PRIx64
+> +                   " 0x%016" PRIx64 " 0x%016" PRIx64 "\n",
+> +                    KiBugCheckData, header.BugcheckCode,
+> +                    data.BugcheckParameter1, data.BugcheckParameter2,
+> +                    data.BugcheckParameter3, data.BugcheckParameter4);
+> +        } else {
+> +            eprintf("Failed to va_space_rw KiBugCheckData.\n");
+> +        }
+> +    }
+> +
+> +    fill_context(&header, kdbg, &vs, &qemu_elf);
+>   
+>       if (!write_dump(&ps, &header, argv[2])) {
+>           eprintf("Failed to save dump\n");
+> diff --git a/contrib/elf2dmp/qemu_elf.c b/contrib/elf2dmp/qemu_elf.c
+> index c9bad6e82c..8eb2654356 100644
+> --- a/contrib/elf2dmp/qemu_elf.c
+> +++ b/contrib/elf2dmp/qemu_elf.c
+> @@ -71,7 +71,8 @@ static bool init_states(QEMU_Elf *qe)
+>           return false;
+>       }
+>   
+> -    qe->has_kernel_gs_base = 1;
+> +    qe->has_kernel_gs_base = 0;
+> +    qe->has_is_crash_occurred_cpu = 0;
+>       offset = phdr[0].p_offset;
+>       states = g_ptr_array_new();
+>   
+> @@ -103,14 +104,19 @@ static bool init_states(QEMU_Elf *qe)
+>               nhdr->n_descsz >= offsetof(QEMUCPUState, kernel_gs_base)) {
+>               state_size = MIN(state->size, nhdr->n_descsz);
+>   
+> -            if (state_size < sizeof(*state)) {
+> +            if (state_size >= offsetof(QEMUCPUState, kernel_gs_base) +
+> +                              sizeof(state->kernel_gs_base)) {
+> +                qe->has_kernel_gs_base = 1;
+> +            }
+> +
+> +            if (state_size >= offsetof(QEMUCPUState, is_crash_occurred_cpu) +
+> +                              sizeof(state->is_crash_occurred_cpu)) {
+> +                qe->has_is_crash_occurred_cpu = 1;
+> +            }
+> +
+> +            if (state_size != sizeof(*state)) {
+>                   eprintf("CPU #%u: QEMU CPU state size %u doesn't match\n",
+>                           states->len, state_size);
+> -                /*
+> -                 * We assume either every QEMU CPU state has KERNEL_GS_BASE or
+> -                 * no one has.
+> -                 */
+> -                qe->has_kernel_gs_base = 0;
+>               }
+
+Field availability is ORed across all CPU notes and then applied to 
+every note. With a 440-byte CPU 0 note followed by a 448-byte CPU 1 
+note, CPU 1 sets has_is_crash_occurred_cpu, after which fill_context() 
+reads byte 440 beyond CPU 0’s descriptor. That byte normally belongs to 
+the next note header and is nonzero, so CPU 0 can be falsely selected. 
+The same aggregation can make fix_dtb() read a missing kernel_gs_base. 
+Please follow what's previously done for kernel_gs_base.
 
 Regards,
 Akihiko Odaki
 
->   } QEMUCPUState;
+>               g_ptr_array_add(states, state);
+>           }
+> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
+> index 3b28332e67..120de4a2f4 100644
+> --- a/contrib/elf2dmp/qemu_elf.h
+> +++ b/contrib/elf2dmp/qemu_elf.h
+> @@ -42,6 +42,7 @@ typedef struct QEMU_Elf {
+>       QEMUCPUState **state;
+>       size_t state_nr;
+>       int has_kernel_gs_base;
+> +    int has_is_crash_occurred_cpu;
+>   } QEMU_Elf;
 >   
->   int is_system(QEMUCPUState *s);
-> diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
-> index 16e47c4747..8ce2c7e9bb 100644
-> --- a/target/i386/arch_dump.c
-> +++ b/target/i386/arch_dump.c
-> @@ -264,6 +264,8 @@ struct QEMUCPUState {
->        * by checking 'size' field.
->        */
->       uint64_t kernel_gs_base;
-> +    uint8_t  is_crash_occurred_cpu;
-> +    uint8_t  pad[7];
->   };
->   
->   typedef struct QEMUCPUState QEMUCPUState;
-> @@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache *s)
->   
->   static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
->   {
-> +    CPUState *cs = env_cpu(env);
->       memset(s, 0, sizeof(QEMUCPUState));
->   
->       s->version = QEMUCPUSTATE_VERSION;
-> @@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
->   #ifdef TARGET_X86_64
->       s->kernel_gs_base = env->kernelgsbase;
->   #endif
-> +    if (cs->crash_occurred) {
-> +        s->is_crash_occurred_cpu = 1;
-> +    }
->   }
->   
->   static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
+>   bool QEMU_Elf_init(QEMU_Elf *qe, const char *filename);
 
 
