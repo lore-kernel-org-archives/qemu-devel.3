@@ -4,58 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80911C56208
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 11:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C52C56208
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 12:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrweN-0000eT-0k; Thu, 06 Aug 2026 07:52:39 -0400
+	id 1wrwo0-0003Pf-F8; Thu, 06 Aug 2026 08:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrweK-0000e7-UE
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 07:52:36 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrweF-00084E-3R
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 07:52:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1786017135; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
- bh=Ticgn9kwPOoMRioR/Pec1N76znx4SZUbf99lKRA91f4=;
- b=iewDIOpXInI0MUuQeF7NZHrSblI0uRYuQ3G/FbLOdASnuJfa530wYgbwxn4RjkNxmiGC7LzSFeVf6em2IAynZyIdovn3zhK0TFvsLirat4p0zo3ptR62MKyzUFOGDmdQl21eq9dipl0oIg3jgvX2WMPfO3YMN67Y67MD+dx9MXg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R551e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
- MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X8Tu5Ta_1786017129; 
-Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
- fp:SMTPD_---0X8Tu5Ta_1786017129 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 06 Aug 2026 19:52:14 +0800
-From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: odaki@rsg.ci.i.u-tokyo.ac.jp, philmd@qualcomm.com, pbonzini@redhat.com,
- viktor.prutyanov@phystech.edu, zhengrong_li@linux.alibaba.com
-Subject: [PATCH v3 3/3] elf2dmp: fill ContextBuffer with faulting CPU context
-Date: Thu, 06 Aug 2026 19:51:34 +0800
-Message-ID: <178601709478.48495.18042917568665873564@linux.alibaba.com>
-In-Reply-To: <178601709477.48495.9850518471453430873@linux.alibaba.com>
-References: <178601709477.48495.9850518471453430873@linux.alibaba.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wrwnZ-0003Lc-Qz
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 08:02:12 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wrwnW-0000fX-KZ
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 08:02:09 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8Axw+mvd3RqmfoKAA--.12235S3;
+ Thu, 06 Aug 2026 20:01:51 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJCx7weud3RqJcElAA--.7186S2;
+ Thu, 06 Aug 2026 20:01:50 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+ "Andrew S . Rightenburg" <andrew@rail5.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v3] target/loongarch: Fix SWI interrupt delivery via CSR_ESTAT
+Date: Thu,  6 Aug 2026 20:03:15 +0800
+Message-ID: <20260806120315.1059413-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=zhengrong_li@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCx7weud3RqJcElAA--.7186S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxJFWrJr4fuF4DAr18trW3CFX_yoWrCF1kpr
+ W7uryYyw48GrWDJ3s8Jas8urn8Zr47Gw1Ivan7K34fCFWUXw12qr1ktasFgF4DG345Wryj
+ qF1Fy3y8Za17ZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUk2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6x
+ kF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,158 +77,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When is_crash_occurred_cpu is set in QEMUCPUState, copy that CPU's
-context into WinDumpHeader64 ContextBuffer so WinDbg opens on the
-faulting CPU instead of CPU 0. A per-CPU size check ensures the
-field is present before reading, supporting heterogeneous dumps.
+In TCG mode, helper_csrwr_estat() updates CSR.ESTAT.IS[1:0] (SWI0/SWI1)
+when the guest writes CSR_ESTAT, but it did not update the CPU interrupt
+request state. As a result, software interrupts could be observed as pending
+in CSR.ESTAT while no interrupt exception was taken.
 
-Also extract KiBugCheckData from the guest kernel to populate
-BugcheckCode and BugcheckParameters in the dump header.
+Update CPU_INTERRUPT_HARD after modifying CSR_ESTAT, matching the behavior of
+loongarch_cpu_set_irq(). The helper runs without the Big QEMU Lock (BQL), so
+take the BQL while calling cpu_interrupt().
 
-The embedded state->size is clamped to MIN(state->size, n_descsz)
-in init_states() to prevent reading beyond the note descriptor.
-
-Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
+Fixes: 5b1dedfe848b ("target/loongarch: Add LoongArch CSR instruction")
+Reported-by: Andrew S. Rightenburg <andrew@rail5.org>
+Signed-off-by: Andrew S. Rightenburg <andrew@rail5.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by:  Song Gao <17746591750@163.com>
 ---
- contrib/elf2dmp/kdbg.h     |  9 +++++++
- contrib/elf2dmp/main.c     | 50 ++++++++++++++++++++++++++++++++++++--
- contrib/elf2dmp/qemu_elf.c | 10 +++++++-
- contrib/elf2dmp/qemu_elf.h |  2 ++
- 4 files changed, 68 insertions(+), 3 deletions(-)
+v2 ... v3:
+  1. Add old value of CSR estat for loongarch_cpu_update_irq(), trigger
+     interrupt if old == 0 and new != 0, the similiar with interrupt
+     clear logic.
+  2. Use simpler method (sys->CSR_ESTAT != old_v) check whether to update
+     irq in helper_csrwr_estat().
 
-diff --git a/contrib/elf2dmp/kdbg.h b/contrib/elf2dmp/kdbg.h
-index 002e3d0cd5..15e4fb1140 100644
---- a/contrib/elf2dmp/kdbg.h
-+++ b/contrib/elf2dmp/kdbg.h
-@@ -195,4 +195,13 @@ typedef struct KDDEBUGGER_DATA64 {
-     uint16_t OffsetPrcbContext;
- } KDDEBUGGER_DATA64;
-=20
-+typedef struct KIBUGCHECK_INFO {
-+    uint32_t BugcheckCode;
-+    uint32_t unused0;
-+    uint64_t BugcheckParameter1;
-+    uint64_t BugcheckParameter2;
-+    uint64_t BugcheckParameter3;
-+    uint64_t BugcheckParameter4;
-+} KIBUGCHECK_INFO;
+v1 ... v2:
+  1. Add common function loongarch_cpu_update_irq() called by
+     loongarch_cpu_set_irq() and helper_csrwr_estat().
+---
+ target/loongarch/cpu.c            | 26 ++++++++++++++++++++------
+ target/loongarch/internals.h      |  1 +
+ target/loongarch/tcg/csr_helper.c | 10 ++++++++++
+ 3 files changed, 31 insertions(+), 6 deletions(-)
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index fb03424ffa..7bc77cf67e 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -57,12 +57,29 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/loongarch/virt.h"
+ 
++void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old)
++{
++    CPULoongArchState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
++    CPUSysState *sys = env_sys(env);
 +
- #endif /* KDBG_H */
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index a62abadcc0..e25709b45d 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -338,11 +338,26 @@ static bool fill_header(WinDumpHeader64 *hdr, struct pa=
-_space *ps,
-  * A dump may still contain valuable information even if it lacks contexts of
-  * some CPUs due to dump corruption or a failure before starting CPUs.
-  */
--static void fill_context(KDDEBUGGER_DATA64 *kdbg,
-+static void fill_context(WinDumpHeader64 *hdr, KDDEBUGGER_DATA64 *kdbg,
-                          struct va_space *vs, QEMU_Elf *qe)
- {
-     int i;
-=20
-+    /* First pass: identify faulting CPU and set header context early */
-+    for (i =3D 0; i < qe->state_nr; i++) {
-+        QEMUCPUState *s =3D qe->state[i];
-+        if (s->size >=3D offsetof(QEMUCPUState, is_crash_occurred_cpu) +
-+                        sizeof(s->is_crash_occurred_cpu) &&
-+            s->is_crash_occurred_cpu) {
-+            WinContext64 ctx;
-+            win_context_init_from_qemu_cpu_state(&ctx, s);
-+            memcpy(hdr->ContextBuffer, &ctx, sizeof(ctx));
-+            printf("Faulting CPU identified: #%d\n", i);
-+            break;
++    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
++        if (!FIELD_EX64(old, CSR_ESTAT, IS)) {
++            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
 +        }
-+    }
-+
-+    /* Second pass: fill context for all CPUs (best-effort) */
-     for (i =3D 0; i < qe->state_nr; i++) {
-         uint64_t Prcb;
-         uint64_t Context;
-@@ -512,6 +527,7 @@ int main(int argc, char *argv[])
-     uint64_t KdVersionBlock;
-     bool kernel_found =3D false;
-     OMFSignatureRSDS rsds;
-+    uint64_t KiBugCheckData;
-=20
-     if (argc !=3D 3) {
-         eprintf("usage:\n\t%s elf_file dmp_file\n", argv[0]);
-@@ -611,7 +627,37 @@ int main(int argc, char *argv[])
-         goto out_kdbg;
-     }
-=20
--    fill_context(kdbg, &vs, &qemu_elf);
-+    if (!SYM_RESOLVE(KernBase, &pdb, KiBugCheckData)) {
-+        eprintf("Failed to get KiBugCheckData.\n");
 +    } else {
-+        KIBUGCHECK_INFO data =3D { 0 };
-+        if (va_space_rw(&vs, KiBugCheckData, &data, sizeof(data), 0)) {
-+            header.BugcheckCode =3D data.BugcheckCode;
-+            header.BugcheckParameter1 =3D data.BugcheckParameter1;
-+            header.BugcheckParameter2 =3D data.BugcheckParameter2;
-+            header.BugcheckParameter3 =3D data.BugcheckParameter3;
-+            header.BugcheckParameter4 =3D data.BugcheckParameter4;
-+
-+            /*
-+             * If BugcheckCode wasn't saved, we consider guest OS as alive.
-+             */
-+            if (!header.BugcheckCode) {
-+                header.BugcheckCode =3D LIVE_SYSTEM_DUMP;
-+            }
-+
-+            printf("KiBugCheckData: 0x%016" PRIx64
-+                   ", BugcheckCode: 0x%08" PRIx32 ", Args:"
-+                   " 0x%016" PRIx64 " 0x%016" PRIx64
-+                   " 0x%016" PRIx64 " 0x%016" PRIx64 "\n",
-+                    KiBugCheckData, header.BugcheckCode,
-+                    data.BugcheckParameter1, data.BugcheckParameter2,
-+                    data.BugcheckParameter3, data.BugcheckParameter4);
-+        } else {
-+            eprintf("Failed to va_space_rw KiBugCheckData.\n");
++        if (FIELD_EX64(old, CSR_ESTAT, IS)) {
++            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
 +        }
 +    }
++}
 +
-+    fill_context(&header, kdbg, &vs, &qemu_elf);
-=20
-     if (!write_dump(&ps, &header, argv[2])) {
-         eprintf("Failed to save dump\n");
-diff --git a/contrib/elf2dmp/qemu_elf.c b/contrib/elf2dmp/qemu_elf.c
-index c9bad6e82c..f69023554b 100644
---- a/contrib/elf2dmp/qemu_elf.c
-+++ b/contrib/elf2dmp/qemu_elf.c
-@@ -103,7 +103,15 @@ static bool init_states(QEMU_Elf *qe)
-             nhdr->n_descsz >=3D offsetof(QEMUCPUState, kernel_gs_base)) {
-             state_size =3D MIN(state->size, nhdr->n_descsz);
-=20
--            if (state_size < sizeof(*state)) {
-+            /*
-+             * Clamp the embedded size to the actual note descriptor size
-+             * so that downstream size checks (e.g. fill_context) never
-+             * read beyond the descriptor boundary.
-+             */
-+            state->size =3D state_size;
-+
-+            if (state_size < offsetof(QEMUCPUState, kernel_gs_base) +
-+                              sizeof(state->kernel_gs_base)) {
-                 eprintf("CPU #%u: QEMU CPU state size %u doesn't match\n",
-                         states->len, state_size);
-                 /*
-diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
-index adc50238b4..3b28332e67 100644
---- a/contrib/elf2dmp/qemu_elf.h
-+++ b/contrib/elf2dmp/qemu_elf.h
-@@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
-     QEMUCPUSegment ldt, tr, gdt, idt;
-     uint64_t cr[5];
-     uint64_t kernel_gs_base;
-+    uint8_t  is_crash_occurred_cpu;
-+    uint8_t  pad[7];
- } QEMUCPUState;
-=20
- int is_system(QEMUCPUState *s);
---=20
-2.43.0
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+ {
+     LoongArchCPU *cpu = opaque;
+     CPULoongArchState *env = &cpu->env;
+-    CPUState *cs = CPU(cpu);
+     CPUSysState *sys = env_sys(env);
++    uint64_t old;
+ 
+     if (irq < 0 || irq >= N_IRQS) {
+         return;
+@@ -71,12 +88,9 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+     if (kvm_enabled()) {
+         kvm_loongarch_set_interrupt(cpu, irq, level);
+     } else if (tcg_enabled()) {
++        old = sys->CSR_ESTAT;
+         sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+-        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+-            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+-        } else {
+-            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+-        }
++        loongarch_cpu_update_irq(cpu, old);
+     }
+ }
+ 
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index e01dbed40f..0b670f9466 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -31,6 +31,7 @@ void restore_fp_status(CPULoongArchState *env);
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_loongarch_cpu;
+ 
++void loongarch_cpu_update_irq(LoongArchCPU *cpu, uint64_t old);
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level);
+ 
+ void loongarch_constant_timer_cb(void *opaque);
+diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
+index 7dc33bc180..155482efc6 100644
+--- a/target/loongarch/tcg/csr_helper.c
++++ b/target/loongarch/tcg/csr_helper.c
+@@ -106,6 +106,16 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
+ 
+     /* Only IS[1:0] can be written */
+     sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, 0, 2, val);
++    /*
++     * Software interrupts (SWI0/SWI1) are latched in CSR.ESTAT.IS[1:0].
++     * Make sure the CPU interrupt request state tracks the pending bits,
++     * matching the behavior of loongarch_cpu_set_irq().
++     */
++    if (sys->CSR_ESTAT != old_v) {
++        bql_lock();
++        loongarch_cpu_update_irq(env_archcpu(env), old_v);
++        bql_unlock();
++    }
+ 
+     return old_v;
+ }
+
+base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
+-- 
+2.54.0
 
 
