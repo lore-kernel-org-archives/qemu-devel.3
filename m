@@ -4,69 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AB4C55174
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 03:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E765C55ABA
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 03:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wroZi-0001sk-LG; Wed, 05 Aug 2026 23:15:18 -0400
+	id 1wroc4-0002LS-DL; Wed, 05 Aug 2026 23:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wroZf-0001pR-C4
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:15:15 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wroZc-0003SC-4w
- for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:15:15 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axx+o4_HNqUuAKAA--.35036S3;
- Thu, 06 Aug 2026 11:15:04 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxTsU4_HNq9VklAA--.5342S2;
- Thu, 06 Aug 2026 11:15:04 +0800 (CST)
-Subject: Re: [PATCH] hw/loongarch/boot: Check return value of g_strlcpy in
- init_cmdline
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, philmd@oss.qualcomm.com,
- jiaxun.yang@flygoat.com
-References: <20260806020410.1869776-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <2d844bd4-db05-1d15-4320-11a5e5c067f7@loongson.cn>
-Date: Thu, 6 Aug 2026 11:14:47 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1wroby-0002L7-Ku
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:17:39 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1wrobu-0004YA-Kr
+ for qemu-devel@nongnu.org; Wed, 05 Aug 2026 23:17:36 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cf452def93so3901265ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Aug 2026 20:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1785986252; x=1786591052; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DbH+0Fhd+wH7wzNXEzv2L0k2Fb2kYsTWq1qtZw/sO2I=;
+ b=K/aiWGLoIGhB2F6ndgAE5LjVDyXmBplIBV5Zdl088Rd6OEDVKtzGZAGX7WO7Kvs5qR
+ QQnOchb3wEJUX872uehgErNPBEDtNoVjVgez+xlOC6k1gJbJYR9uAd/NYYJElZKaikVC
+ Ei6vXXR1NhVr/Xy4Q5+4mvzfaN1wgKGql2GRIUT/kfJXD8bWXvSy/RJI48vyWXapg14D
+ djSsEXnmdbMUUVRUqisR6hGzJytXEtyU8SbIXtUTs8BkhnnvIcPeA42hNhruFWcOEa7I
+ 7Mmp5/RDksB1gAeUfT49gCXZhuiiXsHUSXksOAKDAcjWpT2op6eN6wxWVW8FXHQukAo3
+ xKnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1785986252; x=1786591052;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=DbH+0Fhd+wH7wzNXEzv2L0k2Fb2kYsTWq1qtZw/sO2I=;
+ b=ddzdH0EjwNS7nVySIg0LdX26cjSvffmEotsXNhsb/M0UGwdVC1i04X0rD1Zmt0s3Zt
+ ZclJjTvRYLx96FqwAlodYxzJVzGe/axwPYaEPB/l0VSyG4p1pdgluoU1atB8RpBT9hN7
+ yzOzUOLsAu3lAB9wTfWQ8MRFmiWmKn4CtPCWTfiEz4gHR6v9oA4q5QTYeKiC5i+dP3Ur
+ VbDNOFZDTrIPMivgWanKXWb+8/UbOC78DPBPk6GSf6o9SaRrQBKo0znfHpNjrPsUY9cT
+ ywkoSJeFz6NBJ4Fg2AvjvIlJ98nYcnwXwKGfOinfE0MoWVkAQM811ymO+r3oQKUA8Oaq
+ ZBQQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro8hhD11IWo40V5jTnYb1U1nxP46MTMay6SlQME/egIscyRsc/zBMcF3IMJnnvdTKOCSP+RFbTph2hx@nongnu.org
+X-Gm-Message-State: AOJu0Yxr9LAWrGO2A4Cx5fBMT3u0Ksa3ADWkprtAgbq93qUDi/eAFk5H
+ T9yiTPMSGXhG9g9aoSBGwJpvrK304O3PzzHWj4kkQ8lEheDevT1h3hYX
+X-Gm-Gg: AR+sD13+YRWDBxSuygRg61/cVoF2t5caddOvXbJIjD45tkv4NxWyBzf8HGzhDfgj5f5
+ tXu0c3v7qJdgNFTIJwYKlK8QppJmSicMqiRu61H+b30QHeFsmotUOaH5nLR6dgTC+fpk5zmw4H+
+ waDmd6A2uaW3YdeP/aWub4RLPIu7t7ZqKJhc8nxgxQMAF0sLEtHfs8BZG9ZRmFofV+KaDxZ1At4
+ gTCF9qCKuZUH3oBEx7O4dPnMmvB+FqBjQgJIZw5XJyHg66tDzcQHm5APDu/OHhI+/r5+xmtVKMF
+ hkrRoIHpUamx2H7wffq5EUdIAhWdDTFEDuBWmgbz8sW4/Rvoc2VAwHB5Ctx+AxJwTclloTs1Fyj
+ nAzJHXDh/qG5xYl8W+s6f0XKN3Iqt8e2n1Gh0M4nKsuwagiM0iU2N6tmdrFFgNWXHjJIJDXijwc
+ 64EfKkjTE7S1voelu22NpPwCc9qSIn6+2E3bmJp5K81vMir6z1nhSiAmDw7eBoG7hw8LNB+Wouu
+ Xnzmny0gVPQP0UyIFJ5HcW6NTI=
+X-Received: by 2002:a17:90b:4d0a:b0:38e:c232:9d2c with SMTP id
+ 98e67ed59e1d1-3908972cd26mr578868a91.2.1785986251980; 
+ Wed, 05 Aug 2026 20:17:31 -0700 (PDT)
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39085f2b2fdsm554421a91.12.2026.08.05.20.17.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Aug 2026 20:17:31 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@gmail.com>
+X-Google-Original-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <c7994cf1-dce2-4017-acff-bdd54c6ee658@daynix.com>
+Date: Thu, 6 Aug 2026 12:17:29 +0900
 MIME-Version: 1.0
-In-Reply-To: <20260806020410.1869776-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] dump: add crash_occurred flag to QEMUCPUState
+To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: viktor.prutyanov@phystech.edu
+References: <178592075881.15274.7510279315190894277@linux.alibaba.com>
+ <178592075881.15274.5708870107372539268@linux.alibaba.com>
 Content-Language: en-US
+In-Reply-To: <178592075881.15274.5708870107372539268@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxTsU4_HNq9VklAA--.5342S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tF48CrW5Zw47AF1ktF17XFc_yoW8Gw4xpF
- y7ur15JanYk3WDCrZrZ3s7Ww1UZ3Z7Gw13KFn2qr98CasrXr1vgr1rWFZrZFy0qayrKFyv
- vrn5Ww42v3WDX3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.454,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,47 +107,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The value of COMMAND_LINE_SIZE in QEMU is different with Linux kernel, 
-and linux kernel increases it with 4096.
-
-I think COMMAND_LINE_SIZE can be removed here, copy the whole string 
-bootrom if it is smaller than bootrom size which is 1MB.
-
-
-Regards
-Bibo Mao
-
-On 2026/8/6 上午10:04, Song Gao wrote:
-> From: gaosong <gaosong@loongson.cn>
+On 2026/08/05 18:05, Zhengrong Li wrote:
+> Add is_crash_occurred_cpu field to QEMUCPUState so that
+> dump-guest-memory can record which CPU triggered the guest
+> panic.
 > 
-> If the kernel command line is longer than COMMAND_LINE_SIZE - 1, it
-> will be silently truncated. Check the return value of g_strlcpy and
-> emit a warning to avoid hard-to-debug kernel misbehavior.
+> The new field is appended after kernel_gs_base, so existing
+> tools that check the 'size' field can safely ignore it when
+> reading older dumps.
 > 
-> Fixes: 1234567890ab ("hw/loongarch: Add boot support")
-> Resolves: Coverity CID 1550791
-> Signed-off-by: gaosong <gaosong@loongson.cn>
+> Changes since v1:
+>    - Revert QEMUCPUSTATE_VERSION bump (not needed, tools check size)
+>    - Move crash_occurred check outside #ifdef TARGET_X86_64 to fix
+>      -Werror=unused-variable on i386 builds (reported by Akihiko Odaki)
+>    - Use linux.alibaba.com identity
+> 
+> Signed-off-by: Zhengrong Li <zhengrong_li@linux.alibaba.com>
 > ---
->   hw/loongarch/boot.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
+>   contrib/elf2dmp/qemu_elf.h | 2 ++
+>   target/i386/arch_dump.c    | 6 ++++++
+>   2 files changed, 8 insertions(+)
 > 
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index ef8eae237c..d91982fe86 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -212,7 +212,11 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
->       info->a0 = 1;
->       info->a1 = cmdline_addr;
+> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
+> index adc50238b4..3b28332e67 100644
+> --- a/contrib/elf2dmp/qemu_elf.h
+> +++ b/contrib/elf2dmp/qemu_elf.h
+> @@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
+>       QEMUCPUSegment ldt, tr, gdt, idt;
+>       uint64_t cr[5];
+>       uint64_t kernel_gs_base;
+> +    uint8_t  is_crash_occurred_cpu;
+> +    uint8_t  pad[7];
+
+Growing QEMUCPUState from 440 to 448 bytes confuses init_states() in 
+contrib/elf2dmp/qemu_elf.c and makes valid version-1 notes appear to 
+lack kernel_gs_base, despite that field occupying bytes 432–439.
+
+Patch 3 fixes homogeneous old dumps, but that field-specific size 
+detection belongs in this patch for bisectability and to support its 
+compatibility claim. Please see docs/devel/submitting-a-patch.rst for 
+the bisect requirement.
+
+Regards,
+Akihiko Odaki
+
+>   } QEMUCPUState;
 >   
-> -    g_strlcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE);
-> +    if (g_strlcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE)
-> +        >= COMMAND_LINE_SIZE) {
-> +        warn_report("kernel command line truncated to %d bytes",
-> +                    COMMAND_LINE_SIZE);
+>   int is_system(QEMUCPUState *s);
+> diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+> index 16e47c4747..8ce2c7e9bb 100644
+> --- a/target/i386/arch_dump.c
+> +++ b/target/i386/arch_dump.c
+> @@ -264,6 +264,8 @@ struct QEMUCPUState {
+>        * by checking 'size' field.
+>        */
+>       uint64_t kernel_gs_base;
+> +    uint8_t  is_crash_occurred_cpu;
+> +    uint8_t  pad[7];
+>   };
+>   
+>   typedef struct QEMUCPUState QEMUCPUState;
+> @@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache *s)
+>   
+>   static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+>   {
+> +    CPUState *cs = env_cpu(env);
+>       memset(s, 0, sizeof(QEMUCPUState));
+>   
+>       s->version = QEMUCPUSTATE_VERSION;
+> @@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+>   #ifdef TARGET_X86_64
+>       s->kernel_gs_base = env->kernelgsbase;
+>   #endif
+> +    if (cs->crash_occurred) {
+> +        s->is_crash_occurred_cpu = 1;
 > +    }
 >   }
 >   
->   static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
-> 
+>   static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
 
 
