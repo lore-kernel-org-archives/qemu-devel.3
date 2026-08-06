@@ -4,59 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A587C561E6
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C053EC561E6
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:12:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrtAR-0000Cq-Tg; Thu, 06 Aug 2026 04:09:32 -0400
+	id 1wrtD0-0000tw-CA; Thu, 06 Aug 2026 04:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wrtAO-0000CZ-QC
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:09:29 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wrtAL-0005ZZ-5X
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:09:27 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67689Ag1028608
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 6 Aug 2026 17:09:10 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=vkzUz2tltMLSyUseir9AB5ilHYnEj4PQIV9zFCRWyhE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1786003750; v=1;
- b=fSBmfzURHUH8zF3umXVOsAlYV1ecsmEUNRPVVN/wHaxjcFqBjzU4zUjpvlQiB6Oq
- LUK8ue8GsSOIvA19RBNm3fJiJDFvTA3KcSHEhygBbY0Yr2dSbXrskaDO29lr9jbN
- /o5OVM9X2Oij62rBysNruYTHYnkBkhDPV2g/OqzPHdbo8Hk9Hrr+axqNRc0nWxKb
- 8mtKOXsBD2gdu86e3szNUqUCfzWvPWB7CZoo9FQFoPO6XBM17Kb26WauZQXqXnvh
- uQl8mjc/yANw1zLQwXreq7u1EGNkSi5nCzJhTHy9BoSsrivx3YOlNDe2XhFVijiN
- 0zZrK0ZTuR0Kuz/lRwFxWQ==
-Message-ID: <1b01c4f2-53f8-43b2-8dd1-ceab19cc6be8@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 6 Aug 2026 17:09:09 +0900
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1wrtCs-0000ta-1f
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:12:02 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1wrtCp-0005s0-63
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:12:01 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2cacb8416a1so20371925ad.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 01:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786003917; x=1786608717; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7NPcm9UdLMecgFj3EvrESXhFvHs6d/CP4uDNrSCFXRE=;
+ b=HuZp63vqDYo+8U3fvZOJaY9IImiTfEjzCqTj1xvTHh7+jUSm886Hl3L8gzi97sPhti
+ uv5iU/Y+OLm3ipjDL/ATsrtTpGj6MDQBhBo+VaeEZWXBYh5PqNEM2/uSsYK3CR5VcV5q
+ 9QlCWQY9V9mZnSbFnCdcX25zvEPlHpJQDS8090MbmpX8u1s2d/ex/hFlk6ZW7NvRPDub
+ K3dkE6RPUE699y7rXkZ+b3+akAQvvNGN6cVjMCcWZ+0vAvrJjDKbOUj4e7Ldm0BXVLBP
+ BXI5o3JLzhQcAP/LNhye1Vy6/q3NHyKY5Z+9S8hKYtgF9brX1mT1M5g/ycNRyrkpkTK5
+ nPyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786003917; x=1786608717;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7NPcm9UdLMecgFj3EvrESXhFvHs6d/CP4uDNrSCFXRE=;
+ b=hZWs7/6TCb0pbM8cTcUfrNh4qEvSILD1cLL3cFAYnukyF87jJfb9ggkzONmr1Yb7DJ
+ pxdiFkqGW0Cep5eFQVLl7s0gd73vyn/E0TIqHiGI8HNlmD6lVNoEVVvjDZvHaUShtFaS
+ SD9UVyMqQ0IsdxReezK66iUmFCdr0jUGJ0RlZUYFkcj1FEggkLND5F+2UVRVYVGpY5xr
+ CUC2LgrhOlt7mTeOsx2rzdiXCU/gTApT8lVkcwkdhQJ+e22HHU43MVsfKtdgOeKpEy/Y
+ AnIgBOIYBNOXxg8d2mTfGiAcV8z7IDJ2i+26hNqTTwdATuWwhXopFi8a2CiEZwqnN9q7
+ JMwQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqPxQ6i1sWdqxEr1tgcdakoUtW0hGIvYKYEu97IV1h/FLC/jgZFo5MsXLpOSN41idOme6RCgOlbP9m3@nongnu.org
+X-Gm-Message-State: AOJu0Yyk3RX8gEeAGI42bBHo4TJjzUQxQfPL5WwKKSeBbZRAHg+pjCNl
+ rIL0QzzgLau5PLAnRHfZvAGT7FUiApGj//uaoL4k2OlSi5756VfwXjy/
+X-Gm-Gg: AR+sD10qX2v6f95wsSVS8B0WIZAAZ4mz+jhhRJvByQvvRlh7Kjmbo05HUgiksouHHDI
+ dJJltMmXDvQrYZ8y/M1SwFEAftO+Uu4XWQXN77ce6DhW+hHQm1kyKdqm4qzQVAko0p4g8yogByh
+ uNk/x3qOXIFIIl931BSL+dvikSQln6FnVY8+6UMmpvVK8zEaLe77NeRVKeWUJqxEDOH/G11if5G
+ TT0sNYfmKa8IhcVBkdYaYGBS+qSnKmWfimMgO6R/cWeghEqQVcoHVNg7FSi0TkJnyhU+lrcEjvu
+ wR9AJa7sWFHs62U1JDPaf/JysV9SeXNjyR6ZRmbGVMHNa9nlG65hecKTPlI473guBf+p4Btd+VU
+ e5y4SPaNUOBddxzxKOrYeBluuw1idBzGfnW7H1Kl4PsZK4rbCHeON9195KXY4qyUOT54owa7G7i
+ qdihmuFcPsQMfWbaqBawjWnZlSJi1YlgH7vofzUbTWDqYnhLpDnVJAgszLIHw4ZywqofuQHyMoN
+ Vu1xJlnwcCCPyfxzNYwyFaRag==
+X-Received: by 2002:a17:903:2b03:b0:2cc:d69a:354a with SMTP id
+ d9443c01a7336-2d0caa0339bmr148442645ad.22.1786003917194; 
+ Thu, 06 Aug 2026 01:11:57 -0700 (PDT)
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d0a9f8fb4bsm27750915ad.5.2026.08.06.01.11.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Aug 2026 01:11:56 -0700 (PDT)
+Message-ID: <f7f579be-a600-46d9-8f3f-d8d41cff63f6@gmail.com>
+Date: Thu, 6 Aug 2026 17:11:54 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dump: add crash_occurred flag to QEMUCPUState
+Subject: Re: [PATCH v3 3/3] elf2dmp: fill ContextBuffer with faulting CPU
+ context
 To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: philmd@qualcomm.com, pbonzini@redhat.com, viktor.prutyanov@phystech.edu
 References: <178599725914.10029.4441302124415593392@linux.alibaba.com>
- <178599725914.10029.14279751262185488168@linux.alibaba.com>
+ <178599725914.10029.4197199405670909732@linux.alibaba.com>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <178599725914.10029.14279751262185488168@linux.alibaba.com>
+From: Akihiko Odaki <akihiko.odaki@gmail.com>
+In-Reply-To: <178599725914.10029.4197199405670909732@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,75 +108,125 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/08/06 15:20, Zhengrong Li wrote:
-> Add is_crash_occurred_cpu field to QEMUCPUState so that
-> dump-guest-memory can record which CPU triggered the guest
-> panic. Bump QEMUCPUSTATE_VERSION to 2.
-
-The patch message still says it bumps QEMUCPUSTATE_VERSION.
-
+> When is_crash_occurred_cpu is set in QEMUCPUState, copy that CPU's
+> context into WinDumpHeader64 ContextBuffer so WinDbg opens on the
+> faulting CPU instead of CPU 0. A per-CPU size check ensures the
+> field is present before reading, supporting heterogeneous dumps.
 > 
-> The new field is appended after kernel_gs_base, so existing
-> tools that check the 'size' field can safely ignore it when
-> reading older dumps.
+> Also extract KiBugCheckData from the guest kernel to populate
+> BugcheckCode and BugcheckParameters in the dump header.
 > 
 > Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
 > ---
->   contrib/elf2dmp/qemu_elf.h | 2 ++
->   target/i386/arch_dump.c    | 6 ++++++
->   2 files changed, 8 insertions(+)
+>   contrib/elf2dmp/kdbg.h |  9 ++++++++
+>   contrib/elf2dmp/main.c | 50 ++++++++++++++++++++++++++++++++++++++++--
+>   2 files changed, 57 insertions(+), 2 deletions(-)
 > 
-> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
-> index adc50238b4..3b28332e67 100644
-> --- a/contrib/elf2dmp/qemu_elf.h
-> +++ b/contrib/elf2dmp/qemu_elf.h
-> @@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
->       QEMUCPUSegment ldt, tr, gdt, idt;
->       uint64_t cr[5];
->       uint64_t kernel_gs_base;
-> +    uint8_t  is_crash_occurred_cpu;
-> +    uint8_t  pad[7];
+> diff --git a/contrib/elf2dmp/kdbg.h b/contrib/elf2dmp/kdbg.h
+> index 002e3d0cd5..15e4fb1140 100644
+> --- a/contrib/elf2dmp/kdbg.h
+> +++ b/contrib/elf2dmp/kdbg.h
+> @@ -195,4 +195,13 @@ typedef struct KDDEBUGGER_DATA64 {
+>       uint16_t OffsetPrcbContext;
+>   } KDDEBUGGER_DATA64;
+>   
+> +typedef struct KIBUGCHECK_INFO {
+> +    uint32_t BugcheckCode;
+> +    uint32_t unused0;
+> +    uint64_t BugcheckParameter1;
+> +    uint64_t BugcheckParameter2;
+> +    uint64_t BugcheckParameter3;
+> +    uint64_t BugcheckParameter4;
+> +} KIBUGCHECK_INFO;
+> +
+>   #endif /* KDBG_H */
+> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+> index a62abadcc0..e25709b45d 100644
+> --- a/contrib/elf2dmp/main.c
+> +++ b/contrib/elf2dmp/main.c
+> @@ -338,11 +338,26 @@ static bool fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+>    * A dump may still contain valuable information even if it lacks contexts of
+>    * some CPUs due to dump corruption or a failure before starting CPUs.
+>    */
+> -static void fill_context(KDDEBUGGER_DATA64 *kdbg,
+> +static void fill_context(WinDumpHeader64 *hdr, KDDEBUGGER_DATA64 *kdbg,
+>                            struct va_space *vs, QEMU_Elf *qe)
+>   {
+>       int i;
+>   
+> +    /* First pass: identify faulting CPU and set header context early */
+> +    for (i = 0; i < qe->state_nr; i++) {
+> +        QEMUCPUState *s = qe->state[i];
+> +        if (s->size >= offsetof(QEMUCPUState, is_crash_occurred_cpu) +
+> +                        sizeof(s->is_crash_occurred_cpu) &&
+> +            s->is_crash_occurred_cpu) {
 
-Growing QEMUCPUState from 440 to 448 bytes confuses init_states() in 
-contrib/elf2dmp/qemu_elf.c and makes valid version-1 notes and appear to 
-lack kernel_gs_base, despite that field occupying bytes 432–439. Move 
-this hunk to patch 2 which updates the function and other elf2dmp stuff.
+This trusts embedded s->size, while the validated MIN(s->size, n_descsz) 
+at init_states() in contrib/elf2dmp/qemu_elf.c is discarded. A note 
+claiming 448 bytes with a 440-byte descriptor reads the marker beyond 
+that descriptor. Please preserve each note’s validated size.
 
 Regards,
 Akihiko Odaki
 
->   } QEMUCPUState;
->   
->   int is_system(QEMUCPUState *s);
-> diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
-> index 16e47c4747..8ce2c7e9bb 100644
-> --- a/target/i386/arch_dump.c
-> +++ b/target/i386/arch_dump.c
-> @@ -264,6 +264,8 @@ struct QEMUCPUState {
->        * by checking 'size' field.
->        */
->       uint64_t kernel_gs_base;
-> +    uint8_t  is_crash_occurred_cpu;
-> +    uint8_t  pad[7];
->   };
->   
->   typedef struct QEMUCPUState QEMUCPUState;
-> @@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache *s)
->   
->   static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
->   {
-> +    CPUState *cs = env_cpu(env);
->       memset(s, 0, sizeof(QEMUCPUState));
->   
->       s->version = QEMUCPUSTATE_VERSION;
-> @@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
->   #ifdef TARGET_X86_64
->       s->kernel_gs_base = env->kernelgsbase;
->   #endif
-> +    if (cs->crash_occurred) {
-> +        s->is_crash_occurred_cpu = 1;
+> +            WinContext64 ctx;
+> +            win_context_init_from_qemu_cpu_state(&ctx, s);
+> +            memcpy(hdr->ContextBuffer, &ctx, sizeof(ctx));
+> +            printf("Faulting CPU identified: #%d\n", i);
+> +            break;
+> +        }
 > +    }
->   }
+> +
+> +    /* Second pass: fill context for all CPUs (best-effort) */
+>       for (i = 0; i < qe->state_nr; i++) {
+>           uint64_t Prcb;
+>           uint64_t Context;
+> @@ -512,6 +527,7 @@ int main(int argc, char *argv[])
+>       uint64_t KdVersionBlock;
+>       bool kernel_found = false;
+>       OMFSignatureRSDS rsds;
+> +    uint64_t KiBugCheckData;
 >   
->   static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
+>       if (argc != 3) {
+>           eprintf("usage:\n\t%s elf_file dmp_file\n", argv[0]);
+> @@ -611,7 +627,37 @@ int main(int argc, char *argv[])
+>           goto out_kdbg;
+>       }
+>   
+> -    fill_context(kdbg, &vs, &qemu_elf);
+> +    if (!SYM_RESOLVE(KernBase, &pdb, KiBugCheckData)) {
+> +        eprintf("Failed to get KiBugCheckData.\n");
+> +    } else {
+> +        KIBUGCHECK_INFO data = { 0 };
+> +        if (va_space_rw(&vs, KiBugCheckData, &data, sizeof(data), 0)) {
+> +            header.BugcheckCode = data.BugcheckCode;
+> +            header.BugcheckParameter1 = data.BugcheckParameter1;
+> +            header.BugcheckParameter2 = data.BugcheckParameter2;
+> +            header.BugcheckParameter3 = data.BugcheckParameter3;
+> +            header.BugcheckParameter4 = data.BugcheckParameter4;
+> +
+> +            /*
+> +             * If BugcheckCode wasn't saved, we consider guest OS as alive.
+> +             */
+> +            if (!header.BugcheckCode) {
+> +                header.BugcheckCode = LIVE_SYSTEM_DUMP;
+> +            }
+> +
+> +            printf("KiBugCheckData: 0x%016" PRIx64
+> +                   ", BugcheckCode: 0x%08" PRIx32 ", Args:"
+> +                   " 0x%016" PRIx64 " 0x%016" PRIx64
+> +                   " 0x%016" PRIx64 " 0x%016" PRIx64 "\n",
+> +                    KiBugCheckData, header.BugcheckCode,
+> +                    data.BugcheckParameter1, data.BugcheckParameter2,
+> +                    data.BugcheckParameter3, data.BugcheckParameter4);
+> +        } else {
+> +            eprintf("Failed to va_space_rw KiBugCheckData.\n");
+> +        }
+> +    }
+> +
+> +    fill_context(&header, kdbg, &vs, &qemu_elf);
+>   
+>       if (!write_dump(&ps, &header, argv[2])) {
+>           eprintf("Failed to save dump\n");
 
 
