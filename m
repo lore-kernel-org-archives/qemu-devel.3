@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E943DC56205
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 16:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72BDC56208
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 16:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws0xP-0003GP-9J; Thu, 06 Aug 2026 12:28:35 -0400
+	id 1ws11Z-0004WL-OM; Thu, 06 Aug 2026 12:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws0xO-0003G8-8i
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:28:34 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ws11Y-0004Vz-Bo
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:32:52 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws0xL-0005Uz-Tg
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:28:34 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2cc97653887so28683455ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 09:28:31 -0700 (PDT)
+ id 1ws11W-0007Pr-K7
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:32:52 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-84e0688b859so833466b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 09:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786033710; x=1786638510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786033969; x=1786638769; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AEQnROxPeiLVayVjIWXAfWCCfoXfgrW5OLqp5/Dmi08=;
- b=nZ6EtjJgkQAmsn/1FMWhGHLXhf4E9m9uUz2Nbv+HOriPmOJW3J32W07cT57O9JDvZi
- c9sX3iIcX4z0Nvn03tgoxY+y3kzFNBMOKv9fThye9Dcfc+PpHGT7J224WOs4wCwHKABi
- sy96WEstRn3Zd5G9xPy8t46pPSHvWYB7jRidNqaOtrQHC5scN3uVor6uS7sW4Mr1OZ9C
- cLEHpWjRh5NiYAtoxWrD2jhsksSrmz+YhfEBKZQFT3olYyw0EvBgz0YmG6rNw51jdxVt
- kfDCjvQTx/GutxePnK8JOShVEu7WLgio8kePeO38kfmB/tID1GsVWzIAkj4rgTSbfYKV
- wWfw==
+ bh=PCXH8C52W7ZK0seF8WFhcvqgDynyVjh/s4U9YgqVZlY=;
+ b=yU3IFzYtoV9XQSMmLxzUDQlqjpSXydR1DneEu26wZtFyR3Wdf0/NaXlo8gCCUn961Z
+ C4Y5aG12BVtEl3wN0GnRs2fmxXjCNm/nrGs+nhUrxuxT3gvtQACuNcVFsLZrDebrOucT
+ fXb6Pn4DbMYiA07b8XxBai14yDVDpzKzucYTXOUZh5BFbL33GygS7WGIzi+IWgDRKFXH
+ wZAzwMuBreFqRwgnqYwDm6sVX21fwmoPHuUv10C73hhoQ1hJCjE1T/b41rkbXqwInorp
+ FStdgo4gZ6ZoBTUljb1jpZl8jTJVgmqQacZWN3Y+RpUVRT9T/j1m2DOKonwshLLNUsmt
+ igKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786033710; x=1786638510;
+ d=1e100.net; s=20251104; t=1786033969; x=1786638769;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AEQnROxPeiLVayVjIWXAfWCCfoXfgrW5OLqp5/Dmi08=;
- b=pC13CaI3Yr7mF1fgoGoPqYTkkCRX7WURZo9svNpK0Y3r90lLLww2krTCyX/igyYA9q
- 4zGV3IsotTdioWiEHl7inKDJkGuOlVs7NE73rNCs0qdGm4xYnhIatUhwQG1nqM2Z5hDZ
- jRr6ZInMrbO5bS5182fMSLt/thW0L9ktBvyM/rBlIP0jZiuPVOnSzxs0Qi0lnhLdSP0r
- rrscJbmaWBgZEerDgiDe5xkEDrmsaryLtNnsY6qSmaJTHNcEn7pqBwJbdXNo9gcx9gVc
- SbY4RhpkNxrhEhQR6ZdWcwtNebxZ02Lt0FY8DJX2zKWNlJoQMBWGLk9gFqORa6ORpBTW
- 85fA==
+ bh=PCXH8C52W7ZK0seF8WFhcvqgDynyVjh/s4U9YgqVZlY=;
+ b=tSGQmRqVzYHGzSklou20Uy5ZanTn8mYrA2F9QmxcCC8jpz3lrUN82n4D1LBRPGRtb0
+ XEXI5/xqvJoIw+ljXvhFGNab8QAmiMoruhWVam/TPtuTPzHCzXNzGUv7Pibv/ESMtyiA
+ Psfye29p5Nps4+LhLSwPV38dW5N0k/7dk9IQm9tVWH3Idyn3n9m0eRSZVVjFD9z+9gSn
+ ddbDnh6EnQtCNMqht3Jtop30GthevEjyfljaYhoeZ/tItwuafxY18ZJUPKCoOt2mXEA0
+ 9/Za0goygKE7y1hOiPUyfM4ZU8si0kokWiD6tnJdWiBe9fIkl9G8xpqrETZXNjGg0yQo
+ 830w==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq3aG+W4DVSFU8MskXw/7bsnyVZQFoH13jynlXS+wSar9XkFtrVwVK0tXX2mm7sEWTxWCp+/FUDK8wv@nongnu.org
-X-Gm-Message-State: AOJu0YxukTfYq/mBUGI5j2133oSJq4soNYj/yKojxD0TAFPQWmuaRgWV
- J/YoKIblDrmiySCwVsPE83xGJCYuZ9LYwC9rq0+uOX70gOGjlx7hXqt1EMENqkhhRAE=
-X-Gm-Gg: AR+sD10QDc45zXW8/spxQthKy2EQScLJQD62H6zy3Nd2BsDP7QYhbElYpvAe6GUtJfP
- KZKdezBK7qqoQzNeppuWb/dasE0Qj0hXOmS14ECrIn0zaiEOkpvUAtklJUJe5rHYpQKAo73H+r+
- Tp1/XVSalg8DmoWDTE9/3wpeVx/CZTQgVUWSdxF1/+d//GNM94OomX1sdDIL5B3Pzc7jCTn0aGV
- iyCS+vkJ3Rg61B5kfNHe8GObfmiEyVFCVj4ONNeBPLp1mQwz5JfnWSEluVjxtZi4+Jd2vIPkAuu
- Sz7vDYRknotiwTeOJSjb5YUoqa8JbbHLf0JFWpKQ7JPxuwJe9HD30t/W8+gzoMhhHnma+lGBUic
- F0km48OQS/UELS0TvBuCHxEgRRy8CklT+XThFz6LIsYZjtbwQyn9QrmTwU/uM+yL0z5C1NocDHq
- hGcMot5K/N+u1dfD6fWjc9BlrvB+Xt8lPmuGOtErUIdF3u51bZLbriACENk7ghtxFkD6UgRQr2F
- aD5tyiibHHJ2bCb69fEASzUfisx
-X-Received: by 2002:a17:903:2450:b0:2ca:e19c:986 with SMTP id
- d9443c01a7336-2d0ca70e87bmr164843545ad.1.1786033709835; 
- Thu, 06 Aug 2026 09:28:29 -0700 (PDT)
+ AHgh+RpYbmruUR6rlpoWgFoVCoVwiwwM2WOdeSJSpCoNImT+AQQPMr/EjmmZM8ufA4ULiki2iAwulrBdCBWn@nongnu.org
+X-Gm-Message-State: AOJu0YxxqUCZM2C5pbCaQFENfCx/kI/G3HV+Jgu9WQhgZeyw8wZgkAS2
+ M2od2o0jqfL237WO1PRDldjQrGlAzOYzKdl3cR8KYdXeShrUVe1grAwa1ql9GPW0xaE=
+X-Gm-Gg: AR+sD13HynQ+D6PK7WlUeRvMHIl0SNx24ykchcBuZnZsOkpjuS4/zgb2aOJfmuQne3D
+ zE2r3ZAfU+igJ3Zy2IqsVmrQ/Spn6yXFKkhky0O+16rU5evppn07t4soy7rnU9UjyP6j3re+bNj
+ MYEEbudOpNFQC/9w61RyAsKdaX5DtEzPFoBcfTEmyFLDQbPrc+LV39fw2NOKv+eY76d1kelJUZ2
+ bBAkvNWVvtV/H2+IcMbBwDYSDhQ2owduk8SyYX4ZxhYrE1dyi+FZL9EU01/4TnT+aRzyzD/pHBJ
+ I0JRAZj17G0ldLNApsA3KtVXfzaBW+vLt540vNuENdwb4M+e7+WdH2JHS9lqF9StI9ZJ/rkwyOl
+ TLbr1nO8cTTWiOgHGPS3t/1pbPy6Z7LAclLnEzPRNeUUT6Y29x5yhaKLRkwr31Vgdq6iWnPkvIn
+ lMKtOn9mG/9F6WSjfE2qGdN+dk0xDqYRIDFat2ScRi7hM3mm6FHp8bD8oQpSypLaunMGMq+RNPf
+ isSd17ZrV//B9k1X+k1XiZn/OJv
+X-Received: by 2002:a05:6a00:8d81:b0:845:e9ff:5d97 with SMTP id
+ d2e1a72fcca58-84f2e025254mr20640793b3a.12.1786033969100; 
+ Thu, 06 Aug 2026 09:32:49 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d0a9f8fb4bsm34776005ad.5.2026.08.06.09.28.29
+ d2e1a72fcca58-84f45389e68sm1723037b3a.4.2026.08.06.09.32.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Aug 2026 09:28:29 -0700 (PDT)
-Message-ID: <0d0c9cc9-2952-4823-94db-a0203847109c@linaro.org>
-Date: Thu, 6 Aug 2026 09:28:27 -0700
+ Thu, 06 Aug 2026 09:32:48 -0700 (PDT)
+Message-ID: <4add9dd6-85e0-4149-8670-705225e18f8a@linaro.org>
+Date: Thu, 6 Aug 2026 09:32:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Clear OF, SF, and AF for fcomi/fucomi
+Subject: Re: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
 To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-References: <20260806145224.184019-1-scherer.simon89@gmail.com>
+References: <20260625155613.192643-1-scherer.simon89@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260806145224.184019-1-scherer.simon89@gmail.com>
+In-Reply-To: <20260625155613.192643-1-scherer.simon89@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,16 +105,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/26 07:52, Simon Scherer wrote:
-> +    /* OF, SF, and AF are unconditionally cleared to 0 */
-> +    eflags = cpu_cc_compute_all(env) &
-> +                 ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C);
+On 6/25/26 08:56, Simon Scherer wrote:
+> The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
+> incorrect. Per the AMD manual the instruction encoding looks as follows:
+> 
+> EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
+> 
+> The /0 indicates that the "Reg" field of the ModR/M byte must be equal
+> to 0 and the XMM register operand is specified by the "R/M" field.
+> However, qemu incorrectly uses the "Reg" field to extract the register operand.
+> 
+> This patch instead extracts the XMM register operand from the "R/M"
+> field.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
+> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+> ---
+>   target/i386/tcg/decode-new.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-There are only 6 flags, and you have cleared all of them.
-Which means you don't need to compute any of them, just
-
--     CC_SRC = eflags | fcomi_ccval[ret + 1];
-+     CC_SRC = fcomi_ccval[ret + 1];
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
