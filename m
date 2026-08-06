@@ -4,94 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C053EC561E6
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95771C55ABF
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrtD0-0000tw-CA; Thu, 06 Aug 2026 04:12:10 -0400
+	id 1wrtmw-0004G9-V9; Thu, 06 Aug 2026 04:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wrtCs-0000ta-1f
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:12:02 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wrtCp-0005s0-63
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:12:01 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2cacb8416a1so20371925ad.1
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 01:11:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
+ id 1wrtmt-0004FB-W0
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:16 -0400
+Received: from [115.124.30.111] (helo=out30-111.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
+ id 1wrtmm-0001NM-Rq
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:49:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786003917; x=1786608717; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=7NPcm9UdLMecgFj3EvrESXhFvHs6d/CP4uDNrSCFXRE=;
- b=HuZp63vqDYo+8U3fvZOJaY9IImiTfEjzCqTj1xvTHh7+jUSm886Hl3L8gzi97sPhti
- uv5iU/Y+OLm3ipjDL/ATsrtTpGj6MDQBhBo+VaeEZWXBYh5PqNEM2/uSsYK3CR5VcV5q
- 9QlCWQY9V9mZnSbFnCdcX25zvEPlHpJQDS8090MbmpX8u1s2d/ex/hFlk6ZW7NvRPDub
- K3dkE6RPUE699y7rXkZ+b3+akAQvvNGN6cVjMCcWZ+0vAvrJjDKbOUj4e7Ldm0BXVLBP
- BXI5o3JLzhQcAP/LNhye1Vy6/q3NHyKY5Z+9S8hKYtgF9brX1mT1M5g/ycNRyrkpkTK5
- nPyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786003917; x=1786608717;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7NPcm9UdLMecgFj3EvrESXhFvHs6d/CP4uDNrSCFXRE=;
- b=hZWs7/6TCb0pbM8cTcUfrNh4qEvSILD1cLL3cFAYnukyF87jJfb9ggkzONmr1Yb7DJ
- pxdiFkqGW0Cep5eFQVLl7s0gd73vyn/E0TIqHiGI8HNlmD6lVNoEVVvjDZvHaUShtFaS
- SD9UVyMqQ0IsdxReezK66iUmFCdr0jUGJ0RlZUYFkcj1FEggkLND5F+2UVRVYVGpY5xr
- CUC2LgrhOlt7mTeOsx2rzdiXCU/gTApT8lVkcwkdhQJ+e22HHU43MVsfKtdgOeKpEy/Y
- AnIgBOIYBNOXxg8d2mTfGiAcV8z7IDJ2i+26hNqTTwdATuWwhXopFi8a2CiEZwqnN9q7
- JMwQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqPxQ6i1sWdqxEr1tgcdakoUtW0hGIvYKYEu97IV1h/FLC/jgZFo5MsXLpOSN41idOme6RCgOlbP9m3@nongnu.org
-X-Gm-Message-State: AOJu0Yyk3RX8gEeAGI42bBHo4TJjzUQxQfPL5WwKKSeBbZRAHg+pjCNl
- rIL0QzzgLau5PLAnRHfZvAGT7FUiApGj//uaoL4k2OlSi5756VfwXjy/
-X-Gm-Gg: AR+sD10qX2v6f95wsSVS8B0WIZAAZ4mz+jhhRJvByQvvRlh7Kjmbo05HUgiksouHHDI
- dJJltMmXDvQrYZ8y/M1SwFEAftO+Uu4XWQXN77ce6DhW+hHQm1kyKdqm4qzQVAko0p4g8yogByh
- uNk/x3qOXIFIIl931BSL+dvikSQln6FnVY8+6UMmpvVK8zEaLe77NeRVKeWUJqxEDOH/G11if5G
- TT0sNYfmKa8IhcVBkdYaYGBS+qSnKmWfimMgO6R/cWeghEqQVcoHVNg7FSi0TkJnyhU+lrcEjvu
- wR9AJa7sWFHs62U1JDPaf/JysV9SeXNjyR6ZRmbGVMHNa9nlG65hecKTPlI473guBf+p4Btd+VU
- e5y4SPaNUOBddxzxKOrYeBluuw1idBzGfnW7H1Kl4PsZK4rbCHeON9195KXY4qyUOT54owa7G7i
- qdihmuFcPsQMfWbaqBawjWnZlSJi1YlgH7vofzUbTWDqYnhLpDnVJAgszLIHw4ZywqofuQHyMoN
- Vu1xJlnwcCCPyfxzNYwyFaRag==
-X-Received: by 2002:a17:903:2b03:b0:2cc:d69a:354a with SMTP id
- d9443c01a7336-2d0caa0339bmr148442645ad.22.1786003917194; 
- Thu, 06 Aug 2026 01:11:57 -0700 (PDT)
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d0a9f8fb4bsm27750915ad.5.2026.08.06.01.11.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Aug 2026 01:11:56 -0700 (PDT)
-Message-ID: <f7f579be-a600-46d9-8f3f-d8d41cff63f6@gmail.com>
-Date: Thu, 6 Aug 2026 17:11:54 +0900
+ d=linux.alibaba.com; s=default;
+ t=1786006129; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+ bh=aVrtlsA7Jg/Ha9/qbJG0kFJ5A7fFXUivVpxYdndNPFs=;
+ b=I5nrtSqamcyFMjRkAoasv6/J2xXOUir3Ohhe27zMpfTkwZvQLW1FI8zuKm2hhd+uDonGutQ10rkSfUbAgBj/yvRt3v7UrlJC2i2Ped7sr+5Cr60JSkoTl8QxssRM/INS5XlDEOyi7+uhEqCVsP+GZPL7udG9QQD+qlRttPW8gzg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R831e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
+ TI=SMTPD_---0X8TQ57R_1786006123; 
+Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
+ fp:SMTPD_---0X8TQ57R_1786006123 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 06 Aug 2026 16:48:49 +0800
+From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com, philmd@qualcomm.com, pbonzini@redhat.com,
+ viktor.prutyanov@phystech.edu, zhengrong_li@linux.alibaba.com
+Subject: [PATCH v3 1/3] runstate: set crash_occurred on guest crashloaded
+Date: Thu, 06 Aug 2026 16:47:41 +0800
+Message-ID: <178600606177.41696.1952897016467970943@linux.alibaba.com>
+In-Reply-To: <178600606177.41696.3160576684819885412@linux.alibaba.com>
+References: <178600606177.41696.3160576684819885412@linux.alibaba.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] elf2dmp: fill ContextBuffer with faulting CPU
- context
-To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: philmd@qualcomm.com, pbonzini@redhat.com, viktor.prutyanov@phystech.edu
-References: <178599725914.10029.4441302124415593392@linux.alibaba.com>
- <178599725914.10029.4197199405670909732@linux.alibaba.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-In-Reply-To: <178599725914.10029.4197199405670909732@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.111 (deferred)
+Received-SPF: pass client-ip=115.124.30.111;
+ envelope-from=zhengrong_li@linux.alibaba.com;
+ helo=out30-111.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,126 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/06 15:20, Zhengrong Li wrote:
-> When is_crash_occurred_cpu is set in QEMUCPUState, copy that CPU's
-> context into WinDumpHeader64 ContextBuffer so WinDbg opens on the
-> faulting CPU instead of CPU 0. A per-CPU size check ensures the
-> field is present before reading, supporting heterogeneous dumps.
-> 
-> Also extract KiBugCheckData from the guest kernel to populate
-> BugcheckCode and BugcheckParameters in the dump header.
-> 
-> Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
-> ---
->   contrib/elf2dmp/kdbg.h |  9 ++++++++
->   contrib/elf2dmp/main.c | 50 ++++++++++++++++++++++++++++++++++++++++--
->   2 files changed, 57 insertions(+), 2 deletions(-)
-> 
-> diff --git a/contrib/elf2dmp/kdbg.h b/contrib/elf2dmp/kdbg.h
-> index 002e3d0cd5..15e4fb1140 100644
-> --- a/contrib/elf2dmp/kdbg.h
-> +++ b/contrib/elf2dmp/kdbg.h
-> @@ -195,4 +195,13 @@ typedef struct KDDEBUGGER_DATA64 {
->       uint16_t OffsetPrcbContext;
->   } KDDEBUGGER_DATA64;
->   
-> +typedef struct KIBUGCHECK_INFO {
-> +    uint32_t BugcheckCode;
-> +    uint32_t unused0;
-> +    uint64_t BugcheckParameter1;
-> +    uint64_t BugcheckParameter2;
-> +    uint64_t BugcheckParameter3;
-> +    uint64_t BugcheckParameter4;
-> +} KIBUGCHECK_INFO;
-> +
->   #endif /* KDBG_H */
-> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-> index a62abadcc0..e25709b45d 100644
-> --- a/contrib/elf2dmp/main.c
-> +++ b/contrib/elf2dmp/main.c
-> @@ -338,11 +338,26 @@ static bool fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
->    * A dump may still contain valuable information even if it lacks contexts of
->    * some CPUs due to dump corruption or a failure before starting CPUs.
->    */
-> -static void fill_context(KDDEBUGGER_DATA64 *kdbg,
-> +static void fill_context(WinDumpHeader64 *hdr, KDDEBUGGER_DATA64 *kdbg,
->                            struct va_space *vs, QEMU_Elf *qe)
->   {
->       int i;
->   
-> +    /* First pass: identify faulting CPU and set header context early */
-> +    for (i = 0; i < qe->state_nr; i++) {
-> +        QEMUCPUState *s = qe->state[i];
-> +        if (s->size >= offsetof(QEMUCPUState, is_crash_occurred_cpu) +
-> +                        sizeof(s->is_crash_occurred_cpu) &&
-> +            s->is_crash_occurred_cpu) {
+Windows pvpanic driver writes PVPANIC_CRASH_LOADED (bit 1) on
+bugcheck, not PVPANIC_PANICKED (bit 0). As a result,
+qemu_system_guest_panicked() is never called and crash_occurred
+stays false for Windows guests.
 
-This trusts embedded s->size, while the validated MIN(s->size, n_descsz) 
-at init_states() in contrib/elf2dmp/qemu_elf.c is discarded. A note 
-claiming 448 bytes with a 440-byte descriptor reads the marker beyond 
-that descriptor. Please preserve each note’s validated size.
+Set crash_occurred in qemu_system_guest_crashloaded() as well,
+so the faulting CPU can be identified in the guest dump.
 
-Regards,
-Akihiko Odaki
+Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
+---
+ system/runstate.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-> +            WinContext64 ctx;
-> +            win_context_init_from_qemu_cpu_state(&ctx, s);
-> +            memcpy(hdr->ContextBuffer, &ctx, sizeof(ctx));
-> +            printf("Faulting CPU identified: #%d\n", i);
-> +            break;
-> +        }
-> +    }
-> +
-> +    /* Second pass: fill context for all CPUs (best-effort) */
->       for (i = 0; i < qe->state_nr; i++) {
->           uint64_t Prcb;
->           uint64_t Context;
-> @@ -512,6 +527,7 @@ int main(int argc, char *argv[])
->       uint64_t KdVersionBlock;
->       bool kernel_found = false;
->       OMFSignatureRSDS rsds;
-> +    uint64_t KiBugCheckData;
->   
->       if (argc != 3) {
->           eprintf("usage:\n\t%s elf_file dmp_file\n", argv[0]);
-> @@ -611,7 +627,37 @@ int main(int argc, char *argv[])
->           goto out_kdbg;
->       }
->   
-> -    fill_context(kdbg, &vs, &qemu_elf);
-> +    if (!SYM_RESOLVE(KernBase, &pdb, KiBugCheckData)) {
-> +        eprintf("Failed to get KiBugCheckData.\n");
-> +    } else {
-> +        KIBUGCHECK_INFO data = { 0 };
-> +        if (va_space_rw(&vs, KiBugCheckData, &data, sizeof(data), 0)) {
-> +            header.BugcheckCode = data.BugcheckCode;
-> +            header.BugcheckParameter1 = data.BugcheckParameter1;
-> +            header.BugcheckParameter2 = data.BugcheckParameter2;
-> +            header.BugcheckParameter3 = data.BugcheckParameter3;
-> +            header.BugcheckParameter4 = data.BugcheckParameter4;
-> +
-> +            /*
-> +             * If BugcheckCode wasn't saved, we consider guest OS as alive.
-> +             */
-> +            if (!header.BugcheckCode) {
-> +                header.BugcheckCode = LIVE_SYSTEM_DUMP;
-> +            }
-> +
-> +            printf("KiBugCheckData: 0x%016" PRIx64
-> +                   ", BugcheckCode: 0x%08" PRIx32 ", Args:"
-> +                   " 0x%016" PRIx64 " 0x%016" PRIx64
-> +                   " 0x%016" PRIx64 " 0x%016" PRIx64 "\n",
-> +                    KiBugCheckData, header.BugcheckCode,
-> +                    data.BugcheckParameter1, data.BugcheckParameter2,
-> +                    data.BugcheckParameter3, data.BugcheckParameter4);
-> +        } else {
-> +            eprintf("Failed to va_space_rw KiBugCheckData.\n");
-> +        }
-> +    }
-> +
-> +    fill_context(&header, kdbg, &vs, &qemu_elf);
->   
->       if (!write_dump(&ps, &header, argv[2])) {
->           eprintf("Failed to save dump\n");
+diff --git a/system/runstate.c b/system/runstate.c
+index 08acf801b0..c7961cc1df 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -724,6 +724,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *i=
+nfo)
+ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ {
+     qemu_log_mask(LOG_GUEST_ERROR, "Guest crash loaded");
++
++    if (current_cpu) {
++        current_cpu->crash_occurred =3D true;
++    }
++
+     qapi_event_send_guest_crashloaded(GUEST_PANIC_ACTION_RUN, info);
+     qapi_free_GuestPanicInformation(info);
+ }
+--=20
+2.43.0
 
 
