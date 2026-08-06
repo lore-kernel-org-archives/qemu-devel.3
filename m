@@ -4,108 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C38C56208
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 15:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0CB8C56208
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 15:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrzmm-0007RR-Pf; Thu, 06 Aug 2026 11:13:32 -0400
+	id 1ws02T-0000NQ-Sv; Thu, 06 Aug 2026 11:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wrzmg-0007GA-Oq; Thu, 06 Aug 2026 11:13:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wrzmX-0007n4-De; Thu, 06 Aug 2026 11:13:24 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 676En66L1079181; Thu, 6 Aug 2026 15:13:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=t2hvvVnBtj6w8W+p3
- lfCdnm6OJ9fvS7q3NBN/FsiuwI=; b=Ds+pt5r/MNj9VI9di85AyOSdPlW9ksb7h
- yB6EWiSSjo/AK5/OCOMP+wC5BYAP4N00ob9uYY5r/j2plusf3I6VyJ8m+Xojx5S6
- rHHuKQTLkd2YDQTbFnkiVXOXe/5PpmcQHOWy+CN6YG94lV3daYH3Pgh0TrbNLS+Q
- Cp+KGeqf66Cc+DJcvDno56Mb7YXPBq8DbgENfBZeVh7h1oCqdL+6MO4BlyFc6P5D
- rka37v+aPV7X1FlgztgJdIc7l5nhL43FrJVWITLDs2xa6TOr6/2bQT1t+cIpVGi1
- NMZs+WW3J5gXWn1hEfMtpHP1Io25YZowV2/LEfuJfpM7/P9lBjuWA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fs8fr0u86-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Aug 2026 15:13:11 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 676FBLZP006881;
- Thu, 6 Aug 2026 15:13:10 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswtyufgq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 06 Aug 2026 15:13:10 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 676FD72A33030568
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 6 Aug 2026 15:13:07 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 037B52004B;
- Thu,  6 Aug 2026 15:13:07 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CE73620043;
- Thu,  6 Aug 2026 15:13:06 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.111.145.185])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  6 Aug 2026 15:13:06 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v14 16/19] target/s390x: Minimal protected key AES XTS support
- for cpacf pcc instruction
-Date: Thu,  6 Aug 2026 17:12:58 +0200
-Message-ID: <20260806151302.26846-17-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260806151302.26846-1-freude@linux.ibm.com>
-References: <20260806151302.26846-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1ws02S-0000N1-Ko
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 11:29:44 -0400
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1ws02R-0002sS-A8
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 11:29:44 -0400
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-51c2a818fc4so15458331cf.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 08:29:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786030182; cv=none;
+ d=google.com; s=arc-20260327;
+ b=HuZvqT8JCfeeIa+OVpv1sqx1cqEj9rIvrFe9ppLKk3cV+jTKb8+r/R1nFCsoWIR1rX
+ hoIFbRPwrBKOn4ppJrHSFRS1u89ayjVVCrU2vWFVEGj65WdnK0zCxcrCCyYQwTJdUZvo
+ dDmgCOtSjyFdBOyxrjoyteQw5OaAW4g6KlB9D/j8K60aKq5RMbC8Acbguxz8h7jftqIO
+ H2MZ9vGuvRv8IyBbzCAQKpaQJ7zgNAyxoq0s6JwDbeNZ65D9j4D6+cuHaqGCVqu0ZNgF
+ gjCqbfvbGvdJfohGFFr/9kyiCdJblT9VT/QXe+ZY9w6uKf4tovZXpj917MpmpHGG1qHm
+ KLmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fbhM6ni7JY8Y2h7SdY5C0ULZ5EeFXPs3jMUf+pr9MXk=;
+ fh=x50nJBzqz+v5M8Pm4mrIW+J9ZsMO4Kfn7wHtfmb2xEg=;
+ b=KhzgAlUPN9y/JDq4fjmUx6uG95nDQ4fNWJNQ7nPeF8vCTlfVbc7qQPhMbZSirgZeJV
+ ZZKGwAH1Bw0qhmgsJKpdBRTkN/IUUZHhHWhPUruKQNl5EeuofLyff+6OBx/IzpMTagNG
+ GKHAw1Yxee2S0tPsZmbqvlWyMIHAZXYe29jpEZkXFHrixUrNRxirWxbPh7I9N+78XWwh
+ blZWIkbBTNC4MHmKc0zkVxUElZhhOi3D2jfjXDkImVB+Zvs2I6TSebFJ6UkX6Dcu+jZs
+ ld2Ln4Lkyy3ynExht6Ei6LtCjh8bNcEmnPgsqSryKvmCgp1xzI3PeweGYGacIgHRl6B0
+ B6CQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786030182; x=1786634982; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fbhM6ni7JY8Y2h7SdY5C0ULZ5EeFXPs3jMUf+pr9MXk=;
+ b=n7G5duJOkqWTmBY9nO5Hl8e/QEWQsMv0YcEoTxXjHvHR85CuzxXLxhd/eBQXIc595o
+ w4P2gSHQGR6Jx734w6Fbu++6CJ8Gjv1aRV1NklmNz5ypYTlj13zkneSQgoDI4JnNur3m
+ sLcWL/unXlXQS+ALSKXZEzM0vY9NSKhrmMJDxP8azapM0FmuylH1PM1DVJj5Hyrh/Tm0
+ wnoWThV6OSMqjraWMgbV0Oh3rBvjxG3U7qBnBdKoZV9FTWw68WNX7eSuFV1z50/iKSs/
+ LcQAw07kwtIRYsP2JNiNo5LyZ0H+LUM3afEHt71WfeE83Dv3Pv0amIT2d32oxEsKNeVy
+ dkiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786030182; x=1786634982;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fbhM6ni7JY8Y2h7SdY5C0ULZ5EeFXPs3jMUf+pr9MXk=;
+ b=oaOv9QAhEWJg9e8qkm7O3W8/dkLqsSPRouitJuVpv5wOjSoojJjLMDdiVb6c5YqC3S
+ amL1g9QYo55VQOgkxLvxnOSKzS9BHWJeIzaLK36jyMuQ2tybfgI19HlncfSnpHansj20
+ 7Q9/5hqzg2GOwgkRUl4r7SvtOK2Q8CSCc/dio6mtuoiZrZcCqbtT7j2tJmNN42nn4HGt
+ JdiFlaPkvZsaDPdeN/qbIGyQ4R5ZnD8WLXI4j91eONRB1CVznPWS7cn6qLSikyhD0g5X
+ 2vV90SRuwgLc9qcwY+6yQ4JpsCLdGgcyNWzG6+NtCL+yb3CacOnEA3XlLZPRMLfh12PV
+ a1XA==
+X-Gm-Message-State: AOJu0YwL1JTVJrZ3zbIwpH6WMUNWuzuJ1EhZ/N3gxuMjaI83D86zFpNx
+ zrIbbLyRZvqqdpyRvpIl/Jw6TKSggUJYVZaxxPo0t91xL2hu+3I7yOlvBJ3nOtluaudwu8gxWPA
+ yLhYiRx5zIPeUHtLY3vP6UMYtZ1j2jbE=
+X-Gm-Gg: AR+sD10uxgt+DXklfpHN9/Pjb2e2tq6xFu8Qfhf+ullLbFULQZ/2aAqta0oSV8LWzNW
+ cCpWaIM6yXjkZANXFKiP7R0OTA4W+E7+QsPAioAM9LU9vx31BbS74+xKa2yorw//HxQKzP+cSRr
+ XjtHd2tNIqwgNi4lXBRmWwsZ5yQJfpUqD+3S1UH3MB2EZCP0x7rIB8hh9oZceM8WgsAv0qSHVMU
+ 9o/d1fFgFQUVrdoD6HK6JBEWGSJe0LjDGxheBp1y3aevGBXfV15UOzDogqq90wGijuJc/soOhP0
+ A7ekYfsWcT7bwKWN8eLLe/Jd4H5ZdJJ4rQrtd2i8AD5Mq9gbkOzR/Zco3tbWtpWwkYycPXKpg1n
+ zdqA=
+X-Received: by 2002:a05:622a:428c:b0:51f:636c:8eae with SMTP id
+ d75a77b69052e-52ce5ff21c5mr174083461cf.14.1786030181907; Thu, 06 Aug 2026
+ 08:29:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: YORfiU5yGJfq1N43spwzZn9E_NyzMFP8
-X-Proofpoint-ORIG-GUID: YORfiU5yGJfq1N43spwzZn9E_NyzMFP8
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDExNSBTYWx0ZWRfX7oxkowqzH5Mm
- irL15MyNnWOrT4qZg7yO+vC5PM9I4SvQVh9qB8hAf6yTMwdn65AE9H1bZ99XisOUyHSvtfn+fy1
- bwT1df02uWlgBTai5XjVmKfsdkjoBB8=
-X-Authority-Analysis: v=2.4 cv=K8cS2SWI c=1 sm=1 tr=0 ts=6a74a487 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=tkYQr5ag8MGam-WK_qUA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDExNSBTYWx0ZWRfX7Fzkm+FjxT2k
- 4miiqw+IpJh5Xu9BfwH6a4ek5wuKmpN3gPBFG8LyF0W8vLESToZb6Xu2HLeGaxbYloHQIB9/rKO
- A7Hhxy8/V7Vwqaj5YL0hRYYSj48RpwzBqqhpGKYJ5kTwC7MI4vmNXEyupt39LW+mvIdOvXludPl
- Cm/FRpa7Viz4qBaCerD1fzuRZiz5vimkNIgT0KNWX7XpPQioR18Ad8x4Wdoo0njjkFG18eexfNw
- SY2WOyn2kvGPE4BrzXgaJn+dPa/4dMR8k2ermQxvm6OGJSIHUqdyImUhxTRqnVbT8HU9dlWpM0C
- nesIjoaq07jfEWIn5FfluGhhP2m6XD34BbfvFqOH/cAScv/lmlpgifE2/V2DBNvCb/JxwwlH4zI
- s6uS0J5p4hDlxU4hR7Cv1ZU+Akj7wsI01KkNYN1Hk+ZACekJkWekuExPh+4Hjtv7gaTYCe7YPDr
- 86Qv/XNlij2dhvGKqlw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-06_01,2026-08-05_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060115
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-9-6b97c439eb28@gmail.com>
+ <f9125d0a-3258-46f4-93f6-0761a4acdc66@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <f9125d0a-3258-46f4-93f6-0761a4acdc66@rsg.ci.i.u-tokyo.ac.jp>
+From: Connor Kite <connorkite@gmail.com>
+Date: Thu, 6 Aug 2026 08:29:30 -0700
+X-Gm-Features: AUfX_mw1fmyon2HTcHvHhQjAK7H8kXEhTUaSklvV3gLZ5vUvN2JB54elHNtQ0Co
+Message-ID: <CA+spn3pLJvQCyfUvK4WvjvfJnGYBKr-i302HvBeVm9Y3t6sR8Q@mail.gmail.com>
+Subject: Re: [PATCH RFC 09/15] hw/virtio/vhost-shadow-virtqueue: specified
+ vring placement
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x82d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,134 +139,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support CPACF pcc subfunctions PCC-Compute-XTS-Parameter-Encrypted-AES-128
-and PCC-Compute-XTS-Parameter-Encrypted-AES-128 but only for the special
-case block sequential number is 0. However, this covers the s390 PAES XTS
-implementation in the Linux kernel.
+On Fri, Jul 24, 2026 at 5:19=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+...
+>
+> Nit: please remove the whitespace between (void *) and svq->base_addr.
+>
 
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Tested-by: Holger Dengler <dengler@linux.ibm.com>
----
- target/s390x/gen-features.c      |  2 +
- target/s390x/tcg/cpacf.h         |  2 +
- target/s390x/tcg/cpacf_aes.c     | 65 ++++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c |  4 ++
- 4 files changed, 73 insertions(+)
+Removing the whitespace!
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 9898f880a6..6b206cee83 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -944,6 +944,8 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_KMCTR_EAES_256,
-     S390_FEAT_PCC_XTS_AES_128,
-     S390_FEAT_PCC_XTS_AES_256,
-+    S390_FEAT_PCC_XTS_EAES_128,
-+    S390_FEAT_PCC_XTS_EAES_256,
-     S390_FEAT_PCKMO_AES_128,
-     S390_FEAT_PCKMO_AES_192,
-     S390_FEAT_PCKMO_AES_256,
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index a878d7d9d6..4d5e09f715 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -295,5 +295,7 @@ int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                    uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-                    uint64_t *ctr_ptr_reg, uint32_t type,
-                    uint8_t fc, uint8_t mod);
-+int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                   uint64_t param_addr, uint8_t fc);
- 
- #endif /* S390X_CPACF_H */
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-index 18d8e2299b..d1f3b44a15 100644
---- a/target/s390x/tcg/cpacf_aes.c
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -714,3 +714,68 @@ int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
- 
-     return !len ? 0 : 3;
- }
-+
-+int cpacf_paes_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                   uint64_t param_addr, uint8_t fc)
-+{
-+    uint8_t key[32], wkvp[32], tweak[AES_BLOCK_SIZE], buf[AES_BLOCK_SIZE];
-+    int keysize, i;
-+    AES_KEY exkey;
-+
-+    switch (fc) {
-+    case CPACF_PCC_XTS_PAES_128:
-+        keysize = 16;
-+        break;
-+    case CPACF_PCC_XTS_PAES_256:
-+        keysize = 32;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    /* fetch and check wkvp from param block */
-+    read_guest_wrap_u8(env, mmu_idx, ra,
-+                       param_addr + keysize, wkvp, sizeof(wkvp));
-+    if (memcmp(wkvp, protkey_wkvp, sizeof(wkvp))) {
-+        /* wkvp mismatch -> return with cc 1 */
-+        return 1;
-+    }
-+
-+    /* fetch block sequence nr from param block into buf */
-+    read_guest_wrap_u8(env, mmu_idx, ra,
-+                       param_addr + keysize + sizeof(wkvp) + AES_BLOCK_SIZE,
-+                       buf, AES_BLOCK_SIZE);
-+
-+    /* is the block sequence nr 0 ? */
-+    for (i = 0; i < AES_BLOCK_SIZE && !buf[i]; i++) {
-+            ;
-+    }
-+    if (i < AES_BLOCK_SIZE) {
-+        /* no, sorry handling of non zero block sequence is not implemented */
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+        return 1;
-+    }
-+
-+    /* fetch protected key from param block */
-+    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
-+    /* decrypt the protected key */
-+    decrypt_protkey(key, keysize);
-+
-+    /* fetch tweak from param block into tweak */
-+    read_guest_wrap_u8(env, mmu_idx, ra,
-+                       param_addr + keysize + sizeof(wkvp),
-+                       tweak, AES_BLOCK_SIZE);
-+
-+    /* expand key */
-+    AES_set_encrypt_key(key, keysize * 8, &exkey);
-+
-+    /* encrypt tweak */
-+    AES_encrypt(tweak, buf, &exkey);
-+
-+    /* store encrypted tweak into xts parameter field of the param block */
-+    write_guest_wrap_u8(env, mmu_idx, ra,
-+                        param_addr + keysize + sizeof(wkvp) + 3 * AES_BLOCK_SIZE,
-+                        buf, AES_BLOCK_SIZE);
-+
-+    return 0;
-+}
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 155c06ee4c..aa27889d97 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -207,6 +207,10 @@ static int cpacf_pcc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     case CPACF_PCC_XTS_AES_256:
-             rc = cpacf_aes_pcc(env, mmu_idx, ra, env->regs[1], fc);
-             break;
-+    case CPACF_PCC_XTS_PAES_128:
-+    case CPACF_PCC_XTS_PAES_256:
-+            rc = cpacf_paes_pcc(env, mmu_idx, ra, env->regs[1], fc);
-+            break;
-     default:
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-     }
--- 
-2.43.0
+> > +        svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_s=
+ize);
+> > +        svq->vring.used =3D (void *)((char *)svq->base_addr +
+> > +                          vhost_svq_driver_area_size(svq));
+> > +    }
+>
+> Unmapping svq here can lead to use-after-unmapping because the ring is
+> not stopped yet. do_vhost_dev_stop() calls do_vhost_virtqueue_stop()
+> only after calling hdev->vhost_ops->vhost_dev_start(hdev, false).
+>
 
+I am afraid I don't quite understand, as this patch does not introduce
+any unmapping.
+Was this comment meant for a different patch?
+
+...
+
+> > +
+> > +    /* Location assigned to vrings if not in default anon memory map*/
+>
+> Nit: here please add a whitespace before */
+>
+
+The whitespace is now added in.
+
+Thanks!
+
+Connor
 
