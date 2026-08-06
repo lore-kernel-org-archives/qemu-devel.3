@@ -4,202 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E885C561E6
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 09:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456ABC55ABF
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 09:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wruLH-0000PF-53; Thu, 06 Aug 2026 05:24:47 -0400
+	id 1wrual-0002MV-4E; Thu, 06 Aug 2026 05:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wruLF-0000OX-14; Thu, 06 Aug 2026 05:24:45 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wruag-0002ME-QJ
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 05:40:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wruLC-0005Gi-Hm; Thu, 06 Aug 2026 05:24:44 -0400
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 675NYR9C881428; Thu, 6 Aug 2026 02:24:08 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=r0LDsINqxVUzvG8hoM2ca2N1ZJi8JZqktsRIuejXk
- 9Y=; b=FUouBDRuoJKxL19lYqiKnWfToRKN//gOgbrzC3Y9u01lXUvAUN2M44hNP
- 2UemBHVg7y2+qHzzXZxyi55T5IN83OlMZdgsVX5GtfqrNDrQepwDfZEdA95Kwco2
- aC8bdOFjTZcBW2qwTTCzyMX2OjvlzDWgvlf1VhzcrwQ8XOnO6It/g0RQ59d4kvIx
- ZkzrshuWXK8C3cl2S83uK5nn8nRhgrl9eLSw6pkp7AjHQTGJVB+dg/xvS8+baYHY
- pQNR+3hcqxWfz78zweAOK3cKxvFhfBDt9FHw9lfhjwmRX38EK+CHGZIdIvFq3oil
- SqdT4KiLtILVewp7+HyN3uTQGMVdA==
-Received: from ph7pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11020085.outbound.protection.outlook.com [52.101.201.85])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4fuhfcdrm0-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 06 Aug 2026 02:24:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FsufvNX+ribItqr+cfyJJQ7Qqyb6BD+ty77u62U8U/EtbYYB6q5bW9sI+U2EXQdUGLkspmiSr17B2CYUbFF3F2gOFMmg88DoRfTfX4x96FTs5XLosx+Yr4C6ll/iOg4pTXH5goKq0pb/TFDm8ApZLuP3DC9/4uC2Vte7KQQDcd5z9n1LSp/H1MkIOaXFNQ6Liif6VCTePFmEyU20FWczDXoYqgTxIUwCaEVGzI+QzNX4oVFfSJY5XRrgxZHYPmKUp7hmfzjnp/E5QVRFtgQ4mOoHsO7GNERVyo+ixT18XLiTPnNkVbFqN9GDx8KE1RaSnBFKl27AsqimVqRkQpU5wA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r0LDsINqxVUzvG8hoM2ca2N1ZJi8JZqktsRIuejXk9Y=;
- b=ie5kBkg1R5xJz3YNpq88S4wuIvY0EZneZSu8StQy71AvLLA9JFG+ErYoMNYdMmc2F1X8Et22P/hd292mGPWRMRimp/0YPO3E4Yg5JCQCwlcGG2hlaUu+u+R20qSQJvjCpB8jDFngSRQ6dzJKkVPm8KZlNogBIljsnow8pV7gsTujvA0gM18WdK1xXicq3+fQ4JuugB+CA8lW2emPyxf8QGIeJpo9C5zG1jcC/7WYbI6+F3s/hh+k68aC1zQY3IWSWdp+OrLE3mByzlSUE6Wzqhdnt5JRMJVgXcOYCkrDLIeQ5wYhuH6LtUZ30f9Ne2WMxJE5+6Vp47yoMCQxzICTEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r0LDsINqxVUzvG8hoM2ca2N1ZJi8JZqktsRIuejXk9Y=;
- b=vxGn4BLBksW2VsYbOvjQSJFnKMk0fDo9LglHwMwr8FYaBH//H2Z5S5RToooPNjbFDdk5xnqrpJW8SPFCbmyDa2rGHAP359sviBrPrjDwiMNaXc5DII02giatKeXGrjSYpCZ0Keuo/H3E/Rsi+VNie2XRY8KHQ2NFZ10n7RBTnsg4VH67GWJnK2XaPOCfhF8lsTzSZePWIxk7AZx+OF0mRFaNTwzkRuyTAgj1wlRoodNz2PFmHk6lfdhHAJD3PghPWgZGPnXPJkxNqiNxQrCvkJZCEPTkEliE5qiQkl3AAIkFSSIgpwNK7R+UuoLf6EPhyM+9QvzHidv9zvpondmuSQ==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by MW4PR02MB7411.namprd02.prod.outlook.com (2603:10b6:303:7c::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Thu, 6 Aug
- 2026 09:24:05 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0292.019; Thu, 6 Aug 2026
- 09:24:04 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: Markus Armbruster <armbru@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "cohuck@redhat.com"
- <cohuck@redhat.com>, "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
- <jdenemar@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>, "sebott@redhat.com"
- <sebott@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>, Shaju Abraham
- <shaju.abraham@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Prerna Saxena <prerna.saxena@nutanix.com>
-Subject: Re: [RFC PATCH v3 16/19] qmp: add query-cpu-props-info command
-Thread-Topic: [RFC PATCH v3 16/19] qmp: add query-cpu-props-info command
-Thread-Index: AQHdFWubvCZ5bHZqSUmcDdL6/mUClLZ2aouzgBYuboCAAOqvpYAAAIwAgAAGWgCAAAYJPIABkVKAgAAC3zqAAAlggIAAYgwsgAFPjYA=
-Date: Thu, 6 Aug 2026 09:24:04 +0000
-Message-ID: <7B2898F0-DA7A-4DFD-A2CB-997833A47A05@nutanix.com>
-References: <20260716213858.609699-1-khushit.shah@nutanix.com>
- <20260716213858.609699-17-khushit.shah@nutanix.com>
- <87y0f5u78t.fsf@pond.sub.org>
- <6AA3BD42-9596-476B-9F64-AB09372821B9@nutanix.com>
- <87tspa5skn.fsf@pond.sub.org>
- <FD805FA0-9323-450C-9D79-319C0883F05E@nutanix.com>
- <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com>
- <8733wu5qfs.fsf@pond.sub.org>
- <08DA9B28-D5BD-4EC3-8182-FEE212F0C2A0@nutanix.com>
- <871pcd12bf.fsf@pond.sub.org>
- <5F6481F1-B5E1-4B30-A4D1-481D9C0731AC@nutanix.com>
- <87o6fgzopu.fsf@pond.sub.org>
-In-Reply-To: <87o6fgzopu.fsf@pond.sub.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|MW4PR02MB7411:EE_
-x-ms-office365-filtering-correlation-id: 0da33184-29d8-484d-1a25-08def39c755c
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|1800799024|376014|23010399003|366016|13003099007|18002099003|22082099003|38070700021|4133799003|4143699003|10067099003|56012099006;
-x-microsoft-antispam-message-info: weT7jwdsJf96dgu440mbBIj6S0DffwY85xOXJfHNfiQYdRCaSrz3kLS5DRpmBPdgPLKMxScQiHeebZrBAwQf04K7sGYDzwLwR0lfroaoVGo9NK0U/eP2QGOL6uDfO2Cyw6OkABeRaVssUN7GXOMZrJRp1H3wMWdRGIoJ2vsNmShw4Yv2ksz6j+TjlnNiW/PKQBf3h5AFxxRHoh2EjeyJoLK93L/haYI71tIawb5VUfl/QOMzFI5RThxNGLscO9Hm+BF5Lh3NGMTWbZZm1kEv6K11T1N0xDzDBZPBxrp76thLwtJFhFa9J2p6niAmjJeR65JTBVqoyjz93RSXOCXBOs96Uy9onwbdIcum90vz5G9GGJVWX4kn1420AfDHcTo9CP1vxDidafbZowF8pYnmd6bPlNI3tjjqFY4ekeDcsA1z2CaOPiInIq9/+t5WzgzXqwlMHBtj5q7CvGQzET3OdLGeXZZ3bk6cnPeQk2wzpFiqH90uW7NzNqEEyLs0SYFmy9fIy12ajc7+vK7yBbInMADTPcNRhYxKPApMp9LdEoXbUGRpQDbmFx5Dv0WuxWuIWejgBUxrrA+bRk/KMKgNGeY/noh41nvrT7+qikCW/owtUFTAZOsiU88EAaiy7KGIrYgTQipCIsR1XXXziKjmRWgRj0FKeQ3HluJVFX1fXFXV5YKSK/mJXSZurGu3KhC/P1vMwNpIDJyFk1B6UhS9alrQTBZXiSY0kAyvmnAaIjQ=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(376014)(23010399003)(366016)(13003099007)(18002099003)(22082099003)(38070700021)(4133799003)(4143699003)(10067099003)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZDlSdktGaVAvVjU4OHQwZGl2VHlQd2JhRnl5NXViV2I1Sk41UXdpOW1RVjBM?=
- =?utf-8?B?b3BnOEZiZjJUalQwa0R5TXdXb1NGckwvUGhTemw1bFJzaFg1WVFxTWNYY1Vz?=
- =?utf-8?B?UmppQVBIdHUxR0JlTXl4cUNGWVZFSUFJLzllbTh2aVYwZ08zb3h2NnUvYld4?=
- =?utf-8?B?VmhxYWRndnRXVkxTYkI2dlZicHlDZXRrV1B5Vnd0NnE4aVZRU0FmRUlQbkJC?=
- =?utf-8?B?dEV3L2R2UHhnQ09ZekhDQUp0Zm5rY0FyZzZrV2RsTU1NSnE1UXdzUDV5bFN2?=
- =?utf-8?B?Z3FtVHc1eDBvRjJ1c04rQmVPeEx3bTZ3MjBJb280R3NobGpRaXV0blhLVWN0?=
- =?utf-8?B?aUdMdlR3Q2x6YVR0M0RvZmtQTUw5SlB3KzYydmpYWWNHQ2VNVEh5U1pjN0Zz?=
- =?utf-8?B?UlhQM0NFVi84akZHQTBmTFZpRTVkU3dMWFl5Z1o5TmNJeUt1OERudU1MeW1O?=
- =?utf-8?B?bGtjaVpEeUhncWZabEl3djhST1hDYUpPY0tLY2RLSGdoZkg5SzVtK2RyVm5Z?=
- =?utf-8?B?NnU1YmRrT1RzaS95R2VEU0dTMkhSSjNJMjVOUXhGUktCSTV5SjI3L2prb3lw?=
- =?utf-8?B?M1g0U1VQU1grTHlkRUxxV0VhNkd4Ri84a2VOUFlKcHZGYnYzTFlDUUZmNXFl?=
- =?utf-8?B?VGFIZFNKYzVmWXcrUUxsUUdvcThkLzVKQUVLaHBvVllNcDFHai9YSVloaURN?=
- =?utf-8?B?QlRtYjdqTml1SUUzT29TUXkyTXRiRjFFdDhnVkxOUndvemllNjNGUjYvUWRO?=
- =?utf-8?B?amRiR3hjc3NhTXdHb2V3M2syYUxrUHJrQWxVTGJ3MUc1ZVU1VXQ3WEVIRjFK?=
- =?utf-8?B?ZGJuWE10U1BLN0RCU3lmZTg2UTVsclp4QWp2K09JUXNrTU51Z0gvbXhqZEd0?=
- =?utf-8?B?anJnYm1ZaTFYSDJUOW0zZWNwMlpEWkg2cmVVbXp0RE1YK05OK0xORjRRY05M?=
- =?utf-8?B?U0Z5VFUzaTNWeTZoT3BSYnVzUm54aHFmSmd1K3lOZmJDeGJHczYrRGxiV1JL?=
- =?utf-8?B?Y1RyTkZPWFpUaWdUd0h6VHY2ODFtUGxSSXE3UkE5STI2cDNWTC9ETGRZb2R6?=
- =?utf-8?B?K1RhNEplQ0lnVktjRitZSm96SWtDNThPcm44MnZLR2dqNXNxczRQQ3QxY3Ns?=
- =?utf-8?B?K082azlkRWdXSXJ3TmRZaUdqZlpKYjBSRXA5UlhYTjl4bzh2SnRjUFJzZm56?=
- =?utf-8?B?VjlEY3J5bkJsaFJQWU5ZZTZNMjdac2phTmVSNjRER283MUpGdHorbVQ5Q2RJ?=
- =?utf-8?B?VHp5WnRmVGI3Y1hqSXExWGVETE40ajZOMGFRWFRnVkRSd2RCampiQzQyRkVv?=
- =?utf-8?B?TXBmVjhuNnp4b1h0d1o3YUVLRVVXVlBNeDl6clNqNmJJN3pmb3oxam83RkNX?=
- =?utf-8?B?SEVYRFo3Sm96ZGZZcTNPVHZKVzd2SEVEUXoxRDFXcFJBMXA3V25VL2ZYencv?=
- =?utf-8?B?ZkpOSWp2WVRQUzdFdXNULzE1ekRWcXZ6eGtxOU5xd1JCa3BSK2pzUUl5THh2?=
- =?utf-8?B?ZXBZZlVzZjE5QmxTRlFyMnhqMWwyQmI5dlU0MWVSaENVSHVCcThVcWl2S2FU?=
- =?utf-8?B?b1Mvd1AxUHVOcW9pOVY2VnFxL1VDTWNuV01qOE9ja1RUckprNmNTRUx2a3dL?=
- =?utf-8?B?YndVMUthbHlPZTBWNHM0ZVdiS1pxL21tWHc1QWUzYXUwamV6SVhaa1diQmlX?=
- =?utf-8?B?L2lDMGtaUi9DS1FBT0NQaUtKTU51clZPVUJMQm5rb0lib0s4U0dqT0h0cnhY?=
- =?utf-8?B?dXoyZDlLVnJsN2M3K1FyaVhSTUVkb3Z1TTBHYTlyeko0U3NFY1dsVitNdXNV?=
- =?utf-8?B?R21wRmtmOG5Sbzd4VmJGTnAzMEovOUhuZzduQVRNQzhyTXI0VUNOdnJTTXJY?=
- =?utf-8?B?WWw3OG1CZ3FIMzdGMjltVStEalpyNU16UGY3UUsrVEZnd0tDOEpuZ3E1WEVK?=
- =?utf-8?B?T2hGcVdIUEFFMDRaUzRQTEhkb00rVGZCbXkwR0tFRElHVjl1MmJLMnIxd2tT?=
- =?utf-8?B?TUtkU2lma1hrR1dyeEU2ZVcxU1Fvck1GZDhoWjBXUjhUL0l1VCtBWG04NnA4?=
- =?utf-8?B?U1g2Z1Z4WVJVK1NuaGRsSEpyZUJoM3R4VmxaVDFGL1pjL1ZzdWxOVittc1F4?=
- =?utf-8?B?S3Z6RVl3LzZkdzh5dDA3OWpUQ01YOXRzckFaZmZldFo2K0hKb1ZnU1N0OWRU?=
- =?utf-8?B?RjJZUVNiTFYycE9aek9CT1lZUEM2c2YyTkJPYnFwaWJ6MXR1RDl0cHo2dzY4?=
- =?utf-8?B?YW1hREhadHlETjFBL3lGZFE3dE1LYXU5RmRGcEFQOFRaSDA2V1djN3VJS0o0?=
- =?utf-8?B?N0VvNHRIaTR5LzNhS2JvSmF5NHYzWk9NQ3c4WndGTGtKODFHbFp3UTJpRlhw?=
- =?utf-8?Q?g5+HGGsnbi3hGiXA=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <865BCDE36F912840A87367E5954D93FA@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wruae-0007In-AC
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 05:40:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786009238;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zmkNJr59R2zx9t4dc4+A+rkVIa10jNJVakE9JscBcP0=;
+ b=dJNqkOpGcmtSur8H7WrxLHzqPtAap8TiOOMMq+3+cjO3sXlfWAURuXIhDKfVLtq0paze8T
+ mVDZk/JrS9MsvnLyS8YGDyHwd0t5QQAnP66FTyAkYGcJSkqvEuOBFT6VmAlYR4XMfJMi3+
+ NwTcGwE7ll/W37Xasz+hA6HXUeZ9+Wo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-7L9SFfolPNWfmavoHtAI0A-1; Thu,
+ 06 Aug 2026 05:40:34 -0400
+X-MC-Unique: 7L9SFfolPNWfmavoHtAI0A-1
+X-Mimecast-MFC-AGG-ID: 7L9SFfolPNWfmavoHtAI0A_1786009234
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E723E180049D; Thu,  6 Aug 2026 09:40:33 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DA09195DF92; Thu,  6 Aug 2026 09:40:31 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: akihiko.odaki@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v5] hw/display/qxl: validate primary surface stride against
+ width
+Date: Thu,  6 Aug 2026 13:40:27 +0400
+Message-ID: <20260806094028.640676-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: dnjkiv4VY2fppAFTddLZK627D3TZ1vFPyOL8tnJxSyBY8X9sXERYupkuOQre5x0B6Wojiw4aZTcs9SJVKOUj5GEoSsTTCk4Aln351bFD1YIVqIdMGxsax4PmsGl0N1nfubAtdxcT3Ey6l7ig6zoyKZ8Pv21EPo0HMdsia8KqOwewEtCs+9rAS1iqFYhYsBUMzzDAQznnMxs0vQA2jqe1VTY1H2Iq2wabn9YzfB4E0R4naPvH80lqrk0ATLP/BqgiylMw6XQvYTtaePmPpE+5yTyzkfdCqZ4/bVWckWn1siLPhnIsnZ0WnjmIIOkk5/vnh+qNpiC1NA//T5LL62Fmpg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0da33184-29d8-484d-1a25-08def39c755c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Aug 2026 09:24:04.1983 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: n4O6r0jPJLtu5S9QGiz1LjYYNlfajNjMgSbdhMcLOVll4Sn5ejllHNp9r10uehmxUZezFTr0pcPRpqbToXOLazGKqUjWjuL93jx8zf7pi+I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR02MB7411
-X-Authority-Analysis: v=2.4 cv=JN0LdcKb c=1 sm=1 tr=0 ts=6a7452b7 cx=c_pps
- a=H3Na7JgWheL2EZIWx/c7UQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22 a=NEAV23lmAAAA:8
- a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=A-3yAG_m9RM1Aa1Ao-wA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: QyGT7C8LfhhoLu97aszLBLXejHZ1U0iB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDA3MyBTYWx0ZWRfX9cZKakyVXmw3
- a5XextUfenMSdeQYjoTrDeoxd46QUu+B12nkpODl0LFXb7qkiMU5s/LNSGrcvQMEBj8Jv/5n3XH
- gTZ3GQIAJbDLSA+jGD82HdmGkbz503E=
-X-Proofpoint-GUID: QyGT7C8LfhhoLu97aszLBLXejHZ1U0iB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDA3MyBTYWx0ZWRfX+DdWXc1BoKv3
- hmlsCNh8YkaO3rBD4CByZT7jAySmoVxoQ2+yX5LtcR1cjkuMUX8R6u3bhXqtIwZ5axGHKxL0dR/
- w1HTC0tH3MIVsrtrmvgjnQ2B2vIQOnRBFmRvvIabHAVAOzALkr9JCkC/6hHPK+5OO/+PDZ/enIq
- 8B/STMgg73zP17C2ErlTBil1DedEMarRugLVT3blVd80nCQPNUqQ+dhLmdKfGvao4EYEEMroLdW
- Nv47Jy+EdqW4U73TcNHQ6fnVnZssm6DdRFDk9uP5MaE0Iftoh2ZXhVkh5UbfB0+WDtP4AhoGVxb
- xmx9NHS419ENBnmi/c5/czkhrXN8MVAoFbv13JNxLSkT5yxEnt9ZfOSwQSaXKtUD9yaHBNyhvMi
- sneSv3cjYBHSsywJfmJJTfUJ9Pm2FWEwhQAfZZkiLialLRwtflVEIiOSwfQGmj8iTgcalOcbkCc
- bo5iDZ2ICDzRSG/rPNA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-05_06,2026-08-05_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
 X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -215,45 +83,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gNSBBdWcgMjAyNiwgYXQgNjo1MuKAr1BNLCBNYXJrdXMgQXJtYnJ1c3RlciA8YXJt
-YnJ1QHJlZGhhdC5jb20+IHdyb3RlOg0KPiANCj4gIS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS18DQo+ICBDQVVUSU9OOiBF
-eHRlcm5hbCBFbWFpbA0KPiANCj4gfC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0hDQo+IA0KPiBLaHVzaGl0IFNoYWggPGto
-dXNoaXQuc2hhaEBudXRhbml4LmNvbT4gd3JpdGVzOg0KPiANCj4+PiBPbiA1IEF1ZyAyMDI2LCBh
-dCAxMjoyOOKAr1BNLCBNYXJrdXMgQXJtYnJ1c3RlciA8YXJtYnJ1QHJlZGhhdC5jb20+IHdyb3Rl
-Og0KPj4+IA0KPj4+ICEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KPj4+IENBVVRJT046IEV4dGVybmFsIEVtYWlsDQo+
-Pj4gDQo+Pj4gfC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0hDQo+Pj4gDQo+Pj4gS2h1c2hpdCBTaGFoIDxraHVzaGl0LnNo
-YWhAbnV0YW5peC5jb20+IHdyaXRlczoNCj4+PiANCj4+Pj4+IE9uIDQgQXVnIDIwMjYsIGF0IDEy
-OjIx4oCvUE0sIE1hcmt1cyBBcm1icnVzdGVyIDxhcm1icnVAcmVkaGF0LmNvbT4gd3JvdGU6DQo+
-Pj4+PiANCj4+Pj4+ICEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KPj4+Pj4gQ0FVVElPTjogRXh0ZXJuYWwgRW1haWwN
-Cj4+Pj4+IA0KPj4+Pj4gfC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0hDQo+Pj4+PiANCj4+Pj4+IEtodXNoaXQgU2hhaCA8
-a2h1c2hpdC5zaGFoQG51dGFuaXguY29tPiB3cml0ZXM6DQo+Pj4+PiANCj4+Pj4+IFsuLi5dDQo+
-Pj4+PiANCj4+Pj4+PiBTdHViIGZpbGUgd2FzIG1pc3Npbmcgb24gYXJtIHVzZXIgYnVpbGRzLiAN
-Cj4+Pj4+PiANCj4+Pj4+PiBJIGhhdmUgZml4ZWQgdGhpcyBvbiB0aGUgcHJpdmF0ZSBicmFuY2gg
-aWYgeW91IHdhbnQgdG8gdGFrZSBhIGxvb2suDQo+Pj4+PiANCj4+Pj4+IEknbSB3aWxsaW5nIHRv
-IHB1bGwgYW4gdXBkYXRlIHRvIHYzLCBhc3N1bWluZyBpdCdzIGEgc21hbGwgZml4Lg0KPj4+PiAN
-Cj4+Pj4gSXQgaXMgYSBzbWFsbCBmaXggOikNCj4+PiANCj4+PiBQbGVhc2UgdGVsbCBtZSB3aGF0
-IHRvIHB1bGwuICBXaGVuIHlvdSdyZSByZWFkeSwgb2YgY291cnNlLg0KPj4gDQo+PiBJdOKAmXMg
-b24gdGhlIHNhbWUgcHJpdmF0ZSBicmFuY2g6IGh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50
-LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2l0aHViLmNvbV9raHVzaGl0LTJEc2hhaC0yRG54X3Fl
-bXVfdHJlZV91cHN0cmVhbS0yRHJmYy0yRHYzLTJEZml4dXBzJmQ9RHdJRmFRJmM9czg4M0dwVUNP
-Q2hLT0hpb2NZdEdjZyZyPVBHV015aWduQTBOaURtVGx5UDd2T1RIb3pCd3NfVk44NnlyVm1TTWtC
-cDAmbT1sdjQ2eWJvZFN0akF0ZGFwak13TG5vaEVEOS11UVNUM0tka3Z3WWVqOXloaUtZTnJSZHpE
-eUhqZXVZcVV4ZHlnJnM9N0liY1N2MXBHTDI5UFRIQU94ajJsWldyMnR5U1FlUXFCODhxSHhsVHB2
-RSZlPQ0KPiANCj4gQnVpbGRzLCBidXQgZmFpbHMgIm1ha2UgY2hlY2siIG9uIG15IGJveCAqc2ln
-aCouDQo+IA0KPiB0ZXN0cy9xdGVzdC9xbXAtY21kLXRlc3QuYyBuZWVkcyBhbiB1cGRhdGUuDQoN
-CjrigJkpDQoNCkZpeGVkIGl0LCBhdmFpbGFibGUgb246IA0KaHR0cHM6Ly9naXRodWIuY29tL2to
-dXNoaXQtc2hhaC1ueC9xZW11L3RyZWUvdXBzdHJlYW0tcmZjLXYzLWZpeHVwcw0KDQpPbiBteSBt
-YWNoaW5lLCBxZW11OnF0ZXN0K3F0ZXN0LWFhcmNoNjQgLyBxdGVzdC1hYXJjaDY0L2RldmljZS1p
-bnRyb3NwZWN0LXRlc3QNCnN0aWxsIGZhaWxzLiAoSXQgd2lsbCBsaWtlbHkgbm90IGZhaWwgZm9y
-IHlvdSBpZiB5b3UgYXJlIG9uIChhcm0gKyBrdm0gb3IgYW55DQpvdGhlciBBcmNoKSkNCg0KSSBo
-YXZlIHJlcG9ydGVkIHRoaXMgdG8gRXJpYyBhcyB0aGUgZmFpbCBzdGVtcyBmcm9tIHRoZSBiYXNl
-ICJjdXN0b21pemFibGUgaG9zdA0KbW9kZWzigJ0gc2VyaWVzLg0KDQpTb3JyeSBmb3IgdGhlIGhp
-Y2N1cHMsIGFuZCB0aGFua3MgZm9yIHlvdXIgcGF0aWVuY2UsIHdpbGwgdGFrZSBjYXJlIGZyb20g
-bm93IG9uLg0KDQoNCg0K
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+The existing validation in qxl_create_guest_primary() checks that
+abs(stride) * height fits in vgamem_size and that stride is 4-byte
+aligned, but never checks that abs(stride) is large enough to hold one
+row of pixels for the declared width and format.
+
+A malicious guest can create a primary surface with a stride much
+smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+surface). The spice server rejects this via red_validate_surface(), but
+the return is void and QEMU unconditionally proceeds to set up the local
+rendering state. On the next display refresh, VNC or SDL reads width *
+bytes_pp per scanline from a region backed by only stride bytes per
+row, causing a host-side out-of-bounds read.
+
+Add three checks in qxl_create_guest_primary() before creating the
+surface:
+ - reject unknown surface formats
+ - reject zero width or height
+ - reject surfaces where abs(stride) < width * bytes_per_pixel
+
+Also fix three related issues in qxl-render.c:
+ - qxl_blit() used abs_stride to advance the dst pointer into the
+   DisplaySurface, but when stride is negative the DisplaySurface is a
+   packed buffer whose stride may be smaller. Use surface_stride()
+   instead.
+ - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+   QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+   abs_stride, bypassing the new validation. Clamp the effective width
+   to abs_stride / bytes_pp to prevent out-of-bounds access while
+   tolerating the normal transient where the monitor config arrives
+   before the primary surface is resized to match.
+ - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
+   validation. Without clamping, abs_stride * height can overrun
+   vgamem_size, and the product can also overflow 32 bits (e.g.
+   abs_stride=16 MiB, height=256 wraps to zero), defeating the
+   qxl_phys2virt() bounds check. Clamp height to
+   vgamem_size / abs_stride to prevent both.
+
+While touch it, fix some endianness issues.
+
+Fixes: CVE-2026-16271
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: 979f7ef8966b ("qxl: use guest_monitor_config for local renderer.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+Reported-by: huntr bubble
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+---
+v5:
+ - fix negative stride mapping in qxl_render_update_area_unlocked()
+ - fix fields endianness in qxl_render_resize()
+---
+ hw/display/qxl.h        |  2 ++
+ hw/display/qxl-render.c | 66 +++++++++++++++++++++++++----------------
+ hw/display/qxl.c        | 59 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 101 insertions(+), 26 deletions(-)
+
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index 48d664f77736..6f5b96fe86cc 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
+ void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
+ void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
+ void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp);
+ 
+ /* qxl-logger.c */
+ int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_id);
+diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+index 4799c9e8befd..348ddba76890 100644
+--- a/hw/display/qxl-render.c
++++ b/hw/display/qxl-render.c
+@@ -27,6 +27,7 @@
+ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+ {
+     DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
++    int dst_stride = surface_stride(surface);
+     uint8_t *dst = surface_data(surface);
+     uint8_t *src;
+     int len, i;
+@@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+     } else {
+         src += rect->top * qxl->guest_primary.abs_stride;
+     }
+-    dst += rect->top  * qxl->guest_primary.abs_stride;
++    dst += rect->top  * dst_stride;
+     src += rect->left * qxl->guest_primary.bytes_pp;
+     dst += rect->left * qxl->guest_primary.bytes_pp;
+     len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+ 
+     for (i = rect->top; i < rect->bottom; i++) {
+         memcpy(dst, src, len);
+-        dst += qxl->guest_primary.abs_stride;
++        dst += dst_stride;
+         src += qxl->guest_primary.qxl_stride;
+     }
+ }
+@@ -61,30 +62,13 @@ void qxl_render_resize(PCIQXLDevice *qxl)
+ {
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+ 
+-    qxl->guest_primary.qxl_stride = sc->stride;
+-    qxl->guest_primary.abs_stride = abs(sc->stride);
++    qxl->guest_primary.qxl_stride = le32_to_cpu(sc->stride);
++    qxl->guest_primary.abs_stride = abs(qxl->guest_primary.qxl_stride);
+     qxl->guest_primary.resized++;
+-    switch (sc->format) {
+-    case SPICE_SURFACE_FMT_16_555:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 15;
+-        break;
+-    case SPICE_SURFACE_FMT_16_565:
+-        qxl->guest_primary.bytes_pp = 2;
+-        qxl->guest_primary.bits_pp = 16;
+-        break;
+-    case SPICE_SURFACE_FMT_32_xRGB:
+-    case SPICE_SURFACE_FMT_32_ARGB:
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    default:
+-        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
+-                qxl->guest_primary.surface.format);
+-        qxl->guest_primary.bytes_pp = 4;
+-        qxl->guest_primary.bits_pp = 32;
+-        break;
+-    }
++    /* fallback to default bpp if format is unknown */
++    qxl_format_bpp(qxl, le32_to_cpu(sc->format),
++                   &qxl->guest_primary.bytes_pp,
++                   &qxl->guest_primary.bits_pp);
+ }
+ 
+ static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
+@@ -101,15 +85,45 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
+     DisplaySurface *surface;
+     int width = qxl->guest_head0_width ?: qxl->guest_primary.surface.width;
+     int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
++    uint64_t map_height;
+     int i;
+ 
++    if (width <= 0 || height <= 0) {
++        goto end;
++    }
++
++    if (qxl->guest_primary.bytes_pp > 0) {
++        int max_width = qxl->guest_primary.abs_stride
++                        / qxl->guest_primary.bytes_pp;
++        width = MIN(width, max_width);
++    }
++
++    if (qxl->guest_primary.qxl_stride < 0) {
++        /* qxl_blit() uses the primary height to find the first scanline. */
++        height = MIN(height, (int)qxl->guest_primary.surface.height);
++    }
++
++    if (qxl->guest_primary.abs_stride > 0) {
++        int max_height = qxl->vgamem_size / qxl->guest_primary.abs_stride;
++        height = MIN(height, max_height);
++    }
++
++    /*
++     * height limits the visible update, while map_height is the guest memory
++     * span validated by qxl_phys2virt().  With a negative stride qxl_blit()
++     * addresses scanlines from the declared primary height, so a shorter
++     * monitor still requires validating the full primary surface.
++     */
++    map_height = qxl->guest_primary.qxl_stride < 0 ?
++                 qxl->guest_primary.surface.height : height;
++
+     if (qxl->guest_primary.resized) {
+         qxl->guest_primary.resized = 0;
+         qxl->guest_primary.data = qxl_phys2virt(qxl,
+                                                 qxl->guest_primary.surface.mem,
+                                                 MEMSLOT_GROUP_GUEST,
+                                                 qxl->guest_primary.abs_stride
+-                                                * height);
++                                                * map_height);
+         if (!qxl->guest_primary.data) {
+             goto end;
+         }
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b7d871b9ee33..384b8767b8e6 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1489,6 +1489,47 @@ static void qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
+     qxl_render_resize(qxl);
+ }
+ 
++/*
++ * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
++ *
++ * Only valid for surface suitable for rendering.
++ */
++bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
++                    uint32_t *bytes_pp, uint32_t *bits_pp)
++{
++    uint32_t bypp = 4;
++    uint32_t bipp = 32;
++    bool ret = true;
++
++    switch (format) {
++    case SPICE_SURFACE_FMT_16_555:
++        bypp = 2;
++        bipp = 15;
++        break;
++    case SPICE_SURFACE_FMT_16_565:
++        bypp = 2;
++        bipp = 16;
++        break;
++    case SPICE_SURFACE_FMT_32_xRGB:
++    case SPICE_SURFACE_FMT_32_ARGB:
++        bypp = 4;
++        bipp = 32;
++        break;
++    default:
++        ret = false;
++        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, format);
++    }
++
++    if (bytes_pp != NULL) {
++        *bytes_pp = bypp;
++    }
++    if (bits_pp != NULL) {
++        *bits_pp = bipp;
++    }
++
++    return ret;
++}
++
+ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+                                      qxl_async_io async)
+ {
+@@ -1496,6 +1537,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+     QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+     uint32_t requested_height = le32_to_cpu(sc->height);
+     int requested_stride = le32_to_cpu(sc->stride);
++    uint32_t bytes_pp;
+ 
+     if (requested_stride == INT32_MIN ||
+         abs(requested_stride) * (uint64_t)requested_height
+@@ -1532,6 +1574,23 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+         return;
+     }
+ 
++    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
++        return;
++    }
++
++    if (surface.width == 0 || surface.height == 0) {
++        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
++                          __func__, surface.width, surface.height);
++        return;
++    }
++
++    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
++        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
++                          " stride %d width %u bpp %u",
++                          __func__, surface.stride, surface.width, bytes_pp);
++        return;
++    }
++
+     surface.mouse_mode = true;
+     surface.group_id   = MEMSLOT_GROUP_GUEST;
+     if (loadvm) {
+-- 
+2.55.0
+
 
