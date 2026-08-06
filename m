@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7522CC56205
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 15:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E943DC56205
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 16:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws0Tq-0004sc-J6; Thu, 06 Aug 2026 11:58:03 -0400
+	id 1ws0xP-0003GP-9J; Thu, 06 Aug 2026 12:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ws0Tm-0004sE-BJ; Thu, 06 Aug 2026 11:57:58 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1ws0Tj-0006ye-1u; Thu, 06 Aug 2026 11:57:58 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 676FusjA003499
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 7 Aug 2026 00:56:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jKtWHgb9iw0wJzY2NL5PuVmLGrV+j2bXleDjb2S8IiE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1786031815; v=1;
- b=DhXJvv9+/WKLV9yGm5mF7kmSAF0piMqTk+mti/UD0EtjIuIVqJgDTIlVYkCRO+1v
- UppWYa71TpyB5zKL4r54ESaXg6ObbQM60kbr2RfAU4ZpD9ey0wg+m3RMQFXBaibJ
- C2yqKdStL+W5UzgAax9ilw1mokGs0bMb2LBP1gBeY0pE+DKGZiwCKEtxm65jvRp5
- KrxkKL/DPDUla6YL/Aq5XN3xCMh4RY+k5T7O5LsCeqaL7+aRP6C6A2bH/oDEAjlk
- g6V/qHBvHImTudQWdXQHeZdXV4fihhh4HetF7SWwt4q9CEhNUgFI77N1niirxykR
- wHm841BieO42k+CdaQ+acw==
-Message-ID: <64e6116e-5729-490d-b945-b11310dec709@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 7 Aug 2026 00:56:54 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ws0xO-0003G8-8i
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:28:34 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ws0xL-0005Uz-Tg
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 12:28:34 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2cc97653887so28683455ad.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 09:28:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786033710; x=1786638510; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=AEQnROxPeiLVayVjIWXAfWCCfoXfgrW5OLqp5/Dmi08=;
+ b=nZ6EtjJgkQAmsn/1FMWhGHLXhf4E9m9uUz2Nbv+HOriPmOJW3J32W07cT57O9JDvZi
+ c9sX3iIcX4z0Nvn03tgoxY+y3kzFNBMOKv9fThye9Dcfc+PpHGT7J224WOs4wCwHKABi
+ sy96WEstRn3Zd5G9xPy8t46pPSHvWYB7jRidNqaOtrQHC5scN3uVor6uS7sW4Mr1OZ9C
+ cLEHpWjRh5NiYAtoxWrD2jhsksSrmz+YhfEBKZQFT3olYyw0EvBgz0YmG6rNw51jdxVt
+ kfDCjvQTx/GutxePnK8JOShVEu7WLgio8kePeO38kfmB/tID1GsVWzIAkj4rgTSbfYKV
+ wWfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786033710; x=1786638510;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=AEQnROxPeiLVayVjIWXAfWCCfoXfgrW5OLqp5/Dmi08=;
+ b=pC13CaI3Yr7mF1fgoGoPqYTkkCRX7WURZo9svNpK0Y3r90lLLww2krTCyX/igyYA9q
+ 4zGV3IsotTdioWiEHl7inKDJkGuOlVs7NE73rNCs0qdGm4xYnhIatUhwQG1nqM2Z5hDZ
+ jRr6ZInMrbO5bS5182fMSLt/thW0L9ktBvyM/rBlIP0jZiuPVOnSzxs0Qi0lnhLdSP0r
+ rrscJbmaWBgZEerDgiDe5xkEDrmsaryLtNnsY6qSmaJTHNcEn7pqBwJbdXNo9gcx9gVc
+ SbY4RhpkNxrhEhQR6ZdWcwtNebxZ02Lt0FY8DJX2zKWNlJoQMBWGLk9gFqORa6ORpBTW
+ 85fA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq3aG+W4DVSFU8MskXw/7bsnyVZQFoH13jynlXS+wSar9XkFtrVwVK0tXX2mm7sEWTxWCp+/FUDK8wv@nongnu.org
+X-Gm-Message-State: AOJu0YxukTfYq/mBUGI5j2133oSJq4soNYj/yKojxD0TAFPQWmuaRgWV
+ J/YoKIblDrmiySCwVsPE83xGJCYuZ9LYwC9rq0+uOX70gOGjlx7hXqt1EMENqkhhRAE=
+X-Gm-Gg: AR+sD10QDc45zXW8/spxQthKy2EQScLJQD62H6zy3Nd2BsDP7QYhbElYpvAe6GUtJfP
+ KZKdezBK7qqoQzNeppuWb/dasE0Qj0hXOmS14ECrIn0zaiEOkpvUAtklJUJe5rHYpQKAo73H+r+
+ Tp1/XVSalg8DmoWDTE9/3wpeVx/CZTQgVUWSdxF1/+d//GNM94OomX1sdDIL5B3Pzc7jCTn0aGV
+ iyCS+vkJ3Rg61B5kfNHe8GObfmiEyVFCVj4ONNeBPLp1mQwz5JfnWSEluVjxtZi4+Jd2vIPkAuu
+ Sz7vDYRknotiwTeOJSjb5YUoqa8JbbHLf0JFWpKQ7JPxuwJe9HD30t/W8+gzoMhhHnma+lGBUic
+ F0km48OQS/UELS0TvBuCHxEgRRy8CklT+XThFz6LIsYZjtbwQyn9QrmTwU/uM+yL0z5C1NocDHq
+ hGcMot5K/N+u1dfD6fWjc9BlrvB+Xt8lPmuGOtErUIdF3u51bZLbriACENk7ghtxFkD6UgRQr2F
+ aD5tyiibHHJ2bCb69fEASzUfisx
+X-Received: by 2002:a17:903:2450:b0:2ca:e19c:986 with SMTP id
+ d9443c01a7336-2d0ca70e87bmr164843545ad.1.1786033709835; 
+ Thu, 06 Aug 2026 09:28:29 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d0a9f8fb4bsm34776005ad.5.2026.08.06.09.28.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Aug 2026 09:28:29 -0700 (PDT)
+Message-ID: <0d0c9cc9-2952-4823-94db-a0203847109c@linaro.org>
+Date: Thu, 6 Aug 2026 09:28:27 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 09/15] hw/virtio/vhost-shadow-virtqueue: specified
- vring placement
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Haixu Cui <quic_haixcui@quicinc.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-9-6b97c439eb28@gmail.com>
- <f9125d0a-3258-46f4-93f6-0761a4acdc66@rsg.ci.i.u-tokyo.ac.jp>
- <CA+spn3pLJvQCyfUvK4WvjvfJnGYBKr-i302HvBeVm9Y3t6sR8Q@mail.gmail.com>
+Subject: Re: [PATCH] target/i386: Clear OF, SF, and AF for fcomi/fucomi
+To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20260806145224.184019-1-scherer.simon89@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CA+spn3pLJvQCyfUvK4WvjvfJnGYBKr-i302HvBeVm9Y3t6sR8Q@mail.gmail.com>
+In-Reply-To: <20260806145224.184019-1-scherer.simon89@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,39 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/07 0:29, Connor Kite wrote:
-> On Fri, Jul 24, 2026 at 5:19 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> ...
->>
->> Nit: please remove the whitespace between (void *) and svq->base_addr.
->>
-> 
-> Removing the whitespace!
-> 
->>> +        svq->vring.avail = (void *)((char *)svq->vring.desc + desc_size);
->>> +        svq->vring.used = (void *)((char *)svq->base_addr +
->>> +                          vhost_svq_driver_area_size(svq));
->>> +    }
->>
->> Unmapping svq here can lead to use-after-unmapping because the ring is
->> not stopped yet. do_vhost_dev_stop() calls do_vhost_virtqueue_stop()
->> only after calling hdev->vhost_ops->vhost_dev_start(hdev, false).
->>
-> 
-> I am afraid I don't quite understand, as this patch does not introduce
-> any unmapping.
-> Was this comment meant for a different patch?
+On 8/6/26 07:52, Simon Scherer wrote:
+> +    /* OF, SF, and AF are unconditionally cleared to 0 */
+> +    eflags = cpu_cc_compute_all(env) &
+> +                 ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C);
 
-Yes, sorry, this comment was meant for "[PATCH RFC 14/15] 
-hw/virtio/vhost-user: handle data movement with shadow vqs".
+There are only 6 flags, and you have cleared all of them.
+Which means you don't need to compute any of them, just
 
-vhost_user_dev_start(dev, false) calls vhost_user_svqs_stop(), which 
-calls vhost_svq_stop() and unmaps the shadow vring. However, 
-do_vhost_dev_stop() calls do_vhost_virtqueue_stop() only after the 
-callback returns. The backend vring therefore remains active until 
-VHOST_USER_GET_VRING_BASE, so it may still access the unmapped memory.
+-     CC_SRC = eflags | fcomi_ccval[ret + 1];
++     CC_SRC = fcomi_ccval[ret + 1];
 
-Regards,
-Akihiko Odaki
+
+r~
 
