@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D169C55838
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 07:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A587C561E6
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 08:10:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrsrI-00054L-Pw; Thu, 06 Aug 2026 03:49:44 -0400
+	id 1wrtAR-0000Cq-Tg; Thu, 06 Aug 2026 04:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yang.yanjun1@sanechips.com.cn>)
- id 1wrsrF-00053X-43; Thu, 06 Aug 2026 03:49:41 -0400
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wrtAO-0000CZ-QC
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:09:29 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yang.yanjun1@sanechips.com.cn>)
- id 1wrsrB-0002v8-Iu; Thu, 06 Aug 2026 03:49:40 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4hFzv809Rfz57KTq;
- Thu, 06 Aug 2026 15:49:24 +0800 (CST)
-Received: (from root@localhost) by mse-fl2.zte.com.cn id 6767nOjv097972;
- Thu, 6 Aug 2026 15:49:24 +0800 (+08)
- (envelope-from yang.yanjun1@sanechips.com.cn)
-Message-Id: <202608060749.6767nOjv097972@mse-fl2.zte.com.cn>
-Received: from njy2app04.zte.com.cn ([10.40.12.64])
- by mse-fl1.zte.com.cn with SMTP id 6767laWw060418;
- Thu, 6 Aug 2026 15:47:36 +0800 (+08)
- (envelope-from yang.yanjun1@sanechips.com.cn)
-Received: from mapi (njb2app06[null]) by mapi (Zmail) with MAPI id mid202;
- Thu, 6 Aug 2026 15:47:38 +0800 (CST)
-X-Zmail-TransId: 2afe6a743c1ac91-75b1d
-X-Mailer: Zmail v1.0
-Date: Thu, 6 Aug 2026 15:47:38 +0800 (CST)
-Mime-Version: 1.0
-From: <yang.yanjun1@sanechips.com.cn>
-To: <qemu-devel@nongnu.org>
-Cc: <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <qemu-arm@nongnu.org>
-Subject: =?UTF-8?B?wqBbUEFUQ0hdIHRhcmdldC9hcm06IEZpeCBTVkUyIFdISUxFV1IvV0hJTEVSVyB6ZXJvIGRpZmYgYm91bmRhcnkgY2FzZQ==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 6767nOjv097972
-X-MSS: AUDITRELEASE@mse-fl2.zte.com.cn
-X-TLS: YES
-X-ENVELOPE-SENDER: yang.yanjun1@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.133 unknown Thu, 06 Aug 2026 15:49:24 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6A743C84.000/4hFzv809Rfz57KTq
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=yang.yanjun1@sanechips.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wrtAL-0005ZZ-5X
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 04:09:27 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67689Ag1028608
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 6 Aug 2026 17:09:10 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=vkzUz2tltMLSyUseir9AB5ilHYnEj4PQIV9zFCRWyhE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1786003750; v=1;
+ b=fSBmfzURHUH8zF3umXVOsAlYV1ecsmEUNRPVVN/wHaxjcFqBjzU4zUjpvlQiB6Oq
+ LUK8ue8GsSOIvA19RBNm3fJiJDFvTA3KcSHEhygBbY0Yr2dSbXrskaDO29lr9jbN
+ /o5OVM9X2Oij62rBysNruYTHYnkBkhDPV2g/OqzPHdbo8Hk9Hrr+axqNRc0nWxKb
+ 8mtKOXsBD2gdu86e3szNUqUCfzWvPWB7CZoo9FQFoPO6XBM17Kb26WauZQXqXnvh
+ uQl8mjc/yANw1zLQwXreq7u1EGNkSi5nCzJhTHy9BoSsrivx3YOlNDe2XhFVijiN
+ 0zZrK0ZTuR0Kuz/lRwFxWQ==
+Message-ID: <1b01c4f2-53f8-43b2-8dd1-ceab19cc6be8@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 6 Aug 2026 17:09:09 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] dump: add crash_occurred flag to QEMUCPUState
+To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: philmd@qualcomm.com, pbonzini@redhat.com, viktor.prutyanov@phystech.edu
+References: <178599725914.10029.4441302124415593392@linux.alibaba.com>
+ <178599725914.10029.14279751262185488168@linux.alibaba.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <178599725914.10029.14279751262185488168@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,44 +73,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YanjunYang <yang.yanjun1@sanechips.com.cn>
+On 2026/08/06 15:20, Zhengrong Li wrote:
+> Add is_crash_occurred_cpu field to QEMUCPUState so that
+> dump-guest-memory can record which CPU triggered the guest
+> panic. Bump QEMUCPUSTATE_VERSION to 2.
 
-The trans_WHILE_ptr function incorrectly handles the case where the
-address difference divided by ESIZE results in zero. This happens when
-the address difference is less than ESIZE but greater than zero.
+The patch message still says it bumps QEMUCPUSTATE_VERSION.
 
-In this boundary case, the address difference is less than ESIZE, which
-means all elements are safe from conflicts. The previous code would set
-the predicate to all zeros, but the correct behavior is to set all
-elements to one.
+> 
+> The new field is appended after kernel_gs_base, so existing
+> tools that check the 'size' field can safely ignore it when
+> reading older dumps.
+> 
+> Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
+> ---
+>   contrib/elf2dmp/qemu_elf.h | 2 ++
+>   target/i386/arch_dump.c    | 6 ++++++
+>   2 files changed, 8 insertions(+)
+> 
+> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
+> index adc50238b4..3b28332e67 100644
+> --- a/contrib/elf2dmp/qemu_elf.h
+> +++ b/contrib/elf2dmp/qemu_elf.h
+> @@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
+>       QEMUCPUSegment ldt, tr, gdt, idt;
+>       uint64_t cr[5];
+>       uint64_t kernel_gs_base;
+> +    uint8_t  is_crash_occurred_cpu;
+> +    uint8_t  pad[7];
 
-Fix by checking if diff == 0 after the shift and setting diff to tmax
-(all elements true) in this case.
+Growing QEMUCPUState from 440 to 448 bytes confuses init_states() in 
+contrib/elf2dmp/qemu_elf.c and makes valid version-1 notes and appear to 
+lack kernel_gs_base, despite that field occupying bytes 432–439. Move 
+this hunk to patch 2 which updates the function and other elf2dmp stuff.
 
-Fixes the following test cases:
-  whilewr p0.s, x9, x10  ; x9=8, x10=11 => p0=0xffffffff (all ones)
-  whilerw p0.s, x9, x10  ; x9=8, x10=11 => p0=0xffffffff (all ones)
+Regards,
+Akihiko Odaki
 
-Signed-off-by: YanjunYang <yang.yanjun1@sanechips.com.cn>
----
- target/arm/tcg/translate-sve.c | 4 ++++
- 1 file changed, 4 insertions(+)
+>   } QEMUCPUState;
+>   
+>   int is_system(QEMUCPUState *s);
+> diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+> index 16e47c4747..8ce2c7e9bb 100644
+> --- a/target/i386/arch_dump.c
+> +++ b/target/i386/arch_dump.c
+> @@ -264,6 +264,8 @@ struct QEMUCPUState {
+>        * by checking 'size' field.
+>        */
+>       uint64_t kernel_gs_base;
+> +    uint8_t  is_crash_occurred_cpu;
+> +    uint8_t  pad[7];
+>   };
+>   
+>   typedef struct QEMUCPUState QEMUCPUState;
+> @@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache *s)
+>   
+>   static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+>   {
+> +    CPUState *cs = env_cpu(env);
+>       memset(s, 0, sizeof(QEMUCPUState));
+>   
+>       s->version = QEMUCPUSTATE_VERSION;
+> @@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+>   #ifdef TARGET_X86_64
+>       s->kernel_gs_base = env->kernelgsbase;
+>   #endif
+> +    if (cs->crash_occurred) {
+> +        s->is_crash_occurred_cpu = 1;
+> +    }
+>   }
+>   
+>   static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index fc4cc8c479..33613ebf58 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3736,6 +3736,10 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
-         tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, tmax, diff);
-     }
-
-+    /* If diff == 0, the address difference is less than ESIZE,
-+       so all elements are safe from conflicts. */
-+    tcg_gen_movcond_i64(TCG_COND_EQ, diff, diff, tcg_constant_i64(0), tmax, diff);
-+
-     /* Bound to the maximum.  */
-     tcg_gen_umin_i64(diff, diff, tmax);
-
--- 
-2.43.0
 
