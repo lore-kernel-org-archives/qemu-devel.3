@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C6FC5AC7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 17:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E9BC56205
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 17:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws1wL-0004nM-5W; Thu, 06 Aug 2026 13:31:33 -0400
+	id 1ws27K-00011R-Ut; Thu, 06 Aug 2026 13:42:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws1wJ-0004lU-0c
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:31:31 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1ws27I-00010g-PI
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:42:52 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ws1wH-0001fy-Ba
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:31:30 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38dc4553f62so2641826a91.0
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 10:31:28 -0700 (PDT)
+ id 1ws27H-00038u-06
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:42:52 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cc97653887so29934655ad.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 10:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786037488; x=1786642288; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1L0+rBxezIyKN6/2AHClvxFcunVGgHr8jfzeunPqo3I=;
- b=HVvrYuK1S1ZkS8V+gBOCGT3ye7toOhLZF440dM31C1ShjLEAoC5bOX3BFgeoCiP1nX
- /eo4gRRc4F/wbSlEGujpwFSskEBrRQGBlmSslukx7HoQ6hSy6ZWG5xygTW85X0E4Ip1E
- 3C8+cG8L+KeopxfAfs6Wj9cclKmplUYEX8mMTI6Skx8W/sXFE2xwXlobUuFLsSft8q8x
- ZoVRrFPOUu/azuUUYxNnX6AmE13Sa9KeWNo/xaytrKP7PAknaTFbBn/sMTJwuw2i+4gM
- OqWG+iFzUQTZlxPjQq8uk+TMqY5MwxPulNvr60ryEPBgoy49RLCjq3ZbGlmG/1lGR+z7
- RBmw==
+ d=linaro.org; s=google; t=1786038169; x=1786642969; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qu5Dd5fdshxW051RRVWmVpvHBpKdzpJ6blH9N4sEoR0=;
+ b=BKopC7l79ldBuunPIwq6N1XQ1myjeMuyKj7BpqiG5RXd2qrwYphluENSLuyp79auLD
+ btHKSAr9R99jjHZ72B3XaXyxXYxBc87lN0k/yKJDLaZz/WaE5Gr/7YI2hzV1P4HrwMp/
+ vj6AckaVZN04SuH91FsawSJ06Qm0+YjnwVJjswcvYuGcXtDtueUXfC17FlvYmlV7Arnx
+ ZeORj2fMZuHmeE6gi2nz0AT0GYvKqg4RqjYHVf6sTJliQN0Ee8awxaqxqIVQ3RhQlE3u
+ E5qsidbMz1euSgZXj4EdUODIcPLBWd1V3SILbKSso0zEb8MEKXaMauXoWf/EgkgTYmvd
+ VaZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786037488; x=1786642288;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1L0+rBxezIyKN6/2AHClvxFcunVGgHr8jfzeunPqo3I=;
- b=dAqIh4qIzF0P7Ra88Cp23KWC72KSE6DkgVuIWtdaHrmf3i2ki7481xJ/8qw6FXlv1E
- 376zw5gaXTEK6M2CE6Kkr6UnFjRaPqodsgPiatVaI5LGzfzgj6XvhxO4wv+/Z+DNhnAu
- 75XoejDFOFKUtHXSZOUXsCTzRhGMHvT5Jw5PdYwy11q4aHZrn/R5hUlSrbNAQpvRBotC
- huaFrnAQ7U94Ei8MXia5iBiN2TofI/TOSmYZ93vB4l39GBjgJ0h3hUO6Me0Zz1v1gSHN
- 1NuTLJ9NpxwXhVrobrAVfGCFvjfVHZ6UL83zLv7p1WjlAlAT3WUCvZaVCRwFc4msSvJG
- Gzpg==
-X-Gm-Message-State: AOJu0Yxiv3vGSHalXvkXQG+F1Zd8tvaJpHcNNq1YCO72Oex6ZzoIuvmh
- ZHGaKUhID2kJNjX41gl4xxYU286VDQq4N7imi1NqQTwqrqQA3vKVz+lpInHJq9c2eECpoUVpHzR
- TYZC7
-X-Gm-Gg: AR+sD12z1OFjo3ZdDf+g1kYGxqKcrMcBolH50hkBUP58GNkqT8rhOxIEhx57WpxP0Rw
- WjW38Bpx7+035Xor2jrkHxRerfmvWV+/zX0BwIVRyp1O2J9trl58ZydXsQMbcCdwcNgRMkuAThL
- evNAyL5kv0rzTLmS8VIDX2cJA7xWNgsoUhupl/NfvGW4zoLZ76+I7UWuTtE066SCYDQzoAnxVy/
- Ip5bQe53VA3AZcJrgmgljJrNj8XjoCbV7lcx5hf98KH54KgKbebaEHcCt3ond1QW5x3Ax2xFiNd
- 98bwcIfenAOu3W4O2rVfChreGCIywwcL8kv0qNj2LeeyPvoKsspBeB20sCIqXYeFIbUqKqXqT8j
- U8/nUabGKbacU/6BiPnMMRQqwtUsCumVl59AvWw2hnJo4E5CnVmPAntDJDj4dhf79ekASJGf0SJ
- bgZ199TBLnOFsqBaK13AnrM0jpIGBJ9Y5U9/2bD1M/6P1Ru8sfZ+RYds1BqzcK+2O+sosFoOSCE
- xwb+lhuMnShr74d2Akd
-X-Received: by 2002:a17:90b:4b84:b0:38e:8021:2ea9 with SMTP id
- 98e67ed59e1d1-3903c5f6482mr15178690a91.19.1786037486581; 
- Thu, 06 Aug 2026 10:31:26 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ d=1e100.net; s=20251104; t=1786038169; x=1786642969;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=qu5Dd5fdshxW051RRVWmVpvHBpKdzpJ6blH9N4sEoR0=;
+ b=c7RmNyyOl+yRiZRds08XBXy+vDaKxTjw4xYqerzanes4+/SFRbsEEPN5qPAGG5vPvr
+ 0ks/Ieg8NYEqr1ln3GN6WXzy4oTJBZ2gi4HyA0hi6JRJGNuWCVhhUxBrUIcofYLbcc+9
+ FphbhjZTHZ6ADA7Ou8MGRt6jAx5wwmX3BpuZkMWa2mjBW4GAQ7Pi55EEE4eBg9gwBZ49
+ V6k29wwGW9NkffDbWynUMfzGdxDcOTF1wLLFdORRdWgh7dKczOix2WPYhaHe4e+zrx7n
+ yPmLfQttU9E0+XfurhG7bD4plXG8nvmrywD7/WxkB2ztdvRVI8r+kWAji+N82+cw5DHT
+ GHKw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RptNV7Y7QH9oMzn1CF3VuOwF7ias2tM1pim399G8p0IPQKgAM9XkihxiUEr2WbvvS7DMgHucEhqCmUk@nongnu.org
+X-Gm-Message-State: AOJu0YzYIqGwxzMucHIdtPwKxliJiuzx4lIgzaDpNGfhzddWMmiFhw4g
+ GwhZcD8aZpmimhnosQHiqDGrpEN0Iu76UwH6YxbQTWmrz/Kh1/aPUi+eThhtEIvo09g=
+X-Gm-Gg: AR+sD11GWUxQw2J/S5Fop4ZiZgVBawKgBDyKjqhbqEpDNH+4ds9ghZqvnvXS9dsWzPp
+ aWl3nh8kEmn9qALwcjziFWaAR/DH6ZzOS2b3XgYFchTjDyHDru2CJpF5OEoK7BcP2f909mthWnr
+ AYac+/ztFdEBJXDJtEshFQ6hb+pyV4sgY5VgOqufKGyWKRzygO7UiqWVmtVbu9g9b4uqvYsoJsa
+ u8gqKIXh3TpxosrjgOM3rtJgtMgQJc/VYYg+T1ane60+XY1nQqMBSSHfKLdRwr/2vBQZ9G9PZVU
+ nHLOaLkbZw2jsfsCO0dGnMh7/8be5czN8R/W4ugcMw4i70PlHau944xFjCyyxznv7tPhlYsct3o
+ ay6XsWUjpcpGzns5/Od+Z7F3g9YQ3VqNSRlR6+5VqYQ7T/gIszXeTYaHSfiEKd8VVrr5Szw1sGu
+ RIT1RpBPW1Ameco5qGbWgBC/knOUZXBPUFTVHBtFoGIszwg5TxWK0az2n3M7ZEOkKxnVgbSd5jW
+ tOOjrnz6+vGmmTf1E8BDvce4CFU
+X-Received: by 2002:a17:902:e5c6:b0:2ca:17e2:2acc with SMTP id
+ d9443c01a7336-2d0ca9444damr181164205ad.21.1786038169199; 
+ Thu, 06 Aug 2026 10:42:49 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39085e4a2a5sm1983711a91.14.2026.08.06.10.31.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Aug 2026 10:31:26 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 2/6] target/arm: Enable writes to SCR_EL3.TID{3,5}
-Date: Thu,  6 Aug 2026 10:31:19 -0700
-Message-ID: <20260806173123.333423-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260806173123.333423-1-richard.henderson@linaro.org>
-References: <20260806173123.333423-1-richard.henderson@linaro.org>
+ d9443c01a7336-2d120877ce5sm78785ad.35.2026.08.06.10.42.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Aug 2026 10:42:48 -0700 (PDT)
+Message-ID: <6339f8e0-dda8-405f-bb79-dcd95a297da2@linaro.org>
+Date: Thu, 6 Aug 2026 10:42:46 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/tcg/s390x: Test LOAD and STORE REVERSED
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, philmd@oss.qualcomm.com
+References: <20260731185628.23161-1-richard.henderson@linaro.org>
+ <20260803123928.1875606-1-iii@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260803123928.1875606-1-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,58 +106,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu-features.h | 5 +++++
- target/arm/cpu.h          | 2 ++
- target/arm/helper.c       | 3 +++
- 3 files changed, 10 insertions(+)
+On 8/3/26 05:38, Ilya Leoshkevich wrote:
+> Add a small test to prevent regressions.
+> 
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+> 
+> v1 -> v2: CC:qemu-devel@nongnu.org.
+>            Check that upper bytes are not modified.
+> 
+>   tests/tcg/s390x/Makefile.target       |  1 +
+>   tests/tcg/s390x/load-store-reversed.c | 46 +++++++++++++++++++++++++++
+>   2 files changed, 47 insertions(+)
+>   create mode 100644 tests/tcg/s390x/load-store-reversed.c
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index d6f8b4d065..f0b354445f 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1402,6 +1402,11 @@ static inline bool isar_feature_aa64_idst(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, IDS) != 0;
- }
- 
-+static inline bool isar_feature_aa64_idte3(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, IDS) >= 2;
-+}
-+
- static inline bool isar_feature_aa64_half_evt(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR2, EVT) >= 1;
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a471b87aa5..41bfda65d4 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1786,6 +1786,8 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
- #define SCR_EASE              (1ULL << 19)
- #define SCR_NMEA              (1ULL << 20)
- #define SCR_FIEN              (1ULL << 21)
-+#define SCR_TID3              (1ULL << 22)
-+#define SCR_TID5              (1ULL << 23)
- #define SCR_ENSCXT            (1ULL << 25)
- #define SCR_ATA               (1ULL << 26)
- #define SCR_FGTEN             (1ULL << 27)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index c88af981e2..8ab0075628 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -796,6 +796,9 @@ static void scr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
-         if (cpu_isar_feature(aa64_rng_trap, cpu)) {
-             valid_mask |= SCR_TRNDR;
-         }
-+        if (cpu_isar_feature(aa64_idte3, cpu)) {
-+            valid_mask |= SCR_TID5 | SCR_TID3;
-+        }
-     } else {
-         valid_mask &= ~(SCR_RW | SCR_ST);
-         if (cpu_isar_feature(aa32_ras, cpu)) {
--- 
-2.43.0
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
