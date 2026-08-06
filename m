@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EABBC55ABF
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 10:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE99C56208
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 10:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrvUM-0001uO-Sc; Thu, 06 Aug 2026 06:38:14 -0400
+	id 1wrvmt-00051Q-Cz; Thu, 06 Aug 2026 06:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wrvUK-0001u2-Il
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 06:38:12 -0400
+ id 1wrvmr-00051I-6I
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 06:57:21 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wrvUI-0005hp-Cv
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 06:38:12 -0400
+ id 1wrvmn-0007zE-5J
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 06:57:20 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 676Ac3B1013502
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 676AvAKG018261
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 6 Aug 2026 19:38:03 +0900 (JST)
+ Thu, 6 Aug 2026 19:57:10 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=l1HypR3oxkSoEkMqY4wha+KI3nUgxl2mLhDdvrX6qxs=; 
+DKIM-Signature: a=rsa-sha256; bh=89eG+v+Nnt/oSzvrN8B5PzugQDex+nvObtHQnUO+QkM=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1786012683; v=1;
- b=iSzeXYMZTTSQ+D3JN3z1rdgntGCJCsQbDsbUeu7ha6xVU0EONbe1Hxjgzlq4XbZu
- r88KFho2XaFVcihrOoXR9kf6CrmXDAxEAEIdXWjbrZ93O7YHV0Cat0VyfJoPKPPG
- 7kZS8yK+kf5wcXuh6QftsJ+/dZd42uoHRJbKogKekg2ppThiKcjZz8rzelnV+5pq
- WtVg9kRNJVwRtlx20VnWC2BszjJ3DaP4nzyQeWx1Uc/OBeXEmkkZe5PtmUYXmP3/
- z0qZ90OhfPD8ePk+wOU/w9v/mfrZzcQKcmP2wr+3Qvv98N0opv25zhEHOwimaSdH
- cCse7W0W7GxNlmN+k4NQxg==
-Message-ID: <54ea719f-750f-48a7-874d-0cab5c790163@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 6 Aug 2026 19:38:03 +0900
+ s=rs20250326; t=1786013830; v=1;
+ b=JEzd5nkpewpBYLb1ks9zmVDz8xYnr2bStIei1hzRtCyppf7fFCoCFpIOcR70WSN2
+ LQNfwy17Z0p749ZJ+aUrZjl/hDM5/bQL0tv3Q2MEJbsZgcGoBCweqKFLXtt8MqPj
+ 7FLFlm265vo1nsIqhYqA71sgS9qFaFieW1qSO4WgJs7mFQ0cSsVnQkEIQRStp98v
+ 7el8ENwjzQPuC1736bw/EqhShDUkCAU7d4LdbGn1Mj0GinOcrBdlayVPo4AL3UEl
+ v9yHeAkHAMvQHfi/n0ZoSGCnRSmuMi+gO3GrkxEtZQsllFf3uFcwsKWc9xMB5A9L
+ ub6PvEy/vWWWWmQ2gK+dcA==
+Message-ID: <2920adc0-74a1-4b30-bab3-0e596757adef@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 6 Aug 2026 19:57:09 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] elf2dmp: fill ContextBuffer with faulting CPU
- context
-To: Zhengrong Li <zhengrong_li@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: philmd@qualcomm.com, pbonzini@redhat.com, viktor.prutyanov@phystech.edu
-References: <178600606177.41696.3160576684819885412@linux.alibaba.com>
- <178600606177.41696.17020382803154474312@linux.alibaba.com>
+Subject: Re: [PATCH v5] hw/display/qxl: validate primary surface stride
+ against width
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260806094028.640676-1-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <178600606177.41696.17020382803154474312@linux.alibaba.com>
+In-Reply-To: <20260806094028.640676-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -19
@@ -74,162 +72,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/06 17:47, Zhengrong Li wrote:
-> When is_crash_occurred_cpu is set in QEMUCPUState, copy that CPU's
-> context into WinDumpHeader64 ContextBuffer so WinDbg opens on the
-> faulting CPU instead of CPU 0. A per-CPU size check ensures the
-> field is present before reading, supporting heterogeneous dumps.
+On 2026/08/06 18:40, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Also extract KiBugCheckData from the guest kernel to populate
-> BugcheckCode and BugcheckParameters in the dump header.
+> The existing validation in qxl_create_guest_primary() checks that
+> abs(stride) * height fits in vgamem_size and that stride is 4-byte
+> aligned, but never checks that abs(stride) is large enough to hold one
+> row of pixels for the declared width and format.
 > 
-> The embedded state->size is clamped to MIN(state->size, n_descsz)
-> in init_states() to prevent reading beyond the note descriptor.
+> A malicious guest can create a primary surface with a stride much
+> smaller than width * bytes_per_pixel (e.g. stride=4 for a 64-wide 32bpp
+> surface). The spice server rejects this via red_validate_surface(), but
+> the return is void and QEMU unconditionally proceeds to set up the local
+> rendering state. On the next display refresh, VNC or SDL reads width *
+> bytes_pp per scanline from a region backed by only stride bytes per
+> row, causing a host-side out-of-bounds read.
 > 
-> Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
-> ---
->   contrib/elf2dmp/kdbg.h     |  9 +++++++
->   contrib/elf2dmp/main.c     | 50 ++++++++++++++++++++++++++++++++++++--
->   contrib/elf2dmp/qemu_elf.c |  7 ++++++
->   contrib/elf2dmp/qemu_elf.h |  2 ++
->   4 files changed, 66 insertions(+), 2 deletions(-)
+> Add three checks in qxl_create_guest_primary() before creating the
+> surface:
+>   - reject unknown surface formats
+>   - reject zero width or height
+>   - reject surfaces where abs(stride) < width * bytes_per_pixel
 > 
-> diff --git a/contrib/elf2dmp/kdbg.h b/contrib/elf2dmp/kdbg.h
-> index 002e3d0cd5..15e4fb1140 100644
-> --- a/contrib/elf2dmp/kdbg.h
-> +++ b/contrib/elf2dmp/kdbg.h
-> @@ -195,4 +195,13 @@ typedef struct KDDEBUGGER_DATA64 {
->       uint16_t OffsetPrcbContext;
->   } KDDEBUGGER_DATA64;
->   
-> +typedef struct KIBUGCHECK_INFO {
-> +    uint32_t BugcheckCode;
-> +    uint32_t unused0;
-> +    uint64_t BugcheckParameter1;
-> +    uint64_t BugcheckParameter2;
-> +    uint64_t BugcheckParameter3;
-> +    uint64_t BugcheckParameter4;
-> +} KIBUGCHECK_INFO;
-> +
->   #endif /* KDBG_H */
-> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-> index a62abadcc0..e25709b45d 100644
-> --- a/contrib/elf2dmp/main.c
-> +++ b/contrib/elf2dmp/main.c
-> @@ -338,11 +338,26 @@ static bool fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
->    * A dump may still contain valuable information even if it lacks contexts of
->    * some CPUs due to dump corruption or a failure before starting CPUs.
->    */
-> -static void fill_context(KDDEBUGGER_DATA64 *kdbg,
-> +static void fill_context(WinDumpHeader64 *hdr, KDDEBUGGER_DATA64 *kdbg,
->                            struct va_space *vs, QEMU_Elf *qe)
->   {
->       int i;
->   
-> +    /* First pass: identify faulting CPU and set header context early */
-> +    for (i = 0; i < qe->state_nr; i++) {
-> +        QEMUCPUState *s = qe->state[i];
-> +        if (s->size >= offsetof(QEMUCPUState, is_crash_occurred_cpu) +
-> +                        sizeof(s->is_crash_occurred_cpu) &&
-> +            s->is_crash_occurred_cpu) {
-> +            WinContext64 ctx;
-> +            win_context_init_from_qemu_cpu_state(&ctx, s);
-> +            memcpy(hdr->ContextBuffer, &ctx, sizeof(ctx));
-> +            printf("Faulting CPU identified: #%d\n", i);
-> +            break;
-> +        }
-> +    }
-> +
-> +    /* Second pass: fill context for all CPUs (best-effort) */
->       for (i = 0; i < qe->state_nr; i++) {
->           uint64_t Prcb;
->           uint64_t Context;
-> @@ -512,6 +527,7 @@ int main(int argc, char *argv[])
->       uint64_t KdVersionBlock;
->       bool kernel_found = false;
->       OMFSignatureRSDS rsds;
-> +    uint64_t KiBugCheckData;
->   
->       if (argc != 3) {
->           eprintf("usage:\n\t%s elf_file dmp_file\n", argv[0]);
-> @@ -611,7 +627,37 @@ int main(int argc, char *argv[])
->           goto out_kdbg;
->       }
->   
-> -    fill_context(kdbg, &vs, &qemu_elf);
-> +    if (!SYM_RESOLVE(KernBase, &pdb, KiBugCheckData)) {
-> +        eprintf("Failed to get KiBugCheckData.\n");
-> +    } else {
-> +        KIBUGCHECK_INFO data = { 0 };
-> +        if (va_space_rw(&vs, KiBugCheckData, &data, sizeof(data), 0)) {
-> +            header.BugcheckCode = data.BugcheckCode;
-> +            header.BugcheckParameter1 = data.BugcheckParameter1;
-> +            header.BugcheckParameter2 = data.BugcheckParameter2;
-> +            header.BugcheckParameter3 = data.BugcheckParameter3;
-> +            header.BugcheckParameter4 = data.BugcheckParameter4;
-> +
-> +            /*
-> +             * If BugcheckCode wasn't saved, we consider guest OS as alive.
-> +             */
-> +            if (!header.BugcheckCode) {
-> +                header.BugcheckCode = LIVE_SYSTEM_DUMP;
-> +            }
-> +
-> +            printf("KiBugCheckData: 0x%016" PRIx64
-> +                   ", BugcheckCode: 0x%08" PRIx32 ", Args:"
-> +                   " 0x%016" PRIx64 " 0x%016" PRIx64
-> +                   " 0x%016" PRIx64 " 0x%016" PRIx64 "\n",
-> +                    KiBugCheckData, header.BugcheckCode,
-> +                    data.BugcheckParameter1, data.BugcheckParameter2,
-> +                    data.BugcheckParameter3, data.BugcheckParameter4);
-> +        } else {
-> +            eprintf("Failed to va_space_rw KiBugCheckData.\n");
-> +        }
-> +    }
-> +
-> +    fill_context(&header, kdbg, &vs, &qemu_elf);
->   
->       if (!write_dump(&ps, &header, argv[2])) {
->           eprintf("Failed to save dump\n");
-> diff --git a/contrib/elf2dmp/qemu_elf.c b/contrib/elf2dmp/qemu_elf.c
-> index c9bad6e82c..b181d418bd 100644
-> --- a/contrib/elf2dmp/qemu_elf.c
-> +++ b/contrib/elf2dmp/qemu_elf.c
-> @@ -103,6 +103,13 @@ static bool init_states(QEMU_Elf *qe)
->               nhdr->n_descsz >= offsetof(QEMUCPUState, kernel_gs_base)) {
->               state_size = MIN(state->size, nhdr->n_descsz);
->   
-> +            /*
-> +             * Clamp the embedded size to the actual note descriptor size
-> +             * so that downstream size checks (e.g. fill_context) never
-> +             * read beyond the descriptor boundary.
-> +             */
-> +            state->size = state_size;
-> +
->               if (state_size < sizeof(*state)) {
+> Also fix three related issues in qxl-render.c:
+>   - qxl_blit() used abs_stride to advance the dst pointer into the
+>     DisplaySurface, but when stride is negative the DisplaySurface is a
+>     packed buffer whose stride may be smaller. Use surface_stride()
+>     instead.
+>   - qxl_render_update_area_unlocked() uses guest_head0_width (set via
+>     QXL_IO_MONITORS_CONFIG_ASYNC) without validating it against
+>     abs_stride, bypassing the new validation. Clamp the effective width
+>     to abs_stride / bytes_pp to prevent out-of-bounds access while
+>     tolerating the normal transient where the monitor config arrives
+>     before the primary surface is resized to match.
+>   - Similarly, guest_head0_height bypasses qxl_create_guest_primary()
+>     validation. Without clamping, abs_stride * height can overrun
+>     vgamem_size, and the product can also overflow 32 bits (e.g.
+>     abs_stride=16 MiB, height=256 wraps to zero), defeating the
+>     qxl_phys2virt() bounds check. Clamp height to
+>     vgamem_size / abs_stride to prevent both.
+> 
+> While touch it, fix some endianness issues.
+> 
+> Fixes: CVE-2026-16271
+> Fixes: a19cbfb34642 ("spice: add qxl device")
+> Fixes: 979f7ef8966b ("qxl: use guest_monitor_config for local renderer.")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3637
+> Reported-by: huntr bubble
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 
-This compares the validated size with the new 448-byte whole structure. 
-Valid old 440-byte notes contain kernel_gs_base, but are classified as 
-lacking it. Please change this to compare against the end of 
-kernel_gs_base, not sizeof(*state).
+I believe this version comprehensively fixes the memory safety issue:
+
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 Regards,
 Akihiko Odaki
 
->                   eprintf("CPU #%u: QEMU CPU state size %u doesn't match\n",
->                           states->len, state_size);
-> diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
-> index adc50238b4..3b28332e67 100644
-> --- a/contrib/elf2dmp/qemu_elf.h
-> +++ b/contrib/elf2dmp/qemu_elf.h
-> @@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
->       QEMUCPUSegment ldt, tr, gdt, idt;
->       uint64_t cr[5];
->       uint64_t kernel_gs_base;
-> +    uint8_t  is_crash_occurred_cpu;
-> +    uint8_t  pad[7];
->   } QEMUCPUState;
+> ---
+> v5:
+>   - fix negative stride mapping in qxl_render_update_area_unlocked()
+>   - fix fields endianness in qxl_render_resize()
+> ---
+>   hw/display/qxl.h        |  2 ++
+>   hw/display/qxl-render.c | 66 +++++++++++++++++++++++++----------------
+>   hw/display/qxl.c        | 59 ++++++++++++++++++++++++++++++++++++
+>   3 files changed, 101 insertions(+), 26 deletions(-)
+> 
+> diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+> index 48d664f77736..6f5b96fe86cc 100644
+> --- a/hw/display/qxl.h
+> +++ b/hw/display/qxl.h
+> @@ -181,6 +181,8 @@ void qxl_spice_oom(PCIQXLDevice *qxl);
+>   void qxl_spice_reset_memslots(PCIQXLDevice *qxl);
+>   void qxl_spice_reset_image_cache(PCIQXLDevice *qxl);
+>   void qxl_spice_reset_cursor(PCIQXLDevice *qxl);
+> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
+> +                    uint32_t *bytes_pp, uint32_t *bits_pp);
 >   
->   int is_system(QEMUCPUState *s);
+>   /* qxl-logger.c */
+>   int qxl_log_cmd_cursor(PCIQXLDevice *qxl, QXLCursorCmd *cmd, int group_id);
+> diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
+> index 4799c9e8befd..348ddba76890 100644
+> --- a/hw/display/qxl-render.c
+> +++ b/hw/display/qxl-render.c
+> @@ -27,6 +27,7 @@
+>   static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+>   {
+>       DisplaySurface *surface = qemu_console_surface(qxl->vga.con);
+> +    int dst_stride = surface_stride(surface);
+>       uint8_t *dst = surface_data(surface);
+>       uint8_t *src;
+>       int len, i;
+> @@ -45,14 +46,14 @@ static void qxl_blit(PCIQXLDevice *qxl, QXLRect *rect)
+>       } else {
+>           src += rect->top * qxl->guest_primary.abs_stride;
+>       }
+> -    dst += rect->top  * qxl->guest_primary.abs_stride;
+> +    dst += rect->top  * dst_stride;
+>       src += rect->left * qxl->guest_primary.bytes_pp;
+>       dst += rect->left * qxl->guest_primary.bytes_pp;
+>       len  = (rect->right - rect->left) * qxl->guest_primary.bytes_pp;
+>   
+>       for (i = rect->top; i < rect->bottom; i++) {
+>           memcpy(dst, src, len);
+> -        dst += qxl->guest_primary.abs_stride;
+> +        dst += dst_stride;
+>           src += qxl->guest_primary.qxl_stride;
+>       }
+>   }
+> @@ -61,30 +62,13 @@ void qxl_render_resize(PCIQXLDevice *qxl)
+>   {
+>       QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+>   
+> -    qxl->guest_primary.qxl_stride = sc->stride;
+> -    qxl->guest_primary.abs_stride = abs(sc->stride);
+> +    qxl->guest_primary.qxl_stride = le32_to_cpu(sc->stride);
+> +    qxl->guest_primary.abs_stride = abs(qxl->guest_primary.qxl_stride);
+>       qxl->guest_primary.resized++;
+> -    switch (sc->format) {
+> -    case SPICE_SURFACE_FMT_16_555:
+> -        qxl->guest_primary.bytes_pp = 2;
+> -        qxl->guest_primary.bits_pp = 15;
+> -        break;
+> -    case SPICE_SURFACE_FMT_16_565:
+> -        qxl->guest_primary.bytes_pp = 2;
+> -        qxl->guest_primary.bits_pp = 16;
+> -        break;
+> -    case SPICE_SURFACE_FMT_32_xRGB:
+> -    case SPICE_SURFACE_FMT_32_ARGB:
+> -        qxl->guest_primary.bytes_pp = 4;
+> -        qxl->guest_primary.bits_pp = 32;
+> -        break;
+> -    default:
+> -        fprintf(stderr, "%s: unhandled format: %x\n", __func__,
+> -                qxl->guest_primary.surface.format);
+> -        qxl->guest_primary.bytes_pp = 4;
+> -        qxl->guest_primary.bits_pp = 32;
+> -        break;
+> -    }
+> +    /* fallback to default bpp if format is unknown */
+> +    qxl_format_bpp(qxl, le32_to_cpu(sc->format),
+> +                   &qxl->guest_primary.bytes_pp,
+> +                   &qxl->guest_primary.bits_pp);
+>   }
+>   
+>   static void qxl_set_rect_to_surface(PCIQXLDevice *qxl, QXLRect *area)
+> @@ -101,15 +85,45 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
+>       DisplaySurface *surface;
+>       int width = qxl->guest_head0_width ?: qxl->guest_primary.surface.width;
+>       int height = qxl->guest_head0_height ?: qxl->guest_primary.surface.height;
+> +    uint64_t map_height;
+>       int i;
+>   
+> +    if (width <= 0 || height <= 0) {
+> +        goto end;
+> +    }
+> +
+> +    if (qxl->guest_primary.bytes_pp > 0) {
+> +        int max_width = qxl->guest_primary.abs_stride
+> +                        / qxl->guest_primary.bytes_pp;
+> +        width = MIN(width, max_width);
+> +    }
+> +
+> +    if (qxl->guest_primary.qxl_stride < 0) {
+> +        /* qxl_blit() uses the primary height to find the first scanline. */
+> +        height = MIN(height, (int)qxl->guest_primary.surface.height);
+> +    }
+> +
+> +    if (qxl->guest_primary.abs_stride > 0) {
+> +        int max_height = qxl->vgamem_size / qxl->guest_primary.abs_stride;
+> +        height = MIN(height, max_height);
+> +    }
+> +
+> +    /*
+> +     * height limits the visible update, while map_height is the guest memory
+> +     * span validated by qxl_phys2virt().  With a negative stride qxl_blit()
+> +     * addresses scanlines from the declared primary height, so a shorter
+> +     * monitor still requires validating the full primary surface.
+> +     */
+> +    map_height = qxl->guest_primary.qxl_stride < 0 ?
+> +                 qxl->guest_primary.surface.height : height;
+> +
+>       if (qxl->guest_primary.resized) {
+>           qxl->guest_primary.resized = 0;
+>           qxl->guest_primary.data = qxl_phys2virt(qxl,
+>                                                   qxl->guest_primary.surface.mem,
+>                                                   MEMSLOT_GROUP_GUEST,
+>                                                   qxl->guest_primary.abs_stride
+> -                                                * height);
+> +                                                * map_height);
+>           if (!qxl->guest_primary.data) {
+>               goto end;
+>           }
+> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+> index b7d871b9ee33..384b8767b8e6 100644
+> --- a/hw/display/qxl.c
+> +++ b/hw/display/qxl.c
+> @@ -1489,6 +1489,47 @@ static void qxl_create_guest_primary_complete(PCIQXLDevice *qxl)
+>       qxl_render_resize(qxl);
+>   }
+>   
+> +/*
+> + * Convert a SpiceSurfaceFormat to bytes per pixel and bits per pixel.
+> + *
+> + * Only valid for surface suitable for rendering.
+> + */
+> +bool qxl_format_bpp(PCIQXLDevice *qxl, SpiceSurfaceFmt format,
+> +                    uint32_t *bytes_pp, uint32_t *bits_pp)
+> +{
+> +    uint32_t bypp = 4;
+> +    uint32_t bipp = 32;
+> +    bool ret = true;
+> +
+> +    switch (format) {
+> +    case SPICE_SURFACE_FMT_16_555:
+> +        bypp = 2;
+> +        bipp = 15;
+> +        break;
+> +    case SPICE_SURFACE_FMT_16_565:
+> +        bypp = 2;
+> +        bipp = 16;
+> +        break;
+> +    case SPICE_SURFACE_FMT_32_xRGB:
+> +    case SPICE_SURFACE_FMT_32_ARGB:
+> +        bypp = 4;
+> +        bipp = 32;
+> +        break;
+> +    default:
+> +        ret = false;
+> +        qxl_set_guest_bug(qxl, "%s: unhandled format: %x", __func__, format);
+> +    }
+> +
+> +    if (bytes_pp != NULL) {
+> +        *bytes_pp = bypp;
+> +    }
+> +    if (bits_pp != NULL) {
+> +        *bits_pp = bipp;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>   static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+>                                        qxl_async_io async)
+>   {
+> @@ -1496,6 +1537,7 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+>       QXLSurfaceCreate *sc = &qxl->guest_primary.surface;
+>       uint32_t requested_height = le32_to_cpu(sc->height);
+>       int requested_stride = le32_to_cpu(sc->stride);
+> +    uint32_t bytes_pp;
+>   
+>       if (requested_stride == INT32_MIN ||
+>           abs(requested_stride) * (uint64_t)requested_height
+> @@ -1532,6 +1574,23 @@ static void qxl_create_guest_primary(PCIQXLDevice *qxl, int loadvm,
+>           return;
+>       }
+>   
+> +    if (!qxl_format_bpp(qxl, surface.format, &bytes_pp, NULL)) {
+> +        return;
+> +    }
+> +
+> +    if (surface.width == 0 || surface.height == 0) {
+> +        qxl_set_guest_bug(qxl, "%s: zero dimension %ux%u",
+> +                          __func__, surface.width, surface.height);
+> +        return;
+> +    }
+> +
+> +    if ((uint64_t)surface.width * bytes_pp > abs(surface.stride)) {
+> +        qxl_set_guest_bug(qxl, "%s: stride too small for width:"
+> +                          " stride %d width %u bpp %u",
+> +                          __func__, surface.stride, surface.width, bytes_pp);
+> +        return;
+> +    }
+> +
+>       surface.mouse_mode = true;
+>       surface.group_id   = MEMSLOT_GROUP_GUEST;
+>       if (loadvm) {
 
 
