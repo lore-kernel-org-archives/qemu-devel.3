@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B2CC561E6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC18C55ABF
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 06:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wrrU6-0005EV-68; Thu, 06 Aug 2026 02:21:42 -0400
+	id 1wrrU8-0005FX-DA; Thu, 06 Aug 2026 02:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrrU3-0005E6-Li
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 02:21:39 -0400
-Received: from [115.124.30.101] (helo=out30-101.freemail.mail.aliyun.com)
+ id 1wrrU6-0005Ev-Ge
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 02:21:42 -0400
+Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhengrong_li@linux.alibaba.com>)
- id 1wrrU0-00005u-Iy
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 02:21:39 -0400
+ id 1wrrU3-00008u-LM
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 02:21:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1785997275; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
- bh=flVzNmQUGixTFVkSu+up6JnRXqCpTSu1kZQeWIg4zh4=;
- b=olViCysfq82oddWK0qIpnGlU8gcYERF83a6iLrR4wYEihO2XqERdinHKdnm0izks3q7ko4yduCBQhGHHpC7FN46vDdgbxyg8Ywp2W73Dvu14elf6KO3W1X17wF6tCXiJ/xNBFhtDjBD1L9NF8mYsVU54dYkKlLDlz2m6TdmL5q8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1785997287; h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version;
+ bh=386a66FsBwzQIFv2juxm9COckIHSiZZFZ+5xqyObths=;
+ b=Ur1jtcktZKrGaT+q14yoSYO1GMO5T4J3TU8YacFxWmMBQeWRp5ExNdwoElkNdxPoBKTu2vHFs3gYYM8cl/eyFu7D4UaA/Z73MSEeMqlEhgq1lyi7elL699GfuB3DCuPFBs47XrSmk5zPFpfp8C8iLifx/TPY94bs1L2IuYChhpg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
  MF=zhengrong_li@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X8T1lix_1785997269; 
+ TI=SMTPD_---0X8T274Y_1785997281; 
 Received: from U-92DF4J33-2338.local(mailfrom:zhengrong_li@linux.alibaba.com
- fp:SMTPD_---0X8T1lix_1785997269 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 06 Aug 2026 14:21:14 +0800
+ fp:SMTPD_---0X8T274Y_1785997281 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 06 Aug 2026 14:21:27 +0800
 From: Zhengrong Li <zhengrong_li@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: akihiko.odaki@gmail.com, philmd@qualcomm.com, pbonzini@redhat.com,
  viktor.prutyanov@phystech.edu, zhengrong_li@linux.alibaba.com
-Subject: [PATCH v3 0/3] elf2dmp: identify faulting CPU in Windows crash dumps
+Subject: [PATCH v3 2/3] dump: add crash_occurred flag to QEMUCPUState
 Date: Thu, 06 Aug 2026 14:20:59 +0800
-Message-ID: <178599725914.10029.4441302124415593392@linux.alibaba.com>
+Message-ID: <178599725914.10029.14279751262185488168@linux.alibaba.com>
+In-Reply-To: <178599725914.10029.4441302124415593392@linux.alibaba.com>
+References: <178599725914.10029.4441302124415593392@linux.alibaba.com>
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.101 (deferred)
-Received-SPF: pass client-ip=115.124.30.101;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
+Received-SPF: pass client-ip=115.124.30.112;
  envelope-from=zhengrong_li@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -69,42 +71,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a Windows guest crashes and QEMU generates a memory dump via
-pvpanic, elf2dmp currently always sets CPU 0's context in the dump
-header. This makes WinDbg default to CPU 0 when opening the dump,
-even if the actual crash happened on a different CPU.
+Add is_crash_occurred_cpu field to QEMUCPUState so that
+dump-guest-memory can record which CPU triggered the guest
+panic. Bump QEMUCPUSTATE_VERSION to 2.
 
-This series adds crash_occurred tracking from the runstate layer
-through to the QEMUCPUState in the ELF dump, and teaches elf2dmp
-to identify and use the faulting CPU's context.
+The new field is appended after kernel_gs_base, so existing
+tools that check the 'size' field can safely ignore it when
+reading older dumps.
 
-Changes since v2:
-   - Remove unused fault_cpu variable in fill_context()
-   - Use per-CPU size check (s->size >= offsetof + sizeof) instead
-     of global has_is_crash_occurred_cpu flag, fixing heterogeneous
-     dumps where CPU notes have different sizes
-   - Remove has_is_crash_occurred_cpu from QEMU_Elf struct and
-     init_states() since per-CPU check makes it unnecessary
+Signed-off-by: Zhengrong Li <zhengrong.lzr@alibaba-inc.com>
+---
+ contrib/elf2dmp/qemu_elf.h | 2 ++
+ target/i386/arch_dump.c    | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-Changes since v1:
-   - Set header context before best-effort guest memory operations
-     to avoid losing faulting CPU context on partial dump failures
-   - Use LIVE_SYSTEM_DUMP when BugcheckCode is zero
-   - Use PRIx32 for BugcheckCode format specifier
-   - Use linux.alibaba.com identity
-
-Zhengrong Li (3):
-  runstate: set crash_occurred on guest crashloaded
-  dump: add crash_occurred flag to QEMUCPUState
-  elf2dmp: fill ContextBuffer with faulting CPU context
-
- contrib/elf2dmp/kdbg.h     |  9 +++++++
- contrib/elf2dmp/main.c     | 50 ++++++++++++++++++++++++++++++++++++--
- contrib/elf2dmp/qemu_elf.h |  2 ++
- system/runstate.c          |  5 ++++
- target/i386/arch_dump.c    |  6 +++++
- 5 files changed, 70 insertions(+), 2 deletions(-)
-
--- 
+diff --git a/contrib/elf2dmp/qemu_elf.h b/contrib/elf2dmp/qemu_elf.h
+index adc50238b4..3b28332e67 100644
+--- a/contrib/elf2dmp/qemu_elf.h
++++ b/contrib/elf2dmp/qemu_elf.h
+@@ -27,6 +27,8 @@ typedef struct QEMUCPUState {
+     QEMUCPUSegment ldt, tr, gdt, idt;
+     uint64_t cr[5];
+     uint64_t kernel_gs_base;
++    uint8_t  is_crash_occurred_cpu;
++    uint8_t  pad[7];
+ } QEMUCPUState;
+=20
+ int is_system(QEMUCPUState *s);
+diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
+index 16e47c4747..8ce2c7e9bb 100644
+--- a/target/i386/arch_dump.c
++++ b/target/i386/arch_dump.c
+@@ -264,6 +264,8 @@ struct QEMUCPUState {
+      * by checking 'size' field.
+      */
+     uint64_t kernel_gs_base;
++    uint8_t  is_crash_occurred_cpu;
++    uint8_t  pad[7];
+ };
+=20
+ typedef struct QEMUCPUState QEMUCPUState;
+@@ -279,6 +281,7 @@ static void copy_segment(QEMUCPUSegment *d, SegmentCache =
+*s)
+=20
+ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86State *env)
+ {
++    CPUState *cs =3D env_cpu(env);
+     memset(s, 0, sizeof(QEMUCPUState));
+=20
+     s->version =3D QEMUCPUSTATE_VERSION;
+@@ -325,6 +328,9 @@ static void qemu_get_cpustate(QEMUCPUState *s, CPUX86Stat=
+e *env)
+ #ifdef TARGET_X86_64
+     s->kernel_gs_base =3D env->kernelgsbase;
+ #endif
++    if (cs->crash_occurred) {
++        s->is_crash_occurred_cpu =3D 1;
++    }
+ }
+=20
+ static inline int cpu_write_qemu_note(WriteCoreDumpFunction f,
+--=20
 2.43.0
+
 
