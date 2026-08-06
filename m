@@ -4,143 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55160C5AC7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 17:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1243C5AC67
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Aug 2026 18:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws2Li-0005JB-PV; Thu, 06 Aug 2026 13:57:46 -0400
+	id 1ws2d2-0002RO-4V; Thu, 06 Aug 2026 14:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1ws2Lh-0005Ih-4l
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:57:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ws2d0-0002RA-ON
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 14:15:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1ws2Lf-0005Ey-O6
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 13:57:44 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 676HPO5i2927765
- for <qemu-devel@nongnu.org>; Thu, 6 Aug 2026 17:57:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fVMm80MZuOIFfsshSWXb8ISJozWwBNCO58IeqlVamBc=; b=SG4ofUqt1QuT9dp2
- ZZ/HxRPUil8/CcBrwwovwxseb/N5ccH0nSul44VLEqlQHpIcY6slY6rlWBJeXt3D
- Jqsev+CuceLDrmPTxXbPL1hi8lBjbIEguzv+hIxwDUCDkgyPL/YHjpGJ4AkvbBQM
- lDMnGfQWVSd/J1m64+T1BBR09txMV1R2YAWuEQazzTWDNbHPqH/6sg2CiCwHlQvx
- 8/L6kbwI3UGso5n9ZKx5j01oapMTr4xrqVH9lf4HsOKZXb3D0lCOFZ4xI9kx2zQ/
- H/zF0rY24gfVewdMPZ49hA4EFgIYh7G8KWkrwjUdxKYU3tqETh/ROzfbn98c4Fkt
- jP9CHg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvxne85cq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 17:57:42 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51bf321d786so27352331cf.1
- for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 10:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786039062; x=1786643862; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fVMm80MZuOIFfsshSWXb8ISJozWwBNCO58IeqlVamBc=;
- b=UKF/69P0YmDYk3Ns6+2jC+FiKm5nvkIDT//9O2PbFCkKqnZsM/bdxb1fWxhasoh05b
- HFlvEfeqWuJR8O5o5ETwFwi/TqphPNk7+H0V06aO5mikhKc29PyH10D6XqFMUj8RQdDP
- YbsBIgOvhHvAbmIQVJXrRWJO1Kaf37NRt6n1uXlWuCdXMjO9/9KeAhAaup65seFtPisM
- A9k1h1d02Sib8I0vO487XpLVDxHlW3TSykioW+XmOKL3XS/+STqE+fPuYp7ec4RUv+Dp
- u82ihERU6Sf/DHcbmbZYZX1Lw/WQUlyEM51FN0QgHBml8c9vH2PCdZveeiKz3gQOZj2u
- Z0Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786039062; x=1786643862;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=fVMm80MZuOIFfsshSWXb8ISJozWwBNCO58IeqlVamBc=;
- b=LtqFjS+EcEID7w4qUtwWmHxl1dV4hvoGq54M4Efj6Ajy4sUXJoVwaOHCtK2DVjpvXw
- xjX4g0xt7mX5qX82X+wCj9fHKk1yG5EuN60/LKPbufWFnNM7L2Jtsr1mgacu84Fa/A7y
- 04stVfMtFOTVfT9br2Yx1/y+M/QMC/Vazc9BIdrAzZPH5ScyocX81xEtiHemtabnK8yW
- VGxX24kdpazQNfkDjjK3sLV0Ul2EWuwGyoEApLPDZNCNQZxE7thxkZLDK74Esvkrkmfa
- 3fhPB4dSsvxhXls6eswFtyx6W0z4U1qoSV1LBo+I/2J3gS6zUvg9DJmebxNror+Q7Mfs
- 8SrQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RonsVXiUrU+HTEzmzvPHYSeVwUwYkvzcDuVjn/oWUwVYp8oxIYFuQQWkJzVZIJFf8pK4hlDcizdBeDj@nongnu.org
-X-Gm-Message-State: AOJu0YycFWRm3XuT3D+/OJw/3u9SLnyUV4LdFwBwHW0Kaww9XljkruZ3
- wypLcHJ7INwOC/m6mNR9wjNDA11zb4iRU3F6EeDHqwH3aqaSwzoezEvTzOncrlQ9EDRDXA7BYy7
- d575TY4HMrbWChOtiT2uDcs+xLZKYdxVOfxvAKPAOFoVN86KusSTTpKkPvTKKT/nQuQ==
-X-Gm-Gg: AR+sD13jqV19JSG5VmYXoI5H7ibtovI+kvKzRHrpMzFuTzXQrg59ZPuQnQ9gAnMroGv
- 275MBfIKxgNFudEPgdkgcpE1RDYnfJA4dt6AvP73wbeUbVZgmk+3HGwOmFzvz4+Pol+ht9jvpc6
- oCXMfS1wdEL7hbVtimYlk21jvI8NLwU9i4zGBRlMhqRnDzt1JKQBqKd7S6LUhxiKNAxKD0Eopo3
- OQ7gwJCz2ABKNqW5P6SGNztWehtQ4i3u99iFQM9XO4XHSh2cNZmhXOVBJ+/x7oFYOnDju/Ac0gr
- YJbsrYjGUFHKfZXQeVxPd1EyPOx3VGfOYyzSujF41FYdcv1XlQDmHdJCi14jl8DX/18rgsuBbLM
- dHRgRgIopCfTbC6gtV70qEP++pdzlw46z5VI=
-X-Received: by 2002:a05:622a:148c:b0:52c:dffc:4645 with SMTP id
- d75a77b69052e-52ce5f2ffadmr163775501cf.7.1786039062075; 
- Thu, 06 Aug 2026 10:57:42 -0700 (PDT)
-X-Received: by 2002:a05:622a:148c:b0:52c:dffc:4645 with SMTP id
- d75a77b69052e-52ce5f2ffadmr163774861cf.7.1786039061539; 
- Thu, 06 Aug 2026 10:57:41 -0700 (PDT)
-Received: from [192.168.69.212] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49952f2e151sm35754675e9.4.2026.08.06.10.57.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Aug 2026 10:57:40 -0700 (PDT)
-Message-ID: <316c76ac-7d02-4414-ac45-12e44aa2aa74@oss.qualcomm.com>
-Date: Thu, 6 Aug 2026 19:57:39 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ws2cy-0000m5-C5
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 14:15:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786040135;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nmlhGcOu6DFhF6nKnKB75GmDypaZnmvhrljGAkyXVlg=;
+ b=LTUb5V3hQMc3VKVvNoayYyJrqc57gsK2sCrmtXok9r6+NapUO2cT6oiX97Zz1tj2+9v6ZT
+ 63RNH7biMlKqlY4a+u4zAHpstqBnLlpcKIN8nP5MiZl0VjIoN0PgCwfGBm5sB5ShR8jQbl
+ VM/OOemNwSVpnpotKbrTsaeHmRe2hAw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-W2T70IWnOaiZsy_RBjLNAA-1; Thu,
+ 06 Aug 2026 14:15:31 -0400
+X-MC-Unique: W2T70IWnOaiZsy_RBjLNAA-1
+X-Mimecast-MFC-AGG-ID: W2T70IWnOaiZsy_RBjLNAA_1786040129
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 02F3A18002F8; Thu,  6 Aug 2026 18:15:29 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C442D1956094; Thu,  6 Aug 2026 18:15:25 +0000 (UTC)
+Date: Thu, 6 Aug 2026 19:15:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH 01/27] include/qemu/target-info-qom.h: declare
+ TYPE_TARGET_SPECIFIC interface
+Message-ID: <anTPOqFKWFKAX_3C@redhat.com>
+References: <20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260724000948.234657-2-pierrick.bouvier@oss.qualcomm.com>
+ <anNDM7WAvxY5tO2K@redhat.com>
+ <adfd5a5f-c237-4634-9c0b-14389c0f3585@oss.qualcomm.com>
+ <anNqhjSU5tEDC0br@redhat.com>
+ <a9c89dd7-6317-42f1-9e03-30e48c2d08aa@oss.qualcomm.com>
+ <anRgKw58IMYoR4p-@redhat.com>
+ <5bda3566-5ce5-46dc-a281-2cc07a56dc6f@oss.qualcomm.com>
+ <077fc585-a6b8-455a-abdc-fd72e13b8315@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] target/arm: Sink aarch64_aa32_a57_init into
- aarch64_max_tcg_initfn
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260806163939.328201-1-richard.henderson@linaro.org>
- <20260806163939.328201-5-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260806163939.328201-5-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: _GtRrZm7oqJIMYW8eX2KUy-FRJflvv73
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA2MDE0MCBTYWx0ZWRfX8/7686gAPny6
- IogCoUhSHznZPkkF2eiXqc8MxBZz2+NtnZXs8EBMqdoNBtI9w+1qUTYnm9ODQRKldTpG5BGcuoG
- W8+eIzyxHSo2qNSXcWrdDkz7MMc99xk=
-X-Proofpoint-ORIG-GUID: _GtRrZm7oqJIMYW8eX2KUy-FRJflvv73
-X-Authority-Analysis: v=2.4 cv=ZYQt8MVA c=1 sm=1 tr=0 ts=6a74cb16 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=F4whdlzREtsA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA2MDE0MCBTYWx0ZWRfX9ZzHhHu2oBcj
- oT9wMZevfMcdfJ3zI1UY1McKNQfdzZCVs2KWw2kH+idDgX6SiiSqJ88OGS6lIat1A6D29WqdnmX
- Fr/HeRPnp4xemqkDp+8dVQhrLivP42h5kcg4JARGAiHwTaylXa/zKcjibk9BOcxUAoKHQLyOG6B
- Ek+JAbQ2scgkBr+nB2b+tIeiA0VXjfnUggPeF2sqBj1ynk3wiHOXDflDyPQS3PPKklM3/mRdv5O
- 1tctlkc5vmwVXOqdQPJdUqRfeTOUy+RwXn6q6Gh5TP0coD8NPSpzE0PaD66WInT8hO5ncEHlXFd
- wOB/fhodrG9s/rOInHhcF6Uk4LBppjNsVD/B7PgS/N5Q3RADs6fPXriYFz0MxsliA+v1lLZzSoU
- BlvyjOqeEhE/ts8XgR3f/Rc8VzJ/JeA+O4Jvyv/KYWBCpXyUWcK8tnpWxoEl2CYq22tC9TJHO7L
- /TbxPLOuhDr3YlOQU9g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-06_01,2026-08-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 bulkscore=0
- phishscore=0 spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608060140
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <077fc585-a6b8-455a-abdc-fd72e13b8315@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,15 +99,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/26 18:39, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/cpu-max.c   | 3 +--
->   target/arm/tcg/cpu64.c | 2 ++
->   2 files changed, 3 insertions(+), 2 deletions(-)
+On Thu, Aug 06, 2026 at 09:38:43AM -0700, Pierrick Bouvier wrote:
+> On 8/6/2026 7:52 AM, Philippe Mathieu-Daudé wrote:
+> > On 6/8/26 12:21, Daniel P. BerrangÃ© wrote:
+> >> On Wed, Aug 05, 2026 at 12:10:27PM -0700, Pierrick Bouvier wrote:
+> >>> On 8/5/2026 9:53 AM, Daniel P. Berrangé wrote:
+> >>>> On Wed, Aug 05, 2026 at 09:16:20AM -0700, Pierrick Bouvier wrote:
+> >>>>> On 8/5/2026 7:05 AM, Daniel P. Berrangé wrote:
+> >>>>>> On Fri, Jul 24, 2026 at 12:09:21AM +0000, Pierrick Bouvier wrote:
+> >>>>>>> In the next commits, We'll replace the logic to filter QOM types per
+> >>>>>>> target from a static one (based on INTERFACES) to a runtime one,
+> >>>>>>> based
+> >>>>>>> on is_available() function, that can be overriden per class.
+> >>>>>>>
+> >>>>>>> Introduce the new interface we'll use for that.
+> >>>>>>>
+> >>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> >>>>>>> ---
+> >>>>>>>   include/qemu/target-info-qom.h | 15 +++++++++++++++
+> >>>>>>>   target-info-qom.c              |  5 +++++
+> >>>>>>>   2 files changed, 20 insertions(+)
+> >>>>>>>
+> >>>>>>> diff --git a/include/qemu/target-info-qom.h b/include/qemu/
+> >>>>>>> target-info-qom.h
+> >>>>>>> index 91be415ed33..83eb537333b 100644
+> >>>>>>> --- a/include/qemu/target-info-qom.h
+> >>>>>>> +++ b/include/qemu/target-info-qom.h
+> >>>>>>> @@ -14,6 +14,21 @@
+> >>>>>>>     #define TYPE_TARGET_INFO "target-info"
+> >>>>>>>   +#define TYPE_TARGET_SPECIFIC "target-specific"
+> >>>>>>> +
+> >>>>>>> +typedef struct TargetSpecific TargetSpecific;
+> >>>>>>> +
+> >>>>>>> +typedef struct TargetSpecificClass {
+> >>>>>>> +    InterfaceClass parent_class;
+> >>>>>>> +
+> >>>>>>> +    bool (*is_available)(void);
+> >>>>>>> +} TargetSpecificClass;
+> >>>>>>> +
+> >>>>>>> +#define TARGET_SPECIFIC(obj) \
+> >>>>>>> +    INTERFACE_CHECK(TargetSpecific, (obj), TYPE_TARGET_SPECIFIC)
+> >>>>>>> +DECLARE_CLASS_CHECKERS(TargetSpecificClass, TARGET_SPECIFIC,
+> >>>>>>> +                       TYPE_TARGET_SPECIFIC)
+> >>>>>>
+> >>>>>> Looking through the series,I don't really see the point
+> >>>>>> in this interface.   Why is this not possible to do by
+> >>>>>> adding 'is_available' to MachineClass.  It would make
+> >>>>>> the rest of the series simpler and especially avoid the
+> >>>>>> need to introduced yet more series of macros for defining
+> >>>>>> machine classes.
+> >>>>>>
+> >>>>>
+> >>>>> We'll need the exact same interface for cpus, and devices also.
+> >>>>> IMHO, it
+> >>>>> makes sense to have this in an external interface, instead of
+> >>>>> forcing it
+> >>>>> to be present in all cpus/devices/machines. I also considered
+> >>>>> adding it
+> >>>>> directly in Object class directly (would be the simplest), but I
+> >>>>> felt it
+> >>>>> would be hard to motivate it.
+> >>>>
+> >>>> I don't see a need for the common interface across cpus/devices/etc as
+> >>>> as code that's filtering only cares about the specific types. It also
+> >>>> definitely doesn't beloong in Object class, but the Object class could
+> >>>> be changed to make it simpler.
+> >>>>
+> >>>
+> >>> We agree on this.
+> >>>
+> >>>> The object_class_get_list() method could get a 'bool
+> >>>> filter(ObjectClass *cl)'
+> >>>> callback which could be invoked on each class to filter it.
+> >>>>
+> >>>> That said I find it pretty undesirable as an approach that we're
+> >>>> registering classes that can't then be used in a given situation.
+> >>>> This has a ripple effect where every bit of code that iterates over
+> >>>> classes needs changing to add filtering after the fact. It is also
+> >>>> not great for scalability, as it means every QEMU process will have
+> >>>> the union of all classes for all targets registered, most of which
+> >>>> have to be discarded / ignored at runtime.
+> >>>>
+> >>>
+> >>> This is inherent to the nature of having a single binary.
+> >>> We need to cover those two requirements:
+> >>> 1. having a filter mechanism (per target)
+> >>> 2. have all the classes accessible for the heterogeneous machines that
+> >>> will be coming in the future
+> >>>
+> >>> 1. could be covered by what you describe, however, it breaks 2. For
+> >>> this, you need to be able to register all types by design.
+> >>
+> >>
+> >> Even the heterogeneous machines aren't going to need all the
+> >> classes from all 30+ targets that QEMU supports.
+> >>
+> >> IIUC, the current approach relies on '--target <blah>' to select
+> >> which target we need. Would the heterogeneous machines not just
+> >> change that to allow "--target <this> --target <that>". It still
+> >> looks like we should be able to significantly limit  what we
+> >> register for heterogeneous machines.
+> > 
+> > Heterogeneous binary won't filter anything at runtime (if we want
+> > to filter components we already have Kconfig at compile time).
+> > 
+> > "--target <foo>" is only needed to have a single binary backward
+> > compatible. If you use it, you fall back to single architecture
+> > (our current binaries). If you want anything heterogeneous, you
+> > can not use it. This will be by design.
+> 
+> I've been thinking about it yesterday, and we could apply the paradigm
+> "register only classes that will be used". For heterogeneous machine,
+> either we'll provide a "none" target, which enables all target, or use
+> --target aarch64,riscv64, like Daniel proposed.
+>
+> I will implement what Daniel asked for v2.
+> However, please be aware it will be probably be more invasive and
+> verbose, since we'll need to add macros and stuff to have conditional
+> type_register_static.
+> 
+> I would like to avoid doing a change you asked, and have no further
+> comment after that or something like "it was better before".
+> Do we agree on this Daniel?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+That is an unreasonable request - I can't approve of a patch series
+that doesn't exist yet.
+
+I can only say that I don't think the current series is a desirable
+approach and make suggestions of what I think is (hopefully) a
+better way.
+
+
+Something else that I didn't consider previously is possible interaction
+with modules. Much of our use of modules is to make backends loadable,
+but we've got a few loadable devices too. It seems likely that with the
+single binary model we'll have greater motivation to make more device &
+machine code into loadable modules, as people have repeatedly pushed us
+to have a lower mandatory footprint for QEMU.
+
+The loadable modules relies on some metadata defined in the source
+code alongside the type info. For example
+
+  static const TypeInfo emulated_card_info = {
+    .name          = TYPE_EMULATED_CCID,
+    .parent        = TYPE_CCID_CARD,
+    .instance_size = sizeof(EmulatedState),
+    .class_init    = emulated_class_initfn,
+  };
+  module_obj(TYPE_EMULATED_CCID);
+  module_kconfig(USB);
+
+In particular it feels like the module_kconfig() and module_arch()
+metadata have overlap with what you're trying todo in this series.
+
+So I wonder if we could generalize the module metadata so that it
+serves a broader set of use cases. Instead of having to manually
+write conditional logic in XXX_register_type() methods, perhaps we
+can do the right thing automatically in type_register() using the
+metadata we collect from the code ?
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
