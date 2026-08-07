@@ -4,111 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00700C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C9EC5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKNB-00020H-Pa; Fri, 07 Aug 2026 09:12:31 -0400
+	id 1wsKRi-0003ad-2w; Fri, 07 Aug 2026 09:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsKN5-0001zw-Mk
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:12:27 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsKN3-0004YB-KX
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:12:22 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-81e69a2db34so54374057b3.0
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:12:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786108340; cv=none;
- d=google.com; s=arc-20260327;
- b=lyy4WENHHzIbVww9EECQFXOXHUl/e0iMdYE6xXhEUDVvK6g9bSlUu4MhZwG50MQ1Yb
- wefCYPU5DbgdeVYgXP48vnwN7B+MGIXCGc3/XVUHPYD/vN1ZAl1T/RBawdhaVzl+rSER
- K7pQCmhUyb2OHnOH+qduhsN7YfXZJ79At4BJS0nmBZtGsRfpgK1sm3fWEv12PQjtfdPO
- JGFwP8PrqwP82G9hC2YHyVYCYkssVXEtFH+7KHJLwDwoa90+FD0cZJMY1Cdf4TiP30ui
- uTMKL5O7rHNLEFTbjeg0cpPa3mYYuVuJX5IZwIBhiYx02/s8YgxE7F8OpNPFDhhV5YSi
- vtnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
- fh=luh2pz+jE30peEkvnCOTtp/S2/mwabsJyHcziE/qc94=;
- b=QXIy+/uOjBdoepnhZhUBlYYIPKXdb9rZHBIATNLj/ePPhysZSz8AhjE0P3ZbEuuQfZ
- 8BDWRh8t4C7Jkq67nsQa2sshAH7fFP4zNCmldEvjjnYiMbzpm9FYy7Ath3M3Sn51WTy2
- xenshLm+UtMbgWZpdgSQ1hxnbeAvdLzDcDf69/clns2mSYKLQwQsBESLh8zrxQnC8Y2q
- z66fbH7krhOF9oDVX80ZP1mzMbD4l1VizGgPH21xpNXgrZiuIl2ckGMLbpJtdUi2RyyP
- xzNXyqowrw6sAlx8qM4xguYHeuhOdPLZ3P0OhbF1FwfCGS40MqryEo82stdneZUhv2Lj
- vyFw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786108340; x=1786713140; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
- b=g7WPpvoHPzlJzZ0Mfh0saA2VnmEgtJox8vrryrLNYhiRzPZuB5O+0iSrXgCmKM+GN0
- h/jbBEZfpuNgycTlSl/sm+HR/bLB3/4MTInZyih44XCiQA7IjXiZ4gRkTmf/6uHEX7eG
- FijtkiIqyWLNHh24M/bDTkeO/id7kI3OOq6F3Til9CyRlr2ZYsp1p6edHLZztLohKbDW
- /nfyG9ePB7kJAgm3qW16LYuuT7pMC6HRatHyM9ag6K+yxEKnFWDz/TkK+ynsF6myAMVl
- abeZ72v1+iuhKah1/sIhbyp1S8R7F/bywD2MVu+C1+w2VXQfomW+Lx1aguJqUPtgsnHC
- 3RDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786108340; x=1786713140;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
- b=WgiJ8OH1HfQ/a6GDrn+KLI29bUYwishCyyc+wew19CWqrGLXrVwg5Q715qS0OYfupd
- VQfZGSwy13TrR3Wi83sMQgGBd3wjPTyQGQgndpg7PIlK5TSo+Ek4pbGrTMuQ+EzxhLnC
- RzYG4iSj9AWhUdqeygfK2WsgXkpJT7UqiopPl9+36/uRg5yqog8zVC5jYbDZX0IRPj0Z
- EvkyL9T/gRM5CEyeeYo7bdyHMaes6MyY8NDJe2rbGWzapHi8ycUpNigxy4OgJeGBLjri
- jrxd8tsU8oeJrftjSbEhkqapyL17PnhiD8xqZRNrGVGPJErOvOS8bjCp0BWqVhK2tZFJ
- pZKQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqOIWrcn73pI+2+KQ+RmWZuq53MRSa9Wp3fnLXUvU2G6SDJuFcLyJoVhT4jITS0uaV5jR3d3+AYcTnP@nongnu.org
-X-Gm-Message-State: AOJu0Yy2l8kgOiMzrantnBwoRtAteTiJB+R2Tfs+J4E2zl/0vRA/34sG
- ZiggJK/fe8V3zkjRFuR8cCrEQhjeLs2YT6EoF8k+0TJvdYTMhjtC/1v1ORdGCF9ymo1swNtT5v7
- egv7osEsCZgjqO9CTFEiTsGfg9hqhTQcfc+nGDpAtlQ==
-X-Gm-Gg: AR+sD12DwhgwviyLaIh1UB4tO7cD/mF//I3TO1akFQOCZVkMTwXxnDtz8IqPrdlHHA5
- SVYW8YUEa1+BrfTZQs16OTnIBjlnWgd4AGFBI1cOlol61jjiqq7ypwlBU7Ao8Xec+ZNgdS2Cuvn
- iJQyayM0rkoYhipfQV64I9c4QWFeZhZV5OPuhpZx8LolZQ0e5eOB4z8FQG9uWRuSvRlkCuDXQAc
- x7iHjVscw++Pjg2mam0DKmxVrGD4soGdYzd/jDYnJS6gHm9IjkUtKGC4ujlQso6QtRfpaicf2im
- vPlI5ou/JRpXNbfhB4QXp/DS8TpHDFLUvmqEvA23rOYatrSghywfa6yweZf9t53YEJojVAaRI8u
- KQNimalX/in5uLe1tZWhG/Rz9J9gRbm4OhM8xEhQCwRMqoKyPoZA=
-X-Received: by 2002:a05:690c:260f:b0:81f:64e8:d86a with SMTP id
- 00721157ae682-825778aa65bmr1714987b3.30.1786108340011; Fri, 07 Aug 2026
- 06:12:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKRe-0003aG-8t
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:17:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKRc-0005Rj-3X
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:17:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786108622;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=2DK1jEio/0HUqfJU5wzHlkgCW55DG2rxsB/2c3PI/a0=;
+ b=CizuvZzgEZMQb7AXAv0P53hNw1XU3iUoERwuaJ2C2oC2z7VJ+ikM3+e+MN1atwfFLfXlob
+ VAVJ1RMqUcVA1v3Hc5Xjt0gVUODc7ZyVhCg1osrrGyxJx1CElHp5bp5685clwYESXRmvmV
+ zI2K1bviBt4+w86nVwGxmx7QSYO13aA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-KDZpNDvaOMCwX1oj8Ji4Ew-1; Fri,
+ 07 Aug 2026 09:17:00 -0400
+X-MC-Unique: KDZpNDvaOMCwX1oj8Ji4Ew-1
+X-Mimecast-MFC-AGG-ID: KDZpNDvaOMCwX1oj8Ji4Ew_1786108619
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E26B1956095; Fri,  7 Aug 2026 13:16:59 +0000 (UTC)
+Received: from [100.90.56.12] (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5196C180049F; Fri,  7 Aug 2026 13:16:58 +0000 (UTC)
+Message-ID: <5dd7fe61-c9c9-47fd-b20e-d76059271863@redhat.com>
+Date: Fri, 7 Aug 2026 15:16:56 +0200
 MIME-Version: 1.0
-References: <20260728192913.61279-1-deller@kernel.org>
- <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
- <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
- <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
- <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de> <87ecgfkrg9.fsf@igel.home>
- <anEBr8nK-4nKmuXj@p100> <87y0emkhjo.fsf@igel.home>
- <b1fbcbb6-2e04-42e4-80ad-f9b4907676ba@gmx.de>
-In-Reply-To: <b1fbcbb6-2e04-42e4-80ad-f9b4907676ba@gmx.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Aug 2026 14:12:08 +0100
-X-Gm-Features: AUfX_mxPE8VnG6zbTnpWRme0ljcDatf9OdJH0rtR1D2lv4tgALmm7k4KVdMF_G0
-Message-ID: <CAFEAcA8Mof1EDHoF0hBRcu+to0W6ny-KvX7mUwch+SGVgRD3MA@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
- architectures
-To: Helge Deller <deller@gmx.de>
-Cc: Andreas Schwab <schwab@linux-m68k.org>, Helge Deller <deller@kernel.org>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: do not zero-extend BSR/BSF dest when source
+ is zero
+To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20260805151810.369643-1-scherer.simon89@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260805151810.369643-1-scherer.simon89@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,23 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Aug 2026 at 07:30, Helge Deller <deller@gmx.de> wrote:
->
-> On 8/3/26 23:42, Andreas Schwab wrote:
-> >  This "preferred" approach does not really make any sense at all.
->
-> Right. IMHO this "preferred" (aka padding behind 32-bit time value even on big-endian)
-> doesn't make any sense for big-endian. The lower 32-bit value then ends up in the upper
-> 32-bits of a 64-bit time_t value and thus you have problems when mixing 32- and 64-bit
-> time_t applications.
-> I think m68k needs to follow the other 32-bit big-endian arches I mentioned above
-> and provide an own uapi/asm/msgbuf.h:struct msqid64_ds file/struct.
-> And this stupid "preferred" sentence in the kernel should be dropped.
+On 8/5/26 17:18, Simon Scherer wrote:
+> For the bsr and bsf instructions per the Intel SDM: "If the content
+> of the source operand is 0, the content of the destination operand
+> is undefined." The AMD64 Architecture Programmer's Manual is more
+> specific: it states the destination operand remains unchanged when
+> the source is zero. Testing on real hardware (multiple Intel and
+> AMD systems) confirms that when the source operand is zero, the CPU
+> leaves the entire 64-bit destination register untouched, including
+> the upper 32 bits, even when executing the 32-bit form of the
+> instruction (e.g. "bsr edx, ecx") in 64-bit mode.
+> 
+> gen_BSF()/gen_BSR() already encode this intent (see the existing
+> comment) by arranging for T0 to hold the correct full-width
+> passthrough value when the source is zero. However, that correct
+> value was then handed to the generic register writeback path
+> (gen_writeback), which for a 32-bit destination unconditionally
+> applies tcg_gen_ext32u_tl() and clears the upper 32 bits regardless
+> of what gen_BSF()/gen_BSR() had just computed.
+> 
+> This patch bypasses the generic writeback for this specific case
+> (64-bit mode, 32-bit operand size) and writes the already-correct
+> value directly to the register instead.
 
-If every 32-bit big-endian architecture is avoiding the asm-generic
-msqid64_ds struct in order to provide its own, and they are all
-exactly the same, could the asm-generic one be made to do what all the
-32-bit BE archs actually want rather than something that nobody wants?
+I think this is the same as using d64 instead of v?
 
--- PMM
+     case X86_SIZE_v:  /* 16/32/64-bit, based on operand size */
+         *ot = s->dflag;
+         return true;
+...
+     case X86_SIZE_d64:  /* Default to 64-bit in 64-bit mode */
+         *ot = CODE64(s) && s->dflag == MO_32 ? MO_64 : s->dflag;
+         return true;
+
+That is, something like:
+
+     /* For BSF, pass 2op as the third operand so that we can use zextT0.
+      * Use d64 because ctz already zero-extends the full 64-bit result,
+      * and v would zero-extend the output register if the input is zero.
+      */
+     static const X86OpEntry opcodes_0FBC[4] = {
+         X86_OP_ENTRY3(BSF,    G,d64, E,d64, 2op,d64, zextT0),
+         X86_OP_ENTRY3(BSF,    G,d64, E,d64, 2op,d64, zextT0), /* 0x66 */
+         X86_OP_ENTRYwr(TZCNT, G,v,   E,v,            zextT0), /* 0xf3 */
+         X86_OP_ENTRY3(BSF,    G,d64, E,d64, 2op,d64, zextT0), /* 0xf2 */
+     };
+
+Thanks,
+
+Paolo
+
 
