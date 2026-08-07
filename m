@@ -4,65 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC264C5AC82
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 07:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62640C5AC7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 07:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsEY0-0001XU-Km; Fri, 07 Aug 2026 02:59:16 -0400
+	id 1wsElT-0003z8-Pg; Fri, 07 Aug 2026 03:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wsEXx-0001X3-Ak
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:59:13 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wsEXt-0008Au-Cs
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:59:12 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxfZs3gnVqszgLAA--.12610S3;
- Fri, 07 Aug 2026 14:59:03 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJAxjgc2gnVqX8gmAA--.7931S3;
- Fri, 07 Aug 2026 14:59:02 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] hw/loongarch/boot: Check memory boundary in
- init_boot_rom()
-Date: Fri,  7 Aug 2026 15:00:28 +0800
-Message-ID: <20260807070029.1171348-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260807070029.1171348-1-maobibo@loongson.cn>
-References: <20260807070029.1171348-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsElI-0003yk-RT
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 03:13:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsElF-0001wH-8V
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 03:12:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786086774;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jlWXU41tXlH4VzEPsnDpBdnqkIqge8+fKnLPWU7RdWA=;
+ b=hlqWnn6vvhMn8Ob0VGis2EO9IPbc0FLytXzr8Nc+MUNZsVJx+oKJIPBXf6qEvLglajz22M
+ tNrzUGZjzXYKmMb52k49aH0Ut6h/wG8nU7Xu9HGamdrmawnXLRstKUhUXEEiDE+vHSX0gb
+ I1W0T6XQjUzrxzGDs8xxqFo6myrRyW8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-9MLCQWT_PQWB9wThbc6LMw-1; Fri,
+ 07 Aug 2026 03:12:44 -0400
+X-MC-Unique: 9MLCQWT_PQWB9wThbc6LMw-1
+X-Mimecast-MFC-AGG-ID: 9MLCQWT_PQWB9wThbc6LMw_1786086763
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D4F7195608F; Fri,  7 Aug 2026 07:12:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E6EB180034C; Fri,  7 Aug 2026 07:12:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0D0AF21E6920; Fri, 07 Aug 2026 09:12:40 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 06/53] meson: add qapi-type-infos-*.c/h to build
+In-Reply-To: <20260616-qom-qapi-v2-6-cc9396b9c18c@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Tue, 16 Jun 2026 00:37:32 +0400")
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-6-cc9396b9c18c@redhat.com>
+Date: Fri, 07 Aug 2026 09:12:40 +0200
+Message-ID: <87o6fes8t3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxjgc2gnVqX8gmAA--.7931S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuFyUKF4DKr1xXw1rXrWkAFc_yoWrZr1rpF
- y5Zr95Jrs5JrsrWr97t34j9Fs3Jr1xG3WaqasrXryFkF1UJr1UWF4vv342vFyDtan5KF1F
- vFnYva42gF47JwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,153 +91,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting the Linux kernel without UEFI BIOS, QEMU needs to set the boot
-param for kernel. For the LoongArch Linux kernel, it is put in structure
-loongarch_boot_info, and the total size is 1MB.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Here add memory boundary checking with preparing kernel boot param in
-loongarch_boot_info.
+> Register the new per-module type-infos output files so they are
+> generated during the QAPI code generation step and compiled into
+> the build.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/boot.c | 68 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 55 insertions(+), 13 deletions(-)
+Actually, they're generated before this patch already, they just aren't
+compiled.
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index ef8eae237c..fe91ab16bd 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -173,12 +173,19 @@ static void init_efi_fdt_table(struct efi_system_table *systab)
-     systab->nr_tables = 3;
- }
- 
--static void init_systab(MachineState *ms,
-+static void init_systab(MachineState *ms, size_t size,
-                         struct loongarch_boot_info *info, void *p, void *start)
- {
-     void *bp_tables_start;
-     struct efi_system_table *systab = p;
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-+    size_t len;
-+
-+    len = ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_system_table");
-+        exit(1);
-+    }
- 
-     info->a2 = p - start;
- 
-@@ -190,29 +197,56 @@ static void init_systab(MachineState *ms,
-     systab->boottime = 0;
-     systab->nr_tables = 0;
- 
--    p += ROUND_UP(sizeof(struct efi_system_table), 64 * KiB);
-+    p += len;
-+    size -= len;
- 
-     systab->tables = p;
-     bp_tables_start = p;
- 
-+    len = ROUND_UP(sizeof(struct efi_boot_memmap) +
-+                   sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_boot_memmap");
-+        exit(1);
-+    }
-+
-     init_efi_boot_memmap(ms, systab, p, start);
--    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
--                  sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
-+    p += len;
-+    size -= len;
-+
-+    len = ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init efi_initrd");
-+        exit(1);
-+    }
-+
-     init_efi_initrd_table(info, systab, p, start);
--    p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-+    p += len;
-+    size -= len;
-     init_efi_fdt_table(systab);
- 
-     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
- }
- 
--static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
-+static size_t init_cmdline(struct loongarch_boot_info *info, void *p,
-+                           void *start, size_t size)
- {
-     hwaddr cmdline_addr = p - start;
-+    size_t len;
- 
-     info->a0 = 1;
-     info->a1 = cmdline_addr;
- 
--    g_strlcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE);
-+    len = g_strlcpy(p, info->kernel_cmdline, size);
-+
-+    /* include terminating null byte */
-+    if (len < size) {
-+        len += 1;
-+    } else {
-+        len = size;
-+    }
-+
-+    return len;
- }
- 
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
-@@ -385,15 +419,21 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
-     fw_cfg_add_kernel_info(info, lvms->fw_cfg);
- }
- 
--static void init_boot_rom(MachineState *ms,
-+static void init_boot_rom(MachineState *ms, size_t size,
-                           struct loongarch_boot_info *info, void *p)
- {
-     void *start = p;
-+    size_t len;
- 
--    init_cmdline(info, p, start);
--    p += COMMAND_LINE_SIZE;
-+    len = init_cmdline(info, p, start, size);
-+    len = ROUND_UP(len, 64 * KiB);
-+    if (len > size) {
-+        error_report("could not init systab");
-+        exit(1);
-+    }
- 
--    init_systab(ms, info, p, start);
-+    p += len;
-+    init_systab(ms, size - len, info, p, start);
- }
- 
- static void loongarch_direct_kernel_boot(MachineState *ms,
-@@ -403,6 +443,7 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-     uint64_t *data;
-+    size_t size;
- 
-     if (info->kernel_filename) {
-         kernel_addr = load_kernel_info(info, phys_addr_mask);
-@@ -415,8 +456,9 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     /* Load cmdline and system tables at [0 - 1 MiB] */
-     p = g_malloc0(1 * MiB);
-     bp = p;
--    init_boot_rom(ms, info, p);
--    rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
-+    size = 1 * MiB;
-+    init_boot_rom(ms, size, info, p);
-+    rom_add_blob_fixed_as("boot_info", bp, size, 0, &address_space_memory);
- 
-     /* Load slave boot code at pflash0 . */
-     void *boot_code = g_malloc0(VIRT_FLASH0_SIZE);
--- 
-2.54.0
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  qapi/meson.build              | 4 ++++
+>  tests/include/meson.build     | 2 ++
+>  tests/meson.build             | 6 ++++++
+>  tests/qapi-schema/meson.build | 1 +
+>  4 files changed, 13 insertions(+)
+>
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index a46269b5a0c..7ae3843de6e 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -80,6 +80,7 @@ endif
+>  qapi_nonmodule_outputs =3D [
+>    'qapi-introspect.c', 'qapi-introspect.h',
+>    'qapi-types.c', 'qapi-types.h',
+> +  'qapi-type-infos.c', 'qapi-type-infos.h',
+>    'qapi-visit.h', 'qapi-visit.c',
+>    'qapi-commands.h', 'qapi-commands.c',
+>    'qapi-init-commands.h', 'qapi-init-commands.c',
+> @@ -90,6 +91,7 @@ qapi_nonmodule_outputs =3D [
+>  qapi_outputs =3D qapi_nonmodule_outputs + [
+>    'qapi-builtin-types.c', 'qapi-builtin-visit.c',
+>    'qapi-builtin-types.h', 'qapi-builtin-visit.h',
+> +  'qapi-builtin-type-infos.c', 'qapi-builtin-type-infos.h',
+>  ]
+>=20=20
+>  qapi_inputs =3D []
+> @@ -100,6 +102,8 @@ foreach module : qapi_all_modules
+>      'qapi-types-@0@.h'.format(module),
+>      'qapi-visit-@0@.c'.format(module),
+>      'qapi-visit-@0@.h'.format(module),
+> +    'qapi-type-infos-@0@.c'.format(module),
+> +    'qapi-type-infos-@0@.h'.format(module),
+>    ]
+>    if have_system or have_tools
+>      qapi_module_outputs +=3D [
+> diff --git a/tests/include/meson.build b/tests/include/meson.build
+> index 8e8d1ec4e69..026480d9685 100644
+> --- a/tests/include/meson.build
+> +++ b/tests/include/meson.build
+> @@ -4,6 +4,8 @@ test_qapi_outputs_extra =3D [
+>    'test-qapi-commands-sub-module.h',
+>    'test-qapi-events-sub-module.c',
+>    'test-qapi-events-sub-module.h',
+> +  'test-qapi-type-infos-sub-module.c',
+> +  'test-qapi-type-infos-sub-module.h',
+>    'test-qapi-types-sub-module.c',
+>    'test-qapi-types-sub-module.h',
+>    'test-qapi-visit-sub-module.c',
+> diff --git a/tests/meson.build b/tests/meson.build
+> index 9ba04bbedd3..71dc4ac8bf9 100644
+> --- a/tests/meson.build
+> +++ b/tests/meson.build
+> @@ -2,6 +2,8 @@ subdir('bench')
+>  subdir('qemu-iotests')
+>=20=20
+>  test_qapi_outputs =3D [
+> +  'qapi-builtin-type-infos.c',
+> +  'qapi-builtin-type-infos.h',
+>    'qapi-builtin-types.c',
+>    'qapi-builtin-types.h',
+>    'qapi-builtin-visit.c',
+> @@ -22,6 +24,10 @@ test_qapi_outputs =3D [
+>    'test-qapi-init-commands.h',
+>    'test-qapi-introspect.c',
+>    'test-qapi-introspect.h',
+> +  'test-qapi-type-infos-sub-sub-module.c',
+> +  'test-qapi-type-infos-sub-sub-module.h',
+> +  'test-qapi-type-infos.c',
+> +  'test-qapi-type-infos.h',
+>    'test-qapi-types-sub-sub-module.c',
+>    'test-qapi-types-sub-sub-module.h',
+>    'test-qapi-types.c',
+> diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+> index debff633ac1..b10f081554d 100644
+> --- a/tests/qapi-schema/meson.build
+> +++ b/tests/qapi-schema/meson.build
+> @@ -232,6 +232,7 @@ custom_target('QAPI doc',
+>                         'doc-good-qapi-init-commands.c', 'doc-good-qapi-i=
+nit-commands.h',
+>                         'doc-good-qapi-introspect.c', 'doc-good-qapi-intr=
+ospect.h',
+>                         'doc-good-qapi-types.c', 'doc-good-qapi-types.h',
+> +                       'doc-good-qapi-type-infos.c', 'doc-good-qapi-type=
+-infos.h',
+>                         'doc-good-qapi-visit.c', 'doc-good-qapi-visit.h' =
+],
+>                input: files('doc-good.json'),
+>                command: [ qapi_gen, '-o', meson.current_build_dir(),
+
+You add *type-infos* before *types* in some places, and after *types* in
+others.  I'd prefer same order everywhere.  Slight preference for
+before, so the order is alphabetical.
+
+You don't add them to qga/meson.build.  Makes sense; the guest agent has
+no use for them at this time.  They're still generated, though, which is
+fine, except "make clean" doesn't delete them.  Unclean :)
+
+Related: PATCH 04 generates files with bad names
+qapi-builtin-type-builtin-infos.[ch], PATCH 05 fixes them to
+qapi-builtin-type-infos.[ch], but "make clean" doesn't delete the bad
+ones.  Only "hurts" people compiling between PATCH 04 and 05, so no big
+deal.  I'd reorder to avoid this anyway.  The fix's commit message needs
+to be adjusted then.
+
+Similar dirtiness predates this series: qapi-features.[ch]
+qapi-commands.trace-events qapi-init-commands.trace-events.
 
 
