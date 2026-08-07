@@ -4,108 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2184C2A09B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92FFC5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKaj-0000VW-8P; Fri, 07 Aug 2026 09:26:29 -0400
+	id 1wsKbX-0001BJ-E2; Fri, 07 Aug 2026 09:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wsKaR-0000OW-UA
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:26:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbH-00014x-8O
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:03 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wsKaN-0007Nw-PJ
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:26:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786109165;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X+JNmJhEdAH5FUqIeeArybC46kMbU8Mgg9BJv0skx3Y=;
- b=PaDrGdEJPtFY5vy4p3GzqL8pDwktlUJX3V8Sszp+ne6I443gYHnLWH4Z8DKfJdsvds2KLD
- 2wTSFd6LrcuKgxEXMyP/0wPSjJtqnHZtFY49gNxJ1QZgbxOWxGUDeWN5+HfvYj5pZCYRku
- 7rAjMYNrl5gyMcD9FS226KZqt3xBuUM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-G121yu8bMripwi5MpEl3rg-1; Fri,
- 07 Aug 2026 09:25:55 -0400
-X-MC-Unique: G121yu8bMripwi5MpEl3rg-1
-X-Mimecast-MFC-AGG-ID: G121yu8bMripwi5MpEl3rg_1786109154
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60B9A1800578; Fri,  7 Aug 2026 13:25:54 +0000 (UTC)
-Received: from [100.90.56.12] (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5DE86426; Fri,  7 Aug 2026 13:25:53 +0000 (UTC)
-Message-ID: <b8cea56a-0039-4d65-afd8-132b14f3b744@redhat.com>
-Date: Fri, 7 Aug 2026 15:25:51 +0200
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbF-0007hD-Q2
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:03 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 46ED0600D8;
+ Fri,  7 Aug 2026 13:27:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677921F000E9;
+ Fri,  7 Aug 2026 13:26:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1786109220;
+ bh=wiInlw6k2zYuD+YRAQqnhjA7W0hWpiLsPyptXCDVL9g=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=mFb5Fkq3+TPxgUTK5VotPSnE15t63Py5ssGRRhh3m432n7u1D9FGP2K4xMb1bqeHz
+ qWQus/uyjUquFGOmvUs4dtT6LY0JUhnhysEC3oVbC49+dGkiyDiwD1odzEmhVTV1Xl
+ U3+8eJo4p6unx890eol7Qx88zTEGjbd7qWMVRoTQV2jyXWN05iqhAHHhJqXfor3Nb3
+ dUwzhINuKp7fB8+xIgcOIB/HTbcJpAHDtf71hnu9ENLg+CJI8e9duV953pHOKFqw6V
+ veQyJuSQns8ObRucZsahtspl9H0ApDc6GiYMnMSY4lmBXeR2x8YSl6ZfRMueWbfjjS
+ Kcz5Oe/cCpRGg==
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org,
+	Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, deller@gmx.de,
+ Laurent Vivier <laurent@vivier.eu>, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PULL 2/3] linux-user/sh4: Initialize the FPSCR register on signal
+Date: Fri,  7 Aug 2026 15:26:51 +0200
+Message-ID: <20260807132652.9687-3-deller@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260807132652.9687-1-deller@kernel.org>
+References: <20260807132652.9687-1-deller@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
-To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20260625155613.192643-1-scherer.simon89@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260625155613.192643-1-scherer.simon89@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
 X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,42 +70,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/26 17:56, Simon Scherer wrote:
-> The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
-> incorrect. Per the AMD manual the instruction encoding looks as follows:
-> 
-> EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
-> 
-> The /0 indicates that the "Reg" field of the ModR/M byte must be equal
-> to 0 and the XMM register operand is specified by the "R/M" field.
-> However, qemu incorrectly uses the "Reg" field to extract the register operand.
-> 
-> This patch instead extracts the XMM register operand from the "R/M"
-> field.
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-Thanks, I'll add a check that Reg is indeed 0.
+On the SH4 architecture, the instructions that perform single precision
+and double precision floating point operations are encoded in the same
+way. The bit PR in the FPSCR register determines if the CPU performs
+single or double operation.
 
-Paolo
+According to the ABI, the PR bit must be set at function entry and
+function exit.
 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/i386/tcg/decode-new.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index ac181308ca..acb300457c 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -605,7 +605,7 @@ static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
->   {
->       static const X86OpEntry opcodes_0F78[4] = {
->           {},
-> -        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
-> +        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
->           {},
->           X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
->       };
+GCC generates code that flips this bit as needed during function
+execution. If we get a signal, we must set the PR bit, so that the signal
+handler finds the bit in the expected state. Qemu lacked this logic, so
+that if the signal interrupts single-precision floating point
+calculation, the PR bit would be incorrectly clear at signal handler
+entry. If the signal handler performed some floating-point calculation,
+it would get incorrect result.
+
+This patch fixes the bug, by initializing the FPSCR register at signal
+entry. Note that we initialize the whole register, because the Linux
+kernel initializes the whole register too.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/sh4/signal.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 00290d6e40..7f246e750d 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -206,6 +206,8 @@ void setup_frame(int sig, struct target_sigaction *ka,
+         __put_user(set->sig[i + 1], &frame->extramask[i]);
+     }
+ 
++    regs->fpscr = FPSCR_PR;
++
+     /* Set up to return from userspace.  If provided, use a stub
+        already in userspace.  */
+     if (ka->sa_flags & TARGET_SA_RESTORER) {
+@@ -258,6 +260,8 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+         __put_user(set->sig[i], &frame->uc.tuc_sigmask.sig[i]);
+     }
+ 
++    regs->fpscr = FPSCR_PR;
++
+     /* Set up to return from userspace.  If provided, use a stub
+        already in userspace.  */
+     if (ka->sa_flags & TARGET_SA_RESTORER) {
+-- 
+2.54.0
 
 
