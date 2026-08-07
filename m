@@ -4,79 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E126FC5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 09:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CADC5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 09:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsGrr-00049o-FB; Fri, 07 Aug 2026 05:27:55 -0400
+	id 1wsHCk-0006RZ-CD; Fri, 07 Aug 2026 05:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsGrq-00049Q-7R
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:27:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsGro-0005a8-3O
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786094870;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Srqkj+gU7lIh2jdsDohaYTsCGp2UPYERlP+ycDtDo6w=;
- b=Ht/dajIKKE88TnYOk8yOeXGpxr+ebQDmqT4Yjv6hNhCqB2Yfu9V+CtUEdRWWMk7XgXxev+
- BmYgDFyyEZMpsGZGvyoKyxVVxqF2nujO/FxU/jll3Qiux+ketwWJxvBSkWQnIxmQpqQgqp
- hdh+yl2wrOsrqUKIghAeHl4xDaODMu8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-0QGRZnLUMea1JmABpCSejA-1; Fri,
- 07 Aug 2026 05:27:47 -0400
-X-MC-Unique: 0QGRZnLUMea1JmABpCSejA-1
-X-Mimecast-MFC-AGG-ID: 0QGRZnLUMea1JmABpCSejA_1786094866
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CC42195608B; Fri,  7 Aug 2026 09:27:45 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 214DC18005AC; Fri,  7 Aug 2026 09:27:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AF8BB21E6920; Fri, 07 Aug 2026 11:27:42 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 08/53] qapi/qom: add qapi-type field to
- ObjectPropertyInfo
-In-Reply-To: <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 16 Jun 2026 00:37:34 +0400")
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com>
-Date: Fri, 07 Aug 2026 11:27:42 +0200
-Message-ID: <87ik5mqnzl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1wsHCj-0006RE-3S
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:49:29 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1wsHCh-0000Hu-JP
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:49:28 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-84874b52eabso4282182b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 02:49:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786096166; x=1786700966; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+3VBkwCw6t8B4YZFfVBDh43NXf0CXsweVCe+7Wnt4r0=;
+ b=q7yJW1YqK76qj0AWNy+IQd195fK3N+AEA629ayAHnAWTUHoz+GSQ+pZwPpoyJZ1i4i
+ W87Eo6wrsP6KQwQgT+QxFdEaL4pOqep9sNOfgwnDHuos7/6k7wiYttuqFUsBmrBuZXWX
+ dEPKfVMIdEA4aKaR4jJaWK34pHwRo4JbNrAKw4V0FjiuvcKuLhvdivXxEbO3EDSrh+Gt
+ 90Y9ta54pfz2Y5IKlaqmQp/YWA79qsPIHZpal9b/rYGrqcg4Oe2SBjva8VOyid1XC0fL
+ +Vzv9z7gqd3EcRikARsRMhtNKVuve4i1G+mik5cOvBgG6gms3cvDosGc0Rvb8gjcr6+z
+ OHwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786096166; x=1786700966;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+3VBkwCw6t8B4YZFfVBDh43NXf0CXsweVCe+7Wnt4r0=;
+ b=nVRj3SNAdESn3+sHYCyLKdtr2hOONUrhfUUSurXzipamyZ/gDxRlqC0LZi4gc8AOnq
+ vtJ3nAW5SjUxmbGOG4W2unPcb2AqlQRV6jvr3RmzWcw0ZxR98YOh5L9mGOEMPB2xU8Y0
+ Uu1ZVfLpYk+Ki1x8a+QftmkXvoRe6ECqffFHg4F+kP4jMDyICetMlt29S1wdzR300vfF
+ I+rLntYpKRKqyi4nrUN/SGwIRYOxmnEx0cLWrblIz+kjrfbZUtALtFEVQdt9Wf5s66fF
+ fv6aJfomslmkviL90QLCe6W820/xis+vy6azBHl69vtI4K6FgVOLdcq2M43rqrygrPIx
+ r+xA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoOxcdq7mBFBur78+O+S2V6B2GoQrj7yj13TS7Qs6ejB1qyEqFyCvupCYWSFr9hIkEVR6wAvgM9XUJ1@nongnu.org
+X-Gm-Message-State: AOJu0YyxNrLN9Rlxg8Tg+oGAFOVgdOrvQW+mjvuJL7uin5kHKSZpXh47
+ kbbmJRxDjv+l3BD6X56TkKU0yEUb8XR75Ku/IZHikjZ52eNzeVHSnZtm
+X-Gm-Gg: AR+sD12u9xQEuEoRbj2dONzrpEpNVBo4Yfjqe4t9RKSTdQQCF4hbVB3Og//L2f7b+Ml
+ Q6VEk8LikpRIPFZPj4wugbfhuFu3sBDut0cZ81qDeYeXUZNRUa533a4SB3JYwP4fbdarAldUShd
+ U3OnQQFN68aEXvJjbk5yvGOYMtq2gOUKh8eT7hP1k9OvoY1n3FoNftcLYS9DyUPq02HTgr/NS/3
+ kMIYKNnnmdXghqtNjRudUfZpRhiPU4GpcMurq7+RZ0S679CsHmuMEUSz+GU3Cd2II1xSdBxebQL
+ ZsbjXqfS8+NOI2TibLXW+V7TmCbtPKMLi8XrpsBSFQpoesr2j5HBnyvmUqoc7tOZAAIb4rh1DxS
+ JyhAL4OwKCVjzBMtFYWKYvccjNNoHfwg5vyn/1sL5LWBu9RpIGf60NyQpiwlpno7A8Ghq92unw4
+ OaGRN3R2nxIsslHy3MHBAlnL/aU+IwSaouOJm00qwgZ5q6LpeL8kbfUlAYzQMR8Bzu
+X-Received: by 2002:a05:6a00:4b56:b0:847:8650:69cd with SMTP id
+ d2e1a72fcca58-84f5e0d2cbdmr2561907b3a.33.1786096165753; 
+ Fri, 07 Aug 2026 02:49:25 -0700 (PDT)
+Received: from [192.168.200.57] ([14.19.80.247])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cbe8f0ae02dsm467925a12.0.2026.08.07.02.49.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Aug 2026 02:49:25 -0700 (PDT)
+Message-ID: <33f15edb-9bce-4f12-b205-eaa4b4d5290d@gmail.com>
+Date: Fri, 7 Aug 2026 17:49:19 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v2 1/3] hw/char: add K230 DW 8250-compatible UART
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com>
+ <20260725-feat-k230-uart-v2-v2-1-d5fe82c47c28@gmail.com>
+ <d079904c-e1c7-4495-bb3c-88c133bf1508@oss.qualcomm.com>
+Content-Language: en-US
+From: zhenbaii <wxchen0913@gmail.com>
+In-Reply-To: <d079904c-e1c7-4495-bb3c-88c133bf1508@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=wxchen0913@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,101 +114,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-> Add an optional 'qapi-type' field to ObjectPropertyInfo and
-> ObjectPropertyValue. When present, it contains the masked type name that
-> can be looked up in query-qmp-schema output. Absent for properties
-> without a QAPI type association.
+Hi Daniel,
 
-Always absent at this point, isn't it?
+Thanks for the review!
 
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/qom.json | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+
+On 8/6/26 04:01, Daniel Henrique Barboza wrote:
+> I believe a helper like 'static bool k230_uart_receiver_status_int' that
+> encapsulates it is more idiomatic. 
+
+
+Agreed. I'll make it into a helper in v3.
+
+
+> If I have to make a guess I think these macros were being used as easy 
+> knobs to test
+> the emulation, i.e. manually enabling/disabling things in the header 
+> file, rebuilding
+> and see if the behaves as expected.  Which is of course fine, but 
+> unless we're
+> willing to make these knobs available to users (either by making these 
+> available during
+> ./configure or create device properties we can set in the command 
+> line) I think we
+> shouldn't use them in the logic since they're all hardwired.
 >
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index dd45ac1087c..a655be0beaa 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -35,6 +35,11 @@
-   ##
-   # @ObjectPropertyInfo:
-   #
-   # @name: the name of the property
-   #
-   # @type: the type of the property.  This will typically come in one of
-   #     four forms:
-   #
-   #     1) A primitive type such as 'u8', 'u16', 'bool', 'str', or
-   #        'double'.  These types are mapped to the appropriate JSON
-   #        type.
-   #
-   #     2) A child type in the form 'child<subtype>' where subtype is a
-   #        qdev device type name.  Child properties create the
-   #        composition tree.
-   #
-   #     3) A link type in the form 'link<subtype>' where subtype is a
->  #        qdev device type name.  Link properties form the device model
->  #        graph.
+> This is more pronounced down there in k230_uart_read().  We have this:
+>
+> > +            /* DLL accessible only when not busy. */
+> > +            ret = (K230_UART_16550_COMPATIBLE || 
+> !k230_uart_is_busy(s))
+> > +                  ? s->dll : 0;
+>
+> K230_UART_16550_COMPATIBLE is hardwired to 0, hence this is equal to:
+>
+> ret = !k230_uart_is_busy(s) ? s->dll : 0;
+>
+> I believe we have more instances where we have a hardwired macro being 
+> used
+> as conditionals in the logic.  We should eliminate all of them to make 
+> the
+> logic simpler.
 
-The description of @type is problematic, and will need an update at some
-time.
 
->  #
-> +# @qapi-type: if the property was registered with a QAPI type
-> +#     association, the type name as it appears in the output of
-> +#     ``query-qmp-schema``.  Absent for properties without a QAPI
-> +#     type association.  (since 11.1)
+Yes as you say I use them for testing the emulation. Indeed it shouldn't 
+be left in the logic. I will remove them in v3.
 
-Whether "the property was registered with a QAPI type association" is
-implementation detail.
 
-Maybe
+> These are all hardwired thus I recommend creating a macro in the 
+> header like
+> #define K230_UART_R_CPR (....)
+> that encapsulates this value. 
 
-   # @qapi-type: the name of the property's type name as it appears in
-   #     the output of ``query-qmp-schema``.  Absent if the type does not
-   #     occur there.  (since 11.2)
 
-This is inaccurate now --- it can also be absent when we haven't gotten
-around to fix the property --- but it hopefully becomes accurate soon,
-and should be good enough until then.
+Agreed. I will fix add K230_UART_R_CPR and the UCV macro in v3.
 
-> +#
->  # @description: if specified, the description of the property.
->  #
->  # @default-value: the default value, if any (since 5.0)
-> @@ -44,6 +49,7 @@
->  { 'struct': 'ObjectPropertyInfo',
->    'data': { 'name': 'str',
->              'type': 'str',
-> +            '*qapi-type': 'str',
->              '*description': 'str',
->              '*default-value': 'any' } }
->=20=20
-> @@ -55,6 +61,11 @@
->  # @type: the type of the property, as described in
->  #     `ObjectPropertyInfo`.
->  #
-> +# @qapi-type: if the property was registered with a QAPI type
-> +#     association, the type name as it appears in the output of
-> +#     ``query-qmp-schema``.  Absent for properties without a QAPI
-> +#     type association.  (since 11.1)
-> +#
 
-Likewise.
+Regards,
 
->  # @value: the value of the property.  Absent when the property cannot
->  #     be read.
->  #
-> @@ -63,6 +74,7 @@
->  { 'struct': 'ObjectPropertyValue',
->    'data': { 'name': 'str',
->              'type': 'str',
-> +            '*qapi-type': 'str',
->              '*value': 'any' } }
->=20=20
->  ##
+WX Chen
+
 
 
