@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07299C2A09B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66509C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKJe-0000vp-3n; Fri, 07 Aug 2026 09:08:54 -0400
+	id 1wsKKZ-000193-VZ; Fri, 07 Aug 2026 09:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsKJT-0000vG-10
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:08:40 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsKJQ-0003qz-UC
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:08:38 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-8228ed0081fso20109197b3.2
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:08:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786108115; cv=none;
- d=google.com; s=arc-20260327;
- b=qNM0H5V36SXISuAezgbIVmwwc2Ef6zf79VhkdXysp8M9FGLp+tV7dr0jO20AMJd8FP
- fFlkgBrRvgox/pgQf5W4ZhUggS6EqOQXqxjYgmzviSpNZzTf2pQPStUyj6q7cFFul0WS
- FgLDHh+Usjg4ZgsPf937dZ5iarWrXKBnIFC1wY/7SDwMADX5sypGQIKh74DIpI4oxCi1
- ADCdKnC79mlKz6vF62dWmtBVmAUslmTtFnlZhtKsor4wcmjrpCbTnt69F0MNM36PI3Ot
- fcrtPCP7gF8hcNlFdpXPc3er764Eo6a2SW8ucapMk0oBlMA1VpGv4VkMMNUQZruxSQj7
- zjlQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ZC1bpTzGtDOlOCPyTg9Zro82V4hMLSqK1OP0MQnP+8w=;
- fh=Byz0PHcDpfUh6gDZ2nqrGipMtb/BdgMohHzpZf8pAAM=;
- b=lFOuH9aih4BEe5vncP3+fcMHnQDTk39LV77/M3atbgOY5JEI6TThjw4SJ0+RHvsyJg
- 9rF9UWaZ6ZLEDopjBgOZMorjvKW9rECxqXnTUVmEhXIo2OfbvrQgEg0h1DNQUHeoTfeR
- ha+Ti5KRRVJ1hUj3eV2jJ0JAqH5m+GqO4QmHcDl8ZjvpIXXwpoLxXVa5SQXxMFBEYY7O
- RMyX0MxBElpPCWNKZ2JBH47uJawLDyiS3awIPYmR3uf6WdykpMimZHLvM0ra/PBKg/Qa
- AirHYLfAth4WMFkbxpV8XDp1Yu0HzJW8poJ7uhCCdCM3QaiigQcP7Ee6Wv9cbRkvQm9v
- uZeQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKKY-00018e-Iq
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:09:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKKW-000433-0X
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:09:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786108182;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=OpwT1ecUrzhIISy/FUgnI429GsWJm3GyAIgiZVaaQPg7rPh/ZQATtnGohhTNqA0I3GLDL2
+ ia8Cg70rFM+YR5lQa3UawMuuiK5kSTVB2k7GNgtVLZul0QjFL/duT3zkLaZx2RSEIApMDR
+ yPzwu65kVKnuHHMdGS8LtTa+RvtMn+8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-367-m-4WpA1nOUKjVHzncWkx_g-1; Fri, 07 Aug 2026 09:09:31 -0400
+X-MC-Unique: m-4WpA1nOUKjVHzncWkx_g-1
+X-Mimecast-MFC-AGG-ID: m-4WpA1nOUKjVHzncWkx_g_1786108170
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4954b1c6310so25813445e9.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786108115; x=1786712915; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=ZC1bpTzGtDOlOCPyTg9Zro82V4hMLSqK1OP0MQnP+8w=;
- b=RQD/ILfpXcG8KQpB8NlUnf9IYVQXcmZyW0bS25cJK/EioxBjsKb4gccBlggChZTT2P
- EN4M1twY4O/OTuSrhFYvEIA2ZSojrOZ0Bn/b9XtVuh2XrLylBqAiCcR8opR9r7t8jaHf
- qQBCEtE/2WTq/ApXfrkCI8oJ967aefMXwXEQ18ISCQNLjs2VPqZK9ptuUyNwXP7H4IKz
- KwmEJr5fsnMnfO88MGjaNn677coSH8EB7nAzXm/ADbb3F42r1wi6ys1EOTiNbs+ATxAM
- YgyQOcWZkkyF52G4a8YXiGPIzuVWZsXMyCmD521mzimyRPjfzTaXMZ6D6F+rtJ58X4sg
- pxvw==
+ d=redhat.com; s=google; t=1786108170; x=1786712970; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=rUPcPmwTbY+sfVCTx8R81SuvxHEUqVgIrgJ38TrzfbTUDZekmEKIQm0GfWfp7y5D9b
+ pzT0g7IEHHGI9DqfiYZFug6pd6YVY0KXwWXY7BScpwwz+iDq0Yh3NJmG5WjrIYRYnZcf
+ nk999IfBiPpfRWuuHBRgz5btRMVi6EgLuMQUVqUlQoR0Pr+Jv1DZIM7KtZvLHiMtof67
+ UMNPHAj1SjerCjMT7WcwRgXcmCShk0puvxDLNFH/t790ZIGglGI8HcwFxo9c8TNe8fvg
+ DoQ9+yrhy2TBW/56FuUppWQKNFC/mEdmsikWaHKWkEYbIg4vVBtPxE3nSShbejngyhny
+ ZA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786108115; x=1786712915;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ZC1bpTzGtDOlOCPyTg9Zro82V4hMLSqK1OP0MQnP+8w=;
- b=pg0+pxyStEE9tufC1w3NJYSV7PVfJ0VtQQmt1FxXlkpWe2NTH27dGQN5dMQEGo1Qve
- jNyFzGyOrfONvvfumn0j4+qw7JTT23ux78ohwwUQAntl7/uOK9i3uA8U29p6MLx7dG8A
- p/7Tldy8KZw00P2z1D8C7PY9AEQ1UsWsEuuApOPO3nrnqJ71UAz6Qqfz/ajm4WjUyFxJ
- C/YQ7feRs2Vqr3lvbSCr5jy/Ohzid7WHmjI1zlhydedLju2u2FE02OxNvl3+uMdkr1H9
- hmjGNVJdy6lFxlvR5+dhuMMJX7kjmzijN2A9nqqmOxjxmgIlNwLNrI74MrcQ6vbEignf
- UymA==
-X-Gm-Message-State: AOJu0Ywbd0mpHbup67dzHG2acJrlkqBhmZYesEvLtvcKSAWDNPQeOIs7
- N4EngSyqRhVancESZ7yEEVuETXEpvMxU2d+pL8ZVBg4aYS1OXzMIizhvTQnG/gCRM5e+GELgBGL
- 86e4hu6ulNEr8Se0LKENpfQTFaU3MJmuuRJw1hNT5ug==
-X-Gm-Gg: AR+sD10ZRQcHwc8MxWkcccp6nmp6AYgm+C0NioV7eeaHT/BI9h4mpWwu7g0cY5zq7+2
- Ws7hpqghoAMewYL7uvDdVuM/zumbrf7ZGZ26TwmwwtxPABq2k91bESMFgJvMpEp+ke4eP2U0mFU
- 2VXnxpBikAGb7MpgN++EM2zqPaDnm7646tygncPNfpR58NZoduqnoWrqr8uhdWGzbL9LOVZw7Fw
- u3bnlWJBrlXd3UB1UHzrVwlhIBB4o6h1epI0Gf4TS/4kku+xjh0u2ikQU8btsOkvin9jS8jieuW
- Dnl+wWJSFiNBxNoEQ5Jjvq7WRPyv6URoMBeCFkM3wuHY5L4RQwhuDtzg/sYZI5pY7DXZzHJjWad
- crfwlF30zE4lTivPBcFo3Rs7rtBBy
-X-Received: by 2002:a05:690c:9b0c:b0:824:a7ec:e33b with SMTP id
- 00721157ae682-82579bb0611mr1226627b3.34.1786108115263; Fri, 07 Aug 2026
- 06:08:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786108170; x=1786712970;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Cvxvtq9qlYAuapB7v1udLEKrJ5gG/g5GDwTo6B7uxKK4eiJVFKDuz2Ftya1+lonHgj
+ GxThVeeqThCiKLx+4GvqaYR3064S1WdOPfQTi8oUPvFHfP2CKvqxJpe+HQXxNhTyq3yY
+ Ijn3cjP5TmonASYp4aDQv9te+IaiDThsAiRt7KawNaiMIjVIi1ZdQjn2JhFbAsrpAGQn
+ 93YW+DP2vI5DdhurAYjfmWYxUsy1N5E/XLfnR2uJEvsTSNwZ1g3a/RPxmMRsqaizd/rO
+ +J2hR1z13l29QmB4+dAYXgVxVDSzVxzePYW3NTIaIE76avZ0kDEM4JHc/+3VfxhJ9bGW
+ b7wg==
+X-Gm-Message-State: AOJu0YxbRcZw6ABCDIMXnjQtUkSujkh7O50uGaBoyVsAy7rw6aUXF5Hf
+ rGo3GAM0P9odjDes0Ui6GodOcGPV/00zmwu2m+K6/3rej8UC0+KMHMRkCGuKhfU4Yk0Dt3mikTf
+ hOIVnCkioIBaBZHvG+nijxdOktBjC29QVj5NPNkI0NfZFoYQO4hRkhIsw
+X-Gm-Gg: AR+sD12gLfH1uJwEpU3sH8iA5LlaUxsCLmATTKkMmm+S1lBhrAEKmp+qfUdg1fDcXE+
+ X9IrOwbmCmc2a0Z3evJ+DbOFacm5i1a9EcJmYKfr9xuOEfNi9xFPR5tL0OYseZ6WL2PH3LVLhjj
+ iQNNyp/afpC7kYJNLZU+lws/Q/BUQXyXp5AZEELTLkt8y9uwF+EgLza1RCJMGWRQiMeSUDCR0ui
+ MOP51uKH84nEFsHq2eAfFtlnXCX2PJN1zu3+PDDjVamp4G0O/CBVL1YTB2fdK0DUQl7mbrV3Zmz
+ EDYglRbQE8fBN64zCtIWyIq9ItfJNMmw8SMX3DNidJRUcoZXczW+dK8PE/5sQrA4Hf7PR35vuvq
+ +sH4xbyBIEyh0EzG7XcU7H6o4X4CkOl+Ox/+MtL2labruvqdR5Hpyy/Pfg3+/cP4mbQcl7Kg/zD
+ l/p/c=
+X-Received: by 2002:a05:600c:6a8a:b0:498:ee7:e407 with SMTP id
+ 5b1f17b1804b1-4994e7d3f2fmr258466655e9.17.1786108170068; 
+ Fri, 07 Aug 2026 06:09:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:6a8a:b0:498:ee7:e407 with SMTP id
+ 5b1f17b1804b1-4994e7d3f2fmr258466035e9.17.1786108169666; 
+ Fri, 07 Aug 2026 06:09:29 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.34.92])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48002150804sm5511249f8f.13.2026.08.07.06.09.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Aug 2026 06:09:29 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Simon Scherer <scherer.simon89@gmail.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org
+Subject: Re: [PATCH v2] target/i386: Clear OF, SF, and AF for fcomi/fucomi
+Date: Fri,  7 Aug 2026 15:09:27 +0200
+Message-ID: <20260807130927.2604124-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260807062831.19618-1-scherer.simon89@gmail.com>
+References: 
 MIME-Version: 1.0
-References: <20260803041808.58174-1-guobin@linux.alibaba.com>
-In-Reply-To: <20260803041808.58174-1-guobin@linux.alibaba.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Aug 2026 14:08:24 +0100
-X-Gm-Features: AUfX_mwRzQV065_6Rnf5Wuh958xPpZHtclr84h7SwcG6EZ1XiWjyuBymXfepm8M
-Message-ID: <CAFEAcA-P6RH7nJK0KQ1H8576ULFA7nocB0EkhhZf6Rw3g0WCag@mail.gmail.com>
-Subject: Re: [PATCH] hw/block/pflash_cfi01: Restore ROMD mode after migration
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,66 +119,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Aug 2026 at 05:19, Bin Guo <guobin@linux.alibaba.com> wrote:
->
-> pflash_post_load() did not restore the ROMD mode of the memory region.
-> Although cmd and wcycle are migrated, the destination retains the
-> default ROMD = true from realize.  When the source was in a non-array
-> mode (e.g. ID read, cmd = 0x90), reads on the destination bypass
-> pflash_read() via the ROM fast path and return raw storage bytes
-> instead of the command-specific response.
->
-> Derive ROMD from the migrated cmd/wcycle in pflash_post_load.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4042
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->  hw/block/pflash_cfi01.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-> index 5b9ddb20b1..a13b91967e 100644
-> --- a/hw/block/pflash_cfi01.c
-> +++ b/hw/block/pflash_cfi01.c
-> @@ -1030,6 +1030,16 @@ static int pflash_post_load(void *opaque, int version_id)
->  {
->      PFlashCFI01 *pfl = opaque;
->
-> +    /*
-> +     * ROMD mode is not in the VMState; derive it from the migrated
-> +     * cmd and wcycle.  Only (wcycle == 0, cmd == 0x00) is read-array.
-> +     */
-> +    if (pfl->wcycle == 0 && pfl->cmd == 0x00) {
-> +        memory_region_rom_device_set_romd(&pfl->mem, true);
-> +    } else {
-> +        memory_region_rom_device_set_romd(&pfl->mem, false);
-> +    }
+Queued, thanks.
 
-Confirming that this is correct is a bit tricky. It relies on:
- * when we set romd mode to true we also set wcycle = 0, cmd = 0
-   (which we do, in reset and in the mode_read_array code)
- * when we set romd mode to false at the top of pflash_write(),
-   all paths out of that function either go through the mode_read_array
-   path, or else update pfl->cmd to something non-zero
- * nowhere outside pflash_write() udpates cmd or wcycle except
-   for the "clear them to 0 and set romd mode" places
+Paolo
 
-This is almost but not quite true. In pflash_read(), the default
-case for the pfl->cmd switch sets wcycle = 0 cmd = 0 but doesn't
-change the romd state. Luckily the "this should never happen"
-comment is true -- there's no way to get a pfl->cmd that falls
-into the default (except for being deliberately fed a bogus value
-via inbound migration).
-
-It might be worth having that pflash_read() code also set the
-romd mode when it clears wcycle and cmd, to make the invariant
-more clearly preserved.
-
-But this patch is correct, so:
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
