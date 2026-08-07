@@ -4,99 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FF8C5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 100FCC2A09B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKAd-0007J5-9U; Fri, 07 Aug 2026 08:59:31 -0400
+	id 1wsKDf-0007uS-SN; Fri, 07 Aug 2026 09:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wsKAc-0007In-0q
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:59:30 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKDb-0007sZ-GZ
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:02:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wsKAa-0001CF-3q
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:59:29 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wsKDZ-0001xs-6R
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:02:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786107566;
+ s=mimecast20190719; t=1786107751;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
- b=PZ1DU8FXTn/uJgmCugQuODzVo0kwikhCBGdSmOJ9V1yNRcPRLwdMKyWjs+EGePYCDUxdHi
- 30Q4D8XsadVfiak2le6+7jUV8DFK5LPUH4WEs6yrxip3UVNUshpkpwKqAKoqyoXFkjekCY
- /Ij8ehzVH/uMgg9+ShGmKC5aqmK4qAo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=niWwnaQNGy1KDUNQ6iEFjPqLRtGRvwhejogbSwcampw=;
+ b=ezvgaYNH2sRqSxdAnwMjxRrJt1AMgeVKr/kblkHqVxT55dXaz88O5ED2omPNhWekju7+Tb
+ dquCFt47bFqJxF3tD3te+k0jTDUwz/YZZPuEcrsAOTAC3wZ5XCchTvK5WoeD+2a6o+mo07
+ LkBf06pkuKOS74hs2OlPfg1B6M9Fedw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-HmvQmV98NCuV0Ynt4Di1MQ-1; Fri, 07 Aug 2026 08:59:25 -0400
-X-MC-Unique: HmvQmV98NCuV0Ynt4Di1MQ-1
-X-Mimecast-MFC-AGG-ID: HmvQmV98NCuV0Ynt4Di1MQ_1786107564
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8eeba1d9e47so28408256d6.2
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 05:59:25 -0700 (PDT)
+ us-mta-407-bIDYYKJTPw6_8f6mKhqW4g-1; Fri, 07 Aug 2026 09:02:28 -0400
+X-MC-Unique: bIDYYKJTPw6_8f6mKhqW4g-1
+X-Mimecast-MFC-AGG-ID: bIDYYKJTPw6_8f6mKhqW4g_1786107747
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47fe85684b9so2757773f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:02:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786107747; cv=none;
+ d=google.com; s=arc-20260327;
+ b=C6jz7IkmSL27Ip5l8D8s16PEAXZ0riaaciqfLu94rCKJ9dIwowY0n0jLVjmD9dv6hW
+ N5uQet78cF5gpBtKcTjAya3HSgwq9F9KeD+5E/5+gEi/Stv/0M9/nupzAhSTLtvg4cSJ
+ OC4bEbDvLYoevDJesD1yB9XdUPTqcxUy8oMSm7egw+gxjsXn3dLdWgXUohHRWxmg1wrY
+ d/TLIRPpLfsSbv51Ogs7VqZIHtldwZMsVvB2QBtaLfmoLVgmGI+mL/CzJjmb9zv1wAb/
+ ad7PofsrPKmwlVwF1PsTy48itJftB7DizxppgzBC6U99M3VXZRTap0NP5q80AdmjAsEL
+ M1HQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=niWwnaQNGy1KDUNQ6iEFjPqLRtGRvwhejogbSwcampw=;
+ fh=Xm1ao//qklFdOPp89/6xUzCVv6E/EI6O1lKNAzhngcE=;
+ b=nsIJ7xvNMxUtCGTpeH4hEaBDx5+elSO9UcYTlHfsHAissKCo+UOsHmC43OtPvQBi11
+ hDWUajgVx3TBfwol7q4uUY+L9O4BLesm/goVf8tAYVladhqBNeKh+ojsHFETh3deEqqE
+ 5a1/IYEPjmv4Y2AFZCwQYXVbKuphq94ZZgrMfZTpZV7V9YNXIsQ7sNQJZQzaadrhGjgJ
+ EhAbe+t2ldOFbAFGQCwdLiyEs9P5nmYC1edFQ1pvbYCkAvK+Q/C5BUQR0Hg8+fYqJBml
+ Ub5HcIwuNaZi062u8o2DfTcx0/waeuf1ALfKPQiTWbo5TAxCMvkkrW/7ApH6O0FBqV8S
+ YoMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786107564; x=1786712364; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=redhat.com; s=google; t=1786107747; x=1786712547; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
- b=PzlAKg5QP9X32fJrFQbCUa1uci2SMK1zXKECUtmHRqCBz6rb3WjcupcyAQ3B98RhLF
- HS12LAQyuREYk/1nHKA1NJe5PPhMQat3UdQHZoiS1yhslw2zP4Fr2NzmELjnoq2XnWIb
- iaQQrv2iRtFdd0swiWBqot1lYfV7zFsnGByN9Z7vwQHSKsNE8DqR9IXZ+PUwoyjRayKS
- GXqXQrcwVunGFttfZwqyOmGJVwdSlcCKJZN6Uf7aRAzcSDpQsjzSu51cbLktjRSqYmn0
- exvMNua9imZROrIekmFzPi7c0EE5714xQ4YIn572w/WFUyJfOkKxe5d6BUkw8Q7x9NbR
- dayA==
+ bh=niWwnaQNGy1KDUNQ6iEFjPqLRtGRvwhejogbSwcampw=;
+ b=SrOrEk3z/l/9n1GkTy8PbKW3bwNTFLl1KgLsXg4w0J1UPLSl3/kG4HRIE2z+rD4/ic
+ DU+Sx574nlcz7mIFkvNp+qyypO1i7UiJiko47q/M0cq/nhiM1Tx5nVPiFraxrZV30BaA
+ m77WZtlaas79CzHIx7LN+bqtgPu/nRmp+O7JHkjDbdHxe6CR4CcL6lmtg3Z/rkwnO4Y7
+ wM+dMcOWb/LTT5ahc3wNpFVrZnIpY4IQIodsJztnY4sZCKfqOlHtYgnPDhvT+m3ZjtHy
+ rL/Q4wi0GbOXt862ReC9oktZNM6ZQBKw8wOMlFag/h3NOM6IPylF0KPHGAxz2MH+WhLu
+ 6NiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786107564; x=1786712364;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1786107747; x=1786712547;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
- b=iPWO4lktc7SVUxQBkMkGYLvh+ZXT/SrDfF5KSTqoQ0z+zo5l4HdWSHNGfUp7UzMaP6
- 1ug3twzK7u4xK2GCjrNmAPPNuzrgHWQClAJkaNR9d3Qa71wq5KNdUojtCSkRepyEQH7T
- HlCI51PJxB5vBIVSWOjGRpHSpO9KwpwprEfdv3VpFCHIHraJIaQ7xXlK1Ddv1KpUGq2U
- 0fwWMt84UiX1B8qqGU0rXFyDV8hCYRuG2mLW+pkvo/m4/g2WrFpqf3Pn7UtMBt1QOsfw
- HJVXURAS9/tkirxuI8K7e1lOGwhq8+kcll5vQTpuJLHTSBu1G2YpJ5DeSQBuSA7WS50U
- 7ugg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr4JaTGslDpef63JIhZ/tpkmcVgxNbyM1MVwzUWsK2fU8+fJnIIHKEPbJ2P7raWnRXocJhEwXipKPDO@nongnu.org
-X-Gm-Message-State: AOJu0YwBfavxEXYKr15aiThBBjz7JI9Iweworq35sheQwEAWaWEtm0fP
- /RqRC10Oe+MSJnN5CEs6vZH8cER8wiC3uRUrmNJ0iP0Vuu9p3NhLTIDTMlj5EeWabhm3hFFVmcD
- vhvY2x2BiF8gKEAiv+RT9KxpE6g+DDJLc+tyCbFQw4h5ZjdHEbNyqo+wz
-X-Gm-Gg: AR+sD13PvhhixKIg4wAyrfknCPDD4ZdNmtLFlUM9lUg8Nu+2V5RT7hlJhcGBdjgQrYw
- A0wMdPlR1WJsQaPyQsCdZSA15NFyYio4o0GvzK0esDi1C0w9pqxcodB/SsD6v25sTwdbdSDsBYP
- jtuLWXV3mjEH5Xgzj6PZJzQyKwZDXAGoExV1dhzi50rg8KaNFwdKXgTfKc0o3nB7oI/bv61I5xF
- pRZh9m9u8PyNKbWBMoplrSwsLU6ZABq+6u9ET3c5affOKU/iyLc+j4xKBs+z7mWPgCpxYHllDLh
- 6r2M52Gdv7a6qmEHWXf1GJI4J1uOacDrJvyBCaZC46DnsIOTZSEaCM3rvdm/jN8zOryP
-X-Received: by 2002:ad4:5c8b:0:b0:8f7:40b8:e8ab with SMTP id
- 6a1803df08f44-9088108f7dfmr250634196d6.3.1786107564490; 
- Fri, 07 Aug 2026 05:59:24 -0700 (PDT)
-X-Received: by 2002:ad4:5c8b:0:b0:8f7:40b8:e8ab with SMTP id
- 6a1803df08f44-9088108f7dfmr250633416d6.3.1786107563921; 
- Fri, 07 Aug 2026 05:59:23 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-908a9331213sm8059546d6.41.2026.08.07.05.59.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Aug 2026 05:59:23 -0700 (PDT)
-Date: Fri, 7 Aug 2026 08:59:11 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org, kraxel@redhat.com
-Subject: Re: [PATCH v4 04/11] system/memory: add a tracepoint for
- memory_region_finalize
-Message-ID: <anXWn4-q92ZUULDb@x1.local>
-References: <20260807052559.50643-1-anisinha@redhat.com>
- <20260807052559.50643-5-anisinha@redhat.com>
+ bh=niWwnaQNGy1KDUNQ6iEFjPqLRtGRvwhejogbSwcampw=;
+ b=bswH7Tm69wONpVgbOZKV2e9v7J/M+qnrv34XroJY0FZdcR3ZXdxPO35Bk1H/sQfpIG
+ ivIDwxXDYmy4rCSPssZP9y6RmDoPaJdT1DOkPyLAeczwsseiBAeNyc9kklI3ZSnZGCZc
+ MXbLoUqotN7MOQjQFRnMwhOQCLPcIVxe2EqxlZNR9FeDZYTy9owBtVxRIN8H/GEJC6iy
+ Utrd4oJ17y8o92YKVbk517JQeSSDgSoAYdi8keejvzuknvEtSt4F7fapRLC7hgbIh19a
+ 8OG4z23mmTYVp/0IsHlV5qbo+1GyOLtmsmnkE9nEx0V8RSZd0xrFuvwLXOOAfJKuUJPg
+ 1YvQ==
+X-Gm-Message-State: AOJu0YzFThLNpVp7WxIDdLsqvs6i5W0QD9ooyjQRL1+WLK9RgFY9/8Pd
+ s2jUxyLo/iQEDy42HzbaTvB2/5v2i92zU1BZAIFfIIECtIFbdZVJ+x8OPz8c/sNKXsAxWWhdStH
+ zGYUcdl9e+t7Ay9818GijIMJd1koPvDhN9MF5HOSlZuUCgVxyem+11czCW72kb7Bp3EmUvjBiUR
+ yTPe9ZmFnd+3dI7fXoXlPED08adrXQShc8B7mPngpLyA==
+X-Gm-Gg: AR+sD10E6/2X4cugLtzpIwQVBUgLnvKDDOLhtIgRiX2QhqB/Jd8Pt93xmQN9W2hEHTi
+ bMPtrDZU5ckda1He2i3if0iQzgDyA4l1/SSXIYnm9LLc0cQlv7Za7krYKPfNFLQIKzy4nk2To+Z
+ goep4uwg8+3DyXFpGEQ8oXepgZ6wHLtw26coQ8P/hLo+cfLjiSry3XToSZQqPV4D2eAh2vEG9ix
+ d3YDtfc2LfAYIif2uWUzuBTcVkZzIJ+gHUkO31m2MeMBk5K+6XkExnm/Ic=
+X-Received: by 2002:a05:6000:2989:20b0:47f:ece1:5d with SMTP id
+ ffacd0b85a97d-47fece100b6mr29703360f8f.27.1786107747268; 
+ Fri, 07 Aug 2026 06:02:27 -0700 (PDT)
+X-Received: by 2002:a05:6000:2989:20b0:47f:ece1:5d with SMTP id
+ ffacd0b85a97d-47fece100b6mr29703292f8f.27.1786107746870; Fri, 07 Aug 2026
+ 06:02:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260807052559.50643-5-anisinha@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20260724130044.1369843-1-pbonzini@redhat.com>
+ <20260724130044.1369843-2-pbonzini@redhat.com>
+ <87a4rf61e9.fsf@pond.sub.org>
+ <CABgObfaAnbH6eV3Gu305KjNBN9MCJN0TwPbbrE2ZkMWO4Mcxcg@mail.gmail.com>
+ <87qzkozskq.fsf@pond.sub.org>
+ <69be7bb2-cc30-4788-8bb5-6a6c51a65bb9@redhat.com>
+ <87ldajwx5p.fsf@pond.sub.org>
+In-Reply-To: <87ldajwx5p.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 7 Aug 2026 15:02:14 +0200
+X-Gm-Features: AUfX_mw1rpCBrnOGXET8nhOZuFexJDChnnerUY75Z6g3etVzr_YUNQtHUYWWq1A
+Message-ID: <CABgObfbOVY5mpyhxQHOCvVDZkOHgTK=SmJ-gQ3A6_4Ywhhew_Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] scripts/qapi: enum with conditional first item must
+ be optional
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
@@ -120,15 +142,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 07, 2026 at 10:55:46AM +0530, Ani Sinha wrote:
-> cosmetic: add a tracepoint to track when memory regions are getting freed.
-> Useful for debugging and tracking all freed memory regions.
-> 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+On Thu, Aug 6, 2026 at 9:01=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+> >                Qcow2CompressionType could grow one in case zlib option
+> > becomes mandatory.
+>
+> Do you mean "becomes optional?"
+>
+> Note that @zlib can't become optional without a compatibility break,
+> because @compression-type defaults to it in BlockdevCreateOptionsQcow2.
+>
+> Moreover, Qcow2CompressionType needs members, because @compression-type
+> is mandatory in ImageInfoSpecificQCow2.
+>
+> [...]
+>
+> > BlockExportType is the most potentially problematic, because it does
+> > not make sense to have 'none' there.
+>
+> BlockExportType also needs members, because BlockExportOptions and
+> BlockExportInfo have a mandatory member @type of BlockExportType.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+That would only mean you can't construct a valid one; but it would be
+dead code, not an error.
 
--- 
-Peter Xu
+> Joking aside, I wouldn't call it a feature, because "feature" implies
+> "good for something".  "Bug" implies "has some undesirable effect".  If
+> we volunteer for the mission "don't let the programmer specify useless
+> interfaces", then this is a bug.  If we go "you're asking for rope, have
+> some" instead, it's not.
+
+There's some advantage in avoiding #ifdefs of this kind:
+
+#if defined CONFIG_FOO1 || defined CONFIG_FOO2 || defined CONFIG_FOO3
+#define CONFIG_FOO_AVAILABLE
+#endif
+
+and let other stuff compile; sometimes even if you cannot rely on dead
+code elimination of some sort (which could be *another* language
+problem).
+
+But as you said, this was indeed a bit of an excursion into the weeds.
+
+> >> * Forbid empty enums [PATCH 2].  They are allowed simply because I nev=
+er
+> >>   found a compelling reason to forbid them.  Yes, they're useless, but
+> >>   users can figure that out without the QAPI generator insisting.
+> >>
+> >>   Does forbidding them help Rust?
+> >
+> > Somewhat; I cannot generate Default::default() for them.  It would be
+> > easy enough to skip generation of that method, but you'd still get a
+> > Rust compilation error if you put them in a struct.
+> >
+> > IMO this is telling us that empty enums should indeed fail to compile
+> > even earlier, in the QAPI schema generator.
+> >
+> > Empty enum types cannot be created, and neither can any structs or
+> > commands they contain.  There's simply no way to have code that refers
+> > to them, unless they're wrapped in something else that lets the code
+> > pretend they can exist: for example you can make a field optional and
+> > write "None" for it.
+> >
+> > With conditionally empty enums, this at least makes sense as a concept;=
+ on the other hand I just don't see the point in unconditionally empty enum=
+s, even if they're optional, so I left them out.
+>
+> If forbidding empty enums makes Rust generation simpler or easier,
+> that's a compelling reason, isn't it?
+>
+> You should mention the Rust reason(s) in the commit message then.
+
+Rust can live with it.  I'm just taking a clue from the language.
+
+> I might have banned conditional first members from the start if I had
+> thought out things back then.
+
+Ok, then let's do it.
+
+Paolo
 
 
