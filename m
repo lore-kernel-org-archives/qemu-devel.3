@@ -4,99 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF40C2A09B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621C1C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsNd0-0001eV-Ix; Fri, 07 Aug 2026 12:41:02 -0400
+	id 1wsNd6-0001mB-Na; Fri, 07 Aug 2026 12:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wzy15515798875@gmail.com>)
- id 1wsMVk-0004ZC-9D
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 11:29:28 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wzy15515798875@gmail.com>)
- id 1wsMVh-0007R3-Fp
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 11:29:28 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2ce7d2adef4so52488545ad.3
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 08:29:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsNd4-0001l1-LM
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:41:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsNd1-0003q5-Qh
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:41:06 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 677GOFDs1149865
+ for <qemu-devel@nongnu.org>; Fri, 7 Aug 2026 16:41:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ PcumGsmvmvxvWZt6EQnxRugUtRGODPJixspYkK0rgKc=; b=Aopc2FoO7wRG7wxA
+ IUUGuLGA8rteAShXQbIKwny1912QpD0wdqMHJXcm0ptfWdJxOTud4a7pLhhHIc4C
+ Lak1+J+uZbylG683Yo+YaslMHIRIt19MvVrvDGatYYhsJFicgOHZAPsqv7zmC9kX
+ r64RQYV5Pm8WUhmnEbuejwNbiJCsBwr6KWtcb0/FGx+qJHbVElinbdEIUbYmnGCx
+ Pvz7lMw+uuVI9MT3MfyoLUhUgkxu5cX92hqE8+CWgVj4Gwm2Llxf1bmOu32XtNHD
+ FNjJIfVITbVA8aBOVYIRjrt+ZN127QoslNwprUw4hN4jj39pcM2dZrPSFNjTJipy
+ eMRD3w==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fwhk3genm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 16:41:02 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51c1b4d961dso19179711cf.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 09:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786116564; x=1786721364; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WRT7Ht2mEENkwBrIlmhqK7G+z/zY98Xv2eh9U+KRqmw=;
- b=H1Ud0nzS9R76fv183XdSoeSqRD9jB2ctPt44D3B3BzCwFGRWxWCMimQlKkFupv8Tw8
- PByRIhHWQMlbaWdd+0u7PZx3+0t191mANgKc1BS0Tupj/E5FJC/8Nof/d5J5H3xZVva7
- lCFa2e319aMsVlBaAx//QF4y+OaZE5VFfoI2NKiiktEXYocRXV3HqTqW8lxoFru/tgjj
- 5BwivcPR4/DwVcj6pd0EYYhh1NOkzAVYeHsuSPGxWo5elP6wVLT5s8Mo9Abl+j/BPF0E
- cOLaf38ze+vP1qKPK75Ne7mnBIyF3H3kMBKBhxG+b5ZRqR/85J/qv1LHKBUlr55osRyC
- rD/Q==
+ d=oss.qualcomm.com; s=google; t=1786120861; x=1786725661; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PcumGsmvmvxvWZt6EQnxRugUtRGODPJixspYkK0rgKc=;
+ b=SErxqM4fdyJmm+61XwWCa4U2bWDVLvYuw4/FDJToWgoXxCEWHjZVpuwRpHuk5VLR3H
+ qoqVsNN3TuT8kV0bie6IEKPSGlKzawxMD5Hl5xo+EdrRQ2ZUyOB/7LrqDGFZQns97981
+ CUNqRMI9fAiDF+vrem6fH7yjIdlPgaLhdD3FjelIOEDlBl53RndrPmDdNGfELpzKdgBd
+ gwv85QWksHHqiLCOXSSMFLe686Sdo9ADRpo1UwnzkBsgZEiOVc2krxRm5AEr+A8GOmfH
+ Pk6tWoCFwPz42qPPRO/fElvDlQhOTeQb8kNXAaU1MjiuX6newEGMUQvNSwxmkZ4jyZqx
+ +ORw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786116564; x=1786721364;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WRT7Ht2mEENkwBrIlmhqK7G+z/zY98Xv2eh9U+KRqmw=;
- b=XxxmSXcQdIc2Cq6AcTIWAjzCI60p4EwpG9aU793Pkwd2QUQ58u/17e0jt4lyfN8DC9
- VxVPmH8RCGDvdtU0XkQJXg+b//G6tnnaflZeGXtO8EqUKTmv4kBhzAcxqVAQc6WwUKFo
- Q+8FzgDWZNKeowW/H4+1w7ywCWDQYvP/chsOeYFgw5HCy/+LNtygn12PT6+yYMupwIjO
- yteYPPZS4SgerSZBj2MxqPdVP+CqISBdhULtjHyWOXEkH8i2NABvLRHW3HOTpfNlxej3
- RXJIArqd37D3/zhNawNUKZQaFPBjgMtCK05Nav2FAE/5UCydE359oeTs65yw39gdFAUc
- jAYg==
-X-Gm-Message-State: AOJu0YxRWTgzC/c10euQqiZ9l5dZRqUxLEi32u+/1eLydeHsIo7InrUz
- 4vWD0ifHHGFsN9BlkcNVt4wbv+wWX3rFabdZW+jn3eXK7wcfvLXHCu/W
-X-Gm-Gg: AR+sD10xlKboZ3BeD8/uKdY6T2uSfAKo9G72WNcDHhw6gjfGoy5Mm/w3qKilEsbAIUM
- CSKLIavV0USee8UiaeAt2UxgMMpt9YzWIIpRvTM+aYyWqbOMCMFBBkZpSlR7P2mfKEAFUngoomZ
- IYc+utjkbaioL2Csn/a7D1/zzDl/hr1xHuRBh5d5KsXZwNRR+n8DlQlcnlUVQ99435D0JVr1IpJ
- PKnY9aGfVSsi11X0RGiwgl3Cv6td1AboHvMor5VehdzddHJeheHKG/+UNAcg786ciaYPGnBO0uA
- s2w7P/469sH+C9Yyq9cJz7fSXYcBaiKsJW2/Pb3VQQ3AeREyZ8GsbGk1+/eK1gn/RnV+iYe2kLZ
- ++tgM58IvGrsYgVbjRUAMS5liWrRtpWxRsR01oZgCYyN8bq8RxY9dh65fzzok4nEd2DO+QBFTsD
- MSaiwfkgNBUKgJbwYBkWMdDNv84lcr2SOpA3tAk0xngLobpHpLQZx/ky2cALsZ/uzAuhOAohn7o
- Gb+oghE0Ds=
-X-Received: by 2002:a17:903:3b87:b0:2ce:93a3:c168 with SMTP id
- d9443c01a7336-2d294b4b57bmr63393675ad.7.1786116564065; 
- Fri, 07 Aug 2026 08:29:24 -0700 (PDT)
-Received: from localhost.localdomain
- ([2406:da14:1cf8:d800:471c:a879:4603:554f])
+ d=1e100.net; s=20251104; t=1786120861; x=1786725661;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PcumGsmvmvxvWZt6EQnxRugUtRGODPJixspYkK0rgKc=;
+ b=amKVXuUJEW4pcrcWjGd4eVjvtnUDwDs8Sg/UL7TOY7R8qHiC/o4AxUvHtJGCHLqJ4/
+ MRjZp/6Pk9kvMsIeRR9BVfBvvkAwNunKZksaTDMGq1OFqJr9BetMzVxsUsZveFJneRta
+ 5YuxItc1b07Gbx1NHBHksXBf0kWjUk5tpTRhNL07/oI0S3H8uNZg2Fv4JyfPjDj3GF5w
+ RsRk88yFotjCfJaytRCxsqmOhpWpcMAESswVeGTtU9UhSLbZbIKroi2UPcyxZ3pVWlVv
+ ENTnl5IKhzdwJUe+xtfSoYCLONDpa6KmUVbcInbFMU+YSr1f9sQv4ItbmJkcdD3EIELW
+ p9bQ==
+X-Gm-Message-State: AOJu0YwxcbXemx+it0hq50thysYfV4fo3i+2qrJ8vj6eVqe8bvwtG3nw
+ 9uAnE6jUdGpAXxdx6tsGxPrI++dnUkMboX93ExtS7jpuZV9ZXmfES6skylNFdbHiBPwFkAuxIMI
+ eAB3SH4T8K+toFGZTY/zRVspB13+3PanXxMHzSGeYvH+jblGFNzHs4DSUxA==
+X-Gm-Gg: AR+sD10rl7VBVOq1b3me5sHG4WIrycUK9naKcdasBVhs5m5T9elnilm5ZBFIKaBg/rG
+ +oaw4gAvCyHEZGkOFX1GI6f9ZWCFmSp4UIwc4cCuj/td7LlKk9P279uaW3EGsy53FIUhD3RPj2o
+ iJwUeRy2n/5W975XtClL5a9ecoqn3dL24Hc7FoTcmBi84sjOBVgNzbiTYwh2MTOKHG/dyVZuaAh
+ 31/osTrh8kH/kNBX8VHvdIpAq9SIlWbBZTfOuEASRXEjWT4b9hMJ+LtdW4Bn8tBPUGC6VuYvl/2
+ xNWnHC9xd/EMgC9oLWHh1FqexPcXdribxzDD+TFg98j76Y2WX1fW4VIU+sMmAeEulPnvkI6TL8d
+ q307a7KgCvM7trIsk9rypCNuFJjWhrAt1PpzE
+X-Received: by 2002:ac8:5949:0:b0:51b:e946:45cd with SMTP id
+ d75a77b69052e-52d218e82e5mr15110151cf.14.1786120860808; 
+ Fri, 07 Aug 2026 09:41:00 -0700 (PDT)
+X-Received: by 2002:ac8:5949:0:b0:51b:e946:45cd with SMTP id
+ d75a77b69052e-52d218e82e5mr15109121cf.14.1786120860251; 
+ Fri, 07 Aug 2026 09:41:00 -0700 (PDT)
+Received: from [192.168.68.104] ([187.11.154.152])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d14ccae6f8sm10953895ad.1.2026.08.07.08.29.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Aug 2026 08:29:23 -0700 (PDT)
-From: Wang Zhongyu <wzy15515798875@gmail.com>
-To: Chao Liu <chao.liu@processmission.com>
+ d75a77b69052e-52d1659c1d8sm15807131cf.16.2026.08.07.09.40.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Aug 2026 09:40:59 -0700 (PDT)
+Message-ID: <dbe4c9c0-b202-4265-bdcc-6f900409a972@oss.qualcomm.com>
+Date: Fri, 7 Aug 2026 13:40:55 -0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] tests/qtest: expand K230 I2C controller tests
+To: Wang Zhongyu <wzy15515798875@gmail.com>,
+ Chao Liu <chao.liu@processmission.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 5/5] tests/qtest: test K230 I2C transfers with slave devices
-Date: Fri,  7 Aug 2026 23:28:30 +0800
-Message-ID: <20260807152830.6833-6-wzy15515798875@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260807152830.6833-1-wzy15515798875@gmail.com>
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20260807152830.6833-1-wzy15515798875@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=wzy15515798875@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ <20260807152830.6833-5-wzy15515798875@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260807152830.6833-5-wzy15515798875@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=RKaD2Yi+ c=1 sm=1 tr=0 ts=6a760a9e cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=FxexUvcVwA1O1iOrnkgA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDEzMCBTYWx0ZWRfXzfZm3bQX9EQZ
+ E7RfXjGbE6eQMnP6w2xoZzUP7l8L0vOfyWJ908auowI0Ge81QoMM/if1tT6BfTPQeAXarW354rf
+ 9laQzZGV89gEfO4U9I1bR+gUdhNJ7Jg=
+X-Proofpoint-ORIG-GUID: G93OitY1JW7-s2rSFzE69hgXfFkqv6pQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDEzMCBTYWx0ZWRfX0CHuopD0wc6l
+ KSx4+byL14Lb44KIbgUIIrdeNuwBsb/DhRr+vEhzXOPXJtb2OzZSSs4N8y4xvFVq3n09SYk6hZ6
+ StSwR5agKo7yAEAn25i1M6aCOpvHsZKRZ7/T5X1AJgqs79TztguO48OEMoI9O4jZXuzxAAFl/x0
+ XzVgcIY3pq7hw+BxQ8g10SRw13AwtagulwLGKepB1OWRxlHosmWdFYuLGX0XMiQaxx+q8ScIfmO
+ /SL5QeTGXtRgcpzRyfZobLMUgp36u9xCc0tkG0LPFPDx5q09oG/zQZ1/JOkNFRqOgxgNnsMgR6M
+ 3oBDOGEM9FyKeT9M/muimjzbJhdqtZiuFySkx16N68MXL9Giuvc+1+tWWenxs9ewKfQ3LufMw/M
+ FZGzNLg/3UG6Jm7aabRW1twHRvkCVecbdUFw5zDmIcO7fqbGWLTrxA3v1LodlKAZL9IIXYBSuZH
+ cBwLsxt6PtswBL/Vnpw==
+X-Proofpoint-GUID: G93OitY1JW7-s2rSFzE69hgXfFkqv6pQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-07_03,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0
+ adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608070130
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 07 Aug 2026 12:41:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,676 +159,654 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add transfer tests using TMP105 and i2c-echo slave devices.
 
-Cover single- and multi-byte reads and writes, combined write/read
-transfers, repeated START and STOP handling, RX threshold and
-overflow behavior, data NACK reporting, restart-disabled aborts.
 
-Signed-off-by: Wang Zhongyu <wzy15515798875@gmail.com>
----
- tests/qtest/k230-i2c-test.c | 598 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 598 insertions(+)
+On 8/7/2026 12:28 PM, Wang Zhongyu wrote:
+> Expand the K230 I2C qtests to cover instance isolation, read-only
+> registers, system reset, read-to-clear interrupts, abort source
+> reporting, and START BYTE abort handling.
+> 
+> Signed-off-by: Wang Zhongyu <wzy15515798875@gmail.com>
+> ---
 
-diff --git a/tests/qtest/k230-i2c-test.c b/tests/qtest/k230-i2c-test.c
-index 1d134de5d0..ee788216fb 100644
---- a/tests/qtest/k230-i2c-test.c
-+++ b/tests/qtest/k230-i2c-test.c
-@@ -38,7 +38,11 @@
- #define K230_IC_TX_TL                  0x3c
- #define K230_IC_CLR_INTR               0x40
- #define K230_IC_CLR_RX_UNDER           0x44
-+#define K230_IC_CLR_RX_OVER            0x48
- #define K230_IC_CLR_TX_ABRT            0x54
-+#define K230_IC_CLR_ACTIVITY           0x5c
-+#define K230_IC_CLR_STOP_DET           0x60
-+#define K230_IC_CLR_START_DET          0x64
- #define K230_IC_ENABLE                 0x6c
- #define K230_IC_STATUS                 0x70
- #define K230_IC_TXFLR                  0x74
-@@ -63,20 +67,29 @@
- /* IC_DATA_CMD */
- #define IC_DATA_CMD_READ               BIT(8)
- #define IC_DATA_CMD_STOP               BIT(9)
-+#define IC_DATA_CMD_RESTART            BIT(10)
- 
- /* IC_INTR_STAT and IC_RAW_INTR_STAT */
- #define IC_INTR_RX_UNDER               BIT(0)
-+#define IC_INTR_RX_OVER                BIT(1)
-+#define IC_INTR_RX_FULL                BIT(2)
- #define IC_INTR_TX_EMPTY               BIT(4)
- #define IC_INTR_TX_ABRT                BIT(6)
- #define IC_INTR_ACTIVITY               BIT(8)
-+#define IC_INTR_STOP_DET               BIT(9)
- #define IC_INTR_START_DET              BIT(10)
- 
- /* IC_STATUS */
-+#define IC_STATUS_ACTIVITY             BIT(0)
- #define IC_STATUS_TFNF                 BIT(1)
- #define IC_STATUS_TFE                  BIT(2)
-+#define IC_STATUS_RFNE                 BIT(3)
-+#define IC_STATUS_RFF                  BIT(4)
-+#define IC_STATUS_MST_ACTIVITY         BIT(5)
- 
- /* IC_TX_ABRT_SOURCE */
- #define IC_ABRT_7B_ADDR_NOACK          BIT(0)
-+#define IC_ABRT_TXDATA_NOACK           BIT(3)
- #define IC_ABRT_GCALL_NOACK            BIT(4)
- #define IC_ABRT_GCALL_READ             BIT(5)
- #define IC_ABRT_SBYTE_NORSTRT          BIT(9)
-@@ -86,6 +99,19 @@
- #define K230_IC_COMP_VERSION_VALUE     0x3132302a
- #define K230_IC_COMP_TYPE_VALUE        0x44570140
- 
-+#define TMP105_ADDRESS                  0x49
-+#define I2C_ECHO_ADDRESS                0x50
-+
-+#define TMP105_REG_TEMPERATURE          0x00
-+#define TMP105_REG_CONFIG               0x01
-+#define TMP105_REG_T_LOW                0x02
-+#define TMP105_REG_T_HIGH               0x03
-+
-+#define K230_I2C_SLAVE_MACHINE_ARGS                             \
-+    "-machine k230 "                                            \
-+    "-device tmp105,id=tmp105-test,address=0x49 "                \
-+    "-device i2c-echo,id=i2c-echo-test,address=0x50"
-+
- static const uint64_t k230_i2c_base[K230_I2C_COUNT] = {
-     K230_I2C0_BASE,
-     K230_I2C1_BASE,
-@@ -94,6 +120,129 @@ static const uint64_t k230_i2c_base[K230_I2C_COUNT] = {
-     K230_I2C4_BASE,
- };
- 
-+static QTestState *k230_i2c_init_with_slaves(void)
-+{
-+    return qtest_init(K230_I2C_SLAVE_MACHINE_ARGS);
-+}
-+
-+static void k230_i2c_configure_master(QTestState *qts, uint64_t base,
-+                                      uint8_t target, bool restart_enable)
-+{
-+    uint32_t con;
-+
-+    qtest_writel(qts, base + K230_IC_ENABLE, 0);
-+
-+    con = qtest_readl(qts, base + K230_IC_CON);
-+    con |= IC_CON_MASTER_MODE;
-+    con &= ~IC_CON_10BITADDR_MASTER;
-+
-+    if (restart_enable) {
-+        con |= IC_CON_RESTART_EN;
-+    } else {
-+        con &= ~IC_CON_RESTART_EN;
-+    }
-+
-+    qtest_writel(qts, base + K230_IC_CON, con);
-+    qtest_writel(qts, base + K230_IC_TAR, target);
-+    qtest_writel(qts, base + K230_IC_ENABLE, 1);
-+}
-+
-+static void k230_i2c_assert_no_abort(QTestState *qts, uint64_t base)
-+{
-+    uint32_t raw;
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+
-+    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_TX_ABRT_SOURCE),
-+                    ==, 0);
-+}
-+
-+static uint64_t k230_i2c_find_tmp105_bus(QTestState *qts)
-+{
-+    for (int i = 0; i < K230_I2C_COUNT; i++) {
-+        uint64_t base = k230_i2c_base[i];
-+        uint32_t raw;
-+
-+        k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+        /*
-+         * A one-byte write selects the temperature register.  The
-+         * controller whose bus contains TMP105 completes without aborting.
-+         */
-+        qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                     IC_DATA_CMD_STOP | TMP105_REG_TEMPERATURE);
-+
-+        raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+
-+        if (!(raw & IC_INTR_TX_ABRT)) {
-+            qtest_writel(qts, base + K230_IC_ENABLE, 0);
-+            return base;
-+        }
-+
-+        qtest_readl(qts, base + K230_IC_CLR_TX_ABRT);
-+        qtest_writel(qts, base + K230_IC_ENABLE, 0);
-+    }
-+
-+    g_assert_not_reached();
-+}
-+
-+static void k230_i2c_write_bytes(QTestState *qts, uint64_t base,
-+                                 const uint8_t *data, size_t len)
-+{
-+    g_assert_cmpuint(len, >, 0);
-+
-+    for (size_t i = 0; i < len; i++) {
-+        uint32_t command = data[i];
-+
-+        if (i == len - 1) {
-+            command |= IC_DATA_CMD_STOP;
-+        }
-+
-+        qtest_writel(qts, base + K230_IC_DATA_CMD, command);
-+    }
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+}
-+
-+static void k230_i2c_select_register(QTestState *qts, uint64_t base,
-+                                     uint8_t reg)
-+{
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_STOP | reg);
-+    k230_i2c_assert_no_abort(qts, base);
-+}
-+
-+static void k230_i2c_queue_reads(QTestState *qts, uint64_t base,
-+                                 size_t len, bool restart_first,
-+                                 bool stop_last)
-+{
-+    g_assert_cmpuint(len, >, 0);
-+
-+    for (size_t i = 0; i < len; i++) {
-+        uint32_t command = IC_DATA_CMD_READ;
-+
-+        if (i == 0 && restart_first) {
-+            command |= IC_DATA_CMD_RESTART;
-+        }
-+
-+        if (i == len - 1 && stop_last) {
-+            command |= IC_DATA_CMD_STOP;
-+        }
-+
-+        qtest_writel(qts, base + K230_IC_DATA_CMD, command);
-+    }
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+}
-+
-+static void k230_i2c_tmp105_combined_read(QTestState *qts, uint64_t base,
-+                                          uint8_t reg, size_t len)
-+{
-+    qtest_writel(qts, base + K230_IC_DATA_CMD, reg);
-+    k230_i2c_queue_reads(qts, base, len, true, true);
-+}
-+
- static void test_reset_values(void)
- {
-     QTestState *qts = qtest_init("-machine k230");
-@@ -824,6 +973,432 @@ static void test_start_byte_abort(void)
-     qtest_quit(qts);
- }
- 
-+static void test_tmp105_config_read_write(void)
-+{
-+    static const uint8_t write_data[] = {
-+        TMP105_REG_CONFIG,
-+        0x60,
-+    };
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+    k230_i2c_write_bytes(qts, base, write_data,
-+                         G_N_ELEMENTS(write_data));
-+
-+    k230_i2c_tmp105_combined_read(qts, base,
-+                                  TMP105_REG_CONFIG, 1);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x60);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 0);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_tmp105_limit_read_write(void)
-+{
-+    static const uint8_t write_data[] = {
-+        TMP105_REG_T_LOW,
-+        0x12,
-+        0x34,
-+    };
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+    k230_i2c_write_bytes(qts, base, write_data,
-+                         G_N_ELEMENTS(write_data));
-+
-+    k230_i2c_tmp105_combined_read(qts, base,
-+                                  TMP105_REG_T_LOW, 2);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 2);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x12);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x30);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 0);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_tmp105_direct_read(void)
-+{
-+    static const uint8_t write_data[] = {
-+        TMP105_REG_CONFIG,
-+        0x20,
-+    };
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+    k230_i2c_write_bytes(qts, base, write_data,
-+                         G_N_ELEMENTS(write_data));
-+    k230_i2c_select_register(qts, base, TMP105_REG_CONFIG);
-+
-+    /*
-+     * Start a read while the controller is idle.  This covers the
-+     * IDLE-to-RECEIVING path without a preceding repeated START.
-+     */
-+    k230_i2c_queue_reads(qts, base, 1, false, true);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x20);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_tmp105_read_write_restart(void)
-+{
-+    static const uint8_t initial_data[] = {
-+        TMP105_REG_CONFIG,
-+        0x20,
-+    };
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+    k230_i2c_write_bytes(qts, base, initial_data,
-+                         G_N_ELEMENTS(initial_data));
-+    k230_i2c_select_register(qts, base, TMP105_REG_CONFIG);
-+
-+    /*
-+     * Leave the read transfer active, then switch from receiving to
-+     * sending with a repeated START.
-+     */
-+    k230_i2c_queue_reads(qts, base, 1, false, false);
-+
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_RESTART | TMP105_REG_CONFIG);
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_STOP | 0x60);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 1);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x20);
-+
-+    k230_i2c_tmp105_combined_read(qts, base,
-+                                  TMP105_REG_CONFIG, 1);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x60);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_tmp105_same_direction_restart(void)
-+{
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+
-+    /*
-+     * Start in the sending state, issue an explicit repeated START
-+     * without changing direction, and then write the config register.
-+     */
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 TMP105_REG_T_LOW);
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_RESTART | TMP105_REG_CONFIG);
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_STOP | 0x40);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+
-+    k230_i2c_tmp105_combined_read(qts, base,
-+                                  TMP105_REG_CONFIG, 1);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x40);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_transfer_status_with_slave(void)
-+{
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+    uint32_t raw;
-+    uint32_t status;
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+    qtest_readl(qts, base + K230_IC_CLR_INTR);
-+
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 TMP105_REG_CONFIG);
-+
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+    g_assert_cmphex(status & IC_STATUS_ACTIVITY,
-+                    ==, IC_STATUS_ACTIVITY);
-+    g_assert_cmphex(status & IC_STATUS_MST_ACTIVITY,
-+                    ==, IC_STATUS_MST_ACTIVITY);
-+    g_assert_cmphex(status & IC_STATUS_TFNF,
-+                    ==, IC_STATUS_TFNF);
-+    g_assert_cmphex(status & IC_STATUS_TFE,
-+                    ==, IC_STATUS_TFE);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_START_DET,
-+                    ==, IC_INTR_START_DET);
-+    g_assert_cmphex(raw & IC_INTR_ACTIVITY,
-+                    ==, IC_INTR_ACTIVITY);
-+
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_STOP | 0x20);
-+
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+    g_assert_cmphex(status & IC_STATUS_ACTIVITY, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_MST_ACTIVITY, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_TFNF,
-+                    ==, IC_STATUS_TFNF);
-+    g_assert_cmphex(status & IC_STATUS_TFE,
-+                    ==, IC_STATUS_TFE);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_STOP_DET,
-+                    ==, IC_INTR_STOP_DET);
-+    g_assert_cmphex(raw & IC_INTR_ACTIVITY,
-+                    ==, IC_INTR_ACTIVITY);
-+
-+    qtest_readl(qts, base + K230_IC_CLR_START_DET);
-+    qtest_readl(qts, base + K230_IC_CLR_STOP_DET);
-+    qtest_readl(qts, base + K230_IC_CLR_ACTIVITY);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_START_DET, ==, 0);
-+    g_assert_cmphex(raw & IC_INTR_STOP_DET, ==, 0);
-+    g_assert_cmphex(raw & IC_INTR_ACTIVITY, ==, 0);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_rx_threshold_with_slave(void)
-+{
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+    uint32_t raw;
-+    uint32_t stat;
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+    qtest_writel(qts, base + K230_IC_RX_TL, 1);
-+    qtest_writel(qts, base + K230_IC_INTR_MASK,
-+                 IC_INTR_RX_FULL);
-+
-+    k230_i2c_select_register(qts, base, TMP105_REG_T_LOW);
-+    qtest_readl(qts, base + K230_IC_CLR_INTR);
-+
-+    k230_i2c_queue_reads(qts, base, 1, false, false);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_RX_FULL, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 1);
-+
-+    k230_i2c_queue_reads(qts, base, 1, false, true);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    stat = qtest_readl(qts, base + K230_IC_INTR_STAT);
-+
-+    g_assert_cmphex(raw & IC_INTR_RX_FULL,
-+                    ==, IC_INTR_RX_FULL);
-+    g_assert_cmphex(stat & IC_INTR_RX_FULL,
-+                    ==, IC_INTR_RX_FULL);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 2);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x4b);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_RX_FULL, ==, 0);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x00);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_rx_overflow_with_slave(void)
-+{
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+    uint32_t raw;
-+    uint32_t status;
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, true);
-+    qtest_writel(qts, base + K230_IC_RX_TL, 63);
-+    qtest_writel(qts, base + K230_IC_INTR_MASK,
-+                 IC_INTR_RX_FULL | IC_INTR_RX_OVER);
-+
-+    k230_i2c_select_register(qts, base, TMP105_REG_T_LOW);
-+    qtest_readl(qts, base + K230_IC_CLR_INTR);
-+
-+    /*
-+     * TMP105 returns two register bytes and then 0xff.  Sixty-five
-+     * read commands therefore fill the 64-byte RX FIFO and overflow
-+     * on the final command.
-+     */
-+    k230_i2c_queue_reads(qts, base, 65, false, true);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 64);
-+
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+    g_assert_cmphex(status & IC_STATUS_RFNE,
-+                    ==, IC_STATUS_RFNE);
-+    g_assert_cmphex(status & IC_STATUS_RFF,
-+                    ==, IC_STATUS_RFF);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_RX_FULL,
-+                    ==, IC_INTR_RX_FULL);
-+    g_assert_cmphex(raw & IC_INTR_RX_OVER,
-+                    ==, IC_INTR_RX_OVER);
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x4b);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_DATA_CMD),
-+                    ==, 0x00);
-+
-+    for (int i = 0; i < 62; i++) {
-+        g_assert_cmphex(qtest_readl(qts,
-+                                   base + K230_IC_DATA_CMD),
-+                        ==, 0xff);
-+    }
-+
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 0);
-+
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+    g_assert_cmphex(status & IC_STATUS_RFNE, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_RFF, ==, 0);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_RX_FULL, ==, 0);
-+    g_assert_cmphex(raw & IC_INTR_RX_OVER,
-+                    ==, IC_INTR_RX_OVER);
-+
-+    qtest_readl(qts, base + K230_IC_CLR_RX_OVER);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_RX_OVER, ==, 0);
-+
-+    k230_i2c_assert_no_abort(qts, base);
-+    qtest_quit(qts);
-+}
-+
-+static void test_restart_disabled_abort(void)
-+{
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+    uint32_t raw;
-+    uint32_t status;
-+
-+    k230_i2c_configure_master(qts, base, TMP105_ADDRESS, false);
-+
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 TMP105_REG_CONFIG);
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_READ | IC_DATA_CMD_STOP);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+
-+    g_assert_cmphex(raw & IC_INTR_TX_ABRT,
-+                    ==, IC_INTR_TX_ABRT);
-+    g_assert_cmphex(qtest_readl(qts,
-+                               base + K230_IC_TX_ABRT_SOURCE),
-+                    ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_ACTIVITY, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_MST_ACTIVITY, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_TXFLR),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 0);
-+
-+    qtest_readl(qts, base + K230_IC_CLR_TX_ABRT);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_echo_data_nack(void)
-+{
-+    static const uint8_t accepted_data[] = {
-+        0x7f,
-+        0x11,
-+        0x22,
-+    };
-+    QTestState *qts = k230_i2c_init_with_slaves();
-+    uint64_t base = k230_i2c_find_tmp105_bus(qts);
-+    uint32_t raw;
-+    uint32_t source;
-+    uint32_t status;
-+
-+    k230_i2c_configure_master(qts, base, I2C_ECHO_ADDRESS, true);
-+
-+    for (size_t i = 0; i < G_N_ELEMENTS(accepted_data); i++) {
-+        qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                     accepted_data[i]);
-+    }
-+
-+    /*
-+     * i2c-echo accepts three bytes.  The fourth byte is rejected,
-+     * allowing the controller's TXDATA_NOACK path to be tested.
-+     */
-+    qtest_writel(qts, base + K230_IC_DATA_CMD,
-+                 IC_DATA_CMD_STOP | 0x33);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    source = qtest_readl(qts, base + K230_IC_TX_ABRT_SOURCE);
-+    status = qtest_readl(qts, base + K230_IC_STATUS);
-+
-+    g_assert_cmphex(raw & IC_INTR_TX_ABRT,
-+                    ==, IC_INTR_TX_ABRT);
-+    g_assert_cmphex(source & IC_ABRT_TXDATA_NOACK,
-+                    ==, IC_ABRT_TXDATA_NOACK);
-+    g_assert_cmphex(source & IC_ABRT_7B_ADDR_NOACK, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_ACTIVITY, ==, 0);
-+    g_assert_cmphex(status & IC_STATUS_MST_ACTIVITY, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_TXFLR),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, base + K230_IC_RXFLR),
-+                    ==, 0);
-+
-+    qtest_readl(qts, base + K230_IC_CLR_TX_ABRT);
-+
-+    raw = qtest_readl(qts, base + K230_IC_RAW_INTR_STAT);
-+    source = qtest_readl(qts, base + K230_IC_TX_ABRT_SOURCE);
-+
-+    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
-+    g_assert_cmphex(source, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-@@ -857,5 +1432,28 @@ int main(int argc, char **argv)
-     qtest_add_func("/k230-i2c/start-byte-abort",
-                    test_start_byte_abort);
- 
-+    if (qtest_has_device("tmp105") && qtest_has_device("i2c-echo")) {
-+        qtest_add_func("/k230-i2c/tmp105-config-read-write",
-+                       test_tmp105_config_read_write);
-+        qtest_add_func("/k230-i2c/tmp105-limit-read-write",
-+                       test_tmp105_limit_read_write);
-+        qtest_add_func("/k230-i2c/tmp105-direct-read",
-+                       test_tmp105_direct_read);
-+        qtest_add_func("/k230-i2c/tmp105-read-write-restart",
-+                       test_tmp105_read_write_restart);
-+        qtest_add_func("/k230-i2c/tmp105-same-direction-restart",
-+                       test_tmp105_same_direction_restart);
-+        qtest_add_func("/k230-i2c/transfer-status-with-slave",
-+                       test_transfer_status_with_slave);
-+        qtest_add_func("/k230-i2c/rx-threshold-with-slave",
-+                       test_rx_threshold_with_slave);
-+        qtest_add_func("/k230-i2c/rx-overflow-with-slave",
-+                       test_rx_overflow_with_slave);
-+        qtest_add_func("/k230-i2c/restart-disabled-abort",
-+                       test_restart_disabled_abort);
-+        qtest_add_func("/k230-i2c/echo-data-nack",
-+                       test_echo_data_nack);
-+    }
-+
-     return g_test_run();
- }
--- 
-2.43.0
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   tests/qtest/k230-i2c-test.c | 532 +++++++++++++++++++++++++++++++++++-
+>   1 file changed, 529 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/qtest/k230-i2c-test.c b/tests/qtest/k230-i2c-test.c
+> index cc8dd54153..1d134de5d0 100644
+> --- a/tests/qtest/k230-i2c-test.c
+> +++ b/tests/qtest/k230-i2c-test.c
+> @@ -25,11 +25,18 @@
+>   #define K230_IC_SAR                    0x08
+>   #define K230_IC_HS_MADDR               0x0c
+>   #define K230_IC_DATA_CMD               0x10
+> +#define K230_IC_SS_SCL_HCNT            0x14
+> +#define K230_IC_SS_SCL_LCNT            0x18
+> +#define K230_IC_FS_SCL_HCNT            0x1c
+> +#define K230_IC_FS_SCL_LCNT            0x20
+> +#define K230_IC_HS_SCL_HCNT            0x24
+> +#define K230_IC_HS_SCL_LCNT            0x28
+>   #define K230_IC_INTR_STAT              0x2c
+>   #define K230_IC_INTR_MASK              0x30
+>   #define K230_IC_RAW_INTR_STAT          0x34
+>   #define K230_IC_RX_TL                  0x38
+>   #define K230_IC_TX_TL                  0x3c
+> +#define K230_IC_CLR_INTR               0x40
+>   #define K230_IC_CLR_RX_UNDER           0x44
+>   #define K230_IC_CLR_TX_ABRT            0x54
+>   #define K230_IC_ENABLE                 0x6c
+> @@ -37,20 +44,32 @@
+>   #define K230_IC_TXFLR                  0x74
+>   #define K230_IC_RXFLR                  0x78
+>   #define K230_IC_TX_ABRT_SOURCE         0x80
+> +#define K230_IC_SDA_SETUP              0x94
+> +#define K230_IC_ACK_GENERAL_CALL       0x98
+>   #define K230_IC_ENABLE_STATUS          0x9c
+>   #define K230_IC_COMP_PARAM_1           0xf4
+>   #define K230_IC_COMP_VERSION           0xf8
+>   #define K230_IC_COMP_TYPE              0xfc
+>   
+> +/* IC_CON */
+> +#define IC_CON_MASTER_MODE             BIT(0)
+>   #define IC_CON_10BITADDR_MASTER        BIT(4)
+> +#define IC_CON_RESTART_EN              BIT(5)
+> +
+> +/* IC_TAR */
+> +#define IC_TAR_GC_OR_START             BIT(10)
+> +#define IC_TAR_SPECIAL                 BIT(11)
+>   
+>   /* IC_DATA_CMD */
+> +#define IC_DATA_CMD_READ               BIT(8)
+>   #define IC_DATA_CMD_STOP               BIT(9)
+>   
+>   /* IC_INTR_STAT and IC_RAW_INTR_STAT */
+>   #define IC_INTR_RX_UNDER               BIT(0)
+>   #define IC_INTR_TX_EMPTY               BIT(4)
+>   #define IC_INTR_TX_ABRT                BIT(6)
+> +#define IC_INTR_ACTIVITY               BIT(8)
+> +#define IC_INTR_START_DET              BIT(10)
+>   
+>   /* IC_STATUS */
+>   #define IC_STATUS_TFNF                 BIT(1)
+> @@ -58,6 +77,10 @@
+>   
+>   /* IC_TX_ABRT_SOURCE */
+>   #define IC_ABRT_7B_ADDR_NOACK          BIT(0)
+> +#define IC_ABRT_GCALL_NOACK            BIT(4)
+> +#define IC_ABRT_GCALL_READ             BIT(5)
+> +#define IC_ABRT_SBYTE_NORSTRT          BIT(9)
+> +#define IC_ABRT_MASTER_DIS             BIT(11)
+>   
+>   #define K230_IC_COMP_PARAM_1_VALUE     0x001f3fae
+>   #define K230_IC_COMP_VERSION_VALUE     0x3132302a
+> @@ -131,6 +154,38 @@ static void test_all_instances(void)
+>       qtest_quit(qts);
+>   }
+>   
+> +static void test_instance_isolation(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x2a);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_RX_TL, 17);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_INTR_MASK, 0x41);
+> +
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TAR),
+> +                    ==, 0x2a);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_RX_TL),
+> +                    ==, 17);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_INTR_MASK),
+> +                    ==, 0x41);
+> +
+> +    for (int i = 1; i < K230_I2C_COUNT; i++) {
+> +        g_assert_cmphex(qtest_readl(qts,
+> +                                   k230_i2c_base[i] + K230_IC_TAR),
+> +                        ==, 0x55);
+> +        g_assert_cmphex(qtest_readl(qts,
+> +                                   k230_i2c_base[i] + K230_IC_RX_TL),
+> +                        ==, 0);
+> +        g_assert_cmphex(qtest_readl(qts,
+> +                                   k230_i2c_base[i] +
+> +                                   K230_IC_INTR_MASK),
+> +                        ==, 0x8ff);
+> +    }
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+>   static void test_register_access(void)
+>   {
+>       QTestState *qts = qtest_init("-machine k230");
+> @@ -163,6 +218,82 @@ static void test_register_access(void)
+>       g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TX_TL),
+>                       ==, 32);
+>   
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_INTR_MASK,
+> +                 UINT32_MAX);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_INTR_MASK),
+> +                    ==, 0xfff);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SDA_SETUP,
+> +                 UINT32_MAX);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_SDA_SETUP),
+> +                    ==, 0xff);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ACK_GENERAL_CALL,
+> +                 UINT32_MAX);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_ACK_GENERAL_CALL),
+> +                    ==, 1);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE,
+> +                 UINT32_MAX);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_TX_ABRT_SOURCE),
+> +                    ==, 0xffff);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_HCNT,
+> +                 65525);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_SS_SCL_HCNT),
+> +                    ==, 65525);
+> +
+> +    /*
+> +     * Values greater than 65525 are rejected. The previous valid
+> +     * value must be preserved.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_HCNT,
+> +                 65526);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_SS_SCL_HCNT),
+> +                    ==, 65525);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_readonly_registers(void)
+> +{
+> +    static const struct {
+> +        uint32_t offset;
+> +        uint32_t expected;
+> +    } registers[] = {
+> +        { K230_IC_INTR_STAT,     0 },
+> +        { K230_IC_RAW_INTR_STAT, 0 },
+> +        { K230_IC_STATUS,        IC_STATUS_TFNF | IC_STATUS_TFE },
+> +        { K230_IC_TXFLR,         0 },
+> +        { K230_IC_RXFLR,         0 },
+> +        { K230_IC_ENABLE_STATUS, 0 },
+> +        { K230_IC_COMP_PARAM_1,  K230_IC_COMP_PARAM_1_VALUE },
+> +        { K230_IC_COMP_VERSION,  K230_IC_COMP_VERSION_VALUE },
+> +        { K230_IC_COMP_TYPE,     K230_IC_COMP_TYPE_VALUE },
+> +    };
+> +    QTestState *qts = qtest_init("-machine k230");
+> +
+> +    for (size_t i = 0; i < G_N_ELEMENTS(registers); i++) {
+> +        qtest_writel(qts,
+> +                     K230_I2C0_BASE + registers[i].offset,
+> +                     UINT32_MAX);
+> +
+> +        g_assert_cmphex(qtest_readl(qts,
+> +                                   K230_I2C0_BASE +
+> +                                   registers[i].offset),
+> +                        ==, registers[i].expected);
+> +    }
+> +
+>       qtest_quit(qts);
+>   }
+>   
+> @@ -171,15 +302,78 @@ static void test_register_lock_while_enabled(void)
+>       QTestState *qts = qtest_init("-machine k230");
+>   
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x22);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SAR, 0x155);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_MADDR, 0x3);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_HCNT, 20);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_LCNT, 21);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_FS_SCL_HCNT, 22);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_FS_SCL_LCNT, 23);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_SCL_HCNT, 24);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_SCL_LCNT, 25);
+> +
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+>   
+> -    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x33);
+> +    /*
+> +     * Configuration registers cannot be changed while the
+> +     * controller is enabled.
+> +     */
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, 0);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x33);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SAR, 0x222);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_MADDR, 0x7);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_HCNT, 30);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SS_SCL_LCNT, 31);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_FS_SCL_HCNT, 32);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_FS_SCL_LCNT, 33);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_SCL_HCNT, 34);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_HS_SCL_LCNT, 35);
+>   
+> -    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TAR),
+> -                    ==, 0x22);
+>       g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON),
+>                       ==, 0x7f);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TAR),
+> +                    ==, 0x22);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_SAR),
+> +                    ==, 0x155);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_HS_MADDR),
+> +                    ==, 0x3);
+> +
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_SS_SCL_HCNT),
+> +                    ==, 20);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_SS_SCL_LCNT),
+> +                    ==, 21);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_FS_SCL_HCNT),
+> +                    ==, 22);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_FS_SCL_LCNT),
+> +                    ==, 23);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_HS_SCL_HCNT),
+> +                    ==, 24);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_HS_SCL_LCNT),
+> +                    ==, 25);
+> +
+> +    /*
+> +     * Configuration registers become writable again after the
+> +     * controller is disabled.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 0);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x33);
+> +
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TAR),
+> +                    ==, 0x33);
+>   
+>       qtest_quit(qts);
+>   }
+> @@ -281,6 +475,7 @@ static void test_address_nack(void)
+>        */
+>       con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+>       con &= ~IC_CON_10BITADDR_MASTER;
+> +
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x7f);
+>       qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> @@ -310,6 +505,325 @@ static void test_address_nack(void)
+>       qtest_quit(qts);
+>   }
+>   
+> +static void test_system_reset(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +    uint32_t raw;
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x2a);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_SAR, 0x123);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_RX_TL, 10);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TX_TL, 12);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_INTR_MASK, 0);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +
+> +    /*
+> +     * Reading an empty RX FIFO produces RX_UNDER.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_DATA_CMD);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, IC_INTR_RX_UNDER);
+> +
+> +    qtest_system_reset(qts);
+> +
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON),
+> +                    ==, 0x7f);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TAR),
+> +                    ==, 0x55);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_SAR),
+> +                    ==, 0x55);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_HS_MADDR),
+> +                    ==, 0x1);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_INTR_MASK),
+> +                    ==, 0x8ff);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_RX_TL),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TX_TL),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_ENABLE),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_ENABLE_STATUS),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE + K230_IC_RAW_INTR_STAT),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts,
+> +                               K230_I2C0_BASE +
+> +                               K230_IC_TX_ABRT_SOURCE),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_TXFLR),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_RXFLR),
+> +                    ==, 0);
+> +    g_assert_cmphex(qtest_readl(qts, K230_I2C0_BASE + K230_IC_STATUS),
+> +                    ==, IC_STATUS_TFNF | IC_STATUS_TFE);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_clear_on_read(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +    uint32_t con;
+> +    uint32_t raw;
+> +    uint32_t source;
+> +
+> +    /*
+> +     * Produce RX_UNDER.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_DATA_CMD);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, IC_INTR_RX_UNDER);
+> +
+> +    /*
+> +     * Writing a clear register must not clear the interrupt.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CLR_RX_UNDER, 1);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, IC_INTR_RX_UNDER);
+> +
+> +    /*
+> +     * Produce an independent TX_ABRT interrupt.
+> +     */
+> +    con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+> +    con &= ~IC_CON_10BITADDR_MASTER;
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x7f);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_STOP | 0x55);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, IC_INTR_RX_UNDER);
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_7B_ADDR_NOACK,
+> +                    ==, IC_ABRT_7B_ADDR_NOACK);
+> +
+> +    /*
+> +     * Reading CLR_RX_UNDER clears only RX_UNDER.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_CLR_RX_UNDER);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, 0);
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +
+> +    /*
+> +     * Writing CLR_TX_ABRT must not clear TX_ABRT.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CLR_TX_ABRT, 1);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +
+> +    /*
+> +     * Reading CLR_TX_ABRT clears TX_ABRT and its source.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_CLR_TX_ABRT);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
+> +    g_assert_cmphex(source, ==, 0);
+> +
+> +    /*
+> +     * CLR_INTR clears latched interrupts. TX_EMPTY remains asserted
+> +     * because it is recalculated from the empty TX FIFO.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_CLR_INTR);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_RX_UNDER, ==, 0);
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
+> +    g_assert_cmphex(raw & IC_INTR_ACTIVITY, ==, 0);
+> +    g_assert_cmphex(raw & IC_INTR_START_DET, ==, 0);
+> +    g_assert_cmphex(raw & IC_INTR_TX_EMPTY, ==, IC_INTR_TX_EMPTY);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_abort_sources(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +    uint32_t con;
+> +    uint32_t raw;
+> +    uint32_t source;
+> +
+> +    /*
+> +     * Master mode disabled.
+> +     */
+> +    con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+> +    con &= ~(IC_CON_MASTER_MODE | IC_CON_10BITADDR_MASTER);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR, 0x7f);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_STOP | 0x55);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_MASTER_DIS,
+> +                    ==, IC_ABRT_MASTER_DIS);
+> +
+> +    qtest_system_reset(qts);
+> +
+> +    /*
+> +     * A read command cannot target the General Call address.
+> +     */
+> +    con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+> +    con &= ~IC_CON_10BITADDR_MASTER;
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR,
+> +                 IC_TAR_SPECIAL);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_READ | IC_DATA_CMD_STOP);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_GCALL_READ,
+> +                    ==, IC_ABRT_GCALL_READ);
+> +
+> +    qtest_system_reset(qts);
+> +
+> +    /*
+> +     * No slave is attached to acknowledge the General Call.
+> +     */
+> +    con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+> +    con &= ~IC_CON_10BITADDR_MASTER;
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR,
+> +                 IC_TAR_SPECIAL);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_STOP | 0x55);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_GCALL_NOACK,
+> +                    ==, IC_ABRT_GCALL_NOACK);
+> +
+> +    qtest_system_reset(qts);
+> +
+> +    /*
+> +     * 10-bit master addressing is deliberately unsupported.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_STOP | 0x55);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source, ==, 0);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_start_byte_abort(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +    uint32_t con;
+> +    uint32_t raw;
+> +    uint32_t source;
+> +
+> +    /*
+> +     * START BYTE requires RESTART_EN.
+> +     */
+> +    con = qtest_readl(qts, K230_I2C0_BASE + K230_IC_CON);
+> +    con &= ~(IC_CON_10BITADDR_MASTER | IC_CON_RESTART_EN);
+> +
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_TAR,
+> +                 IC_TAR_SPECIAL | IC_TAR_GC_OR_START);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 1);
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_DATA_CMD,
+> +                 IC_DATA_CMD_STOP | 0x55);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_SBYTE_NORSTRT,
+> +                    ==, IC_ABRT_SBYTE_NORSTRT);
+> +
+> +    /*
+> +     * Bit 9 remains set while the invalid configuration remains.
+> +     */
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_CLR_TX_ABRT);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, IC_INTR_TX_ABRT);
+> +    g_assert_cmphex(source & IC_ABRT_SBYTE_NORSTRT,
+> +                    ==, IC_ABRT_SBYTE_NORSTRT);
+> +
+> +    /*
+> +     * Remove the cause by enabling RESTART_EN, then clear again.
+> +     */
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_ENABLE, 0);
+> +
+> +    con |= IC_CON_RESTART_EN;
+> +    qtest_writel(qts, K230_I2C0_BASE + K230_IC_CON, con);
+> +
+> +    qtest_readl(qts, K230_I2C0_BASE + K230_IC_CLR_TX_ABRT);
+> +
+> +    raw = qtest_readl(qts,
+> +                      K230_I2C0_BASE + K230_IC_RAW_INTR_STAT);
+> +    source = qtest_readl(qts,
+> +                         K230_I2C0_BASE + K230_IC_TX_ABRT_SOURCE);
+> +
+> +    g_assert_cmphex(raw & IC_INTR_TX_ABRT, ==, 0);
+> +    g_assert_cmphex(source, ==, 0);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+>   int main(int argc, char **argv)
+>   {
+>       g_test_init(&argc, &argv, NULL);
+> @@ -318,8 +832,12 @@ int main(int argc, char **argv)
+>                      test_reset_values);
+>       qtest_add_func("/k230-i2c/all-instances",
+>                      test_all_instances);
+> +    qtest_add_func("/k230-i2c/instance-isolation",
+> +                   test_instance_isolation);
+>       qtest_add_func("/k230-i2c/register-access",
+>                      test_register_access);
+> +    qtest_add_func("/k230-i2c/readonly-registers",
+> +                   test_readonly_registers);
+>       qtest_add_func("/k230-i2c/register-lock-while-enabled",
+>                      test_register_lock_while_enabled);
+>       qtest_add_func("/k230-i2c/enable-disable",
+> @@ -330,6 +848,14 @@ int main(int argc, char **argv)
+>                      test_rx_underflow);
+>       qtest_add_func("/k230-i2c/address-nack",
+>                      test_address_nack);
+> +    qtest_add_func("/k230-i2c/system-reset",
+> +                   test_system_reset);
+> +    qtest_add_func("/k230-i2c/clear-on-read",
+> +                   test_clear_on_read);
+> +    qtest_add_func("/k230-i2c/abort-sources",
+> +                   test_abort_sources);
+> +    qtest_add_func("/k230-i2c/start-byte-abort",
+> +                   test_start_byte_abort);
+>   
+>       return g_test_run();
+>   }
 
 
