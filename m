@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E30C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 05:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30316C2A09B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 05:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsDGN-0007CH-U0; Fri, 07 Aug 2026 01:36:59 -0400
+	id 1wsDQQ-0008OL-Gr; Fri, 07 Aug 2026 01:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsDGM-0007C4-4Z
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 01:36:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wsDQN-0008Nv-Ux
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 01:47:20 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsDGK-0002R4-90
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 01:36:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786081014;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TuOZrFi2gEoNZkzhT45V3jb5HsnevzpD35shqMzHzXw=;
- b=WpJ4v9Zo4MlQL64DS7jKLCF7kyyOWi557MipZiC0ZYkOdQofJdNNjnee8Lyw2eoASsA982
- bZjXc8TXfz/QjmysgGS3OtvbR6P9nz96xVXhmxvfg4AQifwMSukg9KnZOk3INF6/CNyKWA
- 1g8RjyuiRdjP76yAhudhP5VFWPH+lWM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-_S4l-8E_OSGPF8k0ZaIo-Q-1; Fri,
- 07 Aug 2026 01:36:53 -0400
-X-MC-Unique: _S4l-8E_OSGPF8k0ZaIo-Q-1
-X-Mimecast-MFC-AGG-ID: _S4l-8E_OSGPF8k0ZaIo-Q_1786081012
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBA6219560B5; Fri,  7 Aug 2026 05:36:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D7761422; Fri,  7 Aug 2026 05:36:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4617A21E6920; Fri, 07 Aug 2026 07:36:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 04/53] qapi/backend: wire up type-infos generation
-In-Reply-To: <20260616-qom-qapi-v2-4-cc9396b9c18c@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 16 Jun 2026 00:37:30 +0400")
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-4-cc9396b9c18c@redhat.com>
-Date: Fri, 07 Aug 2026 07:36:48 +0200
-Message-ID: <8733wqtrtb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wsDQJ-0003jn-Hi
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 01:47:19 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6775kmNI013828
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 7 Aug 2026 14:46:48 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=sX1ovWzkfHvcor/NePdhuRdRG27wIEaxomiIT7OKJfI=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1786081608; v=1;
+ b=EpoZMUo022W6XgK71sTrmbChOXD4TuiuJwW2ajjkO4z50X7kAc05zyKMu+/ZopZZ
+ vQgJgR/mHvK4xxc/VCwZWXPMTi2n3cdlmtqQZT4NwjKkj1Ncrm6du0L8gg71ntM+
+ PpZfFNePHdnhfvG347X2covwF0915xo18iH4HJhu5FXsKZR079IDju1LGMzNkwQB
+ s+HpO7U/73ioc0bN8FOjyCmGLC1y2souplTHODkceu7337Jh3DoPcG1uACFsQRs/
+ o2enJZSUBzMfsdkrmV+J7+fClMWXz8Q/nT4mh5lMHko2ovbEbdG20vxK+28uYfqA
+ 9slLMdujUeEusnE33pqfRQ==
+Message-ID: <61b505bf-f8a4-4882-8dfa-e8f55aad54c6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 7 Aug 2026 14:46:48 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/7] igb: Implement Transmit Rate Limiting (TRL)
+To: Josh Hilke <jrhilke@google.com>
+Cc: qemu-devel@nongnu.org, Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Vipin Sharma <vipinsh@google.com>, Samiullah Khawaja <skhawaja@google.com>
+References: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
+ <ff0bcd39-afd6-4842-9cd5-3e39e56ec901@rsg.ci.i.u-tokyo.ac.jp>
+ <CAAdrzjtjVyG-yV+MnZ5wtgef3UQ-MLCWZtHh9feeBK4ek4YXJg@mail.gmail.com>
+ <f2c35b50-264d-4268-bd0e-dd52fe6269bf@rsg.ci.i.u-tokyo.ac.jp>
+ <CAAdrzjvgpkSO14HZnRz2_X78LriOqo4G5ePwyh_4guKE8HWZCg@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <CAAdrzjvgpkSO14HZnRz2_X78LriOqo4G5ePwyh_4guKE8HWZCg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,36 +82,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+On 2026/08/07 3:44, Josh Hilke wrote:
+> Which version will this be added to?
 
-> Call gen_type_infos() after gen_introspect(), passing the name map so
-> type-info constants get the correct masked names.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  scripts/qapi/backend.py | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-> index 49ae6ecdd33..353f7801149 100644
-> --- a/scripts/qapi/backend.py
-> +++ b/scripts/qapi/backend.py
-> @@ -8,6 +8,7 @@
->  from .features import gen_features
->  from .introspect import gen_introspect
->  from .schema import QAPISchema
-> +from .type_infos import gen_type_infos
->  from .types import gen_types
->  from .visit import gen_visit
->=20=20
-> @@ -62,4 +63,5 @@ def generate(self,
->          gen_visit(schema, output_dir, prefix, builtins)
->          gen_commands(schema, output_dir, prefix, gen_tracing)
->          gen_events(schema, output_dir, prefix)
-> -        gen_introspect(schema, output_dir, prefix, unmask)
-> +        name_map =3D gen_introspect(schema, output_dir, prefix, unmask)
-> +        gen_type_infos(schema, output_dir, prefix, builtins, name_map)
+11.2 since 11.1 is about to be released.
 
-Squash this into the previous patch?
+Context: the network device subsystem has been the "Odd Fixes" state for 
+a decade (i.e., no one is paid to maintain it and don't have time to do 
+much other than "throw the odd patch in"). Jason Wang used to make pull 
+requests with network device patches (igb and others), but apparently he 
+recently left Red Hat.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Regards,
+> Josh Hilke
+> 
+> On Tue, Jun 30, 2026 at 12:52 AM Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>
+>> On 2026/06/30 3:11, Josh Hilke wrote:
+>>> Do I need to push a v9 to include your "Reviewed-by" tag?
+>>
+>> No. I think this series is ready to pull along with other network patches.
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>> Thanks,
+>>> Josh
+>>>
+>>> On Wed, Jun 24, 2026 at 1:18 AM Akihiko Odaki
+>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>
+>>>> On 2026/06/24 0:05, Josh Hilke wrote:
+>>>>> This is v8 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
+>>>>> the Intel 82576 (igb) network device emulation in QEMU.
+>>>>>
+>>>>> v7: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05440.html
+>>>>>
+>>>>> Changelog:
+>>>>>
+>>>>> v8:
+>>>>>      - Fix extraneous whitespace modifications.
+>>>>>      - Use muldiv64() in igb_trl_calculate_delay().
+>>>>>      - Fix comment for rate factor in igb_trl_calculate_delay().>
+>>>>> Signed-off-by: Josh Hilke <jrhilke@google.com>
+>>>>
+>>>> For the whole series:
+>>>>
+>>>> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>>
+>>>>> ---
+>>>>> Josh Hilke (7):
+>>>>>          igb: Define TRL registers and core state
+>>>>>          igb: Add VMState support for TRL state
+>>>>>          igb: Implement TRL register write and configuration
+>>>>>          igb: Refactor TX path to return processed byte count
+>>>>>          igb: Implement TRL throttling and timer resumption
+>>>>>          igb: Add QTest for Transmit Rate Limiter register multiplexing
+>>>>>          igb: Add QTest for Transmit Rate Limiter traffic throttling
+>>>>>
+>>>>>     hw/net/igb.c           |  43 +++++++++++
+>>>>>     hw/net/igb_common.h    |   1 +
+>>>>>     hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
+>>>>>     hw/net/igb_core.h      |  12 +++
+>>>>>     hw/net/igb_regs.h      |   5 ++
+>>>>>     tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
+>>>>>     6 files changed, 404 insertions(+), 5 deletions(-)
+>>>>> ---
+>>>>> base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+>>>>> change-id: 20260608-igb-trl-19be198da6f2
+>>>>>
+>>>>> Best regards,
+>>>>
+>>
 
 
