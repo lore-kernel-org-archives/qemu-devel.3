@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC0BC5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E08C2A09B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKbP-00018O-Ju; Fri, 07 Aug 2026 09:27:11 -0400
+	id 1wsKbP-00018z-Qy; Fri, 07 Aug 2026 09:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbF-00014i-Uq
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:03 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbI-00015x-IB
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:07 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbE-0007gU-1s
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:01 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wsKbH-0007hU-43
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:27:04 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 0F9316013A;
- Fri,  7 Aug 2026 13:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0801F000E9;
- Fri,  7 Aug 2026 13:26:54 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 1EC8A436BB;
+ Fri,  7 Aug 2026 13:27:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2E61F000E9;
+ Fri,  7 Aug 2026 13:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1786109215;
- bh=xg8J8KhbQK9Q3W6PUzmGRzAJJXwqLIyJ1vTbPWCnsS4=;
- h=From:To:Cc:Subject:Date;
- b=bCRNiKsXoirp2EgX0pVsvcaqCuhOF+isrneBEfqtzXNJEcnPZrB5sG0k9+ymNsDWZ
- 7SzYX+Ihqfb+UTRujV9eDHz5om8ljqIEtB4M2jlSlu9LB8j8PWFJZUl/p5R0P5tvrD
- LcfzNVdlnUQKpWpvFElqM/61PDpCHSZc+hlpkhhBnPKwhAWxX4srDfR3JlJkrnwOTj
- H//unj7JNMcqA40L5CgYiVAI+eWb4AvLnMUsuTFmkguGXd2T6zY1bjaXOBCrHLi3Nc
- qL2O5Pfnq1+qGnjcUs6bQMGT2j4sxUwwQxiqjzNa4fqfW5vNCyJfdu5rIBWhtXOoGV
- HKwN5fNeSCdhw==
+ s=k20260515; t=1786109222;
+ bh=RrMYKTvmx3jhoSITMt71yGt3H0mvNwE3sRAvOwuYlR4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=BJf3f3Pn5XgXBhC9xNcfpoSY5oK7aNsvKZGkwNSLflG79JfV8IbLVkv3FlWpfSdrM
+ ypW7MOdsQRCwI14wQxn2c89j1snzyBBADY+3UmDU3jkbCnVoTXJxCMAEbGbwHR4rT8
+ kZlBB4nIzlrV1N5XsZfGXqcr7rB4rM3LeA2XxdYIoq1Gd3sGz6ME+ArfuU54oRzjeS
+ 6J6pLjvdGkGu1LHOkJ4OMgJ/4m9osfJb3zlzbmKwl9azz4xdD20QcXPexKatlr7VDk
+ Wh+uouM8eMTAmHAI5cRGEGnbTIPPgbcVjyq+vQL4DlgS9cnjPjbi+6/+1dtPA7Mcdw
+ /+LbruHq7UJ7g==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, deller@gmx.de,
- Laurent Vivier <laurent@vivier.eu>, Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PULL 0/3] Linux user patches
-Date: Fri,  7 Aug 2026 15:26:49 +0200
-Message-ID: <20260807132652.9687-1-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PULL 3/3] linux-user/sh4: Fix crashes on signal delivery in
+ conditional delay slot
+Date: Fri,  7 Aug 2026 15:26:52 +0200
+Message-ID: <20260807132652.9687-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260807132652.9687-1-deller@kernel.org>
+References: <20260807132652.9687-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -68,38 +71,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-The following changes since commit 3e3ccab106f879b1512f8e0d51a827dd4de30e22:
+If we get a signal in the delay slot, we must roll-back the PC to the
+jump instruction. This was already fixed by the commit 3b894b699c9a
+("linux-user/sh4: Fix crashes on signal delivery"), however this fix
+omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
+by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
+the PC in this case, resulting in incorrect program execution.
 
-  Update version for v11.1.0-rc3 release (2026-08-04 15:36:08 -0400)
+This patch fixes it.
 
-are available in the Git repository at:
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/sh4/signal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
-
-for you to fetch changes up to f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041:
-
-  linux-user/sh4: Fix crashes on signal delivery in conditional delay slot (2026-08-07 15:13:36 +0200)
-
-----------------------------------------------------------------
-linux-user sh4 signal patches
-
-Three important small signal handling fixes for the sh4 architecture from
-Mikulas Patocka.
-
-----------------------------------------------------------------
-
-Mikulas Patocka (3):
-  linux-user/sh4: Deliver SIGILL on invalid instruction
-  linux-user/sh4: Initialize the FPSCR register on signal
-  linux-user/sh4: Fix crashes on signal delivery in conditional delay
-    slot
-
- linux-user/sh4/cpu_loop.c | 7 +++++++
- linux-user/sh4/signal.c   | 6 +++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 7f246e750d..047174ac8f 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
+            the SP, otherwise we would be pushing the signal context to
+            invalid memory.  */
+         regs->gregs[15] = regs->gregs[1];
+-    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
++    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
+         /* If we are in a delay slot, push the previous instruction.  */
+         regs->pc -= 2;
+     }
 -- 
 2.54.0
 
