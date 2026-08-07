@@ -4,144 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B694C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538F1C2A09B
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsNkK-00065y-6J; Fri, 07 Aug 2026 12:48:36 -0400
+	id 1wsNsn-000079-0s; Fri, 07 Aug 2026 12:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wsNkI-00065l-J8
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:48:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wsNsl-00006l-4e; Fri, 07 Aug 2026 12:57:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wsNkG-0004br-UP
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:48:34 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 677GOAJk1190366
- for <qemu-devel@nongnu.org>; Fri, 7 Aug 2026 16:48:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FQ652snNF1qvX8dAz2fc/CTMK1dPsxh0OKclkmREy5Y=; b=OeWkKWIy1qefOpID
- qIdXCMWqHOOzSo8T04g/ts15F48JnUPZZLxOrAXH5Irm32n679PFQhi1lXnOmrDk
- wcOp8tsSo9fvo/vys+tTeu5Jbklmyp9xgz7s0GVIIdiKd6G39sbg3cnU6J6RY/YS
- RfLyQtcoW1y4dWzlop8xrYlC+kwfhK6m1BQ5Uc/Db/q0vOdYsEbt9A2ch2LqSwWg
- keFmVtW+/+BwBKFCFSKUZHY2t3jTp6mazpAeS7Sthb493ZkJiRqZIHebYw4paDcg
- WmbnUQQTv/7ag9xlpVtb++pzWjsfWSAPG8znOrvLm4aOi32DudsU/cmJ7JXfesj7
- Md0AYw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fwcujhr27-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 16:48:30 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-91931144870so481874885a.1
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 09:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786121310; x=1786726110; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=FQ652snNF1qvX8dAz2fc/CTMK1dPsxh0OKclkmREy5Y=;
- b=FO+rauVxr/gdkoEcIBJevd6uTUU3X3If6HDI654sBuADf0To4NoZfz9OOTgf34q1wE
- Ps4yxAWZPEMYTaeiOaHcSNct6OvGQynIcMxVS3fr5BJqkuwThuJxJlZRYATYvCNPMjoL
- R+nh7AXyrVogaNxZz6swOVyeCRyIy2QEbEJiSOssTiwVePxQdz0KMrC5FzrjXfsE5T5b
- hY1zH/wIgp2JzzZQD1mwyygK69dzjjcxx/3B8lE1waXdm7Mmfvqbb+UmCnFAtkUjyq+K
- pz+MnP1Rja4R1y/HK9XzljVNDdgCMMh73KynIIPP7JvAu6oDrXl/pTonLBOcY7r1d45Y
- mPEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786121310; x=1786726110;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=FQ652snNF1qvX8dAz2fc/CTMK1dPsxh0OKclkmREy5Y=;
- b=if+U4q/t2pCnBCc9PGLsQxj/Un+7oQ7mGI+dow2DjeChSk4DUa8KlY5Icb/VUjzQHp
- ry56q4ABS6vTu0LanPl6hjgR03TSwfRVrb8zeA19SPnVmP0/9dNmnfUogNBXB1M1hbTT
- wD6qixEwZZYJ9hKF9d5mFz50/Xn0qI/lNjwHbjAS9ttvB9Gz0QYCw8YfSPEz4eGrD9pe
- uogKr2coP3u5dnnYkUR3mmsrC6RjwRjjOhGHj2CMlRjKB7W/JDgxWL3NMurfTho+ef1t
- A5w3sXOExj7Nf4mDv80l2PmKXsZseV+uNmkm1bazuJCgzW4Qi7eIr1H3f1/HzwxdWfJj
- nYHA==
-X-Gm-Message-State: AOJu0YyEiv/1azGgLsx+GZqpSyOBbcdMZ/3UWwmrJ4k6vDqlq058Ui94
- Ps383fFkWdR+rnYhEnT4k2gq+CB7+ra75xj34T0s4S8y2WaMb6iUmS2Bn1thRAjvq7X8xUvCBcA
- f8aXOLn6tChdS5EJsP4/oKJJ2GUe6cy+l87D7vrf3KtEpo92tuRsjMLQU65wufpDn2w==
-X-Gm-Gg: AR+sD12t9DniTqr1mtXWtvp7RlioWhs0T8NZQMqgk0KMnHNORrRlzYPw/219Rd8evZq
- xMKQDEESUUqQOXPXCqwguW35TU16UxwCpdCEsvqnI0PfywS1uy+9GpRTsvzFM0FZzXcOz9dx1Tw
- iXF9cpAX9ZXL+0zGyYHm8sECepMPg+Yij+UpVoGFCE5lpyUKU1EKt0g0VBiWUZ0CQ7MOA4RPmH3
- 5upZB4ybQ2tqOegW8nrvHiK2wD2HF7dp9Tl+OGzZg9qjDmy+wnPy/LrO0CzfdsHo5z0QwA6sW+8
- NrPDPUfmYJ4TwJ2nelv+qmqzF/p+Bh8jvfLDHouA2JIOEwJvr1TnrlksQ61623WvPU/2Mr8jt0y
- kcxFxHFujOxmAiDr6bj/yMj2ubLPlMBCs7oK3cvsu37Win+M8Sm1QCGH7TuBCHMFl
-X-Received: by 2002:a05:6214:27cb:b0:8ee:efa3:4466 with SMTP id
- 6a1803df08f44-908813b28f0mr279941166d6.28.1786121309875; 
- Fri, 07 Aug 2026 09:48:29 -0700 (PDT)
-X-Received: by 2002:a05:6214:27cb:b0:8ee:efa3:4466 with SMTP id
- 6a1803df08f44-908813b28f0mr279940466d6.28.1786121309400; 
- Fri, 07 Aug 2026 09:48:29 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-908a91b58d6sm12754186d6.13.2026.08.07.09.48.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Aug 2026 09:48:28 -0700 (PDT)
-Message-ID: <193758ea-acc7-45e3-bda5-a40253bf12ca@oss.qualcomm.com>
-Date: Fri, 7 Aug 2026 11:48:27 -0500
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wsNsi-00068b-Sg; Fri, 07 Aug 2026 12:57:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 677GlYQG153976; Fri, 7 Aug 2026 16:57:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lfbwb1
+ dBo7iTfiw791O693AJ8tlFqJxSTvQCbtyrAEA=; b=ON2liJ2ntxohccKGG4ki/W
+ ix+tKyRyzUp+M8M764Jg7bO17E/lVOOJZXtnXFE7dvElzS95QktQC2sbOvZ+KWec
+ vSw9aS2bJMMzS+t5jKxMzSrH8iDa1hMuKM6NXf4ECcqvij5l9ORmid7TMKmfb3DO
+ t9nyi9e92qhdSQYaJ6xOjyV6g0q+RFrR0VW9vIB48lNaL6qGe+2mWiOi2pTL3t0C
+ wDIjDqjNQiQKPPPJxbyfrqZzbZMRKZ2EwxrPxbPiBA7Ogi4h391AiuwQnMkK/p2O
+ 9IiPehEXLhh9zgp/Y/hDZuuB0pNG1FeLIsno1djz7Jsl0584AJcuIrx+UvEhWXQA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fvy01mxs3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Aug 2026 16:57:11 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 677GuOnJ026031;
+ Fri, 7 Aug 2026 16:57:10 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fswu00a3q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Aug 2026 16:57:10 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 677Gv8Zp25559710
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Aug 2026 16:57:08 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 95BC35805B;
+ Fri,  7 Aug 2026 16:57:08 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 171FA58058;
+ Fri,  7 Aug 2026 16:57:08 +0000 (GMT)
+Received: from [9.16.62.165] (unknown [9.16.62.165])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Aug 2026 16:57:08 +0000 (GMT)
+Message-ID: <ec3a1da6-07d4-4a7e-92ba-f173c277e949@linux.ibm.com>
+Date: Fri, 7 Aug 2026 11:57:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] host-utils: fix ssub32/64_saturate return type and
- clamp direction
-To: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-stable@nongnu.org
-References: <20260806043223.3787083-1-brian.cain@oss.qualcomm.com>
- <20260806043223.3787083-2-brian.cain@oss.qualcomm.com>
+Subject: Re: [PATCH v5 14/15] s390x/pci: Implement migration for emulated
+ devices
+To: Farhan Ali <alifm@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260804024443.56445-1-kshk@linux.ibm.com>
+ <20260804024443.56445-15-kshk@linux.ibm.com>
+ <b3bd5351-c51b-42fb-a1dc-09eb998befa9@linux.ibm.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260806043223.3787083-2-brian.cain@oss.qualcomm.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <b3bd5351-c51b-42fb-a1dc-09eb998befa9@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDEzMSBTYWx0ZWRfX7dXE5DdZLHcp
- DUkOezJ3vxUi+o5hh/V+GG0ksGU24TEjyZynGlZrng/+t0cgvJgZhIwzpxbTstdRMhE2QUalebN
- 5oIrJoKNg875KCNr8kmhPuzc8vg2RIo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDEzMSBTYWx0ZWRfX0LVLHRTIsGCf
- kaAws8dWL85KQbMPsC/EVNmWwKvKY3C5N1/AnVgzNcdLYshmnkuSiLZDBY+VUAkog/DL8JaK8Fw
- mwvPm/UTTtYtPPhtr3qA9rWZRyuX1jpuPNgtXpcavgHQfOLcscEQuVzTxvXB+KFtvUp9SEjAKoe
- mjyNF6IaCWtmVy5XKHjFBhEIVZoU+uJ4qtEnAJGPbfLT35I2yxXg0k1mb4raXocYQezs5WYsPf4
- /Db9Ayg1aB9nlOfiBuxVlKuz6up9DQXc2PRgDur+ldLrUv6XsS5aBxBfqudrDYFKXjAkKEm1vI/
- KFyT0uT0HU7JPmduirnS+/zD98zsgj50zaGPBE0seplxOCJEN+MwwMIwirdTesARgG8gtDwOzTp
- T5ZMkn2zJBcZQ+4eY5v3H6ufJ1lcesOdoAZk5h/Je22hr3xBpyGfYJHGI2braBoDRNV7S81yt0G
- jY3EXi3/ptQIsJo49Ag==
-X-Proofpoint-ORIG-GUID: YeFRq_5QxKXT45HKcsLjcSs8D_zDJCht
-X-Proofpoint-GUID: YeFRq_5QxKXT45HKcsLjcSs8D_zDJCht
-X-Authority-Analysis: v=2.4 cv=Wssb99fv c=1 sm=1 tr=0 ts=6a760c5e cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=zSMaiZIlteQihR2KgU8A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: PJS1U9tAXHVzQWOcykTMNBYVr0yvjoHA
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDEzMSBTYWx0ZWRfX3kDaurejLZoB
+ Q3c1tx57x92m0twgmJX9mKCYFU6kRml0tby5l+K9y0raOvT+3gQbOnlu9RmpzzOyJYmIlyVcoGS
+ A0Uq4KTJiMgShsWxZwmT7M/b77zVxT0=
+X-Proofpoint-ORIG-GUID: PJS1U9tAXHVzQWOcykTMNBYVr0yvjoHA
+X-Authority-Analysis: v=2.4 cv=afNRWxot c=1 sm=1 tr=0 ts=6a760e67 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=y5_OHTmNZ1c2rmefk8oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDEzMSBTYWx0ZWRfX5lDpqF0Vxbvn
+ LHgCctMY2PP58CcAHopBLIBeIexHzmWxWi4AZ2yd+TRAp8aIH3e3UwDvRXAWiXI1b7XrduxHDFA
+ eP2u25XiXl/3TDdp0DJotF3YgUhbnWwvLAvBxKwM7DNspNVfhoUuGUbVl0IC/5YnL/26ycgVaAk
+ hV3FbHXMY+3f4I7hjGcmFXkpc9XIb2ibbTen0+0mpOHqrKfEMf1NfIidAurt+A67uN6MxhoONou
+ ZmfzGcSmd6Eixifaz209GltHX9bYIM/coQoPHg+F9YN7IFlIwDK48YSZ7IFhYjE9/hhH8JDmxCL
+ 4bU7NHen9DRm6xM7PmS3I80mZ5gJhBXokClOax5U8PzP3cXDbL6D1+OsWvSZySVptWkc5NJ+/Pr
+ R8lZRfZ0u8MHZSh+jkZ3wLNiXfKOHQoWNgqpvwBScD/0OFBEe0uw3fJqA8IUniknLd135SF1qG+
+ EY2WSj5XBbTsljCul5g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-07_03,2026-08-07_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ malwarescore=0 spamscore=0 phishscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608070131
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,96 +128,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 260805 17:02, Farhan Ali wrote:
+> 
+> On 8/3/2026 7:44 PM, Konstantin Shkolnyy wrote:
+>> Implement zPCI device state migration, consequently enabling migration
+>> of VMs that have emulated PCI devices, whether virtio or not.
+>> Migration is allowed for devices whose function handle has the
+>> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
+>> state of its zPCI emulator.
+>>
+>> This will enable emulated PCI migration starting with s390-ccw- 
+>> virtio-11.1.
+>>
+>> Passthrough devices will continue to block migration.
+>>
+>> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
+>> ---
+>>   hw/s390x/s390-pci-bus.c         | 189 +++++++++++++++++++++++++++++++-
+>>   hw/s390x/s390-pci-inst.c        |   2 +-
+>>   hw/s390x/s390-virtio-ccw.c      |   4 +
+>>   include/hw/s390x/s390-pci-bus.h |   4 +
+>>   4 files changed, 193 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+>> index a94e24a2ac..9441c80ef4 100644
+>> --- a/hw/s390x/s390-pci-bus.c
+>> +++ b/hw/s390x/s390-pci-bus.c
+>> @@ -26,6 +26,7 @@
+>>   #include "hw/pci/pci_bridge.h"
+>>   #include "hw/pci/msi.h"
+>>   #include "exec/cpu-common.h"
+>> +#include "migration/blocker.h"
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/module.h"
+>>   #include "system/physmem.h"
+>> @@ -34,6 +35,11 @@
+>>   #include "trace.h"
+>> +static const Property phb_props[] = {
+>> +    DEFINE_PROP_BOOL("x-zpci-emul-dev-migr-enabled", S390pciState,
+>> +                     emul_dev_migr_enabled, true),
+>> +};
+>> +
+>>   S390pciState *s390_get_phb(void)
+>>   {
+>>       static S390pciState *phb;
+>> @@ -917,6 +923,23 @@ static void set_pbdev_info(S390PCIBusDevice *pbdev)
+>>       pbdev->pci_group = s390_group_find(ZPCI_DEFAULT_FN_GRP);
+>>   }
+>> +static int s390_set_emul_dev_migration_blocker(S390pciState *s, Error 
+>> **errp)
+>> +{
+>> +    if (s->emul_dev_migr_enabled) {
+>> +        return 0;
+>> +    }
+>> +    error_setg(&s->emul_dev_migr_blocker,
+>> +               "Migration disabled for emulated zPCI devices on this 
+>> machine type");
+>> +    return migrate_add_blocker(&s->emul_dev_migr_blocker, errp);
+>> +}
+>> +
+> I was trying to test this patch series, and something i tried was doing 
+> was a save/restore of a VM with just CCW devices. But with this patch 
+> the save/restore of the VM fails with error:
+> 
+> error: Requested operation is not valid: cannot migrate domain: 
+> Migration disabled for emulated zPCI devices on this machine type
+> 
+> I think this is a regression, as the save/restore works with the same 
+> guest definition with current master branch. I also think this may break 
+> live migration for guest with just CCW devices. Something to also note, 
+> by default libvirt auto adds a pci-root controller to the guest 
+> definition [1]. So i wonder if that's tripping up the migration blocker?
+> 
+> 
+> [1] https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/ 
+> html/virtualization_deployment_and_administration_guide/sect- 
+> guest_virtual_machine_device_configuration-configuring_device_controllers
 
-On 8/5/2026 11:32 PM, Brian Cain wrote:
-> ssub32_saturate() and ssub64_saturate() were declared to return bool
-> instead of int32_t/int64_t, and clamped to the wrong bound on overflow.
->
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Cc: qemu-stable@nongnu.org
-> Fixes: 16495533131 ("host-utils: Introduce signed saturation primitives")
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
+Yes, indeed there is this device in qtree, even without any PCI devices 
+configured in the libvirt XML, and it blocks migration:
 
-Michael,
+       dev: s390-pcihost, id ""
+         x-zpci-emul-dev-migr-enabled = false
+         x-config-reg-migration-enabled = true
+         bypass-iommu = false
+         bus: s390-pcibus.0
+           type s390-pcibus
+         bus: pci.0
+           type PCI
 
-     I think this patch is a good candidate fix for -stable.
+Instead of creating a single migration blocker for this s390-pcihost, 
+I'll create one for each PCI device if this x-zpci-emul-dev-migr-enabled 
+flag if false.
 
--Brian
-
-
->   include/qemu/host-utils.h | 24 ++++++++++++------------
->   1 file changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
-> index 2e8da7fb3d0..1db9dbb138e 100644
-> --- a/include/qemu/host-utils.h
-> +++ b/include/qemu/host-utils.h
-> @@ -607,10 +607,10 @@ static inline bool umul64_overflow(uint64_t x, uint64_t y, uint64_t *ret)
->   }
->   
->   /**
-> - * sadd32_saturate - addition with saturation
-> + * sadd32_saturate - 32-bit signed addition with saturation
->    * @x, @y: addends
->    *
-> - * Computes @x + @y, and saturates rathern than truncating the result.
-> + * Computes @x + @y, and saturates rather than truncating the result.
->    */
->   static inline int32_t sadd32_saturate(int32_t x, int32_t y)
->   {
-> @@ -622,10 +622,10 @@ static inline int32_t sadd32_saturate(int32_t x, int32_t y)
->   }
->   
->   /**
-> - * sadd64_saturate - addition with saturation
-> + * sadd64_saturate - 64-bit signed addition with saturation
->    * @x, @y: addends
->    *
-> - * Computes @x + @y, and saturates rathern than truncating the result.
-> + * Computes @x + @y, and saturates rather than truncating the result.
->    */
->   static inline int64_t sadd64_saturate(int64_t x, int64_t y)
->   {
-> @@ -637,31 +637,31 @@ static inline int64_t sadd64_saturate(int64_t x, int64_t y)
->   }
->   
->   /**
-> - * ssub32_saturate - subtraction with saturation
-> + * ssub32_saturate - 32-bit signed subtraction with saturation
->    * @x, @y: addends
->    *
-> - * Computes @x + @y, and saturates rathern than truncating the result.
-> + * Computes @x - @y, and saturates rather than truncating the result.
->    */
-> -static inline bool ssub32_saturate(int32_t x, int32_t y)
-> +static inline int32_t ssub32_saturate(int32_t x, int32_t y)
->   {
->       int32_t ret;
->       if (ssub32_overflow(x, y, &ret)) {
-> -        ret = x < 0 ? INT32_MAX : INT32_MIN;
-> +        ret = x < 0 ? INT32_MIN : INT32_MAX;
->       }
->       return ret;
->   }
->   
->   /**
-> - * ssub64_saturate - subtraction with saturation
-> + * ssub64_saturate - 64-bit signed subtraction with saturation
->    * @x, @y: addends
->    *
-> - * Computes @x + @y, and saturates rathern than truncating the result.
-> + * Computes @x - @y, and saturates rather than truncating the result.
->    */
-> -static inline bool ssub64_saturate(int64_t x, int64_t y)
-> +static inline int64_t ssub64_saturate(int64_t x, int64_t y)
->   {
->       int64_t ret;
->       if (ssub64_overflow(x, y, &ret)) {
-> -        ret = x < 0 ? INT64_MAX : INT64_MIN;
-> +        ret = x < 0 ? INT64_MIN : INT64_MAX;
->       }
->       return ret;
->   }
 
