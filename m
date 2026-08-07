@@ -4,84 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F282FC5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 12:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1C4C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 12:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsJPY-0007DF-Ou; Fri, 07 Aug 2026 08:10:52 -0400
+	id 1wsJPa-0007DZ-Fj; Fri, 07 Aug 2026 08:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1wsG9D-0005fY-6N
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 04:41:47 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1wsG9B-00072M-Hw
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 04:41:46 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-383b4a3755fso3099194a91.3
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 01:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786092104; x=1786696904; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=LpcWn2SuFvxiyMeM56VEofkzDXfNTJQ0BrCuZovQqJE=;
- b=myApGYQ5ft3Scd8ng+fE2xd5h9WX0soq6C/SnpM3dxkhAQVRNX+T931bpoAznlCWT9
- eUXa5ty4OssjiNo8/sN1kIQFsrqDk5rTj0CRyb/AOyz6cz57B2FBvp87NMeSCxim9JUg
- MjpkgH5Tk43r3/5cpIMkgSSuhGCRDMFMfq0wBOf03Drg5k+n2qgsQ+QQzMLkaentTA6G
- ksJT4dI9W3JbUFoyXzi+OS6KGFMzREv0iQzs2qjre+IhDy0IPPwmyM2nRHuQF5W+nOrw
- KNXrQe+e0rBQCs9uc+yyHOggEGjlISFcFSp4Om6H3vB59EgihTNnzcFU4TFmEAvF3mII
- SWVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786092104; x=1786696904;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LpcWn2SuFvxiyMeM56VEofkzDXfNTJQ0BrCuZovQqJE=;
- b=pmV9EpD7NntCHT3TFV6p3WNmKl1obzztsQiQNQBJzObTz5aVALOhm0uYl2mFzIOcqb
- z1nz+74vzWM8zKdJzPZAjQ9cEI9kfxpcxm9Etw4ck7RtGjc4wUn0GzbSNf5l7eufQmEZ
- 5mF5mVa8+1A7rjbNS/JtlvCeOuMUg/M43dDmq0fwro5USFcCucri+gq4rZ6N39kYDt4g
- TrLTjURr4rQC1mspj18dmJvKRX6r8hTxaXg1LjuoAuPk+wKwBhsIhgS4rEq4zwNTDry+
- /cJGdZK2fd3ZdBXMOmEfSJ9Dkvb319FV87YEmqy9Oa6aWI9c9JLoyx0Meos/z62veI2q
- 6B5g==
-X-Gm-Message-State: AOJu0YzisU3J2LbOFXPbwYqaEw3ZdNIPl3tCfN0z/KzgAR0bL6qDu2da
- 3nG3gJQ3thF4lDl9zVB3RWtfNa42rIKVuTVOD3GpzBwBnaUZNTwDVWQXo2aLCwML
-X-Gm-Gg: AR+sD12BVFfU67mjkTlmqsTS6wdvSnFTkZAJdp67yQGWOFkOw/dasb2xBleHwwlCmxS
- AQa8kBPQOwudwlqdhfBF0ZpXl5px2MAuSDw0cJP6LqV1N4RLx7Q2tVOLFsYyrpRP67N2mM68Gdu
- iDHW4mOY0WJptON/ED+mZsljszNehm9JZndCyjEQyWsKhVc1cuh6Np3nGJQ4OIhPA8gfEc1eEPf
- VrwT/pGrwTz7zR0CwJUt6p08t2U+Xl/B+J+QW+NHnIANf7o2MxNcta4c1R+RQqJMDJB4dv/TNO3
- 9YRbiJg/N/1K8iljcVds/Iy4U+jVMyJ3PvoQso2lau+4SyCGQXEmQZ7rM/MQu+mzG7pgDaL3Ngc
- NXG7m/Aq0wpCJFLl4Qn5TmGQahl4s6hCWJbXzNzZF122nQryDTLiQVvrQEFC6oSVx+6nnoWG1m9
- vvXV3S6a/8KcnJJlpO1+1c6Yp3u6VThMcHAvg39R4BtD4HTBwWFY2WUIRc071zxpEG
-X-Received: by 2002:a17:90b:52c4:b0:38d:ef48:b04 with SMTP id
- 98e67ed59e1d1-392620e70b5mr2597624a91.10.1786092103523; 
- Fri, 07 Aug 2026 01:41:43 -0700 (PDT)
-Received: from colazcyASUSlaptop ([2a09:bac1:76a0:3d0::26b:61])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3925fc6dfcdsm1594357a91.4.2026.08.07.01.41.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Aug 2026 01:41:42 -0700 (PDT)
-From: Chengyang Zhu <colazcyg@gmail.com>
+ (Exim 4.90_1) (envelope-from <sesame_h@qq.com>)
+ id 1wsGlg-0002pX-UP; Fri, 07 Aug 2026 05:21:33 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.50])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sesame_h@qq.com>)
+ id 1wsGlb-0004sn-SB; Fri, 07 Aug 2026 05:21:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1786094477; bh=/V9XKLdZoAqVa9Z+dLVGe8pdE0XqgbtmdETvCkf9dJM=;
+ h=From:To:Cc:Subject:Date;
+ b=LHuouiMq7X3z3V6eQINT9IwmfsLREceKF3shp9pcn+l1hAVxCMCyH2798dKg0wXBf
+ Fi2Bv15cqJHj44nLww6MLCvxm1RIlQKgul27M3DllC7vbfsnFp3g41AollHGZbEH3t
+ nMVXfMyrggSwPC6SAZ+Lyr6Alsvp4RopXksHwTGM=
+Received: from minhang-zhang-KVM.. ([116.128.244.169])
+ by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+ id 46D84CF3; Fri, 07 Aug 2026 17:17:45 +0800
+X-QQ-mid: xmsmtpt1786094265tl09zp79k
+Message-ID: <tencent_8A3172131A5ED2AD86D441389EB32CF67809@qq.com>
+X-QQ-XMAILINFO: NnYhxYSyuBnLakVX+Cr8LghSKDRbV81B8r7D2V0SJzKfjqJ2V/csIAQ8jpDDPH
+ WsrDPCuijsyoSHwqReFj0a3+GYq9qvpDpRFRUAwDcj5SZMExyH8Oat8x5SemSyMq8TKx2NYBAYUd
+ wjAn/KgcoOaoqTZnUfpRLbnl5RHuo4ypx47bPZajYq10iFTc6c1248+t1TP5mzqgiT7wDsZtaDQp
+ nSxTaoq+bIievYi1peTPVeNVEoGXv4UN4JWpavzzDBCYHopXR2KARBVH35y4b8h5ijaI8Vx+kps3
+ cFcgJRb97ZBGfEKEZlR4USfwi//gjqHTQzNRLhaW5cm7f+VQinS2uVwnO/unSZRPL3O4t3bLMZdW
+ GsYYjYsbSzAW+QCxmlVc/sBdd+krnUzLxl1wRN+/xQ7gh6ZyTXqFHUagCdr1mdNGckysVrlPN2Lg
+ bcyXzYOA8b9zM1d1gCk1ABRgZKFhuGKtXNm+hrJzaYXYye+9YgnfbLpeG+A14uD8LtfxlAcjz3xb
+ 8B/KHuaCyEnO7IEjO0QYXGvbnyI9OlwdF/QJiRX9sK37+LIEMpyO8AiMG/R+wY/U+IUY/3kmjRCh
+ Rd6+r9SvPOSVt/orzHF5URX86NftoFx1xGL66fGRCeQVNwCG52heqSIlVLlz/J3c1qb8n57qZ7ZD
+ POQrJ26Fa+j4uxPA9j6XR6zZmgB+/NKXfpKqtiNGlJ2Nui2O3iwCVyEBZpw7CRUkP5Elpyut4Qu1
+ xwdkTx5EKS5Qgvvnl9teV8P+3nUQel+vz3LYJho9M1vLNKSXJUciSQxYe4plJdP4CQGyssxnPQZP
+ WdtdKAwpTsNXQ5qrd59jP6fHd+KAtIM4uMVb6Gq9fPm9E2bgD5PVPv6JmV1IwT633N6w4yWTcNXo
+ kXlgo69xvqjf7pkVuCEEqCcZOL6Z7WNmRjSQZ+wxTg45KXFKFaYtu/O2GlSChbfZgt7rmyxFMuge
+ iMHTrTk4+O7MKzW/bKnJ7IJDyoEvZ98p5pE8qN3KQomx1BxPYbJ/jvcF/S4BSXckrmHnNaDF8=
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+From: sesame_h@qq.com
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	Chengyang Zhu <colazcyg@gmail.com>
-Subject: [PATCH RFC 0/1] an extensible SetUIInfo2 design
-Date: Fri,  7 Aug 2026 16:40:49 +0800
-Message-ID: <20260807084050.526109-1-colazcyg@gmail.com>
-X-Mailer: git-send-email 2.55.0
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
+ Minhang Zhang <zhangminhang@kylinos.cn>
+Subject: [PATCH] target/ppc: Validate HTABMASK and reserved bits in SDR1 for
+ 32-bit mode
+Date: Fri,  7 Aug 2026 17:17:35 +0800
+X-OQ-MSGID: <20260807091735.17019-1-sesame_h@qq.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=colazcyg@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=43.163.128.50; envelope-from=sesame_h@qq.com;
+ helo=xmbghk7.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 07 Aug 2026 08:10:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,34 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the `SetUIInfo` method cannot set a refresh rate.
-Simply adding a refresh_rate argument would break the method signature.
+From: Minhang Zhang <zhangminhang@kylinos.cn>
 
-This RFC adds the `SetUIInfo2` method and `QemuUIInfoTypes` property.
-  * `SetUIInfo2` takes a dictionary,
-    allowing partial updates and adding more keys in the future.
-  * `QemuUIInfoTypes` exposes the schema of `SetUIInfo2`'s argument.
+ppc_store_sdr1() had validation for 64-bit SDR1 values but lacked
+corresponding checks for the 32-bit case.  According to the Power ISA,
+in 32-bit mode SDR1 bits 16-22 are reserved (must be zero) and
+HTABMASK (bits 23-31) must consist of a consecutive string of
+1-bits starting from the LSB, i.e., be of the form 2^n-1.
 
-This patch is a proof-of-concept and it needs further discussion on:
-  * public API design (the name and the signature)
-  * partial update behavior (only updating the recognized fields)
-  * error handling (ignore the wrong keys or return an error?)
+Add checks to reject invalid HTABMASK values and log a guest error
+for non-zero reserved bits, following the same pattern used by the
+existing 64-bit validation.
 
-Test results:
-  * qemu:qtest-x86_64/dbus-display-test passed
-  * qemu:qtest-x86_64/dbus-vmstate-test passed
-  * qemu:qtest-x86_64/dbus-vnc-test SKIP
-  * manually created a virtual machine
-    and successfully set its refresh rate and resolution via `SetUIInfo2`
+Signed-off-by: Minhang Zhang <zhangminhang@kylinos.cn>
+---
+ target/ppc/mmu_common.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-Chengyang Zhu (1):
-  ui/dbus: add extensible SetUIInfo2 method
-
- ui/dbus-console.c    | 56 ++++++++++++++++++++++++++++++++++++++++++++
- ui/dbus-display1.xml | 17 ++++++++++++++
- 2 files changed, 73 insertions(+)
-
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 2499e61..59e8324 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -57,9 +57,23 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+                      " stored in SDR1", htabsize);
+             return;
+         }
+-    }
++    } else
+ #endif /* defined(TARGET_PPC64) */
+-    /* FIXME: Should check for valid HTABMASK values in 32-bit case */
++    {
++        target_ulong htabmask = value & SDR_32_HTABMASK;
++        if (value & 0x007F0000UL) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Invalid SDR1: reserved bits 0x" TARGET_FMT_lx
++                          " set\n", value & 0x007F0000UL);
++            value &= ~0x007F0000UL;
++        }
++        if ((htabmask & (htabmask + 1)) != 0) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Invalid HTABMASK 0x" TARGET_FMT_lx
++                          " in SDR1 (must be of form 2^n-1)\n", htabmask);
++            return;
++        }
++    }
+     env->spr[SPR_SDR1] = value;
+ }
+ 
 -- 
-2.55.0
+2.43.0
 
 
