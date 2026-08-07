@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E202C5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12A1C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsDuU-0006mH-H8; Fri, 07 Aug 2026 02:18:26 -0400
+	id 1wsDuc-0006tj-Kj; Fri, 07 Aug 2026 02:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuR-0006kK-Lg
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:18:23 -0400
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuS-0006kX-19
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:18:24 -0400
+Received: from mail-westus2azon11010040.outbound.protection.outlook.com
+ ([52.101.46.40] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuP-0002gC-Dv
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuQ-0002gD-2l
  for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:18:23 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IR1w4f0JuwP46n5c6tBUE2pflPQkz69w5ye9iB3vPw5EwRA2L9oqS+Cfz1BVNkF4F7HNzAXRyGExW+QtZ0jvUrUnyhYLZeKoCrZU++ZDYSjzcdXkAnwv2/+mSQKuYRYYwbijQtIYTXRanHynmMgcoTkeZVokx8sfg88Kt6hTS434Xd3OxPJg+X19Fn6FYTIneYLOTwXm79iE9ndwY3S7c0Puu50a5M13lQB0vcB0l1WwOVS+xuQgYaJZ29UMK+l9zrBRkyrlw78NQxTmkK6fj9RkvtU1aSZGd/9Bvtv64wVyzKBX2pxNjOJzF2npvglYXf3IkS5EQVZhqsJSlr9D8Q==
+ b=yJ4oiK36b8YDqcFP8DUBNkG5RzaNAsVsxDyImuKFhuVTlfKNtUMBcjg85P50J+Ovvaadb/FMYD6crb60mhiojjPfHSkMQGWm9otEUvvnkRa57tt4J/lCrl27ajnTjzuqiLogRsQJQ9cLhyHB7kI40IVaBat5dA5kTOw7XFoO7YEVpkF3m0Z8vm5w3qnf8isqOM6kquibXcLyCOo20Mi9eFQtTqrl/7fe218AsT2TlaLwbY9WoKek78Gtr83I0KBrFm5V234rH/yyHexipA6RyW0j2ncoXXvtaPU1b4ZjRcRMm+Jm9AriZB2JsHMVM2YoHUUckPLNRkhrZZsMyZWv2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jj1y8q3EPZQ9AFSCIBsGZmPoe/su1A3KaN+AdCW6EaU=;
- b=fT++QsdWpjvPn/ys65D3kWR0YwTvWk3IzDU8x9wj++sreEFpysiPtbu80PyJc3/hThBKKl4BoKwJ00KhplB8z2cUcHYNT5ebyRwqUm6bU9dLGDHovYru7hsH3CdxcFzc+vCcEnPQLvX+QUmicmlsR9cy/YePIUwqbqZAV30Eo14QVkdjXfZUU1fSlYE0CsvmnZLPd68NxQqSxmNIQsfvoyJoSG+kRAW4sXcoQQ+1Zuv4eSBujZsgzMucFZ/FjZjzsGeuHcWXI2mnzh/2wF9jZ1NvcCPSZjobQWc6iDUWn6gGvBnF44CyAuYfeWXSa1l0JHOUhw0VASLafHJh8zq0vw==
+ bh=EDJCKCOpbRwHGDTFw+y7as8vDCMixz6ZVdkU02bG9SE=;
+ b=AKaOj1WImH9yukqjRrCAWCszfEk7RVDOP+ssxIR3tgDVzqH9fxFkHkGgAL32Qte2Uzer9JNozRG6NX5ch76n+lVkpkDmZ247+3hKh1FHMLZTumnqWHhaCo2H98v3BD5nF1rLt366PJgZVFtgLhfgRWQIKIqhHY1yrBb/UfGTAzb8gHGmhBfgJMQZwbLk1SVn1KwjHVJGoBB7Gah0wVyBiDu6+7+WV/IQmPNcwOk636fffi4sZFZL5MDwES/f759Vd9Hjmz0C4T98zHedM8r/6Lx19+ETryFtRUJ8UBlN7mK40EaPU2+MFlvSapxBdS77AvskDLHh86oppGACn9Baaw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jj1y8q3EPZQ9AFSCIBsGZmPoe/su1A3KaN+AdCW6EaU=;
- b=uAzpaEFqXKCAbpFlEKvbx75XJGChz62WhMncLRr9K4MD146Wt63gpek/NqkeBqACbnAowk5+/q+LP8GmS5o637dAeAtOyHyD4blvZwDUuj4tdggKIsmzE50W7cmwH8srBHRJPxSNXazcUjjMppW6D22a06FWulRJlKAmhgkN0QI=
-Received: from SJ0PR03CA0190.namprd03.prod.outlook.com (2603:10b6:a03:2ef::15)
- by PH8PR12MB7208.namprd12.prod.outlook.com (2603:10b6:510:224::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.23; Fri, 7 Aug
- 2026 06:18:14 +0000
-Received: from SJ5PEPF000001CA.namprd05.prod.outlook.com
- (2603:10b6:a03:2ef:cafe::a8) by SJ0PR03CA0190.outlook.office365.com
- (2603:10b6:a03:2ef::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.21 via Frontend Transport; Fri, 7
- Aug 2026 06:18:14 +0000
+ bh=EDJCKCOpbRwHGDTFw+y7as8vDCMixz6ZVdkU02bG9SE=;
+ b=rVeaGrbHWWyHCzV0/C2zy3wO+PiO81fyxpmAr5+4tjdI5ycNGtCeJSEILnVXTnUyPkZIpBeMmtZiM/6AJdxmzFqt9pmZ94LVjNjqcZat03KIuuiXV2gyu1qBD0VRtXoqT4ZzeOCuAZesa/WtdCIKJURdUGzdhWaaZsYaysl/dRU=
+Received: from IA1P220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:464::10)
+ by SA5PPFCAFD069B8.namprd12.prod.outlook.com
+ (2603:10b6:80f:fc04::8e1) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Fri, 7 Aug
+ 2026 06:13:13 +0000
+Received: from MN1PEPF0000ECD5.namprd02.prod.outlook.com
+ (2603:10b6:208:464:cafe::6c) by IA1P220CA0016.outlook.office365.com
+ (2603:10b6:208:464::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.23 via Frontend Transport; Fri, 7
+ Aug 2026 06:13:13 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -51,13 +51,13 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF000001CA.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ MN1PEPF0000ECD5.mail.protection.outlook.com (10.167.242.133) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Fri, 7 Aug 2026 06:18:14 +0000
+ 15.21.315.6 via Frontend Transport; Fri, 7 Aug 2026 06:13:12 +0000
 Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 7 Aug
- 2026 01:18:10 -0500
+ 2026 01:13:09 -0500
 From: Sairaj Kodilkar <sarunkod@amd.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
  <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Igor
@@ -65,12 +65,10 @@ To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
  "Richard Henderson" <richard.henderson@linaro.org>, Sairaj Kodilkar
  <sarunkod@amd.com>, <qemu-devel@nongnu.org>
 CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-Subject: [PATCH v2 7/7] tests/acpi: x86: update golden masters for IVRS
-Date: Fri, 7 Aug 2026 11:42:50 +0530
-Message-ID: <20260807061250.27739-8-sarunkod@amd.com>
+Subject: [PATCH v2 0/7] acpi_build: Refactor and cleanup AMD IVRS build
+Date: Fri, 7 Aug 2026 11:42:43 +0530
+Message-ID: <20260807061250.27739-1-sarunkod@amd.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260807061250.27739-1-sarunkod@amd.com>
-References: <20260807061250.27739-1-sarunkod@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -79,38 +77,37 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CA:EE_|PH8PR12MB7208:EE_
-X-MS-Office365-Filtering-Correlation-Id: aad6c485-79e1-4bdd-7920-08def44ba9e9
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD5:EE_|SA5PPFCAFD069B8:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42e6c10d-4a0a-4a19-4b55-08def44af651
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|36860700016|1800799024|82310400026|376014|11063799006|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: Kw1AFpwdmw29IHGVbGKR2e+uPDOnRn7+0p98j/zUJKM9HE9TErFd5a/Zm4BT13Ji5ZHUfzhYwXhyOvJ2p6T+DGkpvpMNcgVUE4gDKky9+L6ZzYU0PsEZ0ubopYjZUVlBxp9kIGGX+P1O47ZWb8Ez9ch+UUgMdbNxLePM3y2hridCF5WQekuxA6vnz59NEJLl9SLRsDTcgx9bGBYTbEJGUBQwCxldMeKe9YaHpJv6vE7RfQpHbhi258b5bu12pUI7xOxXlYlC70k7BnNNRnCGJMA6QAOxfILMPFiOJRFTcua2bRGSdGIdmJDRN0ZSnYl2moJJuOhFgaSB82PvAh8pqgm9Sc69hDtXc7NEImeF+22KupfoDMn0Iip5Bb/j61MwnpXBz4z9oBxmCJgQCauVD5LhDx7Y+d+w6X5oCH2M1elq6VJqN7WCZChqWsLO1B0UrReEA939FBmrQDr9P8Cp1PevF/3/EYAyGpo4z/eYod6wO4UwDEuSH8v3gvd22ZXAx9Zj/CzzT/kCVrWbZIYgLtGgXalGmAVUl4vlpf9IlXq4MHTnZYNx1cBxjAkLEBFOW71a6i2eIGyHj63/lPdqH6XXo9kWz+BJbzpxyWwZ4cZL6tNHpV2iqOea6w0oXahX9rsfJzZ0GxlMgsdtfF6/OXz8ygmmGYZYXRB333i/VZTHaqlDgtmxxf0zLMxQFr+j0vpRjBojInGZ+sbO9F1Www==
+ ARA:13230040|82310400026|1800799024|376014|36860700016|23010399003|18002099003|56012099006|11063799006|13003099007|10067099003;
+X-Microsoft-Antispam-Message-Info: Aq2kMFOKnoQytoEhi76nzCbZW02ujFNWyXoo8dfkrP1zOTf2EWe67VlZPG+ei91xiRUQjqLh4GDswbEur9oMSAp1rujIYWXGvGc1VpALHlMne0wPNTT5T8DzWTXm2sNvI8LCPi9tzg20rn87iZZ6K74l9O2TXTvMpxB3Rv+yfMKOFrsmG9mwTe+OsW8pua1d3++cbHa7mzGPwB7w5cTcpGCBi0LVNXk1VAturcWMhTYhWDkpaAL8LMb/zyrTBOD6zxtg+TZkyMbUbTboO3A3CpS7cMtcPRwUjMQVjZ9mOY7hk7KogakNCP3CAcnQxiiAx9GYzNu9qrhdAku04Po1CRdzIzE9vvROx00522CtrmVf7rsJZ7xsc6V3V15TmCNfMBJ9qq9ZCaIGbJJ6cqBPURFLlAV/NUQmzbiFB/HflGJcZq3x1ehfkQzeSbcMt/vjgxFqBj/MS+J7Lv6uHSCq4Pp42t5R5vkIRlObopPVRnlZkTJXP+h74tA6ntMNPcZf5zrAjBqoMQbPiEWk5wJ/sNs6FEbt/6tJ/JV8SAFHoG0K9Ie6UTeF8Tx6iu7ktxfRL2tDi3ig1BDNUH3CR4dlVxhe/3WlnvkxeMdgFZ0YC3OKu8rFWG9sQHDbEZQaGDV7xrpa5MWi5YYafjhc97XoqmSeoaxgbFsWN4Z661dY8p5hBc76jRjrn/M60+Luhs8jJ2GFBmLgLo4KVXqSo66iCA==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(36860700016)(1800799024)(82310400026)(376014)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(82310400026)(1800799024)(376014)(36860700016)(23010399003)(18002099003)(56012099006)(11063799006)(13003099007)(10067099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: PfWXWIX9YnGDF3CbX8vhHAkUIkvLmqaBTNoeNb7RsIzfFaCA2IZnSvrDp8G2rF70XEuGTzA+oUsw24MBA/PSmN+t7hr8iBScHiKSXbLjR8BIfLQbcRi3PMDQeA6+Ucnxi0g6Q1hg3wjIIIPdDNPQkD2IpuGgsqIzVTD0LIWUvie6B4nqr9JsShwrfTdeK7VMkJ0ZFcMoaonmolor1v40Lo7LRhWrxyav1vEfoZgmK8pBAUvPmQx0gzVni7rl2wWCydr2PfnNY03I2q6q7U3ES4iss4weqapoAszXxXAQOs+ZsJjz1+r3m4vuieYO7bDL3AiZhPEQn2Xm3wTkn7N8/GAUlyTZtFVyU7oE/MSwD1Ia0/7UCfGVPAXPsLJQV2hcgzSyoNRSIzNq+hkSlxiPakkCJdiSqSQFEKyZcoAHTrHfwz0rFqzMIlMvvYfYqhJD
+X-MS-Exchange-AntiSpam-MessageData-0: p63IdwhKwdCtrytcyu8wqTsBHSIeZl/6IkH9msM5vF6X3sVyv483V4PVB0Lvn8EEYJ1oLiIRU/Yn/UoYDW6e55N9pg910R8/fFKwhp2pp2oF84tOjll4xXYCMXyUmdN+OLz5usqflLnlatOSM0IKjcAVJ5KOLaeEjrhcXsau7HVB+rU1J+K4ykbO3gbr50A1+5RciEU2nZKL7aTLEwns+exuSHoZeI02fHv8Q3KoLc0m3TDHzFsTfugwltkmy3Bc8ln9F7HRgCDySqGcbcvNzSCX8gAhi6SUwBOS3kidMPzxvsDYzQZgKoDMOr3j9nxJoiJ/I3X53tNRwBXbaDBAjz55sY54U6rCAuNtjsPdnW+lGBzAqBx/pGKeRKZ1tyk07/RpPIk12RHXJuf7mOIkW4OtLY3F1ptVRxq3v32sC2Hy0gq3RJonWrtIsnSo3XVQ
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 06:18:14.2296 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: aad6c485-79e1-4bdd-7920-08def44ba9e9
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 06:13:12.9962 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42e6c10d-4a0a-4a19-4b55-08def44af651
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001CA.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD5.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7208
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=Sairaj.K@amd.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPFCAFD069B8
+Received-SPF: permerror client-ip=52.101.46.40; envelope-from=Sairaj.K@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
 X-Spam_bar: ---
 X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,126 +124,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Differences between disassembled ASL files for IVRS:
+QEMU reports several IVRS fields that either do not match what the
+emulated AMD IOMMU actually implements, or are hardcoded and drift out
+of sync with the extended feature register (EFR). This series fixes
+them.
 
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/x86/q35/IVRS.ivrs, Mon May 11 11:21:47 2026
-+ * Disassembly of /tmp/aml-NGQ9O3, Mon May 11 11:21:47 2026
-  *
-  * ACPI Data Table [IVRS]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
+The goal is to land a maintainable baseline before adding AMD
+hardware-accelerated vIOMMU support in QEMU, where we will require multiple
+vIOMMUs attached to different pcie-pxb buses in order to serve set of
+passthrough devices.
 
- [000h 0000   4]                    Signature : "IVRS"    [I/O Virtualization Reporting Structure]
- [004h 0004   4]                 Table Length : 000000B0
- [008h 0008   1]                     Revision : 01
--[009h 0009   1]                     Checksum : 74
-+[009h 0009   1]                     Checksum : CB
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
+Please refer to AMD IOMMU spec [1] for more details about IVRS.
+[1] https://docs.amd.com/api/khub/documents/GD6kOXjzWsek8QUbn_qMvg/content
 
--[024h 0036   4]          Virtualization Info : 00002801
-+[024h 0036   4]          Virtualization Info : 00203441
- [028h 0040   8]                     Reserved : 0000000000000000
+Changes since v1:
+https://lore.kernel.org/all/20260511123937.32743-1-sarunkod@amd.com/
+ - Dropped "acpi_build: Cleanup AMD IOMMU IVRS building" and
+   "acpi_build: Introduce necessary macros and structs for AMD IOMMU
+   IVRS".
+ - Added "amd_iommu: acpi-build: Remove unsupported PPR and HE
+   feature"
+ - Use pci_get_bdf() instead of pci_bus_num
+ - Move AMD IVRS specific macros from acpi-build.h to amd_iommu.h
+ - Remove GLX_SUP from feature reporting field
 
- [030h 0048   1]                Subtable Type : 10 [Hardware Definition Block]
--[031h 0049   1]                        Flags : D1
-+[031h 0049   1]                        Flags : 51
- [032h 0050   2]                       Length : 0038
- [034h 0052   2]                     DeviceId : 0010
+Sairaj Kodilkar (7):
+  amd_iommu: Return empty efr for stub call
+  tests/acpi: x86: Allow IVRS acpi table changes
+  amd_iommu: acpi-build: update PA, GVA and VA size macros
+  acpi_build: Use IOMMU pci device to build IOMMU DeviceID
+  acpi_build: Build IVRS feature report using extended feature register
+  amd_iommu: acpi-build: Remove unsupported PPR and HE feature
+  tests/acpi: x86: update golden masters for IVRS
 
- [036h 0054   2]            Capability Offset : 0040
- [038h 0056   8]                 Base Address : 00000000FED80000
- [040h 0064   2]            PCI Segment Group : 0000
- [042h 0066   2]          Virtualization Info : 0000
--[044h 0068   4]            Feature Reporting : 00000044
-+[044h 0068   4]            Feature Reporting : A0000064
+ hw/i386/acpi-build.c     | 65 +++++++++++++++++++++++++++-------------
+ hw/i386/amd_iommu-stub.c |  2 +-
+ hw/i386/amd_iommu.c      |  2 +-
+ hw/i386/amd_iommu.h      | 27 +++++++++++++----
+ 4 files changed, 67 insertions(+), 29 deletions(-)
 
- [048h 0072   1]                   Entry Type : 02
- [049h 0073   2]                    Device ID : 0000
- [04Bh 0075   1]                 Data Setting : 00
 
- [04Ch 0076   1]                   Entry Type : 02
- [04Dh 0077   2]                    Device ID : 0008
- [04Fh 0079   1]                 Data Setting : 00
-
- [050h 0080   1]                   Entry Type : 02
- [051h 0081   2]                    Device ID : 0010
- [053h 0083   1]                 Data Setting : 00
-
- [054h 0084   1]                   Entry Type : 02
- [055h 0085   2]                    Device ID : 00F8
- [057h 0087   1]                 Data Setting : 00
-@@ -62,33 +62,33 @@
- [061h 0097   2]                    Device ID : 0000
- [063h 0099   1]                 Data Setting : 00
- [064h 0100   1]                       Handle : 00
- [065h 0101   2]        Source Used Device ID : 00A0
- [067h 0103   1]                      Variety : 01
-
- [068h 0104   1]                Subtable Type : 11 [Hardware Definition Block]
- [069h 0105   1]                        Flags : 11
- [06Ah 0106   2]                       Length : 0048
- [06Ch 0108   2]                     DeviceId : 0010
-
- [06Eh 0110   2]            Capability Offset : 0040
- [070h 0112   8]                 Base Address : 00000000FED80000
- [078h 0120   2]            PCI Segment Group : 0000
- [07Ah 0122   2]          Virtualization Info : 0000
- [07Ch 0124   4]                   Attributes : 00000000
--[080h 0128   8]                    EFR Image : 00000000000029D3
-+[080h 0128   8]                    EFR Image : 00000000000028D1
- [088h 0136   8]                     Reserved : 0000000000000000
-
- [090h 0144   1]                   Entry Type : 02
- [091h 0145   2]                    Device ID : 0000
- [093h 0147   1]                 Data Setting : 00
-
- [094h 0148   1]                   Entry Type : 02
- [095h 0149   2]                    Device ID : 0008
- [097h 0151   1]                 Data Setting : 00
-
- [098h 0152   1]                   Entry Type : 02
- [099h 0153   2]                    Device ID : 0010
- [09Bh 0155   1]                 Data Setting : 00
-
- [09Ch 0156   1]                   Entry Type : 02
- [09Dh 0157   2]                    Device ID : 00F8
-@@ -98,27 +98,27 @@
- [0A1h 0161   2]                    Device ID : 00FA
- [0A3h 0163   1]                 Data Setting : 00
-
- [0A4h 0164   1]                   Entry Type : 02
- [0A5h 0165   2]                    Device ID : 00FB
- [0A7h 0167   1]                 Data Setting : 00
-
- [0A8h 0168   1]                   Entry Type : 48
- [0A9h 0169   2]                    Device ID : 0000
- [0ABh 0171   1]                 Data Setting : 00
- [0ACh 0172   1]                       Handle : 00
- [0ADh 0173   2]        Source Used Device ID : 00A0
- [0AFh 0175   1]                      Variety : 01
-
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 33e998165591..dfb8523c8bf4 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--tests/data/acpi/x86/q35/IVRS.ivrs
+base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
 -- 
 2.34.1
 
