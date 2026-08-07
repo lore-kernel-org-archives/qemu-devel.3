@@ -4,109 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359B3C5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 12:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1AAC5AC81
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 12:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsJZC-0001YA-FQ; Fri, 07 Aug 2026 08:20:50 -0400
+	id 1wsJre-0004V3-1x; Fri, 07 Aug 2026 08:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
- id 1wsJZ7-0001Xt-OM
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:20:46 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wsJra-0004Uf-CR
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:39:50 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ahshehab24@gmail.com>)
- id 1wsJZ5-0004sK-2u
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:20:45 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-39c7ce122c7so27614521fa.2
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 05:20:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786105240; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wsJrY-0002rx-Tr
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:39:50 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-82113c53aeaso23798857b3.1
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 05:39:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786106385; cv=none;
  d=google.com; s=arc-20260327;
- b=NLbiT037HgfpQy+I76Mdumb89f864N3O/Ws7xXPbCvetsnd3Ziu3abR1Jnql1Th4T4
- FKKlJtZYjmeimJe9TF4ZqjFmEqzUGNcYRTrUsPpt9r3Z1ZNO82B+x8fNd9w3wTrCQsLB
- s6V1lGTM86FEkgbAChnlg/anXOYIDVPSPfvIjhyNFTwtGxhHULI/H9jR59G7lNY1HOce
- qsuqec7Hfi6uY93qDcerNbCwFte58L8e/7u3kCA9yF4pz9LBuRisUilow9R8oA4BPM3D
- M+iFduLiiFba4M8USeJ5DI4U9JZ8SMQpVw0DnGNiSELUQQZoAQgdUZI3CpIPsowK8Nw6
- WegQ==
+ b=f24UdReOu/UJcF67EIAQ7MAiiPuxNYg25czQToxFXAbo09610Dn/NwpIAjgtrL1GwK
+ eiMgZ9pd21CwTabCrtdyxwb2QFYdF03r5PD4PhSoeL1aea1nTS13keo6rQ3FM5jKiOQF
+ 3iP7WKsDKkT/C8XMtSk+3szNm2Jyy24dFduw75x0C5BXYHae4yqpDydoLLk82pR4kwEj
+ mD5gLYc4ZHrubU6enNHk7qbdNApbFc8amc7K6GR2XNE+cJ9d7Wra1gClmK1Va5eLqAZO
+ OlVm3ZLKjQjiOy6rspFPoDOKN88Tqs5l4R7xwudVnf3VsulQEU+TAkUTXsbzAPYUY4hq
+ BXIA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=3r600VAzrZZcPqNnveFqiPmKCez+VS+LhKY4TXZ/BHk=;
- fh=fM7KSPMjImjWzsdKcaV7PeYVprmSf8prO6RfY8kbTFs=;
- b=cW6dLX8ijejPuImsR4ajbEBVOcXTM9V+4ohx+yikDJFj1l8GLX79d/VF9v6pbaSmj5
- vv0YES1et8/DPFQm0OtSPf+aNhLDAeVyfKqNVrVpBHxr13w1ym6TZdOqRJdyG3asjSjc
- DCl7X9T4HE9ksakvMCwDXEsISxHHh1f/AcvtWWGEcjRbmX6z7KZq58/5OikwOmuy5Q85
- 43uExX6CAw/FnOAL9aUwkJGR/ElI/QrZFf7bCYNXpzEqpL1ry0lDT8T71HbOdANAME9q
- tGZstaqX0gp1BfeOaNOu3ejt+zmtL8EsaxmRltMyCjtx9Em6/ee6fuKoW8UZAcESFtyr
- QK2w==; darn=nongnu.org
+ bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
+ fh=c4YsF+xbwPsO7TD20ekzmIuvWRuS8wd7Xb6Dt0bE+KY=;
+ b=YtCbT7Qw4kyRYWViRLDfD557hh1yMRTe02rJnaKqxiYdcVwinJfGOs1F+k9DehHFj/
+ 3lXPkJlGZIow2+RHRVA8VOx1n7nKQpnpRNUUajVB8I8QGJO6IwS9tcChd8XB/2+qXLSV
+ ZcNU5RJDaargOxlZhczl7/UqzmG3rt6bfaE0KzoUk0psmK+mVoKvNTWQCNBdR6qzz6Cp
+ L8AHYJcIvsL7lykdykePoHUqGs1b7Lpz8iC5WkMYzKe7saEoPzeG98efMud4+/CfeT9d
+ Py6fwkheAiD2OnH4PM8ffyiK3CscFeDQ58Re3EzjTMJuQQva1yPCzOazFMhFLti86s17
+ Aciw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786105240; x=1786710040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786106385; x=1786711185; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3r600VAzrZZcPqNnveFqiPmKCez+VS+LhKY4TXZ/BHk=;
- b=Fj+AUEBAVcwGhaUpFsoB42+A1GCZBJQd2rItnrkcwMYyBQXNWP0Eulq9EjQbH6iOwY
- mS+ThYI0pV+reFB4Uv5sHzgFWZRu8pBcECNoRHOf4Mlagz6O2x7eu8gnSGXmbOUvHEvH
- 7zizehWNycZLTJUwAxgagz3y0y9LSv9BQILgdrwGFRHn56/s8iJTWHWKkr65WougBd6t
- 5AFNFWccBrZN7vLwZHWNtFUyCquDb1VKNJfjpuW3TL+JNsUbqlT1pKFkVU6aYAzFp1cm
- 1dpftLIUEyohF/m9lipK4F6isUS3RjpqMj9jjVooVasSr+3pPvDhGCiDxQA8n+oiKQmC
- T6nA==
+ :content-type; bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
+ b=T8ST7kPAyYtQlnv0NhkMjkB+06NJGIXGPRr9PaJPjvRKTePU4Pa8FUO1r58Nb6gs+V
+ AsymF82YuR8QTv5d62DHjQL4SJWfHHMES0O0fvQ9oa9MlCqgOa0zmmAZYfHyKH6rUYX/
+ wJU4NZHbUrhXNtmvjf/VMT3+oo3leWgQIIKQOdc8r/1xZTHAsmx9U+Wnhvd/uEwZ0xA4
+ eEy0CkKeJrvg5BEQxayREl+1k460lPyqfSlvJC7boLcxmoHkPaI0xImDk0cMLDYbVSTJ
+ +h3/GdSYVB3I4b8Ld5NFI3eo8ipK2qjRhdV4FPsQN9vW0T7Zx6V9tmo8oJ/r9gMFO341
+ eOhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786105240; x=1786710040;
+ d=1e100.net; s=20251104; t=1786106385; x=1786711185;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=3r600VAzrZZcPqNnveFqiPmKCez+VS+LhKY4TXZ/BHk=;
- b=g6e+zh1O9aQ2QUKTlMZpzfpTYmExci/+ZN+crux0CnvTfvee+fA2KIE4/Gq8eO931s
- FjMxvkSME0lTiVsqwK0tKf7y8brICYkrywDpzaHmrnTmFWXP6JCugy2zNQdz04fabDYy
- +be7jT7Lii92OCrTmwGs7qZj1a9JBPPEJqmsq+e6kTI2kuVMc+Wa++bzMzSRFPBAo7HU
- dbatPrsECgumhMzw7t0iI3cY9PyomyRwsR2jhp7jFHUX4WPBdEdKCutzFnoRn5tZc1TI
- vaoG+I/XQJcDIKEqBoIbbLNCYk2oJrxNauyueSXvMLhyNNeBRIVuJBvHjBAVfqtCih4v
- ei9Q==
-X-Gm-Message-State: AOJu0YyldBpk+8MHAdqpuJRK069mb9ngOpBmP8QLOpjzGQvpUeZDO2V5
- O96U88ygoUpPAPNqJagdmxSzTvqpiSVSIZbRnnEAiVOPIzexWTnIBsYE6imhR3k3GdFJVOo3YV6
- MdSfMql+w5DR03144s5XX1fZcs55c7bAQ6wq56MNpl60H8rTN6K52KheVtBH63bnZ/XNmUvE=
-X-Gm-Gg: AR+sD10kotWnTLxyFNfNLHXiyvq+n9xM1iF312H4NRNRuRxskKoLAsN6FAIGZA8RkNb
- yYcA7pFceqn1WCOnrAYuvU/wXbXBJCKALYGLp7Ki1ChMmVgFOXZ/igah2Kzaogp5/hNMXetJyNU
- Lqwhc2dk9VlKky3XQZuOYDhiUgHNVbn8oTMBExmpVHYVny4o+/9V/31PhbeznP73sXljttfy4zz
- E8PYSLFqrHK7P8clzZcGN/SpKIi6By570F+DFmGYTSOKm7aMOXx/1KtdfEHetsnMHmdkiGXvhum
- RRbolxaPJB5wieEKAMghAvA6qmmGkuNe/4KAy7bSQ599UTDuHDTBcJxi
-X-Received: by 2002:a2e:b8d2:0:b0:39f:a2be:bc61 with SMTP id
- 38308e7fff4ca-39fbb3227dbmr23510591fa.27.1786105239776; Fri, 07 Aug 2026
- 05:20:39 -0700 (PDT)
+ bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
+ b=tL8GbY4RuxHLC2RcTovu3j5n1BXW16YAQ5+wzQungLdvfxqpPN+D0JwT9JpnAb+Gt8
+ 5NIH68Iu6k4hScWx4urssxkjtwpg7u5QdZbMMQSX26nhZfLWLI9dqJQIsX7Y69uOqMLf
+ 0q5hq+OwXGz4VkzzFoC1bHoWR8Kp6PZLc/OkqELtipjUNzf4+q19ZYgIg8pVeRcDmmHa
+ gYQgDN29wJM/QdHybd1AERM+GHG86ZIA8qySxopPa7e/aC/emMXkY7V6ZH1JBeN7O2QT
+ nfNXHaMLSOdkVYJ5/cM1miVMhhLLgsiYvEpYAoQM6t26u2x500Bf08Xn98AOuH177Waz
+ I1nQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpjvZlCRaqIQzp37KY8DNs62WJGfoL2bRRhLhjFJbmkJTBWLDn7PVvmWvEcQWug1iltMVw2+c/Iif9o@nongnu.org
+X-Gm-Message-State: AOJu0YwOEmDNFneo+vc7N1d4sagOkgT47WpNodNFklPogL4AVyCUgHqB
+ GUKSLVEfLId93JWoTqmbWbFtrBLmmt4fLT+PLH3Hd1JYB5v5a2qIu85yWt8BWSbNRheUufEhZnc
+ hnP8hpzfvCs6lGLrrT3ZiNR8FuG7rPYuEvbm0vz5L8w==
+X-Gm-Gg: AR+sD13Ouej1poI/1EzMettyphKsLc/WlnJtvmsduuutmH70DgkJTQsz2ZTHL5pzqSU
+ BurlDLIaqOTnoeXAeIYWzrKm31AZJOp+otcKhqSjUq2QEsyDv6lyQNiZm2aLlqpxGxmQehjOHjD
+ K901ZDQohM6iNcOghgMRC1M6T9OTlfBi10TFoxiLwMxvuFJeNQrGD1QXCMplpX5sgPNAx8bCU11
+ bcOyZ1zihPBsXQAR/f2a6bezJJdU0ioRdjXIK7rkpR5QSp9EnlrlPBG8d1+u21BUNMC6DgLbZdK
+ OHY0gv+Ud1lHFzhgQ/tyeHX26R4WPof95HZEWnaAp3RuMpborAHe7q4y9l/gx7MX8zjdYwThskd
+ dR/yQpWmN25ko833BeGoncII+Hpo7
+X-Received: by 2002:a05:690c:6d90:b0:81c:8005:9104 with SMTP id
+ 00721157ae682-820224e5320mr138129437b3.30.1786106384818; Fri, 07 Aug 2026
+ 05:39:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260730181852.1622-1-ahshehab24@gmail.com>
- <CANiaA1v6qFSMMDBp7dHqKWhW3d7vRQUMXDB3+vDuaWqLGCk=xg@mail.gmail.com>
-In-Reply-To: <CANiaA1v6qFSMMDBp7dHqKWhW3d7vRQUMXDB3+vDuaWqLGCk=xg@mail.gmail.com>
-From: Ahmed Shehab <ahshehab24@gmail.com>
-Date: Fri, 7 Aug 2026 15:20:27 +0300
-X-Gm-Features: AUfX_mxdLZnIpHvtQnmuEWEgToVsMBusW1IOy00OEEkr7uWi-ihpUWTv13QoqYo
-Message-ID: <CADdZfQQMVd_K_HEzoc0taKaDZm18G95O_ts_jaESFgDHRevHMw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix PC sync in trans_sspopchk for CFI
- exception handling
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>
-Content-Type: multipart/alternative; boundary="0000000000005933020658740851"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=ahshehab24@gmail.com; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- MIME_BOUND_DIGITS_15=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260529094619.1034458-1-pbonzini@redhat.com>
+ <20260802154350-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20260802154350-mutt-send-email-mst@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Aug 2026 13:39:32 +0100
+X-Gm-Features: AUfX_mxLU0M-fkGJJUdnmWTfxZs9xi6XUs1byYL0NVHvuaIyrfdGYaM-Z1Vl-Tw
+Message-ID: <CAFEAcA-VB7kNn6MM4cF7Pz356KgkyKRaK0xMC2PTXYYCVVfLyg@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <bonzini@gnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,33 +125,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005933020658740851
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sun, 2 Aug 2026 at 20:51, Michael S. Tsirkin <mst@redhat.com> wrote:
+> So GCC has now decided that 15 lines or so is ok, if a maintainer
+> decides so, and that one
+> should only count significantly different changes, what they call,
+> following the gnu maintainer guidelines "legally significant contributions":
+>
+>         A change of just a few lines (less than 15 or so) is not legally
+>         significant for copyright. A regular series of repeated changes, such as
+>         renaming a symbol, is not legally significant even if the symbol has to
+>         be renamed in many places.
 
-=F0=9F=91=8D
+That is more that the GNU project already had a level they defined
+as legally significant, because they wanted it to determine whether
+they needed copyright assignment or not. So it's natural for GCC to
+use it also in their AI policy.
 
-Ahmed Shehab reacted via Gmail
-<https://www.google.com/gmail/about/?utm_source=3Dgmail-in-product&utm_medi=
-um=3Det&utm_campaign=3Demojireactionemail#app>
+> GCC also makes an exception for tests and I guess we could make
+> an exception for internal developer docs?
 
---0000000000005933020658740851
-Content-Type: text/vnd.google.email-reaction+json; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I don't think we should have AI generated docs, including
+developer docs, as I noted somewhere up thread. That's not for
+any particular copyright reasons, it's because we need actual
+humans to be understanding and writing the documentation,
+because it can't be easily cross-checked by tests.
 
-{
-  "emoji": "=F0=9F=91=8D",
-  "version": 1
-}
---0000000000005933020658740851
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><p style=3D"font-size:50px;margin-top:0;margin-bottom:0">=F0=9F=91=8D<=
-/p><p style=3D"margin-top:10px;margin-bottom:0">Ahmed Shehab reacted via <a=
- href=3D"https://www.google.com/gmail/about/?utm_source=3Dgmail-in-product&=
-amp;utm_medium=3Det&amp;utm_campaign=3Demojireactionemail#app">Gmail</a></p=
-></div>
-
---0000000000005933020658740851--
+-- PMM
 
