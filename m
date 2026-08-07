@@ -4,76 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E05A1C5AC80
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 11:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D532C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 11:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsIjG-0005Dx-Ck; Fri, 07 Aug 2026 07:27:10 -0400
+	id 1wsInq-0005y2-QL; Fri, 07 Aug 2026 07:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@ecloud.org>) id 1wsIjC-0005Di-93
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 07:27:06 -0400
-Received: from shrimp.cherry.relay.mailchannels.net ([23.83.223.164])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wsInk-0005xQ-Mc; Fri, 07 Aug 2026 07:31:49 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@ecloud.org>) id 1wsIj8-0001TA-GM
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 07:27:04 -0400
-X-Sender-Id: dreamhost|x-authsender|lists@ecloud.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 0DFB2401471
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 11:26:59 +0000 (UTC)
-Received: from pdx1-sub0-mail-a210.dreamhost.com
- (trex-green-2.trex.outbound.svc.cluster.local [100.106.248.237])
- (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 4395D402382
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 11:26:53 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|lists@ecloud.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|lists@ecloud.org
-X-MailChannels-Auth-Id: dreamhost
-X-Power-Celery: 756ec47a572fb9db_1786102017623_8293822
-X-MC-Loop-Signature: 1786102017623:1420389044
-X-MC-Ingress-Time: 1786102017623
-Received: from pdx1-sub0-mail-a210.dreamhost.com (pop.dreamhost.com
- [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.106.248.237 (trex/8.0.2); Fri, 07 Aug 2026 11:26:57 +0000
-Received: from smtpclient.apple (unknown [46.109.74.206])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: lists@ecloud.org)
- by pdx1-sub0-mail-a210.dreamhost.com (Postfix) with ESMTPSA id 4hGhgc5QB3zND
- for <qemu-devel@nongnu.org>; Fri,  7 Aug 2026 04:26:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ecloud.org;
- s=dreamhost; t=1786102013;
- bh=RCZvtt55etTeZPGjd3pEnXdq3h1r1wUZ0rHvJNU9mCE=;
- h=Content-Type:Content-Transfer-Encoding:From:Subject:Date:To;
- b=YY+UELVAoQ3ReRFdOGP17HFxINIcg6N8adKukFsURv4Lz7ZrjvWFkReE/8ZAK4uoc
- NnqjI1V1uuDArib3qd+pzX10WSGHakHhIp1y6jYDj1d08CPbZe9r9I1wlST9sgiIIJ
- njv7mOuNr/FnbAQ1XSDJA24XA4H98/olpiH2p0syjCS3tqiGuIA+9ySduHF93ljpYO
- NLv90M7r0CJ87uPO5yACi17cVNC+poZQ87rRmwn4u93/y8Qv0GwsH6cxjFna2uZ2IQ
- MQAYF+28MP/Dv56By7bpEPxU8XDhGJorVu+sbAqawbKrFXUtT0lJAkeZkxE6wgu9oC
- hKWuo7BRj2YgQ==
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: lists <lists@ecloud.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] hw/riscv/virt: add dram-base machine property
-Date: Fri, 7 Aug 2026 14:26:39 +0300
-Message-Id: <EB2AEA1E-D748-4448-8824-722A91099AA5@ecloud.org>
-References: <amscWwQvYUftUYW8@zen>
-In-Reply-To: <amscWwQvYUftUYW8@zen>
-To: qemu-devel@nongnu.org
-X-Mailer: iPhone Mail (23G71)
-Received-SPF: pass client-ip=23.83.223.164; envelope-from=lists@ecloud.org;
- helo=shrimp.cherry.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wsInj-0002Gi-1H; Fri, 07 Aug 2026 07:31:48 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 5188560A79;
+ Fri,  7 Aug 2026 11:31:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87B31F000E9;
+ Fri,  7 Aug 2026 11:31:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1786102305;
+ bh=R1IHR4kNUbWl69tBHJufUNUGgQ57FhADgzNfrvGthYU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=V+k/QEYN1YllKhbyWwzsHkwIB+gJbw5v+xs0PDLwduQeSgncCJeE60sV4JPUNL1V5
+ 11SGk6IZxEZbULjfIKNc2UzfkDJ8CMHQCH5B/2/iuMM5tq9gcQRhw78IOFqPBe5pIn
+ 9gChj902vkf9p4TQTKV2DovZeVku/j6Y/Yk0T9A9NzM0VGhwaSd5L6zUkJDbUVNHeM
+ Ciw8J+HGExYorguSDRFO75sUY8AioobWuCEgHNlrUf3kVDG9Df3LBGLMZDNIaatUkr
+ BkBEKA5JRQNBEZxA7XZDZlRBm73JM5sJiAsBdU0jsMNXe8vzsd6nyyxZmSNv5Jl177
+ TDpO7L38BbDPA==
+Date: Fri, 7 Aug 2026 13:31:39 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: qemu-devel@nongnu.org, dlemoal@kernel.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v14 0/6] Add full zoned storage emulation to the qcow2
+ driver
+Message-ID: <anXCGzwqXVhkA3Yf@ryzen>
+References: <20260708221615.346155-1-faithilikerun@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260708221615.346155-1-faithilikerun@gmail.com>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,169 +74,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On Thu, Jul 09, 2026 at 12:16:09AM +0200, Sam Li wrote:
+> This patch series add a new extension - zoned format - to the
+> qcow2 driver, allowing full zoned storage emulation on a qcow2
+> image file. A user can attach such an image to a guest and have
+> it appear as a host-managed zoned block device.
+> 
+> The zoned format is opt-in through a new qcow2 header extension
+> that pins the zone geometry. Behind the extension is a dedicated
+> zoned metadata region that stores one 8-byte write pointer (WP)
+> per zone. The extension is gated by an incompatible bit, so an
+> older qcow2 implementation cannot accidentally open the image.
+> 
+> Each write pointer is routed through the write pointer cache,
+> a Qcow2Cache object. The write pointer cache is written to disk
+> after the qcow2 metadata is written, thus guaranteeing that
+> the write pointer is updated after the corresponding data is
+> written.
+> 
+> Zone states are in memory. Read-only and offline states are
+> device-internal events, which are not modelled in qcow2
+> emulation for simplicity. The other zone states
+> (closed, empty, full) can be inferred from write poiner
+> values, presistent across QEMU reboots. The open states are
+> kept in memory using open zone lists.
+> 
 
-Do you have a different solution to emulate memory layouts of actual boards?=
+Hello Sam,
 
 
-For me this is necessary for the Plan 9 porting work: a Banana Pi F3 has a d=
-ifferent base address than one of the K3 boards, and both different than the=
- QEMU default.
+I ran: fio test suite, zonefs test suite, blktests, and zbd-state-test
+(WD internal test suite), on the following backends:
 
-> On Jul 30, 2026, at 12:42, Shawn Rutledge <lists@ecloud.org> wrote:
->=20
-> =EF=BB=BFThe 'virt' RISC-V machine hardcodes its DRAM base to 0x80000000.
-> Real-world RISC-V SoCs put DRAM elsewhere (SpacemiT K1 at 0x40000000,
-> SpacemiT K3 at 0x100000000, etc.), which forces ports that target
-> those boards to build separate kernels for QEMU testing.
->=20
-> Add a 'dram-base' string property that lets users move VIRT_DRAM up
-> without rebuilding QEMU.  Values must be 2 MiB-aligned and at or
-> above the default 0x80000000 to avoid colliding with statically-
-> placed MMIO regions (PCIE_MMIO ends at 0x80000000).  Lower bases
-> would also require moving PCIE_MMIO/IMSIC/etc. and are rejected with
-> an explicit error pointing at the cause.
->=20
-> Example:
->  qemu-system-riscv64 -machine virt,dram-base=3D0x100000000 -m 6G ...
-> runs OpenSBI at firmware base 0x100000000, matching K3 memory layout.
->=20
-> Signed-off-by: Shawn Rutledge <s@ecloud.org>
-> ---
-> hw/riscv/virt.c         | 59 ++++++++++++++++++++++++++++++++++++++++-
-> include/hw/riscv/virt.h |  2 ++
-> 2 files changed, 60 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 51bac47a91..6ccc98842f 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -20,6 +20,7 @@
->=20
-> #include "qemu/osdep.h"
-> #include "qemu/units.h"
-> +#include "qemu/cutils.h"
-> #include "qemu/error-report.h"
-> #include "qemu/guest-random.h"
-> #include "qapi/error.h"
-> @@ -1307,7 +1308,13 @@ static void virt_machine_init(MachineState *machine=
-)
->     int i, base_hartid, hart_count;
->     int socket_count =3D riscv_socket_count(machine);
->=20
-> -    s->memmap =3D virt_memmap;
-> +    if (s->dram_base) {
-> +        s->memmap_storage =3D g_memdup2(virt_memmap, sizeof(virt_memmap))=
-;
-> +        s->memmap_storage[VIRT_DRAM].base =3D s->dram_base;
-> +        s->memmap =3D s->memmap_storage;
-> +    } else {
-> +        s->memmap =3D virt_memmap;
-> +    }
->=20
->     /* Check socket count limit */
->     if (VIRT_SOCKETS_MAX < socket_count) {
-> @@ -1545,6 +1552,7 @@ static void virt_machine_instance_finalize(Object *o=
-bj)
->     }
->     g_free(s->oem_id);
->     g_free(s->oem_table_id);
-> +    g_free(s->memmap_storage);
-> }
->=20
-> static void virt_machine_instance_init(Object *obj)
-> @@ -1616,6 +1624,46 @@ static void virt_set_aia(Object *obj, const char *v=
-al, Error **errp)
->     }
-> }
->=20
-> +static char *virt_get_dram_base(Object *obj, Error **errp)
-> +{
-> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> +    uint64_t val =3D s->dram_base ? s->dram_base : virt_memmap[VIRT_DRAM]=
-.base;
-> +
-> +    return g_strdup_printf("0x%" PRIx64, val);
-> +}
-> +
-> +static void virt_set_dram_base(Object *obj, const char *val, Error **errp=
-)
-> +{
-> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> +    const char *endptr;
-> +    uint64_t base;
-> +
-> +    if (qemu_strtou64(val, &endptr, 0, &base) < 0 || *endptr !=3D '\0') {=
+1) QEMU qcow2 (this series):
+$ lsblk -z
+NAME ZONED        ZONE-SZ ZONE-NR ZONE-AMAX ZONE-OMAX ZONE-APP ZONE-WGRAN
+vda  host-managed    256M     140         0        16       4K       512B
 
-> +        error_setg(errp, "Invalid dram-base value '%s'", val);
-> +        return;
-> +    }
-> +    /*
-> +     * DRAM must clear all statically-placed MMIO regions in virt_memmap[=
-]
-> +     * (PCIE_MMIO ends at 0x80000000) and be 2 MiB-aligned so a standard
-> +     * OpenSBI + kernel layout (firmware at base, kernel at base+0x200000=
-)
-> +     * fits.  Values below the default base would collide with on-board
-> +     * MMIO and are rejected.
-> +     */
-> +    if (base < virt_memmap[VIRT_DRAM].base) {
-> +        error_setg(errp,
-> +                   "dram-base 0x%" PRIx64 " is below default 0x%" PRIx64
-> +                   "; would collide with static MMIO regions",
-> +                   base, (uint64_t)virt_memmap[VIRT_DRAM].base);
-> +        return;
-> +    }
-> +    if (base & (2 * MiB - 1)) {
-> +        error_setg(errp, "dram-base 0x%" PRIx64 " must be 2 MiB-aligned",=
+2) zloop:
+https://docs.kernel.org/admin-guide/blockdev/zoned_loop.html
+$ lsblk -z
+NAME ZONED        ZONE-SZ ZONE-NR ZONE-AMAX ZONE-OMAX ZONE-APP ZONE-WGRAN
+vda  host-managed    256M     140         0        16       1M         4K
 
-> +                   base);
-> +        return;
-> +    }
-> +    s->dram_base =3D base;
-> +}
-> +
-> static bool virt_get_aclint(Object *obj, Error **errp)
-> {
->     RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> @@ -1744,6 +1792,15 @@ static void virt_machine_class_init(ObjectClass *oc=
-, const void *data)
->     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
-> #endif
->=20
-> +    object_class_property_add_str(oc, "dram-base", virt_get_dram_base,
-> +                                  virt_set_dram_base);
-> +    object_class_property_set_description(oc, "dram-base",
-> +                                          "Base physical address of DRAM "=
+3) A real HM-SMR device:
+$ lsblk -z
+NAME ZONED        ZONE-SZ ZONE-NR ZONE-AMAX ZONE-OMAX ZONE-APP ZONE-WGRAN
+sda  host-managed    256M  111760         0       128      32M         4K
 
-> +                                          "(default 0x80000000). Must be "=
 
-> +                                          "2 MiB-aligned and at or above "=
 
-> +                                          "the default to avoid colliding=
- "
-> +                                          "with statically-placed MMIO.")=
-;
-> +
->     object_class_property_add_bool(oc, "aclint", virt_get_aclint,
->                                    virt_set_aclint);
->     object_class_property_set_description(oc, "aclint",
-> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index 36a2def410..be8a4ac049 100644
-> --- a/include/hw/riscv/virt.h
-> +++ b/include/hw/riscv/virt.h
-> @@ -61,6 +61,8 @@ struct RISCVVirtState {
->     char *oem_table_id;
->     OnOffAuto acpi;
->     const MemMapEntry *memmap;
-> +    MemMapEntry *memmap_storage; /* g_malloc'd copy when dram-base overri=
-de is set */
-> +    uint64_t dram_base;          /* 0 =3D use compiled-in default (0x8000=
-0000) */
->     struct GPEXHost *gpex_host;
->     OnOffAuto iommu_sys;
->     uint16_t pci_iommu_bdf;
-> --
-> 2.55.0
->=20
+
+fio test suite: looks good.
+
+zonefs test suite: looks good.
+
+blktests: same amount of test cases pass.
+Only major difference I can see is for the following test cases:
+
+QEMU qcow2:
+zbd/004 => vda (write split across sequential zones)         [passed]
+    runtime    ...  148.769s
+
+
+zloop:
+zbd/004 => vda (write split across sequential zones)         [passed]
+    runtime    ...  47.446s
+
+
+real dev:
+zbd/004 => sda (write split across sequential zones)         [passed]
+    runtime    ...  27.616s
+
+
+QEMU qcow2 seems significantly slower than zloop for this test case.
+
+Perhaps not something to worry about, but the difference compared to
+zloop is big enough to raise my eyebrows :)
+
+
+zbd-state-test:
+Show a test case for QEMU qcow2 that fails, but passes on zloop and a
+real device.
+
+You can use e.g. blkzone
+or libzbd:
+https://github.com/westerndigitalcorporation/libzbd
+to perform zone operations.
+
+I guess you could also use iotests for this test case.
+
+021: OPEN_ZONE full to full... [Failed]
+	    => Expected zone condition fu
+	       Got oe
+
+Test case seem to do:
+1) Finds a zone in zone state empty.
+2) Fills the zone (using dd), zone is now in zone state full.
+3) Tries to explicitly open the zone (this zone transition is not legal),
+   and the open command should fail.
+4) Checks the zone state of the zone, should still be zone state full.
+
+I guess the problem with the QEMU qcow2 code is that it actually changes
+the zone state to explicit open in step 3), while it should fail the open
+command and keep the zone in zone state full.
+
+If you look at e.g. null_blk: null_open_zone(), it also fails to open a
+full zone.
+
+
+Kind regards,
+Niklas
 
