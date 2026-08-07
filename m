@@ -4,142 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7CAC5AC7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 09:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E126FC5AC7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 09:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsGnR-0002zG-3p; Fri, 07 Aug 2026 05:23:21 -0400
+	id 1wsGrr-00049o-FB; Fri, 07 Aug 2026 05:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wsGnP-0002yr-Kp
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:23:19 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsGrq-00049Q-7R
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:27:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wsGnN-00051T-Jx
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:23:19 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6778FvPf3477036
- for <qemu-devel@nongnu.org>; Fri, 7 Aug 2026 09:23:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qD/1TcnQ4KzM/ZUd4tMzr2gYm3twFCXOprs1E0ZjG8k=; b=OrLX3iALAnhMMuri
- CqZGr/qMy8xAkS/FISm7stHW9SSTMVYdNAcWa4FjZnYJb8+mWOpwL1MmaDByKYOI
- EZmS4U7TsiRJlVv8SMpCGIfEJ4ccCxoUHbo0ZYBZQtinyqWkkt0RONsnyMNn8kF5
- Kv8lir/EZJ+ui+GxPP6fOFEr/o7TWN9+wzCx23SMdUEkyz6qp9g+6t4WCHT30rmU
- 7KsWaeH/QA0VQZB1x8Ei6SVQnCEd5cSKA7AwvCFXSjt73ZHMipACpGZMNfgdNgo9
- 3FK/Rw0iZTL0fJykjgAVFEKZ196XDqHV0JF+g3r9VuL9DS6yGjmH3Ah6Cb+WeLYB
- 8xq6pQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fvy6hb8bh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 09:23:15 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92ec3146553so528994685a.1
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 02:23:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786094595; x=1786699395; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=qD/1TcnQ4KzM/ZUd4tMzr2gYm3twFCXOprs1E0ZjG8k=;
- b=WjYVMejWcV/MytzFD7mVbP4y/rxCbNFDHpHb9KvzMRVEzHLF3y1qGGri7r7wfVow8S
- nvbcY2TzaUXLuufol/m5S1FXGtfI/ZPczqz/A+USgV+7bS5sP4/G3ripj6462ZaD4NQ1
- 07Ef2UhBYrbIcYlO/uj9VlctuHY2X5CiLeZkix7zV6nGJPBFEICM6+LYnQ4NJzxks7MG
- o8TlFYA45YHq52MB+N49PBHLP7Tr1UFXal4Ikc6wKaeItaW5M/Wh/nMPyp3N/zMtlcG4
- W/CMG3zk/FHu/CnC1dHqrQDZhXIC4z+1t6EaeZG4Tgxv2ElZoch4s6hSECgbWFCAzgmN
- XD7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786094595; x=1786699395;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=qD/1TcnQ4KzM/ZUd4tMzr2gYm3twFCXOprs1E0ZjG8k=;
- b=HBFY4lJF8UbZzApGarTZVPYMyaa157vQ/txpJdoIDkPJ2e9PjUoVb1z0VV3p0YK84T
- cMJp3/LT4dqPU0ciO/11NWPwI109OGOrPbMD3HwXhNFtbpWsasUBElV9UYDnejgoFtuI
- H8dYH8G/90C9FnVwuG9r2100m+Zc5cy/+HygJw+JF88E66gVtHHYMiMvTcpTgsybV4mx
- +oFGAuVnyEPec3/2A27W8L2HGNab++MmTEx53i6Hd9kCSXlRly/EmNdiDlSVNozk3m5a
- IVJbNtUPnVTstpBa+b34h95MA14vG4zdIiU6YBCicOTsTZ1QmCry7qt8VYtaFW8z7W4x
- X6kQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq2T1ULrrKiqG9WGraEG/9HLKHweW3prDC4kXDS67xDbTmarwLf4HoF3udxCnrP0F/eamo0UQ14iN1l@nongnu.org
-X-Gm-Message-State: AOJu0Yx8M721BrqMsrclVbhtqZ1QiOazW9g6BTgnS5DX4FcCyMbdfhb5
- wEwuUA32H0me9Mv5AemQVMPMT/JNSBhtjmi0oe61yUINiQvkfrC2iYE5Gv/ctnDZZ4rZOo2Vr2C
- XD8ZOwwJtHpNrA+YTEgPEaBzB7IhNGFRFZvL3cUL3/XhhqYGLWpRVqzJngw==
-X-Gm-Gg: AR+sD12Q6G1D0W6ECM62tAw0SvgLdBvE8Zz9XkvP2KOg5P5Uba9aGNnDTmDN/D3nn3b
- apcbTYOZ+/NZI2FNxuCbujHDL8/b9eUzUujHzs1rOOf1GPaOIYYzPE69SPNZ8dYd5mXtXBkGNLy
- GJKP5rd18JSDfZXgsX1sipO6AV3YEBEI53KEf9OUfrtHJh93TAaldfX4MaKpuWV3uDEmfd04oZM
- w2CKq2AGiND169jsmkEfA4KDJmOnfZmOJ9nGIIGsictLBWl954oiUGwxpweVhs21gAlsa+p0sN9
- DTLAv98bics6UalakBg6Dd1ibSZlQkq5dx/pBDpm5vcPpTXy9izbJqsz7OtPNE+NuZqfKvJfIRc
- E5MRDhzHmw46IeRUq4bhhYwwUc98eScGmauKH
-X-Received: by 2002:a05:620a:2255:20b0:92e:5554:a80e with SMTP id
- af79cd13be357-936491f5d43mr1741578985a.39.1786094595322; 
- Fri, 07 Aug 2026 02:23:15 -0700 (PDT)
-X-Received: by 2002:a05:620a:2255:20b0:92e:5554:a80e with SMTP id
- af79cd13be357-936491f5d43mr1741576785a.39.1786094594802; 
- Fri, 07 Aug 2026 02:23:14 -0700 (PDT)
-Received: from [192.168.68.103] ([187.11.154.152])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9366e226895sm108184085a.23.2026.08.07.02.23.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Aug 2026 02:23:14 -0700 (PDT)
-Message-ID: <dd93f115-dcd8-4fa2-aea0-ba4d7ea40dfd@oss.qualcomm.com>
-Date: Fri, 7 Aug 2026 06:23:11 -0300
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsGro-0005a8-3O
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 05:27:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786094870;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Srqkj+gU7lIh2jdsDohaYTsCGp2UPYERlP+ycDtDo6w=;
+ b=Ht/dajIKKE88TnYOk8yOeXGpxr+ebQDmqT4Yjv6hNhCqB2Yfu9V+CtUEdRWWMk7XgXxev+
+ BmYgDFyyEZMpsGZGvyoKyxVVxqF2nujO/FxU/jll3Qiux+ketwWJxvBSkWQnIxmQpqQgqp
+ hdh+yl2wrOsrqUKIghAeHl4xDaODMu8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-0QGRZnLUMea1JmABpCSejA-1; Fri,
+ 07 Aug 2026 05:27:47 -0400
+X-MC-Unique: 0QGRZnLUMea1JmABpCSejA-1
+X-Mimecast-MFC-AGG-ID: 0QGRZnLUMea1JmABpCSejA_1786094866
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CC42195608B; Fri,  7 Aug 2026 09:27:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 214DC18005AC; Fri,  7 Aug 2026 09:27:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AF8BB21E6920; Fri, 07 Aug 2026 11:27:42 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 08/53] qapi/qom: add qapi-type field to
+ ObjectPropertyInfo
+In-Reply-To: <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Tue, 16 Jun 2026 00:37:34 +0400")
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com>
+Date: Fri, 07 Aug 2026 11:27:42 +0200
+Message-ID: <87ik5mqnzl.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: Fix sstatus update in rv128
-To: frederic.petrot@univ-grenoble-alpes.fr, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20260729083941.103646-1-frederic.petrot@univ-grenoble-alpes.fr>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260729083941.103646-1-frederic.petrot@univ-grenoble-alpes.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: r-boiRjY1D6tsbMYXeEYbCLUN1PtZOb0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDA3MCBTYWx0ZWRfX8KyBXgj3y4qN
- 3jdO5ndR8RUpk39cPgeOzLFB8WYOcYgT06FifvWpHrFOK6wB5YlV1p+MH4rREkEuYZNGICnX2S+
- g0ViIUe6o0Y63WgoNHYUTVIyxt+j66tulzkxS+3T2nw7/MB4zE0jnrLKvPBvBuOANU/A8m4Dl7S
- lcBq4KLZRJYLbEph/jvCOjlngMw68o4HtoQEbQPvT/oLzwJXbNUMQv843C2h6oKfMvRaohSaL3D
- pl2fOEXx4hvlCqa38w0Tu0ruKRBSzVBhyimnm2DerK2yDv1vHJJqL18RchOUYe4bvsioKgsfIdM
- grHZ07GPDNHNNGi63uZfExfsm1mlODV5UEKudlw4CVhNCaK3e/PTjhCw+2X920P0SzfQFSI2Yu9
- /F0yYoYoVGVrPS6athP3MNcBryawm0YC6lx3f/CmxJ/pSjAUBCYo2VKo6vIxZznrie7s7mHKrVS
- mQa7agqTsY+dKVUmbeA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDA3MCBTYWx0ZWRfXzz15Ti+Qo5hR
- SsG9l0+F4jb4rgAeAZjsVcLZZLlL/e99e1mKr7bKyU8WlC/XWhROYU9oHXjMn52AwT3RR+6Qx6x
- F4NrDsZsGaD4QrJapoHihE8njtFMvU4=
-X-Proofpoint-ORIG-GUID: r-boiRjY1D6tsbMYXeEYbCLUN1PtZOb0
-X-Authority-Analysis: v=2.4 cv=MbpcfZ/f c=1 sm=1 tr=0 ts=6a75a403 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=_IHU2iZSYYauedWJTUkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-07_01,2026-08-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608070070
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,47 +92,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
+> Add an optional 'qapi-type' field to ObjectPropertyInfo and
+> ObjectPropertyValue. When present, it contains the masked type name that
+> can be looked up in query-qmp-schema output. Absent for properties
+> without a QAPI type association.
 
-On 7/29/2026 5:39 AM, frederic.petrot@univ-grenoble-alpes.fr wrote:
-> From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-> 
-> The sstatus register assignment was performed before the write
-> mask was fully constructed, leading to an incomplete update of
-> sstatus fields on the experimental rv128 target.
-> 
-> Move the sstatus write after the mask completion so the full
-> write mask is applied correctly.
-> 
-> Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+Always absent at this point, isn't it?
+
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
+>  qapi/qom.json | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index dd45ac1087c..a655be0beaa 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -35,6 +35,11 @@
+   ##
+   # @ObjectPropertyInfo:
+   #
+   # @name: the name of the property
+   #
+   # @type: the type of the property.  This will typically come in one of
+   #     four forms:
+   #
+   #     1) A primitive type such as 'u8', 'u16', 'bool', 'str', or
+   #        'double'.  These types are mapped to the appropriate JSON
+   #        type.
+   #
+   #     2) A child type in the form 'child<subtype>' where subtype is a
+   #        qdev device type name.  Child properties create the
+   #        composition tree.
+   #
+   #     3) A link type in the form 'link<subtype>' where subtype is a
+>  #        qdev device type name.  Link properties form the device model
+>  #        graph.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+The description of @type is problematic, and will need an update at some
+time.
 
->   target/riscv/tcg/csr.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index 36f2004bc5..d834b77714 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -3984,7 +3984,7 @@ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
->                                           Int128 *val)
->   {
->       uint64_t mask = sstatus_v1_10_mask;
-> -    uint64_t sstatus = env->mstatus & mask;
-> +    uint64_t sstatus;
->       if (env->xl != MXL_RV32 || env->debugger) {
->           mask |= SSTATUS64_UXL;
->       }
-> @@ -3995,7 +3995,7 @@ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
->       if (env_archcpu(env)->cfg.ext_zicfilp) {
->           mask |= SSTATUS_SPELP;
->       }
-> -
-> +    sstatus = env->mstatus & mask;
->       *val = int128_make128(sstatus, add_status_sd(MXL_RV128, sstatus));
->       return RISCV_EXCP_NONE;
->   }
+>  #
+> +# @qapi-type: if the property was registered with a QAPI type
+> +#     association, the type name as it appears in the output of
+> +#     ``query-qmp-schema``.  Absent for properties without a QAPI
+> +#     type association.  (since 11.1)
+
+Whether "the property was registered with a QAPI type association" is
+implementation detail.
+
+Maybe
+
+   # @qapi-type: the name of the property's type name as it appears in
+   #     the output of ``query-qmp-schema``.  Absent if the type does not
+   #     occur there.  (since 11.2)
+
+This is inaccurate now --- it can also be absent when we haven't gotten
+around to fix the property --- but it hopefully becomes accurate soon,
+and should be good enough until then.
+
+> +#
+>  # @description: if specified, the description of the property.
+>  #
+>  # @default-value: the default value, if any (since 5.0)
+> @@ -44,6 +49,7 @@
+>  { 'struct': 'ObjectPropertyInfo',
+>    'data': { 'name': 'str',
+>              'type': 'str',
+> +            '*qapi-type': 'str',
+>              '*description': 'str',
+>              '*default-value': 'any' } }
+>=20=20
+> @@ -55,6 +61,11 @@
+>  # @type: the type of the property, as described in
+>  #     `ObjectPropertyInfo`.
+>  #
+> +# @qapi-type: if the property was registered with a QAPI type
+> +#     association, the type name as it appears in the output of
+> +#     ``query-qmp-schema``.  Absent for properties without a QAPI
+> +#     type association.  (since 11.1)
+> +#
+
+Likewise.
+
+>  # @value: the value of the property.  Absent when the property cannot
+>  #     be read.
+>  #
+> @@ -63,6 +74,7 @@
+>  { 'struct': 'ObjectPropertyValue',
+>    'data': { 'name': 'str',
+>              'type': 'str',
+> +            '*qapi-type': 'str',
+>              '*value': 'any' } }
+>=20=20
+>  ##
 
 
