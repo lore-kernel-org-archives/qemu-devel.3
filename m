@@ -4,54 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64F8C5AC9E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 02:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D77C5AC80
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 02:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsAZD-000670-HV; Thu, 06 Aug 2026 22:44:15 -0400
+	id 1wsAZC-00066z-9Y; Thu, 06 Aug 2026 22:44:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongweimin@kylinos.cn>)
- id 1wsAZA-00065u-4j
+ id 1wsAZA-000660-8R
  for qemu-devel@nongnu.org; Thu, 06 Aug 2026 22:44:12 -0400
 Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiongweimin@kylinos.cn>)
- id 1wsAZ5-0001DZ-7n
- for qemu-devel@nongnu.org; Thu, 06 Aug 2026 22:44:11 -0400
-X-UUID: d5a8ba6a920911f1aa26b74ffac11d73-20260807
+ id 1wsAZ7-0001Dx-1B
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 22:44:12 -0400
+X-UUID: d8eaf7b0920911f1aa26b74ffac11d73-20260807
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:1d75855c-ed8e-41f6-bbcd-13596e2f0056, IP:0,
+X-CID-O-INFO: VERSION:1.3.12, REQID:4106178b-6c22-443f-8b85-3b8bdbf4ae82, IP:0,
  U
  RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
  release,TS:0
-X-CID-META: VersionHash:e7bac3a, CLOUDID:034cdb1e54a2d1f265d9d57def8108d7,
+X-CID-META: VersionHash:e7bac3a, CLOUDID:8a9c9a87391082d94948f77bd7939082,
  BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:81|82|83|102|865|898,TC:nil,Content:0|15
- |50,EDM:-3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:
+ D:nil,BulkQuantity:0,Recheck:0,SF:102|136|865|898,TC:nil,Content:0|15|50,E
+ DM:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:
  0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: d5a8ba6a920911f1aa26b74ffac11d73-20260807
+X-UUID: d8eaf7b0920911f1aa26b74ffac11d73-20260807
 X-User: xiongweimin@kylinos.cn
 Received: from xwm-tianyi510pro-14imb.. [(10.44.16.150)] by mailgw.kylinos.cn
  (envelope-from <xiongweimin@kylinos.cn>)
  (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 1493182803; Fri, 07 Aug 2026 10:43:56 +0800
+ with ESMTP id 556373050; Fri, 07 Aug 2026 10:44:01 +0800
 From: Xiong Weimin <xiongweimin@kylinos.cn>
-To: "Michael S . Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, virtualization@lists.linux.dev,
- qemu-devel@nongnu.org, Weimin Xiong <xiongwm2026@163.com>
-Subject: Re: [PATCH 2/3] hw/virtio: Implement vhost_log_start and
- vhost_log_stop
-Date: Fri,  7 Aug 2026 10:43:53 +0800
-Message-ID: <20260807024353.2157846-1-xiongweimin@kylinos.cn>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ virtualization@lists.linux.dev
+Subject: [PATCH] hw/virtio: Propagate vhost_virtqueue_mask errors
+Date: Fri,  7 Aug 2026 10:43:59 +0800
+Message-ID: <20260807024359.2157914-1-xiongweimin@kylinos.cn>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260724054712-mutt-send-email-mst@kernel.org>
-References: <20260724054712-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,18 +74,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 05:48:26AM -0400, Michael S. Tsirkin wrote:
-> Is the implications that in your opinion dirty page logging during live
-> migration does not work currently?
+vhost_virtqueue_mask() currently reports failures from
+vhost_set_vring_call() but always returns void, so callers cannot
+react.  In particular, vhost_virtqueue_start() has a TODO next to the
+unmask call when !use_guest_notifier_mask.
 
-No -- that was a bad commit message on my side.
+Make vhost_virtqueue_mask() return the underlying errno, and on failure
+in vhost_virtqueue_start() jump to the existing fail path which unmaps
+the vring and propagates the error to the device start caller.  Other
+call sites keep today's behavior by ignoring the return value.
 
-Live migration logging already goes through log_global_start/stop ->
-vhost_migration_log().  The log_start/log_stop stubs are a different
-path, and my change was incorrect.
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+---
+ hw/virtio/vhost.c         | 10 +++++++---
+ include/hw/virtio/vhost.h |  9 ++++++---
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-I will drop this patch.
-
-Thanks,
-Xiong Weimin
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index af41841b52..b02d831d3a 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1470,8 +1470,10 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+      * will do it later.
+      */
+     if (!vdev->use_guest_notifier_mask) {
+-        /* TODO: check and handle errors. */
+-        vhost_virtqueue_mask(dev, vdev, idx, false);
++        r = vhost_virtqueue_mask(dev, vdev, idx, false);
++        if (r < 0) {
++            goto fail;
++        }
+     }
+ 
+     if (k->query_guest_notifiers &&
+@@ -1918,7 +1920,7 @@ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n)
+ }
+ 
+ /* Mask/unmask events from this vq. */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+                          bool mask)
+ {
+     struct VirtQueue *vvq = virtio_get_queue(vdev, n);
+@@ -1939,7 +1941,9 @@ void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+     r = hdev->vhost_ops->vhost_set_vring_call(hdev, &file);
+     if (r < 0) {
+         error_report("vhost_set_vring_call failed %d", -r);
++        return r;
+     }
++    return 0;
+ }
+ 
+ bool vhost_config_pending(struct vhost_dev *hdev)
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 684bafcaad..3db56433b6 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -310,10 +310,13 @@ void vhost_dev_set_config_notifier(struct vhost_dev *dev,
+  */
+ bool vhost_virtqueue_pending(struct vhost_dev *hdev, int n);
+ 
+-/* Mask/unmask events from this vq.
++/**
++ * vhost_virtqueue_mask(): mask/unmask events from this vq.
++ *
++ * Returns: 0 on success, a negative errno on failure.
+  */
+-void vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
+-                          bool mask);
++int vhost_virtqueue_mask(struct vhost_dev *hdev, VirtIODevice *vdev, int n,
++                         bool mask);
+ 
+ /**
+  * vhost_get_features_ex() - sanitize the extended features set
 
