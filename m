@@ -4,79 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57110C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52848C5AC7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsELz-0007cJ-AR; Fri, 07 Aug 2026 02:46:51 -0400
+	id 1wsEY2-0001YM-V6; Fri, 07 Aug 2026 02:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsELr-0007bv-Mz
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:46:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wsELp-0006be-Ax
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:46:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786085200;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=O8PlK4rCIv3ZXzcDG/RiSBQ9CCVTl+p+N+vDkrBMYNI=;
- b=KMCgvsTQgT7G58EHZy6kl7jhh6XBYSBxUdexwb1BHo6OiKWTCjUP5CvFdDne0NzLx2GWeO
- NwigSME7p/e5Cj4i2F3Fi3Wz5UnhlMcDj+2NOduJ/PIEdMkXLpTv05iWw1wSPcG+tto06B
- qjTNwurAaLzYpX45NQnJWjg5/mDmEyA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-457-bIdgcRMaO6SV28GB2dYkcg-1; Fri,
- 07 Aug 2026 02:46:38 -0400
-X-MC-Unique: bIdgcRMaO6SV28GB2dYkcg-1
-X-Mimecast-MFC-AGG-ID: bIdgcRMaO6SV28GB2dYkcg_1786085197
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55D381956088; Fri,  7 Aug 2026 06:46:37 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.7])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C2E6F19560AB; Fri,  7 Aug 2026 06:46:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 539DA21E6920; Fri, 07 Aug 2026 08:46:34 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 05/53] qapi/gen: fix _module_basename for multi-dash
- 'what' parameters
-In-Reply-To: <20260616-qom-qapi-v2-5-cc9396b9c18c@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 16 Jun 2026 00:37:31 +0400")
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-5-cc9396b9c18c@redhat.com>
-Date: Fri, 07 Aug 2026 08:46:34 +0200
-Message-ID: <87wlu2sa0l.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wsEXy-0001XO-T1
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:59:14 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wsEXt-0008Av-Dw
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:59:13 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8AxVeg3gnVqtDgLAA--.12733S3;
+ Fri, 07 Aug 2026 14:59:03 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJAxjgc2gnVqX8gmAA--.7931S4;
+ Fri, 07 Aug 2026 14:59:03 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 2/2] hw/loongarch/virt: Add bootargs and initrd to device-tree
+Date: Fri,  7 Aug 2026 15:00:29 +0800
+Message-ID: <20260807070029.1171348-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260807070029.1171348-1-maobibo@loongson.cn>
+References: <20260807070029.1171348-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJAxjgc2gnVqX8gmAA--.7931S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tryruF17uFW8CF4kWF1xZwc_yoW8AF1UpF
+ 4xC3Z8Wry8W3yfArsxX345u3WrXr1kC342qanrWr1FyFn8tw1rWF45C3y8AF4DGas5tFsY
+ kFs8Ar98uFy2vrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r126r13M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jjpB-UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,34 +77,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+Add bootarg and initrd information in fdt tree.
 
-> The re.sub() call replaces every hyphen in 'what' with the system module
-> infix. This produces broken filenames for multi-hyphen names (e.g.
-> 'qapi-type-infos' becomes 'qapi-builtin-type-builtin-infos').
->
-> Add count=3D1 so only the first hyphen is replaced.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  scripts/qapi/gen.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-> index 0c9b8db3b02..690187d4280 100644
-> --- a/scripts/qapi/gen.py
-> +++ b/scripts/qapi/gen.py
-> @@ -300,7 +300,7 @@ def _module_basename(self, what: str, name: str) -> s=
-tr:
->                  ret +=3D '-' + os.path.splitext(basename)[0]
->          else:
->              assert QAPISchemaModule.is_system_module(name)
-> -            ret +=3D re.sub(r'-', '-' + name[2:] + '-', what)
-> +            ret +=3D re.sub(r'-', '-' + name[2:] + '-', what, count=3D1)
->          return ret
->=20=20
->      def _module_filename(self, what: str, name: str) -> str:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/loongarch/virt-fdt-build.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index 6c06b36fca..c6f5d022c5 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -25,6 +25,7 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+ {
+     MachineState *ms = MACHINE(lvms);
+     uint8_t rng_seed[32];
++    int ret;
+ 
+     ms->fdt = create_device_tree(&lvms->fdt_size);
+     if (!ms->fdt) {
+@@ -39,6 +40,32 @@ static void create_fdt(LoongArchVirtMachineState *lvms)
+     qemu_fdt_setprop_cell(ms->fdt, "/", "#size-cells", 0x2);
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
+ 
++    if (ms->kernel_cmdline && *ms->kernel_cmdline) {
++        ret = qemu_fdt_setprop_string(ms->fdt, "/chosen", "bootargs",
++                                      ms->kernel_cmdline);
++        if (ret < 0) {
++            error_report("set /chosen/bootargs failed");
++            exit(1);
++        }
++    }
++
++    if (lvms->bootinfo.initrd_addr) {
++        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-start",
++                                    lvms->bootinfo.initrd_addr);
++        if (ret < 0) {
++            error_report("set /chosen/linux,initrd-start failed");
++            exit(1);
++        }
++
++        ret = qemu_fdt_setprop_cell(ms->fdt, "/chosen", "linux,initrd-end",
++                                    lvms->bootinfo.initrd_addr +
++                                    lvms->bootinfo.initrd_size);
++        if (ret < 0) {
++            error_report("set /chosen/linux,initrd-end failed");
++            exit(1);
++        }
++    }
++
+     /* Pass seed to RNG */
+     qemu_guest_getrandom_nofail(rng_seed, sizeof(rng_seed));
+     qemu_fdt_setprop(ms->fdt, "/chosen", "rng-seed", rng_seed, sizeof(rng_seed));
+-- 
+2.54.0
 
 
