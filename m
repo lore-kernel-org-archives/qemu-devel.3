@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12A1C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E5BC5AC7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 06:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsDuc-0006tj-Kj; Fri, 07 Aug 2026 02:18:34 -0400
+	id 1wsE4N-00030f-WF; Fri, 07 Aug 2026 02:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuS-0006kX-19
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:18:24 -0400
-Received: from mail-westus2azon11010040.outbound.protection.outlook.com
- ([52.101.46.40] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wsDuQ-0002gD-2l
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:18:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yJ4oiK36b8YDqcFP8DUBNkG5RzaNAsVsxDyImuKFhuVTlfKNtUMBcjg85P50J+Ovvaadb/FMYD6crb60mhiojjPfHSkMQGWm9otEUvvnkRa57tt4J/lCrl27ajnTjzuqiLogRsQJQ9cLhyHB7kI40IVaBat5dA5kTOw7XFoO7YEVpkF3m0Z8vm5w3qnf8isqOM6kquibXcLyCOo20Mi9eFQtTqrl/7fe218AsT2TlaLwbY9WoKek78Gtr83I0KBrFm5V234rH/yyHexipA6RyW0j2ncoXXvtaPU1b4ZjRcRMm+Jm9AriZB2JsHMVM2YoHUUckPLNRkhrZZsMyZWv2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EDJCKCOpbRwHGDTFw+y7as8vDCMixz6ZVdkU02bG9SE=;
- b=AKaOj1WImH9yukqjRrCAWCszfEk7RVDOP+ssxIR3tgDVzqH9fxFkHkGgAL32Qte2Uzer9JNozRG6NX5ch76n+lVkpkDmZ247+3hKh1FHMLZTumnqWHhaCo2H98v3BD5nF1rLt366PJgZVFtgLhfgRWQIKIqhHY1yrBb/UfGTAzb8gHGmhBfgJMQZwbLk1SVn1KwjHVJGoBB7Gah0wVyBiDu6+7+WV/IQmPNcwOk636fffi4sZFZL5MDwES/f759Vd9Hjmz0C4T98zHedM8r/6Lx19+ETryFtRUJ8UBlN7mK40EaPU2+MFlvSapxBdS77AvskDLHh86oppGACn9Baaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EDJCKCOpbRwHGDTFw+y7as8vDCMixz6ZVdkU02bG9SE=;
- b=rVeaGrbHWWyHCzV0/C2zy3wO+PiO81fyxpmAr5+4tjdI5ycNGtCeJSEILnVXTnUyPkZIpBeMmtZiM/6AJdxmzFqt9pmZ94LVjNjqcZat03KIuuiXV2gyu1qBD0VRtXoqT4ZzeOCuAZesa/WtdCIKJURdUGzdhWaaZsYaysl/dRU=
-Received: from IA1P220CA0016.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:464::10)
- by SA5PPFCAFD069B8.namprd12.prod.outlook.com
- (2603:10b6:80f:fc04::8e1) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Fri, 7 Aug
- 2026 06:13:13 +0000
-Received: from MN1PEPF0000ECD5.namprd02.prod.outlook.com
- (2603:10b6:208:464:cafe::6c) by IA1P220CA0016.outlook.office365.com
- (2603:10b6:208:464::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.292.23 via Frontend Transport; Fri, 7
- Aug 2026 06:13:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MN1PEPF0000ECD5.mail.protection.outlook.com (10.167.242.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.315.6 via Frontend Transport; Fri, 7 Aug 2026 06:13:12 +0000
-Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 7 Aug
- 2026 01:13:09 -0500
-From: Sairaj Kodilkar <sarunkod@amd.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
- <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Igor
- Mammedov" <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Richard Henderson" <richard.henderson@linaro.org>, Sairaj Kodilkar
- <sarunkod@amd.com>, <qemu-devel@nongnu.org>
-CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-Subject: [PATCH v2 0/7] acpi_build: Refactor and cleanup AMD IVRS build
-Date: Fri, 7 Aug 2026 11:42:43 +0530
-Message-ID: <20260807061250.27739-1-sarunkod@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wsE4M-00030Q-Of
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:28:38 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wsE4L-0003aj-3p
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 02:28:38 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-47f904e80eeso2485843f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Aug 2026 23:28:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786084115; x=1786688915; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BthZMi5aiboRYBSYsdordM+1qmYl7Da/2BBvfRJwpCU=;
+ b=CKrtmBSuz7PwI2IsWaY0xnZz9i9YKNgrU/VeQu3TMiCrbZeZ0W82h6l1mXVUXKUlfV
+ yxSoALr+n6SMl/bEoKg/+bX4MJEDOGvK/EWQ1pkf7HFKZ1toZpDAVXtnAxSy9T0xs9Bf
+ mOm6nAKkEouokilc+7o8q26yYyDxrWwP+cwMjZuqGr2UwwV6+48QxUYfiLPQycErgC1r
+ +69VbEzXPpJYQLB53m+Mkbb2gXoUJLBHTEywkWXL3v0yzfTpIKMBsG/qSB2hA1sRFtTU
+ 0qn+dFcwL9+GsNMyi0ZCKrur9/qB+uimyKN2xGJV4p9RuSU5/FEwUjwuV8CmSixbGW15
+ poYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786084115; x=1786688915;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BthZMi5aiboRYBSYsdordM+1qmYl7Da/2BBvfRJwpCU=;
+ b=YqML3gh06GoljRVsk6ANGdjiBxZIfhgEMLOdbOuTEkbO3WKfZitkLuJBXtiXmPMQgt
+ yElkyrItICWtzI8P6FrtacPZESD7PzOzOYPIDM3wUEE4NG+0qEK5m9CF8qK3PeNhWO3v
+ bYodbZU2pSjTKRzZs4rXyzXbPsYAl/uR4H14eJhpCROS2C+lbyjxMxKU+AIrba7rSQ5c
+ d/5TNhZAYgpWkDlVJKTfK5JWhdqOz4bnf/i8ZlXAL1lGCywaSN+1gbUZVvwpaYFQSwR9
+ /zJznwIEnO2H2NSvgZ5aS/VdFsfG/V6Ww6AlcYjGgX9ck5k/5yoA/5O8c22bvmbx4vav
+ 9/JQ==
+X-Gm-Message-State: AOJu0YxGa9q1wFNsY+Z+DHl5aXXY/OJ9SEMLlVnz8//JSIRAf+xaijks
+ y4XXrXDkvYryf1VrCGzLdsvmJPG+OIYecdqrtYeFSSLvlwIJ9P/dYON6jhPRyKgpHtU=
+X-Gm-Gg: AR+sD10OjE0TroEUIOUY+sOF0SFLM8qVZMcD+RVOoYnqDBFlEp3/vjnQpYc+6hBXqqE
+ AhAlPAqJka0CuvLDQR12O2hHSVwvOezGG6gNMUgl/4qczzgcH5Bpf8p/v6psiHAUUnARLHm86BK
+ 87VilZj1Jk6WdnuH3+qSfD1mDCtpy19tsXil2DZYs6KvVpKbtHEGZtdL4F7NEaeutCzCuFyfiw7
+ ymy5rgkBRKvJNqybUIM2xYAEJrm+srcz1ptT1mKT+Qc4r1vBNWabkvjt5pMGZirN6/jzfEIYq8J
+ Z6wbFUeLLorG075VElFnxa2PqiApaznoGLNNiiSzYtXYuMeAf7zBxdPw23r8JRoj65exfGQ88OS
+ /gYsE9pZSIUUbcoB2coWG/0xYg3SH5z2oqtl0mg7/BIL9i4B5CzB6eL6BAV+nQPJLGMp8gHYJnL
+ XJgpBYGOOkwF9Iobi2QUHPHhSIJ3ODqnjFSmhSECbMP5iWkKbQhhdZ26iJqZBCqjkgmqtjH+OIy
+ /c0wbRFbb9MYzP6K2M47V2QVSsF2vuDgPuk/ghverXOTd2HBkTkVg5zqBAGfKm1E90itl83LRU8
+ 7/HFYoLNXtYgrFPq8jCZd27LkUXk
+X-Received: by 2002:a05:6000:29d5:b0:47f:6f89:7dae with SMTP id
+ ffacd0b85a97d-47fec4e291dmr24678119f8f.6.1786084114907; 
+ Thu, 06 Aug 2026 23:28:34 -0700 (PDT)
+Received: from simon-macbookpro.tugraz.local (tug-swl-c122.tugraz.at.
+ [129.27.234.122]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-480021e7b3fsm2727907f8f.20.2026.08.06.23.28.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Aug 2026 23:28:34 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH v2] target/i386: Clear OF, SF, and AF for fcomi/fucomi
+Date: Fri,  7 Aug 2026 08:28:31 +0200
+Message-ID: <20260807062831.19618-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD5:EE_|SA5PPFCAFD069B8:EE_
-X-MS-Office365-Filtering-Correlation-Id: 42e6c10d-4a0a-4a19-4b55-08def44af651
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|376014|36860700016|23010399003|18002099003|56012099006|11063799006|13003099007|10067099003;
-X-Microsoft-Antispam-Message-Info: Aq2kMFOKnoQytoEhi76nzCbZW02ujFNWyXoo8dfkrP1zOTf2EWe67VlZPG+ei91xiRUQjqLh4GDswbEur9oMSAp1rujIYWXGvGc1VpALHlMne0wPNTT5T8DzWTXm2sNvI8LCPi9tzg20rn87iZZ6K74l9O2TXTvMpxB3Rv+yfMKOFrsmG9mwTe+OsW8pua1d3++cbHa7mzGPwB7w5cTcpGCBi0LVNXk1VAturcWMhTYhWDkpaAL8LMb/zyrTBOD6zxtg+TZkyMbUbTboO3A3CpS7cMtcPRwUjMQVjZ9mOY7hk7KogakNCP3CAcnQxiiAx9GYzNu9qrhdAku04Po1CRdzIzE9vvROx00522CtrmVf7rsJZ7xsc6V3V15TmCNfMBJ9qq9ZCaIGbJJ6cqBPURFLlAV/NUQmzbiFB/HflGJcZq3x1ehfkQzeSbcMt/vjgxFqBj/MS+J7Lv6uHSCq4Pp42t5R5vkIRlObopPVRnlZkTJXP+h74tA6ntMNPcZf5zrAjBqoMQbPiEWk5wJ/sNs6FEbt/6tJ/JV8SAFHoG0K9Ie6UTeF8Tx6iu7ktxfRL2tDi3ig1BDNUH3CR4dlVxhe/3WlnvkxeMdgFZ0YC3OKu8rFWG9sQHDbEZQaGDV7xrpa5MWi5YYafjhc97XoqmSeoaxgbFsWN4Z661dY8p5hBc76jRjrn/M60+Luhs8jJ2GFBmLgLo4KVXqSo66iCA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(376014)(36860700016)(23010399003)(18002099003)(56012099006)(11063799006)(13003099007)(10067099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: p63IdwhKwdCtrytcyu8wqTsBHSIeZl/6IkH9msM5vF6X3sVyv483V4PVB0Lvn8EEYJ1oLiIRU/Yn/UoYDW6e55N9pg910R8/fFKwhp2pp2oF84tOjll4xXYCMXyUmdN+OLz5usqflLnlatOSM0IKjcAVJ5KOLaeEjrhcXsau7HVB+rU1J+K4ykbO3gbr50A1+5RciEU2nZKL7aTLEwns+exuSHoZeI02fHv8Q3KoLc0m3TDHzFsTfugwltkmy3Bc8ln9F7HRgCDySqGcbcvNzSCX8gAhi6SUwBOS3kidMPzxvsDYzQZgKoDMOr3j9nxJoiJ/I3X53tNRwBXbaDBAjz55sY54U6rCAuNtjsPdnW+lGBzAqBx/pGKeRKZ1tyk07/RpPIk12RHXJuf7mOIkW4OtLY3F1ptVRxq3v32sC2Hy0gq3RJonWrtIsnSo3XVQ
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2026 06:13:12.9962 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 42e6c10d-4a0a-4a19-4b55-08def44af651
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD5.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPFCAFD069B8
-Received-SPF: permerror client-ip=52.101.46.40; envelope-from=Sairaj.K@amd.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,48 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU reports several IVRS fields that either do not match what the
-emulated AMD IOMMU actually implements, or are hardcoded and drift out
-of sync with the extended feature register (EFR). This series fixes
-them.
+helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
+CC_Z, CC_P, and CC_C before merging in the comparison result,
+leaving CC_O, CC_S, and CC_A untouched from whatever they were
+set to beforehand.
 
-The goal is to land a maintainable baseline before adding AMD
-hardware-accelerated vIOMMU support in QEMU, where we will require multiple
-vIOMMUs attached to different pcie-pxb buses in order to serve set of
-passthrough devices.
+The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
+SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
+at all. However, testing on multiple real Intel and AMD systems confirms
+all three are unconditionally cleared regardless of the comparison
+result or their prior value.
 
-Please refer to AMD IOMMU spec [1] for more details about IVRS.
-[1] https://docs.amd.com/api/khub/documents/GD6kOXjzWsek8QUbn_qMvg/content
+Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
+and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
+can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
+into a masked cpu_cc_compute_all() result.
 
-Changes since v1:
-https://lore.kernel.org/all/20260511123937.32743-1-sarunkod@amd.com/
- - Dropped "acpi_build: Cleanup AMD IOMMU IVRS building" and
-   "acpi_build: Introduce necessary macros and structs for AMD IOMMU
-   IVRS".
- - Added "amd_iommu: acpi-build: Remove unsupported PPR and HE
-   feature"
- - Use pci_get_bdf() instead of pci_bus_num
- - Move AMD IVRS specific macros from acpi-build.h to amd_iommu.h
- - Remove GLX_SUP from feature reporting field
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+---
+v2: Simplify per Richard Henderson's review: CC_O|CC_S|CC_A|CC_Z|CC_P|CC_C already covers
+    every flag, so drop the now-pointless cpu_cc_compute_all() call and assign
+    CC_SRC from fcomi_ccval[] directly.
 
-Sairaj Kodilkar (7):
-  amd_iommu: Return empty efr for stub call
-  tests/acpi: x86: Allow IVRS acpi table changes
-  amd_iommu: acpi-build: update PA, GVA and VA size macros
-  acpi_build: Use IOMMU pci device to build IOMMU DeviceID
-  acpi_build: Build IVRS feature report using extended feature register
-  amd_iommu: acpi-build: Remove unsupported PPR and HE feature
-  tests/acpi: x86: update golden masters for IVRS
+ target/i386/tcg/fpu_helper.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
- hw/i386/acpi-build.c     | 65 +++++++++++++++++++++++++++-------------
- hw/i386/amd_iommu-stub.c |  2 +-
- hw/i386/amd_iommu.c      |  2 +-
- hw/i386/amd_iommu.h      | 27 +++++++++++++----
- 4 files changed, 67 insertions(+), 29 deletions(-)
-
-
-base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 978eb1411b..b812125efa 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
+ void helper_fcomi_ST0_FT0(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
+ 
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
+ }
+@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+ void helper_fucomi_ST0_FT0(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
+ 
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
+ }
 -- 
-2.34.1
+2.53.0
 
 
