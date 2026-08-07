@@ -4,105 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66509C5AC7A
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00700C5AC7A
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsKKZ-000193-VZ; Fri, 07 Aug 2026 09:09:48 -0400
+	id 1wsKNB-00020H-Pa; Fri, 07 Aug 2026 09:12:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wsKKY-00018e-Iq
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:09:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wsKKW-000433-0X
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:09:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786108182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=OpwT1ecUrzhIISy/FUgnI429GsWJm3GyAIgiZVaaQPg7rPh/ZQATtnGohhTNqA0I3GLDL2
- ia8Cg70rFM+YR5lQa3UawMuuiK5kSTVB2k7GNgtVLZul0QjFL/duT3zkLaZx2RSEIApMDR
- yPzwu65kVKnuHHMdGS8LtTa+RvtMn+8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-m-4WpA1nOUKjVHzncWkx_g-1; Fri, 07 Aug 2026 09:09:31 -0400
-X-MC-Unique: m-4WpA1nOUKjVHzncWkx_g-1
-X-Mimecast-MFC-AGG-ID: m-4WpA1nOUKjVHzncWkx_g_1786108170
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4954b1c6310so25813445e9.0
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:09:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wsKN5-0001zw-Mk
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:12:27 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wsKN3-0004YB-KX
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 09:12:22 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-81e69a2db34so54374057b3.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 06:12:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786108340; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lyy4WENHHzIbVww9EECQFXOXHUl/e0iMdYE6xXhEUDVvK6g9bSlUu4MhZwG50MQ1Yb
+ wefCYPU5DbgdeVYgXP48vnwN7B+MGIXCGc3/XVUHPYD/vN1ZAl1T/RBawdhaVzl+rSER
+ K7pQCmhUyb2OHnOH+qduhsN7YfXZJ79At4BJS0nmBZtGsRfpgK1sm3fWEv12PQjtfdPO
+ JGFwP8PrqwP82G9hC2YHyVYCYkssVXEtFH+7KHJLwDwoa90+FD0cZJMY1Cdf4TiP30ui
+ uTMKL5O7rHNLEFTbjeg0cpPa3mYYuVuJX5IZwIBhiYx02/s8YgxE7F8OpNPFDhhV5YSi
+ vtnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
+ fh=luh2pz+jE30peEkvnCOTtp/S2/mwabsJyHcziE/qc94=;
+ b=QXIy+/uOjBdoepnhZhUBlYYIPKXdb9rZHBIATNLj/ePPhysZSz8AhjE0P3ZbEuuQfZ
+ 8BDWRh8t4C7Jkq67nsQa2sshAH7fFP4zNCmldEvjjnYiMbzpm9FYy7Ath3M3Sn51WTy2
+ xenshLm+UtMbgWZpdgSQ1hxnbeAvdLzDcDf69/clns2mSYKLQwQsBESLh8zrxQnC8Y2q
+ z66fbH7krhOF9oDVX80ZP1mzMbD4l1VizGgPH21xpNXgrZiuIl2ckGMLbpJtdUi2RyyP
+ xzNXyqowrw6sAlx8qM4xguYHeuhOdPLZ3P0OhbF1FwfCGS40MqryEo82stdneZUhv2Lj
+ vyFw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786108170; x=1786712970; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=rUPcPmwTbY+sfVCTx8R81SuvxHEUqVgIrgJ38TrzfbTUDZekmEKIQm0GfWfp7y5D9b
- pzT0g7IEHHGI9DqfiYZFug6pd6YVY0KXwWXY7BScpwwz+iDq0Yh3NJmG5WjrIYRYnZcf
- nk999IfBiPpfRWuuHBRgz5btRMVi6EgLuMQUVqUlQoR0Pr+Jv1DZIM7KtZvLHiMtof67
- UMNPHAj1SjerCjMT7WcwRgXcmCShk0puvxDLNFH/t790ZIGglGI8HcwFxo9c8TNe8fvg
- DoQ9+yrhy2TBW/56FuUppWQKNFC/mEdmsikWaHKWkEYbIg4vVBtPxE3nSShbejngyhny
- ZA1A==
+ d=linaro.org; s=google; t=1786108340; x=1786713140; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
+ b=g7WPpvoHPzlJzZ0Mfh0saA2VnmEgtJox8vrryrLNYhiRzPZuB5O+0iSrXgCmKM+GN0
+ h/jbBEZfpuNgycTlSl/sm+HR/bLB3/4MTInZyih44XCiQA7IjXiZ4gRkTmf/6uHEX7eG
+ FijtkiIqyWLNHh24M/bDTkeO/id7kI3OOq6F3Til9CyRlr2ZYsp1p6edHLZztLohKbDW
+ /nfyG9ePB7kJAgm3qW16LYuuT7pMC6HRatHyM9ag6K+yxEKnFWDz/TkK+ynsF6myAMVl
+ abeZ72v1+iuhKah1/sIhbyp1S8R7F/bywD2MVu+C1+w2VXQfomW+Lx1aguJqUPtgsnHC
+ 3RDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786108170; x=1786712970;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Cvxvtq9qlYAuapB7v1udLEKrJ5gG/g5GDwTo6B7uxKK4eiJVFKDuz2Ftya1+lonHgj
- GxThVeeqThCiKLx+4GvqaYR3064S1WdOPfQTi8oUPvFHfP2CKvqxJpe+HQXxNhTyq3yY
- Ijn3cjP5TmonASYp4aDQv9te+IaiDThsAiRt7KawNaiMIjVIi1ZdQjn2JhFbAsrpAGQn
- 93YW+DP2vI5DdhurAYjfmWYxUsy1N5E/XLfnR2uJEvsTSNwZ1g3a/RPxmMRsqaizd/rO
- +J2hR1z13l29QmB4+dAYXgVxVDSzVxzePYW3NTIaIE76avZ0kDEM4JHc/+3VfxhJ9bGW
- b7wg==
-X-Gm-Message-State: AOJu0YxbRcZw6ABCDIMXnjQtUkSujkh7O50uGaBoyVsAy7rw6aUXF5Hf
- rGo3GAM0P9odjDes0Ui6GodOcGPV/00zmwu2m+K6/3rej8UC0+KMHMRkCGuKhfU4Yk0Dt3mikTf
- hOIVnCkioIBaBZHvG+nijxdOktBjC29QVj5NPNkI0NfZFoYQO4hRkhIsw
-X-Gm-Gg: AR+sD12gLfH1uJwEpU3sH8iA5LlaUxsCLmATTKkMmm+S1lBhrAEKmp+qfUdg1fDcXE+
- X9IrOwbmCmc2a0Z3evJ+DbOFacm5i1a9EcJmYKfr9xuOEfNi9xFPR5tL0OYseZ6WL2PH3LVLhjj
- iQNNyp/afpC7kYJNLZU+lws/Q/BUQXyXp5AZEELTLkt8y9uwF+EgLza1RCJMGWRQiMeSUDCR0ui
- MOP51uKH84nEFsHq2eAfFtlnXCX2PJN1zu3+PDDjVamp4G0O/CBVL1YTB2fdK0DUQl7mbrV3Zmz
- EDYglRbQE8fBN64zCtIWyIq9ItfJNMmw8SMX3DNidJRUcoZXczW+dK8PE/5sQrA4Hf7PR35vuvq
- +sH4xbyBIEyh0EzG7XcU7H6o4X4CkOl+Ox/+MtL2labruvqdR5Hpyy/Pfg3+/cP4mbQcl7Kg/zD
- l/p/c=
-X-Received: by 2002:a05:600c:6a8a:b0:498:ee7:e407 with SMTP id
- 5b1f17b1804b1-4994e7d3f2fmr258466655e9.17.1786108170068; 
- Fri, 07 Aug 2026 06:09:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:6a8a:b0:498:ee7:e407 with SMTP id
- 5b1f17b1804b1-4994e7d3f2fmr258466035e9.17.1786108169666; 
- Fri, 07 Aug 2026 06:09:29 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.34.92])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48002150804sm5511249f8f.13.2026.08.07.06.09.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Aug 2026 06:09:29 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Simon Scherer <scherer.simon89@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org
-Subject: Re: [PATCH v2] target/i386: Clear OF, SF, and AF for fcomi/fucomi
-Date: Fri,  7 Aug 2026 15:09:27 +0200
-Message-ID: <20260807130927.2604124-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260807062831.19618-1-scherer.simon89@gmail.com>
-References: 
+ d=1e100.net; s=20251104; t=1786108340; x=1786713140;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=CK8iK/G1b2VqaxBAxYz3Xk1Z5WkHDabSP7CszsPk04s=;
+ b=WgiJ8OH1HfQ/a6GDrn+KLI29bUYwishCyyc+wew19CWqrGLXrVwg5Q715qS0OYfupd
+ VQfZGSwy13TrR3Wi83sMQgGBd3wjPTyQGQgndpg7PIlK5TSo+Ek4pbGrTMuQ+EzxhLnC
+ RzYG4iSj9AWhUdqeygfK2WsgXkpJT7UqiopPl9+36/uRg5yqog8zVC5jYbDZX0IRPj0Z
+ EvkyL9T/gRM5CEyeeYo7bdyHMaes6MyY8NDJe2rbGWzapHi8ycUpNigxy4OgJeGBLjri
+ jrxd8tsU8oeJrftjSbEhkqapyL17PnhiD8xqZRNrGVGPJErOvOS8bjCp0BWqVhK2tZFJ
+ pZKQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqOIWrcn73pI+2+KQ+RmWZuq53MRSa9Wp3fnLXUvU2G6SDJuFcLyJoVhT4jITS0uaV5jR3d3+AYcTnP@nongnu.org
+X-Gm-Message-State: AOJu0Yy2l8kgOiMzrantnBwoRtAteTiJB+R2Tfs+J4E2zl/0vRA/34sG
+ ZiggJK/fe8V3zkjRFuR8cCrEQhjeLs2YT6EoF8k+0TJvdYTMhjtC/1v1ORdGCF9ymo1swNtT5v7
+ egv7osEsCZgjqO9CTFEiTsGfg9hqhTQcfc+nGDpAtlQ==
+X-Gm-Gg: AR+sD12DwhgwviyLaIh1UB4tO7cD/mF//I3TO1akFQOCZVkMTwXxnDtz8IqPrdlHHA5
+ SVYW8YUEa1+BrfTZQs16OTnIBjlnWgd4AGFBI1cOlol61jjiqq7ypwlBU7Ao8Xec+ZNgdS2Cuvn
+ iJQyayM0rkoYhipfQV64I9c4QWFeZhZV5OPuhpZx8LolZQ0e5eOB4z8FQG9uWRuSvRlkCuDXQAc
+ x7iHjVscw++Pjg2mam0DKmxVrGD4soGdYzd/jDYnJS6gHm9IjkUtKGC4ujlQso6QtRfpaicf2im
+ vPlI5ou/JRpXNbfhB4QXp/DS8TpHDFLUvmqEvA23rOYatrSghywfa6yweZf9t53YEJojVAaRI8u
+ KQNimalX/in5uLe1tZWhG/Rz9J9gRbm4OhM8xEhQCwRMqoKyPoZA=
+X-Received: by 2002:a05:690c:260f:b0:81f:64e8:d86a with SMTP id
+ 00721157ae682-825778aa65bmr1714987b3.30.1786108340011; Fri, 07 Aug 2026
+ 06:12:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+References: <20260728192913.61279-1-deller@kernel.org>
+ <CAFEAcA_8o2A8FDsJKacde+pdj4HzA5c7aTw=k7tmONYXD4=c_w@mail.gmail.com>
+ <244987da-f6d8-47a8-ac4a-16a71c660e36@gmx.de>
+ <CAFEAcA9F8rauUNc2NAqbnf1f7-0O_ivft1XOftwt1hW0YWeeJw@mail.gmail.com>
+ <a8c13cdc-54c3-4913-bc6e-956cbfe082cb@gmx.de> <87ecgfkrg9.fsf@igel.home>
+ <anEBr8nK-4nKmuXj@p100> <87y0emkhjo.fsf@igel.home>
+ <b1fbcbb6-2e04-42e4-80ad-f9b4907676ba@gmx.de>
+In-Reply-To: <b1fbcbb6-2e04-42e4-80ad-f9b4907676ba@gmx.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Aug 2026 14:12:08 +0100
+X-Gm-Features: AUfX_mxPE8VnG6zbTnpWRme0ljcDatf9OdJH0rtR1D2lv4tgALmm7k4KVdMF_G0
+Message-ID: <CAFEAcA8Mof1EDHoF0hBRcu+to0W6ny-KvX7mUwch+SGVgRD3MA@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: Fix msqid_ds struct wrt 32-bit big endian
+ architectures
+To: Helge Deller <deller@gmx.de>
+Cc: Andreas Schwab <schwab@linux-m68k.org>, Helge Deller <deller@kernel.org>,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,8 +124,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On Tue, 4 Aug 2026 at 07:30, Helge Deller <deller@gmx.de> wrote:
+>
+> On 8/3/26 23:42, Andreas Schwab wrote:
+> >  This "preferred" approach does not really make any sense at all.
+>
+> Right. IMHO this "preferred" (aka padding behind 32-bit time value even on big-endian)
+> doesn't make any sense for big-endian. The lower 32-bit value then ends up in the upper
+> 32-bits of a 64-bit time_t value and thus you have problems when mixing 32- and 64-bit
+> time_t applications.
+> I think m68k needs to follow the other 32-bit big-endian arches I mentioned above
+> and provide an own uapi/asm/msgbuf.h:struct msqid64_ds file/struct.
+> And this stupid "preferred" sentence in the kernel should be dropped.
 
-Paolo
+If every 32-bit big-endian architecture is avoiding the asm-generic
+msqid64_ds struct in order to provide its own, and they are all
+exactly the same, could the asm-generic one be made to do what all the
+32-bit BE archs actually want rather than something that nobody wants?
 
+-- PMM
 
