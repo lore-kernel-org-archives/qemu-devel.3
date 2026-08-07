@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B07C5AC67
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 00:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3487C5AC67
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 02:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ws8HJ-00088j-4V; Thu, 06 Aug 2026 20:17:37 -0400
+	id 1wsAZB-00066f-U9; Thu, 06 Aug 2026 22:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1ws8HD-00088Q-PQ; Thu, 06 Aug 2026 20:17:32 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <xiongweimin@kylinos.cn>)
+ id 1wsAZA-00065r-4E
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 22:44:12 -0400
+Received: from mailgw.kylinos.cn ([124.126.103.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1ws8HB-0006JG-Mi; Thu, 06 Aug 2026 20:17:30 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 14676404AD;
- Fri,  7 Aug 2026 00:17:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4FC1F000E9;
- Fri,  7 Aug 2026 00:17:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1786061847;
- bh=SLxc4eVqoA64jflmY+2zL+dzl62hQKdRsRl9P+3gvE8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=dnXy7fEfdaCGMkYakyImgHuPX4abb+DoUGy44m813S4HsG6BKcH2tTF8IcRC0EoRN
- WdgWDYgy9iMM6H/Y4+MsWPvP/FGXvXHyTfbkx6EYrBgcslkKeRO8XvIIuOOjqqZFoE
- hwou5t/j5QalbADvjopkCzxb+c4EIvYI0zTf7hEdB2syKd03UjCc4VJHRPS/vGJTNg
- F/aS/8urwtffjYwnj8QwAlRL5bjCumIai3CohZo4uf/l7c6EHPnhvb/KwtFPOYu0rA
- Aa9pp5qV+w9oIr5bI/gwViijuxmrpd6kM8VkKKyKapVgt6r+ieXaCoM4uEgmdqWhT8
- 2ZZN/9i2DcRWw==
-Date: Fri, 7 Aug 2026 02:17:22 +0200
-From: Niklas Cassel <cassel@kernel.org>
-To: Sam Li <faithilikerun@gmail.com>, dlemoal@kernel.org
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v14 3/6] qcow2: add configurations for zoned format
- extension
-Message-ID: <anUkEv3T9GqFzQ0q@ryzen>
-References: <20260708221615.346155-1-faithilikerun@gmail.com>
- <20260708221615.346155-4-faithilikerun@gmail.com>
- <anUfL40CLw_amIJE@ryzen> <anUhlwOBFW_lUThL@ryzen>
+ (Exim 4.90_1) (envelope-from <xiongweimin@kylinos.cn>)
+ id 1wsAZ6-0001Dk-T9
+ for qemu-devel@nongnu.org; Thu, 06 Aug 2026 22:44:11 -0400
+X-UUID: d73a68b0920911f1aa26b74ffac11d73-20260807
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.12, REQID:c9aa53b3-3798-49f9-a7ca-2622ee2467d8, IP:0,
+ U
+ RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+ release,TS:0
+X-CID-META: VersionHash:e7bac3a, CLOUDID:54beb59992935713d1a2ebc40e642617,
+ BulkI
+ D:nil,BulkQuantity:0,Recheck:0,SF:81|82|83|102|136|865|898,TC:nil,Content:
+ 0|15|50,EDM:-3|-100,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,C
+ OL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: d73a68b0920911f1aa26b74ffac11d73-20260807
+X-User: xiongweimin@kylinos.cn
+Received: from xwm-tianyi510pro-14imb.. [(10.44.16.150)] by mailgw.kylinos.cn
+ (envelope-from <xiongweimin@kylinos.cn>)
+ (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+ with ESMTP id 1117453092; Fri, 07 Aug 2026 10:43:58 +0800
+From: Xiong Weimin <xiongweimin@kylinos.cn>
+To: "Michael S . Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, virtualization@lists.linux.dev,
+ qemu-devel@nongnu.org, Weimin Xiong <xiongwm2026@163.com>
+Subject: Re: [PATCH 3/3] hw/virtio: Add error handling for
+ vhost_virtqueue_mask failure
+Date: Fri,  7 Aug 2026 10:43:56 +0800
+Message-ID: <20260807024356.2157890-1-xiongweimin@kylinos.cn>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260724054836-mutt-send-email-mst@kernel.org>
+References: <20260724054836-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <anUhlwOBFW_lUThL@ryzen>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.852,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=124.126.103.232;
+ envelope-from=xiongweimin@kylinos.cn; helo=mailgw.kylinos.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,38 +77,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 07, 2026 at 02:06:52AM +0200, Niklas Cassel wrote:
-> On Fri, Aug 07, 2026 at 01:56:36AM +0200, Niklas Cassel wrote:
-> > Looking at the write_granularity in virtio-blk + file-posix:
-> > for blkcfg.zoned.write_granularity, which is what virtio-blk exposes to
-> > the guest, it is initialized using:
-> > https://github.com/qemu/qemu/blob/v11.1.0-rc3/hw/block/virtio-blk.c#L1257
-> > conf->logical_block_size:
-> > https://github.com/qemu/qemu/blob/v11.1.0-rc3/hw/block/virtio-blk.c#L1183
-> > 
-> > and the value we set to the qemu block layer - bs->bl.write_granularity,
-> > which file-posix initilizes using:
-> > https://github.com/qemu/qemu/blob/v11.1.0-rc3/block/file-posix.c#L1498-L1501
-> > the sysfs value for physical_block_size.
-> 
-> If we are using sysfs, I wonder why this code does not simply read:
-> /sys/block/<disk>/queue/zone_write_granularity
-> instead.
-> 
-> 
-> But that would still be inconsistent with blkcfg.zoned.write_granularity which
-> is initialized using conf->logical_block_size.
+On Fri, Jul 24, 2026 at 05:51:46AM -0400, Michael S. Tsirkin wrote:
+> why is this part of this patchset?
+>
+> and then what happens?
 
-At least QEMU is currently bug compatible with Linux:
+It should not have been part of that series.  I am dropping the other
+two patches and will resend this as a standalone change.
 
-linux $ git grep "zone_write_granularity ="
-block/blk-settings.c:           lim->zone_write_granularity = lim->logical_block_size;
-drivers/scsi/sd_zbc.c:  lim->zone_write_granularity = sdkp->physical_block_size;
+Also, the previous version was incomplete: vhost_virtqueue_mask() is
+void today, so simply checking its return value was wrong.  The new
+patch makes it return the errno from vhost_set_vring_call().  On
+failure in vhost_virtqueue_start(), we jump to the existing fail path,
+which unmaps the vring and returns the error so device start fails
+instead of continuing with a half-configured queue.
 
-Where blk-settings is using the logical block size, but SCSI is using the
-physical block size :)
-
-
-Kind regards,
-Niklas
+Thanks,
+Xiong Weimin
 
