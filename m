@@ -4,111 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1AAC5AC81
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 12:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FF8C5AC7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 13:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsJre-0004V3-1x; Fri, 07 Aug 2026 08:39:54 -0400
+	id 1wsKAd-0007J5-9U; Fri, 07 Aug 2026 08:59:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsJra-0004Uf-CR
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:39:50 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wsJrY-0002rx-Tr
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:39:50 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-82113c53aeaso23798857b3.1
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 05:39:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786106385; cv=none;
- d=google.com; s=arc-20260327;
- b=f24UdReOu/UJcF67EIAQ7MAiiPuxNYg25czQToxFXAbo09610Dn/NwpIAjgtrL1GwK
- eiMgZ9pd21CwTabCrtdyxwb2QFYdF03r5PD4PhSoeL1aea1nTS13keo6rQ3FM5jKiOQF
- 3iP7WKsDKkT/C8XMtSk+3szNm2Jyy24dFduw75x0C5BXYHae4yqpDydoLLk82pR4kwEj
- mD5gLYc4ZHrubU6enNHk7qbdNApbFc8amc7K6GR2XNE+cJ9d7Wra1gClmK1Va5eLqAZO
- OlVm3ZLKjQjiOy6rspFPoDOKN88Tqs5l4R7xwudVnf3VsulQEU+TAkUTXsbzAPYUY4hq
- BXIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
- fh=c4YsF+xbwPsO7TD20ekzmIuvWRuS8wd7Xb6Dt0bE+KY=;
- b=YtCbT7Qw4kyRYWViRLDfD557hh1yMRTe02rJnaKqxiYdcVwinJfGOs1F+k9DehHFj/
- 3lXPkJlGZIow2+RHRVA8VOx1n7nKQpnpRNUUajVB8I8QGJO6IwS9tcChd8XB/2+qXLSV
- ZcNU5RJDaargOxlZhczl7/UqzmG3rt6bfaE0KzoUk0psmK+mVoKvNTWQCNBdR6qzz6Cp
- L8AHYJcIvsL7lykdykePoHUqGs1b7Lpz8iC5WkMYzKe7saEoPzeG98efMud4+/CfeT9d
- Py6fwkheAiD2OnH4PM8ffyiK3CscFeDQ58Re3EzjTMJuQQva1yPCzOazFMhFLti86s17
- Aciw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wsKAc-0007In-0q
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:59:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wsKAa-0001CF-3q
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 08:59:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786107566;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
+ b=PZ1DU8FXTn/uJgmCugQuODzVo0kwikhCBGdSmOJ9V1yNRcPRLwdMKyWjs+EGePYCDUxdHi
+ 30Q4D8XsadVfiak2le6+7jUV8DFK5LPUH4WEs6yrxip3UVNUshpkpwKqAKoqyoXFkjekCY
+ /Ij8ehzVH/uMgg9+ShGmKC5aqmK4qAo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-HmvQmV98NCuV0Ynt4Di1MQ-1; Fri, 07 Aug 2026 08:59:25 -0400
+X-MC-Unique: HmvQmV98NCuV0Ynt4Di1MQ-1
+X-Mimecast-MFC-AGG-ID: HmvQmV98NCuV0Ynt4Di1MQ_1786107564
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8eeba1d9e47so28408256d6.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 05:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786106385; x=1786711185; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
- b=T8ST7kPAyYtQlnv0NhkMjkB+06NJGIXGPRr9PaJPjvRKTePU4Pa8FUO1r58Nb6gs+V
- AsymF82YuR8QTv5d62DHjQL4SJWfHHMES0O0fvQ9oa9MlCqgOa0zmmAZYfHyKH6rUYX/
- wJU4NZHbUrhXNtmvjf/VMT3+oo3leWgQIIKQOdc8r/1xZTHAsmx9U+Wnhvd/uEwZ0xA4
- eEy0CkKeJrvg5BEQxayREl+1k460lPyqfSlvJC7boLcxmoHkPaI0xImDk0cMLDYbVSTJ
- +h3/GdSYVB3I4b8Ld5NFI3eo8ipK2qjRhdV4FPsQN9vW0T7Zx6V9tmo8oJ/r9gMFO341
- eOhw==
+ d=redhat.com; s=google; t=1786107564; x=1786712364; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
+ b=PzlAKg5QP9X32fJrFQbCUa1uci2SMK1zXKECUtmHRqCBz6rb3WjcupcyAQ3B98RhLF
+ HS12LAQyuREYk/1nHKA1NJe5PPhMQat3UdQHZoiS1yhslw2zP4Fr2NzmELjnoq2XnWIb
+ iaQQrv2iRtFdd0swiWBqot1lYfV7zFsnGByN9Z7vwQHSKsNE8DqR9IXZ+PUwoyjRayKS
+ GXqXQrcwVunGFttfZwqyOmGJVwdSlcCKJZN6Uf7aRAzcSDpQsjzSu51cbLktjRSqYmn0
+ exvMNua9imZROrIekmFzPi7c0EE5714xQ4YIn572w/WFUyJfOkKxe5d6BUkw8Q7x9NbR
+ dayA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786106385; x=1786711185;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/unQYnt4dGcWOnoLsOmOb4Gr7VWVjFPmq0fcER/Nto0=;
- b=tL8GbY4RuxHLC2RcTovu3j5n1BXW16YAQ5+wzQungLdvfxqpPN+D0JwT9JpnAb+Gt8
- 5NIH68Iu6k4hScWx4urssxkjtwpg7u5QdZbMMQSX26nhZfLWLI9dqJQIsX7Y69uOqMLf
- 0q5hq+OwXGz4VkzzFoC1bHoWR8Kp6PZLc/OkqELtipjUNzf4+q19ZYgIg8pVeRcDmmHa
- gYQgDN29wJM/QdHybd1AERM+GHG86ZIA8qySxopPa7e/aC/emMXkY7V6ZH1JBeN7O2QT
- nfNXHaMLSOdkVYJ5/cM1miVMhhLLgsiYvEpYAoQM6t26u2x500Bf08Xn98AOuH177Waz
- I1nQ==
+ d=1e100.net; s=20251104; t=1786107564; x=1786712364;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=TyQBrT9dY9tRlNWIBb6513byGlEnK78b1jObvv/MajY=;
+ b=iPWO4lktc7SVUxQBkMkGYLvh+ZXT/SrDfF5KSTqoQ0z+zo5l4HdWSHNGfUp7UzMaP6
+ 1ug3twzK7u4xK2GCjrNmAPPNuzrgHWQClAJkaNR9d3Qa71wq5KNdUojtCSkRepyEQH7T
+ HlCI51PJxB5vBIVSWOjGRpHSpO9KwpwprEfdv3VpFCHIHraJIaQ7xXlK1Ddv1KpUGq2U
+ 0fwWMt84UiX1B8qqGU0rXFyDV8hCYRuG2mLW+pkvo/m4/g2WrFpqf3Pn7UtMBt1QOsfw
+ HJVXURAS9/tkirxuI8K7e1lOGwhq8+kcll5vQTpuJLHTSBu1G2YpJ5DeSQBuSA7WS50U
+ 7ugg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpjvZlCRaqIQzp37KY8DNs62WJGfoL2bRRhLhjFJbmkJTBWLDn7PVvmWvEcQWug1iltMVw2+c/Iif9o@nongnu.org
-X-Gm-Message-State: AOJu0YwOEmDNFneo+vc7N1d4sagOkgT47WpNodNFklPogL4AVyCUgHqB
- GUKSLVEfLId93JWoTqmbWbFtrBLmmt4fLT+PLH3Hd1JYB5v5a2qIu85yWt8BWSbNRheUufEhZnc
- hnP8hpzfvCs6lGLrrT3ZiNR8FuG7rPYuEvbm0vz5L8w==
-X-Gm-Gg: AR+sD13Ouej1poI/1EzMettyphKsLc/WlnJtvmsduuutmH70DgkJTQsz2ZTHL5pzqSU
- BurlDLIaqOTnoeXAeIYWzrKm31AZJOp+otcKhqSjUq2QEsyDv6lyQNiZm2aLlqpxGxmQehjOHjD
- K901ZDQohM6iNcOghgMRC1M6T9OTlfBi10TFoxiLwMxvuFJeNQrGD1QXCMplpX5sgPNAx8bCU11
- bcOyZ1zihPBsXQAR/f2a6bezJJdU0ioRdjXIK7rkpR5QSp9EnlrlPBG8d1+u21BUNMC6DgLbZdK
- OHY0gv+Ud1lHFzhgQ/tyeHX26R4WPof95HZEWnaAp3RuMpborAHe7q4y9l/gx7MX8zjdYwThskd
- dR/yQpWmN25ko833BeGoncII+Hpo7
-X-Received: by 2002:a05:690c:6d90:b0:81c:8005:9104 with SMTP id
- 00721157ae682-820224e5320mr138129437b3.30.1786106384818; Fri, 07 Aug 2026
- 05:39:44 -0700 (PDT)
+ AHgh+Rr4JaTGslDpef63JIhZ/tpkmcVgxNbyM1MVwzUWsK2fU8+fJnIIHKEPbJ2P7raWnRXocJhEwXipKPDO@nongnu.org
+X-Gm-Message-State: AOJu0YwBfavxEXYKr15aiThBBjz7JI9Iweworq35sheQwEAWaWEtm0fP
+ /RqRC10Oe+MSJnN5CEs6vZH8cER8wiC3uRUrmNJ0iP0Vuu9p3NhLTIDTMlj5EeWabhm3hFFVmcD
+ vhvY2x2BiF8gKEAiv+RT9KxpE6g+DDJLc+tyCbFQw4h5ZjdHEbNyqo+wz
+X-Gm-Gg: AR+sD13PvhhixKIg4wAyrfknCPDD4ZdNmtLFlUM9lUg8Nu+2V5RT7hlJhcGBdjgQrYw
+ A0wMdPlR1WJsQaPyQsCdZSA15NFyYio4o0GvzK0esDi1C0w9pqxcodB/SsD6v25sTwdbdSDsBYP
+ jtuLWXV3mjEH5Xgzj6PZJzQyKwZDXAGoExV1dhzi50rg8KaNFwdKXgTfKc0o3nB7oI/bv61I5xF
+ pRZh9m9u8PyNKbWBMoplrSwsLU6ZABq+6u9ET3c5affOKU/iyLc+j4xKBs+z7mWPgCpxYHllDLh
+ 6r2M52Gdv7a6qmEHWXf1GJI4J1uOacDrJvyBCaZC46DnsIOTZSEaCM3rvdm/jN8zOryP
+X-Received: by 2002:ad4:5c8b:0:b0:8f7:40b8:e8ab with SMTP id
+ 6a1803df08f44-9088108f7dfmr250634196d6.3.1786107564490; 
+ Fri, 07 Aug 2026 05:59:24 -0700 (PDT)
+X-Received: by 2002:ad4:5c8b:0:b0:8f7:40b8:e8ab with SMTP id
+ 6a1803df08f44-9088108f7dfmr250633416d6.3.1786107563921; 
+ Fri, 07 Aug 2026 05:59:23 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-908a9331213sm8059546d6.41.2026.08.07.05.59.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 07 Aug 2026 05:59:23 -0700 (PDT)
+Date: Fri, 7 Aug 2026 08:59:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org, kraxel@redhat.com
+Subject: Re: [PATCH v4 04/11] system/memory: add a tracepoint for
+ memory_region_finalize
+Message-ID: <anXWn4-q92ZUULDb@x1.local>
+References: <20260807052559.50643-1-anisinha@redhat.com>
+ <20260807052559.50643-5-anisinha@redhat.com>
 MIME-Version: 1.0
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <20260802154350-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260802154350-mutt-send-email-mst@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Aug 2026 13:39:32 +0100
-X-Gm-Features: AUfX_mxLU0M-fkGJJUdnmWTfxZs9xi6XUs1byYL0NVHvuaIyrfdGYaM-Z1Vl-Tw
-Message-ID: <CAFEAcA-VB7kNn6MM4cF7Pz356KgkyKRaK0xMC2PTXYYCVVfLyg@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <bonzini@gnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260807052559.50643-5-anisinha@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.238,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,30 +120,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2 Aug 2026 at 20:51, Michael S. Tsirkin <mst@redhat.com> wrote:
-> So GCC has now decided that 15 lines or so is ok, if a maintainer
-> decides so, and that one
-> should only count significantly different changes, what they call,
-> following the gnu maintainer guidelines "legally significant contributions":
->
->         A change of just a few lines (less than 15 or so) is not legally
->         significant for copyright. A regular series of repeated changes, such as
->         renaming a symbol, is not legally significant even if the symbol has to
->         be renamed in many places.
+On Fri, Aug 07, 2026 at 10:55:46AM +0530, Ani Sinha wrote:
+> cosmetic: add a tracepoint to track when memory regions are getting freed.
+> Useful for debugging and tracking all freed memory regions.
+> 
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 
-That is more that the GNU project already had a level they defined
-as legally significant, because they wanted it to determine whether
-they needed copyright assignment or not. So it's natural for GCC to
-use it also in their AI policy.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> GCC also makes an exception for tests and I guess we could make
-> an exception for internal developer docs?
+-- 
+Peter Xu
 
-I don't think we should have AI generated docs, including
-developer docs, as I noted somewhere up thread. That's not for
-any particular copyright reasons, it's because we need actual
-humans to be understanding and writing the documentation,
-because it can't be easily cross-checked by tests.
-
--- PMM
 
