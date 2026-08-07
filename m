@@ -4,196 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9A9C2A09B
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C1A5C5AC9F
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Aug 2026 16:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsNBv-000545-6l; Fri, 07 Aug 2026 12:13:03 -0400
+	id 1wsNbK-00008o-21; Fri, 07 Aug 2026 12:39:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wsNBq-00053N-FD
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:12:58 -0400
-Received: from mout.gmx.net ([212.227.15.19])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsNbI-00005m-ER
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:39:16 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wsNBm-0006SX-Oy
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:12:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1786119171; x=1786723971; i=deller@gmx.de;
- bh=7ZyKrK7/AdIVzL6tYFv22qrRBIySWi3rtkLq3KWIE/I=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=U/nJl/4YBpZsr70mtjHj6NyMzFPy2YtLa+5Q6qTrZsYwdfIPEvp9xRbb+g4Kj75l
- R9FmYZHjwMYkRgvuM66pyk0RHnOGI9TUT4cxJARcxq9sMkoENXvXVXbm++S2aZoLM
- PosyPSogbohNzleaRC1uvHo08zwiOLN30ac5ubNpSEw8Y6kFcDGZ+kh+MOcYq9tOG
- yNVEDSPsCMGZJZPS0++0vuI7/BHCOtxNjx1F0xzOQo0AM7KQAfPTmYs4nnkNjZHWV
- 8C94UTfKnS4qBzHhbOVuR4kVROJRHbqR/ZyEEOJPQPRRETdJ5YOXR+a1oVYxWgtu+
- UYx6ZCCaecMsKdDwiw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDQiS-1whxKv1vgU-00GnLv; Fri, 07
- Aug 2026 18:12:51 +0200
-Message-ID: <14232d35-cafd-4d24-9607-0f390c9626c4@gmx.de>
-Date: Fri, 7 Aug 2026 18:12:50 +0200
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsNbG-0003Ql-QA
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 12:39:16 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 677GOGfA769888
+ for <qemu-devel@nongnu.org>; Fri, 7 Aug 2026 16:39:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ zfbbJ9R83COrdPTxLGowC8v4XsbBmjNId46+n6rpieo=; b=dZpdYfdYtfMwVGfS
+ BWapaFVlahSSUnnOsDhQ8t2XJsOp78v8o2I/KUSbZduX3rlG3570dz7l6ycti38v
+ 0W8t/AMcmsJ5DnKp5MTCp5e+8nz/gvHdZEnQuxXiU2PCe6pVctVqvZ910UWSwAIN
+ ruYRofP8OwrHRt+IQ0AAlGmGvywAVVQqUsXlkTdtQTiXThSlPaGQMWl2LfDoi3Kc
+ vYYFJwUB9p8WMde0Xa8HB0dDl1uU6I8HumoCWwwq1ECSTqMX9pmuviOPn3zXNDLT
+ 1PyQyOWcrRq0pIWaXKnavvH1IzhEBF6e4XsdTXAp6itEQjZ+ol/5Jrpw1n8EsY7M
+ POA/iw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fw9vu2dec-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 16:39:13 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5174a236220so33429211cf.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 09:39:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786120752; x=1786725552; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zfbbJ9R83COrdPTxLGowC8v4XsbBmjNId46+n6rpieo=;
+ b=MpFBYoGVi2LpDx0wXSnkc+Qnwqea+yaswgCyNuGYda/Qd3A+7BQ6Tf7Ea8maWv2nMV
+ P/nd1apIeUNArHg0ds17kNU2LW0PUNs/6Rj8bZjLD66yOyAq+l1ZQZVBe+2290qZw4/S
+ nBEYBAGlNz5tSQ7ZlHW2xZnqVHlidHqIpSieF4Yh85mT1xeQbRZ1Fbk6C/+od6BQ8tLb
+ nEVl9UQjfznSSYSxVn9C4/ngzOWBsmhKPDk1u0BM8/NcebkcV4xgOQTZzivFcF4feG9M
+ wwzOmUMonHeLr2Q7PB+dIu4Gu5klFuFd1aq2ZXbjlKrlFBvqnE8qRbQQ8KSEUHeLcHRD
+ ihjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786120752; x=1786725552;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zfbbJ9R83COrdPTxLGowC8v4XsbBmjNId46+n6rpieo=;
+ b=WlsJnHrl0kkIL8p1sXJ9P9huXkdNbSkvYvUh7Pv5bntfqC5vh0D1AB5PGJOELQKYLa
+ 5AfqFv6TJMv8Gh9KJXXTwweHjh6ykyLL/IicyAKFhGK4jajq1md6lblFGwI5vUvLNiu8
+ OXXyy+p6QzaGyKgpd+Ra6XFpxAqpPjucOSltn4dQSgUVKfwpTpjjlIR57Zz+5nC+hVts
+ H4d1NadUwwDHxTPKskQvQiq2MDca32rk9gqP2yVYw/oZW9j9vJbWv+pNmV8x3z45jKXQ
+ LvaFr+FqsbWTgJuiNdmvZZ0V+iNAyhK7p7JtHtuZYcgHOkL4ebH23wi1rn4OsXLSSsHw
+ /6wA==
+X-Gm-Message-State: AOJu0Ywmkainookf1AYdPE02z+G0FHzjO9EvJmiNW+8fCtlxlrQjoY3B
+ 1OwXN0/T1V5+RUnADX42XpHo96wd3RM8EBKEZUE0vBiajdAG9KE+OTsIgkgdiaFsDCMmDPoTRSG
+ Fqxix4T8UgBBulqodMqirW4hH8aJXb3xExudsIYUHpaXwvWgDcqyKiODnRA==
+X-Gm-Gg: AR+sD11KKANb3Jptjv9Zm3ewET2LWrdGXItx2CyEKsb2dE8DMer0pN+yvHK0B8uEqCY
+ oST+DKY1WHdHt+cj3ZziF1QQ7REcBrX3IIa7xKfGZQEEpjPi0R4nlvxODBXLzLD0QjZVSYx2Onw
+ aqH8r9dB/mcO2H179EQukdpfsFUQUaLa4JhOEElXh+cckPhxl9oEpAnFKIlc3AuCj60n+Z5Vipz
+ rOLdnai18AwXkEHcOTVEvADhuXuR/uGWhjg8oXXrjzAEl7Ld67EnnKDqdWmV+FNvqynd65aQPG3
+ W8S7ildt2pKcA3sX1VJy3dlDPi4nBTNzNNVuI+p3YCwMS8tnj3f4XkEOZa442ow0QHMU7FAvTGC
+ j5sNsUBDoXuDmumTWBTn1ssIJ2VYxUKzN4FAs
+X-Received: by 2002:a05:622a:1484:b0:519:e020:6087 with SMTP id
+ d75a77b69052e-52ce5fb8b85mr250345181cf.11.1786120752324; 
+ Fri, 07 Aug 2026 09:39:12 -0700 (PDT)
+X-Received: by 2002:a05:622a:1484:b0:519:e020:6087 with SMTP id
+ d75a77b69052e-52ce5fb8b85mr250344641cf.11.1786120751863; 
+ Fri, 07 Aug 2026 09:39:11 -0700 (PDT)
+Received: from [192.168.68.104] ([187.11.154.152])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-908a918eb4asm13057396d6.7.2026.08.07.09.39.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Aug 2026 09:39:11 -0700 (PDT)
+Message-ID: <bb8cf7a9-f761-48e7-bc4c-d10b82076616@oss.qualcomm.com>
+Date: Fri, 7 Aug 2026 13:39:07 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] linux-user/alpha: write the floating-point registers
- to a core dump
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260805171507.3119442-1-mattst88@gmail.com>
+Subject: Re: [PATCH 2/5] hw/riscv: instantiate K230 I2C controllers
+To: Wang Zhongyu <wzy15515798875@gmail.com>,
+ Chao Liu <chao.liu@processmission.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20260807152830.6833-1-wzy15515798875@gmail.com>
+ <20260807152830.6833-3-wzy15515798875@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260805171507.3119442-1-mattst88@gmail.com>
+In-Reply-To: <20260807152830.6833-3-wzy15515798875@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:gd4jcAyAIN998BRpcY7DxgbQvBuHWKVnRwkxEr0YLDhvoNHKUW4
- vTRj12RxQyLY/5PdXOkuNbSKtJWnFW0ZVp0VbmdLqH6B1uI0fUUxCniZ8saz9bVtkswHPcV
- PuU5P6UIF2NsG/lf9bseqPK6QiRRXHPTnT9Pt075fzkDem818rUrvRRp9KQX5cq5rTycBen
- sgV1YPaO8Uu7VJgwsEVWQ==
-UI-OutboundReport: notjunk:1;M01:P0:D45apsknuac=;uezXELXzCwyd1UmAqTOlUnk8z7k
- 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
- LQmCvF4QSUHzQXi5Ooc=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: gXRGnhucL50Z4Z0GtX6lMUnb-iB716Nf
+X-Authority-Analysis: v=2.4 cv=SYbHsPRu c=1 sm=1 tr=0 ts=6a760a31 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=iMfxv9gflPUPBcmW7/Gq5Q==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=D47K7NXmnVvAYYZL0Z0A:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA3MDEzMCBTYWx0ZWRfX3Bc8YlXlnAui
+ PtInXduKTTR0j1LQxDz7UfLZ8uVA5e7n3nz8EQApdnlICMQMxRnIyklvBSvJAx7G5rGwZOeIbs3
+ m+74hR8kxpexFnrngR/03cxHo4/Lz8w=
+X-Proofpoint-GUID: gXRGnhucL50Z4Z0GtX6lMUnb-iB716Nf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA3MDEzMCBTYWx0ZWRfX5C8wysM9xBOk
+ i9vz0MgX4kHZN66Acpis0hERuZNB38725mcQ4rftpPbjMXy7ZDjoDrZZwrgpEqcvcYz0ntCf0la
+ XhICWyBSylL5lRQR9leXm4EihreVuoAIbzXMcj6PrWWYCSqPkBNJVlnLprqsJNgS71YWUfpG9wq
+ N7A9u81lrT98yqiToJtR1kfDPwTslYBC+f5oWIGodQz0RpVDxKSmd0wuPhd/j1CKSTd1qba2eGV
+ 6ZpyNLwckGN7IikrZOWSq7CQUWHb49iLaC66cMHrss6Fdi3ADEpX9BBISuN5B1NdHKrNbGSu7bX
+ SDhLJXQ6kYoS8nV34+cznMDjnpifXb9GFnoM1S1F+25X28HPxofVZUC902mv9bHOLvspS7BlZEF
+ gHUcQTqLtu6ZUQhlQc+OGsSKhkCexwbGzcf68W2t5h4ckLXxooiLoB9ADk2BOiGwqiIlB1eH0jX
+ JS7wfCEIHiZhVedWLmg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-07_03,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608070130
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,29 +159,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/26 19:15, Matt Turner wrote:
-> A guest core carried only the general-purpose registers, so a debugger
-> opening one reported every floating-point register as unavailable --
-> including the arguments of the function that crashed.
->=20
-> Implement HAVE_ELF_CORE_FPREGS for Alpha: define target_elf_fpregset_t
-> to match the kernel's layout ($f0-$f30 plus the control register in the
-> slot $f31 would occupy) and fill it from elf_core_copy_fpregs().
->=20
-> Checked with lldb on a core from a program that faults with live values
-> in $f16 and $f17: both read back correctly, as does the control register=
-.
->=20
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
+
+
+On 8/7/2026 12:28 PM, Wang Zhongyu wrote:
+> Instantiate the five K230 I2C controllers, map their MMIO regions,
+> and connect IRQs 21 through 25 to the PLIC.
+> 
+> Select the K230 I2C model in the machine configuration and update
+> the K230 machine documentation.
+> 
+> Signed-off-by: Wang Zhongyu <wzy15515798875@gmail.com>
 > ---
->   linux-user/alpha/elfload.c    | 10 ++++++++++
->   linux-user/alpha/target_elf.h | 11 +++++++++++
->   2 files changed, 21 insertions(+)
-For the whole series:
-Reviewed-by: Helge Deller <deller@gmx.de>
 
-series queued up for past qemu-v11.1
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Thanks!
-Helge
+>   docs/system/riscv/k230.rst |  1 +
+>   hw/riscv/Kconfig           |  1 +
+>   hw/riscv/k230.c            | 36 +++++++++++++++++++++---------------
+>   include/hw/riscv/k230.h    |  8 ++++++++
+>   4 files changed, 31 insertions(+), 15 deletions(-)
+> 
+> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+> index cea8202e55..7a011903ab 100644
+> --- a/docs/system/riscv/k230.rst
+> +++ b/docs/system/riscv/k230.rst
+> @@ -19,6 +19,7 @@ The ``k230`` machine supports the following devices:
+>   * Core Local Interruptor (CLINT)
+>   * Platform-Level Interrupt Controller (PLIC)
+>   * 2 K230 Watchdog Timer
+> +* 5 K230 I2C controllers
+>   * 5 UART
+>   
+>   Boot options
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index de37c08cae..d2bd41173d 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -162,3 +162,4 @@ config K230
+>       select SERIAL_MM
+>       select UNIMP
+>       select K230_WDT
+> +    select K230_I2C
+> diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+> index 656f28190c..a42f896c0a 100644
+> --- a/hw/riscv/k230.c
+> +++ b/hw/riscv/k230.c
+> @@ -110,6 +110,11 @@ static void k230_soc_init(Object *obj)
+>       object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
+>       object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
+>       object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
+> +    object_initialize_child(obj, "k230-i2c0", &s->i2c[0], TYPE_K230_I2C);
+> +    object_initialize_child(obj, "k230-i2c1", &s->i2c[1], TYPE_K230_I2C);
+> +    object_initialize_child(obj, "k230-i2c2", &s->i2c[2], TYPE_K230_I2C);
+> +    object_initialize_child(obj, "k230-i2c3", &s->i2c[3], TYPE_K230_I2C);
+> +    object_initialize_child(obj, "k230-i2c4", &s->i2c[4], TYPE_K230_I2C);
+>   
+>       qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+>       qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+> @@ -191,6 +196,22 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+>           k230_create_uart(sys_mem, DEVICE(s->c908_plic), i);
+>       }
+>   
+> +    /* I2C */
+> +    for (int i = 0; i < K230_I2C_COUNT; i++) {
+> +        int i2c_dev = K230_DEV_I2C0 + i;
+> +
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
+> +            return;
+> +        }
+> +
+> +        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0,
+> +                        memmap[i2c_dev].base);
+> +
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
+> +                        qdev_get_gpio_in(DEVICE(s->c908_plic),
+> +                                            K230_I2C0_IRQ + i));
+> +    }
+> +
+>       /* Watchdog */
+>       for (int i = 0; i < 2; i++) {
+>           if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
+> @@ -304,21 +325,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+>       create_unimplemented_device("security", memmap[K230_DEV_SECURITY].base,
+>                                   memmap[K230_DEV_SECURITY].size);
+>   
+> -    create_unimplemented_device("i2c0", memmap[K230_DEV_I2C0].base,
+> -                                memmap[K230_DEV_I2C0].size);
+> -
+> -    create_unimplemented_device("i2c1", memmap[K230_DEV_I2C1].base,
+> -                                memmap[K230_DEV_I2C1].size);
+> -
+> -    create_unimplemented_device("i2c2", memmap[K230_DEV_I2C2].base,
+> -                                memmap[K230_DEV_I2C2].size);
+> -
+> -    create_unimplemented_device("i2c3", memmap[K230_DEV_I2C3].base,
+> -                                memmap[K230_DEV_I2C3].size);
+> -
+> -    create_unimplemented_device("i2c4", memmap[K230_DEV_I2C4].base,
+> -                                memmap[K230_DEV_I2C4].size);
+> -
+>       create_unimplemented_device("pwm", memmap[K230_DEV_PWM].base,
+>                                   memmap[K230_DEV_PWM].size);
+>   
+> diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+> index 592e1c26bf..4ea927a63b 100644
+> --- a/include/hw/riscv/k230.h
+> +++ b/include/hw/riscv/k230.h
+> @@ -18,8 +18,10 @@
+>   #include "hw/core/boards.h"
+>   #include "hw/riscv/riscv_hart.h"
+>   #include "hw/watchdog/k230_wdt.h"
+> +#include "hw/i2c/k230_i2c.h"
+>   
+>   #define C908_CPU_HARTID   (0)
+> +#define K230_I2C_COUNT    5
+>   
+>   #define TYPE_RISCV_K230_SOC "riscv.k230.soc"
+>   #define RISCV_K230_SOC(obj) \
+> @@ -33,6 +35,7 @@ typedef struct K230SoCState {
+>       RISCVHartArrayState c908_cpu; /* Small core */
+>   
+>       K230WdtState wdt[2];
+> +    K230I2CState i2c[K230_I2C_COUNT];
+>       MemoryRegion sram;
+>       MemoryRegion bootrom;
+>   
+> @@ -127,6 +130,11 @@ enum {
+>       K230_UART2_IRQ  = 18,
+>       K230_UART3_IRQ  = 19,
+>       K230_UART4_IRQ  = 20,
+> +    K230_I2C0_IRQ   = 21,
+> +    K230_I2C1_IRQ   = 22,
+> +    K230_I2C2_IRQ   = 23,
+> +    K230_I2C3_IRQ   = 24,
+> +    K230_I2C4_IRQ   = 25,
+>       K230_WDT0_IRQ   = 107,
+>       K230_WDT1_IRQ   = 108,
+>   };
+
 
