@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2E2C5AD2C
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 08:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400D8C55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 08:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wscM0-0008Hn-8j; Sat, 08 Aug 2026 04:24:28 -0400
+	id 1wsclG-0004QD-Go; Sat, 08 Aug 2026 04:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wscLy-0008HS-C9; Sat, 08 Aug 2026 04:24:26 -0400
+ id 1wsclD-0004Ou-2j; Sat, 08 Aug 2026 04:50:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wscLu-0007YX-D5; Sat, 08 Aug 2026 04:24:24 -0400
+ id 1wscl9-0002Hb-GZ; Sat, 08 Aug 2026 04:50:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786177455; bh=xUiYPGEULuI00kahUlFbjgFok9JBluNMqAOTxnn8bT0=;
+ t=1786179019; bh=fDoqhCp3jGZnywF6pK1/jSrr2vQEB6A9+bF4GDB3ivo=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=GhYpMDBpXwunoMbx8gUeR3SXohxuYD1jPcpsxxPDnpWybOz1ad5PpJguRO5Dx86X0
- 12eix0QJXjx+//ERr4oVvumf2qwziIXveEVbFjiLmKD8KezMHCTBVktR7j8mqZ85W/
- m6gh1HLzEoEuzcJXpTEXyHbiozPT3N6S8uA4hzANKssTe+D0Mo/SN/oWZs4mzXoN2Y
- K0S9huAvKI7ts2gQ+Yz+1NFeuo/pTrFcXFbyF3XN2tIVse20+zZ3sLlh4xNbzC4+zQ
- ELkyPN2Yd/snloTA/zeHRAMM38Zy3pV3uu4j+LBiNUr8pAlnoAenxnIp8NYSeGQ4De
- 67xeCPBweF03A==
+ b=Kax8H+FnEhcj5Qm5G4UGMZSIzSWsXxKhaJVD5zk5TbqO8PYdtg+dFwdu4ER+EBQXO
+ 3clE2wzypzAq0xkBVlxkc7kJSZPkpSB3TrW53T8BEFubK8durXGg8yht9bss1Oadcy
+ bemxO8I74wUqOVvOD+YFuW17AjHwHFa3L8Y/m5kIijmnPyAODQ25/nK3JXlT8ZEOO4
+ OsOhb7WtBLx0db91MXIAH/S4/VxsNdWTijc15TiNuap9lkKjOek+tAN2swacfEhuME
+ mVXGLqr7sLe98oyu4ly+ogrsNVYtawKKdY0pvMRSWJVlI6ecai7qeoWqLaHd4lk/1a
+ yoLltPoZNIW4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 027561C935C;
- Sat, 08 Aug 2026 11:24:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B56451C935F;
+ Sat, 08 Aug 2026 11:50:19 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AA1E2404E09;
- Sat, 08 Aug 2026 11:24:17 +0300 (MSK)
-Message-ID: <afcb8440-ef18-472f-ae46-368574e35f5a@tls.msk.ru>
-Date: Sat, 8 Aug 2026 11:23:57 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C2EA404E2A;
+ Sat, 08 Aug 2026 11:50:22 +0300 (MSK)
+Message-ID: <c2c16a13-96d8-47b4-afec-81c812d473fe@tls.msk.ru>
+Date: Sat, 8 Aug 2026 11:50:02 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] host-utils: fix ssub32/64_saturate return type and
- clamp direction
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260806043223.3787083-1-brian.cain@oss.qualcomm.com>
- <20260806043223.3787083-2-brian.cain@oss.qualcomm.com>
- <193758ea-acc7-45e3-bda5-a40253bf12ca@oss.qualcomm.com>
+Subject: Re: [PATCH v2] linux-user/syscall: fix target_msqid_ds time fields
+ order
+To: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20240329223653.155786-1-jcmvbkbc@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <193758ea-acc7-45e3-bda5-a40253bf12ca@oss.qualcomm.com>
+In-Reply-To: <20240329223653.155786-1-jcmvbkbc@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -115,25 +115,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/26 19:48, Brian Cain wrote:
+On 3/30/24 01:36, Max Filippov wrote:
+> target_msqid_ds::msg_*time field pairs are reversed on 32-bit TARGET_PPC
+> and TARGET_SPARC and on big-endian TARGET_MIPS and TARGET_XTENSA.
+> Fix the order to match the kernel definitions.
+> The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
+> on big-endian xtensa core.
 > 
-> On 8/5/2026 11:32 PM, Brian Cain wrote:
->> ssub32_saturate() and ssub64_saturate() were declared to return bool
->> instead of int32_t/int64_t, and clamped to the wrong bound on overflow.
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> Cc: qemu-stable@nongnu.org
->> Fixes: 16495533131 ("host-utils: Introduce signed saturation primitives")
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
-> 
-> Michael,
-> 
->      I think this patch is a good candidate fix for -stable.
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
 
-Yeah, I noticed the Cc: qemu-stable@ tag in this patch.
-Thank you!
+Just come across this old patch, is it not needed anymore or has it been lost?
+(I realize the current code uses target_time64_t instead of abi_ulong, so probably
+not needed now)
+
+Thanks,
 
 /mjt
+
+> Changes v1->v2:
+> - split into a separate patch
+> - add PPC, SPARC and big-endian MIPS
+> 
+>   linux-user/syscall.c | 20 +++++++++++++++-----
+>   1 file changed, 15 insertions(+), 5 deletions(-)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index d9bfd31c1cad..781ed14bc613 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -4113,17 +4113,27 @@ static inline abi_long do_semtimedop(int semid,
+>   struct target_msqid_ds
+>   {
+>       struct target_ipc_perm msg_perm;
+> -    abi_ulong msg_stime;
+>   #if TARGET_ABI_BITS == 32
+> +#if defined(TARGET_PPC) || defined(TARGET_SPARC) || \
+> +    (TARGET_BIG_ENDIAN && (defined(TARGET_MIPS) || defined(TARGET_XTENSA)))
+> +    abi_ulong __unused1;
+> +    abi_ulong msg_stime;
+> +    abi_ulong __unused2;
+> +    abi_ulong msg_rtime;
+> +    abi_ulong __unused3;
+> +    abi_ulong msg_ctime;
+> +#else
+> +    abi_ulong msg_stime;
+>       abi_ulong __unused1;
+> -#endif
+>       abi_ulong msg_rtime;
+> -#if TARGET_ABI_BITS == 32
+>       abi_ulong __unused2;
+> -#endif
+>       abi_ulong msg_ctime;
+> -#if TARGET_ABI_BITS == 32
+>       abi_ulong __unused3;
+> +#endif
+> +#else
+> +    abi_ulong msg_stime;
+> +    abi_ulong msg_rtime;
+> +    abi_ulong msg_ctime;
+>   #endif
+>       abi_ulong __msg_cbytes;
+>       abi_ulong msg_qnum;
+
 
