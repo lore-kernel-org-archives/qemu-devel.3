@@ -4,199 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52731C55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 09:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93298C55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 11:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsdFw-00016k-Ff; Sat, 08 Aug 2026 05:22:16 -0400
+	id 1wsfLS-0005Is-9N; Sat, 08 Aug 2026 07:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wsdFu-000163-Bx; Sat, 08 Aug 2026 05:22:14 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsfLQ-0005Ia-Tj
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 07:36:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1wsdFp-0007Sj-Jz; Sat, 08 Aug 2026 05:22:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1786180927; x=1786785727; i=deller@gmx.de;
- bh=LPtqI9FBwXbYJUaDk01c1WtOP605RbV6GigVao3ur8c=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=mVJjDCuWzKFWp5wHdql80tir5DvYj3LfLHLQ43lzB/t2pvWGhuMb/4WNMRZHtZL8
- 3Vy/a5DGZYRL1HUQBsbwIkD1fDrZioFpabgPo6JrHTPwWiKndPNvsQ0+hBhiqJG4H
- qOs/HRxUQmSM1M1lxlCJeT/mWQrunoQ2xBtk8YG/rvSUDKLJAgG7F0zbPU/oQOip5
- xJgvidDQToyf77a/y4Y1dvoGJIw5g9/Ui6IMmaqb2E4GQWUs255PLiAGIxxPcdfQ4
- 8+RD3uWCfG9drJC06aqdcf/YHRN3axZAiYTNPL1a1eThMxKn85fp2kwjI5vlnAHx4
- p9srnpKNZuy3gdLY5g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUGeB-1wRrBs2dil-00PyqK; Sat, 08
- Aug 2026 11:22:07 +0200
-Message-ID: <3141d1ed-f7b6-4666-bb0f-9c52eb02d74e@gmx.de>
-Date: Sat, 8 Aug 2026 11:22:05 +0200
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wsfLO-0001e8-6n
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 07:36:04 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 678AJKFm3744634
+ for <qemu-devel@nongnu.org>; Sat, 8 Aug 2026 11:36:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ HPq197mfDE+1l41B3YaplH5gWlZpF+JPIyZ4YIKPp0Q=; b=EkyDSVpbcJQBLX2m
+ 0nqlkSvEHkrNg2Gbr7+uy2T7zR5fLO8uVV3xJwt/tRSQ6BRxlp+lneM0FU7EYLmI
+ vds4giGee7125lFy0cBzNJRgP6UNy+Tmp3rk7IJDrLueHaaz16uMCrEvuy1+1u05
+ yAJ6cqKhdL+YOCl57h96kuKoONqEsiqjDC/773b6WwnuufYLAjrneB29Xgo/lKgK
+ NwANK0pb8f7VA65O53PWtwcNiaC1D83h6VxQhMGLU58lCPHV5g/gV1ouTTs48iJj
+ qYAn2eJ02oZADIED/nf4mDGqtfasf7GUlf3SzyqlZu45UDp55D4ZvYTt8rS4UtTX
+ ArX+Pw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fwvhv8qgv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 11:36:01 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e82060977so32058385a.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 04:36:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786188960; x=1786793760; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HPq197mfDE+1l41B3YaplH5gWlZpF+JPIyZ4YIKPp0Q=;
+ b=cIVyh+bRO1Y9vnt/XfzRk6qqQjIfmLGfFNflCkq0ruLhO+gdMA/48lQE+8V/W+BP5h
+ QtcFYG+Y4zzmNjiAxvv61vq5zRxh9DGcZaalzR+AdKG9uw4UioeTJag0kiUfqop/in85
+ x95ZrxZp3cbSom2enDMXdtrWRHgtVGi01uE4VePVhYBaZifZcRh+X2judkP17BEi0vSY
+ bkVUbyIQNdUSSgJV3RyEUuR8gnQtsUD7ucVxUHlOAk5EiDX0JsvR/oVmugD8TE/hqy9z
+ 2uRIMWHkGSWDImMvGpKynXOkFrh9zlckyqzjvvwJVuzaIrkJCGoKT35HvVLgPymaBifk
+ ChjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786188960; x=1786793760;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HPq197mfDE+1l41B3YaplH5gWlZpF+JPIyZ4YIKPp0Q=;
+ b=gWk87gIcBAcMiXVaVInztxvGvXHVAGa2pOCmfMvAo+c32GVL7ZK9WReoKnSSgijOVA
+ A1u/oZhJqblLDMt3yTMAd3QIyMABvfFHcjmCKT9nEhCFqQs2PbDJft7yvORdQTuMbvp0
+ uV7hLcxmA6nqUus7JIHeE4UfmxI50DC+c6JicWE7qt95E9i7o5uq7V6AOlRvl4cHaq0O
+ CPh+YC3fDc4T0AxjDiKHuruzbS7ym1yQ7+itDWdKAdHSvJi9laIZ+Yf4YaqxEPYWIf3B
+ HPlv28ASHo4aai/qDIlU0Dp2AX1BcEM28Lm9oYxJS6kpPEGYintT0yRSbXSX3kOrsWqo
+ sr8g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro8lTQ9GN3Y/4uNSpTqr25ODmnpX9zmRUa5gVpmy6KjNXhy09NQ2D0hs8UdYXXChaoRrohyGbRhYqhd@nongnu.org
+X-Gm-Message-State: AOJu0Yy/+Gdqd7mY8GS5UxQ+w5rwA8a2Jfepa969/i5KM/GbhsjdSnvW
+ 76WOtaek/tD7ankiyIMbMbyPVqNPShB6ioBf/jRlelT00AoHTHYXdRBLYMMjwrGaDvO5JYZcp+V
+ qUXW2eZAd8/xOwPzasthlLTxJojjGHwWQ7Z/k5SIftBlymNrkne1AvOnLS5KaOQNwIQ==
+X-Gm-Gg: AR+sD12yBs5wz9VqsUegImvoV9xHiS8qEjn1JydIX1Ku6uCwxcckbymXVQisNS2dHOr
+ s3SiY9Ecze6NOFw7ZB8cJisZtFB92dT5QO/bR0Rw/rDbxtleO85IaemX7SV1czLlMeNA/Ij/OSF
+ JQric7TwjeRdvbiB2xot88OT48ldc6zFb0XzVPRRyC/AJ8osPU5bju1lJieokDiDXs6K2kxt2nm
+ nvwNZXP0558SLgGQfq3+xREgYvfu6gN/dldr59fY51m3Rf+ueWxv7SrQiFN7LJIo1if3OvLKcmU
+ WwtdRHOoWaTTUdtgJC0poWs5vcQmaLUTVhAyFfN4LY+ms9JghE0+e4fSqEQ3lp8n1NOD76VQ2oB
+ XmccrpO8Is2ig42Ud9xr1AjXgbnI2cNpJHDBP
+X-Received: by 2002:a05:620a:7018:b0:92e:e601:d238 with SMTP id
+ af79cd13be357-9367b5e6b61mr409867785a.10.1786188960284; 
+ Sat, 08 Aug 2026 04:36:00 -0700 (PDT)
+X-Received: by 2002:a05:620a:7018:b0:92e:e601:d238 with SMTP id
+ af79cd13be357-9367b5e6b61mr409862685a.10.1786188959568; 
+ Sat, 08 Aug 2026 04:35:59 -0700 (PDT)
+Received: from [192.168.68.100] ([177.198.100.18])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9366e0ad602sm359391385a.20.2026.08.08.04.35.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 08 Aug 2026 04:35:59 -0700 (PDT)
+Message-ID: <92510763-aced-4b38-b3a8-5cdc30f3fd15@oss.qualcomm.com>
+Date: Sat, 8 Aug 2026 08:35:55 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user/syscall: fix target_msqid_ds time fields
- order
-To: Michael Tokarev <mjt@tls.msk.ru>, Max Filippov <jcmvbkbc@gmail.com>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20240329223653.155786-1-jcmvbkbc@gmail.com>
- <c2c16a13-96d8-47b4-afec-81c812d473fe@tls.msk.ru>
+Subject: Re: [PATCH v3 3/3] tests/qtest: add K230 UART test
+To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
+ <20260808-feat-k230-uart-v3-v3-3-d73b31f0034b@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <c2c16a13-96d8-47b4-afec-81c812d473fe@tls.msk.ru>
+In-Reply-To: <20260808-feat-k230-uart-v3-v3-3-d73b31f0034b@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Tt0pyCWEF7Ebw6a5tye0zWoL+sQQp7mDNY1CReIuxwuueNViAnH
- 2Zw7RkXkV5Y5N4DiMNtv1cn1l9yM/mltWWbzSTJevHD6vkf+DNjf+HeOChapi68RGItNhtr
- QJ+459er7JT9Fz/HqoqeyLTf19rTiJ6vRMhtP+/xE1e2qJcOrP/YEN4InhnPkl5lLeD8f0L
- nXsYqVDqqyiDoa5Krutqw==
-UI-OutboundReport: notjunk:1;M01:P0:HMRtngWyjEA=;yVh7i1gFwtzhhztIzPr/j0zEdRg
- rw5AQgGIpbfZU46zYaJ1vm7AkZ7c56+KSWQDiWmnn2ssTonhpiVWJ885z6SWibJhCRo056904
- w8FnRiSSv4G1UFV0IX2jHWVLi1BjDhtsl9Zmf53FxH1hPAQRpF/8DJZFhX497mr4FxAnflt+3
- xqptWDyShPEZwohWKGmZJCmiHTDdTy3h+snq5cd2UubBExBo98OmVU0e8R7f6lphdc+MX0YIX
- I2LY4xZtrWohXSsCQS3TvWZ3MgWrL++1nMHTcPlixDS+AiD+2UyrKx+itNLuY4gN3lGGZcDCb
- Ij6YhnT1bEFRgmIpRAQz0+z8dWJNgf1hyffc7gfXjdb5NLzsxEzhM/pCi+ixgD/+PZ8JLIMoS
- IWOuE/H2Mz/HjSnHaAinWtqGziMI2qeHc7VQS+sCWUE3cIDK4zsCrrCO16nu8362RbrYyBs7h
- oTUR4MeOhzUv0tlIgq5nCJE81nR5L8InAvAqh4eRooNaopx0Bf0aXEV63LM8eY2dV1oGBcoim
- G+1JqdDfC2sgIXkAnKhu0JAEwbifXtNkdgBS1QGD1cpZIrpmbV5+oBbyQe92uuVolmFx34b4V
- 21deEj1GUYTMx4hh+kWPVM4Z8/Cpj0M0AH2+r5cezIxS2arwecpm/1Foyat+6d1Km+A2iAueP
- LxghHPqb9gd/sppeGMznrxTvgKTBcne+NjMBJyDOrvJm4ThzWWej/jmR7IJv1hgQa8mOVjpHx
- 8TEmwDx7RC2LC/WN1Ka1/jdM/SjLdxN+OcBbhrhDz9FlXHlbm5quzp1WZJpY3hQ3/FHrfNLO9
- 6G5g7B/QGQjTlS24ddP/N5ygl7QlKuqXAgbFZOla5k9+L4iKx6uC3CTowln9NRmBYj4Isq2SL
- 1zwDtW2V9wcZR4QZu5sfBuc96WBoQZMDfVpm0kPauwbdAyCmtRc+O2Jx6GFMmMxVJoSethLlj
- Xkw1E2e3pt96aWkTrqTSFmqmzyXgyCD5K6wPpP4ey9txxnt/bi/HrzlCbqiIcUiw4WuUFnNIr
- EJdrJUVxHnqpMYwOZC1l0oUPlBkekvEMzQ/yDZg7aqSFrafr7aSzEgoOKssS7VnwqOz4lMYw5
- 5R3a6luT3QZ0ojUVz65ionwLzCeyQ7ZDHll8PBEHdz0I6F6tOwKxX05vEOgJki6JeeSrWim0C
- bK7EpmBcEkijbQ9NiuuNCZFCxGVgO4j2epymWDWv9Nh1crGHHOquqNKNz7Sgf/JIrohIavHll
- gV7ETd8NLdu+Gv3HHx62WE8HRYouDeSvR7a+HcNRjQsBeFzE3Fio0GzXLPXSbig7WjcEtFm00
- J8P5VVDp8FH8H4nEeM+eDB2JFTQeo2p9pZZFBoXHg991wI6Nug+J2LegmzXiYTiKnbMTs0WiX
- NMQrgDPfQVGgreWBg4YRMktAdMmgSBls8mWjHd6y7z9OVyoIYqQWIHDUMHvzs+2Al7K5izOr1
- q9gciI5cDpQaAn2LKcC2mGUn8x9qeLLvPT9sFvTpvWAvn8QgX2duq2BTNd5itNbdQTucKbLRw
- wCNqmy15TksklveCHBpejdSYaIczZHRezWyMzw2yoyyioCcxGRo+oxPvU+8JV9mXyxpDBSw2C
- y2wQQC8AAKnuhGkJJhuEgQtOBaJmzsw1hi8nhZufO5NI8GMXLGK9zkT04cEZp4+54vV2gNx1t
- zudy0VfhDJWDNZW9pUs0tHdSyaYbSKaofRdVoJ6n3Un6eNFnyD8arXtPSBlVMACjRSV58VvzS
- r0TubaProMJY7UIlPgxIXJc1I/v2WVXuT19FeJULaYtXk27Prz0KIDTbveURoLmKPkdTcBMX5
- AqAxDOEBtnN+rdGP5iaGXZjQFrB+ogeNzC7fKnUs3cwUoOis3Z++PYCC0vLsO1tWUFme/zNbW
- gqi8Utv8/GNsvABzu0YHVc5tUYuBbrTLODhD/+wsksgck8auAMGgS7BRvv/mipQy+I5s1Cc1V
- 9VyGWSWsEgyzUbZNblHGDKCWNJF2nfBi3dgX3ZSbAJLCPu+KkgHEWRWi0kHN1ZCzPHgzrbsp/
- o1xxRxmCqmwtg4JvDeMbe3rzQjVZzfP2QCjrNbrF2+hFHYL5PNZVu+Qgy6mtzT7eugfg/8aQh
- kob26zosb7785Kiq4od5B6odRq85rE5QI0fJ/eGFv8hcREFaQXLGLVttQMNS0bsaKlH7J2uZA
- paTNwmxJTeX54o+nVJYgdkSnKwsNImLos4EKGZrataO3o/Df9Fqy3F9QaCWVtON2kMHESCKws
- eeIqH+eWG5yrQfZ0FB9C2qUPCOB1IEkARpvWvKII39CeJkMlXNhAUoBpUG7HLX9sWAGSUORAD
- zXkQY8SnYKhVH3WycQPWqFW69uqh4+OYCK3Hvmok+/KSP7RCvx+BRFJtz0RBUdQj4vHISgVVU
- 9+DE1icYjv9TijSVlFk0pscA/5lVVxHBDEUq2WfUlT2i+IENEEBiqagvm3GK1xxuK+1UySedO
- Ra/1YuyjHtLv1cp1QKmNPgDleSVxhlXqmWPyD3crxgo5mF811o+d3zbJDwdecHuWnGEc92jVU
- I1E0gyF+cVlnua+VmtUj99LKc2ZTs5b2vzCnp7qFL6HZOO8pzuVH2L331QhJ5wRB+6KwhfRqZ
- JO/jKoGsvba5ZNbMkJo588iCMKVzbwS1rypiD/60iyPPVuc9vf0bS/9TdDeFoS8IYoMhWTjk7
- Ga2eC/DOBuCuZ+Ut5kE5n1qWOrzW2di3udoKmVk25/+dTVBMP0ruc1RL/EUtkaQvSbYe6IG1A
- hx0O69OjezZ+1hVNSdQivVY0Wytc5Aoo3YfoamhUPOEHWU11gzCuXVALEReuRHXmt44nz7t8o
- /R7IWTk45XcJnEzUTaeupHm+hxnlGs7HkkXjUFkloTQaLL8yLsjyv2gI2wm8BR4B0FpcR0ZsT
- Hy51ri48DPg6trSNBe3BybmaOFCZw0alh2i14Op1/fZ1a/yEmCPX+tUTDo4DvhUpkuhdg9VKZ
- O3kPWedG5tI/14bfoGxG7AFHIiWQ97x32gu3kKuEXnmu6pyaFRxtCuXg60qwXl9Iv20HIO76e
- g1zl2vp55G8LmATccZcndW9w94oQNesVqQp1zIdKOhIEylpkuT8BkKgEK/1E/+SUj3M/4+X2i
- ufJaKh/dE7/snssc9ELNYu7fj4I3aqzN4QD99kuBHPg+R8l9tfsWgCWdMYNRhRGfjawq8mMLw
- b+UbCwWNWwxrkOgLP7p1eHhGFMsVSDPnnahzLgaa0dHm0dphSsswIp/+1NdHxAoOjoRuNRXHy
- RH6p+uL/qC0Jw2I4XGsBPh8ieON39TbH162syX2+/EmqOJ4NGeYlP1HtVSU5Rw7DuUaHSTbSU
- fp30CXnBv0MUpcIchBNM/Q8TDxSJcluJSG7TfdhOcvEsPlueV7nCkPh5A5t6lndDbqQUmYO/r
- 32O6DFWqSYHSkT7uzZFIJSjswee//6bhrFCbyY3oVHza2Rcp0p54JASsZzaG+Lto2eNBq2Je+
- F9XTzBoQUmk7notWUd35isibZeT+d0IMry0hW85I7MV+HL93O03vxO7AarRN4eeU34gWNqeuI
- XaI9VY6fk83BN4gWhmTX8xwME9t0Vhu8+NlURIzLWClrBez07YXKv26hp81xggOH3/sZSCTkn
- rYShWzBiW3cPmikyXXWG0j6qsS3qt04GrngraPe5mAzZ1HiVuVX6y73WKfV5282HKsR/nCW1h
- n0yrrPLwgNqC4cYlJjOhxZtXzbsdSZxqDWiddtGnjVRc4+tXff++o8VXMkTS6M0M3M24D855k
- VioCciS7m1ANJkVpbnAHWLVzISkHox1CGLoYh6yej09vJ+lO5P8ZxPQryYhFBGz2A/aHqDA3t
- pZ+ZSO7oY52mDFyQbFPeHdmt6MZTsOUHsLCHLmwEVC/mGimuDhzJBaW9egbBLiQrEWz6mzNgd
- CqwhfQB+OyaG6eCOyuLZd5kTXh2Gnkre6vSrtDgLXu28pzRXoL0t5OlMhurysfrCZBvLCeiMP
- 9a/1BFO3RWugU75cydIM8YoV7WySN+niJBrxgKGr/4i5BCh+Sk8IVJ8sZAuDBirnZBpObvQwi
- uYx+FmFzGtAk8wSZeO8xLKUWfjpp9viUk5LXiCYFBZxgcmdcu2QcPrl+mXmWhWd1UfAxdvR23
- 3nO9XIKMC5KAqwXEkgxRnr9DtvOws70JPP+MeqY5lgAu630ovLgYwbUKPOcG01BnYtJvXeOtx
- 5JNKKe7IVdgdJo51BKwSMoi48TD08ybP9sz+4b3h++bp7ZxNjI5TAGwQqsa7wymRKdT40xuiR
- mLQeVqgRCma8lrhJYoSUsP/wgfc/pfVYrzq/On9PgtdX8owjKqsOB9Snbkge/oxwYJ0r+RDCF
- a/DmXGsEqpjJN75HUtyl49U7rsI1WrNeus6NDkjfl3DZ4PcrwcWH7FhT9yYon6LBNKGNQs+QX
- /XmCw2X7af/I6Jlq2FKv2bn9PTcJ/sqdHnsMAMWXziF0VUl8Ed6Is9mIqL2gT+EDCx5YM+Iek
- W1I0OPKA4cqeScUc4DJ9nr6YBE7iR14hGo6VjohJ6TUXdPKOHd8ZALq77/BW5/5M0PfnxkPu4
- TBmRhFFyYMz+RbxPb2mmlmhThL+TBgAhYOY9my0j5OqnkxpDQnIUP7xDnMjzTY01SAT11YnZN
- Sfm7T0BwK0cizne/DjSQ4T0fHQxv2SiQDw4cvJpruy18OUGSyT9jjIScXhCCVxx/4U2RuXy6Y
- mMczw1pcvAKbA80C3FJ4zKaKMTaYb0dRzBWKoO4cfnc9h6mnyDdczkuDs3GgJJHN3DCbWXX6R
- Q2eXvCcCz+Zssi9OlrG3F79Dl2Cm35TMgnhruY8t77nBq3sflkKMWPP+gF4cAKtXbIsdCYP/N
- +IE1jvMZ4KI6nFLmQYIIKN0BkrmpC95nhqTLnJdmeSVR5HehsKuWhkwt0+DxrhcGVQCevoHts
- DKPA3mK7y2Ms6yonlerKuKaqgKJzlzCCiqx7X4U3/PVHDZOxEoEYqg9bTD+EZsL1rv6mPE+97
- nWjtKKQ0vyCjAI6WG0SBum0IXfX1FdKAbV5+lRDKD981FYZHIqUqQpCGG9f8JD2tPYUgQBD0v
- QZNR2OJI0mJDteyL5tXSH9hgSnB2iIHQB7HZWeqxIKDyR612frENZAz3kwpWpnWdjXSfyumbo
- OFQyOX6k/W5wLCoacQHnZvVdEfeSXIyEBGnQtmZZE9LJBAQlIuEaTlWNcR6Y/Dg0jpr7cxiIz
- EWDaz7PoFH4FjICd33U/BVTX1tcNz7DcdBs2q6ARYqwBkNs5BOO7nySjGHxBu2wJdieAZku7/
- ArS916DDiwUGvB6DT5cFigkAsm17eLeYi82RmUPZ5KYCklvSJyUcJPvj0B9PjCo0NykJ/rAbm
- fI8tA8CYKQS6alek3Scck8bPRfG7jKpTKrCI6KbNoB2G0FPIzmP5buvQcpXgalbv8oOo3s0Hk
- hkrrMwnEr9hZRp/MS37u9G9h5E2eS+0zLzZ/Z4LbZDmSLQXgLz1TzDFncm7HKRH68jxhgr2jW
- LK/aLIw81x0PN+t7ctA6/Sb+f/6twbpLpaNlnSMOVr7YAnW+S5HVmjAQRcRVE2RMlNYhKLWDI
- Br285zqBjC7zJRIKRFvntvHqkatluSnTCzlk8qj3snVyrFNlTF7rNoZ0WRbpX5k7+9G+HIcaV
- l6nm/iuVv8vq7nL0Sk13Uu1mJcesAYBQJlsaZRIr1IwIFDDapxeVVr2p2MiftB7B4RlWMOVyx
- qpCWAp/ofDTNhCiNus6cLVcQcoYMiIYGIzLJzx79L+Hgtp5K0pPlRCAieXHynAMIMMBfYRQZ1
- yoPYlG4qRr0N5YQxs/m0Z2c22wifhY73Z7Yi3He48CBEw3JzVFUEezBUySkPGZeyi4wFPMmes
- kz4dD/hSpX+JiQ3DHi4yjJU/htjE/Ra9U0WjtoBYuZhWrS0NobQsagKJOfeg6JY/G0Oe/TaGZ
- E7EkX1bvzl06utIJ7pYS2jKkOMsFZ5Hss07lGeyE9XgpBWczstH4sEEua8ZhlFEUEeH6KJhMw
- b0xppmVEyxi19YtKI+EehktIzuANDkaeZSCPICN6eUYZysn/n7/kgV5nNm+VZWqLHH+HtnYm6
- mfn48Ls6ZBrKtiZaWIUA96+22TVpcoOCbO3Ch6x6iBmYqlgOVbHz4mAB9o3ThyueXbBmUxDkQ
- gfb56BWnTb5vdS5qM2w=
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=eqbvCIpX c=1 sm=1 tr=0 ts=6a7714a1 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=el0UrXJS4K3zujXh0Vdy/w==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=VxrKFGbl1GlyxEfYH6wA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: vC8rKzek8IXaCPK91RiihEZjT4zEHHot
+X-Proofpoint-GUID: vC8rKzek8IXaCPK91RiihEZjT4zEHHot
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODA4MDA5NyBTYWx0ZWRfX8NAAejnBuCAW
+ b4QZ3WViRrl1jAjXO5sSeaO+K/RSlvra5IMW0monCSntXImZTMhQIDIQeZWK1R2118CA3LDwRik
+ I++MOXiUkN35yPjImMzzK9VdUaocaPOlX68lzk7PNLS1JE4y+VTfqkH1LUL3xbrnTd2QLXp4tL9
+ NI9ZPWOEDw25Ggd2s6rRv73G65UDFvDbHzixxXbs9wnDr3UV/FIYruR2s7ANdiJYA8Fii2QRqCz
+ pbS9jZbzVSxWZbl4qMwl89ZcVpe2y+3jxCca17rCszJHKQI4Ra8tHXN+yMdvCNwaMWtoU1Bsjo9
+ B7DyPBPG8zO9rsyCEWjA9tixpSFpPeVF23MB7AyZYol13+8o2wmq+xQ6Xl72m86YuB9L9xPM3Th
+ Vw5iU2JF8eBXxXCoeXDodfrhfv3l2dgW0LUUO6hIFyB69eie+QTBW4+nkUFDjR4K5BDE68dmnpT
+ djt8AWW2icFkmUXBHrw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODA4MDA5NyBTYWx0ZWRfX1jt7vB5wlsdD
+ XhSMlI+r7ZzDFt8w2NalwUOgVMrv35XS9reWQawIkN1a+oBips0inS+fdIOX2Gbbfembbm89LZb
+ nxdl5V59bX6xZz7VDlyDi3Njk+/1Efc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-08_04,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 impostorscore=0 spamscore=0 clxscore=1015 adultscore=0
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608080097
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -212,79 +160,559 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/26 10:50, Michael Tokarev wrote:
-> On 3/30/24 01:36, Max Filippov wrote:
->> target_msqid_ds::msg_*time field pairs are reversed on 32-bit TARGET_PP=
-C
->> and TARGET_SPARC and on big-endian TARGET_MIPS and TARGET_XTENSA.
->> Fix the order to match the kernel definitions.
->> The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=3Dlibc-=
-test
->> on big-endian xtensa core.
->>
->> Cc: qemu-stable@nongnu.org
->> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
->=20
-> Just come across this old patch, is it not needed anymore or has it been=
- lost?
 
-Yes, seems to have been lost.
 
-> (I realize the current code uses target_time64_t instead of abi_ulong, s=
-o probably
-> not needed now)
+On 8/7/2026 11:32 PM, WX Chen wrote:
+> Add 8 test cases covering the main register paths and driver usage
+> scenarios: device probe, init & baud, TX/RX datapath, THRE interrupt,
+> RX interrupts (timeout & trigger level), error interrupts & IIR
+> priority, USR & busy detect, and advanced features (shadow registers,
+> HTX, SRR, PTIME/TET).
+> 
+> All tests pass.
+> 
+> Signed-off-by: WX Chen <wxchen0913@gmail.com>
+> ---
 
-Right. Unless we have an alignment problem with target_time64_t on 32-bit =
-(which seems ok).
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Helge
-
->> Changes v1->v2:
->> - split into a separate patch
->> - add PPC, SPARC and big-endian MIPS
->>
->> =C2=A0 linux-user/syscall.c | 20 +++++++++++++++-----
->> =C2=A0 1 file changed, 15 insertions(+), 5 deletions(-)
->>
->> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
->> index d9bfd31c1cad..781ed14bc613 100644
->> --- a/linux-user/syscall.c
->> +++ b/linux-user/syscall.c
->> @@ -4113,17 +4113,27 @@ static inline abi_long do_semtimedop(int semid,
->> =C2=A0 struct target_msqid_ds
->> =C2=A0 {
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct target_ipc_perm msg_perm;
->> -=C2=A0=C2=A0=C2=A0 abi_ulong msg_stime;
->> =C2=A0 #if TARGET_ABI_BITS =3D=3D 32
->> +#if defined(TARGET_PPC) || defined(TARGET_SPARC) || \
->> +=C2=A0=C2=A0=C2=A0 (TARGET_BIG_ENDIAN && (defined(TARGET_MIPS) || defi=
-ned(TARGET_XTENSA)))
->> +=C2=A0=C2=A0=C2=A0 abi_ulong __unused1;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_stime;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong __unused2;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_rtime;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong __unused3;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_ctime;
->> +#else
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_stime;
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong __unused1;
->> -#endif
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong msg_rtime;
->> -#if TARGET_ABI_BITS =3D=3D 32
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong __unused2;
->> -#endif
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong msg_ctime;
->> -#if TARGET_ABI_BITS =3D=3D 32
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong __unused3;
->> +#endif
->> +#else
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_stime;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_rtime;
->> +=C2=A0=C2=A0=C2=A0 abi_ulong msg_ctime;
->> =C2=A0 #endif
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong __msg_cbytes;
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 abi_ulong msg_qnum;
->=20
->=20
+>   tests/qtest/k230-uart-test.c | 514 +++++++++++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build      |   2 +-
+>   2 files changed, 515 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/k230-uart-test.c b/tests/qtest/k230-uart-test.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..488dbbb7ffd28726434cdfebe976c3155e14b455
+> --- /dev/null
+> +++ b/tests/qtest/k230-uart-test.c
+> @@ -0,0 +1,514 @@
+> +/*
+> + * QTest for the K230 UART — functional-path coverage.
+> + *
+> + * Tests are organised around driver usage scenarios rather than
+> + * enumerating every register in isolation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include <string.h>
+> +
+> +#define UART_BASE  0x91400000
+> +#define R(off)     (UART_BASE + (off))
+> +
+> +/* register offsets */
+> +#define THR    0x00
+> +#define IER    0x04
+> +#define IIR    0x08
+> +#define LCR    0x0c
+> +#define MCR    0x10
+> +#define LSR    0x14
+> +#define SCR    0x1c
+> +#define USR    0x7c
+> +#define TFL    0x80
+> +#define RFL    0x84
+> +#define SRR    0x88
+> +#define SRTS   0x8c
+> +#define SBCR   0x90
+> +#define SDMAM  0x94
+> +#define SFE    0x98
+> +#define SRT    0x9c
+> +#define STET   0xa0
+> +#define HTX    0xa4
+> +#define CPR    0xf4
+> +#define CTR    0xfc
+> +
+> +/* bit fields */
+> +#define LCR_DLAB     0x80
+> +#define LCR_BC       0x40
+> +#define LCR_8N1      0x03
+> +
+> +#define LSR_DR       0x01
+> +#define LSR_OE       0x02
+> +#define LSR_THRE     0x20
+> +#define LSR_TEMT     0x40
+> +#define LSR_RESET    0x60
+> +
+> +#define IIR_IID      0x0f
+> +#define IIR_NONE     0x01
+> +#define IIR_THR      0x02
+> +#define IIR_RX       0x04
+> +#define IIR_LINE     0x06
+> +#define IIR_BUSY     0x07
+> +#define IIR_TO       0x0c
+> +#define IIR_FF       0xc0
+> +
+> +#define IER_RX       0x01
+> +#define IER_TX       0x02
+> +#define IER_LS       0x04
+> +#define IER_COLR     0x10
+> +#define IER_PTIME    0x80
+> +
+> +#define MCR_LB       0x10
+> +#define MCR_RTS      0x02
+> +
+> +#define FCR_FE       0x01
+> +#define FCR_RR       0x02
+> +#define FCR_XR       0x04
+> +#define FCR_TET_H    (3 << 4)
+> +#define FCR_RT_Q     (1 << 6)
+> +#define FCR_RT_F     (3 << 6)
+> +
+> +#define USR_BUSY     0x01
+> +#define USR_RESET    0x06
+> +
+> +#define SRR_UR       0x01
+> +#define SRR_RFR      0x02
+> +
+> +/* helpers */
+> +static uint32_t rd(QTestState *qts, uint32_t o)
+> +{
+> +    return qtest_readl(qts, R(o));
+> +}
+> +static uint32_t iid(QTestState *qts)
+> +{
+> +    return rd(qts, IIR) & IIR_IID;
+> +}
+> +
+> +static void poll_lsr(QTestState *qts, uint32_t m)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < 1000; i++) {
+> +        if (rd(qts, LSR) & m) {
+> +            return;
+> +        }
+> +        qtest_clock_step(qts, 1000);
+> +    }
+> +    g_assert_not_reached();
+> +}
+> +
+> +static void s1(QTestState *qts, int fd, char c)
+> +{
+> +    g_assert_cmpint(send(fd, &c, 1, 0), ==, 1);
+> +    poll_lsr(qts, LSR_DR);
+> +}
+> +
+> +static void sn(QTestState *qts, int fd, const char *d, int n)
+> +{
+> +    g_assert_cmpint(send(fd, d, n, 0), ==, n);
+> +    poll_lsr(qts, LSR_DR);
+> +}
+> +
+> +static void oe_nf(QTestState *qts, int fd)
+> +{
+> +    int i;
+> +
+> +    s1(qts, fd, 'A');
+> +    {
+> +        char c = 'B';
+> +        g_assert_cmpint(send(fd, &c, 1, 0), ==, 1);
+> +    }
+> +    for (i = 0; i < 200; i++) {
+> +        rd(qts, SCR);
+> +        qtest_clock_step(qts, 1000);
+> +    }
+> +}
+> +
+> +/* 1. device probe */
+> +static void test_device_probe(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +    uint32_t cpr = rd(qts, CPR);
+> +
+> +    g_assert_cmphex(cpr & 0x3, ==, 0x2);
+> +    g_assert_cmphex(cpr & (1 << 5), ==, (1 << 5));
+> +    g_assert_cmphex(cpr & (1 << 8), ==, (1 << 8));
+> +    g_assert_cmphex((cpr >> 16) & 0xff, ==, 0x2);
+> +    g_assert_cmphex(cpr & (1 << 4), ==, 0);
+> +    g_assert_cmphex(rd(qts, CTR), ==, 0x44570110);
+> +    g_assert_cmphex(rd(qts, LSR), ==, LSR_RESET);
+> +    g_assert_cmphex(rd(qts, USR), ==, USR_RESET);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    g_assert_cmphex(rd(qts, IIR) & IIR_FF, ==, 0);
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, 0);
+> +
+> +    qtest_writel(qts, R(IIR), FCR_FE);
+> +    g_assert_cmphex(rd(qts, IIR) & IIR_FF, ==, IIR_FF);
+> +    qtest_quit(qts);
+> +}
+> +
+> +/* 2. init & baud */
+> +static void test_init_and_baud(void)
+> +{
+> +    int fd;
+> +    QTestState *qts = qtest_init_with_serial("-machine k230", &fd);
+> +
+> +    qtest_writel(qts, R(LCR), LCR_DLAB);
+> +    qtest_writel(qts, R(THR), 0x55);
+> +    g_assert_cmphex(rd(qts, THR), ==, 0x55);
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    g_assert_cmphex(rd(qts, THR), ==, 0x00);
+> +
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RT_F);
+> +    qtest_writel(qts, R(IER), IER_RX);
+> +
+> +    /* divisor=1 -> timeout=12800ns */
+> +    qtest_writel(qts, R(LCR), LCR_8N1 | LCR_DLAB);
+> +    qtest_writel(qts, R(THR), 1); qtest_writel(qts, R(IER), 0);
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    s1(qts, fd, 'X');
+> +    qtest_clock_step(qts, 13000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +
+> +    /* divisor=100 -> timeout=1.28e6ns; 13000ns too short */
+> +    rd(qts, THR);
+> +    qtest_writel(qts, R(LCR), LCR_8N1 | LCR_DLAB);
+> +    qtest_writel(qts, R(THR), 100); qtest_writel(qts, R(IER), 0);
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    s1(qts, fd, 'Y');
+> +    qtest_clock_step(qts, 13000);
+> +    g_assert_cmphex(iid(qts), !=, IIR_TO);
+> +    qtest_clock_step(qts, 1300000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +
+> +    close(fd); qtest_quit(qts);
+> +}
+> +
+> +/* 3. TX / RX datapath */
+> +static void test_tx_rx_datapath(void)
+> +{
+> +    int fd;
+> +    QTestState *qts = qtest_init_with_serial("-machine k230", &fd);
+> +
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    g_assert_cmphex(rd(qts, LSR) & (LSR_THRE | LSR_TEMT),
+> +                    ==, LSR_THRE | LSR_TEMT);
+> +    qtest_writel(qts, R(THR), 'A');
+> +    g_assert_cmphex(rd(qts, LSR) & (LSR_THRE | LSR_TEMT),
+> +                    ==, LSR_THRE | LSR_TEMT);
+> +
+> +    /* external RX (FIFO mode) */
+> +    qtest_writel(qts, R(IIR), FCR_FE);
+> +    qtest_writel(qts, R(IER), IER_RX);
+> +    sn(qts, fd, "K230", 4);
+> +    for (int i = 0; i < 4; i++) {
+> +        if (i < 3) {
+> +            g_assert_cmphex(iid(qts), ==, IIR_RX);
+> +        }
+> +        g_assert_cmphex(rd(qts, THR), ==, "K230"[i]);
+> +    }
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, 0);
+> +
+> +    /* loopback */
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +    qtest_writel(qts, R(THR), 'L');
+> +    g_assert_cmphex(rd(qts, THR), ==, 'L');
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, 0);
+> +
+> +    /* no loopback */
+> +    qtest_writel(qts, R(MCR), 0);
+> +    qtest_writel(qts, R(THR), 'Z');
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, 0);
+> +
+> +    /* TFL / RFL */
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RR | FCR_XR);
+> +    qtest_writel(qts, R(THR), 'X'); qtest_writel(qts, R(THR), 'Y');
+> +    g_assert_cmphex(rd(qts, TFL), ==, 0);
+> +    g_assert_cmphex(rd(qts, RFL), ==, 2);
+> +
+> +    /* non-FIFO mode */
+> +    qtest_writel(qts, R(MCR), 0);
+> +    qtest_writel(qts, R(IIR), 0);
+> +    s1(qts, fd, 'N');
+> +    g_assert_cmphex(rd(qts, THR), ==, 'N');
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, 0);
+> +
+> +    /* non-FIFO overrun */
+> +    int i;
+> +    s1(qts, fd, 'n');
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, LSR_DR);
+> +    {
+> +        char c = 'o';
+> +        send(fd, &c, 1, 0);
+> +    }
+> +    for (i = 0; i < 200; i++) {
+> +        rd(qts, SCR);
+> +        qtest_clock_step(qts, 1000);
+> +    }
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_OE, ==, LSR_OE);
+> +
+> +    close(fd); qtest_quit(qts);
+> +}
+> +
+> +/* 4. THRE interrupt */
+> +static void test_thre_interrupt(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230 "
+> +                                 "-chardev null,id=c0 -serial chardev:c0");
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +
+> +    qtest_writel(qts, R(THR), 'A');
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +
+> +    qtest_writel(qts, R(IER), IER_TX);
+> +    g_assert_cmphex(iid(qts), ==, IIR_THR);
+> +
+> +    qtest_writel(qts, R(THR), 'B');
+> +    g_assert_cmphex(iid(qts), ==, IIR_THR);
+> +
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    qtest_quit(qts);
+> +}
+> +
+> +/* 5. RX interrupts: timeout & trigger level */
+> +static void test_rx_interrupts(void)
+> +{
+> +    int fd;
+> +    QTestState *qts = qtest_init_with_serial("-machine k230", &fd);
+> +
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RT_F);
+> +    qtest_writel(qts, R(IER), IER_RX);
+> +
+> +    /* basic timeout */
+> +    s1(qts, fd, 'T');
+> +    qtest_clock_step(qts, 400000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +    g_assert_cmphex(rd(qts, THR), ==, 'T');
+> +    g_assert_cmphex(iid(qts), !=, IIR_TO);
+> +
+> +    /* timeout reset by new byte */
+> +    s1(qts, fd, 'A'); qtest_clock_step(qts, 200000);
+> +    s1(qts, fd, 'B');
+> +    qtest_clock_step(qts, 200000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    qtest_clock_step(qts, 200000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +    rd(qts, THR);
+> +    rd(qts, THR);
+> +
+> +    /* timeout rearmed by partial drain */
+> +    s1(qts, fd, 'X');
+> +    s1(qts, fd, 'Y');
+> +    qtest_clock_step(qts, 400000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +    g_assert_cmphex(rd(qts, THR), ==, 'X');
+> +    qtest_clock_step(qts, 200000);
+> +    g_assert_cmphex(iid(qts), !=, IIR_TO);
+> +    qtest_clock_step(qts, 250000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +    g_assert_cmphex(rd(qts, THR), ==, 'Y');
+> +
+> +    /* RX trigger level: RT=Q -> trigger at 8 bytes */
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RT_Q);
+> +    sn(qts, fd, "ABCDEFG", 7);
+> +    qtest_clock_step(qts, 20000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    qtest_clock_step(qts, 400000);
+> +    g_assert_cmphex(iid(qts), ==, IIR_TO);
+> +    for (int i = 0; i < 7; i++) {
+> +        rd(qts, THR);
+> +    }
+> +
+> +    sn(qts, fd, "12345678", 8);
+> +    for (int i = 0; i < 1000; i++) {
+> +        if (iid(qts) == IIR_RX) {
+> +            break;
+> +        }
+> +        qtest_clock_step(qts, 1000);
+> +    }
+> +    g_assert_cmphex(iid(qts), ==, IIR_RX);
+> +
+> +    close(fd); qtest_quit(qts);
+> +}
+> +
+> +/* 6. error interrupts & IIR priority */
+> +static void test_error_interrupts(void)
+> +{
+> +    int fd;
+> +    QTestState *qts = qtest_init_with_serial("-machine k230", &fd);
+> +
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    qtest_writel(qts, R(IER), IER_LS);
+> +
+> +    /* OE -> IIR=0x6; LSR clears; ELCOLR=0: RBR clears; ELCOLR=1: RBR keeps */
+> +    oe_nf(qts, fd);
+> +    g_assert_cmphex(iid(qts), ==, IIR_LINE);
+> +    rd(qts, LSR);
+> +    g_assert_cmphex(iid(qts), !=, IIR_LINE);
+> +
+> +    oe_nf(qts, fd);
+> +    g_assert_cmphex(iid(qts), ==, IIR_LINE);
+> +    rd(qts, THR);
+> +    g_assert_cmphex(iid(qts), !=, IIR_LINE);
+> +
+> +    qtest_writel(qts, R(IER), IER_LS | IER_COLR);
+> +    oe_nf(qts, fd);
+> +    g_assert_cmphex(iid(qts), ==, IIR_LINE);
+> +    rd(qts, THR);
+> +    g_assert_cmphex(iid(qts), ==, IIR_LINE);
+> +    rd(qts, LSR);
+> +    g_assert_cmphex(iid(qts), !=, IIR_LINE);
+> +
+> +    /* IIR priority: RX > TX (loopback) */
+> +    qtest_writel(qts, R(IIR), FCR_FE);
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +    qtest_writel(qts, R(IER), IER_TX | IER_RX);
+> +    qtest_writel(qts, R(THR), 'P');
+> +    g_assert_cmphex(iid(qts), ==, IIR_RX);
+> +    g_assert_cmphex(rd(qts, THR), ==, 'P');
+> +    g_assert_cmphex(iid(qts), ==, IIR_THR);
+> +    iid(qts);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +
+> +    /* OE in FIFO mode via loopback */
+> +    qtest_writel(qts, R(IER), IER_LS);
+> +    for (int i = 0; i < 32; i++) {
+> +        qtest_writel(qts, R(THR), 'a');
+> +    }
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_OE, ==, 0);
+> +    qtest_writel(qts, R(THR), 'z');
+> +    g_assert_cmphex(iid(qts), ==, IIR_LINE);
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_OE, ==, LSR_OE);
+> +
+> +    close(fd); qtest_quit(qts);
+> +}
+> +
+> +/* 7. USR & busy detect */
+> +static void test_busy_detect(void)
+> +{
+> +    int fd;
+> +    QTestState *qts = qtest_init_with_serial("-machine k230", &fd);
+> +
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    qtest_writel(qts, R(IIR), FCR_FE);
+> +
+> +    g_assert_cmphex(rd(qts, USR) & 0x1e, ==, 0x06);
+> +
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +    qtest_writel(qts, R(THR), 'A');
+> +    g_assert_cmphex(rd(qts, USR) & 0x08, ==, 0x08);
+> +    rd(qts, THR);
+> +    g_assert_cmphex(rd(qts, USR) & 0x08, ==, 0);
+> +    qtest_writel(qts, R(MCR), 0);
+> +
+> +    /* BUSY via RX & loopback */
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, 0);
+> +    s1(qts, fd, 'Z');
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, USR_BUSY);
+> +    rd(qts, THR);
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, 0);
+> +
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +    qtest_writel(qts, R(THR), 'L');
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, USR_BUSY);
+> +    rd(qts, THR);
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, 0);
+> +
+> +    /* busy-detect: LCR write rejected while BUSY=1 */
+> +    qtest_writel(qts, R(MCR), 0);
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RR | FCR_XR);
+> +    s1(qts, fd, 'B');
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, USR_BUSY);
+> +    qtest_writel(qts, R(LCR), LCR_8N1 | LCR_DLAB);
+> +    g_assert_cmphex(rd(qts, LCR), ==, LCR_8N1);
+> +    g_assert_cmphex(iid(qts), ==, IIR_BUSY);
+> +    rd(qts, USR);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_RR);
+> +    g_assert_cmphex(rd(qts, USR) & USR_BUSY, ==, 0);
+> +    qtest_writel(qts, R(LCR), LCR_8N1 | LCR_DLAB);
+> +    g_assert_cmphex(rd(qts, LCR), ==, LCR_8N1 | LCR_DLAB);
+> +
+> +    close(fd); qtest_quit(qts);
+> +}
+> +
+> +/* 8. advanced features */
+> +static void test_advanced_features(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230 "
+> +                                 "-chardev null,id=c0 -serial chardev:c0");
+> +
+> +    /* shadow: SRTS<->MCR.RTS, SBCR<->LCR.BC, SDMAM, SFE, SRT, STET, HTX */
+> +    qtest_writel(qts, R(SRTS), 1);
+> +    g_assert_cmphex(rd(qts, MCR) & MCR_RTS, ==, MCR_RTS);
+> +    qtest_writel(qts, R(MCR), 0); g_assert_cmphex(rd(qts, SRTS), ==, 0);
+> +    qtest_writel(qts, R(SBCR), 1);
+> +    g_assert_cmphex(rd(qts, LCR) & LCR_BC, ==, LCR_BC);
+> +    qtest_writel(qts, R(LCR), 0); g_assert_cmphex(rd(qts, SBCR), ==, 0);
+> +    qtest_writel(qts, R(SDMAM), 1); g_assert_cmphex(rd(qts, SDMAM), ==, 1);
+> +    qtest_writel(qts, R(SRT), 0x2); g_assert_cmphex(rd(qts, SRT), ==, 0x2);
+> +    qtest_writel(qts, R(STET), 0x3); g_assert_cmphex(rd(qts, STET), ==, 0x3);
+> +    qtest_writel(qts, R(SFE), 1); g_assert_cmphex(rd(qts, SFE), ==, 1);
+> +    g_assert_cmphex(rd(qts, IIR) & IIR_FF, ==, IIR_FF);
+> +    qtest_writel(qts, R(HTX), 1); g_assert_cmphex(rd(qts, HTX), ==, 1);
+> +    qtest_writel(qts, R(HTX), 0); g_assert_cmphex(rd(qts, HTX), ==, 0);
+> +
+> +    /* HTX halt TX */
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    qtest_writel(qts, R(IIR), FCR_FE);
+> +    qtest_writel(qts, R(MCR), MCR_LB);
+> +
+> +    qtest_writel(qts, R(HTX), 1);
+> +    qtest_writel(qts, R(THR), 'H');
+> +    g_assert_cmphex(rd(qts, TFL), ==, 1);
+> +    g_assert_cmphex(rd(qts, RFL), ==, 0);
+> +
+> +    qtest_writel(qts, R(HTX), 0);
+> +    g_assert_cmphex(rd(qts, TFL), ==, 0);
+> +    g_assert_cmphex(rd(qts, RFL), ==, 1);
+> +    g_assert_cmphex(rd(qts, THR), ==, 'H');
+> +
+> +    /* SRR: RFR & UR */
+> +    qtest_writel(qts, R(THR), 'Z');
+> +    g_assert_cmphex(rd(qts, RFL), ==, 1);
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, LSR_DR);
+> +    qtest_writel(qts, R(SRR), SRR_RFR);
+> +    g_assert_cmphex(rd(qts, RFL), ==, 0);
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_DR, ==, 0);
+> +    g_assert_cmphex(rd(qts, SRR), ==, 0);
+> +    qtest_writel(qts, R(THR), 'Y');
+> +    qtest_writel(qts, R(SRR), SRR_UR);
+> +    g_assert_cmphex(rd(qts, LSR), ==, LSR_RESET);
+> +    g_assert_cmphex(iid(qts), ==, IIR_NONE);
+> +    g_assert_cmphex(rd(qts, RFL), ==, 0);
+> +
+> +    /* PTIME + TET programmable THRE */
+> +    qtest_writel(qts, R(LCR), LCR_8N1);
+> +    qtest_writel(qts, R(IIR), FCR_FE | FCR_TET_H);
+> +    qtest_writel(qts, R(IER), IER_TX | IER_PTIME);
+> +    qtest_writel(qts, R(THR), 'A');
+> +    g_assert_cmphex(rd(qts, LSR) & LSR_THRE, ==, LSR_THRE);
+> +    g_assert_cmphex(iid(qts), ==, IIR_THR);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +int main(int argc, char *argv[])
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +    qtest_add_func("/k230-uart/device_probe",       test_device_probe);
+> +    qtest_add_func("/k230-uart/init_and_baud",      test_init_and_baud);
+> +    qtest_add_func("/k230-uart/tx_rx_datapath",     test_tx_rx_datapath);
+> +    qtest_add_func("/k230-uart/thre_interrupt",     test_thre_interrupt);
+> +    qtest_add_func("/k230-uart/rx_interrupts",      test_rx_interrupts);
+> +    qtest_add_func("/k230-uart/error_interrupts",   test_error_interrupts);
+> +    qtest_add_func("/k230-uart/busy_detect",        test_busy_detect);
+> +    qtest_add_func("/k230-uart/advanced_features",  test_advanced_features);
+> +    return g_test_run();
+> +}
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 822e0bd286970339fe28127649feb131ce8a81b2..93246d9bf77206e9cebb9d8ade5801f4541d3b8d 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -294,7 +294,7 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+>     (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+>      config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+>      ['iommu-riscv-test'] : []) + \
+> -  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
+> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-uart-test'] : [])
+>   
+>   qtests_hexagon = ['boot-serial-test']
+>   
+> 
 
 
