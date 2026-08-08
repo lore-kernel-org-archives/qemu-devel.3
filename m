@@ -4,125 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A38C55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 05:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8135C55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 06:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsZzI-00055p-HU; Sat, 08 Aug 2026 01:52:53 -0400
+	id 1wsaSd-0006Cf-Tv; Sat, 08 Aug 2026 02:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wsZzE-00055W-JO
- for qemu-devel@nongnu.org; Sat, 08 Aug 2026 01:52:49 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wsZzC-0005cb-E3
- for qemu-devel@nongnu.org; Sat, 08 Aug 2026 01:52:47 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-51a868b6962so2868321cf.2
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 22:52:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786168365; cv=none;
- d=google.com; s=arc-20260327;
- b=let4RZJOcynHLOxxU+ssrxtnLNzw6USm3w9P5qxzpduQrmZszAEQOXik1wv8fan3oz
- LIPImM4ihk2pVwWOJy5gMUpBwhfpuH2JIKHtaKxG72f27okhrmqe4CDzXsiItGm5V5B+
- nAS+afEVvxC+XuLNeHEg9MVEX5HoDzEe16tAUK5HkL4RL39CZVu/ygi9chtTBZw6StaA
- nMUtLvrgpEC7NRe6DaTKBHCus+dwfvGrATdetZg1Hv0HmYJjCdwneN1Jri9hQBFrEK2R
- aXGn3Kz3Y0dpghyVlht5k7w9yYn8OUfmSzxk7vz4maRn72aZQNzMsnRBPx+28LDMZSEW
- ZqVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=f73IJPUp6q0Wp68Ac+cralPtDGHihzN4LDNZXFWNQE4=;
- fh=xsRg86ZwBm0LGRQZIEC1R+b8QTOodxCX7/oSmDWEnOY=;
- b=lBuVICOCvkSxeqlVdP+NjyMsNy4kvdnMfviz9xn/opd8rTyra26gsEXXmSqTKPbMje
- vA1u8fJ6vp8UTpiL05TKXwTWxpLotHhlUYbb5qu7iqJ3PlnAfHmDj+woiKiOlOek397/
- Pmyrog+gq/+YW7eiO5O5rKJIMo6iQvXd5lbByfKwfBh+xYh28zOlpmDrPMcuhIjUK2SJ
- /fMNWKD6BEGxqlRkqYmkpIxUJHoaOoYlr6Sw1+2UJ7Egtph4CfjIBHc+KhGmyKFs0h5e
- K+cwn9QNq57c6G9/t8P0vyY394K1LMRzSMjsVPLtbE6ulLbeYahvYBle7z+7jdd9GCuy
- dfkQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786168365; x=1786773165; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=f73IJPUp6q0Wp68Ac+cralPtDGHihzN4LDNZXFWNQE4=;
- b=jmB0PG5Y2v0DGFir1t3ZVl4z47Y0Kyx+DXT0lFM9uFPDJOSpjvKwbxeiNxGbjvxqEd
- OQYS57cDkOobvXBrEoxcN8NbtSJhGarIet9kAYP6qXpbPbCIBigiC/NhK1Oqf0uBVTfC
- 4AKW+WOUl8JLzQuK5BwQELAoa6kmsVPZ+WdCuRQwFwPecZz9HtYIDSVArEwMAnk0tHev
- WRxgLu7xazlelT6moKjoON3EYoReNZIGTZHthuczz3tUYk3G94d7Ub35xsuIejvjkrXr
- 3FcoQV7E80sNyg9j7jSg+4tpeK7lSKXY/pC528w6L22lQnBj4ayBNko+AAJQfQyAshQ4
- czFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786168365; x=1786773165;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=f73IJPUp6q0Wp68Ac+cralPtDGHihzN4LDNZXFWNQE4=;
- b=dnVr0Pfa2AXS1ziUC2Grqin59hWlabjFGXiM8MLbeSMkpzw2HJnIuZvL9CIEjzdvdC
- T/SsO2tKTZXzlgJPzxpAAZBosxS4KvkkYWBUEkIrQMx+A4CTTaxOz3KwhGUgE8egH4W8
- c9EPX4XJWCtNgjb6M928urn0JjWbYW+5FDdBHtKaGvURashV2fZdzyAHzZq3l2aoNCdy
- FL1GEM2wfsdkg6HLZu0Vari4YQSjy8GHLF8zEWLAyjJxjbp5C5KbolUkksYonda0gcyf
- 7JCgt/GmvejCPCC1phWJ7m9jWN1GLVIN4UXtLqVoscHoAi4Xv+uSvRDISlojgJYqPTnU
- edGQ==
-X-Gm-Message-State: AOJu0YwcS2RfW8rr4JctIdU3Fpthh9OGIwpOthu8eYPyEWeBwo4HxssR
- P+fcigdAfAl0lheAkRs+Rs6oLR2btx14n5gOEPKoa1ZcueWT1/BM3tnZXVCEbTyja3CZcTl8UgQ
- Wff4bABumeWY+KVCh7OkWqdyX3Sg58Lw=
-X-Gm-Gg: AR+sD123yO8585zgjYHlgCTtuQUYIWRzq4lTb6DRNHRvd9YklAnv8cVVmjcDC1MJXpG
- IMquU3r8ANMtYkJVApDZ1s1bdatnIWsCTt3J2cRvej/HV6bEV/fTmBpchUA8YbaNGNKc5xzqRoZ
- iGakO+kq/9YJRhEK+DdUbANk6nYsu0tMym+EFvS7a5unr2DVcDrApqMLOCUNV9ngtSuTMK6QcYc
- 5pzJ+Iyx9WRDNPeaxloRUyWKYcGO5Rg8YrRwBVbNCE+4N6U1CFUton2K8NuT9/nn4T3yBA7xtNc
- cAJZBSoLeFeersATXAYDP/uv4DrEgo99VrUeXoNoKnkWPkey4zf1D40rLJ+8DN6fUcGX1WGb5NZ
- KXlU=
-X-Received: by 2002:ac8:7c4f:0:b0:51c:1132:c7f7 with SMTP id
- d75a77b69052e-52d20a3212bmr73283081cf.29.1786168364959; Fri, 07 Aug 2026
- 22:52:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wsaSX-0006C2-7H; Sat, 08 Aug 2026 02:23:07 -0400
+Received: from m16.mail.163.com ([117.135.210.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1wsaSP-00037q-1C; Sat, 08 Aug 2026 02:23:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=sn
+ BProiOIxyknSbGfXU/tB7P9GoSoUrXxWizFIPHlXA=; b=GZRzIkqpi8jBLwFOmO
+ dhZUMj1CEHwXAjuXyiU9pmiaCCBwUXkQ0mT0T2dXVid0wj/ZuH3wjq6l2ywVGANH
+ qd5i0cQiFcmplnSjy9RIT4ymygvik/5HUuF+Vx1l5rfcmbVwz3PXbwGfXwTaapBo
+ 5kjfevlCaeegepthUdSiVGDYE=
+Received: from dt-VM.localdomain (unknown [])
+ by gzsmtp3 (Coremail) with SMTP id PigvCgC3_wsky3Zq2MzjLw--.10202S4;
+ Sat, 08 Aug 2026 14:22:36 +0800 (CST)
+From: Tao Ding <dingtao0430@163.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com,
+ Tao Ding <dingtao0430@163.com>
+Subject: [PATCH v3 2/7] hw/riscv: k230: add gsdma in K230 board
+Date: Sat,  8 Aug 2026 14:22:22 +0800
+Message-ID: <20260808062227.66961-3-dingtao0430@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260808062227.66961-1-dingtao0430@163.com>
+References: <20260808062227.66961-1-dingtao0430@163.com>
 MIME-Version: 1.0
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-10-6b97c439eb28@gmail.com>
- <ba6158dd-7b7b-4457-9256-497ab60a27d3@redhat.com>
-In-Reply-To: <ba6158dd-7b7b-4457-9256-497ab60a27d3@redhat.com>
-From: Connor Kite <connorkite@gmail.com>
-Date: Fri, 7 Aug 2026 22:52:33 -0700
-X-Gm-Features: AUfX_mz29_PGUItMUHiK2fhIF6i4er8uxAWBlXK1AVB5x0b6YqHJWCDPmzom6BY
-Message-ID: <CA+spn3qP1xahLRTNutmOLvDEXJXHh9W1tMeGeKiiDiz-ntyknw@mail.gmail.com>
-Subject: Re: [PATCH RFC 10/15] hw/virtio/vhost-shadow-virtqueue: range
- boundary in translation
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: PigvCgC3_wsky3Zq2MzjLw--.10202S4
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZry3XFW3WryxArW7ZFWfuFg_yoW5KF1xpF
+ sxWrZFyrW8GFn3A3WfKrsxurykWa1kuF15Cw43u34rGrW7ArZ8tFsI93WIv348JFZ5A345
+ uFy0kaySv3W5Xw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pR573kUUUUU=
+X-Originating-IP: [101.204.17.203]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC-Qw2dGp2yyxszwAA3r
+Received-SPF: pass client-ip=117.135.210.4; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,31 +76,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 3, 2026 at 5:56=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
-rote:
->
->
-> It=E2=80=99s not immediately obvious what is ensuring that `iov_len` can =
-never
-> be 0. Sure, it would be wrong and makes no sense, but that is why I
-> think an `assert(iovec[i].iov_len > 0)` would be appropriate.
->
-> (Looks like `virtqueue_map_desc()` is what rejects zero length, but that
-> is not really local to this code path, so not immediately obvious.)
->
-> Hanna
->
+This commit replaces the unimplemented part of GSDMA in K230. And connect the interrupt to plic.
 
-From the QEMU Coding Style guidelines on error-handling it looks like
-errors that
-could be initiated by a malfunctioning guest should not cause Qemu to
-exit. Would it be
-more appropriate to return false when zero-length is detected?  That follow=
-s
-the existing error path returning up to vhost_handle_guest_kick, which
-renders the svq
-unresponsive to future kicks.
+Update K230.rst.
 
-Best,
-Connor
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ docs/system/riscv/k230.rst |  1 +
+ hw/riscv/Kconfig           |  1 +
+ hw/riscv/k230.c            | 12 +++++++++---
+ include/hw/riscv/k230.h    |  3 +++
+ 4 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+index cea8202e55..a426a1d776 100644
+--- a/docs/system/riscv/k230.rst
++++ b/docs/system/riscv/k230.rst
+@@ -20,6 +20,7 @@ The ``k230`` machine supports the following devices:
+ * Platform-Level Interrupt Controller (PLIC)
+ * 2 K230 Watchdog Timer
+ * 5 UART
++* System Direct Memory Access (SDMA)
+ 
+ Boot options
+ ------------
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index de37c08cae..d28ac06043 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -162,3 +162,4 @@ config K230
+     select SERIAL_MM
+     select UNIMP
+     select K230_WDT
++    select K230_GSDMA
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 656f28190c..c80bd65694 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -110,6 +110,7 @@ static void k230_soc_init(Object *obj)
+     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
+     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
+     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
++    object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
+ 
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+@@ -206,6 +207,14 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
+                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
+ 
++    /* Gsdma */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gsdma), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gsdma), 0, memmap[K230_DEV_GSDMA].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->gsdma), 0,
++                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_GSDMA_IRQ));
++
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
+@@ -221,9 +230,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+                                 memmap[K230_DEV_AI_2D_ENGINE].base,
+                                 memmap[K230_DEV_AI_2D_ENGINE].size);
+ 
+-    create_unimplemented_device("gsdma", memmap[K230_DEV_GSDMA].base,
+-                                memmap[K230_DEV_GSDMA].size);
+-
+     create_unimplemented_device("dma", memmap[K230_DEV_DMA].base,
+                                 memmap[K230_DEV_DMA].size);
+ 
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index 592e1c26bf..156a386edc 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -18,6 +18,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/watchdog/k230_wdt.h"
++#include "hw/dma/k230_gsdma.h"
+ 
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -33,6 +34,7 @@ typedef struct K230SoCState {
+     RISCVHartArrayState c908_cpu; /* Small core */
+ 
+     K230WdtState wdt[2];
++    K230GSDMAState gsdma;
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+@@ -129,6 +131,7 @@ enum {
+     K230_UART4_IRQ  = 20,
+     K230_WDT0_IRQ   = 107,
+     K230_WDT1_IRQ   = 108,
++    K230_GSDMA_IRQ  = 140,
+ };
+ 
+ #define K230_UART_COUNT 5
+-- 
+2.43.0
+
 
