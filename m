@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B72C55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 13:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96CDC55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 13:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsgu0-0006Mv-OJ; Sat, 08 Aug 2026 09:15:52 -0400
+	id 1wsgu3-0006O1-Oz; Sat, 08 Aug 2026 09:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
- id 1wseg3-0006fr-Qe; Sat, 08 Aug 2026 06:53:20 -0400
+ id 1wsecP-0005Gf-2V; Sat, 08 Aug 2026 06:49:33 -0400
 Received: from xmbghk7.mail.qq.com ([43.163.128.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
- id 1wsefz-0003NB-SC; Sat, 08 Aug 2026 06:53:19 -0400
+ id 1wsecL-00022O-Kt; Sat, 08 Aug 2026 06:49:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vip.qq.com;
- s=s201512; t=1786186392;
- bh=tlEDeI9rUIv5/D2oJZ1211STflka7B5LSkBg5t4gP14=;
+ s=s201512; t=1786186163;
+ bh=tv4zD5jPN9+L7eCtaM2d1bafGngqf5H8mYmZaNcuAD8=;
  h=In-Reply-To:References:Date:Subject:To:Cc:From;
- b=y2LZ2ZmWRNEBPdCzChBQyqMbwEu6znWRUuznU7M4HJACad8+huB48q6h7Qix/7Y8m
- M7aYSmqIClkxcZN4CArvfX0eOUWt8VdzGtgA+8vbpXTKRmbsWPArnKGhF8ATO2wS56
- e9tQ+AUeBDxUiCgJzZ1udIAk2hVPWyPe/hQ5WqsA=
+ b=sx6JFlNo9TdLlcyWz4zEiUsrLhwE6tX6VzWbMKn0qfDgmSO+sBsFjV48IkxDbhQEp
+ 3flOPqdvZ3DZiuKuUuorzpcz4ggYzVprQrDPjO2Td3Jm9XiewlxZUAO5VH8WDw108E
+ uyUQ1ILE0eJSODYPRhB245SrinQEdao5sL7btb4E=
 Received: from localhost ([111.52.124.140])
- by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
- id B6D36C57; Sat, 08 Aug 2026 18:45:45 +0800
-X-QQ-mid: xmsmtpt1786185945tqyvf109m
-Message-ID: <tencent_3B4BE5CB1802CC14474515C3715E8CF04008@qq.com>
-X-QQ-XMAILINFO: MDbayGdXPuoeFb5oHkEA8MFqQ9CPgzulpIEa0XkoO4U+Xel6yjR2BiF5em2/Em
- YTYPdl0kGzqfR/zjBrZ8yAIAP1G08ujmX5b1wtk5DwQ8G258T7neCtCqJ4zNQcqLTtGjA9gPT/U9
- 5A4GPOSYnsa6NWan05SILbVYKkRxr9pg6VeaZzWl8oXE+0xRRJJ/BQC4xIGq59CLzti9Tz0/Hj46
- lwULX8h/eW12wNZguL5L9xpNibRVdHAlzmgjNvWVy7l1WZABwC8pq34xg8a+cZV3GsfyUJ8/hm5d
- tkreUHXQbCPFDTwStoO5p4IoVpx8GnNq6v8WCnDkvAScWpZO2ik4GBkG27cUKm49Z+7xsXFFDtNU
- P8MoWnVtUUY4+Rs9teunJ7o9NQMFM9TrbxPWweBnjvva7rkI4H95BDTOsANpG2m+etLW1bQElf4+
- oGx88lQd1/eIxbJJ53c9G4PegU6oiq75Kz0XaH5llFckLK8EZgYdYNhQB1JGihCHjUe1BZdf20cJ
- Q64Oks7h7N648VSweLS8X1dGlvtXEOzyjFl+6cNknO8ydDT/lfkPPSMdjaZTf8laeuZOieevHn02
- SYDKZHbe25vJeVKdjUfhMvvaHRZUzvrdsmzlnBB4tJsHQZsoUUkymoyXUokOKe6+huwPZGQvBY4F
- oDZqCr5C2GFDoZv30FNc4hvCsQTZzXZyEBr2mSZyjwG/GwyC5UlCYiKtpqmc6FFZoVIbDBgEcjP9
- 46iC5Z3xrYpsCeQ0QqLE4JqUoLVvoV+Cx3JG9sUoiVkc5KahSP0FT5LJeBoOD6oWBEicOg0eeGEM
- fxubMJb91bGxuqxs9JD019wZsxn/dJiv98GLYiadAkifhqa7lF53zUfIzT2czYOYSi22oY0PJnpj
- Yj3nV3bJa6AGJrTmOaHWCdP/W/F0WxSQre33D04F4rNX8TM2hyOABCXmvkpeQi/Fu32WvdDMoCF6
- AnpawCuzV8qyz9mHkZBn692Vcgd/QP9WYh63CNhGtqO6EJOvuKBDzPuy5fkQi7EjScT1yWwKH9iQ
- HaHG3Tl3fm8uaxElwpxY8vWCYkCXWXwUiNexKadjAcMPaHa8LHe3FRJ/d7nYNmQiiY/CuYqd5BBW
- EKN96F3b3Cb/gvv3b04Cs2uthQ9UBudFWcSvk8
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-OQ-MSGID: <224c17025d3872a61036afb4639154ee644c2c93.1786185889.git.chengkelfan@qq.com>
+ by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
+ id B6A948B5; Sat, 08 Aug 2026 18:45:42 +0800
+X-QQ-mid: xmsmtpt1786185942t5qmir6jm
+Message-ID: <tencent_4079F108A382388E90910168A31C0E838305@qq.com>
+X-QQ-XMAILINFO: OENI+BIeKsiQH81TIGDRKmSHk5ksU3LYp34Ax+wxyiEyUTBLygJw4FmW/LCmXB
+ Z556yjfzNClpcq30Y+y4wcXuJpV5fzLj3BVNZcqCFTu74xfH9e7eM+pwUsIqDZgUuvWRmcGXkRZK
+ 0/eewtvy6iI/38aFVekVzQZyUL5qfQ1tGb6+mGscy//2gtFjv/7Ytb2yVEAcwBgD6W6XBgbRuSwD
+ 0aRH9bNgwMyDfcEzNxkoJVmG921zO7gAGKiGxm0UCNrlETb7V/SxZ91FapmoANJrGFJSrAID3R/n
+ pbXP/kJEM7revDos7HUZTx52b6VCNlNx5DlqYJU6o/dV63BiSBGPGr9zJIr9vC/sLPAYxTKL+lhv
+ 8GjA8DgjfPMNliInTeq7PD/3H4f0TUUXB1f0YJoNZunqlU/yU3EKBFw4gfZgQ7FqEDDs9k59RPDS
+ 0AwcuLJMlUANO96DB7JKq5hFgtj1+VIAXzxw40d2Ovm+nJW93Xlnfed/L/2jaLtp7kw+iRqGdwQa
+ 9PmSKPbumx9djjM5Bl0wkO3zWvQ07nefsXpbdH/IjftVUCrg19MKDWCY+1S94XlUo3on2z0zqWAT
+ nmEM4aPZI3MeRsvmZb1yF5dCRhnQVUThuNNU+Sm+dlFuduVrDuWUiWFeKJrY+cLRMPfoSHPK8A8d
+ HfmRJXzg+37xAAiBrc6LiuIGEOkHOWWaWpFm3n3/COaqekAXxJiposCjwfEiudnTAhNKgBQ4uBAB
+ c8YNjczxV3ua72MXdxYzM4KStd/PC7my4PLEiD6Q7QCYePeUtTY8zp+1cuhxOxaGNGQ33YN2+j69
+ ZwLi/d5Jm+U+gY63a558vc1fimz2uIfq0uL9mxY3C1pdzFs1pjaZMx3dbALUcQNaJsZThL1p3+G8
+ CebvCLE629bQ0KLgHDsBctEVgDcYmn6KmCEygikad5ZyPxpJLRw31Mv3/QkHhnMZX9mKovtxAxHJ
+ KTvzw815pVY3nqHZI8AfxtEwM2lvVqUAyAty4uQP6FyME9oec9vpVapWtARrRfNWQ86BnKiQhKIz
+ +eJBZaKgWPD31Ayfc9esPA9nn6t8QyfnHLM+BBzsrte913Oc1l/e9C/b1fVTIoeLg452YH/c73ys
+ c2crEG2qm0dcuLrhgC66v/T/Uq16OnYpu5fI1GU85ZEm/Kvxo9S2cIqXLHHA==
+X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
+X-OQ-MSGID: <05eec6b577fa56e8fc6dd0693f4ab878e227401d.1786185889.git.chengkelfan@qq.com>
 In-Reply-To: <cover.1786185889.git.chengkelfan@qq.com>
 References: <cover.1786185889.git.chengkelfan@qq.com>
-Date: Sat, 8 Aug 2026 18:44:24 +0800
-Subject: [PATCH 2/5] hw/rtc: add K230 RTC.
+Date: Sat, 8 Aug 2026 18:44:23 +0800
+Subject: [PATCH 1/5] hw/gpio: add K230 GPIO controller.
 To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Cc: Chao Liu <chao.liu@processmission.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
@@ -85,40 +85,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the K230 RTC: date/time keeping with leap-year carry, write protection, a masked comparator alarm, a TICK_EN periodic tick interrupt, and a live sub-second COUNT derived from virtual time. The alarm is re-evaluated on TIME/ALARM/INT_CTRL writes and the year comparison ignores the DATE leap flag. Register layout from the K230 TRM v0.3.1. Covered by tests/qtest/k230-rtc-test.
+Model the Synopsys DW_apb_gpio controller on the Kendryte K230: direction, output, per-pin edge/level interrupts with EOI and output loopback in EXT_PORTA. Each pin drives its own PLIC line. Register layout from the K230 TRM v0.3.1. Covered by tests/qtest/k230-gpio-test.
 
 Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
 ---
- hw/rtc/Kconfig              |   3 +
- hw/rtc/k230_rtc.c           | 306 ++++++++++++++++++++++++++++++++++++
- hw/rtc/meson.build          |   1 +
- hw/rtc/trace-events         |   5 +
- include/hw/rtc/k230_rtc.h   |  61 +++++++
- tests/qtest/k230-rtc-test.c | 188 ++++++++++++++++++++++
- 6 files changed, 564 insertions(+)
- create mode 100644 hw/rtc/k230_rtc.c
- create mode 100644 include/hw/rtc/k230_rtc.h
- create mode 100644 tests/qtest/k230-rtc-test.c
+ hw/gpio/Kconfig              |   3 +
+ hw/gpio/k230_gpio.c          | 270 +++++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build          |   1 +
+ hw/gpio/trace-events         |   4 +
+ include/hw/gpio/k230_gpio.h  |  68 +++++++++
+ tests/qtest/k230-gpio-test.c | 143 +++++++++++++++++++
+ 6 files changed, 489 insertions(+)
+ create mode 100644 hw/gpio/k230_gpio.c
+ create mode 100644 include/hw/gpio/k230_gpio.h
+ create mode 100644 tests/qtest/k230-gpio-test.c
 
-diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
-index 315b0e4..d764807 100644
---- a/hw/rtc/Kconfig
-+++ b/hw/rtc/Kconfig
-@@ -31,3 +31,6 @@ config RS5C372_RTC
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index a209294..07ef5a2 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -30,3 +30,6 @@ config PCF8574
+ 
+ config ZAURUS_SCOOP
      bool
-     depends on I2C
-     default y if I2C_DEVICES
 +
-+config K230_RTC
++config K230_GPIO
 +    bool
-diff --git a/hw/rtc/k230_rtc.c b/hw/rtc/k230_rtc.c
+diff --git a/hw/gpio/k230_gpio.c b/hw/gpio/k230_gpio.c
 new file mode 100644
-index 0000000..c1de83d
+index 0000000..da4448f
 --- /dev/null
-+++ b/hw/rtc/k230_rtc.c
-@@ -0,0 +1,306 @@
++++ b/hw/gpio/k230_gpio.c
+@@ -0,0 +1,270 @@
 +/*
-+ * K230 RTC compatible with Kendryte K230 SDK
++ * K230 GPIO controller (Synopsys DW_apb_gpio) compatible with Kendryte K230 SDK
 + *
 + * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
 + *
@@ -130,221 +130,177 @@ index 0000000..c1de83d
 + * For more information, see <https://www.kendryte.com/en/proDetail/230>
 + */
 +#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
++#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "qemu/timer.h"
 +#include "hw/core/irq.h"
 +#include "migration/vmstate.h"
-+#include "hw/rtc/k230_rtc.h"
++#include "hw/gpio/k230_gpio.h"
 +#include "trace.h"
 +
-+static bool k230_rtc_is_leap(uint32_t year)
++/* Live pin levels: output pins reflect the driven value, inputs the source. */
++static uint32_t k230_gpio_pin_level(K230GpioState *s)
 +{
-+    return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
++    return (s->in & ~s->ddr) | (s->dr & s->ddr);
 +}
 +
-+static void k230_rtc_advance(K230RtcState *s)
++static void k230_gpio_update(K230GpioState *s, uint32_t old_level)
 +{
-+    uint32_t sec = extract32(s->time, 0, 6);
-+    uint32_t min = extract32(s->time, 8, 6);
-+    uint32_t hour = extract32(s->time, 16, 5);
-+    uint32_t week = extract32(s->time, 24, 3);
-+    uint32_t day = extract32(s->date, 0, 5);
-+    uint32_t month = extract32(s->date, 8, 4);
-+    uint32_t year_l = extract32(s->date, 16, 7);
-+    uint32_t year_h = extract32(s->date, 24, 7);
-+    static const uint8_t dim[12] = {31, 28, 31, 30, 31, 30,
-+                                    31, 31, 30, 31, 30, 31};
++    uint32_t level = k230_gpio_pin_level(s);
 +
-+    if (++sec >= 60) {
-+        sec = 0;
-+        if (++min >= 60) {
-+            min = 0;
-+            if (++hour >= 24) {
-+                uint32_t year = year_h * 100 + year_l;
-+                uint32_t maxd = month >= 1 && month <= 12 ? dim[month - 1] : 31;
++    for (int i = 0; i < K230_GPIO_PINS; i++) {
++        uint32_t bit = 1u << i;
 +
-+                hour = 0;
-+                week = (week + 1) % 7;
-+                if (month == 2 && k230_rtc_is_leap(year)) {
-+                    maxd = 29;
-+                }
-+                if (++day > maxd) {
-+                    day = 1;
-+                    if (++month > 12) {
-+                        month = 1;
-+                        if (++year_l >= 100) {
-+                            year_l = 0;
-+                            year_h++;
-+                        }
-+                    }
-+                }
++        if (!(s->inten & bit)) {
++            continue;
++        }
++
++        bool active = (s->int_polarity & bit) ? (level & bit) : !(level & bit);
++
++        if (s->inttype_level & bit) {
++            bool was = (s->int_polarity & bit) ? (old_level & bit)
++                                               : !(old_level & bit);
++            if (active && !was) {
++                s->raw_intstatus |= bit;
 +            }
++        } else if (active) {
++            s->raw_intstatus |= bit;
++        } else {
++            s->raw_intstatus &= ~bit;
 +        }
 +    }
 +
-+    s->time = deposit32(deposit32(deposit32(deposit32(0, 0, 6, sec),
-+                        8, 6, min), 16, 5, hour), 24, 3, week);
-+    s->date = deposit32(deposit32(deposit32(deposit32(deposit32(0, 0, 5, day),
-+                        8, 4, month), 16, 7, year_l), 24, 7, year_h),
-+                        23, 1, k230_rtc_is_leap(year_h * 100 + year_l));
-+}
++    s->intstatus = s->raw_intstatus & ~s->intmask;
 +
-+static void k230_rtc_update_irq(K230RtcState *s)
-+{
-+    qemu_set_irq(s->irq, s->alarm_pending || s->tick_pending);
-+}
-+
-+static void k230_rtc_check_alarm(K230RtcState *s)
-+{
-+    uint32_t cmp = extract32(s->int_ctrl, K230_RTC_CMP_SHIFT, 7);
-+    bool match = true;
-+
-+    if (!(s->int_ctrl & K230_RTC_ALARM_EN) || cmp == 0) {
-+        return;
-+    }
-+
-+    if (cmp & BIT(0)) { /* second */
-+        match &= extract32(s->time, 0, 6) == extract32(s->alarm_time, 0, 6);
-+    }
-+    if (cmp & BIT(1)) { /* minute */
-+        match &= extract32(s->time, 8, 6) == extract32(s->alarm_time, 8, 6);
-+    }
-+    if (cmp & BIT(2)) { /* hour */
-+        match &= extract32(s->time, 16, 5) == extract32(s->alarm_time, 16, 5);
-+    }
-+    if (cmp & BIT(3)) { /* weekday */
-+        match &= extract32(s->time, 24, 3) == extract32(s->alarm_time, 24, 3);
-+    }
-+    if (cmp & BIT(4)) { /* day */
-+        match &= extract32(s->date, 0, 5) == extract32(s->alarm_date, 0, 5);
-+    }
-+    if (cmp & BIT(5)) { /* month */
-+        match &= extract32(s->date, 8, 4) == extract32(s->alarm_date, 8, 4);
-+    }
-+    if (cmp & BIT(6)) { /* year: skip leap flag at bit 23 */
-+        match &= extract32(s->date, 16, 7) == extract32(s->alarm_date, 16, 7) &&
-+                 extract32(s->date, 24, 7) == extract32(s->alarm_date, 24, 7);
-+    }
-+
-+    if (match) {
-+        s->alarm_pending = true;
-+        k230_rtc_update_irq(s);
-+        trace_k230_rtc_alarm();
++    for (int i = 0; i < K230_GPIO_PINS; i++) {
++        qemu_set_irq(s->irq[i], (s->intstatus >> i) & 1);
 +    }
 +}
 +
-+static void k230_rtc_tick(void *opaque)
++static void k230_gpio_set_input(void *opaque, int line, int level)
 +{
-+    K230RtcState *s = K230_RTC(opaque);
++    K230GpioState *s = K230_GPIO(opaque);
++    uint32_t old = k230_gpio_pin_level(s);
 +
-+    s->last_tick_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    k230_rtc_advance(s);
-+    if (s->int_ctrl & K230_RTC_TICK_EN) {
-+        s->tick_pending = true;
++    if (level) {
++        s->in |= (1u << line);
++    } else {
++        s->in &= ~(1u << line);
 +    }
-+    k230_rtc_check_alarm(s);
-+    k230_rtc_update_irq(s);
-+    timer_mod(s->timer, s->last_tick_ns + NANOSECONDS_PER_SECOND);
++    k230_gpio_update(s, old);
 +}
 +
-+static uint64_t k230_rtc_read(void *opaque, hwaddr addr, unsigned int size)
++static uint64_t k230_gpio_read(void *opaque, hwaddr addr, unsigned int size)
 +{
-+    K230RtcState *s = K230_RTC(opaque);
++    K230GpioState *s = K230_GPIO(opaque);
 +    uint32_t value = 0;
 +
 +    switch (addr) {
-+    case K230_RTC_DATE:
-+        value = s->date;
++    case K230_GPIO_SWPORTA_DR:
++        value = s->dr;
 +        break;
-+    case K230_RTC_TIME:
-+        value = s->time;
++    case K230_GPIO_SWPORTA_DDR:
++        value = s->ddr;
 +        break;
-+    case K230_RTC_ALARM_DATE:
-+        value = s->alarm_date;
++    case K230_GPIO_SWPORTA_CTL:
++        value = s->ctl;
 +        break;
-+    case K230_RTC_ALARM_TIME:
-+        value = s->alarm_time;
++    case K230_GPIO_INTEN:
++        value = s->inten;
 +        break;
-+    case K230_RTC_COUNT: {
-+        uint32_t sum = extract32(s->count, 16, 16);
-+        int64_t elapsed = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) -
-+                          s->last_tick_ns;
-+        uint64_t curr = 0;
-+
-+        if (elapsed > 0) {
-+            curr = (uint64_t)elapsed * (sum + 1) / NANOSECONDS_PER_SECOND;
-+        }
-+        if (curr > sum) {
-+            curr = sum;
-+        }
-+        value = (sum << 16) | (uint32_t)curr;
++    case K230_GPIO_INTMASK:
++        value = s->intmask;
 +        break;
-+    }
-+    case K230_RTC_INT_CTRL:
-+        value = s->int_ctrl;
++    case K230_GPIO_INTTYPE_LEVEL:
++        value = s->inttype_level;
++        break;
++    case K230_GPIO_INT_POLARITY:
++        value = s->int_polarity;
++        break;
++    case K230_GPIO_INTSTATUS:
++        value = s->intstatus;
++        break;
++    case K230_GPIO_RAW_INTSTATUS:
++        value = s->raw_intstatus;
++        break;
++    case K230_GPIO_DEBOUNCE:
++        value = s->debounce;
++        break;
++    case K230_GPIO_EXT_PORTA:
++        value = k230_gpio_pin_level(s);
++        break;
++    case K230_GPIO_LS_SYNC:
++        value = s->ls_sync;
++        break;
++    case K230_GPIO_VER_ID_CODE:
++        value = K230_GPIO_VER_ID_VALUE;
++        break;
++    case K230_GPIO_CONFIG_REG2:
++        /* Port A width - 1 in bits [4:0]; single 32-bit port. */
++        value = K230_GPIO_PINS - 1;
 +        break;
 +    default:
 +        break;
 +    }
 +
-+    trace_k230_rtc_read(addr, value);
++    trace_k230_gpio_read(addr, value);
 +    return value;
 +}
 +
-+static void k230_rtc_write(void *opaque, hwaddr addr,
-+                           uint64_t value, unsigned int size)
++static void k230_gpio_write(void *opaque, hwaddr addr,
++                            uint64_t value, unsigned int size)
 +{
-+    K230RtcState *s = K230_RTC(opaque);
-+    bool w_en = s->int_ctrl & K230_RTC_TIMER_W_EN;
++    K230GpioState *s = K230_GPIO(opaque);
++    uint32_t old = k230_gpio_pin_level(s);
 +
-+    trace_k230_rtc_write(addr, value);
++    trace_k230_gpio_write(addr, value);
 +
 +    switch (addr) {
-+    case K230_RTC_DATE:
-+        if (w_en) {
-+            s->date = value;
-+            k230_rtc_check_alarm(s);
-+        }
++    case K230_GPIO_SWPORTA_DR:
++        s->dr = value;
++        k230_gpio_update(s, old);
 +        break;
-+    case K230_RTC_TIME:
-+        if (w_en) {
-+            s->time = value;
-+            k230_rtc_check_alarm(s);
-+        }
++    case K230_GPIO_SWPORTA_DDR:
++        s->ddr = value;
++        k230_gpio_update(s, old);
 +        break;
-+    case K230_RTC_ALARM_DATE:
-+        s->alarm_date = value;
-+        k230_rtc_check_alarm(s);
++    case K230_GPIO_SWPORTA_CTL:
++        s->ctl = value;
 +        break;
-+    case K230_RTC_ALARM_TIME:
-+        s->alarm_time = value;
-+        k230_rtc_check_alarm(s);
++    case K230_GPIO_INTEN:
++        s->inten = value;
++        k230_gpio_update(s, old);
 +        break;
-+    case K230_RTC_COUNT:
-+        if (w_en) {
-+            s->count = value;
-+            s->last_tick_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+        }
++    case K230_GPIO_INTMASK:
++        s->intmask = value;
++        k230_gpio_update(s, old);
 +        break;
-+    case K230_RTC_INT_CTRL:
-+        if (value & K230_RTC_ALARM_CLR) {
-+            s->alarm_pending = false;
-+            s->tick_pending = false;
-+            value &= ~K230_RTC_ALARM_CLR;
-+        }
-+        s->int_ctrl = value;
-+        k230_rtc_check_alarm(s);
-+        k230_rtc_update_irq(s);
++    case K230_GPIO_INTTYPE_LEVEL:
++        s->inttype_level = value;
++        k230_gpio_update(s, old);
++        break;
++    case K230_GPIO_INT_POLARITY:
++        s->int_polarity = value;
++        k230_gpio_update(s, old);
++        break;
++    case K230_GPIO_DEBOUNCE:
++        s->debounce = value;
++        break;
++    case K230_GPIO_PORTA_EOI:
++        /* Write-1-to-clear latched edge interrupts only. */
++        s->raw_intstatus &= ~(value & s->inttype_level);
++        k230_gpio_update(s, k230_gpio_pin_level(s));
++        break;
++    case K230_GPIO_LS_SYNC:
++        s->ls_sync = value;
 +        break;
 +    default:
 +        break;
 +    }
 +}
 +
-+static const MemoryRegionOps k230_rtc_ops = {
-+    .read = k230_rtc_read,
-+    .write = k230_rtc_write,
++static const MemoryRegionOps k230_gpio_ops = {
++    .read = k230_gpio_read,
++    .write = k230_gpio_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .impl = {
 +        .min_access_size = 4,
@@ -353,106 +309,113 @@ index 0000000..c1de83d
 +    },
 +};
 +
-+static void k230_rtc_reset(DeviceState *dev)
++static void k230_gpio_reset(DeviceState *dev)
 +{
-+    K230RtcState *s = K230_RTC(dev);
++    K230GpioState *s = K230_GPIO(dev);
 +
-+    s->date = 0;
-+    s->time = 0;
-+    s->alarm_date = 0;
-+    s->alarm_time = 0;
-+    s->count = 32767u << 16;
-+    s->int_ctrl = 0;
-+    s->alarm_pending = false;
-+    s->tick_pending = false;
-+    s->last_tick_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    qemu_set_irq(s->irq, 0);
++    s->dr = 0;
++    s->ddr = 0;
++    s->ctl = 0;
++    s->inten = 0;
++    s->intmask = 0;
++    s->inttype_level = 0;
++    s->int_polarity = 0;
++    s->intstatus = 0;
++    s->raw_intstatus = 0;
++    s->debounce = 0;
++    s->ls_sync = 0;
++    s->in = 0;
 +
-+    timer_mod(s->timer, s->last_tick_ns + NANOSECONDS_PER_SECOND);
++    for (int i = 0; i < K230_GPIO_PINS; i++) {
++        qemu_set_irq(s->irq[i], 0);
++    }
 +}
 +
-+static const VMStateDescription vmstate_k230_rtc = {
-+    .name = "k230.rtc",
++static const VMStateDescription vmstate_k230_gpio = {
++    .name = "k230.gpio",
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_TIMER_PTR(timer, K230RtcState),
-+        VMSTATE_UINT32(date, K230RtcState),
-+        VMSTATE_UINT32(time, K230RtcState),
-+        VMSTATE_UINT32(alarm_date, K230RtcState),
-+        VMSTATE_UINT32(alarm_time, K230RtcState),
-+        VMSTATE_UINT32(count, K230RtcState),
-+        VMSTATE_UINT32(int_ctrl, K230RtcState),
-+        VMSTATE_INT64(last_tick_ns, K230RtcState),
-+        VMSTATE_BOOL(alarm_pending, K230RtcState),
-+        VMSTATE_BOOL(tick_pending, K230RtcState),
++        VMSTATE_UINT32(dr, K230GpioState),
++        VMSTATE_UINT32(ddr, K230GpioState),
++        VMSTATE_UINT32(ctl, K230GpioState),
++        VMSTATE_UINT32(inten, K230GpioState),
++        VMSTATE_UINT32(intmask, K230GpioState),
++        VMSTATE_UINT32(inttype_level, K230GpioState),
++        VMSTATE_UINT32(int_polarity, K230GpioState),
++        VMSTATE_UINT32(intstatus, K230GpioState),
++        VMSTATE_UINT32(raw_intstatus, K230GpioState),
++        VMSTATE_UINT32(debounce, K230GpioState),
++        VMSTATE_UINT32(ls_sync, K230GpioState),
++        VMSTATE_UINT32(in, K230GpioState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void k230_rtc_realize(DeviceState *dev, Error **errp)
++static void k230_gpio_realize(DeviceState *dev, Error **errp)
 +{
-+    K230RtcState *s = K230_RTC(dev);
++    K230GpioState *s = K230_GPIO(dev);
 +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
 +
-+    memory_region_init_io(&s->mmio, OBJECT(dev), &k230_rtc_ops, s,
-+                          TYPE_K230_RTC, K230_RTC_MMIO_SIZE);
++    memory_region_init_io(&s->mmio, OBJECT(dev), &k230_gpio_ops, s,
++                          TYPE_K230_GPIO, K230_GPIO_MMIO_SIZE);
 +    sysbus_init_mmio(sbd, &s->mmio);
-+    sysbus_init_irq(sbd, &s->irq);
 +
-+    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, k230_rtc_tick, s);
++    for (int i = 0; i < K230_GPIO_PINS; i++) {
++        sysbus_init_irq(sbd, &s->irq[i]);
++    }
++    qdev_init_gpio_in(dev, k230_gpio_set_input, K230_GPIO_PINS);
 +}
 +
-+static void k230_rtc_class_init(ObjectClass *klass, const void *data)
++static void k230_gpio_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->realize = k230_rtc_realize;
-+    device_class_set_legacy_reset(dc, k230_rtc_reset);
-+    dc->vmsd = &vmstate_k230_rtc;
-+    dc->desc = "K230 RTC";
++    dc->realize = k230_gpio_realize;
++    device_class_set_legacy_reset(dc, k230_gpio_reset);
++    dc->vmsd = &vmstate_k230_gpio;
++    dc->desc = "K230 GPIO controller";
 +}
 +
-+static const TypeInfo k230_rtc_info = {
-+    .name          = TYPE_K230_RTC,
++static const TypeInfo k230_gpio_info = {
++    .name          = TYPE_K230_GPIO,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(K230RtcState),
-+    .class_init    = k230_rtc_class_init,
++    .instance_size = sizeof(K230GpioState),
++    .class_init    = k230_gpio_class_init,
 +};
 +
-+static void k230_rtc_register_type(void)
++static void k230_gpio_register_type(void)
 +{
-+    type_register_static(&k230_rtc_info);
++    type_register_static(&k230_gpio_info);
 +}
-+type_init(k230_rtc_register_type)
-diff --git a/hw/rtc/meson.build b/hw/rtc/meson.build
-index 6c87864..3f3529c 100644
---- a/hw/rtc/meson.build
-+++ b/hw/rtc/meson.build
-@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_LS7A_RTC', if_true: files('ls7a_rtc.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-rtc.c'))
- system_ss.add(when: 'CONFIG_MC146818RTC', if_true: files('mc146818rtc.c'))
- system_ss.add(when: 'CONFIG_RS5C372_RTC', if_true: files('rs5c372.c'))
-+system_ss.add(when: 'CONFIG_K230_RTC', if_true: files('k230_rtc.c'))
-diff --git a/hw/rtc/trace-events b/hw/rtc/trace-events
-index d2f3621..beee3b1 100644
---- a/hw/rtc/trace-events
-+++ b/hw/rtc/trace-events
-@@ -43,3 +43,8 @@ goldfish_rtc_write(uint64_t addr, uint64_t value) "addr 0x%02" PRIx64 " value 0x
- # rs5c372.c
- rs5c372_recv(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] -> 0x%02" PRIx8
- rs5c372_send(uint32_t addr, uint8_t value) "[0x%" PRIx32 "] <- 0x%02" PRIx8
++type_init(k230_gpio_register_type)
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 6a67ee9..94b5d9e 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
+ system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
++system_ss.add(when: 'CONFIG_K230_GPIO', if_true: files('k230_gpio.c'))
+diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
+index cea896b..ac5d7fd 100644
+--- a/hw/gpio/trace-events
++++ b/hw/gpio/trace-events
+@@ -46,3 +46,7 @@ stm32l4x5_gpio_read(char *gpio, uint64_t addr) "GPIO%s addr: 0x%" PRIx64 " "
+ stm32l4x5_gpio_write(char *gpio, uint64_t addr, uint64_t data) "GPIO%s addr: 0x%" PRIx64 " val: 0x%" PRIx64 ""
+ stm32l4x5_gpio_update_idr(char *gpio, uint32_t old_idr, uint32_t new_idr) "GPIO%s from: 0x%x to: 0x%x"
+ stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s disconnected pins: 0x%x levels: 0x%x"
 +
-+# k230_rtc.c
-+k230_rtc_read(uint64_t addr, uint32_t data) "K230 RTC read: [0x%" PRIx64 "] -> 0x%" PRIx32
-+k230_rtc_write(uint64_t addr, uint64_t data) "K230 RTC write: [0x%" PRIx64 "] <- 0x%" PRIx64
-+k230_rtc_alarm(void) "K230 RTC alarm"
-diff --git a/include/hw/rtc/k230_rtc.h b/include/hw/rtc/k230_rtc.h
++# k230_gpio.c
++k230_gpio_read(uint64_t addr, uint32_t data) "K230 GPIO read: [0x%" PRIx64 "] -> 0x%" PRIx32
++k230_gpio_write(uint64_t addr, uint64_t data) "K230 GPIO write: [0x%" PRIx64 "] <- 0x%" PRIx64
+diff --git a/include/hw/gpio/k230_gpio.h b/include/hw/gpio/k230_gpio.h
 new file mode 100644
-index 0000000..678ee37
+index 0000000..10c123d
 --- /dev/null
-+++ b/include/hw/rtc/k230_rtc.h
-@@ -0,0 +1,61 @@
++++ b/include/hw/gpio/k230_gpio.h
+@@ -0,0 +1,68 @@
 +/*
-+ * K230 RTC compatible with Kendryte K230 SDK
++ * K230 GPIO controller (Synopsys DW_apb_gpio) compatible with Kendryte K230 SDK
 + *
 + * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
 + *
@@ -463,78 +426,88 @@ index 0000000..678ee37
 + *
 + * For more information, see <https://www.kendryte.com/en/proDetail/230>
 + */
-+#ifndef HW_RTC_K230_RTC_H
-+#define HW_RTC_K230_RTC_H
++#ifndef HW_GPIO_K230_GPIO_H
++#define HW_GPIO_K230_GPIO_H
 +
 +#include "hw/core/sysbus.h"
-+#include "qemu/timer.h"
 +#include "qom/object.h"
 +
-+#define TYPE_K230_RTC "riscv.k230.rtc"
-+OBJECT_DECLARE_SIMPLE_TYPE(K230RtcState, K230_RTC)
++#define TYPE_K230_GPIO "riscv.k230.gpio"
++OBJECT_DECLARE_SIMPLE_TYPE(K230GpioState, K230_GPIO)
 +
-+#define K230_RTC_MMIO_SIZE 0x400
++#define K230_GPIO_PINS      32
++#define K230_GPIO_MMIO_SIZE 0x1000
 +
 +enum {
-+    K230_RTC_DATE       = 0x00,
-+    K230_RTC_TIME       = 0x04,
-+    K230_RTC_ALARM_DATE = 0x08,
-+    K230_RTC_ALARM_TIME = 0x0c,
-+    K230_RTC_COUNT      = 0x10,
-+    K230_RTC_INT_CTRL   = 0x14,
++    K230_GPIO_SWPORTA_DR   = 0x00,
++    K230_GPIO_SWPORTA_DDR  = 0x04,
++    K230_GPIO_SWPORTA_CTL  = 0x08,
++    K230_GPIO_INTEN        = 0x30,
++    K230_GPIO_INTMASK      = 0x34,
++    K230_GPIO_INTTYPE_LEVEL = 0x38,
++    K230_GPIO_INT_POLARITY = 0x3c,
++    K230_GPIO_INTSTATUS    = 0x40,
++    K230_GPIO_RAW_INTSTATUS = 0x44,
++    K230_GPIO_DEBOUNCE     = 0x48,
++    K230_GPIO_PORTA_EOI    = 0x4c,
++    K230_GPIO_EXT_PORTA    = 0x50,
++    K230_GPIO_LS_SYNC      = 0x60,
++    K230_GPIO_ID_CODE      = 0x64,
++    K230_GPIO_VER_ID_CODE  = 0x6c,
++    K230_GPIO_CONFIG_REG2  = 0x70,
++    K230_GPIO_CONFIG_REG1  = 0x74,
 +};
 +
-+/* INT_CTRL bits */
-+#define K230_RTC_TIMER_W_EN (1u << 0)
-+#define K230_RTC_TIMER_R_EN (1u << 1)
-+#define K230_RTC_TICK_EN    (1u << 8)
-+#define K230_RTC_ALARM_EN   (1u << 16)
-+#define K230_RTC_ALARM_CLR  (1u << 17)
-+#define K230_RTC_CMP_SHIFT  24
-+#define K230_RTC_CMP_SECOND (1u << 24)
++#define K230_GPIO_VER_ID_VALUE 0x3230312a
 +
-+struct K230RtcState {
++struct K230GpioState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion mmio;
-+    qemu_irq irq;
-+    QEMUTimer *timer;
++    qemu_irq irq[K230_GPIO_PINS];
 +
-+    uint32_t date;
-+    uint32_t time;
-+    uint32_t alarm_date;
-+    uint32_t alarm_time;
-+    uint32_t count;
-+    uint32_t int_ctrl;
-+    int64_t last_tick_ns;
-+    bool alarm_pending;
-+    bool tick_pending;
++    uint32_t dr;
++    uint32_t ddr;
++    uint32_t ctl;
++    uint32_t inten;
++    uint32_t intmask;
++    uint32_t inttype_level;
++    uint32_t int_polarity;
++    uint32_t intstatus;
++    uint32_t raw_intstatus;
++    uint32_t debounce;
++    uint32_t ls_sync;
++
++    uint32_t in;
 +};
 +
 +#endif
-diff --git a/tests/qtest/k230-rtc-test.c b/tests/qtest/k230-rtc-test.c
+diff --git a/tests/qtest/k230-gpio-test.c b/tests/qtest/k230-gpio-test.c
 new file mode 100644
-index 0000000..081f21d
+index 0000000..42ef137
 --- /dev/null
-+++ b/tests/qtest/k230-rtc-test.c
-@@ -0,0 +1,188 @@
++++ b/tests/qtest/k230-gpio-test.c
+@@ -0,0 +1,143 @@
 +/*
-+ * QTest testcase for K230 RTC
++ * QTest testcase for K230 GPIO (DW_apb_gpio)
 + *
 + * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
++ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
 + */
 +#include "qemu/osdep.h"
-+#include "qemu/timer.h"
 +#include "libqtest.h"
-+#include "hw/rtc/k230_rtc.h"
++#include "hw/gpio/k230_gpio.h"
 +
-+#define RTC_BASE 0x91000C00
++#define GPIO0_BASE 0x9140B000
++#define GPIO1_BASE 0x9140C000
 +
-+#define PLIC_BASE    0xF00000000ULL
-+#define PLIC_PENDING (PLIC_BASE + 0x1000)
-+#define RTC_IRQ      175
++#define PLIC_BASE       0xF00000000ULL
++#define PLIC_PENDING    (PLIC_BASE + 0x1000)
++#define GPIO0_IRQ_BASE  32
 +
 +static bool plic_pending(QTestState *qts, int irq)
 +{
@@ -546,147 +519,102 @@ index 0000000..081f21d
 +{
 +    QTestState *qts = qtest_init("-machine k230");
 +
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + K230_RTC_INT_CTRL), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS), ==, 0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA), ==, 0);
 +
 +    qtest_quit(qts);
 +}
 +
-+/* Write-protect: date/time writes need timer_w_en */
-+static void test_write_protect(void)
++/* Output pins loop back into EXT_PORTA */
++static void test_output_loopback(void)
 +{
 +    QTestState *qts = qtest_init("-machine k230");
 +
-+    /* Protected: with w_en clear, writes are ignored */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, 0);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_TIME, 0x0A);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + K230_RTC_TIME), ==, 0);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA) & 0x1,
++                    ==, 0x1);
 +
-+    /* Unlocked: enable then write date + time, read back */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_DATE, (6 << 8) | 15);  /* Jun 15 */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_TIME,
-+                 (12 << 16) | (30 << 8) | 45);  /* 12:30:45 */
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + K230_RTC_DATE), ==,
-+                    (6 << 8) | 15);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + K230_RTC_TIME), ==,
-+                    (12 << 16) | (30 << 8) | 45);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA) & 0x1,
++                    ==, 0x0);
++
++    /* Independent pins */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0xFFFFFFFF);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x80000001);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA),
++                    ==, 0x80000001);
 +
 +    qtest_quit(qts);
 +}
 +
-+/* One virtual second advances TIME.second */
-+static void test_tick(void)
++/* Rising-edge interrupt via DR toggle on an output pin, cleared by EOI */
++static void test_edge_interrupt(void)
 +{
 +    QTestState *qts = qtest_init("-machine k230");
 +
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_TIME, 10);  /* second = 10 */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x1); /* edge */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);  /* rising */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
 +
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+    g_assert_cmpuint(qtest_readl(qts, RTC_BASE + K230_RTC_TIME) & 0x3F, ==, 11);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0);
++
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0x1);
++    g_assert_true(plic_pending(qts, GPIO0_IRQ_BASE + 0));
++
++    /* Write-1 EOI clears the latched edge */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_PORTA_EOI, 0x1);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0);
 +
 +    qtest_quit(qts);
 +}
 +
-+/* Masked second alarm raises the RTC interrupt; cleared by alarm_clr */
-+static void test_alarm(void)
++/* Level interrupt follows the pin; EOI does not clear it */
++static void test_level_interrupt(void)
 +{
 +    QTestState *qts = qtest_init("-machine k230");
 +
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_TIME, 10);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_ALARM_TIME, 11);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL,
-+                 K230_RTC_ALARM_EN | K230_RTC_CMP_SECOND);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x0); /* level */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);  /* high */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
 +
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+    g_assert_true(plic_pending(qts, RTC_IRQ));
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0x1);
 +
-+    /*
-+     * alarm_clr is write-1 self-clearing and lowers the RTC IRQ line; the
-+     * PLIC pending bit is sticky until claimed, so verify the ack bit here.
-+     */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL,
-+                 K230_RTC_ALARM_EN | K230_RTC_CMP_SECOND | K230_RTC_ALARM_CLR);
-+    g_assert_cmphex(qtest_readl(qts, RTC_BASE + K230_RTC_INT_CTRL), ==,
-+                    K230_RTC_ALARM_EN | K230_RTC_CMP_SECOND);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0);
 +
 +    qtest_quit(qts);
 +}
 +
-+/* COUNT sub-second field advances with virtual time within the second */
-+static void test_count_live(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t count;
-+
-+    /* half a second in -> curr = (sum+1)/2, sum field unchanged */
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND / 2);
-+    count = qtest_readl(qts, RTC_BASE + K230_RTC_COUNT);
-+    g_assert_cmpuint(count >> 16, ==, 32767);
-+    g_assert_cmpuint(count & 0xFFFF, ==, 16384);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* TICK_EN turns the 1 Hz advance into a periodic interrupt; gated by TICK_EN */
-+static void test_tick_irq(void)
++/* INTMASK hides the interrupt from INTSTATUS/PLIC but not RAW_INTSTATUS */
++static void test_mask(void)
 +{
 +    QTestState *qts = qtest_init("-machine k230");
 +
-+    /* No TICK_EN: a tick advances time but raises no interrupt */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+    g_assert_false(plic_pending(qts, RTC_IRQ));
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x0);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTMASK, 0x1);
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
 +
-+    /* TICK_EN set: the next tick raises the shared RTC interrupt */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL,
-+                 K230_RTC_TIMER_W_EN | K230_RTC_TICK_EN);
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+    g_assert_true(plic_pending(qts, RTC_IRQ));
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Enabling an alarm whose time already matches fires without waiting a tick */
-+static void test_alarm_immediate(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_TIME, 10);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_ALARM_TIME, 10);
-+
-+    /* enable while already matching -> immediate, no clock step */
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL,
-+                 K230_RTC_TIMER_W_EN | K230_RTC_ALARM_EN | K230_RTC_CMP_SECOND);
-+    g_assert_true(plic_pending(qts, RTC_IRQ));
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Year alarm must match in a leap year: advance() sets a leap flag at DATE
-+ * bit 23, which must not contaminate the year comparison.
-+ */
-+static void test_alarm_year_leap(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t date2024 = (20u << 24) | (24u << 16) | (6u << 8) | 15u; /* 2024 */
-+
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL, K230_RTC_TIMER_W_EN);
-+    qtest_writel(qts, RTC_BASE + K230_RTC_DATE, date2024);
-+    /* one tick makes advance() set the leap flag (bit 23) in DATE */
-+    qtest_clock_step(qts, NANOSECONDS_PER_SECOND);
-+
-+    qtest_writel(qts, RTC_BASE + K230_RTC_INT_CTRL,
-+                 K230_RTC_TIMER_W_EN | K230_RTC_ALARM_EN |
-+                 ((1u << 6) << K230_RTC_CMP_SHIFT));  /* year compare */
-+    g_assert_false(plic_pending(qts, RTC_IRQ));       /* alarm_date still 0 */
-+
-+    qtest_writel(qts, RTC_BASE + K230_RTC_ALARM_DATE,
-+                 (20u << 24) | (24u << 16));
-+    g_assert_true(plic_pending(qts, RTC_IRQ));  /* matches despite leap flag */
++    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
++    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts,
++                    GPIO0_BASE + K230_GPIO_RAW_INTSTATUS) & 0x1, ==, 0x1);
 +
 +    qtest_quit(qts);
 +}
@@ -695,14 +623,11 @@ index 0000000..081f21d
 +{
 +    g_test_init(&argc, &argv, NULL);
 +
-+    qtest_add_func("/k230-rtc/reset_values", test_reset_values);
-+    qtest_add_func("/k230-rtc/write_protect", test_write_protect);
-+    qtest_add_func("/k230-rtc/tick", test_tick);
-+    qtest_add_func("/k230-rtc/alarm", test_alarm);
-+    qtest_add_func("/k230-rtc/count_live", test_count_live);
-+    qtest_add_func("/k230-rtc/tick_irq", test_tick_irq);
-+    qtest_add_func("/k230-rtc/alarm_immediate", test_alarm_immediate);
-+    qtest_add_func("/k230-rtc/alarm_year_leap", test_alarm_year_leap);
++    qtest_add_func("/k230-gpio/reset_values", test_reset_values);
++    qtest_add_func("/k230-gpio/output_loopback", test_output_loopback);
++    qtest_add_func("/k230-gpio/edge_interrupt", test_edge_interrupt);
++    qtest_add_func("/k230-gpio/level_interrupt", test_level_interrupt);
++    qtest_add_func("/k230-gpio/mask", test_mask);
 +
 +    return g_test_run();
 +}
