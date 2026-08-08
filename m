@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400D8C55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 08:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA033C5AD2C
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 09:06:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsclG-0004QD-Go; Sat, 08 Aug 2026 04:50:34 -0400
+	id 1wsczV-0006rN-0E; Sat, 08 Aug 2026 05:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wsclD-0004Ou-2j; Sat, 08 Aug 2026 04:50:32 -0400
+ id 1wsczS-0006qX-SW; Sat, 08 Aug 2026 05:05:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wscl9-0002Hb-GZ; Sat, 08 Aug 2026 04:50:30 -0400
+ id 1wsczP-0004yd-VJ; Sat, 08 Aug 2026 05:05:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786179019; bh=fDoqhCp3jGZnywF6pK1/jSrr2vQEB6A9+bF4GDB3ivo=;
+ t=1786179903; bh=Q43xD9dK/bjHiOVr5Hbh/YFCcP9bejsZBDmjOo5Sjl0=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Kax8H+FnEhcj5Qm5G4UGMZSIzSWsXxKhaJVD5zk5TbqO8PYdtg+dFwdu4ER+EBQXO
- 3clE2wzypzAq0xkBVlxkc7kJSZPkpSB3TrW53T8BEFubK8durXGg8yht9bss1Oadcy
- bemxO8I74wUqOVvOD+YFuW17AjHwHFa3L8Y/m5kIijmnPyAODQ25/nK3JXlT8ZEOO4
- OsOhb7WtBLx0db91MXIAH/S4/VxsNdWTijc15TiNuap9lkKjOek+tAN2swacfEhuME
- mVXGLqr7sLe98oyu4ly+ogrsNVYtawKKdY0pvMRSWJVlI6ecai7qeoWqLaHd4lk/1a
- yoLltPoZNIW4A==
+ b=Zhpe1DeQOgdYtIX3sltqwe1ZUUXNGFsGFs2RZvSekyNfnS2TlUafAgy9NVy5GrKkE
+ Pt1ADWVQSlvefPGpHSAGRBOuBlUKHfd5hQMHjgJFIAf1yCzdDGQbxouhr22clEJsH3
+ sFBYowUDcsBPrBo4ZhWVk3rQpgczmYRH2lFeY623WKfp+T4d/AXjMH9abAsKQUBccj
+ SHrjgc933bNgn9HqdkkcvT7XpBw2tQY4P5wZc1POVq3Nams9KRYu3HoK3zIM+fu65O
+ Kz2AUMR4+nKQU3NHB+i9W5ZivCzQSfYq3YNNLUIlkl05GpFD/j2r2+Lkb6xiFEcqFU
+ s5sEjhFtl/mgQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B56451C935F;
- Sat, 08 Aug 2026 11:50:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B7CF31C9363;
+ Sat, 08 Aug 2026 12:05:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C2EA404E2A;
- Sat, 08 Aug 2026 11:50:22 +0300 (MSK)
-Message-ID: <c2c16a13-96d8-47b4-afec-81c812d473fe@tls.msk.ru>
-Date: Sat, 8 Aug 2026 11:50:02 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 62D12404E3A;
+ Sat, 08 Aug 2026 12:05:06 +0300 (MSK)
+Message-ID: <3ad150e9-5a6b-43e5-9122-f2ec34090d76@tls.msk.ru>
+Date: Sat, 8 Aug 2026 12:04:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] linux-user/syscall: fix target_msqid_ds time fields
- order
-To: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, qemu-stable@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20240329223653.155786-1-jcmvbkbc@gmail.com>
+Subject: Re: [PATCH v4 0/3] qapi: Fix some command blocked for too long
+To: zoudongjie <zoudongjie@huawei.com>, qemu-devel@nongnu.org
+Cc: armbru@redhat.com, alex.chen@huawei.com, chenjianfei3@huawei.com,
+ eric.fangyi@huawei.com, fam@euphon.net, hreitz@redhat.com, kwolf@redhat.com,
+ luolongmin@huawei.com, mujinsheng@huawei.com, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, renxuming@huawei.com, stefanha@redhat.com,
+ suxiaodong1@huawei.com, wangjian161@huawei.com, wangyan122@huawei.com,
+ yebiaoxiang@huawei.com, zhuyangyang14@huawei.com
+References: <20250401130300.1457584-1-zoudongjie@huawei.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +91,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20240329223653.155786-1-jcmvbkbc@gmail.com>
+In-Reply-To: <20250401130300.1457584-1-zoudongjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,67 +117,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/30/24 01:36, Max Filippov wrote:
-> target_msqid_ds::msg_*time field pairs are reversed on 32-bit TARGET_PPC
-> and TARGET_SPARC and on big-endian TARGET_MIPS and TARGET_XTENSA.
-> Fix the order to match the kernel definitions.
-> The issue is spotted by the libc-test http://nsz.repo.hu/git/?p=libc-test
-> on big-endian xtensa core.
+On 4/1/25 16:02, zoudongjie via wrote:
+> From: Zhu Yangyang <zhuyangyang14@huawei.com>
 > 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+> QMP may will be blocked for a long time on bdrv_drained_begin() when a
+> network disk is configured and the network failure is just about to occur.
+> 
+> In theory, any command may be blocked if it calls bdrv_drained_begin().
+> 
+> This series add a timeout parameter for qmp_block_set_io_throttle() and
+> qmp_block_resize() to control their execution duration.
 
-Just come across this old patch, is it not needed anymore or has it been lost?
-(I realize the current code uses target_time64_t instead of abi_ulong, so probably
-not needed now)
+Hi!
+
+Has this (oldish) patchset been abandoned/lost somehow?
 
 Thanks,
 
 /mjt
 
-> Changes v1->v2:
-> - split into a separate patch
-> - add PPC, SPARC and big-endian MIPS
+> Changelog
+> v4 ---
+>    1. Corrected the added version of the timeout parameter from 10.0 to 10.1
+>    2. Add a patch to add the timeout parameter for qmp_block_resize().
 > 
->   linux-user/syscall.c | 20 +++++++++++++++-----
->   1 file changed, 15 insertions(+), 5 deletions(-)
+> v3 ---
+>    Unify AIO_WAIT_WHILE_{TIMEOUT/INTERNAL} by replacing AIO_WAIT_WHILE_INTERNAL() with
+>    AIO_WAIT_WHILE_TIMEOUT(..., 0).
 > 
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index d9bfd31c1cad..781ed14bc613 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -4113,17 +4113,27 @@ static inline abi_long do_semtimedop(int semid,
->   struct target_msqid_ds
->   {
->       struct target_ipc_perm msg_perm;
-> -    abi_ulong msg_stime;
->   #if TARGET_ABI_BITS == 32
-> +#if defined(TARGET_PPC) || defined(TARGET_SPARC) || \
-> +    (TARGET_BIG_ENDIAN && (defined(TARGET_MIPS) || defined(TARGET_XTENSA)))
-> +    abi_ulong __unused1;
-> +    abi_ulong msg_stime;
-> +    abi_ulong __unused2;
-> +    abi_ulong msg_rtime;
-> +    abi_ulong __unused3;
-> +    abi_ulong msg_ctime;
-> +#else
-> +    abi_ulong msg_stime;
->       abi_ulong __unused1;
-> -#endif
->       abi_ulong msg_rtime;
-> -#if TARGET_ABI_BITS == 32
->       abi_ulong __unused2;
-> -#endif
->       abi_ulong msg_ctime;
-> -#if TARGET_ABI_BITS == 32
->       abi_ulong __unused3;
-> +#endif
-> +#else
-> +    abi_ulong msg_stime;
-> +    abi_ulong msg_rtime;
-> +    abi_ulong msg_ctime;
->   #endif
->       abi_ulong __msg_cbytes;
->       abi_ulong msg_qnum;
+> v2 ---
+>    1. Support 0 in BDRV_POLL_WHILE_TIMEOUT(), 0 means infinite.
+>    2. Use uint64_t timeout_ns instead of int64 timeout to name variables.
+>    3. Use timer_pending() to check for expiry instead of explicitly checking
+>       against the deadline for BDRV_POLL_WHILE_TIMEOUT().
+>    4. Add documentation for bdrv_drained_begin_timeout(), note that bdrv_drained_end()
+>       must be called when -ETIMEDOUT is returned.
+>    5. Add a timeout parameter to the qmp_block_set_io_throttle() instead of hardcoding
+>       the timeout, and the default value is 0, mean an infinite timeout.
+> 
+> v1 patch link:
+> https://lore.kernel.org/qemu-devel/20250308101618.721954-1-zoudongjie@huawei.com/
+> 
+> 
+> Zhu Yangyang (3):
+>    io/block: Refactoring the bdrv_drained_begin() function and implement
+>      a timeout mechanism.
+>    qapi/throttle: add timeout parameter for qmp_block_set_io_throttle()
+>    qapi/resize: add timeout parameter for qmp_block_resize()
+> 
+>   block/block-backend.c                       | 14 ++++-
+>   block/io.c                                  | 58 +++++++++++++++++----
+>   block/monitor/block-hmp-cmds.c              |  2 +-
+>   block/qapi-system.c                         | 10 +++-
+>   blockdev.c                                  | 16 +++++-
+>   include/block/aio-wait.h                    | 47 ++++++++++++-----
+>   include/block/block-io.h                    | 22 +++++++-
+>   include/system/block-backend-global-state.h |  1 +
+>   qapi/block-core.json                        | 11 +++-
+>   util/aio-wait.c                             |  5 ++
+>   10 files changed, 155 insertions(+), 31 deletions(-)
+> 
 
 
