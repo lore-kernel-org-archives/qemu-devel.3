@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14BAFC5AD2B
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 01:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4453CC5AD2B
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 02:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsW6M-0003oB-M9; Fri, 07 Aug 2026 21:43:55 -0400
+	id 1wsWM2-0005g0-TC; Fri, 07 Aug 2026 22:00:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wsW6L-0003o3-9p
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 21:43:53 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1wsWM0-0005fE-Fj
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 22:00:04 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wsW6I-0008Rk-QF
- for qemu-devel@nongnu.org; Fri, 07 Aug 2026 21:43:52 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-84e3007a2b7so125169b3a.0
- for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 18:43:49 -0700 (PDT)
+ id 1wsWLy-0002ea-9l
+ for qemu-devel@nongnu.org; Fri, 07 Aug 2026 22:00:04 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-38f0f132f56so2109046a91.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Aug 2026 19:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786153428; x=1786758228; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786154400; x=1786759200; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=O4GIHFJ3Jzq4zAZSw1vIDcvJbZyv6aXJ6LIgb6JFwg8=;
- b=VkIIZgTqL2aDmEzI5yJ0TlAC1NvAHusqJdn/tXntg6HPTIvJGNAX2Ord4/atYUIRsC
- JWZTgktwdU8yeVvEj/Irll5/iZb4qj1762u5/ZALBAqSWRQXe4qYaxDDPMwcmdhzJqdE
- IUD4Rnyt17Aiw6Vc6yuZNlWQVfUpQDUlKi4MpH3hw4numiDIE3PWlF5zWWwABWCxNKvL
- FwsMfzt+Av18sj6yHfdd5ZG3gPHz0+TKh0BDEJrczbEYIaI3aShCpCm+3niy/f/UF3MZ
- CCGQqHzOuadApURvs0CC6jPvTHhKONk4K9Cr4eU1+USrAAV4CgYl6xjVNn8o6/6p7Eos
- HG/g==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Wcff7Qc7G4NPhKObhvB8cmR7HEnvuR9tx458N9ysRiw=;
+ b=k5P0md2kG9o7rRWG+pFUXgFOAEPAFuxM+AX4OiCE4JLrqG2SFv5uilQ1ZI+XlQhDEk
+ SyG2yyOysb3RG1V4mWjD3sLUD3KZCNPN0B00jiHUVQZ2BCRbPz6K9pWT47gET3o6NwIA
+ BZPtVfROBtIWeS1T0lpixN5UkuVxHSJzk7DY2Wg7wLOrvvpRhhA7SmyEQTn8NLsKI/kY
+ yqxwmiz7kKYuAQjdnX1kQ7kqKFZbV/0FCEF45eMtrZqz+1g2V3RgINk9aK7mCY5zNUsh
+ lNnd8RW9TK78EPT5r+qJpqLH/BnnPaqspxztLahPVkxz72FBR0BIsjW1SzJY8n84VysX
+ OPuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786153428; x=1786758228;
+ d=1e100.net; s=20251104; t=1786154400; x=1786759200;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=O4GIHFJ3Jzq4zAZSw1vIDcvJbZyv6aXJ6LIgb6JFwg8=;
- b=O2VQ9Pb83ZGnJU/5aH0luA8HX7bxeoyA8QSCkkm1CGSxy6UxEOT2b33r1SQmd6/WSE
- aA9ohtH+9zqb+/iEkOwBmRqmnYg8+3unEWNOFpglGCt06pKjTs1hUtmErefSSRti/8NB
- l0cTMPESIX9AsglxVq8ok1amDais/nESdcw0GkFQiWb2pYQM3SsGnk6aSaHzN+x+5gpf
- 132jXkpbW5KyNpgDHkBCyTSEIEjEUclI9Vs/XOWRogLIuqMbyom5PA+eO004CD4O0jBg
- pF10l2DzBmrJh+ZTIazFDRsi9Y8Hmg5TbJphmhQS6f9RV2DRRG123piF4Q8kA8n84mbB
- WOeg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq0HRdeI4IljXhlTtmcPJ0V5zLkxB59RkRny6p4BoRgUptSBEgNtNUmuBwmEk1nKF0qBh4LaMHFNocA@nongnu.org
-X-Gm-Message-State: AOJu0Yxsq90A7JJtYK9lu8np16vhB3jLCQl8Rn9Cbe4VrorfI3sO6yT5
- sAPIfP2xVXFkbbw35GNISdnKJYYnOhgRx45mn+jIZj3k9gfYsWySywEWpX66FRe929I=
-X-Gm-Gg: AR+sD13bwHcdueFCIyz5lT5q1bsPHjgPejMv3aFeJ3ym3wlqXjW+6H527L+P4hhtKJt
- xwbcGeVLyexd56AQmklZXqFUSMQ+gN7Un3Kn6Nhe7VjSlvctHBd50pKjsm0ijVckgE0Do0jbwC2
- /pAYCtQ80IZkWQQV/VFPqJLseFOWLOqBIwN0CnTTZ4nZmlPhJuRx8OETcMQzIwQIBe1pc66j9Rn
- UQspE8Vww3UB1EuX2ypd9j7UjK3m46sJg0elQlzE8avgVdvxGwWEwoPUdkFNokZW7phO8rXexc5
- 8RYpooZvo5yFTEhKUWoyKdvkXm8bgKpBvzFU5GpYNEUle5EwA60GoyvCUZ83I+D6pEki7mOaIZm
- sx9fnuBEqVIm7p5v4CpnDSHzJGa16r5ayuocgk6qC3hgPnnMbfGYjBGE2rVyROkgFaYHPwWXRik
- ec5Fx582uG8+VGyGIxF/Goip3M46HejueF+PMxP8duCqNzqlmVTkj2L+CiPnD+vHCFGU76PZ4S3
- lsXYuapPS0SaEUlMCe4/oUGHd4Y
-X-Received: by 2002:a05:6a00:3696:b0:842:3a3b:d6e7 with SMTP id
- d2e1a72fcca58-84f696a193cmr4434393b3a.23.1786153428475; 
- Fri, 07 Aug 2026 18:43:48 -0700 (PDT)
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Wcff7Qc7G4NPhKObhvB8cmR7HEnvuR9tx458N9ysRiw=;
+ b=MP5qt1uiT/TdfYhOuUdi9H/m2J09JGosvjYppqIAwWimAXTekdM2Yqgb3UAB0H+4SF
+ YJwpvqTd2sDkPFkLggxHF6P9fXMzsUzaaj5D+0fySolQilpeqggOvQH4S463Hr3vY30x
+ yDNoxLLUacrOIXHZPLaxY8yYq8QEfL36ca5m7c9NjXLT+Z7f9Nrvj+npNXx1H44f995N
+ 72zgBt+InxqmaJJSF+9vvmBNFymTfkYvG+yh1rGznsEv4GlhPLgOyjF0d1541F+tJXFK
+ RsZtIdDNIDF+9HE4LwwN98SRsK6Kt7/JUcg/ieoUzsTIiuRoc14Myf+ebXGMTHloWrfS
+ M2zg==
+X-Gm-Message-State: AOJu0YxJLLLa8BCnSy76Rd+9Fyph80MSM6GXEtTzevAZxtFQhyHIfY4H
+ Q80ffjAzmDSICIg8AZz5p3I1VIaQuapBYylZ0aBo4QETC2ODeO20eQ/ONbioEytylDfFV9bd4i3
+ 3Nq02
+X-Gm-Gg: AR+sD11bRs1wbNEvsJXc1zvy8WYqpX2X2BajmvfStYgpyR8e/TcPCYLGm2GomQVBzig
+ DTQ2Jpt76ydpdsu2M9gCEl96VtFRShyZpr+Zp5ZiXz/74k1feL/agBRZNRb2F7WepS9XeJelF/V
+ pQadU9Xs00wp3N1/cO1/CFy03Oh5qYSjlPNuZ2MABCaqgtjWpqU10rFsf1E4jg/5sIelQVATKVi
+ JRDB5zOBXYI4fpgCWqMWckU/ZzpI50EeU87eXhfE74A8nyueDCoVpmer7LEqNVF1cWIEMpE+k5T
+ aqxb/MigcZ5Hb32i7oN/WTFMgdyEN6QXXNf0en1ndHJw4BBgJoHYlnz8kXO+fUcJwIZvz04z9pN
+ 5iBAFPjEuv3X9Tw4XcgxmZv5plLfmjTp2ZmkqVFLCqhBWQm0ZDpsXpK9jyzRQHMBhYvpuUjNALz
+ cYVbwy6ikFFrEBBMa3PWkpN2DE5Z98A0Cn/9yuTzIaGHxxDd9HD3Plg849MREJ5UAwVlJnj+iE/
+ euVBsB/nigIdqdbdq8s/aL18V/GSH4SWjBZdzKe
+X-Received: by 2002:a17:90b:4fcb:b0:386:ca4b:16a9 with SMTP id
+ 98e67ed59e1d1-392846f2325mr1215967a91.16.1786154399742; 
+ Fri, 07 Aug 2026 18:59:59 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-84f5a51d88dsm1590777b3a.29.2026.08.07.18.43.47
+ 98e67ed59e1d1-3925ff6658bsm4443479a91.14.2026.08.07.18.59.59
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Aug 2026 18:43:47 -0700 (PDT)
-Message-ID: <34ea6eb3-7e4e-4d50-b3ad-26c48ef3af34@linaro.org>
-Date: Fri, 7 Aug 2026 18:43:45 -0700
+ Fri, 07 Aug 2026 18:59:59 -0700 (PDT)
+Message-ID: <6f08e939-fc56-406c-b7d6-b095db111e9b@linaro.org>
+Date: Fri, 7 Aug 2026 18:59:57 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386: Clear OF, SF, and AF for fcomi/fucomi
-To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-References: <20260807062831.19618-1-scherer.simon89@gmail.com>
+Subject: Re: [PATCH] linux-user: fix issues with mmap on 4K guest on 16K host
+ and library load
+To: qemu-devel@nongnu.org
+References: <20260805164052.199608-1-andreas@kemnade.info>
+ <6f98eb42-54ae-4909-b4f1-4ff683d3d6f9@gmx.de>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260807062831.19618-1-scherer.simon89@gmail.com>
+In-Reply-To: <6f98eb42-54ae-4909-b4f1-4ff683d3d6f9@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,34 +106,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/26 23:28, Simon Scherer wrote:
-> helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
-> CC_Z, CC_P, and CC_C before merging in the comparison result,
-> leaving CC_O, CC_S, and CC_A untouched from whatever they were
-> set to beforehand.
+On 8/7/26 14:26, Helge Deller wrote:
+> On 8/5/26 18:40, Andreas Kemnade wrote:
+>> Strace in qemu:
+>> 198005 openat(AT_FDCWD,"/lib/arm-linux-gnueabihf/libselinux.so.1",O_RDONLY|O_LARGEFILE| 
+>> O_CLOEXEC) = 3
+>> 198005 read(3,0x40802570,512) = 512
+>> 198005 statx(3,"",AT_EMPTY_PATH|AT_NO_AUTOMOUNT| 
+>> AT_STATX_SYNC_AS_STAT,STATX_BASIC_STATS,0x408022a8) = 0
+>> 198005 mmap2(NULL,269428,PROT_NONE,MAP_PRIVATE|MAP_ANONYMOUS|MAP_DENYWRITE,-1,0) = 
+>> 0x40868000
+>> 198005 mmap2(0x40870000,203892,PROT_EXEC|PROT_READ,MAP_PRIVATE|MAP_DENYWRITE| 
+>> MAP_FIXED,3,0) = 0x40870000
+>> 198005 munmap(0x40868000,32768) = 0
+>> 198005 munmap(0x408a2000,31860) = 0
+>> 198005 mprotect(0x40890000,61440,PROT_NONE) = 0
+>> 198005 mmap2(0x4089f000,8192,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_DENYWRITE| 
+>> MAP_FIXED,3,0x1f) = -1 errno=14 (Bad address)
+>>
+>> strace outside qemu:
+>> [pid 195331] readlinkat(AT_FDCWD, "/usr/lib", 0x7fffd1a7fd00, 1023) = -1 EINVAL (Invalid 
+>> argument)
+>> [pid 195331] readlinkat(AT_FDCWD, "/usr/lib/arm-linux-gnueabihf", 0x7fffd1a7fd00, 1023) 
+>> = -1 EINVAL (Invalid argument)
+>> [pid 195331] readlinkat(AT_FDCWD, "/usr/lib/arm-linux-gnueabihf/libselinux.so.1", 
+>> 0x7fffd1a7fd00, 1023) = -1 EINVAL (Invalid argument)
+>> [pid 195331] faccessat(AT_FDCWD, "/usr/gnemul/qemu-arm/lib/arm-linux-gnueabihf/ 
+>> libselinux.so.1", F_OK) = -1 ENOENT (No such file or directory)
+>> [pid 195331] openat(AT_FDCWD, "/lib/arm-linux-gnueabihf/libselinux.so.1", O_RDONLY| 
+>> O_CLOEXEC) = 3
+>> [pid 195331] read(3, 
+>> "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\0\0\0\0004\0\0\0"..., 512) = 512
+>> [pid 195331] statx(3, "", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT|AT_EMPTY_PATH, 
+>> STATX_BASIC_STATS, {stx_mask=STATX_ALL|STATX_MNT_ID|STATX_SUBVOL, stx_attributes=0, 
+>> stx_mode=S_IFREG|0644, stx_size=132612, ...}) = 0
+>> [pid 195331] mmap(0x408a8000, 16384, PROT_NONE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS| 
+>> MAP_DENYWRITE, -1, 0) = 0x408a8000
+>> [pid 195331] mprotect(0x408a8000, 16384, PROT_WRITE) = 0
+>> [pid 195331] mprotect(0x408a8000, 16384, PROT_NONE) = 0
+>> [pid 195331] mmap(0x40868000, 262144, PROT_NONE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS| 
+>> MAP_DENYWRITE, -1, 0) = 0x40868000
+>> [pid 195331] mprotect(0x408a0000, 16384, PROT_WRITE) = 0
+>> [pid 195331] pread64(3, "", 8192, 196608) = 0
+>> [pid 195331] mprotect(0x408a0000, 16384, PROT_READ) = 0
+>> [pid 195331] mmap(0x40870000, 196608, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 
+>> 0) = 0x40870000
+>> [pid 195331] mmap(0x40868000, 32768, PROT_NONE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS| 
+>> MAP_NORESERVE, -1, 0) = 0x40868000
+>> [pid 195331] mmap(0x408a4000, 32768, PROT_NONE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS| 
+>> MAP_NORESERVE, -1, 0) = 0x408a4000
+>> [pid 195331] mprotect(0x4089c000, 16384, PROT_READ) = 0
+>> [pid 195331] mprotect(0x40890000, 49152, PROT_NONE) = 0
+>> [pid 195331] mprotect(0x4089c000, 16384, PROT_WRITE) = 0
+>> [pid 195331] pread64(3, 0x4089f000, 4096, 126976) = -1 EFAULT (Bad address)
+>>
+>> That makes simple commands like ls --version to fail.
+>> Tested was arm32 on a arm64 only host.
+>>
+>> Fix that issue by truncating file mapping and replacing out-of-file
+>> mappings by anonymous mappings.
 > 
-> The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
-> SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
-> at all. However, testing on multiple real Intel and AMD systems confirms
-> all three are unconditionally cleared regardless of the comparison
-> result or their prior value.
+> Could you please explain "the issue" and not just referring to the strace?
+> It's not that easy to see the problem.
 > 
-> Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
-> and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
-> can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
-> into a masked cpu_cc_compute_all() result.
+> Thanks!
+> Helge
 > 
-> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/4133
-> Signed-off-by: Simon Scherer<scherer.simon89@gmail.com>
-> ---
-> v2: Simplify per Richard Henderson's review: CC_O|CC_S|CC_A|CC_Z|CC_P|CC_C already covers
->      every flag, so drop the now-pointless cpu_cc_compute_all() call and assign
->      CC_SRC from fcomi_ccval[] directly.
+> Btw: you patch might fix this problem, but you may run into other problems too,
+> see e.g.: https://gitlab.com/qemu-project/qemu/-/work_items/3410
 > 
->   target/i386/tcg/fpu_helper.c | 10 ++++------
->   1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+>> Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+>> ---
+>>   linux-user/mmap.c | 26 ++++++++++++++++++++++++++
+>>   1 file changed, 26 insertions(+)
+>>
+>> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+>> index 423c77856a..4fce6fae3c 100644
+>> --- a/linux-user/mmap.c
+>> +++ b/linux-user/mmap.c
+>> @@ -796,6 +796,32 @@ static abi_long mmap_h_gt_g(abi_ulong start, abi_ulong len,
+>>       bool misaligned_offset = false;
+>>       size_t host_len;
+>> +    if (!(flags & MAP_ANONYMOUS)) {
+>> +        struct stat sb;
+>> +
+>> +        if (fstat(fd, &sb) == -1) {
+>> +            return -1;
+>> +        }
+>> +        if (offset >= sb.st_size) {
+>> +            /*
+>> +             * The entire map is beyond the end of the file.
+>> +             * Transform it to an anonymous mapping.
+>> +             */
+>> +            flags |= MAP_ANONYMOUS;
+>> +            fd = -1;
+>> +            offset = 0;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is incorrect.  Even natively, accessing past the end of the file should SIGBUS.
+For host page size > guest page size, as we are here, you should never encounter that 
+particular emulation problem.
+
+I've no idea what you're trying to solve.
+
 
 r~
 
