@@ -4,73 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96CDC55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 13:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519F6C55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 13:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsgu3-0006O1-Oz; Sat, 08 Aug 2026 09:15:57 -0400
+	id 1wsgu1-0006N3-Iw; Sat, 08 Aug 2026 09:15:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
- id 1wsecP-0005Gf-2V; Sat, 08 Aug 2026 06:49:33 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.48])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
- id 1wsecL-00022O-Kt; Sat, 08 Aug 2026 06:49:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vip.qq.com;
- s=s201512; t=1786186163;
- bh=tv4zD5jPN9+L7eCtaM2d1bafGngqf5H8mYmZaNcuAD8=;
- h=In-Reply-To:References:Date:Subject:To:Cc:From;
- b=sx6JFlNo9TdLlcyWz4zEiUsrLhwE6tX6VzWbMKn0qfDgmSO+sBsFjV48IkxDbhQEp
- 3flOPqdvZ3DZiuKuUuorzpcz4ggYzVprQrDPjO2Td3Jm9XiewlxZUAO5VH8WDw108E
- uyUQ1ILE0eJSODYPRhB245SrinQEdao5sL7btb4E=
-Received: from localhost ([111.52.124.140])
- by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
- id B6A948B5; Sat, 08 Aug 2026 18:45:42 +0800
-X-QQ-mid: xmsmtpt1786185942t5qmir6jm
-Message-ID: <tencent_4079F108A382388E90910168A31C0E838305@qq.com>
-X-QQ-XMAILINFO: OENI+BIeKsiQH81TIGDRKmSHk5ksU3LYp34Ax+wxyiEyUTBLygJw4FmW/LCmXB
- Z556yjfzNClpcq30Y+y4wcXuJpV5fzLj3BVNZcqCFTu74xfH9e7eM+pwUsIqDZgUuvWRmcGXkRZK
- 0/eewtvy6iI/38aFVekVzQZyUL5qfQ1tGb6+mGscy//2gtFjv/7Ytb2yVEAcwBgD6W6XBgbRuSwD
- 0aRH9bNgwMyDfcEzNxkoJVmG921zO7gAGKiGxm0UCNrlETb7V/SxZ91FapmoANJrGFJSrAID3R/n
- pbXP/kJEM7revDos7HUZTx52b6VCNlNx5DlqYJU6o/dV63BiSBGPGr9zJIr9vC/sLPAYxTKL+lhv
- 8GjA8DgjfPMNliInTeq7PD/3H4f0TUUXB1f0YJoNZunqlU/yU3EKBFw4gfZgQ7FqEDDs9k59RPDS
- 0AwcuLJMlUANO96DB7JKq5hFgtj1+VIAXzxw40d2Ovm+nJW93Xlnfed/L/2jaLtp7kw+iRqGdwQa
- 9PmSKPbumx9djjM5Bl0wkO3zWvQ07nefsXpbdH/IjftVUCrg19MKDWCY+1S94XlUo3on2z0zqWAT
- nmEM4aPZI3MeRsvmZb1yF5dCRhnQVUThuNNU+Sm+dlFuduVrDuWUiWFeKJrY+cLRMPfoSHPK8A8d
- HfmRJXzg+37xAAiBrc6LiuIGEOkHOWWaWpFm3n3/COaqekAXxJiposCjwfEiudnTAhNKgBQ4uBAB
- c8YNjczxV3ua72MXdxYzM4KStd/PC7my4PLEiD6Q7QCYePeUtTY8zp+1cuhxOxaGNGQ33YN2+j69
- ZwLi/d5Jm+U+gY63a558vc1fimz2uIfq0uL9mxY3C1pdzFs1pjaZMx3dbALUcQNaJsZThL1p3+G8
- CebvCLE629bQ0KLgHDsBctEVgDcYmn6KmCEygikad5ZyPxpJLRw31Mv3/QkHhnMZX9mKovtxAxHJ
- KTvzw815pVY3nqHZI8AfxtEwM2lvVqUAyAty4uQP6FyME9oec9vpVapWtARrRfNWQ86BnKiQhKIz
- +eJBZaKgWPD31Ayfc9esPA9nn6t8QyfnHLM+BBzsrte913Oc1l/e9C/b1fVTIoeLg452YH/c73ys
- c2crEG2qm0dcuLrhgC66v/T/Uq16OnYpu5fI1GU85ZEm/Kvxo9S2cIqXLHHA==
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-OQ-MSGID: <05eec6b577fa56e8fc6dd0693f4ab878e227401d.1786185889.git.chengkelfan@qq.com>
-In-Reply-To: <cover.1786185889.git.chengkelfan@qq.com>
-References: <cover.1786185889.git.chengkelfan@qq.com>
-Date: Sat, 8 Aug 2026 18:44:23 +0800
-Subject: [PATCH 1/5] hw/gpio: add K230 GPIO controller.
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-From: Leo Cheng <leo-cheng@vip.qq.com>
-Received-SPF: pass client-ip=43.163.128.48; envelope-from=leo-cheng@vip.qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <dreibh@simula.no>) id 1wseNa-0002Ay-01
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 06:34:14 -0400
+Received: from mail-lr2-x06.google.com ([2a00:1450:4864:38::6])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dreibh@simula.no>) id 1wseNX-0000gE-Qq
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 06:34:13 -0400
+Received: by mail-lr2-x06.google.com with SMTP id
+ 38308e7fff4ca-39f7d684247so2939921fa.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 03:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=simula-no.20251104.gappssmtp.com; s=20251104; t=1786185248; x=1786790048;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/z+1UkM0XJ5q0jYwCIu1jFHtvphtNFNeZC8/C42QARk=;
+ b=Br2X8SsqDQ2S4RP3ouar4S/nQZE/MXyM5CXfgNOyxAnWze7ejCXvaQbLPhPNMH1QtR
+ aqi9luuvSmKYypATFxq0W/2Y1qyt+LezJmjsFvou9H9nvCuN0dJbZa2g4i9qu9ihHuBq
+ ig/yhTGIKUL3tnqdY7NWFaDemZwso8iNs7lV1YCjyVK1W3ZQl0oAtt6bYLLDH1CY9O4t
+ WyfFpSckMOHu2eW/D8jNnpUWnSRNym7YAUzSmrS20EvenUmPwpf0dg1mdLlsX9uxiQzb
+ U6hpbixPxctf7c3QYBh7Td1KWC5nBv/v0z24YMeVuTUuAr+7V3IKBuKUSarwe5nBFka7
+ Wifg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786185248; x=1786790048;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=/z+1UkM0XJ5q0jYwCIu1jFHtvphtNFNeZC8/C42QARk=;
+ b=qDwU7FbUvtZQAjQa6TLdPhMraaSHe22fn7Y423hSk/R3tYQdBvS/YGBA1HxC4VnxBN
+ Huw8XTZ8ofyg46bCAxRrLVMOk4g1tr+3FCQkXAajtJjWLHnZ1bi7C3Gy+JnkvQMXpA3G
+ id1c8LeWLcvoKKKEGDs0N8Zd7Lh3+b76Z6ecz3i+rs2TJ0H5N2KDaZ3CUSCetTfRXalZ
+ OWa0JwzzLXCjmVyXTZpQrHqGiOIO/5CPH8IGMF7F2Gg5H5mdfgU9PrXxj++E+taKlNOn
+ YT7NvCMqiujei0oOx9u9vlajUaDsLfoV0OQSGMY9/ism2o2NpmVjgf61OEqeD3d+miyJ
+ IBiw==
+X-Gm-Message-State: AOJu0YyQe4w+HCtC6D5Uninkwkv9C2WruNOHC1xZtWCRlq6Qy0ZkOyS1
+ HGtsERa4fQmn1pZZFpXdPe8foZDrCd4lcvqZ3COHQ1Qx4bGsnMYPNUaCZ4I+yvttjO6gsweysP/
+ Ka82dl7uo+iow
+X-Gm-Gg: AR+sD12IoHpLLyWOzxNzpWc183gA2R4WgdvU2zrYcgatzRaNp4A7oBv+aZghiq1/sGH
+ H4SF8WI8DHYd4+UTh9YBGBkMjoNBdDsJi66iRpbAt7GeAzxnD5snjjmOe8I0/ZlSH0iVnY1WCG0
+ NkVdZY7704ZR5PbZOKhExZECFFQ9WgvwCjIL0KN4IDAYTIvD7FWdzX4tBUo054hPA4xWEf3h5ma
+ gAH/pVKb7noNDUA8XMO641+tq30ToPokfFwi57FSMNP8CbqJ9bngKRh+fzcEY3EjNXDIUhARju8
+ m9hW9BYmxMPY5/opQ6jtd8nqyJZsSNDAz4ofIskPx+8aeQtFvoP+MJsnzodpfmu4vQ58goZw91n
+ OnM2ItgUjqcAJfwnL8kKa/x4Q5yNPASvEVqs10BX+R+k7exOz0gwQIBXG2sLsBzBX+lnoCnEWl/
+ 0QxG+N/QEb9Fl/68LYdVMyjhdkUDqnfM1qqpZnV8Se7Ve0N9VbO9+dKLjxqJfMG6gyIx/puT2N9
+ 6RoFgNgcr4plh3hERK8
+X-Received: by 2002:a2e:be2b:0:b0:39f:a2be:bc4a with SMTP id
+ 38308e7fff4ca-39fbae0b9d2mr35065511fa.4.1786185248460; 
+ Sat, 08 Aug 2026 03:34:08 -0700 (PDT)
+Received: from nordmarka.crnalab.net ([178.232.16.23])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-39fdda80e0dsm9455521fa.7.2026.08.08.03.34.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Aug 2026 03:34:08 -0700 (PDT)
+From: Thomas Dreibholz <dreibh@simula.no>
+To: qemu-devel@nongnu.org
+Cc: Thomas Dreibholz <dreibh@simula.no>, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH] Fix for
+ https://gitlab.com/qemu-project/qemu/-/work_items/4141:
+Date: Sat,  8 Aug 2026 12:34:06 +0200
+Message-ID: <20260808-solaris-qga-fix-b4-v1-1-80eafc48246c@simula.no>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2017; i=dreibh@simula.no;
+ h=from:subject:message-id; bh=/pOBVLszhwGWvOuffrnWg+P4FroCOv76l53EXB/auSg=;
+ b=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
+ XgdwtoVGbcpWuEhR4Hh2JXIii1zdAKBfnVfb4Q==
+X-Developer-Key: i=dreibh@simula.no; a=openpgp;
+ fpr=21412672518D8B2D1862EFEF5CD5D12AA0877B49
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:38::6;
+ envelope-from=dreibh@simula.no; helo=mail-lr2-x06.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 08 Aug 2026 09:15:40 -0400
+X-Mailman-Approved-At: Sat, 08 Aug 2026 09:15:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,553 +144,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Model the Synopsys DW_apb_gpio controller on the Kendryte K230: direction, output, per-pin edge/level interrupts with EOI and output loopback in EXT_PORTA. Each pin drives its own PLIC line. Register layout from the K230 TRM v0.3.1. Covered by tests/qtest/k230-gpio-test.
+Using the correct paths for "shutdown", "reboot", etc. under Solaris.
 
-Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
+Signed-off-by: Thomas Dreibholz <dreibh@simula.no>
 ---
- hw/gpio/Kconfig              |   3 +
- hw/gpio/k230_gpio.c          | 270 +++++++++++++++++++++++++++++++++++
- hw/gpio/meson.build          |   1 +
- hw/gpio/trace-events         |   4 +
- include/hw/gpio/k230_gpio.h  |  68 +++++++++
- tests/qtest/k230-gpio-test.c | 143 +++++++++++++++++++
- 6 files changed, 489 insertions(+)
- create mode 100644 hw/gpio/k230_gpio.c
- create mode 100644 include/hw/gpio/k230_gpio.h
- create mode 100644 tests/qtest/k230-gpio-test.c
+This patch fixes the issue of the not-working shutdown command
+in the QEMU Guest Agent under Solaris
+(https://gitlab.com/qemu-project/qemu/-/work_items/4141) by
+fixing the command paths from /sbin/ to /usr/sbin/ in the
+Solaris build.
+---
+ qga/commands-posix.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index a209294..07ef5a2 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -30,3 +30,6 @@ config PCF8574
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 837be51c40..e24248a0f3 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -216,9 +216,17 @@ out:
+     return retcode;
+ }
  
- config ZAURUS_SCOOP
-     bool
-+
-+config K230_GPIO
-+    bool
-diff --git a/hw/gpio/k230_gpio.c b/hw/gpio/k230_gpio.c
-new file mode 100644
-index 0000000..da4448f
---- /dev/null
-+++ b/hw/gpio/k230_gpio.c
-@@ -0,0 +1,270 @@
-+/*
-+ * K230 GPIO controller (Synopsys DW_apb_gpio) compatible with Kendryte K230 SDK
-+ *
-+ * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ *
-+ * For more information, see <https://www.kendryte.com/en/proDetail/230>
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/core/irq.h"
-+#include "migration/vmstate.h"
-+#include "hw/gpio/k230_gpio.h"
-+#include "trace.h"
-+
-+/* Live pin levels: output pins reflect the driven value, inputs the source. */
-+static uint32_t k230_gpio_pin_level(K230GpioState *s)
-+{
-+    return (s->in & ~s->ddr) | (s->dr & s->ddr);
-+}
-+
-+static void k230_gpio_update(K230GpioState *s, uint32_t old_level)
-+{
-+    uint32_t level = k230_gpio_pin_level(s);
-+
-+    for (int i = 0; i < K230_GPIO_PINS; i++) {
-+        uint32_t bit = 1u << i;
-+
-+        if (!(s->inten & bit)) {
-+            continue;
-+        }
-+
-+        bool active = (s->int_polarity & bit) ? (level & bit) : !(level & bit);
-+
-+        if (s->inttype_level & bit) {
-+            bool was = (s->int_polarity & bit) ? (old_level & bit)
-+                                               : !(old_level & bit);
-+            if (active && !was) {
-+                s->raw_intstatus |= bit;
-+            }
-+        } else if (active) {
-+            s->raw_intstatus |= bit;
-+        } else {
-+            s->raw_intstatus &= ~bit;
-+        }
-+    }
-+
-+    s->intstatus = s->raw_intstatus & ~s->intmask;
-+
-+    for (int i = 0; i < K230_GPIO_PINS; i++) {
-+        qemu_set_irq(s->irq[i], (s->intstatus >> i) & 1);
-+    }
-+}
-+
-+static void k230_gpio_set_input(void *opaque, int line, int level)
-+{
-+    K230GpioState *s = K230_GPIO(opaque);
-+    uint32_t old = k230_gpio_pin_level(s);
-+
-+    if (level) {
-+        s->in |= (1u << line);
-+    } else {
-+        s->in &= ~(1u << line);
-+    }
-+    k230_gpio_update(s, old);
-+}
-+
-+static uint64_t k230_gpio_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    K230GpioState *s = K230_GPIO(opaque);
-+    uint32_t value = 0;
-+
-+    switch (addr) {
-+    case K230_GPIO_SWPORTA_DR:
-+        value = s->dr;
-+        break;
-+    case K230_GPIO_SWPORTA_DDR:
-+        value = s->ddr;
-+        break;
-+    case K230_GPIO_SWPORTA_CTL:
-+        value = s->ctl;
-+        break;
-+    case K230_GPIO_INTEN:
-+        value = s->inten;
-+        break;
-+    case K230_GPIO_INTMASK:
-+        value = s->intmask;
-+        break;
-+    case K230_GPIO_INTTYPE_LEVEL:
-+        value = s->inttype_level;
-+        break;
-+    case K230_GPIO_INT_POLARITY:
-+        value = s->int_polarity;
-+        break;
-+    case K230_GPIO_INTSTATUS:
-+        value = s->intstatus;
-+        break;
-+    case K230_GPIO_RAW_INTSTATUS:
-+        value = s->raw_intstatus;
-+        break;
-+    case K230_GPIO_DEBOUNCE:
-+        value = s->debounce;
-+        break;
-+    case K230_GPIO_EXT_PORTA:
-+        value = k230_gpio_pin_level(s);
-+        break;
-+    case K230_GPIO_LS_SYNC:
-+        value = s->ls_sync;
-+        break;
-+    case K230_GPIO_VER_ID_CODE:
-+        value = K230_GPIO_VER_ID_VALUE;
-+        break;
-+    case K230_GPIO_CONFIG_REG2:
-+        /* Port A width - 1 in bits [4:0]; single 32-bit port. */
-+        value = K230_GPIO_PINS - 1;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    trace_k230_gpio_read(addr, value);
-+    return value;
-+}
-+
-+static void k230_gpio_write(void *opaque, hwaddr addr,
-+                            uint64_t value, unsigned int size)
-+{
-+    K230GpioState *s = K230_GPIO(opaque);
-+    uint32_t old = k230_gpio_pin_level(s);
-+
-+    trace_k230_gpio_write(addr, value);
-+
-+    switch (addr) {
-+    case K230_GPIO_SWPORTA_DR:
-+        s->dr = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_SWPORTA_DDR:
-+        s->ddr = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_SWPORTA_CTL:
-+        s->ctl = value;
-+        break;
-+    case K230_GPIO_INTEN:
-+        s->inten = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_INTMASK:
-+        s->intmask = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_INTTYPE_LEVEL:
-+        s->inttype_level = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_INT_POLARITY:
-+        s->int_polarity = value;
-+        k230_gpio_update(s, old);
-+        break;
-+    case K230_GPIO_DEBOUNCE:
-+        s->debounce = value;
-+        break;
-+    case K230_GPIO_PORTA_EOI:
-+        /* Write-1-to-clear latched edge interrupts only. */
-+        s->raw_intstatus &= ~(value & s->inttype_level);
-+        k230_gpio_update(s, k230_gpio_pin_level(s));
-+        break;
-+    case K230_GPIO_LS_SYNC:
-+        s->ls_sync = value;
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps k230_gpio_ops = {
-+    .read = k230_gpio_read,
-+    .write = k230_gpio_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void k230_gpio_reset(DeviceState *dev)
-+{
-+    K230GpioState *s = K230_GPIO(dev);
-+
-+    s->dr = 0;
-+    s->ddr = 0;
-+    s->ctl = 0;
-+    s->inten = 0;
-+    s->intmask = 0;
-+    s->inttype_level = 0;
-+    s->int_polarity = 0;
-+    s->intstatus = 0;
-+    s->raw_intstatus = 0;
-+    s->debounce = 0;
-+    s->ls_sync = 0;
-+    s->in = 0;
-+
-+    for (int i = 0; i < K230_GPIO_PINS; i++) {
-+        qemu_set_irq(s->irq[i], 0);
-+    }
-+}
-+
-+static const VMStateDescription vmstate_k230_gpio = {
-+    .name = "k230.gpio",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(dr, K230GpioState),
-+        VMSTATE_UINT32(ddr, K230GpioState),
-+        VMSTATE_UINT32(ctl, K230GpioState),
-+        VMSTATE_UINT32(inten, K230GpioState),
-+        VMSTATE_UINT32(intmask, K230GpioState),
-+        VMSTATE_UINT32(inttype_level, K230GpioState),
-+        VMSTATE_UINT32(int_polarity, K230GpioState),
-+        VMSTATE_UINT32(intstatus, K230GpioState),
-+        VMSTATE_UINT32(raw_intstatus, K230GpioState),
-+        VMSTATE_UINT32(debounce, K230GpioState),
-+        VMSTATE_UINT32(ls_sync, K230GpioState),
-+        VMSTATE_UINT32(in, K230GpioState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void k230_gpio_realize(DeviceState *dev, Error **errp)
-+{
-+    K230GpioState *s = K230_GPIO(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&s->mmio, OBJECT(dev), &k230_gpio_ops, s,
-+                          TYPE_K230_GPIO, K230_GPIO_MMIO_SIZE);
-+    sysbus_init_mmio(sbd, &s->mmio);
-+
-+    for (int i = 0; i < K230_GPIO_PINS; i++) {
-+        sysbus_init_irq(sbd, &s->irq[i]);
-+    }
-+    qdev_init_gpio_in(dev, k230_gpio_set_input, K230_GPIO_PINS);
-+}
-+
-+static void k230_gpio_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = k230_gpio_realize;
-+    device_class_set_legacy_reset(dc, k230_gpio_reset);
-+    dc->vmsd = &vmstate_k230_gpio;
-+    dc->desc = "K230 GPIO controller";
-+}
-+
-+static const TypeInfo k230_gpio_info = {
-+    .name          = TYPE_K230_GPIO,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(K230GpioState),
-+    .class_init    = k230_gpio_class_init,
-+};
-+
-+static void k230_gpio_register_type(void)
-+{
-+    type_register_static(&k230_gpio_info);
-+}
-+type_init(k230_gpio_register_type)
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 6a67ee9..94b5d9e 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
- system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
-+system_ss.add(when: 'CONFIG_K230_GPIO', if_true: files('k230_gpio.c'))
-diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
-index cea896b..ac5d7fd 100644
---- a/hw/gpio/trace-events
-+++ b/hw/gpio/trace-events
-@@ -46,3 +46,7 @@ stm32l4x5_gpio_read(char *gpio, uint64_t addr) "GPIO%s addr: 0x%" PRIx64 " "
- stm32l4x5_gpio_write(char *gpio, uint64_t addr, uint64_t data) "GPIO%s addr: 0x%" PRIx64 " val: 0x%" PRIx64 ""
- stm32l4x5_gpio_update_idr(char *gpio, uint32_t old_idr, uint32_t new_idr) "GPIO%s from: 0x%x to: 0x%x"
- stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s disconnected pins: 0x%x levels: 0x%x"
-+
-+# k230_gpio.c
-+k230_gpio_read(uint64_t addr, uint32_t data) "K230 GPIO read: [0x%" PRIx64 "] -> 0x%" PRIx32
-+k230_gpio_write(uint64_t addr, uint64_t data) "K230 GPIO write: [0x%" PRIx64 "] <- 0x%" PRIx64
-diff --git a/include/hw/gpio/k230_gpio.h b/include/hw/gpio/k230_gpio.h
-new file mode 100644
-index 0000000..10c123d
---- /dev/null
-+++ b/include/hw/gpio/k230_gpio.h
-@@ -0,0 +1,68 @@
-+/*
-+ * K230 GPIO controller (Synopsys DW_apb_gpio) compatible with Kendryte K230 SDK
-+ *
-+ * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ *
-+ * For more information, see <https://www.kendryte.com/en/proDetail/230>
-+ */
-+#ifndef HW_GPIO_K230_GPIO_H
-+#define HW_GPIO_K230_GPIO_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_K230_GPIO "riscv.k230.gpio"
-+OBJECT_DECLARE_SIMPLE_TYPE(K230GpioState, K230_GPIO)
-+
-+#define K230_GPIO_PINS      32
-+#define K230_GPIO_MMIO_SIZE 0x1000
-+
-+enum {
-+    K230_GPIO_SWPORTA_DR   = 0x00,
-+    K230_GPIO_SWPORTA_DDR  = 0x04,
-+    K230_GPIO_SWPORTA_CTL  = 0x08,
-+    K230_GPIO_INTEN        = 0x30,
-+    K230_GPIO_INTMASK      = 0x34,
-+    K230_GPIO_INTTYPE_LEVEL = 0x38,
-+    K230_GPIO_INT_POLARITY = 0x3c,
-+    K230_GPIO_INTSTATUS    = 0x40,
-+    K230_GPIO_RAW_INTSTATUS = 0x44,
-+    K230_GPIO_DEBOUNCE     = 0x48,
-+    K230_GPIO_PORTA_EOI    = 0x4c,
-+    K230_GPIO_EXT_PORTA    = 0x50,
-+    K230_GPIO_LS_SYNC      = 0x60,
-+    K230_GPIO_ID_CODE      = 0x64,
-+    K230_GPIO_VER_ID_CODE  = 0x6c,
-+    K230_GPIO_CONFIG_REG2  = 0x70,
-+    K230_GPIO_CONFIG_REG1  = 0x74,
-+};
-+
-+#define K230_GPIO_VER_ID_VALUE 0x3230312a
-+
-+struct K230GpioState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    qemu_irq irq[K230_GPIO_PINS];
-+
-+    uint32_t dr;
-+    uint32_t ddr;
-+    uint32_t ctl;
-+    uint32_t inten;
-+    uint32_t intmask;
-+    uint32_t inttype_level;
-+    uint32_t int_polarity;
-+    uint32_t intstatus;
-+    uint32_t raw_intstatus;
-+    uint32_t debounce;
-+    uint32_t ls_sync;
-+
-+    uint32_t in;
-+};
-+
++#ifdef CONFIG_SOLARIS
++#define POWEROFF_CMD_PATH "/usr/sbin/poweroff"
++#define SHUTDOWN_CMD_PATH "/usr/sbin/shutdown"
++#define HALT_CMD_PATH     "/usr/sbin/halt"
++#define REBOOT_CMD_PATH   "/usr/sbin/reboot"
++#else
+ #define POWEROFF_CMD_PATH "/sbin/poweroff"
+-#define HALT_CMD_PATH "/sbin/halt"
+-#define REBOOT_CMD_PATH "/sbin/reboot"
++#define SHUTDOWN_CMD_PATH "/sbin/shutdown"
++#define HALT_CMD_PATH     "/sbin/halt"
++#define REBOOT_CMD_PATH   "/sbin/reboot"
 +#endif
-diff --git a/tests/qtest/k230-gpio-test.c b/tests/qtest/k230-gpio-test.c
-new file mode 100644
-index 0000000..42ef137
---- /dev/null
-+++ b/tests/qtest/k230-gpio-test.c
-@@ -0,0 +1,143 @@
-+/*
-+ * QTest testcase for K230 GPIO (DW_apb_gpio)
-+ *
-+ * Copyright (c) 2026 Leo Cheng <chengkelfan@qq.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ */
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/gpio/k230_gpio.h"
-+
-+#define GPIO0_BASE 0x9140B000
-+#define GPIO1_BASE 0x9140C000
-+
-+#define PLIC_BASE       0xF00000000ULL
-+#define PLIC_PENDING    (PLIC_BASE + 0x1000)
-+#define GPIO0_IRQ_BASE  32
-+
-+static bool plic_pending(QTestState *qts, int irq)
-+{
-+    uint32_t word = qtest_readl(qts, PLIC_PENDING + (irq / 32) * 4);
-+    return (word >> (irq % 32)) & 1;
-+}
-+
-+static void test_reset_values(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR),
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Output pins loop back into EXT_PORTA */
-+static void test_output_loopback(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA) & 0x1,
-+                    ==, 0x1);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA) & 0x1,
-+                    ==, 0x0);
-+
-+    /* Independent pins */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0xFFFFFFFF);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x80000001);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_EXT_PORTA),
-+                    ==, 0x80000001);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Rising-edge interrupt via DR toggle on an output pin, cleared by EOI */
-+static void test_edge_interrupt(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x1); /* edge */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);  /* rising */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0x1);
-+    g_assert_true(plic_pending(qts, GPIO0_IRQ_BASE + 0));
-+
-+    /* Write-1 EOI clears the latched edge */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_PORTA_EOI, 0x1);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Level interrupt follows the pin; EOI does not clear it */
-+static void test_level_interrupt(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x0); /* level */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);  /* high */
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0x1);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x0);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* INTMASK hides the interrupt from INTSTATUS/PLIC but not RAW_INTSTATUS */
-+static void test_mask(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DDR, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTTYPE_LEVEL, 0x0);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INT_POLARITY, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTMASK, 0x1);
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_INTEN, 0x1);
-+
-+    qtest_writel(qts, GPIO0_BASE + K230_GPIO_SWPORTA_DR, 0x1);
-+    g_assert_cmphex(qtest_readl(qts, GPIO0_BASE + K230_GPIO_INTSTATUS) & 0x1,
-+                    ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                    GPIO0_BASE + K230_GPIO_RAW_INTSTATUS) & 0x1, ==, 0x1);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-gpio/reset_values", test_reset_values);
-+    qtest_add_func("/k230-gpio/output_loopback", test_output_loopback);
-+    qtest_add_func("/k230-gpio/edge_interrupt", test_edge_interrupt);
-+    qtest_add_func("/k230-gpio/level_interrupt", test_level_interrupt);
-+    qtest_add_func("/k230-gpio/mask", test_mask);
-+
-+    return g_test_run();
-+}
+ 
+ void qmp_guest_shutdown(const char *mode, Error **errp)
+ {
+@@ -262,7 +270,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+         return;
+     }
+ 
+-    const char *argv[] = {"/sbin/shutdown",
++    const char *argv[] = {SHUTDOWN_CMD_PATH,
+ #ifdef CONFIG_SOLARIS
+                           shutdown_flag, "-g0", "-y",
+ #elif defined(CONFIG_BSD)
+@@ -274,7 +282,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+ 
+     /*
+      * If the specific command exists (poweroff, halt or reboot), use it instead
+-     * of /sbin/shutdown.
++     * of SHUTDOWN_CMD_PATH.
+      */
+     if (shutdown_cmd != NULL) {
+         argv[0] = shutdown_cmd;
+
+---
+base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
+change-id: 20260808-solaris-qga-fix-b4-d25104a17fb7
+
+Best regards,
 -- 
-2.43.0
+Thomas Dreibholz <dreibh@simula.no>
 
 
