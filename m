@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01332C55174
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 12:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93AB0C5AD48
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 13:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsgXV-0000cN-1P; Sat, 08 Aug 2026 08:52:37 -0400
+	id 1wsgtz-0006M8-Ai; Sat, 08 Aug 2026 09:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1wsgXL-0000aQ-Dq; Sat, 08 Aug 2026 08:52:27 -0400
-Received: from [218.76.62.146] (helo=ultrarisc.com)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <xb@ultrarisc.com>)
- id 1wsgXJ-00069c-F9; Sat, 08 Aug 2026 08:52:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ultrarisc.com; s=dkim; h=Received:From:To:Cc:Subject:Date:
- Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=g60apWzxv+GGh2zAcMC6ZqUwFUVI7GjL1/
- GqVD3LBEU=; b=Q+gLBKxsPOlL+rhG062z6F+/rU3/hXmcoqkjBD9sPJr3Qjcame
- 5UcfB8m9b6/kvTLBgRCOLiWzvcgZmxn7bFcdjMJmwmhm2kT9POXSCRR3wCqPKAof
- HNpcOI6PKXc/vr1mHDkgoFOoRvUlITEOcB5LLgc6ZcOUUdY/yXeAAMcGc=
-Received: from ur-dp1000 (unknown [192.168.100.1])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAfwDXEEKHJndqI3UWAA--.18312S2; 
- Sat, 08 Aug 2026 20:52:37 +0800 (CST)
-From: Xie Bo <xb@ultrarisc.com>
-To: qemu-devel@nongnu.org
-Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, alistair23@gmail.com,
- pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
- rkrcmar@ventanamicro.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com, xb@ultrarisc.com
-Subject: [PATCH v11 0/2] target/riscv: Fix riscv64 KVM migration
-Date: Sat,  8 Aug 2026 20:51:55 +0800
-Message-ID: <20260808125157.1220511-1-xb@ultrarisc.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260730051926.7322-1-xb@ultrarisc.com>
-References: <20260730051926.7322-1-xb@ultrarisc.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXEEKHJndqI3UWAA--.18312S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Kr1xKw4xXrW7CFy5XrWfAFb_yoW8WFyDpr
- 4rG34rXFs0qry7Gw1fJrsrXFy5Zr4fWa15A397JryktrW5XrZF9wn2q34SgFZxuFyIgr1S
- 9ryjy345CF1DAF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9l14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
- 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
- n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I
- 8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
- xVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
- AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8I
- cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
- 4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUoWlkDUUUU
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAMB2p1VlUAFAACsA
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
-Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
- helo=ultrarisc.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
+ id 1wseZ1-00057U-BR; Sat, 08 Aug 2026 06:46:04 -0400
+Received: from xmbghk7.mail.qq.com ([43.163.128.47])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leo-cheng@vip.qq.com>)
+ id 1wseYx-0001sk-5h; Sat, 08 Aug 2026 06:46:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vip.qq.com;
+ s=s201512; t=1786185944;
+ bh=k48Wq9hSp8qvFW7zrRKjDe6w3UQ1q1FoazuXrhv9R3M=;
+ h=Date:Subject:To:Cc:From;
+ b=GRpuYNaWESpGiPP7UCnS7IzJrtu/Ws184G5eHVG+BcvunecqizzElzdxeYfFUyx3Y
+ q+3qTNIRSN+kmKr+QyHx12TJJ2bdjDY9vKnS+XKHUG7gsxn9MM3GC0Xh1hFdG8y9u8
+ 5TpU3wYy+02GAQd9BsqGdMzczBCeX0VEYVnSBOHk=
+Received: from localhost ([111.52.124.140])
+ by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+ id B682BEF5; Sat, 08 Aug 2026 18:45:40 +0800
+X-QQ-mid: xmsmtpt1786185940tmobnfysx
+Message-ID: <tencent_A2EA48A88233AE87D10D48AB3C0AC3953905@qq.com>
+X-QQ-XMAILINFO: OZILsD/zN1fMLabsJqSwcmnhUSpehanzcEc9n65AL+wrHdAbPR1S1dgUKeD9x7
+ sSf57Gmj5h4SxQ/fKGmKlN/Df/VZ14YC8rfysl1LCSgWFTUnAavu+qLbgu/JNoZD7fEGadFibHi8
+ UGbnpMonkhsF3fj9usYA3RBWwwaY8MXubqUmOt47w05OVTBiKHISA9XMZX0zWzLKdsPNeuRQx2P7
+ CdB8r484yQxlLs0BkpCj9WXdff7X0hiJ88uD47thOs4TOmJLgCsaGcB/DKAet8Fbwv9S2ZXsH8xh
+ WW/krVbJWD9GFuxFHXGAoGnEfCTZFyiksR55W2pAsIv2M4uczpszDC2/oUuRLUSSZtCFB8VkVGMh
+ IEMfZQMUyxS59bUhfZ49tZ2Wa7UAkmT9bRdrZyHlTV0KcJLUr2DEVi8HplAIGx7eD4aVgVRiouYA
+ FQ+PPwI+szL7iyFNPhpyM/McTRc2uMuN40R2OdHVodpO2yO4Q/xfH6rZOzA6nPedvgQNqHqXqHmk
+ XaWeUvB7qgKCEqWiWwCq6dfX+3/EVEcofumh57twb9yc4OJfE5y+tEbYq6lE02krPzmo4Ko6GvBY
+ 4nohIzL8aTPRp9d1+ltdzHCqEoYJQVMpNpeb5DLxzrNPZgeGQkwNDLu3wHDziS6YKbBQBSCxO64T
+ 2HBURIHy4WSQqPmv/C75dVJhzkrYwIiObtHsmFyMQR2HwUnQ0JXUIHayXI6CVDDpWxF+TZi2fOGT
+ NJZjMWmIZqjuJ8yGG8+sFfns+kRh7ab7aMraT0fsGRm0LqpIKrdmlRNIMTFTKsoDX6rv8zmTcB8f
+ 8LpJ8N8LLOC9rr73+7RnZh74Ret/UC16eDGY/DVUUkyog6YqFaaAWzzo4dDrdPO2maRPzqtCj8nS
+ ptc4j3NA6Ckf2CQLi6E0dlz8wc2O2SQNxYSr2/xn6YJTZFl1kwq3q/QDAmk2xms8nkUeu9ndXAH0
+ edg4YuqfotssIiHo9QIvHUCRbeXXTqmMWZ4KBzfVRvyAOC6yQcm/wAQ03mifs3ZIQXJABIcxOy4u
+ II6tuJ6l3iK11H9ivV48Xcsba4v6zwzRNqJvU+JL5xLSJmcoQTLjUIXvK8W8SxIEMWSwXglpFrjB
+ vs9hDpz1lljObLzHLRdNjt69TE0A==
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+X-OQ-MSGID: <cover.1786185889.git.chengkelfan@qq.com>
+Date: Sat, 8 Aug 2026 18:44:49 +0800
+Subject: [PATCH 0/5] hw/riscv: K230 peripheral device models
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+From: Leo Cheng <leo-cheng@vip.qq.com>
+Received-SPF: pass client-ip=43.163.128.47; envelope-from=leo-cheng@vip.qq.com;
+ helo=xmbghk7.mail.qq.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 08 Aug 2026 09:15:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,44 +83,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series revives v9, which was applied to riscv-to-apply.next but did
-not reach QEMU master.
+The K230 machine and its watchdog are already in tree. This series adds
+device models for the peripherals on the c908 little-core bus and wires them
+into the machine, each with a qtest.
 
-RISC-V KVM migration currently loses two pieces of vCPU state: the
-privilege mode core register and KVM MP state. The latter leaves secondary
-vCPUs in their reset STOPPED state on the destination.
+Patch 1 adds the DesignWare APB GPIO controller (one PLIC line per pin).
+Patch 2 adds the RTC (date/time, masked alarm, periodic tick, live sub-second
+count).
+Patch 3 adds the IOMUX pin controller and the mailbox/IPCM block (doorbell
+interrupts + hardware spinlock).
+Patch 4 adds the SD/eMMC host (DesignWare dw_mmc) register model.
+Patch 5 wires the devices into the k230 machine, adds two SiFive PWM instances,
+a satellite-safety fault-injection qtest, and updates docs and MAINTAINERS.
 
-Synchronize the privilege mode through the existing generic CPU VMState,
-and carry MP state in a capability-gated KVM-only subsection. The subsection
-keeps KVM state out of TCG migration streams. Bump the generic RISC-V CPU
-VMState version and minimum version to 12 as required by the new pre_load
-hook and subsection.
+Register layouts are taken from the K230 TRM v0.3.1, the upstream Linux
+pinctrl-k230 driver, and the Canaan k230_sdk. Exercised by the k230 qtests
+(gpio, rtc, iomux, mailbox, dwmmc, pwm, safety) under qtest-riscv64.
 
-Changes from v10:
-- Bump the RISC-V CPU VMState version_id and minimum_version_id to 12.
-- Add Daniel's Reviewed-by tags.
+Based on commit f893c46 (qemu-openbios-20260707 merge); hw/riscv/k230.c and
+include/hw/riscv/k230.h are unchanged from that base upstream.
 
-Testing on a native riscv64 host with Linux 6.6.20 and GCC 13.3.0:
-- KVM build: riscv64-softmmu, --enable-kvm.
-- Non-KVM build: riscv64-softmmu, --disable-kvm.
-- Four-vCPU KVM migration on unmodified master: all vCPUs failed to run
-  after migration and the guest reported RCU stalls.
-- The same migration with this series: CPU0 through CPU3 all ran after
-  migration.
-- Four user-mode busy workers, one pinned to each vCPU, all made forward
-  progress across migration to exercise privilege-mode restoration.
+Leo Cheng (5):
+  hw/gpio: add K230 GPIO controller.
+  hw/rtc: add K230 RTC.
+  hw/misc: add K230 IOMUX and mailbox/IPCM.
+  hw/sd: add K230 SD/eMMC (DesignWare dw_mmc).
+  hw/riscv: wire K230 peripherals into the machine.
 
-Xie Bo (2):
-  target/riscv/kvm: Synchronize privilege mode
-  target/riscv/kvm: Preserve MP state across migration
-
- target/riscv/cpu.h           |  4 +++
- target/riscv/kvm/kvm-cpu.c   | 62 ++++++++++++++++++++++++++----------
- target/riscv/kvm/kvm_riscv.h |  2 +-
- target/riscv/machine.c       | 49 ++++++++++++++++++++++++++--
- 4 files changed, 98 insertions(+), 19 deletions(-)
+ MAINTAINERS                     |  12 +-
+ docs/system/riscv/k230.rst      |   6 +
+ hw/gpio/Kconfig                 |   3 +
+ hw/gpio/k230_gpio.c             | 270 ++++++++++++++++++++++++++++
+ hw/gpio/meson.build             |   1 +
+ hw/gpio/trace-events            |   4 +
+ hw/misc/Kconfig                 |   6 +
+ hw/misc/k230_iomux.c            | 101 +++++++++++
+ hw/misc/k230_mailbox.c          | 206 +++++++++++++++++++++
+ hw/misc/meson.build             |   2 +
+ hw/misc/trace-events            |  10 ++
+ hw/riscv/Kconfig                |   7 +
+ hw/riscv/k230.c                 |  89 ++++++++--
+ hw/rtc/Kconfig                  |   3 +
+ hw/rtc/k230_rtc.c               | 306 ++++++++++++++++++++++++++++++++
+ hw/rtc/meson.build              |   1 +
+ hw/rtc/trace-events             |   5 +
+ hw/sd/Kconfig                   |   3 +
+ hw/sd/k230_dwmmc.c              | 139 +++++++++++++++
+ hw/sd/meson.build               |   1 +
+ hw/sd/trace-events              |   4 +
+ include/hw/gpio/k230_gpio.h     |  68 +++++++
+ include/hw/misc/k230_iomux.h    |  44 +++++
+ include/hw/misc/k230_mailbox.h  |  61 +++++++
+ include/hw/riscv/k230.h         |  18 ++
+ include/hw/rtc/k230_rtc.h       |  61 +++++++
+ include/hw/sd/k230_dwmmc.h      |  61 +++++++
+ tests/qtest/k230-dwmmc-test.c   |  79 +++++++++
+ tests/qtest/k230-gpio-test.c    | 143 +++++++++++++++
+ tests/qtest/k230-iomux-test.c   |  62 +++++++
+ tests/qtest/k230-mailbox-test.c |  89 ++++++++++
+ tests/qtest/k230-pwm-test.c     |  43 +++++
+ tests/qtest/k230-rtc-test.c     | 188 ++++++++++++++++++++
+ tests/qtest/k230-safety-test.c  | 127 +++++++++++++
+ tests/qtest/meson.build         |   2 +-
+ 35 files changed, 2211 insertions(+), 14 deletions(-)
+ create mode 100644 hw/gpio/k230_gpio.c
+ create mode 100644 hw/misc/k230_iomux.c
+ create mode 100644 hw/misc/k230_mailbox.c
+ create mode 100644 hw/rtc/k230_rtc.c
+ create mode 100644 hw/sd/k230_dwmmc.c
+ create mode 100644 include/hw/gpio/k230_gpio.h
+ create mode 100644 include/hw/misc/k230_iomux.h
+ create mode 100644 include/hw/misc/k230_mailbox.h
+ create mode 100644 include/hw/rtc/k230_rtc.h
+ create mode 100644 include/hw/sd/k230_dwmmc.h
+ create mode 100644 tests/qtest/k230-dwmmc-test.c
+ create mode 100644 tests/qtest/k230-gpio-test.c
+ create mode 100644 tests/qtest/k230-iomux-test.c
+ create mode 100644 tests/qtest/k230-mailbox-test.c
+ create mode 100644 tests/qtest/k230-pwm-test.c
+ create mode 100644 tests/qtest/k230-rtc-test.c
+ create mode 100644 tests/qtest/k230-safety-test.c
 
 -- 
-2.17.1
+2.43.0
 
 
