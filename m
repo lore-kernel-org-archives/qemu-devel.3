@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CBBC5AC67
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 12:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01332C55174
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Aug 2026 12:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wsgXT-0000bU-9R; Sat, 08 Aug 2026 08:52:35 -0400
+	id 1wsgXV-0000cN-1P; Sat, 08 Aug 2026 08:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xb@ultrarisc.com>)
- id 1wsgXK-0000aH-JN; Sat, 08 Aug 2026 08:52:27 -0400
+ id 1wsgXL-0000aQ-Dq; Sat, 08 Aug 2026 08:52:27 -0400
 Received: from [218.76.62.146] (helo=ultrarisc.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <xb@ultrarisc.com>)
- id 1wsgXH-00069Z-6K; Sat, 08 Aug 2026 08:52:26 -0400
+ id 1wsgXJ-00069c-F9; Sat, 08 Aug 2026 08:52:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=ultrarisc.com; s=dkim; h=Received:From:To:Cc:Subject:Date:
  Message-ID:In-Reply-To:References:MIME-Version:
- Content-Transfer-Encoding; bh=RG1Do0XFo3/EFfxE7sET0v3r+mS+mnC1m4
- mZ/+FlRy4=; b=UoOGu1APaJDjREcuVj73OVHaay6Zgy0m66fVAkX7phfwdKSZb6
- Y/p4HhLQq8cgEKUnxq0V//igQJZkRNB5cTvht4BXTboELiPN6swBxDSO2o3IwHTq
- 02ax0Wv9LfUo/cdxA/vRIo7iEKJttJgup4PqsaQBYxkGhd1YjWhKf4AdQ=
+ Content-Transfer-Encoding; bh=g60apWzxv+GGh2zAcMC6ZqUwFUVI7GjL1/
+ GqVD3LBEU=; b=Q+gLBKxsPOlL+rhG062z6F+/rU3/hXmcoqkjBD9sPJr3Qjcame
+ 5UcfB8m9b6/kvTLBgRCOLiWzvcgZmxn7bFcdjMJmwmhm2kT9POXSCRR3wCqPKAof
+ HNpcOI6PKXc/vr1mHDkgoFOoRvUlITEOcB5LLgc6ZcOUUdY/yXeAAMcGc=
 Received: from ur-dp1000 (unknown [192.168.100.1])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAfwDXEEKHJndqI3UWAA--.18312S4; 
- Sat, 08 Aug 2026 20:52:39 +0800 (CST)
+ AQAAfwDXEEKHJndqI3UWAA--.18312S2; 
+ Sat, 08 Aug 2026 20:52:37 +0800 (CST)
 From: Xie Bo <xb@ultrarisc.com>
 To: qemu-devel@nongnu.org
 Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, alistair23@gmail.com,
  pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com,
  rkrcmar@ventanamicro.com, palmer@dabbelt.com,
  daniel.barboza@oss.qualcomm.com, xb@ultrarisc.com
-Subject: [PATCH v11 2/2] target/riscv/kvm: Preserve MP state across migration
-Date: Sat,  8 Aug 2026 20:51:57 +0800
-Message-ID: <20260808125157.1220511-3-xb@ultrarisc.com>
+Subject: [PATCH v11 0/2] target/riscv: Fix riscv64 KVM migration
+Date: Sat,  8 Aug 2026 20:51:55 +0800
+Message-ID: <20260808125157.1220511-1-xb@ultrarisc.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260808125157.1220511-1-xb@ultrarisc.com>
+In-Reply-To: <20260730051926.7322-1-xb@ultrarisc.com>
 References: <20260730051926.7322-1-xb@ultrarisc.com>
- <20260808125157.1220511-1-xb@ultrarisc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXEEKHJndqI3UWAA--.18312S4
-X-Coremail-Antispam: 1UD129KBjvJXoWxKr18WF4rur4rCr48Ww1xZrb_yoWxXr4fpF
- s8GrW3CrZ5J3s3Xw1fJ34DWFn8Wr4kGr45A3yxCrWIkF45KrW5urWkKrW2yrs8Ja48JrWa
- 93WUAr9xCa10y3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUmm14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
- x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
- Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84
- ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AI
- xVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20x
- vE14v26r1Y6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xv
- r2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2IY04
- v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVCm-wCF04k20xvY0x0EwIxGrwCFx2IqxVCF
- s4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r
- 1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWU
- JVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r
- 1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1U
- YxBIdaVFxhVjvjDU0xZFpf9x0JUl9a9UUUUU=
-X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAMB2p1VlUAFAAFsH
+X-CM-TRANSID: AQAAfwDXEEKHJndqI3UWAA--.18312S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kr1xKw4xXrW7CFy5XrWfAFb_yoW8WFyDpr
+ 4rG34rXFs0qry7Gw1fJrsrXFy5Zr4fWa15A397JryktrW5XrZF9wn2q34SgFZxuFyIgr1S
+ 9ryjy345CF1DAF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9l14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+ 6F4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+ 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+ I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+ 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+ n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I
+ 8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
+ xVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
+ AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8I
+ cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
+ 4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUoWlkDUUUU
+X-CM-SenderInfo: l0e63zxwud2x1vfou0bp/1tbiAQAMB2p1VlUAFAACsA
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 218.76.62.146 (failed)
 Received-SPF: pass client-ip=218.76.62.146; envelope-from=xb@ultrarisc.com;
  helo=ultrarisc.com
@@ -87,212 +85,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V KVM initializes secondary vCPUs in KVM_MP_STATE_STOPPED, but QEMU
-does not save their runtime MP state. A destination therefore retains reset
-MP state after migration and cannot reliably resume all vCPUs.
+This series revives v9, which was applied to riscv-to-apply.next but did
+not reach QEMU master.
 
-Save KVM_GET_MP_STATE in a capability-gated KVM VMState subsection and
-restore it on KVM_PUT_FULL_STATE. Keep the existing reset initialization
-path unchanged. Track whether the subsection was loaded so streams where
-the subsection is absent retain the destination reset behavior.
+RISC-V KVM migration currently loses two pieces of vCPU state: the
+privilege mode core register and KVM MP state. The latter leaves secondary
+vCPUs in their reset STOPPED state on the destination.
 
-Bump the RISC-V CPU VMState version and minimum version to 12 for the new
-pre_load hook and KVM MP-state subsection. Keep the subsection out of KVM
-migration streams when the host does not support the MP-state capability.
+Synchronize the privilege mode through the existing generic CPU VMState,
+and carry MP state in a capability-gated KVM-only subsection. The subsection
+keeps KVM state out of TCG migration streams. Bump the generic RISC-V CPU
+VMState version and minimum version to 12 as required by the new pre_load
+hook and subsection.
 
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
+Changes from v10:
+- Bump the RISC-V CPU VMState version_id and minimum_version_id to 12.
+- Add Daniel's Reviewed-by tags.
+
+Testing on a native riscv64 host with Linux 6.6.20 and GCC 13.3.0:
+- KVM build: riscv64-softmmu, --enable-kvm.
+- Non-KVM build: riscv64-softmmu, --disable-kvm.
+- Four-vCPU KVM migration on unmodified master: all vCPUs failed to run
+  after migration and the guest reported RCU stalls.
+- The same migration with this series: CPU0 through CPU3 all ran after
+  migration.
+- Four user-mode busy workers, one pinned to each vCPU, all made forward
+  progress across migration to exercise privilege-mode restoration.
+
+Xie Bo (2):
+  target/riscv/kvm: Synchronize privilege mode
+  target/riscv/kvm: Preserve MP state across migration
+
  target/riscv/cpu.h           |  4 +++
- target/riscv/kvm/kvm-cpu.c   | 50 ++++++++++++++++++++++++------------
+ target/riscv/kvm/kvm-cpu.c   | 62 ++++++++++++++++++++++++++----------
  target/riscv/kvm/kvm_riscv.h |  2 +-
- target/riscv/machine.c       | 49 +++++++++++++++++++++++++++++++++--
- 4 files changed, 86 insertions(+), 19 deletions(-)
+ target/riscv/machine.c       | 49 ++++++++++++++++++++++++++--
+ 4 files changed, 98 insertions(+), 19 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index c9dfa7daff..e980b5964d 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -538,6 +538,10 @@ struct CPUArchState {
-     uint64_t kvm_timer_compare;
-     uint64_t kvm_timer_state;
-     uint64_t kvm_timer_frequency;
-+
-+    /* KVM multiprocessor state */
-+    uint32_t kvm_mp_state;
-+    bool kvm_mp_state_loaded;
- #endif /* CONFIG_KVM */
- };
- 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 8218832fbe..cc5655d46d 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1374,25 +1374,35 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-         return ret;
-     }
- 
-+    if (cap_has_mp_state) {
-+        struct kvm_mp_state mp_state;
-+
-+        ret = kvm_vcpu_ioctl(cs, KVM_GET_MP_STATE, &mp_state);
-+        if (ret) {
-+            return ret;
-+        }
-+        RISCV_CPU(cs)->env.kvm_mp_state = mp_state.mp_state;
-+    }
-+
-     return ret;
- }
- 
--int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
-+bool kvm_riscv_has_mp_state(void)
- {
--    if (cap_has_mp_state) {
--        struct kvm_mp_state mp_state = {
--            .mp_state = state
--        };
-+    return cap_has_mp_state;
-+}
- 
--        int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MP_STATE, &mp_state);
--        if (ret) {
--            fprintf(stderr, "%s: failed to sync MP_STATE %d/%s\n",
--                    __func__, ret, strerror(-ret));
--            return -1;
--        }
-+static int kvm_riscv_put_mp_state(CPUState *cs)
-+{
-+    struct kvm_mp_state mp_state = {
-+        .mp_state = RISCV_CPU(cs)->env.kvm_mp_state,
-+    };
-+
-+    if (!cap_has_mp_state) {
-+        return 0;
-     }
- 
--    return 0;
-+    return kvm_vcpu_ioctl(cs, KVM_SET_MP_STATE, &mp_state);
- }
- 
- int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-@@ -1431,10 +1441,18 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-     }
- 
-     if (KVM_PUT_RESET_STATE == level) {
--        RISCVCPU *cpu = RISCV_CPU(cs);
--        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
--                                       : KVM_MP_STATE_STOPPED;
--        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
-+        CPURISCVState *env = &RISCV_CPU(cs)->env;
-+
-+        env->kvm_mp_state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
-+                                               : KVM_MP_STATE_STOPPED;
-+        env->kvm_mp_state_loaded = false;
-+        ret = kvm_riscv_put_mp_state(cs);
-+        if (ret) {
-+            return ret;
-+        }
-+    } else if (KVM_PUT_FULL_STATE == level &&
-+               RISCV_CPU(cs)->env.kvm_mp_state_loaded) {
-+        ret = kvm_riscv_put_mp_state(cs);
-         if (ret) {
-             return ret;
-         }
-diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-index b2bcd1041f..61eaa12443 100644
---- a/target/riscv/kvm/kvm_riscv.h
-+++ b/target/riscv/kvm/kvm_riscv.h
-@@ -28,7 +28,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
-                           uint64_t aplic_base, uint64_t imsic_base,
-                           uint64_t guest_num);
- void riscv_kvm_aplic_request(void *opaque, int irq, int level);
--int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
-+bool kvm_riscv_has_mp_state(void);
- void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
- 
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 0ab613a298..31c49ca3e6 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -25,6 +25,9 @@
- #include "exec/icount.h"
- #include "target/riscv/tcg/debug.h"
- #include "hw/riscv/machines-qom.h"
-+#ifdef CONFIG_KVM
-+#include "kvm/kvm_riscv.h"
-+#endif
- 
- static bool pmp_needed(void *opaque)
- {
-@@ -222,6 +225,44 @@ static const VMStateDescription vmstate_kvmtimer = {
-         VMSTATE_END_OF_LIST()
-     }
- };
-+
-+static int riscv_cpu_kvm_pre_load(void *opaque)
-+{
-+    RISCVCPU *cpu = opaque;
-+
-+    cpu->env.kvm_mp_state_loaded = false;
-+    return 0;
-+}
-+
-+static bool kvm_mp_state_needed(void *opaque)
-+{
-+    return kvm_enabled() && kvm_riscv_has_mp_state();
-+}
-+
-+static int kvm_mp_state_post_load(void *opaque, int version_id)
-+{
-+    RISCVCPU *cpu = opaque;
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (!kvm_enabled() || !kvm_riscv_has_mp_state()) {
-+        return -ENOTSUP;
-+    }
-+
-+    env->kvm_mp_state_loaded = true;
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_kvm_mp_state = {
-+    .name = "cpu/kvm-mp-state",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = kvm_mp_state_needed,
-+    .post_load = kvm_mp_state_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(env.kvm_mp_state, RISCVCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
- #endif
- 
- static bool debug_needed(void *opaque)
-@@ -457,8 +498,11 @@ static const VMStateDescription vmstate_mseccfg = {
- 
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
--    .version_id = 11,
--    .minimum_version_id = 11,
-+    .version_id = 12,
-+    .minimum_version_id = 12,
-+#ifdef CONFIG_KVM
-+    .pre_load = riscv_cpu_kvm_pre_load,
-+#endif
-     .post_load = riscv_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64_ARRAY(env.gpr, RISCVCPU, 32),
-@@ -522,6 +566,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_rv128,
- #ifdef CONFIG_KVM
-         &vmstate_kvmtimer,
-+        &vmstate_kvm_mp_state,
- #endif
-         &vmstate_envcfg,
-         &vmstate_debug,
 -- 
 2.17.1
 
