@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50879C5AD4E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 22:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5CFC5AD4E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 22:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtC8A-0001Hz-Ie; Sun, 09 Aug 2026 18:36:34 -0400
+	id 1wtCBG-0005uc-8K; Sun, 09 Aug 2026 18:39:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtC88-0001Dj-QA
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:32 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wtCBE-0005tG-Vc
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:39:45 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtC87-0007VC-86
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:32 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-ca766c1c9ccso665268a12.0
- for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 15:36:30 -0700 (PDT)
+ id 1wtCBC-00083N-0o
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:39:44 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38101f85591so3261646a91.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 15:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786314990; x=1786919790; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786315181; x=1786919981; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PpWt1nMmBJbR0ViO/0y4L3pwLje0jeG3yYA88r5hCo4=;
- b=Lxs8q9/5YF5JNN6msd8TvcSLP6n6cOR+hOoEMxEGVhI+E6CSKyw0UrzPiwUsnZBAVS
- 65HpUXPDzTzgXR7PSI9//IqhUoXpWiByNNrXy/qVyJmc3xZbMCeOG87+AW8cd1Y/D8gl
- VUkp7584blUUTx0wG4boc5J43TOzsBN3UHMhHhRn5ZUbSM5ZU3gaz59i4L4t3flUTGOI
- b+3pN7cv/qQP1BbFNgBn4E6t66v463pOeQI9xP4VONSXN259TE6wCQHUhz2YTCclTgDz
- HqhCFqmvorLwulfDfMO0SWVmQ6vVWf2s5OMcBJc2oq8AGECVlBqR/if2s9MHHeCAMnie
- TVRQ==
+ bh=HPktSh0uMMuMi7kM/ExryJclVyqS0CaAF0oCr9EJbrc=;
+ b=TcZcinHiGmE8XVFCmU2JTpxSnmEgtugbpFfcpJzXLCl1Hd3UCo4O5ydg3CwAEH6RpC
+ xuZUqohl/bzpgIqmuPj2MAlTMq3HeHjykBRQ3FGpI/rGF8gTeTGVycWQZDADQkRy6sOR
+ Lo8MyNmUz9vDC1szUdtx+FQPmTY17x/AVeET1cV3fgIpAtgkej8Kxty5HyonHgEHbOfp
+ iFSsDL5N6+hk/BPwKrT3Om15stNa2+HPOUN1C1CV2dRWDYZ9u3XWOh6xdXBPgAihQghW
+ HdxBBKhT8x2Lrh2yqTJbXOp8bdqt9VGLT/nSfWl2vXzh/6Uwpvcu8CqhrAAzn/faRQy5
+ up4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786314990; x=1786919790;
+ d=1e100.net; s=20251104; t=1786315181; x=1786919981;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PpWt1nMmBJbR0ViO/0y4L3pwLje0jeG3yYA88r5hCo4=;
- b=KfebTCZ1R9NeAXGsUqB4XKQpGbIQeU2TAnqEKAv3QOqOkf+/+HxUBSu344h80uB4eb
- 3VIe+CafHv1lkMXn3nF0NXIiNlmP41aEg1zkbkFvzN1RVgrJybXjxJ1g9+37I1jjjKXG
- qWeaSYwS22bjxT2b4Qn8INVeAc7vp4/hw0Mc5fht/HvLum54KBwyh8H+67rN3weRWw4L
- XA8hn12mJ3tHi0Ju6ZlSh0jEGrI2+yvMCK3zCptodT5xn2HXgpV8mY6D+l1xai6IeRXh
- ApLAGjAKBD9LxraOL08slIKhwzbLEq5+cJ7hiPrEgatp8/KGt22P8a6y46aOraEOoymN
- EDuQ==
-X-Gm-Message-State: AOJu0Yw/1axUR0/ATDH6oQ6nPgLNySOf4Peu4WQWhZPNt6uWV3++a1zR
- GBo2vB5xsYlTtfMt3Rm8oUAJRYHMoCH4J4l0pNpPDMehv6r8LtSeCuDDcd4NOB1sxg8Bp9B9qyr
- BSxsC
-X-Gm-Gg: AR+sD13MbT/W+8GSsoSpRdBizdnjNU2IrU/Hs0IzI1EOKyFFDg6oclKu4MNfXmeU/tE
- O8+NGor7/RpL7jKGkwkN8UHg62/QxS0m0WVZueTn19MQX0BSmLzOBJzulguFtud8F51b7yQWrec
- TBLKSHwFngOl2UhO6VYEuDem56RZ74BrSzjlIJt0h9SWZFdGN1V6JH0KvBP9ZM/oAr3HUkwGc/b
- d/17mNqo//eSJntpZTvQlNX7JdZgFzFcR1iDssTUCMW2zHq8EtGBHjgI1j56oR5cnQsDnV7rtb7
- ppB/UZAo2nhPzuirw9Oul6wWLafbessEAl1jlvslikFM8rvERylzEP3M7Fk85jaVpKDeDWNFBdK
- 9ewLewEWv1jmEVmdnLUxgq90J3jO6e/y6x4eQMVxN1QepKIhLltix2Xdq7+eLkQgwMWKk9MQ4ZB
- 9idqFybee8351quwxOWqs6YdNpSgs6G5hi+9g8oyQMv91pYl192+pRkp1aY9tOn4fQKz0evyE52
- omYAQLOkpt+ZHLU/5LvykoY25dOZ8o=
-X-Received: by 2002:a05:6a00:ad5:b0:846:de21:3da4 with SMTP id
- d2e1a72fcca58-84f2e021ff5mr39961380b3a.3.1786314989757; 
- Sun, 09 Aug 2026 15:36:29 -0700 (PDT)
+ bh=HPktSh0uMMuMi7kM/ExryJclVyqS0CaAF0oCr9EJbrc=;
+ b=XITypmBXH/WliqHEWWH8IbCJhkLhlg6P7u9Y0uquL5f05eY83TVEesj9sxIc1u59Hz
+ po5YAAAXfL3LNGVymMu1HWhrMddVoLoPACzbaXyTtEwv+eKWHsie38hImmqfp5bYL19z
+ TBHljS6sKrZWT9hGLvqa79G6feZ4agNRXHBaTGE8o9RgkDYWq1p5m9O+SuKJMiomZ82a
+ nU4Xr82t3D1fJymGF8daiy5qDZBsj2jW/7UJy9QGB6iHlahH/ieiajjYXDC5QnQiQcoi
+ QOwCQLgpe9oEqWxXgJFFzlHcYGb/VewRZ/li9o7L7T46lrQ3bRa0EwBfiz6djGd+Inte
+ bzBQ==
+X-Gm-Message-State: AOJu0YwGg7W1sE2A9RCXmO1qMgMRzKYhiZx8BuhvDZBSD/s0vD2kHZ7b
+ a38Fg2iWcXeJrI1Sm1O6moc7ETLtV+RmH99hCFTpr9tUmnBd6+csizYJh8wOC3d/ty/JTQNoDhm
+ TYBVu
+X-Gm-Gg: AR+sD13CsAPUSd1vl73exi82E0nCbNcK5xfwOmg1TvsionbCfBYHE7Ww18T0843a+7d
+ cgqnxBU+ip0NlpaGNUbv99nfvodYW97vG8MC5B+yIwDXr99pN98RJXKWC0E3Zw8HCDJJTrk+Dxx
+ EIXnVmbScgl07ErBW1TOoUhfbZ/AKdrxPlu0KKNoSutauSqApdiF8zQblIh7M9yPr0+PejqBnUa
+ bMc0arqv71TxDanvv0RrXvKSlsvDbLfheiadnUVpyGkC6iPwkJa2SxZR71/CsxGtX5ytIKdh1ee
+ 4upuPGBazGNRsO3apr9zzfaaBlepFQBl4O09O0zhXlq/eLhYy0ywPUVudSpgnAvSmmvgewr9H4U
+ z7IDt+uUvyk3LuBtrfy7PgVdYGvK3AyA7RiNUrsnXBLXr0IF3k2b8/nLxX5hJKS9Q65jcShsf35
+ Nj0YpYrrdH1DHWCD5S3nN+z7vsyLwr6UBlLOicLvEFIcXuss9BqgJZKoDA5Fol8dD/2GTT1u0Z9
+ DpY6fmWUwvAQ7vUfUWAobu/9f+rT84=
+X-Received: by 2002:a17:90b:268d:b0:38e:5ce1:ae30 with SMTP id
+ 98e67ed59e1d1-392846b0c3amr6105498a91.14.1786315180567; 
+ Sun, 09 Aug 2026 15:39:40 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbe8f19ace6sm2998102a12.2.2026.08.09.15.36.28
+ 98e67ed59e1d1-390b1573defsm4264430a91.1.2026.08.09.15.39.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Aug 2026 15:36:29 -0700 (PDT)
+ Sun, 09 Aug 2026 15:39:40 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Subject: [PATCH 35/56] disas/riscv: Chain "ret" pseudo off "jr" pseudo
-Date: Sun,  9 Aug 2026 15:35:24 -0700
-Message-ID: <20260809223545.730664-36-richard.henderson@linaro.org>
+Subject: [PATCH 45/56] disas/riscv: Split ventana_opcode_data
+Date: Sun,  9 Aug 2026 15:35:34 -0700
+Message-ID: <20260809223545.730664-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260809223545.730664-1-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,54 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"jr" has already checked two conditions that apply to "ret".
+Move the table to riscv-xventana-op.c.inc and massage
+the lines into OP() form.  Drop vt.illegal as unused.
+Return pointers to objects directly.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ disas/riscv-xventana.c        | 21 ++++++---------------
+ disas/riscv-xventana-op.c.inc |  2 ++
+ 2 files changed, 8 insertions(+), 15 deletions(-)
+ create mode 100644 disas/riscv-xventana-op.c.inc
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index bb4779614b..2fec135b5f 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1061,8 +1061,7 @@ static const rvc_constraint rvcc_bgez[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bltz[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bgtz[] = { rvc_rs1_eq_x0, rvc_end };
- static const rvc_constraint rvcc_j[] = { rvc_rd_eq_x0, rvc_end };
--static const rvc_constraint rvcc_ret[] = { rvc_rd_eq_x0, rvc_rs1_eq_ra,
--                                           rvc_end };
-+static const rvc_constraint rvcc_ret[] = { rvc_rs1_eq_ra, rvc_end };
- static const rvc_constraint rvcc_jr[] = { rvc_rd_eq_x0, rvc_imm_eq_zero,
-                                           rvc_end };
- static const rvc_constraint rvcc_true[] = { rvc_end };
-@@ -1076,12 +1075,16 @@ static const rv_comp_data rvcp_jal[] = {
- };
+diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
+index a4e59312d0..5d2e07865f 100644
+--- a/disas/riscv-xventana.c
++++ b/disas/riscv-xventana.c
+@@ -8,35 +8,26 @@
+ #include "disas/riscv.h"
+ #include "disas/riscv-xventana.h"
  
- static const rv_comp_data rvcp_jalr[] = {
--    { rv_op_ret, rvcc_ret },
-     { rv_op_jr, rvcc_jr },
-     { rv_op_jalr_ra, rvcc_jalr_ra },
-     { },
- };
+-typedef enum {
+-    /* 0 is reserved for rv_op_illegal. */
+-    ventana_op_vt_maskc = 1,
+-    ventana_op_vt_maskcn = 2,
+-} rv_ventana_op;
+-
+-static const rv_opcode_data ventana_opcode_data[] = {
+-    { "vt.illegal", rv_codec_illegal, rv_fmt_none },
+-    { "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2 },
+-    { "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2 },
+-};
++#define OP(N, ...) static const rv_opcode_data op_##N = { __VA_ARGS__ };
++#include "riscv-xventana-op.c.inc"
++#undef OP
  
-+static const rv_comp_data rvcp_jr[] = {
-+    { rv_op_ret, rvcc_ret },
-+    { },
-+};
-+
- static const rv_comp_data rvcp_beq[] = {
-     { rv_op_beqz, rvcc_beqz },
-     { },
-@@ -1896,7 +1899,7 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { },
-     { "j", rv_codec_uj, rv_fmt_offset },
-     { "ret", rv_codec_i, rv_fmt_none },
--    { "jr", rv_codec_i, rv_fmt_rs1 },
-+    { "jr", rv_codec_i, rv_fmt_rs1, rvcp_jr },
-     { "rdcycle", rv_codec_i_csr, rv_fmt_rd },
-     { "rdtime", rv_codec_i_csr, rv_fmt_rd },
-     { "rdinstret", rv_codec_i_csr, rv_fmt_rd },
+ const rv_opcode_data *decode_xventanacondops(rv_decode *dec, rv_isa isa)
+ {
+     rv_inst inst = dec->inst;
+-    rv_opcode op = rv_op_illegal;
+ 
+     switch (((inst >> 0) & 0b11)) {
+     case 3:
+         switch (((inst >> 2) & 0b11111)) {
+         case 30:
+             switch (((inst >> 22) & 0b1111111000) | ((inst >> 12) & 0b0000000111)) {
+-            case 6: op = ventana_op_vt_maskc; break;
+-            case 7: op = ventana_op_vt_maskcn; break;
++            case 6: return &op_vt_maskc;
++            case 7: return &op_vt_maskcn;
+             }
+             break;
+         }
+         break;
+     }
+ 
+-    return op == rv_op_illegal ? NULL : &ventana_opcode_data[op];
++    return NULL;
+ }
+diff --git a/disas/riscv-xventana-op.c.inc b/disas/riscv-xventana-op.c.inc
+new file mode 100644
+index 0000000000..0fe4666aee
+--- /dev/null
++++ b/disas/riscv-xventana-op.c.inc
+@@ -0,0 +1,2 @@
++OP(vt_maskc, "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2)
++OP(vt_maskcn, "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2)
 -- 
 2.43.0
 
