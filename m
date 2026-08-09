@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83888C5AD5A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CAD0C5B560
 	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 20:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wt9hk-0003IU-Lx; Sun, 09 Aug 2026 16:01:08 -0400
+	id 1wt9ho-0003JD-49; Sun, 09 Aug 2026 16:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounces-491136634-1855475486@ha.d.sender-sib.com>)
- id 1wt9hh-0003Hq-Ti
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 16:01:06 -0400
+ id 1wt9hm-0003Ic-2u
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 16:01:10 -0400
 Received: from ha.d.sender-sib.com ([77.32.148.27])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounces-491136634-1855475486@ha.d.sender-sib.com>)
- id 1wt9hY-0002co-Js
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 16:01:05 -0400
+ id 1wt9hj-0002co-3q
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 16:01:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=11859270.brevosend.com;
- q=dns/txt; s=mail; bh=YNTDtLjbbbqqI+WO6BjyPGh6h/w5mgtAH8Olp2saEL8=;
+ q=dns/txt; s=mail; bh=99UrMyIdHU4dxREXcsctiEdrUfj8g/vGg0ID597CjNc=;
  h=from:subject:date:to:cc:mime-version:content-transfer-encoding:in-reply-to:references:list-unsubscribe:x-csa-complaints:list-unsubscribe-post:message-id:x-sib-id:feedback-id;
- b=O8eKTEoqCte74iphOwPVxwpzv5cTAJD+wk/ceLxLOqGoO0JE2uT776Bg3cXXFseuKJD95z4amFJs
- /SZMtGFZ/TV0aAo6ZI1uUunZ+uZKJwOkffykSQvuWrRAxMkEHVkClogbif3AzVfn5E+7oFWcYSDU
- nWHf+DrNfkz4ndUXaBs=
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Feedback-ID: 77.32.148.27:11859270_-1:11859270:Sendinblue
-X-CSA-Complaints: csa-complaints@eco.de
-X-Mailin-EID: NDkxMTM2NjM0fnFlbXUtZGV2ZWxAbm9uZ251Lm9yZ348MjAyNjA4MDkyMDAwMzguMzAwMjE2LTEtZ3VvY2h1bi53YW5nQGZveG1haWwuY29tPn5oYS5kLnNlbmRlci1zaWIuY29t
-To: <qemu-devel@nongnu.org>
-Date: Mon, 10 Aug 2026 04:00:38 +0800
+ b=nRd4EbOfEaXWKekG+NjYHJihuobjUe3ezXmHVgw4+stAmqMgPQk5/YO7T1/J8BuI35O89SEdaOW0
+ D6ClYi1yPMU4BZ5/QO5gtrjV9AecuFLzO3A6TZ1+T5ju/xxWj6bo3SphH81olhnmip/pONjMFb5d
+ BSRu/hm8EOkYwSVMXF0=
+From: "guochun wang" <guochun.wang@foxmail.com>
+Subject: [PATCH v3 2/2] tests/qtest: add K230 GPIO controller test
+X-sib-id: K5dXPfghOZT8MYmF1c3gb8gZhLlT1HFFmlYBgR_qUHTk6lOiHLpl9yemK2Rk6GOFjp8r9hnuu19w70or5oTGpMHMy5ip4hxHkoaXpibrGN4gx_oyHNtjJR5cJy7-CMl1JTK9ZmlrPh-Tk57n0TSEgGpVLpm-ZcisTQ4XvgqHKaMVDw-P
 Cc: <chao.liu@processmission.com>, <pbonzini@redhat.com>, <farosas@suse.de>,
  <lvivier@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
  <liwei1518@gmail.com>, <daniel.barboza@oss.qualcomm.com>,
  <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>,
  <guochun.wang@foxmail.com>
-Message-Id: <be7afd5c-55dd-4af1-b828-9a2f401e3bfc@smtp-relay.sendinblue.com>
-From: "guochun wang" <guochun.wang@foxmail.com>
-Subject: [PATCH v3 1/2] hw/gpio: add K230 GPIO controller model
-X-sib-id: 0c8Px7IGF2VoGmo5GBs7N4DEHkbeb8rDHAleT4jWykOo2myCek0eCE3I-zGFkZNZle3vgwiXd1PBnDxw0s0_R3PgomHfTxnmBs1d7sBfh0dIr2ia621duy5Tiw8aSI7CfIpb73OOeltC26ZKA-4uMadkBd_z51vFKdMy3zumONJ-ycoS
-Origin-messageId: <20260809200038.300216-1-guochun.wang@foxmail.com>
+Message-Id: <fc9c099e-de7b-4bd3-a013-7c388907f173@smtp-relay.sendinblue.com>
+Origin-messageId: <20260809200055.300535-1-guochun.wang@foxmail.com>
+Feedback-ID: 77.32.148.27:11859270_-1:11859270:Sendinblue
+X-CSA-Complaints: csa-complaints@eco.de
+X-Mailin-EID: NDkxMTM2NjM0fnFlbXUtZGV2ZWxAbm9uZ251Lm9yZ348MjAyNjA4MDkyMDAwNTUuMzAwNTM1LTEtZ3VvY2h1bi53YW5nQGZveG1haWwuY29tPn5oYS5kLnNlbmRlci1zaWIuY29t
+To: <qemu-devel@nongnu.org>
+Date: Mon, 10 Aug 2026 04:00:55 +0800
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Mime-Version: 1.0
-In-Reply-To: <tencent_EF996EEB2215272639C89FAE1491CEF43908@qq.com>
-Content-Transfer-Encoding: quoted-printable
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <tencent_EF996EEB2215272639C89FAE1491CEF43908@qq.com>
 References: <tencent_EF996EEB2215272639C89FAE1491CEF43908@qq.com>
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=77.32.148.27;
  envelope-from=bounces-491136634-1855475486@ha.d.sender-sib.com;
  helo=ha.d.sender-sib.com
@@ -76,656 +76,590 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-Implement a K230 SoC APB GPIO controller model for QEMU, derived from
-the Synopsys DesignWare APB GPIO (the Linux gpio-k230 driver is based
-on gpio-dwapb.c and shares the same register layout), with a
-Canaan-specific compatible ("canaan,k230-apb-gpio") and hardlock
-integration. The model is capable of running the Linux gpio-k230 driver
-and driving external input/output lines. Behaviour follows the K230
-Technical Reference Manual v0.3.1.
+Add qtest cases verifying the K230 GPIO model against TRM v0.3.1
+behaviour and Linux gpio-k230 driver requirements.
 
-Implemented:
-  - Port A registers: SWPORTA_DR/DDR/CTL, EXT_PORTA, INTEN, INTMASK,
-    INTTYPE_LEVEL, INT_POLARITY, INTSTATUS, RAW_INTSTATUS, DEBOUNCE,
-    LS_SYNC, INT_BOTHEDGE, PORTA_EOI, ID_CODE, VER_ID_CODE,
-    CONFIG_REG1/2
-  - Software control mode: DR drives output pad, DDR selects direction,
-    EXT_PORTA multiplexes external input vs. DR by DDR
-  - Per-pin IRQ output lines (single interrupt scheme), 32 per group
-  - Edge detection: rising / falling / both-edge via INT_BOTHEDGE
-  - Level-sensitive interrupts: active-high / active-low
-  - PORTA_EOI clears edge interrupts only; level interrupts cleared by
-    source removal or INTMASK
-  - INTMASK masking and INTEN gating
-  - DDR/CTL mode switching: no new interrupts while output/hardware mode,
-    pending interrupts preserved; on switch back to input/software mode,
-    level interrupts re-evaluated against current ext level, edge left
-    untouched, per TRM v0.3.1
-  - Three-phase Resettable API (enter/hold); VMState migration
+Tests cover:
+  - Reset values: all registers cleared after machine init
+  - Edge detection: rising / falling / both-edge, with EOI clearing
+  - Level-sensitive: active-high / active-low, cleared by source removal
+  - EOI: clears edge interrupts only, raw status verified
+  - INTEN gating and INTMASK masking (raw status still recorded)
+  - No new interrupts while DDR=3Doutput or CTL=3Dhardware mode
+  - PLIC integration: per-pin IRQ, claim/complete flow
+  - Multiple simultaneous interrupts on independent lines
+  - GPIO1 controller (second instance at 0x9140C000)
+  - DDR/CTL mode switching: pending interrupts preserved; on switch
+    back to input/software mode, level interrupts re-evaluated against
+    current ext level, edge interrupts left untouched (TRM v0.3.1)
 
-Not implemented (no observable effect under QEMU):
-  - Hardware control mode (aux_porta_out/en/in signals, single-ctl params)
-  - Debounce logic (dbclk, glitch filtering, both-edge debounce timing)
-  - Combined interrupt output (gpio_intr_flag OR of all lines)
-  - Clock-domain synchronization (pclk_intr, ls_sync metastability
-    registers, gpio_intrclk_en output)
-  - Config-time parameters GPIO_PA_SYNC_EXT_DATA / GPIO_PA_SYNC_INTERRUPTS
-    / GPIO_INT_BOTH_EDGE / GPIO_PORTX_SINGLE_CTL
-
-Two controllers are instantiated in the K230 SoC (gpio0 at 0x9140B000,
-gpio1 at 0x9140C000), replacing the previous unimplemented-device
-placeholders. Each controller exposes 32 per-pin IRQ lines connected
-to the PLIC:
-  - GPIO0: PLIC sources 32..63
-  - GPIO1: PLIC sources 64..95
+Update MAINTAINERS with the new test file.
 
 Signed-off-by: guochun wang <guochun.wang@foxmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- MAINTAINERS                 |   2 +
- hw/gpio/Kconfig             |   3 +
- hw/gpio/k230_gpio.c         | 362 ++++++++++++++++++++++++++++++++++++
- hw/gpio/meson.build         |   1 +
- hw/riscv/Kconfig            |   1 +
- hw/riscv/k230.c             |  27 ++-
- include/hw/gpio/k230_gpio.h |  71 +++++++
- include/hw/riscv/k230.h     |   5 +
- 8 files changed, 466 insertions(+), 6 deletions(-)
- create mode 100644 hw/gpio/k230_gpio.c
- create mode 100644 include/hw/gpio/k230_gpio.h
+ MAINTAINERS                  |   1 +
+ tests/qtest/k230-gpio-test.c | 521 +++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build      |   2 +-
+ 3 files changed, 523 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-gpio-test.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 902db77218..4301d29f7e 100644
+index 4301d29f7e..bb4f585426 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1827,8 +1827,10 @@ M: Chao Liu <chao.liu@processmission.com>
- L: qemu-riscv@nongnu.org
- S: Maintained
- F: docs/system/riscv/k230.rst
-+F: hw/gpio/k230_gpio.c
- F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
-+F: include/hw/gpio/k230_gpio.h
+@@ -1834,6 +1834,7 @@ F: include/hw/gpio/k230_gpio.h
  F: include/hw/riscv/k230.h
  F: include/hw/watchdog/k230_wdt.h
  F: tests/functional/riscv64/test_k230.py
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index a209294c20..2d37a8bb6f 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -16,6 +16,9 @@ config SIFIVE_GPIO
- config STM32L4X5_GPIO
-     bool
++F: tests/qtest/k230-gpio-test.c
+ F: tests/qtest/k230-wdt-test.c
 =20
-+config K230_GPIO
-+    bool
-+
- config PCA9552
-     bool
-     depends on I2C
-diff --git a/hw/gpio/k230_gpio.c b/hw/gpio/k230_gpio.c
+ RX Machines
+diff --git a/tests/qtest/k230-gpio-test.c b/tests/qtest/k230-gpio-test.c
 new file mode 100644
-index 0000000000..9d27f0bbfd
+index 0000000000..9c930cbd1c
 --- /dev/null
-+++ b/hw/gpio/k230_gpio.c
-@@ -0,0 +1,362 @@
++++ b/tests/qtest/k230-gpio-test.c
+@@ -0,0 +1,521 @@
 +/*
-+ * QEMU K230 GPIO Controller
++ * QTest testcase for K230 GPIO
 + *
 + * Copyright (c) 2025 Wang Guochun <wdasn99@gmail.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18), section 12.5 GPIO
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Tec=
-hnical_Reference_Manual_V0.3.1_20241118.pdf
++ * K230 Technical Reference Manual V0.3.1 (2024-11-18)
 + */
 +
 +#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "libqtest.h"
 +#include "hw/gpio/k230_gpio.h"
-+#include "hw/core/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
 +
-+static void k230_gpio_update_int(K230GPIOState *s)
++#define K230_GPIO0_BASE  0x9140B000
++#define K230_GPIO1_BASE  0x9140C000
++
++#define GPIO_BASE K230_GPIO0_BASE
++
++#define PLIC_BASE           0xF00000000ULL
++#define PLIC_PRIORITY       (PLIC_BASE + 0x000000)
++#define PLIC_PENDING        (PLIC_BASE + 0x001000)
++#define PLIC_ENABLE         (PLIC_BASE + 0x002000)
++#define PLIC_CONTEXT        (PLIC_BASE + 0x200000)
++#define PLIC_THRESHOLD      (PLIC_CONTEXT + 0x0)
++#define PLIC_CLAIM          (PLIC_CONTEXT + 0x4)
++
++#define GPIO0_IRQ_BASE  32
++#define GPIO1_IRQ_BASE  64
++
++static inline bool plic_irq_pending(QTestState *qts, int irq)
 +{
-+    uint32_t masked_status =3D s->raw_intstatus & ~s->intmask & s->inten;
-+    for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+        if (s->irq[i]) {
-+            qemu_set_irq(s->irq[i], extract32(masked_status, i, 1));
-+        }
-+    }
++    uint32_t word =3D qtest_readl(qts, PLIC_PENDING + (irq / 32) * 4);
++    return extract32(word, irq % 32, 1);
 +}
 +
-+static void k230_gpio_set_int_line(K230GPIOState *s, int line, int level)
++static void gpio0_set_input(QTestState *qts, int line, int level)
 +{
-+    if (line >=3D K230_GPIO_PINS_PER_GROUP) {
-+        return;
-+    }
-+
-+    uint32_t prev_level =3D extract32(s->ext_porta, line, 1);
-+    uint32_t curr_level =3D level;
-+
-+    s->ext_porta =3D deposit32(s->ext_porta, line, 1, curr_level);
-+
-+    if (extract32(s->swporta_ddr, line, 1)) {
-+        return;
-+    }
-+
-+    if (extract32(s->swporta_ctl, line, 1)) {
-+        return;
-+    }
-+
-+    uint32_t pol =3D extract32(s->int_polarity, line, 1);
-+    uint32_t both =3D extract32(s->int_bothedge, line, 1);
-+    uint32_t is_level =3D !extract32(s->inttype_level, line, 1);
-+
-+    if (both) {
-+        if (prev_level !=3D curr_level) {
-+            s->raw_intstatus |=3D (1U << line);
-+        }
-+    } else if (is_level) {
-+        if (curr_level =3D=3D pol) {
-+            s->raw_intstatus |=3D (1U << line);
-+        } else {
-+            s->raw_intstatus &=3D ~(1U << line);
-+        }
-+    } else {
-+        if (prev_level !=3D curr_level && curr_level =3D=3D pol) {
-+            s->raw_intstatus |=3D (1U << line);
-+        }
-+    }
++    qtest_set_irq_in(qts, "/machine/soc/k230-gpio0",
++                     "unnamed-gpio-in", line, level);
 +}
 +
-+static void k230_gpio_set(void *opaque, int line, int level)
++static void gpio1_set_input(QTestState *qts, int line, int level)
 +{
-+    K230GPIOState *s =3D K230_GPIO(opaque);
-+
-+    k230_gpio_set_int_line(s, line, level);
-+    k230_gpio_update_int(s);
++    qtest_set_irq_in(qts, "/machine/soc/k230-gpio1",
++                     "unnamed-gpio-in", line, level);
 +}
 +
-+static void k230_gpio_set_all_output_lines(K230GPIOState *s)
++static void plic_enable_irq(QTestState *qts, int irq)
 +{
-+    int i;
-+
-+    for (i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+        if (extract32(s->swporta_ddr, i, 1) && s->output[i]) {
-+            qemu_set_irq(s->output[i], extract32(s->swporta_dr, i, 1));
-+        }
-+    }
++    qtest_writel(qts, PLIC_PRIORITY + irq * 4, 1);
++    qtest_writel(qts, PLIC_THRESHOLD, 0);
++    qtest_writel(qts, PLIC_ENABLE + (irq / 32) * 4, BIT(irq % 32));
 +}
 +
-+static uint64_t k230_gpio_read(void *opaque, hwaddr offset, unsigned size)
++static void plic_claim_complete(QTestState *qts, int irq)
 +{
-+    K230GPIOState *s =3D K230_GPIO(opaque);
-+
-+    switch (offset) {
-+    case K230_GPIO_SWPORTA_DR:
-+        return s->swporta_dr;
-+    case K230_GPIO_SWPORTA_DDR:
-+        return s->swporta_ddr;
-+    case K230_GPIO_SWPORTA_CTL:
-+        return s->swporta_ctl;
-+    case K230_GPIO_INTEN:
-+        return s->inten;
-+    case K230_GPIO_INTMASK:
-+        return s->intmask;
-+    case K230_GPIO_INTTYPE_LEVEL:
-+        return s->inttype_level;
-+    case K230_GPIO_INT_POLARITY:
-+        return s->int_polarity;
-+    case K230_GPIO_INTSTATUS:
-+        return s->raw_intstatus & ~s->intmask;
-+    case K230_GPIO_RAW_INTSTATUS:
-+        return s->raw_intstatus;
-+    case K230_GPIO_DEBOUNCE:
-+        return s->debounce;
-+    case K230_GPIO_EXT_PORTA:
-+        return (s->ext_porta & ~s->swporta_ddr) |
-+               (s->swporta_dr & s->swporta_ddr);
-+    case K230_GPIO_LS_SYNC:
-+        return s->ls_sync;
-+    case K230_GPIO_ID_CODE:
-+        return s->id_code;
-+    case K230_GPIO_INT_BOTHEDGE:
-+        return s->int_bothedge;
-+    case K230_GPIO_VER_ID_CODE:
-+        return s->ver_id_code;
-+    case K230_GPIO_CONFIG_REG2:
-+        return s->config_reg2;
-+    case K230_GPIO_CONFIG_REG1:
-+        return s->config_reg1;
-+    case K230_GPIO_PORTA_EOI:
-+        return 0;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%=
-"
-+                      HWADDR_PRIx "\n", TYPE_K230_GPIO, __func__, offset);
-+        return 0;
-+    }
++    uint32_t claimed =3D qtest_readl(qts, PLIC_CLAIM);
++    g_assert_cmpuint(claimed, =3D=3D, irq);
++    qtest_writel(qts, PLIC_CLAIM, irq);
 +}
 +
-+static void k230_gpio_write(void *opaque, hwaddr offset, uint64_t value,
-+                            unsigned size)
++static uint32_t gpio0_read(QTestState *qts, hwaddr offset)
 +{
-+    K230GPIOState *s =3D K230_GPIO(opaque);
-+    uint32_t curr_level, pol;
-+
-+    switch (offset) {
-+    case K230_GPIO_SWPORTA_DR:
-+        s->swporta_dr =3D value;
-+        k230_gpio_set_all_output_lines(s);
-+        break;
-+    case K230_GPIO_SWPORTA_DDR: {
-+        uint32_t prev_ddr =3D s->swporta_ddr;
-+        s->swporta_ddr =3D value;
-+        k230_gpio_set_all_output_lines(s);
-+        for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+            /* Skip pins whose direction did not change */
-+            if (extract32(prev_ddr, i, 1) =3D=3D extract32(s->swporta_ddr,=
- i, 1)) {
-+                continue;
-+            }
-+            /*
-+             * When switching back to input mode (and still in software
-+             * control), re-evaluate level-sensitive interrupts. Edge
-+             * interrupts are left untouched, matching the manual TRM v0.3=
-.1.
-+             */
-+            if (extract32(s->swporta_ddr, i, 1) ||
-+                extract32(s->swporta_ctl, i, 1) ||
-+                extract32(s->inttype_level, i, 1)) {
-+                continue;
-+            }
-+
-+            curr_level =3D extract32(s->ext_porta, i, 1);
-+            pol =3D extract32(s->int_polarity, i, 1);
-+            if (curr_level =3D=3D pol) {
-+                s->raw_intstatus |=3D (1U << i);
-+            } else {
-+                s->raw_intstatus &=3D ~(1U << i);
-+            }
-+        }
-+        k230_gpio_update_int(s);
-+        break;
-+    }
-+    case K230_GPIO_SWPORTA_CTL: {
-+        uint32_t prev_ctl =3D s->swporta_ctl;
-+        s->swporta_ctl =3D value;
-+        for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+            /* Skip pins whose control mode did not change */
-+            if (extract32(prev_ctl, i, 1) =3D=3D extract32(s->swporta_ctl,=
- i, 1)) {
-+                continue;
-+            }
-+            /*
-+             * When switching back from hardware to software control (and =
-DDR
-+             * is input), re-evaluate level-sensitive interrupts. Edge
-+             * interrupts are left untouched, matching the manual TRM v0.3=
-.1.
-+             */
-+            if (extract32(s->swporta_ddr, i, 1) ||
-+                extract32(s->swporta_ctl, i, 1) ||
-+                extract32(s->inttype_level, i, 1)) {
-+                continue;
-+            }
-+
-+            curr_level =3D extract32(s->ext_porta, i, 1);
-+            pol =3D extract32(s->int_polarity, i, 1);
-+            if (curr_level =3D=3D pol) {
-+                s->raw_intstatus |=3D (1U << i);
-+            } else {
-+                s->raw_intstatus &=3D ~(1U << i);
-+            }
-+        }
-+        k230_gpio_update_int(s);
-+        break;
-+    }
-+    case K230_GPIO_INTEN:
-+        s->inten =3D value;
-+        k230_gpio_update_int(s);
-+        break;
-+    case K230_GPIO_INTMASK:
-+        s->intmask =3D value;
-+        k230_gpio_update_int(s);
-+        break;
-+    case K230_GPIO_INTTYPE_LEVEL:
-+        s->inttype_level =3D value;
-+        break;
-+    case K230_GPIO_INT_POLARITY:
-+        s->int_polarity =3D value;
-+        break;
-+    case K230_GPIO_DEBOUNCE:
-+        s->debounce =3D value;
-+        break;
-+    case K230_GPIO_PORTA_EOI:
-+        for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+            if (extract32(value, i, 1) && extract32(s->inttype_level, i, 1=
-)) {
-+                s->raw_intstatus =3D deposit32(s->raw_intstatus, i, 1, 0);
-+            }
-+        }
-+        k230_gpio_update_int(s);
-+        break;
-+    case K230_GPIO_LS_SYNC:
-+        s->ls_sync =3D value;
-+        break;
-+    case K230_GPIO_ID_CODE:
-+        break;
-+    case K230_GPIO_INT_BOTHEDGE:
-+        s->int_bothedge =3D value;
-+        break;
-+    case K230_GPIO_VER_ID_CODE:
-+        break;
-+    case K230_GPIO_CONFIG_REG2:
-+        break;
-+    case K230_GPIO_CONFIG_REG1:
-+        break;
-+    case K230_GPIO_INTSTATUS:
-+        break;
-+    case K230_GPIO_RAW_INTSTATUS:
-+        break;
-+    case K230_GPIO_EXT_PORTA:
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%=
-"
-+                      HWADDR_PRIx "\n", TYPE_K230_GPIO, __func__, offset);
-+        break;
-+    }
++    return qtest_readl(qts, GPIO_BASE + offset);
 +}
 +
-+static const MemoryRegionOps k230_gpio_ops =3D {
-+    .read =3D k230_gpio_read,
-+    .write =3D k230_gpio_write,
-+    .valid.min_access_size =3D 4,
-+    .valid.max_access_size =3D 4,
-+    .endianness =3D DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static const VMStateDescription vmstate_k230_gpio =3D {
-+    .name =3D TYPE_K230_GPIO,
-+    .version_id =3D 1,
-+    .minimum_version_id =3D 1,
-+    .fields =3D (const VMStateField[]) {
-+        VMSTATE_UINT32(swporta_dr, K230GPIOState),
-+        VMSTATE_UINT32(swporta_ddr, K230GPIOState),
-+        VMSTATE_UINT32(swporta_ctl, K230GPIOState),
-+        VMSTATE_UINT32(inten, K230GPIOState),
-+        VMSTATE_UINT32(intmask, K230GPIOState),
-+        VMSTATE_UINT32(inttype_level, K230GPIOState),
-+        VMSTATE_UINT32(int_polarity, K230GPIOState),
-+        VMSTATE_UINT32(raw_intstatus, K230GPIOState),
-+        VMSTATE_UINT32(debounce, K230GPIOState),
-+        VMSTATE_UINT32(ext_porta, K230GPIOState),
-+        VMSTATE_UINT32(ls_sync, K230GPIOState),
-+        VMSTATE_UINT32(int_bothedge, K230GPIOState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void k230_gpio_enter_reset(Object *obj, ResetType type)
++static void gpio0_write(QTestState *qts, hwaddr offset, uint32_t value)
 +{
-+    K230GPIOState *s =3D K230_GPIO(obj);
-+
-+    s->swporta_dr =3D 0;
-+    s->swporta_ddr =3D 0;
-+    s->swporta_ctl =3D 0;
-+    s->inten =3D 0;
-+    s->intmask =3D 0;
-+    s->inttype_level =3D 0;
-+    s->int_polarity =3D 0;
-+    s->raw_intstatus =3D 0;
-+    s->debounce =3D 0;
-+    s->porta_eoi =3D 0;
-+    s->ext_porta =3D 0;
-+    s->ls_sync =3D 0;
-+    s->id_code =3D 0;
-+    s->int_bothedge =3D 0;
-+    s->ver_id_code =3D 0;
-+    s->config_reg2 =3D 0;
-+    s->config_reg1 =3D 0;
++    qtest_writel(qts, GPIO_BASE + offset, value);
 +}
 +
-+static void k230_gpio_hold_reset(Object *obj, ResetType type)
++static uint32_t gpio0_raw_intstatus(QTestState *qts)
 +{
-+    K230GPIOState *s =3D K230_GPIO(obj);
-+
-+    k230_gpio_update_int(s);
++    return gpio0_read(qts, K230_GPIO_RAW_INTSTATUS);
 +}
 +
-+static void k230_gpio_realize(DeviceState *dev, Error **errp)
++static void test_reset_values(void)
 +{
-+    K230GPIOState *s =3D K230_GPIO(dev);
-+    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
-+    int i;
++    QTestState *qts =3D qtest_init("-machine k230");
 +
-+    memory_region_init_io(&s->iomem, OBJECT(s), &k230_gpio_ops, s,
-+                          TYPE_K230_GPIO, K230_GPIO_MEM_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_SWPORTA_DR), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_SWPORTA_DDR), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_SWPORTA_CTL), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_INTEN), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_INTMASK), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_INTTYPE_LEVEL), =3D=3D, 0x0)=
+;
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_INT_POLARITY), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_INTSTATUS), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_RAW_INTSTATUS), =3D=3D, 0x0)=
+;
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_CONFIG_REG2), =3D=3D, 0x0);
++    g_assert_cmphex(gpio0_read(qts, K230_GPIO_CONFIG_REG1), =3D=3D, 0x0);
 +
-+    qdev_init_gpio_in(DEVICE(s), k230_gpio_set, K230_GPIO_PINS_PER_GROUP);
-+    qdev_init_gpio_out(DEVICE(s), s->output, K230_GPIO_PINS_PER_GROUP);
-+
-+    for (i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+        sysbus_init_irq(sbd, &s->irq[i]);
-+    }
++    qtest_quit(qts);
 +}
 +
-+static void k230_gpio_class_init(ObjectClass *klass, const void *data)
++static void test_edge_rising(void)
 +{
-+    DeviceClass *dc =3D DEVICE_CLASS(klass);
-+    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 5;
 +
-+    dc->realize =3D k230_gpio_realize;
-+    rc->phases.enter =3D k230_gpio_enter_reset;
-+    rc->phases.hold =3D k230_gpio_hold_reset;
-+    dc->vmsd =3D &vmstate_k230_gpio;
-+    dc->desc =3D "K230 GPIO controller";
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(5));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(5));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(5));
++
++    gpio0_set_input(qts, 5, 0);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 5, 1);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
 +}
 +
-+static const TypeInfo k230_gpio_info =3D {
-+    .name =3D TYPE_K230_GPIO,
-+    .parent =3D TYPE_SYS_BUS_DEVICE,
-+    .instance_size =3D sizeof(K230GPIOState),
-+    .class_init =3D k230_gpio_class_init,
-+};
-+
-+static void k230_gpio_register_types(void)
++static void test_edge_falling(void)
 +{
-+    type_register_static(&k230_gpio_info);
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 3;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(3));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, 0);
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(3));
++
++    gpio0_set_input(qts, 3, 1);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 3, 0);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
 +}
 +
-+type_init(k230_gpio_register_types)
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 6a67ee958f..94b5d9e2fa 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('=
-aspeed_gpio.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
- system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
-+system_ss.add(when: 'CONFIG_K230_GPIO', if_true: files('k230_gpio.c'))
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..410877425c 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -162,3 +162,4 @@ config K230
-     select SERIAL_MM
-     select UNIMP
-     select K230_WDT
-+    select K230_GPIO
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 656f28190c..62967a67d0 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -110,6 +110,8 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-+    object_initialize_child(obj, "k230-gpio0", &s->gpio[0], TYPE_K230_GPIO=
-);
-+    object_initialize_child(obj, "k230-gpio1", &s->gpio[1], TYPE_K230_GPIO=
-);
++static void test_both_edge(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 7;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(7));
++    gpio0_write(qts, K230_GPIO_INT_BOTHEDGE, BIT(7));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(7));
++
++    gpio0_set_input(qts, 7, 0);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 7, 1);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_write(qts, K230_GPIO_PORTA_EOI, BIT(7));
++    g_assert_cmphex(gpio0_raw_intstatus(qts) & BIT(7), =3D=3D, 0);
++    plic_claim_complete(qts, gpio_irq);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 7, 0);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_level_high(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 2;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, 0);
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(2));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(2));
++
++    gpio0_set_input(qts, 2, 0);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 2, 1);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 2, 0);
++    g_assert_cmphex(gpio0_raw_intstatus(qts) & BIT(2), =3D=3D, 0);
++    plic_claim_complete(qts, gpio_irq);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_level_low(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 4;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, 0);
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, 0);
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(4));
++
++    gpio0_set_input(qts, 4, 1);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    gpio0_set_input(qts, 4, 0);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    /*
++     * Level goes away: GPIO deasserts, but the PLIC pending bit is
++     * sticky. Verify the GPIO-side status is cleared, then
++     * claim/complete to clear the PLIC pending bit.
++     */
++    gpio0_set_input(qts, 4, 1);
++    g_assert_cmphex(gpio0_raw_intstatus(qts) & BIT(4), =3D=3D, 0);
++    plic_claim_complete(qts, gpio_irq);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_eoi_clear(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 10;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(10));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(10));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(10));
++
++    gpio0_set_input(qts, 10, 0);
++    gpio0_set_input(qts, 10, 1);
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    /*
++     * EOI clears the GPIO-side raw status, then claim/complete
++     * clears the sticky PLIC pending bit.
++     */
++    gpio0_write(qts, K230_GPIO_PORTA_EOI, BIT(10));
++    g_assert_cmphex(gpio0_raw_intstatus(qts) & BIT(10), =3D=3D, 0);
++    plic_claim_complete(qts, gpio_irq);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_inten_disabled(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 15;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(15));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(15));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, 0);
++
++    gpio0_set_input(qts, 15, 0);
++    gpio0_set_input(qts, 15, 1);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_intmask(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 20;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(20));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(20));
++    gpio0_write(qts, K230_GPIO_INTMASK, BIT(20));
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(20));
++
++    gpio0_set_input(qts, 20, 0);
++    gpio0_set_input(qts, 20, 1);
++
++    g_assert_cmphex(gpio0_raw_intstatus(qts) & BIT(20), =3D=3D, BIT(20));
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_ddr_output_no_int(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 25;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, BIT(25));
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(25));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(25));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(25));
++
++    gpio0_set_input(qts, 25, 0);
++    gpio0_set_input(qts, 25, 1);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_ctl_hw_no_int(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 27;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_SWPORTA_CTL, BIT(27));
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(27));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(27));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(27));
++
++    gpio0_set_input(qts, 27, 0);
++    gpio0_set_input(qts, 27, 1);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_gpio_plic(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO0_IRQ_BASE + 6;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(6));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(6));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(6));
++
++    gpio0_set_input(qts, 6, 0);
++    gpio0_set_input(qts, 6, 1);
++
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    /*
++     * EOI clears the GPIO-side raw status, then claim/complete
++     * clears the sticky PLIC pending bit and returns the claimed
++     * IRQ id.
++     */
++    gpio0_write(qts, K230_GPIO_PORTA_EOI, BIT(6));
++    plic_claim_complete(qts, gpio_irq);
++    g_assert_false(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_multiple_irqs(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int irq_a =3D GPIO0_IRQ_BASE + 1;
++    int irq_b =3D GPIO0_IRQ_BASE + 9;
++
++    qtest_writel(qts, PLIC_PRIORITY + irq_a * 4, 1);
++    qtest_writel(qts, PLIC_PRIORITY + irq_b * 4, 1);
++    qtest_writel(qts, PLIC_THRESHOLD, 0);
++    qtest_writel(qts, PLIC_ENABLE + (irq_a / 32) * 4,
++                 BIT(irq_a % 32) | BIT(irq_b % 32));
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(1) | BIT(9));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(1) | BIT(9));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(1) | BIT(9));
++
++    gpio0_set_input(qts, 1, 0);
++    gpio0_set_input(qts, 9, 0);
++
++    gpio0_set_input(qts, 1, 1);
++    g_assert_true(plic_irq_pending(qts, irq_a));
++    g_assert_false(plic_irq_pending(qts, irq_b));
++
++    gpio0_set_input(qts, 9, 1);
++    g_assert_true(plic_irq_pending(qts, irq_a));
++    g_assert_true(plic_irq_pending(qts, irq_b));
++
++    qtest_quit(qts);
++}
++
++static void test_gpio1_plic(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int gpio_irq =3D GPIO1_IRQ_BASE + 5;
++
++    plic_enable_irq(qts, gpio_irq);
++
++    qtest_writel(qts, K230_GPIO1_BASE + K230_GPIO_SWPORTA_DDR, 0);
++    qtest_writel(qts, K230_GPIO1_BASE + K230_GPIO_INTTYPE_LEVEL, BIT(5));
++    qtest_writel(qts, K230_GPIO1_BASE + K230_GPIO_INT_POLARITY, BIT(5));
++    qtest_writel(qts, K230_GPIO1_BASE + K230_GPIO_INTMASK, 0);
++    qtest_writel(qts, K230_GPIO1_BASE + K230_GPIO_INTEN, BIT(5));
++
++    gpio1_set_input(qts, 5, 0);
++    gpio1_set_input(qts, 5, 1);
++
++    g_assert_true(plic_irq_pending(qts, gpio_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_ddr_switch_output_to_input(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int level_irq =3D GPIO0_IRQ_BASE + 12;
++    int edge_irq =3D GPIO0_IRQ_BASE + 13;
++
++    qtest_writel(qts, PLIC_PRIORITY + level_irq * 4, 1);
++    qtest_writel(qts, PLIC_PRIORITY + edge_irq * 4, 1);
++    qtest_writel(qts, PLIC_THRESHOLD, 0);
++    qtest_writel(qts, PLIC_ENABLE + (level_irq / 32) * 4,
++                 BIT(level_irq % 32) | BIT(edge_irq % 32));
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, BIT(12) | BIT(13));
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(13));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(12) | BIT(13));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(12) | BIT(13));
++
++    gpio0_set_input(qts, 12, 0);
++    gpio0_set_input(qts, 13, 0);
++
++    gpio0_set_input(qts, 12, 1);
++    gpio0_set_input(qts, 13, 1);
++
++    g_assert_false(plic_irq_pending(qts, level_irq));
++    g_assert_false(plic_irq_pending(qts, edge_irq));
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++
++    g_assert_true(plic_irq_pending(qts, level_irq));
++    g_assert_false(plic_irq_pending(qts, edge_irq));
++
++    qtest_quit(qts);
++}
++
++static void test_ctl_switch_hw_to_sw(void)
++{
++    QTestState *qts =3D qtest_init("-machine k230");
++    int level_irq =3D GPIO0_IRQ_BASE + 14;
++    int edge_irq =3D GPIO0_IRQ_BASE + 16;
++
++    qtest_writel(qts, PLIC_PRIORITY + level_irq * 4, 1);
++    qtest_writel(qts, PLIC_PRIORITY + edge_irq * 4, 1);
++    qtest_writel(qts, PLIC_THRESHOLD, 0);
++    qtest_writel(qts, PLIC_ENABLE + (level_irq / 32) * 4,
++                 BIT(level_irq % 32) | BIT(edge_irq % 32));
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_DDR, 0);
++    gpio0_write(qts, K230_GPIO_SWPORTA_CTL, BIT(14) | BIT(16));
++    gpio0_write(qts, K230_GPIO_INTTYPE_LEVEL, BIT(16));
++    gpio0_write(qts, K230_GPIO_INT_POLARITY, BIT(14) | BIT(16));
++    gpio0_write(qts, K230_GPIO_INTMASK, 0);
++    gpio0_write(qts, K230_GPIO_INTEN, BIT(14) | BIT(16));
++
++    gpio0_set_input(qts, 14, 0);
++    gpio0_set_input(qts, 16, 0);
++
++    gpio0_set_input(qts, 14, 1);
++    gpio0_set_input(qts, 16, 1);
++
++    g_assert_false(plic_irq_pending(qts, level_irq));
++    g_assert_false(plic_irq_pending(qts, edge_irq));
++
++    gpio0_write(qts, K230_GPIO_SWPORTA_CTL, 0);
++
++    g_assert_true(plic_irq_pending(qts, level_irq));
++    g_assert_false(plic_irq_pending(qts, edge_irq));
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/k230-gpio/reset_values", test_reset_values);
++    qtest_add_func("/k230-gpio/edge_rising", test_edge_rising);
++    qtest_add_func("/k230-gpio/edge_falling", test_edge_falling);
++    qtest_add_func("/k230-gpio/both_edge", test_both_edge);
++    qtest_add_func("/k230-gpio/level_high", test_level_high);
++    qtest_add_func("/k230-gpio/level_low", test_level_low);
++    qtest_add_func("/k230-gpio/eoi_clear", test_eoi_clear);
++    qtest_add_func("/k230-gpio/inten_disabled", test_inten_disabled);
++    qtest_add_func("/k230-gpio/intmask", test_intmask);
++    qtest_add_func("/k230-gpio/ddr_output_no_int", test_ddr_output_no_int)=
+;
++    qtest_add_func("/k230-gpio/ctl_hw_no_int", test_ctl_hw_no_int);
++    qtest_add_func("/k230-gpio/gpio_plic", test_gpio_plic);
++    qtest_add_func("/k230-gpio/multiple_irqs", test_multiple_irqs);
++    qtest_add_func("/k230-gpio/gpio1_plic", test_gpio1_plic);
++    qtest_add_func("/k230-gpio/ddr_switch_out_to_in",
++                   test_ddr_switch_output_to_input);
++    qtest_add_func("/k230-gpio/ctl_switch_hw_to_sw",
++                   test_ctl_switch_hw_to_sw);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 56ff860e21..cec2f818ae 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -297,7 +297,7 @@ qtests_riscv64 =3D ['riscv-csr-test'] + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
++  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test', 'k230-gpi=
+o-test'] : [])
 =20
-     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C9=
-08);
-@@ -206,6 +208,25 @@ static void k230_soc_realize(DeviceState *dev, Error *=
-*errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IR=
-Q));
+ qtests_hexagon =3D ['boot-serial-test']
 =20
-+    /* GPIO */
-+    sysbus_realize(SYS_BUS_DEVICE(&s->gpio[0]), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[0]), 0,
-+                    memmap[K230_DEV_GPIO0].base);
-+    for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[0]), i,
-+                           qdev_get_gpio_in(DEVICE(s->c908_plic),
-+                                            K230_GPIO0_IRQ_BASE + i));
-+    }
-+
-+    sysbus_realize(SYS_BUS_DEVICE(&s->gpio[1]), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[1]), 0,
-+                    memmap[K230_DEV_GPIO1].base);
-+    for (int i =3D 0; i < K230_GPIO_PINS_PER_GROUP; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[1]), i,
-+                           qdev_get_gpio_in(DEVICE(s->c908_plic),
-+                                            K230_GPIO1_IRQ_BASE + i));
-+    }
-+
-     /* unimplemented devices */
-     create_unimplemented_device("kpu.l2-cache",
-                                 memmap[K230_DEV_KPU_L2_CACHE].base,
-@@ -322,12 +343,6 @@ static void k230_soc_realize(DeviceState *dev, Error *=
-*errp)
-     create_unimplemented_device("pwm", memmap[K230_DEV_PWM].base,
-                                 memmap[K230_DEV_PWM].size);
-=20
--    create_unimplemented_device("gpio0", memmap[K230_DEV_GPIO0].base,
--                                memmap[K230_DEV_GPIO0].size);
--
--    create_unimplemented_device("gpio1", memmap[K230_DEV_GPIO1].base,
--                                memmap[K230_DEV_GPIO1].size);
--
-     create_unimplemented_device("adc", memmap[K230_DEV_ADC].base,
-                                 memmap[K230_DEV_ADC].size);
-=20
-diff --git a/include/hw/gpio/k230_gpio.h b/include/hw/gpio/k230_gpio.h
-new file mode 100644
-index 0000000000..32005815d2
---- /dev/null
-+++ b/include/hw/gpio/k230_gpio.h
-@@ -0,0 +1,71 @@
-+/*
-+ * QEMU K230 GPIO Controller
-+ *
-+ * Copyright (c) 2025 Wang Guochun <wdasn99@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18), section 12.5 GPIO
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Tec=
-hnical_Reference_Manual_V0.3.1_20241118.pdf
-+ */
-+
-+#ifndef HW_K230_GPIO_H
-+#define HW_K230_GPIO_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_K230_GPIO "k230.gpio"
-+OBJECT_DECLARE_SIMPLE_TYPE(K230GPIOState, K230_GPIO)
-+
-+#define K230_GPIO_MEM_SIZE 0x1000
-+
-+#define K230_GPIO_SWPORTA_DR      0x00
-+#define K230_GPIO_SWPORTA_DDR     0x04
-+#define K230_GPIO_SWPORTA_CTL     0x08
-+#define K230_GPIO_INTEN           0x30
-+#define K230_GPIO_INTMASK         0x34
-+#define K230_GPIO_INTTYPE_LEVEL   0x38
-+#define K230_GPIO_INT_POLARITY    0x3c
-+#define K230_GPIO_INTSTATUS       0x40
-+#define K230_GPIO_RAW_INTSTATUS   0x44
-+#define K230_GPIO_DEBOUNCE        0x48
-+#define K230_GPIO_PORTA_EOI       0x4c
-+#define K230_GPIO_EXT_PORTA       0x50
-+#define K230_GPIO_LS_SYNC         0x60
-+#define K230_GPIO_ID_CODE         0x64
-+#define K230_GPIO_INT_BOTHEDGE    0x68
-+#define K230_GPIO_VER_ID_CODE     0x6c
-+#define K230_GPIO_CONFIG_REG2     0x70
-+#define K230_GPIO_CONFIG_REG1     0x74
-+
-+#define K230_GPIO_PINS_PER_GROUP 32
-+
-+struct K230GPIOState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint32_t swporta_dr;
-+    uint32_t swporta_ddr;
-+    uint32_t swporta_ctl;
-+    uint32_t inten;
-+    uint32_t intmask;
-+    uint32_t inttype_level;
-+    uint32_t int_polarity;
-+    uint32_t raw_intstatus;
-+    uint32_t debounce;
-+    uint32_t porta_eoi;
-+    uint32_t ext_porta;
-+    uint32_t ls_sync;
-+    uint32_t id_code;
-+    uint32_t int_bothedge;
-+    uint32_t ver_id_code;
-+    uint32_t config_reg2;
-+    uint32_t config_reg1;
-+
-+    qemu_irq irq[K230_GPIO_PINS_PER_GROUP];
-+    qemu_irq output[K230_GPIO_PINS_PER_GROUP];
-+};
-+
-+#endif
-diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 592e1c26bf..5fccea7fd5 100644
---- a/include/hw/riscv/k230.h
-+++ b/include/hw/riscv/k230.h
-@@ -18,6 +18,7 @@
- #include "hw/core/boards.h"
- #include "hw/riscv/riscv_hart.h"
- #include "hw/watchdog/k230_wdt.h"
-+#include "hw/gpio/k230_gpio.h"
-=20
- #define C908_CPU_HARTID   (0)
-=20
-@@ -33,6 +34,7 @@ typedef struct K230SoCState {
-     RISCVHartArrayState c908_cpu; /* Small core */
-=20
-     K230WdtState wdt[2];
-+    K230GPIOState gpio[2];
-     MemoryRegion sram;
-     MemoryRegion bootrom;
-=20
-@@ -127,8 +129,11 @@ enum {
-     K230_UART2_IRQ  =3D 18,
-     K230_UART3_IRQ  =3D 19,
-     K230_UART4_IRQ  =3D 20,
-+    K230_GPIO0_IRQ_BASE  =3D 32,
-+    K230_GPIO1_IRQ_BASE  =3D 64,
-     K230_WDT0_IRQ   =3D 107,
-     K230_WDT1_IRQ   =3D 108,
-+
- };
-=20
- #define K230_UART_COUNT 5
 --=20
 2.43.0
 
