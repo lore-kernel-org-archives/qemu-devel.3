@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2A5C5AD5A
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 22:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9633EC5AD4E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 22:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtC8D-0001K0-03; Sun, 09 Aug 2026 18:36:37 -0400
+	id 1wtC7n-0000pX-RN; Sun, 09 Aug 2026 18:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtC8B-0001Ix-V2
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:35 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wtC7m-0000p6-Ha
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:10 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtC8A-0007Wb-D5
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:35 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84874b52eabso1636738b3a.0
- for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 15:36:34 -0700 (PDT)
+ id 1wtC7l-0007MM-3o
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 18:36:10 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-84e3007a2b7so1141862b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 15:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786314993; x=1786919793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786314968; x=1786919768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kYsIul/61IhCa6F/lTcoHSFIX3vKxxDLD588ZuPF2o8=;
- b=G4IRHYD7Trjd9bS6SRgEuZ44L4figRrGNkcwpj9IQXMnATXDLzELnLhWKdQgsf4EK2
- 4UXYoeW2UPPFA1PPomSDnr7pwsd/fFcZwK3uRoMZRP25Lx33uggh1OIVs3xu+GUmX0Dc
- DIA5Rl8ZxdmIQxelgbspvqJWLh/PfMjDR9zTry6/Cogz1z9WEkc8tBS6pU0wPSLUwj5D
- zNsKFUJ0sKPCHwY2y7eTY97z8wTZeBHoMssPPh4YG7bCz4DcmPR+cduwLkphlFuxQfRM
- VrKUvVyWaTDCPVeBWeJy1/Dl4HNX9gD6h224LOlTMx45At8f8vwQP9Ae68vhj0pkBYUW
- eQBw==
+ bh=b4B0whQLU8Fqrs8mhfR5RJRxBochR2jShENdUKhhET4=;
+ b=poQJxkSRt2Eb3uoQcgkEswF/y6eDYkm3CwpMdQn/G07O0ls0yFgch9EM6vTQXyiETR
+ w9AX7Mx1X+2235NrjE/enj3qAMeJSSKV2xwD4EyKuTt90wpzCktt+a0UZT3kBAJ58rPK
+ IDhC9CeMwtpLTdUx2DwELHB3QD196zczeAM+tSRXfzymzZIDnoVsdcxz/Pfrqm+Ug9yL
+ YrNQ8B10eix292nfhAngsdSM1IcB09lGPqUp5a7/lblRqAGhPw69W3fzERiC8qgAuo5T
+ 7DxFrw2Hxi6dX/Nk3ZKPlUqzXeyUKdS8/6sdowHbENrsTg7u/gKq4ZZLy2qBkDd7IYM3
+ Dh4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786314993; x=1786919793;
+ d=1e100.net; s=20251104; t=1786314968; x=1786919768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kYsIul/61IhCa6F/lTcoHSFIX3vKxxDLD588ZuPF2o8=;
- b=ss4ORaRbRxxHg2zUlFWcKEsGuAiJ2jrYXQ4RhYMazvvCy89SiXy4XI8WUQdwmjhXM0
- DhFQPe2gJnX8gKfNO4xaZQE48wwdeyRhnWs/mKu6VmVmYgf9mTbcZl9P0Xy/dydcbvLU
- IlNnsXYPniZwJ2WXARbHo5sozRcWsY8AwEt8jFUS2eIGE2QxAZN0OGE1wEK2Fil8yfm0
- NJ06hS1RwU1WxJTxdRKbpxPo+MSg+zZ94x+RLCgZF/ESRPoP4lLwnqP2SAn/oc0rbsjP
- Pmk+G+xAFi8m0DO3n8JqhNneCfvKsFfI3OyeZNvu10fdF4heRTUS9seUPHJBJ3eEWyVX
- wHNw==
-X-Gm-Message-State: AOJu0YzcvKmhT6b79np4X0UjyclE5m7ZDVsVnqfbijHpK3K0rSHmyD1n
- bN/asqYJKnMZhrgjOwszGlaqzkZ3hqlUViY1nCQTGqaMAzYXzPl9rfgexe70tn8tpVkoUiWQC93
- QBOso
-X-Gm-Gg: AR+sD12Vpq/lA85pP6p4OHBSMOABcE7oBO53Fq+16ufjX+XtPBYip+HjxFyVgfUXPp8
- 5IEu778H8Sr8S9dsb5WdH/AluWOUO9rRSqswGVIsODmT7jlt1CCS+OHi7VLBWh+HhcwM9yrHTme
- mO5GL7MoMcP/51CpGMDEeJlIWAqyrnDfCzWqT/jocL2Tpn5HH+yKo8dN1zTaYKqlQlgSgg2Q1EB
- FN0lZY85rVGGJpuAkVa52EUSiZFz3by7EkbCcCEdcag+DI0FyGloZFoRFKY9SI8xugHCBEkfC5l
- Et54tHj2tCccU/CwsowEIvj8JsHeGXvgttSw3sUUUmmT/t8XYTw5zHWtt/aCUCvrAAzYR0DYhuL
- vglekBgghtRWzvYVDUtN1g4U5jBsfYL55fv1ASUwdqp//ye/oEcvPsj+gx3XzR5z9yviCrzEvHk
- 6s/dPPRJxrpUpSCfMjLpV3GpTtqiPtI1QGITQImiJVUQa+v0T6ARxxRkQdMvRzbBYEu8jNILtWP
- HyhDAzN4IzvqTXVWe4U
-X-Received: by 2002:a05:6a00:2883:b0:847:902a:57b5 with SMTP id
- d2e1a72fcca58-84f5e1149admr22553043b3a.35.1786314993157; 
- Sun, 09 Aug 2026 15:36:33 -0700 (PDT)
+ bh=b4B0whQLU8Fqrs8mhfR5RJRxBochR2jShENdUKhhET4=;
+ b=jWkxhGtw7605hmxdA/rWFdAaKhSmc43hGw/QLRRSjKKITrGMWBBNJZJz+VQa7dBkF8
+ IQxXMWLJKFcxIAOmfYkVRTbtgsYb0OmBuaiu4JnSlxWFxLrXwCBpoqfoY43zmC57j08B
+ rCuaingHlb6XFMcX7F/5uCJghuGb2DM0Yg+NCod6ZvpFDU99B3SNNTOwX5cN3c84Xnd6
+ ow3+mAzYnHiBsXhxEGol5oAAn+BWlQU4z1Dl34xsC4z+RwM8YbaYRfQST+SWTn1IqfHo
+ D8C81Aivf762bect9dB6CC9YD6yyel2H7UWzt1toNOe7J1mpWiqnsjPWjJYQ46AxCp7u
+ 8agw==
+X-Gm-Message-State: AOJu0Yz/5Vf+nb3D7+YZXp3I3u/28eH+b8jG6XxluA7auW93/vTXfN63
+ JwkGIRu2KCWGCQVIWwRT2NOzm32GE9ZmX3Jgho6VKsr5qFEUEXqEK4s2c1qAnwWsNXSsEiG6DQG
+ UWWIg
+X-Gm-Gg: AR+sD13plsgXME7KcEv1Sb6i9cy6NqA7oJs8Si/82fXA/JXBajw1OQN0YoGc3fLYfZY
+ bHLPbycvpe1u5OkJkX4Jftx/gbGSKjNe5frNvHMlY/ZWwN98DOucKGUHnwxCzQ4IitftuD6orXZ
+ m8LG1NnH+tIx+cqFN0MuKGKrnQAkFgIInCGyShLJ8NJHbaSuQx2iMHDmoQLCnR6xPLiWvcg97f3
+ EIfA2GXg/D7HdVLBXwJ1r4DuQQyiIQ6V0Ko8KDBK85zlXsefFy2dPUvBLUCfrAycztHQgkn/KY6
+ 8pi6EH/a3zqRgeCj+ZBSLnLJuxU9zAbwzhA0iIQ7729Wf03o0bvpSd9wULZvk/6ViW+9O/7cq9S
+ 3uwXE+c2qO6Rvqbq5cIBf8ktgJiegIReJ/5F3yDwz6vXPzT/aUQeYIm2C3qTcCiZWeop3RcdzWC
+ IWCU3athhYO1DVz7Wqp5tjVSX3P9K55+HwJVzfjgeCZnU/EsiVYOlBa6R5KubcH4riW2QOSN9a3
+ 3ddln2BlXtu/5OTX+kr
+X-Received: by 2002:a05:6a00:244a:b0:845:c8f9:6ce0 with SMTP id
+ d2e1a72fcca58-84f696a1628mr13617845b3a.21.1786314967694; 
+ Sun, 09 Aug 2026 15:36:07 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbe8f19ace6sm2998102a12.2.2026.08.09.15.36.32
+ 41be03b00d2f7-cbe8f19ace6sm2998102a12.2.2026.08.09.15.36.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 09 Aug 2026 15:36:32 -0700 (PDT)
+ Sun, 09 Aug 2026 15:36:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Subject: [PATCH 38/56] disas/riscv: Simplify some insn decompressions
-Date: Sun,  9 Aug 2026 15:35:27 -0700
-Message-ID: <20260809223545.730664-39-richard.henderson@linaro.org>
+Subject: [PATCH 16/56] disas/riscv: Drop useless const in structures
+Date: Sun,  9 Aug 2026 15:35:05 -0700
+Message-ID: <20260809223545.730664-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260809223545.730664-1-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,38 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Route "c.j" to "j" instead of "jal", etc.
+Individual fields should not be const, only full structures.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ disas/riscv.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index fc821355fe..9a528803e8 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1848,15 +1848,15 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "c.and", rv_codec_cs, NULL, DECOMP(rv_op_and) },
-     { "c.subw", rv_codec_cs, NULL, DECOMP(rv_op_subw) },
-     { "c.addw", rv_codec_cs, NULL, DECOMP(rv_op_addw) },
--    { "c.j", rv_codec_cj, NULL, DECOMP(rv_op_jal) },
--    { "c.beqz", rv_codec_cb, NULL, DECOMP(rv_op_beq) },
--    { "c.bnez", rv_codec_cb, NULL, DECOMP(rv_op_bne) },
-+    { "c.j", rv_codec_cj, NULL, DECOMP(rv_op_j) },
-+    { "c.beqz", rv_codec_cb, NULL, DECOMP(rv_op_beqz) },
-+    { "c.bnez", rv_codec_cb, NULL, DECOMP(rv_op_bnez) },
-     { "c.slli", rv_codec_ci_sh6, NULL, DECOMP(rv_op_slli) },
-     { "c.fldsp", rv_codec_ci_ldsp, NULL, DECOMP(rv_op_fld) },
-     { "c.lwsp", rv_codec_ci_lwsp, NULL, DECOMP(rv_op_lw) },
-     { "c.flwsp", rv_codec_ci_lwsp, NULL, DECOMP(rv_op_flw) },
--    { "c.jr", rv_codec_cr_jr, NULL, DECOMP(rv_op_jalr) },
--    { "c.mv", rv_codec_cr_mv, NULL, DECOMP(rv_op_addi) },
-+    { "c.jr", rv_codec_cr_jr, NULL, DECOMP(rv_op_jr) },
-+    { "c.mv", rv_codec_cr_mv, NULL, DECOMP(rv_op_mv) },
-     { "c.ebreak", rv_codec_ci_none, NULL, DECOMP(rv_op_ebreak) },
-     { "c.jalr", rv_codec_cr_jalr, NULL, DECOMP(rv_op_jalr) },
-     { "c.add", rv_codec_cr, NULL, DECOMP(rv_op_add) },
+diff --git a/disas/riscv.h b/disas/riscv.h
+index eabe193b4f..3325b7b4ef 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -174,19 +174,19 @@ typedef enum {
+ /* structures */
+ 
+ typedef struct {
+-    const int op;
++    int op;
+     const rvc_constraint *constraints;
+ } rv_comp_data;
+ 
+ typedef struct {
+-    const char * const name;
+-    const rv_codec codec;
+-    const char * const format;
++    const char *name;
++    rv_codec codec;
++    const char *format;
+     const rv_comp_data *pseudo;
+-    const short decomp_rv32;
+-    const short decomp_rv64;
+-    const short decomp_rv128;
+-    const short decomp_data;
++    short decomp_rv32;
++    short decomp_rv64;
++    short decomp_rv128;
++    short decomp_data;
+ } rv_opcode_data;
+ 
+ typedef struct {
 -- 
 2.43.0
 
