@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB79C5AC80
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 11:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B978FC5AD5A
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 11:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wt1yb-0002xT-JZ; Sun, 09 Aug 2026 07:46:01 -0400
+	id 1wt1yg-0002yq-DZ; Sun, 09 Aug 2026 07:46:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itai.handler@gmail.com>)
- id 1wswOs-0002fm-7K
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 01:48:51 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wswuL-00082z-OY
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 02:21:17 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itai.handler@gmail.com>)
- id 1wswOq-0001t5-Go
- for qemu-devel@nongnu.org; Sun, 09 Aug 2026 01:48:45 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4956d1d9fb2so1082415e9.0
- for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 22:48:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wswuK-0005u6-72
+ for qemu-devel@nongnu.org; Sun, 09 Aug 2026 02:21:17 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ccf2360620so6725685ad.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 23:21:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786254522; x=1786859322; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=IOeHt9nsOmgApfugujVJopkZKUUbjS5NZATb0Mf3lhk=;
- b=bcw6gRl2Kd+UU1Km88Nx/GnjUtmE3mLCz7I1lxhcmGomt67xY1okHmrqN8C5wYOS4C
- jR/ezDQXRXydUZ+1i6gUCiyVnug5s1/TvQIOZvOjTJ7oZmaBbIEM2HsMcAzujYgKVN4Y
- ElCk9b1T4I7Rq4aSndvx3EHzkJUm62qB90K1qF8g1Berm9kf7n7j3ar6HCT+L2LrjTiL
- orMo18avZxhaFqsRoAZhDn2Rj/Vu7kiDyPoJ6DPhbLcrHNslnY31kNSQkrUHRtdS5tpX
- Q2Uj+51O6vPPdNI5oijVXqOqkqcYfMMC0Q0OiwZqMMqmOXx8O315slaoN4OJtccFz6PA
- x8VQ==
+ d=gmail.com; s=20251104; t=1786256474; x=1786861274; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=/D6HjVKa4QQ4IcscIfUtE4RoMhIMfrZSlP4SYUTz+h4=;
+ b=QN4kc31HTpuFAEKifULoD/+RYdkjkmiOOWv3h1sByKmpbBAHJ79g43HVD6jpWANCxi
+ 2nm/lC/+Ntovv/eBhEwZbQ1OvOGiEIFGNfWvf3z65OdSgpbSwmAGAWcpuDDoRktJQsA9
+ RMMkmYnejoCObbamyiIfWpBEiNdplbhMpPT77Pv11tq3zE/DTIIIfm1sKLQaQe4KXkwm
+ GRZbJs1UIT4D0bhpC8OBP6fhlfv3PysHbhUQcUZSCN1WJX2foyaYdNfwBSlgHwDxeik3
+ lovVwTFbj7b19BVp5NYgbRvEtfuHSbOfNzhIxZ1X8h14dYUWTZEoOJGtFa2IqfSzCXKY
+ Tydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786254522; x=1786859322;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IOeHt9nsOmgApfugujVJopkZKUUbjS5NZATb0Mf3lhk=;
- b=M/LK/+TU1N8kiRmmPZAIAUFGtpcT1u6+CrTlg9QEaOiIDWVoGcDrImrewjKcC2KF5J
- WBEWMfvemKjGRbycdHyV30/S+bqwPtx1AYP9ZEoyMPoYHlwQD7+NQs4FKFgD7mgwYEQb
- 4hAZVGV01gRvCZA86jhbGGf9f1XSQAC8krIMcFiV8e9sAwugEc6yBevsNiej8ZCWqePx
- o9lH+4SfVrDFZQcn9itHRRpaz/8MH/V/eem7Ds9YziGZUkqlB/PVBDrwFC/NIepavjEx
- 2mnXWSCPNU0rafq/s7mNH0VlCVzfwEByAF2XNR0IwRuuQiRglNnlQ1Z6dhDLvS3ifT2a
- oD8g==
-X-Gm-Message-State: AOJu0YzsWT6vngivIBjYMnH+IFyMihn0A9fIO0ndaBd8w4OrtU2upag/
- 820cT+iwx1AcN1POPGVmSpdPDDojZ9PpVnTrpFQXPyOfDrs4XSKJgkOOAJTEINdHsSY=
-X-Gm-Gg: AR+sD12umZnCUrDAvQccCwBwM6l4yWuN8C35XERs1yehgw4yZ/HQ+tZ2A+wM+OiQcvi
- Liid/ZmXNNh5qiFkx3uppO0SombPF+p5KIrN3Xp/C0UUtQBb0c6bFB7jb9K2RBRqGJxLa59RaJk
- 3JLRdfO6m/ZUN/HE/4IXvlshiKYmm2Lm41r2wtrMJu0w6x+FfzpSN2egr+fM0klh+JZ+xWhv1jI
- x5jYQkPfiJ0neBtq8FRR3qVjh6Sj+Iz/WdhNJM7StsPZI9Rikz5LYV+aUiFx5AqsTzKOW3mfnJo
- xoDlzcK8bJyN8+a8FzT+pVkDZym7b0NAoaIfjvUlPppEe+xmqkqiP2qsICFMzyjfqa3lt2LQFfM
- 0NsYmeZsH2PGCmITN4q4/ngTuJHbZfP/4LFi0JFTv+fA0J4q2RW/85Ub+BZP9XaCk7Owh9P8p6t
- 0RKtUetZlbDmZP8FFx36fDsIf8HRDq3N6/nCxF3ADX0dueCQrgDyH9AemaN8+N8sKIUifdo6lFz
- xGbaozV
-X-Received: by 2002:a05:600c:b85:b0:495:4505:dad0 with SMTP id
- 5b1f17b1804b1-4994e7ba5efmr255422225e9.2.1786254522290; 
- Sat, 08 Aug 2026 22:48:42 -0700 (PDT)
-Received: from L-P-ITAIH2-L-RF.rf.local ([193.169.70.108])
+ d=1e100.net; s=20251104; t=1786256474; x=1786861274;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=/D6HjVKa4QQ4IcscIfUtE4RoMhIMfrZSlP4SYUTz+h4=;
+ b=QXuPiEZ7BgCM8jjKZz2mCrDFPtf6OohnY3dPkpMikIuTRQLxVF1HhuZ862h+CGVDpP
+ OVPQbeG4XYSiYzaVluj6TAZWhApCUuCFuXm6p4ApUPZoEJL4lLh6HLyNXHXQBbXDlgK9
+ Yqm/HfqxUkquexBU54iylc+OEMEEj6TI5/Xa48klQb/2Kth6oyzyIbKoN0plS6TFowe7
+ k8B/a2S1fBq7IBha0xCZ/3OdhODPvQFKswGLJE3RjZJ2q7Y36xXbhrxR+AMurECUgfOA
+ TxT4sd58hOFO87mrXIJFSWSppNy9tvS343R8nU6Ux/7DxRLzZ69vmZsw3iIrv+lZoyiu
+ HQ8Q==
+X-Gm-Message-State: AOJu0Yw82BiLrp2iYE90lPgqDEAffaNwB/cAsFakODfKlAfFjiBkWxwG
+ HhePeVxljH2zc3lj9S38pQvoemP/WN2TEDGJkOjPdCh6rY/MF/d3NxFyaioLseLxehBKDw==
+X-Gm-Gg: AR+sD10XhXG/20yB9qyhAJK4zQtXCNKLHaivDf8eoGNYJYWTG5wiOMc5+/+7e7Y/S9T
+ k8vKTBRxOvuSAflH7rhrlnZ29ZbJRIxO2W0cEIt0yqvfUOxdjrzOx6DPm9fwA9V/iSA51ZiiCFt
+ sUaWijzbBIP8xbQ6iNwFpGKlT+eSlu3ZSh4qFVrPzjC3qR/dlJTz1oSgt+xVdOOAZ0Z6aVUVKOz
+ PA3BcjrhWOQ93mjkeiy+Wq5GELpEz0GCjstFMaD8MSJaPLUgT3FNlDTQs0WZcHnyS7REMAS9Y0G
+ ZOIhytCWCLVivqpTq0zSpkWTRhmMnTo1SSiKLKkReLZmVuanOcila1zNnEzHXhsrMW5CJBDWPMG
+ 2NuDWTtMoat3eId8j/Fp3cwVLQZdKmLCEZ0tzEAEmvjYluIIYMuM7fQr7f1Kuas5x55yWRUrMZY
+ utYkDGk6kDbLs3GYkqfWCtxiH1c2C27TXGWyBrT0vrnv8xMIBmZvDO3DD3wJOUZlv1E2gTqF94q
+ B26Eu9r/pQDfxp5eVpL5C+VPTQ4KvZ9
+X-Received: by 2002:a17:903:1aa6:b0:2c8:f34c:82c0 with SMTP id
+ d9443c01a7336-2d106a18e41mr259197365ad.2.1786256474572; 
+ Sat, 08 Aug 2026 23:21:14 -0700 (PDT)
+Received: from localhost.localdomain ([159.75.12.57])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4995e9e702dsm199791005e9.3.2026.08.08.22.48.41
+ d9443c01a7336-2d14ccac6d7sm21805265ad.6.2026.08.08.23.21.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Aug 2026 22:48:41 -0700 (PDT)
-From: Itai Handler <itai.handler@gmail.com>
+ Sat, 08 Aug 2026 23:21:14 -0700 (PDT)
+From: Simon Law <0860734llx@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it,
- qemu-block@nongnu.org, qemu-stable@nongnu.org,
- Itai Handler <itai.handler@gmail.com>
-Subject: [PATCH] hw/nvme: fix cq_pending underflow that wedges pin-based
- interrupts
-Date: Sun,  9 Aug 2026 08:48:37 +0300
-Message-Id: <20260809054837.67255-1-itai.handler@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ pierrick.bouvier@oss.qualcomm.com
+Subject: [PATCH 4/4] docs/system/riscv: document K230 CMU support
+Date: Sun,  9 Aug 2026 14:20:44 +0800
+Message-ID: <20260809-feat-k230-cmu-v1-4-8792982c446c@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260809-feat-k230-cmu-v1-0-8792982c446c@gmail.com>
+References: <20260809-feat-k230-cmu-v1-0-8792982c446c@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=itai.handler@gmail.com; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=0860734llx@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 09 Aug 2026 07:45:41 -0400
+X-Mailman-Approved-At: Sun, 09 Aug 2026 07:45:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,92 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-n->cq_pending counts the completion queues that hold CQEs the host has
-not acknowledged yet. With pin-based interrupts it is what keeps the
-line asserted while any queue still has unacknowledged CQEs:
-nvme_irq_deassert() clears the vector's bit in irq_status only when the
-count drops to zero.
-
-The accounting is not symmetric. nvme_post_cqes() increments the
-counter once per empty -> non-empty transition of a CQ, but the two CQ
-head doorbell paths, nvme_process_db() and nvme_cq_notifier(),
-decrement it on every update that leaves the queue empty, including an
-update to a queue that was already empty. nvme_del_cq() gets this right
-and checks cq->tail != cq->head before decrementing; the doorbell paths
-do not. A host that writes the CQ head doorbell without having consumed
-a CQE - a redundant write, e.g. from a completion path racing with
-another one that already drained the queue - thus decrements more often
-than the device incremented, and cq_pending goes negative.
-
-Once it is negative it never gets back to zero: nvme_irq_deassert()
-stops clearing irq_status, nvme_irq_check() keeps re-asserting the pin,
-and the guest takes an endless interrupt for an empty completion queue.
-Linux eventually gives up on the line
-
-  irq 26: nobody cared (try booting with the "irqpoll" option)
-  handlers: [<...>] nvme_irq
-  Disabling IRQ #26
-
-and all I/O to the device hangs. MSI-X guests are not affected, they
-never look at cq_pending.
-
-Only decrement when the queue actually had unacknowledged CQEs. That
-restores the pairing with the increment in nvme_post_cqes() and makes
-the counter unable to underflow.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 83d7ed5c570d ("hw/nvme: fix pin-based interrupt behavior (again)")
-Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Signed-off-by: Simon Law <0860734llx@gmail.com>
 ---
- hw/nvme/ctrl.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ docs/system/riscv/k230.rst | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index bd6ad64..655af08 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -4761,15 +4761,18 @@ static void nvme_cq_notifier(EventNotifier *e)
- {
-     NvmeCQueue *cq = container_of(e, NvmeCQueue, notifier);
-     NvmeCtrl *n = cq->ctrl;
-+    bool pending;
+diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+index cea8202e55..dd50b0bd2e 100644
+--- a/docs/system/riscv/k230.rst
++++ b/docs/system/riscv/k230.rst
+@@ -18,9 +18,31 @@ The ``k230`` machine supports the following devices:
+ * 1 c908 cores (little core)
+ * Core Local Interruptor (CLINT)
+ * Platform-Level Interrupt Controller (PLIC)
++* Clock Management Unit (CMU)
+ * 2 K230 Watchdog Timer
+ * 5 UART
  
-     if (!event_notifier_test_and_clear(e)) {
-         return;
-     }
- 
-+    pending = cq->tail != cq->head;
++Clock Management Unit
++---------------------
 +
-     nvme_update_cq_head(cq);
- 
-     if (cq->tail == cq->head) {
--        if (cq->irq_enabled) {
-+        if (cq->irq_enabled && pending) {
-             n->cq_pending--;
-         }
- 
-@@ -8509,6 +8512,7 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
- 
-         uint16_t new_head = val & 0xffff;
-         NvmeCQueue *cq;
-+        bool pending;
- 
-         qid = (addr - (0x1000 + (1 << 2))) >> 3;
-         if (unlikely(nvme_check_cqid(n, qid))) {
-@@ -8563,13 +8567,14 @@ static void nvme_process_db(NvmeCtrl *n, hwaddr addr, int val)
-             qemu_bh_schedule(cq->bh);
-         }
- 
-+        pending = cq->tail != cq->head;
-         cq->head = new_head;
-         if (!qid && n->dbbuf_enabled) {
-             stl_le_pci_dma(pci, cq->db_addr, cq->head, MEMTXATTRS_UNSPECIFIED);
-         }
- 
-         if (cq->tail == cq->head) {
--            if (cq->irq_enabled) {
-+            if (cq->irq_enabled && pending) {
-                 n->cq_pending--;
-             }
- 
++The CMU model provides the register interface used by the K230 SDK U-Boot and
++the upstream Linux K230 clock driver. It implements the four PLL register
++blocks at ``0x91102000`` through ``0x9110203f`` and the defined sysclk
++registers in the ``0x91100000`` window, including the software-visible
++``SPI2AXI_CLK_DIV`` register at offset ``0x108``.
++
++The model implements reset values, writable and reserved bits, PLL control
++write-enable semantics, and write-one-to-trigger update operations. PLL lock
++and init completion are deterministic and immediate so that Linux clock probe
++does not depend on virtual time.
++
++The CMU does not propagate clock frequencies to QEMU devices or alter CPU
++execution speed. Peripheral reset, power control, and a guest-initiated K230
++system-reset backend are separate hardware blocks and are not modeled by the
++CMU. Consequently, a guest reboot requires the future K230 reset subsystem
++and matching OpenSBI reboot backend; QMP ``system_reset`` resets the CMU along
++with the rest of the machine.
++
+ Boot options
+ ------------
+ The ``k230`` machine supports K230 SDK boot through M-mode U-Boot, which then
+
+-- 
+2.43.0
 
