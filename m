@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84501C5AD56
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82715C5AD2C
 	for <qemu-devel@archiver.kernel.org>; Sun,  9 Aug 2026 01:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wssQL-0000SY-1V; Sat, 08 Aug 2026 21:34:01 -0400
+	id 1wssQF-0000Mc-Tm; Sat, 08 Aug 2026 21:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wssQK-0000Ro-2D
- for qemu-devel@nongnu.org; Sat, 08 Aug 2026 21:34:00 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wssQE-0000Km-76
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 21:33:54 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wssQI-0002Of-0z
- for qemu-devel@nongnu.org; Sat, 08 Aug 2026 21:33:59 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-3811f512167so1115393a91.3
- for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 18:33:57 -0700 (PDT)
+ id 1wssQC-0002L5-8m
+ for qemu-devel@nongnu.org; Sat, 08 Aug 2026 21:33:53 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38a0c7e841fso1034979a91.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Aug 2026 18:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786239236; x=1786844036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786239231; x=1786844031; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=dWl2kF+BI1wwEWisHRuE5gHiRiAwOOJORcz274ON1PI=;
- b=vzoKRK+TUYMFypegU1M9VojcwQuV6IGY/7NH8vwLL7IrtYxsRqBhJVZXlW1qRMzCPF
- yFZQLnEUY+4bpMCdx5FmVyKgcKhWwqkKbGo67eC4CMIFiHjc3PCSbSA8YALCxoS6VoZf
- 8JL30lJ3dzV0Xd+CpoUxOOT1k258FpEiILn7qrPD/mHLvTThuP/eAty3tUigCQpKh2Mh
- UJMnx5pxtRzsiVdB5P/ojT3bN+DYMI0dc8v0eHxLA+Ub7k9gBKgfPHyTaPQUkerGpb3/
- pOBKyprydf4bqDwloknFUo7lQP6a+0x4kSZQEaH/HYodTLPgZdxCZ90wPRXDVUOceAQO
- EQQQ==
+ bh=9CMjhGAouHGBJW/4hNYHsxuO6VLA75iUJaQ3M13HdXA=;
+ b=U3k809V8Njf08omCmoxMBcqnLkWemSDPXVBR7GMj9Q3RahLCRLGVSIN+x7tGg4G8TP
+ XQYdjNgP3rpZ5WFzfWdIymNLdb3cnNorrZxnlURvEZOXDATS3zEBv4FZAv4NmlOYQJku
+ 19U8XlANC5ubgVz5OUSXyYQEp0qvoljgEWnmX5AzbLQv3PJ38F50MBWoVCkZTxYyKLyP
+ l8gB5xMZtCx4S4s4Pm7+wme8gp+ttnDQ3glmetYpQYW5oDwx/gprw0W1GtlpYgfMO9wQ
+ WNHEAydJWaViQcmVy2t6Yzuswly0spLdBZbv0GXpvPOl/OwakukUG+uLgfpIA0ubUW5P
+ aBVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786239236; x=1786844036;
+ d=1e100.net; s=20251104; t=1786239231; x=1786844031;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=dWl2kF+BI1wwEWisHRuE5gHiRiAwOOJORcz274ON1PI=;
- b=AYKQNCQaMPC8CiUdLIYT6Asr4UKzTiBFiuW0qeNTmj7UTMfsYhUvYiXSST95LECCb2
- 2lEhG1yy5ZuC0UsxJyzL+rCRMCcfHlZyj6rYNBQqqKabeUaEQDj9iCouUAyzoAZi7Jqq
- 4JUxDE+ZoK9nXSXeuN11FYKdmAFr/K1F+eqyw8uQeqXyWiYYYKDnTvdpixQl0RBh40oK
- nwIuoisrFbTFd8xoZ8mSGyTQT/OnBkBUVCwTmG2l3UxfCL/jKRsKK7B+MNT2OUcEKJcF
- Y90CXQkuywwe0gxm7Cwsiv8y9ZLgNEsXM3H2IaTQaOt+cnSgLDGZB5wjRGGZ9PQ0sWYb
- RTUQ==
-X-Gm-Message-State: AOJu0Yzv2cTdrMQ0XYcLZp287h/kwBpfpD7yi1QHItamv/Va00Qpjk29
- LrBkMGHIyw4Hic0ESQRPgfwE5buZC3ITDe9PfXI0rurwhuH6H4PYk+3CnnuC/SFlfCsCzCdKLDj
- BbqUu
-X-Gm-Gg: AR+sD139KtqZ1G0DsLL/0Luygj7GoBrVNnatnuEuN5L3IjKMQib3cV1oAE5TkUim9Qu
- AizO1RZKie3/PPWY6kId5gk/nHKHRw9bhluggm92rGOqD0W7evPRZFQiXQjJS300X2Jv059RwQz
- hsTWcqkgJQGZsGFHcbeVx72vPgaAD6ckez4teUSXO+sVPTulo3Ytestna1mH4AtTcSWF2isU1aB
- 73vNSYIcjfe8BL2/5+3DV7/47nQ17CYn8LQFkIErabsqx7QWJqICZFh+cGLSsNmEdEPT1DeTjky
- diUlsLFK3bBi+uT5EB4uYbwt0KzhqCgvue+VqApY8bOi66eOeELrqFXcKVRTlMjdLtsoisOHnzt
- Z4w8EeOqQhD1Zeh5fKrlEthY+eqp67uPtpocO6psHNw6FdnrA4XCPsM9gZyx/DUB0dk5ICfv1kQ
- 8RFz+QVxvQHB/B2l65OYDbumKzE3ycsIm7NVUKKDlvjtsj7cUU8AjPGMxg++vk1gUnR5+xE6GeF
- ohZGzP6JGdsMjHSYhUP
-X-Received: by 2002:a17:90b:5683:b0:38e:6aa7:68ad with SMTP id
- 98e67ed59e1d1-3903c54fbc4mr33971012a91.5.1786239236257; 
- Sat, 08 Aug 2026 18:33:56 -0700 (PDT)
+ bh=9CMjhGAouHGBJW/4hNYHsxuO6VLA75iUJaQ3M13HdXA=;
+ b=cKTCkpkZm0P3HBzyzSTkFezQeb+0umFmT0nC+7+PSxfcDc3mnJQCWoG/tEU+lC/vEn
+ v7GEzujvMzdFMjmvDgkq/ixPuwOnhRzkc+s/iCTitINlW7wk4fYO5w5BpjoZo8aehUt5
+ sw6NGdkWv6mRaALSHsGfqVEAAQ6hZYGp/Mdzh9rEcsUW3f9HDYL9PUA1R+6i0ww20NFK
+ WSNvdIn5mZAYAFvSLw5kTRzFQY1+eqsSc0Ov/KtWuDfdtwkGD8i01/mQj92MFsMAK94H
+ fdC+40GhsrAZO8kms8gpu7RGGtti4md3qv8vMTLJHQy9U8P/RkizjyfFr4XKwfu+tXYT
+ 3ssg==
+X-Gm-Message-State: AOJu0YyUFQ+nKUASNeyas7Zp95FlqLaoKeZ1WLWHtizJKt2Mv1D+TEZx
+ ym6ez+XtAHLBdMsYBQQRSdWVa6EH+DbNuJ9M3hIHpxQXnenU0GKdOktgQpCSKq7XJO2NoJiXzbL
+ 3DqLi
+X-Gm-Gg: AR+sD10tGEjzeU5Zkw75XZ5FXAWV3+XcnPAqqnj0PdgoWjlT+mBF2MLnVp8aZEDCryw
+ KzegTVxdGza4hALAskGmA4xLoeI0+5BR0I3gmBPo+lQNP197qUz8VMMOGIPU/wEeJMda8TS4GQP
+ Lrv+UsarvhlXHzNWk/jR+MfWbc1k9Oz9zeJTMCfIpiviioAtryzFy1lkZGplFrAh/fCCsET0ThR
+ 9saN2y502dQcci5DfwyOi0tjMNpI8zhd3dwC+Q9R0ONcUJctpqc7cH8jmyjlSAVBC7QezdWVUm5
+ DrKQNKf1BWizOjBgo+YCWOim1Lp6d+TmcPZ95uZEv8BzBp6wUzkZlOTZpSlVCTVoU9b/ngJqSru
+ ZmEFs7sE85L55lnFEJHUpnsDq59WhCtKyZ0bPptq13IMGUfHGmOkRNJSgZrN6zTwi+RNC7co1M7
+ qSRgvSwMSJbO96u/LEwm6P3EP/3ybevxTlbMa0VwuxdGk0rkt/SRRcoqa1h9MDz3U5Q32y/3Rfv
+ RnbYN2zyrSQdqbRAVyl
+X-Received: by 2002:a17:90a:d445:b0:381:20b:a9ee with SMTP id
+ 98e67ed59e1d1-3926213f22emr14128526a91.14.1786239230705; 
+ Sat, 08 Aug 2026 18:33:50 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39085de8ddcsm10067927a91.6.2026.08.08.18.33.55
+ 98e67ed59e1d1-39085de8ddcsm10067927a91.6.2026.08.08.18.33.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Aug 2026 18:33:55 -0700 (PDT)
+ Sat, 08 Aug 2026 18:33:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, laurent@vivier.eu, philmd@mailo.com,
  qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH 9/9] target/mips: Enable disassembly via capstone
-Date: Sat,  8 Aug 2026 18:33:43 -0700
-Message-ID: <20260809013343.664966-10-richard.henderson@linaro.org>
+Subject: [PATCH 5/9] target/tricore: Enable disassembly via capstone
+Date: Sat,  8 Aug 2026 18:33:39 -0700
+Message-ID: <20260809013343.664966-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260809013343.664966-1-richard.henderson@linaro.org>
 References: <20260809013343.664966-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,144 +104,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/disas/capstone.h | 24 ++++++++++++++--
- target/mips/cpu.c        | 60 +++++++++++++++++++++++++++++++++++++---
- 2 files changed, 77 insertions(+), 7 deletions(-)
+ include/disas/capstone.h | 11 +++++++++++
+ target/tricore/cpu.c     | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
 diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index 3d6f90d816..e72faf8179 100644
+index 788f90771a..db1abe7f70 100644
 --- a/include/disas/capstone.h
 +++ b/include/disas/capstone.h
-@@ -29,6 +29,7 @@
- #define CS_MODE_THUMB            0
- #define CS_MODE_MCLASS           0
- #define CS_MODE_V8               0
-+#define CS_MODE_V9               0
- #define CS_MODE_M68K_000         0
- #define CS_MODE_M68K_010         0
- #define CS_MODE_M68K_020         0
-@@ -36,11 +37,10 @@
- #define CS_MODE_M68K_040         0
- #define CS_MODE_M68K_060         0
- #define CS_MODE_MICRO            0
-+#define CS_MODE_MIPS2            0
- #define CS_MODE_MIPS3            0
--#define CS_MODE_MIPS32R6         0
--#define CS_MODE_MIPSGP64         0
--#define CS_MODE_V9               0
- #define CS_MODE_MIPS32           0
-+#define CS_MODE_MIPS32R6         0
- #define CS_MODE_MIPS64           0
- 
- #endif /* CONFIG_CAPSTONE */
-@@ -64,6 +64,24 @@
- #define CS_MODE_M68K_CF_FPU      0
+@@ -78,4 +78,15 @@
+ #define CS_MODE_SH4A             0
  #endif
  
-+#if CS_API_MAJOR < 6
-+#define CS_MODE_MIPS16           0
-+#define CS_MODE_MIPS1            0
-+#define CS_MODE_MIPS32R2         0
-+#define CS_MODE_MIPS32R3         0
-+#define CS_MODE_MIPS32R5         0
-+#define CS_MODE_MIPS4            0
-+#define CS_MODE_MIPS5            0
-+#define CS_MODE_MIPS64R2         0
-+#define CS_MODE_MIPS64R3         0
-+#define CS_MODE_MIPS64R5         0
-+#define CS_MODE_MIPS64R6         0
-+#define CS_MODE_OCTEON           0
-+#define CS_MODE_OCTEONP          0
-+#define CS_MODE_NANOMIPS         0
-+#define CS_MODE_MIPS_PTR64       0
++#if CS_API_MAJOR < 5
++#define CS_ARCH_TRICORE         -1
++#define CS_MODE_TRICORE_110      0
++#define CS_MODE_TRICORE_120      0
++#define CS_MODE_TRICORE_130      0
++#define CS_MODE_TRICORE_131      0
++#define CS_MODE_TRICORE_160      0
++#define CS_MODE_TRICORE_161      0
++#define CS_MODE_TRICORE_162      0
 +#endif
 +
- #if CS_API_MAJOR < 5
- #define CS_ARCH_RISCV           -1
- #define CS_MODE_RISCV32          0
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index d72044aef6..7c1e4827b9 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -30,6 +30,7 @@
- #include "system/qtest.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-clock.h"
+ #endif /* QEMU_CAPSTONE_H */
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 472c24ae32..c3c9b7ef02 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -24,6 +24,7 @@
+ #include "qemu/error-report.h"
+ #include "tcg/debug-assert.h"
+ #include "accel/tcg/cpu-ops.h"
 +#include "disas/capstone.h"
- #include "fpu_helper.h"
- #ifndef CONFIG_USER_ONLY
- #include "semihosting/semihost.h"
-@@ -488,15 +489,66 @@ static void mips_cpu_disas_set_info(const CPUState *cs, disassemble_info *info)
- {
-     const MIPSCPU *cpu = MIPS_CPU(cs);
-     const CPUMIPSState *env = &cpu->env;
-+    bool is64 = env->hflags & MIPS_HFLAG_64;
-+    int cap_mode = 0;
  
--    if (!(env->insn_flags & ISA_NANOMIPS32)) {
-+    if (env->insn_flags & ISA_NANOMIPS32) {
-+        info->print_insn = print_insn_nanomips;
-+        info->endian = BFD_ENDIAN_LITTLE;
-+        /* nanomips has 16, 32 and 48-bit insns */
-+        info->cap_insn_unit = 2;
-+        info->cap_insn_split = 6;
-+        cap_mode = CS_MODE_NANOMIPS;
-+    } else {
-         info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
-                                          : BFD_ENDIAN_LITTLE;
-         info->print_insn = TARGET_BIG_ENDIAN ? print_insn_big_mips
-                                              : print_insn_little_mips;
--    } else {
--        info->print_insn = print_insn_nanomips;
--        info->endian = BFD_ENDIAN_LITTLE;
-+
-+        if (env->hflags & MIPS_HFLAG_M16) {
-+            cap_mode = (env->insn_flags & ASE_MICROMIPS
-+                        ? CS_MODE_MICRO : CS_MODE_MIPS16);
-+            /* Beware unsupported capstone mode */
-+            if (cap_mode == 0) {
-+                return;
-+            }
-+            info->cap_insn_unit = 2;
-+        } else {
-+            info->cap_insn_unit = 4;
-+        }
-+        info->cap_insn_split = 4;
-+
-+        cap_mode |= is64 ? CS_MODE_MIPS64 : CS_MODE_MIPS32;
-+        if (env->insn_flags & ISA_MIPS_R6) {
-+            cap_mode |= is64 ? CS_MODE_MIPS64R6 : CS_MODE_MIPS32R6;
-+        } else if (env->insn_flags & ISA_MIPS_R5) {
-+            cap_mode |= is64 ? CS_MODE_MIPS64R5 : CS_MODE_MIPS32R5;
-+        } else if (env->insn_flags & ISA_MIPS_R3) {
-+            cap_mode |= is64 ? CS_MODE_MIPS64R3 : CS_MODE_MIPS32R3;
-+        } else if (env->insn_flags & ISA_MIPS_R2) {
-+            cap_mode |= is64 ? CS_MODE_MIPS64R2 : CS_MODE_MIPS32R2;
-+        } else if (env->insn_flags & ISA_MIPS5) {
-+            cap_mode |= CS_MODE_MIPS5;
-+        } else if (env->insn_flags & ISA_MIPS4) {
-+            cap_mode |= CS_MODE_MIPS4;
-+        } else if (env->insn_flags & ISA_MIPS3) {
-+            cap_mode |= CS_MODE_MIPS3;
-+        } else if (env->insn_flags & ISA_MIPS2) {
-+            cap_mode |= CS_MODE_MIPS2;
-+        } else if (env->insn_flags & ISA_MIPS1) {
-+            cap_mode |= CS_MODE_MIPS1;
-+        }
-+        if (env->insn_flags & INSN_OCTEON) {
-+            cap_mode |= CS_MODE_OCTEON | CS_MODE_OCTEONP;
-+        }
-+        if (is64 && !(env->hflags & MIPS_HFLAG_AWRAP)) {
-+            cap_mode |= CS_MODE_MIPS_PTR64;
-+        }
-+    }
-+    /* Beware unsupported capstone mode */
-+    if (cap_mode) {
-+        info->cap_arch = CS_ARCH_MIPS;
-+        info->cap_mode = cap_mode;
-     }
+ static inline void set_feature(CPUTriCoreState *env, int feature)
+ {
+@@ -35,6 +36,35 @@ static const gchar *tricore_gdb_arch_name(CPUState *cs)
+     return "tricore";
  }
  
++static void tricore_disas_set_info(const CPUState *cpu, disassemble_info *info)
++{
++    CPUTriCoreState *env = cpu_env((CPUState *)cpu);
++
++    info->endian = BFD_ENDIAN_LITTLE;
++    info->cap_arch = CS_ARCH_TRICORE;
++    info->cap_insn_unit = 4;
++    info->cap_insn_split = 4;
++
++    /*
++     * Possible capstone bug: the isa levels are not additive.
++     * Work around by settiing only one.
++     * Note that TriCore 1.3.0 is the earliest we support.
++     */
++    if (tricore_has_feature(env, TRICORE_FEATURE_162)) {
++        info->cap_mode = CS_MODE_TRICORE_162;
++    } else if (tricore_has_feature(env, TRICORE_FEATURE_161)) {
++        info->cap_mode = CS_MODE_TRICORE_161;
++    } else if (tricore_has_feature(env, TRICORE_FEATURE_16)) {
++        info->cap_mode = CS_MODE_TRICORE_160;
++    } else if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
++        info->cap_mode = CS_MODE_TRICORE_131;
++    } else if (tricore_has_feature(env, TRICORE_FEATURE_13)) {
++        info->cap_mode = CS_MODE_TRICORE_130;
++    } else {
++        g_assert_not_reached();
++    }
++}
++
+ static void tricore_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+     cpu_env(cs)->PC = value & ~1;
+@@ -214,6 +244,7 @@ static void tricore_cpu_class_init(ObjectClass *c, const void *data)
+     cc->gdb_write_register = tricore_cpu_gdb_write_register;
+     cc->gdb_num_core_regs = 44;
+     cc->gdb_arch_name = tricore_gdb_arch_name;
++    cc->disas_set_info = tricore_disas_set_info;
+ 
+     cc->dump_state = tricore_cpu_dump_state;
+     cc->set_pc = tricore_cpu_set_pc;
 -- 
 2.43.0
 
