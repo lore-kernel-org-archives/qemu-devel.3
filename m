@@ -4,141 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46BAC5B567
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C843C5B567
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:34:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtVkH-0002EU-7H; Mon, 10 Aug 2026 15:33:13 -0400
+	id 1wtVlM-0002eW-Nf; Mon, 10 Aug 2026 15:34:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wtVkF-0002EC-8d
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:33:11 -0400
-Received: from mail-northeuropeazon11020123.outbound.protection.outlook.com
- ([52.101.84.123] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wtVlM-0002eN-3Q
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:34:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wtVkD-0000i1-I7
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:33:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=n3MAkt1WxuCalp+oIAywJ0fCtYUK7q3E89ZjOO4a2/XfwRuyF1T4pAEo5XeLWSvWmxLL1nbbRJL82aFhVr3Z/Gaq06YN8U7Qc1GLkiVyGd0tEGVvBJKbhWKLS29nYDGgt4XVDK+ka27OZ5Q1uZJ2xcyHWx2/J6Wa/2bgAmHCcOLlbJ7QaY+ywKn/rIznInmHJMs0l2R3FmRDgwIwqqRF/BzNkgDodqVHnjz7a4TMntbntsazwA0GDczP8x7eXWvThee6MIym7EfJLMLN6NnZ6QWNFGFfNr7wQorio+plg2HBqhWZHpx9G8yDFPRWsItlwRA0xUrmu3F1beEGUcPHoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KbDTGRjzvvAC8MxVSNmTvZn/qwOYFErBdVlUzXMLIJI=;
- b=OiBLCJApA56Y+pGlRXs7rl1UPR61YDkWyrfeEUZRYWl9wGpRPjOz8O4NfKTc61+E9AjMNiJx7mciFS/c/AI+uhti9rcCAasTP292JnpFcFoUMIZ/d+WJ/zzojsyKAq+zpuPjBEkRohVJuuOOfUqu+soLVZMMVmhN1TZpxgF8TZsukrafDl5z4HxHYGUa9/Sx0cPhQwXYO1g80qJlpG6m3Q1x0d2pgv2oneIYd90Ja/9036cd6QIBEWMoqAT7TFtNBMkfvRxMQ/cPIJT9WyUqwc5VXR+tdqAx1mjdROSonbrfr2BXw4CDKZoBmBA5hAAjKUf43pZJRNJ4Joql+n63hg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KbDTGRjzvvAC8MxVSNmTvZn/qwOYFErBdVlUzXMLIJI=;
- b=dSNYnpMdyKgXXDgwJxZIDbTIGGRae/g4cJ7bcphSc8/DwSb1qmYgJ08LGiuI0lus94nlLPWUs++tWi5S4Kq3K7OgL7LDWwlbXyNEE3MOJmWDGkRBEbP7SzCJqBLb32sst52v59Iv6RKy3TXOddbM9KHfDtB+AJRMrYgsMW9JNXq9Vr4/nIOqMvfLF17UvLCM0GUD9EkPteEeNT+4zge/fzfHwJwEaFi3roSeknxiITRYmtXGRc18sP1iWGCKISWzZvd8ljvMzUPClg1gKQkok6ruj2wE6t9W6/hRbdZrGuw/YD3/SxLZmJImnUVOrOxcRtC2ZdeGQ4SgdeW+y8nNyA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by DB9PR08MB6620.eurprd08.prod.outlook.com (2603:10a6:10:256::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 19:28:03 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
- 19:28:03 +0000
-Message-ID: <4388199e-a638-475f-b27f-9a0eb8941f3f@virtuozzo.com>
-Date: Mon, 10 Aug 2026 21:28:02 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] checkpatch: warn about hunks which only add blank lines
-To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
- Chao Liu <chao.liu@processmission.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260731134046.1015479-1-den@openvz.org>
- <e8921043-2405-4b20-95f8-7cfc2d9bd8f9@redhat.com>
- <877bm3yg02.fsf@pond.sub.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <877bm3yg02.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0063.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:337::17) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wtVlK-0000ke-CX
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:34:19 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67AIwBHl2152339
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 19:34:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=; b=B/t5Da+qfS9lJOVn
+ L+nh5H/lBTosg8LVXb8jnZNZq+b3Ac33aCR609cVcAXlRkXGUqpg6bp7dde52GuU
+ RZPuKekZnjzi1cZQqVsXGMwXSBn+2hQWWEZHmBZxRFgvL4jvvbrkOqQ4z/kAcLWY
+ cCpXaYWMIE7dgMSFGnMYVOoEMgEzwE1Zo0jYehxsRqQ1j/JpnYsf4HeYX7VndU+J
+ zBLMkrmgFUCbdaJ0YGI9LdaAi5HG1tVOFenYNmqDPHRUwagChtmsLjXRJ49uHpE4
+ PmhyiVeFfr+lvRybb2zdcTchw2WpAQa6++/6CKq4RfSIycs4K9rwkjUH6bsbr3Zb
+ 1PPimw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyccqthma-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 19:34:15 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5276aa86d00so23309721cf.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 12:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786390455; x=1786995255; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=;
+ b=UfausvYUkyZyV2qhdWYeyeJS1upaxU79ZRHOKO/uI5xXL3miRN9TN4QJ7/R4adpZZ+
+ 78jE9jyXz2TJtOTsHYs1eCSouj7X4O3XWK8bUmnE552fNem4/9JO9a81L78F77TFMR6A
+ xbH3gcsO9WeLBRYd3r4tRUbmmd5RJ3Lo44DHU4h0AYi4V6bStaw8oNXa1Z3zRd8Uiv+D
+ BmDAE0RxdQI6UAviSfnj1ynI16MGn70NIbvAuPGY0cKcq2OWWsE4kUdp3S/VdcKBeYzU
+ sqUAfq2iydMiYe24Tzzqdz76sx/3fQ1eCMfl9Qg4tQoJCqKEDjS9YieIPWY1Ul0YQr8u
+ 60nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786390455; x=1786995255;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=;
+ b=hGgd6ZMBfPoJtOlgGpkfkrc+ydT3P6BbfSICMzzzGhm2T1XnGrkKCvGpqXc7n6GhFa
+ fpnQEv3YgS/33haeuUFi0I+Gra0jGHSerNhcJr9p3YY7ve1/5Hm9CXlu7RDEF6SAATcd
+ ag7PWc+EpUXc3ssQHV4xKAtTITzu8F9zmcXwnQlpXIwnvXCaybdzw/QvaNVbGEyrW0Cd
+ 8jqwZXxVeGJhSwLWssNraGFnz1E2IejXZYwHY3Rp/uEyUljLL0hIvuBLBjw70Fq1LF3H
+ PX4xmUS46z1KtC/F+uItIPVaTGtJCQ0SojhFClqziSDl1MgZDibtaBRGvQzy4Kf86rzP
+ B97A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr/XieUjy2+yQebZmKmgaV8rFehh2DA+rT5XS1GZmOKkTWG7maQLd+mBRlhcDiu0BocfQmlzlDJMiPz@nongnu.org
+X-Gm-Message-State: AOJu0YwHj8tCRsWwxLY4EYTyPxQrWIn3Laz+hRLCDUuAPhRZdrH6xRMj
+ PXrnqgxgXxNB2MOph3FyqWEIg6d3Kw7ADSOHZuY4zE8CuJ70MECF8t5C50+mYC35OitRwUm5n+8
+ iU3cpwgcdBfte7EJ4zzlixc4X5IEcW6hCbkh+HCV0m2lQJWsBJDd2anGIbg==
+X-Gm-Gg: AR+sD12Xl0xERT4D63dt8BIkUknrRznxiYvmwekp8fQgPKAKDkp91PUCYxy+y2+Btbe
+ yK2w3Xc0eYN+p5SMvBUnq6VkQG2ZkZAFoyB79cMA1J+wvASleaol0VOewPURSZSZwvMiRIJcggz
+ ZZ074qNdihiOZIQCRti2Dnyfes18OZUxSgZxtKif0ZSdFMkXrGngIaHSPXuosb85T4sX+af4vOO
+ tv9mOa9ZaScah9Zg07FbUG/v/w+9vwBcMsU4PZNTjm8trAyCA+eRTybVDTA6s5j0R3Yptop4m4q
+ mKff5jyn1N0vf4t8wyoXXc0uAWSVcGe6FzGvjB44UPOdASILpYR52tU2KbUpcyiRv0ES0PdyBL8
+ 2JKl8RjShCMlF0/MxeyVuEWm74PsiuvizGk7aW1I7zC6TxJZoKR9QxRDkK68N+H/N
+X-Received: by 2002:a05:622a:a588:b0:516:dda7:51e0 with SMTP id
+ d75a77b69052e-52d2095c5f6mr247350781cf.17.1786390454835; 
+ Mon, 10 Aug 2026 12:34:14 -0700 (PDT)
+X-Received: by 2002:a05:622a:a588:b0:516:dda7:51e0 with SMTP id
+ d75a77b69052e-52d2095c5f6mr247350091cf.17.1786390454316; 
+ Mon, 10 Aug 2026 12:34:14 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-908a91e2cdfsm78881446d6.22.2026.08.10.12.34.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Aug 2026 12:34:13 -0700 (PDT)
+Message-ID: <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
+Date: Mon, 10 Aug 2026 14:34:11 -0500
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB6620:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad8e5678-edd9-43b1-7f29-08def7157f2d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|10070799003|6133799003|10067099003|4143699003|56012099006|5023799004|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: +XcYii0htgjZJp9+LVZR0Cv5A7NtsGiBYMOzPJVjaeKRskMh2JHXcPsobhnl/BXn366kKYEj+ghtCNN4yo5LdWqKZWKGkkmKrRl1w5s+HLrkbjx0yKMCX+T0yrDI3Q6DKov1x24kRbM/g8qZ1lVgS/nn3osOGUtWFgtPoS9CtiIylx1ZlhY2UE0zBV0yLFzgbzr8dBU/qmUV8Q3FLK3aIRAqfuJF/skIXkwHqjpL2/eLVdM0seCSZN/E+0ItB0kOQOLE4O0Rp9otibaNHFdw/efpP+WN5u5hu8NWXBJojbYuebUgjDJ0uTFegoonSoGy4JZm00lQOwHy4tDAJ/YqTAqNyRCiu9ev76/vmhnUBSnvrD+VeUmo50OXOMZSnWRF8KRkJuoIdBlHxVUSPjvsHnPRm8tE2bUThTSFJ0n4rqmIujB2t+ZP9pr8P95Rh9KlI+s4zHmT68XPOzX2lHhBmBBqvtC3pENN1li1aVJmgwPssuUI1ZhUEhq0fHpr7Xc+BnTa3SZIn+Usl6EmZ8auvagTdmp0x+ShKlsTUloNZqMvUhocVW7eBa1iUewBqGuqdhkBLLVtkoCkaq5kgAGrEkgTNBTBV1sr0I2SKE8dCYUh2G3CpcuSsh9BF2bi8VL41OTKqvmc6BpjiY0s6G/cRTeFET71E1ZiMlNGbkCC3Vs=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10070799003)(6133799003)(10067099003)(4143699003)(56012099006)(5023799004)(22082099003)(18002099003)(3023799007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TllGOFJkdXZCaWJwbVlxTEdiL1k1YlBLRUZlY1poLzUzMDFkMjA0eW1URFln?=
- =?utf-8?B?OTRHdnJ2elVabUxIOXorT0VRRTNuTUx6OEpmMGtnS0VBNUQrdkozT2pPSzVV?=
- =?utf-8?B?ekZsaEJnS1NqOGpPSTVBdVhDR01lbkhpMjY4RjBGVFNUdGpaYjJBRk5HRlZV?=
- =?utf-8?B?UlBFQ3UrNVhQRVVyMjBFbThCZW12QnZnSW03UUZ1TnRtUGNMMStVYi84Znpv?=
- =?utf-8?B?bjNsMi9rcG5vVHB6aTh0MXlaWXJ3cjVxL21CKy9GZndBYWpKcTFRRXltOHZC?=
- =?utf-8?B?KzRGTDFHRi92eDdlUG5idVlqeGZBRFZ3M3JVTGh2RXg1bVF0OFlRRThiNGI2?=
- =?utf-8?B?Unl4bnVEelRiNnlTY08vUlE4OUJJWWJqSGRMVEpReCtPdEZXc2p3Y1VUTTZH?=
- =?utf-8?B?a2pUd3FnV3lWdWxGY2psTmxvaFNjUlgxQTk2WDRTZ2hKdnNLa2tOWllVQWZq?=
- =?utf-8?B?Sk5hMXc5TDhwSlZNdTd0VytJN1ZLRXRRVTk4YmVBcWFTNE43ck1VRGlNVTlq?=
- =?utf-8?B?cXJUQmg1TUdkdEJnU2g4bzFHWU9zUzVST1NXbHJOVzdDekxNMXhTVURSY0tK?=
- =?utf-8?B?SXBwYlBqWGVNc3BGOUl5aGxSbk5adlltS0RQR3VJcktDTmpvTGw2UGtWb0Fx?=
- =?utf-8?B?L0QyWCtzSkhoYUo5K1BjNU1ubnFiWEt4V2MvaW1ja1BhZG9WUVRsUjlEa2Uw?=
- =?utf-8?B?SUErSW5UVjlBSzZVbkpxN2JzVkRSd0NYMXR6azRZL1RiRVNCWW9Fa2lOeEsv?=
- =?utf-8?B?ZkNaeWhHMHdsa0M2b1R6UzlUaW85eXdHamYwejZrSzdCTVNnaVJnMENwSXJZ?=
- =?utf-8?B?TDBkQXNTYnVvMFNoNEpZREhXcDliZ2tHS2tMa1N2VndiOGxQYmtFRWVvOFhX?=
- =?utf-8?B?RDhPdytoWWJ1SUF0blYvUUdwbFp0cVZkYjVhejRtblZpVjRCZTU1V1UvN2FW?=
- =?utf-8?B?R3llaWpJNnNGa0g3NlhhdytsdnlLU09rdVc0REE4UEFMeEs1dDdwdXBQNUtP?=
- =?utf-8?B?cU9OQmdqN08vWFgvTnJxRllaQVB5SW1KWndyYk1YNThFNDZiWSt6VTZaRTlU?=
- =?utf-8?B?NlZGYkhHMVQya3FZR2pVUzA5SnFEREhmMlJLVWhWdUR4empZZGFOYjdxR2VP?=
- =?utf-8?B?MU5SMDJhSXdHZnJvVkhjckcrT1VRVG15V0dWRUY3am5hNGpaNGkzVUV6WTZS?=
- =?utf-8?B?TUhIeDZhZ29haVZvMkU2MitqcjlmTEJ2bm5oc0dpcEt5LzFDaFBiUHpHTnhh?=
- =?utf-8?B?RGhVcWFBSm0rdjBZSlluSXNFRlNHdjFWeFdSdVJ2Q2ZaNThvYS9ORWY3d21l?=
- =?utf-8?B?OTdhSUE2ZXlSU29HWXJ0TEViRWNpa3lmcEhhYmxsZ01iWDIxaDY1aHMxSzMr?=
- =?utf-8?B?dU5NSzlPbGtvM2d0eVNYaUVvVVNGWS9ISzBpdnUzejNWOEc4UnlwZmtobG40?=
- =?utf-8?B?WGNIQTNIKzdMYkRCTmMyNHBrdXVobkh3K0IrQTVGaDhQU0RkR3JVUFBQZjVw?=
- =?utf-8?B?TS81K3o1RURPTmRCYmRXMTlhOUYwTDI2QW9hbVZENEZFWDJoYVZ1TVJrSzdJ?=
- =?utf-8?B?QkRjN04vQ09XY3VNbG9XQmMrNXp4MEx1RUhzbXZ1U0p2aW9nSDRMQ0RkWUpq?=
- =?utf-8?B?RGFkSWJUWUxNRlQ2aTZTeDA2ZlpjZThlNWNaWkhXSWtnUHE5dVcwMS9yNC96?=
- =?utf-8?B?czFBWllZVUMvQjVLaktOV3RLK0pvODVKT1JwM1FuSDVLV0kwSFQ4Q2tuVjJI?=
- =?utf-8?B?VHpRQ0tpcm9IOG9zMWhuTHFnUjA2WFUyNlFJRC9TRVUzRjIyS0xzUnAxUFdu?=
- =?utf-8?B?dnhibGNybnpYclJjSTB3Y29NbFBkbUVtV3YyZkRnWHp1dDFzUDdGRVFGRWxQ?=
- =?utf-8?B?SmJocnJOdjBCc2pYSXhteUtNWFBDeGZ4bXE5aGVDbnZvb09iWlJxdkVIajRp?=
- =?utf-8?B?NkxzUDVaenlwR1BZeDlrQXhWOElxdUpOUjJjRGxoZ2FuT0M5Wm12R0Rvbzd2?=
- =?utf-8?B?dFpGeWJQazk1WTdWN0xaQ3dPbkQ0bW92TUg1aG1YM2lBWHJnN3JTK2xTUHdL?=
- =?utf-8?B?N1dvR2RKUW1KazM3bCt1WGJrV2N2TEZhUXVCemI3V0RwV25yYXVNdGNhL0Z5?=
- =?utf-8?B?WDgzSGQzMzN5cFpPTVdIUzcyTWtuV0s4YTNadThnRThmMnJHTnhsV3pPbThV?=
- =?utf-8?B?a1o4MTBRa1c3TzAxM1lZZHZacEZxcWRpQlQyaVplYW4vdnZMMlk0Nk1wTVFy?=
- =?utf-8?B?RUpzQ3VXOEswZk1iYVBjSlZxYXJ2MzBjMC9RSmdhOWxYREV4UHpGZHdkaDdW?=
- =?utf-8?B?THFreFAyK2NzZmlCaWU1T2lPNml6RFUxU0hVM25FYklXYktSZVNEdjA1bFJ0?=
- =?utf-8?Q?kzeI2W7nlAJKiBflSuSDtvftr9Lmu+sw73Wvpmjh9qLr0?=
-X-MS-Exchange-AntiSpam-MessageData-1: w9L+hNAfDrj76A==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad8e5678-edd9-43b1-7f29-08def7157f2d
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 19:28:03.4694 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7gvqlFx7Agp1uWKbvG4ctlS+3x0AZZzK28BUDDAWRr89mebipA4uExkmabUPl7rBoOicfWzLTZVOEmhYDSEa0w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6620
-Received-SPF: pass client-ip=52.101.84.123; envelope-from=den@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
+ and system regs
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
+Cc: matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
+ philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: qgKCVsIu5f-5UeoyLWLPUgIGYIWA460J
+X-Proofpoint-ORIG-GUID: qgKCVsIu5f-5UeoyLWLPUgIGYIWA460J
+X-Authority-Analysis: v=2.4 cv=WNVPmHsR c=1 sm=1 tr=0 ts=6a7a27b7 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=pGLkceISAAAA:8 a=d3VFUEEDnz3kqReynRoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE2NiBTYWx0ZWRfX/eqeyI0dEvCB
+ 50SS6njdO/w0qum78l56L4Hdc+5L6V865owTvGFM5vc29tepuEUIz6BM9fJGsu13UvdlxgFNxx8
+ QedU3yD+NMQr2ebpaxWbf4vqgbDOInkwz5WwOqJsrHbbxQ837fZsWYbj0fjiN9svYBDlKNIEEQ1
+ BCOWPxxXWyt6eQtPeyAa95LlYxE03+YKN8O2nLPLHN1L61vk1iHBIWj8S3DYkxluvlSm7FA4tFt
+ GMAsBo5e9fuVwVI9FYvQ06uo5BpgtCI4rmiSq1heSktYc02LtykU8yYkHRjnuGyEyCSwErvLy7p
+ rH0jSnD2YQT72OSZeE85ynxVTMFPxhznjIMFX/hJemAmrxeC38R4Y31S/P16s6Pzps9p2FEaJ9B
+ uDpJWcPbGZ3vpFdJuOmedgN9l1R/xqBsGOoiR0ofWRg8p4HeGn2uAHRjg0ZFZUfqMBAt1GVhkUV
+ a+I0V6XjrAVDMjyagwg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE2NiBTYWx0ZWRfX+wM6wWYmBv2l
+ OAtBZmAGyJw8q914dOsg936bvGFR7QR3Yyz8wxEWmbj3yCPV+LMGoQznbpVX7BOf9paGgm7JW1K
+ 0yp0yrDmJ6YdJFznqmr1CN3bzAdA31c=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-10_05,2026-08-10_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100166
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,70 +156,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/26 07:28, Markus Armbruster wrote:
-> Thomas Huth <thuth@redhat.com> writes:
->
->> On 31/07/2026 15.40, Denis V. Lunev wrote:
->>> Patches sometimes carry a hunk whose entire content is one or two
->>> added blank lines. It changes nothing, it makes the diff longer and
->>> it survives review because nobody looks twice at a blank line. The
->>> blank line itself is perfectly fine, the gratuitous hunk is not.
->> Well, I wouldn't say that the blank line itself is fine. It depends.
->> In source code, there normally should not be more than one empty line between code blocks, that's why I complained to the patch in your pull request.
-> For what it's worth, Python style *demands* two blank lines in places.
-> Here's what happens when I delete one of them:
->
->     $ pycodestyle scripts/qapi/parser.py 
->     scripts/qapi/parser.py:656:1: E302 expected 2 blank lines, found 1
->
-> Why?  PEP 8 "Style Guide for Python Code" section "Blank Lines":
->
-> --> Surround top-level function and class definitions with two blank
-> --> lines.
->
->     Method definitions inside a class are surrounded by a single blank
->     line.
->
->     Extra blank lines may be used (sparingly) to separate groups of
->     related functions. Blank lines may be omitted between a bunch of
->     related one-liners (e.g. a set of dummy implementations).
->
->     Use blank lines in functions, sparingly, to indicate logical
->     sections.
->
->     Python accepts the control-L (i.e. ^L) form feed character as
->     whitespace; many tools treat these characters as page separators, so
->     you may use them to separate pages of related sections of your
->     file. Note, some editors and web-based code viewers may not
->     recognize control-L as a form feed and will show another glyph in
->     its place.
->
-> We run pycodestyle via flake8 from python/tests/linters.py.  Still not
-> part of "make check".
->
-> [...]
->
-That is actually the difference in between what is done in
-the kernel and here.
 
-There are 3 main notes:
-* kernel check is not running always, it is hidden under
-  --strict-only
-* kernel check is not executed over Python
-* kernel check catches consecutive blank lines
+On 8/10/2026 1:28 PM, Taylor Simpson wrote:
+> Change disassembly of control regs from C{num}/{name} to {name}
+> Change disassembly of system regs from S{num}/r{num} to {name}
+>
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
+>   target/hexagon/gen_printinsn.py | 14 ++++++++------
+>   2 files changed, 26 insertions(+), 10 deletions(-)
+>
+> diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+> index a7e46f4bcd..b55d3b0b35 100644
+> --- a/target/hexagon/printinsn.c
+> +++ b/target/hexagon/printinsn.c
+> @@ -23,18 +23,32 @@
+>   #include "internal.h"
+>   #include "decode.h"
+>   
+> +static char regstr[10];
+> +
+>   static const char *sreg2str(unsigned int reg)
+>   {
+> -    if (reg < TOTAL_PER_THREAD_REGS) {
+> -        return hexagon_regnames[reg];
+> +#ifndef CONFIG_USER_ONLY
+> +    if (reg < NUM_SREGS) {
+> +        return hexagon_sregnames[reg];
+>       } else {
+> -        return "???";
+> +        snprintf(regstr, sizeof(regstr), "S%d", reg);
+> +        return regstr;
+>       }
+> +#else
+> +    snprintf(regstr, sizeof(regstr), "S%d", reg);
+> +    return regstr;
+> +#endif
+>   }
+>   
+>   static const char *creg2str(unsigned int reg)
+>   {
+> -    return sreg2str(reg + HEX_REG_SA0);
+> +    unsigned int gpr = reg + HEX_REG_SA0;
+> +    if (gpr < TOTAL_PER_THREAD_REGS) {
+> +        return hexagon_regnames[gpr];
+> +    } else {
+> +        snprintf(regstr, sizeof(regstr), "C%d", reg);
+> +        return regstr;
+> +    }
+>   }
+>   
 
-Here my check is different - I am trying to catch junk
-hunk, which was missed with manual eye review - just
-blank line. Such hunks at my opinion are absolutely
-useless and that is worth to flag.
 
-Thus kernel style check would be complementary to my
-one and they are orthogonal.
+Seems like this change also depends on some kind of mutex around 
+regstr[] so that we know it's not being used concurrently by multiple 
+threads.  Translation is single-threaded but if we gained another caller 
+we wouldn't remember to come back and remediate this.
 
-I propose to stay with this version. Anyway, if you
-prefer, I could port Linux one. We could try to make
-voting :-)
+I suppose we could take an input buffer/length.  Or maybe we just add 
+another static _regnames[] array to solve the lifetime/race problems?
 
-Thank you in advance,
-    Den 
+
+
+>   static void snprintinsn(GString *buf, Insn *insn)
+> diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
+> index d5f969960a..cf1a12adbc 100755
+> --- a/target/hexagon/gen_printinsn.py
+> +++ b/target/hexagon/gen_printinsn.py
+> @@ -28,13 +28,14 @@
+>   ##     Generate data for printing each instruction (format string + operands)
+>   ##
+>   def regprinter(m):
+> -    str = m.group(1)
+> -    str += ":".join(["%d"] * len(m.group(2)))
+> -    str += m.group(3)
+>       if ("S" in m.group(1)) and (len(m.group(2)) == 1):
+> -        str += "/%s"
+> +        str = "%s"
+>       elif ("C" in m.group(1)) and (len(m.group(2)) == 1):
+> -        str += "/%s"
+> +        str = "%s"
+> +    else:
+> +        str = m.group(1)
+> +        str += ":".join(["%d"] * len(m.group(2)))
+> +        str += m.group(3)
+>       return str
+>   
+>   
+> @@ -142,11 +143,12 @@ def main():
+>                       else:
+>                           regno = ri
+>                       if len(b) == 1:
+> -                        f.write(f", insn->regno[{regno}]")
+>                           if "S" in a:
+>                               f.write(f", sreg2str(insn->regno[{regno}])")
+>                           elif "C" in a:
+>                               f.write(f", creg2str(insn->regno[{regno}])")
+> +                        else:
+> +                            f.write(f", insn->regno[{regno}]")
+>                       elif len(b) == 2:
+>                           f.write(f", insn->regno[{regno}] + 1" f", insn->regno[{regno}]")
+>                       else:
 
