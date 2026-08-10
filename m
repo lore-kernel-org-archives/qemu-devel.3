@@ -4,145 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAFB0C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 20:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE00FC5AD55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 20:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtWQc-0001do-E6; Mon, 10 Aug 2026 16:16:58 -0400
+	id 1wtWzj-0005GM-RK; Mon, 10 Aug 2026 16:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtWQU-0001d8-K6
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 16:16:50 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtWQT-00077S-7y
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 16:16:50 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AJmDJt2602697
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 20:16:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xn1FUV8qy48mFSMnA6Z2W+e2LphneltPqYtP4AOcLdY=; b=oJfmmB4hnxAwFM8p
- LportiS0uebtn8c53Nlyp7y9T7AwCmKUUoeEAC1B/xOkzRAKpuh80iiTPzeBu/Ao
- Pdgn8Ys8I/H2OW+r/h2ziWTp5sjr0wY9K7zStct/48btryCpP5P6rngOSVxaSrU/
- 0gD/IAyY7YCw/koqa/CUxsQkQ73bcElL3dBdx3Yo8xnwmue9Vlx8G/Jahxdx2Nxe
- o47ez4Ir1heFbaSWopxfwT/t7K4mvQn6lwig4dNfHe7EnH5pHZYoGEU6rQ2rZCb+
- EFXQdPW0rmar/iCt5YI6Ga9mgtQhAqedzJy6UUVw/196kAxwjSb6RikUNQPYCPTL
- AGya1g==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjyf0qpk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 20:16:47 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5174a236220so1558141cf.3
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 13:16:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtWzi-0005G9-U7
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 16:53:14 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtWzh-0003NA-7N
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 16:53:14 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2cf50c6f235so1751455ad.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 13:53:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786395191; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lV24V04TAYY5K7Yu6sakkSg92JRXRCIZNMqL9Ea0wST+ymi9nkwp0kIZ3T07McDRZf
+ vYQkyLuLqplkNRIcRsVG0v4cXJKBZm4bJgeiRNoIHL5ypCJ4nem/WnORBo3aTNebHZir
+ sYsfoGFDFrtSY933smBUG4tSxtmw5QQurFJKqsk7Q/uJSVOiy1YlmU+Vc2U0+/qmr405
+ sOnjKS1u5zs1oYicKeZQYsIHRMEUwiOzBGVmp5FaoCdTyVjKGm+iFtW5aGQl2GftT+KC
+ Y7ebff47W/0pP/gqoV803eHGY9zEjsO2KBFpm/2tPdlkn1vnIF2TKlr1IV5ATbk3ZPav
+ TCcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7CbD++GQdW4Dgp/saTJcJk8ah6NvdNd1bQkPIkcov20=;
+ fh=Tv1hKPs+cXWynI23hL3wQd3MOt1ixTT8ANGq27q0/yE=;
+ b=AMY1um3AVbDGtWQqyS+Rth25sRRGQxEBemhQHbhFffwD1nHarJwZ0X/9ClkqkDZ+Ql
+ 2gHhi4qJNipztjYqZjPlwIiAPw6zWQMrvHS5sz5KySVufvm1414hDZ3wGHb9GeU+06Fa
+ 7Jfq+PAzCKLpO43XVMjATTCeRcNoiaU4KRBEffqzpZ+8SGOPo0Y7UMEkvSvVRa3iMZoS
+ k+TSw+x8992+qKSNb7MKpa1HyfubT4cVk6kUJk9aizX+ZiNgP3QWpGNYRr0LGO0pWMZ5
+ cHrq6g1NRmeutIvTSlUWSDh3OGta5lCHKDfZ96SAgm8/5Pyrr5/U+CZCkfFA/t2doWQd
+ Yr6g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786393006; x=1786997806; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xn1FUV8qy48mFSMnA6Z2W+e2LphneltPqYtP4AOcLdY=;
- b=fCPwbVnMqOC6+yTuDXYGCXWNFiMK/oAukEkdoM6YqZ+UvFwaJ2/YDPpRC1IaMw8d9n
- 8WXp4jM4+jZNmn4XY06R0bChNKbGwdHpKCzgOJu7TP3mI5UfKgjoOWMJ1bDRoJRZAX2s
- Tjht3wrrDS6cJOZgK78qlXb6K+rufwuDRfWhr6WXV89RJjjby7x8qeBBj3U71bPgtlDQ
- hR2pJ2S+77KYCRC3PrHdjvnXgQ+AxOkkWiCDA5VbgwGamio89ENMu6g3FPaCD14XItFo
- C87rvmVU1CdjaESWu7BEOdojkg+IDHiokCRu9FN27LtKv4Q5Dj1mesr2cPCJ5R7ydlHb
- ItOQ==
+ d=gmail.com; s=20251104; t=1786395191; x=1786999991; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=7CbD++GQdW4Dgp/saTJcJk8ah6NvdNd1bQkPIkcov20=;
+ b=pwIWDuVjd95dvEwzVNR2628pAFRgyUtltlj127HRMpoPR1ZtpK4f96wDihCILn9BIi
+ Y+dEUf41YaiulwKB0Idkk9AiWmmxmh/NO9SNc42QABvX8mEdoQWoMMJH8mtE4T5/gBaO
+ KEnRX8oQrS0taT716pt4wYnJVOpoMNdGlN6lKgfBPwtw1xr62TPPCIq7TUw9uCIUDLTt
+ XstfgD8+ZP5czMBHlylOl/+GxRCKs50DpaTHptaREuYEixcO+dqgbLIsVSx196rsBjKE
+ vcR+Oxq4l5yV+dngcRobNDP9nOU9DgjCxa5WwKo3SDXZbLfjWs3fQL/DtmI03+5BJWC3
+ BqDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786393006; x=1786997806;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xn1FUV8qy48mFSMnA6Z2W+e2LphneltPqYtP4AOcLdY=;
- b=Iscorj9J+T3Hr6q+fWl5kEhrjuHJy4IaB9x9aPMdXwXmvzSZMkUJOOACFMvYcWasTQ
- WVQnW7Df0G5sJvYGIFjX98H8kAyOWCO289W3GdQMJkzn4P2EoRlnPFF+QKO44YxBhF5H
- fzNYM+dfAa/KREkRvsaDDV1Lkfm+K4mC0emPz1C2mbC6zg6SkecU0TnUzszJrTOWSgnQ
- 4awyguGXqTPMTSJ8vRD8chkgl/Ge684VmdqbZxv+VnXmVDcwNnJJloNpa3O6Y0r5yiJ7
- hgJMksOJnuzD50pLqY66FH4nvUCV3o71FPMx87zMLG0T1pTcEulFuoG8eF88nGDHoG7x
- JfUA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoNwDpe6YhbcuPNvBMjQznNJTL2TeynfH1Y7kasqvDFQRBElwJQcGsM4xb72BvbLASOjGJ9RroB2xPU@nongnu.org
-X-Gm-Message-State: AOJu0YxMuI5HJnpLQyL7JxZEWcIz2Ijo7zR+8tU7GHKTOIsIDQeqbIKx
- d2BwuriDGVd0LPT0yChgQ/trniGT/1FtHBZ0c2o7IFaW8SqZsDkcsOUbaQl6OotFkVi3lh5H4EB
- NJVjz1enfhQzpliYjzg03F+n51WDMEqMc2RREZgyHUB8pLCynPN77RLTGDw==
-X-Gm-Gg: AR+sD13l9AUloo75fj47awFXtHYwEJdvzpJBxJ73aBXDYdvuad9KygLuHjVZxeCz7df
- LOkuNA1k5OPE7RbCZRX/NbFkTPnxXYXi2aiudG7cgmWgaeDt137g2SeHKfvzol/mIDPMjuKPkc3
- cYTFzWEzZotBJ8Hp2OgxuSK751oufqGkxL/Sj3RKkC6B1gHwktH+fiFu2pLkLS5JQZtuOthWrvB
- 75n4yFaYYFr7cHcMCEolCmTeXNEkHvRLwsr6NorrvpbXFxm/TuuN3rxkaiKvYfv1URsAMzuDu8/
- RfEkpbGaby14zoH7s2LRkK2z2Q4MsSDoO1HMxtUlL+2v/m63f42+pnaG9Pz7Zhq4h8JYvVzPo6K
- Fb99TWMNaRDyBhyuGsoTgLrNiCpOh46Nez1g=
-X-Received: by 2002:a05:622a:9008:b0:52d:f7d:804a with SMTP id
- d75a77b69052e-52d0f7d8697mr323464001cf.10.1786393006524; 
- Mon, 10 Aug 2026 13:16:46 -0700 (PDT)
-X-Received: by 2002:a05:622a:9008:b0:52d:f7d:804a with SMTP id
- d75a77b69052e-52d0f7d8697mr323463461cf.10.1786393006039; 
- Mon, 10 Aug 2026 13:16:46 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48002150952sm33013079f8f.15.2026.08.10.13.16.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Aug 2026 13:16:45 -0700 (PDT)
-Message-ID: <686270c6-99d6-4dac-9a63-d47c477a01bb@oss.qualcomm.com>
-Date: Mon, 10 Aug 2026 22:16:44 +0200
+ d=1e100.net; s=20251104; t=1786395191; x=1786999991;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=7CbD++GQdW4Dgp/saTJcJk8ah6NvdNd1bQkPIkcov20=;
+ b=cZ2Im1D9zsWrTzJ9rfpSBQHz+UvMuvBA8OJiS3dFwHUl7Q8k6mATU/epheT+rPHT4A
+ wcjNR0xvJixB3/DDhwhTCcRz+ZDr6I6rSJyXJPWdOJkhoguLX6rIFT9GSwKxiGk3K7vb
+ I+iALwkh7WKkvgdzmiZYomkrFiDPEIc4olCXYo7gpJONhnrgfh9HNa9z7WVnRbV0WMt5
+ 3IxOB9KX5Zw/cQtVspMO79LbS5zQ1Mtt/7+ia/JHApgZGPmIeb3/HxQaFrRaI4g4E7pL
+ rLS936c+kJr7kFaNrq7SLDg17KeaVTcGNYrseqbKkCoCkflfQZDkxSWdOb9rcyfe2fZT
+ YlDg==
+X-Gm-Message-State: AOJu0YxjWHUkk/I6ldMGf5O18+OwKuIg/QlSppIhGfc3Lk3thYYH+xIp
+ mndmew39ZBL7wjO48qQHiOSSejwKKqwrz3lk0XxLx+nmQiEfibHt3zYpcDjHlfp0IYegp6UrQut
+ ffME36giBFV80zkMO/qQyPJKvK1rrIiM=
+X-Gm-Gg: AR+sD11QdXcZrb/e2RufWZ8vW/ruOe6Mxk+Lbm3Ogm9zveOdaEmVHrS2rGyxymaqi1Q
+ F0ucsZoreNGdAO5q3vlr3tYJYJD4qbZiqRp3L2Hg4ndMm9p7ZANPKdYK/3w5w3/AUPoZ+HsdiH/
+ DRIoGuyzKdpjkQmM7n+F96jRh1rxGPYvbmsd0GmKhk3iuB++1geHU28nmBrYfappUfUD+eVIujs
+ RTPMoKUfOPVvVj2KnVX3apSKdWdjZ2MmJ4H+kZi76dOmqAbjjtodQMeypqA5X/yhY4TW+VC74V+
+ zHpD+NNaewmS2uZM+8IUvr+R+WMVYU2kzWrjTUnEpPXQZhtynR4BbUSxrllF25Sd/oOvthmKMzv
+ g
+X-Received: by 2002:a17:903:388c:b0:2cf:4339:aaa with SMTP id
+ d9443c01a7336-2d0ca7fbb6bmr559001935ad.12.1786395191496; Mon, 10 Aug 2026
+ 13:53:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/39] target/i386: return an error for invalid CPU in
- hmp_mce()
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
- <20260626-qemu-no-hmp-v2-5-8af31bc54c61@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260626-qemu-no-hmp-v2-5-8af31bc54c61@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: HBCwm0P9CD-laFUTiS8Fr3tRVUmrZnLf
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE3MiBTYWx0ZWRfX1ZdGQQAVPFRX
- NoNO/g+EqXIOp3unl31lkINWcVlfomiLl36kd+3d9GYfpFRwQ6B5/C5KkfrgYN5n7qysm2wSgwU
- QsKppHH9IAMCHSuev/r+xFk+ZAQMsTI=
-X-Proofpoint-GUID: HBCwm0P9CD-laFUTiS8Fr3tRVUmrZnLf
-X-Authority-Analysis: v=2.4 cv=NqnhtcdJ c=1 sm=1 tr=0 ts=6a7a31af cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=pyZv4lzt5f8x-vXTrdYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE3MiBTYWx0ZWRfX53EsaRikt8d7
- qSYvINeKKyiyHCeW+tzIfJS0a4H2T8YHvu72anbOdjmHrNITZ7T4wK33H8S3qso74tiY2dSS4Y0
- /QCufA/7sOcDr1JFX3H+laTwUzAhS73QIefqZhGNMNz6EmQYgT65kkFt6xHbKt+AgGMESS+yH4a
- ErJxyhmCFNrdgydSOrbvW0mLjObTnn+UfM9Bye8g449gex6flP0drvELlLXUOlsdb8w004d3TwS
- +SU9P9HNvKL33Ul/VIqhbH54lvaUJ7radEm1ojYcNYHpTkgxQX4WCcuY0K929j1Cr63DwIxY3hP
- OAPuLRsdV4C7FNN1TR6JhD+eZMoBaOovl1w89upUSlxYRm4ZpRAQpeLeqkyqPG74Oc6s2q3wbUs
- IorssWKGCIW0/smi/fVvjJmqqeuivrdZjiaBb0V8v0ZEAlldWkzj/WVctf3mpuDAotcq6Kwt7uf
- iovr8LF4bDLBpqlItMw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_05,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100172
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
+ <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
+In-Reply-To: <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 10 Aug 2026 14:53:00 -0600
+X-Gm-Features: AUfX_mzSYln5fXqCH9hzFl-K4C3NPGfwQlkCMvbVh1lhZjPFpRngmEnyEAl1Zsw
+Message-ID: <CAATN3NoX9jxBv4mjXwRxJ3puooZFEJrE5_LnoPMabnX=WwD0sg@mail.gmail.com>
+Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
+ and system regs
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="000000000000d155830658b78a7a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,14 +118,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/6/26 23:19, Marc-AndrÃ© Lureau wrote:
-> Rather than silently doing nothing.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   target/i386/monitor.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+--000000000000d155830658b78a7a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Mon, Aug 10, 2026 at 1:34=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
+
+>
+> On 8/10/2026 1:28 PM, Taylor Simpson wrote:
+> > Change disassembly of control regs from C{num}/{name} to {name}
+> > Change disassembly of system regs from S{num}/r{num} to {name}
+> >
+> > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> > ---
+> >   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
+> >   target/hexagon/gen_printinsn.py | 14 ++++++++------
+> >   2 files changed, 26 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+> > index a7e46f4bcd..b55d3b0b35 100644
+> > --- a/target/hexagon/printinsn.c
+> > +++ b/target/hexagon/printinsn.c
+> > @@ -23,18 +23,32 @@
+> >   #include "internal.h"
+> >   #include "decode.h"
+> >
+> > +static char regstr[10];
+> > +
+> >   static const char *sreg2str(unsigned int reg)
+> >   {
+> > -    if (reg < TOTAL_PER_THREAD_REGS) {
+> > -        return hexagon_regnames[reg];
+> > +#ifndef CONFIG_USER_ONLY
+> > +    if (reg < NUM_SREGS) {
+> > +        return hexagon_sregnames[reg];
+> >       } else {
+> > -        return "???";
+> > +        snprintf(regstr, sizeof(regstr), "S%d", reg);
+> > +        return regstr;
+> >       }
+> > +#else
+> > +    snprintf(regstr, sizeof(regstr), "S%d", reg);
+> > +    return regstr;
+> > +#endif
+> >   }
+> >
+> >   static const char *creg2str(unsigned int reg)
+> >   {
+> > -    return sreg2str(reg + HEX_REG_SA0);
+> > +    unsigned int gpr =3D reg + HEX_REG_SA0;
+> > +    if (gpr < TOTAL_PER_THREAD_REGS) {
+> > +        return hexagon_regnames[gpr];
+> > +    } else {
+> > +        snprintf(regstr, sizeof(regstr), "C%d", reg);
+> > +        return regstr;
+> > +    }
+> >   }
+> >
+>
+>
+> Seems like this change also depends on some kind of mutex around
+> regstr[] so that we know it's not being used concurrently by multiple
+> threads.  Translation is single-threaded but if we gained another caller
+> we wouldn't remember to come back and remediate this.
+>
+> I suppose we could take an input buffer/length.  Or maybe we just add
+> another static _regnames[] array to solve the lifetime/race problems?
+>
+>
+How about putting a regstr field in the Insn struct (and pass Insn* to
+these two functions)?
+
+Thanks,
+Taylor
+
+--000000000000d155830658b78a7a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10,=
+ 2026 at 1:34=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex"><br>
+On 8/10/2026 1:28 PM, Taylor Simpson wrote:<br>
+&gt; Change disassembly of control regs from C{num}/{name} to {name}<br>
+&gt; Change disassembly of system regs from S{num}/r{num} to {name}<br>
+&gt;<br>
+&gt; Signed-off-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gma=
+il.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0target/hexagon/printinsn.c=C2=A0 =C2=A0 =C2=A0 | 22 ++++++=
+++++++++++++----<br>
+&gt;=C2=A0 =C2=A0target/hexagon/gen_printinsn.py | 14 ++++++++------<br>
+&gt;=C2=A0 =C2=A02 files changed, 26 insertions(+), 10 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c<b=
+r>
+&gt; index a7e46f4bcd..b55d3b0b35 100644<br>
+&gt; --- a/target/hexagon/printinsn.c<br>
+&gt; +++ b/target/hexagon/printinsn.c<br>
+&gt; @@ -23,18 +23,32 @@<br>
+&gt;=C2=A0 =C2=A0#include &quot;internal.h&quot;<br>
+&gt;=C2=A0 =C2=A0#include &quot;decode.h&quot;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +static char regstr[10];<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0static const char *sreg2str(unsigned int reg)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; -=C2=A0 =C2=A0 if (reg &lt; TOTAL_PER_THREAD_REGS) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regnames[reg];<br>
+&gt; +#ifndef CONFIG_USER_ONLY<br>
+&gt; +=C2=A0 =C2=A0 if (reg &lt; NUM_SREGS) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_sregnames[reg];<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return &quot;???&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, sizeof(regstr), &quot;S%=
+d&quot;, reg);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +#else<br>
+&gt; +=C2=A0 =C2=A0 snprintf(regstr, sizeof(regstr), &quot;S%d&quot;, reg);=
+<br>
+&gt; +=C2=A0 =C2=A0 return regstr;<br>
+&gt; +#endif<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0static const char *creg2str(unsigned int reg)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt; -=C2=A0 =C2=A0 return sreg2str(reg + HEX_REG_SA0);<br>
+&gt; +=C2=A0 =C2=A0 unsigned int gpr =3D reg + HEX_REG_SA0;<br>
+&gt; +=C2=A0 =C2=A0 if (gpr &lt; TOTAL_PER_THREAD_REGS) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regnames[gpr];<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, sizeof(regstr), &quot;C%=
+d&quot;, reg);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+<br>
+<br>
+Seems like this change also depends on some kind of mutex around <br>
+regstr[] so that we know it&#39;s not being used concurrently by multiple <=
+br>
+threads.=C2=A0 Translation is single-threaded but if we gained another call=
+er <br>
+we wouldn&#39;t remember to come back and remediate this.<br>
+<br>
+I suppose we could take an input buffer/length.=C2=A0 Or maybe we just add =
+<br>
+another static _regnames[] array to solve the lifetime/race problems?<br><b=
+r></blockquote><div><br></div><div>How about putting a=C2=A0regstr=C2=A0fie=
+ld in the Insn struct (and pass Insn* to these two functions)?</div><div><b=
+r></div><div>Thanks,</div><div>Taylor</div><div><br></div></div></div>
+
+--000000000000d155830658b78a7a--
 
