@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA159C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:10:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74F9C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtReH-0004ex-QA; Mon, 10 Aug 2026 11:10:46 -0400
+	id 1wtReV-00058X-QX; Mon, 10 Aug 2026 11:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtReE-0004Ts-6V
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wtReT-000564-Sn
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtReB-0001h0-K6
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:40 -0400
+ id 1wtReS-0001iZ-Df
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786374638;
+ s=mimecast20190719; t=1786374655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3Wji16Z5ZlWZpVjXKO1mZdnmua7yT7+NSgk08FdAF3A=;
- b=Uj8r15yMyc9zBMwb968K9kPFOx5EY3RF+Wj8vylyrPmu2h9GqNQesWUuywd71EBdfe/4b/
- t/mHfiOoR7hupSZhRNk2cay5sR+QnmdZElMk3/S7cYi/gUhJEFyNhcmr7jtJsQXinijt9S
- Mg+o+Bl5zeik56P5HrLwmMnl3/8vWd4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Yrx8M8Vk3IsULFypRrJcH9qWmMCESUzQ1dG4LmLs6jQ=;
+ b=ba7lcnbw316m+KfMMSGEBuZKI/x0zYyZQ9RH9foAEfIjfQkjjJPtAAnUXUlt8xE8ZZWvgc
+ Jg8EmE7lsvi6HO824ajlt02ivDOz0i8mqM/D5rVyfHZ4L2aqG0C3dt2+QYD6lD9j/IlS6q
+ DIWPno0lgfJmzWbiuMisWVRGy+fdSrw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-TNbonQTzP3KIXtrEE3HNOA-1; Mon, 10 Aug 2026 11:10:37 -0400
-X-MC-Unique: TNbonQTzP3KIXtrEE3HNOA-1
-X-Mimecast-MFC-AGG-ID: TNbonQTzP3KIXtrEE3HNOA_1786374636
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-473ac08a6a4so1412172f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:10:37 -0700 (PDT)
+ us-mta-232-cA7nLQ5PPI6ggRXG33WjKw-1; Mon, 10 Aug 2026 11:08:46 -0400
+X-MC-Unique: cA7nLQ5PPI6ggRXG33WjKw-1
+X-Mimecast-MFC-AGG-ID: cA7nLQ5PPI6ggRXG33WjKw_1786374525
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f90dbaf84so1697603f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786374636; x=1786979436; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786374525; x=1786979325; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3Wji16Z5ZlWZpVjXKO1mZdnmua7yT7+NSgk08FdAF3A=;
- b=TAv18EaB5u0/SUDOvGP9l5iN1eKtT4aFO3Ky660Yuv5MaJFZM98UlawHAmIUmkfgET
- jii28UGr7lLxypaLlSLdQe4eomKcbcijpVLN0GMCqyDcfw+Tu9PCnonxzmw0UxjZPq20
- MZumH1ZyrLfszxzr8qu2MUR2+cM0FyZWBWNZndCcSBZFp+mNC1zQPAr31wpw1heGVZZL
- qDaeOp/w9C0ITpURnyDgOZndCALabhj5oKzHZvAJcnAtYO5rLrIVxKo1hpZHkZFx3gXF
- 2Y1V4XNg0H2h2HlX/4hMAiYiGLOOxCbGgRbkyvETGTQQ0LOuSbh1NDDxW7Y6p/tB4CJa
- Zwew==
+ bh=Yrx8M8Vk3IsULFypRrJcH9qWmMCESUzQ1dG4LmLs6jQ=;
+ b=QXKR8rAxN4vsj7pTew9kpMWVr0OhUiFZDEkAX10gg3lkdxNOwW2ZbZUm85TfZ+7ibL
+ oUo6kWApppV5Q29rEuuohucZaYh287VXEVVTWfKeCZcRnRRnjSjvSP0mHPTXaxj3Vzoj
+ wkYpUE7HR16VdphS/TbJ2kQ+D8OH/Y1ZnBBP74u3mIpqmR2qWYdk8fCdIM5tkcj0ggBo
+ ysmxEhlvd0TtcQ+BfpS21RCwTVeWz/6QZN8JI7/hOglhXtMTCQUwL0v91NDhbvanxa2Q
+ oEea0Gfn3P+B15HLAlLtaKKxaNv2PchyEzMSVYBjUfF7rl0ornb5U8G5CfG1oQ9GR2yt
+ /uVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786374636; x=1786979436;
+ d=1e100.net; s=20251104; t=1786374525; x=1786979325;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3Wji16Z5ZlWZpVjXKO1mZdnmua7yT7+NSgk08FdAF3A=;
- b=V7UZF4lnJ0wV1ZK2/bJXst4UnXrt8PYGDlt4gLSXtfvsM3dyMd9r2uIsKSwF3DqnYQ
- JmJVhHwFJqxPMImnN+Sd3WhOx669g1h+8Svx5/boaJkOXTfGGnfiaZ261isizVFq7EBM
- adu+hKXacySj77W7VYJwZRsFd42ZkuVZ7SKIb/J9d90JzwFzqHKcYGhD/979bbI6o+qA
- RauEVki9/Kxrp//Fk2TlJx5LBJ9RT6YKW3TrwXa5GY8napF5ZRA1f+4BMFI/HdqCLW1E
- nj5BXG1w9IRaV/r6joWjLxSAg+EaQKpOPRH6MT5RvrhhSmi/imVmTT8LVbWzqYUxj/6L
- EpOw==
-X-Gm-Message-State: AOJu0YwQ0yXdPIFbftZ9hmnkfjruAwwbnB61KrN77TVL8MfvRL4IA6Ym
- aNZMxytkw8MP0HKZYGo1TZSi7edcbbDgE2eHRntbiY84bMX06ox+2PNKtofTIQhWwo8Yl04phTr
- Vy4iMUz9ngtZJ2i0NE5jYzIR47vCAqjEQz1Zo3IWVVH6t2TSazEBUTo+9
-X-Gm-Gg: AR+sD11ey91/LE7wFUu1mKIbK7obLplv7N97N7voBHcH8Y2aktioEi1Gom4y7AD42fK
- 85hCkMwYoLP3M+LKKBetxxrgpbedFXe08s5wtxI/iCoVVGhEm+3fZhr3ONZGb9koOHPLWDZG6WS
- Vx9PlCdzZOJIkw01mvCIn+1gXWrA+Bke6jCwWCOJLbT13FvgHrsxSwdA4dKkKBJSe728kovDbI5
- HGj4XLCh35+hvd882EpChixz60GHUedA3ostSsxuLllDGqG/5rVYurHu1GHuu8A/lQG+7TmK5Eb
- CZtbpF7LBmL29+XYj50ggJkQ3NS8nu1d2VQmRMa8/OcMdQ1A5G9BIwND
-X-Received: by 2002:a5d:4242:0:b0:47d:f441:5f93 with SMTP id
- ffacd0b85a97d-48130ff168emr20616342f8f.25.1786374635407; 
- Mon, 10 Aug 2026 08:10:35 -0700 (PDT)
-X-Received: by 2002:a5d:4242:0:b0:47d:f441:5f93 with SMTP id
- ffacd0b85a97d-48130ff168emr20616198f8f.25.1786374634544; 
- Mon, 10 Aug 2026 08:10:34 -0700 (PDT)
+ bh=Yrx8M8Vk3IsULFypRrJcH9qWmMCESUzQ1dG4LmLs6jQ=;
+ b=OtJkaIM1kngq+11p+7cx4C2gg8Kqtuxn++gCBoCqNg6JW2IzpLFbgS0SSUZt3YIhux
+ CjBxj4H8Mr7e3XEeAJkUVtFWEjvmroBEvEHrFr2FV3+5YqVims2jUAUfUPIWQUZZ258g
+ aTozZtZHVRf6Y2gwJiecgBpVxB8DgNobGdC6BJirZZEW8+AMExA0gCS+8ERAQ+5cn1AH
+ 4/04sRNYhK+IbRRIjuhdmsLp0XKzL0+HcvjchRlRcfMpti5ox7GjXIOMNlFnPWyoerZw
+ GKtjY9aZ2CyHoR051cHg9iesv2AdGyZxtMzkjlzSHOkAmXjNjyHQ6fzFjJVcUekPqxR/
+ B9xQ==
+X-Gm-Message-State: AOJu0YwYG4nYFXACpTgaLBDtJZ3G9FGptzzvJW6k7waSNtXzajnBhgxo
+ QrbyIGo4UrmytoJ7nvk0+VTfmW1UEnvuaWjtK5XL/A322ecYsbey4bG6DHPqnIqS2/K00txu/rq
+ WyJgiqj2OyuEGVC6gfIiAxrcQnLTb+rdb8t2HUPT0slNUWckKWeW46qON
+X-Gm-Gg: AR+sD13NuYhX9ArKKgDo2/1G4rz/hy1ot0DUtNyqSyqosfYjU9rFFAL/upz72jXdo/G
+ CKyUBk7o0LgRvDJAWJ//IJEptJPh5luzL3wGIiNHEwc6OKMOi2wik8hXa2LPIGSbeEDfMsJ+RCM
+ VgmA3tKyeALEIO25dureLr6mzbfEr4QQhUaLMwKdWBl2Jgyg0tHyT2UNZyeTSCWwQGXGZ3g0Ev6
+ YXMmljUD6VE+iGDhAWN55qNWfswEKW/Nv7JbdMxFQbKx9sCsQjCqnZ0U43YpNjgo5hpyXQupOXG
+ NH9UqcN+XLC+hPOkE0fJnWSgN+2zwQBZPZFwpTwLYzeqTm+YQC3xQJIf
+X-Received: by 2002:a05:600c:8b5c:b0:496:bbce:f3 with SMTP id
+ 5b1f17b1804b1-4997276902bmr38771955e9.6.1786374525420; 
+ Mon, 10 Aug 2026 08:08:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b5c:b0:496:bbce:f3 with SMTP id
+ 5b1f17b1804b1-4997276902bmr38771475e9.6.1786374525080; 
+ Mon, 10 Aug 2026 08:08:45 -0700 (PDT)
 Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4800220727bsm37133789f8f.33.2026.08.10.08.10.33
+ 5b1f17b1804b1-4995428f294sm416675945e9.15.2026.08.10.08.08.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 08:10:33 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:10:31 +0200
+ Mon, 10 Aug 2026 08:08:44 -0700 (PDT)
+Date: Mon, 10 Aug 2026 17:08:42 +0200
 From: Juraj Marcin <jmarcin@redhat.com>
 To: Aadeshveer Singh <aadeshveer07@gmail.com>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
  pbonzini@redhat.com, philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
  pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 05/11] migration: Make qemu_get_buffer_at() thread-safe
-Message-ID: <annp0wm5l_5Fu21F@fedora>
+Subject: Re: [PATCH v4 02/11] migration: Extract blocktime marking helper
+Message-ID: <annpZ7a5pohaUJ6h@fedora>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-6-aadeshveer07@gmail.com>
+ <20260801023628.22665-3-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-6-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+In-Reply-To: <20260801023628.22665-3-aadeshveer07@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +120,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-08-01 08:06, Aadeshveer Singh wrote:
-> Remove the internal QEMUFile error state modification from
-> qemu_get_buffer_at(). This function is called by two functions, both of
-> which already check for unexpected return values and handle their own
-> error reporting.
+> Use new function try_mark_postcopy_blocktim_begin() to call
+> mark_postcopy_blocktime_begin if page was not received and return if it
+> actually marked it.
 > 
-> Removing this shared state modification makes qemu_get_buffer_at()
-> strictly thread-safe for concurrent disk reads, serving as a
-> preparatory change for the upcoming fast snapshot load feature.
-> 
-> Removed local error by passing errp to improve on error handling,
-> consequently also change caller to use error_prevent and not error_setg.
-> 
-> Set errp in case of f->last_error as function should set errp in case it
-> fails, and caller can simply use error_prepend without checking errp in
-> case of error.
+> This will help in having a cleaner API to call
+> mark_postcopy_blocktime_begin as it requires the page to not be received
+> by asserting on it's existance in RAMBlock->receivedmap.
 > 
 > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/qemu-file.c | 11 +++++------
->  migration/qemu-file.h |  4 ++--
->  migration/ram.c       |  6 +++---
->  3 files changed, 10 insertions(+), 11 deletions(-)
+>  migration/migration.c    | 24 ++----------------------
+>  migration/postcopy-ram.c | 31 +++++++++++++++++++++++++++++++
+>  migration/postcopy-ram.h |  3 +++
+>  3 files changed, 36 insertions(+), 22 deletions(-)
 
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
