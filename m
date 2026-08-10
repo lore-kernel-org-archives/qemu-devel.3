@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44517C5AE49
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 14:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13294C5AE49
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 14:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtQmj-0002kF-JL; Mon, 10 Aug 2026 10:15:27 -0400
+	id 1wtQpR-0003ap-AZ; Mon, 10 Aug 2026 10:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtQmU-0002cQ-FE
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 10:15:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtQmQ-0001z7-KL
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 10:15:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786371305;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/JVOjOsdLw46U5wf76i9LPv3QuZPEvP3XANE+nMJB+M=;
- b=ASLBr7CHEKN2E4Nfitr6gMIIk6PzgH8PmZXHQH2utNlrOh7Rzbz3OpeBRA/XE20EU+Tp2Y
- f4kWYv7THOA/vKM2uBqAC1eySFuGNEJ38/Vo4U7FEsoYH1mbwEABCJHSoyY+cfQizyo0Tg
- hbeGqrPtGcxpbD7RF4GVJLt2d7g+H80=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-7_Qakrc0ObWSfMwmL7fy5Q-1; Mon, 10 Aug 2026 10:15:04 -0400
-X-MC-Unique: 7_Qakrc0ObWSfMwmL7fy5Q-1
-X-Mimecast-MFC-AGG-ID: 7_Qakrc0ObWSfMwmL7fy5Q_1786371304
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9368f2b7b2bso103717785a.0
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 07:15:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtQoj-0003Wt-QW
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 10:17:33 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtQog-0002cz-K2
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 10:17:28 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-80bb41f7f3cso19467817b3.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 07:17:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786371445; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hdsmU/aIgKAVgjOj7a/9C7iCeoBmWU42r5dTsYPV513CcoLNVvPtn1r+zni5KHRlxB
+ zBhj0cjTR6eV6gcQKiP/3CKCmq/bwbfJlo6RKlgjpD+dZ3DIIPgXWOWXW/Q9JFlMJOw8
+ DJaWKIm9AhrrbLyzozxpEU/AZEjryQYeiiJP2dQRm127JFz95pINvVR2K4JsWW/F6uOF
+ ZxMLhKQl/Q59/fXVbt2/LqFkGlCFViaR0R0292CluaYO8fPY22rHz/J5nnt2YGGn0MPs
+ WcrdWVfYP2o6fuPWk5MIs9uhJWMppZm7kfAt2IHvuPVCboD1iBtDD5Z+a/ghqILbTp/8
+ memg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=tWabzeHPU4UF7K0LvwXAvuyY2Qr/ELZJGmNyrH1b2fQ=;
+ fh=7FzEi/2LFrewGH2MJzBtQfwp2vNgslaa5OqjoXzw9FM=;
+ b=OKFuhcP6cVkDsjzy7udEzynKzbgrvHvR4IwJ3t9akMlnDotqOwyvd9vD/KKnn2eAul
+ U0hgGHc7D0+UVL/CpBXzRVfmBmJCNCQrKj7iLv4U8K6SSLxFotg2whZ8RL2e/AwL2NJK
+ OKRtFAaeyRibUmrof2D8ZTxcZb3jAFxg63paD94gOObJJk3oP50mgMcR4TKTdVXsyTVq
+ zbtPpnMZTpy3TlEv+Ue8Xhln4cwKAkQR+612a8ULxv7A3JTFfNXueVSnuQ5cDWFfICh1
+ wCuzwJl4Bg1x8zNRm2+tc26vG0mF21HX8TtVBb9G6XqRY2bexraTg3ztMyZFP+j/4K4c
+ NWTQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786371304; x=1786976104; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/JVOjOsdLw46U5wf76i9LPv3QuZPEvP3XANE+nMJB+M=;
- b=aGmfQYrl5sW9s1GH5YfIbC8RW+x8IK4t+4EAvG6STJaU+u7/47gn6Mi3yuJSecve8D
- ESH46tdNluBS4scqgkNRAm10kycRuUx6y4KaLo6xISj46rzgN5GkMdU4GhzRVGmtZDcr
- OMvPhPlToZ9x5HlEZpxzUfcqUgIzpQax7A/Ro3gTpOQTu4dLgyxjMxE2A+2MRsmMArGU
- 3vvM1zDKpqgXticDwiM8YXq6IA7oS9DSaj1fWvmxTCS8OnO5uZqrmPr7GCYW2PCBkrWM
- sGOJvQ9R3bp0ZMO1Qj7HgOk7CXSppubJdA+W4Di8m53bAeoIHH55/MNeYdsqIFgbMajI
- KatQ==
+ d=linaro.org; s=google; t=1786371445; x=1786976245; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=tWabzeHPU4UF7K0LvwXAvuyY2Qr/ELZJGmNyrH1b2fQ=;
+ b=KerQL11+FjsIEg8CfC8is+8fNy0vVKkHoQJjzBXPC7x3Pmj1ea6mxS7GvDc/5/iowQ
+ Ra5+Hb/QEaRSsQFkaaYiCnQtnWReaVM6TeLOOapoBNqQnBkuKsb8KKjWzzw6Q1o0ffMp
+ 6OGscIJ5c4BlKrfRCSsRP34tFMbjuJcRdXxoWvM+Qw+P9DNKseihZ1kkqmG+kvFTOFgT
+ RpZLJbAXfS7mVuPOlipHmHLwYjNchhQL89venbgfNFKXLGYTvBLCT2hcFhTisJBwYC01
+ T5XQNnfqgcx6cau+NSFBdNx/HtsBqOd94x/YcX9YRwF3SzUv9zikoIh095YLzQir5Tr1
+ 2hUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786371304; x=1786976104;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/JVOjOsdLw46U5wf76i9LPv3QuZPEvP3XANE+nMJB+M=;
- b=qW0hqmS8gCxjCFf41L1b/blQwQdzWypZwbQPIopHRSx6OtCtSBh945cUZfYJAHs6dL
- iswnQv2SYoaqL/8U38+D01x31wRrp/+tzuHB0LD5gixUHancch5rp4ovU/LNSz+3Loyr
- Hv29EbggsIo/lsz1+6PIFxXlzVdR/Hyr2Ax9wK7jkGrNctLdCFXCslMXL2MpETMdSpSD
- BgOqf/8cRgneWrZzUggaVyU7uCVW5ctcjOMiH8y0Dg5NOeWX07aNWwuUg+7L+lSi2Gg8
- qocZLDVkDeIOy9Mf05FP5j7myfFLcp1dziTXgPcoKCn0NWSHhxu9mVsjb+0BARN6xcr8
- 66tw==
-X-Gm-Message-State: AOJu0YyMeRXTc6wUFCuQG9pqU+WZ68O/+t8gjPr0P7+PIfYurenc/d8c
- uT/DNMzGW/Z9nflSfwLlV0ygLppsIC3efHxzeVL/zelQS+kOR7nqscr+Lmj0mSNL7y3KlYFktqk
- b7wOZykOO0Ha/rfFX2vJeC7qv0mDt0lTME6IW0I1jmYSOiiLgYc/2TenO
-X-Gm-Gg: AR+sD11+vYbszkIjcjcUix1jYEtf+s7t26w/ZaDxCNq0s4iwfu89EyPrbxf8XDVnmsW
- NXJ3C3i8GfMpxzV0AHZIw6O4xe+sWsv3fkCXaRi1EuROS1AnigjxHxZ/3Be7h6KKpJlLAomR33z
- aduLd5TYdgkE0H1nO1ZhKiC6PYSYlAKLD5olKdFcejTfTmd3csSeYcwN9GBAq3yhcqwFWy4A2sN
- cC95CDRRzhrQZAIk/mCOCU1FkE3XYMY1H/14Jfz+NxHojy4Q8raZ/n0xqqZ9FedgCww4J2vYHhD
- A9eTW96lnR2D5F0D6C5Pyy2nokt1fB+8EXeQnWrp54WGgtET3+1QbPrrBBAOf3hCQniUYT1G
-X-Received: by 2002:a05:620a:700f:b0:92e:4859:49dd with SMTP id
- af79cd13be357-9369d081bf7mr188145685a.26.1786371303375; 
- Mon, 10 Aug 2026 07:15:03 -0700 (PDT)
-X-Received: by 2002:a05:620a:700f:b0:92e:4859:49dd with SMTP id
- af79cd13be357-9369d081bf7mr188136785a.26.1786371302806; 
- Mon, 10 Aug 2026 07:15:02 -0700 (PDT)
-Received: from x1.local ([2605:8d80:6cca:6745:8cc0:20fa:c0c1:4a55])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9366e279f0esm784763085a.38.2026.08.10.07.14.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 07:14:59 -0700 (PDT)
-Date: Mon, 10 Aug 2026 10:14:55 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 05/11] migration: Make qemu_get_buffer_at() thread-safe
-Message-ID: <annc38EEuLehN-mE@x1.local>
-References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-6-aadeshveer07@gmail.com>
+ d=1e100.net; s=20251104; t=1786371445; x=1786976245;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=tWabzeHPU4UF7K0LvwXAvuyY2Qr/ELZJGmNyrH1b2fQ=;
+ b=YYApifi1oepjv8Sb7y6C0tdVtaggeb4GFedCEcPigjK8bJxtVfEXIddwg8XxPf/Nwr
+ 04tDnKZxwglZ5fT/3Ny5L2mrc7WvqLo1hVgBNSWv15M9m3S7asH7Jjq7JGY3lg71tqpJ
+ PO/mXR+fFbUS8qzKmdOhvBruoE8QYAoKLWKjODCUSe+vwB9jaBrUeW1N6U/aUa45CcHQ
+ IHBqKnOgYUSWCTxjPXaEHZK8nvUt1R7LPdWnVp3niS3wieHFNjFJmJhy0Y5AtkDkPD/x
+ 1sbUQAv9McMCc3wvdzvGOH3rwj2kkgthQSilUwu/5Fs2PpD7KRVtgq1V5CatfR0mQnaE
+ QLMw==
+X-Gm-Message-State: AOJu0YxE36z/UrOvLvj2pTggC10cHRVrSay8P8EzW+VMRs8IJKWxT7Oe
+ wqVT+zCeyGhwsi36UmHd/CI611OIGifJUVISy7Hd5jy5GY1b5V5B0hKMAUOIM5OZ18pvP7rR5if
+ pqrETs8uwUMZK2lBHDfYzIL2/3EWDt8qCQ0urzeFY9A==
+X-Gm-Gg: AR+sD13ceT+R4Oku2RkB2ytIh3LKJ9QfswuLQ3tcmGCiDXvQw4oLsQcEYkMEKA59T+C
+ bOcxU7thHnHLTiqgb/LF1q8ySiZ4ckH8l67kGlClVoa1MKqG+mwcKgSx4CxveErusM5DDl8RoSR
+ upsQ0RZTZNF40v1OJ2fmalCHKT/WYyfOaILzLO2/LuJRkrpPC1XFv3s0qqF5Qkd2rHZusSSVMYF
+ lrh+pDKGxUz5eUamrjRcbevPjp63X3Px+4Ze7+xdMTxGLV69DKpSe2rwcjEtjhrUlgy6dFGkbzu
+ 75hGF0nd5xn/FsiCqVB0776u0BVniQ/t/4tlIHwudVY3H0zJcRE00B74PBPNkhd0aMyM1ghP9Lp
+ 2l6xHeN+UPhNrujc/M1Vvho+795zN
+X-Received: by 2002:a05:690c:9689:b0:80c:3848:bde5 with SMTP id
+ 00721157ae682-82258a8f2dbmr162698237b3.13.1786371444478; Mon, 10 Aug 2026
+ 07:17:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-6-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260810140641.161728-1-kkostiuk@redhat.com>
+In-Reply-To: <20260810140641.161728-1-kkostiuk@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Aug 2026 15:17:13 +0100
+X-Gm-Features: AUfX_mzsnHkUhv2_MIG0gojrQ-ulk9p8cy-Da0BvezrYqYMAeGCNQ3qEMpplUj0
+Message-ID: <CAFEAcA996EVXzZNTH4cSM0iFf8iCdM-ZC=voMJSvnz3B=W9c=A@mail.gmail.com>
+Subject: Re: [PATCH v3] qga: Change effective user/group ID in guest-ssh-*
+ commands
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Valentino Paulon <valentino.paulon88@gmail.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Yan Vugenfirer <yvugenfi@redhat.com>, Michael Roth <michael.roth@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,28 +117,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 01, 2026 at 08:06:22AM +0530, Aadeshveer Singh wrote:
-> Remove the internal QEMUFile error state modification from
-> qemu_get_buffer_at(). This function is called by two functions, both of
-> which already check for unexpected return values and handle their own
-> error reporting.
-> 
-> Removing this shared state modification makes qemu_get_buffer_at()
-> strictly thread-safe for concurrent disk reads, serving as a
-> preparatory change for the upcoming fast snapshot load feature.
-> 
-> Removed local error by passing errp to improve on error handling,
-> consequently also change caller to use error_prevent and not error_setg.
-> 
-> Set errp in case of f->last_error as function should set errp in case it
-> fails, and caller can simply use error_prepend without checking errp in
-> case of error.
-> 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+On Mon, 10 Aug 2026 at 15:07, Kostiantyn Kostiuk <kkostiuk@redhat.com> wrote:
+>
+> Before this commit, when qmp_guest_ssh_add_authorized_keys adds an
+> SSH key for an existing local user, the agent (running as root) decides
+> whether to create the user's .ssh directory with a symlink-following
+> directory test, and then writes and chowns the authorized_keys file.
+> A local unprivileged user who owns their home directory can pre-stage
+> their .ssh directory (or the authorized_keys file) as a symbolic link
+> so that, when the host or operator triggers a key add for that user,
+> the root agent follows the link and transfers ownership of an arbitrary
+> root-owned file or directory to the unprivileged user, who can then rewrite
+> it to obtain root.
+>
+> Fixes: CVE-2026-12080
+> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/3929
+>
+> v1: https://patchew.org/QEMU/20260709105707.91209-1-kkostiuk@redhat.com/
+> v2 -> v1:
+> Change effective user/group ID instead of checking for symlinks and
+> changing ownership of the file.
+>
+> v2: https://patchew.org/QEMU/20260810104659.82320-1-kkostiuk@redhat.com
+> v3 -> v2:
+> Deduplicate code.
+> Fail daemon when can't rollback effective user/group ID.
+>
+> Reported-by: Valentino Paulon <valentino.paulon88@gmail.com>
+> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+> ---
+>  qga/commands-posix-ssh.c | 66 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 66 insertions(+)
+>
+> diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
+> index 661972e34e..070cdffcd0 100644
+> --- a/qga/commands-posix-ssh.c
+> +++ b/qga/commands-posix-ssh.c
+> @@ -8,11 +8,29 @@
+>  #include <glib/gstdio.h>
+>  #include <locale.h>
+>  #include <pwd.h>
+> +#include <grp.h>
+>
+>  #include "commands-common-ssh.h"
+>  #include "qapi/error.h"
+>  #include "qga-qapi-commands.h"
+>
+> +typedef struct EffectiveUserInfo {
+> +    uid_t uid;
+> +    gid_t gid;
+> +} EffectiveUserInfo;
+> +
+> +typedef EffectiveUserInfo *PEffectiveUserInfo;
+> +
+> +static void rollback_effective_info(PEffectiveUserInfo info)
+> +{
+> +    if (info) {
+> +        assert(seteuid(info->uid) == 0);
+> +        assert(setegid(info->gid) == 0);
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+A brief comment here about why we're happy to assert() here would
+be helpful.
 
--- 
-Peter Xu
+> +    }
+> +}
+> +
+> +G_DEFINE_AUTO_CLEANUP_FREE_FUNC(PEffectiveUserInfo, rollback_effective_info, NULL);
 
+Don't we also need to g_free(info) in the cleanup function?
+
+thanks
+-- PMM
 
