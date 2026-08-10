@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C931C5AC82
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DB1C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtLSY-0001WX-BI; Mon, 10 Aug 2026 04:34:14 -0400
+	id 1wtLSY-0001Y2-W9; Mon, 10 Aug 2026 04:34:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRl-0001QH-2j
+ id 1wtLRk-0001QE-TE
  for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:33 -0400
-Received: from [115.124.28.125] (helo=out28-125.mail.aliyun.com)
+Received: from [115.124.28.5] (helo=out28-5.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRh-0005Bx-Hs
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:24 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07441887|-1; CH=green;
- DM=|CONTINUE|false|;
- DS=CONTINUE|ham_regular_dialog|0.00345733-0.000296969-0.996246;
- FP=7196549941702542555|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037026024;
+ id 1wtLRf-0005Bu-MU
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:23 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07437109|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.00974696-4.09803e-05-0.990212;
+ FP=7199979514931766635|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033068016216;
  MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.iiL7hL8_1786350660; 
+ TI=SMTPD_---.iiL7hCG_1786350652; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iiL7hL8_1786350660 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 10 Aug 2026 16:31:01 +0800
+ fp:SMTPD_---.iiL7hCG_1786350652 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 10 Aug 2026 16:30:58 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v2 3/9] target/i386: Hide ARCH_CAPABILITIES for Hygon
-Date: Mon, 10 Aug 2026 16:29:50 +0800
-Message-ID: <20260810082956.1768042-4-zhang_wei@open-hieco.net>
+Subject: [PATCH v2 0/9] target/i386: Fix Hygon vendor-specific CPU behavior
+Date: Mon, 10 Aug 2026 16:29:47 +0800
+Message-ID: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
-In-Reply-To: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
-References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.125 (deferred)
-Received-SPF: pass client-ip=115.124.28.125;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-125.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.5 (deferred)
+Received-SPF: pass client-ip=115.124.28.5;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-5.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,93 +65,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IA32_ARCH_CAPABILITIES is an Intel-defined MSR.  KVM can synthesize the
-CPUID bit and read-only MSR for non-Intel guests, and QEMU already hides
-that interface for AMD CPU models because Windows may not expect it on
-AMD-compatible CPUs.
+Hygon Dhyana uses the HygonGenuine vendor string, but a number of
+guest-visible and KVM-facing interfaces follow AMD-compatible behavior.
+QEMU currently keys several of these paths only on AuthenticAMD, so Hygon
+guests can see vendor-inconsistent CPUID/MSR state or use the wrong KVM
+PMU/MCE handling paths.
 
-Hygon Dhyana uses the HygonGenuine vendor string, so it currently skips
-that AMD filter.  If arch-capabilities=on is requested, QEMU can expose
-CPUID.7.0.EDX[ARCH_CAPABILITIES] and the associated MSR feature word to
-a Hygon guest.
+This series makes those checks explicit for Hygon where appropriate.
 
-That creates a vendor-inconsistent CPU ABI: the guest sees an
-AMD-compatible vendor and cache/topology interface, but also sees an
-Intel-specific architectural capabilities MSR.  Guests that choose CPU
-mitigation or feature paths from the vendor can mis-handle that
-combination; Windows is known to be sensitive to ARCH_CAPABILITIES on
-AMD-compatible CPUs.
+Guest-visible CPU ABI changes are gated by the new
+x-hygon-vendor-abi-fixes property.  The property defaults to true for new
+machine types and is disabled for pc-11.0 and older, so existing machine
+types keep their previous Hygon ABI for migration compatibility.
 
-Apply the same ARCH_CAPABILITIES hiding rule to Hygon CPUs when the vendor
-CPU ABI compat gate is enabled.  Keep arch_cap_always_on as the migration
-escape hatch, and keep the old Hygon CPUID/MSR output for pc-11.0 and
-older machine types via x-hygon-vendor-abi-fixes=false.
+The KVM injected-MCE and PMU path changes are not CPUID model table
+changes.  They make QEMU use the AMD-compatible runtime handling that
+Linux/KVM already uses for Hygon.
 
-Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 33 ++++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+The series covers:
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ad94fa755c..569ef785ca 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8209,6 +8209,8 @@ static uint8_t x86_cpu_get_host_avx10_version(void)
-     return ebx & 0xff;
- }
- 
-+static bool x86_cpu_should_hide_arch_capabilities(const X86CPU *cpu);
-+
- uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- {
-     FeatureWordInfo *wi = &feature_word_info[w];
-@@ -8294,15 +8296,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-         break;
- 
-     case FEAT_7_0_EDX:
--        /*
--         * Windows does not like ARCH_CAPABILITIES on AMD machines at all.
--         * Do not show the fake ARCH_CAPABILITIES MSR that KVM sets up,
--         * except if needed for migration.
--         *
--         * When arch_cap_always_on is removed, this tweak can move to
--         * kvm_arch_get_supported_cpuid.
--         */
--        if (cpu && IS_AMD_CPU(&cpu->env) && !cpu->arch_cap_always_on) {
-+        if (cpu && x86_cpu_should_hide_arch_capabilities(cpu)) {
-             unavail = CPUID_7_0_EDX_ARCH_CAPABILITIES;
-         }
-         break;
-@@ -8608,6 +8602,27 @@ uint32_t cpu_x86_virtual_addr_width(CPUX86State *env)
-     }
- }
- 
-+/*
-+ * Windows does not like ARCH_CAPABILITIES on AMD machines at all.
-+ * Do not show the fake ARCH_CAPABILITIES MSR that KVM sets up,
-+ * except if needed for migration.  Apply the same rule to Hygon CPUs when
-+ * the corrected vendor CPU ABI is enabled.
-+ *
-+ * When arch_cap_always_on is removed, this tweak can move to
-+ * kvm_arch_get_supported_cpuid.
-+ */
-+static bool x86_cpu_should_hide_arch_capabilities(const X86CPU *cpu)
-+{
-+    const CPUX86State *env = &cpu->env;
-+
-+    if (cpu->arch_cap_always_on) {
-+        return false;
-+    }
-+
-+    return IS_AMD_CPU(env) ||
-+           (cpu->hygon_vendor_abi_fixes && IS_HYGON_CPU(env));
-+}
-+
- /*
-  * CPUID leaves 2 and 4 describe Intel cache information.  AMD CPUs use
-  * extended cache leaves instead, and Hygon Dhyana follows that AMD/Hygon
+  * AMD CPUID[0x80000001].EDX aliases for Hygon
+  * hiding Intel cache CPUID leaves 2 and 4 for Hygon
+  * hiding IA32_ARCH_CAPABILITIES for Hygon unless old ABI requires it
+  * AMD MCE status encoding for Hygon memory-failure injection
+  * AMD PMU MSR setup/save/restore paths for Hygon
+  * disabling Intel-style MCA broadcast for Hygon injected MCEs
+  * AMD IOMMU HT GPA hole layout for Hygon on new machine types
+  * AMD legacy cache fallback for Hygon when legacy-cache=on
+  * AMD-shaped default ucode-rev value for Hygon
+
+Changes in v2:
+
+  * Rebased onto v11.1.0-rc3.  Moved the compatibility property to
+    pc_compat_11_1 and wired it into the i440fx and q35 11.1 machine
+    options.  (Zhao)
+  * Patch 1: removed the single-use CPUID-alias helper and checked Hygon
+    directly at the call site.  Also updated the hygon_vendor_abi_fixes
+    field comment to emphasize that it is a machine-type compatibility
+    option.  (Zhao)
+  * Patch 4: removed the single-use MCE-status helper and checked Hygon
+    directly at the call site.  (Zhao)
+  * Patch 5: reworked the PMU vendor checks around a common PMU vendor-family
+    abstraction, covering host/guest compatibility, PMU initialization,
+    and PMU MSR save/restore.  (Zhao)
+  * Collected Reviewed-by tags for patches 2, 3, and 8.
+
+Tested with:
+
+  ninja -C build
+
+  build/pyvenv/bin/meson test -C build --print-errorlogs \
+      qemu:qtest-x86_64/test-x86-cpuid-compat \
+      qemu:func-x86_64-mem_addr_space
+
+Tina Zhang (9):
+  target/i386: Sync AMD CPUID aliases for Hygon
+  target/i386: Hide Intel cache CPUID leaves for Hygon
+  target/i386: Hide ARCH_CAPABILITIES for Hygon
+  target/i386/kvm: Use AMD MCE status encoding for Hygon
+  target/i386/kvm: Use AMD PMU MSR paths for Hygon
+  target/i386: Do not broadcast injected MCEs for Hygon
+  hw/i386: Reserve AMD IOMMU HT GPA range for Hygon
+  target/i386: Use AMD legacy cache fallback for Hygon
+  target/i386: Use AMD ucode-rev default for Hygon
+
+ hw/i386/pc.c                                  | 23 ++++-
+ hw/i386/pc_piix.c                             |  1 +
+ hw/i386/pc_q35.c                              |  1 +
+ include/hw/i386/pc.h                          |  3 +
+ target/i386/cpu.c                             | 73 ++++++++++----
+ target/i386/cpu.h                             | 13 +++
+ target/i386/helper.c                          |  2 +-
+ target/i386/kvm/kvm.c                         | 75 +++++++++++----
+ .../functional/x86_64/test_mem_addr_space.py  | 37 ++++++++
+ tests/qtest/test-x86-cpuid-compat.c           | 95 +++++++++++++++++++
+ 10 files changed, 282 insertions(+), 41 deletions(-)
+
 -- 
 2.43.7
-
 
