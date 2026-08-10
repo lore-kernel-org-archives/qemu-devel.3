@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F8CC5AC82
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 06:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F50C5AD4E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 06:57:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtJ37-0007SZ-C3; Mon, 10 Aug 2026 01:59:49 -0400
+	id 1wtJwl-0007wh-4p; Mon, 10 Aug 2026 02:57:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wtJ34-0007QS-7R
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 01:59:46 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wtJ32-0008An-9P
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 01:59:45 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6a144c8eea2so2271166a12.0
- for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 22:59:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786341582; cv=none;
- d=google.com; s=arc-20260327;
- b=eIttHIzPBO6O0JdozenjVSWKpD2bO7vMpkokHiaLE5Cq7KZ3lUqtFJCN57XHAQAP8+
- NaOacD2smhrcSFk207lk00sSr0IChd3I2TiTyJaPyhtGQsnuYH77K0Ysph+EsYiAkEWf
- k+Uj0LmOG21/x/unf8/BS6P5VUsJWMDuQcqPRutxbj+a/vnq6Oc2dNp2iQs2D53BXmKA
- bV2XFXp2oMqHjeYCB5Gdh8HKmg98GZgDiESHCmJ9ZnHL+DrcFjizJ08Egj3o+GzwT7RU
- Tn3TqTAzf/plySpn90ML4Oa1BTmD1aKTuHxja97rbuXk9d3rLrwSN9Zy3wifEw3435Kt
- NTKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=qNKYrIqi4VQVj1jd9Wxmt3C/DiIje5TlJdX3XScfTyg=;
- fh=YfaUHuIIljKaZoeu4cVBi2p6IHamIXuQ0zRCEROCZYc=;
- b=VKEhtH3neFAHgGG7xVll7JkFteCacdCuwpXDwML3oRYPAZnBfhVUIhj9FMY8NvWbV6
- kN8R3k2a4JEQUlUJ6dHVJ0YjE7inAdq3OKyuGzkNilM7APoFmd5xmvMhCBFk7XqZ/tFl
- 8wHPSMl193Isii2d4+2eWTQjQHF5TZca8aBX2bJ8Mc3rt2eVFXT7kFl8silumJ9WLlC3
- ShZW79zaTYpd4ORIjjfsyRJXGr8NQ435+7TME0nizpr6HGVudwtzHFOCGrLKzsr+lcpp
- E/E1EnDPfqJifYvtIUTtXY2gXPxLsFxGF7zVC2se1EnTQJ0aDoFICLwbQgq4wXB/pJw5
- GdNA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtJwi-0007wP-4M
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 02:57:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtJwg-0007Et-Ft
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 02:57:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786345032;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eMrKbJEmDOeIwA5y7xnPv80Kr/FmW+udgISbTRBD8c8=;
+ b=Vkeuv03dUEHgHF1r+aN7/b8U6C/dd5JvzVvhcaSpacYpKLdnCMu5cr3wckrbjJ/URSA0qn
+ Or4Eg7XVk4+RLCxhNa6WCzamPCjOCr00Mid6IKOkv+6F+83hk6J8ZTFV7lXfSHX8NkuDLp
+ k/ChMwoXda19nZluvI2tXm/gWVHTn5A=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-uwIG8g-yPCGQ6TcnwOFymg-1; Mon, 10 Aug 2026 02:57:11 -0400
+X-MC-Unique: uwIG8g-yPCGQ6TcnwOFymg-1
+X-Mimecast-MFC-AGG-ID: uwIG8g-yPCGQ6TcnwOFymg_1786345030
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47feac2021eso937359f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 09 Aug 2026 23:57:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1786341582; x=1786946382; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=qNKYrIqi4VQVj1jd9Wxmt3C/DiIje5TlJdX3XScfTyg=;
- b=QRiVcxu2C+/j9UsDNRVgFyV8/Tzt+hjp9roJ4tKJ80/VBxdSHsJRwPpmjLD2KyScLk
- 5NJqlseWnFQpwBYMBv2qU/Hy3wOIdzi13eW2GT3qsQzqIzxl2F0BiqH/OGYhfwqdOcPh
- olbsxU6WejAjBmvWdCdPja2RmnU+XXq5P9OvqKN/UN7hZowqA/llUG/YCYblMtSe6h+Y
- XE583JWaJaYOcln8GAhuty1Uvi1V4ZEmYCpNisI0sppc/Qeln7FJud08TkeD45DSlEQr
- 1T6mD4zOnuunqbqQpBub6FfAtbzvFIJbpr5hQ2iOd7QRSmxSXkQM/6E5Vp783R/ja2XP
- l7Gg==
+ d=redhat.com; s=google; t=1786345030; x=1786949830; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=eMrKbJEmDOeIwA5y7xnPv80Kr/FmW+udgISbTRBD8c8=;
+ b=qifqnOlmlVsbb5Hqj241vuUKXYI8cPcHIjXrPjwrh7d1eFhmW2wIwmuSPutB6eMZKJ
+ HhZwvKt8xDmxao8JFiSy1rQybIcSb3Wt73r/MMAgwoN12OrWfLjG6ND6ylnZXrn2FwfA
+ a1A+lfRaxOuL6azxp+SHLDRmfYgPaV/NvZOUorZizEbOH91ThBIQ9MlogAVAcMu8DrFT
+ op78pTivzV5+Wl8MLCZ4LnF7y3UIkWBV1IM/C4Tz8vc1m4Ym6cHSEMWAPiIO4YmOrqn0
+ EcLo6WckLYlANxpUIOVUeKPCINBBM3lZ8We9Hk4cmnkJYlmOZv9QU3Z73tLy6SJ0CgIn
+ ZsYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786341582; x=1786946382;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=qNKYrIqi4VQVj1jd9Wxmt3C/DiIje5TlJdX3XScfTyg=;
- b=o50/5qSPwILUUQ/8ZwsMjo7MTg63mA+N1QUF5aFRVkj8mcUXoZR7uuYhUAt6ko3jzz
- EGzueK8esdDD8ujPd78VLakABi+S9z+vrg+ohiQ/3TvAxKurZegDoJDmmaT45oNO6sYU
- KxDP1nn6I9Yk/qHubWF/PdtVzkFP2HOCL9axVg0SFWbcx/QyHauM4pQyJKBxXM50zHM1
- ZWNkfUWOPo8SEoHfsB3A+nvhbQsriZv+gesVpeXqGTN7fifFraMYgx3Je9LgNc4kU+zX
- Cyh80MA/oCvVjKpnQV8smh9upTOyc25Fkn40y52gfb0eU2ScGhJ+o0KEifXey7/DKdJX
- KDkw==
-X-Gm-Message-State: AOJu0YyLG1/WVqd0SUdkRBZrGSexprea4jTWkCQN8uKKYgzFG82wjWdI
- i6eAln995kcdwHqAUfwxASsjHZ7pGpJUGL83yJljubAzEP2qdlG0r7+25LRDJ6bkvnG0/oUyTVx
- n+y3jUoFKDCpvNY6EdYb4+t6waeivvb+yR7jqZ2/7gA==
-X-Gm-Gg: AR+sD11MQtdeK6uHqHEDfr07+j9weZBTG2WlGfixfqZ/bzI3tOcCEnOUjY/buUEIOBs
- XBYYNiLxXpOvDY+O9RGKIJAezHGsNvR9vNaH5QMB2b/BVX9TgwrkEJ148jPglLK0H4JmRioYmr6
- kbTPNVPums1lYRIxjj37CcJsDA6fJ+Ym+zSMimz+iylQmq8B3lKzeD2uQVhuFL1SpFFq1lVQKhz
- CKcFlmpA1IiJaamqBiKNxPmn0dAGLZT/TU5zUgC3HjiPloQjNLls8nt8RlNX5B3XBVvfvOVrOrY
- tA/kd53IMPh/bck2PHnJaY6H6qPQ0ZPFP0uERzNTLToewD7/v8+bfW1w/g==
-X-Received: by 2002:a17:907:3cc4:b0:c12:3059:4071 with SMTP id
- a640c23a62f3a-c2087572c2bmr934037766b.15.1786341580766; Sun, 09 Aug 2026
- 22:59:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786345030; x=1786949830;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eMrKbJEmDOeIwA5y7xnPv80Kr/FmW+udgISbTRBD8c8=;
+ b=CfNdo8zwOlqw5LoGnWleUh8pD6NDIrrdPGU1OXKpl3NT7Jvji6+MA09vy6vg9Cu9j8
+ q3jk+Yn3vLf+fzQHYkVEYk+RktJVSwB60dn5AIGzo4DP8Wr5nxGYg5RrDWK08+vYMSaX
+ cMf1XkvSca36sViulYG5dWM5He9c1fgudjD4tPLqx8mnH5nsiY8st7tYd1M+iEZYqru6
+ rJO1zYooHl0iVDbHKlM7dYLM0TkzBSggT72/MtH+bPCgMlX+c22UgjvAG4Hvo38zPklC
+ 2+aD8oJ+uPFFiiNrKgGjGzLCDuXNpb2IdX5IG+SooT9VyhOg8Nd39nRjSnq5CxRHuxxK
+ dmgw==
+X-Gm-Message-State: AOJu0Yyd1VxHtyjImqR0F26dw5oZd+ogk6u7L6mSx8k0+aug09P90qNT
+ 5XB2KjICuOVdjfFJz8J+jj3qBBl84sv8xlOlQT1e7pD8XpAGVODPThWEegvSeCSBqBhYedZfgXx
+ e7eYm1JLXCkY8aDB48duK+RQr5Tay3W53fICsVBR/TCIIyyZU/wdbvAAgi0Q4yWWNVU6Xo56GSN
+ Z3SqRgRZ81BB6nSm+iQoXxy+YGrcG4iCwpug==
+X-Gm-Gg: AR+sD13BOBfszvRgMb+JXFSD/mP3rsemmUNfIjRySTdnZYxD+l+nrB3b4szifXZv9NY
+ Fqn6j2gWJ37hzGcA5QVYMumSkAOZ/Hqv0+MENmtE5pzj+vWypK2QYdO824jaHHSPG2twiEptV0e
+ +i7j7cTHh4AfzE56JmtCTYVug9ISv51kpSB6ynZ0osmr6Gb2lOUwlcIlT4lMMSttYowbLQoL99N
+ rP0/eQDNQBQWJ7qbqI6klgoYIGxjgzIXxSp2dyofjwDZdUo8wgc8IaxLcSffClBHdJZc0BQThvY
+ s9DCZDySo1Gr8I/QjOJfsM7NMGf2P7BN9Yp2/t9+tl7VJ3aAeJmdFUnHTcRBkpMQ8u1g3Ra2V0f
+ qhybhN+zQcQkld3geLc54Dg==
+X-Received: by 2002:a5d:68c9:0:b0:474:18d9:8371 with SMTP id
+ ffacd0b85a97d-47fec6359c1mr42177350f8f.28.1786345029829; 
+ Sun, 09 Aug 2026 23:57:09 -0700 (PDT)
+X-Received: by 2002:a5d:68c9:0:b0:474:18d9:8371 with SMTP id
+ ffacd0b85a97d-47fec6359c1mr42177285f8f.28.1786345029316; 
+ Sun, 09 Aug 2026 23:57:09 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-39-98.inter.net.il. [80.230.39.98])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4800220a6d9sm35260971f8f.34.2026.08.09.23.57.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 09 Aug 2026 23:57:08 -0700 (PDT)
+Date: Mon, 10 Aug 2026 02:57:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] meson: disable "maybe uninitilized" errors with -Og
+Message-ID: <20260810025526-mutt-send-email-mst@kernel.org>
+References: <f559b622eb2d1a384b4f30583a8af10531f4b032.1785144729.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20260805164345.698208-1-frank.chang@sifive.com>
- <20260805164345.698208-2-frank.chang@sifive.com>
- <a26fb578-54bd-40c4-ab4f-59ee61f3c843@oss.qualcomm.com>
-In-Reply-To: <a26fb578-54bd-40c4-ab4f-59ee61f3c843@oss.qualcomm.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Mon, 10 Aug 2026 13:59:29 +0800
-X-Gm-Features: AUfX_mxpY9unEVo-3UXk2lCX_rrnbjJNp7EJGgcqWeSlknGIQ-W_Udl8ngwoCPY
-Message-ID: <CAE_xrPhGq0v_-b8PGj2rdfv7qZ_pkBmz-XTFHzOQou8UB-f8OQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/8] target/riscv: Add Zicclsm CPU option
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, 
- "open list:SiFive Machines" <qemu-riscv@nongnu.org>,
- Max Chou <max.chou@sifive.com>
-Content-Type: multipart/alternative; boundary="0000000000005e8e4c0658ab0ff4"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=frank.chang@sifive.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f559b622eb2d1a384b4f30583a8af10531f4b032.1785144729.git.mst@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.827,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,139 +121,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005e8e4c0658ab0ff4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jul 27, 2026 at 09:30:54AM -0400, Michael S. Tsirkin wrote:
+> GCC's "maybe uninitilized" warnings depend on optimizations
+> for code flow analysis, and produce false positive errors
+> with -Og. Default build gives us coverage with that,
+> so let's just disable with -Og.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-Hi Daniel,
+ping, comments on this?
 
-On Fri, Aug 7, 2026 at 9:49=E2=80=AFPM Daniel Henrique Barboza <
-daniel.barboza@oss.qualcomm.com> wrote:
-
-> Hi Frank!
->
-> On 8/5/2026 1:43 PM, frank.chang@sifive.com wrote:
-> > From: Frank Chang <frank.chang@sifive.com>
-> >
-> > Add Zicclsm CPU option so that user can turn on/off misaligned loads
-> > and stores support.
-> >
-> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > Reviewed-by: Max Chou <max.chou@sifive.com>
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >   target/riscv/cpu_cfg_fields.h.inc | 2 ++
-> >   1 file changed, 2 insertions(+)
-> >
-> > diff --git a/target/riscv/cpu_cfg_fields.h.inc
-> b/target/riscv/cpu_cfg_fields.h.inc
-> > index 9eb47af0a76..f8c27a574f8 100644
-> > --- a/target/riscv/cpu_cfg_fields.h.inc
-> > +++ b/target/riscv/cpu_cfg_fields.h.inc
-> > @@ -139,6 +139,8 @@ BOOL_FIELD(has_priv_1_11)
-> >   /* Always enabled for TCG if has_priv_1_11 */
-> >   BOOL_FIELD(ext_ziccrse)
-> >
-> > +BOOL_FIELD(ext_zicclsm)
-> > +
->
-> This is a needed step but, as is, it's not adding a new CPU option for
-> users as
-> the commit msg says.  This is being done in patch 7.
->
-> I think this change should be squashed into patch 2, where ext_zicclsm is
-> being
-> added in eligible CPUs.
->
-
-Thanks for the review.
-
-I've squashed patch 1 into patch 2 and sent out the v8 patchset:
-https://lore.kernel.org/qemu-riscv/20260810055618.1175500-1-frank.chang@sif=
-ive.com/
-
-Regards,
-Frank Chang
+As an alternative, I can see us doing this for everyone
+and only adding -Werror=maybe-uninitialized in CI for
+known good compiler/flag combos which do not produce
+too many false positives.
 
 
->
->
-> Thanks,
-> Daniel
->
-> >   /* Vendor-specific custom extensions */
-> >   BOOL_FIELD(ext_xtheadba)
-> >   BOOL_FIELD(ext_xtheadbb)
->
->
+> ---
+>  meson.build | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index 164328ded8..a119dae6ac 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -742,6 +742,10 @@ warn_flags = [
+>    '-Wno-typedef-redefinition',
+>  ]
+>  
+> +if get_option('optimization') == 'g'
+> +  warn_flags += ['-Wno-error=maybe-uninitialized']
+> +endif
+> +
+>  if host_os != 'darwin'
+>    tsa_has_cleanup = cc.compiles('''
+>      struct __attribute__((capability("mutex"))) mutex {};
+> -- 
+> MST
 
---0000000000005e8e4c0658ab0ff4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Daniel,</div><br><div class=3D"gmail_q=
-uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, A=
-ug 7, 2026 at 9:49=E2=80=AFPM Daniel Henrique Barboza &lt;<a href=3D"mailto=
-:daniel.barboza@oss.qualcomm.com">daniel.barboza@oss.qualcomm.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Frank!<=
-br>
-<br>
-On 8/5/2026 1:43 PM, <a href=3D"mailto:frank.chang@sifive.com" target=3D"_b=
-lank">frank.chang@sifive.com</a> wrote:<br>
-&gt; From: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" target=
-=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt; <br>
-&gt; Add Zicclsm CPU option so that user can turn on/off misaligned loads<b=
-r>
-&gt; and stores support.<br>
-&gt; <br>
-&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
-m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt; Reviewed-by: Max Chou &lt;<a href=3D"mailto:max.chou@sifive.com" targe=
-t=3D"_blank">max.chou@sifive.com</a>&gt;<br>
-&gt; Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@w=
-dc.com" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu_cfg_fields.h.inc | 2 ++<br>
-&gt;=C2=A0 =C2=A01 file changed, 2 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_=
-fields.h.inc<br>
-&gt; index 9eb47af0a76..f8c27a574f8 100644<br>
-&gt; --- a/target/riscv/cpu_cfg_fields.h.inc<br>
-&gt; +++ b/target/riscv/cpu_cfg_fields.h.inc<br>
-&gt; @@ -139,6 +139,8 @@ BOOL_FIELD(has_priv_1_11)<br>
-&gt;=C2=A0 =C2=A0/* Always enabled for TCG if has_priv_1_11 */<br>
-&gt;=C2=A0 =C2=A0BOOL_FIELD(ext_ziccrse)<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +BOOL_FIELD(ext_zicclsm)<br>
-&gt; +<br>
-<br>
-This is a needed step but, as is, it&#39;s not adding a new CPU option for =
-users as<br>
-the commit msg says.=C2=A0 This is being done in patch 7.<br>
-<br>
-I think this change should be squashed into patch 2, where ext_zicclsm is b=
-eing<br>
-added in eligible CPUs.<br></blockquote><div><br></div><div>Thanks for the =
-review.</div><div><br></div><div>I&#39;ve squashed patch 1 into patch 2 and=
- sent out the v8 patchset:</div><div><a href=3D"https://lore.kernel.org/qem=
-u-riscv/20260810055618.1175500-1-frank.chang@sifive.com/">https://lore.kern=
-el.org/qemu-riscv/20260810055618.1175500-1-frank.chang@sifive.com/</a></div=
-><div><br></div><div>Regards,</div><div>Frank Chang</div><div>=C2=A0</div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-Thanks,<br>
-Daniel<br>
-<br>
-&gt;=C2=A0 =C2=A0/* Vendor-specific custom extensions */<br>
-&gt;=C2=A0 =C2=A0BOOL_FIELD(ext_xtheadba)<br>
-&gt;=C2=A0 =C2=A0BOOL_FIELD(ext_xtheadbb)<br>
-<br>
-</blockquote></div></div>
-
---0000000000005e8e4c0658ab0ff4--
 
