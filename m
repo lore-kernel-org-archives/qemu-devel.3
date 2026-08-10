@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E05A1C5B567
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 18:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D7CC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtVCx-0001ZU-5C; Mon, 10 Aug 2026 14:58:47 -0400
+	id 1wtVCc-0001VT-1G; Mon, 10 Aug 2026 14:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wtVCv-0001Z2-K3; Mon, 10 Aug 2026 14:58:45 -0400
+ id 1wtVCa-0001UK-6y; Mon, 10 Aug 2026 14:58:24 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wtVCt-0003UV-9y; Mon, 10 Aug 2026 14:58:45 -0400
+ id 1wtVCX-0003Rg-Mr; Mon, 10 Aug 2026 14:58:23 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AGVtnv292855; Mon, 10 Aug 2026 18:57:59 GMT
+ 67AGVtnu292855; Mon, 10 Aug 2026 18:57:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=AqhPQ1Q9hfplNQ2nS
- zeEDUlFwpKQrrNt7URNcAzMZlI=; b=If2ZGqk7DO35SdZcz3t2SD4o5cEDiHNJ0
- OfEF3sYwaKBjcy1PRJ1l5YOnGyMmqihOgtFX89CUb5nORJB57sv6Pt0zFdJl3GwF
- ulwpo8gcsCWzud1Woa3mXc0Bt9DBSaRtckYe/jgdbohw/pjnl63bcSpQ601USXyc
- H4N1n30b2zRnI7qmJJjWbyRD4QL4+GyifY+1p5rGVwLwkKPVe9cif4KklFms0C7X
- ctDBMc2oifAqGCj7ksefB1UMvZT4XgWjzKRED8B9k9+My7YdxCL2yK1HkxUY5siN
- hAiypJ/UC3mOI5JHu9SfAip1SHqwcVtg47NKQnkw58B79cteiRckA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjysmke-1
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=PFUdvod4578KlAlJNW9b3M3Pi3m3
+ giB2+fWB54jkGMo=; b=Uf/HNSYrsH2xODMiU2mu6KXy4+c+DFHR693j09mjDsQG
+ 2CZWaLDbOGbjjWQmZi70MmRKuAUhFoX2NMMCqzjVt1heeuoRQ5BEpA1A4qALGKZt
+ M27epZHON0fyTgkDZm6ExDtYUVZMzVay6r14HLqGd0FPX5trUwcBH8QQC90SrPhP
+ EFZnsW62lTFjUan6UWKRRZ+FuJDzTs3jK9qqd10GlbzhCzrBMqVVB2h6h871j7Yn
+ IhWx+/QO6WLpYz/hXfnwM+o25bmSaeQaePvGYJH1zER4hzd2eCaP2sYl9NAqWsPH
+ qJui+bg3L+KcKbMjq6XG14C5yRl3E3f8X+voHq3rCw==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjysmk3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Aug 2026 18:57:58 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AIuLno031725;
- Mon, 10 Aug 2026 18:57:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0g5wek-1
+ Mon, 10 Aug 2026 18:57:53 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AIuMTx019224;
+ Mon, 10 Aug 2026 18:57:52 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9gx00h-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Aug 2026 18:57:57 +0000 (GMT)
+ Mon, 10 Aug 2026 18:57:52 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67AIvupT30671558
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67AIvDON24773210
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Aug 2026 18:57:56 GMT
+ Mon, 10 Aug 2026 18:57:13 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3135358051;
- Mon, 10 Aug 2026 18:57:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 206605805A;
+ Mon, 10 Aug 2026 18:57:51 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9253E5805A;
- Mon, 10 Aug 2026 18:57:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D631C58051;
+ Mon, 10 Aug 2026 18:57:49 +0000 (GMT)
 Received: from IBM-MFS.ibm.com (unknown [9.61.24.176])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Aug 2026 18:57:55 +0000 (GMT)
+ Mon, 10 Aug 2026 18:57:49 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,34 +65,33 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 7/8] ufs/aspeed: Add AST2700 UFS host controller
-Date: Mon, 10 Aug 2026 13:57:45 -0500
-Message-ID: <20260810185748.1253-8-mikail.sadic@ibm.com>
+Subject: [PATCH v3 0/8] Add IBM Huygens BMC machine for AST2700
+Date: Mon, 10 Aug 2026 13:57:38 -0500
+Message-ID: <20260810185748.1253-1-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260810185748.1253-1-mikail.sadic@ibm.com>
-References: <20260810185748.1253-1-mikail.sadic@ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfX3ZvfY4b9RI8q
- k5GCsFt/K1o259L5O6d2Ilw2lgCrafGNdQ0rTTbrwbib9QyQficD+qIdSYPiI0zFqGdBQg7hHlu
- p/ksuSLAAOtBgx7qKpUajN7Zf1tbXzmauq1xA9b9Kx/f9M4trdxb59Du/3xjIqasiJ/glrPuRuQ
- DrFpKFNrbgJ+41oEHih5DgjiH9FKMsdMxzz+Rsdy8F5qlKugZhD/82YFPkvyuMhXlUNgD23HYaF
- jKR6DKmJVKuJy2FVGtYn7tsMsqHqm4miOtptjy0aJZyWAEcXNF5d7f09Q6yhXCLX+ctUx3tmwzP
- tbD9G1g+Kbh2x82uwjQCzyodK3IUOhcq4k81n+Hu68o6Rdrwxhg/urzuLY3n8BwfS4IIN79ryHw
- PzPbLzt2T3k3xDWKkMi1Q7nznvy3Y1Q+2yyfmTj1fAAip8fCKTb+s74oXWHOx6IYVwJMzkPUWuF
- aZviWxlmv+05qU2Weug==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfXwJ+PTvhoPexe
- klXwJO4FZeuq7Sf6B3JOlhclgkJyR/xR4TLURJcxfiMsuiB8dlVadv29C7wFuBzKI0GDRiR+oU0
- 3E4L/U0sTXOYi/+YWB3vtPot2SpZNTM=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7a1f36 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=hD80L64hAAAA:8
- a=ATOKqi0wAkDwqrHMCoMA:9
-X-Proofpoint-GUID: u9OUWINL-Buua42nQFQh0N3VoybuUwRs
-X-Proofpoint-ORIG-GUID: AoxkxqbdErwQZa0bkWVQT0vCexm0PqaK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfXxeLHWpiRBbEq
+ oiFhbf/DkFSYckkMb3JNG0ujq09gUd2h+LDmhAl+zKdl2IgBg5Qhrr72ie6J3WMZTJfKrjIPvs1
+ dhc1tFbL7INH7qTZL/uHMoORK4SWEfaSkFSt5qew1pBrWTYEFHNCTtRsHVcpytRFaskbTj/4poj
+ vCPbYzXEU+WDV49fD0FUgZJxqeehe05FYaLNh7CCY0uIPME+ONzSPkTZw6tj3e/xi2/L2SLhUB7
+ J8Yz4TaEvPsJ5SyzuT/naAmrWzT+YnbU67BqREkFB996oJsCJKHHtU1LN7GdjVB42onvhhBhC2J
+ +f1HllCWKwRMVgEYIhHGe7MkSqAIfn4kfMMxKh/ISgL2Mnn/gaccaf91I4AWgBiSiSDJNfqFWkT
+ cOTSGdZ1HcevSJs46Kd6lRtvClt5wk9WLf9GExe+8LVqftMhTVuzVsZ1/WH/frrvwlEPNxone7x
+ 4+rS9WAc5mAXqqkjTVw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfX3alKqsNWQRNW
+ FzvO4JkkfpZtpsIF2ZIVGOedYmHpkXuUUj5LOugQDgXsCfajS6rIngcseMhZNOjxrXD6wD1vLvp
+ Vde0DLF7w2G38KRNHg+Et3Ch3ka8OBg=
+X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7a1f32 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=hD80L64hAAAA:8 a=16UY8-0HC6ZX7w77xpQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: wB_UmNl3naz7uaAHLYclm0b5_DhQ29rc
+X-Proofpoint-ORIG-GUID: w91KTs4U0Au0hTGEzTPKDW439jAJc_rh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-10_04,2026-08-10_02,2025-10-01_01
@@ -126,356 +125,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AST2700 carries a UFS host controller (aspeed,ufshc-m31-16nm) at
-0x12c08200 on IRQ 118, used by the OpenBMC image to reach its root
-filesystem.
+This series adds initial support for the IBM Huygens BMC, the baseboard
+management controller of an IBM POWER12 server platform, based on the
+ASPEED AST2700 A2 SoC.
 
-Add 'aspeed-ufs' as a subclass of the generic sysbus UFS controller. The
-sysbus device supplies the MMIO region, the interrupt, the DMA address
-space and the controller properties, so the only thing left to model is
-the UFSHCI version: the AST2700 reports 2.0, while the core reports 4.1,
-which makes the U-Boot and Linux drivers run 4.x-only probe steps this
-model does not implement.
+It introduces a CFAM-S FSI responder model, wires the AST2700 FSI
+controllers to their APB-to-OPB bridges, fixes an aspeed I2C DMA
+block-read corner case, adds a TI UCD90320 PMBus power-sequencer model,
+adds an AST2700 UFS host controller on top of the generic sysbus UFS
+device, and finally adds the huygens-bmc machine that ties these together
+to boot OpenBMC from FMC flash and a UFS root filesystem.
 
-Wire the controller into the AST2700 SoC and select UFS_SYSBUS, so an
-Aspeed target no longer depends on the PCI UFS device being configured
-to get a UFS controller.
+Dependency: this series applies on top of Jeuk Kim's UFS restructure,
+which is on-list but not yet merged:
 
-The UFS bus only exists once the controller is realized, so the board
-creates the logical unit for the first backend drive after SoC realize
-rather than through a controller drive property. AspeedMachineClass
-gains a ufs_block_size field for machines whose image geometry differs
-from the ufs-lu default; zero leaves the default in place.
+  https://lore.kernel.org/qemu-devel/cover.1786096976.git.jeuk20.kim@samsung.com/
 
-Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
----
- MAINTAINERS                 |  2 ++
- docs/specs/aspeed-ufs.rst   | 46 +++++++++++++++++++++++++
- docs/specs/index.rst        |  1 +
- include/hw/arm/aspeed.h     |  1 +
- include/hw/arm/aspeed_soc.h |  3 ++
- include/hw/ufs/aspeed_ufs.h | 15 +++++++++
- hw/arm/aspeed.c             | 25 ++++++++++++++
- hw/arm/aspeed_ast27x0.c     | 13 +++++++
- hw/ufs/aspeed_ufs.c         | 67 +++++++++++++++++++++++++++++++++++++
- hw/arm/Kconfig              |  1 +
- hw/ufs/meson.build          |  1 +
- 11 files changed, 175 insertions(+)
+The base-commit trailer below therefore names a local commit that is
+v11.1.0-rc3 (3e3ccab106) plus those two patches. Patches 6 and 7 need
+it, patches 1-5 and 8 do not.
+
+Patch summary:
+
+  1. fsi/cfam: a common CFAM model holding the slot, config table,
+     responder and local bus, with the existing cfam as its first
+     derivative. No functional change to the existing cfam.
+  2. fsi/cfam: the CFAM-S as a second derivative - its own config table,
+     the slave-ID alias window, and a v1 mailbox engine added to lbus.c
+     alongside the scratchpad.
+  3. arm/aspeed: wire the two AST2700 FSI controllers to their APB-to-OPB
+     bridges.
+  4. i2c/aspeed: fix DMA-receive first-byte handling so SMBus block reads
+     (I2C_M_RECV_LEN) report the correct length.
+  5. hw/sensor: TI UCD90320 24-rail PMBus power sequencer.
+  6. ufs: a configurable logical-block-size on ufs-lu, and an unmapped LUN
+     answering INQUIRY as "not connected". The ufs PCI device keeps its
+     current property set and geometry.
+  7. ufs/aspeed: the AST2700 UFS host controller as a subclass of
+     TYPE_SYSBUS_UFS, adding only the UFSHCI version.
+  8. arm/aspeed: the huygens-bmc machine.
+
+Changes since v2:
+
+* UFS: rebased onto Jeuk Kim's restructure, as requested. The v2 core
+  refactor (v2 patch 6) is dropped entirely, Jeuk's patch 1 supersedes it.
+  hw/ufs/aspeed_ufs.c is now a subclass of TYPE_SYSBUS_UFS whose only
+  AST2700-specific behavior is pinning the controller version register
+  to 2.0, chained after the parent realize. MMIO, IRQ, DMA address space,
+  properties, migration state and unrealize all come from the generic
+  sysbus device, and the Aspeed type adds no instance fields.
+
+  The two behaviors Huygens needs that the restructure does not provide
+  are now their own patch (6), placed ahead of the Aspeed patch: the
+  ufs-lu logical-block-size property (default unchanged, so the PCI
+  device is unaffected) and the unmapped-LUN INQUIRY reporting "not
+  connected" rather than failing the request. logical-block-size now also
+  rejects non-powers-of-two, values outside 512..UFS_BLOCK_SIZE, and a
+  drive shorter than one block, which would previously have realized a
+  zero-block unit.
+
+  The Aspeed SoC Kconfig now selects UFS_SYSBUS. It previously relied on
+  UFS_PCI being enabled via "imply PCI_DEVICES".
+
+* CFAM: dropped the State suffix from the instance struct names (Miles).
+  FSICFAMCommonState becomes FSICFAMCommon; FSICFAMState, which predates
+  this series, becomes FSICFAM to match rather than leaving the two
+  spellings side by side in one header; FSICFAMSState becomes FSICFAMS.
+  The FSI prefix is kept. The class structs keep their suffix, as is
+  usual for QOM. Also fixed patch 1 to check the realize_engines() return
+  value.
+
+* Machine: reworded the commit message (Miles). No code change.
+
+* Rebased onto v11.1.0-rc3.
+
+Not addressed in this series:
+
+* CFAM extended addressing (Miles): the mode where a single CFAM has 8MB
+  rather than four cascaded CFAMs sharing that space. This changes the
+  addressing model of the existing FSI/CFAM code rather than anything this
+  series introduces, so it's left it as follow-up work. It does bear on
+  patch 2 though: the CFAM-S there aliases one 2MiB slot across the 8MiB
+  window to fold the slave-ID views together, and if extended addressing
+  is modelled properly that window is probably the wrong shape or should
+  not exist at all. I am happy to take direction on whether to do that
+  first.
+
+Testing done:
+
+* Whole series builds, and each of the 8 patches builds standalone.
+* make check passes.
+* huygens-bmc boots OpenBMC to the login prompt and multi-user target
+  from FMC flash + UFS storage (internal images).
+* PCI UFS qtests pass (13/13), unchanged by patch 6.
+* aspeed_fsi-test passes (4/4), unchanged by the CFAM patches.
+* huygens-bmc, ast2700-evb and ast2600-evb all construct successfully.
+* On huygens-bmc, the UFS version register reads 0x00000200, and the
+  ufs-lu created by the board reports a 512-byte block size and passes it
+  to its backing scsi-hd. The PCI ufs device with no property set still
+  reports 4096.
+
+Changes since v1 (unchanged from the v2 posting, for reference):
+
+* Split the original 5 commits into 8. The aspeed I2C DMA fix, the FSI
+  controller wiring, the CFAM common base class, and the UFS
+  core-vs-frontend split are now separate patches (each buildable on its
+  own).
+
+* UFS: reworked per review (Jeuk Kim). Instead of a second, standalone
+  UFS implementation, the common core was separated from the PCI glue so
+  the AST2700 controller could be a thin sysbus frontend on top of it.
+  (Superseded in v3 - see above.)
+
+* CFAM-S: reworked per review (Ninad). It now shares a common base class
+  with the cfam rather than being a parallel implementation: patch 1 adds
+  an abstract cfam-common whose realize is driven by an FSICFAMCommonClass
+  (config table, responder and local-bus offsets, and an engines hook),
+  and both cfam and cfam-s derive from it. They are siblings rather than
+  parent and child, since a CFAM-S is another kind of CFAM and not a
+  specialisation of the P9 one. Patch 2 adds cfam-s supplying only its own
+  config table, its mailbox engine and the slave-ID alias window; the v1
+  mailbox is a local bus engine so it sits in lbus.c next to the
+  scratchpad. Duplicated code has been cleaned. Two behavior changes
+  follow from sharing the common config ops, both noted in patch 2: cfam-s
+  now honors the SID_BREAK sequence, and config-table access is word-only
+  for both types. Also made generic, all specific references dropped.
+
+  Patch 1 is intended to be a no-op for the existing cfam, and was
+  checked that way: aspeed_fsi-test passes, the four P9 config words read
+  back identically over the OPB, and "info mtree" for ast2600-evb is
+  unchanged. The Rainier boot test was also run and verified.
+
+* i2c/aspeed: the DMA block-read fix is now its own patch, with a commit
+  message explaining the I2C_M_RECV_LEN + DMA interaction (Cédric).
+
+* UCD90320: the device-id/monitor-config/mfr-status responses are now
+  device reset state rather than file-scope constants, with matching
+  VMState (Cédric).
+
+* Docs: the huygens-bmc and aspeed-ufs boot examples now use -blockdev
+  instead of -drive (Cédric).
+
+* Machine: commit message expanded (POWER12 BMC on AST2700 A2), the VPD
+  buffer uses g_autofree, the docs describe the flash-vs-UFS split, and
+  the networking example was simplified.
+
+* New device files use DEFINE_TYPES() with inlined TypeInfo (Jamin Lin).
+
+* Dropped the v1 functional test for now: depends on non-public Huygens
+  images. It will be resent once images go public.
+
+Note: checkpatch reports a couple of MAINTAINERS/SPDX warnings for the
+new files; they are covered by existing wildcard entries in the ASPEED
+and FSI sections.
+
+Thank you again for all of the feedback.
+
+Mikail Sadic (8):
+  fsi/cfam: Add common CFAM base class
+  fsi/cfam: Add CFAM-S model
+  arm/aspeed: Wire AST2700 FSI controllers to APB-to-OPB bridges
+  i2c/aspeed: Fix DMA receive first-byte handling for block reads
+  hw/sensor: Add UCD90320 model
+  ufs: Make the logical block size configurable and answer absent LUNs
+  ufs/aspeed: Add AST2700 UFS host controller
+  arm/aspeed: Add AST2700 Huygens machine
+
+ MAINTAINERS                     |   3 +
+ docs/specs/aspeed-ufs.rst       |  46 ++++++
+ docs/specs/fsi.rst              |  15 ++
+ docs/specs/index.rst            |   2 +
+ docs/specs/ucd90320.rst         |  36 +++++
+ docs/system/arm/aspeed.rst      |  50 ++++++-
+ hw/ufs/ufs.h                    |   3 +
+ include/hw/arm/aspeed.h         |   1 +
+ include/hw/arm/aspeed_soc.h     |   3 +
+ include/hw/fsi/cfam-s.h         |  40 ++++++
+ include/hw/fsi/cfam.h           |  68 ++++++++-
+ include/hw/fsi/fsi-master.h     |   4 +-
+ include/hw/fsi/lbus.h           |  11 ++
+ include/hw/ufs/aspeed_ufs.h     |  15 ++
+ hw/arm/aspeed.c                 |  25 ++++
+ hw/arm/aspeed_ast27x0.c         |  31 ++++
+ hw/arm/aspeed_ast27x0_huygens.c | 241 ++++++++++++++++++++++++++++++++
+ hw/fsi/cfam-s.c                 |  91 ++++++++++++
+ hw/fsi/cfam.c                   | 125 ++++++++++-------
+ hw/fsi/fsi-master.c             |   9 +-
+ hw/fsi/lbus.c                   |  69 +++++++++
+ hw/i2c/aspeed_i2c.c             |   7 +
+ hw/sensor/ucd90320.c            | 169 ++++++++++++++++++++++
+ hw/ufs/aspeed_ufs.c             |  67 +++++++++
+ hw/ufs/lu.c                     |  67 ++++++++-
+ hw/ufs/ufs.c                    |   2 +-
+ hw/arm/Kconfig                  |   2 +
+ hw/arm/meson.build              |   1 +
+ hw/fsi/meson.build              |   2 +-
+ hw/fsi/trace-events             |   2 +
+ hw/sensor/Kconfig               |   4 +
+ hw/sensor/meson.build           |   1 +
+ hw/ufs/meson.build              |   1 +
+ 33 files changed, 1149 insertions(+), 64 deletions(-)
  create mode 100644 docs/specs/aspeed-ufs.rst
+ create mode 100644 docs/specs/ucd90320.rst
+ create mode 100644 include/hw/fsi/cfam-s.h
  create mode 100644 include/hw/ufs/aspeed_ufs.h
+ create mode 100644 hw/arm/aspeed_ast27x0_huygens.c
+ create mode 100644 hw/fsi/cfam-s.c
+ create mode 100644 hw/sensor/ucd90320.c
  create mode 100644 hw/ufs/aspeed_ufs.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ec415cb8e4..4b335c5dc0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2700,6 +2700,8 @@ M: Jeuk Kim <jeuk20.kim@samsung.com>
- S: Supported
- F: hw/ufs/*
- F: include/block/ufs.h
-+F: include/hw/ufs/aspeed_ufs.h
-+F: docs/specs/aspeed-ufs.rst
- F: tests/qtest/ufs-test.c
- 
- megasas
-diff --git a/docs/specs/aspeed-ufs.rst b/docs/specs/aspeed-ufs.rst
-new file mode 100644
-index 0000000000..2ab7e7e771
---- /dev/null
-+++ b/docs/specs/aspeed-ufs.rst
-@@ -0,0 +1,46 @@
-+ASPEED AST2700 UFS Host Controller
-+===================================
-+
-+The AST2700 SoC includes a UFS host controller identified in the device tree
-+as ``aspeed,ufshc-m31-16nm``, mapped at ``0x12c08200`` (IRQ SPI 118).
-+
-+QEMU models it as ``aspeed-ufs``, a subclass of the generic sysbus UFS
-+controller ``sysbus-ufs`` (``hw/ufs/ufs-sysbus.c``), which in turn wraps the
-+transport-independent UFS core (``hw/ufs/ufs.c`` and ``hw/ufs/lu.c``) that
-+also backs the PCI UFS device. The sysbus device provides the MMIO region,
-+the interrupt line, the DMA address space and the controller properties; the
-+core implements the UFSHCI registers, the UTP transfer and task list
-+processing, the UPIU and query handling and the SCSI logical-unit logic.
-+
-+The only AST2700-specific behaviour ``aspeed-ufs`` adds is the controller
-+version register value ``0x00000200``, the UFSHCI 2.0 interface the hardware
-+reports.
-+
-+The clock/reset wrapper at ``0x12c08000`` (``aspeed,ast2700-ufscnr``) is left
-+as an ``UnimplementedDevice``.
-+
-+Logical units
-+-------------
-+
-+Storage is attached through ``ufs-lu`` devices on the controller's UFS bus
-+(``ufs-bus.0``), exactly as for the PCI UFS device. The Huygens OpenBMC image
-+is laid out for 512-byte sectors, so its logical unit is created with
-+``logical-block-size=512``.
-+
-+Usage
-+-----
-+
-+Attach a UFS image as logical unit 0 of the controller's UFS bus:
-+
-+.. code-block:: console
-+
-+  qemu-system-aarch64 -M huygens-bmc \
-+    -nodefaults \
-+    -blockdev node-name=fmc0,driver=file,filename=image-bmc \
-+    -device w25q01jvq,bus=ssi.0,cs=0,drive=fmc0 \
-+    -blockdev node-name=ufs0,driver=file,filename=ufs.img \
-+    -device ufs-lu,bus=ufs-bus.0,drive=ufs0,lun=0,logical-block-size=512 \
-+    -display none -serial mon:stdio
-+
-+Please check :doc:`../../system/arm/aspeed` for more details on the
-+``huygens-bmc`` machine.
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index 4de65e2fdf..dd0cdec8d4 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -40,4 +40,5 @@ guest hardware that is specific to QEMU.
-    riscv-aia
-    aspeed-intc
-    ucd90320
-+   aspeed-ufs
-    iommu-testdev
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index a00238ed74..dedc784926 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -62,6 +62,7 @@ struct AspeedMachineClass {
-     uint32_t uart_default;
-     bool sdhci_wp_inverted;
-     bool vbootrom;
-+    uint32_t ufs_block_size;
- };
- 
- /*
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 41dc04e293..8a562d47ec 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -35,6 +35,7 @@
- #include "hw/gpio/aspeed_gpio.h"
- #include "hw/gpio/aspeed_sgpio.h"
- #include "hw/sd/aspeed_sdhci.h"
-+#include "hw/ufs/aspeed_ufs.h"
- #include "hw/usb/hcd-ehci.h"
- #include "qom/object.h"
- #include "hw/misc/aspeed_lpc.h"
-@@ -118,6 +119,7 @@ struct AspeedSoCState {
-     AspeedAPB2OPBState fsi[2];
-     AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
-     AspeedAST1700SoCState ioexp[ASPEED_IOEXP_NUM];
-+    SysbusUfsState ufs;
- };
- 
- #define TYPE_ASPEED_SOC "aspeed-soc"
-@@ -298,6 +300,7 @@ enum {
-     ASPEED_DEV_PRIC0,
-     ASPEED_DEV_PRIC1,
-     ASPEED_DEV_OTP,
-+    ASPEED_DEV_UFS,
- };
- 
- const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
-diff --git a/include/hw/ufs/aspeed_ufs.h b/include/hw/ufs/aspeed_ufs.h
-new file mode 100644
-index 0000000000..6b9f85498a
---- /dev/null
-+++ b/include/hw/ufs/aspeed_ufs.h
-@@ -0,0 +1,15 @@
-+/*
-+ * ASPEED AST2700 UFS Host Controller
-+ *
-+ * Copyright 2026 IBM Corp.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ASPEED_UFS_H
-+#define ASPEED_UFS_H
-+
-+#include "hw/ufs/ufs-sysbus.h"
-+
-+#define TYPE_ASPEED_UFS "aspeed-ufs"
-+
-+#endif /* ASPEED_UFS_H */
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a48c442058..b70a1326a1 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -187,6 +187,31 @@ static void aspeed_machine_init(MachineState *machine)
-     aspeed_connect_serial_hds_to_uarts(bmc);
-     qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
- 
-+    /*
-+     * If the SoC instantiated a UFS host controller (AST2700), attach the
-+     * first backend drive to it as logical unit 0.  The controller and its
-+     * UFS bus only exist once the SoC has been realized, so the ufs-lu is
-+     * created here rather than through a controller drive property.
-+     */
-+    if (object_resolve_path_component(OBJECT(bmc->soc), "ufs")) {
-+        DriveInfo *ufs_dinfo = drive_get(IF_NONE, 0, 0);
-+
-+        if (ufs_dinfo) {
-+            DeviceState *ufs_lu = qdev_new(TYPE_UFS_LU);
-+
-+            qdev_prop_set_uint8(ufs_lu, "lun", 0);
-+            if (amc->ufs_block_size) {
-+                qdev_prop_set_uint32(ufs_lu, "logical-block-size",
-+                                     amc->ufs_block_size);
-+            }
-+            qdev_prop_set_drive_err(ufs_lu, "drive",
-+                                    blk_by_legacy_dinfo(ufs_dinfo),
-+                                    &error_fatal);
-+            qdev_realize_and_unref(ufs_lu, BUS(&bmc->soc->ufs.ufs.bus),
-+                                   &error_fatal);
-+        }
-+    }
-+
-     if (defaults_enabled()) {
-         aspeed_board_init_flashes(&bmc->soc->fmc,
-                               bmc->fmc_model ? bmc->fmc_model : amc->fmc_model,
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index b908d7d4ff..1ee8f3a210 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -46,6 +46,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_GIC_REDIST]    =  0x12280000,
-     [ASPEED_DEV_SDMC]      =  0x12C00000,
-     [ASPEED_DEV_SCU]       =  0x12C02000,
-+    [ASPEED_DEV_UFS]       =  0x12c08200,
-     [ASPEED_DEV_RTC]       =  0x12C0F000,
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-     [ASPEED_DEV_PCIE_PHY0] =  0x12C15000,
-@@ -129,6 +130,7 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
-     [ASPEED_DEV_EHCI2]     = 37,
-     [ASPEED_DEV_PCIE0]     = 56,
-     [ASPEED_DEV_PCIE1]     = 57,
-+    [ASPEED_DEV_UFS]       = 118,
-     [ASPEED_DEV_LPC]       = 192,
-     [ASPEED_DEV_IBT]       = 192,
-     [ASPEED_DEV_KCS]       = 192,
-@@ -533,6 +535,8 @@ static void aspeed_soc_ast2700_init(Object *obj)
-     object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
-                             TYPE_SYSBUS_SDHCI);
- 
-+    object_initialize_child(obj, "ufs", &s->ufs, TYPE_ASPEED_UFS);
-+
-     snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
-     object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
- 
-@@ -1039,6 +1043,15 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
-                        aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_EMMC));
- 
-+    /* UFS */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ufs), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->ufs), 0,
-+                    sc->memmap[ASPEED_DEV_UFS]);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->ufs), 0,
-+                       aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_UFS));
-+
-     /* Timer */
-     object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
-                              &error_abort);
-diff --git a/hw/ufs/aspeed_ufs.c b/hw/ufs/aspeed_ufs.c
-new file mode 100644
-index 0000000000..bfe540b929
---- /dev/null
-+++ b/hw/ufs/aspeed_ufs.c
-@@ -0,0 +1,67 @@
-+/*
-+ * ASPEED AST2700 UFS Host Controller
-+ *
-+ * The AST2700 host controller (aspeed,ufshc-m31-16nm) is the generic sysbus
-+ * UFS controller, so this model only overrides the UFSHCI version.
-+ *
-+ * The clock/reset wrapper at 0x12c08000 (aspeed,ast2700-ufscnr) is modelled
-+ * elsewhere as an UnimplementedDevice.
-+ *
-+ * Copyright 2026 IBM Corp.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/ufs/aspeed_ufs.h"
-+
-+/* UFSHCI 2.0, against the 4.1 the core reports */
-+#define ASPEED_UFS_HCI_VERSION 0x00000200
-+
-+OBJECT_DECLARE_TYPE(AspeedUfsState, AspeedUfsClass, ASPEED_UFS)
-+
-+struct AspeedUfsState {
-+    SysbusUfsState parent_obj;
-+};
-+
-+struct AspeedUfsClass {
-+    DeviceClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+};
-+
-+static void aspeed_ufs_realize(DeviceState *dev, Error **errp)
-+{
-+    ERRP_GUARD();
-+    AspeedUfsClass *ac = ASPEED_UFS_GET_CLASS(dev);
-+    SysbusUfsState *s = SYSBUS_UFS(dev);
-+
-+    ac->parent_realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+    s->ufs.reg.ver = ASPEED_UFS_HCI_VERSION;
-+}
-+
-+static void aspeed_ufs_class_init(ObjectClass *oc, const void *data)
-+{
-+    AspeedUfsClass *ac = ASPEED_UFS_CLASS(oc);
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    device_class_set_parent_realize(dc, aspeed_ufs_realize,
-+                                    &ac->parent_realize);
-+    dc->desc = "ASPEED UFS Host Controller";
-+}
-+
-+static const TypeInfo aspeed_ufs_types[] = {
-+    {
-+        .name          = TYPE_ASPEED_UFS,
-+        .parent        = TYPE_SYSBUS_UFS,
-+        .instance_size = sizeof(AspeedUfsState),
-+        .class_size    = sizeof(AspeedUfsClass),
-+        .class_init    = aspeed_ufs_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(aspeed_ufs_types)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index ac44740547..14a076f4f9 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -557,6 +557,7 @@ config ASPEED_SOC
-     select MAX31785
-     select UCD90320
-     select FSI_APB2OPB_ASPEED
-+    select UFS_SYSBUS
-     select AT24C
-     select PCI_EXPRESS
-     select PCI_EXPRESS_ASPEED
-diff --git a/hw/ufs/meson.build b/hw/ufs/meson.build
-index a84627b96a..9266a580f5 100644
---- a/hw/ufs/meson.build
-+++ b/hw/ufs/meson.build
-@@ -1,3 +1,4 @@
- system_ss.add(when: 'CONFIG_UFS', if_true: files('ufs.c', 'lu.c'))
- system_ss.add(when: 'CONFIG_UFS_PCI', if_true: files('ufs-pci.c'))
- system_ss.add(when: 'CONFIG_UFS_SYSBUS', if_true: files('ufs-sysbus.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_ufs.c'))
+base-commit: 8c9baa57b781ae86330ba036415a768da12d9b28
+
 -- 
 2.53.0
 
