@@ -4,147 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98820C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 22:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E37C5AD55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 23:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtYtV-0003DU-PV; Mon, 10 Aug 2026 18:54:59 -0400
+	id 1wtZLk-0001AR-Ea; Mon, 10 Aug 2026 19:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wtYtL-0003Cz-Qm
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:54:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wtZLi-00019k-9E; Mon, 10 Aug 2026 19:24:06 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wtYtI-0004ii-Q5
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:54:47 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AMqeuK3011239
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:54:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=fpBdnm7zza3lWROc+mw/QUeR
- iFeDgqHMiCKbMXrbVdM=; b=DGa4kha2s1t0+SHe8XsNxtln8oe2pNAK4Q9n7hU2
- vRuuqPyyZPGl17aCDMjGWepOn/bHCs/9scRmWLqFXY6NXfPnxdxEaBF/G+Bz6McR
- sceIHRDh2y0VECe+lm5qxrLnKcRLsi6YMAb7dYpl0ik0/0IWu5et1mzTakjlLgag
- CyFd3YJf22y0UofKefgTfng7fGjxOIVIg/ZKfq+WJXWdZvV32EKUu4Rp9dMZ9tpX
- UDcWdH7OsusaOqlQx0KA0T9eZo7hzUMHAxAPXCzAPlTW7SvuCtS6TBBIgqSdkRqr
- /6vs2NA+UID4wS0ogl0oI/aM8/RIFLbnoMMVMpvb4e0Xzg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjjthc0v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:54:40 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-930a098ea19so294433485a.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 15:54:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wtZLf-0002L2-VT; Mon, 10 Aug 2026 19:24:06 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67AFgAQU165277; Mon, 10 Aug 2026 23:23:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=AcC3bTUBaaIwXH97LepWXXZzXsCKtK7cGhg+QvMQc7s=; b=
+ CEbXvFgK/nQ9rCQA+hh7QWWE/ifgwis3GVU05sNMHJ4tK8Q3N7HJWT5XWUV+W7d3
+ TeNk6Vd3wPfX9JStN9OzM4GcMBNPBVbfBSm7x1fuTaelENZpndDRj+/uJfna3nnN
+ DLzQkBmXMHcxEKAizlzLqfdD5KBqs+r8ICjzjQq5ktNuqLZ61NLDctjAjPAtYAg6
+ gF8hKM91kghqiZachCk1zihO9OjSI2PuJ5xoeHcYvIvIrtr/F4fyrbQq4WCabek8
+ 1wjvXzIehMay51jbya1XQul+tmzOJFLrpJzHtf0bn1EVBeCD5F45pyf3UyM3biLf
+ rOCeCRyU7swFSU3UGEqzow==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fwvfxuj5r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Aug 2026 23:23:53 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 67ANFWbD005115; Mon, 10 Aug 2026 23:23:53 GMT
+Received: from bl0pr03cu003.outbound.protection.outlook.com
+ (mail-eastusazon11012071.outbound.protection.outlook.com [52.101.53.71])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4fwtwqtxx4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+ Mon, 10 Aug 2026 23:23:52 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GRvjR7LxdxBqweRdEi7rFJDhvtEd8o0X+YmVLBNvLDhvuw+PHZPgLmrtRAooDVRQdekgd0IjHtCPZdLuYFoqktD8AAqhcJQLArhQUIeF48QcL7xQ5PKX4FliyYytaviowUwft+Rd/5pHs+1gViEXjqmJI83sj0oRHcQ6bBXF368wKF5AamxSaAxiDqxYurAtdKPn16kJGa73lbZCz8i35uZujLlXkAmGuhz4/ylY5nnMIV69EO93yTnY83egJoyskmkf2KXhgM2e8CeLqouEFcv2dhlRirEGjNu4yyK3wlDWh4tAsLMwYjsMvQ0pvHm4TlFARWxArS1lyhzKW+1E0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AcC3bTUBaaIwXH97LepWXXZzXsCKtK7cGhg+QvMQc7s=;
+ b=adG01WHGJtCyjXOUjYEvg1OxD2yFpN4+7C9oe2Ycm2iNTYtcSpBaGg/1BMO5ASE2+X9tdJHdQJvSQ2H8sG5ltefNcJcyv2KWYrMlZTX/2udGJcZLJBvvkdVc2mpohIVdKB852tSR+19Xv4X+rsIb7GWWolPbE8YbkjPADLkv/IlF8ZqFWVMkE9HPvWzvLoxDTb5zqz+nETrt6P5XpIr5Czx+7VoMOIa3GV+0PvarKBUsuPHeCb0EZoFBG2dM8Ky5BvWhTOkJHXR8fwSmDFPMLrDhKmTPwZDmdwNESoARLI8VEs4uaR7ort+GaChsCkpv90vRYw2nJJnno8ajI5jsgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786402480; x=1787007280; darn=nongnu.org;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=fpBdnm7zza3lWROc+mw/QUeRiFeDgqHMiCKbMXrbVdM=;
- b=bPj7kscFAxnZ7Kgb/ew3Ys3YPGL0KOfjdyypfy5QQDB0sS8jzq7Hlsa7VORoIpxFuS
- DM7OZfuuNCSr4DSamvZKfen8nq3IdixU3pUOP/jppmhwjWYmNRWb8l6wcOXzssC9iriy
- mslQnYJ4NVc8H83JwiiTC6ACSA1RPmG7yj/Ad0j5549KTVrfWwdfL40N2N1jIWrIcwrh
- BOdTpb+LAD4jw7rr9zt0US5vcwmNJ0vCkRQQl6VQhMpznZSWziN4KRMuV3AcygkSeqR9
- wnWwGAeR8AtX+yQELvACWKzXAVBNvMZekGGdvO05NKGWxorUHAUgWhtsX+pDgLLCE8Yg
- NBcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786402480; x=1787007280;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:content-type:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fpBdnm7zza3lWROc+mw/QUeRiFeDgqHMiCKbMXrbVdM=;
- b=L8XquWhvEt+WVdMcRtd11VlBZXJ6FW3VsYbXSqYZI4j9AqzxLIo7QX5URshPDwbLQf
- 4Lq6rhm/4xjPrCpvclvuRHY8M50DzMyrJaRexQCZuAMFEGefmkUP/nY7uOKru0x3cgZL
- 2ASYfjAvBsoeKUvazCPjNtaDx2H+Zk01RLEpwR+jUGwdIgUVYMvVPmPg+JUPVSEK1UmA
- /H52jzZ7jFR2Xz+uWjPqmVnflU3w3DiS6sm2jlHca8BFaWKFXYQkdrRPucX7IoX+GXHW
- CPLeADqcySPsnGO7F58JYxiOcQr1N6FAm5WARaEiqc1Ob4CSUm//EiFVqraAmyDeaWy0
- XKrQ==
-X-Gm-Message-State: AOJu0YyG9kaVyqbykYNhyaShtnusZGzyJEH5qr+9qQzWWDFlDvqfyy/i
- x5leMHnXGtjxDice2hl3JGVP+aLCsGT4fZLy2Werog4lOFi/cUXK1QyfH0gCelRE5grJ71iJUQS
- 0z4GNfyWbCOtEyOa9Tmqd3qURcgx9wgV4os0HssGPufmge/NloYkzVKWgZA==
-X-Gm-Gg: AR+sD10nMlBBuUhIpk2xSTxT+0hHmd/9AAXb1bOEaSsiLoIY+KbooAvvEFztBPdlzn0
- qKEZhUaBSL22wcp4UH9zuWeKCl2vRQ7C8djiFRn+8lRLlaFWVgyxGkswMTW8Jv7LlN01uVHkPhD
- mtmoOr8O+CWfKfOtSgFWvb1/bCZPWNZILWZumB20+MFjlMzdgUPTJaBcocHRUSG3oHtRaC55Vie
- iEEYZjLHLDgVORiOXfsseD7RkKA4/ZdfNA0LdI4syRO1c2+lwXjoQgQJFZ8jrstgSbGHw86/Cxx
- RyJNq25KcI1zsRHH/OLt4SdX+20/Bb0HIyOe7u6H1QQTb0S0ZeP1Rr7kMTcUJfMWp3g/YVhHDDB
- BJLvvvCbGZZA2E1LYtgqJeKEKX8vINQtlZsJ5UB0Qt9cF7zz2LRwBmsaSbVOFddglcsuVk5WWZc
- KpnThR
-X-Received: by 2002:a05:620a:40ca:b0:936:4955:e5ef with SMTP id
- af79cd13be357-93671eae246mr2577767985a.22.1786402479766; 
- Mon, 10 Aug 2026 15:54:39 -0700 (PDT)
-X-Received: by 2002:a05:620a:40ca:b0:936:4955:e5ef with SMTP id
- af79cd13be357-93671eae246mr2577764685a.22.1786402479285; 
- Mon, 10 Aug 2026 15:54:39 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9366e03aeadsm887266185a.3.2026.08.10.15.54.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Aug 2026 15:54:38 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------2zZLFmMeMwnzXX0LkZJIbyoe"
-Message-ID: <9db1ef83-7c05-4327-a6f3-539d1769df9d@oss.qualcomm.com>
-Date: Mon, 10 Aug 2026 17:54:36 -0500
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AcC3bTUBaaIwXH97LepWXXZzXsCKtK7cGhg+QvMQc7s=;
+ b=HRnag9yZMQoCAoJ674dZNQcM/Z1ItlTAUCAOolAJDf7ucRN1sBgkXr+xf87GnOmVoBbmQ9FgvThH9Rj9iUEvmTrOp5NcnP7mU9Snv/R2cf/gOHzzCe2g8F2uKDFkpIOXS3T5KQ7TPpSsLH98Uqv67HrMEfFI0FRa899HNpvVwbY=
+Received: from CO1PR10MB5506.namprd10.prod.outlook.com (2603:10b6:303:161::7)
+ by DS4PPFAFF9EAD68.namprd10.prod.outlook.com (2603:10b6:f:fc00::d41)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
+ 2026 23:23:49 +0000
+Received: from CO1PR10MB5506.namprd10.prod.outlook.com
+ ([fe80::da72:a0a9:5f18:cda4]) by CO1PR10MB5506.namprd10.prod.outlook.com
+ ([fe80::da72:a0a9:5f18:cda4%6]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
+ 23:23:49 +0000
+Message-ID: <6a14bfe7-c8cf-4329-85c6-480781355c41@oracle.com>
+Date: Mon, 10 Aug 2026 16:23:45 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
- and system regs
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
-References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
- <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
- <CAATN3NoX9jxBv4mjXwRxJ3puooZFEJrE5_LnoPMabnX=WwD0sg@mail.gmail.com>
- <b6f8c765-4e17-4aa1-990c-5518224971ef@oss.qualcomm.com>
- <CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD
+ PMU getter
+To: pbonzini@redhat.com, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, mtosatti@redhat.com, dapeng1.mi@linux.intel.com,
+ sandipan.das@amd.com, zide.chen@intel.com, joe.jin@oracle.com,
+ qemu-stable@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20260325021236.14574-1-dongli.zhang@oracle.com>
+ <aigek5eqJr6DHZau@intel.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE5NCBTYWx0ZWRfX6S1Sl+LRKJcL
- 5XPcGScp74DXXwnDG/mPb6Hq4Zz/7DP9H/z748al5YZd6ADHy0GG4azj0fwPQifOaWVCZSIe2BY
- iKVgMQuOiqE9vwBx4BBrkvNrkYbprtxFoWKDRTv+gaDq0LDu2FphAcbvHwRuE2zfN7EuZy0PA/S
- 9upQAE0+EyxL8n5tuGWCdhxh8BAkQdVRQ8fJJ9Df5mgcmhAI2f32DnITUOC7wY1XxxKYnfqv9Km
- 7Veng5zpUmtuRatz2GRDHx0Dl5GX34kiuZgsKrh1DuMjKyBjLEHJ3t9M2KG0TjKAENAW1sM6vpS
- 54z0Pmki59l8N+OF4P/PD6FIrFIf++yT8yO72l4Kbtm7OeLQNVJxBJTqUeTiZDDVouvtm0t3zJD
- bqiXPZg8jnZVQh8A1ILyATxpnxZ/rKJf9mmpWisw6sZ+cxbAwWTzGK2XSWjUz+osJbQp/RYcbOo
- WUFnYLriUaWxhf+FRnQ==
-X-Proofpoint-ORIG-GUID: 4e-V9q8pHdaHXrlEGEN-CAbfu24XlUz3
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE5NCBTYWx0ZWRfXyhmkdS2Yn4Om
- 1levuWSUr0CPmcVUJu5Gv5WkL+KwNpoj0+YgrLSkg0tnq2KE4/I8iVyMUiHJqf3zgbx10SUm6KA
- vZhQVR+NoCGE0HNkUoJR1Lb4UigDg6w=
-X-Proofpoint-GUID: 4e-V9q8pHdaHXrlEGEN-CAbfu24XlUz3
-X-Authority-Analysis: v=2.4 cv=JsHBas4C c=1 sm=1 tr=0 ts=6a7a56b0 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=r77TgQKjGQsHNAKrUKIA:9
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=oA4ofaE83iibCVGMRL0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TqKbhGCr5fgxf99J02oA:9 a=L6CHnQDNeuppI5oN:21
- a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <aigek5eqJr6DHZau@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH3P221CA0019.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:610:1e7::18) To CO1PR10MB5506.namprd10.prod.outlook.com
+ (2603:10b6:303:161::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR10MB5506:EE_|DS4PPFAFF9EAD68:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f914923-bab2-44c3-bf1f-08def7366e98
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|23010399003|376014|1800799024|22082099003|18002099003|4143699003|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info: J20v4+O+YDxIICZJUpFCEogITDsiub7cwTxx5/aZLnS38zXDwmzDHytDyF1un7XiwP0/KKQIBRfgbcFWHiMgl2plB5dMLjLRoTwM3411YPjMJryB/XziLjfLbknKFhVS+YtACObcxY/OuPIZv/f/Ap0Lr773T3Uwqqwu4OlfNplbTzoXDpODx68VUe5I50J4C4PZI3Ib9LTXjVEmSEUH/F5jFcUSAkryI4fyg16E/JwLbgmsQ7VJW2pffkTl1NoHTcqQzmzYdAdSObo3gBwJD+01Zesr0VVQiRkn0MKZA5Tcr4hPgpLIQ5xbFyp+2B1quk3oQLX6Y0LTttUhgsHtpE4COgdnd7AM5xldYutYU7ZiypL5TfvK5fhjDP+cV8tApZHG4DYAD934r2F8fffaw+G92aqH8PXk49IKlRo0DAgWhUVhJBEPGIuSCWpsizv6FJFLT7GWLSFZpO5N0269J4mJ+XAKCjwIFU/1+EYqVhRjg8rA8CdUCY3rDJnpqWCpAHC5bVkY92H7fwLuk09fpnMZ+o2OifBfbjW5gJsdgkEtNbds0Z7EJ4OZSPFxzxnNjiF2XgGYmdMrDvAZFlvoqaSLpcbU9r8nio6zYer2UuKZ2uLyq4UAa3iLX+B3JTYyKm7ZcnHFZ0OnyXKOa2uXBavvVUxkzfjfY+UUx2v5Ci0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO1PR10MB5506.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(23010399003)(376014)(1800799024)(22082099003)(18002099003)(4143699003)(10067099003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dS9jZ25EaVhCUFp1aEl6UnRrM2tlUEt5VExDQ2F6THpISmpXYnlaSS9mdGlk?=
+ =?utf-8?B?MVdVaVhGWjN3ZDQ0RGtkcGw2UVJ3L2tYNWp5alhvMXBBSjhCelFpYTRMOTQr?=
+ =?utf-8?B?dUpRNUdwTEJHWTVXdzVnTXdEYkRXZTUxelBLZVcyTDJHcCt6R0tMU3RqTDkz?=
+ =?utf-8?B?QmEvNDdvakxVa0FkZTZQVC8zT0dpaERiblZtM041MlVoVWIrdm1QSnVmOEZV?=
+ =?utf-8?B?eFBadit1aWNBQ2RWZ3ZseFJqNjk4SVFUM1d5bWtHam9MaW1PQ3VUNVVGY0Ux?=
+ =?utf-8?B?UVNCQW1QMlhQcVg4RGNyQXJrUHY2MzNobXdTeHBsNG5CTWgxbWJZd3FaR1Rn?=
+ =?utf-8?B?MENXblNlVVhnZXJZaUVRbWJ5SlRZWE54Tk9ZZDc1S1FxRlN1ZWY5T0pRZDBU?=
+ =?utf-8?B?aFY0MUZLYzU3NmNqZkVGais3cVBZd05IelBkY1ZaVmpaQ1oxMGNlNzJrWnN3?=
+ =?utf-8?B?b09OUTByN2xiWTB2MHlVZUZJN0tWemQxcTd0aGc3YnJkOUxmaVN1Q3BWUDRJ?=
+ =?utf-8?B?YURDYUpRWEQ0WHZoUVZZazNqWC9lYWNEbFUyY21uUGtZY3p5UUt1eW0vOERo?=
+ =?utf-8?B?b2sva2dqbHF1eEdXb3E2WFUrMW5MOHViQ0JOZmxCbU5Qa09LMTU2UG1ZOGdD?=
+ =?utf-8?B?OWVjd1ZYVTFtR0MvdnpScUhwMStWQWNodTYrdkN6OTBLeUp5RFZleTV2YXBh?=
+ =?utf-8?B?Sk9ab1diS3JLTTAxZWpsRHBTYzVra21Vc0ZXWTdHQ3NTOHd1eEdRcmpGa0o2?=
+ =?utf-8?B?TXdyUEhTd2g5ZnVEWi8rdEkyRkFaNnl0bENLajRJYmpwaVc0a01keHlCQ0Er?=
+ =?utf-8?B?aGY5YjJ2c056aUpDMUs5WXVKMC9oSXFCcUgzN2hiZ1lBVHlvTnlocEgwMSs3?=
+ =?utf-8?B?VlRnT1ZDTXdMay92S0lNTGhlSFNreHBCMzIyY3pDU0t6eExzd2VUWHVnUjJk?=
+ =?utf-8?B?VUI0MXVsQ3hmcFcvdmVBWU5pWnA0WC8rUkM1R1RKa0ZKNUNhYURXa0VEUmE0?=
+ =?utf-8?B?YmtTeG5kTGU3TzQzUGtVUVRFTDUwbmZGaGRwNkZ6YnpmZDFlUnF6bXRYUW13?=
+ =?utf-8?B?VnhNOGpKUFFUNWpRRW9RbW1EQ0tGY0QrT2FUUW5yS1FsMm4vUjYrWEdqWGtQ?=
+ =?utf-8?B?QVBDK2Y5cjgxVExRWCs2QjdZWk5PbXlnd0tSNHZUbk5BZy9XMUdwUjlzYnRv?=
+ =?utf-8?B?L1RGOXk2ZWNSbGxsVnBacFdXcGExREdrUS9KbURnUlVqRFVZOUo4Mm93c21Z?=
+ =?utf-8?B?azMyd0NKYmo0dG9PaDNUZW03Q1d0c3Y5dFRld3VNakFvY2VwR29CUDN0K05o?=
+ =?utf-8?B?NXY2YmlsZ0dJbXhBYThXdWpOME5KMVhJN3RmQy9Ja3l5Ujl0NDJNSzZOMURp?=
+ =?utf-8?B?bGF3RTZ4VWIwdVlvT0ZPN0E0UjZVaWQwblF5Y2NqVnNjMUJuSHZNdDA1Y2ZL?=
+ =?utf-8?B?a0dvQ3pDMnlNSU9SL1VKT1piWW0xMWROeStmZXByWWhSNFZNR1NOWmZGOWVH?=
+ =?utf-8?B?UGpzL3V1RVJyN2Z3NzZWTXlCNzFYTElxbDlDbTJUMUVYdVN6c3V6cjdUQ3pJ?=
+ =?utf-8?B?aWhwc0Nxbi82R2pleFFxWkxheVF4Vm03TjRscUd4VEd6di81OTBxLzFSL1VS?=
+ =?utf-8?B?MXE0K3lxWnVZYkpFVkxqTWI1cTNGOWJjcHpBTXpnWUNTKy9UV2EwVHE1ZThK?=
+ =?utf-8?B?NEQwV3NUbHJvSWtkc1lKb1Y1dWJqVjVjSDdxb1AyMHFxR2d6ZHQ2Q01XQzdT?=
+ =?utf-8?B?b21JNzA4NURaa082V2dWUlZuSzNlU2lYZTJPMmZucEtZZkozbTl2WlVmU0xh?=
+ =?utf-8?B?WE5QWi9zZjZncW5vSE1VRGZXSy90YiszQzYyZkZ3US9xSEhqQm9vUTF4TkJ4?=
+ =?utf-8?B?TGMvRUtSWkptNlZSdUcwUzZUQ1QxaHVkSUZvYWRkSHZ5UDQ0Wmd5MFJEZ1pw?=
+ =?utf-8?B?Z0RuOFBpbi92TjdVeHV2VEVQZzZtK1lMMHNSTS9LZUpNNVFPNTlqSWYveEti?=
+ =?utf-8?B?MGVqRTkrR1MvZDduSGhrWndHVlJyK3ZEbzArVGlmemc4MjJMZExKbjdrRUE1?=
+ =?utf-8?B?cEk0TnE1V1JkaWwyamNmODdDOXZWc3phMW9kNS9pRVp2Z3RXOEJDZzNiYm9o?=
+ =?utf-8?B?dHVkQjNsQlhxb3JRMkZZWTNlbDNidEQzNWZpU2VpQTlBcm9MNHNHUjBYSEEv?=
+ =?utf-8?B?YmVoaXAwZDJSNGRqR2VSalJ1NWs2dTNFNWhqUDJIWFZ6ZzVCdzBoR1doTExW?=
+ =?utf-8?B?YTNNelMxS1pQRDNCbzVzMXlRb3RTSUZTTzBMdE9zaDBrai9jRG1jVUFmZUNt?=
+ =?utf-8?B?aEQ4WVJmOU5JaHFtNGptaTVkK2VVL3ltM0Y2dVQ1ZzY4TWpnV1NvQT09?=
+X-Exchange-RoutingPolicyChecked: Mb+IbyHjs+71dtfT4UaDZJ5G3/brQMUtum/V7P53dyWUky6Bf4GpsU5x9wwXzA2TSKgPvryoOJb/VTS0X7DOpYbfixDEsu1lU+4O6B9RHgpN6DKZgWlYLLm82UenCRXb4pqJpVSvFQvx6EoyvbJ0bmbFBoTGl0CLp8/l80xQnFvuXgXWRclMQ5bsp0NkDlK4n13jdJln0mSCe3q3AbYQznZgXQquo4nUIrtf+M85KcVchcaxWNYwrxvE3QTT5CYAheFpeR94VsXwGzR0C7p0cLGK2lr5rvby++gedvTrDL25Z1OS1j/bLVZUbZsXN35EdR5qN2ma1PUzcfSlfwzuEw==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: SPz+bbnvsOWWBB0AarDDJKl7FnEk3NPOZzsakf/46ijw9rPxPOQbE/00yEWapfRVJF3xElKHmE/EXwxPvh3GWCa1o0joKhYeIXXfheWvMTWQpcWeIx3YPC8rbDSv0Q+mjOw1pg91LYEi4Opdsx1PClj5N5TJz8hePHhvBjlfc3qeYjVwFF8naIyVqFnXvfWvWA9UXpVUR+YvOiSvLagfvkhdqb9t/JF9uEP5nNPdrD+D9ecSiMG97WhMIw0xf7PD/IWxjL9ll7iebcDsAUhgr7d02hxJcAWQD89wa1Y6Ot4J5g1DjQUHNKrZYwaIdvz9dlmXuGYzKHwplDXSaTGyoUKOtOjqeq326r7LifdBhyxDz0rBQKvH2oA4Yry1ddQPHwpUtfPMLmVOeUlPYr0ZiopBRLsJwhQXdI7OuRPIV/9kzcIeSkSPINUe1hAVSkUf7NBjOnP1yiRFuCwDsXu1HK3pInroH3DFhblqaG5I/w7qVkN8yIAP/ujaTi5HfXUjAPhadXqxFvK+4AAeJviDUMHrK+gE3EJzMoO3q8+qeIeoDsMJAz8NgYox++2nCCLsi4989bMNPnmLopLovsTH1ohFAQ+R+aJfdKGlZt2HJHA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f914923-bab2-44c3-bf1f-08def7366e98
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR10MB5506.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 23:23:49.0856 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7DATM1EoX1gtk8Hw5k+80x5UZiKr8PGkioPKs6sZ9CNafFOTqtpCmRtRccvu6EqFEV27k3dnIvsSbEomgz1lBQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPFAFF9EAD68
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-10_06,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 adultscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608100194
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ mlxscore=0 malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2608100198
+X-Proofpoint-GUID: 6yBJ-U0yrH-wC6j3uKvbYDgdCyzFqmes
+X-Authority-Analysis: v=2.4 cv=K/sS2SWI c=1 sm=1 tr=0 ts=6a7a5d89 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117
+ a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Sv0fKeRqtYgA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=VwQbUJbxAAAA:8
+ a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8 a=zd2uoN0lAAAA:8 a=69wJf7TsAAAA:8
+ a=TJD7A3fHtCaaXPdfes4A:9 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:13509
+X-Proofpoint-ORIG-GUID: 6yBJ-U0yrH-wC6j3uKvbYDgdCyzFqmes
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE5OSBTYWx0ZWRfX7bpyxVPgrLBS
+ /Ot5KVMUtTcje1PqorhrJ5Gsu78u5B5p4bvlYswGTcrAyuTGBzGxa1osUqcRiNmDEngELzkfARM
+ XmG9sMTYao8g4Vnsb6LWbAyuZGnilA4EJtG0du2cMom0ZyVp3UQy5bRIis4lji+zO0v27bK7VP7
+ 49vkZN/r5TBpfbvzQ9MIQCm2kLQEsVXPAGH4QvrCHg32GdIXdlPRSPEFsEo7S690C8wBaFN65xx
+ DQdqNTWMY+STuWD0sCs8GECPcIHUT0WOmSku9RyNBPsmi2kWjvYL3Ej4YZBiDT6FK4zWeCA6jQK
+ +f558nTXxhpAl2dIFKzJzHmuNAhgtex+Z+LTrZAaz+1GdkvUrqC3ypCcEGBTVBRePFh0ieNNTDC
+ aV/+EZA9PLIEQy1Ou+OaBJcMj59nOARAQOoK6U3P+4oA5GdE+YkwI9NXaJXiOQKhCMVk8ROSgWZ
+ HlFzkK5vg3Smbpj0nBvD2oIMEb3yDFQf7SLwsp+k=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE5OSBTYWx0ZWRfX7CYvDD7+Od7x
+ 6VJHIRioxv+D4Bmy4gRPHiTQi0eR/Ue3s/XouOkG/nqa+W5R7eM2dpHd7h4pd+CZKSSpDWWLBUp
+ c11/cEDzcDvSuZauOTbFCq31rZYsVgYvPEIAWReAkzHXD1tlVQG1
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,316 +209,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------2zZLFmMeMwnzXX0LkZJIbyoe
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi Paolo,
+
+Apologies for bothering you.
+
+Would it be possible to merge this bugfix? It has already been reviewed by many
+developers.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+
+I have verified that it still applies cleanly to the latest mainline QEMU
+commit.
+
+[PATCH 1/1] target/i386/kvm: Use logical counter index for AMD PMU getter
+https://lore.kernel.org/qemu-devel/20260325021236.14574-1-dongli.zhang@oracle.com/
+
+Live migration of AMD PMUs will not work correctly without this fix.
+
+At the moment, there is no actual out-of-bounds memory access because
+MAX_GP_COUNTERS is large enough. However, if MAX_GP_COUNTERS is reduced further
+to fewer than 12 in the future, this could result in an out-of-bounds memory access.
+
+Once the bugfix is merged, the upcoming v11.1.0 release will provide more
+comprehensive and robust support for AMD PMU live migration.
+
+Thank you very much!
+
+Dongli Zhang
 
 
-On 8/10/2026 4:32 PM, Taylor Simpson wrote:
->
->
-> On Mon, Aug 10, 2026 at 3:12 PM Brian Cain 
-> <brian.cain@oss.qualcomm.com> wrote:
->
->
->     On 8/10/2026 3:53 PM, Taylor Simpson wrote:
+On 2026-06-09 7:09 AM, Zhao Liu wrote:
+> Cc: qemu-stable@nongnu.org
+> 
+> On Tue, Mar 24, 2026 at 07:12:36PM -0700, Dongli Zhang wrote:
+>> Date: Tue, 24 Mar 2026 19:12:36 -0700
+>> From: Dongli Zhang <dongli.zhang@oracle.com>
+>> Subject: [PATCH 1/1] target/i386/kvm: Use logical counter index for AMD PMU
+>>  getter
+>> X-Mailer: git-send-email 2.43.5
 >>
+>> For Intel PMU, the counter and selector MSR ranges are disjoint. AMD PMU
+>> behaves the same way when PerfCore is unavailable.
 >>
->>     On Mon, Aug 10, 2026 at 1:34 PM Brian Cain
->>     <brian.cain@oss.qualcomm.com> wrote:
+>> However, once PerfCore is present, AMD PMU switches to an interleaved
+>> layout in which selector and counter MSRs share a single alternating range.
 >>
+>> MSR_F15H_PERF_CTL0 = 0xc0010200
+>> MSR_F15H_PERF_CTR0 = 0xc0010201
+>> ... ...
+>> ... ...
+>> MSR_F15H_PERF_CTL5 = 0xc001020a
+>> MSR_F15H_PERF_CTR5 = 0xc001020b
 >>
->>         On 8/10/2026 1:28 PM, Taylor Simpson wrote:
->>         > Change disassembly of control regs from C{num}/{name} to {name}
->>         > Change disassembly of system regs from S{num}/r{num} to {name}
->>         >
->>         > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
->>         > ---
->>         >   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
->>         >   target/hexagon/gen_printinsn.py | 14 ++++++++------
->>         >   2 files changed, 26 insertions(+), 10 deletions(-)
->>         >
->>         > diff --git a/target/hexagon/printinsn.c
->>         b/target/hexagon/printinsn.c
->>         > index a7e46f4bcd..b55d3b0b35 100644
->>         > --- a/target/hexagon/printinsn.c
->>         > +++ b/target/hexagon/printinsn.c
->>         > @@ -23,18 +23,32 @@
->>         >   #include "internal.h"
->>         >   #include "decode.h"
->>         >
->>         > +static char regstr[10];
->>         > +
->>         >   static const char *sreg2str(unsigned int reg)
->>         >   {
->>         > -    if (reg < TOTAL_PER_THREAD_REGS) {
->>         > -        return hexagon_regnames[reg];
->>         > +#ifndef CONFIG_USER_ONLY
->>         > +    if (reg < NUM_SREGS) {
->>         > +        return hexagon_sregnames[reg];
->>         >       } else {
->>         > -        return "???";
->>         > +        snprintf(regstr, sizeof(regstr), "S%d", reg);
->>         > +        return regstr;
->>         >       }
->>         > +#else
->>         > +    snprintf(regstr, sizeof(regstr), "S%d", reg);
->>         > +    return regstr;
->>         > +#endif
->>         >   }
->>         >
->>         >   static const char *creg2str(unsigned int reg)
->>         >   {
->>         > -    return sreg2str(reg + HEX_REG_SA0);
->>         > +    unsigned int gpr = reg + HEX_REG_SA0;
->>         > +    if (gpr < TOTAL_PER_THREAD_REGS) {
->>         > +        return hexagon_regnames[gpr];
->>         > +    } else {
->>         > +        snprintf(regstr, sizeof(regstr), "C%d", reg);
->>         > +        return regstr;
->>         > +    }
->>         >   }
->>         >
+>> The commit 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM
+>> reset") added the getter/putter pair for AMD PMU MSRs to clear them on
+>> reset, but it ignored that, without PerfCore, AMD reuses alternating MSR
+>> addresses for selectors and counters. env->msr_gp_counters[] holds the raw
+>> counts and env->msr_gp_evtsel[] holds the selectors, so with the
+>> interleaved layout we must translate the MSR address back to the logical
+>> counter index instead of treating the interleaved slot as the array index.
 >>
+>> The arrays are sized to MAX_GP_COUNTERS = 18, so the code never writes past
+>> the end. And in the reset path QEMU simply zeroes everything, so that use
+>> case still works.
 >>
->>         Seems like this change also depends on some kind of mutex around
->>         regstr[] so that we know it's not being used concurrently by
->>         multiple
->>         threads.  Translation is single-threaded but if we gained
->>         another caller
->>         we wouldn't remember to come back and remediate this.
+>> However, the live migration is broken. The PMU state is stored at the
+>> wrong indices, so the destination VM reloads mismatched selector/counter
+>> pairs. Fix the getter to use the logical counter index rather than the raw
+>> interleaved offset.
 >>
->>         I suppose we could take an input buffer/length. Or maybe we
->>         just add
->>         another static _regnames[] array to solve the lifetime/race
->>         problems?
->>
->>
->>     How about putting a regstr field in the Insn struct (and pass
->>     Insn* to these two functions)?
->>
->
->     A character array?  Sure: seems like that should work.
->
->     But if we have a static array for the others why not leverage that
->     here too?  We can statically fill these values, right?
->
->
-> These are for cases where there is some sort of error and the reg 
-> number is larger than NUM_SREGS/TOTAL_PER_THREAD_REGS.  So, we 
-> wouldn't know how to size these without looking at the number of bits 
-> in the encoding of each instruction that has one of these. However, 
-> that could change over time if the architecture adds new instructions.
->
-Ah, okay, right.
+>> Fixes: 4c7f05232c ("target/i386/kvm: reset AMD PMU registers during VM reset")
+>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>> ---
+>>  target/i386/kvm/kvm.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> Sorry for late response, LGTM,
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> 
 
-Okay - any solution that mitigates the race should suffice, then.
-
-
-> The regno field in the Insn struct is a uint8_t, so we could create 
-> static arrays with 256 entries and
->
-> We could revert back to returning "???".  Alternatively, S<unknown> or 
-> C<unknown> would be more readable.
->
-> Thoughts?
->
->
->
---------------2zZLFmMeMwnzXX0LkZJIbyoe
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 8/10/2026 4:32 PM, Taylor Simpson
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <div dir="ltr">
-        <div dir="ltr"><br>
-        </div>
-        <br>
-        <div class="gmail_quote gmail_quote_container">
-          <div dir="ltr" class="gmail_attr">On Mon, Aug 10, 2026 at
-            3:12 PM Brian Cain &lt;<a
-              href="mailto:brian.cain@oss.qualcomm.com"
-              moz-do-not-send="true" class="moz-txt-link-freetext">brian.cain@oss.qualcomm.com</a>&gt;
-            wrote:<br>
-          </div>
-          <blockquote class="gmail_quote"
-style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-            <div>
-              <p><br>
-              </p>
-              <div>On 8/10/2026 3:53 PM, Taylor Simpson wrote:<br>
-              </div>
-              <blockquote type="cite">
-                <div dir="ltr">
-                  <div dir="ltr"><br>
-                  </div>
-                  <br>
-                  <div class="gmail_quote">
-                    <div dir="ltr" class="gmail_attr">On Mon, Aug 10,
-                      2026 at 1:34 PM Brian Cain &lt;<a
-                        href="mailto:brian.cain@oss.qualcomm.com"
-                        target="_blank" moz-do-not-send="true"
-                        class="moz-txt-link-freetext">brian.cain@oss.qualcomm.com</a>&gt;
-                      wrote:<br>
-                    </div>
-                    <blockquote class="gmail_quote"
-style="margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-                      On 8/10/2026 1:28 PM, Taylor Simpson wrote:<br>
-                      &gt; Change disassembly of control regs from
-                      C{num}/{name} to {name}<br>
-                      &gt; Change disassembly of system regs from
-                      S{num}/r{num} to {name}<br>
-                      &gt;<br>
-                      &gt; Signed-off-by: Taylor Simpson &lt;<a
-                        href="mailto:ltaylorsimpson@gmail.com"
-                        target="_blank" moz-do-not-send="true"
-                        class="moz-txt-link-freetext">ltaylorsimpson@gmail.com</a>&gt;<br>
-                      &gt; ---<br>
-                      &gt;   target/hexagon/printinsn.c      | 22
-                      ++++++++++++++++++----<br>
-                      &gt;   target/hexagon/gen_printinsn.py | 14
-                      ++++++++------<br>
-                      &gt;   2 files changed, 26 insertions(+), 10
-                      deletions(-)<br>
-                      &gt;<br>
-                      &gt; diff --git a/target/hexagon/printinsn.c
-                      b/target/hexagon/printinsn.c<br>
-                      &gt; index a7e46f4bcd..b55d3b0b35 100644<br>
-                      &gt; --- a/target/hexagon/printinsn.c<br>
-                      &gt; +++ b/target/hexagon/printinsn.c<br>
-                      &gt; @@ -23,18 +23,32 @@<br>
-                      &gt;   #include "internal.h"<br>
-                      &gt;   #include "decode.h"<br>
-                      &gt;   <br>
-                      &gt; +static char regstr[10];<br>
-                      &gt; +<br>
-                      &gt;   static const char *sreg2str(unsigned int
-                      reg)<br>
-                      &gt;   {<br>
-                      &gt; -    if (reg &lt; TOTAL_PER_THREAD_REGS) {<br>
-                      &gt; -        return hexagon_regnames[reg];<br>
-                      &gt; +#ifndef CONFIG_USER_ONLY<br>
-                      &gt; +    if (reg &lt; NUM_SREGS) {<br>
-                      &gt; +        return hexagon_sregnames[reg];<br>
-                      &gt;       } else {<br>
-                      &gt; -        return "???";<br>
-                      &gt; +        snprintf(regstr, sizeof(regstr),
-                      "S%d", reg);<br>
-                      &gt; +        return regstr;<br>
-                      &gt;       }<br>
-                      &gt; +#else<br>
-                      &gt; +    snprintf(regstr, sizeof(regstr), "S%d",
-                      reg);<br>
-                      &gt; +    return regstr;<br>
-                      &gt; +#endif<br>
-                      &gt;   }<br>
-                      &gt;   <br>
-                      &gt;   static const char *creg2str(unsigned int
-                      reg)<br>
-                      &gt;   {<br>
-                      &gt; -    return sreg2str(reg + HEX_REG_SA0);<br>
-                      &gt; +    unsigned int gpr = reg + HEX_REG_SA0;<br>
-                      &gt; +    if (gpr &lt; TOTAL_PER_THREAD_REGS) {<br>
-                      &gt; +        return hexagon_regnames[gpr];<br>
-                      &gt; +    } else {<br>
-                      &gt; +        snprintf(regstr, sizeof(regstr),
-                      "C%d", reg);<br>
-                      &gt; +        return regstr;<br>
-                      &gt; +    }<br>
-                      &gt;   }<br>
-                      &gt;   <br>
-                      <br>
-                      <br>
-                      Seems like this change also depends on some kind
-                      of mutex around <br>
-                      regstr[] so that we know it's not being used
-                      concurrently by multiple <br>
-                      threads.  Translation is single-threaded but if we
-                      gained another caller <br>
-                      we wouldn't remember to come back and remediate
-                      this.<br>
-                      <br>
-                      I suppose we could take an input buffer/length. 
-                      Or maybe we just add <br>
-                      another static _regnames[] array to solve the
-                      lifetime/race problems?<br>
-                      <br>
-                    </blockquote>
-                    <div><br>
-                    </div>
-                    <div>How about putting a regstr field in the Insn
-                      struct (and pass Insn* to these two functions)?</div>
-                    <div><br>
-                    </div>
-                  </div>
-                </div>
-              </blockquote>
-              <p><br>
-              </p>
-              <p>A character array?  Sure: seems like that should
-                work.  <br>
-                <br>
-              </p>
-              <p>But if we have a static array for the others why not
-                leverage that here too?  We can statically fill these
-                values, right?</p>
-            </div>
-          </blockquote>
-          <div><br>
-          </div>
-          <div>These are for cases where there is some sort of error and
-            the reg number is larger than
-            NUM_SREGS/TOTAL_PER_THREAD_REGS.  So, we wouldn't know how
-            to size these without looking at the number of bits in the
-            encoding of each instruction that has one of these. 
-            However, that could change over time if the architecture
-            adds new instructions.</div>
-          <div><br>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-    <p>Ah, okay, right.</p>
-    <p>Okay - any solution that mitigates the race should suffice, then.</p>
-    <br>
-    <blockquote type="cite"
-cite="mid:CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com">
-      <div dir="ltr">
-        <div class="gmail_quote gmail_quote_container">
-          <div>The regno field in the Insn struct is a uint8_t, so we
-            could create static arrays with 256 entries and </div>
-          <div><br>
-          </div>
-          <div>We could revert back to returning "???".  Alternatively,
-            S&lt;unknown&gt; or C&lt;unknown&gt; would be more readable.</div>
-          <div><br>
-          </div>
-          <div>Thoughts?</div>
-          <div><br>
-          </div>
-          <div><br>
-          </div>
-          <div><br>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------2zZLFmMeMwnzXX0LkZJIbyoe--
 
