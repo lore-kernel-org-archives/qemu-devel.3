@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037C5C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 17:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCCFC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 17:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtUDF-0008NM-FH; Mon, 10 Aug 2026 13:55:01 -0400
+	id 1wtUEb-0000bV-VF; Mon, 10 Aug 2026 13:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wtUDD-0008Mn-Q4
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:54:59 -0400
+ id 1wtUEY-0000b9-LD
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:56:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wtUD7-0007ch-J5
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:54:59 -0400
+ id 1wtUEU-0007wV-CH
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786384492;
+ s=mimecast20190719; t=1786384577;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HMiy8EtzL+KdqZ+UPMuDaVHm6nXH1kd0i2lKbBJBaKs=;
- b=fv8iju8T8RVjtgmgrrcvjyehXEVDWeWrtxjnFTzXfzg4IwnlScxJmjx5iuVUQWMu4xv2lM
- 62HpbgXjbKBmQFJz+m6+FDHohkgCsv/rxO4UHE5vOP1HYs54L8SmLAcd1HNZl2jbmag3Vd
- SMHdjCI8tPyjzfiexaMtZQ/MEazPuhY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=QObAgGrCPbIuhP2ErIVNg1K+lJvDUayU/7GIQSLUcio=;
+ b=NZ5n4eZu4sLbk1gXVL+05mWVH4AqiOtUWvGS21KGqV/0xJgONGu2QQz60d3c8VH8HJWvPT
+ +4IP7QyD8HAgrdkrGQdZa+0pZqzWby7W6taYbN9dpxWCmL4vjcs++uRBsDnvNw9zjjlzDn
+ lkIkGwUX1hrxU99qkWbd1bzFjbngBgE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-fFgz-aBtOc607IyjQi7iKQ-1; Mon,
- 10 Aug 2026 13:54:51 -0400
-X-MC-Unique: fFgz-aBtOc607IyjQi7iKQ-1
-X-Mimecast-MFC-AGG-ID: fFgz-aBtOc607IyjQi7iKQ_1786384490
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-JAC8DDIiNVaFh2s4xiRsjA-1; Mon,
+ 10 Aug 2026 13:56:13 -0400
+X-MC-Unique: JAC8DDIiNVaFh2s4xiRsjA-1
+X-Mimecast-MFC-AGG-ID: JAC8DDIiNVaFh2s4xiRsjA_1786384572
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C86041800657; Mon, 10 Aug 2026 17:54:49 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5A9F51800149; Mon, 10 Aug 2026 17:56:12 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F0F4422; Mon, 10 Aug 2026 17:54:48 +0000 (UTC)
-Date: Mon, 10 Aug 2026 18:54:45 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A6EC1800346; Mon, 10 Aug 2026 17:56:10 +0000 (UTC)
+Date: Mon, 10 Aug 2026 18:56:08 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 11/39] tests/functional: use query-version QMP command
- instead of HMP
-Message-ID: <anoQZTZn0J88pEFp@redhat.com>
+Subject: Re: [PATCH v2 12/39] net/qapi: add x-query-usernet command
+Message-ID: <anoQuGQkHTkgwqDX@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
- <20260626-qemu-no-hmp-v2-11-8af31bc54c61@redhat.com>
+ <20260626-qemu-no-hmp-v2-12-8af31bc54c61@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260626-qemu-no-hmp-v2-11-8af31bc54c61@redhat.com>
+In-Reply-To: <20260626-qemu-no-hmp-v2-12-8af31bc54c61@redhat.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -92,18 +91,85 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 26, 2026 at 01:19:12AM +0400, Marc-André Lureau wrote:
-> Replace the human-monitor-command based version test with the native
-> QMP query-version command, which returns structured version data.
+On Fri, Jun 26, 2026 at 01:19:13AM +0400, Marc-André Lureau wrote:
+> Add a QMP command to query user-mode network stack (slirp) connection
+> states, providing a structured alternative to "info usernet" HMP.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> The new command returns a list of UsernetInfo, with hub-id, hub-name,
+> and connection info for each slirp stack. It is marked unstable as it
+> is meant for debugging.
+> 
+> Rewrite hmp_info_usernet() as a thin wrapper over qmp_x_query_usernet()
+> so the HMP and QMP paths share the same implementation.
+> 
+> This is part of the effort to decouple HMP from QEMU core.
+> 
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 > ---
->  tests/functional/generic/test_version.py | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  qapi/net.json | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  net/slirp.c   | 34 ++++++++++++++++++++++++++++------
+>  2 files changed, 72 insertions(+), 6 deletions(-)
+
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+> 
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 1a6382825c5..08ec7f37946 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -1261,3 +1261,47 @@
+>  ##
+>  { 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
+>    'data': { 'netdev-id': 'str' } }
+> +
+> +##
+> +# @UsernetInfo:
+> +#
+> +# Information about a user-mode network stack (slirp).
+> +#
+> +# @hub-id: The hub id, if available.
+> +#
+> +# @hub-name: The name of the hub.
+> +#
+> +# @info: Network information from slirp.
+> +#
+> +# Since: 11.1
+
+s/11.1/11.2/ when you rebase here and the next
+comment.
+
+> +##
+> +{ 'struct': 'UsernetInfo',
+> +  'data': {
+> +    '*hub-id': 'int',
+> +    'hub-name': 'str',
+> +    'info': 'str' },
+> +  'if': 'CONFIG_SLIRP' }
+> +
+> +##
+> +# @x-query-usernet:
+> +#
+> +# Query user-mode network stack connection states.
+> +#
+> +# Features:
+> +#
+> +# @unstable: This command is meant for debugging.
+> +#
+> +# Returns: list of user-mode network stack information.
+> +#
+> +# Since: 11.1
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "x-query-usernet" }
+> +#     <- { "return": [ { "hub-id": 0, "hub-name": "vnet",
+> +#                        "info": "..." } ] }
+> +##
+> +{ 'command': 'x-query-usernet',
+> +  'returns': ['UsernetInfo'],
+> +  'if': 'CONFIG_SLIRP',
+> +  'features': [ 'unstable' ] }
 
 With regards,
 Daniel
