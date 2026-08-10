@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DBF8C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE00C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtSEz-0004KX-4T; Mon, 10 Aug 2026 11:48:41 -0400
+	id 1wtSFm-0004kE-4k; Mon, 10 Aug 2026 11:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtSEx-0004KD-E0
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:48:39 -0400
+ id 1wtSFk-0004k2-17
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:49:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtSEv-0007rl-TD
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:48:39 -0400
+ id 1wtSFi-0007tq-Ic
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:49:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786376915;
+ s=mimecast20190719; t=1786376965;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ckljxzQyE43TfOjBlFU9TNNE6C678xtuZYWh8Q43kvE=;
- b=QgfWnOs4szir/Tz+TrUS8r06sz89qknzBahC9xvgeaYhI4XXyplVy//g0kHMSxq43NBUM0
- vlxS/5krnu6O0SBFu5e9fnum/dhKK8dzsvTCkybSkFba1JDtj2vFGSqsMgajkKhq/SGLCf
- Ib3j84In5mUmYcV+BtV8qU0qB++0678=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vD645EtleOUzDowepCXxZgoK2vO387+nDjXctvWuVAE=;
+ b=IVABnIWsxo5goHERll31qntcFvNX9jgqi6jVYfWD60KNWG1IrdNhWUla1UGV8P+MNCw3gW
+ 9u3ZqBnZORPy3aVCqcpt6ppA+kis9SYH6UHPl06YrodGYeJvFMGCtLdaYJSBk+K26ZnkRK
+ YUZSEiQEAtyyWXfcNn4ZUQanvL4dC+o=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-srgtbiT1P7m8JGWekSTMaQ-1; Mon, 10 Aug 2026 11:48:33 -0400
-X-MC-Unique: srgtbiT1P7m8JGWekSTMaQ-1
-X-Mimecast-MFC-AGG-ID: srgtbiT1P7m8JGWekSTMaQ_1786376912
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4996832e7b4so103585e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:48:32 -0700 (PDT)
+ us-mta-478-Qph1QQymNT-Ys08voHvoRQ-1; Mon, 10 Aug 2026 11:49:21 -0400
+X-MC-Unique: Qph1QQymNT-Ys08voHvoRQ-1
+X-Mimecast-MFC-AGG-ID: Qph1QQymNT-Ys08voHvoRQ_1786376960
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47fe23b5acdso1944806f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786376912; x=1786981712; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786376960; x=1786981760; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ckljxzQyE43TfOjBlFU9TNNE6C678xtuZYWh8Q43kvE=;
- b=V8B10vT6IQqIcvmNR3X4zWW5pxcUXzaLZzX9ly8t6pjdkcDmhZC+/0UrEiuPjchx1v
- XG88lJ0/r8JlBfueLx3IWEngXGYrC1xq6Tmn6ZYz0fH+pogjrz2fF7iTG88Q/92G7SMz
- xZM99Z3IDJ4PPRsmlqt9u7l3FrTV4AtwEMqQJBf5qTVsO9K2IznEN/dogUDe1Kb7VSih
- oxVNsg3TWXm1gae9Dl2m3AbRH0afbHiWTdfkF4CZ6NkYuexGAW5whIa9jXi0k7Mftte0
- vqFPEbFovS6Y6Nbegh24/fGyqqj/pPRz4/Uh4wcRDUha56Mm+KUgMo3ykJUkqYTItGER
- XpPA==
+ bh=vD645EtleOUzDowepCXxZgoK2vO387+nDjXctvWuVAE=;
+ b=UyZlaDKM9BvsCgMHWg2kEGbLASOnERWEU7qSFd+/7W/Ty5g+PeOdhVbRfFbB/a+Ze6
+ 0X4SkHHKpgv6AZDP3wq8N58oI+QlPkSWtvIG/QbnFka5LRc/WemBUpMq0gKIVrzPNBC6
+ O/QOMeC9XDzhFwL6mSBVx6ga8V1vyc5mLSOztX3SCLh4bYb76gZwyJykZ1uxyHolRqyZ
+ Y8mpFy7QipjsKnSM8Vu9pOBbPyFjvM3pvGSqmbDk7QA+i829nlZu10hfGat0gnQXpAz2
+ HatEKmuqAIMR+cehxQz6TShd6xBsbS8HEUNLXLctDTz733Fx4a4Zd2vI5D2xd4N7JXmQ
+ irig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786376912; x=1786981712;
+ d=1e100.net; s=20251104; t=1786376960; x=1786981760;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ckljxzQyE43TfOjBlFU9TNNE6C678xtuZYWh8Q43kvE=;
- b=Eal2xjQRCt7/KWd0apoCD6Xfze43R1zHzA1664F1CUmADeF24Gosf8i+zvCHhgv82O
- L5QbDUauAnvZ9lTwyfEbLYtL2a1AvkHEXbfvhG6hOBNP0lmGVhVPUO0nBayjwj9Mn9yz
- kWXdal+XVool4T1h0I+QTip1S7CXRHabfRRqr3PE2t+u8w8rOocOqKas73AbKIrS/98R
- z6JETQaI/MEUmuwApAT3rWAKRf8zgR1BHFBI8Ps/dMD6dTU77Eb46WBV6aVVd4R4Mu/t
- 9ebWVToxGGowBdsReYTpnviuMbVgvVhwjEUGsepC9bwjS1cAv500/+ROKv9dzDEYo9UP
- Ju4Q==
-X-Gm-Message-State: AOJu0YxCkb8jC9bE5HZeYqP4SYdjbmuzXf5RZ0O+FxXjjMhlGcJUDgHC
- fJeW9FJ2PB71I1zeHO/5lbsiYUxErIGAKut4pTiDf5VSmCpo6Weijd7ybiZtNcZvzHbrkV1Cjau
- Ef+pUKcX8KpDK0mpzFa5GT0BfzNIi4w3pl5Z7kdshqjcExO0zUDfHdWOX
-X-Gm-Gg: AR+sD12Te00gFkJs/TRZxCbL0dW1Dy2a4MKdbJIqo/nz/NtkQl2CIvXIlbDolximz67
- F6FlneBjVjnZ1fG+qJ2vxrJdxnUE6EHjX2fvoIYjZElDV68H/bwHl0eFmYWEO7ZmzGV2mv9TNZR
- vNRRYg+Ci50Aj3kIt4gU3y+DguHwYAFarh9RZS8zDvZRff19KE/VMRe6fCVEJ0Isxj8hToGu/Fz
- wZ7RUw9FunxL7h4uO6ovdoVs7YXx5N3VxZKMTGwwy0QwDR/ERW0br6vSqjXxIIqDmK2i7OssFiR
- dd439sLhJsw5kL8rDroLgToMvmpmz/eWXVQRjRXybOtTO6EBMOS5uQKA
-X-Received: by 2002:a05:600c:64c7:b0:499:728c:a1c7 with SMTP id
- 5b1f17b1804b1-499728ca1eemr38373795e9.5.1786376911611; 
- Mon, 10 Aug 2026 08:48:31 -0700 (PDT)
-X-Received: by 2002:a05:600c:64c7:b0:499:728c:a1c7 with SMTP id
- 5b1f17b1804b1-499728ca1eemr38373135e9.5.1786376911240; 
- Mon, 10 Aug 2026 08:48:31 -0700 (PDT)
-Received: from fedora ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997402a89bsm2583795e9.0.2026.08.10.08.48.30
+ bh=vD645EtleOUzDowepCXxZgoK2vO387+nDjXctvWuVAE=;
+ b=XoZYxl4FfQeVcMiCH7JYDIVDAZdttFfNGExplHvQ9A+YZPA+PUVVZkDHfI61prQhNa
+ IbK7DsO2tBfS7lD27J6vroKLahPGjZlw/RJv35Xy9V7ttoROuZADJu7uDMH5jfpLAmSN
+ XZLzRHI1zMjP03qfbI6FfaUUiklHnWKgTeg+rELGsDuozUb2oWZCvrOBSh1eVNI6YkqA
+ n1PG4+A1i/No5DyCDSZ0iWvcmIYOQOjAkbxLZn/1yjsV8JD6vp9BbY140XOuwoqZ7fRy
+ 33ha5Vut0FHC+KP15S6rExW0WLiCQo/uPZGhs/HBxW5NWNkcHu7qjkTeLAT1NkfthRUd
+ kirQ==
+X-Gm-Message-State: AOJu0YzyKRbVZfhIRZT9/cVj0FHeDfqTZbsxs4ykWxElo4zeF16T1tg+
+ l/lw/3Z/Yn70PcfaGeWtdfiOIGVd/xHgqsyN28Vhd2h5raFhxEONhSU09ZU4mpee7z9DT+Ami79
+ uJpaTR+/qBWBkgFO9XWXo6RZiprUpEPCW50TD4vyseQmaw394lCo7W9AE
+X-Gm-Gg: AR+sD11NEOAc1VQ4E7Edo8GrPhzzNFBWlPL2QjUt2FZQdZ80D5niJutNGqovB5a6RY2
+ DFMBHsQU+bsrRk4HrrVnM+j0tEVRZv9N3/nUxmkSSqSrOA0ub7e+G56+BSwQzdxxxWek9uxmIP7
+ IjITBDge1Huz/dA5LEBtvj7bYq25I7/A7xMl145f/5zbsxawMnBMUufs/0xBw45UuyI2Ty0shjS
+ kqYSMSXQ5cwrdJaxQd+OeX4/VJirY/U3BAqWzthMPum2eWeivktv3qaQN0zlxt9jPfTbmjimUJ2
+ HLUC38LzWneb1VUmVq4WgVkwUQBEYh2WXKDPmoBxatPYqXMZYc8rC1DW
+X-Received: by 2002:a5d:5888:0:b0:47f:aebd:841d with SMTP id
+ ffacd0b85a97d-47ffd91848dmr49870773f8f.15.1786376960341; 
+ Mon, 10 Aug 2026 08:49:20 -0700 (PDT)
+X-Received: by 2002:a5d:5888:0:b0:47f:aebd:841d with SMTP id
+ ffacd0b85a97d-47ffd91848dmr49870701f8f.15.1786376959993; 
+ Mon, 10 Aug 2026 08:49:19 -0700 (PDT)
+Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48002206effsm32603199f8f.32.2026.08.10.08.49.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 08:48:30 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:48:28 +0200
+ Mon, 10 Aug 2026 08:49:19 -0700 (PDT)
+Date: Mon, 10 Aug 2026 17:49:17 +0200
 From: Juraj Marcin <jmarcin@redhat.com>
 To: Aadeshveer Singh <aadeshveer07@gmail.com>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
  pbonzini@redhat.com, philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
  pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 08/11] migration: add eager load thread and setup for
- fast snapshot load
-Message-ID: <annyvWEfAcFLZIRi@fedora>
+Subject: Re: [PATCH v4 09/11] migration: update capability conflict test for
+ postcopy-ram+mapped-ram
+Message-ID: <anny7SztZXyLtfZq@fedora>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-9-aadeshveer07@gmail.com>
+ <20260801023628.22665-10-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-9-aadeshveer07@gmail.com>
+In-Reply-To: <20260801023628.22665-10-aadeshveer07@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -121,57 +121,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-08-01 08:06, Aadeshveer Singh wrote:
-> In fast snapshot load a thread is needed for actively loading in pages
-> along with the fault path so that the guest is not dependent on fault
-> thread indefinitely. Considering the difference from usual network
-> postcopy where major chunk of RAM is already loaded here entire RAM
-> needs to be loaded later. Existance of background pages which are not
-> really accessed by the guest might never be loaded and system will be
-> locked in migration for indefinite time. As there should be no
-> assumption about how guest accesses memory, the load times can be
-> indefinite.
+> Remove the test test_validate_caps_pair, which asserted postcopy-ram
+> and mapped-ram capabilities cannot be active together. The new fast
+> snapshot load feature is exactly this pair of capabilities active
+> together, with the following patches in this series, this combination
+> will now supported and be functional.
 > 
-> Add postcopy_ram_eager_load_thread(), for the eager thread which
-> iterates over all non ignored blocks calling ram_block_load_eager()
-> on each. ram_block_load_eager then iterates to load in all pages using
-> postcopy_mapped_ram_load_page(), with a different channel, which takes
-> care of not loading in pages already loaded by fault thread. On
-> completion the thread schedules postcopy_incoming_complete_bh() to
-> destroy the incoming migration state.
+> Remove the capability check that rejected mapped-ram and postcopy-ram
+> being set simultaneously, as this combination now corresponds to fast
+> snapshot load.
 > 
-> Add postcopy_ram_eager_load_setup() to create the thread. Added joining
-> logic in postcopy_incoming_cleanup().
+> Add a capability check against setting multifd when configured for fast
+> snapshot load as it is not supported yet. Also add capability check
+> against setting postcopy-preempt as it is incompatible.
 > 
-> Add tracepoints for entry and exit to eager load thread.
+> Add infrastructure to check postcopy_notifier_list being empty in
+> capaility checking to block vhost-user with fast snapshot load as it is
+> not supported.
 > 
-> When both mapped-ram and postcopy-ram are set, divert from
-> qemu_loadvm_state to run fast snapshot load
-> 
-> Initialize postcopy RAM state and register RAM Blocks with userfaultfd
-> via ram_postcopy_incoming_init() and postcopy_ram_incoming_setup() in
-> process_incoming_migration_co(). Fault thread needs to be launched
-> before VM to serve faults for some hardwares emulation that need to read
-> RAM (like vapic devices). Populate bitmaps and offset tables while
-> reading file in qemu_loadvm_state_main.
-> 
-> Add function qemu_loadvm_run_fast_snapshot_load() which starts the VM
-> using loadvm_postcopy_handle_run_bh() and launches eager load thread.
-> 
-> Skip scheduling process_incoming_migration_bh() in
-> process_incoming_migration_co(), for fast snapshot load as the state
-> cleanup is managed by eager load thread on completion.
+> A smoke test exercising this feature has been added further in this
+> series.
 > 
 > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/migration.c    | 36 +++++++++++++++++++--
->  migration/migration.h    |  5 +++
->  migration/postcopy-ram.c | 69 ++++++++++++++++++++++++++++++++++++++++
->  migration/postcopy-ram.h |  2 ++
->  migration/savevm.c       | 16 ++++++++++
->  migration/savevm.h       |  2 ++
->  migration/trace-events   |  2 ++
->  7 files changed, 130 insertions(+), 2 deletions(-)
+>  include/qemu/notify.h              |  2 ++
+>  migration/options.c                | 20 ++++++++++--
+>  migration/postcopy-ram.c           |  5 +++
+>  migration/postcopy-ram.h           |  1 +
+>  tests/qtest/migration/misc-tests.c | 52 ------------------------------
+>  util/notify.c                      |  5 +++
+>  6 files changed, 31 insertions(+), 54 deletions(-)
 
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
