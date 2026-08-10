@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901D5C5AD55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A527DC5B56D
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtRdg-0003v0-Kn; Mon, 10 Aug 2026 11:10:08 -0400
+	id 1wtRd5-0003om-Fo; Mon, 10 Aug 2026 11:09:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtRdf-0003ui-18
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:07 -0400
+ id 1wtRd2-0003nz-Cl
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:09:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtRdd-0001Pu-Hm
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:10:06 -0400
+ id 1wtRd0-0001II-O2
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:09:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786374604;
+ s=mimecast20190719; t=1786374565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uCHbKKzr5OxROXasiTpgSEv6U7Z1fDggYXpw+GfitUM=;
- b=YZkwNDR5W4/Nns3d/IrxPIucb41d/InT3eM1s7fwhquYQsqbm50lbUIksc8v2zgnY5ui/0
- g/BcS597TeDMJ4XePRPBAxoynMpmYbsKF9a2eCMyeuEbDhTYcirI/3Zxv/74ubnnofD7fy
- H3uEQ+EpoxedBr24kUGaaJbfDrlFB58=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HYkMROPk5tnt9TKZ2yMptsHcqYxKzdJ/3bYucS5nefU=;
+ b=S/HbKs5LLoH8BqipkgTLxeJp1KTSil+KGV5pbgRJ3o/wPrd/VcpxFjbVVOPToJEUTRTVna
+ 8MvjJI6EZGVrnRERvC4x0MkyNd39w9kCDEVlwh1psTTYEYTF8rbFEPd02uB8/25w0sJ2mU
+ tk/RYkAUaZe1Mt0/gJEZqyOG/rcOb8Y=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258-G2HqWYxTNtmHllGTaJKj_Q-1; Mon, 10 Aug 2026 11:10:03 -0400
-X-MC-Unique: G2HqWYxTNtmHllGTaJKj_Q-1
-X-Mimecast-MFC-AGG-ID: G2HqWYxTNtmHllGTaJKj_Q_1786374602
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-480010f8bdfso616272f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:10:03 -0700 (PDT)
+ us-mta-12-oNxg4Wj4Ps-U6rykJRxu_g-1; Mon, 10 Aug 2026 11:08:15 -0400
+X-MC-Unique: oNxg4Wj4Ps-U6rykJRxu_g-1
+X-Mimecast-MFC-AGG-ID: oNxg4Wj4Ps-U6rykJRxu_g_1786374494
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-493fa6e28a7so21618865e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786374602; x=1786979402; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786374494; x=1786979294; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=uCHbKKzr5OxROXasiTpgSEv6U7Z1fDggYXpw+GfitUM=;
- b=Zz+3pR3ch61sFolusnGWcCXRTUYfO5yGBX/2uugc4cPw+4XqlHuLu+hhxAAzRXTAg4
- qrS4sDl227iCI0KCbYGmqndeUXeumaHPtefi8dauhiXlK2A7WyDy2+y0MFtmxODy2ENp
- Z0+puHB1vvqgSBMF+Ho1GaJsbYJv81aydGtptvfJZdaatqquwl4MRTv33XLLwqy+b/bQ
- IIEwQv6xioUMLK0Kuwg3mNmWwoLX5KR1SQL0cJ4HGzUEppuEmDwNIMNs9Z8/21KoFBfE
- ddqzBTcXkyTOj5XXSEHFFpRC6h/rqddEjxZanQGHEDrG6NOpmX18/zEf6p0olYmKY7P/
- LcEQ==
+ bh=HYkMROPk5tnt9TKZ2yMptsHcqYxKzdJ/3bYucS5nefU=;
+ b=EKhJaPEM0X4Xf+F4xX6K8v01n54ALfNkNrQkdLoHIKzOCOIr/bvBDOBdKMCYqxDLen
+ Lq+Env6zK3pdjn8FkpNsOBg0OPxkKjn2oqYoDvg/As35zqJ4/HcyZn0h3wFCiNEPHlA+
+ IJzuih6BRqK+fFDxhaAtkreO2SURsNTUamzOZdzWRjvCi8/ZlV+Uk17XiPFWhbJRqaOS
+ k+LevsVhhzi7IIU//CZ9VjRiCN+rp+U0zuYg5AYlfnH08MPCXMg7YJEhcQAUS9uvR/Lt
+ h62H7xsLSHomYCglN+9rrpHvF6h2gmROSSUGK1qO775Ar5yreZ/FMHsPM7hxlnZgux5r
+ J/GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786374602; x=1786979402;
+ d=1e100.net; s=20251104; t=1786374494; x=1786979294;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uCHbKKzr5OxROXasiTpgSEv6U7Z1fDggYXpw+GfitUM=;
- b=FYUXP09lcBGEKwdoQffuoJntIY28wl9kq6kQ2FqHBrHqLH+HgK6ylKk2l8ILLzTR2T
- zE8QMhVIdMhzIuDj/o53oQy8D9zyplrymcSQC8nq5D7EBTXcis9XmGzr4kSY/1KImimX
- uC08/r/qusslIg0WpmYS7zzL/zTS8IzpE6HOo8y+d2MKCU0PWNkpl8Pi3PpJ+GfLxEii
- JG3Qm1V0YXBdbsO/Hy8RPAiNaD8ETlv67HY+XQs7sdWAvKzzjvhOlV205sNalfHnPSRQ
- qQbupl7+NZ0bnKxrlCZIEAfYRNt5cS3w6C5Wt8/EDXF9WlCZgJSPzqnY/YBl4CIBwtr4
- Wzdw==
-X-Gm-Message-State: AOJu0YwNx5OUscevnSqfxy+Apw8WgaTiBtOkKY7/WEVV5KxKIk8g0JV7
- lyhUcEPPr9FL0hePaVDrOqSpj9vrZfH1OGx4fPjWNAVAdu2AFBDimPvxR4AQTKQckDkFyCTU19h
- Wpms/Ofkfl58K+rlid9GQN6iyUxh1ejvJ6rNhDoT3C5oTWkXmtjbgASmZ
-X-Gm-Gg: AR+sD11/IDhrKyfjPXlDFVBvigBaVdgqFs/ECVTTWcHkNRcKPrNQct/qZ44lgzmFiqA
- BKESFV+Jh+UMnOlD2H4xM0xi59vH6vom6Mpkn5JHtPLgUVrsB05HKR+vTcl8+7dgeh6tx1Uilf1
- nAjyiZ/aL2Q9iRFvCqLJ8dz2hVLPR5IRxkL1JqAUli6TeacW5XSzzrcR6VTN2utNaVRLfG9uVHg
- OLaI9atQx3W3xU8/fuyCfla4zD38on7xmjPNZGbWrTHF27zkU8G6cC1ynzt+BhiaKzmfv6c089d
- lKKywLVlR1qAcLb0xUiOlKCWhihheKtsX9cdT5FYl2e90PnZyJtgPQzI
-X-Received: by 2002:a05:6000:24c8:b0:47f:f4b9:88b7 with SMTP id
- ffacd0b85a97d-48002671fc7mr27781438f8f.1.1786374602367; 
- Mon, 10 Aug 2026 08:10:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:24c8:b0:47f:f4b9:88b7 with SMTP id
- ffacd0b85a97d-48002671fc7mr27781377f8f.1.1786374601987; 
- Mon, 10 Aug 2026 08:10:01 -0700 (PDT)
+ bh=HYkMROPk5tnt9TKZ2yMptsHcqYxKzdJ/3bYucS5nefU=;
+ b=D/six/xnedzhcPxNv2zbgJsOEAk21nQktWSUbmtOA3wmBO2DdcJLOABJIjCRr8KDnr
+ EkZfo/kYGcjAixm+19GFWSyciVYkNI/Lpe+0BM9Z+RZ9CeekyoXUbMaFTBj4oUm2c/sX
+ wciPauMII0SbrIB4RAGXA072pG3dfTJhGLaGJeHl+KMY+JZgs9bIOEh425ajhpB+06Uz
+ yoD0jJ/SyTChGUpsLPVuHxfvAf2jWcyCZLi+VCLQ+HbgW7jMczoq3lPP3V4Rvgw+FldN
+ sA6jDvxwgsQicDmqRQ3GDIo1X4werVpsF7ZYZmYKN4asXn5SETxtJHTh6sWiOaYlxa0Q
+ NvQw==
+X-Gm-Message-State: AOJu0YykQYdgDfIYrnvkOknFgGs3wea2XWTEBkfTE3Jwc6WUt3n3bFcc
+ 3y1mVVS/8xs1tSqbzJDaVLdE/EcykbsToR+f/f2LtqaSbjXTQhF/hwFmxr0MDwqCPVZCV48TDQH
+ T1sV+gYE7qCjK/mvUFQtLIuVhB7M2rB+4XBAcXRDiBnXy/6Rb9ytX3d00
+X-Gm-Gg: AR+sD12XvxFPE6AxH5gyL80nYUlVqj7Rki1XGdvLWUNYORzr5bpqV/HT4clLMnKjE5/
+ agHhFfb0XoN2NdFVO4F5WMX/k7zIkYze1Ju2Efi2DX47tbRo9139ZS1hfcEJ1INZKQBOW36QVbd
+ r3+VVIVn8ZpgZUV6PIFOWHD8jzTWtRV2zuJLWUIyE3Mh2TNBF9TTHN3VXvfDFUsRAd/wKHoECXL
+ aCfIa+m082lN03MKwCAbH4JGub2iaUVCSgupfM3GDcdUSIdDCHc1Y+Lb3+mmIN5wAxfTCQj9Yrg
+ cyU98vXKqpwk3vYlr8KCDJZcpWu1laOiVF9YjW8bzSpPX78ULHC6Vppd
+X-Received: by 2002:a05:600c:530d:b0:495:52db:7e8 with SMTP id
+ 5b1f17b1804b1-499727fd550mr41613625e9.19.1786374494194; 
+ Mon, 10 Aug 2026 08:08:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:530d:b0:495:52db:7e8 with SMTP id
+ 5b1f17b1804b1-499727fd550mr41612865e9.19.1786374493768; 
+ Mon, 10 Aug 2026 08:08:13 -0700 (PDT)
 Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4800220ab04sm32764444f8f.37.2026.08.10.08.10.00
+ 5b1f17b1804b1-4995427a4dcsm483994085e9.11.2026.08.10.08.08.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 08:10:01 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:09:59 +0200
+ Mon, 10 Aug 2026 08:08:12 -0700 (PDT)
+Date: Mon, 10 Aug 2026 17:08:10 +0200
 From: Juraj Marcin <jmarcin@redhat.com>
 To: Aadeshveer Singh <aadeshveer07@gmail.com>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
  pbonzini@redhat.com, philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
  pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 04/11] migration: Use file_bmap for RAMBlock during
- incoming file load
-Message-ID: <annpt2JfVZWdgQkz@fedora>
+Subject: Re: [PATCH v4 01/11] migration: Propagate error in postcopy setup
+ functions
+Message-ID: <annpOewt7RS5GjBA@fedora>
 References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-5-aadeshveer07@gmail.com>
+ <20260801023628.22665-2-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-5-aadeshveer07@gmail.com>
+In-Reply-To: <20260801023628.22665-2-aadeshveer07@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -121,22 +121,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026-08-01 08:06, Aadeshveer Singh wrote:
-> Replace the temporary bitmap with the existing file_bmap attribute of
-> the RAMBlock. This acts as a preparatory change for the upcoming fast
-> snapshot load feature.
+> Modernize error handling in postcopy_ram_incoming_setup() and
+> postcopy_temp_pages_setup() by replacing error_reports and local error
+> handling with standard Error propagation.
 > 
-> Reusing this bitmap allows the destination to track page types during
-> a postcopy load, enabling faster, direct placement of zero pages.
-> 
-> Since file_bmap is currently only utilized during the migration save
-> phase, it can be safely repurposed during the load phase without
-> introducing conflicts.
+> Replace use of strerror() on errno with error_setg_errno() for modular
+> handling of errors and change return values to -1 on failure as no
+> caller checks the actual return value.
 > 
 > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 > Reviewed-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/ram.c | 33 +++++++++++++++++++++++++++------
->  1 file changed, 27 insertions(+), 6 deletions(-)
+>  migration/postcopy-ram.c | 41 +++++++++++++++++-----------------------
+>  migration/postcopy-ram.h |  2 +-
+>  2 files changed, 18 insertions(+), 25 deletions(-)
 
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
