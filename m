@@ -4,103 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2819C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46BAC5B567
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtVGO-0006Gm-Jf; Mon, 10 Aug 2026 15:02:24 -0400
+	id 1wtVkH-0002EU-7H; Mon, 10 Aug 2026 15:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtVGE-0006EN-0C
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:02:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wtVkF-0002EC-8d
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:33:11 -0400
+Received: from mail-northeuropeazon11020123.outbound.protection.outlook.com
+ ([52.101.84.123] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtVGC-0004DI-GL
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:02:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786388527;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fHFKJHN+Xq2dSc3ZMPQ5wy9jmRtgzNaGe3ZsiNbk41s=;
- b=b5rcBtflhk5AXGI+hRszcEF3JCYVgnciwRQYixKlqN60yEbX+6eK1/K1sBiIFywRHS89f9
- suSGx5fgXH0d5Kr2fAuQvF/0MbKHj0n09qZ3GdR28VoPmElCGaDoUqHk74LwEXiact+0eM
- lCsrTrrPdodDSoChkcpYKY52s3nBvfw=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-6sMolV_CPl2GFuo_fx7v2g-1; Mon, 10 Aug 2026 15:02:05 -0400
-X-MC-Unique: 6sMolV_CPl2GFuo_fx7v2g-1
-X-Mimecast-MFC-AGG-ID: 6sMolV_CPl2GFuo_fx7v2g_1786388525
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92ec3146553so367613085a.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 12:02:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786388525; x=1786993325; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=fHFKJHN+Xq2dSc3ZMPQ5wy9jmRtgzNaGe3ZsiNbk41s=;
- b=OGdaY6d6CgpnKYSoRjt7unJ9wZP7OXj/DSe4pUjgALWOrCbRsIS7kLIykM5YspoqFD
- hlb6iQjUijIuj9NY6uwigVElIs08LvZCyAE14V1W489L8RP9N9ijSLACGzf7FXANlh8L
- MR+nx4SA/qnX5K8bIQ6h0JiQhIDcN58UsU9vC25dCas/yOPilVL/OPiHRm/2zWk1meTT
- U+N+yO8aa+oZo9QheXsIVhZ0ZRF8/I210IN0Yb303/D1wW22mMX5AbCsnr8QZks2jwkC
- IaiyKygrlokfNsKJQ8v86dc555vfSf/p8Dd4t6dJ7R9F7wotBlGofsxNgs536looWwap
- +Q0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786388525; x=1786993325;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=fHFKJHN+Xq2dSc3ZMPQ5wy9jmRtgzNaGe3ZsiNbk41s=;
- b=aJ8LQ/RCCMq5f6qA4MY3wQpo+btHsM844tW/idg5XsvZI1vYmHxDAsXUex9jZYNKtt
- 8WNrzoWBilbcZ+nzzZwtEaRJCfH+kmmRqzBHDTIaZQwrAM6WMoSJVL2XFs+GzBRegwyH
- 58xYdhFFzqI3qvELemUBlYvKAAkoURleeeYUekDTfwwsu5z2iGCyrwdrh2j6VBDtob70
- k4QS8BBEpa16RngIaUvewNs+oy1BzxpRrnn9cjwLDZpPJRkDdz+HhN5UgfZ4SocfFn5L
- 7lwxj4mRUn4QQB83pHpu/qCiWd7HFEAZc1fvXONMgqYOeuqQ78OcIGqHkUwVH968UbQ7
- t1rQ==
-X-Gm-Message-State: AOJu0Yy+BsikasGfO5siuYrG7TFdiQXCsywQmUILvMgGjD2nMApzZj3c
- JjrTZRkgmWYW7aSv0QJR17//fwa9e7H9AZyptjFJB3RW8alwpjOOjIo6yn3UFcjmrY8AOlOs9yJ
- JOqeN+zuVtPxCTZfCU3EFvx/32cpl9LQSQBa+iHcNWzlLKgpBYih2qs1D
-X-Gm-Gg: AR+sD125J8AajJHJ6+vYRl1I00EdZ2vGiLTFlcqG9loxpzMlGwjBvxQGq7I9wLERait
- sRz98Y9MsKcvOEEkDEghfGSB0flJY+zcZ99lPApr+ksUfV3vwkMP6ra2mje/k3fAYjcM5LSwonV
- g/wlOAJXj2XDrwEDdMR1JpzPWSdzRvR0ii+JvTSiVRbT0QeykLyQ9LF8s81CyLLzWVYjEt+HWvI
- dVb4HpzCvfbDU709V3nWFKVfxbDPITTkyVVcL6Qcl3hQwbpcxCzkaiBMA+mEqrqMuEri28OTXN2
- 8zbvc//8tyOfQ9JkppEAMwHB9DhXGiy0usNYwgeu1W19leS9OgQv65DEQvgdMpg1Uur9
-X-Received: by 2002:a05:620a:4549:b0:92e:6637:da8 with SMTP id
- af79cd13be357-9369d124a29mr343609385a.28.1786388525020; 
- Mon, 10 Aug 2026 12:02:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:4549:b0:92e:6637:da8 with SMTP id
- af79cd13be357-9369d124a29mr343597385a.28.1786388524366; 
- Mon, 10 Aug 2026 12:02:04 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-936a16dcb0bsm37071785a.47.2026.08.10.12.02.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 12:02:03 -0700 (PDT)
-Date: Mon, 10 Aug 2026 15:02:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 00/11] migration: fast snapshot load
-Message-ID: <anogKPQgWvLLjOH3@x1.local>
-References: <20260801023628.22665-1-aadeshveer07@gmail.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wtVkD-0000i1-I7
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:33:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n3MAkt1WxuCalp+oIAywJ0fCtYUK7q3E89ZjOO4a2/XfwRuyF1T4pAEo5XeLWSvWmxLL1nbbRJL82aFhVr3Z/Gaq06YN8U7Qc1GLkiVyGd0tEGVvBJKbhWKLS29nYDGgt4XVDK+ka27OZ5Q1uZJ2xcyHWx2/J6Wa/2bgAmHCcOLlbJ7QaY+ywKn/rIznInmHJMs0l2R3FmRDgwIwqqRF/BzNkgDodqVHnjz7a4TMntbntsazwA0GDczP8x7eXWvThee6MIym7EfJLMLN6NnZ6QWNFGFfNr7wQorio+plg2HBqhWZHpx9G8yDFPRWsItlwRA0xUrmu3F1beEGUcPHoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KbDTGRjzvvAC8MxVSNmTvZn/qwOYFErBdVlUzXMLIJI=;
+ b=OiBLCJApA56Y+pGlRXs7rl1UPR61YDkWyrfeEUZRYWl9wGpRPjOz8O4NfKTc61+E9AjMNiJx7mciFS/c/AI+uhti9rcCAasTP292JnpFcFoUMIZ/d+WJ/zzojsyKAq+zpuPjBEkRohVJuuOOfUqu+soLVZMMVmhN1TZpxgF8TZsukrafDl5z4HxHYGUa9/Sx0cPhQwXYO1g80qJlpG6m3Q1x0d2pgv2oneIYd90Ja/9036cd6QIBEWMoqAT7TFtNBMkfvRxMQ/cPIJT9WyUqwc5VXR+tdqAx1mjdROSonbrfr2BXw4CDKZoBmBA5hAAjKUf43pZJRNJ4Joql+n63hg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KbDTGRjzvvAC8MxVSNmTvZn/qwOYFErBdVlUzXMLIJI=;
+ b=dSNYnpMdyKgXXDgwJxZIDbTIGGRae/g4cJ7bcphSc8/DwSb1qmYgJ08LGiuI0lus94nlLPWUs++tWi5S4Kq3K7OgL7LDWwlbXyNEE3MOJmWDGkRBEbP7SzCJqBLb32sst52v59Iv6RKy3TXOddbM9KHfDtB+AJRMrYgsMW9JNXq9Vr4/nIOqMvfLF17UvLCM0GUD9EkPteEeNT+4zge/fzfHwJwEaFi3roSeknxiITRYmtXGRc18sP1iWGCKISWzZvd8ljvMzUPClg1gKQkok6ruj2wE6t9W6/hRbdZrGuw/YD3/SxLZmJImnUVOrOxcRtC2ZdeGQ4SgdeW+y8nNyA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB6620.eurprd08.prod.outlook.com (2603:10a6:10:256::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
+ 2026 19:28:03 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
+ 19:28:03 +0000
+Message-ID: <4388199e-a638-475f-b27f-9a0eb8941f3f@virtuozzo.com>
+Date: Mon, 10 Aug 2026 21:28:02 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] checkpatch: warn about hunks which only add blank lines
+To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ Chao Liu <chao.liu@processmission.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260731134046.1015479-1-den@openvz.org>
+ <e8921043-2405-4b20-95f8-7cfc2d9bd8f9@redhat.com>
+ <877bm3yg02.fsf@pond.sub.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <877bm3yg02.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VIUP296CA0063.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:337::17) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-1-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB6620:EE_
+X-MS-Office365-Filtering-Correlation-Id: ad8e5678-edd9-43b1-7f29-08def7157f2d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|10070799003|6133799003|10067099003|4143699003|56012099006|5023799004|22082099003|18002099003|3023799007;
+X-Microsoft-Antispam-Message-Info: +XcYii0htgjZJp9+LVZR0Cv5A7NtsGiBYMOzPJVjaeKRskMh2JHXcPsobhnl/BXn366kKYEj+ghtCNN4yo5LdWqKZWKGkkmKrRl1w5s+HLrkbjx0yKMCX+T0yrDI3Q6DKov1x24kRbM/g8qZ1lVgS/nn3osOGUtWFgtPoS9CtiIylx1ZlhY2UE0zBV0yLFzgbzr8dBU/qmUV8Q3FLK3aIRAqfuJF/skIXkwHqjpL2/eLVdM0seCSZN/E+0ItB0kOQOLE4O0Rp9otibaNHFdw/efpP+WN5u5hu8NWXBJojbYuebUgjDJ0uTFegoonSoGy4JZm00lQOwHy4tDAJ/YqTAqNyRCiu9ev76/vmhnUBSnvrD+VeUmo50OXOMZSnWRF8KRkJuoIdBlHxVUSPjvsHnPRm8tE2bUThTSFJ0n4rqmIujB2t+ZP9pr8P95Rh9KlI+s4zHmT68XPOzX2lHhBmBBqvtC3pENN1li1aVJmgwPssuUI1ZhUEhq0fHpr7Xc+BnTa3SZIn+Usl6EmZ8auvagTdmp0x+ShKlsTUloNZqMvUhocVW7eBa1iUewBqGuqdhkBLLVtkoCkaq5kgAGrEkgTNBTBV1sr0I2SKE8dCYUh2G3CpcuSsh9BF2bi8VL41OTKqvmc6BpjiY0s6G/cRTeFET71E1ZiMlNGbkCC3Vs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10070799003)(6133799003)(10067099003)(4143699003)(56012099006)(5023799004)(22082099003)(18002099003)(3023799007);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TllGOFJkdXZCaWJwbVlxTEdiL1k1YlBLRUZlY1poLzUzMDFkMjA0eW1URFln?=
+ =?utf-8?B?OTRHdnJ2elVabUxIOXorT0VRRTNuTUx6OEpmMGtnS0VBNUQrdkozT2pPSzVV?=
+ =?utf-8?B?ekZsaEJnS1NqOGpPSTVBdVhDR01lbkhpMjY4RjBGVFNUdGpaYjJBRk5HRlZV?=
+ =?utf-8?B?UlBFQ3UrNVhQRVVyMjBFbThCZW12QnZnSW03UUZ1TnRtUGNMMStVYi84Znpv?=
+ =?utf-8?B?bjNsMi9rcG5vVHB6aTh0MXlaWXJ3cjVxL21CKy9GZndBYWpKcTFRRXltOHZC?=
+ =?utf-8?B?KzRGTDFHRi92eDdlUG5idVlqeGZBRFZ3M3JVTGh2RXg1bVF0OFlRRThiNGI2?=
+ =?utf-8?B?Unl4bnVEelRiNnlTY08vUlE4OUJJWWJqSGRMVEpReCtPdEZXc2p3Y1VUTTZH?=
+ =?utf-8?B?a2pUd3FnV3lWdWxGY2psTmxvaFNjUlgxQTk2WDRTZ2hKdnNLa2tOWllVQWZq?=
+ =?utf-8?B?Sk5hMXc5TDhwSlZNdTd0VytJN1ZLRXRRVTk4YmVBcWFTNE43ck1VRGlNVTlq?=
+ =?utf-8?B?cXJUQmg1TUdkdEJnU2g4bzFHWU9zUzVST1NXbHJOVzdDekxNMXhTVURSY0tK?=
+ =?utf-8?B?SXBwYlBqWGVNc3BGOUl5aGxSbk5adlltS0RQR3VJcktDTmpvTGw2UGtWb0Fx?=
+ =?utf-8?B?L0QyWCtzSkhoYUo5K1BjNU1ubnFiWEt4V2MvaW1ja1BhZG9WUVRsUjlEa2Uw?=
+ =?utf-8?B?SUErSW5UVjlBSzZVbkpxN2JzVkRSd0NYMXR6azRZL1RiRVNCWW9Fa2lOeEsv?=
+ =?utf-8?B?ZkNaeWhHMHdsa0M2b1R6UzlUaW85eXdHamYwejZrSzdCTVNnaVJnMENwSXJZ?=
+ =?utf-8?B?TDBkQXNTYnVvMFNoNEpZREhXcDliZ2tHS2tMa1N2VndiOGxQYmtFRWVvOFhX?=
+ =?utf-8?B?RDhPdytoWWJ1SUF0blYvUUdwbFp0cVZkYjVhejRtblZpVjRCZTU1V1UvN2FW?=
+ =?utf-8?B?R3llaWpJNnNGa0g3NlhhdytsdnlLU09rdVc0REE4UEFMeEs1dDdwdXBQNUtP?=
+ =?utf-8?B?cU9OQmdqN08vWFgvTnJxRllaQVB5SW1KWndyYk1YNThFNDZiWSt6VTZaRTlU?=
+ =?utf-8?B?NlZGYkhHMVQya3FZR2pVUzA5SnFEREhmMlJLVWhWdUR4empZZGFOYjdxR2VP?=
+ =?utf-8?B?MU5SMDJhSXdHZnJvVkhjckcrT1VRVG15V0dWRUY3am5hNGpaNGkzVUV6WTZS?=
+ =?utf-8?B?TUhIeDZhZ29haVZvMkU2MitqcjlmTEJ2bm5oc0dpcEt5LzFDaFBiUHpHTnhh?=
+ =?utf-8?B?RGhVcWFBSm0rdjBZSlluSXNFRlNHdjFWeFdSdVJ2Q2ZaNThvYS9ORWY3d21l?=
+ =?utf-8?B?OTdhSUE2ZXlSU29HWXJ0TEViRWNpa3lmcEhhYmxsZ01iWDIxaDY1aHMxSzMr?=
+ =?utf-8?B?dU5NSzlPbGtvM2d0eVNYaUVvVVNGWS9ISzBpdnUzejNWOEc4UnlwZmtobG40?=
+ =?utf-8?B?WGNIQTNIKzdMYkRCTmMyNHBrdXVobkh3K0IrQTVGaDhQU0RkR3JVUFBQZjVw?=
+ =?utf-8?B?TS81K3o1RURPTmRCYmRXMTlhOUYwTDI2QW9hbVZENEZFWDJoYVZ1TVJrSzdJ?=
+ =?utf-8?B?QkRjN04vQ09XY3VNbG9XQmMrNXp4MEx1RUhzbXZ1U0p2aW9nSDRMQ0RkWUpq?=
+ =?utf-8?B?RGFkSWJUWUxNRlQ2aTZTeDA2ZlpjZThlNWNaWkhXSWtnUHE5dVcwMS9yNC96?=
+ =?utf-8?B?czFBWllZVUMvQjVLaktOV3RLK0pvODVKT1JwM1FuSDVLV0kwSFQ4Q2tuVjJI?=
+ =?utf-8?B?VHpRQ0tpcm9IOG9zMWhuTHFnUjA2WFUyNlFJRC9TRVUzRjIyS0xzUnAxUFdu?=
+ =?utf-8?B?dnhibGNybnpYclJjSTB3Y29NbFBkbUVtV3YyZkRnWHp1dDFzUDdGRVFGRWxQ?=
+ =?utf-8?B?SmJocnJOdjBCc2pYSXhteUtNWFBDeGZ4bXE5aGVDbnZvb09iWlJxdkVIajRp?=
+ =?utf-8?B?NkxzUDVaenlwR1BZeDlrQXhWOElxdUpOUjJjRGxoZ2FuT0M5Wm12R0Rvbzd2?=
+ =?utf-8?B?dFpGeWJQazk1WTdWN0xaQ3dPbkQ0bW92TUg1aG1YM2lBWHJnN3JTK2xTUHdL?=
+ =?utf-8?B?N1dvR2RKUW1KazM3bCt1WGJrV2N2TEZhUXVCemI3V0RwV25yYXVNdGNhL0Z5?=
+ =?utf-8?B?WDgzSGQzMzN5cFpPTVdIUzcyTWtuV0s4YTNadThnRThmMnJHTnhsV3pPbThV?=
+ =?utf-8?B?a1o4MTBRa1c3TzAxM1lZZHZacEZxcWRpQlQyaVplYW4vdnZMMlk0Nk1wTVFy?=
+ =?utf-8?B?RUpzQ3VXOEswZk1iYVBjSlZxYXJ2MzBjMC9RSmdhOWxYREV4UHpGZHdkaDdW?=
+ =?utf-8?B?THFreFAyK2NzZmlCaWU1T2lPNml6RFUxU0hVM25FYklXYktSZVNEdjA1bFJ0?=
+ =?utf-8?Q?kzeI2W7nlAJKiBflSuSDtvftr9Lmu+sw73Wvpmjh9qLr0?=
+X-MS-Exchange-AntiSpam-MessageData-1: w9L+hNAfDrj76A==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ad8e5678-edd9-43b1-7f29-08def7157f2d
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Aug 2026 19:28:03.4694 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7gvqlFx7Agp1uWKbvG4ctlS+3x0AZZzK28BUDDAWRr89mebipA4uExkmabUPl7rBoOicfWzLTZVOEmhYDSEa0w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB6620
+Received-SPF: pass client-ip=52.101.84.123; envelope-from=den@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,32 +155,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 01, 2026 at 08:06:17AM +0530, Aadeshveer Singh wrote:
-> This series implements a "fast snapshot load" mechanism to
-> significantly reduce the perceived resume time of a VM from a snapshot
-> file.
+On 8/6/26 07:28, Markus Armbruster wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+>
+>> On 31/07/2026 15.40, Denis V. Lunev wrote:
+>>> Patches sometimes carry a hunk whose entire content is one or two
+>>> added blank lines. It changes nothing, it makes the diff longer and
+>>> it survives review because nobody looks twice at a blank line. The
+>>> blank line itself is perfectly fine, the gratuitous hunk is not.
+>> Well, I wouldn't say that the blank line itself is fine. It depends.
+>> In source code, there normally should not be more than one empty line between code blocks, that's why I complained to the patch in your pull request.
+> For what it's worth, Python style *demands* two blank lines in places.
+> Here's what happens when I delete one of them:
+>
+>     $ pycodestyle scripts/qapi/parser.py 
+>     scripts/qapi/parser.py:656:1: E302 expected 2 blank lines, found 1
+>
+> Why?  PEP 8 "Style Guide for Python Code" section "Blank Lines":
+>
+> --> Surround top-level function and class definitions with two blank
+> --> lines.
+>
+>     Method definitions inside a class are surrounded by a single blank
+>     line.
+>
+>     Extra blank lines may be used (sparingly) to separate groups of
+>     related functions. Blank lines may be omitted between a bunch of
+>     related one-liners (e.g. a set of dummy implementations).
+>
+>     Use blank lines in functions, sparingly, to indicate logical
+>     sections.
+>
+>     Python accepts the control-L (i.e. ^L) form feed character as
+>     whitespace; many tools treat these characters as page separators, so
+>     you may use them to separate pages of related sections of your
+>     file. Note, some editors and web-based code viewers may not
+>     recognize control-L as a form feed and will show another glyph in
+>     its place.
+>
+> We run pycodestyle via flake8 from python/tests/linters.py.  Still not
+> part of "make check".
+>
+> [...]
+>
+That is actually the difference in between what is done in
+the kernel and here.
 
-I gave this one a quick shot, it ran all fine here.  It's a bit of a pity
-that I still almost need to rely on postcopy-blocktime to get some more
-info out of the async load process.. but I think it's still OK.
+There are 3 main notes:
+* kernel check is not running always, it is hidden under
+  --strict-only
+* kernel check is not executed over Python
+* kernel check catches consecutive blank lines
 
-One other issue I found though, after applying this patch, QEMU will also
-allow me to use QMP/HMP "migrate" (rather than "migrate_incoming") command
-when both postcopy and mapped-ram are enabled, which will ultimately leads
-to an error:
+Here my check is different - I am trying to catch junk
+hunk, which was missed with manual eye review - just
+blank line. Such hunks at my opinion are absolutely
+useless and that is worth to flag.
 
-(qemu) info migrate                                                         
-Status:                 failed (Unable to read from file: Bad file descriptor)
+Thus kernel style check would be complementary to my
+one and they are orthogonal.
 
-What we can do is to disable it for qmp_migrate(), e.g.  migrate_prepare()
-can bail out for outgoing migrations of such setup.
+I propose to stay with this version. Anyway, if you
+prefer, I could port Linux one. We could try to make
+voting :-)
 
-Other than that (and the page size issue I raised in the separate email),
-I think it's ready.
-
-Thanks,
-
--- 
-Peter Xu
-
+Thank you in advance,
+    Den 
 
