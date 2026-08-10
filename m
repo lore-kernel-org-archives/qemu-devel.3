@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F049C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 17:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19989C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 17:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtU2n-0003yA-4n; Mon, 10 Aug 2026 13:44:13 -0400
+	id 1wtU3I-0004Iw-7m; Mon, 10 Aug 2026 13:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wtU2l-0003xv-LX
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:44:11 -0400
+ id 1wtU3G-0004D2-7M
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:44:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wtU2k-0004h6-1t
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:44:11 -0400
+ id 1wtU3E-0004kd-MU
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 13:44:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786383849;
+ s=mimecast20190719; t=1786383879;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PXLnZdygJxKqanh86FXFTKtaNCBsQBWFdB+pgaMSz9k=;
- b=fPh1dFG0sZth8LN74lwBlzaiqbEnXj1sn07xdfoN8Na4lyLyZDPt0u2qbQvZU0lYlKjceW
- ICFnavbyMS67JCYPJBwBBmsh/W5M4CZqwBMWwtdRwrdMtYpeupvOh/YuIpiC/1uxmxHowR
- WMSM5gP3Ww1R/HiaOjxZBzku7ER7NwE=
+ bh=gMOywVOpxQgUhcaew+MIBdKVbrxzvPuF0sIem07xkN0=;
+ b=KPiCwZbvom7Xl5l9morhZZ0o3TBzjBfbo8g/7tnScOijn+Wn231CyU4BeVUy3Faco/29xY
+ YZXxnEHcJiEogPKAf0dhsgpi7mSELW4D5Okgx7PvLtatQcmJTFI721p/B7m7CUM39F7j8D
+ sn4p5edfI5I8kMsCLpsDFH37scjCh48=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-kpkjy07VOyWVdhbl6jAYtQ-1; Mon,
- 10 Aug 2026 13:44:07 -0400
-X-MC-Unique: kpkjy07VOyWVdhbl6jAYtQ-1
-X-Mimecast-MFC-AGG-ID: kpkjy07VOyWVdhbl6jAYtQ_1786383846
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-U9smKTczPAyxHb2DvvctDA-1; Mon,
+ 10 Aug 2026 13:44:36 -0400
+X-MC-Unique: U9smKTczPAyxHb2DvvctDA-1
+X-Mimecast-MFC-AGG-ID: U9smKTczPAyxHb2DvvctDA_1786383875
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 912651956070; Mon, 10 Aug 2026 17:44:06 +0000 (UTC)
+ id 5C3DD1956041; Mon, 10 Aug 2026 17:44:35 +0000 (UTC)
 Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1018919560AB; Mon, 10 Aug 2026 17:44:04 +0000 (UTC)
-Date: Mon, 10 Aug 2026 18:44:01 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C7E9180049F; Mon, 10 Aug 2026 17:44:33 +0000 (UTC)
+Date: Mon, 10 Aug 2026 18:44:31 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 06/39] system: move gpa2hva() to system memory unit
-Message-ID: <anoN4TVRFUBdtqj3@redhat.com>
+ Markus Armbruster <armbru@redhat.com>, Eric Farman <farman@linux.ibm.com>
+Subject: Re: [PATCH v2 07/39] s390x: prevent crash if given invalid CPU#
+Message-ID: <anoN_yB8ep9ZA-f6@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
- <20260626-qemu-no-hmp-v2-6-8af31bc54c61@redhat.com>
+ <20260626-qemu-no-hmp-v2-7-8af31bc54c61@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260626-qemu-no-hmp-v2-6-8af31bc54c61@redhat.com>
+In-Reply-To: <20260626-qemu-no-hmp-v2-7-8af31bc54c61@redhat.com>
 User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -92,21 +92,12 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 26, 2026 at 01:19:07AM +0400, Marc-André Lureau wrote:
-> The function is now used by SEV code path. Move it to physmem.c rather
-> than hmp-cmds.c.
-
-Fun, a nice example of why we would benefit from a clear separation
-of HMP and internal code.
-
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, Jun 26, 2026 at 01:19:08AM +0400, Marc-André Lureau wrote:
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  include/monitor/monitor.h |  2 --
->  include/system/memory.h   |  2 ++
->  monitor/hmp-cmds.c        | 31 -------------------------------
->  system/physmem.c          | 31 +++++++++++++++++++++++++++++++
->  4 files changed, 33 insertions(+), 33 deletions(-)
+>  hw/s390x/s390-virtio-ccw.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
