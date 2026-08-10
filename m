@@ -4,182 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9901FC5AE5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBA9C5AE5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtNZU-0004JT-ES; Mon, 10 Aug 2026 06:49:32 -0400
+	id 1wtNhC-0005lH-Ku; Mon, 10 Aug 2026 06:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wtNZS-0004J1-V6
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:49:30 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wtNhA-0005l5-E2; Mon, 10 Aug 2026 06:57:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wtNZR-0001hi-9E
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:49:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1786358970; x=1817894970;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=iW9expB6szDurnLaEuatxBULZLDUmm/rgIqmnEZ+K54=;
- b=RTuWMWTFW6u3YwiGXuaosXiankePlTx/HKrGa8XS6Vi+a+uaXkvSvAMv
- nC5v6I3UCs2Pb2mpZsHn5TPzGv3VNAAm1u7Ju7hk1/wyXr6rRsePTzZ4Z
- xI/yR3abl81pZxzy4lr7y6ICfqEAflMyRhYCzX4wwY+Yqq+kJDcVP7RSr
- iHPYJCvhpCukphsG/Z93aXuoTu7WT3K9QqBePDS999zz1q0nPTt/Xb9fp
- RFzRTPC0cUu9rPb3ttBmts8FvIwTHALAdjkZM9i3sGEWTvgvkwDjReC6z
- Ys9j74r05IXcYZCLlWTB87fI85WWIMFxkiMeGAQF2Phtgn7dEJBWxcP2p g==;
-X-CSE-ConnectionGUID: 6k4WvqSmTPOTUTpdSZr9/Q==
-X-CSE-MsgGUID: dx0MSHW1SY+GgOlsW4aWVg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11870"; a="90550663"
-X-IronPort-AV: E=Sophos;i="6.25,215,1779174000"; d="scan'208";a="90550663"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Aug 2026 03:49:28 -0700
-X-CSE-ConnectionGUID: JrjD7do0SWKRnuXHJAwF5g==
-X-CSE-MsgGUID: DT5Ahm7+TGq+VtsNqOmHTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,215,1779174000"; d="scan'208";a="301237248"
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
- by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Aug 2026 03:49:27 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 10 Aug 2026 03:49:26 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Mon, 10 Aug 2026 03:49:26 -0700
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.43) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Mon, 10 Aug 2026 03:49:26 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WwnMevDRuSo6KUGZvTeA4nH75uypNi9QwNV1sFfhPDlKiA1oRKnR5Fi1fOnA+VA/2bROQafsLgcTw98Zzsxp/QVUTTorF7Fzo1uUifwi9p0GKuqJ5Zh6tujqOW3EEJoHz8JVmWa5tRzynF6/PzFEbtBlOgH97pZNEdPG4QGsVHlQJzGDHNnWI8dUBsax7qoCl7UqkKGl0nk4gMnrg3P4A5Qnis7Vm/sGdISxawRSKOzL7XtHNtkgUkqCbQtV5vrxwr2oPCcWM9fIcAZLnDr3PV2GVX9PElL7CdVRhQO82YMBrkjVgEnNPCcW2kRK2Z7pKP6J9QO43h7qL2FOGQODwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iW9expB6szDurnLaEuatxBULZLDUmm/rgIqmnEZ+K54=;
- b=HxhWv5xHKzDU7cBHmjQtsEdbofsSQ/UDsPYmsJf91v68Gj1jUbVnloH9kcWPX/Ies8zQYnpUlBc833rDyRxHmfypbhoNoGj6xoBEQjt+2L3RQnIR6zm4CWMEaLUvK8l9/K0bfyT4gG8Thl1EUuixMej+4Eu68NkCTlOKEMInqNgT9MGUCCqD99xSasBL8ZH9Wd40wkgtvlFGzZoIfRHtCdCpJraygLT3EuOUgA6O5/xNs+C5hTtZ9Td+JTBTPREyBkxrw96dD8LPeADwbm9n5suId41utlFyTo1sPTHVyvFkZ0GeKlpIyjctl7FgwW2JWj3PNCa3huvF6QqWILSZfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by PH3PPFD114713BA.namprd11.prod.outlook.com (2603:10b6:518:1::d50)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
- 2026 10:49:23 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%3]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
- 10:49:23 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
- <clement.mathieu--drif@bull.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowangio@gmail.com" <jasowangio@gmail.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian, Kevin"
- <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Hao, Xudong"
- <xudong.hao@intel.com>
-Subject: RE: [PATCH v3 0/6] intel_iommu: Enable PRQ support for passthrough
- device
-Thread-Topic: [PATCH v3 0/6] intel_iommu: Enable PRQ support for passthrough
- device
-Thread-Index: AQHdJXaoJ2foc7Rrs0CFGZilBc0gdraUUwKAgALNe6A=
-Date: Mon, 10 Aug 2026 10:49:23 +0000
-Message-ID: <IA3PR11MB9136D461AAF0FCC8D757B33C92DE2@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260806073825.363468-1-zhenzhong.duan@intel.com>
- <45013c8a3fe7983ee31f52d9d9ba6c176ce98fdb.camel@bull.com>
-In-Reply-To: <45013c8a3fe7983ee31f52d9d9ba6c176ce98fdb.camel@bull.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH3PPFD114713BA:EE_
-x-ms-office365-filtering-correlation-id: 5d04bc8d-c815-40d6-bf14-08def6cd0a3b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|1800799024|23010399003|38070700021|4143699003|11063799006|56012099006|10067099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: 1/tuLXRbaqvk8fxK1yUz9AN5AwcsH8UTh/SM5mkARZ0qbFN5V+cQXPE5YYqHxVV8fWDX4TKxRHyuyhx9UrjL70ASliLeZjyrHYxAZcR0iEwRf2RUiVnGmJCybZY9d9BAiMvzUXhHfTOxeyX26BWNcq0L5CGclisk7Z08mHbUdRomGlkmzodcH6URg3+7YVkpOaIibFSSd/cqjcEnXDr2mTnfhTfr/Nhbkn7+tWMPBK8tXtsnlkhT/f75vb9fTY3IDy0uAwcHR7hr32WHd5ikpRZsuyJtWLfC4NHQv9xN0u468wMIlvB5Z3aQtgyeIlQZtvD4JVNMMsCZALwZqIVIo0kmgRmvml17ye5zNOa0NmqBxOKFejZ4qeRrAhXLonUAcLKU2vUbwdqmvz+RrL2KRZCfmzmYsiQ3+Dn1wEqbB5RQdgfkpAulLlj75xXf8eVWrOmxIKNc45dbDzRl7ogznNjs2X/cJdDgpitnSgFvno1+2z7rU5tHY+t30OJrqUX+0pW/wr+pjnGEkPQ0bCLiBbjPCPRygqrcJh3hmftxatscuADW3MT5P64RLX4k5ywIw6bNZfM7pJCqwZ3Z/7mxnU5DQW5dI2FQ1hKdHBUBPRPJcTHVi4HE4xEaQARPlO8buMQVSGaYzofAK/Q1URV756/z2/q5QwnFmJ6g/GoNfeXN6lUU5pxvsknYudkFXqVcUDYABfacJ0NqHsjKQjM/Hk5VSD9Aw54W8ogaozR7zf8=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(1800799024)(23010399003)(38070700021)(4143699003)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cVNQcjVWSDF6V21hRzF4cUJEMGU3c0ZVYUpQV0ZJNHV5aXhhYTRramVmR3gx?=
- =?utf-8?B?T0JXK25xbExnTStlUjNURDZBL09GRXM5bDE0M0l1VjJQYVg4WDlZeWVHYVNB?=
- =?utf-8?B?U3Aza2o3ZHkxS0tyc2h1eXpsRHhkT0ZweEs0V1FhQ25XMFBMWFJpa0UyYWRW?=
- =?utf-8?B?MGNIZFR3ckV4cW56OWhsWnkwRGVPUmRRS3djZnNwTVJGbHZhSmQ4SnRHUkll?=
- =?utf-8?B?VHlpSjU4RWxLU0ZodXdpNEhsNmNjUEZKVUZvWW8zb2kzRzhVS0pSZzBOZ1RD?=
- =?utf-8?B?dW01Z3JlRmpYQ2lpRnNNVnFrbnVxT2pkZmNWeVFMa3ZkTW9BZ3BLVFpqYUVs?=
- =?utf-8?B?RkRSYVFWdDAzNHJlck1YK2RCeVlBMlVMMytSY2g2SnQyWnNyTmQ3VmRQTmtV?=
- =?utf-8?B?czg1VEZVQWlNa2grZDhqUVZkQ0NuNzlUNkpRbXlXbU9uNHd6UHBRU2pHNUN2?=
- =?utf-8?B?d2k1WENsdjBOTEdva0l0MHJZa1VNSmxpWU4zUWQ2NHA1ODUyaG1OVDdldWp2?=
- =?utf-8?B?d2JIZWM4T3lzYlFkcWIxNDRNNkZMSDVSQk43ZHNoTFJkUDZtMER2RWpPcjdF?=
- =?utf-8?B?Q1ZUK21PbEFJSThTaUFpMTRrbWZ2b0g2eUkzTmw3azJXMGF0b0QxR1BWaVdQ?=
- =?utf-8?B?enJWeUUvV2NvME0rcUg0REN3TGtZT1lUNDJTSzNkZ0lvNlUvSWYvRlN3b3dq?=
- =?utf-8?B?U3ZNaFR1Y24vbGxoSUJoYk02SVFEZi8wNGlwWkVtVDBhQllxdDVBQnVvRWtL?=
- =?utf-8?B?WC9QL09aQU8rZ0hzZHNFVjI2VlB6S1ZEK2hSRzR4a0JmU2NZc0VyNGsreDlD?=
- =?utf-8?B?MDk2WkpQMVpNZWVXNTcxNUtxWmFBZTJTRDllaC9TcHR2TWlkVGVGYzFTaytK?=
- =?utf-8?B?cXlQejhEM1ZManZFNWpxcitZWjhxbWU5RXBqTUZaMlNNUTFhWmpTcldJRDdS?=
- =?utf-8?B?bXNPMG1HUkdBcmlMZ1lwajBYSFlkNTh1dVV6QTliNXpCTU1yWFFGSDZrdE9u?=
- =?utf-8?B?a0M3bWFxdUdDMmRmV1llWlRmd1JURnBVajB4YXZPK2ZkRVBncUgrZnVSWkNL?=
- =?utf-8?B?bmJudkQ4QUZrUzJWNjhLeXc3TUZEaDJSaXQ3aWVpTExqN0U3V3lBUXJWNzFV?=
- =?utf-8?B?T1dRODVKbk1POXVFajc5R3VQeVBGZFl2MFBlcGhwS2VQVnpPcmJGdHJCY1k3?=
- =?utf-8?B?K2xNZTh0NmFqLzNmbGFlQ2RTa0pUSmxaZ3JsQWlWQWZwV3Q0ZThNb08xUTZi?=
- =?utf-8?B?Umpmb0ZCY2hOYjQrY0dxK0hsM2c3U1BzT2s3Vi8wYTZydFgyVDJwc2ZVUmth?=
- =?utf-8?B?QlRKVzlwcEd4ckE0UUFQd25zYlpuanRzRW5VQTV1bllkdTJvZ3NnTmk0UlVC?=
- =?utf-8?B?QVRzRlo1Uk1VYi9HYzZsWkVLZ0J6VmNOSGxMUXBWUXhjTURoOXU0SEx4amhF?=
- =?utf-8?B?djdDOVYwcEZvYUNMSDVseEtCd1F2K0huWUo0WDBDQmZ5ZzB6RUJTZ2Npbi9D?=
- =?utf-8?B?ck85QnZPeVBYcG1xcWpzT0tHeUZ2bnpZcUJCMWlla21Eb2wwWFZrMS8vNXRT?=
- =?utf-8?B?N0F5bDNZSXJ5NGhzdGxncmprMDVBUEY4OHBqY1BuTE1WU2FVdndVRGZOSG5r?=
- =?utf-8?B?QjBpNUhicnhqUUJQZElmMVBsbjZvRDAwb2FZUE1yK1BQNEo5dFZoaGxtaVNu?=
- =?utf-8?B?MUo3cU9rNGJkOFVPUGFRQmlWYk8xZmlBaTlscDlzcUVyZzVNR05uak5xYWFx?=
- =?utf-8?B?cDNUNTBaUE9UNzJ1bHpFNjdKaUQxN1EzWDB0RXIwdUlIN3FkTkV6dkVzYVJm?=
- =?utf-8?B?eGlMQm40dWpkUDRnSWFhM0NvOXdmekZsNFFNNXNWOEdUQlcwWXpjU1B2OWJz?=
- =?utf-8?B?TktOZDhnV3VadGNQMmJPWGhRTnN2WWdxQS9ObFpka1hZUFhPYUwrSGtJNTdH?=
- =?utf-8?B?MldHRGhmQ1BjQXRHYnh6Nk1oNFlmaFZGNGs0ek1PejBKOS9qSWsrRHUwa3dV?=
- =?utf-8?B?R2FHTzdjZ28ydEdNWWMyL0hKQjRQTm9CODBYYmdHRm1FYUFGQVd1NW50cnVT?=
- =?utf-8?B?aFg0Q2dKSXpieUtNam42cURYcVV6ZjI4bDVtUGluSTdmMlYxazJTVjFpdnlH?=
- =?utf-8?B?WkpFME1Zb0ZEUHZ3MjhReklrSkhWbng0OXlkcExSdU9Md2g2djdzWXU1WkNR?=
- =?utf-8?B?KzA4RDJNaWYydzZlK2RaYm5OSUpjdFZMalVqSDlFYlNuZkhDMEFxaTRvOHFT?=
- =?utf-8?B?c2ZYWW1ObnJ6TStLWk1sbENSNXFLd3Z6NmxOc2pTM3NwSHovdmU1UlQ0MElJ?=
- =?utf-8?B?dTVHQjd1Z2JpK1psVTdlRUhhcjZzbDVQRWlPeXhNREVKUmJFSDEwUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wtNh8-00031q-EX; Mon, 10 Aug 2026 06:57:28 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67A9VYaU1208983; Mon, 10 Aug 2026 10:57:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=drPK3O
+ 4aQOcLvd2RULq+W3uledZWjB2+RSZrbKOy8OE=; b=tnVaZ6ZO+QY1Q9+tzyrN14
+ 8LijowaEKcZgCITyqZ53HrEoXAoSPFZoelRHhUBmnoWyyShCR9S8+VUV0ffG7gFE
+ ZjVMMIjgPQvQoeUy3VnQ+QSR+zNVmkDb0MBUgfV0L9bSFBVhB6Hj3hZilXMBUOTk
+ 2ne+nZVR5j5p/6sVjtKBB3cUNmar53yvNsCCTFLlHnwyqrI6fYecAxP0SYYTl4yn
+ lf6Ctam6AdSCZ5lnTiVqGrJEf/DE2WpweGf4YUdtgCbXRR2M0++2igj+U4KawHH4
+ VtGIOcfJDh0paWCDdn7nVQKuhSE1CY3qgtHUdb4W4TlWHg/qNdvIB/bzKXALxo8Q
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq97gt0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Aug 2026 10:57:20 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AAuIAK013774;
+ Mon, 10 Aug 2026 10:57:20 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0g4abc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Aug 2026 10:57:19 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67AAvIYI32047662
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Aug 2026 10:57:18 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0C86A58058;
+ Mon, 10 Aug 2026 10:57:18 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F07F58057;
+ Mon, 10 Aug 2026 10:57:15 +0000 (GMT)
+Received: from [9.123.8.229] (unknown [9.123.8.229])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 10 Aug 2026 10:57:15 +0000 (GMT)
+Message-ID: <a15bda83-a711-4f34-802c-42c6b389962b@linux.ibm.com>
+Date: Mon, 10 Aug 2026 16:27:13 +0530
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: ctmScNSaG0N2jhpqrSSpIbER2kSJE4I0Cn+FI+rQNaackaWmgAaz2XZ3dljf1+ZbH1tmXzdzEyIiiC/5w2Dn66kouDym+IZgUWrZvdbrqi+KllmT8ZC1wn21TFXZuO3JkcBDkKt50MdH2U5OQ4GkZcGbD1moJJp9T7uKaiTCf2UXdY/1Et7dj2J7ityzoDcnR5rDQaeM7KsNK4OaYADcSq9Qs0fH/h4I0fPZ0YH1WuAxODWWEuHAIZfDqdU5CiFDbzw8mtfUlQGgU8EWua6mfZUXNetm0sxA3r3o1AwTBGeiLaL2PQWVIblXaus9FIxWy00AcPxxNhTfl5Sgu6S/CQ==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5d04bc8d-c815-40d6-bf14-08def6cd0a3b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Aug 2026 10:49:23.2778 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KqXKPCJ10y7Z6U8y2rDrjSpI6pWVhKZPRUI4p4LpgvbTZdK173D7GjwubyVyQCWeYWa5w1jKQeZUiOmx6ihWKQzpr8CkQSbkdo2LkNTzmCY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPFD114713BA
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.15;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.827,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] tcg: defer tb_flush when initial region alloc fails
+To: Yogesh Vyas <yvyas1991@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com
+Cc: anushree.mathur@linux.ibm.com, npiggin@gmail.com, harshpb@linux.ibm.com
+References: <20260805171453.25940-1-yvyas1991@gmail.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20260805171453.25940-1-yvyas1991@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 7n_-ZLGbmFQESDJ8sG7YYgYckAJNdBk1
+X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a79ae91 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=t84m7cRm7uVbb12eVNgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDA5MSBTYWx0ZWRfX9KaDnkCftJhJ
+ TQbiRaOS+yuAXefiTXikrj+TdVYcKK0TpMMMdxssG56sCHH1/Vfao5iTkgDDab1dw0jLqBDx4GU
+ dUsqsAaT+PylOvVvAfNMETAxLA/xeerATdSpwwZN7vbLFzLFvehoR5vNgV8/nVw1SLchO3mzC3K
+ MODFLDE8KaeMQ5cVQ2XsxLDuUnkUMTAkQtsti0jdWTuFkmx8iuZvdmk4LPEYmQHQevL8QBcKylC
+ YoXh+6fmX3tLO1enRPiPiFguFrP+mrV08Qvsl0+4CIArTzMtNrwbYWbjbb93jhtZS9bbfodg5Is
+ YE0b9W6jjkcu5gEAkHoeYtNUwZlwrbqFPXvs7+y4d370x5blvis3s9MTfsOc/JkQGPuMWaommWW
+ udj7s/GIvN6Ri/KX9xI20LrstlxTPFXQSxwYF7flyhhePCKpD1EcDnrZZ1K3fJ2nktT2P6+XOPn
+ FY8jyTm3hAxubU6jD0w==
+X-Proofpoint-ORIG-GUID: St7eQcxX9YbTfqlLkOX57Up9WhEEgSHP
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDA5MSBTYWx0ZWRfX8/2146KWo8y2
+ yh2w/zwXdB8rD7iK9BjhXEn8GE/XDA/8DewrlM2g90OzWWQKg+DyLAU/pnRj9b+O5X9S2jceoeF
+ BXMjTEaJNSrg68EneUvRiJnh/fQVekI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-10_02,2026-08-07_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608100091
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -195,19 +126,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2xlbWVudCwNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ2zDqW1l
-bnQgTUFUSElFVS0tRFJJRiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGJ1bGwuY29tPg0KPlN1Ympl
-Y3Q6IFJlOiBbUEFUQ0ggdjMgMC82XSBpbnRlbF9pb21tdTogRW5hYmxlIFBSUSBzdXBwb3J0IGZv
-ciBwYXNzdGhyb3VnaA0KPmRldmljZQ0KPg0KPkhpIFpoZW56aG9uZywNCj4NCj5JIHdpbGwgcmVh
-ZCB0aGlzIHNlcmllcyBlYXJseSBuZXh0IHdlZWsuDQo+dGhhbmtzIGZvciB0aGUgcmVzcGluIQ0K
-Pg0KPmJ0dywgcmVsYXRlZCB0byB0aGlzIHdvcms6IGhhdmUgZXZlciBzZWVuDQo+dmZpb19kZXZp
-Y2VfZ2V0X2F3X2JpdHMgcmV0dXJuaW5nIDQ3IHdoZXJlYXMNCj50aGUgaW9tbXUgc3VwcG9ydHMg
-NDg/IFRoaXMgbGVhZHMgdGhlIGZvbGxvd2luZw0KPmF3IHRlc3QgdG8gZmFpbDoNCj4NCj5gYGAN
-Cj5yZXQgPSBoaW9kYy0+Z2V0X2NhcChoaW9kLCBIT1NUX0lPTU1VX0RFVklDRV9DQVBfQVdfQklU
-UywgZXJycCk7DQo+aWYgKHJldCA8IDApIHsNCj4gICAgcmV0dXJuIGZhbHNlOw0KPn0NCj5pZiAo
-cy0+YXdfYml0cyA+IHJldCkgew0KPiAgICBlcnJvcl9zZXRnKGVycnAsICJhdy1iaXRzICVkID4g
-aG9zdCBhdy1iaXRzICVkIiwgcy0+YXdfYml0cywgcmV0KTsNCj4gICAgcmV0dXJuIGZhbHNlOw0K
-Pn0NCj5gYGANCj4NCj5JIGdvdCB0aGlzIHdoZW4gdHJ5aW5nIHRvIG5lc3QgVk1zLg0KDQpJIGFt
-IHRyeWluZyB0byByZXByb2R1Y2UsIHdoYXQgZGV2aWNlIGRpZCB5b3UgcGFzc3Rocm91Z2g/DQoN
-ClRoYW5rcw0KWmhlbnpob25nDQo=
+Hi Yogesh,
+
+Thanks for coming up with this solution ! It looks good to me. I had a 
+doubt though.
+After tb_flush_pending is set, tcg_region_reset_all() allocates new 
+region to all the contexts. Is there a possibility of region not being 
+allocated here as well and the loop repeating ?
+
+Thanks,
+Chinmay
+
+On 8/5/26 22:44, Yogesh Vyas wrote:
+> Under MTTCG, busy vCPUs can temporarily exhaust the fixed code-gen
+> region pool by holding multiple regions. A newly registered vCPU
+> thread that then fails tcg_region_initial_alloc() currently hits
+> g_assert and aborts QEMU — seen during vCPU hotplug on ppc64 TCG
+> (virt-type=qemu) with a large maxcpus.
+> Instead of asserting, mark the context with tb_flush_pending. The
+> first tcg_tb_alloc() returns NULL so the existing tb_gen_code path
+> queues a tb_flush; tcg_region_reset_all() then repacks the pool and
+> the new thread obtains a region on retry.
+> This mirrors the graceful exhaustion handling already used by the
+> runtime tcg_region_alloc() path.
+>
+> Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/2984
+> Signed-off-by: Yogesh Vyas <yvyas1991@gmail.com>
+> ---
+>   include/tcg/tcg.h |  9 +++++++++
+>   tcg/region.c      | 15 ++++++++++++++-
+>   tcg/tcg.c         | 12 ++++++++++++
+>   3 files changed, 35 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+> index 7669dc1c2d..8a05e3af7b 100644
+> --- a/include/tcg/tcg.h
+> +++ b/include/tcg/tcg.h
+> @@ -381,6 +381,15 @@ struct TCGContext {
+>       /* Threshold to flush the translated code buffer.  */
+>       void *code_gen_highwater;
+>   
+> +    /*
+> +     * Set when this context (a newly registered vCPU thread) could not be
+> +     * given an initial code-gen region because the region pool was
+> +     * momentarily exhausted by other busy vCPUs. Rather than aborting, the
+> +     * thread defers a tb_flush: the next tcg_tb_alloc() forces a flush +
+> +     * retry, which resets the region pool and reclaims slack for this thread.
+> +     */
+> +    bool tb_flush_pending;
+> +
+>       /* Track which vCPU triggers events */
+>       CPUState *cpu;                      /* *_trans */
+>   
+> diff --git a/tcg/region.c b/tcg/region.c
+> index 5d4be1453b..1200947385 100644
+> --- a/tcg/region.c
+> +++ b/tcg/region.c
+> @@ -393,7 +393,20 @@ bool tcg_region_alloc(TCGContext *s)
+>   static void tcg_region_initial_alloc__locked(TCGContext *s)
+>   {
+>       bool err = tcg_region_alloc__locked(s);
+> -    g_assert(!err);
+> +
+> +    /*
+> +     * The region pool can be momentarily exhausted when many busy vCPUs have
+> +     * each grabbed several regions during translation. A newly started vCPU
+> +     * thread that cannot get its initial region must not abort QEMU: instead
+> +     * flag a deferred tb_flush. The thread's first tcg_tb_alloc() will force a
+> +     * flush + retry (tcg_region_reset_all() resets region.current and
+> +     * re-packs the live contexts), which reclaims that slack and assigns this
+> +     * context a region. This mirrors the graceful runtime path in
+> +     * tcg_tb_alloc()/tcg_region_alloc().
+> +     */
+> +    if (err) {
+> +        s->tb_flush_pending = true;
+> +    }
+>   }
+>   
+>   void tcg_region_initial_alloc(TCGContext *s)
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index 1e77f2365a..ea66fb6f84 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -1830,6 +1830,18 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+>       TranslationBlock *tb;
+>       void *next;
+>   
+> +    /*
+> +     * A newly started vCPU thread that could not obtain its initial region
+> +     * (region pool momentarily exhausted) deferred a flush. Trigger it now:
+> +     * returning NULL makes the caller queue a tb_flush and retry, which
+> +     * resets the region pool and gives this context a valid region. Do this
+> +     * before touching code_gen_ptr, which is not yet valid for this context.
+> +     */
+> +    if (unlikely(s->tb_flush_pending)) {
+> +        s->tb_flush_pending = false;
+> +        return NULL;
+> +    }
+> +
+>    retry:
+>       tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
+>       next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
 
