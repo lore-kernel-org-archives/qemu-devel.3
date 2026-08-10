@@ -4,144 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FBA7C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 22:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F81C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 22:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtYG3-0005xj-7w; Mon, 10 Aug 2026 18:14:11 -0400
+	id 1wtYIy-0006om-W0; Mon, 10 Aug 2026 18:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtYG1-0005xb-SV
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:14:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtYG0-0004Yo-37
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:14:09 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67ALXBRS2883100
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:14:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ijdH0he7rhLsJyqIh9n+XbQ5pzCFm3Ijw87Wiwboyso=; b=Q/XQQZFpukdn0DVg
- geQrXdIc695B23GugyGk1HfKPnLDoJVOtBJ5OoTrgRfJNWuRHGjCk0WUmH06Ux4N
- s/sFURLSlF5uN1qcnIFK2UDWcmE2PKyB4W2zf44wF1b+miR1DsxH5QXcnYHpsMQP
- MPtXFVZHR0Bd0YJme5OKedLZIOfdpwPsCcoqggG6GSuNp8UWMSoGUNtCskvYA8A1
- BIRMwacYOrVCf8wPvuA2Y8qfE1zvJjUTVhzQKXBCUJjUZz9HLmlkT+5PyJKM7jns
- aPSZajf8C4HG+kw/Qft1d/CNY1cDfUBcd8LkkveaFRgOk9qcoMU7Uk29lLWDYyNK
- 31S7og==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjk21akk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:14:02 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c1d7886cdso46300991cf.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 15:14:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wtYIx-0006oA-AT
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:17:11 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wtYIv-0005TI-H9
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:17:11 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-5218927884fso23253791cf.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 15:17:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786400228; cv=none;
+ d=google.com; s=arc-20260327;
+ b=DP+1sXHokS1phEBwGEmdYtFKGqlOCXpbuKqi91dExsvOIes5zJX5QInh7PXm5Ib7Vw
+ PeprGOcFdhZqQ4LurJ2SMqgjiaYq+U/VQEJsaR+Iyni3PPkPk8UUfb5U7sqRdqWHegHZ
+ xbumqTveOgs63dF7N14V8a8KDGBuRxP+Ja8LQP0AW7wJMp1uRSk09P807Xoptn2a6E3v
+ 6ThtE+yHdWy+UPfiEr2DIJh993cIp+ncQnmf/bb9EzHMe2TYqZO2qWf+KnFb4ORwPNf6
+ BahNxoA7pstb3fh4l/sPzFu4peZBHz2cHWco0T7q2qY6T+0f0uPylkdKYDnoZNEhr9Yp
+ lG5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=f6D6gbor0YNO+WmjnO+LpeTVG1lSL/c2F8d3w+GaXw4=;
+ fh=azakwI4Xb9f6DnAcztET+ugSHXzSSw4voANLU4fk32Q=;
+ b=D1GIpOy82GKDCffCJVVG+GreS/IS5ithMdaI1ZvX0mxK5+31bgFu8Crp5DNo7IJWQU
+ enBJaHeQ11P+VhNLkpRh4Cc1Bnzxt70IrKzB+g1PKKoavzkXSDb/bZjev4CcyD4wjQe7
+ zp9h8PXMIlqDssnYAZvbbdHDKX76nhSUjer0xsNhQDiAgDEk5j7MwywDtkXlES2ZOSqy
+ C1SGA1gEnOnqxHnf6dWzxeE4TXrbhzpnm0jKckTR/evlf6V62IRHbdXNcYJxVoVM7KpW
+ XiYLEMySa4eAHVJuiDOLL81kMiN05bDyonbUSgUKgmvFwIsdJ2k31PsTVpjLBTSviMdV
+ ukDg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786400037; x=1787004837; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ijdH0he7rhLsJyqIh9n+XbQ5pzCFm3Ijw87Wiwboyso=;
- b=PWHFWeGPWb/KwufX6EAkm9+tks0gfNjeaxPFq/CZntIMlNOiE1yOhFMtee0r4TExN4
- iPs4Pcew7zHbvDsc79aaOPEgQtU57RqRU7rka2Z4uKWJ4FQrksIE5g2i6k0in1Qv6Xs+
- nqhihCIp5A+tgW/9Afa32bYG1CV9zVFXkaU0hpcFrJInBRtalrAt64Ix8NSfhbokl8sb
- IEe9wd9eMJ4sYcX5i+UZSYys8TZUzOi+QsOthrhddOnalZogSG/ovRFnXV6CLtG9ruer
- nQvvDYwMU9npWxTh4QKXti9pQ8BchOJN/6FKxifVR0oIPAVVWv6rlM1Y3l2l2j7U4ggo
- 7XuA==
+ d=gmail.com; s=20251104; t=1786400228; x=1787005028; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=f6D6gbor0YNO+WmjnO+LpeTVG1lSL/c2F8d3w+GaXw4=;
+ b=ERRp56ruW3SsAT5MX3OcGanKpYoWMrJVBOi4zQDiF2yRxH2Bx51/juIaBRjm2eBzR1
+ FAFtZC6iSLWFpjtT54wSu2oU2GbHWZTzNJa5PRqSPmUvo9pYk6KetoD3J4LHRCTe4GJn
+ eCZHuADfNy8oyh9i92qHAcjwU2eWynd3AdbicpXfKDwb6yCDe/OUWJr4hB4oCBkMLUko
+ BVh8Hl0EGAkvgydJ7bumBIxtaKGiT24TH6aivIQmI2zxO8tC+VCY+wWGCvRjbBfvDX3e
+ Obrx4RrkJrmO+lZBIVyB1Eii+s7TuoelgpBa7fEMSZQSF0niEvtwjFk0sLEdh5PxbKSn
+ UrwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786400037; x=1787004837;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ijdH0he7rhLsJyqIh9n+XbQ5pzCFm3Ijw87Wiwboyso=;
- b=C4dSb4XNLBm5h5QxqAsfF4kGPylDtiYF+hUMtpboDc/s0pODkEAI1usGrnzo5SrBvl
- wZ2maEgNZxuhGl6wH9qUh1dhxCeJkLhGM+n6RMp9LhmoZSJTzMcUUL0oq04NPsqgjg1n
- e8o/rVEiO4VEXY1xyYbRx9ESy0VQtgIwf9IQ4dVu7HBWV20dRPB+4Jz8YUYBgig59Q8h
- ROao2gvQO4lngWZTUMboAXfks//lRtbq9tZHrevLsTMsZAYQaZbVjB+PeJEeDpKd69ZZ
- tASZdPeG5DBUnraSJU7tPYxfcPvsajaBCZKf7ElA0wi2ZBXTD51EljykxfxRRFgMBaKF
- KZ7Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoEKWpis0tcMceXOHul05jz4CmD+uaSwxBO9G9xgUQfN2OKJ+HKbpPX2kjXAGjWImIG7JrAZy6nrvWY@nongnu.org
-X-Gm-Message-State: AOJu0YzYSro1BzpZvAw4jxLa55ZPKtmohAP8YctoD15v8A2T4QLe70/L
- ZBZCAZh5c+/M3LFY2Q/YF6i1QCudtE+MLlgZOSk5SlcXJRkNzgZ9PmFpJQOx38JO6SiduJZakrE
- G10SdqECa7ZgZJJosWxsWqVydPfO91DMsYT5RgNuSBtOSGvSy8aBbyLCyeg==
-X-Gm-Gg: AR+sD13he2dKzbjZbhFvbYqduTsrQCXyTE/QvlU9B3t92h0DuD4GV4OvprtY1EMSovI
- Xbck+3NKYAp2ms9ETOl5pSfjwSo/lhhYtUOAVKTslB2afydN6pya8SrzgPVMy/uCQr3TOWGSg4Q
- YUEnNjTZBLqFiwZBZMzFlygKlP0oVIuCpkInHUFFgIAUPIO3sIxUjWvJ1M1+eotScCvJKsaV5ei
- 8KWePpn3SlEFp79XR68AcWoR1WaUqRq1mvOnF6WAq5UrabUqwF7DAzjUV/oFz/QlNSIU6atNKGh
- KzYu7q2beEnvAgw8ajmfV8SnkKzmMXvYFO9GsNtxMB6/u6VYqoiSumvu/n53+5X1KNA05GgyZxI
- DEaz/to0k8syEmjFQvuDXjOcxIzFxbCX4gAWXHAsG
-X-Received: by 2002:ac8:598e:0:b0:517:8d24:64d8 with SMTP id
- d75a77b69052e-52d4bba4135mr60914511cf.13.1786400037042; 
- Mon, 10 Aug 2026 15:13:57 -0700 (PDT)
-X-Received: by 2002:ac8:598e:0:b0:517:8d24:64d8 with SMTP id
- d75a77b69052e-52d4bba4135mr60914061cf.13.1786400036607; 
- Mon, 10 Aug 2026 15:13:56 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-480021f8b9bsm44382638f8f.25.2026.08.10.15.13.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Aug 2026 15:13:55 -0700 (PDT)
-Message-ID: <6e2e8dcb-92d9-4d95-90b8-5be9fa085fa6@oss.qualcomm.com>
-Date: Tue, 11 Aug 2026 00:13:54 +0200
+ d=1e100.net; s=20251104; t=1786400228; x=1787005028;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=f6D6gbor0YNO+WmjnO+LpeTVG1lSL/c2F8d3w+GaXw4=;
+ b=JJSZcGtV64b/UJAh8bh+rGG6RvyonCH20gwyCjTyWXzQmG3Bi9HClh2dXg7QSP3tD3
+ ZNcnR2wMdbWwFUqyUDI9S9lUbFG/pnJiK69JwyG+aMKF+MtNaCv+7guiz0k4bM542ooE
+ 5a5aKXF4lUvKZjSSpg61mmjR+8OgDVCPB7V7WgDPQZLs0Ta6ual8bfKnz2MLxg7ibQaG
+ wz0S7JQ4ykFlHdH11NTJ9c0NPxoShowIosOX1FcKPY3ImnQ0dU8IF959rNukZ3VWnpFk
+ pgR6FfV7GiuTtf52G2CVnOf+nArWlKioivvWn/+nLMEtjkULGHSYXzKFyxRvLUarjExS
+ HBwA==
+X-Gm-Message-State: AOJu0YzL/DXqi9TTHpK0LTITrcXSf0sOmlCzDe8NmT8MkeajIKry/88W
+ D/Hs6LCSA/e/LzxEDyJYVzkc4VUBSSY9GMsLqphUAkeJPkp2z/iX3IfXr1Xvt0SdmFDFJR8IQkT
+ oxUvsUhlINFgOQ8XbrF2dsk9tTpqLFNw=
+X-Gm-Gg: AR+sD13YyHpa13pW3DAGicTd7YfeYjOY4Z4xWQm/WaatAvp68T3eryisNgY0m/SLA58
+ //HkcN4oaftDiewGwm9fGcwbA/V5945RDibmJYetLytMJMNzdR31j2/iuahEdVtE2S76XsZanQ+
+ 0NqeX7LcZuOp/ErxLe+YpkF2vSa8jDg9laEeITHykfIdSeDIYnGfFZzcP50nhH4/yMNwkNJC2kB
+ 0OZYz5WndPnmqYtfn8Sg1qOFfhdS9gh9ut97ApNIAwqZ22h1wuPDb4C/8+2c3ZQZvzB7A4dX6tu
+ Rm8308Mwm3L0otKYHSnHp6L0YSgWEpYWpcPnGV4HAO2LqkUhOtNF1SMet6HKIQYAovlw/LFwgUk
+ UWAM=
+X-Received: by 2002:ac8:5cc4:0:b0:51c:239:42da with SMTP id
+ d75a77b69052e-52d4bba4276mr65739571cf.15.1786400228320; Mon, 10 Aug 2026
+ 15:17:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] target/tricore: add tc39x CPU model
-Content-Language: en-US
-To: Parthiban Nallathambi <parthiban@linumiz.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- christoph.seitz@infineon.com
-References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
- <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-3-1c39053e5e95@linumiz.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-3-1c39053e5e95@linumiz.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE4OCBTYWx0ZWRfXwLm07IEqzuvs
- ajrp/0erkOr3yZyT+qiuBgbIvNnIzlaCtWDN/SlixRCAx6HBr3OiBT9b33yN1Y2feLkWR+FY+qZ
- DUBi2QSznq/zQ1KsQOP9WUo0CPJzGUo=
-X-Proofpoint-GUID: 1Kd1S7FVQYTVuCvJZ0buLHuT9HPY1tHY
-X-Proofpoint-ORIG-GUID: 1Kd1S7FVQYTVuCvJZ0buLHuT9HPY1tHY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE4OCBTYWx0ZWRfX8OsfU2PCIZ7t
- uG3AZv/f7M8hy4hSMtAwWunB+E0NgHb0MT+MpL+4eGJ/VtHLEfVFlW3KiLFdH8ow0nD2jQNJgmd
- LBe339aSTvLWQG3jfgrWG2Z7phsA3pUTivROXDdSGlUeSjWZL/h02h6S8BjTD2lbUsw4PCZUSYk
- rSYGEcSSQN1z7Y/rPl0lhzmamIawz0UuAHnjJg/uGUlN7cP6OpPN4nxvmVyzn/cDj8QIhjc/dGK
- hxsE3Ai2+dIEUn9q9LLLSGBMlB7YsC1gsUasVG+tmIEXEOJ4/5fse2UvELypFKvfEXuPphSmvGd
- To2FOV151yANCH5hdTprL+Vpm0SOpTEz86apIpqQj1wgiZfO2JozpzpLPIKWnJIJYpz14bnCvWt
- GEnymh9ZY1ytCQuB6Al02oLEEWwMGLpB8WqHMAmjplz9vK78SJveR8g4OUpc53oWz3BKKQcf8VR
- eTJRTfzbjTuSysyvMBw==
-X-Authority-Analysis: v=2.4 cv=eJ4jSnp1 c=1 sm=1 tr=0 ts=6a7a4d2a cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=vU9dKmh3AAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=rsP06fVo5MYu2ilr0aT5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_05,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608100188
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
+ <20260723-vhost-user-isolated-memory-v1-12-6b97c439eb28@gmail.com>
+ <9478d870-641b-4f3c-a5da-9026a0ec137d@redhat.com>
+In-Reply-To: <9478d870-641b-4f3c-a5da-9026a0ec137d@redhat.com>
+From: Connor Kite <connorkite@gmail.com>
+Date: Mon, 10 Aug 2026 15:16:56 -0700
+X-Gm-Features: AUfX_myccA-zhgRVZD7-2mOnxFmk9MjBYGEJGwyeZxrB-0TE5jnA0X_Yc_F-r78
+Message-ID: <CA+spn3qP5n3=-MZQ4Y4BxYF3=LLbUicLVC0kDM9yGoZ-2pNakQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 12/15] hw/virtio/vhost-user: send isolation regions to
+ device
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Haixu Cui <quic_haixcui@quicinc.com>, 
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,14 +139,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/26 11:30, Parthiban Nallathambi wrote:
-> Add tc39x with TRICORE_FEATURE_162.  Same ISA as tc37x but a
-> different chip family (6-core AURIX 2nd gen).
-> 
-> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
-> ---
->   target/tricore/cpu.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+On Mon, Aug 3, 2026 at 6:46=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> w=
+rote:
+>
+>
+> This function name doesn=E2=80=99t really say what the function does, and=
+ more
+> describes its type.
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+I will change it to vhost_user_fill_msg_reg_from_tree since it is now doing
+the filling directly rather than calling another function to do so.
+
+> > +{
+> > +    struct iova_tree_traversal_args *args =3D data;
+> > +    struct vhost_memory_region msg_region;
+> > +    VhostUserMemoryRegion region_buffer;
+> > +    DMAMap *map =3D key;
+> > +    args->fds[*args->fd_num] =3D args->u->iso_memory.iso_fd;
+>
+> Generally: I find it quite hard to read code where general statements
+> come after a list of declarations without an empty line, especially if
+> there is an empty line later. Visually, this last line to me looks like
+> another variable declaration.
+>
+
+Got it!  The declarations and statements are now getting separated for clar=
+ity.
+
+> > +
+> > +    msg_region.guest_phys_addr =3D map->iova;
+> > +    msg_region.memory_size =3D map->size + 1;
+> > +    msg_region.userspace_addr =3D map->iova;
+> > +    vhost_user_fill_msg_region_iso(&region_buffer, args->u, &msg_regio=
+n);
+> > +    args->msg->payload.memory.regions[*args->fd_num] =3D region_buffer=
+;
+>
+> Why does `vhost_user_fill_msg_region_iso()` exist when this is the only
+> caller, and we could just fill `regions[i]` here directly?
+>
+> > +    (*args->fd_num)++;
+>
+
+vhost_user_fill_msg_region_iso existed before the iova_tree was integrated =
+in
+the code base.  I agree that the traversal function can absorb it for
+added clarity.
+
+> As noted by Akihiko, there needs to be some bounds checking. At least
+> against `VHOST_MEMORY_BASELINE_NREGIONS`, but even better against the
+> array size of `args->msg->payload.memory.regions` and the caller should
+> pass the size of `fds[]` via `args`.
+>
+> (And I=E2=80=99m also with Stefan, something with `index` would be better=
+. Maybe
+> `region_idx`.)
+>
+
+With the current state of the refactor, the size of fds should be the same =
+as
+dev->mem->nregions, so I will pass that value in via args and do the check.
+
+The fd_num field is now called idx.
+
+> > +
+> > +    return false;
+> > +}
+> > +
+> >   static int init_isolation_regions(struct vhost_dev *dev,
+> >                                     VhostUserMsg *msg,
+> >                                     int *fds, size_t *fd_num)
+> > @@ -1234,6 +1275,24 @@ static int init_isolation_regions(struct vhost_d=
+ev *dev,
+> >                                         map->translated_addr);
+> >       }
+> >
+> > +    struct iova_tree_traversal_args args =3D {
+> > +        .fd_num =3D fd_num,
+> > +        .fds =3D fds,
+> > +        .msg =3D msg,
+> > +        .u =3D u
+> > +    };
+>
+> Personal preference: I would like `*fd_num =3D 0` somewhere here, or
+> `assert(*fd_num =3D=3D 0)` before the iteration. Yes, the caller initiali=
+zes
+> it to zero, but it is just not obvious here, and it seems necessary for
+> correct semantics.
+>
+> (And the open question whether `fd_num` should be renamed here, too, or
+> can keep that name. Not sure.)
+>
+
+I will set *fd_num =3D 0 here.   I can see how it makes it easier to see
+what is going on.
+
+It may make sense to keep it named fd_num here.  Whereas its main use in th=
+e
+traversal function is as an index, here and in vhost_user_set_mem_table it =
+is
+primarily providing a count of the number of elements in
+msg->payload.memory.regions
+that have been filled.
+
+> > +
+> > +    vhost_iova_tree_foreach(u->iso_iova_tree,
+> > +                            vhost_user_iova_tree_traverse_funct, &args=
+);
+> > +
+> > +    msg->payload.memory.nregions =3D *fd_num;
+> > +
+> > +    assert(*fd_num !=3D 0);
+>
+> Am I wrong or should `*fd_num =3D=3D nregions`? Is it possible that
+> `*fd_num` is less because regions end up joined? Can you add a comment
+> on when they would differ?
+>
+> Hanna
+
+I updated this to check against nregions.  In the current revision, I
+do not think
+this assertion would be reached if there was an issue with allocating eleme=
+nts
+on the iova-tree or filling out the message payloads, but the final sanity =
+check
+doesn't hurt.
+
+Best,
+Connor
 
