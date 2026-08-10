@@ -4,100 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4853C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 22:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1296C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 22:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtY27-00020o-AE; Mon, 10 Aug 2026 17:59:47 -0400
+	id 1wtY2W-0002Ek-OD; Mon, 10 Aug 2026 18:00:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wtY25-00020g-RL
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 17:59:45 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wtY23-000251-Km
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 17:59:45 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-47ffaa8ebbdso1896276f8f.0
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 14:59:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtY2U-0002BK-Rp
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:00:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtY2T-0002Ix-7f
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 18:00:10 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67ALXWuK2830912
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:00:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ac/zO01AnBGVjMtA2xEMGdxLwOUplaoTa6PPUlfgQ40=; b=ej2TRxQ4wAEQMq14
+ WtAsPgq5aH1no9n2levfEY97RTtt3dVh7mkrPrq8yWASpXErYd47rcSjnX97LWjx
+ V7PFsduZUDPlviHljo/64A9xuh9xhZPAPQuMuTp+7e6OTcxxdsy8GHMhdK5/mWh/
+ 98j/AkhTHJ/GOeXeNHQHYjR6JLXHQbqheBE5q97hLOFVvXiDwQ3BoEQ9Sq86ug3l
+ MvfrijdYuk+A6Bu1MztZ5nzzxw8Sb76Sa0HBTjry83rEvJhqITfq57OQ5jg6nclO
+ AuSjZS+qQvuxjRmvAh8NJFB608Uu32FKdgPb3vsxeqeGf4seXYjCydgH5MMkU7aX
+ 4W/EQw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjyf133k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 22:00:07 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c12e43b98so2611271cf.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 15:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786399182; x=1787003982; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=cAP0VU2N6KGIzkl9ksBfE7osvjif03UqtxnHqh+NYlo=;
- b=TVekPpL/dQvJ0vhx6JcNoyzrBRIKcHNPidGE6r8NI/LdTMrYT5sxo/cetu9QPSdFUo
- HpCocjmUypYUze/BGbsUQKdtKe5Vn5TViTpMyG8mDLuOhhvHCQ00HjJoPzkzaqm8pSYe
- T+j/CNkZ/r5bxAYifP5clxsiZ5wL2LNFyL+3LpBK+AmtXYExgOgTerVFLfdRaruHF9n7
- nJ/iFadaUrwjJuEGPRQwmahDZOi2nGV2fqwrWn0l3ljZFilD+hK/4e1ouQ2tnQUGqDUV
- ktIDBHuuVlJcZqr59Cl4XtnWmbt1nl4aNHmCfwBcOT4H+YqvhGC9eCxYTUXuhbG/ZopJ
- 5R/w==
+ d=oss.qualcomm.com; s=google; t=1786399207; x=1787004007; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ac/zO01AnBGVjMtA2xEMGdxLwOUplaoTa6PPUlfgQ40=;
+ b=RiS+e3BLgJ2HuZscK+lYdxAl7sL8o3k/Atvzm4WxQ0ljx8Z4bSBorrjbGDZIvlaMb7
+ 3vXfHOey9PLWKkE+e5bybYMgEKjks1f6B6kfKeT38KcwZ75blaRVEQ3jHY17IBih7JpQ
+ Ih5yabMNrT7Z1zrDCybX8L84fLm4fLzJ6/BBkEVEIAWab5Gpw7t5Q9gUXxloKt2U22fX
+ doucLThRcD+EDxz0JcFz4SG1xvQcEM3SILOw3x7vrRw/p3eLiCr/JMocqTPn0iTXZOg+
+ xGrkZaVw20XuZ4eB71+v1pMIhELMVM16l3ll7vXzWjl6iiEtG0UliywxmdVS9eTyxJLS
+ 0zPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786399182; x=1787003982;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=cAP0VU2N6KGIzkl9ksBfE7osvjif03UqtxnHqh+NYlo=;
- b=mrOleppPvXOqa5aHvCAs+iS0jyAfpuO0qrtUtG0cTOoQPJnb5/GSizzvJlJgVFZdMZ
- NP40m1SMMzxnmksseTRvptTXjZxqLVO7a8qtdOfgzmixMDKDc6W5OuLyWgma4M+5z09p
- 182E/VZ1pZOo8J4KlhrheGx7VOr41jGH4FjOKFRErQ6cD+HLfhaSc9N4bG19RTqvdW+1
- 4I6k6/wp01pDbc9TcpbXw9LowEMHYs/XTpm0tcyhpDqDrWrRQ3ZQzexLu7rWqJjtlU9w
- jfeyuqwgpT5pKNP4z6CRRRZx8jBufGye51xvY0BLSvRgBKmd9qnHpnm0Cfz8XnOFerS8
- Vvsw==
-X-Gm-Message-State: AOJu0YwFwNrFHq33mIq907iusTISA08MiyMw2N3nVcMeV2x/hHGfmdEh
- VRQIhGYsZPPh9H55cH4eum1SMniG/DUPNJ9hkB5/AvkL2sBRIimvurEbdzh5JG8pfrU=
-X-Gm-Gg: AR+sD13PijAKCCLJaQ5KSv1jwK7ewJzZfutD/ki0b8ySCXREJrixcUvLJ2VSWbCTR9+
- qJEQBkUlJ5FatXEpq9dVQeNGfacOWlHoHIg0d1C5sw9INAD5QRs9QQcMyduacLUEhMwYliMPVof
- ac9fmegnrdYb64I4fMYaXq3fmWc4Y/v68By0hbT7JEVHQZas5jptToZCN4YT2Pxb+n/jpg7Dyfx
- 279ZWv3bEg4o4pYEuSpTX2o2OR/aOcWRtsUsgii0MhvqYrCZoRWLTGnMr4TXF7Sjmc4VFM1RT0q
- 60Lpyqvv1fKntGTi99E3ryjhiiYJqmr+epRgxR13+yRGy0dGNAXr4FsSMauTurvOljjq1qPL51u
- TquM/oy20Wjgbconl7ko0PA7qp6NMmJwnyk1mFO33HtIyuJs8Pj/8YHo7FaCWjYXdeHwVABvN+d
- ME93WKXrsihqaah7Cs0CaM4TTs4CulQLHL/aTuy+2OpPGmWUISzoA46r/Ea9FB
-X-Received: by 2002:a05:6000:41fa:b0:47f:fa17:ae0e with SMTP id
- ffacd0b85a97d-47ffa17ae68mr52725883f8f.11.1786399181771; 
- Mon, 10 Aug 2026 14:59:41 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-480021f8f33sm43847178f8f.27.2026.08.10.14.59.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 14:59:39 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D0E685F7F8;
- Mon, 10 Aug 2026 22:59:38 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Brian Cain <brian.cain@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Ilya
- Leoshkevich <iii@linux.ibm.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Helge Deller <deller@gmx.de>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v6 004/103] meson: bump minimal version to 1.6.0
-In-Reply-To: <20260728044248.137626-5-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Mon, 27 Jul 2026 21:41:08 -0700")
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728044248.137626-5-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre5; emacs 30.1
-Date: Mon, 10 Aug 2026 22:59:38 +0100
-Message-ID: <87bjb93ad1.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1786399207; x=1787004007;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ac/zO01AnBGVjMtA2xEMGdxLwOUplaoTa6PPUlfgQ40=;
+ b=MyEyABKAiV/e3hsujGNQ9JJgkea07Fe/FSyrC7tCK/vQRcTvi/YJAc9KvHtr2Pvw62
+ m6TfglI/I5GBBsA5JjHsgNczr+R3/RIN6MWhoA5aWfw7VV8WfkI13PIwjasDESuU9YnD
+ n+qNnVpNN3kmh//5MC1ZgNqQFtalNDOrGNkJRFrTjOTOoKnnDN6lzYctRu+0T+Qz633n
+ ojXHLe/7ZZ7k/klvv+PooCLtyt/xMtSRxOxcFFwdbJp+gDzsQDECcPwMiPlwjLOmlnrh
+ 6eedLoBoG4xO33WW32jOedd/9uGeQTK+RVVtJrOXtev8V927ViSzW/spXZEGkMshSJAm
+ oDGA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqqDxXQyt8BRKU8IrJciJxHF3wmyhBBNWMcH/WEGy9OVKrWDGgB1ZSaJG7r32ExO1swRrXhyM2HoDs4@nongnu.org
+X-Gm-Message-State: AOJu0YyeOLRfhVz6QxUe+snZmFUbTHsxQHIr9spSpr4KGZvZga+XPiog
+ EVVYgovQVr/AFi6fVua4rO8gdmAABTwCXGKgsm5yShi6N/Q2+JK9yJri2U1xKkiVi83jIPb+V6w
+ Bi+FKLtJJTuyn/BperDJkoENxSRT7c6P5lst1KiMvHmWzE+9L0e4gbCvBZg==
+X-Gm-Gg: AR+sD132eA9upwoQLiNTJXrOYL6sMWS3i4QnHxyF34rEItmyWKRZzRt2C2NCQWDQCRs
+ Z4lSYY7OuY+pC0BNrXlQ8wD9dsOzo0pDbkRliIizuLvCy7J3GK+0HcgsKo3qbV3hpGbWihN91p1
+ VVIkcxXa0fkzH1N2m52oZFpppH4PjDg5hkBb33+XZC3uO7wPyMAhDz3b2sLTKd6r9zS3Lvv2MTp
+ YbXngkG0VLKoZRPeAruHsn8Zm4BO7BiQFFdLJgbccHNT3Q9uQ0F/E70fbi1KJ5hisljJwIHDyAD
+ l4724pQdHC8C5xndBUUx0IZW7KGjc667tXRD0YrqAWsEhlDeYpdlZB9vbvgU58WzaIdWQK0SdGF
+ Z+OfxbylUsWgBEPzqQBOHQtwxO/yq7ydgH9bOgsza
+X-Received: by 2002:a05:622a:1447:b0:527:43a:2f30 with SMTP id
+ d75a77b69052e-52ce5f6013emr470978841cf.1.1786399206800; 
+ Mon, 10 Aug 2026 15:00:06 -0700 (PDT)
+X-Received: by 2002:a05:622a:1447:b0:527:43a:2f30 with SMTP id
+ d75a77b69052e-52ce5f6013emr470975561cf.1.1786399206194; 
+ Mon, 10 Aug 2026 15:00:06 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4800215078asm36785674f8f.12.2026.08.10.15.00.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Aug 2026 15:00:05 -0700 (PDT)
+Message-ID: <50dd37b4-39d0-4bfc-a987-73516b8f681c@oss.qualcomm.com>
+Date: Tue, 11 Aug 2026 00:00:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] MAINTAINERS: take over TriCore and add peripheral
+ file paths
+Content-Language: en-US
+To: Parthiban Nallathambi <parthiban@linumiz.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ christoph.seitz@infineon.com
+References: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-0-1c39053e5e95@linumiz.com>
+ <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-9-1c39053e5e95@linumiz.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260531-dev-ifx-tricore-upstream-rebase-minimal-v1-9-1c39053e5e95@linumiz.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 7ax2Rl0ura4B-dm5o-4-fSHXyLSqoduU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE4NiBTYWx0ZWRfX2ImPxhYnsfOU
+ bkxGArixgtfgBGHkAFpWTv4T4WyrqGWrNWnPnpfrmB1gy6CccZYthOTWVgquTI1pBA0GKUaq+g+
+ UDG4zYFraueX+aA3+lDHVzje2Nl5gN4=
+X-Proofpoint-GUID: 7ax2Rl0ura4B-dm5o-4-fSHXyLSqoduU
+X-Authority-Analysis: v=2.4 cv=NqnhtcdJ c=1 sm=1 tr=0 ts=6a7a49e7 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=vU9dKmh3AAAA:8 a=EUspDBNiAAAA:8 a=wCO55ekECHlw7XZBzokA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=rsP06fVo5MYu2ilr0aT5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE4NiBTYWx0ZWRfX0NzeE9wQeQfS
+ 39jGfGsdqTOkUDmTqL5+Jr9/eCip7io7ujXdmrsx8p731YlaKAWnsghIInbf9UKjRVB5B2vQ6e+
+ 6qQazCB2ltnvr/LTGc3wtsA1qgyOL+tTkWJHwOIgVEda5YrZ7tfP8N2vWSkv1WYLgpAcznaHIBt
+ g650VVfGyn5Kx3k28MO9nn11zXnLXpStnUKqXfMivO7okpgo2EIZ0loTOIzyI+Q55xXWmGg0Fb5
+ HYRsPCQCiqx7wKDu2QVyMtJ9eb/Z179G//frp/Pmt0SbA4pQUPrlTI8/TbsXUC5m/p1YcM2TT8O
+ wZLPOGZqakqpe6snDkKS+NXBbVe5q6c1uoAElt0ENJ1WWGKV1rDJot6CVUNWPELtoifN975MbbK
+ Bzx+VazRbF3ies2rdVk2h3CLsr+0Fe7ansOU4zCYp4U4/K2CGKlKEX9ndCkJ5QxX3/UEkg+GgDT
+ kHyb+za/tNdFs5y5mmA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-10_05,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100186
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,286 +157,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> Without it, we'll get the following warning:
-> WARNING: Project specifies a minimum meson_version '>=3D1.5.0' but uses f=
-eatures which were added in newer versions:
->  * 1.6.0: {'test with external_program in args'}
->
-> Which we require because of how we build iteratively our test command
-> line.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 31/5/26 11:31, Parthiban Nallathambi wrote:
+> TriCore was Orphan.  Add maintainer and register the new
+> peripheral files that live outside hw/tricore/.
+> 
+> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 > ---
->  meson.build                                                   | 4 ++--
->  pythondeps.toml                                               | 2 +-
->  subprojects/packagefiles/anyhow-1-rs/meson.build              | 2 +-
->  subprojects/packagefiles/arbitrary-int-1-rs/meson.build       | 2 +-
->  subprojects/packagefiles/attrs-0.2-rs/meson.build             | 2 +-
->  subprojects/packagefiles/bilge-0.2-rs/meson.build             | 2 +-
->  subprojects/packagefiles/bilge-impl-0.2-rs/meson.build        | 2 +-
->  subprojects/packagefiles/either-1-rs/meson.build              | 2 +-
->  subprojects/packagefiles/foreign-0.3-rs/meson.build           | 2 +-
->  subprojects/packagefiles/glib-sys-0.21-rs/meson.build         | 2 +-
->  subprojects/packagefiles/itertools-0.11-rs/meson.build        | 2 +-
->  subprojects/packagefiles/libc-0.2-rs/meson.build              | 2 +-
->  subprojects/packagefiles/probe-0.5-rs/meson.build             | 2 +-
->  subprojects/packagefiles/proc-macro-error-1-rs/meson.build    | 2 +-
->  .../packagefiles/proc-macro-error-attr-1-rs/meson.build       | 2 +-
->  subprojects/packagefiles/proc-macro2-1-rs/meson.build         | 2 +-
->  subprojects/packagefiles/quote-1-rs/meson.build               | 2 +-
->  subprojects/packagefiles/syn-2-rs/meson.build                 | 2 +-
->  subprojects/packagefiles/unicode-ident-1-rs/meson.build       | 2 +-
->  19 files changed, 20 insertions(+), 20 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index 49a5baf5b52..d59c86ab2bc 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1,4 +1,4 @@
-> -project('qemu', ['c'], meson_version: '>=3D1.5.0',
-> +project('qemu', ['c'], meson_version: '>=3D1.6.0',
->          default_options: ['warning_level=3D1', 'c_std=3Dgnu11', 'cpp_std=
-=3Dgnu++23', 'b_colorout=3Dauto',
->                            'b_staticpic=3Dfalse', 'stdsplit=3Dfalse', 'op=
-timization=3D2', 'b_pie=3Dtrue'] +
->=20=20
-> @@ -1385,7 +1385,7 @@ if not get_option('zstd').auto() or have_block
->  endif
->  qpl =3D not_found
->  if not get_option('qpl').auto() or have_system
-> -  qpl =3D dependency('qpl', version: '>=3D1.5.0',
-> +  qpl =3D dependency('qpl', version: '>=3D1.6.0',
->                      required: get_option('qpl'),
->                      method: 'pkg-config')
+>   MAINTAINERS | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 7752917d8c..489be83fb2 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -454,10 +454,17 @@ F: include/hw/xtensa/xtensa-isa.h
+>   F: configs/devices/xtensa*/default.mak
+>   
+>   TriCore TCG CPUs
+> -S: Orphan
+> +M: Parthiban Nallathambi <parthiban@linumiz.com>
+> +S: Maintained
+>   F: target/tricore/
+>   F: hw/tricore/
+>   F: include/hw/tricore/
+> +F: hw/intc/tricore_ir.c
+> +F: include/hw/intc/tricore_ir.h
 
-How is this a meson dependency?
+Move to "[PATCH 04/10] hw/intc: add TriCore interrupt router"
 
->  endif
-> diff --git a/pythondeps.toml b/pythondeps.toml
-> index bef88d49a6e..e2ee450ba68 100644
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -19,7 +19,7 @@
->=20=20
->  [meson]
->  # The install key should match the version in python/wheels/
-> -meson =3D { accepted =3D ">=3D1.5.0", installed =3D "1.11.1", canary =3D=
- "meson" }
-> +meson =3D { accepted =3D ">=3D1.6.0", installed =3D "1.11.1", canary =3D=
- "meson" }
->  pycotap =3D { accepted =3D ">=3D1.1.0", installed =3D "1.3.1" }
->=20=20
->  [meson-rust]
-> diff --git a/subprojects/packagefiles/anyhow-1-rs/meson.build b/subprojec=
-ts/packagefiles/anyhow-1-rs/meson.build
-> index 348bab98b9f..e82b1f20bb4 100644
-> --- a/subprojects/packagefiles/anyhow-1-rs/meson.build
-> +++ b/subprojects/packagefiles/anyhow-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('anyhow-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.0.98',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/su=
-bprojects/packagefiles/arbitrary-int-1-rs/meson.build
-> index 00733d1faab..267357fa912 100644
-> --- a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-> +++ b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('arbitrary-int-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.2.7',
->    license: 'MIT',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/attrs-0.2-rs/meson.build b/subproje=
-cts/packagefiles/attrs-0.2-rs/meson.build
-> index ee575476cb2..9b76fe0f73e 100644
-> --- a/subprojects/packagefiles/attrs-0.2-rs/meson.build
-> +++ b/subprojects/packagefiles/attrs-0.2-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('attrs-0.2-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.2.9',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subproje=
-cts/packagefiles/bilge-0.2-rs/meson.build
-> index ce13d0fe80f..4d4c9bde404 100644
-> --- a/subprojects/packagefiles/bilge-0.2-rs/meson.build
-> +++ b/subprojects/packagefiles/bilge-0.2-rs/meson.build
-> @@ -1,7 +1,7 @@
->  project(
->    'bilge-0.2-rs',
->    'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version : '0.2.0',
->    license : 'MIT or Apache-2.0',
->  )
-> diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/sub=
-projects/packagefiles/bilge-impl-0.2-rs/meson.build
-> index 04617b875c5..57bdf30ba05 100644
-> --- a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-> +++ b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('bilge-impl-0.2-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.2.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojec=
-ts/packagefiles/either-1-rs/meson.build
-> index 04c96cc5fb3..d869201e43e 100644
-> --- a/subprojects/packagefiles/either-1-rs/meson.build
-> +++ b/subprojects/packagefiles/either-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('either-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.12.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/foreign-0.3-rs/meson.build b/subpro=
-jects/packagefiles/foreign-0.3-rs/meson.build
-> index 0901c02c527..80e68967ab4 100644
-> --- a/subprojects/packagefiles/foreign-0.3-rs/meson.build
-> +++ b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('foreign-0.3-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.2.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build b/subp=
-rojects/packagefiles/glib-sys-0.21-rs/meson.build
-> index 8c5483311ed..b9ceb12463f 100644
-> --- a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-> +++ b/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('glib-sys-0.21-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.21.2',
->    license: 'MIT',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/sub=
-projects/packagefiles/itertools-0.11-rs/meson.build
-> index 2a3fbe9ee5a..3081639890b 100644
-> --- a/subprojects/packagefiles/itertools-0.11-rs/meson.build
-> +++ b/subprojects/packagefiles/itertools-0.11-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('itertools-0.11-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.11.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/libc-0.2-rs/meson.build b/subprojec=
-ts/packagefiles/libc-0.2-rs/meson.build
-> index ac4f80dba98..d1a9da194da 100644
-> --- a/subprojects/packagefiles/libc-0.2-rs/meson.build
-> +++ b/subprojects/packagefiles/libc-0.2-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('libc-0.2-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.2.162',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/probe-0.5-rs/meson.build b/subproje=
-cts/packagefiles/probe-0.5-rs/meson.build
-> index e6ea69533b7..1d33800cde2 100644
-> --- a/subprojects/packagefiles/probe-0.5-rs/meson.build
-> +++ b/subprojects/packagefiles/probe-0.5-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('probe-0.5-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '0.5.2',
->    license: 'Apache-2.0 OR MIT',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b=
-/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-> index 8ba558e1330..523572173c7 100644
-> --- a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-> +++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('proc-macro-error-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.0.4',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.bu=
-ild b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-> index a85d7c07143..85f190e56e0 100644
-> --- a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-> +++ b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('proc-macro-error-attr-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.12.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subp=
-rojects/packagefiles/proc-macro2-1-rs/meson.build
-> index ba7de070292..7cb4f93bb08 100644
-> --- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-> +++ b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('proc-macro2-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.0.95',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subproject=
-s/packagefiles/quote-1-rs/meson.build
-> index bf41fad99bb..fdd549e7648 100644
-> --- a/subprojects/packagefiles/quote-1-rs/meson.build
-> +++ b/subprojects/packagefiles/quote-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('quote-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.12.0',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/=
-packagefiles/syn-2-rs/meson.build
-> index 3e6dc318a9c..a7baa6feff4 100644
-> --- a/subprojects/packagefiles/syn-2-rs/meson.build
-> +++ b/subprojects/packagefiles/syn-2-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('syn-2-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '2.0.104',
->    license: 'MIT OR Apache-2.0',
->    default_options: [])
-> diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/su=
-bprojects/packagefiles/unicode-ident-1-rs/meson.build
-> index 11a5dab97df..ee483e13423 100644
-> --- a/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-> +++ b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-> @@ -1,5 +1,5 @@
->  project('unicode-ident-1-rs', 'rust',
-> -  meson_version: '>=3D1.5.0',
-> +  meson_version: '>=3D1.6.0',
->    version: '1.0.12',
->    license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
->    default_options: [])
+> +F: hw/char/tricore_asclin.c
+> +F: include/hw/char/tricore_asclin.h
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Move to "[PATCH 05/10] hw/char: add TriCore ASCLIN UART controller"
+
+> +F: hw/timer/tricore_stm.c
+> +F: include/hw/timer/tricore_stm.h
+
+Move to "[PATCH 06/10] hw/timer: add TriCore System Timer Module (STM)"
+
+>   F: tests/docker/dockerfiles/debian-tricore-cross.docker
+>   F: tests/tcg/tricore/
+
+Otherwise,
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+Thanks!
+
 
