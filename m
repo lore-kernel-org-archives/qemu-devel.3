@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D7CC5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DCDC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtVCc-0001VT-1G; Mon, 10 Aug 2026 14:58:26 -0400
+	id 1wtVD1-0001c7-7U; Mon, 10 Aug 2026 14:58:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wtVCa-0001UK-6y; Mon, 10 Aug 2026 14:58:24 -0400
+ id 1wtVCv-0001Z4-OF; Mon, 10 Aug 2026 14:58:45 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mikail.sadic@ibm.com>)
- id 1wtVCX-0003Rg-Mr; Mon, 10 Aug 2026 14:58:23 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wtVCt-0003Ua-N8; Mon, 10 Aug 2026 14:58:45 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AGVtnu292855; Mon, 10 Aug 2026 18:57:54 GMT
+ 67AGVocX2111767; Mon, 10 Aug 2026 18:57:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=PFUdvod4578KlAlJNW9b3M3Pi3m3
- giB2+fWB54jkGMo=; b=Uf/HNSYrsH2xODMiU2mu6KXy4+c+DFHR693j09mjDsQG
- 2CZWaLDbOGbjjWQmZi70MmRKuAUhFoX2NMMCqzjVt1heeuoRQ5BEpA1A4qALGKZt
- M27epZHON0fyTgkDZm6ExDtYUVZMzVay6r14HLqGd0FPX5trUwcBH8QQC90SrPhP
- EFZnsW62lTFjUan6UWKRRZ+FuJDzTs3jK9qqd10GlbzhCzrBMqVVB2h6h871j7Yn
- IhWx+/QO6WLpYz/hXfnwM+o25bmSaeQaePvGYJH1zER4hzd2eCaP2sYl9NAqWsPH
- qJui+bg3L+KcKbMjq6XG14C5yRl3E3f8X+voHq3rCw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjysmk3-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=UrFuDFzpdhvLqMbSp
+ 8uSpjVRXqP7RXty94LVtAtZMR8=; b=L5BFQt0qKjV1f8dNwgL+37rWYXmDVaFfu
+ 4FS+N80PfyUCEwRX0bgMyBGHZWxmSIcxj4CHiuqTVjUTbrzwdb/tK7zwpR96UAml
+ wsun+2tMBjyyCIaqy+/BJu+j9FuFuqzKvuvnTPv6AEaR4Eaxe+HZVJZDyhNSKbPu
+ zjY+A34mz7qh/qRp5pkiI8WqevhO1pJGGQenP//IrkZ6A1dTWb4sWsVFpHamqX40
+ iN30HBz0ypeJUpXsSEO+Spuy8i8Fj24wZfcSu6RtlbuVbpuRiyD6zZiwZ03XJswA
+ e0mxOjo5cqui8Pg0Wdr2H3kM50QW2WH74fO5GZ5Rq5SFfOLW077vw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq99m4b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Aug 2026 18:57:54 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AIun5l020368;
+ Mon, 10 Aug 2026 18:57:53 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxf5vx5gn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Mon, 10 Aug 2026 18:57:53 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67AIuMTx019224;
- Mon, 10 Aug 2026 18:57:52 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9gx00h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Aug 2026 18:57:52 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67AIvDON24773210
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67AIvqYv64225576
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Aug 2026 18:57:13 GMT
+ Mon, 10 Aug 2026 18:57:52 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 206605805A;
+ by IMSVA (Postfix) with ESMTP id 16CF75805C;
+ Mon, 10 Aug 2026 18:57:52 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3034658051;
  Mon, 10 Aug 2026 18:57:51 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D631C58051;
- Mon, 10 Aug 2026 18:57:49 +0000 (GMT)
 Received: from IBM-MFS.ibm.com (unknown [9.61.24.176])
  by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Aug 2026 18:57:49 +0000 (GMT)
+ Mon, 10 Aug 2026 18:57:51 +0000 (GMT)
 From: Mikail Sadic <mikail.sadic@ibm.com>
 To: clg@kaod.org, peter.maydell@linaro.org
 Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
@@ -65,41 +65,41 @@ Cc: Mikail Sadic <mikail.sadic@ibm.com>, pbonzini@redhat.com,
  jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 0/8] Add IBM Huygens BMC machine for AST2700
-Date: Mon, 10 Aug 2026 13:57:38 -0500
-Message-ID: <20260810185748.1253-1-mikail.sadic@ibm.com>
+Subject: [PATCH v3 1/8] fsi/cfam: Add common CFAM base class
+Date: Mon, 10 Aug 2026 13:57:39 -0500
+Message-ID: <20260810185748.1253-2-mikail.sadic@ibm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260810185748.1253-1-mikail.sadic@ibm.com>
+References: <20260810185748.1253-1-mikail.sadic@ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfXxeLHWpiRBbEq
- oiFhbf/DkFSYckkMb3JNG0ujq09gUd2h+LDmhAl+zKdl2IgBg5Qhrr72ie6J3WMZTJfKrjIPvs1
- dhc1tFbL7INH7qTZL/uHMoORK4SWEfaSkFSt5qew1pBrWTYEFHNCTtRsHVcpytRFaskbTj/4poj
- vCPbYzXEU+WDV49fD0FUgZJxqeehe05FYaLNh7CCY0uIPME+ONzSPkTZw6tj3e/xi2/L2SLhUB7
- J8Yz4TaEvPsJ5SyzuT/naAmrWzT+YnbU67BqREkFB996oJsCJKHHtU1LN7GdjVB42onvhhBhC2J
- +f1HllCWKwRMVgEYIhHGe7MkSqAIfn4kfMMxKh/ISgL2Mnn/gaccaf91I4AWgBiSiSDJNfqFWkT
- cOTSGdZ1HcevSJs46Kd6lRtvClt5wk9WLf9GExe+8LVqftMhTVuzVsZ1/WH/frrvwlEPNxone7x
- 4+rS9WAc5mAXqqkjTVw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfX3alKqsNWQRNW
- FzvO4JkkfpZtpsIF2ZIVGOedYmHpkXuUUj5LOugQDgXsCfajS6rIngcseMhZNOjxrXD6wD1vLvp
- Vde0DLF7w2G38KRNHg+Et3Ch3ka8OBg=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7a1f32 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
- a=hD80L64hAAAA:8 a=16UY8-0HC6ZX7w77xpQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: wB_UmNl3naz7uaAHLYclm0b5_DhQ29rc
-X-Proofpoint-ORIG-GUID: w91KTs4U0Au0hTGEzTPKDW439jAJc_rh
+X-Proofpoint-GUID: 2VYSnMgLRYntnwQ5tkr6wTo4qKwLT2lt
+X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7a1f33 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=0vKXlNE1Mb1R75NS9r0A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfX/UkgkQeUCdLc
+ 3fT64bpZxfhqbIU3JSgX4FkdMNOOM4pXIviYZiEacny69kful/fbIpqH3Xf/frJGagxGnPD2Cya
+ NaXEf65foALS8P89t5IMqqB1R33qh5Ff/XZPmrfNGdk9vAp5+f0U5Vg5tCbalL5yug+XaGPTcLo
+ 37p/vx5yrkaexAmq7fEod4Bq1S4KH3xkhFNXVSOVecVnVaS2cRvdLYXNN9qQL9fQHrMGFOMn0CV
+ wqkwrIaPxIgWrvQDPOz8X7iTdRFeW7sJqljVDzB5wk7VPvrRaAR8Hjd9T1dIaVaDDwt3SXoaZe8
+ /hoiJbZ9GJSujWoqk15hOu3AMQtyZVwzwiB5aRjKDgWyINCHbeKxTtt8Mxhq1rnHqPiFENoRaO2
+ a0M9fqPILiqsMewTRJZfNajt67+Xgs2iCXUySO30/vGlMb+RTVAn2fIJI0GJsrCpJ1vmTijEv5r
+ Zy0d/n+GDYvytyXO17A==
+X-Proofpoint-ORIG-GUID: JrvSfiMgnZNkXk-Xgb6SZvoR9xa9fVpg
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE1OCBTYWx0ZWRfX3EJFjF5lsysh
+ sq+XlAr81IsUILlVUtRyjQSQRG1mdSooV3049w0dKhGlrlIk6qcDWLp7S8CR07SIAHOFRdfq+BM
+ tCA69VDDSPEnxK41r1Fy+u+MdJjMtB4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-10_04,2026-08-10_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608100158
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=mikail.sadic@ibm.com;
  helo=mx0a-001b2d01.pphosted.com
@@ -125,217 +125,337 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds initial support for the IBM Huygens BMC, the baseboard
-management controller of an IBM POWER12 server platform, based on the
-ASPEED AST2700 A2 SoC.
+Prepare a common CFAM parent class for CFAM-S implementation.
 
-It introduces a CFAM-S FSI responder model, wires the AST2700 FSI
-controllers to their APB-to-OPB bridges, fixes an aspeed I2C DMA
-block-read corner case, adds a TI UCD90320 PMBus power-sequencer model,
-adds an AST2700 UFS host controller on top of the generic sysbus UFS
-device, and finally adds the huygens-bmc machine that ties these together
-to boot OpenBMC from FMC flash and a UFS root filesystem.
+Add an abstract TYPE_FSI_CFAM_COMMON with an FSICFAMCommonClass holding
+what varies between types: the config table, the offsets of the FSI
+responder and the local bus within the register slot, and a
+realize_engines() hook for the engines on the local bus. Its realize is
+driven by those fields, so one realize serves every type. TYPE_FSI_CFAM
+keeps its name and becomes the first derived type, supplying the P9
+config table, its slot offsets and the scratchpad engine. The config
+table becomes data, still written with the same CFAM_CONFIG_REG()
+expressions, which move to the header so a derived type can describe its
+own table the same way.
 
-Dependency: this series applies on top of Jeuk Kim's UFS restructure,
-which is on-list but not yet merged:
+Name the new instance struct without a State suffix and rename
+FSICFAMState to FSICFAM to match.
 
-  https://lore.kernel.org/qemu-devel/cover.1786096976.git.jeuk20.kim@samsung.com/
+No functional change: same memory map, same config words, same type and
+child names. aspeed_fsi-test verified.
 
-The base-commit trailer below therefore names a local commit that is
-v11.1.0-rc3 (3e3ccab106) plus those two patches. Patches 6 and 7 need
-it, patches 1-5 and 8 do not.
+Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
+---
+ include/hw/fsi/cfam.h       |  58 ++++++++++++++++-
+ include/hw/fsi/fsi-master.h |   2 +-
+ hw/fsi/cfam.c               | 125 +++++++++++++++++++++---------------
+ hw/fsi/fsi-master.c         |   2 +-
+ 4 files changed, 130 insertions(+), 57 deletions(-)
 
-Patch summary:
-
-  1. fsi/cfam: a common CFAM model holding the slot, config table,
-     responder and local bus, with the existing cfam as its first
-     derivative. No functional change to the existing cfam.
-  2. fsi/cfam: the CFAM-S as a second derivative - its own config table,
-     the slave-ID alias window, and a v1 mailbox engine added to lbus.c
-     alongside the scratchpad.
-  3. arm/aspeed: wire the two AST2700 FSI controllers to their APB-to-OPB
-     bridges.
-  4. i2c/aspeed: fix DMA-receive first-byte handling so SMBus block reads
-     (I2C_M_RECV_LEN) report the correct length.
-  5. hw/sensor: TI UCD90320 24-rail PMBus power sequencer.
-  6. ufs: a configurable logical-block-size on ufs-lu, and an unmapped LUN
-     answering INQUIRY as "not connected". The ufs PCI device keeps its
-     current property set and geometry.
-  7. ufs/aspeed: the AST2700 UFS host controller as a subclass of
-     TYPE_SYSBUS_UFS, adding only the UFSHCI version.
-  8. arm/aspeed: the huygens-bmc machine.
-
-Changes since v2:
-
-* UFS: rebased onto Jeuk Kim's restructure, as requested. The v2 core
-  refactor (v2 patch 6) is dropped entirely, Jeuk's patch 1 supersedes it.
-  hw/ufs/aspeed_ufs.c is now a subclass of TYPE_SYSBUS_UFS whose only
-  AST2700-specific behavior is pinning the controller version register
-  to 2.0, chained after the parent realize. MMIO, IRQ, DMA address space,
-  properties, migration state and unrealize all come from the generic
-  sysbus device, and the Aspeed type adds no instance fields.
-
-  The two behaviors Huygens needs that the restructure does not provide
-  are now their own patch (6), placed ahead of the Aspeed patch: the
-  ufs-lu logical-block-size property (default unchanged, so the PCI
-  device is unaffected) and the unmapped-LUN INQUIRY reporting "not
-  connected" rather than failing the request. logical-block-size now also
-  rejects non-powers-of-two, values outside 512..UFS_BLOCK_SIZE, and a
-  drive shorter than one block, which would previously have realized a
-  zero-block unit.
-
-  The Aspeed SoC Kconfig now selects UFS_SYSBUS. It previously relied on
-  UFS_PCI being enabled via "imply PCI_DEVICES".
-
-* CFAM: dropped the State suffix from the instance struct names (Miles).
-  FSICFAMCommonState becomes FSICFAMCommon; FSICFAMState, which predates
-  this series, becomes FSICFAM to match rather than leaving the two
-  spellings side by side in one header; FSICFAMSState becomes FSICFAMS.
-  The FSI prefix is kept. The class structs keep their suffix, as is
-  usual for QOM. Also fixed patch 1 to check the realize_engines() return
-  value.
-
-* Machine: reworded the commit message (Miles). No code change.
-
-* Rebased onto v11.1.0-rc3.
-
-Not addressed in this series:
-
-* CFAM extended addressing (Miles): the mode where a single CFAM has 8MB
-  rather than four cascaded CFAMs sharing that space. This changes the
-  addressing model of the existing FSI/CFAM code rather than anything this
-  series introduces, so it's left it as follow-up work. It does bear on
-  patch 2 though: the CFAM-S there aliases one 2MiB slot across the 8MiB
-  window to fold the slave-ID views together, and if extended addressing
-  is modelled properly that window is probably the wrong shape or should
-  not exist at all. I am happy to take direction on whether to do that
-  first.
-
-Testing done:
-
-* Whole series builds, and each of the 8 patches builds standalone.
-* make check passes.
-* huygens-bmc boots OpenBMC to the login prompt and multi-user target
-  from FMC flash + UFS storage (internal images).
-* PCI UFS qtests pass (13/13), unchanged by patch 6.
-* aspeed_fsi-test passes (4/4), unchanged by the CFAM patches.
-* huygens-bmc, ast2700-evb and ast2600-evb all construct successfully.
-* On huygens-bmc, the UFS version register reads 0x00000200, and the
-  ufs-lu created by the board reports a 512-byte block size and passes it
-  to its backing scsi-hd. The PCI ufs device with no property set still
-  reports 4096.
-
-Changes since v1 (unchanged from the v2 posting, for reference):
-
-* Split the original 5 commits into 8. The aspeed I2C DMA fix, the FSI
-  controller wiring, the CFAM common base class, and the UFS
-  core-vs-frontend split are now separate patches (each buildable on its
-  own).
-
-* UFS: reworked per review (Jeuk Kim). Instead of a second, standalone
-  UFS implementation, the common core was separated from the PCI glue so
-  the AST2700 controller could be a thin sysbus frontend on top of it.
-  (Superseded in v3 - see above.)
-
-* CFAM-S: reworked per review (Ninad). It now shares a common base class
-  with the cfam rather than being a parallel implementation: patch 1 adds
-  an abstract cfam-common whose realize is driven by an FSICFAMCommonClass
-  (config table, responder and local-bus offsets, and an engines hook),
-  and both cfam and cfam-s derive from it. They are siblings rather than
-  parent and child, since a CFAM-S is another kind of CFAM and not a
-  specialisation of the P9 one. Patch 2 adds cfam-s supplying only its own
-  config table, its mailbox engine and the slave-ID alias window; the v1
-  mailbox is a local bus engine so it sits in lbus.c next to the
-  scratchpad. Duplicated code has been cleaned. Two behavior changes
-  follow from sharing the common config ops, both noted in patch 2: cfam-s
-  now honors the SID_BREAK sequence, and config-table access is word-only
-  for both types. Also made generic, all specific references dropped.
-
-  Patch 1 is intended to be a no-op for the existing cfam, and was
-  checked that way: aspeed_fsi-test passes, the four P9 config words read
-  back identically over the OPB, and "info mtree" for ast2600-evb is
-  unchanged. The Rainier boot test was also run and verified.
-
-* i2c/aspeed: the DMA block-read fix is now its own patch, with a commit
-  message explaining the I2C_M_RECV_LEN + DMA interaction (Cédric).
-
-* UCD90320: the device-id/monitor-config/mfr-status responses are now
-  device reset state rather than file-scope constants, with matching
-  VMState (Cédric).
-
-* Docs: the huygens-bmc and aspeed-ufs boot examples now use -blockdev
-  instead of -drive (Cédric).
-
-* Machine: commit message expanded (POWER12 BMC on AST2700 A2), the VPD
-  buffer uses g_autofree, the docs describe the flash-vs-UFS split, and
-  the networking example was simplified.
-
-* New device files use DEFINE_TYPES() with inlined TypeInfo (Jamin Lin).
-
-* Dropped the v1 functional test for now: depends on non-public Huygens
-  images. It will be resent once images go public.
-
-Note: checkpatch reports a couple of MAINTAINERS/SPDX warnings for the
-new files; they are covered by existing wildcard entries in the ASPEED
-and FSI sections.
-
-Thank you again for all of the feedback.
-
-Mikail Sadic (8):
-  fsi/cfam: Add common CFAM base class
-  fsi/cfam: Add CFAM-S model
-  arm/aspeed: Wire AST2700 FSI controllers to APB-to-OPB bridges
-  i2c/aspeed: Fix DMA receive first-byte handling for block reads
-  hw/sensor: Add UCD90320 model
-  ufs: Make the logical block size configurable and answer absent LUNs
-  ufs/aspeed: Add AST2700 UFS host controller
-  arm/aspeed: Add AST2700 Huygens machine
-
- MAINTAINERS                     |   3 +
- docs/specs/aspeed-ufs.rst       |  46 ++++++
- docs/specs/fsi.rst              |  15 ++
- docs/specs/index.rst            |   2 +
- docs/specs/ucd90320.rst         |  36 +++++
- docs/system/arm/aspeed.rst      |  50 ++++++-
- hw/ufs/ufs.h                    |   3 +
- include/hw/arm/aspeed.h         |   1 +
- include/hw/arm/aspeed_soc.h     |   3 +
- include/hw/fsi/cfam-s.h         |  40 ++++++
- include/hw/fsi/cfam.h           |  68 ++++++++-
- include/hw/fsi/fsi-master.h     |   4 +-
- include/hw/fsi/lbus.h           |  11 ++
- include/hw/ufs/aspeed_ufs.h     |  15 ++
- hw/arm/aspeed.c                 |  25 ++++
- hw/arm/aspeed_ast27x0.c         |  31 ++++
- hw/arm/aspeed_ast27x0_huygens.c | 241 ++++++++++++++++++++++++++++++++
- hw/fsi/cfam-s.c                 |  91 ++++++++++++
- hw/fsi/cfam.c                   | 125 ++++++++++-------
- hw/fsi/fsi-master.c             |   9 +-
- hw/fsi/lbus.c                   |  69 +++++++++
- hw/i2c/aspeed_i2c.c             |   7 +
- hw/sensor/ucd90320.c            | 169 ++++++++++++++++++++++
- hw/ufs/aspeed_ufs.c             |  67 +++++++++
- hw/ufs/lu.c                     |  67 ++++++++-
- hw/ufs/ufs.c                    |   2 +-
- hw/arm/Kconfig                  |   2 +
- hw/arm/meson.build              |   1 +
- hw/fsi/meson.build              |   2 +-
- hw/fsi/trace-events             |   2 +
- hw/sensor/Kconfig               |   4 +
- hw/sensor/meson.build           |   1 +
- hw/ufs/meson.build              |   1 +
- 33 files changed, 1149 insertions(+), 64 deletions(-)
- create mode 100644 docs/specs/aspeed-ufs.rst
- create mode 100644 docs/specs/ucd90320.rst
- create mode 100644 include/hw/fsi/cfam-s.h
- create mode 100644 include/hw/ufs/aspeed_ufs.h
- create mode 100644 hw/arm/aspeed_ast27x0_huygens.c
- create mode 100644 hw/fsi/cfam-s.c
- create mode 100644 hw/sensor/ucd90320.c
- create mode 100644 hw/ufs/aspeed_ufs.c
-
-base-commit: 8c9baa57b781ae86330ba036415a768da12d9b28
-
+diff --git a/include/hw/fsi/cfam.h b/include/hw/fsi/cfam.h
+index cceb4bd6f1..bdf579b4fe 100644
+--- a/include/hw/fsi/cfam.h
++++ b/include/hw/fsi/cfam.h
+@@ -7,18 +7,44 @@
+ #ifndef FSI_CFAM_H
+ #define FSI_CFAM_H
+ 
++#include "qemu/units.h"
+ #include "system/memory.h"
+ 
+ #include "hw/fsi/fsi.h"
+ #include "hw/fsi/lbus.h"
+ 
++/*
++ * All CFAM flavors present a register slot holding a config table, an FSI
++ * responder and a local bus carrying the engines the config table describes.
++ * That is the common model; each flavor supplies its own table, slot layout
++ * and engines.
++ */
++#define TYPE_FSI_CFAM_COMMON "cfam-common"
++OBJECT_DECLARE_TYPE(FSICFAMCommon, FSICFAMCommonClass, FSI_CFAM_COMMON)
++
+ #define TYPE_FSI_CFAM "cfam"
+-#define FSI_CFAM(obj) OBJECT_CHECK(FSICFAMState, (obj), TYPE_FSI_CFAM)
++OBJECT_DECLARE_SIMPLE_TYPE(FSICFAM, FSI_CFAM)
+ 
+ /* P9-ism */
+ #define CFAM_CONFIG_NR_REGS 0x28
+ 
+-typedef struct FSICFAMState {
++#define FSI_CFAM_SLOT_SIZE   (2 * MiB)
++#define FSI_CFAM_CONFIG_SIZE 0x400
++
++#define ENGINE_CONFIG_NEXT            BIT(31)
++#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
++#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
++#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
++
++/* Valid, slots, version, type, crc */
++#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
++    (ENGINE_CONFIG_NEXT       |   \
++     0x00010000               |   \
++     (__VER)                  |   \
++     (__TYPE)                 |   \
++     (__CRC))
++
++struct FSICFAMCommon {
+     /* < private > */
+     FSISlaveState parent;
+ 
+@@ -28,7 +54,33 @@ typedef struct FSICFAMState {
+     MemoryRegion mr;
+ 
+     FSILBus lbus;
++};
++
++struct FSICFAMCommonClass {
++    /* < private > */
++    DeviceClass parent_class;
++
++    /* < public > */
++    /* Config table served by the common ops, one word per 4-byte offset */
++    const uint32_t *config;
++    unsigned config_nr;
++
++    /* Layout of the register slot */
++    hwaddr responder_offset;
++    hwaddr lbus_offset;
++
++    /* Realize and map this flavor's local bus engines */
++    bool (*realize_engines)(FSICFAMCommon *cfam, Error **errp);
++};
++
++struct FSICFAM {
++    /* < private > */
++    FSICFAMCommon parent;
++
+     FSIScratchPad scratchpad;
+-} FSICFAMState;
++};
++
++bool fsi_cfam_add_engine(FSICFAMCommon *cfam, DeviceState *engine,
++                         hwaddr offset, Error **errp);
+ 
+ #endif /* FSI_CFAM_H */
+diff --git a/include/hw/fsi/fsi-master.h b/include/hw/fsi/fsi-master.h
+index 60ddaa994f..87c11ec3dc 100644
+--- a/include/hw/fsi/fsi-master.h
++++ b/include/hw/fsi/fsi-master.h
+@@ -25,7 +25,7 @@ typedef struct FSIMasterState {
+     FSIBus bus;
+ 
+     uint32_t regs[FSI_MASTER_NR_REGS];
+-    FSICFAMState cfam;
++    FSICFAM cfam;
+ } FSIMasterState;
+ 
+ 
+diff --git a/hw/fsi/cfam.c b/hw/fsi/cfam.c
+index 54c0b05769..5d4d0622d0 100644
+--- a/hw/fsi/cfam.c
++++ b/hw/fsi/cfam.c
+@@ -16,19 +16,6 @@
+ 
+ #include "hw/core/qdev-properties.h"
+ 
+-#define ENGINE_CONFIG_NEXT            BIT(31)
+-#define ENGINE_CONFIG_TYPE_PEEK       (0x02 << 4)
+-#define ENGINE_CONFIG_TYPE_FSI        (0x03 << 4)
+-#define ENGINE_CONFIG_TYPE_SCRATCHPAD (0x06 << 4)
+-
+-/* Valid, slots, version, type, crc */
+-#define CFAM_CONFIG_REG(__VER, __TYPE, __CRC)   \
+-    (ENGINE_CONFIG_NEXT       |   \
+-     0x00010000               |   \
+-     (__VER)                  |   \
+-     (__TYPE)                 |   \
+-     (__CRC))
+-
+ #define TO_REG(x)                          ((x) >> 2)
+ 
+ #define CFAM_CONFIG_CHIP_ID                TO_REG(0x00)
+@@ -36,34 +23,33 @@
+ #define CFAM_CONFIG_CHIP_ID_P9             0xc0022d15
+ #define CFAM_CONFIG_CHIP_ID_BREAK          0xc0de0000
+ 
++/*
++ * Config table of the P9 CFAM: the chip ID followed by one entry per engine,
++ * entry n describing the engine at address n * 4. We need to add future
++ * engines from address 0x10 onwards.
++ */
++static const uint32_t cfam_p9_config[] = {
++    CFAM_CONFIG_CHIP_ID_P9,
++    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc),
++    CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa),
++    CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7),
++};
++
+ static uint64_t fsi_cfam_config_read(void *opaque, hwaddr addr, unsigned size)
+ {
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(opaque);
++    unsigned int reg = TO_REG(addr);
++
+     trace_fsi_cfam_config_read(addr, size);
+ 
+-    switch (addr) {
+-    case 0x00:
+-        return CFAM_CONFIG_CHIP_ID_P9;
+-    case 0x04:
+-        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_PEEK, 0xc);
+-    case 0x08:
+-        return CFAM_CONFIG_REG(0x5000, ENGINE_CONFIG_TYPE_FSI, 0xa);
+-    case 0xc:
+-        return CFAM_CONFIG_REG(0x1000, ENGINE_CONFIG_TYPE_SCRATCHPAD, 0x7);
+-    default:
+-        /*
+-         * The config table contains different engines from 0xc onwards.
+-         * The scratch pad is already added at address 0xc. We need to add
+-         * future engines from address 0x10 onwards. Returning 0 as engine
+-         * is not implemented.
+-         */
+-        return 0;
+-    }
++    /* Engines past the end of the table are not implemented */
++    return reg < cc->config_nr ? cc->config[reg] : 0;
+ }
+ 
+ static void fsi_cfam_config_write(void *opaque, hwaddr addr, uint64_t data,
+                                   unsigned size)
+ {
+-    FSICFAMState *cfam = FSI_CFAM(opaque);
++    FSICFAMCommon *cfam = FSI_CFAM_COMMON(opaque);
+ 
+     trace_fsi_cfam_config_write(addr, size, data);
+ 
+@@ -109,59 +95,94 @@ static const struct MemoryRegionOps fsi_cfam_unimplemented_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static void fsi_cfam_instance_init(Object *obj)
++bool fsi_cfam_add_engine(FSICFAMCommon *cfam, DeviceState *engine,
++                         hwaddr offset, Error **errp)
+ {
+-    FSICFAMState *s = FSI_CFAM(obj);
++    if (!qdev_realize(engine, BUS(&cfam->lbus), errp)) {
++        return false;
++    }
+ 
+-    object_initialize_child(obj, "scratchpad", &s->scratchpad,
+-                            TYPE_FSI_SCRATCHPAD);
++    memory_region_add_subregion(&cfam->lbus.mr, offset,
++                                &FSI_LBUS_DEVICE(engine)->iomem);
++    return true;
+ }
+ 
+-static void fsi_cfam_realize(DeviceState *dev, Error **errp)
++static void fsi_cfam_common_realize(DeviceState *dev, Error **errp)
+ {
+-    FSICFAMState *cfam = FSI_CFAM(dev);
++    FSICFAMCommon *cfam = FSI_CFAM_COMMON(dev);
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_GET_CLASS(dev);
+     FSISlaveState *slave = FSI_SLAVE(dev);
++    const char *type = object_get_typename(OBJECT(dev));
++    g_autofree char *config_name = g_strdup_printf("%s.config", type);
+ 
+     /* Each slave has a 2MiB address space */
+     memory_region_init_io(&cfam->mr, OBJECT(cfam), &fsi_cfam_unimplemented_ops,
+-                          cfam, TYPE_FSI_CFAM, 2 * MiB);
++                          cfam, type, FSI_CFAM_SLOT_SIZE);
+ 
+     qbus_init(&cfam->lbus, sizeof(cfam->lbus), TYPE_FSI_LBUS, DEVICE(cfam),
+               NULL);
+ 
+     memory_region_init_io(&cfam->config_iomem, OBJECT(cfam), &cfam_config_ops,
+-                          cfam, TYPE_FSI_CFAM ".config", 0x400);
++                          cfam, config_name, FSI_CFAM_CONFIG_SIZE);
+ 
+     memory_region_add_subregion(&cfam->mr, 0, &cfam->config_iomem);
+-    memory_region_add_subregion(&cfam->mr, 0x800, &slave->iomem);
+-    memory_region_add_subregion(&cfam->mr, 0xc00, &cfam->lbus.mr);
++    memory_region_add_subregion(&cfam->mr, cc->responder_offset, &slave->iomem);
++    memory_region_add_subregion(&cfam->mr, cc->lbus_offset, &cfam->lbus.mr);
+ 
+-    /* Add scratchpad engine */
+-    if (!qdev_realize(DEVICE(&cfam->scratchpad), BUS(&cfam->lbus), errp)) {
++    if (!cc->realize_engines(cfam, errp)) {
+         return;
+     }
+-
+-    FSILBusDevice *fsi_dev = FSI_LBUS_DEVICE(&cfam->scratchpad);
+-    memory_region_add_subregion(&cfam->lbus.mr, 0, &fsi_dev->iomem);
+ }
+ 
+-static void fsi_cfam_class_init(ObjectClass *klass, const void *data)
++static void fsi_cfam_common_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++
+     dc->bus_type = TYPE_FSI_BUS;
+-    dc->realize = fsi_cfam_realize;
++    dc->realize = fsi_cfam_common_realize;
++}
++
++static bool fsi_cfam_realize_engines(FSICFAMCommon *cfam, Error **errp)
++{
++    FSICFAM *s = FSI_CFAM(cfam);
++
++    /* Add scratchpad engine */
++    object_initialize_child(OBJECT(s), "scratchpad", &s->scratchpad,
++                            TYPE_FSI_SCRATCHPAD);
++
++    return fsi_cfam_add_engine(cfam, DEVICE(&s->scratchpad), 0, errp);
+ }
+ 
++static void fsi_cfam_class_init(ObjectClass *klass, const void *data)
++{
++    FSICFAMCommonClass *cc = FSI_CFAM_COMMON_CLASS(klass);
++
++    cc->config = cfam_p9_config;
++    cc->config_nr = ARRAY_SIZE(cfam_p9_config);
++    cc->responder_offset = 0x800;
++    cc->lbus_offset = 0xc00;
++    cc->realize_engines = fsi_cfam_realize_engines;
++}
++
++static const TypeInfo fsi_cfam_common_info = {
++    .name = TYPE_FSI_CFAM_COMMON,
++    .parent = TYPE_FSI_SLAVE,
++    .instance_size = sizeof(FSICFAMCommon),
++    .class_size = sizeof(FSICFAMCommonClass),
++    .class_init = fsi_cfam_common_class_init,
++    .abstract = true,
++};
++
+ static const TypeInfo fsi_cfam_info = {
+     .name = TYPE_FSI_CFAM,
+-    .parent = TYPE_FSI_SLAVE,
+-    .instance_init = fsi_cfam_instance_init,
+-    .instance_size = sizeof(FSICFAMState),
++    .parent = TYPE_FSI_CFAM_COMMON,
++    .instance_size = sizeof(FSICFAM),
+     .class_init = fsi_cfam_class_init,
+ };
+ 
+ static void fsi_cfam_register_types(void)
+ {
++    type_register_static(&fsi_cfam_common_info);
+     type_register_static(&fsi_cfam_info);
+ }
+ 
+diff --git a/hw/fsi/fsi-master.c b/hw/fsi/fsi-master.c
+index 083a5507ab..d82df1c094 100644
+--- a/hw/fsi/fsi-master.c
++++ b/hw/fsi/fsi-master.c
+@@ -130,7 +130,7 @@ static void fsi_master_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* address ? */
+-    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.mr);
++    memory_region_add_subregion(&s->opb2fsi, 0, &s->cfam.parent.mr);
+ }
+ 
+ static void fsi_master_reset(DeviceState *dev)
 -- 
 2.53.0
 
