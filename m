@@ -4,129 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99F0C5AC82
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9901FC5AE5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtNYZ-0003vb-1q; Mon, 10 Aug 2026 06:48:35 -0400
+	id 1wtNZU-0004JT-ES; Mon, 10 Aug 2026 06:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1wtNYW-0003vR-TZ
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:48:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wtNZS-0004J1-V6
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:49:30 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1wtNYT-0001eL-UZ
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:48:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786358908;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=edO+LZJhgTpzj4NHsdMHQS0+qsWA9b2sUQXS4xrXKF4=;
- b=J1V16bBckgCHJ1U3H3h09d6yKo+BOANpya2W89JcyeeYWxYT81luFGjyQKqgtebLu4On7a
- xw3tRyX+go14X2Fq48JynW6n5lcWvBjTIvTWC2bGTfCRgPSvZn2Rt7WEKz6+H9qq2LPf8B
- pPWgbEcM3qkFrfedTLBT/IB2FNSmzRU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-2E1YUfYtNA2kyl-0Rel6cw-1; Mon, 10 Aug 2026 06:48:24 -0400
-X-MC-Unique: 2E1YUfYtNA2kyl-0Rel6cw-1
-X-Mimecast-MFC-AGG-ID: 2E1YUfYtNA2kyl-0Rel6cw_1786358904
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8ea75996387so32231806d6.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 03:48:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786358904; cv=none;
- d=google.com; s=arc-20260327;
- b=TO8iTD1jQf1MCm41p6XQ4C/Q3TxXgG0MrGfvV3nszsC9N4jAKE8ydgr852ZcsS1G8N
- Rvw/gCyKokBtyWqy8h2vXGEO4dZPBt2kBidTYqOjkp0/sCy1uRU1ABzLz+4lqIe1phY2
- QKIaGJQc6p/9bWZWrx242iSFFQOeFA+qgID374oT88ldzLewzntVJ4uY+6kH4g45VJ3D
- dqY+GXhgV0eiISghXJG1s/IyxhvUXyYtyRJqFLNu3eDITbQ5O0D2Bvghxw09ZASlpVak
- MvUBYT1TLoVkygSjvNVClOsbdpPUM6Yld7b+Jj7Tj8JE9NyOR7LrGJy/iuXoEvNA1XTe
- 751A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=edO+LZJhgTpzj4NHsdMHQS0+qsWA9b2sUQXS4xrXKF4=;
- fh=mFHYeVKkGQhIcHBL0v8Z4Ydk0tvzNfroyxe0OZaEAEM=;
- b=QNhpug3wMQlKxNyXkJmFjUXgZmFx4xEvxYcGB+POytLPAT59WwunQhDUuvoymMiun8
- /WYzRDagseBbcFl3/BtSI6pqbW6lxdz83ceMaIIdNdyalcY5CBRazsm61MZNCRQgdLm2
- 3mTfC9WxkMPesdcckYHyk8bpH1PFXslS1SICgJCRZ7pl2tEkratQ06couvu9pG1lN9Il
- ypOw9rbELRYc62Rmq+uiIN92wYnDcjaGm2RHMjNBqe7g7kLYrLHWtaieow/wcu3b5Ad/
- MMfCTfcqwiG3tuDR5ZAXAY/iBvOEiPNj0xzQtsN4ATdzwah+ZhRwURLeT51QWTttKekI
- BJFw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786358904; x=1786963704; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=edO+LZJhgTpzj4NHsdMHQS0+qsWA9b2sUQXS4xrXKF4=;
- b=G+uCXJXM9i1eg3/XLWNXWT1T2Zcdlp90CxM0uMHOyrDTZMxMWxomYYiZvHNuht+nmh
- xgE/2UZdN2so1Z2xGnsm/TLBBZbuLAOWJkRR5RUoFyLy/SYnqPrSdbPKAJB6p/ATfyJI
- ij9R+6Tkoj4oQ6tZ3URHAXJhVJmKUT3I1Upa8yVI2cQdGqcUFtfydtQtMXFWHOVXr3HO
- X6GoMfyYlDLNOItLulVAf/rHyHxlpRcF3GIBN96DBfYaYApYIyL439aahT+Z6na7Nm4H
- YSrVKubcAAzBxv2Wd1UHm+IPCblwmMhTeQReg5eoF3KGsqgZ027OpyisJbJUw8dAh/10
- kL2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786358904; x=1786963704;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=edO+LZJhgTpzj4NHsdMHQS0+qsWA9b2sUQXS4xrXKF4=;
- b=B2lNOUsR5eTH/IetOzpEG+vUhWAqUdY5oLUEEebAnSdbUgQtvSObdfp1i0M/TYTXL7
- ZHFA33iWAlNDYgRYmkyIltr1QQnpf1CUv+sCvadWuaTOTPZgsUgtbwdDw+wLHd41EanM
- ypSgHF7a0cYzfT3Ni5e1K5biC9sznqzoP0MT7t6HMDIE7SMNe4GdVQgHe6xrLjuFKUPM
- QxXFzmw8vz5BJ+KetW5WnCXgXGlgYQMTWlWkbf+tqKwgY36gSzVVl2pWqjkLhQ79Zfkk
- vcPgSh3onyriyrxcKe063wqaoJiXjtW/R7w8tM3vOESb2pnFUIghDTuhMYQ3wmhA3soW
- m1tQ==
-X-Gm-Message-State: AOJu0Yz1ESIzGgnyzdn1inKJyEprkctVNVm16Y28fSDI60IKYvVaLfFG
- 6jmol7WvORFOzh0mwOR41zjxqfQs+2uVMjn+EJ5/Oy5+FY/QSIBEl3UYK07Ids731EuXKFm29Vu
- yCnWP6prXJlfd67nvqfDB3UeyGuuNI9TpjsKVp271X+ZyREex6NVemfg9XtNzijC/JaafFhj/FK
- 36xmFIfTmgI5Faqec54SL0BgE0tmUktFA=
-X-Gm-Gg: AR+sD11wluQIPsNB4RxTDIb/bxi5exxJTeoBCUanzK1o4xL4A1cVzWoISiu24vvypYA
- w+IHv5Fw6QgJ2ZK19ulLSU873PhVfsTxc5pyD8uZ7YkzKBLtfMbjrAFNcyupG4RsLUnW6umV/lw
- Xl/obWUFGrDK1AFUSlan7gyMFeu67m7oBkQS5M9l0xGDif6Lv6kNxcWhtmOW0=
-X-Received: by 2002:a05:6214:2c0d:b0:8ef:ea2a:2728 with SMTP id
- 6a1803df08f44-90a5dffb920mr4719046d6.19.1786358903833; 
- Mon, 10 Aug 2026 03:48:23 -0700 (PDT)
-X-Received: by 2002:a05:6214:2c0d:b0:8ef:ea2a:2728 with SMTP id
- 6a1803df08f44-90a5dffb920mr4718796d6.19.1786358903348; Mon, 10 Aug 2026
- 03:48:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wtNZR-0001hi-9E
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 06:49:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1786358970; x=1817894970;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=iW9expB6szDurnLaEuatxBULZLDUmm/rgIqmnEZ+K54=;
+ b=RTuWMWTFW6u3YwiGXuaosXiankePlTx/HKrGa8XS6Vi+a+uaXkvSvAMv
+ nC5v6I3UCs2Pb2mpZsHn5TPzGv3VNAAm1u7Ju7hk1/wyXr6rRsePTzZ4Z
+ xI/yR3abl81pZxzy4lr7y6ICfqEAflMyRhYCzX4wwY+Yqq+kJDcVP7RSr
+ iHPYJCvhpCukphsG/Z93aXuoTu7WT3K9QqBePDS999zz1q0nPTt/Xb9fp
+ RFzRTPC0cUu9rPb3ttBmts8FvIwTHALAdjkZM9i3sGEWTvgvkwDjReC6z
+ Ys9j74r05IXcYZCLlWTB87fI85WWIMFxkiMeGAQF2Phtgn7dEJBWxcP2p g==;
+X-CSE-ConnectionGUID: 6k4WvqSmTPOTUTpdSZr9/Q==
+X-CSE-MsgGUID: dx0MSHW1SY+GgOlsW4aWVg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11870"; a="90550663"
+X-IronPort-AV: E=Sophos;i="6.25,215,1779174000"; d="scan'208";a="90550663"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Aug 2026 03:49:28 -0700
+X-CSE-ConnectionGUID: JrjD7do0SWKRnuXHJAwF5g==
+X-CSE-MsgGUID: DT5Ahm7+TGq+VtsNqOmHTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,215,1779174000"; d="scan'208";a="301237248"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+ by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Aug 2026 03:49:27 -0700
+Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 10 Aug 2026 03:49:26 -0700
+Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
+ FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45 via Frontend Transport; Mon, 10 Aug 2026 03:49:26 -0700
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.43) by
+ edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 10 Aug 2026 03:49:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WwnMevDRuSo6KUGZvTeA4nH75uypNi9QwNV1sFfhPDlKiA1oRKnR5Fi1fOnA+VA/2bROQafsLgcTw98Zzsxp/QVUTTorF7Fzo1uUifwi9p0GKuqJ5Zh6tujqOW3EEJoHz8JVmWa5tRzynF6/PzFEbtBlOgH97pZNEdPG4QGsVHlQJzGDHNnWI8dUBsax7qoCl7UqkKGl0nk4gMnrg3P4A5Qnis7Vm/sGdISxawRSKOzL7XtHNtkgUkqCbQtV5vrxwr2oPCcWM9fIcAZLnDr3PV2GVX9PElL7CdVRhQO82YMBrkjVgEnNPCcW2kRK2Z7pKP6J9QO43h7qL2FOGQODwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iW9expB6szDurnLaEuatxBULZLDUmm/rgIqmnEZ+K54=;
+ b=HxhWv5xHKzDU7cBHmjQtsEdbofsSQ/UDsPYmsJf91v68Gj1jUbVnloH9kcWPX/Ies8zQYnpUlBc833rDyRxHmfypbhoNoGj6xoBEQjt+2L3RQnIR6zm4CWMEaLUvK8l9/K0bfyT4gG8Thl1EUuixMej+4Eu68NkCTlOKEMInqNgT9MGUCCqD99xSasBL8ZH9Wd40wkgtvlFGzZoIfRHtCdCpJraygLT3EuOUgA6O5/xNs+C5hTtZ9Td+JTBTPREyBkxrw96dD8LPeADwbm9n5suId41utlFyTo1sPTHVyvFkZ0GeKlpIyjctl7FgwW2JWj3PNCa3huvF6QqWILSZfw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by PH3PPFD114713BA.namprd11.prod.outlook.com (2603:10b6:518:1::d50)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Mon, 10 Aug
+ 2026 10:49:23 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%3]) with mapi id 15.21.0292.024; Mon, 10 Aug 2026
+ 10:49:23 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
+ <clement.mathieu--drif@bull.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowangio@gmail.com" <jasowangio@gmail.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian, Kevin"
+ <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Hao, Xudong"
+ <xudong.hao@intel.com>
+Subject: RE: [PATCH v3 0/6] intel_iommu: Enable PRQ support for passthrough
+ device
+Thread-Topic: [PATCH v3 0/6] intel_iommu: Enable PRQ support for passthrough
+ device
+Thread-Index: AQHdJXaoJ2foc7Rrs0CFGZilBc0gdraUUwKAgALNe6A=
+Date: Mon, 10 Aug 2026 10:49:23 +0000
+Message-ID: <IA3PR11MB9136D461AAF0FCC8D757B33C92DE2@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260806073825.363468-1-zhenzhong.duan@intel.com>
+ <45013c8a3fe7983ee31f52d9d9ba6c176ce98fdb.camel@bull.com>
+In-Reply-To: <45013c8a3fe7983ee31f52d9d9ba6c176ce98fdb.camel@bull.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH3PPFD114713BA:EE_
+x-ms-office365-filtering-correlation-id: 5d04bc8d-c815-40d6-bf14-08def6cd0a3b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|7416014|1800799024|23010399003|38070700021|4143699003|11063799006|56012099006|10067099003|18002099003|22082099003;
+x-microsoft-antispam-message-info: 1/tuLXRbaqvk8fxK1yUz9AN5AwcsH8UTh/SM5mkARZ0qbFN5V+cQXPE5YYqHxVV8fWDX4TKxRHyuyhx9UrjL70ASliLeZjyrHYxAZcR0iEwRf2RUiVnGmJCybZY9d9BAiMvzUXhHfTOxeyX26BWNcq0L5CGclisk7Z08mHbUdRomGlkmzodcH6URg3+7YVkpOaIibFSSd/cqjcEnXDr2mTnfhTfr/Nhbkn7+tWMPBK8tXtsnlkhT/f75vb9fTY3IDy0uAwcHR7hr32WHd5ikpRZsuyJtWLfC4NHQv9xN0u468wMIlvB5Z3aQtgyeIlQZtvD4JVNMMsCZALwZqIVIo0kmgRmvml17ye5zNOa0NmqBxOKFejZ4qeRrAhXLonUAcLKU2vUbwdqmvz+RrL2KRZCfmzmYsiQ3+Dn1wEqbB5RQdgfkpAulLlj75xXf8eVWrOmxIKNc45dbDzRl7ogznNjs2X/cJdDgpitnSgFvno1+2z7rU5tHY+t30OJrqUX+0pW/wr+pjnGEkPQ0bCLiBbjPCPRygqrcJh3hmftxatscuADW3MT5P64RLX4k5ywIw6bNZfM7pJCqwZ3Z/7mxnU5DQW5dI2FQ1hKdHBUBPRPJcTHVi4HE4xEaQARPlO8buMQVSGaYzofAK/Q1URV756/z2/q5QwnFmJ6g/GoNfeXN6lUU5pxvsknYudkFXqVcUDYABfacJ0NqHsjKQjM/Hk5VSD9Aw54W8ogaozR7zf8=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(7416014)(1800799024)(23010399003)(38070700021)(4143699003)(11063799006)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cVNQcjVWSDF6V21hRzF4cUJEMGU3c0ZVYUpQV0ZJNHV5aXhhYTRramVmR3gx?=
+ =?utf-8?B?T0JXK25xbExnTStlUjNURDZBL09GRXM5bDE0M0l1VjJQYVg4WDlZeWVHYVNB?=
+ =?utf-8?B?U3Aza2o3ZHkxS0tyc2h1eXpsRHhkT0ZweEs0V1FhQ25XMFBMWFJpa0UyYWRW?=
+ =?utf-8?B?MGNIZFR3ckV4cW56OWhsWnkwRGVPUmRRS3djZnNwTVJGbHZhSmQ4SnRHUkll?=
+ =?utf-8?B?VHlpSjU4RWxLU0ZodXdpNEhsNmNjUEZKVUZvWW8zb2kzRzhVS0pSZzBOZ1RD?=
+ =?utf-8?B?dW01Z3JlRmpYQ2lpRnNNVnFrbnVxT2pkZmNWeVFMa3ZkTW9BZ3BLVFpqYUVs?=
+ =?utf-8?B?RkRSYVFWdDAzNHJlck1YK2RCeVlBMlVMMytSY2g2SnQyWnNyTmQ3VmRQTmtV?=
+ =?utf-8?B?czg1VEZVQWlNa2grZDhqUVZkQ0NuNzlUNkpRbXlXbU9uNHd6UHBRU2pHNUN2?=
+ =?utf-8?B?d2k1WENsdjBOTEdva0l0MHJZa1VNSmxpWU4zUWQ2NHA1ODUyaG1OVDdldWp2?=
+ =?utf-8?B?d2JIZWM4T3lzYlFkcWIxNDRNNkZMSDVSQk43ZHNoTFJkUDZtMER2RWpPcjdF?=
+ =?utf-8?B?Q1ZUK21PbEFJSThTaUFpMTRrbWZ2b0g2eUkzTmw3azJXMGF0b0QxR1BWaVdQ?=
+ =?utf-8?B?enJWeUUvV2NvME0rcUg0REN3TGtZT1lUNDJTSzNkZ0lvNlUvSWYvRlN3b3dq?=
+ =?utf-8?B?U3ZNaFR1Y24vbGxoSUJoYk02SVFEZi8wNGlwWkVtVDBhQllxdDVBQnVvRWtL?=
+ =?utf-8?B?WC9QL09aQU8rZ0hzZHNFVjI2VlB6S1ZEK2hSRzR4a0JmU2NZc0VyNGsreDlD?=
+ =?utf-8?B?MDk2WkpQMVpNZWVXNTcxNUtxWmFBZTJTRDllaC9TcHR2TWlkVGVGYzFTaytK?=
+ =?utf-8?B?cXlQejhEM1ZManZFNWpxcitZWjhxbWU5RXBqTUZaMlNNUTFhWmpTcldJRDdS?=
+ =?utf-8?B?bXNPMG1HUkdBcmlMZ1lwajBYSFlkNTh1dVV6QTliNXpCTU1yWFFGSDZrdE9u?=
+ =?utf-8?B?a0M3bWFxdUdDMmRmV1llWlRmd1JURnBVajB4YXZPK2ZkRVBncUgrZnVSWkNL?=
+ =?utf-8?B?bmJudkQ4QUZrUzJWNjhLeXc3TUZEaDJSaXQ3aWVpTExqN0U3V3lBUXJWNzFV?=
+ =?utf-8?B?T1dRODVKbk1POXVFajc5R3VQeVBGZFl2MFBlcGhwS2VQVnpPcmJGdHJCY1k3?=
+ =?utf-8?B?K2xNZTh0NmFqLzNmbGFlQ2RTa0pUSmxaZ3JsQWlWQWZwV3Q0ZThNb08xUTZi?=
+ =?utf-8?B?Umpmb0ZCY2hOYjQrY0dxK0hsM2c3U1BzT2s3Vi8wYTZydFgyVDJwc2ZVUmth?=
+ =?utf-8?B?QlRKVzlwcEd4ckE0UUFQd25zYlpuanRzRW5VQTV1bllkdTJvZ3NnTmk0UlVC?=
+ =?utf-8?B?QVRzRlo1Uk1VYi9HYzZsWkVLZ0J6VmNOSGxMUXBWUXhjTURoOXU0SEx4amhF?=
+ =?utf-8?B?djdDOVYwcEZvYUNMSDVseEtCd1F2K0huWUo0WDBDQmZ5ZzB6RUJTZ2Npbi9D?=
+ =?utf-8?B?ck85QnZPeVBYcG1xcWpzT0tHeUZ2bnpZcUJCMWlla21Eb2wwWFZrMS8vNXRT?=
+ =?utf-8?B?N0F5bDNZSXJ5NGhzdGxncmprMDVBUEY4OHBqY1BuTE1WU2FVdndVRGZOSG5r?=
+ =?utf-8?B?QjBpNUhicnhqUUJQZElmMVBsbjZvRDAwb2FZUE1yK1BQNEo5dFZoaGxtaVNu?=
+ =?utf-8?B?MUo3cU9rNGJkOFVPUGFRQmlWYk8xZmlBaTlscDlzcUVyZzVNR05uak5xYWFx?=
+ =?utf-8?B?cDNUNTBaUE9UNzJ1bHpFNjdKaUQxN1EzWDB0RXIwdUlIN3FkTkV6dkVzYVJm?=
+ =?utf-8?B?eGlMQm40dWpkUDRnSWFhM0NvOXdmekZsNFFNNXNWOEdUQlcwWXpjU1B2OWJz?=
+ =?utf-8?B?TktOZDhnV3VadGNQMmJPWGhRTnN2WWdxQS9ObFpka1hZUFhPYUwrSGtJNTdH?=
+ =?utf-8?B?MldHRGhmQ1BjQXRHYnh6Nk1oNFlmaFZGNGs0ek1PejBKOS9qSWsrRHUwa3dV?=
+ =?utf-8?B?R2FHTzdjZ28ydEdNWWMyL0hKQjRQTm9CODBYYmdHRm1FYUFGQVd1NW50cnVT?=
+ =?utf-8?B?aFg0Q2dKSXpieUtNam42cURYcVV6ZjI4bDVtUGluSTdmMlYxazJTVjFpdnlH?=
+ =?utf-8?B?WkpFME1Zb0ZEUHZ3MjhReklrSkhWbng0OXlkcExSdU9Md2g2djdzWXU1WkNR?=
+ =?utf-8?B?KzA4RDJNaWYydzZlK2RaYm5OSUpjdFZMalVqSDlFYlNuZkhDMEFxaTRvOHFT?=
+ =?utf-8?B?c2ZYWW1ObnJ6TStLWk1sbENSNXFLd3Z6NmxOc2pTM3NwSHovdmU1UlQ0MElJ?=
+ =?utf-8?B?dTVHQjd1Z2JpK1psVTdlRUhhcjZzbDVQRWlPeXhNREVKUmJFSDEwUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAPMcbCpHZPMRMFas8FOjNZtohozc96M7pcdce5Xnpur-ThwJQQ@mail.gmail.com>
- <alYdwKHMWoVcay_B@redhat.com>
- <CAF2ANE06ah2B37BmL=WQfJYutt1zGP7sPkOWZ+=+-dLdLqZ_MA@mail.gmail.com>
- <CAPMcbCp0vNA5RwR2W9C7-JYUyd-9QWdSKtLERsSW6mEr1nx9YQ@mail.gmail.com>
- <anmJvO2PUDM0xa7l@redhat.com>
- <CAPMcbCoKduRuKdt8P6ULrc43uX_2z=hBp_N87yi8F4GHdVqPeA@mail.gmail.com>
- <anmR9aKJcdtL_xTL@redhat.com>
- <CAPMcbCouxjFScnj54ETuBCbw6_rVx=kurAyWiFEPANMjM_QSHg@mail.gmail.com>
- <anmZxvE8f8BcaKEH@redhat.com>
- <CAPMcbCpkoSPbP0XFcunMeCQaCmPTpU7_+6_k9Nn2UGcQitxHbQ@mail.gmail.com>
- <anmgvCrijp_en1Bx@redhat.com>
-In-Reply-To: <anmgvCrijp_en1Bx@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 10 Aug 2026 13:48:10 +0300
-X-Gm-Features: AUfX_my8diBZfHpL7FeOzxyBNGeRhmlEh_Pka6RMormqcWrHsH64X-ms-887lKw
-Message-ID: <CAPMcbCqN722Z8+qDF0_kLhXXPpYdbPr7LHwwEG1zP-DMQJG_rg@mail.gmail.com>
-Subject: Re: [PATCH] qga: Do not follow symlink in guest-ssh-* commands
-To: Valentino Paulon <valentino.paulon88@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- yvugenfi@redhat.com, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000e033f00658af1734"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.827,
+X-Exchange-RoutingPolicyChecked: ctmScNSaG0N2jhpqrSSpIbER2kSJE4I0Cn+FI+rQNaackaWmgAaz2XZ3dljf1+ZbH1tmXzdzEyIiiC/5w2Dn66kouDym+IZgUWrZvdbrqi+KllmT8ZC1wn21TFXZuO3JkcBDkKt50MdH2U5OQ4GkZcGbD1moJJp9T7uKaiTCf2UXdY/1Et7dj2J7ityzoDcnR5rDQaeM7KsNK4OaYADcSq9Qs0fH/h4I0fPZ0YH1WuAxODWWEuHAIZfDqdU5CiFDbzw8mtfUlQGgU8EWua6mfZUXNetm0sxA3r3o1AwTBGeiLaL2PQWVIblXaus9FIxWy00AcPxxNhTfl5Sgu6S/CQ==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d04bc8d-c815-40d6-bf14-08def6cd0a3b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Aug 2026 10:49:23.2778 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KqXKPCJ10y7Z6U8y2rDrjSpI6pWVhKZPRUI4p4LpgvbTZdK173D7GjwubyVyQCWeYWa5w1jKQeZUiOmx6ihWKQzpr8CkQSbkdo2LkNTzmCY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPFD114713BA
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.827,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,328 +195,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e033f00658af1734
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Version 2 with setegid/seteuid logic pushed
-Please review and test
-
-On Mon, Aug 10, 2026 at 12:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com>
-wrote:
-
-> On Mon, Aug 10, 2026 at 12:33:39PM +0300, Kostiantyn Kostiuk wrote:
-> > On Mon, Aug 10, 2026 at 12:28=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com
-> >
-> > wrote:
-> >
-> > > On Mon, Aug 10, 2026 at 11:58:44AM +0300, Kostiantyn Kostiuk wrote:
-> > > > On Mon, Aug 10, 2026 at 11:55=E2=80=AFAM Daniel P. Berrang=C3=A9 <
-> berrange@redhat.com
-> > > >
-> > > > wrote:
-> > > >
-> > > > > On Mon, Aug 10, 2026 at 11:37:34AM +0300, Kostiantyn Kostiuk wrot=
-e:
-> > > > > > On Mon, Aug 10, 2026 at 11:20=E2=80=AFAM Daniel P. Berrang=C3=
-=A9 <
-> > > berrange@redhat.com
-> > > > > >
-> > > > > > wrote:
-> > > > > >
-> > > > > > > On Mon, Aug 10, 2026 at 11:06:27AM +0300, Kostiantyn Kostiuk
-> wrote:
-> > > > > > > > Hi Valentino,
-> > > > > > > >
-> > > > > > > > Sorry for the long delay.
-> > > > > > > > I have a question for you
-> > > > > > > >
-> > > > > > > > On Tue, Jul 14, 2026 at 7:10=E2=80=AFPM Valentino Paulon <
-> > > > > > > > valentino.paulon88@gmail.com> wrote:
-> > > > > > > >
-> > > > > > > > > > > So, you propose to call seteuid/setegid before any I/=
-O
-> > > > > operation?
-> > > > > > > > > >
-> > > > > > > > > > Yes, specifically for the SSH commands, because they're
-> > > unusual
-> > > > > in
-> > > > > > > > > > that we're doing stuff on behalf of an unprivileged use=
-r.
-> > > > > > > > >
-> > > > > > > > > +1 on the euid/egid direction -- as the reporter that's t=
-he
-> > > > > outcome I
-> > > > > > > > > was hoping for. It confines every step (read, mkdir,
-> create,
-> > > > > rename,
-> > > > > > > > > chown) to what the target user could already do himself,
-> which
-> > > > > removes
-> > > > > > > > > the whole TOCTOU class instead of chasing one instance of
-> it.
-> > > > > > > > >
-> > > > > > > > > A few implementation details that tend to bite with this
-> > > pattern,
-> > > > > in
-> > > > > > > > > case they save a round-trip:
-> > > > > > > > >
-> > > > > > > > > - drop the supplementary groups too, not just egid:
-> > > initgroups()
-> > > > > (or
-> > > > > > > > > setgroups() with the user's list) while still root,
-> otherwise
-> > > the
-> > > > > > > > > agent's effective access won't match the user's in either
-> > > direction
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > Technically, there is no limitation to running QGA in
-> > > unprivileged
-> > > > > mode.
-> > > > > > > > Normally, it is a system daemon, but this is not mandatory.
-> > > > > > > > In this case, we can not call initgroups because the caller
-> must
-> > > > > > > > have CAP_SETGID.
-> > > > > > > > We can call initgroups only when QGA runs as root. What do
-> you
-> > > think?
-> > > > > > >
-> > > > > > > In any practical sense it is a system daemon given the set of
-> > > commands
-> > > > > > > it is exposing. Thus, IMHO, deploying as an unprivileged user
-> > > should
-> > > > > > > be considered a broken deployment. We could make that explici=
-t
-> by
-> > > > > > > refusing to launch.
-> > > > > > >
-> > > > > >
-> > > > > > Makes sense, but we have one more issue with QGA unit tests in
-> this
-> > > case.
-> > > > > > They are called by an unprivileged user (build user), and
-> initgroups
-> > > > > broke
-> > > > > > it.
-> > > > > > Is it possible to enter the namespace automatically by the test
-> > > engine?
-> > > > >
-> > > > > We can't assume that is possible todo in all build/test
-> environments.
-> > > > >
-> > > > > Doing things as different user accounts feels pretty dubious for
-> the
-> > > > > scope of a unit test too - that is really functional or integrati=
-on
-> > > > > testing.
-> > > > >
-> > > > > Can we somehow restructure the tests and/or agent code to avoid t=
-he
-> > > > > changing groups stuff in unit tests.
-> > > > >
-> > > >
-> > > > There are two possible options:
-> > > > 1. add #ifdef QGA_BUILD_UNIT_TEST into qmp_guest_ssh_* functions
-> > > > 2. check the current uid and skip initgroups if it is zero (my
-> initial
-> > > > question)
-> > >
-> > > Surely you mean "if it is non-zero" here, as it is with uid!=3D0 that
-> > > the UID changes will fail.
-> > >
-> >
-> > yes. So what sounds better: "ifdef" or "uid!=3D0"?
->
-> I'd be inclined to #ifdef so we know it doesn't affect production
-> deployments, only tests.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
->
-
---000000000000e033f00658af1734
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Version=C2=A02 with=C2=A0setegid/seteuid logic pushed=
-</div><div>Please review and test</div></div><br><div class=3D"gmail_quote =
-gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10=
-, 2026 at 12:58=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:be=
-rrange@redhat.com">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">On Mon, Aug 10, 2026 at 12:33:39PM +0=
-300, Kostiantyn Kostiuk wrote:<br>
-&gt; On Mon, Aug 10, 2026 at 12:28=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<=
-a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com=
-</a>&gt;<br>
-&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; On Mon, Aug 10, 2026 at 11:58:44AM +0300, Kostiantyn Kostiuk wrot=
-e:<br>
-&gt; &gt; &gt; On Mon, Aug 10, 2026 at 11:55=E2=80=AFAM Daniel P. Berrang=
-=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrang=
-e@redhat.com</a><br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; wrote:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; On Mon, Aug 10, 2026 at 11:37:34AM +0300, Kostiantyn Ko=
-stiuk wrote:<br>
-&gt; &gt; &gt; &gt; &gt; On Mon, Aug 10, 2026 at 11:20=E2=80=AFAM Daniel P.=
- Berrang=C3=A9 &lt;<br>
-&gt; &gt; <a href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange=
-@redhat.com</a><br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; wrote:<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; On Mon, Aug 10, 2026 at 11:06:27AM +0300, Kos=
-tiantyn Kostiuk wrote:<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; Hi Valentino,<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; Sorry for the long delay.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; I have a question for you<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; On Tue, Jul 14, 2026 at 7:10=E2=80=AFPM =
-Valentino Paulon &lt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; <a href=3D"mailto:valentino.paulon88@gma=
-il.com" target=3D"_blank">valentino.paulon88@gmail.com</a>&gt; wrote:<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; So, you propose to call s=
-eteuid/setegid before any I/O<br>
-&gt; &gt; &gt; &gt; operation?<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; Yes, specifically for the SSH =
-commands, because they&#39;re<br>
-&gt; &gt; unusual<br>
-&gt; &gt; &gt; &gt; in<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; that we&#39;re doing stuff on =
-behalf of an unprivileged user.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; +1 on the euid/egid direction -- as=
- the reporter that&#39;s the<br>
-&gt; &gt; &gt; &gt; outcome I<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; was hoping for. It confines every s=
-tep (read, mkdir, create,<br>
-&gt; &gt; &gt; &gt; rename,<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; chown) to what the target user coul=
-d already do himself, which<br>
-&gt; &gt; &gt; &gt; removes<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; the whole TOCTOU class instead of c=
-hasing one instance of it.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; A few implementation details that t=
-end to bite with this<br>
-&gt; &gt; pattern,<br>
-&gt; &gt; &gt; &gt; in<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; case they save a round-trip:<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; - drop the supplementary groups too=
-, not just egid:<br>
-&gt; &gt; initgroups()<br>
-&gt; &gt; &gt; &gt; (or<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; setgroups() with the user&#39;s lis=
-t) while still root, otherwise<br>
-&gt; &gt; the<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; agent&#39;s effective access won&#3=
-9;t match the user&#39;s in either<br>
-&gt; &gt; direction<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; Technically, there is no limitation to r=
-unning QGA in<br>
-&gt; &gt; unprivileged<br>
-&gt; &gt; &gt; &gt; mode.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; Normally, it is a system daemon, but thi=
-s is not mandatory.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; In this case, we can not call initgroups=
- because the caller must<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; have CAP_SETGID.<br>
-&gt; &gt; &gt; &gt; &gt; &gt; &gt; We can call initgroups only when QGA run=
-s as root. What do you<br>
-&gt; &gt; think?<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; &gt; In any practical sense it is a system daemon =
-given the set of<br>
-&gt; &gt; commands<br>
-&gt; &gt; &gt; &gt; &gt; &gt; it is exposing. Thus, IMHO, deploying as an u=
-nprivileged user<br>
-&gt; &gt; should<br>
-&gt; &gt; &gt; &gt; &gt; &gt; be considered a broken deployment. We could m=
-ake that explicit by<br>
-&gt; &gt; &gt; &gt; &gt; &gt; refusing to launch.<br>
-&gt; &gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; &gt; Makes sense, but we have one more issue with QGA u=
-nit tests in this<br>
-&gt; &gt; case.<br>
-&gt; &gt; &gt; &gt; &gt; They are called by an unprivileged user (build use=
-r), and initgroups<br>
-&gt; &gt; &gt; &gt; broke<br>
-&gt; &gt; &gt; &gt; &gt; it.<br>
-&gt; &gt; &gt; &gt; &gt; Is it possible to enter the namespace automaticall=
-y by the test<br>
-&gt; &gt; engine?<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; We can&#39;t assume that is possible todo in all build/=
-test environments.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Doing things as different user accounts feels pretty du=
-bious for the<br>
-&gt; &gt; &gt; &gt; scope of a unit test too - that is really functional or=
- integration<br>
-&gt; &gt; &gt; &gt; testing.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt; &gt; Can we somehow restructure the tests and/or agent code =
-to avoid the<br>
-&gt; &gt; &gt; &gt; changing groups stuff in unit tests.<br>
-&gt; &gt; &gt; &gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; There are two possible options:<br>
-&gt; &gt; &gt; 1. add #ifdef QGA_BUILD_UNIT_TEST into qmp_guest_ssh_* funct=
-ions<br>
-&gt; &gt; &gt; 2. check the current uid and skip initgroups if it is zero (=
-my initial<br>
-&gt; &gt; &gt; question)<br>
-&gt; &gt;<br>
-&gt; &gt; Surely you mean &quot;if it is non-zero&quot; here, as it is with=
- uid!=3D0 that<br>
-&gt; &gt; the UID changes will fail.<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; yes. So what sounds better: &quot;ifdef&quot; or &quot;uid!=3D0&quot;?=
-<br>
-<br>
-I&#39;d be inclined to #ifdef so we know it doesn&#39;t affect production<b=
-r>
-deployments, only tests.<br>
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer" target=3D=
-"_blank">https://hachyderm.io/@berrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"noreferrer"=
- target=3D"_blank">https://entangle-photo.org</a> :|<br>
-|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer" target=3D"_=
-blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =C2=A0 <a hre=
-f=3D"https://fstop138.berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://fstop138.berrange.com</a> :|<br>
-<br>
-</blockquote></div>
-
---000000000000e033f00658af1734--
-
+SGkgQ2xlbWVudCwNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ2zDqW1l
+bnQgTUFUSElFVS0tRFJJRiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGJ1bGwuY29tPg0KPlN1Ympl
+Y3Q6IFJlOiBbUEFUQ0ggdjMgMC82XSBpbnRlbF9pb21tdTogRW5hYmxlIFBSUSBzdXBwb3J0IGZv
+ciBwYXNzdGhyb3VnaA0KPmRldmljZQ0KPg0KPkhpIFpoZW56aG9uZywNCj4NCj5JIHdpbGwgcmVh
+ZCB0aGlzIHNlcmllcyBlYXJseSBuZXh0IHdlZWsuDQo+dGhhbmtzIGZvciB0aGUgcmVzcGluIQ0K
+Pg0KPmJ0dywgcmVsYXRlZCB0byB0aGlzIHdvcms6IGhhdmUgZXZlciBzZWVuDQo+dmZpb19kZXZp
+Y2VfZ2V0X2F3X2JpdHMgcmV0dXJuaW5nIDQ3IHdoZXJlYXMNCj50aGUgaW9tbXUgc3VwcG9ydHMg
+NDg/IFRoaXMgbGVhZHMgdGhlIGZvbGxvd2luZw0KPmF3IHRlc3QgdG8gZmFpbDoNCj4NCj5gYGAN
+Cj5yZXQgPSBoaW9kYy0+Z2V0X2NhcChoaW9kLCBIT1NUX0lPTU1VX0RFVklDRV9DQVBfQVdfQklU
+UywgZXJycCk7DQo+aWYgKHJldCA8IDApIHsNCj4gICAgcmV0dXJuIGZhbHNlOw0KPn0NCj5pZiAo
+cy0+YXdfYml0cyA+IHJldCkgew0KPiAgICBlcnJvcl9zZXRnKGVycnAsICJhdy1iaXRzICVkID4g
+aG9zdCBhdy1iaXRzICVkIiwgcy0+YXdfYml0cywgcmV0KTsNCj4gICAgcmV0dXJuIGZhbHNlOw0K
+Pn0NCj5gYGANCj4NCj5JIGdvdCB0aGlzIHdoZW4gdHJ5aW5nIHRvIG5lc3QgVk1zLg0KDQpJIGFt
+IHRyeWluZyB0byByZXByb2R1Y2UsIHdoYXQgZGV2aWNlIGRpZCB5b3UgcGFzc3Rocm91Z2g/DQoN
+ClRoYW5rcw0KWmhlbnpob25nDQo=
 
