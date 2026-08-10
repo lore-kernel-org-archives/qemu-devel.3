@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E458BC5AC82
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 464A5C5AC82
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 10:41:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtNPR-0000jv-KT; Mon, 10 Aug 2026 06:39:09 -0400
+	id 1wtNRT-0001k7-Lo; Mon, 10 Aug 2026 06:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wtNPG-0000dZ-Fx; Mon, 10 Aug 2026 06:39:00 -0400
+ id 1wtNRR-0001jW-To; Mon, 10 Aug 2026 06:41:13 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wtNPE-0000Jw-MU; Mon, 10 Aug 2026 06:38:57 -0400
+ id 1wtNRQ-0000tI-DF; Mon, 10 Aug 2026 06:41:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=2LZvcQwgJEPifQ3Wjt6DtbUg9t5tJ0bXb9zJCn6qEbM=; b=A8+Nvpn9bQX8jzy
- qg0zgCh2ZCxpbo2+1H5bkJwrXViVyk6Xp9Oxc8w/aGISvzc68PSk5r0Eukgkyx6JxB2MHZ35vQHiH
- g0EbdM0z7UgRidNQ7PvNlJvmbVDZY9HromIFYNRQ3sxGB1UOQhWjvAM/IopXI9+0W4Xh5mUYGj0jM
- P8=;
-Date: Mon, 10 Aug 2026 12:44:03 +0200
+ List-Help; bh=Mbz2gJSUAtXEtesXPBaX3BaUTQ2ccADLKuGC2fPWncU=; b=WsnPmyg6Mcjm4fx
+ it8BHUJMoqfjvxSBGhU+xXdu+wZc5+6oReteR0xBZbqw8MzIxNUDOlQgKkNr9VF7fzsLE2kgfdJYu
+ 5SQAIkOtpR1LsYUzKgnVNO7gqLEnCM6BpHlCF9IpQa1ci799n0WMu+2luo+hKzqsfdmOMqWSC+fF4
+ 34=;
+Date: Mon, 10 Aug 2026 12:46:23 +0200
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, git@xen0n.name, 
  17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  philmd@mailo.com
-Subject: Re: [PATCH 08/11] tcg/optimize: Handle revbit{32,64}
-Message-ID: <anmrFkhbJTqRhPkd@hive.localdomain>
+Subject: Re: [PATCH 00/11] tcg: Add revbit opcodes
+Message-ID: <anmrwtgK2OogZzEx@hive.localdomain>
 References: <20260731000503.170446-1-richard.henderson@linaro.org>
- <20260731000503.170446-9-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260731000503.170446-9-richard.henderson@linaro.org>
+In-Reply-To: <20260731000503.170446-1-richard.henderson@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -67,12 +66,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 31/07/26, Richard Henderson wrote:
-> These are nearly identical to bswap, so reuse fold_bswap.
+> Adding these have been at the back of my mind for a while.  Most recently
+> tickled by the Octeon additions, and Anton's helper-to-tcg work.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  tcg/optimize.c | 48 +++++++++++++++++++++++++-----------------------
->  1 file changed, 25 insertions(+), 23 deletions(-)
+> I didn't add a 16-bit function or opcode because no host implements it.
+> The 16-bit reverse that the hexagon target does can be implemented with
+> a 32-bit reverse plus a shift.
+> 
+> 
+> r~
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+Thanks for adding these!:) I just came back from some time off, will take
+a look now.
+
+// Anton
 
