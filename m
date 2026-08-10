@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15973C5AC82
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 12:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EFE1C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 12:46:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtOul-000761-Jy; Mon, 10 Aug 2026 08:15:36 -0400
+	id 1wtPOG-00048V-3F; Mon, 10 Aug 2026 08:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wtOuh-00073M-Po
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 08:15:31 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wtPNd-00044i-Ga
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 08:45:27 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wtOuf-0001Dc-UA
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 08:15:31 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-47fe2d179e2so1032799f8f.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 05:15:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wtPNb-0007bl-EQ
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 08:45:24 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4a17f91so2827241a12.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 05:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1786364127; x=1786968927; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=f6w3W8atRrqKQaVtE38r1TC6G0N7Trc9YGRXReVzOaM=;
- b=Mt4zGmnCU68zW8MlTtoBaP+B/vDb6uKKVz9QDsblwdmQMIhEMSBQMJQyP5CkJI4lsL
- FNdr11WeFjPk+xIv9WWDphR8sE7jTd0XLJ0R2w+jQCZzlG0iie50atbRyodbLRmkOe0Z
- XxZxoEqzUpDokosobyBOjyzL+52xZgkZD/ejo=
+ d=gmail.com; s=20251104; t=1786365921; x=1786970721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=OfhdNFipSZRqPS4pPyjA4J8l2tPQ/gtSWhKLZK4KL/M=;
+ b=Jhz5di6U4Ok23jeGR67sFeDiq8r2FK9Q8wXI5x7NkmYctpZi7zmOJPm6U1dhQfr8Cj
+ PRStIMY/p5GW7wLnP9auY9uONLj3RCVHUHztv9w+epbLXKPyZLYyyWRvhslF5MJ5Qib0
+ E6lxonxzVnR6aI9REHIdcFmQoALlc3G948JsH+uwrmfNmaakgzCrn029WDM6T6LHoduC
+ XSS8FISELb1DC3gbhr0JyIah62JuQGg3oIS0Lyp08G+Syrsjj7G7EpFnmHH3WfteAnHp
+ IHyVRx5QzLVAVbnEryLyWAPvoc5ZYANFjKcIrxDsHVpWtytjSgFLSXhesN7GSUH6FT1G
+ Tgbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786364127; x=1786968927;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=f6w3W8atRrqKQaVtE38r1TC6G0N7Trc9YGRXReVzOaM=;
- b=ov2/pPhvaM+RQHuZFa+uFOH7v33xCUj/dyCoXkBHUE9jQHzZMcjwjV87fJ+Qs3LWNc
- o3lf39xzvi86M4BPXZEve6loWIhxPRS7cxjwInStJnFegB77xs72jQIzuQaOP4bg1C75
- PRhmmbROZbY1grvaIiC4AXgxgeRBRAH3dqnQTwMtD2sn/VopTTBZ2ulhdAj4ubGqKE/8
- uu7pB3Kpc0JqUBFPd0eMAX2nmK3UAnJ/bhm20cnEUreh69B/SHLi1bxDh/V+F8O7vI+a
- EGS/q++ikrlqDQLPndyfDhVtfa9LXQkWD/xPNiqbsqo0z67HSGwJgfyG1tKTV41UfFCD
- VyCQ==
-X-Gm-Message-State: AOJu0YweCddqn9Y8B3bGP0ERvtcvHF3k/vzAxMVGp97cVLoN8WhifQdl
- l2xFo7HZ9iJATXUFmAax94f+OG6JeDyLWDiRC+LfLU6Y3P+QF4dpsv08k/WcTEDLtv4KIwARseK
- uciI3
-X-Gm-Gg: AR+sD11fkS0+a8TO17TqtMaaSFguNfhX4IVfculVWwM7w5rt1AEtLRo9GraExjy3TDZ
- ubj+jwJFKIzlCqmPiHtA89lNaE++euO5FVRixKW/T37f3DVsvag02pG+NOEzX7N+td/fLarimZM
- MKEu4h9+B9OPEQDHrDYtgF0wYQB9Ou15jm8MODQ5UOAFKhA6dV4M1Ii44h++E7RJxCxL0yRS44/
- TODxzWfd+ZH9d/D9rvPiIJXeDQh7pIafN2BscsKPrsqHDyXdD5OBamZqiof0OuzLRDfsr/o8bgh
- QvQvvmY+IvYPvq7LS8+tQgd5jILG4TjZwdCZIk93v5pY9CICZZqbGPujqARBVPB74TVGxs0nffx
- f6kCSsk8xqJ6OajzQ3QahlZHj0F3VtzfrGiNiltbbDOrnBq7mXAbzZNxTe4+b1K3NGsmg4RZPx4
- 0GNpb2t3ZuTSY28yIwFC9yJwztulr92DNc329n4IyBlHubKZOWZBZV/64i9/WAzEcuc4HoboA/z
- vE0Gur0c6RMp9bNKVmDxQmhjoShIp0izD6tjd2+o+Yw0Jm/QV9b/3YWrRme
-X-Received: by 2002:a05:6000:29c6:b0:47f:6e23:64d6 with SMTP id
- ffacd0b85a97d-4814562d12bmr1632037f8f.16.1786364127476; 
- Mon, 10 Aug 2026 05:15:27 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf574a7200f46c63e7a2c45b35.dip0.t-ipconnect.de.
- [2003:cf:574a:7200:f46c:63e7:a2c4:5b35])
+ d=1e100.net; s=20251104; t=1786365921; x=1786970721;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=OfhdNFipSZRqPS4pPyjA4J8l2tPQ/gtSWhKLZK4KL/M=;
+ b=mMk2kxkjdAvJ/A8GRMZIHJqDvUTKDD+mi6KTqBmL//ZSntzIXD2x9TxcDO32I5oz7+
+ ZrwnmZJHb67B0ryICED/GRHCkKTTr37f4bldc913PNxeCUhLD75lRi8xsrOIDbzN5Lrg
+ J3xc2NvoHg1HgRAJPmsnNXEdUajvBRcQBCEjYFNtiECAn4Ty8VtfQC3rRnnl+sYw/zwg
+ c4O2SfNDMXTS26AMcz3On6wJE4InkGXV5lmOa0CAh11T+kEMigAwHchjCplrFwfqzJh2
+ O5zEFxgy6LoVxXJk8pfEJCiWUYwj1y8ug9Gr+8KtG6VX8EJndI+jcMiJ4IiWxeUUyubA
+ uXMw==
+X-Gm-Message-State: AOJu0YyYnqg8DrzAMDyNx/F901iRzXRmGV3jCjNvwY/BxhcfESDdwwyN
+ +4vW64XZRjGRGyCQEwfsfsdcWUlPmqoYYuKxQ/YUg0X0edlsDNm5/SM9
+X-Gm-Gg: AR+sD13OEafH+TwZ+fo5S7T7ek1UAMm5qKIUNrOzFoCP5qlNJ9k2Epieu1ALFG2CAye
+ /wqaqtguAglVOwQs+nEjxq84s6hfNhd4ordcnpOVY+AZBjs5v0djG2q2uhyyc/kJFKdVBAvvOVf
+ KrrFduYRHcEprVLsPXQ31xxPkYVdH2WWdE66UZlkqN/O52sLzc/tqChWe21Dwkc7u3jIY4evXAB
+ gv4a1PVEuivzR7VJQrtS/aYh9eKHt2FWCZc8e0hclhz+Lc+YWJzblf7XzVHowpQpfSR1/1pF4vU
+ YmCAJuuA/GsUP6k8NlAQlI0wv5xmBGnd1w4DozR+tuGfnzCZNL57Rjpr7AD+oxMQCJsfV48cVoY
+ hetJo9NIyIzU3jaDPSaL7qnf1COma7f49e6wp+pYlL2KCUsuUeQh21fxGWiPmBRFHWM09Us7g7u
+ c6Rz0ptepVRr2BsF8Sm7UBUczfJwYngOHS3R9Z2X3Ube+jO+eDQMj+LQh5vsM6jQ65NkQBS8iOs
+ 1xcUaZkKl/5BRfQ30OCJeIxX6OiSd9CAw==
+X-Received: by 2002:a17:907:80b:b0:c16:66dc:3ab7 with SMTP id
+ a640c23a62f3a-c20c67c947bmr75497666b.10.1786365920654; 
+ Mon, 10 Aug 2026 05:45:20 -0700 (PDT)
+Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-480021506cbsm35872061f8f.14.2026.08.10.05.15.26
+ a640c23a62f3a-c2080c910aesm391823266b.30.2026.08.10.05.45.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 05:15:26 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Aleksanr Mikhalitsyn <alexander@mihalicyn.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH] hw/char/pl011: support backend hotswap
-Date: Mon, 10 Aug 2026 14:15:25 +0200
-Message-ID: <20260810121525.100540-1-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
+ Mon, 10 Aug 2026 05:45:19 -0700 (PDT)
+From: Wadim Mueller <wafgo01@gmail.com>
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	qemu-block@nongnu.org
+Subject: Re: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor
+ chains in one pass
+Date: Mon, 10 Aug 2026 14:45:14 +0200
+Message-ID: <20260810124519.34501-1-wafgo01@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CAEUhbmVE4j_+havPFTLgHs26FiqWPyRmeU1bjrVpPD0ZQ-Rtaw@mail.gmail.com>
+References: <20260804081459.8007-1-wafgo01@gmail.com>
+ <CAEUhbmVOkPeMzZGpgJ6WMk07xmf9oGL25jp7uw3uQtPt4LE93g@mail.gmail.com>
+ <20260805080540.323431-1-wafgo01@gmail.com>
+ <CAEUhbmVE4j_+havPFTLgHs26FiqWPyRmeU1bjrVpPD0ZQ-Rtaw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=wafgo01@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,55 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aleksanr Mikhalitsyn <alexander@mihalicyn.com>
+Hi Bin,
 
-Currently, when Incus issues "chardev-change" QMP command to change
-chardev backend from ringbuf to socket it receives an error (with aarch64 VM):
-"Chardev user does not support chardev hotswap" [1], [2]
+Thanks for the 513930 pointer -- that was exactly the missing piece, and
+it changes my earlier result, so let me correct the record first.
 
-Let's fix this by properly implementing BackendChangeHandler for pl011.
+With "hw/sd: sdhci: Fix SDMA boundary bug" (513930) applied first, series
+515264 builds on my tree (I applied 513930 patch 1 + 515264 patches
+07-12; I dropped 13/26 "keep high-capacity memory blocks at 512" -- it
+didn't apply on my older hw/sd/sd.c and is orthogonal to the ADMA path).
+Re-running the same AM64x reproducer, 15 hands-off boots each:
 
-Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-console-on-arm-architecture/23096/3 [1]
-Link: https://github.com/lxc/distrobuilder/issues/892 [2]
-Reported-by: Stéphane Graber <stgraber@stgraber.org>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- hw/char/pl011.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+  baseline (before either change):              7/15 time out
+  your series (513930 + 515264 07-12):          0/15
+  my patch (complete non-INT chains in a pass): 0/15
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index cb12c3e224f..3622248ec0c 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -660,12 +660,26 @@ static void pl011_init(Object *obj)
-     s->id = pl011_id_arm;
- }
- 
-+static int pl011_be_change(void *opaque)
-+{
-+    PL011State *s = opaque;
-+    int break_enable = s->lcr & LCR_BRK;
-+
-+    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
-+                             pl011_event, pl011_be_change, s, NULL, true);
-+
-+    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
-+                      &break_enable);
-+
-+    return 0;
-+}
-+
- static void pl011_realize(DeviceState *dev, Error **errp)
- {
-     PL011State *s = PL011(dev);
- 
-     qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
--                             pl011_event, NULL, s, NULL, true);
-+                             pl011_event, pl011_be_change, s, NULL, true);
- }
- 
- static void pl011_reset(DeviceState *dev)
--- 
-2.47.3
+So your series *does* fix the AM64x case -- my earlier "10/15" number was
+from my crude hand-approximation of patch 12 alone on the old base, which
+(as I feared) simply wasn't representative. Apologies for the noise; the
+real series resolves it here, same as my patch.
 
+As promised, the reproducer -- I kept it free of any proprietary bits:
+
+ - The machine is public in my QEMU fork:
+     https://github.com/wafgo/qemu  branch cmblu/corenode
+   (an "am64-virt" TI AM64x board). Build qemu-system-aarch64 from it;
+   to observe the original failure, revert my fix commit cad8b499
+   ("fix(sdhci): complete non-int adma chains in one pass").
+
+ - A small image-free qtest on that branch,
+   tests/qtest/am64-adma-pacing-test.c, drives an ADMA2 read on am64-virt
+   and counts how many SDHC_TRANSFER_DELAY virtual-clock steps the chain
+   takes to complete: 0 with either fix in place, >0 (the sliced,
+   timer-paced transfer) without. It reproduces the *mechanism*
+   deterministically, no guest image needed.
+
+Since your series fixes this, my standalone patch is effectively
+superseded -- please feel free to drop it in favour of 515264, I don't
+think a separate fix is needed.
+
+The one thing possibly worth keeping is the pacing regression test. As
+written it targets my fork's am64-virt, so it isn't directly
+mainline-able; if a test that catches this ADMA virtual-clock pacing
+would be useful upstream, I'd be glad to port it to an in-tree SDHCI
+machine -- e.g. the Icicle Kit where you hit the same "Timeout for
+status update", or the xilinx-zynq SDHCI you just added a test for in
+513930. Would that be worthwhile, and which board would you prefer?
+
+Thanks again for the help,
+Wadim
 
