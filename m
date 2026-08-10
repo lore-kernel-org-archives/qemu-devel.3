@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A5EC5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 392FFC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtRyo-0000Ud-U2; Mon, 10 Aug 2026 11:31:58 -0400
+	id 1wtS27-0001I7-9k; Mon, 10 Aug 2026 11:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtRyl-0000UK-7V
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:31:56 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wtS20-0001Gx-16
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:35:16 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtRyj-0004gQ-No
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:31:54 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-80bb41f7f3cso20565487b3.2
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:31:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786375912; cv=none;
- d=google.com; s=arc-20260327;
- b=k6Z71TghHN1nmj5ZrwxjUbD/M6+tTahC7eXraA9WJfnVp3YkF2++mI2RYMSLuzvA9c
- L1wjW0nBI71+x5njYUyd2BZwXAVmNcr/df7Dx4i1cY2GbhHKjFlNIzj0b02NfiAFIKVS
- oz/DsswDSRpMPfk+ykRo69F7Oz36HMYYY8zLWgxdEUG2rqIXuejZSYTldiWuXQ3Lt9Ie
- VGP6hi+ixdUZgcJlS3h8QVbKHcODO1Lc3THX22IyG9Aqbmz9iqh6jCQ65A0HguWMfatH
- 344AaJs3cygCg5b8Fu7P9NiKOPs8IGQeo1OkyEWgsLbuQK8O5qzXRc3bQdk23BJrxSrd
- D0jQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
- fh=sa54kRfqZCSJoqqovfbLshesdcnvoIzhJ6jhb/uDQ0k=;
- b=Z26ibNh85dnP0PsacdiOKcJf++RiUHFUzDerMrBBvXVMqtL1zRmT6WkFZpFVMR4MOy
- JgEfogGdNAesU8UgT7Neb3skQQWDcXusBe5LxYRQ1aNYBbpZjejppJcNem64RKggQNNI
- lGa8VCE7vcNTQJzxPZMo0W4fTRJHZkIxJ4SMBZ3GrQrR1Y4QoO0SDvkrluc43zuJUMVZ
- fsrMFyvQFyCUP1oXfwAXKwtSAGk70ST7KCdE5qJ3jd7QoFaw7EgGgglhq4lqYhDAnAl7
- yJCkl7r9CmB76Dlxlg2vSuAzgHy+SY3HQF/XObH/HTMa8DiyFdai5D6uisaSOaangHsp
- GHuQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wtS1y-0005BX-8J
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:35:15 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so25474215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786375912; x=1786980712; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
- b=wxPoPh2gm0WmHT3pJMoe4/DLiJ4y1VbBeSsoGIDbDdhmzqCyOR84Z5gJIGhBhQK/PC
- kKF2rSYXbim5gvy7Mj0xYoS+8tcvS/O8YOYiVApcI+iGmchm+GyMOMrlgdIXzJvU6e1p
- PI54BLwkleL+//nztvomalujf3wDrjCnS5mmrjeid+e3kUmNEv/QU+FsFGBAUb78dgZZ
- Z8jNcwel34Ea6oVYz+pgvtH4njvI/099tcOojybaTucjBCKxTWIvexVduAmxAYylj1FA
- l3PrrRb7UzVmH2Y14H75aPqN8RI82ejtdhqGK7EHb26ocq3kMdN1GKeVHxYvnu9x2a0O
- mq0Q==
+ d=linaro.org; s=google; t=1786376111; x=1786980911; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=evoH7tn9HwlReMqq40LV/1k6FhTDd6/nIyj6oxDghDo=;
+ b=OyawgGg4YLBxK7TbR2a6sra1r/Mih502xxF1tCwNL6KRGDhTNM3CXHY3MF9qA9yb+l
+ mLX76eahxc9qkzUgTP7rtFVBE0/BiRQy2iGF6ifTbGX1tkryKmOHVpij4TGsmMCG953o
+ WZhX+5+j8J7E7HqlwIWOhK4ZQ7/KBQ3iJyqx0ITTBU10hNksm5sPn2q7XM6VHl20dIIs
+ +eL/ZTyANJSpSMlBwke1It8dj947YGtA2zVXEMpNeiCwn5RyAI4Lyt56Ql5Ll/DPlLZm
+ KaXBbUA652v7yni+TCB00bz0iIt12IoLyF6/3P1d6MBu0eW2k3yXt7klMXA45WBdTx1G
+ gnxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786375912; x=1786980712;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
- b=ZKegqyWbKDWrknhTNayzkUWcmG9EWD7j9klUegEXRqAwFCVlkr/CSpGvuE01Pv8tvI
- 3+nsYkJt+VjMufFAeK8RNMuBMNHJuvzylPiOb8EAwV1TUUS/FVJf9LZ+iZodhWdNPfph
- 8zHkXwyPNJEc/MElppc7uKST+8Megi3LwcdAn8ZdlR0tPoSfEzYORZvcJFSUXvHiDaJc
- 9/bRUrPgAw/oChNw00dpBzkDCwRQ8rCPpHoy/wu0ecUoGEBw6+2bi9kNFmYgN25ZRSLo
- xYEYwMVgJd5oIPPBMp9WnmqRjLPbCr1OIU79FP2FdQ5+hsVFdE56mm8sMr5FO5mlLX5T
- jzVQ==
-X-Gm-Message-State: AOJu0YwdS0YZBU2iaGvV83+UQ5BESdhostdg5jSsAYQqqfGlIawl+rHN
- j9OXWYDn05uaVnm9TvzaDUB90X4L0TFNfRZcCRcOkhKNveivD0I+bLPrWBFA4LGmYoc1Adwy+l9
- tPZvxKismJks6MG/EqXNRsPFZZoliQDqv0QtgdALhGg==
-X-Gm-Gg: AR+sD12vvyioK5Bwfs7B7diBfXC9Gs0Rupqc9FNxPnyiACnvBMHZnTuGhSm/RGay/2/
- gAFwQ08k8R/J4B512u1yfd/xZ545UAdNBl2HEM26eSIGeRH2xaM4Q/ILWdXRc5FgtxRXJAWRBxm
- 1yYdzDdvAjTimfAiByrVya1W7tH/thK6t/pryi2/rSVxq/QOqiZt1NjrtCZpKjqIyBMU9FtY8nu
- 0TI089Yld8Ot1s5JjVR7NJp+0sThVWv7DseBpWDMAhELIpw36wk6qSSW7gFPPNvmbBjDdQVtG1v
- ayd7+WjrFM4GG/gGXGrUgPBk5DV1JdM7YeV3HiyRnfT4TTIE9gHvrl0ZRqY5fgWBRlUg2jQw0B6
- d1j9PMBae59KZe91insm39nWPIbJm
-X-Received: by 2002:a05:690c:4f8e:10b0:826:9576:a284 with SMTP id
- 00721157ae682-8269576b0aamr77251437b3.4.1786375912183; Mon, 10 Aug 2026
- 08:31:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786376111; x=1786980911;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=evoH7tn9HwlReMqq40LV/1k6FhTDd6/nIyj6oxDghDo=;
+ b=UcY7li4bwUfo2tKK+YU0W1311C4SPWUEQnWBQBOXVz5TSCF5qz3fJMdXc6dSmjQcxl
+ ZKwSME7KnxwlUjIS0Mvigteo2+z75j4TXdSPmOePCEhpALUkuoR9hx8sHbElI3uFkaSO
+ z4TmMfrNtbwkzOkydshQ/xzga4OUs/R1P0laWd3hxcr+hiO2OCy1U+7IhWooJjFKTESY
+ TdOlB7zTdeYrgnGaXxIuMPMfQugqW7t+twb78TQ+SQIFM7e7N8+kLuJ7Rh0Xr70UBWrZ
+ JEPQbqmJGYqxrMzAqH7X1JaK7zvbT0wf7Kup7OXQkK5c2BNNJ1yqwi/ORq+9jJhmLtUs
+ wafQ==
+X-Gm-Message-State: AOJu0Yx8cxqy/nk+I9do7fgMzbbF0ejOycjiRj/kGa5jlpohUqDapg0s
+ qwB9uuJwjT0cf1mispYjaF6X7hbOhtmO9lC7BzzI35F6FQai0+sJiBoeSjpbQs0aEhM=
+X-Gm-Gg: AR+sD11/iubqvEG7XDhX0DJv6jJFrtfQcJARawO3kgihNgy7BD+wYqnLaeJLttBLCCo
+ hkXw9ffDwk5ED+8sWEkqVpxX0Fua7Zce5btWvqJLss0YW7bUCKK6lJIeLxu6QSiL4GNzr9VRyoQ
+ HvPiPeP5vXwWC55LN1dqYD0AOi0r9+Fwe6a0Cq31s1ScVX+4KXsovgnhgH0GV0XveXXxU7wJkL8
+ a/lbR/qeIvDwct1MroU4yYVDMLjsJpqALsQJrLmyOO23QG8Og7kPx5w7PKKIWo15w6HDnh1+5++
+ 3y2CTK+GNucb3ZhR7JzQEpXphuuwfe9efi1na4lZD+IykKFOgPqypBrkP7bM1WikjGm/IQdOX7d
+ V6pA9jbazzTZVsIOL3J0qzjsgL+MKVoJJAbW6dmLp65npb5UprZkrzI3ui1RbhsM7FFbP3f6cxg
+ iSwBLnpJ89ETaKBwYPeSOT4CgeJMI/tnzSGcqh8buZC9YOgGAduG3syttLT2Am
+X-Received: by 2002:a05:600c:474a:b0:496:c361:fb96 with SMTP id
+ 5b1f17b1804b1-4994e6db5aemr522903295e9.0.1786376111158; 
+ Mon, 10 Aug 2026 08:35:11 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48002150952sm31646699f8f.15.2026.08.10.08.35.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Aug 2026 08:35:10 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5A0FE5F83B;
+ Mon, 10 Aug 2026 16:35:09 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org (open list:i.MX31 (kzm))
+Subject: [RFC PATCH] char-fe: implement qemu_chr_fe_backend_name
+Date: Mon, 10 Aug 2026 16:35:02 +0100
+Message-ID: <20260810153503.2652324-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260713073033.3883619-1-kchiu@axiado.com>
-In-Reply-To: <20260713073033.3883619-1-kchiu@axiado.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 10 Aug 2026 16:31:39 +0100
-X-Gm-Features: AUfX_mwWIK0FmzW5i-dr3j1J-nDdKoQk6PinVSqDYtdSqsrhgRSMvnwV_IHKAMg
-Message-ID: <CAFEAcA_=DVVwQYdpwnhbzF_GwR9gZp4sJa-C97caA0i7zofADA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/8] Add Axiado SoC AX3000 and EVK board
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,28 +108,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 13 Jul 2026 at 08:31, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->
-> This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
-> The model for Axiado SoC AX3000 supports
->   4 Cortex-A53 CPUs
->   Arm Generic Interrupt Controller v3
->   4 Cadence UARTs
->   1 SDHCI controller with PHY
->   8 Cadence GPIOs
+A number of chardev users where calling qemu_chr_fe_get_driver() which
+is discouraged as it blocks backend hotswap. As the pattern is common
+and need for the string is transitory add a helper and keep
+qemu_chr_fe_get_driver() for those that really need the funkiness of
+poking around the backend setup.
 
-Thanks; I've applied this to target-arm.next ready for when
-the tree reopens for 11.2.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/chardev/char-fe.h       | 13 ++++++++++++-
+ backends/cryptodev-vhost-user.c |  8 +-------
+ backends/rng-egd.c              |  8 +-------
+ backends/vhost-user.c           |  8 +-------
+ hw/char/imx_serial.c            |  4 ++--
+ 5 files changed, 17 insertions(+), 24 deletions(-)
 
-I made a couple of minor fixes to save you doing another respin:
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index 5f8a6df17dc..13218d04c8d 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -52,7 +52,8 @@ void qemu_chr_fe_deinit(CharFrontend *c, bool del);
+  * associated Chardev.
+  * Note: avoid this function as the driver should never be accessed directly,
+  *       especially by the frontends that support chardevice hotswap.
+- *       Consider qemu_chr_fe_backend_connected() to check for driver existence
++ *       Consider qemu_chr_fe_backend_connected() to check for driver
++ *       existence or qemu_chr_fe_backend_name() if you need the name.
+  */
+ Chardev *qemu_chr_fe_get_driver(CharFrontend *c);
+ 
+@@ -70,6 +71,16 @@ bool qemu_chr_fe_backend_connected(CharFrontend *c);
+  */
+ bool qemu_chr_fe_backend_open(CharFrontend *c);
+ 
++/**
++  * qemu_chr_fe_backend_name:
++  *
++  * Returns: caller freeable string or NULL
++  */
++static inline char * qemu_chr_fe_backend_name(CharFrontend *c)
++{
++    return (c->chr && c->chr->label) ? g_strdup(c->chr->label) : NULL;
++}
++
+ /**
+  * qemu_chr_fe_set_handlers_full:
+  * @c: a CharFrontend
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index cc478d9902d..3334e280a27 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -373,13 +373,7 @@ cryptodev_vhost_user_get_chardev(Object *obj, Error **errp)
+ {
+     CryptoDevBackendVhostUser *s =
+                       CRYPTODEV_BACKEND_VHOST_USER(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&s->chr);
+ }
+ 
+ static void cryptodev_vhost_user_finalize(Object *obj)
+diff --git a/backends/rng-egd.c b/backends/rng-egd.c
+index 1d92bd71cf7..c2207f40c5c 100644
+--- a/backends/rng-egd.c
++++ b/backends/rng-egd.c
+@@ -126,13 +126,7 @@ static void rng_egd_set_chardev(Object *obj, const char *value, Error **errp)
+ static char *rng_egd_get_chardev(Object *obj, Error **errp)
+ {
+     RngEgd *s = RNG_EGD(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&s->chr);
+ }
+ 
+ static void rng_egd_finalize(Object *obj)
+diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+index 380d8250233..46dadb74800 100644
+--- a/backends/vhost-user.c
++++ b/backends/vhost-user.c
+@@ -152,13 +152,7 @@ static void set_chardev(Object *obj, const char *value, Error **errp)
+ static char *get_chardev(Object *obj, Error **errp)
+ {
+     VhostUserBackend *b = VHOST_USER_BACKEND(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&b->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&b->chr);
+ }
+ 
+ static void vhost_user_backend_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index fb41ee2ac50..8ac4efbb5e9 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -278,10 +278,10 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+                              uint64_t value, unsigned size)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
++    g_autofree char *label = qemu_chr_fe_backend_name(&s->chr);
+     unsigned char ch;
+ 
+-    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
++    trace_imx_serial_write(label ? label : "NODEV", offset, value);
+ 
+     switch (offset >> 2) {
+     case 0x10: /* UTXD */
+-- 
+2.47.3
 
-(1) you can't use %lx in logging printf format strings for printing
-a variable of type 'hwaddr' (it isn't a "long" on all hosts, and
-this won't compile on some systems) -- you need HWADDR_PRIx . I
-fixed some cases of this in patches 2 and 4.
-
-(2) we don't require the "<public>" and "<private>" marker comments
-any more, so I removed them from patch 7.
-
--- PMM
 
