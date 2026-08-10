@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC95C5AD4E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D017C5AC82
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtLSe-0001ca-OD; Mon, 10 Aug 2026 04:34:20 -0400
+	id 1wtLSa-0001bZ-Vm; Mon, 10 Aug 2026 04:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRl-0001QI-6Y
+ id 1wtLRk-0001QD-T7
  for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:33 -0400
-Received: from [115.124.28.51] (helo=out28-51.mail.aliyun.com)
+Received: from [115.124.28.98] (helo=out28-98.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRh-0005C2-4t
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:24 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.08302353|-1; CH=green;
- DM=|CONTINUE|false|;
- DS=CONTINUE|ham_regular_dialog|0.195864-0.0147222-0.789414;
- FP=3152376357097244031|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033045220102;
+ id 1wtLRf-0005CH-4D
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:23 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436353|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.014778-0.000114728-0.985107;
+ FP=7607367760908667379|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037032089;
  MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.iiL7hML_1786350661; 
+ TI=SMTPD_---.iiL7hP8_1786350663; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iiL7hML_1786350661 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 10 Aug 2026 16:31:01 +0800
+ fp:SMTPD_---.iiL7hP8_1786350663 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 10 Aug 2026 16:31:04 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v2 4/9] target/i386/kvm: Use AMD MCE status encoding for Hygon
-Date: Mon, 10 Aug 2026 16:29:51 +0800
-Message-ID: <20260810082956.1768042-5-zhang_wei@open-hieco.net>
+Subject: [PATCH v2 7/9] hw/i386: Reserve AMD IOMMU HT GPA range for Hygon
+Date: Mon, 10 Aug 2026 16:29:54 +0800
+Message-ID: <20260810082956.1768042-8-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.51 (deferred)
-Received-SPF: pass client-ip=115.124.28.51;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-51.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.98 (deferred)
+Received-SPF: pass client-ip=115.124.28.98;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-98.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -68,44 +67,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU's KVM memory-failure injection path builds synthetic MCI_STATUS
-records for the guest CPU.  The status encoding is vendor-specific:
-Intel-style records use bits such as MCI_STATUS_S and MCI_STATUS_AR for
-action-required events, while the AMD path uses the AMD memory-failure
-encoding.
+pc_memory_init() avoids the AMD IOMMU HyperTransport range below 1 TiB
+only for AMD vCPUs.  Dhyana therefore allows RAM, hotplug address space,
+or 64-bit PCI MMIO to overlap 0xfd00000000-0xffffffffff.
 
-Today QEMU selects the AMD status encoding only for AuthenticAMD guests.
-Hygon guests should use the AMD status encoding as well, but currently
-get Intel-style injected status bits, including MCI_STATUS_S and
-MCI_STATUS_AR for action-required events, and a non-deferred
-action-optional record.  That can prevent a guest OS running on the Hygon
-CPU model from handling the injected MCE correctly.
+Linux supports Dhyana platforms in the AMD IOMMU driver.  The driver
+reports this range as reserved unless the IOMMU advertises
+FEATURE_HT_RANGE_IGNORE.  A VFIO device cannot DMA to guest addresses
+that QEMU places in the reserved range: VFIO_DMA_MAP may fail with
+-EINVAL, or the IOMMU may report an INVALID_DEVICE_REQUEST fault.
 
-Use the AMD injected-memory-failure MCE status encoding for Hygon guests
-as well.  This does not depend on Hygon exposing CPUID 0x80000007.EBX
-recovery features such as SUCCOR, and it does not advertise any new
-recovery capability.  The change is limited to QEMU's synthetic KVM
-memory-failure MCE status; it does not change CPUID, MCE bank state, or
-migrated CPU state.
+Apply the AMD IOMMU HT GPA layout to Hygon vCPUs.  When the possible
+address space reaches the reserved range, move RAM above 4 GiB to 1 TiB;
+also expose the range as reserved in E820 when the vCPU can address it.
 
+Changing the GPA layout affects migration, so enable the Hygon behavior
+through x-hygon-vendor-abi-fixes.  pc-11.0 and older machine types retain
+their previous Hygon layout.  The existing enforce_amd_1tb_hole setting
+continues to preserve the AMD layout of pc/q35 machine types through 7.0.
+
+Add functional tests for Dhyana with the current q35 machine type and
+with pc-q35-11.0 compatibility.
+
+Signed-off-by: Yanjing Zhou <zhouyanjing@hygon.cn>
 Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
 ---
- target/i386/kvm/kvm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/pc.c                                  | 18 ++++++---
+ .../functional/x86_64/test_mem_addr_space.py  | 37 +++++++++++++++++++
+ 2 files changed, 50 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4272b6770c..aa32b74f10 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -707,7 +707,7 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
-     uint64_t mcg_status = MCG_STATUS_MCIP | MCG_STATUS_RIPV;
-     int flags = 0;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2b4e322b2f..04aef6c267 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -738,6 +738,12 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
+ #define AMD_ABOVE_1TB_START  (AMD_HT_END + 1)
+ #define AMD_HT_SIZE          (AMD_ABOVE_1TB_START - AMD_HT_START)
  
--    if (!IS_AMD_CPU(env)) {
-+    if (!IS_AMD_CPU(env) && !IS_HYGON_CPU(env)) {
-         status |= MCI_STATUS_S | MCI_STATUS_UC;
-         if (code == BUS_MCEERR_AR) {
-             status |= MCI_STATUS_AR | 0x134;
++static bool x86_cpu_has_amd_iommu_ht_gpa_hole(const X86CPU *cpu)
++{
++    return IS_AMD_CPU(&cpu->env) ||
++           (IS_HYGON_CPU(&cpu->env) && cpu->hygon_vendor_abi_fixes);
++}
++
+ void pc_memory_init(PCMachineState *pcms,
+                     MemoryRegion *system_memory,
+                     MemoryRegion *rom_memory,
+@@ -762,12 +768,14 @@ void pc_memory_init(PCMachineState *pcms,
+     linux_boot = (machine->kernel_filename != NULL);
+ 
+     /*
+-     * The HyperTransport range close to the 1T boundary is unique to AMD
+-     * hosts with IOMMUs enabled. Restrict the ram-above-4g relocation
+-     * to above 1T to AMD vCPUs only. @enforce_amd_1tb_hole is only false in
+-     * older machine types (<= 7.0) for compatibility purposes.
++     * The HyperTransport range close to the 1T boundary is reserved by the
++     * AMD IOMMU GPA layout.  Apply the ram-above-4g relocation only to vCPUs
++     * that use that layout. @enforce_amd_1tb_hole preserves older AMD
++     * machine types (<= 7.0), and x-hygon-vendor-abi-fixes preserves older
++     * Hygon machine types (<= 11.0).
+      */
+-    if (IS_AMD_CPU(&cpu->env) && pcmc->enforce_amd_1tb_hole) {
++    if (x86_cpu_has_amd_iommu_ht_gpa_hole(cpu) &&
++        pcmc->enforce_amd_1tb_hole) {
+         /* Bail out if max possible address does not cross HT range */
+         if (pc_max_used_gpa(pcms, pci_hole64_size) >= AMD_HT_START) {
+             x86ms->above_4g_mem_start = AMD_ABOVE_1TB_START;
+diff --git a/tests/functional/x86_64/test_mem_addr_space.py b/tests/functional/x86_64/test_mem_addr_space.py
+index 61b4a190b4..b80f9acd99 100755
+--- a/tests/functional/x86_64/test_mem_addr_space.py
++++ b/tests/functional/x86_64/test_mem_addr_space.py
+@@ -208,6 +208,25 @@ def test_phybits_low_tcg_q35_71_amd(self):
+         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
+         self.assertRegex(self.vm.get_log(), r'phys-bits too low')
+ 
++    def test_phybits_low_tcg_q35_hygon(self):
++        """
++        Same as q35-7.1 AMD case except that here we check that Dhyana
++        follows the same AMD IOMMU HT reserved GPA range on new machine
++        types.
++        """
++        self.ensure_64bit_binary()
++        self.set_machine('q35')
++        self.vm.add_args('-S', '-cpu', 'Dhyana,phys-bits=40',
++                         '-m', '512,slots=1,maxmem=976G',
++                         '-display', 'none',
++                         '-object', 'memory-backend-ram,id=mem1,size=1G',
++                         '-device', 'pc-dimm,id=vm0,memdev=mem1')
++        self.vm.set_qmp_monitor(enabled=False)
++        self.vm.launch()
++        self.vm.wait()
++        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
++        self.assertRegex(self.vm.get_log(), r'phys-bits too low')
++
+     def test_phybits_ok_tcg_q35_70_amd(self):
+         """
+         Same as q35-7.0 AMD case except that here we check that QEMU can
+@@ -225,6 +244,24 @@ def test_phybits_ok_tcg_q35_70_amd(self):
+         self.vm.shutdown()
+         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
+ 
++    def test_phybits_ok_tcg_q35_110_hygon(self):
++        """
++        Same as q35-7.1 Dhyana case except that here we check that the
++        q35-11.0 compatibility setting keeps the old memory layout.
++        """
++        self.ensure_64bit_binary()
++        self.set_machine('pc-q35-11.0')
++        self.vm.add_args('-S', '-cpu', 'Dhyana,phys-bits=40',
++                         '-m', '512,slots=1,maxmem=976G',
++                         '-display', 'none',
++                         '-object', 'memory-backend-ram,id=mem1,size=1G',
++                         '-device', 'pc-dimm,id=vm0,memdev=mem1')
++        self.vm.set_qmp_monitor(enabled=False)
++        self.vm.launch()
++        time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
++        self.vm.shutdown()
++        self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
++
+     def test_phybits_ok_tcg_q35_71_amd(self):
+         """
+         Same as q35-7.1 AMD case except that here we check that QEMU can
 -- 
 2.43.7
 
