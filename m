@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E2EC5AD4E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813E4C5AD4E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtLS5-0001Rr-KR; Mon, 10 Aug 2026 04:33:47 -0400
+	id 1wtLSN-0001Sh-DI; Mon, 10 Aug 2026 04:34:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRh-0001Pi-3s
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:22 -0400
-Received: from [115.124.28.4] (helo=out28-4.mail.aliyun.com)
+ id 1wtLRk-0001QG-U7
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:33 -0400
+Received: from [115.124.28.75] (helo=out28-75.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRd-0005CA-Bz
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:20 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.09693278|-1; CH=green;
+ id 1wtLRh-0005Cd-3n
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:23 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436348|-1; CH=green;
  DM=|CONTINUE|false|;
- DS=CONTINUE|ham_regular_dialog|0.0628494-0.0109224-0.926228;
- FP=7187561936658883669|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037031241;
- MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.iiL7hO7_1786350662; 
+ DS=CONTINUE|ham_system_inform|0.00378828-0.000704797-0.995507;
+ FP=16568555282154128715|1|1|1|0|-1|-1|-1;
+ HT=maildocker-contentspam033032053168; MF=zhang_wei@open-hieco.net; NM=1;
+ PH=DS; RN=8; RT=8; SR=0; TI=SMTPD_---.iiL7hRH_1786350665; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iiL7hO7_1786350662 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 10 Aug 2026 16:31:03 +0800
+ fp:SMTPD_---.iiL7hRH_1786350665 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 10 Aug 2026 16:31:05 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v2 6/9] target/i386: Do not broadcast injected MCEs for Hygon
-Date: Mon, 10 Aug 2026 16:29:53 +0800
-Message-ID: <20260810082956.1768042-7-zhang_wei@open-hieco.net>
+Subject: [PATCH v2 9/9] target/i386: Use AMD ucode-rev default for Hygon
+Date: Mon, 10 Aug 2026 16:29:56 +0800
+Message-ID: <20260810082956.1768042-10-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.4 (deferred)
-Received-SPF: pass client-ip=115.124.28.4;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-4.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.75 (deferred)
+Received-SPF: pass client-ip=115.124.28.75;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-75.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, RDNS_NONE=0.793,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, RDNS_NONE=0.793,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -68,44 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_x86_support_mca_broadcast() excludes AMD CPUs because QEMU handles
-AMD injected MCEs as local machine checks, not as Intel-style broadcast
-MCEs.  Hygon Dhyana missed that exclusion: it is not an AMD vendor CPU
-and its family is greater than 6, so QEMU reported MCA broadcast
-support.
+QEMU currently gives named Hygon Dhyana CPUs the non-AMD default
+ucode-rev value, 0x100000000.  That is the Intel/KVM-VMX-shaped
+encoding, where the visible revision is in the high 32 bits.
 
-This affects QEMU's synthetic MCE injection paths.  KVM memory-failure
-injection uses this helper to decide whether to set MCE_INJECT_BROADCAST.
-HMP 'mce -b' uses it to decide whether a broadcast request is valid.
-With a multi-vCPU Dhyana guest, QEMU could fan out an injected MCE to
-secondary vCPUs and populate extra bank records.
+Linux reads MSR 0x8b for Hygon CPUs through the AMD patch-level path,
+using MSR_AMD64_PATCH_LEVEL and storing the low 32 bits as
+cpuinfo_x86.microcode.  With the old QEMU default, a Dhyana guest sees
+microcode revision 0.
 
-Linux routes Hygon through the AMD MCE feature initialization path and
-does not use Intel/Zhaoxin LMCE broadcast handling for Hygon.  Do not
-advertise Intel-style MCA broadcast support for Hygon in QEMU's injected
-MCE paths.
+Use the AMD/KVM-SVM-shaped default, 0x01000065, for Hygon on this
+specific MSR 0x8b default path.  This does not route Hygon through AMD
+microcode loading and does not claim that Hygon CPUs are otherwise
+identical to AMD CPUs.
 
-This is limited to the MCE broadcast-support decision.  It does not claim
-that all Hygon MCE/MCA behavior is identical to AMD.
+Preserve migration ABI through the vendor CPU ABI compatibility gate used
+by this Hygon bug-fix group.  pc-11.0 and older machine types leave that
+gate off, so they retain the previous ucode-rev default.  Explicit
+user-provided ucode-rev values still override the default.
+
+Add qtest coverage for the new default, the compatibility cases, and an
+explicit user override.
 
 Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
 ---
- target/i386/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/cpu.c                   |  8 ++++++--
+ tests/qtest/test-x86-cpuid-compat.c | 19 +++++++++++++++++++
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 6836214162..c5bbe9715b 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -95,7 +95,7 @@ int cpu_x86_support_mca_broadcast(CPUX86State *env)
-     int family = 0;
-     int model = 0;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 4d8364f1ef..eb4295e562 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10219,10 +10219,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+     if (cpu->ucode_rev == 0) {
+         /*
+          * The default is the same as KVM's. Note that this check
+-         * needs to happen after the evenual setting of ucode_rev in
++         * needs to happen after the eventual setting of ucode_rev in
+          * accel-specific code in cpu_exec_realizefn.
++         *
++         * Hygon uses the AMD patch-level MSR 0x8b encoding, where the visible
++         * microcode revision is in the low 32 bits.
+          */
+-        if (IS_AMD_CPU(env)) {
++        if (IS_AMD_CPU(env) ||
++            (IS_HYGON_CPU(env) && cpu->hygon_vendor_abi_fixes)) {
+             cpu->ucode_rev = 0x01000065;
+         } else {
+             cpu->ucode_rev = 0x100000000ULL;
+diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
+index b7f8834052..06cbf35d76 100644
+--- a/tests/qtest/test-x86-cpuid-compat.c
++++ b/tests/qtest/test-x86-cpuid-compat.c
+@@ -404,6 +404,25 @@ static const CpuidTestArgs cpuid_tests[] = {
+         "486", "xlevel2=0xC0000002,xstore=on",
+         NULL, "xlevel2", 0xC0000002,
+     },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/default",
++        "Dhyana", NULL, NULL, "ucode-rev", 0x01000065,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/compat-off",
++        "Dhyana", "x-hygon-vendor-abi-fixes=off", NULL,
++        "ucode-rev", 0x100000000LL,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/pc-i440fx-11.0",
++        "Dhyana", NULL, "pc-i440fx-11.0",
++        "ucode-rev", 0x100000000LL,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/user",
++        "Dhyana", "ucode-rev=0x12345678", NULL,
++        "ucode-rev", 0x12345678,
++    },
+ };
  
--    if (IS_AMD_CPU(env)) {
-+    if (IS_AMD_CPU(env) || IS_HYGON_CPU(env)) {
-         return 0;
-     }
- 
+ /*
 -- 
 2.43.7
 
