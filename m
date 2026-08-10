@@ -4,105 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68872C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 18:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BAD5C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 18:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtUg7-0000ZQ-J4; Mon, 10 Aug 2026 14:24:51 -0400
+	id 1wtUgR-00011t-EA; Mon, 10 Aug 2026 14:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtUg6-0000ZF-2E
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 14:24:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wtUgP-0000tF-CX
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 14:25:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtUg4-0004KY-P8
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 14:24:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wtUgN-0004WQ-Pz
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 14:25:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786386288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1786386307;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BvTfnDxqvPZ6WkWTNmHoyvgP1kxm9wu/5znqcHj/KCQ=;
- b=f3i1/TL3LIvtUdLmXtspjm+E696DDZNpHo5x8w1tCMVKPdkY36w0YXDkk70lMGTbCI3HR+
- sCVPk+JGjn2670c9bBD4fLvczo23z94uflguZhE5psJwgnPhfpNp8C1qW59aQiN5AQ3CQ3
- VsvuyBION38+U6SySC4mV2IMZXHs0rk=
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-gb1SNCfSNTy6rUNr5afeKQ-1; Mon, 10 Aug 2026 14:24:41 -0400
-X-MC-Unique: gb1SNCfSNTy6rUNr5afeKQ-1
-X-Mimecast-MFC-AGG-ID: gb1SNCfSNTy6rUNr5afeKQ_1786386281
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-756261d422dso2031144137.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 11:24:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786386281; x=1786991081; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=BvTfnDxqvPZ6WkWTNmHoyvgP1kxm9wu/5znqcHj/KCQ=;
- b=tWpBGYWh3z6WsAwf0HKpweduf5iFyhLXvRWQjG2thRxg8/WtJJhZ8Y5XDFErxGYGf7
- dy9uPQ8CFQX7Ee399rA+VHDf0ZUb3f835wMUEzJZu6Lrm0wfefKKP8cpmlHSC0KelN2a
- IgMw3+b6sG1+XEgCES9t+I7EeWF7OC8d2wt0RABBUM/Tsl7+6ds2DkofxG8KNku/QK+D
- UdC9MQHE9CEc2/QQuIgqwYzs/nKmzz3edOLJdh3ID6Zao6R7TA35T43fxsImjBmBj22t
- ODgpDD4FF0V/r0eukgH21VTJSguPA/64tJ9EGuAe/hlbXhXHPBrEQE8mqtlGp8k+M0cC
- HJow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786386281; x=1786991081;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=BvTfnDxqvPZ6WkWTNmHoyvgP1kxm9wu/5znqcHj/KCQ=;
- b=LWXSOwx9o79nFNmy2Gtn1pmIOaXkOTYuRNsz5lofw3nbP1Vb1YqsP72WIz3e7WtfwB
- Ie+We5lHjnFMma5LJmwioSLhL5cJpsWyMRVoebzp6cH6Z5cYSxDq3OUQxa8F3FB7PO/w
- H7viZ3257JsGro5IMa5c2g90nqtQ+bwW/drjoeEgBbvKyb7eDpGDdWWyq6JSQnQ1u/vN
- C/cKDo28yubeJakRyoOtmcpukbAMTdlYyCOvtOMhRoG9ATqpYqpuSOLvVoyKkOu1urP2
- sygUSJGSYWc7JgOvxUMEZfCzJJf7gJtFzbeHqRsrTJO+TzpFN0ELfHEhueRrLwJ5vQmF
- pWNQ==
-X-Gm-Message-State: AOJu0YyKgEMkOqt7gz6dlapCAmoNJkSnUutlqKSoAftD8bnS72agyTxm
- AInYOeVJJdfc6cFfiaa34jn1668wwQ81mZFaWaNbNL0han/ukygpUYHbozPrx1hL2UpGdnmTOVi
- BgAtFhounM5q7eoi4YKwr63g4kCCQ+DsI3WgkpNmD2EgH8f6jyBgfpL8S
-X-Gm-Gg: AR+sD11mQHu36yb30TrZhKlb9u6uDBGLVwgbTLHZoKceLKnv8lfuqWMatnPRkd/ig5p
- QcmQS6RbWT1aKSQYH7kLNVVy3qHHnorh7+CPKFoiev1A+Oual98qVtpf6T1q+c5ku8Uty3uoMpM
- /0/hE4h3ecc8T9ecjRFRMO/A3mVkriR/lOX9BERQ3hNIMexN+8XXRrssIIqZrS8t171065LwfMe
- DuGFp2uDnI7IfcM/aAGjkE8hYXU0QaxIUdwSRvQPMIoMUE9HEPoKa4U+bNOBTZMRo3dZoQhAUs9
- F20Le6z0gzOTrcv2yUHm5ytcR4avGlBdxKUKwNEh/WZaJiEuINcZyEhPWISw7VTHw0iZ
-X-Received: by 2002:a05:6102:374c:b0:738:3525:43ff with SMTP id
- ada2fe7eead31-764e7cf067cmr5942870137.13.1786386281178; 
- Mon, 10 Aug 2026 11:24:41 -0700 (PDT)
-X-Received: by 2002:a05:6102:374c:b0:738:3525:43ff with SMTP id
- ada2fe7eead31-764e7cf067cmr5942841137.13.1786386280683; 
- Mon, 10 Aug 2026 11:24:40 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-979f303c3a4sm3960127241.10.2026.08.10.11.24.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 11:24:40 -0700 (PDT)
-Date: Mon, 10 Aug 2026 14:24:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 11/11] docs/migration: Add documentation for fast
- snapshot load feature
-Message-ID: <anoXZJjz7YTwVFSt@x1.local>
-References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-12-aadeshveer07@gmail.com>
+ bh=ihJXW1X/YsBCc4+p6hg6H90ZbQW4zJkQJYsbB5q/CZ8=;
+ b=Yp9itojeGJOE9lMGyqzPsuWH/3p4js+bVXTWxisEnPJot1pGLwcsHCKyVSPyqQac1rQxB1
+ UXcSa/zZ2GstGOLkskhvwSTqSb2fA4Z7nWXVIxaDlA8JsIQAM4IFXBBrzmO2wYXtAcEYQa
+ iQCt/EM1i/FsbqQ/I4jmBruAUhY7H/s=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-QIqXXLOaN-CPym77k2Fy-A-1; Mon,
+ 10 Aug 2026 14:25:03 -0400
+X-MC-Unique: QIqXXLOaN-CPym77k2Fy-A-1
+X-Mimecast-MFC-AGG-ID: QIqXXLOaN-CPym77k2Fy-A_1786386303
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E79C19560A5; Mon, 10 Aug 2026 18:25:02 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21EC7427; Mon, 10 Aug 2026 18:25:00 +0000 (UTC)
+Date: Mon, 10 Aug 2026 19:24:58 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 26/39] tests/qemu-iotests: add qmp_qemu_io()
+Message-ID: <anoXekth-3V__uSE@redhat.com>
+References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
+ <20260626-qemu-no-hmp-v2-26-8af31bc54c61@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-12-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260626-qemu-no-hmp-v2-26-8af31bc54c61@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,18 +88,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 01, 2026 at 08:06:28AM +0530, Aadeshveer Singh wrote:
-> Add documenatation for fast snapshot load covering an overview, the
-> architecture, usage and limitations.
+On Fri, Jun 26, 2026 at 01:19:27AM +0400, Marc-André Lureau wrote:
+> Add qmp_qemu_io() method as a QMP counterpart to hmp_qemu_io(),
+> using the x-qemu-io QMP command instead of human-monitor-command.
+> The x-qemu-io command takes separate 'device' (or 'qdev') and
+> 'command' arguments, and returns the error string.
 > 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> ---
+>  tests/qemu-iotests/iotests.py | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
