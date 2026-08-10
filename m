@@ -4,156 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36100C5AD55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 21:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D226CC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 21:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtXRe-0001Ue-Dw; Mon, 10 Aug 2026 17:22:06 -0400
+	id 1wtXcN-0003GO-3V; Mon, 10 Aug 2026 17:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wtXRc-0001U4-RM; Mon, 10 Aug 2026 17:22:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wtXRb-0006Yr-9E; Mon, 10 Aug 2026 17:22:04 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AK1foK1504645; Mon, 10 Aug 2026 21:22:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=r5ZqCI
- fADxtpfebRG+3ODVVpRfZPpOC5VKq3+ytBTfk=; b=Bv0TqhcQG3U+rAwKCnWazA
- dfEHcqY45vOf/YC34vm93/c+0bivkKJ63pxZ8bBv1h8UiKhEkjvpeOwzr523jopJ
- LQQJkytbcdh55aiRrBBRGLbqwmKpAOYhaMmpd3wKTia9qWgc/Us7yBhsBhMz9Geu
- RdQyAh99tz4Zsuo2rrAzynYdM7qA6ryYNiuxVYK9NFavCKMrxgwZsFEhnbxuXKHG
- xRvcpTIk2CXQblJSgLdJUWoeJebPO5eM3ys8S/b42VGU8laMfVJ0XXdsmmDVocWz
- FcgAb/RXMRRYje/Gcff3Nx4kg1YldcoVIl9ajadBvzJ0uZF8MabBVdEzaU58ZIXg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fyb23k0uh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Aug 2026 21:22:01 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ALBIrr025710;
- Mon, 10 Aug 2026 21:22:00 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0g6b85-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 10 Aug 2026 21:22:00 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67ALLxxC30409222
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 10 Aug 2026 21:21:59 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 732DB58059;
- Mon, 10 Aug 2026 21:21:59 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 130A258055;
- Mon, 10 Aug 2026 21:21:59 +0000 (GMT)
-Received: from [9.61.71.159] (unknown [9.61.71.159])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 10 Aug 2026 21:21:58 +0000 (GMT)
-Message-ID: <1f47fff9-34ed-48a5-aa86-adb8ae178c55@linux.ibm.com>
-Date: Mon, 10 Aug 2026 17:21:58 -0400
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtXcL-0003GF-04
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 17:33:09 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtXcJ-0007ai-4j
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 17:33:08 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-38de840f2f0so1712157a91.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 14:33:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786397586; cv=none;
+ d=google.com; s=arc-20260327;
+ b=C4JkfN/59UhfeXVTaaMnsy6W4Hq6zDUM4g0g1UT2eaV37iRT9+BcCi8az/KQZseeDK
+ MpR0z4XHV7lo1Ujex+8Fit0bVHSzRCpTCLCOQC2wVK8z+L/svC80WoyNwtuKLG3SwO1g
+ VHPtXRyQiY5XXwsq8ZoMueUY6b9zg9VKbau8Uv8Jb200y2UnEU2RH0uDMC2IUC2X057X
+ FkO6giY0N6FrQfJU+p1s5gCbV+3KIcGVrnkjuKUyVQHNk67N05FkzOIMUt+6zsk5l6PG
+ dWnd2Mgv5McZYCumpcMCuttN4gH3yizyuAvYG7NFKWRgWbUiBwJWTKjEOCI128FTXEqn
+ clVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=w+sRpfiRi82hJrWsr2fUcTdP3gTZc+38FGy28g5eXyM=;
+ fh=Tv1hKPs+cXWynI23hL3wQd3MOt1ixTT8ANGq27q0/yE=;
+ b=Y0UrgIbYBuqXfKX9sgu8CK2HF3vJhfCIr4UJTMCSrZfjhxac2C6cod8evE3AMFXfJj
+ Ua0KGQUSkkuGFWP8vHBoPl7TvTvpCwSh6SHAqKOZbZ51FjHtibJIkmxCVj4s9a9ojy4A
+ K7uzU1e9ar6CDAygEVZ/qU+kS4ztNV8gTX2DvtK7SOtCEC7yMUuRJP4qX7U1Fw0Dr48k
+ k/0VLh3BC9MYnJ1Ku5BBjwzIGmftiW02CGIdqZOoERQxGBAhWo0O67Ef77IbgSMHCYVo
+ HAH37L1YwojnKbjs5FvIq4TQOnQDDXQJdQmrnb8Na249VXQcuXZMcZKBl/OvxChc/971
+ ZkeQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786397586; x=1787002386; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=w+sRpfiRi82hJrWsr2fUcTdP3gTZc+38FGy28g5eXyM=;
+ b=rfigNvf8ZwSupn6cmhmVMA334nsKPVfBC0FWSv0K9uKDfNX3js7IvbekwXQEhAvIt0
+ Xvi0DzVrMVOHxr/flsqLXZTsrEMwAtaq3sTVqrBimq+wdOL4Pi659Cfx14aDB/a6juhf
+ bD1CjjrVJy0fFoBZo3Pl5TBJ7m57x7dFTTOmdlGfOfE4y1BEIOUDxVjX453RNx2ilaDU
+ s7iyde99a7V3VJpx0LEqSaE87nI8pULDZxa4NmRJSz+5pZxa+7Xh3zT+K31CTR7S67OI
+ 6qT49rtLOk4vi2LBWP9PfonjC7bLdYnEtoEyYS8g0o4PngJpId0fUwegZCvDEZFDkBGh
+ n03g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786397586; x=1787002386;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=w+sRpfiRi82hJrWsr2fUcTdP3gTZc+38FGy28g5eXyM=;
+ b=nFFJ55x9NKgPt8SWrft4UWITxCv0Ez+6thkrcEqZQtVcLCpP98e8rZO/voT5NUycOv
+ 7MH+m1jaz651REHZngV7gN5tV4FwQYapJHbxJyI2DNpTm5pOcOkoq/cnVIdH/1SlJvYN
+ chK6Tim16lGhaSaYUSE66Xn32Do83zvP+MnpRR+IZDPZujT6WmjhY0IeAhZpjk2WeFnx
+ PKHi5lll/Vg5L9G6WVv/t7aTL2vfiqC6DlAVGFFnTf92NLZNh7fyvR1b/Zi55/ZCBx/M
+ PFV5OY5ggm1nbBV2LaUO7TH7TkVMRP8Cb+8A29bi1xnSrQNI9QUu7jSVxc9plSPtd9Qx
+ SzCA==
+X-Gm-Message-State: AOJu0YzQf6jQHMEvU69gV0kYFVeTlRDJghjN4FRycVrVD3HPzaweyolF
+ CCxfAuoPkDlm2bw0bB2KISfjLz5BEGIqq7WRboAb15X6Litxwgwv6fk1w6Gk5Cc107J0Pmosh53
+ Ex4Hr8+wZvEODwnUx9EDx1/M6o9EzrU4=
+X-Gm-Gg: AR+sD12TneP8RoCRtanBAghXj7wX7hpVYAWnK+Rq7mKNBIQGZsHQnxBY7jdehG9IX4P
+ F2yuaGuLa/8lweu26u7yPgxz2pp9dDg7veT7j8//sAFxQ6IpDLjIcZWGCUZuNLhQRA4AzLhVte3
+ fDkzcBcIR02zz+QU91NHmM7N06wpBKxUbU582/rYsEKGKffVYYN8JE5lEDk1OZq6Zwjbs0ZlXZX
+ EgG+3WkT2g73ShuMHlzO4AwbrBZO3qwiaQPfjHN1lhUNZW2sTLPl4je6HTBKKHoQAoOJ3HAesvc
+ rDAlru4sptDGrhHaaArutBZU7HcKmNa5F20mYebkfJd4BafoPHEaxNSvSrxHTHmm05k8IUrpUEf
+ U
+X-Received: by 2002:a17:90b:2684:b0:366:10f1:3d91 with SMTP id
+ 98e67ed59e1d1-392821f55abmr24159962a91.1.1786397585527; Mon, 10 Aug 2026
+ 14:33:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] iotests/108: skip test if cannot access /dev/fuse
-To: Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20260728192644.2879028-1-farman@linux.ibm.com>
- <20260728192644.2879028-2-farman@linux.ibm.com>
- <9be3c3bb-8c41-4f9b-b396-0010cce0d75e@redhat.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <9be3c3bb-8c41-4f9b-b396-0010cce0d75e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XqfK/1F9 c=1 sm=1 tr=0 ts=6a7a40f9 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=6rqHouBjAAAA:8
- a=VnNF1IyMAAAA:8 a=wdF1M4HB5J3ikfWXs0IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Hx1yvPaMooE3kwe23bt7:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE3OCBTYWx0ZWRfX8/I2VU1fUgmJ
- fbFUF7s8npDPxHhrvMKUe6/tDhpHeXSbRCgaCyvgF5nH4Uny6evoUIdMYnUKrPt+sVZtptbhkqs
- r/N29gUGIpeEhlrGKB4cCwEQrlfrPUnhyAKZhc3eto76hQzHQFwfx8/YVuQqRv1c3HGfCB0emGZ
- 1C0RzyeaytUcWg51BaEtHYJ4JPZ/7sc1aKQPVLVfrg1HGMwhafchaSHFeZ1aZnZ/XAuak6hmRlV
- hU6wOtbCSd/3wMDWJUYMiaytqgAX6+YqDho9gXu2GR69cqe1p6PHpmoGWwkWGl15gPAwYGMr1na
- 1YAYAe7jTnRSgrHuJ0Pw/poW9lH6Hrqzt5F7SaqXn9GPY77CnEWoR92iCJzezob6OSpVR1JgFlt
- CQp8C3BXHd8RLnOBCTh8doMZOla7MY1uCoWT8xX/cl+5pWfvJ3gzGnECFmiQ6JvpShv5RsKfYSZ
- XVC3lg+lTSL7HNmTU5Q==
-X-Proofpoint-ORIG-GUID: Cc6tv2X7WNZurJPAth0T7JRaKt1QDGi7
-X-Proofpoint-GUID: Cc6tv2X7WNZurJPAth0T7JRaKt1QDGi7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE3OCBTYWx0ZWRfX2z+2B3GvNmGm
- gNWSQurcX0LsfP5qKvpcuPPIqIAWttCfDSVz8+KG8YcFMRm0JboyqvBeZayxVEP5whoWruBBh8n
- fGVCvPu4Go5p/+1o+KFIiAUwPY5cVh4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_05,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100178
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
+ <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
+ <CAATN3NoX9jxBv4mjXwRxJ3puooZFEJrE5_LnoPMabnX=WwD0sg@mail.gmail.com>
+ <b6f8c765-4e17-4aa1-990c-5518224971ef@oss.qualcomm.com>
+In-Reply-To: <b6f8c765-4e17-4aa1-990c-5518224971ef@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 10 Aug 2026 15:32:54 -0600
+X-Gm-Features: AUfX_mwENci2YVktpTH8GstpIomY2YBozB4zjuoEiDtZH9BZ3kKsLfkhCJG_EEw
+Message-ID: <CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com>
+Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
+ and system regs
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="00000000000083794c0658b81940"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -170,68 +120,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--00000000000083794c0658b81940
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Aug 10, 2026 at 3:12=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
 
-On 8/4/26 7:46 AM, Hanna Czenczek wrote:
-> On 28.07.26 21:26, Eric Farman wrote:
->> This test might fail if the user is not root (or sudo'd):
+>
+> On 8/10/2026 3:53 PM, Taylor Simpson wrote:
+>
+>
+>
+> On Mon, Aug 10, 2026 at 1:34=E2=80=AFPM Brian Cain <brian.cain@oss.qualco=
+mm.com>
+> wrote:
+>
 >>
->>    fusermount3: failed to open .../scratch/qcow2-file-108/fuse-export: 
->> Permission denied
+>> On 8/10/2026 1:28 PM, Taylor Simpson wrote:
+>> > Change disassembly of control regs from C{num}/{name} to {name}
+>> > Change disassembly of system regs from S{num}/r{num} to {name}
+>> >
+>> > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+>> > ---
+>> >   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
+>> >   target/hexagon/gen_printinsn.py | 14 ++++++++------
+>> >   2 files changed, 26 insertions(+), 10 deletions(-)
+>> >
+>> > diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+>> > index a7e46f4bcd..b55d3b0b35 100644
+>> > --- a/target/hexagon/printinsn.c
+>> > +++ b/target/hexagon/printinsn.c
+>> > @@ -23,18 +23,32 @@
+>> >   #include "internal.h"
+>> >   #include "decode.h"
+>> >
+>> > +static char regstr[10];
+>> > +
+>> >   static const char *sreg2str(unsigned int reg)
+>> >   {
+>> > -    if (reg < TOTAL_PER_THREAD_REGS) {
+>> > -        return hexagon_regnames[reg];
+>> > +#ifndef CONFIG_USER_ONLY
+>> > +    if (reg < NUM_SREGS) {
+>> > +        return hexagon_sregnames[reg];
+>> >       } else {
+>> > -        return "???";
+>> > +        snprintf(regstr, sizeof(regstr), "S%d", reg);
+>> > +        return regstr;
+>> >       }
+>> > +#else
+>> > +    snprintf(regstr, sizeof(regstr), "S%d", reg);
+>> > +    return regstr;
+>> > +#endif
+>> >   }
+>> >
+>> >   static const char *creg2str(unsigned int reg)
+>> >   {
+>> > -    return sreg2str(reg + HEX_REG_SA0);
+>> > +    unsigned int gpr =3D reg + HEX_REG_SA0;
+>> > +    if (gpr < TOTAL_PER_THREAD_REGS) {
+>> > +        return hexagon_regnames[gpr];
+>> > +    } else {
+>> > +        snprintf(regstr, sizeof(regstr), "C%d", reg);
+>> > +        return regstr;
+>> > +    }
+>> >   }
+>> >
 >>
->> A check exists to try to cover for this, but there are
->> two potential error messages that signal this case
->> (per the comment block associated with the check) and
->> only a skip for one of them.
 >>
->> Update the common fuse check to include this message,
->> and update test 108 to utilize it.
+>> Seems like this change also depends on some kind of mutex around
+>> regstr[] so that we know it's not being used concurrently by multiple
+>> threads.  Translation is single-threaded but if we gained another caller
+>> we wouldn't remember to come back and remediate this.
 >>
->> Fixes: 9ffd6d646d ("iotests/108: Test new refcount rebuild algorithm")
->> Based-on: <20260715103451.1930909-1-den@openvz.org>
->> Signed-off-by: Eric Farman <farman@linux.ibm.com>
->> ---
->>   tests/qemu-iotests/108       | 5 +----
->>   tests/qemu-iotests/common.rc | 1 +
->>   2 files changed, 2 insertions(+), 4 deletions(-)
+>> I suppose we could take an input buffer/length.  Or maybe we just add
+>> another static _regnames[] array to solve the lifetime/race problems?
 >>
->> diff --git a/tests/qemu-iotests/108 b/tests/qemu-iotests/108
->> index bf808b3512..5d91e58943 100755
->> --- a/tests/qemu-iotests/108
->> +++ b/tests/qemu-iotests/108
->> @@ -69,10 +69,7 @@ else
->>       # or "Invalid parameter 'fuse'", depending on whether there is
->>       # FUSE support or not.
->>       error=$($QSD --export fuse 2>&1)
->> -    if [[ $error = *"'fuse'"* ]]; then
->> -        _notrun 'Passwordless sudo for losetup or FUSE support 
->> required, but' \
->> -                'neither is available'
->> -    fi
->> +    _notrun_on_fuse_error "$error"
->>   fi
->>   echo
->> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
->> index bcb1ec50a9..844c19d15a 100644
->> --- a/tests/qemu-iotests/common.rc
->> +++ b/tests/qemu-iotests/common.rc
->> @@ -986,6 +986,7 @@ _require_drivers()
->>   _notrun_on_fuse_error()
->>   {
->>       case "$1" in
->> +        *"Parameter 'id' is missing"* | \
->>           *"Parameter 'type' does not accept value 'fuse'"*)
->>               _notrun "No FUSE support"
->>               ;;
-> 
-> Is “Parameter 'id' is missing” not the expected error message when there 
-> *is* FUSE support? At least for the case above in test 108.
-> 
+>>
+> How about putting a regstr field in the Insn struct (and pass Insn* to
+> these two functions)?
+>
+>
+> A character array?  Sure: seems like that should work.
+>
+> But if we have a static array for the others why not leverage that here
+> too?  We can statically fill these values, right?
+>
 
-Hrm, guess I got my wires crossed between a sudo-able guest and one that 
-isn't. You're right that the same response is given regardless of 
-whether. Let me revisit this and see if I can get this to skip properly.
+These are for cases where there is some sort of error and the reg number is
+larger than NUM_SREGS/TOTAL_PER_THREAD_REGS.  So, we wouldn't know how to
+size these without looking at the number of bits in the encoding of each
+instruction that has one of these.  However, that could change over time if
+the architecture adds new instructions.
 
-Thanks,
-Eric
+The regno field in the Insn struct is a uint8_t, so we could create static
+arrays with 256 entries and
+
+We could revert back to returning "???".  Alternatively, S<unknown> or
+C<unknown> would be more readable.
+
+Thoughts?
+
+--00000000000083794c0658b81940
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10,=
+ 2026 at 3:12=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex"><u></u>
+
+ =20
+   =20
+ =20
+  <div>
+    <p><br>
+    </p>
+    <div>On 8/10/2026 3:53 PM, Taylor Simpson
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+     =20
+      <div dir=3D"ltr">
+        <div dir=3D"ltr"><br>
+        </div>
+        <br>
+        <div class=3D"gmail_quote">
+          <div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10, 2026 at
+            1:34=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss=
+.qualcomm.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;
+            wrote:<br>
+          </div>
+          <blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+            On 8/10/2026 1:28 PM, Taylor Simpson wrote:<br>
+            &gt; Change disassembly of control regs from C{num}/{name}
+            to {name}<br>
+            &gt; Change disassembly of system regs from S{num}/r{num} to
+            {name}<br>
+            &gt;<br>
+            &gt; Signed-off-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylo=
+rsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;<br>
+            &gt; ---<br>
+            &gt;=C2=A0 =C2=A0target/hexagon/printinsn.c=C2=A0 =C2=A0 =C2=A0=
+ | 22
+            ++++++++++++++++++----<br>
+            &gt;=C2=A0 =C2=A0target/hexagon/gen_printinsn.py | 14 ++++++++-=
+-----<br>
+            &gt;=C2=A0 =C2=A02 files changed, 26 insertions(+), 10 deletion=
+s(-)<br>
+            &gt;<br>
+            &gt; diff --git a/target/hexagon/printinsn.c
+            b/target/hexagon/printinsn.c<br>
+            &gt; index a7e46f4bcd..b55d3b0b35 100644<br>
+            &gt; --- a/target/hexagon/printinsn.c<br>
+            &gt; +++ b/target/hexagon/printinsn.c<br>
+            &gt; @@ -23,18 +23,32 @@<br>
+            &gt;=C2=A0 =C2=A0#include &quot;internal.h&quot;<br>
+            &gt;=C2=A0 =C2=A0#include &quot;decode.h&quot;<br>
+            &gt;=C2=A0 =C2=A0<br>
+            &gt; +static char regstr[10];<br>
+            &gt; +<br>
+            &gt;=C2=A0 =C2=A0static const char *sreg2str(unsigned int reg)<=
+br>
+            &gt;=C2=A0 =C2=A0{<br>
+            &gt; -=C2=A0 =C2=A0 if (reg &lt; TOTAL_PER_THREAD_REGS) {<br>
+            &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regnames[reg];=
+<br>
+            &gt; +#ifndef CONFIG_USER_ONLY<br>
+            &gt; +=C2=A0 =C2=A0 if (reg &lt; NUM_SREGS) {<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_sregnames[reg]=
+;<br>
+            &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+            &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return &quot;???&quot;;<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, sizeof(regst=
+r), &quot;S%d&quot;, reg);<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+            &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+            &gt; +#else<br>
+            &gt; +=C2=A0 =C2=A0 snprintf(regstr, sizeof(regstr), &quot;S%d&=
+quot;, reg);<br>
+            &gt; +=C2=A0 =C2=A0 return regstr;<br>
+            &gt; +#endif<br>
+            &gt;=C2=A0 =C2=A0}<br>
+            &gt;=C2=A0 =C2=A0<br>
+            &gt;=C2=A0 =C2=A0static const char *creg2str(unsigned int reg)<=
+br>
+            &gt;=C2=A0 =C2=A0{<br>
+            &gt; -=C2=A0 =C2=A0 return sreg2str(reg + HEX_REG_SA0);<br>
+            &gt; +=C2=A0 =C2=A0 unsigned int gpr =3D reg + HEX_REG_SA0;<br>
+            &gt; +=C2=A0 =C2=A0 if (gpr &lt; TOTAL_PER_THREAD_REGS) {<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regnames[gpr];=
+<br>
+            &gt; +=C2=A0 =C2=A0 } else {<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, sizeof(regst=
+r), &quot;C%d&quot;, reg);<br>
+            &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+            &gt; +=C2=A0 =C2=A0 }<br>
+            &gt;=C2=A0 =C2=A0}<br>
+            &gt;=C2=A0 =C2=A0<br>
+            <br>
+            <br>
+            Seems like this change also depends on some kind of mutex
+            around <br>
+            regstr[] so that we know it&#39;s not being used concurrently b=
+y
+            multiple <br>
+            threads.=C2=A0 Translation is single-threaded but if we gained
+            another caller <br>
+            we wouldn&#39;t remember to come back and remediate this.<br>
+            <br>
+            I suppose we could take an input buffer/length.=C2=A0 Or maybe =
+we
+            just add <br>
+            another static _regnames[] array to solve the lifetime/race
+            problems?<br>
+            <br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>How about putting a=C2=A0regstr=C2=A0field in the Insn struc=
+t (and
+            pass Insn* to these two functions)?</div>
+          <div><br>
+          </div>
+        </div>
+      </div>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>A character array?=C2=A0 Sure: seems like that should work.=C2=A0=C2=
+=A0<br>
+      <br>
+    </p>
+    <p>But if we have a static array for the others why not leverage
+      that here too?=C2=A0 We can statically fill these values, right?</p><=
+/div></blockquote><div><br></div><div>These are for cases where there is so=
+me sort of error and the reg number is larger than NUM_SREGS/TOTAL_PER_THRE=
+AD_REGS.=C2=A0 So, we wouldn&#39;t know how to size these without looking a=
+t the number of bits in the encoding of each instruction that has one of th=
+ese.=C2=A0 However, that could change over time if the architecture adds ne=
+w instructions.</div><div><br></div><div>The regno field in the Insn struct=
+ is a uint8_t, so we could create static arrays with 256 entries and=C2=A0<=
+/div><div><br></div><div>We could revert back to returning &quot;???&quot;.=
+=C2=A0 Alternatively, S&lt;unknown&gt; or C&lt;unknown&gt; would be more re=
+adable.</div><div><br></div><div>Thoughts?</div><div><br></div><div><br></d=
+iv><div><br></div></div></div>
+
+--00000000000083794c0658b81940--
 
