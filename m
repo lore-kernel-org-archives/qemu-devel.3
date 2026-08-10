@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714B8C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A5EC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 15:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtRg8-0005q5-K5; Mon, 10 Aug 2026 11:12:43 -0400
+	id 1wtRyo-0000Ud-U2; Mon, 10 Aug 2026 11:31:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtRfz-0005pE-UJ
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:12:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wtRfy-0001oS-H7
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:12:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786374749;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wZX4HDp0ggGodc0JFtR6vubC9P2aeg637EvufH5Dr2o=;
- b=WRp+PcgPxhtKu1cntH7umWbDBR66+uOfIeC5q/zLAOFxqG1pCaBPGLkoOcXha9t1ryqMe9
- nAwzdtRLPCvtR2NqD8X8AAOzpaqC2jVHmCLfMM8dUCAFkkxbybilgJUSClVssqgocABDdN
- wkG7tUd8+dAxrZ0djSK+3fIRcv6CY8I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-167-wGsOHSiUMdOypD5938BMXw-1; Mon, 10 Aug 2026 11:12:25 -0400
-X-MC-Unique: wGsOHSiUMdOypD5938BMXw-1
-X-Mimecast-MFC-AGG-ID: wGsOHSiUMdOypD5938BMXw_1786374744
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4955fd77c18so13115485e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:12:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtRyl-0000UK-7V
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:31:56 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtRyj-0004gQ-No
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 11:31:54 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-80bb41f7f3cso20565487b3.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 08:31:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786375912; cv=none;
+ d=google.com; s=arc-20260327;
+ b=k6Z71TghHN1nmj5ZrwxjUbD/M6+tTahC7eXraA9WJfnVp3YkF2++mI2RYMSLuzvA9c
+ L1wjW0nBI71+x5njYUyd2BZwXAVmNcr/df7Dx4i1cY2GbhHKjFlNIzj0b02NfiAFIKVS
+ oz/DsswDSRpMPfk+ykRo69F7Oz36HMYYY8zLWgxdEUG2rqIXuejZSYTldiWuXQ3Lt9Ie
+ VGP6hi+ixdUZgcJlS3h8QVbKHcODO1Lc3THX22IyG9Aqbmz9iqh6jCQ65A0HguWMfatH
+ 344AaJs3cygCg5b8Fu7P9NiKOPs8IGQeo1OkyEWgsLbuQK8O5qzXRc3bQdk23BJrxSrd
+ D0jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
+ fh=sa54kRfqZCSJoqqovfbLshesdcnvoIzhJ6jhb/uDQ0k=;
+ b=Z26ibNh85dnP0PsacdiOKcJf++RiUHFUzDerMrBBvXVMqtL1zRmT6WkFZpFVMR4MOy
+ JgEfogGdNAesU8UgT7Neb3skQQWDcXusBe5LxYRQ1aNYBbpZjejppJcNem64RKggQNNI
+ lGa8VCE7vcNTQJzxPZMo0W4fTRJHZkIxJ4SMBZ3GrQrR1Y4QoO0SDvkrluc43zuJUMVZ
+ fsrMFyvQFyCUP1oXfwAXKwtSAGk70ST7KCdE5qJ3jd7QoFaw7EgGgglhq4lqYhDAnAl7
+ yJCkl7r9CmB76Dlxlg2vSuAzgHy+SY3HQF/XObH/HTMa8DiyFdai5D6uisaSOaangHsp
+ GHuQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786374744; x=1786979544; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=wZX4HDp0ggGodc0JFtR6vubC9P2aeg637EvufH5Dr2o=;
- b=Hrhrf89/AQct1yDnImd4EWbWD+rqotUnSYUOhYTrCcQSbaA+CbyeAx+/WHNlSgtkra
- 9R9EjU19rw8WCPOHXoNgCPef7uxhD4f2mr/KxqqwbdCsODY4QthDvp0Dtgr+QGvToP0l
- QLTuaeZe++5AFa/qF28rg3dk+5cdk/hJLer7g9svHQxJGGwhapP6zSxmqEs5kL68qqzs
- j7/alB38crgzPtPoL7utrJsnt15XzO9AD5ilQfcYSerMTvZmqPPSQNaPdALj1n3IE0jG
- 5LSW5cDJ7fm2b+8DAcr2IBpD/Z/t5fLUCHNLVYjpK6D0ML57B3UPfMUTj0IQ1LZL2sWB
- lNFw==
+ d=linaro.org; s=google; t=1786375912; x=1786980712; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
+ b=wxPoPh2gm0WmHT3pJMoe4/DLiJ4y1VbBeSsoGIDbDdhmzqCyOR84Z5gJIGhBhQK/PC
+ kKF2rSYXbim5gvy7Mj0xYoS+8tcvS/O8YOYiVApcI+iGmchm+GyMOMrlgdIXzJvU6e1p
+ PI54BLwkleL+//nztvomalujf3wDrjCnS5mmrjeid+e3kUmNEv/QU+FsFGBAUb78dgZZ
+ Z8jNcwel34Ea6oVYz+pgvtH4njvI/099tcOojybaTucjBCKxTWIvexVduAmxAYylj1FA
+ l3PrrRb7UzVmH2Y14H75aPqN8RI82ejtdhqGK7EHb26ocq3kMdN1GKeVHxYvnu9x2a0O
+ mq0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786374744; x=1786979544;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=wZX4HDp0ggGodc0JFtR6vubC9P2aeg637EvufH5Dr2o=;
- b=Hdwg5/bRah6gIouAWj3ct2XCk6mjE+smkHUXVDo2rMcrZ+HVTDLGCQkQsVN80qjlgU
- qJpKg9AspBoiz+beNM6qG9l2e1S55SweCodYInFIjy3iuwtTW7KjXDiF/X/gJA574eGc
- qxOCbm+tlqHv9Yhpe0YUnK62VvcmogedpJlOw253Y6p7LPYTiD7AX0sMkH8G/ktWvJ4g
- S7neoyKFytc/hx8XOpFvPIiQnaN1CMyqVMiUwMZZPYGz9U5WySmiC/Ta8eblJr7C7kwK
- pbGYj/jAylKr9876LQ7rvnju62w28wW2MmXpZgfz4KYvD8QgmlWQAImNFiwmd0Mp+kRt
- jofA==
-X-Gm-Message-State: AOJu0Yz6JYkV+lsMdEffOMBSdbLVflws7U3qoLaaavLD7eP1mjLG8EY0
- a4E1mDOAZS6mEnd/U+ORDdmFAwkJkFUzas8Ms2vO9m9tvO2r9gmSVqhRdwoMo9loCCkK1fJqNet
- mdhFnlyAJo723DVfpeqjMPdv8zW9xvxynk5/W1guahvlBXElvxcaD/HAx
-X-Gm-Gg: AR+sD10zAmiIU96zDRQjiOBeh8dzHQ9y/xxe6+G9o2F11QbifOnl5LXhGquXlHg1hWH
- 2kEpRDs+dWJk30Q4NZSF2NGVrfSoR+TxYDDiUPaFNPxArNYvzdZXU+dJ6OlDB/0OD+UxtzY3OqJ
- QiHv5J4TBbeH6GIa6SICj9nQJMptxuG+mREdU+5MRfY2Piyhzm3YLyQEtgmh1HdYut4sATate8h
- a8luXm9seHeu61SgfEGNSwTnuNAW84U79lZB2XgHyDlIVkLbqXtFOMMqMYqNMvKBEcgNCHy8CnW
- +vd6hT8ljkZYfFQuQtDhzMKgkwOlTJvDZkkz8e1vez/Bp/5wTKAqHyCr
-X-Received: by 2002:a05:600c:474a:b0:496:c361:fb96 with SMTP id
- 5b1f17b1804b1-4994e6db5aemr520705305e9.0.1786374743941; 
- Mon, 10 Aug 2026 08:12:23 -0700 (PDT)
-X-Received: by 2002:a05:600c:474a:b0:496:c361:fb96 with SMTP id
- 5b1f17b1804b1-4994e6db5aemr520704665e9.0.1786374743593; 
- Mon, 10 Aug 2026 08:12:23 -0700 (PDT)
-Received: from fedora ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4995420bd1csm442323145e9.3.2026.08.10.08.12.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 08:12:22 -0700 (PDT)
-Date: Mon, 10 Aug 2026 17:12:20 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- pbonzini@redhat.com, philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PATCH v4 06/11] migration: add RAMBlock field and helper for
- fast snapshot load
-Message-ID: <annqQ6WqANY1MH1G@fedora>
-References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <20260801023628.22665-7-aadeshveer07@gmail.com>
+ d=1e100.net; s=20251104; t=1786375912; x=1786980712;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=rMses8ntYDlGghtT4lnKPVhSwBUnfqq+VYmQiOYW02k=;
+ b=ZKegqyWbKDWrknhTNayzkUWcmG9EWD7j9klUegEXRqAwFCVlkr/CSpGvuE01Pv8tvI
+ 3+nsYkJt+VjMufFAeK8RNMuBMNHJuvzylPiOb8EAwV1TUUS/FVJf9LZ+iZodhWdNPfph
+ 8zHkXwyPNJEc/MElppc7uKST+8Megi3LwcdAn8ZdlR0tPoSfEzYORZvcJFSUXvHiDaJc
+ 9/bRUrPgAw/oChNw00dpBzkDCwRQ8rCPpHoy/wu0ecUoGEBw6+2bi9kNFmYgN25ZRSLo
+ xYEYwMVgJd5oIPPBMp9WnmqRjLPbCr1OIU79FP2FdQ5+hsVFdE56mm8sMr5FO5mlLX5T
+ jzVQ==
+X-Gm-Message-State: AOJu0YwdS0YZBU2iaGvV83+UQ5BESdhostdg5jSsAYQqqfGlIawl+rHN
+ j9OXWYDn05uaVnm9TvzaDUB90X4L0TFNfRZcCRcOkhKNveivD0I+bLPrWBFA4LGmYoc1Adwy+l9
+ tPZvxKismJks6MG/EqXNRsPFZZoliQDqv0QtgdALhGg==
+X-Gm-Gg: AR+sD12vvyioK5Bwfs7B7diBfXC9Gs0Rupqc9FNxPnyiACnvBMHZnTuGhSm/RGay/2/
+ gAFwQ08k8R/J4B512u1yfd/xZ545UAdNBl2HEM26eSIGeRH2xaM4Q/ILWdXRc5FgtxRXJAWRBxm
+ 1yYdzDdvAjTimfAiByrVya1W7tH/thK6t/pryi2/rSVxq/QOqiZt1NjrtCZpKjqIyBMU9FtY8nu
+ 0TI089Yld8Ot1s5JjVR7NJp+0sThVWv7DseBpWDMAhELIpw36wk6qSSW7gFPPNvmbBjDdQVtG1v
+ ayd7+WjrFM4GG/gGXGrUgPBk5DV1JdM7YeV3HiyRnfT4TTIE9gHvrl0ZRqY5fgWBRlUg2jQw0B6
+ d1j9PMBae59KZe91insm39nWPIbJm
+X-Received: by 2002:a05:690c:4f8e:10b0:826:9576:a284 with SMTP id
+ 00721157ae682-8269576b0aamr77251437b3.4.1786375912183; Mon, 10 Aug 2026
+ 08:31:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260801023628.22665-7-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260713073033.3883619-1-kchiu@axiado.com>
+In-Reply-To: <20260713073033.3883619-1-kchiu@axiado.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Aug 2026 16:31:39 +0100
+X-Gm-Features: AUfX_mwWIK0FmzW5i-dr3j1J-nDdKoQk6PinVSqDYtdSqsrhgRSMvnwV_IHKAMg
+Message-ID: <CAFEAcA_=DVVwQYdpwnhbzF_GwR9gZp4sJa-C97caA0i7zofADA@mail.gmail.com>
+Subject: Re: [PATCH v7 0/8] Add Axiado SoC AX3000 and EVK board
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,24 +114,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-01 08:06, Aadeshveer Singh wrote:
-> Add pending_bmap field per RAMBlock which is a Bitmap to store
-> internal state of which pages have been read by some thread to ensure
-> coordination between fault thread and eager load thread.
-> 
-> Modify parse_ramblock_mapped_ram(), to not load the actual RAMBlocks
-> data in postcopy case as that will be loaded by fault thread and eager
-> thread after the VM starts running.
-> 
-> Change ram_load() to use new function ram_should_load_postcopy_pages()
-> to decide how to load/read RAM.
-> 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-> ---
->  include/system/ramblock.h |  6 ++++
->  migration/ram.c           | 59 +++++++++++++++++++++++++++++++++++----
->  2 files changed, 59 insertions(+), 6 deletions(-)
+On Mon, 13 Jul 2026 at 08:31, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+>
+> This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
+> The model for Axiado SoC AX3000 supports
+>   4 Cortex-A53 CPUs
+>   Arm Generic Interrupt Controller v3
+>   4 Cadence UARTs
+>   1 SDHCI controller with PHY
+>   8 Cadence GPIOs
 
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Thanks; I've applied this to target-arm.next ready for when
+the tree reopens for 11.2.
 
+I made a couple of minor fixes to save you doing another respin:
+
+(1) you can't use %lx in logging printf format strings for printing
+a variable of type 'hwaddr' (it isn't a "long" on all hosts, and
+this won't compile on some systems) -- you need HWADDR_PRIx . I
+fixed some cases of this in patches 2 and 4.
+
+(2) we don't require the "<public>" and "<private>" marker comments
+any more, so I removed them from patch 7.
+
+-- PMM
 
