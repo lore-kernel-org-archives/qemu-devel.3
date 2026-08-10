@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DB1C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B88FC5AC82
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 08:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtLSY-0001Y2-W9; Mon, 10 Aug 2026 04:34:15 -0400
+	id 1wtLSY-0001WW-Bn; Mon, 10 Aug 2026 04:34:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRk-0001QE-TE
+ id 1wtLRl-0001QJ-SI
  for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:33 -0400
 Received: from [115.124.28.5] (helo=out28-5.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wtLRf-0005Bu-MU
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:23 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07437109|-1; CH=green;
- DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.00974696-4.09803e-05-0.990212;
- FP=7199979514931766635|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033068016216;
+ id 1wtLRh-0005C5-3z
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 04:33:25 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436259|-1; CH=green;
+ DM=|CONTINUE|false|;
+ DS=CONTINUE|ham_regular_dialog|0.00967293-0.000767904-0.989559;
+ FP=7743778515548045655|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037028158;
  MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.iiL7hCG_1786350652; 
+ TI=SMTPD_---.iiL7hNB_1786350662; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.iiL7hCG_1786350652 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 10 Aug 2026 16:30:58 +0800
+ fp:SMTPD_---.iiL7hNB_1786350662 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 10 Aug 2026 16:31:02 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v2 0/9] target/i386: Fix Hygon vendor-specific CPU behavior
-Date: Mon, 10 Aug 2026 16:29:47 +0800
-Message-ID: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
+Subject: [PATCH v2 5/9] target/i386/kvm: Use AMD PMU MSR paths for Hygon
+Date: Mon, 10 Aug 2026 16:29:52 +0800
+Message-ID: <20260810082956.1768042-6-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
+In-Reply-To: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
+References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.5 (deferred)
@@ -65,82 +68,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hygon Dhyana uses the HygonGenuine vendor string, but a number of
-guest-visible and KVM-facing interfaces follow AMD-compatible behavior.
-QEMU currently keys several of these paths only on AuthenticAMD, so Hygon
-guests can see vendor-inconsistent CPUID/MSR state or use the wrong KVM
-PMU/MCE handling paths.
+On SVM, KVM uses the AMD PMU implementation and AMD PMU CPUID/MSR
+layout.  Hygon guests that enable PMU and request AMD PMU CPUID
+features such as perfctr-core need QEMU's KVM PMU setup and MSR state
+paths to use that layout too.
 
-This series makes those checks explicit for Hygon where appropriate.
+The relevant QEMU KVM PMU paths are currently restricted to
+AuthenticAMD guests: host/guest PMU compatibility checks, AMD PMU
+information initialization, and AMD PMU MSR save/restore.  For a Hygon
+Dhyana guest with pmu=on, the compatibility check reports vPMU as
+unsupported solely because the guest vendor is HygonGenuine rather than
+AuthenticAMD.  If the VM continues, QEMU still skips AMD PMU setup and
+never saves or restores the AMD PMU MSRs for the Hygon guest.
 
-Guest-visible CPU ABI changes are gated by the new
-x-hygon-vendor-abi-fixes property.  The property defaults to true for new
-machine types and is disabled for pc-11.0 and older, so existing machine
-types keep their previous Hygon ABI for migration compatibility.
+Treat Hygon as using the AMD PMU CPUID/MSR layout for these KVM PMU
+paths.  Because the PMU MSR layout is shared, accept both AMD and Hygon
+hosts for guests using that layout.  This intentionally allows the PMU
+compatibility check to pass for AMD-host/Hygon-guest and
+Hygon-host/AMD-guest combinations.
 
-The KVM injected-MCE and PMU path changes are not CPUID model table
-changes.  They make QEMU use the AMD-compatible runtime handling that
-Linux/KVM already uses for Hygon.
+This does not enable PMU, perfctr-core, or perfmon-v2 by default for the
+Dhyana CPU model.  On backward migration to older QEMU, Hygon PMU MSR
+state may still be dropped because older QEMU did not write that state
+back through the AMD PMU MSR KVM paths for Hygon guests.
 
-The series covers:
+Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
+---
+ target/i386/kvm/kvm.c | 73 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 56 insertions(+), 17 deletions(-)
 
-  * AMD CPUID[0x80000001].EDX aliases for Hygon
-  * hiding Intel cache CPUID leaves 2 and 4 for Hygon
-  * hiding IA32_ARCH_CAPABILITIES for Hygon unless old ABI requires it
-  * AMD MCE status encoding for Hygon memory-failure injection
-  * AMD PMU MSR setup/save/restore paths for Hygon
-  * disabling Intel-style MCA broadcast for Hygon injected MCEs
-  * AMD IOMMU HT GPA hole layout for Hygon on new machine types
-  * AMD legacy cache fallback for Hygon when legacy-cache=on
-  * AMD-shaped default ucode-rev value for Hygon
-
-Changes in v2:
-
-  * Rebased onto v11.1.0-rc3.  Moved the compatibility property to
-    pc_compat_11_1 and wired it into the i440fx and q35 11.1 machine
-    options.  (Zhao)
-  * Patch 1: removed the single-use CPUID-alias helper and checked Hygon
-    directly at the call site.  Also updated the hygon_vendor_abi_fixes
-    field comment to emphasize that it is a machine-type compatibility
-    option.  (Zhao)
-  * Patch 4: removed the single-use MCE-status helper and checked Hygon
-    directly at the call site.  (Zhao)
-  * Patch 5: reworked the PMU vendor checks around a common PMU vendor-family
-    abstraction, covering host/guest compatibility, PMU initialization,
-    and PMU MSR save/restore.  (Zhao)
-  * Collected Reviewed-by tags for patches 2, 3, and 8.
-
-Tested with:
-
-  ninja -C build
-
-  build/pyvenv/bin/meson test -C build --print-errorlogs \
-      qemu:qtest-x86_64/test-x86-cpuid-compat \
-      qemu:func-x86_64-mem_addr_space
-
-Tina Zhang (9):
-  target/i386: Sync AMD CPUID aliases for Hygon
-  target/i386: Hide Intel cache CPUID leaves for Hygon
-  target/i386: Hide ARCH_CAPABILITIES for Hygon
-  target/i386/kvm: Use AMD MCE status encoding for Hygon
-  target/i386/kvm: Use AMD PMU MSR paths for Hygon
-  target/i386: Do not broadcast injected MCEs for Hygon
-  hw/i386: Reserve AMD IOMMU HT GPA range for Hygon
-  target/i386: Use AMD legacy cache fallback for Hygon
-  target/i386: Use AMD ucode-rev default for Hygon
-
- hw/i386/pc.c                                  | 23 ++++-
- hw/i386/pc_piix.c                             |  1 +
- hw/i386/pc_q35.c                              |  1 +
- include/hw/i386/pc.h                          |  3 +
- target/i386/cpu.c                             | 73 ++++++++++----
- target/i386/cpu.h                             | 13 +++
- target/i386/helper.c                          |  2 +-
- target/i386/kvm/kvm.c                         | 75 +++++++++++----
- .../functional/x86_64/test_mem_addr_space.py  | 37 ++++++++
- tests/qtest/test-x86-cpuid-compat.c           | 95 +++++++++++++++++++
- 10 files changed, 282 insertions(+), 41 deletions(-)
-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index aa32b74f10..6408254b67 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2166,24 +2166,54 @@ static void kvm_init_pmu_info_amd(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+     }
+ }
+ 
+-static bool is_host_compat_vendor(CPUX86State *env)
++typedef enum X86PMUVendor {
++    X86_PMU_VENDOR_UNKNOWN,
++    X86_PMU_VENDOR_INTEL,
++    X86_PMU_VENDOR_AMD,
++} X86PMUVendor;
++
++static X86PMUVendor x86_cpu_pmu_vendor(const CPUX86State *env)
++{
++    if (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) {
++        return X86_PMU_VENDOR_INTEL;
++    }
++
++    if (IS_AMD_CPU(env) || IS_HYGON_CPU(env)) {
++        return X86_PMU_VENDOR_AMD;
++    }
++
++    return X86_PMU_VENDOR_UNKNOWN;
++}
++
++static X86PMUVendor x86_host_pmu_vendor(void)
+ {
+     char host_vendor[CPUID_VENDOR_SZ + 1];
+ 
+     host_cpu_vendor_fms(host_vendor, NULL, NULL, NULL);
+ 
+-    /*
+-     * Intel and Zhaoxin are compatible.
+-     */
+-    if ((g_str_equal(host_vendor, CPUID_VENDOR_INTEL) ||
+-         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN1) ||
+-         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN2)) &&
+-        (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
+-        return true;
++    if (g_str_equal(host_vendor, CPUID_VENDOR_INTEL) ||
++        g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN1) ||
++        g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN2)) {
++        return X86_PMU_VENDOR_INTEL;
+     }
+ 
+-    return g_str_equal(host_vendor, CPUID_VENDOR_AMD) &&
+-           IS_AMD_CPU(env);
++    if (g_str_equal(host_vendor, CPUID_VENDOR_AMD) ||
++        g_str_equal(host_vendor, CPUID_VENDOR_HYGON)) {
++        return X86_PMU_VENDOR_AMD;
++    }
++
++    return X86_PMU_VENDOR_UNKNOWN;
++}
++
++/*
++ * The guest vPMU can be virtualized only when the host and guest PMU
++ * architectures are compatible.
++ */
++static bool is_host_compat_vendor(CPUX86State *env)
++{
++    X86PMUVendor guest = x86_cpu_pmu_vendor(env);
++
++    return guest != X86_PMU_VENDOR_UNKNOWN && guest == x86_host_pmu_vendor();
+ }
+ 
+ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+@@ -2211,10 +2241,15 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
+         return;
+     }
+ 
+-    if (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) {
++    switch (x86_cpu_pmu_vendor(env)) {
++    case X86_PMU_VENDOR_INTEL:
+         kvm_init_pmu_info_intel(cpuid);
+-    } else if (IS_AMD_CPU(env)) {
++        break;
++    case X86_PMU_VENDOR_AMD:
+         kvm_init_pmu_info_amd(cpuid, cpu);
++        break;
++    case X86_PMU_VENDOR_UNKNOWN:
++        break;
+     }
+ }
+ 
+@@ -4268,7 +4303,8 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+         }
+ 
+-        if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
++        if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_INTEL &&
++            pmu_version > 0) {
+             if (pmu_version > 1) {
+                 /* Stop the counter.  */
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+@@ -4300,7 +4336,8 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+             }
+         }
+ 
+-        if (IS_AMD_CPU(env) && pmu_version > 0) {
++        if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_AMD &&
++            pmu_version > 0) {
+             uint32_t sel_base = MSR_K7_EVNTSEL0;
+             uint32_t ctr_base = MSR_K7_PERFCTR0;
+             /*
+@@ -4846,7 +4883,8 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+     }
+ 
+-    if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
++    if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_INTEL &&
++        pmu_version > 0) {
+         if (pmu_version > 1) {
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+@@ -4862,7 +4900,8 @@ static int kvm_get_msrs(X86CPU *cpu)
+         }
+     }
+ 
+-    if (IS_AMD_CPU(env) && pmu_version > 0) {
++    if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_AMD &&
++        pmu_version > 0) {
+         uint32_t sel_base = MSR_K7_EVNTSEL0;
+         uint32_t ctr_base = MSR_K7_PERFCTR0;
+         /*
 -- 
 2.43.7
+
 
