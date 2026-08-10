@@ -4,143 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C843C5B567
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:34:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4226C5B567
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 19:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtVlM-0002eW-Nf; Mon, 10 Aug 2026 15:34:20 -0400
+	id 1wtVmy-0003GG-Fi; Mon, 10 Aug 2026 15:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wtVlM-0002eN-3Q
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:34:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wtVlK-0000ke-CX
- for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:34:19 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AIwBHl2152339
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 19:34:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=; b=B/t5Da+qfS9lJOVn
- L+nh5H/lBTosg8LVXb8jnZNZq+b3Ac33aCR609cVcAXlRkXGUqpg6bp7dde52GuU
- RZPuKekZnjzi1cZQqVsXGMwXSBn+2hQWWEZHmBZxRFgvL4jvvbrkOqQ4z/kAcLWY
- cCpXaYWMIE7dgMSFGnMYVOoEMgEzwE1Zo0jYehxsRqQ1j/JpnYsf4HeYX7VndU+J
- zBLMkrmgFUCbdaJ0YGI9LdaAi5HG1tVOFenYNmqDPHRUwagChtmsLjXRJ49uHpE4
- PmhyiVeFfr+lvRybb2zdcTchw2WpAQa6++/6CKq4RfSIycs4K9rwkjUH6bsbr3Zb
- 1PPimw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyccqthma-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 19:34:15 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5276aa86d00so23309721cf.2
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 12:34:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wtVmx-0003Fy-0Q
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:35:59 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wtVms-00010t-W8
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 15:35:58 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-66892c81725so3066332d50.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 12:35:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786390553; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GAlKnrep+wSy4h71PBVtIbN3BTAj528Sa7aCQxbX0J4iOp+iQ5BF64Tr+a9gP4laQo
+ eBG8/VyQxwdliKhJZ+yk84nJLQYgB/n8GVd9ny4NdIo632JNDrQ4flsvEvLmj9xfVtYz
+ mH+3QJN0lMSkPVmLd3HZmbpW+GsggFKmv/9tU6xt9VwnFup0yA1b4e8HKFR68XueoKyk
+ RzhxAdosZq61XVrc/bki634gRXABrADk2BpCNkk2wXYe/OKcNs/J4HNF5uJYs4nHcGMw
+ 3xFfBGRrA0j9cLmdjq+FrLpb6c6n8r4HhNZXFWy0+CvJddeks+r/OiTzLStXgLE+4glV
+ Mwnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lLwU4/8fDq6/cC71FNcMMHCInjN9nX76P4ZwdLe9KLc=;
+ fh=9jSbO5mv5oQl/rh5OVrFoyeXofyJyoVY7s6pOP5R3PA=;
+ b=aR/tNVl27+qpgJGLhFAFuCXzyKBy5afhUvz5QrRmbSC7kHuHKd1wtCd501faBrosIT
+ TvDMcESL4chxGF0MFMdUiAo8Xxz3fOxe9BqgqJvp4s2zJ2ZNLRmKSovsciXB9XETm//T
+ zdMhlGZIG/cPS4CkLzkacledlknfNPO9Ermja8NB8gbyRbzb3WLhmYOKZSDWWPxVVa61
+ fUrkHHDebtMb32UzBSJZ34wJ0MRrTrANl71X1LLUHC75TyC1qSWkcJBbmj2EHH0KeGLh
+ Lg9XsxEjU8o+FjXb8yWVR1ZNj9Z35zmG/MeYIKeeOdjgsCmUF4Fz4Fw3568Zuj2mbZl2
+ g9FA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786390455; x=1786995255; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=;
- b=UfausvYUkyZyV2qhdWYeyeJS1upaxU79ZRHOKO/uI5xXL3miRN9TN4QJ7/R4adpZZ+
- 78jE9jyXz2TJtOTsHYs1eCSouj7X4O3XWK8bUmnE552fNem4/9JO9a81L78F77TFMR6A
- xbH3gcsO9WeLBRYd3r4tRUbmmd5RJ3Lo44DHU4h0AYi4V6bStaw8oNXa1Z3zRd8Uiv+D
- BmDAE0RxdQI6UAviSfnj1ynI16MGn70NIbvAuPGY0cKcq2OWWsE4kUdp3S/VdcKBeYzU
- sqUAfq2iydMiYe24Tzzqdz76sx/3fQ1eCMfl9Qg4tQoJCqKEDjS9YieIPWY1Ul0YQr8u
- 60nw==
+ d=tenstorrent.com; s=google; t=1786390553; x=1786995353; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=lLwU4/8fDq6/cC71FNcMMHCInjN9nX76P4ZwdLe9KLc=;
+ b=FyGiHIuGVQddkNVsl69X9XXae2dtrydv68D55smFolR8djIwQJLpdncfqD6U5otgf/
+ Gk+1OAMKMtjFNhoveaGYnVAh3Flk2xPdSwHylQTrLDHxkuweeyGEIJCGbLPiJYaTZ7jn
+ xW/4Uquiz7Y32HaCdgvMcarOqpTm+V0wCrhAALpDzU6Wuhvplu4hfpfy3HKHxd75H8QC
+ vGBpwHuQ7uZ5p9OX6GXp7RtcY3G5UmW8Y0VB6tMqK0n/LZHrSYZDTnZBtFSGxrfeVVqY
+ i3xBdGa3qRni3UGHFvWmzE7q2yfBOuCI8CMccZ2Z5qNlkiaVZBnylWOp6gy/v0lGdJrU
+ mjXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786390455; x=1786995255;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=30+ycHOVLmN9xSpC91TcFuiy3hCmucyxw16/nbQpEJg=;
- b=hGgd6ZMBfPoJtOlgGpkfkrc+ydT3P6BbfSICMzzzGhm2T1XnGrkKCvGpqXc7n6GhFa
- fpnQEv3YgS/33haeuUFi0I+Gra0jGHSerNhcJr9p3YY7ve1/5Hm9CXlu7RDEF6SAATcd
- ag7PWc+EpUXc3ssQHV4xKAtTITzu8F9zmcXwnQlpXIwnvXCaybdzw/QvaNVbGEyrW0Cd
- 8jqwZXxVeGJhSwLWssNraGFnz1E2IejXZYwHY3Rp/uEyUljLL0hIvuBLBjw70Fq1LF3H
- PX4xmUS46z1KtC/F+uItIPVaTGtJCQ0SojhFClqziSDl1MgZDibtaBRGvQzy4Kf86rzP
- B97A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr/XieUjy2+yQebZmKmgaV8rFehh2DA+rT5XS1GZmOKkTWG7maQLd+mBRlhcDiu0BocfQmlzlDJMiPz@nongnu.org
-X-Gm-Message-State: AOJu0YwHj8tCRsWwxLY4EYTyPxQrWIn3Laz+hRLCDUuAPhRZdrH6xRMj
- PXrnqgxgXxNB2MOph3FyqWEIg6d3Kw7ADSOHZuY4zE8CuJ70MECF8t5C50+mYC35OitRwUm5n+8
- iU3cpwgcdBfte7EJ4zzlixc4X5IEcW6hCbkh+HCV0m2lQJWsBJDd2anGIbg==
-X-Gm-Gg: AR+sD12Xl0xERT4D63dt8BIkUknrRznxiYvmwekp8fQgPKAKDkp91PUCYxy+y2+Btbe
- yK2w3Xc0eYN+p5SMvBUnq6VkQG2ZkZAFoyB79cMA1J+wvASleaol0VOewPURSZSZwvMiRIJcggz
- ZZ074qNdihiOZIQCRti2Dnyfes18OZUxSgZxtKif0ZSdFMkXrGngIaHSPXuosb85T4sX+af4vOO
- tv9mOa9ZaScah9Zg07FbUG/v/w+9vwBcMsU4PZNTjm8trAyCA+eRTybVDTA6s5j0R3Yptop4m4q
- mKff5jyn1N0vf4t8wyoXXc0uAWSVcGe6FzGvjB44UPOdASILpYR52tU2KbUpcyiRv0ES0PdyBL8
- 2JKl8RjShCMlF0/MxeyVuEWm74PsiuvizGk7aW1I7zC6TxJZoKR9QxRDkK68N+H/N
-X-Received: by 2002:a05:622a:a588:b0:516:dda7:51e0 with SMTP id
- d75a77b69052e-52d2095c5f6mr247350781cf.17.1786390454835; 
- Mon, 10 Aug 2026 12:34:14 -0700 (PDT)
-X-Received: by 2002:a05:622a:a588:b0:516:dda7:51e0 with SMTP id
- d75a77b69052e-52d2095c5f6mr247350091cf.17.1786390454316; 
- Mon, 10 Aug 2026 12:34:14 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-908a91e2cdfsm78881446d6.22.2026.08.10.12.34.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 10 Aug 2026 12:34:13 -0700 (PDT)
-Message-ID: <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
-Date: Mon, 10 Aug 2026 14:34:11 -0500
+ d=1e100.net; s=20251104; t=1786390553; x=1786995353;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lLwU4/8fDq6/cC71FNcMMHCInjN9nX76P4ZwdLe9KLc=;
+ b=BIKkfcM78+oi1RYpLSNXb2qQEXfRBi0Ghm2pSjsWLw/dad6lPZ51ohb0rXaqMm9V6h
+ +FAuEi1EW62pd/vx1GS6YZcxcadqzyhj7bsI6yX74tXwtfjRFk49NcdMLgmzgb/uORsL
+ J/6YYW8VT9A++pU8ihQRdroyNAlJ82VPSgHmDbwLHrpWkaRuooxm/GgkMlJZgSHZ7+sq
+ XfihjG0CZuOYtpKcPQF59qlNthbi7taOtZE6Mi4aaDJnom3+mGXd8DKvh7zIsHESPP0a
+ BpY7T6CYPI7UYnPUYmh0E4o4gw5DhpeJ06pBdzK8uqZoSTqfM5ilioR5iCRqY0ervzow
+ 0+Zw==
+X-Gm-Message-State: AOJu0Yw3l/GyMlx/G3vRMgzPKUVVoVnxApYmFdCvoAAGdktChn+cooHu
+ RdGx+TdxzgaUmL0trWrtGpX/KwiGEGtJSN1wZcgpb202KjWmdUQhkc/fX/Z0UpR6iR0E0UalRg7
+ 7K2kkU8JG9Ug2Y9AE2xc9QOneyLMvw0w8SdUH0DcNhA==
+X-Gm-Gg: AR+sD13OCiiSQswh6SwsV93Lb9yzecn/ORGT9QH9V+xa2mqeEuhz0H6EUFVOmSb8ciU
+ gsuKduilfNIEtI2IBuM0pnbAj31EvdVV/CKOUwQ1EF2FiRVuy54DPKDQTVI24qgF61Haj4P0RPG
+ OLkCvI24OEOTCQPaXr4Zd2tVeIWFhPSgQimV9RNxos2NpLiZmHkgHkDZ+/xnKM3xY46tCvtJub1
+ EULQYoW3H+t3AFKc/Uc2YuvuX55tJMvD/gdmrGiOlHbczOqN60vrDz1HVluafmwJ/JPvTVdLDEg
+ 41cJiPizYCMZwtNCiQM2gK5S9RLwBy1/MdK49yBibjNpxMiu5FLYQfwRcjXLQy+J6fNqn54izrQ
+ =
+X-Received: by 2002:a05:690e:1913:b0:668:8b5b:75ab with SMTP id
+ 956f58d0204a3-6699ac6d3d6mr25662978d50.49.1786390553255; Mon, 10 Aug 2026
+ 12:35:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
- and system regs
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@linaro.org, ale@rev.ng, anjo@rev.ng
-References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: qgKCVsIu5f-5UeoyLWLPUgIGYIWA460J
-X-Proofpoint-ORIG-GUID: qgKCVsIu5f-5UeoyLWLPUgIGYIWA460J
-X-Authority-Analysis: v=2.4 cv=WNVPmHsR c=1 sm=1 tr=0 ts=6a7a27b7 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=pGLkceISAAAA:8 a=d3VFUEEDnz3kqReynRoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEwMDE2NiBTYWx0ZWRfX/eqeyI0dEvCB
- 50SS6njdO/w0qum78l56L4Hdc+5L6V865owTvGFM5vc29tepuEUIz6BM9fJGsu13UvdlxgFNxx8
- QedU3yD+NMQr2ebpaxWbf4vqgbDOInkwz5WwOqJsrHbbxQ837fZsWYbj0fjiN9svYBDlKNIEEQ1
- BCOWPxxXWyt6eQtPeyAa95LlYxE03+YKN8O2nLPLHN1L61vk1iHBIWj8S3DYkxluvlSm7FA4tFt
- GMAsBo5e9fuVwVI9FYvQ06uo5BpgtCI4rmiSq1heSktYc02LtykU8yYkHRjnuGyEyCSwErvLy7p
- rH0jSnD2YQT72OSZeE85ynxVTMFPxhznjIMFX/hJemAmrxeC38R4Y31S/P16s6Pzps9p2FEaJ9B
- uDpJWcPbGZ3vpFdJuOmedgN9l1R/xqBsGOoiR0ofWRg8p4HeGn2uAHRjg0ZFZUfqMBAt1GVhkUV
- a+I0V6XjrAVDMjyagwg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEwMDE2NiBTYWx0ZWRfX+wM6wWYmBv2l
- OAtBZmAGyJw8q914dOsg936bvGFR7QR3Yyz8wxEWmbj3yCPV+LMGoQznbpVX7BOf9paGgm7JW1K
- 0yp0yrDmJ6YdJFznqmr1CN3bzAdA31c=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_05,2026-08-10_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- impostorscore=0 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608100166
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260729-atlantis_prcm-v1-0-502882933e51@oss.tenstorrent.com>
+ <20260729-atlantis_prcm-v1-1-502882933e51@oss.tenstorrent.com>
+ <6e689892-7a9a-473e-aaa7-6d50c5c0c969@oss.qualcomm.com>
+In-Reply-To: <6e689892-7a9a-473e-aaa7-6d50c5c0c969@oss.qualcomm.com>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Date: Mon, 10 Aug 2026 14:35:41 -0500
+X-Gm-Features: AUfX_mzap9GS-uDr7b6OjowegZlqVfV3SIZGjuwuHq2_pwOKoSRIlXVCKZJMYU0
+Message-ID: <CAEev2e94WKz0=jG4u+L77_q2ES+Cie_kOTc0iqB00hzgfi6A0Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/misc: Add Tenstorrent Atlantis PRCM model
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>, 
+ Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,106 +125,436 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Daniel,
 
-On 8/10/2026 1:28 PM, Taylor Simpson wrote:
-> Change disassembly of control regs from C{num}/{name} to {name}
-> Change disassembly of system regs from S{num}/r{num} to {name}
+On Fri, Aug 7, 2026 at 8:38=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
->   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
->   target/hexagon/gen_printinsn.py | 14 ++++++++------
->   2 files changed, 26 insertions(+), 10 deletions(-)
+> Hello,
 >
-> diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
-> index a7e46f4bcd..b55d3b0b35 100644
-> --- a/target/hexagon/printinsn.c
-> +++ b/target/hexagon/printinsn.c
-> @@ -23,18 +23,32 @@
->   #include "internal.h"
->   #include "decode.h"
->   
-> +static char regstr[10];
-> +
->   static const char *sreg2str(unsigned int reg)
->   {
-> -    if (reg < TOTAL_PER_THREAD_REGS) {
-> -        return hexagon_regnames[reg];
-> +#ifndef CONFIG_USER_ONLY
-> +    if (reg < NUM_SREGS) {
-> +        return hexagon_sregnames[reg];
->       } else {
-> -        return "???";
-> +        snprintf(regstr, sizeof(regstr), "S%d", reg);
-> +        return regstr;
->       }
-> +#else
-> +    snprintf(regstr, sizeof(regstr), "S%d", reg);
-> +    return regstr;
-> +#endif
->   }
->   
->   static const char *creg2str(unsigned int reg)
->   {
-> -    return sreg2str(reg + HEX_REG_SA0);
-> +    unsigned int gpr = reg + HEX_REG_SA0;
-> +    if (gpr < TOTAL_PER_THREAD_REGS) {
-> +        return hexagon_regnames[gpr];
-> +    } else {
-> +        snprintf(regstr, sizeof(regstr), "C%d", reg);
-> +        return regstr;
-> +    }
->   }
->   
+> On 7/29/2026 12:21 PM, Anirudh Srinivasan wrote:
+> > This device present in Tenstorrent Atlantis has registers that control
+> > clocks, reset and other misc functionality in the SoC. This commit adds
+> > models for the RCPU, HSIO, PCIE, MM and 2 DDR PRCMs.
+> >
+> > Co-developed-by: Portia Stephens <portias@oss.tenstorrent.com>
+> > Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> > Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+> > ---
+> >   MAINTAINERS                        |   2 +
+> >   hw/misc/meson.build                |   1 +
+> >   hw/misc/trace-events               |   4 +
+> >   hw/misc/tt_atlantis_prcm.c         | 436 ++++++++++++++++++++++++++++=
++++++++++
+> >   include/hw/misc/tt_atlantis_prcm.h |  51 +++++
+> >   5 files changed, 494 insertions(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index e25df9493c..49c1a5ad76 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1802,7 +1802,9 @@ R: Portia Stephens <portias@oss.tenstorrent.com>
+> >   L: qemu-riscv@nongnu.org
+> >   S: Supported
+> >   F: docs/system/riscv/tt_*.rst
+> > +F: hw/misc/tt_*.c
+> >   F: hw/riscv/tt_*.c
+> > +F: include/hw/misc/tt_*.h
+> >   F: include/hw/riscv/tt_*.h
+> >   F: tests/functional/riscv64/test_tt_*.py
+> >
 
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_write(void *opaque, hwaddr offset,
+> > +                                            uint64_t data, unsigned si=
+ze) {
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    trace_tt_atlantis_prcm_write(c->domain, offset, data);
+> > +
+> > +    if (offset >=3D c->regs_size) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: Out-of-bounds write at offset 0x%" HWADDR_P=
+RIx "\n",
+> > +                      __func__, offset);
+> > +        return;
+> > +    }
+>
+> I'm a bit confused here: in tt_atlantis_prcm_read() we're doing a qemu_lo=
+g_mask() and
+> return, and then do a "trace_tt_atlantis...".  So in an error case you'll=
+ have just
+> the qemu_log_mask().   Here we're doing a trace at the start of prcm_writ=
+e() and then
+> a qemu_log_mask() if something wrong happens.
+>
+> There's no rule on how you use trace so there's nothing wrong with both a=
+pproaches but
+> would be nice if we could stick with one single approach: either do trace=
+_tt_... during
+> function start or in function success.  From what I can tell the most com=
+mon pattern is
+> the one used in prcm_read(), i.e. qemu_log_mask on errors and trace_ on s=
+uccess.
 
-Seems like this change also depends on some kind of mutex around 
-regstr[] so that we know it's not being used concurrently by multiple 
-threads.  Translation is single-threaded but if we gained another caller 
-we wouldn't remember to come back and remediate this.
+I think I tried placing the trace for the write at the top of the
+function and missed this bit. Will do it this way instead.
 
-I suppose we could take an input buffer/length.  Or maybe we just add 
-another static _regnames[] array to solve the lifetime/race problems?
+>
+> > +
+> > +    switch (TO_REG(offset)) {
+> > +    default:
+> > +        s->regs[TO_REG(offset)] =3D data;
+> > +        break;
+> > +    }
+>
+> This switch is doing nothing.  Just do s->regs[TO_REG(offset)] =3D data d=
+irectly.
 
+Yes, I think I left this in case I was expecting to handle writes to
+specific registers here, but that doesn't seem to be needed. WIll
+remove this.
 
+>
+>
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_write(void *opaque, hwaddr offset,
+> > +                                            uint64_t data, unsigned si=
+ze) {
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(opaque);
+> > +
+> > +    tt_atlantis_prcm_write(opaque, offset, data, size);
+> > +
+> > +    bool pll_en_written =3D false;
+> > +    uint32_t pll_reg_offset;
+> > +    switch TO_REG(offset)
+> > +    {
+> > +        case RCPU_PLL_RCPU_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_RCPU_CFG;
+> > +            break;
+> > +        case RCPU_PLL_NOCC_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_NOCC_CFG;
+> > +            break;
+> > +        case RCPU_PLL_HSIO_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_HSIO_CFG;
+> > +            break;
+> > +        case RCPU_PLL_PCIE_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_PCIE_CFG;
+> > +            break;
+> > +        case RCPU_PLL_MM_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_MM_CFG;
+> > +            break;
+> > +        case RCPU_PLL1_MM_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL1_MM_CFG;
+> > +            break;
+> > +        case RCPU_PLL_I2S_EN:
+> > +            pll_en_written =3D true;
+> > +            pll_reg_offset =3D RCPU_PLL_I2S_CFG;
+> > +            break;
+> > +    }
+> > +    if (pll_en_written) {
+> > +        if (data & PLL_EN) {
+> > +            s->regs[pll_reg_offset] |=3D BIT(PLL_LOCK_BIT);
+> > +        } else {
+> > +            s->regs[pll_reg_offset] &=3D ~BIT(PLL_LOCK_BIT);
+> > +        }
+> > +    }
+>
+> Seems like you're using pll_en_written as a flag to detect if we have a m=
+atch
+> in the 'switch' and nothing else, since pll_en_written is always being se=
+t to
+> 'true'.  And if there's no match in the switch() the function just return=
+s.
+>
+> I suggest removing pll_en_written and doing a return in a default label.
+> Something like this:
+>
+> > +    uint32_t pll_reg_offset;
+> > +    switch TO_REG(offset) {
+> > +    case RCPU_PLL_RCPU_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_RCPU_CFG;
+> > +        break;
+> > +    case RCPU_PLL_NOCC_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_NOCC_CFG;
+> > +        break;
+> > +    case RCPU_PLL_HSIO_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_HSIO_CFG;
+> > +        break;
+> > +    case RCPU_PLL_PCIE_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_PCIE_CFG;
+> > +        break;
+> > +    case RCPU_PLL_MM_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_MM_CFG;
+> > +        break;
+> > +    case RCPU_PLL1_MM_EN:
+> > +        pll_reg_offset =3D RCPU_PLL1_MM_CFG;
+> > +        break;
+> > +   case RCPU_PLL_I2S_EN:
+> > +        pll_reg_offset =3D RCPU_PLL_I2S_CFG;
+> > +        break;
+>        default:
+>             return;
+> > +   }
+>
+> > +  if (data & PLL_EN) {
+> > +      s->regs[pll_reg_offset] |=3D BIT(PLL_LOCK_BIT);
+> > +  } else {
+> > +     s->regs[pll_reg_offset] &=3D ~BIT(PLL_LOCK_BIT);
+> > +  }
 
->   static void snprintinsn(GString *buf, Insn *insn)
-> diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
-> index d5f969960a..cf1a12adbc 100755
-> --- a/target/hexagon/gen_printinsn.py
-> +++ b/target/hexagon/gen_printinsn.py
-> @@ -28,13 +28,14 @@
->   ##     Generate data for printing each instruction (format string + operands)
->   ##
->   def regprinter(m):
-> -    str = m.group(1)
-> -    str += ":".join(["%d"] * len(m.group(2)))
-> -    str += m.group(3)
->       if ("S" in m.group(1)) and (len(m.group(2)) == 1):
-> -        str += "/%s"
-> +        str = "%s"
->       elif ("C" in m.group(1)) and (len(m.group(2)) == 1):
-> -        str += "/%s"
-> +        str = "%s"
-> +    else:
-> +        str = m.group(1)
-> +        str += ":".join(["%d"] * len(m.group(2)))
-> +        str += m.group(3)
->       return str
->   
->   
-> @@ -142,11 +143,12 @@ def main():
->                       else:
->                           regno = ri
->                       if len(b) == 1:
-> -                        f.write(f", insn->regno[{regno}]")
->                           if "S" in a:
->                               f.write(f", sreg2str(insn->regno[{regno}])")
->                           elif "C" in a:
->                               f.write(f", creg2str(insn->regno[{regno}])")
-> +                        else:
-> +                            f.write(f", insn->regno[{regno}]")
->                       elif len(b) == 2:
->                           f.write(f", insn->regno[{regno}] + 1" f", insn->regno[{regno}]")
->                       else:
+Yes, this looks simpler. Will change it to this.
+
+>
+> > +}
+> > +
+> > +static const MemoryRegionOps tt_atlantis_prcm_ops =3D {
+> > +    .read =3D tt_atlantis_prcm_read,
+> > +    .write =3D tt_atlantis_prcm_write,
+> > +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +    .valid.min_access_size =3D 4,
+> > +    .valid.max_access_size =3D 4,
+> > +};
+> > +
+> > +static const MemoryRegionOps tt_atlantis_prcm_rcpu_ops =3D {
+> > +    .read =3D tt_atlantis_prcm_read,
+> > +    .write =3D tt_atlantis_prcm_rcpu_write,
+> > +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +    .valid.min_access_size =3D 4,
+> > +    .valid.max_access_size =3D 4,
+> > +};
+> > +
+> > +static void tt_atlantis_prcm_realize(DeviceState *dev, Error **errp)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    if (c->domain >=3D PRCM_DOMAIN_COUNT) {
+> > +        error_setg(errp,
+> > +                   "domain %d is larger than max number of possible do=
+mains %d",
+> > +                   c->domain, PRCM_DOMAIN_COUNT);
+> > +        return;
+> > +    }
+> > +    s->regs =3D g_new0(uint32_t, TO_REG(c->regs_size));
+> > +
+> > +    memory_region_init_io(&s->mmio, OBJECT(s), c->ops, s,
+> > +                          TYPE_TT_ATLANTIS_PRCM, c->regs_size);
+> > +    sysbus_init_mmio(sbd, &s->mmio);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_GET_CLASS(s);
+> > +
+> > +    memset(s->regs, 0, c->regs_size);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    tt_atlantis_prcm_reset(dev);
+> > +
+> > +    s->regs[RCPU_PLL_RCPU_CFG] =3D PLL_RESET_VAL(1, 0, 4, 0, 100, 1);
+> > +    s->regs[RCPU_PLL_NOCC_CFG] =3D PLL_RESET_VAL(0, 2, 2, 2, 267, 1);
+> > +    s->regs[RCPU_NOCC_CLK_CFG] =3D (0x25f31 << 1) | BIT(0);
+> > +    s->regs[RCPU_RCPU_DIV_CFG] =3D (0xb8c2 << 1);
+>
+> There's a lot of the so called 'magic numbers' around the code.  Please p=
+ut
+> them in macros and, preferrably, explain where they're coming from (a com=
+bination
+> of reg values, a hardcoded value that the manual/spec dictates, etc).
+
+Most of the reset values are already covered by the PLL_RESET_VAL
+macro, which is defined at the top of this file. For the remaining
+few, some are all 0s or all Fs, and the remaining "magic" values come
+from the datasheet, so I will add a comment to reflect that.
+
+>
+> One more thing:
+>
+> > +    s->regs[RCPU_RCPU_BLK_CG] =3D 0;
+> > +    s->regs[RCPU_LSIO_BLK_CG] =3D 0;
+> > +    s->regs[RCPU_RCPU_BLK_RST] =3D 0xffffffff;
+> > +    s->regs[RCPU_LSIO_BLK_RST] =3D 0xffffffff;
+> > +    s->regs[RCPU_PLL_RCPU_EN] =3D PLL_EN;
+> > +    s->regs[RCPU_PLL_NOCC_EN] =3D PLL_EN;
+> > +    s->regs[RCPU_PLL_HSIO_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_MM_EN] =3D 0;
+> > +    s->regs[RCPU_PLL1_MM_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_I2S_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_PCIE_EN] =3D 0;
+> > +    s->regs[RCPU_PLL_HSIO_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 0);
+> > +    s->regs[RCPU_PLL_PCIE_CFG] =3D PLL_RESET_VAL(0, 2, 3, 1, 250, 0);
+> > +    s->regs[RCPU_BOOT_MODE_CFG] =3D RCPU_BOOT_MODE_SD;
+> > +    s->regs[RCPU_PLL_MM_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 1);
+> > +    s->regs[RCPU_PLL1_MM_CFG] =3D PLL_RESET_VAL(0, 1, 2, 1, 50, 1);
+> > +    s->regs[RCPU_PLL_I2S_CFG] =3D PLL_RESET_VAL(0, 1, 6, 6, 33, 0);
+> > +    s->regs[RCPU_I2S_DIV_CFG] =3D 0xde69ad31;
+> > +    s->regs[RCPU_BUS_CFG] =3D NOCC_PLL_BUS_CG_EN | HSIO_PLL_BUS_CG_EN;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_ddrc_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    tt_atlantis_prcm_reset(dev);
+> > +
+> > +    s->regs[DDRC_STAT] =3D 0x1;
+> > +    s->regs[DDRC_DFISTAT] =3D 0x1;
+> > +    s->regs[DDRC_SWSTAT] =3D 0x1;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_hsio_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    tt_atlantis_prcm_reset(dev);
+> > +
+> > +    s->regs[HSIO_HSIO_DIV_CFG] =3D 0x20821731;
+> > +    s->regs[HSIO_HSIO_DIV_CFG1] =3D 0x8;
+> > +    s->regs[HSIO_HSIO_BLK_CG] =3D 0;
+> > +    s->regs[HSIO_HSIO_BLK_RST] =3D 0;
+> > +    s->regs[HSIO_HSIO_GMAC_DIV_CFG] =3D 0;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_pcie_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    tt_atlantis_prcm_reset(dev);
+> > +
+> > +    s->regs[PCIE_SUBS_RST_CTL] =3D 0;
+> > +    s->regs[PCIE_SUBS_CG_CTL] =3D 0;
+> > +    s->regs[PCIE_SUBS_CK_CTL] =3D 0x44908;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_mm_reset(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +    tt_atlantis_prcm_reset(dev);
+> > +
+> > +    s->regs[MM_MM_CLK_GATE_CFG] =3D 0;
+> > +    s->regs[MM_MM_CLK_DIV_CFG] =3D 0xddc8312;
+> > +    s->regs[MM_MM_CLK_SEL_CFG] =3D 0;
+> > +    s->regs[MM_MM_RSTN] =3D 0;
+> > +    s->regs[MM_MM_CLK_DIV_CFG1] =3D 0x333;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_unrealize(DeviceState *dev)
+> > +{
+> > +    TTAtlantisPRCMState *s =3D TT_ATLANTIS_PRCM(dev);
+> > +
+> > +    g_free(s->regs);
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_class_init(ObjectClass *klass,
+> > +                                                 const void *data) {
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    dc->unrealize =3D tt_atlantis_prcm_unrealize;
+> > +    device_class_set_legacy_reset(dc, tt_atlantis_prcm_reset);
+> > +    dc->desc =3D "Tenstorrent Atlantis PRCM Controller";
+> > +    c->ops =3D &tt_atlantis_prcm_ops;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_rcpu_class_init(ObjectClass *klass,
+> > +                                                 const void *data) {
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    device_class_set_legacy_reset(dc, tt_atlantis_prcm_rcpu_reset);
+> > +    dc->desc =3D "Tenstorrent Atlantis RCPU PRCM Controller";
+> > +    c->domain =3D PRCM_DOMAIN_RCPU;
+> > +    c->regs_size =3D RCPU_DOMAIN_SIZE;
+> > +    c->ops =3D &tt_atlantis_prcm_rcpu_ops;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_hsio_class_init(ObjectClass *klass,
+> > +                                                 const void *data) {
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    device_class_set_legacy_reset(dc, tt_atlantis_prcm_hsio_reset);
+> > +    dc->desc =3D "Tenstorrent Atlantis HSIO PRCM Controller";
+> > +    c->domain =3D PRCM_DOMAIN_HSIO;
+> > +    c->regs_size =3D HSIO_DOMAIN_SIZE;
+> > +    c->ops =3D &tt_atlantis_prcm_ops;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_pcie_class_init(ObjectClass *klass,
+> > +                                                 const void *data) {
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    device_class_set_legacy_reset(dc, tt_atlantis_prcm_pcie_reset);
+> > +    dc->desc =3D "Tenstorrent Atlantis PCIE PRCM Controller";
+> > +    c->domain =3D PRCM_DOMAIN_PCIE;
+> > +    c->regs_size =3D PCIE_DOMAIN_SIZE;
+> > +    c->ops =3D &tt_atlantis_prcm_ops;
+> > +}
+> > +
+> > +static void tt_atlantis_prcm_mm_class_init(ObjectClass *klass,
+> > +                                                 const void *data) {
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +    TTAtlantisPRCMClass *c =3D TT_ATLANTIS_PRCM_CLASS(klass);
+> > +
+> > +    dc->realize =3D tt_atlantis_prcm_realize;
+> > +    device_class_set_legacy_reset(dc, tt_atlantis_prcm_mm_reset);
+>
+> Let's not use the legacy reset interface for new devices - we should use =
+the
+> Resetabble interface instead.  Here's a straightforward example from
+> riscv-iommu-sys.c:
+
+Okay, will change over to this.
+
+>
+>
+> static void riscv_iommu_sys_reset_hold(Object *obj, ResetType type)
+> {
+>     // reset procedure
+> }
+>
+> static void riscv_iommu_sys_class_init(ObjectClass *klass, const void *da=
+ta)
+> {
+>      DeviceClass *dc =3D DEVICE_CLASS(klass);
+>      ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+>
+>      rc->phases.hold =3D riscv_iommu_sys_reset_hold;
+>     (...)
+>
+>
+> In this case you would do "rc->phases.hold =3D tt_atlantis_prcm_mm_reset"=
+.  Same
+>
+> Note that if the device requires a more elaborated reset procedure you wo=
+uld need
+> to do more stuff, but from what I can tell this would be enough for this =
+PRCM model.
+> For more information on reset phases feel free to take a look here:
+>
+> https://www.qemu.org/docs/master/devel/reset.html
+>
+>
+> Thanks,
+> Daniel
+
+I ended up getting 2 replies from you to this mail. Not sure if this
+was a bug or not. I have replied to the 2nd one.
 
