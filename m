@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF073C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 12:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3D9C5AE5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Aug 2026 12:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtOpf-0005Mb-4c; Mon, 10 Aug 2026 08:10:19 -0400
+	id 1wtOqG-0005eA-IY; Mon, 10 Aug 2026 08:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wtOpQ-0005M1-Uu; Mon, 10 Aug 2026 08:10:07 -0400
+ id 1wtOpu-0005Ow-L7; Mon, 10 Aug 2026 08:10:40 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wtOpL-0007m5-DD; Mon, 10 Aug 2026 08:10:02 -0400
+ id 1wtOpo-00083Y-QS; Mon, 10 Aug 2026 08:10:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=gc75uDlfIXjpTlyKDYIjgXxBPOKL8aMvjZSfQOpQh6A=; b=LT0ASi5FunziqmD
- YlQ08aEkvb1BWN5vL8uswz5OYdWpX9BCfhjiJlyOkJOnHZ58u3ke6uGm/VXqHjLmBP/QnKijfZNXS
- wGehmOUZMu65ia5SG8CNQu31VdPsr3kl3LhcJLD03zAAJQhbWngjzZFxONbVTRJisv+JKkkB+rQC1
- Ck=;
-Date: Mon, 10 Aug 2026 14:15:09 +0200
+ List-Help; bh=C4d1wZJG/RHsPb8+gGPemTSF+aI1qy2XVXxxFi7x8I0=; b=dpalUvHK34TtJ01
+ 3cPY0Mvqy4cX2D3yhoJjCw59KPSn+voqDnkn1JVUKRUWsHo4g6eigvxesKwshfp3En9DguGI/EegI
+ Pz+DMaBjeJEUc6v8aJIHrX9E5gCKnuxOv6TDpkUgMmP/7qUW1Rt6najpdsyC8jpuSIpl6SFl+Ba4n
+ DI=;
+Date: Mon, 10 Aug 2026 14:15:43 +0200
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, git@xen0n.name, 
  17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  philmd@mailo.com
-Subject: Re: [PATCH 11/11] tcg/loongarch64: Implement revbit{32,64}
-Message-ID: <annAxGCvT0pzGVmX@hive.localdomain>
+Subject: Re: [PATCH 07/11] tcg: Add revbit{32,64} opcodes
+Message-ID: <annA4S4HG6dZqIqf@hive.localdomain>
 References: <20260731000503.170446-1-richard.henderson@linaro.org>
- <20260731000503.170446-12-richard.henderson@linaro.org>
+ <20260731000503.170446-8-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260731000503.170446-12-richard.henderson@linaro.org>
+In-Reply-To: <20260731000503.170446-8-richard.henderson@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -67,10 +67,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 31/07/26, Richard Henderson wrote:
+> Add the plumbing, but not yet implemented for any host.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tcg/loongarch64/tcg-target.c.inc | 22 ++++++++++++++++++++--
->  1 file changed, 20 insertions(+), 2 deletions(-)
+>  include/tcg/tcg-opc.h            |  2 ++
+>  tcg/tcg-op.c                     | 43 +++++++++++++++++++++++---------
+>  tcg/tcg.c                        |  6 +++++
+>  docs/devel/tcg-ops.rst           | 11 ++++++++
+>  tcg/aarch64/tcg-target.c.inc     |  8 ++++++
+>  tcg/loongarch64/tcg-target.c.inc |  8 ++++++
+>  tcg/ppc64/tcg-target.c.inc       |  8 ++++++
+>  tcg/riscv64/tcg-target.c.inc     |  8 ++++++
+>  tcg/s390x/tcg-target.c.inc       |  8 ++++++
+>  tcg/sparc64/tcg-target.c.inc     |  8 ++++++
+>  tcg/tci/tcg-target.c.inc         |  8 ++++++
+>  tcg/x86_64/tcg-target.c.inc      |  8 ++++++
+>  12 files changed, 114 insertions(+), 12 deletions(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
