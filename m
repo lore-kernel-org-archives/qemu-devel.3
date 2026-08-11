@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66288C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E56EC5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtsPb-0003FP-0F; Tue, 11 Aug 2026 15:45:23 -0400
+	id 1wtsXu-0001BQ-L3; Tue, 11 Aug 2026 15:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsPa-0003FE-2M
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:45:22 -0400
+ id 1wtsXs-0001B4-9W; Tue, 11 Aug 2026 15:53:56 -0400
 Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsPY-0006wK-FZ
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:45:21 -0400
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfhigh.phl.internal (Postfix) with ESMTP id E364F1400173;
- Tue, 11 Aug 2026 15:45:19 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-11.internal (MEProxy); Tue, 11 Aug 2026 15:45:19 -0400
+ id 1wtsXq-0007wr-FU; Tue, 11 Aug 2026 15:53:56 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 7469D140013F;
+ Tue, 11 Aug 2026 15:53:53 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-02.internal (MEProxy); Tue, 11 Aug 2026 15:53:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1786477519;
- x=1786563919; bh=Z4MmbZ+B71Qf5bmPSR3XLgEDAkagdDepzhKLyhTm3Rg=; b=
- kAQAe0NMUKW+bzxDZl/1dngz0MdotuwaGMWgoqOqMr0otyHzlFrXiuulG/J5xEu2
- nzlgcN8m5vHXmf3DWcdmy8xnTy+bbXUwLvPHyMKvTJSjNHtvCA1sYog1XDWxN3pR
- H74j2++Vo5zNnDQSEk5tPApxVaS8f/D7lmie91b+amOjCv8qZUJsw1IjY4aRiGyd
- wGXWCT+gAObwxGKMeqaADFbjvz8xOMjtLpk8PHsvDOrrqg2M1hjZS7YRGxQobQnr
- b82bLXEqb4e7zO0BbwFX8BFZt7eQxXilg3JJsK5n4XzcNVRMWqsDH/8ENcLI3020
- mcOd+64aHmxOcWGQmmSE0g==
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786478033; x=1786564433; bh=Mv7+Kl9I6GUepJaQwbQkgOGT2KTVSpIG
+ pKD4+jm2NuU=; b=cuHjfsU+msabcedTOjVgaH3/bhaNhESHTwAvWWw+95Vuowoe
+ ElqZmmqnyHV94n57+2AAsm0exkZbLiC1K2VVF1uF6GG1jHT+vupiSZZLdvKi75mt
+ nuxfixzRognraoRY7VYGxpOc5NPk8vOs4FJwG//bDN01/ndLfz7QNv2XBDsIRNMC
+ 5otjdOPN6OkN7jr0cqN0/oJZgURUAGIfgz4KSu6z2z/MsWyrryfC8L9yTRbEX4gX
+ V4Ke7eM4sPCW/yIV+K2FjKxnujkyoNGDQqhYv98ornpLld/oxMC/GinlUSO2YaLi
+ nZHyQkyRzQ0lt0hBlJHaCxcfvrJgBz9pFFpBOg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1786477519; x=1786563919; bh=Z
- 4MmbZ+B71Qf5bmPSR3XLgEDAkagdDepzhKLyhTm3Rg=; b=i2w2IChWWuQ3Ovvd/
- +X/kP6F67G6LM6ec3rz5Q2+6Mpyz2fA9z8SZNumYTxGrG4s0VqOr9WVU677sGcDE
- cbdpBp2c9cMhCiR6q1fbXr+xG1GRPWF5rGdbKwEQKVzUDTxp5xWnNoT8X0OZIR9H
- dq8eO7O6udpGDShMS+D4K6JsaviYuxivk2O75OYgqeenI77A/Kpa2sJxeFp/iFVf
- N6FgBJCjgrnMuNgs0jKMdLBuB2CNh4XGQ3Km1i36Z1hfwUNaKbndN5eRX0D1tpj5
- Xgh8s3pLeCKg+lSzq3MdP2dqMGz/ThTCYyDLfB05AZWEnU5fdGLdulTBeVoSwvuK
- bLsAw==
-X-ME-Sender: <xms:z3t7aq42tv81LvGn8pQSosoTY8APw-3ToDUyluUYcDFqTW3RefoIQg>
- <xme:z3t7agOJyKNemnnQvenRNg1e5WiNscw9nkq_-1CJl7hd1BlRk7V2wKWUsjLpJ_j75
- hCTqZgohZNsSUoA45gjHyye6Mj9-4c_s7aKraryVqnYxpNolUkK8Q>
-X-ME-Received: <xmr:z3t7asMRPt-SZvdJ8i32aY8g9WGXinjGdqQuvyPCbs2WbE_LpCRlu62Ud9RU1Pf25nVuoA>
-X-ME-Proxy-Cause: dmFkZTGzx8pjxsTSPVs8RxGvp9RPZKn5dtNsHHoLfq1fGrcmrEahLD2ZZNR6SlGaw76Azb
- ZLaRSycxvcDZ29gaIaX6qjLvlmMabQ+5WoIo9qOzpiceZJ5yaS0vGTeiQrZ+OJC/ex8GDG
- 8lh58DZ/kAWZYT42ByJSjRTJ6Ix/FnJO7oEa1lihJEn9rxK9dmuEKLpC4jMLC0oRB387bd
- YsnWMLa/p7eckLUioXyvYwgibSUKIKBa9Tg9pJu9A6/NBQKCS0B8aL7+bu8/r76z9K+yiY
- QWHoayEwXiJR3YDqZY2TJp2oziNXxrwoJwBkUOd5o0OVSTM9UGHEgoMr8vQfPtnbBWURl6
- zTuBIjT3obdF8lWjbNjxq7j62RLc70klzchZYnjfYmIAGpRzRl0qnMqlP3H3Si3ouOKZ0s
- r/e2BQfCmzzUtX2CP0es4Alp9dqfkajEgG7WaL8fZLcj/4OaJA1iAsa40uutl+Pkt78a/J
- x+X59+cdoWBQGyGPprA9x0GNI2TeMDZbBi92GJwvoLjA3nAhNuObB/4DntNzCB9W8V/CHL
- ZkIEPMhXAtNomiWj6EaZF4tp/PjnXVFF9wMCIsRAXKdFWrI+VakGhIxYY1dBwm45+D70EZ
- ey02a3NPrVdydPYpuFtKrP6LXdeLsNIqN6esCrvUW6u/Yj88vzPKeixRKsqA
-X-ME-Proxy: <xmx:z3t7ao9huiNilvddaTyGithWa1gPQMgy-gYIeoHKudLL3TvA1pTWPQ>
- <xmx:z3t7ag76HtCKWL-iIw8YSg2IbCaX2Z-0ajsyTACXYLgl19wzqq4G1w>
- <xmx:z3t7av1Um0Kz5v_54OQgwrCdBNf6gBwf6ek4Nwm_h_3JB48my9VehQ>
- <xmx:z3t7anD7gJPWT05ENs2hK8p4UecUhSZuqG8ujlwwvZSdU0Uracshqw>
- <xmx:z3t7au8w6ePJdFb8uJKg_Dhr9zNtn8khrlqYM8OTTIaWrU3RKMW1Pav4>
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786478033; x=
+ 1786564433; bh=Mv7+Kl9I6GUepJaQwbQkgOGT2KTVSpIGpKD4+jm2NuU=; b=l
+ Xmaavgp+b1Y8eg6a3q+2/TFdtaxeSMhewcJ5qfmlxjRaGhgF70qdszWven5RjONe
+ wV6cFpjST1QDjy4dhW0lrWCeXKJc/85208nUfYyIKcXyvihQMLBSsbnNr3aoVPhR
+ ZORMzdHeTsEYKK7JuUz58+15tK2xOgzsj7iT/B+TV51rHGM6FCNyywoukPugE5FP
+ WTyhUr+GZ4cCX1jB4UWO0hwMpsyRpmV4WSOPIAtf69nC+vUK4Ljy/qJ79o0IYr/P
+ 5HqmUICs8L++yIjp/W+cM6v8jgfYL7tiy+uxQZRNBiwPlAWJ9zb1ZM7xOCsg4wST
+ ikHHLqN7B0LC/2SdLWd3A==
+X-ME-Sender: <xms:0H17augmbvwm42dTikCianxrSGRwAzg1htUWkM3gTpqCYhugGjSdXA>
+ <xme:0H17aj-2R41JSFtA07uOUun9jIftU1Nz_sBwZYL0YRdzFa5XO1d8Nx95pfliViZEO
+ C6bJMr7th9sUy4tCVwGJz4utXxojPU7fgYhU9a4qSoYbeT10IndSw>
+X-ME-Received: <xmr:0H17aqVi2bq59dz9hKVtdbkbQ2qJq-jPEHRbCPR79ZBYHpOmyl5oG4lXy303QG00WpLsMg>
+X-ME-Proxy-Cause: dmFkZTGAYDcAf25Q41j7gzwaMMJWDFwwWyg3KDlmzy0OeoXDX3yMhQUAu4blpA001hXa7h
+ ShxN4OnIaTznSwBMXlyciVWog7lOQPZdGHwkE+chgwSot02UMWo3y2jg45WRTujWWlsIh6
+ wcL4BEAUW1vuS2KvrA8dRViST7uKlWYsbL9iKXldq7rB4TkQTrhPXm2mA9SZDUy02XsQ9m
+ l7e22d0wYTbUYMAp/uuxDzZKMzhbbEu2GtxgoBgz5h/KGhZzt8WvebZikQJEi/JhfwQ/ze
+ HfEPI+M2xTfOv65hxZzGJe57kcE06EQflYZIYCxRjvNob/f67irildoPf3dO65R6gxqDM+
+ LfLRph4/bkIprZXg8L8QZo9LFMZjGEExSaT7UPrdboUILM5o4g3a8OMxHkodro+8/YJ4FG
+ vPKz0TzycAfJc29SxFlgYEemZyhPWF20ev9uP3T/HXlL4tnYnyopdcPkOJsBt/sLuFTHOO
+ vozxnB93VA/uybjtigNzlP+Vk/5qLk+qH8KQ4kuOoMjZrSTI4OiYwLpU/HPYc8fnR7VH7J
+ I0X5BdgviPJ+Gj8LDpL+wQHXGUBFwwU55RpORWBXpWXinZml4RObjSJjAX6YIXXICwdxSd
+ fTdrqXlGtMJW4fctZf00gd9ZQLcxsdQrSr2MwMXwc15lZkeBt43aKDLVSBuw
+X-ME-Proxy: <xmx:0H17anD07PREowOs2WQiWl5XtYz9ZoHK-cnsDqQMecds_SRvVVkrSw>
+ <xmx:0H17avGvx2zSIz5MS2D7hbr2ZhcR7j3DTB-hVHy0Ypa8KE-lP98ydA>
+ <xmx:0H17ao5WEGFPgOdsT2GkZSWoakY3vzOcbPF26xA0kdidqoEleaGEgA>
+ <xmx:0H17almnRmSjnZKkTCFVi4p-kWFRT-Fr5GHWBMXZcy9nIygp6Mzabg>
+ <xmx:0X17amG5t6QYdwhIUNcJezIyTLzG_qlHN6EIXNiGlImZPaCL-589ZOGM>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 15:45:19 -0400 (EDT)
-Message-ID: <43605116ec3c61075c686d519f669fb6e0b7424a.camel@alistair23.me>
-Subject: Re: [PATCH v2 14/16] tcg/riscv64: Implement revbit8
+ 11 Aug 2026 15:53:52 -0400 (EDT)
+Message-ID: <98e154971281c51dbad65df221a8201a7bfc0d38.camel@alistair23.me>
+Subject: Re: [PATCH v8 0/7] target/riscv: Support the true Zicclsm extension
 From: Alistair <alistair@alistair23.me>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Date: Wed, 12 Aug 2026 05:45:19 +1000
-In-Reply-To: <20260811045605.1246543-15-richard.henderson@linaro.org>
-References: <20260811045605.1246543-1-richard.henderson@linaro.org>
- <20260811045605.1246543-15-richard.henderson@linaro.org>
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>, Palmer Dabbelt	
+ <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, Daniel Henrique
+ Barboza	 <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
+ "open list:SiFive Machines" <qemu-riscv@nongnu.org>
+Date: Wed, 12 Aug 2026 05:53:51 +1000
+In-Reply-To: <20260810055618.1175500-1-frank.chang@sifive.com>
+References: <20260810055618.1175500-1-frank.chang@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
@@ -107,55 +109,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-08-10 at 21:56 -0700, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Mon, 2026-08-10 at 13:56 +0800, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
+>=20
+> Support the true Zicclsm extension so that we can trap misaligned
+> accesses
+> when Zicclsm is disabled.
+>=20
+> To enable/disable Zicclsm, simply set zicclsm=3D[true|false], e.g.:
+> =C2=A0 -cpu rv64,zicclsm=3D[true|false]
+>=20
+> QEMU will raise a misaligned load/store exception when executing
+> misaligned
+> load/store instructions if Zicclsm is disabled.
+>=20
+> Changelog:
+> =C2=A0 v8:
+> =C2=A0=C2=A0=C2=A0 * Squash patch#1 into patch#2.
+> =C2=A0 v7:
+> =C2=A0=C2=A0=C2=A0 * Raise the misaligned exceptions for floating-point i=
+nstructions
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (RVF, RVD, Zfh) when Zicclsm is disabled.
+> =C2=A0=C2=A0=C2=A0 * Add Zicclsm unit tests.
+> =C2=A0 v6:
+> =C2=A0=C2=A0=C2=A0 * Reorder and squash Zicclsm CPU property and RVA22U64=
+ profile
+> patches to
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 make every single commit to pass `make che=
+ck`.
+> =C2=A0 v5:
+> =C2=A0=C2=A0=C2=A0 * Add Zicclsm to RVA22U64 profile explicitly.
+> =C2=A0=C2=A0=C2=A0 * Rebase to the latest riscv-to-apply.next.
+> =C2=A0 v4:
+> =C2=A0=C2=A0=C2=A0 * Align ROM reset vector data at 8-byte aligned offset=
+s.
+> =C2=A0 v3:
+> =C2=A0=C2=A0=C2=A0 * Enable Zicclsm for the compatible CPUs.
+> =C2=A0=C2=A0=C2=A0 * Rebase to the latest riscv-to-apply.next.
+> =C2=A0 v2:
+> =C2=A0=C2=A0=C2=A0 * Use (size_memop(size) | mo_endian_env(env)) to calcu=
+late MemOp.
+> =C2=A0=C2=A0=C2=A0 * Use (log2_esz << MO_ASHIFT) to calculate aligment Me=
+mOp for
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 vector load/store whole register instructi=
+ons.
+>=20
+> Frank Chang (7):
+> =C2=A0 target/riscv: Add Zicclsm CPU option and enable it for the eligibl=
+e
+> =C2=A0=C2=A0=C2=A0 CPUs
+> =C2=A0 hw/riscv: sifive_u: Align ROM reset vector data
+> =C2=A0 target/riscv: Support raising misaligned exceptions for scalar
+> =C2=A0=C2=A0=C2=A0 loads/stores
+> =C2=A0 target/riscv: Support raising misaligned exceptions for floating-
+> point
+> =C2=A0=C2=A0=C2=A0 loads/stores
+> =C2=A0 target/riscv: Support raising misaligned exceptions for vector
+> =C2=A0=C2=A0=C2=A0 loads/stores
+> =C2=A0 target/riscv: Expose Zicclsm as a CPU property and update RVA22U64
+> =C2=A0=C2=A0=C2=A0 profile
+> =C2=A0 tests/tcg/riscv64: Add test for Zicclsm
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
-> =C2=A0tcg/riscv64/tcg-target.c.inc | 17 ++++++++++++++++-
-> =C2=A01 file changed, 16 insertions(+), 1 deletion(-)
 >=20
-> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-
-> target.c.inc
-> index 687146e0b0..8fd32644fe 100644
-> --- a/tcg/riscv64/tcg-target.c.inc
-> +++ b/tcg/riscv64/tcg-target.c.inc
-> @@ -246,6 +246,9 @@ typedef enum {
-> =C2=A0=C2=A0=C2=A0=C2=A0 OPC_XNOR=C2=A0=C2=A0 =3D 0x40004033,
-> =C2=A0=C2=A0=C2=A0=C2=A0 OPC_ZEXT_H =3D 0x0800403b,
-> =C2=A0
-> +=C2=A0=C2=A0=C2=A0 /* Zbkb: Bit Manipulation for Cryptography */
-> +=C2=A0=C2=A0=C2=A0 OPC_BREV8=C2=A0 =3D 0x68705013,
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* Zicond: integer conditional operations */
-> =C2=A0=C2=A0=C2=A0=C2=A0 OPC_CZERO_EQZ =3D 0x0e005033,
-> =C2=A0=C2=A0=C2=A0=C2=A0 OPC_CZERO_NEZ =3D 0x0e007033,
-> @@ -2469,8 +2472,20 @@ static const TCGOutOpUnary outop_bswap64 =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 .out_rr =3D tgen_bswap64,
-> =C2=A0};
-> =C2=A0
-> +static TCGConstraintSetIndex cset_revbit8(TCGType type, unsigned
-> flags)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return cpuinfo & CPUINFO_ZBKB ? C_O1_I1(r, r) :
-> C_NotImplemented;
-> +}
-> +
-> +static void tgen_revbit8(TCGContext *s, TCGType type, TCGReg a0,
-> TCGReg a1)
-> +{
-> +=C2=A0=C2=A0=C2=A0 tcg_out_opc_imm(s, OPC_BREV8, a0, a1, 0);
-> +}
-> +
-> =C2=A0static const TCGOutOpUnary outop_revbit8 =3D {
-> -=C2=A0=C2=A0=C2=A0 .base.static_constraint =3D C_NotImplemented,
-> +=C2=A0=C2=A0=C2=A0 .base.static_constraint =3D C_Dynamic,
-> +=C2=A0=C2=A0=C2=A0 .base.dynamic_constraint =3D cset_revbit8,
-> +=C2=A0=C2=A0=C2=A0 .out_rr =3D tgen_revbit8,
-> =C2=A0};
-> =C2=A0
-> =C2=A0static const TCGOutOpBswap outop_revbit32 =3D {
+> =C2=A0hw/riscv/sifive_u.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 11 +-
+> =C2=A0target/riscv/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 10 +-
+> =C2=A0target/riscv/cpu_cfg_fields.h.inc=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvd.c.inc=C2=A0=C2=A0 |=C2=A0=C2=
+=A0 6 +
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvf.c.inc=C2=A0=C2=A0 |=C2=A0=C2=
+=A0 6 +
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvi.c.inc=C2=A0=C2=A0 |=C2=A0=C2=
+=A0 6 +
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvv.c.inc=C2=A0=C2=A0 |=C2=A0 18 =
++-
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvzfh.c.inc |=C2=A0=C2=A0 6 +
+> =C2=A0target/riscv/tcg/vector_helper.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 65 +++-
+> =C2=A0tests/tcg/riscv64/Makefile.softmmu-target=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 22 ++
+> =C2=A0tests/tcg/riscv64/test-zicclsm.S=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 368
+> ++++++++++++++++++
+> =C2=A011 files changed, 496 insertions(+), 24 deletions(-)
+> =C2=A0create mode 100644 tests/tcg/riscv64/test-zicclsm.S
+>=20
+> --
+> 2.43.0
+>=20
 
