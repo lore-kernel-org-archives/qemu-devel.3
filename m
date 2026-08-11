@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEF0C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDC5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:31:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpNl-0001gd-30; Tue, 11 Aug 2026 12:31:17 -0400
+	id 1wtpO4-0002tc-Hj; Tue, 11 Aug 2026 12:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNL-0000Bn-S0
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNt-0001zL-Dz
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNJ-0000fD-Ec
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNr-0000o4-Jl
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465848;
+ s=mimecast20190719; t=1786465882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+HMW26/ei06rBWnF54T4lDecyffI8NgFMPCAOe03zLA=;
- b=ePdQGNRRXnVxmmB23HaREZcoGsO9qb84RFRMDMXxlQJxEJvdmoWsIBtC1LsTp6FSPN6aK2
- Q/d5iT2soBX+LfroYB6p4bN1/cPfxvIyvK5Hb+IxLYOFzxzSOuHDUp3YkThtjaAodVeJa9
- 917oFmW8lPPQ69LwfrC6azqq9fm+c/U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=HXAWtw7Em+ptZ30dAYgIonsq2wUGiEIUYdNgiY4wFrE=;
+ b=RqUO+qzIif7u1wQexksTDpChrgD1KayXqERBnB6RZe4FvQf8X2JUqG0Hvg0gPE/LO0XbSm
+ LKI+dFzyNs+Ucj/B4dmjEZYQp2CTtN3AfYDMFBkyFvylKupRaEuqbElNyZqV+i+GILh2Lw
+ XX4F6oPsRitftVd/OQ9Zxeth9i/n3YU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-n2pVXOHwPluIMmvDi63d3Q-1; Tue,
- 11 Aug 2026 12:30:45 -0400
-X-MC-Unique: n2pVXOHwPluIMmvDi63d3Q-1
-X-Mimecast-MFC-AGG-ID: n2pVXOHwPluIMmvDi63d3Q_1786465844
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-c6G47kS3PNWQXM34-T5Gbg-1; Tue,
+ 11 Aug 2026 12:31:21 -0400
+X-MC-Unique: c6G47kS3PNWQXM34-T5Gbg-1
+X-Mimecast-MFC-AGG-ID: c6G47kS3PNWQXM34-T5Gbg_1786465880
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 570C619560AB; Tue, 11 Aug 2026 16:30:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4DC5C1800878; Tue, 11 Aug 2026 16:31:20 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD384195DF91; Tue, 11 Aug 2026 16:30:42 +0000 (UTC)
+ id 9B27D195DF9A; Tue, 11 Aug 2026 16:31:18 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 28/83] tests/qtest: adc128d818: add test harness and register
- access
-Date: Tue, 11 Aug 2026 18:28:43 +0200
-Message-ID: <20260811162938.1403216-29-clg@redhat.com>
+Subject: [PULL 45/83] tests/qtest: pca9555: test polarity inversion
+Date: Tue, 11 Aug 2026 18:29:00 +0200
+Message-ID: <20260811162938.1403216-46-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -62,13 +61,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,207 +85,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-Introduce the QOS test node and QMP property helpers for the
-ADC128D818, and cover basic register access: manufacturer and
-revision IDs, power-on-reset defaults, software reset, and the
-ain and temperature property readback.
+Add tests for the polarity inversion register: the inversion is applied
+when reading the INPUT register, both for input pins (pull-up) and for
+output-driven pins, and it does not affect the OUTPUT register readback.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-Link: https://lore.kernel.org/qemu-devel/20260707091609.97759-3-emmanuel.blot@free.fr
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-12-82a63fead90c@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/adc128d818-test.c | 169 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |   1 +
- 2 files changed, 170 insertions(+)
- create mode 100644 tests/qtest/adc128d818-test.c
+ tests/qtest/pca9555-test.c | 44 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
-new file mode 100644
-index 000000000000..9a8811256f66
---- /dev/null
-+++ b/tests/qtest/adc128d818-test.c
-@@ -0,0 +1,169 @@
+diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
+index 6b085702c3c8..2afa061bd2e0 100644
+--- a/tests/qtest/pca9555-test.c
++++ b/tests/qtest/pca9555-test.c
+@@ -99,6 +99,46 @@ static void test_port_independence(void *obj, void *data,
+     g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xAA);
+ }
+ 
 +/*
-+ * QTest testcase for the ADC128D818 ADC
-+ *
-+ * Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Polarity inversion: reading INPUT with polarity bits set should
++ * return the XOR of the actual input state and the polarity register.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqos/i2c.h"
-+#include "libqos/qgraph.h"
-+#include "libqtest-single.h"
-+#include "qobject/qdict.h"
-+
-+#define ADC128D818_TEST_ID      "adc128d818-test"
-+#define ADC128D818_TEST_ADDR    0x1f
-+
-+/* Register addresses */
-+#define REG_CONFIG              0x00
-+#define REG_INT_STATUS          0x01
-+#define REG_INT_MASK            0x03
-+#define REG_CONV_RATE           0x07
-+#define REG_CH_DISABLE          0x08
-+#define REG_ONE_SHOT            0x09
-+#define REG_DEEP_SHUTDOWN       0x0a
-+#define REG_ADV_CONFIG          0x0b
-+#define REG_BUSY_STATUS         0x0c
-+
-+/* Channel Reading Registers (16-bit, read-only) */
-+#define REG_CH_READING_BASE     0x20
-+
-+/* Limit Registers (8-bit, read/write) */
-+#define REG_LIMIT_BASE          0x2a
-+
-+/* ID Registers (read-only) */
-+#define REG_MANUFACTURER_ID     0x3e
-+#define REG_REVISION_ID         0x3f
-+
-+/* Configuration Register (0x00) bitfields */
-+#define CONFIG_START            BIT(0)
-+#define CONFIG_INT_ENABLE       BIT(1)
-+#define CONFIG_INT_CLEAR        BIT(3)
-+#define CONFIG_INITIALIZATION   BIT(7)
-+
-+/* Advanced Configuration Register (0x0b) bitfields */
-+#define ADV_CONFIG_EXT_REF_EN   BIT(0)
-+#define ADV_CONFIG_MODE_1       (1 << 1)
-+#define ADV_CONFIG_MODE_2       (2 << 1)
-+#define ADV_CONFIG_MODE_3       (3 << 1)
-+
-+/* Number of channels */
-+#define NUM_CHANNELS            8
-+
-+/* Internal VREF in mV */
-+#define INTERNAL_VREF_MV        2560
-+
-+/* QMP helpers for setting device properties */
-+
-+static void qmp_adc128d818_set(const char *property, int value)
-+{
-+    QDict *resp;
-+
-+    resp = qmp("{ 'execute': 'qom-set', 'arguments':"
-+               " { 'path': %s, 'property': %s, 'value': %d } }",
-+               ADC128D818_TEST_ID, property, value);
-+    g_assert(qdict_haskey(resp, "return"));
-+    qobject_unref(resp);
-+}
-+
-+static int qmp_adc128d818_get(const char *property)
-+{
-+    QDict *resp;
-+    int ret;
-+
-+    resp = qmp("{ 'execute': 'qom-get', 'arguments':"
-+               " { 'path': %s, 'property': %s } }",
-+               ADC128D818_TEST_ID, property);
-+    g_assert(qdict_haskey(resp, "return"));
-+    ret = qdict_get_int(resp, "return");
-+    qobject_unref(resp);
-+    return ret;
-+}
-+
-+/* Manufacturer and Revision ID registers */
-+static void test_id_registers(void *obj, void *data, QGuestAllocator *alloc)
++static void test_polarity_inversion(void *obj, void *data,
++                                    QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
 +
-+    g_assert_cmphex(i2c_get8(dev, REG_MANUFACTURER_ID), ==, 0x01);
-+    g_assert_cmphex(i2c_get8(dev, REG_REVISION_ID), ==, 0x09);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
++
++    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x00);
++
++    i2c_set8(dev, PCA9535_POLARITY0, 0x0F);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xF0);
++
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
++
++    i2c_set8(dev, PCA9535_POLARITY1, 0xAA);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0x55);
 +}
 +
-+/* Power-on-reset default values */
-+static void test_defaults(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    unsigned ch;
-+
-+    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_STATUS), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CONV_RATE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_DEEP_SHUTDOWN), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_ADV_CONFIG), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
-+
-+    for (ch = 0u; ch < NUM_CHANNELS; ch++) {
-+        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u), ==, 0xFF);
-+        g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE + ch * 2u + 1u), ==, 0x00);
-+    }
-+}
-+
-+/* Software reset via INITIALIZATION bit */
-+static void test_soft_reset(void *obj, void *data, QGuestAllocator *alloc)
++/* Polarity inversion combined with output-driven pins. */
++static void test_polarity_with_output(void *obj, void *data,
++                                      QGuestAllocator *alloc)
 +{
 +    QI2CDevice *dev = (QI2CDevice *)obj;
 +
-+    i2c_set8(dev, REG_INT_MASK, 0xAA);
-+    i2c_set8(dev, REG_CH_DISABLE, 0x55);
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x42);
++    i2c_set8(dev, PCA9535_CONFIG0, 0x00);
++    i2c_set8(dev, PCA9535_OUTPUT0, 0xA5);
 +
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0xAA);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x55);
-+    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0x42);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xA5);
 +
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
++    i2c_set8(dev, PCA9535_POLARITY0, 0xFF);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0x5A);
 +
-+    g_assert_cmphex(i2c_get8(dev, REG_CONFIG), ==, 0x08);
-+    g_assert_cmphex(i2c_get8(dev, REG_INT_MASK), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_CH_DISABLE), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, REG_LIMIT_BASE), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, REG_BUSY_STATUS), ==, 0x02);
++    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xA5);
 +}
 +
-+/* Verify ain property readback via QMP */
-+static void test_ain_property(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    int value;
-+
-+    qmp_adc128d818_set("ain3", 1500);
-+    value = qmp_adc128d818_get("ain3");
-+    g_test_message("Set ain3 = 1500 mV, readback = %d mV", value);
-+    g_assert_cmpint(value, ==, 1500);
-+
-+    qmp_adc128d818_set("temperature", 37500);
-+    value = qmp_adc128d818_get("temperature");
-+    g_test_message("Set temperature = 37500 mC, readback = %d mC", value);
-+    g_assert_cmpint(value, ==, 37500);
-+}
-+
-+static void adc128d818_register_nodes(void)
-+{
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "id=" ADC128D818_TEST_ID
-+                             ",address=0x1f"
-+    };
-+    add_qi2c_address(&opts, &(QI2CAddress) { ADC128D818_TEST_ADDR });
-+
-+    qos_node_create_driver("adc128d818", i2c_device_create);
-+    qos_node_consumes("adc128d818", "i2c-bus", &opts);
-+
-+    qos_add_test("id-registers", "adc128d818", test_id_registers, NULL);
-+    qos_add_test("defaults", "adc128d818", test_defaults, NULL);
-+    qos_add_test("soft-reset", "adc128d818", test_soft_reset, NULL);
-+    qos_add_test("ain-property", "adc128d818", test_ain_property, NULL);
-+}
-+libqos_init(adc128d818_register_nodes);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e216c..5e1fc597e6d1 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -304,6 +304,7 @@ qtests_hexagon = ['boot-serial-test']
- qos_test_ss = ss.source_set()
- qos_test_ss.add(
-   'ac97-test.c',
-+  'adc128d818-test.c',
-   'adm1272-test.c',
-   'adm1266-test.c',
-   'ds1338-test.c',
+ static void pca9555_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -114,6 +154,10 @@ static void pca9555_register_nodes(void)
+                  NULL);
+     qos_add_test("input-pullup", "pca9555", test_input_pullup, NULL);
+     qos_add_test("port-independence", "pca9555", test_port_independence, NULL);
++    qos_add_test("polarity-inversion", "pca9555", test_polarity_inversion,
++                 NULL);
++    qos_add_test("polarity-with-output", "pca9555", test_polarity_with_output,
++                 NULL);
+ }
+ 
+ libqos_init(pca9555_register_nodes);
 -- 
 2.55.0
 
