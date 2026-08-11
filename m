@@ -4,86 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B797EC5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F643C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtqRq-0004e1-1j; Tue, 11 Aug 2026 13:39:34 -0400
+	id 1wtqRk-0004az-Ux; Tue, 11 Aug 2026 13:39:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRY-0004YR-4F
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:16 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRW-0000TH-IK
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:15 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6a1f80fd2e4so221839a12.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:39:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786469953; x=1787074753; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/JzRXJJhfykp1Yow4iskX+SbSIGhsF2ft8QA0zD6CcA=;
- b=kj1e/4faQfPa+q+2oyseuAx5hWO/9H5oB/4O37TcKNMyZABmtV8cL26kWmv1VyMt51
- OBsPx69oWg/3ofTfFWg6cVak6nkZJlmt1MEM+/mxhLMixzWcD4t2uVJVDpXRUsWAoixG
- 1nzC6oR7XrmOfXuPNYtU0hIhvqvpMOpsi6Obywq8Zh5iYPnWLMtKNqt7b9bcAe/9cM4n
- 1Qj0vtxRrA6X9cbRdlmMi6NrcNBxWRUeL8uODYPrt1kYGMsPsV7cbCiIR+tGW6cu9m1r
- MiN4HwcfULoWe5jMOih9v0Ge8HxvnqMFRJ2cb/paayhiBecMFhxLienc1A/6z5oUY4TD
- pZAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786469953; x=1787074753;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/JzRXJJhfykp1Yow4iskX+SbSIGhsF2ft8QA0zD6CcA=;
- b=hd+011wFxvrx+kTa7Y2B6cLZ4uAvZbVegpqY+gEtE6Pv371djhinQsHtE7pqMEBZqW
- 66q4L/XTLmYd1pIC6z2Gluu3ucmbailDehPFInevIDfwrY/BbjRcAVzkIfYKg1K6PNP1
- Xvzj75yvL/ydoub+2FPzNaayKvZQ8lJa4+SXIeY1qtuZGKqtq+88SyFDyP3LI2m8q9lO
- G+QA3+d26MOrAQJhZ4yuicmPf5i4RSGSCgHfjeXSOvjcd9spVkKrokDSSWVcL/rihJdf
- rkPstI07nYYrRqeBveBFxEQnleFGC5qk2uHv6Rqo/a0deF5BaJhj/7HaXu+tPT5FtW3U
- 6GmQ==
-X-Gm-Message-State: AOJu0YycTx8vlkGcMiTNy/jj2Gvmi0SXMMrbC2sGDMfP9Co6XCNEzZ2X
- jQF605KjijtQdz8pkthp8z1TwDm7kDkVLevYACd76cogG31vqHjD/fN2OzihSunsPW5FI71kAu8
- a80oM
-X-Gm-Gg: AR+sD10gXk+w5/u5I8DCeNaLKKGxUfNhBT6K3Z3mSxxGdxcnuuRE4l6BmBfgCmta3Ei
- UQGIhCx4wH9thnOLjyTfLE/LfpntwfcGSNmtcjUlQaNErNY/ZSIMXR1Dj6jrQpQZ03RegDDYQNL
- rzO7CXaFOMpmh2apnGHP4cXPJqtjJLxjjLf5J8Jv4Qwx5Z1IkGqcdz7B8dKlsb2l+A4S1OIsD20
- hHETI5MtDSPz67/dJKB7Sy7jAXGoLJ+1AjFoSnbI/plbzc3LUG2ZUpS5nG8ZNKAXsrVEWVSUrpD
- s8vw13/k1FdPawwyGp1MmRQSEg/tKowZ3IGa+jwBuCKcksaHMKxqM0kjHeTvpyKK9CI1UEsxyHZ
- 3TSTY1kPx3W/uUn+UnEU47anDgJ04mZRcWtGF639PWCXCbl5tp4x2GwtnkAsw8bdcrb9tCH9NSd
- ltknGRrQgHLYC0DZ4pF1fXrMPgG9oVCrFn1AAQ/FRYoucBL4AMK1lqH2Bu
-X-Received: by 2002:a05:6402:4014:b0:69f:c929:b88 with SMTP id
- 4fb4d7f45d1cf-6a36d763d52mr920129a12.5.1786469953022; 
- Tue, 11 Aug 2026 10:39:13 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:c43:d230:7bbc:68d4])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a362ef7525sm880945a12.29.2026.08.11.10.39.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 10:39:11 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 4/8] parallels: bound the bitmap L1 table against the bitmap
- size
-Date: Tue, 11 Aug 2026 19:38:53 +0200
-Message-ID: <20260811173857.396571-5-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260811173857.396571-1-den@openvz.org>
-References: <20260811173857.396571-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wtqRW-0004YM-FR; Tue, 11 Aug 2026 13:39:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1wtqRU-0000Sb-Dx; Tue, 11 Aug 2026 13:39:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67BGW229890268; Tue, 11 Aug 2026 17:39:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=921nNk
+ Sr5MqsoxS+g9JCBxW6JuKPuyFlzsdIjArBhq0=; b=GAFYvihtHb07J7uYpVYchA
+ HJkTDGBrhTMV4RsHkRdEzKU7SpZ303pwsiMXASoZTlyBm/jgCZ8Iha6PpfWc3yQZ
+ +9sOT7yKeKmLdo6JEwP9NtfvP9XM0Te97zSoCogeUOwxR9tFzkKEj8ays9FAH4el
+ HWq1lNboDImZUrd4Ij6hNDumir0RVOnq+5cN0w0O3PM58lZ7Nlcz5/2dHdCFx32k
+ h5ZKH9HLFwUF52U3hmAM5A54RT0VrIQRoQFkxgIauUP2dQeTqok+Enwel+aAathI
+ B3pE6mYvntQU7niWo1VfjLOqEeRLCpuuz9R/TgtNu5IvNFGsAWgZ9Ep+RFI9xVSg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9e7cj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Aug 2026 17:39:08 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BHQHen015205;
+ Tue, 11 Aug 2026 17:39:07 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0g9vfy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 11 Aug 2026 17:39:07 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67BHd6XY9700042
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 11 Aug 2026 17:39:06 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C443B5805A;
+ Tue, 11 Aug 2026 17:39:06 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E658E58056;
+ Tue, 11 Aug 2026 17:39:05 +0000 (GMT)
+Received: from [9.61.240.229] (unknown [9.61.240.229])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 11 Aug 2026 17:39:05 +0000 (GMT)
+Message-ID: <20e98555-db6e-402c-96b4-c90a329709e0@linux.ibm.com>
+Date: Tue, 11 Aug 2026 10:39:04 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=den@openvz.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 12/15] s390x/pci: Move max_dma_limit from S390PCIIOMMU
+ to S390PCIBusDevice
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260807170812.658820-1-kshk@linux.ibm.com>
+ <20260807170812.658820-13-kshk@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260807170812.658820-13-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: I_VKvQzWRBkT_YtTznM5TfusorEpEEZE
+X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7b5e3c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=NT-D918DeMxGRRny-ogA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDE0NyBTYWx0ZWRfX8lp5w5Ru0uj+
+ KLhU6cAwYssG2UxCJBhaPTv84ZoOisLPeOTKNf6TNTBAat8q4BeQThvJOT24DXwZZ4EqFWTsuDF
+ 2HJnIXiZfmwRJo30O8u/qhLRbiLK8eZo2TYJPrQVOhcR8+NaxkqBuyL7TS5U5cSGgGOSGmu1E8g
+ V7uL/OHuvdAKqwxPY6Csie/Mct8EXMzSm8uUV/YrfO8jTTa9CNiDWtDSBJYXA02Sv5okhgvoSUC
+ h/jzcF6hcCwsTUFYoQjj/+J3OTaFQI3+j2viEs9L8jnKr5pMoWzM2VdDCenDDp7OodbxiXX0Eex
+ ltNJBcB/+CvPRBgWMgBlfSu5ioS6I05ThQ4GaJRyvqd8rU31uxILfPCP5t1unMIeOPAD7SHahAR
+ bC1Bfoh4i/eBB3/4kIGZp8A6UeUoY4vcSIzYn2b0xP9LU1FWBmxtvLiJSWDGls+XgAZoDsCkq4u
+ UoRwcqUyfrY1CDhWxnw==
+X-Proofpoint-ORIG-GUID: I_VKvQzWRBkT_YtTznM5TfusorEpEEZE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDE0NyBTYWx0ZWRfX1uQeyUIXuXtw
+ QWlmC5On/rGYYSvmJtFH+9G5HXhIHUux2fIjL6wz9IncXr8ku+s3mFPF3YfZSo1c1e6o4rV/TUt
+ CHJkjyqX8x4lg35Npbe32zJw0/UjSrk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-11_04,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608110147
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,51 +127,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-parallels_load_bitmap_data() derives the number of bytes to
-deserialize from "bm_size - offset" without checking that the offset
-is still inside the bitmap, and an offset past the end makes that
-subtraction underflow.
 
-The overflow which used to produce such an offset is fixed by
-"dirty-bitmap: fix integer overflow in serialization coverage", but
-both the cluster size and the L1 contents come from the image, so
-refuse the table explicitly. The check cannot reject a valid table:
-l1_size is DIV_ROUND_UP(bm_size, limit), so the largest offset the
-loop reaches is (l1_size - 1) * limit, always below bm_size.
+On 8/7/2026 10:08 AM, Konstantin Shkolnyy wrote:
+> This field is only used when S390PCIBusDevice exists, so it can be moved
+> there to simplify S390PCIIOMMU which purpose is just to store the "root"
+> AddressSpace.
+>
+> This also allows to save/restore this field during migration.
+>
+> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
+> ---
+>   hw/s390x/s390-pci-vfio.c        | 4 ++--
+>   include/hw/s390x/s390-pci-bus.h | 2 +-
+>   2 files changed, 3 insertions(+), 3 deletions(-)
 
-Fixes: baefd977002e ("parallels: support bitmap extension for read-only mode")
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- block/parallels-ext.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 830ac78a11..63fe4d5b1e 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -76,8 +76,17 @@ parallels_load_bitmap_data(BlockDriverState *bs, const uint64_t *l1_table,
-     buf = qemu_blockalign(bs, s->cluster_size);
-     limit = bdrv_dirty_bitmap_serialization_coverage(s->cluster_size, bitmap);
-     for (i = 0, offset = 0; i < l1_size; ++i, offset += limit) {
--        uint64_t count = MIN(bm_size - offset, limit);
--        uint64_t entry = l1_table[i];
-+        uint64_t count, entry;
-+
-+        if (offset >= bm_size) {
-+            error_setg(errp, "Bitmap L1 table covers more than the bitmap "
-+                       "size %" PRIu64, bm_size);
-+            ret = -EINVAL;
-+            goto finish;
-+        }
-+
-+        count = MIN(bm_size - offset, limit);
-+        entry = l1_table[i];
- 
-         if (entry == 0) {
-             /* No need to deserialize zeros because @bitmap is cleared. */
--- 
-2.53.0
 
 
