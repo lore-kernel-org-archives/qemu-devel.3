@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C891C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93636C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtmQH-0001oW-7S; Tue, 11 Aug 2026 09:21:41 -0400
+	id 1wtmTI-0002sj-KC; Tue, 11 Aug 2026 09:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtmQG-0001nh-6q
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:21:40 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ id 1wtmTD-0002qo-2B
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:24:43 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtmQD-00073y-MF
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:21:39 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-8200b55dc47so41117567b3.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:21:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786454496; cv=none;
+ id 1wtmTA-0007VY-Tg
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:24:42 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-c15e592da74so361416866b.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:24:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786454679; cv=none;
  d=google.com; s=arc-20260327;
- b=gIFrNiPbMBIVwTUanQHE2574RLp3PbwNAOa5pbFwxQT/gLdGyM1f3un8fPhAmI5+US
- 8u3Qbi1mI85EM5NCrUShYavfAjS86O9mV1teID5Dt86JiqTyZMBCOemgVCG3s+s052Qu
- EYRHDTBRKFJWcJdSw5TDb9TgNw0Zvu4FEQFDJM47KICUNgltpDTCGFjJf3oZMEdGWd6R
- CZsv+FbJhTyVYAz+bXZx2fD0YKYvF42zyfSQQJF4n/lAuMq+duNrNY11NxUMJdU4ovHV
- l2YxeSiEXGD0KU1s5YVmy5NXssvfRqK66RRq1K3yg3OcJcme0A+iMm2TyWKP4Yw26Tpv
- DqZA==
+ b=aZQJoVfJYtWiYIh/EJm3FLe3wHWIozEcAYSx4z+rrZfRxlBG1EvKonFPqqeJ3FnPow
+ cgWfs184MrE6NkfWsZdiHE0RIvzcnHEVPj2ZDeBnkIngGyM8PMFOxt4oFPCWtTDzA/EH
+ TTJRZ7nsGj/6tZZZ2TtKQEZQPa9Zk5JgrhCG+ABySz251V7tlZ+IqF2QLAq/UJk2WOdY
+ yfH9ghkvyeqUo5PK1fAkUzcgAdHOyGCikiJKRxkd9LJYvACv+RBuTAadW8UYrlwnh36c
+ M+4k/Eb9ZOaVNtNOP0j+j/KMTqcDZHrpAIgFf7IyM0eHac8Bt7Vs8UAbvmpzzXjfOgU9
+ 8zeg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
- fh=Xpa6efb5XshLLxQDMJx+ki/cRscfYHSO5/O4/GqD30Q=;
- b=jyVp7Pm9Gp+FsLcuSfdz23zyrLjS3ynSYjW6KPJFPsPFjAzmud3x1jCwwE+g6XuCUp
- Ptcj7xBDgDK0NyWMMPn3LaeG+AeP1powuvdi5NxMM78mmjsP/F/dzOtsP30j4h+7Zj2l
- zFinOSNS9GtsYnImDUbNKXskSry5JfThnNC/Kf4F4z/Hi2IvptxDVf9yZR1sUaMI0SYT
- sEJzB/gZbxLGWGsn714r22T5+qMTpwvfzG/DdLStPZcnLT6O2fjM5qIabX1QkIPrEBwe
- MoT2GW4ATOv1/Ac5Vjal/FZl47NL+9KRb9tutLayB0V+hPVf+MU/EZ2Km68wbpOZVJVm
- f2zg==; darn=nongnu.org
+ bh=jTXaA2SHpHXXlRCQ79+dBU18IWzowbs5ltzr+OVr0VI=;
+ fh=fY1hac5nrlXpQ7YDv5ffhDfNTEnXha1SHTsEDZCQz08=;
+ b=MHolNc8a/WSgSx24zaYYwJz8e2x0tu93u7O7XXuwPtCrf7UKqPPGckTfGX4j3/8iXt
+ AaTNem+eChvLGEK6izrd4M07HGleewXbmky3OEMWUrUMUtz6aSku6yTRV9rQa+fTNzOR
+ q6h11hQ4EyK/Oy1pV85SITV39Waopf0ArkmO1q9kTzu9bJVL7A5QuLPpypI19fY1Yk+k
+ JYuDuaObmijm8WGoI9iUp3ZeByA2QBByfs5iJuwB0hbl1uqUWmsEgY7Oh0lQiHybxtQS
+ Aw9w4VTWVBy+s6s9+wTcUKh7kX2u9+dUko4643eprJxD3bxJ3mCyr/ZJBa97bwQ86bvX
+ tF8w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786454496; x=1787059296; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786454679; x=1787059479; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
- b=ocY6weBpeRlyl3ZBO1M/ampHDi7YJkJnBrUygEaT9M4ggvn45/rzLDWNbpFc3agVVZ
- ju7DWPbbfZGVrzMNxSINTnhMdMGbWjyIYZG3GTLfFG6yNz4o1Q/uxabLIR5yQ9xOOs0L
- obUbya2l42WNrpLjqInAo5uY/ECTKp+b3Lr+79E/SMZur17AyANDU4DGunk7R6uRG50P
- cTAyJgpsWKm+oEwrufD/7hotHdE2BYJpFKxNy41btne5e+MdRDtU0FQmdVcJwAyjX3Gm
- q/oVsECU++Cyhn3KwKfnabe4jQuS/6LitDdZoO06YmX2LCm/5mTjIgZlU15wCXBxTyLe
- vZ3g==
+ bh=jTXaA2SHpHXXlRCQ79+dBU18IWzowbs5ltzr+OVr0VI=;
+ b=Nq2C4kl5nkffvFPqOO5328UEyUW0ceCDtkJbN9hT4zAH188TFkab/oZh9AF7Xlny/p
+ PS4iKO5ZErJiU/H0gE/rXv+0eRXHzBadPab55NklHZSqULkcZvV3ViQ40OKA/t//Vxcx
+ cMHJ1X8urs0PFVgPcD9niqFqcju8QX8pEe0GUSTzIQblxcqCxXRXmL6xP2x19/NqHWjK
+ sdnjdLsjJY4CCNNFX+ByysqCbsDxm/tiYE6P8ha/TSSWLGghAzBqsm5UkR9YQCKXoPf4
+ XzpQ/OS1fFFOpocXSDy5MPS1DvnKX5Gu+CHS1R9NDR2QfQDf7QzDGfGXrOn6moSzSdbZ
+ jWQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786454496; x=1787059296;
+ d=1e100.net; s=20251104; t=1786454679; x=1787059479;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
- b=QryqfUe1EdhIO1q7gInqtj3yurBiCeIRUbtHMRR4G58JpVGwwhAbh/KAuTEijoT/qh
- KvuMQt2vGhi8ff89xPlD5bm0Vi7fr67i+3EOWBPlX0wHoTlb18zNIHrcPQnuxuBTSK/p
- Cg1KlTuqc5SR0wa7Q5Nb0+DCT97pP3fXDKsFLu6alTLtxyGeecIcQvppp4zMw6+ayHf/
- BK4SzOFGTaYyeW+7oY1PnzAe6KlfxeNZpt7oyy7LJ7U83xAItQCMrAlOvcycHrTSKF3S
- qiVQ1BBO+GJjEiMA6UT5BFY1Gvf+welJEUde2wkwN74G3cEYPMqbnZKCXJVxhXkWrZC0
- JWpQ==
-X-Gm-Message-State: AOJu0Yx8zsdQWV4uL3yoQ1l01aKTWhtqvGkl87wbryBJT+CIpi7cDyov
- IsTAZR1GuRan5wQDGEuV9YmPK3tiYjxznsLC1zDCoGFFFeeMfr45vwKuoAFULqrFYC9diJaNI/9
- EnxpiLXhA05kEG/qDxKjh7xICSkVqxmWlGAeZdImblg==
-X-Gm-Gg: AR+sD11UhSsQn4WP91Oz1V1Qsa3F5Q2wBYF9yQxEOdbL3NvB4emwljsP/JOgy0zWdwT
- qeyzHEDIxkCrsozXq4P5egsWoMHy/cmR63/l4Sd0S0MZgZ1It6Esay7nhmCNCwU9jrMLslGmvG1
- cwnBpOU5XNoIiiphJfYkbsE1qmEMsPzd2XzkEHwTgHOrA2gWYxSzGwUg+VALMI3TkWPvP/Q1Kp4
- Gr562lj+TYDiPPm5rx3BuqRV8LAggCBqHFpW8b3S3TbS5uebrt0U3bRla2+YlQf2YeEn0QqtsKj
- HBx8Fu1A0X5VZROS4j5oVW4fbbeRoIU6swcC71wg7yGKuA6s1nGpV+3T4Dy8axksSQNx4CqDRNa
- nlV+AkfMzBUiFlwS08k9/chTf1ajJ
-X-Received: by 2002:a05:690c:c0a:b0:7fe:1333:c745 with SMTP id
- 00721157ae682-82f2db9920emr22010437b3.27.1786454496265; Tue, 11 Aug 2026
- 06:21:36 -0700 (PDT)
+ bh=jTXaA2SHpHXXlRCQ79+dBU18IWzowbs5ltzr+OVr0VI=;
+ b=Bx56bCEUsGn9aqLaMOYUgjIgj1xeg9zJ9D5bKRNR+FYyptX80H/bw5f238wnZne0TK
+ ssrDN6+vEyDHfBzHjxcJw0uDtv4MpudJ7oT88ALL49p7/hrto1Ud28rC01ecrCqpmjmq
+ N3M9mAmGqObyuFxOiynejqg3LXzMAk9aXCni2ucpHC7BGDtSvKHXsKvg+Q9yCNUlyX6E
+ yEVPgGMipQoPer1XoIcvkMLxEhBV1MiBiklbXsAym9xOR9TZCqiFoi+JQYrvfpXrSy+B
+ dEmyjYPA4mHqaC3Jmoy8YetTnxiBfvHJifDHn/BZedBneSm4E4Mu8HPTXOqlBjY3zwrk
+ X8yg==
+X-Gm-Message-State: AOJu0YwwS1inm2quqHnrjVtOy94FOXM/+tmmlmFCqCm3sc4gp5CgIPXS
+ hvLCxFeUbLlxvbojz6VSZTwbPO6OI75qUDGijSCCps5imHuG5QaPxxf/BJvjRmHkl0HQCik3ds+
+ qdowZpwvASxi9CVGz9oWIAZVv7NKh2WQgzYkVS4SPRg==
+X-Gm-Gg: AR+sD10S/EnwFsJLJf5ZegWrJMm12v++uCNc6KlxppZ6swMtuP5960v7csemjM7vzkO
+ L75muyiDN4A/0UCpaC7Pyjlg71BsgCZJfh6JKPxVvIGIBWUMBjqp9dXSPEhPKvhXptu6dCPdBmF
+ ixw6RahnXlaWpba3Q/Dldwzp/cbLRGko28t8ofrZcQOC3rSzJdA8tjDp7Bx+8nH9S1kaZcFMXFN
+ m3L5PI1uNQ6sb/5iQDy6flRR0Ogm8x0LJ1XMxywNKd2v3rvk3qpZ0Fox5CA41EtxrJKB+DMh/a0
+ UWveqLvIbgwsMelXhs42Pd3+BVMSzSCNjGPGJUBIQwIRGbYtk66PKauhCAw5rBeHpQvKII/7hwf
+ AYCXLUY31cLQhR2yuiQXWsEuadj67
+X-Received: by 2002:a17:907:97d1:b0:c15:dbc7:a6c1 with SMTP id
+ a640c23a62f3a-c20e5df3050mr150420166b.0.1786454678634; Tue, 11 Aug 2026
+ 06:24:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
- <20260811105425.7429-4-philmd@oss.qualcomm.com>
-In-Reply-To: <20260811105425.7429-4-philmd@oss.qualcomm.com>
+ <20260811105425.7429-7-philmd@oss.qualcomm.com>
+In-Reply-To: <20260811105425.7429-7-philmd@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Aug 2026 14:21:24 +0100
-X-Gm-Features: AUfX_mwKnAXVIy_-TgBj5BbsRNHimFpq5t2oTVQTmR0eGaJuCA_-FLOasSlmY1g
-Message-ID: <CAFEAcA_xv8+kzJpfRCxKY7FYZoFpLH34+_ftE_8S50RG8O3Bog@mail.gmail.com>
-Subject: Re: [PATCH v3 3/7] hw/nmi: Remove @cpu_index argument from
- NMIClass::nmi_monitor_handler()
+Date: Tue, 11 Aug 2026 14:24:24 +0100
+X-Gm-Features: AUfX_myenv0lZsRJ9ZVDgRwL6ZkHo_litPa7lssCbVgn4bEj_Wzx2weeSrv_6v0
+Message-ID: <CAFEAcA_VMtdZzQzFOkjOj4i1JoGcA-2v3Ku8SHtLL7-MXCQp9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 6/7] hw/nmi: Remove unused @errp argument from
+ deliver_nmi()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
@@ -98,23 +98,20 @@ Cc: qemu-devel@nongnu.org,
  Thomas Huth <thuth@redhat.com>, 
  qemu-ppc@nongnu.org, Corey Minyard <minyard@acm.org>, 
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- David Hildenbrand <david@kernel.org>, Halil Pasic <pasic@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,13 +137,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 11 Aug 2026 at 11:56, Philippe Mathieu-Daud=C3=A9
 <philmd@oss.qualcomm.com> wrote:
 >
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Not a single handler update @errp. The single user is
+> nmi_trigger() filling with "machine does not provide NMIs".
+> Remove the unused argument from the deliver_nmi() callback,
+> simplifying the methods in hw/core/nmi.c.
 >
-> Only s390x was using the 'cpu_index' argument, but since the
-> previous commit it isn't anymore (it use the first cpu).
-> Since this argument is now completely unused, remove it.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > ---
 
