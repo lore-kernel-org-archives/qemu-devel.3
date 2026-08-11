@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836C6C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E79C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtsrV-0004FG-4W; Tue, 11 Aug 2026 16:14:13 -0400
+	id 1wtsrV-0004FB-4K; Tue, 11 Aug 2026 16:14:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsrM-0004Df-PT; Tue, 11 Aug 2026 16:14:09 -0400
-Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wtsrL-0004DL-6w
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 16:14:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsrL-0002yS-9I; Tue, 11 Aug 2026 16:14:04 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id 817B9EC01CE;
- Tue, 11 Aug 2026 16:14:00 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Tue, 11 Aug 2026 16:14:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786479240; x=1786565640; bh=46QVBeWBEM3IQEHApv4Bcn9UA5knMgnq
- PVWR3zKR1zs=; b=RMCQl6CQ/3Zo/bK/5v/5MbVT9PpSOou0R0+U/xQLxGwIAX7S
- jyM/od3F4McxCfNi+A32eMEda9Pl0+XRDWkoYe76XbM2nEcaeFDyIyM2OdzmwdoJ
- ykZ+kGCvuhZXga/8jr2bChQub21/UhWxhjjghMAMFeinrvOUyhYFkz9lPPPMErwT
- HJ1f4jJTWKf/I8H3m3gsop78wn3aU6SX8aBqvz2eisPxI+xHRVriL0ANY4KZGfK6
- SQ7iiIgbJxqlB8E7IMVqIyHl4RUPZeh1uvmqa8jRuxTerqloZySyhGXjRII+cnaX
- 0xbyp2aMQw8Ib0kZ4jIiz/Up4CjRFyBT7F2TBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479240; x=
- 1786565640; bh=46QVBeWBEM3IQEHApv4Bcn9UA5knMgnqPVWR3zKR1zs=; b=I
- ZHgWoAJANBDKR/yu35nXJK873bPaCVK53mkCplOOhynTTiG67MFbl7bNibdBBLR1
- XoRpA1bVSRc8A93q+KVlOpfL9aWooYiUZ+uBzQgfcHD25a+zAElG9g9nf4r/UoUR
- GebW4GSLH62IYA2rmeVvySvpqWf/UDYYQNWAZMOU78K6RnU0p/r2ZbtlXcH+wXMn
- p9u+z6Z5syyWn6P0ZBfncGlq5XVZKDl51Q+7TG7oSqrtX5iYCZEcHqbQeT/7INKJ
- Q9QdvghJPWL95CmSN1BFRmnDshdQxZQNpzMn9Zm/6Ei+kIr+pmaUvV3J/s06kGR5
- dzKDtBLb0LmrmWO7Fw40Q==
-X-ME-Sender: <xms:iIJ7au4s_ii_4iIyzyAeVNCevc-Lzot0jTffHAV6GvzlGERWtz-ykQ>
- <xme:iIJ7asPglj1V3W8MBJIqGkk2-64TvsaWwul_EBlnJOlVFidCYWMr4jlB77bGK0kJf
- dtJ1CIwgHSTdhuVDUabLW9YRmc1_mRQ70Pcl2Oow9WTBIO31iqU6w>
-X-ME-Received: <xmr:iIJ7asmXhfAR56dXYaHixRY7_sjoBZrNzd7aMl7wKPi1Kxb44-2VchWJKdTFzqCInukMYg>
-X-ME-Proxy-Cause: dmFkZTFmzoB37enw+G5Jj89yBAskoL3QjmCbpuwf6axCPPT5+/BgeDXBwVDcGfdR7neByN
- VqgTWbmquFFH4mFQ93nDU+4RNa4bqy9l5zjDCB/GjqXdgjBNJ/kKAttKQUeziRzpQKqBhB
- nKJGn6wu9yop5EHgwiwiOEYGfQkGJokUWJwwipPqf/2FOKcM/WnIBH2Fle0yc7amE+7nxR
- ObUvQTqmG8iBhOpxkuLEzQgeqeex1NYE2A1EPdrqg7OPX95076lbURDAC22PCgqkeB8ixy
- Bd9IbZ1WCk670GXLkwiU9Rutal124mabZ6C8kAdVKJKNIEMMjUM8oZmBVI7uw0kUY7vlLZ
- Nc1AJZjNI9sO6oRvJhM6NAo4LsyapQsoIqYiis4ZEnfsd8w4VVUcATI0FLvYIrljUos7rD
- AGyZGRDSBtuE7s5zYvsi8bAVMAjGejU0a7yy+7vUYGXICmG5WZ1gilpFH3qnt39Sn6b1u7
- Zwd1NhJR0MtU7pouFqvNh8tAI81KXexBQ4Zmcoyerxc533lJQfxnemIpJ492K2mVp+T0wj
- L1dpFkrul83G+FOaD5ZSsuT6jtVAmKwfQeQMbnzsbjAOLIgzsVfp6Zwdh9tKHMozweEw2G
- eQR0xQi5/Aj9ucILw5ysLbDeYrUoSwGXiOuy69Sv3x+Npv8g6oNyEm0xLjBA
-X-ME-Proxy: <xmx:iIJ7ajQuXlwle1oiZxN29DSAions3XFrch294PH-O_xcK6MqvUaktA>
- <xmx:iIJ7aoBsCtZiwRuN_J9toAFScsorlUnREl8TYChzX6Az8DplDCr4Ag>
- <xmx:iIJ7aiS2tW6Yd4BbpvRJmKbVIoPu9wiKw48VoJZdgX_cqnh2QHiavw>
- <xmx:iIJ7aupglPA9ewcdGUMdmtfl4YzQsk7L70OyklZAOCDZY9AGlGWl9w>
- <xmx:iIJ7arvJ0nRHJmTt97a__8AIxboF3D5inQrWtYpStOeZoAoUC09WzlRN>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 16:14:00 -0400 (EDT)
-Message-ID: <54fd125ddfbf7b720738b3cf6ab6c9df476586ba.camel@alistair23.me>
-Subject: Re: [PATCH 19/56] disas/riscv: Simplify c.addi
-From: Alistair <alistair@alistair23.me>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 06:14:00 +1000
-In-Reply-To: <20260809223545.730664-20-richard.henderson@linaro.org>
-References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-20-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wtsrH-0002yJ-Ji
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 16:14:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786479238;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dBtTGm5Ks5iXKZISqeAtCN2hqW4r+xpzqM8puzQTDAw=;
+ b=cqzLU0fQ1D6HdGmNA0wOG52QLIgQaDa/seimt6/8/oiD+Twzdga9VJzV8Idl95i0pq4XlC
+ t4o+ZRCr2jUhgqtEotzqvwrC4JP07Bfp5mazMa/uuyJSugp3Q8rlMFqlQzocRpKgYw5pLu
+ xE6Ye70w+192wcQORt7zR2JOLgBSoj0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-6521w8SvOYKooZmVI0_P3w-1; Tue,
+ 11 Aug 2026 16:13:52 -0400
+X-MC-Unique: 6521w8SvOYKooZmVI0_P3w-1
+X-Mimecast-MFC-AGG-ID: 6521w8SvOYKooZmVI0_P3w_1786479231
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26A6E18001D7; Tue, 11 Aug 2026 20:13:51 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8FE0319560AB; Tue, 11 Aug 2026 20:13:50 +0000 (UTC)
+Date: Tue, 11 Aug 2026 16:13:49 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ "Denis V. Lunev" <den@openvz.org>
+Subject: Re: [PULL 1/8] MAINTAINERS: add myself to IDE maintainers
+Message-ID: <20260811201349.GB196609@fedora>
+References: <20260730081325.1816193-1-den@openvz.org>
+ <20260730081325.1816193-2-den@openvz.org>
+ <CAJSP0QUnp4=pPYQvGvTEoBCndvJb0o=Z0RzehP30KKK_svyXCA@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.150;
- envelope-from=alistair@alistair23.me; helo=fout-a7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="DrPzHyVsXfWSWGCD"
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QUnp4=pPYQvGvTEoBCndvJb0o=Z0RzehP30KKK_svyXCA@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,84 +88,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-08-09 at 15:35 -0700, Richard Henderson wrote:
-> While c.addi with imm =3D=3D 0 and rd =3D=3D 0 is c.nop,
-> other c.addi with imm =3D=3D 0 and rd !=3D 0 are not illegal,
-> but are reserved as HINTs.=C2=A0 Go ahead and disassemble as
-> c.addi rather than falling back to invalid.
->=20
-> Further, there's no reason to differentiate c.nop, since we have
-> =C2=A0 c.addi -> addi -> nop
-> vs
-> =C2=A0 c.nop -> addi -> nop
-> via decompress and pseudo translation steps.
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+--DrPzHyVsXfWSWGCD
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
-> =C2=A0disas/riscv.c | 11 +++--------
-> =C2=A01 file changed, 3 insertions(+), 8 deletions(-)
+On Thu, Jul 30, 2026 at 10:55:53AM -0400, Stefan Hajnoczi wrote:
+> On Thu, Jul 30, 2026 at 4:14=E2=80=AFAM Denis V. Lunev <den@openvz.org> w=
+rote:
+> >
+> > Signed-off-by: Denis V. Lunev <den@openvz.org>
+> > CC: Stefan Hajnoczi <stefanha@redhat.com>
+> > CC: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> > ---
+> >  MAINTAINERS | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index 902db77218..4628793dde 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -2160,6 +2160,7 @@ F: docs/specs/edu.rst
+> >
+> >  IDE
+> >  M: John Snow <jsnow@redhat.com>
+> > +M: Denis V. Lunev <den@openvz.org>
 >=20
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 8a957e6a1e..7978ffb378 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -263,7 +263,6 @@ typedef enum {
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_fsd =3D 231,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_sw =3D 232,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_fsw =3D 233,
-> -=C2=A0=C2=A0=C2=A0 rv_op_c_nop =3D 234,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_addi =3D 235,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_jal =3D 236,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_c_li =3D 237,
-> @@ -1896,10 +1895,9 @@ static const rv_opcode_data rvi_opcode_data[]
-> =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1,=
- NULL, rv_op_sw,
-> rv_op_sw,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sw },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs=
-1, NULL,
-> rv_op_fsw, 0, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.nop", rv_codec_ci_none, rv_fmt_none, NULL, rv_op=
-_addi,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> +=C2=A0=C2=A0=C2=A0 { },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL=
-, rv_op_addi,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi, rvcd_imm_nz },
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, NU=
-LL, rv_op_jal,
-> 0, 0 },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, NUL=
-L, rv_op_addi,
-> rv_op_addi,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> @@ -3010,10 +3008,7 @@ static void decode_inst_opcode(rv_decode *dec,
-> rv_isa isa)
-> =C2=A0=C2=A0=C2=A0=C2=A0 case 1:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 switch ((inst >> 13) & 0=
-b111) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case 0:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 switc=
-h ((inst >> 2) & 0b11111111111) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case =
-0: op =3D rv_op_c_nop; break;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 defau=
-lt: op =3D rv_op_c_addi; break;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 op =
-=3D rv_op_c_addi; /* or unspecified HINT */
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-break;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case 1:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-if (isa =3D=3D rv32) {
+> Waiting for acknowledgement from John.
+>=20
+> Stefan
+>=20
+
+Thanks, applied to my staging tree:
+https://gitlab.com/stefanha/qemu/commits/staging
+
+Stefan
+
+--DrPzHyVsXfWSWGCD
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmp7gn0ACgkQnKSrs4Gr
+c8jLKwf/TMxUYSldTFn2lyJ7RakMKrchtPwQo/8/YyMIrRnYpN4fR+OT1SxowFGl
+KZzhU1vHfvOIi/W69H0Vf1Y1wvFySjcrZVdiAdC81leBHVlnrAceeOqwRIZOqU2K
+U7dQCcsZvTb2VelB5r5/St5ApvaRAT50EMtZ+pyz8Z8AAY4wnYqvOvSrBsgO1Fis
+a9t5OhCNMkAfpXgtzask9MBgvWZAK7Z/sJG3QsTMK9KrP/mQkwOdU0sFK+d0Cp35
+UX/CultRx7FeabIJSe5DhyRRq5a2xeEEdVpsL2hFVveNtDbh/SMSCmJlpAq7+hdW
++TsDbPqSXW+KNh1NVAUMAuUhFZOlew==
+=jVXN
+-----END PGP SIGNATURE-----
+
+--DrPzHyVsXfWSWGCD--
+
 
