@@ -4,107 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7119EC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16CEC5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 15:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnkX-0002Ta-0v; Tue, 11 Aug 2026 10:46:41 -0400
+	id 1wtoce-0007uj-Oc; Tue, 11 Aug 2026 11:42:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wtnkV-0002T7-OL; Tue, 11 Aug 2026 10:46:39 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wtnkU-0003ep-67; Tue, 11 Aug 2026 10:46:39 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BDWRiP537294; Tue, 11 Aug 2026 14:46:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=qb2wyX466h91vZu55
- RS8pWPoSu4aHfl3xRVEQ4wwJbc=; b=ledHjC30MA/0/4RFdwF3x0cB/qvd/JlCX
- 0ftUu7j17Kw7H+o9l84V0T9uomqdCcspvLWISRP02QI8Th6wo+aZodK9kcTfsl0N
- 8ZXPxqts9k6k6R2ZjL+9gk5c39w5QMUeEwTB3RTLz9puTZI9X4+okXWwf4P+dzz+
- VkLhiLZRE3MTbAFwxw0di9Q4lsXTJ6fFbLH0V3dlUTY4P1AhtlKpk9sF0auqXTj1
- HnM6xAJT++vKZX7T8WoZ2b7ySOuimuj8nAwl82DShziTYcVuehuMYL2rmi2MXNpP
- 9zZbTjwiOgMTGcyHDVh1+X/D139z2ah3dWcaY9kcNTJmwmLkGYjfQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvm9ng42-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 14:46:36 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BEfEgB019843;
- Tue, 11 Aug 2026 14:46:35 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy14jx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 14:46:35 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67BEkYA922282918
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Aug 2026 14:46:34 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 674025805E;
- Tue, 11 Aug 2026 14:46:34 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D183258043;
- Tue, 11 Aug 2026 14:46:33 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.86.140])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 11 Aug 2026 14:46:33 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v2 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block length
- constant
-Date: Tue, 11 Aug 2026 10:46:23 -0400
-Message-ID: <20260811144629.866641-3-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260811144629.866641-1-jrossi@linux.ibm.com>
-References: <20260811144629.866641-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtocd-0007u9-Eq
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:35 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtocM-00046R-G5
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:35 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-6a1b51723a9so5484391a12.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 08:42:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1786462936; x=1787067736; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=z4HjFwPizF1XiGDK5/730THxCreYP5Hk3iH1cf1B/Po=;
+ b=CwFdmRdg9ELy3qQRcqDncWKs+a+NZRjIVGaFmmFdGmCqwRtWM/T0c8VubYX0asBYGw
+ Q1t35+deErNAK1gKEHRUl4NHzx5jZhqHekM4NJZbTKG4/8IHrWbeWhF+xQIYvzigUAnJ
+ A4Fgko910EXMVtanBmEhS8NBSKd2YlLqnLhNdfvFVBiG2PciLbGa/z0WArOoTqERlqJ3
+ JeheN7C7zWGyEefRR6FmD6g24XxNZ8gJ2ESYFYoqKNEnPLP7qi+cktWnlfDPwgJLozE+
+ 1Gvj/stIzMg/gbkoBkk8iJRt/hHH2DzGEvx468s9O8uEaK+HJLWhagOA10xw2K/YceVg
+ IjFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786462936; x=1787067736;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=z4HjFwPizF1XiGDK5/730THxCreYP5Hk3iH1cf1B/Po=;
+ b=pPcv9JSw/SrqHq7m8T9jOwZPjqoTPgDPm2uGeW/wJjny2fogUr2UITZXmS8JaFrDHj
+ ha3Kprhioq/+xvSbIXt5cgLcJ6Qhg3jkhdd49GxEwC1ffxoyu/3Foy3zM70vCC9pWzio
+ zZFbQhbrOM5Sv7IEAbCzPb6N6+04pePMyrZdB3Rz7INmhACXk6DrAUXyDIKHfiJwlSQe
+ ygYMrtXq3hxrr7+y6kHVq6VJ8O531sNwGZv1kqm3oX3UqqDsaUtaXPk/C9TNhhe1+WXg
+ xgykNrP7WMXHvbZ1D3gWPJXz/aa8lZRjMKtBzTJ5kc5QDr784avAAsBl6cXl+7teFMg8
+ +IUQ==
+X-Gm-Message-State: AOJu0Yx7lmwpiRWVJXuGuye4VpfzIzLUSCJWswfvabIhrqS9FHYLV863
+ /64OjxZwkA1dEHINlrlA6r0M/mpZW61kxPLkGEs3RhY13rny944pdge4+H+psND8J/3/ts+7MXt
+ bEz2t
+X-Gm-Gg: AR+sD11moGhvevHadFK460Y5tMS1Px+gQr29RQ9W8RNz8xtbUKYUb1IvmV5TF3vy/L1
+ SIcrCCFAYzlY430f7dJf06hfjHVkdH5k/pp+dTajCYrHeyE7NnKHdJcW2Mg6VrnHMWuW09l3bhO
+ ZpjXQc8k595hIa92jl81OeoeG+aupMziwXeKs2UwQURpbyEyr/7d4YYDDkqImKZA3VRyuCHWWBD
+ ToZTCH3WCCWAtH8Bg3VROxKuPhGc6Hm5qPESZORjqvhklGfV4WKP0rhe6hs3XyYD2UHLXsi3C5B
+ 9n/znUQ5TRC9djV0W0BsyIjre1IWd49p1CCLpQPf2BldB+dz16/pf8MH/7irQv9+Rwd1hkAVCwh
+ 2Hzkc+RS9k1bIPkplwXiLtif4oFJ2YTRCzhMMIhePN+4kspwM3i+Yx4JSJfGyygMQQxIYVCjONH
+ JosTbEGC+xoTBtt5rshTL3RBsOrMLHInpeAqNJl+dIdZ2c8n23Yyyhy6Bc
+X-Received: by 2002:a05:6402:24c4:b0:6a1:245e:525a with SMTP id
+ 4fb4d7f45d1cf-6a36452cbf9mr1899470a12.19.1786462936418; 
+ Tue, 11 Aug 2026 08:42:16 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:c43:d230:7bbc:68d4])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a362e34d4bsm841128a12.12.2026.08.11.08.42.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 08:42:15 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-stable@nongnu.org
+Subject: [PATCH v2 0/4] qcow2: silent corruption when a dirty image becomes
+ writable
+Date: Tue, 11 Aug 2026 17:42:09 +0200
+Message-ID: <20260811154213.184947-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDEyMSBTYWx0ZWRfXzOvaniGPDIPB
- ZkAnojd1Lg3/jEOMT4cn1mQuze8VAIPXii7DlsQmVTIYlToqR1HVEFmeINy2YI5JMuV/AhvmLEP
- R5tTou7uw/ITXpQqgGYs/Vn3v5hEfLpDmk7a681V3TVr+FeD86h6b8RAURSDnJ3C0qPisTxh+3k
- kEKfhG/LqvJDqXJsy0NVZiiCr2Z+vM1hNzLs5HZMa6ac5PhK3xAkctjNtvREGC7cPpUc42LgXCa
- 1242smvpWeSWO85/v1Jf+2a2Y5U54mx9Fx0qAh5+XiYgPj5PdjKZsNBZC106myGLLF+zwBoHqG+
- EakEudjGNMlhdk94ccTlsijbY93Y1nFt3RIFX6dGpDneFPSoHNuy5QImcWsq4F5fTGaI64JTSvC
- UVwq8reL9Bu3u/HMl8tslIt9Ng8dk7SaODDwB7wazUJFdmGR8ImYG+s6o5YpuzjMOXD0eZYtVAC
- MNr7ODITPAkLhjNG4kw==
-X-Proofpoint-ORIG-GUID: 5OtjauhSOX4DVytUmAiYe6dIihjwtJxp
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDEyMSBTYWx0ZWRfX4hgDZRozjnqX
- TPNf06qkOoDPEIqkdQlsOTxlXkDpx72bulrswPt0zGWySSvYJu1VsvvZH/0ZFrxg9qQrlsJ51ld
- oz2qmt2YJYl8Nz9V2mc12ZAyrPY4RsY=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7b35cc cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=Nzsg8VXm9MNVq0Y9DCkA:9
-X-Proofpoint-GUID: 5OtjauhSOX4DVytUmAiYe6dIihjwtJxp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-11_03,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=den@openvz.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +98,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Today I have faced real data corrupt from our customer with the
+situation very close to the one addressed in the patch
+"qcow2: do not try to clear the dirty bit on a read-only node" and
+that is interesting. I was really unsure that design is correct
+but with today case I can say that correct thing was done.
 
-The IplBlockPci struct is 336 bytes in length.
+The problem
+-----------
 
-Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
-while we are at it.
+qcow2_do_open() repairs an image carrying QCOW2_INCOMPAT_DIRTY, but only
+for a node that is writable from the start:
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- hw/s390x/ipl.c | 2 ++
- hw/s390x/ipl.h | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+    if (!(flags & BDRV_O_CHECK) && bdrv_is_writable(bs) &&
+        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index d5fdc3ea0f..fd6e9100f9 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -526,6 +526,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         switch (devtype) {
-         case PCI_DEVTYPE_VIRTIO:
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-+            iplb->blk0_len =
-+                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
-             iplb->pbt = S390_IPL_TYPE_PCI;
-             iplb->pci.fid = cpu_to_be32(pbdev->fid);
-             break;
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index fac30763df..b4d93054a7 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -107,7 +107,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
- #define S390_IPLB_MIN_PV_LEN 148
- #define S390_IPLB_MIN_CCW_LEN 200
- #define S390_IPLB_MIN_FCP_LEN 384
--#define S390_IPLB_MIN_PCI_LEN 376
-+#define S390_IPLB_MIN_PCI_LEN 336
- #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
- 
- static inline bool iplb_valid_len(IplParameterBlock *iplb)
+A node opened read-only skips it, correctly, since it resolves nothing
+and writes nothing. Nothing revisits the question when that same node
+later becomes writable, and bdrv_reopen() is not an exotic way to get
+there: commit_active_start() and commit_start() both reopen the base
+read-write for the duration of the job, so an ordinary block-commit onto
+a read-only backing file is enough.
+
+With lazy refcounts the refcount blocks are not written again once the
+dirty bit is set, so an image left behind by a killed QEMU has an
+on-disk refcount block that accounts for the metadata clusters and
+nothing else. Every data cluster reads as free. s->free_cluster_index
+starts at 0, so the first allocation after such a reopen starts at the
+front of the image and hands out clusters that L2 entries still point
+at.
+
+The result is aliasing: two guest offsets mapped onto one host cluster,
+so the guest reads back data belonging to some other offset. Nothing
+about this fails. No I/O error is reported, the corrupt bit stays clear,
+and a clean close clears the dirty bit as well, so no later open will
+repair the image either. Afterwards qemu-img check reports
+
+    ERROR cluster N refcount=1 reference=2
+    ERROR cluster N refcount=0 reference=1
+    ERROR OFLAG_COPIED data cluster: l2_entry=<host>|COPIED refcount=0
+
+and the only runtime witness, if something eventually frees one of those
+clusters, is a bare
+
+    qcow2_free_clusters failed: Invalid argument
+
+on stderr, with the guest none the wiser.
+
+How it looked in production
+---------------------------
+
+A VM was killed while its storage was unavailable, leaving a 100 GiB
+volume dirty. It came back with a snapshot-revert overlay on top, so the
+volume itself was now the read-only backing file, and the overlay was
+committed into it two and a half hours later. 8082 host clusters ended
+up referenced by two L2 entries each, roughly 8 GiB of guest data
+cross-mapped. The guest filesystem began failing metadata verification
+on buffers holding fragments of unrelated files.
+
+Two properties of the damage are worth recording, because they are what
+told us this was not a race:
+
+ - aliasing is exactly two-way, never three or more, which is a single
+   monotonic sweep of the allocator rather than a window hit repeatedly;
+
+ - it stops dead at the host cluster that was the image end at the
+   moment the volume was made writable. Everything allocated after that
+   point is intact.
+
+qemu-img check -r all makes the metadata self-consistent again, and then
+honestly reports no errors, but it cannot un-alias anything. The guest
+data stays wrong.
+
+Reproducer
+----------
+
+Under a second, no guest and no block job required:
+
+  qemu-img create -f qcow2 -o compat=1.1,lazy_refcounts=on base.qcow2 1G
+  qemu-io -f qcow2 -c "write -P 0xaa 0 100M" -c flush \
+          -c "sigraise 9" base.qcow2
+
+  qemu-io -r -f qcow2 base.qcow2 \
+      <<< $'reopen -w\nwrite -P 0xbb 900M 100M\nquit'
+
+  qemu-io -r -f qcow2 -c "read -v 0 16" base.qcow2
+  # 00000000:  bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb
+
+The flush is load-bearing: it writes out the L2 cache but not the
+refcount blocks, which is exactly the asymmetry the bug needs. Guest
+fsyncs supply it in production, so a long-running VM is the ideal
+victim. qemu-img commit of an overlay reaches the same state through
+commit_active_start().
+
+v1:
+https://lore.kernel.org/qemu-devel/20260731220039.1765584-1-den@openvz.org/
+
+Changes in v2
+-------------
+
+ - A failed repair no longer falls through to qcow2_reopen_bitmaps_rw().
+   qcow2_signal_corruption() has already cleared bs->drv at that point,
+   so there is nothing left to reopen. bdrv_reopen() also reported
+   success in that case and handed the caller a dead node, which needed
+   a block layer change, patch 2. (Hanna)
+
+ - Repair only when the node has just become writable. With lazy
+   refcounts the dirty bit stays set for the whole writable session, so
+   repairing whenever the node is writable made every read-write to
+   read-write reopen, blockdev-reopen changing l2-cache-size for
+   instance, scan the metadata of a live image under bdrv_drain_all()
+   and clear the dirty bit its session still owns. Patch 3 records the
+   writability the reopen started from. (Andrey)
+
+ - Three new cases in iotests 039: the read-write reopen that must not
+   check the image, the failed repair that must fail the reopen, and
+   the read-only reopen that must keep the dirty bit.
+
+Notes for review
+----------------
+
+ - The repair still runs under bdrv_drain_all(), so a block-commit onto
+   a large dirty base stalls guest I/O for the length of a full metadata
+   scan. Rejecting the reopen instead would be cheap, but block-commit
+   depends on it succeeding, so repairing in place is the only option.
+
+ - .bdrv_reopen_commit_post() runs after the transaction is committed
+   and cannot roll anything back, so a negative return value reports an
+   unusable node rather than rejecting the reopen. That is unusual, and
+   it is the only channel available: there is no failable hook once the
+   node holds BLK_PERM_WRITE.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-stable@nongnu.org
+
+Denis V. Lunev (4):
+  qcow2: do not clear the dirty bit when reopening a read-only node
+  block: let bdrv_reopen_commit_post() report a failure
+  block: remember the writability a reopen starts from
+  qcow2: repair a dirty image when it becomes writable
+
+ block.c                          | 19 +++++++--
+ block/qcow2.c                    | 29 +++++++++++--
+ include/block/block-common.h     |  1 +
+ include/block/block_int-common.h |  5 ++-
+ tests/qemu-iotests/039           | 70 ++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/039.out       | 41 +++++++++++++++++++
+ 6 files changed, 156 insertions(+), 9 deletions(-)
+
+
+base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
 -- 
-2.54.0
+2.53.0
 
 
