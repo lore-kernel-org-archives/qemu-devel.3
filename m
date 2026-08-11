@@ -4,143 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC36C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51424C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnAR-0004Il-Lo; Tue, 11 Aug 2026 10:09:23 -0400
+	id 1wtnDz-00056W-0H; Tue, 11 Aug 2026 10:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtnAQ-0004IK-KL
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:09:22 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wtnDx-00056F-Cn
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:13:01 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtnAP-0006Lm-1S
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:09:22 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BDWjLB3718161
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 14:09:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- loFLSosiBV+eF5PC2iaEWFill6fpkAYwL4Gym0cCmzc=; b=N1QqEyAjViFzbpf1
- FdQ5xxcf1uRiNOAgemDgH/ozcJDGWuIPX98lvaSzaTewJwt6dA9/yWjpsBhHGWYT
- R+LX6H3HGaihk3DXhOLFlMaEkUFseXU/w43Bzyo+jX9rb49hzmK35UN0g3H8yoh5
- AnlDwv2sSf36/08tJD+oyYIGoAvJhSV38WEk98+vekXy/ecXdsUE3lM1cSRxm8wr
- HvikHVcsuzdf7Pn5KHxFVlkCb2zhR3DD6bbWiA0tkvGhx2vdq32dIq/og9gk0PAw
- 0v8UO4LzFPG9NG+DwrxKVNcFRRtxjCEuDM8jXA6upCm6IahaAhHqTHgT5A2m26FE
- 7BqMkQ==
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyxwesm66-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 14:09:19 +0000 (GMT)
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-96910ded42cso106556241.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786457359; x=1787062159; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=loFLSosiBV+eF5PC2iaEWFill6fpkAYwL4Gym0cCmzc=;
- b=Pvs/bB/KSbbCGfdROavBpT+uH5nWyuvTzLhoUZivWZgwkSeTeWJA2oiL+dbBSpe02h
- TC8JWcGA9VsLK/l1N78aGUCmnPkSQVo4lxsP1Jcr/+TTDrizdHz+BkQCplbHa7loisWd
- PM4rJ/VX9kLV0AJT0eCrNp0Fuxnifv387B2EKk8MUjs8cLuSFBazflIsDXfHRkQP1g0M
- pFY2CvodavBM56RixkVt4UYMx4PsgU/eHDXpDLLZJYWa/nuwqiq4Mn8pO7ct1V9dIS64
- LG/O6QhCSYXHgrjlrmedDk2aiO3xeOhUINyNbNaSD/LJRPDdhAiaGvOigZRPdpWDy0Be
- lSOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786457359; x=1787062159;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=loFLSosiBV+eF5PC2iaEWFill6fpkAYwL4Gym0cCmzc=;
- b=a5aMInBj2vQ7msxy4wrw+ERrXLOAMa4kJgU7xcpCanbMMZCECS807ekrhMgy5Z/lTv
- AsJfLGxBXoSvQHGjv1KkMZLjc1csutZN0KjibdG4XDRLjYFwg0LLSqjwcLK3/+8gI2Ym
- 3znYQW8cilASe/vNNpBP/+W2fb3YArhpGI0y6Jc+fkbVrnTgPCmBhaJie/aPnf3o5VM8
- Oo2bd78ocY1LUNfJRJWgbUrz1DRRkPQvFPaOkf6QxP3hZeTubCWCQPUWhgz0wWLVpkVR
- KD+828S+bCVSfoEzDYNmO7aYGqObOxUQmkIYb2o0q6XWalKK76WeZSB6ZiTOYeuw0JVZ
- c8ng==
-X-Gm-Message-State: AOJu0YwFx8EFdJ0snLkmMfssiOZ+plb+hBGhlZvxg07PcZP2k+B2Muy4
- 3xf3XCeieA9XJcQHmq2yeoLdypE9e6/605t2E5arahdfLL4u8P9IjPTdH2mhcUaD7OBKFgrYk14
- RuBgG/oXYK4yE6gmu8rMZeKMKYuPPyAQP5WuSa9UAGDCgtl1UXHtpeHydXg==
-X-Gm-Gg: AR+sD10PpFEftKUIf8GBbEA92vr35v6Qai8KbW3SRmOQ/emoPnIkEZD/K4XcWuZjudu
- tJ/NIO9pR0/nTF7hYyYw092ARQbQDIdYQvv1+duepQnJDJOKsNp+vpTE6IXd/ehqo1Xs7n4JgPl
- xE0WLiMRXPQEfn71BQ7Esq3t2ZidHxMPEStKb+c+iF5gP/sVgGoGj0bOpv13B33xOunCUY6IoeN
- yjqu17/ThDkzjnimrgV8LMDOzDPWUX2x6MeOawxvyE8Q2JEHFYmbT/kFHLhExDV5SbxdJ3oJ2kY
- H/SAgsNo/96eYAYCQjTwzawoIKsTwYgruo5IPG6uRS5mzxX1Qs+25P+ZvgklMQw8Qp/izrlM+yX
- Iu5GvD3XlaAuAZoJkkmDLBS/VWHMVNJZmQn/h2Ex/
-X-Received: by 2002:a05:6102:915:b0:76b:12e9:a442 with SMTP id
- ada2fe7eead31-76b54f7ac18mr845926137.1.1786457358694; 
- Tue, 11 Aug 2026 07:09:18 -0700 (PDT)
-X-Received: by 2002:a05:6102:915:b0:76b:12e9:a442 with SMTP id
- ada2fe7eead31-76b54f7ac18mr845914137.1.1786457358233; 
- Tue, 11 Aug 2026 07:09:18 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997415daa7sm62280715e9.12.2026.08.11.07.09.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Aug 2026 07:09:17 -0700 (PDT)
-Message-ID: <a63982d6-cd6f-4945-9541-fb65b105e3ba@oss.qualcomm.com>
-Date: Tue, 11 Aug 2026 16:09:15 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wtnDv-0006lA-QC
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:13:01 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DK0kqWBqDYfyzvJdf4Ka7gzRRJ5nWWwYKuyKZOUBAC37QvqmaQxOmLtg1+NjUd/UxXzXI1+i0krmsj1ign6nHfFXIxNQ9fciK1TFqTNaSf0qTBMDcqPfuqm2tVOW9NdUVQRbnXKOpYPSEvlKDHNoMOMLlO7YDG8/s6ptB07f6NXUT0EjBULW77sBV0KhwfO9e/8Ty/P2LVkt9hD2TwGQep0SU+d7+pMQOtB5OxkU0BAE9+RHxKB/fuNBKzFTMz7R7hrXGITOz1TD8ElD/xrHvJpIN5me2j97Hw02RR6QKIIeQz6FhnCRq3/tSJjhNZbMSlEYYqwqI4AjUrzfch1niQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=a0TC2C90/2lhYvZAxhnqOmD7W9uGmGQATe6uHjtPGhk=;
+ b=w6EYi7TqHImbr/yiBo8ujiv3pVWkA+rY6QEbqO6UJAkd37Y9bgRkUtQdtUItK01mHgtKVZYUiLgUWgRgYxKrqDxAkamHICcXWXR4rbk7PCC8KteMT+n36kkxq3h5CHeIHirbtQU/8ZFgY17KmvQ65J6mAL4E1N2Pgbqwb2U7KTMKEBz+go7bd3Tf5LsvS/BWcOtBY2suo3bQuVfW4Ga6tL5eKMImhSISdvFnrUajOEoU0gPyWPvu/wrtbhxaHV5wLpUW9SieLXceUC4fZxK2Vjc3+Bdbp3JRpRpPql9x6uVMww9zxybX1UYD2iQBqplr8rFbDdRYebVXJzfhdP+uuw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=a0TC2C90/2lhYvZAxhnqOmD7W9uGmGQATe6uHjtPGhk=;
+ b=TgCw1ALPOCT3vXHzgzkpm7mTO4J8gvwZ1cRo7p9JFs+sVqFyNpseHKpLYisi4V+iCgLNbOpM+LqXwW4IQ8x4pS+Oj/MYJWDeTcuIabhU07aE1xbppbIJ1QUd/t+jJ2xDViFMdekSA77fCjdlEo6etMLNfW8OGhCN2pGRF5TtZ72p2KVEamQUDf2jQ6UXaT6/GdoRKlgWFN//LNzY0tWpkokuPjr62PA8QsyXZNRBDZRBuGWvjJnqCzwvIxFWfPrJFZ5ARwBfvsU67dvQA+nJgB+t4z1jT5r65gDCsxZZvzkzlPFTkBuvFd/uBLilh8IDVJ1NK0QT21xDKK3zfyuojA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by DU2PR08MB10230.eurprd08.prod.outlook.com
+ (2603:10a6:10:46e::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
+ 2026 14:12:54 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
+ 14:12:54 +0000
+Message-ID: <f335aadd-1157-4a57-bd8c-18bd6b76582c@virtuozzo.com>
+Date: Tue, 11 Aug 2026 17:12:53 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] hw/nmi: Deliver NMI only once
+Subject: Re: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
+ bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+ <ee6fc8e2-dffd-4a93-8501-7894c593b760@maciej.szmigiero.name>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>,
- qemu-s390x@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <minyard@acm.org>, Markus Armbruster <armbru@redhat.com>
-References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
- <20260811105425.7429-8-philmd@oss.qualcomm.com>
- <CAFEAcA-kPGVfJ5KfKYLVJaEtxCZd_Qhs44j9HB4XxWQ7GZ5t_Q@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA-kPGVfJ5KfKYLVJaEtxCZd_Qhs44j9HB4XxWQ7GZ5t_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: wsOUAsSdv7wBs_cPr9hTefExVPHtxhrS
-X-Authority-Analysis: v=2.4 cv=K8QS2SWI c=1 sm=1 tr=0 ts=6a7b2d0f cx=c_pps
- a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=QwkVr2a9dXBqvz9nFN0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TD8TdBvy0hsOASGTdmB-:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: wsOUAsSdv7wBs_cPr9hTefExVPHtxhrS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDExOCBTYWx0ZWRfXyZf/NabOfHBj
- YbqOeX63nukbo44Cvb12gvVt4oDG2FBcgbJjuJFPjzzbIjaFYZQj0sjzs9KgFvtLzrDLFotUE83
- ItSqjzr0thJicxxhDAueJ7LTqoG1pEI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDExOCBTYWx0ZWRfX21jeRrHtQ67X
- 22W3jbny81oTqBjbbribnRnh/8xeIBSlWZ/WGP4DJW+H1/xRcmloFjCdooTbfsU8qWYhhUujgK9
- n3zIUUVTBsdaGrtY/lvpyNlEEJ8UqdiPsfRljkAxkYZgdWe0wFbRKtUINEXsdm4vMhyUV+1QWcM
- CvrJnZ+zZucABgU1af+qViA5iF/U6v3J1R0IZ1NhqP4Ub36GIGMocIfTyLbYPhFCktMFnNzLW1n
- uVetOAMMRzFI/IU9+GRKpIF7v94G1j9ohijBKV/Js6CWsvGtiJkKY+BhzD+YVxxODL4BT9FrG9d
- qXApopNvmS2x+3UZCNhqcgMY0zHF75IRJyPZpilgge3b+3Wb0CALJ1P/PL3zg/N6mTsXlnVe6xL
- GlBD0kjGGl/2XMYzLjWD0U8GtXo8ZLpSv6Y1RorJpYEJhG9d81oTaw9+FVuN5VTkFRuWxaDaG68
- ImrUkwKcuXHAZUFgOtg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-11_03,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
- clxscore=1015 phishscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110118
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <ee6fc8e2-dffd-4a93-8501-7894c593b760@maciej.szmigiero.name>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ZR1PEPF000077A7.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::435) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DU2PR08MB10230:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2040737-a775-424f-3f79-08def7b2a312
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|7416014|1800799024|366016|4143699003|10067099003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: OQRsxqqKKgCtpKbucWef4YDbuv/lRdOyLF4gJbJTozSaV/8rfOoYUs9BDeYOK1Z3ZaVfCxyr9mRpVt2cQUIrMCMrnfgGHeCR8AhPsrwiNFIURN7sxnZ8Cqt7AhB7UdQijS4YB/rrd+0TA1H0wPbsmPS/HV84Euo/bxQYlE3ne9KnJ+cInIYLt4AibErPes+Gz9Nn7af3iuDfsdNK8Bwu5zNMRuYW3MjZH58dTAtqOPgyjzrEGsvYVEFY7S/++y82KGC82Qc9FRYLsYQugv/p0IBMQOYy6jO4yPyX2Bi7M921GcDr++WewBjKY9gGSuPn3r9yEc/SXd0EMcUEv/NycNP0e2PazUSz/Ujrvs5tUScka1uuyGwHseDybXv+0itD/Y6LbMIchevuwaslYUYbgVYbJ5Murx8/8VVMydx1XkSK+V4hdFuK9L6nmmIBOnhj5PlaD1F/dhh322Jb5VMzwvt1VOJQHyZaBc5TxdVOU9zL66zmiTcznSspPqWAOaYXzuic/yMPo66MSKPh4xHcqkoL3daR5jtmz/XwdVfkAjC1y+Sit+H1Ov4f/BLhaNrkVA5NdBv+pjj7s2s3PlMRyHSz20LkyYx+pS5/2sEh2PTtNIIXz3e4NvkDlXS2HNbKVrmta2omxObn06PYqBSYlWfs99YBFX78vPSrxOnTrJQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(7416014)(1800799024)(366016)(4143699003)(10067099003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eWMzeG9RT3VJZFdTVk1BRnVMdFB4TkM3OTVheHpjUGNDNDJSMXdBSitqSnh4?=
+ =?utf-8?B?WW1aL2IxSjJlUG1DRUhrc0JhMGUwZzIxSjNIeFpJcFU3YUpwekM1U1Y5aEt0?=
+ =?utf-8?B?SFNXb29MSDJsc0JDOXlwSzZZdU1YcFJORVdFZm84UFZ2aEVlNGQrVURpZUwr?=
+ =?utf-8?B?Q3owU09VOFN3WTlINUs4OHVPckFwV3ZRVWEwYysrdG5WWlYyODR0T0RuMU1M?=
+ =?utf-8?B?VDhFcERIeWdTM3EwUU5OYWV4QXRvWW1wQ2wrNXpKTXdJUnlhUmhENDRxT05x?=
+ =?utf-8?B?WG1mbmIzOWpIYWx6UVNIMVdUTjQzUmU1K04xQ0pqZkhsR2F6ZEJOYVN2ZVo0?=
+ =?utf-8?B?WFFDanNuaElMM3RlZ2x2UUNOUkptZldRNDZCcmZqOUlpbW9nb2p3dHVXdW1p?=
+ =?utf-8?B?QVZCYWI0RHI4K1JxZnN3cVRuSE0vZ1ZJdllHMlZ4UjhiTVkzYVVsZis1Q1U2?=
+ =?utf-8?B?ei9tRk5wa2VkYVh1RG5oR0tneit3SEV5dU9hd2ozSGJzdE9ocGFMSExyQzhZ?=
+ =?utf-8?B?UFpCUG9hS2NHRXd6eVNlZnYzZXFsamVVdERLVi9pTEZzOGQrY0d5TldWejRm?=
+ =?utf-8?B?dmVJazRtR3d4QTJhOGtIY1U5Wnh2L1gvN1V3Wk5rVzU2V0hhVG9hMXJaMjhU?=
+ =?utf-8?B?VHNtbWp1dXdyajMzajFScWtqRE9zUzFjazcwbFNiakk1eExNb0lzZTF1UU1J?=
+ =?utf-8?B?OEl5Y001enJIQ3pxOHB3RGtWTC9waHgxSVBJZkx3Nk5NNW10STVQVnRGeFJ2?=
+ =?utf-8?B?ZG9mZGtHdWMydEpydURreTVwWEpJV3drd2R5a0Nsb3o3bm1MaDVSUGttY1FM?=
+ =?utf-8?B?cUZmdS8yTHhPNEUxUHNCUUR3K3MxTXlhWStiL05hR1pXejJyZmVHNS90NFRq?=
+ =?utf-8?B?QXV5TGJERnNKSHdCUmZRR3VhV0hFaVJjS2hyNUhCUWNERE5aa2dUbTZ1K1hk?=
+ =?utf-8?B?NGtEZjhkUHF1QktYYi84MGY4WXVYWmlGeDc1TkdVY3JKQmhWVitzUStld1pD?=
+ =?utf-8?B?RnV0bi90N0lLZzVITCs0ZHZJUnN2cTZqM1QwV0lVVlZrMTBFYWRlQ050Qkcv?=
+ =?utf-8?B?T1ZBV0FkbjNXWTNmN0RuSDJSZVdqSVQ2d1p2eUp1OE9DZzJHOW1wVVZTUDRa?=
+ =?utf-8?B?L1kvVWNHeEpidk9LbWkyOU54aWxna29sZzFtQ3B4ejRGZzZsK3ZLaWs2VHdl?=
+ =?utf-8?B?L1c1UjhVKyswVFY3bm1RRk92VFpKLzdGRnhGcW1TbTBySk1BeU1MQW9Ia2Vv?=
+ =?utf-8?B?Y2FwTi8wZ1o2VnYxSG55VXljaEZ5Ymh4SE9pRStGTlc3dVAyeXdNeHlJYi9i?=
+ =?utf-8?B?akFwZkdrU2pxU2J0OStWTTV6Wm41RTRzeTNJdFV5cnBVcSsvcGk5dlBWRXBX?=
+ =?utf-8?B?UVNSY3NuUnA3LzVreTV1VFdlUnJTenRhbDdlTDFYdlg0T1ZvRVdxVm1uRWVQ?=
+ =?utf-8?B?UWlYZjM4RGkzWFpqUE8wVGQ1aXMvZFpGdGszWnJXbDE3ZURhL2ZPSTdjcUNn?=
+ =?utf-8?B?eThkbkZlbXJiMzhObHo5UGx4VGhtSmRoQWs0SVROdUllam5KZDJrTFg3dGhY?=
+ =?utf-8?B?YlpNUVN4YjZURVRQdENDTSsydDBmanJTYk9QUllDZWJTRzNqbzBPODZLM1gz?=
+ =?utf-8?B?dzVZczdTbDVXU0FCYndRc1RXVVFKeW1Penk5aStodXhjcHp5VXJXQVpTQlVn?=
+ =?utf-8?B?aGRhV0tDNkR5a3ZwOFpFaEdXN0dnUDd4NFRYWHZodkh1c0dlbENmdTJxeEVR?=
+ =?utf-8?B?ZGw5QytqOHJUVHV1dExhM1UxUzJ2SzhxVUd4YjRVaUJpUHh5akVsR0FUWWE3?=
+ =?utf-8?B?bmtQaUxBZUlYcXVlVnh0ZUdBaDNHclV0VFR2VC9jUnJvdWo3eU9qMWtvK2RH?=
+ =?utf-8?B?VEY4dGRCNUh0cHI5dDdtVndZVnBjaUtGa2oyR3owTTZRUEpXdXJsWHNoWVNK?=
+ =?utf-8?B?NXdsaVhWaXFyVHpCOXRqaUl4aHNMS2dTVVIzcWc1T0ZTdGJsajEwQTN1MWdz?=
+ =?utf-8?B?NGV2S3Q1b0hXQW9wNk9qVXZaZ2w4VEgxRU9tT3ZITDVzUVJ1cVMvZ2w5M0tn?=
+ =?utf-8?B?TG1vYVBERkpLK0N0OHh3TS9ycWY2WGM4SHhmUlpzRkpzY0p4c1pla1Z0M2JT?=
+ =?utf-8?B?SkdlckN5M0xPMG42RDRpcE81UEMvRk95SzU1U1lwZTZCZ1JyRzd5WVpnU0tl?=
+ =?utf-8?B?MThnS3R5UUhyblhYNTVMeFhWeTNVSEg5OGFKcEc0VEVYTGN2VGN4RWJrekFx?=
+ =?utf-8?B?T1QzNk5rbGZDSXR1NFlCSExHKzltZkpHMHNsQWNvbk84Z0k0c2Fqa1psV3NC?=
+ =?utf-8?B?cDdESXQrcFY0NHZ4bFdVMGhhdmdGYVlSWTQvQW9EWDhPaGhQYUVTVnhpem5G?=
+ =?utf-8?Q?t0Q7eud+qEzBzTRU=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2040737-a775-424f-3f79-08def7b2a312
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 14:12:54.6666 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: v79a1DnjEdYnvyYEi7y7i1DbQqK9+/EO5iqJqPAr0iIanb/Q82tcPm2vHNOgZS6r5YTiHJkqpPZ0nKytuc4VgAON8KQu68DszeiF8vkRZbU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR08MB10230
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,56 +154,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/8/26 15:34, Peter Maydell wrote:
-> On Tue, 11 Aug 2026 at 11:55, Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
+On 6/30/26 9:35 PM, Maciej S. Szmigiero wrote:
+> On 26.06.2026 18:46, Andrey Drobyshev wrote:
+>> v2 -> v3:
 >>
->> Use the first handler available to deliver NMI only once.
->> If anothers handlers are available, no need to keep delivering.
+>> Re-design device ownership hand-off (suggested by Dongli).  Do not rely
+>> on SETUP migration notifiers, as this approach forces us to reorder
+>> generic migration code (see v2 discussion).  Instead:
 >>
->> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> ---
->>   hw/core/nmi.c | 2 ++
->>   1 file changed, 2 insertions(+)
+>>    * .pre_save() releases ownership on the source (RESET_OWNER) once VM
+>>      is stopped;
+>>    * .realize() is adjusted to defer device ownership acquisition for an
+>>      incoming CPR;
+>>    * .post_load() actually claims the device (VHOST_SET_OWNER);
+>>    * FAILED migration event callback re-aquires the ownership on the
+>>      source after re_save released it.
 >>
->> diff --git a/hw/core/nmi.c b/hw/core/nmi.c
->> index 8eea75ad530..4fe5ee75bfc 100644
->> --- a/hw/core/nmi.c
->> +++ b/hw/core/nmi.c
->> @@ -31,6 +31,8 @@ static int do_nmi(Object *o, void *opaque)
->>       if (n) {
->>           *handled = true;
->>           NMI_GET_CLASS(n)->deliver_nmi(n);
->> +        /* We only need to deliver NMI once */
->> +        return 1;
->>       }
+>> v2: https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
 >>
->>       return 0;
+>> Andrey Drobyshev (7):
+>>    vhost: add vhost_reset_owner op
+>>    vhost-vsock: don't reset connections during CPR
+>>    vhost-vsock: fix FD leak in realize()
+>>    vhost-vsock: preserve vhost FD during CPR
+>>    vhost: factor out vhost_dev_init_backend()
+>>    vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
+>>    vhost-vsock: hand off device ownership across CPR
+>>
+> These patches look okay CPR-wise, so:
+> Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
 > 
-> Looking back at my review comments on v1 of this series,
-> I think we could clarify the comment / commit message a bit.
-> Commit message:
+> But the vsock parts still need review by their maintainers/reviewers.
 > 
-> We only expect one device in the system to implement the
-> TYPE_NMI interface (typically the machine, but in a few cases
-> for e.g. m68k and ppc this is an interrupt controller or
-> similar device); so we don't need to keep walking the whole
-> QOM tree once we've found it. As no machine type creates more
-> than one object implementing TYPE_NMI, this is not a behaviour
-> change.
+> Thanks,
+> Maciej
 > 
-> and comment:
-> 
->   /*
->    * We expect only one object to implement TYPE_NMI, so once
->    * we've asked it to deliver the NMI we can stop looking.
->    */
-> 
-> With that
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Thanks for the wording help!
+FYI the kernel counterpart series adding VHOST_RESET_OWNER ioctl to
+vsock ended up in Michael's vhost tree ([1], commits
+6236e765f16d^..c7bfb8815d83).
 
+Therefore - friendly ping for this series.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+
+Andrey
 
