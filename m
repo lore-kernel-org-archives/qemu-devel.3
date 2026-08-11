@@ -4,128 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976B5C5B574
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 07:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06B10C5B574
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wthM3-0000S5-1p; Tue, 11 Aug 2026 03:56:59 -0400
+	id 1wthSh-0003Y0-Px; Tue, 11 Aug 2026 04:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wthLy-0000Ri-J6
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 03:56:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wthLw-0002Q7-Kc
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 03:56:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786435011;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L9R+nnmJErbI9pZf8mubgUFj4Cr7CpLaVqqub9Aq0/g=;
- b=CYPn4afJg1BKwaQk+VO91KETSD7xvy+lbiE0l3Cb2mHnC+CDMA/skiuLysM14Jn3YCkpjB
- Wd9KqFL+3EBoDg730s4DevXFZxYYs/xvGAlxzAcSVlIwHVGQMZuZU+2WMF5MekQgVIzxnF
- C053rwMrTmOKzylzglSdESrju3rkiOQ=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-5qESs2HqNfqSacESNDAxWw-1; Tue, 11 Aug 2026 03:56:49 -0400
-X-MC-Unique: 5qESs2HqNfqSacESNDAxWw-1
-X-Mimecast-MFC-AGG-ID: 5qESs2HqNfqSacESNDAxWw_1786435009
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c860544c077so6152442a12.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 00:56:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786435009; cv=none;
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wthSc-0003XX-NQ
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:03:48 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wthSY-0003YF-IX
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:03:44 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c1f5208b38dso87134666b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 01:03:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786435420; cv=none;
  d=google.com; s=arc-20260327;
- b=Td9NlN8+KX6Hox94ltR9qssm8cMIrN/TcFZ4P73wUpSeDfBVIVTLZGLm8P7anbfJ7x
- 4ajV1oRfyRuCmA8c56i+UP03pFYhXSXIRMtzcDmKVkiC3IztrWcfhzhWLXei9uMVyqtM
- 5CkHZMzU0xcv+B86CuksuYVpKYCjtBjMWslWc6jvisA6sEMOBQfQcnFjucOf2SnhPVFd
- uTqkzUZpHb73TByZzM9eAasdmmw0fiYRLAQ27akmkRzWoSPWFY6L4Z7MNfeDnKBFkn/m
- 5JOSorgQujMPPR/pZnaiz1xZiTMyZrMd2wBMFe13YBUiGOlMXMKjTazqw3/p65OHPH9w
- WbYg==
+ b=c0t/AROLX7JNXLxl8VaSG1uSd8J9FobhEIQUMjVOA/oMu3s15y/wbCEDgrdK04eeO8
+ JZoN2Z0W6MDuYmyhVWJJ5NMTBFlSU74PSWA07Aol9gM7ikWghiRA1EkEIom7NojJcfgm
+ 5pxQpYzsVt2d/LI7SvObauFK7TPMuJEU5twUWuzKamgVKGCWd+JRq4KM9Jxth3mcP5/u
+ St7a4JkeQXYf3Mvf33HRme7XNg9GY9jNyjuB+0lHeGkEXRbUo0IZlaL4VpSgDgVBCLPZ
+ +2SLxpIEev2sfD5MYNKdVqmFV7GNWYCD2zsWR1/T8aCBCqiOJq2Ad8zpEvDKOkmAOXdx
+ BjHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=L9R+nnmJErbI9pZf8mubgUFj4Cr7CpLaVqqub9Aq0/g=;
- fh=clj/N3aH4K/xfvVAs99VTHE3zWNs21ViYr0khAbs26E=;
- b=Ix943iIvs8Z9YCL7PKXs/3ptnXdePw+Vbslh8NzSsctqTsXLN4GTMU7qZ7m9Jd79W3
- JnnYNtDtdjoEzVb5PDoAoM3fhwQcWfzCu4z+R4uPVA/yOw5wWMpHh55r4TIKnjtVu+Im
- 13FVzxpNS8AWr8abTgassGx84F4cFz6SwB5Yb7STbGD3rLbI1Dd3T1jT7DYE1DpLA5Ik
- Gj61A/HNa7f0VdMMzraY/4Gk/RXjaXDE1BKmsEQiEKa26lXTeKMUr4PM8h1yndS5hl2e
- vNwxQIGEhB9vsYSPUfmyFPcnvVQgkq0ESCFX8vXzur9to9r8m5px136wRilB/h4LoL3B
- UfjQ==; darn=nongnu.org
+ bh=fqBlwW6z9w6sMGT5hmHk/u75u+YKjMvOiqEv5IfaHqE=;
+ fh=lj2KhW/MAsZ/+uqmxCUPGYBeJsseSAo4tZ2naAjMmts=;
+ b=Pmb/J7z1YM8Br4QDUN0hmIrP0RcmUeeJKLBIkUQ93QmQawc08FWjMQRlDvCr1SvG6W
+ WlJDd1EHbgWHdmuVr0xX0xJ/IufrI7eOPC1t3jPgF1YwG2q7Ukrat1D703Af909bULvy
+ hcQYFEP5e+QDmwisD9XMT03osgjKelvFll0YxWJGCGcE9bfvvhb0YnRo5f5y9+uVBlwB
+ K0Q8pmznxx+EM+2wPYYHFWtT1vHrLPQeiGAFgrpWIma34SEYnXIfOP5stfFo69n3YTx3
+ 8WPI6eYsqSaqmQiX53kYrnVetotv1zfUa9genlJu8lfyULoSVu5zhtpcQN5S1iqBH1a0
+ MCTw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786435009; x=1787039809; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1786435420; x=1787040220; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=L9R+nnmJErbI9pZf8mubgUFj4Cr7CpLaVqqub9Aq0/g=;
- b=q1G3PQ4r1ebXE6MW+d5ZCiYQqWxNoYOEaFKE3KUoyW57aNWEzcCUGGEmzWUYpv9JS7
- SUiX+2nMglErJ46qmh5mET0uJ6lZewte3HLXo1RpMZ330uZ41d+56Q7A4U2YIogUByMe
- kNCsHAQa2/dVx/IlPuLYBnocLdz10am9PjGgTTSnvQ2Jnqhn/1nJRYRZdfLpMAhwtMPR
- +YV2LXhk3XkLAzLFk2MrJRzW6BVnuRqfZhc+YUiXR7jCG13t3D3w6Alxo9oXbsuiGXIK
- oONCFgPk2fmHZNnfFSmKteAH6ys5ylIPH+W/UQfOPUThvIVtapNHBfZNGGmEHptrON8J
- jGVg==
+ bh=fqBlwW6z9w6sMGT5hmHk/u75u+YKjMvOiqEv5IfaHqE=;
+ b=dm0HxLiuqWTQGTOj/nH9RQOvUkDkt7IJyJfS2FtiM15WsNHz+H/hj2caUJd2kpvKa4
+ HCjH+X71FwfLT421ta2cipoihiKmeDOnWAhmnl6wEOkKvEoj/q5lWDOjMBKq49/KLZuv
+ ArqKYqRAr9qQfEppsfy5GOdG8A/Aa1cztjhzI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786435009; x=1787039809;
+ d=1e100.net; s=20251104; t=1786435420; x=1787040220;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=L9R+nnmJErbI9pZf8mubgUFj4Cr7CpLaVqqub9Aq0/g=;
- b=Wuk9R2wLfF+Jgwj7SrxGnAnX3oG1igPZuVFuty/moChtv/R9rlIoyxw7f3OjXx9zmc
- AhppXXh6pgoxuYIvwOiiPSPj+N1/qiiEhDBhJp9FenZjP26PVo1fAbHcbfAFQ2kwFLVr
- TQAFqpQ5i/JRGvcSbYI7GsiSNj1ChMpNCbf5eOqkbS+PrQFp8TJRBG0yYjSGJSpP2UOf
- +SUVe/NToDTKbNjEoxz8zPZgpEO9xqTwsVAgcCe57+APsih+nCU3X27jLZWaSqcuHcRy
- Gp0RuI+PZ9iqhZA0iYP2TNt3uX/KutbHitx2PuqQsXP9V0ACy/+kDpYzGqHTHk9UHjxN
- euTQ==
-X-Gm-Message-State: AOJu0YxDKbdiuMNh0mchR/0p6wLi1Aj4K+d8oj9Iws8lyP4fsySElpTB
- /y4Ai1VgP1IJgCwg0DAJc7hetRguL563yDjLoufaD0J7GgTt9gtay9IeD1eHmo1NS2S2vabXZgi
- 85MddWlORIIyq8HzKfRkBQIAWSohpZtb6tDt7uAtruX6f6mf/nralKcLdE86uys7fqijn3Y68uC
- iCLKTGJdseHvNhtDTu3oGI0tk7VsDduKM=
-X-Gm-Gg: AR+sD139ltUHZs09k/X93ENoF5KZsJih9w3KjnPximUYBgbtXe48Rsg6W/KvScVHwRg
- 96DI4YYowg/DGJbooDJVaxlaD513sc8H9b9HyrQIEXnqsi/OgsCqB4sHCVIOxTpMvUaGekzUA7m
- iUC/xQa0pa6UZgIcCneI5i7ZCrIwJJdW9uCejlURflQSO3JQEMa634/EK/tSgDfbGuuMKGt6WFd
- AuqFiJ40m1AuhIvAcJbHBoSfUo9Ztp1DuE0c1jHh8meYVuHcUmy/G/8xM6nhFGfCOpaVnqKBsJE
- sg==
-X-Received: by 2002:a05:6a21:3a43:b0:3c8:e10b:7a9b with SMTP id
- adf61e73a8af0-3cc2b8e1eb5mr2365339637.16.1786435008709; 
- Tue, 11 Aug 2026 00:56:48 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3a43:b0:3c8:e10b:7a9b with SMTP id
- adf61e73a8af0-3cc2b8e1eb5mr2365282637.16.1786435008066; Tue, 11 Aug 2026
- 00:56:48 -0700 (PDT)
+ bh=fqBlwW6z9w6sMGT5hmHk/u75u+YKjMvOiqEv5IfaHqE=;
+ b=FTdlypgBN7plZtnSuCj3QfBFo36r5JS9R97O+5z0ZOuQTqrEHAxjyOy8WAIC/z45oi
+ vsbNHoMvFlwUSEYBuv7FCzIB8oDftyCJmFO6f9CW+c1n45MmX1WujHJ7sMGkt81NrlOf
+ U2WDuYs7PnICQIO8KkYf7mf/rXM8A0YZzvE3hen3BrcnhC0qXg2wSJRs8UbtkUGp5fSu
+ OOlCYr7ft2P63zLi1mpqA5rV9+10e/XahJr77AA3mfQ48cQ83WXQ3VaQ1p6EIsHu99yO
+ OCsutfI+71X7L/9yKEawvHXqnH6oEZ3IF3xdG4R6Dj1Ia6foZirW6bdMlPWq970fiDdw
+ qTlQ==
+X-Gm-Message-State: AOJu0YxsjSGNMkU4zyldp0n3oftjYvdrc21yuSy7nB42/dksBAD65tRh
+ SPfNzI48OyPvxXxMC9A9xXj0I+IW6ooDNkek+vKAuYJDemiq57MMt2veRnSbhBbKyroGXxx+daP
+ K4thUpe/5twOiqsAoyLFO7704m2ryrGnbxE4u1kfttg==
+X-Gm-Gg: AR+sD10quCmzdojJy/SC6b3ZzJxc9wxE7+sD6SS5ZnOSNKhyt/eZdxxyQEDUwuQldCH
+ q9ShJs+hrwJZRvjZPBN5tF6Yso01sUcBKDdLie4ldyNGFJMIpR6jFdO0l3j2n0VVb+CNVXPjvLP
+ Us+RXhADexrAxtNc8CgZr5f4GTxfJppyrn6U/p3fcbpneTgY73huQS/9mzG8y7EXtMCLMpPg1Co
+ 7IULfNLCuLrEwk259ltumYM8pTkG6dvDuECBEz0xX7ENTDrT9/8V5tFFlcE9mBlbomriVDwcQLz
+ dEOFUF19bz9kXR9bXSIqCR+/CsWr3pR0V7NwwaQgJ5wT/l/D/Bt43yzDBmGoEiDRYGwo5CKi4v0
+ =
+X-Received: by 2002:a17:907:d26:b0:c15:fc5b:6884 with SMTP id
+ a640c23a62f3a-c20e623c23bmr62798066b.13.1786435419036; Tue, 11 Aug 2026
+ 01:03:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
- <20260626-qemu-no-hmp-v2-4-8af31bc54c61@redhat.com>
- <anoM-GDPeNTNfFR_@redhat.com>
-In-Reply-To: <anoM-GDPeNTNfFR_@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 11 Aug 2026 11:56:35 +0400
-X-Gm-Features: AUfX_mwFzf08-gkLbJKbRBQjYShy8VJfVU6jAr0lx9E9rBeCo45cJmziQaTyNjo
-Message-ID: <CAMxuvaxjP7trxak3-NMdbW5koGKtY0gsqVL403PJoLSnb16xNA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/39] target/i386: decouple cpu_x86_inject_mce() from
- Monitor
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Markus Armbruster <armbru@redhat.com>
+References: <20260810121525.100540-1-alexander@mihalicyn.com>
+ <87h5l22faq.fsf@draig.linaro.org>
+ <CAJqdLrr2hR_ObgzEosMhDvbz+B9sywGQwJPEcjrzhr1imhCptQ@mail.gmail.com>
+In-Reply-To: <CAJqdLrr2hR_ObgzEosMhDvbz+B9sywGQwJPEcjrzhr1imhCptQ@mail.gmail.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Tue, 11 Aug 2026 10:03:27 +0200
+X-Gm-Features: AUfX_mw51nf7tFxHAkKDropcsexOUiudL1TH_2vEuw8Z5OKlgNcWK0bnr2Lu-PE
+Message-ID: <CAJqdLrqM4tv7b55g+6_heCNBC-9fMC4CEvDK5rxk4tXjygCYvw@mail.gmail.com>
+Subject: Re: [PATCH] hw/char/pl011: support backend hotswap
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-arm@nongnu.org, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alexander@mihalicyn.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,178 +121,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Am Mo., 10. Aug. 2026 um 19:31 Uhr schrieb Alexander Mikhalitsyn
+<alexander@mihalicyn.com>:
+>
+> Am Mo., 10. Aug. 2026 um 16:58 Uhr schrieb Alex Benn=C3=A9e <alex.bennee@=
+linaro.org>:
+> >
+> > Alexander Mikhalitsyn <alexander@mihalicyn.com> writes:
+> >
+> > > From: Aleksanr Mikhalitsyn <alexander@mihalicyn.com>
+>
+> Ugh, I did git format-patch and copied this patch from my Raspberry PI
+> dev/test machine
+> and it turns out that I have a stupid typo in my `git config get
+> user.name` on that machine.
+> I'll drop -v2 a bit later.
+>
+> > >
+> > > Currently, when Incus issues "chardev-change" QMP command to change
+> > > chardev backend from ringbuf to socket it receives an error (with aar=
+ch64 VM):
+> > > "Chardev user does not support chardev hotswap" [1], [2]
+> > >
+> > > Let's fix this by properly implementing BackendChangeHandler for pl01=
+1.
+> > >
+> > > Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-c=
+onsole-on-arm-architecture/23096/3 [1]
+> > > Link: https://github.com/lxc/distrobuilder/issues/892 [2]
+> > > Reported-by: St=C3=A9phane Graber <stgraber@stgraber.org>
+> > > Signed-off-by: Alexander Mikhalitsyn
+> > > <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Dear Alex,
+>
+> first of all thank you very much for such a fast reaction and review ;-)
+>
+> >
+> > At first I wondered why the FE needs to care about where the BE is
+> > routed to but 7bb86085e61 (char: chardevice hotswap) explains:
+> >
+> >   However, backends are not stateless and are set up by the frontends
+> >   via qemu_chr_fe_<> functions, and it's not (generally) possible to
+> >   replay that setup entirely in a backend code, as different chardevs
+> >   respond to the setup calls differently, so do frontends work
+> >   differently basing on those setup responses. Moreover, some frontend
+> >   can generally get and save the backend pointer
+> >   (qemu_chr_fe_get_driver()), and it will become invalid after backend
+> >   change.
+>
+> yes, exactly
+>
+> >
+> > > ---
+> > >  hw/char/pl011.c | 16 +++++++++++++++-
+> > >  1 file changed, 15 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> > > index cb12c3e224f..3622248ec0c 100644
+> > > --- a/hw/char/pl011.c
+> > > +++ b/hw/char/pl011.c
+> > > @@ -660,12 +660,26 @@ static void pl011_init(Object *obj)
+> > >      s->id =3D pl011_id_arm;
+> > >  }
+> > >
+> > > +static int pl011_be_change(void *opaque)
+> > > +{
+> > > +    PL011State *s =3D opaque;
+> > > +    int break_enable =3D s->lcr & LCR_BRK;
+> > > +
+> > > +    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_recei=
+ve,
+> > > +                             pl011_event, pl011_be_change, s, NULL, =
+true);
+> > > +
+> > > +    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
+> > > +                      &break_enable);
+> >
+> > So this is just ensuring that if we switch to a serial backend we
+> > properly register the break behaviour on the backend? Is it idempotent?
+>
+> Right. And AFAIU, `CHR_IOCTL_SERIAL_SET_BREAK` is specific to the
+> char-serial device only.
+>
+> So when we switch, let's say, from a serial to a socket backend, this
+> call is basically a no-op.
+> But when we switch back from the socket to the serial, this will
+> trigger `tcsendbreak(fioc->fd, 1)`, which is not idempotent (and is a
+> single-shot action).
+>
+> But I believe it's not a problem here, because we do it once when we
+> *switch* between two different backends, and `fioc->fd` is a fresh fd
+> every time.
+> My point is that we can't really trigger this thing twice for the same fd=
+.
+>
+> Please, correct me if I'm wrong. I took inspiration from 16550A's
+> serial_be_change() when working on this.
+>
+> =3D=3D=3D=3D BEGIN offtopic :-)
+>
+> Btw, thanks to your question I did some more research on tcsendbreak()
+> and BRK behavior [1] and it feels to me that what we currently have in
+> pl011 UARTLCR_H's register handling code is not really correct. See:
+>
+> static void pl011_write(void *opaque, hwaddr offset,
+>                         uint64_t value, unsigned size)
+> {
+> <..>
+>     case 11: /* UARTLCR_H */
+>         /* Reset the FIFO state on FIFO enable or disable */
+>         if ((s->lcr ^ value) & LCR_FEN) {
+>             pl011_reset_rx_fifo(s);
+>             pl011_reset_tx_fifo(s);
+>         }
+>         if ((s->lcr ^ value) & LCR_BRK) {
+>
+>            // << spec [1] says that setting BRK means "If this bit is
+> set to 1, a low-level is continually output on the UARTTXD output,
+> after completing transmission of the current character."
+>            // what we do is CHR_IOCTL_SERIAL_SET_BREAK which is just
+> tcsendbreak(fioc->fd, 1) under the hood which can't emulate continuous
+> low-level signal on the UARTTXD output
+>            // for the time of BRK bit is set. It only does this for a
+> short period of time.
+>
+>             int break_enable =3D value & LCR_BRK;
+>             qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
+>                               &break_enable);
+>             pl011_loopback_break(s, break_enable);
+>         }
+>
+> I guess we need some pl011 expert in here :-)
+>
+> [1] https://support.arm.com/documentation/ddi0183/g/programmers-model/reg=
+ister-descriptions/line-control-register--uartlcr-h
 
-On Mon, Aug 10, 2026 at 9:40=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Fri, Jun 26, 2026 at 01:19:05AM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Replace monitor_printf() error reporting with the standard **errp
-> > pattern. Drop the Monitor *mon parameter and return bool to indicate
-> > success, improving the function usage from non-HMP contexts. Update the
-> > KVM MCE injection path and hmp_mce() accordingly.
-> >
-> > Notes:
-> >  - we may want to print the error in KVM path too
-> >  - multiple error prints are now accumulated with error hints
-> >
-> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  target/i386/cpu.h     |  4 ++--
-> >  target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------=
-------
-> >  target/i386/kvm/kvm.c |  4 ++--
-> >  target/i386/monitor.c |  6 ++++--
-> >  4 files changed, 36 insertions(+), 27 deletions(-)
->
->
-> >  typedef struct MCEInjectionParams {
-> > -    Monitor *mon;
-> > +    GString *err;
->
-> Why not have "Error **errp"
->
-> >      int bank;
-> >      uint64_t status;
-> >      uint64_t mcg_status;
-> > @@ -428,9 +428,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_=
-cpu_data data)
-> >           * reporting is disabled
-> >           */
-> >          if ((cenv->mcg_cap & MCG_CTL_P) && cenv->mcg_ctl !=3D ~(uint64=
-_t)0) {
-> > -            monitor_printf(params->mon,
-> > -                           "CPU %d: Uncorrected error reporting disabl=
-ed\n",
-> > -                           cs->cpu_index);
-> > +            g_string_append_printf(params->err,
-> > +                "CPU %d: Uncorrected error reporting disabled\n",
-> > +                cs->cpu_index);
->
-> and use  error_setg here and the other two places below.
->
-> >              return;
-> >          }
-> >
-> > @@ -439,10 +439,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on=
-_cpu_data data)
-> >           * reporting is disabled for the bank
-> >           */
-> >          if (banks[0] !=3D ~(uint64_t)0) {
-> > -            monitor_printf(params->mon,
-> > -                           "CPU %d: Uncorrected error reporting disabl=
-ed for"
-> > -                           " bank %d\n",
-> > -                           cs->cpu_index, params->bank);
-> > +            g_string_append_printf(params->err,
-> > +                "CPU %d: Uncorrected error reporting disabled for bank=
- %d\n",
-> > +                cs->cpu_index, params->bank);
-> >              return;
-> >          }
-> >
-> > @@ -459,7 +458,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_=
-cpu_data data)
-> >          if (need_reset) {
-> >              emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
-> >                                        recursive);
-> > -            monitor_printf(params->mon, "%s", msg);
-> > +            g_string_append_printf(params->err, "%s\n", msg);
-> >              qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
-> >              qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> >              return;
-> > @@ -488,14 +487,16 @@ static void do_inject_x86_mce(CPUState *cs, run_o=
-n_cpu_data data)
-> >      emit_guest_memory_failure(MEMORY_FAILURE_ACTION_INJECT, ar, recurs=
-ive);
-> >  }
-> >
-> > -void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
-> > +bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
-> >                          uint64_t status, uint64_t mcg_status, uint64_t=
- addr,
-> > -                        uint64_t misc, int flags)
-> > +                        uint64_t misc, int flags, Error **errp)
-> >  {
-> > +    ERRP_GUARD();
-> >      CPUState *cs =3D CPU(cpu);
-> >      CPUX86State *cenv =3D &cpu->env;
-> > +    g_autoptr(GString) err =3D g_string_new(NULL);
-> >      MCEInjectionParams params =3D {
-> > -        .mon =3D mon,
-> > +        .err =3D err,
->
-> This indirection via GString feels overkill when we could
-> use directly pass 'errp', given the ERRP_GUARD we have
->
-> >          .bank =3D bank,
-> >          .status =3D status,
-> >          .mcg_status =3D mcg_status,
-> > @@ -506,21 +507,21 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu=
-, int bank,
-> >      unsigned bank_num =3D cenv->mcg_cap & 0xff;
-> >
-> >      if (!cenv->mcg_cap) {
-> > -        monitor_printf(mon, "MCE injection not supported\n");
-> > -        return;
-> > +        error_setg(errp, "MCE injection not supported");
-> > +        return false;
-> >      }
-> >      if (bank >=3D bank_num) {
-> > -        monitor_printf(mon, "Invalid MCE bank number\n");
-> > -        return;
-> > +        error_setg(errp, "Invalid MCE bank number");
-> > +        return false;
-> >      }
-> >      if (!(status & MCI_STATUS_VAL)) {
-> > -        monitor_printf(mon, "Invalid MCE status code\n");
-> > -        return;
-> > +        error_setg(errp, "Invalid MCE status code");
-> > +        return false;
-> >      }
-> >      if ((flags & MCE_INJECT_BROADCAST)
-> >          && !cpu_x86_support_mca_broadcast(cenv)) {
-> > -        monitor_printf(mon, "Guest CPU does not support MCA broadcast\=
-n");
-> > -        return;
-> > +        error_setg(errp, "Guest CPU does not support MCA broadcast");
-> > +        return false;
-> >      }
-> >
-> >      run_on_cpu(cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
-> > @@ -539,6 +540,12 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu,=
- int bank,
-> >              run_on_cpu(other_cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PT=
-R(&params));
-> >          }
-> >      }
-> > +    if (params.err->len) {
-> > +        error_setg(errp, "Failed to inject MCE");
-> > +        error_append_hint(errp, "%s", params.err->str);
-> > +        return false;
-> > +    }
->
-> This could be just
->
->   if (*params.errp) {
->      return false;
->   }
->
+Dear friends,
 
-Good ideas, I'll do those changes
+I looked closely into this stuff and found something interesting I
+would like to share just in case
+and discuss. (I'm not an expert in UART or tty code, so I can be wrong
+in my understanding.)
 
-> > +    return true;
-> >  }
+1. It seems to me that QEMU BRK emulation code for both PL011 and
+16550A is not fully correct.
+
+According to the spec for PL011 [1]:
+=3D=3D=3D
+Send break. If this bit is set to 1, a low-level is continually output
+on the UARTTXD output, after completing transmission of the current
+character. For the proper execution of the break command, the software
+must set this bit for at least two complete frames.
+
+For normal use, this bit must be cleared to 0.
+=3D=3D=3D
+
+According to the spec for 16550A [2]:
+=3D=3D=3D
+bit 6: When this bit is set a break condition is
+forced in the transmission line. The serial output
+pin (txd) is forced to the spacing state (zero).
+When this bit is cleared, the break state is
+removed. The break state has no effect on the
+transmitter=E2=80=99s logic, so if several characters are
+stored in the transmitter=E2=80=99s FIFO they will be
+removed from this FIFO and passed
+sequentially to the Transmitter Shift Register
+which serializes them. This fact can be useful to
+establish the break time making use of the THR
+Empty and Transmitter Empty flags of the LSR
+=3D=3D=3D
+
+My interpretation of this is that setting a BRK flag for both means
+that TX line will be set to spacing state (zero) for an infinite time
+(until bit is unset).
+
+Our implementation in QEMU for both just calls qemu_chr_fe_ioctl(..
+CHR_IOCTL_SERIAL_SET_BREAK ..) which is just:
+=3D=3D=3D
+            int enable =3D *(int *)arg;
+            if (enable) {
+                tcsendbreak(fioc->fd, 1);
+            }
+=3D=3D=3D
+under the hood.
+
+tcsendbreak() in glibc is implemented as ioctl(TCSBRK / TCSBRKP),
+which internally sets a BRK bit for a certain
+period of time and unsets it back. To be fully sure, I looked into the
+Linux kernel, and the call stack is the following:
+tty_ioctl(TCSBRK / TCSBRKP) -> send_break():
+
+=3D=3D=3D
+/**
+ * send_break - performed time break
+ * @tty: device to break on
+ * @duration: timeout in mS
+ *
+ * Perform a timed break on hardware that lacks its own driver level timed
+ * break functionality.
+ *
+ * Locking:
+ * @tty->atomic_write_lock serializes
+ */
+static int send_break(struct tty_struct *tty, unsigned int duration)
+{
+        int retval;
+
+        if (tty->ops->break_ctl =3D=3D NULL)
+                return 0;
+
+        if (tty->driver->flags & TTY_DRIVER_HARDWARE_BREAK) // <<<
+*not* our case
+                return tty->ops->break_ctl(tty, duration);
+
+        /* Do the work ourselves */
+        if (tty_write_lock(tty, false) < 0)
+                return -EINTR;
+
+        retval =3D tty->ops->break_ctl(tty, -1); // << set BRK bit
+        if (!retval) {
+                msleep_interruptible(duration);
+                retval =3D tty->ops->break_ctl(tty, 0); // << unset BRK bit
+        } else if (retval =3D=3D -EOPNOTSUPP) {
+                /* some drivers can tell only dynamically */
+                retval =3D 0;
+        }
+        tty_write_unlock(tty);
+
+        if (signal_pending(current))
+                retval =3D -EINTR;
+
+        return retval;
+}
+=3D=3D=3D
+
+tty->ops->break_ctl is just uart_break_ctl() which in turns is just a
+wrapper for (struct uart_ops *)->break_ctl().
+
+For PL011 (struct uart_ops *)->break_ctl is pl011_break_ctl():
+=3D=3D=3D
+static void pl011_break_ctl(struct uart_port *port, int break_state)
+{
+        struct uart_amba_port *uap =3D
+            container_of(port, struct uart_amba_port, port);
+        unsigned long flags;
+        unsigned int lcr_h;
+
+        uart_port_lock_irqsave(&uap->port, &flags);
+        lcr_h =3D pl011_read(uap, REG_LCRH_TX);
+        if (break_state =3D=3D -1)
+                lcr_h |=3D UART01x_LCRH_BRK;
+        else
+                lcr_h &=3D ~UART01x_LCRH_BRK;
+        pl011_write(lcr_h, uap, REG_LCRH_TX);
+        uart_port_unlock_irqrestore(&uap->port, flags);
+}
+=3D=3D=3D
+
+For 16550A (struct uart_ops *)->break_ctl is serial8250_break_ctl():
+=3D=3D=3D
+static void serial8250_break_ctl(struct uart_port *port, int break_state)
+{
+        struct uart_8250_port *up =3D up_to_u8250p(port);
+
+        guard(serial8250_rpm)(up);
+        guard(uart_port_lock_irqsave)(port);
+
+        if (break_state =3D=3D -1)
+                up->lcr |=3D UART_LCR_SBC;
+        else
+                up->lcr &=3D ~UART_LCR_SBC;
+        serial_port_out(port, UART_LCR, up->lcr);
+}
+=3D=3D=3D
+
+i.e the same logic.
+
+It means that our current code in QEMU is good enough for simple cases
+when the guest sets a BRK bit
+for a short period of time. The guest can't really see the difference.
+I hoped that this pattern when
+BRK bit is set and then cleared is the only way how BRK bit is used in
+Linux kernel (then our gap in the
+implementation would not be noticeable as Linux kernel is our primary
+kernel), but it's not.
+
+We actually have:
+=3D=3D=3D
+/*
+ * Split this up, as gcc can choke on it otherwise..
+ */
+long tty_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+{
+<...>
+        case TIOCSBRK: /* Turn break on, unconditionally */
+                if (tty->ops->break_ctl)
+                        return tty->ops->break_ctl(tty, -1);
+                return 0;
+        case TIOCCBRK: /* Turn break off, unconditionally */
+                if (tty->ops->break_ctl)
+                        return tty->ops->break_ctl(tty, 0);
+                return 0;
+=3D=3D=3D
+
+So even *userspace* can set BRK bit for PL011/16550A for as long as it want=
+s to!
+
+The question is why we don't use these ioctls in QEMU to properly
+emulate BRK behavior and instead use ioctl(TCSBRK / TCSBRKP)
+which sets BRK bit and clears it after a short period of time?.. There
+must be a reason, but I'm not familiar with the code
+to see it. Ideas?
+
+Link: https://support.arm.com/documentation/ddi0183/f/programmer-s-model/re=
+gister-descriptions/line-control-register--uartlcr-h
+[1]
+Link: https://caro.su/msx/ocm_de1/16550.pdf [2]
+
+Kind regards,
+Alex
+
+>
 > >
-> >  static inline target_ulong get_memio_eip(CPUX86State *env)
+> > > +
+> > > +    return 0;
+> > > +}
+> > > +
+> > >  static void pl011_realize(DeviceState *dev, Error **errp)
+> > >  {
+> > >      PL011State *s =3D PL011(dev);
+> > >
+> > >      qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_recei=
+ve,
+> > > -                             pl011_event, NULL, s, NULL, true);
+> > > +                             pl011_event, pl011_be_change, s, NULL, =
+true);
+> > >  }
+> >
+> > This does make me wonder if having a static pl011_set_handlers helper
+> > would keep things tidy and in one place? Either way:
 >
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> I'm happy to do this too if you want me to. And probably for
+> hw/char/serial.c too, then?
 >
-
+> >
+> > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Thanks ;-)
+>
+> Giving all the suspicion around UARTLCR_H and BRK behavior I still
+> believe that I'm not making things
+> worse by this change, but better, cause now we can do backend hotswap.
+> But it would be great to fully
+> understand that part too.
+>
+> Kind regards,
+> Alex
+>
+> >
+> > >
+> > >  static void pl011_reset(DeviceState *dev)
+> >
+> > --
+> > Alex Benn=C3=A9e
+> > Virtualisation Tech Lead @ Linaro
 
