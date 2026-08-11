@@ -4,119 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DC2C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 18:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91795C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtrg9-00008p-14; Tue, 11 Aug 2026 14:58:26 -0400
+	id 1wtrtW-0001aS-Ew; Tue, 11 Aug 2026 15:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtrfx-00008A-8H
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 14:58:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wtrtV-0001aA-8S; Tue, 11 Aug 2026 15:12:13 -0400
+Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtrfv-0007CK-Cl
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 14:58:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786474689;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
- b=BcqqTc+uVWHTCnOw5VsYWVBN9Snd4dSkQQUQdsH642g79whJzEDmSTPwkV7OuyPqOYKRRv
- www40A2OO1CMFWVrhyMBNnao5dD+ZR2XeYjuNYswxmzSgzjwsksX8A6rnQMJVF9K7YNK3h
- f2/H069NDn0uDk90vgVghds2UexRGq0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-mY9POekwPhSngw8P2CobVQ-1; Tue, 11 Aug 2026 14:58:08 -0400
-X-MC-Unique: mY9POekwPhSngw8P2CobVQ-1
-X-Mimecast-MFC-AGG-ID: mY9POekwPhSngw8P2CobVQ_1786474687
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f81362fb1so44592f8f.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 11:58:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786474687; x=1787079487; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
- b=DV3ZJrKeovzEmDaH9t7LJ+sMXAcElIGC5PCK4MvtEXiPFH81Xp1sf7KeqDEbjvb/Fd
- HyIj6FfgxgmA9aURBtKWCNw1CQWNzJi38VFtEVvhOJG4IWxmp9YwoViOtoTuEYLNVejH
- CktOZxU4HcV7G5X7I0ZBJLClUGiUUfXxqxfi7bFnWzrFae3wxhQTkG/AfJjckZY2gXoD
- 5O9Ho1AX79xIFYy5kDavqH8wuVFrU6AxLX+cMjfiKAXMv4VqTQZJff1meSFiizj0o2Vy
- MGyW317TbO6yrzNUzuqtKF9x4w0PlVFZEVkV7BYzaYrn44RfWNc7fcBiF6E0m0hgfQjQ
- g19Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786474687; x=1787079487;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
- b=GzowzVbO/WcdT+Yn3pm+li8Wi606l4JTfsFex1cFCp6rrDxsYaSx809FMpaGufvowF
- su32HM6ptl3GKCy4uLO6MeNS0hKTsr/7NESoW+jws0j6JasW9qc0dqcye4TXP28sqppB
- zvMFlxu1b7tQso/kSmkd93NO12BdBaZQJ+4ktsQpvynpjfNmGCekDtFs+ZzayvY7Dwj+
- XJ890A7QUdhG9HjeJ4PDwBNeZmvmCj5aB3OdOnFDCiYxEo1bt00BzZhmEMldjBeOR4MQ
- 9oIWPnTKymH4z+eexnalafS9GSY1oibyzby02Wd1AsEi/dUqxoWzx2T7hSmgJqy/goW1
- 4lag==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoDzFY6S/+V1RQoSHliqI7uHJxUShayFiWrQ8eS74uWUuE/warQ1BbgiFAeMxX6moOIf7qL3oK2XQSG@nongnu.org
-X-Gm-Message-State: AOJu0YyA3AE+onuUMPjCvV7D4WdsPqcRmuUVhFITpkB3wmdm2ZzPKMv2
- w1/uMMPPdR6jLlMo37X/f8UN/uk195nJ4CJg28HBoPDKv3NXUmdVBTXKaZvOLGNUE7WWYUnjCVp
- YnBbU+cvMGmmleI1HOkd0UvUNmKDRi50U2oe2sDuaQ0tgn615YWyMTVlL
-X-Gm-Gg: AR+sD11dOFMxhkzho/g5Q6SsiE4edOJb6iBsLgRYWC6FnTOv1sjukNcXeYJPdqspeMs
- EvhJF5J+865oEf1WOrALmhWJMx7aSm46j+U1bfuHSZaY02O/wO0Y622NTWbH7EA2KAUL31jyouW
- pSk+tbmiLs9Ibki30fhYKJHQzcufaIQjbjxGvDBXYmtPUM5Z/XeyDV1Gu4dNBbsIOHpF0NAuxUh
- c5Tj9pSlDXG6hRV8I8d8XiWtUs+grmNT17UNVjvASIFjWqOgJtlNDsi0F9zV/dkDHzojLBnkx5I
- TSccunVpFa4QxeYkpAQgG3b7SAh79NlUtuBxcgoxHUqxbXuPum9bYl4L6YXHZlNPJx6peLoOwn2
- LgNEGPrwZi5mPK9hZiHDFLQ==
-X-Received: by 2002:a05:6000:46ce:b0:47f:7786:b00d with SMTP id
- ffacd0b85a97d-4814addc2a0mr6494925f8f.24.1786474686798; 
- Tue, 11 Aug 2026 11:58:06 -0700 (PDT)
-X-Received: by 2002:a05:6000:46ce:b0:47f:7786:b00d with SMTP id
- ffacd0b85a97d-4814addc2a0mr6494886f8f.24.1786474686284; 
- Tue, 11 Aug 2026 11:58:06 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-39-98.inter.net.il. [80.230.39.98])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48150bf5c5fsm525184f8f.3.2026.08.11.11.58.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 11:58:05 -0700 (PDT)
-Date: Tue, 11 Aug 2026 14:58:02 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: GCC, Conservancy and Rust AI documents (was Re: [PATCH v2]
- docs/devel: relax policy on AI-generated contributions)
-Message-ID: <20260811145706-mutt-send-email-mst@kernel.org>
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <20260802154350-mutt-send-email-mst@kernel.org>
- <CAFEAcA-VB7kNn6MM4cF7Pz356KgkyKRaK0xMC2PTXYYCVVfLyg@mail.gmail.com>
- <anXuqbBXERqn4lPu@redhat.com>
- <be6325a1-8a4f-4ecf-8045-a56ec66dcd42@redhat.com>
- <CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wtrtT-0001P0-I4; Tue, 11 Aug 2026 15:12:13 -0400
+Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 474B71400141;
+ Tue, 11 Aug 2026 15:12:10 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-12.internal (MEProxy); Tue, 11 Aug 2026 15:12:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786475530; x=1786561930; bh=T5AyB0ah59LGJZdySV6J4dpGz0cOZmaR
+ LEGnRgE3Gxk=; b=MyOYaAOrBbr7I7MVVYq3YT/feY3fSwvek4WXdWnc0/alLeFX
+ VsqCSn+RWCd4zHtEa+TsilBJ1mPGhd1qtEtKx/aXMTjqodf9/3uRIUpznyKdJIsi
+ 2FYen+WBJefhj3128K3I5c1SIk1ggTdPIkaZ2JXQxIG0AkLLlCVvGV37w0MvK4lH
+ TLdY0xP6QkirJ7UHlbecobzDK/NNbdM9+o0g6sjsEKfQnSgVYguj8IQk1iPXySpE
+ x/UWZfa9oLmBM+wEikoqIqgq7+uufBqGNkX0FA08AqMnNFE4EmTQAtAGic7DaIF+
+ JL2+wgBWwpTwVQzciWJhQQsCXX5l7PDt6cWlQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786475530; x=
+ 1786561930; bh=T5AyB0ah59LGJZdySV6J4dpGz0cOZmaRLEGnRgE3Gxk=; b=A
+ x4BDiRuvblEhFwC9oMFfIGq6U18HzL20ey0HurNPdI7i1vxO7KJWf+sr2AtR8PVQ
+ vnnSvmfVk6wV62QkDwzEzCXYCCjPznFEpCp76fIWBiLsbnc4HcGQAjPYmPcFtR0o
+ ac17yVaLJpnhPDls1c2IR7rzMgtiZsyv1O9m09WvwosPH9PxMm4VwqZqXcugTH5R
+ PricdzYcn3I1n4OqMVjBi9fg7A/b19ss8EtZET4u647H98BGUrr6TyHi4RzDHmsT
+ 7y29+9hyb2M0sR+CNO08pEtXUP01y3l+7ePncbfDUuov4945Gd+MgCRt3/O1uGEU
+ b+F3NISqiQiUkG43w1iwg==
+X-ME-Sender: <xms:CHR7ahF_5cmexVme2zYcHc0K7v2gtPpAz3L1Z5miy1jnfW0aXjdwIw>
+ <xme:CHR7as3_-W3tGvHiGJzIC4_ZbpYTEMHuG-fG74qQGqlsuqrJ6JrrNPGHIVugILYRU
+ lxHsgWxSXIk4fxNhrFVJJiPzubm5yrTWcpWyaTF1-d9XSxVIAfJalk>
+X-ME-Received: <xmr:CHR7ahIjKp-1ee_KmdLUok_j0D6RN9MNk9ZCIkmD-J1u5u22Yji3kg4rJfEzvryzAxb8HA>
+X-ME-Proxy-Cause: dmFkZTFxT514kitKIdGOhXPEiLUJyDOYCZHOcJCRAOs4iYG0U2+eCRfL4rAqpKWp8tzCCR
+ q4/lWng/GUxRzf9jB8M/gjcbSNH7eBBgrAogeCEgch6IlePQaIL0umnHG/4whnLqGUmuy5
+ 1XdTh9EINXUFcqBkSrcRd4KWJy/1VXgYkKm79H+kfjltKRZGpszgKqB3IkB6CgkqF8tCy2
+ jsy1lIEvkV1EEPh9/pUxL/otB0LPqMrUwAmiwxGR2Ra692PFMY1lFEqTjfz5RAU50SIG8D
+ xmiQGo+9OVLBswG+iD05AtJTyIG+c7MwK1B/aqlQzng5u8kS9bH1KGD3FbmzwO26hvsVRw
+ Z6366wPlbzggFQCN3X45CYElNf1Vlib0mxY05nQMxvEb0OVm5KH6VWOVJJdIoiUGlVgf/S
+ gWPWCp/7O4C2pYXn1ThdjQLYHNp9VG2QtFHnXwOv+Audx1AObL3Ja1IdCnV8xekts3LRE2
+ 5mFup66EdGobShrC+DljQDvO1YCa07ADu3pGZxE9WdI7LPdzTrN6+T59GMonHo1sdWdtmi
+ e1QaQr53+V9sVPpliFAtVZxmx8e5UMzy4u+z23MuzrgXG495AW0G0kfAEX6SpzIJK/WegO
+ p79F75RnrSkL/R1xR2DKptMJjWbUkFsIbGZPAV+gXEPhsUihC8d3HMZnvNVw
+X-ME-Proxy: <xmx:CHR7ap1mtZ7fsiNK7S8H56tA4pjF6-UUd-becIp38EsViE3STmr48A>
+ <xmx:CHR7atmhF8aqF6UlhmUWk1KD3dVF8vLBC_LrfVyqNC3Df6hqa_pbqA>
+ <xmx:CHR7asjSSpMZdS08nspuWDTHk16cDgGL-ezXdBecNr20nAgLJ18uQg>
+ <xmx:CHR7asS8Enihx_FpQd53OepPzLiXmVohCmTEaZrZ28_6AiK9EHfvEg>
+ <xmx:CnR7avhSoGd271d7eZKBUXgAZcfC6TSHiHZwVW0GpxRP8ah0ziLNJ8nD>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 15:12:08 -0400 (EDT)
+Message-ID: <972c0983cab48890a0b089a5ccc9ba0c2b04bc32.camel@alistair23.me>
+Subject: Re: [PATCH v3 0/3] riscv: Add K230 DW 8250-compatible UART
+From: Alistair <alistair@alistair23.me>
+To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?ISO-8859-1?Q?Marc-Andr=E9?=
+ Lureau	 <marcandre.lureau@redhat.com>, Chao Liu
+ <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
+ Francis <alistair.francis@wdc.com>, Weiwei Li	 <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, Fabiano Rosas
+ <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>
+Date: Wed, 12 Aug 2026 05:12:07 +1000
+In-Reply-To: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
+References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=103.168.172.156;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,71 +111,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 10, 2026 at 11:18:44AM +0100, Peter Maydell wrote:
-> On Fri, 7 Aug 2026 at 19:43, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > No one is going to agree 100% with everyone else; the only possible
-> > equilibrium is going to be the current "no AI for code generation"
-> > policy.
-> 
-> Also, I'm not sure we even have consensus on what the goals
-> of an AI policy should be. At least, in my own mind I am
-> not sure about that. We might care about, to different degrees:
-> 
->  - the possibility that AI contributions might later be found
->    to be copyright-infringing or otherwise legally encumbered,
->    and need to be removed again
->  - poor quality of resulting generated code
->  - that a large number of individually OK-looking changes might
->    pile up to result in design messes and degeneration of the
->    codebase into "big ball of mud" architecture (you can argue
->    we already have this difficulty without AI :-))
->  - that our already very limited code-review ability gets
->    overwhelmed if we allow AI-generated patchsets (there are
->    already human-generated patchsets which go unreviewed and
->    ignored as it is)
->  - that we don't think one-shot AI-generated changes are likely
->    to be a pathway by which new contributors join the community
->    in the longer term
->  - various non-technical aspects like those the Rust policy drafters
->    labelled as "out of scope for discussion" under the "ethics"
->    label
-> 
-> (and probably others that I have forgotten).
+On Sat, 2026-08-08 at 10:32 +0800, WX Chen wrote:
+> This series adds a QEMU model for the K230 SoC DesignWare 8250-
+> compatible
+> UART controller, wires it into the K230 SoC, and adds qtest coverage.
+>=20
+> The implementation supports the registers and features required by
+> the
+> Linux 8250_dw driver, providing an interactive shell over the serial
+> port.
+>=20
+> Signed-off-by: WX Chen <wxchen0913@gmail.com>
+> ---
+> Changes in v3:
+> - Removed all hardwired preprocessor #if conditionals from the logic
+> - Added a helper for the receiver line status interrupt check
+> - Encapsulated CPR and UCV register values in header macros
+> - Replaced g_usleep() with qtest_clock_step() in the qtest
+> - Link to v2:
+> https://lore.kernel.org/qemu-devel/20260725-feat-k230-uart-v2-v2-0-d5fe82=
+c47c28@gmail.com
+>=20
+> ---
+> WX Chen (3):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/char: add K230 DW 8250-compatible UART
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv: k230: connect DW 8250 UART
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tests/qtest: add K230 UART test
 
+Thanks!
 
-Well the 15 line limit helps with these too, to a degree.
+Applied to riscv-to-apply.next
 
+Alistair
 
-> The current policy being "no AI" on a fairly narrow legal ground
-> had the advantage for me that I didn't need to consider my views
-> on all the rest of this. If we relax that strong position then
-> what kinds of relaxation we're OK with depends on what goals
-> we are trying to achieve and what problems we're trying to
-> defend against.
-> 
-> > Second, the Rust project came up with a different way to approach the
-> > issue: require disclosure of LLM-assisted changes and hold them to a
-> > higher bar.
-> 
-> That's not really the way the Rust policy came over to me. I
-> read it more as "no AI for codegen, but with an 'experimental'
-> back door for limited use". But that comes down to how much
-> "experimental" really means that to them and how much it's
-> "not actually experimental but the label made it easier to get
-> the policy agreed"...
-> 
-> I do think the "pre-agreement and pre-finding-a-reviewer" parts
-> are worth thinking about; to the extent that we've allowed some
-> AI-assisted work already, it's had that kind of "pre-agreement
-> and done by somebody we already trust as a contributor" aspect.
-> 
-> Also, I would be more in favour of uses of AI in the project
-> that made my life / job easier. "More and larger and more
-> frequent patch submissions that I have to review" isn't that,
-> so I am not super enthusiastic about permitting LLM assisted
-> contributions. ("Deluge of not very interesting autogenerated
-> bug reports" isn't great either, for that matter.)
-> 
-> -- PMM
-
+>=20
+> =C2=A0hw/char/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +
+> =C2=A0hw/char/k230_uart.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 816
+> +++++++++++++++++++++++++++++++++++++++++++
+> =C2=A0hw/char/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0=C2=A0 1 +
+> =C2=A0hw/riscv/k230.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 33 +-
+> =C2=A0include/hw/char/k230_uart.h=C2=A0 | 198 +++++++++++
+> =C2=A0include/hw/riscv/k230.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=
+ 6 +-
+> =C2=A0tests/qtest/k230-uart-test.c | 514 +++++++++++++++++++++++++++
+> =C2=A0tests/qtest/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=
+ 2 +-
+> =C2=A08 files changed, 1559 insertions(+), 14 deletions(-)
+> ---
+> base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
+> change-id: 20260808-feat-k230-uart-v3-0ff3651d70ef
+>=20
+> Best regards,
 
