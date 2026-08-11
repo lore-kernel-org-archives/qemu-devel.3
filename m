@@ -4,140 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D90C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 03:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DFFC5AD7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 03:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtcyb-00030l-Gt; Mon, 10 Aug 2026 23:16:30 -0400
+	id 1wtd4A-0005BR-6j; Mon, 10 Aug 2026 23:22:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wtcyR-0002sJ-Dc; Mon, 10 Aug 2026 23:16:22 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wtcyP-0005fC-7b; Mon, 10 Aug 2026 23:16:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eRwhh9XB5kusNmQxXasBIY2akvx6ND1OYA0BB+8YeaMblXOx8t4hGGiqFHYs/okTAzACJPCciUmesO/7TN5q+tyHMBoLnRcRPnyjzPLcMhXAiSp4ZgRCFYv4S9U9MXnEFtGp10c71hTyRsPj4HytuF/5yjET0ps5ihBipPO5ykODe6SFuna/4G5EeJgVH9ibqfseZ5PZ+XWHoJVW5RCUDnU1Qlr6ZKANlR8Kx6FYBdanrE3GUdzHEKJgRjglsTXx7aIXeiUshexRHdzc4rezzyYeBDG0KCN1+XHbbq3MjsG7nHnCRZvaTnllvC3n0PsSeFYJ2zfPy1TnkeNU38oyMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7IClWpHxiV0+wDJCZEKBdjq00b+YjJbn4nm3ZL0oUh0=;
- b=EyFUs9ivw/gdiUBmmNOyoKg5uWWSVJNYKr5xGFaJPqB2RbBLWdUc/TuvS1MCjmrhR/fbz+43Lyhum72qhzRHc3xh5TICK+EmXinLSh9zNhmuLHcZcixt5WTWBzPfj3Bm1P/6R6cfn4KhrdtwwbMTNpZNwoYQIjfrEwX9WydzghIBn52cucwZzbM2cj4axx+z6EGJoc6/r0gVYTF60ZtK42bqaM5R7otSdU7IMYkZa8OHQtAcC1j+TXNBp/WYUp5HcC31WTcoHuXcqDVi4ESe1SrnBmDMrCzimnT90xS9dIuJRk+NlCwmUCuozKcnY5AP4GzAJzJdu1WVDUpGXg1CVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7IClWpHxiV0+wDJCZEKBdjq00b+YjJbn4nm3ZL0oUh0=;
- b=q5ZfOYXtZRyT8kLh54TeJc9SOAy5URPrY1TPbj5vtbEP6bV37rflll2NB048z8T+9ZIRPanUW0qkBgaaCmJ11Cg77mOROGvHT63wtZDShfNCydc4ee0haMi4nfjh+WqFWDawey+F9ECcQgWWs4+LJ+RNQcm9FDlkjsq4vlIXc8F80RDMxrf8CPLHqYf9vsBgEg4NPOqlohxOdKBgcx6/D0c6QFzzyRWvtQnq7T8cyjnFVsRabe+lMxNgsW+Vwa8GH1QEx6lXb8rvTeK4MyUlMQrImyeQlfDnFEzoVUJaM3GyMDuirnIB8urQDnv0ei3P3fzyU4IDHuG0bH0a/hnRZQ==
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
- by SEYPR06MB6105.apcprd06.prod.outlook.com (2603:1096:101:de::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.24; Tue, 11 Aug
- 2026 03:16:12 +0000
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::afe5:a3f1:b435:e43c%6]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
- 03:16:12 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:All
- patches CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v3 03/16] hw/misc/aspeed_hace: Support scatter-gather mode
- for the crypto command
-Thread-Topic: [PATCH v3 03/16] hw/misc/aspeed_hace: Support scatter-gather
- mode for the crypto command
-Thread-Index: AQHdKT74zFu+6TcLZEOvQZZZrZO3MbaYLPeQ
-Date: Tue, 11 Aug 2026 03:16:12 +0000
-Message-ID: <SI6PR06MB7631B92531CED76C4C358857F7DD2@SI6PR06MB7631.apcprd06.prod.outlook.com>
-References: <20260811031025.2784489-1-jamin_lin@aspeedtech.com>
- <20260811031025.2784489-4-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260811031025.2784489-4-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|SEYPR06MB6105:EE_
-x-ms-office365-filtering-correlation-id: 17dfe06a-4dbf-44ee-d3b3-08def756e5c5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|7416014|921020|38070700021|56012099006|10067099003|4143699003|18002099003|22082099003;
-x-microsoft-antispam-message-info: HOtz3DmyEMucU4Gh0uEt/DE04KB+5iPWeNti2z0BwWYZ3tHP6dCkzTkzlRsqAL0+mTbiXTlrnAqOACzHPZxEetuMIVbpYcT/BNFmIbLk/bqrCx8w65NDEXl6dHwJMBsPIExN6PzYUc2/pADH67zGpeXuj1WCBjUqBotCTiqWpcA1PslM3+Ez9+U8nBwlsLMFY6iFJjwOIAkTuo8l9eo0o2vtwewnHK0PfrLOjy0UQGTYtS1hnPSsODiYDETL//KB0ZgsZJcw7xK9zBwIfN3PEJT29RUfUEtKJqd305cxbBpxMV/MrjFkW+6Zm2m2FOA3fNwZ8IvSZ80pA0foC0R/OpP8LGhxi4GnFPac9WZbLf6dw/ZZJRqX1IrqohZGxlkYozR+DNGRSSVBoxlmRy8J5v5Kg7v0LCrUrcLKtlYCnkENZTIRGTl9Pva1y9z7gsS6xqcaGriXcKt6pFdtXtLpeIwidQIm0Wsg5Qs0cgOsKm2utUxK8TQ1ZjegXpCkOsBAmDrLN1A1Gk9o7cOKlTkacUgso6i7Y6e169HIw3rOUtxESJys5+TnybcjIJ3EItS8f3dHuWic0kAv2x9wpcHxAXB6BmmPjEIi6Q+zFv2YKEJ8DLVmGrB+Nr9SYSFxZaoZm5aiB/5Co1sRRqoqyFOl0CbQF0jrPwqHTvhU94DKxpG0QlDme9rTnHSxm8hZIZJj7QDxcv5iWlQqhJbiXEXOrvxr4Caojm+8mJk1pEpyV0KP3hF/WUOz3YAPVrMggPJB
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(921020)(38070700021)(56012099006)(10067099003)(4143699003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?MfthI2Mb8Ki/jXiJ5Jb0Mw8raIMSdXR054yXKiieIpcXSw3q9qWBIc3fF7?=
- =?iso-8859-1?Q?wHS4uBYDfaufcxWgm3+rctGS4KdCWS0y5mCdU0oUUNba1qaIPAtaqG8qUZ?=
- =?iso-8859-1?Q?89bTK3BpWUjp3kmcTwe2xp6BwngeWrKu+ayOtnP5bkaUzbA9/cOiSoFIL2?=
- =?iso-8859-1?Q?TvXrJkDUpDR2N7IzA7aMnJpbY13rrnLqhhYbzEqzCzOrZ9fN/FfHS+G6CB?=
- =?iso-8859-1?Q?EvECi5JgjGKIZxLsZ2Atv9HKGB0fB3fKoTHHw0G+fS2TshtP7wn8rj9MwH?=
- =?iso-8859-1?Q?5CzCGELupmH/X1B9xpsVvm0FcKF0K3AVh8Co2yybiOoloe7JpDVbTGvSaF?=
- =?iso-8859-1?Q?xPtkVUWQlDPQDUyHpsSIywvWKVJ9jB3MYoONPUiO5QQrtBgjY7UVKZ/+vh?=
- =?iso-8859-1?Q?Jwe0g/8RrQD3FA7At1+947mRITSX0g48xkjZCMxz0o49WuuCxn5V+Hv+1C?=
- =?iso-8859-1?Q?hWHGLf0nMnsjyVPQVVV33VkPNdPCyj8Nslb3BzzJHABlRz/thtay4FNu0t?=
- =?iso-8859-1?Q?5PD2qgGrJVZ8dEnVHwOf+XbGGxBJmTpKR9hSay6tAzByWJQM6+flRpHBiH?=
- =?iso-8859-1?Q?RXiMdIRjGluBJe+GAn9eMI4UqoIT9eAdcIS8Yi1sHQUU6Kfjbefqf7Rlr0?=
- =?iso-8859-1?Q?/cDsrffjwPVKpJ4ipxtcJLzYZj0L9JhZ/i5f4mxhVy7K3DUSTGzd7098+w?=
- =?iso-8859-1?Q?+HZUOIuUOw1Bllpf80Z2RN42f7I0C14ciJyUP0PpNXb6G+aOZLEY5h5T/c?=
- =?iso-8859-1?Q?4zPaZqPcm0PenIJXvjR2EN/oD9KY1reboOeCbFkvO395mU0NUxR1JAkNmz?=
- =?iso-8859-1?Q?7hezMZIJRU/e/o0lZ8YJouDE6jtdsujDqFkV6sy/Mcc+sv3/+8BEpaBrwO?=
- =?iso-8859-1?Q?4V278ETxJ8Poj9FnCZh6vo4hGAdspDmRsF5WtUWXCx4Iyn4tVQjojuHpZX?=
- =?iso-8859-1?Q?Eb1uZsF6E7D38TtaVB4CagqZZ5KxmCaTIeU9N6fmSlTthrIAOfm7Kb3qOz?=
- =?iso-8859-1?Q?8Lyc7u2dXtBoeIhESEPea7QHzb4HcHUeWkVrxo7NcDB/7Zaasi0Pztniwn?=
- =?iso-8859-1?Q?ceeSFjC6FcLVtap9vXITLsD6dXcRpXVhYs07BFITbbrT9uH7LjeaHwlF1X?=
- =?iso-8859-1?Q?0pTsQo4DeVa+PiA0U4nIEkjFAxYvDsGI/Yxv6G17AfhXbHeghGZGoRToD0?=
- =?iso-8859-1?Q?8yUzvqd9qA3K9lWcreHUHwXyC/r3ybQGjBRQfYj0RqM6v4eQIEtRn50zNT?=
- =?iso-8859-1?Q?aaLM2mE79MFIJSrDtftvfcxkWAKkNW9ZcyXC2TFv/8LHecDgdPWYLdeDKT?=
- =?iso-8859-1?Q?WIjrUz4etQ0lxwWgHj2G/jpXAp6mkcXFk0YP6Iw344B57dIRIsFGNZBBte?=
- =?iso-8859-1?Q?WSp5xqBux/UKhAR/BPkLDQ7ZIWB1guUooKsvlzNM8ai2xPj863yc2Jyijb?=
- =?iso-8859-1?Q?yHDVK1RJsTvphIclsXLlVpEjv0Ze57CmQSSd91FgDajDcfdGf0xNFH6j9L?=
- =?iso-8859-1?Q?Rsw7Lij8jpfNCqWEfFwqB8JGwu1CA5Oja8iFeM6WZjFkuaisjKTYKPu1rG?=
- =?iso-8859-1?Q?swsLwjTCzNVdJ29RiZuK5t/DNLzYy92svXa5RxZnwnhNAR8A4joxsBV400?=
- =?iso-8859-1?Q?nj/C12cxkWIjGv/02yvIVyrYG6seeWHUUweY0hkHKmkD/egD7DM9scwpmP?=
- =?iso-8859-1?Q?kgMR+Gxw4SWKe94XuHOS+r/cc6UWUt8xLRSGn9TVjmG5mxpyNpJ6GLqCqE?=
- =?iso-8859-1?Q?yDCM7F1y0+uTx/1oM/pZaFTh3wbiFPH7bur+AKGQ130yts1IDjwNGfWAJ/?=
- =?iso-8859-1?Q?l3AxsTOBIQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtd48-0005As-8H
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 23:22:12 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtd46-0006xy-BB
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 23:22:12 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7eb68bdf53aso1001494a34.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 20:22:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786418529; x=1787023329; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=T020/4BbYswuHkzh+5ntHAVJ23VTFJkz44aKre+VgcU=;
+ b=nOwA2hu4c7GO4ITIhVKZQfd7/3gNe3lo+HuhuKjsKV48Bbe1IV/oYxllAVbImGpc5O
+ zx9KtDRhWmNb0tfX0VCzE5L2hOeWxczqYepgzaX2vMHI29VgU1E5kAoFtQh99fR/1fAB
+ bjGzZZYODK+zqcB+ahEVWHEkOfKQeItpBbMkfE5lVccdoAnVnwNDanCeamvZGPZBLbhz
+ RuxGFxYa5ieUOSqK71IkG9mWl4eikZ/V58/mrtBVrHojiZlMBRLcejSm1+mw3fI8O+0l
+ cdTTVHG17qpVWgjADkI+UnR94Ow9r/KWpYwOAoXj9AvFRn6nr+a03L2QxREq7DJ7uYgj
+ +ccQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786418529; x=1787023329;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=T020/4BbYswuHkzh+5ntHAVJ23VTFJkz44aKre+VgcU=;
+ b=X01RVZMvUUEqVkqULFATXaQqqRdwxZgtilY3FWrSctPEM5tXt920u8v/QavXp++0RJ
+ s8kOvNTMT3iZNZsZgJ1sEVeYWHuTMYW/r/6YZpdL4jpYrqENZIbN2102v751c8YEapan
+ s16MitWyuGDQtYfPBiGSvgfcseVyI+flKV3U4Z6AoH4JT5FDYgGIv6ihYVock9pAOmDV
+ k47M4e2m6l3cm5aHedN3ran7iRFildIJfOKt73DHRWjZQlwqj6Z/xRTG+g9qwzb/fIwH
+ PrHGWR3nDJnXd0FBMSY9O6yKmj0T5TGeFERZjPY/QESQNuo36p9fGiunPeVPb7vQmxJ9
+ hbQw==
+X-Gm-Message-State: AOJu0YyiFqBCRZngaVgecZz4woT1htuiB8L6uAZ/3eiYsmeUrKTXlwPS
+ 5xgSCU67zQtFGU2myYpNlo7fFtmUY3EOEO+yJyPDF/V9f7KQbW8/UbWYoWtFrWT1
+X-Gm-Gg: AR+sD13QvTLLJhSPPXb8G9gJix2ypV4N+uEUvDgEaOWsgK3ACsBsVxdKhuT1Kwx8GY6
+ 3yhpYOlHRngRRFXaxDkRo9gUu5sKUPIj0FXRjZqJ3mfTbULQ3bkhNExVVhpnjZbP24DX3vzGgYa
+ Hre13R4cMmuwcBj19B9XWzKDf9MqPcp6mt6VOZJy1dJzmaTIJi//skLVg333h6hoAyUxzXLycQ5
+ lj2MUdmUqTpt1rE3jxmlO/r9PfGhvFM5pv3gl3Hv9KoeUg/7Nm/FDie3j6T2C+VNhQL4SXaUFFV
+ Bm0ZxiaUiDkBvmZQKcH22sIq6K8w3orHV0wj7aApxHOHIN+G4ykWqC4NQQJIlXMI/czjA+FWTWK
+ Gl+u0K7MJB+8beYzby+ISBJf4NJDJMGfDOOLZYdgdojr7qXPhEHeF8BB0NRWUbp0R0iw0c8dUAt
+ rZ6t6tQLrvHkgkhGfdtV1Mpm8T2bJJDTCuQUoY8GK45HzebalEUolcL5s/6sBWcJjodJpufa+Ab
+ 2BUyXtRBAfsutM5Rh7SHaZvktl6qf1Q+vtINTkbkvy4y3KRX3sOiEq82kx98i0/
+X-Received: by 2002:a05:6820:1885:b0:6a3:d77e:725a with SMTP id
+ 006d021491bc7-6b0a31af8b3mr11651eaf.20.1786418528753; 
+ Mon, 10 Aug 2026 20:22:08 -0700 (PDT)
+Received: from taylor-ubuntu.. (c-67-172-136-152.hsd1.co.comcast.net.
+ [67.172.136.152]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6b09fe54244sm329354eaf.11.2026.08.10.20.22.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 10 Aug 2026 20:22:07 -0700 (PDT)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, philmd@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, ltaylorsimpson@gmail.com
+Subject: [PATCH v2] Hexagon (target/hexagon) Clean up disassembly of control
+ and system regs
+Date: Mon, 10 Aug 2026 21:22:06 -0600
+Message-ID: <20260811032206.58501-1-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: o99uyzdAVNU1R/yxp0/Em7hO/o7ZcFit8NqVSmgpfCoIhYjYbPVDWuIS46XSMaIHZPwKETP4pZOK2Ff1n3A/Apwl/sphSFpxHL54y4xqlx5snvdSACOCu6DrnDUJKT1sK6UgYQu5ZdTVgr5o530M44Fm17wBNcX9/X1/5kBoNITWs+1Fi5hyiaEk5/bzE48NDeuT38PjQjgfge5oD57qQFcsrVQkGmE879UWsA3CmD0PM2i0brN9ugei/GB3PoRHRAYyW9NPd9ohwjwK/PtR6WyAdQN5S9YcIJyMUqshK6UQWtk5fo1C23scwLLHXYdWuyymLLCAmBl4JAIvaymvHQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17dfe06a-4dbf-44ee-d3b3-08def756e5c5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2026 03:16:12.7213 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0M+jfuH0qNO43gd6wZLfD/Nv3wH+qCojTXzyU8CSrnExpcr0xRSHqujaP9X57aIUPmNJbDrItIlBv2f3CAC4hX44by4x7pcE1BH+LNDnQy0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6105
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,178 +102,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> -----Original Message-----
-> From: Jamin Lin <jamin_lin@aspeedtech.com>
-> Sent: Tuesday, August 11, 2026 11:11 AM
-> To: Daniel P. Berrang=E9 <berrange@redhat.com>; C=E9dric Le Goater
-> <clg@kaod.org>; Peter Maydell <peter.maydell@linaro.org>; Steven Lee
-> <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>; Kane Chen
-> <kane_chen@aspeedtech.com>; Andrew Jeffery
-> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; Eric Blake
-> <eblake@redhat.com>; Markus Armbruster <armbru@redhat.com>; Fabiano
-> Rosas <farosas@suse.de>; Laurent Vivier <lvivier@redhat.com>; Paolo Bonzi=
-ni
-> <pbonzini@redhat.com>; open list:All patches CC here
-> <qemu-devel@nongnu.org>; open list:ASPEED BMCs
-> <qemu-arm@nongnu.org>
-> Cc: Jamin Lin <jamin_lin@aspeedtech.com>; Troy Lee
-> <troy_lee@aspeedtech.com>
-> Subject: [PATCH v3 03/16] hw/misc/aspeed_hace: Support scatter-gather mod=
-e
-> for the crypto command
->=20
-> The AST2600 and later crypto engines drive the source and destination thr=
-ough
-> scatter-gather lists (HACE10[18]/[19]) rather than the single contiguous =
-buffers
-> used by the AST2500 direct access mode. Each SG list entry is a length wo=
-rd
-> (SG_LIST_LEN_LAST marks the final entry) followed by a DRAM address,
-> matching the hash engine layout.
->=20
-> Add a crypt_prepare_sg() helper that gathers the source into / scatters t=
-he
-> destination out of the bounce buffer by walking the SG list, and select i=
-t or the
-> existing crypt_prepare_direct() from do_crypt_operation based on HACE10[1=
-8],
-> mirroring the hash engine's direct/scatter-gather dispatch.
->=20
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->  hw/misc/aspeed_hace.c | 70
-> +++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 64 insertions(+), 6 deletions(-)
->=20
-> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c index
-> 0f35d74137..646ff50476 100644
-> --- a/hw/misc/aspeed_hace.c
-> +++ b/hw/misc/aspeed_hace.c
-> @@ -608,13 +608,58 @@ static bool crypt_prepare_direct(AspeedHACEState
-> *s, uint64_t addr,  }
->=20
->  /*
-> - * Perform an AES/DES/3DES ECB/CBC operation in direct access mode: the
-> source
-> - * and destination are single contiguous buffers (HACE00/HACE04) and the
-> IV/key
-> - * come from the context buffer (HACE08). For CBC the resulting chaining=
- IV is
-> - * written back to the context buffer so the driver can continue the cha=
-in.
-> + * Scatter-gather mode: the source/destination register points at an SG
-> +list
-> + * whose entries are a length word (SG_LIST_LEN_LAST flags the final
-> +entry)
-> + * followed by a DRAM address, matching the hash engine layout. Gather
-> +@len
-> + * bytes into @buf, or scatter @buf back out when @to_dram is true.
-> + * Returns true on success.
-> + */
-> +static bool crypt_prepare_sg(AspeedHACEState *s, uint64_t addr,
-> +                             uint8_t *buf, uint32_t len, bool to_dram)
-> +{
-> +    uint32_t copied =3D 0;
-> +    uint32_t sg_addr;
-> +    uint32_t sg_len;
-> +    uint32_t entry;
-> +    int i;
-> +
-> +    for (i =3D 0; i < ASPEED_HACE_MAX_SG && copied < len; i++) {
-> +        entry =3D address_space_ldl_le(&s->dram_as, addr,
-> +                                     MEMTXATTRS_UNSPECIFIED,
-> NULL);
-> +        sg_addr =3D address_space_ldl_le(&s->dram_as, addr +
-> SG_LIST_LEN_SIZE,
-> +                                       MEMTXATTRS_UNSPECIFIED,
-> NULL);
-> +        sg_len =3D entry & SG_LIST_LEN_MASK;
-> +
-> +        sg_addr &=3D SG_LIST_ADDR_MASK;
-> +        addr +=3D SG_LIST_ENTRY_SIZE;
-> +
-> +        if (sg_len > len - copied) {
-> +            sg_len =3D len - copied;
-> +        }
-> +        if (address_space_rw(&s->dram_as, sg_addr,
-> MEMTXATTRS_UNSPECIFIED,
-> +                             buf + copied, sg_len, to_dram)) {
-> +            return false;
-> +        }
-> +        copied +=3D sg_len;
-> +
-> +        if (entry & SG_LIST_LEN_LAST) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    return copied =3D=3D len;
-> +}
-> +
-> +/*
-> + * Perform an AES/DES/3DES ECB/CBC operation. The source and
-> +destination are
-> + * either single contiguous buffers (direct access mode) or
-> +scatter-gather
-> + * lists (HACE10[18]/[19]), addressed by HACE00/HACE04; the IV/key come
-> +from
-> + * the context buffer (HACE08). For CBC the resulting chaining IV is
-> +written
-> + * back to the context buffer so the driver can continue the chain.
->   */
->  static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)  {
-> +    bool sg_mode =3D cmd & CRYPT_CMD_SRC_SG_CTRL;
->      uint32_t len =3D s->regs[R_CRYPT_DATA_LEN];
->      bool encrypt =3D cmd & CRYPT_CMD_ENCRYPT;
->      g_autoptr(QCryptoCipher) cipher =3D NULL; @@ -631,6 +676,7 @@ static
-> void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
->      size_t iv_offset;
->      size_t blocklen;
->      size_t keylen;
-> +    bool status;
->=20
->      if (len =3D=3D 0) {
->          return;
-> @@ -684,8 +730,14 @@ static void do_crypt_operation(AspeedHACEState *s,
-> uint32_t cmd)
->      src_buf =3D g_malloc0(len);
->      dst_buf =3D g_malloc0(len);
->=20
-> +    /* Gather the source into the bounce buffer, per the selected mode.
-> + */
->      src_addr =3D s->regs[R_CRYPT_SRC];
-> -    if (!crypt_prepare_direct(s, src_addr, src_buf, len, false)) {
-> +    if (sg_mode) {
-> +        status =3D crypt_prepare_sg(s, src_addr, src_buf, len, false);
-> +    } else {
-> +        status =3D crypt_prepare_direct(s, src_addr, src_buf, len, false=
-);
-> +    }
-> +    if (!status) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: Failed to read src, addr=3D0x%" HWADDR_PRIx
-> "\n",
->                        __func__, src_addr); @@ -714,8 +766,14 @@
-> static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
->          }
->      }
->=20
-> +    /* Scatter the result back out, per the selected mode. */
->      dst_addr =3D s->regs[R_CRYPT_DEST];
-> -    if (!crypt_prepare_direct(s, dst_addr, dst_buf, len, true)) {
-> +    if (sg_mode) {
-> +        status =3D crypt_prepare_sg(s, dst_addr, dst_buf, len, true);
-> +    } else {
-> +        status =3D crypt_prepare_direct(s, dst_addr, dst_buf, len, true)=
-;
-> +    }
-> +    if (!status) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: Failed to write dst, addr=3D0x%" HWADDR_PRIx
-> "\n",
->                        __func__, dst_addr);
-> --
-> 2.43.0
+Change disassembly of control regs from C{num}/{name} to {name}
+Change disassembly of system regs from S{num}/r{num} to {name}
 
-Reviewed-by: Kane Chen <kane_chen@aspeedtech.com>
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/printinsn.c      | 99 +++++++++++++++++++++++++++++++--
+ target/hexagon/gen_printinsn.py | 14 +++--
+ 2 files changed, 101 insertions(+), 12 deletions(-)
+
+diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+index a7e46f4bcd..1673e95421 100644
+--- a/target/hexagon/printinsn.c
++++ b/target/hexagon/printinsn.c
+@@ -23,18 +23,105 @@
+ #include "internal.h"
+ #include "decode.h"
+ 
+-static const char *sreg2str(unsigned int reg)
++/*
++ * Used when there is some sort of error and we can't figure out the real
++ * system register name
++ */
++static const char *const generic_sreg_names[256] = {
++    "S000", "S001", "S002", "S003", "S004", "S005", "S006", "S007",
++    "S008", "S009", "S010", "S011", "S012", "S013", "S014", "S015",
++    "S016", "S017", "S018", "S019", "S020", "S021", "S022", "S023",
++    "S024", "S025", "S026", "S027", "S028", "S029", "S030", "S031",
++    "S032", "S033", "S034", "S035", "S036", "S037", "S038", "S039",
++    "S040", "S041", "S042", "S043", "S044", "S045", "S046", "S047",
++    "S048", "S049", "S050", "S051", "S052", "S053", "S054", "S055",
++    "S056", "S057", "S058", "S059", "S060", "S061", "S062", "S063",
++    "S064", "S065", "S066", "S067", "S068", "S069", "S070", "S071",
++    "S072", "S073", "S074", "S075", "S076", "S077", "S078", "S079",
++    "S080", "S081", "S082", "S083", "S084", "S085", "S086", "S087",
++    "S088", "S089", "S090", "S091", "S092", "S093", "S094", "S095",
++    "S096", "S097", "S098", "S099", "S100", "S101", "S102", "S103",
++    "S104", "S105", "S106", "S107", "S108", "S109", "S110", "S111",
++    "S112", "S113", "S114", "S115", "S116", "S117", "S118", "S119",
++    "S120", "S121", "S122", "S123", "S124", "S125", "S126", "S127",
++    "S128", "S129", "S130", "S131", "S132", "S133", "S134", "S135",
++    "S136", "S137", "S138", "S139", "S140", "S141", "S142", "S143",
++    "S144", "S145", "S146", "S147", "S148", "S149", "S150", "S151",
++    "S152", "S153", "S154", "S155", "S156", "S157", "S158", "S159",
++    "S160", "S161", "S162", "S163", "S164", "S165", "S166", "S167",
++    "S168", "S169", "S170", "S171", "S172", "S173", "S174", "S175",
++    "S176", "S177", "S178", "S179", "S180", "S181", "S182", "S183",
++    "S184", "S185", "S186", "S187", "S188", "S189", "S190", "S191",
++    "S192", "S193", "S194", "S195", "S196", "S197", "S198", "S199",
++    "S200", "S201", "S202", "S203", "S204", "S205", "S206", "S207",
++    "S208", "S209", "S210", "S211", "S212", "S213", "S214", "S215",
++    "S216", "S217", "S218", "S219", "S220", "S221", "S222", "S223",
++    "S224", "S225", "S226", "S227", "S228", "S229", "S230", "S231",
++    "S232", "S233", "S234", "S235", "S236", "S237", "S238", "S239",
++    "S240", "S241", "S242", "S243", "S244", "S245", "S246", "S247",
++    "S248", "S249", "S250", "S251", "S252", "S253", "S254", "S255",
++};
++
++static const char *sreg2str(uint8_t reg)
+ {
+-    if (reg < TOTAL_PER_THREAD_REGS) {
+-        return hexagon_regnames[reg];
++#ifndef CONFIG_USER_ONLY
++    if (reg < NUM_SREGS) {
++        return hexagon_sregnames[reg];
+     } else {
+-        return "???";
++        return generic_sreg_names[reg];
+     }
++#else
++    return generic_sreg_names[reg];
++#endif
+ }
+ 
+-static const char *creg2str(unsigned int reg)
++/*
++ * Used when there is some sort of error and we can't figure out the real
++ * control register name
++ */
++static const char *const generic_creg_names[256] = {
++    "C000", "C001", "C002", "C003", "C004", "C005", "C006", "C007",
++    "C008", "C009", "C010", "C011", "C012", "C013", "C014", "C015",
++    "C016", "C017", "C018", "C019", "C020", "C021", "C022", "C023",
++    "C024", "C025", "C026", "C027", "C028", "C029", "C030", "C031",
++    "C032", "C033", "C034", "C035", "C036", "C037", "C038", "C039",
++    "C040", "C041", "C042", "C043", "C044", "C045", "C046", "C047",
++    "C048", "C049", "C050", "C051", "C052", "C053", "C054", "C055",
++    "C056", "C057", "C058", "C059", "C060", "C061", "C062", "C063",
++    "C064", "C065", "C066", "C067", "C068", "C069", "C070", "C071",
++    "C072", "C073", "C074", "C075", "C076", "C077", "C078", "C079",
++    "C080", "C081", "C082", "C083", "C084", "C085", "C086", "C087",
++    "C088", "C089", "C090", "C091", "C092", "C093", "C094", "C095",
++    "C096", "C097", "C098", "C099", "C100", "C101", "C102", "C103",
++    "C104", "C105", "C106", "C107", "C108", "C109", "C110", "C111",
++    "C112", "C113", "C114", "C115", "C116", "C117", "C118", "C119",
++    "C120", "C121", "C122", "C123", "C124", "C125", "C126", "C127",
++    "C128", "C129", "C130", "C131", "C132", "C133", "C134", "C135",
++    "C136", "C137", "C138", "C139", "C140", "C141", "C142", "C143",
++    "C144", "C145", "C146", "C147", "C148", "C149", "C150", "C151",
++    "C152", "C153", "C154", "C155", "C156", "C157", "C158", "C159",
++    "C160", "C161", "C162", "C163", "C164", "C165", "C166", "C167",
++    "C168", "C169", "C170", "C171", "C172", "C173", "C174", "C175",
++    "C176", "C177", "C178", "C179", "C180", "C181", "C182", "C183",
++    "C184", "C185", "C186", "C187", "C188", "C189", "C190", "C191",
++    "C192", "C193", "C194", "C195", "C196", "C197", "C198", "C199",
++    "C200", "C201", "C202", "C203", "C204", "C205", "C206", "C207",
++    "C208", "C209", "C210", "C211", "C212", "C213", "C214", "C215",
++    "C216", "C217", "C218", "C219", "C220", "C221", "C222", "C223",
++    "C224", "C225", "C226", "C227", "C228", "C229", "C230", "C231",
++    "C232", "C233", "C234", "C235", "C236", "C237", "C238", "C239",
++    "C240", "C241", "C242", "C243", "C244", "C245", "C246", "C247",
++    "C248", "C249", "C250", "C251", "C252", "C253", "C254", "C255",
++};
++
++static const char *creg2str(uint8_t reg)
+ {
+-    return sreg2str(reg + HEX_REG_SA0);
++    uint8_t gpr = reg + HEX_REG_SA0;
++    if (gpr < TOTAL_PER_THREAD_REGS) {
++        return hexagon_regnames[gpr];
++    } else {
++        return generic_creg_names[reg];
++    }
+ }
+ 
+ static void snprintinsn(GString *buf, Insn *insn)
+diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
+index d5f969960a..cf1a12adbc 100755
+--- a/target/hexagon/gen_printinsn.py
++++ b/target/hexagon/gen_printinsn.py
+@@ -28,13 +28,14 @@
+ ##     Generate data for printing each instruction (format string + operands)
+ ##
+ def regprinter(m):
+-    str = m.group(1)
+-    str += ":".join(["%d"] * len(m.group(2)))
+-    str += m.group(3)
+     if ("S" in m.group(1)) and (len(m.group(2)) == 1):
+-        str += "/%s"
++        str = "%s"
+     elif ("C" in m.group(1)) and (len(m.group(2)) == 1):
+-        str += "/%s"
++        str = "%s"
++    else:
++        str = m.group(1)
++        str += ":".join(["%d"] * len(m.group(2)))
++        str += m.group(3)
+     return str
+ 
+ 
+@@ -142,11 +143,12 @@ def main():
+                     else:
+                         regno = ri
+                     if len(b) == 1:
+-                        f.write(f", insn->regno[{regno}]")
+                         if "S" in a:
+                             f.write(f", sreg2str(insn->regno[{regno}])")
+                         elif "C" in a:
+                             f.write(f", creg2str(insn->regno[{regno}])")
++                        else:
++                            f.write(f", insn->regno[{regno}]")
+                     elif len(b) == 2:
+                         f.write(f", insn->regno[{regno}] + 1" f", insn->regno[{regno}]")
+                     else:
+-- 
+2.43.0
+
 
