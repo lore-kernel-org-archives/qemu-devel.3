@@ -4,115 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43588C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:41:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FAF3C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpUf-0001GB-AE; Tue, 11 Aug 2026 12:38:26 -0400
+	id 1wtpNh-0001Je-Dq; Tue, 11 Aug 2026 12:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtpUW-0000zX-4w
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:38:16 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtpUU-0002mi-BS
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:38:15 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-80cebd41372so46413547b3.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 09:38:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786466293; cv=none;
- d=google.com; s=arc-20260327;
- b=YqNydX0mGCiDqlr665eM5/19vGd6xjkg/ZqPNFOv93S0/F82vdSUYnH9brL4s3Ftt5
- 6r1/rIFPwqsm9t8LQfNhXmAl6QiOtozGNsEDC1oXCUt7iEFBiFMJ6BDMrFMoHTMebvL1
- +dV+2t+ebkogc8uCk8YPKYh5OJsqnlZjoJnTxMv/edL6hNeYp34js4AUajD+sD8U31yd
- /2v1nkM2t/7sacHuVR44ty45wBiqvWzxoNjAhahhjuKZmmUaA9F4mc+fieaUVLcaXesT
- fOkv2Jayb8aCW1UGB/NBFswFIRjd4PEv0z4FfbcElqJfHWM20tf7KdsSRyxSrVdsbPTR
- osmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=dFjvSQ0Z5STTXqbBfIW5yzwrJ19UJ0wpYPKOA1LkQKI=;
- fh=w2qb3jk9JwAPSB6Csh8SoINPieWh1o32x8VoECJYBoE=;
- b=QCvwTENdiZqenYqlgSOu9V+/hvaoI2ZyZK8fPAV38AS/E59HS18h03uqdalHn/rfBX
- a9q2bnbECQYOfVr7WdEgUB8UBJ2DmUfdlXzQ6LQv7N64gZvuPlZ5/Ohu29tYpnf0IHwR
- XAXsfW4/9GLoXBbGHo58HZOpBzthgwOEYhkzGumfU1Xo/+popIfhrrJbot5Intvy/LZ0
- /LSKocyvcVVjdcAVGvQhMYV3kGfZnwc1y7+PqTRu0JK/na673f9Ikh7VIZa427QBaAJb
- wgyYoEcsij+uIwPPUCf6R+1mNiJyT07YoTmRDydTqqeab4S0cGrjRLjoe04TILtX6gRG
- ielA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786466293; x=1787071093; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=dFjvSQ0Z5STTXqbBfIW5yzwrJ19UJ0wpYPKOA1LkQKI=;
- b=PEn3NBsrKBY9rXek0eWdlZZsMJ1yFig12kX8PnuwEgLBdTPKUHk2rtSpSfJ8diAwM4
- l1aIPSOFjyvwZTBCTh8eBajYPknZau05UhKOveACiiBNakR8CotPbpZgihmQck7ewNDE
- hhIq39W54BnJaCPrKX9ZzApUkuvDXHXswZS/qX9sGi7P2UUp3Pq6CCK3Chi2Gu78/xW9
- 4OVd0CqFTnOrlKiIPeIeGOxCWquta7oEeOLgaC2n72naTkStv3trppFca6uJtQU4rUpd
- cFIm5Lr+QinA8TzkFSzOIwbz3LWvKH02doMZeBkon9Lqw6ItNN4z5QBkoffCB9EQ2a50
- GipA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786466293; x=1787071093;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=dFjvSQ0Z5STTXqbBfIW5yzwrJ19UJ0wpYPKOA1LkQKI=;
- b=GuRAj3y4VRAQTvgnFlmj0G+3HNufwsI7EQjGJp/hzWXlwNUxFILbT+H4r+hgJ9Bwbs
- e0uVb19dgPUdWZUY4LqIOzNnN4cRwvNRuojx3B1XcNjcdDhfZncrwl82RqX5X/8SMQ+c
- nIvtE/EFdFxzeO12mOpz8mBKp+sPfHm3AwQ0eRwY3AZ/26I/N6fRITG5+einm4w5Azni
- 8MeHR0KcK9HL8MG//SzUgm42EZgDU+ApshyUX3FSUvbejN7p5iS3BS2yrjMemBPple9H
- GCjwTfLPx6Z8YolLpJFK/9pKsc/VQ6SdFzGJCiU36enldGx3zeujgCdekoKodxuaUQBk
- dX8g==
-X-Gm-Message-State: AOJu0YzPbC2b6xExp38ZhxuKp2NjsiuQ2g75tupj/Gm3DHpMWTcZNrIm
- N6syHjvx52TYx7dubH99rG/CAqGbfLl/fmU2vV6aVcvM5eLweTzGuw93B0AOwE/euGGIxoA2hVr
- jbmh1n259zN0dO5+GC4jgmZa7UFyYIb/4Z/BZVMM3Ag==
-X-Gm-Gg: AR+sD11Gvy7U2+OTzAAC4zAXXibCKy3oKuFqY/sIum/eVDy8ciR8zlTbjPWJf8Xc23k
- Kfeh5CW8rRm5HvcX/T2a+YHIVF9G/yk+Crz9zfGOgpQlqhRCs/khrrEo4uJk0p1YYS0H/C2z08W
- ADUAXwU+EqPfwSBs9ZYsr9W96WcF30TLeLXFKrfOl33UhLkN4DHqVss1dx1b2q0cZ5EyFSp2Ude
- 9R29xZeTTP/B4HI1ZfZvnRXkxnGzmksPssKf/0cuOgfz72H9qr07E3yK+s+CS9BxPpPhLBfYLV+
- q6oZfsQtAHJBfATNbh8oiBS0b3I4MKZZNJZHjpWoRPjFzFmnst/9o7FvpUC25F85j8oQJpWVVgf
- snDESUtp9UEruFCeXQ56X9zaRAUJP
-X-Received: by 2002:a05:690c:698d:b0:81f:650c:98cd with SMTP id
- 00721157ae682-82f2dc957b4mr35649487b3.28.1786466292911; Tue, 11 Aug 2026
- 09:38:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNb-0000ml-LL
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNX-0000jF-Kt
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786465862;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A0rfqHYkg9gpevvDZkO/JoxV/QyKM6R5lV11DiT5Z24=;
+ b=d9QVPgGUL/lalF4CIm3rkGEcwjKYrHeAcNa+8DyvMNUuvIHcgkPHQBabvPnW81Bl4wOlZK
+ Q74FsI+LLXRZD1BDq33xyjJVi1fOAWHWaoVMjiXiyeyGNynfEIlxCA3UmmmiSlgP8e4zGA
+ NN4so/ZbTF8xUEtLhXSc3wgG1zbw/n0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-2fvQZadTOuKSPblxuCmfzg-1; Tue,
+ 11 Aug 2026 12:30:59 -0400
+X-MC-Unique: 2fvQZadTOuKSPblxuCmfzg-1
+X-Mimecast-MFC-AGG-ID: 2fvQZadTOuKSPblxuCmfzg_1786465858
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AD111800115; Tue, 11 Aug 2026 16:30:58 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.48.12])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B40D1195DF91; Tue, 11 Aug 2026 16:30:56 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 35/83] hw/gpio: pca9552: move PCA955xState definition out of
+ the header
+Date: Tue, 11 Aug 2026 18:28:50 +0200
+Message-ID: <20260811162938.1403216-36-clg@redhat.com>
+In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
+References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20260811154930.13915-1-philmd@oss.qualcomm.com>
- <20260811154930.13915-5-philmd@oss.qualcomm.com>
-In-Reply-To: <20260811154930.13915-5-philmd@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Aug 2026 17:38:01 +0100
-X-Gm-Features: AUfX_mzkGLnWUOyapv75Mq5EtKUny6ry6vUJNsBlgwPnJh8pRPkCmUXWBtjU-vQ
-Message-ID: <CAFEAcA_3uQhuCmuzTi1xnsrXZXO9zJHLC_WE=OfmLGwi3h6J5w@mail.gmail.com>
-Subject: Re: [PATCH v4 4/7] hw/nmi: Remove @cpu_index argument from
- nmi_inject()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Corey Minyard <minyard@acm.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,68 +84,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Aug 2026 at 16:50, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> nmi_monitor_handle() is not related to the monitor, rename
-> it as nmi_inject().
->
-> Return a boolean value indicating success / failure as
-> recommended by the Error API since commit e3fe3988d7
-> ("error: Document Error API usage rules").
->
-> The 'cpu_index' argument is not used, remove it.
-> This officially drops the current CPU for HMP command.
->
-> Document nmi_inject() as suggested by Peter Maydell in
-> https://lore.kernel.org/qemu-devel/CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9=
-RYeo8fKqz7gcw@mail.gmail.com/.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  include/hw/core/nmi.h  | 25 ++++++++++++++++++++++++-
->  hw/core/nmi.c          |  9 ++++-----
->  hw/ipmi/ipmi.c         |  3 +--
->  hw/watchdog/watchdog.c |  2 +-
->  system/cpus.c          |  2 +-
->  hmp-commands.hx        |  2 +-
->  6 files changed, 32 insertions(+), 11 deletions(-)
->
-> diff --git a/include/hw/core/nmi.h b/include/hw/core/nmi.h
-> index 4c4ce79071d..2ff5be1e214 100644
-> --- a/include/hw/core/nmi.h
-> +++ b/include/hw/core/nmi.h
-> @@ -46,6 +46,29 @@ struct NMIClass {
->      void (*nmi_monitor_handler)(NMIState *ns, Error **errp);
->  };
->
-> -void nmi_monitor_handle(int cpu_index, Error **errp);
-> +/**
-> + * nmi_inject: Inject an NMI, in a machine-specific way
-> + * @errp: pointer to error object
-> + *
-> + * This function injects an NMI, in a machine-specific way. The
-> + * intention is that this should typically trigger a guest kernel
-> + * dump or reboot, and might happen as a result of user request
-> + * from the monitor, watchdog timeouts, and similar events.
-> + * (For example on the x86 PC it triggers an NMI on all CPUs,
-> + * and on s390 it triggers the RESTART interrupt on the first CPU.)
-> + *
-> + * The NMI is injected by looking for QOM objects which
-> + * implement the TYPE_NMI interface, and calling their nmi_monitor_handl=
-er
-> + * method. Usually it is the machine model class that implements
-> + * this interface.
+From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-I guess with patch 7 this ought to say "looking for a QOM
-object which implements the TYPE_NMI interface, and calling
-its nmi_monitor_handler method".
+Nothing outside pca9552.c uses the PCA955xState structure, its instance
+checker, or the PCA955X_NR_REGS/PCA955X_PIN_COUNT_MAX defines: the board
+files and qtests only rely on the TYPE_* name macros (and the register
+macros in pca9552_regs.h).
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Move the state structure and the size defines into pca9552.c, leaving
+pca9552.h with just the type-name macros. While at it, replace the
+separate DECLARE_INSTANCE_CHECKER and DECLARE_CLASS_CHECKERS declarations
+with a single OBJECT_DECLARE_TYPE().
 
-thanks
--- PMM
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-2-814575bc076b@free.fr
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/gpio/pca9552.h | 30 ++++--------------------------
+ hw/gpio/pca9552.c         | 29 ++++++++++++++++++++++++-----
+ 2 files changed, 28 insertions(+), 31 deletions(-)
+
+diff --git a/include/hw/gpio/pca9552.h b/include/hw/gpio/pca9552.h
+index 43b175235d2f..71479ea0006e 100644
+--- a/include/hw/gpio/pca9552.h
++++ b/include/hw/gpio/pca9552.h
+@@ -1,39 +1,17 @@
+ /*
+- * PCA9552 I2C LED blinker
++ * PCA955X I2C LED blinker and I/O expanders
+  *
+  * Copyright (c) 2017-2018, IBM Corporation.
+  *
+  * This work is licensed under the terms of the GNU GPL, version 2 or
+  * later. See the COPYING file in the top-level directory.
+  */
+-#ifndef PCA9552_H
+-#define PCA9552_H
+ 
+-#include "hw/i2c/i2c.h"
+-#include "qom/object.h"
++#ifndef HW_GPIO_PCA9552_H
++#define HW_GPIO_PCA9552_H
+ 
+-#define TYPE_PCA9552 "pca9552"
+ #define TYPE_PCA955X "pca955x"
++#define TYPE_PCA9552 "pca9552"
+ #define TYPE_PCA9535 "pca9535"
+-typedef struct PCA955xState PCA955xState;
+-DECLARE_INSTANCE_CHECKER(PCA955xState, PCA955X,
+-                         TYPE_PCA955X)
+-
+-#define PCA955X_NR_REGS 10
+-#define PCA955X_PIN_COUNT_MAX 16
+-
+-struct PCA955xState {
+-    /*< private >*/
+-    I2CSlave i2c;
+-    /*< public >*/
+-
+-    uint8_t len;
+-    uint8_t pointer;
+-
+-    uint8_t regs[PCA955X_NR_REGS];
+-    qemu_irq gpio_out[PCA955X_PIN_COUNT_MAX];
+-    uint8_t ext_state[PCA955X_PIN_COUNT_MAX];
+-    char *description; /* For debugging purpose only */
+-};
+ 
+ #endif
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index 50e868a6e9a7..36bc4f86edb1 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -1,7 +1,10 @@
+ /*
+- * PCA9552 I2C LED blinker
++ * PCA955X I2C LED blinker and I/O expanders
+  *
+  *     https://www.nxp.com/docs/en/application-note/AN264.pdf
++ *     https://www.nxp.com/docs/en/data-sheet/PCA9552.pdf
++ *     https://www.nxp.com/docs/en/data-sheet/PCA9555.pdf
++ *     https://www.nxp.com/docs/en/data-sheet/PCA9535_PCA9535C.pdf
+  *
+  * Copyright (c) 2017-2018, IBM Corporation.
+  * Copyright (c) 2020 Philippe Mathieu-Daudé
+@@ -12,9 +15,9 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+-#include "qemu/module.h"
+ #include "qemu/bitops.h"
+ #include "hw/core/qdev-properties.h"
++#include "hw/i2c/i2c.h"
+ #include "hw/gpio/pca9552.h"
+ #include "hw/gpio/pca9552_regs.h"
+ #include "hw/core/irq.h"
+@@ -24,6 +27,25 @@
+ #include "trace.h"
+ #include "qom/object.h"
+ 
++#define PCA955X_NR_REGS 10
++#define PCA955X_PIN_COUNT_MAX 16
++
++OBJECT_DECLARE_TYPE(PCA955xState, PCA955xClass, PCA955X)
++
++struct PCA955xState {
++    /*< private >*/
++    I2CSlave i2c;
++    /*< public >*/
++
++    uint8_t len;
++    uint8_t pointer;
++
++    uint8_t regs[PCA955X_NR_REGS];
++    qemu_irq gpio_out[PCA955X_PIN_COUNT_MAX];
++    uint8_t ext_state[PCA955X_PIN_COUNT_MAX];
++    char *description; /* For debugging purpose only */
++};
++
+ struct PCA955xClass {
+     /*< private >*/
+     I2CSlaveClass parent_class;
+@@ -33,10 +55,7 @@ struct PCA955xClass {
+     uint8_t max_reg;
+     bool has_led_support;
+ };
+-typedef struct PCA955xClass PCA955xClass;
+ 
+-DECLARE_CLASS_CHECKERS(PCA955xClass, PCA955X,
+-                       TYPE_PCA955X)
+ /*
+  * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
+  *        chips are the reverse of the PCA953X family of chips.
+-- 
+2.55.0
+
 
