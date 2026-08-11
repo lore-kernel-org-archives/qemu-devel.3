@@ -4,104 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0954BC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42A5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtq84-0008Ja-2Q; Tue, 11 Aug 2026 13:19:08 -0400
+	id 1wtqCL-0001GK-UD; Tue, 11 Aug 2026 13:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wtq81-0008Hz-Ub; Tue, 11 Aug 2026 13:19:05 -0400
+ id 1wtqCG-0001Fp-Sn; Tue, 11 Aug 2026 13:23:29 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wtq80-0004xf-Eq; Tue, 11 Aug 2026 13:19:05 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wtqCF-0006Bq-1V; Tue, 11 Aug 2026 13:23:28 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BGWFPl965413; Tue, 11 Aug 2026 17:18:59 GMT
+ 67BGVnxi846880; Tue, 11 Aug 2026 17:23:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=upkg8g
- cf2rPFrf+krmG4hzps6hY/YPvNjAB9lHs9PK4=; b=BQ9WYBE6jk/RIDmXuRbhYV
- 7aYsqq+oRtZcBgZmPI+DU9/9OchBfsSf/uMnCZG926luK0WkkM4Div2SgBA0wJtQ
- uGEAZlFOB8KEeUnvt595fJyU/MtqvRl/ZKw2AuRM8JBqhLvCIFPyhA6fO6WLUIFG
- sWzPixwtn0khagEvFqzuEx3QuadKdpSfxL+hX/C7skEKj7K3el5kzmRnMJo/cXaL
- U5lmvMGHGmTEMXuEbbcrsFUa/M0c+X78oYtKO52KzRS0cxyI4Olm5KJQGIigm5Q1
- 9fEF7CUvQkrDIfRXiu3v8Xz8D/AvDQI3Smu81V2Of0ThQx4bOl/rIOb6LEf2r43A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=b8kp9N
+ ixOejLzB4FMUpHJoV2SqCjUPCC9XQ8+g0Jaw8=; b=mDGvn4przlnWydagFrqQeS
+ BjlxnqHvyu658eCCY2C7P4YzkBtPvS/fISTnzz8qak8f9Ct/a/kGf8KBPO+/jkJ9
+ YujrZkPpShm4VPBetgYLpMY6TG2GENTnb6nEPFIoxDs06GUO9lhD1+Kt3tH0TD08
+ QpEeFmFBWmtXCTXE5m1rqrNxvNVjKqIcMJMX/Q438vuufC6Wf90yv89atl0RDuyn
+ p6eXpyG0nj5CjE4hH4EBGbWdKXM49vsO33WjH+S+QjoioLIz9RfHeie6uDO+BcDA
+ 9A9iYbARyvFv/n4deMMbmCdEAY9BrR8kXVNNuCIHQU4vFwLv0fUxEWlduIgoqw1w
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvnw5g0a-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp2wh5s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 17:18:59 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BHBUfn028428;
- Tue, 11 Aug 2026 17:18:58 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsjsy6b-1
+ Tue, 11 Aug 2026 17:23:22 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BHBF7x029645;
+ Tue, 11 Aug 2026 17:23:22 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesq2454-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 17:18:58 +0000 (GMT)
+ Tue, 11 Aug 2026 17:23:22 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67BHIvfH30278192
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67BHNK7w5374956
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Aug 2026 17:18:57 GMT
+ Tue, 11 Aug 2026 17:23:20 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6DBCD58056;
- Tue, 11 Aug 2026 17:18:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 596D45805A;
+ Tue, 11 Aug 2026 17:23:20 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A3D0D58052;
- Tue, 11 Aug 2026 17:18:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9297E58056;
+ Tue, 11 Aug 2026 17:23:19 +0000 (GMT)
 Received: from [9.61.240.229] (unknown [9.61.240.229])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 11 Aug 2026 17:18:56 +0000 (GMT)
-Message-ID: <5d600672-98de-4016-98bd-8f2bfd2e6bce@linux.ibm.com>
-Date: Tue, 11 Aug 2026 10:18:55 -0700
+ Tue, 11 Aug 2026 17:23:19 +0000 (GMT)
+Message-ID: <12aedf57-cf5e-4ab8-b762-d634b00f75f8@linux.ibm.com>
+Date: Tue, 11 Aug 2026 10:23:18 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/15] s390x/pci: Move/rename enabled from S390PCIIOMMU
- to S390PCIBusDevice
+Subject: Re: [PATCH v6 08/15] s390x/pci: Move dma_limit from S390PCIIOMMU to
+ S390PCIBusDevice
 To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
 Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
  david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 References: <20260807170812.658820-1-kshk@linux.ibm.com>
- <20260807170812.658820-8-kshk@linux.ibm.com>
+ <20260807170812.658820-9-kshk@linux.ibm.com>
 Content-Language: en-US
 From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260807170812.658820-8-kshk@linux.ibm.com>
+In-Reply-To: <20260807170812.658820-9-kshk@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=RsP16imK c=1 sm=1 tr=0 ts=6a7b5983 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7b5a8b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
  a=NT-D918DeMxGRRny-ogA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: HQJuSUjuPn9u4I_NRiYqE4iWOOY_Wq3Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDE0MiBTYWx0ZWRfX9X6QKyiyoxxP
- b2P/oL2qZtd+W2s3KsdbkYxi7+AXhsakI6o5aPdrJtq4g9mLSdVwZdT7DackabsaKRKgyQBS/72
- bdmHye5WEAEd2VSw0J6MsxeantX4wlwmjHaJ3HTnsr/Hf9HW1hhKltl4TgFa68LOUuu6O7FUQ0+
- x/gBbzLLVsEdBrM8lOwiEySABqBe/w2yQnVSHOEku9L4H3bNGwzQaMLut9lU07o3d+fnPjVVMcm
- MDv7lreCK3L/vBn776Vcke7WUzvRv1H3UTakjelQlbAquJFCNE9EMKrg9xOAjio39xK+Jx+fqMf
- 7xZUUZFlA9YWTjcqSUsUXN9NDv2dctGW5WY2mkzqRt2ff5gKvD4Z7sXBMvlaBshhCnFedgG1Q0/
- 66HSvTiOHnowaUErGnIgu/R+VECqflPlTPcdMG7V6WYB4QDw37Hadezdiw/jqKZ+26DItgtyXfX
- rcdzUuaFKn9M35TDbaw==
-X-Proofpoint-ORIG-GUID: HQJuSUjuPn9u4I_NRiYqE4iWOOY_Wq3Y
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDE0MiBTYWx0ZWRfX/zuivMbkQNoG
- WnF8TL4FbV9xvZy1UCjgT6u5aNXlMP04D6IK3uYcePu4ik4oGYd0TL7coTr9F8BH9JOnt4c2PJ8
- fa4sCmGXFJDkgdBgZ1XHD6gNG2Li2uo=
+X-Proofpoint-GUID: Wi2rx1OLi8GVxEBfITsD3nMZzMJdK2Nh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDE0MiBTYWx0ZWRfX1DJZK/BBs1r/
+ /UHT/tP2Cj62C553KoXKkmBASU5o12+vcw6zeiqDR5lCGr5Ijar4/5QlxOHsFouDNm73qglBBeM
+ 7kXsblX1xpAsFQPtsFBYTHMQk83FsPL2BO36OkKYtD/GUew/gfDIxwzqkdVt27v8svlV5xgGCb3
+ mCJ4aRE+4oHg5c5DNZ6fQdZKRxFVeLKIqDZw6MdSqpLS2DmK9ovI7XwnGb7lk8E3/N4mzfWlduN
+ +3lxIPR8iKKOX6a7kLA8Ojs0fEEnao9XERVNNbdArnfNe8rAyIq0nVQhxEpIGln3pNg1EDoPg/V
+ 9dF/AyjUyG+MuJEQsRcCxc1sfK4sdnwtOhE4xPRAfn3IajukBFcg2bymFO+ATY9+Dzbt203/J+E
+ FTDgoMBX+sX7+gTGFK9a76I5MsgSlZRv2EXTjEl7i5eBYEAWpYRW56HHVzfYzFxI4jdwPwLXcZZ
+ P9A42AlI3k56RJznRBQ==
+X-Proofpoint-ORIG-GUID: Wi2rx1OLi8GVxEBfITsD3nMZzMJdK2Nh
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDE0MiBTYWx0ZWRfX+r6B1g0yaVou
+ /l2l+mQK7/e2G2VL/HY0+4Y2mSJ2NBVKUMB+8e2fmEBX+RQEedV9PbjqIbUQyk+t28k3N7OgKNk
+ 6nWrEpjI0UYosco0DqRplGpL5/E2Yp0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-11_04,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110142
+ suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608110142
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -132,14 +133,12 @@ On 8/7/2026 10:08 AM, Konstantin Shkolnyy wrote:
 > there to simplify S390PCIIOMMU which purpose is just to store the "root"
 > AddressSpace.
 >
-> This also allows to save/restore this field during migration.
->
 > Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
 > ---
->   hw/s390x/s390-pci-bus.c         | 14 +++++++-------
->   hw/s390x/s390-pci-inst.c        |  8 ++++----
+>   hw/s390x/s390-pci-bus.c         | 10 +++++-----
+>   hw/s390x/s390-pci-inst.c        | 23 +++++++++++------------
 >   include/hw/s390x/s390-pci-bus.h |  2 +-
->   3 files changed, 12 insertions(+), 12 deletions(-)
+>   3 files changed, 17 insertions(+), 18 deletions(-)
 
 Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
