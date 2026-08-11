@@ -4,138 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C5C8C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E742C5CFD9
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtjXA-0004VD-HN; Tue, 11 Aug 2026 06:16:36 -0400
+	id 1wtjY4-00050q-Mj; Tue, 11 Aug 2026 06:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wtjX1-0004UY-40; Tue, 11 Aug 2026 06:16:27 -0400
-Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtjXz-000507-VV
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:17:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wtjWy-0003W7-Qx; Tue, 11 Aug 2026 06:16:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YI5kSwzQ+EjBZMa13ms19/HOoQ1mFoCbyOOwTo/RYtuw3yLGax2LVsA3fhhKEyFJJGYGtY8xa74GTIWqQ/cGF74sV3ASc9plOWB5BL9KYMQVH/pLcXF9Ho+aRVfsAuXdDnRfKHmP7/nOJDBvhnhqpi0Jb+0jDWYqLVo8W6l3XzP0uiQq5RvMXhz84uCKDDkhwLlDSdZ6y2iqLCNwkApHFRwZFGZsDsRD9W5R3G0KqqWc9S9QQ9HSgaPHliuEVZ0C7Xfdz2oznmf+icnKRm5VGffzUwNE+hhJxF2LHG0O28RUMZuXIBY5A1FCtrmO/c+25BkzTZdu++f8vBn3qvbfAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c3bS3XAPZNOWHR2iEwH5LAw5BzgpX9xCyjM0Ne0OZ8M=;
- b=lkAHXr0NeYOsEjrL6xpNnafpdTS7uZr+9D4QecdO2Ew+PJ07/cigqc8rhCmKeEHNxPp9PLRFHsToLrpbD831lpu3nLMN4v91x5UwwE2XKyFdcdjA5JILvPVP1EUo9DpWLYICB66Ka5Po4ucYIPfeHThsEVD9mi4MD6XUZuhplGskq0x6i5MFZHT1tpyHc7l/CKJ25Q5qJmSYgmzKJgJd9iajtl9670HFJoe8R8JRVRAiD3II8LTz5sIXFTVC1y6YQ/Nkhc6d3il2WBOrym1Ab8jRWqynRONIylUNjGDU0GhzmGSkGGJYaxr/6MCBZMXAqmueF2xMxy2sqcthmAtJyQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c3bS3XAPZNOWHR2iEwH5LAw5BzgpX9xCyjM0Ne0OZ8M=;
- b=0Haz3cYX3f5vu85xNKpSdi9n3ojQwNzlMTVh3Q0BuokO5xwUYlGtWFKPmXgP7ataWa3Acjq3uK1L9mZOUX2Hf7MWJX0IJe6TJRV6mxWuE/sL5zjZyGG/PILc/Nd+blG9BgvY4bINz3bJdcP2Dblv8kF6c32VDFUOcTmxIYd+5L2381cfcE3mc3D3TtkZTLK+1aVRIzTJskQ0/tND3B5bM/PCROyGu3RxN7P5sRy9B+ndUOHPbUuXSeJRa+BmxXn45afkMSFVzpzKXTyNQa81N22Gv/kKqsS84hc6Bw0VlyJZKQYHrGlTsqkLueXh5HJUeG6KWswfLedY8NswJe0PZQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by DB9PR08MB9612.eurprd08.prod.outlook.com
- (2603:10a6:10:45e::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
- 2026 10:16:15 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
- 10:16:14 +0000
-Message-ID: <8d19b588-dfdb-4e60-837a-c43d335cd935@virtuozzo.com>
-Date: Tue, 11 Aug 2026 13:16:13 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qcow2: repair a dirty image when it becomes writable
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-References: <20260731220039.1765584-1-den@openvz.org>
- <20260731220039.1765584-3-den@openvz.org>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260731220039.1765584-3-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR2P281CA0141.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:9e::20) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtjXx-0003ci-4v
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:17:27 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67B6v9EC2252636
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:17:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ TS9UX0Me5aWJDRPKzVaog3xIjd6Y36d4CbiDMA4XNbM=; b=IqHBgb4mY3HtAA9y
+ 55KAi6CNYGtbw1qgmh6RYyYmh4WNxuJahyvN2BJzzX/RigceYlybPXQW1awYpkcJ
+ 8v6roGngpOp8PS6YKD8JHxQcBftPhIhEUQvnOie3DkD6cQNwRtR2NWmbthjzmHpb
+ NNg1QeRN1C3KFNb0NcFexTxCG3AdhnJ+9jn3FthXSpZ2QS0blwNvbzxvyZCmjSlP
+ BTS5SNiZm8Ksz2N2wfz82LpoNwcrwc/z3kiDPRMUmrSbIJQL31og9lQ84MJYX6HJ
+ VFl2XetuaLFxJoX+wUUhHQGxIDvu+hBoDkp/ac9oGgv+HIHxdZUgN2C0WYtuNN39
+ rCB36w==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjk7bnff-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:17:22 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51bff5c7035so56664571cf.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786443441; x=1787048241; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TS9UX0Me5aWJDRPKzVaog3xIjd6Y36d4CbiDMA4XNbM=;
+ b=UBkfzOheV/NdtS+h4gPIEBC8hwtfwon4un/EvdAgyo3v4S6Ppln6wCWkNWsryfL0O9
+ cu6cgPIaItS7aYtGJLBWO1c0+bjBlzMqmTIND+3dD0cfYtXUXoHe5lQPHh+7c8N7CqyP
+ b2+8tCABA+uHy3HvCq5DYDSOB/xxAkoyfl6zB60xb4kWNDhN25RQPljJDcazmG6z5+Y7
+ boVNE2O6G69qC4Fe5Ut8R0lIYfZypWQP5u1BIQYWr73TRjNnSPmH2DzoM8D8USQmr9/T
+ EqCJDJKJjlD7D7zAxbDePNUTaFyXhlfEi5YK569KdBc3zNLycoQpgnNj8vaJw7hv8/tg
+ WFNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786443441; x=1787048241;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TS9UX0Me5aWJDRPKzVaog3xIjd6Y36d4CbiDMA4XNbM=;
+ b=kTk8Km4rUcqDy2OkquQcAKRvVK0fsJRSI2ApJkiOFvdbDuWhM461uYzd93rPLcsxki
+ Zt+AQZUPt91lBFE57zH6z0zalYDO8twgH/1cBFqaXsavs9oviBgtyQadMxnRuTDHhRJz
+ mZcKr+4rW5hPy3MRboTNBqi8oTXHnreiDoHSw9PuInscWZwr7p+3qYTBh3liQqjj63x5
+ qRyiVWdcw1xQKrv/D/EMKF7NMpnT79sGcFAaTCYZcmh/sQb6EH3HJI2Y83m+R5cRgsjn
+ 9Hm6fPhDZBeZ4rDcvVcPNhn0p8B8HVbHXgxwlP7qU2zoG+pM3MP7iJbH55a1Wjv7kh0y
+ WgWQ==
+X-Gm-Message-State: AOJu0Yxkxll+DNITJSyYbmQLXrpTvrvgeGGcKzRI5jgqSrLLR8o72R8Z
+ bdJdHuKdJ0J3X50uN9FeZVIQr9exa+4y61hYLBSAlDKwO98PG+cv23O2cylOtvmZLgun/PUKJZH
+ yiMpbUkavha/bUYwoDE+liopZtVgSzYlhyHEHgTX/Jspl5iy1SOJugUmyWA==
+X-Gm-Gg: AR+sD11zZ9XGh0UDBepccwXTDVFBmrn0XvYbhumBjScXcCiG2Ucm/IdAgizDDOf8hiu
+ eU7kBQUgWLSLxNje9ZYom7QGB5a/n7IKPKNKxDPi0Xmc7nd7s8ewMXw7etOB/dF5kcL8gctHi1X
+ uwieJg/US3xIfBn4/sBR61SnHmzxCeSYmaFWuId7REg0DWAWaWj8xKA/KRKjQ9CF1r7nHNBwetX
+ c+hlfw0mGlNVzlrKd53DuEinOrrmVMhx3n/FtctNSWuFRO+bsPFkO8a9E7NNcidh32ErgYSzSD0
+ hR7nGjnSBl77lWkKqUwiNUfBduVfwVbP9xpVl3wIUn3KLs7AgO1fG8MGWRWw3++MYoSa6Ya282P
+ MrIkGgQTtHV6zdD8HwSJwQ1ISXe0+SPl11USE503J
+X-Received: by 2002:a05:622a:5905:b0:51b:ee11:e71e with SMTP id
+ d75a77b69052e-52d58495872mr16757371cf.1.1786443441273; 
+ Tue, 11 Aug 2026 03:17:21 -0700 (PDT)
+X-Received: by 2002:a05:622a:5905:b0:51b:ee11:e71e with SMTP id
+ d75a77b69052e-52d58495872mr16756961cf.1.1786443440897; 
+ Tue, 11 Aug 2026 03:17:20 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4814a5ac691sm3439559f8f.3.2026.08.11.03.17.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Aug 2026 03:17:20 -0700 (PDT)
+Message-ID: <d0ad382b-9fe1-4ba2-a7f5-0bbb05daabe5@oss.qualcomm.com>
+Date: Tue, 11 Aug 2026 12:17:19 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|DB9PR08MB9612:EE_
-X-MS-Office365-Filtering-Correlation-Id: 95ef2f71-e6a1-4097-e6a1-08def791933a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|366016|6133799003|56012099006|5023799004|10067099003|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: nEZozH4DTomiiWgB3rLeono+2eoUCyXIUxaErHqzWE9IdIQgXqcmEQblQhTHHPA1XvOIZh8EfubH2cSpkxBD9SBjZhsTgI1ZrD/YhnA0te+Yk5GN6wrNV6LvRlkw7rJpaZU/AnrNl/7v/FBT8eqwQGDC6oG38X/EhzSxkHYtdYT8m7j2E5o/bsO99xOvisaXTwO+0M8giKFLxb3J/HtkHBtQF+cekQdoyn4ajRDmNVc3FAkXzL/BNGXpkPrul+jGpJn/R4z+a8OxKcxc8DBYX4mFMCu14kLHofkOQv3N2sRc+xFfCL0zbFYXXsN0BksDeKD8tjxyR48I1Xju/O5f2cKiaz1oU4kxzmlhwNTAUkgo8kL8d97/HyRpFAEFdsTC9CR5W5kkS43JQwZSZFskQ/jScn6s+ZHQlkFH21rhvPp7GnZRnE4xvzVdiAg/dVtpHzZ+YDJjrg3n/TPg2skRaWBXgWggvOvigWEWXKnz3uQhW2QEqNct2tHsvSZyWDnimv0lkOYzkwlzwC654IpqKkeZvW7YTNl+2JWgHSowbLd67sSpcoc2QyXJHDh1PTTPBVYefCe1YFLlAkiKQ69PzrhQb1ZOhl1tDAsCj74odGNDfpM+reCKCTRGUNWovcW5UJzkExHF6EydvyRzN9e4H5xvoQknTRn+zKrM1Fizxhc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(6133799003)(56012099006)(5023799004)(10067099003)(4143699003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QllCN1NpVUpCMnJySWNPQktNci83cWpEVmo2S3BYY0JBUHQrYXN0NjdsU2lY?=
- =?utf-8?B?bkN0RXVmL2xEUURpMjB0NDhBc2dFdUJzU1hLZ3NlRVRQVDdCUG4xK0Zmekxz?=
- =?utf-8?B?QzdiN2dVdDlvUWtHWGN0aVBEYk10UTJncFBGTjFNdlZwMCsxOXdCUUN0a3ox?=
- =?utf-8?B?TTQyNWVsNFJrTGlwcVBFTUJCL1ZDUFFjRVdRZDdSZS9majhyaTZudU5DOThw?=
- =?utf-8?B?NWZaUG5jNHhucFJ3d0ZSUGpSWDRuOStQaVZVUWd1d3daUVIvaHBwVXBVcjE5?=
- =?utf-8?B?SThvekl3WVBCU3A4dVQ2anYvZ0R1czZsOTVUcUh4dEdhbE8xdWlOMm94MHVZ?=
- =?utf-8?B?dGhMWVRQTWcyU2s5cWg5TFhlcGc5dExGWkNvZVMyd0d6RENpc2wzeGdWek9t?=
- =?utf-8?B?L2ZtYkJaZ3NMZTN6Y0IySVZpZzBFT0laT296cFhVWU45OWNuaTlaeHFyaHRq?=
- =?utf-8?B?UjBvdlJzNXRCTFdoRWJ3MW9kaHBya2pvZ1BBVmtJUytZTGlBbXJ1Q0NscFVT?=
- =?utf-8?B?bGE4a29ySXN2c21qYS9aTVpxaTlwTUFsWThFZGZxWjhOU0YzWU41anNOU0dV?=
- =?utf-8?B?ZDhYQnhCVVhEQThnT1crYkRWZHNBNnJyWFNhVGdrSmZESHhpN0JrOVl6QTFv?=
- =?utf-8?B?MVdndmJlcHdXTDVhbFZyaC8zSGdzMUN2YWo4b21ESm5Na2hvb2F0cG9EOGpU?=
- =?utf-8?B?NDQ2NEhBZEJmS3ByeStCMmhuMWtveVlRZlMzZE5WMjZlRkxKZmhjWTJINlVw?=
- =?utf-8?B?dkl3bXdRbXErTndZR0kvQkZBRkxOLzVralk2SEUzTGRxVEhJR1pjVEZNbjNv?=
- =?utf-8?B?SWROWDJGZkI0OE81NWU1cHA0cTk4TnR2ckFJaSt1OWh2OFdQOVorQmNOWDda?=
- =?utf-8?B?clpZbkEwYk40R2Q0UW9VYkFNMWlMZHV6akVSS3ZhczFlY0hIOUFDWnNQYjdT?=
- =?utf-8?B?aHZZbE5ZNzlvREg5T2JXVUt0dHF0Rkp5WDkwRWRRZUFHVGZqQjd0anROOHcv?=
- =?utf-8?B?R2FBYk4ydjFBTUhQT2JtQkN1MXdXY0d6S0RSU2pBVEM0Yjd2K1NlMWtnMUJx?=
- =?utf-8?B?bkhsNDN4NHdnMGlYT2ZWaHFRZjRKY0F0MnRBTHo0T2ZrenY4N1V3aUlqb2RZ?=
- =?utf-8?B?S3NRVm41R29Ka21wNVdHbkNtQ2RzalA4Q0xMeTcyclZnWHdyZnY2VkxyMlVy?=
- =?utf-8?B?Z01EckNsZGZ0Vkt1alJHVUNURGZhaXpwbVFqS3NLT3V3eWRncWJtUEVFMTFu?=
- =?utf-8?B?UDJPRnV3TmxINTQ4V1JQL0ViSkhTK3AzamNOdHFKVnBTUjVRNzlxMlRWWjFi?=
- =?utf-8?B?ZzlneXVMeDA3dW1sbkNzUUUxcXgwSnJKZjh1aDBJeEpjSGNDaCt2VUdRTEdl?=
- =?utf-8?B?d0dJMkF4aEVqbjNhU00zc0NHZloyRVpPWis5RjNObG9LcDNEYmswWXczamh4?=
- =?utf-8?B?L3NhVUJCMGVyd0RPSmhlaGptSThuNFNpYzQxQ1ByejN1Z2RCcVkvQVFaMEZY?=
- =?utf-8?B?R1AxbHRpcUQ5Tll1cHVjT2loUmxid1FEZlRmSjlBU0c4ekt1K1puamhjZ04w?=
- =?utf-8?B?OGo3RjBYQkZJL3lvZGRVY3NXWWEwdVNBaFRVbXZiY3BOZ3M3VEE2Uy9SL0p1?=
- =?utf-8?B?RUFueHBrQ3JxOXNLLzdRd2tLTDVVM0ZHRmJlakJHakVBbVNsbE9JcTgwWTlI?=
- =?utf-8?B?UmZ2R0tqT1FVN0JGdnZDLzVlb0VmMHNic3RteG8yUzFPeGIyemVXaXBUSlJz?=
- =?utf-8?B?Qjd1TGVQYUJRWWtvR3l2SzAzcUNIUWtLNlgzRXc4MEZKM2tSUlRKMkdaTk1P?=
- =?utf-8?B?T2N5WlZVNmpBczgyUlY2M2VmVllJdGFhWkV5RUQ3elhxZGFEMnRzZEd4LzBJ?=
- =?utf-8?B?ZE9KbGVuRVV6QzF3YytLRUJKajJ3ZkxJa1hEZGh2dGlERHpSUjN3dllrM005?=
- =?utf-8?B?aXE3ZHpVOGpodEtGcnl6WVRHZlI3aWhtSGVkcmJidytNYlVneFJCSU5VWlh3?=
- =?utf-8?B?VXk4aCtTWkt5enZEc0RmTFNYckdxNXl1andYcXZ5S2FCN2hQTm9QRDUrVXpV?=
- =?utf-8?B?MkFOa3V0VFJBUFZLejhNYVdpOFppU0dkNEIwSWZKNDlkSE00YU56Y2Z0OXBW?=
- =?utf-8?B?RUl0U0F0YmRzTk5TdVdyeWE2UkZ4RmRZeVlvakY4bWJkN0d0LzFKWlhIV1Jt?=
- =?utf-8?B?NXpMdFB3aU03cUVLSXZuTm8wUlMrZFpvS01kRFFMQ1pUOFdWS2x2cTBSaXR5?=
- =?utf-8?B?T0E2WEJXcDlVNWg5aE1MV2orc014SExKUWJJRnorcC9QTUwrZjl3ejAyeGVC?=
- =?utf-8?B?S0lFOEhyQjBDS296UDdiSFphZGNsangvVVB4MnRYcTZVNkZqdFNBSnEyY1FN?=
- =?utf-8?Q?mZfO+F1Bpo6hVPnM=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95ef2f71-e6a1-4097-e6a1-08def791933a
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Aug 2026 10:16:14.7728 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wiYLd8QyoM3YwClqF5zj1FozUUcxnR8Gqz02CM7vtJp3EZtVAfiUSN/WO9h8BAEKcOjV396plfqDXlVCdfQQdHf6YYq1rENs0044nrUjZtM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB9612
-Received-SPF: pass client-ip=2a01:111:f403:c200::5;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DUZPR83CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] hw/nmi: Remove @cpu_index argument from nmi_trigger()
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Corey Minyard <minyard@acm.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <20240220150833.13674-5-philmd@linaro.org>
+ <CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9RYeo8fKqz7gcw@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9RYeo8fKqz7gcw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Yus/gYYX c=1 sm=1 tr=0 ts=6a7af6b2 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=KKAkSRfTAAAA:8 a=TuDfYeBIR2I6H_eFPGAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 0_EJe9Kuo3K1IJ9p4xYgnIsy2r8Runn4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA4NSBTYWx0ZWRfXwOPZ9tisW+Cj
+ jz4wgg89Iv6t9Javgh/IFpZvZ5hKY2OCNghUb5YSB/RVWsTOXlMLkvLfqdBUBakdETGTnrrTvye
+ f1xaaIqrleaDTg4DkYJQy3sHXgHwEV00xsK/MDC/iFZKa2oLidAyE24qsd3hQBcFtYk6zj9nAiW
+ IEIrhDr2MBQhORn7wlLe9qZy8WGjo7yK7vN8szOsjxXxJyano5LDA6g9a6ZqxwJeNznsrvrWx1e
+ lSKiez94W81jiUIgxOHYq6SgLUZQMVlKB+CC1bg+/PloCkBlCaNEEbiJJ1wwwxQZ9sArMYR29Of
+ wudVtpCYVS77ErFeWrVXHU5nrRZQ0nSExKwCBaQfwhxpjGTO/xJdLL1VCegdp3Xp2Q0ug2v48eP
+ 48+Z6H1DJQHGXB/G05T1OO4vIwI19J4Fk0+svO8MQDrLo2AsS2e9DemcinInZncBYOxUwNyH/ZT
+ pbo2uMH+yrZhIdViFgg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA4NSBTYWx0ZWRfX0zIgtm488Rvw
+ Q8UjHhrxN4m3lbGRVRH9NJ0yuz5607sCjQeudfBmORY+emJt+jUPWsUCUG1Q38/hFo4pRn2r2qD
+ oEdwjsQjgkmYjs9QWoCdbPc5LXN4Rsw=
+X-Proofpoint-GUID: 0_EJe9Kuo3K1IJ9p4xYgnIsy2r8Runn4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-10_06,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110085
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,140 +159,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/26 1:00 AM, Denis V. Lunev wrote:
-> A dirty image must be repaired before anything allocates a cluster in
-> it. qcow2_do_open() does that, but only for a node that is writable
-> from the start. A node opened read-only skips it, and nothing revisits
-> the question once that node becomes writable, which block-commit does
-> routinely: commit_active_start() and commit_start() reopen the base
-> read-write for the duration of the job.
+On 20/3/24 14:34, Peter Maydell wrote:
+> On Tue, 20 Feb 2024 at 15:09, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> nmi_monitor_handle() is not related to the monitor,
+>> rename it as nmi_trigger().
 > 
-> With lazy refcounts the on-disk refcount block then still accounts for
-> the metadata clusters only, so the allocator restarts at the front of
-> the image and hands out clusters that L2 entries point at. Two guest
-> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
-> stays clear, and a clean close clears the dirty bit, so no later open
-> repairs the image either.
+>> Return boolean value
+>> indicating success / failure. The 'cpu_index' argument
+>> is not used, remove it.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/nmi.h       | 13 ++++++++++++-
+>>   hw/core/nmi.c          |  9 ++++-----
+>>   hw/ipmi/ipmi.c         |  3 +--
+>>   hw/watchdog/watchdog.c |  2 +-
+>>   system/cpus.c          |  2 +-
+>>   5 files changed, 19 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/include/hw/nmi.h b/include/hw/nmi.h
+>> index c70db941c9..32b27067f2 100644
+>> --- a/include/hw/nmi.h
+>> +++ b/include/hw/nmi.h
+>> @@ -49,6 +49,17 @@ struct NMIClass {
+>>       bool (*nmi_handler)(NMIState *n, Error **errp);
+>>   };
+>>
+>> -void nmi_monitor_handle(int cpu_index, Error **errp);
+>> +/**
+>> + * nmi_trigger: Trigger a NMI.
+>> + *
+>> + * @errp: pointer to error object
+>> + *
+>> + * Iterate over all objects implementing the TYPE_NMI interface
+>> + * and deliver NMI to them.
 > 
-> Do the repair in qcow2_reopen_commit_post(). bdrv_reopen_prepare() runs
-> before bdrv_list_refresh_perms(), so it holds no BLK_PERM_WRITE and,
-> with auto-read-only, bs->file may still have an O_RDONLY descriptor.
-> commit_post cannot reject the reopen, so signal corruption if the
-> repair fails rather than let writes alias live clusters. An inactive
-> node is skipped: bdrv_activate() calls qcow2_do_open() again through
-> qcow2_co_invalidate_cache().
+> I think I would document this something like;
 > 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> ---
->  block/qcow2.c              | 14 ++++++++++++++
->  tests/qemu-iotests/039     | 24 ++++++++++++++++++++++++
->  tests/qemu-iotests/039.out | 17 +++++++++++++++++
->  3 files changed, 55 insertions(+)
+>   * nmi_trigger: Trigger an NMI, in a machine-specific way
+>   *
+>   * This function triggers an NMI, in a machine-specific way. The
+>   * intention is that this should typically trigger a guest kernel
+>   * dump or reboot, and might happen as a result of user request
+>   * from the monitor, watchdog timeouts, and similar events.
+>   * (For example on the x86 PC it triggers an NMI on all CPUs,
+>   * and on s390 it triggers the RESTART interrupt on the first CPU.)
+>   *
+>   * The NMI is triggered by looking for QOM objects which
+>   * implement the TYPE_NMI interface, and calling their nmi_handler
+>   * method. Usually it is the machine model class that implements
+>   * this interface.
+>   *
+>   * Not all machines implement NMI handling; this function
+>   * will return an error if used on a machine which does not
+>   * implement NMIs.
+
+Thanks!
+
 > 
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 1543255eba..e660655a0d 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -2147,8 +2147,22 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
->  
->  static void qcow2_reopen_commit_post(BDRVReopenState *state)
->  {
-> +    BDRVQcow2State *s = state->bs->opaque;
-> +
->      GRAPH_RDLOCK_GUARD_MAINLOOP();
->  
-> +    if (bdrv_is_writable(state->bs) &&
-> +        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
-> +        BdrvCheckResult result = {0};
-> +        int ret;
-> +
-> +        ret = bdrv_check(state->bs, &result, BDRV_FIX_ERRORS | BDRV_FIX_LEAKS);
-> +        if (ret < 0 || result.check_errors) {
-> +            qcow2_signal_corruption(state->bs, true, -1, -1,
-> +                                    "Could not repair dirty image");
-> +        }
-> +    }
-> +
+> (In an ideal world we would also document per-board what
+> the NMI handling is, in the user-facing board docs...)
+> 
+>> + *
+>> + * On success, return %true.
+>> + * On failure, store an error through @errp and return %false.
+>> + */
+>> +bool nmi_trigger(Error **errp);
+> 
+> Why return a bool here? None of the callsites looks at the
+> return value.
 
-This looks wrong.  What if we blockdev_reopen() a healthy image which is
-already RW?  Say, we want to tweak L2 cache size.  Then we reopen
-RW->RW, and yet with your patch we do full scan of metadata.  IIUC we're
-being drained at this point -> we get guest IO stalled because of this
-scan.
+Indeed, but again this is the style *recommended* by the Error API
+since commit e3fe3988d7 ("error: Document Error API usage rules").
 
-The subject says "... when it BECOMES writable".  But essentially we're
-doing full check anytime it IS writable.  That's a completely different
-thing.
+Callers providing a non-NULL errp should check the return value,
+but the QMP handlers generated by gen_command_decl() like
+qmp_inject_nmi() here don't return anything.
 
-Andrey
-
->      if (state->flags & BDRV_O_RDWR) {
->          Error *local_err = NULL;
->  
-> diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
-> index a5be81bc4a..255dc2e7e5 100755
-> --- a/tests/qemu-iotests/039
-> +++ b/tests/qemu-iotests/039
-> @@ -137,6 +137,30 @@ $QEMU_IO -c "write 0 512" "$TEST_IMG" | _filter_qemu_io
->  # The dirty bit must not be set
->  _qcow2_dump_header | grep incompatible_features
->  
-> +echo
-> +echo "== Reopening a dirty image read/write should repair it =="
-> +
-> +_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-> +
-> +_NO_VALGRIND \
-> +$QEMU_IO -c "write -P 0x5a 0 512" \
-> +         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
-> +    | _filter_qemu_io
-> +
-> +# The dirty bit must be set
-> +_qcow2_dump_header | grep incompatible_features
-> +
-> +# The refcounts are only resolved when the node becomes writable. Without
-> +# that, this write is allocated on top of the cluster at offset 0 and reading
-> +# it back returns the data written here.
-> +$QEMU_IO -r -c "reopen -w" \
-> +            -c "write -P 0xb1 1M 512" \
-> +            -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
-> +
-> +# The dirty bit must not be set
-> +_qcow2_dump_header | grep incompatible_features
-> +_check_test_img
-> +
->  echo
->  echo "== Creating an image file with lazy_refcounts=off =="
->  
-> diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-> index 3c71e5a3dd..62073916a9 100644
-> --- a/tests/qemu-iotests/039.out
-> +++ b/tests/qemu-iotests/039.out
-> @@ -64,6 +64,23 @@ wrote 512/512 bytes at offset 0
->  512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
->  incompatible_features     []
->  
-> +== Reopening a dirty image read/write should repair it ==
-> +Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
-> +wrote 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-> +incompatible_features     [0]
-> +ERROR cluster 5 refcount=0 reference=1
-> +Rebuilding refcount structure
-> +Repairing cluster 1 refcount=1 reference=0
-> +Repairing cluster 2 refcount=1 reference=0
-> +wrote 512/512 bytes at offset 1048576
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +read 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +incompatible_features     []
-> +No errors were found on the image.
-> +
->  == Creating an image file with lazy_refcounts=off ==
->  Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
->  wrote 512/512 bytes at offset 0
+Markus, what would be your preference?
 
 
