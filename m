@@ -4,115 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6DBEC5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C891C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtmPw-0001dA-0V; Tue, 11 Aug 2026 09:21:20 -0400
+	id 1wtmQH-0001oW-7S; Tue, 11 Aug 2026 09:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wtmPu-0001cr-7O; Tue, 11 Aug 2026 09:21:18 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wtmPs-0006zI-GZ; Tue, 11 Aug 2026 09:21:17 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BCVdFl2731381; Tue, 11 Aug 2026 13:21:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=pySq8H
- gVbjdSZAETMs2GEJ/6jzNyAsxpPihbJrmxBUg=; b=F9QTlI1KBexdLAh198VRDg
- q3twZ78xiPyWanSgc5thyC3Uqn0Ouy3WoVYa27wyRjTsUtfsfWywUMkGGp4ZlZcj
- Ort2bUZ8TLBbuumjgsZGmeDmDa4qk9cGq898B4gNMuwJZPqbK+f1dzQi0hw5r+oe
- k3TFm12R0xGsbfNKBzld3fhCD0U5iLKNLToogvwScmtOC4X5OUkXj9B+O6R1s7XK
- t5nowtaMzqDM4sTH9SYtD56RLjr5ROiaJAW7pNraeZu/HurGMg98vWNXzFEaAbcq
- E1yJ7oGYf8N5352n8zyXDlnvg0lYnGLQY9Fvq/qfSrLsppAkg3VhSOA/lNLqPhSQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjyw218-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 13:21:07 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BCuI6E021133;
- Tue, 11 Aug 2026 13:21:06 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy0ts5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 13:21:06 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67BDL5XD26804922
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Aug 2026 13:21:05 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0C55858069;
- Tue, 11 Aug 2026 13:21:05 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E11D758065;
- Tue, 11 Aug 2026 13:21:01 +0000 (GMT)
-Received: from [9.124.218.109] (unknown [9.124.218.109])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 11 Aug 2026 13:21:01 +0000 (GMT)
-Message-ID: <8611cad6-bfc9-4d3d-9fe2-322fdb34e1ca@linux.ibm.com>
-Date: Tue, 11 Aug 2026 18:51:00 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtmQG-0001nh-6q
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:21:40 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtmQD-00073y-MF
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:21:39 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-8200b55dc47so41117567b3.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:21:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786454496; cv=none;
+ d=google.com; s=arc-20260327;
+ b=gIFrNiPbMBIVwTUanQHE2574RLp3PbwNAOa5pbFwxQT/gLdGyM1f3un8fPhAmI5+US
+ 8u3Qbi1mI85EM5NCrUShYavfAjS86O9mV1teID5Dt86JiqTyZMBCOemgVCG3s+s052Qu
+ EYRHDTBRKFJWcJdSw5TDb9TgNw0Zvu4FEQFDJM47KICUNgltpDTCGFjJf3oZMEdGWd6R
+ CZsv+FbJhTyVYAz+bXZx2fD0YKYvF42zyfSQQJF4n/lAuMq+duNrNY11NxUMJdU4ovHV
+ l2YxeSiEXGD0KU1s5YVmy5NXssvfRqK66RRq1K3yg3OcJcme0A+iMm2TyWKP4Yw26Tpv
+ DqZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
+ fh=Xpa6efb5XshLLxQDMJx+ki/cRscfYHSO5/O4/GqD30Q=;
+ b=jyVp7Pm9Gp+FsLcuSfdz23zyrLjS3ynSYjW6KPJFPsPFjAzmud3x1jCwwE+g6XuCUp
+ Ptcj7xBDgDK0NyWMMPn3LaeG+AeP1powuvdi5NxMM78mmjsP/F/dzOtsP30j4h+7Zj2l
+ zFinOSNS9GtsYnImDUbNKXskSry5JfThnNC/Kf4F4z/Hi2IvptxDVf9yZR1sUaMI0SYT
+ sEJzB/gZbxLGWGsn714r22T5+qMTpwvfzG/DdLStPZcnLT6O2fjM5qIabX1QkIPrEBwe
+ MoT2GW4ATOv1/Ac5Vjal/FZl47NL+9KRb9tutLayB0V+hPVf+MU/EZ2Km68wbpOZVJVm
+ f2zg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786454496; x=1787059296; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
+ b=ocY6weBpeRlyl3ZBO1M/ampHDi7YJkJnBrUygEaT9M4ggvn45/rzLDWNbpFc3agVVZ
+ ju7DWPbbfZGVrzMNxSINTnhMdMGbWjyIYZG3GTLfFG6yNz4o1Q/uxabLIR5yQ9xOOs0L
+ obUbya2l42WNrpLjqInAo5uY/ECTKp+b3Lr+79E/SMZur17AyANDU4DGunk7R6uRG50P
+ cTAyJgpsWKm+oEwrufD/7hotHdE2BYJpFKxNy41btne5e+MdRDtU0FQmdVcJwAyjX3Gm
+ q/oVsECU++Cyhn3KwKfnabe4jQuS/6LitDdZoO06YmX2LCm/5mTjIgZlU15wCXBxTyLe
+ vZ3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786454496; x=1787059296;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Z2R2x1gYsSkkO9yf4+gJGUKBXhfDrKpSSJsTpfkIVDw=;
+ b=QryqfUe1EdhIO1q7gInqtj3yurBiCeIRUbtHMRR4G58JpVGwwhAbh/KAuTEijoT/qh
+ KvuMQt2vGhi8ff89xPlD5bm0Vi7fr67i+3EOWBPlX0wHoTlb18zNIHrcPQnuxuBTSK/p
+ Cg1KlTuqc5SR0wa7Q5Nb0+DCT97pP3fXDKsFLu6alTLtxyGeecIcQvppp4zMw6+ayHf/
+ BK4SzOFGTaYyeW+7oY1PnzAe6KlfxeNZpt7oyy7LJ7U83xAItQCMrAlOvcycHrTSKF3S
+ qiVQ1BBO+GJjEiMA6UT5BFY1Gvf+welJEUde2wkwN74G3cEYPMqbnZKCXJVxhXkWrZC0
+ JWpQ==
+X-Gm-Message-State: AOJu0Yx8zsdQWV4uL3yoQ1l01aKTWhtqvGkl87wbryBJT+CIpi7cDyov
+ IsTAZR1GuRan5wQDGEuV9YmPK3tiYjxznsLC1zDCoGFFFeeMfr45vwKuoAFULqrFYC9diJaNI/9
+ EnxpiLXhA05kEG/qDxKjh7xICSkVqxmWlGAeZdImblg==
+X-Gm-Gg: AR+sD11UhSsQn4WP91Oz1V1Qsa3F5Q2wBYF9yQxEOdbL3NvB4emwljsP/JOgy0zWdwT
+ qeyzHEDIxkCrsozXq4P5egsWoMHy/cmR63/l4Sd0S0MZgZ1It6Esay7nhmCNCwU9jrMLslGmvG1
+ cwnBpOU5XNoIiiphJfYkbsE1qmEMsPzd2XzkEHwTgHOrA2gWYxSzGwUg+VALMI3TkWPvP/Q1Kp4
+ Gr562lj+TYDiPPm5rx3BuqRV8LAggCBqHFpW8b3S3TbS5uebrt0U3bRla2+YlQf2YeEn0QqtsKj
+ HBx8Fu1A0X5VZROS4j5oVW4fbbeRoIU6swcC71wg7yGKuA6s1nGpV+3T4Dy8axksSQNx4CqDRNa
+ nlV+AkfMzBUiFlwS08k9/chTf1ajJ
+X-Received: by 2002:a05:690c:c0a:b0:7fe:1333:c745 with SMTP id
+ 00721157ae682-82f2db9920emr22010437b3.27.1786454496265; Tue, 11 Aug 2026
+ 06:21:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Validate HTABMASK and reserved bits in SDR1
- for 32-bit mode
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: sesame_h@qq.com, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, harshpb@linux.ibm.com,
- Minhang Zhang <zhangminhang@kylinos.cn>
-References: <tencent_8A3172131A5ED2AD86D441389EB32CF67809@qq.com>
- <97953d1c-8777-4e25-9669-16a5e2a47602@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <97953d1c-8777-4e25-9669-16a5e2a47602@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDEwOSBTYWx0ZWRfX974d9Nw/d3w0
- 1gtdpBnqP8ioz1dsxuHKMmCVAsqdi11dBubRLKgUfHPJGmk/NznqjewelDWnQlWXogHSlybDCPq
- icAq5ndWb3PHM6st4FdHvdPTz2YC1kRq1X06y9WedcpendxynVDT037EJe7eQ/ETEkDG2QhETy0
- TJcIce5wVOSwAqRfAAGPlGhub3FTWG61kyVgSpplxlIt3RYBxbQCnA/8Um1RlK6LT9Oz5zSIkmg
- qCn3irxlNGPOlO83kUfPalld5hx9QxBef+CDf3kSD8zUAvc8TlZsjwdBj9QveA0c6ej3OOe3u1F
- c2e73Ld3pg5/72tfRCXtetcGoBXuYgScRUzarbIQWwtnYpzhbmLwgLoWFzSD6p+NLDEMNLDzAh1
- p75/KrAMynzm/VA1Zb7WrjjX0b8vVGVzTYBP5+Jiya4AtNa/4G6ta/PHzf7Fli5uxnrzjv1/+iL
- hWGtOSpVUuyZaaXdnOw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDEwOSBTYWx0ZWRfX9puJ23ie+Ets
- vRvmH5iNGUSssdEWT2CjfIbjWZJ6gy4DA7S18X70/fbfuX1dVIGomaIQvjyuI39NAkmtR04mAJM
- d+GAimNMhV9rmCivWtJD9Wf4l893UuE=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7b21c4 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=dZbOZ2KzAAAA:8
- a=j1eo19963X934_aDWvYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: roghYrBnO2aXPOPy07HNQSWuRcfQGoUk
-X-Proofpoint-ORIG-GUID: Hg-7u2p1AAnm-rafmZbQVpFraWynWDcd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-11_02,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- clxscore=1011 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608110109
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
+ <20260811105425.7429-4-philmd@oss.qualcomm.com>
+In-Reply-To: <20260811105425.7429-4-philmd@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Aug 2026 14:21:24 +0100
+X-Gm-Features: AUfX_mwKnAXVIy_-TgBj5BbsRNHimFpq5t2oTVQTmR0eGaJuCA_-FLOasSlmY1g
+Message-ID: <CAFEAcA_xv8+kzJpfRCxKY7FYZoFpLH34+_ftE_8S50RG8O3Bog@mail.gmail.com>
+Subject: Re: [PATCH v3 3/7] hw/nmi: Remove @cpu_index argument from
+ NMIClass::nmi_monitor_handler()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-s390x@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Thomas Huth <thuth@redhat.com>, 
+ qemu-ppc@nongnu.org, Corey Minyard <minyard@acm.org>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ David Hildenbrand <david@kernel.org>, Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,70 +137,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 11 Aug 2026 at 11:56, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Only s390x was using the 'cpu_index' argument, but since the
+> previous commit it isn't anymore (it use the first cpu).
+> Since this argument is now completely unused, remove it.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
 
-On 8/11/26 18:47, Chinmay Rath wrote:
-> Hi Minhang,
-> Thanks for fixing this. Took me a while to get hold of the docs for 32 
-> bit mmu, hence the late response.
->
-> On 8/7/26 14:47, sesame_h@qq.com wrote:
->> From: Minhang Zhang <zhangminhang@kylinos.cn>
->>
->> ppc_store_sdr1() had validation for 64-bit SDR1 values but lacked
->> corresponding checks for the 32-bit case.  According to the Power ISA,
->> in 32-bit mode SDR1 bits 16-22 are reserved (must be zero) and
->> HTABMASK (bits 23-31) must consist of a consecutive string of
->> 1-bits starting from the LSB, i.e., be of the form 2^n-1.
->>
->> Add checks to reject invalid HTABMASK values and log a guest error
->> for non-zero reserved bits, following the same pattern used by the
->> existing 64-bit validation.
->>
->> Signed-off-by: Minhang Zhang <zhangminhang@kylinos.cn>
->> ---
->>   target/ppc/mmu_common.c | 18 ++++++++++++++++--
->>   1 file changed, 16 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
->> index 2499e61..59e8324 100644
->> --- a/target/ppc/mmu_common.c
->> +++ b/target/ppc/mmu_common.c
->> @@ -57,9 +57,23 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong 
->> value)
->>                        " stored in SDR1", htabsize);
->>               return;
->>           }
->> -    }
->> +    } else
->>   #endif /* defined(TARGET_PPC64) */
->> -    /* FIXME: Should check for valid HTABMASK values in 32-bit case */
->> +    {
->> +        target_ulong htabmask = value & SDR_32_HTABMASK;
->> +        if (value & 0x007F0000UL) {
-> From what I see in the programming manual, shouldn't the bits of this 
-> flag be the other way around : 0x0000FE00 ?
-"bits of this mask", is what I meant. Not "flag", my bad.
-> Nevertheless, it would be better to form the mask by ORing the 
-> SDR_32_HTABORG and SDR_32_HTABMASK fields from mmu-hash32.h, instead 
-> of hardcoding it; the way it is already done for 64 bits in the same 
-> function.
->
-> Regards,
-> Chinmay
->> + qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "Invalid SDR1: reserved bits 0x" 
->> TARGET_FMT_lx
->> +                          " set\n", value & 0x007F0000UL);
->> +            value &= ~0x007F0000UL;
->> +        }
->> +        if ((htabmask & (htabmask + 1)) != 0) {
->> +            qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "Invalid HTABMASK 0x" TARGET_FMT_lx
->> +                          " in SDR1 (must be of form 2^n-1)\n", 
->> htabmask);
->> +            return;
->> +        }
->> +    }
->>       env->spr[SPR_SDR1] = value;
->>   }
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
