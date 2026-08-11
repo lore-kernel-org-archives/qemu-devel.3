@@ -4,107 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C5EDC5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 12:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A63C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtljH-0001Ap-CM; Tue, 11 Aug 2026 08:37:15 -0400
+	id 1wtm89-0006M7-Se; Tue, 11 Aug 2026 09:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtljG-0001AT-2f
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 08:37:14 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtljE-0004UV-HM
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 08:37:13 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-81f36179dd5so39493187b3.2
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 05:37:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786451831; cv=none;
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wtm80-0006JE-PM
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:02:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wtm7y-0001pl-QJ
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:02:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786453365;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/T4pHmsimFLqT38WvekMsdFy2xTedO/JMlFZBr1velU=;
+ b=G4Vw8V+Hv978V8DZctwqfz2jNjC5r8cDv9iaOTLLgjrEbuMjXSffUIQey/7n2KH96CWKjT
+ PnOQfDAaK2N0cml63y9azRe5HoS7yvl1ETSxe1qfl/ghl3twt4Y5dBEs3N/45+gF0fQXk1
+ 3YDT4Isw7MUAJvLwbuVCKyJItFShJCY=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-swf1vlp2NxW1jvBn0PFXAQ-1; Tue, 11 Aug 2026 09:02:43 -0400
+X-MC-Unique: swf1vlp2NxW1jvBn0PFXAQ-1
+X-Mimecast-MFC-AGG-ID: swf1vlp2NxW1jvBn0PFXAQ_1786453363
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-cb835525b10so3994650a12.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:02:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786453362; cv=none;
  d=google.com; s=arc-20260327;
- b=SGih8FbJs5FT9oJ6lyBZo8FFNy9XEeSzgXA27sdGZtHOijEtv0cWLeAE+dxPbznBNf
- 7YaC6mOBXUvwdRWr2piRcHCGizmuK1RV4gUUriroBG3Qmk0Ojz22ZUp519VwsFQpfdr9
- Qb5s1sX7SQYBVLkH0wD1q85Q28FHK3XLgqlvFbyoaGE3/eyGblO9qmN5LDj755SG/gU0
- bwdRgttnpMX05r86RIN5BqW+cyyMFmR5oxkriEULd8hy7SrNnhuru0vFDCdn4H3hSGGy
- iaCQdi4zKAW60wzkLn8tg3jVAubKLLW7sixCkBMnUBHp0986bSZgMlMabwpjgLnInD5i
- Lknw==
+ b=SQscLpsnFRaWMwqjZuvuCZqJhaQQYGvSrVvBWq5DdpGbFvFKLAc4ChmLTE6C7SsrpU
+ uBhRrqfHvs9o3SlxglsGt0QwODoF2IUSAhDHcftsMWsIybrHYU3PajqK0UmhOnbN0dQX
+ J4n/kTR69VFa9dKvf3ts2odWsSWd7Ro2HrcYiOjZOslqur8Mv4cqfK3K+gDfuYeINVOn
+ Fp0+a6418jTiVq2BPX1mYwcLBArp+xqK9O/FBL3cIWPzvStfXYZD1fR0uEUTwesMCiUc
+ lJG+8cmYkS2mnGEZ+uO+AB/WoF86mbaXmxLuG5RY474oOEbNZvlwyAupdTHWbnZRBwwL
+ F8TQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0Hvj+wrc631AZA4YVy8LgxDeRYYfDIgyODUNomANRKc=;
- fh=ZHgkT1embQC1Ws/ngMa+lKOkAvKamAhw0AO9fvQNV0I=;
- b=sO0w3Q21Jk9axJNUWEVWeG73aJCcU037eUzcEskD9W+mRMoDXLYrYC4Oytdr+B7cU0
- GCd7bxisGoQ+OLab/dy6slHa578aDNnkl5mInt7Kp3nQaZ6TnwUsxyalEriApWFwxfhn
- n+y7Ov01se8AV7iNHD3f9CQSgO/auOhymOvNaqSn8L1jbi0sSsUSCgReI7qHF8MMWVx2
- JHi4ptpo2LJu2XAK6T3gdIIkM8bEKkZBRo6WIsPJFWDSGGsfQmtv6EkeUqHDwRWWGv+g
- Z3TjcQ3+cJAjGXLndxIwKwDOgw2gboEBtLd5lFCcwuLfe/8jjPfCOE80FrZ5Zyp3MwnG
- mRFQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/T4pHmsimFLqT38WvekMsdFy2xTedO/JMlFZBr1velU=;
+ fh=clj/N3aH4K/xfvVAs99VTHE3zWNs21ViYr0khAbs26E=;
+ b=Kxp4ovQFv3T5tq3AI5ysEY77ZMpTWNOc51qEUhv9Qoc58LHpP+rXKXSuBbc2rkplzq
+ gjuKMbkUGOT94Mk9Su7t6OLhuMfamCMQ/M39vV9qpQ26r+ZMndgZrl+klN8xBKNr3C3T
+ 1jS72TTpm3+ZCymk2tryIy8pT23Z8lElUQCQ+UUJwW8KDx0nHi2zNnor5B38Zl75YXm1
+ +fOMPtHdgLNzP0yVseFY7gv+dquiinROWPflJdgdM7rsKevH0yWpoPWbeTaOykS+pZam
+ mYQuwl3tziKgWesxevNieHYHUG6c9LYq/nNbwgIb+TGR29pYqXhJnpXU9j/iJcK72/l6
+ zyLg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786451831; x=1787056631; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=0Hvj+wrc631AZA4YVy8LgxDeRYYfDIgyODUNomANRKc=;
- b=SB8CjVEnX19qiaEmv1ywI5tXdoDU/vBoCdRB5XoTfzO0HvQuPVQ0V0PuRkO0rFkSpD
- iLhVgYK8wswhDbiHZVtAKcpWxq4GyngzQ3NtNCRkFAGFyQBEBd+PO8jyeSqePhdsEUMy
- Aqa6IWUO2R25l0ovMdYtr7yQ8sjCyk7s8/fovvHnsmCJZ+QBcHZkKW4uixEVzDHxXT3p
- UEnYGVRfvKITzdKYsRSYWC0gPBfFdkfV2DbGyLppgR3OKQ7ZZQAeF3hcIa4fWCOy0vVr
- 6moF4sEw/T0B7+O14lNzhE+ebSjSGZDYa3m3wVtCe/aC2xbBC/REETvUkxwbdePrOxXF
- 2epw==
+ d=redhat.com; s=google; t=1786453362; x=1787058162; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=/T4pHmsimFLqT38WvekMsdFy2xTedO/JMlFZBr1velU=;
+ b=FiKHyAfCaimdkj8vwxTafHAnJ3j5zqqC8rz4E5dNKuel0LkI0cRoLzRKDR6h52oCB1
+ +6D+3bIC5I4YWPTqs33/ZhyfculIx42riNun0l0i5T2z9qoleWcxIN6lRhM8sRxvfwZL
+ T1YeLDB3+RMyovzwmvJc0id9WFQqcl1lJW+bC4hzU49yh4k1BtzRD+VMutritwDq6pMW
+ Ygq6eXZZkK5tQBtkrW8kU57vjBwIimC4uCX+elyRf9QlmEJG6IZuWAOKIRS55ABPwQS7
+ ipBv280XqfeYS9wOlwQNtWbnMszpVYFtzGDubjKCVWCF1rFJX2Z0uMQE1jDfalqwcb6F
+ C2uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786451831; x=1787056631;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0Hvj+wrc631AZA4YVy8LgxDeRYYfDIgyODUNomANRKc=;
- b=fifmPQLIOO0pZ2fW/1zC172lrt+kDBRkrY+BC68EA9dJKXRcJ1En5z/LNiEXTHE3qB
- 6cJHzH9jkK4AJ2O97bwY6YQtNWgBcYXLMv10KHOg8pGciFrKGtF6JMO6Kfs8XHjsHurS
- 2ARXr5dv441sBB12JDBaDuRq0jC1vc/v1k/RupS4Y0hl1BmUHRiEhkwoKPGq1AJ1Igcv
- uTGRz/l2Rq5TKgA0HY7n9raaf8NIpJaDyNpYQVFpC9DjTOaElIZ5y4YMD3aVIYEiTH2M
- MvVXqtW8HTp4Ml2fQ7UC/rtAGPH4OoMPUSpl2CWDX40RZeqhIT9p9zGo74C5JfnsmAP2
- MIjw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpATu4jP5Cn/yXlReaBuyPAZTWRjPiz3vYzQoAsIagzGKrUt7WjP5xOA9RbPf6QtS2qmuSegVEDJQVN@nongnu.org
-X-Gm-Message-State: AOJu0YzwWiB59fec2cWEw1cW/rMo/B/ssGAJp5ZbgeA53GAArLNjFnIM
- pAp0pIWBbWvhQDEP7fD49dfWBGgdEKj/XiBFPFX5Wn4X8ve1Hazlft+YgM5XsUKnWGXCxWcFngC
- jZSgqSWNOPlZGQ5DoF5IFUr/uQ+PKFHvEWBZAbMbarkXnpD83Bm6F
-X-Gm-Gg: AR+sD12vfwq4bYM5Uqwb8bNIugI7//Xy0yKjxHt+r+vgSL5858DzAdG3/2fbT4mhZvh
- gH0cZSSSOgbIHAoeorg0lzt3UOjev0d6eMLLmnscOC+84g8y2VfGZ6kdXDSTtR9YE/rd5Hcaj58
- 7WWxF3SNLQiURfeCpyEdxgyBBTYfagBlpfC6kenHbtx0SoH8DUQHbRuXZLGfXGkT3XKi6qzozJL
- FYDT2idTsfslnZajRhLSLrKenXEonCXfiSDVHtP6LprMicUixRdAU+zFgPa3i07Q93chZlIcpr9
- XPZde4OoNAbJPXKnOeVPYSml4aw8KLY7AoMJXc+DD8AtYXIpooPgSwzoqv2tt5P28EI1FiDdd0h
- eNEgsAUdOvWAAj1S/+emftXsPn2g0
-X-Received: by 2002:a05:690c:6e8f:b0:81e:8112:c5c9 with SMTP id
- 00721157ae682-82f26fc886fmr20852107b3.3.1786451831043; Tue, 11 Aug 2026
- 05:37:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786453362; x=1787058162;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=/T4pHmsimFLqT38WvekMsdFy2xTedO/JMlFZBr1velU=;
+ b=PkVLPuzMmJ0/s1qgAax4VJggyOmORWmh9th6unWn6QQqQSz7iVjSC3Gzt/uBpnUh72
+ VzadRlXlZmEpog5eBFT0j7mThYPh5YKyqm768CZv9TDlTWaSUT5OXLO9xtajLcMc7+Rj
+ bvW+yYVeVuApoeHQvgNTgVok01zrtncAw4dUBiSaz8FBkGeWP7lJhTWDKA8qXItkZkpu
+ bmhUeZGxUREbP+tdItDoqiFLLT1iPZmiCyewpavLMyX0fTg4eIXMewIhz7FXuJ5Npni8
+ s0oGsaxRhIiRD8U+X2YhD0pDkZI7d2j2Mqw1CHt0RRcXJ5Pzh2iZrXxbQd9dSazdUdBw
+ EUzg==
+X-Gm-Message-State: AOJu0YyU12Jfp4wknqEicfxHdPtMOG53o7fTFcfjv9IxIS0TrpgaH++b
+ lGKRcQJMTiqqPt1GmOKh66A1FnjA0zZUmkjjRZq26P1x2ddVD5h+2wzHWxt27HChVV6VJfybV3/
+ /Adeb8gdaXYz72HNO7B3Q/lUL+FsjhINEpeLlUz5NOhf52239vUMVAzsIahViExNLNR+wFhy/GJ
+ 2/4Cn8IxXya4YY3oOZOx3BN7Qb5yBrL4I=
+X-Gm-Gg: AR+sD107tFBVbJsLhkNLaWiqWoKxZ7cuiJ9kIhOP7ev8e+XyIUbJpytKi6wYewQctuH
+ ila+qzvMDy9f8992s42ffj/5esoAQyuXeV5oKHVUF9BxuxeDFTBXhJqulHmMu9WC7zsWCe+sTGm
+ mB56L7tzDoTo5nIr4jPbRQKrKMCe70Z8WyVQAX6y6QiA6ogij1mckvxOZXo6hfe74AMY8zAZ0B4
+ 9n2wsW/iP6hI33oBnhdR0hRkCohgzaGeQ91vmbSlu/UrBqH4/3fETRtr3R9rGfilkoLigIYRF/C
+ iw==
+X-Received: by 2002:a05:6a21:d83:b0:3c3:9a7f:7309 with SMTP id
+ adf61e73a8af0-3cc2bac424amr4519312637.26.1786453360822; 
+ Tue, 11 Aug 2026 06:02:40 -0700 (PDT)
+X-Received: by 2002:a05:6a21:d83:b0:3c3:9a7f:7309 with SMTP id
+ adf61e73a8af0-3cc2bac424amr4519155637.26.1786453360152; Tue, 11 Aug 2026
+ 06:02:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <tencent_7CCA5131E298B98FB02B48E362186F801A09@qq.com>
-In-Reply-To: <tencent_7CCA5131E298B98FB02B48E362186F801A09@qq.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Aug 2026 13:36:59 +0100
-X-Gm-Features: AUfX_myBZJveB-9Wp212FdADkgo-jqBgpbS4fpwcuJ48q79tboQYp0m_R-NaPXo
-Message-ID: <CAFEAcA_LyJj3sXMhSs5g9=C8fXMp6TMUcFqXZwrPeHd4XYWJVg@mail.gmail.com>
-Subject: Re: [PATCH] docs/nvme: fix doubled word in detached namespace
- description
-To: Leo Cheng <leo-cheng@vip.qq.com>
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
+ <20260626-qemu-no-hmp-v2-31-8af31bc54c61@redhat.com>
+ <anoZpbLdNBtcUYbr@redhat.com>
+In-Reply-To: <anoZpbLdNBtcUYbr@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 11 Aug 2026 17:02:28 +0400
+X-Gm-Features: AUfX_mx0IguRPCbVz314omiyHu-sN2-GAA1ZybcoP8GG_INEU40TD3oQFVWp9Vk
+Message-ID: <CAMxuvawNxhdZeX44T=Rd1HTdmBaRYy376LQw2LSrxaYPOsMfgw@mail.gmail.com>
+Subject: Re: [PATCH v2 31/39] util: guard monitor_vprintf callers with
+ CONFIG_HMP
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Markus Armbruster <armbru@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,29 +141,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Aug 2026 at 12:53, Leo Cheng <leo-cheng@vip.qq.com> wrote:
+Hi
+
+On Mon, Aug 10, 2026 at 10:34=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
 >
-> Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
-> ---
->  docs/system/devices/nvme.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Fri, Jun 26, 2026 at 01:19:32AM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Guard calls to monitor_vprintf in error-report and qemu-print so
+> > they compile without HMP. When CONFIG_HMP is not set,
+> > error_vprintf_mon falls back directly to stderr and qemu_vfprintf
+> > returns -1 for NULL streams.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  tests/unit/test-util-sockets.c | 4 +++-
+> >  tools/qemu-vnc/stubs.c         | 2 ++
+> >  util/error-report.c            | 8 +++++---
+> >  util/qemu-print.c              | 6 ++++++
+> >  4 files changed, 16 insertions(+), 4 deletions(-)
 >
-> diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
-> index 98a4401..531f156 100644
-> --- a/docs/system/devices/nvme.rst
-> +++ b/docs/system/devices/nvme.rst
-> @@ -142,7 +142,7 @@ linked to an ``nvme-subsys`` device allows additional ``nvme-ns`` parameters:
->    are hotplugged).
+> This patch probably isn't required any more.
 >
->  ``detached`` (default: ``off``)
-> -  If set to ``on``, the namespace will be be available in the subsystem, but
-> +  If set to ``on``, the namespace will be available in the subsystem, but
->    not attached to any controllers initially. A shared namespace with this set
->    to ``on`` will never be automatically attached to controllers.
+> With the QOM classes for montior,  monitor_vprintf calls to a 'vprintf'
+> class virtual method, or returns -1.
+>
+> So simply by virtue of HMP being compiled out, monitor_vprintf should
+> do the right thing.
+
+It does, but shouldn't we remove API that only works & makes sense
+when HMP is enabled? The monitor_printf* functions are not just simple
+stubs, but won't work without HMP. I'll try to improve this now that
+we have proper objects.
+
+>
+> >
+> > diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sock=
+ets.c
+> > index b9f2453e299..23ebe1e26b5 100644
+> > --- a/tests/unit/test-util-sockets.c
+> > +++ b/tests/unit/test-util-sockets.c
+> > @@ -73,8 +73,10 @@ int monitor_get_fd(Monitor *mon, const char *fdname,=
+ Error **errp)
+> >   */
+> >  Monitor *monitor_cur(void) { return cur_mon; }
+> >  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+> > -int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort=
+(); }
+> >  bool monitor_cur_is_qmp(void) { abort(); };
+> > +#ifdef CONFIG_HMP
+> > +int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort=
+(); }
+> > +#endif
+> >
+> >  #ifndef _WIN32
+> >  static void test_socket_fd_pass_name_good(void)
+> > diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
+> > index a865ce85f04..f476dd6d956 100644
+> > --- a/tools/qemu-vnc/stubs.c
+> > +++ b/tools/qemu-vnc/stubs.c
+> > @@ -46,10 +46,12 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mo=
+n)
+> >      return NULL;
+> >  }
+> >
+> > +#ifdef CONFIG_HMP
+> >  int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+> >  {
+> >      return -1;
+> >  }
+> > +#endif
+> >
+> >  /*
+> >   * Link-time stubs for VMState symbols referenced by VNC code.
+> > diff --git a/util/error-report.c b/util/error-report.c
+> > index f832ad9b6b6..e2e46281455 100644
+> > --- a/util/error-report.c
+> > +++ b/util/error-report.c
+> > @@ -40,11 +40,13 @@ error_vprintf_mon(Monitor *cur_mon, const char *fmt=
+, va_list ap)
+> >       * IOW this will only print if in HMP, otherwise we
+> >       * fallback to stderr for QMP / no-monitor scenarios.
+> >       */
+> > +#ifdef CONFIG_HMP
+> >      int ret =3D monitor_vprintf(cur_mon, fmt, ap);
+> > -    if (ret =3D=3D -1) {
+> > -        ret =3D vfprintf(stderr, fmt, ap);
+> > +    if (ret !=3D -1) {
+> > +        return ret;
+> >      }
+> > -    return ret;
+> > +#endif
+> > +    return vfprintf(stderr, fmt, ap);
+> >  }
+> >
+> >  /*
+> > diff --git a/util/qemu-print.c b/util/qemu-print.c
+> > index 7b9591035e5..ee80000722b 100644
+> > --- a/util/qemu-print.c
+> > +++ b/util/qemu-print.c
+> > @@ -20,10 +20,12 @@
+> >   */
+> >  int qemu_vprintf(const char *fmt, va_list ap)
+> >  {
+> > +#ifdef CONFIG_HMP
+> >      Monitor *cur_mon =3D monitor_cur();
+> >      if (cur_mon) {
+> >          return monitor_vprintf(cur_mon, fmt, ap);
+> >      }
+> > +#endif
+> >      return vprintf(fmt, ap);
+> >  }
+> >
+> > @@ -52,7 +54,11 @@ int qemu_printf(const char *fmt, ...)
+> >  int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
+> >  {
+> >      if (!stream) {
+> > +#ifdef CONFIG_HMP
+> >          return monitor_vprintf(monitor_cur(), fmt, ap);
+> > +#else
+> > +        return -1;
+> > +#endif
+> >      }
+> >      return vfprintf(stream, fmt, ap);
+> >  }
+> >
+> > --
+> > 2.54.0
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 >
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
