@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EDBC5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 15:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 736CFC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 15:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtocj-0007yR-ER; Tue, 11 Aug 2026 11:42:41 -0400
+	id 1wtocf-0007w2-E3; Tue, 11 Aug 2026 11:42:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtoch-0007xd-6L
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:39 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtocd-0007uP-LG
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:35 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtocQ-0004CC-Cm
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:38 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6a144c8eea2so5161451a12.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 08:42:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtocN-00048A-6R
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:42:35 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6a063d211ebso4226408a12.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 08:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786462941; x=1787067741; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786462938; x=1787067738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=7V+Ujk44PJvZHDttbRgVQxc94DYK+G9QIRN+pGmRpvA=;
- b=goYlhNtYLGhzqyZYfc84jDGKRq7Ezdi0iwlrFrQRPWSiKln8X9J/+v2u7JhGlEwtGj
- 4d/Xbn3Vxrdz6z5FjYVnMCGeIMoZwr9h/HYDpFJzNdVhMfwN0Td1yanaUI129giYHkJR
- xyY2FtRgoqhNnSj4oMlqFLLiMpVfBjhdZ7IRJayl8KaQSrFnApabQKXTcJQ0J/OzgKiK
- NVzI1crNcKlrKswWh+MnIx50nWELd7ivZfvjdmLfAXFYYA7w9cyf5CRV6kZpCPA5eiqe
- CSUjNYZxpOXXZmOPUlGPrlagpGcS9n2b6xqKlIXsvgoGw/DlIv8uqfcmwsUlWTpPAJmZ
- RO4Q==
+ bh=xdgqlKtTotTQsDwD3eVNqnrjorchCaz1rInhMcHrFds=;
+ b=gde3Uv1Ix7FPu54YnMz/e4fmtl/PmZ/vm1w1Id+bVrSYigXx19xPaIKxEabpLHVGHg
+ yj0JRMB6cPudTHGPyXOCYaT+53GWmyS/1KEm/f64W56EBOTh1DwC9Ff16QwOjy6VWZEp
+ JGkz2+FiIuWQ3iQYTlXoq3QidaJYdG6qnGpZR2S5TFeXnZxLgp1MSZ+5h+9aBg/SfIAK
+ 512DqXXvrZojAe0WPrWmv+6PCDrgMQTP6vCQAOapmPz2lcvSO8jpWXc+1plNN478MAN3
+ CL/8I8YPD9OiRZXT9s0gHlrHkTaXKT+lK+HOlZ+8Hmyg0zRLwp7i6E2ktTIGnuFwpGfO
+ Q9OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786462941; x=1787067741;
+ d=1e100.net; s=20251104; t=1786462938; x=1787067738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=7V+Ujk44PJvZHDttbRgVQxc94DYK+G9QIRN+pGmRpvA=;
- b=dJEW1MmdwCNkXLAIiO6cK8ahkqlaMWVnI4fcwUi/f47Cb+lWXwsvrqQvDKS9XOGccP
- f15WEEgRV6rgFUsObQETAuFImZHJ6nE4V50FfxsE6JqeaFGyE/NQyZvVm4AR/EIkmd7V
- SWU76HBtOxHq3moBMM4rR4HdneNjzy6da6yQ74bKqGQSyqtul2FcrKuFfOsC5tqodOvW
- Mrymf1zX4aUXZ1XXqQJmBHOM/Bwp/IihJ+dQMiX/IeJcDt/ZnzvKOLhDrLtgjEXpCiOd
- v9OKJtRNRezy28E00LTN5Dl7INqs0IrVpyUHGxSwBiRwSD6oa4Qp/xrFey0f+QsZR3vL
- LQ0w==
-X-Gm-Message-State: AOJu0YzYoYA5NCA7cXFQ6Ql/UzuXhdZDOV331Y3p+wzWm9HY/eA5pnrk
- gJLJo843WOGh3jx6BbcvTg6rZO7RQ7KlbbAACU41zSL9aUJoR1mIDO49UDSY5ypPiv5kA/x50qv
- 5sV4E
-X-Gm-Gg: AR+sD13gTlxpGhn5u4Z25L9/L4KfEO9YI3apbOE+aIEIRSxRB0zjItH/8NunZPHc+RO
- qigT+uhEPqobAlS9MbkV9DB+OTZJUXo2KIbVpBJDCFMaLS7WrVUBcbFDFH6deDunUNJbzYJ6KxZ
- N354tTJVqnOD7aNATD0ytuI7U2bpfwb5MW1ocDnCpTawsnX+xhVbnyj4ECrs1LnazImL8MWYGj1
- LYa8xWV68xRdX7KD8s2atXhbyVlLmfb1CX3uDGBx1NgpAlY/b8f/l2oc4TgODhGVcGFCL8mNXvg
- pRklTrzBmghoC2JgYCGxFih0XUsyPc59Yb2m5B5DGb4YpMxdAepcxjRx4D8A7hEdW2mXwoiGPJi
- 5biGW21aPiixDqJpkisCNmfvGfkj15k3lFYd29K/yEqFkAY8Dcs1XvnrjeDbKE/gG3Ml3vxCf+a
- SsPa0ySIzwaEHDiYNKCqqkV+HU3LirAOWJQl5ALOer98eV2rE1QRDR0xPV
-X-Received: by 2002:a05:6402:4283:b0:69c:6547:518b with SMTP id
- 4fb4d7f45d1cf-6a3644ed12amr2220408a12.12.1786462940709; 
- Tue, 11 Aug 2026 08:42:20 -0700 (PDT)
+ bh=xdgqlKtTotTQsDwD3eVNqnrjorchCaz1rInhMcHrFds=;
+ b=ZdXqH10AapYT/lriUe8oN9u3DaSLaEgUhWrvDVgjsEAYa3XAD9XQC7fPm9R9CZ9RQc
+ 273z+hQP8beWmUxuYxPYFhKziwK+SLg+tkL5kurVJHbKlJXvyICw5n7lKHCUAeN50tQZ
+ f29P9qtVuZF83cINYZqqYiSNBhfogRSVf0ggPXXiWf0FwMZnFt7PmR6dKP71kOdbGFNh
+ 5/gh5OzjLjHHjHxpI7k0AgLr0Lph1cnm5F7mlfq9MySbOJ3DdCcfsN6EosLCxK3x+cV4
+ sUzj6NHvtAR+aYxraO/tAOptgJ6RlK7MgthzPpDd4KdxbLDKjrNHQ8ratMlxTIw1vBXL
+ g3Bw==
+X-Gm-Message-State: AOJu0YzGYQkKqgQsko6x5+SeD08iFILCPxmyJtETXAWFgms4N4KzvJJ1
+ l1p25Mb52cYHHrinXDDE/KfQmseO9o+adPYBF/HGYtbok5tsoTeg91BBIPX27ISZpTP4udgWj3V
+ 1/51w
+X-Gm-Gg: AR+sD10/dpa08Xyx0U6FqLDdVArmofLo5H2/AR2vP2h5Lc9an6O22A/JV6io1DxomgA
+ fdHlbZfV/J3ND1EPs1IHjQkaA+G4lXq56I8i7U4erWf75aWyyq++gMsVBGE0ea9dpVFolx37NDs
+ foDqcH3jAHMod+JwEaIWabZTyIHqShrv+0gueJByRvwpgwgku+S5HXfgIzCYvDHaqH3oC9wJvZF
+ WGVTfJRIfO4MPUn4LUZEA4jLurTlUA8dZHfjTryCsnkopJO27K+n1zGKguG39GPK3vjp1yftODW
+ KuttmkbYEQVoCoJVwYYhdNIwRKHRY8NY7+j5mgcehE3yEYYjHPuy1aS6mfHUf81fDP8x0auazpD
+ /EvT++eJk/2WlodYzQSbiWC8cawvva5oYfJgJAmENILNtAj1fEOa5kgW/xjftnzEY1d2JAK3xK+
+ rDTcT1JUCWr74og6IXtVkhCYM8wvQJG1+CFBBgrwFOZOUMEo4q57kq1qb7
+X-Received: by 2002:a17:906:7953:b0:c12:67d2:3d6b with SMTP id
+ a640c23a62f3a-c20e616f45amr199720266b.11.1786462937637; 
+ Tue, 11 Aug 2026 08:42:17 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:c43:d230:7bbc:68d4])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a362e34d4bsm841128a12.12.2026.08.11.08.42.18
+ 4fb4d7f45d1cf-6a362e34d4bsm841128a12.12.2026.08.11.08.42.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 08:42:20 -0700 (PDT)
+ Tue, 11 Aug 2026 08:42:17 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-stable@nongnu.org
-Subject: [PATCH v2 3/4] block: remember the writability a reopen starts from
-Date: Tue, 11 Aug 2026 17:42:12 +0200
-Message-ID: <20260811154213.184947-4-den@openvz.org>
+Subject: [PATCH v2 1/4] qcow2: do not clear the dirty bit when reopening a
+ read-only node
+Date: Tue, 11 Aug 2026 17:42:10 +0200
+Message-ID: <20260811154213.184947-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260811154213.184947-1-den@openvz.org>
 References: <20260811154213.184947-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=den@openvz.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=den@openvz.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,13 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bdrv_reopen_commit() updates bs->open_flags, so by the time
-.bdrv_reopen_commit_post() runs a driver can no longer tell whether
-the node has just become writable or was writable all along. Only the
-transition is worth reacting to.
+qcow2_reopen_prepare() clears the dirty bit whenever the node is
+reopened read-only, with an unguarded header write. A read-only node
+can still be dirty, inherited from an earlier writable session, and it
+holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
+reopen of a dirty image therefore fails outright:
 
-Record the value while the queue is built, next to the other
-pre-reopen state BDRVReopenState already keeps.
+  $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
+  qemu-io: failed while preparing to reopen image 'dirty.qcow2'
+
+Clear it only for a node that is writable now, the predicate
+qcow2_do_open() already uses for the repair. bdrv_is_writable() also
+excludes an inactive node, whose header must not be touched either.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
@@ -114,34 +120,67 @@ CC: Hanna Reitz <hreitz@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: qemu-stable@nongnu.org
 ---
- block.c                      | 1 +
- include/block/block-common.h | 1 +
- 2 files changed, 2 insertions(+)
+ block/qcow2.c              |  8 +++++---
+ tests/qemu-iotests/039     | 10 ++++++++++
+ tests/qemu-iotests/039.out |  5 +++++
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/block.c b/block.c
-index 99ed06f8ca..c50d9474fc 100644
---- a/block.c
-+++ b/block.c
-@@ -4473,6 +4473,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
-     bs_entry->state.options = options;
-     bs_entry->state.explicit_options = explicit_options;
-     bs_entry->state.flags = flags;
-+    bs_entry->state.was_writable = bdrv_is_writable(bs);
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 7292dd036c..1543255eba 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2102,9 +2102,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
+             goto fail;
+         }
  
-     /*
-      * If keep_old_opts is false then it means that unspecified
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index 895ea17541..f64b2d6f35 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -360,6 +360,7 @@ typedef struct BDRVReopenState {
-     int flags;
-     BlockdevDetectZeroesOptions detect_zeroes;
-     bool backing_missing;
-+    bool was_writable; /* bs->open_flags is updated on commit */
-     BlockDriverState *old_backing_bs; /* keep pointer for permissions update */
-     BlockDriverState *old_file_bs; /* keep pointer for permissions update */
-     QDict *options;
+-        ret = qcow2_mark_clean(state->bs);
+-        if (ret < 0) {
+-            goto fail;
++        if (bdrv_is_writable(state->bs)) {
++            ret = qcow2_mark_clean(state->bs);
++            if (ret < 0) {
++                goto fail;
++            }
+         }
+     }
+ 
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index 94a8bfe754..db52c580d1 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -95,6 +95,16 @@ $QEMU_IMG info --image-opts \
+ # The dirty bit must still be set: this open never wrote any guest data
+ _qcow2_dump_header | grep incompatible_features
+ 
++echo
++echo "== Read-only reopen must not clear the dirty bit =="
++
++# A read-only node cannot write the header, and must keep the dirty bit
++$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
++    | _filter_qemu_io
++
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Repairing the image file must succeed =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index c66361128f..3c71e5a3dd 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -27,6 +27,11 @@ incompatible_features     [0]
+ == Read-only open must not crash on close ==
+ incompatible_features     [0]
+ 
++== Read-only reopen must not clear the dirty bit ==
++read 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++incompatible_features     [0]
++
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
 -- 
 2.53.0
 
