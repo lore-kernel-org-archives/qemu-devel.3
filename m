@@ -4,150 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094BDC5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 13:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24116C5CFED
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtmxU-0001a1-Kh; Tue, 11 Aug 2026 09:56:00 -0400
+	id 1wtn8T-0003pC-HU; Tue, 11 Aug 2026 10:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtmxT-0001Zc-ID
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:55:59 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtn8Q-0003or-Fp
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:07:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtmxR-0004kI-Hb
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 09:55:59 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BDX3Yh462323
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 13:55:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- vQX8GFfoGQyKmI8T8Del13ugd9QTp/Um4gOkszhpidk=; b=kmhH937iL/63tNe+
- 0lgpKTqQWheWqmnscyMqkiqTiuL3KEkRpKWJHZUVf14Knzs3uMQMXVk7zfCnNnX7
- DHcSKymYXzbV3ga+z6nyIXXo6Ry36w/5qhfE9NALhkufmmQ/2HxilJpG5Vfmj9So
- jVosrKXWi8mgxQWHMdIlBSnmGujG90Z1qFLR4YXVAdvxvXhTpNaZy/5ygyvhwK+a
- DisK4nI49u0n0v+0sBKtEwphM6r4KtY9hwpGyYNScrvW8CLefwSghwwE+VhUcf64
- ID2xzYleOc/1JYFAMCJpyLNO7xRtdyKoz2jYMLKt3HMiaSvbmE1mFZ05aOipd0rh
- XUMgog==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049mg7m3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 13:55:55 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5283fa0656dso13491711cf.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:55:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wtn8N-0006Bs-GK
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:07:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786457232;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eanlrWvrfR6lOMT0GmoHtHFQzwC/tPo0LsUZeWkiV/I=;
+ b=Ng/VIw2u3XH6tLqIXc3q0DzGIv29h2PecwQC27oxiDcMdhUzFcE85x4NnTDtZGBoFvJvLX
+ ghy//BMaUZ3GsDev5HYPvMA195qmCKiYqrALef+kxRlGrWPPxN0NhcL3WcrVoW7/VzC5JO
+ iy9Hzn/KUXulPN9u3ZrsXgL7N47A2dA=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-184-tEYj7IchMNCSRd2zToJoRw-1; Tue, 11 Aug 2026 10:07:08 -0400
+X-MC-Unique: tEYj7IchMNCSRd2zToJoRw-1
+X-Mimecast-MFC-AGG-ID: tEYj7IchMNCSRd2zToJoRw_1786457228
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-73883529f72so2904491137.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786456555; x=1787061355; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=vQX8GFfoGQyKmI8T8Del13ugd9QTp/Um4gOkszhpidk=;
- b=DKwho+o9fLToWTyU3oS3X0BZpVb7jeDascptdLPGn7DW/jf8yWMeLvyU8fuwZZbP0j
- 4z1oDEsGla5vAZ7PL7nr3JRIfGDZTtKggBswr3f64xC9RpONLBvtnjublGPP/L1oqc/z
- TI6TKGwOLoSVqNn7Z9utDDopIFc4LQLJAKEnxqqVf7LgOHQvdQlNl6mJjK0Auwy6z7+9
- GH2NSn32YGC9RCWjEIuWbE1/2g+dK1tebsCRqwZIw0QinBs9kDtfTqDHJGOyJWS3a10Y
- sk5FaWH9cmIuKx636DX0b/opnx8OENGkDmwgFD3B560ntktYuwNntSSbifErhyjdmEdD
- rqPA==
+ d=redhat.com; s=google; t=1786457228; x=1787062028; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=eanlrWvrfR6lOMT0GmoHtHFQzwC/tPo0LsUZeWkiV/I=;
+ b=J8Nqle3Pyo1GPcOEZFxqZ7Yb14iSUjxamifjIQPuQSmfmaYSagXEJPvoNilmKYAMg9
+ TuDBVj9uxcqiC9/AtBA9FlrJ28B8yFsm5LusdEdBfZGgbxzsGRihVBnSc0uUigSKkoDx
+ YAdd53WbZVmh7jcq67RuLD77C9Lfx8x870Ndo4rioh9jJCwdefwqdSmAUrtesfdjRF4X
+ rWewNNv+6fCKWqPcqaIaP1lOBtw6U7GSEdY7Bzum2MHcCPzLbzzTspqur+KN+wwVSUDM
+ S6Lq83gyUEBy+hEBRQe8vRubwuk1sdr9Y/ApcSewhx2rEQCN3qWlJ5Qg9zO0fBQQdnGj
+ sPsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786456555; x=1787061355;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=vQX8GFfoGQyKmI8T8Del13ugd9QTp/Um4gOkszhpidk=;
- b=b4FlXfpzFHcOacn8ouPLM9ulI9MNgkWbkdvRsz+SkUQ/c6PQAnOICACDvenCn1ssMP
- p99CnToiETIPT9hR4htTLfVzPbT4AldkTxYNX8aEn2Sv29BYzp6k6WWiC5OP0YsRD40g
- PTOyH+HdgCS7pf0pVKzcEjhsA0kzPxPzDGp/uohKiYriApkIKu0wtZVqOz24C3ijp7Jp
- riiqbhyWYVqvgIbby7pv4b85ukVfJbWbvh+U4mv3xGa5y10xII0P1n2yyzQyw9n6JoDz
- YhGepgv10WRvcunDogaDwoSTnrkDrqPsSSpY+qpS+T31o6x6WtTDt6gSMwBVSAu5/Z4q
- sIOA==
-X-Gm-Message-State: AOJu0YyLMI5WMMOcTli8e4RlIf4v6fO/hmVRAKXFntNwH+p0TWzf4NFs
- /wE4noNA1i2RyL5gGD3Zw0KAcMjq2DOX4jhSbbvXRHXu+eOP6DRWfW3/iVgYtFYBCFSNGld+0fc
- jOvRpYtl3/J3QVPWuf1Cwm5+8r5cAzOOEKzV5HzYHMStbJ1XE2yoNc/T7JA==
-X-Gm-Gg: AR+sD138tvmpOc0OJp1VitU5G1YoRGvVJgKiGC/iV9YM0PQ50FukAe/XLIkVThd2guM
- iwhQGzf+ARsZH/nHJUa/Ywqn0JHZa4rsIOkK36NtQJN/DaKvzVIr+S5ESl96nSTSF7Iz8IE03PO
- yrvNVmhQRQ1lZbVxtjk0gCrcPy393NBPoKBsh3LHJvn3IS6prkMJj258HoBqeSGeh1MtBS8eYdd
- RJIQdVUZrMzb/vKgLNNr7P3rnHypXZhR5NZtLAM5Kc+EwKF+VDZK+l2mgufpwsNWVfj21oKdf6Y
- mPY4gjYtbKLESCHrwtZl3fqsP8r1By8fSoqZUlDyDQBcv+jh3hvsvyd061pj4R3VE8tDo5Jp1/E
- yGnFvABeGCy+9rMRXd4FRkkRYLIypXaM05J64IIQ6
-X-Received: by 2002:a05:622a:2505:b0:51b:f992:9e18 with SMTP id
- d75a77b69052e-52d601b392cmr5214351cf.2.1786456555049; 
- Tue, 11 Aug 2026 06:55:55 -0700 (PDT)
-X-Received: by 2002:a05:622a:2505:b0:51b:f992:9e18 with SMTP id
- d75a77b69052e-52d601b392cmr5213711cf.2.1786456554559; 
- Tue, 11 Aug 2026 06:55:54 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4814a5be110sm4788745f8f.10.2026.08.11.06.55.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Aug 2026 06:55:53 -0700 (PDT)
-Message-ID: <2f897e89-1549-4d46-aceb-ccf1a86721f1@oss.qualcomm.com>
-Date: Tue, 11 Aug 2026 15:55:52 +0200
+ d=1e100.net; s=20251104; t=1786457228; x=1787062028;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eanlrWvrfR6lOMT0GmoHtHFQzwC/tPo0LsUZeWkiV/I=;
+ b=nY4SGiFTT2ordNVBwDbDmWJAOuLlIYTsQhbl6RDlxzFscX/p87BildpJV7/U8FN3RS
+ 9LuTZvD8tcFI9/mo1H8xF16pY39EuyPRZV3k+r8GIbYjxLIqXkHiprmj8Zh9hHyt2YQU
+ ngVwhhUJ6FpW2qJVRTsz6Ys3k1Q36KW/d15W9zZ2co9XJqm0tdL2PN21sXFIhr8HIx0e
+ uuuw9yHPa6AKZ11oyNhynBAKyMd+xXjjNSLS10Gow30lTeqhIIdOM1Q0ByraWyDH5jBZ
+ IKn6Bn3ic9qLcW9BJYAc2ALV3scR5Bt/UKgugS75NdFxzb5PXvWvaxcOXhg2iPUwzhPo
+ QHcg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoRW304l+/J8x2PwlDaKdn5SeTFXnv5gq9O6ByDrOm9+sU/toZutV970njGWgz+1/AgSTlomsZOuPgi@nongnu.org
+X-Gm-Message-State: AOJu0YyGTUopj+fhXmLlVZoYFRjWPip8BT4eszGCA7k04kQ3NaTIU1+n
+ fmIAkKtigbfAMwkImAFgSQrZ8EScz/JnuzA3bpilHYR3YsYN/OPHyhJCWWbm2B1nvgeJGgBlasT
+ qWWe/F40E4oh5FLPEuk3zv6t0SIOfA/k6FHXxumv+E/AnjnMS6mCo62C3
+X-Gm-Gg: AR+sD10fdjK67aFahN/fo1mcqD3Qv3RmstUoH+oKLX3VQI0AC+5w5SuAQG9xfFzHvqs
+ +RFC13lCso9AouGbcw2aPbvzOZxcUL41vgGND8oDogeBjBeJLcHLvrqZZL79c/usXdyOj9wEkRH
+ UrRJ3M0jx6j2+JWtkm0Dq/lQUe7j/a6FSTa903wtQim7BvAXCP1mE4ngUrD4l4NVkgh56zlgW6T
+ ioG31+3DFE9WD+T37dIx+viRSi2g+VWbzYYujbpxXf43aM0FyGZZa4IbO/bDmAx8vbC85Tutglx
+ FUVks88zMtGLxC6+0SznVVsQPBlIKG2OcxT3zHIxJAPq9le/yDaej4NPw1htxxIAdTAL
+X-Received: by 2002:a05:6102:1588:b0:739:5cfb:50f6 with SMTP id
+ ada2fe7eead31-76b570bd5demr1080422137.11.1786457227566; 
+ Tue, 11 Aug 2026 07:07:07 -0700 (PDT)
+X-Received: by 2002:a05:6102:1588:b0:739:5cfb:50f6 with SMTP id
+ ada2fe7eead31-76b570bd5demr1080392137.11.1786457226938; 
+ Tue, 11 Aug 2026 07:07:06 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-97a3c16629csm2906241.4.2026.08.11.07.07.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 07:07:06 -0700 (PDT)
+Date: Tue, 11 Aug 2026 10:06:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH 2/4] migration: Introduce VMStateOffset
+Message-ID: <anssfjna-uNi7bqR@x1.local>
+References: <20260729225227.1170574-1-farosas@suse.de>
+ <20260729225227.1170574-3-farosas@suse.de>
+ <3166925a-0456-42b6-80d3-8154e3e66825@yandex-team.ru>
+ <87o6fnmf4c.fsf@suse.de> <amzGTh3DXvX9ovJQ@x1.local>
+ <87ldarm8rp.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/7] hw/nmi: Remove @cpu_index argument from
- nmi_trigger()
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
- Corey Minyard <minyard@acm.org>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
- <20260811105425.7429-5-philmd@oss.qualcomm.com>
- <CAMxuvay+TjVoNb0PgmnVj1TmTMHAj7+j7Xm+sTkN58XVUgZ6Hw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAMxuvay+TjVoNb0PgmnVj1TmTMHAj7+j7Xm+sTkN58XVUgZ6Hw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: X6umD-8AQPOg02P1-sw4b42TsM1Pzhr0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDExNiBTYWx0ZWRfX3pU4kLOiQ8I5
- 7fhTMUg0wavW5vsL/Y6ObiwPj1xZ6R3iFn+h7Z3cUWFRulw8BSimlqXEldEOyMxZGZpJKNeHUa3
- JSRgeVLBh61IppzKJAuhQkavTKVi1Thkj3ID5Kq6yY9x23Qv1JD43xIQKk8lyoIUPdJn5Si16vb
- /FLeXm0gFKCtCjDF02w7cFlkv4mfCViLdT+eUw/O3AptXs04uZsK1NbbWvNTUWcNb8PuJJwHG+e
- V3K5Blm2cQJU0qTS4NS+6fxjNmMwEicmxp8EiXGkoL8NLWw0Zg3XcKrNK1Y6S6z34h1UIJdVF8W
- EpcIQV2jYope+wzNYAp+QmRLpaRGasEc3xbRonI5nvdBVsZLjcmYla0CBzDlcxG1qw01gpv1BL8
- a65YIN39rIO8B5WzSFCE59E3VSjMQDMxe2+q+DG8Jqiq5aLh37+dAO0c6JcrSNI+iqbU/fJ1rln
- goOWAv4iN1HvuyH6htQ==
-X-Proofpoint-ORIG-GUID: X6umD-8AQPOg02P1-sw4b42TsM1Pzhr0
-X-Authority-Analysis: v=2.4 cv=FbkHAp+6 c=1 sm=1 tr=0 ts=6a7b29eb cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=RL9MCpvF642aKd2_VhEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDExNiBTYWx0ZWRfX0xIegHS9Tt90
- B4OXy7Vz1om7m7ne/y4stIIZbcmHHnD27Gq6IcMhYnEwAPYUE+bPEWHApIuGts+to3qTlUzq7Om
- WCm/CcEUosxA4m/WWPnTpt3Lptx5vLs=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-11_03,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 bulkscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608110116
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ldarm8rp.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,148 +122,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/8/26 13:10, Marc-AndrÃ© Lureau wrote:
-> Hi
+On Fri, Jul 31, 2026 at 01:19:38PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> On Tue, Aug 11, 2026 at 2:55 PM Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
->>
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> nmi_monitor_handle() is not related to the monitor, rename
->> it as nmi_trigger().
->>
->> Return a boolean value indicating success / failure as
->> recommended by the Error API since commit e3fe3988d7
->> ("error: Document Error API usage rules").
->>
->> The 'cpu_index' argument is not used, remove it.
->>
->> Document nmi_trigger() as suggested by Peter Maydell in
->> https://lore.kernel.org/qemu-devel/CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9RYeo8fKqz7gcw@mail.gmail.com/.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> ---
->>   include/hw/core/nmi.h  | 25 ++++++++++++++++++++++++-
->>   hw/core/nmi.c          |  9 ++++-----
->>   hw/ipmi/ipmi.c         |  3 +--
->>   hw/watchdog/watchdog.c |  2 +-
->>   system/cpus.c          |  2 +-
->>   5 files changed, 31 insertions(+), 10 deletions(-)
-
-
->> -void nmi_monitor_handle(int cpu_index, Error **errp);
->> +/**
->> + * nmi_trigger: Trigger an NMI, in a machine-specific way
->> + * @errp: pointer to error object
->> + *
->> + * This function triggers an NMI, in a machine-specific way. The
->> + * intention is that this should typically trigger a guest kernel
->> + * dump or reboot, and might happen as a result of user request
->> + * from the monitor, watchdog timeouts, and similar events.
->> + * (For example on the x86 PC it triggers an NMI on all CPUs,
->> + * and on s390 it triggers the RESTART interrupt on the first CPU.)
->> + *
->> + * The NMI is triggered by looking for QOM objects which
->> + * implement the TYPE_NMI interface, and calling their nmi_handler
->> + * method. Usually it is the machine model class that implements
->> + * this interface.
->> + *
->> + * Not all machines implement NMI handling; this function
->> + * will return an error if used on a machine which does not
->> + * implement NMIs.
->> + *
->> + * On success, return %true.
->> + * On failure, store an error through @errp and return %false.
->> + */
->> +bool nmi_trigger(Error **errp);
-
-
->> -void nmi_monitor_handle(int cpu_index, Error **errp)
->> +bool nmi_trigger(Error **errp)
->>   {
->>       struct do_nmi_s ns = {
->> -        .cpu_index = cpu_index,
->>           .err = NULL,
->>           .handled = false
->>       };
->>
->>       if (nmi_children(object_get_root(), &ns)) {
->>           error_propagate(errp, ns.err);
->> +        return false;
->>       } else if (!ns.handled) {
->>           error_setg(errp, "machine does not provide NMIs");
->> +        return false;
->>       }
->> +    return true;
->>   }
->>
->>   static const TypeInfo nmi_info = {
->> diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
->> index 74818ff3cea..444af726d75 100644
->> --- a/hw/ipmi/ipmi.c
->> +++ b/hw/ipmi/ipmi.c
->> @@ -59,8 +59,7 @@ static int ipmi_do_hw_op(IPMIInterface *s, enum ipmi_op op, int checkonly)
->>           if (checkonly) {
->>               return 0;
->>           }
->> -        /* We don't care what CPU we use. */
->> -        nmi_monitor_handle(0, NULL);
->> +        nmi_trigger(NULL);
->>           return 0;
->>
->>       case IPMI_SHUTDOWN_VIA_ACPI_OVERTEMP:
->> diff --git a/hw/watchdog/watchdog.c b/hw/watchdog/watchdog.c
->> index 0842fe373ae..026768e9fb2 100644
->> --- a/hw/watchdog/watchdog.c
->> +++ b/hw/watchdog/watchdog.c
->> @@ -81,7 +81,7 @@ void watchdog_perform_action(void)
->>
->>       case WATCHDOG_ACTION_INJECT_NMI:
->>           qapi_event_send_watchdog(WATCHDOG_ACTION_INJECT_NMI);
->> -        nmi_monitor_handle(0, NULL);
->> +        nmi_trigger(NULL);
->>           break;
->>
->>       default:
->> diff --git a/system/cpus.c b/system/cpus.c
->> index 97e5a5edee2..5c0a192c01e 100644
->> --- a/system/cpus.c
->> +++ b/system/cpus.c
->> @@ -926,6 +926,6 @@ exit:
->>
->>   void qmp_inject_nmi(Error **errp)
->>   {
->> -    nmi_monitor_handle(monitor_get_cpu_index(monitor_cur()), errp);
->> +    nmi_trigger(errp);
->>   }
+> > On Fri, Jul 31, 2026 at 11:02:27AM -0300, Fabiano Rosas wrote:
+> >> Hi Vladimir, I've been looking at this, could you clarify which vmstates
+> >> do you think we could merge? I don't see it, either VARRAY vs. VBUFFER
+> >> or VARRAY vs. BUFFER, also ARRAY vs. BUFFER doesn't seem to work.
+> >> 
+> >> One main point of difference is the size_offset/num_offset variants are
+> >> only known at load-time, so we can't convert them between each other at
+> >> build time because the either the total size or num will not be know.
+> >
+> > Something like this?
+> >
+> > NOTE: I hid a fix to a comment that is irrelevant.. which I mentioned @size
+> > and @size_offset can't co-exist, but it can when VMS_MULTIPLY is set.  I
+> > had a vague feeling we can further clean vmstate flags.
 > 
-> This officially drops the current CPU for HMP command too. Just
-> acknowledge it in the commit message, and remove the "*cpu*"
-> documentation in hmp-commands.hx?
+> Is there a reason we cannot use .num for MULTIPLY instead of .size?
 
-Ack.
+.num decides not only the size for allocation when needed, but also how
+many times we'll invoke the vmstate_save|load_field(), so maybe not
+directly replaceable.
 
 > 
-> Also, can we use one word for "deliver", "trigger", "inject"? or is
-> there any distinction I am missing?
+> >
+> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > index 24631fd678..3a02709650 100644
+> > --- a/include/migration/vmstate.h
+> > +++ b/include/migration/vmstate.h
+> > @@ -69,17 +69,15 @@ enum VMStateFlags {
+> >       * }). Dereference the pointer before using it as basis for
+> >       * further pointer arithmetic (see e.g. VMS_ARRAY). Does not
+> >       * affect the meaning of VMStateField.num_offset or
+> > -     * VMStateField.size_offset; see VMS_VARRAY and VMS_VBUFFER for
+> > -     * those.
+> > +     * VMStateField.size_offset; see VMS_VARRAY for those.
+> >       */
+> >      VMS_POINTER          = 0x002,
+> >  
+> >      /* The field is an array of fixed size. VMStateField.num contains
+> >       * the number of entries in the array. The size of each entry is
+> >       * given by VMStateField.size and / or opaque +
+> > -     * VMStateField.size_offset; see VMS_VBUFFER and
+> > -     * VMS_MULTIPLY. Each array entry will be processed individually
+> > -     * (VMStateField.info.get()/put() if VMS_STRUCT is not set,
+> > +     * VMStateField.size_offset. Each array entry will be processed
+> > +     * individually (VMStateField.info.get()/put() if VMS_STRUCT is not set,
+> >       * recursion into VMStateField.vmsd if VMS_STRUCT is set). May not
+> >       * be combined with VMS_VARRAY.
+> >       */
+> > @@ -108,18 +106,10 @@ enum VMStateFlags {
+> >       */
+> >      VMS_ARRAY_OF_POINTER = 0x040,
+> >  
+> > -    /* The size of the individual entries (a single array entry if
+> > -     * VMS_ARRAY or VMS_VARRAY are set, or the field itself if
+> > -     * neither is set) is variable (i.e. not known at compile-time),
+> > -     * but the same for all entries. Use the int32_t at opaque +
+> > -     * VMStateField.size_offset (subject to VMS_MULTIPLY) to determine
+> > -     * the size of each (and every) entry. */
+> > -    VMS_VBUFFER          = 0x100,
+> > -
+> >      /* Multiply the entry size given by the int32_t at opaque +
+> > -     * VMStateField.size_offset (see VMS_VBUFFER description) with
+> > -     * VMStateField.size to determine the number of bytes to be
+> > -     * allocated. Only valid in combination with VMS_VBUFFER. */
+> > +     * VMStateField.size_offset with VMStateField.size to determine the
+> > +     * number of bytes to be allocated.
+> > +     */
+> >      VMS_MULTIPLY         = 0x200,
+> >  
+> >      /* Fail loading the serialised VM state if this field is missing
+> > @@ -181,8 +171,8 @@ struct VMStateField {
+> >  
+> >      /*
+> >       * @size or @size_offset specifies the size of the element embeded in
+> > -     * the field.  Only one of them should be present never both.  When
+> > -     * @size_offset is used together with VMS_VBUFFER, it means the size is
+> > +     * the field.  Only one of them should be present never both, except
+> > +     * VMS_MULTIPLY.  When @size_offset is used, it means the size is
+> >       * dynamic calculated instead of a constant.
+> >       *
+> >       * When the field is an array of any type, this stores the size of one
+> > @@ -696,7 +686,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >      .size_offset  = vmstate_field_offset(_state, _field_size),       \
+> >      .size         = (_multiply),                                      \
+> >      .info         = &vmstate_info_buffer,                            \
+> > -    .flags        = VMS_VBUFFER|VMS_POINTER|VMS_MULTIPLY,            \
+> > +    .flags        = VMS_VARRAY|VMS_POINTER|VMS_MULTIPLY,              \
+> >      .offset       = offsetof(_state, _field),                        \
+> >  }
+> >  
+> > @@ -706,7 +696,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >      .field_exists = (_test),                                         \
+> >      .size_offset  = vmstate_field_offset(_state, _field_size),       \
+> >      .info         = &vmstate_info_buffer,                            \
+> > -    .flags        = VMS_VBUFFER|VMS_POINTER,                         \
+> > +    .flags        = VMS_VARRAY|VMS_POINTER,                          \
+> >      .offset       = offsetof(_state, _field),                        \
+> >  }
+> >  
+> > @@ -720,7 +710,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >      .field_exists = (_test),                                         \
+> >      .size_offset  = vmstate_field_offset(_state, _field_size),       \
+> >      .info         = &vmstate_info_buffer,                            \
+> > -    .flags        = VMS_VBUFFER|VMS_POINTER|VMS_ALLOC,               \
+> > +    .flags        = VMS_VARRAY|VMS_POINTER|VMS_ALLOC,                \
+> >      .offset       = offsetof(_state, _field),                        \
+> >  }
+> >  
+> > @@ -798,7 +788,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >      .version_id   = (_version),                                      \
+> >      .size_offset  = vmstate_field_offset(_state, _field_size),       \
+> >      .info         = &vmstate_info_bitmap,                            \
+> > -    .flags        = VMS_VBUFFER|VMS_POINTER,                         \
+> > +    .flags        = VMS_VARRAY|VMS_POINTER,                          \
+> >      .offset       = offsetof(_state, _field),                        \
+> >  }
+> >  
+> > @@ -1200,9 +1190,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+> >  #define VMSTATE_BUFFER_START_MIDDLE(_f, _s, _start) \
+> >      VMSTATE_BUFFER_START_MIDDLE_V(_f, _s, _start, 0)
+> >  
+> > -#define VMSTATE_PARTIAL_VBUFFER(_f, _s, _size)                        \
+> > -    VMSTATE_VBUFFER(_f, _s, 0, NULL, _size)
+> > -
+> >  #define VMSTATE_PARTIAL_VBUFFER_UINT32(_f, _s, _size)                        \
+> >      VMSTATE_VBUFFER_UINT32(_f, _s, 0, NULL, _size)
+> >  
+> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > index bc8eb3d3ca..f7363a8776 100644
+> > --- a/migration/vmstate.c
+> > +++ b/migration/vmstate.c
+> > @@ -102,7 +102,7 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+> >  
+> >      if (field->flags & VMS_ARRAY) {
+> >          n_elems = field->num;
+> > -    } else if (field->flags & VMS_VARRAY) {
+> > +    } else if (field->num_offset.size) {
+> 
+> Hmm, is it better to infer from the data rather than having the explicit
+> flag? And if so, can't we remove VMS_VARRAY flag altogether?
 
-Hmm indeed from the monitor perspective we "inject" a NMI.
+Yes, looks like we can drop it too.
 
-Watchdog seems to also "inject" with WATCHDOG_ACTION_INJECT_NMI
-(here my understanding is "raise", but whatever).
+> 
+> From Vladimir's message I though the intent was not only to remove the
+> flag, but to remove the definition of VMSTATE_VBUFFER entirely and
+> somehow fit that case into VMSTATE_VARRAY, removing size_offset along
+> with it.
 
-I suppose IPMI devices also "raise", but "inject" is acceptable.
+I may have messed up one thing in my prior quick patch, that I replaced
+VMS_VBUFFER with VMS_VARRAY, but in reality I don't think we need .num for
+VBUFFER case.. so maybe VMS_VARRAY isn't needed either.
 
-$ git grep deliver_nmi
-hw/i386/x86.c:159:            apic_deliver_nmi(cpu->apic_state);
-hw/intc/apic_common.c:122:void apic_deliver_nmi(APICCommonState *s)
-include/hw/i386/apic.h:10:void apic_deliver_nmi(APICCommonState *s);
+Or say, we should have two ways to get rid of VBUFFER: either treat it as
+one buffer (.size non-zero, .num not needed), or multiple chars (.size = 1
+which is a byte, .num to be size of buffer).
 
-The NMIClass handler then "route" or "deliver" it.
+> 
+> >          n_elems = vmstate_read_from_offset(opaque,
+> >      &field->num_offset); }
+> >  
+> > @@ -114,17 +114,17 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
+> >  {
+> >      uint64_t size;
+> >  
+> > -    if (field->flags & VMS_VBUFFER) {
+> > -        size = vmstate_read_from_offset(opaque, &field->size_offset);
+> > -        if (field->flags & VMS_MULTIPLY) {
+> > -            size *= field->size;
+> > -        }
+> > -    } else if (field->flags & VMS_ARRAY_OF_POINTER) {
+> > +    if (field->flags & VMS_ARRAY_OF_POINTER) {
+> >          /*
+> >           * For an array of pointer, the each element is always size of a
+> >           * host pointer.
+> >           */
+> >          size = sizeof(void *);
+> > +    } else if (field->size_offset.size) {
+> > +        size = vmstate_read_from_offset(opaque, &field->size_offset);
+> > +        if (field->flags & VMS_MULTIPLY) {
+> > +            size *= field->size;
+> > +        }
+> >      } else {
+> >          size = field->size;
+> 
+> Since we're talking about flags, I'd like to be able to assert(size) at
+> this point, but there is some weirness with vmstate_msix and
+> vmstate_scsi_device that have no state at all. I'm thinking of
+> introducing a new flag to identify those cases:
 
+Your patch below looks ok to me, I'll wait for you to repost with all the
+things.  There seems to be quite something we can explore in vmstate code
+to clean it up..
 
-I'll rename as 'nmi_inject' I suppose, better to keep in pair with
-the QMP command name.
+Just to say, IIUC there're better way to impl both.  It looks like both of
+them came from 10+ years ago so vmstate code was rough.  Now we have more
+facilities and I think we can do better on them, I suspect,
+
+- vmstate_msix can be replaced with two VBUFFER plus some post_load hooks,
+
+- vmstate_scsi_device might be replaced with VMSTATE_QTAILQ_V, but this one
+  is trickier to make sure ABI compatible.
+
+These can be future items to explore even if applicable..  Let's fix the
+security / hardening issues first that your series addresses.
+
+Thanks,
+
+> 
+> -- >8 --
+> From: Fabiano Rosas <farosas@suse.de>
+> Subject: [PATCH] migration: Add VMS_NO_STATE flag
+> 
+> There are a few special cases of vmstate usage:
+> 
+> The vmstate_msix and vmstate_scsi_device have fields that contain no
+> data, only a vmstate_info structure.
+> 
+> The VMSTATE_VALIDATE macro serves only to invoke the .field_exists
+> routine for validation.
+> 
+> Regardless whether these scenarios are valid, add a separate flag to
+> identify them so we can enforce common constraints for the normal
+> vmstates such as having a size greater than zero.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  hw/pci/msix.c               | 6 +-----
+>  hw/scsi/scsi-bus.c          | 6 +-----
+>  include/migration/vmstate.h | 9 +++++++--
+>  migration/savevm.c          | 3 +--
+>  4 files changed, 10 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+> index 1b23eaf1007..adf76b5bccc 100644
+> --- a/hw/pci/msix.c
+> +++ b/hw/pci/msix.c
+> @@ -711,12 +711,8 @@ const VMStateDescription vmstate_msix = {
+>      .fields = (const VMStateField[]) {
+>          {
+>              .name         = "msix",
+> -            .version_id   = 0,
+> -            .field_exists = NULL,
+> -            .size         = 0,   /* ouch */
+>              .info         = &vmstate_info_msix,
+> -            .flags        = VMS_SINGLE,
+> -            .offset       = 0,
+> +            .flags        = VMS_SINGLE | VMS_NO_STATE,
+>          },
+>          VMSTATE_END_OF_LIST()
+>      }
+> diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+> index deb43d5560e..aa02ff631b7 100644
+> --- a/hw/scsi/scsi-bus.c
+> +++ b/hw/scsi/scsi-bus.c
+> @@ -1980,12 +1980,8 @@ const VMStateDescription vmstate_scsi_device = {
+>          VMSTATE_UINT32(sense_len, SCSIDevice),
+>          {
+>              .name         = "requests",
+> -            .version_id   = 0,
+> -            .field_exists = NULL,
+> -            .size         = 0,   /* ouch */
+>              .info         = &vmstate_info_scsi_requests,
+> -            .flags        = VMS_SINGLE,
+> -            .offset       = 0,
+> +            .flags        = VMS_SINGLE | VMS_NO_STATE,
+>          },
+>          VMSTATE_END_OF_LIST()
+>      },
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 09b2e535645..ada1625f5b6 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -108,6 +108,12 @@ enum VMStateFlags {
+>       */
+>      VMS_ARRAY_OF_POINTER = 0x040,
+>  
+> +    /*
+> +     * The field contains no data. Used for special cases such as
+> +     * invoking a custom VMStateInfo.
+> +     */
+> +    VMS_NO_STATE = 0x080,
+> +
+>      /* The size of the individual entries (a single array entry if
+>       * VMS_ARRAY or VMS_VARRAY are set, or the field itself if
+>       * neither is set) is variable (i.e. not known at compile-time),
+> @@ -451,8 +457,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+>  #define VMSTATE_VALIDATE(_name, _test) { \
+>      .name         = (_name),                                         \
+>      .field_exists = (_test),                                         \
+> -    .flags        = VMS_ARRAY | VMS_MUST_EXIST,                      \
+> -    .num          = 0, /* 0 elements: no data, only run _test */     \
+> +    .flags        = VMS_ARRAY | VMS_MUST_EXIST | VMS_NO_STATE,       \
+>  }
+>  
+>  #define VMSTATE_POINTER(_field, _state, _version, _info, _type) {    \
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 3e5cce6520d..160c0f2d97d 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -617,8 +617,7 @@ static void dump_vmstate_vmsd(FILE *out_file,
+>          fprintf(out_file, ",\n%*s\"Fields\": [\n", indent, "");
+>          first = true;
+>          while (field->name != NULL) {
+> -            if (field->flags & VMS_MUST_EXIST) {
+> -                /* Ignore VMSTATE_VALIDATE bits; these don't get migrated */
+> +            if (field->flags & VMS_NO_STATE) {
+>                  field++;
+>                  continue;
+>              }
+> -- 
+> 2.53.0
+> 
+
+-- 
+Peter Xu
+
 
