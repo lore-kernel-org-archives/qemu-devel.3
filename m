@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D373BC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7C3C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtjfZ-0007Em-Kl; Tue, 11 Aug 2026 06:25:17 -0400
+	id 1wtjgH-0007ny-PE; Tue, 11 Aug 2026 06:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtjfX-0007CX-LL
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:25:15 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ id 1wtjgF-0007mv-Rs
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:25:59 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wtjfW-0004yk-0C
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:25:15 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-821106b5b64so15178427b3.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:25:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786443912; cv=none;
+ id 1wtjgE-00059D-9J
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:25:59 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-80bb41f7f3cso30325467b3.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:25:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786443956; cv=none;
  d=google.com; s=arc-20260327;
- b=im6ba9q23+4q59ZyM3rBsb9dKM7m8Z+Ego/PzLTZ59JkuUs5d45qDSk+2tPrUJNhaS
- 1V+B57YA/+3guhjDuWj2vKW3FHDCfFUpZ0JKWC9tG2yE1I3cz674rU52M7mihWQ/8sG8
- 7hIbiafRYi4vrKGpdy7W59hl2HLI1VZw8gyeJ08iGsv5dD/nuKVPTkpiyOBi/IQRYOWE
- I4Od/5eiT9SEBhAClsHJAwrXH48xeuMwnVB2cEf9OOz90lS/GBk1sYu3pNI9dIw9qeTx
- D9GGsQjd+BhUQDU5xP//zGLkJ/E8mXlksl5+NoM1YL29X7bNssWqiroqYLNCtboZEqM6
- F7Mw==
+ b=OUVAq3PWWJnN26tdh9DNGbfdRTKkp56rSnnhNwGhDouikmoi0Z0if8WFcTBeI+FSBi
+ B6PzBUjr9QPxmXFKxTpPqSEKnKZPPXDy1TdHtdTdo6HcDM6yhtdsMviO5AEkLmpysxxL
+ iAhXFERqoBvVWGAKD140rEQmJf+7iJNMb0tJgh/AFyT4PGf5CsXrTVUdkvjb21eAsW2y
+ XeJ484qtWTR9ceUJPXIuwBHiJEIyajsfSLtixA/L6KJklWE/9f50xiSdcWrwPvT+r//H
+ Q1SJSy5bv/00XEIB6JE+9t6Y3CvfLbi6GXsQH5/4WzkiqQs09HJ8nyTLn2e8z6DFI/VF
+ jE7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=uvdRbPu+mAOcN5Hl36DJm5zpu8FZi6IK1n/F9YxiBk4=;
+ bh=8rV/GeOFwghZ/mUDsgrUlESp+c74JXJ5GiSeMNO9mnk=;
  fh=Bkm7h1qePyNu6XewviHipxJh5Gb0B/9a4YQ4WVdINBE=;
- b=sIEFzRdLJt+9U12A47zGrSxsPFcm1GQTGbpqdxQnhCzNaE1fUnERg7Bc5eqZRkn76Y
- S1DPLZTEAWN26rGN2KW8MiwKwuM4Ow86ryr/eRGYzAhHCl6C3N/+6k0cKoqgT+xwPKu4
- dWHdKhB7S11CM/LhANBU2QC6tH9SBFzcpZqQDRDFc3JUws/K15vtgVCJm3suXRBpkAiE
- 1gF/iYExR7c9ij2wlre2idH7p+bjfZdxzmbbsQVd8r+vFf6b25SGY/Xsde8OMx12TWzq
- 2ggrE4uWvimasa9MUrsuU4yUDxDFoa8KgCE8WTPJyAI+43KjjnrYcCmyVULshtADgiiR
- olMg==; darn=nongnu.org
+ b=HVRO8dJBeQUu8shTREsAqgdAZ2rWKd66npc7NNDIthvqYPhaJsb3Bs8r/Sc1B2fxKN
+ 1AXAo7IuaP5Ka05VHAh9L8dsIiW2Scz1Yv1NiJ0crIJdXeJE5r/i7whgQ7yyGLpFg55M
+ xREzedMJrqieag310ZlkvZGBk4M2co1Mi43orgCjc2pAAQ4aH+QM0ytktOm1U9UtzpnU
+ kSoWymTstAsCwM1pnsmL5qoTj+DRt5UE8lcrsjDMiuLP3db5nnd7D4jQVg/OyiO+Mmfk
+ EBHvB9jPsOYvagP77m3uv+uIfd86hus+ZYstHzeylYrYnvdCqmrMMpPRAJPRkN+P+c4B
+ Fnag==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786443912; x=1787048712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786443956; x=1787048756; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=uvdRbPu+mAOcN5Hl36DJm5zpu8FZi6IK1n/F9YxiBk4=;
- b=Md5isdlwasTyvDwcPDdQK0L52NB3CxIv0De+AvteCXmg5skXfGgAeC0JyrGNT4Ve4g
- 1EjCF2JJLZ64LOBgTrgSRIVNTB7MzR6e0eEL5Iin+JJ4I777F1t4zWmnqcgaqUjgeoW6
- r4FWfAO3ckTgaLI97J/3+OyLHR8wVqlwCfT625Pxl+n6x99L1gRVqWzZDAlSoBs4giiR
- OV50y354mIzxM1CIyfobiU2q8zUr7fwtT430fnlExKTaSHQV22R/QME+0VKYVmXxOcVu
- xPI7REVFcJxr3j0bgdbgl7CO3dg+MTN8Z8ZOg+wXKrDOaiDg7/rzh9fKCslljfvGv9cf
- su/A==
+ :content-type; bh=8rV/GeOFwghZ/mUDsgrUlESp+c74JXJ5GiSeMNO9mnk=;
+ b=FleMbhmRmcfQyCQhg+2sh5gHMNAJwoy4dTIPQ2EjVAbl34W2Ljjb3W++6LAeK1ShH9
+ HTab8ck6vs9gp6fsyXWUfR/jUrf7GpMrLeWsri21EwyZg6bXEAzLoxqeotlO/xwTTNFV
+ 8tOFnGPoaJIuiLtqcdR0NQ+10kb0ynk1z0UBbEOkoSOtmWXtS0SAlZR16Vo18YteoOxp
+ TlYY9G1nQM7i3jO7A/Q+J76YFLBKhtiUt8HpBfUR2zw2gMIa84aXjU1Iclj8dPzJjzav
+ HHqMrQYIZi3Xw00FC7bySRBQ/9MowLsf2le3BzEkCwtatPslk9HcqlqHx2JFlqwvIZRi
+ WRDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786443912; x=1787048712;
+ d=1e100.net; s=20251104; t=1786443956; x=1787048756;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=uvdRbPu+mAOcN5Hl36DJm5zpu8FZi6IK1n/F9YxiBk4=;
- b=aN94mVzgxzG51v5ZYLD09/OJc8PT2HTAtTIQi3urRBDQEHr0Siufptb9dBzmk4Mf/U
- o2T3u+FvPOP/68UDU9t5cT0YF7VAc3Mz2sJsnYYxXt7+iGeVygHCqjxajrXSp9j5Y3RQ
- eeC0XrgZerUUPSQDkhqZaXhSN5LCpkDEiMUg4hTn/NMP9R1vxw0DfZert7G87t0yxUIT
- b4a7blEb4uiUR19RLopTaxIDE6UrmNCJfJB993TWqcaXbUXAgzVOca/q3O7kLPu6T7hi
- NTW2wutVc/VSIQ4SC/buS+APjbAMYfDeooGex3Z+2HyA09+SR47QNGtXI2vJSlaVvRzM
- 4xSA==
-X-Gm-Message-State: AOJu0YxcHhHexTAXsS9vHaDuaUVOEHhj4zaD/t7FpfJK7So6MJ1rfy8E
- dIrSRoImZGB99l3aUu0dO40XxAdlxrU1cb2xfj0ZI7B9Jk0mnjJKEwNhbzk3h/tnPBGR9n5dNES
- GhQELSvX6hD+bPerK1kXJRcXex+ZVds1EQpa4jpP+GoSMd0tKOjIr
-X-Gm-Gg: AR+sD10TIUKjTHzPQKkD8ipqEQBAMWg67IyP8rFM4Ne2svdjMJRkLnq5FNlNv0fmXUx
- sNJxXyrKR+X1wDGjWWzr/TTzwvDlcNP2CccWbXMyFKrqNGO7CsjBQDpf6CX0+MhBgLvvdtLHw9w
- 3cpaz8xfEYN5dK1Gr84QbbP1lCpJoBo3eYfpW+StTlcCuOpuvfcqgdndnmA1dP+qZVu2rlu5bq5
- 0jOUXmVYDbfw3RRGC0IunHkJ209nGR4ap6B1FKOcByFN20POHUCFyC252exAXOD6u7q8gJ7Y/KV
- t6Ss0dHqlnrRhpsLjU5ViegX8yKw7mHizIiDsjo3XR5v1ZxizI0xbBfW1NUc+I83pCS+8Yj+kCm
- DL4K7TaR47tRKbZm8okFx7y3vWetG
-X-Received: by 2002:a05:690c:9988:b0:7f0:38f7:6ca6 with SMTP id
- 00721157ae682-82f215a85dcmr12427017b3.5.1786443912517; Tue, 11 Aug 2026
- 03:25:12 -0700 (PDT)
+ bh=8rV/GeOFwghZ/mUDsgrUlESp+c74JXJ5GiSeMNO9mnk=;
+ b=ZQPm836lPZPO7D0ZJ+2x4s18yI+rpj0K51FHC/I9WQNHbjSE8L0S5P4KntR3+wSbtg
+ NRUU2VrCfUNtvTNWnHXEVadj5xw702ewx50X6QNqfX4+fC2fvQF7U5Vnpo/Y2IfqruwR
+ rLOk4/XHjpT9QM7tgg4CzNQbqxCm4gedPFQ3jokKJLg8VSR6iQKahkWsEBMBvadU5X3g
+ C/d6ReDRgw83oPQPIlKdR9G2QIToJIJPXiEmQwdhDC8fE42mMdWvvmGakphxiEoxQff3
+ KeXpXA13pd9MpTVig+a62kbQTiDJ7WeqyQ54HTie1KeBztSBFzV/NN/Pf7Hcl5ulIYlw
+ 51jg==
+X-Gm-Message-State: AOJu0Ywjx+LJdK8pFhY+LhnDjf/WrYW/KkRKFlHrvvd45e+6BTjfnMjn
+ 0X03CbsfHqF1lEqj/jE24U4UQsxUlwGrpYISGFHno8x7YzwUKx4+MhyQGU4btScw5Sfl2VLtJyd
+ GV/dby4YPEaZTdpXezYz7c1JQl3Q0AuFJHqpkySwsNg==
+X-Gm-Gg: AR+sD11s+j4I5sl+DtGWjYXeZe65g2NeFHbxGWRRsYkbwtVx6y0A7dqCWFQFoSeJUjN
+ 6VagwI1tDbRGapuSZ8x2QUI4bJJtEEa+rroDEGwnODPA0y420LYcxo/rBO3P/C7DqASYexHly6t
+ YmugrDAfv8AOEKyxjQbkpmY30QX8rTsu+V9PL0PPyd9iVrSuSjEjydhQcQ6bK+s0yRqE2sYUMYf
+ gRsewpODorU4Bh+Gpq9gTs5ELlxJrH0oST/bEiLBZNXTm6ak9ATYyRwPf9nx+vZ82iT/7ghpz/P
+ FkGj/TIScBDFhgyjQ7bFoo6vIaxxc6L36TJ/ngARLExPwrT0fc71wnLY4XmnmC4XRRoKBaMa4kj
+ coU1O4+DhXk3YW/tbhYEVcwtSYiW3
+X-Received: by 2002:a05:690c:884:b0:81e:a471:e893 with SMTP id
+ 00721157ae682-82f2db9e0a9mr12285277b3.24.1786443956435; Tue, 11 Aug 2026
+ 03:25:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260805191257.11303-1-simonxhy0404@gmail.com>
- <20260805191257.11303-3-simonxhy0404@gmail.com>
-In-Reply-To: <20260805191257.11303-3-simonxhy0404@gmail.com>
+ <20260805191257.11303-2-simonxhy0404@gmail.com>
+In-Reply-To: <20260805191257.11303-2-simonxhy0404@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Aug 2026 11:25:00 +0100
-X-Gm-Features: AUfX_mxVmi4XCGO_W80vDo7hanxtZJqVL-uOwAqlMX5bxcLjVhMqkmM0gydN6j8
-Message-ID: <CAFEAcA_f6S0XTL-v6Wa9n=vKJMob4xm4FhDDSyC3MwBbgOH4ag@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/arm/armsse.c: fix SSE-300 PPU addresses
+Date: Tue, 11 Aug 2026 11:25:45 +0100
+X-Gm-Features: AUfX_myYkigxjIB_8Lvn1mcxJVf6NXjm02vswH1uexxDSD5Q-DONFEK_xOD4V4o
+Message-ID: <CAFEAcA-myBo1Oa7US8FoKMNVeVdE4o0FjMkho8vTRmVu_TULOQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] hw/arm/armsse.c: fix SSE-300 s32kwatchdog address
 To: Simon Xu <simonxhy0404@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,18 +115,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 5 Aug 2026 at 20:13, Simon Xu <simonxhy0404@gmail.com> wrote:
+On Wed, 5 Aug 2026 at 20:12, Simon Xu <simonxhy0404@gmail.com> wrote:
 >
-> The SSE-300 CPU0_PPU, MGMT_PPU, DEBUG_PPU had the wrong addresses
-> that were the same as the SSE-200 addresses.
-> Page 146 of the SSE-300 TRM defines the addresses of the PPUs.
+> The SSE-300 SLOWCLK Secure Watchdog Timer is only defined at address
+> 0x5802e000 in the secure region.
+> Page 45 of the SSE-300 TRM specifies that "the watchdog is Secure
+> access only".
 >
 > SSE-300 TRM: https://support.arm.com/documentation/101773/latest/
 >
 > Fixes: 8901bb414a24 ("hw/arm/armsse: Add SSE-300 support")
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
-
-I got the SYS_PPU address right, at least :-)
+> ---
+>  hw/arm/armsse.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
