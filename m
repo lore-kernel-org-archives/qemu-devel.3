@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A902C5CFE7
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 15:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F35C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 15:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtoki-0003fc-NC; Tue, 11 Aug 2026 11:50:59 -0400
+	id 1wtolH-0003xP-R3; Tue, 11 Aug 2026 11:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtoke-0003bY-4z
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:50:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wtoky-0003lU-Es
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:51:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtojg-00023C-5O
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:50:50 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wtok2-0002et-Iu
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 11:51:09 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BDWXmU1914347
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 15:49:51 GMT
+ 67BDX5uT767022
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 15:50:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZNPVG0pKMHrN58VHLVnd6gBqWmgUFYW3CfavPyrN/lk=; b=g+s4IhTILG6XVyKU
- 7A9PWFf5tgTZVMh7YgEElFjWziN4ZbzkL5qigb21Jwc1iCLfvmsTc99m9lGZyOEt
- wAauAhR7eQbRaI9AQmoR+hvLQvq8VgcxAn3XF5+mEqUA+QEiYSCeG8tk6dRGmWxh
- wtjA1vvT1f2zZ7SIW0xfCDOjyBmN3dFhdeZiZWAsrIoKfvTJuMUg9i4b6IT7azEa
- ZXeRSB4R5aqwwc/aTruxS2ckzzioQRibY9t2n1RQXoBTFXPy3m8Atxk+W759xcPW
- 3q4vzO1poUDiOM3B52wNiWXphCZgcrEDwf9bUDNCmChwGHIMzZFjD9418y97lpNx
- u5e2jw==
+ 0edfJ/cchANNWiukKnZOf9OSLonHl948sTIY1UKAj1Y=; b=ABVZCzW7tbiA6S/G
+ 01R+5ADQJHZXvp1qb0zb3jwZ/ov50hAvSGZuAlTlgwEtVMxUzjnI8s3rPaJ6XIRB
+ C6dwKrEYFfYzM0tfGPda9b6IBc78CKjtcXG7Tlfkq4pzcOPNXTRjCfU5hzHb4rHr
+ t3nyV6qxxFy7rnfjI85yryGv/TYeptmWxgxetYVtbdvP2OnIZmhrKb1njSRbV1hk
+ DrkAT3XeYYU+KZi5CLniKkLEMtHpQcu3/WXeg9e2LH49qTncGtQplBHF4LlWcNPX
+ c8wggd7yjlgXKlBoe61bvbHpOH59mJep4Bm2L4z3t0mU41pfd0aoJf5kOR3tYEmd
+ RPqNBw==
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049brs03-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g01nc1b12-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 15:49:50 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 15:50:13 +0000 (GMT)
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5276aa86d00so600721cf.2
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 08:49:50 -0700 (PDT)
+ d75a77b69052e-52ce3c7cb2eso758771cf.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 08:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786463390; x=1787068190; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786463413; x=1787068213; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ZNPVG0pKMHrN58VHLVnd6gBqWmgUFYW3CfavPyrN/lk=;
- b=ZSqwP2fdIB9DBi5Op3y6QYwrZzWIFASkbju0WTeAXJXZaF1TKB7tGczSwIXrDivA5j
- UpIYesYfGn+UB7Zw21tNrGqvGrhjjUXYWkzlkU25My//DzatIq1d8QLbMst5Crhf7kuV
- un2AlnvdA/JSzauz9T+ajtMEYJJLFB2oathzT5eylx9rDynKN1HmurwT7y5hPnEyg7RH
- oekHZ39GlqeJjHc13N/Xj91ULuV1/S3joe0NPqcMZ9o7RhZUw9U8hp1wB5EyJ6/enAxU
- Kckulddpiyvja0H20Wc+2pMJCeLdALfHhhX1JIQKn/rwTAxDesyyz4UrLhIQ8H2OVZMj
- b6DQ==
+ bh=0edfJ/cchANNWiukKnZOf9OSLonHl948sTIY1UKAj1Y=;
+ b=Kp9XwsqJPyyffCbHyz0VBowHWvWBEgXrxeH6V7b136PU9BmRLZHhHwiGpOQkReyS+n
+ o8qOFo9XGV8VniLfo6rrhueawnvG9vRSmFFZpTa035XZNzAcUO+wrEVb8xnHk/v4pi6C
+ +/cQqs1CKeLY9z2i73EQqOeb+qgvufbpGxp4x0IdB9gID3C+MN2bigmYL1sMcH8IgtiW
+ hfrWTWCQB8ZaNbMqrkyv8R4TgGDvG5meeH2JC6LttwtwhauAgHLPfx232p9Y5YT55cD2
+ tvCgGGFmCba+eolB/yFTNwgbtu6IW/42Qafh5yu9c2FWo53Hm90T6uivCmrORGJ+k+C0
+ t89Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786463390; x=1787068190;
+ d=1e100.net; s=20251104; t=1786463413; x=1787068213;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZNPVG0pKMHrN58VHLVnd6gBqWmgUFYW3CfavPyrN/lk=;
- b=gmH9TWDZ7nbDnWdIBIx7DEtDxUH1Wb2SYJEpyJLpe65gwPSh41F2st3QjRx1d/BVh7
- zGnRAIvjlm3TK/KbTyb6qMrmV3F35rmmey1wI+8NZ8Ltm3aewIVSgcsQOYj4wZr7sxCB
- cgEmGoZHSKcHhXgT47/SIwddjMX1CTUCOWQ68GyCI15wiC1nEDwL23FT+1hWkn32I4Uj
- RupCzuj88kEhE3Ko8qozAg2Qioi9fSZO2mQS8Uo5ZdUjkgzYlS5WxUJiKpyFA2T68K46
- 4aVH0qppjxhiEcEj5b/RBuCW+vjqvwoUHYwVCWfiEf3kXrp6+t//7ugozW8/xWm5dEWu
- qM+A==
-X-Gm-Message-State: AOJu0YzpDCr5TGTxleS/T6AV5a61iezsMt5VZZsy4uRlTgAN87UlVsIS
- Iirjlq5XfUwX91MLNNYccl6iKU3uC3ZXuoZNEGiBoMDQMIePGjwomKG8MY4mZcn2L4q/TsjlVvh
- aAoKrwgEiJFpJtqTOAYWnB58hrTbPsTgB+wAJZcSarDPyJYaLcWmdx9RduEDoulRVUw==
-X-Gm-Gg: AR+sD10/lOejKO35FggMzM3hcFKK8pbnTPS0JhBkiSeyxkV+aTAf6+M7EiqOJBRX3fQ
- mrT5Ybjsi1Vredof3dygnepH7B/zDxcsswELvUFwOXvzHUQCvS0sDbcaG2vv9Dbc3GiQh0bIEAO
- R0fLaJ8eMucWPbdb1lAmqLgytS9jfVHvRGtr7bQElTM1R2YVVkwZm6JHsHYE9cRtULbYlvBzhuw
- 2xgx8oj55Cv0sklR/KCJ8m6e7DYQhKmunZjYlew9d6Dx3CFKVK3Zn4qJClwGV/wI5kOsaQzPKxs
- Mx59Z54vXgh6VDL1wVcrDzJAgf/2FfX2JeBa1OwK0PED1SHmoOdRvRvLw4zz0ZnEBEYi8fQygkX
- iigFZEtI8UaBtsOBV05jhitZqi4WYSvg/xeeBpda1zQ==
-X-Received: by 2002:ac8:5c85:0:b0:517:c65c:488b with SMTP id
- d75a77b69052e-52d582aeecfmr36666691cf.0.1786463389531; 
- Tue, 11 Aug 2026 08:49:49 -0700 (PDT)
-X-Received: by 2002:ac8:5c85:0:b0:517:c65c:488b with SMTP id
- d75a77b69052e-52d582aeecfmr36666051cf.0.1786463388991; 
- Tue, 11 Aug 2026 08:49:48 -0700 (PDT)
+ bh=0edfJ/cchANNWiukKnZOf9OSLonHl948sTIY1UKAj1Y=;
+ b=AZmDi2+V/ZBGuGK49F0FqBWZeSyntE+L5S8e1BMgps5EVROUradvn3U4GvDxT0J/SR
+ XnhTwZYoA+VOQ8TYn9vQxcXaUTZ8LxEdi+rRq88hIdEbb1k8KYt2K4HVYxmajJz32A9c
+ w1NonImzXqFnHZQwfL8uMrQmEgf27LxhLIMNfk5aC1PjxnYNn5+h19ChapmF37bBJbuJ
+ Z9LhvjuNboBngXWw5NHZ0rCvJ0+RYoYuJAd7LtbjgJdLZTSaZNh+ZaGGB8xRvjxJ8sWL
+ Wk9dLXfkTh5zOaxpHg/WIByvf09IV+/jWdJ2TFvzPUiS+725KRb4vmxmJCYNkZKFqyaF
+ mevg==
+X-Gm-Message-State: AOJu0YzSpHIYNbgJNKj2V4PBIzT+R4uOB0iaYcInPK8DlZYmDfexUZ1o
+ Y0uQfFyQe0gRiHUbWa0WgOlluwXHHaDX6NGa4NEzkqs4DlI0GumTxPp55B5fF49uzJ8nzX+N4kb
+ ofZT3Quh+AV8NR6Mw1zzlqB1olIk+hFck4V7/0DuJHJfHEGr+MlJ05jsjm1xN5KttCA==
+X-Gm-Gg: AR+sD11M0X8rF8s3Cev+cL6KZV4893WMMqv+f1v8sy6nWUrqHwBJjtznAngIS+ihu3s
+ IyGZTeovjlMJUJWeFzBJgqMpvisiTzbSbmihf1VoJTY1SadFu48voJYhJVw4WWzzlmXKJsXqR3c
+ Pd913TB/5KX7+q5tclu52Eh2rfyi6JlBZwWKCqwjiofjV8Dy1vFaRkfDwe9U8l4AoAEgZRavgt8
+ 9eMzyPFkrlXlWPiroD5IIelbkgzfSctvMbEnUG8FMdRcNUiN/LgAElu9NXAASB6Z0Eoity21UA8
+ Z18GIj8gBfUqdjdRUtqI9HW6eAUhb1nI7yeKiAOJzpCCXlYu+0WaIB14z/AcjjheW1vNr6dhWjG
+ q65OgXu+tAkPnyMd38j7JwKof6M2Xa8PgXDoAaNPozQ==
+X-Received: by 2002:a05:622a:2508:b0:51e:47a4:4851 with SMTP id
+ d75a77b69052e-52d58498252mr40396331cf.8.1786463412548; 
+ Tue, 11 Aug 2026 08:50:12 -0700 (PDT)
+X-Received: by 2002:a05:622a:2508:b0:51e:47a4:4851 with SMTP id
+ d75a77b69052e-52d58498252mr40395881cf.8.1786463412125; 
+ Tue, 11 Aug 2026 08:50:12 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4814a709594sm5364913f8f.18.2026.08.11.08.49.47
+ 5b1f17b1804b1-4997abeba30sm1307555e9.9.2026.08.11.08.50.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 08:49:48 -0700 (PDT)
+ Tue, 11 Aug 2026 08:50:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -94,59 +94,58 @@ Cc: qemu-ppc@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Corey Minyard <minyard@acm.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
  Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v4 2/7] hw/s390x/virtio-ccw: Always inject NMI to first CPU
-Date: Tue, 11 Aug 2026 17:49:25 +0200
-Message-ID: <20260811154930.13915-3-philmd@oss.qualcomm.com>
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v4 5/7] hw/nmi: Rename nmi_monitor_handler() -> raise_nmi()
+Date: Tue, 11 Aug 2026 17:49:28 +0200
+Message-ID: <20260811154930.13915-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260811154930.13915-1-philmd@oss.qualcomm.com>
 References: <20260811154930.13915-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: uc25wsfe7cTpj6vP7qN5izVc5e7RK5eW
-X-Authority-Analysis: v=2.4 cv=ENg2FVZC c=1 sm=1 tr=0 ts=6a7b449e cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDEzMiBTYWx0ZWRfX1SyVqNVq85+G
+ YnFyTe+MTN3Ob0DD/9930f0+UC7t2inXhS3zb+V/+zC6CbsEicBSC2dNytCFFV3JPsdi2zs/yTs
+ zMb7ZGbeHNJGwYxbrFITJlF168XjlYw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDEzMiBTYWx0ZWRfX4nzVvEZ6m6ie
+ R2V+Op6ptyAdUbCjmYaJV6beY01a/dQy9hoUydk4x8YHBqXh7KDJJOFQxvhW5ipaml5jf7VNynJ
+ ozrPgbJdjqxDzEgrEMqGUp/NvyWo9JJ/Qakh2bj+eYBcxHUZhkUlw004nVZwN4N1/xIl5ZBOff0
+ uK6/qdwWNEz/0MbH815wxon3Etyc2gzM5eB3vrXW3/2Gmj7ojLqmmP4LIuKhRpLbaY29oKo4u3v
+ h4X86uWs9YkHe+5y8lA3DI8wdffnsYV+PpKrvrEEJb+vimSFLoWGgW2MS2StxZbgJJKHGc0PVAe
+ lmxXrJQftDq1rfUYtxrOepAJkbxqNwRFnG43hGX+OFaDUdbBNqeNMfUAkHsZFQ/yylstGluxJwX
+ +uWU1Nv5+haQldeUbvmbaeFF4GZYQJB6Yf+LeECHg86/rXMmacxGfPPtFIp39H/o8BZbpdDEM16
+ lRG41d7B1LTdjleemcA==
+X-Authority-Analysis: v=2.4 cv=RY6gzVtv c=1 sm=1 tr=0 ts=6a7b44b5 cx=c_pps
  a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=43zqHlSF2DfHiYptYdwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: uc25wsfe7cTpj6vP7qN5izVc5e7RK5eW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDEzMiBTYWx0ZWRfX7yOkG9cOsut1
- O576sPA0i31YAS2/nCOwlw4DTIXdYz71lytSwtR7IYd51TjlQUns6Y1FHyqOBHxO9x9Ni588wy3
- OW7aZFqM+osajP6n1vJ6dSqnXaU1U5eoAx3s8xDnHPRjuApfxW+aYSz4Pxiz9u1HKaDg0HImzNQ
- LVRsH7G/eRgY7/TrsBBn1z5LUgBzmDsmmnxqKTPoWcw+4UMBOF3dSUnETird463MtAOqVZyABTZ
- 5NZmNr8a35P4VgpryFUqsIFPuIu+mIsPGuXp+Wcd1D2FsySmOX1+qgSynjmfMKBRf2FYauGa40j
- DdJJ6xi5sAEhF1+Dquol7BjEoAh81sQm7D+k6kfPfydkgbchNvKEWuE37JNnACJhNzUtcpU8A0q
- QaNw5MAdhIyHUSgAoILrGPr6ofsbryouK0OG33iAV0Wt/ByrFN0KoF06u2/8H7LdGfDDIm4uPJT
- 7B0psPuYruwDE++VQdg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDEzMiBTYWx0ZWRfX8ib22UlhDbup
- m3YeolTYhEJPDuzZ9EpsdlF9hPmvQTrkTxMSm0yAQDm2fienGiCiQV+XwTHbAXC1Vf4JdZ4hLXx
- 6HaIQKjFnbDWfkLSD10VuIiMKfhKCBc=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=XQsbmRuMgCUMduHJsesA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: LGF2EdLzD7X8OcyZu4rYHAiSCDckoCzI
+X-Proofpoint-GUID: LGF2EdLzD7X8OcyZu4rYHAiSCDckoCzI
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-11_03,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ impostorscore=0 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608110132
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -169,108 +168,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+nmi_monitor_handler() is not related to the monitor,
+rename it as raise_nmi().
 
-We can trigger NMI from HMP or QMP.
-
-QEMU maps the NMI to the s390x per-CPU 'RESTART' interrupt.
-Linux guests usually setup this interrupt to trigger kdump
-or crash. Such crashdump can be triggered in QEMU by HMP
-"nmi" or QMP "inject-nmi" commands.
-
-Using QMP, since we can not select a particular CPU, the first
-CPU is used (CPU#0). See the documentation from commit 795dc6e4
-("watchdog: Add new Virtual Watchdog action INJECT-NMI"):
-
-  @inject-nmi: a non-maskable interrupt is injected into the
-               first VCPU (all VCPUS on x86) (since 2.4)
-
-While we can select a particular CPU on HMP, the guest behavior
-is expected to be the same if using CPU #N or CPU #0. Since
-always using CPU#0 simplifies API maintainance, update s390_nmi()
-to inject NMI to the first CPU.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- qapi/machine.json          | 7 ++++---
- qapi/run-state.json        | 6 ++++--
- hw/s390x/s390-virtio-ccw.c | 4 +---
- hmp-commands.hx            | 5 +++--
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ include/hw/core/nmi.h      | 10 ++++++----
+ hw/core/nmi.c              |  2 +-
+ hw/hppa/machine.c          |  2 +-
+ hw/i386/x86.c              |  2 +-
+ hw/intc/m68k_irqc.c        |  2 +-
+ hw/m68k/q800-glue.c        |  2 +-
+ hw/misc/macio/gpio.c       |  2 +-
+ hw/ppc/pnv.c               |  2 +-
+ hw/ppc/spapr.c             |  2 +-
+ hw/s390x/s390-virtio-ccw.c |  2 +-
+ 10 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 9b2248038fc..2d63c1bac3b 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -432,9 +432,10 @@
- ##
- # @inject-nmi:
- #
--# Injects a Non-Maskable Interrupt into the default CPU (x86/s390) or
--# all CPUs (ppc64).  The command fails when the guest doesn't support
--# injecting.
-+# Injects a Non-Maskable Interrupt (machine specific: for example on
-+# s390x CCW only the first vCPU receives the NMI, but on x86 machines
-+# all vCPUs receive it).  The command fails when the guest doesn't
-+# support injecting.
- #
- # Since: 0.14
- #
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index a5771ad4681..e4fdead1e0b 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -317,8 +317,10 @@
- #
- # @none: nothing is done
- #
--# @inject-nmi: a non-maskable interrupt is injected into the first
--#     VCPU (all VCPUS on x86) (since 2.4)
-+# @inject-nmi: a non-maskable interrupt is injected (machine
-+#     specific: for example on s390x CCW only the first vCPU
-+#     receives the NMI, but on x86 machines all vCPUs receive
-+#     it).  (since 2.4)
- #
- # Since: 2.1
- ##
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 25a9fa49554..4f7861dbbb7 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -727,9 +727,7 @@ static HotplugHandler *s390_get_hotplug_handler(MachineState *machine,
+diff --git a/include/hw/core/nmi.h b/include/hw/core/nmi.h
+index 2ff5be1e214..1ba6f393449 100644
+--- a/include/hw/core/nmi.h
++++ b/include/hw/core/nmi.h
+@@ -38,12 +38,14 @@ struct NMIClass {
+     InterfaceClass parent_class;
  
- static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
- {
--    CPUState *cs = qemu_get_cpu(cpu_index);
--
--    s390_cpu_restart(S390_CPU(cs));
-+    s390_cpu_restart(S390_CPU(first_cpu));
+     /**
+-     * nmi_monitor_handler: Callback to handle NMI notifications.
+-     *
++     * raise_nmi: Callback to handle NMI notifications.
+      * @ns: Class #NMIState state
+      * @errp: pointer to error object
++     *
++     * Called by nmi_inject() to perform the machine-specific
++     * action when a NMI is requested.
+      */
+-    void (*nmi_monitor_handler)(NMIState *ns, Error **errp);
++    void (*raise_nmi)(NMIState *ns, Error **errp);
+ };
+ 
+ /**
+@@ -58,7 +60,7 @@ struct NMIClass {
+  * and on s390 it triggers the RESTART interrupt on the first CPU.)
+  *
+  * The NMI is injected by looking for QOM objects which
+- * implement the TYPE_NMI interface, and calling their nmi_monitor_handler
++ * implement the TYPE_NMI interface, and calling their raise_nmi
+  * method. Usually it is the machine model class that implements
+  * this interface.
+  *
+diff --git a/hw/core/nmi.c b/hw/core/nmi.c
+index 2d890f2995d..a6edf4fbf01 100644
+--- a/hw/core/nmi.c
++++ b/hw/core/nmi.c
+@@ -37,7 +37,7 @@ static int do_nmi(Object *o, void *opaque)
+         NMIClass *nc = NMI_GET_CLASS(n);
+ 
+         ns->handled = true;
+-        nc->nmi_monitor_handler(n, &ns->err);
++        nc->raise_nmi(n, &ns->err);
+         if (ns->err) {
+             return -1;
+         }
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 2b44debc388..717cfde61da 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -851,7 +851,7 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_id = "hppa.ram";
+     mc->default_nic = "tulip";
+ 
+-    nc->nmi_monitor_handler = hppa_nmi;
++    nc->raise_nmi = hppa_nmi;
  }
  
- static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d9..a1b77ae4044 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -865,12 +865,13 @@ ERST
-         .name       = "nmi",
-         .args_type  = "",
-         .params     = "",
--        .help       = "inject an NMI",
-+        .help       = "Inject an NMI, in a machine-specific way",
-         .cmd        = hmp_nmi,
-     },
- SRST
- ``nmi`` *cpu*
--  Inject an NMI on the default CPU (x86/s390) or all CPUs (ppc64).
-+  Inject an NMI, in a machine-specific way.
-+  Not all machines implement NMI handling.
- ERST
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 0ea5453403d..d1414ff63db 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -389,7 +389,7 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+     mc->kvm_type = x86_kvm_type;
+-    nc->nmi_monitor_handler = x86_nmi;
++    nc->raise_nmi = x86_nmi;
  
-     {
+     object_class_property_add(oc, X86_MACHINE_SMM, "OnOffAuto",
+         x86_machine_get_smm, x86_machine_set_smm,
+diff --git a/hw/intc/m68k_irqc.c b/hw/intc/m68k_irqc.c
+index bc41b44d455..29f758dafd1 100644
+--- a/hw/intc/m68k_irqc.c
++++ b/hw/intc/m68k_irqc.c
+@@ -97,7 +97,7 @@ static void m68k_irqc_class_init(ObjectClass *oc, const void *data)
+     InterruptStatsProviderClass *ic = INTERRUPT_STATS_PROVIDER_CLASS(oc);
+ 
+     device_class_set_props(dc, m68k_irqc_properties);
+-    nc->nmi_monitor_handler = m68k_nmi;
++    nc->raise_nmi = m68k_nmi;
+     device_class_set_legacy_reset(dc, m68k_irqc_reset);
+     dc->vmsd = &vmstate_m68k_irqc;
+     ic->get_statistics = m68k_irqc_get_statistics;
+diff --git a/hw/m68k/q800-glue.c b/hw/m68k/q800-glue.c
+index b13e5ef95f1..265af90a8e6 100644
+--- a/hw/m68k/q800-glue.c
++++ b/hw/m68k/q800-glue.c
+@@ -237,7 +237,7 @@ static void glue_class_init(ObjectClass *klass, const void *data)
+     dc->vmsd = &vmstate_glue;
+     device_class_set_props(dc, glue_properties);
+     rc->phases.hold = glue_reset_hold;
+-    nc->nmi_monitor_handler = glue_nmi;
++    nc->raise_nmi = glue_nmi;
+ }
+ 
+ static const TypeInfo glue_info_types[] = {
+diff --git a/hw/misc/macio/gpio.c b/hw/misc/macio/gpio.c
+index 1bdca728f97..db0c4ecb3cf 100644
+--- a/hw/misc/macio/gpio.c
++++ b/hw/misc/macio/gpio.c
+@@ -201,7 +201,7 @@ static void macio_gpio_class_init(ObjectClass *oc, const void *data)
+ 
+     device_class_set_legacy_reset(dc, macio_gpio_reset);
+     dc->vmsd = &vmstate_macio_gpio;
+-    nc->nmi_monitor_handler = macio_gpio_nmi;
++    nc->raise_nmi = macio_gpio_nmi;
+ }
+ 
+ static const TypeInfo macio_gpio_init_info = {
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 8676be7bbb1..a9f74245866 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -3583,7 +3583,7 @@ static void pnv_machine_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_size = 1 * GiB;
+     mc->default_ram_id = "pnv.ram";
+     ispc->print_info = pnv_pic_print_info;
+-    nc->nmi_monitor_handler = pnv_nmi;
++    nc->raise_nmi = pnv_nmi;
+ 
+     object_class_property_add_bool(oc, "hb-mode",
+                                    pnv_machine_get_hb, pnv_machine_set_hb);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 189334b9f0a..ad571481c44 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4652,7 +4652,7 @@ static void spapr_machine_class_init(ObjectClass *oc, const void *data)
+     mc->nvdimm_supported = true;
+     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+     fwc->get_dev_path = spapr_get_fw_dev_path;
+-    nc->nmi_monitor_handler = spapr_nmi;
++    nc->raise_nmi = spapr_nmi;
+     vhc->cpu_in_nested = spapr_cpu_in_nested;
+     vhc->deliver_hv_excp = spapr_exit_nested;
+     vhc->hypercall = emulate_spapr_hypercall;
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 5d8a73a63df..a59346a2120 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -830,7 +830,7 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+     hc->plug = s390_machine_device_plug;
+     hc->unplug_request = s390_machine_device_unplug_request;
+     hc->unplug = s390_machine_device_unplug;
+-    nc->nmi_monitor_handler = s390_nmi;
++    nc->raise_nmi = s390_nmi;
+     mc->default_ram_id = "s390.ram";
+     mc->default_nic = "virtio-net-ccw";
+     dsi->qmp_dump_skeys = s390_qmp_dump_skeys;
 -- 
 2.53.0
 
