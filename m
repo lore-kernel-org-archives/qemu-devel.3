@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35239C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7312C5CFC1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wthat-0006ta-0G; Tue, 11 Aug 2026 04:12:19 -0400
+	id 1wthcg-0007Ov-3v; Tue, 11 Aug 2026 04:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wthar-0006t8-Kj; Tue, 11 Aug 2026 04:12:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wthap-0005PE-UU; Tue, 11 Aug 2026 04:12:17 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67AN1rgb2965210; Tue, 11 Aug 2026 08:12:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=VMrc/EnF2Ur46i6EFsA3fUrsNPK+nG
- MwvMoaIJg5//E=; b=Q4ZtqrfKETaVoPfG8xR6z65bN4FIJ5NhSORn2d8AeNetr5
- yJbAZVbHJHfYCh0DJ7vp+mkdrPCMBT35F+Iekv7WFK7oThxyHdVZ+XEBRVQIc30J
- cuZZJWAFt3RHA7F4UXDMBwV+9+0LVH0xWxRjUflg78x5kc1Vz/nix6rWBktLgX0O
- 1bd6lg8TOzqhDfXHSLG64NOc6Us0/K83MayPMvAhvsQYqItjg/z/8c/sl64kLhQV
- 7fuhLF2GjcBSqWjWFQ1+a2dnbQpuMRiWKMP6TNOVzYkwp5waPzkipLmvMlJCfNc+
- VRgUpiWCu6E6eBcpBFubtd4s0ROVWE2k3W6lNivA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvm9m0sd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 08:12:00 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67B7uOK0017728;
- Tue, 11 Aug 2026 08:11:59 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsjr5ar-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 08:11:59 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67B8BtZo34603416
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Aug 2026 08:11:55 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 572E12004B;
- Tue, 11 Aug 2026 08:11:55 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D250520040;
- Tue, 11 Aug 2026 08:11:51 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.25.110]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 11 Aug 2026 08:11:51 +0000 (GMT)
-Date: Tue, 11 Aug 2026 13:41:48 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: "Kirill A. Korinsky" <kirill@korins.ky>
-Cc: shivangu@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- npiggin@gmail.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- rathc@linux.ibm.com, brad@comstyle.com
-Subject: Re: [PATCH v4] powernv: boot OpenBSD on POWER9
-Message-ID: <anrZFLsu2ywOUH5U@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260719145559.94342-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wthce-0007Oe-5r
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:14:08 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wthcc-0005Zf-FB
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:14:07 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-47f7027ca11so1770103f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 01:14:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1786436044; x=1787040844; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=R7S39uQxz8DgeQ+qlTnBuuwhWWQyog1pObMiQJSp9Io=;
+ b=aVeaUiw4sweSHE9NX0EsZEsk0gu2/jC2TazKmWhmasFTUTpt5AdXDlAER63qtWwF84
+ 2IwfgUuX30umzPJX6x3b6A4GBlwAuqgJeUnGB+IBFHL6QYIy7pGUw5uJn3lVgzVPyRJs
+ QzAcF7pvgtGB5TQUgeB15QYOzDLFzjpg1xf44=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786436044; x=1787040844;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=R7S39uQxz8DgeQ+qlTnBuuwhWWQyog1pObMiQJSp9Io=;
+ b=X91dZNr21xjYIbxjUq9oJoRuP7FoeCDbIXfQt1+gRPa/HJnxcKx3ru5L6mU7Du1Ch3
+ RWjVZtHz+RQ1ZCYpcKLCFY+nZT/epd7jyJjsDfsAu8LsubOrJBereEepONUT76vNHxck
+ zq+YJlwfkQ4a4QMyAlhwdaU4KBqc0iycTrMfGDuvIaTUkT93B9vxlcSla0/yjtCYD7LQ
+ jkOrHMAqDLQx7bkTC4RuEqFi2SBQtNRx/50iLTYM/Qc60TRy8Zblo/Df9bee3gm5yunq
+ k/+1DGpaa4bQtaJdEriOlRKh1wkdyACoV+tMChU1qGgd18hdWEX9hvcFhVSSENgbzj+j
+ tCwg==
+X-Gm-Message-State: AOJu0YyN4g83BaF6Mi/7ZZ6I9EyZJ16+NDLVCg8tY7Io018wZTdHvckr
+ r3S1i1aubwVT08s43zpjZadxO6gx04Z4cVjyb2yfDrnZUWMdpEYe3jmJ0YYWPjvNPG+sTnZzwd3
+ lGYbi
+X-Gm-Gg: AR+sD11Itx4ZTQNrngXUfAIeik1Hj0aVF3eDdsR6WKBAU936pU/vNl2uSro06sWpT17
+ za5nplws1YLnIUkLnX3QO2Y2l8ywkDL/Ct7NwA+7XRjd9p3pY/e8NIu84Kcv1G/VSAZU7hhQMDf
+ E/0zEURtzmvR2+i0Za3UiBHSIV4OjBM0CKjZgqzkmxdN10R5q/jOX8Ade2xEX3xYfugFt/hLOEb
+ arDuCs4rLIVUmkNIadnOz8adRqyaE/ckpd8bsPvwe0UoVwj8mHuUmesl5yLJV191LdOViWhx742
+ tHmFvkw491Jj2eXsGsUaoZHuJdGBc2wfgIwEno+mZQHB3HPI18k1Dj11Ke0yim+aqfF3yDRf1cI
+ 4ufdAsT6QPYvgEQZZAynkl9g+jt12FWEOu0vycfDY4SPVxacO4gBAH9cS5by7gavsluvS0HGOw7
+ ORoPheiMpqQN2toXUFiFwGPMD74yBGA0yaj5vhspjBq3LK6759Bg5iUhOv9QdO5sC8oQO19/oQV
+ PQfz3XnxqN0kbdX52s8SgrHcZyFfc3QEB1QyhE6EUzvohAWfp88uMS+KGoBSK5pkGqLaw==
+X-Received: by 2002:a05:6000:1449:b0:47f:fd05:25a2 with SMTP id
+ ffacd0b85a97d-4814ad852b5mr2490539f8f.8.1786436043345; 
+ Tue, 11 Aug 2026 01:14:03 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf574a72003269960306a2193b.dip0.t-ipconnect.de.
+ [2003:cf:574a:7200:3269:9603:6a2:193b])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4814a5ac75dsm2164925f8f.7.2026.08.11.01.14.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 01:14:02 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v2] hw/char/pl011: support backend hotswap
+Date: Tue, 11 Aug 2026 10:14:01 +0200
+Message-ID: <20260811081401.51771-1-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260719145559.94342-1-kirill@korins.ky>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA2NiBTYWx0ZWRfX2EmFYKt1IYiH
- 7wc3YbMQUg0BLPi6ZLW+XJoVJLTWhtmfSRP9jTWsDdHFfA3DC6LFbVg+9B/hfDlqCcvJe1DspqH
- 1FiPg9nI0ecoH1BA1jcdXPCmuXBHKDqYogec1VS9YBdFmnorhCQnE2Wkv9LAYFKDRpXws940xMZ
- UcVm2rwX0Qz8YWV69JGc5u6tjpIIouszTfVoLMz3A5l+iTMEmzLumbJhO2YVUp6Bgj3cA4ooQOO
- H/ZwxvQCbRZRXa+VNBOk8JqfEtrcESK+tSlQ0fcpu0nzGkNr9TSIw/tzrlF8Q9z+yyb7KP5+Szn
- cv4XS/aLLXWqVMid7AaUa7ErEiGCiKrRI77Oto7IEhZ7yecCKykg93kj8TVIiclJpbtJv94pw38
- X7aF85J9c1n4c43LTf0NPK4d9s0vR5ZE+t8zQCTBJ2tjrQDdPMgSFsjeR1rh/1AboCKg9I9K/F3
- CJOG6N8jSj22b6A4goQ==
-X-Proofpoint-ORIG-GUID: W5skl-MBDzexja19KZAMkFPbMYpw8xhr
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA2NiBTYWx0ZWRfX5eLV44uavXov
- lG4ySPmsm0haDLXDC8Df+RXuZk4SR/g/neFX1MCad+vo9uKCoNukqos1NEgX0ibXPHfezEHufPU
- kPWjCAEb6Kz3d8zJtkhHSZnzQZZoeGc=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7ad950 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=tJga6xRQVZmOmLnUc40A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: qkV2oQm7aZFdxtT8WsPMo9JMB5QM8ZTt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-10_06,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110066
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,33 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/07/19 04:55PM, Kirill A. Korinsky wrote:
-> The POWER9 Processor User's Manual, section 4.9.4, specifies that POWER9
-> ignores PTCR[PATS] and only supports a 64 KiB partition table. Use an
-> effective PATS value of 4 on POWER9; other processors keep the existing
-> ISA v3.0 interpretation.
-> 
-> The PSI model now exposes POWER9 IRQ level and pending status registers,
-> and keeps both updated while delivering through the existing XIVE LSI
-> source. This lets guests that select the POWER9 PSI LSI IRQ method
-> continue to receive LPC interrupts.
-> 
-> The blast radius is probably minimal: the PTCR change is limited to
-> POWER9, while the PSI change only touches POWER9 PSI state and reuses
-> the existing delivery path.
-> ---
->  hw/ppc/pnv_psi.c                       | 11 ++++--
->  target/ppc/mmu-book3s-v3.c             | 21 +++++++++--
->  tests/functional/ppc64/meson.build     |  2 +
->  tests/functional/ppc64/test_openbsd.py | 52 ++++++++++++++++++++++++++
->  4 files changed, 79 insertions(+), 7 deletions(-)
->  create mode 100755 tests/functional/ppc64/test_openbsd.py
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Looks good to me. Thank you for adding openbsd support :)
+Currently, when Incus issues "chardev-change" QMP command to change
+chardev backend from ringbuf to socket it receives an error (with aarch64 VM):
+"Chardev user does not support chardev hotswap" [1], [2]
 
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Let's fix this by properly implementing BackendChangeHandler for pl011.
 
-Thanks,
-- Aditya G
+Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, because
+if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is true),
+then after change we need to send break to a new backend too.
+
+Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-console-on-arm-architecture/23096/3 [1]
+Link: https://github.com/lxc/distrobuilder/issues/892 [2]
+Reported-by: Stéphane Graber <stgraber@stgraber.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+v2:
+	- fixed a typo in commit author name
+	  [ I did `git format-patch` and copied this patch from my Raspberry PI
+	    dev/test machine and it turns out that I have a stupid typo in my
+	    `git config get user.name` on that machine. ]
+	- added RWB tag from Alex Bennée
+	- adjusted a commit message
+---
+ hw/char/pl011.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index cb12c3e224f..3622248ec0c 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -660,12 +660,26 @@ static void pl011_init(Object *obj)
+     s->id = pl011_id_arm;
+ }
+ 
++static int pl011_be_change(void *opaque)
++{
++    PL011State *s = opaque;
++    int break_enable = s->lcr & LCR_BRK;
++
++    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
++                             pl011_event, pl011_be_change, s, NULL, true);
++
++    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
++                      &break_enable);
++
++    return 0;
++}
++
+ static void pl011_realize(DeviceState *dev, Error **errp)
+ {
+     PL011State *s = PL011(dev);
+ 
+     qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
+-                             pl011_event, NULL, s, NULL, true);
++                             pl011_event, pl011_be_change, s, NULL, true);
+ }
+ 
+ static void pl011_reset(DeviceState *dev)
+-- 
+2.47.3
 
 
