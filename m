@@ -4,141 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8893CC5AD7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 01:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98786C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 01:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtb9y-0006zW-Ex; Mon, 10 Aug 2026 21:20:06 -0400
+	id 1wtbH3-00086U-TY; Mon, 10 Aug 2026 21:27:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wtb9v-0006yh-N4; Mon, 10 Aug 2026 21:20:03 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wtb9s-000772-0u; Mon, 10 Aug 2026 21:20:03 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QK3fMVezaki08TvWbf1nVtdQUl2E/cKirZwCLnxxupY38s05sZr7o6kuSgJTuH0VSPynVO4YU8PlJCupXJ5CZoPTEBXtZqMlru7jtqYAlAU3Q2jpSX+FnmvDOUX9ZmnN9ypsr/1pgqQjbJDipMyfdUQt2D/5ZU/rD/t6dRA9Dd5pWO2Pwqe+uiLNYlLToHOBq/j7EHiSnezyZFrcy0bCqgk8K2QuP+osCBTkiMRWSZHLVM/T4xdpHq+ih0e9T3fiOKiE72FxQEH/IXWlAQhhW1YSI48J4o5iQZV+kWR1SGWzjS/+/mhAfB4QxG0qavkKC4OI4b0ISf71IffTL6N4qQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+W/1EpKcdZ77qo2d5I0vAhGd5nXcjP+SgLb4567JUzY=;
- b=KKr0bHXFWWzbJ//4QZ7nzvINV9iJwy6p/SCftrHaNnGDQ7Yv9Q8j9CQg/ucDzBqY4BYpQ0ir3QhirPG4sb4P5WzS6ZtqKOD8nPBWKIFFzeP4bNhmMsV3jywFp105/xdP/6H6Iw2TIi2Jmkl6Wh/5KKT48dN3MrttfALkV6dcS02MYqk3kN7aynxpP+TlBsjR8legYX30xOYxoQs/eZZMZhPIZpKRxxbZn5AtPO97SG80UmEVHg89i72PTI4PYy081mJFL4XeHFWAdiuQBtqfivwQWSZEJZXSnV76uVym/terY2xlastKextF1qmGXdJF9rfJ2vtLj6AFsiggIa7CUw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+W/1EpKcdZ77qo2d5I0vAhGd5nXcjP+SgLb4567JUzY=;
- b=b3dbXzzJX8LmcecOvaLgLTriZMOa1Dmec/vi0Fz08XE+ogbbOeOhxizjEbAqGzHEyQROW2hiB3xr/tdvu9vAEn9MeVhE28l3v94v7afowD9Dw1XzA4QOPmZt0TXtzADG7fS+feOxDw+F6jHGng5lkiXSgUWNtKq2bPlreDhkm1cDJJSWZx7+K7I/9poRwUP/WYz68CYgIlso3u52jWFWTLAV0sH+/Ndsxcr0fl3tUiVwrwQGgoCLXlza/b/+1YSWi4Y7jPTPIMZ1fWWEugYVp/+7aZiUI1Y6liDb0nZIuUOQEHpPJqVhVGwH/XSVwX4iM3yLe5Mrwsal/XPHQEsDzA==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SE2PPF2BE5BD2CD.apcprd06.prod.outlook.com (2603:1096:108:1::7ca)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Tue, 11 Aug
- 2026 01:19:49 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
- 01:19:48 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Kane Chen <kane_chen@aspeedtech.com>,
- =?iso-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "open list:All
- patches CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v2 01/17] hw/misc/aspeed_hace: Support the crypto command
- in direct access mode
-Thread-Topic: [PATCH v2 01/17] hw/misc/aspeed_hace: Support the crypto command
- in direct access mode
-Thread-Index: AQHdFAqrltXLJE5RlUerH8FfKXx9/7aXA3gAgAEvl+A=
-Date: Tue, 11 Aug 2026 01:19:48 +0000
-Message-ID: <TYZPR06MB49804F19F3CD19D3D7D48AA8FCDD2@TYZPR06MB4980.apcprd06.prod.outlook.com>
-References: <20260715033311.1648424-1-jamin_lin@aspeedtech.com>
- <20260715033311.1648424-2-jamin_lin@aspeedtech.com>
- <SI6PR06MB7631D594BB6D342FEC137AD4F7DE2@SI6PR06MB7631.apcprd06.prod.outlook.com>
-In-Reply-To: <SI6PR06MB7631D594BB6D342FEC137AD4F7DE2@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SE2PPF2BE5BD2CD:EE_
-x-ms-office365-filtering-correlation-id: 961d7534-af2b-488d-5c16-08def746a300
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|23010399003|18002099003|22082099003|56012099006|3023799007|38070700021|6133799003|4143699003|10067099003|921020;
-x-microsoft-antispam-message-info: 1o6IC0CP5w7HgGjFK12LzW6NIikBEsbM4PRtP5EyMoyM086xGqJTAyh+Pih7G9gd6F0OaX6jZkjgsn4n+1oXuXzRB7IHP7MMeu9DtmuKxnqgw2wYS09uKTxJMTdgMVelIouYYHMdjKrUwLlr3+bSNXBnO+WQEJVTnuVPcKMJDpW1TIi04eBRq8Fzmma65DyzQzuQg8hnu1d7WF0WFju+jCtntU4epowR1FxZocbItvvYGJHy9Yd6OF/EiUu7TigWWXbX3rvgEt4vLewn2YkVBkEH4L989iQUsJek0y522xDr0r8MCWoL2wSQXPKQapqkyJhFApeMhHuvPK3fwcCNQLE0zJkPtgYolZapRntVd8L3zEaS75mJuulJQa2To4PE9qP8e1TB/m9KEh3BQaQsU5m/6witb/du0kVK2Fyybyxadztx1GTOxjjKe+UBaEFbF4SiJN097lQHKPxs5Mf5ODqAe4IWHGtpte+P9CO+qUw2pxBQbwb0AHaRdEl58k4+nfoLmVjfqPtBwUCz8kfct51gyBk/GYDt1yMcEa2Fe+vZ3Un2EdTK7hl774tuNN142oCyVz6+z0Zbw7sQ13+HUwsZva2aEsXll33xVbm1tpUVVlIac+Y+0OUt8cjtL1nuVYqqnWgiLo/y/P3Vhw2enSNjGHtAwT5cUu4zyMRF/rX+wTVyJsqzd475nlhlkDSLQ8gJUcXfZwokvXgFAj0sBX1EY5deokz3/Pu35HmOXi6nixlAUiN6qChf4GRJEgFg
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(23010399003)(18002099003)(22082099003)(56012099006)(3023799007)(38070700021)(6133799003)(4143699003)(10067099003)(921020);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DK4ZwJybii8w0WC055ekFtgj23X9Q4yvO+pHLAi5QmQx9b/pZdbMCYeIil?=
- =?iso-8859-1?Q?ZO3wGvXd7xd9O96CyzaRwpcNhBG1+TSRQN04wmVisLjHSHLECc6GSJ8K/P?=
- =?iso-8859-1?Q?5yYpESBjBNKmJiO22zDqv3SwSvfL3U6cR5UOf5UMznkDlt0JVYgdAxDDvS?=
- =?iso-8859-1?Q?VmP0lRNNav2udmxIUgnYVl3jd26ObJ5eSncVFGu1gbSGWMQxZ8Z3u95XWy?=
- =?iso-8859-1?Q?K38dWTo7X1NCPM87EPf7286/5p+SmY+GEpxyNCzmNJwCfRDrUJCgWDjOym?=
- =?iso-8859-1?Q?4gv6C6fr9rEDwAO3tNQRxJ+EqWm89552FGqHonS3Wj9PxTBQ+I9lrdFfNU?=
- =?iso-8859-1?Q?J9eHyz61TW7Q8g32xB+xxzWDj+AgHyVLX2cKt8THv6BmIYOLA4wTTqpSKD?=
- =?iso-8859-1?Q?4So9lNuVXeWchD6t+lWTULFlmSbTTntPrzjMTyWQ2N0Ai1vbQYlbnM80hz?=
- =?iso-8859-1?Q?ACyO0wu8O3vXXjrWBeh3hqGykn1SrU6pvy1+DjatTPMovMoEbmiV6ivITf?=
- =?iso-8859-1?Q?7bPSTiEISNBpIbJGJEXQBe+GJVDV1TcLNBZmEccQyzR5EocUn9VgGSMskc?=
- =?iso-8859-1?Q?9yc+25P9JZTY9/BMPWFjGtlXor94rJFds5Ezq1rpyZO/kS3z0gw76o+y4y?=
- =?iso-8859-1?Q?a6KYBQICCE4DPlMpXjmKF2jllpDEYHhQXx/DarHfYWMGPwlh7eb8FAhBHt?=
- =?iso-8859-1?Q?VvC6m3TsZkRtrrysd242mGNGcFu0IRBJnOZyL3fCh3CPs+1FQFfm15HKBl?=
- =?iso-8859-1?Q?HhkJS0k4g1o8ZUZkBsy3h32gt6y9Dcukz8UFAlIkvZ/nN7ri6qdSr2ImC4?=
- =?iso-8859-1?Q?sHdw97/m5om0uuGO75Vfyym9zZYjgJEfyeiBxZyH3+T8rHXgIyQxI47bP7?=
- =?iso-8859-1?Q?T59Z5bOfYMcWUHQLcM51Ocrq8dL3GOvKCrB0BMf+UiHkDzLrcM1Ub9UT0g?=
- =?iso-8859-1?Q?WkweazMWOySeyzr04LwHvwbizi6LgomMaxwtlanxFqenr9BWFLzIu8dhn7?=
- =?iso-8859-1?Q?XpKO7fLbaaSsMnR5Zs8uWEemlNkl/rNdJ3aV54DP8iym5OFeGwqeB3MaF5?=
- =?iso-8859-1?Q?W5ncLAN9d0UlJlhl1VpsjzukQfDdFuMUY6vvKWBX/Buwv8AHNJx2utMlg6?=
- =?iso-8859-1?Q?qvyxLYngC/fptzc6lpE6wvU5MaJ0M9gJL9icjqKs2lJn9j2s7v/6Bm5PPa?=
- =?iso-8859-1?Q?DNqHzBv3/1PYj1AcYRbxdf/KInNsxIFvOqx0LSa+iGvFhSnf/9WXQNZehF?=
- =?iso-8859-1?Q?/A8TsVzhVHrStiBfWvWza1yBhgTafYaizBuHla+ELAlwqLQYkTrSPdZf/U?=
- =?iso-8859-1?Q?psl7+lvkVHqHnNo/CccSnxVXOryw8RbhI43jw316WD5cFHfK9iwQBN45so?=
- =?iso-8859-1?Q?YPmONrgX90eEyKgUp6joU37fKPqKHpt2p06QGZGGqAs3kcPhj39Cah4Oom?=
- =?iso-8859-1?Q?2Abk4Qtxz/CYiXg3NU8d3Or3a/G2Hy3GU+PEFqxpYzQ9ClGvLmYaHLFlqV?=
- =?iso-8859-1?Q?wNhF844UPAVkKZfHopif1mC+d5zFmE5VB6sr+u/7NcWkFacJ7Y+4Km0ZDu?=
- =?iso-8859-1?Q?APgXj94L6f+Ws4MFHyRMUxuu+UaKO2AGf1jDPN2QhCKxGxqsy5Clu2KwPR?=
- =?iso-8859-1?Q?BnN/lealGIoZvFIkhD0R5Dv3wdjrtrMm7Bf+Mdhf9cnz0Z2lm68GPGNcES?=
- =?iso-8859-1?Q?OMiF4PSw8qIph0b1FZpxSyHbEHfmgc96taVvMumNfFk7Svn/b1sME8wK6M?=
- =?iso-8859-1?Q?SDuZjpTWN+T38tCyDHrDQSYwgsHDDwAx94UtpdNGz/NpObH4q2byB9z9KH?=
- =?iso-8859-1?Q?DGoz/2qqKw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtbGw-00086B-UJ
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 21:27:19 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1wtbGu-0007uj-VR
+ for qemu-devel@nongnu.org; Mon, 10 Aug 2026 21:27:18 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-669944f60b3so2820126d50.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 18:27:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786411636; cv=none;
+ d=google.com; s=arc-20260327;
+ b=USx6i/+0ZmRCyjuJpL8AXhwPbL0rqweF6Biuiq1A8mBz9miMty3B3SYry4fXiwiYdf
+ E7yg8nvX42rNzFlfjPXJpx2MgMqVlMERMHdr5M0gXe6jpEhksKrqosaPCl820ucWEGPl
+ xG7R9s3/r/Q/9iIAUeoZqn/iHrJyzTpuBkzVFf8tLX08VDDbaxg6bmJEoOHBZT97ISeK
+ IKBcI8jHnW6F6D37CBevqLlJ+5kUhf8NH1Ptd2piUsl+AbliIIaOujtGVi+x4mMV6qfD
+ sy1RuNKh4DzTygzDj/gFeqbjsDPBgkNs0BwWMfjpj2mqQMRgqe5Gs3FxVRZJQfjCQWG/
+ QVnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TBxAmOSUBbNLyw26qtRONWHRSp6bIPFEi6RDZXWF+T4=;
+ fh=Tv1hKPs+cXWynI23hL3wQd3MOt1ixTT8ANGq27q0/yE=;
+ b=Cdcu8IzTgdooAaY/tPzUz3sJEz8M8nePsYSh+ebgHxqzT12lRfUzgiy2lp+DerWotB
+ S51uO2B6xVEO/vqYtb6UQQVGXVc0TAhpmgiUx8RQR2t29nQzfqiohZXnUVEVExVFNxVB
+ /OjQSOpRO/PIWiUuVlv/HGHG1EW0EJe/+mHvALVZVLA+zW2/MED/9Ll3uia+LEuZmVlM
+ jqPMesS6rnNiB5sSVciJpJI4zKxvcIiV4CR6MRU30aHmuHQlxKQAtKHx1+GjTTwYkbXY
+ ijEi5DXFFpc4seN8Ud3XOVCk5GrumYfbVFCWzF9eBmqhPJ/I+6eNz8h65gb8t1Nw1Kky
+ 460Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786411636; x=1787016436; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TBxAmOSUBbNLyw26qtRONWHRSp6bIPFEi6RDZXWF+T4=;
+ b=KdwiDCrGuAFtXtCvhcg9XRWNkrnUAaKa8gdLnoLThIiceZ7x61fOuMcDWojAqQ9eVU
+ iwcIvW4+RDqb5ArS/5/8kUeC/Y4BANHkdxC3WfhEh2G0fu2Q2KojUOpoCgQtwQuIuM4p
+ O/uNPAzBHzvhQGTxa0BLcCn1N5YgOazdXl87UTuJQim/pxZ8ZCMtfDhnqRt/Qcyqmfp2
+ hEwstx22Ui/3zH//v83bmt9MkYMX2S3bjkJqhyO3vGMvuuoZFXDNrQkgwtdKj+3XjxL+
+ Y4GGaoe75yd+9P2NNQBg4aPysCHuFUhW8tSQ7SCyj2hKokC4wPrj2VyoDtW0OpnqkSzS
+ 6fiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786411636; x=1787016436;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=TBxAmOSUBbNLyw26qtRONWHRSp6bIPFEi6RDZXWF+T4=;
+ b=aFTPo8nF1TBi5zn5qx1cCmVDf3kzVcdkS71cpueLLEg/FyCvoreC9gohU4i4gQ46+W
+ XyAte53+NdOfRdAqpTHfi+ipZvwIhMuh5ZBT2LBfMA2idnIFaxFUcVlaBDQCGhE2yWdN
+ g53BOtjMteiF4cEjmMRKbdSt3BADg6eo3N8uPfL0a3Nu7FT/1c+Pi2Up3HyQyKHCwA1l
+ oJ0nOzNcjNS1QFrSCVLkUSYEbZRgfasAHg7ktMwkDLyaGwHwRPc0Fvh9Z4PZS+4RyMzJ
+ J5/E2FYu8aN8ksjligLmE/N8hLSypXacWfLVGpcX2hzQZGJ1RVYlLE1sG8nj91j0AFjr
+ iwPQ==
+X-Gm-Message-State: AOJu0Yw7Li16EntWXk2ExDdTQOhzyhCqK+F/bddQwjcJRjvo0CX/dUaI
+ IwzZQ6foGFL2wzeH6oARzkBkQaWmhdKixbk4+FfZiZ6PU/r4E8l/+3lhXcmK+s027stKPQsuy6u
+ 63wPZ4hABeX/ParbhqnpjCcbHp/tla78=
+X-Gm-Gg: AR+sD10lVotEdUt3nSE+lMH3ZIQxUhivsKj+4uLr5Txg5biIH50/E2DTHTc5nvSQHjN
+ mPIq/tPyOz7ncgpElNV1BtZbMYFchzwHmIooBGc8MIqqXqWDvhQ8yttWLsUsOcKeEVRTUPK4GLC
+ vViyuejubwpxgZ7DCRuM8O82546BojMWE4w27ZX+bFUfnCcE5lsuMH7xqfAMWG6MDk334rOlYMZ
+ Z6YFSf4EzgsjXUgvw1QeiBu1DsVMYg1YWr7Pwjwj1XKKRVjRfrgcj3GpLRd/ujIBXr10MSb3tKi
+ TQq9gOHkGYgjAV2nPVVGVLV678w/Oz9QeMZgvP+66FQvsDpSNjRPXpmMjvWRO/WPaj2rlbnE/kj
+ s
+X-Received: by 2002:a05:690e:1913:b0:668:8b5b:75ab with SMTP id
+ 956f58d0204a3-6699ac6d3d6mr26974547d50.49.1786411635592; Mon, 10 Aug 2026
+ 18:27:15 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: iFirtwRq1ht/wQAI2WoPZ4Ao++woC6gGWh8PJaoELOfYiBl2zWpGp65IoTqqfiIwB5pj8cciFv4JXWBMFXWNx64cSOm8NZc44C1Oog40P+PfA9VT3zmwAiRGvvqPgSDg4IKlwqitidZH7ifPVYPKl6ISfLtfKHTD9ffjgDwbeceCkwi87ldCg/E+WiDEYKlWwdyz6hBWiW7VgrV+9QCLtqdvQXb30G+ZPMytn0RWuh+IjGxgebXKH4Lh4lvvsq9ulqy4aIXzwBqwLqm21tVCzRVOof+WVShtFuuPSl/WuhONzZFj/Nz1D0HK1qJB0fCj6Sr9PupbQDVG0Jg67d0x0A==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 961d7534-af2b-488d-5c16-08def746a300
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2026 01:19:48.7212 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iJxcMC896qO5d89ToaaUQF/Sml+1T+KvxkgxLAEr025CHOIKEahE9Pq3Mc/6P5XLPrg97VDt7am80GxcnnFLtbN1TwSnfpSGCGYIiWjGfHI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF2BE5BD2CD
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+References: <20260810182804.27310-1-ltaylorsimpson@gmail.com>
+ <57bf1075-cf49-4ccd-8893-94d32d4be313@oss.qualcomm.com>
+ <CAATN3NoX9jxBv4mjXwRxJ3puooZFEJrE5_LnoPMabnX=WwD0sg@mail.gmail.com>
+ <b6f8c765-4e17-4aa1-990c-5518224971ef@oss.qualcomm.com>
+ <CAATN3NrvDzJ_+7pnx2E2dLcQmmDsVRqPGvcVSVA4e+j_AiMGdA@mail.gmail.com>
+ <9db1ef83-7c05-4327-a6f3-539d1769df9d@oss.qualcomm.com>
+In-Reply-To: <9db1ef83-7c05-4327-a6f3-539d1769df9d@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 10 Aug 2026 19:27:02 -0600
+X-Gm-Features: AUfX_my9rAKBBVmRgWNCrgRAasMhdu90zM4pKLAHlOS3AUjQpmb-CzH8q3WXReE
+Message-ID: <CAATN3NqQ4Tz5AnVBg5OAtgBv_A4sCoFP375ZcbDMoPN2ZxDggA@mail.gmail.com>
+Subject: Re: [PATCH] Hexagon (target/hexagon) Clean up disassembly of control
+ and system regs
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ richard.henderson@linaro.org, philmd@linaro.org, ale@rev.ng, anjo@rev.ng
+Content-Type: multipart/alternative; boundary="000000000000f6538c0658bb5e04"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,448 +122,310 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kane,
+--000000000000f6538c0658bb5e04
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Subject: RE: [PATCH v2 01/17] hw/misc/aspeed_hace: Support the crypto
-> command in direct access mode
->=20
-> > -----Original Message-----
-> > From: Jamin Lin <jamin_lin@aspeedtech.com>
-> > Sent: Wednesday, July 15, 2026 11:33 AM
-> > To: Daniel P. Berrang=E9 <berrange@redhat.com>; C=E9dric Le Goater
-> > <clg@kaod.org>; Peter Maydell <peter.maydell@linaro.org>; Steven Lee
-> > <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>; Kane Chen
-> > <kane_chen@aspeedtech.com>; Andrew Jeffery
-> > <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; Eric
-> > Blake <eblake@redhat.com>; Markus Armbruster <armbru@redhat.com>;
-> > Fabiano Rosas <farosas@suse.de>; Laurent Vivier <lvivier@redhat.com>;
-> > Paolo Bonzini <pbonzini@redhat.com>; open list:All patches CC here
-> > <qemu-devel@nongnu.org>; open list:ASPEED BMCs
-> <qemu-arm@nongnu.org>
-> > Cc: Jamin Lin <jamin_lin@aspeedtech.com>; Troy Lee
-> > <troy_lee@aspeedtech.com>
-> > Subject: [PATCH v2 01/17] hw/misc/aspeed_hace: Support the crypto
-> > command in direct access mode
-> >
-> > The crypt command register was previously stubbed out. Implement it
-> > for the direct access mode, where HACE00/HACE04 point directly at
-> > contiguous source and destination buffers. AES-128/192/256, DES and
-> > 3DES are supported in ECB and CBC modes via the qcrypto cipher API;
-> > the IV and key are read from the context buffer (HACE08) and, for CBC,
-> > the resulting chaining IV is written back to the context.
-> >
-> > The completion interrupt is now raised for every HACE variant as the
-> > hardware does, which fixes the crypt command hang on the AST2500,
-> > AST2600 and AST1030. The AST2700 crypto engine still needs 64-bit DMA
-> > and AES-GCM, which are added later, so it keeps its temporary
-> > interrupt-only workaround until then.
-> >
-> > For debugging, the context, source and destination buffers are dumped
-> > through the existing aspeed_hace_hexdump trace event (disabled by
-> > default). CTR mode, scatter-gather mode and AES-GCM are added
-> separately.
-> >
-> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> > ---
-> >  hw/misc/aspeed_hace.c | 283
-> > +++++++++++++++++++++++++++++++++++++++---
-> >  1 file changed, 269 insertions(+), 14 deletions(-)
-> >
-> > diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c index
-> > c61efe50c4..de4399f322 100644
-> > --- a/hw/misc/aspeed_hace.c
-> > +++ b/hw/misc/aspeed_hace.c
-> > @@ -18,11 +18,44 @@
-> >  #include "qapi/error.h"
-> >  #include "migration/vmstate.h"
-> >  #include "crypto/hash.h"
-> > +#include "crypto/cipher.h"
-> >  #include "hw/core/qdev-properties.h"
-> >  #include "hw/core/irq.h"
-> >  #include "trace.h"
-> >
-> > -#define R_CRYPT_CMD     (0x10 / 4)
-> > +/* Crypto engine registers */
-> > +#define R_CRYPT_SRC         (0x00 / 4)
-> > +#define R_CRYPT_DEST        (0x04 / 4)
-> > +#define R_CRYPT_CONTEXT     (0x08 / 4)
-> > +#define R_CRYPT_DATA_LEN    (0x0c / 4)
-> > +/* HACE0C[27:0] holds the crypto data length */
-> > +#define  CRYPT_DATA_LEN_MASK    0x0FFFFFFF
-> > +#define R_CRYPT_CMD         (0x10 / 4)
-> > +/* Crypto engine command register (HACE10) bits */
-> > +#define  CRYPT_CMD_ENCRYPT          BIT(7)
-> > +#define  CRYPT_CMD_ISR_EN           BIT(12)
->=20
-> Regarding CRYPT_CMD_ISR_EN, the current code already has similar
-> definitions, such as CRYPT_IRQ and CRYPT_IRQ_EN. Would it make sense to
-> migrate these definitions together for consistency?
->=20
-Thanks for the review and suggestion.
+On Mon, Aug 10, 2026 at 4:54=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
 
-CRYPT_IRQ is used to indicate the CRYPT ISR status in the HAC Engine Status=
- Register (0x1C).
-Both CRYPT_CMD_ISR_EN and CRYPT_IRQ_EN are used to enable the CRYPT IRQ in =
-the Crypto Engine Command Register (0x10).
-I will remove the duplicate CRYPT_IRQ_EN definition.
+>
+> On 8/10/2026 4:32 PM, Taylor Simpson wrote:
+>
+>
+>
+> On Mon, Aug 10, 2026 at 3:12=E2=80=AFPM Brian Cain <brian.cain@oss.qualco=
+mm.com>
+> wrote:
+>
+>>
+>> On 8/10/2026 3:53 PM, Taylor Simpson wrote:
+>>
+>>
+>>
+>> On Mon, Aug 10, 2026 at 1:34=E2=80=AFPM Brian Cain <brian.cain@oss.qualc=
+omm.com>
+>> wrote:
+>>
+>>>
+>>> On 8/10/2026 1:28 PM, Taylor Simpson wrote:
+>>> > Change disassembly of control regs from C{num}/{name} to {name}
+>>> > Change disassembly of system regs from S{num}/r{num} to {name}
+>>> >
+>>> > Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+>>> > ---
+>>> >   target/hexagon/printinsn.c      | 22 ++++++++++++++++++----
+>>> >   target/hexagon/gen_printinsn.py | 14 ++++++++------
+>>> >   2 files changed, 26 insertions(+), 10 deletions(-)
+>>> >
+>>> > diff --git a/target/hexagon/printinsn.c b/target/hexagon/printinsn.c
+>>> > index a7e46f4bcd..b55d3b0b35 100644
+>>> > --- a/target/hexagon/printinsn.c
+>>> > +++ b/target/hexagon/printinsn.c
+>>> > @@ -23,18 +23,32 @@
+>>> >   #include "internal.h"
+>>> >   #include "decode.h"
+>>> >
+>>> > +static char regstr[10];
+>>> > +
+>>> >   static const char *sreg2str(unsigned int reg)
+>>> >   {
+>>> > -    if (reg < TOTAL_PER_THREAD_REGS) {
+>>> > -        return hexagon_regnames[reg];
+>>> > +#ifndef CONFIG_USER_ONLY
+>>> > +    if (reg < NUM_SREGS) {
+>>> > +        return hexagon_sregnames[reg];
+>>> >       } else {
+>>> > -        return "???";
+>>> > +        snprintf(regstr, sizeof(regstr), "S%d", reg);
+>>> > +        return regstr;
+>>> >       }
+>>> > +#else
+>>> > +    snprintf(regstr, sizeof(regstr), "S%d", reg);
+>>> > +    return regstr;
+>>> > +#endif
+>>> >   }
+>>> >
+>>> >   static const char *creg2str(unsigned int reg)
+>>> >   {
+>>> > -    return sreg2str(reg + HEX_REG_SA0);
+>>> > +    unsigned int gpr =3D reg + HEX_REG_SA0;
+>>> > +    if (gpr < TOTAL_PER_THREAD_REGS) {
+>>> > +        return hexagon_regnames[gpr];
+>>> > +    } else {
+>>> > +        snprintf(regstr, sizeof(regstr), "C%d", reg);
+>>> > +        return regstr;
+>>> > +    }
+>>> >   }
+>>> >
+>>>
+>>>
+>>> Seems like this change also depends on some kind of mutex around
+>>> regstr[] so that we know it's not being used concurrently by multiple
+>>> threads.  Translation is single-threaded but if we gained another calle=
+r
+>>> we wouldn't remember to come back and remediate this.
+>>>
+>>> I suppose we could take an input buffer/length.  Or maybe we just add
+>>> another static _regnames[] array to solve the lifetime/race problems?
+>>>
+>>>
+>> How about putting a regstr field in the Insn struct (and pass Insn* to
+>> these two functions)?
+>>
+>>
+>> A character array?  Sure: seems like that should work.
+>>
+>> But if we have a static array for the others why not leverage that here
+>> too?  We can statically fill these values, right?
+>>
+>
+> These are for cases where there is some sort of error and the reg number
+> is larger than NUM_SREGS/TOTAL_PER_THREAD_REGS.  So, we wouldn't know how
+> to size these without looking at the number of bits in the encoding of ea=
+ch
+> instruction that has one of these.  However, that could change over time =
+if
+> the architecture adds new instructions.
+>
+> Ah, okay, right.
+>
+> Okay - any solution that mitigates the race should suffice, then.
+>
 
-> > +#define  CRYPT_CMD_DES_SELECT       BIT(16)
-> > +#define  CRYPT_CMD_TRIPLE_DES       BIT(17)
-> > +#define  CRYPT_CMD_SRC_SG_CTRL      BIT(18)
-> > +#define  CRYPT_CMD_DST_SG_CTRL      BIT(19)
->=20
-> CRYPT_CMD_DST_SG_CTRL is currently defined but not used anywhere. Could
-> we defer adding this definition until it is actually needed?
->=20
+I'll go with static arrays with 256 entries.  Stand by for v2 of the patch.
 
-Will remove it
+--000000000000f6538c0658bb5e04
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Jamin
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10,=
+ 2026 at 4:54=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex"><u></u>
 
-> > +/* Operation mode HACE10[6:4] */
-> > +#define  CRYPT_CMD_OP_MODE_MASK     (0x7 << 4)
-> > +#define  CRYPT_CMD_ECB              (0x0 << 4)
-> > +#define  CRYPT_CMD_CBC              (0x1 << 4)
-> > +/* AES key length HACE10[3:2] */
-> > +#define  CRYPT_CMD_AES_KEY_LEN_MASK (0x3 << 2)
-> > +#define  CRYPT_CMD_AES256           (0x2 << 2)
-> > +#define  CRYPT_CMD_AES192           (0x1 << 2)
-> > +#define  CRYPT_CMD_AES128           (0x0 << 2)
-> > +
-> > +/*
-> > + * Crypto context buffer layout (HACE08). The IV is at the start of
-> > +the buffer
-> > + * (DES places its 8 byte IV at offset 8) and the cipher key at offset=
- 0x10.
-> > + */
-> > +#define CRYPT_CTX_IV_OFFSET         0x00
-> > +#define CRYPT_CTX_DES_IV_OFFSET     0x08
-> > +#define CRYPT_CTX_KEY_OFFSET        0x10
-> > +#define CRYPT_CTX_SIZE              0x30
-> >
-> >  #define R_STATUS        (0x1c / 4)
-> >  #define HASH_IRQ        BIT(9)
-> > @@ -501,6 +534,216 @@ static void do_hash_operation(AspeedHACEState
-> > *s, int algo, bool sg_mode,
-> >      }
-> >  }
-> >
-> > +static bool crypt_aes_alg(uint32_t cmd, QCryptoCipherAlgo *alg,
-> > +size_t
-> > +*keylen) {
-> > +    switch (cmd & CRYPT_CMD_AES_KEY_LEN_MASK) {
-> > +    case CRYPT_CMD_AES128:
-> > +        *alg =3D QCRYPTO_CIPHER_ALGO_AES_128;
-> > +        *keylen =3D 16;
-> > +        break;
-> > +    case CRYPT_CMD_AES192:
-> > +        *alg =3D QCRYPTO_CIPHER_ALGO_AES_192;
-> > +        *keylen =3D 24;
-> > +        break;
-> > +    case CRYPT_CMD_AES256:
-> > +        *alg =3D QCRYPTO_CIPHER_ALGO_AES_256;
-> > +        *keylen =3D 32;
-> > +        break;
-> > +    default:
-> > +        return false;
-> > +    }
-> > +
-> > +    return true;
-> > +}
-> > +
-> > +/*
-> > + * Decode the crypto command register into a libqcrypto
-> > +algorithm/mode pair
-> > + * and the block/IV geometry. Returns false for unsupported selections=
-.
-> > + */
-> > +static bool crypt_decode_cmd(uint32_t cmd, QCryptoCipherAlgo *alg,
-> > +                             QCryptoCipherMode *mode, size_t
-> > *keylen,
-> > +                             size_t *blocklen, size_t *iv_offset) {
-> > +    if (cmd & CRYPT_CMD_DES_SELECT) {
-> > +        *blocklen =3D 8;
-> > +        *iv_offset =3D CRYPT_CTX_DES_IV_OFFSET;
-> > +        if (cmd & CRYPT_CMD_TRIPLE_DES) {
-> > +            *alg =3D QCRYPTO_CIPHER_ALGO_3DES;
-> > +            *keylen =3D 24;
-> > +        } else {
-> > +            *alg =3D QCRYPTO_CIPHER_ALGO_DES;
-> > +            *keylen =3D 8;
-> > +        }
-> > +    } else {
-> > +        *blocklen =3D 16;
-> > +        *iv_offset =3D CRYPT_CTX_IV_OFFSET;
-> > +        if (!crypt_aes_alg(cmd, alg, keylen)) {
-> > +            return false;
-> > +        }
-> > +    }
-> > +
-> > +    switch (cmd & CRYPT_CMD_OP_MODE_MASK) {
-> > +    case CRYPT_CMD_ECB:
-> > +        *mode =3D QCRYPTO_CIPHER_MODE_ECB;
-> > +        break;
-> > +    case CRYPT_CMD_CBC:
-> > +        *mode =3D QCRYPTO_CIPHER_MODE_CBC;
-> > +        break;
-> > +    default:
-> > +        return false;
-> > +    }
-> > +
-> > +    return true;
-> > +}
-> > +
-> > +/*
-> > + * Direct access mode: the source/destination register
-> > +(HACE00/HACE04) points
-> > + * at a single contiguous buffer in DRAM. Copy @len bytes between it
-> > +and the
-> > + * bounce buffer @buf; when @to_dram is true @buf is written out,
-> > +otherwise it
-> > + * is read in. Returns true on success.
-> > + */
-> > +static bool crypt_prepare_direct(AspeedHACEState *s, uint64_t addr,
-> > +                                 uint8_t *buf, uint32_t len, bool
-> > +to_dram) {
-> > +    return !address_space_rw(&s->dram_as, addr,
-> > MEMTXATTRS_UNSPECIFIED,
-> > +                             buf, len, to_dram); }
-> > +
-> > +/*
-> > + * Perform an AES/DES/3DES ECB/CBC operation in direct access mode:
-> > +the source
-> > + * and destination are single contiguous buffers (HACE00/HACE04) and
-> > +the IV/key
-> > + * come from the context buffer (HACE08). For CBC the resulting
-> > +chaining IV is
-> > + * written back to the context buffer so the driver can continue the c=
-hain.
-> > + */
-> > +static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd) {
-> > +    uint32_t len =3D s->regs[R_CRYPT_DATA_LEN];
-> > +    bool encrypt =3D cmd & CRYPT_CMD_ENCRYPT;
-> > +    g_autoptr(QCryptoCipher) cipher =3D NULL;
-> > +    g_autofree uint8_t *src_buf =3D NULL;
-> > +    g_autofree uint8_t *dst_buf =3D NULL;
-> > +    uint8_t ctx[CRYPT_CTX_SIZE];
-> > +    Error *local_err =3D NULL;
-> > +    QCryptoCipherMode mode;
-> > +    QCryptoCipherAlgo alg;
-> > +    const uint8_t *next_iv;
-> > +    uint64_t ctx_addr;
-> > +    uint64_t src_addr;
-> > +    uint64_t dst_addr;
-> > +    size_t iv_offset;
-> > +    size_t blocklen;
-> > +    size_t keylen;
-> > +
-> > +    if (len =3D=3D 0) {
-> > +        return;
-> > +    }
-> > +
-> > +    if (!crypt_decode_cmd(cmd, &alg, &mode, &keylen, &blocklen,
-> > &iv_offset)) {
-> > +        qemu_log_mask(LOG_UNIMP,
-> > +                      "%s: Unsupported crypt command 0x%x\n",
-> > __func__, cmd);
-> > +        return;
-> > +    }
-> > +
-> > +    if (!qcrypto_cipher_supports(alg, mode)) {
-> > +        qemu_log_mask(LOG_UNIMP,
-> > +                      "%s: cipher mode not supported by the crypto
-> > backend\n",
-> > +                      __func__);
-> > +        return;
-> > +    }
-> > +
-> > +    /* Fetch the IV and key from the context buffer in DRAM. */
-> > +    ctx_addr =3D s->regs[R_CRYPT_CONTEXT];
-> > +    if (address_space_read(&s->dram_as, ctx_addr,
-> > MEMTXATTRS_UNSPECIFIED,
-> > +                           ctx, sizeof(ctx))) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: Failed to read context, addr=3D0x%"
-> > HWADDR_PRIx "\n",
-> > +                      __func__, ctx_addr);
-> > +        return;
-> > +    }
-> > +
-> > +    if
-> (trace_event_get_state_backends(TRACE_ASPEED_HACE_HEXDUMP))
-> > {
-> > +        hace_hexdump("context", (char *)ctx, sizeof(ctx));
-> > +    }
-> > +
-> > +    cipher =3D qcrypto_cipher_new(alg, mode, ctx +
-> > + CRYPT_CTX_KEY_OFFSET,
-> > keylen,
-> > +                                &local_err);
-> > +    if (cipher =3D=3D NULL) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto cipher new
-> > failed: %s\n",
-> > +                      __func__, error_get_pretty(local_err));
-> > +        error_free(local_err);
-> > +        return;
-> > +    }
-> > +
-> > +    if (mode !=3D QCRYPTO_CIPHER_MODE_ECB &&
-> > +        qcrypto_cipher_setiv(cipher, ctx + iv_offset, blocklen,
-> > +                             &local_err) < 0) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto cipher setiv
-> > failed: %s\n",
-> > +                      __func__, error_get_pretty(local_err));
-> > +        error_free(local_err);
-> > +        return;
-> > +    }
-> > +
-> > +    src_buf =3D g_malloc0(len);
-> > +    dst_buf =3D g_malloc0(len);
-> > +
-> > +    src_addr =3D s->regs[R_CRYPT_SRC];
-> > +    if (!crypt_prepare_direct(s, src_addr, src_buf, len, false)) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: Failed to read src, addr=3D0x%"
-> HWADDR_PRIx
-> > "\n",
-> > +                      __func__, src_addr);
-> > +        return;
-> > +    }
-> > +
-> > +    if
-> (trace_event_get_state_backends(TRACE_ASPEED_HACE_HEXDUMP))
-> > {
-> > +        hace_hexdump("src", (char *)src_buf, len);
-> > +    }
-> > +
-> > +    if (encrypt) {
-> > +        if (qcrypto_cipher_encrypt(cipher, src_buf, dst_buf, len,
-> > +                                   &local_err) < 0) {
-> > +            qemu_log_mask(LOG_GUEST_ERROR, "%s: encrypt failed:
-> > %s\n",
-> > +                          __func__, error_get_pretty(local_err));
-> > +            error_free(local_err);
-> > +            return;
-> > +        }
-> > +    } else {
-> > +        if (qcrypto_cipher_decrypt(cipher, src_buf, dst_buf, len,
-> > +                                   &local_err) < 0) {
-> > +            qemu_log_mask(LOG_GUEST_ERROR, "%s: decrypt failed:
-> > %s\n",
-> > +                          __func__, error_get_pretty(local_err));
-> > +            error_free(local_err);
-> > +            return;
-> > +        }
-> > +    }
-> > +
-> > +    dst_addr =3D s->regs[R_CRYPT_DEST];
-> > +    if (!crypt_prepare_direct(s, dst_addr, dst_buf, len, true)) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "%s: Failed to write dst, addr=3D0x%"
-> HWADDR_PRIx
-> > "\n",
-> > +                      __func__, dst_addr);
-> > +        return;
-> > +    }
-> > +
-> > +    if
-> (trace_event_get_state_backends(TRACE_ASPEED_HACE_HEXDUMP))
-> > {
-> > +        hace_hexdump("dst", (char *)dst_buf, len);
-> > +    }
-> > +
-> > +    if (mode =3D=3D QCRYPTO_CIPHER_MODE_CBC) {
-> > +        /*
-> > +         * CBC chains on the last ciphertext block: the final block of=
- the
-> > +         * output when encrypting, or of the input when decrypting.
-> > + Write
-> > it
-> > +         * back as the IV for the next request.
-> > +         */
-> > +        next_iv =3D (encrypt ? dst_buf : src_buf) + len - blocklen;
-> > +        if (address_space_write(&s->dram_as, ctx_addr + iv_offset,
-> > +                                MEMTXATTRS_UNSPECIFIED,
-> next_iv,
-> > blocklen)) {
-> > +            qemu_log_mask(LOG_GUEST_ERROR,
-> > +                          "%s: Failed to write IV, addr=3D0x%"
-> > HWADDR_PRIx "\n",
-> > +                          __func__, ctx_addr + iv_offset);
-> > +        }
-> > +    }
-> > +}
-> > +
-> >  static uint64_t aspeed_hace_read(void *opaque, hwaddr addr, unsigned
-> > int
-> > size)  {
-> >      AspeedHACEState *s =3D ASPEED_HACE(opaque); @@ -531,16 +774,22
-> @@
-> > static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-> >                  qemu_irq_lower(s->irq);
-> >              }
-> >          }
-> > -        if (ahc->raise_crypt_interrupt_workaround) {
-> > -            if (data & CRYPT_IRQ) {
-> > -                data &=3D ~CRYPT_IRQ;
-> > +        if (data & CRYPT_IRQ) {
-> > +            data &=3D ~CRYPT_IRQ;
-> >
-> > -                if (s->regs[addr] & CRYPT_IRQ) {
-> > -                    qemu_irq_lower(s->irq);
-> > -                }
-> > +            if (s->regs[addr] & CRYPT_IRQ) {
-> > +                qemu_irq_lower(s->irq);
-> >              }
-> >          }
-> >          break;
-> > +    case R_CRYPT_SRC:
-> > +    case R_CRYPT_DEST:
-> > +    case R_CRYPT_CONTEXT:
-> > +        data &=3D ahc->src_mask;
-> > +        break;
-> > +    case R_CRYPT_DATA_LEN:
-> > +        data &=3D CRYPT_DATA_LEN_MASK;
-> > +        break;
-> >      case R_HASH_SRC:
-> >          data &=3D ahc->src_mask;
-> >          break;
-> > @@ -589,13 +838,19 @@ static void aspeed_hace_write(void *opaque,
-> > hwaddr addr, uint64_t data,
-> >          break;
-> >      }
-> >      case R_CRYPT_CMD:
-> > -        qemu_log_mask(LOG_UNIMP, "%s: Crypt commands not
-> > implemented\n",
-> > -                       __func__);
-> > -        if (ahc->raise_crypt_interrupt_workaround) {
-> > -            s->regs[R_STATUS] |=3D CRYPT_IRQ;
-> > -            if (data & CRYPT_IRQ_EN) {
-> > -                qemu_irq_raise(s->irq);
-> > -            }
-> > +        /*
-> > +         * The AST2700 crypto engine needs 64-bit DMA and AES-GCM,
-> > which are
-> > +         * added later; until then it keeps the temporary workaround
-> > + of
-> > only
-> > +         * raising the completion interrupt without running the
-> command.
-> > +         */
-> > +        if (!ahc->raise_crypt_interrupt_workaround) {
-> > +            do_crypt_operation(s, data);
-> > +        }
-> > +
-> > +        /* Hardware raises the crypt interrupt once the command
-> finishes.
-> > */
-> > +        s->regs[R_STATUS] |=3D CRYPT_IRQ;
-> > +        if (data & CRYPT_CMD_ISR_EN) {
-> > +            qemu_irq_raise(s->irq);
-> >          }
-> >          break;
-> >      case R_HASH_SRC_HI:
-> > --
-> > 2.43.0
+ =20
+   =20
+ =20
+  <div>
+    <p><br>
+    </p>
+    <div>On 8/10/2026 4:32 PM, Taylor Simpson
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+     =20
+      <div dir=3D"ltr">
+        <div dir=3D"ltr"><br>
+        </div>
+        <br>
+        <div class=3D"gmail_quote">
+          <div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10, 2026 at
+            3:12=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss=
+.qualcomm.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;
+            wrote:<br>
+          </div>
+          <blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+            <div>
+              <p><br>
+              </p>
+              <div>On 8/10/2026 3:53 PM, Taylor Simpson wrote:<br>
+              </div>
+              <blockquote type=3D"cite">
+                <div dir=3D"ltr">
+                  <div dir=3D"ltr"><br>
+                  </div>
+                  <br>
+                  <div class=3D"gmail_quote">
+                    <div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 10,
+                      2026 at 1:34=E2=80=AFPM Brian Cain &lt;<a href=3D"mai=
+lto:brian.cain@oss.qualcomm.com" target=3D"_blank">brian.cain@oss.qualcomm.=
+com</a>&gt;
+                      wrote:<br>
+                    </div>
+                    <blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+                      On 8/10/2026 1:28 PM, Taylor Simpson wrote:<br>
+                      &gt; Change disassembly of control regs from
+                      C{num}/{name} to {name}<br>
+                      &gt; Change disassembly of system regs from
+                      S{num}/r{num} to {name}<br>
+                      &gt;<br>
+                      &gt; Signed-off-by: Taylor Simpson &lt;<a href=3D"mai=
+lto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a=
+>&gt;<br>
+                      &gt; ---<br>
+                      &gt;=C2=A0 =C2=A0target/hexagon/printinsn.c=C2=A0 =C2=
+=A0 =C2=A0 | 22
+                      ++++++++++++++++++----<br>
+                      &gt;=C2=A0 =C2=A0target/hexagon/gen_printinsn.py | 14
+                      ++++++++------<br>
+                      &gt;=C2=A0 =C2=A02 files changed, 26 insertions(+), 1=
+0
+                      deletions(-)<br>
+                      &gt;<br>
+                      &gt; diff --git a/target/hexagon/printinsn.c
+                      b/target/hexagon/printinsn.c<br>
+                      &gt; index a7e46f4bcd..b55d3b0b35 100644<br>
+                      &gt; --- a/target/hexagon/printinsn.c<br>
+                      &gt; +++ b/target/hexagon/printinsn.c<br>
+                      &gt; @@ -23,18 +23,32 @@<br>
+                      &gt;=C2=A0 =C2=A0#include &quot;internal.h&quot;<br>
+                      &gt;=C2=A0 =C2=A0#include &quot;decode.h&quot;<br>
+                      &gt;=C2=A0 =C2=A0<br>
+                      &gt; +static char regstr[10];<br>
+                      &gt; +<br>
+                      &gt;=C2=A0 =C2=A0static const char *sreg2str(unsigned=
+ int
+                      reg)<br>
+                      &gt;=C2=A0 =C2=A0{<br>
+                      &gt; -=C2=A0 =C2=A0 if (reg &lt; TOTAL_PER_THREAD_REG=
+S) {<br>
+                      &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regn=
+ames[reg];<br>
+                      &gt; +#ifndef CONFIG_USER_ONLY<br>
+                      &gt; +=C2=A0 =C2=A0 if (reg &lt; NUM_SREGS) {<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_sreg=
+names[reg];<br>
+                      &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+                      &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 return &quot;???&qu=
+ot;;<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, si=
+zeof(regstr),
+                      &quot;S%d&quot;, reg);<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+                      &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+                      &gt; +#else<br>
+                      &gt; +=C2=A0 =C2=A0 snprintf(regstr, sizeof(regstr), =
+&quot;S%d&quot;,
+                      reg);<br>
+                      &gt; +=C2=A0 =C2=A0 return regstr;<br>
+                      &gt; +#endif<br>
+                      &gt;=C2=A0 =C2=A0}<br>
+                      &gt;=C2=A0 =C2=A0<br>
+                      &gt;=C2=A0 =C2=A0static const char *creg2str(unsigned=
+ int
+                      reg)<br>
+                      &gt;=C2=A0 =C2=A0{<br>
+                      &gt; -=C2=A0 =C2=A0 return sreg2str(reg + HEX_REG_SA0=
+);<br>
+                      &gt; +=C2=A0 =C2=A0 unsigned int gpr =3D reg + HEX_RE=
+G_SA0;<br>
+                      &gt; +=C2=A0 =C2=A0 if (gpr &lt; TOTAL_PER_THREAD_REG=
+S) {<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return hexagon_regn=
+ames[gpr];<br>
+                      &gt; +=C2=A0 =C2=A0 } else {<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(regstr, si=
+zeof(regstr),
+                      &quot;C%d&quot;, reg);<br>
+                      &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return regstr;<br>
+                      &gt; +=C2=A0 =C2=A0 }<br>
+                      &gt;=C2=A0 =C2=A0}<br>
+                      &gt;=C2=A0 =C2=A0<br>
+                      <br>
+                      <br>
+                      Seems like this change also depends on some kind
+                      of mutex around <br>
+                      regstr[] so that we know it&#39;s not being used
+                      concurrently by multiple <br>
+                      threads.=C2=A0 Translation is single-threaded but if =
+we
+                      gained another caller <br>
+                      we wouldn&#39;t remember to come back and remediate
+                      this.<br>
+                      <br>
+                      I suppose we could take an input buffer/length.=C2=A0
+                      Or maybe we just add <br>
+                      another static _regnames[] array to solve the
+                      lifetime/race problems?<br>
+                      <br>
+                    </blockquote>
+                    <div><br>
+                    </div>
+                    <div>How about putting a=C2=A0regstr=C2=A0field in the =
+Insn
+                      struct (and pass Insn* to these two functions)?</div>
+                    <div><br>
+                    </div>
+                  </div>
+                </div>
+              </blockquote>
+              <p><br>
+              </p>
+              <p>A character array?=C2=A0 Sure: seems like that should
+                work.=C2=A0=C2=A0<br>
+                <br>
+              </p>
+              <p>But if we have a static array for the others why not
+                leverage that here too?=C2=A0 We can statically fill these
+                values, right?</p>
+            </div>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>These are for cases where there is some sort of error and
+            the reg number is larger than
+            NUM_SREGS/TOTAL_PER_THREAD_REGS.=C2=A0 So, we wouldn&#39;t know=
+ how
+            to size these without looking at the number of bits in the
+            encoding of each instruction that has one of these.=C2=A0
+            However, that could change over time if the architecture
+            adds new instructions.</div>
+          <div><br>
+          </div>
+        </div>
+      </div>
+    </blockquote>
+    <p>Ah, okay, right.</p>
+    <p>Okay - any solution that mitigates the race should suffice, then.</p=
+></div></blockquote><div><br></div><div>I&#39;ll go with static arrays with=
+ 256 entries.=C2=A0 Stand by for v2 of the patch.</div><div><br></div><div>=
+=C2=A0</div></div></div>
+
+--000000000000f6538c0658bb5e04--
 
