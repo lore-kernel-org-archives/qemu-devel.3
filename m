@@ -4,92 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 981E8C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 06:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C48FC5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 06:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtgGN-0001Rn-E3; Tue, 11 Aug 2026 02:47:03 -0400
+	id 1wtgKa-0003hr-Oa; Tue, 11 Aug 2026 02:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
- id 1wtgGK-0001Ig-Aj
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 02:47:01 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
- id 1wtgGI-0005Q8-5Y
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 02:47:00 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2d01663d816so23813635ad.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 23:46:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtgKU-0003hW-2Y
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 02:51:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wtgKS-0006ZB-Mp
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 02:51:17 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67AMptMB2995763
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:51:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ nW0xE3B4HxAwmjzOskOD3KAB6NxqsxKT9NRBRZwTy4M=; b=R1LNWHKdLU2gGQ/T
+ nW2SMnNc6FbB6WhIEf+kTWN/BQl/BDvs1kico4J+7/+6fbeXY1uIEp5sRs1z76tK
+ +s3TO7gE8PDv4TeWjTuMUUTztt340sHqne4RcSnjfMWxvJKauretLbldd8wG+8hF
+ wLWw4fJmOffCg0I0O0Oe0cgTI8mXSwYLo0LhnhpMHzTHfDrLtAx6szvpKaWhFxAC
+ IJoDBU3pxt5BGgWJ5onW7k5wE9I32M59DasaURnozE7X7F88gMKE6XQ86lxyucJL
+ Ai0FG4ziq6PgfDvOHIHx14rRw/AF/OFgTF2KVLZhnGEHMmPqvd5PraKqOCNqnpLm
+ sH325w==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjyf2pg8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 06:51:15 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52b4f6ac06aso46913971cf.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 23:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786430816; x=1787035616; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=r/3tunvNDh+d2dbLfwBToYPitzpMWQNF1ejrM3C3nhg=;
- b=cogdzkGMIUUqh8d3LoQ86h5UeSYaZdR0Tw7Q+uNiG2kdv/bJt3rK+MO62jXihfu/Tm
- R8MbOkkb0CeQTjgKDgnUwhbbhPV+e610LGBp/F0FngZT2tRU5TuLMh3zPbm5zvcBK78o
- u+lDX+Dcf8EPtGzpfk2ZFcDHAEWzgDf+HctQ2SC1YlkxoljdGu0wBMTK675Pcx4vHmRh
- dQaMzc6USNNj5B3wME4gjr2gM8T5rCEgqDcdq+Co+q2PqTSKmfN4LHzWsDJ1ADPLm5yn
- 0MOLgBb7MSyQgRuPPw2UJtXquEPPxS8aXXRqOi3OCiVlzUon7O4MVdAD441V98YSIyo/
- OSvw==
+ d=oss.qualcomm.com; s=google; t=1786431074; x=1787035874; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=nW0xE3B4HxAwmjzOskOD3KAB6NxqsxKT9NRBRZwTy4M=;
+ b=Nbp4NhISfz85Kaw6OHM1QyYAl0Hz6HTQYpLD2ZD3Usdwd5fzlrrU5de9MZ/6xHmHH3
+ aEWxtYBwJd1WOej5xXNdiMC1fdP9mTZbJzXGLW5vXC7dRUFPZN5Sh037bWUYDBTfECPc
+ YIAVvpWN+oSELnfGCfpdo8wzauq9tgEK7FJygp94d5kAvMCVfztRImBAbQ1x/BV1YBBq
+ ZH9tZP2r2CR4qVj+XEoI5s/ADzW9zTDNZmwYkJbwswvM26LtAer0LMOMMe0gGKQ+rMOk
+ bSd7h9BJGhOd/rHUj/HabtgNGGAoS7Z/TyVeW61Nj33OylM3iYtZpaRgvfry3T7hwQoq
+ JnNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786430816; x=1787035616;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=r/3tunvNDh+d2dbLfwBToYPitzpMWQNF1ejrM3C3nhg=;
- b=Cq3TEi/UdgjgYUh9cRMrW0RT125yVegAS/bx0WXNwowKsd/bNrWxU/FgczgHJ3GH2j
- pWngUtaHXeQsOy8oMn0ZJADfW0F1BzDbpvIbpmYge7Knw8W1pgVNRN9JbLWmlDNJhSJM
- J6Q+IksJzwCSgTIb+gLWKFL7qzGN/TGpVhPz0MCzrwYWxy0B9jUJOItgX29Pxt3XlDJ9
- p1/YUFOx+jV1/9syKBulXmnSQSLzQZFljUcQP1owPVH3b+L7YeuoFIdPyGzEY5JW4OjB
- P5ZXHl0CKN5JG1Ha6fR5woj4qmOEZE0dvZ0nF8bZNVWnSrVf6CSaF37N9QR2q2NnKswq
- nRUw==
-X-Gm-Message-State: AOJu0Yy6u/t9tLta8BLkS1ldGvHSfernxr6KVmLmmLOQlwIjHjH3Kkj6
- vSnFhpbP3yVC3iW4H9Ku6+rRALxWR8XNEQsliMlHD0zDrzVFX2hn5u8y9CtiCSKn
-X-Gm-Gg: AR+sD133+VrncSODpJrM/aEXRHckFfEznSb3p3NwONTbb8MZmPn3B0BU63c3R9U17em
- 0o2aw5CeFKH0e/D5mLGlzoKVYh//ceIe5TK5vP8p7J4kKNHLKRcjDnEQRCE4+X3O2E/HVqsyJU0
- CplBXRIsplQlAXZ/y2dXG+a7AQWmBZC1xnYpCXaipH1wAlxm/wUNe4YunK6Bppg0CxfieZ2eYH+
- GiiWNNfHDV5CYg307047hvd/zMu8WDVDBFctbTV2JMxEnHEaRlkQzi6YjajwS6NaqbRKBemQf7z
- WQOz6pcixu7I1fwGRmdtNRrppoN8RiVc9ewWddYzrr54dU8T8r0Sx70NeRBr6CCY4+a0Oq2Gj36
- KybCM/8JvXSyggWNKZyCnYR2R1Z9AoPKgRdtMUP+dqhinyYbiQ33Q052JrNJdyQEcQsQkM9UCeS
- vQK0L2NdQLVs3JxPDZmi/LR0tudQD5YDQjJ7Hsey7FajvftdJF4OxhsBtq0MvuFETUF3OyLPZC
-X-Received: by 2002:a17:903:3248:b0:2c9:8f4a:90b with SMTP id
- d9443c01a7336-2d31776bf4emr16642285ad.3.1786430816422; 
- Mon, 10 Aug 2026 23:46:56 -0700 (PDT)
-Received: from DESKTOP-DFGP8OG.lan ([120.235.190.222])
+ d=1e100.net; s=20251104; t=1786431074; x=1787035874;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=nW0xE3B4HxAwmjzOskOD3KAB6NxqsxKT9NRBRZwTy4M=;
+ b=eeF21CxF5rIH1jn6iwwqedTqZLbWhHHynuRUd86suLQ7wlziS6VNAmsR8BayHt94F9
+ chZSFGFUZCTWI7CrSj8Twk/qmsR5cifL618o/DC04qM99yhdkQv7ucKUJiMcrAd0IgWf
+ SfUFdVuaYUJ5NEku6rRxv1aQdan/nAqgZem6eJLDuHtJ3J8+Y6Pfa850DxCxroJCIMRJ
+ lrFOZ4iOBJT1tlFJJ0rjItXqXAwl/jhNhlaAToTialXc1CReu7Tuw/DOcEeL3Ejn0+7U
+ M4vEoV93b3Jk0GcPElSRxxxofObE//BCFvlW6CCIq6ClgfMNHm6YNmGf7NqfqH8ryzeq
+ FB/A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqcHlm9Zi8QWvb1jJAedw4Q6b7XQQ1Ip+aC58T8Vi8P7ePawHQe8iN9E6IxlU+hxek8ATdLrkTU7qyO@nongnu.org
+X-Gm-Message-State: AOJu0YzaR1wpUixyGZz+MkLOyHNOtSTW+M/v9YiygZ5ujtb254rCfW0n
+ 7Dl2X1wfQ9ZlKhBMGYGEWDm4Tz6i+31UTCtEduxSJsnnkrEwZ8QkCbrUBbC6s9X6kmtxhbz3DSM
+ +lZ68hOBnh2OSGScg1lzJ0HCibBuFMTCRQJhIYVSICkaOnbzm2xCsnInYrA==
+X-Gm-Gg: AR+sD10PcLP7qpddCa7dXgCgHxWW9m3DR4u4vAsfdf5t4zFvx4LcENBhWngL1NXnKqm
+ Go/3d+ax/wgjiAw2kOiJuLXDSq344CmBLN6LPJ1gNW4EvQs4LDEqIOUhH5M2MldAdRO99XsIE8y
+ I6GoUjd7fR+QVSH81HKXPpKqtO0wu5mWysFZkOQ8zwepFW5LoR8ouc2cKQ9CxhWkluDvJ/IstFO
+ 5k6/3U7UUpap3rlB+DZbxMEq8AVrdBTQ1S9foCSVPLWBP+V0YbWnf3L5aCDx2pl7BoGbpc+PPzN
+ +v9M+nbg1f5Eoek7D0vkbFIHLCf5A7O+aITNbfGngAodv6C+kzbwBGrp7XSSUta+WhTdnYEkl0u
+ gG9NXAySyJD3Z7IJVhpTSTEntS7BLH+13TS30ylPa
+X-Received: by 2002:a05:622a:4cc7:b0:51c:1291:911c with SMTP id
+ d75a77b69052e-52d584f683dmr9875211cf.14.1786431074579; 
+ Mon, 10 Aug 2026 23:51:14 -0700 (PDT)
+X-Received: by 2002:a05:622a:4cc7:b0:51c:1291:911c with SMTP id
+ d75a77b69052e-52d584f683dmr9875021cf.14.1786431074233; 
+ Mon, 10 Aug 2026 23:51:14 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d315f3ffd5sm2591015ad.30.2026.08.10.23.46.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 23:46:55 -0700 (PDT)
-From: raoyi <rao232328@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com,
- caojunze424@gmail.com, bmeng.cn@gmail.com, raoyi <rao232328@gmail.com>
-Subject: [PATCH v3 3/3] tests/qtest: add k230 dwapb timer test
-Date: Tue, 11 Aug 2026 14:46:10 +0800
-Message-ID: <20260811064612.16517-4-rao232328@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260811064612.16517-1-rao232328@gmail.com>
-References: <20260811064612.16517-1-rao232328@gmail.com>
+ 5b1f17b1804b1-49977e57785sm20815655e9.2.2026.08.10.23.51.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Aug 2026 23:51:13 -0700 (PDT)
+Message-ID: <a6b9953d-7438-41a4-a739-4ea0c93d5864@oss.qualcomm.com>
+Date: Tue, 11 Aug 2026 08:51:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/16] tcg: Add revbit{8,32,64} opcodes
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260811045605.1246543-1-richard.henderson@linaro.org>
+ <20260811045605.1246543-9-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260811045605.1246543-9-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=rao232328@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-ORIG-GUID: JBKfIcfZfoq4XW2kjLWDonevr_OzKmOG
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA1NSBTYWx0ZWRfX8WPwPQ37QhOB
+ OD4fw1Gsm2xqOWS+STcGJF6anqP5ORlZF5b6ub4TEOC0Q68HKpTm6yecaoEXzuyjb7akSvQXwd9
+ d6CuVf3uAl6wKlvrZzTnaOvFmjqjEyM=
+X-Proofpoint-GUID: JBKfIcfZfoq4XW2kjLWDonevr_OzKmOG
+X-Authority-Analysis: v=2.4 cv=NqnhtcdJ c=1 sm=1 tr=0 ts=6a7ac663 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA1NSBTYWx0ZWRfXzktOzANC4sHo
+ /X45v3qVCbOh1hqVWXvd9Jw24mDADzyTUIs+vLg9H2tK5FjoIF6eZugM6cyKEzHIfkldzFRfCLN
+ sXNwAtUCiZN4/i5Kbo+pi4g1/BAWCLGSdwaFX5cNIKQN9m1/WkCveHa+2CQxl6zDRe/aEGUTKDz
+ U5+RpgAftVJFtJ/Hgx2P4Y6lhERX4AKn3/sRRINhRu/JMiBZylSmT4/FHd5bl8m8pKeZNh4w9RM
+ RFtjc0T+1djOWy5lfPjzxC2PWcTRA/MwnJYS2mcMjdClmoQjZWrd7G0VoaS6Dp/RhKV0met+P4D
+ I3Sc7G5mBqHa5aAhnLm9+jFu4RA6SYSRrT9UdQ8d96qtsA6kbDRKp6yg4mP/GGsG2mg2m6MVbpl
+ LRtJDIW+zt8XL3x0U6fWx/5nwBTpqkJxg34zZ2u2MJQs91MxsRm7xxLrx5UN0nZIapuEc3B0nTl
+ rWZOXZDUqbxEqUbdg4w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-10_06,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110055
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,321 +153,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add qtest coverage for K230 DW APB timer including
-free-running, periodic, interrupt mask, disable
-behavior, current value, dynamic reload, and
-multi-channel scenarios.
+On 11/8/26 06:55, Richard Henderson wrote:
+> Add the plumbing, but not yet implemented for any host.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-opc.h            |  3 ++
+>   tcg/tcg-op.c                     | 66 +++++++++++++++++++++++++-------
+>   tcg/tcg.c                        |  7 ++++
+>   docs/devel/tcg-ops.rst           | 16 ++++++++
+>   tcg/aarch64/tcg-target.c.inc     | 12 ++++++
+>   tcg/loongarch64/tcg-target.c.inc | 12 ++++++
+>   tcg/ppc64/tcg-target.c.inc       | 12 ++++++
+>   tcg/riscv64/tcg-target.c.inc     | 12 ++++++
+>   tcg/s390x/tcg-target.c.inc       | 12 ++++++
+>   tcg/sparc64/tcg-target.c.inc     | 12 ++++++
+>   tcg/tci/tcg-target.c.inc         | 12 ++++++
+>   tcg/x86_64/tcg-target.c.inc      | 12 ++++++
+>   12 files changed, 174 insertions(+), 14 deletions(-)
 
-Add timer files to MAINTAINERS.
-
-Signed-off-by: raoyi <rao232328@gmail.com>
----
- MAINTAINERS                         |   3 +
- tests/qtest/k230-dwapb-timer-test.c | 261 ++++++++++++++++++++++++++++
- tests/qtest/meson.build             |   4 +-
- 3 files changed, 267 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/k230-dwapb-timer-test.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6171cc7494..b30bcba640 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1826,9 +1826,12 @@ S: Maintained
- F: docs/system/riscv/k230.rst
- F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
-+F: hw/timer/dw-apb-timer.c
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
-+F: include/hw/timer/dw-apb-timer.h
- F: tests/qtest/k230-wdt-test.c
-+F: tests/qtest/dw-apb-timer-test.c
- 
- RX Machines
- -----------
-diff --git a/tests/qtest/k230-dwapb-timer-test.c b/tests/qtest/k230-dwapb-timer-test.c
-new file mode 100644
-index 0000000000..70dc384bfa
---- /dev/null
-+++ b/tests/qtest/k230-dwapb-timer-test.c
-@@ -0,0 +1,261 @@
-+/*
-+ * QTest testcase for the DesignWare APB timer through the K230 machine
-+ *
-+ * Copyright (c) 2026 raoyi <rao232328@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/timer.h"
-+#include "libqtest.h"
-+#include "hw/timer/dw-apb-timer.h"
-+
-+#define TIMER_BASE 0x91105800
-+#define K230_TIMER_NUM_CHANNELS 6
-+#define K230_TIMER_DEFAULT_FREQ 6250000
-+#define TIMER_REG(n, reg) (TIMER_BASE + (n) * DW_APB_TIMER_STRIDE + (reg))
-+#define TIMER_TICK_NS (NANOSECONDS_PER_SECOND / K230_TIMER_DEFAULT_FREQ)
-+
-+static void timer_load(QTestState *qts, int n, uint32_t value)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_LOAD_COUNT), value);
-+}
-+
-+static void timer_enable(QTestState *qts, int n, uint32_t ctrl)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_CONTROL), ctrl);
-+}
-+
-+static void timer_disable(QTestState *qts, int n)
-+{
-+    qtest_writel(qts, TIMER_REG(n, DW_APB_TIMER_N_CONTROL), 0);
-+}
-+
-+static uint32_t timer_get_and_clear_status(QTestState *qts, int n)
-+{
-+    uint32_t int_status = qtest_readl(qts,
-+                            TIMER_REG(n, DW_APB_TIMER_N_INT_STATUS));
-+
-+    if (int_status) {
-+        qtest_readl(qts, TIMER_REG(n, DW_APB_TIMER_N_EOI));
-+    }
-+
-+    return int_status;
-+}
-+
-+static void test_timer_free_running(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+    uint32_t cur = qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur, <, UINT32_MAX);
-+    g_assert_cmphex(cur, >, 0);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_periodic(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    int i;
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    for (i = 0; i < 3; i++) {
-+        qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+        g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+        uint32_t cur = qtest_readl(qts,
-+                          TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+        g_assert_cmphex(cur, <=, 100);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_int_mask(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC |
-+                        DW_APB_TIMER_CONTROL_INT);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_INT_STATUS), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_RAW_INT_STATUS) & 1, ==, 1);
-+
-+    /* Unmasking a pending interrupt must assert it immediately. */
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)), ==, 1);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_INT_STATUS) & 1, ==, 1);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_disable_clears_irq(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 1);
-+
-+    timer_disable(qts, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_INT_STATUS)) & 1, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_current_disabled(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    /* TRM: "A '0' is always read back when the timer is not enabled" */
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    timer_load(qts, 0, 9999);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE);
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+    uint32_t cur_enabled = qtest_readl(qts,
-+                              TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur_enabled, >, 0);
-+    g_assert_cmphex(cur_enabled, <, UINT32_MAX);
-+
-+    timer_disable(qts, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_dynamic_reload(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    uint32_t cur;
-+
-+    timer_load(qts, 0, 1000);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+
-+    qtest_clock_step(qts, 100ULL * TIMER_TICK_NS);
-+
-+    timer_load(qts, 0, 200);
-+
-+    qtest_clock_step(qts, 901ULL * TIMER_TICK_NS + 1);
-+    g_assert_cmphex(timer_get_and_clear_status(qts, 0), ==, 1);
-+
-+    qtest_clock_step(qts, 100ULL * TIMER_TICK_NS);
-+    cur = qtest_readl(qts, TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE));
-+    g_assert_cmphex(cur, ==, 99);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_all_channels(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+    int i;
-+
-+    for (i = 0; i < K230_TIMER_NUM_CHANNELS; i++) {
-+        timer_load(qts, i, 100 + i * 50);
-+        timer_enable(qts, i, DW_APB_TIMER_CONTROL_ENABLE |
-+                             DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    }
-+
-+    /* Step past timer 0 expiry (load=100) — only timer 0 should fire */
-+    qtest_clock_step(qts, 101ULL * TIMER_TICK_NS + 1);
-+    uint32_t sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts & 1, ==, 1);
-+    g_assert_cmphex(sts & 0x3e, ==, 0);
-+
-+    /* Step to timer 1 expiry (another 50 ticks) */
-+    qtest_clock_step(qts, 50ULL * TIMER_TICK_NS + 1);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts & 0x3, ==, 0x3);
-+    g_assert_cmphex(sts & 0x3c, ==, 0);
-+
-+    /* Step to expiry of all remaining timers (another 200 ticks) */
-+    qtest_clock_step(qts, 200ULL * TIMER_TICK_NS + 1);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts, ==, 0x3f);
-+
-+    /* EOI_ALL clears all */
-+    qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_EOI);
-+    sts = qtest_readl(qts, TIMER_BASE + DW_APB_TIMER_INT_STATUS);
-+    g_assert_cmphex(sts, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_timer_reset(void)
-+{
-+    QTestState *qts = qtest_init("-machine k230");
-+
-+    timer_load(qts, 0, 100);
-+    timer_enable(qts, 0, DW_APB_TIMER_CONTROL_ENABLE |
-+                        DW_APB_TIMER_CONTROL_MODE_PERIODIC);
-+    qtest_clock_step(qts, 10ULL * TIMER_TICK_NS);
-+
-+    qtest_system_reset(qts);
-+
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_LOAD_COUNT)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CONTROL)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_REG(0, DW_APB_TIMER_N_CURRENT_VALUE)), ==, 0);
-+    g_assert_cmphex(qtest_readl(qts,
-+                      TIMER_BASE + DW_APB_TIMER_RAW_INT_STATUS), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/dw-apb-timer/free_running", test_timer_free_running);
-+    qtest_add_func("/dw-apb-timer/periodic", test_timer_periodic);
-+    qtest_add_func("/dw-apb-timer/int_mask", test_timer_int_mask);
-+    qtest_add_func("/dw-apb-timer/disable_clears_irq",
-+                   test_timer_disable_clears_irq);
-+    qtest_add_func("/dw-apb-timer/current_disabled",
-+                   test_timer_current_disabled);
-+    qtest_add_func("/dw-apb-timer/dynamic_reload",
-+                   test_timer_dynamic_reload);
-+    qtest_add_func("/dw-apb-timer/all_channels", test_timer_all_channels);
-+    qtest_add_func("/dw-apb-timer/reset", test_timer_reset);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e21..295a724116 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,9 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') and
-+   config_all_devices.has_key('CONFIG_DW_APB_TIMER') ?
-+   ['k230-wdt-test', 'k230-dwapb-timer-test'] : [])
- 
- qtests_hexagon = ['boot-serial-test']
- 
--- 
-2.53.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
