@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 800A4C5AD7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DE1C5AD7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wte8T-00054Q-4m; Tue, 11 Aug 2026 00:30:45 -0400
+	id 1wteAm-0005hu-0I; Tue, 11 Aug 2026 00:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wte8R-00053r-BQ; Tue, 11 Aug 2026 00:30:43 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
+ id 1wteAi-0005hR-6u; Tue, 11 Aug 2026 00:33:04 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wte8P-0006fD-AS; Tue, 11 Aug 2026 00:30:43 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hJzFQ4fhlz43tH;
- Tue, 11 Aug 2026 04:30:34 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 11 Aug 2026 04:30:33 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.241])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hJzFP6MSWz1xs5; Tue, 11 Aug 2026 04:30:33 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ id 1wteAf-0006xO-K0; Tue, 11 Aug 2026 00:33:03 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [152.228.215.222])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hJzJ867nMz66Y7;
+ Tue, 11 Aug 2026 04:32:56 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 11 Aug 2026 04:32:56 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.159])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hJzJ815mVz5vVv; Tue, 11 Aug 2026 04:32:56 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id C3DD212E3EF9;
- Tue, 11 Aug 2026 04:30:31 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id B58801B43EE1;
+ Tue, 11 Aug 2026 04:32:53 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-97G002879a27af-58ae-45b3-a63f-c2199e09811d,
+ (GARM-109S00319ff1eca-f75a-43a1-a667-cadd0601d4ec,
  803E6BE66494CDF3CD1430A16CDAFD105E03C239) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <9311015c-69a5-482a-99ed-93548a9f493d@kaod.org>
-Date: Tue, 11 Aug 2026 06:30:31 +0200
+Message-ID: <b5d12587-f88c-4bff-bf9f-540a3a532dd9@kaod.org>
+Date: Tue, 11 Aug 2026 06:32:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] i2c/aspeed: Fix DMA receive first-byte handling
- for block reads
+Subject: Re: [PATCH v3 3/8] arm/aspeed: Wire AST2700 FSI controllers to
+ APB-to-OPB bridges
 To: Mikail Sadic <mikail.sadic@ibm.com>, peter.maydell@linaro.org
 Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
  jeuk20.kim@samsung.com, philmd@mailo.com, steven_lee@aspeedtech.com,
@@ -50,7 +50,7 @@ Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
  andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
  milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
 References: <20260810185748.1253-1-mikail.sadic@ibm.com>
- <20260810185748.1253-5-mikail.sadic@ibm.com>
+ <20260810185748.1253-4-mikail.sadic@ibm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -95,23 +95,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260810185748.1253-5-mikail.sadic@ibm.com>
+In-Reply-To: <20260810185748.1253-4-mikail.sadic@ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 11919057890490887299
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 11959308810787728515
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFzAf7HQkFTqyu2fy66E0185S7wnOnageh8MILSIL9y2srcLsAbHU6hvy8LepSkwo8Ff3bDdgWeLV2XqagCyZh9C5AZNBbmsz5Xw3pVoR0QZMisFZNjIUtJufPaagujBoMNMNCnQ9/a7Eoh28pADVQxsNV7DyC/dSkr4ImmX53U5IBXNDwEB/77OujbHpVSO0Z6LgXnzkBJ7Hru0bfI4jcEkJH5oLIjQr/Q+JDqHJ8CH3w5q7tizUGpw0Z6huOjiL2EmBXfC26G9dTP3BE2gdhKC7WLhJpbAEcc9LKST+z76xIjR+pVN9nqHXKY166Ktt8/wKVJzLdBafRdElgfKICwIr9x5A3glEuVpvQQJNB6TRHjy6yoc+ULh7FoI9mJeGjYmZdydg+9jFkdeaB0wK0A7zjdil5V+429yIGBd7bjn0cbGJohDhXLBOBjFsGml108hru0ycw59njj+iM5eVuMwsnunK13N0hk0/HY0hYzbDG2ajj0EMyS+XVE+wBJGgEiomUhrQmNmviSvo1hmsF4eYK16B7NsTRzitaMlKdJqoB+c2G7Z0P8OY/f+k9GgeHrcRppR2WDpOVR2r6HW3mF+QT+IbISAEyG+RZkUjoVZHUaOe85SwsVNsw789ebOnjHO5zH/+kV0nsKqX75UsSINuDa/pG/n+qlBB4HUAdsMQ
-DKIM-Signature: a=rsa-sha256; bh=anU1q9+aapk7XZxfobfhPAVZnNabszZXotzDRiKDD2o=; 
+X-VR-SPAMCAUSE: dmFkZTE2bUaQhuwKHyR8VGN+TqzW7BsGnZOuQ1wD1zEdZHXOAJbCrYUBNpu2USFn/v5PQYxqycKTk0NZYcFO8Enb9aDVSgTc3r55I4Np1OkEPSIezHKcwMQ5z8Bp/sCRQQrdomhCS6bqQ8f+nrT+o834zq7dlhPcC/12uLl4fnPstcK+uYDhMMac5cMpRD8wffsrx38vuXzrM8nCEwPm472cctnZAVNGI31mo0DRNHa9nofH/RMgb/SsEjLoFJkLM/U45UhxSh8blri3Q35WO6H/5beiF+ZYmzoLBjcb78rS7Gp8TIJLHxk6A68Tl3MEbIqvTfKM9j7F1bqlreoSz3fZMMQCj8lr1uBKJJVeE5R4QmDDbVMPvOTsuW/4sf9Ez8cwslgvdvmeIaP4dXjgE9JxF9VBwPVXLClPERH24NacMLzBAhBauLb5DTeLckhXYVAJBS60yM7VzYqSPmsGn1coVcZkcvjUJK5TewjN7OBhVVc5dH/WqKZ4H5aSGOdATqYRxEaVjEnYpQn83HMR9Q74g7rbjSnrAqmA7LRteLL16ydrJmNHImxfDhSeL1qb+v6RxWEyG5h8PDnX5Z14pYU5ImU3ry4AqsE+baRhkPiaRkXV/HB8RI82bY75aUveWEU67gmITEHh70Po1dVvGQ5kF9M09io3xIUkBWsrGQ8iDV+ejg
+DKIM-Signature: a=rsa-sha256; bh=0DRnBFax2mUhLeon6GfWFLjdnixI+LBJAMNtZVasD4M=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1786422636; v=1;
- b=L/fIw2/mqg3a7LkNB1NMipPmEU/b5wgmI7H3hQZu0fgSLQOOT9/pKskLZLll0ccG0fQViOXK
- /vEPm6G5ab5VhCj1QAPE9dADc0YH1SaegplZzP61Q6vvGoOmLzBQLnC2TokV21RbPt6wczZ631M
- yVOOc+GNEqUCG5c3FRVQqheQskMb+qcED7cXAA8AJTeswOtatQfVQEGpjPcnOHk9JMuKMQLzGGY
- uQ8SL1qgVXoti2BFSp6jphYgPjTPEHpEqQMv8pZqRZt2Is5HCn/EjYbTVZrmz7zwB+tPh+ZpGyo
- WnnCDJOyeZb4ohHsJyc3b7jzgEYkyvYN7ZlIG1cAG/BHw==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+ t=1786422778; v=1;
+ b=EOVgPdY0TftmCtxz7D32U2uaz4JYE4KQrUGo2dEFp5AiyMyb1IbPwK4pR/dy38nEsfdnO9kG
+ njiCMqZLG36AxPqi36wz+xbuocsJxAlkJnDKbFffJAgTgbSrAk0ClHMrFCtB+V8YRfTu0X938rj
+ hqC4smLEu3gzGIfRQZSKiE+gdFPfp3ilABgVL0KwkqZAEEqnp7MQ/I+3Ud6JnQND1uydV1yDnhs
+ 1kExvl8TP9RW71QctoiPKTeSYFTBPB6N0Nr33yai2+cgYWcW215Ewj9ZBhIaUeKVMFie88HgK2b
+ 5LOqyDXagw+y45sYVdV5F5TaHggO6IRmqEU8zhmP8Ahpg==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,66 +134,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
-
-I would appreciate a feedback from you on this change.
-
 On 8/10/26 20:57, Mikail Sadic wrote:
-> An SMBus block read (I2C_M_RECV_LEN) reads the block length from the
-> first received byte. The Linux/U-Boot aspeed I2C driver obtains that
-> first byte from the I2CC_STS_AND_BUFF register (modelled here as
-> reg_byte_buf), even when the transfer uses DMA. The DMA receive path,
-> however, only wrote received data to DRAM and never updated
-> reg_byte_buf, so block reads read a stale/zero length.
-> 
-> Mirror the first DMA-received byte into reg_byte_buf so that
-> I2C_M_RECV_LEN transfers using DMA report the correct block length.
-> This is required for the ucd9000 driver, which uses
-> i2c_smbus_read_block_data().
+> The AST2700 SoC exposes two FSI controllers behind APB-to-OPB bridges.
+> Add the ASPEED_DEV_FSI1/FSI2 memory-map entries, instantiate both fsi[]
+> APB-to-OPB bridges and map them during SoC realize, so the CFAM/CFAM-S
+> devices on the FSI local buses become reachable from the SoC.
 > 
 > Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
+> ---
+>   hw/arm/aspeed_ast27x0.c | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index dddd7d2106..b908d7d4ff 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -17,6 +17,7 @@
+>   #include "qemu/module.h"
+>   #include "qemu/error-report.h"
+>   #include "hw/i2c/aspeed_i2c.h"
+> +#include "hw/fsi/aspeed_apb2opb.h"
+>   #include "net/net.h"
+>   #include "system/qtest.h"
+>   #include "system/system.h"
+> @@ -98,6 +99,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_PCIE_MMIO0] = 0x60000000,
+>       [ASPEED_DEV_PCIE_MMIO1] = 0x80000000,
+>       [ASPEED_DEV_PCIE_MMIO2] = 0xA0000000,
+> +    [ASPEED_DEV_FSI1]      =  0x21800000,
+> +    [ASPEED_DEV_FSI2]      =  0x23800000,
+>       [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+>       [ASPEED_DEV_SDRAM]     =  0x400000000,
+>   };
+> @@ -559,6 +562,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>                                sc->silicon_rev);
+>       }
+>   
+> +    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
+> +        object_initialize_child(obj, "fsi[*]", &s->fsi[i],
+> +                                TYPE_ASPEED_APB2OPB);
+> +    }
+> +
+>       object_initialize_child(obj, "dpmcu", &s->dpmcu,
+>                               TYPE_UNIMPLEMENTED_DEVICE);
+>       object_initialize_child(obj, "iomem", &s->iomem,
+> @@ -1132,6 +1140,16 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>           }
+>       }
+>   
+> +    /* FSI / OPB */
+> +    for (i = 0; i < ARRAY_SIZE(s->fsi); i++) {
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->fsi[i]), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->fsi[i]), 0,
+> +                        sc->memmap[ASPEED_DEV_FSI1 + i]);
+> +    }
+> +
+> +
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+>                                     "aspeed.dpmcu",
+>                                     sc->memmap[ASPEED_DEV_DPMCU],
 
-Does this change deserve a Fixes: tag ?
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-> ---
->   hw/i2c/aspeed_i2c.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index 27afcaecee..facb54d27e 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -365,6 +365,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
->       uint32_t reg_pool_ctrl = aspeed_i2c_bus_pool_ctrl_offset(bus);
->       uint32_t reg_byte_buf = aspeed_i2c_bus_byte_buf_offset(bus);
->       uint32_t reg_dma_len = aspeed_i2c_bus_dma_len_offset(bus);
-> +    bool first_dma_byte;
->       int pool_rx_count = SHARED_ARRAY_FIELD_EX32(bus->regs, reg_pool_ctrl,
->                                                   RX_SIZE) + 1;
->   
-> @@ -391,6 +392,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
->           }
->   
->           aspeed_i2c_set_rx_dma_dram_offset(bus);
-> +        first_dma_byte = true;
->           while (bus->regs[reg_dma_len]) {
->               MemTxResult result;
->   
-> @@ -407,6 +409,11 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)
->                   return;
->               }
->   
-> +            /* Mirror first byte to reg_byte_buf for I2C_M_RECV_LEN. */
-> +            if (first_dma_byte) {
-> +                SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);
-> +                first_dma_byte = false;
-> +            }
->               bus->dma_dram_offset++;
->               bus->regs[reg_dma_len]--;
->               /* In new mode, keep track of how many bytes we RXed */
 
 
