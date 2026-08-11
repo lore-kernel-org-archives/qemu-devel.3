@@ -4,106 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B1ADC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9EEC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 09:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtiF0-0006H9-0S; Tue, 11 Aug 2026 04:53:46 -0400
+	id 1wtiWA-0000Dm-RG; Tue, 11 Aug 2026 05:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wtiEy-0006Gn-Cv
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:53:44 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wtiEw-00029D-Fz
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:53:44 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6a20319d030so3056246a12.2
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 01:53:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786438421; cv=none;
- d=google.com; s=arc-20260327;
- b=LXYXE0/8DZ0TV+XWcCuFmlPnMepCKNAE2NEULIPqvfglyXBw20JOhyeoV5mqeptwBE
- Pyng3PFkU0LCafHPOKKDzT5oGbU0xhQRLQjtJqlVN37o9kr65tobcQpq3MI67x6sGRLa
- psFIk8GB1fND9Pks55qggifhIEcxH+lOt82ZKHf9bZ3+RCB8NYjfe/3yfwmmy3804TRZ
- fqRLWyHoORlHJk5JCRc1k953kIkfpf4rsHDf/jQONZTXPIl/bT4FEZJ5FUzuC5ReP9QH
- BMM33LP/nYm8Xa2sHmr5Lng2RJcVKUS89avDBVJ3sFyx5H0DPcRAl1tPsWqNbhv70Uz/
- iQGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KntnWJht4JWG8q/8KPwv0R938uhXWrIG6b5ejF9Y9mk=;
- fh=MJlun3wUSRZ/tNORE8+1B5jg+j+FWhlvz5w8I+IrLxc=;
- b=oi6ptZZVIp9fums4aXFlHbJ5pDMcDTwnm5sMAiWpXP+NpUvKiotpsHtlaVjXVF5Jb6
- FzIJUXvxFHVO28f0mahLTIhQfOQWlf4ZFl9jj/q/GUPlmduXQYbFGwspPI/HFsF3gAsg
- gQRkUeII0uwCMPGrDYkBG6GqjmKpWOy65f8pSFZ0ExP8zQi/LfaYRqMJCiEJTCvO7qIK
- tnF788LQAONhKPztJlhqouu7obTWnTszaYzOj7mqRh05pjLQrJrq4+tnNCoeW52soRSY
- tW81DgmFI1EHu3pjpebn6ly5PsFb93Hfr8P4QTsANX2/+YktzNYMaPbtacnWuJU3hToo
- 3ejQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1786438421; x=1787043221; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KntnWJht4JWG8q/8KPwv0R938uhXWrIG6b5ejF9Y9mk=;
- b=e7AIUayAUnjhirqD8uzHxnuevpPQMWIhm0J54ywlsu6AWWnip2Tu7BXajaHAqJ93VG
- RcK0Z1NgURa9NH0YEzdx3++TTtoL0AEugQzE46XB1KIEJVwUPTKhybHnlafSK3y8O9le
- Y+4HLaVPZIe7BsSgc5kQQLrxm5ADTfOCKsyCs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786438421; x=1787043221;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KntnWJht4JWG8q/8KPwv0R938uhXWrIG6b5ejF9Y9mk=;
- b=kX7GNCCjhhT4UBkXjh7VL27II6q9D61p7R4Votnbe5Gm0XSrRGlNH7bYEE/MWnjKFG
- qoQLiV3O6wIvNmTBjqUZ625JhmD5FfV67dHqr4VA9ElLanu9MUZGmagukQjO0aQkhwZS
- 7zLRmZXRTHZZkStWSeNBw/2Co0d+nEMy9/GSvozGqOZEDK8lRG6e1cfY13xImVVzK5mw
- lED3P9WR/KuZ8j8N9HlMsxlI/FBvHqOceGBkXHCyKKsQkmNOHkDEUNM/0njKdQGlQGkZ
- 0ZlBqUri53w+3d7dGvHnc12rwn0/eaHa/xd3AlAlDSuX78UN7SFJrzYFJI0hPOri4IC5
- N9ug==
-X-Gm-Message-State: AOJu0YzhOd0gmUoDEPvsGYIdmLkp3O8dVWx35SLo8h8XGizTdSQLHQA1
- Us6qBz+BGFznK47IUXBFvwu9CCwMnsjq6eVGdsdY1DV0lmSiK9SiipfZFjBzLIr7hGNhNhYAUAY
- I3gX91yEhFSxNDVrbn6tmXDAwLZnY8f1wXybxF4z7Aw==
-X-Gm-Gg: AR+sD13g70WX34JxP5uUJyIRrCbRZbR5zwWFhlCz+0aT4jlyuxfyiPK6tq8QwSESk77
- Uaz5qodUsWZVH+3aZzsa9I8F3NtI84Ff4oBr1IsZ4OxLlb73koxnCmxVrea8iJyOAVxF3LsorQy
- i0wvtNnl+IfbSjK3TMZgHIUlgQu2P+QmzAXgJ2/eLU/r3/5k0OfP0mvH1AHkI8IJHlwqrRpCiUy
- w+oL8+tvZRDyVUeRJdkD8YP6zvMqrsrb71OKiRVr8XkInO50sdbmsAf2hAeIH9aUwxqapFL9eLZ
- XHqQe4HXfHrOMT5cYYdjUUe4iIPRf2kiiRrq56hkEks2PXmDZatirwiSehpWoHm90Y7afaUtWmc
- adO3f0o8ldSI=
-X-Received: by 2002:a17:906:f583:b0:c20:3733:a8c5 with SMTP id
- a640c23a62f3a-c20e608810cmr75748266b.8.1786438420382; Tue, 11 Aug 2026
- 01:53:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <17746591750@163.com>)
+ id 1wtiW9-0000D2-0V
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:11:29 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <17746591750@163.com>)
+ id 1wtiW5-00040D-M1
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:11:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Subject:To:From:Message-ID:Date:MIME-Version:
+ Content-Type; bh=NDCoKzNPLkyCH8elTvs20cnH0ST8ZEx8g0oWbKKAaKU=;
+ b=iKidxrG8sQj3J6N4YLy2Hy84RXWdRSvmcI0M0olz1aJRmMzjppAF+yAbrD9hGf
+ Le5MBVfS55bbdyQ2VskmUT2J72q+zJ3b4wQ7G7pGnCnQ/Q8zQi0P68vLGU+7bTX8
+ czgOew13PBqDM+f2VKgs/2txnazuZpXXl6RAKEutEIm+4=
+Received: from [10.2.10.30] (unknown [])
+ by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id
+ _____wDXH_Eo53pqS7hUOQ--.24690S2; 
+ Tue, 11 Aug 2026 17:11:05 +0800 (CST)
+Subject: Re: [PATCH] hw/intc/loongarch_dintc: Add
+ loongarch_dintc_cpu_by_arch_id() function
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260811084331.23526-1-maobibo@loongson.cn>
+From: Song Gao <17746591750@163.com>
+Message-ID: <27b9d9e3-b762-9472-984e-a14b1abba13c@163.com>
+Date: Tue, 11 Aug 2026 17:11:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20260811081401.51771-1-alexander@mihalicyn.com>
- <33a61f97-d058-466c-9793-98e2618790ba@oss.qualcomm.com>
-In-Reply-To: <33a61f97-d058-466c-9793-98e2618790ba@oss.qualcomm.com>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Tue, 11 Aug 2026 10:53:28 +0200
-X-Gm-Features: AUfX_myjHJrHUTybz8dXpWu44oX0xd9tthWOxjy7dmUdCYZpJpY4rs-m2Q505l4
-Message-ID: <CAJqdLroHhv05B_4105eX1GsFGOdD-qfP9ijF36WWg9keuuYnUg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/char/pl011: support backend hotswap
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-arm@nongnu.org, =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+In-Reply-To: <20260811084331.23526-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: _____wDXH_Eo53pqS7hUOQ--.24690S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxGFWDXr43Zw1DJFyDGFy5CFg_yoW5ZrWfpF
+ Wxurn0gr1UA39rXa9xXa4rZF4fCrn3u3W2q3WakF92yF4kAr15Xr48GrWUZF92ka4jgr4j
+ vw1xG3WUuF17JFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRbdb8UUUUU=
+X-Originating-IP: [114.242.206.180]
+X-CM-SenderInfo: jprxlkywvzilivq6il2tof0z/xtbC8gk9Rmp65ymixQAA35
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=17746591750@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
+ FROM_LOCAL_HEX=0.006, NICE_REPLY_A=-1.998, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,104 +79,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Di., 11. Aug. 2026 um 10:30 Uhr schrieb Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com>:
+
+在 2026/8/11 下午4:43, Bibo Mao 写道:
+> Similar with IPI, add function loongarch_dintc_cpu_by_arch_id() for
+> dintc driver. It searches dintc device from physical CPUID, also it
+> used binary search method, rather than one by one with common API
+> cpu_by_arch_id().
 >
-> Hi Alexander,
+> And use this newly added API in loongarch_dintc_get_cpu() and
+> loongarch_dintc_mem_write().
 >
-> On 11/8/26 10:14, Alexander Mikhalitsyn wrote:
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >
-> > Currently, when Incus issues "chardev-change" QMP command to change
-> > chardev backend from ringbuf to socket it receives an error (with aarch=
-64 VM):
-> > "Chardev user does not support chardev hotswap" [1], [2]
-> >
-> > Let's fix this by properly implementing BackendChangeHandler for pl011.
-> >
-> > Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, becau=
-se
-> > if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is tr=
-ue),
-> > then after change we need to send break to a new backend too.
-> >
-> > Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-con=
-sole-on-arm-architecture/23096/3 [1]
-> > Link: https://github.com/lxc/distrobuilder/issues/892 [2]
-> > Reported-by: St=C3=A9phane Graber <stgraber@stgraber.org>
-> > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
-.io>
-> > ---
-> > v2:
-> >       - fixed a typo in commit author name
-> >         [ I did `git format-patch` and copied this patch from my Raspbe=
-rry PI
-> >           dev/test machine and it turns out that I have a stupid typo i=
-n my
-> >           `git config get user.name` on that machine. ]
-> >       - added RWB tag from Alex Benn=C3=A9e
-> >       - adjusted a commit message
-> > ---
-> >   hw/char/pl011.c | 16 +++++++++++++++-
-> >   1 file changed, 15 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> > index cb12c3e224f..3622248ec0c 100644
-> > --- a/hw/char/pl011.c
-> > +++ b/hw/char/pl011.c
-> > @@ -660,12 +660,26 @@ static void pl011_init(Object *obj)
-> >       s->id =3D pl011_id_arm;
-> >   }
-> >
-> > +static int pl011_be_change(void *opaque)
-> > +{
-> > +    PL011State *s =3D opaque;
-> > +    int break_enable =3D s->lcr & LCR_BRK;
-> > +
-> > +    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive=
-,
-> > +                             pl011_event, pl011_be_change, s, NULL, tr=
-ue);
-> > +
-> > +    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
-> > +                      &break_enable);
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/intc/loongarch_dintc.c | 49 +++++++++++++++++++++++----------------
+>   1 file changed, 29 insertions(+), 20 deletions(-)
+  Reviewed-by:  Song Gao <17746591750@163.com>
+
+Thanks.
+Song Gao
+> diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+> index e40292887c..68c1cfce43 100644
+> --- a/hw/intc/loongarch_dintc.c
+> +++ b/hw/intc/loongarch_dintc.c
+> @@ -26,6 +26,25 @@ FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+>   FIELD(MSG_ADDR, CPU_NUM, 12, 8)
+>   FIELD(MSG_ADDR, FIX, 28, 12)
+>   
+> +static int loongarch_dintc_cmp(const void *a, const void *b)
+> +{
+> +    DINTCCore *dintc_a = (DINTCCore *)a;
+> +    DINTCCore *dintc_b = (DINTCCore *)b;
+> +
+> +    return dintc_a->arch_id - dintc_b->arch_id;
+> +}
+> +
+> +static DINTCCore *loongarch_dintc_cpu_by_arch_id(LoongArchDINTCState *s,
+> +                                                 int64_t arch_id)
+> +{
+> +    DINTCCore dintc, *found;
+> +
+> +    dintc.arch_id = arch_id;
+> +    found = bsearch(&dintc, s->cpu, s->num_cpu, sizeof(DINTCCore),
+> +                    loongarch_dintc_cmp);
+> +    return found;
+> +}
+> +
+>   static uint64_t loongarch_dintc_mem_read(void *opaque,
+>                                           hwaddr addr, unsigned size)
+>   {
+> @@ -49,23 +68,20 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
+>   {
+>       int irq_num, cpu_num = 0;
+>       LoongArchDINTCState *s = LOONGARCH_DINTC(opaque);
+> -    uint64_t msg_addr = addr + VIRT_DINTC_BASE;
+> +    uint64_t msg_addr = addr + VIRT_DINTC_BASE, arch_id;
+> +    DINTCCore *core;
+>       CPUState *cs;
+>   
+> -    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+> -
+> -    /* Validate cpu_num against the configured number of CPUs */
+> -    if (cpu_num >= s->num_cpu) {
+> -        qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
+> -        return;
+> -    }
+> -    cs = cpu_by_arch_id(cpu_num);
+> -    if (!cs) {
+> +    arch_id = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+> +    core = loongarch_dintc_cpu_by_arch_id(s, arch_id);
+> +    if (!core || !core->cpu) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+> -                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
+> +                      "loongarch-dintc: no CPU for arch_id %"PRId64"\n",
+> +                      arch_id);
+>           return;
+>       }
+> +    cpu_num = core - s->cpu;
+> +    cs = core->cpu;
+>       irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+>   
+>       async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
+> @@ -135,15 +151,8 @@ static DINTCCore *loongarch_dintc_get_cpu(LoongArchDINTCState *s,
+>   {
+>       CPUClass *k = CPU_GET_CLASS(dev);
+>       uint64_t arch_id = k->get_arch_id(CPU(dev));
+> -    int i;
+> -
+> -    for (i = 0; i < s->num_cpu; i++) {
+> -        if (s->cpu[i].arch_id == arch_id) {
+> -            return &s->cpu[i];
+> -        }
+> -    }
+>   
+> -    return NULL;
+> +    return loongarch_dintc_cpu_by_arch_id(s, arch_id);
+>   }
+>   
+>   static void loongarch_dintc_cpu_plug(HotplugHandler *hotplug_dev,
 >
+> base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
 
-Dear Philippe,
-
-thank you for the review!
-
-> Could we factor the common code used in pl011_write() in a common
-> helper?
-
-yep, I think we can factor out CHR_IOCTL_SERIAL_SET_BREAK call
-together with break_enable variable.
-
-Please, can you look into our thread with Alex Benn=C3=A9e:
-https://lore.kernel.org/qemu-devel/87h5l22faq.fsf@draig.linaro.org/
-
-It would be great to have your opinion there.
-
-Kind regards,
-Alex
-
->
-> > +
-> > +    return 0;
-> > +}
-> > +
-> >   static void pl011_realize(DeviceState *dev, Error **errp)
-> >   {
-> >       PL011State *s =3D PL011(dev);
-> >
-> >       qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receiv=
-e,
-> > -                             pl011_event, NULL, s, NULL, true);
-> > +                             pl011_event, pl011_be_change, s, NULL, tr=
-ue);
-> >   }
-> >
-> >   static void pl011_reset(DeviceState *dev)
->
 
