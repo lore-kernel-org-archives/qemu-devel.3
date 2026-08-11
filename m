@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F920C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C28C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtseX-0006D8-U9; Tue, 11 Aug 2026 16:00:50 -0400
+	id 1wtsg7-0006hH-55; Tue, 11 Aug 2026 16:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtseO-0006CO-5s; Tue, 11 Aug 2026 16:00:42 -0400
+ id 1wtsg5-0006gx-TP; Tue, 11 Aug 2026 16:02:25 -0400
 Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtseM-0000Xa-QS; Tue, 11 Aug 2026 16:00:39 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.phl.internal (Postfix) with ESMTP id 914C9EC0190;
- Tue, 11 Aug 2026 16:00:37 -0400 (EDT)
+ id 1wtsg4-0000d6-Gt; Tue, 11 Aug 2026 16:02:25 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id A813CEC010B;
+ Tue, 11 Aug 2026 16:02:23 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 16:00:37 -0400
+ by phl-compute-02.internal (MEProxy); Tue, 11 Aug 2026 16:02:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786478437; x=1786564837; bh=1em1IjqIK/7w3cV5iwW0euD3HBiN8iSF
- jQHpMuT/G1w=; b=IrAcz5+QehCqwTfcmE3JniBR2M/EdbO52JqjUfPYffJYnr6T
- uFfC8a4pfyJg0vNQvX0jMIh6kHyTBDEXtWbpMRbHHRWnjmmC1VZ3oZoKoP/9782o
- qkkPHYGQtfblU6Pr917nl6dBfm8eUBIixCnIGSLnxpb/gcZgHYpeyiRB9FImCk9Z
- HfZxA4hxCtNUitx2Hz32faOrQwewSRxQakaONJdfSp+/BnQ3VqJweFIigTCEo5br
- lrbmppS70mLkchrNRwiw/bot+H8MKMkUqA4m4b5uBDq+EuufeU6nCBaXYEzgIX05
- JHCdJgVTH1DDBQ/SBCETjzxdptS7YZh+ZRjnzQ==
+ t=1786478543; x=1786564943; bh=19BktR0GNGXo8wIndCI95hSTYzF4n9dz
+ bP/hl5A1F3A=; b=JzxykNW0TywO8GFkv5Pht0H2SkY0EWNj2hmOOAOpFbAmQLob
+ 9tp9weHhhj8e3dck07sHeO0kax0Y/X+Qw9evz5hC1usFPq+EDUDYnaFPVhNx53Vr
+ OI5RzvA3uMsWEFR0U7hFipD6oGEE1iSwJFQSPU8HRz86JIP80RVXRTFMCwkkNdFQ
+ 11YwzmkfucmeZ+Tla81VgTjBFlsetQe5CaeaPrNcLtA8cP/YkauAH8a6l3m4eePG
+ VaXxl6BcJB3EbyN8FGdsoSo5PPf+1y/k1M/txWVvL5GVNb9haFUbaO2CN69qgmfZ
+ CVQgrSQfNMbEgWgQdY+eXpvvNJ5U5mIi+P4fbw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786478437; x=
- 1786564837; bh=1em1IjqIK/7w3cV5iwW0euD3HBiN8iSFjQHpMuT/G1w=; b=g
- r220JnlXvLz3B6dVDzTwlqcMo/3nDeoJy1uonhtMNeEcpPzyjzUY3mJ+zmdEv/Tp
- r2uNGoz6J+qJ/HIWk8R7evobDGRWQJBWXAtr/IOxa5xLtyyWy5L6sPsgxS7azrdN
- dU9m9LsbJjl2SZzoaJ5a56RGdHiOjyR3D/9yQbodBKcjjzBJmMYDw4WTtMBXTOhe
- uSHHBGPVmEwGhAt86ql6wMcjpdUjnyDdGGc72Db/McwJ6ec1hC4OpYUlXMMRf9/3
- s7QlnQFm3NxDTZM54ceuHoCYQIrPAnjNj9bb9l99llgf3eLl3spvYuqou1//Tp4G
- 6w2h63NVUfIu65EgtsHgQ==
-X-ME-Sender: <xms:ZX97amyq1kcXFCpDh_4TKU6Za-QSg63ZsLE0TDE81xZB5ljRD0bm0g>
- <xme:ZX97ammDq9SfeynWZmeQWkNyZ9e0t3mS4E0xaXZ_jzUjkhaYpTdoGRFvH2svH0Tzi
- Oev37HdGtHfmhnzMsKauhjDJqWbkMVzU0tBS-G_wKNNDlIYx9b_d7M>
-X-ME-Received: <xmr:ZX97anf8d7N4CZMVpTRmr1XY_WePgZn02bJesuFpl1yAPJn8YeSabnIomj0CO8FlTYr3IA>
-X-ME-Proxy-Cause: dmFkZTG022mVQphzI7AWPJwf5iH2zrR/m6qBn9XfRmKRpHDMJFydYTJQKVsM1QV+rwV6La
- 5lrePzwx4fvDAbuWGvHeRfj/XXR7cRigp+VFqRksAUG14iVvyA71KFanGk670lEqM8JVu4
- s34RyOYIIjP0W8WBcm0e1tPVBp/pNSsHcdVX1Ks29W2b9Vr5JvJeEXiSndrwW6yXxb4+J4
- eZfRbt29FtMtF3dLgjNB6mepufrYu6ZS9dF46cYmkr7C0VornlkrAZTNc8V+Abmi0Y7yME
- 8S+ZxumAgsgCiVLwzI8RB5uG9SF/jOVVCcorsE69lSTOl6wZGe9l8hpUAF/XNdPBWsb4gQ
- 8zHIGxU4dY9l4GTSFGIWjCwMKTIORS5IjtUkwgO5SWW+wY+634k05ib9g8e2VuZDQduNTj
- bCekoHGKZ+CxVlQ3xQs4yICeGHi/y84oF4PwsB9DJDDVbtk/T4TQzC7sXTDeAZ0cTbo9Zq
- bd48CxTaOnYqwRc0qJh1OYyQdZSpaxbLJeriqcyxh4Z4NbsrIRkcGTPtprteFXCHV3lw8g
- 4n/E44IK2V+2Elatgph4uI6fk/Y7o5Y/iSn2kv4irqtXNIUdesn1RewWfGzWuOEgGKmRaT
- Y39rS7IUDcCcKCTFo4hkf9F6D1AATzeXUpwWKDM8TJglLN1OlqYs8y8EC/fA
-X-ME-Proxy: <xmx:ZX97akpgb9ipehFPLE-gTNI-XYbAdY8MxkddU57-9roWY6dAK3ATug>
- <xmx:ZX97at6DpFyLeRzjhTVJ9U14cHBTjwEGFgNkL5N1glkkqB3Oy6ngjA>
- <xmx:ZX97aiod-D2Vhsb9curwC1_DOAqRFUelwh4VsLXQ_XirAZCDKqIReA>
- <xmx:ZX97anii8QWFUZKHHSGP0GTBv30KQOkOQr-INdL9n4ng7i_53VOgEw>
- <xmx:ZX97ajGt3rbBneDrVjfjk8bgN_aE_nakaAsDVMHxojABMcFYS_RfWZrU>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786478543; x=
+ 1786564943; bh=19BktR0GNGXo8wIndCI95hSTYzF4n9dzbP/hl5A1F3A=; b=h
+ DQzyb4ufbZmcBLkvfRkGrxkkM5Rs4ADoHSjCDe62U44wsFJiVmYUsSel+PuAYcWW
+ N4Ce2U15Cfr3pmvuvTf8r7b68QsD7II7++WHb3YDuvfrSq1LKhLB8XRYMVoQVhpP
+ dIH0urFgSMJ9Qkmekpmc/c8v+ejo/HkC3F2NAqt2Fgk2FRZu0Ty2mwyAbj9l8YrR
+ MuseLfX/zkF40hV+fStn0DTXDJGAEs3fhpYJ1n3b6CpRDkL+hnCx5kXWSAHyRxYy
+ JTjlK04ZPagWI7kHaqgRLTVM/mAALZaH9HTfqfGHv9YPuc++Yxwc8wOY8xYOnHo6
+ J8sSdFzrFr3Dxa4D2Pe1Q==
+X-ME-Sender: <xms:z397alIxGxLgVMxezkM_wMLpUn7ea8PlOHe5_hktuAqCOOgb2eYiYw>
+ <xme:z397aleXE1UkvCgtbQhk-hS5xNbmH280IN06ziH46_FXlswg7VEbiKUepJwk23VQd
+ 5oZhTxEJjRNnZtnrkI8ENSsqRA8GDmeBIjUmeHlaOFoJ8XX-u57nmE>
+X-ME-Received: <xmr:z397as1MGKXo8eVRo5tqoCTJ26ePg97Kp_RvAWi9vgXGLMsc6L2azONgUrXlA3pni_Cv_Q>
+X-ME-Proxy-Cause: dmFkZTGo2QrkfpFVuH7S4IBNCTeomJ8QhEtBvgfnL3QDxFj7ruf2huTSiTBYpg0p9zZT8E
+ X0oQyXn2IvY9JI9QL6wQ9VVBPMPTCdzJkfAFbnVOcaYVJXeWoQ6c4uwS+d40kNjjosnVck
+ SpyBnEMNSBhuOH6TxVEsaKVDNyfNFu0olX9PeT3RiN6K+KUTCcOdyqT1zoD6e+hkpFMH0A
+ rvZ9lHEOYKL0qwMXtKLxoGAgWVrW+ut03mHMzj7FaksvbsjWEZTezwSEZCFfuyLCuxtL5p
+ ddPNVfUF+PPvYdQk8jY4CcBTn9Fg9fwOBg6mZNMU3PqNcCvVg0reAUbAR9mC9zcLRCtaRt
+ 4aiYzB2CNeVIEtMg6+ipNwausOO0NXgdI0Mudpw1ZmYteULrRdGHr4XJ7WE/LGBAm5nwne
+ dM/ZJgGgIE9+YZl+Wn2B0QJhDTTfEManyfS8H6syzaqtqno3pHOCXygxfjl8TMpAk2cZuM
+ dmc3RCx5j5c2y7o9IyJpoUi7UfIKQWQ1eqGFl8/ue826KW0B7BGvw9qAnnVjUyVPTlCRfX
+ tUhrV8a2nRSz6XLn4frgzzPOXBZKJUriWEmb+/5xre3/KHOj/juDHkeYgTQwa8KAbIkeRr
+ kw2bWZTSK7QHm8i76rn6B6w1o3dtuA2aWNapwP3NPjX6kGNeHdZ9yEVvKlnA
+X-ME-Proxy: <xmx:z397aujYJmWKqxavt-StE-l0MK0ewYwuUhwiISYsYndSoXZ-fRj1nw>
+ <xmx:z397aiTTyFJ7TND23JnQKQg4iRVSrMbtaHEoeyakDiLB1FQwtAVd5w>
+ <xmx:z397avjBLnOSyOSqVEzoRy3EnJ-YaBkmR148LQcVMM92DDoLTy9U7A>
+ <xmx:z397ai7iLlhaSGRRAmvGLgMebK2I0fPMJg1Ls5W6cMe9vhdCK96AQw>
+ <xmx:z397aq__c7RaiDmhgRoj2LxNbC6zqZuB_2FxPOKXv7WA2CANkBTAgfrY>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 16:00:37 -0400 (EDT)
-Message-ID: <ca35830e2c4a22bd1b38603375fc78944f9417bb.camel@alistair23.me>
-Subject: Re: [PATCH 08/56] disas/riscv: Tidy dec initialization in disasm_inst
+ 11 Aug 2026 16:02:23 -0400 (EDT)
+Message-ID: <931e9fdba0589005ea20464734b46b5620bd4c83.camel@alistair23.me>
+Subject: Re: [PATCH 09/56] disas/riscv: Pass rv_opcode_data pointer to
+ decode_inst_operands
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 06:00:37 +1000
-In-Reply-To: <20260809223545.730664-9-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 06:02:23 +1000
+In-Reply-To: <20260809223545.730664-10-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-9-richard.henderson@linaro.org>
+ <20260809223545.730664-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
@@ -114,31 +115,59 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
-> =C2=A0disas/riscv.c | 9 +++++----
-> =C2=A01 file changed, 5 insertions(+), 4 deletions(-)
+> =C2=A0disas/riscv.c | 12 ++++++++----
+> =C2=A01 file changed, 8 insertions(+), 4 deletions(-)
 >=20
 > diff --git a/disas/riscv.c b/disas/riscv.c
-> index 012f90fce6..986dc6b752 100644
+> index 986dc6b752..af43940732 100644
 > --- a/disas/riscv.c
 > +++ b/disas/riscv.c
-> @@ -5441,10 +5441,11 @@ static void decode_inst_decompress(rv_decode
+> @@ -4595,11 +4595,12 @@ static void decode_inst_opcode(rv_decode
 > *dec, rv_isa isa)
-> =C2=A0static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 const RISCVCPUConfig *cfg)
-> =C2=A0{
-> -=C2=A0=C2=A0=C2=A0 rv_decode dec =3D { 0 };
-> -=C2=A0=C2=A0=C2=A0 dec.pc =3D pc;
-> -=C2=A0=C2=A0=C2=A0 dec.inst =3D inst;
-> -=C2=A0=C2=A0=C2=A0 dec.cfg =3D cfg;
-> +=C2=A0=C2=A0=C2=A0 rv_decode dec =3D {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .pc =3D pc,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .inst =3D inst,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .cfg =3D cfg,
-> +=C2=A0=C2=A0=C2=A0 };
 > =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 static const struct {
+> =C2=A0/* decode operands */
+> =C2=A0
+> -static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+> +static void decode_inst_operands(rv_decode *dec, rv_isa isa,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const rv_opcode_data *op)
+> =C2=A0{
+> -=C2=A0=C2=A0=C2=A0 const rv_opcode_data *opcode_data =3D dec->opcode_dat=
+a;
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_inst inst =3D dec->inst;
+> -=C2=A0=C2=A0=C2=A0 dec->codec =3D opcode_data[dec->op].codec;
+> +
+> +=C2=A0=C2=A0=C2=A0 dec->codec =3D op->codec;
+> =C2=A0=C2=A0=C2=A0=C2=A0 switch (dec->codec) {
+> =C2=A0=C2=A0=C2=A0=C2=A0 case rv_codec_none:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dec->rd =3D dec->rs1 =3D=
+ dec->rs2 =3D rv_ireg_zero;
+> @@ -5468,6 +5469,8 @@ static GString *disasm_inst(rv_isa isa,
+> uint64_t pc, rv_inst inst,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 { has_xlrbr_p, rv_xlrbr_=
+opcode_data, decode_xlrbr },
+> =C2=A0=C2=A0=C2=A0=C2=A0 };
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 const rv_opcode_data *op;
+> +
+> =C2=A0=C2=A0=C2=A0=C2=A0 for (size_t i =3D 0; i < ARRAY_SIZE(decoders); i=
+++) {
 > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool (*guard_func)(const=
- RISCVCPUConfig *);
+ RISCVCPUConfig *) =3D
+> decoders[i].guard_func;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const rv_opcode_data *op=
+code_data =3D decoders[i].opcode_data;
+> @@ -5486,7 +5489,8 @@ static GString *disasm_inst(rv_isa isa,
+> uint64_t pc, rv_inst inst,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dec.opcode_data =3D rvi_=
+opcode_data;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 decode_inst_operands(&dec, isa);
+> +=C2=A0=C2=A0=C2=A0 op =3D &dec.opcode_data[dec.op];
+> +=C2=A0=C2=A0=C2=A0 decode_inst_operands(&dec, isa, op);
+> =C2=A0=C2=A0=C2=A0=C2=A0 decode_inst_decompress(&dec, isa);
+> =C2=A0=C2=A0=C2=A0=C2=A0 decode_inst_lift_pseudo(&dec);
+> =C2=A0=C2=A0=C2=A0=C2=A0 return format_inst(24, &dec);
 
