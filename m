@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A5FC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F81C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtszK-00025m-0P; Tue, 11 Aug 2026 16:22:21 -0400
+	id 1wtt07-0002sz-UG; Tue, 11 Aug 2026 16:23:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtszC-000237-CM; Tue, 11 Aug 2026 16:22:12 -0400
+ id 1wtt05-0002sh-Sa; Tue, 11 Aug 2026 16:23:05 -0400
 Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtszA-00049V-N6; Tue, 11 Aug 2026 16:22:10 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id C1564140016F;
- Tue, 11 Aug 2026 16:22:07 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 16:22:07 -0400
+ id 1wtt04-0004Bp-AY; Tue, 11 Aug 2026 16:23:05 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 93A7B14000B8;
+ Tue, 11 Aug 2026 16:23:03 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 16:23:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786479727; x=1786566127; bh=mU8/9OWnb0D6m7JSLbHflwgFheQfpNfq
- zpyH5e40CMo=; b=lxkEYzCV7sznO7MIWwlcUZPXuEoJUcYbDMH8WCTvZuICZ38K
- z967BpjCHQJh31fBhPadrsnx9RsmzFr2LPg3Z8ULs5ivn+6lpvruzj9pfcSYXpyD
- 0himJ+Ie4LzsHgYVX4CbgT8o3AJCYfIkfMuELCRPkNhZBe/wbDQQ+HKXhdCJP+yu
- HUSdVxvJyGwu7NtfQJBTZ1L3oUdR2PT1PQ2agEt0Qxm+XBK9yy/IwNAkOXt058TW
- v3iSdu6LE5lH9/Ps1MeHIAWJMARBZZ5xwr/FL/oJKc0HJpZmUGqriQc/lj6trqet
- gqteNKjah6jxugFdPtRPc1P9LVevg/U60v4g4A==
+ t=1786479783; x=1786566183; bh=ke0S2K30SunoZQf+EvRHqCSJlMczgEoo
+ QJKm1mnVrM4=; b=V3Z5Ygtxy7MCEWSxqeMU80sWazdlmHOnIGOScHVVuu1sZUSS
+ DmNnRQW2jlARWg9N8QqhkaNDsQbqJG74V3vbeVOy388m9BqGtYUeLxgn2YUb+PI+
+ 2zAPUSxzkfwPVlw25AqhLt2ESCdXGjywVlGX4VzP65BLJELljWZFWGKsFJaxRO2r
+ f2ncfVZRl5/Cg6qQPg4D6/E+Z0NqsFOD8MXFffqiyVuUAH3vdnHwuZzlYBH/lZbr
+ tPYzNUDt1SKgliUZ5sVWugvH9+nS39kmuaB7YUF9QQBuTNnnoBK9AN12H2av9vTm
+ HiKnnc/NfnSTICsoOjeW+Fw3lsR6FQCvkWWjkA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479727; x=
- 1786566127; bh=mU8/9OWnb0D6m7JSLbHflwgFheQfpNfqzpyH5e40CMo=; b=J
- a0fufWXDVHjB0fnqCWL3ndyiJwk2StxHsotEtqINBA0cKfqYDEHKFUkgCYD75Znm
- spA/np6XCML5dZhj9wUTTLic1FYLlOrybgcGsizmQ48SkOb/VhLFWtQ3Vqb3dtB8
- W/h0ioPySOX17IXOgeKKjiy/qKKkktjzq7OPUaab2eC4NI/5qpVUSMPqveIqKozl
- vAt59EY9QHG/G3qAowCspSNRFl3ZqVCheBD3LH5VEVoo7k2duGVSMl73jm+jczZJ
- jKC/UzAnXo5QuAB8z/FC7JM8usa9as2I7yBpq8+kQX1jKiBJD2NE5UiXr4wh/9eT
- oWiRB9s+rhVAr2EIvF8Qg==
-X-ME-Sender: <xms:b4R7aqtaye59LAgtlCr7ZLTBuNjZ-M5i1lSZAZFc3XbTZnqRWuwK6A>
- <xme:b4R7ajwobRCc5z4rheOOUAhj1GIbnwVh4L3dfdn6fHNQcuAOevumDi1uMC6y8qKrv
- 7ddt3TqgTbRRD6yUdHkU2Vo6Wn2NG2mcbJMcQilGr7DwlwRUfYecBI>
-X-ME-Received: <xmr:b4R7ak68hAvYFDhCrBYVMpy4qjixyVgPv3M5foHLHQM3uz9D7Wuze073jI8Ik2eZ6kj4Sw>
-X-ME-Proxy-Cause: dmFkZTGFUpSS2GT1z7DHoWv8NCM7+16aVte8EPcTOexXdW4G8RGpvTIDkkb9QH/6b3lrEi
- 1QfIZs+N3MbyOFqV8mRj8GKZrEOXVeiF+EFez4pVjLgnRU9i+JfRj3PTXYYbmI5N2UMtHV
- K2j88n1elLZIEH7515+VW5iiht/TNZB1dGxKz6HzYBQCgC2eOodtqOJdSpZNqeALwZqEuI
- DFqpAvMiJtrOwf7l1T1ujDu4b5y0MFoi9u9/JAb7eppzTrOWqRV1Eielyobcy6YkxQ5D6V
- mYp08JdTcFEtTlaUcpcdcO6LKBUhXgLUvkDF8vn8Oz+1Wx0Q/AlGDibx/qsu8xqDLhn5UD
- QKf5WWtFFyIZoAaOvykG/5XLuIub+E+gQbvOBepv5ND57PQveefKc1mOeEG7Nh/97n5PHn
- zpZcyJdBbq83CJHY+weiDKFA1P0dMkMu0/GGa58Y2VSzV4V8Ktyb2hkqqSE11FdGz5/Sop
- 0DGnoU1FVJWjI7Tb818A/TU7JPhX7TlmBy7irKRxShjcpJzLSa2i0Xtec0Or3ZMIJKuLm9
- lzcb6pNoVDZ8JG2Lc6Zf1QAlCU+dgK2Jt1H+hAkLGjDgTtwmzbacI3FaYVmx56lQv/4K/I
- e3pW6ueJ+YPhUU5Cl9BsvZ6wq4st1FoQCSM86d3X/Q8Gq7Ls9mf7uYYiArpQ
-X-ME-Proxy: <xmx:b4R7atU4bBYjyOMzcesDGRrKIUNO3hywPWQnYaLq34Nnh3yFRXAzFw>
- <xmx:b4R7ag2Z_RXb06xCe_3qkxPWPYbfa-Am6v3hwUPUjX0KD37hywtG_w>
- <xmx:b4R7ai1cQnu8Db82r0wE89KD20_2us3YluBH_Y-saHuG2ABly7VF-Q>
- <xmx:b4R7ar8o74OWH_2kBjbrrlugGivHMwzKUeHrXQ3cPudjwrKs6oUM-Q>
- <xmx:b4R7amzW8AjMj9DeA4ZzlJXFrV9JU0VcGgjAiHyHPEC6Uk2bbd3Gfbk_>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479783; x=
+ 1786566183; bh=ke0S2K30SunoZQf+EvRHqCSJlMczgEooQJKm1mnVrM4=; b=H
+ /+aK0+a3zcaml6QI0zV54xATJ6RoBuTq0jG0nCaTtsRJtzvV9rWP3SCAw3dQQbWp
+ vI0ILXcpNSp3G+oSdeGT5S/CsgosL90qVpo/09c5OTLhRxEaORtL+ZELok8hL9TM
+ cxXdMOv6YdhQg57X5Qr8v56IyC8KCHfpLlwdydu/oE9/dr8PO4nJxq2Ei+oIqTpG
+ lMDCvCC67h6hXL47v+Tx/GyTE0m7njtxq9njrVQHJNwGK1vgrEhJMdOdCdQnL6I9
+ d1pve5LAuSJJmlmBaIqcKMjLfRMxyOR4rq1fOnoYOVpqPJadd1MC2UVaQwsu2xle
+ 3UwREoUJFgTg1+XARZO7Q==
+X-ME-Sender: <xms:p4R7aszgVKfKafCwR9EzHTh90GzdQoxeKXSqVi3nHJ2hpGMwuw7xaQ>
+ <xme:p4R7aknqwkKEYmT_EbFsmB0R9FCHf_-FrxJMqFBKx0ECogJZ2U4CnBZbV0cuv3iCX
+ v-wv-krphohwX_elqiiE1ki5H2u5zTPzvQrMruiI2vOM-J1pKrU6Q>
+X-ME-Received: <xmr:p4R7atcJXLArqml2Dk9Cq00ndsbXJOcPgn632B5NgLD_HEWt--EQLKa7VBIxAGLMrxKcmA>
+X-ME-Proxy-Cause: dmFkZTEe44bzU318ZKGPPkmI//vzCNdVcYTYrqRtyU+DALhpzqDIrDJwcBKSHZMm4wnCMf
+ 9PUVrK5o6AhiUSiuSHL+1pFOddNIyiumPnXWByRYWCiPKoMD7LpIxSXTPbQLcCCeUi2Ayl
+ lZhv0amE+njS/NQ6fBOmBDx+m0qvsBnHoW/t9sg/Z1H8bHw4jmKj5CgcDmj+xNoBXMcCsB
+ VunOEWHMKShnBk/h7Ljnrzisg4XMruYntxk0fJHDFNQ4GaUuSnP7WZIf61sh4YmvNs4ksS
+ qLV4eLP9GUxwdWyxSb7FXaax/mli1hOteEtTMY4L052hQLPg6p0x5fRGFTYIR45pG4W+Xb
+ YrOxKMSxvYbF8wARLFHIVH3zN3NlaaqYl31Y9lCkrE1G5gtrT9IUv2aCAtNKlxPZGCXkq2
+ u+cAmuoCuNJx4joCGwyWjB9y0kxGQ9aeRj4d1J8Gc0BzEuNS1rfMhj+p3EVO2+d/oJ/FZ/
+ KR1FTB1BHT/p5aor9sB7peK62uzmdLuxK0LMvf7W1o/7v0PGIcXnIBJcytoW+1Whjasa7r
+ ag1FgWMmA49NVUgWL+N9FV1iKmj9bppQcAv1ouW/lhDfvusf3UEVm7OuRyqq3UIlBTjiDp
+ DjI61FTNN5U9pS+GnzJdmE5MMXneJHgg2vgXXUrRMiFZD83NAAlqKj5zmvxw
+X-ME-Proxy: <xmx:p4R7aipSDf4z17-2v_QQujiRTgozj3qVn-lcFehVH8G_6NU870enxw>
+ <xmx:p4R7aj7As4KFFmN1kKt2UkvU110FAi5rfEt1f8PSnTFELQd3bzJ8Dw>
+ <xmx:p4R7agoSMwvabLKRsLKfgZA7Ck16TzIAViChX5Klmx6_4BlrXeYDdQ>
+ <xmx:p4R7atgljV55iLm6p3GQ-YXyDexa0-R_k-TWCS30tkJQQG47fyikPQ>
+ <xmx:p4R7ahG9gAA-wBOE_Tm1WtqU1aYZUw4pM1o2XTF7CvZBYVl2hmve1y1D>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 16:22:07 -0400 (EDT)
-Message-ID: <6327945cf92de01961061767b136f33374c2ac1a.camel@alistair23.me>
-Subject: Re: [PATCH 29/56] disas/riscv: Handle aliases of csrrwi during decode
+ 11 Aug 2026 16:23:03 -0400 (EDT)
+Message-ID: <b0d8328b32d9c2723ec11026fdbe21318d092d02.camel@alistair23.me>
+Subject: Re: [PATCH 30/56] disas/riscv: Break pseudo loop for jal and jalr
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 06:22:07 +1000
-In-Reply-To: <20260809223545.730664-30-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 06:23:03 +1000
+In-Reply-To: <20260809223545.730664-31-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-30-richard.henderson@linaro.org>
+ <20260809223545.730664-31-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=103.168.172.157;
@@ -106,73 +106,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gU3VuLCAyMDI2LTA4LTA5IGF0IDE1OjM1IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiBTaWduZWQtb2ZmLWJ5OiBSaWNoYXJkIEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJzb25A
-bGluYXJvLm9yZz4KClJldmlld2VkLWJ5OiBBbGlzdGFpciBGcmFuY2lzIDxhbGlzdGFpci5mcmFu
-Y2lzQHdkYy5jb20+CgpBbGlzdGFpcgoKPiAtLS0KPiDCoGRpc2FzL3Jpc2N2LmggfMKgIDIgLS0K
-PiDCoGRpc2FzL3Jpc2N2LmMgfCAyOCArKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tCj4gwqAy
-IGZpbGVzIGNoYW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMjIgZGVsZXRpb25zKC0pCj4gCj4gZGlm
-ZiAtLWdpdCBhL2Rpc2FzL3Jpc2N2LmggYi9kaXNhcy9yaXNjdi5oCj4gaW5kZXggZDhjNWFjZDk2
-OS4uM2JiY2JmMTBmYiAxMDA2NDQKPiAtLS0gYS9kaXNhcy9yaXNjdi5oCj4gKysrIGIvZGlzYXMv
-cmlzY3YuaAo+IEBAIC04NCw4ICs4NCw2IEBAIHR5cGVkZWYgZW51bSB7Cj4gwqDCoMKgwqAgcnZj
-X2ltbV9lcV96ZXJvLAo+IMKgwqDCoMKgIHJ2Y19pbW1fZXFfbjEsCj4gwqDCoMKgwqAgcnZjX2lt
-bV9lcV9wMSwKPiAtwqDCoMKgIHJ2Y19jc3JfZXFfMHgwMDEsCj4gLcKgwqDCoCBydmNfY3NyX2Vx
-XzB4MDAyLAo+IMKgfSBydmNfY29uc3RyYWludDsKPiDCoAo+IMKgdHlwZWRlZiBlbnVtIHsKPiBk
-aWZmIC0tZ2l0IGEvZGlzYXMvcmlzY3YuYyBiL2Rpc2FzL3Jpc2N2LmMKPiBpbmRleCA5ZWM3OWJh
-ZjRkLi5kM2NiZmI4NmFjIDEwMDY0NAo+IC0tLSBhL2Rpc2FzL3Jpc2N2LmMKPiArKysgYi9kaXNh
-cy9yaXNjdi5jCj4gQEAgLTEwNjMsOCArMTA2Myw2IEBAIHN0YXRpYyBjb25zdCBydmNfY29uc3Ry
-YWludCBydmNjX3JldFtdID0gewo+IHJ2Y19yZF9lcV94MCwgcnZjX3JzMV9lcV9yYSwKPiDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBydmNfZW5kIH07Cj4gwqBzdGF0aWMgY29uc3QgcnZj
-X2NvbnN0cmFpbnQgcnZjY19qcltdID0geyBydmNfcmRfZXFfeDAsCj4gcnZjX2ltbV9lcV96ZXJv
-LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBydmNfZW5kIH07Cj4gLXN0YXRpYyBjb25z
-dCBydmNfY29uc3RyYWludCBydmNjX2Zzcm1pW10gPSB7IHJ2Y19jc3JfZXFfMHgwMDIsCj4gcnZj
-X2VuZCB9Owo+IC1zdGF0aWMgY29uc3QgcnZjX2NvbnN0cmFpbnQgcnZjY19mc2ZsYWdzaVtdID0g
-eyBydmNfY3NyX2VxXzB4MDAxLAo+IHJ2Y19lbmQgfTsKPiDCoAo+IMKgLyogcHNldWRvLWluc3Ry
-dWN0aW9uIG1ldGFkYXRhICovCj4gwqAKPiBAQCAtMTE0NSwxMiArMTE0Myw2IEBAIHN0YXRpYyBj
-b25zdCBydl9jb21wX2RhdGEgcnZjcF9zdWJ3W10gPSB7Cj4gwqDCoMKgwqAgeyBydl9vcF9pbGxl
-Z2FsLCBOVUxMIH0KPiDCoH07Cj4gwqAKPiAtc3RhdGljIGNvbnN0IHJ2X2NvbXBfZGF0YSBydmNw
-X2NzcnJ3aVtdID0gewo+IC3CoMKgwqAgeyBydl9vcF9mc3JtaSwgcnZjY19mc3JtaSB9LAo+IC3C
-oMKgwqAgeyBydl9vcF9mc2ZsYWdzaSwgcnZjY19mc2ZsYWdzaSB9LAo+IC3CoMKgwqAgeyBydl9v
-cF9pbGxlZ2FsLCBOVUxMIH0KPiAtfTsKPiAtCj4gwqBzdGF0aWMgY29uc3QgcnZfY29tcF9kYXRh
-IHJ2Y3BfZnNnbmpfc1tdID0gewo+IMKgwqDCoMKgIHsgcnZfb3BfZm12X3MsIHJ2Y2NfZm12X3Mg
-fSwKPiDCoMKgwqDCoCB7IHJ2X29wX2lsbGVnYWwsIE5VTEwgfQo+IEBAIC0xNzIyLDcgKzE3MTQs
-NyBAQCBzdGF0aWMgY29uc3QgcnZfb3Bjb2RlX2RhdGEgcnZpX29wY29kZV9kYXRhW10gPQo+IHsK
-PiDCoMKgwqDCoCB7ICJjc3JydyIsIHJ2X2NvZGVjX2lfY3NyLCBydl9mbXRfcmRfY3NyX3JzMSB9
-LAo+IMKgwqDCoMKgIHsgImNzcnJzIiwgcnZfY29kZWNfaV9jc3IsIHJ2X2ZtdF9yZF9jc3JfcnMx
-IH0sCj4gwqDCoMKgwqAgeyAiY3NycmMiLCBydl9jb2RlY19pX2NzciwgcnZfZm10X3JkX2Nzcl9y
-czEgfSwKPiAtwqDCoMKgIHsgImNzcnJ3aSIsIHJ2X2NvZGVjX2lfY3NyLCBydl9mbXRfcmRfY3Ny
-X3ppbW0sIHJ2Y3BfY3NycndpIH0sCj4gK8KgwqDCoCB7ICJjc3Jyd2kiLCBydl9jb2RlY19pX2Nz
-ciwgcnZfZm10X3JkX2Nzcl96aW1tIH0sCj4gwqDCoMKgwqAgeyAiY3NycnNpIiwgcnZfY29kZWNf
-aV9jc3IsIHJ2X2ZtdF9yZF9jc3JfemltbSB9LAo+IMKgwqDCoMKgIHsgImNzcnJjaSIsIHJ2X2Nv
-ZGVjX2lfY3NyLCBydl9mbXRfcmRfY3NyX3ppbW0gfSwKPiDCoMKgwqDCoCB7ICJmbHciLCBydl9j
-b2RlY19pLCBydl9mbXRfZnJkX29mZnNldF9yczEgfSwKPiBAQCAtNDQ2OSw3ICs0NDYxLDEzIEBA
-IHN0YXRpYyB2b2lkIGRlY29kZV9pbnN0X29wY29kZShydl9kZWNvZGUgKmRlYywKPiBydl9pc2Eg
-aXNhKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBicmVhazsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlIDU6IG9wID0gcnZf
-b3BfY3NycndpOyBicmVhazsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlIDU6Cj4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzd2l0Y2ggKG9wZXJhbmRfY3NyMTIoaW5zdCkp
-IHsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNhc2UgMTogb3AgPSBydl9vcF9m
-c2ZsYWdzaTsgYnJlYWs7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlIDI6
-IG9wID0gcnZfb3BfZnNybWk7IGJyZWFrOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgZGVmYXVsdDogb3AgPSBydl9vcF9jc3Jyd2k7IGJyZWFrOwo+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgfQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7
-Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNhc2UgNjogb3AgPSBydl9vcF9jc3Jyc2k7IGJy
-ZWFrOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlIDc6IG9wID0gcnZfb3BfY3NycmNp
-OyBicmVhazsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IEBAIC00OTkxLDE2ICs0OTg5
-LDYgQEAgc3RhdGljIGJvb2wgY2hlY2tfY29uc3RyYWludHMocnZfZGVjb2RlICpkZWMsCj4gY29u
-c3QgcnZjX2NvbnN0cmFpbnQgKmMpCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-cmV0dXJuIGZhbHNlOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIGJyZWFrOwo+IC3CoMKgwqDCoMKgwqDCoCBjYXNlIHJ2Y19jc3JfZXFfMHgw
-MDE6Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKCEoaW1tID09IDB4MDAxKSkgewo+IC3C
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIGZhbHNlOwo+IC3CoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIH0KPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPiAtwqDCoMKg
-wqDCoMKgwqAgY2FzZSBydmNfY3NyX2VxXzB4MDAyOgo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGlmICghKGltbSA9PSAweDAwMikpIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IHJldHVybiBmYWxzZTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gLcKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgYnJlYWs7Cj4gwqDCoMKgwqDCoMKgwqDCoCBkZWZhdWx0OiBicmVhazsKPiDC
-oMKgwqDCoMKgwqDCoMKgIH0KPiDCoMKgwqDCoMKgwqDCoMKgIGMrKzsK
+On Sun, 2026-08-09 at 15:35 -0700, Richard Henderson wrote:
+> These were clearly intending to simplify
+> 	jal	ra, foo
+> to
+> 	jal	foo
+> and similarly for jalr, but the pseudo expansion looped
+> back to the original jal/jalr with the full format.
+>=20
+> Add new opcode expansions dropping the implied ra.
+>=20
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+> =C2=A0disas/riscv.c | 16 +++++++++-------
+> =C2=A01 file changed, 9 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index d3cbfb86ac..fe503b6cae 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -326,6 +326,8 @@ typedef enum {
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgez =3D 295,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bltz =3D 296,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgtz =3D 297,
+> +=C2=A0=C2=A0=C2=A0 rv_op_jal_ra =3D 298,
+> +=C2=A0=C2=A0=C2=A0 rv_op_jalr_ra =3D 299,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_j =3D 302,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ret =3D 303,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jr =3D 304,
+> @@ -1029,9 +1031,9 @@ static const char rv_fli_name_const[32][9] =3D
+> =C2=A0
+> =C2=A0/* pseudo-instruction constraints */
+> =C2=A0
+> -static const rvc_constraint rvcc_jal[] =3D { rvc_rd_eq_ra, rvc_end };
+> -static const rvc_constraint rvcc_jalr[] =3D { rvc_rd_eq_ra,
+> rvc_imm_eq_zero,
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_end };
+> +static const rvc_constraint rvcc_jal_ra[] =3D { rvc_rd_eq_ra, rvc_end
+> };
+> +static const rvc_constraint rvcc_jalr_ra[] =3D { rvc_rd_eq_ra,
+> rvc_imm_eq_zero,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_end };
+> =C2=A0static const rvc_constraint rvcc_nop[] =3D { rvc_rd_eq_x0,
+> rvc_rs1_eq_x0,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_imm_eq_zero, rvc_end
+> };
+> =C2=A0static const rvc_constraint rvcc_mv[] =3D { rvc_imm_eq_zero, rvc_en=
+d
+> };
+> @@ -1068,14 +1070,14 @@ static const rvc_constraint rvcc_jr[] =3D {
+> rvc_rd_eq_x0, rvc_imm_eq_zero,
+> =C2=A0
+> =C2=A0static const rv_comp_data rvcp_jal[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_j, rvcc_j },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_jal, rvcc_jal },
+> +=C2=A0=C2=A0=C2=A0 { rv_op_jal_ra, rvcc_jal_ra },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> =C2=A0};
+> =C2=A0
+> =C2=A0static const rv_comp_data rvcp_jalr[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_ret, rvcc_ret },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_jr, rvcc_jr },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_jalr, rvcc_jalr },
+> +=C2=A0=C2=A0=C2=A0 { rv_op_jalr_ra, rvcc_jalr_ra },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> =C2=A0};
+> =C2=A0
+> @@ -1884,8 +1886,8 @@ static const rv_opcode_data rvi_opcode_data[] =3D
+> {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgez", rv_codec_sb, rv_fmt_rs1_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bltz", rv_codec_sb, rv_fmt_rs1_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgtz", rv_codec_sb, rv_fmt_rs2_offset },
+> -=C2=A0=C2=A0=C2=A0 { },
+> -=C2=A0=C2=A0=C2=A0 { },
+> +=C2=A0=C2=A0=C2=A0 { "jal", rv_codec_none, rv_fmt_offset }, /* rv_op_jal=
+_ra */
+> +=C2=A0=C2=A0=C2=A0 { "jalr", rv_codec_none, rv_fmt_rs1 }, /* rv_op_jalr_=
+ra */
+> =C2=A0=C2=A0=C2=A0=C2=A0 { },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "j", rv_codec_uj, rv_fmt_offset },
 
