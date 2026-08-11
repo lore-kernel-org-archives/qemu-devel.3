@@ -4,123 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F06C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 11:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4131C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 11:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtkHS-0005ia-Dx; Tue, 11 Aug 2026 07:04:30 -0400
+	id 1wtkO5-000795-DN; Tue, 11 Aug 2026 07:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wtkHH-0005gz-0e
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 07:04:16 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wtkO2-00078i-QZ
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 07:11:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wtkHF-0001Gi-GC
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 07:04:14 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wtkO0-0002Tg-7F
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 07:11:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786446250;
+ s=mimecast20190719; t=1786446671;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x+FkPEdueLwHWFyrKrhKgCEWI0VHQD9Y7/FLtdLDcRU=;
- b=eEbxYO6IhE8UeYYsoEK4SKaL1Fc0c2GY4Zog/cwqeeyu5s6TTLYa4tREut9FRNUASVdUD3
- gVuStdHFr5trG7AGmq3if19H22/BIFsWnNgYT7NrqOj5Le0d1yS87k1dGXsayU9Ga15bqg
- NrUcjwLbAf9d2esl8GizqFhw3wrjIsE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5lC/UHm6AIYmxUrQwEn7PnFT2Xqx7q7cgySb7hxJIac=;
+ b=HnsYXQ2tDeitsQhYtJq3aeO/VkgeYZ2IABtSRxMElpGhdzH0+2tf7ogSVCNxXXAsOlXXYK
+ /ZP6laNJMv73girBjXCW1w0t5yuMRUYloKDVa8KuNFrplIHKDkcYu6geJhaG4NTJ4oA5z0
+ 7M+3yGqA6HEAUT4ZXAgrkOUJjhPwNu0=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-TUeNG3vFOVuJyMffmuGgTQ-1; Tue, 11 Aug 2026 07:04:09 -0400
-X-MC-Unique: TUeNG3vFOVuJyMffmuGgTQ-1
-X-Mimecast-MFC-AGG-ID: TUeNG3vFOVuJyMffmuGgTQ_1786446248
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48000d75326so1826454f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 04:04:08 -0700 (PDT)
+ us-mta-537-h1hmYXnTPTWbJsV8tPLK4w-1; Tue, 11 Aug 2026 07:11:10 -0400
+X-MC-Unique: h1hmYXnTPTWbJsV8tPLK4w-1
+X-Mimecast-MFC-AGG-ID: h1hmYXnTPTWbJsV8tPLK4w_1786446669
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cbedc1899f7so132246a12.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 04:11:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786446669; cv=none;
+ d=google.com; s=arc-20260327;
+ b=mw1qJs1h7Lyfs2w4AyF9l9q4wVN82n0iiEFpBK0CEuP8fgpQ7X3L0xbQeEqbV3mWKc
+ H54mInJUl15tBF3HT88rShsZqv8XQX1CjvHf+D0eHuDIk8XpBlWww4k9cdq7M92dPKy9
+ 4jkUWzs0S5eyJWltJ5dyYrPdmkok43GZi5RXje7U53PDJrg3Ek7j+7zcAsgegTe91pjr
+ eDvz0dv6LroEO5yc3FKa0zKAir1VVlfo96aPg7dIOdXx8BZI+wHXI7V6bdjA/RI9hfOV
+ p1oUuFY8eIdAx1PS67txn43sImSmfisIkfp2f5iOUwQCMetFAS2J10+yreOf72tQ8pfp
+ 3saw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5lC/UHm6AIYmxUrQwEn7PnFT2Xqx7q7cgySb7hxJIac=;
+ fh=cm37+rwiGUyfdWg+5XYmpoBPAEY1qvegLf2w8agcdbs=;
+ b=MEDUrTrvX37a+UiSfKvvN8PyjuVOByIm9P0aUkulrURzk3r1f0+38VuNAC9KYsFyDD
+ v2BDWcRvx+GYPHmpF1NYDLmeeyphKj9LEt/R96Zv3dtYtLqIMIvk9X/WQTF602T+At6z
+ zBzJyrX5rC4wHI4ZTGlNV/kDTHEVZuVw3/lyfTS5Tqd3QwROFqohGNZX4OWDm2BmzwmR
+ xaCJLNcBWQ/xZPqnKN3/ZSB1Mr7klIk+fWMfAufdNfdiusEFEeoLB6nxjownN8QJtX2Z
+ OK7paO0OVu70Wlv07spypmvm3FcxIF9oUjr9T721t0MfvvDlUtJ3U1GPPKEWag9YgS6S
+ Lmug==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786446248; x=1787051048; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=x+FkPEdueLwHWFyrKrhKgCEWI0VHQD9Y7/FLtdLDcRU=;
- b=YDDWPXpBdazW2gnO2PVYYyznwqEidP4LNeuSztnqTceXkKXz0XksU8RVdxfCMeuXNU
- v0apzPYq6kVQn/QnMGBDfaLL6dzCjA5NSFjaIfLypR7WgMfEPwPMxoK9NFTQDULGLeEr
- mQSDtuYJOdQtASCtZVJXnvHmA86JvLrivQOzlojM2FKfJlyYDII1eEkc8n9jEOsD1Poe
- Nxh6Aje4kCSCIxr06RjvTk2OxxJgewpMTZu4ElU2sMuJv0knZzEsQpOpP/7layQ5J7bt
- tfmmhomIm4zt3A575aJayNn9/MxRCXiWY/xHFRtvViJkZWudLzs557uRhOoGNWzyY/wu
- sezg==
+ d=redhat.com; s=google; t=1786446669; x=1787051469; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5lC/UHm6AIYmxUrQwEn7PnFT2Xqx7q7cgySb7hxJIac=;
+ b=S/KFJvpiJplie8cDik5/D4j2D8lCrOtWWUSFhdh+9L00UbFoIhCdH73DGUb4fOGp1e
+ vO+Hnv6DYXo02b+YWM6Q60irtRYL4J+NW3AGlhkPpo++NNYn/YOS6V0fffX/dwz8Z1Zw
+ uWo5aeUNm8oEGhNSTEmdCOOVnCrbnUeTWQAmvYZ5fCyqj/ye41xdAwAc1xN8mb8VDBNX
+ BxRtqVsmpz+ZOh1ZGOZLykhISrHurKo1mw2QJH9RI1k8HjFK5hRlm6d4dWgeUVBga1FD
+ ENNDUfbKhdJ1n6U0U52mfp4IBR85GpIs5xAk4RdQE9bTfYn3tcfgSpGGEnAbWCJzxRIR
+ IbXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786446248; x=1787051048;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=x+FkPEdueLwHWFyrKrhKgCEWI0VHQD9Y7/FLtdLDcRU=;
- b=Z/xiXAu9p0yzugRHt17IvIQ5vOdTuEW3s1MusmiUuDmwl+efFdFHJcOIVSl6DvGv1t
- u3x9PGusWPGfdDldthqX+EsMBEt+NQk1OcwsbUzrtS1ROh3IvuWsZFt9c3XR9lZPcLe/
- y0EGeGI5gUyZwXEQ2ht6PcZBtVH1QrdhxqeDft79VJTiJuwLUUz74SNsTn7kOHCRFJM1
- af8oJEpYqbnJrVP55SI3515kEubh1evPkq2ztB0CuQImHyVvS0UinsaKVaAr1Jwt7SBu
- EwPpo/V7VrkGkUJZJiCOFbpVA7oWX/s31jmamOZ3IQMuCMZR2Wv+lqUlFtO59tldfZUP
- aA7Q==
-X-Gm-Message-State: AOJu0YxQHLA/WiCYZefvhP/lo02fRNmqa3YP3I84YyWHUvCyJmNe6Ftc
- 9q3WL/qjdfF2NMgConafVAnIA0B3qiwIT9o9Nk3+x5+jsJQi9bEbS3TnL8v0eJh935hxH02lT4c
- N5VwTnFAqRx3ads34IDau5A8W3LIGSUGD3rSZFBWzlyy5D9kWzMGejBjz
-X-Gm-Gg: AR+sD10WtvKI3ZZuVc1FXnlaWofjFJlF84H1n3tyjwyL76VUGFPGYPlOX5gXuTTr0/y
- ABWSUxxy2325cZ3HuYSfruNALN7uWptYhbzLWC4vGxga8OoyNKkpKeiE+uP+xNQBBF5VWkjeLAz
- mtqzPBC1W2y5o+3FdLVO3USn5YbzEzoFo7BpUt4hBuKlr+mqVFUzZ6XIGfAKbraIX1suCJhhkXG
- uzDoKaE6w2EYsU3qtCg4O3VDz4PeTj/0wCnH2ZQvEHMl594R5ZqsUKTvv9FZyHBRVlB6Z+BouGo
- C0w7YrQgFeG7exdiodMWWwcLPLVaePyzBbOmrgSC8OjWIvY4DvbJovH10WWR1GFa9VseN055TOp
- nMIYm85MWaul+ZLbS8sHlrFXsQ5x4AirdUoDoZwEb7UN9xJe97WLodjVddpbLCQP+DYeqfah7yL
- XO34kSYazV08zWiuxKQNKvrf9tQdtncA==
-X-Received: by 2002:a05:6000:18ab:b0:481:45ed:cb50 with SMTP id
- ffacd0b85a97d-4814adc2590mr4032324f8f.16.1786446247859; 
- Tue, 11 Aug 2026 04:04:07 -0700 (PDT)
-X-Received: by 2002:a05:6000:18ab:b0:481:45ed:cb50 with SMTP id
- ffacd0b85a97d-4814adc2590mr4032229f8f.16.1786446247445; 
- Tue, 11 Aug 2026 04:04:07 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d706:f1cb:272a:2c7d:bb01:94e8?
- (p200300cfd706f1cb272a2c7dbb0194e8.dip0.t-ipconnect.de.
- [2003:cf:d706:f1cb:272a:2c7d:bb01:94e8])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4814a5ac6cfsm3224864f8f.4.2026.08.11.04.04.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Aug 2026 04:04:06 -0700 (PDT)
-Message-ID: <1355454f-0dfb-463a-86d8-a09ef6204dea@redhat.com>
-Date: Tue, 11 Aug 2026 13:04:04 +0200
+ d=1e100.net; s=20251104; t=1786446669; x=1787051469;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=5lC/UHm6AIYmxUrQwEn7PnFT2Xqx7q7cgySb7hxJIac=;
+ b=WpIrdHfRO63Ol1VGMmyh0ktM8p4DeeqcA1m0UgKvFghmbmp8gjtvUEi2YmkEqLJF9o
+ hZTqp4o3iRDpJIY60W5K0MIZld7xbJRgmd1QyYh2eXC9/rCRnW0+RsC4rI5rasKNf9PC
+ nOSrDkAJ1UHz3sEm5DfTFJQJjRt8ftejqq6Bjctql1TEVlVflAh8PDH8SNVH04Bd0dwO
+ kfDp1DAFj/hSPwp3db1ivKZgwwEFpZAdlxRQjB9+3Lp2XFfKzF0j9bdNkPTEjgzcA0V8
+ 0md7okbCUaB3rLn0ufCfR2Z098f9/zrH5vhgEH3fNrEAZ0AYJ2DF0EBPvY/LgE3EvrXD
+ 4eig==
+X-Gm-Message-State: AOJu0YyybOtm5FComRVNHBGLRl0DtEurD3pwCeWg05YKEK2s3GcXwoEt
+ AxeoiyH8xvi1BMjh+kRira00Wz/2kuGSiKpe0nc8Fct0SxX9XL22s4lH5yJXMsb+WGobrXDhQXe
+ agC/LqcR47erjptMau+CFHebGPSjIMGu9zGtF3pA7kl0XNACsXwm/xG35WbpFz5JwtwM7CxXuUO
+ d8T6YE1YjNpS63Z+8bZkFNTiQCikdCl2k=
+X-Gm-Gg: AR+sD10jR4AVhUdNNCpMmrwqbt5ouPWMt5WJEt7CSnymt8nWCWg17Dok1Ybk/tFexFe
+ pwrAJtiZpqy6VB4f4tPNT5JNiHuU5F+3wPr2Uf6KelNWPCFBFfDUynXcvD1Zc54xs+Qmx5m8UHg
+ PdOUB6UPS+cjQWNMtCDRGSSZ55bqH4CyTzhwcQYx+pt45BM29j+ErXrEq+JyaNxD/Y3kF9mXl38
+ u0G+6oT6E+396y33LFdC+iBv/qq7CXFxy9kjdsU3oaaYGPQnQQOP4ZBoDN9hxlKp/iAUX3LB7NF
+ GA==
+X-Received: by 2002:a05:6a21:117:b0:3bb:2883:a723 with SMTP id
+ adf61e73a8af0-3cc2bc77f3emr3679256637.35.1786446668634; 
+ Tue, 11 Aug 2026 04:11:08 -0700 (PDT)
+X-Received: by 2002:a05:6a21:117:b0:3bb:2883:a723 with SMTP id
+ adf61e73a8af0-3cc2bc77f3emr3679185637.35.1786446668009; Tue, 11 Aug 2026
+ 04:11:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 10/15] hw/virtio/vhost-shadow-virtqueue: range
- boundary in translation
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Alyssa Ross <hi@alyssa.is>,
- Demi Marie Obenour <demiobenour@gmail.com>
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-10-6b97c439eb28@gmail.com>
- <ba6158dd-7b7b-4457-9256-497ab60a27d3@redhat.com>
- <CA+spn3qP1xahLRTNutmOLvDEXJXHh9W1tMeGeKiiDiz-ntyknw@mail.gmail.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <CA+spn3qP1xahLRTNutmOLvDEXJXHh9W1tMeGeKiiDiz-ntyknw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
+ <20260811105425.7429-5-philmd@oss.qualcomm.com>
+In-Reply-To: <20260811105425.7429-5-philmd@oss.qualcomm.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 11 Aug 2026 15:10:55 +0400
+X-Gm-Features: AUfX_mxfKCYnCVBX4epPQKbmQurAgg44jZqaVGIKcFmlaBn632TgIHJvXx9CHK4
+Message-ID: <CAMxuvay+TjVoNb0PgmnVj1TmTMHAj7+j7Xm+sTkN58XVUgZ6Hw@mail.gmail.com>
+Subject: Re: [PATCH v3 4/7] hw/nmi: Remove @cpu_index argument from
+ nmi_trigger()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Thomas Huth <thuth@redhat.com>,
+ qemu-ppc@nongnu.org, 
+ Corey Minyard <minyard@acm.org>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -128,7 +129,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,34 +145,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.08.26 07:52, Connor Kite wrote:
-> On Mon, Aug 3, 2026 at 5:56 AM Hanna Czenczek <hreitz@redhat.com> wrote:
->>
->> It’s not immediately obvious what is ensuring that `iov_len` can never
->> be 0. Sure, it would be wrong and makes no sense, but that is why I
->> think an `assert(iovec[i].iov_len > 0)` would be appropriate.
->>
->> (Looks like `virtqueue_map_desc()` is what rejects zero length, but that
->> is not really local to this code path, so not immediately obvious.)
->>
->> Hanna
->>
->  From the QEMU Coding Style guidelines on error-handling it looks like
-> errors that
-> could be initiated by a malfunctioning guest should not cause Qemu to
-> exit. Would it be
-> more appropriate to return false when zero-length is detected?  That follows
-> the existing error path returning up to vhost_handle_guest_kick, which
-> renders the svq
-> unresponsive to future kicks.
+Hi
 
-Sure, but it’s necessary only *if* a malfunctioning guest could cause 
-this. As I said, it looks like `virtqueue_map_desc()` already rejects 
-zero-length descriptors, so an assert should be sufficient.
+On Tue, Aug 11, 2026 at 2:55=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> nmi_monitor_handle() is not related to the monitor, rename
+> it as nmi_trigger().
+>
+> Return a boolean value indicating success / failure as
+> recommended by the Error API since commit e3fe3988d7
+> ("error: Document Error API usage rules").
+>
+> The 'cpu_index' argument is not used, remove it.
+>
+> Document nmi_trigger() as suggested by Peter Maydell in
+> https://lore.kernel.org/qemu-devel/CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9=
+RYeo8fKqz7gcw@mail.gmail.com/.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> ---
+>  include/hw/core/nmi.h  | 25 ++++++++++++++++++++++++-
+>  hw/core/nmi.c          |  9 ++++-----
+>  hw/ipmi/ipmi.c         |  3 +--
+>  hw/watchdog/watchdog.c |  2 +-
+>  system/cpus.c          |  2 +-
+>  5 files changed, 31 insertions(+), 10 deletions(-)
+>
+> diff --git a/include/hw/core/nmi.h b/include/hw/core/nmi.h
+> index 4c4ce79071d..e77c382452a 100644
+> --- a/include/hw/core/nmi.h
+> +++ b/include/hw/core/nmi.h
+> @@ -46,6 +46,29 @@ struct NMIClass {
+>      void (*nmi_monitor_handler)(NMIState *ns, Error **errp);
+>  };
+>
+> -void nmi_monitor_handle(int cpu_index, Error **errp);
+> +/**
+> + * nmi_trigger: Trigger an NMI, in a machine-specific way
+> + * @errp: pointer to error object
+> + *
+> + * This function triggers an NMI, in a machine-specific way. The
+> + * intention is that this should typically trigger a guest kernel
+> + * dump or reboot, and might happen as a result of user request
+> + * from the monitor, watchdog timeouts, and similar events.
+> + * (For example on the x86 PC it triggers an NMI on all CPUs,
+> + * and on s390 it triggers the RESTART interrupt on the first CPU.)
+> + *
+> + * The NMI is triggered by looking for QOM objects which
+> + * implement the TYPE_NMI interface, and calling their nmi_handler
+> + * method. Usually it is the machine model class that implements
+> + * this interface.
+> + *
+> + * Not all machines implement NMI handling; this function
+> + * will return an error if used on a machine which does not
+> + * implement NMIs.
+> + *
+> + * On success, return %true.
+> + * On failure, store an error through @errp and return %false.
+> + */
+> +bool nmi_trigger(Error **errp);
+>
+>  #endif /* NMI_H */
+> diff --git a/hw/core/nmi.c b/hw/core/nmi.c
+> index ff6454437c1..662f2051123 100644
+> --- a/hw/core/nmi.c
+> +++ b/hw/core/nmi.c
+> @@ -22,11 +22,8 @@
+>  #include "qemu/osdep.h"
+>  #include "hw/core/nmi.h"
+>  #include "qapi/error.h"
+> -#include "qemu/module.h"
+> -#include "monitor/monitor.h"
+>
+>  struct do_nmi_s {
+> -    int cpu_index;
+>      Error *err;
+>      bool handled;
+>  };
+> @@ -54,19 +51,21 @@ static int nmi_children(Object *o, struct do_nmi_s *n=
+s)
+>      return object_child_foreach_recursive(o, do_nmi, ns);
+>  }
+>
+> -void nmi_monitor_handle(int cpu_index, Error **errp)
+> +bool nmi_trigger(Error **errp)
+>  {
+>      struct do_nmi_s ns =3D {
+> -        .cpu_index =3D cpu_index,
+>          .err =3D NULL,
+>          .handled =3D false
+>      };
+>
+>      if (nmi_children(object_get_root(), &ns)) {
+>          error_propagate(errp, ns.err);
+> +        return false;
+>      } else if (!ns.handled) {
+>          error_setg(errp, "machine does not provide NMIs");
+> +        return false;
+>      }
+> +    return true;
+>  }
+>
+>  static const TypeInfo nmi_info =3D {
+> diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
+> index 74818ff3cea..444af726d75 100644
+> --- a/hw/ipmi/ipmi.c
+> +++ b/hw/ipmi/ipmi.c
+> @@ -59,8 +59,7 @@ static int ipmi_do_hw_op(IPMIInterface *s, enum ipmi_op=
+ op, int checkonly)
+>          if (checkonly) {
+>              return 0;
+>          }
+> -        /* We don't care what CPU we use. */
+> -        nmi_monitor_handle(0, NULL);
+> +        nmi_trigger(NULL);
+>          return 0;
+>
+>      case IPMI_SHUTDOWN_VIA_ACPI_OVERTEMP:
+> diff --git a/hw/watchdog/watchdog.c b/hw/watchdog/watchdog.c
+> index 0842fe373ae..026768e9fb2 100644
+> --- a/hw/watchdog/watchdog.c
+> +++ b/hw/watchdog/watchdog.c
+> @@ -81,7 +81,7 @@ void watchdog_perform_action(void)
+>
+>      case WATCHDOG_ACTION_INJECT_NMI:
+>          qapi_event_send_watchdog(WATCHDOG_ACTION_INJECT_NMI);
+> -        nmi_monitor_handle(0, NULL);
+> +        nmi_trigger(NULL);
+>          break;
+>
+>      default:
+> diff --git a/system/cpus.c b/system/cpus.c
+> index 97e5a5edee2..5c0a192c01e 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -926,6 +926,6 @@ exit:
+>
+>  void qmp_inject_nmi(Error **errp)
+>  {
+> -    nmi_monitor_handle(monitor_get_cpu_index(monitor_cur()), errp);
+> +    nmi_trigger(errp);
+>  }
 
-Then again, if you can handle it benignly either way (without an 
-assert), that’s always a good option.
+This officially drops the current CPU for HMP command too. Just
+acknowledge it in the commit message, and remove the "*cpu*"
+documentation in hmp-commands.hx?
 
-Hanna
+Also, can we use one word for "deliver", "trigger", "inject"? or is
+there any distinction I am missing?
 
 
