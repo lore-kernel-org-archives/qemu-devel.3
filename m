@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89095C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E04EC5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnar-00012c-2A; Tue, 11 Aug 2026 10:36:41 -0400
+	id 1wtnk1-0002LK-L0; Tue, 11 Aug 2026 10:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaV-0000K0-VR
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:21 -0400
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtnjz-0002Kt-4n
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:46:07 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaT-0001vs-Mv
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:19 -0400
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-8f032b47e3cso22080666d6.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:36:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wtnjx-0003ZM-Dh
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:46:06 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-81e9f7491ffso43502687b3.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:46:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786459564; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Kyf/7yUrZLhapTZ7Fet+wCv/ZuVENpEy1NszdzxhUeK4o+17QXViOh3W8kM0NJi3O0
+ DIr3pXIRAFJQ7Pq2kRr3qe3pM0GWctZbWC/PpmhCBV5q6mEO/Id71SuEC61495t6lRf9
+ Xk44ZeixxSXZVpQd1NXqjleu9pmWGLCT95E2vEfwXFtky2fVEgvvnpLd1V5Jl9+FWskz
+ feIRy6bMNaqvBmk+h8g6UNvq0EySI/i7rKdpmZIPgeVrylqc74Gs4dN8fdn8kT1cJ0Tx
+ fquoYHVXbXqoBpchfv1lmnfP6VE+oQE7H8smfQTzU7MaKoPponDRUf0ke6s3xRbM4fX0
+ /u1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=U363yjl95zUvpvGaT8oqi424jEa6U9SckoONTniyMnc=;
+ fh=miNGedvR6G4phaqfPNhZVC1mw8LnDJgpl/iKh8V4IcA=;
+ b=Hhu4pNrDNOuwEjvPZpnu0WwGe+FiqMS9lKnSlq3cCpSuzDwVGj1C6undIryaN291xK
+ VkvSnEg19UzFwSQ+H0y3uRhDWG7LlFKNaWpkwL2Xf4rROPr0eXDaBvfFZpiHmyQYBLEj
+ RJjThqleRV3wLmvsX0lzzztbNDuWeSRz9DWT84szan1k8ZhmFrzukuXdretBSJTe4TdV
+ hj75CVnXL7aEwIrOs4DonoSpnKExKdRgSlAvK56KXh7xaYhMoiCRwwxRAXFvQYXLX/5h
+ YMlj1izBmSRhqfVA6HZ/xJza27aev+uaJNVPpCOCZYjvgrjpPWq3x1rYaq1db5XLaNLm
+ Vquw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786458977; x=1787063777; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0jXwXMcIM9domi9Vq64aJDlJVcT9DGz1pqG5naol8gc=;
- b=RjoN6LqXA7Y0ZrXVmLrygATIQFWcCaY/KLJtyZyZID1Lw1+jxKPs58BBZdtOIBXiFR
- X2EL4AJ9OS/ZdRxg8f+sh88wsEsk+dQ0fqh6cneMxSGTf6EAYILox6dDV5wUJoWl8X86
- /Bx3Ugp9WbWDGOmeQOg93o7RtcfnfeJAZfBtntztEaHNdWwGrnB7RZiEMCNCQ+ehEBQy
- MLF3mBYxKJZ4O7D/0fIB0gkQCdrzADTQz8i4zTFxq/btfxOtFMNFLTp5pFtI4Z3GZ08R
- K5DfPKDYqK9rmrDjM/5dc+L1AOE8wrSCcJTlaERD/Yer8scSp5moD4nSqEe1NiBU59W/
- 0CWw==
+ d=linaro.org; s=google; t=1786459564; x=1787064364; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=U363yjl95zUvpvGaT8oqi424jEa6U9SckoONTniyMnc=;
+ b=IalHogeE9RsTE99MmpCGzniC3uhG5K4vkZzPyXQLhn5FQ0RAPoeB1T5eEg7QM6KbXK
+ +7pHMTVPs5llDkyaVqTXqnm+Zvbi3zH3xbsCIgfDnxYwoRRUJmTX+L2svNwLOylgLoKW
+ slojcfeYFxOH0l8/a2F6wC4EnO5HqYTo0Zi4PfSsJRyn+H+xI3YwywDlSnsvIjkqPqZr
+ tuG00+WFwFMaTBAVwCSe+O4+q/FvU6v8skuddjdZzcIK4ptApXMtmuN9355a4Un0BK4F
+ qhclbd3a0Nziy1mh0NsjDVGM999utV0DEljy5LJH38DYpPHSo7i/A/Tz9Ss9b78MrsFj
+ l9Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786458977; x=1787063777;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0jXwXMcIM9domi9Vq64aJDlJVcT9DGz1pqG5naol8gc=;
- b=WZQx4y8dPq+gwDvKQ8SYqxgVXm4tQZM9D0WzNJcMxyZO9AYnJvD7/eSTrcc8DqFRh1
- V1n43jMAd3qZ2qVdmIwjSwnpE1zb6FZ6EdOoZUHPOtfpsYGi6dJwMoO9eCKmiRclhr/M
- y3WevEOcfqOohuEdapYDQUHz0k0bK8AjldGVK1T16Rpss5gY3zaPe58Bb/QRn48IVvIL
- b+JdectXiT/GpZ9ccSMp6L/4DVkGU1nDjqJDXo1dqDZknecq5A6xjwCV86OYrtcEkC5n
- s0pX3tmXsn0JMigybMalZcsH1CSwIWbD2+/PboLT/LleKcHWUoBO6y4wdCbgwXBVp6yc
- KOEQ==
-X-Gm-Message-State: AOJu0YzDtAd1FeAr4ANYyh0q9ZhP9aXr4zbE2RzfVubk8fGG0t8iZbUe
- zaRF3suq9efOpKZAcJTvnihsm5CYpv9RvQWba6lsMYpynvK7L3T5IJbwGF4IXw==
-X-Gm-Gg: AR+sD10TYmlwwcL9/nefKueIPbPXN+QSOPqhX+SSWpWsvEiy/zUjBG7jp3D1DBg+KR5
- VZG7krtMNoOdCh2NznTYlxm6AioVQo0U6pbPEuQFpqmGqA+144mhcQvflVVaPtPzSkm8aVBgzFV
- 7dZBLhIAe3zeaOc7u8NZ2TOZCjeEdJreGaz/L4MHxTcrdO5IWPTeSfdk8C74yIVZ/n6k6ur/DrW
- Jo0KrRKcp78p+6Z5PfYrrko3qh2U13KaeI3h0mp13TEt4Ge1xgXLOcZEBsbn1JkyzYewJ0YxJBg
- L7WhVgg/rdma5J9a2gZSN6hwnGTWJBFIUla5jLdd++MMpD+PsgxM+OEnDAddgfkExX1ivB09kP/
- GzM4adlahFfvOBgWFJPBmLqlIsyDANEb5Hk38refoA4N1dLWcEGjRZZ2cVrxpk4b9xuNUJD+R96
- OTVV27omxzhReqQTY5MX56oli+WWQHVRq32hfX76V3hbk/shzAiMr6NYuFr7zEH2YVdJ1xTIJaM
- hOwMirGBC1UuzCT8SM=
-X-Received: by 2002:a05:6214:404:b0:8ef:cfa:2a36 with SMTP id
- 6a1803df08f44-90a6681f28amr34221656d6.9.1786458976516; 
- Tue, 11 Aug 2026 07:36:16 -0700 (PDT)
-Received: from localhost.localdomain ([198.16.145.87])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.36.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 07:36:15 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v2 16/19] hw/net/bcm2838_genet: fix bogus RX checksum reporting
-Date: Tue, 11 Aug 2026 10:35:53 -0400
-Message-ID: <20260811143557.7862-17-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20260811143557.7862-1-marcelomanzo@gmail.com>
-References: <20260811143557.7862-1-marcelomanzo@gmail.com>
+ d=1e100.net; s=20251104; t=1786459564; x=1787064364;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=U363yjl95zUvpvGaT8oqi424jEa6U9SckoONTniyMnc=;
+ b=n/jNZINq/Z6CwYJpZ4P0GCexfALJTIVuwQlqhGslqyWE1FTf9kZZtgsUydqdVmpHN7
+ ULNJZIJfCugpdEmfq2bKem0oXeSYkukE2EZNVXnBaLfwOk/Yni04/yh0G5E1CYDLtdw+
+ 3//HsMlmmeiZ5fbm0p5dOlw86UgqshIOUh29+6LlG/p96NDDbrL6qJHS8D74BAVv3TZd
+ fNvFVu5dMUCslqNEYUJ8Xq3YOsbR2CfspiXq+xoKuCZ/p/AuJULCOs2124gGWiHrJY5g
+ nYY4m7sEwjVn7VR5fWhY0eWHKt0een72Xb16iQbWETodTNy9wE6n3s3qvOIv/cqzP6ab
+ KYLw==
+X-Gm-Message-State: AOJu0YzZ+pT/JTvX9ZeXD+kHT127M7HVybHOaWtkM41tWgskK+j7J771
+ ePl9uS9kUSLvyVGn92Bn95CofhlHHkelDPsou8E6XrHjxlz2WKOogg5rZ4eX4wXvRMXhJiP3qXn
+ cOyLpEHwL2OoErg7bXQCiOQR69TruBFLITbFts2HJjHH6REumZUsUM5c=
+X-Gm-Gg: AR+sD13VYtxInyEBXUyijNTURwIIvTdymnCSEoUkcGSqN1WkKYBNuHnm2mIt5n6rDX5
+ JUdEUlLL0GnGb3vpTKhHSgc6J5B5HMy9W0Fc0hoorE1yM+gWJ8WZCI/u7Ew0s31vL/zFpX+pqZC
+ Ae6nBPu42+rPdwNn4jg2TenVbojzCZDd5Ac5Ux0KZwNUNbbp631ar0BRI1wCZ8/Ake3ZjpJEYSg
+ 9/XFxfj0Xd4dctvi8yAK6fqjaXuPw6rWtLvfR07aC1yAtIlYFH+U0EdDoUkEeZanRyOcb1z8AAW
+ DXdgLdQfoE3vFnhQxZMugdIF3oz6eMtEV/KqCWaYAHJTDCFd3YeCEo1Y+7+pCp3RV+EGNm4p5Ls
+ fwtJSo3i9Hedjccy+/iolouqbsKzyTaUhnFsstdws
+X-Received: by 2002:a05:690c:399:b0:81f:27f8:2de4 with SMTP id
+ 00721157ae682-8303d4d3d23mr5852507b3.8.1786459563424; Tue, 11 Aug 2026
+ 07:46:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf2e.google.com
+References: <20260803193635.4153664-1-pmazzini@gmail.com>
+In-Reply-To: <20260803193635.4153664-1-pmazzini@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Aug 2026 15:45:52 +0100
+X-Gm-Features: AUfX_mzJDWbp3lU0a-Ayto9xlD3vtqLfKr1KfJ51dbm9AekNeJcS2ifw7Lz7GBg
+Message-ID: <CAFEAcA8H0f6FjkQJJM=qp0CoXJCX1Ow81ac6v8V7xO-jpQzfEw@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/imx6_ccm: add the i.MX6SLL variant
+To: Pablo Mazzini <pmazzini@gmail.com>
+Cc: qemu-devel@nongnu.org, jcd@tribudubois.net, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,84 +114,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-bcm2838_genet_rdma() reported the received frame's IPv4 header
-checksum (in host byte order) as the descriptor's rx_csum value.
-The guest driver's CHECKSUM_COMPLETE path expects a running checksum
-over the L4 payload there, not the L3 header checksum, so the
-mismatch made the guest reject otherwise-valid inbound packets
-("hw csum failure" in dmesg, from bcmgenet_rx_poll()), breaking
-DHCP and general connectivity intermittently.
+On Mon, 3 Aug 2026 at 20:36, Pablo Mazzini <pmazzini@gmail.com> wrote:
+>
+> The i.MX6SLL shares the i.MX6Q clock tree, but reports its own chip id
+> in the ANATOP DIGPROG register and implements the PMU and XTALOSC24M
+> registers that the i.MX6Q does not.
+>
+> Add TYPE_IMX6SLL_CCM as a subtype of TYPE_IMX6_CCM.  QOM runs the
+> parent's instance_init first, so the subtype only has to override
+> DIGPROG and widen the decoded ANALOG window to cover the extra
+> registers; the i.MX6Q window is unchanged.
 
-Report no hardware-computed checksum instead (rx_csum = 0), which
-makes the guest fall back to verifying checksums in software; this
-succeeds since the packet data itself was never corrupted. Drop the
-eth_get_protocols() call and its output variables along with it,
-since isip4/ip4hdr_info were only ever used to compute the checksum
-value being removed here.
+There's no user of this new type. We prefer patches adding new
+devices to come in a patchset that includes support for whatever
+their user is.
 
-Confirmed with the guest booted repeatedly: "hw csum failure" no
-longer appears in dmesg, and ping to the gateway succeeds with 0%
-loss.
+>
+> DIGPROG is a hardwired chip identifier rather than a reset value, so
+> move its default out of imx6_ccm_reset() and into imx6_ccm_init().
+>
+> The analog register array grows to cover the new registers.
+>
+> Signed-off-by: Pablo Mazzini <pmazzini@gmail.com>
+> ---
+>  hw/misc/imx6_ccm.c         | 39 ++++++++++++++++++++++++++++++++++++--
+>  include/hw/misc/imx6_ccm.h | 12 +++++++++++-
+>  2 files changed, 48 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/misc/imx6_ccm.c b/hw/misc/imx6_ccm.c
+> index 45fdd0d5a8..6f48de5954 100644
+> --- a/hw/misc/imx6_ccm.c
+> +++ b/hw/misc/imx6_ccm.c
+> @@ -223,6 +223,14 @@ static const char *imx6_analog_reg_name(uint32_t reg)
+>          return "PMU_MISC1_TOG";
+>      case USB_ANALOG_DIGPROG:
+>          return "USB_ANALOG_DIGPROG";
+> +    case PMU_LOW_PWR_CTRL:
+> +        return "PMU_LOW_PWR_CTRL";
+> +    case XTALOSC24M_OSC_CONFIG0:
+> +        return "XTALOSC24M_OSC_CONFIG0";
+> +    case XTALOSC24M_OSC_CONFIG1:
+> +        return "XTALOSC24M_OSC_CONFIG1";
+> +    case XTALOSC24M_OSC_CONFIG2:
+> +        return "XTALOSC24M_OSC_CONFIG2";
+>      default:
+>          snprintf(unknown, sizeof(unknown), "%u ?", reg);
+>          return unknown;
+> @@ -237,7 +245,7 @@ static const VMStateDescription vmstate_imx6_ccm = {
+>      .minimum_version_id = 1,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINT32_ARRAY(ccm, IMX6CCMState, CCM_MAX),
+> -        VMSTATE_UINT32_ARRAY(analog, IMX6CCMState, CCM_ANALOG_MAX),
+> +        VMSTATE_UINT32_ARRAY(analog, IMX6CCMState, CCM_ANALOG_REGS),
+>          VMSTATE_END_OF_LIST()
+>      },
+>  };
 
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
----
- hw/net/bcm2838_genet.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+Adding new elements to a vmstate is a migration bump, and at
+minimum needs the version ID numbers to be incremented.
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index dfdc5ac728..ccf3c2fef0 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -828,12 +828,6 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
-         MemTxResult mem_tx_result = MEMTX_OK;
-         uint8_t *frame_buf = dma_buf + sizeof(BCM2838GenetXmitStatus) + 2;
-         BCM2838GenetXmitStatus *xmit_status = (BCM2838GenetXmitStatus *)dma_buf;
--        struct iovec iov;
--        bool isip4, isip6;
--        size_t l3hdr_off, l4hdr_off, l5hdr_off;
--        eth_ip6_hdr_info ip6hdr_info;
--        eth_ip4_hdr_info ip4hdr_info;
--        eth_l4_hdr_info  l4hdr_info;
- 
-         bool crc_fwd = FIELD_EX32(s->regs.umac.cmd, GENET_UMAC_CMD, CRC_FWD);
-         size_t buflength;
-@@ -844,12 +838,6 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
-         }
- 
-         memcpy(frame_buf, buf + len, l);
--        iov.iov_base = frame_buf;
--        iov.iov_len = l;
--        eth_get_protocols(&iov, 1, 0,
--                          &isip4, &isip6,
--                          &l3hdr_off, &l4hdr_off, &l5hdr_off,
--                          &ip6hdr_info, &ip4hdr_info, &l4hdr_info);
- 
-         len += l;
- 
-@@ -875,10 +863,19 @@ static ssize_t bcm2838_genet_rdma(BCM2838GenetState *s, uint32_t ring_idx,
-                                          MULTICAST,
-                                          !!is_packet_multicast(frame_buf, l));
- 
-+        /*
-+         * Report no hardware-computed checksum. The IP header's own
-+         * checksum was previously (incorrectly) stored here, but the
-+         * guest's CHECKSUM_COMPLETE path expects a running checksum over
-+         * the L4 payload, not the L3 header checksum -- and it was stored
-+         * in host byte order besides. That mismatch was causing the guest
-+         * to reject otherwise-valid inbound packets ("hw csum failure" in
-+         * dmesg, tied to bcmgenet_rx_poll), breaking DHCP/connectivity
-+         * intermittently. Leaving this at 0 makes the guest fall back to
-+         * verifying checksums itself in software, which succeeds since the
-+         * packet data itself is intact.
-+         */
-         xmit_status->rx_csum = 0;
--        if (isip4) {
--            xmit_status->rx_csum = ip4hdr_info.ip4_hdr.ip_sum;
--        }
-         xmit_status->length_status = desc->length_status;
- 
-         mem_tx_result = address_space_write(&s->dma_as, dma_buf_addr,
--- 
-2.47.1
+In this case I would favour having the new register state
+in a vmstate subsection so that we only migrate it for the new
+device type, and the existing device's migration info doesn't change.
 
+> @@ -474,7 +482,6 @@ static void imx6_ccm_reset(DeviceState *dev)
+>      s->analog[USB_ANALOG_USB2_VBUS_DETECT] = 0x00000004;
+>      s->analog[USB_ANALOG_USB2_CHRG_DETECT] = 0x00000000;
+>      s->analog[USB_ANALOG_USB2_MISC] = 0x00000002;
+> -    s->analog[USB_ANALOG_DIGPROG] = 0x00630000;
+>
+>      /* all PLLs need to be locked */
+>      s->analog[CCM_ANALOG_PLL_ARM]   |= CCM_ANALOG_PLL_LOCK;
+> @@ -763,6 +770,12 @@ static void imx6_ccm_init(Object *obj)
+>      memory_region_add_subregion(&s->container, 0x4000, &s->ioanalog);
+>
+>      sysbus_init_mmio(sd, &s->container);
+> +
+> +    /*
+> +     * DIGPROG is a hardwired chip identifier: it is not affected by reset.
+> +     * Default to i.MX6Q; variants sharing this CCM override it below.
+> +     */
+> +    s->analog[USB_ANALOG_DIGPROG] = 0x00630000;
+>  }
+>
+>  static void imx6_ccm_class_init(ObjectClass *klass, const void *data)
+> @@ -777,6 +790,21 @@ static void imx6_ccm_class_init(ObjectClass *klass, const void *data)
+>      ccm->get_clock_frequency = imx6_ccm_get_clock_frequency;
+>  }
+>
+> +static void imx6sll_ccm_init(Object *obj)
+> +{
+> +    IMX6CCMState *s = IMX6_CCM(obj);
+> +
+> +    /*
+> +     * Runs after imx6_ccm_init(), which installs the i.MX6Q default.  The
+> +     * clock tree is the same; only the chip identifier differs:
+> +     * MXC_CPU_IMX6SLL (0x67), revision 1.0.
+> +     */
+> +    s->analog[USB_ANALOG_DIGPROG] = 0x00670000;
+> +
+> +    /* Unlike the i.MX6Q, this one implements the PMU/XTALOSC24M registers. */
+> +    memory_region_set_size(&s->ioanalog, CCM_ANALOG_REGS * sizeof(uint32_t));
+
+memory_region_set_size() is really for MRs that dynamically change size,
+not for fixing up a size that we could have got right in the first place.
+
+I recommend that you add a class struct to the TYPE_IMX6_CCM, and give
+that struct suitable fields that define how the subclasses differ (DIGPROG
+reset value, whether XTALOSC24M registers are present, etc). In the class_init
+function for each subclass you set those fields in the class struct. Then in
+instance_init you can look at the class struct to see how big you should
+make the MemoryRegion, and in reset you can look to see what reset value to
+use, and so on.
+
+hw/misc/npcm_gcr.c is an example of this approach.
+
+thanks
+-- PMM
 
