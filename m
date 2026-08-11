@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9394BC5CFEB
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDDCC5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnap-0000t4-6K; Tue, 11 Aug 2026 10:36:39 -0400
+	id 1wtna0-00005m-6V; Tue, 11 Aug 2026 10:35:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaO-0000J3-5Y
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:17 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ id 1wtnZy-0008WQ-Mf
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:35:46 -0400
+Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaM-0001tb-Dn
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:11 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-51c15bf5000so14751991cf.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:36:09 -0700 (PDT)
+ id 1wtnZw-0001oX-C3
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:35:46 -0400
+Received: by mail-qv1-xf35.google.com with SMTP id
+ 6a1803df08f44-8f29ec73064so17583576d6.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786458969; x=1787063769; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=5DF/roODHfFHQQFRWJENRPG9PsVBeH7GEX5xxemSqm4=;
- b=AOLbObMnuI24NbZvm+JGv2aYskYJfkizg8Mdo2bu32U6yKO5aYlCEw+BqffxQsHjD/
- VKnRUwFHpBIOHkPD2jHh90Rn/nIYLFmGm7AGbhnRBqF0EXVNFuz0vUU/uPJYLWF060X4
- nr/J7Nz1+4rntSCYamSGdzho92dQsyzBKMJu76ITmROk5AEEmRlq96BKd7pQ7tJYoofG
- lD+il589f87otU1cehJcQuLM31ug+i0Fr8rXkINzke+hDEVJTAfIauJqUPHIcHq9f1wQ
- icdGgy57yNDk8Q19uFgz5q4+l/bexh3+pr4bfGX1giQpBj+0wLnDVVI5g7rZSrlV3S42
- FROw==
+ d=gmail.com; s=20251104; t=1786458943; x=1787063743; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nUDoFYam/Cs4djr+4VD+W1090TdsQ0zW6Cv5SU9lt7c=;
+ b=D8H7Kj4AW4tN2gP+xyIWGEcTJ9VDeRPfOeXhCVR0NKvfNiTc7ozzhfaTkcexgMN1Io
+ CP/RwBQMc87Td1A5itGJLrbgH8IbNI3O96wvqWuxrhlHRBrQuf6JyjCGEyYEPDyhugRP
+ /yaylbivvgJ+t95mR2/5eThY/N77iDfOp2m7DsZ1HrM99ZDZvbmteCEiSJm5FlN6SCMu
+ ro/bcCcxzw/q9dXhiqMFnH7yQNzGOJ7a/GbfCjzgReCXvMOn9gtg59vUSCwrU6chGcJi
+ P4tWWtUv6IRKFx5bdj4LmwXEZNaSN7EgWd2PVvQow41J21LGvpUjv4pdr1TxMpQbl9LD
+ IPoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786458969; x=1787063769;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5DF/roODHfFHQQFRWJENRPG9PsVBeH7GEX5xxemSqm4=;
- b=C2IN+UeQgc2FoX5uBQIEMaIV2xSwhrTpEEuDHHP/KZNJD1oaiTO1Gg3mcj+A1w2/3N
- 5dK4mv022YWIly/bpjB8YLt6VBHo3Ly7T8NKc2byKY01kcrAjfnNbYY6r6H+I2qO3nSB
- Z3L6kJ7YkOjdZSqF16StXywvLF3V+ForhCTUJabBvA038CusUrtvpgT/yXISzZbIGSbA
- 8yirSESGEY3cWzY4/pRH49I1FxccCkIOxLU8bQxIRaEIht7r8CqMDatG0eWBPqitXZzY
- xVbVoV+RYPfTPZ6gVhwZoc5Md6FL7RPgY78kv5BoEbJrENR+QILEcHvFQqXtLP/2fJ89
- pRiQ==
-X-Gm-Message-State: AOJu0Yze/272OoOMWx3gTjzcbOoreShT0MMRKxBR3fYM4DwY/ELrAfBQ
- g7JnNp6Am5zSwQWsX1NjH44XJhDBwAnqKYWlXNKPEbWvsyEn3aqcJOzTbLpenQ==
-X-Gm-Gg: AR+sD108c3gwGf5tn0Jpxth1oEAO5qCzwUbsXhCFU3JQQUoGteZoV89YHfHvb/vl+U0
- 8SQxFkmE2cfxLxfgKRNfHWgrPZkdjQRdCdTRy2fLLOPXR4heznRGvBLq0bGwbIkO5S+45BpupTj
- ZdMz639QXgGVWwtNcxp8p22VQJocctbyFamiaIVnM0Tf33i1BEW+OEsVi0J4UpHOZHOtoFxNBBk
- DbVCg1r43er5xEq+I67TNfxrz3gj0ycOycGoaEy9KJ1yWVdQ6lEcylknEBpqskTCTdIgI54sTM/
- dFtZWYX9TOSwqW2cCjQTXs83QtFQVo3vc+M80jVBq0kuQXPtzVvk40AVVTf93va2Yo5CbSTW/RF
- zgXcixMCnXstKEU/za8fcjGQL3NKXnyU7qVBRMGAFMPFcSZhmDUChMDfo9/mb0J95fS5UQNnxtS
- BGVQcK74SGJEgtwKO3PmO3mHXr6dQhUJIHi5YD4ZlBHmjbSp0GYLe0caMsNIPYEOmE+Pjm7ms52
- d5MSvyerFSiIdWgFvg=
-X-Received: by 2002:a05:622a:a18:b0:519:efea:cf41 with SMTP id
- d75a77b69052e-52d585dea65mr34155651cf.28.1786458968837; 
- Tue, 11 Aug 2026 07:36:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786458943; x=1787063743;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nUDoFYam/Cs4djr+4VD+W1090TdsQ0zW6Cv5SU9lt7c=;
+ b=n+vFpBNwxclSPGXWI11yNNvMyOHEkEAxDC6uhbdPpdzd9f0o3QOn7vFMi8T4UYUa+a
+ Vij2hKgE6GntsDboGYkfEt6Y17U5lD1vXp/OtZKUkWRboWniQ8b5KN5hF6z9YUEMsfPw
+ KE22IwwoAukJNlh7QnScVb7nVCp+Fno3jnhT2isKWNXYLY2jIf86tKzKe4z7lMNy1HyU
+ oM6FPltI51fqIRX9jJEinGNX4voCYRWtJxAGArOA6+Ed5WMmtgzkm8FfZBilMq2J5bDS
+ ez1qYXBdeSRg9f2wB8lndNjEDlJ4b8WpUL/NF0qswxOuZQjMvWfZOYa272qsHBj/CdzG
+ c0jA==
+X-Gm-Message-State: AOJu0Yyb8Kbs8pUqXqFeMXxkNcNgHP0bMNpeqLrYyP55Gxq+D6vM2yd8
+ Ci5W2qP4mITApgnOlaJ4114frN8rWQUlw79NM/F22WCu6g4jIscv8vL6ySEsBQ==
+X-Gm-Gg: AR+sD10bxAoITlNf1xVToOa33X8tHI05BR8uvLqNLLstEKNddHfOht6ZpSPyMq73kEv
+ Wf5yCxcgT05DXbMYBittzzYYQwJzvnm01L5lfHNXaRCcd47WpHP0crtUobfWRLQQEBzqOyv/P4p
+ 1Z/8brW9BGBHzyGOeeF9wb1NJF3QSEujwsl5163SfHzE93Zw/ILrzwRZsq+3L7CEc+gMVRsic3o
+ aGfUlSzFKh87EgbDEU63iYJGrqOhyzo1TrccJyoLiRFhFK6KeyUFW12pfsg74CKora/VssmhSmK
+ GpAek2qLs+gx2AQtfcGbAtgyZYKOxUguYXp1wwaun+qKwNT5mK5mWNO+SWgx7KPODc0RCbVHPeM
+ 8avoO4QThEc3jEWpg4avscr8iNRuO3IMeq19LxBxLZ6zcztKCRz68B6WJQ5kAkjuiEjs0DrTk4d
+ +7c/cNraqZv0qkjMNLLHq1ZU4CzZT+J9oQY2pRZNnsXU9KMjlvY9phN9gz31l6Tc8hztnatpD9k
+ OYe6Q/tNpuHG5fM4kM=
+X-Received: by 2002:a05:6214:540e:b0:8f0:5b55:1f64 with SMTP id
+ 6a1803df08f44-90a66901679mr36615686d6.20.1786458943057; 
+ Tue, 11 Aug 2026 07:35:43 -0700 (PDT)
 Received: from localhost.localdomain ([198.16.145.87])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.36.07
+ 6a1803df08f44-90a6c3ec565sm376396d6.43.2026.08.11.07.35.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 07:36:08 -0700 (PDT)
+ Tue, 11 Aug 2026 07:35:42 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sergey Kambalin <serg.oker@gmail.com>,
- Sergey Kambalin <sergey.kambalin@auriga.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v2 09/19] hw/net/bcm2838_genet: add GENET register access
- macros
-Date: Tue, 11 Aug 2026 10:35:46 -0400
-Message-ID: <20260811143557.7862-10-marcelomanzo@gmail.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v3 1/2] hw/arm/raspi4b: fix guest never seeing more than ~1
+ GiB of RAM
+Date: Tue, 11 Aug 2026 10:35:38 -0400
+Message-ID: <20260811143539.7835-2-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20260811143557.7862-1-marcelomanzo@gmail.com>
-References: <20260811143557.7862-1-marcelomanzo@gmail.com>
+In-Reply-To: <20260811143539.7835-1-marcelomanzo@gmail.com>
+References: <20260811143539.7835-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x834.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,115 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+raspi4_modify_dtb() decides whether to add a second memory node above
+the 1 GiB peripheral hole by checking info->ram_size -- but that field
+is the boot loader's RAM budget for loading the kernel/initrd/dtb
+image, itself always capped to at most UPPER_RAM_BASE - vcram_size by
+raspi_base_machine_init(). Since that capped value can never exceed
+UPPER_RAM_BASE by construction, the condition was never true for any
+raspi4b configuration, and the second node was never added: the guest
+never saw more than ~1 GiB of its nominal RAM, regardless of the
+machine's actual size.
 
-Add offsetof()-based byte-offset macros for the register block
-layouts added in the previous patches (INTRL0/1, UMAC, TDMA/RDMA
-and their per-ring registers, HFB filters), used by the MMIO
-read/write dispatch implemented in the following patches.
+board_ram_size(info->board_id), computed one line above in the same
+function, is the value that was actually needed -- the board's real
+total RAM, not the boot loader's own budget for where it's allowed to
+place the kernel image.
 
-Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
-networking series (patchwork series 829638, posted to qemu-devel in
-2024, never merged). Carried forward and completed by Marcelo Manzo.
+Confirmed via direct measurement inside the guest ("free -h" /
+/proc/meminfo) on raspi4b's default 2 GiB configuration, before and
+after:
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+    before: MemTotal:  943524 kB (~921 MiB)
+    after:  MemTotal: 1905824 kB (~1861 MiB)
+
+Also verified against two real, unmodified Raspberry Pi OS releases
+(Debian 11/Bullseye and Debian 13/Trixie): both now report ~1.8 GiB of
+usable RAM instead of ~900 MiB, with clean boots, working SSH, and no
+kernel errors on either.
+
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/hw/net/bcm2838_genet.h | 78 ++++++++++++++++++++++++++++++++++
- 1 file changed, 78 insertions(+)
+ hw/arm/raspi4b.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index 12439b580d..b9895933b6 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -22,9 +22,87 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
- #define BCM2838_GENET_DMA_RING_CNT      17
- #define BCM2838_GENET_DMA_RING_DEFAULT  (BCM2838_GENET_DMA_RING_CNT - 1)
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index b92840e1b6..821ddb42ed 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -64,7 +64,7 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
  
-+#define BCM2838_GENET_HFB_FILTER_REGS     offsetof(BCM2838GenetRegs, hfb)
-+#define BCM2838_GENET_HFB_FILTER_REG(reg) (BCM2838_GENET_HFB_FILTER_REGS \
-+                                           + offsetof(BCM2838GenetRegsHfb, reg))
- #define BCM2838_GENET_HFB_FILTER_CNT      48
- #define BCM2838_GENET_HFB_FILTER_SIZE     128
+     ram_size = board_ram_size(info->board_id);
  
-+#define BCM2838_GENET_INTRL0_REG(reg)   (offsetof(BCM2838GenetRegs, intrl0) \
-+                                        + offsetof(BCM2838GenetRegsIntrl0, reg))
-+#define BCM2838_GENET_INTRL0_SET        BCM2838_GENET_INTRL0_REG(set)
-+#define BCM2838_GENET_INTRL0_CLEAR      BCM2838_GENET_INTRL0_REG(clear)
-+#define BCM2838_GENET_INTRL0_MASK_SET   BCM2838_GENET_INTRL0_REG(mask_set)
-+#define BCM2838_GENET_INTRL0_MASK_CLEAR BCM2838_GENET_INTRL0_REG(mask_clear)
-+
-+#define BCM2838_GENET_INTRL1_REG(reg)   (offsetof(BCM2838GenetRegs, intrl1) \
-+                                        + offsetof(BCM2838GenetRegsIntrl1, reg))
-+#define BCM2838_GENET_INTRL1_SET        BCM2838_GENET_INTRL1_REG(set)
-+#define BCM2838_GENET_INTRL1_CLEAR      BCM2838_GENET_INTRL1_REG(clear)
-+#define BCM2838_GENET_INTRL1_MASK_SET   BCM2838_GENET_INTRL1_REG(mask_set)
-+#define BCM2838_GENET_INTRL1_MASK_CLEAR BCM2838_GENET_INTRL1_REG(mask_clear)
-+
-+#define BCM2838_GENET_UMAC_REG(reg)     (offsetof(BCM2838GenetRegs, umac) \
-+                                         + offsetof(BCM2838GenetRegsUmac, reg))
-+#define BCM2838_GENET_UMAC_CMD          BCM2838_GENET_UMAC_REG(cmd)
-+#define BCM2838_GENET_UMAC_MAC0         BCM2838_GENET_UMAC_REG(mac0)
-+#define BCM2838_GENET_UMAC_MAC1         BCM2838_GENET_UMAC_REG(mac1)
-+#define BCM2838_GENET_UMAC_MDIO_CMD     BCM2838_GENET_UMAC_REG(mdio_cmd)
-+
-+#define BCM2838_GENET_TDMA_REGS         offsetof(BCM2838GenetRegs, tdma)
-+#define BCM2838_GENET_TDMA_REG(reg)     (BCM2838_GENET_TDMA_REGS \
-+                                         + offsetof(BCM2838GenetRegsTdma, reg))
-+#define BCM2838_GENET_TDMA_RINGS        BCM2838_GENET_TDMA_REG(rings)
-+#define BCM2838_GENET_TDMA_RING_CFG     BCM2838_GENET_TDMA_REG(ring_cfg)
-+#define BCM2838_GENET_TDMA_CTRL         BCM2838_GENET_TDMA_REG(ctrl)
-+#define BCM2838_GENET_TDMA_STATUS       BCM2838_GENET_TDMA_REG(status)
-+
-+#define BCM2838_GENET_RDMA_REGS         offsetof(BCM2838GenetRegs, rdma)
-+#define BCM2838_GENET_RDMA_REG(reg)     (BCM2838_GENET_RDMA_REGS \
-+                                         + offsetof(BCM2838GenetRegsRdma, reg))
-+#define BCM2838_GENET_RDMA_RINGS        BCM2838_GENET_RDMA_REG(rings)
-+#define BCM2838_GENET_RDMA_RING_CFG     BCM2838_GENET_RDMA_REG(ring_cfg)
-+#define BCM2838_GENET_RDMA_CTRL         BCM2838_GENET_RDMA_REG(ctrl)
-+#define BCM2838_GENET_RDMA_STATUS       BCM2838_GENET_RDMA_REG(status)
-+
-+#define BCM2838_GENET_TRING_REG(reg)    offsetof(BCM2838GenetTdmaRing, reg)
-+#define BCM2838_GENET_TRING_WRITE_PTR BCM2838_GENET_TRING_REG(write_ptr)
-+#define BCM2838_GENET_TRING_WRITE_PTR_HI BCM2838_GENET_TRING_REG(write_ptr_hi)
-+#define BCM2838_GENET_TRING_PROD_INDEX BCM2838_GENET_TRING_REG(prod_index)
-+#define BCM2838_GENET_TRING_CONS_INDEX BCM2838_GENET_TRING_REG(cons_index)
-+#define BCM2838_GENET_TRING_RING_BUF_SIZE BCM2838_GENET_TRING_REG(ring_buf_size)
-+#define BCM2838_GENET_TRING_RING_START_ADDR BCM2838_GENET_TRING_REG(start_addr)
-+#define BCM2838_GENET_TRING_RING_START_ADDR_HI BCM2838_GENET_TRING_REG(start_addr_hi)
-+#define BCM2838_GENET_TRING_RING_END_ADDR BCM2838_GENET_TRING_REG(end_addr)
-+#define BCM2838_GENET_TRING_RING_END_ADDR_HI BCM2838_GENET_TRING_REG(end_addr_hi)
-+#define BCM2838_GENET_TRING_RING_MBUF_DONE_TRESH BCM2838_GENET_TRING_REG(mbuf_done_tresh)
-+#define BCM2838_GENET_TRING_RING_FLOW_PERIOD BCM2838_GENET_TRING_REG(flow_period)
-+#define BCM2838_GENET_TRING_RING_READ_PTR BCM2838_GENET_TRING_REG(read_ptr)
-+#define BCM2838_GENET_TRING_RING_READ_PTR_HI BCM2838_GENET_TRING_REG(read_ptr_hi)
-+
-+#define BCM2838_GENET_RRING_REG(reg)    offsetof(BCM2838GenetRdmaRing, reg)
-+#define BCM2838_GENET_RRING_WRITE_PTR BCM2838_GENET_RRING_REG(write_ptr)
-+#define BCM2838_GENET_RRING_WRITE_PTR_HI BCM2838_GENET_RRING_REG(write_ptr_hi)
-+#define BCM2838_GENET_RRING_PROD_INDEX BCM2838_GENET_RRING_REG(prod_index)
-+#define BCM2838_GENET_RRING_CONS_INDEX BCM2838_GENET_RRING_REG(cons_index)
-+#define BCM2838_GENET_RRING_RING_BUF_SIZE BCM2838_GENET_RRING_REG(ring_buf_size)
-+#define BCM2838_GENET_RRING_RING_START_ADDR BCM2838_GENET_RRING_REG(start_addr)
-+#define BCM2838_GENET_RRING_RING_START_ADDR_HI BCM2838_GENET_RRING_REG(start_addr_hi)
-+#define BCM2838_GENET_RRING_RING_END_ADDR BCM2838_GENET_RRING_REG(end_addr)
-+#define BCM2838_GENET_RRING_RING_END_ADDR_HI BCM2838_GENET_RRING_REG(end_addr_hi)
-+#define BCM2838_GENET_RRING_RING_MBUF_DONE_TRESH BCM2838_GENET_RRING_REG(mbuf_done_tresh)
-+#define BCM2838_GENET_RRING_RING_XON_XOFF_TRESH BCM2838_GENET_RRING_REG(xon_xoff_tresh)
-+#define BCM2838_GENET_RRING_RING_READ_PTR BCM2838_GENET_RRING_REG(read_ptr)
-+#define BCM2838_GENET_RRING_RING_READ_PTR_HI BCM2838_GENET_RRING_REG(read_ptr_hi)
-+
-+
-+#define BCM2838_GENET_PHY_REG(reg)      (offsetof(BCM2838GenetPhyRegs, reg) / 2)
-+#define BCM2838_GENET_PHY_BMCR          BCM2838_GENET_PHY_REG(bmcr)
-+#define BCM2838_GENET_PHY_AUX_CTL       BCM2838_GENET_PHY_REG(aux_ctl)
-+#define BCM2838_GENET_PHY_SHD           BCM2838_GENET_PHY_REG(shd)
-+#define BCM2838_GENET_EXP_DATA          BCM2838_GENET_PHY_REG(exp_data)
-+#define BCM2838_GENET_EXP_SEL           BCM2838_GENET_PHY_REG(exp_ctrl)
-+
- #define BCM2838_GENET_PHY_AUX_CTL_MISC  0x7
- #define BCM2838_GENET_PHY_AUX_CTL_REGS_SIZE 8
- 
+-    if (info->ram_size > UPPER_RAM_BASE) {
++    if (ram_size > UPPER_RAM_BASE) {
+         raspi_add_memory_node(fdt, UPPER_RAM_BASE, ram_size - UPPER_RAM_BASE);
+     }
+ }
 -- 
 2.47.1
 
