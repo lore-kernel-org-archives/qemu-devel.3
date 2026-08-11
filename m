@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4E3C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DDBC5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnaF-0000EN-Ah; Tue, 11 Aug 2026 10:36:03 -0400
+	id 1wtnak-0000ae-Nf; Tue, 11 Aug 2026 10:36:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaD-0000E6-Rz
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:01 -0400
-Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ id 1wtnaM-0000Iu-Nt
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:13 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaC-0001q2-6l
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:01 -0400
-Received: by mail-qv1-xf34.google.com with SMTP id
- 6a1803df08f44-9034b6b7674so6467376d6.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:35:59 -0700 (PDT)
+ id 1wtnaK-0001tE-Mm
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:09 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-52b6543169fso19601091cf.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786458959; x=1787063759; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MOPsIRAHmnpYPNJRCDGGvnlTaDui8VBb2s0z+7gjrio=;
- b=W6EVVtrWyM2PGfuPVn6pOJoG5WDaxIV6Yr5mXoPrAAIGECxbe3FIMK7rpX8Lvj/jKh
- vWeRR6dLjwvpZtsXjLd44C1Zw9gFA3DFoaF20kVIyeb+Xm9VKs5q2CRl/8mNqFIDs6pA
- 5p4XRCBD5TW8WVvsK2S/p6I75qjTTd6Tuqb8pu8X7zyH/HorXrdBC9alGB5VdYKWIDXA
- t4z8456HbFb2ihD9kfd1OT4UL93IZKgE8W/7BDJum49HIWvGq/R9NU8EHLTggFSz/EtV
- XmAUFBYN35W92kZuVP8aD2fm0ec3iYJQCWbuJ3E/z5f7HpsieLbDqB8RkfOmYO5mnYvW
- Vd9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786458959; x=1787063759;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1786458968; x=1787063768; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MOPsIRAHmnpYPNJRCDGGvnlTaDui8VBb2s0z+7gjrio=;
- b=lCPgqwAgWRvBRcwpMWKLpVreP2DviZ48qfP7qb45LJh1UvSV37cqqsrHc1x55+N63j
- nicFcbiDtjWUskGx5RDzu6JWgQmSCj7Wak7zq6zsz5wRt6YOrGjP18VALUekRbZzH961
- iVHlKHHSp8WoIUA1tJY8gCaLhhVNMsaIo6Sgep3mlUADXeUERNNh3VGI2ac7LXmnncE7
- I1c9RUV/dAVJpvTElB8NZWux4O6cAlivZY+MddT1yOoN4n7WJfZ1MPy+zo4VXpVCFqTq
- rYV3n42gcl8DrwuyxRsVsA5G06FBQUM4+7JxvWPieeRlYryY+kKQcRapvDrLtYnOZ1ap
- AiXg==
-X-Gm-Message-State: AOJu0YxdKeZZFpgGrkaR/CqqlUBs4sNRIHfn787+BJTcFfjJyLb/f7rB
- V7eT7wgJUyG6vq/wVyPl7KMPH7AyckqDZuJ9KqeRqKcKyrtua+7tp5RAfaDLbw==
-X-Gm-Gg: AR+sD105soqU1p8C2wLDNT/qhZCk8lDel2db2BXjOw5SQPheF9cQHrKkdvvKIC30R7p
- jNK8eb5Zfph/tO4oddaX3kgTSaN3r0RdY367QNmkLs5u8YaaQWDo104VGrQxcex4OqgWQXq8fts
- yDO2uLUgL0Cg7rfig3sCkYdMGIXi/QPW5+l7bwl7ULjmMiTkRzP2FIWtSddWwxRubqt/XLAWyWo
- zweO9ZoofRW3dQKy2totrpZ5afR4/XSROxr61Giv8GLu2V/qH3+wuVlqQUoa2+FMnMuOpiv0MgX
- jQPPI23BNmuqDOYLytksf79Uzi/RzIZ3wxFUXXvLYw/HSCIpAOBCf/kRCFqtax4vK5MxIY4pozB
- sSGYIij3vW+DchQ63iym2HIf7nd+9dbUPRI6HBVwhXdLWl0GgdzqMvOQwUoT94e5BDueY7DikkW
- +BtG6lLindBwACZKBfX/cdCv/NuWNxVBxxW/FK/ug/B10BtRhEklQ0WDwFscxniZG/GOnfA8HSD
- Zb54UjJs60FkVFffOA=
-X-Received: by 2002:a05:6214:3d8a:b0:908:92e3:a37 with SMTP id
- 6a1803df08f44-90a6c258352mr3659486d6.32.1786458959163; 
- Tue, 11 Aug 2026 07:35:59 -0700 (PDT)
+ bh=xsYLjlscox7P7BfombKX5T/LNj0yU2z7O4B/638wR0E=;
+ b=H1BCb0lO4QPG6IO63OAZn8t9Ma6EzPHzp0PAIQ0O0wZK3TY4jX/XrNBs8HipKc9SJ0
+ nT9SmN1fl8IviYmUWn2NluG5U2x66T5cYyB4/9IlmarSUn90FlZX1Z1Y+CyJ0lKVYbLx
+ fTH6+W5k7ywsSgU1YxURbVEKBF4HeUfGuGrImrUUrJGD4qhiw7scQjGIIeARi0qypb3C
+ SdsH8rKMV5rmeJ12TpzSPE/egA0v1Hcf7iZFvR7NiuV43tpsB8RDn3t4Wh/dHuXgcsf1
+ rA/1XsmGmZoSPfg6/RYnwj8hafU+SNgQXi0CuhkI4/57IEp+GiTBb9IIYhuIEKeaiybr
+ YW3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786458968; x=1787063768;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xsYLjlscox7P7BfombKX5T/LNj0yU2z7O4B/638wR0E=;
+ b=cxq6jBbehZReDjGfMyDGIJk27C8IJfFOXc0w16NU3crUuqRZ9If6hZuv0UkToYNYCt
+ YfnRcGkKIPf5TvkqeLytLdjpZMXowrGi4046KqqCjveUWIDCXmI5pn/zFEsQwW2MTJZU
+ C8gRfR4MW71wRu0a3LeSCGOPqOWR72aEmkoXJCwDnJLmCqTrZGTTG5uOnl5/BCpMLhW0
+ Lqs5xNlp7GKVT8Tz6SFhUsbCthUQMkoippzqyqeMeYII0t0OKCQPeUj2Xr/kSjZVdca3
+ dYXxGs6MK6qgqFH29anq3AlCeR2mLx9yQ4KYeu4rUCJHXpf8vyQgPynJt9idDGPPwTmh
+ v2Lg==
+X-Gm-Message-State: AOJu0YyWdisI6lRlksPlMRfMe9hL4s5FyMzvQT1SQG0KLIsDNq33mTjs
+ 7sEiu/h5h50aMvZu0KN1fB+xOGNLsxY6kcxvChkxZiMVzS4GpGREYhIyWGnKUg==
+X-Gm-Gg: AR+sD11EGXA1SLTHQYJoPV045jltBcsKlQRXXZ938FFIGrk5IAWgVsSCDOJRl0WaHZz
+ DFpmD3EiIljShy+Y4H2o3JKfN8cS45vyWilsWSu6wb0OfzcjWxgDrEkLOlfJCoUsLaizY1XxcvQ
+ KcnK1pGcg2eJMB1hM24VJAA4Wr4wfm1mQZzGh0ySaTfl+LRelGT/TmP09BUpYqHS8szD0SjX+rG
+ ykY5QTmPjmyyRF2EmbbVkZ/Zg2pKBwtdBzgY0Ya90DiCUwNudrTKmcvljUrdBS2AL8OSC+vGHaX
+ VfSSay6hyEvPbK5FCaLSY0LL0IfpmzmqkvNK5Z9Qw4TlGHPuYkafIoxMZV9V3Ix5vEn/4hWco8q
+ PxG9Z3ogp6EEPHylKgB3XdRsWVG2xt4US1Ek5dwa3UelQAKFUNCN0795LftkQrk4rCcrE8lnidH
+ foPD16zSYZutI5RmGmCL/Esi/Rdl8GVuhSPUSOf7LFhae2s085x2kY/3Wot37hHT/8idDdXsvTV
+ uvaUQrBEOr73ux0M4E=
+X-Received: by 2002:a05:622a:15c3:b0:528:3216:b802 with SMTP id
+ d75a77b69052e-52d58544b0emr33334841cf.15.1786458967672; 
+ Tue, 11 Aug 2026 07:36:07 -0700 (PDT)
 Received: from localhost.localdomain ([198.16.145.87])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.35.58
+ 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.36.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 07:35:58 -0700 (PDT)
+ Tue, 11 Aug 2026 07:36:07 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH v2 00/19] hw/arm/raspi4b: working PCIe and GENET (real
- networking)
-Date: Tue, 11 Aug 2026 10:35:37 -0400
-Message-ID: <20260811143557.7862-1-marcelomanzo@gmail.com>
+ Sergey Kambalin <serg.oker@gmail.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>,
+ Marcelo Manzo <marcelomanzo@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v2 08/19] hw/net/bcm2838_genet: add GENET register structs,
+ part 4/4
+Date: Tue, 11 Aug 2026 10:35:45 -0400
+Message-ID: <20260811143557.7862-9-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260811143557.7862-1-marcelomanzo@gmail.com>
+References: <20260811143557.7862-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,84 +108,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series gets raspi4b's PCIe root complex and GENET Ethernet
-controller working end to end: the PCIe link comes up and devices on
-it actually enumerate, and GENET passes real network traffic (DHCP,
-SSH) under both older and newer guest kernels.
+From: Sergey Kambalin <serg.oker@gmail.com>
 
-v2: per Peter Maydell's review of two follow-up series posted after
-this one ("hw/arm/bcm2838_pcie: make PCI device enumeration work" and
-half of "hw/arm/raspi4b: fix watchdog and GENET bugs hit by modern
-distro kernels"), folded both of those bugfixes directly into the
-patches here that introduce the affected code, since neither
-bcm2838_pcie.c nor bcm2838_genet.c is in upstream git yet:
+Add the PHY "shadow" register structs (BCM54213PE PHY-specific
+clock control, RGMII mode, LED, and expansion-block registers
+accessed via the AUX_CTL/EXP_SHD indirection scheme) used by the
+MDIO emulation added in a later patch.
 
-  - patch 2 ("add BCM2838 PCIe host") and patch 3 ("enable BCM2838
-    PCIe host bridge") now include the PCI enumeration fix (config
-    space read/write underflow, missing pcie_host_mmcfg_init(),
-    wrongly-overridden config_read/config_write, and the MMIO window
-    address-translation fix) instead of introducing it broken and
-    fixing it in a later series;
-  - patch 6, 9, 10, 12, and 13 now include the per-ring DMA
-    status/RX-ring-selection fix (proper per-ring enable bitmask for
-    both RDMA and TDMA, a queued-packet flush on ring enable, and
-    scanning for the first active ring instead of assuming the last
-    one) instead of introducing that bug and fixing it afterwards;
-  - patch 18 carries the accompanying docs note about PCIe MSI/MSI-X
-    not being implemented (use msi=off,msix=off).
+Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
+networking series (patchwork series 829638, posted to qemu-devel in
+2024, never merged). Carried forward and completed by Marcelo Manzo.
 
-Those two follow-up threads are superseded by this v2 and shouldn't be
-applied standalone. No functional changes beyond what those two fixes
-already did -- this is purely relocating the same diffs to where the
-buggy code was first introduced. checkpatch.pl is clean (0 errors)
-across all 19 patches, the series builds standalone from a clean
-worktree (--target-list=aarch64-softmmu), and the full
-tests/functional/aarch64/test_raspi4.py suite passes, including the
-GENET and PCIe tests that exercise exactly the folded-in fixes.
+Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+---
+ include/hw/net/bcm2838_genet.h | 37 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-Marcelo Manzo (10):
-  hw/arm/bcm2838_pcie: add BCM2838 PCIe Root Complex
-  hw/arm/bcm2838_pcie: add BCM2838 PCIe host
-  hw/arm/bcm2838: enable BCM2838 PCIe host bridge
-  hw/net/bcm2838_genet: add GENET stub device
-  hw/arm/bcm2838: enable BCM2838 GENET controller
-  hw/net/bcm2838_genet: fix PHY autonegotiation-restart deadlock
-  hw/net/bcm2838_genet: fix bogus RX checksum reporting
-  hw/net/bcm2838_genet: fix TX ring activation check
-  docs/system/arm/raspi: move PCIe/GENET from missing to implemented
-  tests/functional/aarch64: add raspi4b GENET networking test
-
-Sergey Kambalin (9):
-  hw/net/bcm2838_genet: add GENET register structs, part 1/4
-  hw/net/bcm2838_genet: add GENET register structs, part 2/4
-  hw/net/bcm2838_genet: add GENET register structs, part 3/4
-  hw/net/bcm2838_genet: add GENET register structs, part 4/4
-  hw/net/bcm2838_genet: add GENET register access macros
-  hw/net/bcm2838_genet: implement GENET register ops
-  hw/net/bcm2838_genet: implement GENET MDIO
-  hw/net/bcm2838_genet: implement GENET TX path
-  hw/net/bcm2838_genet: implement GENET RX path
-
- docs/system/arm/raspi.rst               |    6 +-
- hw/arm/bcm2838.c                        |   15 +
- hw/arm/bcm2838_pcie.c                   |  308 +++++++
- hw/arm/bcm2838_peripherals.c            |   46 +
- hw/arm/meson.build                      |    4 +-
- hw/arm/raspi4b.c                        |    2 -
- hw/arm/trace-events                     |    4 +
- hw/net/bcm2838_genet.c                  | 1119 +++++++++++++++++++++++
- hw/net/meson.build                      |    2 +
- hw/net/trace-events                     |   16 +
- include/hw/arm/bcm2838_pcie.h           |   75 ++
- include/hw/arm/bcm2838_peripherals.h    |    7 +
- include/hw/net/bcm2838_genet.h          |  428 +++++++++
- tests/functional/aarch64/test_raspi4.py |   30 +
- 14 files changed, 2057 insertions(+), 5 deletions(-)
- create mode 100644 hw/arm/bcm2838_pcie.c
- create mode 100644 hw/net/bcm2838_genet.c
- create mode 100644 include/hw/arm/bcm2838_pcie.h
- create mode 100644 include/hw/net/bcm2838_genet.h
-
+diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
+index fedfbde066..12439b580d 100644
+--- a/include/hw/net/bcm2838_genet.h
++++ b/include/hw/net/bcm2838_genet.h
+@@ -25,6 +25,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
+ #define BCM2838_GENET_HFB_FILTER_CNT      48
+ #define BCM2838_GENET_HFB_FILTER_SIZE     128
+ 
++#define BCM2838_GENET_PHY_AUX_CTL_MISC  0x7
++#define BCM2838_GENET_PHY_AUX_CTL_REGS_SIZE 8
++
++#define BCM2838_GENET_PHY_EXP_SHD_BLOCKS_CNT 256
++#define BCM2838_GENET_PHY_EXP_SHD_REGS_CNT   256
++
+ typedef struct {
+     uint32_t rev_ctrl;
+     uint32_t port_ctrl;
+@@ -273,6 +279,34 @@ typedef struct {
+     uint16_t rdb_data;
+ } BCM2838GenetPhyRegs;
+ 
++typedef struct {
++    uint16_t reserved_0_2[3];
++    uint16_t clk_ctl;
++    uint16_t scr2;
++    uint16_t scr3;
++    uint16_t reserved_6_9[4];
++    uint16_t apd;
++    uint16_t rgmii_mode;
++    uint16_t reserved_12;
++    uint16_t leds1;
++    uint16_t reserved_14_18[5];
++    uint16_t _100fx_ctrl;
++    uint16_t ssd;
++    uint16_t reserved_21_30[10];
++    uint16_t mode;
++} BCM2838GenetPhyShdRegs;
++
++typedef struct {
++    uint16_t auxctl;
++    uint16_t reserved_1_6[BCM2838_GENET_PHY_AUX_CTL_REGS_SIZE - 2];
++    uint16_t misc;
++} BCM2838GenetPhyAuxShdRegs;
++
++typedef struct {
++    uint16_t regs[BCM2838_GENET_PHY_EXP_SHD_BLOCKS_CNT]
++                 [BCM2838_GENET_PHY_EXP_SHD_REGS_CNT];
++} BCM2838GenetPhyExpShdRegs;
++
+ struct BCM2838GenetState {
+     /*< private >*/
+     SysBusDevice parent_obj;
+@@ -284,6 +318,9 @@ struct BCM2838GenetState {
+ 
+     BCM2838GenetRegs regs;
+     BCM2838GenetPhyRegs phy_regs;
++    BCM2838GenetPhyShdRegs phy_shd_regs;
++    BCM2838GenetPhyAuxShdRegs phy_aux_ctl_shd_regs;
++    BCM2838GenetPhyExpShdRegs phy_exp_shd_regs;
+ 
+     qemu_irq irq_default;
+     qemu_irq irq_prio;
 -- 
 2.47.1
 
