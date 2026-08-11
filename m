@@ -4,113 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B917EC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C51C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtqPn-0003yq-Fj; Tue, 11 Aug 2026 13:37:27 -0400
+	id 1wtqRc-0004aC-GR; Tue, 11 Aug 2026 13:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wtqPl-0003yM-SI; Tue, 11 Aug 2026 13:37:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1wtqPj-0000Bd-Qw; Tue, 11 Aug 2026 13:37:25 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BGVQGp3260508; Tue, 11 Aug 2026 17:37:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=xOSe2s
- fHx43hwbcxhIq9JDxS3aXGAYUKGCXBL1qzdMM=; b=KIfdqRb9aMZrbXGeBUcprU
- zT/da4a33cjnPY657YwY5nOzZcdvVR/DDvQphFBaBPHgUrzBXi8E5JPO/htUZOC0
- IJ2XA3ES802an9GShvEM25eOCniwykzeRWutJRrcP3L8ln/HFFqa31kMh898aNxy
- aqksQLBgeOUBojO8rBCRJUPi+ky5Dw/RbWGNG6qMD/SPvROAFNtFpf5zZXfF+qlZ
- 8a84y25kxlUxV7kq0aD9G6wrxjoiT11k1Zj/nGc621893aLLfOQvgWmrjucLYf3s
- MfnRQX7UYiZ5zis+D1f55P8RZmEB8cWiNAQUEnhKL8sWCv3rhjihFDA4zPPcK9cw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvjyx7am-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 17:37:19 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67BHQFqn000639;
- Tue, 11 Aug 2026 17:37:18 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy1t0p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 11 Aug 2026 17:37:18 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67BHbGqr17367762
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 11 Aug 2026 17:37:16 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B6DF5805E;
- Tue, 11 Aug 2026 17:37:16 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 987CC58056;
- Tue, 11 Aug 2026 17:37:15 +0000 (GMT)
-Received: from [9.61.240.229] (unknown [9.61.240.229])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 11 Aug 2026 17:37:15 +0000 (GMT)
-Message-ID: <22a22779-ddc4-4c46-89e8-a15945412f7e@linux.ibm.com>
-Date: Tue, 11 Aug 2026 10:37:14 -0700
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRV-0004X5-Dc
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:14 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRT-0000SW-TP
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:13 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6a36982a875so162947a12.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:39:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1786469950; x=1787074750; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/FLrBFGnc3sdlHbz+yFP8aIfw/LA8xDvV8QDl90J8e8=;
+ b=mT3oabxFNdsky6+qWD3+ISnToOZmXtNbL1bw+KcoSFjD+RHuzO8W0zbtz4s+Bs/QeN
+ 2a5qGbHIX9fCapQzqLcLGUINymQsErZ3aCbm6WSn2KnGP2qxKu/6epjlaMqwgoaisE8C
+ TKceTniHeDp+6bHTq9VHxXsRCCVUvtKq+5MhpVGPQ4rNpA03r748IQQEgwW4nmqGMxN/
+ SpoaTxyeTbKbPie7zZ9TPUTX2EmyeQ1RDpWIU9V6ceYAE2pkqTl3z1qHi69FKRRPh8MH
+ +x9/ljqJWL2skHE0KcenEn/pMJeo5wQzWYYDPbogoZa7Ut8IG/OoUjMRRCuAz7DBB+Qv
+ nEvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786469950; x=1787074750;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/FLrBFGnc3sdlHbz+yFP8aIfw/LA8xDvV8QDl90J8e8=;
+ b=KNucnsnhi51X6uG9JD4kaB1I6viwdfIIFZXwcerN1oEdB1RoO9l5Dw1i9iFjMAB6HV
+ uYnAbTetZXgVDfMOTfzH4615v7nzu/qWfCQKdTnugN1nNsXmieUrsR2TM584Hrk+N4YM
+ Tvvq/8GTqYWVtX6ayUUzPgFJseENyHxtw9uBVmUMBHHwHKqrC/I3oZ7yZLcKdAgxSmKV
+ LV6I/927QKdkvFiJfOfM5cF9QiIlameApNxu5rTehkZjJY3cymJKMlDhqVXNPBNodowB
+ Vjss2MrFJ++R1oHZVrzH6MWZWA5AXRPoJ7hbfgyTCFs0yYnvcSb2myMu7fRjHf5vPRZj
+ ZXTQ==
+X-Gm-Message-State: AOJu0Yxv3HcOf46/j6fhlU+ffSb3wZtC87qt8jm94NNrxfX8zfW6HZtV
+ LK7tI4RLj+eVAgwd+qu3hB4aRIcY/VR391GyFPZhQ0Bk5DLsswOigC9mTbhpkgeSTQgXMv6TXSH
+ PI2b1
+X-Gm-Gg: AR+sD12VS1/OPJRBH7HEZzZtjX+fob+aw1Sr0rVrTgm81IAU49wbyjhfPEtJhRm4MIo
+ f0fAzlbpqGPjpHYJGvNLgipB5+5F1LZjLTREqAU5LW2477G8m8BPmtjuaOkh7uAngRBVd6ELQZS
+ pIBPNxolSMV9H9ZKVXLTh5yyfxFq1WK8aTcvLSaBUycBlyaqroJSrSP9o1WpUHEYsOGeRAgXMtT
+ RlycjXCD2VmURDtPw5upIAJe+ja+SvdwYC9I/uAEoiRfb6LySQVRYRcp0EzFMUw9Rd3HqKeoON3
+ yrPLNhEmrSdq3m43Q+rH+KoeZI6batF5RTnO9Ag4XV1bmdan0ZjVxWSOpOOymLjdFc8973+zT4j
+ W1mM2hqXn92B8wy9yk2irlH3HjnJ8gJgVV+lqOB8WNeoFoteVNO9CQVQEeOXPHr+0GLl0VUfZOz
+ auvLKwTB7hSTBW6K86cTtpBv3EppgrZbFXcWvB2vRlbPLWMGKK92PXiFuI
+X-Received: by 2002:a17:907:fd89:b0:c20:acfb:72ef with SMTP id
+ a640c23a62f3a-c20ecbb755amr99656066b.30.1786469950160; 
+ Tue, 11 Aug 2026 10:39:10 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:c43:d230:7bbc:68d4])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a362ef7525sm880945a12.29.2026.08.11.10.39.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 10:39:08 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 3/8] dirty-bitmap: fix integer overflow in serialization
+ coverage
+Date: Tue, 11 Aug 2026 19:38:52 +0200
+Message-ID: <20260811173857.396571-4-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260811173857.396571-1-den@openvz.org>
+References: <20260811173857.396571-1-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 11/15] s390x/pci: Move pal from S390PCIIOMMU to
- S390PCIBusDevice
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260807170812.658820-1-kshk@linux.ibm.com>
- <20260807170812.658820-12-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260807170812.658820-12-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDE0NyBTYWx0ZWRfX2IGF3mzywyfr
- y40wECyHXiS6VlA7NQsYHTsgd+9Yj0qwDyyl4aQJBIVmDaKVtS33hy8QOvwlkajazScdomlyWaM
- R9kN9tdo3x0DkgeLpQxYlaqsJwMriy9h9YVrpGy/MjA3BlYQXqTYZd++VWgmueiocqv26JUx0SW
- 6vx7qkK0jvJt5FRUeG7t33bSsD0fyaZc83bZLsILEOPoMnJ/ie06opfSOalJY7RJTQcuaI3qDJo
- +on0t+nRP5fWypkDAOv5oPpd3iur22bIZmagPxUVHjR/WLmJOJzhHDIPMTNaPpxDJyH6G77EZcK
- lrKYxpVIrq2OwU13LR/+OoqmrgnRQnxKYcugX13h4w8yEW6dQkSeB/Z/PsJLoG9Xmx9vtCGKInm
- oYuVMvrr/xpDmX3fTKIdRqVO0nw1/VALr9D5/UK5ijuw9jyn6+5oUe1vWh0kGUEiHpdGtSBtEzc
- qFgkVAyEjZa97S9yIMw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDE0NyBTYWx0ZWRfX605LnyHXo/ZR
- 46no7wQEqwiW1CE7Z5p2+6iF9ItIHLRqqa30otGqf4eqnTwo0C3w50TZA585xNq7SOxUgtKAfqj
- CCcxP+HlsDrZQCikAidz4MjRuCp3JBc=
-X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7b5dcf cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=NT-D918DeMxGRRny-ogA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: qOs2CcXCIJSRRHApgS-sZa1bsHZGSyPG
-X-Proofpoint-ORIG-GUID: qOs2CcXCIJSRRHApgS-sZa1bsHZGSyPG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-11_04,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608110147
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=den@openvz.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,22 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The chunk size is an int and is shifted left by 3 before the result is
+widened, so a chunk size of 1 << 28 or above overflows.
 
-On 8/7/2026 10:08 AM, Konstantin Shkolnyy wrote:
-> This field is only used when S390PCIBusDevice exists, so it can be moved
-> there to simplify S390PCIIOMMU which purpose is just to store the "root"
-> AddressSpace.
->
-> This also allows to save/restore this field during migration.
->
-> Signed-off-by: Konstantin Shkolnyy<kshk@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c         |  8 +++-----
->   hw/s390x/s390-pci-inst.c        | 14 +++++---------
->   include/hw/s390x/s390-pci-bus.h |  2 +-
->   3 files changed, 9 insertions(+), 15 deletions(-)
+parallels passes s->cluster_size, which parallels_open() lets reach
+2 GiB. With a bitmap needing two L1 entries the bogus limit makes the
+"bm_size - offset" in parallels_load_bitmap_data() underflow; both
+wrong values slip past the assertions in serialization_chunk() and the
+resulting index lands outside the hbitmap, so a 128 KiB image memsets
+unrelated memory through hbitmap_deserialize_ones().
 
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Widen the shift. qcow2, the only other caller, never exceeds a 2 MiB
+cluster.
 
+Fixes: 35f428ba3971 ("qcow2-bitmap: make bytes_covered_by_bitmap_cluster() public")
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+---
+ block/dirty-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
+index 13a1979755..9fda3a4b98 100644
+--- a/block/dirty-bitmap.c
++++ b/block/dirty-bitmap.c
+@@ -612,7 +612,7 @@ uint64_t bdrv_dirty_bitmap_serialization_coverage(int serialized_chunk_size,
+                                                   const BdrvDirtyBitmap *bitmap)
+ {
+     uint64_t granularity = bdrv_dirty_bitmap_granularity(bitmap);
+-    uint64_t limit = granularity * (serialized_chunk_size << 3);
++    uint64_t limit = granularity * ((uint64_t)serialized_chunk_size << 3);
+ 
+     assert(QEMU_IS_ALIGNED(limit,
+                            bdrv_dirty_bitmap_serialization_align(bitmap)));
+-- 
+2.53.0
 
 
