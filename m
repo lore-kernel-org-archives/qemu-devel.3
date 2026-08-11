@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEB7C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F06C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpOc-00058Y-9X; Tue, 11 Aug 2026 12:32:10 -0400
+	id 1wtpOI-00041Y-Jd; Tue, 11 Aug 2026 12:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOa-0004vZ-0W
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOF-0003jj-0v
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOY-0000yL-A7
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOC-0000sm-GO
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465925;
+ s=mimecast20190719; t=1786465903;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kWnoHbeX0Bj5s7Ejqgs+GFdD0ZsE2bcsx8zPMkC5ZgY=;
- b=fiTxaH22LRfxZVMgcOEnItZw7BWjQCficqF4BQWOGsGBcRyZEOcanA5mZHK5Yk9S0uUqGC
- vngT9fajnxX6CAk4bpui/05aUNaSTtHaNuHO7kOwnI7/dU/8NNQFsUJBxNeuwy8xtzT64g
- 9xjChzvwAF4C2JDDheyN0v9uUSV4HKo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TD4ve/07S+h/+TWVYrd6Ao8qPLekqmeRr3NVgSkvhNU=;
+ b=NHKrNGOPzunGjU+2Y3w/wO5ntTOLS67TTQbZbU//JCATWrsxK77rXBiLJHDvZ59jYcOUVF
+ r96thJXt3Qc1jTq4vah3lzzNrZXbGxHFwVcXJ/N3ph01VV6V+SMi93HW5+EDWHFeK9Bzb4
+ 7Z1PM+2M8BTYhu+uxxxj9vIR/k15l1w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-6H7rgFEwPwmPQkFO0UVFZA-1; Tue,
- 11 Aug 2026 12:32:01 -0400
-X-MC-Unique: 6H7rgFEwPwmPQkFO0UVFZA-1
-X-Mimecast-MFC-AGG-ID: 6H7rgFEwPwmPQkFO0UVFZA_1786465920
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-V6uH23-tOWuByYxDpNuSEQ-1; Tue,
+ 11 Aug 2026 12:31:40 -0400
+X-MC-Unique: V6uH23-tOWuByYxDpNuSEQ-1
+X-Mimecast-MFC-AGG-ID: V6uH23-tOWuByYxDpNuSEQ_1786465898
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EAB0180064B; Tue, 11 Aug 2026 16:32:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED96418007E7; Tue, 11 Aug 2026 16:31:37 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E2858195DF91; Tue, 11 Aug 2026 16:31:58 +0000 (UTC)
+ id 463B2195DF91; Tue, 11 Aug 2026 16:31:36 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 64/83] tests/functional/arm/test_aspeed_ast2500_sdk: Update
- ASPEED SDK v11.03
-Date: Tue, 11 Aug 2026 18:29:19 +0200
-Message-ID: <20260811162938.1403216-65-clg@redhat.com>
+Subject: [PULL 53/83] tests/qtest: pca9554: test output-to-input reflection
+ and pull-ups
+Date: Tue, 11 Aug 2026 18:29:08 +0200
+Message-ID: <20260811162938.1403216-54-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_SPACE_RATIO=0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,63 +84,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260804081955.1563537-7-jamin_lin@aspeedtech.com
+Check that a pin configured as output drives its OUTPUT register level
+onto the pin (push-pull) as reflected by the INPUT register, and that a
+pin configured as input floats high through its pull-up.
+
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-20-82a63fead90c@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/arm/test_aspeed_ast2500_sdk.py     | 8 ++++----
- tests/functional/arm/test_aspeed_ast2500_sdk_515.py | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ tests/qtest/pca9554-test.c | 45 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/tests/functional/arm/test_aspeed_ast2500_sdk.py b/tests/functional/arm/test_aspeed_ast2500_sdk.py
-index 6ab498b3ff54..95df32b84ff8 100755
---- a/tests/functional/arm/test_aspeed_ast2500_sdk.py
-+++ b/tests/functional/arm/test_aspeed_ast2500_sdk.py
-@@ -10,14 +10,14 @@
+diff --git a/tests/qtest/pca9554-test.c b/tests/qtest/pca9554-test.c
+index a5f213a59cc6..ce6e90f3f881 100644
+--- a/tests/qtest/pca9554-test.c
++++ b/tests/qtest/pca9554-test.c
+@@ -25,6 +25,48 @@ static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(i2c_get8(dev, PCA9554_CONFIG), ==, 0xFF);
+ }
  
- class AST2500Machine(AspeedTest):
++/*
++ * A pin configured as output (config=0) drives its OUTPUT register level onto
++ * the pin (push-pull), which the INPUT register reflects. A pin configured as
++ * input (config=1) floats high through its pull-up.
++ */
++static void test_output_drives_input(void *obj, void *data,
++                                     QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    /* Low nibble output, high nibble input (pull-up). */
++    i2c_set8(dev, PCA9554_CONFIG, 0xF0);
++    i2c_set8(dev, PCA9554_OUTPUT, 0xFA);
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0xFA);
++
++    /* All outputs, driven low then high. */
++    i2c_set8(dev, PCA9554_CONFIG, 0x00);
++    i2c_set8(dev, PCA9554_OUTPUT, 0x00);
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x00);
++
++    i2c_set8(dev, PCA9554_OUTPUT, 0xFF);
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0xFF);
++}
++
++/*
++ * With all pins configured as inputs the pull-ups make the INPUT register read
++ * all ones regardless of the OUTPUT register; switching a pin to output with
++ * output=0 drives it low.
++ */
++static void test_input_pullup(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QI2CDevice *dev = (QI2CDevice *)obj;
++
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0xFF);
++
++    i2c_set8(dev, PCA9554_OUTPUT, 0x00);
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0xFF);
++
++    i2c_set8(dev, PCA9554_CONFIG, 0x00);
++    g_assert_cmphex(i2c_get8(dev, PCA9554_INPUT), ==, 0x00);
++}
++
+ static void pca9554_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -36,6 +78,9 @@ static void pca9554_register_nodes(void)
+     qos_node_consumes("pca9554", "i2c-bus", &opts);
  
--    ASSET_SDK_V1101_AST2500 = Asset(
--        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.01/ast2500-default-obmc.tar.gz',
--        '3faa1188198da2216837be4b53861c483a58c3ad63784089720bf8421e157da1')
-+    ASSET_SDK_V1103_AST2500 = Asset(
-+        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.03/ast2500-default-obmc.tar.gz',
-+        '8e20cafddca04d73b799918d6f35b08c83c9f024e223a317b0ad71b97b84842f')
+     qos_add_test("reset-defaults", "pca9554", test_reset_defaults, NULL);
++    qos_add_test("output-drives-input", "pca9554", test_output_drives_input,
++                 NULL);
++    qos_add_test("input-pullup", "pca9554", test_input_pullup, NULL);
+ }
  
-     def test_arm_ast2500_evb_sdk(self):
-         self.set_machine('ast2500-evb')
- 
--        self.archive_extract(self.ASSET_SDK_V1101_AST2500)
-+        self.archive_extract(self.ASSET_SDK_V1103_AST2500)
- 
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2500-default", "image-bmc"))
-diff --git a/tests/functional/arm/test_aspeed_ast2500_sdk_515.py b/tests/functional/arm/test_aspeed_ast2500_sdk_515.py
-index 8d39dc65daaa..516e96e52db7 100755
---- a/tests/functional/arm/test_aspeed_ast2500_sdk_515.py
-+++ b/tests/functional/arm/test_aspeed_ast2500_sdk_515.py
-@@ -10,14 +10,14 @@
- 
- class AST2500Machine(AspeedTest):
- 
--    ASSET_SDK_V1101_AST2500_515 = Asset(
--        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.01/ast2500-default-515-obmc.tar.gz',
--        'b848ff620d2e9c83e2fb4736b4d1c39b82fdb041058cd42be42c3b177bf38eb9')
-+    ASSET_SDK_V1103_AST2500_515 = Asset(
-+        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.03/ast2500-default-515-obmc.tar.gz',
-+        'f17d3b0a5157bcf73c21c4981f838ea0b76c6406cc4a6409267d57d61758ebb6')
- 
-     def test_arm_ast2500_evb_sdk_515(self):
-         self.set_machine('ast2500-evb')
- 
--        self.archive_extract(self.ASSET_SDK_V1101_AST2500_515)
-+        self.archive_extract(self.ASSET_SDK_V1103_AST2500_515)
- 
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2500-default-515", "image-bmc"))
+ libqos_init(pca9554_register_nodes);
 -- 
 2.55.0
 
