@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2B1EC5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4E3C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtna0-000068-JG; Tue, 11 Aug 2026 10:35:48 -0400
+	id 1wtnaF-0000EN-Ah; Tue, 11 Aug 2026 10:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnZz-000055-3U
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:35:47 -0400
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ id 1wtnaD-0000E6-Rz
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:01 -0400
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnZx-0001oj-EG
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:35:46 -0400
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-51c05dcdf49so30248991cf.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:35:45 -0700 (PDT)
+ id 1wtnaC-0001q2-6l
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:01 -0400
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-9034b6b7674so6467376d6.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786458944; x=1787063744; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qtwJ48c2jv1FFgaa3GcNc1BiQL2QiF7L65p40Cem4T0=;
- b=jCUPPo1PuVjifc5P8py4KEx+NyON8DhRqLFXi9mLb0Y66vOSSacHBZ7Z2LNaUKVD2K
- 1SRRue4WS9UpLh+dq03RmC64++fbekkYnP9VB1zM3kK6EPMwRufv5z01uV76JOQO39ub
- 9Awtl7oDsd4pDmZCI8U4HX4jVtU6e6Q3/16Eb2OFAi8bhgI6Ue2FEBKQjHpe0JMmDrPL
- unUM/20ukUZ+TuFf65XvoiGILyzwVUxQxkDKVtOg35arSSsdv8I5Q75nOL7kL7gJ5Rda
- YKGyMbPSvrS+blX8j/wV6bPPddXZkXolTnKyzP2v6z5/OGkEIs/CoajN/pnVyQ2903mJ
- e2fA==
+ d=gmail.com; s=20251104; t=1786458959; x=1787063759; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MOPsIRAHmnpYPNJRCDGGvnlTaDui8VBb2s0z+7gjrio=;
+ b=W6EVVtrWyM2PGfuPVn6pOJoG5WDaxIV6Yr5mXoPrAAIGECxbe3FIMK7rpX8Lvj/jKh
+ vWeRR6dLjwvpZtsXjLd44C1Zw9gFA3DFoaF20kVIyeb+Xm9VKs5q2CRl/8mNqFIDs6pA
+ 5p4XRCBD5TW8WVvsK2S/p6I75qjTTd6Tuqb8pu8X7zyH/HorXrdBC9alGB5VdYKWIDXA
+ t4z8456HbFb2ihD9kfd1OT4UL93IZKgE8W/7BDJum49HIWvGq/R9NU8EHLTggFSz/EtV
+ XmAUFBYN35W92kZuVP8aD2fm0ec3iYJQCWbuJ3E/z5f7HpsieLbDqB8RkfOmYO5mnYvW
+ Vd9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786458944; x=1787063744;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=qtwJ48c2jv1FFgaa3GcNc1BiQL2QiF7L65p40Cem4T0=;
- b=mXCa3sk6PmXW8l4y9i+SsTB9LBD7uPRdoicVoi6caggTUZcEjjPapcZ2K0MKOgi8nm
- JjOoJMub81Oi2ju5iinDLL9zv/Z6NwjzwPgsDuW7DbveRWARTULLdG8voSKZ529Cno/t
- lFnxg7mCJCvvJuP9b6BAk5tod2gTmZfGuqDZw7Yjm+P2rRydby34TcfFst5v87jj22DA
- sxdlevyKb+NPMDXv6zFNgnpDg9noBcPRYzMRnAfKfvV2E1bP5EPDZOmets27iCZwmJZM
- soN6YMkcfuH+qMg3TNd2ZWjx71tWbcYoPwY72+4ZSX3cm48OdweO6WeLpWOhCehBr+gQ
- qj+A==
-X-Gm-Message-State: AOJu0YxbumwLP2WkpYya5W+S27Q/gj0Qyv7nuZQRfEy57VZ5nAMcrsek
- 09TdsKLBFsYrtrGENz6FPgXoAntbrRxb1QUFgg85yT5nPO4H27sFtJmGP4ZeIg==
-X-Gm-Gg: AR+sD127bPsvg/9ptVhCOBUvNd6plW/r6WgxEn/SPBjBkn0GN629o9aEbfdLBn3iitF
- 5OcbqY9Fl+Kz+83/hUo426oSJBvzVFzE9kjZxY1pm4dD0bw25SrNTWQakJORhgnAkeMvq8jORja
- jufmSg2n98ITLyFAiYkLj4Ld8VXxXdVwDSo9BkVFsg+4f2W4NUI3VOK4Gs1IN/xAQipJH9a+cyF
- Qg6AF4qUEO18ZRxgTjukyq7N8/Dx7Xuze65MNl/wTUdM2jh2J2UWZso0dhHBe7jBnRlNugyXDY/
- adsk6lcKH1u0b0gulLAt3bwVOYEkNkK5S13jH4Bt46dJiDMh8GUsW1UPnjl+AfljpkV5tdnwfD3
- T7xF163gNdTFTwRl/5pLFg2WeHxD6dqD6RVEHFhRDQPAMtLmfzoodL+r31vUYM0IqcQOjWnqw/6
- yrujRTWCQS/I9e/q+TY1fvu+bLWjRMGIswiLtIAUgmdNP/eD1oCpkZOtHkhGE5p7q3pdgy4WQ+r
- jU7dcpIqQlYhjacv3U=
-X-Received: by 2002:ac8:7f07:0:b0:51c:239:42da with SMTP id
- d75a77b69052e-52d584f6403mr33135831cf.15.1786458944155; 
- Tue, 11 Aug 2026 07:35:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786458959; x=1787063759;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MOPsIRAHmnpYPNJRCDGGvnlTaDui8VBb2s0z+7gjrio=;
+ b=lCPgqwAgWRvBRcwpMWKLpVreP2DviZ48qfP7qb45LJh1UvSV37cqqsrHc1x55+N63j
+ nicFcbiDtjWUskGx5RDzu6JWgQmSCj7Wak7zq6zsz5wRt6YOrGjP18VALUekRbZzH961
+ iVHlKHHSp8WoIUA1tJY8gCaLhhVNMsaIo6Sgep3mlUADXeUERNNh3VGI2ac7LXmnncE7
+ I1c9RUV/dAVJpvTElB8NZWux4O6cAlivZY+MddT1yOoN4n7WJfZ1MPy+zo4VXpVCFqTq
+ rYV3n42gcl8DrwuyxRsVsA5G06FBQUM4+7JxvWPieeRlYryY+kKQcRapvDrLtYnOZ1ap
+ AiXg==
+X-Gm-Message-State: AOJu0YxdKeZZFpgGrkaR/CqqlUBs4sNRIHfn787+BJTcFfjJyLb/f7rB
+ V7eT7wgJUyG6vq/wVyPl7KMPH7AyckqDZuJ9KqeRqKcKyrtua+7tp5RAfaDLbw==
+X-Gm-Gg: AR+sD105soqU1p8C2wLDNT/qhZCk8lDel2db2BXjOw5SQPheF9cQHrKkdvvKIC30R7p
+ jNK8eb5Zfph/tO4oddaX3kgTSaN3r0RdY367QNmkLs5u8YaaQWDo104VGrQxcex4OqgWQXq8fts
+ yDO2uLUgL0Cg7rfig3sCkYdMGIXi/QPW5+l7bwl7ULjmMiTkRzP2FIWtSddWwxRubqt/XLAWyWo
+ zweO9ZoofRW3dQKy2totrpZ5afR4/XSROxr61Giv8GLu2V/qH3+wuVlqQUoa2+FMnMuOpiv0MgX
+ jQPPI23BNmuqDOYLytksf79Uzi/RzIZ3wxFUXXvLYw/HSCIpAOBCf/kRCFqtax4vK5MxIY4pozB
+ sSGYIij3vW+DchQ63iym2HIf7nd+9dbUPRI6HBVwhXdLWl0GgdzqMvOQwUoT94e5BDueY7DikkW
+ +BtG6lLindBwACZKBfX/cdCv/NuWNxVBxxW/FK/ug/B10BtRhEklQ0WDwFscxniZG/GOnfA8HSD
+ Zb54UjJs60FkVFffOA=
+X-Received: by 2002:a05:6214:3d8a:b0:908:92e3:a37 with SMTP id
+ 6a1803df08f44-90a6c258352mr3659486d6.32.1786458959163; 
+ Tue, 11 Aug 2026 07:35:59 -0700 (PDT)
 Received: from localhost.localdomain ([198.16.145.87])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90a6c3ec565sm376396d6.43.2026.08.11.07.35.43
+ 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.35.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 07:35:43 -0700 (PDT)
+ Tue, 11 Aug 2026 07:35:58 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v3 2/2] tests/functional/aarch64: add raspi4b full-RAM
- regression test
-Date: Tue, 11 Aug 2026 10:35:39 -0400
-Message-ID: <20260811143539.7835-3-marcelomanzo@gmail.com>
+ Marcelo Manzo <marcelomanzo@gmail.com>
+Subject: [PATCH v2 00/19] hw/arm/raspi4b: working PCIe and GENET (real
+ networking)
+Date: Tue, 11 Aug 2026 10:35:37 -0400
+Message-ID: <20260811143557.7862-1-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20260811143539.7835-1-marcelomanzo@gmail.com>
-References: <20260811143539.7835-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qt1-x835.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf34.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +101,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guards against the bug fixed in the previous commit: boots raspi4b's
-default 2 GiB configuration and checks that the guest actually sees
-close to that (>1.9M kB), not the ~921 MiB the bug left it capped at.
-Deliberately checks a threshold rather than the exact byte count of
-either figure, since the precise number depends on how this specific
-pinned kernel accounts for its own early reservations; the threshold
-is comfortably between the two (943524 kB broken, 1905824 kB fixed,
-confirmed by hand against this exact kernel/initrd).
+This series gets raspi4b's PCIe root complex and GENET Ethernet
+controller working end to end: the PCIe link comes up and devices on
+it actually enumerate, and GENET passes real network traffic (DHCP,
+SSH) under both older and newer guest kernels.
 
-Folded into the existing test_arm_raspi4_initrd test rather than a
-new standalone boot, since it needs no machine state that test isn't
-already setting up, and the functional-test suite is already slow
-enough from how many separate guest boots it runs.
+v2: per Peter Maydell's review of two follow-up series posted after
+this one ("hw/arm/bcm2838_pcie: make PCI device enumeration work" and
+half of "hw/arm/raspi4b: fix watchdog and GENET bugs hit by modern
+distro kernels"), folded both of those bugfixes directly into the
+patches here that introduce the affected code, since neither
+bcm2838_pcie.c nor bcm2838_genet.c is in upstream git yet:
 
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
----
- tests/functional/aarch64/test_raspi4.py | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+  - patch 2 ("add BCM2838 PCIe host") and patch 3 ("enable BCM2838
+    PCIe host bridge") now include the PCI enumeration fix (config
+    space read/write underflow, missing pcie_host_mmcfg_init(),
+    wrongly-overridden config_read/config_write, and the MMIO window
+    address-translation fix) instead of introducing it broken and
+    fixing it in a later series;
+  - patch 6, 9, 10, 12, and 13 now include the per-ring DMA
+    status/RX-ring-selection fix (proper per-ring enable bitmask for
+    both RDMA and TDMA, a queued-packet flush on ring enable, and
+    scanning for the first active ring instead of assuming the last
+    one) instead of introducing that bug and fixing it afterwards;
+  - patch 18 carries the accompanying docs note about PCIe MSI/MSI-X
+    not being implemented (use msi=off,msix=off).
 
-diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
-index 35ba6c24f7..8506854d99 100755
---- a/tests/functional/aarch64/test_raspi4.py
-+++ b/tests/functional/aarch64/test_raspi4.py
-@@ -86,6 +86,23 @@ def test_arm_raspi4_initrd(self):
-                                                 'BCM2835')
-         exec_command_and_wait_for_pattern(self, 'cat /proc/iomem',
-                                                 'cprman@7e101000')
-+
-+        # We used to get the RAM size wrong; guard against a regression
-+        # (see git history for details).
-+        mem_total_kb = None
-+        cmd_output = exec_command_and_wait_for_pattern(
-+            self, 'cat /proc/meminfo', 'MemAvailable')
-+        for line in cmd_output.decode('ascii', errors='replace').splitlines():
-+            if line.startswith('MemTotal:'):
-+                mem_total_kb = int(line.split()[1])
-+                break
-+        self.assertIsNotNone(mem_total_kb, 'MemTotal line not found')
-+        self.assertGreater(mem_total_kb, 1900000,
-+                           'guest RAM (%d kB) is far below the ~1.9 GiB '
-+                           'expected for a 2 GiB raspi4b -- the second '
-+                           'memory node above the 1 GiB peripheral hole '
-+                           'is probably not being added' % mem_total_kb)
-+
-         exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
-         # TODO: Raspberry Pi4 doesn't shut down properly with recent kernels
-         # Wait for VM to shut down gracefully
+Those two follow-up threads are superseded by this v2 and shouldn't be
+applied standalone. No functional changes beyond what those two fixes
+already did -- this is purely relocating the same diffs to where the
+buggy code was first introduced. checkpatch.pl is clean (0 errors)
+across all 19 patches, the series builds standalone from a clean
+worktree (--target-list=aarch64-softmmu), and the full
+tests/functional/aarch64/test_raspi4.py suite passes, including the
+GENET and PCIe tests that exercise exactly the folded-in fixes.
+
+Marcelo Manzo (10):
+  hw/arm/bcm2838_pcie: add BCM2838 PCIe Root Complex
+  hw/arm/bcm2838_pcie: add BCM2838 PCIe host
+  hw/arm/bcm2838: enable BCM2838 PCIe host bridge
+  hw/net/bcm2838_genet: add GENET stub device
+  hw/arm/bcm2838: enable BCM2838 GENET controller
+  hw/net/bcm2838_genet: fix PHY autonegotiation-restart deadlock
+  hw/net/bcm2838_genet: fix bogus RX checksum reporting
+  hw/net/bcm2838_genet: fix TX ring activation check
+  docs/system/arm/raspi: move PCIe/GENET from missing to implemented
+  tests/functional/aarch64: add raspi4b GENET networking test
+
+Sergey Kambalin (9):
+  hw/net/bcm2838_genet: add GENET register structs, part 1/4
+  hw/net/bcm2838_genet: add GENET register structs, part 2/4
+  hw/net/bcm2838_genet: add GENET register structs, part 3/4
+  hw/net/bcm2838_genet: add GENET register structs, part 4/4
+  hw/net/bcm2838_genet: add GENET register access macros
+  hw/net/bcm2838_genet: implement GENET register ops
+  hw/net/bcm2838_genet: implement GENET MDIO
+  hw/net/bcm2838_genet: implement GENET TX path
+  hw/net/bcm2838_genet: implement GENET RX path
+
+ docs/system/arm/raspi.rst               |    6 +-
+ hw/arm/bcm2838.c                        |   15 +
+ hw/arm/bcm2838_pcie.c                   |  308 +++++++
+ hw/arm/bcm2838_peripherals.c            |   46 +
+ hw/arm/meson.build                      |    4 +-
+ hw/arm/raspi4b.c                        |    2 -
+ hw/arm/trace-events                     |    4 +
+ hw/net/bcm2838_genet.c                  | 1119 +++++++++++++++++++++++
+ hw/net/meson.build                      |    2 +
+ hw/net/trace-events                     |   16 +
+ include/hw/arm/bcm2838_pcie.h           |   75 ++
+ include/hw/arm/bcm2838_peripherals.h    |    7 +
+ include/hw/net/bcm2838_genet.h          |  428 +++++++++
+ tests/functional/aarch64/test_raspi4.py |   30 +
+ 14 files changed, 2057 insertions(+), 5 deletions(-)
+ create mode 100644 hw/arm/bcm2838_pcie.c
+ create mode 100644 hw/net/bcm2838_genet.c
+ create mode 100644 include/hw/arm/bcm2838_pcie.h
+ create mode 100644 include/hw/net/bcm2838_genet.h
+
 -- 
 2.47.1
 
