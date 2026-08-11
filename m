@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB39C5AD55
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA84C5AD55
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wteX6-0005E6-Di; Tue, 11 Aug 2026 00:56:12 -0400
+	id 1wteXH-0005SD-2J; Tue, 11 Aug 2026 00:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wteX4-0005Cp-Vf
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:10 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1wteXE-0005Qc-QV
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:20 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wteX3-0002lD-GD
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:10 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38dcbade417so439862a91.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 21:56:08 -0700 (PDT)
+ id 1wteXD-0002nV-Bk
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:20 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38f620399a0so383748a91.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 21:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786424168; x=1787028968; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786424178; x=1787028978; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=MefsC4UE6lFVxPtqPstaD9eR7c3atArJc6pwlLo8zrI=;
- b=jWDCb04lRmBB18DH/2natfXe3b1hh22yi991Hua2yf4T4N/P8iwJWdMCop3C/8ab9T
- 4fNAEXmJJW5G/yCOaO9jatuuqhNgsnBDga9HwT+pU5fS2Fue+iYg0DFXGaOig379O0dt
- tZ7mXd683+VPDX6BncKAMB/GoahLfSjuGxasHU6YJzuiVDZpboAnKEt0QKV2fhziUXgU
- 4I1oNsqbkXCOX44KuRILYzT8UmhEf9mtQFw3eYaBONjYLp+RA/oFimi3O9fQBA7vA1Xq
- dzNNw2PnWeupFWvHhj1VDYpRjQT349bbS8F6cNhz/06gIF0REdrczDeM5MzIDa5qwaXZ
- X/yA==
+ bh=VhlDEow7kayv7qRQDlE/Y1wsQ2IfOPvBYG5/m8i8FvA=;
+ b=HeUcAHjFkCJCELe5OhC1kkrrtD3bNTOKCUJbwRtHlpcddeQ4P6Ijkid5wSm5tvvBJN
+ Rb2ry0F6pCdOwM0yi9p62fBRQFDtZGs4H017U1cx8y5YVz3nEKqE8EE4BhebyC0fEdyk
+ 6gw654rHUqcevvvTnmKJSV5ziOPXA722ENTQejpjSBM/9wup7spXY0t75kYABI5K45ga
+ QdRzcVCwi34RebkyFOs1OCnV55E3zbljH3vyn2NRYLnmkGgRuSf40laWJw1Bm8n7FZ80
+ iXiCHYUTyrvS0dmuLQubGdSAHuNpyionfxNuJJdhfdiieo6/eop5MTdV7k7P96Nd9Lth
+ uulw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786424168; x=1787028968;
+ d=1e100.net; s=20251104; t=1786424178; x=1787028978;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=MefsC4UE6lFVxPtqPstaD9eR7c3atArJc6pwlLo8zrI=;
- b=jhfKCofO4F0wPe9F5/1YiyswrmNUhPMNJItmK+sHBx6PqTrKfMqgQr1EytoPDQnPcx
- vu77+ieic/zofbBzNE0/YuUgiOlsvwhdKy5sGfv6kJSKusXU0W9vCKUC+JILDEeBFJCH
- L8TPWOKdcZ30hzIGJaLANvi9/ZOvDmrcFx6wrAH5yOxREmveQAZI6hp8iN1IHp60c/rd
- YA2Ivi0fV/HwScdCEDwtMJ326WwAlzUzHK0KwUb6K4mZbQJOaZ+x288YzH0GxEzdRK6D
- Qda39sQwdoosMMmtpJO19q/2SBiZapIXgDRpOuhy3W1rODwvYpokoa7jbHX7smMADoqJ
- GjHA==
-X-Gm-Message-State: AOJu0YyyLr/Ax4hAQ8SPUgi0xTTcnDmzrROXC5Pse6UGml5hc3E3jH4O
- ao8semG28+EHg8TnIR74ZG4jt8csYHIVUSSdlqlfK+W+QTy4yUMv5apFkjb0yipOZMNfLaiMZJk
- z0cMz
-X-Gm-Gg: AR+sD13Mo6fvOXAJp9vMl8YR3cha258pzZn7bPhbk6HkLKdgMbQYG9frW5hIUpWyDT3
- jk7uTQUezzApN4rqO8FGrA5e9idANFe4FOxKVpH7jtbOeo6qaJ0okBCBLhh7IvTvOXpFJlIq0V+
- gyLngpKACi8GwkLonCOQfBvcfg11opLyzt7TeVB9Zko8JZLZ+qJzFhfJmQtT2haD/tu0bXKChaU
- IoEDzgXHCA7izTpL3R+K6XX4lyuqy/QIk3j8RLXbynJEWzt2iV91GhtmU3IzsFfmqow7XgAS50o
- UC+Ko8npUaLNRq+KzwAl82cWG+n/zSYJf4F2MyzDzvINjYW0q04m3fXVf5gagaK4zZvBzwD5xUh
- 6XZm7yXgPc7C2pc4ZO4vx11/ze40tPsjmbi/UAx7eHpguoih/urulme/Xbi2u9pgM/VjpH/7UNV
- 8uewAgogsyCkO6Nsb85y+Puc7BFEV+K5pTHFbDNRjwM7fPfdQU+PROg6fVExvWL/W9/1G16kPZO
- x+ME8VgridJ7IePXN4u
-X-Received: by 2002:a17:90b:54c6:b0:38e:542:6485 with SMTP id
- 98e67ed59e1d1-392ec5d6ab5mr738805a91.12.1786424167638; 
- Mon, 10 Aug 2026 21:56:07 -0700 (PDT)
+ bh=VhlDEow7kayv7qRQDlE/Y1wsQ2IfOPvBYG5/m8i8FvA=;
+ b=XoeIe0KY8SQ0R+QOnqSSm8UZmDWV4w3WaPqs0onDR/hDBAJB8hbCf7vk4IT2i1IkxI
+ Mi21ffHSe9xpxMjTXM2Jd/2MXeqOTSD2SNoh9CDYgfr4stKaBGkDTIKE2+LkEAhejZ4k
+ 6Tl9ixT/fkJcJxIR6YbMLTv5VUNN+yRM2kYxO2SF062ONDkj0+QFydcSJfE/P8zgldp6
+ A2/irRs3fpN4LiLJH1fmyk7kfD/wlCQ+IooNLzZtZJqalF/z5O8w84osXQBMqsqy4KNf
+ U5I6FHOjAEWx3vB6n9n5N/MWBeIZMw5xoJPBfZHM9ZBGbcUJmhjjqNwQLnapAIXq4GX0
+ OqNw==
+X-Gm-Message-State: AOJu0Yx+v08EqYF2KVee3gOGLlplXq6DeCPdQiQzPfMYzyE0pnlCI0F6
+ 7QdIJ16fWGdawQL7Ysj55eWQhr6oQzLzXMILA7L3PW7v1YQe2ASbcaMCX9mWBocV1DWBB2+Jmb9
+ 6w71A
+X-Gm-Gg: AR+sD1198BBRQ315lLKj33/xZdbF4EaMgMeHjGIzwef176Mc8qMPk3fxaSLZT/CLhRk
+ Ffwm9WhJhtCFSlcBZzF86YbHRdxgfPc7h4RiTk/h5vr6FoKxNRZlVoxxFLVNbBv4RvLyyaSnrqN
+ pjMmu6HWBoMsUzo0oIQtLZf4QZIAUz9rRNRJK31EWJrNp9Nda4e6zEuxGg3JcKqw7irHdxC2G3w
+ JR1IaWx6uJzXxAaVWsfr28I0B+8VHGxcHyVp9EWREhIJh2+DZ4wWpRZ7JT8Zy5GDpjN+64Ttz5l
+ xOWPVJrhCp41END4wrxS+9fyIxXBCdtMoJ4vU7o0ZUe9lf9vyyF294MjCSHghdax7+E5/V24S0M
+ 2tLC1hw5YVBdWWVTNg9/ytX9UHffbKmLp1cKwXeYrATcZ/pWs3JncDpPM89juyetjKQ+K7fAvpT
+ LObxQdvLQiTBmqUelFZUA758PAtjkwgImi+UcAxYKicKUG12QYWCs0u80CQOZR4XcxxYqOCO4oA
+ 3Z6c6MtNtGFD3y4BNKp
+X-Received: by 2002:a17:90b:398d:b0:38d:e658:5959 with SMTP id
+ 98e67ed59e1d1-392ec4d23c3mr603158a91.5.1786424178016; 
+ Mon, 10 Aug 2026 21:56:18 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392ee3084d0sm156818a91.8.2026.08.10.21.56.07
+ 98e67ed59e1d1-392ee3084d0sm156818a91.8.2026.08.10.21.56.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 21:56:07 -0700 (PDT)
+ Mon, 10 Aug 2026 21:56:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 01/16] tcg: Fix opcode dump for bswap
-Date: Mon, 10 Aug 2026 21:55:50 -0700
-Message-ID: <20260811045605.1246543-2-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 12/16] tcg/loongarch64: Implement revbit{8,32,64}
+Date: Mon, 10 Aug 2026 21:56:01 -0700
+Message-ID: <20260811045605.1246543-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260811045605.1246543-1-richard.henderson@linaro.org>
 References: <20260811045605.1246543-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,29 +104,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We use an array of char for bswap_flag_name, so some
-entries in the array are non-null but empty.  Check that.
-
-Fixes: 587195bd590 ("tcg: Add flags argument to bswap opcodes")
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tcg/loongarch64/tcg-target.c.inc | 34 +++++++++++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 3 deletions(-)
 
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 1e77f2365a..e023ee8b9a 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -2951,7 +2951,7 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
-                     if (flags < ARRAY_SIZE(bswap_flag_name)) {
-                         name = bswap_flag_name[flags];
-                     }
--                    if (name) {
-+                    if (name && name[0]) {
-                         col += ne_fprintf(f, ",%s", name);
-                     } else {
-                         col += ne_fprintf(f, ",$0x%" TCG_PRIlx, flags);
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 97ed51d99c..7d89e80886 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -1866,16 +1866,44 @@ static const TCGOutOpUnary outop_bswap64 = {
+     .out_rr = tgen_bswap64,
+ };
+ 
++static void tgen_revbit8(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
++{
++    if (type == TCG_TYPE_I32) {
++        tcg_out_opc_revbit_4b(s, a0, a1);
++    } else {
++        tcg_out_opc_revbit_8b(s, a0, a1);
++    }
++}
++
+ static const TCGOutOpUnary outop_revbit8 = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O1_I1(r, r),
++    .out_rr = tgen_revbit8;
+ };
+ 
++static void tgen_revbit32(TCGContext *s, TCGType type,
++                          TCGReg a0, TCGReg a1, unsigned flags)
++{
++    tcg_out_opc_revbit_w(s, a0, a1);
++
++    /* All 32-bit values are computed sign-extended in the register.  */
++    if (type == TCG_TYPE_I64 && (flags & TCG_BSWAP_OZ)) {
++        tcg_out_ext32u(s, a0, a0);
++    }
++}
++
+ static const TCGOutOpBswap outop_revbit32 = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O1_I1(r, r),
++    .out_rr = tgen_revbit32,
+ };
+ 
++static void tgen_revbit64(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
++{
++    tcg_out_opc_revbit_d(s, a0, a1);
++}
++
+ static const TCGOutOpUnary outop_revbit64 = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_O1_I1(r, r),
++    .out_rr = tgen_revbit64,
+ };
+ 
+ static void tgen_neg(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
 -- 
 2.43.0
 
