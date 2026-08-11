@@ -4,77 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E2E4C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CDAC5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtsFT-0000YZ-5m; Tue, 11 Aug 2026 15:34:55 -0400
+	id 1wtsLh-0001gP-Fz; Tue, 11 Aug 2026 15:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wtsFN-0000YG-KT
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:34:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wtsLe-0001g1-69; Tue, 11 Aug 2026 15:41:18 -0400
+Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wtsFL-00054r-OA
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:34:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786476886;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=h5jYfm+CvxMRA0ENZWb6+tfU6DID4sCV4Eg1pb1rb2I=;
- b=UZXoHh1uyeUH0/HMr0lCXwWjqwmvdonX1d38jOVmAJMCXI9vMJvQHt3OwSMtNj9qA7JktC
- WFlzbSuwRJUuQ2WZObnKhxdXj2/VKsXUL3P89M6JvCZ/iBzxtshvfkQhixo+zVKUB/2pja
- viYWSuBIrIqg2H5dgRQsJAoiktwOIc8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-t7T9jvUtOzazw_Qgtq9jig-1; Tue,
- 11 Aug 2026 15:34:44 -0400
-X-MC-Unique: t7T9jvUtOzazw_Qgtq9jig-1
-X-Mimecast-MFC-AGG-ID: t7T9jvUtOzazw_Qgtq9jig_1786476883
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3E961800145; Tue, 11 Aug 2026 19:34:43 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA8281800347; Tue, 11 Aug 2026 19:34:42 +0000 (UTC)
-Date: Tue, 11 Aug 2026 15:34:40 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- 'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH V11 05/15] block/export: track IOThread references
-Message-ID: <20260811193440.GD170741@fedora>
-References: <20260806202531.243806-1-zhangckid@gmail.com>
- <20260806202531.243806-6-zhangckid@gmail.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wtsLQ-000659-Gv; Tue, 11 Aug 2026 15:41:08 -0400
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+ by mailfout.phl.internal (Postfix) with ESMTP id 6A972EC0041;
+ Tue, 11 Aug 2026 15:41:02 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-10.internal (MEProxy); Tue, 11 Aug 2026 15:41:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786477262; x=1786563662; bh=n5YH/xPo3cEuI/Yji1Cys9ytlYUV+Vsm
+ jEiBv/06c6w=; b=rHP46vQXxBWT0g9qkJsFE/mD4HFZG71BVUQ6RJF26rvDqvC5
+ 3QpNhoJOIJMHVFck4SfiIualv22kO0kBq0dDrhf/zM9QzHzMpGFPevx5xlcRr8wZ
+ 9poKlSX5MehrKVD6ShAltqozkdsBoMHbaFA3kqw1TKr07zkLviint+oHvMyV0+rN
+ xDWVuFFA7kGRwrKohtPIZjnzoNgZK1RWtlShFNGWz+fsRTquyKAazrXoLwErKsH7
+ hsbHJ/zUaEWMan+jpzYDHffCcH7It/6WB6768LJFkErB37scA6DdVMRLFNx9RirT
+ 1sUk9wVHW88Ot8VvRwODo7E2wa62y+UzJK5X0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786477262; x=
+ 1786563662; bh=n5YH/xPo3cEuI/Yji1Cys9ytlYUV+VsmjEiBv/06c6w=; b=Y
+ 35dnbwQMu0ZRvmJmT+hp/bIRV8W4FDlYDIjHdiPG5qax7RbcOUgDnE0hc77stIDp
+ HdCdevSDNRnE3IvufqJbcGY0yDWjLAWWp479DjHcqOYtCg0vKgAzh0Z+VQul06OE
+ T+VvKlliiIEpeA9g3GJr9dCLZY+dGv0AuPd3651iVi1V+2xc80R9IFayEp7uiynY
+ psiUdS6vUBy33Pq+SDdAPZxXSssBropGYcCBmTojgX4BgRHcjimX4Rjn3xGErorB
+ B0uzfCGiydswNYoBwkpHgsJzHev/X8+74t0o5+rH6cyDZUPz45Wv/QjWqYa3xM3Y
+ am8dfC0CrhHLbvoaVMp5g==
+X-ME-Sender: <xms:zXp7an8QzhyIWuFusZx-9caLOS1PKbCg0jgjdsgwX0bCQc7BSfoEJg>
+ <xme:zXp7aorVL8sP-RjQS4DSyI-UQ_Dv6Dsfq6165z25Uo2JxJ8QUc5TVp7YPvhqjh0L0
+ O8qlsLutQ4HzI9Y4cJ59zlvJy_PGfpq9xBC3fxqw0KdtlZ93reXlA>
+X-ME-Received: <xmr:zXp7apQX8IXWLp8VExZH5gTNdg8RsAiLIh0xdMBpdp5e5fQQNmKoEgQ_H30lZ8zBbJhYCA>
+X-ME-Proxy-Cause: dmFkZTFUwNsH4sONHDJOti4OzZLf6Mfllisr61SunchFjqQxk1v6zGMYYZvZgIJ0UHe5S5
+ qLPJf8p2/0Ga2VLj0ESZpa84ZCvCrXCs4RTiQHnlxFrv1aLRiIwVVFCYtf0NyuQIHx2ZjL
+ 2nRWVJQ9KI9uewIybUXW3tepXpstDr7Auz29BttaMjcZF3pVlGAQ3KY9MU6NKkn9lEukEp
+ sIkH9L+cEhfClNgucG04WLg68Rzq0bTB/kCz4T2Y58QGANeYVGarFGypuoaCPTk5/2wCwT
+ qQ4SnByA8XGkrHxZFW5NgriOaYA8qBJmi9h0vMu54m9ipdhmhDgTzB6wqBMAubVDxyHdGJ
+ 67XK2MzIoNJ4p7uFv/Vq5qnN9SvjpaJCRXT3dxKOp/UoBUP+4v0nslAevZITxrq05fXBC9
+ CgDScimU23OmWyZzZfVFOIkq73IrQIMy5fNJ7By3xOn0lQGyvf2+90hJP+4DqMfRC6qrr6
+ xVhj4ry7OMV5T2eqWz7Q5mUOFxUHyBuQCXlRTrz0EkQmq8Y6I8x+6vNZEMlLZD+mNxwfVH
+ PECgaf3CnH4BExXv4y692BPwNAXQk2uKkN1b7pU3qxBq+l73gG+Bo9rxsmlIJ8DxwXWEjK
+ 9DTgKZoH0wpro9uO9id9z7YfHDPmde0WKjqy5Qo/sipLoLYF+Upb2I5z2rtw
+X-ME-Proxy: <xmx:zXp7ajO4euKY_FZzzNp94wxbriGziZDQkM3xGJm6ezbJ2nng9pJ4_w>
+ <xmx:zXp7avg7yYHiKobr06RG_elyZLs-gEooPTvIgRSO-fJ070ZcWcr9JA>
+ <xmx:zXp7aok_-94SKprtBNWc3VkQK6Wyipc5qMc-_o0nWgJXUz-GhWSIGA>
+ <xmx:zXp7ajhcAYCfZYD-y4WtUAj9GW7XGY3XmN0m9DWZ44IXhFIWEjToZw>
+ <xmx:znp7ah_JBwphl7Fq4No38gITM3pBk0HHP73Z9kpVTShWatrITT1LJDhe>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Aug 2026 15:41:01 -0400 (EDT)
+Message-ID: <718ed7010d214630379023daabb2fb804f7be73f.camel@alistair23.me>
+Subject: Re: [PATCH v2] target/riscv: preserve vl on element-zero fault
+From: Alistair <alistair@alistair23.me>
+To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, 	zhiwei_liu@linux.alibaba.com
+Date: Wed, 12 Aug 2026 05:41:00 +1000
+In-Reply-To: <20260727084203.881580-1-fritchleybohrer@gmail.com>
+References: <20260724030145.14778-1-fritchleybohrer@gmail.com>
+ <20260727084203.881580-1-fritchleybohrer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="pBOWDeEFaOLauAZ5"
-Content-Disposition: inline
-In-Reply-To: <20260806202531.243806-6-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=103.168.172.150;
+ envelope-from=alistair@alistair23.me; helo=fout-a7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,233 +108,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---pBOWDeEFaOLauAZ5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Aug 07, 2026 at 04:25:14AM +0800, Zhang Chen wrote:
-> Track the IOThreads used by a block export and identify the holder
-> with the unique BlockExportOptions id.
->=20
-> Acquire holder-aware references during export creation and release
-> them on error or export deletion.  Support both single- and
-> multi-iothread exports.
->=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  block/export/export.c  | 79 +++++++++++++++++++++++++++++++++++++-----
->  include/block/export.h |  6 ++++
->  2 files changed, 76 insertions(+), 9 deletions(-)
->=20
-> diff --git a/block/export/export.c b/block/export/export.c
-> index b733f269f3..96d719418e 100644
-> --- a/block/export/export.c
-> +++ b/block/export/export.c
-> @@ -15,7 +15,6 @@
-> =20
->  #include "block/block.h"
->  #include "system/block-backend.h"
-> -#include "system/iothread.h"
->  #include "block/export.h"
->  #include "block/fuse.h"
->  #include "block/nbd.h"
-> @@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Er=
-ror **errp)
->      AioContext *ctx;
->      AioContext **multithread_ctxs =3D NULL;
->      size_t multithread_count =3D 0;
-> +    g_autofree IOThread **local_iothreads =3D NULL;
-> +    const char *holder_id =3D NULL;
->      uint64_t perm;
->      int ret;
-> =20
-> @@ -139,7 +140,16 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
- Error **errp)
->              goto fail;
->          }
-> =20
-> -        new_ctx =3D iothread_get_aio_context(iothread);
-> +        holder_id =3D export->id;
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D (char *)holder_id,
-
-Is this char * cast necessary since the holder variable is declared
-const?
-
-> +        };
-> +
-> +        new_ctx =3D iothread_ref_and_get_aio_context(iothread, &holder);
-> +        multithread_count =3D 1;
-> +        local_iothreads =3D g_new0(IOThread *, 1);
-> +        local_iothreads[0] =3D iothread;
-> =20
->          /* Ignore errors with fixed-iothread=3Dfalse */
->          set_context_errp =3D fixed_iothread ? errp : NULL;
-> @@ -163,8 +173,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
- Error **errp)
->              return NULL;
->          }
-> =20
-> +        local_iothreads =3D g_new0(IOThread *, multithread_count);
->          multithread_ctxs =3D g_new(AioContext *, multithread_count);
->          i =3D 0;
-> +        holder_id =3D export->id;
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D (char *)holder_id,
-
-Same here.
-
-> +        };
-> +
->          for (strList *e =3D iothread_list; e; e =3D e->next) {
->              IOThread *iothread =3D iothread_by_id(e->value);
-> =20
-> @@ -172,7 +189,9 @@ BlockExport *blk_exp_add(BlockExportOptions *export, =
-Error **errp)
->                  error_setg(errp, "iothread \"%s\" not found", e->value);
->                  goto fail;
->              }
-> -            multithread_ctxs[i++] =3D iothread_get_aio_context(iothread);
-> +            local_iothreads[i] =3D iothread;
-> +            multithread_ctxs[i++] =3D iothread_ref_and_get_aio_context(i=
-othread,
-> +                                                                     &ho=
-lder);
->          }
->          assert(i =3D=3D multithread_count);
->      }
-> @@ -225,12 +244,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
-, Error **errp)
->      assert(drv->instance_size >=3D sizeof(BlockExport));
->      exp =3D g_malloc0(drv->instance_size);
->      *exp =3D (BlockExport) {
-> -        .drv        =3D drv,
-> -        .refcount   =3D 1,
-> -        .user_owned =3D true,
-> -        .id         =3D g_strdup(export->id),
-> -        .ctx        =3D ctx,
-> -        .blk        =3D blk,
-> +        .drv                  =3D drv,
-> +        .refcount             =3D 1,
-> +        .user_owned           =3D true,
-> +        .id                   =3D g_strdup(export->id),
-> +        .ctx                  =3D ctx,
-> +        .blk                  =3D blk,
-> +        .iothreads            =3D g_steal_pointer(&local_iothreads),
-> +        .iothread_count       =3D multithread_count,
-> +        .iothread_holder_id   =3D g_strdup(holder_id),
->      };
-> =20
->      ret =3D drv->create(exp, export, multithread_ctxs, multithread_count=
-, errp);
-> @@ -250,8 +272,32 @@ fail:
->          blk_unref(blk);
->      }
->      if (exp) {
-> +        if (exp->iothreads) {
-> +            const IOThreadHolder holder =3D {
-> +                .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +                .u.block_export.export_id =3D exp->iothread_holder_id,
-> +            };
-> +            for (size_t j =3D 0; j < exp->iothread_count; j++) {
-> +                if (exp->iothreads[j]) {
-> +                    iothread_put_aio_context(exp->iothreads[j], &holder);
-> +                }
-> +            }
-> +            g_free(exp->iothreads);
-> +        }
-> +        g_free(exp->iothread_holder_id);
->          g_free(exp->id);
->          g_free(exp);
-> +    } else if (local_iothreads) {
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D (char *)holder_id,
-
-Same here.
-
-> +        };
-> +
-> +        for (size_t j =3D 0; j < multithread_count; j++) {
-> +            if (local_iothreads[j]) {
-> +                iothread_put_aio_context(local_iothreads[j], &holder);
-> +            }
-> +        }
->      }
->      g_free(multithread_ctxs);
->      return NULL;
-> @@ -269,10 +315,25 @@ static void blk_exp_delete_bh(void *opaque)
->      BlockExport *exp =3D opaque;
-> =20
->      assert(exp->refcount =3D=3D 0);
-> +
->      QLIST_REMOVE(exp, next);
->      exp->drv->delete(exp);
->      blk_set_dev_ops(exp->blk, NULL, NULL);
->      blk_unref(exp->blk);
-> +
-> +    if (exp->iothreads) {
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D exp->iothread_holder_id,
-> +        };
-> +
-> +        for (size_t i =3D 0; i < exp->iothread_count; i++) {
-> +            iothread_put_aio_context(exp->iothreads[i], &holder);
-> +        }
-> +        g_free(exp->iothreads);
-> +    }
-> +
-> +    g_free(exp->iothread_holder_id);
->      qapi_event_send_block_export_deleted(exp->id);
->      g_free(exp->id);
->      g_free(exp);
-> diff --git a/include/block/export.h b/include/block/export.h
-> index ca45da928c..a093dea0b6 100644
-> --- a/include/block/export.h
-> +++ b/include/block/export.h
-> @@ -16,6 +16,7 @@
-> =20
->  #include "qapi/qapi-types-block-export.h"
->  #include "qemu/queue.h"
-> +#include "system/iothread.h"
-> =20
->  typedef struct BlockExport BlockExport;
-> =20
-> @@ -89,6 +90,11 @@ struct BlockExport {
-> =20
->      /* List entry for block_exports */
->      QLIST_ENTRY(BlockExport) next;
-> +
-> +    /* The IOThreads utilized by this specific block export */
-> +    IOThread **iothreads;
-> +    size_t iothread_count;
-> +    char *iothread_holder_id;
->  };
-> =20
->  BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
-> --=20
-> 2.53.0
->=20
-
---pBOWDeEFaOLauAZ5
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmp7eVAACgkQnKSrs4Gr
-c8ihDAf7BNFxb4EwB1Jzr3Xz4dh0x0k4HZQZL7l8FWWeNdFiMnmtl9MQaBuyXquI
-pMqeAatF0DRXRjhQRn+qzeNwcTknZE6H3iXXjaLey9Fym6hNKmt8PobYBBfx6HmC
-z7gKaFaUPpn6mJ9UEBUM/UzI+p/T12j6SaPD53pbT9cGUaBUllc62Wa8/cxVVcKw
-kbfvZAO9T/nqZtWvVgBz8LZK/mjAkZC7exJwr5qQ61kZ4+yp4rZ9RDOmC29PoWve
-lRbd5R3W3l6LOXVb3DZ/h7kwfbPJcVsY3jB4JkNlQW+G4Z7wbnaTT0GJ8X7KhzhW
-DaGO3KnXhzVMDcaG1d1OJptnNixESA==
-=CU6q
------END PGP SIGNATURE-----
-
---pBOWDeEFaOLauAZ5--
+T24gTW9uLCAyMDI2LTA3LTI3IGF0IDE2OjQyICswODAwLCBaZXBoeXIgTGkgd3JvdGU6Cj4gQSB1
+bml0LXN0cmlkZSBmYXVsdC1vbmx5LWZpcnN0IGxvYWQgbXVzdCBsZWF2ZSB2bCB1bmNoYW5nZWQg
+d2hlbgo+IGVsZW1lbnQKPiB6ZXJvIHJhaXNlcyBhIHN5bmNocm9ub3VzIGV4Y2VwdGlvbi4gS2Vl
+cCB0aGUgc2hvcnRlbmVkIHZhbHVlIGluIGEKPiBsb2NhbAo+IGJvdW5kIHVudGlsIGFsbCBsb2Fk
+cyBjb21wbGV0ZSwgYW5kIG9ubHkgdGhlbiB1cGRhdGUgdGhlCj4gYXJjaGl0ZWN0dXJhbCB2bC4K
+PiAKPiBBZGQgYSBiYXJlLW1ldGFsIFJWViByZWdyZXNzaW9uIHRlc3Qgd2hpY2ggZmF1bHRzIHZs
+ZTMyZmYudiBvbgo+IGVsZW1lbnQgemVybwo+IGFuZCBjaGVja3MgdGhhdCB2bCByZW1haW5zIHVu
+Y2hhbmdlZCBpbiB0aGUgdHJhcCBoYW5kbGVyLgo+IAo+IFJlc29sdmVzOiBodHRwczovL2dpdGxh
+Yi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS93b3JrX2l0ZW1zLzM1NDQKPiBSZXZpZXdlZC1ieTog
+Q2hhbyBMaXUgPGNoYW8ubGl1QHByb2Nlc3NtaXNzaW9uLmNvbT4KCldhcyB0aGlzIFJldmlld2Vk
+PwoKQWxpc3RhaXIKCj4gU2lnbmVkLW9mZi1ieTogWmVwaHlyIExpIDxmcml0Y2hsZXlib2hyZXJA
+Z21haWwuY29tPgo+IC0tLQo+IENoYW5nZXMgaW4gdjI6Cj4gLSBGaXggY29tbWl0IG1lc3NhZ2Ug
+Zm9ybWF0dGluZy4KPiAtIEVuYWJsZSB2ZWN0b3Igc3RhdGUgaW4gdGhlIGJhcmUtbWV0YWwgdGVz
+dC4KPiAtIFVzZSBhbiBhbGlnbmVkIHVubWFwcGVkIGFkZHJlc3MgYW5kIGNvbXBhcmUgYWdhaW5z
+dCB0aGUgdnNldHZsaQo+IHJlc3VsdC4KPiAtIEV4cHJlc3MgdGhlIG1zdGF0dXMuVlMgc2V0dGlu
+ZyBhcyBhIGZpZWxkIHNoaWZ0Lgo+IAo+IMKgdGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVy
+LmPCoMKgwqDCoMKgwqDCoMKgwqAgfCAyMyArKysrKy0tLS0KPiDCoHRlc3RzL3RjZy9yaXNjdjY0
+L01ha2VmaWxlLnNvZnRtbXUtdGFyZ2V0IHzCoCA1ICsrCj4gwqB0ZXN0cy90Y2cvcmlzY3Y2NC90
+ZXN0LXZsZTMyZmYuU8KgwqDCoMKgwqDCoMKgwqDCoCB8IDU3Cj4gKysrKysrKysrKysrKysrKysr
+KysrKysKPiDCoDMgZmlsZXMgY2hhbmdlZCwgNzYgaW5zZXJ0aW9ucygrKSwgOSBkZWxldGlvbnMo
+LSkKPiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0cy90Y2cvcmlzY3Y2NC90ZXN0LXZsZTMyZmYu
+Uwo+IAo+IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvdGNnL3ZlY3Rvcl9oZWxwZXIuYwo+IGIv
+dGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBpbmRleCBlMzIxY2EyNjE2Li41YTMx
+MDgyMmI3IDEwMDY0NAo+IC0tLSBhL3RhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5jCj4g
+KysrIGIvdGFyZ2V0L3Jpc2N2L3RjZy92ZWN0b3JfaGVscGVyLmMKPiBAQCAtNjg2LDcgKzY4Niw3
+IEBAIHZleHRfbGRmZih2b2lkICp2ZCwgdm9pZCAqdjAsIHRhcmdldF91bG9uZyBiYXNlLAo+IENQ
+VVJJU0NWU3RhdGUgKmVudiwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCBkZXNjLCB2
+ZXh0X2xkc3RfZWxlbV9mbl90bGIgKmxkc3RfdGxiLAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgIHZl
+eHRfbGRzdF9lbGVtX2ZuX2hvc3QgKmxkc3RfaG9zdCwgdWludDMyX3QgbG9nMl9lc3osCj4gdWlu
+dHB0cl90IHJhKQo+IMKgewo+IC3CoMKgwqAgdWludDMyX3QgaSwgaywgdmwgPSAwOwo+ICvCoMKg
+wqAgdWludDMyX3QgaSwgaywgdmwgPSAwLCBsb2FkX3ZsOwo+IMKgwqDCoMKgIHVpbnQzMl90IG5m
+ID0gdmV4dF9uZihkZXNjKTsKPiDCoMKgwqDCoCB1aW50MzJfdCB2bSA9IHZleHRfdm0oZGVzYyk7
+Cj4gwqDCoMKgwqAgdWludDMyX3QgbWF4X2VsZW1zID0gdmV4dF9tYXhfZWxlbXMoZGVzYywgbG9n
+Ml9lc3opOwo+IEBAIC03NTIsMjIgKzc1MiwyNCBAQCB2ZXh0X2xkZmYodm9pZCAqdmQsIHZvaWQg
+KnYwLCB0YXJnZXRfdWxvbmcKPiBiYXNlLCBDUFVSSVNDVlN0YXRlICplbnYsCj4gwqDCoMKgwqDC
+oMKgwqDCoCB9Cj4gwqDCoMKgwqAgfQo+IMKgUHJvYmVTdWNjZXNzOgo+IC3CoMKgwqAgLyogbG9h
+ZCBieXRlcyBmcm9tIGd1ZXN0IG1lbW9yeSAqLwo+IC3CoMKgwqAgaWYgKHZsICE9IDApIHsKPiAt
+wqDCoMKgwqDCoMKgwqAgZW52LT52bCA9IHZsOwo+IC3CoMKgwqAgfQo+ICvCoMKgwqAgLyoKPiAr
+wqDCoMKgwqAgKiBLZWVwIGEgc2hvcnRlbmVkIHZsIGxvY2FsIHVudGlsIGFsbCBsb2FkcyBjb21w
+bGV0ZS4gSW4KPiBwYXJ0aWN1bGFyLAo+ICvCoMKgwqDCoCAqIGFuIGV4Y2VwdGlvbiBmcm9tIGVs
+ZW1lbnQgemVybyBtdXN0IGxlYXZlIHRoZSBhcmNoaXRlY3R1cmFsCj4gdmwgYWxvbmUuCj4gK8Kg
+wqDCoMKgICovCj4gK8KgwqDCoCBsb2FkX3ZsID0gdmwgPyB2bCA6IGVudi0+dmw7Cj4gwqAKPiAt
+wqDCoMKgIGlmIChlbnYtPnZzdGFydCA8IGVudi0+dmwpIHsKPiArwqDCoMKgIGlmIChlbnYtPnZz
+dGFydCA8IGxvYWRfdmwpIHsKPiDCoMKgwqDCoMKgwqDCoMKgIGlmICh2bSkgewo+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCAvKiBMb2FkL3N0b3JlIGVsZW1lbnRzIGluIHRoZSBmaXJzdCBwYWdl
+ICovCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChsaWtlbHkoZWxlbXMpKSB7Cj4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBlbGVtcyA9IE1JTihlbGVtcywgbG9hZF92bCAt
+IGVudi0+dnN0YXJ0KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB2ZXh0X3Bh
+Z2VfbGRzdF91cyhlbnYsIHZkLCBhZGRyLCBlbGVtcywgbmYsCj4gbWF4X2VsZW1zLAo+IMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGxvZzJfZXN6LCB0cnVlLCBtbXVfaW5kZXgsCj4gbGRzdF90bGIsCj4gwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgbGRzdF9ob3N0LCByYSk7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiDCoAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBMb2FkL3N0b3JlIGVsZW1lbnRzIGluIHRoZSBzZWNv
+bmQgcGFnZSAqLwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmICh1bmxpa2VseShlbnYtPnZz
+dGFydCA8IGVudi0+dmwpKSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHVubGlrZWx5
+KGVudi0+dnN0YXJ0IDwgbG9hZF92bCkpIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCAvKiBDcm9zcyBwYWdlIGVsZW1lbnQgKi8KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBpZiAodW5saWtlbHkocGFnZV9zcGxpdCAlIG1zaXplKSkgewo+IMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZm9yIChrID0gMDsgayA8IG5mOyBrKyspIHsK
+PiBAQCAtNzgwLDcgKzc4Miw3IEBAIFByb2JlU3VjY2VzczoKPiDCoAo+IMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIGFkZHIgPSBiYXNlICsgKChlbnYtPnZzdGFydCAqIG5mKSA8PCBs
+b2cyX2Vzeik7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogR2V0IG51bWJl
+ciBvZiBlbGVtZW50cyBvZiBzZWNvbmQgcGFnZSAqLwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgZWxlbXMgPSBlbnYtPnZsIC0gZW52LT52c3RhcnQ7Cj4gK8KgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBlbGVtcyA9IGxvYWRfdmwgLSBlbnYtPnZzdGFydDsKPiDCoAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIExvYWQvc3RvcmUgZWxlbWVudHMgaW4g
+dGhlIHNlY29uZCBwYWdlICovCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdmV4
+dF9wYWdlX2xkc3RfdXMoZW52LCB2ZCwgYWRkciwgZWxlbXMsIG5mLAo+IG1heF9lbGVtcywKPiBA
+QCAtNzg4LDcgKzc5MCw3IEBAIFByb2JlU3VjY2VzczoKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBsZHN0X2hvc3Qs
+IHJhKTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgwqDCoMKgwqAgfSBl
+bHNlIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBmb3IgKGkgPSBlbnYtPnZzdGFydDsgaSA8
+IGVudi0+dmw7IGkrKykgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZvciAoaSA9IGVudi0+
+dnN0YXJ0OyBpIDwgbG9hZF92bDsgaSsrKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgayA9IDA7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgd2hpbGUgKGsg
+PCBuZikgewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKCF2
+ZXh0X2VsZW1fbWFzayh2MCwgaSkpIHsKPiBAQCAtODA2LDYgKzgwOCw5IEBAIFByb2JlU3VjY2Vz
+czoKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKg
+wqDCoMKgIH0KPiArwqDCoMKgIGlmICh2bCAhPSAwKSB7Cj4gK8KgwqDCoMKgwqDCoMKgIGVudi0+
+dmwgPSB2bDsKPiArwqDCoMKgIH0KPiDCoMKgwqDCoCBlbnYtPnZzdGFydCA9IDA7Cj4gwqAKPiDC
+oMKgwqDCoCB2ZXh0X3NldF90YWlsX2VsZW1zXzFzKGVudi0+dmwsIHZkLCBkZXNjLCBuZiwgZXN6
+LCBtYXhfZWxlbXMpOwo+IGRpZmYgLS1naXQgYS90ZXN0cy90Y2cvcmlzY3Y2NC9NYWtlZmlsZS5z
+b2Z0bW11LXRhcmdldAo+IGIvdGVzdHMvdGNnL3Jpc2N2NjQvTWFrZWZpbGUuc29mdG1tdS10YXJn
+ZXQKPiBpbmRleCA4MmJlOGEyYzkxLi43YWUyMjViZDczIDEwMDY0NAo+IC0tLSBhL3Rlc3RzL3Rj
+Zy9yaXNjdjY0L01ha2VmaWxlLnNvZnRtbXUtdGFyZ2V0Cj4gKysrIGIvdGVzdHMvdGNnL3Jpc2N2
+NjQvTWFrZWZpbGUuc29mdG1tdS10YXJnZXQKPiBAQCAtNDEsNSArNDEsMTAgQEAgY29tbWE6PSAs
+Cj4gwqBydW4tdGVzdC1jcmMzMjogdGVzdC1jcmMzMgo+IMKgCSQoY2FsbCBydW4tdGVzdCwgJDws
+ICQoUUVNVSkgLWNwdSBydjY0JChjb21tYSl4bHJicj10cnVlCj4gJChRRU1VX09QVFMpJDwpCj4g
+wqAKPiArRVhUUkFfUlVOUyArPSBydW4tdGVzdC12bGUzMmZmCj4gK3J1bi10ZXN0LXZsZTMyZmY6
+IHRlc3QtdmxlMzJmZgo+ICsJJChjYWxsIHJ1bi10ZXN0LCAkPCwgJChRRU1VKSAtY3B1IHJ2NjQk
+KGNvbW1hKXY9dHJ1ZQo+ICQoUUVNVV9PUFRTKSQ8KQo+ICt0ZXN0LXZsZTMyZmY6IENGTEFHUyAr
+PSAtbWFyY2g9cnY2NGdjdgo+ICsKPiDCoCMgV2UgZG9uJ3QgY3VycmVudGx5IHN1cHBvcnQgdGhl
+IG11bHRpYXJjaCBzeXN0ZW0gdGVzdHMKPiDCoHVuZGVmaW5lIE1VTFRJQVJDSF9URVNUUwo+IGRp
+ZmYgLS1naXQgYS90ZXN0cy90Y2cvcmlzY3Y2NC90ZXN0LXZsZTMyZmYuUwo+IGIvdGVzdHMvdGNn
+L3Jpc2N2NjQvdGVzdC12bGUzMmZmLlMKPiBuZXcgZmlsZSBtb2RlIDEwMDY0NAo+IGluZGV4IDAw
+MDAwMDAwMDAuLmY1MTA5NjBjMDUKPiAtLS0gL2Rldi9udWxsCj4gKysrIGIvdGVzdHMvdGNnL3Jp
+c2N2NjQvdGVzdC12bGUzMmZmLlMKPiBAQCAtMCwwICsxLDU3IEBACj4gKy8qCj4gKyAqIFZlcmlm
+eSB0aGF0IGEgZmF1bHQtb25seS1maXJzdCBsb2FkIGtlZXBzIHZsIHVuY2hhbmdlZCB3aGVuCj4g
+ZWxlbWVudCB6ZXJvCj4gKyAqIHJhaXNlcyBhIHN5bmNocm9ub3VzIGV4Y2VwdGlvbi4KPiArICoK
+PiArICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0ZXIKPiArICovCj4g
+Kwo+ICsJLm9wdGlvbiBub3J2Ywo+ICsKPiArCS50ZXh0Cj4gKwkuZ2xvYmwgX3N0YXJ0Cj4gK19z
+dGFydDoKPiArCWxsYQl0MCwgdHJhcAo+ICsJY3NydwltdHZlYywgdDAKPiArCj4gKwlsaQl0MCwg
+KDEgPDwgOSkJLyogU2V0IG1zdGF0dXMuVlMgdG8gSW5pdGlhbC4gKi8KPiArCWNzcnMJbXN0YXR1
+cywgdDAKPiArCWxpCXQxLCA0Cj4gKwl2c2V0dmxpCXQyLCB0MSwgZTMyLCBtMSwgdGEsIG1hCj4g
+KwlsaQl0MCwgMHgxODAwMDAwMAkvKiBVbm1hcHBlZCBnYXAgaW4gdGhlIHZpcnQgbWVtb3J5Cj4g
+bWFwLiAqLwo+ICsJdmxlMzJmZi52CXYxLCAodDApCj4gKwo+ICsJLyogRWxlbWVudCB6ZXJvIGRp
+ZCBub3QgdHJhcC4gKi8KPiArCWxpCWEwLCAxCj4gKwlqCV9leGl0Cj4gKwo+ICt0cmFwOgo+ICsJ
+Y3Nycgl0MCwgbWNhdXNlCj4gKwlsaQl0MSwgNQkJLyogTG9hZCBhY2Nlc3MgZmF1bHQuICovCj4g
+KwlibmUJdDAsIHQxLCB0cmFwX2ZhaWwKPiArCj4gKwljc3JyCXQwLCB2bAo+ICsJYm5lCXQwLCB0
+MiwgdHJhcF9mYWlsCj4gKwo+ICsJbGkJYTAsIDAKPiArCWoJX2V4aXQKPiArCj4gK3RyYXBfZmFp
+bDoKPiArCWxpCWEwLCAxCj4gKwo+ICtfZXhpdDoKPiArCWxsYQlhMSwgc2VtaWFyZ3MKPiArCWxp
+CXQwLCAweDIwMDI2CS8qIEFEUF9TdG9wcGVkX0FwcGxpY2F0aW9uRXhpdCAqLwo+ICsJc2QJdDAs
+IDAoYTEpCj4gKwlzZAlhMCwgOChhMSkKPiArCWxpCWEwLCAweDIwCS8qIFRBUkdFVF9TWVNfRVhJ
+VF9FWFRFTkRFRCAqLwo+ICsKPiArCS5iYWxpZ24JMTYKPiArCXNsbGkJemVybywgemVybywgMHgx
+Zgo+ICsJZWJyZWFrCj4gKwlzcmFpCXplcm8sIHplcm8sIDB4Nwo+ICsJagkuCj4gKwo+ICsJLmRh
+dGEKPiArCS5iYWxpZ24JOAo+ICtzZW1pYXJnczoKPiArCS5zcGFjZQkxNgo=
 
 
