@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F81C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28D82C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtt07-0002sz-UG; Tue, 11 Aug 2026 16:23:07 -0400
+	id 1wtt0m-0003Tb-Pr; Tue, 11 Aug 2026 16:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtt05-0002sh-Sa; Tue, 11 Aug 2026 16:23:05 -0400
-Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
+ id 1wtt0l-0003Sx-0r; Tue, 11 Aug 2026 16:23:47 -0400
+Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtt04-0004Bp-AY; Tue, 11 Aug 2026 16:23:05 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 93A7B14000B8;
- Tue, 11 Aug 2026 16:23:03 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Tue, 11 Aug 2026 16:23:03 -0400
+ id 1wtt0j-0004Eo-FA; Tue, 11 Aug 2026 16:23:46 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfout.phl.internal (Postfix) with ESMTP id BB2E7EC01DE;
+ Tue, 11 Aug 2026 16:23:44 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Tue, 11 Aug 2026 16:23:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786479783; x=1786566183; bh=ke0S2K30SunoZQf+EvRHqCSJlMczgEoo
- QJKm1mnVrM4=; b=V3Z5Ygtxy7MCEWSxqeMU80sWazdlmHOnIGOScHVVuu1sZUSS
- DmNnRQW2jlARWg9N8QqhkaNDsQbqJG74V3vbeVOy388m9BqGtYUeLxgn2YUb+PI+
- 2zAPUSxzkfwPVlw25AqhLt2ESCdXGjywVlGX4VzP65BLJELljWZFWGKsFJaxRO2r
- f2ncfVZRl5/Cg6qQPg4D6/E+Z0NqsFOD8MXFffqiyVuUAH3vdnHwuZzlYBH/lZbr
- tPYzNUDt1SKgliUZ5sVWugvH9+nS39kmuaB7YUF9QQBuTNnnoBK9AN12H2av9vTm
- HiKnnc/NfnSTICsoOjeW+Fw3lsR6FQCvkWWjkA==
+ t=1786479824; x=1786566224; bh=dwlPoLdkCNgiR198seO/0bB8MJG67pTf
+ gx5VvwHGHHY=; b=rqAdMSMWW5dDeahc4Ro4sr85Yi/BTRTl+qK31z+7QCgVz+dl
+ udOq56hho08z90Dau+7x/5fRKcO8CRUvgGfxVLuzvX27/7PTzMQycnr1l6rQi93q
+ F+EJj0WNAWgFUzDkyhaiMf627IgajpCOhkc9lyIuI2/4iY2mQN31gjK+hUk4Wrzd
+ qPsGWPyUSxhsp6HdaBoD/JUlw7eFhT4GLxf31zMvauaoNP1aARh27zziQWSfajK+
+ OQ20rsJ9g/OFTRGHDOm5Nm/N9B2umpGjeJJt23yBOk1OjydhwFpXQthJXlDvyLQl
+ Cgh9PUGiuK5RA23QmGCtG664ZXh7XQSDPZ5K+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479783; x=
- 1786566183; bh=ke0S2K30SunoZQf+EvRHqCSJlMczgEooQJKm1mnVrM4=; b=H
- /+aK0+a3zcaml6QI0zV54xATJ6RoBuTq0jG0nCaTtsRJtzvV9rWP3SCAw3dQQbWp
- vI0ILXcpNSp3G+oSdeGT5S/CsgosL90qVpo/09c5OTLhRxEaORtL+ZELok8hL9TM
- cxXdMOv6YdhQg57X5Qr8v56IyC8KCHfpLlwdydu/oE9/dr8PO4nJxq2Ei+oIqTpG
- lMDCvCC67h6hXL47v+Tx/GyTE0m7njtxq9njrVQHJNwGK1vgrEhJMdOdCdQnL6I9
- d1pve5LAuSJJmlmBaIqcKMjLfRMxyOR4rq1fOnoYOVpqPJadd1MC2UVaQwsu2xle
- 3UwREoUJFgTg1+XARZO7Q==
-X-ME-Sender: <xms:p4R7aszgVKfKafCwR9EzHTh90GzdQoxeKXSqVi3nHJ2hpGMwuw7xaQ>
- <xme:p4R7aknqwkKEYmT_EbFsmB0R9FCHf_-FrxJMqFBKx0ECogJZ2U4CnBZbV0cuv3iCX
- v-wv-krphohwX_elqiiE1ki5H2u5zTPzvQrMruiI2vOM-J1pKrU6Q>
-X-ME-Received: <xmr:p4R7atcJXLArqml2Dk9Cq00ndsbXJOcPgn632B5NgLD_HEWt--EQLKa7VBIxAGLMrxKcmA>
-X-ME-Proxy-Cause: dmFkZTEe44bzU318ZKGPPkmI//vzCNdVcYTYrqRtyU+DALhpzqDIrDJwcBKSHZMm4wnCMf
- 9PUVrK5o6AhiUSiuSHL+1pFOddNIyiumPnXWByRYWCiPKoMD7LpIxSXTPbQLcCCeUi2Ayl
- lZhv0amE+njS/NQ6fBOmBDx+m0qvsBnHoW/t9sg/Z1H8bHw4jmKj5CgcDmj+xNoBXMcCsB
- VunOEWHMKShnBk/h7Ljnrzisg4XMruYntxk0fJHDFNQ4GaUuSnP7WZIf61sh4YmvNs4ksS
- qLV4eLP9GUxwdWyxSb7FXaax/mli1hOteEtTMY4L052hQLPg6p0x5fRGFTYIR45pG4W+Xb
- YrOxKMSxvYbF8wARLFHIVH3zN3NlaaqYl31Y9lCkrE1G5gtrT9IUv2aCAtNKlxPZGCXkq2
- u+cAmuoCuNJx4joCGwyWjB9y0kxGQ9aeRj4d1J8Gc0BzEuNS1rfMhj+p3EVO2+d/oJ/FZ/
- KR1FTB1BHT/p5aor9sB7peK62uzmdLuxK0LMvf7W1o/7v0PGIcXnIBJcytoW+1Whjasa7r
- ag1FgWMmA49NVUgWL+N9FV1iKmj9bppQcAv1ouW/lhDfvusf3UEVm7OuRyqq3UIlBTjiDp
- DjI61FTNN5U9pS+GnzJdmE5MMXneJHgg2vgXXUrRMiFZD83NAAlqKj5zmvxw
-X-ME-Proxy: <xmx:p4R7aipSDf4z17-2v_QQujiRTgozj3qVn-lcFehVH8G_6NU870enxw>
- <xmx:p4R7aj7As4KFFmN1kKt2UkvU110FAi5rfEt1f8PSnTFELQd3bzJ8Dw>
- <xmx:p4R7agoSMwvabLKRsLKfgZA7Ck16TzIAViChX5Klmx6_4BlrXeYDdQ>
- <xmx:p4R7atgljV55iLm6p3GQ-YXyDexa0-R_k-TWCS30tkJQQG47fyikPQ>
- <xmx:p4R7ahG9gAA-wBOE_Tm1WtqU1aYZUw4pM1o2XTF7CvZBYVl2hmve1y1D>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479824; x=
+ 1786566224; bh=dwlPoLdkCNgiR198seO/0bB8MJG67pTfgx5VvwHGHHY=; b=h
+ eS790MhmURgudn4Jenk5/jkB4Ui1SHoTv2WTbgGnt4kWSQDKNqrt2Wur/pVJHwfY
+ 6+5txMZcL4ka+Mpt+PINSd2ekqkhF6WR5GsAf3ove13j3iuoWBKo7jzeV8lYxLHA
+ fmbppdAQVIxwkC0d+hWQeCSRA6nbLjCLkTLsd5z8EKM4WYHQdIS3TDpOS8L7OtOP
+ MoFtLfoffEYM6wGvFXQ1XNWnpy08zQ0fyj6UnOd/LVfoqmmge82xtNzqexQCGTof
+ hYR/c3Psl4agHIM+0tTGmpMNAZf4JNgAlP8Lissy08PAl6fHSWhQn/KB4Pj3RGnf
+ 9JBSI08XHX2pCg6hPTgpg==
+X-ME-Sender: <xms:0IR7ahvmQJmKIg83VprypmfoVTh9Y6PT3h10V9uEfH-A1TXe-Zg1Fg>
+ <xme:0IR7auwm2rdMG2NDpzTytpOXIvgcc7An4aIht8ZRZu1xAfuV1pdlyKT4JrN-2oK26
+ 9l0EzRE5tX-uXdDTcaHHGHeY-OBqhaXX8NJxApigQPIuGNr3_xmFCg>
+X-ME-Received: <xmr:0IR7aj5N_6ualCN2l8zEkcciagf_19tN13ufR_VkNoDtgg6Xmj_M87vc92-o320ymj77Ag>
+X-ME-Proxy-Cause: dmFkZTGFUpSS2GT1z7DHoWv8NCM7+16aVte8EPcTOexXdW4G8RGpvTIDkkb9QH/6b3lrEi
+ 1QfIZs+N3MbyOFqV8mRj8GKZrEOXVeiF+EFez4pVjLgnRU9i+JfRj3PTXYYbmI5N2UMtHV
+ K2j88n1elLZIEH7515+VW5iiht/TNZB1dGxKz6HzYBQCgC2eOodtqOJdSpZNqeALwZqEuI
+ DFqpAvMiJtrOwf7l1T1ujDu4b5y0MFoi9u9/JAb7eppzTrOWqRV1Eielyobcy6YkxQ5D6V
+ mYp08JdTcFEtTlaUcpcdcO6LKBUhXgLUvkDF8vn8Oz+1Wx0Q/AlGDibx/qsu8xqDLhn5QZ
+ nnyML7Lfgen2GlR7QGu3L77w/+qxcv8orGU5cN9sXcrp9fYpsJ9MS7/MA11XbTY0+Z7KR6
+ tAMEFxJCKf4toFqi6+jxCUTTakfGd466cAc582KBFW7eo+jUcpsHL9td6He0y7aH3WA0Mo
+ hN3K4RbziLCASNtJVC6krdV4ovFziHsmTn0YuwaBsk6TWbBOUFTEasL8e3wwFiHKzj3dFH
+ mKVNtZp8KhTL2CNJnOw44epq2sri5X7St2DIA0hx62qleh04kl2Yd2FeLfTBu/yoaaUBuY
+ LU6E+s08QnN6RGmld4tt7ZcBNzpuDKcL//hVCDGbMerVo7oFT3WxDrI5xYIQ
+X-ME-Proxy: <xmx:0IR7agWPE0bBprRq9_vyseECWjZz1HK5sqRMtD9i_c9wNErdrMJvKg>
+ <xmx:0IR7an1r7MtmDOYKetDXidys_ANdBDmMb218-AdRO3lCqvih4fkNFQ>
+ <xmx:0IR7at2VQqI4KPsBdyz4iTOLGBnRLZRQE51j7eLADLkhT0nSrmVEfw>
+ <xmx:0IR7aq_YGyGb1KGUoTXO6mNi9EaJcPcIMIrVfWunpk4-FgDDmnJSDg>
+ <xmx:0IR7apwPLoJ7UBfCrfHsfXOSlSKcQq6uqp1K7SmlCuB5S5-pLWxm4bFr>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 16:23:03 -0400 (EDT)
-Message-ID: <b0d8328b32d9c2723ec11026fdbe21318d092d02.camel@alistair23.me>
-Subject: Re: [PATCH 30/56] disas/riscv: Break pseudo loop for jal and jalr
+ 11 Aug 2026 16:23:44 -0400 (EDT)
+Message-ID: <271642bc639d731b11ab9819d8b9da29ed27bd64.camel@alistair23.me>
+Subject: Re: [PATCH 31/56] disas/riscv: Allow decode_inst_lift_pseudo to loop
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 06:23:03 +1000
-In-Reply-To: <20260809223545.730664-31-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 06:23:44 +1000
+In-Reply-To: <20260809223545.730664-32-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-31-richard.henderson@linaro.org>
+ <20260809223545.730664-32-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.157;
- envelope-from=alistair@alistair23.me; helo=fhigh-a6-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.150;
+ envelope-from=alistair@alistair23.me; helo=fout-a7-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -106,98 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-08-09 at 15:35 -0700, Richard Henderson wrote:
-> These were clearly intending to simplify
-> 	jal	ra, foo
-> to
-> 	jal	foo
-> and similarly for jalr, but the pseudo expansion looped
-> back to the original jal/jalr with the full format.
->=20
-> Add new opcode expansions dropping the implied ra.
->=20
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+T24gU3VuLCAyMDI2LTA4LTA5IGF0IDE1OjM1IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
+ZToKPiBBbGxvdyBwc2V1ZG8gZXhwYW5zaW9uIHRvIHByb2NlZWQgaW4gbXVsdGlwbGUgc3RlcHMu
+Cj4gQXNzZXJ0IHRoYXQgd2UgZG9uJ3QgaGF2ZSBzaW1wbGUgbG9vcHMuCj4gCj4gU2lnbmVkLW9m
+Zi1ieTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+CgpS
+ZXZpZXdlZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPgoK
+QWxpc3RhaXIKCj4gLS0tCj4gwqBkaXNhcy9yaXNjdi5jIHwgNiArKystLS0KPiDCoDEgZmlsZSBj
+aGFuZ2VkLCAzIGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBh
+L2Rpc2FzL3Jpc2N2LmMgYi9kaXNhcy9yaXNjdi5jCj4gaW5kZXggZmU1MDNiNmNhZS4uYjhlNWIx
+MjRhNSAxMDA2NDQKPiAtLS0gYS9kaXNhcy9yaXNjdi5jCj4gKysrIGIvZGlzYXMvcmlzY3YuYwo+
+IEBAIC01MjU5LDkgKzUyNTksOSBAQCBzdGF0aWMgY29uc3QgcnZfb3Bjb2RlX2RhdGEKPiAqZGVj
+b2RlX2luc3RfbGlmdF9wc2V1ZG8ocnZfZGVjb2RlICpkZWMsCj4gwqDCoMKgwqAgaWYgKGNvbXBf
+ZGF0YSkgewo+IMKgwqDCoMKgwqDCoMKgwqAgd2hpbGUgKGNvbXBfZGF0YS0+Y29uc3RyYWludHMp
+IHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKGNoZWNrX2NvbnN0cmFpbnRzKGRlYywg
+Y29tcF9kYXRhLT5jb25zdHJhaW50cykpIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIGRlYy0+b3AgPSBjb21wX2RhdGEtPm9wOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgb3AgPSAmZGVjLT5vcGNvZGVfZGF0YVtkZWMtPm9wXTsKPiAtwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIGJyZWFrOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+Y29uc3QgcnZfb3Bjb2RlX2RhdGEgKm5ld19vcCA9ICZkZWMtCj4gPm9wY29kZV9kYXRhW2NvbXBf
+ZGF0YS0+b3BdOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYXNzZXJ0KG5ld19v
+cCAhPSBvcCk7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1cm4gZGVjb2Rl
+X2luc3RfbGlmdF9wc2V1ZG8oZGVjLCBuZXdfb3ApOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB9Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNvbXBfZGF0YSsrOwo+IMKgwqDCoMKgwqDC
+oMKgwqAgfQo=
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
-> =C2=A0disas/riscv.c | 16 +++++++++-------
-> =C2=A01 file changed, 9 insertions(+), 7 deletions(-)
->=20
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index d3cbfb86ac..fe503b6cae 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -326,6 +326,8 @@ typedef enum {
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgez =3D 295,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bltz =3D 296,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgtz =3D 297,
-> +=C2=A0=C2=A0=C2=A0 rv_op_jal_ra =3D 298,
-> +=C2=A0=C2=A0=C2=A0 rv_op_jalr_ra =3D 299,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_j =3D 302,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ret =3D 303,
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jr =3D 304,
-> @@ -1029,9 +1031,9 @@ static const char rv_fli_name_const[32][9] =3D
-> =C2=A0
-> =C2=A0/* pseudo-instruction constraints */
-> =C2=A0
-> -static const rvc_constraint rvcc_jal[] =3D { rvc_rd_eq_ra, rvc_end };
-> -static const rvc_constraint rvcc_jalr[] =3D { rvc_rd_eq_ra,
-> rvc_imm_eq_zero,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_end };
-> +static const rvc_constraint rvcc_jal_ra[] =3D { rvc_rd_eq_ra, rvc_end
-> };
-> +static const rvc_constraint rvcc_jalr_ra[] =3D { rvc_rd_eq_ra,
-> rvc_imm_eq_zero,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_end };
-> =C2=A0static const rvc_constraint rvcc_nop[] =3D { rvc_rd_eq_x0,
-> rvc_rs1_eq_x0,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_imm_eq_zero, rvc_end
-> };
-> =C2=A0static const rvc_constraint rvcc_mv[] =3D { rvc_imm_eq_zero, rvc_en=
-d
-> };
-> @@ -1068,14 +1070,14 @@ static const rvc_constraint rvcc_jr[] =3D {
-> rvc_rd_eq_x0, rvc_imm_eq_zero,
-> =C2=A0
-> =C2=A0static const rv_comp_data rvcp_jal[] =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_j, rvcc_j },
-> -=C2=A0=C2=A0=C2=A0 { rv_op_jal, rvcc_jal },
-> +=C2=A0=C2=A0=C2=A0 { rv_op_jal_ra, rvcc_jal_ra },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
-> =C2=A0};
-> =C2=A0
-> =C2=A0static const rv_comp_data rvcp_jalr[] =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_ret, rvcc_ret },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_jr, rvcc_jr },
-> -=C2=A0=C2=A0=C2=A0 { rv_op_jalr, rvcc_jalr },
-> +=C2=A0=C2=A0=C2=A0 { rv_op_jalr_ra, rvcc_jalr_ra },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
-> =C2=A0};
-> =C2=A0
-> @@ -1884,8 +1886,8 @@ static const rv_opcode_data rvi_opcode_data[] =3D
-> {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgez", rv_codec_sb, rv_fmt_rs1_offset },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "bltz", rv_codec_sb, rv_fmt_rs1_offset },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgtz", rv_codec_sb, rv_fmt_rs2_offset },
-> -=C2=A0=C2=A0=C2=A0 { },
-> -=C2=A0=C2=A0=C2=A0 { },
-> +=C2=A0=C2=A0=C2=A0 { "jal", rv_codec_none, rv_fmt_offset }, /* rv_op_jal=
-_ra */
-> +=C2=A0=C2=A0=C2=A0 { "jalr", rv_codec_none, rv_fmt_rs1 }, /* rv_op_jalr_=
-ra */
-> =C2=A0=C2=A0=C2=A0=C2=A0 { },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "j", rv_codec_uj, rv_fmt_offset },
 
