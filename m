@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B529C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0EEEC5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtsd2-0005AU-7A; Tue, 11 Aug 2026 15:59:16 -0400
+	id 1wtsdk-0005d8-T2; Tue, 11 Aug 2026 16:00:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsd0-00058M-PI; Tue, 11 Aug 2026 15:59:14 -0400
+ id 1wtsdj-0005cr-UA; Tue, 11 Aug 2026 15:59:59 -0400
 Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtscx-0000GO-R7; Tue, 11 Aug 2026 15:59:14 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.phl.internal (Postfix) with ESMTP id ECF45EC009E;
- Tue, 11 Aug 2026 15:59:10 -0400 (EDT)
+ id 1wtsdi-0000J2-ET; Tue, 11 Aug 2026 15:59:59 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id B0083EC0190;
+ Tue, 11 Aug 2026 15:59:57 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Tue, 11 Aug 2026 15:59:10 -0400
+ by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 15:59:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786478350; x=1786564750; bh=qWaBC6lEgkbVOzFqE/dzgOhUJnpop9ud
- tlKyvZ0rya4=; b=z61E88lvOkaqXqI2rs1t1kF+aPNtD7VekuVJHZJ3MfQ20HRV
- 3Ajt+gT34Uxif8LFctsEqhYqlK8ucFYfIUT6+irVXetVVYHOm3InbHTohJuRkvsM
- tHQTMKtZmrXBb1y3aUxsqfORxVEQ6hsb5DgUprMqzI6p8hUGsLBRmjgHUh3VA4Ao
- 1GPlH3vae53Ccx2dyox9yRDxzQQd6EWxkN/0e5YznLMvTf0V+bS7HaLkjedulT5n
- K8gIUsaZQ7zOklUeyrZ8BjpfgSqu8htr76aLUD6KZ8TGsVg6WjL1uTZte/cG6zh8
- 1+GYruSfdxWNkFERek0MHe9rNG0uz3l4OBDkKA==
+ t=1786478397; x=1786564797; bh=N+4O2kn5sZ+j5wgAUNN+oSXeIGWgkXBK
+ l6rgiIwvR/g=; b=c//Nefh87sqa30Rlom18nDBhQ8pmoK5RLos0Lt3ap1LphZbQ
+ S940GkeBWXDas7zdCDB/B1t1GRv1V3c5T2mOIRDyhJ1i6ocKZ+zJwUOozRVss9nB
+ vyLB8iU2TGRV1DDid+k2t1jurBbuNRuDJSTQwRCQOh7LmsW5oAbpBSCn7rTO8oWL
+ /x2i+DU5X4RX0Bw/9oIFCYsuLTqQYJ4BJNS/G2EHW9cB41hPmlsqXup/3SNn/yIr
+ ifePIK2/RgmRzoOpGjo8XsxfTOBI2x5VEJnLo1/5uBZJTNJ8lhoN0/7JPrAmuNYE
+ zcoKjgxykHKUGugLhlt7ObqK/t+b3qSbQZwS8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786478350; x=
- 1786564750; bh=qWaBC6lEgkbVOzFqE/dzgOhUJnpop9udtlKyvZ0rya4=; b=O
- iTefB/+Cz6G0PByFG7sY5kqLqHdbDbHxPngQPJqumY8aLjAjtgLIdDPaBOJuOdUb
- HKeUQYd1YrNMTW/2e2c3ckEzDiDwAOw3c1kKDlLjnBKxJmIBU2yWaMZIaaCIc593
- 7yCIYPGhK275+xealV7Ny2YoSim+2jcCMP/Kyo3lQ1l32cH7FN+Ji0WvBnIL7yK8
- TID/hN069ZBVjTIh/20g4PaQTB22PGlXoT3mQ9z19wtTKEU1bnUWpo15g1XcZ577
- x/5rms3Eo54H/DKNrnKllL6SwvMFW154YYE73mbN/ObHONFdDMmvtc/lekjdB8nT
- bd0JY7OPx1TkvDFMOuP1Q==
-X-ME-Sender: <xms:Dn97aq_zFDGztLyD-Iz6fbYVThOW9mqc7PhsvJO9OQKtGTtbSrl4Gw>
- <xme:Dn97avDmxr3iAC7PmePidnvDxpodsM0Osh8PkrymnbhF_P8dQ0QWoNMmNbVJIlRmx
- 9ed867hi2pOp-qxt0bHtq1cVF_xIAsUqgKHYXradqT5WPtau5muoA>
-X-ME-Received: <xmr:Dn97avKmAGKbB5lgmmlhGKM2wbyYWDC2__kEe82FAhpNkzwjjhzxAbBFTmyCxPD_VGcXCA>
-X-ME-Proxy-Cause: dmFkZTG022mVQphzI7AWPJwf5iH2zrR/m6qBn9XfRmKRpHDMJFydYTJQKVsM1QV+rwV6La
- 5lrePzwx4fvDAbuWGvHeRfj/XXR7cRigp+VFqRksAUG14iVvyA71KFanGk670lEqM8JVu4
- s34RyOYIIjP0W8WBcm0e1tPVBp/pNSsHcdVX1Ks29W2b9Vr5JvJeEXiSndrwW6yXxb4+J4
- eZfRbt29FtMtF3dLgjNB6mepufrYu6ZS9dF46cYmkr7C0VornlkrAZTNc8V+Abmi0Y7yME
- 8S+ZxumAgsgCiVLwzI8RB5uG9SF/jOVVCcorsE69lSTOl6wZGe9l8hpUAF/XNdPBWsb4of
- wi0EIaQfbyro91PuxjifIy6AllOkkrbsPiiXVUpgR4G2HU0EJ1BHLNxozjTjhbbE2tbQX9
- j9fFwdkKMl2lEc0ZJcblYcbBlY0dxqKZilj5WsyOqbXih3fPUV/n5XLnZaqOVFXmsqYYFE
- 4SqJyv5UUdmhE8O/SEIgIRaM8iIh6vdY8sFUOdUb5fo33uIZnORtPeL/MZLDiFUwsbbH2D
- a84rnaXTrjAbD0GK1wgLrP0nc0PD4cyiFweLaJsCTAo96RXTKv7xZQtOVCrZe/6IjcImJC
- sAEV0SZS+W0EKbj1S6CCUE0FzHBYrfI0V+UVqULmpj900OcNYCrdhIgCYeyA
-X-ME-Proxy: <xmx:Dn97aql4LsVgAISkXxJfZs1DKFBG8j6ntA8V3paVUxbe71kCzH8Siw>
- <xmx:Dn97alE-e7OKWklJWQlc2Mt5MHYbIqDpNEm8wRAw2CMDXT3PcIOwnQ>
- <xmx:Dn97aiHS7L59l2xwYSeedLtlgVAj-JS3XjoW_8uGQs-NZUOCSO_gng>
- <xmx:Dn97aqOZbM4seyXDa-eacRlT1WdtO8mAiHWr_iBhhtIsUdCOTn3fTg>
- <xmx:Dn97aoDzZ1KmbsFR5pRjitlI07AdfhX8mNXVAuETaQR8QrxpsnLfllhS>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786478397; x=
+ 1786564797; bh=N+4O2kn5sZ+j5wgAUNN+oSXeIGWgkXBKl6rgiIwvR/g=; b=H
+ xhx2DASo2/luj5Q9okChitmdmQAMmiaud09PctYUtXtX4m3MAa2uSFMfMKUSeZqm
+ b7OSQ3Shm8Uc77XTteJpiOW57EUwoGMRRSaWwnAxJXw5lm/unXh+1V3kn/GNINkg
+ 1ztQaeMuDtHYuV+g7bvxJ89pCUur7aZcWkZssLk/zzf8yoYww6iylxaTz4aZcD1D
+ xKz3MKYSif7Hcj/D1d9vABB1PvsF7nodc9U0XeTM2Jbb2jtwwl9FvlaLZth3k6QQ
+ CpnQ8RcctDsDGoKpEox5Lohq2vEw4/sr1KWvgDNvQyG9uVnABYH9EsYJzYYvXGfj
+ MYB5YEpi1omQXYPCnG50A==
+X-ME-Sender: <xms:PX97akJoihySIbPiuwzLHFY1ngoIM6FuizD_kFB36j4OIGwkMeiCuA>
+ <xme:PX97aoebCXf2tmzYA_BUSzK8IG03YPDb9RVhaWN9l9YXGTl-sXjC6UnNc6Pa3W8Pe
+ gybFX4ktIR8Gvm1In8aVgyMHLhShMXTRSWQxB9LsMOyRCIKEslWOw>
+X-ME-Received: <xmr:PX97aj01254GlcZu8AbJyY4Fqhg1kKTlhJuDyuD75bbwywL1iH_Njcr3Wg9eH4dlbPVkdQ>
+X-ME-Proxy-Cause: dmFkZTECvURETSaS1LWppBzxw9fQ/4Ka/J4hSBSmr1AXFCEIPkilWGtETGFm6gZiqROT30
+ 7IQJt2XSE52sichpy3bzC5BD+NbS4jZgRHd9lqzj3DvUFiIHwH7s4+Xc0HNSXYlnbcfnH1
+ H7y5liumNqFdGAaKvlg5otXUa3ZDHYR4uLrzGSqhmgYzjrsB8WJ6GImXXkAXFfnnYTuQhK
+ +/NSTS4ddupQyNpl4qMptOkPtciAigf7rA+bIZOYxMKNDPV4odZajK0w9Jr1+OLRLBiyTJ
+ zHqszNOuonfgEJPDOO6SAJvDOJd/eV3hI5Jh+yOHeAKVdXLD4UCZtMKn/xFHRzPtXQVdMk
+ /iHctzx6WiX4SEh0yyKbGnfoncS+GvtzmtA+cU0GBq4ig/P6YfbYiTG/LtKLcnAZTKXuN0
+ Usqmyj2dMGEhZwagzUn9xjHrYMl8RUlsMEVamf6ZEo6XLyeA1XIcNkQD9lbW5pTfjjgl9p
+ 0w1/iVMEXZhShrL22xdBEKN+6fdYWDOP0c4Tx26kqadIrgp9vP/6LXOWhvWX2ZSMGlIri1
+ w/tYSMmwVBQPB7jFtZIntKSdR+BGzb34AcBzP0vxU695b22o4JYB7X/98JPtTXV43Gmhy1
+ XekgkBYKbSZLZQ4ojWW2LhK4X9P3bV+qvxX891OmKwc+tX9a0JgHqRlmtvew
+X-ME-Proxy: <xmx:PX97aphwOEEwqLq9qnb92sRBxCGTm7lOHRMpxpy_znyh3iwhwYRulw>
+ <xmx:PX97ahSJzkrwyMuj_1H7y8xUuHyqk9qo6-vlCTplExa3nICwjsCbew>
+ <xmx:PX97aijZUggKepCYph3kk_KX-VJhVdDGqYLZUCBzprHcqaSbbhl4bQ>
+ <xmx:PX97ap7hoUWew8Ca7zASugtO39jHbdlJR8rjHsqJn2w-1jlDsYlavQ>
+ <xmx:PX97al-SQ_NICQenNniUJHiQRrWl6dMOzKMLqq-4Ixspi6kyhJmhDvqT>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 15:59:10 -0400 (EDT)
-Message-ID: <966cc97e039f72787090e8c3c9d89a3a7a602508.camel@alistair23.me>
-Subject: Re: [PATCH 06/56] disas/riscv: Move operand extractors earlier in file
+ 11 Aug 2026 15:59:57 -0400 (EDT)
+Message-ID: <6570b7fdcb45ff0027fc2adb4c7a0b66bfe9d48b.camel@alistair23.me>
+Subject: Re: [PATCH 07/56] disas/riscv: Reduce rv_insn to uint32_t
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 05:59:10 +1000
-In-Reply-To: <20260809223545.730664-7-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 05:59:57 +1000
+In-Reply-To: <20260809223545.730664-8-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-7-richard.henderson@linaro.org>
+ <20260809223545.730664-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=103.168.172.150;
@@ -106,842 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-08-09 at 15:34 -0700, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+T24gU3VuLCAyMDI2LTA4LTA5IGF0IDE1OjM0IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
+ZToKPiBTaW5jZSA3NThkY2U5Yzk4YSwgdGhlIG9ubHkgcG9zc2libGUgdmFsdWVzIGZvcgo+IGlu
+c3RydWN0aW9uIGxlbmd0aCBhcmUgMiBhbmQgNC4KPiAKPiBTaWduZWQtb2ZmLWJ5OiBSaWNoYXJk
+IEhlbmRlcnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4KClJldmlld2VkLWJ5OiBB
+bGlzdGFpciBGcmFuY2lzIDxhbGlzdGFpci5mcmFuY2lzQHdkYy5jb20+CgpBbGlzdGFpcgoKPiAt
+LS0KPiDCoGRpc2FzL3Jpc2N2LmggfMKgIDIgKy0KPiDCoGRpc2FzL3Jpc2N2LmMgfCAxMiArKyst
+LS0tLS0tLS0KPiDCoDIgZmlsZXMgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspLCAxMCBkZWxldGlv
+bnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvZGlzYXMvcmlzY3YuaCBiL2Rpc2FzL3Jpc2N2LmgKPiBp
+bmRleCA5MWFkYThiNTMxLi5lYWJlMTkzYjRmIDEwMDY0NAo+IC0tLSBhL2Rpc2FzL3Jpc2N2LmgK
+PiArKysgYi9kaXNhcy9yaXNjdi5oCj4gQEAgLTExLDcgKzExLDcgQEAKPiDCoAo+IMKgLyogdHlw
+ZXMgKi8KPiDCoAo+IC10eXBlZGVmIHVpbnQ2NF90IHJ2X2luc3Q7Cj4gK3R5cGVkZWYgdWludDMy
+X3QgcnZfaW5zdDsKPiDCoHR5cGVkZWYgdWludDE2X3QgcnZfb3Bjb2RlOwo+IMKgCj4gwqAvKiBl
+bnVtcyAqLwo+IGRpZmYgLS1naXQgYS9kaXNhcy9yaXNjdi5jIGIvZGlzYXMvcmlzY3YuYwo+IGlu
+ZGV4IGUzZmJjMjY2MjYuLjAxMmY5MGZjZTYgMTAwNjQ0Cj4gLS0tIGEvZGlzYXMvcmlzY3YuYwo+
+ICsrKyBiL2Rpc2FzL3Jpc2N2LmMKPiBAQCAtNTQ5MSwxMCArNTQ5MSw4IEBAIHN0YXRpYyBHU3Ry
+aW5nICpkaXNhc21faW5zdChydl9pc2EgaXNhLAo+IHVpbnQ2NF90IHBjLCBydl9pbnN0IGluc3Qs
+Cj4gwqDCoMKgwqAgcmV0dXJuIGZvcm1hdF9pbnN0KDI0LCAmZGVjKTsKPiDCoH0KPiDCoAo+IC0j
+ZGVmaW5lIElOU1RfRk1UXzIgIiUwNCIgUFJJeDY0ICLCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCAiCj4gLSNkZWZpbmUgSU5TVF9GTVRfNCAiJTA4IiBQUkl4NjQgIsKgwqDCoMKgwqDCoMKgwqDC
+oCAiCj4gLSNkZWZpbmUgSU5TVF9GTVRfNiAiJTAxMiIgUFJJeDY0ICLCoMKgwqDCoMKgICIKPiAt
+I2RlZmluZSBJTlNUX0ZNVF84ICIlMDE2IiBQUkl4NjQgIsKgICIKPiArI2RlZmluZSBJTlNUX0ZN
+VF8yICIlMDR4wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgIgo+ICsjZGVmaW5lIElOU1RfRk1U
+XzQgIiUwOHjCoMKgwqDCoMKgwqDCoMKgwqAgIgo+IMKgCj4gwqBzdGF0aWMgaW50Cj4gwqBwcmlu
+dF9pbnNuX3Jpc2N2KGJmZF92bWEgbWVtYWRkciwgc3RydWN0IGRpc2Fzc2VtYmxlX2luZm8gKmlu
+Zm8sCj4gcnZfaXNhIGlzYSkKPiBAQCAtNTUzMCwxMiArNTUyOCw4IEBAIHByaW50X2luc25fcmlz
+Y3YoYmZkX3ZtYSBtZW1hZGRyLCBzdHJ1Y3QKPiBkaXNhc3NlbWJsZV9pbmZvICppbmZvLCBydl9p
+c2EgaXNhKQo+IMKgwqDCoMKgwqDCoMKgwqAgY2FzZSA0Ogo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCAoKmluZm8tPmZwcmludGZfZnVuYykoaW5mby0+c3RyZWFtLCBJTlNUX0ZNVF80LCBpbnN0
+KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7Cj4gLcKgwqDCoMKgwqDCoMKgIGNh
+c2UgNjoKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAoKmluZm8tPmZwcmludGZfZnVuYykoaW5m
+by0+c3RyZWFtLCBJTlNUX0ZNVF82LCBpbnN0KTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBi
+cmVhazsKPiDCoMKgwqDCoMKgwqDCoMKgIGRlZmF1bHQ6Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgKCppbmZvLT5mcHJpbnRmX2Z1bmMpKGluZm8tPnN0cmVhbSwgSU5TVF9GTVRfOCwgaW5zdCk7
+Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsKPiDCoMKgwqDCoMKgwqDCoMKgIH0KPiDCoMKgwqDC
+oCB9Cj4gwqAK
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
-> =C2=A0disas/riscv.c | 790 +++++++++++++++++++++++++----------------------=
--
-> --
-> =C2=A01 file changed, 395 insertions(+), 395 deletions(-)
->=20
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 2ba0a6a73a..e3fbc26626 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -1259,6 +1259,401 @@ static const rv_comp_data rvcp_fsgnjx_q[] =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
-> =C2=A0};
-> =C2=A0
-> +/* operand extractors */
-> +
-> +static uint32_t operand_rd(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> +}
-> +
-> +static uint32_t operand_rs1(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 15, 5);
-> +}
-> +
-> +static uint32_t operand_rs2(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 5);
-> +}
-> +
-> +static uint32_t operand_rs3(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 27, 5);
-> +}
-> +
-> +static uint32_t operand_aq(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 1);
-> +}
-> +
-> +static uint32_t operand_rl(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 1);
-> +}
-> +
-> +static uint32_t operand_pred(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 24, 4);
-> +}
-> +
-> +static uint32_t operand_succ(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 4);
-> +}
-> +
-> +static uint32_t operand_rm(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 3);
-> +}
-> +
-> +static uint32_t operand_shamt5(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 5);
-> +}
-> +
-> +static uint32_t operand_shamt6(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> +}
-> +
-> +static uint32_t operand_shamt7(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 7);
-> +}
-> +
-> +static uint32_t operand_crdq(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 3);
-> +}
-> +
-> +static uint32_t operand_crs1q(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 3);
-> +}
-> +
-> +static uint32_t operand_crs1rdq(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 3);
-> +}
-> +
-> +static uint32_t operand_crs2q(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 3);
-> +}
-> +
-> +static uint32_t calculate_xreg(uint32_t sreg)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sreg < 2 ? sreg + 8 : sreg + 16;
-> +}
-> +
-> +static uint32_t operand_sreg1(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return calculate_xreg(extract32(inst, 7, 3));
-> +}
-> +
-> +static uint32_t operand_sreg2(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return calculate_xreg(extract32(inst, 2, 3));
-> +}
-> +
-> +static uint32_t operand_crd(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> +}
-> +
-> +static uint32_t operand_crs1(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> +}
-> +
-> +static uint32_t operand_crs1rd(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> +}
-> +
-> +static uint32_t operand_crs2(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 5);
-> +}
-> +
-> +static uint32_t operand_cimmsh5(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 5);
-> +}
-> +
-> +static uint32_t operand_csr12(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 12);
-> +}
-> +
-> +static int32_t operand_imm12(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 20, 12);
-> +}
-> +
-> +static int32_t operand_imm20(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 20) << 12;
-> +}
-> +
-> +static int32_t operand_jimm20(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 31, 1) << 20 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 21, 10) << 1 =
-|
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 20, 1) << 11 =
-|
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 12, 8) << 12;
-> +}
-> +
-> +static int32_t operand_simm12(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 25, 7) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 5);
-> +}
-> +
-> +static int32_t operand_sbimm12(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 31, 1) << 12 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 25, 6) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 8, 4) << 1 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 1) << 11;
-> +}
-> +
-> +static uint32_t operand_cimmshl6(rv_inst inst, rv_isa isa)
-> +{
-> +=C2=A0=C2=A0=C2=A0 int imm =3D extract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> +=C2=A0=C2=A0=C2=A0 if (isa =3D=3D rv128) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm ? imm : 64;
-> +=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0 return imm;
-> +}
-> +
-> +static uint32_t operand_cimmshr6(rv_inst inst, rv_isa isa)
-> +{
-> +=C2=A0=C2=A0=C2=A0 int imm =3D extract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> +=C2=A0=C2=A0=C2=A0 if (isa =3D=3D rv128) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm | (imm & 32) << 1=
-;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm ? imm : 64;
-> +=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0 return imm;
-> +}
-> +
-> +static int32_t operand_cimmi(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> +}
-> +
-> +static int32_t operand_cimmui(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 17 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5) << 12;
-> +}
-> +
-> +static uint32_t operand_cimmlwsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 4, 3) << 2 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 2) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmldsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 3 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 3) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmlqsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 4) << 6;
-> +}
-> +
-> +static int32_t operand_cimm16sp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 9 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 6 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 2) << 7 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> +}
-> +
-> +static int32_t operand_cimmj(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 11 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 11, 1) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 9, 2) << 8 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 8, 1) << 10 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 1) << 6 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 7 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 3) << 1 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> +}
-> +
-> +static int32_t operand_cimmb(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 8 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 10, 2) << 3 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 2) << 1 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> +}
-> +
-> +static uint32_t operand_cimmswsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 9, 4) << 2 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 2) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmsdsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 3) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmsqsp(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 4) << 6;
-> +}
-> +
-> +static uint32_t operand_cimm4spn(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 4) << 6 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 2 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 3;
-> +}
-> +
-> +static uint32_t operand_cimmw(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 2 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmd(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6;
-> +}
-> +
-> +static uint32_t operand_cimmq(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 10, 1) << 8 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6;
-> +}
-> +
-> +static int32_t operand_vimm(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return sextract32(inst, 15, 5);
-> +}
-> +
-> +static uint32_t operand_vuimm(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 15, 5);
-> +}
-> +
-> +static uint32_t operand_vzimm11(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 11);
-> +}
-> +
-> +static uint32_t operand_vzimm10(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 10);
-> +}
-> +
-> +static uint32_t operand_vzimm6(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 1) << 5 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 15, 5);
-> +}
-> +
-> +static uint32_t operand_bs(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 30, 2);
-> +}
-> +
-> +static uint32_t operand_rnum(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 4);
-> +}
-> +
-> +static uint32_t operand_vm(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 1);
-> +}
-> +
-> +static uint32_t operand_uimm_c_lb(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 5, 1) << 1 |
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1);
-> +}
-> +
-> +static uint32_t operand_uimm_c_lh(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 5, 1) << 1;
-> +}
-> +
-> +static uint32_t operand_zcmp_spimm(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 2) << 4;
-> +}
-> +
-> +static uint32_t operand_zcmp_rlist(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 4, 4);
-> +}
-> +
-> +static uint32_t operand_imm6(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> +}
-> +
-> +static uint32_t operand_imm2(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 2);
-> +}
-> +
-> +static uint32_t operand_immh(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 6);
-> +}
-> +
-> +static uint32_t operand_imml(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> +}
-> +
-> +static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist,
-> uint32_t spimm)
-> +{
-> +=C2=A0=C2=A0=C2=A0 int xlen_bytes_log2 =3D isa =3D=3D rv64 ? 3 : 2;
-> +=C2=A0=C2=A0=C2=A0 int regs =3D rlist =3D=3D 15 ? 13 : rlist - 3;
-> +=C2=A0=C2=A0=C2=A0 uint32_t stack_adj_base =3D ROUND_UP(regs << xlen_byt=
-es_log2, 16);
-> +=C2=A0=C2=A0=C2=A0 return stack_adj_base + spimm;
-> +}
-> +
-> +static uint32_t operand_zcmp_stack_adj(rv_inst inst, rv_isa isa)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return calculate_stack_adj(isa, operand_zcmp_rlist(in=
-st),
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 operand_zcmp_spimm(inst));
-> +}
-> +
-> +static uint32_t operand_tbl_index(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 8);
-> +}
-> +
-> +static uint32_t operand_lpl(rv_inst inst)
-> +{
-> +=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 20);
-> +}
-> +
-> =C2=A0/* instruction metadata */
-> =C2=A0
-> =C2=A0const rv_opcode_data rvi_opcode_data[] =3D {
-> @@ -4198,401 +4593,6 @@ static void decode_inst_opcode(rv_decode
-> *dec, rv_isa isa)
-> =C2=A0=C2=A0=C2=A0=C2=A0 dec->op =3D op;
-> =C2=A0}
-> =C2=A0
-> -/* operand extractors */
-> -
-> -static uint32_t operand_rd(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> -}
-> -
-> -static uint32_t operand_rs1(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 15, 5);
-> -}
-> -
-> -static uint32_t operand_rs2(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 5);
-> -}
-> -
-> -static uint32_t operand_rs3(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 27, 5);
-> -}
-> -
-> -static uint32_t operand_aq(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 1);
-> -}
-> -
-> -static uint32_t operand_rl(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 1);
-> -}
-> -
-> -static uint32_t operand_pred(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 24, 4);
-> -}
-> -
-> -static uint32_t operand_succ(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 4);
-> -}
-> -
-> -static uint32_t operand_rm(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 3);
-> -}
-> -
-> -static uint32_t operand_shamt5(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 5);
-> -}
-> -
-> -static uint32_t operand_shamt6(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> -}
-> -
-> -static uint32_t operand_shamt7(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 7);
-> -}
-> -
-> -static uint32_t operand_crdq(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 3);
-> -}
-> -
-> -static uint32_t operand_crs1q(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 3);
-> -}
-> -
-> -static uint32_t operand_crs1rdq(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 3);
-> -}
-> -
-> -static uint32_t operand_crs2q(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 3);
-> -}
-> -
-> -static uint32_t calculate_xreg(uint32_t sreg)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sreg < 2 ? sreg + 8 : sreg + 16;
-> -}
-> -
-> -static uint32_t operand_sreg1(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return calculate_xreg(extract32(inst, 7, 3));
-> -}
-> -
-> -static uint32_t operand_sreg2(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return calculate_xreg(extract32(inst, 2, 3));
-> -}
-> -
-> -static uint32_t operand_crd(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> -}
-> -
-> -static uint32_t operand_crs1(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> -}
-> -
-> -static uint32_t operand_crs1rd(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 7, 5);
-> -}
-> -
-> -static uint32_t operand_crs2(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 5);
-> -}
-> -
-> -static uint32_t operand_cimmsh5(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 5);
-> -}
-> -
-> -static uint32_t operand_csr12(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 12);
-> -}
-> -
-> -static int32_t operand_imm12(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 20, 12);
-> -}
-> -
-> -static int32_t operand_imm20(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 20) << 12;
-> -}
-> -
-> -static int32_t operand_jimm20(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 31, 1) << 20 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 21, 10) << 1 =
-|
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 20, 1) << 11 =
-|
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 12, 8) << 12;
-> -}
-> -
-> -static int32_t operand_simm12(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 25, 7) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 5);
-> -}
-> -
-> -static int32_t operand_sbimm12(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 31, 1) << 12 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 25, 6) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 8, 4) << 1 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 1) << 11;
-> -}
-> -
-> -static uint32_t operand_cimmshl6(rv_inst inst, rv_isa isa)
-> -{
-> -=C2=A0=C2=A0=C2=A0 int imm =3D extract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> -=C2=A0=C2=A0=C2=A0 if (isa =3D=3D rv128) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm ? imm : 64;
-> -=C2=A0=C2=A0=C2=A0 }
-> -=C2=A0=C2=A0=C2=A0 return imm;
-> -}
-> -
-> -static uint32_t operand_cimmshr6(rv_inst inst, rv_isa isa)
-> -{
-> -=C2=A0=C2=A0=C2=A0 int imm =3D extract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> -=C2=A0=C2=A0=C2=A0 if (isa =3D=3D rv128) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm | (imm & 32) << 1=
-;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 imm =3D imm ? imm : 64;
-> -=C2=A0=C2=A0=C2=A0 }
-> -=C2=A0=C2=A0=C2=A0 return imm;
-> -}
-> -
-> -static int32_t operand_cimmi(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5);
-> -}
-> -
-> -static int32_t operand_cimmui(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 17 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 5) << 12;
-> -}
-> -
-> -static uint32_t operand_cimmlwsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 4, 3) << 2 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 2) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmldsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 3 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 3) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmlqsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 4) << 6;
-> -}
-> -
-> -static int32_t operand_cimm16sp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 9 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 6 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 2) << 7 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> -}
-> -
-> -static int32_t operand_cimmj(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 11 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 11, 1) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 9, 2) << 8 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 8, 1) << 10 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 1) << 6 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 7 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 3) << 1 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> -}
-> -
-> -static int32_t operand_cimmb(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 12, 1) << 8 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 10, 2) << 3 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 3, 2) << 1 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 2, 1) << 5;
-> -}
-> -
-> -static uint32_t operand_cimmswsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 9, 4) << 2 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 2) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmsdsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 3) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmsqsp(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 4) << 6;
-> -}
-> -
-> -static uint32_t operand_cimm4spn(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 7, 4) << 6 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 2 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 3;
-> -}
-> -
-> -static uint32_t operand_cimmw(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1) << 2 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 1) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmd(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 10, 3) << 3 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6;
-> -}
-> -
-> -static uint32_t operand_cimmq(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 11, 2) << 4 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 10, 1) << 8 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 5, 2) << 6;
-> -}
-> -
-> -static int32_t operand_vimm(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return sextract32(inst, 15, 5);
-> -}
-> -
-> -static uint32_t operand_vuimm(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 15, 5);
-> -}
-> -
-> -static uint32_t operand_vzimm11(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 11);
-> -}
-> -
-> -static uint32_t operand_vzimm10(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 10);
-> -}
-> -
-> -static uint32_t operand_vzimm6(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 1) << 5 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 15, 5);
-> -}
-> -
-> -static uint32_t operand_bs(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 30, 2);
-> -}
-> -
-> -static uint32_t operand_rnum(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 4);
-> -}
-> -
-> -static uint32_t operand_vm(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 1);
-> -}
-> -
-> -static uint32_t operand_uimm_c_lb(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 5, 1) << 1 |
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 extract32(inst, 6, 1);
-> -}
-> -
-> -static uint32_t operand_uimm_c_lh(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 5, 1) << 1;
-> -}
-> -
-> -static uint32_t operand_zcmp_spimm(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 2) << 4;
-> -}
-> -
-> -static uint32_t operand_zcmp_rlist(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 4, 4);
-> -}
-> -
-> -static uint32_t operand_imm6(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> -}
-> -
-> -static uint32_t operand_imm2(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 25, 2);
-> -}
-> -
-> -static uint32_t operand_immh(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 26, 6);
-> -}
-> -
-> -static uint32_t operand_imml(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 20, 6);
-> -}
-> -
-> -static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist,
-> uint32_t spimm)
-> -{
-> -=C2=A0=C2=A0=C2=A0 int xlen_bytes_log2 =3D isa =3D=3D rv64 ? 3 : 2;
-> -=C2=A0=C2=A0=C2=A0 int regs =3D rlist =3D=3D 15 ? 13 : rlist - 3;
-> -=C2=A0=C2=A0=C2=A0 uint32_t stack_adj_base =3D ROUND_UP(regs << xlen_byt=
-es_log2, 16);
-> -=C2=A0=C2=A0=C2=A0 return stack_adj_base + spimm;
-> -}
-> -
-> -static uint32_t operand_zcmp_stack_adj(rv_inst inst, rv_isa isa)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return calculate_stack_adj(isa, operand_zcmp_rlist(in=
-st),
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 operand_zcmp_spimm(inst));
-> -}
-> -
-> -static uint32_t operand_tbl_index(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 2, 8);
-> -}
-> -
-> -static uint32_t operand_lpl(rv_inst inst)
-> -{
-> -=C2=A0=C2=A0=C2=A0 return extract32(inst, 12, 20);
-> -}
-> -
-> =C2=A0/* decode operands */
-> =C2=A0
-> =C2=A0static void decode_inst_operands(rv_decode *dec, rv_isa isa)
 
