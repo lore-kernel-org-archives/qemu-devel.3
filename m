@@ -4,120 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F89C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:35:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6F5C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wteCp-0006Jm-92; Tue, 11 Aug 2026 00:35:15 -0400
+	id 1wteTq-0004Am-Lf; Tue, 11 Aug 2026 00:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wteCn-0006JC-81; Tue, 11 Aug 2026 00:35:13 -0400
-Received: from smtpout1.mo2.mail-out.ovh.net ([79.137.123.219])
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wteTp-0004Ac-3b
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:52:49 -0400
+Received: from mail-northeuropeazon11012042.outbound.protection.outlook.com
+ ([52.101.66.42] helo=DUZPR83CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wteCk-0007Fr-3K; Tue, 11 Aug 2026 00:35:12 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo2.mail-out.ovh.net (Postfix) with ESMTPS id 4hJzLf4Kxwz43v3;
- Tue, 11 Aug 2026 04:35:06 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 11 Aug 2026 04:35:06 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.71])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hJzLf2djvz7tKR; Tue, 11 Aug 2026 04:35:06 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 5016C1B43EE1;
- Tue, 11 Aug 2026 04:35:04 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003dbcb8c99-d836-46ba-871e-221a98d125c9,
- 803E6BE66494CDF3CD1430A16CDAFD105E03C239) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.66.77.115
-Message-ID: <025b75a9-f60b-4a37-9640-c874b247f3ae@kaod.org>
-Date: Tue, 11 Aug 2026 06:35:03 +0200
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wteTn-00027L-7p
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:52:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JGlToFA8JYTHIM+fdff9faXorvNoWEHHYIIJGUb998xYE5BHIFKYyoJVQQDeW3lZbzy9Nx9Dbyzn/b/CKjHr85/z3d6Xc53wCrxl3O9V4QncQUtKxayYeeGbU6xPVhiL5+JVIm8wlS1q7DzeJZKUPJvf0Ypr1UaKan2q97jH234tNOGsdF6MNYprS7FvkjHiuWoh4/95FXTthZbgy4UoMk5WCdY1Jy8HCnyEXuJ2m4SMV6GTLT4bFmqLxQUnzHcz3m+3VljJyrTV5lw4ApQ0gZKpdzWGsOxx7dAdgumTtBBvNQVzAXvdtavZK9LxJLuybZfqjIuw3dmPRbdpEPYWWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LgRCqBJEfBhOtRDHXcm1oxx98fX+vjoA8ZNI8PA2oJU=;
+ b=p+n3Er4HoK8Pc41pdIoJPuhdessIZcjok/by8yVMR9Yu2ehOQiT26T7FRQF+uMVYgnAkZWnER1Leu4qcQPkYyKk3KlU/tHo3ef327dXfntBtSDWsfSz7xBlH7dRIPDkdj1Ys2PnfTpZ6HXtkup1yt7Ez9X0HqdDAfLp4EBQRLVLCU/N7aOzyYrliypnp+zMg2/FisqnTBC7fpKF1W0hgVUxaI61VKYXOpLfYosh3udlaDrNRTwh01hFmb3QGVDFf3BcFPQrVDTdCR5YkEdeXGGDcxJllbb7LHeLqhsNhrB+iQU8MsyQ9XoRe4TcG8wd42+MgZi/nQCoMo5tv/wD3IQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LgRCqBJEfBhOtRDHXcm1oxx98fX+vjoA8ZNI8PA2oJU=;
+ b=LfJMNfluPgPq01vkD/6KscZeoSToYWs+fDZYZfp2uZnwXGuwE/0qRfHXWqUsUZdYAricH7e65Uy9UFrvJeW11KtRd4ovdf3eJzCBbVZ2+rFHibS3cp5KGLz2v59E2Eh3Ec6x5QM4PrC82Dl9p+uBrwFN/7XbLPrQLkOguGSXo+Qsl/nNqMP7qefyGWc6K64XSSeWbH68zn7f9kyUXYUoLhrQUIO9wOjil+v+wl8SE1EsVCLyM9PksP+vhi2sfZZkyvdkWj0QsSSLFeOv3XTyPNMlQ35x0JiO7hq1fuRt1LUBRZHicvKvNM3qKhNCeAWp1QIbvKOuu3dbSXe7Wah3fA==
+Received: from DB8PR04MB7177.eurprd04.prod.outlook.com (2603:10a6:10:127::23)
+ by DU4PR04MB12131.eurprd04.prod.outlook.com (2603:10a6:10:642::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.11; Tue, 11 Aug
+ 2026 04:47:41 +0000
+Received: from DB8PR04MB7177.eurprd04.prod.outlook.com
+ ([fe80::cf7b:6007:220b:97a2]) by DB8PR04MB7177.eurprd04.prod.outlook.com
+ ([fe80::cf7b:6007:220b:97a2%4]) with mapi id 15.21.0292.024; Tue, 11 Aug 2026
+ 04:47:41 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Bernhard Beschow <shentey@gmail.com>
+Subject: RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric Multiprocessing
+ boot support for i.MX8MP
+Thread-Topic: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+ Multiprocessing boot support for i.MX8MP
+Thread-Index: AQHdDWSQYf08EcE04EOcCOxujcqOMLZ8J0EQgBxXAYA=
+Date: Tue, 11 Aug 2026 04:47:40 +0000
+Message-ID: <DB8PR04MB717730147C8E5B87FF57D07D87DD2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+References: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
+ <DB8PR04MB717781FAC6A65C0BE2AF1D0587CF2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+In-Reply-To: <DB8PR04MB717781FAC6A65C0BE2AF1D0587CF2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB8PR04MB7177:EE_|DU4PR04MB12131:EE_
+x-ms-office365-filtering-correlation-id: eb42bcc5-876c-4d69-8714-08def763ace3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|19092799006|23010399003|366016|11063799006|5023799004|56012099006|10067099003|3023799007|18002099003|22082099003|4143699003|38070700021;
+x-microsoft-antispam-message-info: 3J/79OMv5Q8yq2cHyWUg5s5cRJ+HUX49Lyw7QXOX766jJ7w+98UjdZvJibr1teQDO9nKsaXm4Val4u8U0ThvwbhUwwwAz6To9+98aNXVCp9ISwUxrbkLnB6+WUSx2OphgeU4SeyTUkrMXDHXECNpCRMylS9tuP5WG7RuzgEhdkfvTVMjc6ZmhJA4J6LHuzj4z51/krSvi9ulvzsTsa41vNG8R4KIGjItJCicESX4nKGxr3LX5qnH7JvhDEkrm0mUm6yPVuD4ACyD6x9cx+Au+SlAWgby32QUdkf8ceWf9VEn8/gggn5x55fR3hNbFEUc2Sm2zFh132AKWMBb6MHYqxNWEbp4Hod+xB/PIkBCbkeoorEV7ALEP+NW223zwp/3mnrQEyQ2ZZNBYDqElKizjNQ/x39UCvRYIhk9VA5DtL/21jl1GOBMz0c1+lYiViwH/NB87UBdA8LnI5qLIzfNHke7+aDEroEOD8L2c12z4ui+sMLzCxP0/NdOjgUvqOwRPF3LPQeMv8dpSuivN24Oz6wElkZKtE6nnk5L+m5W6LFI5nQDuz3VHX3LF5UB1VWrNNwJdsnGXSW60XSrHibPgm5QqyRyOnfiOUe0ysXaWNV59WS8vxkmBntvDLbCpBMaTqchjtZUudtWNyWw1iv7s4w+7kC3VrBTjkelH4WHTWXCFsqXK9fEF4+hwTGnJG3R3gbctRi5BavvNf5JSH0yaM7h0VH/xUmUFB6HfUcTZdw=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DB8PR04MB7177.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(19092799006)(23010399003)(366016)(11063799006)(5023799004)(56012099006)(10067099003)(3023799007)(18002099003)(22082099003)(4143699003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?m0AE+BIWIosyrVoULBbbJkX7LhFiuJ1eTHHC1eNQKVICvzd94F7hWlL3pU5k?=
+ =?us-ascii?Q?NZArAhgxofS6J0KmopnrRdX300YEnJzfxkhU7wW17nUn8oujFBlyXM6hFz9s?=
+ =?us-ascii?Q?AtKULRojBNzBV4lKs/s8Ol4OVp1NO84mvAD8qu+TFMrDEvdJOva7XPvHrBHd?=
+ =?us-ascii?Q?10nkJTEc1rlJrnSBSlM8M4ZcIEN8hG1QXMr16vHRye+KGx14/K8546Xcixrm?=
+ =?us-ascii?Q?SPo412p2c2ActOuf1QJrLqfV2pkAfA5wYyxT387aOP1QDegba6mQxYWkB+rD?=
+ =?us-ascii?Q?3eiPWwshP1aPRmT3tTu6L6hjCk7CnMdkwV1LmajmWf7/DM+BdJdaJTLCLFkL?=
+ =?us-ascii?Q?G+4uDEMvjEntnCrrFv20bghE6Vb+sk2O2RrUVvkFhRX1CL+KRPDpg5MjSYAh?=
+ =?us-ascii?Q?6XMa91wFXBdhpf0PCil4vcf0MRd1Eaijd/icF11G5qRoj9B5eeNPoqgbDNJj?=
+ =?us-ascii?Q?kdeqv3RuzD8Rlv5dBFENVEIRRg6oADwBGRHdATaXaRMf+dcGRSkVSJlnL936?=
+ =?us-ascii?Q?/IVpjB2eAjr+boaLsHYQKurKXVm5l4uNHAmmhci4Ua+ktumbIKxiQMcIhhfL?=
+ =?us-ascii?Q?IyRWb0HwPLIvDKFfT2r5/ak68WRXNSVG1M1Va3hiw1+UtnKxgaNk8gVomCMp?=
+ =?us-ascii?Q?oeLsC1q9tVhsbx5ALCAef88W9aJZmWZhxgk9D/dA/wbi4Tjdsuqd9wkcERDS?=
+ =?us-ascii?Q?+lGqqXTXidRe2uYXynoPQJ5Fu/B3iKrMTiBAHgS8G3db+j6bzHOimM+DljFy?=
+ =?us-ascii?Q?tnWuxR3sePsIjlgsAbvfdOuDgvdl6R6Ck8dOpN4nKgnJAdUe/VcW69x5ZyVh?=
+ =?us-ascii?Q?TqcCcbkmVMr3WcAVheFT2JoksgQjlRkAMgyt54KSrrSzr9Hf4ehmHBGz9UZp?=
+ =?us-ascii?Q?PBCZHN6+sBsfmAi1ZeAg3M/Ez2vr9+sbtdQjjnlBMgg3DWeMCL4UgYw/TeUP?=
+ =?us-ascii?Q?6S6i6pFlSxXxGWxWpMzzQeVbbDR0LJyOxfdGIDBEwUZy/JlSLLJ3GyhjWTYm?=
+ =?us-ascii?Q?OhuuoRXgmVM0HVXqY32PYMkFL41+keD8QoUDVyT2jSyTwrlAl08FibaF0lhp?=
+ =?us-ascii?Q?DLmkAFPsre6/7NjG1n3uXLkNMcJPdMUBXhv5aND4Rbsebqnf6f3S/hcL01cN?=
+ =?us-ascii?Q?OWZSadC1OWfC6s4RuYtFKwPbEXqtoo1kmOT9SXP6ozcxPA9Vd6D7PsY8DRxJ?=
+ =?us-ascii?Q?UzAzRiztN+qyWNNekdqxhBaWf0eFGe8QlRrFmZkyRtfp5lUygaBC13GVcIcj?=
+ =?us-ascii?Q?VATrGqkeZ88Lo8bi8FTcmUK7xGSN+BSJ1E1BzU1SyGITe5qMlKACb8P2GWNN?=
+ =?us-ascii?Q?/XL3uo4n7PTrU+Z1UmIX+I6dLhtgiifIb9EBLnJgLOMjbHpg4Ff9iwkgICsm?=
+ =?us-ascii?Q?TCL6tHIQrahE25n6zaCuAuZAa0ixWKZUJ9mABHkTiWxCrzG2CzBA/A5pKCSH?=
+ =?us-ascii?Q?Wfs6RBD771x4zXwlSZ/P1w1CwlhIlj5fT/PYOb9hU+AJt+Tf3xvQ/9jtwoHR?=
+ =?us-ascii?Q?9OGejrQvTh65UEMtXPyU40lMBN9jpPHiAILo3BnVFREdcI60H29CSaKq5lSf?=
+ =?us-ascii?Q?nWoOGvkuW3dkNukdQWGybf6l+ctLyVAUcKVI5bVikRPMNNqZnZVezGFYF+Sv?=
+ =?us-ascii?Q?XUl3Q0rIrNXOGb6SYUg75LXb0gGabmQ0J6iudyJECXgd6Pl3PgLVOvRtXTp5?=
+ =?us-ascii?Q?SuwXZ9BJnKM0eCs/yqRTR9+QyXheZWNqSj43iDMZb/K4YSj5kQRLLJyM+MGp?=
+ =?us-ascii?Q?Sj/z/Uzcrw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] arm/aspeed: Add AST2700 Huygens machine
-To: Mikail Sadic <mikail.sadic@ibm.com>, peter.maydell@linaro.org
-Cc: pbonzini@redhat.com, ninad@linux.ibm.com, titusr@google.com,
- jeuk20.kim@samsung.com, philmd@mailo.com, steven_lee@aspeedtech.com,
- leetroy@gmail.com, jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com,
- andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com,
- milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20260810185748.1253-1-mikail.sadic@ibm.com>
- <20260810185748.1253-9-mikail.sadic@ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260810185748.1253-9-mikail.sadic@ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 11995900557815688323
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGrT7W91OOprcDEHSnlANVTestp7GJWicdrsDdZxesZ6amHuycHIihkF0awCKesIxIt4leDovYPklDJMrzIYDTZU6WZjotcHtFZEFpvX75iAQsyH195FQsH8GwadXqFW/QMXTHSdNiGH0RFP2WtZo9a5h51+EUIGfO71XCLNy+fg7HLwLFUQswxCp0e5LUxnlD1J3F5HViT45BhdNJBoOytaXB68JIWXI9KAjKP4WisjOWtINbj+kkxMNl+5SURSqUiC3iFbbrWJcMeCCUqJTLp/uERMMT7oxW626SzaV5dgDx4OGaEi+SyD9cP9z3aa6mfp8cZsumetnV8aOVJ89XvceChfz/Y6XNI9HFt1H4Ipw2sYS4zAkdTBxTsaMyrghzMmQdUYeHU32nUtGCgTG/FYxUHTFwXd5kJGRuTe5mmwCwCCHAT4rEzcHb4OjSvP7W7OjdI+Axe0lVP9DPrYS24DyQi+Gu6K6KTt7B9JZ2ogZUOwdMrtnk6hObIl5TK+cXNNDhs6RUFjvzd+NegdLKRi8CKtgBjgGTOvq4k9Q0gW95Gqk3P5iwGRt+uI86iwdX7IZjmyGRAIO0KDrBCs0WwCmQQ7G/vjhZ9XNeVFJNe10A1ZZf++US0C47kqYlGVxNbaSoAuES+aZRuJsPjh7KP7ePsMt8hvyIQYSH+upW++g
-DKIM-Signature: a=rsa-sha256; bh=TTSg2NmS0zBg2HXDByEL6xe2RRzU3gg+iR3nrcoPYn8=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1786422906; v=1;
- b=tZ/OAiT9oAd4GfXeCBStYlMBeWlH9kWfYrHrJv4oNWlqJLqAjGFp57Wf2hqenzVn5Y48dB5c
- soLq/iVKJVCF2yS6LulcYfLlrqQAd1tnP+9PL76JbQuLy6aFKvJ7uwuL9NK0h3Hos331S2uAvou
- HoVGI1tMWNYlqJx1VnI8pedIZxGjYQPzWA45qC0h9P4lrMFpwlHd+Bdbfr5TBm8rwj6viEtQBa+
- PSbnzxyl6yfqEdVr0z7IzfuuhNDDN2SgrFMCOqAByn/nWgFAhCuoaJbqSjOYQLBwwaFDx5dvKmN
- arquWZYnungLnvBbtRTIdEVnAHMQUNLGSjr6aJgcycQrw==
-Received-SPF: pass client-ip=79.137.123.219; envelope-from=clg@kaod.org;
- helo=smtpout1.mo2.mail-out.ovh.net
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB8PR04MB7177.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb42bcc5-876c-4d69-8714-08def763ace3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Aug 2026 04:47:40.6584 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YTkIgC2cI/SOm5LStTDGxYG/2Dh1nmjDf+xgoCakcfCes+x1orCcyc0sIZF16bWQYIlGb1tJjFTvnre90I0XyQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR04MB12131
+Received-SPF: pass client-ip=52.101.66.42;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=DUZPR83CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,370 +145,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/26 20:57, Mikail Sadic wrote:
-> Huygens is the IBM POWER12 server platform. The BMC is built around the
-> Aspeed AST2700 A2 SoC and handles power sequencing, thermal management,
-> VPD access and host firmware boot for the POWER host processors.
-> 
-> Add a 'huygens-bmc' machine that instantiates the AST2700 SoC with the
-> board-specific configuration needed to boot the OpenBMC Linux image:
-> the FMC/SPI flash models, the I2C topology (BMC, system and chassis VPD
-> EEPROMs, the UCD90320 power sequencer and temperature sensors) and the
-> network controllers.
-> 
-> Signed-off-by: Mikail Sadic <mikail.sadic@ibm.com>
-> ---
->   docs/system/arm/aspeed.rst      |  50 ++++++-
->   hw/arm/aspeed_ast27x0_huygens.c | 241 ++++++++++++++++++++++++++++++++
->   hw/arm/meson.build              |   1 +
->   3 files changed, 290 insertions(+), 2 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast27x0_huygens.c
-> 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 2d51ceeb84..4e42b1edee 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -271,8 +271,8 @@ configuration file for OTP memory:
->       done > otpmem.img
->     fi
->   
-> -Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``)
-> -==========================================================
-> +Aspeed 2700 family boards (``ast2700-evb``, ``ast2700fc``, ``huygens-bmc``)
-> +============================================================================
->   
->   The QEMU Aspeed machines model BMCs of Aspeed evaluation boards.
->   They are based on different releases of the Aspeed SoC :
-> @@ -285,6 +285,7 @@ AST2700 SoC based machines :
->   
->   - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
->   - ``ast2700fc``            Aspeed AST2700 Evaluation board (Cortex-A35 + Cortex-M4)
-> +- ``huygens-bmc``          Aspeed AST2700 IBM Huygens POWER12 BMC
->   
->   Supported devices
->   -----------------
-> @@ -312,6 +313,8 @@ Supported devices
->    * PECI Controller (minimal)
->    * I3C Controller
->    * Internal Bridge Controller (SLI dummy)
-> + * UFS Host Controller (aspeed,ufshc-m31-16nm) - ``huygens-bmc`` only
-> + * FSI APB-to-OPB bridge with CFAM-S mailbox
->   
->   Missing devices
->   ---------------
-> @@ -440,6 +443,49 @@ Use ``tio`` or another terminal emulator to connect to the consoles:
->      $ tio /dev/pts/56
->      $ tio /dev/pts/57
->   
-> +Booting the huygens-bmc machine
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +The IBM Huygens BMC is based on the AST2700 A2 SoC. Its storage is
-> +split across two images:
-> +
-> +* the FMC (SPI NOR) flash image (``image-bmc``) holds U-Boot, the Linux
-> +  kernel and the FIT image;
-> +* the UFS image (``ufs.img``) holds the root filesystem.
-> +
-> +Both images can be built from the OpenBMC project tree.
-> +
-> +To boot the machine, attach the flash image to the FMC device and the
-> +root filesystem image to a UFS logical unit. ``-nodefaults`` is used so the
-> +board does not also create a default flash at chip-select 0, and the console
-> +is wired explicitly since ``-nodefaults`` disables the implicit one:
-> +
-> +.. code-block:: bash
-> +
-> +  $ qemu-system-aarch64 -M huygens-bmc \
-> +        -nodefaults \
-> +        -blockdev node-name=fmc0,driver=file,filename=image-bmc \
-> +        -device w25q01jvq,bus=ssi.0,cs=0,drive=fmc0 \
-> +        -blockdev node-name=ufs0,driver=file,filename=ufs.img \
-> +        -device ufs-lu,bus=ufs-bus.0,drive=ufs0,lun=0,logical-block-size=512 \
-> +        -display none -serial mon:stdio
-> +
-> +The FMC flash sits on chip-select 0 of the ``ssi.0`` bus and the UFS logical
-> +unit on ``ufs-bus.0``. The Huygens image is laid out for 512-byte sectors,
-> +hence ``logical-block-size=512``.
-> +
-> +The machine instantiates three ``ftgmac100`` Ethernet controllers, which
-> +are wired up by the board. To expose them with user networking, add three
-> +``-nic user`` options to the command above:
-> +
-> +.. code-block:: bash
-> +
-> +        -nic user \
-> +        -nic user \
-> +        -nic user
-> +
-> +The default BMC console is ``uart12``.
-> +
->   
->   Aspeed Bridge IC and Platform Root of Trust processor family boards (``ast1030-evb``, ``ast1040-evb``, ``ast1060-evb``)
->   =======================================================================================================================
-> diff --git a/hw/arm/aspeed_ast27x0_huygens.c b/hw/arm/aspeed_ast27x0_huygens.c
-> new file mode 100644
-> index 0000000000..424962c536
-> --- /dev/null
-> +++ b/hw/arm/aspeed_ast27x0_huygens.c
-> @@ -0,0 +1,241 @@
-> +/*
-> + * IBM Huygens BMC
-> + *
-> + * Copyright 2026 IBM Corp.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/arm/machines-qom.h"
-> +#include "hw/arm/aspeed.h"
-> +#include "hw/arm/aspeed_soc.h"
-> +#include "hw/nvram/eeprom_at24c.h"
-> +#include "hw/i2c/i2c_mux_pca954x.h"
-> +#include "hw/sensor/tmp105.h"
-> +
-> +/* SCU HW Strap1 */
-> +#define HUYGENS_BMC_HW_STRAP1 0x00000800
-> +/* SCUIO HW Strap1 */
-> +#define HUYGENS_BMC_HW_STRAP2 0x00000700
-> +
-> +/*
-> + * 2048-byte IPZ VPD image:
-> + * VHDR, VTOC, VINI, VMPU, VSBP, VSYS, UTIL, DINF, VCEN + ECC
-> + */
-> +static const uint8_t huygens_bmc_fruid[] = {
-> +    0x00, 0x0f, 0x17, 0xba, 0x3a, 0xc9, 0x32, 0x31, 0x49, 0xb2, 0xde, 0x84,
-> +    0x28, 0x00, 0x52, 0x54, 0x04, 0x56, 0x48, 0x44, 0x52, 0x56, 0x44, 0x02,
-> +    0x30, 0x31, 0x50, 0x54, 0x0e, 0x56, 0x54, 0x4f, 0x43, 0xd5, 0x00, 0x37,
-> +    0x00, 0x74, 0x00, 0xa6, 0x05, 0x1d, 0x00, 0x50, 0x46, 0x08, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84, 0x70, 0x00, 0x52, 0x54,
-> +    0x04, 0x56, 0x54, 0x4f, 0x43, 0x50, 0x54, 0x62, 0x56, 0x49, 0x4e, 0x49,
-> +    0xd5, 0x00, 0xab, 0x00, 0x84, 0x00, 0x85, 0x05, 0x21, 0x00, 0x56, 0x4d,
-> +    0x50, 0x55, 0xff, 0x00, 0x2f, 0x01, 0xa4, 0x00, 0x5c, 0x05, 0x29, 0x00,
-> +    0x56, 0x53, 0x42, 0x50, 0xff, 0x00, 0xd3, 0x01, 0x30, 0x00, 0x50, 0x05,
-> +    0x0c, 0x00, 0x56, 0x53, 0x59, 0x53, 0xff, 0x00, 0x03, 0x02, 0x44, 0x01,
-> +    0xff, 0x04, 0x51, 0x00, 0x55, 0x54, 0x49, 0x4c, 0xff, 0x00, 0x47, 0x03,
-> +    0xe8, 0x00, 0xc5, 0x04, 0x3a, 0x00, 0x44, 0x49, 0x4e, 0x46, 0xff, 0x00,
-> +    0x2f, 0x04, 0x30, 0x00, 0xb9, 0x04, 0x0c, 0x00, 0x56, 0x43, 0x45, 0x4e,
-> +    0xff, 0x00, 0x5f, 0x04, 0x48, 0x00, 0xa7, 0x04, 0x12, 0x00, 0x50, 0x46,
-> +    0x01, 0x00, 0x78, 0x84, 0x80, 0x00, 0x52, 0x54, 0x04, 0x56, 0x49, 0x4e,
-> +    0x49, 0x44, 0x52, 0x10, 0x51, 0x45, 0x4d, 0x55, 0x20, 0x48, 0x55, 0x59,
-> +    0x47, 0x45, 0x4e, 0x53, 0x20, 0x42, 0x4d, 0x43, 0x43, 0x45, 0x01, 0x20,
-> +    0x56, 0x5a, 0x02, 0x20, 0x20, 0x46, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x50, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x53, 0x4e, 0x0c, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x43, 0x43, 0x04, 0x20, 0x20, 0x20, 0x20, 0x48,
-> +    0x45, 0x04, 0x20, 0x20, 0x20, 0x20, 0x43, 0x54, 0x04, 0x00, 0x00, 0x00,
-> +    0x00, 0x48, 0x57, 0x02, 0x00, 0x01, 0x42, 0x33, 0x06, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x42, 0x34, 0x01, 0x20, 0x42, 0x37, 0x0c, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46,
-> +    0x01, 0x00, 0x78, 0x84, 0xa0, 0x00, 0x52, 0x54, 0x04, 0x56, 0x4d, 0x50,
-> +    0x55, 0x56, 0x5a, 0x02, 0x30, 0x31, 0x53, 0x4f, 0x02, 0x00, 0x00, 0x44,
-> +    0x49, 0x04, 0x00, 0x00, 0x00, 0x00, 0x49, 0x4e, 0x80, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x46, 0x02, 0x00, 0x00, 0x78, 0x84,
-> +    0x2c, 0x00, 0x52, 0x54, 0x04, 0x56, 0x53, 0x42, 0x50, 0x44, 0x52, 0x10,
-> +    0x56, 0x50, 0x44, 0x20, 0x52, 0x4f, 0x4f, 0x54, 0x20, 0x4e, 0x4f, 0x44,
-> +    0x45, 0x20, 0x20, 0x20, 0x50, 0x41, 0x01, 0x59, 0x49, 0x4d, 0x04, 0x70,
-> +    0x00, 0x10, 0x00, 0x50, 0x46, 0x04, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84,
-> +    0x40, 0x01, 0x52, 0x54, 0x04, 0x56, 0x53, 0x59, 0x53, 0x44, 0x52, 0x06,
-> +    0x53, 0x59, 0x53, 0x54, 0x45, 0x4d, 0x42, 0x52, 0x02, 0x20, 0x20, 0x53,
-> +    0x45, 0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x53, 0x47, 0x07,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4d, 0x08, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4e, 0x08, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x4d, 0x4e, 0x07, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x49, 0x44, 0x02, 0x20, 0x20, 0x53, 0x55, 0x06, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x4e, 0x4e, 0x10, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x52, 0x47, 0x04, 0x20, 0x20, 0x20, 0x20, 0x52, 0x42, 0x04, 0x20, 0x20,
-> +    0x20, 0x20, 0x57, 0x4e, 0x0c, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x56, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x41, 0x41, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x41, 0x42, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x41, 0x4b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x41, 0x54, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x42, 0x4e, 0x40, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x42, 0x41, 0x01, 0x20, 0x4d,
-> +    0x4d, 0x01, 0x20, 0x50, 0x46, 0x04, 0x00, 0x00, 0x00, 0x00, 0x78, 0x84,
-> +    0xe4, 0x00, 0x52, 0x54, 0x04, 0x55, 0x54, 0x49, 0x4c, 0x44, 0x30, 0x01,
-> +    0x00, 0x44, 0x31, 0x01, 0x00, 0x44, 0x32, 0x01, 0x00, 0x44, 0x33, 0x01,
-> +    0x00, 0x44, 0x34, 0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x35, 0x04, 0x00,
-> +    0x00, 0x00, 0x00, 0x44, 0x36, 0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x37,
-> +    0x04, 0x00, 0x00, 0x00, 0x00, 0x44, 0x38, 0x08, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x44, 0x39, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x46, 0x30, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x46, 0x31, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x46, 0x32, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x46, 0x33, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46,
-> +    0x34, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x35,
-> +    0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x36, 0x10, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x46, 0x37, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x38, 0x10, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x46, 0x39, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x50, 0x46, 0x02,
-> +    0x00, 0x00, 0x78, 0x84, 0x2c, 0x00, 0x52, 0x54, 0x04, 0x44, 0x49, 0x4e,
-> +    0x46, 0x52, 0x49, 0x04, 0x00, 0x00, 0x00, 0x00, 0x46, 0x4c, 0x14, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46, 0x04, 0x00, 0x00,
-> +    0x00, 0x00, 0x78, 0x84, 0x44, 0x00, 0x52, 0x54, 0x04, 0x56, 0x43, 0x45,
-> +    0x4e, 0x44, 0x52, 0x06, 0x43, 0x45, 0x43, 0x20, 0x20, 0x20, 0x53, 0x45,
-> +    0x07, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54, 0x4d, 0x08, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x46, 0x43, 0x08, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x52, 0x47, 0x04, 0x20, 0x20, 0x20,
-> +    0x20, 0x52, 0x42, 0x04, 0x20, 0x20, 0x20, 0x20, 0x50, 0x46, 0x03, 0x00,
-> +    /* ECC area */
-> +    0x00, 0x00, 0x78, 0x4d, 0x5d, 0x84, 0x8c, 0x0a, 0xf9, 0xed, 0x3d, 0x96,
-> +    0x11, 0x4a, 0x45, 0x9a, 0xb6, 0xb2, 0xd9, 0x19, 0x43, 0x05, 0x0f, 0xdd,
-> +    0xb5, 0xf9, 0x3d, 0x5b, 0x81, 0xb3, 0x79, 0xcb, 0x19, 0x48, 0xbb, 0xa2,
-> +    0x57, 0x10, 0x6e, 0x39, 0x38, 0x85, 0x5e, 0xa3, 0x24, 0xbc, 0x02, 0x63,
-> +    0x6b, 0x79, 0xa3, 0x6b, 0xed, 0xcd, 0x27, 0x4e, 0x79, 0x9f, 0x76, 0x4e,
-> +    0x7b, 0x93, 0x2d, 0xf4, 0x4c, 0x51, 0x0e, 0x28, 0x46, 0x43, 0x2b, 0xd9,
-> +    0x1b, 0x21, 0x21, 0xc8, 0xe4, 0x6e, 0x9b, 0x4e, 0x34, 0x7e, 0x6e, 0x82,
-> +    0x1b, 0x09, 0x13, 0xf1, 0x40, 0x7b, 0x9f, 0x6d, 0x50, 0x3e, 0x65, 0x31,
-> +    0x1f, 0x19, 0x6f, 0x61, 0x78, 0x27, 0x72, 0x7c, 0x59, 0x34, 0x7c, 0x05,
-> +    0x58, 0x13, 0x6f, 0x78, 0x13, 0x56, 0x33, 0x19, 0x1e, 0x79, 0x17, 0x41,
-> +    0x28, 0x58, 0x6d, 0x26, 0x01, 0x34, 0x7d, 0x68, 0x1d, 0x7e, 0x1c, 0x42,
-> +    0x49, 0x2a, 0x11, 0x7c, 0x70, 0x1a, 0x66, 0x47, 0x68, 0x6e, 0x3f, 0x5e,
-> +    0x6b, 0x6d, 0x25, 0x7e, 0x3e, 0x24, 0x39, 0x07, 0x3c, 0x6e, 0x5b, 0x5d,
-> +    0x4e, 0x59, 0x79, 0x7d, 0x6f, 0x5f, 0x7f, 0x5f, 0x4b, 0x5f, 0x6d, 0x3e,
-> +    0x58, 0x57, 0x1b, 0x19, 0x5d, 0x14, 0x43, 0x83, 0xfc, 0xe6, 0x49, 0x84,
-> +    0x41, 0x28, 0x0b, 0x0a, 0x00, 0x5b, 0xec, 0x46, 0x13, 0x4d, 0x00, 0xdc,
-> +    0x89, 0xab, 0xbb, 0x77, 0x77, 0x7e, 0xee, 0xff, 0xfd, 0xdf, 0xff, 0xbb,
-> +    0xbf, 0xff, 0x77, 0x7f, 0xfe, 0xee, 0xff, 0xfd, 0xdf, 0xff, 0xbb, 0xbf,
-> +    0xfe, 0x76, 0x7e, 0xca, 0xc8, 0x99, 0x51, 0xd7, 0x70, 0x00, 0x03, 0x26,
-> +    0x9e, 0x4e, 0x7f, 0x13, 0x38, 0xbb, 0x3c, 0xbb, 0x00, 0x02, 0xa0, 0x0a,
-> +    0xcb, 0x70, 0xb7, 0x9f, 0x2b, 0x79, 0xa4, 0x00, 0x07, 0x71, 0xad, 0x17,
-> +    0x41, 0xd7, 0xb9, 0x8c, 0x6d, 0x08, 0x2c, 0x80, 0x04, 0x56, 0x6b, 0x9f,
-> +    0x00, 0x9f, 0xbe, 0xdb, 0x71, 0x63, 0x01, 0xb8, 0xf0, 0x41, 0xc0, 0xe1,
-> +    0x8d, 0x3a, 0x6f, 0xc0, 0x66, 0x5f, 0xb6, 0x4c, 0x2a, 0x5f, 0x06, 0x00,
-> +    /* Rest is 0x00 */
-> +};
-> +static const size_t huygens_bmc_fruid_len = sizeof(huygens_bmc_fruid);
-> +
-> +/* chassis1 VPD: huygens_bmc_fruid with VCEN.FC patched to "2E4C-001" */
-> +#define HUYGENS_CHASSIS1_FC_OFFSET 0x048a
-> +static const uint8_t huygens_chassis1_fc[] = {
-> +    0x32, 0x45, 0x34, 0x43, 0x2d, 0x30, 0x30, 0x31
-> +};
-> +
-> +static void huygens_bmc_i2c_init(AspeedMachineState *bmc)
-> +{
-> +    AspeedSoCState *soc = bmc->soc;
-> +
-> +    /* I2C0: BMC EEPROM */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 0), 0x50, 8 * KiB);
-> +
-> +    /* I2C5: UCD90320 power sequencer */
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 5), "ucd90320", 0x11);
-> +
-> +    /* I2C6: chassis1 backplane VPD EEPROM */
-> +    {
-> +        g_autofree uint8_t *ch1 = g_malloc(huygens_bmc_fruid_len);
-> +        memcpy(ch1, huygens_bmc_fruid, huygens_bmc_fruid_len);
-> +        memcpy(ch1 + HUYGENS_CHASSIS1_FC_OFFSET,
-> +               huygens_chassis1_fc, sizeof(huygens_chassis1_fc));
-> +        at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 6), 0x50,
-> +                              8 * KiB, ch1, huygens_bmc_fruid_len);
-> +    }
-> +
-> +    /* I2C8: System VPD at 0x53 */
-> +    at24c_eeprom_init_rom(aspeed_i2c_get_bus(&soc->i2c, 8), 0x53,
-> +                          4 * KiB, huygens_bmc_fruid, huygens_bmc_fruid_len);
-> +    /* LCD EEPROM */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 8), 0x51, 8 * KiB);
-> +
-> +    /* I2C9: System VPD redundant and op-panel devices */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9),
-> +                      0x53, 8 * KiB);  /* SYSVPD-redundant */
-> +
-> +    /* TMP275 temperature sensor (compatible with TMP105) */
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9),
-> +                            TYPE_TMP105, 0x48);
-> +
-> +    /* Op-panel EEPROM */
-> +    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 9), 0x51, 8 * KiB);
-> +
-> +    /* PCA9552 LED controllers on bus 9 */
-> +    aspeed_create_pca9552(soc, 9, 0x62);
-> +    aspeed_create_pca9552(soc, 9, 0x64);
-> +    aspeed_create_pca9552(soc, 9, 0x66);
-> +
-> +    /* DPS310 pressure sensor */
-> +    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "dps310", 0x76);
-> +}
-> +
-> +static void aspeed_machine_huygens_class_init(ObjectClass *oc,
-> +                                              const void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-> +
-> +    mc->alias      = "ast2700-huygens";
-> +    mc->desc       = "Aspeed AST2700 A2 [IBM Huygens]";
-> +    amc->soc_name  = "ast2700-a2";
-> +    amc->hw_strap1 = HUYGENS_BMC_HW_STRAP1;
-> +    amc->hw_strap2 = HUYGENS_BMC_HW_STRAP2;
-> +    amc->fmc_model = "w25q01jvq";
-> +    amc->spi_model = "w25q512jv";
-> +    amc->num_cs    = 2;
-> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-> +    amc->uart_default = ASPEED_DEV_UART12;
-> +    amc->i2c_init  = huygens_bmc_i2c_init;
-> +    amc->vbootrom  = true;
-> +    /* UFS LUN block size to match the OpenBMC image layout */
-> +    amc->ufs_block_size = 512;
-> +    mc->default_ram_size = 2 * GiB;
-> +    aspeed_machine_class_init_cpus_defaults(mc);
-> +}
-> +
-> +static const TypeInfo aspeed_ast27x0_huygens_types[] = {
-> +    {
-> +        .name       = MACHINE_TYPE_NAME("huygens-bmc"),
-> +        .parent     = TYPE_ASPEED_MACHINE,
-> +        .class_init = aspeed_machine_huygens_class_init,
-> +        .interfaces = aarch64_machine_interfaces,
-> +    }
-> +};
-> +
-> +DEFINE_TYPES(aspeed_ast27x0_huygens_types)
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 4233a800be..a237f1d04f 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -75,6 +75,7 @@ arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed_ast27x0-fc.c',
->     'aspeed_ast27x0-ssp.c',
->     'aspeed_ast27x0-tsp.c',
-> +  'aspeed_ast27x0_huygens.c',
->     'aspeed_coprocessor_common.c'))
->   arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
->   arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+ping
 
-Do you plan to send a functional test ?
+> -----Original Message-----
+> From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Sent: 24 July 2026 09:32
+> To: Gaurav Sharma <gaurav.sharma_7@nxp.com>; qemu-devel@nongnu.org
+> Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Bernhard Beschow
+> <shentey@gmail.com>
+> Subject: RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+> Multiprocessing boot support for i.MX8MP
+>=20
+> Ping
+>=20
+> > -----Original Message-----
+> > From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> > Sent: 06 July 2026 21:59
+> > To: qemu-devel@nongnu.org
+> > Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Gaurav Sharma
+> > <gaurav.sharma_7@nxp.com>
+> > Subject: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+> > Multiprocessing boot support for i.MX8MP
+> >
+> > Changes in v1:
+> >
+> > This series adds Asymmetric Multiprocessing (AMP) boot support for the
+> > Cortex-M7 core on the i.MX8MP SoC. The M7 firmware can be loaded and
+> > started from Linux running on the Cortex-A53 cores via the remoteproc
+> > framework.
+> >
+> > The series introduces the following peripheral models needed for AMP:
+> >   - GPC (General Power Controller)
+> >   - GPR (General Purpose Registers)
+> >   - SRC (System Reset Controller) authored by Bernhard Beschow
+> > <shentey@gmail.com>
+> >   - MU (Messaging Unit)
+> >   - Extends the CCM with M7 clock outputs and wires into the i.MX8MP So=
+C
+> >   - Enable Cortex-M7 boot in i.MX8MP EVK functional test
+> >
+> > Changes in v2:
+> >
+> > - Removed the usage of device_class_set_legacy_reset in imx8mp
+> > gpc,gpr,mu and
+> >   src.
+> > - Removed the usage of 'smp' , 'maxcpus' and 'enable-cm7' to make the
+> >   invocation simpler.
+> > - Cleaned up imx8mp_src by removing redundant/unused code.
+> > - Updated Maintainers and improved the imx8mp documentation
+> >
+> > Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> >
+> > Bernhard Beschow (1):
+> >   hw/misc: Add SRC (System Reset Controller) to i.MX8MP
+> >
+> > Gaurav Sharma (6):
+> >   hw/misc: Add i.MX8MP GPC (General Power Controller) IP
+> >   hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+> >   hw/misc: Add MU (Messaging Unit) IP to i.MX8MP device model
+> >   hw/misc: Extend i.MX8MP CCM with Cortex-M7 clock outputs
+> >   hw/arm: Enable Cortex-M7 AMP boot on i.MX8MP
+> >   tests/functional: Enable Cortex-M7 boot in i.MX8MP EVK functional
+> > test
+> >
+> >  MAINTAINERS                                 |  13 +-
+> >  docs/system/arm/imx8m.rst                   | 188 ++++++++++-
+> >  hw/arm/Kconfig                              |   4 +
+> >  hw/arm/fsl-imx8mp.c                         | 220 ++++++++++++-
+> >  hw/arm/imx8mp-evk.c                         |   3 +-
+> >  hw/misc/Kconfig                             |  12 +
+> >  hw/misc/imx8mp_ccm.c                        |   9 +
+> >  hw/misc/imx8mp_gpc.c                        | 146 +++++++++
+> >  hw/misc/imx8mp_gpr.c                        | 153 +++++++++
+> >  hw/misc/imx8mp_mu.c                         | 328 ++++++++++++++++++++
+> >  hw/misc/imx8mp_src.c                        | 275 ++++++++++++++++
+> >  hw/misc/meson.build                         |   4 +
+> >  hw/misc/trace-events                        |   5 +
+> >  include/hw/arm/fsl-imx8mp.h                 |  29 +-
+> >  include/hw/misc/imx8mp_ccm.h                |   3 +
+> >  include/hw/misc/imx8mp_gpc.h                |  34 ++
+> >  include/hw/misc/imx8mp_gpr.h                |  56 ++++
+> >  include/hw/misc/imx8mp_mu.h                 |  53 ++++
+> >  include/hw/misc/imx8mp_src.h                |  31 ++
+> >  tests/functional/aarch64/test_imx8mp_evk.py |   1 -
+> >  20 files changed, 1539 insertions(+), 28 deletions(-)  create mode
+> > 100644 hw/misc/imx8mp_gpc.c  create mode 100644
+> hw/misc/imx8mp_gpr.c
+> > create mode 100644 hw/misc/imx8mp_mu.c  create mode 100644
+> > hw/misc/imx8mp_src.c  create mode 100644
+> include/hw/misc/imx8mp_gpc.h
+> > create mode 100644 include/hw/misc/imx8mp_gpr.h  create mode 100644
+> > include/hw/misc/imx8mp_mu.h  create mode 100644
+> > include/hw/misc/imx8mp_src.h
+> >
+> > --
+> > 2.34.1
 
-Thanks,
-
-C.
 
