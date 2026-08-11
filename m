@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D22C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 18:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671F0C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 18:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtrVF-0004v2-KV; Tue, 11 Aug 2026 14:47:09 -0400
+	id 1wtrZ3-0006ic-Vc; Tue, 11 Aug 2026 14:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrVA-0004oM-Ju; Tue, 11 Aug 2026 14:47:05 -0400
+ id 1wtrZ3-0006iA-99; Tue, 11 Aug 2026 14:51:05 -0400
 Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrV9-0005Vz-75; Tue, 11 Aug 2026 14:47:04 -0400
+ id 1wtrZ1-0006II-8q; Tue, 11 Aug 2026 14:51:05 -0400
 Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 0301014000E4;
- Tue, 11 Aug 2026 14:47:02 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 14:47:02 -0400
+ by mailfhigh.phl.internal (Postfix) with ESMTP id ED8931400147;
+ Tue, 11 Aug 2026 14:51:01 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Tue, 11 Aug 2026 14:51:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786474022; x=1786560422; bh=zyYQEt5tpf04nzEd9voAg9GlAzbCxWvS
- nfi9RHOXikk=; b=lA/r5JyNHl7oeekrzYWAX5MgJRH/ZYhF7n8qFEPGV6yi2I0t
- LLX0U1uQ+1nPU8zfzXEljFqz6evEPQq3wu0Tdi2bvuQU8CvKsyM3mpSrwEuL6OS3
- DRJpeYIcIpiTMmKUlXG117hP/O5rP/7vff4/131UjWYZOPzHFDScLtaQxnZtUBkP
- BYR8QxPDBAsN4IIhVWKQz9wD4/f6EIAOLJVFN9xBet1LlR/phk+1r/++ngwPTNRw
- 6QcfCvqhirtlJZ+kQRb6vwvJIvylh/EHS5VBGT8Q0jQHpuc/YJeiFXLs037In6Pd
- wg8DGu4iTJhu31KeK8MqOnZ3qUwjwtKy+TZsdw==
+ t=1786474261; x=1786560661; bh=aGADaT92hQ56p9H5vfc2Dyl8OQeV/+WN
+ LkaRfzVEs48=; b=SzFNBOduT465rd9mecSvdVFgwMstQ/KsmAKjUdXzydpzR8f0
+ kCDu1bpojr+JDdsBQIwjpXfPP/KiMRIyRc4u8L7ukEtSsjiPMoQ65vib8ubbRbTe
+ h0tRweepp2rxIq7IsSC4QOLSIpN6S74Kxpemkn2qn16JZaR6HJtPCmLalHScWCkL
+ +HaX2Y/i7JrfBWw4EXLoHPkVgRFLvEO/Zj/uXXlu7ip9t6WvDHw09KMB8IzOhVWd
+ r+Zvj3QF4eixY7vphNTTw4ApIAYXFs+zsE354zHyqMGp60beSLFufA1SuAR3Y+1D
+ RfqZJ5ddobW53tJW21UGEuGglIHF+A91A4d8+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786474022; x=
- 1786560422; bh=zyYQEt5tpf04nzEd9voAg9GlAzbCxWvSnfi9RHOXikk=; b=M
- NXKPmtSb8SXY35d28+7twGqefmVuurmvpEvoRbFUnKStv2civTePTc3Q6B0R3wo0
- SkuFK2inIDNGn2HlBtkSuHTK0KIpUbJVp8hEBWFt+wL9bJk1A3fN8dgGU0mv+5XD
- +YQ8IBBK064A1zF74XvRYU0Y7Paj2v7EmQ+t3TQZTEWz8pGDO1rY4cuKFvKMA+Rn
- +XFHQ5eugAMks8491FV9N3rkBoN0EI2QHbMWlXBXxphgi7ra/6f86Ruf2ROBowJJ
- 8nMB7oSED91HYgg/7p+yvFeeBRZb61JuMmBdW3TZREJUW/cj/4lLnIqAYUlBI+C1
- NvMUE4RQWI2S2mEbLU6UQ==
-X-ME-Sender: <xms:JW57alcOtZJAyAqRn97hVCi-8LYuM-O_VKFAZoZLFXLgEv4CKW1ypg>
- <xme:JW57arZVn47GWl3g12YakJRG1HM2IwX_s7PZ_QdOL6cadCh9n2lSUksD1oPNRGnRZ
- d-13sz_kotEuDxtdR1pR0mUEIid9O9eRLycuOvDmnu3it5Og_3Rvw>
-X-ME-Received: <xmr:JW57aqHEG0L_y7FVPSPaJKc8mDc1j7TIJy_Dike-TxS2kodvI7upUPGZwMIDPtsLjkMXHQ>
-X-ME-Proxy-Cause: dmFkZTFiKM2t7ZNIi9lv0kXig/tXHX68iKpfrt4Gi3AYBLxyNPUg4pE8sLyyLUKSlfxPCI
- pWUTx8p2Tw6K1+rsOgwxlND1imirOFgqV/I4/sXHq3RK2S7gFpLuFgrB4JgfCHXTYce0XG
- N4JH1a6WDQOnOvDYbAKOflcniVSSb3y3izfev5jLrr1HvVBPKsMFjC0ZKBbfpEJvKeWLmL
- hCzG54p7RICYLJNwS5fyYcDHigjMofzJibm5Bd/WX/mPgLi/Iyv0q1Gzm+kobVC4VUznk/
- 7c4ePskJLQ2XN+NBOqhmoDlq6TPtS17HievTSJsZBqmr80+Rnyk8H75SrLVz5RAX/1ErGd
- RSBCRLBUKc6L4u25PR4raE1wvXSR5p2C58pNytcrjhfjg5BviIwMdOz1+WT6A+MeCBeSKJ
- gv3v9DV15KNxMaaMWP5bIKH1ngRyKDtkvYJOVbrpEurfRs7dj5OqftYazW3DAY0oIx/vyx
- OGHvUMpE5abugbdYT7QjIoYH7V0PisDWfllrY2Aw9M9MIKQh/H3jDFDa/Uw4Qbmgvet5Ap
- 3EouBTWOUIbAgpZr9TsNd4kRtmPSj6wMQI5D2HBKgIpzir1xqg60cTa12vvBIq7el4exyO
- +Ehihq/44RBbkvl9jp7Iz/RbMywj5KSazwOMWo95sea94TPBfe7YHbajT41A
-X-ME-Proxy: <xmx:JW57apnkX13x0IXPMt94R7JQO40Dt85jE6ge9JGDp02-PV-b6aQgtw>
- <xmx:JW57atcOkEunb0YVrQWp9JBozHO2m-yi6H0RJCar-0YMNu6puGCWzw>
- <xmx:JW57anFOxLDvTO3BkkPKo7xnFTNQLnQQI_QNOXWxIPk9ujiwL_O7xQ>
- <xmx:JW57ajgHBsCx129mQBVnRD_fxPwqpIqsm0ngNcFUNata1LAxpuBSyg>
- <xmx:JW57ansfn-S55iArs_NDjmG0fEoFy-g5k6k6l__DFMIebHWxGpWkMqbM>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786474261; x=
+ 1786560661; bh=aGADaT92hQ56p9H5vfc2Dyl8OQeV/+WNLkaRfzVEs48=; b=W
+ b6c0sLY172fqiusLSziOJrHjD4Fdpy74RG6scpURMDfoSQZf/O0Ye/lQgA4o+R9e
+ 5xOAz7xLM1PeRlqSvoyGbuH1sUniSXe0F8XOirJgbL4z27XyFx0qU6CFIwq4elB8
+ 8pDtUSoit/RVNaLzz6IJJgx3rYDhUf0hFyTMtANF5bTBHB/rZg4pGg9w3+wleHzG
+ f2lg8OCJUD4lPBjBz9nHQiAdNLwtDoeqogjsQZdN8LphPYENZSd7FqNR19xFtZHs
+ SmTDBKQOdEvGvsRKdYuh4EvLfCHkZ3xy0PzTaE1Wc3fC5LSMDQli9Lq1TKnd99iw
+ RhVek46Pe4CSR1FK0W8+Q==
+X-ME-Sender: <xms:FW97aozf1MESbkqHLtnemofO3vN-UTTNySfAUPXN-2iBiz2Q5ynhyQ>
+ <xme:FW97avX3_3XqkP06AT5ZDxKzSgWHym-VzvY8dDGBtctKdyriw8al5ykBoUYXXUEBv
+ pr_vxiodOjW2v_9cArS45UjFxb1HVJUGnvJX8ibSdjXFoA0tY9_yw>
+X-ME-Received: <xmr:FW97ak-JvJ4j0piLUK9x5EKSEjTc6KbZDYvlWbKKhmSVq5zNmFZqiVW4SQMK2CwO0VvDlw>
+X-ME-Proxy-Cause: dmFkZTF1EJc3BzQjMcZHcgzchWhNmwyrXr4+qH65UNCSR6tNuFPj+F2sx7NY3LOwicPHRL
+ aRvCi/2dtQX1IpxUDlOuKvgNdjMkvC9urKYHBh3syQbtQjFYHvkW1IuZgNstcqiX9e49h3
+ PAkI/oSurQsAoaAH/cs6M6FkIg6WZ9CpqSMeiqIQmBi7rgvnrKGwglBrwZy8Ziu0q8Oy98
+ jzF7qKvaYh4Y9ZvPVfX7c4GsB9P/j6/RwN07Kc7hyNm16PJOWEzki3nKaHzEF4DAqAjw+d
+ QKZ8lzIeK4K+T55vGHKMuf0Xarjl8SKN0IcE/99ZgIl03MVSvSBnsY9LVPPlB8JW1xkyiI
+ 6xa5NnOJno/teVXvJToRc0UbS1tGmQEWQFEyW2fp4Mw8+3vLE3tjpeU30Ua0GhvjAYu044
+ nDyETjxtxEmec/8q1YIZ7E8rxU/so/3ivfonWQJVojwEGh76OzQepZuAdovSEfnRH/WwDp
+ JGZaRXI2F67y3fcdDzylAT/p0JWSG0jUPQnGug4+662oHlcms7O+zVRpFzJEL2eofsjGOT
+ 2LDlTom1ahFfNS3LF91EXw0YE3IWhZfe7AqV7C3gaBJuhXG4A/49G2YmcXG9p5QO7PX9aS
+ +a66u+0dd37yUSsae2jYp3K5D+Vu+Z//pSfzKOaj/dnxVi70aZM8G+kwKzMw
+X-ME-Proxy: <xmx:FW97aivoeekwiC1XqjEIqyRXs5Km2WcYyyYKC2YHCZEvCSQXfHsMnA>
+ <xmx:FW97ak3l4tTh4BntnYycG5GsMBxgGlHC3cwP09yf0irydGtLtQMRMA>
+ <xmx:FW97anTgDGoOOJBWvigcBbbf__N5lG7T3srIr5MBHpaB-bbZ6tt9eQ>
+ <xmx:FW97aoeLjsVTt6xHuYjckVQzZ8snoInNo5TNQ2NSvLrgz34aILR6Bg>
+ <xmx:FW97ap8ZORtQWjq4m7Ba8_hhqddF02K2Vr-zFDHLvhaS4PR5wcKNV5He>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 14:47:00 -0400 (EDT)
-Message-ID: <17c24ef9c8cf17091ac6eb46adc8090fdd18747f.camel@alistair23.me>
-Subject: Re: [PATCH v11 0/2] target/riscv: Fix riscv64 KVM migration
+ 11 Aug 2026 14:51:00 -0400 (EDT)
+Message-ID: <01ee5ad4f592c2b36eb5efb5f66c479bf0b4155b.camel@alistair23.me>
+Subject: Re: [PATCH] target/riscv: Fix PC sync in trans_sspopchk for CFI
+ exception handling
 From: Alistair <alistair@alistair23.me>
-To: Xie Bo <xb@ultrarisc.com>, qemu-devel@nongnu.org
-Cc: ajones@ventanamicro.com, qemu-riscv@nongnu.org, alistair23@gmail.com, 
- pbonzini@redhat.com, anup@brainfault.org, alistair.francis@wdc.com, 
- rkrcmar@ventanamicro.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com
-Date: Wed, 12 Aug 2026 04:47:00 +1000
-In-Reply-To: <20260808125157.1220511-1-xb@ultrarisc.com>
-References: <20260730051926.7322-1-xb@ultrarisc.com>
- <20260808125157.1220511-1-xb@ultrarisc.com>
+To: A-Shehab <ahshehab24@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Max Chou <max.chou@sifive.com>, Palmer Dabbelt	
+ <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Weiwei
+ Li	 <liwei1518@gmail.com>, Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>
+Date: Wed, 12 Aug 2026 04:51:00 +1000
+In-Reply-To: <20260730181852.1622-1-ahshehab24@gmail.com>
+References: <20260730181852.1622-1-ahshehab24@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
@@ -109,43 +110,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2026-08-08 at 20:51 +0800, Xie Bo wrote:
-> This series revives v9, which was applied to riscv-to-apply.next but
-> did
-> not reach QEMU master.
+On Thu, 2026-07-30 at 21:18 +0300, A-Shehab wrote:
+> From: Max Chou <max.chou@sifive.com>
 >=20
-> RISC-V KVM migration currently loses two pieces of vCPU state: the
-> privilege mode core register and KVM MP state. The latter leaves
-> secondary
-> vCPUs in their reset STOPPED state on the destination.
+> Move gen_update_pc call before conditional logic to ensure consistent
+> PC state regardless of execution path.
 >=20
-> Synchronize the privilege mode through the existing generic CPU
-> VMState,
-> and carry MP state in a capability-gated KVM-only subsection. The
-> subsection
-> keeps KVM state out of TCG migration streams. Bump the generic RISC-V
-> CPU
-> VMState version and minimum version to 12 as required by the new
-> pre_load
-> hook and subsection.
+> Previously, the host instructions generated to update the cpu_pc were
+> only executed in the failure path when shadow stack validation
+> failed.
+> This created inconsistent PC synchronization.
 >=20
-> Changes from v10:
-> - Bump the RISC-V CPU VMState version_id and minimum_version_id to
-> 12.
-> - Add Daniel's Reviewed-by tags.
+> This inconsistency caused issues in CF_PCREL mode where subsequent
+> instructions calculated wrong relative offsets from stale pc_save
+> values, and could lead to incorrect exception return addresses.
 >=20
-> Testing on a native riscv64 host with Linux 6.6.20 and GCC 13.3.0:
-> - KVM build: riscv64-softmmu, --enable-kvm.
-> - Non-KVM build: riscv64-softmmu, --disable-kvm.
-> - Four-vCPU KVM migration on unmodified master: all vCPUs failed to
-> run
-> =C2=A0 after migration and the guest reported RCU stalls.
-> - The same migration with this series: CPU0 through CPU3 all ran
-> after
-> =C2=A0 migration.
-> - Four user-mode busy workers, one pinned to each vCPU, all made
-> forward
-> =C2=A0 progress across migration to exercise privilege-mode restoration.
+> This fix ensures PC is always synchronized before any helper that
+> might raise an exception, maintaining consistent translator state
+> across all execution paths.
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> [ahshehab: rebased on current master; file moved to
+> =C2=A0target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
+> Tested-by: A-Shehab <ahshehab24@gmail.com>
+> Signed-off-by: A-Shehab <ahshehab24@gmail.com>
 
 Thanks!
 
@@ -153,18 +142,63 @@ Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+> This is a repost of Max Chou's patch from 2025-11-05 [1], which did
+> not
+> receive any review. Rebased onto current master: the file moved to
+> target/riscv/tcg/insn_trans/ and the ssp load is now a 64-bit load,
+> so
+> the original patch no longer applies.
 >=20
-> Xie Bo (2):
-> =C2=A0 target/riscv/kvm: Synchronize privilege mode
-> =C2=A0 target/riscv/kvm: Preserve MP state across migration
+> I opened a GitLab issue (#4118) with a minimal, self-contained bare-
+> metal
+> reproducer for this bug. It runs an sspopchk that matches the shadow
+> stack
+> (the common case) followed by an auipc in the same translation block;
+> on
+> current master the auipc returns an address 4 bytes too low (exit 42)
+> and
+> with this patch it is correct (exit 0). The reproducer is included in
+> the
+> issue.
 >=20
-> =C2=A0target/riscv/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 4 +++
-> =C2=A0target/riscv/kvm/kvm-cpu.c=C2=A0=C2=A0 | 62 +++++++++++++++++++++++=
-+++--------
-> --
-> =C2=A0target/riscv/kvm/kvm_riscv.h |=C2=A0 2 +-
-> =C2=A0target/riscv/machine.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 49 +++=
-+++++++++++++++++++++++--
-> =C2=A04 files changed, 98 insertions(+), 19 deletions(-)
+> [1]
+> https://lore.kernel.org/qemu-devel/20251105134331.2865581-1-max.chou@sifi=
+ve.com/
+>=20
+> =C2=A0target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc | 2 +-
+> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+> b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+> index a813232887..d47a9f9c7d 100644
+> --- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
+> @@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx,
+> arg_sspopchk *a)
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGLabel *skip =3D gen_new_label();
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t tmp =3D (get_xl(ctx) =3D=3D MXL_RV64) ?=
+ 8 : 4;
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv data =3D tcg_temp_new();
+> +=C2=A0=C2=A0=C2=A0 gen_update_pc(ctx, 0);
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i64 wide_addr =3D tcg_temp_new_i64();
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPUR=
+ISCVState,
+> ssp));
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_trunc_i64_tl(addr, wide_addr);
+> @@ -42,7 +43,6 @@ static bool trans_sspopchk(DisasContext *ctx,
+> arg_sspopchk *a)
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+> =C2=A0=C2=A0=C2=A0=C2=A0 tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_C=
+HECK_BCFI_TVAL),
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_env, offsetof(CPURISCV=
+State,
+> sw_check_code));
+> -=C2=A0=C2=A0=C2=A0 gen_update_pc(ctx, 0);
+> =C2=A0=C2=A0=C2=A0=C2=A0 gen_helper_raise_exception(tcg_env,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_constant_i32(RISCV_EXCP_SW_CHECK))=
+;
+> =C2=A0=C2=A0=C2=A0=C2=A0 gen_set_label(skip);
 
