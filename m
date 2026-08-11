@@ -4,109 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5127EC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E208C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wts1O-0004QS-76; Tue, 11 Aug 2026 15:20:22 -0400
+	id 1wts1Y-0004fP-Lv; Tue, 11 Aug 2026 15:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wts1E-0004GG-Ab
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:20:13 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wts11-0002uI-Jj
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:20:12 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-82e475fe54eso13006517b3.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 12:19:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786475998; cv=none;
- d=google.com; s=arc-20260327;
- b=DAtFEpusIT0VD+K7I39yZnMk612RV/TVN6DOGZcvdJrArkkiUzseWdEHAdV3v+bckp
- 8UNMHEDTpAdePKEB0qLJoonmhMFfIFhK3Ylk/XWRhgUgt1TTsBzUIld3H1p3XStCMsbh
- Rc9wQ58N/IbUsadYrwFW6WMn7XypAoPbAVqqyyC4frhOp+7HV+AMruVm1pyPuF6JaCYk
- v5E7oRVW6Pflh8Fa5mkbzDydZHBO/+ydgmfLW5Uq3FqVLLnQr22l3nw2cUD1MxwtyDiq
- q44srt/9aqVNNqewiQGDHPLBsOFFmB9VcZ+Y3ANogNnGSgbllus7l6BdXvgn/P7oCL6U
- pS6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ck2+EZEV//Hl0+aheEqyH4zRQjE4nqm9JXtuPSBFCEA=;
- fh=xaF6fTkH0sgtp/jxDlNhwWHFix3ixKPjSXk/Wx2Zpjc=;
- b=EVZL3+oG12J7BJ0dQG/X6EdeguYqocOSx1FK5l6f+nSBASlxT0YL+NRaCPFgp/sJyk
- pTIiJDEJd/5m6iQDx0fDc0EdxMvLNzAKF7LfqYtU5AIoB/xxBBZyzdhjfuJA/YLk7rZE
- 7rmC2eZbLQ0UtQOeKqXc1J3DOGf4XrFHRHn81PXXuiJA6PSAV/CgHNu3xCTwIBP2WLni
- Lv2iPWMhaGQq9u8XzkKCTDfc+koRT1lLdLg+IDx5nEoG49gygn4YvKcrLZx90IWxAiHs
- pNS91AjtGlGSjVm0xN5iXdmwNBqSAs5Sxyv2IwwVB4Vj9PFl/3KA2CD8SMhyWjW/qiwA
- uj7w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786475998; x=1787080798; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ck2+EZEV//Hl0+aheEqyH4zRQjE4nqm9JXtuPSBFCEA=;
- b=H8d7vTsOjCnqAKmjrY+yaSxKIY5rgwat96rj6LqkzAVh7TMkBiz2OSHm8qvs/P/S6W
- n6PPapzu7Zf+eX7ScyFHxHakWQVWDrVJZQoR7ROBuZ9tQshB14X14KuYVLmxfmBebWY/
- zPy+iaGCXtFDI9s0bhmRtbcIodxlWGJSNfP9xmsWHONyRCaND9NT2PlM2wZrlSQwq0xb
- U4phu/vVs8DhcyhnObkwcwjOBWr1eQ8BpJy2W0tpOIVujskwiMqLKfs2xENNluJm4PZQ
- HIYNwpAxOy5WmftCPtD71/vKbLffSZ1pPcJKVs4ib8Onz3sAnvNPm2mmh1W/8U6vf8qv
- PeIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786475998; x=1787080798;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ck2+EZEV//Hl0+aheEqyH4zRQjE4nqm9JXtuPSBFCEA=;
- b=JIDsplHnv9wyuyt1UHmhjr1vkWth/4MOk+ie5ibTE5MtLadtNcdOk9myZe3Rctdst4
- Rb4TEJ7b5Qu5AgwqfSJczTR+Mpl97J/xBdTpZlYl/0lk5wIY1CqRzpBfYj1McAr9o4Mo
- DV3+wA+x2JXmQl51qIiNH100f1fYyz5XrHd8f/tAwGb6PPpvJKeDPh8t8j1nOrvUQqK7
- 07Zm94hoDeLCO+5sIlTohXIG+/QWLP7dFuJ8jlrQOJdKE3UsWIoUGlxfuz/HYpIRcQat
- OfXcaNcznqalH728iNo2+B4bwfP5+mpsldChiLgGuxJNWMQ0cq5eJC2Au6yHReoq2KTl
- VF5A==
-X-Gm-Message-State: AOJu0Yz2hsx+iCVDCzVdphvxM8Orjl7xzbJezzAjesu9hP7xfsNvD1fW
- PrA5cbfKXW9hpIU19ffsnLxC98U84FHNv6+EIMOG6moAD+D3S4bZm6kaMgNLyUEP0pwUbj0C7W4
- ctlxYSajds9ttSDXPmBsfPB3Ymqd4+S9hxomvfxCfMg==
-X-Gm-Gg: AR+sD13Sg+9fa/zKJzQDsNcWh1VcqepV5EtCZyK1HFfnM6miZL7pxC8dpxt/MH8b7vU
- q/xtn89d+pLPOacOYSzoGngbF/mwb41qWN2RpGzv6k4lwKGEtm1nVu2M4cl3u6NGr9Lv0eSRdPe
- z3JOa7EGcgTTfDvzOB/Zw4PUuple7A+wjzIhiqqSfogkt0zvbYhfGQhIyrMGV7pMuBIlhfIG4TU
- jfFJ/bpuYh9f/LH+TRJMBttjRRfwBiARH0YjrIplOpgkaI5ZUM90Thdf/2cdqrLQnzx1Bh34Yi6
- QcsXenCmK7iNhI5C3gTZQWLd1Ac4cPqRvM7OArXMy4ggC1Fg7tw1D5mKnYaV21IxPzr/nB+dLOu
- FD06IZpUFdKzlG1fah28pDxIQjuPpgGF2a4hRtZY=
-X-Received: by 2002:a05:690c:60c5:b0:81f:2abd:4c0 with SMTP id
- 00721157ae682-8304dd1de8emr18631677b3.4.1786475997993; Tue, 11 Aug 2026
- 12:19:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wts1V-0004de-5g
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:20:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wts1T-0003Ff-Ji
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:20:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786476026;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QrvDdTitIEldMA+HLf6MDff5/+znsieHEvyt1iNXKms=;
+ b=XyrEmrGI68GYIKL7D3M6zR7XsHODAZJRJaOWn9LdZfXy7m3jUcruhXC3cwH83AHxxLBJEg
+ MJSgb8poiYaVWoizLrb4Nd4iQbdVeKJOc84E5cvGSm7+b4FVYbf3CJvSuSOxfjHdWXINQv
+ 7MHvivu4cPsDhdvwSRTL5jxDxxPbYQ4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-syUeHIi4NGKbH7KiFGPBZQ-1; Tue,
+ 11 Aug 2026 15:20:18 -0400
+X-MC-Unique: syUeHIi4NGKbH7KiFGPBZQ-1
+X-Mimecast-MFC-AGG-ID: syUeHIi4NGKbH7KiFGPBZQ_1786476017
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57C801956042; Tue, 11 Aug 2026 19:20:17 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B8D37180049F; Tue, 11 Aug 2026 19:20:16 +0000 (UTC)
+Date: Tue, 11 Aug 2026 15:20:15 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ 'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH V11 04/15] iothread: introduce
+ iothread_unsafe_get_aio_context()
+Message-ID: <20260811192015.GC170741@fedora>
+References: <20260806202531.243806-1-zhangckid@gmail.com>
+ <20260806202531.243806-5-zhangckid@gmail.com>
 MIME-Version: 1.0
-References: <20260811183144.190135-1-stefanha@redhat.com>
-In-Reply-To: <20260811183144.190135-1-stefanha@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Aug 2026 20:19:45 +0100
-X-Gm-Features: AUfX_mzBbOn7Ofe4bDwR2xfSRBhH3XogHrsAJQmouzHP4MErOiZlOuooLEtZ4gI
-Message-ID: <CAFEAcA_W85fsif10XV4wKW-KT_t8kRVbUq9vgDPNH=CsQGubaQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: Do not use versioned pc-q35-5.2 machine
- anymore
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Darren Kenny <darren.kenny@oracle.com>, 
- Alexander Bulekov <alxndr@bu.edu>, Fam Zheng <fam@euphon.net>,
- Laurent Vivier <lvivier@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="+YbDnjKjE+EkTgt0"
+Content-Disposition: inline
+In-Reply-To: <20260806202531.243806-5-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,35 +92,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Aug 2026 at 19:32, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> As of QEMU v11.1.0, the v5.2.0 machines are not usable anymore.
->
-> Use the latest x86 q35 machine instead, otherwise we get:
->
->   $ qemu-system-x86_64 -M pc-q35-5.2
->   qemu-system-x86_64: unsupported machine type: "pc-q35-5.2"
->   Use -machine help to list supported machines
->
-> See commit a35f8577a07 ("include/hw: add macros for deprecation
-> & removal of versioned machines") and f59ee044067 ("include/hw/boards:
-> cope with dev/rc versions in deprecation checks") for explanation
-> on automatically removed versioned machines.
->
-> This commit message is taken from commit 9eef3854d309 ("tests/qtest: Do
-> not use versioned pc-q35-5.0 machine anymore") by Philippe Mathieu-Daud=
-=C3=A9
-> <philmd@linaro.org>.
->
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+--+YbDnjKjE+EkTgt0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Aug 07, 2026 at 04:25:13AM +0800, Zhang Chen wrote:
+> Add an explicitly unsafe accessor for legacy callers that cannot
+> provide a matching holder lifecycle, and convert blockdev.c to use it.
+>=20
+> Keep iothread_get_aio_context() temporarily so that later caller
+> conversions remain independently buildable. It will be removed after
+> all production callers have migrated.
+>=20
+> New code should use iothread_ref_and_get_aio_context().
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 > ---
->  tests/qtest/fuzz-virtio-scsi-test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
+>  blockdev.c                |  2 +-
+>  include/system/iothread.h | 10 ++++++++++
+>  iothread.c                |  5 +++++
+>  3 files changed, 16 insertions(+), 1 deletion(-)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-thanks
--- PMM
+--+YbDnjKjE+EkTgt0
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmp7de8ACgkQnKSrs4Gr
+c8jE8Qf7BMvmSCaH0Dygt1oeGnqbIlZ6aaocaX/jI8VFqwp1CFIIfvQmMTsiI4s4
+mzLGgpM0wJbtqTQO7WZSuUa44gAnhSCYH1Uij5tCRcVRTcPZmB38l01f2rcGogHa
+t0hITtfsKuTj1BcOBJzbWUeLzMqqPxGZscO2+WOQbUmwC+R9bGt2+YBeRxGna6FQ
+bdAunbK2vL1/LDCePSo28u4n7r3PHLPQwIVzcIRz4rnMthMYx6u2VPU2mEJCskbo
+sncea4SkisqwenuDV797o71RQd3vwBM//pF70RD8wldCcASnx3hCanlmgdPVxSom
+MfLMOHRcpm02hH09NzZlrH65d29ApQ==
+=Oh4i
+-----END PGP SIGNATURE-----
+
+--+YbDnjKjE+EkTgt0--
+
 
