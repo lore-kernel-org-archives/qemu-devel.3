@@ -4,65 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9EEC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 09:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBAFC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 09:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtiWA-0000Dm-RG; Tue, 11 Aug 2026 05:11:30 -0400
+	id 1wtib9-000164-UI; Tue, 11 Aug 2026 05:16:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <17746591750@163.com>)
- id 1wtiW9-0000D2-0V
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:11:29 -0400
-Received: from m16.mail.163.com ([117.135.210.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <17746591750@163.com>)
- id 1wtiW5-00040D-M1
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:11:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Subject:To:From:Message-ID:Date:MIME-Version:
- Content-Type; bh=NDCoKzNPLkyCH8elTvs20cnH0ST8ZEx8g0oWbKKAaKU=;
- b=iKidxrG8sQj3J6N4YLy2Hy84RXWdRSvmcI0M0olz1aJRmMzjppAF+yAbrD9hGf
- Le5MBVfS55bbdyQ2VskmUT2J72q+zJ3b4wQ7G7pGnCnQ/Q8zQi0P68vLGU+7bTX8
- czgOew13PBqDM+f2VKgs/2txnazuZpXXl6RAKEutEIm+4=
-Received: from [10.2.10.30] (unknown [])
- by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id
- _____wDXH_Eo53pqS7hUOQ--.24690S2; 
- Tue, 11 Aug 2026 17:11:05 +0800 (CST)
-Subject: Re: [PATCH] hw/intc/loongarch_dintc: Add
- loongarch_dintc_cpu_by_arch_id() function
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20260811084331.23526-1-maobibo@loongson.cn>
-From: Song Gao <17746591750@163.com>
-Message-ID: <27b9d9e3-b762-9472-984e-a14b1abba13c@163.com>
-Date: Tue, 11 Aug 2026 17:11:04 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wtib8-00015f-5I
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:16:38 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wtib6-0004SC-Hz
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 05:16:37 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-38f0f3c8da5so561745a91.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 02:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786439795; x=1787044595; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=ZfnsgyLH4PQ/qK2TwhvO60jxZORJRM1+PUVK8kwg46U=;
+ b=pSA9ewKvEkiTvHaxGpvMIPbZMEmT/HNOm9gWX2LUc7h/41jMzxaTKnVQBb6RLsThqJ
+ AQ3oyEQJ3UdCFB7qZ5plrPRvEeLGs6gYiESLV3lCiZQF5kU0CV6B/kiknDTTrxq2HDFc
+ J+/Qg6gVKzUzh7oPKJGgNNWArVLNCkP8Ihg/pgHEceLfLZi3EdioLPtsSDpHdtCt22HS
+ AEaBOG+HOf/dNIFRl+XUBBJBQVGqxeuFZPCZQ5XhZnwPQPE1s8xHW+ieRiXTXK1V5rCF
+ 9YakrVeSGHUKdmDWXqV9wWojj2ZSAZdVNQdUdrUuzeyWSW9hjwgb+qPAl6RIII16elDW
+ qpzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786439795; x=1787044595;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZfnsgyLH4PQ/qK2TwhvO60jxZORJRM1+PUVK8kwg46U=;
+ b=kAVbtEW3yf8MHxb4RyluDcpqI4RYIhRselbDBzg69S3YAK8TmNGCS6L2acDukMKSVt
+ XjOcBZxjlWzr23ub3L61zYz9NLJax1SEEl3I+XP6uR/IlSPLBIS6xKUHeMCHo/t1630O
+ DLZ66OOQPbu4A66PtlVTdv6E6r/g1j1jRCpfxd1U86aoOOTq6dI9wolRPRZullURbh42
+ EDqmozmVweHf/sc4P9azzNpvq19Qo9VNls5zB5RcUFFESZ7OwYibgJzoI+cEWodhlSVU
+ oKaY6eHIM3OjIlacBPj29657yveHxUYfBnsJv8YQ0BRySbY8pDQr15i6ESDTENRRnr/C
+ 5cew==
+X-Gm-Message-State: AOJu0YwaQ7ODqqnEUirUMOrGmthiIgzukh/frFmj5oNe1LadaHF1+XLy
+ //UmODmaGf5smZQmUP6OeUGmwOsrGDBv0MjJwGToh647Bos2i+SyES1sY/n8FQ==
+X-Gm-Gg: AR+sD11SLL1qOmKHY2h+DLio+YVTwsvjLGvwikRWedz+DyhWbbnSIbzD8R9bH9qsTe3
+ 0N/CSa9YwZAGZi6Nsl0J2OXSwgS5FsSuZC/T8kBaWXpm0pUQtv5IdeOHDEcODQM9YLpSS8GqugP
+ /ZhRc3gQ6lM/5AFN93wE4pH7+4TtQD/tXnWuxui/+Ok2Ak82hRtJEpKFSKuwtefkS2qqyD45AfP
+ Wsx72XwioXLpr/DkOBqzC7NHHP26rMdXEcRjrVQ55h+lo3SPD/4YJBbY7Ky/j/euMpiUOjzejuw
+ lQ846ycjwVZaQCy41SoDE1jho54mKu05uBQKXvyOLo4IJtEpAFYlvhnz/QgvGoO4ZPewgJPUmZJ
+ P1PK2DiX95wAkTFstQ40ncsIK+J1m7IbomnQeKN4etZ6CMRgQ06oDX1fHWqXr/oM3c/Y4k3f5Zc
+ THAzfE4uB9hMxhzCNqTSKhHspuqTfCEJ7n33Z1WH471w3cM0wFCbmJbvZV7Oqc80KhNhnxDJVnu
+ 8EmBp2A
+X-Received: by 2002:a17:90a:ec87:b0:381:2788:a437 with SMTP id
+ 98e67ed59e1d1-392ec4d2710mr1343223a91.1.1786439794667; 
+ Tue, 11 Aug 2026 02:16:34 -0700 (PDT)
+Received: from [127.0.0.1] ([38.34.7.236]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1412042d1dfsm3214257c88.9.2026.08.11.02.16.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 02:16:33 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20260811084331.23526-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: _____wDXH_Eo53pqS7hUOQ--.24690S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGFWDXr43Zw1DJFyDGFy5CFg_yoW5ZrWfpF
- Wxurn0gr1UA39rXa9xXa4rZF4fCrn3u3W2q3WakF92yF4kAr15Xr48GrWUZF92ka4jgr4j
- vw1xG3WUuF17JFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRbdb8UUUUU=
-X-Originating-IP: [114.242.206.180]
-X-CM-SenderInfo: jprxlkywvzilivq6il2tof0z/xtbC8gk9Rmp65ymixQAA35
-Received-SPF: pass client-ip=117.135.210.5; envelope-from=17746591750@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 0/7] K230: add gsdma and decomp_gzip
+From: Junze Cao <caojunze424@gmail.com>
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu@processmission.com, farosas@suse.de, lvivier@redhat.com, 
+ pierrick.bouvier@oss.qualcomm.com, caojunze424@gmail.com
+In-Reply-To: <20260808062227.66961-1-dingtao0430@163.com>
+References: <20260808062227.66961-1-dingtao0430@163.com>
+Date: Tue, 11 Aug 2026 17:16:25 +0800
+Message-Id: <178643978570.1229420.7326743782506484256.b4-review@b4>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=caojunze424@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, NICE_REPLY_A=-1.998, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,105 +106,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, 08 Aug 2026 14:22:20 +0800, Tao Ding <dingtao0430@163.com> wrote:
+> [...]
+>  create mode 100644 tests/qtest/k230-decomp-gzip-test.c
+>  create mode 100644 tests/qtest/k230-gsdma-test.c
+> 
+> base-commit: 300438ffbb8d9430cac2fcc15cba6f482b2c0587
+> --
+> 2.43.0
 
-在 2026/8/11 下午4:43, Bibo Mao 写道:
-> Similar with IPI, add function loongarch_dintc_cpu_by_arch_id() for
-> dintc driver. It searches dintc device from physical CPUID, also it
-> used binary search method, rather than one by one with common API
-> cpu_by_arch_id().
->
-> And use this newly added API in loongarch_dintc_get_cpu() and
-> loongarch_dintc_mem_write().
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/intc/loongarch_dintc.c | 49 +++++++++++++++++++++++----------------
->   1 file changed, 29 insertions(+), 20 deletions(-)
-  Reviewed-by:  Song Gao <17746591750@163.com>
+Thank you very much for your contribution.
 
-Thanks.
-Song Gao
-> diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-> index e40292887c..68c1cfce43 100644
-> --- a/hw/intc/loongarch_dintc.c
-> +++ b/hw/intc/loongarch_dintc.c
-> @@ -26,6 +26,25 @@ FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->   FIELD(MSG_ADDR, CPU_NUM, 12, 8)
->   FIELD(MSG_ADDR, FIX, 28, 12)
->   
-> +static int loongarch_dintc_cmp(const void *a, const void *b)
-> +{
-> +    DINTCCore *dintc_a = (DINTCCore *)a;
-> +    DINTCCore *dintc_b = (DINTCCore *)b;
-> +
-> +    return dintc_a->arch_id - dintc_b->arch_id;
-> +}
-> +
-> +static DINTCCore *loongarch_dintc_cpu_by_arch_id(LoongArchDINTCState *s,
-> +                                                 int64_t arch_id)
-> +{
-> +    DINTCCore dintc, *found;
-> +
-> +    dintc.arch_id = arch_id;
-> +    found = bsearch(&dintc, s->cpu, s->num_cpu, sizeof(DINTCCore),
-> +                    loongarch_dintc_cmp);
-> +    return found;
-> +}
-> +
->   static uint64_t loongarch_dintc_mem_read(void *opaque,
->                                           hwaddr addr, unsigned size)
->   {
-> @@ -49,23 +68,20 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
->   {
->       int irq_num, cpu_num = 0;
->       LoongArchDINTCState *s = LOONGARCH_DINTC(opaque);
-> -    uint64_t msg_addr = addr + VIRT_DINTC_BASE;
-> +    uint64_t msg_addr = addr + VIRT_DINTC_BASE, arch_id;
-> +    DINTCCore *core;
->       CPUState *cs;
->   
-> -    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> -
-> -    /* Validate cpu_num against the configured number of CPUs */
-> -    if (cpu_num >= s->num_cpu) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "loongarch-dintc: invalid cpu number%d\n", cpu_num);
-> -        return;
-> -    }
-> -    cs = cpu_by_arch_id(cpu_num);
-> -    if (!cs) {
-> +    arch_id = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> +    core = loongarch_dintc_cpu_by_arch_id(s, arch_id);
-> +    if (!core || !core->cpu) {
->           qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "loongarch-dintc: no CPU for arch_id %d\n", cpu_num);
-> +                      "loongarch-dintc: no CPU for arch_id %"PRId64"\n",
-> +                      arch_id);
->           return;
->       }
-> +    cpu_num = core - s->cpu;
-> +    cs = core->cpu;
->       irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->   
->       async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
-> @@ -135,15 +151,8 @@ static DINTCCore *loongarch_dintc_get_cpu(LoongArchDINTCState *s,
->   {
->       CPUClass *k = CPU_GET_CLASS(dev);
->       uint64_t arch_id = k->get_arch_id(CPU(dev));
-> -    int i;
-> -
-> -    for (i = 0; i < s->num_cpu; i++) {
-> -        if (s->cpu[i].arch_id == arch_id) {
-> -            return &s->cpu[i];
-> -        }
-> -    }
->   
-> -    return NULL;
-> +    return loongarch_dintc_cpu_by_arch_id(s, arch_id);
->   }
->   
->   static void loongarch_dintc_cpu_plug(HotplugHandler *hotplug_dev,
->
-> base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
+I think there's nothing wrong with the code.
 
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
+
+-- 
+Junze Cao <caojunze424@gmail.com>
 
