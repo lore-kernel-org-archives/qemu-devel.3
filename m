@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C51C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D505C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 17:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtqRc-0004aC-GR; Tue, 11 Aug 2026 13:39:21 -0400
+	id 1wtqRZ-0004YP-5g; Tue, 11 Aug 2026 13:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRV-0004X5-Dc
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:14 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRU-0004Wu-5c
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:12 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRT-0000SW-TP
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:13 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6a36982a875so162947a12.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:39:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wtqRR-0000S8-Fi
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 13:39:11 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0794669a6so172835a12.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786469950; x=1787074750; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786469948; x=1787074748; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/FLrBFGnc3sdlHbz+yFP8aIfw/LA8xDvV8QDl90J8e8=;
- b=mT3oabxFNdsky6+qWD3+ISnToOZmXtNbL1bw+KcoSFjD+RHuzO8W0zbtz4s+Bs/QeN
- 2a5qGbHIX9fCapQzqLcLGUINymQsErZ3aCbm6WSn2KnGP2qxKu/6epjlaMqwgoaisE8C
- TKceTniHeDp+6bHTq9VHxXsRCCVUvtKq+5MhpVGPQ4rNpA03r748IQQEgwW4nmqGMxN/
- SpoaTxyeTbKbPie7zZ9TPUTX2EmyeQ1RDpWIU9V6ceYAE2pkqTl3z1qHi69FKRRPh8MH
- +x9/ljqJWL2skHE0KcenEn/pMJeo5wQzWYYDPbogoZa7Ut8IG/OoUjMRRCuAz7DBB+Qv
- nEvg==
+ bh=GV7Ua9V/Sjx6+gmIOmwjUOl9YM8UQhaC8JaZ+jlAiiY=;
+ b=px6IBtfxJjqIFNUS54wBo46JYmu/Qz9EpjiVKdr8OuQwIEzquXUefGXJ8HOnlE67o7
+ 91pbl74vJ0Y6uPI5WY4weVbZKyhKrbSwEpN9AAN+StDwhajEFSd3iDVjCwxGy0A+GQml
+ Gv6ZTRGU1wGRYsagdRIqy/LXWLIDyqBSIOlHDGWBz07FtLcrQ8CaNBS4/WjsTIJz3OAg
+ fpv7bA0Rn1t0hM3h8Q6mZtqVxpuLtBFufJipspWQd3eYQ8LTUD38K6iTY/nQRnlG4Hdg
+ 6Dr7qGq4XZsE4g+FS3sIB/cUkIvV18bcfHKqBh3iqFiVaEFfJ8Am7F0/ctc9foY6VnjP
+ jTZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786469950; x=1787074750;
+ d=1e100.net; s=20251104; t=1786469948; x=1787074748;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/FLrBFGnc3sdlHbz+yFP8aIfw/LA8xDvV8QDl90J8e8=;
- b=KNucnsnhi51X6uG9JD4kaB1I6viwdfIIFZXwcerN1oEdB1RoO9l5Dw1i9iFjMAB6HV
- uYnAbTetZXgVDfMOTfzH4615v7nzu/qWfCQKdTnugN1nNsXmieUrsR2TM584Hrk+N4YM
- Tvvq/8GTqYWVtX6ayUUzPgFJseENyHxtw9uBVmUMBHHwHKqrC/I3oZ7yZLcKdAgxSmKV
- LV6I/927QKdkvFiJfOfM5cF9QiIlameApNxu5rTehkZjJY3cymJKMlDhqVXNPBNodowB
- Vjss2MrFJ++R1oHZVrzH6MWZWA5AXRPoJ7hbfgyTCFs0yYnvcSb2myMu7fRjHf5vPRZj
- ZXTQ==
-X-Gm-Message-State: AOJu0Yxv3HcOf46/j6fhlU+ffSb3wZtC87qt8jm94NNrxfX8zfW6HZtV
- LK7tI4RLj+eVAgwd+qu3hB4aRIcY/VR391GyFPZhQ0Bk5DLsswOigC9mTbhpkgeSTQgXMv6TXSH
- PI2b1
-X-Gm-Gg: AR+sD12VS1/OPJRBH7HEZzZtjX+fob+aw1Sr0rVrTgm81IAU49wbyjhfPEtJhRm4MIo
- f0fAzlbpqGPjpHYJGvNLgipB5+5F1LZjLTREqAU5LW2477G8m8BPmtjuaOkh7uAngRBVd6ELQZS
- pIBPNxolSMV9H9ZKVXLTh5yyfxFq1WK8aTcvLSaBUycBlyaqroJSrSP9o1WpUHEYsOGeRAgXMtT
- RlycjXCD2VmURDtPw5upIAJe+ja+SvdwYC9I/uAEoiRfb6LySQVRYRcp0EzFMUw9Rd3HqKeoON3
- yrPLNhEmrSdq3m43Q+rH+KoeZI6batF5RTnO9Ag4XV1bmdan0ZjVxWSOpOOymLjdFc8973+zT4j
- W1mM2hqXn92B8wy9yk2irlH3HjnJ8gJgVV+lqOB8WNeoFoteVNO9CQVQEeOXPHr+0GLl0VUfZOz
- auvLKwTB7hSTBW6K86cTtpBv3EppgrZbFXcWvB2vRlbPLWMGKK92PXiFuI
-X-Received: by 2002:a17:907:fd89:b0:c20:acfb:72ef with SMTP id
- a640c23a62f3a-c20ecbb755amr99656066b.30.1786469950160; 
- Tue, 11 Aug 2026 10:39:10 -0700 (PDT)
+ bh=GV7Ua9V/Sjx6+gmIOmwjUOl9YM8UQhaC8JaZ+jlAiiY=;
+ b=fqXlxJoOD0XOMCojFceaWIECkwqxwyeZzkdKPL93c8eXtAKv4rnqqcvbAhfnxXCtAI
+ rR/sLuA0zfPirCRzygZ2kraUp38wxSLHj8nx5M4lZGL5Nl1/UGAekh32kOnxs3mukaby
+ 4QtoYKOt1jeR8nK/isDat9nLVfLNMUhbRg4LYvt4wGhhJTPxsntiNzbpP906QaGD1a+i
+ zz9XXgsboQUao9j7Z5/cAPRkw5xPcRP5ifqqFueTzj1Cg9Pm5GVsQaQg1fq2C6Z57P/F
+ uZsqJaPtYAj/hmKBd9prFj+X00J/8oyggPLYMVHzAR+J6wn8Co1mYSOdhSnMiOWCpbAD
+ +exQ==
+X-Gm-Message-State: AOJu0Yy2zfg4LojU+8iroyyBxEytw4XA0/RHDl+vb2oZa1lYxuOrjpXG
+ tz9pEza5Pw8FAGe9rt0XxaCFAZKRiJC0jHiWEdKn1p9yq7c2+kMrBtZqc/lBRRd/V/BpcTQvXIh
+ h+Ysp
+X-Gm-Gg: AR+sD13y+2usCA06Qx6HAr0Fh7pU8ae1sm+WlbRWMNKLIn/BSIcdkVC49GpRqlssYhf
+ wurOqBoIKKhikv+XMztBnWUWiz987myChPbr7WVSeIQSygEy3ueRge2Qp4oBxAO7kTmbZLojCTW
+ QngfWkHO5q1qTrXlUKeObPQMUcCI5BTmv7QsMMBuN5Cra3HKGwlecMnNMjJgH/pM6iMiPDmxmZQ
+ 6eO8RXXxxKcf0AentevzYMdXGwnDEuKbJbpouD/77bEvmTcT1XI6EDrDGBxW5JLZ1+OT+vb7gxR
+ Pe/kwJNZkF8WBAUP0kJyyMbVvDjM6DK411DK4FkS5/1A9cnO+INy087uUo1hKz0IQYOlc4cG07c
+ 1A/rbrv+kPXLV4jt0LqSKzqhL3ZL3OZv3g9eQY5I45ANKuZuF0I/8exAX2oMHXN9rVNdeIBiuQq
+ dQYrvGOuVJfJPoZwspIi/mAu9T9RGAwc84AwG942kozq69md4vLNYC6N27
+X-Received: by 2002:a05:6402:249e:b0:698:3602:d0d with SMTP id
+ 4fb4d7f45d1cf-6a36451dd1amr2791285a12.17.1786469947999; 
+ Tue, 11 Aug 2026 10:39:07 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:c43:d230:7bbc:68d4])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a362ef7525sm880945a12.29.2026.08.11.10.39.08
+ 4fb4d7f45d1cf-6a362ef7525sm880945a12.29.2026.08.11.10.39.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 10:39:08 -0700 (PDT)
+ Tue, 11 Aug 2026 10:39:06 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 3/8] dirty-bitmap: fix integer overflow in serialization
- coverage
-Date: Tue, 11 Aug 2026 19:38:52 +0200
-Message-ID: <20260811173857.396571-4-den@openvz.org>
+Subject: [PATCH 2/8] parallels: validate dirty bitmap granularity
+Date: Tue, 11 Aug 2026 19:38:51 +0200
+Message-ID: <20260811173857.396571-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260811173857.396571-1-den@openvz.org>
 References: <20260811173857.396571-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=den@openvz.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=den@openvz.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,42 +99,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The chunk size is an int and is shifted left by 3 before the result is
-widened, so a chunk size of 1 << 28 or above overflows.
+bf.granularity comes from the image and is passed to
+bdrv_create_dirty_bitmap(), which asserts on it. An otherwise valid
+image thus aborts qemu-img for a granularity of zero or one which is
+not a power of two. The shift by BDRV_SECTOR_BITS is done on a
+uint32_t as well, so 1 << 23 sectors and above wrap to zero and hit
+the same assertion.
 
-parallels passes s->cluster_size, which parallels_open() lets reach
-2 GiB. With a bitmap needing two L1 entries the bogus limit makes the
-"bm_size - offset" in parallels_load_bitmap_data() underflow; both
-wrong values slip past the assertions in serialization_chunk() and the
-resulting index lands outside the hbitmap, so a 128 KiB image memsets
-unrelated memory through hbitmap_deserialize_ones().
+Compute the granularity in 64 bits and reject what
+bdrv_create_dirty_bitmap() cannot accept.
 
-Widen the shift. qcow2, the only other caller, never exceeds a 2 MiB
-cluster.
-
-Fixes: 35f428ba3971 ("qcow2-bitmap: make bytes_covered_by_bitmap_cluster() public")
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Fixes: baefd977002e ("parallels: support bitmap extension for read-only mode")
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/dirty-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/parallels-ext.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
-index 13a1979755..9fda3a4b98 100644
---- a/block/dirty-bitmap.c
-+++ b/block/dirty-bitmap.c
-@@ -612,7 +612,7 @@ uint64_t bdrv_dirty_bitmap_serialization_coverage(int serialized_chunk_size,
-                                                   const BdrvDirtyBitmap *bitmap)
- {
-     uint64_t granularity = bdrv_dirty_bitmap_granularity(bitmap);
--    uint64_t limit = granularity * (serialized_chunk_size << 3);
-+    uint64_t limit = granularity * ((uint64_t)serialized_chunk_size << 3);
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index baee86a159..830ac78a11 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -31,6 +31,7 @@
+ #include "parallels.h"
+ #include "crypto/hash.h"
+ #include "qemu/bswap.h"
++#include "qemu/host-utils.h"
+ #include "qemu/uuid.h"
+ #include "qemu/memalign.h"
  
-     assert(QEMU_IS_ALIGNED(limit,
-                            bdrv_dirty_bitmap_serialization_align(bitmap)));
+@@ -122,7 +123,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+     BdrvDirtyBitmap *bitmap;
+     QemuUUID uuid;
+     char uuidstr[UUID_STR_LEN];
+-    uint64_t bm_size, tab_size;
++    uint64_t bm_size, tab_size, granularity;
+     int i;
+ 
+     if (data_size < sizeof(bf)) {
+@@ -133,7 +134,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+     }
+     memcpy(&bf, data, sizeof(bf));
+     bf.size = le64_to_cpu(bf.size);
+-    bf.granularity = le32_to_cpu(bf.granularity) << BDRV_SECTOR_BITS;
++    bf.granularity = le32_to_cpu(bf.granularity);
+     bf.l1_size = le32_to_cpu(bf.l1_size);
+     data += sizeof(bf);
+     data_size -= sizeof(bf);
+@@ -144,6 +145,16 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+         return NULL;
+     }
+ 
++    /* bdrv_create_dirty_bitmap() asserts on an unusable granularity */
++    granularity = (uint64_t)bf.granularity << BDRV_SECTOR_BITS;
++    if (granularity < BDRV_SECTOR_SIZE || granularity > UINT32_MAX ||
++        !is_power_of_2(granularity)) {
++        error_setg(errp, "Invalid bitmap granularity %" PRIu64 ", expected a "
++                   "power of two of at least %" PRIu64 " bytes", granularity,
++                   (uint64_t)BDRV_SECTOR_SIZE);
++        return NULL;
++    }
++
+     if (bf.l1_size * sizeof(uint64_t) > data_size) {
+         error_setg(errp, "Bitmaps feature corrupted: l1 table exceeds "
+                    "extension data_size");
+@@ -152,7 +163,7 @@ parallels_load_bitmap(BlockDriverState *bs, uint8_t *data, size_t data_size,
+ 
+     memcpy(&uuid, bf.id, sizeof(uuid));
+     qemu_uuid_unparse(&uuid, uuidstr);
+-    bitmap = bdrv_create_dirty_bitmap(bs, bf.granularity, uuidstr, errp);
++    bitmap = bdrv_create_dirty_bitmap(bs, granularity, uuidstr, errp);
+     if (!bitmap) {
+         return NULL;
+     }
 -- 
 2.53.0
 
