@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB30CC5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 22:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CD1C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 23:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtvL7-000050-KA; Tue, 11 Aug 2026 18:52:57 -0400
+	id 1wtvyy-0008IE-IG; Tue, 11 Aug 2026 19:34:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtvL6-0008WC-7H
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 18:52:56 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wtvyv-0008GY-Dq
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 19:34:05 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wtvL4-0007Ug-Sz
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 18:52:55 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-38e69bdb0fcso415013a91.1
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 15:52:54 -0700 (PDT)
+ id 1wtvys-00076o-J3
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 19:34:05 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ce87c7e3bbso6605515ad.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 16:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786488773; x=1787093573; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=siEA+eoPfFGrDs8/KL2W99pO9PcpFZ6g60+s9nAbM8E=;
- b=rRyF5dzOUrCMyQnh820Z6h7+0ijIDNsZecgpDKM/6NbSRFWzE+4f8iXLxkuYl/+26r
- rKj40yCNDbl82afy69TTuc1e5L4thvJKyNtQfe9tzyYNniT7H3cqFSl2HrqGQt7xGAg9
- rKqdzIbQ6C8jayyK3sPr9qoI3EjhEK8M9YNRNB/dnkxVYJuniPdtsNPB+lLVAi9cRy9R
- BkiaGOw7LjvnvCR8mHtMJCkgrta2uvSHB/2Kb8vYPBL6/RooMHGIGUb0kR/0jUL6taK5
- Je25ZHXMcfH7LKZQocnTj6Ie77R39PAMuTeSPT12kawoizYttBqWBrBlcxo7/DfVHfKE
- 9Wqw==
+ d=linaro.org; s=google; t=1786491241; x=1787096041; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0eStAZ6SsJfA6QA9D9uuJRZ4Drf8kSStCDfosExh3Hg=;
+ b=yxnoAO/YTvclJvIUuTpii1iIr3q0JVP9HiKy1wxYZDwDqWlDSVh+CeaWwERiw047UT
+ tJdRO9lWX1/Kf2R322SdLd4ozNlqLwo6Kl2GRbpdzDyCAAwplCnE4mOPGBkRvSdqYu4X
+ aNmmVZ4fuSZdL1bT3fbTaSPk1du4Qy8RA2z44vCrahsQknD72BxGCq2ji0qtntj5oaT+
+ QV7gawk5a7TMCzt9D3KnTcTDjk0H9G8epvfgRr+py0lrxBRZROsN9mHpzt7uFBTl9/ta
+ Mgi/mH4xZH8WvZ1jOWWYxtkutzYdgWuL8/PJv5mmHPZkgkrZW7VVHsF5YJuN9mP8rOcY
+ vLaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786488773; x=1787093573;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1786491241; x=1787096041;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=siEA+eoPfFGrDs8/KL2W99pO9PcpFZ6g60+s9nAbM8E=;
- b=BCA4qX18lB79PN/dagRZNw/OAjM5FpsuyQp+Btw+oPNM0Glump6CiivRSZBN1mXjjd
- JpLMcr2aW0Bbo/a46R4isSkt9E/1485PMlfADg1tMQYGekyiFP3blct6Xep0ixgBFW55
- 6zfGv/H+b8qsYy+viXvIIpxDwWNeRo3fOt4ijMYy4MBxaWMnlGboDx6fLHUB4+mkWn9m
- vmqPP853kEIJqC+htvgL/VK1LQCGhbJd7xe3YX7rUepw+zgsWLAaOZ6bdrXKHjiHHirW
- 7ESTlY2BpxadlbwLpSjpuN/spX/r0PYryuE9j1HjUHATHkKljCnO8NVwqr0pP7e2HXgk
- NqHQ==
-X-Gm-Message-State: AOJu0Yy3EbaNas9sBGJ8ZWfXYm3ovonjRkO/aS4DazZbUtbU7Z41Xb57
- H1s/OCRRONf289yWUDXmZQzM/aa97GdqPEs1TV+c68yRor2061nSltFxdE8xdCbmDwhYk6rUyOH
- vXK/h
-X-Gm-Gg: AR+sD113SGYl93NSmQ6K2SxmLBLL2jYOVjsKPVv7valhBXZdW2ecbDi6HIxfQ1PYwwM
- ja70d5z8DEKGf8Ojk/2BM3HdK4NhxB6EtcNQ5c7VcogDglbx0fWBFygYCD1q19xG3MaoCB65qHP
- Wuaahl37AjTy2zSRIaB7m7OP8FPjobYG+PMIAGCFW60grOo/7O/BbOWmCAapt5Wt0vZO6NW9epY
- 2JV5I2pKdAwNu4S60puDdWupyJt8XeVtl/t0XjNbXODZgcjSENQV/rdEO2c4N/kQJ90Q6sagEPb
- n3EAlBmpX70LDjlQZpbDeGWW6RDR0CCenvho2AuOis5OD2d82DMfXdRno1BvNTEH+lnv4MTAU0N
- ibahb58+AlHjco6NtA9q3Z0wvr9Kh7mZjVCkZUcX8nmxqNV5htmrw561Ds+1ngWU9mhDkOsRveY
- 5jpAJjmq4HIExMgqMkVTcfM9ivF5lEBt7NWS91OdK94OXU7oDu2U4PkNUIWStag+CwNVsWJmH68
- MjgcOkjb+TlDOqPmDVp
-X-Received: by 2002:a17:90b:1b0d:b0:38f:7f60:ba35 with SMTP id
- 98e67ed59e1d1-3930123788cmr463819a91.5.1786488772823; 
- Tue, 11 Aug 2026 15:52:52 -0700 (PDT)
-Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ bh=0eStAZ6SsJfA6QA9D9uuJRZ4Drf8kSStCDfosExh3Hg=;
+ b=CWCXJP8ilb7LRjYqrn8Z7bEPfSyYQ/Jxb43JuugTr2VRIBdHbz4U2uIqpKASpbdXT/
+ zHlxhfN4m8bffciGVPhQFcezDagWy/dPnW2me1o9FiR+Vay81OkR9Po9LGKrh5mPXTqf
+ bHRK7qgWH3KqKUw+im1PjTvttEocDADsods74OnVrKeLFH3JUtjHYBFn237Qt20uW5P9
+ J8MSLCwEdljMUpCLHUvLeBrpwvVQuCzfpU3ahy0N1fP6SEGtLT+JsxOAW0STGLmfL0Pr
+ 27ir7G0bCR1xBKUwnf66IIdQNRexk/3N68B4SX5oB73k1nsot8rG8/GOu4WqczfQ7ECu
+ cXmw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqiQK5sla6ohVWVM/4YI30gK+HcxwlavGjnzoQCKfY+Kf39V1ewA45fWvgAPGALKyEGjvXymRtZRQwl@nongnu.org
+X-Gm-Message-State: AOJu0YxVShGdtSwXcJ1BOYWP28C9JfBSJu5CaUszQ8wHphEhslyDJVpF
+ J8PT4ldOt9qJBEEX1XdekgQmPuysuhDSpX9dIWtYSWnyRusk51J5iE6Oo/zSQdUZLJQ=
+X-Gm-Gg: AR+sD12dzZnexXlK5JN28z6XCU+VNjCBGyTJSXZh/lKBdurQH9RJfvcuH1IGc1VVG+C
+ iP20phFpxXvW5oPvsTVH7fIgoZ5h259XCiLCeEYunEPsyIgJ6TUP9GIoJsnL/qk0jh46vupyjyN
+ gnP3ijxH7YFTE9xKYgga25GNG0v7NG4A5MSuq/+TsojvWcrSDITGmCmUTnzqISVqWOtsmRGD9jP
+ XGHFrkVIyN81VIcMmuwAoYN5dBpvA7Uky+Dg4DUK9ULi4NGa3EhyFlKjv592AAilLb6JBuh4YGT
+ NStB/CGKwAVW8OcaWFM5o6KulYmzBQlU92d6LyAs2hXUF08oLu9z1yBPMe4aMu3N76a7TpNahR+
+ G0GImjkGwNtPBG86DaWRPY8T85Ju5cx1dB1eLuKtKTnSZ17Wo5NDbuINkyWv9icwYYPumhyZ2a3
+ tebbSCS8AFw0nDKKHxRjNETEf39yaqb3AnjfY6FFp0GB55mqpJwL+nE2Tpf5G7nu4kqciDMt5sq
+ bkpvhJgCgVkcpgA5x2575K2T9fKlHN9GHHRmT0=
+X-Received: by 2002:a17:902:ea0b:b0:2cc:90aa:8787 with SMTP id
+ d9443c01a7336-2d3452da5d8mr13405955ad.6.1786491240755; 
+ Tue, 11 Aug 2026 16:34:00 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392f933fa84sm1134120a91.4.2026.08.11.15.52.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 15:52:52 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] tcg/optimize: INDEX_op_mul is commutative
-Date: Tue, 11 Aug 2026 15:52:50 -0700
-Message-ID: <20260811225250.173812-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d9443c01a7336-2d315ef024esm12928355ad.10.2026.08.11.16.33.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Aug 2026 16:33:59 -0700 (PDT)
+Message-ID: <eb53043c-0379-4fe7-953d-e311a2eff827@linaro.org>
+Date: Tue, 11 Aug 2026 16:33:57 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] hw/cpu: Slightly sanitize CPU API
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ qemu-s390x@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
+References: <20260811183410.22428-1-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260811183410.22428-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,27 +108,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7a2f7084525 ("tcg/optimize: Sink commutative operand swapping into fold functions")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 8/11/26 11:34, Philippe Mathieu-Daudé wrote:
+> API cleanups, mostly removing system-specific code out of
+> cpu-common.c. Code churn renaming functions, in the hope
+> to make things a bit simpler to understand.
+> 
+> Small patch set extracted from a series clarifying CPU /
+> accel synchronization, itself a preliminary work to introduce
+> split acceleration, eventually.
+> 
+> Philippe Mathieu-Daudé (8):
+>    hw/cpu: Correct CPU_GET_CLASS() comment
+>    hw/cpu: Include missing 'qemu/accel.h' header
+>    hw/cpu: Move internal declarations to new 'cpu-internal.h' header
+>    hw/cpu: Rename cpu_common_realizefn() -> cpu_exec_realize()
+>    hw/cpu: Rename cpu_exec_realizefn() -> cpu_common_realize()
+>    hw/cpu: Rename cpu_exec_unrealizefn() -> cpu_common_unrealize()
+>    hw/cpu: Extract cpu_exec_realize() out of cpu_common_realizefn()
+>    hw/cpu: Move system-specific cpu_exec_realize() to cpu-system.c
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index fcdef25bee..ed2ff32ed2 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2152,7 +2152,7 @@ static bool fold_movcond(OptContext *ctx, TCGOp *op)
- 
- static bool fold_mul(OptContext *ctx, TCGOp *op)
- {
--    if (fold_const2(ctx, op) ||
-+    if (fold_const2_commutative(ctx, op) ||
-         fold_xi_to_i(ctx, op, 0) ||
-         fold_xi_to_x(ctx, op, 1)) {
-         return true;
--- 
-2.43.0
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
