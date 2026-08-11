@@ -4,152 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A0EC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B02FC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtk89-0008Ff-EJ; Tue, 11 Aug 2026 06:54:49 -0400
+	id 1wtk7y-00085J-28; Tue, 11 Aug 2026 06:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtk87-0008E8-VC
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:54:47 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wtk7w-00080q-4V
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:54:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtk86-00008I-DE
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:54:47 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wtk7t-00006d-2K
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:54:35 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BALhFT341090
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:45 GMT
+ 67BAM9Ft027477
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 0ooFzW+Lv9lCiVhFwqR4/0Q/n2XWyHN2y+PA3RDrHc4=; b=ksU+8xIrlW3NeCfD
- uhCycczPvuaMDn04fPPcJf7M/k7579PtrzMA0tD/b3Z4yEm2sm78rcxhxbUsMIQF
- KMweGxAsTC6LYbiBy9knhSRWYK3GIFyYFqrtwB5Pdg7d3GL0FSitZBew/A6V7UPo
- Sg60P4ZxM4vbTpbJK3+TyIJvenrWQW2noxlydSrH+8vqhaWV7A7o23PbEcMAzjww
- tCbRbMCq0uwU+vY+7fNcCTPGkALL+ympO9fJ0vvwN8YaLLBC+fJZlsHpEUwi4Cza
- bGDq6n7EAkPIqpFq6+iGnuiMyvHBXm7CWmnRNF4ChrfkEjO54D8y4B98SCelmT2r
- qe4EFw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g01q104ss-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=cUqiTI5VHBbOKclzTe05KN
+ XX8nCzCrAnpabKF4IFnu0=; b=f9E7MiJAGS2kcZGp2YQBREkK+vX7PJBmea8Ij8
+ J+okeBmgP9V5y4ogT7qvxlg+halNFuEWELAso4Hbcb2oN7eWVdTpyzF1oea+KVHT
+ devCJYYtqXxE7LXFj2NCzO45ttVZbocAYKM9eL4YBczeIrL0r0rKKCMlYuKcrySx
+ 3dH2ntxbXcptOOF60YYHrzrIArjn7ZbgNVAT9KmzIJBxRYO0rQY+zEjOX1LRGHAs
+ w+X9+ks/ux/dCQnOLwnDczBzU83YbGOyKwkLgyPAPDnr7tIFi5yi8JbpDB0Xkqiw
+ shegoIdO3TU/cLWWOxAiy7T0udry1SJ8mJWFxX3iXtS+J+Qg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjjsktax-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:45 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c07f25de2so3244761cf.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:54:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:30 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51c21c01cf3so52885621cf.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786445685; x=1787050485; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=0ooFzW+Lv9lCiVhFwqR4/0Q/n2XWyHN2y+PA3RDrHc4=;
- b=Zh+ZNB2LbCw+gDURXxpVnYYp8YQf92qNrnsDoPpyjA/AQ+RYf5F56aMoZLZ7e4UXNT
- 22ms1CVoCIaD94vCXlrCBDn51zk8ZiZCikcOdKTsXx6SR0UXksFUIMyFeY0YFEIdytRd
- gQC3+2ahgkcLH0vhKOSByk+bBeVRs/RDA9da2sGxADc7403ltYa8UEmAyEfJ5gde63ME
- IHqjZg9iZO/L+T15gwnvrPgb5aOt2sPq4OVC4FEjfMnQaMWWk1NlGe+uhhAp4fBBCOF2
- tQwsGozVnb3v5b06+QL0sofUBatbbHRc7vpzUDJ+W3aPURP61yY7t8k3nSt/XEAK3pPe
- iYSQ==
+ d=oss.qualcomm.com; s=google; t=1786445670; x=1787050470; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=cUqiTI5VHBbOKclzTe05KNXX8nCzCrAnpabKF4IFnu0=;
+ b=Qd6r46zJH5F4plQJPmmZxerHKa+PlE7jTik9qYq7DjBXmARGqrQkBRlOHx6sQlvPcv
+ 2P1ShZdzoDGoS/8GKAYYE+A58wYAHHyQx+lWsRsxd9INzVXInNP8ok6VHBcYgikkStJ5
+ scyAwUTB1vBO13gZvlKuoJhTkCWN+3QG/6HZIy2jfrQtDbbU0OntqOO4KVOowpIsUYOi
+ Nxi1OFhSL6zkgsGD/xNXmBUm2Rj4uvz2JmX6RjYdHUx2GiP6w+dBpt2H9LzhPAzOs0ju
+ ZtjmgBrqIaPzb1V6rPJHpKYkw6mlt1Rnq90Ik3tQ1hd0K56ir54JqUu559alh9uDeCWQ
+ WWKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786445685; x=1787050485;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0ooFzW+Lv9lCiVhFwqR4/0Q/n2XWyHN2y+PA3RDrHc4=;
- b=ZfhT7pT2hDLdeVIvWnQo0KU7N2MFudpEuo4sfOdHJpJCZWhbYzp0cE3PNkEwmPceTL
- NI5LJvaqPadqRg2wEU2FYL3SoxnwRFpL8aFOCaKfFBvGU7bmAnSjkztThdP+HMh9hbf0
- eZzyURoj/stRTRPTsxhvW6Drw+ftA6iRz/uVa2FfeTFc9euBvDVrqmlvNqsYQmei4cvy
- ApLHVAdYU1b49VSI3QFOQSe1t4vxLaioFw54TrCcotqULFHtpwo51WF4FasJnBRitRg/
- uJI1u6K3x9ksKeNk02Z2GPXZomj1p2lzFkZgqifm9wkjzd6dtoh0fK+VWotTeKjEeZL4
- uXWg==
-X-Gm-Message-State: AOJu0YweFmyCUxUl6ERWpuCCEio2VAHWJBXBOcW3zpQ0ifXezN428HZE
- bcar/glfvG/766wJor7W3qws1cNfm7CO9T+7MPv9VmPXZCDMwO7TyiNe0aQs33ArUwAi8jx2tjU
- mmUXVsmns/vn3Ijh/RH9KZ2+Hp0vcJKhZ6ASyFUbq2sXfoTbLV4fjFC1iCCac60D2wA==
-X-Gm-Gg: AR+sD11I0am7v77KRinFXtNTgdk5UKZKsvG2Z932oDVcjcsXkZLYLvZYA7gN5PGNHmK
- YFrKQVjTUByNCUPAHH2NtS/oyuTYxYyZbBkB8KRh9jr/4rHx1rFtAQ3gphTjM+bzdhEd1UayajS
- 4yj3/ycog9OU5DXUnKMJrUAu5X5Kx/kz31xr9gRzXjoM9+asEOemDfHGoY5VoNVlTntFcCe115J
- ilVXgtm2W/WbBFFc8AE3xnKdTAnmVYYMjEAGS6jx5WsCe4vp3r0Vghmt2KrZnlF3o/U+4GgsSOV
- 49fj/VDUZsY8au80U626ym0mklTsVyRAHQpuGZoWzdbrmUsqd9es/xurMsO9s0zodNNi31uBO1B
- SXm/w2Fj9wQz8TQSCoZ2cde9QljOJWkwRryN/+GkMtoUzu9g=
-X-Received: by 2002:a05:622a:1314:b0:51c:844f:28da with SMTP id
- d75a77b69052e-52d584a6d54mr14264431cf.5.1786445684555; 
- Tue, 11 Aug 2026 03:54:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:1314:b0:51c:844f:28da with SMTP id
- d75a77b69052e-52d584a6d54mr14264111cf.5.1786445684087; 
- Tue, 11 Aug 2026 03:54:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786445670; x=1787050470;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=cUqiTI5VHBbOKclzTe05KNXX8nCzCrAnpabKF4IFnu0=;
+ b=g2XmHPZ46g7Ss/wClYjupUEd2jgpGJWZVHrP3/NzX/4lVabSLzPFras7MocaFSydPS
+ ERTEqojFzs/cF9+yVoVuya2IpBabvycqgL7dlnGVjqXAD+dkt0VehYWQ05mg3IpoSRFe
+ TX73RMak2+hsS7pW5PRVfDFVMc/NwEl1VNEFLpCTvpMYan1ZmwJMeTIsdeEmgBNO12Tc
+ csZdUD9X1lE2BnHfGUmzn+sj8ZCiYLVI0qznMqxHn2uL2Iu2npp79yxsjATCSrbTyxhb
+ Q26DKkc58RS1UHwZ5xxPRuroBp5iGjZhVQZPZCko3EtSxRYay9My0O3g+Rk0fR9reRjA
+ gRtQ==
+X-Gm-Message-State: AOJu0Yxj3hB10onbYVN3pBkxStRcqvvoS9FPAmnTB9FIwQBzkPT/y0cb
+ /Z+FkJmx0FG2ojDoipLo3l+B/3FDEvRIq+q3/gphGLXFVnoSWo0wkzyIwL0KTvP4xRTIoq2hGjL
+ DoieYzy9iDuYc5C7xfr2y1fU+TaN1Vmnwx+n3G6ItJ5kbPRRSHZZPwQHw9RGTMjf2Wg==
+X-Gm-Gg: AR+sD11rkFRvS2Js0JcrGZm3DwGDLsSIjbXtcL/9cYVHsoAeLeWQ+BzCG1sZLMm5e6z
+ 706D2GZAd7eWEQSjAElugKn9g7yJ/ZpACu7zwLKv55CAVZNp8TwWyA/JJIJZ082FN1UhSv3ATnT
+ KgYRoIKAOHOE4gdOuXC29jWnGUYilWFEn/6jp2kHaAR7Zah/zwvDBMFXNjJ/TqEHDe3G58lACNU
+ +Z24izZOkleYyoEWuGVQ2o6vLud7a1R1SYBUoXedGOHNOM6T6ZB50avv3zz2Mi/UHCsy7Od7Zpc
+ XlaMbIu2k2JzEpUWtNVFDiW7d7Pnn+C6L4edOZCE8fObpUGF+Rw1dYwEoKMgOKqYQexjbs2Nm10
+ tmZLrsXDPFRj5ppp+PzIrjR+Yyth1P4yxTx61y5XDcLc2x8A=
+X-Received: by 2002:a05:622a:488:b0:527:7842:72cc with SMTP id
+ d75a77b69052e-52d586751edmr14110901cf.39.1786445669632; 
+ Tue, 11 Aug 2026 03:54:29 -0700 (PDT)
+X-Received: by 2002:a05:622a:488:b0:527:7842:72cc with SMTP id
+ d75a77b69052e-52d586751edmr14110591cf.39.1786445669235; 
+ Tue, 11 Aug 2026 03:54:29 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49974146b83sm57807885e9.11.2026.08.11.03.54.42
+ 5b1f17b1804b1-49977ea5440sm18121175e9.3.2026.08.11.03.54.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 03:54:43 -0700 (PDT)
+ Tue, 11 Aug 2026 03:54:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-s390x@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
  Thomas Huth <thuth@redhat.com>, qemu-ppc@nongnu.org,
  Corey Minyard <minyard@acm.org>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 2/7] hw/s390x/virtio-ccw: Always deliver NMI to first CPU
-Date: Tue, 11 Aug 2026 12:54:20 +0200
-Message-ID: <20260811105425.7429-3-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v3 0/7] hw/nmi: Disconnect of vCPU and disentangle Monitor code
+Date: Tue, 11 Aug 2026 12:54:18 +0200
+Message-ID: <20260811105425.7429-1-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260811105425.7429-1-philmd@oss.qualcomm.com>
-References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: cpQnHejahy_rcLEOQ3vaKPJNYytbyv37
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX2BKMqdAz5fBP
- I82rgY4BfzbwaLqJ3GKIXYmxDS3P7etnK9ubUto2lFaQKFT7EW88rTGlNNpm5SqzUukyMpOKlfS
- wqNiIwxhTtMUWDuEuV6Rdq/PQFv5tFdWMGTAKv2oI/zGmZVc4caLUFD0utU9UecmNqIMDnE0XCt
- Sbkb/mfUVcCYjBUJF4+ViUfschzh1wW0clnAcYUytxPlQIPadonFFifrUEez02BwaBTiqwcMm5p
- x0Ws4QbbA4ybZuoi8FYKxt0SKC0YAJ1uQ/O6GHLMHAn9bBmAUGWZ3BIdCStWd/XzUaCLwf4OOCc
- ftmupUOjZd0l6Hea3ec+G1XOJP9TCKB2OvhYdNGpszta9Dj/W1vY/4mPGCrtOB2YC2RMF7oN3nG
- SAQDpiW/qaOBFu2fI1qW5VLww6jAzfCA+xe6rgJJXQzPl7mg0lsuUDc+fFO16Y/QD/vrR6vNtcF
- j7MA22ngouCDFm8TVzw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX4htn8FnkNtOo
- YKRISGJsMuHDD+5boJqVn1iLvOwwms1SkhRqPbJLUgQX+NOU+IKtPrSe6rwDhsou0GtB1bOwyaA
- 7M3wTr6nZmO/AdvFNsa0HxnAZOKrJV4=
-X-Proofpoint-ORIG-GUID: cpQnHejahy_rcLEOQ3vaKPJNYytbyv37
-X-Authority-Analysis: v=2.4 cv=brt8wkai c=1 sm=1 tr=0 ts=6a7aff75 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX13XlGhRijB71
+ ZqAn+10lLhi8NazqtP7MRqt9BiBq11n/WpRXXTajTm0hxATiqusksr7kQgMsEaT3pMXUzp1V8mK
+ sGv0aWpysVHaMG8td9kwQZiPSWWoPYU=
+X-Proofpoint-GUID: NdD2Dt6NcRMajHNuBBZXBRJlAGq0fYKA
+X-Proofpoint-ORIG-GUID: NdD2Dt6NcRMajHNuBBZXBRJlAGq0fYKA
+X-Authority-Analysis: v=2.4 cv=cfDiaHDM c=1 sm=1 tr=0 ts=6a7aff66 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ON7NdJYOkfl7qig6nyMA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=mWcDCmz362VFAI59eIAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX0B4hRPfOfbzW
+ HxhdH/7jqGXdXgmoZk+gtS56npCYGLK1XqUZe0fo4Odsw1wrR0MU9c23vGpkXcyVwp++h9/mvON
+ 2GzolEwB+3EmzJiMcDdbaDPWgwSiJNIjhoS3iGC1S+8hICic7NTxnibnPsXGmeWgWCPLhY46Zyz
+ BVFQ7ubSjKC7m22V2dEnp8GDS42MpXr7madeMrUgd82N96CRWoMBi9vwjBch73YoTBssQHEHy79
+ qYCSi+plg+U1W9QAkO6+TRvRl7Tc3HiNgxraSM4MMjRWEOBewiRhBYVZQGxYUm8MktsEgo6tSGM
+ /0/qU4kPS7mWr6nHJnrT/aigZQ82T3msGEgK3tPhZ+MlLMTqPRhX+WgsnY2XF58x2Lta8aa7jI0
+ 9GVI5VlY7NuICrY3RC5lh4O6K75P8AO3XfSdwGdiGtJWm5bcFnhFkG12DXRv0sh0TP3ihGt9iiK
+ zysZXu5S//FA2ew62SA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-11_01,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 adultscore=0 clxscore=1015 suspectscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608110090
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,82 +149,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+- Have s390x always deliver NMI to the first CPU.
+- Remove the @cpu_index / @errp arguments from handler.
+- Rename API as nmi_trigger() (since not monitor specific).
+- Only deliver NMI once
 
-We can trigger NMI from HMP or QMP.
+Rationale described by Peter in v1 [*]:
 
-QEMU maps the NMI to the s390x per-CPU 'RESTART' interrupt.
-Linux guests usually setup this interrupt to trigger kdump
-or crash. Such crashdump can be triggered in QEMU by HMP
-"nmi" or QMP "inject-nmi" commands.
+> The current hw/core/nmi.c code is a bit odd because it's partly
+> working with a cpu_index and partly not: the code passes cpu_index
+> around, but in practice for the QMP command the user can't set
+> which CPU to operate on, and for everything except s390 the
+> implementation doesn't care anyway. My impression from the IRC
+> discussion is that it's not really necessary for the S390 that
+> the monitor user be able to specify which CPU to NMI (and in any
+> case you can only do that from the HMP command, not the QMP
+> command, AIUI), so getting rid of that weird inconsistency makes
+> sense to me: and that's what this patchset is doing.
 
-Using QMP, since we can not select a particular CPU, the first
-CPU is used (CPU#0). See the documentation from commit 795dc6e4
-("watchdog: Add new Virtual Watchdog action INJECT-NMI"):
+[*] https://lore.kernel.org/qemu-devel/CAFEAcA_0qUFW0MewHC+v+pSOisE-kQDt9Wv4F3RafEkyQ0DGJA@mail.gmail.com/:
 
-  @inject-nmi: a non-maskable interrupt is injected into the
-               first VCPU (all VCPUS on x86) (since 2.4)
+Philippe Mathieu-Daudé (7):
+  hw/nmi: Use object_child_foreach_recursive() in nmi_children()
+  hw/s390x/virtio-ccw: Always deliver NMI to first CPU
+  hw/nmi: Remove @cpu_index argument from
+    NMIClass::nmi_monitor_handler()
+  hw/nmi: Remove @cpu_index argument from nmi_trigger()
+  hw/nmi: Rename nmi_monitor_handler() -> deliver_nmi()
+  hw/nmi: Remove unused @errp argument from deliver_nmi()
+  hw/nmi: Deliver NMI only once
 
-While we can select a particular CPU on HMP, the guest behavior
-is expected to be the same if using CPU #N or CPU #0. Since
-always using CPU#0 simplifies API maintainance, update s390_nmi()
-to deliver NMI to the first CPU.
+ qapi/run-state.json        |  6 +++--
+ include/hw/core/nmi.h      | 32 +++++++++++++++++++++++++--
+ hw/core/nmi.c              | 45 ++++++++++----------------------------
+ hw/hppa/machine.c          |  4 ++--
+ hw/i386/x86.c              |  4 ++--
+ hw/intc/m68k_irqc.c        |  4 ++--
+ hw/ipmi/ipmi.c             |  3 +--
+ hw/m68k/q800-glue.c        |  4 ++--
+ hw/misc/macio/gpio.c       |  4 ++--
+ hw/ppc/pnv.c               |  4 ++--
+ hw/ppc/spapr.c             |  4 ++--
+ hw/s390x/s390-virtio-ccw.c |  8 +++----
+ hw/watchdog/watchdog.c     |  2 +-
+ system/cpus.c              |  2 +-
+ hmp-commands.hx            |  2 +-
+ 15 files changed, 66 insertions(+), 62 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- qapi/run-state.json        | 6 ++++--
- hw/s390x/s390-virtio-ccw.c | 4 +---
- hmp-commands.hx            | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index a5771ad4681..e4fdead1e0b 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -317,8 +317,10 @@
- #
- # @none: nothing is done
- #
--# @inject-nmi: a non-maskable interrupt is injected into the first
--#     VCPU (all VCPUS on x86) (since 2.4)
-+# @inject-nmi: a non-maskable interrupt is injected (machine
-+#     specific: for example on s390x CCW only the first vCPU
-+#     receives the NMI, but on x86 machines all vCPUs receive
-+#     it).  (since 2.4)
- #
- # Since: 2.1
- ##
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 25a9fa49554..4f7861dbbb7 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -727,9 +727,7 @@ static HotplugHandler *s390_get_hotplug_handler(MachineState *machine,
- 
- static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
- {
--    CPUState *cs = qemu_get_cpu(cpu_index);
--
--    s390_cpu_restart(S390_CPU(cs));
-+    s390_cpu_restart(S390_CPU(first_cpu));
- }
- 
- static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d9..3aa159f11ce 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -870,7 +870,7 @@ ERST
-     },
- SRST
- ``nmi`` *cpu*
--  Inject an NMI on the default CPU (x86/s390) or all CPUs (ppc64).
-+  Inject an NMI.
- ERST
- 
-     {
 -- 
 2.53.0
 
