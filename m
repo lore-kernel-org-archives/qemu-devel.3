@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91795C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 862D5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 19:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtrtW-0001aS-Ew; Tue, 11 Aug 2026 15:12:14 -0400
+	id 1wtrx4-0002H9-E2; Tue, 11 Aug 2026 15:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrtV-0001aA-8S; Tue, 11 Aug 2026 15:12:13 -0400
-Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrtT-0001P0-I4; Tue, 11 Aug 2026 15:12:13 -0400
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 474B71400141;
- Tue, 11 Aug 2026 15:12:10 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-12.internal (MEProxy); Tue, 11 Aug 2026 15:12:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786475530; x=1786561930; bh=T5AyB0ah59LGJZdySV6J4dpGz0cOZmaR
- LEGnRgE3Gxk=; b=MyOYaAOrBbr7I7MVVYq3YT/feY3fSwvek4WXdWnc0/alLeFX
- VsqCSn+RWCd4zHtEa+TsilBJ1mPGhd1qtEtKx/aXMTjqodf9/3uRIUpznyKdJIsi
- 2FYen+WBJefhj3128K3I5c1SIk1ggTdPIkaZ2JXQxIG0AkLLlCVvGV37w0MvK4lH
- TLdY0xP6QkirJ7UHlbecobzDK/NNbdM9+o0g6sjsEKfQnSgVYguj8IQk1iPXySpE
- x/UWZfa9oLmBM+wEikoqIqgq7+uufBqGNkX0FA08AqMnNFE4EmTQAtAGic7DaIF+
- JL2+wgBWwpTwVQzciWJhQQsCXX5l7PDt6cWlQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786475530; x=
- 1786561930; bh=T5AyB0ah59LGJZdySV6J4dpGz0cOZmaRLEGnRgE3Gxk=; b=A
- x4BDiRuvblEhFwC9oMFfIGq6U18HzL20ey0HurNPdI7i1vxO7KJWf+sr2AtR8PVQ
- vnnSvmfVk6wV62QkDwzEzCXYCCjPznFEpCp76fIWBiLsbnc4HcGQAjPYmPcFtR0o
- ac17yVaLJpnhPDls1c2IR7rzMgtiZsyv1O9m09WvwosPH9PxMm4VwqZqXcugTH5R
- PricdzYcn3I1n4OqMVjBi9fg7A/b19ss8EtZET4u647H98BGUrr6TyHi4RzDHmsT
- 7y29+9hyb2M0sR+CNO08pEtXUP01y3l+7ePncbfDUuov4945Gd+MgCRt3/O1uGEU
- b+F3NISqiQiUkG43w1iwg==
-X-ME-Sender: <xms:CHR7ahF_5cmexVme2zYcHc0K7v2gtPpAz3L1Z5miy1jnfW0aXjdwIw>
- <xme:CHR7as3_-W3tGvHiGJzIC4_ZbpYTEMHuG-fG74qQGqlsuqrJ6JrrNPGHIVugILYRU
- lxHsgWxSXIk4fxNhrFVJJiPzubm5yrTWcpWyaTF1-d9XSxVIAfJalk>
-X-ME-Received: <xmr:CHR7ahIjKp-1ee_KmdLUok_j0D6RN9MNk9ZCIkmD-J1u5u22Yji3kg4rJfEzvryzAxb8HA>
-X-ME-Proxy-Cause: dmFkZTFxT514kitKIdGOhXPEiLUJyDOYCZHOcJCRAOs4iYG0U2+eCRfL4rAqpKWp8tzCCR
- q4/lWng/GUxRzf9jB8M/gjcbSNH7eBBgrAogeCEgch6IlePQaIL0umnHG/4whnLqGUmuy5
- 1XdTh9EINXUFcqBkSrcRd4KWJy/1VXgYkKm79H+kfjltKRZGpszgKqB3IkB6CgkqF8tCy2
- jsy1lIEvkV1EEPh9/pUxL/otB0LPqMrUwAmiwxGR2Ra692PFMY1lFEqTjfz5RAU50SIG8D
- xmiQGo+9OVLBswG+iD05AtJTyIG+c7MwK1B/aqlQzng5u8kS9bH1KGD3FbmzwO26hvsVRw
- Z6366wPlbzggFQCN3X45CYElNf1Vlib0mxY05nQMxvEb0OVm5KH6VWOVJJdIoiUGlVgf/S
- gWPWCp/7O4C2pYXn1ThdjQLYHNp9VG2QtFHnXwOv+Audx1AObL3Ja1IdCnV8xekts3LRE2
- 5mFup66EdGobShrC+DljQDvO1YCa07ADu3pGZxE9WdI7LPdzTrN6+T59GMonHo1sdWdtmi
- e1QaQr53+V9sVPpliFAtVZxmx8e5UMzy4u+z23MuzrgXG495AW0G0kfAEX6SpzIJK/WegO
- p79F75RnrSkL/R1xR2DKptMJjWbUkFsIbGZPAV+gXEPhsUihC8d3HMZnvNVw
-X-ME-Proxy: <xmx:CHR7ap1mtZ7fsiNK7S8H56tA4pjF6-UUd-becIp38EsViE3STmr48A>
- <xmx:CHR7atmhF8aqF6UlhmUWk1KD3dVF8vLBC_LrfVyqNC3Df6hqa_pbqA>
- <xmx:CHR7asjSSpMZdS08nspuWDTHk16cDgGL-ezXdBecNr20nAgLJ18uQg>
- <xmx:CHR7asS8Enihx_FpQd53OepPzLiXmVohCmTEaZrZ28_6AiK9EHfvEg>
- <xmx:CnR7avhSoGd271d7eZKBUXgAZcfC6TSHiHZwVW0GpxRP8ah0ziLNJ8nD>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 15:12:08 -0400 (EDT)
-Message-ID: <972c0983cab48890a0b089a5ccc9ba0c2b04bc32.camel@alistair23.me>
-Subject: Re: [PATCH v3 0/3] riscv: Add K230 DW 8250-compatible UART
-From: Alistair <alistair@alistair23.me>
-To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?ISO-8859-1?Q?Marc-Andr=E9?=
- Lureau	 <marcandre.lureau@redhat.com>, Chao Liu
- <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, Alistair
- Francis <alistair.francis@wdc.com>, Weiwei Li	 <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, Fabiano Rosas
- <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>
-Date: Wed, 12 Aug 2026 05:12:07 +1000
-In-Reply-To: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
-References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wtrwx-0002FP-Ei
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:15:48 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wtrwt-000286-TD
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 15:15:47 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38e07ebd263so200461a91.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 12:15:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786475742; x=1787080542; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=FWe3uPbG8QTQeWcNC7hsaTPyUcsTnfL69Da5dCKR/IM=;
+ b=iVkcxKblc5kjxWW9eHxhYcw0KeCh3pPpoSL5+Q9T1ytx6sJC7kI3id36bhE/TCKefR
+ WLfLUUSC2m56C79/Sng1UdM8iZ+4zm3V7uOFxFSoHJkMImZorRKMuXXNhyJY2NVR91Wi
+ koI8r7hsQdKsQdXj3X++Xkq+5YNQD9dhnfZ+RMT75yo00A/Srpe56QAuz5u+XbznV57P
+ 4RUWQLGMsNdsZIehbJ7f7y8P8fpmcogBEE/KKP8p/k7f0y/SsSk98CeWuGWRiPEseEwi
+ OvhjrsMRlP13fn3oWAxpu1py0Uy3bOH+s3o2f5/435DQnMW5Wzf/OtSNdc9EdE9P5j3z
+ SDvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786475742; x=1787080542;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=FWe3uPbG8QTQeWcNC7hsaTPyUcsTnfL69Da5dCKR/IM=;
+ b=oSdIDLk95Zfe15s/Q+rHPWp+gF7EbDPId1TSfncz94I/eNYYXIgQIMotpkBCCsPCEg
+ p1mKbfeG+8t2mFAOZLc6G4KOZYTBODLc6I+hbZ5a6ZiRIvRr+gzYWv9LcdIlmBRrss69
+ uwE6FYR+9EXwa1T+DybSOzoMGk2qnThWGb4wO/M/x7qs3lrJrJvQEJKYj57+crt5UzJD
+ IUwkywaJf9QwU/O1Nt+2M5Qqe/EvtLJutlppE40hE7nkOzsQMgiZ4QM4RF+iA4SJzYd1
+ DXAO2jlS+pQHn+0jEOmDhzF9nJyaAM/3LhHVL0L73aiB4I5EhlnzRWwPYO0FNXg/F6cF
+ SW8Q==
+X-Gm-Message-State: AOJu0Yznevx0/AXSBabXX0nBwWDxmMdwsGy+PX6URW9b7VC97kHJrJL0
+ V49rNgxF0gTIpm2gGQ7vFHA4Vqrv03uxjhkriFP9j1+smpYxPGu1dctIiCAJb5Q6vh/3Zc0aWGm
+ mike6
+X-Gm-Gg: AR+sD12M0V7uRHC3PyiGDQuwtnSMpl0OkuVZErZ6Pb8K5QfxuOHnpSDhHhXADW59KaN
+ TgzJSrSFMloItgtFeSsfTa7dT57i4AIkscVY3JmRtTJ7qUngTzgbkI2oWH0rm97q2AM3jAkZJpA
+ WTZT+T/DBB6I1v+8grzS3ImdROqqqBXeMaeaZ1D7FxCLPAPaKXBO7ffUSGg+X9TSTUxBSxehdA0
+ 9pCpHH+y8IOcAP019Iq/eovzTfmsZutUsOsUxicoijOn1Cj+BVPjaDHkeraHvU4jCO8AqY0IwjW
+ xKl7rIZYNd9zi0jB26YEHxcRw7NVe8qRF+SHJtLnJYg2CSwVB8adwkIFbdKLzMzq36L4VU0QYLg
+ u/Gov8ZwI/ksJXTbYGgnI++QKx8KS95Ligd294GH7KP0AhMLAcfxfClhcvgFzbpg3InFY+QsJ/7
+ TWrZY8rp8Ix3AqFXfUD4yfs2aTTf1y9c3N8MfNEC+/vTa1ItWwbDI3/yZ6nv11WPXDEF1hvM0VR
+ O8ngcujXNabRPA2iTWT0yAKU/DHKKk=
+X-Received: by 2002:a17:90b:180c:b0:383:f52b:d616 with SMTP id
+ 98e67ed59e1d1-392ec5b6b8amr5463314a91.10.1786475741991; 
+ Tue, 11 Aug 2026 12:15:41 -0700 (PDT)
+Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-392f97fc409sm209668a91.1.2026.08.11.12.15.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 12:15:41 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: yang.yanjun1@sanechips.com.cn,
+	qemu-arm@nongnu.org
+Subject: [PATCH v2 1/3] tcg: Export tcg_gen_ussub_i{32,64,tl}
+Date: Tue, 11 Aug 2026 12:15:38 -0700
+Message-ID: <20260811191540.79882-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260811191540.79882-1-richard.henderson@linaro.org>
+References: <20260811191540.79882-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.156;
- envelope-from=alistair@alistair23.me; helo=fhigh-a5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,59 +102,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2026-08-08 at 10:32 +0800, WX Chen wrote:
-> This series adds a QEMU model for the K230 SoC DesignWare 8250-
-> compatible
-> UART controller, wires it into the K230 SoC, and adds qtest coverage.
->=20
-> The implementation supports the registers and features required by
-> the
-> Linux 8250_dw driver, providing an interactive shell over the serial
-> port.
->=20
-> Signed-off-by: WX Chen <wxchen0913@gmail.com>
-> ---
-> Changes in v3:
-> - Removed all hardwired preprocessor #if conditionals from the logic
-> - Added a helper for the receiver line status interrupt check
-> - Encapsulated CPR and UCV register values in header macros
-> - Replaced g_usleep() with qtest_clock_step() in the qtest
-> - Link to v2:
-> https://lore.kernel.org/qemu-devel/20260725-feat-k230-uart-v2-v2-0-d5fe82=
-c47c28@gmail.com
->=20
-> ---
-> WX Chen (3):
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/char: add K230 DW 8250-compatible UART
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv: k230: connect DW 8250 UART
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tests/qtest: add K230 UART test
+Move from tcg-op-gvec.c to tcg-op.c.
+Use a temporary, to cover the possibility of operand overlap.
 
-Thanks!
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/tcg/tcg-op-common.h |  2 ++
+ include/tcg/tcg-op.h        |  2 ++
+ tcg/tcg-op-gvec.c           | 14 --------------
+ tcg/tcg-op.c                | 20 ++++++++++++++++++++
+ 4 files changed, 24 insertions(+), 14 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index 1fe342db0d..c7d1529c4f 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -163,6 +163,7 @@ void tcg_gen_smin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
++void tcg_gen_ussub_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_abs_i32(TCGv_i32, TCGv_i32);
+ 
+ /* Replicate a value of size @vece from @in to all the lanes in @out */
+@@ -274,6 +275,7 @@ void tcg_gen_smin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
++void tcg_gen_ussub_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_abs_i64(TCGv_i64, TCGv_i64);
+ 
+ /* Replicate a value of size @vece from @in to all the lanes in @out */
+diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+index 96a5af1a29..40ce17eed2 100644
+--- a/include/tcg/tcg-op.h
++++ b/include/tcg/tcg-op.h
+@@ -149,6 +149,7 @@ typedef TCGv_i64 TCGv;
+ #define tcg_gen_umin_tl tcg_gen_umin_i64
+ #define tcg_gen_smax_tl tcg_gen_smax_i64
+ #define tcg_gen_umax_tl tcg_gen_umax_i64
++#define tcg_gen_ussub_tl tcg_gen_ussub_i64
+ #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i64
+ #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i64
+ #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i64
+@@ -268,6 +269,7 @@ typedef TCGv_i64 TCGv;
+ #define tcg_gen_umin_tl tcg_gen_umin_i32
+ #define tcg_gen_smax_tl tcg_gen_smax_i32
+ #define tcg_gen_umax_tl tcg_gen_umax_i32
++#define tcg_gen_ussub_tl tcg_gen_ussub_i32
+ #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i32
+ #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i32
+ #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i32
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index bc323e2500..27f3807b00 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -2399,20 +2399,6 @@ void tcg_gen_gvec_usadd(unsigned vece, uint32_t dofs, uint32_t aofs,
+     tcg_gen_gvec_3(dofs, aofs, bofs, oprsz, maxsz, &g[vece]);
+ }
+ 
+-static void tcg_gen_ussub_i32(TCGv_i32 d, TCGv_i32 a, TCGv_i32 b)
+-{
+-    TCGv_i32 min = tcg_constant_i32(0);
+-    tcg_gen_sub_i32(d, a, b);
+-    tcg_gen_movcond_i32(TCG_COND_LTU, d, a, b, min, d);
+-}
+-
+-static void tcg_gen_ussub_i64(TCGv_i64 d, TCGv_i64 a, TCGv_i64 b)
+-{
+-    TCGv_i64 min = tcg_constant_i64(0);
+-    tcg_gen_sub_i64(d, a, b);
+-    tcg_gen_movcond_i64(TCG_COND_LTU, d, a, b, min, d);
+-}
+-
+ void tcg_gen_gvec_ussub(unsigned vece, uint32_t dofs, uint32_t aofs,
+                         uint32_t bofs, uint32_t oprsz, uint32_t maxsz)
+ {
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index bbcb510c76..4d15d1abbd 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -1264,6 +1264,16 @@ void tcg_gen_umax_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
+     tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, b, a);
+ }
+ 
++void tcg_gen_ussub_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
++{
++    TCGv_i32 t = tcg_temp_ebb_new_i32();
++    TCGv_i32 z = tcg_constant_i32(0);
++
++    tcg_gen_sub_i32(t, a, b);
++    tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, z, t);
++    tcg_temp_free_i32(t);
++}
++
+ void tcg_gen_abs_i32(TCGv_i32 ret, TCGv_i32 a)
+ {
+     TCGv_i32 t = tcg_temp_ebb_new_i32();
+@@ -2433,6 +2443,16 @@ void tcg_gen_umax_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
+     tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, b, a);
+ }
+ 
++void tcg_gen_ussub_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
++{
++    TCGv_i64 t = tcg_temp_ebb_new_i64();
++    TCGv_i64 z = tcg_constant_i64(0);
++
++    tcg_gen_sub_i64(t, a, b);
++    tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, z, t);
++    tcg_temp_free_i64(t);
++}
++
+ void tcg_gen_abs_i64(TCGv_i64 ret, TCGv_i64 a)
+ {
+     TCGv_i64 t = tcg_temp_ebb_new_i64();
+-- 
+2.43.0
 
-Alistair
-
->=20
-> =C2=A0hw/char/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +
-> =C2=A0hw/char/k230_uart.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 816
-> +++++++++++++++++++++++++++++++++++++++++++
-> =C2=A0hw/char/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0=C2=A0 1 +
-> =C2=A0hw/riscv/k230.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 33 +-
-> =C2=A0include/hw/char/k230_uart.h=C2=A0 | 198 +++++++++++
-> =C2=A0include/hw/riscv/k230.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=
- 6 +-
-> =C2=A0tests/qtest/k230-uart-test.c | 514 +++++++++++++++++++++++++++
-> =C2=A0tests/qtest/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=
- 2 +-
-> =C2=A08 files changed, 1559 insertions(+), 14 deletions(-)
-> ---
-> base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
-> change-id: 20260808-feat-k230-uart-v3-0ff3651d70ef
->=20
-> Best regards,
 
