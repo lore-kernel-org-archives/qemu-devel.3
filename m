@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E812C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 930A4C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpNS-0000P9-0S; Tue, 11 Aug 2026 12:30:58 -0400
+	id 1wtpNx-0002Jf-Tl; Tue, 11 Aug 2026 12:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNN-0000Hx-5z
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNS-0000Qn-VG
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNL-0000fj-7m
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNR-0000hh-Aw
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465850;
+ s=mimecast20190719; t=1786465856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ufOlKYvDB40bcwQ0U1VfIshOxC3uJvN4gkjEhDi7DY4=;
- b=OGHUb+Qzc1r7jgb/XAXvt4NXUNLdva2OoxxBGim+ny0yPgPZ9eirwmg0GFTPwVBsYRtc+b
- uel93wbJsSAGvkpyE6JpxHJBh/1HeRSDsD7ki8PsCAA2NGYnU1tgrfY6K6dEKwGwUTz00M
- Fuv6INh9fii3K+x/UcSb8VmHilm9NCw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/aHR2aX7Yht0pPy3X2g+G97Gsg17VR/tIqg918ZiZ8Y=;
+ b=TR/hqlSTFxDbcaFN3y/CAdIXqISSvEkzqrLTT80NjhDKtwGtC3F72Bk7Z4Q1LNQ+qP29Uc
+ BL/aMrgd5VRM89mfz7twTGyhxkgdrzAmsQ/Q9NQcJjfh9zLbO1xkpdWJ7yb+O7R2gf3Vwn
+ r3hvaTTF+5cNwBMcWbbi+tBwmz1GUmc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-yCh6SVAPOM-sKwK2lDg_CA-1; Tue,
- 11 Aug 2026 12:30:49 -0400
-X-MC-Unique: yCh6SVAPOM-sKwK2lDg_CA-1
-X-Mimecast-MFC-AGG-ID: yCh6SVAPOM-sKwK2lDg_CA_1786465848
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-NHAFCp5cMliObNpaByxRkQ-1; Tue,
+ 11 Aug 2026 12:30:53 -0400
+X-MC-Unique: NHAFCp5cMliObNpaByxRkQ-1
+X-Mimecast-MFC-AGG-ID: NHAFCp5cMliObNpaByxRkQ_1786465852
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AD00195609E; Tue, 11 Aug 2026 16:30:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 367F91956063; Tue, 11 Aug 2026 16:30:52 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0316195DF91; Tue, 11 Aug 2026 16:30:46 +0000 (UTC)
+ id BBAE9195DF96; Tue, 11 Aug 2026 16:30:50 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 30/83] tests/qtest: adc128d818: test limit interrupts
-Date: Tue, 11 Aug 2026 18:28:45 +0200
-Message-ID: <20260811162938.1403216-31-clg@redhat.com>
+Subject: [PULL 32/83] hw/arm/aspeed: anacapa: use ASCII in comments
+Date: Tue, 11 Aug 2026 18:28:47 +0200
+Message-ID: <20260811162938.1403216-33-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,155 +86,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-Cover per-channel high- and low-limit interrupt status, the
-INT_CLEAR bit gating the monitoring loop, and the temperature
-high-limit alarm with hysteresis.
+The anacapa machine source contains a few comments using the U+2014 EM
+DASH character. Replace them with plain ASCII hyphens so the file stays
+ASCII-only.
 
 Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-Link: https://lore.kernel.org/qemu-devel/20260707091609.97759-5-emmanuel.blot@free.fr
+Link: https://lore.kernel.org/qemu-devel/20260707091609.97759-8-emmanuel.blot@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/adc128d818-test.c | 121 ++++++++++++++++++++++++++++++++++
- 1 file changed, 121 insertions(+)
+ hw/arm/aspeed_ast2600_anacapa.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
-index 891189f0bd8c..3e3fabb8d9f1 100644
---- a/tests/qtest/adc128d818-test.c
-+++ b/tests/qtest/adc128d818-test.c
-@@ -330,6 +330,123 @@ static void test_ext_vref(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(reading, ==, 0x8000);
+diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
+index a1c8111a9344..bd6cc0068602 100644
+--- a/hw/arm/aspeed_ast2600_anacapa.c
++++ b/hw/arm/aspeed_ast2600_anacapa.c
+@@ -242,7 +242,7 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+     /* &i2c1 */
+     /* eeprom@50 */
+     at24c_eeprom_init(i2c[1], 0x50, 256 * KiB);
+-    /* i2c-mux@70 (PCA9546) — 4 channels, empty */
++    /* i2c-mux@70 (PCA9546) - 4 channels, empty */
+     i2c_slave_create_simple(i2c[1], TYPE_PCA9546, 0x70);
+ 
+     /* &i2c4 */
+@@ -259,7 +259,7 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+     i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
+ 
+     /* i2c8mux ch0 */
+-    /* adc128d818@1f — no model */
++    /* adc128d818@1f - no model */
+     /* pca9555@22 */
+     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
+                             TYPE_PCA9552, 0x22);
+@@ -305,7 +305,7 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+     /* i2c-mux@71 (PCA9548) */
+     i2c_mux = i2c_slave_create_simple(i2c[11], TYPE_PCA9548, 0x71);
+ 
+-    /* i2c11mux ch0-ch4 — empty */
++    /* i2c11mux ch0-ch4 - empty */
+ 
+     /* i2c11mux ch5 */
+     /* pca9555@22 */
+@@ -328,7 +328,7 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+                           hpm_brd_id_eeprom, hpm_brd_id_eeprom_len);
+ 
+     /* i2c13mux ch7 */
+-    /* nfc@28 — no model */
++    /* nfc@28 - no model */
  }
  
-+/* Interrupt status set on limit violation; persists while fault remains */
-+static void test_interrupt_status(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    g_test_message("Set ch0 high limit = 0x10");
-+
-+    qmp_adc128d818_set("ain0", 2560);
-+    g_test_message("Injected ain0 = 2560 mV (exceeds limit)");
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS = 0x%02x (expect bit 0 set)", status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after re-read = 0x%02x (expect bit 0 still set)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+
-+    qmp_adc128d818_set("ain0", 80);
-+    g_test_message("Injected ain0 = 80 mV (within limit)");
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after fault cleared = 0x%02x "
-+                   "(expect bit 0 clear)", status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* INT_CLEAR stops the round-robin monitoring loop */
-+static void test_int_clear(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
-+    qmp_adc128d818_set("ain0", 2560);
-+
-+    i2c_set8(dev, REG_CONFIG,
-+             CONFIG_START | CONFIG_INT_ENABLE | CONFIG_INT_CLEAR);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS with INT_CLEAR set = 0x%02x (expect 0x00)",
-+                   status);
-+    g_assert_cmphex(status, ==, 0x00);
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS after INT_CLEAR cleared = 0x%02x (expect bit 0)",
-+             status);
-+    g_assert_cmphex(status & 0x01u, ==, 0x01);
-+}
-+
-+/* Low-limit interrupt triggers correctly */
-+static void test_low_limit(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 3u, 0x80);
-+    g_test_message("Set ch1 low limit = 0x80");
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 5u, 0x80);
-+    g_test_message("Set ch2 low limit = 0x80");
-+
-+    qmp_adc128d818_set("ain1", 640);
-+    qmp_adc128d818_set("ain2", 1280);
-+    qmp_adc128d818_set("ain0", 1280);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("INT_STATUS = 0x%02x (expect bits 1 and 2 set)", status);
-+    g_assert_cmphex(status & 0x02u, ==, 0x02);
-+    g_assert_cmphex(status & 0x04u, ==, 0x04);
-+
-+    g_assert_cmphex(status & 0x01u, ==, 0x00);
-+}
-+
-+/* Temperature high-limit interrupt with hysteresis */
-+static void test_temp_hysteresis(void *obj, void *data,
-+                                 QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+    uint8_t status;
-+
-+    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
-+
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u, 0x32);
-+    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u + 1u, 0x28);
-+
-+    qmp_adc128d818_set("temperature", 25000);
-+    i2c_set8(dev, REG_CONFIG, CONFIG_START);
-+
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("25 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+
-+    qmp_adc128d818_set("temperature", 55000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("55 C: INT_STATUS = 0x%02x (temp bit expect set)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 45000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("45 C (hysteresis): INT_STATUS = 0x%02x "
-+                   "(temp bit expect set)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x80);
-+
-+    qmp_adc128d818_set("temperature", 35000);
-+    status = i2c_get8(dev, REG_INT_STATUS);
-+    g_test_message("35 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
-+    g_assert_cmphex(status & 0x80u, ==, 0x00);
-+}
-+
- static void adc128d818_register_nodes(void)
- {
-     QOSGraphEdgeOptions opts = {
-@@ -354,5 +471,9 @@ static void adc128d818_register_nodes(void)
-     qos_add_test("temperature-edges", "adc128d818", test_temperature_edges,
-                  NULL);
-     qos_add_test("ext-vref", "adc128d818", test_ext_vref, NULL);
-+    qos_add_test("interrupt-status", "adc128d818", test_interrupt_status, NULL);
-+    qos_add_test("int-clear", "adc128d818", test_int_clear, NULL);
-+    qos_add_test("low-limit", "adc128d818", test_low_limit, NULL);
-+    qos_add_test("temp-hysteresis", "adc128d818", test_temp_hysteresis, NULL);
- }
- libqos_init(adc128d818_register_nodes);
+ static void aspeed_machine_anacapa_class_init(ObjectClass *oc,
 -- 
 2.55.0
 
