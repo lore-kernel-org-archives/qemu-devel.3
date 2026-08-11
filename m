@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DEDC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FBA8C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 10:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtk8P-0008Ll-3o; Tue, 11 Aug 2026 06:55:05 -0400
+	id 1wtk8O-0008LB-Ev; Tue, 11 Aug 2026 06:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtk8N-0008Jm-DU
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:55:03 -0400
+ id 1wtk8M-0008JN-UR
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:55:02 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wtk8L-00009H-GX
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:55:03 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wtk8K-00008q-20
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 06:55:02 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67BAMYHc037442
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:55:00 GMT
+ 67BALVb0338595
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 45O5ZPkXnN4lR6w4tP5RI9h0AD+uvfX9nj+VXuvU+5c=; b=S19YzL3zy1XujhE0
- Uud+lE/81M3SUk526XQLiqkoj39BJIaaU3adnvd5zDI8Ui6yP0GuhY0avM9pTYC7
- wiZgDDgP1a1s6IjiyIi/FDoqOM6bClhe30NhwKGDH14cMHllUxAE9FCRXHOVlDh1
- OE+DBib9115FpXZsjRzq7o4jTh2vqh7GA7Pq8yWAwnBtPVEcs08lp/c7k75tHYLD
- WSWUAMwIKiRpBURjCebwmFOJsDPt66AqzxhdQQALMsZhRC5z4stUXilz5l2tnvd1
- 2eylVV6XXXOyZSMX6gtOl0WXIoeCXCsq0l9T84+U5HXviTAQMnBsRnq7MNTuK8h4
- QSpRvg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4fyjk63q8f-1
+ XgdgW8FHpQY7YzIFnfakjsIyt0J+i7IP25N5DI75/PE=; b=H0JL+lgs6MhQ1tQN
+ Pp307qtcLPVuluhvTosceEtzMvvnt9VkXmxERWWjdeffFWDyT55EmSSrcB0uYwY6
+ PC0wLhVBSuVWahbxMj3oG874B88eO8gSsEfajpFVN4zDONhoWVsUOHPRPFVpHYHF
+ PxOxPt8nokfrnBxcqq4DGkusvAGYoJeI7zKvNemlQ/lh5nN74/IEiW9ZBAQe7g5Y
+ verJ6g8r3bYVI5qjEzNl2j6frkc+wzqVBKyfnNS6YUqIivO5HlbmV8v5Vw6MiPGk
+ gbOnAxv3aeqX93hhHTSAb7T5NSCaY5IoXMOxjpPQWrdeSBMsmeTR+gE6loRQ8Ibw
+ YMySYg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g01nc05bg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:55:00 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52827090cc5so11366951cf.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:55:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 10:54:52 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52769fc3f2eso37818271cf.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 03:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786445700; x=1787050500; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786445692; x=1787050492; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=45O5ZPkXnN4lR6w4tP5RI9h0AD+uvfX9nj+VXuvU+5c=;
- b=dpgkuDjKj3+VsC4+Klt2qswyaWhHdyKSK6v7vAzCzMW6TrBQgHSBg8uYJgRbk989+m
- aallTHyK48HDTxcQqZavglkcDiXCBptrTbbtVGpukjpWB4oSmrqvQhNy0bmZ1DwVsym+
- vij53fdY0pIbEBj+6kYRnwBSK0l/qKe2xQUVe0TWvlRa7B622ZoV2akqcaDykBysubyw
- I1FvK+Yy/9ESfF1UpAOafYOI8xilqAYvznAo2VupUD+cK3hg8P8QgviVjjZPERbT/PB0
- yUdIcwGr7RN+hpY2q6LYWoIqReR6xgdVU9MjLlZzH9svai9vkyzgf72s6RyJ1PAqh1RA
- MUJQ==
+ bh=XgdgW8FHpQY7YzIFnfakjsIyt0J+i7IP25N5DI75/PE=;
+ b=WCBczY7DU+Rew8aUsK4lKkc79SJHenkuzacNo+WkrLmXOkQ04Wx1+T6pOUO+JfhYwb
+ W99rCX9Yq3XaUCoYFZbLN2Ulyl2oGDbP33tsQ0iUjFRyDb1e34mKuUpXtY8Qs+sl5b1V
+ j3lRBE1hQQqvN0AgdQbI006/7MGHEeiPDHV4DgtUsqnSgVocEPpjCdjyrEpuNHoDqqQn
+ +2wxTYlt6YguHuTq2vJgUdcYlZAKGUtbEMqJi/CtbOMQuVWO9hSZbnBTSdhbrTVBlsrw
+ 50QPD576drSW9QD4bliSKRWBJvtGjISK9sXo/fiHRwTIQwown08+K04vNJPEj0u1VSgU
+ aMlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786445700; x=1787050500;
+ d=1e100.net; s=20251104; t=1786445692; x=1787050492;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=45O5ZPkXnN4lR6w4tP5RI9h0AD+uvfX9nj+VXuvU+5c=;
- b=CcrJPixrq66VQ6NF9KhuAi1RHrLYMGbV4Zc9rIxzcgGllDbZCV4F7pCYtrQrR/9xT5
- 1GyvHi9FYFb/T5JFAgn40FYt4pbtHLsyW35778kG56693da+u9Kmod6aOy5WgH3fjAU2
- I0rNURB57OYpGGNbAhWgRGtLuVdHrC2vey/N4VmKPrDf03/lDmi+t+1r2UvgQ6ltehtY
- ceH+VRD/vtxXGiAoMh/WkkkDfR7510CSr4j7CvHDGvfr2updbBHd3S3JU8Z3u98N8gWC
- 9bO2aNam0AkR4MGsySTMtmCnzDqCAlLDoBFSxrtcdXU2dyVm+/G8mSEM7Fq30AWE6Kmp
- DB1g==
-X-Gm-Message-State: AOJu0YyAZcGF+JMgsEa5kEXfS0yWd8nQm8xiBExRGxozgJaKiZvdTdqe
- KDfgC0sgaoLCliXdrktdoeiBybL6KudwxCZMETPaEqAkgAsZV0ZxRJeulwCqP79kov18COO/J6F
- CwYlG9YybIaoxCZicl/JOYXJAOI3bNDMwI4K6+UfEs6dAzyP4TP7r8RFPgHADIzlpig==
-X-Gm-Gg: AR+sD12n8nXvW/z8HZ66FTg1EuKiVGM2aggbuox3GKAShjnwR4KdDFXDffS1adbbKs5
- Q8R2W88eB4v6wTC5T6b7PfEfIBdC8uvGJ+kajgPeO0tbaG2QglbVTW4gImAHnvEcTa3NxT2IPp9
- gRHxedJQryeFFKviNNjeR+Rwvi7Zyx+64zJ0eM4kwOmX7uVm2Lnc/ixV6URB4FtD1YcDWps8QZc
- guaPO/vj3pF/PNS1G+nbwiO0mBhFbcQd5NtDMoOErmc9tFQ8X6J1aSnESSc4HI/rIGpuWpawGT0
- c+qP+i4puwINYD10WPLgZEEXbrJvCVybYzmh4ewOoOxlLQh/6fsDy08T27UCNzxlxC0Nq/Qm637
- IONHM+l77fMK0vJttu9B6cE92EOmtweX9b9pfnqqHTzX7dlI=
-X-Received: by 2002:a05:622a:345:b0:51b:f992:9e18 with SMTP id
- d75a77b69052e-52d5949b962mr14542721cf.2.1786445699787; 
- Tue, 11 Aug 2026 03:54:59 -0700 (PDT)
-X-Received: by 2002:a05:622a:345:b0:51b:f992:9e18 with SMTP id
- d75a77b69052e-52d5949b962mr14542311cf.2.1786445699238; 
- Tue, 11 Aug 2026 03:54:59 -0700 (PDT)
+ bh=XgdgW8FHpQY7YzIFnfakjsIyt0J+i7IP25N5DI75/PE=;
+ b=PMJYP6fZCLtlB/M0AgYMxWz7QSajTTWx00nbhRMeBsPQNbODIaFKl/zGfKk/HWGzN/
+ gIuBhAdQXAVD6Vp0XI5Y2YtH1x5eF8+9IZ2jYjMkZV8avb82vSg8EIAMVVitl6IZw7c5
+ sW8d7N13l6s+87QfyPpbUWaSmMoGpsy53j7BlM9T1Cis1i+pkOiBtnr1Udzwj0pi1csv
+ qAS+8ik0bgIj4yD/9Z7fIhKgJHuaxHij8ar7k6wnyRd5zeEZqryzcbB9zUUfs0U2O9ta
+ JPKtObmSeKYA223ejR9UwaijduMMb2UAp0e4V5vcnyJKJOBQnBh7G3kY8KpolrNEewW4
+ 2tBA==
+X-Gm-Message-State: AOJu0YxHLWr4+Nca7yGNreCRGMiTugnplBafX7jRaida0y6ZtEcUuCMV
+ Jp6keqdRc8pz1+33iImE8xn45c3PoHFTvFhld+HTKd39eUPWnckASDpN+dNLTBjypJsdSvXTU5a
+ CmMpIZqi4OpbEhUi+VUyh2JsU4uYe7AIkID58i0NxiQTxxQVvDuPaTZFLHv2h3ts4GQ==
+X-Gm-Gg: AR+sD13e4Z5BoVvnyg2arkBJKbMmq6DdMAFpCx5F5csWf2XPLbC5cE2+sy9/brn2YW6
+ ZF66uGHdpTxha5di4b6LBTvqA8T54HqbfOqa/M01nHeU4Vx+bJrL4Bdxyzs1b2UzRgt4+hIXKm9
+ liytIfP221ynPmBAQsb8St5yC3yWGdqFrEIcZuwJKJqds6ew/Q8Mp9MZDv9Yd6VhVfbxw408qAr
+ B+7595yvsmFuVhIq4qr1OFuwe0W3PmvX4vK2Gcz8hDfnYO2zHw4CdJF3YKFFmGRLe7lN7QsrmCs
+ 4NsDoDVews7YgzgXa3az7CtZNdDy9aj5ZkCMR1b5ZFI1bzv/+pC0eA2iqY5MOxuNrWVyjG52eW2
+ +AMv8X4xti4temo9Ai0BDDpB0rbr3cCPTnWJkvnUjpqVyMdQ=
+X-Received: by 2002:a05:622a:4d0a:b0:52c:cc14:ff5f with SMTP id
+ d75a77b69052e-52d5869539amr18874711cf.38.1786445692347; 
+ Tue, 11 Aug 2026 03:54:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:4d0a:b0:52c:cc14:ff5f with SMTP id
+ d75a77b69052e-52d5869539amr18874261cf.38.1786445691889; 
+ Tue, 11 Aug 2026 03:54:51 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4814a7096c5sm3646022f8f.24.2026.08.11.03.54.57
+ ffacd0b85a97d-4814a5ac691sm3705229f8f.3.2026.08.11.03.54.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 03:54:58 -0700 (PDT)
+ Tue, 11 Aug 2026 03:54:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -96,45 +96,54 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v3 4/7] hw/nmi: Remove @cpu_index argument from nmi_trigger()
-Date: Tue, 11 Aug 2026 12:54:22 +0200
-Message-ID: <20260811105425.7429-5-philmd@oss.qualcomm.com>
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v3 3/7] hw/nmi: Remove @cpu_index argument from
+ NMIClass::nmi_monitor_handler()
+Date: Tue, 11 Aug 2026 12:54:21 +0200
+Message-ID: <20260811105425.7429-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260811105425.7429-1-philmd@oss.qualcomm.com>
 References: <20260811105425.7429-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Nb3WEWD4 c=1 sm=1 tr=0 ts=6a7aff84 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX5n1oBufJVF5E
+ Po67A6OsWPYBgRQZov2koDo+2MqDpPDXwb08yXpqo5T82BSzihcUbognuX7B+clqQ7vSjsGgTRn
+ q3XdI/PjnIhF5K1hofh99q3TYx9VGA0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfXwFD849mrm8qp
+ VTboY7MhgfkiLr0jG36me58btvRnsEEU+7htzFBWAR/bbW2J6YE5q1CzHnLcA8N4eKs/wso2l8R
+ dL18RDavUevKZVmJjlr27Q2w6u3bX1+tE9wXYxpAXauzeFUxa42Tzraw0aR4n38fooVcqzyx/Cv
+ 3LCTO0j/lKjOZLHJPWY2eK0gyNcobkStuMs/kpnKbH95YQnAK5rzO/O9/gXEltHZx+0sLKbxBSC
+ axTO/Z4ddCY24tkJdjIwY6qFSZ99Te69cBOvNYUVWM0Ps87LWNIiieQONtOyObURjerCdDgZ6Ny
+ vg3qAsHRxBS8YYWIaE5PMvftTSFKJ7Q/ZyJpVwO8JaVEp0iNr8swI/hzc4fCeVMbLzqvyMFZ/li
+ HQ7O0Gk9k7kV6zlItjGrHCqM59jADfY7cDw71xs6GqVxD5qt3MU4VXlmJPYdtRrtNHY6hTDCvmx
+ AY/uCPIBHgW6D9wMa6w==
+X-Authority-Analysis: v=2.4 cv=RY6gzVtv c=1 sm=1 tr=0 ts=6a7aff7c cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=FcA89Dn81BW4c7i3JskA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: rSNsPiGn2i9e3Y31DLx7JpPUcYiQkrxb
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX++lYAxNC6Wem
- BCuu68a92Udo4bMotAeNZ9e1+AYHLfMLKQtzVSOVOhQL5thysFINM2Mer4ffbSQU+7QdTdR09P0
- Rj8rYFPATT6Z9BJB67j1HRzgE3HYTZg=
-X-Proofpoint-GUID: rSNsPiGn2i9e3Y31DLx7JpPUcYiQkrxb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODExMDA5MCBTYWx0ZWRfX8W17iwTK894n
- 8klrJVwUFdov70xJ8sZGrFUBqkNTtGjmMAOImd70jQc7RNT9pL/6PO9jZztSCLt3WPBpRQ8HLqZ
- kFJLkNn/k6yuEYM7JPqtZOQvDOrYPG/nuFvzVB7gQxSfsYW5fXq9Mj5KbvTP3pkvuruGduJR5Ot
- 8Zi1EdAJBg/Q67L4j+dEl3t30krPHzr4lkVEcnDueK+peA4yXn/hT2lZ7BA7gz+4JioBPM8Zubk
- pFd+wOba+NjGmsfPavdG0Q0Ihmzi8+kprnAYImncS1CjpncL0L46XSGIwihwWXDGwkd2SekCSz/
- Nk/mrFtjw53ptR3/9e3MDKJb9aw0WLE3yC84GMu8HA9B8UKrcUnMZFEOIueWBqr50qPPp1aiR79
- QotdDODT2r/oF7mv1SJAXKxPBXhpccLGoT8kTJocpTHvuvNCffhlWaPYCzOgBurMNMNCZzaI3zQ
- q9NKMYgDLKZjXeGdNJg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=KpD7k0r93PjNlcRUnYkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: D-IdwFgsNk1-Id6Gn8Loy5m6zYKsAXbY
+X-Proofpoint-GUID: D-IdwFgsNk1-Id6Gn8Loy5m6zYKsAXbY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-11_01,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ impostorscore=0 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608110090
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
@@ -162,142 +171,161 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-nmi_monitor_handle() is not related to the monitor, rename
-it as nmi_trigger().
-
-Return a boolean value indicating success / failure as
-recommended by the Error API since commit e3fe3988d7
-("error: Document Error API usage rules").
-
-The 'cpu_index' argument is not used, remove it.
-
-Document nmi_trigger() as suggested by Peter Maydell in
-https://lore.kernel.org/qemu-devel/CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9RYeo8fKqz7gcw@mail.gmail.com/.
+Only s390x was using the 'cpu_index' argument, but since the
+previous commit it isn't anymore (it use the first cpu).
+Since this argument is now completely unused, remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/hw/core/nmi.h  | 25 ++++++++++++++++++++++++-
- hw/core/nmi.c          |  9 ++++-----
- hw/ipmi/ipmi.c         |  3 +--
- hw/watchdog/watchdog.c |  2 +-
- system/cpus.c          |  2 +-
- 5 files changed, 31 insertions(+), 10 deletions(-)
+ include/hw/core/nmi.h      | 8 +++++++-
+ hw/core/nmi.c              | 2 +-
+ hw/hppa/machine.c          | 2 +-
+ hw/i386/x86.c              | 2 +-
+ hw/intc/m68k_irqc.c        | 2 +-
+ hw/m68k/q800-glue.c        | 2 +-
+ hw/misc/macio/gpio.c       | 2 +-
+ hw/ppc/pnv.c               | 2 +-
+ hw/ppc/spapr.c             | 2 +-
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ 10 files changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/include/hw/core/nmi.h b/include/hw/core/nmi.h
-index 4c4ce79071d..e77c382452a 100644
+index fff41bebc69..4c4ce79071d 100644
 --- a/include/hw/core/nmi.h
 +++ b/include/hw/core/nmi.h
-@@ -46,6 +46,29 @@ struct NMIClass {
-     void (*nmi_monitor_handler)(NMIState *ns, Error **errp);
+@@ -37,7 +37,13 @@ typedef struct NMIState NMIState;
+ struct NMIClass {
+     InterfaceClass parent_class;
+ 
+-    void (*nmi_monitor_handler)(NMIState *n, int cpu_index, Error **errp);
++    /**
++     * nmi_monitor_handler: Callback to handle NMI notifications.
++     *
++     * @ns: Class #NMIState state
++     * @errp: pointer to error object
++     */
++    void (*nmi_monitor_handler)(NMIState *ns, Error **errp);
  };
  
--void nmi_monitor_handle(int cpu_index, Error **errp);
-+/**
-+ * nmi_trigger: Trigger an NMI, in a machine-specific way
-+ * @errp: pointer to error object
-+ *
-+ * This function triggers an NMI, in a machine-specific way. The
-+ * intention is that this should typically trigger a guest kernel
-+ * dump or reboot, and might happen as a result of user request
-+ * from the monitor, watchdog timeouts, and similar events.
-+ * (For example on the x86 PC it triggers an NMI on all CPUs,
-+ * and on s390 it triggers the RESTART interrupt on the first CPU.)
-+ *
-+ * The NMI is triggered by looking for QOM objects which
-+ * implement the TYPE_NMI interface, and calling their nmi_handler
-+ * method. Usually it is the machine model class that implements
-+ * this interface.
-+ *
-+ * Not all machines implement NMI handling; this function
-+ * will return an error if used on a machine which does not
-+ * implement NMIs.
-+ *
-+ * On success, return %true.
-+ * On failure, store an error through @errp and return %false.
-+ */
-+bool nmi_trigger(Error **errp);
- 
- #endif /* NMI_H */
+ void nmi_monitor_handle(int cpu_index, Error **errp);
 diff --git a/hw/core/nmi.c b/hw/core/nmi.c
-index ff6454437c1..662f2051123 100644
+index 22724046575..ff6454437c1 100644
 --- a/hw/core/nmi.c
 +++ b/hw/core/nmi.c
-@@ -22,11 +22,8 @@
- #include "qemu/osdep.h"
- #include "hw/core/nmi.h"
- #include "qapi/error.h"
--#include "qemu/module.h"
--#include "monitor/monitor.h"
+@@ -40,7 +40,7 @@ static int do_nmi(Object *o, void *opaque)
+         NMIClass *nc = NMI_GET_CLASS(n);
  
- struct do_nmi_s {
--    int cpu_index;
-     Error *err;
-     bool handled;
- };
-@@ -54,19 +51,21 @@ static int nmi_children(Object *o, struct do_nmi_s *ns)
-     return object_child_foreach_recursive(o, do_nmi, ns);
- }
- 
--void nmi_monitor_handle(int cpu_index, Error **errp)
-+bool nmi_trigger(Error **errp)
- {
-     struct do_nmi_s ns = {
--        .cpu_index = cpu_index,
-         .err = NULL,
-         .handled = false
-     };
- 
-     if (nmi_children(object_get_root(), &ns)) {
-         error_propagate(errp, ns.err);
-+        return false;
-     } else if (!ns.handled) {
-         error_setg(errp, "machine does not provide NMIs");
-+        return false;
-     }
-+    return true;
- }
- 
- static const TypeInfo nmi_info = {
-diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
-index 74818ff3cea..444af726d75 100644
---- a/hw/ipmi/ipmi.c
-+++ b/hw/ipmi/ipmi.c
-@@ -59,8 +59,7 @@ static int ipmi_do_hw_op(IPMIInterface *s, enum ipmi_op op, int checkonly)
-         if (checkonly) {
-             return 0;
+         ns->handled = true;
+-        nc->nmi_monitor_handler(n, ns->cpu_index, &ns->err);
++        nc->nmi_monitor_handler(n, &ns->err);
+         if (ns->err) {
+             return -1;
          }
--        /* We don't care what CPU we use. */
--        nmi_monitor_handle(0, NULL);
-+        nmi_trigger(NULL);
-         return 0;
- 
-     case IPMI_SHUTDOWN_VIA_ACPI_OVERTEMP:
-diff --git a/hw/watchdog/watchdog.c b/hw/watchdog/watchdog.c
-index 0842fe373ae..026768e9fb2 100644
---- a/hw/watchdog/watchdog.c
-+++ b/hw/watchdog/watchdog.c
-@@ -81,7 +81,7 @@ void watchdog_perform_action(void)
- 
-     case WATCHDOG_ACTION_INJECT_NMI:
-         qapi_event_send_watchdog(WATCHDOG_ACTION_INJECT_NMI);
--        nmi_monitor_handle(0, NULL);
-+        nmi_trigger(NULL);
-         break;
- 
-     default:
-diff --git a/system/cpus.c b/system/cpus.c
-index 97e5a5edee2..5c0a192c01e 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -926,6 +926,6 @@ exit:
- 
- void qmp_inject_nmi(Error **errp)
- {
--    nmi_monitor_handle(monitor_get_cpu_index(monitor_cur()), errp);
-+    nmi_trigger(errp);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index d762163ddf5..2b44debc388 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -829,7 +829,7 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+     cpu[0]->env.cmdline_or_bootorder = 'c';
  }
  
+-static void hppa_nmi(NMIState *n, int cpu_index, Error **errp)
++static void hppa_nmi(NMIState *ns, Error **errp)
+ {
+     CPUState *cs;
+ 
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index dc7f0d56b01..0ea5453403d 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -147,7 +147,7 @@ static const CPUArchIdList *x86_possible_cpu_arch_ids(MachineState *ms)
+     return ms->possible_cpus;
+ }
+ 
+-static void x86_nmi(NMIState *n, int cpu_index, Error **errp)
++static void x86_nmi(NMIState *ns, Error **errp)
+ {
+     /* cpu index isn't used */
+     CPUState *cs;
+diff --git a/hw/intc/m68k_irqc.c b/hw/intc/m68k_irqc.c
+index 68ddb5351be..bc41b44d455 100644
+--- a/hw/intc/m68k_irqc.c
++++ b/hw/intc/m68k_irqc.c
+@@ -70,7 +70,7 @@ static void m68k_irqc_instance_init(Object *obj)
+     qdev_init_gpio_in(DEVICE(obj), m68k_set_irq, M68K_IRQC_LEVEL_NUM);
+ }
+ 
+-static void m68k_nmi(NMIState *n, int cpu_index, Error **errp)
++static void m68k_nmi(NMIState *n, Error **errp)
+ {
+     m68k_set_irq(n, M68K_IRQC_LEVEL_7, 1);
+ }
+diff --git a/hw/m68k/q800-glue.c b/hw/m68k/q800-glue.c
+index ac9062c6488..b13e5ef95f1 100644
+--- a/hw/m68k/q800-glue.c
++++ b/hw/m68k/q800-glue.c
+@@ -159,7 +159,7 @@ static void glue_auxmode_set_irq(void *opaque, int irq, int level)
+     s->auxmode = level;
+ }
+ 
+-static void glue_nmi(NMIState *n, int cpu_index, Error **errp)
++static void glue_nmi(NMIState *n, Error **errp)
+ {
+     GLUEState *s = GLUE(n);
+ 
+diff --git a/hw/misc/macio/gpio.c b/hw/misc/macio/gpio.c
+index 1a7c534d652..1bdca728f97 100644
+--- a/hw/misc/macio/gpio.c
++++ b/hw/misc/macio/gpio.c
+@@ -188,7 +188,7 @@ static void macio_gpio_reset(DeviceState *dev)
+     macio_set_gpio(s, 1, true);
+ }
+ 
+-static void macio_gpio_nmi(NMIState *n, int cpu_index, Error **errp)
++static void macio_gpio_nmi(NMIState *n, Error **errp)
+ {
+     macio_set_gpio(MACIO_GPIO(n), 9, true);
+     macio_set_gpio(MACIO_GPIO(n), 9, false);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index c0cb45dbfbc..8676be7bbb1 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -3552,7 +3552,7 @@ static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
+     async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_HOST_INT(0));
+ }
+ 
+-static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
++static void pnv_nmi(NMIState *ns, Error **errp)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+     int i;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index b79828b4e90..189334b9f0a 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3550,7 +3550,7 @@ void spapr_do_system_reset_on_cpu(CPUState *cs, run_on_cpu_data arg)
+     }
+ }
+ 
+-static void spapr_nmi(NMIState *n, int cpu_index, Error **errp)
++static void spapr_nmi(NMIState *ns, Error **errp)
+ {
+     CPUState *cs;
+ 
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 4f7861dbbb7..5d8a73a63df 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -725,7 +725,7 @@ static HotplugHandler *s390_get_hotplug_handler(MachineState *machine,
+     return NULL;
+ }
+ 
+-static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
++static void s390_nmi(NMIState *ns, Error **errp)
+ {
+     s390_cpu_restart(S390_CPU(first_cpu));
+ }
 -- 
 2.53.0
 
