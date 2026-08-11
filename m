@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BCEC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C554FC5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 20:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtsw3-0008TW-GO; Tue, 11 Aug 2026 16:18:55 -0400
+	id 1wtsx1-0000WA-Ii; Tue, 11 Aug 2026 16:19:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsw1-0008T0-Iz; Tue, 11 Aug 2026 16:18:53 -0400
-Received: from fout-a7-smtp.messagingengine.com ([103.168.172.150])
+ id 1wtswz-0000Vi-Q5; Tue, 11 Aug 2026 16:19:53 -0400
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtsvz-0003o3-CD; Tue, 11 Aug 2026 16:18:53 -0400
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfout.phl.internal (Postfix) with ESMTP id A2D60EC01DC;
- Tue, 11 Aug 2026 16:18:50 -0400 (EDT)
+ id 1wtswy-0003qz-7D; Tue, 11 Aug 2026 16:19:53 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 0C81F1400030;
+ Tue, 11 Aug 2026 16:19:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-11.internal (MEProxy); Tue, 11 Aug 2026 16:18:50 -0400
+ by phl-compute-04.internal (MEProxy); Tue, 11 Aug 2026 16:19:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786479530; x=1786565930; bh=I5UEeajUvuMXNUAtCiXSlxzcv/psAVwA
- /fwmzSptaJw=; b=udsOs0Id4eui4sO3nJ/oIlMYgrwOASWdgXqChJF8RSC+tAY3
- OJF6imwmOOseE2AzHVlPdYbfVgyALqLxgru+sD9oi/kXU7VV1JkaDcNmocJ7Mb21
- AbH3xrETD0KML7X1Wv6aQZbhYBqUyUmCLuHa3UYidTRjguRyw9vJa9MmuoWodxFC
- T3WA/LFdJ4LbM2ZARlBzih/w90ILdCia+ELodqYo2JsIlE8FDQBFsgq+wkXemlLm
- ay8Xdbp6oqBsFSSp43LZ6sE9Y1O+iQ72ouB7PBygpfpqobtg72gymVW0kz7huTb4
- eMbNrj9u9m7/QB4pggaWV/mUmHGqCxyvwJ8EkA==
+ t=1786479591; x=1786565991; bh=5lMphWgv8RgBsL+xeg+AjDxl7caZrxiy
+ w+2DYy9gefA=; b=Hr2auEZo/3pYgxxdcD8UcJeeEJ1tvD/n6hLkAJoxg6Avwguj
+ mndQJ/I4hhv6FIj29mEUumDvajsU5y+Gk0iVi+cQUyGp2i6mJSeX1e33RziMMfPs
+ Kg0qpGliUXls+LdwFUUp1TkxV6iJ9DMy4mhquobnjXi7OthPxPNuNivTRiSwkCRq
+ Kcn2NuV3C5Pi18hfuR5CwQjuaTX33UZlQf6C6ovrcuyKyEWLu3bPQaEP4wfbOW7H
+ wDsjQtI117ePD2D7ZJGEjd2sXydNlVxfm6leeeiygznRPusz77SHQ5Ro2Ha8cfv1
+ n6nEb3Al9H9N89Z+rP/dDm2EL8Tf0CZB5aIEoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479530; x=
- 1786565930; bh=I5UEeajUvuMXNUAtCiXSlxzcv/psAVwA/fwmzSptaJw=; b=B
- e7hoVWdIOWMwhOi4poTkSDtYb18Y7ET4EBE9lgQQnnqnwy72O9mQLZMgCWbd0WUv
- kx7hlb5n1mujML5g3j+8Mx9eOD2Q7riY5T8hBdMOq57r94Fq2Z4Aak+/uR+Z/CHy
- kYvosWpCBa2DkbS533GouIwAicfRRN2weB8bQzglkD95nZabD5BsmWq6pCTso+7K
- 7Q098bwHW8u90IlQE6xYTPQBdGLjJZbB56Yi93Mj7bbYk0EecDJTZLZL+FEfve5r
- Luc82/6JwMHCJcxd23FxYPKTTAG5SKVZYcratU/AmXwj801w/MBaRIMoMQjze9R2
- jSVJxK6CDQzGEc8Ntnmlg==
-X-ME-Sender: <xms:qoN7aqhoE6zU1mvcuV-nh8dM42pibE0gqQzz3akKhxEAG8k6DJDJLA>
- <xme:qoN7avVqwnwYnAWf6a_HFIFyS4wbzQyJjpRnqyoHCSWylf0_htaBEtRLnAs1vzL3E
- ai_fvlZMnRyAboGMhN48DK1rdlh9lAc6O02exXfN5fEajKgicoPZg>
-X-ME-Received: <xmr:qoN7ahNbULa9x6i-m85gzTzwdaXzHvdfMO_6kJ-QmZ1cJ0F60VK0jN9DfvPUJZpHOV6APQ>
-X-ME-Proxy-Cause: dmFkZTEU6TKLlbeakMvmnbZfC6/1BDHfd10ALQ/aZgi3R3rhwrhMrwPUmgs9P2s1wa1z7g
- eEs/upfz85BE/ow17MBNADGxyFol6iBEncC62pPCXd0HRmJ+/4LWMP7Ewq/ySferhfQ8/Y
- ttPgOR8yjPLMcHdKdQhSwYUsOUR9Ckc+O0mGn5zcFS/FTMBkeIa6Vtf0vRZcjWQz/qARxO
- UySdpOyGFs70R3fgTf1KDH0RECJQ2G0rv5/PvDgqx3oxxf0Za9ivi3y+HS9FnS/ADFIa7O
- PP8Aa+ZWOOBv6H2FIuN4ppy6VZoZ1D3B5YUzJHdF6X9fI4XmlkHsa5tDifRRMMM5OtOzfO
- 1CbnLutY41VR7Rj4UEHbIRU1A1w8t+OrncbN0itXVPYxVS7x3CU85qIZ8BNC6V3MMSrS9C
- nr3p/svFIrS9PVmbVjbR0Ri5HGVpiYf2ef+Zk9xYjPuZm6kcsjzg7v560YqB6d944c+KhS
- 0Q4W8njSu6oUgHIss79sC69bP4/IVFXx7mi9iReVUd4h0a4mbazeTx3nOVmTTgovbqCuh1
- ePBbVZLoN3uMOzGNIHHJttAfvKktvrdOw7Yux8h8QZKdR9HkHJFSqCvzMVsuRZlgwDyxbC
- LkP45rHuY+AaC4icn1Gh+iXlDSMm3FfApmnXQ4dUamNI0xMAbZ7EngUgzl9Q
-X-ME-Proxy: <xmx:qoN7arbQX_OiN7t0iPDAQTF4pfgs4wsuLlZtkxusTKS3tjoZYqc6Pw>
- <xmx:qoN7atpplSXNxTyR-Oa2RZpoXWuSf2BRG11UmQ2aAiaRo_m-VRvtUQ>
- <xmx:qoN7anZxescqxGrsvIfaFEbtNpGbHRceKdT2IioOHFGJx-nZ4YTxwA>
- <xmx:qoN7atTOO0iMAshB9kzpivpwPAiCMV1duaj5uc2ZiA-opT6Z3Wm-Sg>
- <xmx:qoN7al1E2-DoekZmdP_tEGSBjl-kfc2JjUzUpcds_C_BNJYcz70FDuIP>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786479591; x=
+ 1786565991; bh=5lMphWgv8RgBsL+xeg+AjDxl7caZrxiyw+2DYy9gefA=; b=I
+ XxJHngCvmQSoKaxXZ7RtJylPq6fAaMW874v1eOfE6GmsICpi5aprl3t553tw6zaK
+ UzzvIFmH6AzRL4YQkJv4wzVrUP+f5eWkfDtnXWb/j1+Cz8t/Et0CzB9nC8BvMR3l
+ +gCkXADYTSEGe0e/zoEBvB5MkNd88AfI9XUn7OU0YoWGUQknVzEjfLDv8cmGBAd1
+ lGArhpfobMIT+UgNqPK4+V3vWLHNbs5kzsGB61z4U71kecitx0DO9uwfzTkcdocM
+ i8o11Fm4SijOzeSTJTRe7rThUyUTCo8JMrD5P8+jCQiCklKis31XZfo9XZL8C5FZ
+ sEJZkA6L5kNn1Ml16FKWA==
+X-ME-Sender: <xms:5oN7aoTIlF7hPRafWib7_8UbqtJhF7Xj15UV-dyXB7QHSxO-EIPKxQ>
+ <xme:5oN7aqHjx-BwwiLakCw8QNwZOwD3TzPz5qKpon3xV-IGmfKkHeolTv0KIxHdfiefa
+ JOBvoRuwPbdIVJQUhcnBp5SPQb9J6r6kHPhPhzwW_7-CzSj5zXBOA>
+X-ME-Received: <xmr:5oN7ak9En51SJBMZxheLQHgTaMeZ9XEyL82KBBDxnK4S0YqFZhR9LXg8w2PaDfLsXBY3FA>
+X-ME-Proxy-Cause: dmFkZTEEByZQdtsPsbAxpxfho6kRbmIwIV64yq0RrdqCLWkSKGrCCAvive1S9WyYkFGSW1
+ VMqPhNi5VEOc7GP30HXuel9BM7TGVhI49S1qFeYJ6CJENAalGAxqbT8m97hmVu+bFtiAZ5
+ ajjrsvzZtyDB59o1wn/kn2cicNrppL0l9Xp93uTdl4fdGXAIYu3xCjjTmADxGveoStNPCg
+ KByRSRDOZ+7+DMrZO5y9CttoczNzyLlSAQ00pJGxNW72nqS7Nadc9bpeOFmsvPIKn5CaFR
+ WAyFsBdLzNHJ/a5KlM/a12ftyT5IVaOxuaXFX/ePiB/v02ymTBzYP20bSTdyaPz/WUfXHV
+ N6pUFMHMM8h9CyrT2wPRCajO1/eZxAO8AYs5aXEKic3y9nkY08/Dd41d6v/Lp1VUN/zesx
+ ih8HIxmngc2WMJSGmdjuFAEwF/sP86/eV06gOiRdXxuAZJvfYUhaHxFCPOrab4GHWMNIFr
+ JleXWolf4n+krQFexkk0dqwYF+iFggzzhcx6r71ilevZVhqhcD8ntmYJuI1K3tQSuTMBiG
+ 5QR4MGGk3XSdz5CqaTdeGeLHi+9NlV4MTyPZDeLhjlMACscJc6x+4zX3fScS7JL50hqUwi
+ n6HuI9mDiPkwVWENLsANHqZf6ROwGcfAfv8OmHVETrmxZms25IvGb/y0Q7tA
+X-ME-Proxy: <xmx:5oN7akIH1WDDkW0jQcQgkY72a7pDK3jTqynCUn-GHRE3gjkTM5cs_Q>
+ <xmx:54N7anZrj8BJW0C7IBj4JzNeNRgwD_zGUla5M5OWiZHps4z8zzWjDQ>
+ <xmx:54N7auJILyXzxTAG4Gv4k8pj8_JjEUFNyEDB-lxf__Ewf-3SP5ei7Q>
+ <xmx:54N7atCPVufQtZhfxL9nm1Ca11ug5dAXyZU5MZt_ERphCeUWgMYhcg>
+ <xmx:54N7agXt9Z32P4VmwmRGRPlD5_Hbz54-lQciZpuNqSOxS6UvekaIB_0g>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 16:18:50 -0400 (EDT)
-Message-ID: <abaeb45abe24e9e59e8a0ce0eb3445cb31db4637.camel@alistair23.me>
-Subject: Re: [PATCH 25/56] disas/riscv: Unify decomp_rv{32,64,128}
+ 11 Aug 2026 16:19:50 -0400 (EDT)
+Message-ID: <4ff619bddb07f1db48a90983858565fcf6f5665e.camel@alistair23.me>
+Subject: Re: [PATCH 26/56] disas/riscv: Drop always true branch psudeos
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Date: Wed, 12 Aug 2026 06:18:50 +1000
-In-Reply-To: <20260809223545.730664-26-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 06:19:50 +1000
+In-Reply-To: <20260809223545.730664-27-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-26-richard.henderson@linaro.org>
+ <20260809223545.730664-27-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.150;
- envelope-from=alistair@alistair23.me; helo=fout-a7-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.157;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a6-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -107,8 +107,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sun, 2026-08-09 at 15:35 -0700, Richard Henderson wrote:
-> We now distinguish compressed opcodes by isa during decode.
-> Therefore we don't need 3 copies of decomp_*.
+> The real insns are blt, bge, bltu, bgeu.=C2=A0 Do not include
+> psuedos that unconditionally swap operands.=C2=A0 That's fine
+> for an assembler but not a disassembler.
 >=20
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -117,396 +118,102 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
-> =C2=A0disas/riscv.h |=C2=A0=C2=A0 4 +-
-> =C2=A0disas/riscv.c | 155 ++++++++++++++++-------------------------------=
--
-> --
-> =C2=A02 files changed, 51 insertions(+), 108 deletions(-)
+> =C2=A0disas/riscv.c | 32 ++++++--------------------------
+> =C2=A01 file changed, 6 insertions(+), 26 deletions(-)
 >=20
-> diff --git a/disas/riscv.h b/disas/riscv.h
-> index 3909d73dd0..900363c603 100644
-> --- a/disas/riscv.h
-> +++ b/disas/riscv.h
-> @@ -183,9 +183,7 @@ typedef struct {
-> =C2=A0=C2=A0=C2=A0=C2=A0 rv_codec codec;
-> =C2=A0=C2=A0=C2=A0=C2=A0 const char *format;
-> =C2=A0=C2=A0=C2=A0=C2=A0 const rv_comp_data *pseudo;
-> -=C2=A0=C2=A0=C2=A0 short decomp_rv32;
-> -=C2=A0=C2=A0=C2=A0 short decomp_rv64;
-> -=C2=A0=C2=A0=C2=A0 short decomp_rv128;
-> +=C2=A0=C2=A0=C2=A0 rv_opcode decomp;
-> =C2=A0} rv_opcode_data;
-> =C2=A0
-> =C2=A0typedef struct {
 > diff --git a/disas/riscv.c b/disas/riscv.c
-> index 95957506bd..2e891f509e 100644
+> index 2e891f509e..bde1cc6e62 100644
 > --- a/disas/riscv.c
 > +++ b/disas/riscv.c
-> @@ -1883,91 +1883,52 @@ static const rv_opcode_data rvi_opcode_data[]
-> =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "fcvt.q.lu", rv_codec_r_m, rv_fmt_rm_frd_rs1 }=
-,
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "fmv.x.q", rv_codec_r, rv_fmt_rd_frs1 },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "fmv.q.x", rv_codec_r, rv_fmt_frd_rs1 },
-> -=C2=A0=C2=A0=C2=A0 { "c.addi4spn", rv_codec_ciw_4spn, rv_fmt_rd_rs1_imm,=
- NULL,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi, rv_op_addi },
-> -=C2=A0=C2=A0=C2=A0 { "c.fld", rv_codec_cl_ld, rv_fmt_frd_offset_rs1, NUL=
-L,
-> rv_op_fld,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_fld, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.lw", rv_codec_cl_lw, rv_fmt_rd_offset_rs1, NULL,=
- rv_op_lw,
-> rv_op_lw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_lw },
-> -=C2=A0=C2=A0=C2=A0 { "c.flw", rv_codec_cl_lw, rv_fmt_frd_offset_rs1, NUL=
-L,
-> rv_op_flw, 0, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.fsd", rv_codec_cs_sd, rv_fmt_frs2_offset_rs1, NU=
-LL,
-> rv_op_fsd,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_fsd, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1, NULL=
-, rv_op_sw,
-> rv_op_sw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sw },
-> -=C2=A0=C2=A0=C2=A0 { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs1, NU=
-LL,
-> rv_op_fsw, 0, 0 },
-> +=C2=A0=C2=A0=C2=A0 { "c.addi4spn", rv_codec_ciw_4spn, rv_fmt_rd_rs1_imm,=
- NULL,
-> rv_op_addi },
-> +=C2=A0=C2=A0=C2=A0 { "c.fld", rv_codec_cl_ld, rv_fmt_frd_offset_rs1, NUL=
-L,
-> rv_op_fld },
-> +=C2=A0=C2=A0=C2=A0 { "c.lw", rv_codec_cl_lw, rv_fmt_rd_offset_rs1, NULL,=
- rv_op_lw
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.flw", rv_codec_cl_lw, rv_fmt_frd_offset_rs1, NUL=
-L,
-> rv_op_flw },
-> +=C2=A0=C2=A0=C2=A0 { "c.fsd", rv_codec_cs_sd, rv_fmt_frs2_offset_rs1, NU=
-LL,
-> rv_op_fsd },
-> +=C2=A0=C2=A0=C2=A0 { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1, NULL=
-, rv_op_sw
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs1, NU=
-LL,
-> rv_op_fsw },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { },
-> -=C2=A0=C2=A0=C2=A0 { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv_=
-op_addi,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> -=C2=A0=C2=A0=C2=A0 { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, NULL, r=
-v_op_jal,
-> 0, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, NULL, rv=
-_op_addi,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> -=C2=A0=C2=A0=C2=A0 { "c.addi16sp", rv_codec_ci_16sp, rv_fmt_rd_rs1_imm, =
-NULL,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi, rv_op_addi },
-> -=C2=A0=C2=A0=C2=A0 { "c.lui", rv_codec_ci_lui, rv_fmt_rd_uimm, NULL, rv_=
-op_lui,
-> rv_op_lui,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_lui },
-> -=C2=A0=C2=A0=C2=A0 { "c.srli", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL,
-> rv_op_srli,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_srli, rv_op_srli },
-> -=C2=A0=C2=A0=C2=A0 { "c.srai", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL,
-> rv_op_srai,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_srai, rv_op_srai },
-> -=C2=A0=C2=A0=C2=A0 { "c.andi", rv_codec_cb_imm, rv_fmt_rd_rs1_imm, NULL,
-> rv_op_andi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_andi, rv_op_andi },
-> -=C2=A0=C2=A0=C2=A0 { "c.sub", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_sub,
-> rv_op_sub,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sub },
-> -=C2=A0=C2=A0=C2=A0 { "c.xor", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_xor,
-> rv_op_xor,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_xor },
-> -=C2=A0=C2=A0=C2=A0 { "c.or", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op=
-_or,
-> rv_op_or,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_or },
-> -=C2=A0=C2=A0=C2=A0 { "c.and", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_and,
-> rv_op_and,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_and },
-> -=C2=A0=C2=A0=C2=A0 { "c.subw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_=
-op_subw,
-> rv_op_subw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_subw },
-> -=C2=A0=C2=A0=C2=A0 { "c.addw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_=
-op_addw,
-> rv_op_addw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addw },
-> -=C2=A0=C2=A0=C2=A0 { "c.j", rv_codec_cj, rv_fmt_rd_offset, NULL, rv_op_j=
-al,
-> rv_op_jal,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jal },
-> -=C2=A0=C2=A0=C2=A0 { "c.beqz", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL,=
- rv_op_beq,
-> rv_op_beq,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_beq },
-> -=C2=A0=C2=A0=C2=A0 { "c.bnez", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL,=
- rv_op_bne,
-> rv_op_bne,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bne },
-> -=C2=A0=C2=A0=C2=A0 { "c.slli", rv_codec_ci_sh6, rv_fmt_rd_rs1_imm, NULL,
-> rv_op_slli,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_slli, rv_op_slli },
-> -=C2=A0=C2=A0=C2=A0 { "c.fldsp", rv_codec_ci_ldsp, rv_fmt_frd_offset_rs1,=
- NULL,
-> rv_op_fld,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_fld, rv_op_fld },
-> -=C2=A0=C2=A0=C2=A0 { "c.lwsp", rv_codec_ci_lwsp, rv_fmt_rd_offset_rs1, N=
-ULL,
-> rv_op_lw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_lw, rv_op_lw },
-> -=C2=A0=C2=A0=C2=A0 { "c.flwsp", rv_codec_ci_lwsp, rv_fmt_frd_offset_rs1,=
- NULL,
-> rv_op_flw, 0,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.jr", rv_codec_cr_jr, rv_fmt_rd_rs1_offset, NULL,
-> rv_op_jalr,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jalr, rv_op_jalr },
-> -=C2=A0=C2=A0=C2=A0 { "c.mv", rv_codec_cr_mv, rv_fmt_rd_rs1_rs2, NULL, rv=
-_op_addi,
-> rv_op_addi,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addi },
-> -=C2=A0=C2=A0=C2=A0 { "c.ebreak", rv_codec_ci_none, rv_fmt_none, NULL, rv=
-_op_ebreak,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ebreak, rv_op_ebreak },
-> -=C2=A0=C2=A0=C2=A0 { "c.jalr", rv_codec_cr_jalr, rv_fmt_rd_rs1_offset, N=
-ULL,
-> rv_op_jalr,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jalr, rv_op_jalr },
-> -=C2=A0=C2=A0=C2=A0 { "c.add", rv_codec_cr, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_add,
-> rv_op_add,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_add },
-> -=C2=A0=C2=A0=C2=A0 { "c.fsdsp", rv_codec_css_sdsp, rv_fmt_frs2_offset_rs=
-1, NULL,
-> rv_op_fsd,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_fsd, rv_op_fsd },
-> -=C2=A0=C2=A0=C2=A0 { "c.swsp", rv_codec_css_swsp, rv_fmt_rs2_offset_rs1,=
- NULL,
-> rv_op_sw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sw, rv_op_sw },
-> -=C2=A0=C2=A0=C2=A0 { "c.fswsp", rv_codec_css_swsp, rv_fmt_frs2_offset_rs=
-1, NULL,
-> rv_op_fsw, 0,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.ld", rv_codec_cl_ld, rv_fmt_rd_offset_rs1, NULL,=
- 0,
-> rv_op_ld,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ld },
-> -=C2=A0=C2=A0=C2=A0 { "c.sd", rv_codec_cs_sd, rv_fmt_rs2_offset_rs1, NULL=
-, 0,
-> rv_op_sd,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sd },
-> -=C2=A0=C2=A0=C2=A0 { "c.addiw", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, 0,
-> rv_op_addiw,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_addiw },
-> -=C2=A0=C2=A0=C2=A0 { "c.ldsp", rv_codec_ci_ldsp, rv_fmt_rd_offset_rs1, N=
-ULL, 0,
-> rv_op_ld,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ld },
-> -=C2=A0=C2=A0=C2=A0 { "c.sdsp", rv_codec_css_sdsp, rv_fmt_rs2_offset_rs1,=
- NULL, 0,
-> rv_op_sd,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sd },
-> -=C2=A0=C2=A0=C2=A0 { "c.lq", rv_codec_cl_lq, rv_fmt_rd_offset_rs1, NULL,=
- 0, 0,
-> rv_op_lq },
-> -=C2=A0=C2=A0=C2=A0 { "c.sq", rv_codec_cs_sq, rv_fmt_rs2_offset_rs1, NULL=
-, 0, 0,
-> rv_op_sq },
-> -=C2=A0=C2=A0=C2=A0 { "c.lqsp", rv_codec_ci_lqsp, rv_fmt_rd_offset_rs1, N=
-ULL, 0, 0,
-> rv_op_lq },
-> -=C2=A0=C2=A0=C2=A0 { "c.sqsp", rv_codec_css_sqsp, rv_fmt_rs2_offset_rs1,=
- NULL, 0,
-> 0,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sq },
-> +=C2=A0=C2=A0=C2=A0 { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv_=
-op_addi },
-> +=C2=A0=C2=A0=C2=A0 { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, NULL, r=
-v_op_jal },
-> +=C2=A0=C2=A0=C2=A0 { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, NULL, rv=
-_op_addi },
-> +=C2=A0=C2=A0=C2=A0 { "c.addi16sp", rv_codec_ci_16sp, rv_fmt_rd_rs1_imm, =
-NULL,
-> rv_op_addi },
-> +=C2=A0=C2=A0=C2=A0 { "c.lui", rv_codec_ci_lui, rv_fmt_rd_uimm, NULL, rv_=
-op_lui },
-> +=C2=A0=C2=A0=C2=A0 { "c.srli", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL,=
- rv_op_srli
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.srai", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL,=
- rv_op_srai
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.andi", rv_codec_cb_imm, rv_fmt_rd_rs1_imm, NULL,=
- rv_op_andi
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.sub", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_sub },
-> +=C2=A0=C2=A0=C2=A0 { "c.xor", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_xor },
-> +=C2=A0=C2=A0=C2=A0 { "c.or", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op=
-_or },
-> +=C2=A0=C2=A0=C2=A0 { "c.and", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_and },
-> +=C2=A0=C2=A0=C2=A0 { "c.subw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_=
-op_subw },
-> +=C2=A0=C2=A0=C2=A0 { "c.addw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_=
-op_addw },
-> +=C2=A0=C2=A0=C2=A0 { "c.j", rv_codec_cj, rv_fmt_rd_offset, NULL, rv_op_j=
-al },
-> +=C2=A0=C2=A0=C2=A0 { "c.beqz", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL,=
- rv_op_beq
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.bnez", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL,=
- rv_op_bne
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.slli", rv_codec_ci_sh6, rv_fmt_rd_rs1_imm, NULL,=
- rv_op_slli
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.fldsp", rv_codec_ci_ldsp, rv_fmt_frd_offset_rs1,=
- NULL,
-> rv_op_fld },
-> +=C2=A0=C2=A0=C2=A0 { "c.lwsp", rv_codec_ci_lwsp, rv_fmt_rd_offset_rs1, N=
-ULL,
-> rv_op_lw },
-> +=C2=A0=C2=A0=C2=A0 { "c.flwsp", rv_codec_ci_lwsp, rv_fmt_frd_offset_rs1,=
- NULL,
-> rv_op_flw },
-> +=C2=A0=C2=A0=C2=A0 { "c.jr", rv_codec_cr_jr, rv_fmt_rd_rs1_offset, NULL,=
- rv_op_jalr
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.mv", rv_codec_cr_mv, rv_fmt_rd_rs1_rs2, NULL, rv=
-_op_addi },
-> +=C2=A0=C2=A0=C2=A0 { "c.ebreak", rv_codec_ci_none, rv_fmt_none, NULL, rv=
-_op_ebreak
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.jalr", rv_codec_cr_jalr, rv_fmt_rd_rs1_offset, N=
-ULL,
-> rv_op_jalr },
-> +=C2=A0=C2=A0=C2=A0 { "c.add", rv_codec_cr, rv_fmt_rd_rs1_rs2, NULL, rv_o=
-p_add },
-> +=C2=A0=C2=A0=C2=A0 { "c.fsdsp", rv_codec_css_sdsp, rv_fmt_frs2_offset_rs=
-1, NULL,
-> rv_op_fsd },
-> +=C2=A0=C2=A0=C2=A0 { "c.swsp", rv_codec_css_swsp, rv_fmt_rs2_offset_rs1,=
- NULL,
-> rv_op_sw },
-> +=C2=A0=C2=A0=C2=A0 { "c.fswsp", rv_codec_css_swsp, rv_fmt_frs2_offset_rs=
-1, NULL,
-> rv_op_fsw },
-> +=C2=A0=C2=A0=C2=A0 { "c.ld", rv_codec_cl_ld, rv_fmt_rd_offset_rs1, NULL,=
- rv_op_ld
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.sd", rv_codec_cs_sd, rv_fmt_rs2_offset_rs1, NULL=
-,=C2=A0 rv_op_sd
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.addiw", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv=
-_op_addiw
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.ldsp", rv_codec_ci_ldsp, rv_fmt_rd_offset_rs1, N=
-ULL,
-> rv_op_ld },
-> +=C2=A0=C2=A0=C2=A0 { "c.sdsp", rv_codec_css_sdsp, rv_fmt_rs2_offset_rs1,=
- NULL,
-> rv_op_sd },
-> +=C2=A0=C2=A0=C2=A0 { "c.lq", rv_codec_cl_lq, rv_fmt_rd_offset_rs1, NULL,=
- rv_op_lq
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.sq", rv_codec_cs_sq, rv_fmt_rs2_offset_rs1, NULL=
-, rv_op_sq
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.lqsp", rv_codec_ci_lqsp, rv_fmt_rd_offset_rs1, N=
-ULL,
-> rv_op_lq },
-> +=C2=A0=C2=A0=C2=A0 { "c.sqsp", rv_codec_css_sqsp, rv_fmt_rs2_offset_rs1,=
- NULL,
-> rv_op_sq },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "nop", rv_codec_i, rv_fmt_none },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "mv", rv_codec_i, rv_fmt_rd_rs1 },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "not", rv_codec_i, rv_fmt_rd_rs1 },
-> @@ -2649,10 +2610,8 @@ static const rv_opcode_data rvi_opcode_data[]
-> =3D {
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "ssrdp", rv_codec_r, rv_fmt_rd },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "ssamoswap.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs=
-2_rs1 },
-> =C2=A0=C2=A0=C2=A0=C2=A0 { "ssamoswap.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs=
-2_rs1 },
-> -=C2=A0=C2=A0=C2=A0 { "c.sspush", rv_codec_cmop_ss, rv_fmt_rs2, NULL, rv_=
-op_sspush,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sspush, 0 },
-> -=C2=A0=C2=A0=C2=A0 { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL,
-> rv_op_sspopchk,
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rv_op_sspopchk, 0 },
-> +=C2=A0=C2=A0=C2=A0 { "c.sspush", rv_codec_cmop_ss, rv_fmt_rs2, NULL, rv_=
-op_sspush
-> },
-> +=C2=A0=C2=A0=C2=A0 { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL,
-> rv_op_sspopchk },
-> =C2=A0=C2=A0=C2=A0 { "cbo.inval", rv_codec_r, rv_fmt_rs1 },
-> =C2=A0=C2=A0=C2=A0 { "cbo.clean", rv_codec_r, rv_fmt_rs1 },
-> =C2=A0=C2=A0=C2=A0 { "cbo.flush", rv_codec_r, rv_fmt_rs1 },
-> @@ -5397,24 +5356,10 @@ static const rv_opcode_data
-> *decode_inst_lift_pseudo(rv_decode *dec,
-> =C2=A0
-> =C2=A0/* decompress instruction */
-> =C2=A0
-> -static const rv_opcode_data *decode_inst_decompress(rv_decode *dec,
-> rv_isa isa,
-> +static const rv_opcode_data *decode_inst_decompress(rv_decode *dec,
+> @@ -326,10 +326,6 @@ typedef enum {
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgez =3D 295,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bltz =3D 296,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_bgtz =3D 297,
+> -=C2=A0=C2=A0=C2=A0 rv_op_ble =3D 298,
+> -=C2=A0=C2=A0=C2=A0 rv_op_bleu =3D 299,
+> -=C2=A0=C2=A0=C2=A0 rv_op_bgt =3D 300,
+> -=C2=A0=C2=A0=C2=A0 rv_op_bgtu =3D 301,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_j =3D 302,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_ret =3D 303,
+> =C2=A0=C2=A0=C2=A0=C2=A0 rv_op_jr =3D 304,
+> @@ -1062,10 +1058,6 @@ static const rvc_constraint rvcc_blez[] =3D {
+> rvc_rs1_eq_x0, rvc_end };
+> =C2=A0static const rvc_constraint rvcc_bgez[] =3D { rvc_rs2_eq_x0, rvc_en=
+d
+> };
+> =C2=A0static const rvc_constraint rvcc_bltz[] =3D { rvc_rs2_eq_x0, rvc_en=
+d
+> };
+> =C2=A0static const rvc_constraint rvcc_bgtz[] =3D { rvc_rs1_eq_x0, rvc_en=
+d
+> };
+> -static const rvc_constraint rvcc_ble[] =3D { rvc_end };
+> -static const rvc_constraint rvcc_bleu[] =3D { rvc_end };
+> -static const rvc_constraint rvcc_bgt[] =3D { rvc_end };
+> -static const rvc_constraint rvcc_bgtu[] =3D { rvc_end };
+> =C2=A0static const rvc_constraint rvcc_j[] =3D { rvc_rd_eq_x0, rvc_end };
+> =C2=A0static const rvc_constraint rvcc_ret[] =3D { rvc_rd_eq_x0,
+> rvc_rs1_eq_ra,
 > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
 =A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 const
-> rv_opcode_data *op)
-> =C2=A0{
-> -=C2=A0=C2=A0=C2=A0 int decomp_op;
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rvc_end };
+> @@ -1123,24 +1115,12 @@ static const rv_comp_data rvcp_bne[] =3D {
+> =C2=A0static const rv_comp_data rvcp_blt[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_bltz, rvcc_bltz },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_bgtz, rvcc_bgtz },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_bgt, rvcc_bgt },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> =C2=A0};
+> =C2=A0
+> =C2=A0static const rv_comp_data rvcp_bge[] =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_blez, rvcc_blez },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_bgez, rvcc_bgez },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_ble, rvcc_ble },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> -};
 > -
-> -=C2=A0=C2=A0=C2=A0 switch (isa) {
-> -=C2=A0=C2=A0=C2=A0 case rv32:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 decomp_op =3D op->decomp_rv32=
-;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> -=C2=A0=C2=A0=C2=A0 case rv64:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 decomp_op =3D op->decomp_rv64=
-;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> -=C2=A0=C2=A0=C2=A0 case rv128:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 decomp_op =3D op->decomp_rv12=
-8;
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> -=C2=A0=C2=A0=C2=A0 default:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_assert_not_reached();
-> -=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0 int decomp_op =3D op->decomp;
+> -static const rv_comp_data rvcp_bltu[] =3D {
+> -=C2=A0=C2=A0=C2=A0 { rv_op_bgtu, rvcc_bgtu },
+> -=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> -};
+> -
+> -static const rv_comp_data rvcp_bgeu[] =3D {
+> -=C2=A0=C2=A0=C2=A0 { rv_op_bleu, rvcc_bleu },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { rv_op_illegal, NULL }
+> =C2=A0};
 > =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (decomp_op !=3D rv_op_illegal) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dec->op =3D decomp_op;
-> @@ -5473,7 +5418,7 @@ static GString *disasm_inst(rv_isa isa,
-> uint64_t pc, rv_inst inst,
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 op =3D &dec.opcode_data[dec.op];
-> =C2=A0=C2=A0=C2=A0=C2=A0 decode_inst_operands(&dec, isa, op);
-> -=C2=A0=C2=A0=C2=A0 op =3D decode_inst_decompress(&dec, isa, op);
-> +=C2=A0=C2=A0=C2=A0 op =3D decode_inst_decompress(&dec, op);
-> =C2=A0=C2=A0=C2=A0=C2=A0 op =3D decode_inst_lift_pseudo(&dec, op);
-> =C2=A0=C2=A0=C2=A0=C2=A0 return format_inst(24, &dec, op);
-> =C2=A0}
+> @@ -1665,8 +1645,8 @@ static const rv_opcode_data rvi_opcode_data[] =3D
+> {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bne", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvc=
+p_bne },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "blt", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvc=
+p_blt },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bge", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvc=
+p_bge },
+> -=C2=A0=C2=A0=C2=A0 { "bltu", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bl=
+tu },
+> -=C2=A0=C2=A0=C2=A0 { "bgeu", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bg=
+eu },
+> +=C2=A0=C2=A0=C2=A0 { "bltu", rv_codec_sb, rv_fmt_rs1_rs2_offset },
+> +=C2=A0=C2=A0=C2=A0 { "bgeu", rv_codec_sb, rv_fmt_rs1_rs2_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "lb", rv_codec_i, rv_fmt_rd_offset_rs1 },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "lh", rv_codec_i, rv_fmt_rd_offset_rs1 },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "lw", rv_codec_i, rv_fmt_rd_offset_rs1 },
+> @@ -1954,10 +1934,10 @@ static const rv_opcode_data rvi_opcode_data[]
+> =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgez", rv_codec_sb, rv_fmt_rs1_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bltz", rv_codec_sb, rv_fmt_rs1_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "bgtz", rv_codec_sb, rv_fmt_rs2_offset },
+> -=C2=A0=C2=A0=C2=A0 { "ble", rv_codec_sb, rv_fmt_rs2_rs1_offset },
+> -=C2=A0=C2=A0=C2=A0 { "bleu", rv_codec_sb, rv_fmt_rs2_rs1_offset },
+> -=C2=A0=C2=A0=C2=A0 { "bgt", rv_codec_sb, rv_fmt_rs2_rs1_offset },
+> -=C2=A0=C2=A0=C2=A0 { "bgtu", rv_codec_sb, rv_fmt_rs2_rs1_offset },
+> +=C2=A0=C2=A0=C2=A0 { },
+> +=C2=A0=C2=A0=C2=A0 { },
+> +=C2=A0=C2=A0=C2=A0 { },
+> +=C2=A0=C2=A0=C2=A0 { },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "j", rv_codec_uj, rv_fmt_offset },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "ret", rv_codec_i, rv_fmt_none },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "jr", rv_codec_i, rv_fmt_rs1 },
 
