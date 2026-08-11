@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F5EC5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD6AC5CFEB
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpNv-00026Q-VM; Tue, 11 Aug 2026 12:31:28 -0400
+	id 1wtpOa-0004wv-EV; Tue, 11 Aug 2026 12:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNr-0001st-7e
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOY-0004mc-0X
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNo-0000nQ-VC
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOV-0000xP-M3
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465880;
+ s=mimecast20190719; t=1786465923;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IrJ+2OfQv+KByRO7sKLKGfL+OVLjZ4JAkfZsy88ftpA=;
- b=LUZxXAFgpGyXrJ3AXYRjlM3mukqH6TKInwwtnYtBqL+2akctFwn9XoTXxwOomNDT3jHLoP
- A1Y9l7Im9JJH3AF+6ZbuADy0b6EJaDLq8wbR3g7u+DlwOhRHYc4dwhpQSrTMQSvWoItdVS
- HIK3sv1YrRjkO/96txCg8PQeWz5eoew=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Nzxhg5EtdsbPFhxM9OxJLcKjuCS3+iMJ8/d5JpbJPEw=;
+ b=eixjbBpKIeppLyNn/a+nrH3D0whaBx/xExhmHTcQiFpuFfYVzOjYCyHKJaA82GR4f2S9vO
+ jl+XH0u0k6A6n0G/kL+d068U8a8evvfasAdLkqSntvgcs8FJUCryAZofIjAw0c/qJfkaZU
+ yvRKF+ZUTOVci6WkaGOZT764AWJLuWg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-RxQvZBJWPSyDJHMViCI8OQ-1; Tue,
- 11 Aug 2026 12:31:17 -0400
-X-MC-Unique: RxQvZBJWPSyDJHMViCI8OQ-1
-X-Mimecast-MFC-AGG-ID: RxQvZBJWPSyDJHMViCI8OQ_1786465876
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-lvd707_uOzC0wr46runsAQ-1; Tue,
+ 11 Aug 2026 12:31:59 -0400
+X-MC-Unique: lvd707_uOzC0wr46runsAQ-1
+X-Mimecast-MFC-AGG-ID: lvd707_uOzC0wr46runsAQ_1786465918
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 077F418009C0; Tue, 11 Aug 2026 16:31:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 731881800650; Tue, 11 Aug 2026 16:31:58 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 53994195DF91; Tue, 11 Aug 2026 16:31:14 +0000 (UTC)
+ id A83A0195DF91; Tue, 11 Aug 2026 16:31:56 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 43/83] tests/qtest: add PCA9555 register access tests
-Date: Tue, 11 Aug 2026 18:28:58 +0200
-Message-ID: <20260811162938.1403216-44-clg@redhat.com>
+Subject: [PULL 63/83] tests/functional/arm/test_aspeed_ast2600_sdk: Update
+ ASPEED SDK v11.03
+Date: Tue, 11 Aug 2026 18:29:18 +0200
+Message-ID: <20260811162938.1403216-64-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -83,85 +84,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Emmanuel Blot <emmanuel.blot@free.fr>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Introduce a qtest for the PCA9555 16-bit I/O port expander.
-
-This first set covers the power-on reset defaults and the read/write
-behaviour of the OUTPUT, CONFIG and POLARITY register pairs.
-
-Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-10-814575bc076b@free.fr
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260804081955.1563537-6-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/qtest/pca9555-test.c | 44 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build    |  1 +
- 2 files changed, 45 insertions(+)
- create mode 100644 tests/qtest/pca9555-test.c
+ tests/functional/arm/test_aspeed_ast2600_sdk.py     | 8 ++++----
+ tests/functional/arm/test_aspeed_ast2600_sdk_515.py | 8 ++++----
+ tests/functional/arm/test_aspeed_ast2600_sdk_otp.py | 8 ++++----
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/tests/qtest/pca9555-test.c b/tests/qtest/pca9555-test.c
-new file mode 100644
-index 000000000000..5945c3441e92
---- /dev/null
-+++ b/tests/qtest/pca9555-test.c
-@@ -0,0 +1,44 @@
-+/*
-+ * QTest testcase for the PCA9555 16-bit I/O port expander
-+ *
-+ * Copyright (c) Meta Platforms, Inc. and affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/gpio/pca9552_regs.h"
-+#include "libqos/i2c.h"
-+#include "libqos/qgraph.h"
-+
-+#define PCA9555_TEST_ADDR 0x20
-+
-+/* Verify power-on reset defaults match the PCA9555 datasheet. */
-+static void test_reset_defaults(void *obj, void *data, QGuestAllocator *alloc)
-+{
-+    QI2CDevice *dev = (QI2CDevice *)obj;
-+
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT0), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_INPUT1), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT0), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_OUTPUT1), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_POLARITY0), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_POLARITY1), ==, 0x00);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG0), ==, 0xFF);
-+    g_assert_cmphex(i2c_get8(dev, PCA9535_CONFIG1), ==, 0xFF);
-+}
-+
-+static void pca9555_register_nodes(void)
-+{
-+    QOSGraphEdgeOptions opts = {
-+        .extra_device_opts = "address=0x20"
-+    };
-+    add_qi2c_address(&opts, &(QI2CAddress) { PCA9555_TEST_ADDR });
-+
-+    qos_node_create_driver("pca9555", i2c_device_create);
-+    qos_node_consumes("pca9555", "i2c-bus", &opts);
-+
-+    qos_add_test("reset-defaults", "pca9555", test_reset_defaults, NULL);
-+}
-+
-+libqos_init(pca9555_register_nodes);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 5e1fc597e6d1..e92130bd04dd 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -319,6 +319,7 @@ qos_test_ss.add(
-   'tulip-test.c',
-   'nvme-test.c',
-   'pca9552-test.c',
-+  'pca9555-test.c',
-   'pci-test.c',
-   'pcnet-test.c',
-   'rs5c372-test.c',
+diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+index cabbe230c4cc..4fc594dfd5a1 100755
+--- a/tests/functional/arm/test_aspeed_ast2600_sdk.py
++++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py
+@@ -14,9 +14,9 @@
+ 
+ class AST2600Machine(AspeedTest):
+ 
+-    ASSET_SDK_V1101_AST2600 = Asset(
+-        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.01/ast2600-default-image.tar.gz',
+-        '3c5b4d4ccf27b0d208a073f98426db54cd751b96143180cd15df1a83978f832c')
++    ASSET_SDK_V1103_AST2600 = Asset(
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.03/ast2600-default-image.tar.gz',
++        '47e3656a14bf7a4de28d3dfbf48bc2325443bc42d270f3bc82646f92f6dea165')
+ 
+     def do_ast2600_pcie_test(self):
+         exec_command_and_wait_for_pattern(self,
+@@ -49,7 +49,7 @@ def test_arm_ast2600_evb_sdk(self):
+         self.set_machine('ast2600-evb')
+         self.require_netdev('user')
+ 
+-        self.archive_extract(self.ASSET_SDK_V1101_AST2600)
++        self.archive_extract(self.ASSET_SDK_V1103_AST2600)
+ 
+         self.vm.add_args('-device',
+             'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
+diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk_515.py b/tests/functional/arm/test_aspeed_ast2600_sdk_515.py
+index a8e7faff4890..f5b14de083a7 100755
+--- a/tests/functional/arm/test_aspeed_ast2600_sdk_515.py
++++ b/tests/functional/arm/test_aspeed_ast2600_sdk_515.py
+@@ -10,14 +10,14 @@
+ 
+ class AST2600Machine(AspeedTest):
+ 
+-    ASSET_SDK_V1101_AST2600_515 = Asset(
+-        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.01/ast2600-default-515-image.tar.gz',
+-        'f3ccf1c08db71cf891637fc73131b80b2c0c0e005c06d5dcae0cf74fc458b43c')
++    ASSET_SDK_V1103_AST2600_515 = Asset(
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.03/ast2600-default-515-image.tar.gz',
++        'c79d0197106f146476e82bb878e5438f6569bd30f3b53fbb520b59bc54f6b7dc')
+ 
+     def test_arm_ast2600_evb_sdk_515(self):
+         self.set_machine('ast2600-evb')
+ 
+-        self.archive_extract(self.ASSET_SDK_V1101_AST2600_515)
++        self.archive_extract(self.ASSET_SDK_V1103_AST2600_515)
+ 
+         self.do_test_arm_aspeed_sdk_start(
+             self.scratch_file("ast2600-default-515-image", "image-bmc"))
+diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py b/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py
+index f24dea1e8f03..5813c59bd6db 100755
+--- a/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py
++++ b/tests/functional/arm/test_aspeed_ast2600_sdk_otp.py
+@@ -12,15 +12,15 @@
+ 
+ class AST2600Machine(AspeedTest):
+ 
+-    ASSET_SDK_V1101_AST2600 = Asset(
+-        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.01/ast2600-default-image.tar.gz',
+-        '3c5b4d4ccf27b0d208a073f98426db54cd751b96143180cd15df1a83978f832c')
++    ASSET_SDK_V1103_AST2600 = Asset(
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.03/ast2600-default-image.tar.gz',
++        '47e3656a14bf7a4de28d3dfbf48bc2325443bc42d270f3bc82646f92f6dea165')
+ 
+     def test_arm_ast2600_otp_blockdev_device(self):
+         self.vm.set_machine("ast2600-evb")
+         self.require_netdev('user')
+ 
+-        image_path = self.archive_extract(self.ASSET_SDK_V1101_AST2600)
++        image_path = self.archive_extract(self.ASSET_SDK_V1103_AST2600)
+         otp_img = self.generate_otpmem_image()
+ 
+         self.vm.set_console()
 -- 
 2.55.0
 
