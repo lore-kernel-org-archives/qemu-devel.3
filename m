@@ -4,68 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1580DC5B574
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DCB1C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 08:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wthWY-0004Is-Ev; Tue, 11 Aug 2026 04:07:51 -0400
+	id 1wtha4-0005uu-7e; Tue, 11 Aug 2026 04:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wthWT-0004Ia-F1
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:07:47 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wthWQ-0004VZ-Cr
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:07:45 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxdvA82Hpq7xsAAA--.442S3;
- Tue, 11 Aug 2026 16:07:25 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAx3c442HpqnVUAAA--.2144S2;
- Tue, 11 Aug 2026 16:07:22 +0800 (CST)
-Subject: Re: [PATCH v3 2/4] target/loongarch: Add kvm support dintc
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
-References: <20260525084645.3328690-1-gaosong@loongson.cn>
- <20260525084645.3328690-3-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <8b2ce6dc-cc47-4056-a0f7-f8da469b5657@loongson.cn>
-Date: Tue, 11 Aug 2026 16:07:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wthZi-0005eY-Q0
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:11:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wthZg-0005BZ-8z
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 04:11:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786435862;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PCqV+LwYeH1TzbOC6x2tcguj3jnVdShCKf3wQhrW4jI=;
+ b=WLXiBiyopXLcDBpMxvSkZBYtyX4Ipyp9qZe1CNWz4KfwjfctbK+70PWph20TDgp2oqOQwl
+ dYKcfR5tamqNtjEKipwk+2z2iqPcvlRX0P3k+xBcXJF+HmctHp/MVe24RstPJW8Hm5Qda1
+ A2ScpMf3H+7b4pwkDLt/OxbTRlPl/tQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-120-QY-h7BZ-MqqXehfd69opeQ-1; Tue, 11 Aug 2026 04:11:01 -0400
+X-MC-Unique: QY-h7BZ-MqqXehfd69opeQ-1
+X-Mimecast-MFC-AGG-ID: QY-h7BZ-MqqXehfd69opeQ_1786435860
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so23755145e9.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 01:11:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786435860; x=1787040660;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PCqV+LwYeH1TzbOC6x2tcguj3jnVdShCKf3wQhrW4jI=;
+ b=DyRkG5jwXTYj6ahvziCs9GPrkZTmrVkAJn72HIZ7VHuMk3maKXCLpvDKFTbBSlqVjF
+ GSU1f2l3RIJykzCTcguLYXyjiTe8v8NN6obMIgvE8OXtXhUM4LKdHCaq+ZSKbobYjffz
+ k2FAtzpcsXXPSA9ToBTJisD7/LGvQDY80Ii7nkLr0eR3CnUa/NHZntccFmOCCgz77i6T
+ rGFbsa2WsFqq2K1i0XEFCBKfqw5I9ZMdGiN8bf4fvjwVntJl2jmrk3eL5bwAZpJEzvw0
+ q7HAAqN6Sa+Mez0QwDYAibGILRM7edOtWXhtsvTPSAmXLvLumojpzKFkOWXFRAKfnFO2
+ tz3g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp4xoPtJW2ZiCCW9+KsqOuJhSByApcJXvaP2QiyQHP3pMBsUB6/qBtiM0DVqdvqsczHklQxU0g3HfJx@nongnu.org
+X-Gm-Message-State: AOJu0YwioFv2dxOU6CrZQ7IL4cHLg1IdfnHYsg4ohpDZcdAPfvrn1xJX
+ +1uQgobyiqMNQ5RSSpQ5yzqx6QhqeKzDRliTFoAdeic6YNPByWmx7MXVvSDnTqEHNQfp52Z3Jnb
+ JlsFhVZft2GY8jWR0xpj9/ELrdj2qa1k8HNoxf11aKubPs0T2Pyzhih/w
+X-Gm-Gg: AR+sD10oB68Xp+ZPUO7YSFZyvpQuXoVqCbH7Y5orV5F83xgLutfi12o6ZaMl+wPXE7P
+ jnJKgkmZIDGeQDcJMtckwN47LIWr/W4C11lcJ474dml1LNuH9+JZKCTxnqbwm/7IMBW7JD8fkvm
+ VDE/rNMcKSixlObwRSVifdRiNZvwyR9RBv+rF8oHeMkOMTEwxZuRGUyxKjOB52Ib70bXRSeNVe5
+ SHG6Oy6Wem+8jcXG/Db+VYmbs2XExzTVKovAfDu9bnR6rIvljm3tRR0pccdE59I4RDEskm+s4pk
+ YxAB2BTI6RziRML06ZMJgJ+J+IlL8RNQVDlFhw1Lwk3nOQySsehUmg205JPTa+fEdePcrgQncwv
+ 5JEn+6aqUwU1/WNvrGTfHNoMuCiTNiSb+RqkH+tII5lWrO5Bs
+X-Received: by 2002:a05:600c:4585:b0:495:4e1d:82df with SMTP id
+ 5b1f17b1804b1-499784612aemr23515625e9.10.1786435860001; 
+ Tue, 11 Aug 2026 01:11:00 -0700 (PDT)
+X-Received: by 2002:a05:600c:4585:b0:495:4e1d:82df with SMTP id
+ 5b1f17b1804b1-499784612aemr23513965e9.10.1786435859092; 
+ Tue, 11 Aug 2026 01:10:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49977e86b55sm41224385e9.4.2026.08.11.01.10.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Aug 2026 01:10:58 -0700 (PDT)
+Message-ID: <de4f28a8-5f6a-4675-8daa-327ee7d938d7@redhat.com>
+Date: Tue, 11 Aug 2026 10:10:55 +0200
 MIME-Version: 1.0
-In-Reply-To: <20260525084645.3328690-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 10/18] target/arm/kvm: Retrieve writable ID reg map
 Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-11-eric.auger@redhat.com>
+ <650A3325-5A8A-477A-9E60-D1D02363FA19@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <650A3325-5A8A-477A-9E60-D1D02363FA19@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAx3c442HpqnVUAAA--.2144S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3JFWUtFW5XrW7ZF4DJryrAFc_yoW7Zw1xpr
- ZxAFZ09FWUtFZrA3Z3XF9Y9r13Xr4xKw429FyxGrySyF1DWryUXF18KanxJFy5A3s5uFyS
- vF4rCF43uanrJacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.998,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.746,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,182 +130,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Khushit,
+On 8/6/26 6:52 AM, Khushit Shah wrote:
+>
+>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> From: Cornelia Huck <cohuck@redhat.com>
+>>
+>> Add an helper to retrieve the writable id reg bitmask.
+>>
+>> then retrieve the writable_map array and dispatch it in the writable_map
+>> fields of arm64_id_regs[] elements.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>
+>> ---
+>>
+>> v5 -> v6
+>> - use arm64_id_regs[].writable_map
+>> - squashed 2 commits (helper + user)
+>> - removed stub
+>> ---
+>> target/arm/kvm.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++
+>> 1 file changed, 61 insertions(+)
+>>
+>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index d40a6a9859..d270f9870e 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+>> @@ -28,6 +28,7 @@
+>> #include "kvm_arm.h"
+>> #include "cpu.h"
+>> #include "cpu-sysregs.h"
+>> +#include "cpu-idregs.h"
+>> #include "trace.h"
+>> #include "internals.h"
+>> #include "hw/pci/pci.h"
+>> @@ -51,6 +52,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+>> static bool cap_has_mp_state;
+>> static bool cap_has_inject_serror_esr;
+>> static bool cap_has_inject_ext_dabt;
+>> +static bool writable_map_dispatched;
+>>
+>> /**
+>>  * ARMHostCPUFeatures: information about the host CPU (identified
+>> @@ -273,6 +275,21 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+>>     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+>> }
+>>
+>> +static int kvm_feature_idx_to_idregs_idx(int kidx)
+>> +{
+>> +    int op1, crm, op2;
+>> +    ARMSysRegs sysreg;
+>> +
+>> +    op1 = kidx / 64;
+>> +    if (op1 == 2) {
+>> +        op1 = 3;
+>> +    }
+>> +    crm = (kidx % 64) / 8;
+>> +    op2 = kidx % 8;
+>> +    sysreg = ENCODE_ID_REG(3, op1, 0, crm, op2);
+>> +    return get_sysreg_idx(sysreg);
+>> +}
+>> +
+>> static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>> {
+>>     /* Identify the feature bits corresponding to the host CPU, and
+>> @@ -480,9 +497,53 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>     ahcf->features = features;
+>> }
+>>
+>> +static int kvm_arm_get_writable_id_regs(uint64_t *idregmap)
+>> +{
+> This should probably be gated with kvm_enabled()?
+>
+> qtest-aarch64/device-introspect-test fails on my aarch64 devvm, which does not
+> have KVM.
+Thanks for the report.
 
+I will fix that in next respin
 
-On 2026/5/25 下午4:46, Song Gao wrote:
-> This patch adds Kvm put/get msgint CSRs and check msgint feature.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu.c     |  5 ++-
->   target/loongarch/cpu.h     |  1 +
->   target/loongarch/kvm/kvm.c | 74 ++++++++++++++++++++++++++++++++++++++
->   3 files changed, 77 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 8f277f7696..64f437fcba 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
->   
->       cpu->ptw = ON_OFF_AUTO_AUTO;
->       if (tcg_enabled()) {
-> -        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-> -        cpu->msgint = ON_OFF_AUTO_AUTO;
-> -
->           uint32_t data = cpu->env.cpucfg[2];
->           data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
->           /* Enable LA v1.1 instructions */
-> @@ -460,6 +457,8 @@ static void loongarch_max_initfn(Object *obj)
->           data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
->           cpu->env.cpucfg[3] = data;
->       }
-> +    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-> +    cpu->msgint = ON_OFF_AUTO_AUTO;
->   }
->   
->   #if defined(CONFIG_KVM)
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index 096d778928..e6bbcded95 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -301,6 +301,7 @@ enum loongarch_features {
->       LOONGARCH_FEATURE_PV_IPI,
->       LOONGARCH_FEATURE_STEALTIME,
->       LOONGARCH_FEATURE_PTW,
-> +    LOONGARCH_FEATURE_MSGINT,
->   };
->   
->   typedef struct  LoongArchBT {
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index 4af4ab2ed0..af08f551a0 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -36,6 +36,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
->       KVM_CAP_LAST_INFO
->   };
->   
-> +static bool kvm_cpu_has_msgint(CPUState *cs)
-> +{
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +
-> +    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-> +}
-> +
->   static int kvm_get_stealtime(CPUState *cs)
->   {
->       CPULoongArchState *env = cpu_env(cs);
-> @@ -359,6 +366,25 @@ static int kvm_loongarch_get_csr(CPUState *cs)
->   
->       ret |= kvm_loongarch_get_pmu(cs);
->   
-> +    /*
-> +     * CSR register MSGIS getting must be put after CSR register CSR_ESTAT,
-> +     * Since register CSR_ESTAT will sync software pending MSGINT status to
-> +     * hardware register and modify HW CSR MSGIS registers.
-> +     */
-> +    if (kvm_cpu_has_msgint(cs)) {
-> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-> +                               &env->CSR_MSGIS[0]);
-> +
-> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-> +                               &env->CSR_MSGIS[1]);
-> +
-> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-> +                               &env->CSR_MSGIS[2]);
-> +
-> +        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-> +                               &env->CSR_MSGIS[3]);
-> +    }
-> +
->       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
->                              &env->CSR_TVAL);
->   
-> @@ -534,6 +560,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
->   
->       ret |= kvm_loongarch_put_pmu(cs);
->   
-> +    if (kvm_cpu_has_msgint(cs)) {
-> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-> +                               &env->CSR_MSGIS[0]);
-> +
-> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-> +                               &env->CSR_MSGIS[1]);
-> +
-> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-> +                               &env->CSR_MSGIS[2]);
-> +
-> +        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-> +                               &env->CSR_MSGIS[3]);
-> +    }
-> +
->       /*
->        * timer cfg must be put at last since it is used to enable
->        * guest timer
-> @@ -983,6 +1023,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
->           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->           return (ret == 0);
->   
-> +    case LOONGARCH_FEATURE_MSGINT:
-> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
-> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-> +        return (ret == 0);
-> +
->       default:
->           return false;
->       }
-> @@ -1156,6 +1202,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
->       return 0;
->   }
->   
-> +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-> +{
-> +    CPULoongArchState *env = cpu_env(cs);
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    bool kvm_supported;
-> +
-> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
-> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
-> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
-> +        if (kvm_supported) {
-> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-> +        } else {
-> +            error_setg(errp, "'msgint' feature not supported by KVM on this host");
-> +            return -ENOTSUP;
-> +        }
-> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->   {
->       return 0;
-> @@ -1211,6 +1279,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->           return ret;
->       }
->   
-> +    ret = kvm_cpu_check_msgint(cs, &local_err);
-> +    if (ret < 0) {
-> +        error_report_err(local_err);
-> +        return ret;
-> +    }
-> +
->       return 0;
->   }
->   
-> 
-With netperf test, linux kernel need disable irqbalance, else there is 
-error reporting from kernel avec driver.
-    Unexpected IRQ occurs on CPU#0 [vector 21]
-It seems it is the problem of linux kernel avec driver.
-
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Eric
+>
+>> +    int cap_writable_id_regs;
+>> +    struct reg_mask_range range = {
+>> +        .range = KVM_ARM_FEATURE_ID_RANGE,
+>> +        .reserved = {0},
+>> +        .addr = (uint64_t)idregmap,
+>> +    };
+>> +
+>> +    cap_writable_id_regs =
+>> +        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
+>> +
+>> +    if (!cap_writable_id_regs ||
+>> +        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
+>> +        return -ENOSYS;
+>> +    }
+>> +
+>> +    if (kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range)) {
+>> +        return -errno;
+>> +    }
+>> +    return 0;
+>> +}
+>> +
+>> void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+>> {
+>>     CPUARMState *env = &cpu->env;
+>> +    uint64_t *writable_map;
+>> +
+>> +    writable_map = g_new(uint64_t, KVM_ARM_FEATURE_ID_RANGE_SIZE);
+>> +
+>> +    if (!writable_map_dispatched &&
+>> +        !kvm_arm_get_writable_id_regs(writable_map)) {
+>> +        for (int i = 0; i < KVM_ARM_FEATURE_ID_RANGE_SIZE; i++) {
+>> +            uint64_t mask = writable_map[i];
+>> +
+>> +            if (mask) {
+>> +                int idx = kvm_feature_idx_to_idregs_idx(i);
+>> +
+>> +                if (idx < 0 || idx > ARRAY_SIZE(arm64_id_regs)) {
+>> +                    continue;
+>> +                }
+>> +                arm64_id_regs[idx].writable_mask = mask;
+>> +            }
+>> +        }
+>> +        writable_map_dispatched = true;
+>> +    }
+>> +    g_free(writable_map);
+>>
+>>     if (!arm_host_cpu_features.dtb_compatible) {
+>>         kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
+>> -- 
+>> 2.53.0
+>>
 
 
