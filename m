@@ -4,96 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB88C5AC67
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 18:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DC2C5AC67
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 18:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtrdJ-0007yc-Jw; Tue, 11 Aug 2026 14:55:29 -0400
+	id 1wtrg9-00008p-14; Tue, 11 Aug 2026 14:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrdD-0007uh-3p; Tue, 11 Aug 2026 14:55:23 -0400
-Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtrfx-00008A-8H
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 14:58:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wtrd5-0006w0-PJ; Tue, 11 Aug 2026 14:55:22 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 5DCF31400074;
- Tue, 11 Aug 2026 14:55:13 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Tue, 11 Aug 2026 14:55:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786474513; x=1786560913; bh=vhQoxLGt+oLkyO8rEIasdHXzQ/bCWntt
- L41he0TzBm0=; b=WCCbO9zf5zKMJsTzztnzkPX8eCZXmrefsYRHoUxkeS4Ebr2N
- HkNR45dYIgaUhA641CwtY91iPIvD7C/YATFATrZH+4S/FajyRWql2NjZT8hHbWDl
- /J5epC5mTubVz5cEM0PLiCAHuScTVjJmi7Y4DoIdXedT4LD+qLUByWFvstOZGczi
- 5NkfDJr8IhOaC11Xt6RNOlIsd7Ayz6dbePAb9EnPmAqFoR+ekegqD5QZtQlpG+jt
- y3gT5kgd4+wH/b9QL/3OFm3+QnWA8k1FRPB7ItVq/NInsdrLVtasAWGbVC1s2WZE
- 9sOa/nMdfC1kH6qGUFdjtZpArOQbBTlQ9KKSlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786474513; x=
- 1786560913; bh=vhQoxLGt+oLkyO8rEIasdHXzQ/bCWnttL41he0TzBm0=; b=Y
- bNh26c6eA//iX8JyDDnvEhFTtGHpvw/diFRpxBwy9RZJ4vESp/TWGwGAhV7kNGsD
- SfpOlqBeS20YA+Nlp3oOLc/3QGoXch8cIpxpBdWDINSMMFcT9Lh08nX+Jye/GnIa
- h7rcsKj1YnFPi02r23NaJYbs3N64wXVwqYbfKY1n76BgO4mqjmshbWx0YcX7QsFE
- W2tz55jpDKGgJGKaKGYXk04+6EgHqhHeTSHeR0hXfjiX3yVVmwVq7h4JRxp9g5oK
- kaYyMlUhC7iuUZbd822/i67H2teWT1yN0a6GxQpv7VbtskJryJGMsW6vuw3rb6sR
- 2z+oDPG2MsN7mzy+6VZ/Q==
-X-ME-Sender: <xms:EHB7ak1OGmuridH21VoUpT4wrgVbp0cEPWtwJDdIk3d4iTnEgCIF3Q>
- <xme:EHB7aq9XbSges8aUFo1o7o2j0jDUP-_IIOBVuUk_y7jvDu6gV_Z35LT8BhuWEtkUE
- hBcuzwCUOCPhkbSUrqgFJ2DwfhfsHjja7MY1ynecY8May20jm1YdMg>
-X-ME-Received: <xmr:EHB7ap6qdNqje-ruiuJwuLOM0hE8lYhb2Tl0nDXj6Rjv5hh4IPYqYDyAf-3U1d-8guc58g>
-X-ME-Proxy-Cause: dmFkZTF7rlekoM20D+hW9PlrTtvLQon6Nu0GfMOx8d4Soz6WfdbAYxDMB5N6kxMQZtk8xK
- 5+LrkOYEdk0NEctTsC6fSqSssv1X9sxH+HvdHrdZ1CXVjc+Xkhn6xEgEDOzvO606q0P9AI
- NhhwCqPXAXinwQmBngHbmxQr3uKf3eWWdme6Ypeh5ljpp91Zj7fpe0EOVXSTEeZ3gHI7U9
- 3HUxSkBMCIxUZrJ4XrCvlMGEPfEDr2Tq1Z+51mLLMY3cZrLuFY6w6KA2XM/vtsTVegC7M/
- ZlSgTzhbiMDGxPDseWaojK0c+wjBm2g4Oo07tpxatFPaBYHJJSUVBggUwjXNEviwHTswA0
- /TdzGZpe4AgEAqzTnx9ge3YbY1QK43otE96NC9y5/vRfEwdJP8InPvy4cVdeycPKQFwCmG
- H1l7MRkuyClTiEpi2IanpYKcL9pLNiq7OXyhTFWfpQ/1MXnAIft1+uhk54pQeJ8MtkdR8Z
- ys1EAgBgurTGspwp8yxylIAL8RHUwLmxp6W9zmhp5cOZbCbkX4f/23iPqohjKtMQ5dxEXN
- eVlu8QBJqXX4dd1Udw3U5bnpdwzQWZ1owo2PiUl4JTWHY2yRMTm/78ZV2WAou8U1uxMBEE
- +Tu9EXD9u8FKGWD1LUcytf2MrGPo3NqOAVco8EiOqWHrOj0tSbx9L57IYYJQ
-X-ME-Proxy: <xmx:EHB7aisE0N_vOUkZGSmVCfrMyq-BW_mtz95Vm0GQoRwVz8NICmvG7g>
- <xmx:EHB7ar2hRRnEL15Xe3HsqWpK5lwycS8ZtXrJOkMiDs73_vg2wdgwFw>
- <xmx:EHB7arro34SEAyem8JwqgOkUdykIxEJSu1lQ-uWH6Cm4V6VW5sJn-A>
- <xmx:EHB7arLJb9z9GOprE7o81NL4VfViaJ_ptaQuo81xHER0csvFQu-Myw>
- <xmx:EXB7alid77D-YRWFhZRTzQKE7bBV_cFU-YtVIOpdXRsMcv7qtf16btgh>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Aug 2026 14:55:12 -0400 (EDT)
-Message-ID: <0f8b9bb9579fbfba978d3ae5854b15dc3a0a4f50.camel@alistair23.me>
-Subject: Re: [PATCH v2] target/riscv: Fix memory leak in
- riscv_trigger_unrealize()
-From: Alistair <alistair@alistair23.me>
-To: Zeng Chi <zeng_chi911@163.com>, philmd@oss.qualcomm.com, 
- alistair.francis@wdc.com, chao.liu@processmission.com, 
- daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com, palmer@dabbelt.com, 
- zhiwei_liu@linux.alibaba.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zengchi@kylinos.cn
-Date: Wed, 12 Aug 2026 04:55:11 +1000
-In-Reply-To: <20260724063927.3360599-1-zeng_chi911@163.com>
-References: <9882f9e7-5c05-4a76-95f0-eb8ae8366f62@oss.qualcomm.com>
- <20260724063927.3360599-1-zeng_chi911@163.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wtrfv-0007CK-Cl
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 14:58:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786474689;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
+ b=BcqqTc+uVWHTCnOw5VsYWVBN9Snd4dSkQQUQdsH642g79whJzEDmSTPwkV7OuyPqOYKRRv
+ www40A2OO1CMFWVrhyMBNnao5dD+ZR2XeYjuNYswxmzSgzjwsksX8A6rnQMJVF9K7YNK3h
+ f2/H069NDn0uDk90vgVghds2UexRGq0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-mY9POekwPhSngw8P2CobVQ-1; Tue, 11 Aug 2026 14:58:08 -0400
+X-MC-Unique: mY9POekwPhSngw8P2CobVQ-1
+X-Mimecast-MFC-AGG-ID: mY9POekwPhSngw8P2CobVQ_1786474687
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f81362fb1so44592f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 11:58:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786474687; x=1787079487; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
+ b=DV3ZJrKeovzEmDaH9t7LJ+sMXAcElIGC5PCK4MvtEXiPFH81Xp1sf7KeqDEbjvb/Fd
+ HyIj6FfgxgmA9aURBtKWCNw1CQWNzJi38VFtEVvhOJG4IWxmp9YwoViOtoTuEYLNVejH
+ CktOZxU4HcV7G5X7I0ZBJLClUGiUUfXxqxfi7bFnWzrFae3wxhQTkG/AfJjckZY2gXoD
+ 5O9Ho1AX79xIFYy5kDavqH8wuVFrU6AxLX+cMjfiKAXMv4VqTQZJff1meSFiizj0o2Vy
+ MGyW317TbO6yrzNUzuqtKF9x4w0PlVFZEVkV7BYzaYrn44RfWNc7fcBiF6E0m0hgfQjQ
+ g19Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786474687; x=1787079487;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Xc1gkSgolc5utfV7OvVEF2vGqC1L4wiEzOW0wSghSXI=;
+ b=GzowzVbO/WcdT+Yn3pm+li8Wi606l4JTfsFex1cFCp6rrDxsYaSx809FMpaGufvowF
+ su32HM6ptl3GKCy4uLO6MeNS0hKTsr/7NESoW+jws0j6JasW9qc0dqcye4TXP28sqppB
+ zvMFlxu1b7tQso/kSmkd93NO12BdBaZQJ+4ktsQpvynpjfNmGCekDtFs+ZzayvY7Dwj+
+ XJ890A7QUdhG9HjeJ4PDwBNeZmvmCj5aB3OdOnFDCiYxEo1bt00BzZhmEMldjBeOR4MQ
+ 9oIWPnTKymH4z+eexnalafS9GSY1oibyzby02Wd1AsEi/dUqxoWzx2T7hSmgJqy/goW1
+ 4lag==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoDzFY6S/+V1RQoSHliqI7uHJxUShayFiWrQ8eS74uWUuE/warQ1BbgiFAeMxX6moOIf7qL3oK2XQSG@nongnu.org
+X-Gm-Message-State: AOJu0YyA3AE+onuUMPjCvV7D4WdsPqcRmuUVhFITpkB3wmdm2ZzPKMv2
+ w1/uMMPPdR6jLlMo37X/f8UN/uk195nJ4CJg28HBoPDKv3NXUmdVBTXKaZvOLGNUE7WWYUnjCVp
+ YnBbU+cvMGmmleI1HOkd0UvUNmKDRi50U2oe2sDuaQ0tgn615YWyMTVlL
+X-Gm-Gg: AR+sD11dOFMxhkzho/g5Q6SsiE4edOJb6iBsLgRYWC6FnTOv1sjukNcXeYJPdqspeMs
+ EvhJF5J+865oEf1WOrALmhWJMx7aSm46j+U1bfuHSZaY02O/wO0Y622NTWbH7EA2KAUL31jyouW
+ pSk+tbmiLs9Ibki30fhYKJHQzcufaIQjbjxGvDBXYmtPUM5Z/XeyDV1Gu4dNBbsIOHpF0NAuxUh
+ c5Tj9pSlDXG6hRV8I8d8XiWtUs+grmNT17UNVjvASIFjWqOgJtlNDsi0F9zV/dkDHzojLBnkx5I
+ TSccunVpFa4QxeYkpAQgG3b7SAh79NlUtuBxcgoxHUqxbXuPum9bYl4L6YXHZlNPJx6peLoOwn2
+ LgNEGPrwZi5mPK9hZiHDFLQ==
+X-Received: by 2002:a05:6000:46ce:b0:47f:7786:b00d with SMTP id
+ ffacd0b85a97d-4814addc2a0mr6494925f8f.24.1786474686798; 
+ Tue, 11 Aug 2026 11:58:06 -0700 (PDT)
+X-Received: by 2002:a05:6000:46ce:b0:47f:7786:b00d with SMTP id
+ ffacd0b85a97d-4814addc2a0mr6494886f8f.24.1786474686284; 
+ Tue, 11 Aug 2026 11:58:06 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-39-98.inter.net.il. [80.230.39.98])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48150bf5c5fsm525184f8f.3.2026.08.11.11.58.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2026 11:58:05 -0700 (PDT)
+Date: Tue, 11 Aug 2026 14:58:02 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: GCC, Conservancy and Rust AI documents (was Re: [PATCH v2]
+ docs/devel: relax policy on AI-generated contributions)
+Message-ID: <20260811145706-mutt-send-email-mst@kernel.org>
+References: <20260529094619.1034458-1-pbonzini@redhat.com>
+ <20260802154350-mutt-send-email-mst@kernel.org>
+ <CAFEAcA-VB7kNn6MM4cF7Pz356KgkyKRaK0xMC2PTXYYCVVfLyg@mail.gmail.com>
+ <anXuqbBXERqn4lPu@redhat.com>
+ <be6325a1-8a4f-4ecf-8045-a56ec66dcd42@redhat.com>
+ <CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.156;
- envelope-from=alistair@alistair23.me; helo=fhigh-a5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,49 +133,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2026-07-24 at 14:39 +0800, Zeng Chi wrote:
-> From: Zeng Chi <zengchi@kylinos.cn>
->=20
-> In riscv_trigger_unrealize(), the per-trigger QEMUTimer objects are
-> created in riscv_trigger_realize() using timer_new_ns().=C2=A0 However,
-> unrealize only calls timer_del() to cancel them, but never frees the
-> timer objects themselves. This results in a memory leak every time a
-> CPU instance is unrealized (e.g., during hot-unplug or machine
-> teardown).
->=20
-> Fix it by replacing timer_del() with timer_free(), which internally
-> cancels the timer and frees its memory.=C2=A0 The separate timer_del()
-> call
-> is no longer needed.
->=20
-> Fixes: 820552a92e32 ("target/riscv: dynamic alloc of debug trigger
-> arrays")
-> Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
+On Mon, Aug 10, 2026 at 11:18:44AM +0100, Peter Maydell wrote:
+> On Fri, 7 Aug 2026 at 19:43, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > No one is going to agree 100% with everyone else; the only possible
+> > equilibrium is going to be the current "no AI for code generation"
+> > policy.
+> 
+> Also, I'm not sure we even have consensus on what the goals
+> of an AI policy should be. At least, in my own mind I am
+> not sure about that. We might care about, to different degrees:
+> 
+>  - the possibility that AI contributions might later be found
+>    to be copyright-infringing or otherwise legally encumbered,
+>    and need to be removed again
+>  - poor quality of resulting generated code
+>  - that a large number of individually OK-looking changes might
+>    pile up to result in design messes and degeneration of the
+>    codebase into "big ball of mud" architecture (you can argue
+>    we already have this difficulty without AI :-))
+>  - that our already very limited code-review ability gets
+>    overwhelmed if we allow AI-generated patchsets (there are
+>    already human-generated patchsets which go unreviewed and
+>    ignored as it is)
+>  - that we don't think one-shot AI-generated changes are likely
+>    to be a pathway by which new contributors join the community
+>    in the longer term
+>  - various non-technical aspects like those the Rust policy drafters
+>    labelled as "out of scope for discussion" under the "ethics"
+>    label
+> 
+> (and probably others that I have forgotten).
 
-Thanks!
 
-Applied to riscv-to-apply.next
+Well the 15 line limit helps with these too, to a degree.
 
-Alistair
 
-> ---
-> =C2=A0target/riscv/tcg/debug.c | 2 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
-> index 3c0fe70101..5ab29f6945 100644
-> --- a/target/riscv/tcg/debug.c
-> +++ b/target/riscv/tcg/debug.c
-> @@ -1080,7 +1080,7 @@ void riscv_trigger_unrealize(CPURISCVState
-> *env)
-> =C2=A0=C2=A0=C2=A0=C2=A0 g_free(env->cpu_watchpoint);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < env->num_triggers; i++) {
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 timer_del(env->itrigger_timer=
-[i]);
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 timer_free(env->itrigger_time=
-r[i]);
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0 g_free(env->itrigger_timer);
-> =C2=A0}
+> The current policy being "no AI" on a fairly narrow legal ground
+> had the advantage for me that I didn't need to consider my views
+> on all the rest of this. If we relax that strong position then
+> what kinds of relaxation we're OK with depends on what goals
+> we are trying to achieve and what problems we're trying to
+> defend against.
+> 
+> > Second, the Rust project came up with a different way to approach the
+> > issue: require disclosure of LLM-assisted changes and hold them to a
+> > higher bar.
+> 
+> That's not really the way the Rust policy came over to me. I
+> read it more as "no AI for codegen, but with an 'experimental'
+> back door for limited use". But that comes down to how much
+> "experimental" really means that to them and how much it's
+> "not actually experimental but the label made it easier to get
+> the policy agreed"...
+> 
+> I do think the "pre-agreement and pre-finding-a-reviewer" parts
+> are worth thinking about; to the extent that we've allowed some
+> AI-assisted work already, it's had that kind of "pre-agreement
+> and done by somebody we already trust as a contributor" aspect.
+> 
+> Also, I would be more in favour of uses of AI in the project
+> that made my life / job easier. "More and larger and more
+> frequent patch submissions that I have to review" isn't that,
+> so I am not super enthusiastic about permitting LLM assisted
+> contributions. ("Deluge of not very interesting autogenerated
+> bug reports" isn't great either, for that matter.)
+> 
+> -- PMM
+
 
