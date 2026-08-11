@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34728C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A2EC5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 14:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtnar-00013w-Mq; Tue, 11 Aug 2026 10:36:41 -0400
+	id 1wtnas-00015H-H6; Tue, 11 Aug 2026 10:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaS-0000Jm-6z
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:21 -0400
-Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ id 1wtnaZ-0000NR-Cf
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:23 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1wtnaQ-0001uZ-4K
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:15 -0400
-Received: by mail-qv1-xf36.google.com with SMTP id
- 6a1803df08f44-8efcfdb2b43so23119626d6.3
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:36:13 -0700 (PDT)
+ id 1wtnaX-0001x4-Ja
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 10:36:22 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-90a6b298887so1159966d6.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 07:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786458973; x=1787063773; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786458979; x=1787063779; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zAGkNDzZ3qi7+HUhU7T8RpYQbvTHCFyX1QLR0SeeZn8=;
- b=N7vLBuorRM/k5/M5og6vbwDSiNSjDg2S7XNS4SU+ho95mqK7oSu1AATjG4mj85LZEd
- FwF1DkzpRmUXdhYNKjENXSRDJbRY1VyWfcaxwl99w5Qe5Dn0BHtS2xZHvmjKARhifuhz
- 1z4jlzK5VpQ7eLfHKUYBnJar5YDVTr2ByGUOboMdq18a7tcm9qNDlsBTwrLNE4IaGMJ4
- 0a/fMDh/34sl+jmbT+I3SPrT5RrZncFKr0bn0QH4sIp0oXBQZYRCGygaBnADNRIMj8bA
- dOihI3eM3xDdxTtFrEMnHvppdFtW5AiAeKZRceTr2XXdRhwkz6+9RfctKIvJhaAHFROt
- ukHA==
+ bh=KOt2p99qli37aLiRSGWi+DGEsvQgttAGvPBuWfl5IYw=;
+ b=Nmyc1qgrEyvhz+Bfto2QFD/vjUDOl0zNgc+qifywD7WIgT41jTSjBDjoE+zNKoyIj9
+ IELeOF3sW4QFd2f3dWrzrHdrz/fzo25V5ohqXtsAbXyzcy+1rlM8GrETP2jWw0jruNT/
+ DNFeON7cXs0brqxEFycB0EwFhRg8RNql1UUjRHuRtjiRamWBtytjKCnnOSn7Sr2QvATA
+ oN385wFRz18ooxSsVNZDY/u9PsVenwKJBcVy5eH3VatiEPH8KMKMl0RD7nM+4fnas4Ii
+ Xq3l3Up4/eTaizLYUs9BnrFNZ6M/II2AtLwpGSqZjsPAhjXfLtWLueQMrMSEalaS6oxL
+ RzNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786458973; x=1787063773;
+ d=1e100.net; s=20251104; t=1786458979; x=1787063779;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zAGkNDzZ3qi7+HUhU7T8RpYQbvTHCFyX1QLR0SeeZn8=;
- b=a0+n5oG3VBgBFqc+ncvZvxt3vwwgpwm8EVBihqpmvIomXhU5joSEacwD50upq9sTLv
- jm4Tp+74OJb2GgUIIpNtbVHs/un7M7JmIakA/gUoMgqISPbn50TPa3lZzdQgMbGBvAWn
- URLOyvzq164Rs6gGbkqbQzKXtpmlQoJA9ZzD9aBJgLkqbHGoHOchdZLcAF8R47aD1HQo
- UL8sqRNULY2/79NLHVvgKzOw2XBWtLiJvLw1MV3qNeIpra6hPEGxm2Xg+n5QaEkeDCJ9
- ckSalEVE7jTQLyrA/nlBm6otx5xe3J2uR8jLJkspZBHUxJQGwwut/PkPqMign+VMB6Ne
- 3Yfg==
-X-Gm-Message-State: AOJu0Yxou3NugkY+9woh6pGqmB+JwCAzxOxSl/tUkLg3ydsAZMG9YWc0
- 5fS/GYHhOgRgvOtQcX5pAlEU1lE1R7glNnaDTnGzxkWJwAX1ozHrzzNUyeYTkg==
-X-Gm-Gg: AR+sD13U6dFQdy2pqtZdrT6ktF8xjVdrVG5fnmp+4+RAYXd4l77ysY5iPxocrFqVtu8
- w0vddYJT/DFdWnEf4GE9o0m7K/9FtoYtY/SphSRhNjYt4o3lKQ4lqv6KqENe+4l1C5qsKayAR2h
- kw1NtNfsFFnhn7HvJtSiXrDNL3LrisRsn6RPHkp/DpPNYjtc3YRjy3ngDXd3FfBGBOvmbumbzaF
- qFAZ5eAgm4wI80XYjABf2781b/SurRRFZHWl8UIPkFhhJ2fv3KvPvwuswbYLvm+I9VxJhqX0hcn
- d9+8/3SRqVNUyzPgNGCbTLQAXaikSXBfQ8POEr3JVbiq9x/mfdO8IcsG36ndkLR0SsjFQdZqxhz
- bMpyriKHRe138qmaXFlUdDHc1QUWKYLeO2KhDQhLX9NpJ+JSaMeHp0EUG/cxMlSGSsVys2hoUyq
- B60+nl942wDtMP8KwL6aVI4TK3v1EoNmBBZZ5ziW/yaKvTnuMXfrTvaVgNxXz8Dz2B2OwPh0f3k
- ZkpaQNbF41F7+11h/YA
-X-Received: by 2002:a05:6214:e4f:b0:8f0:afa3:594e with SMTP id
- 6a1803df08f44-90a66dfb43emr31167506d6.8.1786458972370; 
- Tue, 11 Aug 2026 07:36:12 -0700 (PDT)
+ bh=KOt2p99qli37aLiRSGWi+DGEsvQgttAGvPBuWfl5IYw=;
+ b=arHIc7dWYQedif+KyINg9K3D7Pvr/dPuIucwvYVlvVjSk5ESPbGjex3jxWKVqCE2k5
+ zle0o0wQYjjO7XrhAJLH0hGF+bnd07OnwQ/l5KAwh8U5GWatKXb2woihBF8ilvsg6oor
+ Iqtzxz2VYbmLUy1DQP/acCsdTqb1ac89ZOH8JfKZwCV+S9Ya8Emg/RGGCkyGhucJY1NY
+ HxmJ5/EPcL1/NB/1hMKzaKTI5D5sJ4/+9jIpLl4ebO1CdP2auVKAw7BQjAlegqA55lDX
+ GteMrDajb4Oy0kluSkMq7aDqM1SXgPKihnSZdud3jPP/dXcC/yfQcprK1sgeNGqpeI85
+ PAQw==
+X-Gm-Message-State: AOJu0YxRFbdssBLbSS3bYnHf7Mwj3pmxwlywXmSLLjv+8cE6VCsWabop
+ dZ8x9NpJF1RmHR3fsr26BbwMlhiOnQvq8X+MGpWT2kJWmhpO6o6RfUPXN0Bf/w==
+X-Gm-Gg: AR+sD11V4lcC/nDm4nxMlxj7iJIm7cgSzcKOxNBG1L6/jCd5i252Z4aW3KzIQ+uxLVi
+ 5kC23HvtgnV0aTIK4m6JqcMR8ZVSKl3aEgWTepd36Vcqh9HiwuhzwtL3nyaRslYwopcEMfNJKm7
+ f6xOPYYQ6e+SmoKJNkIqTgLxPd/nN2SXA8wUqqUWF2QP4klpxofTw3ThBL9qZUVZt0vcBSRUZze
+ ov70D2mxA50Y8/hxSMzvu6Vfo/GexK1/eq5HA4j0MyhvP8lJxMLmRM1uC1Filb/nReaRPLMNJkC
+ wYwlBMA1iI5hthmRuQ1TlYiZSi3WEaGy/qBAtpOYoF1D+J9CRsMo0QeyQwIn6UHsDEE81IY+0vE
+ xWP9lL8CgiDLRQ+UgK3U3y5AvmfIP8wwCHNZ1mKmRu5zolaNLspUeWLtvamZutnkTjtUpttwzjx
+ WIiMZZCreCmx6fx60goWYQmhjdxZuqWPvTgFzQJmmwAqt9vFBvOLeAIMMdcONV3rixiwpHgSL+7
+ x3bbHD5pyNubav7mgo=
+X-Received: by 2002:a05:6214:493:b0:8ef:aad6:dada with SMTP id
+ 6a1803df08f44-90a66ea44c6mr32735916d6.20.1786458979436; 
+ Tue, 11 Aug 2026 07:36:19 -0700 (PDT)
 Received: from localhost.localdomain ([198.16.145.87])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.36.11
+ 6a1803df08f44-90a6c26e074sm681286d6.2.2026.08.11.07.36.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Aug 2026 07:36:12 -0700 (PDT)
+ Tue, 11 Aug 2026 07:36:19 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sergey Kambalin <serg.oker@gmail.com>,
- Sergey Kambalin <sergey.kambalin@auriga.com>,
  Marcelo Manzo <marcelomanzo@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v2 12/19] hw/net/bcm2838_genet: implement GENET TX path
-Date: Tue, 11 Aug 2026 10:35:49 -0400
-Message-ID: <20260811143557.7862-13-marcelomanzo@gmail.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v2 19/19] tests/functional/aarch64: add raspi4b GENET
+ networking test
+Date: Tue, 11 Aug 2026 10:35:56 -0400
+Message-ID: <20260811143557.7862-20-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260811143557.7862-1-marcelomanzo@gmail.com>
 References: <20260811143557.7862-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,306 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+Add test_arm_raspi4_genet, exercising the raspi4b GENET controller
+end to end: boot with a -nic bcm2838-genet device attached, confirm
+the guest driver probes it ("GENET 5.0 EPHY" in the kernel log),
+reach a shell, and confirm the link actually comes up
+("ip link show eth0" reports LOWER_UP) rather than just that the
+device exists.
 
-Implement the transmit DMA ring handling: walk TX descriptors
-between the consumer and producer index for a ring, pull frame data
-out of guest memory, and hand completed frames to the netdev peer
-via qemu_send_packet(), advancing the consumer index and raising the
-TXDMA_MBDONE interrupt as descriptors complete.
+Verified locally against this series with the exact kernel/initrd
+assets this file already pins (raspberrypi-kernel_1.20230106-1 /
+groeck linux-build-test rootfs): without the "fix PHY
+autonegotiation-restart deadlock" patch earlier in this series, the
+link never comes up and this test would hang at the "ip link show
+eth0" step, so it also serves as a regression test for that fix.
 
-Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
-networking series (patchwork series 829638, posted to qemu-devel in
-2024, never merged). Carried forward and completed by Marcelo Manzo;
-see the later "Fix TX ring activation check" patch for a real bug
-found and fixed in the ring-activity check this path depends on.
-
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 ---
- hw/net/bcm2838_genet.c         | 219 ++++++++++++++++++++++++++++++++-
- include/hw/net/bcm2838_genet.h |  17 +++
- 2 files changed, 235 insertions(+), 1 deletion(-)
+ tests/functional/aarch64/test_raspi4.py | 30 +++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 6b3c9cb12b..1b02876094 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -237,6 +237,13 @@ REG16(GENET_PHY_EXP_SEL,           0)
- FIELD(GENET_PHY_EXP_SEL, REG_ID,   0, 8)
- FIELD(GENET_PHY_EXP_SEL, BLOCK_ID, 8, 8)
+diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
+index 7a4302b0c5..0e254a2034 100755
+--- a/tests/functional/aarch64/test_raspi4.py
++++ b/tests/functional/aarch64/test_raspi4.py
+@@ -92,5 +92,35 @@ def test_arm_raspi4_initrd(self):
+         #self.vm.wait()
  
-+REG32(GENET_TX_CSUM_INFO,            0)
-+FIELD(GENET_TX_CSUM_INFO, OFFSET,    0, 15)
-+FIELD(GENET_TX_CSUM_INFO, PROTO_UDP, 15, 1)
-+FIELD(GENET_TX_CSUM_INFO, START,     16, 15)
-+FIELD(GENET_TX_CSUM_INFO, LV,        30, 1)
-+
-+
- static void bcm2838_genet_set_qemu_mac(BCM2838GenetState *s)
- {
-     const MACAddr *addr = &s->nic_conf.macaddr;
-@@ -396,6 +403,216 @@ static uint64_t bcm2838_genet_mdio_cmd(BCM2838GenetState *s, uint64_t cmd)
-     return cmd;
- }
  
-+static void bcm2838_genet_xmit_packet(NetClientState *s, void *packet,
-+                                      size_t size)
-+{
-+    uint8_t *buf = packet + sizeof(BCM2838GenetXmitStatus);
-+    size_t len = size;
-+    uint16_t len_type = 0;
++    def test_arm_raspi4_genet(self):
++        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
++                                           member='boot/kernel8.img')
++        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
++                                        member='boot/bcm2711-rpi-4-b.dtb')
++        initrd_path = self.uncompress(self.ASSET_INITRD)
 +
-+    len -= sizeof(BCM2838GenetXmitStatus);
-+    net_checksum_calculate(buf, len, CSUM_ALL);
++        self.set_machine('raspi4b')
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'earlycon=pl011,mmio32,0xfe201000 ' +
++                               'console=ttyAMA0,115200 ' +
++                               'panic=-1 noreboot ' +
++                               'dwc_otg.fiq_fsm_enable=0')
++        self.vm.add_args('-kernel', kernel_path,
++                         '-dtb', dtb_path,
++                         '-initrd', initrd_path,
++                         '-append', kernel_command_line,
++                         '-no-reboot',
++                         '-nic', 'user,model=bcm2838-genet')
++        self.vm.launch()
++        self.wait_for_console_pattern(
++            'bcmgenet fd580000.ethernet: GENET 5.0 EPHY')
++        self.wait_for_console_pattern('Boot successful.')
 +
-+    memcpy(&len_type, &buf[12], sizeof(len_type));
-+    len_type = ntohs(len_type);
-+    if (len_type < MAX_PAYLOAD_SIZE) {
-+        len_type = len;
-+        len_type = htons(len_type);
-+        memcpy(&buf[12], &len_type, sizeof(len_type));
-+    }
-+
-+    qemu_send_packet(s, buf, len);
-+}
-+
-+static uint64_t bcm2838_genet_tx(BCM2838GenetState *s, unsigned int ring_index,
-+                                 uint32_t prod_index,
-+                                 uint32_t cons_index)
-+{
-+    const unsigned int DESC_SIZE_WORDS
-+        = sizeof(BCM2838GenetTdmaDesc) / sizeof(uint32_t);
-+    const uint64_t RING_START_ADDR
-+        = ((uint64_t)s->regs.tdma.rings[ring_index].start_addr_hi << 32)
-+            + s->regs.tdma.rings[ring_index].start_addr;
-+    const uint64_t RING_END_ADDR
-+        = ((uint64_t)s->regs.tdma.rings[ring_index].end_addr_hi << 32)
-+            + s->regs.tdma.rings[ring_index].end_addr;
-+
-+    hwaddr data_addr;
-+    uint64_t desc_index;
-+    uint32_t desc_status = 0;
-+    uint32_t buflength = 0;
-+    uint64_t num_descs = 0;
-+    uint64_t read_ptr
-+        = ((uint64_t)s->regs.tdma.rings[ring_index].read_ptr_hi << 32)
-+            + s->regs.tdma.rings[ring_index].read_ptr;
-+    off_t packet_off = 0;
-+
-+    uint32_t prod_index_fld = FIELD_EX32(prod_index,
-+                                         GENET_DMA_PROD_INDEX, INDEX);
-+    uint32_t cons_index_fld = FIELD_EX32(cons_index,
-+                                        GENET_DMA_CONS_INDEX, INDEX);
-+
-+    while (cons_index_fld != prod_index_fld) {
-+        desc_index = read_ptr / DESC_SIZE_WORDS;
-+        if (desc_index >= BCM2838_GENET_DMA_DESC_CNT) {
-+            qemu_log_mask(
-+                LOG_GUEST_ERROR,
-+                "%s: invalid TX descriptor index %" PRIu64 " (exceeds %u)\n",
-+                __func__, desc_index, BCM2838_GENET_DMA_DESC_CNT - 1);
-+            break;
-+        }
-+        desc_status = s->regs.tdma.descs[desc_index].length_status;
-+        data_addr = ((uint64_t)s->regs.tdma.descs[desc_index].address_hi << 32)
-+            + s->regs.tdma.descs[desc_index].address_lo;
-+        trace_bcm2838_genet_tx(ring_index, desc_index, desc_status,
-+                               data_addr);
-+
-+        if (FIELD_EX32(desc_status, GENET_RDMA_LENGTH_STATUS, SOP) != 0) {
-+            packet_off = 0;
-+        }
-+
-+        buflength = FIELD_EX32(desc_status,
-+                               GENET_RDMA_LENGTH_STATUS, BUFLENGTH);
-+
-+        /* TODO: Add address_space_read() return value check */
-+        address_space_read(&s->dma_as, data_addr,
-+                                        MEMTXATTRS_UNSPECIFIED,
-+                                        s->tx_packet + packet_off,
-+                                        buflength);
-+        packet_off += buflength;
-+
-+        if (FIELD_EX32(desc_status, GENET_RDMA_LENGTH_STATUS, EOP) != 0) {
-+            bcm2838_genet_xmit_packet(qemu_get_queue(s->nic), s->tx_packet,
-+                                                     packet_off);
-+            packet_off = 0;
-+        }
-+
-+        num_descs++;
-+        cons_index_fld++;
-+        s->regs.tdma.descs[desc_index].length_status =
-+            FIELD_DP32(s->regs.tdma.descs[desc_index].length_status,
-+                       GENET_RDMA_LENGTH_STATUS, OWN, 1);
-+        read_ptr = read_ptr == RING_END_ADDR + 1 - DESC_SIZE_WORDS
-+            ? RING_START_ADDR : read_ptr + DESC_SIZE_WORDS;
-+    }
-+
-+    s->regs.tdma.rings[ring_index].read_ptr = read_ptr;
-+    s->regs.tdma.rings[ring_index].read_ptr_hi = read_ptr >> 32;
-+
-+    return num_descs;
-+}
-+
-+static bool bcm2838_genet_tdma_ring_active(BCM2838GenetState *s,
-+                                           unsigned int ring_index)
-+{
-+    uint32_t ctrl_reg = s->regs.tdma.ctrl;
-+    uint32_t ring_cfg_reg = s->regs.tdma.ring_cfg;
-+    uint32_t ring_mask = 1 << ring_index;
-+    bool dma_en = FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, EN) != 0;
-+    bool ring_en =
-+        (FIELD_EX32(ring_cfg_reg, GENET_DMA_CTRL, EN) & ring_mask) != 0;
-+    bool ring_buf_en =
-+        (FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, RING_BUF_EN) & ring_mask) != 0;
-+    bool active = dma_en && ring_en && ring_buf_en;
-+
-+    trace_bcm2838_genet_tx_dma_ring_active(ring_index,
-+                                           active ? "active" : "halted");
-+    return active;
-+}
-+
-+static void bcm2838_genet_tdma(BCM2838GenetState *s, hwaddr offset,
-+                               uint64_t value)
-+{
-+    hwaddr ring_offset;
-+    uint64_t num_descs_tx;
-+    unsigned int ring_index;
-+     uint32_t tx_intrs;
-+    uint32_t cons_index;
-+    uint32_t prod_index = value;
-+    uint32_t ring_cfg = value;
-+    uint32_t dma_ctrl = value;
-+
-+    uint32_t cons_index_fld;
-+    uint32_t prod_index_fld =
-+        FIELD_EX32(prod_index, GENET_DMA_PROD_INDEX, INDEX);
-+
-+    uint32_t exst_tdma_en =
-+        FIELD_EX32(s->regs.tdma.ctrl, GENET_DMA_CTRL, EN);
-+    uint32_t exst_ring_en =
-+        FIELD_EX32(s->regs.tdma.ring_cfg, GENET_DMA_RING_CFG, EN);
-+    uint32_t incm_tdma_en =
-+        FIELD_EX32(dma_ctrl, GENET_DMA_CTRL, EN);
-+    uint32_t incm_ring_en =
-+        FIELD_EX32(ring_cfg, GENET_DMA_RING_CFG, EN);
-+    uint32_t incm_ring_buf_en =
-+        FIELD_EX32(dma_ctrl, GENET_DMA_CTRL, RING_BUF_EN);
-+
-+    switch (offset) {
-+    case BCM2838_GENET_TDMA_RINGS
-+        ... BCM2838_GENET_TDMA_RINGS + sizeof(s->regs.tdma.rings) - 1:
-+        ring_index = (offset - BCM2838_GENET_TDMA_RINGS)
-+            / sizeof(BCM2838GenetTdmaRing);
-+        if (bcm2838_genet_tdma_ring_active(s, ring_index)) {
-+            ring_offset = offset - BCM2838_GENET_TDMA_RINGS
-+                - ring_index * sizeof(BCM2838GenetTdmaRing);
-+            switch (ring_offset) {
-+            case BCM2838_GENET_TRING_PROD_INDEX:
-+                cons_index = s->regs.tdma.rings[ring_index].cons_index;
-+                cons_index_fld = FIELD_EX32(cons_index,
-+                                            GENET_DMA_CONS_INDEX, INDEX);
-+                if (cons_index_fld != prod_index_fld) {
-+                    trace_bcm2838_genet_tx_request(ring_index,
-+                                                   prod_index_fld,
-+                                                   cons_index_fld);
-+                    num_descs_tx = bcm2838_genet_tx(s, ring_index, prod_index,
-+                                                    cons_index);
-+                    if (num_descs_tx > 0) {
-+                        s->regs.tdma.rings[ring_index].cons_index =
-+                            FIELD_DP32(s->regs.tdma.rings[ring_index].cons_index,
-+                                       GENET_DMA_CONS_INDEX, INDEX,
-+                                       cons_index + num_descs_tx);
-+
-+                        if (ring_index == BCM2838_GENET_DMA_RING_DEFAULT) {
-+                            s->regs.intrl0.stat =
-+                                FIELD_DP32(s->regs.intrl0.stat, GENET_INTRL_0,
-+                                           TXDMA_MBDONE, 1);
-+                        } else {
-+                            tx_intrs =  FIELD_EX32(s->regs.intrl1.stat,
-+                                                   GENET_INTRL_1, TX_INTRS);
-+                            s->regs.intrl1.stat =
-+                                FIELD_DP32(s->regs.intrl1.stat,
-+                                           GENET_INTRL_1, TX_INTRS,
-+                                           tx_intrs | 1 << ring_index);
-+                        }
-+                    }
-+                }
-+                break;
-+            default:
-+                break;
-+            }
-+        }
-+        break;
-+    case BCM2838_GENET_TDMA_RING_CFG:
-+        if (exst_ring_en != incm_ring_en) {
-+            trace_bcm2838_genet_tx_dma_ring(incm_ring_en);
-+        }
-+        break;
-+    case BCM2838_GENET_TDMA_CTRL:
-+        s->regs.tdma.status = (~dma_ctrl) & GENET_DMA_ENABLE_MASK;
-+        if (exst_tdma_en != incm_tdma_en) {
-+            trace_bcm2838_genet_tx_dma(incm_tdma_en == 1
-+                                       ? "enabled"
-+                                       : "disabled");
-+        }
-+        if (exst_ring_en != incm_ring_buf_en) {
-+            trace_bcm2838_genet_tx_dma_ring_buf(incm_ring_buf_en);
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+}
-+
- static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
- {
-     uint64_t value = ~0;
-@@ -489,7 +706,7 @@ static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
-             break;
-         case BCM2838_GENET_TDMA_REGS
-             ... BCM2838_GENET_TDMA_REGS + sizeof(BCM2838GenetRegsTdma) - 1:
--            qemu_log_mask(LOG_UNIMP, "TDMA isn't implemented yet");
-+            bcm2838_genet_tdma(s, offset, value);
-             break;
-         default:
-             break;
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index b34c4b3ce7..bad582fe0d 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -110,6 +110,21 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
- #define BCM2838_GENET_PHY_EXP_SHD_BLOCKS_CNT 256
- #define BCM2838_GENET_PHY_EXP_SHD_REGS_CNT   256
- 
-+#define MAX_FRAME_SIZE                  0xFFF
-+#define MAX_PACKET_SIZE                 1518
-+#define MAX_PAYLOAD_SIZE                1500
-+#define TX_MIN_PKT_SIZE                 60
++        exec_command_and_wait_for_pattern(self, 'ip link show eth0',
++                                                'LOWER_UP')
++        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
 +
 +
-+typedef struct BCM2838GenetXmitStatus {
-+    uint32_t  length_status;  /* length and peripheral status */
-+    uint32_t  ext_status;     /* Extended status */
-+    uint32_t  rx_csum;        /* partial rx checksum */
-+    uint32_t  unused1[9];     /* unused */
-+    uint32_t  tx_csum_info;   /* Tx checksum info. */
-+    uint32_t  unused2[3];     /* unused */
-+} BCM2838GenetXmitStatus;
-+
- typedef struct {
-     uint32_t rev_ctrl;
-     uint32_t port_ctrl;
-@@ -405,6 +420,8 @@ struct BCM2838GenetState {
- 
-     qemu_irq irq_default;
-     qemu_irq irq_prio;
-+
-+    uint8_t tx_packet[MAX_FRAME_SIZE];
- };
- 
- #endif /* BCM2838_GENET_H */
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.47.1
 
