@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E104C5AD55
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC91C5AD55
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 04:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wteXF-0005RV-N0; Tue, 11 Aug 2026 00:56:21 -0400
+	id 1wteXJ-0005Vd-Bg; Tue, 11 Aug 2026 00:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wteXD-0005PY-6m
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:19 -0400
+ id 1wteXG-0005RY-9f
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:22 -0400
 Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wteXB-0002nA-PK
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:18 -0400
+ id 1wteXE-0002nq-MY
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 00:56:22 -0400
 Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-38dd55ad76cso596585a91.1
- for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 21:56:17 -0700 (PDT)
+ 98e67ed59e1d1-3811f512167so3695981a91.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Aug 2026 21:56:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786424176; x=1787028976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786424179; x=1787028979; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=PNBZwXtGw/7SqTqr09BkkYdWVCo+PU/5thxbzztQAsQ=;
- b=b1hBlSw8qkCT7WSesAd4uK3jbt54wMclgdfLsAsmKSlJAWyhV9yw2hhrfxNRG+YWMR
- EUdA+VHA1HlCucNSKDqFeRXA9Gl7Aegt2YqlhTp7lHitb8PTTwdEKwrcwgtPxm6H1bG+
- v9YYxi0e4laLM0jBahNCFRC5qgplp/j08fgLBgGsuUDHI5IIxvLSpuULETBOR7cWCMSQ
- QRvKEXetk9jxP0r06hx6uQNSZe96gy0WH5cNwHXjmIxMEHCFFQ1e0Ojm1Ft75kGgIKjf
- rWC0VGRtZOkbRAB9I6KJr0aTBKu5V++6mmJfD3UG5k59974x4ndiFf21luyXV5B+nd2f
- 6YCg==
+ bh=Cc1RC4WfWTjVgunvR82BNYQc1BHHqprNxL8r/tyP2lo=;
+ b=xOLDM64dv0AMlQ7FPMrNnb4wc4lWgVMp8lgKBaAXKmkdOj7U0RUlONSP5vCorwBMym
+ euggP7+oq6irv4CPzvcp2q5cz4xxmAXyBGc1bny7xlPl8gdDghQDipztGvwbeBlLfeTo
+ cEDHb2fI9irnMK0L+9KJnBB4jiUa+uFsXlyw287Z0jpJi0ukzN79//bLVVJyBfR7RimR
+ VH+gVTlRfLjFpKBP4wvikssfkRUSd1pdptn3V0qu3X75I9mL082uttRoE4oQjVRkkczj
+ uRVO/Tgcxj1FNBkgOuoUzaPEXIf6VCrRYNB0h2VyZD0fvsBbfptJ3ZfP6qEGZz5aKj/Z
+ FIqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786424176; x=1787028976;
+ d=1e100.net; s=20251104; t=1786424179; x=1787028979;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=PNBZwXtGw/7SqTqr09BkkYdWVCo+PU/5thxbzztQAsQ=;
- b=ctGV22YK8pShdu8OKqG6k6JbexXgKKOQu9qYYg5xe9i2jsUqZS2pzldfqa0yEiN6ow
- vDhTlPe6focsoJiXhTBlD/U5uz51PnR4i1AOtp78MzV48waJ2uYI+8riD1jgK9LRSKPc
- yrLl0jSUD30zOOeMk0juBssHDvM8Ucc1aHAwH7RXLK2bZssHGEgHuxYljlOYn9IVGN7a
- 4m/qyBllTt2o3voDFI9IVEmn8bOY3BjhOmb94dxl28wxOdD5zSWXRIYZEtYU95ic+6kq
- LtCYlScfQTDOygzQO1IgRuo7ckXpjbJGW+VRlym6PEsoQPv/4jblL2hS71Iad2jhVlrU
- gNCA==
-X-Gm-Message-State: AOJu0YyL/FeUCZbEf1NQGZRhQ2b2O7AQKZ7iL3xEh1RnqHm6uOt4uiEF
- 50Csw9YaQ6GTNSnFahuW7BQFXyYWank7pIAjw4ZvASE8vVLUWanfghuGATa/RK1Vn0Ky3j8ikVk
- ShH1v
-X-Gm-Gg: AR+sD10Be+Ya7HpN9U0tfh1B3x0jVbrG4h87jYSA+KEmd9tB+AQcPcsiHdJsiLBAUW5
- 3xmmDH4aYsTDWivMbVVMc5nLUr0IbmuOpXbVTVKXQi+G02vn3EK9+uP1sVeoITmdUrpq37ZbK4e
- YHbG2rBiyRn3YTqGoIXqItq3nmUbUBDwNiae8H7T1zbs86iCxAtxSqrCGyxi6sBXuQM1Bb/wRt0
- rWHqbDqTcZrQIgSEY87g8GiI2HsY2IDmp4TW1fdUadKlPKV6iyoQxCRDIBweQxuErHk+9zDwLDJ
- RBcX4odmR+uc+fUtHeuT8r+yKdyweTUI+h1R9/oP9j3uyVDhsBsDrj8t/4b/82MNtejFx7TQ8/v
- DrC80mFfFzTqDZvp5M71CpEP6C0JzirS5W7bGioedocyWstikjDLQvfYi6ZH7rQPL9q45oC2ll3
- 0NkvaIbBq2wYOyxQtHREhfrJQbve8NhoU+h+QQ95YMWgNuUQ33TYp6BxEPL6JoCyKccl8DYzyZE
- 89SAkVQR/VGkNo8hW1X
-X-Received: by 2002:a17:90b:2e0c:b0:38f:cfe2:fd3a with SMTP id
- 98e67ed59e1d1-392ed18a96amr255952a91.15.1786424176103; 
- Mon, 10 Aug 2026 21:56:16 -0700 (PDT)
+ bh=Cc1RC4WfWTjVgunvR82BNYQc1BHHqprNxL8r/tyP2lo=;
+ b=IkR6wW70m7UxbU3dW1UndM4DCzDMShC+j2XtX8dkuP0nMe0IX2x1gTWPsZqOYPkuhw
+ ANEHmBUdCJ9yYrnd1BXnthXD/XxwLPhxgQSpoxX/4oVVHC4q5O4NZWnILIuvx5ozx+Ws
+ ozNkSDXdybtW4P8D5TY9l4853FDFf4/hUUCyIU0BGNrcKqvB88qH5XIwPqbWiRpvHy9v
+ BzFOVHBGEmHcdiH7ZhPuddzX7qtNtxrPr05rwAenkH5Rerdcjy5Ld5MCf+zCbettZ9D0
+ +W5ksZErSVOg+duBhCXsy9ND/BlFnhJPfbdE6Dx9lR6QmbiOFIpsrOSckEnns2itwk/t
+ 1ueQ==
+X-Gm-Message-State: AOJu0Yyk+OFJUIfWW02MuLC+CFRDzghm4uTsPokmCgpRf+ZzR2qMr/1Z
+ fXi5K9Js4U2Q7g82zxrUVGU5Cof1JuaMGq5oBmdBqoMEiDgWuAv2uJe9va8xrBbgMU7xn2oVA1L
+ EXv59
+X-Gm-Gg: AR+sD12ZrIRxVqcrg0jmrfenmQQ0ZU0bouXqh0VkBhvcwp+pEZL2sO8Tw2fUxvqdNvc
+ g5Vfq7+L9TAcCwXuIT3u9FjjacO7cogXMZRS+R6wbi7YHAkXKrHw3+sISTTR0hPBps124JMEgiN
+ 0dY2ZWT85OmLuGaAz7O0EBNFpIwcpS3ySnwEkdviDxcHr15b7IIqlOf8KnS78xYPZvsIswND6Y4
+ Ne0YtQHAI6+Js/8VyXgsMo59Q8Iot5pUlyNQDe0hhkmMKc4uPfMxmxZTMaUiDKgHG7z0nQlWvLv
+ 0Cl5Y2Z2FHvup5Uz7ZASAU7T9Ln+kmTS5JF9KBPKT3iTdjId1JtQFLHGzZ0I5MjeksdlJ8fCJVi
+ X1aUkA4cYK/V1BsXCPtYssMj0wA0VzdZXehL05odOViY2CYPZFNZzvyewT8rEMAOCGKCfPU2Qw5
+ bWkB1Ce7I2xw8FvlzgMwuDXZGfttHXOlMXSs2MRx6HFcu1uPlkO8fHjhKZjSw4aNqIQnzoB/8xF
+ gXpUua/hGb5E8UNftnb
+X-Received: by 2002:a17:90b:3d8d:b0:381:152b:d596 with SMTP id
+ 98e67ed59e1d1-392ec52f32emr733910a91.11.1786424179379; 
+ Mon, 10 Aug 2026 21:56:19 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392ee3084d0sm156818a91.8.2026.08.10.21.56.15
+ 98e67ed59e1d1-392ee3084d0sm156818a91.8.2026.08.10.21.56.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Aug 2026 21:56:15 -0700 (PDT)
+ Mon, 10 Aug 2026 21:56:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 10/16] tcg/aarch64: Implement revbit{32,64}
-Date: Mon, 10 Aug 2026 21:55:59 -0700
-Message-ID: <20260811045605.1246543-11-richard.henderson@linaro.org>
+Subject: [PATCH v2 14/16] tcg/riscv64: Implement revbit8
+Date: Mon, 10 Aug 2026 21:56:03 -0700
+Message-ID: <20260811045605.1246543-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260811045605.1246543-1-richard.henderson@linaro.org>
 References: <20260811045605.1246543-1-richard.henderson@linaro.org>
@@ -103,44 +103,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/aarch64/tcg-target.c.inc | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ tcg/riscv64/tcg-target.c.inc | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 0afa988087..80995403e4 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -2656,12 +2656,28 @@ static const TCGOutOpUnary outop_revbit8 = {
-     .base.static_constraint = C_NotImplemented,
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 687146e0b0..8fd32644fe 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -246,6 +246,9 @@ typedef enum {
+     OPC_XNOR   = 0x40004033,
+     OPC_ZEXT_H = 0x0800403b,
+ 
++    /* Zbkb: Bit Manipulation for Cryptography */
++    OPC_BREV8  = 0x68705013,
++
+     /* Zicond: integer conditional operations */
+     OPC_CZERO_EQZ = 0x0e005033,
+     OPC_CZERO_NEZ = 0x0e007033,
+@@ -2469,8 +2472,20 @@ static const TCGOutOpUnary outop_bswap64 = {
+     .out_rr = tgen_bswap64,
  };
  
-+static void tgen_revbit32(TCGContext *s, TCGType type,
-+                          TCGReg a0, TCGReg a1, unsigned flags)
++static TCGConstraintSetIndex cset_revbit8(TCGType type, unsigned flags)
 +{
-+    tcg_out_insn(s, rr_sf, RBIT, TCG_TYPE_I32, a0, a1);
-+    if (flags & TCG_BSWAP_OS) {
-+        tcg_out_ext32s(s, a0, a0);
-+    }
++    return cpuinfo & CPUINFO_ZBKB ? C_O1_I1(r, r) : C_NotImplemented;
 +}
 +
++static void tgen_revbit8(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
++{
++    tcg_out_opc_imm(s, OPC_BREV8, a0, a1, 0);
++}
++
+ static const TCGOutOpUnary outop_revbit8 = {
+-    .base.static_constraint = C_NotImplemented,
++    .base.static_constraint = C_Dynamic,
++    .base.dynamic_constraint = cset_revbit8,
++    .out_rr = tgen_revbit8,
+ };
+ 
  static const TCGOutOpBswap outop_revbit32 = {
--    .base.static_constraint = C_NotImplemented,
-+    .base.static_constraint = C_O1_I1(r, r),
-+    .out_rr = tgen_revbit32,
- };
- 
-+static void tgen_revbit64(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
-+{
-+    tcg_out_insn(s, rr_sf, RBIT, TCG_TYPE_I64, a0, a1);
-+}
-+
- static const TCGOutOpUnary outop_revbit64 = {
--    .base.static_constraint = C_NotImplemented,
-+    .base.static_constraint = C_O1_I1(r, r),
-+    .out_rr = tgen_revbit64,
- };
- 
- static void tgen_neg(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1)
 -- 
 2.43.0
 
