@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA27C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7995C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpPT-0006NW-7D; Tue, 11 Aug 2026 12:33:03 -0400
+	id 1wtpOE-0003c1-82; Tue, 11 Aug 2026 12:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpPC-0005g9-CX
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNp-0001rR-Q7
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpPA-00015n-Ha
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNo-0000nG-02
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465963;
+ s=mimecast20190719; t=1786465879;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nOIiYpEcEVjua90l0i/4yf5V22rbX8J41GaCPa9EA+I=;
- b=dLxgOa1I0Q/XNpOJvAtnHMPC3gifweIULSSBYBL1iLdl2qoO1C3BfmEZMsSFksoqF055eu
- aj88Uqjn1+7Yb+k/A8zccocv1Lzvf6KQJIr9VZXOf/jlh6dIF2P7LK6YRtc9H4GWcVq3nq
- Oy+kt20BtCYDn7LmH3dTAxR4d4IVYZ8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Kc13nXUTSuMz/0eFM/NUTUDuVKo3/6LbmmwdzhwHkIc=;
+ b=L+R/kkbl0B1mNuzQgcYVUOloABsA4zDrVJ6JmUyt/UotvJ781iurGGECUs60jwm1RIb/14
+ zliqLHZC00b3B7lzZWotUTBnLWBQgkdDC2h68rgH/80Ee4k1vfx1itV9x+b2atnd1bZmIm
+ AD8sgxLm+JN4KswkVasbOqqfUaBRA4U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-TTvvk7ohNNGFIJ2QuPyQog-1; Tue,
- 11 Aug 2026 12:32:39 -0400
-X-MC-Unique: TTvvk7ohNNGFIJ2QuPyQog-1
-X-Mimecast-MFC-AGG-ID: TTvvk7ohNNGFIJ2QuPyQog_1786465958
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-t3AtJtoPMuuHEwT0X-QGqg-1; Tue,
+ 11 Aug 2026 12:31:16 -0400
+X-MC-Unique: t3AtJtoPMuuHEwT0X-QGqg-1
+X-Mimecast-MFC-AGG-ID: t3AtJtoPMuuHEwT0X-QGqg_1786465875
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0E231956063; Tue, 11 Aug 2026 16:32:37 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D79BE1800D8D; Tue, 11 Aug 2026 16:31:13 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47FBB195DF91; Tue, 11 Aug 2026 16:32:36 +0000 (UTC)
+ id 2FD91195DF91; Tue, 11 Aug 2026 16:31:11 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 81/83] hw/misc/aspeed_hace: Support the AES-GCM mode for the
- crypto command
-Date: Tue, 11 Aug 2026 18:29:36 +0200
-Message-ID: <20260811162938.1403216-82-clg@redhat.com>
+Subject: [PULL 42/83] hw/gpio: pca9552: expose GPIO pins as pin%d QOM
+ properties
+Date: Tue, 11 Aug 2026 18:28:57 +0200
+Message-ID: <20260811162938.1403216-43-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,201 +84,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-Implement the AES-GCM mode (HACE10[6:4] = 0b101) used by the AST2700
-crypto engine: decode the GCM selection, read the 96-bit IV from the
-context buffer, operate on the exact data length (GCM handles a partial
-final block itself), and write the 128-bit authentication tag to the tag
-buffer (HACE18/HACE8C). The hardware GCM path is only used without
-associated data (the driver falls back to software otherwise), so AAD is
-not modelled and a non-zero HACE14 is reported as unimplemented.
+The PCA9552 exposes its LED channels as led%d QOM string properties, but
+the GPIO variants (PCA9535/PCA9555) inherited the same led%d interface,
+which drives the LED selector registers and is meaningless for a plain
+I/O expander.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Kane Chen <kane_chen@aspeedtech.com>
-Link: https://lore.kernel.org/qemu-devel/20260811060115.1849266-15-jamin_lin@aspeedtech.com
+Add pin%d string properties ("low"/"high") for the GPIO variants,
+mirroring the standalone pca9555 model:
+
+  - reading returns the raw pin logic level from the INPUT register;
+  - writing drives the external input level, but only for pins the guest
+    has configured as inputs (writes to output pins are ignored with a
+    LOG_UNIMP message).
+
+The LED variant keeps its led%d properties.
+
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-9-814575bc076b@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/misc/aspeed_hace.c | 70 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 62 insertions(+), 8 deletions(-)
+ hw/gpio/pca9552.c | 91 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 86 insertions(+), 5 deletions(-)
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 0a6e2fa82914..23dacc9be85e 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -31,6 +31,9 @@
- /* HACE0C[27:0] holds the crypto data length */
- #define  CRYPT_DATA_LEN_MASK    0x0FFFFFFF
- #define R_CRYPT_CMD         (0x10 / 4)
-+/* AES-GCM associated data length (HACE14) and tag write buffer (HACE18) */
-+#define R_CRYPT_GCM_ADD_LEN (0x14 / 4)
-+#define R_CRYPT_GCM_TAG     (0x18 / 4)
- /* Crypto engine command register (HACE10) bits */
- #define  CRYPT_CMD_ENCRYPT          BIT(7)
- #define  CRYPT_CMD_ISR_EN           BIT(12)
-@@ -42,6 +45,7 @@
- #define  CRYPT_CMD_ECB              (0x0 << 4)
- #define  CRYPT_CMD_CBC              (0x1 << 4)
- #define  CRYPT_CMD_CTR              (0x4 << 4)
-+#define  CRYPT_CMD_GCM              (0x5 << 4)
- /* AES key length HACE10[3:2] */
- #define  CRYPT_CMD_AES_KEY_LEN_MASK (0x3 << 2)
- #define  CRYPT_CMD_AES256           (0x2 << 2)
-@@ -57,10 +61,15 @@
- #define CRYPT_CTX_KEY_OFFSET        0x10
- #define CRYPT_CTX_SIZE              0x30
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index 54a5945d9252..719149b7174b 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -68,6 +68,7 @@ struct PCA955xClass {
+ #define PCA9552_PIN_HIZ  0x1
  
-+/* AES-GCM uses a 96-bit IV and a 128-bit authentication tag */
-+#define CRYPT_GCM_IV_LEN            12
-+#define CRYPT_GCM_TAG_LEN           16
-+
- /* AST2700 64-bit DMA high address registers for the crypto command */
- #define R_CRYPT_SRC_HI      (0x80 / 4)
- #define R_CRYPT_DEST_HI     (0x84 / 4)
- #define R_CRYPT_CONTEXT_HI  (0x88 / 4)
-+#define R_CRYPT_GCM_TAG_HI  (0x8c / 4)
+ static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
++static const char *pin_state[] = {"low", "high"};
  
- #define R_STATUS        (0x1c / 4)
- #define HASH_IRQ        BIT(9)
-@@ -596,6 +605,9 @@ static bool crypt_decode_cmd(uint32_t cmd, QCryptoCipherAlgo *alg,
-     case CRYPT_CMD_CTR:
-         *mode = QCRYPTO_CIPHER_MODE_CTR;
-         break;
-+    case CRYPT_CMD_GCM:
-+        *mode = QCRYPTO_CIPHER_MODE_GCM;
-+        break;
-     default:
-         return false;
-     }
-@@ -689,11 +701,12 @@ static uint64_t crypt_get_addr(AspeedHACEState *s, int reg, int reg_hi)
+ static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
+ {
+@@ -428,6 +429,79 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+     pca955x_write(s, reg, val);
  }
  
- /*
-- * Perform an AES/DES/3DES ECB/CBC operation. The source and destination are
-- * either single contiguous buffers (direct access mode) or scatter-gather
-- * lists (HACE10[18]/[19]), addressed by HACE00/HACE04; the IV/key come from
-- * the context buffer (HACE08). For CBC the resulting chaining IV is written
-- * back to the context buffer so the driver can continue the chain.
-+ * Perform an AES/DES/3DES ECB/CBC/CTR or AES-GCM operation. The source and
-+ * destination are either single contiguous buffers (direct access mode) or
-+ * scatter-gather lists (HACE10[18]/[19]), addressed by HACE00/HACE04; the
-+ * IV/key come from the context buffer (HACE08). For CBC and CTR the resulting
-+ * chaining state is written back to the context buffer so the driver can
-+ * continue; for GCM the authentication tag is written to the tag buffer.
-  */
- static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
- {
-@@ -703,6 +716,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-     g_autoptr(QCryptoCipher) cipher = NULL;
-     g_autofree uint8_t *src_buf = NULL;
-     g_autofree uint8_t *dst_buf = NULL;
-+    uint8_t tag[CRYPT_GCM_TAG_LEN];
-     uint8_t ctx[CRYPT_CTX_SIZE];
-     Error *local_err = NULL;
-     QCryptoCipherMode mode;
-@@ -711,10 +725,13 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-     uint64_t ctx_addr;
-     uint64_t src_addr;
-     uint64_t dst_addr;
-+    uint64_t tag_addr;
-+    uint32_t aad_len;
-     size_t iv_offset;
-     size_t blocklen;
-     size_t buf_len;
-     size_t keylen;
-+    size_t ivlen;
-     bool status;
- 
-     if (len == 0) {
-@@ -734,6 +751,20 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-         return;
-     }
- 
-+    /* GCM uses a 96-bit IV; the block modes use a full-block IV. */
-+    ivlen = (mode == QCRYPTO_CIPHER_MODE_GCM) ? CRYPT_GCM_IV_LEN : blocklen;
++static void pca955x_set_ext_state(PCA955xState *s, int pin, int level);
 +
-+    /*
-+     * The hardware GCM path is only exercised without associated data (the
-+     * driver falls back to software when there is any), so AAD is not modelled.
-+     */
-+    aad_len = s->regs[R_CRYPT_GCM_ADD_LEN];
-+    if (mode == QCRYPTO_CIPHER_MODE_GCM && aad_len != 0) {
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: GCM associated data is not implemented\n", __func__);
++static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
++                            void *opaque, Error **errp)
++{
++    PCA955xClass *k = PCA955X_GET_CLASS(obj);
++    PCA955xState *s = PCA955X(obj);
++    int pin, rc;
++    uint8_t input_reg, state;
++
++    rc = sscanf(name, "pin%2d", &pin);
++    if (rc != 1) {
++        error_setg(errp, "%s: error reading %s", __func__, name);
++        return;
++    }
++    if (pin < 0 || pin >= k->pin_count) {
++        error_setg(errp, "%s invalid pin %s", __func__, name);
 +        return;
 +    }
 +
-     /* Fetch the IV and key from the context buffer in DRAM. */
-     ctx_addr = crypt_get_addr(s, R_CRYPT_CONTEXT, R_CRYPT_CONTEXT_HI);
-     if (address_space_read(&s->dram_as, ctx_addr, MEMTXATTRS_UNSPECIFIED,
-@@ -758,7 +789,7 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-     }
- 
-     if (mode != QCRYPTO_CIPHER_MODE_ECB &&
--        qcrypto_cipher_setiv(cipher, ctx + iv_offset, blocklen,
-+        qcrypto_cipher_setiv(cipher, ctx + iv_offset, ivlen,
-                              &local_err) < 0) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto cipher setiv failed: %s\n",
-                       __func__, error_get_pretty(local_err));
-@@ -769,9 +800,11 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-     /*
-      * Round the working buffers up to a whole block. Block modes are already
-      * block-aligned; the stream-like CTR mode may leave a partial final block
--     * that the engine still processes a full block at a time.
-+     * that the engine still processes a full block at a time. GCM handles a
-+     * partial final block itself, so it operates on the exact length.
-      */
--    buf_len = QEMU_ALIGN_UP(len, blocklen);
-+    buf_len = (mode == QCRYPTO_CIPHER_MODE_GCM) ?
-+              len : QEMU_ALIGN_UP(len, blocklen);
-     src_buf = g_malloc0(buf_len);
-     dst_buf = g_malloc0(buf_len);
- 
-@@ -855,6 +888,24 @@ static void do_crypt_operation(AspeedHACEState *s, uint32_t cmd)
-                           "%s: Failed to write IV, addr=0x%" HWADDR_PRIx "\n",
-                           __func__, ctx_addr + iv_offset);
-         }
-+    } else if (mode == QCRYPTO_CIPHER_MODE_GCM) {
-+        /*
-+         * GCM authenticates the message and writes the resulting tag to the
-+         * dedicated tag buffer (HACE18/HACE8C).
-+         */
-+        if (qcrypto_cipher_gettag(cipher, tag, sizeof(tag), &local_err) < 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto cipher gettag failed: "
-+                          "%s\n", __func__, error_get_pretty(local_err));
-+            error_free(local_err);
-+            return;
++    /*
++     * Report the raw pin logic level; polarity inversion is a read-time
++     * transform applied to the INPUT register, not to the pin state itself.
++     */
++    input_reg = PCA9535_INPUT0 + (pin / 8);
++    state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
++    visit_type_str(v, name, (char **)&pin_state[state], errp);
++}
++
++static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
++                            void *opaque, Error **errp)
++{
++    PCA955xClass *k = PCA955X_GET_CLASS(obj);
++    PCA955xState *s = PCA955X(obj);
++    int pin, rc;
++    uint8_t state, config_reg;
++    g_autofree char *state_str = NULL;
++
++    if (!visit_type_str(v, name, &state_str, errp)) {
++        return;
++    }
++    rc = sscanf(name, "pin%2d", &pin);
++    if (rc != 1) {
++        error_setg(errp, "%s: error reading %s", __func__, name);
++        return;
++    }
++    if (pin < 0 || pin >= k->pin_count) {
++        error_setg(errp, "%s invalid pin %s", __func__, name);
++        return;
++    }
++
++    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
++        if (!strcmp(state_str, pin_state[state])) {
++            break;
 +        }
-+        tag_addr = crypt_get_addr(s, R_CRYPT_GCM_TAG, R_CRYPT_GCM_TAG_HI);
-+        if (address_space_write(&s->dram_as, tag_addr, MEMTXATTRS_UNSPECIFIED,
-+                                tag, sizeof(tag))) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: Failed to write tag, addr=0x%" HWADDR_PRIx "\n",
-+                          __func__, tag_addr);
++    }
++    if (state >= ARRAY_SIZE(pin_state)) {
++        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
++        return;
++    }
++
++    /* Only input-configured pins can be driven by an external device. */
++    config_reg = PCA9535_CONFIG0 + (pin / 8);
++    if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: pin %d is configured as output, ignoring set\n",
++                      s->description, pin);
++        return;
++    }
++
++    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
++}
++
+ static const VMStateDescription pca9552_vmstate = {
+     .name = "PCA9552",
+     .version_id = 0,
+@@ -485,15 +559,22 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
+ static void pca955x_initfn(Object *obj)
+ {
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+-    int led;
+ 
+     assert(k->pin_count <= PCA955X_PIN_COUNT_MAX);
+-    for (led = 0; led < k->pin_count; led++) {
++    for (int ix = 0; ix < k->pin_count; ix++) {
+         char *name;
+ 
+-        name = g_strdup_printf("led%d", led);
+-        object_property_add(obj, name, "bool", pca955x_get_led, pca955x_set_led,
+-                            NULL, NULL);
++        if (k->has_led_support) {
++            /* LED variant: expose the LED selector state as led%d. */
++            name = g_strdup_printf("led%d", ix);
++            object_property_add(obj, name, "bool",
++                                pca955x_get_led, pca955x_set_led, NULL, NULL);
++        } else {
++            /* GPIO variant: expose the pin logic level as pin%d. */
++            name = g_strdup_printf("pin%d", ix);
++            object_property_add(obj, name, "str",
++                                pca955x_get_pin, pca955x_set_pin, NULL, NULL);
 +        }
+         g_free(name);
      }
  }
- 
-@@ -899,9 +950,11 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-     case R_CRYPT_SRC:
-     case R_CRYPT_DEST:
-     case R_CRYPT_CONTEXT:
-+    case R_CRYPT_GCM_TAG:
-         data &= ahc->src_mask;
-         break;
-     case R_CRYPT_DATA_LEN:
-+    case R_CRYPT_GCM_ADD_LEN:
-         data &= CRYPT_DATA_LEN_MASK;
-         break;
-     case R_HASH_SRC:
-@@ -980,6 +1033,7 @@ static void aspeed_hace_write(void *opaque, hwaddr addr, uint64_t data,
-         data &= ahc->src_hi_mask;
-         break;
-     case R_CRYPT_DEST_HI:
-+    case R_CRYPT_GCM_TAG_HI:
-         data &= ahc->dest_hi_mask;
-         break;
-     case R_CRYPT_CONTEXT_HI:
 -- 
 2.55.0
 
