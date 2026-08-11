@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A09C5B56A
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E812C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpPX-0006sY-Gy; Tue, 11 Aug 2026 12:33:07 -0400
+	id 1wtpNS-0000P9-0S; Tue, 11 Aug 2026 12:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpP1-0005Yt-FB
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNN-0000Hx-5z
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOz-00013L-1F
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpNL-0000fj-7m
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:30:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465952;
+ s=mimecast20190719; t=1786465850;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CGdvrg+WDqR7Alrt832wb9STFzkfQNaTIbSA3p0aVWg=;
- b=PxQ5uGvOJNiNlasHPKE1wgfwYW1U+FUiqwCjqMUyld6beNliStvEJi+xiwGhwMxQHNhtXc
- 1G5zridnyHgrCQy8dBxrvqdnfHIDibROnfr3uZihXkXKwUkWFjDnBBrYtbgsG3+3XKeilq
- NM30V44KK5Xsw1Ae2jgrM90UmJQPgrc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ufOlKYvDB40bcwQ0U1VfIshOxC3uJvN4gkjEhDi7DY4=;
+ b=OGHUb+Qzc1r7jgb/XAXvt4NXUNLdva2OoxxBGim+ny0yPgPZ9eirwmg0GFTPwVBsYRtc+b
+ uel93wbJsSAGvkpyE6JpxHJBh/1HeRSDsD7ki8PsCAA2NGYnU1tgrfY6K6dEKwGwUTz00M
+ Fuv6INh9fii3K+x/UcSb8VmHilm9NCw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-fvo2WtmcPZC_v9X_eQveBg-1; Tue,
- 11 Aug 2026 12:32:28 -0400
-X-MC-Unique: fvo2WtmcPZC_v9X_eQveBg-1
-X-Mimecast-MFC-AGG-ID: fvo2WtmcPZC_v9X_eQveBg_1786465946
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-yCh6SVAPOM-sKwK2lDg_CA-1; Tue,
+ 11 Aug 2026 12:30:49 -0400
+X-MC-Unique: yCh6SVAPOM-sKwK2lDg_CA-1
+X-Mimecast-MFC-AGG-ID: yCh6SVAPOM-sKwK2lDg_CA_1786465848
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FD3219560AA; Tue, 11 Aug 2026 16:32:26 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AD00195609E; Tue, 11 Aug 2026 16:30:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 69563195DF91; Tue, 11 Aug 2026 16:32:24 +0000 (UTC)
+ id B0316195DF91; Tue, 11 Aug 2026 16:30:46 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 76/83] crypto/cipher-gcrypt: Implement AES-GCM
-Date: Tue, 11 Aug 2026 18:29:31 +0200
-Message-ID: <20260811162938.1403216-77-clg@redhat.com>
+Subject: [PULL 30/83] tests/qtest: adc128d818: test limit interrupts
+Date: Tue, 11 Aug 2026 18:28:45 +0200
+Message-ID: <20260811162938.1403216-31-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
 X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,156 +83,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-Map QCRYPTO_CIPHER_MODE_GCM to GCRY_CIPHER_MODE_GCM and advertise it in
-qcrypto_cipher_supports() for 128-bit block ciphers. Add a GCM driver
-whose setiv accepts the (typically 96-bit) nonce, whose encrypt/decrypt
-do not require block-aligned lengths, and which implements setaad via
-gcry_cipher_authenticate() and gettag via gcry_cipher_gettag().
+Cover per-channel high- and low-limit interrupt status, the
+INT_CLEAR bit gating the monitoring loop, and the temperature
+high-limit alarm with hysteresis.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260811060115.1849266-10-jamin_lin@aspeedtech.com
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Link: https://lore.kernel.org/qemu-devel/20260707091609.97759-5-emmanuel.blot@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- crypto/cipher-gcrypt.c.inc | 101 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 101 insertions(+)
+ tests/qtest/adc128d818-test.c | 121 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 121 insertions(+)
 
-diff --git a/crypto/cipher-gcrypt.c.inc b/crypto/cipher-gcrypt.c.inc
-index 12eb9ddb5a6f..fce09a3c7717 100644
---- a/crypto/cipher-gcrypt.c.inc
-+++ b/crypto/cipher-gcrypt.c.inc
-@@ -65,6 +65,8 @@ static int qcrypto_cipher_mode_to_gcry_mode(QCryptoCipherMode mode)
-         return GCRY_CIPHER_MODE_CBC;
-     case QCRYPTO_CIPHER_MODE_CTR:
-         return GCRY_CIPHER_MODE_CTR;
-+    case QCRYPTO_CIPHER_MODE_GCM:
-+        return GCRY_CIPHER_MODE_GCM;
-     default:
-         return GCRY_CIPHER_MODE_NONE;
-     }
-@@ -104,6 +106,10 @@ bool qcrypto_cipher_supports(QCryptoCipherAlgo alg,
-     case QCRYPTO_CIPHER_MODE_XTS:
-     case QCRYPTO_CIPHER_MODE_CTR:
-         return true;
-+    case QCRYPTO_CIPHER_MODE_GCM:
-+        /* GCM requires a 128-bit block cipher. */
-+        return gcry_cipher_get_algo_blklen(
-+                   qcrypto_cipher_alg_to_gcry_alg(alg)) == 16;
-     default:
-         return false;
-     }
-@@ -228,6 +234,99 @@ static const struct QCryptoCipherDriver qcrypto_gcrypt_ctr_driver = {
-     .cipher_free = qcrypto_gcrypt_ctx_free,
- };
+diff --git a/tests/qtest/adc128d818-test.c b/tests/qtest/adc128d818-test.c
+index 891189f0bd8c..3e3fabb8d9f1 100644
+--- a/tests/qtest/adc128d818-test.c
++++ b/tests/qtest/adc128d818-test.c
+@@ -330,6 +330,123 @@ static void test_ext_vref(void *obj, void *data, QGuestAllocator *alloc)
+     g_assert_cmphex(reading, ==, 0x8000);
+ }
  
-+/*
-+ * GCM is an AEAD stream mode: the IV/nonce need not match the block size,
-+ * the message length need not be a multiple of the block size, associated
-+ * data is fed with gcry_cipher_authenticate() and the authentication tag is
-+ * read back with gcry_cipher_gettag().
-+ */
-+static int qcrypto_gcrypt_gcm_setiv(QCryptoCipher *cipher,
-+                                    const uint8_t *iv, size_t niv,
-+                                    Error **errp)
++/* Interrupt status set on limit violation; persists while fault remains */
++static void test_interrupt_status(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QCryptoCipherGcrypt *ctx = container_of(cipher, QCryptoCipherGcrypt, base);
-+    gcry_error_t err;
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    uint8_t status;
 +
-+    gcry_cipher_reset(ctx->handle);
-+    err = gcry_cipher_setiv(ctx->handle, iv, niv);
-+    if (err != 0) {
-+        error_setg(errp, "Cannot set IV: %s", gcry_strerror(err));
-+        return -1;
-+    }
++    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
++    g_test_message("Set ch0 high limit = 0x10");
 +
-+    return 0;
++    qmp_adc128d818_set("ain0", 2560);
++    g_test_message("Injected ain0 = 2560 mV (exceeds limit)");
++
++    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
++
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS = 0x%02x (expect bit 0 set)", status);
++    g_assert_cmphex(status & 0x01u, ==, 0x01);
++
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS after re-read = 0x%02x (expect bit 0 still set)",
++             status);
++    g_assert_cmphex(status & 0x01u, ==, 0x01);
++
++    qmp_adc128d818_set("ain0", 80);
++    g_test_message("Injected ain0 = 80 mV (within limit)");
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS after fault cleared = 0x%02x "
++                   "(expect bit 0 clear)", status);
++    g_assert_cmphex(status & 0x01u, ==, 0x00);
 +}
 +
-+static int qcrypto_gcrypt_gcm_setaad(QCryptoCipher *cipher,
-+                                     const uint8_t *aad, size_t len,
-+                                     Error **errp)
++/* INT_CLEAR stops the round-robin monitoring loop */
++static void test_int_clear(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QCryptoCipherGcrypt *ctx = container_of(cipher, QCryptoCipherGcrypt, base);
-+    gcry_error_t err;
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    uint8_t status;
 +
-+    err = gcry_cipher_authenticate(ctx->handle, aad, len);
-+    if (err != 0) {
-+        error_setg(errp, "Cannot set AAD: %s", gcry_strerror(err));
-+        return -1;
-+    }
++    i2c_set8(dev, REG_LIMIT_BASE, 0x10);
++    qmp_adc128d818_set("ain0", 2560);
 +
-+    return 0;
++    i2c_set8(dev, REG_CONFIG,
++             CONFIG_START | CONFIG_INT_ENABLE | CONFIG_INT_CLEAR);
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS with INT_CLEAR set = 0x%02x (expect 0x00)",
++                   status);
++    g_assert_cmphex(status, ==, 0x00);
++
++    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS after INT_CLEAR cleared = 0x%02x (expect bit 0)",
++             status);
++    g_assert_cmphex(status & 0x01u, ==, 0x01);
 +}
 +
-+static int qcrypto_gcrypt_gcm_encrypt(QCryptoCipher *cipher, const void *in,
-+                                      void *out, size_t len, Error **errp)
++/* Low-limit interrupt triggers correctly */
++static void test_low_limit(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    QCryptoCipherGcrypt *ctx = container_of(cipher, QCryptoCipherGcrypt, base);
-+    gcry_error_t err;
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    uint8_t status;
 +
-+    err = gcry_cipher_encrypt(ctx->handle, out, len, in, len);
-+    if (err != 0) {
-+        error_setg(errp, "Cannot encrypt data: %s", gcry_strerror(err));
-+        return -1;
-+    }
++    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
 +
-+    return 0;
++    i2c_set8(dev, REG_LIMIT_BASE + 3u, 0x80);
++    g_test_message("Set ch1 low limit = 0x80");
++
++    i2c_set8(dev, REG_LIMIT_BASE + 5u, 0x80);
++    g_test_message("Set ch2 low limit = 0x80");
++
++    qmp_adc128d818_set("ain1", 640);
++    qmp_adc128d818_set("ain2", 1280);
++    qmp_adc128d818_set("ain0", 1280);
++    i2c_set8(dev, REG_CONFIG, CONFIG_START | CONFIG_INT_ENABLE);
++
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("INT_STATUS = 0x%02x (expect bits 1 and 2 set)", status);
++    g_assert_cmphex(status & 0x02u, ==, 0x02);
++    g_assert_cmphex(status & 0x04u, ==, 0x04);
++
++    g_assert_cmphex(status & 0x01u, ==, 0x00);
 +}
 +
-+static int qcrypto_gcrypt_gcm_decrypt(QCryptoCipher *cipher, const void *in,
-+                                      void *out, size_t len, Error **errp)
++/* Temperature high-limit interrupt with hysteresis */
++static void test_temp_hysteresis(void *obj, void *data,
++                                 QGuestAllocator *alloc)
 +{
-+    QCryptoCipherGcrypt *ctx = container_of(cipher, QCryptoCipherGcrypt, base);
-+    gcry_error_t err;
++    QI2CDevice *dev = (QI2CDevice *)obj;
++    uint8_t status;
 +
-+    err = gcry_cipher_decrypt(ctx->handle, out, len, in, len);
-+    if (err != 0) {
-+        error_setg(errp, "Cannot decrypt data: %s", gcry_strerror(err));
-+        return -1;
-+    }
++    i2c_set8(dev, REG_CONFIG, CONFIG_INITIALIZATION);
 +
-+    return 0;
++    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u, 0x32);
++    i2c_set8(dev, REG_LIMIT_BASE + 7u * 2u + 1u, 0x28);
++
++    qmp_adc128d818_set("temperature", 25000);
++    i2c_set8(dev, REG_CONFIG, CONFIG_START);
++
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("25 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
++    g_assert_cmphex(status & 0x80u, ==, 0x00);
++
++    qmp_adc128d818_set("temperature", 55000);
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("55 C: INT_STATUS = 0x%02x (temp bit expect set)", status);
++    g_assert_cmphex(status & 0x80u, ==, 0x80);
++
++    qmp_adc128d818_set("temperature", 45000);
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("45 C (hysteresis): INT_STATUS = 0x%02x "
++                   "(temp bit expect set)", status);
++    g_assert_cmphex(status & 0x80u, ==, 0x80);
++
++    qmp_adc128d818_set("temperature", 35000);
++    status = i2c_get8(dev, REG_INT_STATUS);
++    g_test_message("35 C: INT_STATUS = 0x%02x (temp bit expect clear)", status);
++    g_assert_cmphex(status & 0x80u, ==, 0x00);
 +}
 +
-+static int qcrypto_gcrypt_gcm_gettag(QCryptoCipher *cipher,
-+                                     uint8_t *tag, size_t len, Error **errp)
-+{
-+    QCryptoCipherGcrypt *ctx = container_of(cipher, QCryptoCipherGcrypt, base);
-+    gcry_error_t err;
-+
-+    err = gcry_cipher_gettag(ctx->handle, tag, len);
-+    if (err != 0) {
-+        error_setg(errp, "Cannot get tag: %s", gcry_strerror(err));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static const struct QCryptoCipherDriver qcrypto_gcrypt_gcm_driver = {
-+    .cipher_encrypt = qcrypto_gcrypt_gcm_encrypt,
-+    .cipher_decrypt = qcrypto_gcrypt_gcm_decrypt,
-+    .cipher_setiv = qcrypto_gcrypt_gcm_setiv,
-+    .cipher_setaad = qcrypto_gcrypt_gcm_setaad,
-+    .cipher_gettag = qcrypto_gcrypt_gcm_gettag,
-+    .cipher_free = qcrypto_gcrypt_ctx_free,
-+};
-+
- static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgo alg,
-                                              QCryptoCipherMode mode,
-                                              const uint8_t *key,
-@@ -259,6 +358,8 @@ static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgo alg,
- 
-     if (mode == QCRYPTO_CIPHER_MODE_CTR) {
-         drv = &qcrypto_gcrypt_ctr_driver;
-+    } else if (mode == QCRYPTO_CIPHER_MODE_GCM) {
-+        drv = &qcrypto_gcrypt_gcm_driver;
-     } else {
-         drv = &qcrypto_gcrypt_driver;
-     }
+ static void adc128d818_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -354,5 +471,9 @@ static void adc128d818_register_nodes(void)
+     qos_add_test("temperature-edges", "adc128d818", test_temperature_edges,
+                  NULL);
+     qos_add_test("ext-vref", "adc128d818", test_ext_vref, NULL);
++    qos_add_test("interrupt-status", "adc128d818", test_interrupt_status, NULL);
++    qos_add_test("int-clear", "adc128d818", test_int_clear, NULL);
++    qos_add_test("low-limit", "adc128d818", test_low_limit, NULL);
++    qos_add_test("temp-hysteresis", "adc128d818", test_temp_hysteresis, NULL);
+ }
+ libqos_init(adc128d818_register_nodes);
 -- 
 2.55.0
 
