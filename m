@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91C8C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8EDC5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Aug 2026 16:37:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtpOg-0005Ii-Rj; Tue, 11 Aug 2026 12:32:14 -0400
+	id 1wtpOH-0003v7-58; Tue, 11 Aug 2026 12:31:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOe-0005GO-9x
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOA-0003ax-Px
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpOc-0000zL-Rg
- for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:32:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wtpO9-0000s2-32
+ for qemu-devel@nongnu.org; Tue, 11 Aug 2026 12:31:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786465930;
+ s=mimecast20190719; t=1786465900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1x9uKneUZJnQx3A+Wl/a9vyNunpA4lgIOoIRJt3uHr8=;
- b=FI1NCZ86VcODhPdBYyYxlB/5ykeaX0h3EDfFTpj6KnjBldoOi4BfEgS6aM9h87wKI/UUaM
- Y2zL57seX6ukRK3gW9cL/fxE/zzNgXsb2GbWiVYetgaD3f9k2lNVuHsb6olF9nboKR0KFf
- QxKNeVur06vv4SQAR2ZF3J+4ipnGH10=
+ bh=/jKHWoHosk9MWohYc5Yj1kHRkMGUHa8KL6bWRx9B/NY=;
+ b=JL8yR8KfZbU8UJ87PZPiDCcDMvt4/JO6wCQ/egKmU4UrPbrQJI/ZMiJR/OF0BadEb52nEU
+ T5i7i3H0tThmuMWtCfFMNzo0b/6aZO/27tCFzgYu9X1c0ziUNFI3Kll1K7iSbCkCHIjz2N
+ JiRPcvV6yclEG8Dhm69jefaHyOfg4f0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-c1CRiyzQMHm6qduzymhp2g-1; Tue,
- 11 Aug 2026 12:32:07 -0400
-X-MC-Unique: c1CRiyzQMHm6qduzymhp2g-1
-X-Mimecast-MFC-AGG-ID: c1CRiyzQMHm6qduzymhp2g_1786465926
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-F9M_9wmmPMG-ZjOSikqB-A-1; Tue,
+ 11 Aug 2026 12:31:32 -0400
+X-MC-Unique: F9M_9wmmPMG-ZjOSikqB-A-1
+X-Mimecast-MFC-AGG-ID: F9M_9wmmPMG-ZjOSikqB-A_1786465891
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27E4C19560BB; Tue, 11 Aug 2026 16:32:06 +0000 (UTC)
+ id 4BA5F195609E; Tue, 11 Aug 2026 16:31:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.48.12])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A36E1195DF98; Tue, 11 Aug 2026 16:32:04 +0000 (UTC)
+ id 97BBB195DF96; Tue, 11 Aug 2026 16:31:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>,
+Cc: Emmanuel Blot <emmanuel.blot@free.fr>, Glenn Miles <milesg@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 67/83] hw/arm/aspeed: avoid sign mismatch on sscanf for uart
- property
-Date: Tue, 11 Aug 2026 18:29:22 +0200
-Message-ID: <20260811162938.1403216-68-clg@redhat.com>
+Subject: [PULL 50/83] hw/gpio: pca9554: reflect push-pull outputs in the input
+ register
+Date: Tue, 11 Aug 2026 18:29:05 +0200
+Message-ID: <20260811162938.1403216-51-clg@redhat.com>
 In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
 References: <20260811162938.1403216-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,35 +85,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+From: Emmanuel Blot <emmanuel.blot@free.fr>
 
-using "%u" with sscanf() was likely meant to indicate that a
-negative value was unexpected, but with a signed variable it
-could result in undefined behaviour.
+pca9554_update_pin_input() derived the pin level from CONFIG | OUTPUT,
+which treated an output driven high as Hi-Z and let ext_state pull it
+low. The PCA9554/PCA9536 output stage is push-pull, so a pin configured
+as an output drives the OUTPUT register level regardless of any external
+agent. Reflect the output value directly for output pins and keep the
+pull-up/ext_state behaviour for input pins, matching the PCA9555 GPIO
+variant.
 
-use "%d" and check for a negative input explicitly.
-
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260802162828.16880-1-carenas@gmail.com
+Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260709-catalina-upgrade-v1-17-82a63fead90c@free.fr
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/gpio/pca9554.c | 29 +++++++++--------------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a48c44205837..a9238e6217dd 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -327,7 +327,7 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
-     int uart_first = aspeed_uart_first(sc->uarts_base);
-     int uart_last = aspeed_uart_last(sc->uarts_base, sc->uarts_num);
+diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+index ed38fe102b18..d4746719f916 100644
+--- a/hw/gpio/pca9554.c
++++ b/hw/gpio/pca9554.c
+@@ -43,43 +43,32 @@ static void pca9554_update_pin_input(PCA9554State *s)
+     int i;
+     uint8_t config = s->regs[PCA9554_CONFIG];
+     uint8_t output = s->regs[PCA9554_OUTPUT];
+-    uint8_t internal_state = config | output;
  
--    if (sscanf(value, "uart%u", &val) != 1) {
-+    if (sscanf(value, "uart%d", &val) != 1 || val < 0) {
-         error_setg(errp, "Bad value for \"uart\" property");
-         return;
+     for (i = 0; i < pc->pin_count; i++) {
+         uint8_t bit_mask = 1 << i;
+-        uint8_t internal_pin_state = (internal_state >> i) & 0x1;
+         uint8_t old_value = s->regs[PCA9554_INPUT] & bit_mask;
+         uint8_t new_value;
+ 
+-        switch (internal_pin_state) {
+-        case PCA9554_PIN_LOW:
+-            s->regs[PCA9554_INPUT] &= ~bit_mask;
+-            break;
+-        case PCA9554_PIN_HIZ:
++        if (config & bit_mask) {
+             /*
+-             * pullup sets it to a logical 1 unless
+-             * external device drives it low.
++             * Input: the pin is Hi-Z with a pull-up, so it reads high
++             * unless an external device drives it low.
+              */
+             if (s->ext_state[i] == PCA9554_PIN_LOW) {
+                 s->regs[PCA9554_INPUT] &= ~bit_mask;
+             } else {
+-                s->regs[PCA9554_INPUT] |=  bit_mask;
++                s->regs[PCA9554_INPUT] |= bit_mask;
+             }
+-            break;
+-        default:
+-            break;
++        } else {
++            /* Output: the push-pull stage drives the output register level. */
++            s->regs[PCA9554_INPUT] = (s->regs[PCA9554_INPUT] & ~bit_mask) |
++                                     (output & bit_mask);
+         }
+ 
+         /* drive the per-pin GPIO output only if the pin level changed */
+         new_value = s->regs[PCA9554_INPUT] & bit_mask;
+         if (new_value != old_value) {
+-            if (new_value) {
+-                /* changed from 0 to 1 */
+-                qemu_set_irq(s->gpio_out[i], 1);
+-            } else {
+-                /* changed from 1 to 0 */
+-                qemu_set_irq(s->gpio_out[i], 0);
+-            }
++            qemu_set_irq(s->gpio_out[i], !!new_value);
+         }
      }
+ }
 -- 
 2.55.0
 
