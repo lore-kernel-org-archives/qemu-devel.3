@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B9EFC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389C4C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuANh-0004Ar-01; Wed, 12 Aug 2026 10:56:40 -0400
+	id 1wuAQC-0008Os-Qb; Wed, 12 Aug 2026 10:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuANQ-0003zH-MT; Wed, 12 Aug 2026 10:56:26 -0400
+ id 1wuAQA-0008DX-8l; Wed, 12 Aug 2026 10:59:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAN4-00006m-UB; Wed, 12 Aug 2026 10:56:20 -0400
+ id 1wuAQ8-0001Rx-0N; Wed, 12 Aug 2026 10:59:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=5aTx44/tPkjRMx1m07dr23hm/+mofZyGft8shN+lqfY=;
+ t=1786546233; bh=adCV0qxPnqF3ua6HniH7NBbIOmjJ3njwCW/SCZc48lQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lDuOvYUagAD5CeKbcsT4gh14wk4WaO9ENjGzLq2AQbICoExQOaAQwZa7rN8nbw0c4
- zpKbT4bvDdPBse3WVXAhnK3vXExSGXyGQsTZKuwkqDeyr/yFHXO7zyYPOeO8i9Ju7w
- WCl3vn9gKXiQjWsuaWGhGozT9qTOgOvI5fdnMKcw/INcYG1o8o8ms5kJiSoOYQTeV0
- 9lwuB0Zr2bahntAHZhueyx8V4AYIntuGaQyS1vkejv+ETG+DY7/civiumWCbnYTZHc
- L9dS49Ll+jUaU1iOFQl5CIsa1rGRzs9mNdDZO2EKhwVW0B1Yq9/a3bOA5UqoizgiWl
- OlxsmjqjTxjew==
+ b=Bzh74M6xHeGSbhNCgO8xs6qxfH2hWXCL9+dL2ouZR1INNiRv2ReZMcp4AvMgYoU6v
+ jKdOfFRQyKha7Ww+oVzCPj65ybHy655FTC2/lQHr3h8dZ+uBZ5mNf/dlA57kHhgjAM
+ Cu+FO9zHMkfHWNRe4hB+v0b5We/ljc2nrtw5gIZ1uxNlhb9hNNeXDwPrupCEvsfhHm
+ k+PJAWFyqdA1iC/N/73PAcXzzLhiHtS5Ghgw2iC118an+DW6Rgu3lmQ+QyOYINZQh9
+ YzZteBpjt8SsscpibJRQFKU/D5aEAq5dlOLZ64hZG9OZaWqd7/ut/wdWXw5zBp4Lh6
+ pzmtmhFpHcTLA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 465131CA63C;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2D7E11CA65A;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A181E409D7E;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 88988409D9C;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0CFE52F9D3; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id E53F02FA0F; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Xie Yongji <xieyongji@bytedance.com>,
- Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 056/120] libvhost-user: validate last_batch_head in
- vu_check_queue_inflights
-Date: Wed, 12 Aug 2026 17:48:39 +0300
-Message-ID: <20260812144955.649205-56-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 086/120] linux-user: Fix msqid_ds struct wrt 32-bit
+ big endian architectures
+Date: Wed, 12 Aug 2026 17:49:09 +0300
+Message-ID: <20260812144955.649205-86-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -73,43 +71,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Helge Deller <deller@gmx.de>
 
-vu_check_queue_inflights uses last_batch_head from the frontend-controlled
-inflight shared memory as an index into desc[] without bounds checking.
-A malicious or buggy frontend can set last_batch_head >= desc_num,
-causing an out-of-bounds write.
+Make sure that the time entries (msg_stime, msg_rtime and msg_ctime)
+are defined as 64-bit time_t values, since the userspace may access
+the whole 64-bit value. By this change we fix the word ordering for
+32-bit big endian architectures as well.
 
-Validate last_batch_head before using it.
-Note: the value is not guest-accessible so not a security vulnerability.
+This fixes the msgctl01 LTP testcase on hppa32.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Cc: Xie Yongji <xieyongji@bytedance.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: BB CC <wywwzjj@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <8133770c75c9907578dd551f4d468140a0a75cd2.1784892981.git.mst@redhat.com>
-(cherry picked from commit bf21298c082cc5561072bbfd79216d478861a5cd)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9e3df3019d21c54df435406fca31b3e145b29702)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 82e16c2c969..037c6614018 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1379,6 +1379,12 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
-     vq->counter = 0;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 67106f1f59e..bf7c9af691e 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -4216,21 +4216,15 @@ static inline abi_long do_semtimedop(int semid,
+ }
+ #endif
  
-     if (unlikely(vq->inflight->used_idx != vq->used_idx)) {
-+        if (vq->inflight->last_batch_head >= vq->inflight->desc_num) {
-+            vu_panic(dev, "vu_check_queue_inflights: last_batch_head %u "
-+                     "out of range (desc_num %u)",
-+                     vq->inflight->last_batch_head, vq->inflight->desc_num);
-+            return -1;
-+        }
-         vq->inflight->desc[vq->inflight->last_batch_head].inflight = 0;
- 
-         barrier();
++#define target_time64_t         abi_ullong
++#define target_swap_time64(x)   tswap64(x)
++
+ struct target_msqid_ds
+ {
+     struct target_ipc_perm msg_perm;
+-    abi_ulong msg_stime;
+-#if TARGET_ABI_BITS == 32
+-    abi_ulong __unused1;
+-#endif
+-    abi_ulong msg_rtime;
+-#if TARGET_ABI_BITS == 32
+-    abi_ulong __unused2;
+-#endif
+-    abi_ulong msg_ctime;
+-#if TARGET_ABI_BITS == 32
+-    abi_ulong __unused3;
+-#endif
++    target_time64_t msg_stime;
++    target_time64_t msg_rtime;
++    target_time64_t msg_ctime;
+     abi_ulong __msg_cbytes;
+     abi_ulong msg_qnum;
+     abi_ulong msg_qbytes;
+@@ -4249,9 +4243,9 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
+         return -TARGET_EFAULT;
+     if (target_to_host_ipc_perm(&(host_md->msg_perm),target_addr))
+         return -TARGET_EFAULT;
+-    host_md->msg_stime = tswapal(target_md->msg_stime);
+-    host_md->msg_rtime = tswapal(target_md->msg_rtime);
+-    host_md->msg_ctime = tswapal(target_md->msg_ctime);
++    host_md->msg_stime = target_swap_time64(target_md->msg_stime);
++    host_md->msg_rtime = target_swap_time64(target_md->msg_rtime);
++    host_md->msg_ctime = target_swap_time64(target_md->msg_ctime);
+     host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
+     host_md->msg_qnum = tswapal(target_md->msg_qnum);
+     host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
+@@ -4270,9 +4264,9 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
+         return -TARGET_EFAULT;
+     if (host_to_target_ipc_perm(target_addr,&(host_md->msg_perm)))
+         return -TARGET_EFAULT;
+-    target_md->msg_stime = tswapal(host_md->msg_stime);
+-    target_md->msg_rtime = tswapal(host_md->msg_rtime);
+-    target_md->msg_ctime = tswapal(host_md->msg_ctime);
++    target_md->msg_stime = target_swap_time64(host_md->msg_stime);
++    target_md->msg_rtime = target_swap_time64(host_md->msg_rtime);
++    target_md->msg_ctime = target_swap_time64(host_md->msg_ctime);
+     target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
+     target_md->msg_qnum = tswapal(host_md->msg_qnum);
+     target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
 -- 
 2.47.3
 
