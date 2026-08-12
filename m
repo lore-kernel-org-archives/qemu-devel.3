@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A256DC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11358C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMg-0002Lq-Ju; Wed, 12 Aug 2026 10:55:42 -0400
+	id 1wuAMz-0003OK-SC; Wed, 12 Aug 2026 10:55:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKI-0006iW-U5; Wed, 12 Aug 2026 10:53:10 -0400
+ id 1wuALp-0000bI-Tx; Wed, 12 Aug 2026 10:54:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKG-00074D-PZ; Wed, 12 Aug 2026 10:53:06 -0400
+ id 1wuALl-0007Sw-Uk; Wed, 12 Aug 2026 10:54:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=m+ZZ/hb2gmgAbPYWvMYTVuqmMP7vNsKTvEPWKHWFZyQ=;
+ t=1786546232; bh=dhHlx0uUBkzPHqkiEP/7gu2E31HUvYlw1GbP/oJcQj8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OlUDsvCvzPrGp0o5j6dtcYeDGYEzKxX4E/njYKrESIX42lIxi89DujrsUQLFzRhxf
- MjFNz14tUGYrKvts9pQhm4HtgZb2gRhBdR1HYKijIRBH7/tszZr+e61DjeaSzWl87I
- XJaVklLqHj6iXf6MWKwAFKsZChIkD02w43yUL/0eOkLiCHoBZQ6KcZ7zjD/PrMd8Kd
- 9zYnRXuBysxL06KGuv3DMvGUFnlrGka//8ZgygQaXeDewiPeRBF1PA/lo/lja21luV
- ReWFkzAfeZSNzegkHQ04WLeqBbGffCcvOXBgrFSfd7cZsHrja431Vo7drCiMPPe5FA
- ZHS8Ef6gQxsPA==
+ b=Op+fiThT7hfuxbvAYk/+6Wo+dWakcyj8KXOKbNSHgsFGYATl+2/BPM/pLcpRiN2ue
+ EviRVeq1x+1i/8EX+u1B39qSPm54d7xITcGdLVDJmN8QJEsaVvCpXUZx7jiy/oNzK7
+ BYXyo0h5VexfOE2uiXi1UW1mlkGllA+n0wmbQ3HQ/60f4c6iqOl9/uCnIkGtMV6HHW
+ WJVcc/xUDBe6amWTDJeWIjY1zT4FTCpNXCU7uDAGT2TXgVXtKrYI24lTm2WPJ5QjF3
+ Z9EbMrOkB1xWutrMV5UBkVUXYR1MBVfrcHzjO1eo9ui0UwMz7lmRRe5E6MwT/HcUxD
+ vxZe/kC2XC2Dg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 851491CA622;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 06A941CA633;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E02A0409D61;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 61A0B409D75;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4A3082F99F; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id C16D12F9C1; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Feifan Qian <bea1e@proton.me>, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 030/120] hw/usb/hcd-xhci: Check return value of
- xhci_xfer_create_sgl() for errors
-Date: Wed, 12 Aug 2026 17:48:13 +0300
-Message-ID: <20260812144955.649205-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ huntr bubble <bubblehuntr@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 047/120] virtio-net: fix short frame OOB read in
+ receive_filter()
+Date: Wed, 12 Aug 2026 17:48:30 +0300
+Message-ID: <20260812144955.649205-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -72,65 +72,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-xhci_xfer_create_sgl() can fail if a guest programmed the XHCI in
-a weird way. The current code ignores this error, and this triggers
-an assert() shortly afterwards:
+Within virtio-net, receive_filter() reads Ethernet header fields without
+any length checks.
 
- hw/usb/core.c:612: usb_packet_copy:
-  Assertion `p->actual_length + bytes <= iov->size' failed.
+But virtio-net sets do_not_pad in NetClientState, so backends such as
+socket forward frames at the size supplied by the peer without padding
+to the Ethernet minimum. A short frame thus causes an out-of-bounds
+read.
 
-Fix it by handling the error correctly (i.e. return with an error to
-the caller).
+Add size checks in receive_filter() and drop the truncated frames.
 
-While we're at it, change the DPRINTF statements in xhci_xfer_create_sgl()
-into proper qemu_log_mask() statements, so we have a better way to detect
-this situation.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3786
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260724110933.629791-1-thuth@redhat.com>
-(cherry picked from commit 92abc3c51ebb3223a6fdb5bd3414b2943d7653b2)
+Fixes: CVE-2026-63320
+Fixes: 3831ab2094 ("qemu:virtio-net: Enable filtering based on MAC, promisc, broadcast and allmulti (Alex Williamson)")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3626
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <ee5c77b96ab66b2dd518f146def8727216a5c495.1784895727.git.mst@redhat.com>
+(cherry picked from commit 772488562053c1299fc3667a49b3ff1858f83979)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 5131d05c6ee..be06240cee2 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1465,7 +1465,8 @@ static int xhci_xfer_create_sgl(XHCITransfer *xfer, int in_xfer)
-         switch (TRB_TYPE(*trb)) {
-         case TR_DATA:
-             if ((!(trb->control & TRB_TR_DIR)) != (!in_xfer)) {
--                DPRINTF("xhci: data direction mismatch for TR_DATA\n");
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "xhci: data direction mismatch for TR_DATA\n");
-                 goto err;
-             }
-             /* fallthrough */
-@@ -1475,7 +1476,8 @@ static int xhci_xfer_create_sgl(XHCITransfer *xfer, int in_xfer)
-             chunk = trb->status & 0x1ffff;
-             if (trb->control & TRB_TR_IDT) {
-                 if (chunk > 8 || in_xfer) {
--                    DPRINTF("xhci: invalid immediate data TRB\n");
-+                    qemu_log_mask(LOG_GUEST_ERROR,
-+                                  "xhci: invalid immediate data TRB\n");
-                     goto err;
-                 }
-                 qemu_sglist_add(&xfer->sgl, trb->addr, chunk);
-@@ -1618,7 +1620,9 @@ static int xhci_setup_packet(XHCITransfer *xfer)
-         }
-     }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 2761644dfd9..7e0c984ec64 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1744,10 +1744,21 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+     if (n->promisc)
+         return 1;
  
--    xhci_xfer_create_sgl(xfer, dir == USB_TOKEN_IN); /* Also sets int_req */
-+    if (xhci_xfer_create_sgl(xfer, dir == USB_TOKEN_IN) < 0) {  /* Also sets int_req */
-+        return -1;
++    if (size < n->host_hdr_len + 14) {
++        /* Truncated ethernet packet */
++        return 0;
 +    }
-     usb_packet_setup(&xfer->packet, dir, ep, xfer->streamid,
-                      xfer->trbs[0].addr, false, xfer->int_req);
-     if (usb_packet_map(&xfer->packet, &xfer->sgl)) {
++
+     ptr += n->host_hdr_len;
+ 
+     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
+-        int vid = lduw_be_p(ptr + 14) & 0xfff;
++        int vid;
++
++        /* Truncated vlan packet */
++        if (size < n->host_hdr_len + 16) {
++            return 0;
++        }
++        vid = lduw_be_p(ptr + 14) & 0xfff;
+         if (!(n->vlans[vid >> 5] & (1U << (vid & 0x1f))))
+             return 0;
+     }
 -- 
 2.47.3
 
