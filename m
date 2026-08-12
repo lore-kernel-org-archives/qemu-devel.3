@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FACC5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71BC8C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuHXi-00012P-7T; Wed, 12 Aug 2026 18:35:26 -0400
+	id 1wuHXu-0001MS-KW; Wed, 12 Aug 2026 18:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHXg-00011A-Pv
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:24 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1wuHXs-0001Gf-8H
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:36 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHXf-0001oe-64
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:24 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2cc7e86e7aeso20578365ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:35:22 -0700 (PDT)
+ id 1wuHXl-0001s1-2B
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:35 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cf27856f9cso15336935ad.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786574122; x=1787178922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786574128; x=1787178928; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Q7rP/XM/owlqnwOCNDD6Fk3HJHISzcNBKQfAsZY+VBU=;
- b=hhGCdUUCdAyv4VTd9UVgJTzH9i1YAK4QAxZK0WrqHu5RdO3bTtDgJB5PsgEmka/9KS
- JQzwkQQuXLxNTFDy2WzsdHJd2e4m5JU6g5uuBb/I/sETF7Lw5KDFclTYY6q/c6tIKGvH
- CS8ogd4iv1OUfWW/j9jOSisOcwfVTOXODnvS3KZCiBXx8/3drFInXbgNItW6+lFCo/ty
- tPUClpvSwleERuWUe4VsWZ11YUDeKt+hMhEjq5TDAyijMv5+QJv9uqtXYcTXKGygSUmf
- PRH2JCsWLb89c1ChL5uLlwFQQvTvqG09cn2pn0A2vyL6veJe3JJGDA+qVkDDAXPKSuUY
- 4c8Q==
+ bh=SQULInA+M5WqXEN53pzaAESWjpBuJD19rKsMNS6v2d0=;
+ b=ooASxZS1CAZ2IijxU6YBhLmnH5KZYw+ArSqedanhjSOZkINS38nGXLMT05Xf50xW8z
+ lXs/rHRlvYtEW491tTxIARTJBHgflDx5ZtJTgOL+6mbl7M6bUDoNCmTA2Upgx6k9JIsh
+ LSzYMizQFR7jY/s724sBJM/Gb8poUnRocBOhxHtcaaM24e6+x8yLFdQgitogOtHxd6b8
+ MkXQnYA8lpJ4Q4FFjJZpbDRkOaiSge12QOHHk6AxBfuPUN1R3bPlokdDQ1GbJNFtq+wI
+ gZY3puoHt3P6xQ45xWdBB7FCfhnOrVqqZqarQLMR8hnewqpYsZycbtaRtxxytB1FmsfF
+ aPyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786574122; x=1787178922;
+ d=1e100.net; s=20251104; t=1786574128; x=1787178928;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Q7rP/XM/owlqnwOCNDD6Fk3HJHISzcNBKQfAsZY+VBU=;
- b=F+dhfjynofyJ22IE8yuF+a85mmW/ijopAt4tPaKSOQBYNlAZ3ZNucxFNKZcnFJ8OWl
- C1UV2tDIUZts6deuHuvuFEcnpUM3wDvhacXAt78EuWqStDJK11xHL3FUdF7D85x9JBI5
- 9e7JJS8dWfPvOgYykCcpzQEgaIFOUgOCH3ISFBd/CJacoK9RIRhMiLuzXFpc349Mo+Cw
- GANDFfJqcr+Mxi5veq/3e3DnCi4HukBVHE5Yeqx7VN0Y3VOa+zWAbP5ZGqsLXQFNbGCL
- RzZDUBp0qas/dFM0IGppoheWHlkbiWAX6t82qOvSWAJLhnRGbymr92qqOuEVOEHcbi3n
- yPEg==
-X-Gm-Message-State: AOJu0YzEBMkkJJVbJAe9MzN8nsGmuvhYSw+xjmKyanHfdqXrTk8f/mo9
- CZUzn1EW2xT8EYBaqcwnX/cWYGbh3tLp0tFCncJncd+tq/51gP0DvHLgPKPNKEF8nlGElzk0Vzi
- yyYWr
-X-Gm-Gg: AR+sD13Fyi/91uaZ+LIgiJIKvoYn+EX1vx9CuIgNirp4ilbYnRIVra/2oXHguAwXUKA
- MeyOvwQW29qfauH7RGf/5a7O1gxLNvCGQ0p2FBfQ6Ezp7mJmHtc+e9wOeHaLNYZSTrwVIVR3BZD
- zgPdaAVdEG6+1iTK5ktVhyxJRh+Heq9JqZ34+RTi1s5zRUU2ssyHcc9eiH7NVvL3aOwJqkdG9pP
- Nb1tiJ+gR5NXoj5MH2RwS4DSScC8etMCQHmpejgHq38zD0H7DvN9A1gfWihw+udJZ4pnVMBj6g7
- kO3mcQ8KF4P815zlGMy6QJFK9FVqb61c1REcR6LanyRUgq0mBuW0owYufCgNByPf+wRW8Ai7sjz
- 5puVe3s3MIf4sMg/agw5THHU5OSkCTVN7c0GvZFGykGlF78hqxG+c7aMuaamZ0F1VkZvoFDcFj0
- lGsO76mlSx04xAJcg6VPJA4SZQFVXYyRpwbIDPT3tWsenkhE7EvUphhRkbtMQcey2HHl9SrFDMB
- ih6Lxt04EvkGRCgFxpn
-X-Received: by 2002:a17:90b:514c:b0:38d:ddc2:7ccb with SMTP id
- 98e67ed59e1d1-3931dfd0897mr1815582a91.1.1786574121542; 
- Wed, 12 Aug 2026 15:35:21 -0700 (PDT)
+ bh=SQULInA+M5WqXEN53pzaAESWjpBuJD19rKsMNS6v2d0=;
+ b=NQvWO4OEjlSKZBeh/b9V0z1s2MCRd9yFkvYu2k3WuYX6M7ndz62qWgCM932GE0xnL/
+ 4bUTOx1Mm66lrClYmEylICEeeQHm+GF8qIfvL+QUvdvp/QLtrH0345f5GLiW9yjRXxzQ
+ 4QZo16Iy7ALUW5r+p06r9USMixWei6chP4m2tQwetK0e2gzvex9CGZO6szURhrfwKuLB
+ EnbIxrVKeJFzToLLfWW7ND2lAaAnX54ZjthjjQ+G/HROAtR6tV+1811IeJc9MNcgWIfw
+ 2HlguFhQlYUEkUWoAXh841ELWbp+QGrGfwgLkHkr8NGb5nMRlS3TS5MIhZu34UFp97ig
+ zuMQ==
+X-Gm-Message-State: AOJu0YwaZqMfAdbdIl0UnqUPU0NHjuRvBNLc+wNQT1hJTTlkbrFJsGuB
+ gA1js9A0k7w9VpYf9ralJuPwWWQs2VoX6F38LOHnfzZtOGxp7wyc0zQj8blObgtKb7Bcc3M4wO1
+ qmDJX
+X-Gm-Gg: AR+sD10oFAFAOGc53pwB/X8xSTHrKBWRQck2AfXaZydC5Fg+jAwrc+r7xOXHhqmwJ94
+ DZlJ5Eq8OKrhi/Feeu2055jZGKfO+p8UbiJMOYpd8vYCxkoQbZCqMZAcUAgst/O/LW3Mt+0febq
+ +OoCybvOHlB3nIegILsKU54tAg72MB0Cc/QzI8obPGKhJnEJLWbdqyQUF2d59qxMHGC4G7VsNPB
+ XIels8e/+bF8rIq76JfSydxAWuLLm/5VeCLMwsnDpcc1ll0L1gpNOkaqaEfQ4kwqXXkNOWjEDZ6
+ cBkpO2ncghaWa734+xoXkr+mYsKXlx+jIgSBidvpPSzeCAcWgfV5P/PEqr7Be0zDpKpnkjF0Tpb
+ oQKeWNuYD3ZXq5zEBH0ySzN9wDMbLJ88BXDIQAuJaJQaMPzwN5FaXSQa+UTwbUVdlRVbTdmrPNE
+ YHua7iM/EtxG6xbQloFP75SoFlRkemJ3Z3Ffzh/0jZ7qyMfwS2MWqFVElj0H35HowSoOaVcFxVL
+ LwxyixGrTCD7wpCat0S
+X-Received: by 2002:a17:90b:270e:b0:393:194d:5366 with SMTP id
+ 98e67ed59e1d1-3931e0f6145mr1738476a91.10.1786574127552; 
+ Wed, 12 Aug 2026 15:35:27 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931f41cd2fsm464854a91.12.2026.08.12.15.35.21
+ 98e67ed59e1d1-3931f41cd2fsm464854a91.12.2026.08.12.15.35.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 15:35:21 -0700 (PDT)
+ Wed, 12 Aug 2026 15:35:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com, qemu-stable@nongnu.org,
+Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 40/52] disas/riscv: Fix typo in th.lbib format
-Date: Wed, 12 Aug 2026 15:31:30 -0700
-Message-ID: <20260812223142.349142-41-richard.henderson@linaro.org>
+Subject: [PATCH v2 48/52] disas/riscv: Merge all c.mop.n to one pattern
+Date: Wed, 12 Aug 2026 15:31:38 -0700
+Message-ID: <20260812223142.349142-49-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812223142.349142-1-richard.henderson@linaro.org>
 References: <20260812223142.349142-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,30 +102,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-th.lbib should format the same as th.lbia, and the other
-increment insns, with the address register in parenthesis.
+Avoid performing arithmetic on rv_op_c_mop_1.
+Treat the 'n' as an immediate.
+Create a codec and format to match.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 318df7238b9 ("disas/riscv: Add support for XThead* instructions")
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv-xthead.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ disas/riscv.h        |  2 ++
+ disas/riscv.c        | 10 +++++++++-
+ disas/riscv-op.c.inc |  9 +--------
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index 428a6380e9..fbc96631fd 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -189,7 +189,7 @@ static const rv_opcode_data xthead_opcode_data[] = {
-     { "th.mulsh", rv_codec_r, rv_fmt_rd_rs1_rs2 },
-     /* XTheadMemIdx */
-     { "th.lbia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
--    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml },
-+    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
-     { "th.lbuia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
-     { "th.lbuib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
-     { "th.lhia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 47647f750f..b0269bb709 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -159,6 +159,7 @@ typedef enum {
+     rv_codec_r2_imm2_imm5,
+     rv_codec_fli,
+     rv_codec_lp,
++    rv_codec_cmop,
+     rv_codec_cmop_ss,
+     rv_codec_mop_r,
+     rv_codec_mop_rr,
+@@ -286,6 +287,7 @@ typedef struct {
+ #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
+ #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
+ #define rv_fmt_fli                    "O\t3,h"
++#define rv_fmt_cmop                   "O.i"
+ #define rv_fmt_mop_r                  "O.i\t0,1"
+ #define rv_fmt_mop_rr                 "O.i\t0,1,2"
+ 
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 22104638e1..39235e5bc7 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -643,6 +643,11 @@ static uint32_t operand_lpl(rv_inst inst)
+     return extract32(inst, 12, 20);
+ }
+ 
++static uint32_t operand_cmop_imm(rv_inst inst)
++{
++    return extract32(inst, 8, 3) * 2 + 1;
++}
++
+ static uint32_t operand_mop_r_imm(rv_inst inst)
+ {
+     return (extract32(inst, 30, 1) << 4) |
+@@ -1027,7 +1032,7 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                     (((inst >> 11) & 0b11) == 0b0)) {
+                     unsigned int cmop_code = 0;
+                     cmop_code = ((inst >> 8) & 0b111);
+-                    op = rv_op_c_mop_1 + cmop_code;
++                    op = rv_op_c_mop;
+                     if (dec->cfg->ext_zicfiss) {
+                         op = (cmop_code == 0) ? rv_op_c_sspush : op;
+                         op = (cmop_code == 2) ? rv_op_c_sspopchk : op;
+@@ -3056,6 +3061,9 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa,
+     case rv_codec_lp:
+         dec->imm = operand_lpl(inst);
+         break;
++    case rv_codec_cmop:
++        dec->imm = operand_cmop_imm(inst);
++        break;
+     case rv_codec_cmop_ss:
+         dec->rd = rv_ireg_zero;
+         dec->rs1 = dec->rs2 = operand_crs1(inst);
+diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
+index 2100e54475..802a521bca 100644
+--- a/disas/riscv-op.c.inc
++++ b/disas/riscv-op.c.inc
+@@ -875,14 +875,7 @@ OP(amocas_d, "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amocas_q, "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(mop_r, "mop.r", rv_codec_mop_r, rv_fmt_mop_r)
+ OP(mop_rr, "mop.rr", rv_codec_mop_rr, rv_fmt_mop_rr)
+-OP(c_mop_1, "c.mop.1", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_3, "c.mop.3", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_5, "c.mop.5", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_7, "c.mop.7", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_9, "c.mop.9", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_11, "c.mop.11", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_13, "c.mop.13", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_15, "c.mop.15", rv_codec_ci_none, rv_fmt_none)
++OP(c_mop, "c.mop", rv_codec_cmop, rv_fmt_cmop)
+ OP(amoswap_b, "amoswap.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amoadd_b, "amoadd.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amoxor_b, "amoxor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
 -- 
 2.43.0
 
