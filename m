@@ -4,107 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9A0C5B56A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E191BC5CFCF
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAgc-00087a-Uf; Wed, 12 Aug 2026 11:16:12 -0400
+	id 1wuARH-0002ez-Gg; Wed, 12 Aug 2026 11:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgF-0007wv-Bk
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAR7-0002Fz-Q2; Wed, 12 Aug 2026 11:00:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgD-0007B5-F4
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786547744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0JQ86lSdiu/uKGXruj2u8e/IyYjOzEuT9uWy0Nac8HE=;
- b=eXl5SyPOV+uBSa/zLO9lai05fzLDycsssAHLffWGb5lrrlTWRbTStjHF3n1VRgBukcDSbR
- Gyki7BPFW7dThBiQxiHQe0FclvG29ePsAq+dtJZt5EQAejUVlGEMISqpOexCUhHstNFMt5
- fDW4OWbWx3XEsHcxyD8adaKk/nf1TdY=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-9t3_PTG2P2-MZ9Yfu4iDdQ-1; Wed, 12 Aug 2026 11:15:43 -0400
-X-MC-Unique: 9t3_PTG2P2-MZ9Yfu4iDdQ-1
-X-Mimecast-MFC-AGG-ID: 9t3_PTG2P2-MZ9Yfu4iDdQ_1786547743
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-526da7e3c9dso10745141cf.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786547743; x=1787152543; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=0JQ86lSdiu/uKGXruj2u8e/IyYjOzEuT9uWy0Nac8HE=;
- b=UWtmeBsU3YhVAfwZpbziAY0nlvXBp0IXZRMXv63Bc4N2JIP8rhkxTK3+5Q24Z/ISsg
- xQgwx6cOQAgD/eCMjaUk0w78bXsAiM8iEy/fxMlUGk25A25Vip56RhNZ0Bj83N1zjUXD
- Hm39y3UZkRiuJN1rUXJ9w/Dx7VM1FLaLYfiwYICU60qmvDsJKjzc9iL0W/oCEzZ4ymLa
- 0RVOPormyPwWv5qLojCL5H4zPvn0GTOSkxQzxIWgrdoH2XLg3KW2xgGZHawkROGfFRgx
- dSwaOZVuSaaHH+Kcs8YxAZyiv1Rp1PSWHkwnjFSlRcMva/4OQrvmP6r/yMhJV3nZEUjP
- W85A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786547743; x=1787152543;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=0JQ86lSdiu/uKGXruj2u8e/IyYjOzEuT9uWy0Nac8HE=;
- b=p4k/Hdxbq1OL5zNW1h0qJyFJNo9GqslH6G6Vt8RhrSX6Crm3nW+4ZqBWxU2Ye526dS
- wAEHuLrIrmB7cVuErgp5lFIR+bd5dmFwCzOKjGbxSJmGe+DLp3+IK2o66/OLWPCHya43
- IJbK2EI2TgecJ9lu0BPanHT2G33XNKUm132qOtTNeWNS4Z1pgAIMLU1LqMqxj6JgGVjn
- vle0yIfP6xLJebqYL16zz+r0upTiPxqevRSIz+/V1wKP5RHjGxe/KTZwEPiAeVo4YJpR
- CPTICjDG6b8SBPj75iDehSl4ky56Fpi5zI+6g3kcPPaJD9D6E+LaIkYUxSg/IQ/sHq3V
- CfbQ==
-X-Gm-Message-State: AOJu0Yz+GV1yp7gnxJbTymtqqmWvk1VfQ/CuDSnHWNt+SSgAQeIC2kLp
- 4SPc0fFxnQXa2sXrxRYmYpZe8tvSPrKp6kgz3mShRryHid1wcyBHa5E5ltmiGmorHjc9pLzJh3u
- cN/sl21XdimyHsA8VYEfNq7cpL7qLaszK+/q9Ja2d6IFQMye0RuImUAkxLD6BFwAhnx+5Xg3/8D
- oQAeclqIzvWphKmuWWiD77reis8NHJoMmd4WCgCQ==
-X-Gm-Gg: AR+sD104nLSFMZ4Kb4wmZaEv5IV0ilNis7bHkBDRYap7yp3ENUSVK4h7Qj1STYC9GZK
- 2GmD47kjH9lLUd4csj0mp/gk3pfIJ0bZ2A1GE9RUdreO7iUU6F3t+QjBbH8Q83N4X0iF78JKi6G
- BkfBtrt/eL9CblnchKYSgDZg/s1mt1vPb2RtCpHS+amsB9AAo6g6sL1cZAhLSOAX3H/1Kc6AL6t
- QGbRNS3Ygri78ZtdQKF/KmtXsbKxocrBWsKAP0orKHxIca8F+p4L14Y/Ixo/s7ysDs5MdPV6CRW
- aI5mJDcKD7u00qFli2BPDZsb3YlpmXfZOLAuJd9urrN22ALsdKikpwSPZAFOP4DIMA==
-X-Received: by 2002:ac8:6f1b:0:b0:52d:3d46:bfd6 with SMTP id
- d75a77b69052e-52d64712203mr45475041cf.12.1786547742773; 
- Wed, 12 Aug 2026 08:15:42 -0700 (PDT)
-X-Received: by 2002:ac8:6f1b:0:b0:52d:3d46:bfd6 with SMTP id
- d75a77b69052e-52d64712203mr45474001cf.12.1786547742006; 
- Wed, 12 Aug 2026 08:15:42 -0700 (PDT)
-Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 08:15:38 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAR1-0001nR-I8; Wed, 12 Aug 2026 11:00:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786546233; bh=r6AVMyggxDeu9kfBLkC4tiGT1cW2mG3DgvSGSEAyloA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=gREvUM1L7qcAgWgwtaf1VGljSCIE8TAQuCcAJbKJjwTDa8JjziSHHk6NAtHuOgw5m
+ BoXj2QvShmETlkfk+46NwPcgtRFuTN0k+uEw1rE18RRDipqxnkuTFnJgw6fm/h9AqP
+ DeDQQ6cfSD5/ewMBkk+XkV8E7boCc3/BBiEqFKhbbRld1UqM7Zca8hkfZeY3cvTgfk
+ eB2DzNG5JoDuEIk81R9ZVSDhMCd9msEE4fVFm8rhA9Ynqr8T3ZSGYAMy4XM1j1jAr0
+ A4W71HTlb+rwl6PrmW7buXtoUkLdNPreJREJtdXSJzNFwxsNXj273lPnsEzlpvEj/2
+ 885+hg9KLLDXQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 68EE11CA662;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C370F409DA4;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 2CA962FA1F; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, xlabai <xlabai@tencent.com>,
- Jules Denardou <jules.denardou@datadoghq.com>,
- Tristan Madani <tristan@talencesecurity.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: [PULL 07/10] migration/multifd: Validate next_packet_size in
- zlib/zstd recv
-Date: Wed, 12 Aug 2026 11:14:40 -0400
-Message-ID: <20260812151444.2611689-8-peterx@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260812151444.2611689-1-peterx@redhat.com>
-References: <20260812151444.2611689-1-peterx@redhat.com>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 094/120] block/qapi: take stats->lock when reading
+ BlockAcctStats for query-blockstats
+Date: Wed, 12 Aug 2026 17:49:17 +0300
+Message-ID: <20260812144955.649205-94-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,83 +74,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The zlib and zstd multifd compression backends read next_packet_size from
-the incoming migration stream and use it directly as the read length into a
-fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
-source can set next_packet_size bigger than allocated, causing a heap
-buffer overflow write on the destination.
+From: "Denis V. Lunev" <den@openvz.org>
 
-Add a check against zbuff_len before reading, matching what the qatzip
-backend already does.  Also replace the assert(in_size == 0) for empty
-packets with proper error reporting, since the value is wire-controlled,
-meanwhile assert() stops working with -DNDEBUG builds.
+bdrv_query_blk_stats() reads BlockAcctStats's counters, latency
+histogram, and per-interval TimedAverage stats without stats->lock,
+while block_account_one_io() updates the same fields under that lock
+from an iothread. timed_average_min()/max()/avg() make this worse
+than a stale read: they call check_expirations(), which can reset a
+window's sum/count/min/max -- a write, not just a read -- so this is
+a genuine race with a concurrent writer, not merely a slower reader
+like the scalar counters.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
-Reported-by: xlabai <xlabai@tencent.com>
-Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Reported-by: david korczynski (@david1766)
-Reported-by: huntr bubble (@bubblehuntr)
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260728210417.1925078-3-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/multifd-zlib.c | 11 ++++++++++-
- migration/multifd-zstd.c | 11 ++++++++++-
- 2 files changed, 20 insertions(+), 2 deletions(-)
+Take stats->lock for the whole call, both to close the race and to
+make the returned snapshot internally consistent (previously each
+field could reflect a different instant relative to concurrent
+updates).
 
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 8820b2a787..400146566e 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -216,10 +216,19 @@ static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
+block_acct_queue_depth() used to take the lock itself on every call;
+since bdrv_query_blk_stats() is its only caller and now already holds
+the lock, that would self-deadlock. Make it require the caller to
+hold stats->lock instead (documented and asserted).
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260724111311.4086859-3-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 16f94ef4c6ce3e7ca6b02b796580e2cfc41e9789)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/block/accounting.c b/block/accounting.c
+index 6e06c7609eb..038af370170 100644
+--- a/block/accounting.c
++++ b/block/accounting.c
+@@ -318,10 +318,9 @@ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+     uint64_t sum, elapsed;
  
-+    if (in_size > z->zbuff_len) {
-+        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
-+                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
-+        return -1;
-+    }
+     assert(type < BLOCK_MAX_IOTYPE);
++    assert(qemu_mutex_trylock(&stats->stats->lock) == -EBUSY);
+ 
+-    qemu_mutex_lock(&stats->stats->lock);
+     sum = timed_average_sum(&stats->latency[type], &elapsed);
+-    qemu_mutex_unlock(&stats->stats->lock);
+ 
+     return (double) sum / elapsed;
+ }
+diff --git a/block/qapi.c b/block/qapi.c
+index eabfbfc2585..1dfac510918 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -535,6 +535,8 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+     BlockAcctTimedStats *ts = NULL;
+     BlockLatencyHistogram *hgram;
+ 
++    qemu_mutex_lock(&stats->lock);
 +
-     multifd_recv_zero_page_process(p);
+     ds->rd_bytes = stats->nr_bytes[BLOCK_ACCT_READ];
+     ds->wr_bytes = stats->nr_bytes[BLOCK_ACCT_WRITE];
+     ds->zone_append_bytes = stats->nr_bytes[BLOCK_ACCT_ZONE_APPEND];
+@@ -624,6 +626,7 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_ZONE_APPEND]);
+     ds->flush_latency_histogram
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_FLUSH]);
++    qemu_mutex_unlock(&stats->lock);
+ }
  
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index 3c2dcf76b0..69ef1a5f38 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -210,10 +210,19 @@ static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
- 
-+    if (in_size > z->zbuff_len) {
-+        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
-+                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
-+        return -1;
-+    }
-+
-     multifd_recv_zero_page_process(p);
- 
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
+ static BlockStats * GRAPH_RDLOCK
+diff --git a/include/block/accounting.h b/include/block/accounting.h
+index b1cf417b572..12d32460927 100644
+--- a/include/block/accounting.h
++++ b/include/block/accounting.h
+@@ -116,6 +116,7 @@ void block_acct_invalid(BlockAcctStats *stats, enum BlockAcctType type);
+ void block_acct_merge_done(BlockAcctStats *stats, enum BlockAcctType type,
+                            int num_requests);
+ int64_t block_acct_idle_time_ns(BlockAcctStats *stats);
++/* Caller must hold stats->stats->lock. */
+ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+                               enum BlockAcctType type);
+ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
 -- 
-2.54.0
+2.47.3
 
 
