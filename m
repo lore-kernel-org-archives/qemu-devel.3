@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FAFC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97B3C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuCuQ-0000cy-B3; Wed, 12 Aug 2026 13:38:34 -0400
+	id 1wuCx1-0001rG-Nd; Wed, 12 Aug 2026 13:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuCuP-0000ci-24; Wed, 12 Aug 2026 13:38:33 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ id 1wuCwv-0001pr-0E; Wed, 12 Aug 2026 13:41:09 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuCuN-0006XU-Eh; Wed, 12 Aug 2026 13:38:32 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 996C7140008E;
- Wed, 12 Aug 2026 13:38:30 -0400 (EDT)
+ id 1wuCwt-000783-7V; Wed, 12 Aug 2026 13:41:08 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 09084EC0183;
+ Wed, 12 Aug 2026 13:41:06 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Wed, 12 Aug 2026 13:38:30 -0400
+ by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 13:41:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786556310; x=1786642710; bh=WCgtYfBD5RzWqrtCYloQc4gxMkBtntG8
- sQmZBuCvDpk=; b=wRqVL3JARccC+z2PvSZ4rY0gvtAWs+sUupss/fR1K0HkZFSB
- gWRAR95jy8+q0ibBdJ3d07wBpso+qFc4sKAu+9t9A13uy2taBBZPExJnQPPH1ZD8
- jRM3cNASRIbWwLbiXs8SOR3r7uTeBBKmX6ivXOAGnzNvltYgz962cxs+BEeWTico
- 5ssXQEBgCvzaYB9I8TXNBKiOYkoI2N8swILWeu7Az0muzqHcxIg64uPucWAbiv1K
- e4+mJs3sCKtU7IF+rZRCkSvzX5H2YWyXhpLd4Y6AeUY2hiPvKfNEVz5iu7p/DRoL
- JSZH5JZ1PK7DeTIUZup7bZBFojKu/lVkkiEdig==
+ t=1786556466; x=1786642866; bh=HnjkEGzHPRofK9YidEXdNrW4DhlwaW9J
+ Zp0VgrxxnLc=; b=AOR0T47R/ZD2IiqrOdA5MVco7KcExAXofiYnPLCWCNcf3y/f
+ Z1fFFWzvQfHlwY+B3bev4mfbrt6kb7cz4lQE5sP5I36BmyB3+y+auU4bFW3Q5oz/
+ D02WprtXg2f3NcQgeIDdEOXnV9boq/tjfSRzUoWuWKKI3C4RJkZ0hmlYnw+hlsuU
+ fqVxmjRbct2OVkurrpjjSBG4Furkraf1T1dF92yHXzn5QAWgVQfsbpHLVYWZv5Ya
+ hOhGx3tCW86wuXmICgCp9F85QL7NQlLtxCcZOti97sJ9C75pQ8+9/nnwh+qBhZnn
+ vStHSYBCRP0KjrL1c9FZ3YPR2lXE+Ey3uj+x5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786556310; x=
- 1786642710; bh=WCgtYfBD5RzWqrtCYloQc4gxMkBtntG8sQmZBuCvDpk=; b=R
- +bv/NNTBeGJ+5MfppUjrz0ZNPinHRloQP4YqFqgFnJ8kGahukjA132UM/hF/810/
- 2sGXkEL2wBnqLi/YLCOfKwnklUfPJ8Fb0vCVLmaNn+EBIaKLPM+LNllaj7kWgNUd
- V+Zz3piIrWJ54b7SWw1n1I3nXsfdf2nuXDYGLH26e8WExgldxCBw09QtrdE6/d18
- GY8mZi7xBX+RIxxuc7YrBgvDMxEaZJntdCUcAgKRWm7RItbk8K0Pmfpw81CwhJuc
- evgqoTYDjB3/V6YQ9Z0X5UIRlO6E/DeppkEgRIv3YmTBbDjNL0dCSEpjkurmZyxU
- Nt6197qfBmtrrjLO+hKug==
-X-ME-Sender: <xms:la98amBrSXLS6H_uFfI0cJ2YuOSH1wSIaNad27UBFXNviwlyiqVKVw>
- <xme:la98aletx-ncCU6sZ004ub9_2b92bNslWtXka0SBcdLLMUCCFbi-R-i4iXfUMc58Z
- CznCPG73K_mo7D4hgjf5Bckm5tPKm82Q_eGwPWNuUZ22f7MsZQJkYR8>
-X-ME-Received: <xmr:la98at0nda9w_cK-mi43GEOYfdriTaXOYWL6GvYeg2b82CKOUNuGm4rkI4Chxmgd6x5edg>
-X-ME-Proxy-Cause: dmFkZTGCFwlo9Qn6AD8QFmga8XH9bW5D+AobHzzLVWpuCobwcotp873L7Leixjjh1mhcCb
- QtaGfCzIrK87dcFgByXRsbqjJxSN2hioJjgTeklvq/ia0v9Os76utH289xMvzGrTaeUT+B
- uZ1kGR0R47eG4mW7XyCnTgrT4iqWPcpdXEDxrwz6irX9/+dcB8ti7aOWjFm9v4KcHOW91b
- oWDCV2r6GTVC2h34vmd6H2Bz8MhHOcpJ9FfTWd9PHkS2GzASlbK1heJGlgYf6JxPa+V6BL
- CDJ7T1TFECO3pqYjLFytMe8ihhwspXbxLZnSPSsrkZ8TzJdgAYndhk7zVxWJ+ZOgy6tqUa
- Hnyg4E1KitOjPcKPQoE4Ry1E2UBvrFUuU0+rEZPttkBkplLWs4daPJ1LHOM49kzt389gPR
- 1NZZ6gg6yYnAKEjuBzDroVQNSEbyRGx4vqVSuWmnsT7VW7OuyPEQqAHEcBKBQdszNxt15m
- RlikYIiSICi4dj9vJlJcEuAQgCwbizqjbdMDjGaJadymEr0cOKdwRfY1uevw1EbEYSV/iN
- t1LH+y2PWQy5G/QRXDZbirHlHRBWGFc79lUU8XzhCmYqhAB9GDUkZGyTwqAKHQijQNYz0R
- /lN+H6qTaWBGmCXnyIyB4baOBM+JuXcuhWRopgWA3DceFZigxHBeUBL/w2uw
-X-ME-Proxy: <xmx:la98akg9EG6AIRelxy3ygeHIGCsnb1GLiZ3WXI--D30-VcvTYLq_Iw>
- <xmx:la98aunDXyu_H-oG7h_trA2XV1q6Oj2ZnuhGg08s1iZHto5lqCeewA>
- <xmx:la98aianYaLDLO1FH7qRh8jE8Ad9nwRewrCoOhxFyYmuf-OYD3UnXQ>
- <xmx:la98ahGIbl74eTnKvyl30ocO9ICBYd9gXJakzN5L5eMLaDDHrHKThg>
- <xmx:lq98apFTAnx-9Skk9wlk30Av9ccnaD1eIU4AdM9EL4AnntJ-WX4cD8WG>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786556466; x=
+ 1786642866; bh=HnjkEGzHPRofK9YidEXdNrW4DhlwaW9JZp0VgrxxnLc=; b=Y
+ 0GVMbN0uUsQWxlnGpND4+KiKCx9CZMGULeXz91gFejsa69IZcUY2F+32EyvBQ2W3
+ ZpG+grxrNLgr1rcRbE4OWsQcOfL6CCgZsc8F7k4N74KNp6McSIuiDlmY85B88RPf
+ Fof4YY/iuMV0JAU2JI4p3iKxvJ982PD4zeb3WkEiF4kkeBJzEnIEdJXugIcT446R
+ OUGmhrif9Mk/Ku1P8MSa4p8j2KpFOOpqQ3ssK0TW1BXklQc0luNE8YSd3aYqmxXi
+ T+FcbaihM9BnFuZ2KXR+rvvGKgfGGP0q25X8ix9RKun8vvDE4QVkKHYui4xiX0VE
+ 7YVZecGY0r27u4kjucqKw==
+X-ME-Sender: <xms:MbB8aokk_AW4m_k9LIvTEwulxjmJfICzDToDWziUq0TyQ4czXSxq0w>
+ <xme:MbB8aq6l78FqLZqakQnhQpa1HGUY4VmNdrzXBCuvBUldB4fZUg0IqBOec_mumrRD-
+ axwPhkKCmMCVe9cp9yWcwwffiCTlz__X84sRRGKR7HObTufFwpBkdc>
+X-ME-Received: <xmr:MbB8ahS3ad4VeV2DC6HEJXLW8tV2ClBjo6U0cVWYljTW9-jZ9uwSTfzcgG_RD4rmAukp-Q>
+X-ME-Proxy-Cause: dmFkZTEmIH4Os54QA0LNXvEUeh2YEXI8xJmddtnaUWyjfjEsPrJD0cVuJiaxGMx8EXv+FA
+ TOVQtBNMWqiQiZgHmk3xg+y3SEtpyEXw4q7o80aoklyTdNMNl+Be5F6x4qWmVe+pZSTyAK
+ pR7VV1+74h0fKsYIRdt3mZ89UrmEl3yI4HMYv0tTLNnKC+vTZti5TiLeGYZpi8PxiRI0Zr
+ 58cLnkguPV704O9VQZARutPnUM/gw5+pq3xVBjN7+Jlt2HeUagoo2kNwDi2kp9IOzUe956
+ FkTNPDHPBEjO5SryfcZ4o/VwssbYgUm2PS9uF7mSM2M4eVqb945MUfzyZaIlyDjiSxbAOU
+ VnRNXTPzNV1hHYGOgx4T1m09mQm5G7MGLhR36jzJ0owbs7CuWgyuIjxRo1OF3ibNNU5nVs
+ 76Vv5bi474dQQ7S0lrH6NSKhJPZw1OKnpVOvIPFuTv+YSTd9amsYB2sKFtSL0SZRmifpWj
+ hzKy0Wc1WRUg6mx2MFtzF0xayOWGnJnScltmcy0fSsLWuK6php+nfq4hRmVMcP9JhWrEcm
+ oqy+BTMl+h7gw4xspb/z27QwLqdUGnMHRBuRK+CHAr8Bqgm+kxnYneaXRix0iEOo1ntVG4
+ DzGOQbjVACpv3kggfDPnYtdEd6aFpZOjqMV/40W1zPKq0CyyAoc+jNC1gsag
+X-ME-Proxy: <xmx:MbB8agxj8aQwd_0HsfYscfERIcDRsOB3_kaUzWljiW_STR6W80SR8g>
+ <xmx:MbB8ahpdlGQhMCbUEqOm9-hU7ye4MV-vTevbwym6zqhtb7uv2eoMrw>
+ <xmx:MbB8ar0QO0HpqnJPESc-2M-aWChgZp_3gBBDKzUXZVRbQ7-q5_pGtA>
+ <xmx:MbB8apyw5rTyObtD8e5IfuTOz4DtLDtKuIHwKA6h_lD32LlE0dcyWA>
+ <xmx:MrB8apV8XwWrapMoVZq4ZUzqdeu_Nn8Sc7dPSidkkkWV0gxHJH2yHjkc>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 13:38:29 -0400 (EDT)
-Message-ID: <6f7d6a5d74482bd8ec472151e6c75ff24b23137a.camel@alistair23.me>
-Subject: Re: [PATCH 2/2] tests/tcg/riscv64: add misa write test
+ 12 Aug 2026 13:41:05 -0400 (EDT)
+Message-ID: <4f5842775eddb0abab6d2439ba5ea03fb1053961.camel@alistair23.me>
+Subject: Re: [PATCH v2] target/riscv: allow menvcfg/henvcfg LPE and SSE bits
+ on RV32
 From: Alistair <alistair@alistair23.me>
-To: Vladimir Isaev <vvisaev@gmail.com>, qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu@processmission.com, qemu-riscv@nongnu.org
-Date: Thu, 13 Aug 2026 03:38:28 +1000
-In-Reply-To: <20260806133755.45924-2-vvisaev@gmail.com>
-References: <20260806133755.45924-1-vvisaev@gmail.com>
- <20260806133755.45924-2-vvisaev@gmail.com>
+To: A-Shehab <ahshehab24@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, daniel.barboza@oss.qualcomm.com,
+ palmer@dabbelt.com, 	alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, 	chao.liu@processmission.com,
+ debug@rivosinc.com
+Date: Thu, 13 Aug 2026 03:41:04 +1000
+In-Reply-To: <20260726080537.13913-1-ahshehab24@gmail.com>
+References: <20260726080537.13913-1-ahshehab24@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.153;
- envelope-from=alistair@alistair23.me; helo=fhigh-a2-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=alistair@alistair23.me; helo=fout-a1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -108,93 +109,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-08-06 at 16:37 +0300, Vladimir Isaev wrote:
-> Add test to check that writing misa before compact instruction
-> doesn't
-> drop any bits.
+On Sun, 2026-07-26 at 11:05 +0300, A-Shehab wrote:
+> The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
+> enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
+> henvcfg, and the CFI specification defines them for both RV32 and
+> RV64.
 >=20
-> Signed-off-by: Vladimir Isaev <vvisaev@gmail.com>
+> QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents)
+> to
+> the writable mask inside the "riscv_cpu_mxl(env) =3D=3D MXL_RV64" block,
+> so
+> on RV32 these bits are silently dropped and the features cannot be
+> enabled. This is inconsistent with write_senvcfg(), which already
+> handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
+>=20
+> Hoist the LPE/SSE mask handling out of the RV64-only block in
+> write_menvcfg() and write_henvcfg() so the bits become writable on
+> RV32
+> as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
+> unaffected because these bits reside in the low 32 bits.
+>=20
+> Reproducible on qemu-system-riscv32 -cpu
+> rv32,zicfilp=3Dtrue,zicfiss=3Dtrue:
+> an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the
+> same
+> program on rv64 keeps the bits set.
+>=20
+> Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling
+> controls for zicfilp")
+> Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling
+> controls for zicfiss")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
+> Signed-off-by: A-Shehab <ahshehab24@gmail.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
-> =C2=A0tests/tcg/riscv64/Makefile.softmmu-target |=C2=A0 4 ++
-> =C2=A0tests/tcg/riscv64/test-misa-w.S=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 46
-> +++++++++++++++++++++++
-> =C2=A02 files changed, 50 insertions(+)
-> =C2=A0create mode 100644 tests/tcg/riscv64/test-misa-w.S
+> v2: Rebase on current master; the file moved from target/riscv/csr.c
+> to
+> =C2=A0=C2=A0=C2=A0 target/riscv/tcg/csr.c (noted by Daniel Henrique Barbo=
+za). No
+> =C2=A0=C2=A0=C2=A0 functional change.
 >=20
-> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target
-> b/tests/tcg/riscv64/Makefile.softmmu-target
-> index 82be8a2c91..e7d052909f 100644
-> --- a/tests/tcg/riscv64/Makefile.softmmu-target
-> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
-> @@ -41,5 +41,9 @@ comma:=3D ,
-> =C2=A0run-test-crc32: test-crc32
-> =C2=A0	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=3Dtrue
-> $(QEMU_OPTS)$<)
+> v1:
+> https://lore.kernel.org/qemu-devel/20260719111749.23777-1-ahshehab24@gmai=
+l.com/
+>=20
+> =C2=A0target/riscv/tcg/csr.c | 45 +++++++++++++++++++++++++--------------=
+-
+> --
+> =C2=A01 file changed, 27 insertions(+), 18 deletions(-)
+>=20
+> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+> index 36f2004bc5..0182e4c408 100644
+> --- a/target/riscv/tcg/csr.c
+> +++ b/target/riscv/tcg/csr.c
+> @@ -3216,6 +3216,19 @@ static RISCVException
+> write_menvcfg(CPURISCVState *env, int csrno,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 MENVCFG_CBZE;
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool stce_changed =3D false;
 > =C2=A0
-> +EXTRA_RUNS +=3D run-test-misa-w
-> +run-test-misa-w: test-misa-w
-> +	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-misa-
-> w=3Dtrue$(comma)c=3Dtrue $(QEMU_OPTS)$<)
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfis=
+s) reside in the
+> low
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * 32 bits and are defined for both RV32 and RV6=
+4, so they must
+> be
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * writable regardless of MXLEN.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (cfg->ext_zicfilp) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D MENVCFG_LPE;
+> +=C2=A0=C2=A0=C2=A0 }
 > +
-> =C2=A0# We don't currently support the multiarch system tests
-> =C2=A0undefine MULTIARCH_TESTS
-> diff --git a/tests/tcg/riscv64/test-misa-w.S
-> b/tests/tcg/riscv64/test-misa-w.S
-> new file mode 100644
-> index 0000000000..22cba98b8c
-> --- /dev/null
-> +++ b/tests/tcg/riscv64/test-misa-w.S
-> @@ -0,0 +1,46 @@
-> +#define MISA_C (1<<2)
+> +=C2=A0=C2=A0=C2=A0 if (cfg->ext_zicfiss) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D MENVCFG_SSE;
+> +=C2=A0=C2=A0=C2=A0 }
 > +
-> +	.text
-> +	.globl _start
-> +	.balign 4
-> +_start:
-> +	.option norvc
-> +	lla t0, trap
-> +	csrw mtvec, t0
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D (cfg->ext_svpb=
+mt ? MENVCFG_PBMTE : 0) |
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+> @@ -3223,14 +3236,6 @@ static RISCVException
+> write_menvcfg(CPURISCVState *env, int csrno,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cfg.ext=
+_zicfilp) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask =
+|=3D MENVCFG_LPE;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cfg.ext=
+_zicfiss) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask =
+|=3D MENVCFG_SSE;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Update PMM field only=
+ if the value is valid according to
+> Zjpm v1.0 */
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cf=
+g.ext_smnpm &&
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+get_field(val, MENVCFG_PMM) !=3D PMM_FIELD_RESERVED) {
+> @@ -3378,20 +3383,24 @@ static RISCVException
+> write_henvcfg(CPURISCVState *env, int csrno,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return ret;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfis=
+s) reside in the
+> low
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * 32 bits and are defined for both RV32 and RV6=
+4, so they must
+> be
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * writable regardless of MXLEN.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (cfg->ext_zicfilp) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D HENVCFG_LPE;
+> +=C2=A0=C2=A0=C2=A0 }
 > +
-> +	# Fail if misa after write is not the same as before
-> +	csrr t0, misa
-> +	.option rvc
-> +	c.nop
-> +	csrw misa, t0
-> +	c.nop
-> +	csrr t1, misa
-> +	bne t0, t1, fail
+> +=C2=A0=C2=A0=C2=A0 /* H can light up SSE for VS only if HS had it from m=
+envcfg */
+> +=C2=A0=C2=A0=C2=A0 if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVC=
+FG_SSE)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D HENVCFG_SSE;
+> +=C2=A0=C2=A0=C2=A0 }
 > +
-> +	li a0, 0
-> +	j=C2=A0 _exit
-> +
-> +
-> +	.balign 4
-> +	.option norvc
-> +trap:
-> +fail:
-> +	li	a0, 1
-> +_exit:
-> +	lla	a1, semiargs
-> +	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-> +	sd	t0, 0(a1)
-> +	sd	a0, 8(a1)
-> +	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-> +
-> +	# Semihosting call sequence
-> +	.balign	16
-> +	slli	zero, zero, 0x1f
-> +	ebreak
-> +	srai	zero, zero, 0x7
-> +	j	.
-> +
-> +	.data
-> +	.balign	16
-> +semiargs:
-> +	.space	16
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (riscv_cpu_mxl(env) =3D=3D MXL_RV64) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask |=3D env->menvcfg &=
+ (HENVCFG_PBMTE | HENVCFG_STCE |
+> HENVCFG_ADUE |
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 HENVCFG_DTE);
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cfg.ext=
+_zicfilp) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask =
+|=3D HENVCFG_LPE;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* H can light up SSE for VS =
+only if HS had it from menvcfg
+> */
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cfg.ext=
+_zicfiss &&
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 get_f=
+ield(env->menvcfg, MENVCFG_SSE)) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 mask =
+|=3D HENVCFG_SSE;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Update PMM field only=
+ if the value is valid according to
+> Zjpm v1.0 */
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env_archcpu(env)->cf=
+g.ext_ssnpm &&
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+get_field(val, HENVCFG_PMM) !=3D PMM_FIELD_RESERVED) {
 
