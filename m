@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00DDEC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC97C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8Pk-0007ze-Hq; Wed, 12 Aug 2026 08:50:36 -0400
+	id 1wu8QE-00005V-4s; Wed, 12 Aug 2026 08:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu8Pg-0007vg-Gh; Wed, 12 Aug 2026 08:50:33 -0400
+ id 1wu8QC-0008VD-5g; Wed, 12 Aug 2026 08:51:04 -0400
 Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu8PS-0000dk-W5; Wed, 12 Aug 2026 08:50:23 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.phl.internal (Postfix) with ESMTP id 0540FEC01F2;
- Wed, 12 Aug 2026 08:50:15 -0400 (EDT)
+ id 1wu8Q9-00010e-FN; Wed, 12 Aug 2026 08:51:03 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 376DEEC01ED;
+ Wed, 12 Aug 2026 08:50:57 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 08:50:15 -0400
+ by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 08:50:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786539015; x=1786625415; bh=qWrKqiLJWwkjtSSuvdmid3VrEIcWT5YN
- ZjDfVp1fuOw=; b=tvrDvHF/Z//njT2da1qtJuiis05ckxBE+v7y3QzeDpbrtPL/
- YQXOa4ceOGzLSnvZeevfw5293cE9TcvcIGlnAN6CTglkrs7/s9u8l5pM/B4Vjkno
- 6TBcbrdiP1lK6B7oHrrOFmL8ohRvCmBQe6q4/BI4MfbpPsagLhfhwis4rRpGkHp4
- aa4p31yaVoQXQyr8yYBS2/wRm5Fruh52mMwXJLcv1qRziJCBDtZL9bnrc3VrRp6j
- /+2/ATNfuQz2SAvYVaqP3wa4o+e8OwqhLH1yPuVjmgDjgkcXwYsPRvB6qljQrE/M
- iaVDlypsoeVDgo2JlyfmY17WqX5wDTBv9+BVjw==
+ t=1786539057; x=1786625457; bh=Ong4D2NWyGJa2MjofI7aKvRzhuNzzdqe
+ 5ZzWgiCUlE4=; b=MzY4np/MbOZUT1Q4u8DlnnJq5duIXkHxicnUcPtQOHx4i7Rx
+ fq1JH87IQYGcResX/dO/HQdOOIJkmRfMwmTkZStCpp9QFsvwsDuhA2rGXfkL7s/d
+ 44BZO1VQduUGCp6zurXNn2ichvrlf+kxQnC2hxVATOu7R+8QmbeDOgZHoRoI6LU7
+ /ztHAIr0quGnsPr6iYTO2va6bw3R10vMk76/gb0zzm7gVMdC4qpylFdiviG/GCnH
+ Uv+nWbTKm+TyXacITFEuCdlVjB/hQLcr5QK0+R5F4HXqo6pUfVJ3Kg6UAqzopwiz
+ E6pbeGWAfNuIzNp9lfNpHYxTZsGNY3Nqerh65Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786539015; x=
- 1786625415; bh=qWrKqiLJWwkjtSSuvdmid3VrEIcWT5YNZjDfVp1fuOw=; b=h
- B4v8vtd7hohUoFtY4DFNZyxAlh75fGXbzdjk6IHRr9GVYbIDumT4iwRdwWhijIgd
- CZn9wPB1HfQ0vrbW+SzMJcAbK1Z5qeyc3RYDS+y+pqvSDegKmEP84YvpYuIXiK1E
- 3hddTHBIUmGQ8tY1LxPSkifo8abveWpQ2J58R5mgBz27ujPOYGbqIixlj5aOjqzQ
- MdtQyAnMGJfrjT6F8XGU0z5rwrimCL3StB0YaIba2UADr8lybAUlNULyCzi/lYpb
- PQuJU4k3R0km4+2X/Na9KyYzeiFXCBvz2a5oMrVn43rFTN7ZlrfRy9RvVmmgbQDt
- J+mDyXBgPT+Q1WbvHS5Tw==
-X-ME-Sender: <xms:Bmx8anFgtm6JlDCzbAqihRGsRSoF-A4SQBaEgvgkXhZsHIzbhTmC-Q>
- <xme:Bmx8akcXCu97o54MZ_YouQau_uAyPf9im-VoURi16_R-JovUG8RbeI3XafD9uc8jF
- _ke9mkZ07xdX_hju16yjDa3kpEHabMnMNTSLkrKN_hGis9i_QetMlk6>
-X-ME-Received: <xmr:Bmx8ahG9fE3v_PYrfz517LlWSLXNO1TXzLCnq3sOlzc7k3BWJRB6YgZNRGldMv9-WCFmGg>
-X-ME-Proxy-Cause: dmFkZTFSQ6bX1pXq2VoAPXFmnupD1bi9jM4uOP0PFHX/2PPqwvWtyPKDgpIq7bXf/r/e/l
- cTYdg3KmA5fCkeZZEbh3XWkbLJm9eKpWEUPTr8tGkRhIUiW1cNrXC58vnzmOdzEG9ZNicx
- 4zCLAQxvNp+kdKV/6Ys7lgvV5WiMedVrMLs69boSwQskzyXn+XqbzTlajRD5u3O7dpORJF
- OURWmHA+sYSlbY3TeQMCc7HRG2fC1t/oYzTEw8gCeiQToSCHNafUiW68VBDipl3oFa84pr
- EckXAt/+hwiJVlmOqRXXwR4aoV/ZS5XWwO2refQB/2LW4IKhocbkYdFaHkiEZmOI3QEDJA
- lZ38ZMxe1rqqZxwNVlTFs7AZ0vPthvMXV5S5XEdzgQYyraaJJNfTa/mx1RSv/7Fj8ZNwl+
- G8kFgahyBUgssIos1cQrdcV6oK21h3JIKxv83DDdFXhFuzJvNiLotUUYTAQqxys0+3BqoI
- zk8HbG5tjCNDhaAyYtdvLbgLIh20wg/0MB5gZUEa6s0NgPXxyIu4Hl9DLvZYnOL+MfIHfQ
- UsFg16Zv0hToy6epZf6Gm/TyzKMDfyKdU9zUCkZcXVkgpGST5FI6WJHlhPBmqF+y6OYKB+
- Ek056UebuKYrOf9rgi+VE1yRHxtvDmVo+sPJvzxj1Qjjn3gk1Cjx+aMfpr4A
-X-ME-Proxy: <xmx:Bmx8atWG1HyYClwdZkxs_hB4vf5asaY3o6PUItQBImFn82Q0RYHblA>
- <xmx:Bmx8aoLU5ofKxRsdAAVkyZKIVzXDlbF8c4M62YvnE1yL9kz5Eh98Lw>
- <xmx:Bmx8al9VLb18jLk9CpniNKaagGLIaiUhTIp_Lo4R6iBFbHlfXEOKWw>
- <xmx:Bmx8ajLp1Qlfl_MIA25Iv1Awu7B3ZrFduaoBi8LW4OdpS1F8Ny2F1A>
- <xmx:B2x8ahfHJEFfp7k6iOxtjvQymXBai65ZjhLvhTUyAPqh6Qzmx03HxYku>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786539057; x=
+ 1786625457; bh=Ong4D2NWyGJa2MjofI7aKvRzhuNzzdqe5ZzWgiCUlE4=; b=X
+ Aue1yKN5DYTXKzvVrmu4Al7PMjfs/8cOJLfpRizM7tWaFV6Ym4U+fB8mrM/O+IV9
+ //qXhq0IFlQBIAnRxvr25mF8CkoeLf7Bu93y69ZH6yJ7WD1cQqkq6S6OR5JcGfvf
+ uwmI5MfKecNyXtfePlKvZ+Yxf58k6vOd1Lcb0EMGuSv1iHVq/VUGm78Cjk5ZXIFQ
+ eMjTbSGgQ4kvAGFCnxRrx6Gl5OjFiH8AfQQ/8zVHQ4cYS0VpHG1hE2SXVBxW2eZ+
+ MlhrjVd9X8ADcUdNmsMY9LfFfiIaX11laqrcNdV4ur1XRi+P7VPp79CWlxe+XXIx
+ 6sSt1vzbig25kmI5R7JMg==
+X-ME-Sender: <xms:MWx8atiwQJTFRODdZcocTSW88fhSnk1g6p2GpzJJ6zqh1ALfx2tSiw>
+ <xme:MWx8aiLdHqB6hj6VIkWBFFdbAuUFk129c_skmWGjPi3FVuYoUqJtNz9FzAoIPdF2i
+ YK9J6GS-S7fLqdOLTfkU87OeVYYeEwdcsFa3VlVcLejTndAO2LDmdW9>
+X-ME-Received: <xmr:MWx8alC9-6zGmqEZVwVQwAxa8FsrwysB88JiPiWUymLZwnu1iIKkvUECDk9oJng0HQgRYg>
+X-ME-Proxy-Cause: dmFkZTE2elvziyd9WUgbaOUmNMom465/J0MimGPvt4pN1S+QK8bubjtU/aNKa6zQYXMfv4
+ GMV7jxszaU0z+fhKkCNYuefptoWd9AUiRC4zXw2HhKtLj+rMxoGqs8+21s++e2I74PdlIz
+ 8C9xJOfBbpxQbwkbSN4BJFFQOJTEeEUHHB1H3NKi9kejIrn6wwkuIuRloKO2IDvb4Jioaa
+ 10U+ko4WO5sidUiP+1ltDK/eWDuA/mZe4elfZB3j7qwqbmgkSHrgeDf6L3bM/bVBXIBG+v
+ Av4385bG2taPn7mYbu+c2IesDhtZd1zRGyTOFPeFqSLQaiscI8kR+ZlIs7kl5ORC9D8WbI
+ 3HF6VZPBKVRZtqv3K6ua+5gtAmvqtizgji/R5kfSp3HDFYjfuX0vi5NcaCPaXVdPSURtk8
+ 3b8fk8CDe7OOo0CwXaYGR9lkqMhiPa+en0chhUqwmVSJYx1dakNq/ijUz3w+yAF0PbwWVX
+ 0VVRsH/89laNsf1ezyrzqRw8rxnDoKohUEWmmxCP11S+b5/zuysiPgSlCnnk6FMQgGvQd9
+ iKcvkV/LdnICzHfZmH2fB+Iz5ppg2GtDQtTrkEjy/GLTX38Ppj0MYDX92gb2wSTpMg1hxN
+ vvwE1RkcUUEDsZilinem3kokHs4W9u+WzePrAUO+yjoBg7cU2/JPT7zw/V1A
+X-ME-Proxy: <xmx:MWx8aqg7NByhWzhE5l1LBdWVtlObHZDjDnqxXMgdm1Kt5i0IGpbrEg>
+ <xmx:MWx8allkoAyqeQKpqPn-EJsOtWJkZ4n1XOdMc02Sm9Gc1HMl3ISxow>
+ <xmx:MWx8auq9ngOrt6wbV6oUaA7YqTEWMZpdHlb_8C9DdJ6el8frd5G0oA>
+ <xmx:MWx8amFOMNZR5YUxzYrh_9Cu88V9ernF99VzHavwfWFiogAD8xCf5w>
+ <xmx:MWx8al48IYVzpGY-h5cMtmMyoDlSCYB-c0dmnxtLMZ2W_kJ4YrtyqcBf>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 08:50:14 -0400 (EDT)
-Message-ID: <a847b3e98668cd69487fc64c8c7d840e202518ea.camel@alistair23.me>
-Subject: Re: [PATCH 43/56] disas/riscv: Fix isa decoding of rev8
+ 12 Aug 2026 08:50:56 -0400 (EDT)
+Message-ID: <9c263d50b8aca6a7522d2a53282dce1463786d57.camel@alistair23.me>
+Subject: Re: [PATCH 44/56] disas/riscv: Fix typo in th.lbib format
 From: Alistair <alistair@alistair23.me>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, qemu-stable@nongnu.org
-Date: Wed, 12 Aug 2026 22:50:14 +1000
-In-Reply-To: <20260809223545.730664-44-richard.henderson@linaro.org>
+Date: Wed, 12 Aug 2026 22:50:56 +1000
+In-Reply-To: <20260809223545.730664-45-richard.henderson@linaro.org>
 References: <20260809223545.730664-1-richard.henderson@linaro.org>
- <20260809223545.730664-44-richard.henderson@linaro.org>
+ <20260809223545.730664-45-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
 Received-SPF: pass client-ip=103.168.172.145;
@@ -106,38 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gU3VuLCAyMDI2LTA4LTA5IGF0IDE1OjM1IC0wNzAwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90
-ZToKPiBUaGUgZW5jb2Rpbmcgb2YgcmV2OCBpcyBkaWZmZXJlbnQgZm9yIHJ2MzIgYW5kIHJ2NjQu
-Cj4gCj4gQ2M6IHFlbXUtc3RhYmxlQG5vbmdudS5vcmcKPiBGaXhlczogMDJjMWI1NjlhMTUgKCJk
-aXNhcy9yaXNjdjogQWRkIFpiW2FiY3NdIGluc3RydWN0aW9ucyIpCj4gU2lnbmVkLW9mZi1ieTog
-UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+CgpSZXZpZXdl
-ZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPgoKQWxpc3Rh
-aXIKCj4gLS0tCj4gwqBkaXNhcy9yaXNjdi5jIHwgMTIgKysrKysrKysrKy0tCj4gwqAxIGZpbGUg
-Y2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0
-IGEvZGlzYXMvcmlzY3YuYyBiL2Rpc2FzL3Jpc2N2LmMKPiBpbmRleCA5NDQyYTZjMTE1Li40MTQx
-NzQxZDc5IDEwMDY0NAo+IC0tLSBhL2Rpc2FzL3Jpc2N2LmMKPiArKysgYi9kaXNhcy9yaXNjdi5j
-Cj4gQEAgLTMyOTIsOCArMzI5MiwxNiBAQCBzdGF0aWMgY29uc3QgcnZfb3Bjb2RlX2RhdGEKPiAq
-ZGVjb2RlX2luc3Rfb3Bjb2RlKHJ2X2RlY29kZSAqZGVjLCBydl9pc2EgaXNhKQo+IMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNhc2UgMGIwMTEwMDogb3AgPSBydl9vcF9yb3JpOyBi
-cmVhazsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlIDBiMDExMDE6Cj4g
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzd2l0Y2ggKChpbnN0ID4+
-IDIwKSAmIDBiMTExMTExMSkgewo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBjYXNlIDBiMDAxMTAwMDogb3AgPSBydl9vcF9yZXY4OyBicmVhazsKPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2FzZSAwYjAxMTEwMDA6IG9wID0gcnZfb3Bf
-cmV2ODsgYnJlYWs7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNh
-c2UgMGIwMDExMDAwOgo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIGlmIChpc2EgPT0gcnYzMikgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgb3AgPSBydl9vcF9yZXY4Owo+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIH0KPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2FzZSAwYjAxMTEwMDA6Cj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKGlzYSA9PSBydjY0KSB7Cj4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBvcCA9
-IHJ2X29wX3Jldjg7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgfQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGJyZWFrOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2FzZSAw
-YjAwMDAxMTE6IG9wID0gcnZfb3BfYnJldjg7IGJyZWFrOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgYnJlYWs7Cg==
+On Sun, 2026-08-09 at 15:35 -0700, Richard Henderson wrote:
+> th.lbib should format the same as th.lbia, and the other
+> increment insns, with the address register in parenthesis.
+>=20
+> Cc: qemu-stable@nongnu.org
+> Fixes: 318df7238b9 ("disas/riscv: Add support for XThead*
+> instructions")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+> =C2=A0disas/riscv-xthead.c | 2 +-
+> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+> index 428a6380e9..fbc96631fd 100644
+> --- a/disas/riscv-xthead.c
+> +++ b/disas/riscv-xthead.c
+> @@ -189,7 +189,7 @@ static const rv_opcode_data xthead_opcode_data[]
+> =3D {
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "th.mulsh", rv_codec_r, rv_fmt_rd_rs1_rs2 },
+> =C2=A0=C2=A0=C2=A0=C2=A0 /* XTheadMemIdx */
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "th.lbia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs=
+1_immh_imml_addr
+> },
+> -=C2=A0=C2=A0=C2=A0 { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_imm=
+h_imml },
+> +=C2=A0=C2=A0=C2=A0 { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_imm=
+h_imml_addr
+> },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "th.lbuia", rv_codec_r2_imm2_imm5,
+> rv_fmt_rd_rs1_immh_imml_addr },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "th.lbuib", rv_codec_r2_imm2_imm5,
+> rv_fmt_rd_rs1_immh_imml_addr },
+> =C2=A0=C2=A0=C2=A0=C2=A0 { "th.lhia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs=
+1_immh_imml_addr
+> },
 
