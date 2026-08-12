@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA0AC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEB4C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9lF-0000jY-D7; Wed, 12 Aug 2026 10:16:57 -0400
+	id 1wu9mH-0001I4-Ni; Wed, 12 Aug 2026 10:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9kv-0000iE-0Y; Wed, 12 Aug 2026 10:16:33 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ id 1wu9m6-00015l-W2; Wed, 12 Aug 2026 10:17:48 -0400
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9kr-0005Mx-Bx; Wed, 12 Aug 2026 10:16:32 -0400
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
- by mailfout.phl.internal (Postfix) with ESMTP id E7952EC0019;
- Wed, 12 Aug 2026 10:16:27 -0400 (EDT)
+ id 1wu9m2-0005cN-0g; Wed, 12 Aug 2026 10:17:45 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 4E02B1400129;
+ Wed, 12 Aug 2026 10:17:39 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-08.internal (MEProxy); Wed, 12 Aug 2026 10:16:27 -0400
+ by phl-compute-09.internal (MEProxy); Wed, 12 Aug 2026 10:17:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786544187; x=1786630587; bh=kaqxLHYM0GSVkW1m3tek8QKIOCRJtZH9
- r+jffXUnD1A=; b=MvwZv+KBLqGUlmxKV9beusHOnVTWLivmGXOGLbS7LcjWItP9
- T4wZdk22FJXTJOgVj1fkvGipfDptxqI5eLLeIkgtMQA04i7eVusqI6gRiE/85ssO
- oDk/MYj6jE1hBm0INOx7eb6+/JkCRCXO+kfu3oQOQ1y1Y0cmpB6fVWlQ+wlWNRaT
- 4TaImtnSPf9ksMNsbfJQrj6ZYuCFHzBBUTEHpYKQ8ddxvDyG3uPDIngf6gVvSOa6
- R3985fHc50y29FEzv3x4zT+GQBbHKST5XoVqJ61kUVbHhd/WoewstFVyVzglmgMY
- MfclLTx2FOB6Ivx4uLJyPugO7wY998JYS1Q8bA==
+ t=1786544259; x=1786630659; bh=BHbDuhBI0rNUlNQ34rA2597RhmS6rKl8
+ Bbi7L61/Xgw=; b=crItQ2zQdVxso+k218c3tECKU/zSDqsCsBE4sDc9kZmRpXAg
+ rTJtTN0loQPRWePsS5WpPnbdq9cUor8JG+KngcsklDweAC9ej19iRE1M2Cr94Het
+ eb22VwulDEn+0sYUSk4Pt/8nPpS43DHV2NNSlZlSgVeQ1i1Iqu7lSH1rzu5F49Zy
+ UdtQFlR2G0woHpdPqcDKGJbc1N+AmQFmtVIXMnyks9Az6kmXE1J9zpVoyfaB1o/U
+ eoYTq1kjSfsiKBS9+c1yhaEIyBZgUzjKaQ8H7fv6hibWcMHDnpF7zFdb+cOzxMgC
+ 3krw7ZVYXu3DFZQYSC1hAVtjKvOOF+tUniFcIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786544187; x=
- 1786630587; bh=kaqxLHYM0GSVkW1m3tek8QKIOCRJtZH9r+jffXUnD1A=; b=E
- 3T4lHIkd76QlFF7RHuMXOMOsG9pZgQxWozUF1/MaL61pomZdesL5Xkc88tQqii8H
- AWlynMGNA/LzGg8qmUeoeF8h2J9vOtn/yf7RcC3Jj/FI+VpHXoNKcL8W2zRCme37
- hATtyo12lrWz4WQcE77fxsLzObhUZyQFMz9vG+nDBDJd1tr+Jy60st2TyeUqvbzs
- /6giMVtHp9BKPQibl2aDV6ZsuGEpR3sMKc0yRxcXg22bOCKuKwvpdqOHPBLs9m0B
- 1XX/dXWvNBP18OG7JYf3BekMUsj6X1aXwjtjDxTR+30UrPZBljz8ZrwhAvdhjnZi
- ZAbLMVyzn9JptmBE8jwxg==
-X-ME-Sender: <xms:O4B8aroI8IRBaaOwmuzfRAiqi6tcuZzWzUkG3ClQWkFe7SEhUdr8ag>
- <xme:O4B8aqmID6ddrRknXPMzTdRBoqz8iCfJVaWw7Gn8bOIcO13oBb6YVr4Knd6hSEgNo
- HIJVLKolquAcpfLcChzRc-DWgvZ4a6xX_Js3PEvv9tWvV_GgOOUdg>
-X-ME-Received: <xmr:O4B8asc1sSFIgrvwg-RyPII396gJQo98PRdnYEkeqU5TF2qO9fznWjp2_62WRILc28el1g>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786544259; x=
+ 1786630659; bh=BHbDuhBI0rNUlNQ34rA2597RhmS6rKl8Bbi7L61/Xgw=; b=N
+ p8XO2MauqQqYuXF5tOUzapSxm7CyeJC3Xh3yjFpsR8TAb8ciyu2++7k/4wXXBcTp
+ RgdvFtOb/moVUzKyLwQV9nVoi7M2vxTyrV1o82IGWrfYv0vz4o3HgmVebhHbkkJe
+ +3wNBxusBK6j8m7GMQt1G9laWR9jcPjKJZISoapN1ZuEAVX2dgIgtjPFH1FtNfM7
+ AVYyu65qE4oQ7aC5qdweTRN9K2cjQn+2pBNKTjR/Sx6/dULE3cG2MHrcf0t0VqeB
+ F9z+UNy91X9yK/AKwrZeGEqultQdUitJZFBy4nwAjaA9LOu3/bPDqPxi2bXsn/TM
+ QumlAmmcIDb/25xsnBeFQ==
+X-ME-Sender: <xms:g4B8aqHunBwyEN7GplXLUEG9cftIgXaZtjZXMMmZW4qglu-tGNaSvg>
+ <xme:g4B8agT2LtUqjsmRUhoctNNl5NkPGH0g0lpzdwW15hLVOJH1mHfXIW5QJqNRqu6Bb
+ ZVqSWIKux5eP0Bwbj84SNPdvw-LBWoWf6Ip71objTfQ9m0afQC459o>
+X-ME-Received: <xmr:g4B8aoaHNrvKMxTT5Nyf_gEjOb6m1NFfjPuy35PP1wovFGCFYEeZ6w5T_YMUBAROs9U3Mg>
 X-ME-Proxy-Cause: dmFkZTGeQovrfaj3HhfP/EkzWDbpNgWLVrfjyAwVEkzsPGVkLNqHzf0ACGpy+JCwI5bysl
  uvmdVmkFoa6xMUHSn8bDZAiomMvSlUr62iRYKPkWPMWvezhhnjartIy0uIFKfFsJJnyjpY
  6RcLVYsJQssR4u/HUgYfQtmFIyrKEchE0pkPX3RQgLDsRLwjOLX8W1e5VC8ur4mc04+XQl
  HyQiRcsZN/pi7yioALD53GiO6au9UboJkpSoP1mgXw3682mXyV8Vlhchh/6CPy22yDo0CK
- sslr7evbFxOG1e9NuLsDPFjW3BhI4e3xxfhTmtGFhiCB7pTawyJiKyI6QdvZq3vXgt9HgP
- Ac66ghWMcreLFDH6fdVGn0d5IXxO5OU6J249aZpHSzCfYwglDfhKz1lIb8zXz4lIsXak67
- NZf9Hba4J+P5/K+o39ad6BI165lO8G7NyJ0vDViuWVlVFIB/IiqWDtmUm4vwSh1mULWRLa
- 7iRihQS3eXgVCa3tzcAULuEKSUy91u3/ByVB3ArgGnDygVwXSbHXpQA+EfagA0j39TQ4m1
- 66vosTvajfZvCI1WDaFdSRcT0TI6yAncQePQtdPA8A7F/83et9gegPpaa7bnMmIp+HEAuU
- NF2fvJQ9EpzuhTsaI1e/eRfgXgL9COoIavE2zHgFT5F7xTsNTL9eS0A98OlA
-X-ME-Proxy: <xmx:O4B8aupl2sV4SuMnIQWmVDh9B4JhCB8DqDxh3e75XVR-Xzum-tZTFA>
- <xmx:O4B8auOcTB7h4Mu1TINn4EGtLr-fK8JuIpG4mySMgtouW-vOLPbnnQ>
- <xmx:O4B8apiloq5ovGiujsF4wmZxpoWWice9OSgOxBr5bsc1lQCLqmKrOg>
- <xmx:O4B8aptKzWfgPc7uLLZznMMRFAt47Ms8_TMnQqwHlOVKefJv9MAxuA>
- <xmx:O4B8aorBJ6bl_UaUDt_bIwtrbNqB2RcZw7yGvjwDbAy_-iEqQmRJgShv>
+ sslr7evbFxOG1e9NuLsDPFjW3BhI4e3xxfhTmtGFhiCB7pTawyJiKyI6QdvZq3vXgt9HmU
+ tVGEybXuJWqLyMatnR6xGy/BRlzFR9kR+DZEtBPUMbzLwYXUnQrKtgnz2VIZO2hnZT3sJm
+ k+t8xvUkgm9Qd3KR2EIwX1cQIpDe6O0t1EC2hR/AF+VywqPL5tGV7zIBpX574uImyQC5np
+ /Y/42OgE9SEocHueawFJkYn+ejdPECk9x6dJZ8pCfSFf8+MKpq37ndiG7yQkeSnqn3eR8C
+ RGe74nQFV+kIWmwx/vuHe5FnZ6L4jJFEIGvmvNyz/dkzv4HQzL/PS4I79MNMEye4MVp+ZK
+ o/NZ+k8oo7hqAe4DTj7wOojMh4JDF1KCwbxMJIldbLc2uUPoVGCO9HugrXnw
+X-ME-Proxy: <xmx:g4B8aj3OI-lowCzhMRFWtAPQgcVbNbmHVJuXyFEtuJmNFe1hfUAJnQ>
+ <xmx:g4B8ajqazD4W9BJNTrnPAcl5q6oS10Cz-MluFP0lEOd9i6RJF48qhA>
+ <xmx:g4B8aqOt8YDBvnut4rVa_EsxRh1HW80roM-VcQphS4yblvOMAM3j4w>
+ <xmx:g4B8akqZ0eiOKWVH7QLlhHtnx4oRlHp7ECdomiQCV7MYuDUmEMeWiQ>
+ <xmx:g4B8agZ94Ty1gh7Qrb8E8-VDO2HALMgvUNE58Ba1LLTCOHGutM4Jtw95>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 10:16:26 -0400 (EDT)
-Message-ID: <7d898286ea347c17d8ed62b9c29249b9b43b4ce8.camel@alistair23.me>
+ 12 Aug 2026 10:17:37 -0400 (EDT)
+Message-ID: <7e49c67dc378ed8e2f2419f5fe94f71adf697d94.camel@alistair23.me>
 Subject: Re: [PATCH v2] target/riscv: do not count ECALL in minstret
 From: Alistair <alistair@alistair23.me>
 To: Zephyr Li <fritchleybohrer@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
-Date: Thu, 13 Aug 2026 00:16:26 +1000
+Date: Thu, 13 Aug 2026 00:17:37 +1000
 In-Reply-To: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
 References: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.151;
- envelope-from=alistair@alistair23.me; helo=fout-a8-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.159;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a8-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -124,7 +124,9 @@ On Thu, 2026-07-30 at 11:21 +0800, Zephyr Li wrote:
 > Reviewed-by: Daniel Henrique Barboza
 > <daniel.barboza@oss.qualcomm.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
