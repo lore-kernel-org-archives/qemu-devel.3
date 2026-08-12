@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D949EC5DF61
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571DEC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAOw-00052c-Dc; Wed, 12 Aug 2026 10:57:54 -0400
+	id 1wuALI-0007eV-BG; Wed, 12 Aug 2026 10:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAO6-0004JJ-CS; Wed, 12 Aug 2026 10:57:04 -0400
+ id 1wuAIv-00051i-5V; Wed, 12 Aug 2026 10:51:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAO4-0000kT-N9; Wed, 12 Aug 2026 10:57:02 -0400
+ id 1wuAIt-0006mg-FA; Wed, 12 Aug 2026 10:51:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=GYUfXShPy2YDXnsyJjI++nnigt08vHmbfFj8G7y7usI=;
+ t=1786546231; bh=ebWdaFqJnEcTicyE2bqL1Mj0OsK7DUakSnUMP5QurSc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TndS8jNtr1kgK9HQVvUL3gIZE4P29BaFU6YUGZFSlfOm25KDODnz54CrhVjyb1Los
- vUTstTXJYB6ZjEvgzb7IuaY15tNKZ2DQh/ym69meYds98MvR40JWsTKEUX1ZrpYVEr
- wH9LitOnMSmnHdiC9Uj91kAPyVhlfVEfGjbaL63NlSsFyINziYqkiTqPzDvL8koMri
- PPyJT33537aq5SksG8KMYNVbDtDkrcKVt0rw6EPNI1+crUHi0GA0rCgvUz/+IpHsgc
- N2QA95eRKOsa2fOjxW73tGg052QoZOHTBgvFR4kBEsz307HoZ35NFW9G/PMqTfZtJq
- 1jNhc+RLpvmxA==
+ b=d1D6pX6RWKBiOvMElI8T7VQoOfWXq4qLtoISqnXOZErBg/b3wqzYjcEeFkp0q0G9e
+ Uz+ucVTWCSEczPmNKGdE5TRancvW8U0soddxCEOidB5lR6m20VfX2LAAPD1DO+WfrW
+ 89K4bcYImw6Tq73gHsFba5jjHth6h3FjsSPFJC166xHjAn0RWta7eATLpG7UJqYfQM
+ tolJII3ISyoPIWNH/skshOdu7t3CnNCSmLZt7o5QXmNcZXyuVh/Xe8BqT5AUsYKMPV
+ KSdSMP3B3pMz11v4YuaOXqVhmqxMHdPkTEj8auZNkCzVCUpQy7WUScui/sfYUyWmRx
+ nXDKA7nOTpUnQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8B0651CA645;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 119021CA613;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E60C5409D87;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6B81B409D4F;
+ Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4F47E2F9E5; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id CB9A52F981; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Cl=C3=A9ment=20MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>,
- huntr bubble <bubblehuntr@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 065/120] intel_iommu: Check address mask before using
- it in pasid-based iotlb invalidation
-Date: Wed, 12 Aug 2026 17:48:48 +0300
-Message-ID: <20260812144955.649205-65-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 015/120] vfio-user: vfio_user_get_region_info: reject
+ unreasonably short struct
+Date: Wed, 12 Aug 2026 17:47:58 +0300
+Message-ID: <20260812144955.649205-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -76,51 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+From: Thanos Makatos <thanos.makatos@nutanix.com>
 
-Prevent a buggy driver to execute malformed invalidation operations.
+While this isn't technically a bug, it's highly unlikely that the
+server wouldn't be writing an entire struct.
 
-Add the same assert as in vtd_iotlb_page_invalidate.
-
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
-Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
-Reported-by: huntr bubble <bubblehuntr@gmail.com>
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
-(cherry picked from commit 0691bb257a7cbfd62127208b49988705bfa2dfe8)
+Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
+Fixes: 667866d66620 ("vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260721122643.30985-4-thanos.makatos@nutanix.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 3966a4258b597c7e1a86a65d6a0d15f28a09dca8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 7b2cead8f8b..5dd46d3bdc2 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3059,6 +3059,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
- {
-     VTDIOTLBPageInvInfo info;
+diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
+index 8feedf82238..df86dabe1e6 100644
+--- a/hw/vfio-user/device.c
++++ b/hw/vfio-user/device.c
+@@ -124,6 +124,11 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
+     }
+     trace_vfio_user_get_region_info(msgp->index, msgp->flags, msgp->size);
  
-+    assert(am <= VTD_MAMV);
++    if (msgp->argsz < sizeof(*info)) {
++        error_printf("vfio_user_get_region_info reply argsz too small\n");
++        return -EINVAL;
++    }
 +
-     info.domain_id = domain_id;
-     info.pasid = pasid;
-     info.addr = addr;
-@@ -3098,6 +3100,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+     memcpy(info, &msgp->argsz, info->argsz);
  
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-+        if (am > VTD_MAMV) {
-+            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
-+                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
-+                              __func__, inv_desc->val[1], inv_desc->val[0],
-+                              am, VTD_MAMV);
-+            return false;
-+        }
-         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
-         vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am,
-                                    VTD_INV_DESC_PIOTLB_IH(inv_desc));
+     /*
 -- 
 2.47.3
 
