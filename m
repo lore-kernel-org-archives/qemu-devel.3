@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97631C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E932C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7t3-0004Pj-Eo; Wed, 12 Aug 2026 08:16:49 -0400
+	id 1wu7xV-0005DY-Af; Wed, 12 Aug 2026 08:21:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sy-0004B4-TP
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:46 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wu7xT-0005DJ-Mf
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:21:23 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sx-0008VK-8B
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:44 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-47f6609c657so395544f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <scherer.simon89@gmail.com>)
+ id 1wu7xS-0001BC-3h
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:21:23 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-47f96c5b722so440846f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786537001; x=1787141801; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=LsoLDHnYghJUoEKHkwC8XnaFsRjiPcziLwYSVW0Jgvk=;
- b=Ly5ZJEAHsQOUMfsnGzZf6uYJrVMEszT6prdwQnylF3SIr2pBSTE3Ju6Gw/7ehUZQwV
- 6rK2eIBUjHuoVxAnPhjWYqxk01qZHPP4mfR8TSEGxmBjFs6kVJLlVial2lG1E6t1onP8
- mE5gTgx4Oja497O67y5Dyv0jqiQZ2K+zYbwRmn1EJcFRFj3ezi1F4T2BUHcg1rDJd/0k
- iuFp13dGwzCxMC4Jd/R5XLDu/vcuXfCQPbp0QA8fSsSRKD5iu7Y1DedIFpGGNQxoGoK9
- psDpU3R1H35HV7QMcRKhXkBUDly6a02c/50tqD70Xtex7Bx12fc2DR5bj/yP5Y65VC8v
- tPgQ==
+ d=gmail.com; s=20251104; t=1786537280; x=1787142080; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ceUcsRCZcacpbvGqC7cSzSGnWAYXiOOlJVltnWZJ3FQ=;
+ b=r2vnTtao6888Wfq8ryRGebjlXyVn0UwVgljcxiVP8YBRwdh3INwpk5a6zhY22YKVVa
+ QpEYMdBgb71MGDeMQDlmZCNn69v9QKNeTaepk3DxdDQCeIMT51oQl3t+d1hATgG6W4wS
+ ZVviFtrApFxAgx8VFlW82TUkcZkwSqov+kQHh+bpwG6m/9f5AiJw5+S4WMnH39g1mkzg
+ dnib/pN68apo8NJm97/UYj9m59Mhp2k/IOWtfB1t1IXy+dcnRVZX0aGc7jmDIMhVRIAz
+ XeaNXD7BhdEp5UP6UyVJ5YTCQvhacZ3Yk/lHvx173Wp34lRRSf7huptaYwt/4kcYNUNM
+ 9AIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786537001; x=1787141801;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=LsoLDHnYghJUoEKHkwC8XnaFsRjiPcziLwYSVW0Jgvk=;
- b=KooBTo0VlI6ShjJ3A/9BRxUKDNTAFisyUph8vdNy9CqMhDthk1TY0Nnfgwqpnp/MQu
- y/39d0MSCo2rPLlWpEPGF0497Pg33LZvpyskNzehPYxz8dm0eUhZYSLq7GWHalWGDT4N
- ODa5Q/ZUd+B7DyXM5eLlEW0UgnFrxojediDuz7ksVFzbsJDdFqL+fwZGXNrbhbiFDOAq
- Yqv1+xc16PZcaGmWfvajtazXP3WoINcnIYQnwL6iYCIZzODYQfkI5abR7q8mIUAGAdaZ
- VyCWCXqLIYmIX891z6yxnYxWOHV6EI5iAh6UUcyyQyfip8/qDOOwsr+OOvhRAZgwRChL
- /b7g==
-X-Gm-Message-State: AOJu0YxyXYuAayDjR0wrRHtYyZmsU1MvCyXoLP4ooTCTrtHMQpc2/2vm
- /iaw3wIMkZg0+dIJ4yBHk4TfONsRbKB9usIW4uPVqAHh5Rw+zqdkg9V9iGq2cYULpnA+8VjTMhC
- 69gq9
-X-Gm-Gg: AR+sD13J+qGtO1NCScG30M1NT7V7tKCgX2qlWlGg8NH5QZnZaCh/OFY/hNl4nV870Dk
- dgI4T2/ApPzbL5kksQE/UFBxe5xfOhk0ZeMrd6/JZipE/uxTBiI7GFrXh025iKIPnOdzT2xT742
- 1gCmzKeIrFxQEGeTP59U4cUPjQpVQ5lmN1LUowG7LGIzkiAsGberlWTHzW4ddtoUFUlHnNQmxhG
- ZrZLQZI+srqL139aztVurFeOMEyTWkQJmksdNYSamEXGHK+Iawpn2wWTpn6eNfD6BlOQi25wXPP
- sklZzS8r08U4U0brF2hzBJ8TuWIqx+KlW+h4Je8CozADkpzgooNofAxgVrDPx7+qrDSvnG28dJ3
- s6KVqqoH8UPRovrrP35aAQw8zDJy9qMgG7wfPhH+xA8t3zfYeAiF3BVosiwDuSw9AyqUkQM2aeE
- uTC6cElZMbsgBBDXvmrYgMYKFXxj7+PDdB6zrZzEp131xgXIpZlH7Iqpgc3CJUyvu7y+6NlyFrU
- XZNoOTPg/5PF6EhXuFOXpNuCIDIEvDXTxw5YwLk77GFW6qseTR9YM7XZTkA4XOYSuoeJw==
-X-Received: by 2002:a05:600c:628d:b0:498:261:dd93 with SMTP id
- 5b1f17b1804b1-4997c18d823mr65316715e9.18.1786537001579; 
- Wed, 12 Aug 2026 05:16:41 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.40
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20251104; t=1786537280; x=1787142080;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ceUcsRCZcacpbvGqC7cSzSGnWAYXiOOlJVltnWZJ3FQ=;
+ b=F8QbdKRuAwwzOq31fftAPYH9U4BSsgsKYNnC25BvqNyKIjrJFpno2qaJqXwywoOj3G
+ zVpgoTUg6XjWON6Lqsb6Ww9DlikXimlt16GeoXaRDd2RZeARBvvr5HpSigJihc4h27B2
+ pHIojAGK3Wyg9Cj1hQxhveePwe27i7n2MhndCS4BRWCiLNBlfu58JB3m1PQxI2UivRGl
+ vihBQyWohUGtr1mQRpNHVS2npjG/sILer3ZcdJ6mp4C8hnRRlEHQtjaqkxZXZRk8jDla
+ Q8dCp5w25MzbfBDMD+3iXLxK3PKhdLhUYwa6FW/kfz6hAWJwNv8t+Xu28cf/RJoz9ALD
+ VLmg==
+X-Gm-Message-State: AOJu0YzGU5TEe/NRWSxRoS9zSXo1E4G+W0EdmTYuNhE7CLchrE1p3PO6
+ asHLeaT6of2NkuxOfwUGHLbx1zax7SqZZ38TdAaC2vtpiMCfug3JIZKbqXraEP8O+c0=
+X-Gm-Gg: AR+sD10Sl8jzFzocbMmLHQAEl/LCi0Y9wmr0MBt56uihVJqsvVVjYxPBSFkDr3X25pn
+ W0fwhLb5WQAaoBTWDemDlD3DNxOv7NBNhBJ1cUlzyZO0B/wKRq/8XCreGXOxhV4h9meAtss78Ef
+ tl1mmldwHLETgOVWUbesmUQp6JOlOV2tOjAVRQ6EpORvdFXRSUNWeTzJoCDVwiHQSqEhaAcDxPE
+ FKzux5W8rmz/ENtA4seLbT+agfQvtpusJGY4Equa8VTFHuGeDeKJ5iTGW/kMGghVbEYWs1x0AFx
+ C+mjgFESMyFPqY5ZQ/xibZVwExv71fKlEZEFrtPGPFSygMV/oprMLHAwGIzksqF5s0/7Zxhx08G
+ wcZd5N0i5PUT5fOSM0CEpaG+eoeMda2gNLKe2XwwyWVW7/97Uv5UzN5uEqKnfrB5IW+Xxjs8BdD
+ gUEpSvsSo6UDVW7BiiyoBLQOxALqd5ZnX9143tsXNVIgZOQuRph7kqZI5j5Wi2VOdZaCGVG2dkT
+ U48/dzItcQ7C6B89hOcQcAXuCu1c8vmLqZ4vB7Y1/Dg3hORPm6/ApTJop9CKOg9gNcLPLLpCBcM
+ VzeD7PHWXxe9cUE2mBuMeS3+Qal4g+TnItyWt7I/DeU=
+X-Received: by 2002:a05:600c:8489:b0:495:6338:1453 with SMTP id
+ 5b1f17b1804b1-4997c153c38mr58446675e9.16.1786537279892; 
+ Wed, 12 Aug 2026 05:21:19 -0700 (PDT)
+Received: from simon-macbookpro.tugraz.local (tug-swl-c122.tugraz.at.
+ [129.27.234.122]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4997aabab7asm68945585e9.6.2026.08.12.05.21.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:40 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Wed, 12 Aug 2026 05:21:19 -0700 (PDT)
+From: Simon Scherer <scherer.simon89@gmail.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/26] target/arm: Enable FEAT_SME_TMOP for -cpu max
-Date: Wed, 12 Aug 2026 13:16:06 +0100
-Message-ID: <20260812121622.649730-11-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
-References: <20260812121622.649730-1-peter.maydell@linaro.org>
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ Simon Scherer <scherer.simon89@gmail.com>
+Subject: [PATCH] target/i386: Set aliased x87 exponent bits to all 1s for MMX
+ register writes
+Date: Wed, 12 Aug 2026 14:21:14 +0200
+Message-ID: <20260812122114.510447-1-scherer.simon89@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=scherer.simon89@gmail.com; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,58 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Per the Intel SDM (Vol 3, 15.2), writing an MMX register also sets bits
+64-79 of the aliased x87 register to all 1s. gen_writeback() never
+does this for X86_OP_MMX destinations, so those bits keep whatever
+the x87 side left there (e.g. 0 after finit/fldz). A later x87
+instruction such as fucomi/fucomip can then read a stale finite
+value where real hardware guarantees a NaN encoding, changing
+comparison results and flags.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260713230244.70174-11-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Set the high 16 bits to 0xffff when writing back to a MMX register (not
+memory).
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4105
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
 ---
- docs/system/arm/emulation.rst | 1 +
- linux-user/aarch64/elfload.c  | 1 +
- target/arm/tcg/cpu64.c        | 3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ target/i386/tcg/emit.c.inc | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 9930974a50..cc42db9e0b 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -188,6 +188,7 @@ the following architecture extensions:
- - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
- - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
- - FEAT_SME_MOP4 (Quarter-tile outer product instructions)
-+- FEAT_SME_TMOP (Structured sparsity outer product instructions)
- - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
- - FEAT_SSVE_FEXPA (Streaming FEXPA instruction)
- - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 64e25a04e3..48be49580a 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -177,6 +177,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_ssve_fexpa, ARM_HWCAP_A64_SME_SFEXPA);
-     GET_FEATURE_ID(aa64_fprcvt, ARM_HWCAP_A64_FPRCVT);
-     GET_FEATURE_ID(aa64_sme_mop4, ARM_HWCAP_A64_SME_SMOP4);
-+    GET_FEATURE_ID(aa64_sme_tmop, ARM_HWCAP_A64_SME_STMOP);
- 
-     return hwcaps;
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 8a3ebf6321..24f34947ec 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1384,8 +1384,9 @@ void aarch64_max_tcg_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64DFR0, t);
- 
-     t = GET_IDREG(isar, ID_AA64SMFR0);
--    t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SMOP4, 1);    /* FEAT_SME_MOP4 */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, STMOP, 1);    /* FEAT_SME_TMOP */
-+    t = FIELD_DP64(t, ID_AA64SMFR0, SFEXPA, 1);   /* FEAT_SSVE_FEXPA */
-     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 473f415766..e2f0b4b1f7 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -352,6 +352,10 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
+         }
+         break;
+     case X86_OP_MMX:
++        if (!op->has_ea) {
++            tcg_gen_st16_i32(tcg_constant_i32(0xffff), tcg_env,
++                             MMX_OFFSET(op->n) + offsetof(floatx80, high));
++        }
+         break;
+     case X86_OP_SSE:
+         if (!op->has_ea && (s->prefix & PREFIX_VEX) && op->ot <= MO_128) {
 -- 
-2.43.0
+2.53.0
 
 
