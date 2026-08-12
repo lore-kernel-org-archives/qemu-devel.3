@@ -4,139 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BC1C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA91CC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBaN-0003Jk-QQ; Wed, 12 Aug 2026 12:13:47 -0400
+	id 1wuBad-0003Na-Eh; Wed, 12 Aug 2026 12:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wuBaM-0003JM-KM
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:13:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBab-0003NN-EI
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:14:01 -0400
+Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wuBaK-000512-9w
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:13:46 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CDbZl0899645
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 16:13:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=; b=DVawKU8M4hH1Jgoe
- A37LJaUdurriGRcuYynaYl/fg+IqHbjBYTv1Ecig4yH/JgUINNnNiBsd7r7tOYLX
- 8PTF1dSj5zMNsMcV5M7RoWFYFuSRuCe6y6pB14UuxTIM2NWmTQLiOUarADCpE2v/
- K+r2B2CVnmydFEkq2q8mrdph0atcPBotWzvJspb30t9RYOBVi6lbHJoygBuMCgaM
- V4GjJI7oczDsb+N7mgPGh4tQwunKzd4JK0Ad9cAmWM6ECXvhoCvB0IBnx+LxcOno
- UmmVXv3mXrgawhPSAR7WYE3HT2g6UTrgEtOeTlfxUoxZs/8ZtR0zVQ9TF2KYplwO
- rAFYUA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0nut9vv9-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 16:13:41 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-cbee6bb8408so953505a12.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:13:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786551221; x=1787156021; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=;
- b=f/NdbSWpGOrQjkFqqJL+QCju02O3IBSr9sMHEVUCZPzWwhK0pBfYV8sD02m+GlHI3k
- k8HrAkX+H1YYJaucFd3cUPUKl2/ogL9qFWAQfHwb9igKXS/IYfnrWByNrm9ZpQQL8i2S
- sCh5C+3/PtynAVmBFEzNEd3Yz/upubjwxxDA4cAqbdIh3zOuWtTuRBkjtir3g9o0glCu
- LF2MxowZkKKsx+y9kS2y2KiE2I9rT8GHQUAplUUrdLkM2e6bVNrXskP4FwogmVteeYHJ
- nt4bJhc0FzVcMwZ2y2D8/w3hb8ZHoXo/zGTXvvDrAyjVwPm8vj4dFG4+0LBYzMXCBoD4
- Py7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786551221; x=1787156021;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=;
- b=adJ4Hxloy/q426Y6/lxa4nKls3jyZHoycOmozbSA/INmWIpW6yb/5i7DIGJzdu3oDe
- EuZxBjjhJjgQ6um8JYlJlaQOxhid6DrXf+8hiwgefU0MAqsPPigCIKp5+n+K+l9+k8sz
- /HcsfdqTFaJA7Zj6Emp3uHJ5tComTv0h9UStR8FqgZv+fhDpKHeqnqh6zBKPAxGXjGKT
- JhmEHXJlsHelSJJh2pI3BtHBKQ/EIAA4IOv6ATARSJkk0wCzI+rKFivr71ZIb6/5YmeP
- Pv1+ZydRx8HVnHAO67CnnKGfOzKJ1YJ3ePAA4NANwnfgcv046XXfeoflz2L2cUnt4yqY
- lL7A==
-X-Gm-Message-State: AOJu0YzE91Jvcz+Fash6nKYptg32Ck5Ci81yWsZDUF/X4QCkynEkv8QY
- MkHhVkcRbX/dyVkwfLTvU+EPJK58BX1ygIAP4D/MJYZJdgiASvVljVN0JFv4yV1g2zAIdvjUMgi
- DDd7x1A+oudSdW3tAxsXZiRnB5MVoj1Yc3p2uLJIbylnYyMeXY4TaMWVDi2ucPS2TxQ==
-X-Gm-Gg: AR+sD139aZEaYsbHuqkVTtM2w/vx3TDCxIDvOczEmjSrDTGTdEK5pU5bP+u62vd2x3f
- FoHzw6Z7O/PG7IRVnxRLElTPHPUrq3SQKZl2A6WqAAW6AV3RsuSKdcLxe7Az1TT7dPwMBHQ3IYT
- c3AvrqeESDUKWd6CPMrVlUtCalmGgBM1HxAJmmSXmj3OYp4sKxF/JlTDsa0KqZ26FdWtaKOgcQs
- GKmXYT+5Hn6COWSdxMSRxZgUN7W/tEDbRaTVniFVCNsxmc9XGrTD2mS+MGrohVgG7PO1quhqm75
- /P8xORsP9D/d+O/E9kdP07Gp9EYNICRhZUsmV7jgOtsNqhLumG/x2nGNAy818N0Zs5N9mmH9buC
- RFgwmE+FLRZNuhZHMlKrj0TOvVlRU99Y6P8nKIuGc/S3ixQOv
-X-Received: by 2002:a05:6a21:6f10:b0:398:837a:7af0 with SMTP id
- adf61e73a8af0-3cc3f7ca7dcmr8292935637.30.1786551220967; 
- Wed, 12 Aug 2026 09:13:40 -0700 (PDT)
-X-Received: by 2002:a05:6a21:6f10:b0:398:837a:7af0 with SMTP id
- adf61e73a8af0-3cc3f7ca7dcmr8292858637.30.1786551220478; 
- Wed, 12 Aug 2026 09:13:40 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1412458461bsm18100074c88.13.2026.08.12.09.13.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 09:13:39 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com
-Cc: brian.cain@oss.qualcomm.com,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Taylor Simpson <ltaylorsimpson@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL v2 41/41] tests/hexagon: add tests for HVX bfloat
-Date: Wed, 12 Aug 2026 08:42:20 -0700
-Message-Id: <20260812154220.1029828-42-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
-References: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBaY-00053a-RD
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:14:01 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 2E65E140008D;
+ Wed, 12 Aug 2026 12:13:58 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 12:13:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1786551238;
+ x=1786637638; bh=PBFdGDCdT3ibKoSh6aeELnaeqDG556fU39GTemxf/tc=; b=
+ f74CAXz1HsvmkuJqVxX4ZqfHC50MSp25I+aubKnFwuuz6I5Qa7RVNtjGSKtU7MMU
+ +fQ0Ej4/hqaxwLGLVawti04QQ7TA1aoZp6w+Rmpto08x+2/IscBu6xZaytAXOg85
+ Y8Wd/UOUf57uf+3ILFBnLUqu28cOLfCom9sgZ3BJRYjsCOLw4ZpFnmv+h8TvI4jl
+ DitYYw0SD4TwGthCc0wRRHyLLpFbEz4490wCAusrlX998+0W6ne1MdqnNtStSNd7
+ /7TPgSS1BrL7z3H7ETgvKEAVWRTz0RDrJvGtlyWMuh4UhRlUv+Vf4e6PLgtIDZVB
+ YYsVupvgllk6k/NCw0hqQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1786551238; x=1786637638; bh=P
+ BFdGDCdT3ibKoSh6aeELnaeqDG556fU39GTemxf/tc=; b=CCFNGJgNfqOudQAmV
+ WZeKYzyLNc7VrCevMF+FP4tk9gxLmFjRIA3lufzb+tcOwZZ7/5ss9hqEcSc80WMY
+ OHYpR8O/aVhKPv4rRum+j00GWgtqKoyPeWeVJAUuiCVrkgCXWaFbUktOXFuPM8j2
+ rclDZ63vFZ7WSxWcarjbipZfGez8GNlO2iBjc/nJteo0stYKsmAwyOpYpXiNoKkd
+ jnnHPkC19RLIRo13rrT4hcFCjjCv4WRAWk/KLPX69jrHaEPVRHzs54jzfqmxcg0P
+ gJcNbHaYEp9LmAVdNFbIKlVTxoXJAX2NFg0nGNrV5iN07BqHlvFNcVYOrfUSdb19
+ UwJ5g==
+X-ME-Sender: <xms:xZt8ahkNM33VNoJANB7fITpgvuvyGouEZZ19HTNrRLT1_RVSEPKH0Q>
+ <xme:xZt8apL2N6_VcrYaPjFsZKZtCMsSedq0dObIUe5x795IaFGl27_mBPh6W4KTKlOIJ
+ QRWFuggSO6C8_14a8JQSApaeBpy0KWBGPqRVb7BFseKINX1jwz_3uY>
+X-ME-Received: <xmr:xZt8aqYx8tshF2GnibOiVr7CIpbeQqMj-qfhiF7hP1aoRNIqKMlLZ-A69r0NvcpcHXMX4A>
+X-ME-Proxy-Cause: dmFkZTFxrRjOFtMe8RX8vWtbFQk3KUj4tqhREesQduyAIhwMkvILA9a9umlDItRtIt0TCc
+ LLSbF8gHotGdHPQpf7bgFSbxI6HcX5sfyig2+uO2ERjiaAAl7y28r0eYeYY1BXNJ7Vmmav
+ I1xZEeCZcPoiFpAHmh8K5Hc7x1fPcA6Cp4XImCw7zrLGoSu/HDV2JC5KMe1lPattbgbJIO
+ AVoIb4lASyLVJOtTdr5BN9oD2nMhttw6G9K17A3+bcBrtc5jCkCzXPK6WbYZ5BbBOswOAz
+ yuirPbHY6V7D14BJXdOAbMwZQB6pobwILUp93jCn24rtDcEvBB7FhRufLYtv68bfdsIbLd
+ Un5zNL7R40kl8MubUvl4b8z3gm9UpEqBc2ZikbIK5KjBWXLfW8i5QJQieY1vKrrCUYLRcA
+ g8FetPTXrApjXMc0571skG/VmDZlYHHmVcEaS9EV1UMqanW5fkbBJrE+bx8RLPJMywenXO
+ DQw8B/1DYelzGyA1iEumsIRqMG9KMGFImIJ724RxLW+7sljlfGOJFA27+8+/NjMLbQyWJ4
+ cgbmVC07abkBCcDUSttvtWYLCHMtEK+LGQUtjLGLQ2bRhS12T7vKqcCoRopWoiIMOSDAmq
+ nbiWuTPiATtFfABwFEoD0HiEuKj8bq++LZ3RGDgUCoz/CXLaw4BI/jMP6jAg
+X-ME-Proxy: <xmx:xZt8ajbnVdAhz8oBvfIOTmr7TsA6M4wi_2vA2Mgia4VJWAXuR9qfSQ>
+ <xmx:xZt8ainsXhBz3G2fk07F3QDB87BmkqBbiRm5-_NPfl6_Oq6TCQcG5w>
+ <xmx:xZt8anysPaynBfBaLFjta1ng-yUVAT2csnWTTK7b2UM_NVFltC0S3g>
+ <xmx:xZt8aoNWUDPAq81hRkb-qutNqi_ixQOVUdMKpgcCKSKSLudS7czlfQ>
+ <xmx:xpt8as72RdXqqQcdxcia6_jxQLvuMhOyad_HswuN3aIYU-rR0Ctq77cS>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 12:13:57 -0400 (EDT)
+Message-ID: <4d56aa849324980065070f85c05aa45f24180ac5.camel@alistair23.me>
+Subject: Re: [PATCH] hw/riscv/virt: add dram-base machine property
+From: Alistair <alistair@alistair23.me>
+To: lists <lists@ecloud.org>, qemu-devel@nongnu.org
+Date: Thu, 13 Aug 2026 02:13:56 +1000
+In-Reply-To: <EB2AEA1E-D748-4448-8824-722A91099AA5@ecloud.org>
+References: <amscWwQvYUftUYW8@zen>
+ <EB2AEA1E-D748-4448-8824-722A91099AA5@ecloud.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzMSBTYWx0ZWRfX/OPKf1q/Ym4C
- W5VMwm/cbI9B0iEZocQyCXTXx9b39x/7o8QKzIv95Xmgiu5aNFaRRdwFYVJpAEJ9lMKhWU0TQI6
- NbsNFzUF+jOW4BQhNBvD7v/Gjor6N9k=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzMSBTYWx0ZWRfX7XKoF8NWTG0G
- KTuUtBBAmRPdybEYJaEPT/0LXFggm9VcOJ3oJKpcra0GDLLkHTIHc1bOsvvMkhDwfFwXrvI8LqY
- Aoh55nfUNFu5C1mn8lETXsVg2kDmzDaaKkNQA6tUcrZR8jc/5iYxMM+wXLTgvrB6sozOlIJUzup
- UBEIz9uDnvq/T68iqopEgg7bCXGyzYUyg1bQnWQX6caZTwIfMJTrk66oSl5HhJlitbPKbMCixOR
- 4LrCRJCU90Q6pwnmQeNJ1z9OAAgSnhn78e76VhSIT+f2DjoSrdXYpRJhMBI6gkVuryd0Y6OcsGW
- xU5/lzSMajfGOdv/GHym8seWdVZC58HBptt/uHBIErC1jNF9vZA9N6fePSB/coBzGIarM3P8teg
- Pco7QwHsIX+I9yzfXC9+qMed4dm3/61Y4omduf73IMJZRpYol98XSf+rk5yXiYZptZB0wNTL974
- 69FGx3C7badHVfPbM1g==
-X-Proofpoint-ORIG-GUID: 8aSSk4Qzl3mXiSoJLEOGWlK9FhOQ7t7m
-X-Authority-Analysis: v=2.4 cv=POA/P/qC c=1 sm=1 tr=0 ts=6a7c9bb5 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=UXK3Z1TEhiG8phQMQjQA:9
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: 8aSSk4Qzl3mXiSoJLEOGWlK9FhOQ7t7m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120131
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=103.168.172.152;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,201 +107,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogTWF0aGV1cyBUYXZhcmVzIEJlcm5hcmRpbm8gPG1hdGhldXMuYmVybmFyZGlub0Bvc3Mu
-cXVhbGNvbW0uY29tPgoKUmV2aWV3ZWQtYnk6IFRheWxvciBTaW1wc29uIDxsdGF5bG9yc2ltcHNv
-bkBnbWFpbC5jb20+ClNpZ25lZC1vZmYtYnk6IE1hdGhldXMgVGF2YXJlcyBCZXJuYXJkaW5vIDxt
-YXRoZXVzLmJlcm5hcmRpbm9Ab3NzLnF1YWxjb21tLmNvbT4KUmV2aWV3ZWQtYnk6IEJyaWFuIENh
-aW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KTGluazogaHR0cHM6Ly9sb3JlLmtlcm5l
-bC5vcmcvcWVtdS1kZXZlbC8zOTIxMTRjNGMxNmU2ZjdmMjgzNWE2NTEzOTg3YWFmZWE4MmI1NjVj
-LjE3NzYzMzk0NTEuZ2l0Lm1hdGhldXMuYmVybmFyZGlub0Bvc3MucXVhbGNvbW0uY29tClNpZ25l
-ZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0
-ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVzdC5oICAgfCAxMyArKysrKysrKysKIHRlc3RzL3RjZy9o
-ZXhhZ29uL2h2eF9taXNjLmggICB8IDMwICsrKysrKysrKysrKysrKysrKysrCiB0ZXN0cy90Y2cv
-aGV4YWdvbi9mcF9odnguYyAgICAgfCA0MSArKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRl
-c3RzL3RjZy9oZXhhZ29uL2ZwX2h2eF9jbXAuYyB8IDUxICsrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysKIHRlc3RzL3RjZy9oZXhhZ29uL2ZwX2h2eF9jdnQuYyB8IDMxICsrKysrKysr
-KysrKysrKysrKysrKwogNSBmaWxlcyBjaGFuZ2VkLCAxNjYgaW5zZXJ0aW9ucygrKQoKZGlmZiAt
-LWdpdCBhL3Rlc3RzL3RjZy9oZXhhZ29uL2hleF90ZXN0LmggYi90ZXN0cy90Y2cvaGV4YWdvbi9o
-ZXhfdGVzdC5oCmluZGV4IDc5ZDMwZWM2MWM2Li5mODZlNmUxYTY5ZSAxMDA2NDQKLS0tIGEvdGVz
-dHMvdGNnL2hleGFnb24vaGV4X3Rlc3QuaAorKysgYi90ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVz
-dC5oCkBAIC0xMjYsNiArMTI2LDE5IEBAIGNvbnN0IHVpbnQxNl90IEhGX3NtYWxsX25lZyA9IDB4
-ODAxMDsKIGNvbnN0IHVpbnQxNl90IEhGX2FueSA9IDB4M2MwMDsKIGNvbnN0IHVpbnQxNl90IEhG
-X25lZ190d28gPSAweGMwMDA7CiAKK2NvbnN0IHVpbnQxNl90IEJGX0lORiAgICAgICAgICAgPSAw
-eDdmODA7Citjb25zdCB1aW50MTZfdCBCRl9JTkZfbmVnICAgICAgID0gMHhmZjgwOworY29uc3Qg
-dWludDE2X3QgQkZfUU5hTiAgICAgICAgICA9IDB4N2ZjMDsKK2NvbnN0IHVpbnQxNl90IEJGX1NO
-YU4gICAgICAgICAgPSAweDdmODE7Citjb25zdCB1aW50MTZfdCBCRl9RTmFOX25lZyAgICAgID0g
-MHhmZmMwOworY29uc3QgdWludDE2X3QgQkZfU05hTl9uZWcgICAgICA9IDB4ZmY4MTsKK2NvbnN0
-IHVpbnQxNl90IEJGX0hFWF9OYU4gICAgICAgPSAweDdmZmY7Citjb25zdCB1aW50MTZfdCBCRl96
-ZXJvICAgICAgICAgID0gMHgwMDAwOworY29uc3QgdWludDE2X3QgQkZfemVyb19uZWcgICAgICA9
-IDB4ODAwMDsKK2NvbnN0IHVpbnQxNl90IEJGX29uZSAgICAgICAgICAgPSAweDNmODA7Citjb25z
-dCB1aW50MTZfdCBCRl90d28gICAgICAgICAgID0gMHg0MDAwOworY29uc3QgdWludDE2X3QgQkZf
-Zm91ciAgICAgICAgICA9IDB4NDA4MDsKKwogY29uc3QgdWludDMyX3QgU0ZfSU5GID0gICAgICAg
-ICAgICAgIDB4N2Y4MDAwMDA7CiBjb25zdCB1aW50MzJfdCBTRl9JTkZfbmVnID0gICAgICAgICAg
-MHhmZjgwMDAwMDsKIGNvbnN0IHVpbnQzMl90IFNGX1FOYU4gPSAgICAgICAgICAgICAweDdmYzAw
-MDAwOwpkaWZmIC0tZ2l0IGEvdGVzdHMvdGNnL2hleGFnb24vaHZ4X21pc2MuaCBiL3Rlc3RzL3Rj
-Zy9oZXhhZ29uL2h2eF9taXNjLmgKaW5kZXggNDNkZTIwZGE2YWMuLmMyMWVhOTc1YzE2IDEwMDY0
-NAotLS0gYS90ZXN0cy90Y2cvaGV4YWdvbi9odnhfbWlzYy5oCisrKyBiL3Rlc3RzL3RjZy9oZXhh
-Z29uL2h2eF9taXNjLmgKQEAgLTQxLDYgKzQxLDcgQEAgdHlwZWRlZiB1bmlvbiB7CiAgICAgdWlu
-dDE2X3QgdWhbTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMl07CiAgICAgdWludDE2X3QgaGZbTUFYX1ZF
-Q19TSVpFX0JZVEVTIC8gMl07IC8qIGNvbnZlbmllbmNlIGFsaWFzICovCiAgICAgaW50MTZfdCAg
-IGhbTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMl07CisgICAgdWludDE2X3QgIGJmW01BWF9WRUNfU0la
-RV9CWVRFUyAvIDJdOwogICAgIHVpbnQ4X3QgIHViW01BWF9WRUNfU0laRV9CWVRFUyAvIDFdOwog
-ICAgIGludDhfdCAgICBiW01BWF9WRUNfU0laRV9CWVRFUyAvIDFdOwogfSBNTVZlY3RvcjsKQEAg
-LTczLDYgKzc0LDcgQEAgQ0hFQ0tfT1VUUFVUX0ZVTkModWgsIDIpCiBDSEVDS19PVVRQVVRfRlVO
-QyhoZiwgMikKIENIRUNLX09VVFBVVF9GVU5DKHViLCAgMSkKIENIRUNLX09VVFBVVF9GVU5DKGIs
-ICAxKQorQ0hFQ0tfT1VUUFVUX0ZVTkMoYmYsICAyKQogCiBzdGF0aWMgaW5saW5lIHZvaWQgaW5p
-dF9idWZmZXJzKHZvaWQpCiB7CkBAIC05Nyw2ICs5OSwxMiBAQCBzdGF0aWMgY29uc3QgdWludDMy
-X3QgRlBfVkFMVUVTW10gPSB7CiB9OwogI2RlZmluZSBGUF9WQUxVRVNfTUFYIEFSUkFZX1NJWkUo
-RlBfVkFMVUVTKQogCitzdGF0aWMgY29uc3QgdWludDE2X3QgQkZfVkFMVUVTW10gPSB7CisgICAg
-QkZfSU5GLCBCRl9JTkZfbmVnLCBCRl9RTmFOLCBCRl9TTmFOLCBCRl9RTmFOX25lZywgQkZfU05h
-Tl9uZWcsCisgICAgQkZfSEVYX05hTiwgQkZfemVybywgQkZfemVyb19uZWcsIEJGX29uZSwgQkZf
-dHdvLCBCRl9mb3VyLAorfTsKKyNkZWZpbmUgQkZfVkFMVUVTX01BWCBBUlJBWV9TSVpFKEJGX1ZB
-TFVFUykKKwogc3RhdGljIGlubGluZSB2b2lkIGluaXRfYnVmZmVyc19mcCh2b2lkKQogewogICAg
-IF9TdGF0aWNfYXNzZXJ0KEJVRlNJWkUgKiAoTUFYX1ZFQ19TSVpFX0JZVEVTIC8gNCkgPgpAQCAt
-MTE2LDYgKzEyNCwyNSBAQCBzdGF0aWMgaW5saW5lIHZvaWQgaW5pdF9idWZmZXJzX2ZwKHZvaWQp
-CiAgICAgfQogfQogCitzdGF0aWMgaW5saW5lIHZvaWQgaW5pdF9idWZmZXJzX2JmKHZvaWQpCit7
-CisgICAgX1N0YXRpY19hc3NlcnQoQlVGU0laRSAqIChNQVhfVkVDX1NJWkVfQllURVMgLyAyKSA+
-CisgICAgICAgICAgICAgICAgICAgQkZfVkFMVUVTX01BWCAqIEJGX1ZBTFVFU19NQVgsCisgICAg
-ICAgICAgICAgICAgICAgInRlc3QgYXJyYXlzIGNhbid0IGZpdCBhbGwgQkZfVkFMVUVTIGNvbWJp
-bmF0aW9ucyIpOworICAgIGludCBjb3VudGVyMSA9IDAsIGNvdW50ZXIyID0gMDsKKyAgICBmb3Ig
-KGludCBpID0gMDsgaSA8IEJVRlNJWkU7IGkrKykgeworICAgICAgICBmb3IgKGludCBqID0gMDsg
-aiA8IE1BWF9WRUNfU0laRV9CWVRFUyAvIDI7IGorKykgeworICAgICAgICAgICAgYnVmZmVyMFtp
-XS5iZltqXSA9IEJGX1ZBTFVFU1tjb3VudGVyMV07CisgICAgICAgICAgICBidWZmZXIxW2ldLmJm
-W2pdID0gQkZfVkFMVUVTW2NvdW50ZXIyXTsKKyAgICAgICAgICAgIGNvdW50ZXIyKys7CisgICAg
-ICAgICAgICBpZiAoY291bnRlcjIgPT0gQkZfVkFMVUVTX01BWCkgeworICAgICAgICAgICAgICAg
-IGNvdW50ZXIyID0gMDsKKyAgICAgICAgICAgICAgICBjb3VudGVyMSA9IChjb3VudGVyMSArIDEp
-ICUgQkZfVkFMVUVTX01BWDsKKyAgICAgICAgICAgIH0KKyAgICAgICAgfQorICAgIH0KK30KKwog
-I2RlZmluZSBWRUNfT1AxKEFTTSwgRUwsIElOLCBPVVQpIFwKICAgICBhc20oInYyID0gdm1lbSgl
-MCArICMwKVxuXHQiIFwKICAgICAgICAgInYyIiAjRUwgIiA9ICIgI0FTTSAiKHYyIiAjRUwgIilc
-blx0IiBcCkBAIC0yMTIsMTAgKzIzOSwxMyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgdGVzdF8jI05B
-TUUoYm9vbCBpbnZlcnQpIFwKIAogI2RlZmluZSBmbG9hdF9zZih4KSAoeyB0eXBlb2YoeCkgX3gg
-PSAoeCk7ICooKGZsb2F0ICopJihfeCkpOyB9KQogI2RlZmluZSBmbG9hdF9oZih4KSAoeyB0eXBl
-b2YoeCkgX3ggPSAoeCk7ICooKF9GbG9hdDE2ICopICYoX3gpKTsgfSkKKyNkZWZpbmUgZmxvYXRf
-YmYoeCkgKHsgdWludDMyX3QgX3UgPSAoKHVpbnQzMl90KSh4KSkgPDwgMTY7ICooKGZsb2F0ICop
-JihfdSkpOyB9KQogI2RlZmluZSByYXdfc2YoeCkgKHsgdHlwZW9mKHgpIF94ID0gKHgpOyAqKCh1
-aW50MzJfdCAqKSYoX3gpKTsgfSkKICNkZWZpbmUgcmF3X2hmKHgpICh7IHR5cGVvZih4KSBfeCA9
-ICh4KTsgKigodWludDE2X3QgKikmKF94KSk7IH0pCisjZGVmaW5lIHJhd19iZih4KSAoeyB0eXBl
-b2YoeCkgX3ggPSAoeCk7ICh1aW50MTZfdCkoKigodWludDMyX3QgKikmKF94KSkgPj4gMTYpOyB9
-KQogI2RlZmluZSBmbG9hdF9oZl90b19zZih4KSAoKGZsb2F0KXgpCiAjZGVmaW5lIGJ5dGVzX2hm
-IDIKICNkZWZpbmUgYnl0ZXNfc2YgNAorI2RlZmluZSBieXRlc19iZiAyCiAKICNlbmRpZgpkaWZm
-IC0tZ2l0IGEvdGVzdHMvdGNnL2hleGFnb24vZnBfaHZ4LmMgYi90ZXN0cy90Y2cvaGV4YWdvbi9m
-cF9odnguYwppbmRleCBkZWUwNzgxYmQ3Mi4uNDU0M2EwYWE4YzcgMTAwNjQ0Ci0tLSBhL3Rlc3Rz
-L3RjZy9oZXhhZ29uL2ZwX2h2eC5jCisrKyBiL3Rlc3RzL3RjZy9oZXhhZ29uL2ZwX2h2eC5jCkBA
-IC0yOSw2ICsyOSw3IEBAIGludCBlcnI7CiAjZGVmaW5lIENIRUNLX05BTihBLCBERUZfTkFOKSAo
-aXNuYW4oQSkgPyBERUZfTkFOIDogKEEpKQogI2RlZmluZSBOQU5fU0YgZmxvYXRfc2YoMHg3RkZG
-RkZGRikKICNkZWZpbmUgTkFOX0hGIGZsb2F0X2hmKDB4N0ZGRikKKyNkZWZpbmUgTkFOX0JGIGZs
-b2F0X2hmKDB4N0ZGRikKIAogLyoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
-KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKgogICogQmluYXJ5IG9wZXJh
-dGlvbnMKQEAgLTkxLDExICs5Miw0MyBAQCBERUZfVEVTVF9PUF8yKHZtcHksIE1VTFRfSEYsIGhm
-LCBoZik7CiAjZGVmaW5lIE1BWF9IRihYLCBZKSBNQVgoWCwgWSwgTkFOX0hGKQogI2RlZmluZSBN
-SU5fU0YoWCwgWSkgTUlOKFgsIFksIE5BTl9TRikKICNkZWZpbmUgTUFYX1NGKFgsIFkpIE1BWChY
-LCBZLCBOQU5fU0YpCisjZGVmaW5lIE1JTl9CRihYLCBZKSBNSU4oWCwgWSwgTkFOX0JGKQorI2Rl
-ZmluZSBNQVhfQkYoWCwgWSkgTUFYKFgsIFksIE5BTl9CRikKIAogREVGX1RFU1RfT1BfMih2Zm1p
-biwgTUlOX1NGLCBzZiwgc2YpOwogREVGX1RFU1RfT1BfMih2Zm1heCwgTUFYX1NGLCBzZiwgc2Yp
-OwogREVGX1RFU1RfT1BfMih2Zm1pbiwgTUlOX0hGLCBoZiwgaGYpOwogREVGX1RFU1RfT1BfMih2
-Zm1heCwgTUFYX0hGLCBoZiwgaGYpOworREVGX1RFU1RfT1BfMih2bWluLCBNSU5fQkYsIGJmLCBi
-Zik7CitERUZfVEVTVF9PUF8yKHZtYXgsIE1BWF9CRiwgYmYsIGJmKTsKKworI2RlZmluZSBERUZf
-VEVTVF9PUF8yX0lOVEVSTEVBVkVEKHZvcCwgb3AsIHR5cGVfcmVzLCB0eXBlX2FyZykgXAorICAg
-IHN0YXRpYyB2b2lkIHRlc3RfIyN2b3AjI18jI3R5cGVfcmVzIyNfIyN0eXBlX2FyZyh2b2lkKSBc
-CisgICAgeyBcCisgICAgICAgIG1lbXNldChleHBlY3QsIDB4ZmYsIHNpemVvZihleHBlY3QpKTsg
-XAorICAgICAgICBtZW1zZXQob3V0cHV0LCAweGZmLCBzaXplb2Yob3V0cHV0KSk7IFwKKyAgICAg
-ICAgZm9yIChpbnQgaSA9IDA7IGkgPCBCVUZTSVpFIC8gMjsgaSsrKSB7IFwKKyAgICAgICAgICAg
-IEhWWF9WZWN0b3JQYWlyICpodnhfb3V0cHV0ID0gKEhWWF9WZWN0b3JQYWlyICopJm91dHB1dFsy
-ICogaV07IFwKKyAgICAgICAgICAgIEhWWF9WZWN0b3IgaHZ4X2J1ZmZlcjAgPSAqKEhWWF9WZWN0
-b3IgKikmYnVmZmVyMFtpXTsgXAorICAgICAgICAgICAgSFZYX1ZlY3RvciBodnhfYnVmZmVyMSA9
-ICooSFZYX1ZlY3RvciAqKSZidWZmZXIxW2ldOyBcCisgICAgICAgICAgICAqaHZ4X291dHB1dCA9
-IFwKKyAgICAgICAgICAgICAgICBRNl9XIyN0eXBlX3JlcyMjXyMjdm9wIyNfViMjdHlwZV9hcmcj
-I1YjI3R5cGVfYXJnKGh2eF9idWZmZXIwLCBcCisgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBodnhfYnVmZmVyMSk7IFwKKyAg
-ICAgICAgICAgIGZvciAoaW50IGogPSAwOyBqIDwgTUFYX1ZFQ19TSVpFX0JZVEVTIC8gYnl0ZXNf
-IyN0eXBlX3JlczsgaisrKSB7IFwKKyAgICAgICAgICAgICAgICBleHBlY3RbMiAqIGldLnR5cGVf
-cmVzW2pdID0gXAorICAgICAgICAgICAgICAgICAgICByYXdfIyN0eXBlX3JlcyhvcChmbG9hdF8j
-I3R5cGVfYXJnKGJ1ZmZlcjBbaV0udHlwZV9hcmdbMiAqIGpdKSwgXAorICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBmbG9hdF8jI3R5cGVfYXJnKGJ1ZmZlcjFbaV0udHlwZV9h
-cmdbMiAqIGpdKSkpOyBcCisgICAgICAgICAgICAgICAgZXhwZWN0WzIgKiBpICsgMV0udHlwZV9y
-ZXNbal0gPSBcCisgICAgICAgICAgICAgICAgICAgIHJhd18jI3R5cGVfcmVzKG9wKGZsb2F0XyMj
-dHlwZV9hcmcoYnVmZmVyMFtpXS50eXBlX2FyZ1syICogaiArIDFdKSwgXAorICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgZmxvYXRfIyN0eXBlX2FyZyhidWZmZXIxW2ldLnR5cGVf
-YXJnWzIgKiBqICsgMV0pKSk7IFwKKyAgICAgICAgICAgIH0gXAorICAgICAgICB9IFwKKyAgICAg
-ICAgY2hlY2tfb3V0cHV0XyMjdHlwZV9yZXMoX19MSU5FX18sIEJVRlNJWkUpOyBcCisgICAgfQor
-CitERUZfVEVTVF9PUF8yX0lOVEVSTEVBVkVEKHZhZGQsIFNVTV9TRiwgc2YsIGJmKTsKK0RFRl9U
-RVNUX09QXzJfSU5URVJMRUFWRUQodnN1YiwgU1VCX1NGLCBzZiwgYmYpOworREVGX1RFU1RfT1Bf
-Ml9JTlRFUkxFQVZFRCh2bXB5LCBNVUxUX1NGLCBzZiwgYmYpOwogCiAvKioqKioqKioqKioqKioq
-KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
-KioqKioqCiAgKiBPdGhlciB0ZXN0cwpAQCAtMTgwLDYgKzIxMywxNCBAQCBpbnQgbWFpbih2b2lk
-KQogICAgIHRlc3RfdmZtYXhfc2Zfc2YoKTsKICAgICB0ZXN0X3ZmbWF4X2hmX2hmKCk7CiAKKyAg
-ICAvKiBiZmxvYXQgKi8KKyAgICBpbml0X2J1ZmZlcnNfYmYoKTsKKyAgICB0ZXN0X3ZtaW5fYmZf
-YmYoKTsKKyAgICB0ZXN0X3ZtYXhfYmZfYmYoKTsKKyAgICB0ZXN0X3ZhZGRfc2ZfYmYoKTsKKyAg
-ICB0ZXN0X3ZzdWJfc2ZfYmYoKTsKKyAgICB0ZXN0X3ZtcHlfc2ZfYmYoKTsKKwogICAgIHB1dHMo
-ZXJyID8gIkZBSUwiIDogIlBBU1MiKTsKICAgICByZXR1cm4gZXJyID8gMSA6IDA7CiB9CmRpZmYg
-LS1naXQgYS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY21wLmMgYi90ZXN0cy90Y2cvaGV4YWdv
-bi9mcF9odnhfY21wLmMKaW5kZXggODA2OGQxYzNlZTQuLjYzZmI0MjM5NDFiIDEwMDY0NAotLS0g
-YS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY21wLmMKKysrIGIvdGVzdHMvdGNnL2hleGFnb24v
-ZnBfaHZ4X2NtcC5jCkBAIC0yMiw5ICsyMiwxMSBAQCBpbnQgZXJyOwogCiAjZGVmaW5lIE1BWF9U
-RVNUU19oZiAoTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMikKICNkZWZpbmUgTUFYX1RFU1RTX3NmIChN
-QVhfVkVDX1NJWkVfQllURVMgLyA0KQorI2RlZmluZSBNQVhfVEVTVFNfYmYgKE1BWF9WRUNfU0la
-RV9CWVRFUyAvIDIpCiAKICNkZWZpbmUgVFJVRV9NQVNLX3NmIDB4ZmZmZmZmZmYKICNkZWZpbmUg
-VFJVRV9NQVNLX2hmIDB4ZmZmZgorI2RlZmluZSBUUlVFX01BU0tfYmYgMHhmZmZmCiAKIHN0YXRp
-YyBjb25zdCBjaGFyICpjb21wYXJpc29uc1tNQVhfVEVTVFNfc2ZdWzJdOwogc3RhdGljIEhWWF9W
-ZWN0b3IgKmh2eF9vdXRwdXQgPSAoSFZYX1ZlY3RvciAqKSZvdXRwdXRbMF07CkBAIC0xNjAsNiAr
-MTYyLDU0IEBAIHN0YXRpYyB2b2lkIHRlc3RfY21wX2hmKHZvaWQpCiAgICAgQ0hFQ0soaGYsIDIp
-OwogfQogCitzdGF0aWMgdm9pZCB0ZXN0X2NtcF9iZih2b2lkKQoreworICAgIC8qCisgICAgICog
-R2VuZXJhbCBvcmRlcmluZyBmb3IgYmY6CisgICAgICogUU5hTiA+IFNOYU4gPiArSW5mID4gbnVt
-YmVycyA+IC1JbmYgPiBTTmFOX25lZyA+IFFOYU5fbmVnCisgICAgICovCisKKyAgICAvKiBUZXN0
-IGVxdWFsaXR5ICovCisgICAgUFJFUF9URVNUKCk7CisgICAgQUREX1RFU1RfQ01QKGJmLCAwLCAg
-ICAgICAwLCAgICAgICBmYWxzZSk7CisgICAgQUREX1RFU1RfQ01QKGJmLCBCRl9TTmFOLCBCRl9T
-TmFOLCBmYWxzZSk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAgLyogQ29tbW9uIG51bWJlcnMg
-Ki8KKyAgICBQUkVQX1RFU1QoKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfdHdvLCBCRl9vbmUp
-OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9vbmUsIEJGX3plcm8pOworICAgIENIRUNLKGJmLCAy
-KTsKKworICAgIC8qIEluZmluaXR5IHZzIEluZmluaXR5L05hTiAqLworICAgIFBSRVBfVEVTVCgp
-OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9RTmFOLCAgICAgIEJGX0lORik7CisgICAgVEVTVF9D
-TVBfR1QoYmYsIEJGX1NOYU4sICAgICAgQkZfSU5GKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZf
-SU5GLCAgICAgICBCRl9JTkZfbmVnKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfSU5GLCAgICAg
-ICBCRl9TTmFOX25lZyk7CisgICAgVEVTVF9DTVBfR1QoYmYsIEJGX0lORiwgICAgICAgQkZfUU5h
-Tl9uZWcpOworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9JTkZfbmVnLCAgIEJGX1NOYU5fbmVnKTsK
-KyAgICBURVNUX0NNUF9HVChiZiwgQkZfSU5GX25lZywgICBCRl9RTmFOX25lZyk7CisgICAgVEVT
-VF9DTVBfR1QoYmYsIEJGX1NOYU4sICAgICAgQkZfSU5GX25lZyk7CisgICAgVEVTVF9DTVBfR1Qo
-YmYsIEJGX1FOYU4sICAgICAgQkZfSU5GX25lZyk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAg
-LyogTmFOIHZzIE5hTiAqLworICAgIFBSRVBfVEVTVCgpOworICAgIFRFU1RfQ01QX0dUKGJmLCBC
-Rl9RTmFOLCAgICAgIEJGX1NOYU4pOworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9TTmFOLCAgICAg
-IEJGX1NOYU5fbmVnKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfU05hTl9uZWcsICBCRl9RTmFO
-X25lZyk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAgLyogTmFOIHZzIG5vbi1OYU4gKi8KKyAg
-ICBQUkVQX1RFU1QoKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfUU5hTiwgICAgICBCRl9vbmUp
-OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9TTmFOLCAgICAgIEJGX29uZSk7CisgICAgVEVTVF9D
-TVBfR1QoYmYsIEJGX29uZSwgICAgICAgQkZfUU5hTl9uZWcpOworICAgIFRFU1RfQ01QX0dUKGJm
-LCBCRl9vbmUsICAgICAgIEJGX1NOYU5fbmVnKTsKKyAgICBDSEVDSyhiZiwgMik7Cit9CisKIHN0
-YXRpYyB2b2lkIGNoZWNrX2J5dGVfcHJlZChIVlhfVmVjdG9yUHJlZCBwcmVkLCBpbnQgYnl0ZV9p
-ZHgsIHVpbnQ4X3QgZXhwX21hc2ssCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW50IGxp
-bmUpCiB7CkBAIC0yMTcsNiArMjY3LDcgQEAgaW50IG1haW4odm9pZCkKIAogICAgIHRlc3RfY21w
-X3NmKCk7CiAgICAgdGVzdF9jbXBfaGYoKTsKKyAgICB0ZXN0X2NtcF9iZigpOwogICAgIHRlc3Rf
-Y21wX3ZhcmlhbnRzKCk7CiAKICAgICBwdXRzKGVyciA/ICJGQUlMIiA6ICJQQVNTIik7CmRpZmYg
-LS1naXQgYS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0LmMgYi90ZXN0cy90Y2cvaGV4YWdv
-bi9mcF9odnhfY3Z0LmMKaW5kZXggYjA4ZWJhOTJkYTguLjcxOTZiYzlhMzNkIDEwMDY0NAotLS0g
-YS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0LmMKKysrIGIvdGVzdHMvdGNnL2hleGFnb24v
-ZnBfaHZ4X2N2dC5jCkBAIC0xOSw2ICsxOSw4IEBAIGludCBlcnI7CiAjaW5jbHVkZSAiaHZ4X21p
-c2MuaCIKICNpbmNsdWRlICJoZXhfdGVzdC5oIgogCisjZGVmaW5lIE5BTl9CRiAweDdGRkYKKwog
-I2RlZmluZSBURVNUX0VYUChUTywgRlJPTSwgVkFMLCBFWFApIGRvIHsgXAogICAgICgoTU1WZWN0
-b3IgKikmYnVmZmVyKS0+RlJPTVtpbmRleF0gPSBWQUw7IFwKICAgICBleHBlY3RbMF0uVE9baW5k
-ZXhdID0gRVhQOyBcCkBAIC0xNzIsNiArMTc0LDM0IEBAIERFRl9URVNUX1ZDT05WKHNmLCB3LCB7
-IFwKICAgICBURVNUX0VYUChzZiwgdywgMTY3NzcyMTksIHJhd19zZigoZmxvYXQpMTY3NzcyMjAp
-KTsgLyogcm91bmRzIFVQICovIFwKIH0pCiAKKyNkZWZpbmUgVEVTVF9FWFBfQkYoVkFMLCBFWFAp
-IGRvIHsgXAorICAgICgoTU1WZWN0b3IgKikmYnVmZmVyc1sxXSktPnNmW2luZGV4XSA9IFZBTDsg
-XAorICAgICgoTU1WZWN0b3IgKikmYnVmZmVyc1swXSktPnNmW2luZGV4XSA9IFZBTDsgXAorICAg
-IGV4cGVjdFswXS5iZlsyICogaW5kZXhdID0gRVhQOyBcCisgICAgZXhwZWN0WzBdLmJmWzIgKiBp
-bmRleCArIDFdID0gRVhQOyBcCisgICAgaW5kZXgrKzsgXAorfSB3aGlsZSAoMCkKKworc3RhdGlj
-IHZvaWQgdGVzdF92Y29udl9iZl9zZih2b2lkKQoreworICAgIEhWWF9WZWN0b3IgKmh2eF9vdXRw
-dXQgPSAoSFZYX1ZlY3RvciAqKSZvdXRwdXRbMF07CisgICAgSFZYX1ZlY3RvciBidWZmZXJzWzJd
-OworICAgIGludCBpbmRleCA9IDA7CisgICAgbWVtc2V0KCZidWZmZXJzLCAwLCBzaXplb2YoYnVm
-ZmVycykpOworICAgIG1lbXNldChleHBlY3QsIDAsIHNpemVvZihleHBlY3QpKTsKKworICAgIFRF
-U1RfRVhQX0JGKFNGX1FOYU4sIE5BTl9CRik7CisgICAgVEVTVF9FWFBfQkYoU0ZfU05hTiwgTkFO
-X0JGKTsKKyAgICBURVNUX0VYUF9CRihTRl9RTmFOX25lZywgTkFOX0JGKTsKKyAgICBURVNUX0VY
-UF9CRihTRl9JTkYsIEJGX0lORik7CisgICAgVEVTVF9FWFBfQkYoU0ZfSU5GX25lZywgQkZfSU5G
-X25lZyk7CisgICAgVEVTVF9FWFBfQkYoU0Zfb25lLCBCRl9vbmUpOworICAgIFRFU1RfRVhQX0JG
-KFNGX3plcm9fbmVnLCBCRl96ZXJvX25lZyk7CisKKyAgICAqaHZ4X291dHB1dCA9IFE2X1ZiZl92
-Y3Z0X1ZzZlZzZihidWZmZXJzWzBdLCBidWZmZXJzWzFdKTsKKyAgICBjaGVja19vdXRwdXRfaGYo
-X19MSU5FX18sIDEpOworfQorCiBpbnQgbWFpbih2b2lkKQogewogICAgIHRlc3RfdmN2dF91aF9o
-ZigpOwpAQCAtMTgyLDYgKzIxMiw3IEBAIGludCBtYWluKHZvaWQpCiAgICAgdGVzdF92Y29udl9z
-Zl93KCk7CiAgICAgdGVzdF92Y29udl9oX2hmKCk7CiAgICAgdGVzdF92Y29udl9oZl9oKCk7Cisg
-ICAgdGVzdF92Y29udl9iZl9zZigpOwogCiAgICAgcHV0cyhlcnIgPyAiRkFJTCIgOiAiUEFTUyIp
-OwogICAgIHJldHVybiBlcnIgPyAxIDogMDsKLS0gCjIuMzQuMQoK
+On Fri, 2026-08-07 at 14:26 +0300, lists wrote:
+> Ping.
+>=20
+> Do you have a different solution to emulate memory layouts of actual
+> boards?
+
+The ideal answer is to model the board
+
+>=20
+> For me this is necessary for the Plan 9 porting work: a Banana Pi F3
+> has a different base address than one of the K3 boards, and both
+> different than the QEMU default.
+
+The Banana Pi F3 and the K3 will also have different hardware blocks at
+different addresses. The starting address of memory isn't the only or
+even the main difference.
+
+I don't see how just changing the memory address fixes an issue for
+you.
+
+>=20
+> > On Jul 30, 2026, at 12:42, Shawn Rutledge <lists@ecloud.org> wrote:
+> >=20
+> > =EF=BB=BFThe 'virt' RISC-V machine hardcodes its DRAM base to 0x8000000=
+0.
+> > Real-world RISC-V SoCs put DRAM elsewhere (SpacemiT K1 at
+> > 0x40000000,
+> > SpacemiT K3 at 0x100000000, etc.), which forces ports that target
+> > those boards to build separate kernels for QEMU testing.
+
+RISC-V SoCs can locate their DRAM at any address, that is true. But I
+don't see how just changing the virt machine address allows you to
+suddenly test a K3 kernel on the virt board. The rest of the hardware
+is still different
+
+> >=20
+> > Add a 'dram-base' string property that lets users move VIRT_DRAM up
+> > without rebuilding QEMU.=C2=A0 Values must be 2 MiB-aligned and at or
+> > above the default 0x80000000 to avoid colliding with statically-
+> > placed MMIO regions (PCIE_MMIO ends at 0x80000000).=C2=A0 Lower bases
+> > would also require moving PCIE_MMIO/IMSIC/etc. and are rejected
+> > with
+> > an explicit error pointing at the cause.
+
+Am I miscounting a 0? 0x4000_0000 is less then 0x8000_0000 so this
+doesn't help for half of your examples.
+
+Alistair
+
+> >=20
+> > Example:
+> > =C2=A0qemu-system-riscv64 -machine virt,dram-base=3D0x100000000 -m 6G .=
+..
+> > runs OpenSBI at firmware base 0x100000000, matching K3 memory
+> > layout.
+> >=20
+> > Signed-off-by: Shawn Rutledge <s@ecloud.org>
+> > ---
+> > hw/riscv/virt.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 59
+> > ++++++++++++++++++++++++++++++++++++++++-
+> > include/hw/riscv/virt.h |=C2=A0 2 ++
+> > 2 files changed, 60 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> > index 51bac47a91..6ccc98842f 100644
+> > --- a/hw/riscv/virt.c
+> > +++ b/hw/riscv/virt.c
+> > @@ -20,6 +20,7 @@
+> >=20
+> > #include "qemu/osdep.h"
+> > #include "qemu/units.h"
+> > +#include "qemu/cutils.h"
+> > #include "qemu/error-report.h"
+> > #include "qemu/guest-random.h"
+> > #include "qapi/error.h"
+> > @@ -1307,7 +1308,13 @@ static void virt_machine_init(MachineState
+> > *machine)
+> > =C2=A0=C2=A0=C2=A0 int i, base_hartid, hart_count;
+> > =C2=A0=C2=A0=C2=A0 int socket_count =3D riscv_socket_count(machine);
+> >=20
+> > -=C2=A0=C2=A0=C2=A0 s->memmap =3D virt_memmap;
+> > +=C2=A0=C2=A0=C2=A0 if (s->dram_base) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->memmap_storage =3D g_mem=
+dup2(virt_memmap,
+> > sizeof(virt_memmap));
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->memmap_storage[VIRT_DRAM=
+].base =3D s->dram_base;
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->memmap =3D s->memmap_sto=
+rage;
+> > +=C2=A0=C2=A0=C2=A0 } else {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->memmap =3D virt_memmap;
+> > +=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > =C2=A0=C2=A0=C2=A0 /* Check socket count limit */
+> > =C2=A0=C2=A0=C2=A0 if (VIRT_SOCKETS_MAX < socket_count) {
+> > @@ -1545,6 +1552,7 @@ static void
+> > virt_machine_instance_finalize(Object *obj)
+> > =C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0 g_free(s->oem_id);
+> > =C2=A0=C2=A0=C2=A0 g_free(s->oem_table_id);
+> > +=C2=A0=C2=A0=C2=A0 g_free(s->memmap_storage);
+> > }
+> >=20
+> > static void virt_machine_instance_init(Object *obj)
+> > @@ -1616,6 +1624,46 @@ static void virt_set_aia(Object *obj, const
+> > char *val, Error **errp)
+> > =C2=A0=C2=A0=C2=A0 }
+> > }
+> >=20
+> > +static char *virt_get_dram_base(Object *obj, Error **errp)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> > +=C2=A0=C2=A0=C2=A0 uint64_t val =3D s->dram_base ? s->dram_base :
+> > virt_memmap[VIRT_DRAM].base;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 return g_strdup_printf("0x%" PRIx64, val);
+> > +}
+> > +
+> > +static void virt_set_dram_base(Object *obj, const char *val, Error
+> > **errp)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> > +=C2=A0=C2=A0=C2=A0 const char *endptr;
+> > +=C2=A0=C2=A0=C2=A0 uint64_t base;
+> > +
+> > +=C2=A0=C2=A0=C2=A0 if (qemu_strtou64(val, &endptr, 0, &base) < 0 || *e=
+ndptr !=3D
+> > '\0') {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "Invalid d=
+ram-base value '%s'", val);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * DRAM must clear all statically-placed MMIO =
+regions in
+> > virt_memmap[]
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * (PCIE_MMIO ends at 0x80000000) and be 2 MiB=
+-aligned so a
+> > standard
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * OpenSBI + kernel layout (firmware at base, =
+kernel at
+> > base+0x200000)
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * fits.=C2=A0 Values below the default base w=
+ould collide with on-
+> > board
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * MMIO and are rejected.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 if (base < virt_memmap[VIRT_DRAM].base) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "dram-base 0x%" PRIx64 " is below d=
+efault 0x%"
+> > PRIx64
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "; would collide with static MMIO r=
+egions",
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 base, (uint64_t)virt_memmap[VIRT_DR=
+AM].base);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 if (base & (2 * MiB - 1)) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_setg(errp, "dram-base=
+ 0x%" PRIx64 " must be 2 MiB-
+> > aligned",
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 base);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > +=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0 s->dram_base =3D base;
+> > +}
+> > +
+> > static bool virt_get_aclint(Object *obj, Error **errp)
+> > {
+> > =C2=A0=C2=A0=C2=A0 RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> > @@ -1744,6 +1792,15 @@ static void
+> > virt_machine_class_init(ObjectClass *oc, const void *data)
+> > =C2=A0=C2=A0=C2=A0 machine_class_allow_dynamic_sysbus_dev(mc,
+> > TYPE_TPM_TIS_SYSBUS);
+> > #endif
+> >=20
+> > +=C2=A0=C2=A0=C2=A0 object_class_property_add_str(oc, "dram-base",
+> > virt_get_dram_base,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 virt_set_dram_base);
+> > +=C2=A0=C2=A0=C2=A0 object_class_property_set_description(oc, "dram-bas=
+e",
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Base physical address
+> > of DRAM "
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 "(default 0x80000000).
+> > Must be "
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 "2 MiB-aligned and at or
+> > above "
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 "the default to avoid
+> > colliding "
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 "with statically-placed
+> > MMIO.");
+> > +
+> > =C2=A0=C2=A0=C2=A0 object_class_property_add_bool(oc, "aclint", virt_ge=
+t_aclint,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 virt_set_aclin=
+t);
+> > =C2=A0=C2=A0=C2=A0 object_class_property_set_description(oc, "aclint",
+> > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> > index 36a2def410..be8a4ac049 100644
+> > --- a/include/hw/riscv/virt.h
+> > +++ b/include/hw/riscv/virt.h
+> > @@ -61,6 +61,8 @@ struct RISCVVirtState {
+> > =C2=A0=C2=A0=C2=A0 char *oem_table_id;
+> > =C2=A0=C2=A0=C2=A0 OnOffAuto acpi;
+> > =C2=A0=C2=A0=C2=A0 const MemMapEntry *memmap;
+> > +=C2=A0=C2=A0=C2=A0 MemMapEntry *memmap_storage; /* g_malloc'd copy whe=
+n dram-base
+> > override is set */
+> > +=C2=A0=C2=A0=C2=A0 uint64_t dram_base;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 /* 0 =3D use compiled-in default
+> > (0x80000000) */
+> > =C2=A0=C2=A0=C2=A0 struct GPEXHost *gpex_host;
+> > =C2=A0=C2=A0=C2=A0 OnOffAuto iommu_sys;
+> > =C2=A0=C2=A0=C2=A0 uint16_t pci_iommu_bdf;
+> > --
+> > 2.55.0
+> >=20
 
