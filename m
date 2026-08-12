@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6CFBC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D8CC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAUE-0005tY-LD; Wed, 12 Aug 2026 11:03:23 -0400
+	id 1wuAV4-0000aq-9i; Wed, 12 Aug 2026 11:04:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASH-0004Ra-9o; Wed, 12 Aug 2026 11:01:33 -0400
+ id 1wuATC-00050A-Ax; Wed, 12 Aug 2026 11:02:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASA-0002LT-GC; Wed, 12 Aug 2026 11:01:17 -0400
+ id 1wuATA-0002an-A8; Wed, 12 Aug 2026 11:02:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=cAZc/FGh/6E73nuz7jbm6MacNVpnYzCWt0Twj0MGtV8=;
+ t=1786546234; bh=C/dBOeeZBTvL9Qn1pJGoM991227DvcD9ksYkY6WhHAA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aGF5Lh6IEgg5WmRdTrZJgtDTSfwRF7sA4knbTH1bsujhmnsyxd0wITweh3AyQJi9s
- wplj3q3qw8h9MG4jfsiQfaohR3YViccG2ROF4GqlPRbGMOx+h/kiaGg7Q4Yi8mVSXQ
- ftkecxQgDIiwBOnVGvxgMM72VWBYMMpChP6yJ9+3NTdPOtm4DbyVd3+BWHRWZWolmQ
- Lvo6w+I3XkmZmm73iqndntEDjrC3ud2GbaXg7gtdPKP28UVUXWz2oZp7ZsNuG0eNH7
- njNyU11rXL6PWc1VarUWjy/Qtd63NcSIPmu7Vkb3PheIkPPCh/fTpynZ5dk2UZcNKx
- dukWCR7eUMFnw==
+ b=l+2qyrAAQzu0oqo2ebtsCNtxoD+4PGlQIkXkl8YxZxZ+HghYYGcupKaiK+b4TCPAe
+ zk7SEF5UBCLWwqs1q9iSV1TFnM5ZTxCT7+c37QqxLMcqhZpBn/P+nNPLrbKDJ1fzTL
+ DCgcQ6i/C10JOi1HAlOoknrw5XdlgDTNyYiryDjF3Zo4seU9NV069l4CUc4iRZ8Euf
+ ITodUOAU6rO6OEdH6pstNmI/wDx51HySo+Q1C6KzdUYuFFlPFHdFsHeTD+oEeqdd1e
+ jqOfjSJWM+ULkA4ITcWn8WwqHNaJYmXVK3UfFQkOYgP4Oy9Vj92FKf1/90xtUwAz96
+ Z2hQVk6sHapyg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CAF771CA66F;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 126F51CA677;
+ Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31B46409DB4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D445409DBC;
  Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8F0312FA39; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id CCC092FA49; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cyber_black <Cyberblackk@proton.me>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 107/120] hw/display/virtio-gpu: fix offset wraparound
- in scanout_blob_to_fb
-Date: Wed, 12 Aug 2026 17:49:30 +0300
-Message-ID: <20260812144955.649205-107-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 115/120] amd_iommu: Return int from page walk status
+ helpers
+Date: Wed, 12 Aug 2026 17:49:38 +0300
+Message-ID: <20260812144955.649205-115-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -75,69 +74,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-virtio_gpu_scanout_blob_to_fb() computes the framebuffer offset from
-guest-controlled offsets[0], r.x, r.y and stride using uint32_t
-arithmetic. When the sum exceeds UINT32_MAX, silent wraparound lets
-the guest steer the scanout to an arbitrary in-bounds region of the
-blob instead of the intended rectangle.
+fetch_pte() returns a status code 0 on success, and (small) negative values
+on failure. The PTE value itself is returned via an output parameter.
+amdvi_get_top_pt_level_and_perms() follows the same return convention.
 
-Compute the offset in uint64_t, reject values exceeding UINT32_MAX
-(the width of fb->offset), and only store into fb->offset once both
-range checks pass.
+Both functions currently return uint64_t, which means any negative error
+values are returned as unsigned and then converted back to int by the
+callers. This does not cause any issues in the current implementation, but
+Coverity flags the type mismatch and potential overflow.
 
-("[PATCH] hw/display/virtio-gpu: Remove the bytes_pp field")
+Make both helpers return int, so the type matches what the return variable
+is (0 on success, small negative value on failure), and also the type used
+by all callers to store their return values.
 
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3871
-Based-on: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
-Reported-by: Cyber_black <Cyberblackk@proton.me>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260725122734.1775774-1-marcandre.lureau@redhat.com>
-(cherry picked from commit b8ef970532c30da2f3fa8985867a74f898ce96aa)
+No functional changes are intended.
+
+Fixes: a1c97c395729 ("amd_iommu: Sync shadow page tables on page invalidation")
+Fixes: 786550e2d38a ("amd_iommu: Follow root pointer before page walk and use 1-based levels")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260630220806.1758748-3-alejandro.j.jimenez@oracle.com>
+(cherry picked from commit 784768f7faccf02fcf904db023cd29c790b57443)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 86255d6056d..4f5716fdb82 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -777,7 +777,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-                                    struct virtio_gpu_set_scanout_blob *ss,
-                                    uint64_t blob_size)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 99b05b2ab67..9f01a8a2cda 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -662,7 +662,7 @@ static uint64_t large_pte_page_size(uint64_t pte)
+  *   - IOVA exceeds the address width supported by DTE[Mode]
+  * In all such cases a page walk must be aborted.
+  */
+-static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
++static int amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
+                                                  uint8_t *top_level,
+                                                  IOMMUAccessFlags *dte_perms)
  {
--    uint64_t fbend;
-+    uint64_t fbend, offset;
-     uint32_t bytes_pp;
- 
-     fb->format = virtio_gpu_get_pixman_format(ss->format);
-@@ -807,18 +807,20 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-         return false;
-     }
- 
--    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
-+    offset = (uint64_t)ss->offsets[0] + (uint64_t)ss->r.x * bytes_pp +
-+             (uint64_t)ss->r.y * fb->stride;
- 
--    fbend = fb->offset;
--    fbend += (uint64_t) fb->stride * ss->r.height;
-+    fbend = offset + (uint64_t)fb->stride * ss->r.height;
- 
--    if (fbend > blob_size) {
-+    if (offset > UINT32_MAX || fbend > blob_size) {
-         qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: fb end out of range\n",
-+                      "%s: invalid fb bounds\n",
-                       __func__);
-         return false;
-     }
- 
-+    fb->offset = offset;
-+
-     return true;
- }
- 
+@@ -705,7 +705,7 @@ static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
+  *      page table walk. This means that the DTE has valid data, but one of the
+  *      lower level entries in the Page Table could not be read.
+  */
+-static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
++static int fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+                           uint64_t *pte, hwaddr *page_size)
+ {
+     uint64_t pte_addr;
 -- 
 2.47.3
 
