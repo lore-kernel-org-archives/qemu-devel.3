@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FF1C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC70C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAN3-0003Zf-SW; Wed, 12 Aug 2026 10:55:58 -0400
+	id 1wuAQD-0008P6-0r; Wed, 12 Aug 2026 10:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMH-0001iw-62; Wed, 12 Aug 2026 10:55:09 -0400
+ id 1wuAQ6-0007ub-DD; Wed, 12 Aug 2026 10:59:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMB-0007Vx-DN; Wed, 12 Aug 2026 10:55:08 -0400
+ id 1wuAQ2-0001PD-GH; Wed, 12 Aug 2026 10:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=AUKTEGb1amDyo2ifw4gohcGjTJjkUIHPy80FyWqS34M=;
+ t=1786546233; bh=6WmNHZZHl6N/3IjYx/sV2enc7ieITYf8pmKnI3d0bFI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wBEjr8IIS/ubTAm+CkkDKkGEHP3ZZvAUSTy575irPS/zT2ixj5RzBISiejRt78wVr
- Gg46kLZ9fMMmnG91IEBH2NdxX4VR4R9B0T9kDKfl3pyGsp+64RD26/pEFewPaIq1m5
- qTn1amh/Kji832EGEIdvsf2xoEcPJqUuqNuvvEgJpKJ9dVs4n14DoF5x23uSFquCih
- qXc+40TFY74Zhg/KdqaLEPH4g3VVimzEr+L3P/VDzC1zFvQ8oUK63rkSmTKFn4958R
- ohhyrsk3Hccb3ZGz2O2MRoy+qlFOM6eWs9WnY8/WYpvrLeGGG/g0cgUyvl0nsd/9ve
- YdeR6nC/48LEw==
+ b=vJQUqbFYijMZP9hXfUCXRr1OPPZkrMgBQ6QD5xTVEqyzBYBURufEjwv1Wa7/NuiVG
+ zGehMKwGOFg2bEPu8x7f82PIt4ogKlO7jg83piTvxPRf8OY0oIl+Rz5HaANFIWhCn8
+ jjPYRBxMM5Gf1TP9si7EXNl46ZA52odFY9smt4vkRGUIjDyyyboGfifD2FMOHXWZjY
+ zHr9zu17cFgVJWbNyIVvRcGa64mqMvXshypYC/u3u9LQF1tqa/o0b0y3+uqwddb870
+ W1hbyRNZ8diNyIeZTMfk2cjHqNscEXoL3fBEz5VOIxFrnDi5rzERxvQ9gtUoEwrOH/
+ gXFMumwQlpm3A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 175941CA635;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E3681CA658;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 71C66409D77;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 77F55409D9A;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CFBCA2F9C5; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id D5DB02FA0B; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>,
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 049/120] libvhost-user: protect against OOB vring
- queue access
-Date: Wed, 12 Aug 2026 17:48:32 +0300
-Message-ID: <20260812144955.649205-49-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 084/120] hw/nvme: fix unintentional integer overflow
+ in shift
+Date: Wed, 12 Aug 2026 17:49:07 +0300
+Message-ID: <20260812144955.649205-84-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,93 +74,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-SET_VRING_NUM, SET_VRING_ADDR, SET_VRING_BASE, and GET_VRING_BASE
-handlers all use the queue index from the message to access dev->vq[]
-without checking that it is below dev->max_queues, so a malformed
-message causes an out-of-bounds heap access.
+Fix potentially overflowing shift operation.
 
-Frontend is trusted so not a security problem, but
-an OOB access is not a nice way to handle errors.
-Check, and panic.
-
-Fixes: 7b2e5c65f4 ("contrib: add libvhost-user")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3741
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: xlabai <xlabai@tencent.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <dbba777b25f86587c8d131891a2b4b2be97e5c5b.1784899069.git.mst@redhat.com>
-(cherry picked from commit 758ef96a2dba157e930af7709f327435a153f7a3)
+Cc: qemu-stable@nongnu.org
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Resolves: Coverity CID 1663674
+Fixes: ec917cd49918 ("hw/nvme: fix FDP set FDP events")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit c39e05af439a3a2bd58a847fc30d7eb590fcf61e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index bdaa6917f19..82e16c2c969 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1200,6 +1200,12 @@ vu_set_vring_num_exec(VuDev *dev, VhostUserMsg *vmsg)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index e482685c8b0..582a04542cd 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -194,6 +194,7 @@
+  */
  
-     DPRINT("State.index: %u\n", index);
-     DPRINT("State.num:   %u\n", num);
-+
-+    if (index >= dev->max_queues) {
-+        vu_panic(dev, "Invalid vring_num index: %u", index);
-+        return false;
-+    }
-+
-     dev->vq[index].vring.num = num;
+ #include "qemu/osdep.h"
++#include "qemu/bitops.h"
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+@@ -6540,7 +6541,8 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
+         if (!shift && event_type) {
+             continue;
+         }
+-        event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
++        event_mask =
++            deposit64(event_mask, nvme_fdp_evf_shifts[events[i]], 1, 1);
+     }
  
-     return false;
-@@ -1210,7 +1216,7 @@ vu_set_vring_addr_exec(VuDev *dev, VhostUserMsg *vmsg)
- {
-     struct vhost_vring_addr addr = vmsg->payload.addr, *vra = &addr;
-     unsigned int index = vra->index;
--    VuVirtq *vq = &dev->vq[index];
-+    VuVirtq *vq;
- 
-     DPRINT("vhost_vring_addr:\n");
-     DPRINT("    index:  %d\n", vra->index);
-@@ -1220,6 +1226,12 @@ vu_set_vring_addr_exec(VuDev *dev, VhostUserMsg *vmsg)
-     DPRINT("    avail_user_addr:  0x%016" PRIx64 "\n", (uint64_t)vra->avail_user_addr);
-     DPRINT("    log_guest_addr:   0x%016" PRIx64 "\n", (uint64_t)vra->log_guest_addr);
- 
-+    if (index >= dev->max_queues) {
-+        vu_panic(dev, "Invalid vring_addr index: %u", index);
-+        return false;
-+    }
-+
-+    vq = &dev->vq[index];
-     vq->vra = *vra;
-     vq->vring.flags = vra->flags;
-     vq->vring.log_guest_addr = vra->log_guest_addr;
-@@ -1256,6 +1268,12 @@ vu_set_vring_base_exec(VuDev *dev, VhostUserMsg *vmsg)
- 
-     DPRINT("State.index: %u\n", index);
-     DPRINT("State.num:   %u\n", num);
-+
-+    if (index >= dev->max_queues) {
-+        vu_panic(dev, "Invalid vring_base index: %u", index);
-+        return false;
-+    }
-+
-     dev->vq[index].shadow_avail_idx = dev->vq[index].last_avail_idx = num;
- 
-     return false;
-@@ -1267,6 +1285,14 @@ vu_get_vring_base_exec(VuDev *dev, VhostUserMsg *vmsg)
-     unsigned int index = vmsg->payload.state.index;
- 
-     DPRINT("State.index: %u\n", index);
-+
-+    if (index >= dev->max_queues) {
-+        vu_panic(dev, "Invalid vring_base index: %u", index);
-+        vmsg->payload.state.num = 0;
-+        vmsg->size = sizeof(vmsg->payload.state);
-+        return true;
-+    }
-+
-     vmsg->payload.state.num = dev->vq[index].last_avail_idx;
-     vmsg->size = sizeof(vmsg->payload.state);
- 
+     if (enable) {
 -- 
 2.47.3
 
