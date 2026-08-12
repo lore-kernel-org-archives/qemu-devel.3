@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68DEC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47CF7C5CFEE
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hK-0005Ny-KV; Wed, 12 Aug 2026 09:08:46 -0400
+	id 1wu8dI-0006Zb-Iu; Wed, 12 Aug 2026 09:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hD-00059D-Ue; Wed, 12 Aug 2026 09:08:41 -0400
+ id 1wu8dF-0006L8-0a; Wed, 12 Aug 2026 09:04:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hC-0005TJ-3g; Wed, 12 Aug 2026 09:08:39 -0400
+ id 1wu8dD-0004RI-57; Wed, 12 Aug 2026 09:04:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=1yFryji6FFCswBGch4UhGjw0JHQtlMydsMi4oqmbxec=;
+ t=1786539783; bh=bNYCM7AUlQaHgnOBi+mCWtNyBFh1HBzDF4jZQDmhflE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UPjz4b4UQTXJiKY5YvTVjPPTfG5gjPxKJOLT1qsRXH1rCrl95iw9vLrPXf79Rv/tH
- auunmsUlAtc7AqxiFpGCthT23tlKDBCMlJTHY8bImP2bL9dUuPLjDPoxirHvz1NTbA
- 6pD6+dEkqna/9bhuWQr9ajEuEw0nR0syxJCy0SrLKiVhBUyi1EAC449OJA/WUmguK2
- tuSSMKAU4u3t9BlIehqocZPWFa0CvTrOxZgMhLXFehRIxb2XdHFgib+AaBv06VREHa
- LVw+JKABTfiWjERHiZP2oEcXjUDJdta1NORX3XIDyGDVUe9vfjCvRlATLerhCVGJye
- gsZKXxffug75g==
+ b=n4e7nrwBY9en9bEJ2+z0aGCYWtmNaCc7rBtEOd2GyEt5bheBE0X+ob961hT8Mn56y
+ lWynt46G6o40CCwI9+hvwCqzPjDVbLPYFlD0DdezzLeYf6itpLPIBo/v4BBTNUPEg7
+ 0iG0OeHklTF8fy8iI4uxAfGBvJ8BoMrBPMa3cpLPGK6+DVtD2RajXUZhT7AlZaSm88
+ tXH/V3L/BnkMIAENO1gtq3dh1+Vmy52QXLSyzPAqfi9Mzppvbkr9jQ7KTWXJLuCJQk
+ Z8TGylqVyQRSwV1gXcsZh4tYnT3hp4kdqQHK2zz71yFyn9FHz0ySWFD37hD6DuVRF+
+ CE4348+0gVm7Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 257FE1CA4B9;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5A49C1CA491;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5BE99409B9C;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8FBB6409B74;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 62E432F908; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id EF7472F8B8; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- dong ling <dongling226655@outlook.com>, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 058/102] backends/rng: cap request size to avoid
- oversized allocation
-Date: Wed, 12 Aug 2026 16:01:33 +0300
-Message-ID: <20260812130233.621965-58-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 018/102] hw/9pfs/xen: drain in-flight PDUs before
+ xen-9p disconnect
+Date: Wed, 12 Aug 2026 16:00:53 +0300
+Message-ID: <20260812130233.621965-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,61 +72,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-rng_backend_request_entropy() uses the requested size to allocate
-a buffer with g_malloc(). With virtio-rng, this size comes from
-guest-supplied descriptor lengths. A malicious guest can set a very
-large descriptor length, causing QEMU to attempt a multi-gigabyte
-allocation and abort.
+The xen-9p disconnect path has two issues:
 
-Cap the allocation to 64 KiB. The virtio-rng queue size is
-hardcoded to 8 entries, the EGD backend protocol limits requests
-to 255 bytes, the Linux kernel hwrng framework requests at most
-SMP_CACHE_BYTES per call (64 bytes on x86_64), and the Windows
-viorng driver uses a 4 KiB buffer. The worst legitimate case is
-8 x 4 KiB = 32 KiB, so 64 KiB is well above any legitimate use.
+1. It frees the Xen9pfsRing structures while in-flight PDUs may still
+   reference them via pdu->tag to index rings[]. This causes a UAF
+   in xen_9pfs_push_and_notify() when worker threads resume after
+   completing filesystem operations.
 
-Fixes: 14417039653d ("virtio-rng: use virtqueue_get_avail_bytes, fix migration")
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3983
-Reported-by: dong ling <dongling226655@outlook.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260715141300.2295392-1-lvivier@redhat.com>
-(cherry picked from commit 70074cc48f450e6c95881ac534e67013c8773cb2)
+2. It never calls v9fs_device_unrealize_common(), which means server
+   state (struct LocalData, mountfd, FIDs) is never cleaned up on
+   disconnect, causing a resource leak on every guest-initiated
+   disconnect.
+
+Fix both by draining in-flight PDUs via v9fs_reset() before tearing
+down rings, and calling v9fs_device_unrealize_common() to clean up
+server state.
+
+Additionally, explicit calls of xen_9pfs_disconnect() in the error
+paths of xen_9pfs_pdu_vmarshal() and xen_9pfs_pdu_vunmarshal() must
+be deferred (via aio_bh_schedule_oneshot()), because
+xen_9pfs_pdu_v(un)marshal() are running within a coroutine context
+which makes them unsafe [1] for calling v9fs_reset() directly, as
+the latter e.g. has a loop like:
+
+    while (!QLIST_EMPTY(&s->active_list)) {
+        aio_poll(qemu_get_aio_context(), true);
+    }
+
+which would a) never terminate (as the coroutine is on the
+active_list) and b) aio_poll() is marked as no_coroutine_fn.
+
+[1] https://lore.kernel.org/qemu-devel/3351181.5fSG56mABF@weasel/
+
+And finally, add an idempotent guard to xen_9pfs_disconnect()
+for the v9fs_reset(s) and v9fs_device_unrealize_common(s) calls
+specifically [2], just to be sure.
+
+[2] https://lore.kernel.org/qemu-devel/alpine.DEB.2.22.394.2607221815520.5295@ubuntu-linux-20-04-desktop/
+
+Fixes: b37eeb0201 ("xen/9pfs: introduce Xen 9pfs backend")
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/qemu-devel/82bc736158e827e05d4b55da27c39d42e2062e96.1784809978.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 1de8aea061b9d5bc7aaed182e2eebe9554debd68)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/rng.c b/backends/rng.c
-index 350cb0f8ff5..acc7592f742 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -11,11 +11,14 @@
-  */
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index bb263afe430..7a6655eb9b9 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -4525,6 +4525,7 @@ void v9fs_device_unrealize_common(V9fsState *s)
+     qp_table_destroy(&s->qpp_table);
+     qp_table_destroy(&s->qpf_table);
+     g_free(s->ctx.fs_root);
++    s->transport = NULL;
+ }
  
- #include "qemu/osdep.h"
-+#include "qemu/units.h"
- #include "system/rng.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
+ typedef struct VirtfsCoResetData {
+diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
+index 029a623bf76..5dbb74a4d20 100644
+--- a/hw/9pfs/xen-9p-backend.c
++++ b/hw/9pfs/xen-9p-backend.c
+@@ -68,6 +68,11 @@ typedef struct Xen9pfsDev {
  
-+#define RNG_MAX_REQUEST_SIZE (64 * KiB)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev);
+ 
++static void xen_9pfs_disconnect_bh(void *opaque)
++{
++    xen_9pfs_disconnect(opaque);
++}
 +
- void rng_backend_request_entropy(RngBackend *s, size_t size,
-                                  EntropyReceiveFunc *receive_entropy,
-                                  void *opaque)
-@@ -27,7 +30,7 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-         req = g_malloc(sizeof(*req));
+ static void xen_9pfs_in_sg(Xen9pfsRing *ring,
+                            struct iovec *in_sg,
+                            int *num,
+@@ -150,7 +155,8 @@ static ssize_t xen_9pfs_pdu_vmarshal(V9fsPDU *pdu,
+                       "Failed to encode VirtFS reply type %d\n",
+                       pdu->id + 1);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -173,7 +179,8 @@ static ssize_t xen_9pfs_pdu_vunmarshal(V9fsPDU *pdu,
+         xen_pv_printf(&xen_9pfs->xendev, 0,
+                       "Failed to decode VirtFS request type %d\n", pdu->id);
+         xen_be_set_state(&xen_9pfs->xendev, XenbusStateClosing);
+-        xen_9pfs_disconnect(&xen_9pfs->xendev);
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                xen_9pfs_disconnect_bh, &xen_9pfs->xendev);
+     }
+     return ret;
+ }
+@@ -368,10 +375,16 @@ static void xen_9pfs_evtchn_event(void *opaque)
+ static void xen_9pfs_disconnect(struct XenLegacyDevice *xendev)
+ {
+     Xen9pfsDev *xen_9pdev = container_of(xendev, Xen9pfsDev, xendev);
++    V9fsState *s = &xen_9pdev->state;
+     int i;
  
-         req->offset = 0;
--        req->size = size;
-+        req->size = MIN(size, RNG_MAX_REQUEST_SIZE);
-         req->receive_entropy = receive_entropy;
-         req->opaque = opaque;
-         req->data = g_malloc(req->size);
+     trace_xen_9pfs_disconnect(xendev->name);
+ 
++    if (s->transport) {
++        v9fs_reset(s); /* cancel all in-flight PDUs to prevent UAF */
++        v9fs_device_unrealize_common(s);
++    }
++
+     for (i = 0; i < xen_9pdev->num_rings; i++) {
+         if (xen_9pdev->rings[i].evtchndev != NULL) {
+             qemu_set_fd_handler(qemu_xen_evtchn_fd(xen_9pdev->rings[i].evtchndev),
 -- 
 2.47.3
 
