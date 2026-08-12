@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C23DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDAAC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8fn-0002hG-3G; Wed, 12 Aug 2026 09:07:13 -0400
+	id 1wu8hk-0006o8-Ok; Wed, 12 Aug 2026 09:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fZ-0002aF-I9; Wed, 12 Aug 2026 09:07:00 -0400
+ id 1wu8hc-0006Rc-Rl; Wed, 12 Aug 2026 09:09:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fX-00055J-My; Wed, 12 Aug 2026 09:06:57 -0400
+ id 1wu8hZ-0005ZE-JU; Wed, 12 Aug 2026 09:09:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=qd1yTos6nxJWMo1T4teGiQB7bu25tbPlb9RkbHQPZlg=;
+ t=1786539784; bh=4EACNSb41NykVhjIA0+ehmFV7QgSEePtQyRjDj2uJg8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fQXAR3iiDsDO87s/G5jQvKK9zH9fPW4zSMbG0SS19F9NjC4Lhm57Hlqk66M/JjVCc
- E3eaRMxOlxkhhuaOpzAxCJKhp/XcFi64Y0Bu4TA+3nlPoUQKUZ39MHJ03BBkCPaVw4
- O5WHtfOaEHHZWAQtiXQIdxdpnVh2enabsFHuwW8WQhzLDojzMShnieDjJENH6MtPKl
- uI2Elike446Ny5k/TmtDeFO6811gY1/xYp785eQ+lzBOOiVQ76opj78KkZIIGai1w4
- ucAyo2dsGwM47zGmAS3fCvhTI83ajJ5oks+w51KMyH+ZTU56Sfa9masu/vgTLyH3f8
- u1X069ecnhLHQ==
+ b=loXNTGdwMwqYBHPIo5jNksdjDrsfLLkfz6BkZbDcl19FYWXl/07kXgkTf/okAi7es
+ VCQVxtq5hO7nWdRfaNJBPnfwH4FFljuJsUQ9c517N4WsnloKLdrxQ53dLxYidDaEu5
+ XO8KOWpCjtm7pDrXeFsqOFcE7b0ym1mQjLhj40b+JGET0dRoG/lec1DaPQuHWlub2m
+ 24aHssyzgxJ3F4Iz6QBZ09xP/lYHfSLwerDpDBDg/EIKCtlGkNtmXipcWsT1O7IihL
+ XuqZD8bixAzQQGqwk9CRf40EMid5yKy4Z+tx387BTVICkGc7IuIsOSRLGsmuh7qLaQ
+ S23Xg4CMKXImA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CF88B1CA4A8;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 31F991CA4BC;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 107C1409B8B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 684AD409B9F;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3609B2F8E6; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 6B7DA2F90E; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Feifan Qian <bea1e@proton.me>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 041/102] vhost: do not crash on ring map failure
-Date: Wed, 12 Aug 2026 16:01:16 +0300
-Message-ID: <20260812130233.621965-41-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 061/102] hw/net/xilinx_axienet: Don't write checksums
+ off end of packet
+Date: Wed, 12 Aug 2026 16:01:36 +0300
+Message-ID: <20260812130233.621965-61-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,44 +74,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-When vhost_commit() rebuilds the memory region table after a flatview
-change, it revalidates cached host virtual addresses for active vring
-parts. If a mapping is stale, QEMU abort().
+The xilinx_axienet device has ethernet checksum offloading, with a
+mode where the guest provides the offsets within the packet where
+the data to be checksummed starts, and where the final checksum
+should be written into the packet.
 
-This is not a security problem - only the priviledged guest
-can control make it invalid - but not nice e.g. for driver debugging.
+We don't sanity check the TX_CSINSERT offset before writing the
+checksum data into it, which means the guest can pass us a value that
+is larger than the packet itself and cause us to write the checksum
+off the end of the buffer.  We also don't explicitly check the
+TX_CSBEGIN offset; this doesn't currently cause any problems because
+we will pass a negative length to net_checksum_add() which does
+nothing, but it's a potential trap for the future if the type
+used for the length gets changed to be unsigned.
 
-Let's call virtio_error() instead, marking the device as broken.
+Explicitly check the offsets.  The datasheet doesn't say what happens
+if the guest misprograms this, so we choose to log an error and send
+the packet as-is.
 
-Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-(cherry picked from commit 27806d2ddba2da97fb4137cba7d4172356c42914)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260706162704.787495-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 8cbcf7579355f995340aa27ad197ef61c4969c06)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 971460eb2a6..2e59a8aa0bd 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -681,8 +681,9 @@ static void vhost_commit(MemoryListener *listener)
-                        (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
-                        dev->mem->regions[i].guest_phys_addr,
-                        dev->mem->regions[i].memory_size)) {
--            error_report("Verify ring failure on region %d", i);
--            abort();
-+            virtio_error(dev->vdev,
-+                         "Verify ring failure on region %d", i);
-+            goto out;
-         }
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+index d2f98db1026..d0b51851f48 100644
+--- a/hw/net/xilinx_axienet.c
++++ b/hw/net/xilinx_axienet.c
+@@ -918,20 +918,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
+     if (s->hdr[0] & 1) {
+         unsigned int start_off = s->hdr[1] >> 16;
+         unsigned int write_off = s->hdr[1] & 0xffff;
+-        uint32_t tmp_csum;
+-        uint16_t csum;
+ 
+-        tmp_csum = net_checksum_add(s->txpos - start_off,
+-                                    buf + start_off);
+-        /* Accumulate the seed.  */
+-        tmp_csum += s->hdr[2] & 0xffff;
++        if (start_off > s->txpos || write_off + 2 > s->txpos) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: offsets outside packet, skipping checksum\n",
++                          TYPE_XILINX_AXI_ENET);
++        } else {
++            uint32_t tmp_csum;
++            uint16_t csum;
++
++            tmp_csum = net_checksum_add(s->txpos - start_off,
++                                        buf + start_off);
++            /* Accumulate the seed.  */
++            tmp_csum += s->hdr[2] & 0xffff;
+ 
+-        /* Fold the 32bit partial checksum.  */
+-        csum = net_checksum_finish(tmp_csum);
++            /* Fold the 32bit partial checksum.  */
++            csum = net_checksum_finish(tmp_csum);
+ 
+-        /* Writeback.  */
+-        buf[write_off] = csum >> 8;
+-        buf[write_off + 1] = csum & 0xff;
++            /* Writeback.  */
++            buf[write_off] = csum >> 8;
++            buf[write_off + 1] = csum & 0xff;
++        }
      }
  
+     qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
 -- 
 2.47.3
 
