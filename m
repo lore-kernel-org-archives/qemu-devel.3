@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62D7C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448DEC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuCb2-0000n7-Ni; Wed, 12 Aug 2026 13:18:34 -0400
+	id 1wuCbY-0001TM-0g; Wed, 12 Aug 2026 13:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuCa1-0000D4-Nc; Wed, 12 Aug 2026 13:17:35 -0400
+ id 1wuCa5-0000E9-HE; Wed, 12 Aug 2026 13:17:35 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuCZw-0000sE-4Y; Wed, 12 Aug 2026 13:17:28 -0400
+ id 1wuCa1-0000uQ-OE; Wed, 12 Aug 2026 13:17:32 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CH1edT3994427; Wed, 12 Aug 2026 17:17:22 GMT
+ 67CH1fc43994436; Wed, 12 Aug 2026 17:17:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=ADIKM5DZN6RQjOVun
- 8HuFP5MmkgrDtqqGtx9FiosaVg=; b=gQF2c3kSiaSs4+hPIOla4ERqHoJlOzxFX
- cH5wN/rbU9qVIHtsOTBde7Dx77dE7ba7usKy5eU4vyLnWnhiJ8hqfxSpS2glJhfd
- LVwqvi+4UJHV+vDAoGclvLos4exV37O2slZhMrgkYh5LrQ4zvs1iyDsoByVX7K7H
- EFocFLMAgkPGBs1VVYSNz9743QL+63sQ/f7dfRAjsmSxk8twl/UicPpJiuzIa5L+
- Labnaz0LukyHVN0V/UpbD3GfPXzDSKVNFx/JXJ0lRiP/o7qktacq99Qct8BcNDMi
- 7HM21NwyB38ycGdgSSO5M6lOdTrC+aq+gIX2KKdRZXTn6cn5f5xPA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp32vpv-1
+ :mime-version:references:subject:to; s=pp1; bh=77oxwcW3642R5fK9q
+ LD3J5GKO6rp/5jW+H4nF6ogR04=; b=W+IugUqkhUMZD1kaWTnu1TogbWippMPZw
+ Y5c/+aFRkZTE3tu+iQRes635QNF6xyShN4X6LmnsCqt22Y/T/v1uE2m3LZKS1+42
+ HNgCQrg1GvLqlyolpeMq9fw1dyJ6PQH1Non53Pw0plqBo3WxP7cPxEuemifClOJM
+ cSnl8yC+j8S8ewsSMHVAgwRlHkrujb+bSkyp9d7nQQiqfEsM6aDHJJ6A1F39JjCp
+ iyloNGaEa6kPuJnxCpZ6kDL1q0Dt84zRKZ7rSZyfxND/WVkv+uYiyhhEsiaS1eVA
+ 8D2PUhRpr5r3bQyTn4ivDyF2Nh4DzWJy5lhC6nTmTbyTkecYpKXig==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp32vpy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 17:17:21 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CHBG5j017015;
- Wed, 12 Aug 2026 17:17:21 GMT
+ Wed, 12 Aug 2026 17:17:22 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CHBRI2017606;
+ Wed, 12 Aug 2026 17:17:22 GMT
 Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesq79yv-1
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9h72na-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 17:17:21 +0000 (GMT)
+ Wed, 12 Aug 2026 17:17:22 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
  [10.241.53.101])
  by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67CHHKAP19202696
+ 67CHHK8Z30933628
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 17:17:20 GMT
+ Wed, 12 Aug 2026 17:17:21 GMT
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A8D958051;
+ by IMSVA (Postfix) with ESMTP id E066F5805A;
  Wed, 12 Aug 2026 17:17:20 +0000 (GMT)
 Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9B1A85805A;
- Wed, 12 Aug 2026 17:17:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 593645805E;
+ Wed, 12 Aug 2026 17:17:20 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.61.74]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 12 Aug 2026 17:17:19 +0000 (GMT)
+ Wed, 12 Aug 2026 17:17:20 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [PULL 13/15] target/s390x: Allow 2G hugepages guest backing
-Date: Wed, 12 Aug 2026 13:17:05 -0400
-Message-ID: <20260812171707.1605637-14-farman@linux.ibm.com>
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 14/15] hw: add compat machines for 11.2
+Date: Wed, 12 Aug 2026 13:17:06 -0400
+Message-ID: <20260812171707.1605637-15-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260812171707.1605637-1-farman@linux.ibm.com>
 References: <20260812171707.1605637-1-farman@linux.ibm.com>
@@ -74,23 +72,23 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7caaa2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=PXhQOlaz77BmCqgndx4A:9
-X-Proofpoint-GUID: RaoSlZj-0Npc9_Ows0VQjTUY58d_Vhmq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX1DcXcKV75aBa
- xi3VXWRyOnjrUW/HbW/WSY2T3VYq0VmmvXCO5aJ2Gd7UaXHCCO/ltW/VLOc1wnZfC6nEGtyTzLB
- 7/Ha9K3Bcb4E84womGL/RLOgmjZCTBEbcVp0A1kDHFj9TVaUV0vEnjuUhPDy9q3HWz6Hl4yEHn9
- GXlnA5VP/U1X2YYESku5rvsgaoZjV5r8A5nFyLRudVjUcg8/KwPVcywIDQZrow+KMf29Rmnq2Hi
- jMhSZKUyIY+iYl2RgGqQTJ4vJGwSGYseolcyy+EwTu3OYoap8yXi5jxWSICAz6YENrZ86qY3Jx1
- rWpW6IWZOgOQG7OECUrTM0Ig+REVJeAFiA9zGrRaH7cvS/mYuaplP7WcSviL6yDeLBG1TEAbsa5
- R+khvIAQXAqL/B4xRxQLFLYo4g0CR64Lr1WQTk+mUiZxp8Iu2EH8FLja5KUA2vgOtN2UyWNwSY+
- Ms4viugmcGoJGnH+kdg==
-X-Proofpoint-ORIG-GUID: RaoSlZj-0Npc9_Ows0VQjTUY58d_Vhmq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX0imanhOGYfKd
- Z/ujzRAHcPxQWl5MxCV5B18+Cg4mtLgw96emZx2qJVUSqPTnjdFCO3sQzPKcusD4V90WWnpiVKq
- nIZx2V3TKXRm+iniqzRI0cGg8SUN4FY=
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=0e9nVU_5ajEX5vtfCxIA:9
+X-Proofpoint-GUID: A3CiYVsRaakz2o86MpA-1itfmz6H53Js
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX2JZ/OBSd31oi
+ JVc3B4HyeSf8ugSWquLUHOKe3AT33jdno776EgqepLAWSxklvIjuwjWG9sJZZUIa2lKD5U6NL5h
+ bqocrizorLXbGDDgEriHMz9zw0NLfZ0meZBW+NRD+S6P6Php/1iLHcF3ta/ane5+/08Z0Ktk7Vo
+ i8rT7+e4GR5qjJLMHxA6RsDk0rCg58YBx5/Lw5CsXyuB5iJNb8+zzpT26l1KmdDqMlxL7pEsUpW
+ +Ky/RKgkG3no1Twas0GtV8ISuvqs90D0AGIUi5KnTump7XHA1G1x+F9giDvSXSJfRrL2WINVCtr
+ 5S0j2iKRRFVSPp6BTEYTNUmyWPoVsyv4QNuW3+YWIFOXCA1UAYt7mVX9JtVvT9DjZt82WNyNkea
+ ZRoNEf/tZAegnuzqDe8fLwOTWSWta7tU4EKpgx5cTxZdB7gki2DzLAtTu986PCMphUKJDePs+qX
+ tgzsz7STZ/xKjZW21sg==
+X-Proofpoint-ORIG-GUID: A3CiYVsRaakz2o86MpA-1itfmz6H53Js
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfXw5oAmN++dCyw
+ JVqJqtsW2DqnaX9LN5FDYaFNlCh14iI+gx4YihxL44G6XU3OQ09oPGdcsLQCfXAXtX9vyXrrdes
+ 0rABW0OcZk7LhiRanDFzOzFlAg2JvS0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_05,2026-08-12_01,2025-10-01_01
@@ -124,133 +122,289 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Cornelia Huck <cohuck@redhat.com>
 
-Allow mapping guest with 2G hugepages on hosts that support it.
+Add 11.2 machine types for arm/i440fx/loongarch/m68k/q35/s390x/spapr.
 
-Rename kvm_s390_get_hpage_1m() to kvm_s390_get_hpage() to reflect that
-it is not anymore limited only to 1m hpages.
-
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260805103728.97602-2-imbrenda@linux.ibm.com
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Link: https://lore.kernel.org/qemu-devel/20260723163806.368127-1-cohuck@redhat.com
+[farman@linux.ibm.com: fixup hw/core/machine.c hunk]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- target/s390x/diag.c          |  2 +-
- target/s390x/kvm/kvm.c       | 36 +++++++++++++++++-------------------
- target/s390x/kvm/kvm_s390x.h |  2 +-
- target/s390x/kvm/stubs.c     |  2 +-
- 4 files changed, 20 insertions(+), 22 deletions(-)
+ hw/arm/virt.c              |  9 ++++++++-
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 13 +++++++++++--
+ hw/i386/pc_q35.c           | 13 +++++++++++--
+ hw/loongarch/virt.c        | 11 +++++++++--
+ hw/m68k/virt.c             |  9 ++++++++-
+ hw/ppc/spapr.c             | 15 +++++++++++++--
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ include/hw/core/boards.h   |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ 11 files changed, 85 insertions(+), 11 deletions(-)
 
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index 80f0958478..46d191b87d 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -185,7 +185,7 @@ out:
-             return false;
-         }
- 
--        if (kvm_enabled() && kvm_s390_get_hpage_1m()) {
-+        if (kvm_enabled() && kvm_s390_get_hpage()) {
-             error_report("Protected VMs can currently not be backed with "
-                          "huge pages");
-             env->regs[r1 + 1] = DIAG_308_RC_INVAL_FOR_PV;
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 72031a5714..803b878b4f 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -145,7 +145,7 @@ static int cap_mem_op;
- static int cap_mem_op_extension;
- static int cap_s390_irq;
- static int cap_ri;
--static int cap_hpage_1m;
-+static int cap_hpage;
- static int cap_vcpu_resets;
- static int cap_protected;
- static int cap_zpci_op;
-@@ -231,7 +231,7 @@ static void kvm_s390_enable_cmma(void)
-         .attr = KVM_S390_VM_MEM_ENABLE_CMMA,
-     };
- 
--    if (cap_hpage_1m) {
-+    if (cap_hpage) {
-         warn_report("CMM will not be enabled because it is not "
-                     "compatible with huge memory backings.");
-         return;
-@@ -292,30 +292,28 @@ void kvm_s390_crypto_reset(void)
-     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 219597cabd..e7a56e37f7 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -4441,10 +4441,17 @@ static void machvirt_machine_init(void)
  }
+ type_init(machvirt_machine_init);
  
--void kvm_s390_set_max_pagesize(uint64_t pagesize, Error **errp)
-+static bool kvm_s390_pgsize_cap(uint32_t capa, const char *s, Error **errp)
- {
--    if (pagesize == 4 * KiB) {
--        return;
--    }
--
--    if (pagesize != 1 * MiB) {
--        error_setg(errp, "Memory backing with 2G pages was specified, "
--                   "but KVM does not support this memory backing");
--        return;
-+    if (kvm_vm_enable_cap(kvm_state, capa, 0)) {
-+        error_setg(errp, "Memory backing with %s pages was specified, "
-+                   "but KVM does not support this memory backing", s);
-+        return false;
-     }
-+    return true;
-+}
- 
--    if (kvm_vm_enable_cap(kvm_state, KVM_CAP_S390_HPAGE_1M, 0)) {
--        error_setg(errp, "Memory backing with 1M pages was specified, "
--                   "but KVM does not support this memory backing");
--        return;
-+void kvm_s390_set_max_pagesize(uint64_t pagesize, Error **errp)
++static void virt_machine_11_2_options(MachineClass *mc)
 +{
-+    if (pagesize == MiB) {
-+        cap_hpage = kvm_s390_pgsize_cap(KVM_CAP_S390_HPAGE_1M, "1M", errp);
-+    } else if (pagesize != 4 * KiB) {
-+        cap_hpage = 2 * kvm_s390_pgsize_cap(KVM_CAP_S390_HPAGE_2G, "2G", errp);
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
++
+ static void virt_machine_11_1_options(MachineClass *mc)
+ {
++    virt_machine_11_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
++DEFINE_VIRT_MACHINE(11, 1)
+ 
+ static void virt_machine_11_0_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 73b4d82b4a..3b15645304 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -40,6 +40,9 @@
+ #include "qemu/audio.h"
+ #include "hw/arm/smmuv3.h"
+ 
++GlobalProperty hw_compat_11_1[] = {};
++const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
++
+ GlobalProperty hw_compat_11_0[] = {
+     { "virtio-mmio", VIRTIO_QUEUE_SIZE_OVERRIDE, "1024" },
+     { "chardev-vc", "encoding", "cp437" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f064aa2b3e..e9e4fc262b 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -74,6 +74,9 @@
+ #include "hw/xen/xen-bus.h"
+ #endif
+ 
++GlobalProperty pc_compat_11_1[] = {};
++const size_t pc_compat_11_1_len = G_N_ELEMENTS(pc_compat_11_1);
++
+ GlobalProperty pc_compat_11_0[] = {};
+ const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 82457bdb16..223a19cc4b 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -428,12 +428,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
+ }
+ 
+-static void pc_i440fx_machine_11_1_options(MachineClass *m)
++static void pc_i440fx_machine_11_2_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+ }
+ 
+-DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);
++DEFINE_I440FX_MACHINE_AS_LATEST(11, 2);
++
++static void pc_i440fx_machine_11_1_options(MachineClass *m)
++{
++    pc_i440fx_machine_11_2_options(m);
++    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
++    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
++}
++
++DEFINE_I440FX_MACHINE(11, 1);
+ 
+ static void pc_i440fx_machine_11_0_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 6c1e4eff5f..94cd71124b 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -383,12 +383,21 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_machine_11_1_options(MachineClass *m)
++static void pc_q35_machine_11_2_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+ }
+ 
+-DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
++DEFINE_Q35_MACHINE_AS_LATEST(11, 2);
++
++static void pc_q35_machine_11_1_options(MachineClass *m)
++{
++    pc_q35_machine_11_2_options(m);
++    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
++    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
++}
++
++DEFINE_Q35_MACHINE(11, 1);
+ 
+ static void pc_q35_machine_11_0_options(MachineClass *m)
+ {
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 6693dea647..9cc79929a8 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -1465,7 +1465,6 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+     mc->default_ram_id = "loongarch.ram";
+     mc->desc = "QEMU LoongArch Virtual Machine";
+     mc->max_cpus = LOONGARCH_MAX_CPUS;
+-    mc->is_default = 1;
+     mc->default_kernel_irqchip_split = false;
+     mc->block_default_type = IF_VIRTIO;
+     mc->default_boot_order = "c";
+@@ -1546,6 +1545,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
+         if (latest) { \
+             mc->alias = "virt"; \
++            mc->is_default = true; \
+         } \
+     } \
+     static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
+@@ -1600,7 +1600,14 @@ static void machvirt_machine_init(void)
+ 
+ type_init(machvirt_machine_init);
+ 
++static void virt_machine_11_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
++
+ static void virt_machine_11_1_options(MachineClass *mc)
+ {
++    virt_machine_11_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
++DEFINE_VIRT_MACHINE(11, 1)
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 51158ce1c0..274970978f 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -367,10 +367,17 @@ type_init(virt_machine_register_types)
+ #define DEFINE_VIRT_MACHINE(major, minor) \
+     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+ 
++static void virt_machine_11_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
++
+ static void virt_machine_11_1_options(MachineClass *mc)
+ {
++    virt_machine_11_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
++DEFINE_VIRT_MACHINE(11, 1)
+ 
+ static void virt_machine_11_0_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index b79828b4e9..7e284edd7d 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4763,15 +4763,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+ #define DEFINE_SPAPR_MACHINE(major, minor) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+ 
++/*
++ * pseries-11.2
++ */
++static void spapr_machine_11_2_class_options(MachineClass *mc)
++{
++    /* Defaults for the latest behaviour inherited from the base class */
++}
++
++DEFINE_SPAPR_MACHINE_AS_LATEST(11, 2);
++
+ /*
+  * pseries-11.1
+  */
+ static void spapr_machine_11_1_class_options(MachineClass *mc)
+ {
+-    /* Defaults for the latest behaviour inherited from the base class */
++    spapr_machine_11_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+ }
+ 
+-DEFINE_SPAPR_MACHINE_AS_LATEST(11, 1);
++DEFINE_SPAPR_MACHINE(11, 1);
+ 
+ /*
+  * pseries-11.0
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 25a9fa4955..55131c1a44 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -925,14 +925,26 @@ static const TypeInfo ccw_machine_info = {
+     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
+ 
+ 
++static void ccw_machine_11_2_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_11_2_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE_AS_LATEST(11, 2);
++
+ static void ccw_machine_11_1_instance_options(MachineState *machine)
+ {
++    ccw_machine_11_2_instance_options(machine);
+ }
+ 
+ static void ccw_machine_11_1_class_options(MachineClass *mc)
+ {
++    ccw_machine_11_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+ }
+-DEFINE_CCW_MACHINE_AS_LATEST(11, 1);
++DEFINE_CCW_MACHINE(11, 1);
+ 
+ static void ccw_machine_11_0_instance_options(MachineState *machine)
+ {
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 29c68931d8..a436d48c8e 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -815,6 +815,9 @@ compat_props_add(GPtrArray *arr,
      }
--
--    cap_hpage_1m = 1;
  }
  
--int kvm_s390_get_hpage_1m(void)
-+int kvm_s390_get_hpage(void)
- {
--    return cap_hpage_1m;
-+    return cap_hpage;
- }
++extern GlobalProperty hw_compat_11_1[];
++extern const size_t hw_compat_11_1_len;
++
+ extern GlobalProperty hw_compat_11_0[];
+ extern const size_t hw_compat_11_0_len;
  
- static void ccw_machine_class_foreach(ObjectClass *oc, void *opaque)
-diff --git a/target/s390x/kvm/kvm_s390x.h b/target/s390x/kvm/kvm_s390x.h
-index 7b1cce3e60..3c4fa0489c 100644
---- a/target/s390x/kvm/kvm_s390x.h
-+++ b/target/s390x/kvm/kvm_s390x.h
-@@ -25,7 +25,7 @@ void kvm_s390_program_interrupt(S390CPU *cpu, uint16_t code);
- int kvm_s390_set_cpu_state(S390CPU *cpu, uint8_t cpu_state);
- void kvm_s390_vcpu_interrupt_pre_save(S390CPU *cpu);
- int kvm_s390_vcpu_interrupt_post_load(S390CPU *cpu);
--int kvm_s390_get_hpage_1m(void);
-+int kvm_s390_get_hpage(void);
- int kvm_s390_get_protected_dump(void);
- int kvm_s390_get_ri(void);
- int kvm_s390_get_zpci_op(void);
-diff --git a/target/s390x/kvm/stubs.c b/target/s390x/kvm/stubs.c
-index 196127baa5..ebf3c83994 100644
---- a/target/s390x/kvm/stubs.c
-+++ b/target/s390x/kvm/stubs.c
-@@ -143,7 +143,7 @@ int kvm_s390_vcpu_interrupt_post_load(S390CPU *cpu)
-     g_assert_not_reached();
- }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index d4b6d3ed57..ac03da97b6 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -209,6 +209,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
  
--int kvm_s390_get_hpage_1m(void)
-+int kvm_s390_get_hpage(void)
- {
-     g_assert_not_reached();
- }
++extern GlobalProperty pc_compat_11_1[];
++extern const size_t pc_compat_11_1_len;
++
+ extern GlobalProperty pc_compat_11_0[];
+ extern const size_t pc_compat_11_0_len;
+ 
 -- 
 2.55.0
 
