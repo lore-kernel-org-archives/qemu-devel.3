@@ -4,117 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6606EC5B567
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9766BC5B567
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu33H-0005fz-UW; Wed, 12 Aug 2026 03:07:03 -0400
+	id 1wu3BG-00070A-J0; Wed, 12 Aug 2026 03:15:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wu33F-0005dV-TH; Wed, 12 Aug 2026 03:07:01 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wu3BF-0006zx-5n
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:15:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wu33E-0001pl-1K; Wed, 12 Aug 2026 03:07:01 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67C62XJS2631722; Wed, 12 Aug 2026 07:06:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=tcav6i
- EvZ4F3TJCbBrJKJM+PlTsK6EmTSrreucCxehc=; b=ordG4y5DQO7UhJhLzqp4g2
- j7gnmPogjPx8X7TlBonm8DH3qyTYuT+LX/evq2C4m12yeWziJlosx2TvJPu6oy6t
- zv+w+JBJoCTDTA6O4zU/x9RszE3Lt0aG29gtUOp/Lbazrdf2u4qRfzbYQR1zjWGg
- WALVSOLhA0y6yISJ3FYUneadL1p/rW+e0t/LSvLwaOfcL/JS3wXHUQsMQFahUNh+
- z+1+9Ig77eYqjcx2Dt4sNjtZr8SPFoFmLwp1eD6N525ZnC4Yhx7g0g+iGWd7/fjl
- QKOeu0se0wCSxdQZOo39Gzz/LY96D6wKBcJqI1NbtBgAiIXuCSpQsKn4O9f/cE6g
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9h7jy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 07:06:40 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67C6uQOj031194;
- Wed, 12 Aug 2026 07:06:39 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy4qxn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 07:06:39 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67C76caQ12124806
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 07:06:38 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5880658045;
- Wed, 12 Aug 2026 07:06:38 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF93958052;
- Wed, 12 Aug 2026 07:06:32 +0000 (GMT)
-Received: from [9.39.26.160] (unknown [9.39.26.160])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 12 Aug 2026 07:06:32 +0000 (GMT)
-Message-ID: <b0ff3cca-7acc-419e-8507-4b3ae13a715e@linux.ibm.com>
-Date: Wed, 12 Aug 2026 12:36:30 +0530
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wu3BD-0003B5-J6
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:15:16 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67C79Wa63144294
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:15:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ TOMWju2MqrEewraL1Y2IdtZinY7l+nQWIh30uq9bD08=; b=ftv0Z/JCgv4IUk78
+ N8kZvg+jx5+nduopYJrK8FLNeCGIOi5tvuVimcK6sfPeMfNxtXISPbH9A+LB68Cr
+ Rjtd6EtNzqqZXhKF6EXqLU4QXxrnCdBBzwccrPFIAFcbkXZdmktngPJEEUfYj4d1
+ FXaZXvdBsLZPU0atHdWV00LZv0CBThxDz/Gkcznj4tWrVWo9VfRx2ILqxmTPuCBY
+ 5iZIl6nBe4S08uMBxTr8kn3vkLvktJwUz7lE2iYsFFkzR37ZeRirdkgzMQjNvQWe
+ L7pbdMUyb7d6TyDl7eD7n/LYsEU/7olZDD+6dOOL7tXMin24IzPOR8gCm9X3uC3V
+ 6Q7rpQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0m6rg0s2-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:15:12 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52ce3c7cb2eso11643871cf.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 00:15:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786518912; x=1787123712; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TOMWju2MqrEewraL1Y2IdtZinY7l+nQWIh30uq9bD08=;
+ b=DKcjaTrVa9uUXjjj45YjRXbOHyjyeTaEBYugCIIsGDxG0fifl3pftjYEvxmLRb4rlC
+ PBWDISacXSBGDWkedYykQr9xkPj54mUwOhprq1TrmasGr4BilW2jFwJ+buf4+TwS5sMq
+ 5bZjC3BMEUYoKtbylqA/qhDWJNFHaxUDcLyeAU3VoWKOpjpLUGCo5pme5Eyybw4d5I1c
+ 1rDeZ8s/Hn0zHWTHJNK6yurGXm9JSc2ZpK5tU400AZGFYdZwYyQhQt8Wf7rKYXY1CQ9+
+ iPB5gIqRXKWErqi/XjAJ9JKZywGwti6JrG22qT3MDb1t1mY7xytkmmxNYcmQaRFM/XLc
+ 0ztw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786518912; x=1787123712;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TOMWju2MqrEewraL1Y2IdtZinY7l+nQWIh30uq9bD08=;
+ b=sHzhEguBTAwB40OHz2Ex/9Q/QRXgvtwTvB2/g2FImJvwqXCNuq1/OFEk5CqL2NLD8Y
+ 5sY7DizrAyL8iaRAtW5D3C8stkII3s0TS8OnZeM65Di6ObMFwKVntgds/0505M7zNMj2
+ Nq5UK+X1FFl08ztikLMAGJLXIFU8Po7UItuaPqiaWQNb3kzIBPAa9b0SdwwyiE++FJbX
+ J4qOrK5FSrqRJ+ZG1WVbAipnRawqlQiVfZy+V7DCf3mQdCoSSB/FRpG9pRyG//LD04N3
+ 3lYa7eRLiTo8t/rJ87U4qnkkcBPtJfZh5FTc46U87xwiGTqddkBt+U21acl9aeZ2JsR+
+ ayMQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqfIXGDc2SYkqwpYgIJfDpkFRsaI27D23LywJF9CwagKmzHkBkGsT3ZY1kv3SWVllZ/F8MUzGMWhbXw@nongnu.org
+X-Gm-Message-State: AOJu0Yx/OeFnpSttXx47UnxPwynVufNYi2N6/yWvKmbAMwSdnSVkmKQk
+ SMSVcBmfIeA5p3fcEuLlPq8+eAvX99An7+AMSMdF4SapYFKMsKyobPrVY+5hU3z5p0G21eIls5T
+ +DNpeAKbu82BjDpEFyH2lMEN/S5r6I6355/hwqBq5JbfIfAxRDubLbjDRdA==
+X-Gm-Gg: AR+sD11qLknd9A/i24M0ADq88W7ir564PuKqoDe9tz7hGL9Jk337XeysyTnWLSKqJwv
+ 23HVziLnBqnFPjL4rg1X8kE+Bfa9ZK+UT7SiS7h0tMt+NgsjKCaAM4vK++wCcX4IROQVjlUaZMr
+ qI3KlTEM2xHKS/fhkkFHAs5k+rk2AS+ELUqp8MAenkZGfm2WSeXE1KLljyQ+Dhg1uHJbp/jW4eA
+ Y2SZBfJCcgO/l4tUJaIPy07nBAmBd2pdv7rba7Hh5ajl/cNgbmvDfoZKFj9IAraxN2RCOBdyI2u
+ B1VwnEfenLJZexduzF9+cNBkBAEejGWtA8dpqrBc8LR40vnNKmTWaJYWBjThP8Gr8lkRIDQlm1n
+ QHp5VV0OUX42+IKGgQ+8kCy3LOIMihrqvRaM=
+X-Received: by 2002:a05:622a:4015:b0:52d:2ddd:27c with SMTP id
+ d75a77b69052e-52d64828bb8mr25249121cf.31.1786518911657; 
+ Wed, 12 Aug 2026 00:15:11 -0700 (PDT)
+X-Received: by 2002:a05:622a:4015:b0:52d:2ddd:27c with SMTP id
+ d75a77b69052e-52d64828bb8mr25248831cf.31.1786518911272; 
+ Wed, 12 Aug 2026 00:15:11 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48150bf7767sm4477288f8f.5.2026.08.12.00.15.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Aug 2026 00:15:10 -0700 (PDT)
+Message-ID: <62354a86-66dd-47cb-bb63-f96e7d372778@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 09:15:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: VW ELF loader
-To: David Gibson <david@gibson.dropbear.id.au>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, balaton@eik.bme.hu
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, th.huth@posteo.eu,
- nnmlinux@linux.ibm.com, sbhat@linux.ibm.com, harshpb@linux.ibm.com,
- qemu-ppc@nongnu.org
-References: <f881c2e7-be92-9695-6e19-2dd88cbc63c1@ozlabs.ru>
- <99254c26-0b41-4efc-b1cd-ad1e19576f32@linux.ibm.com>
- <akuViylBcKiXMbjH@zatzit>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <akuViylBcKiXMbjH@zatzit>
+Subject: Re: [PATCH 4/7] tcg/aarch64: Implement min/max with FEAT_CSSC
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260812003143.225228-1-richard.henderson@linaro.org>
+ <20260812003143.225228-5-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260812003143.225228-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Ow3ugeWSSQy_PmGD2wcXur_HAJk9Bez6
-X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7c1b80 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=EGYj-OwPAAAA:8 a=9zzaJ8bySdf-iAMkGnEA:9 a=QEXdDO2ut3YA:10
- a=xQyHFheebwQZ3wMG2Lhb:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfX/Ba0Tx4HmVfi
- 3jyCzRciRi6IH+Vd6alct4RsBtw8cANffaP4bxXqegUh5oGLM6CGIZ/LHvZFdl+63Pve7VpkykX
- 3napcNxoBCQ+AlB1LivSqI0gMn+KXV8SSqiiklkShvq/06ToaYie45qiWtKvk5LYCKEBsC+2EYz
- xjb5i5GCXRTkgrge3rFOOuKsQGw42pcPc8FqVdKN8apZ3FEMUobez/xsmJLNCKr5r95BKswJ8P4
- WPnPRHZJgI4kf5GyIvdcbNj5sNN8Nx8Fs9qJEVNcoHTvRsGbJ+JiVjN4ipUpvyp9an8IuMnb9hj
- mrDNyDJlw4HHMqUUw1cDHTcTlCXibpjOKnozlhIolw2mWxyNPvO+NaI01jCzH6bezIQMVWQNQOA
- hK3Y1W7NMSoMvELVTHRdQwakz0bGkS3ycf9lw0iV/1bBJxM2mqaxXZm4idUd+6dqOY3JwoqOEZM
- sRUqySq0baKBcqAISGg==
-X-Proofpoint-ORIG-GUID: Ow3ugeWSSQy_PmGD2wcXur_HAJk9Bez6
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfXzh2IaXrfWvkG
- 8vWWOG25STdKOz8m2W5iE/Ge5asTZ35jy3nXluUxz5bM8QpPB7zgG+wTouQJuvTIRIXAloqm3i1
- vQ+2OsqnW6u/3S4gfSglzuyUM11lDlo=
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1NSBTYWx0ZWRfX9rFU1uFYEmjF
+ XLlKLIdUZcvSaEtL2pnLTSxWIZrDkDSeSmoxxbjTG6BAsuXEv/LfUw9u/4IGBQJ7T5Tp4p8pbnR
+ HKPCdmORM6WjsKP72WjV3RFmzIYVyyonOEU8qNyfPEaGcVg8KS3Jpt0DS7umXze+8PUG9V9MP9u
+ iU/OmOsbYe7csl4/P7SULJz9dqaZfjLpGj8fVd13XMHez89jf+mpVbV6ju0KWnI0WWbv0chSB9O
+ DtUoVXkJaVe4fBFvTFsK/z7r4C9x7xQMxptosVNBc+xF5+l3wj6Vp3bpLNtYJL+oaFxtx8kTJd4
+ 0lP63HBxgS9kG7eyBQSrMtxjvLno56UpJhTLTFMvKSObwyymyHQdGmJ+ha7Hq7YaOQNUUAYTzYh
+ PbIVuK6sKYx82PgHW5zuRNOMUnsNYda/88w1JPrEofOM5LCgjL9L2J8Yb6zFF1M1Zv4mrgLehGy
+ RF80LqVjI2T5M2IF3ZQ==
+X-Authority-Analysis: v=2.4 cv=Wb08rUhX c=1 sm=1 tr=0 ts=6a7c1d80 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: uvupWuUg0W6dbmelqbV5Pcj3bNXLlAIY
+X-Proofpoint-ORIG-GUID: uvupWuUg0W6dbmelqbV5Pcj3bNXLlAIY
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1NSBTYWx0ZWRfX6a/bsv8Tnbvv
+ roLbIB0gRZnaXtCAkyWKtr2oear34W5XG4f0ESeuuTG7UWhB5zIuY7llRGPkT9z6Hckom5D0Wlr
+ 2oXF55oqEZF2dv4uXCKAz0/4llU++uY=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
- clxscore=1011 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120054
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ clxscore=1015 impostorscore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120055
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,49 +153,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Balaton, qemu-ppc
+On 12/8/26 02:31, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/aarch64/tcg-target-con-set.h |   2 +
+>   tcg/aarch64/tcg-target-con-str.h |   2 +
+>   tcg/aarch64/tcg-target.c.inc     | 103 +++++++++++++++++++++++++++++--
+>   3 files changed, 103 insertions(+), 4 deletions(-)
 
-Hi David,
-
-On 7/6/26 5:16 PM, David Gibson wrote:
-> On Mon, Jul 06, 2026 at 02:37:48PM +0530, Utkarsh Verma wrote:
->> +Thomas, Narayana, Shiva, Harsh - FYI
->>
->> Hi Alexey, David and Paolo,
->> Reviving this thread as would like to add the disk boot support by loading
->> GRUB.
-> 
-> Good luck, but I'm afraid I no longer have any interest in, or time to
-> commit to looking at ppc qemu stuff.
-> 
-
-Thanks for responding to the query.
-
-Let me share what we have been working on to add the qcow2 disk boot 
-support with VOF to get inputs from others who might have an opinion.
-
-With below changes, we have been able to boot a qcow2 image using the 
--hda option. The implementation covers:
-
-- Partition table scanning (MBR and GPT) to locate the PReP boot partition.
-- A new load_elf_ram_sym_buf() API in hw/core/loader.c that loads an ELF 
-image from a caller-supplied memory buffer, reusing the existing 
-load_elf32/load_elf64 paths internally via memfd and also added an 
-optional per-segment callback so callers can act on each PT_LOAD 
-segment, used here to update /memory@0/available via vof_claim()
-- read, seek, and vscsi-report-luns OF services for block I/O needed by 
-GRUB.
-- VTY read/write routing for GRUB console I/O.
-
-With all of the above, we are able to boot a disk over the sPAPR vSCSI 
-bus. I plan to post a RFC patch series soon. Quite a few things are 
-referenced from the Alexey's older patch series for implementing the VOF 
-(https://lore.kernel.org/qemu-devel/20200203032943.121178-1-aik@ozlabs.ru/#t).
-
-Alexey, Balaton and others,
-Let us know if this approach looks good.
-
-Regards,
-Utkarsh
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
