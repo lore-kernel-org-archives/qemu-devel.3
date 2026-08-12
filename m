@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68AFC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A79C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8jj-0002Rn-KL; Wed, 12 Aug 2026 09:11:17 -0400
+	id 1wu8jG-0000vJ-SZ; Wed, 12 Aug 2026 09:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8jB-0000ar-D5; Wed, 12 Aug 2026 09:10:41 -0400
+ id 1wu8jE-0000o0-8G; Wed, 12 Aug 2026 09:10:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8j9-00066m-Hr; Wed, 12 Aug 2026 09:10:41 -0400
+ id 1wu8jC-00068C-DL; Wed, 12 Aug 2026 09:10:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=+jdJArWd5gZKpLZg4SMZ/PgGfqxSxZDnvhzCvYXIGXc=;
+ t=1786539784; bh=a0iP75LbtPykcsRAHHU8CcY6Iv58uyrPqwiflMHn8ZE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jC9GiXkOrIgS7qkjIWqCbAvZ7hjpr7dXzVaUj2uHoJEUbRHzPs4C3CsWeYtHMEcGa
- 929iQKh064fRYFAdUL6q3k612GqAkJShxZCr8Vn7jWPFIKEAjZz02bqE0Sh0XOssz1
- nC/JGhOlE/wsdqiHkd5cfaSSFOD3SZaqPzL0fCx05MPdHI6/x1eJNV/Gqw2hQbb1fo
- 8C2UlBU30LMcVtMLjmRAK57fDBrTBYyIUIQAvwg+tMcWdP8WKbxjMwQn5EO8cPFooN
- M3hInX20MFu4B+l+/9EJBnDmt/TsriplUzOTFfTMqSUiwfYt3AuDSEiXSMQTB3bMXX
- PRg+DR5d1/PFQ==
+ b=DNpmpLRBLb8jo7MRbgCOE/d+P0vtgLb2Imv8t+nd6yMzsvtrzZ+9xXQk/7rs1NoF4
+ /TwsufRGwHvXSP1MvZ1boXV20JN9tk+KfORO+45/tAusjbQ7/HXfzK2TAcAr4AJizC
+ RGfqF1AE1O3EvqgXgl2GaapuA4KjaLzRb2b+6FfbvrEiJffUjIjZok2mtiIKlSvZ/w
+ Kcvz5ZAfnWHOySZdXgKD+S1CoDO0M+THHOzyFC5zXV71P1oOiPf0pJacvk/HUyGwHk
+ UBMqF46XbTecg6pfCVDckM3L3Jyf4T73P7QpPQhqHI2MpTyLlsAB6xsokg7TkibW4x
+ UhZGi+xQLIPvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E4A11CA4CE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 828881CA4CF;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B4874409BB1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9031409BB2;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9DC952F932; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id A09422F934; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
@@ -42,10 +42,10 @@ Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 079/102] block/accounting: take stats->lock in
- latency histogram setters
-Date: Wed, 12 Aug 2026 16:01:54 +0300
-Message-ID: <20260812130233.621965-79-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 080/102] block/qapi: take stats->lock when reading
+ BlockAcctStats for query-blockstats
+Date: Wed, 12 Aug 2026 16:01:55 +0300
+Message-ID: <20260812130233.621965-80-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -76,65 +76,85 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-block_latency_histogram_set() and block_latency_histograms_clear()
-replace BlockLatencyHistogram's nbins/boundaries/bins without taking
-stats->lock, while block_account_one_io() reads those same fields
-under that lock from whatever iothread completes the I/O. The result
-is usual use-after-free and qemu crash.
+bdrv_query_blk_stats() reads BlockAcctStats's counters, latency
+histogram, and per-interval TimedAverage stats without stats->lock,
+while block_account_one_io() updates the same fields under that lock
+from an iothread. timed_average_min()/max()/avg() make this worse
+than a stale read: they call check_expirations(), which can reset a
+window's sum/count/min/max -- a write, not just a read -- so this is
+a genuine race with a concurrent writer, not merely a slower reader
+like the scalar counters.
 
-Take stats->lock in both setters, matching the lock already held by
-the reader.
+Take stats->lock for the whole call, both to close the race and to
+make the returned snapshot internally consistent (previously each
+field could reflect a different instant relative to concurrent
+updates).
+
+block_acct_queue_depth() used to take the lock itself on every call;
+since bdrv_query_blk_stats() is its only caller and now already holds
+the lock, that would self-deadlock. Make it require the caller to
+hold stats->lock instead (documented and asserted).
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 CC: Kevin Wolf <kwolf@redhat.com>
 CC: Hanna Reitz <hreitz@redhat.com>
 CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260724111311.4086859-2-den@openvz.org>
+Message-ID: <20260724111311.4086859-3-den@openvz.org>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 5b0ba385a024ad92c63c175317cd9374de2e6165)
+(cherry picked from commit 16f94ef4c6ce3e7ca6b02b796580e2cfc41e9789)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/block/accounting.c b/block/accounting.c
-index c7feca40ab1..c5584abb76e 100644
+index c5584abb76e..79e2a37e8a7 100644
 --- a/block/accounting.c
 +++ b/block/accounting.c
-@@ -182,6 +182,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
-         return -EINVAL;
-     }
+@@ -306,10 +306,9 @@ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+     uint64_t sum, elapsed;
+ 
+     assert(type < BLOCK_MAX_IOTYPE);
++    assert(qemu_mutex_trylock(&stats->stats->lock) == -EBUSY);
+ 
+-    qemu_mutex_lock(&stats->stats->lock);
+     sum = timed_average_sum(&stats->latency[type], &elapsed);
+-    qemu_mutex_unlock(&stats->stats->lock);
+ 
+     return (double) sum / elapsed;
+ }
+diff --git a/block/qapi.c b/block/qapi.c
+index 2c50a6bf3b8..33cb1b18b77 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -498,6 +498,8 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+     BlockAcctTimedStats *ts = NULL;
+     BlockLatencyHistogram *hgram;
  
 +    qemu_mutex_lock(&stats->lock);
 +
-     hist->nbins = new_nbins;
-     g_free(hist->boundaries);
-     hist->boundaries = g_new(uint64_t, hist->nbins - 1);
-@@ -194,6 +196,8 @@ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
-     g_free(hist->bins);
-     hist->bins = g_new0(uint64_t, hist->nbins);
- 
-+    qemu_mutex_unlock(&stats->lock);
-+
-     return 0;
- }
- 
-@@ -201,12 +205,16 @@ void block_latency_histograms_clear(BlockAcctStats *stats)
- {
-     int i;
- 
-+    qemu_mutex_lock(&stats->lock);
-+
-     for (i = 0; i < BLOCK_MAX_IOTYPE; i++) {
-         BlockLatencyHistogram *hist = &stats->latency_histogram[i];
-         g_free(hist->bins);
-         g_free(hist->boundaries);
-         memset(hist, 0, sizeof(*hist));
-     }
-+
+     ds->rd_bytes = stats->nr_bytes[BLOCK_ACCT_READ];
+     ds->wr_bytes = stats->nr_bytes[BLOCK_ACCT_WRITE];
+     ds->zone_append_bytes = stats->nr_bytes[BLOCK_ACCT_ZONE_APPEND];
+@@ -587,6 +589,7 @@ static void bdrv_query_blk_stats(BlockDeviceStats *ds, BlockBackend *blk)
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_ZONE_APPEND]);
+     ds->flush_latency_histogram
+         = bdrv_latency_histogram_stats(&hgram[BLOCK_ACCT_FLUSH]);
 +    qemu_mutex_unlock(&stats->lock);
  }
  
- static void block_account_one_io(BlockAcctStats *stats, BlockAcctCookie *cookie,
+ static BlockStats * GRAPH_RDLOCK
+diff --git a/include/block/accounting.h b/include/block/accounting.h
+index a59e39f49d9..6982add4d57 100644
+--- a/include/block/accounting.h
++++ b/include/block/accounting.h
+@@ -115,6 +115,7 @@ void block_acct_invalid(BlockAcctStats *stats, enum BlockAcctType type);
+ void block_acct_merge_done(BlockAcctStats *stats, enum BlockAcctType type,
+                            int num_requests);
+ int64_t block_acct_idle_time_ns(BlockAcctStats *stats);
++/* Caller must hold stats->stats->lock. */
+ double block_acct_queue_depth(BlockAcctTimedStats *stats,
+                               enum BlockAcctType type);
+ int block_latency_histogram_set(BlockAcctStats *stats, enum BlockAcctType type,
 -- 
 2.47.3
 
