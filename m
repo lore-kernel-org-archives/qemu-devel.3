@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5A4C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9927AC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu6D0-0005XU-S9; Wed, 12 Aug 2026 06:29:18 -0400
+	id 1wu6Cz-0005WK-9z; Wed, 12 Aug 2026 06:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wu6Cy-0005W6-P0
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:29:16 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wu6Cx-0005V3-EO
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:29:15 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wu6Cw-0002jZ-Ov
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:29:16 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c15e2dab83eso131251266b.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:29:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wu6Cv-0002j6-CZ
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:29:15 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c207cb16cf5so113887566b.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786530553; x=1787135353; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786530551; x=1787135351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fA9IQDUBY9wYqV4KUbqbPe1RIFw+DaKwtNPF7u/KkP4=;
- b=nKRqyUEDWSY91GK2Jeclzj3pjTgURORQwQVyXBJHH52e+KPTxPE8SsxlK6Z0YtcahK
- nRQ5Appeqk8okAYDVAvlTN4oGhsN/Y3CKls20T8lzg+wGyQEWiLpAtGCUVpnSm5aSOP3
- Gm8BWU/T2GHu+wHaUUIGOKB/OJgU+DN6T1CrUGRe+1ZdpPKQKcQARCZEajvNrW5f8KuL
- B4uC2g15UPC+SBsB253HXJlpP5M6X7uyEWXdWlJxPpLBhJdVDi0+u1lvQ2a/UDVc5sQG
- +1qPNs1LgeqaQ191iu2E3kYSXA/T7Kv0D/l9iyrxyNtaiek9mS6uU1fb1GfqVizGqPhZ
- 9cAA==
+ bh=NtTCK5Dii6LDoNzyyQ9y0Yku0qPmidmnjmWHD+vYK6o=;
+ b=HKPRnZzFrrv0WvbXFB6GG6aF/Okq8uorqxifYW8vReQjjwgsCxHnNu8Kn/ZQFWbp01
+ FDqcwcFyV/6bTUdKLTlQbmdCwxQrQlzHhV2xWkUuO8seMnofEhWOpWWHoiXZCWFQBRx/
+ HlEDxEyhSWY08qfsvQzDb/FV6RYjxvnL5KZM1p8hRV0V/BmVugyAD/4Q+7bsMorNwM89
+ v84Fthte4ZuQf2Hqu9Lso8n4U84HUHvPEdk+MfKFkbRb2Mc/nxTnCt6j1hWh9ihT6hK+
+ B5BOX0ITsRD1a3eeIlgQ9avtMOn6N643DMegRLNCJ/G3/lNoOo4PAeEfJhsBLh3vHRwq
+ 9GTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786530553; x=1787135353;
+ d=1e100.net; s=20251104; t=1786530551; x=1787135351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fA9IQDUBY9wYqV4KUbqbPe1RIFw+DaKwtNPF7u/KkP4=;
- b=MLbADiz8R04LR/xICjn1Eo/SBtACiqWfFpr2OiqIOjKElZy7amUfnYfhM2Yw9QjK0+
- fT1NYsqH5xyPL1NmMZ7N8Zr0NSScjBQwTXYkJREsHkj2UMv4uKfAj/YXDUUVC6jMPJvu
- +ySGmkkMMAIbW9TPXQa8PAXHGM4dbqgsEqe71qmmVp5OJP03VlkR9LceYA88GtrDZMXb
- sHLUL7gHRXljEJxHA6FBHq/57ivdVNvl3wyfTT6vdikhenJHqjg0EOXbMDjFiZ8vmf7N
- +giMOEeW0N37XCidgYjISOnleoDHcS2G6akeoLu9gI5bOXmCs8sXKdnCDtDdlcDrWGtS
- NIfw==
-X-Gm-Message-State: AOJu0YwGwrH+r6rcgkc6o8cWcTNcYCpQ06g4PKJ70gY5vRfS+61Scab4
- PFjk2DRA1vPnQLEjEZn3bOu/Uey/KG+sIm1vYMhjnJv+mtrRZhs4SzmX0wD7wcOyNLMsx5Mg7Hi
- 48x3o
-X-Gm-Gg: AR+sD13V7iIfWpnP29qLyhZqP2+2R4txA43LIINaUj98d6M1Q46m0PqraW1pxDVI1ba
- cgjq6LThYErUIBADFpYPXJWuSE13UYqHb6R8mc4U6qkoWXDlAgknoo5TEq/xRN4IshjXSQ99QNp
- UIQMLa6epZbQX3rEI+Jr0NvAvTb1YPUL4FBtlWq+thRZG4nyJeCMvx3x/Ke8xw+aW/TkICSWcbA
- 2J4lUpfVNGPiIa3J3NZYroqzF3AyZ1eWzlow0LCNrFwT94PIDZnLzm/pa0jJfrErGlppSS6OPIw
- 3l3011rDbUX3iPhU0GdDjjjDj0EBpuWSAZuN5yxXYal5GPkdQ8vP3fpCPHYdf7fP0aeLLFe7Ph7
- 8cvXQZ3Of9WqtS600TdptdUFc38Mn9pTNpZsx7d9PyZh9ETMasyfPSFyLfcvqKoKRFYNo2O0Myr
- 68tPXMrzaXoMrLJr+C+a4l4ILnPHmSDsk+Z5xIOROYakGKVd0HJoMgvs+Khw==
-X-Received: by 2002:a17:906:7954:b0:c1f:c061:569a with SMTP id
- a640c23a62f3a-c20f2e4f67amr154679866b.7.1786530552874; 
- Wed, 12 Aug 2026 03:29:12 -0700 (PDT)
+ bh=NtTCK5Dii6LDoNzyyQ9y0Yku0qPmidmnjmWHD+vYK6o=;
+ b=SHmDxQG7GA+AIKsJFKTKmQpg9hFbzf8B+M6MjUlYVovPdEjXepBYMPftGJvSRGytqK
+ ZVDCoQsW5QMjin/XtIdP8LGEh27WK8fHUguRzzOpdzD/Hv6N771NmB6kKfn4BHmeX/xF
+ bWCQJyqUJPwIjdyTYxvh63JPkVqfm2k0GhBdcuQgSLeRahdfaLvgNrNsKW6531H35F05
+ 2nMsmOR1TEPLV8VTNaIiY++OATbdAK62knCreU7JNwNrLx4sFqotnUxcw/j721fIP+Gc
+ zV/nQt+UACrtAo5+0EG3h950MwMkhjca8GozY6N64lqijY5XF04C2JxqMTZKrPExGJs9
+ O/WQ==
+X-Gm-Message-State: AOJu0YwPrY5yHPTseKgdTDnPrT2fywLP5UZ5+jzFJ8Q9euZgmzUM+o8T
+ HnJUcXdYyeB+EO9fx7TxYa+rGbllB44l+iMf6laO2nLzpnCA+Qf+HMALLuIBt06G0QpqoXqkSkJ
+ GO8bh
+X-Gm-Gg: AR+sD12l5piVyRzDvKPg1NwYqFwjT9fvc1DYi1AiuIDTlXXhXMU57ZzrKyIm6OntFV/
+ qgoGy9XM35O9Vq9ROXuNqyj3ov08x/nHDAnf8V+Bjlzrj06sbopP2IyjdfMEJCml9Xw/1vbk0+o
+ ywQyiGjxjCTDl0ywoc+vTy961yXMIo4/pCFJLYvMmhfWRpo05W4FpYx+Ypn7pbMvWscGpbDJZu/
+ 6z/63erFNG1SNoEGqOSMZw/5L28g3Afvn6fEmXdwvTVR8IjTQchpQdO24mhjobxSiZNbz0WrQvD
+ vhmkaweCgBaB6xP5xkinw6AkLD+elV+j0+MsFz2bo6YvYop5P4JSaYPeerjdSMnDLnT/+SsvsGK
+ ss48/s4TyOkWz2bOcTdP3OQZFjFrGtd5xyWHfCFaTFdnRbSwcDvHk4NTSeWQHnyErWCmcT3bxhc
+ IadLS5DPC5HETr6Ak+aCjo0KJHZZI/hXOGfNiIyy+TRoMZNK0hUAa6qq0XVg==
+X-Received: by 2002:a17:907:d1d:b0:c1f:97f3:7225 with SMTP id
+ a640c23a62f3a-c20f2e3c984mr189342966b.6.1786530551485; 
+ Wed, 12 Aug 2026 03:29:11 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:89f2:ad10:d9bb:681e])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c20f0ad270bsm70748466b.46.2026.08.12.03.29.11
+ a640c23a62f3a-c20f0ad270bsm70748466b.46.2026.08.12.03.29.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 03:29:12 -0700 (PDT)
+ Wed, 12 Aug 2026 03:29:11 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH 3/3] block/nbd: clear reply.cookie under receive_mutex
-Date: Wed, 12 Aug 2026 12:29:06 +0200
-Message-ID: <20260812102906.894063-4-den@openvz.org>
+Subject: [PATCH 2/3] block/nbd: never index requests[] with an unchecked cookie
+Date: Wed, 12 Aug 2026 12:29:05 +0200
+Message-ID: <20260812102906.894063-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260812102906.894063-1-den@openvz.org>
 References: <20260812102906.894063-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=den@openvz.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=den@openvz.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,104 +100,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s->reply is documented as protected by s->receive_mutex, but the cookie
-is cleared without it once the owning request has consumed its chunk.
-A waiter in nbd_receive_replies() inspects the very same field under
-the mutex, and does so with two separate loads:
+Cookies are converted into indices of s->requests[] in several places
+and the result is used right away, without any check:
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
+    int i = COOKIE_TO_INDEX(cookie);
+    ...
+    return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
 
-Nothing keeps those two loads consistent. If the owner clears the
-cookie in between, the second one reads 0, COOKIE_TO_INDEX() turns it
-into an index of -1, and s->requests[] is accessed out of bounds:
+COOKIE_TO_INDEX() subtracts one, so a zero cookie becomes an index of
+-1 and the access lands in front of the array. This is undefined and,
+depending on the type of the index and on what the compiler has put
+there, it can as well pass silently: at the site above i is signed, so
+even a plain i < MAX_NBD_REQUESTS check would happily let -1 through.
 
-  Assertion `!s->requests[ind2].receiving' failed.
+The only cookie which is checked today is the one taken from the wire,
+in nbd_receive_replies(), where an invalid value is a protocol error
+rather than an internal inconsistency and thus has to stay a channel
+error. Route every other conversion through a helper which asserts the
+range before it returns the slot, so that the check can not be
+forgotten again.
 
-  (gdb) p cookie
-  $1 = 8
-  (gdb) p s->reply.cookie
-  $2 = 0
-  (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
-  $3 = (_Bool *) 0x5555558416c0
-  (gdb) p &s->in_flight
-  $4 = (unsigned int *) 0x5555558416c0
-  (gdb) p s->in_flight
-  $5 = 8
+The cookie of the reply in flight goes through the helper as well. It
+is not an unchecked value: it has either passed the check above, or it
+has been cleared by the previous commit, so a stale index there is an
+internal inconsistency too.
 
-The cookie we wait for is 8, yet reply.cookie reads 0 one line after it
-was found non-zero, so the index is -1. requests[-1].receiving lands on
-in_flight, which is non-zero while requests are outstanding, and that is
-what the assertion trips over.
-
-Hitting this requires two coroutines of one NBD node to run in
-different threads, as there is no yield point between the two loads
-for the owner to squeeze into. A multiqueue configuration provides
-exactly that, with the virtqueues of one disk spread over several
-iothreads. Note that a compiler is free to merge the two loads into
-one, in which case the race is invisible, so builds with reduced
-optimization are much more likely to trip over it.
-
-Accessing s->reply without the mutex is fine for the coroutine that
-owns the reply: a non-zero cookie makes the field private to it.
-Releasing that ownership is not, as it races with the waiters which
-are explicitly allowed to look at the cookie. Clear it under the
-mutex, in the same critical section as the wakeup, and make
-nbd_recv_coroutines_wake() caller-locked, as CoMutex is not
-recursive. It has a single caller.
-
-The added acquisition cannot block behind the header read in
-nbd_receive_replies(), because that path is only reachable with
-reply.cookie == 0 while we still own a non-zero cookie. Merging the
-clear with the wakeup also keeps a newcomer from starting a header
-read in between, which would stall this already completed request for
-the duration of that read.
-
-There is no cookie to own when we get here after an error, and then a
-newcomer can indeed be inside that read. It does not hold us for long
-either, as the channel has been shut down before the error was
-reported, so the read it sits in returns right away.
-
-Fixes: 4ddb5d2fde ("block/nbd: drop connection_co")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Eric Blake <eblake@redhat.com>
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/nbd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ block/nbd.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/block/nbd.c b/block/nbd.c
-index 21f0f9d40d..1659008784 100644
+index d9b776283f..21f0f9d40d 100644
 --- a/block/nbd.c
 +++ b/block/nbd.c
-@@ -158,11 +158,11 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
-     return false;
+@@ -136,6 +136,16 @@ static void nbd_clear_bdrvstate(BlockDriverState *bs)
+     s->x_dirty_bitmap = NULL;
  }
  
-+/* Called with s->receive_mutex taken. */
- static void coroutine_fn nbd_recv_coroutines_wake(BDRVNBDState *s)
++/* Not for cookies coming from the wire, those are checked separately. */
++static NBDClientRequest *nbd_request_by_cookie(BDRVNBDState *s, uint64_t cookie)
++{
++    uint64_t ind = COOKIE_TO_INDEX(cookie);
++
++    assert(ind < MAX_NBD_REQUESTS);
++
++    return &s->requests[ind];
++}
++
+ /* Called with s->receive_mutex taken.  */
+ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
  {
-     int i;
+@@ -422,7 +432,8 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+                                             Error **errp)
+ {
+     int ret;
+-    uint64_t ind = COOKIE_TO_INDEX(cookie), ind2;
++    NBDClientRequest *req = nbd_request_by_cookie(s, cookie);
++    uint64_t ind2;
+     QEMU_LOCK_GUARD(&s->receive_mutex);
  
--    QEMU_LOCK_GUARD(&s->receive_mutex);
-     for (i = 0; i < MAX_NBD_REQUESTS; i++) {
-         if (nbd_recv_coroutine_wake_one(&s->requests[i])) {
-             return;
-@@ -970,9 +970,11 @@ static coroutine_fn int nbd_co_receive_one_chunk(
-         /* For assert at loop start in nbd_connection_entry */
-         *reply = s->reply;
+     while (true) {
+@@ -437,10 +448,9 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+              * woken by whoever set s->reply.cookie (or never wait in this
+              * yield). So, we should not wake it here.
+              */
+-            ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+-            assert(!s->requests[ind2].receiving);
++            assert(!nbd_request_by_cookie(s, s->reply.cookie)->receiving);
+ 
+-            s->requests[ind].receiving = true;
++            req->receiving = true;
+             qemu_co_mutex_unlock(&s->receive_mutex);
+ 
+             qemu_coroutine_yield();
+@@ -454,7 +464,7 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+              */
+ 
+             qemu_co_mutex_lock(&s->receive_mutex);
+-            assert(!s->requests[ind].receiving);
++            assert(!req->receiving);
+             continue;
+         }
+ 
+@@ -861,7 +871,6 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
+ {
+     ERRP_GUARD();
+     int ret;
+-    int i = COOKIE_TO_INDEX(cookie);
+     void *local_payload = NULL;
+     NBDStructuredReplyChunk *chunk;
+ 
+@@ -919,8 +928,8 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
+             return -EINVAL;
+         }
+ 
+-        return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
+-                                                  qiov, errp);
++        return nbd_co_receive_offset_data_payload(
++                s, nbd_request_by_cookie(s, cookie)->offset, qiov, errp);
      }
--    s->reply.cookie = 0;
  
--    nbd_recv_coroutines_wake(s);
-+    WITH_QEMU_LOCK_GUARD(&s->receive_mutex) {
-+        s->reply.cookie = 0;
-+        nbd_recv_coroutines_wake(s);
-+    }
+     if (nbd_reply_type_is_error(chunk->type)) {
+@@ -1067,7 +1076,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
  
-     return ret;
- }
+ break_loop:
+     qemu_mutex_lock(&s->requests_lock);
+-    s->requests[COOKIE_TO_INDEX(cookie)].coroutine = NULL;
++    nbd_request_by_cookie(s, cookie)->coroutine = NULL;
+     s->in_flight--;
+     qemu_co_queue_next(&s->free_sema);
+     qemu_mutex_unlock(&s->requests_lock);
 -- 
 2.53.0
 
