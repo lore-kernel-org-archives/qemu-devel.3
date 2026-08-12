@@ -4,183 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76B0C5B567
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524A4C5B567
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:05:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu30l-0001cv-Tn; Wed, 12 Aug 2026 03:04:27 -0400
+	id 1wu2zc-0008Ef-B1; Wed, 12 Aug 2026 03:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wu30d-0001aX-4v
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:04:20 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wu2zb-0008EP-82
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:03:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wu30a-0001E6-Tb
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:04:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1786518257; x=1818054257;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=1bWZesmJZZRZ3DtH4jtwVXnA4HRfzQpRiOX9CNbDlOs=;
- b=OCu6CP7MnYRMMGWLlPX1gl0T12SsDYIk/HKnxDN41JzJZz3txGeeq3KA
- V1mZVMUh9tZK5OX95h+1byDlcsUPsRmfeCjNWti3kCx3VwvhCA2WvBVWN
- 4iLAr3lvsSs1kjPTNaIZL66+D37ACzWuUf1/xEpQvUaZC7VFlbk78JdFu
- efKyc32iwvEqLAI/27S/GxLaGBE5OWq9ommfej4+uRuRepaUOHCaVb+mD
- F88p0EzKUfoQAECKC4KMEwS+NGmspwOU1tiI5FV9iya18cWaeJ4BsRegX
- 49DIR9Ox79aLN6SlS8W6GQsut8IqL4r4XVyzF2/3JyKliSGcs1/F0Pjov g==;
-X-CSE-ConnectionGUID: ZTDYYXYTRpqEUg2zdbQlhQ==
-X-CSE-MsgGUID: +jcnzbFdTWa2TBeByEFhww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11872"; a="97725731"
-X-IronPort-AV: E=Sophos;i="6.25,218,1779174000"; d="scan'208";a="97725731"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Aug 2026 00:04:13 -0700
-X-CSE-ConnectionGUID: hBKy7nxOTIuPeB5UL7N8hg==
-X-CSE-MsgGUID: CEPkG/cMREGiqaxKjOgS8Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,218,1779174000"; d="scan'208";a="257364250"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Aug 2026 00:04:13 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 12 Aug 2026 00:03:35 -0700
-Received: from fmsedg902.ED.cps.intel.com (10.1.192.144) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45 via Frontend Transport; Wed, 12 Aug 2026 00:03:35 -0700
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.38)
- by edgegateway.intel.com (192.55.55.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Wed, 12 Aug 2026 00:02:45 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RoZko0pdwDqhImTYgjBRK8PaTwPyf7zCYjuXdOJD42w1EVJQL/0ly9xSJDD376AIRkk3FFqTUR0VlRn3jFSpb//gdWDh0+WQzSYwjb4DrTXOOL44hBjAoaybrQnDv+tVe9nGx7q39SL/STX7qE3Q5MKTwpzKK5o2TSNeisebTOW7NreR15gjHYoPxxiKoO6Eytu3VJaI30uDk1yMGD2wyZv01UYHTesQVqSysqzo0G5lt+0uRuIKwMdBIFACMiIX+gUdzjl/i6L17MUf8uQeNWcLw7b7yziNMEA9lmaM0g6+kw6fE0n/z74JySTGy3Z5ja7OX+FQq4QMJSOyZhzlxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1bWZesmJZZRZ3DtH4jtwVXnA4HRfzQpRiOX9CNbDlOs=;
- b=arbuwGiZxd0cDfxCxc3ojU/FYqFps1uYddP/SEc4ihYNpN1d3sp+wzo2mn4prnAircd4G3ltse+//IeqY38SEEQvdrujBlD3zt3rcLqDSCMyh+FwQgVEoGXAtxoxG5lWC2UQI67OPiEK8mx6ZO+ZNMVT7ldPBog6octviJ6Gego6z0K6dR3ruiQ5/iNQ5gyK7C5jcF9S06lvFL3LgPHvuSWaUQUuweoQ9VHwbj0rHd3VhSn/H4U1dGOXHYncuV/rpCtT6w8U2HyXiIjyx+Vzr+P9MePE/PkZDgRfkQu8jiG/QWpqg6PHtt9n2Ni4PhMEG13pk+13bA4w4ESPkZ6v2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by BL3PR11MB6411.namprd11.prod.outlook.com (2603:10b6:208:3ba::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Wed, 12 Aug
- 2026 07:02:37 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%3]) with mapi id 15.21.0292.024; Wed, 12 Aug 2026
- 07:02:37 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
- <clement.mathieu--drif@bull.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "Liu, Yi L" <yi.l.liu@intel.com>
-CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowangio@gmail.com" <jasowangio@gmail.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian, Kevin"
- <kevin.tian@intel.com>, "Hao, Xudong" <xudong.hao@intel.com>
-Subject: RE: [PATCH v3 2/6] backends/iommufd: Introduce
- iommufd_backend_alloc_faultq
-Thread-Topic: [PATCH v3 2/6] backends/iommufd: Introduce
- iommufd_backend_alloc_faultq
-Thread-Index: AQHdJXarFur1nTi1wECQ4ZL35pyMz7aYbRYAgAGTGtA=
-Date: Wed, 12 Aug 2026 07:02:36 +0000
-Message-ID: <IA3PR11MB91369EE6124AA8113A00166592DC2@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260806073825.363468-1-zhenzhong.duan@intel.com>
- <20260806073825.363468-3-zhenzhong.duan@intel.com>
- <b47384ede6bc77248473b248ad8c16fbc892bfd9.camel@bull.com>
-In-Reply-To: <b47384ede6bc77248473b248ad8c16fbc892bfd9.camel@bull.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-Mentions: yi.l.liu@intel.com
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|BL3PR11MB6411:EE_
-x-ms-office365-filtering-correlation-id: 5fd548f1-0ad7-4bb7-c42f-08def83fb10e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|7416014|38070700021|6133799003|10067099003|4143699003|11063799006|56012099006|3023799007|22082099003|18002099003;
-x-microsoft-antispam-message-info: kuXmYgxhvgOsm39S3LEsjtYWW2bn8bxTPiXltj8QF8IQRD33+r7y//8iUyNP74uJaIvWYWfwHkPAXTEloJfIAh2WsKsHu51Th+qnZ6pgUlB0M8Shxi1vAhKnclQh3rdgJaZMkau+FRyP5lzM6jJa1qOg0VNovWxZ9O285eUsyglgbo95YvJsLCsLxv+3In/miW35X8Hj5c7myJiDPUFKCXvzhBRhxtf9Wt3gI4JtZAHJu7KPao79l0LZQWP7PzvumXj3BB0biodOES51TMVu5NxtUaiK1Fgb0Pkyl4U1aLIEN6kbTONP1HYT/l6XSpH14U9OOB9+G1trVDTlutCRWlWonO5URQ3RKs6DQi87H1HY+Uptj4EIH2gPl9E1yT6GMiiC4F+gknU9DooVzQlo3n4eNm+sPOJgB05n9vUdJ/C0C7FPayDk1irAQiFaqJHajglFBV+b9sgz/wpxcanRMtuhVSt5zEiC4KlyTbpkEIMxk/flW6HTcJuXKeyXWMqD8c1tB4U+IhwaujorHS6IisFlqcoPBHMep/GMStAxAUrNmetO//4jwz4TutIAluOX/4otgPDuBbA4GcIbRBWzumphtDcho5WpMJ13A/sTb203FjrvO6NVAANpdBsLYf7VEitehviugtJCEPLXFpCOvskkJpTEiieVBd0K2TvQUA7D+iq/kkeqvxDXsvKGYyJ2pMypF0igM6+swsKqN7hcyq+hlF3dvKHV4Aj1C9OUQaY=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(7416014)(38070700021)(6133799003)(10067099003)(4143699003)(11063799006)(56012099006)(3023799007)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SmZpc1k1eW92QmZyZ0RRSGxmUDA0WWJ6eDdLbTE3d0Z5b1VXaWpGMTN6OEk3?=
- =?utf-8?B?R3B2ZkVoTFBtWHNEY2JGV0p2QVV0Q1BRb295eDAvaXVpbEIvcElraUt0Tktw?=
- =?utf-8?B?T2dnNHFxNUdnb0toVGJMdE56YmJRYVpYODQ0dWU5VkpLbGVxUlljM251Wkky?=
- =?utf-8?B?VGFPR0FoRjh2TSs1QU1EMitzTmxYektBSWNpdWhVd094c3hCN2lJRkxMVEVJ?=
- =?utf-8?B?RnRzbzdWamhmOGNzNm82aDUzUDhjTXlJYkpFb3V3YzN5d0pUUXkvUjl5bklS?=
- =?utf-8?B?TkwyNEZVY3NZYndjUGc0UnhSUGE3TUZYT2tldkhTL0xwTFBlKzVIYXN3M0F6?=
- =?utf-8?B?WHUwV2kwRmMyUHUvWDBkSXNhNXU3NlBQT2k0aExUbVBwei92Rnk4dHkxMTVx?=
- =?utf-8?B?WnM3bDNCa0JMcUhOQkZXSHVXZFBGS1hDcWp6ak8xU1VPUjkxL0tLcHVWNXM5?=
- =?utf-8?B?a3NBbUtFUktWZnVBa1E3TTFpMk1zQmIvZGhzUC85Z09wWFNQUFB5SklSNVp6?=
- =?utf-8?B?MWFDNmFYVGsxcDM4MjQ5bFNrVXNPaCs1ZjBoV1lBZ2xtQzRCQVloVTlzZS9x?=
- =?utf-8?B?eTlzaHFTSndzbmY3TCs4OVRETFREUXVUeXJUOXFGTXc4YXJDYVJjQzdGN1I1?=
- =?utf-8?B?SnpVaGo0OEUwTmpzeDYxN1hsV2VmNmowY1RycEZpcGw1b1djT2d2T2tYY0xw?=
- =?utf-8?B?UDFHK1NMY0U0YzY2UnhYVzZzRW9pcHE0Y2VtdDZlTUZsZnNLR2xHTDBEMVo4?=
- =?utf-8?B?WUNTR3AxTStNTWVGZnBJeTNOaDVHa1NyYTNCbWR0OVcrRG9OdzBKVUdWamZq?=
- =?utf-8?B?eHZ2NkxLUmtYbkI0S3QrMnh5cGhrSWVjZVVHVHJwZFZRaFJZTWNQaWhEM0da?=
- =?utf-8?B?NmswRzVJbjJ6dnFUS0JTb2FWNkpNSUhFV1NIbVZUZUJvNGVlWFE2ZUpmUXhH?=
- =?utf-8?B?Z3pTQStOOU1PQ0dNS2g1K2JjcnQ2OW81b1dWYlZSb0t2UjMrenN0TW9iRVdE?=
- =?utf-8?B?dVM3M1VYcjcrS2kwbWZqZUc3SnhsYnR0TUVYakdOWlJ4OEsyUjNvdm1OUUtj?=
- =?utf-8?B?V0x6UG5CZU9Takk4YVlOR0pDVER1dm9PNXdqaERBZWZnREZTN2MvVVFtNHFQ?=
- =?utf-8?B?Ri9TZ3RMMkhqblJyYzNpSkF2eURuYzRJTHVyWTUzT0QyMDVRM1lES3VydHN1?=
- =?utf-8?B?ZnNqWFlkVW1maUlWMGRRNDhDbjdDY1ZsR3lRcDlidFNic0liZnFzekdIT0ZZ?=
- =?utf-8?B?Nmw1M3JRVEx2ejI5WTUyM1FrTGp1aXFnNnl6N3BDUkE2VHI0cVBjY2pKREYz?=
- =?utf-8?B?RzR1eUo4VUZTTmk2UG5ZQnpNei9DZU1GcWZWeUVmN0FjVjJZckRqSHA5eThy?=
- =?utf-8?B?cUR6UE5nS1M4RWpzMEVyTmhVZ0VKQXI3UENDZTVVNThDT0p1ZTFoYTlxYnl0?=
- =?utf-8?B?MktubE9acGV2YW9tSEFmZ1BZNzFiYzlsL1NnblNFTVVnUDFwSGYwRCtsT3h1?=
- =?utf-8?B?b3V0NE1CR2UzK1JzaDFhSFg4djhOdVhZQnAyTXFNeUF1THhsQkhVT2RnczJ2?=
- =?utf-8?B?WUsyaGN3azVMVjZTWkJ2MVNUV3NSWm5PbkhmMGdCQnlKWVVyUzNYUm1hbWQ4?=
- =?utf-8?B?cXQ3aml1bGZORUN6NFZBVDlvWDgyVGZNZEZYY2FJdW1mVzBLWWIrY1UreHFH?=
- =?utf-8?B?RU9kbnhMcEp1UWlxWGdydnRlMk9YWXk4aThMY3FvZHVtTjkxUTZCUXZRNXJL?=
- =?utf-8?B?MWRkRXpIQnczOG1lQ1dta1MzMzNwaURsOWoyaEFqbDg5TWR1bEhieE5GSW0y?=
- =?utf-8?B?eWJST3VxamVyMHZvSU9nN0s4NWlKeXRVdTVGSTQycW1oWlRoRytVc0VwdmtK?=
- =?utf-8?B?bWgwREVFZUZlVDhoUzJ6UjZJRFNES1p6QmxzMEg5aFV3b0hvKzVibTN6OGZN?=
- =?utf-8?B?SlFOaWNoVVFNV2w3bXY5bnBwWkhVbEwxVkRSc3pCOTJGR1dMQy9EZGVObStj?=
- =?utf-8?B?OWcvWk9CVmF4T2ZsbGlPQVZyTjl1OHRjRGtvRkZUQjdXY1ZMcXRaaS9MNDYx?=
- =?utf-8?B?RVd6cVd0WUkvZU84VFJ2eVRkQndJQStxWkM1Z2xQQ2lKOVhSS1oxUVkxcG9z?=
- =?utf-8?B?V2QrRExHUzdwWFRSVU1iK0N4M0RPNFR2dHU0YmVpYWNjRERjdXJmZFAreFdV?=
- =?utf-8?B?NTlFL2tTVnNFdWV3aWM3U3dDMTI3cXFlN1lNbW85MkZJeklSUE9NNnhBUnIw?=
- =?utf-8?B?c1RmQ0lmMXArdHJhUUZTZ25qVndKMUY4MFF2OTBDZVpNc2RXNkE4QWpTZU0y?=
- =?utf-8?B?SnFyQVhuTkQ4aDlBd3RGN1FNWlFqS2lieGNlaXVyNlFnd3RwU3RVZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wu2zZ-00016S-6Y
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:03:14 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67C62f7w2190469
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:03:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=ta5LTNzAZrA
+ zJqdRzCKFQ0YzsHuk9SjovfBbe+YZ3q0=; b=X4PTBOYGP4ESKIzJ5oM3ItEXujZ
+ 8oANQjYqT+qAmmEE1svPURgCA4pn91kDGy9202zAQuHUVB0I6Z869ocCc5z8njsL
+ tKz9bTwBNwoxv6eMtRnNJqVaeRnQY02jNKEWSt27MS3wMdbqoh5AJIj7U4OuEVB9
+ hETZ7loCL/trQXRizTwwOTu8ypyxLs4TFXv/2fwVAMUycdspkfmwsyFZbVcn/ucl
+ OGtpwpiG9NgYpVwCcT89EuBef754efIfOFjuX0NQtTJCgvyftmAwCo3LfL+naCv8
+ GnzgN5yXl6zHFt6LRpvS+s4l5AP4UAIHmQqbuoJoeB4GmJVB7yaaAV87axA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049g3x8e-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:03:01 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c888c687c21so19741a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 00:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786518181; x=1787122981; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ta5LTNzAZrAzJqdRzCKFQ0YzsHuk9SjovfBbe+YZ3q0=;
+ b=ZJ7pxAcvhUib5aEnTGloEfbuXDAEApjBr/D6WUsNCoOX0bZPJ7oUH7+2y8Z7jSNvz2
+ rYk/k1QsCJt93JqQQTVkdVnWWt77+nPhjhOJ/E5Fj4AOOCqQwSbp/0EVUW0Pm70oyc6d
+ zTEOw4kwAM5D0FlzI2Tse25tNDFG/3D+dgu44bJINSupIw3R9iISgUbJJfnSrw5hARdA
+ DA2P2+WtFqiNGU8pxG9mqp4NTVliLCn+wi7yhz0fgLYNGD4GLFUnRoKdAvaKQkTpbtQ0
+ M9fC4jExHyvuIdYnYlbBwaqZl5b8C4Aa8O+cI8oX2vnHCCc/8jGUr8fSrS5W62VnNP3P
+ Y9kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786518181; x=1787122981;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ta5LTNzAZrAzJqdRzCKFQ0YzsHuk9SjovfBbe+YZ3q0=;
+ b=q1xDzJjYjDg+Ag0BE9u7tGDyB9ClW5kA//BT/KSENkEkG32PqhbAgdEFpSXJBgXTMw
+ epKk6kZMBaQcSW1RIb+g4NsJ+RSq69v3h24jnrQcuaX8scTaO405NiG8H1IFZrIeU6FH
+ z9o8+fKG05uumfVP6L7URFO8EXSlTz0elJM/1HNZ+/J7ocDBIEL/SrTyVH/7f9Q1PhSp
+ 1de5h/ImD65X6bZ5JS70Zx98F2hBQ4kJdKf8k0XL8h+f/dPC0W0N4G+UdlKO7NPhfB4W
+ S5xrGPFLDyQneuIQkV4RzoBO+ycpPkHawvjJGE+XKdyfnXJWPUGaFbvDF4ojKMZUS1Zv
+ rPug==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr2XaHDTTxWHK/F7w2ldUuOSij9nYti+dj7RvpE7861jGlgI1VLaJ+gjObCYIo/+yeqRcREqMyJj+cv@nongnu.org
+X-Gm-Message-State: AOJu0YxOx6WqE0A4c0s7A67Y8KJEe+xp+LGulyKtsOna2Bn+YOcQbgpY
+ ngJKJGgOOxWxpHMZGr5RowQcsRWP/EeZtd4cz903kADm67mzh8K1N0lRKlKMaaOA0uHywML8YU2
+ fcOHHGp012cRLrWc8vN81Y1ZqhfRkZakQHgA5fTDmJAdh8WjPB/mWH3n9Rg==
+X-Gm-Gg: AR+sD101/SqyPvyxFPYOBH5CSm12dSAAl28oarepHvZezU+xGK1YDPYNpN2UWpqT8D3
+ DyXKPSVZ/CFqgEl8X6/Qfdm/wkmCahmSG3K4BzJJcq9YhuN3JqRIIs6u6cFtkt2Mz5QPr/auYyC
+ hRy4RzjhRaBALPXO1SlfR7IdwrtCcIXl+d2KHp2gDGw/EquJa83ej5tlphSXYQtKZu7wypIIiBT
+ m1T/ORJaYYzD+nuJTDrI/P3l99PCqsysakpzmlQvUhhWjY75jQ8M9ro1/58MQLT9ZTza/kEKGtg
+ WPJ4GxDZ7Mbmx3n9OiIVErNWTjonA56cpcoXFClRz9bmNmo/MAaJM/8EFQI9XCCcdQXyN7NN3bi
+ o/QvaymfRjKxsocoTvH44PtENjR4FcMIYeNQtgJzAmdfl553LndRi9FU9NHvJ9/ZSbPRDKiikzk
+ /Lh0BOOXGKsNfiL1DSEy8fX0EvzMuqjnQ=
+X-Received: by 2002:a17:902:ef0c:b0:2d2:a952:2628 with SMTP id
+ d9443c01a7336-2d3456ccb29mr26131495ad.2.1786518180986; 
+ Wed, 12 Aug 2026 00:03:00 -0700 (PDT)
+X-Received: by 2002:a17:902:ef0c:b0:2d2:a952:2628 with SMTP id
+ d9443c01a7336-2d3456ccb29mr26131185ad.2.1786518180581; 
+ Wed, 12 Aug 2026 00:03:00 -0700 (PDT)
+Received: from hu-slingapp-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31cf3c08163sm6796627eec.7.2026.08.12.00.02.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 00:03:00 -0700 (PDT)
+From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+To: qemu-riscv@nongnu.org
+Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH v6 10/10] tests/functional: add initial RPMI virt guest smoke
+Date: Wed, 12 Aug 2026 12:31:32 +0530
+Message-ID: <20260812070133.3059679-11-subrahmanya.lingappa@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260812070133.3059679-1-subrahmanya.lingappa@oss.qualcomm.com>
+References: <20260812070133.3059679-1-subrahmanya.lingappa@oss.qualcomm.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: YfXburpf/sxVK9wgmCj5riXptQzFqByCMfMhRWVfJ0XV8ryz30ysFmfYrKowg86gxB3l6I2EdatI50WrwKvuEPGHa3JgssFK0e1Kd0r4HFOUhdf5pr0D+dIyCqxyQLFkD8kFrIhP8APxMSElZlOBAfgzDNGJjGiAthEjIEiwZWG70kYLA9mfGan4jGzh08R31OCm3qelyPuiefUjdEjNYCB4KN9wswuY6gGrbZ3mIIgIj1PZNMJqcLw3tpPJoSxWyHZ7JlmuU2z5Qyq2G7s+uSm0caJSRz/Nuym9uOeYhyn6eYJVAqymOa7XXjvNHX4XBppJF4P9nK2W+DXwpVQFqg==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5fd548f1-0ad7-4bb7-c42f-08def83fb10e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Aug 2026 07:02:37.0050 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: oQVHkflFocGmokoVrMPzePMh9h7jIcmLn1eYbZP4xvuL9ZFHQP9IapKsr/MrgErlOh42jFguCITVVtTLBYJsTsTrkkaZW+kGHZNfmUcuuFE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR11MB6411
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: BdJ51GPllE2GJPjHkhXLTNUaSAKiiC_7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfXxQkJRI+NaEKt
+ zbJvsfB+h1f4vovOsEfpPgKmycBjLIiHJRW7KgmRHwv/nppGYl+e2AdwfXedSKUsMwGJSkhG/gH
+ s+AlvrMJjJxkU4Q1yeTyhF+Nub96yeg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfXwOPBoU3bnG/2
+ HNmC4JpG1Y2fS9jNsCnh1sk7W9YIFI07lSf9nHdOCu2eRfHfRoqPsFWJopxp8nLf6M95uU3Q4L9
+ r2Vz3waLE5D6TZMukqbZa27CTmGhQ7dvPZ9ZEc5oyV1tS0+S9HDRfj4GGYVJeB+B5YDaJr5A4Fq
+ UF8RRJeK8WSFHZeV/zWGrozU/ACWh4vwI0SEzwmxYmmq2xhbv0NtFbzaNYOM80zz+j3d1yQ78hY
+ +hKvnmVCLs9hFZjV6NitLTmb52nF/xjuwWHceBFEq7PCez8f8kFizABZxtYWnJjDcPn4CSxqyhs
+ 3/17c+Yy+tr5TmG+lkpsKUS6o6oPP4frE1eucqCReWm9eTqt2IjvlvOPrl+goKhidPoQc021oL6
+ PXA07ogIisyc3UMSTE7FjgKYc/rjEceTY/6ECRr1t472iI3vuHhWOMQnwCI0LALDt879T3RV1lu
+ GMLh6+d3t9wMFS7Ny4w==
+X-Proofpoint-ORIG-GUID: BdJ51GPllE2GJPjHkhXLTNUaSAKiiC_7
+X-Authority-Analysis: v=2.4 cv=LIRWhpW9 c=1 sm=1 tr=0 ts=6a7c1aa5 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=Cnp7e1vNUpDCZbjFkkcA:9 a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120054
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -196,99 +158,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IENsw6ltZW50IE1BVEhJRVUt
-LURSSUYgPGNsZW1lbnQubWF0aGlldS0tZHJpZkBidWxsLmNvbT4NCj5TdWJqZWN0OiBSZTogW1BB
-VENIIHYzIDIvNl0gYmFja2VuZHMvaW9tbXVmZDogSW50cm9kdWNlDQo+aW9tbXVmZF9iYWNrZW5k
-X2FsbG9jX2ZhdWx0cQ0KPg0KPg0KPk9uIFRodSwgMjAyNi0wOC0wNiBhdCAwMzozOCAtMDQwMCwg
-Wmhlbnpob25nIER1YW4gd3JvdGU6DQo+PiBBZGQgYSBuZXcgaGVscGVyIGZvciBJT01NVV9GQVVM
-VF9RVUVVRV9BTExPQyBpb2N0bCB0byBhbGxvY2F0ZSBhIGZhdWx0DQo+PiBoYW5kbGluZyBvYmpl
-Y3Qgd2hpY2ggd2lsbCBiZSB1c2VkIGluIGh3cHQgYWxsb2NhdGlvbi4NCj4+DQo+PiBTaWduZWQt
-b2ZmLWJ5OiBaaGVuemhvbmcgRHVhbg0KPjxbemhlbnpob25nLmR1YW5AaW50ZWwuY29tXShtYWls
-dG86emhlbnpob25nLmR1YW5AaW50ZWwuY29tKT4NCj4+IFRlc3RlZC1ieTogWHVkb25nIEhhbw0K
-PjxbeHVkb25nLmhhb0BpbnRlbC5jb21dKG1haWx0bzp4dWRvbmcuaGFvQGludGVsLmNvbSk+DQo+
-PiAtLS0NCj4+IMKgaW5jbHVkZS9zeXN0ZW0vaW9tbXVmZC5oIHzCoCAzICsrKw0KPj4gwqBiYWNr
-ZW5kcy9pb21tdWZkLmPCoMKgwqDCoMKgwqAgfCAyMSArKysrKysrKysrKysrKysrKysrKysNCj4+
-IMKgYmFja2VuZHMvdHJhY2UtZXZlbnRzwqDCoMKgIHzCoCAxICsNCj4+IMKgMyBmaWxlcyBjaGFu
-Z2VkLCAyNSBpbnNlcnRpb25zKCspDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvc3lzdGVt
-L2lvbW11ZmQuaCBiL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQuaA0KPj4gaW5kZXggMTdiZjFhMzcy
-Ny4uYzI4Nzc2N2IxMSAxMDA2NDQNCj4+IC0tLSBhL2luY2x1ZGUvc3lzdGVtL2lvbW11ZmQuaA0K
-Pj4gKysrIGIvaW5jbHVkZS9zeXN0ZW0vaW9tbXVmZC5oDQo+PiBAQCAtMTA2LDYgKzEwNiw5IEBA
-IGJvb2wNCj5pb21tdWZkX2JhY2tlbmRfYWxsb2NfdmV2ZW50cShJT01NVUZEQmFja2VuZCAqYmUs
-IHVpbnQzMl90IHZpb21tdV9pZCwNCj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgKm91dF92ZXZl
-bnRxX2lkLA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJfdCAqb3V0X3ZldmVudHFfZmQsIEVycm9y
-ICoqZXJycCk7DQo+Pg0KPj4gK2Jvb2wgaW9tbXVmZF9iYWNrZW5kX2FsbG9jX2ZhdWx0cShJT01N
-VUZEQmFja2VuZCAqYmUsIHVpbnQzMl90DQo+KmZhdWx0X2lkLA0KPj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpbnQg
-KmZhdWx0X2ZkLCBFcnJvciAqKmVycnApOw0KPj4gKw0KPj4gwqBib29sIGlvbW11ZmRfYmFja2Vu
-ZF9hbGxvY19od19xdWV1ZShJT01NVUZEQmFja2VuZCAqYmUsIHVpbnQzMl90DQo+dmlvbW11X2lk
-LA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHF1ZXVlX3R5cGUsIHVpbnQzMl90IGluZGV4
-LA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQ2NF90IGFkZHIsIHVpbnQ2NF90IGxlbmd0aCwNCj4+
-IGRpZmYgLS1naXQgYS9iYWNrZW5kcy9pb21tdWZkLmMgYi9iYWNrZW5kcy9pb21tdWZkLmMNCj4+
-IGluZGV4IDE1ZjJhNTEzNTAuLmZjY2Q0ZTY2MGMgMTAwNjQ0DQo+PiAtLS0gYS9iYWNrZW5kcy9p
-b21tdWZkLmMNCj4+ICsrKyBiL2JhY2tlbmRzL2lvbW11ZmQuYw0KPj4gQEAgLTU1NCw2ICs1NTQs
-MjcgQEAgYm9vbA0KPmlvbW11ZmRfYmFja2VuZF9hbGxvY192ZXZlbnRxKElPTU1VRkRCYWNrZW5k
-ICpiZSwgdWludDMyX3QgdmlvbW11X2lkLA0KPj4gwqDCoMKgwqAgcmV0dXJuIHRydWU7DQo+PiDC
-oH0NCj4+DQo+PiArYm9vbCBpb21tdWZkX2JhY2tlbmRfYWxsb2NfZmF1bHRxKElPTU1VRkRCYWNr
-ZW5kICpiZSwgdWludDMyX3QNCj4qZmF1bHRfaWQsDQo+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGludCAqZmF1bHRf
-ZmQsIEVycm9yICoqZXJycCkNCj4NCj5vdXRfZmF1bHRfZmQgaW4gdGhlIHN0cnVjdHVyZSBpcyBf
-X3UzMi4NCj5JbiB0aGUgc2FtZSBmaWxlLCBpb21tdWZkX2JhY2tlbmRfYWxsb2NfdmV2ZW50cSBp
-cyBpbiBhIHNpbWlsYXIgc2l0dWF0aW9uIGFuZCB0aGUNCj4NCj5GdW5jdGlvbnMgaW4gdGhlIHNh
-bWUgZmlsZSBuYW1lIG91dHB1dCBwYXJhbWV0ZXJzIHVzaW5nIHRoZSAib3V0XyIgcHJlZml4Lg0K
-Pk1heWJlIHdlIHNob3VsZCBkbyB0aGUgc2FtZS4NCj4NCj5Nb3Jlb3ZlciwgdGhlIG91dHB1dCBm
-YXVsdF9mZCBpcyBfX3UzMiBpbiB0aGUgaW9tbXVfZmF1bHRfYWxsb2Mgc3RydWN0dXJlLg0KPldl
-IHNob3VsZCBhdm9pZCB1c2luZyBpbnQgaGVyZS4gaW9tbXVmZF9iYWNrZW5kX2FsbG9jX3ZldmVu
-dHEgaXMgcXVpdGUgc2ltaWxhciBpbg0KPnRoaXMgcmVzcGVjdC4NCg0KSSBwcmV2aW91c2x5IGNo
-YW5nZWQgdGhpcyB0byBpbnQgKmZhdWx0X2ZkIGZvbGxvd2luZyBATGl1LCBZaSBMJ3MgZWFybGll
-ciBzdWdnZXN0aW9uIHRvDQpoYW5kbGUgdGhlIGNvbnZlcnNpb24gZGlyZWN0bHkgd2l0aGluIHRo
-ZSBoZWxwZXIuIEhvd2V2ZXIsIHVzaW5nIHVpbnQzMl90ICpvdXRfZmF1bHRfZmQNCmluc3RlYWQg
-YWxpZ25zIGJldHRlciB3aXRoIHRoZSBwYXR0ZXJuIGVzdGFibGlzaGVkIGJ5IGlvbW11ZmRfYmFj
-a2VuZF9hbGxvY192ZXZlbnRxDQppbiB0aGUgZXhhY3Qgc2FtZSBmaWxlLiBJJ2xsIGRvIHRoYXQg
-dW5sZXNzIFlpIGhhcyBzdHJvbmcgb2JqZWN0aW9ucy4NCg0KVGhhbmtzDQpaaGVuemhvbmcNCg0K
-Pg0KPj4gK3sNCj4+ICvCoMKgwqAgaW50IHJldCwgZmQgPSBiZS0+ZmQ7DQo+PiArwqDCoMKgIHN0
-cnVjdCBpb21tdV9mYXVsdF9hbGxvYyBjbWQgPSB7DQo+PiArwqDCoMKgwqDCoMKgwqAgLnNpemUg
-PSBzaXplb2YoY21kKSwNCj4+ICvCoMKgwqAgfTsNCj4+ICsNCj4+ICvCoMKgwqAgcmV0ID0gaW9j
-dGwoZmQsIElPTU1VX0ZBVUxUX1FVRVVFX0FMTE9DLCAmY21kKTsNCj4+ICvCoMKgwqAgdHJhY2Vf
-aW9tbXVmZF9iYWNrZW5kX2FsbG9jX2ZhdWx0cShmZCwgY21kLm91dF9mYXVsdF9pZCwNCj5jbWQu
-b3V0X2ZhdWx0X2ZkLA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0KTsNCj4+ICvCoMKgwqAg
-aWYgKHJldCkgew0KPj4gK8KgwqDCoMKgwqDCoMKgIGVycm9yX3NldGdfZXJybm8oZXJycCwgZXJy
-bm8sICJGYWlsZWQgdG8gYWxsb2NhdGUgZmF1bHQgcXVldWUiKTsNCj4+ICvCoMKgwqDCoMKgwqDC
-oCByZXR1cm4gZmFsc2U7DQo+PiArwqDCoMKgIH0NCj4+ICsNCj4+ICvCoMKgwqAgKmZhdWx0X2lk
-ID0gY21kLm91dF9mYXVsdF9pZDsNCj4+ICvCoMKgwqAgKmZhdWx0X2ZkID0gY21kLm91dF9mYXVs
-dF9mZDsNCj4+ICvCoMKgwqAgcmV0dXJuIHRydWU7DQo+PiArfQ0KPj4gKw0KPj4gwqBib29sIGlv
-bW11ZmRfYmFja2VuZF9hbGxvY19od19xdWV1ZShJT01NVUZEQmFja2VuZCAqYmUsIHVpbnQzMl90
-DQo+dmlvbW11X2lkLA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHF1ZXVlX3R5cGUsIHVp
-bnQzMl90IGluZGV4LA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQ2NF90IGFkZHIsIHVpbnQ2NF90
-IGxlbmd0aCwNCj4+IGRpZmYgLS1naXQgYS9iYWNrZW5kcy90cmFjZS1ldmVudHMgYi9iYWNrZW5k
-cy90cmFjZS1ldmVudHMNCj4+IGluZGV4IDAwOWEyNWIwYmUuLmRiYmM4ZWE3Y2QgMTAwNjQ0DQo+
-PiAtLS0gYS9iYWNrZW5kcy90cmFjZS1ldmVudHMNCj4+ICsrKyBiL2JhY2tlbmRzL3RyYWNlLWV2
-ZW50cw0KPj4gQEAgLTE3LDYgKzE3LDcgQEAgaW9tbXVmZF9iYWNrZW5kX3VubWFwX2RtYV9ub25f
-ZXhpc3QoaW50IGlvbW11ZmQsDQo+dWludDMyX3QgaW9hcywgdWludDY0X3QgaW92YSwgdQ0KPj4g
-wqBpb21tdWZkX2JhY2tlbmRfdW5tYXBfZG1hKGludCBpb21tdWZkLCB1aW50MzJfdCBpb2FzLCB1
-aW50NjRfdCBpb3ZhLA0KPnVpbnQ2NF90IHNpemUsIGludCByZXQpICIgaW9tbXVmZD0lZCBpb2Fz
-PSVkIGlvdmE9MHglIlBSSXg2NCIgc2l6ZT0weCUiUFJJeDY0Ig0KPiglZCkiDQo+PiDCoGlvbW11
-ZmRfYmFja2VuZF9hbGxvY19pb2FzKGludCBpb21tdWZkLCB1aW50MzJfdCBpb2FzKSAiIGlvbW11
-ZmQ9JWQNCj5pb2FzPSVkIg0KPj4gwqBpb21tdWZkX2JhY2tlbmRfYWxsb2NfaHdwdChpbnQgaW9t
-bXVmZCwgdWludDMyX3QgZGV2X2lkLCB1aW50MzJfdCBwdF9pZCwNCj51aW50MzJfdCBmbGFncywg
-dWludDMyX3QgaHdwdF90eXBlLCB1aW50MzJfdCBsZW4sIHVpbnQ2NF90IGRhdGFfcHRyLCB1aW50
-MzJfdA0KPm91dF9od3B0X2lkLCBpbnQgcmV0KSAiIGlvbW11ZmQ9JWQgZGV2X2lkPSV1IHB0X2lk
-PSV1IGZsYWdzPTB4JXgNCj5od3B0X3R5cGU9JXUgbGVuPSV1IGRhdGFfcHRyPTB4JSJQUkl4NjQi
-IG91dF9od3B0PSV1ICglZCkiDQo+PiAraW9tbXVmZF9iYWNrZW5kX2FsbG9jX2ZhdWx0cShpbnQg
-aW9tbXVmZCwgdWludDMyX3QgZmF1bHRfaWQsIGludCBmYXVsdF9mZCwgaW50DQo+cmV0KSAiIGlv
-bW11ZmQ9JWQgZmF1bHRfaWQ9JXUgZmF1bHRfZmQ9JWQgKCVkKSINCj4+IMKgaW9tbXVmZF9iYWNr
-ZW5kX2ZyZWVfaWQoaW50IGlvbW11ZmQsIHVpbnQzMl90IGlkLCBpbnQgcmV0KSAiIGlvbW11ZmQ9
-JWQNCj5pZD0lZCAoJWQpIg0KPj4gwqBpb21tdWZkX2JhY2tlbmRfc2V0X2RpcnR5KGludCBpb21t
-dWZkLCB1aW50MzJfdCBod3B0X2lkLCBib29sIHN0YXJ0LCBpbnQgcmV0KSAiDQo+aW9tbXVmZD0l
-ZCBod3B0PSV1IGVuYWJsZT0lZCAoJWQpIg0KPj4gwqBpb21tdWZkX2JhY2tlbmRfZ2V0X2RpcnR5
-X2JpdG1hcChpbnQgaW9tbXVmZCwgdWludDMyX3QgaHdwdF9pZCwgdWludDY0X3QNCj5pb3ZhLCB1
-aW50NjRfdCBzaXplLCB1aW50NjRfdCBmbGFncywgdWludDY0X3QgcGFnZV9zaXplLCBpbnQgcmV0
-KSAiIGlvbW11ZmQ9JWQNCj5od3B0PSV1IGlvdmE9MHglIlBSSXg2NCIgc2l6ZT0weCUiUFJJeDY0
-IiBmbGFncz0weCUiUFJJeDY0Ig0KPnBhZ2Vfc2l6ZT0weCUiUFJJeDY0IiAoJWQpIg0K
+Boot an RPMI-enabled RISC-V virt guest and exercise the initial HSM,
+system suspend, and system reset paths.
+
+Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+---
+ tests/functional/riscv64/meson.build       |   2 +
+ tests/functional/riscv64/test_rpmi_virt.py | 171 +++++++++++++++++++++
+ 2 files changed, 173 insertions(+)
+ create mode 100644 tests/functional/riscv64/test_rpmi_virt.py
+
+diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
+index 5871211e89..619a0735fa 100644
+--- a/tests/functional/riscv64/meson.build
++++ b/tests/functional/riscv64/meson.build
+@@ -3,6 +3,7 @@
+ test_riscv64_timeouts = {
+   'boston' : 120,
+   'tuxrun' : 120,
++  'rpmi_virt' : 300,
+ }
+ 
+ tests_riscv64_system_quick = [
+@@ -15,4 +16,5 @@ tests_riscv64_system_thorough = [
+   'boston',
+   'sifive_u',
+   'tuxrun',
++  'rpmi_virt',
+ ]
+diff --git a/tests/functional/riscv64/test_rpmi_virt.py b/tests/functional/riscv64/test_rpmi_virt.py
+new file mode 100644
+index 0000000000..174c2b01a8
+--- /dev/null
++++ b/tests/functional/riscv64/test_rpmi_virt.py
+@@ -0,0 +1,171 @@
++#!/usr/bin/env python3
++#
++# RISC-V virt RPMI Linux guest integration tests
++#
++# Copyright (c) 2026 Qualcomm Technologies, Inc.
++#
++# Author:
++#  Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++from pathlib import Path
++import subprocess
++import time
++
++from qemu_test import QemuSystemTest
++from qemu_test import exec_command
++from qemu_test import exec_command_and_wait_for_pattern
++from qemu_test import get_qemu_img
++from qemu_test import wait_for_console_pattern
++
++
++class RiscvVirtRpmiGuestTest(QemuSystemTest):
++    """Boot Linux and exercise RPMI-backed services through guest APIs.
++
++    This test intentionally keeps guest artifacts external. Set:
++
++      QEMU_TEST_RPMI_OPENSBI=/path/to/fw_jump.bin
++      QEMU_TEST_RPMI_KERNEL=/path/to/Image
++      QEMU_TEST_RPMI_ROOTFS=/path/to/rootfs.ext4
++
++    Exact RPMI packet command-ID coverage remains in riscv-rpmi qtests. This
++    functional test verifies Linux/OpenSBI integration paths visible from a
++    real guest without adding probe hooks to production RPMI sources.
++    """
++
++    timeout = 360
++    PROMPT = 'root@tuxtest:~#'
++
++    def _require_path(self, env_name):
++        value = os.getenv(env_name)
++        if not value:
++            self.skipTest(f'{env_name} is required')
++        path = Path(value)
++        if not path.exists():
++            self.skipTest(f'{env_name} does not exist: {path}')
++        return path
++
++    def setUp(self):
++        super().setUp()
++        self.opensbi = self._require_path('QEMU_TEST_RPMI_OPENSBI')
++        self.kernel = self._require_path('QEMU_TEST_RPMI_KERNEL')
++        self.rootfs = self._require_path('QEMU_TEST_RPMI_ROOTFS')
++        self.qemu_img = get_qemu_img(self)
++
++    def _create_rootfs_overlay(self):
++        overlay = Path(self.scratch_file('rootfs.qcow2'))
++        subprocess.run([
++            self.qemu_img, 'create', '-q', '-f', 'qcow2', '-F', 'raw',
++            '-b', str(self.rootfs), str(overlay),
++        ], check=True)
++        return overlay
++
++    def _boot_guest(self, smp=4):
++        self.set_machine('virt')
++        self.machine = 'virt,rpmi=on,aia=aplic-imsic'
++        rootfs_overlay = self._create_rootfs_overlay()
++
++        self.vm.set_console()
++        self.vm.add_args(
++            '-cpu', 'rv64',
++            '-smp', str(smp),
++            '-m', '1G',
++            '-bios', str(self.opensbi),
++            '-kernel', str(self.kernel),
++            '-append', 'printk.time=0 root=/dev/vda rw console=ttyS0 '
++                       'earlycon=sbi loglevel=8 no_console_suspend',
++            '-blockdev', 'driver=qcow2,file.driver=file,'
++                         f'file.filename={rootfs_overlay},node-name=hd0',
++            '-device', 'virtio-blk-device,drive=hd0',
++        )
++        self.vm.launch()
++
++    def _expect_rpmi_firmware_and_linux(self):
++        patterns = [
++            'Platform HSM Device         : rpmi-hsm',
++            'Platform Suspend Device     : rpmi-system-suspend',
++            'Standard SBI Extensions',
++            'susp',
++            'tuxtest login:',
++        ]
++        for pattern in patterns:
++            wait_for_console_pattern(self, pattern)
++        exec_command_and_wait_for_pattern(self, 'root', self.PROMPT)
++
++    def _run_marker_command(self, command, marker, failure_marker=None):
++        out = exec_command_and_wait_for_pattern(self, command, marker,
++                                                failure_message=failure_marker)
++        self.assertIn(marker.encode(), out)
++        return out
++
++    def _validate_hsm_boot_start(self, online_cpus):
++        self._run_marker_command(
++            'echo RPMI_LINUX_HSM_START_BEGIN; '
++            'cat /sys/devices/system/cpu/present; '
++            'online=$(cat /sys/devices/system/cpu/online); '
++            'echo "$online"; '
++            f'if [ "$online" = "{online_cpus}" ]; '
++            'then echo RPMI_LINUX_HSM_START_PASS; '
++            'else echo RPMI_LINUX_HSM_START_FAIL; fi',
++            'RPMI_LINUX_HSM_START_PASS', 'RPMI_LINUX_HSM_START_FAIL')
++
++    def _validate_hsm_stop(self):
++        self._run_marker_command(
++            'echo RPMI_LINUX_HSM_STOP_BEGIN; '
++            'if [ -w /sys/devices/system/cpu/cpu1/online ]; then '
++            'echo 0 > /sys/devices/system/cpu/cpu1/online && '
++            '[ "$(cat /sys/devices/system/cpu/online)" = 0 ] && '
++            'echo RPMI_LINUX_HSM_STOP_PASS || echo RPMI_LINUX_HSM_STOP_FAIL; '
++            'else echo RPMI_LINUX_HSM_STOP_FAIL; fi',
++            'RPMI_LINUX_HSM_STOP_PASS', 'RPMI_LINUX_HSM_STOP_FAIL')
++
++    def _validate_system_suspend(self):
++        exec_command(
++            self,
++            'echo RPMI_LINUX_SUSPEND_BEGIN; '
++            'if grep -qw mem /sys/power/state; then '
++            'echo mem > /sys/power/state; '
++            'else echo RPMI_LINUX_SUSPEND_FAIL; fi')
++        wait_for_console_pattern(self, 'RPMI_LINUX_SUSPEND_BEGIN')
++        wait_for_console_pattern(self, 'PM: suspend entry')
++        self.vm.event_wait('SUSPEND', 10)
++        self.vm.qmp('system_wakeup')
++        self.vm.event_wait('WAKEUP', 10)
++        wait_for_console_pattern(self, 'PM: suspend exit')
++        wait_for_console_pattern(self, self.PROMPT)
++        self._run_marker_command(
++            'marker=RPMI_LINUX_WAKEUP; echo ${marker}_PASS',
++            'RPMI_LINUX_WAKEUP_PASS')
++
++    def _validate_reset_poweroff(self):
++        exec_command(self, 'echo RPMI_LINUX_RESET_POWEROFF_BEGIN; poweroff -f')
++        wait_for_console_pattern(self, 'RPMI_LINUX_RESET_POWEROFF_BEGIN')
++        wait_for_console_pattern(self, 'reboot: Power down')
++        self.vm.wait()
++
++    def test_linux_guest_service_enumeration(self):
++        self._boot_guest(smp=4)
++        self._expect_rpmi_firmware_and_linux()
++        self._validate_hsm_boot_start('0-3')
++
++    def test_linux_guest_hsm_stop(self):
++        self._boot_guest(smp=2)
++        self._expect_rpmi_firmware_and_linux()
++        self._validate_hsm_boot_start('0-1')
++        self._validate_hsm_stop()
++
++    def test_linux_guest_suspend(self):
++        self._boot_guest(smp=1)
++        self._expect_rpmi_firmware_and_linux()
++        self._validate_system_suspend()
++
++    def test_linux_guest_reset_poweroff(self):
++        self._boot_guest(smp=1)
++        self._expect_rpmi_firmware_and_linux()
++        self._validate_reset_poweroff()
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.43.0
+
 
