@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A439EC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3684C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMx-0003J3-V3; Wed, 12 Aug 2026 10:55:52 -0400
+	id 1wuALF-0007SY-SW; Wed, 12 Aug 2026 10:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALo-0000VV-6H; Wed, 12 Aug 2026 10:54:40 -0400
+ id 1wuAJM-0005P4-3T; Wed, 12 Aug 2026 10:52:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALk-0007Rg-5G; Wed, 12 Aug 2026 10:54:39 -0400
+ id 1wuAJK-0006rN-4s; Wed, 12 Aug 2026 10:52:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=lxSGRkRrXyDUQbQkyAB0HOqLTUi2At9dNb4DpP3pJfY=;
+ t=1786546231; bh=2cYK9vE6S/he+5dI2p82JGGbqbithEi0e850Vl4PZao=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XmyCLoPSIFJ3Fea0BIRpwR0rfM1ZDN63baSLMdz7xnOJtMYQXOEg8nSEVQs78A6sp
- ETcJb5fMLWQLLGISqPseSHL2ZFXOidPCu/EHUMBZQAWElxINca+jwnV2/rBcLsMcko
- JkEC5E1K78EoiYD4r6w53r+cQ812u2lGRnCrpXda2p0XCwwvPgb+C1BIhYVQUDMh8B
- d0fdSXudRM1r2sDl8OcP2yLImHeEJvXnR5qT4x83skxg0joywbGelz0oHezTE8or6D
- dNONEnr6LujXi1QAJrLWHWv2CA1bYySdiLaKFNVOnweR9L7+GvKFAQba4cbvG0terv
- NF+YQJR6kL5RQ==
+ b=Wz/ub9SFa4iFaASo4p9uir5sdVHLLK3zHCUyJ9uDOoSUTbY1K2dOQ0RJjp3Q94JjP
+ IBHkDAQi+z5lQjswhz4yl5BnTVhCoNQB5FeWnUZqnHRRosk95m4vQuExQL+7hS1o/F
+ 5KIhe/1K7c4eJO/sFcqARF/gBRP8OoOZ/aAvD76TfdrDycsfMj9gwxhAk+TXVXB/by
+ IM0MnD60JK/Kts/bWwENj0kjcEJeABvrvDHFHNCeuZe5fh3cQ2DrFuzEVlQ+arxrhl
+ o+bM/jDmoAMxxDRuiZdjUXmbgJbPkSDkz6Xv2rM30XIYxIbu+pCBG1RappBDVIc0Cx
+ GD9d6Qt1y7bFQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0237C1CA632;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 324971CA617;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5CFAE409D74;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C960409D53;
+ Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id BA7622F9BF; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id EA6F92F989; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
- Wei Xu <wexu@redhat.com>, huntr bubble <bubblehuntr@gmail.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 046/120] virtio-net: fix OOB read in RSC receive path
-Date: Wed, 12 Aug 2026 17:48:29 +0300
-Message-ID: <20260812144955.649205-46-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 019/120] scsi-disk: protect against guest sending
+ truncated data for MODE SELECT commands
+Date: Wed, 12 Aug 2026 17:48:02 +0300
+Message-ID: <20260812144955.649205-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -72,48 +72,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The RSC receive path parses incoming frames at guest_hdr_len byte
-offsets, but the backend buffer contains only host_hdr_len bytes of vnet
-header. If the lengths differ, RSC would read at the wrong offset and
-cause an OOB read.
+scsi-disk has a MODE SELECT path where a truncated mode page can be
+allowed by a compatibility quirk, but the parser continues to use the
+page's declared length rather than the number of bytes actually remaining
+in the request buffer.  This means that scsi_disk_check_mode_select() and
+scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
+potentially up to the emulated age's length.
 
-This is no longer possible after the previous patch, but the assumption
-seem fragile. Along the defense in depth lines, let's validate.  To
-ensure we are not breaking any valid setups by mistake, warn and fall
-back to the normal receive path when host_hdr_len != guest_hdr_len.
+Clamping page_len (the size of the page) to len (whatever the
+guest provided) ensures that scsi_disk_check_mode_select() and
+scsi_disk_apply_mode_select() do not access anything beyond bounds;
+however, this requires care to accept and handle truncated input in
+those two functions.
 
-Fixes: CVE-2026-63321
-Fixes: 2974e916df ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Cc: Jason Wang <jasowangio@gmail.com>
-Cc: Yuri Benditovich <ybendito@redhat.com>
-Cc: Wei Xu <wexu@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
-Reported-by: huntr bubble <bubblehuntr@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <f261dcd535edc890f8636d8ae5ac1007bc32b8b4.1784891251.git.mst@redhat.com>
-(cherry picked from commit 52c7bb369b23dfcafb6e6d90665c777797b55e88)
+In particular, until scsi_disk_check_mode_select()'s first call to
+mode_sense_page() the number of bytes to be cleared in mode_current[] is
+unknown, so zero it completely.  And for everything else, be conservative
+and use len when providing inputs to other functions; but at the same time,
+ensure all accesses to inbuf[] are bound by expected_len.
+
+Note that pages longer than the emulated one are still rejected.
+
+Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
+Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d149a11c6c825e182cfb5db7d1d1492a049e82ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index f0e3beb2903..2761644dfd9 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2674,6 +2674,13 @@ static ssize_t virtio_net_receive(NetClientState *nc, const uint8_t *buf,
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 5ba5b46c4f4..85d0bd0b811 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1524,7 +1524,7 @@ static void scsi_disk_emulate_read_data(SCSIRequest *req)
+ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+                                        uint8_t *inbuf, int inlen)
  {
-     VirtIONet *n = qemu_get_nic_opaque(nc);
-     if ((n->rsc4_enabled || n->rsc6_enabled)) {
-+        /* this never happens with existing backends, but just in case. */
-+        if (n->host_hdr_len != n->guest_hdr_len) {
-+            warn_report_once("virtio-net: host_hdr_len %zu != guest_hdr_len %zu, "
-+                             "skipping RSC",
-+                             n->host_hdr_len, n->guest_hdr_len);
-+            return virtio_net_do_receive(nc, buf, size);
+-    uint8_t mode_current[SCSI_MAX_MODE_LEN];
++    uint8_t mode_current[SCSI_MAX_MODE_LEN] = { 0 };
+     uint8_t mode_changeable[SCSI_MAX_MODE_LEN];
+     uint8_t *p;
+     int len, expected_len, changeable_len, i;
+@@ -1543,21 +1543,21 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+     }
+ 
+     p = mode_current;
+-    memset(mode_current, 0, inlen + 2);
+     len = mode_sense_page(s, page, &p, 0);
+-    if (len < 0 || len != expected_len) {
++    /* The guest may send a truncated page, but not a longer one.  */
++    if (len < 0 || expected_len > len) {
+         return -1;
+     }
+ 
+     p = mode_changeable;
+-    memset(mode_changeable, 0, inlen + 2);
++    memset(mode_changeable, 0, len);
+     changeable_len = mode_sense_page(s, page, &p, 1);
+     assert(changeable_len == len);
+ 
+     /* Check that unchangeable bits are the same as what MODE SENSE
+      * would return.
+      */
+-    for (i = 2; i < len; i++) {
++    for (i = 2; i < expected_len; i++) {
+         if (((mode_current[i] ^ inbuf[i - 2]) & ~mode_changeable[i]) != 0) {
+             return -1;
+         }
+@@ -1565,11 +1565,15 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+     return 0;
+ }
+ 
+-static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page, uint8_t *p)
++/* Note p may be truncated, so check any bytes you access against len.  */
++static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page,
++                                        uint8_t *p, int len)
+ {
+     switch (page) {
+     case MODE_PAGE_CACHING:
+-        blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
++        if (len > 0) {
++            blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
 +        }
-         return virtio_net_rsc_receive(nc, buf, size);
-     } else {
-         return virtio_net_do_receive(nc, buf, size);
+         break;
+ 
+     default:
+@@ -1612,6 +1616,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+                 goto invalid_param_len;
+             }
+             trace_scsi_disk_mode_select_page_truncated(page, page_len, len);
++            page_len = len;
+         }
+ 
+         if (!change) {
+@@ -1619,7 +1624,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
+                 goto invalid_param;
+             }
+         } else {
+-            scsi_disk_apply_mode_select(s, page, p);
++            scsi_disk_apply_mode_select(s, page, p, page_len);
+         }
+ 
+         p += page_len;
 -- 
 2.47.3
 
