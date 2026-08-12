@@ -4,59 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A89DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3214C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:16:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuANH-0003sW-2v; Wed, 12 Aug 2026 10:56:11 -0400
+	id 1wuAgj-0008Mw-SI; Wed, 12 Aug 2026 11:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAN3-0003ZK-AD; Wed, 12 Aug 2026 10:55:57 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgG-00083z-Tv
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMp-0008BM-Ez; Wed, 12 Aug 2026 10:55:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=D2Y5HlJq3sSM3xZ5KP0YI7ByRSxAEVA+NjHffR0iTDg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ME689irrutMhO/tcLNNRUUxZPTNsFnrPcddJrK7D86gbPH11f/QXOABtxodiI+z0i
- k9+mRJr/+0GmjBEvcrfYwF0ESQhWk9BMdHGgXziIMRTW15IjPEq4nAvEkc/8njXLu9
- lx7i6fKj8S9karOKFXFb/5fkKhrBX6A4JDGRlDk4OBDRtC56UEf3RnqWYXPWZl9WfO
- xs330W5bgHhWnhedfeziLh16OKd1zMmysffrckENsLr5DMvWxhxVvqpy9apHg64rYU
- CKGe3TaRffz5XnpuvF14mE37ancazBb7Td3Jc9RcfcK+4njgRoVgAKr6Ytfr8tZ75B
- tELfb0OqXZyBw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AECD1CA63A;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 94DB5409D7C;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F33282F9CF; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgF-0007Bi-48
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786547746;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JcxukroejjvEu8ghEHMU38aY+6/s5Jxqaaa6rod+xLU=;
+ b=SJQfw6vq/yRIPqjXzs51Z32Dr6+sjq7HK+n3mIVwcsDjlBy1LZYKc3k1lzrh9os7LK1ABf
+ 5TVqHHmwuUEKNo5Nt2BouCV3Tf2r+4ntEJ3MlPuBjKnJiR0ZTfgkhK762NBIfMC2pIoKLY
+ VOycTRalHN/4PTXPUoJd5N5Wx2qo7Pw=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-vtVGVIIuPOa1Ya0FsfMbDQ-1; Wed, 12 Aug 2026 11:15:26 -0400
+X-MC-Unique: vtVGVIIuPOa1Ya0FsfMbDQ-1
+X-Mimecast-MFC-AGG-ID: vtVGVIIuPOa1Ya0FsfMbDQ_1786547725
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51bf321d786so17315071cf.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786547725; x=1787152525; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JcxukroejjvEu8ghEHMU38aY+6/s5Jxqaaa6rod+xLU=;
+ b=U6/hwy9eoUz++wqGpyPEMbIgNaeV0NYaP1Du9aHK9bXPXPKmT3wJicbrLhSdJDS7C8
+ V0j4OiTX6r2/FnRqEiICSF3q6OKcTJkKHdobNrrZjvZ0Od9lwBxSBcs2B0uzPN4NvqJn
+ MmCtghRJwd8b7ObgGOJsUzGxqsgqobPNg+H0Km8PtLPLRYyePJZMYEFHdtXwzfmb0VrY
+ z6yQGlzNSK6XRi/toAJfamshbbAn4/LJ2nbMezsjZN69Ckq67AtDP0OP2la9QC14mjQY
+ aIgUe6SF9QCaqryRx5pFNG5x2cbcKwOZLVYiPfuc9KISmpct3yiTIHfC7+WSdo1l9PIu
+ iSEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786547725; x=1787152525;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JcxukroejjvEu8ghEHMU38aY+6/s5Jxqaaa6rod+xLU=;
+ b=US/6wgHt4QMpJwL/ROlpILdIlLioVFeq/0TN+YFPSLwb4Xib7KdpJf5EuygZ6k9p3k
+ b1+cCwTHwOdUppSSdQXfF11hSXp1CpQhNSZtV9dQcBaOZZ//RoLH9ehTneeadRwZ6mhT
+ TDRk8Tz53dzPctj2KmiXG7fbHHty1gk01iw8Rn25pih84RyBjkDEGA1bI2nqZYTo1DI1
+ jreHBk0cJjSJLJQSm7DAhn8slQMr46BFHwiOXaBoxkm+ztIiIZSHXU8vWpb6h+4H+U6g
+ r1UEIoLNHwdn2rJWk91AcjcZXae3/jpx/+ykw2r4P8073bRSU/HZQFF2hoaYNBz6Hc5K
+ c7ZQ==
+X-Gm-Message-State: AOJu0YynoGknEW6rZRyBYlqHsGV1BNl58O9C6Y9+0gEuHSFOl70DDFHb
+ 5K+rptOPj7Lj/tzfV+f9g2uTiipwL/BhvI/KilpXdEeJOuym997mGCBID7e/OPJEpjSncZg9Mu0
+ RcHBNAVE2jddjDLs3qmTm1fMQOVUx3onZcP2fB2i5yCAaRg2i4p68g3laPZp7lkUdph7qC8Fxlf
+ pDBHz9xtePZrAY368N3kntDEEAX0h78i95Cu0IFQ==
+X-Gm-Gg: AR+sD11xZSDdC3OEdiICRNgKiTP+YJaujMgGx6IJLRsZ5+dXhZlB+h2r+9g5zCRDzaK
+ JhM1h1Cb5ynZzXHZ7BcnxHVEaSiZkiraTK4cmR6QLkcZC2cHAY7Lj9h8RX+KLD/uWwIFYbt+NBh
+ wMdWFEj4QDWFjMUKfnXnNDG9JtF99gDF3ztbzAzsC0gMopwx/U+4WUUKQPMIVKMGAR4sue3A8Sh
+ aJeGBFbN1woQQ6VTCF0tJ+HddryWX0PC648C2jLW0crfjbszRm40Tqc9SDHj2w7PJXE2yYVwbdf
+ IvZX+GXDXwxWHpG/UTGztuItd1qITA62zywELLTHNxVEckQfItl9fjjxrCXC7UDyYg==
+X-Received: by 2002:a05:622a:4d91:b0:51c:1d18:2fe9 with SMTP id
+ d75a77b69052e-52d6469cf4amr49008631cf.5.1786547725288; 
+ Wed, 12 Aug 2026 08:15:25 -0700 (PDT)
+X-Received: by 2002:a05:622a:4d91:b0:51c:1d18:2fe9 with SMTP id
+ d75a77b69052e-52d6469cf4amr49007491cf.5.1786547724552; 
+ Wed, 12 Aug 2026 08:15:24 -0700 (PDT)
+Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 08:15:18 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 054/120] vhost-user: assert nregions within limit
-Date: Wed, 12 Aug 2026 17:48:37 +0300
-Message-ID: <20260812144955.649205-54-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 03/10] system/memory: Use memmove() for directly accessible
+ regions
+Date: Wed, 12 Aug 2026 11:14:36 -0400
+Message-ID: <20260812151444.2611689-4-peterx@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260812151444.2611689-1-peterx@redhat.com>
+References: <20260812151444.2611689-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,40 +118,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Gavin Shan <gshan@redhat.com>
 
-scrub_shadow_regions() and vhost_user_add_remove_regions() use
-fixed-size stack arrays sized to VHOST_USER_MAX_RAM_SLOTS and index them
-with dev->mem->nregions.
+Similar to what's done in commit 4a73aee88140 ("softmmu: Use memmove in
+flatview_write_continue"), there are more sites where the overlapping
+source and destination buffer are allowed for the directly accessible
+regions. Use memmove() in those sites, listed as below.
 
-nregions is calculated to never overrun these, but let's add an assert
-to make sure we don't get a stack overflow if there's a bug.
+  hw/remote/vfio-user-obj.c::vfu_object_mr_rw
+  include/system/memory.h::address_space_read
+  system/physmem.c::flatview_read_continue_step
 
-Fixes: f1aeb14b08 ("Transmit vhost-user memory regions individually")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3910
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <48fb8411f67e525872fb19618a886e52b670ab7f.1784896199.git.mst@redhat.com>
-(cherry picked from commit cf89b769cdd1933796099706387d3b2a9a865cae)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20260728031731.286666-2-gshan@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ include/system/memory.h   | 2 +-
+ hw/remote/vfio-user-obj.c | 4 ++--
+ system/physmem.c          | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index a8907cca74e..945e40c448b 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -831,6 +831,9 @@ static int vhost_user_add_remove_regions(struct vhost_dev *dev,
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 2192fc9bdc..336d4e84a6 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2741,7 +2741,7 @@ MemTxResult address_space_read(const AddressSpace *as, hwaddr addr,
+             mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
+             if (len == l && memory_access_is_direct(mr, false, attrs)) {
+                 ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
+-                memcpy(buf, ptr, len);
++                memmove(buf, ptr, len);
+             } else {
+                 result = flatview_read_continue(fv, addr, attrs, buf, len,
+                                                 addr1, l, mr);
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index 87fa7b6572..ea50270628 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -375,9 +375,9 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
+         ram_ptr = memory_region_get_ram_ptr(mr);
  
-     msg->hdr.size = sizeof(msg->payload.mem_reg);
+         if (is_write) {
+-            memcpy((ram_ptr + offset), buf, size);
++            memmove((ram_ptr + offset), buf, size);
+         } else {
+-            memcpy(buf, (ram_ptr + offset), size);
++            memmove(buf, (ram_ptr + offset), size);
+         }
  
-+    /* Ensure nregions fits the fixed-size arrays used below. */
-+    assert(dev->mem->nregions <= VHOST_USER_MAX_RAM_SLOTS);
-+
-     /* Find the regions which need to be removed or added. */
-     scrub_shadow_regions(dev, add_reg, &nr_add_reg, rem_reg, &nr_rem_reg,
-                          shadow_pcb, track_ramblocks);
+         return 0;
+diff --git a/system/physmem.c b/system/physmem.c
+index c21ea92915..2c42e365cb 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3363,7 +3363,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
+         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
+                                                false, false);
+ 
+-        memcpy(buf, ram_ptr, *l);
++        memmove(buf, ram_ptr, *l);
+ 
+         return MEMTX_OK;
+     }
 -- 
-2.47.3
+2.54.0
 
 
