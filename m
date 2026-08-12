@@ -4,94 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3152DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485D1C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBwe-0001o3-Ot; Wed, 12 Aug 2026 12:36:48 -0400
+	id 1wuByn-0002tI-Nh; Wed, 12 Aug 2026 12:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuBwd-0001hG-MQ; Wed, 12 Aug 2026 12:36:47 -0400
-Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuBwb-0004iq-LO; Wed, 12 Aug 2026 12:36:47 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.phl.internal (Postfix) with ESMTP id 60C51EC00AF;
- Wed, 12 Aug 2026 12:36:44 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 12:36:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786552604; x=1786639004; bh=y5IC2fVU/9n8r0WP/Sp0oYTjC3/Z6asO
- iEmUnext6Iw=; b=n4fF23+Tl+xwoY/i8m+eVAC/YaMUSM0QSqnpIoZvJRAJ48fz
- rSMSVK9DnMBoZxu6jTgLUBdtGfLfs6xo5ILd+OI8Syrn0t+yiKYK4pRd/UMxrC/q
- SotemEdrR52SmSxiuOJAwNtkHjJWvJjM0Xuuxdj4jCOXY4qznkWSDInXNxc1uMDE
- ztUQnQThBGL2H34xPv3uXpLv3q6vNa854HkGaQ8k1J6CKvh6ipRRaC0TiAZWw1O+
- vWMxPkO1WrHSbxQWtCc800VMF9cQim2IwPoGE3oxqU41qhuqimC/cS+8qvdJlJx6
- nlzqwBtGcQtXd6m3SlT4GPWSu+5rr2mT9F+hhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786552604; x=
- 1786639004; bh=y5IC2fVU/9n8r0WP/Sp0oYTjC3/Z6asOiEmUnext6Iw=; b=T
- RluRJtudjrOwwfSnJgFiIuyaPQtocx/YhN2CZDH8mXnIkaNwwJ9if4rDEPnVvtKK
- LyF7j+nkGaiD110jXkkbsLxIQZJr/ecCjK+nQVXBNGZsxcBfv175exND+qRo+6xX
- Jap0ZBS3Yk7i2XwisTukPkO9Z4shE9/pWPdSLtXR8prhL0cTwHhneDmBzor7MfXJ
- 4X5u5UOVz40DmbvKlWIAuvlxUF/Ze1y3XX4a2abLF5rm7AwzQr8hBxyg9kw64D4B
- L5gBZROZLmqZ6ZX5rK2cvV6nQ8+3SidDo9d2GrrXkwmK5B3txT8PeLDoBjEvuR9i
- vCb8PuSeJNTey0zikDWrA==
-X-ME-Sender: <xms:G6F8ajFPOK_ajsdReQuGX2zuo0vKDprxdSRjo2bQUZYa4tdp5rNs2Q>
- <xme:G6F8ainCGbBcqC_wzL73FFzwdIaGawlSLyJhtlGo3sSMnJkOHSbwaeH4YM27iOLtb
- voORYqxswR73PbHdbOwdNmr7SG-GB14iIGsqY0GLocoRghRC7ir8sk>
-X-ME-Received: <xmr:G6F8anZdeJZSsSbHycV1_J6b4Mxu0PHGe1rM0RxG1mM-hgmOCOi5N6X5mRQTO5Zl71Hlxg>
-X-ME-Proxy-Cause: dmFkZTGMtFjU0zdUK3JgzUZIlA4x2okjR12GkZIlO05lEwnxzAqMFLm/X21V+UaUQRFNuo
- SpgU6XSxNfDybXKmnhHRwh6/b22u+Lh0aUNaP6vPOXv8ZeVEyGZVtkJxNZwUn+o+9XtO1e
- 2ZimnX8eOxl3hY2sjhnuhRJTR0250kjCEkx+obc8UNtpcguCh3Lk9VjYJIhII05KgO/vn8
- ql5J1uSSeJMX6mIb7zAn5mXIVl8K/22zldnE8uHUaHwowKkgGzyee6wBxJHf8GTev4L1bK
- 43mypmkHvtgDKGFJDACVOPJM5IeZ6GSJBnJ2jw6POEdDIu7rW4E1WjlCM8dxK7U5PDSHpl
- L3BVOIep6x2sf6pkPW0lAsPMGY3M3nEXNtox5hgvYH5tvSBm3Q9U9fYMhkgQkfRbTPZuCB
- 6Zu2p1YeUlnMkI8PfkXWAKRD42SZhHPL3aIhFr70JnXq/8QV8YX+bYawTZWnqD6+loXGBm
- rQk/c5gSA8jlByVFDC4II76Gzp2+AXUs4t/GJpS7lexUkxJG44xOmiL4x09OBXPWbC/hb7
- k+uTIOJxxyI6Si3ARaoT6fjEQw9kOpv6Bd8/kL+N6Dnxq6WR0LXEbZNP1D5dR0AXgGsx6A
- uzDxQ3a9w2sFNxyDeSA15dgn0IwELcO2IX82F68KhB87EdikIRE5kpluUXqA
-X-ME-Proxy: <xmx:G6F8anE9r0Cu2lL1UIRrgTD5RB1qf3fh6sY2q_jSmaIFbZmGA5E-2g>
- <xmx:G6F8aoKDseV7_pyfZWN74MMS7NMQH4jdimpNOKQvh5kvlSsm1BsHGw>
- <xmx:G6F8aiMq4ZKjq3nWrvcNG0KnkBvKD4q-xHUsNd55rDDh-qDiBRFTbA>
- <xmx:G6F8aom-2Hu4sXL4eaal4XMriTCJy3xd9riyVq-RUkhVqsJRcXbk0A>
- <xmx:HKF8arWmuZ0RD9SJEbYsNKIlybOi30KL1ggjh381hQ5OEdxbkjqwRPUo>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 12:36:43 -0400 (EDT)
-Message-ID: <9e606a9e83adafb2f58ea2c5386f7fb6d5fbf6c1.camel@alistair23.me>
-Subject: Re: [RFC PATCH v1 00/17] target/riscv: Add KVM CoVE confidential VM
- support
-From: Alistair <alistair@alistair23.me>
-To: Baolong Duan <blduan@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair23@gmail.com, dbarboza@ventanamicro.com, 
- cxx194832@alibaba-inc.com, zengxiangyi.zxy@alibaba-inc.com
-Date: Thu, 13 Aug 2026 02:36:43 +1000
-In-Reply-To: <20260731035011.4178103-1-blduan@linux.alibaba.com>
-References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wuByk-0002sr-UJ
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:38:58 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wuByi-0005Tq-Af
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:38:58 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-39f927721f2so9027281fa.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:38:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786552734; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ORr02HNiQ2QNxmy6B8BCz3U5b0IUBAzEpKYkm5y5f2Gfp+6GHXUoX84iMrxImA9ZYf
+ FDwZaKBuumhIHKMAz8SKutMiAF4CT1oynvU8gkwW0bBk53cGyb1PgDGmSP+l73f3Srfb
+ /XZxe1oX4aOrWreSI9NfeBF/7Qx+qMLRvuagjZhOonn4WbUPDJ1fEwdQyC0CSC+hFY3A
+ 4LAvol0EWCQRMiPyZLyNSG2flFohi+0Znyhdu9x48v433fMBE2kckEwvVhr+WXtJTYtg
+ 8V5EYSO/2TL7xAQeQy82kTapOfZtlz5maHCIRpcSP6Ly/MRz1BoHnCNYCzTB3W0TJquV
+ dQpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=er2JAzN5OD34l82CIdazFDAjL51GEIp29Fo7+TqDdWA=;
+ fh=YYFlP8b5nG0xp43ekYQGYSQr9uembBeNxJ16OtaRW/0=;
+ b=GH85tKq8CYQB1m8MwJKKq3vChG8w1xqjPkKiNFyj0Kbhcpqnkvo8Hi9shdM58oHHef
+ iZuKqC7756WtkUc+LPlifeh/8jD0ZzVZZnxtuAfGsbUcFOXmEGP6xIV5LHRRkbP51/ww
+ nvJo1smRQNT6+uS6GMKeqXNHX5p3iNmPFhJcZyevHbAw3IFIL1+uMRLxQbalf9sGzzw0
+ 3dsZSM/M4xnalHA2XKEGGGEArS4ty1j/CQ1whmTAFTncXU1hc6KLBoaWa1STWhGv9OTe
+ BLE5iMgeY7pXzXGy9foIVqKVdrEEh17y4kMDw0nVt/uH9uq/GQ6Y6UkKF756JvB6fuIG
+ EWOA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786552734; x=1787157534; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=er2JAzN5OD34l82CIdazFDAjL51GEIp29Fo7+TqDdWA=;
+ b=Sruy1EALLbqlYcDhxv781BijC8xjI6Jz8GH6SbWbEsvbJmC4Q0eT0NtKRcY02gwJyU
+ FJxtP7YAjrdCKRyx0sNdIvr7OJdlGRu8E7C8Hhn42f3tmVjAOYpW2S8Q1roDDrS4ibxy
+ aADgKaVBlvrxkPiSBwz7fpP349pnWZXIFBiB6Qybg3DFuNyaz+tsY0Fc3PtJAwvmdnb1
+ FPMCRaJDD0ArPHklrhAZi1hSlx9YxIq8TIk9csmKD4kB0ogf3mM9GhP8rVJrKMcY1w9B
+ D7M2wewdx0InSHX0Z4uPTfBkqFMA0MRxPON3K3ni6NlCaircx2yw+xTr4J1Zc35gTHlt
+ 5cnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786552734; x=1787157534;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=er2JAzN5OD34l82CIdazFDAjL51GEIp29Fo7+TqDdWA=;
+ b=MGMWsnuN7gROxrAQKvp8kvSAYJORK968R059yBh7ScmY2zdyceY1b8WGSUIURE4tuK
+ N5UGPhXYDrlJYiDSoB9T3WOYosYIEzFzekDnquJURoi/day1ALlbbVKWQnGNReA0gjoI
+ C9dFjUtIFLkDWqVFFiMAeTVnJfBpIDFBEB9lKwGoggkEvcGLRnLzzYp4Zj5mXi4WhbMd
+ G1tQ4V4eoIKmwJ8u1jErs2cjqGwadzeF3K5xj0SxZ53LjblTLZFDuJQJVwVsZFDyizcl
+ NwYPc+g4bDGaUnHWh1S9w3I54RQnxeg51odAaOsrUGqz8FBtHC3VT+Qi5aV+yG6/GvSA
+ LKAw==
+X-Gm-Message-State: AOJu0Yz7FGfMFQuLyWpuuUXBoTcmm/VW4kyiw2g+JX1HotD8Fx9+Dj/Y
+ 7woltQRq129lhnEIkVCl6J7ZFuXYTi3SmMQwhk+B/ehqs8/kp7PXJaNqK4hCwoiscpYihngxph+
+ jPOcoWl/n6BYxFy3cdpA8irMCJBzCNfs=
+X-Gm-Gg: AR+sD1342BN10Fi9It8KB/2gwKynM3VfLRDaSZFLMocqBq6eqBFkI0z7yMuSpbWk6nI
+ 69PJdQqfnXC/MiqHS3qeLuEgcd2NXxOEGyEHjZictp2yBMBpAALPnOh9wRG+RB14nVa7U4AFm45
+ m2t+AGk2la8J7qW+KRiDFRSLDuezbNxfYNtpzqopjGWbjoU8BsY3qaIHZ2tWetQhc5H/VK/hi/t
+ iEKTHU4/HNxAfK1awHWUE+gQsFZgsleDOSYRdaMfRmpcklDUjMVNJf1kUryBWpnfod0yD+hT6Xp
+ xgSriP7czHBjEyOd1UO9Uf5EMKKxSvwUYHYwA+G+ZdZRxePwI8szA+ZxVjTgsRShuxa9UweGlTR
+ 0
+X-Received: by 2002:a2e:a554:0:b0:39c:7130:f0db with SMTP id
+ 38308e7fff4ca-3a10d22b3f1mr7786601fa.6.1786552733543; Wed, 12 Aug 2026
+ 09:38:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260801023628.22665-1-aadeshveer07@gmail.com>
+ <20260801023628.22665-8-aadeshveer07@gmail.com>
+ <CA++cPvLsRpqcqhPg4fY_uhnZqeET0OpdxDDM1i4_rGFuR_4Hag@mail.gmail.com>
+ <annw8X51cEa6yvdp@x1.local>
+In-Reply-To: <annw8X51cEa6yvdp@x1.local>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+Date: Wed, 12 Aug 2026 22:08:38 +0530
+X-Gm-Features: AUfX_mwYZRqWdcWNk1RTSi53bokcx2MwIUpcfTS0WtEfKzPTex6vr6824PE5ZmQ
+Message-ID: <CA++cPvJ=nx=4EWHQX5yYO46Dq2Ng7-EjG5J6bhWapTtumeXdPg@mail.gmail.com>
+Subject: Re: [PATCH v4 07/11] migration: add support for fault thread to load
+ pages from disk
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com, 
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com, 
+ pierrick.bouvier@oss.qualcomm.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
-MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.146;
- envelope-from=alistair@alistair23.me; helo=fout-a3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,145 +124,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2026-07-31 at 11:49 +0800, Baolong Duan wrote:
-> This series adds RISC-V CoVE (Confidential VM Extension) support to
-> the
-> virt machine when running with KVM acceleration.
->=20
-> CoVE is the RISC-V equivalent of AMD SEV / Intel TDX, defined by the
-> RISC-V AP-TEE specification [1].=C2=A0 A CoVE guest is a TEE VM (TVM)
-
-Cool!
-
-> whose
-> memory and vCPU state are owned by the TEE Security Manager (TSM),
-> making them inaccessible to the host.
->=20
-> The series adds a "cove-vm" machine property to the virt board and
-> adapts
-> the boot flow, interrupt routing, memory registration and device
-> model to
-> the constraints of a confidential guest:
-
-Awesome! I'm excited to see RISC-V CC coming along.
-
-Thanks for the RFC. When it comes time to send patches make sure you
-check against
-https://wiki.qemu.org/Documentation/Platforms/RISCV#RISC-V_Foundation_Exten=
-sions.
-
-Notably:
- - You need to be clear about which exact spec release you are using
- - You will need to add tests
- - The support needs to be experimental for a draft spec
- - You will need to link to kernel patches to support CoVE
-
->=20
-> =C2=A0 - kernel, initrd and device tree are measured before the guest
-> starts
-> =C2=A0 - interrupts are MSI-only (IMSIC mandatory, APLIC emulated by QEMU=
-)
-> =C2=A0 - virtio uses modern PCI transport with VIRTIO_F_ACCESS_PLATFORM
-> =C2=A0 - vhost is disabled (host kernel has no access to guest memory)
-> =C2=A0 - vCPU threads are pinned (TSM binds vCPUs to harts)
-
-What firmware are you using? OpenSBI? You must need a fair few changes
-for this to work right?
-
->=20
-> The KVM interface used here (KVM_VM_TYPE_RISCV_COVE and
-> KVM_RISCV_COVE_MEASURE_REGION) is not yet part of an upstream Linux
-> release.=C2=A0 The definitions are kept locally and will be replaced by a
-> linux-headers update once the kernel side has been merged.
->=20
-> Patches 15 and 17 contain known workarounds and explicitly ask for
-> design
-> guidance:
->=20
-> =C2=A0 - Patch 15 pins vCPU threads and adds a yield after KVM_RUN to
-> avoid
-> =C2=A0=C2=A0=C2=A0 host RCU stalls.=C2=A0 Thread placement should be left=
- to the user or
-> =C2=A0=C2=A0=C2=A0 management layer.
->=20
-> =C2=A0 - Patch 17 converts system_reset into a shutdown because a TVM
-> cannot be
-> =C2=A0=C2=A0=C2=A0 recreated.=C2=A0 The proper approach may be to impleme=
-nt
-> =C2=A0=C2=A0=C2=A0 ConfidentialGuestSupport and use the existing can_rebu=
-ild_state()
-> =C2=A0=C2=A0=C2=A0 machinery.
->=20
-> Tested with QEMU TCG emulating a CoVE-capable Xuantie C930 platform.
-
-Are we able to access and test this setup?
-
->=20
-> [1] https://github.com/riscv-non-isa/riscv-ap-tee
->=20
-> Baolong Duan (17):
-> =C2=A0 docs/system/riscv/virt: document the cove-vm machine option
-
-Add the docs after adding the feature
-
-> =C2=A0 hw/riscv/virt: add the cove-vm machine property
-
-This is in the wrong order. We want to add the feature then expose it
-to users, not the other way around.
-
-Alistair
-
-> =C2=A0 target/riscv/kvm: create and measure a CoVE TEE VM
-> =C2=A0 accel/kvm: add kvm_gpa_to_userspace_addr()
-> =C2=A0 hw/riscv/boot: load and measure the images of a CoVE guest
-> =C2=A0 hw/riscv/virt: measure the device tree of a CoVE guest
-> =C2=A0 hw/riscv: adapt the device tree of a CoVE guest
-> =C2=A0 hw/riscv/virt: use MSIs only for a CoVE guest
-> =C2=A0 hw/intc/riscv_aplic: emulate the APLIC for a CoVE guest
-> =C2=A0 target/riscv/kvm: skip unsupported KVM requests for a CoVE guest
-> =C2=A0 hw/virtio: force modern virtio for a CoVE guest
-> =C2=A0 hw/net/virtio-net: do not use vhost for a CoVE guest
-> =C2=A0 accel/kvm: only register the DRAM slot of a CoVE guest
-> =C2=A0 accel/kvm: skip MSI route updates for a CoVE guest
-> =C2=A0 accel/kvm: pin the vCPU threads of a CoVE guest
-> =C2=A0 accel/kvm: terminate on a system event of a CoVE guest
-> =C2=A0 hw/core/machine-qmp-cmds: shut down a CoVE guest on reset
->=20
-> =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 6 ++
-> =C2=A0accel/kvm/kvm-accel-ops.c=C2=A0=C2=A0=C2=A0 |=C2=A0 16 +++++
-> =C2=A0accel/kvm/kvm-all.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0 60 +++++++++++++++++
-> =C2=A0docs/system/riscv/virt.rst=C2=A0=C2=A0 |=C2=A0 39 +++++++++++
-> =C2=A0hw/core/machine-qmp-cmds.c=C2=A0=C2=A0 |=C2=A0 10 +++
-> =C2=A0hw/core/machine.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 18 +++++
-> =C2=A0hw/intc/riscv_aplic.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 9 +++
-> =C2=A0hw/net/virtio-net.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0=C2=A0 9 +++
-> =C2=A0hw/riscv/boot.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 91 +++++++++++++++++++++++++
-> =C2=A0hw/riscv/fdt-common.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 4 +-
-> =C2=A0hw/riscv/trace-events=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 4 ++
-> =C2=A0hw/riscv/virt.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 125 +++++++++++++++++++++++++++++----
+On Mon, Aug 10, 2026 at 9:10=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> Aadeshveer,
+>
+> Thanks for looking into this problem.  Below solution should work in
+> general, but there's still one problem..
+>
+> On Sat, Aug 08, 2026 at 10:04:48AM +0530, Aadeshveer Singh wrote:
+> > A subtle concurrency bug exists in the current patch; this small patch
+> > should fix it.
+> >
+> > Current patch uses bitmap_test_and_clear_atomic assuming it performs
+> > an atomic operation over a range, which as pointer out by Peter is not
+> > the case. It performs atomic word by word operations making the
+> > overall operation unsafe.
+> > Therefore, keeping the same bitmap would require protection by a mutex
+> > lock which might not be as efficient. Hence this small patch resizes
+> > the pending_bmap to have exactly one bit per load operation(loading
+> > the larger of host page and guest page).
+> >
+> > Thank you,
+> > Aadeshveer Singh
+> >
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index e01ac628f5..0bf0f837ad 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -1031,9 +1031,13 @@ static bool
+> > postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
+> >      host_page =3D rb_offset / qemu_ram_pagesize(rb);
+> >      page =3D rb_offset >> qemu_target_page_bits();
+> >
+> > -    if (bitmap_test_and_clear_atomic(
+> > -            rb->pending_bmap, host_page,
+> > -            MAX(1, qemu_target_page_size() / qemu_ram_pagesize(rb)))) =
+{
+> > +    /*
+> > +     * pending_bmap needs the index of host or guest page based on whi=
+ch is
+> > +     * larger. As page index is inversely proportional to page size we=
+ use the
+> > +     * minimum of both.
+> > +     */
+> > +    if (bitmap_test_and_clear_atomic(rb->pending_bmap, MIN(host_page, =
+page),
+> > +                                     1)) {
+> >          if (find_next_bit(rb->file_bmap, page + guest_pages_to_load, p=
+age) =3D=3D
+> >              page + guest_pages_to_load) {
+> >              /* It is efficient to use UFFDIO_ZERO if all pages are zer=
+o */
+>
+> Consider the case where guest psize > host psize, here the current code
+> will invoke postcopy_place_page_zero() or postcopy_place_page() only once
+> for each guest page. But IIUC that's not enough: we'll need to loop over
+> the few host pages that is covered by the same guest page.
+I believe I missed it, confusing the page sizes. One of the solutions
+can be a loop or a cleaner solution might be to give larger length to
+ioctl command to handle multiple pages at once. This should be
+efficient but might require some changes to basic postcopy code as
+most of it hardcoded length as page size to most userfaultfd_ioctl
+calls.
+>
+> I confess this is really a rare corner case..  so you can decide how to
+> "fix" it.  There's always the option to disable this feature for now when
+> guest psize is larger than host psize (OTOH, host psize > guest psize is
+> much more common, because that's normally how huge page backed VMs work o=
+n
+> linux systems).
+>
+> Or just provide the loops over host pages, I think it will start working
+> and IIUC it's indeed the most efficient.  But then, to make it slightly
+> easier to future readers (I still think the bitmap definition will be
+> slightly hard to grasp for future readers.. your comments all over
+> hopefully will help), maybe we can also rename "page"; it implies guest
+> page index but it's not obvious.  We can make it "guest_page" to match
+> "host_page".  The "haddr" seems fine.
+I believe it should be simple to implement using direct syscalls,
+however for a cleaner solution current functions need to be made more
+modular. I will try the latter and if the changes go out of hand might
+resort to direct syscalls or loops.
+>
+> When preparing the new version, let's also split this diff into
+> corresponding patches.
+Ack
+>
+> Thanks,
+>
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 734fd90e12..52a3af9245 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -269,7 +269,14 @@ static void ramblock_pending_bmap_init(void)
+> >
+> >      RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+> >          assert(!rb->pending_bmap);
+> > -        size_t size =3D rb->max_length / qemu_ram_pagesize(rb);
+> > +        /*
+> > +         * The pending_bmap granularity must match the maximum of
+> > host and guest
+> > +         * page sizes. This ensures that every load operation checks f=
+or one
+> > +         * bit, allowing lockless thread coordination via a single-bit=
+ atomic
+> > +         * test-and-clear.
+> > +         */
+> > +        size_t size =3D rb->max_length /
+> > +                      MAX(qemu_ram_pagesize(rb), qemu_target_page_size=
+());
+> >          rb->pending_bmap =3D bitmap_new(size);
+> >          bitmap_set(rb->pending_bmap, 0, size);
+> >      }
+> >
+> > On Sat, Aug 1, 2026 at 8:07=E2=80=AFAM Aadeshveer Singh <aadeshveer07@g=
+mail.com> wrote:
+> > >
+> > > In fast snapshot load, we would like to serve faults as soon as possi=
+ble
+> > > hence loading pages directly instead of requesting a source
+> > >
+> > > Add postcopy_mapped_ram_load_page() function which serves single page
+> > > fault. It uses bitmap_test_and_clear_atomic() on pending_bmap to prev=
+ent
+> > > multiple threads from loading same page. It loads a page or pages
+> > > depending on size of guest pages and host pages, loading exactly the
+> > > larger of two. If the entire page is zero postcopy_place_page_zero() =
+is
+> > > used for efficiency and in case some part is non zero it is part by p=
+art
+> > > loaded on loop using new function postcopy_mapped_ram_load_guest_page=
+()
+> > > which loads a single guest page in a buffer which is then placed usin=
+g
+> > > postcopy_place_page(). This covers all possible cases for various pag=
+e
+> > > sizes of host and guest.
+> > >
+> > > Update postcopy_ram_fault_thread to call postcopy_mapped_ram_load_pag=
+e
+> > > instead of requesting source in case of fast snapshot load. to_src_fi=
+le
+> > > check is bypassed in fast snapshot load case as there is no source.
+> > >
+> > > Call try_mark_postcopy_blocktime_begin on every page fault to support
+> > > postcopy-blocktime.
+> > >
+> > > Allocate another channel in postcopy_temp_pages_setup(like the preemp=
+t
+> > > case), for both the fault thread and eager thread to load pages
+> > > independently.
+> > >
+> > > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> > > ---
+> > >  migration/postcopy-ram.c | 174 +++++++++++++++++++++++++++++++++++--=
+--
+> > >  1 file changed, 157 insertions(+), 17 deletions(-)
+> > >
+> > > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > > index 2e2c9fae10..1da9c4309b 100644
+> > > --- a/migration/postcopy-ram.c
+> > > +++ b/migration/postcopy-ram.c
+> > > @@ -949,6 +949,121 @@ int postcopy_wake_shared(struct PostCopyFD *pcf=
+d,
+> > >                         pagesize);
+> > >  }
+> > >
+> > > +/*
+> > > + * Load a single guest page from source file into the buffer.
+> > > + * NOTE: This is not an atomic operation and should not be used to d=
+irectly load
+> > > + * pages on page faults in postcopy. It is meant to fill in buffer t=
+hat can then
+> > > + * be copied into the faulting location using UFFDIO_COPY.
+> > > + */
+> > > +static bool postcopy_mapped_ram_load_guest_page(MigrationIncomingSta=
+te *mis,
+> > > +                                                RAMBlock *rb,
+> > > +                                                ram_addr_t rb_offset=
+, void *buf,
+> > > +                                                Error **errp)
+> > > +{
+> > > +    ERRP_GUARD();
+> > > +    size_t page =3D rb_offset / qemu_target_page_size();
+> > > +    size_t read;
+> > > +
+> > > +    if (test_bit(page, rb->file_bmap)) {
+> > > +        /*
+> > > +         * This can happen concurrently, but it's thread-safe becaus=
+e
+> > > +         * qemu_get_buffer_at() is thread-safe, and the caller will =
+be using
+> > > +         * different temporary buffers.
+> > > +         */
+> > > +        read =3D
+> > > +            qemu_get_buffer_at(mis->from_src_file, buf, qemu_target_=
+page_size(),
+> > > +                               rb->pages_offset + rb_offset, errp);
+> > > +
+> > > +        if (read !=3D qemu_target_page_size()) {
+> > > +            error_prepend(errp,
+> > > +                          "Could not read page %zu from RAM Block %s=
+: ", page,
+> > > +                          rb->idstr);
+> > > +            return false;
+> > > +        }
+> > > +    } else {
+> > > +        memset(buf, '\0', qemu_target_page_size());
+> > > +    }
+> > > +    return true;
+> > > +}
+> > > +
+> > > +/**
+> > > + * postcopy_mapped_ram_load_page() - Load pages required to access h=
+ost address.
+> > > + * @mis: Migration Incoming State.
+> > > + * @rb: RAMBlock from where page is loaded.
+> > > + * @rb_offset: Offset of target page in RAMBlock.
+> > > + * @haddr: Base of target page where to load in page.
+> > > + * @channel: Used to identify between threads and use corresponding =
+temp.
+> > > + * @errp: Set error in case of failure
+> > > + *
+> > > + * Load page(s) from RAMBlock covering the faulting address. We migh=
+t need to
+> > > + * load multiple pages in the case when host page size is greater th=
+an guest
+> > > + * page size. As userfaultfd works on granularity of host pages, we =
+might need
+> > > + * to load guest pages in single operation.
+> > > + *
+> > > + * Return: True on success.
+> > > + */
+> > > +static bool postcopy_mapped_ram_load_page(MigrationIncomingState *mi=
+s,
+> > > +                                          RAMBlock *rb, ram_addr_t r=
+b_offset,
+> > > +                                          uint64_t haddr, int channe=
+l,
+> > > +                                          Error **errp)
+> > > +{
+> > > +    void *place_source =3D mis->postcopy_tmp_pages[channel].tmp_huge=
+_page;
+> > > +    char *buffer_ptr =3D (char *)place_source;
+> > > +    size_t guest_pages_to_load =3D
+> > > +        MAX(1, qemu_ram_pagesize(rb) / qemu_target_page_size());
+> > > +    size_t host_page;
+> > > +    size_t page;
+> > > +
+> > > +    /*
+> > > +     * If guest page size is greater than host page size uffd needs =
+to load one
+> > > +     * guest page and multiple host pages, hence the offsets need to=
+ aligned
+> > > +     * with guest pages (which is automatically aligned with host pa=
+ges). In the
+> > > +     * same case we need to check range of bits on pending_bmap(bit =
+per host
+> > > +     * page) to decide whether all the page have been loaded
+> > > +     */
+> > > +    rb_offset =3D ROUND_DOWN(rb_offset, qemu_target_page_size());
+> > > +    haddr =3D ROUND_DOWN(haddr, qemu_target_page_size());
+> > > +    host_page =3D rb_offset / qemu_ram_pagesize(rb);
+> > > +    page =3D rb_offset >> qemu_target_page_bits();
+> > > +
+> > > +    if (bitmap_test_and_clear_atomic(
+> > > +            rb->pending_bmap, host_page,
+> > > +            MAX(1, qemu_target_page_size() / qemu_ram_pagesize(rb)))=
+) {
+> > > +        if (find_next_bit(rb->file_bmap, page + guest_pages_to_load,=
+ page) =3D=3D
+> > > +            page + guest_pages_to_load) {
+> > > +            /* It is efficient to use UFFDIO_ZERO if all pages are z=
+ero */
+> > > +            if (postcopy_place_page_zero(mis, (void *)haddr, rb)) {
+> > > +                error_setg(errp,
+> > > +                           "Failed to place zero page %zu from RAM B=
+lock %s at "
+> > > +                           "address %" PRIu64,
+> > > +                           page, rb->idstr, haddr);
+> > > +                return false;
+> > > +            }
+> > > +        } else {
+> > > +            size_t load_size =3D guest_pages_to_load * qemu_target_p=
+age_size();
+> > > +            size_t offset;
+> > > +
+> > > +            for (offset =3D 0; offset < load_size;
+> > > +                 offset +=3D qemu_target_page_size()) {
+> > > +                if (!postcopy_mapped_ram_load_guest_page(
+> > > +                        mis, rb, rb_offset + offset, buffer_ptr + of=
+fset,
+> > > +                        errp)) {
+> > > +                    return false;
+> > > +                }
+> > > +            }
+> > > +
+> > > +            if (postcopy_place_page(mis, (void *)haddr, place_source=
+, rb)) {
+> > > +                error_setg(errp,
+> > > +                           "Failed to place page %zu from RAM Block =
+%s at "
+> > > +                           "address %" PRIu64,
+> > > +                           page, rb->idstr, haddr);
+> > > +                return false;
+> > > +            }
+> > > +        }
+> > > +    }
+> > > +    return true;
+> > > +}
+> > > +
+> > >  /*
+> > >   * NOTE: @tid is only used when postcopy-blocktime feature is enable=
+d, and
+> > >   * also optional: when zero is provided, the fault accounting will b=
+e ignored.
+> > > @@ -1310,6 +1425,7 @@ static void *postcopy_ram_fault_thread(void *op=
+aque)
+> > >      int ret;
+> > >      size_t index;
+> > >      RAMBlock *rb =3D NULL;
+> > > +    Error *local_err =3D NULL;
+> > >
+> > >      trace_postcopy_ram_fault_thread_entry();
+> > >      rcu_register_thread();
+> > > @@ -1351,11 +1467,13 @@ static void *postcopy_ram_fault_thread(void *=
+opaque)
+> > >              break;
+> > >          }
+> > >
+> > > -        if (!mis->to_src_file) {
+> > > +        if (!migrate_mapped_ram() && !mis->to_src_file) {
+> > >              /*
+> > > -             * Possibly someone tells us that the return path is
+> > > -             * broken already using the event. We should hold until
+> > > -             * the channel is rebuilt.
+> > > +             * Possibly someone tells us that the return path is bro=
+ken already
+> > > +             * using the event. We should hold until the channel is =
+rebuilt.
+> > > +             * Fast snapshot load doesn't support pause and recover,=
+ because
+> > > +             * it's not necessary: we can fail right away when QEMU =
+just booted
+> > > +             * with nothing to lose.
+> > >               */
+> > >              postcopy_pause_fault_thread(mis);
+> > >          }
+> > > @@ -1418,18 +1536,37 @@ static void *postcopy_ram_fault_thread(void *=
+opaque)
+> > >                                                  qemu_ram_get_idstr(r=
+b),
+> > >                                                  rb_offset,
+> > >                                                  msg.arg.pagefault.fe=
+at.ptid);
+> > > +
+> > > +            if (migrate_mapped_ram()) {
+> > > +                /* Load page directly in case of fast snapshot load =
+*/
+> > > +
+> > > +                uintptr_t aligned =3D (uintptr_t)ROUND_DOWN(
+> > > +                    msg.arg.pagefault.address, qemu_ram_pagesize(rb)=
+);
+> > > +
+> > > +                if (try_mark_postcopy_blocktime_begin(
+> > > +                        mis, rb, rb_offset, (uintptr_t)aligned,
+> > > +                        msg.arg.pagefault.feat.ptid)) {
+> > > +                    if (!postcopy_mapped_ram_load_page(
+> > > +                            mis, rb, rb_offset, aligned, RAM_CHANNEL=
+_POSTCOPY,
+> > > +                            &local_err)) {
+> > > +                        error_report_err(local_err);
+> > > +                        break;
+> > > +                    }
+> > > +                }
+> > > +            } else {
+> > >  retry:
+> > > -            /*
+> > > -             * Send the request to the source - we want to request o=
+ne
+> > > -             * of our host page sizes (which is >=3D TPS)
+> > > -             */
+> > > -            ret =3D postcopy_request_page(mis, rb, rb_offset,
+> > > -                                        msg.arg.pagefault.address,
+> > > -                                        msg.arg.pagefault.feat.ptid)=
+;
+> > > -            if (ret) {
+> > > -                /* May be network failure, try to wait for recovery =
+*/
+> > > -                postcopy_pause_fault_thread(mis);
+> > > -                goto retry;
+> > > +                /*
+> > > +                 * Send the request to the source - we want to reque=
+st one
+> > > +                 * of our host page sizes (which is >=3D TPS)
+> > > +                 */
+> > > +                ret =3D postcopy_request_page(mis, rb, rb_offset,
+> > > +                                            msg.arg.pagefault.addres=
+s,
+> > > +                                            msg.arg.pagefault.feat.p=
+tid);
+> > > +                if (ret) {
+> > > +                    /* May be network failure, try to wait for recov=
+ery */
+> > > +                    postcopy_pause_fault_thread(mis);
+> > > +                    goto retry;
+> > > +                }
+> > >              }
+> > >          }
+> > >
+> > > @@ -1501,8 +1638,11 @@ static int postcopy_temp_pages_setup(Migration=
+IncomingState *mis, Error **errp)
+> > >      unsigned i, channels;
+> > >      void *temp_page;
+> > >
+> > > -    if (migrate_postcopy_preempt()) {
+> > > -        /* If preemption enabled, need extra channel for urgent requ=
+ests */
+> > > +    if (migrate_postcopy_preempt() || migrate_mapped_ram()) {
+> > > +        /*
+> > > +         * If preemption enabled or it is fast snapshot load, need e=
+xtra channel
+> > > +         * for urgent requests/faults
+> > > +         */
+> > >          mis->postcopy_channels =3D RAM_CHANNEL_MAX;
+> > >      } else {
+> > >          /* Both precopy/postcopy on the same channel */
+> > > --
+> > > 2.55.0
+> > >
+> >
+>
 > --
-> =C2=A0hw/virtio/virtio-bus.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
-12 ++++
-> =C2=A0hw/virtio/virtio-pci.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=
-=C2=A0 9 ++-
-> =C2=A0include/hw/riscv/cove.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 24 ++=
-+++++
-> =C2=A0include/hw/riscv/virt.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=
- 1 +
-> =C2=A0include/system/kvm.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0 18 +++++
-> =C2=A0target/riscv/kvm/kvm-cpu.c=C2=A0=C2=A0 |=C2=A0 67 +++++++++++++++++=
-+-
-> =C2=A0target/riscv/kvm/kvm_riscv.h |=C2=A0 10 +++
-> =C2=A019 files changed, 508 insertions(+), 24 deletions(-)
-> =C2=A0create mode 100644 include/hw/riscv/cove.h
+> Peter Xu
+>
 
