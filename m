@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B4EC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A049C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8g8-00033E-CT; Wed, 12 Aug 2026 09:07:35 -0400
+	id 1wu8fA-0002Aj-5o; Wed, 12 Aug 2026 09:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fb-0002b2-Ln; Wed, 12 Aug 2026 09:07:00 -0400
+ id 1wu8f8-00026x-3P; Wed, 12 Aug 2026 09:06:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fY-00055i-Fd; Wed, 12 Aug 2026 09:06:58 -0400
+ id 1wu8f5-0004zi-R8; Wed, 12 Aug 2026 09:06:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=qjlU81RIyK1OkCd4proyDaVf+EDt6gfvWujMqoyOj0c=;
+ t=1786539783; bh=Z+pQRnfF0hWJpexbuGJPNPabVbGRvRKIYyYPgsztAG0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MSqUDlMQLe2ehR1bJh+tphjFy8JJW2lKcc7lN8xA4II9vn0YQereUXpbOJWlk2jhG
- j79ab+KEQWZu3oOAtY5IpW+Rwlw9BUBXGrjICgAjCc8+En2TT3p5qTcxfDzps/4Y4c
- 6ybiyurI91PfCFXGzTfqk9g4XwaY5YPVDk87+kqf62uKpK+lJZI1oDy7uGE4oibBdB
- hhwUk78XACb1pGNGRi6WFtmWWb47o8ielCFCxQlq9MV3bYkLkBp6pLPuu0hQ1IYLYs
- M3c3qnhIYRY3OzD5lXPxmDvxH2CPlNthZNi0mhf0f2bnHQLz8FVILDAhjm28TI3wGC
- QFJEwPnOKhExg==
+ b=gKEeyeEh53rtQ7W5CNcJz/xbbk8Ns0KbLuITDlXLCyK12xSGmAuu5egribVHDZ4FT
+ OPgWXgYUBYbrLKMx5/XQdLTXPYxvsVHHz0DvhTPJcTP8jmtRnyI2j3JUlPkdgWNDUo
+ v1pa0iyMsSzGJIb57JZmZGmG3ITXEaJckjgyjiUxA2CupTlowOanBbgQ5KjhJ3kgFG
+ l8JRor+YNDoMdyDtLh6jOdANM1PL2nTKQI5P6Cr+xHRrlZlBZ7kL2c1Ze5eiOPFAYg
+ HtluuR2eOTjbzBghZGn119QKhym8pN3NkSduXTlrvF4iMFgGXdfgDcWZQMbYDSuxaK
+ hOasNzFBhGE8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3FD21CA4A9;
+ by isrv.corpit.ru (Postfix) with ESMTP id BD3611CA4A4;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 15710409B8C;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F2BB1409B87;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3888B2F8E8; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 2BC342F8DE; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 042/102] virtio-scsi: fix SCSIRequest leak on a bad
- request
-Date: Wed, 12 Aug 2026 16:01:17 +0300
-Message-ID: <20260812130233.621965-42-mjt@tls.msk.ru>
+ Jason Wang <jasowangio@gmail.com>, Alex Williamson <alex@shazbot.org>,
+ huntr bubble <bubblehuntr@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 037/102] virtio-net: fix short frame OOB read in
+ receive_filter()
+Date: Wed, 12 Aug 2026 16:01:12 +0300
+Message-ID: <20260812130233.621965-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -75,70 +74,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Michael S. Tsirkin" <mst@redhat.com>
 
-When virtio_scsi_handle_cmd_vq() cleans up prepared requests after a
-malformed element in the same batch, it drops only one reference even
-though virtio_scsi_handle_cmd_req_prepare() leaves each unsubmitted
-SCSIRequest with two references. This leaks the request and allows
-repeated bad batches to cause unbounded host memory growth.
+Within virtio-net, receive_filter() reads Ethernet header fields without
+any length checks.
 
-Add a second scsi_req_unref() and clear hba_private first.
+But virtio-net sets do_not_pad in NetClientState, so backends such as
+socket forward frames at the size supplied by the peer without padding
+to the Ethernet minimum. A short frame thus causes an out-of-bounds
+read.
 
-Fixes: CVE-2026-61476
-Fixes: 661e32fb3c ("virtio-scsi: convert virtio_scsi_bad_req() to use virtio_error()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3875
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>
-Cc: Greg Kurz <groug@kaod.org>
-Reported-by: Feifan Qian <bea1e@proton.me>
+Add size checks in receive_filter() and drop the truncated frames.
+
+Fixes: CVE-2026-63320
+Fixes: 3831ab2094 ("qemu:virtio-net: Enable filtering based on MAC, promisc, broadcast and allmulti (Alex Williamson)")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3626
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <5092cd4716e08d29731bfe85eea82a732b837ff4.1784895264.git.mst@redhat.com>
-(cherry picked from commit f404bf0e6504e0412a00ea64708f17d2a5e3f869)
+Message-ID: <ee5c77b96ab66b2dd518f146def8727216a5c495.1784895727.git.mst@redhat.com>
+(cherry picked from commit 772488562053c1299fc3667a49b3ff1858f83979)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 35ff216510e..259fab3c7bd 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -1515,6 +1515,13 @@ void scsi_req_unref(SCSIRequest *req)
-     }
- }
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 1f603179173..24256e866cd 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1750,10 +1750,21 @@ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+     if (n->promisc)
+         return 1;
  
-+void scsi_req_unref_detach_hba(SCSIRequest *req)
-+{
-+    /* Unref when the HBA frees hba_private separately (e.g. virtio_scsi_free_req) */
-+    req->hba_private = NULL;
-+    scsi_req_unref(req);
-+}
++    if (size < n->host_hdr_len + 14) {
++        /* Truncated ethernet packet */
++        return 0;
++    }
 +
- /* Tell the device that we finished processing this chunk of I/O.  It
-    will start the next chunk or complete the command.  */
- void scsi_req_continue(SCSIRequest *req)
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index ffa85fa25a5..454e7c9c869 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -935,7 +935,9 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
-                     req = QTAILQ_FIRST(&reqs);
-                     QTAILQ_REMOVE(&reqs, req, next);
-                     defer_call_end();
-+                    /* Drop both the ref from _prepare and the initial ref */
-                     scsi_req_unref(req->sreq);
-+                    scsi_req_unref_detach_hba(req->sreq);
-                     virtqueue_detach_element(req->vq, &req->elem, 0);
-                     virtio_scsi_free_req(req);
-                 }
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 90ee192b4d4..3c7dc845783 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -211,6 +211,7 @@ SCSIRequest *scsi_req_new(SCSIDevice *d, uint32_t tag, uint32_t lun,
- int32_t scsi_req_enqueue(SCSIRequest *req);
- SCSIRequest *scsi_req_ref(SCSIRequest *req);
- void scsi_req_unref(SCSIRequest *req);
-+void scsi_req_unref_detach_hba(SCSIRequest *req);
+     ptr += n->host_hdr_len;
  
- int scsi_bus_parse_cdb(SCSIDevice *dev, SCSICommand *cmd, uint8_t *buf,
-                        size_t buf_len, void *hba_private);
+     if (!memcmp(&ptr[12], vlan, sizeof(vlan))) {
+-        int vid = lduw_be_p(ptr + 14) & 0xfff;
++        int vid;
++
++        /* Truncated vlan packet */
++        if (size < n->host_hdr_len + 16) {
++            return 0;
++        }
++        vid = lduw_be_p(ptr + 14) & 0xfff;
+         if (!(n->vlans[vid >> 5] & (1U << (vid & 0x1f))))
+             return 0;
+     }
 -- 
 2.47.3
 
