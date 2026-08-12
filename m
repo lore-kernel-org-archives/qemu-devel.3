@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D13C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86A4CC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8jI-00016j-2s; Wed, 12 Aug 2026 09:10:48 -0400
+	id 1wu8jQ-00022z-OS; Wed, 12 Aug 2026 09:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8j6-0000JR-Qu; Wed, 12 Aug 2026 09:10:38 -0400
+ id 1wu8ig-0008Qp-HK; Wed, 12 Aug 2026 09:10:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8j4-000622-MH; Wed, 12 Aug 2026 09:10:36 -0400
+ id 1wu8ie-0005lN-G3; Wed, 12 Aug 2026 09:10:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=qEDrbBsfTF8WE2NAezqByD57qYB/HIVEbFKlYdnvRgQ=;
+ t=1786539784; bh=R3z0YtGMUG3trULc8ArRP4UlHkYiIKvKW3WfaQVExEw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cjk9o5Ris0/QkcjZbj0tomv+sHXCOtEiDbWoNlZamSKfDkL8n80r7YkAXlbqStRWG
- wsKnYqFJe7e9IUFHtLGzkll8SzCfMQ1ZPcWzrNLPtggKXqBkaw80HehMdki4kRuSkc
- J+7WYvwyrVEBbmUY42Cu8FQZaQigd7d/0GUFHDysT+wIjUeTXvRR8Wsbq3L58sdduV
- 8nMspwE2OR1BjUimGvT6Qv+2kqpyv/HI09QmaoLb1Y/+kWAtpTHESlEB+t2fTYQcvL
- XeJJQ3APySRtLK1zqCSgYgp/UAg+V+U7H2++MRdxRSRBTqyW5ts52r6wEbeUi7JLnF
- bzTwN5kwYberQ==
+ b=Y9rxVi1IgeoDYnlh4Bk2m9szDzr1WafLMOLCPEP+pFnmMTS/1RGf6lis8ZZGZdacY
+ NH6LyJcMAgSATStDLuyIMJpsHUL+Nivu8jS8gjTmm1VfRGmYXAONlJvf5GJDGiwc81
+ Dj0YcY9BnCC/rOQxGku4tPdcpCGkh6KUV9KkPgDN/1K3SySFeNZGutpZaFxLFAObjq
+ rdIq1xJghY5d2fuGyvyD7+WIVrui5bI8teIb4BWqvm4LiBwCCQvYD76xQdjEcW8Hkj
+ dIHbeExadrelzjRYD7FifuLQUqMv+GAj38MK/3pyH53oPjC+ZQWTq85W6u1LT/K2BD
+ kUBaw3YEGepFw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 719671CA4CB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 610421CA4C7;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8098409BAE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 97372409BAA;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 95A8B2F92C; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 8AEAB2F924; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, no92 <leo@managarm.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 076/102] linux-user: fix incorrect msg_l[sr]pid
- members of target_msqid_ds
-Date: Wed, 12 Aug 2026 16:01:51 +0300
-Message-ID: <20260812130233.621965-76-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jihe Wang <wangjihe.mail@gmail.com>, boy juju <agx1657748706@gmail.com>,
+ contact <contact@xchglabs.com>, david korczynski <david@adalogics.com>,
+ "Brian Chastain (off_by_one / Curious-Keeper)" <brian@scalingsuccess.io>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 072/102] hw/nvme: fix cross-namespace copy dif buffer
+ overflow
+Date: Wed, 12 Aug 2026 16:01:47 +0300
+Message-ID: <20260812130233.621965-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,57 +76,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: no92 <leo@managarm.org>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-The members are declared as __kernel_pid_t in Linux UAPI headers.
-Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
-declared as abi_int.
+The NVMe specification allows a controller with multiple namespaces to
+use different LBA formats per namespace. One implication of this is that
+the destination namespace may have a metadata area for PI, but the
+source does not. In that case, the controller shall generate the
+protection information, but the bounce buffer is erroneously allocated
+without space for that, causing a buffer overflow.
+
+Fix the allocation.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc calls handling")
-Signed-off-by: no92 <leo@managarm.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 518a4aa01b88ff814dbf8668016f3ec910426283)
+Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3387
+Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
+Reported-by: boy juju <agx1657748706@gmail.com>
+Reported-by: contact <contact@xchglabs.com>
+Reported-by: david korczynski <david@adalogics.com>
+Reported-by: Brian Chastain (off_by_one / Curious-Keeper) <brian@scalingsuccess.io>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit df67805ee9b15f4c7d54f0e6276d8f9889ec36c4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index adb9ced9f89..9a58d0a2175 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -4232,8 +4232,8 @@ struct target_msqid_ds
-     abi_ulong __msg_cbytes;
-     abi_ulong msg_qnum;
-     abi_ulong msg_qbytes;
--    abi_ulong msg_lspid;
--    abi_ulong msg_lrpid;
-+    abi_int msg_lspid;
-+    abi_int msg_lrpid;
-     abi_ulong __unused4;
-     abi_ulong __unused5;
- };
-@@ -4253,8 +4253,8 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-     host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
-     host_md->msg_qnum = tswapal(target_md->msg_qnum);
-     host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
--    host_md->msg_lspid = tswapal(target_md->msg_lspid);
--    host_md->msg_lrpid = tswapal(target_md->msg_lrpid);
-+    host_md->msg_lspid = tswap32(target_md->msg_lspid);
-+    host_md->msg_lrpid = tswap32(target_md->msg_lrpid);
-     unlock_user_struct(target_md, target_addr, 0);
-     return 0;
- }
-@@ -4274,8 +4274,8 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-     target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
-     target_md->msg_qnum = tswapal(host_md->msg_qnum);
-     target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
--    target_md->msg_lspid = tswapal(host_md->msg_lspid);
--    target_md->msg_lrpid = tswapal(host_md->msg_lrpid);
-+    target_md->msg_lspid = tswap32(host_md->msg_lspid);
-+    target_md->msg_lrpid = tswap32(host_md->msg_lrpid);
-     unlock_user_struct(target_md, target_addr, 1);
-     return 0;
- }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index a43407e37cd..258ad5f38ec 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -3190,7 +3190,7 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
+     uint16_t prinfow = ((copy->control[2] >> 2) & 0xf);
+     uint64_t slba;
+     uint32_t nlb;
+-    size_t len;
++    size_t len, blen;
+     uint16_t status;
+     uint32_t dnsid = le32_to_cpu(req->cmd.nsid);
+     uint32_t snsid = dnsid;
+@@ -3311,10 +3311,13 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
+     }
+ 
+     g_free(iocb->bounce);
+-    iocb->bounce = g_malloc_n(le16_to_cpu(sns->id_ns.mssrl),
+-                              sns->lbasz + sns->lbaf.ms);
++    assert(g_size_checked_mul(&blen, le16_to_cpu(sns->id_ns.mssrl),
++                              sns->lbasz + MAX(sns->lbaf.ms, dns->lbaf.ms)));
++
++    iocb->bounce = g_malloc(blen);
+ 
+     qemu_iovec_reset(&iocb->iov);
++    assert(len <= blen);
+     qemu_iovec_add(&iocb->iov, iocb->bounce, len);
+ 
+     block_acct_start(blk_get_stats(sns->blkconf.blk), &iocb->acct.read, 0,
 -- 
 2.47.3
 
