@@ -4,111 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F36C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0F8C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8qc-0001WZ-8w; Wed, 12 Aug 2026 09:18:31 -0400
+	id 1wu8os-0007Qo-Rx; Wed, 12 Aug 2026 09:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wu8op-0007Fc-Og
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:16:32 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wu8om-0007WE-PO
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:16:30 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6a18e24ad25so1248995a12.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:16:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786540586; cv=none;
- d=google.com; s=arc-20260327;
- b=Ifkvo4U53pUOOyXfTP3qimYcdIoTma9FGQ7uRN9udTPcasomg38/s6hgmKMvXJ+zSE
- Z0QuBtvJr5QIMtqkily0kQ5gsPumGYM+EXUVu6TmEW8QiMi4czDqOzHeAPnr9q8udtdn
- X0u16pm02tyZr00f/5KQEV5tL8NlPqw/4kLBgYtF3/vW3FWg2a9pLcPTcis/ZSSrKXhD
- iJo6xKMOaQBEXSQ6rLfqBe3pnAVoZwKCmXb/lM1Bby7s00pgV1TRtEXIhQooT5+5BKjW
- oX3HoQQwPLWpkCrzTcsxL5egk/V89EFcF5AmfwvxTDZ7G+R0XFW5TKoI3nmtFca2ZO+U
- /SRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=PQGv/LogH5Qu9sCpmkwq06bJmi7m4v8cuZy/Ye215Yo=;
- fh=Y3e9Bd+knjFMomx6LEwhk05aNuQRrOwpoJOAF/P1AzU=;
- b=COMyWd/jp7Z+79FF+rv0rw3XnJ6p5eR5M8OEOe8sgGibJJ3I5Nk8pUuH2kI2q/ONVb
- oONyMcRZBFxrcvqEtwxfc6y9cSKmVq2dsn3/Lttmg8b+NXNDCb5hV/QQCMO6RPWtp+Zl
- U7Ykg9pB9wzCRjzT6u0XTN/XBC6Kf3KvdDPTz1DiSQ0SSA8FR2j4Q34AjRayWXvj/Gz0
- lG98JQ3yOgMCI3m8khrS7tC4DPKYL/4LuICJ6VlJXnmZOM76/WncEKZ8NsLWroBpwjUE
- yQWveqR4mDdmggcWytmnv92m8d1ZqtRmvq2JkDH45/bHEPkBNvicGYLLCkoslGpL1iSM
- t8og==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wu8lb-0003ww-Ky
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:13:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wu8la-0006ku-5X
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:13:11 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CB4LEW3963393
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:13:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 09Cz3K5Hfu2RAtmfX/9+Mk8nsbjxtr/nJzshMm746yo=; b=Kq0/NGRebtY8ENTJ
+ XkxahlkjeM027cNA5Ee28l+CiVwZ9jPDPkCt9jvLzBqdnSjIBImdZpjFSIeYoZaF
+ HK8PCysUF9xSfJqzxthat2rC/UUVjrGjTdVJ5e9RDCh8tmDp9AaXgtROncrhNRGi
+ h1rImnQe7S2SrvMysqkEWOqg7Dvr/bzjaGWjvHXq9J1Y4sG7d2htGJSq54BnVjd7
+ VNAGFDTmPN/BriKLlkSEHX2D7wx845loSnEBfWzlC7fgSd6otHP/SUFY3+uu8Q3k
+ 38rF17Q7gj5Sph2s7Gs51mzShUGFE4ghBmWX1t/YnwTP+dcIvMyS86uSdXx+J+0v
+ gPs9CQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0nucgwrs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:13:09 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-92e5e38fbc5so81656185a.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786540586; x=1787145386; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1786540388; x=1787145188; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=PQGv/LogH5Qu9sCpmkwq06bJmi7m4v8cuZy/Ye215Yo=;
- b=cbfhIHmNliHyvu6i2RbBlbey+69NKr2Od0/dTi+riuTp/nboXZYns+HHnnD1iZ/Gk8
- ToVdkHiygOzx5KM8PEgk+3ShvuVuH/f+6tEkVaq5AhRUdAChaP4jgdv8Nw7EXMmi2Skj
- EScUtQPenSWvqo9vT7OvbxUYg92+CU+o2lbcx/SW3UUnaewvAdhuBD0bdCr7hPyfbNCj
- gihVwjxryxHTMbXuOGfwwiTWiK6TKkNRAfZF5Lsey+Tpzg+uROj8QQoeXcp/lfYXuh4S
- KSVoq/aaYAKzw9DxhackhQ4Pd5L7Y0AjrOWHn+3SsPBnc+xb3vbulr97M/LVJHQDHXxf
- wNeg==
+ bh=09Cz3K5Hfu2RAtmfX/9+Mk8nsbjxtr/nJzshMm746yo=;
+ b=EXSbvG4plkjRfEzsNPAIwsQEUQmePMb5beCx7WeavNGCubr++9vKDod/B6sIYg2Yqi
+ uIIM4SwmcwOT15fjDL4lGaamdJnfaeqaI14w83Z8F7/VuKc06R7FgKkE1FvIG5TpOHrs
+ Y80mhOWu4pvCIhSD8jZ3apG4njEazQJdbWSu1oaVHfZm8k/238HoejeBwxII9wRFu7/M
+ Q6gDS+cEWQmPc03UZxoFb+pWeEEfwPkm+Jz7T9iZ44BzERVLsfgt7mYVR3LpXJlHzXIo
+ CLOIXzpah1NcS37CM6hdLzfno/nRO9Z7vc7xHROvU2AEsyrdxAIDKXt6C3s1SXUt52Gy
+ 4kWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786540586; x=1787145386;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1786540388; x=1787145188;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=PQGv/LogH5Qu9sCpmkwq06bJmi7m4v8cuZy/Ye215Yo=;
- b=APq02+8Qusu7ehnMOzjd1snUoLY0Er2supqsm4MeHDWsBQ3Nll2rqL8lyM/xgSJcbq
- ozllPXWmBAlW6I54C0kdRJJEM5rVT/N8NU5TYSm46b3XqK7dMKU7IEs0CI1TDM6Ttrn3
- 7Lu+0KOdaOs92T0WGGX1xwmYcUFj5WBK+p6WdgrI5tXysBg/vIVZ2v2qkcAIxD8bpa3T
- ZPIh8DNlBEIFbahp5v5TZih2f/oCNNLMKPpV3+6xmiTDl6mUuEORW1YKhyosUC55fJrl
- wZkIA7V8SvA9KRZFch+lvJ6veZpkdyC8eHEfXSoXJMaGGB0Gk4qtzct+NMryomSkhWQY
- gpNw==
+ bh=09Cz3K5Hfu2RAtmfX/9+Mk8nsbjxtr/nJzshMm746yo=;
+ b=bQO3kUg4lx1idTz0lhRHEANllXZwqwWtyZxXqS+H1lMEU1JLdJOB96OMSF6+5UpJ6M
+ d0w9odU0N0nZi1HOq4oXo4T1R5/GH0cZ+qaS1Nf0dlc/FnJXZEM0o3XM3MF9TLu9UMJk
+ 7SX2IdH5yf1eDdXcRHd6WvrLsWsV+N6CCCwkhXsvBkV7vkAP5cry7PsZ2TxO2RoJ5rF/
+ DwaBjx3aohGrchC2T273h9aOVyEKIF/2kM9eGTn93fXu+9PIESRM08jKAhZd/BBzpDfI
+ 7xF6pG+6i2Wveym8/3EseGiXOX05ndsVoihgaj9lHy0XEZk33J3zrBpoO54HSMFqgOTQ
+ bQ6w==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp1XoQSsZve7DsBXC7TP2hTGefI4wlsURzvv3jfsZCW0npfCS11YL4iBi9Z4T9/JhWPEuwQg7UF5WjN@nongnu.org
-X-Gm-Message-State: AOJu0YwlRdWmMb51ameAhLy2moltX7G79rthULN6vrOmGT2ssSU3zF+9
- WfScjEgmOnvpmcYfKMuAF/vKWE++4+b5V14SMEbjgu9Lx/Vra47v2ltbzkQo+xBySuvZg3H/ucn
- g1ItT7j6TVbwPPDAVS0pTv+3RCBu5z/c=
-X-Gm-Gg: AR+sD125xMZQDBYV+44urYrURHpY9gsxK6HdAbr99Jx2YlLzChPWCEZi4tonvS1HBmC
- xP2D2HCEsv4gp6o1no43xKcryAkWiqr/CIlR1+yTOy99ElOXLitK/gN5WSadKwjFROTHOm2pbzY
- azh3nMDCto+0mLJ1K2Egxf58aIPc2k+NFPGCeWtjg2oQ5xszecpPF6r+QGY7OZidvTtknaG42C+
- KwWZK5qrcbNiZXDQ4X09Tp5g/ol6SbEgLdHwTW1blplXRhJXad6fPsW2WP8dRa7HigjdF7XWb56
- 0vMHgwshwQNvAcEaYsc8vjqCXxvXrWDiK17UC64i561fsI3UBDguFBk3Ncsk5utKWlLRKwgj0ar
- x9HMJvum9KhE4
-X-Received: by 2002:a05:6402:e07:b0:6a0:6978:bee0 with SMTP id
- 4fb4d7f45d1cf-6a375ed7d05mr2334100a12.9.1786540586120; Wed, 12 Aug 2026
- 06:16:26 -0700 (PDT)
+ AHgh+RrbESm/mQEUQ0bV5TsfomhSGqkGTu1KZLVDRFFRAiehmRwqRfeuoqOTCOz7KKGvAh45JeQcLIJ3jDgs@nongnu.org
+X-Gm-Message-State: AOJu0Yzf/30Mr3Iz3DoIPPWMO8k+zVe52P3Qgxowc9C6zkGse/qEIflm
+ uv8hO03mAa+2yu1sCWA3t+XGhadjnTMoSklutFK8YGXhra2AR16PnpltA8GMy1vzdTYd0lP8YC4
+ 0vPqYIxUy3iKNjs/4TcpnNp7tgeuyt3hN6+sgWX7TFDViVdzLKhjjYTCDNA==
+X-Gm-Gg: AR+sD11G1ZyMlyJwtbjJHf81Pzo1QnARc+9aznGe7y2KOdafb/rnT82tfcC4rqXggPI
+ xuAaNO0Lb/RWTIPA4YwvTjhqOkH8lyurI7Tkvj5twMR1JabhC7vyNpwMQJH78IoQMN6A1zpv22w
+ L2eGrxSpnsVNQQqMf0u007TVkgWpwthEMJIALe8bP8Yu/yboQbGN+Bkepl3XrIcRGYlaHycbV+H
+ k6lhR05+Y42H12xLAs3AzG9g3Wdo7oSWt0QveCRbWwbyr0cfsHTSnn7pLP2FSTWo7EntMHTRPFb
+ JVPkUWEvV9JFjf9GJvvb8rEzMERuXHNC6vKfoUAjKWIrfHnRKhr6YMTRpF6XwgviAME9q9xSP2q
+ n54mh2hpw997vnH4aJb30Zb0TWBF3nJVDn+R21jStWA==
+X-Received: by 2002:a05:622a:58f:b0:527:631:8d6 with SMTP id
+ d75a77b69052e-52d647d7a18mr37861871cf.25.1786540388473; 
+ Wed, 12 Aug 2026 06:13:08 -0700 (PDT)
+X-Received: by 2002:a05:622a:58f:b0:527:631:8d6 with SMTP id
+ d75a77b69052e-52d647d7a18mr37861351cf.25.1786540388089; 
+ Wed, 12 Aug 2026 06:13:08 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4997c9944ecsm49617005e9.14.2026.08.12.06.13.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 12 Aug 2026 06:13:07 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 11/16] monitor/hmp: Remove unnecessary 'monitor/monitor.h'
+ header
+Date: Wed, 12 Aug 2026 15:11:42 +0200
+Message-ID: <20260812131147.83188-12-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260812131147.83188-1-philmd@oss.qualcomm.com>
+References: <20260812131147.83188-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260811183144.190135-1-stefanha@redhat.com>
- <1c83a42a-0579-4606-89aa-ee1df66ed309@redhat.com>
-In-Reply-To: <1c83a42a-0579-4606-89aa-ee1df66ed309@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 12 Aug 2026 09:16:11 -0400
-X-Gm-Features: AUfX_mwiQfDkFmlpY-E4TDxIUqojGvPlSZHtOe6bMqf67bPWXOowyl8AQ9k3QYA
-Message-ID: <CAJSP0QVLrLVnsgnna4xFqQj9a8qme528XHESVKWXmBkxbs1-VQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: Do not use versioned pc-q35-5.2 machine
- anymore
-To: Thomas Huth <thuth@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>, 
- Darren Kenny <darren.kenny@oracle.com>, Alexander Bulekov <alxndr@bu.edu>,
- Fam Zheng <fam@euphon.net>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: DoQiGmc3CoFd-C3XHkvlYPQqwIudZVvJ
+X-Proofpoint-ORIG-GUID: DoQiGmc3CoFd-C3XHkvlYPQqwIudZVvJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX/53tsVc44PNs
+ IUOfrzJnfGROetZIikzUI192Mw5NXHm1UBzPjMO9OnckBMbebGjnjP84huWOWk7cpUuVe7tT8V9
+ DsQaxIJ17O8e0TqcinUgVL6Dv0Q+F6pnCLbZgK7pdhi5VC5urynKaU4M5wQq3wtm5SMFzBNgymU
+ W9+aVLukRMhgzhjEAtRJmOyJPnb8ThiZNZ1p/5sMPZXK1umXwfCkMw5hCjtJpll7FmUG5Lf89YU
+ dVAX2C6I83juwwuTYRUaomSpLAmWwaEhUpUgQrhV7zFLXm42jsfWmnhVFGSdfvLA0Hr+MimneV3
+ FMl2tAx7EQYyvLs5a8AvdlqbngeOHSTCwPunx4s/YokpNXYiG3AaWJ87G2uo0l90xQE4aVdaRlg
+ qP36Hm1H6zYOig9PCJ1VLXy5nMS3pmW3s7erWMq0oUzL8x4ZOOvSr39LuMqaiW+M59gY+b2My4U
+ IUUXQ6ozC/CmWM/NO5w==
+X-Authority-Analysis: v=2.4 cv=VcjH+lp9 c=1 sm=1 tr=0 ts=6a7c7165 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=-VyI5JErSVUQEuwvVSgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX169R2NwtJETe
+ QBlbHyHdEVXDGDlbzEtyiEE2CvAZ0qQ66YRg7v/jwHFKk4UGEIFkwFj7H3k/bVl7SvR3FZo9XWt
+ Y/crYIxqCnNOISOvMTY6S16E7BVnbmY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120107
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,65 +158,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 12, 2026 at 4:35=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> On 11/08/2026 20.31, Stefan Hajnoczi wrote:
-> > As of QEMU v11.1.0, the v5.2.0 machines are not usable anymore.
-> >
-> > Use the latest x86 q35 machine instead, otherwise we get:
-> >
-> >    $ qemu-system-x86_64 -M pc-q35-5.2
-> >    qemu-system-x86_64: unsupported machine type: "pc-q35-5.2"
-> >    Use -machine help to list supported machines
-> >
-> > See commit a35f8577a07 ("include/hw: add macros for deprecation
-> > & removal of versioned machines") and f59ee044067 ("include/hw/boards:
-> > cope with dev/rc versions in deprecation checks") for explanation
-> > on automatically removed versioned machines.
-> >
-> > This commit message is taken from commit 9eef3854d309 ("tests/qtest: Do
-> > not use versioned pc-q35-5.0 machine anymore") by Philippe Mathieu-Daud=
-=C3=A9
-> > <philmd@linaro.org>.
-> >
-> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> >   tests/qtest/fuzz-virtio-scsi-test.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/tests/qtest/fuzz-virtio-scsi-test.c b/tests/qtest/fuzz-vir=
-tio-scsi-test.c
-> > index e37b48b2cc1..102a5ccb67e 100644
-> > --- a/tests/qtest/fuzz-virtio-scsi-test.c
-> > +++ b/tests/qtest/fuzz-virtio-scsi-test.c
-> > @@ -19,7 +19,7 @@ static void test_mmio_oob_from_memory_region_cache(vo=
-id)
-> >   {
-> >       QTestState *s;
-> >
-> > -    s =3D qtest_init("-M pc-q35-5.2 -m 512M "
-> > +    s =3D qtest_init("-M q35 -m 512M "
-> >                      "-device virtio-scsi,num_queues=3D8,addr=3D03.0 ")=
-;
-> >
-> >       qtest_outl(s, 0xcf8, 0x80001811);
->
-> I wonder whether we should rather remove the test completely instead? Tho=
-se
-> tests based on the fuzzers rely on a certain way of doing their MMIO - if=
- a
-> newer machine type has a slightly different MMIO layout, the test basical=
-ly
-> does not test anything useful anymore. WDYT?
+Nothing here requires declarations from "monitor/monitor.h".
 
-It is likely that these hardcoded MMIO registers will continue to work
-because q35 won't change its PCI host controller or virtio-pci
-register layout.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/monitor/hmp.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-But if you feel strongly about removing it, feel free to go ahead. I'm
-not 100% sure either.
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 9258a049bff..9be7fe28988 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -16,7 +16,6 @@
+ 
+ #include "qemu/readline.h"
+ #include "qapi/qapi-types-common.h"
+-#include "monitor/monitor.h"
+ 
+ #define HMP_STUB(cmd) \
+     void hmp_##cmd(Monitor *mon, const QDict *qdict) \
+-- 
+2.53.0
 
-Stefan
 
