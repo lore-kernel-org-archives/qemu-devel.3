@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F3CC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0117AC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMz-0003Lu-1p; Wed, 12 Aug 2026 10:55:53 -0400
+	id 1wuAM4-0001SO-Ln; Wed, 12 Aug 2026 10:54:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKn-0006y2-Vm; Wed, 12 Aug 2026 10:53:40 -0400
+ id 1wuAJq-0006CQ-AQ; Wed, 12 Aug 2026 10:52:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKm-0007Bw-2S; Wed, 12 Aug 2026 10:53:37 -0400
+ id 1wuAJo-000726-Ku; Wed, 12 Aug 2026 10:52:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=tXmz/qg5fSfNsVHMY01o4JOcXqJrE+DZ0SHSy1agqi4=;
+ t=1786546231; bh=GxBvZdmNVw+XexaoMHeYdEt3/A2z0Tke7tfsJiyWlGI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=e1DBre4YfHFcZnsnXZNEwczXS7P7AYagh7OjH4wSc7GaEZIZ8rIuO5n/8hB91OeOs
- vA2KcsSeOkaJeb+HbDd5V3RXsvx536WFPsY63XgelTZWMK8eMGF4hJUoi0yyy5QRXN
- n/jrkie7UZsOBCUi2e7iIXNXkzl7hXcT5S7ECb/T9nFyaPzqNUSP2QapPd858dSSfc
- zOSl/JoTH85nMVQtIX1nNim2KCRjG7v9f4oKcGGxcxpFQz/PVN950VmnZzDL8Cf7FJ
- 1PL5CrEEIobImVP70tG3vF6oEkIGINNISHL6U1I0obgonrmsmG614UQO4JMyEzYb0/
- uzb3HFZpWoa9g==
+ b=hFQU818m3cJCo5DT3EfuXV1cCBz+nEkEALMe3OPvG4gUatBE/UuYaoings5N/D+yJ
+ bJgGrXuaEJdDy4YQqG2a0yJUJWJfi4IWNFb97vi6NKdPnEtpuOuH3yR6YCYoy9rj68
+ kjCIZNjFRHNtMj5uuNT2mDXnPB2pCV+LC3UnJw9oVt5My500Zc9SZnMfbj0ocoAsqe
+ GVUchqtB/U7uA/Vg4fJja35TKO0fr5dG/2ELPJmBVLO4B8026eRTxUz7D4MLQRd4Qe
+ DW5dq22kJ/a/KTzI+om9RQO676b3E+oWkKYQtbdEY2OY4jok1kWItcqDwedlCA6oPR
+ 7lhA96SVEApTQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC8401CA628;
+ by isrv.corpit.ru (Postfix) with ESMTP id 654191CA61E;
  Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 12E93409D68;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BF94D409D5D;
+ Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7293E2F9AB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 283352F997; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
- Haotian Jiang <jianghaotian.sunday@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
+ Thomas Huth <thuth@redhat.com>, Jia Jia <physicalmtea@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 036/120] hw/display/qxl: unregister vm_change_state
- handler and BHs
-Date: Wed, 12 Aug 2026 17:48:19 +0300
-Message-ID: <20260812144955.649205-36-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 026/120] hw/cxl: Validate Set Feature payload bounds
+Date: Wed, 12 Aug 2026 17:48:09 +0300
+Message-ID: <20260812144955.649205-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,90 +71,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <sundayjiang@tencent.com>
+From: Feifan Qian <bea1e@proton.me>
 
-qxl_realize_common() registers a vm_change_state handler via
-qemu_add_vm_change_state_handler() and creates three bottom halves
-(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
-The return value of qemu_add_vm_change_state_handler() is discarded, so
-the handler is never removed from the global list, and there is no
-PCIDeviceClass.exit callback to delete the BHs.
+cmd_features_set_feature() derives bytes_to_copy from the mailbox input
+length and uses hdr->offset as the destination offset into per-feature
+write attribute buffers.
 
-When a secondary QXL device (hotpluggable by default) is hot-unplugged
-via device_del, the PCIQXLDevice memory is freed but the vm_state
-handler and BH entries remain with dangling opaque pointers. On the
-next VM state change (stop/cont/migrate) or BH dispatch, the callback
-dereferences freed memory, causing a use-after-free.
+The patrol scrub and ECS paths already reject writes where hdr->offset
+plus bytes_to_copy exceeds the destination structure. Add the same check
+to the soft PPR, hard PPR and memory sparing feature paths before
+copying into their write attribute buffers.
 
-Fix this by storing the VMChangeStateEntry returned by
-qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
-that deletes the vm_state handler, all three BHs, and the
-guest_surfaces.cmds allocation before the device memory is freed.
+Without the check, a malformed Set Feature request can write past the
+selected write attribute object and corrupt adjacent CXL type 3 device
+state.
 
-Fixes: a19cbfb34642 ("spice: add qxl device")
-Fixes: CVE-2026-63322
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
-Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-Cc: qemu-stable@nongnu.org
-[ Marc-André - tweak commit message, add TODO ]
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
-(cherry picked from commit 4727cc883b7e81d2c30b9801af54482d65b84292)
+Fixes: 5e5a86bab830 ("hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)")
+Fixes: da5cafdc4ddd ("hw/cxl: Add emulation for memory sparing control feature")
+Signed-off-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3458
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit b71a179148ff49ed236cffb98af8891aeed94159)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 39a860c2468..c3639092ca9 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -2204,7 +2204,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
-         error_report_err(err);
-     }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index d8ba7e86252..1724b09a6dc 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1813,6 +1813,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
--    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
-+    qxl->vmstate_handler =
-+        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->soft_ppr_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
+                sppr_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
+@@ -1832,6 +1836,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
-     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
-                                           &DEVICE(qxl)->mem_reentrancy_guard);
-@@ -2478,6 +2479,18 @@ static const Property qxl_properties[] = {
-         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
- };
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->hard_ppr_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
+                hppr_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
+@@ -1851,6 +1859,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
-+static void qxl_exit(PCIDevice *dev)
-+{
-+    PCIQXLDevice *qxl = PCI_QXL(dev);
-+
-+    /* TODO: complete cleanup, error paths etc */
-+    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
-+    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
-+    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
-+    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
-+    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
-+}
-+
- static void qxl_pci_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -2485,6 +2498,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->cacheline_sparing_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
+@@ -1869,6 +1881,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
-     k->vendor_id = REDHAT_PCI_VENDOR_ID;
-     k->device_id = QXL_DEVICE_ID_STABLE;
-+    k->exit = qxl_exit;
-     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-     device_class_set_legacy_reset(dc, qxl_reset_handler);
-     dc->vmsd = &qxl_vmstate;
-diff --git a/hw/display/qxl.h b/hw/display/qxl.h
-index e0a85a5ca49..ddbab3d693a 100644
---- a/hw/display/qxl.h
-+++ b/hw/display/qxl.h
-@@ -83,6 +83,7 @@ struct PCIQXLDevice {
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->row_sparing_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
+@@ -1887,6 +1903,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
-     /* thread signaling */
-     QEMUBH             *update_irq;
-+    VMChangeStateEntry *vmstate_handler;
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->bank_sparing_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
+@@ -1905,6 +1925,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+             return CXL_MBOX_UNSUPPORTED;
+         }
  
-     /* ram pci bar */
-     QXLRam             *ram;
++        if ((uint32_t)hdr->offset + bytes_to_copy >
++            sizeof(ct3d->rank_sparing_wr_attrs)) {
++            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
++        }
+         memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+         set_feat_info->data_size += bytes_to_copy;
 -- 
 2.47.3
 
