@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E514FC5DF60
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347C9C5CFEE
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMx-0003Ek-50; Wed, 12 Aug 2026 10:55:51 -0400
+	id 1wuAN5-0003eM-NI; Wed, 12 Aug 2026 10:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKM-0006jP-7f; Wed, 12 Aug 2026 10:53:13 -0400
+ id 1wuALk-0000Gs-Cu; Wed, 12 Aug 2026 10:54:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKK-00079g-M0; Wed, 12 Aug 2026 10:53:09 -0400
+ id 1wuALg-0007Nc-3K; Wed, 12 Aug 2026 10:54:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=tSDYynFEgVkI3gwbDjfUb5SZ4xnvO60qT2dGDIJepAo=;
+ t=1786546231; bh=piYQIwliEH/EXJYw7cYp5cdipRkqr747BOF2sE0T6ek=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rcLsnp9OBIHF3fIkxJRLsMJHnF2HU28QLHTFUBjadg8Ee1O60h0RcKNWsx8x4fQX8
- qiRLkyywXxpxfHp+NT0U3hfTmfRv6ORmtqpigvp47Ldr+kYSS1e7pjZ2UZa6BXTVEh
- m6moBAW8B5d9hfYZtvs0DtrLdSyGWTDcrKtOORiahxVZy+DOFvfULYGliwhjFCFUXY
- SFIPtz8ktQBoMWDQLfp/O7v3QYultmZt4I/zVSbtvgDU5VAt93CA4sheXLWGqVX1OT
- Vn6uGVbWGvN8CqlQ/J0+00HcPqO9gMdAZPorVSoE7TrSf+MYGd2y0q9Tr6CBQHHkwD
- oT3P0wMC9h3Ag==
+ b=w7Xo7fqfiGk9YJy41idcC1gEo8eTPye+C0a8eTonh+V82uFmTG1RK/gA/RGPAQ9Z3
+ TPvM2UWOJ9lxZqQRQUtPtDzxvpsiGlgU5rj6QHEklskvksMSb2el2dO/A/V/fMtEX+
+ JMatvOoEO2KmC4XgEI71ycKAZxax+GwB9+bMbecEnYc9z/q0VyBUZVCgVSSnCSKID9
+ MEONPR3oMB9J/oOpY7DQwZTPGIkMaWkvGuWmYI0qCS9UKvmTjGhO5nnJ629c+P4Bq1
+ egUYwDW0oDocwwIiZUibDidGXdqUrVUYLYV+OeZPpJ8Xvx6FEI5417zcbCDDPClHos
+ lbTHB0TlquqEg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 932111CA624;
+ by isrv.corpit.ru (Postfix) with ESMTP id EB5531CA631;
  Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EDDC2409D63;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52333409D73;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 57F122F9A3; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id B29E52F9BD; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
+ Paolo Abeni <pabeni@redhat.com>, huntr bubble <bubblehuntr@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 032/120] hw/display/virtio-gpu: reject strides
- exceeding INT_MAX
-Date: Wed, 12 Aug 2026 17:48:15 +0300
-Message-ID: <20260812144955.649205-32-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 045/120] virtio: use masked features with
+ set_features_ex
+Date: Wed, 12 Aug 2026 17:48:28 +0300
+Message-ID: <20260812144955.649205-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,64 +73,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-VIRTIO_GPU_CMD_SET_SCANOUT_BLOB supplies a guest-controlled uint32_t
-stride, but some downstream consumers take it as int. They may interpret
-a value greater than INT_MAX as negative and cause issues:
+virtio_set_features_nocheck() calls set_features_ex
+with guest-supplied feature bits, without masking the value
+with host features (unlike set_features which gets the
+correct val & host_features).
 
-- pixman_image_create_bits() takes the stride as int, and Pixman may
-  later access memory before the blob buffer.
+This does not matter if the driver matches spec, but drivers
+can be malicious or buggy and set bit outside the host mask.
 
-- eglCreateImageKHR() also takes the stride as EGLint when importing the
-  DMA-BUF, and Mesa rejects it.
+Devices don't expect this, so unsupported guest feature bits getting set
+can break the host. In virtio-net, this can enable RSC without vnet
+header support and cause out-of-bounds reads from short packets.
 
-Reject such strides before scanout.
+Pass the masked features to set_features_ex, consistent with set_features.
 
-The check in virtio_gpu_scanout_blob_to_fb() rejects unsupported blob
-configurations early. The check added in virtio_gpu_do_set_scanout()
-covers migration post_load.
-
-Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260717-int-v1-1-8aa05e1791a0@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 9c724426f5192845b5975dc48165de06a3da50b2)
+Fixes: CVE-2026-63321
+Fixes: 64a6a336f4 ("virtio: add support for negotiating extended features")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <dfd27c9b26e442a2076f6ddc9bb3d38363d9b2da.1784891251.git.mst@redhat.com>
+(cherry picked from commit a6e0519ea8ed6fc84fab9bf9ca82c7a55780f880)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 10f55bd2ae8..9a1b0a51ed2 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -654,6 +654,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         return false;
-     }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index b337c50c747..ddf8c13e99d 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3153,7 +3153,7 @@ static int virtio_set_features_nocheck(VirtIODevice *vdev, const uint64_t *val)
+     virtio_features_and(tmp, val, vdev->host_features_ex);
  
-+    if (fb->stride > INT_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: stride is %" PRIu32
-+                      ", larger than the supported maximum (%d)\n",
-+                      __func__, fb->stride, INT_MAX);
-+        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return false;
-+    }
-+
-     g->parent_obj.enable = 1;
- 
-     if (res->blob) {
-@@ -773,6 +781,13 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-         return false;
-     }
- 
-+    if (fb->stride > INT_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: stride is %" PRIu32
-+                      ", larger than the supported maximum (%d)\n",
-+                      __func__, fb->stride, INT_MAX);
-+        return false;
-+    }
-+
-     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
- 
-     fbend = fb->offset;
+     if (k->set_features_ex) {
+-        k->set_features_ex(vdev, val);
++        k->set_features_ex(vdev, tmp);
+     } else if (k->set_features) {
+         bad = bad || virtio_features_use_ex(tmp);
+         k->set_features(vdev, tmp[0]);
 -- 
 2.47.3
 
