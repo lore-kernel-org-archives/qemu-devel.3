@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36914C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6099FC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hq-0007YO-AM; Wed, 12 Aug 2026 09:09:18 -0400
+	id 1wu8n8-00057u-9Y; Wed, 12 Aug 2026 09:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hh-0006VJ-G0; Wed, 12 Aug 2026 09:09:09 -0400
+ id 1wu8kC-0003G4-U4; Wed, 12 Aug 2026 09:11:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hf-0005dP-Sn; Wed, 12 Aug 2026 09:09:09 -0400
+ id 1wu8kB-0006G5-3K; Wed, 12 Aug 2026 09:11:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=xp70AxfNeDcIXHA3F8iKSYaauk/23Q9t3WPpr1a1Z0Y=;
+ t=1786539784; bh=/AGXMWzIUO9Ado81QEBXfUF3gEbFN84+SWuo1bltgL4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kwKJNkhXXkEZbwrKbOgxgQOsKdg+nXTkcu5Bfbb6YFOB8Jw5AZ9bpXvP0mK0WHglT
- rqCk2j5Bb41Of45XDz3MutAH6gzll+N8fJFA8/FkCiYjnD9AbrrEuFMdYmkZDf9M6F
- R0Dn58cIvRboxBnPlXnrFBzsgKi60bKRiFetIZ2FqtPc9h4x8qYEyQx4wYD9PTZokR
- ip0L3uot+u9hyz6pRyHCEjG9D7SHOEomKxRNHXirqXm9tBER2FwUOMwnBby0fkl8Uu
- wCSMi6tumyJW1VU2tOLmEVhKMwKoQNvCzZbaldu5ocmaC4dlxqkX+gignsUHBDPvMd
- tHaQl9POD4cWg==
+ b=EpAd3pBgaJqJOnwf/11kAQZBh6SnujnTzpj10ZFRQl59cQkifnsj0p1m2QnBiS0nh
+ Ckk0E3gvt2JG69FOitZ2YQygTpv4IusTfPfLpQCXt4zDt3xOw4NDRSFyI5b0n0URLE
+ /KKxm7UR1zmkByGrxJ9AV+wWl5fM/32FV0uo29KL8AS73ms98q9baVbxAYIt1ib0/d
+ Lx80ibQ7kEupQ5rrnQnC46XXnhocUZ5kC3iHCHjTFpH2l7e7QOoEAwTymS7yhFIRY+
+ gV42HQ4uH8P4jceMQoAhKmNN3Hxumix/Kut/gFm7OLoyyy7A396SHW+9D4/tMjV3+w
+ mX1Uum7cL/oGg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E4751CA4BF;
+ by isrv.corpit.ru (Postfix) with ESMTP id A4CFD1CA4D7;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7475B409BA2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DAC03409BBA;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 73F922F914; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id B6A1A2F944; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?sundayjiang=28=E8=92=8B=E6=B5=A9=E5=A4=A9=29?=
+ <sundayjiang@tencent.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 064/102] hw/net/igb: recalculate rx_desc_len on
- migration load
-Date: Wed, 12 Aug 2026 16:01:39 +0300
-Message-ID: <20260812130233.621965-64-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 088/102] hw/display/virtio-gpu: validate blob iov size
+Date: Wed, 12 Aug 2026 16:02:03 +0300
+Message-ID: <20260812130233.621965-88-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,35 +74,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-rx_desc_len is migrated as a raw uint8_t from the stream but is a
-derived value. Currently igb_rx_use_legacy_descriptor() is a stub
-that always returns false, so rx_desc_len is always set to
-sizeof(union e1000_adv_rx_desc). Recalculate it in post_load to
-prevent a crafted migration stream from setting an invalid value.
+virtio_gpu_resource_create_blob() stores the guest-controlled blob_size
+without checking it against the total size of the iov backing entries.
+Since both values are independently guest-controlled, a malicious guest
+can set blob_size much larger than the actual iov backing. Subsequent
+SET_SCANOUT_BLOB checks bounds against the inflated blob_size, allowing
+a pixman surface to be created over the undersized buffer. Any display
+refresh then reads past the actual allocation, potentially crashing
+QEMU or leaking host memory contents depending on the backing type.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Validate that the iov backing is at least as large as the declared
+blob_size in create_blob (when nr_entries > 0, since the spec permits
+deferred backing), attach_backing (when attaching to a blob resource),
+and the blob migration load path.
+
+Fixes: CVE-2026-66021
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3945
+Reported-by: "sundayjiang(蒋浩天)" <sundayjiang@tencent.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260722112449.1386162-3-lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 1e5efe6d93701d6b2b05b62822c02eee935490b5)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260729161431.1180691-1-marcandre.lureau@redhat.com>
+(cherry picked from commit 241095547a5d87ad6fa68cd674fe524e6596b958)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 39e3ce1c8fe..f362e201b14 100644
---- a/hw/net/igb_core.c
-+++ b/hw/net/igb_core.c
-@@ -4547,5 +4547,7 @@ igb_core_post_load(IGBCore *core)
-     igb_intrmgr_resume(core);
-     igb_autoneg_resume(core);
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index c34a09e82b1..34b8bb053dc 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -368,6 +368,17 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
  
-+    igb_calc_rxdesclen(core);
++    if (res->iov_cnt > 0 &&
++        iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: backing storage smaller than blob size\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        virtio_gpu_cleanup_mapping(g, res);
++        g_free(res);
++        return;
++    }
 +
-     return 0;
+     virtio_gpu_init_udmabuf(res);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
  }
+@@ -989,6 +1000,15 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         return;
+     }
+ 
++    if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: backing storage smaller than blob size\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        virtio_gpu_cleanup_mapping(g, res);
++        return;
++    }
++
+     if (!res->image) {
+         virtio_gpu_init_udmabuf(res);
+     }
+@@ -1478,6 +1498,14 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+             res->iov[i].iov_len = qemu_get_be32(f);
+         }
+ 
++        if (res->iov_cnt > 0 &&
++            iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++            g_free(res->addrs);
++            g_free(res->iov);
++            g_free(res);
++            return -EINVAL;
++        }
++
+         if (!virtio_gpu_load_restore_mapping(g, res)) {
+             g_free(res);
+             return -EINVAL;
 -- 
 2.47.3
 
