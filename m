@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0051FC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05703C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8n4-00055Z-Ve; Wed, 12 Aug 2026 09:14:43 -0400
+	id 1wu8h4-0004hL-8r; Wed, 12 Aug 2026 09:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kz-0003hW-Um; Wed, 12 Aug 2026 09:12:37 -0400
+ id 1wu8g9-00033q-Rw; Wed, 12 Aug 2026 09:07:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kw-0006U0-DV; Wed, 12 Aug 2026 09:12:33 -0400
+ id 1wu8g6-0005Fx-HY; Wed, 12 Aug 2026 09:07:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=8UCTFZCHZqIBMrdgyZWN/8lh3zerIx9tSDSECLIkk90=;
+ t=1786539783; bh=9Zyp9mobdYce4neiIE89VgKtflEMyoLOJFmFLPgWnuk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H+Hq3iaIF0/JwK4YH4GSi/nUUMmANS7rrr1rm80NndzYNu8oCtEq8v8/HCFH06csL
- hbP/tAyxCXJ+kx26jxC+MPPu56655bEeXlJfcqY41IQbg6yNDCcPR8pV90Zd2ftyLM
- cSRYOeBPYHaL5dJpP3f7aFZV3NjQW/7klbFc+32dgbWRLRrWFsQQsQsnS8Xzmy/kf9
- 2Jaf/NLnTAwhCaJhy7TjUhvT4kDbot1ywIlI9O57qqREa9bopepL71D2rlZcwIqfkf
- gFxTIb76EPVbtegX+Fp2weaBZpllaeLjIBS6sHoxh8rE4EownXmlPV0qFb6atQxbp1
- YYBxoqliZRqPQ==
+ b=T7wbR5KYooK/Wi559qmUXZY2fRzAp7mcFOrh1MVc87+f5aL53eBS4/Zbr8H4C5MLq
+ e36ZBroIrt3ukJn5gtO6OhEghxYCBi8kT6v4va+XrDFSianwuXloN8IjaOBOIuJzdF
+ PUSQ09zsQkix9dYExzKI58Pw6A6Cl3ZNH7CsG0kiCUncSKDjyHcAev/GzZSGRxJiOZ
+ TJjo9zzMKqrsfXwRGLG+xk+oGK7HM7TqmiMvB+Gkvj7UajDMipM5P5shx8apMHoO8L
+ c0sunjV+AsIHjcNUYb7KRPoCpAwV4Y6/2b/wM7a8RgPpDuVFLzdaqBi9uFUlGu/KcY
+ 0AERf1xeXwh8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C9E351CA4E0;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EDD381CA4AF;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0C3D2409BC3;
- Wed, 12 Aug 2026 16:03:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2FD50409B92;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CF2EA2F956; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 4809F2F8F4; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Minwoo Im <minwoo.im.dev@gmail.com>,
- Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 097/102] hw/nvme: cancel inflight requests on
- controller reset
-Date: Wed, 12 Aug 2026 16:02:12 +0300
-Message-ID: <20260812130233.621965-97-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jia Jia <physicalmtea@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 048/102] libvduse: validate vq size
+Date: Wed, 12 Aug 2026 16:01:23 +0300
+Message-ID: <20260812130233.621965-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,61 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im.dev@gmail.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-nvme_ctrl_reset() freed every SQ/CQ right after nvme_ns_drain(), which
-only waits out requests on a per-namespace BlockBackend. That is safe
-as long as the guest first tore down I/O queues gracefully (Delete
-I/O SQ/CQ), since nvme_del_sq() already cancels and waits for
-anything left on a queue before freeing it.
+libvduse assumes that vq size (aka vq num) is below VIRTQUEUE_MAX_SIZE
+and maps logs large enough based on this assumption.
 
-A reset that happens without that graceful sequence first (e.g. an
-abrupt/asynchronous controller reset) can still have commands
-inflight on blk_aio_*. Freeing sq/cq before those complete leaves
-their completion callbacks (nvme_rw_cb() and friends) to run against
-already-freed NvmeRequest/NvmeSQueue/NvmeCQueue memory via
-nvme_enqueue_req_completion(), causing a use-after-free/segfault.
+However, vduse_queue_enable() accepts the vq size returned through
+VDUSE_VQ_GET_INFO without validation, so a value above
+VIRTQUEUE_MAX_SIZE (1024) overruns the inflight log and causes
+out-of-bounds writes in vduse_queue_inflight_get().
 
-Run nvme_sq_cancel_inflight() over every queue in nvme_ctrl_reset()
-before the free loops, so no in-flight blk_aio_* callback can fire
-after sq/cq memory is freed.
+According to the virtio spec, vq size can only be reduced, not
+increased, so vq size must not exceed the previously configured
+max_size, but the kernel vduse module does not validate this for us, and
+we should not trust another process to follow the spec.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3398
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3883
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4068
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4072
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 86f938333e2faae7c60ca66c0809f5495c59aa4b)
-(Mjt: back-port across v11.0.0-2641-g9d378cab537d "hw/nvme: add basic live migration support"
- which changed by-queue loops upper bound from `n->params.max_ioqpairs + 1'
- to `n->num_queues')
+Validate and reject vq size values above VIRTQUEUE_MAX_SIZE.
+
+Fixes: CVE-2026-61402
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3652
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Message-ID: <bf7e71b3139875e5e00fd53970c772d6c90dc2a1.1784888961.git.mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 733a98a552e4bd68932de1f58bd6ea39b57b261c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 64241cca8f7..325b06970c6 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7657,6 +7657,18 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-         nvme_ns_drain(ns);
+diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
+index df9ca5e56f2..712b97b4c3b 100644
+--- a/subprojects/libvduse/libvduse.c
++++ b/subprojects/libvduse/libvduse.c
+@@ -902,6 +902,11 @@ static void vduse_queue_enable(VduseVirtq *vq)
+         return;
      }
  
-+    /*
-+     * Cancel and wait out every inflight command on every queue first. A
-+     * reset is not required to be preceded by the guest's graceful
-+     * Delete I/O SQ/CQ sequence, so sq/cq must not be freed below while a
-+     * blk_aio_* completion for them could still be in flight.
-+     */
-+    for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
-+        if (n->sq[i] != NULL) {
-+            nvme_sq_cancel_inflight(n->sq[i], NVME_CMD_ABORT_SQ_DEL);
-+        }
++    if (vq_info.num > VIRTQUEUE_MAX_SIZE) {
++        fprintf(stderr, "vq[%d] vring num %u exceeds max %u\n",
++                vq->index, vq_info.num, VIRTQUEUE_MAX_SIZE);
++        return;
 +    }
-+
-     for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
-         if (n->sq[i] != NULL) {
-             nvme_free_sq(n->sq[i], n);
+     vq->vring.num = vq_info.num;
+     vq->vring.desc_addr = vq_info.desc_addr;
+     vq->vring.avail_addr = vq_info.driver_addr;
 -- 
 2.47.3
 
