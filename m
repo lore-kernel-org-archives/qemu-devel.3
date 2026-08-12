@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C12C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970A2C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8eu-0001Of-Ji; Wed, 12 Aug 2026 09:06:18 -0400
+	id 1wu8jA-0000Sr-MP; Wed, 12 Aug 2026 09:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8ej-00017U-PP; Wed, 12 Aug 2026 09:06:06 -0400
+ id 1wu8ic-0008JK-AM; Wed, 12 Aug 2026 09:10:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8ei-0004yp-1l; Wed, 12 Aug 2026 09:06:05 -0400
+ id 1wu8iZ-0005kE-Dz; Wed, 12 Aug 2026 09:10:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=xa6qc6ds+/cMq8qQuyVfCm8NyU9DzJInKr0AjmnjZYw=;
+ t=1786539784; bh=JLB0XF+fgU/gH+1fEvdNn6QH1Cva8eg9N4UvEqaXAzg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Wi06HRhUaBKQSDSf4fWaC74vstwDyAZMN190S6rydhY8jdMdcXOz2spmJ5gSb22hK
- VRxk2uwx8zY6N1sLFgwO1LULMUmPArnhRZo3TYuamt40yjs/yoTVwNxcuZ/jxSMR7/
- 2gpBPyBVBr/4jO4PvCkRNseiPKPhzL6KDbe7sMAAMX/Ke0tCNzwW3pm4kEC5hMKLWj
- WNO1DVmwJG8A7JOfI2ep+webxsSWhJWFLXZmm9qstTBDewSJp5IVOe+8DdACyxR23d
- xYmi6g+VI1AcccM6bpUliozFhxBU1mgX9hqmae8HZPhPV30L657G+XA52XppY4HV1l
- 94lKDehYic3wg==
+ b=Q15asX9qtdwbAuGpOZyq3WfW1UmNUkPDI2AF9QpIavdas6bJPz9QT1uCifINDDHiu
+ k31oD3/V8uNxC/ixN/wCgMDIrI8VWoEc7Qo52WmGeGSkG1dXvOtQGOKrnk75BsHG4z
+ clq1CkDga46Udsh+avve9YHznztZ+sp5SrZJhlVM66VuoBEe3h6KEWves2caqHxB5z
+ MR/R0Oqccd3h/jg5uVKk1U/TKtIK/yCm8hia+6zd8IZYMZHJU85BDAvzswkHZxhngB
+ iIfi4cerFfSNjHn7NIHB486HyEVNDLehmL74uA/Ervj1vLGvQOCmT8SAuuIv0i5tp8
+ 6ULubZFun8dGg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B3B851CA4A2;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5CA6D1CA4C6;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EA286409B85;
- Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 92F05409BA9;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 26CB12F8DA; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 87F802F922; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Yonggang Luo <luoyonggang@gmail.com>, Miku Hatsune <anznu1l@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 035/102] hw/display/virtio-gpu: Block Rutabaga
- migration
-Date: Wed, 12 Aug 2026 16:01:10 +0300
-Message-ID: <20260812130233.621965-35-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 071/102] virtio-mmio: fix QUEUE_NUM_MAX
+Date: Wed, 12 Aug 2026 16:01:46 +0300
+Message-ID: <20260812130233.621965-71-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,70 +72,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-The migration stream encoding is not defined for Rutabaga yet.
+virtio-mmio reports VIRTQUEUE_MAX_SIZE (1024) as QUEUE_NUM_MAX for every
+queue, regardless of the size the device passes to virtio_add_queue().
 
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 5c9ef661a60ad737c61f4a872226376b5f2d424a)
+This works by accident because QEMU mostly does not care about the ring
+size - the guest is the one allocating memory here.  But this changes
+with in-order vqs where qemu is the one allocating resources.
+Now, specifying a larger vq than allocated causes an OOB memory access.
+
+To fix:
+- for new machine types, report the actual max queue size to guest
+- for old machine types, use a compat property to allocate 1k sized
+  queues
+
+Fixes: CVE-2026-50626
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3882
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <8715acbb9516e67e2a776cda6f9edf105343f788.1784930765.git.mst@redhat.com>
+Acked-by: Yonggang Luo <luoyonggang@gmail.com>
+Reported-by: Miku Hatsune <anznu1l@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit a5cff318f06cd06b37224e15ee74d64d1df8b12b)
+(Mjt: for qemu versions <11.1, always allocate 1k-sized queues,  so whole
+ change reduces to one-liner queue size override.  This becomes sufficient to
+ fix CVE-2026-50626 for <11.1.  See discussin after this patch pull request at
+ https://lore.kernel.org/qemu-devel/a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com/
+)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 3b71f389dc3..dbf9270fab0 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -9,6 +9,7 @@
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "hw/virtio/virtio-iommu.h"
-+#include "migration/blocker.h"
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index c20dc5767cd..b2ac868a4b9 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2561,6 +2561,12 @@ VirtQueue *virtio_add_queue(VirtIODevice *vdev, int queue_size,
+     if (i == VIRTIO_QUEUE_MAX || queue_size > VIRTQUEUE_MAX_SIZE)
+         abort();
  
- #include <glib/gmem.h>
- #include <rutabaga_gfx/rutabaga_gfx_ffi.h>
-@@ -1078,6 +1079,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- {
-+    ERRP_GUARD();
-     uint32_t num_capsets;
-     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
-     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
-@@ -1087,12 +1089,17 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
-     return;
- #endif
- 
--    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+    error_setg(&bdev->migration_blocker, "rutabaga is not yet migratable");
-+    if (migrate_add_blocker(&bdev->migration_blocker, errp) < 0) {
-         return;
-     }
- 
-+    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+        goto fail;
-+    }
++    /*
++     * Always set to max queue size for qemu <11.1.  See discussion starting
++     * https://lore.kernel.org/qemu-devel/a5cff318f06cd06b37224e15ee74d64d1df8b12b.1785179875.git.mst@redhat.com/
++     */
++    queue_size = VIRTQUEUE_MAX_SIZE;
 +
-     if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
--        return;
-+        goto fail;
-     }
- 
-     bdev->conf.flags |= (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED);
-@@ -1101,6 +1108,12 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- 
-     bdev->virtio_config.num_capsets = num_capsets;
-     virtio_gpu_device_realize(qdev, errp);
-+    if (!*errp) {
-+        return;
-+    }
-+
-+fail:
-+    migrate_del_blocker(&bdev->migration_blocker);
- }
- 
- static const Property virtio_gpu_rutabaga_properties[] = {
+     vdev->vq[i].vring.num = queue_size;
+     vdev->vq[i].vring.num_default = queue_size;
+     vdev->vq[i].vring.align = VIRTIO_PCI_VRING_ALIGN;
 -- 
 2.47.3
 
