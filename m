@@ -4,51 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BFDC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9233C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8cz-0004bA-U5; Wed, 12 Aug 2026 09:04:18 -0400
+	id 1wu8cx-0004Ew-V2; Wed, 12 Aug 2026 09:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cM-0003dB-PO; Wed, 12 Aug 2026 09:03:38 -0400
+ id 1wu8cL-0003d2-QX; Wed, 12 Aug 2026 09:03:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cJ-0004L7-HC; Wed, 12 Aug 2026 09:03:38 -0400
+ id 1wu8cJ-0004L6-HJ; Wed, 12 Aug 2026 09:03:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=fg98rH79oJ4M6xkqSQ54I0fiY790x532Wh5DyMjQx3g=;
+ t=1786539783; bh=0I+CfeDvH7B9ZZhT6CqoR02uoPiC09I/apI/OvL4l1o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kr43RKpfibdiggG/7OUJH10t+5f/6ayhRQUd35nwJDM24TsRhuv2KbHOvkE53wtXC
- Yxq8CmhG4z7U2KsPw6naJIY/vAAzTBmGC3BrJNsree0gCZH/AVN/CWo1H2gnSWin/0
- P8OtDHapXfld2IuLrOLko5aFE9BugcU6ugjzjqnGWwQPDyvkKx1oVvZj/joj0tK7a2
- +43KPCQ3VCwJxFYffmxsbFIhRiWj5fC2MryQqAbwbu8SrKeCt5hLuh4sGv6HsNyubY
- 9bTU5bKH9or3VLkCYMzSoRPTSlPB9+RecGgBNta49n0Uw7HSIAyRgy04D8E7lSi6sN
- 9mhR2C/cGeLDg==
+ b=Z9vAe2Yll6JpK2aSNIh/8Vf8YeKoc1shuXwss9Fg9ZtwBwtoSuMfDDY/871clrIVt
+ oIitxsX1zmFzdndq44r9QB6glHfJeaDL7yfblwiscnkmc/91M7FMDB41I7rHZzYldr
+ MMb9KiGH3cCuHrNmMWfOuKI2Z/jBIMOchnD1LFnl4oP+5PzKr2X2LcbPi7B1+45nzs
+ Zq6EYQA0jqD45i0nh6olj8yaeJicA8PZH4dQ/X/2tg2P3CxuxKdeNmNMLd8UjuqZMY
+ eTQJ/2pLoEoomss5QSVy1P0KgR/r1HYwDiXhwzWtdbMwDs9qkk6qP6kF57PvSgH5Gh
+ LS2qU4y+IjOnw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35F2F1CA48A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3192C1CA489;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6BCC1409B6D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 65DE8409B6C;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DD1ED2F8AA; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id DA7DF2F8A8; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 011/102] target/i386: helper_sysret(): Check that RCX
- contains a canonical address when emulating an Intel CPU
-Date: Wed, 12 Aug 2026 16:00:46 +0300
-Message-ID: <20260812130233.621965-11-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 010/102] vfio/pci: reject invalid PCI_INTERRUPT_PIN
+ values
+Date: Wed, 12 Aug 2026 16:00:45 +0300
+Message-ID: <20260812130233.621965-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,73 +75,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Intel and AMD CPUs implement SYSRETQ instruction differently.
-One of these differences is whether a canonicality check of the address that
-will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
+qemu-kvm aborts a few seconds after starting a VM with a
+passed-through GPU whose PCI_INTERRUPT_PIN comes back as an
+out-of-range value: vfio_intx_enable() only guards against pin == 0
+and stores vdev->intx.pin = pin - 1 with no upper-bound check. That
+value later reaches pci_irq_handler()'s
+assert(0 <= irq_num && irq_num < PCI_NUM_PINS) via
+pci_irq_deassert() -> pci_set_irq(), aborting the process.
 
-Currently, QEMU does not perform this check when emulating Intel CPUs.
-This patch corrects this by implementing the canonlicality check on a new RIP
-value from RCX and performing it only when emulating Intel CPUs.
+Legal PCI_INTERRUPT_PIN values are 0 (no legacy interrupt) or
+1-PCI_NUM_PINS (INTA-INTD); reject anything else before it reaches
+vdev->intx.pin, whether the out-of-range value came from a read
+failure (now caught by the previous commit) or was handed back as
+data by the device itself.
 
-Flags and segment registers' caches are updated only after checking the new RIP
-value to ensure that CPU state is not modified in case the #GP(0) exception
-is raised due to the check failure.
-
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 14ce26e75513 ("x86_64 target support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Link: https://lore.kernel.org/r/20260608091815.31303-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 51aa3f3e05772c38cb6f6d8e79eca0f6afaaace0)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Alex Williamson <alex@shazbot.org>
+CC: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260717122232.468955-3-den@openvz.org
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 86abb10256a58d50513d1f9c65652b7b6b7faafc)
+(Mjt: context fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 603993ea03b..07ff1cb47eb 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1070,17 +1070,22 @@ void helper_sysret(CPUX86State *env, int dflag)
-     selector = (env->star >> 48) & 0xffff;
- #ifdef TARGET_X86_64
-     if (env->hflags & HF_LMA_MASK) {
--        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
--                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
--                        NT_MASK);
-         if (dflag == 2) {
-+            uint64_t new_rip = env->regs[R_ECX];
-+            if (IS_INTEL_CPU(env)) {
-+                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
-+                int64_t sext = (int64_t)new_rip >> shift;
-+                if (sext != 0 && sext != -1) {
-+                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+                }
-+            }
-             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
-                                    0, 0xffffffff,
-                                    DESC_G_MASK | DESC_P_MASK |
-                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
-                                    DESC_L_MASK);
--            env->eip = env->regs[R_ECX];
-+            env->eip = new_rip;
-         } else {
-             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
-                                    0, 0xffffffff,
-@@ -1094,6 +1099,10 @@ void helper_sysret(CPUX86State *env, int dflag)
-                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
-                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                DESC_W_MASK | DESC_A_MASK);
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 168f597e782..fdf9528b05b 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -279,6 +279,11 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+         return true;
+     }
+ 
++    if (pin > PCI_NUM_PINS) {
++        error_setg(errp, "invalid PCI interrupt pin %d", pin);
++        return false;
++    }
 +
-+        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
-+                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
-+                        NT_MASK);
-     } else
- #endif
-     {
+     vfio_disable_interrupts(vdev);
+ 
+     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
 -- 
 2.47.3
 
