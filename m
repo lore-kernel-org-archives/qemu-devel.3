@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A59C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A184C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8gt-0004HW-BB; Wed, 12 Aug 2026 09:08:19 -0400
+	id 1wu8hj-0006bM-HB; Wed, 12 Aug 2026 09:09:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8g5-00033c-3i; Wed, 12 Aug 2026 09:07:34 -0400
+ id 1wu8hE-00059U-5U; Wed, 12 Aug 2026 09:08:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8g2-0005AF-Sf; Wed, 12 Aug 2026 09:07:28 -0400
+ id 1wu8hC-0005XB-DA; Wed, 12 Aug 2026 09:08:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=5aTx44/tPkjRMx1m07dr23hm/+mofZyGft8shN+lqfY=;
+ t=1786539784; bh=+DExdsv9AqEXAJL/QR7LlbdAB3p6+5NMhr0eBznDRxA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CcKqDlK81mmhwONkErcELs5ALnuwS4AweiDio7ora+3SY7upd9gbtW3jNnAV0JWfn
- RUgrPKn2D8DyZf1kkArj2rD87s0Bk+vforGqOZ2mr9vAQRBqY7H3OjtGMvBfcpaLpJ
- 0A0nJodLW86nxDLyiK1cHjvzP4kRAAtXom421iNI4NQ2NI6leC0ragrodvAxBciCdV
- G671YAxJO0JF1dO286LFmc+W19Edj1BtNkTokWSq6RPLxofkagVVw5VFn3eirT6YFN
- 28mRZj/ai2e2n5mC9z0IduIeSROD/hvZzbYCay3mMVo7WqhQqPvNyzOmnmgOGimyU0
- HQP/M6K8xOx7Q==
+ b=BdLXrE8feyLeXsWj4CHf2X8FIghNyNsGH2mL2f7m72fewIgqTNmo1nnclOzrEWv0G
+ zOVd581fNDcXn3Ojbl76M5pp/qrj/8tEvumyM+b1HYscfY2Eur/G69rkHZ0iI8oYU9
+ p8SyYd9JLppnaxI7p7p6QaUOsRmxn34oQe/cAE/IgjyLcAzNfquv/y1O3DUxyfxCRj
+ guwNFx0o5e9gzHOd3jFv2ujHxwASBnf83GsuEHmakQa7PuTTGV6/AenNcwNaolx27+
+ R9RRri/v5Kul5fSTYqVEvDcwu2oNzpXUnPzJbqnkNNKwsUTmW8fvnFsmpN1MNNfxzv
+ s6dqWcal7eHoA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E549D1CA4AD;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 296D51CA4BA;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 27584409B90;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5FF40409B9D;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 430062F8F0; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 65B052F90A; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Xie Yongji <xieyongji@bytedance.com>,
- Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 046/102] libvhost-user: validate last_batch_head in
- vu_check_queue_inflights
-Date: Wed, 12 Aug 2026 16:01:21 +0300
-Message-ID: <20260812130233.621965-46-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Anatol Belski <anbelski@linux.microsoft.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 059/102] virtio: avoid packed vring
+ virtio_queue_empty() infinite loops (CVE-2026-16457)
+Date: Wed, 12 Aug 2026 16:01:34 +0300
+Message-ID: <20260812130233.621965-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,43 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-vu_check_queue_inflights uses last_batch_head from the frontend-controlled
-inflight shared memory as an index into desc[] without bounds checking.
-A malicious or buggy frontend can set last_batch_head >= desc_num,
-causing an out-of-bounds write.
+Virtqueue handler functions in device emulation code often look
+something like this:
 
-Validate last_batch_head before using it.
-Note: the value is not guest-accessible so not a security vulnerability.
+  while (!virtio_queue_empty(vq)) {
+      ...pop and process virtqueue element...
+  }
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Cc: Xie Yongji <xieyongji@bytedance.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: BB CC <wywwzjj@gmail.com>
+virtio-blk, virtio-scsi, virtio-crypto, and vhost-shadow-virtqueue use
+this pattern.
+
+The device may break (i.e. hit an error that requires device reset)
+during the loop. virtio_queue_empty() returns 1 for broken split vrings
+but not for broken packed vrings, leading to an infinite loop.
+
+Adjust the packed vring behavior to match split vrings and avoid
+infinite loops.
+
+Fixes: CVE-2026-16457
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3968
+Reported-by: Anatol Belski <anbelski@linux.microsoft.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <8133770c75c9907578dd551f4d468140a0a75cd2.1784892981.git.mst@redhat.com>
-(cherry picked from commit bf21298c082cc5561072bbfd79216d478861a5cd)
+Message-ID: <20260721134424.196337-1-stefanha@redhat.com>
+(cherry picked from commit 6682ea3391277e732a6d74c5758206ba834e1615)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 82e16c2c969..037c6614018 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1379,6 +1379,12 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
-     vq->counter = 0;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index baad0aa571f..c20dc5767cd 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -714,6 +714,10 @@ static int virtio_queue_packed_empty_rcu(VirtQueue *vq)
+     struct VRingPackedDesc desc;
+     VRingMemoryRegionCaches *cache;
  
-     if (unlikely(vq->inflight->used_idx != vq->used_idx)) {
-+        if (vq->inflight->last_batch_head >= vq->inflight->desc_num) {
-+            vu_panic(dev, "vu_check_queue_inflights: last_batch_head %u "
-+                     "out of range (desc_num %u)",
-+                     vq->inflight->last_batch_head, vq->inflight->desc_num);
-+            return -1;
-+        }
-         vq->inflight->desc[vq->inflight->last_batch_head].inflight = 0;
- 
-         barrier();
++    if (virtio_device_disabled(vq->vdev)) {
++        return 1;
++    }
++
+     if (unlikely(!vq->vring.desc)) {
+         return 1;
+     }
 -- 
 2.47.3
 
