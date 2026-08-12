@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AD4C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C494EC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAN2-0003Sy-8J; Wed, 12 Aug 2026 10:55:56 -0400
+	id 1wuAOb-0004nt-Ho; Wed, 12 Aug 2026 10:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALg-0000Cc-EG; Wed, 12 Aug 2026 10:54:35 -0400
+ id 1wuAO4-0004J4-Kj; Wed, 12 Aug 2026 10:57:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALd-0007Mr-Bu; Wed, 12 Aug 2026 10:54:32 -0400
+ id 1wuAO2-0000jX-L5; Wed, 12 Aug 2026 10:57:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=LGQV5mfvgB2ePbi6o9w3DSUZ+K/g17/haQs4LtKdqUA=;
+ t=1786546232; bh=f2Zx7fNQJOtceHZJbipFEsSqAvaZr8yOovHDMdWzoKo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iQpb1eHxJdCbnzeMnxnRH1K7wIrYM3noGCO/cgzZIzSBMhRXEaRmcfQVwjNCjwTOQ
- w2xLkTPMwy6UNbTpzaDUiTyndnS4D7B6hqUEHTnZF0sx589HLKhoQm3CsgLRUrAiYf
- VG3eDoFAEmaAt+Al1u+Hh+UhpXS78SndiIeLb0XlBFRsvHqik8XDsPqiw1CmK6FHmJ
- O/iv1e9DpYAvsniaYUu1g+yTIZjG1JPaCEflwnXC35JWPZmnQ/mm/dMR4x9EuYEzl6
- Vbr8xReAxHpFnfebHqVIThmchRtDMQqR6B923MPBIjrvsLsXTqr12cV0FiaNR7TB9G
- KCKb2yic56s0Q==
+ b=lJFpZ1SsAWnkvq07UmvXxnw1t6DsfD/8CcEjjor1nc6zKX0RnnbUQ4MXgaJBhOvn/
+ 2KJzJi5Cl4Zn988oSkiNdhBkVML7NFhbjgn+Ule8GsGLdbLufiFgzuHmtmLeRo/+xo
+ pA6qInP5CWEkqawgXIifut5uSMTFLzx49z1rr0Yy67DDfZ9zPRTN/BlU5n2yajPIZu
+ Oc4rREhRXE/YOPli88y5J5XPgtkYzcoLXvh24rcdvseKjNdaOIMGs6sC3XdFHiobuO
+ wWabqBgQDPYpIIQsPuriWipi6uSXqqHoLei1CUXvGleVDCD6UHZOjkTAliPaXGCN6V
+ SanN9fwFwR0Vg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E6E0C1CA630;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 82D501CA644;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4DAC9409D72;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDD60409D86;
  Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AB9E22F9BB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 479A22F9E3; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ Jonathan Cameron <jic23@kernel.org>, Michael S. Tsirkin <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 044/120] hw/display/virtio-gpu: Block Rutabaga
- migration
-Date: Wed, 12 Aug 2026 17:48:27 +0300
-Message-ID: <20260812144955.649205-44-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 064/120] hw/cxl: fix OOB access in cxl_doe_cdat_rsp
+ via entry_handle
+Date: Wed, 12 Aug 2026 17:48:47 +0300
+Message-ID: <20260812144955.649205-64-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,70 +72,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-The migration stream encoding is not defined for Rutabaga yet.
+cxl_doe_cdat_rsp() takes ent = req->entry_handle (uint16_t, fully
+guest-controlled, 0..0xFFFF) and directly indexes cdat->entry[ent]
+without checking ent < cdat->entry_len. For a default cxl-type3 with
+one volatile memory region, entry_len = 1 + CT3_CDAT_NUM_ENTRIES = 7,
+so any entry_handle >= 7 reads past the CDATEntry array into host heap.
 
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 5c9ef661a60ad737c61f4a872226376b5f2d424a)
+The OOB-read base/length are then used in
+memcpy(read_mbox + offset, base, len) at cxl_type3.c:298-299, leaking
+host heap memory to the guest via PCI_EXP_DOE_RD_DATA_MBOX, and
+potentially overflowing the 1 MiB read_mbox heap buffer when the OOB
+length field is large.
+
+The same bug exists in the cxl-upstream implementation.
+
+Existing checks do not bound ent: assert(cdat->entry_len) only ensures
+the table is loaded; the minimum-length check only guards against a
+truncated CDATReq; the entry_handle ternary at line 293 only decides
+the next-handle echo, not the current access; pcie_doe_get_obj_len
+reads header.length, not entry_handle.
+
+Reproduce: build QEMU with CONFIG_CXL, boot
+  -M q35,cxl=on -device pxb-cxl,bus_nr=52 ... -device cxl-type3,...
+then send a CDATReq with entry_handle=0xFFFF via the DOE mailbox at
+config offset 0x190. Under ASAN this reports SEGV in cxl_doe_cdat_rsp
+at cxl_type3.c:281.
+
+Fixes: f5ee7413d5 ("hw/mem/cxl-type3: Add CXL CDAT Data Object Exchange")
+Fixes: 882877fc35 ("hw/pci-bridge/cxl-upstream: Add a CDAT table access DOE")
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260713072336.623604-2-jianghaotian.sunday@gmail.com>
+(cherry picked from commit 292902ae4e93dcf33414ec3c6951e02d497cc850)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 17ccfa51170..aa94315543f 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -9,6 +9,7 @@
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "hw/virtio/virtio-iommu.h"
-+#include "migration/blocker.h"
- 
- #include <glib/gmem.h>
- #include <rutabaga_gfx/rutabaga_gfx_ffi.h>
-@@ -1078,6 +1079,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- {
-+    ERRP_GUARD();
-     uint32_t num_capsets;
-     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
-     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
-@@ -1087,12 +1089,17 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
-     return;
- #endif
- 
--    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+    error_setg(&bdev->migration_blocker, "rutabaga is not yet migratable");
-+    if (migrate_add_blocker(&bdev->migration_blocker, errp) < 0) {
-         return;
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 4739239da3c..e39a85cde8e 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -278,6 +278,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
      }
  
-+    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
-+        goto fail;
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
 +    }
-+
-     if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
--        return;
-+        goto fail;
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
+ 
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index b6281cbd4cb..69773ff1638 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -158,6 +158,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
      }
  
-     bdev->conf.flags |= (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED);
-@@ -1101,6 +1108,12 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- 
-     bdev->virtio_config.num_capsets = num_capsets;
-     virtio_gpu_device_realize(qdev, errp);
-+    if (!*errp) {
-+        return;
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
 +    }
-+
-+fail:
-+    migrate_del_blocker(&bdev->migration_blocker);
- }
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
  
- static const Property virtio_gpu_rutabaga_properties[] = {
 -- 
 2.47.3
 
