@@ -4,96 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481F1C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1DD2C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuD0T-0002tZ-1y; Wed, 12 Aug 2026 13:44:49 -0400
+	id 1wuDAP-0008Oo-BU; Wed, 12 Aug 2026 13:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wuD0K-0002nz-7W
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:40 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wuD0D-0007cZ-Qm
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:39 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-38e7109321dso1110997a91.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:44:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuDAM-000872-Vk
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:55:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuDAK-0001gj-J6
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:55:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786557299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZnBcQcrgdhK9pwVFhzAD66Q1YAcR5Nb4snLpGOgei3I=;
+ b=bczhueKdlHKWnVQf9FJ1qfvo+gnXXxxaOYf4vS6FQVx4nAubH5vyRY9h9GSr7fCrZ9yW7C
+ LSgqi6TyxjTMOHVt83OQawnEupd3xLEdDzQHCpD4k1F0OnDQDy/v7xCKAe+EMCyaLbPCPI
+ vGp4TecnFBMZTa+9UK7RJM2Ds9EEb14=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-696-qexGrIifM8qOAThApGkgKw-1; Wed, 12 Aug 2026 13:54:57 -0400
+X-MC-Unique: qexGrIifM8qOAThApGkgKw-1
+X-Mimecast-MFC-AGG-ID: qexGrIifM8qOAThApGkgKw_1786557297
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93494527488so223539385a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1786556671; x=1787161471; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rOQkVidkXGCU4X6LBKsJvJHPV73NIi57GitFKMqrLX0=;
- b=U4Z3/TV7+O2mhdO9r1Bc3fWPjxSbssWEwKU1SAKEdNkH7IHDn+5jGfPy6tPRttakh+
- b+freKjm6suBEX1aDrR3sut7VSWEhKnO6MTF+WZFaLSr++wLrssixjI0RRbfqMoIb0hI
- 8k17X6osH6/5U5sHAUWGzxx7EAGL4HAspbnPjIsCWLzFC1ntOAeUtlg8+fVgw0Zu6b0M
- P1ASKLtteGg3gpV+av2heyviWjJpYankhNxpLt4hTVbMFJDPHbOp1j/5crW1EMf1CKEd
- cyv6A4wszcZ0J/bVT1aV9dzbSMsA8xjOJU1UV7oZ/a8eo08UihQJsQIH/YYvHYvzj0UC
- vV/g==
+ d=redhat.com; s=google; t=1786557297; x=1787162097; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZnBcQcrgdhK9pwVFhzAD66Q1YAcR5Nb4snLpGOgei3I=;
+ b=H39O1dtW+s47lAUYagXTpv+MjxyFU6kcQrvoiBwShQJj4EtXGzQ8d4T+zX2v5+Hr3x
+ f1LnctxbCOyAbbH5LECRDCG5Jel0su0R+UkMwnd2ojJP8AfhfZTCAkUEBkeYTxkRM3cP
+ OjwwazD1hg4qMI1gtltVH0Oi09o+8+ySS0G02YaVdLOPKwic1JkFepmFG+YJUKACQmq8
+ hO9nCy5VcMSdCLNzs0RtG+ZKFqYMm5Q1YCbws4UJe0heN4eymuSJdFpM8sGEpgTuJNFA
+ tX2vLg8rZ+7yT4SC4uar0LjF7qd4Zew4P5jzClmd5clhA+5PGl0AvY8YNilhOqVsSblv
+ 2BoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786556671; x=1787161471;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rOQkVidkXGCU4X6LBKsJvJHPV73NIi57GitFKMqrLX0=;
- b=Kb8tlHPrHslbnR96bKzqKIFaUKmktsprFrCxGT7VOw41MMAjA4Ykow7oAL+aL9/n1w
- 5YtJaQIvQxqb3yDcDehNVs5KpTZCtLMAPUfPyKFx+MTINtJVhd7Zcc6KYkOLE9JI/j9M
- Hb4q46zqaD1oddjfZ1z/pJxtayZIwJjKYlCVK687HY2Qq25QqFOqrLeIIag+XbQ4LaRl
- QU1h81VCurLL33Ut+IVLlGMm+mSTOFZ8qRVie5OqqC3FD38riJqgmgCeuMpOoTS/n5x6
- D6QeKPsu8yfS1RBqMPwr9CefLSXXFNJxTw46jbQ0SbsUaCn29qUMR5nmuEgJBxIOJL+Z
- Elbg==
-X-Gm-Message-State: AOJu0Yxq8Y1HeM8P7DEYvRm/DYrVhxSWcx8iA1dAeWomjL4InOEyHXM1
- T7HCMHEi7GXLh3fXS5iCzk6pryzMhsIGowKJQX27wREy4KI6zpSH3Q0obmd061FFsSC4iidoTp6
- o+hPZ+eDosXoYSdOaQw/UXmDNtsSbwsKUJH4t9c2StAQMVMzZZ5e1aQU5BX5ODwyUofUXg+0RPy
- fnfspvGna167XfXqJJCmq8qll6b76II4xcRTTpHxQ=
-X-Gm-Gg: AR+sD13HzvKDrFYiW9cHabAUJkIDoDm/Kdsa19m5PxO4YyKefNBpa7G4rMsJaG8un0p
- EjGaRtBQt53+1X+iFFlf+zRC6zfI35IsW08VazeDc59DjqKeuyya4tJAB8ivz96eLaf1iNXtJyU
- Qk4E+IY6LK6ajMWTErcFWmMKrRLIeBGbl2IoKqU+jwXKku6P85HgeSc59GMxRo7c8MNmnyTu4iq
- bPO3q+7qFSvRNzFcjtCJniilTKXJ4dPm/5+Mqvt5P6ngkuslc/d+bCx/kRlpsaGO4niXNj4xyN/
- vbu3Nj1Wvp8A9yBy4PO/BlPbmsflb9uTQbEVJM2pnQKTEDsiTjo0s+R6UJocAQFRidvcyO5TzZ3
- VGKffyjav6JNxZGKE31tn1JNGFPyM4bGKNJeyisijYHC43N92edEvvx2ShFBYt5Fqp8gFhjHw3b
- Hp1dweW4juqFh4NHRfFEliQCXoiDD4OsobvPVnqsoKzXGyzxDQLv85JBN7qWuVmZw9et745Bs7/
- LIbzYKKlFKcMY9A4EHzCKFoiZ7u1Oq7ZfQlETqcesqDqWglLdVUk568pwI7G31p
-X-Received: by 2002:a17:90b:38d1:b0:380:21b7:e727 with SMTP id
- 98e67ed59e1d1-393014cac5dmr6841255a91.14.1786556671046; 
- Wed, 12 Aug 2026 10:44:31 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931db13c3bsm13210a91.3.2026.08.12.10.44.28
+ d=1e100.net; s=20251104; t=1786557297; x=1787162097;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ZnBcQcrgdhK9pwVFhzAD66Q1YAcR5Nb4snLpGOgei3I=;
+ b=Hj2hq+j0umGv/xWEPpVmEHe/lAAHuvQKAqMM/Cy87cZG84sAmbLPBNryHW/o8j9E6e
+ 8mVA5d6hPWFI6UBW0dmzSd5c45lENdjF9X8QqX+yb67e65hKkP3W0azhr9rbgQCJQG5K
+ 8+Wqi81h1t+7JWIh/Ig21+ARAIA32AgNIHqXM77xG0e7ckKNlbbN619X9SNTlDwk2QAZ
+ AeFBqB6XnA/3eWj8l07VUMnQRuNVnbtU7fg/gTyPSeE1+NJ9mIzsoELXvN8mkkFyxP5B
+ JOmKJe4FCmMMMEGJAVCmEHnmF+DiSIGn4a25jToVo5NAoyf/omQaV4pzD2wdAe7Wrr5V
+ X2Nw==
+X-Gm-Message-State: AOJu0YyEIGRlHrN1CntD6eJ7hcUkKggaSMiQVNltvU4d0tRNFjqUvZhH
+ p/S/tY6HVhxceUgNh5DP8zfhAgU9+lKTA5qL9pYCIk2farWum6IzxzpsNWFzZzmM56fAF1b0vLV
+ 5RZY49sMNak1T77w2OL+8qdp8n9SpG66u+hyUa/GRgGN60dKe5drP2t3L
+X-Gm-Gg: AR+sD125BPwQDKoCucynSWkhL+XrKpc8nW1VbHlNM+/Oh/kGTnElUsq/xbkuePkqYSv
+ Vo1++Emc6qjbx2a3FnuLrZWbAgKm4qgqiOaIuMXN/s/0CK1ChfBoFeSj4KWOWUYKmZHygJrPePQ
+ JT/4K63BvRRjHQdagjjbYAj0ZIEyss51NS+y72c+xUGinVcJbohqCNjIOQu65x7cZ7H6qLAI+Mb
+ 42d7u9ahxPk+3rP5kw9XLN86GbktG829nKmQvePRJWLgMwch5wlX9X1dXjGXwrr52ZharLAbipV
+ 587kGgW9Zj83Pk3Q6kRTWUVbx7Irp8Bq2GLo7L60rs2bZWt1ecsClrovpIFzcLp9ZKylomf612X
+ GYjaGzdZsI4BlzaqjV9FKeDTSIQDZ9kqQA/TEmomUv+WLJi0YxnXm52WrTCw=
+X-Received: by 2002:a05:620a:700e:b0:932:ddff:123d with SMTP id
+ af79cd13be357-936b3d49b4dmr615683985a.29.1786557296717; 
+ Wed, 12 Aug 2026 10:54:56 -0700 (PDT)
+X-Received: by 2002:a05:620a:700e:b0:932:ddff:123d with SMTP id
+ af79cd13be357-936b3d49b4dmr615678585a.29.1786557296089; 
+ Wed, 12 Aug 2026 10:54:56 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-936b5e35979sm189572285a.21.2026.08.12.10.54.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 10:44:30 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Max Chou <max.chou@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 2/6] target/riscv/cpu: List one implied-ext rule per line
-Date: Thu, 13 Aug 2026 01:44:12 +0800
-Message-ID: <20260812174417.2468981-3-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260812174417.2468981-1-max.chou@sifive.com>
-References: <20260812174417.2468981-1-max.chou@sifive.com>
+ Wed, 12 Aug 2026 10:54:55 -0700 (PDT)
+Date: Wed, 12 Aug 2026 13:54:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
+ pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH v4 07/11] migration: add support for fault thread to load
+ pages from disk
+Message-ID: <anyzbkQxrIuAo2Jf@x1.local>
+References: <20260801023628.22665-1-aadeshveer07@gmail.com>
+ <20260801023628.22665-8-aadeshveer07@gmail.com>
+ <CA++cPvLsRpqcqhPg4fY_uhnZqeET0OpdxDDM1i4_rGFuR_4Hag@mail.gmail.com>
+ <annw8X51cEa6yvdp@x1.local>
+ <CA++cPvJ=nx=4EWHQX5yYO46Dq2Ng7-EjG5J6bhWapTtumeXdPg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CA++cPvJ=nx=4EWHQX5yYO46Dq2Ng7-EjG5J6bhWapTtumeXdPg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,87 +126,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Every entry added to riscv_multi_ext_implied_rules[] currently has to
-reflow whatever line it lands on, since entries are packed several
-per line. List one rule per line instead so future additions are a
-pure append.
+On Wed, Aug 12, 2026 at 10:08:38PM +0530, Aadeshveer Singh wrote:
+> On Mon, Aug 10, 2026 at 9:10 PM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > Aadeshveer,
+> >
+> > Thanks for looking into this problem.  Below solution should work in
+> > general, but there's still one problem..
+> >
+> > On Sat, Aug 08, 2026 at 10:04:48AM +0530, Aadeshveer Singh wrote:
+> > > A subtle concurrency bug exists in the current patch; this small patch
+> > > should fix it.
+> > >
+> > > Current patch uses bitmap_test_and_clear_atomic assuming it performs
+> > > an atomic operation over a range, which as pointer out by Peter is not
+> > > the case. It performs atomic word by word operations making the
+> > > overall operation unsafe.
+> > > Therefore, keeping the same bitmap would require protection by a mutex
+> > > lock which might not be as efficient. Hence this small patch resizes
+> > > the pending_bmap to have exactly one bit per load operation(loading
+> > > the larger of host page and guest page).
+> > >
+> > > Thank you,
+> > > Aadeshveer Singh
+> > >
+> > > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > > index e01ac628f5..0bf0f837ad 100644
+> > > --- a/migration/postcopy-ram.c
+> > > +++ b/migration/postcopy-ram.c
+> > > @@ -1031,9 +1031,13 @@ static bool
+> > > postcopy_mapped_ram_load_page(MigrationIncomingState *mis,
+> > >      host_page = rb_offset / qemu_ram_pagesize(rb);
+> > >      page = rb_offset >> qemu_target_page_bits();
+> > >
+> > > -    if (bitmap_test_and_clear_atomic(
+> > > -            rb->pending_bmap, host_page,
+> > > -            MAX(1, qemu_target_page_size() / qemu_ram_pagesize(rb)))) {
+> > > +    /*
+> > > +     * pending_bmap needs the index of host or guest page based on which is
+> > > +     * larger. As page index is inversely proportional to page size we use the
+> > > +     * minimum of both.
+> > > +     */
+> > > +    if (bitmap_test_and_clear_atomic(rb->pending_bmap, MIN(host_page, page),
+> > > +                                     1)) {
+> > >          if (find_next_bit(rb->file_bmap, page + guest_pages_to_load, page) ==
+> > >              page + guest_pages_to_load) {
+> > >              /* It is efficient to use UFFDIO_ZERO if all pages are zero */
+> >
+> > Consider the case where guest psize > host psize, here the current code
+> > will invoke postcopy_place_page_zero() or postcopy_place_page() only once
+> > for each guest page. But IIUC that's not enough: we'll need to loop over
+> > the few host pages that is covered by the same guest page.
+> I believe I missed it, confusing the page sizes. One of the solutions
+> can be a loop or a cleaner solution might be to give larger length to
+> ioctl command to handle multiple pages at once. This should be
+> efficient but might require some changes to basic postcopy code as
+> most of it hardcoded length as page size to most userfaultfd_ioctl
+> calls.
 
-Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 58 +++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 44 insertions(+), 14 deletions(-)
+Yes the helpers were for one host page only.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e643d7c7af7..fffb92ff110 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2818,20 +2818,50 @@ RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
- };
- 
- RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
--    &ZCB_IMPLIED, &ZCD_IMPLIED, &ZCE_IMPLIED,
--    &ZCF_IMPLIED, &ZCMP_IMPLIED, &ZCMT_IMPLIED,
--    &ZDINX_IMPLIED, &ZFA_IMPLIED, &ZFBFMIN_IMPLIED,
--    &ZFH_IMPLIED, &ZFHMIN_IMPLIED, &ZFINX_IMPLIED,
--    &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
--    &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
--    &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
--    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
--    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
--    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
--    &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
--    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
--    &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
--    &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
-+    &ZCB_IMPLIED,
-+    &ZCD_IMPLIED,
-+    &ZCE_IMPLIED,
-+    &ZCF_IMPLIED,
-+    &ZCMP_IMPLIED,
-+    &ZCMT_IMPLIED,
-+    &ZDINX_IMPLIED,
-+    &ZFA_IMPLIED,
-+    &ZFBFMIN_IMPLIED,
-+    &ZFH_IMPLIED,
-+    &ZFHMIN_IMPLIED,
-+    &ZFINX_IMPLIED,
-+    &ZHINX_IMPLIED,
-+    &ZHINXMIN_IMPLIED,
-+    &ZICNTR_IMPLIED,
-+    &ZIHPM_IMPLIED,
-+    &ZK_IMPLIED,
-+    &ZKN_IMPLIED,
-+    &ZKS_IMPLIED,
-+    &ZVBB_IMPLIED,
-+    &ZVE32F_IMPLIED,
-+    &ZVE32X_IMPLIED,
-+    &ZVE64D_IMPLIED,
-+    &ZVE64F_IMPLIED,
-+    &ZVE64X_IMPLIED,
-+    &ZVFBFA_IMPLIED,
-+    &ZVFBFMIN_IMPLIED,
-+    &ZVFBFWMA_IMPLIED,
-+    &ZVFH_IMPLIED,
-+    &ZVFHMIN_IMPLIED,
-+    &ZVKN_IMPLIED,
-+    &ZVKNC_IMPLIED,
-+    &ZVKNG_IMPLIED,
-+    &ZVKNHB_IMPLIED,
-+    &ZVKS_IMPLIED,
-+    &ZVKSC_IMPLIED,
-+    &ZVKSG_IMPLIED,
-+    &SHA_IMPLIED,
-+    &SSCFG_IMPLIED,
-+    &SUPM_IMPLIED,
-+    &SSPM_IMPLIED,
-+    &SMCTR_IMPLIED,
-+    &SSCTR_IMPLIED,
-+    &SSSTATEEN_IMPLIED,
-     NULL
- };
- 
+Since you mentioned, I found that maybe the generic postcopy code has issue
+with such special psize setup too.. see qemu_ufd_copy_ioctl() where it has:
+
+        ramblock_recv_bitmap_set_range(rb, host_addr,
+                                       pagesize / qemu_target_page_size());
+
+Here pagesize should be host psize, which means if guest psize is larger
+then it'll have nr==0, so QEMU is not properly updating the receivedmap in
+postcopy phase.  It's highly likely nobody ran postcopy with such setup
+before.
+
+> >
+> > I confess this is really a rare corner case..  so you can decide how to
+> > "fix" it.  There's always the option to disable this feature for now when
+> > guest psize is larger than host psize (OTOH, host psize > guest psize is
+> > much more common, because that's normally how huge page backed VMs work on
+> > linux systems).
+> >
+> > Or just provide the loops over host pages, I think it will start working
+> > and IIUC it's indeed the most efficient.  But then, to make it slightly
+> > easier to future readers (I still think the bitmap definition will be
+> > slightly hard to grasp for future readers.. your comments all over
+> > hopefully will help), maybe we can also rename "page"; it implies guest
+> > page index but it's not obvious.  We can make it "guest_page" to match
+> > "host_page".  The "haddr" seems fine.
+> I believe it should be simple to implement using direct syscalls,
+> however for a cleaner solution current functions need to be made more
+> modular. I will try the latter and if the changes go out of hand might
+> resort to direct syscalls or loops.
+
+Let's avoid direct syscalls; it's not good for long term maintenability.
+
+Please try to see if it's easy to fix this problem.  If it's time
+consuming, let's fallback to fail the enablement of postcopy when guest
+psize is larger, and leave it for later; such breakage should apply to
+remote postcopy too.
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
