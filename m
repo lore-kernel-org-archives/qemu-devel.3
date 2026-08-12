@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFA4C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 08:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9C5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 08:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu4K4-0007WF-Vn; Wed, 12 Aug 2026 04:28:29 -0400
+	id 1wu4K5-0007WJ-Ag; Wed, 12 Aug 2026 04:28:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wu4K3-0007VR-8y
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:27 -0400
-Received: from pv-2003d-snip6-11.eps.apple.com ([2a01:b747:3003:205::29]
+ id 1wu4K4-0007Vz-9E
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:28 -0400
+Received: from pv-2003g-snip6-11.eps.apple.com ([2a01:b747:3003:205::47]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wu4K1-00052L-Hd
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:27 -0400
+ id 1wu4K2-00052D-Qv
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:28 -0400
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-100-percent-10 (Postfix) with ESMTPS id
- 903831800947; Wed, 12 Aug 2026 08:28:23 +0000 (UTC)
-X-ICL-RepId: 019ff516-3e85-7720-a7ae-e673de3dc962
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdD1oAQAFKC1wDRQBHC0kEQANGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ DB7AE1800966; Wed, 12 Aug 2026 08:28:21 +0000 (UTC)
+X-ICL-RepId: 019ff516-37f6-7c02-afc0-8066abb8607c
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdD1oAQAFKC1wDRQBHC0kEQARGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1786523304; x=1789115304;
- bh=Ke2xrkwmgPCgpejUY5i9tffDmcMSLiMUb65iOIu/Chw=;
+ s=sig1; t=1786523302; x=1789115302;
+ bh=6NRueJblP8aIw/OsQ8F5jg3sZUd49Zglh8TaSrbigVU=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Io9AfNSAPUoZt+13hx2QErfdE0THv07FSD2PJWWYSO6uzoZjQaDmwm5H9WvPjZ346GdKbmdEalrsiytQw5xxqzI8mjt7bWR6bhECOIIqFYJ299Eyj8mz6Zukhr4r6ma2XKTwu7Ic/Wv9ixIUqUYDaxCS9R7QIDuCl7JSFQj+IQH46mo5jOW8HxCfl3d2mzwC+XrRagO+5wcaC/kM1XROsf7R9xG/vGWnkQuBYUjNimHM9oUdVDrbk7xfHH8OvolcgPNw4tHJkYRP2BnFPv3mc3BRXR0fTJJIWRD3y46rmnoFlPcIYtGOnEJUttW1mOO+RESHi2yErZ39vyNYLVzBJw==
+ b=qk7Pl25OKC2Jm9Ua4Ow1QxbJAz1NeuucVoSejJCcp3/rdzHeb5NOM2ccJwtJYo24hVjSyU1gZiM+NBDKsIABcvbBZ89T95pyaCgua1SKxMbK3JPrki7UXp32mHnUzTKB2ZlFttJilkcpX7dy2U5QFoc+t1LvFsEzwMXMp40liNd2wlSL9Xxx9EakV8RYT//3yvnrgiJwyyh8sGTrHz43fPBQRXVLxNeva7wAUKioguvqyRTgFnlmVVToSNnn5suCGaOVzPsIXURMWd9o7MyUGReezZL7epn1rmWhOuNeIbTl34FkZOi8RzjdkXyLKzhxCTqhmZysBbek6IVd6QOGQQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-100-percent-10 (Postfix) with ESMTPSA id
- 0C1B21800967; Wed, 12 Aug 2026 08:28:21 +0000 (UTC)
+ 7C5F61800949; Wed, 12 Aug 2026 08:28:20 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 3/6] whpx: i386: enable fast hypercall output
-Date: Wed, 12 Aug 2026 10:28:11 +0200
-Message-ID: <20260812082814.27217-4-mohamed@unpredictable.fr>
+Subject: [PATCH 2/6] hw/i386: fw_cfg: do not set VMX feature control on WHPX
+Date: Wed, 12 Aug 2026 10:28:10 +0200
+Message-ID: <20260812082814.27217-3-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260812082814.27217-1-mohamed@unpredictable.fr>
 References: <20260812082814.27217-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA2NyBTYWx0ZWRfXzmXgBdy6K9z2
- H69I6O6R8Br0b1YuvAROQ1kZIv+7sgOEM8dhdXtwZ0IlBFdFzSbTHRox9Jm30q2dSW2gGvkd001
- dGUcx+qSWFjmzr/iByQEGSx/VsZdAmSXiA52D4yEiMly27m7PhCUALWTMR0uE1bHe/e+tAasCxT
- RDUmDDIpjE0C1Rx4G8X0oHtqUrk9d/b04WnmRZRoSOmG8ZolfOHxRTNJHKtDrnIYEGY8F//KaZ9
- cTrFu+XKYCz9qeyNgNVX+Hq91JNSDu2kl9FJj0hgqslV4V5YSMp8m3Q4y4F34LM4e1ZaWbeDeY7
- IEaXEfDni9NuPDOR5OPTwxG6eMwC+ixuZHfCXaN+eztwwAr8dOeLkMXwgQaFaM=
-X-Proofpoint-GUID: gCvJFNmCPvKV5fSYUjnIRE9VPbXPwG_A
-X-Authority-Info-Out: v=2.4 cv=Uvdu9uwB c=1 sm=1 tr=0 ts=6a7c2ea7
+X-Proofpoint-GUID: Pix-INabtEUbn_CgeZDyINTiM_8mP7iY
+X-Proofpoint-ORIG-GUID: Pix-INabtEUbn_CgeZDyINTiM_8mP7iY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA2NyBTYWx0ZWRfXyPEwbtJ/8aUn
+ EqUcoGZcJyUEhfbWz2R+7W62L64xdy8vI3q7fcckkA6Z9PlqeIoc9473X5Zd2E5+lQM/UVxwV+B
+ U3TlaV33TUBetKZrYxApbaXPSv9suEBNbTkrZikI9MnO2Zb/jABcw/Iw+cYqoCsP2Ptv+Qny/DZ
+ rIDfugPiXtpbNwRt6Ympl4rW4NqjByuNTbYQ9hHv2TQgmR452XEJEhahiLY84Tq+Sh1aaf8YmBs
+ Y7sgHEhIkCYEkHLYNSsaYfCFktfmA8F9l/2ysinEEAHIW2vbmzBOowrB2ijEyt5I5tH+gTUpl55
+ TGe63XqvrkB78MK+f9WYsMWGg6GnwTGK+RTC3meTP62Nenjxo8OXW/GEn5PIwY=
+X-Authority-Info-Out: v=2.4 cv=DqBbOW/+ c=1 sm=1 tr=0 ts=6a7c2ea6
  cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
  a=azHRBMxVc17uSn+fyuI/eg==:17 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=__wDYlw7T4YerZGgBbMA:9
-X-Proofpoint-ORIG-GUID: gCvJFNmCPvKV5fSYUjnIRE9VPbXPwG_A
-X-JNJ: AAAAAAABtpNDyKogb/IorJ4LTiVxxzAcpBWym9GmaJO4LkzHbN65+tQoZrza2+92LcBT3DGWUxAaGe80T6pj613ckqlX10y1Y0e/Lvdk39jXAjAoLezDg835f+9GnpFH5wYpMqaQRPkBX3cwPNeZXY4rRX+sQox4ZwgJpobWA1iivLEm+kR8LYfKv+7d+O49W/NGMSkEp4HeSiPLK0OiuGW5Fs3QuhaS8p9N+iWaVzRwVp/rYMOSPt0kKFNei23fKa4z8VDyAyZVWMzqHhcZ4hKLXnU7v4DXljedPsWS7hUt7pRMS6j4YNUZ1+/UtdRErUZ66PXJVRI3VYKBONh4Sr8KiZAjjRfnkHE7z52Q1miKnQ0BKdGRQC794FEFX8v9uo10Gb+UfNilT4jqjjCMI78vPrG4v6umfN9mB6SwAfQfaIP3RVZJUmZYmlt5TI1MxlKzfuQwwsA6aBwDs6A/aLBkCDLNRv5Oo2Cj5IuFFgQCQnBDr9qoyGxDkD/7wMkD3dfygay8Fcl8HVOCzIaa9t3JW6fP7EkFhA2RRi2Kwmq53N1TkrHYxtGrkOvL8iBVd13CWY/JGHrdIdxzMZhY3KtYWxT5NmS9yogZ8UJYpSTybBgXZKOXpOYANZAzh3ImqsZOTUgFcFmr8p9gjlDW2StzCfbQ3kVDkOMoNAsdo3ZnSB3dnd09fymH4YBusjn0LPxJODmCCeYhpiY2QA==
-Received-SPF: pass client-ip=2a01:b747:3003:205::29;
+ a=03zX1AGEHLO9id_vLjQA:9
+X-JNJ: AAAAAAABYoX05bFN98HoRDILnaQuVvxX5V3Vk4Xy7jErPBGp9Gwx6S1SBV7p656b21NBGnFEAmmionMgYxBPFuYNCvNz8rnY0kcK5Vncg+g0jypL2lZd6nHdQdCgFVfReKUo8svaJ4I/Zbg507t7SgEAqk4uE1tQR4N7TWQsny9O42AkXg3ljV0uzOe5Xl3Rodkhd9Omg+VgXd70cysb5cJx6niItH/bvG7D4VbA7wD97zZt2zVrY3lXKRgkibgSVdo4+D7dqcILnJNiWCRx6GOix3USnKqhhRj1O5gOXovhLoW26AjtMsUfbIa1AX7o+66i0Cmljk5Ey8xEKC58jWnp4ghzzQAlOm9kfJPWgXax0VHgaUVyDa7E2R6ZuGzUTpKb76ZH7IHtUVZAomaLD1H3lDOqgNB7REmAUYpVxpz8xYyhrxJMQipNC1yRiVn9VksGzKAxZrj9xT0QyFmL3EkaSOXYlGdWffGAy6hdatoItGEE5ZRZxY+el1QEdTjaFm9tUR9p+rgkbB+9m3wYjf2i9d5b4oL1bLnBCW6yKHcZZM+WTo7Rkijqm5amN4ePIZi88ypUOemD+/wmejwOeQuN+cUJCBfcL0/hWo/7qTqAiOFUlHybeB4jaUFyZQwy7opEcfpTdpiRmthGSKkS0Mp9Hj2Y34FPCs0gAKO80VsclIet7e1OkEzjdliJ2bh+SDH/3o6YmTSE5x9MjFdpIs3bAVWqrb1sJ4cy
+Received-SPF: pass client-ip=2a01:b747:3003:205::47;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,25 +85,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Already enabled on Arm so extending it to x86.
+Hyper-V doesn't allow setting this bit on build 26100.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/fw_cfg.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 634d542821..1800ba8eb1 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -3247,6 +3247,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d422302c1c..5903994a7c 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -13,6 +13,8 @@
+  */
  
-     synthetic_features.Bank0.HypervisorPresent = 1;
-     synthetic_features.Bank0.Hv1 = 1;
-+    synthetic_features.Bank0.FastHypercallOutput = 1;
-     synthetic_features.Bank0.AccessVpRunTimeReg = 1;
-     synthetic_features.Bank0.AccessPartitionReferenceCounter = 1;
-     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
+ #include "qemu/osdep.h"
++#include "system/mshv.h"
++#include "system/whpx.h"
+ #include "system/numa.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
+@@ -182,8 +184,15 @@ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
+     uint64_t *val;
+ 
+     cpu_x86_cpuid(env, 1, 0, &unused, &unused, &ecx, &edx);
+-    if (ecx & CPUID_EXT_VMX) {
+-        feature_control_bits |= FEATURE_CONTROL_VMXON_ENABLED_OUTSIDE_SMX;
++
++    /*
++     * Hyper-V in 26100 disallows this bit to be set.
++     * Otherwise a #GP gets raised.
++     */
++    if (!(whpx_enabled())) {
++        if (ecx & CPUID_EXT_VMX) {
++            feature_control_bits |= FEATURE_CONTROL_VMXON_ENABLED_OUTSIDE_SMX;
++        }
+     }
+ 
+     if ((edx & (CPUID_EXT2_MCE | CPUID_EXT2_MCA)) ==
 -- 
 2.54.0 (Apple Git-156)
 
