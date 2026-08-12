@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D8CC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827F9C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAV4-0000aq-9i; Wed, 12 Aug 2026 11:04:14 -0400
+	id 1wuAPL-0006Ig-Ck; Wed, 12 Aug 2026 10:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuATC-00050A-Ax; Wed, 12 Aug 2026 11:02:23 -0400
+ id 1wuAOz-00058P-6f; Wed, 12 Aug 2026 10:57:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuATA-0002an-A8; Wed, 12 Aug 2026 11:02:17 -0400
+ id 1wuAOx-0000yW-G8; Wed, 12 Aug 2026 10:57:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546234; bh=C/dBOeeZBTvL9Qn1pJGoM991227DvcD9ksYkY6WhHAA=;
+ t=1786546232; bh=THYkKN3M4IAMk9UwDGbFUw9AIUGhATLxxofcORVsFRQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l+2qyrAAQzu0oqo2ebtsCNtxoD+4PGlQIkXkl8YxZxZ+HghYYGcupKaiK+b4TCPAe
- zk7SEF5UBCLWwqs1q9iSV1TFnM5ZTxCT7+c37QqxLMcqhZpBn/P+nNPLrbKDJ1fzTL
- DCgcQ6i/C10JOi1HAlOoknrw5XdlgDTNyYiryDjF3Zo4seU9NV069l4CUc4iRZ8Euf
- ITodUOAU6rO6OEdH6pstNmI/wDx51HySo+Q1C6KzdUYuFFlPFHdFsHeTD+oEeqdd1e
- jqOfjSJWM+ULkA4ITcWn8WwqHNaJYmXVK3UfFQkOYgP4Oy9Vj92FKf1/90xtUwAz96
- Z2hQVk6sHapyg==
+ b=C/FcYvOrdusldEn+TmvWrJ8dQanUKECeagMgFnh8+8bl2OmuZUJOntHUpd28+njcG
+ Ulz6z6p9ESQjjqnwVjzU1RqxPkKMLw9RnOc7hVtJKZcDMKD6hMHfCJLP/6pLOsntam
+ DBejWhnXYIYfczjH7KvpaoWmq/tzCn3FaJkZzHtZgL6WMHQN20n4jOVj6+PwySQeV6
+ /H80AQOknEFQYnes2O/AxS3Kp0YckwKrVJjrcduPmC/WtpM1iroERLfgX+wFiGXiZv
+ CaqPOZrTxHNqIGoByih1ARgPQUplgQuq1Rl6Uqd2gSxepAh06CKqiUw6w92pEFDZ6Q
+ qtrgWHcMVW6nw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 126F51CA677;
- Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B5C281CA64B;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6D445409DBC;
- Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1C2E8409D8D;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CCC092FA49; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id 7A6472F9F1; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 115/120] amd_iommu: Return int from page walk status
- helpers
-Date: Wed, 12 Aug 2026 17:49:38 +0300
-Message-ID: <20260812144955.649205-115-mjt@tls.msk.ru>
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 071/120] hw/net/xilinx_axienet: Don't write checksums
+ off end of packet
+Date: Wed, 12 Aug 2026 17:48:54 +0300
+Message-ID: <20260812144955.649205-71-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -74,58 +74,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-fetch_pte() returns a status code 0 on success, and (small) negative values
-on failure. The PTE value itself is returned via an output parameter.
-amdvi_get_top_pt_level_and_perms() follows the same return convention.
+The xilinx_axienet device has ethernet checksum offloading, with a
+mode where the guest provides the offsets within the packet where
+the data to be checksummed starts, and where the final checksum
+should be written into the packet.
 
-Both functions currently return uint64_t, which means any negative error
-values are returned as unsigned and then converted back to int by the
-callers. This does not cause any issues in the current implementation, but
-Coverity flags the type mismatch and potential overflow.
+We don't sanity check the TX_CSINSERT offset before writing the
+checksum data into it, which means the guest can pass us a value that
+is larger than the packet itself and cause us to write the checksum
+off the end of the buffer.  We also don't explicitly check the
+TX_CSBEGIN offset; this doesn't currently cause any problems because
+we will pass a negative length to net_checksum_add() which does
+nothing, but it's a potential trap for the future if the type
+used for the length gets changed to be unsigned.
 
-Make both helpers return int, so the type matches what the return variable
-is (0 on success, small negative value on failure), and also the type used
-by all callers to store their return values.
+Explicitly check the offsets.  The datasheet doesn't say what happens
+if the guest misprograms this, so we choose to log an error and send
+the packet as-is.
 
-No functional changes are intended.
-
-Fixes: a1c97c395729 ("amd_iommu: Sync shadow page tables on page invalidation")
-Fixes: 786550e2d38a ("amd_iommu: Follow root pointer before page walk and use 1-based levels")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630220806.1758748-3-alejandro.j.jimenez@oracle.com>
-(cherry picked from commit 784768f7faccf02fcf904db023cd29c790b57443)
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260706162704.787495-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 8cbcf7579355f995340aa27ad197ef61c4969c06)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 99b05b2ab67..9f01a8a2cda 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -662,7 +662,7 @@ static uint64_t large_pte_page_size(uint64_t pte)
-  *   - IOVA exceeds the address width supported by DTE[Mode]
-  * In all such cases a page walk must be aborted.
-  */
--static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-+static int amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-                                                  uint8_t *top_level,
-                                                  IOMMUAccessFlags *dte_perms)
- {
-@@ -705,7 +705,7 @@ static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
-  *      page table walk. This means that the DTE has valid data, but one of the
-  *      lower level entries in the Page Table could not be read.
-  */
--static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-+static int fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-                           uint64_t *pte, hwaddr *page_size)
- {
-     uint64_t pte_addr;
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+index 9f5f65ecfac..d35f4a847d6 100644
+--- a/hw/net/xilinx_axienet.c
++++ b/hw/net/xilinx_axienet.c
+@@ -922,20 +922,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
+     if (s->hdr[0] & 1) {
+         unsigned int start_off = s->hdr[1] >> 16;
+         unsigned int write_off = s->hdr[1] & 0xffff;
+-        uint32_t tmp_csum;
+-        uint16_t csum;
+ 
+-        tmp_csum = net_checksum_add(s->txpos - start_off,
+-                                    buf + start_off);
+-        /* Accumulate the seed.  */
+-        tmp_csum += s->hdr[2] & 0xffff;
++        if (start_off > s->txpos || write_off + 2 > s->txpos) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: offsets outside packet, skipping checksum\n",
++                          TYPE_XILINX_AXI_ENET);
++        } else {
++            uint32_t tmp_csum;
++            uint16_t csum;
++
++            tmp_csum = net_checksum_add(s->txpos - start_off,
++                                        buf + start_off);
++            /* Accumulate the seed.  */
++            tmp_csum += s->hdr[2] & 0xffff;
+ 
+-        /* Fold the 32bit partial checksum.  */
+-        csum = net_checksum_finish(tmp_csum);
++            /* Fold the 32bit partial checksum.  */
++            csum = net_checksum_finish(tmp_csum);
+ 
+-        /* Writeback.  */
+-        buf[write_off] = csum >> 8;
+-        buf[write_off + 1] = csum & 0xff;
++            /* Writeback.  */
++            buf[write_off] = csum >> 8;
++            buf[write_off + 1] = csum & 0xff;
++        }
+     }
+ 
+     qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
 -- 
 2.47.3
 
