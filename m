@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6DACC5CFEE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FFBC5B56A
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAPm-0007BS-53; Wed, 12 Aug 2026 10:58:46 -0400
+	id 1wuARt-0004EH-Tc; Wed, 12 Aug 2026 11:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOf-0004vK-3N; Wed, 12 Aug 2026 10:57:39 -0400
+ id 1wuARa-0003va-Jp; Wed, 12 Aug 2026 11:00:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOd-0000yX-GK; Wed, 12 Aug 2026 10:57:36 -0400
+ id 1wuARX-00022V-7F; Wed, 12 Aug 2026 11:00:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=/RUTqmnMJkUSxHtlT4PgzSEvdBuFo9f87JyzfIlm270=;
+ t=1786546233; bh=QJ6gM7foV5Cj1HPVRC8k43X9LggidRyei93AfDsNoiA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NvBmK7VJ4mNaet6GV5FFujLymSnG/HKfShMsoIl1P9/CkrUQ0q691VbunkbhprABW
- kagXXBNjgdX571XealdEymVRWMn3nqqIAIxNSulcws0zKaw2h6sTG61kECFwDh+mw1
- gKy3UvmMV7KvBWIeYla4YcgyUMxsOkcj8XQPY94xc+ktC5Bl10fdOOPNFjbSUpAFNI
- CBuJcRjcAJq4g7IbHXp6aukBnnlc7rHOnPD9kntX4yyTLWuDA7aglArVltwBtD6xRI
- kJOpOL7czefrvIKlbaUiMGa0uIvopxC/0MmWBQ/CaCtPGp7A9ghf2xm5xABSggWkTP
- 0zHfMc9Z7QorQ==
+ b=G1x7ngl9d8lyKa5BPi6P4H6crDaoqwgH1l/t/qd2si7K0fK3znS5+VCesQMzOMIGD
+ 5kVUdM7SCGZs3UaNzfWO/7CI6KNOVGqMDcI4IlO9YKPRe71PhbqSembzCtZs0TXhH/
+ q/8eQE0S3uR6AbLDxOYFytZYdcUwYDfN+aM/GHWwPLrnSMeQ98Cj9Tsy6UqzmWBrWl
+ 8OGS4eD2NibX5av0PQkb65HnBuV19RBwm/h8tRzs145l40yVf6VUdVN5yAOfioWkjK
+ pROemeT6S3eTBa9GDQeSHw4c12rK/BsklA5N8GVZptRVx9ywzC/hr/sQNgaxvsfAzQ
+ QMko0qE2RqaKg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDCFA1CA64C;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8154B1CA666;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24B5C409D8E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DC2A8409DA8;
  Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 817542F9F3; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id 47C072FA27; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 072/120] linux-user: fix guards for the fsmount(2)
- syscall series
-Date: Wed, 12 Aug 2026 17:48:55 +0300
-Message-ID: <20260812144955.649205-72-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ boy juju <agx1657748706@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 098/120] dmg: reject inconsistent UDRW chunk sector
+ count and length (CVE-2026-65928)
+Date: Wed, 12 Aug 2026 17:49:21 +0300
+Message-ID: <20260812144955.649205-98-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,77 +72,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-The fsopen(), fsconfig(), fsmount() and fspick() implementations are
-guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No such
-macro exists, so the guard is never true and the entire series compiles
-out. Guests calling any of the four get -ENOSYS, which for example makes
-systemd's credential setup fail with EXIT_CREDENTIALS for most units.
+The chunk metadata contains both:
+- Sector count: number of 512-byte sectors in the virtual disk
+- Length: number of bytes in the image file
 
-The strace bits for fsconfig() have the same typo.
+The UDRW chunk type indicates uncompressed data that can be accessed
+directly. The code is missing input validation to verify that sector
+count is consistent with length.
 
-Check if FSCONFIG_SET_FLAG is defined to avoid build errors in the strace
-code on some older distributions (Helge).
+If sector count is larger than length, then read requests can access
+beyond the end of the s->uncompressed_chunk buffer. This is an
+out-of-bounds heap access that could lead to a crash or an information
+leak.
 
-Fixes: 767c32fe6983 ("linux-user: implement fsmount(2) series of syscalls")
-Fixes: ee1ac6a68fae in 11.0.x
-Fixes: 6e0aa9f6c731 ("linux-user/strace: add fsmount series of syscalls")
-Fixes: 7e6f47e08cd8 in 11.0.x
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit aba80ad9d853e436047899177f92334379de4537)
+While we're at it, also zero the end of the last sector when length is
+unaligned. This prevents information leaks from the
+s->uncompressed_chunk buffer.
+
+Fixes: CVE-2026-65928
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3846
+Reported-by: boy juju <agx1657748706@gmail.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20260723144519.364701-4-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 370882d0869567e5f21b95229a763171e319d0db)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 3a81cc95f41..bc43a95a778 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4344,7 +4344,7 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
+diff --git a/block/dmg.c b/block/dmg.c
+index 6f8120e0338..5d7d3b8901f 100644
+--- a/block/dmg.c
++++ b/block/dmg.c
+@@ -312,6 +312,21 @@ static int dmg_read_mish_block(BDRVDMGState *s, DmgHeaderState *ds,
+             goto fail;
+         }
  
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig) && defined(FSCONFIG_SET_FLAG)
- static void
- print_fsconfig_cmd_name(int cmd)
- {
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index e363892e0ae..25ace05187a 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1725,7 +1725,7 @@
- #ifdef TARGET_NR_fsopen
- { TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
- #endif
--#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig) && defined(FSCONFIG_SET_FLAG)
- { TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
- #endif
- #ifdef TARGET_NR_fsmount
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index ec249806b91..67106f1f59e 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9680,7 +9680,7 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
- 
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
- #define __NR_sys_fsconfig __NR_fsconfig
-@@ -14421,7 +14421,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
- 
--#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
-+#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-             p = lock_user_string(arg1);
++        /*
++         * Uncompressed chunk length must match sector count. Compressed chunks
++         * are validated during dmg_read_chunk() since the uncompressed size is
++         * not known ahead of time.
++         */
++        if (s->types[i] == UDRW) {
++            if (s->sectorcounts[i] != DIV_ROUND_UP(s->lengths[i], 512)) {
++                error_report("length %" PRIu64 " for chunk %" PRIu32
++                             " is inconsistent with sector count %" PRIu64,
++                             s->lengths[i], i, s->sectorcounts[i]);
++                ret = -EINVAL;
++                goto fail;
++            }
++        }
++
+         update_max_chunk_size(s, i, &ds->max_compressed_size,
+                               &ds->max_sectors_per_chunk);
+         offset += 40;
+@@ -722,6 +737,16 @@ dmg_read_chunk(BlockDriverState *bs, uint64_t sector_num)
+             if (ret < 0) {
+                 return -1;
+             }
++
++            /*
++             * Zero the unread part of the last sector when chunk length is
++             * unaligned to avoid exposing uninitialized memory. Valid image
++             * files may never hit this case, but cover it to be safe.
++             */
++            if (s->lengths[chunk] & 511) {
++                size_t trailing_bytes = 512 - (s->lengths[chunk] & 511);
++                memset(s->uncompressed_chunk + s->lengths[chunk], 0, trailing_bytes);
++            }
+             break;
+         case UDZE: /* zeros */
+         case UDIG: /* ignore */
 -- 
 2.47.3
 
