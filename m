@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9993C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01961C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuALK-000829-Ou; Wed, 12 Aug 2026 10:54:10 -0400
+	id 1wuAPj-0006qK-1Y; Wed, 12 Aug 2026 10:58:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJU-0005jp-1F; Wed, 12 Aug 2026 10:52:22 -0400
+ id 1wuAP2-0005Mj-Ox; Wed, 12 Aug 2026 10:58:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJQ-0006x4-Nm; Wed, 12 Aug 2026 10:52:14 -0400
+ id 1wuAP0-0000zq-Q5; Wed, 12 Aug 2026 10:58:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=8Yv1nPi+tGb6h1Nu1rlZgEwqbLk/I/Q0hp+bTXgX9Yk=;
+ t=1786546232; bh=OSzWGsOR1abOhW645vogr5qkbRsdgNgE4GhouxF/q0g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mcRLLsi861QB+l5SDKErIBf1ifVroV2PZTjRzExsLaDbEvxmh0Icegy7ySeyIN+jN
- PZ1PZ7mdeXwjF5+iiNwvhj3NCYozt+xLtcwpz9rIY4XBSaGRiC8EbPVge4TSQx33E3
- 5OsILzSle5E+FGbCmCGMX5WbebM9D2oR+9H1ZGZVJhobPWy5axmTe8KgoPG3duGkud
- WE4Jsp4FOLs+ywv5XAFGWEE42vJ0ojMWoXP4JTK0OZ2NYpxmDoyEuFMBSWz80HYMUN
- ZxZe+KmtqI6ytBGM6hRTG+mMasioVHb7ZzJJqXmISPoliWG1o0RmPjAUlFs5WUgl7q
- eRkZkk2mUZhsw==
+ b=hWFMKuW3/wrz4wRS4L3mJrUAaXVlfOTnGiPivTP3IUCUrjSQzIT7TEqg6JXZc33fO
+ d/2GsMCIarTgm7EG7DBrZYDH7Jn/6/cC9h0Fhot9PjFZY9XDVevkLhqBkF+H3I3gZh
+ EDGkNWw5oZ9mdk7F58wX58B9RM5AHNWnoJ+ALpTigKrvC3Xlht2+0OynytNosdfcK5
+ dd4STRTUisnV4MIQLYpgszfOEVpXOlTQsv2fI/dzlz+MgEjfsnNkte1RdFRmOdt78w
+ sRGTq0TgJRKBW7S4G9v/xNvIYCLKCXYcdAPMHk/i5xHOvjVpiMKHssICvey6TWuoxu
+ 9ixJoTuy06MaQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 489C81CA61A;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C2F5F1CA64D;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A2F3F409D56;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 29082409D8F;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0D1202F98F; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 887B92F9F5; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- Tristan Madani <tristan@talencesecurity.com>,
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ Bin Meng <bin.meng@processmission.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 022/120] hw/display/vmware_vga: Don't allow guest to
- trigger long running loop in host
-Date: Wed, 12 Aug 2026 17:48:05 +0300
-Message-ID: <20260812144955.649205-22-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 073/120] hw/sd/sdhci: Extract uSDHC-specific quirk
+Date: Wed, 12 Aug 2026 17:48:56 +0300
+Message-ID: <20260812144955.649205-73-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -75,68 +73,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
-basically does:
+In Linux, the ESDHC_MIX_CTRL quirk is guarded by esdhc_is_usdhc() while
+the eSDHC code path uses the standard SDHC interface. Extract the quirk
+into a new `usdhc_write()` function.
 
-            x = vmsvga_fifo_read(s);
-            y = vmsvga_fifo_read(s);
-            args = x * y;
-            goto badcmd;
-            ...
-badcmd:
-            len -= args;
-            if (len < 0) {
-                goto rewind;
-            }
-            while (args--) {
-                vmsvga_fifo_read(s);
-            }
+Fixes file system corruption on emulated i.MX53 where Linux'
+esdhc_is_usdhc() returns false. The same likely happens on e500 and
+imx25-pdk machines.
 
-Thus by supplying huge values for x and y that overflow the result of
-the multiplication, the guest can trigger a long-running loop here
-that burns the host's CPU cycles.
-
-Add some sanity checks so that this cannot happen anymore.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
-Reported-by: Feifan Qian <bea1e@proton.me>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
-Reported-by: Sunday Jiang
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 75e98bc4f859 ("hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE")
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20260720201133.24796-3-shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit f604b807a55acd3f81725bb7dbd98450c96adf00)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 11ed6b92130a3b075cd6528e991c78538685d56a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index c2c6bc76e90..a5b7048e877 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             vmsvga_fifo_read(s);
-             x = vmsvga_fifo_read(s);
-             y = vmsvga_fifo_read(s);
-+            if (x < 0 || x >= SVGA_MAX_WIDTH ||
-+                y < 0 || y >= SVGA_MAX_HEIGHT) {
-+                goto rewind;
-+            }
-             args = x * y;
-             goto badcmd;
-         case SVGA_CMD_RECT_ROP_FILL:
-@@ -776,7 +780,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             if (len < 0) {
-                 goto rewind;
-             }
--            while (args--) {
-+            while (args-- > 0) {
-                 vmsvga_fifo_read(s);
-             }
-             printf("%s: Unknown command 0x%02x in SVGA command FIFO\n",
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index c86dfa281f4..e58a6103970 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1795,34 +1795,6 @@ esdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         sdhci_write(opaque, offset, value, size);
+         break;
+ 
+-    case ESDHC_MIX_CTRL:
+-        /*
+-         * So, when SD/MMC stack in Linux tries to write to "Transfer
+-         * Mode Register", ESDHC i.MX quirk code will translate it
+-         * into a write to ESDHC_MIX_CTRL, so we do the opposite in
+-         * order to get where we started
+-         *
+-         * Note that Auto CMD23 Enable bit is located in a wrong place
+-         * on i.MX, but since it is not used by QEMU we do not care.
+-         *
+-         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...)
+-         * here because it will result in a call to
+-         * sdhci_send_command(s) which we don't want.
+-         *
+-         */
+-        s->trnmod = value & UINT16_MAX;
+-        break;
+-    case SDHC_TRNMOD:
+-        /*
+-         * Similar to above, but this time a write to "Command
+-         * Register" will be translated into a 4-byte write to
+-         * "Transfer Mode register" where lower 16-bit of value would
+-         * be set to zero. So what we do is fill those bits with
+-         * cached value from s->trnmod and let the SDHCI
+-         * infrastructure handle the rest
+-         */
+-        sdhci_write(opaque, offset, val | s->trnmod, size);
+-        break;
+     case SDHC_BLKSIZE:
+         /*
+          * ESDHCI does not implement "Host SDMA Buffer Boundary", and
+@@ -1891,9 +1863,52 @@ static void fsl_esdhc_le_init(Object *obj)
+     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
+ }
+ 
++static void
++usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
++{
++    SDHCIState *s = SYSBUS_SDHCI(opaque);
++    uint32_t value = (uint32_t)val;
++
++    switch (offset) {
++    case ESDHC_MIX_CTRL:
++        /*
++         * So, when SD/MMC stack in Linux tries to write to "Transfer
++         * Mode Register", uSDHC i.MX quirk code will translate it
++         * into a write to ESDHC_MIX_CTRL, so we do the opposite in
++         * order to get where we started.
++         *
++         * Note that Auto CMD23 Enable bit is located in a wrong place
++         * on i.MX, but since it is not used by QEMU we do not care.
++         *
++         * We don't want to call sdhci_write(.., SDHC_TRNMOD, ...)
++         * here because it will result in a call to
++         * sdhci_send_command(s) which we don't want.
++         *
++         */
++        s->trnmod = value & UINT16_MAX;
++        break;
++
++    case SDHC_TRNMOD:
++        /*
++         * Similar to above, but this time a write to "Command
++         * Register" will be translated into a 4-byte write to
++         * "Transfer Mode register" where lower 16-bit of value would
++         * be set to zero. So what we do is fill those bits with
++         * cached value from s->trnmod and let the SDHCI
++         * infrastructure handle the rest
++         */
++        sdhci_write(opaque, offset, val | s->trnmod, size);
++        break;
++
++    default:
++        esdhc_write(opaque, offset, val, size);
++        break;
++    }
++}
++
+ static const MemoryRegionOps usdhc_mmio_ops = {
+     .read = esdhc_read,
+-    .write = esdhc_write,
++    .write = usdhc_write,
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 4,
 -- 
 2.47.3
 
