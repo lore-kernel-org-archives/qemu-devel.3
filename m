@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21C1C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9C0C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9XQ-0007uX-PI; Wed, 12 Aug 2026 10:02:37 -0400
+	id 1wu9b7-0000bQ-JR; Wed, 12 Aug 2026 10:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9XE-0007tW-Rs; Wed, 12 Aug 2026 10:02:26 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wu9ax-0000Yb-L1
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:06:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9XB-0002Nu-GB; Wed, 12 Aug 2026 10:02:24 -0400
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
- by mailfout.phl.internal (Postfix) with ESMTP id 13E9CEC006D;
- Wed, 12 Aug 2026 10:02:17 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-09.internal (MEProxy); Wed, 12 Aug 2026 10:02:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786543337; x=1786629737; bh=ey8Tm/l1CibtSG95Qt+jqOA5SO2w7prG
- nsd+/homs3w=; b=jrW7gadDUXQLBTAZq5QHFr2UptHgLkZBusna0+5+4lXWzGqI
- D2sbI/bVDxd/SRpT0c3bRmVjw6FXEC0lE5vhnxGjtIuC9Wil1uikTH4sVm6ME1xh
- /ZP+yYo6i8NPb0m90+LUwnULlFLL96mmxrbgQaO/ve2hGDSbCnMOqK1OK/CW+lZM
- 8jTWFkhpsVL9SdkerQWGb1eBg+KVlpDrrNzI079p96WxOrAZHObmZq5+PTwXGKFS
- 6lEgnFe83cqlIbT+VWYEkT1wnq4ms1HpukINyO/e1meBjzFqm6HxJhtdTUdrH+rC
- b+KZ+R6jCIhC7m9TUsRig4A2lQelXRPr2YCI1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786543337; x=
- 1786629737; bh=ey8Tm/l1CibtSG95Qt+jqOA5SO2w7prGnsd+/homs3w=; b=b
- NiKirjBIcidhCEFZSO8NCM5YAs+Q93spEw7HFgtisanGi2Pvy5m5+r+zuGpeHYjq
- yVpWArVmLz6v9rilZXBSNTmPLJEsA/Kqd7MaS1QNxfi+bvr9ZzAU/bQFV3UwDUdC
- j3Hhxq4szW3O7OV8atuJGNS11T5cUwSzDjJPH1yLz1bQ/l3lmls9+Zu4ryjT4Ztw
- 9AT9ejgQWEArsrIRsT5J3fxbLEek0jQm4dMjmnkjky1/9fi9ZhKMMnp5HGCuGEis
- pLYlbQwfWrxWenyI76W6UMb0+iSyVlkwHYPSUn8RNXg2gm4XHrPSNhBt8CQ3mPsk
- ECdpEdCJtWZ4+WuRUq8Ug==
-X-ME-Sender: <xms:53x8arMH7CUJlXquDB-N57eiC5eNpI2hHVr21py7ZheYYZZQ7kB1Lw>
- <xme:53x8akdX9GYTmNZ1cYWiLFZMcCv5gRIDuSt18TPXZtktCNpoz6NAeU0BDCyRvT1va
- 5XCqfAyH3s_m6r8StPdTN7Xqg0ddNOsXR69YAKuxL8JD2psrU3eLMs>
-X-ME-Received: <xmr:53x8ahEP49mOKeO-zAFBgdBSbwYW-acg2VvD5dJqZWNltL3mi8fo4D_o6iwVp1cuuYL4Qw>
-X-ME-Proxy-Cause: dmFkZTFsqhFi5OHec8z4spF7YXvJhFsBrzm4DkJqlUBsxeTjyi3hSG0iar8WL5yG+aNnH3
- sjBRmuZbtTHoYoorUR3qlR+DX/fmI/y6y/IHksk37Gm4mX1uDphkDJhqUSb6zDGUrn6W6D
- bkT5lmEW0Iu3AloMVxH9R0KDVlvK5JWiJkDKGJpfS2lggKHWf9Rs9Ir0weaG4FCywmSw7p
- zucGI+T3qSU3nbQa/zTAVWIYX10hQ8RCkfYO+B3QLnb7ys/Ws7WdsDpJLmWBI2Mm+5MSwo
- +/2eJXkcdumFZaYha73AnfJGbeieGmgKKpAIsawyu7z1meKHIjbfbYkc+xHw9XN8zqbgMc
- AKlR1Z6zy72bQqTtIk/MiIxcXdr5QsPMNqhw0OmGNuwfLgpHi2uI7kIdY1z/aItgYEKNZb
- ujuStOrZp8hQVu8kq3DKrGYULw1oFEXvx5nEhKmxck1tRPxXC2iRGyYz9laG03tZd1JtVJ
- 8wMMySPG1IhDbHkdneMtbelqV709TOR3u07SFX7pPYu3Zo3C0rCcsHSlqM0lIDKcTQMn6z
- 2uN2KCg4CZXW24yWOXR+apzIeEiNSV4+nen/f68CWhS0eTb7WTvqznyk6vq/t7PG9hGfZ3
- J20YWXlDFijQ1ejFOr7ImpNAuX5ywPWAIrnaKrouZilKCR530S2wEvAbKn0g
-X-ME-Proxy: <xmx:53x8avv7SDjKYbiUydCZeC8G9JMaSLo4Yyh1_nMpxTgmekVeCe2hbA>
- <xmx:53x8aroJ2k5ef0LQAJAf61aQqKQPGZIcAt6xY_JyctVg1_GZ3JqyTA>
- <xmx:53x8amm-Q_fKmUomyUMXkI0jROHpv8XZIz-pCgYfRq1tkX2upBAUuQ>
- <xmx:53x8aohuY5pq50if25ndO9K1AgTvTGz6D358lWHjvKHdAJMSOiRc2w>
- <xmx:6Xx8asdCZcZrjbXcz9YQ0xFOD-ftfVDKKzP8RQkkgKHQlYjh5-k3o3my>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 10:02:14 -0400 (EDT)
-Message-ID: <41fb7dd23c94be376cf6f03fb54f66443c5e905d.camel@alistair23.me>
-Subject: Re: [PATCH v4 0/3] riscv-iommu: always send MRIF notice MSI
-From: Alistair <alistair@alistair23.me>
-To: Flavien Solt <flavien.solt97@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, Tao
- Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis	 <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier	 <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Nutty Liu	 <nutty.liu@hotmail.com>,
- qemu-stable@nongnu.org
-Date: Thu, 13 Aug 2026 00:02:14 +1000
-In-Reply-To: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
-References: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wu9av-00037f-F3
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:06:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786543572;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fWlGVdbOZovEsQL5eZv8682YjltUyJf+poFcBKHVrLg=;
+ b=MGApzb3N3vqcAqvWVaa61rgQOgEK8JCtwLloVpJ73mG+Vis61vuq48/UlgYUuiKIfTplhj
+ lWw6QYm4Jx+FNlad9Kycn4SfLwbXPLyfUpeBD1wuVvEVKk6BHl7pi3x2t0zyBqVXIHC5sd
+ UkXacO/wFSPBh6pnm/i43AEOwXNx0m4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-HiaNpeBEMza_KFbjP1R4og-1; Wed,
+ 12 Aug 2026 10:06:02 -0400
+X-MC-Unique: HiaNpeBEMza_KFbjP1R4og-1
+X-Mimecast-MFC-AGG-ID: HiaNpeBEMza_KFbjP1R4og_1786543561
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9B2D18002E8; Wed, 12 Aug 2026 14:06:00 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9AEBB3002D28; Wed, 12 Aug 2026 14:05:59 +0000 (UTC)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.151;
- envelope-from=alistair@alistair23.me; helo=fout-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 03/16] qapi/qmp-dispatch: Include 'qemu/aio-wait.h'
+ and 'monitor/monitor.h'
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ David Gibson <david@gibson.dropbear.id.au>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+In-Reply-To: <20260812131147.83188-4-philmd@oss.qualcomm.com>
+References: <20260812131147.83188-1-philmd@oss.qualcomm.com>
+ <20260812131147.83188-4-philmd@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 18:05:43 +0400
+Message-Id: <178654354335.2071945.15885671536112898078.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=712;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=svjDeNPEHRoxwfyUIu5MH96nPJg7U9Pf7wQFCMGcSHk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqfH26QKO6JRnTgTQuZeo0ANHRAzvGQov6Ctaoa
+ 3v8nqGEIXiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCanx9ugAKCRDa6OEJdZac
+ 5Tt8EACoWB4YobNNChXYNiMq2WCLAt8fz/7tH1aoDWlVsaUJ6D+P0Hcd1BOz5/cvQoM6m64cfVI
+ Y6fcmV/6p0ZB5nTUhraWSay7XjQJD0DHlyR41BkSCf6Zp7I99PfxurDtd2CwXHv2k2wvbJDdjL6
+ K9Mx+slTEKAIp5QroZ+jbKenvgGDIppsFcSNb5nYp8YIg7BMfMcwfhjo0cL9RbFJXGi1YRKrnyA
+ QaH7jM0zyboJrCG5S0LORvhtu7ZtSPfxE/EpiUUZpE3Tedsn2K8Y/T/brdr4LHTxsU77qBcnVTr
+ MRi7xcjhIpNWKuDy4g0Uctz2BgwRm1p0XaSFWB2mKr89ag9ydVgLq4iT7IPyRLn2ktBLLNpaeuE
+ LcpoHI5Om2r6aJSw1H/zvnCtwxZzOdJ/QV+KHKBRFFQhf7ftb5gWXCtu88Y75CPRbYZzCguE4x4
+ e+2Vk7CKCwddfFZQKCf5NLdLJ1bB05e6kc+d5iII29BwdzE0n5pNhTz2dSFboz7B60OLWRIbg0/
+ S6UTgQHxFVX9FryvXV6QssOWJhj/YAWxxYDSX9SDgEIvCdSfqXERgSA/T2iWOWmpg1LvbiYXE0Q
+ 4UiBopYdgLY+qzkZZfJtBWlJqPmmsMLP0Tv9WE+mNZjS89rUiY1YKHzY6DvmEyKsdMis22Knnu6
+ gumTHItga9c9Aaw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,75 +109,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-07-27 at 15:22 +0800, Flavien Solt wrote:
-> The AIA specification requires an IOMMU to send the configured notice
-> MSI after storing an MSI to an MRIF even when the destination
-> interrupt
-> is disabled. QEMU currently reads the MRIF interrupt-enable word and
-> returns without sending the notice when the matching bit is clear.
->=20
-> Patch 1 lets iommu-testdev select an MSI payload and supplies its PCI
-> requester ID. Patch 2 removes the invalid enable-bit gate. Patch 3
-> checks
-> both enable states through qemu-system-riscv64.
->=20
-> The complete RISC-V IOMMU qtest suite passes:
->=20
-> =C2=A0 MRIF notice: enable=3D0 pending=3D0x20 notice=3D0x12d
-> =C2=A0 MRIF notice: enable=3D1 pending=3D0x20 notice=3D0x12d
-> =C2=A0 6/6 tests passed
->=20
-> V3 used MIME transfer encoding to protect the patch body, but lore
-> still
-> received five hard-wrapped hunk headers. This revision resends
-> unchanged
-> code through b4 and carries the review tags received on v1 and v3.
->=20
-> Changes in v4:
-> =C2=A0 - Resend through b4 after the v3 lore copy remained line-wrapped.
-> =C2=A0 - Restore Daniel Henrique Barboza's Reviewed-by tag on patch 2.
-> =C2=A0 - Add review and test tags from Nutty Liu and Chao Liu.
->=20
-> Changes in v3:
-> =C2=A0 - Attempt to protect the patch body with MIME transfer encoding.
-> =C2=A0 - Add Tao Tang's Reviewed-by tag to patch 1.
->=20
-> Changes in v2:
-> =C2=A0 - Wrap the fix commit message.
-> =C2=A0 - Keep the existing notification comment.
-> =C2=A0 - Add deterministic IE-clear and IE-set qtests.
->=20
-> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
-> ---
-> Flavien Solt (3):
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/misc/iommu-testdev: support PCI MSI tes=
-t writes
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/riscv-iommu.c: always send MRIF n=
-otice MSI
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tests/qtest: add RISC-V IOMMU MRIF notice =
-tests
+On Wed, 12 Aug 2026 15:11:34 +0200, Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> wrote:
+> qmp-dispatch.c calls aio_wait_kick() and monitor_cur(). Include the
+> header declaring them in order to avoid the following build failure
+> when refactoring unrelated headers:
+> 
+>   ../qapi/qmp-dispatch.c:126:12: error: call to undeclared function 'monitor_cur'
+>     126 |     assert(monitor_cur() == NULL);
+>         |            ^
+>   ../qapi/qmp-dispatch.c:141:5: error: call to undeclared function 'aio_wait_kick'
+>     141 |     aio_wait_kick();
+>         |     ^
+> 
+> [...]
 
-Thanks!
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Applied to riscv-to-apply.next
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Alistair
-
->=20
-> =C2=A0hw/misc/iommu-testdev.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0 14 +++++-
-> =C2=A0hw/riscv/riscv-iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 13 -----
-> =C2=A0include/hw/misc/iommu-testdev.h |=C2=A0=C2=A0 1 +
-> =C2=A0tests/qtest/iommu-riscv-test.c=C2=A0 | 102
-> ++++++++++++++++++++++++++++++++++++++++
-> =C2=A04 files changed, 115 insertions(+), 15 deletions(-)
-> ---
-> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
-> change-id: 20260727-qemu-mrif-v4-c8e3c3a48b9c
->=20
-> Best regards,
-> --=C2=A0=20
-> Flavien Solt <flavien.solt97@gmail.com>
->=20
 
