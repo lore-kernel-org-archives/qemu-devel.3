@@ -4,92 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E3D8C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0DDEC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAH4-0003cK-Gy; Wed, 12 Aug 2026 10:49:47 -0400
+	id 1wuAHq-00040s-Rz; Wed, 12 Aug 2026 10:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuAGx-0003Ya-0Y; Wed, 12 Aug 2026 10:49:40 -0400
-Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAHl-0003xz-9O; Wed, 12 Aug 2026 10:50:29 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuAGu-0006Ev-1S; Wed, 12 Aug 2026 10:49:38 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.phl.internal (Postfix) with ESMTP id AD7ECEC01FC;
- Wed, 12 Aug 2026 10:49:33 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 10:49:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786546173; x=1786632573; bh=Bp0u/J1HPcsfCo+dtDZmi9uDiU9rSRDM
- JMKmBOzB0UA=; b=VGtyTqfHnMhQwlOU2AAb75rW7VHyxFl0UQvVGtGbOSM2Hrw9
- tjRQ9Xdnzn80XHmRAHsFslWSFwHz2e/4MVnfk/JnvsPWT0DSBFB+xsHRoz6VOI16
- nTK/FQuMZpGywsNxbzhq9eXMp7P5RFHmBHBYEFcdci8vrRNdTgdwBf9bZWi4aW7J
- vzFZfj2Acu2fhiFmRh+B9ok26mvMSyHryWSpgnmr+jzTgrWAG2n5qlxAfRveyRw2
- /Uc/OLBmaEvdkWzNlkFR6rDrXDT7OhwoECpXn+Tpf7X3UAEkpy2/9+NviFaLETO/
- iTdss+xDrJC72NxKAm+wjyQV6mXCrzB7QCksjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786546173; x=
- 1786632573; bh=Bp0u/J1HPcsfCo+dtDZmi9uDiU9rSRDMJMKmBOzB0UA=; b=Z
- i/f9KpTtbTcurquEwsgnw0NRoXtaLOWrtK02j5RMVrMso/ilAwkDeoH+Fxv2LDus
- HUaXeUx666K9txlXeyHWLTO7NUMkhiIs1aW746/KoHDP8zvql6qvcUHdXiTY8wOw
- LLprm8mE6WzDraZVsuPZW/zf4kFBXDGFZFsy7PcPKWNhScgAYtv66QHlBUnfhxRn
- l/tVmauWNX9hVt9cDAXTTP0T8WVxWHwXpp15s8jcFQ/8PRbdFCWXHvNva9EaGZ6j
- 0kD21/RGtZfZNCjX7hl3zmFxbS2WaL7MiWMJhW2Y52boFAppg4q4IipK/8h0sTGS
- XpBg4M2ylBMR/eFxwZSNQ==
-X-ME-Sender: <xms:_Yd8ar2XBbGdc6KtgZ-XLiwrEWW5POswQhFxNl4ofbJ8KKXz9lFZcw>
- <xme:_Yd8alCIIb1ezAp6JBCuMugIHKvcjHsNXdYW7nsDlrVTLbiKhTQ5mWXXwCaeWC-bG
- amdO2TLMJW1uY91yEtFMStO6uBxVbmg8mfFqSGjaNtcuspquLXls20a>
-X-ME-Received: <xmr:_Yd8aq5gh7_EfG03jYltXGLNkpc9w66fc4nB9pzb0kBF0kG4DaW5ur-cQgcRiLkmGDRzZA>
-X-ME-Proxy-Cause: dmFkZTEdCXacn7VNZfGMe+3gLNJXPW7rof2QxL+Af6CpHOxePYAI07EgJfkE42XyIIMYIV
- lRMF1NgKUOuWgci452MlUOXt5bbcWC5Jl95cVAkCgempXszDwr3DYc9JGrRUbUmLCxFxge
- FpWhCu5Y07oNP9z1nYYwf66AD1fkEhTV4SRZGBEah0R1WSzgRt5m9MhzKDRTqkoZZwpofl
- sP+UksXWNYg3TcSk2eyKA+aGNiBk55SLMMbWB0XW56lCMB9sy9gJmbNVvfG69zI06HwxAt
- cW7TTZdEl2Sdbl9zO2sN7LazJeR+32FIb+kGQseAm2lKnWCuVC3ulVsIHfeyAcHfV/LKYw
- UcdFZAlZ3Fb2XpMGir2W0F6aVmJAuR1FrBm6r0QxAIh6C57WlNfo7D4USGbd+cFUPfrTp3
- WVoGWVF/KuP/jyc6WePT1RIOCfbVKheCGNtqqEXH0hBd+Wj88B5fKRwcwpQbLgLQY2K6Jk
- RS3KiQxox3bXv96TFq4kkcjfNFVQ9mz2DicM/XAmtGWYvq5aJvPKKnv2y5POuv06BQ9PP0
- yz8W9w3Gjrt7V7u+WcOn3TPBKb22vrPKl1Mr/cowUkcpQncXQ1vcRSy4ceQtrIJ8v4mm9T
- I+iKcvxuBeqGP2fgthGgPGgjmg4ar0hiMDReZ7B1aNq1MmyaXSQwmukGIo2w
-X-ME-Proxy: <xmx:_Yd8amKCtjAhNgEOOP-mdi0DMTNqvOB3ZIGRxXoVxdkhfDb_qdm5pA>
- <xmx:_Yd8artrddBxzOq139QuDMit8A8qyR4wjY9I9FUYQ1jVyq0OOeMj8g>
- <xmx:_Yd8atJO3Elov9wvEp8CW3__trjS_cXUcp6ItZ6HqQV1p8GC_mNfqg>
- <xmx:_Yd8as8P624SaCzvjQKxeIW2PW9yRCmQ2NoxcXKcWgcw6V3eC1m0pA>
- <xmx:_Yd8av4Hpv353RU2DCpG2SiM21EJkPwzjrIioZV7_ECjV749W83mwruN>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 10:49:32 -0400 (EDT)
-Message-ID: <4efadb34d8e21daf0c3897d82d7afd0d73b4ae79.camel@alistair23.me>
-Subject: Re: [PATCH 0/2] target/riscv: Fix seed CSR sign extension
-From: Alistair <alistair@alistair23.me>
-To: Ivan Efremov <nendensu@ispras.ru>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com, 
- farosas@suse.de, lvivier@redhat.com
-Date: Thu, 13 Aug 2026 00:49:32 +1000
-In-Reply-To: <20260802113130.7818-1-nendensu@ispras.ru>
-References: <20260802113130.7818-1-nendensu@ispras.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAHg-0006aB-M1; Wed, 12 Aug 2026 10:50:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786546208; bh=leE4XWIxQ+IGwAL2aKTFAZF+Cj0owg3xSDlUtu6v8/0=;
+ h=From:To:Cc:Subject:Date;
+ b=OEWszv5lMV/GALf/VNcSxS0GTnNZZH9RdWG7I1PlWDue6NOvkNvpcPrRUf35mNeN4
+ 9Y+Ta2cqjBo/r6kh5R1GmzenvCC6G18+iknSEbqmycVdI3JN/t+XNLm8lIkIjgvbKo
+ 9YFNHsgBWum8dJmP86MtttocMmXfKRyTKfOnnApjMFzzw8f/abMWeBe+pIyBh9iheb
+ QQmMiEghff2reENUq3YhA+q6EuJAv9IQVXy4yQyVLOju9uDGpMKPJ7Te4jhsiId7DF
+ 8D1dSFPW0+/26+od79XUmeOrkq7SzM/sDin5ZBqMt3+jTVQlmUwUQZF+k4X4J1Y1nt
+ +g2kLFIBqf83Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 77FA71CA604;
+ Wed, 12 Aug 2026 17:50:08 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D03C9409D3D;
+ Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 321A62F963; Wed, 12 Aug 2026 17:49:55 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 000/120] Patch Round-up for stable 11.0.4,
+ freeze on 2026-08-24
+Date: Wed, 12 Aug 2026 17:47:43 +0300
+Message-ID: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.151;
- envelope-from=alistair@alistair23.me; helo=fout-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,29 +70,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-08-02 at 14:31 +0300, Ivan Efremov wrote:
-> The seed CSR value on RV64 was sign extended while converting to
-> target_ulong.
->=20
-> The first patch makes SEED_OPST_* unsigned.
-> The second patch adds qtest to check that upper 32 bits are zero.
->=20
-> Tests ran:
-> - riscv-csr-test
-> - make check: 324 passed, 11 skipped
-> - RISC-V Zkr-00 architectural test
+The following patches are queued for QEMU stable v11.0.4:
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
 
-Alistair
+Patch freeze is 2026-08-24, and the release is planned for 2026-08-26:
 
->=20
-> Ivan Efremov (2):
-> =C2=A0 target/riscv: Fix seed CSR sign extension
-> =C2=A0 tests/qtest: Add seed CSR zero extension test
->=20
-> =C2=A0target/riscv/cpu_bits.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 +++++---=
---
-> =C2=A0tests/qtest/riscv-csr-test.c | 26 ++++++++++++++++++++++++++
-> =C2=A02 files changed, 31 insertions(+), 5 deletions(-)
+  https://wiki.qemu.org/Planning/11.0
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 702216619e2a Gerd Hoffmann:
+   hw/uefi: add sanity check
+02 ff5a9eb13c86 Gerd Hoffmann:
+   hw/uefi: remove debug function
+03 647ba95eda5a Gerd Hoffmann:
+   hw/uefi: check lower limit for signature list size
+04 8e0ddb4a6ebd Gerd Hoffmann:
+   hw/uefi: account variable policy entries against storage size
+05 acba2d78176d Gerd Hoffmann:
+   hw/uefi: add post_load checks
+06 bd9b3c50f458 Gerd Hoffmann:
+   hw/uefi: make SetupMode read-only
+07 15ebb1ec8c06 Luc Michel:
+   meson.build: re-add explicit gcrypt/nettle request check
+08 c822ecd80661 Mario Casquero:
+   vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
+09 256229e8f9b9 Tomita Moeko:
+   vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
+10 4b2e6505d59b Cédric Le Goater:
+   vfio/region: Clarify dma-buf failure messages
+11 dff528657fc1 Denis V. Lunev:
+   vfio/pci: don't narrow a failed config read to a plausible value
+12 86abb10256a5 Denis V. Lunev:
+   vfio/pci: reject invalid PCI_INTERRUPT_PIN values
+13 f6a321c94b21 Thanos Makatos:
+   vfio-user: vfio_user_get_region_info: prevent buffer overflow
+14 152f7dd3b04f Thanos Makatos:
+   vfio-user: vfio_user_get_region_info: respect max_xfer_size
+15 3966a4258b59 Thanos Makatos:
+   vfio-user: vfio_user_get_region_info: reject unreasonably short struct
+16 6a51aab908e0 Thanos Makatos:
+   vfio-user: vfio_user_get_region_info: prevent excessive malloc
+17 20b3a363fa8c Thanos Makatos:
+   vfio-user: vfio_user_device_io_get_region_info: fix capability check
+18 51aa3f3e0577 Andrey Polivoda:
+   target/i386: helper_sysret(): Check that RCX contains a canonical address 
+   when emulating an Intel CPU
+19 d149a11c6c82 Paolo Bonzini:
+   scsi-disk: protect against guest sending truncated data for MODE SELECT 
+   commands
+20 e2da3d92744d Paolo Bonzini:
+   scsi-disk: fix off by one in assertion
+21 443e02410695 Artem Nasonov:
+   hw/ide: replace assert with proper error handling
+22 f604b807a55a Thomas Huth:
+   hw/display/vmware_vga: Don't allow guest to trigger long running loop in 
+   host
+23 a0414545a212 Christian Schoenebeck:
+   hw/9pfs: fix O_TRUNC bypass on read-only export
+24 210701c82e30 Jia Jia:
+   hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
+25 1de8aea061b9 Christian Schoenebeck:
+   hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
+26 b71a179148ff Feifan Qian:
+   hw/cxl: Validate Set Feature payload bounds
+27 b7520c9a5912 Thomas Huth:
+   hw/usb/dev-uas: Fix guest-triggerable heap OOB access
+28 9b899ddb2706 Thomas Huth:
+   hw/ide/core: Fix possible crash via NULL pointer in ide_cancel_dma_sync()
+29 68809288c7e5 Thomas Huth:
+   hw/usb/core: Avoid possible assert() in do_parameter() --> 
+   usb_packet_copy()
+30 92abc3c51ebb Thomas Huth:
+   hw/usb/hcd-xhci: Check return value of xhci_xfer_create_sgl() for errors
+31 861372428b05 Marc-André Lureau:
+   hw/display/virtio-gpu: validate stride against width on scanout
+32 9c724426f519 Akihiko Odaki:
+   hw/display/virtio-gpu: reject strides exceeding INT_MAX
+33 76dcc0832c5c Akihiko Odaki:
+   hw/display/virtio-gpu: Remove the bytes_pp field
+34 1c1232c2ee07 Marc-André Lureau:
+   hw/display/vhost-user-gpu: validate message payload sizes
+35 efa7244b2a0b Marc-André Lureau:
+   ui/vnc: remove redundant rows computation
+36 4727cc883b7e Haotian Jiang:
+   hw/display/qxl: unregister vm_change_state handler and BHs
+37 b28778131fad Marc-André Lureau:
+   net/colo: fix g_hash_table_destroy assertion on uninitialized filter
+38 415f2759d7b3 Marc-André Lureau:
+   target/i386/sev: fix MemoryRegion reference leaks in gpa2hva callers
+39 8ac0a1c7b98e Haotian Jiang:
+   virtio-gpu: fix NULL deref in rutabaga set_scanout
+40 0fa3e1823b9b Akihiko Odaki:
+   hw/display/virtio-gpu: Fix empty blob discrimination
+41 4ae1c5c7d6f3 Akihiko Odaki:
+   hw/display/virtio-gpu: Initialize blob mapping for ATTACH_BACKING
+42 8dc8449a678f Akihiko Odaki:
+   hw/display/virtio-gpu: Avoid leaking migration blocker
+43 555d0a1eba20 Marc-André Lureau:
+   hw/display/virtio-gpu: drop redundant node->value NULL checks
+44 5c9ef661a60a Akihiko Odaki:
+   hw/display/virtio-gpu: Block Rutabaga migration
+45 a6e0519ea8ed Michael S. Tsirkin:
+   virtio: use masked features with set_features_ex
+46 52c7bb369b23 Michael S. Tsirkin:
+   virtio-net: fix OOB read in RSC receive path
+47 772488562053 Michael S. Tsirkin:
+   virtio-net: fix short frame OOB read in receive_filter()
+48 fbdfdbb9920c Michael S. Tsirkin:
+   libvhost-user: protect against OOB writes in vu_set_inflight_fd
+49 758ef96a2dba Michael S. Tsirkin:
+   libvhost-user: protect against OOB vring queue access
+50 6dbdc271f56b Laurent Vivier:
+   hw/virtio: reject zero-length packed indirect descriptor table
+51 27806d2ddba2 Michael S. Tsirkin:
+   vhost: do not crash on ring map failure
+52 f404bf0e6504 Michael S. Tsirkin:
+   virtio-scsi: fix SCSIRequest leak on a bad request
+53 665c854390e0 Michael S. Tsirkin:
+   virtio: fail early on bad config_len in migration
+54 cf89b769cdd1 Michael S. Tsirkin:
+   vhost-user: assert nregions within limit
+55 5cc182ba39a3 Michael S. Tsirkin:
+   virtio-pmem: wait for flush requests on unrealize
+56 bf21298c082c Michael S. Tsirkin:
+   libvhost-user: validate last_batch_head in vu_check_queue_inflights
+57 b9d248dfaca5 Michael S. Tsirkin:
+   libvhost-user: fix heap overflow in vu_check_queue_inflights
+58 733a98a552e4 Michael S. Tsirkin:
+   libvduse: validate vq size
+59 67550d65b4bf Michael S. Tsirkin:
+   virtio-iommu: fix OOM due to unbounded call_rcu
+60 7ea56dcc9406 Peter Maydell:
+   hw/pci-host/q35.c: Always initialize smram-region even if SMM disabled
+61 a90fcf0080da Peter Maydell:
+   hw/pci-host/q35.c: Factor out creation of SMRAM MRs
+62 e07c67584c69 Peter Maydell:
+   hw/pci-host/q35.c: Avoid early return in mch_write_config()
+63 421f45d03f32 GuoHan Zhao:
+   hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
+64 292902ae4e93 Haotian Jiang:
+   hw/cxl: fix OOB access in cxl_doe_cdat_rsp via entry_handle
+65 0691bb257a7c Clément MATHIEU--DRIF:
+   intel_iommu: Check address mask before using it in pasid-based iotlb 
+   invalidation
+66 df12999cc813 Laurent Vivier:
+   hw/net/virtio-net: Protect from DMA re-entrancy bugs
+67 0be94d8d9c28 Laurent Vivier:
+   hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
+68 70074cc48f45 Laurent Vivier:
+   backends/rng: cap request size to avoid oversized allocation
+69 6682ea339127 Stefan Hajnoczi:
+   virtio: avoid packed vring virtio_queue_empty() infinite loops 
+   (CVE-2026-16457)
+70 8268d216a004 Cédric Le Goater:
+   linux-user: Guard local FUTEX_CMD_MASK definition
+71 8cbcf7579355 Peter Maydell:
+   hw/net/xilinx_axienet: Don't write checksums off end of packet
+72 aba80ad9d853 Matt Turner:
+   linux-user: fix guards for the fsmount(2) syscall series
+73 11ed6b92130a Bernhard Beschow:
+   hw/sd/sdhci: Extract uSDHC-specific quirk
+74 b395a655ae0e Laurent Vivier:
+   hw/net/e1000e: recalculate rx_desc_len on migration load
+75 1e5efe6d9370 Laurent Vivier:
+   hw/net/igb: recalculate rx_desc_len on migration load
+76 d8813fdc4bdf Mark Cave-Ayland:
+   target/sparc: set reg window data structures currently after vmstate load
+77 db3abd36e4c7 Laurent Vivier:
+   linux-user/sh4: allow full 32-bit address space
+78 c4580a3a6d1c botszhuang:
+   hw/i2c/bcm2835_i2c: Correct CLKT register offset
+79 4f635bddf50c Peter Maydell:
+   hw/display/exynos4210_fimd: Factor out finding screen width/height
+80 7dd1e2218835 Peter Maydell:
+   hw/display/exynos4210_fimd: Pass width to draw_line functions
+81 a5f8d33682be Peter Maydell:
+   hw/display/exynos4210_fimd: Clamp windows to screen size
+82 a5cff318f06c Michael S. Tsirkin:
+   virtio-mmio: fix QUEUE_NUM_MAX
+83 df67805ee9b1 Klaus Jensen:
+   hw/nvme: fix cross-namespace copy dif buffer overflow
+84 c39e05af439a Klaus Jensen:
+   hw/nvme: fix unintentional integer overflow in shift
+85 6e5ca34f3870 Daniel Paziyski:
+   hw/nvme: fix assertion failure on subregion removal
+86 9e3df3019d21 Helge Deller:
+   linux-user: Fix msqid_ds struct wrt 32-bit big endian architectures
+87 518a4aa01b88 no92:
+   linux-user: fix incorrect msg_l[sr]pid members of target_msqid_ds
+88 8d0ac5933aa3 Richard Henderson:
+   linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN
+89 702252a0dbc3 Richard Henderson:
+   target/arm: Fix b16b16 feature test for SME2 BFCLAMP, BFMAX, BFMIN
+90 c25f69595ad0 Richard Henderson:
+   target/i386: Update cc_op for SAHF
+91 f498c21b3595 Tycho Andersen (AMD):
+   hw/vfio: Fix liveness check in vfio_connect_kvm_msi_virq()
+92 0d3db94a8866 malike:
+   block/cloop: fix integer overflow in total_sectors calculation
+93 5b0ba385a024 Denis V. Lunev:
+   block/accounting: take stats->lock in latency histogram setters
+94 16f94ef4c6ce Denis V. Lunev:
+   block/qapi: take stats->lock when reading BlockAcctStats for 
+   query-blockstats
+95 842c89281a20 Denis V. Lunev:
+   tests/unit: add reproducer for BlockAcctStats histogram locking race
+96 0c43f801c0d7 Stefan Hajnoczi:
+   dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
+97 ab7b872f0c38 Stefan Hajnoczi:
+   dmg: refuse to open files with no chunks
+98 370882d08695 Stefan Hajnoczi:
+   dmg: reject inconsistent UDRW chunk sector count and length 
+   (CVE-2026-65928)
+99 fe0f9e3ab2a8 Denis V. Lunev:
+   qcow2: do not try to clear the dirty bit on a read-only node
+100 43e4791d99ab Denis V. Lunev:
+   iotests: run the test pool with the 'fork' start method
+101 e554413bd2b4 Denis V. Lunev:
+   coroutine: fix lost wakeup in qemu_co_sleep_wake()
+102 b9ad1c4396e7 Fiona Ebner:
+   block/export/fuse: fix regression with O_TRUNC when export is not growable
+103 7d06bbb2d9ba Fiona Ebner:
+   iotests: test O_TRUNC behavior for fuse exports
+104 241095547a5d Marc-André Lureau:
+   hw/display/virtio-gpu: validate blob iov size
+105 95687639e647 Marc-André Lureau:
+   hw/display/vga: fix panning_buf OOB after text/graphics switch
+106 a113e0c53fb5 Marc-André Lureau:
+   vhost-user-gpu: fix integer overflow in buffer allocation
+107 b8ef970532c3 Marc-André Lureau:
+   hw/display/virtio-gpu: fix offset wraparound in scanout_blob_to_fb
+108 1f24066fc88d Ankur Saini:
+   virtio-gpu: reject requests with short/truncated control headers
+109 d513c644b893 Akihiko Odaki:
+   hw/display/virtio-gpu: Always reject invalid scanout bounds
+110 5ce01c92389a Bin Guo:
+   hw/display/virtio-gpu: Unmap DMA regions on reset
+111 1d5e53df1674 Minwoo Im:
+   hw/nvme: drop AER requests without aiocb in nvme_del_sq()
+112 849ea354ddc1 Minwoo Im:
+   hw/nvme: factor out nvme_sq_cancel_inflight()
+113 86f938333e2f Minwoo Im:
+   hw/nvme: cancel inflight requests on controller reset
+114 7a34f7b8794b Klaus Jensen:
+   hw/nvme: fix leak on copy ranges
+115 784768f7facc Alejandro Jimenez:
+   amd_iommu: Return int from page walk status helpers
+116 923222000443 Stefan Hajnoczi:
+   gitlab: disable provenance attestations to work around CI bug
+117 bc4681990bb6 Mikulas Patocka:
+   linux-user/sh4: Deliver SIGILL on invalid instruction
+118 668d571bf0c2 Mikulas Patocka:
+   linux-user/sh4: Initialize the FPSCR register on signal
+119 f7ad7b1f8c81 Mikulas Patocka:
+   linux-user/sh4: Fix crashes on signal delivery in conditional delay slot
+120 01b4e06b5225 Saul Freedman:
+   target/i386/kvm: Fix CET SSP MSR read feature check
 
