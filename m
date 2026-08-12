@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9233C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABE9C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8cx-0004Ew-V2; Wed, 12 Aug 2026 09:04:16 -0400
+	id 1wu8d5-00059S-2N; Wed, 12 Aug 2026 09:04:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cL-0003d2-QX; Wed, 12 Aug 2026 09:03:38 -0400
+ id 1wu8co-000469-Fb; Wed, 12 Aug 2026 09:04:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cJ-0004L6-HJ; Wed, 12 Aug 2026 09:03:37 -0400
+ id 1wu8cm-0004Q5-PW; Wed, 12 Aug 2026 09:04:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=0I+CfeDvH7B9ZZhT6CqoR02uoPiC09I/apI/OvL4l1o=;
+ t=1786539783; bh=rAMeN9DidrHrnYAjK/RGpE/Y0dVSiuhrBSh4MT0hBDE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Z9vAe2Yll6JpK2aSNIh/8Vf8YeKoc1shuXwss9Fg9ZtwBwtoSuMfDDY/871clrIVt
- oIitxsX1zmFzdndq44r9QB6glHfJeaDL7yfblwiscnkmc/91M7FMDB41I7rHZzYldr
- MMb9KiGH3cCuHrNmMWfOuKI2Z/jBIMOchnD1LFnl4oP+5PzKr2X2LcbPi7B1+45nzs
- Zq6EYQA0jqD45i0nh6olj8yaeJicA8PZH4dQ/X/2tg2P3CxuxKdeNmNMLd8UjuqZMY
- eTQJ/2pLoEoomss5QSVy1P0KgR/r1HYwDiXhwzWtdbMwDs9qkk6qP6kF57PvSgH5Gh
- LS2qU4y+IjOnw==
+ b=FxqXCYTHleT4BmJulUICDbPUlWw4ZPFdBUJTHzYC3orT3ryZ6WF1bauHxCbEo6Blw
+ dm5dxipoNT5kFR9CkfsGp01y9Z+fdApH5LDCzJP94T4+yNpbE+RnkZk37XOFh1U9EC
+ ZOtqrdOWxffvXMxZ0zufwi4F0/mo29aJwYAly+5hRJvuuW8z308g25+dvjsVi2AmTF
+ ZmNj68UPb8/ZdbJGAL1/jh3RFJp9ukNPMNeSKlNfNmLqalgkmFjoJ8OqqPQM4tUEgV
+ pVyJ2TZOgB2vFsJ+rXmKzIgPQIUjgIGcRTb8xNZTUemBqyV9p+Ul3QazEQi87S5XMn
+ GNNVD5zA0BfdA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3192C1CA489;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C56F1CA48E;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 65DE8409B6C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F41E409B71;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DA7DF2F8A8; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id E7A362F8B2; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ Tristan Madani <tristan@talencesecurity.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 010/102] vfio/pci: reject invalid PCI_INTERRUPT_PIN
- values
-Date: Wed, 12 Aug 2026 16:00:45 +0300
-Message-ID: <20260812130233.621965-10-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 015/102] hw/display/vmware_vga: Don't allow guest to
+ trigger long running loop in host
+Date: Wed, 12 Aug 2026 16:00:50 +0300
+Message-ID: <20260812130233.621965-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -75,49 +75,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Thomas Huth <thuth@redhat.com>
 
-qemu-kvm aborts a few seconds after starting a VM with a
-passed-through GPU whose PCI_INTERRUPT_PIN comes back as an
-out-of-range value: vfio_intx_enable() only guards against pin == 0
-and stores vdev->intx.pin = pin - 1 with no upper-bound check. That
-value later reaches pci_irq_handler()'s
-assert(0 <= irq_num && irq_num < PCI_NUM_PINS) via
-pci_irq_deassert() -> pci_set_irq(), aborting the process.
+The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
+basically does:
 
-Legal PCI_INTERRUPT_PIN values are 0 (no legacy interrupt) or
-1-PCI_NUM_PINS (INTA-INTD); reject anything else before it reaches
-vdev->intx.pin, whether the out-of-range value came from a read
-failure (now caught by the previous commit) or was handed back as
-data by the device itself.
+            x = vmsvga_fifo_read(s);
+            y = vmsvga_fifo_read(s);
+            args = x * y;
+            goto badcmd;
+            ...
+badcmd:
+            len -= args;
+            if (len < 0) {
+                goto rewind;
+            }
+            while (args--) {
+                vmsvga_fifo_read(s);
+            }
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Alex Williamson <alex@shazbot.org>
-CC: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260717122232.468955-3-den@openvz.org
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Thus by supplying huge values for x and y that overflow the result of
+the multiplication, the guest can trigger a long-running loop here
+that burns the host's CPU cycles.
+
+Add some sanity checks so that this cannot happen anymore.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
+Reported-by: Feifan Qian <bea1e@proton.me>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
+Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
+Reported-by: Sunday Jiang
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 86abb10256a58d50513d1f9c65652b7b6b7faafc)
-(Mjt: context fixup for 10.0.x)
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit f604b807a55acd3f81725bb7dbd98450c96adf00)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 168f597e782..fdf9528b05b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -279,6 +279,11 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-         return true;
-     }
- 
-+    if (pin > PCI_NUM_PINS) {
-+        error_setg(errp, "invalid PCI interrupt pin %d", pin);
-+        return false;
-+    }
-+
-     vfio_disable_interrupts(vdev);
- 
-     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index 2dd661e3c13..fda3965ca3c 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
+             vmsvga_fifo_read(s);
+             x = vmsvga_fifo_read(s);
+             y = vmsvga_fifo_read(s);
++            if (x < 0 || x >= SVGA_MAX_WIDTH ||
++                y < 0 || y >= SVGA_MAX_HEIGHT) {
++                goto rewind;
++            }
+             args = x * y;
+             goto badcmd;
+         case SVGA_CMD_RECT_ROP_FILL:
+@@ -776,7 +780,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
+             if (len < 0) {
+                 goto rewind;
+             }
+-            while (args--) {
++            while (args-- > 0) {
+                 vmsvga_fifo_read(s);
+             }
+             printf("%s: Unknown command 0x%02x in SVGA command FIFO\n",
 -- 
 2.47.3
 
