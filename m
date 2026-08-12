@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212F3C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D13C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8Gz-0003xe-5N; Wed, 12 Aug 2026 08:41:33 -0400
+	id 1wu8Iy-0004lo-9X; Wed, 12 Aug 2026 08:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Gu-0003xG-MC
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:41:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Iw-0004lY-Qz
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:43:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Gr-0006lz-Jz
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:41:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Iv-0007Fu-56
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:43:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786538482;
+ s=mimecast20190719; t=1786538612;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
- b=MHrkMVEw3/r0PD4+SfiouNlpvPGRauaJmAdTwBG1+lPIfs3lqlkErfiQn9TVikXRDrBU9o
- CORO9shAX5bhGma0+sXEf8aKWbxHC0cUjb93tfQ5b4omKxJsTEHURGdu1BVboBus+KH4ha
- 7P4gzHTG1NXCWLr6SBbXqYkkCKNXoeQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=s5GlkEq8BygSvAKUmzE6jXyNrPWHFI8D44sie+KE5Rk=;
+ b=KfdY/aGRh3RUAOQmPYGilFeJFDnh7YGwzs50K8duw83kYYNeZvR+T8XFYQDP96C7MauBgG
+ d0E3icE4yD9c5r+73kF+LQDNc9637ez5HwIfTzAN36iQn5wZr8fayVc+snI7rlJX1pbA03
+ oUf+1F8+Ja9l3iK8nV8bfxwIO8LzwSE=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-159-CoND65ZoPBGlXBoGBavs1A-1; Wed, 12 Aug 2026 08:41:21 -0400
-X-MC-Unique: CoND65ZoPBGlXBoGBavs1A-1
-X-Mimecast-MFC-AGG-ID: CoND65ZoPBGlXBoGBavs1A_1786538480
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93494cce712so77001585a.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:41:20 -0700 (PDT)
+ us-mta-77-FoMZOZiGPS2Avb1CPtaMzQ-1; Wed, 12 Aug 2026 08:43:31 -0400
+X-MC-Unique: FoMZOZiGPS2Avb1CPtaMzQ-1
+X-Mimecast-MFC-AGG-ID: FoMZOZiGPS2Avb1CPtaMzQ_1786538611
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-936aa34873bso90667285a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786538480; x=1787143280; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
- b=IHmaOGjfrC2QHqQY8jIJhnHhXrkOAjY0s1zsAtwwIWIC20XZtPvQge51XWcsa6F/aO
- IfW8LV6YmbgYKrJiDugtt4EMGM50Tbp8h20ZJ33RYt45Xf2c3kcZNtVoKnR/SEHWjW1i
- ZisFZm0iH3mjbhQh5exR29iWQ8A8ejmbU96uNdgTFv5h+p796pz500XEpGroMHvM5FeK
- DzrRaA05vZhyuxBZoy7zALPot01zWVEwLA3/Lcoc9FTGC3sI4OnDuFceePVN1S0kPT8I
- UPCj7ycBVeWpED/Rx9plUVuwj91Zu9O9vg490KKmR1BIFwol1Jb3jVEHQxy+7kQ4ppUy
- pMuw==
+ d=redhat.com; s=google; t=1786538611; x=1787143411; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=s5GlkEq8BygSvAKUmzE6jXyNrPWHFI8D44sie+KE5Rk=;
+ b=SAzq/D5Sj0VJJNAIv/P5PYGVMFZuGCnjI1Y7Iv9yHJMEFpbfDf23V8eRZmnnhbk2AE
+ rT3d89H52Ov8fU4x+Ce678YItOwOV3QVVr/lVo8k+Nca+X0iOg9n3AcnpoKGxTSC1hnz
+ u0D0b6h0si0tSRZptUbvr+JQkx8V0Lo+IZmFdfcHZXbQiaJZvpRhNyCrGP7T/TGl4r+z
+ mVaJhdqdZMYE2DCWspFVdPnkCakxfAH0Enhz7BYKVrGe7OQDo0LgIyhrrn4SjVkqTYdV
+ JhUjaUxXvnSQEytg9V+q0xpX1Yc/7X0XdWnZXpIsDRpQoMDI0pVdnPN7AjqECemNSMDx
+ jjwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786538480; x=1787143280;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
- b=V0KPB5X6Xw7j2DwaaUcSusJjdV3c7UdwTq6gLxLL5lWFSrSHgbBEv8AFgJWe2AhQ4R
- oMKz5tIV/wyOl/Q47WckqsqsHwZzQhfG+W+/sNUE5m4G25NSzEUF3WSe0kxX+IO8ARoF
- V4qK1qCgi5YKbRjgvNqiHhbrD6XOp6FOJlwZr3gne/fXzusrIn1j3bN6TactENXGzTf3
- 496p9tIXbNLEIi0mGwWSsUNG5yALo1pVv3njVHCc/wtgV2aHLqnn87BXzln+P/yB2yVZ
- ILprHK7Mb4BE3SZCwkzgWpMvo/yaaNpVziClzXQZdws3y1Wzb4/OYIbiuv6hJ4LUhlqP
- X/bg==
-X-Gm-Message-State: AOJu0YzVV7JrvUY2iR2246EjntYE2P6D8qugXAYGSVN626CZE3cuXRFf
- oAvWOJ5hbT6mR0p39N+n9RaneM/04JEAcMnVrflABgZg82OBCRcmtTLNKFQSEvZEtzqYf6590dp
- dsma/TGMTWep0ECvT2onplA+Z73Fg9hMAC5ZZ17CmVJK8/Vda1EVP6SMOomlPa4B0FrRqUjXeiC
- P5aARN0xff5dchjl3oaY739i8wXMuYVYwxINp8NA==
-X-Gm-Gg: AR+sD100FkrFpWGcZGn/O0D9RtKqcez1c2u7lRbPHCtrz0OZDPSOuTYQsq5FB8gABTG
- yBSGHXJd3PUIRzYB9wh7IMToYpw3tRQ7RF/1gKmE58RE/1i+sHaJiWgn9RQ8kCcxUcgTBNearm2
- iTuwITxBPtQ4fwR8QWMz1n6h7cpMx8ked0FKYEwt57CrKKLFArzbi1rvAg3ppqGM1C42PAqEPUP
- 8OU+eCFBXkf8wfHPAJASGpZMc/LDs1SzXBMD8YbI6u5FUk1f222UZIaL6fzHR7T9yioYGy+FWtM
- zlQ0dUQF8AhLGmko/HKaEkrm3Nrdp9+ni+PwhnTdGBqUy0Jw0ZI6lrm++nvedPYYxgO6PkZ6asj
- 88HyJyNYuZYyH0VlKRMOPIZ0ZGgKtvY5eFeQvcLhhIUMM9JL+sChM2dDALyg=
-X-Received: by 2002:a05:620a:d95:b0:934:aa56:45df with SMTP id
- af79cd13be357-936b3a6417bmr421790185a.11.1786538480416; 
- Wed, 12 Aug 2026 05:41:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:d95:b0:934:aa56:45df with SMTP id
- af79cd13be357-936b3a6417bmr421785185a.11.1786538479851; 
- Wed, 12 Aug 2026 05:41:19 -0700 (PDT)
-Received: from x1.local
+ d=1e100.net; s=20251104; t=1786538611; x=1787143411;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=s5GlkEq8BygSvAKUmzE6jXyNrPWHFI8D44sie+KE5Rk=;
+ b=NUf2Yxc0Ezw7C8DDJB8vUtZFmWw5ce4Wqav1u+5wX36N/fLfh0gWOtD+gRUaFDEbw7
+ lJl+oHMZfpSNhH0O1Lc3LapcncWBi7wojcZQ/+QkIeHcimuMsCVLnJkJNoSdU2YQxs9D
+ ZETsMoE4v2qX3xFvpVKC1he+tWSAKwOd3Obtc9Eu68k31n/6X+J5xxNPoFy3x3OjS1fk
+ 02wVeoD8/bnl3MV3LVhsu8USzStbM4q1mSn+KhTAdKfo0TZILACUTeQJvdZ4w/SgxyQe
+ VlwcwZd+o3+kAe4sS2eKUU3LfEcV1bQsCPm6LVv1xaGrGdh97LQgwKoYSKxi1FntkCL8
+ Xc1Q==
+X-Gm-Message-State: AOJu0Yxej/SVRqGPW+o5ktN6UIELp7WYQno2ygTpHEslusZ8YvZ+YHO8
+ H0Gv5Yyo141WxLKaFtD5odkobtZFznqomHiPJY6d6VRwER2V0QW+xrlcPicjiDzESoLc4iRqXlQ
+ EkdlrIbifbeha7FiYkkJM3EsJwFCnljdpVYy5HXytTx2Z6s5ePA7c1u0q0AWp9iQQ7s6s452EPy
+ 7b5UcSY+P6fACJ36ibRAs3vrgnHqO1Qhm+LxXFEw==
+X-Gm-Gg: AR+sD10yYYafpkgnsM+JV6MwQ1lQFCraLQEIcXpeioIjmMclD8JWRjfEdopwl1w5gJ5
+ umQaiZ+qL1kRjUUny/uSr5WpQVyMACaGlf2CVG9AQ6M6HtR2CQ+5OghTTUr+kNFPwRHxX5HiUGc
+ 3+H5Xj82CAKjMugkxcf9rACGewoeIYC8628ExfroF7VSxXVRkHFDXyfcw2Alnd89fXgY8n7dam/
+ stJVqA/6xbtx4oRTj1WhkVbeoRlL1f0VOZEP6kHZV6IcCe2qH0RFCPSjLFQh5rT4fTTF3urK7Kw
+ uJJ9otZaQ+MXra36smeL+x5sCtS7nRuK6AvG8vCab/MDsbMvGCR1+9IGwaE71D7Hg5EbSm2B0b9
+ o3LFUPx4H2nToitiHbV2dXa4JpaiSub6AhuDCh1/GNiV3NSTWBkM4nK2h
+X-Received: by 2002:a05:620a:3192:b0:936:576e:227b with SMTP id
+ af79cd13be357-936b3d24aaemr375529685a.24.1786538610510; 
+ Wed, 12 Aug 2026 05:43:30 -0700 (PDT)
+X-Received: by 2002:a05:620a:3192:b0:936:576e:227b with SMTP id
+ af79cd13be357-936b3d24aaemr375524385a.24.1786538609923; 
+ Wed, 12 Aug 2026 05:43:29 -0700 (PDT)
+Received: from x1.com
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-936b5f3b3afsm118301085a.35.2026.08.12.05.41.18
+ af79cd13be357-936b5f720eesm118947285a.47.2026.08.12.05.43.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:41:19 -0700 (PDT)
-Date: Wed, 12 Aug 2026 08:41:18 -0400
+ Wed, 12 Aug 2026 05:43:29 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 0/5] migration: Hardening fixes for 11.2
-Message-ID: <anxp7qsWJOlqNPVm@x1.local>
-References: <20260728210417.1925078-1-peterx@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>, Feifan Qian <bea1e@proton.me>
+Subject: [PATCH v3] migration: Fix rare hang of migration_channel_read_peek()
+Date: Wed, 12 Aug 2026 08:43:27 -0400
+Message-ID: <20260812124327.2572363-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -118,36 +117,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 28, 2026 at 05:04:12PM -0400, Peter Xu wrote:
-> v2:
-> - Added R-bs
-> - Patch 2/3, update commit message on wrong use of term "release buillds"
-> - Patch 4, fix bug Dan pointed out, use assert() for !coroutine, update
->   commit log
-> 
-> This is a small batch of fixes from recent reports on migration, the plan
-> is this is only for 11.2; we don't need to rush on any of them.
-> 
-> RDMA migration has its own small batch.. It'll take slightly longer so I'll
-> send them separately.
-> 
-> Reviews welcomed.
-> 
-> Peter Xu (5):
->   migration: Fix possible overflow in vmstate_handle_alloc()
->   migration/multifd: Validate next_packet_size in zlib/zstd recv
->   migration/multifd: Replace assert() with error_setg() in recv paths
->   migration: Fix rare hang of migration_channel_read_peek()
->   migration/ram: Check for RAMBlock size mismatch when parsing
+In an unlikely case, when a migration stream is attached to the destination
+QEMU and only send <4 bytes to the channel as magic, it's possible that
+migration_channel_read_peek() may spin forever.
 
-I queued patch 2,3,5.
+Fix it by adding a manual sleep for partial read.
 
-I'll drop 1, Fabiano, please pick up relevant tags when you repost with
-your other series to refactor num/size offsettings.
+Since the path isn't attached to a coroutine, it means when partial read
+happens, there's yet not much we can do but hang the main thread, it will
+happen even for len==0 case.  It means monitors can hang due to this,
+either partial read or no data arrived (but connection established).
 
-I'll repost patch 4 separately.
+Leave this for later, the hope is this is extremely rare in production.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+Reported-by: Feifan Qian <bea1e@proton.me>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/channel.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/migration/channel.c b/migration/channel.c
+index 1e2935f926..266ae8f776 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -296,9 +296,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
+ 
+         if (len == buflen) {
+             break;
++        } else if (len == QIO_CHANNEL_ERR_BLOCK) {
++            qio_channel_wait_cond(ioc, G_IO_IN);
++        } else {
++            /*
++             * When partially ready, we can't use qio_channel_wait_cond()
++             * because it will return immediately.  Apply a manual wait.
++             */
++            assert(!qemu_in_coroutine());
++            g_usleep(1000);
+         }
+-
+-        qio_channel_wait_cond(ioc, G_IO_IN);
+     }
+ 
+     return 0;
 -- 
-Peter Xu
+2.54.0
 
 
