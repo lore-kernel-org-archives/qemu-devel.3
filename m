@@ -4,110 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD06C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21C1C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9Vo-0007Pt-DC; Wed, 12 Aug 2026 10:00:56 -0400
+	id 1wu9XQ-0007uX-PI; Wed, 12 Aug 2026 10:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wu9VZ-0007NF-0T
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:00:41 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wu9VW-00021f-Ko
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:00:40 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-cbe6295f05bso1618852a12.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:00:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786543235; cv=none;
- d=google.com; s=arc-20260327;
- b=c4J94qj7o9hHlWKa4m7xSSFlLYxiFPPTskoUSkEcQImgB+1OjScDfdE7YIv4UZSG6e
- +h+3gvFxGyGHBcRpkhP48wz5uoF3xSOwSkR97nMY5AnnZel99KEL14xYFu1LdmG3l4Gs
- S35G8i4dUOHcAtN3V75F1r4xjrjrXClBdnls5RWltQiA/zqKM7S5EuprfU7NimQsTwFM
- 2Hn0fQvMgktp4G9oz5pZ3ZVOS5+ErvFyI6Cpg3wqjM54E1tXrGJHqC6QyydmsTvEJYKg
- 8Ay+rm9CYEcf4ryyeUZfxk0zlzjuvsSSPrJxV6hNu/k1bENH9WM2FoeHZ+u40713C2S8
- PL0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vyMnUYoND6Vua38fxeIw5u++h037YzQ+tQA0I9C+evk=;
- fh=LNX7mVNHExxcQ5NWzhO4PWUQhCGUJvbD7PZ19nL1UOU=;
- b=rkDA8BOTX7u5WhNei5kCttri3A2Qpv1gaJBLDRgrRkb+ErQqrVUDG4ZQAQF4wdh76x
- wtXb3v1Ao57+AoXZ7K/mpmpYIwYfdMim1wfe1ebxC6ISQoBrCsGtPgcEMDFaSdFGCQ3S
- 1HiyzSLwR2pEuTbcKjdvPeBUUhJNkXDXx8WtoLN1Sz9nGkymx8+Ys8156hNf/E9+7FPp
- 7FiN/fjkoVZ2ed+NM534D6pTcqCXQ8ZZLEgZiMeqQYAySHFpQFJQugijnoJ8DnzVuucX
- 10Wt8/7PxA2+TigNinIVk9WsX+saw7Qug3tdyb5GE3m7jJiebgo6z/bMjMXQhXArIvLT
- v+qg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786543235; x=1787148035; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vyMnUYoND6Vua38fxeIw5u++h037YzQ+tQA0I9C+evk=;
- b=d0AF0UKAtSywklMbriliXln6zazL5P0LgoXkpbuXeBO1hhXMlKgpTmNV30tSU2HfV1
- EsgA9/juQzGP80hDCZfxKPq+EVLbzE1b9zd1QKA9fxH0yE6j+1E4sr6gTd4EJ+3aowIF
- 8ezuiJqm425HZUKQnbmkw9yxiJhRVoQSqzbzL0cWgtei1k3v2p7mg65pbh52hSXFUJnE
- VKmUf/RxrqBcGk9/mw0jjajYi4TXDqHTj88bg3M1wF8VfHKnlUduyqOPArWh/UC2rxCz
- LOD6pSU+7BmQ5bdvyCLbh8s7MDYC96XbShpFChqneSogdHAuOLK71+6auKGhD1ANpUtb
- lJew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786543235; x=1787148035;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vyMnUYoND6Vua38fxeIw5u++h037YzQ+tQA0I9C+evk=;
- b=sqXTC0+Rez7nEPVpLGD1wFs8fmXk12b3OWOaZal2CXvNq4kNhd0sAYkCZnoyb9Q91d
- smTBahAfrytW6fzfmkAhHJxZ4/snMPS5SYconRn8SK5uHKqpEgbFW/M/SX01Bg8fCUsO
- LZVpUjFOLKghSMpqFW290WHCsl57ZiGSkLzYjPyzY1gGZ2pBhmLYJmYxd6YShx5yi5r/
- /0Bv2/gvoFuDeqysrHV0leQKRYulztkD33PJKbtw1Go3hm4HpaK6DV9cSnqIyihFMPT/
- 7KpQ9FL/d1kayV3HCYGkR4fxftPFmZvS84MojJhF1txZ5k4YaoTkoUTi1kBDE0ywi7c4
- 3EJg==
-X-Gm-Message-State: AOJu0YwiHS19HQ0iaujEqZKKVX6jHvSedJGIenNV7GRr9qGBmX0i2G/1
- EbsPQ5mrwRoouP/OBYqwiYiO75avqTRMR+QIbDlRTm0jCLvSVU+5r3kbWHhkrV1tzKAY9heFpUc
- NdkrYCCr8MqaFXEPpps/x1iF29p9IQck=
-X-Gm-Gg: AR+sD10YbH/OrgDuRl1udeSGqimUjMXdIk+guCVSFc0z9IqqfcAPUXgUpQakACVm1yu
- NR4t5v3URkYu296dE4fRvljLpa4YtNbKp98vEmZM8i/DEyFfY0X5yHi9K886Ru/58WDiKzxmFvO
- HO0COTF0d1y+86YNCuXunobSFy1GRV0G/PRx97alNvG0WYn2JSNG7os/J2wrfOL3kRvwA5l1Sqc
- /WZtAI90fDnBELzbBbWg7dWeUF55aM1lqZ49I7W5ysZBH7SG8UCfjwlkhgZ50c2i4m9I//XM0Rn
- PYC7e5EvZRyhC+vVejJxNruUgheX3NtjCFX4IwQ0+UW6WDdyPOhvuXBrcyZGBp8L9kkrmw6RyDy
- u
-X-Received: by 2002:a05:6a20:6a06:b0:3b2:8674:9830 with SMTP id
- adf61e73a8af0-3cc379c763dmr8722680637.14.1786543234876; Wed, 12 Aug 2026
- 07:00:34 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260812131147.83188-1-philmd@oss.qualcomm.com>
- <20260812131147.83188-11-philmd@oss.qualcomm.com>
-In-Reply-To: <20260812131147.83188-11-philmd@oss.qualcomm.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 12 Aug 2026 18:00:22 +0400
-X-Gm-Features: AUfX_myQ9NavvlFmfGb9u2ty0QhlKBNyll68UvGXS83A2Oe-NenRF8VXdtiQ5P8
-Message-ID: <CAJ+F1C+X4DNFWXn9AK8kxp6zyCUnau5SawaZbQLO+=Gjw07y3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 10/16] monitor: Remove unnecessary 'block/block.h'
- header
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wu9XE-0007tW-Rs; Wed, 12 Aug 2026 10:02:26 -0400
+Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wu9XB-0002Nu-GB; Wed, 12 Aug 2026 10:02:24 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 13E9CEC006D;
+ Wed, 12 Aug 2026 10:02:17 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-09.internal (MEProxy); Wed, 12 Aug 2026 10:02:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786543337; x=1786629737; bh=ey8Tm/l1CibtSG95Qt+jqOA5SO2w7prG
+ nsd+/homs3w=; b=jrW7gadDUXQLBTAZq5QHFr2UptHgLkZBusna0+5+4lXWzGqI
+ D2sbI/bVDxd/SRpT0c3bRmVjw6FXEC0lE5vhnxGjtIuC9Wil1uikTH4sVm6ME1xh
+ /ZP+yYo6i8NPb0m90+LUwnULlFLL96mmxrbgQaO/ve2hGDSbCnMOqK1OK/CW+lZM
+ 8jTWFkhpsVL9SdkerQWGb1eBg+KVlpDrrNzI079p96WxOrAZHObmZq5+PTwXGKFS
+ 6lEgnFe83cqlIbT+VWYEkT1wnq4ms1HpukINyO/e1meBjzFqm6HxJhtdTUdrH+rC
+ b+KZ+R6jCIhC7m9TUsRig4A2lQelXRPr2YCI1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786543337; x=
+ 1786629737; bh=ey8Tm/l1CibtSG95Qt+jqOA5SO2w7prGnsd+/homs3w=; b=b
+ NiKirjBIcidhCEFZSO8NCM5YAs+Q93spEw7HFgtisanGi2Pvy5m5+r+zuGpeHYjq
+ yVpWArVmLz6v9rilZXBSNTmPLJEsA/Kqd7MaS1QNxfi+bvr9ZzAU/bQFV3UwDUdC
+ j3Hhxq4szW3O7OV8atuJGNS11T5cUwSzDjJPH1yLz1bQ/l3lmls9+Zu4ryjT4Ztw
+ 9AT9ejgQWEArsrIRsT5J3fxbLEek0jQm4dMjmnkjky1/9fi9ZhKMMnp5HGCuGEis
+ pLYlbQwfWrxWenyI76W6UMb0+iSyVlkwHYPSUn8RNXg2gm4XHrPSNhBt8CQ3mPsk
+ ECdpEdCJtWZ4+WuRUq8Ug==
+X-ME-Sender: <xms:53x8arMH7CUJlXquDB-N57eiC5eNpI2hHVr21py7ZheYYZZQ7kB1Lw>
+ <xme:53x8akdX9GYTmNZ1cYWiLFZMcCv5gRIDuSt18TPXZtktCNpoz6NAeU0BDCyRvT1va
+ 5XCqfAyH3s_m6r8StPdTN7Xqg0ddNOsXR69YAKuxL8JD2psrU3eLMs>
+X-ME-Received: <xmr:53x8ahEP49mOKeO-zAFBgdBSbwYW-acg2VvD5dJqZWNltL3mi8fo4D_o6iwVp1cuuYL4Qw>
+X-ME-Proxy-Cause: dmFkZTFsqhFi5OHec8z4spF7YXvJhFsBrzm4DkJqlUBsxeTjyi3hSG0iar8WL5yG+aNnH3
+ sjBRmuZbtTHoYoorUR3qlR+DX/fmI/y6y/IHksk37Gm4mX1uDphkDJhqUSb6zDGUrn6W6D
+ bkT5lmEW0Iu3AloMVxH9R0KDVlvK5JWiJkDKGJpfS2lggKHWf9Rs9Ir0weaG4FCywmSw7p
+ zucGI+T3qSU3nbQa/zTAVWIYX10hQ8RCkfYO+B3QLnb7ys/Ws7WdsDpJLmWBI2Mm+5MSwo
+ +/2eJXkcdumFZaYha73AnfJGbeieGmgKKpAIsawyu7z1meKHIjbfbYkc+xHw9XN8zqbgMc
+ AKlR1Z6zy72bQqTtIk/MiIxcXdr5QsPMNqhw0OmGNuwfLgpHi2uI7kIdY1z/aItgYEKNZb
+ ujuStOrZp8hQVu8kq3DKrGYULw1oFEXvx5nEhKmxck1tRPxXC2iRGyYz9laG03tZd1JtVJ
+ 8wMMySPG1IhDbHkdneMtbelqV709TOR3u07SFX7pPYu3Zo3C0rCcsHSlqM0lIDKcTQMn6z
+ 2uN2KCg4CZXW24yWOXR+apzIeEiNSV4+nen/f68CWhS0eTb7WTvqznyk6vq/t7PG9hGfZ3
+ J20YWXlDFijQ1ejFOr7ImpNAuX5ywPWAIrnaKrouZilKCR530S2wEvAbKn0g
+X-ME-Proxy: <xmx:53x8avv7SDjKYbiUydCZeC8G9JMaSLo4Yyh1_nMpxTgmekVeCe2hbA>
+ <xmx:53x8aroJ2k5ef0LQAJAf61aQqKQPGZIcAt6xY_JyctVg1_GZ3JqyTA>
+ <xmx:53x8amm-Q_fKmUomyUMXkI0jROHpv8XZIz-pCgYfRq1tkX2upBAUuQ>
+ <xmx:53x8aohuY5pq50if25ndO9K1AgTvTGz6D358lWHjvKHdAJMSOiRc2w>
+ <xmx:6Xx8asdCZcZrjbXcz9YQ0xFOD-ftfVDKKzP8RQkkgKHQlYjh5-k3o3my>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 10:02:14 -0400 (EDT)
+Message-ID: <41fb7dd23c94be376cf6f03fb54f66443c5e905d.camel@alistair23.me>
+Subject: Re: [PATCH v4 0/3] riscv-iommu: always send MRIF notice MSI
+From: Alistair <alistair@alistair23.me>
+To: Flavien Solt <flavien.solt97@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, Tao
+ Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis	 <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier	 <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nutty Liu	 <nutty.liu@hotmail.com>,
+ qemu-stable@nongnu.org
+Date: Thu, 13 Aug 2026 00:02:14 +1000
+In-Reply-To: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
+References: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=103.168.172.151;
+ envelope-from=alistair@alistair23.me; helo=fout-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,121 +113,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Wed, Aug 12, 2026 at 5:38=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Nothing here requires declarations from "block/block.h".
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-
-breaks for me:
-[38/286] Compiling C object libsystem.a.p/net_vhost-vdpa.c.o
-FAILED: [code=3D1] libsystem.a.p/net_vhost-vdpa.c.o
-cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/libvduse
--I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader
--I/usr/include/p11-kit-1 -I/usr/include/libpng16
--I/usr/include/pixman-1 -I/usr/include/spice-1 -I/usr/include/glib-2.0
--I/usr/lib64/glib-2.0/include -I/usr/include/libmount
--I/usr/include/blkid -I/usr/include/sysprof-6
--I/usr/include/gio-unix-2.0 -I/usr/include/spice-server
--I/usr/include/opus -I/usr/include/cacard -I/usr/include/nss3
--I/usr/include/nspr4 -I/usr/include/PCSC -I/usr/include/gstreamer-1.0
--I/usr/include/libdrm -I/usr/include/orc-0.4 -I/usr/include/slirp
--I/usr/local/include -I/usr/include/libusb-1.0 -I/usr/include/SDL2
--I/usr/include/gtk-3.0 -I/usr/include/pango-1.0
--I/usr/include/cloudproviders -I/usr/include/cairo
--I/usr/include/gdk-pixbuf-2.0 -I/usr/include/glycin-2
--I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0
--I/usr/include/atk-1.0 -I/usr/lib64/pkgconfig/../../include/dbus-1.0
--I/usr/lib64/pkgconfig/../../lib64/dbus-1.0/include
--I/usr/include/fribidi -I/usr/include/libxml2 -I/usr/include/harfbuzz
--I/usr/include/freetype2 -I/usr/include/vte-2.91 -I/usr/include/rav1e
--I/usr/include/svt-av1 -I/usr/include/libvmaf -I/usr/include/webp
--I/usr/include/virgl -I/usr/include/fuse3 -I/usr/include/pipewire-0.3
--I/usr/include/spa-0.2 -fdiagnostics-color=3Dauto -Wall -Winvalid-pch
--Werror -std=3Dgnu11 -O2 -g -mcx16 -msse2 -fno-link-libatomic
--D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE
--fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero
--fzero-init-padding-bits=3Dall -fzero-call-used-regs=3Dused-gpr
--fsanitize=3Daddress -fstack-protector-strong -fno-omit-frame-pointer
--Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-overflow=3D2
--Wformat-security -Wformat-y2k -Wignored-qualifiers
--Wimplicit-fallthrough=3D2 -Winit-self -Wmissing-format-attribute
--Wmissing-prototypes -Wnested-externs -Wold-style-declaration
--Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal
--Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings
--Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value
--isystem /home/elmarco/src/qemu.nmi/linux-headers -isystem
-linux-headers -iquote . -iquote /home/elmarco/src/qemu.nmi -iquote
-/home/elmarco/src/qemu.nmi/include -iquote
-/home/elmarco/src/qemu.nmi/host/include/x86_64 -iquote
-/home/elmarco/src/qemu.nmi/host/include/generic -iquote
-/home/elmarco/src/qemu.nmi/tcg/x86_64 -pthread -fPIE
--fno-strict-aliasing -fno-strict-overflow -DHWY_SHARED_DEFINE
--DAVIF_DLL -DEB_DLL -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=3D600
--DNCURSES_WIDECHAR=3D1 -D_GNU_SOURCE=3D1 -D_REENTRANT
--DSTRUCT_IOVEC_DEFINED -DWITH_GZFILEOP -DCONFIG_SOFTMMU
--DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/net_vhost-vdpa.c.o
--MF libsystem.a.p/net_vhost-vdpa.c.o.d -o
-libsystem.a.p/net_vhost-vdpa.c.o -c ../net/vhost-vdpa.c
-../net/vhost-vdpa.c: In function =E2=80=98vhost_vdpa_net_load_cmd=E2=80=99:
-../net/vhost-vdpa.c:714:24: error: implicit declaration of function
-=E2=80=98iov_size=E2=80=99 [-Wimplicit-function-declaration]
-  714 |     size_t data_size =3D iov_size(data_sg, data_num), cmd_size;
-      |                        ^~~~~~~~
-../net/vhost-vdpa.c:714:24: error: nested extern declaration of
-=E2=80=98iov_size=E2=80=99 [-Werror=3Dnested-externs]
-../net/vhost-vdpa.c:742:5: error: implicit declaration of function
-=E2=80=98iov_from_buf=E2=80=99 [-Wimplicit-function-declaration]
-  742 |     iov_from_buf(out_cursor, 1, 0, &ctrl, sizeof(ctrl));
-      |     ^~~~~~~~~~~~
-../net/vhost-vdpa.c:742:5: error: nested extern declaration of
-=E2=80=98iov_from_buf=E2=80=99 [-Werror=3Dnested-externs]
-../net/vhost-vdpa.c:744:5: error: implicit declaration of function
-=E2=80=98iov_to_buf=E2=80=99 [-Wimplicit-function-declaration]
-  744 |     iov_to_buf(data_sg, data_num, 0,
-      |     ^~~~~~~~~~
-../net/vhost-vdpa.c:744:5: error: nested extern declaration of
-=E2=80=98iov_to_buf=E2=80=99 [-Werror=3Dnested-externs]
-../net/vhost-vdpa.c:748:5: error: implicit declaration of function
-=E2=80=98iov_copy=E2=80=99; did you mean =E2=80=98error_copy=E2=80=99?
-[-Wimplicit-function-declaration]
-  748 |     iov_copy(&out, 1, out_cursor, 1, 0, cmd_size);
-      |     ^~~~~~~~
-      |     error_copy
-../net/vhost-vdpa.c:748:5: error: nested extern declaration of
-=E2=80=98iov_copy=E2=80=99 [-Werror=3Dnested-externs]
-../net/vhost-vdpa.c:760:5: error: implicit declaration of function
-=E2=80=98iov_discard_front=E2=80=99 [-Wimplicit-function-declaration]
-  760 |     iov_discard_front(&out_cursor, &dummy_cursor_iov_cnt, cmd_size)=
-;
-      |     ^~~~~~~~~~~~~~~~~
-../net/vhost-vdpa.c:760:5: error: nested extern declaration of
-=E2=80=98iov_discard_front=E2=80=99 [-Werror=3Dnested-externs]
-cc1: all warnings being treated as errors
-[55/286] Compiling C object libsystem.a.p/system_physmem.c.o
-ninja: build stopped: subcommand failed.
-
+On Mon, 2026-07-27 at 15:22 +0800, Flavien Solt wrote:
+> The AIA specification requires an IOMMU to send the configured notice
+> MSI after storing an MSI to an MRIF even when the destination
+> interrupt
+> is disabled. QEMU currently reads the MRIF interrupt-enable word and
+> returns without sending the notice when the matching bit is clear.
+>=20
+> Patch 1 lets iommu-testdev select an MSI payload and supplies its PCI
+> requester ID. Patch 2 removes the invalid enable-bit gate. Patch 3
+> checks
+> both enable states through qemu-system-riscv64.
+>=20
+> The complete RISC-V IOMMU qtest suite passes:
+>=20
+> =C2=A0 MRIF notice: enable=3D0 pending=3D0x20 notice=3D0x12d
+> =C2=A0 MRIF notice: enable=3D1 pending=3D0x20 notice=3D0x12d
+> =C2=A0 6/6 tests passed
+>=20
+> V3 used MIME transfer encoding to protect the patch body, but lore
+> still
+> received five hard-wrapped hunk headers. This revision resends
+> unchanged
+> code through b4 and carries the review tags received on v1 and v3.
+>=20
+> Changes in v4:
+> =C2=A0 - Resend through b4 after the v3 lore copy remained line-wrapped.
+> =C2=A0 - Restore Daniel Henrique Barboza's Reviewed-by tag on patch 2.
+> =C2=A0 - Add review and test tags from Nutty Liu and Chao Liu.
+>=20
+> Changes in v3:
+> =C2=A0 - Attempt to protect the patch body with MIME transfer encoding.
+> =C2=A0 - Add Tao Tang's Reviewed-by tag to patch 1.
+>=20
+> Changes in v2:
+> =C2=A0 - Wrap the fix commit message.
+> =C2=A0 - Keep the existing notification comment.
+> =C2=A0 - Add deterministic IE-clear and IE-set qtests.
+>=20
+> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
 > ---
->  include/monitor/monitor.h | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-> index fa9f4a8a75a..fd98ee2c71d 100644
-> --- a/include/monitor/monitor.h
-> +++ b/include/monitor/monitor.h
-> @@ -1,7 +1,6 @@
->  #ifndef MONITOR_H
->  #define MONITOR_H
->
-> -#include "block/block.h"
->  #include "qapi/qapi-types-misc.h"
->  #include "qemu/coroutine-core.h"
->  #include "qemu/readline.h"
-> --
-> 2.53.0
->
->
+> Flavien Solt (3):
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/misc/iommu-testdev: support PCI MSI tes=
+t writes
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/riscv/riscv-iommu.c: always send MRIF n=
+otice MSI
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tests/qtest: add RISC-V IOMMU MRIF notice =
+tests
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
+>=20
+> =C2=A0hw/misc/iommu-testdev.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0 14 +++++-
+> =C2=A0hw/riscv/riscv-iommu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 |=C2=A0 13 -----
+> =C2=A0include/hw/misc/iommu-testdev.h |=C2=A0=C2=A0 1 +
+> =C2=A0tests/qtest/iommu-riscv-test.c=C2=A0 | 102
+> ++++++++++++++++++++++++++++++++++++++++
+> =C2=A04 files changed, 115 insertions(+), 15 deletions(-)
+> ---
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> change-id: 20260727-qemu-mrif-v4-c8e3c3a48b9c
+>=20
+> Best regards,
+> --=C2=A0=20
+> Flavien Solt <flavien.solt97@gmail.com>
+>=20
 
