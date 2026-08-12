@@ -4,90 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB073C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE3FC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9PU-0004i7-Tf; Wed, 12 Aug 2026 09:54:24 -0400
+	id 1wu9Ql-0005Rs-UR; Wed, 12 Aug 2026 09:55:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wu9PS-0004hu-Gj
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:54:22 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wu9PO-0000P6-Fv
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:54:22 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2ceab75934dso13587375ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786542857; x=1787147657; darn=nongnu.org;
- h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
- :message-id:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=N90NN4n9+LzV7tiYeeKSL3/VSpyLD/AD9T0cJNXZa5o=;
- b=PijYLHbsz2Lg4ljFePeDxGAI9tdmux+H120ih7tQSmw6kNwSdBF0/JU8QVJ1UqSI8a
- ZysMraQFI0Eg+SheL3y/c9X8Scgl2xXS6nli20rZ8rUi96VVObJ/aS8spdPeBczXlRjt
- NpPGKBomtmVqmQuQspMv5K6ZnNu0KdhoEBVc8vbotq1CotmR2CTQ0ZOivcOki/DlW7eC
- jeDZxOzwMXOZEHaloAje+ECNPK2dGmygL4SD8d2F55EtVm7VS68rJ7P2mKYzLQFLepRI
- NJU2f/zfuuwZ/VubPwRTLosJ+fIZoJ80MZZ0D1eo3ZK4N4MTBaXrG0Z3SHXBwGrwoXuL
- UTRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786542857; x=1787147657;
- h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
- :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=N90NN4n9+LzV7tiYeeKSL3/VSpyLD/AD9T0cJNXZa5o=;
- b=San7jqo6SP/R3y7JEISf+EkGKzNqtZFsO1zPIxrKCLCMVlNGoD4J7XPuXlGrGttgcV
- 4LjtfqTJqWFfAQZPmcZWMT5mb3g0w2icW+5HHxF+VaDNxCAYY/g2J8/fzmoFPKWT0zQt
- MllUQ+3KEOdLFlvLMIigJbWR6NF5leDePGC1DImqFM+lhl2Ow4N8gesIIuBRFehV2Na9
- c1QZ6UUfbRn9tV6AxepVWNgrURXdY0txdXzHuC0gpRxISI2ngLOw6bT58WjfyGidCqwg
- F3X/xIVektBj/cX/dWi44NlJZZCRIubBoiGp3fW3OpE2PSJElvPggXeynCFCguv88XkY
- jj5w==
-X-Gm-Message-State: AOJu0YzEk1P4Smlul0SZV4Ad/naKcrNsFEFo/0hGIvVq2lsZdiNHD8cI
- z/EC8Bwx7s7F3tsci6FKY2cKoTHs0rfHfB8+tpougwzL0P2ilSNayVoHM00uwwLV/70=
-X-Gm-Gg: AR+sD12w42Tzt50NwfZzdvfQpbmvHLhqvxh7e0iI5V8FTJ1QZtiT+mhLgGN2Qbqp/8T
- cZlICwYAQCJEMs+NqKYqUb0nNz4ElSa7DT5qteA2JVFJfxJIWSdkYnHBCF4TZDotAwGnE3YbQdc
- N0lQp5CkjQHUrx+wE0mpD3IYjDVKKR7FL/9zfbOIR9r/lKn8XdLhXE4pC/g3cKqdrUU+2yMHfPn
- dt4IAwCxofjQsgoHHh21Y56NoImyyMtSykRj93xBlQ+UMMpoIznBSGRQ0KwLb12TEAFzo5JKH9r
- /NaD+YyWl2vzaJBo/u6BOpj8YQG8cqzfj3XQup2ObiXAi3tDzXzeNliaM4Sz8rwKIFlrBQ2xI+Y
- cv6yHpOFkh/XR2EB/cE0abJcBypyI5SxASKysUhmU1UFjQ2wjRQXvmY8uCqNZuMJudvoKwVIFFl
- UvHkWZAu14pKjLKxlSEfjz7af0L3O94hIdheHLP7VuEQg+r8a/PJRxhrfgw75GdckdQmcX8Q==
-X-Received: by 2002:a17:903:22c4:b0:2ce:7563:70a5 with SMTP id
- d9443c01a7336-2d3453a1791mr57888355ad.6.1786542856795; 
- Wed, 12 Aug 2026 06:54:16 -0700 (PDT)
-Received: from smtpclient.apple ([212.135.212.213])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d351152467sm7283655ad.33.2026.08.12.06.54.11
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 12 Aug 2026 06:54:16 -0700 (PDT)
-From: Jack wang <163wangjack@gmail.com>
-Message-Id: <F0F514AE-1866-47FD-B204-3EB5E0A0159B@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_E51B9375-9BFF-449C-8072-1866BF2C15C3"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [RFC PATCH v1 0/5] hw/gpio: STM32F1xx GPIO controller in Rust
-Date: Wed, 12 Aug 2026 21:53:55 +0800
-In-Reply-To: <20260726145119.19881-1-163wangjack@gmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- qemu-rust@nongnu.org, caojunze424@gmail.com
-To: qemu-devel@nongnu.org
-References: <20260726145119.19881-1-163wangjack@gmail.com>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wu9Qh-0005PR-Ke; Wed, 12 Aug 2026 09:55:39 -0400
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wu9Qf-0000mR-EB; Wed, 12 Aug 2026 09:55:39 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 2EE171400023;
+ Wed, 12 Aug 2026 09:55:36 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 09:55:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786542936; x=1786629336; bh=oZ4GmeYLOWk+0gmP6jzAgTfoqWqnwl8s
+ RrLY7xMA8Nk=; b=iRwUpZO1iewpCsuhD10vNCZh5xVYAEDVMUxD16HNXVqrshvA
+ k+tpk67VJLP3QvLsyV6jtMvHpA/jfzwc8BiYhmK0aCKC452BjrM6enmPFdOsPtfx
+ 2QWneuE7GQfV8uFYVQr2oxKE0nM4WphAav/jz8AsZqPbSrU4Q+G+ASwrnn/kLb6c
+ PLj1UOSjeHSZA5QLm6w5ABVL8ZeX7ZkmnHAQqtkqTHUhs7oWug8j8RXibhtREvi7
+ oPl23I3iK8BCp3ryi3V5knDzH2mzec2v72INpwpZanYoo62aAsNyeTmegP0QYlxF
+ edhN5Y937C6BtSMihmLKPMtyZuKULmvps7dRhg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786542936; x=
+ 1786629336; bh=oZ4GmeYLOWk+0gmP6jzAgTfoqWqnwl8sRrLY7xMA8Nk=; b=V
+ ZlhnCz1SaHfnNQ9F04NukEeuwS9wvaDDNQ0S10e8rGTmKgXwyty4MC8Tgxxx/cMV
+ S3oExrLMzlyKS4irpEY57XEaMHF7WXbu3WnA6f3paZs5nVWd5oPVyQzPRd7uM2YB
+ /HntbHhvgt4FE9V0Q/gme0GhgJusk5U+/jsIoStQAn4/cJ+yPdUNjAAz1wUyKCGy
+ /I5woC27MCbYEmOfye9CgDISf1dnBLugeycF7G3Ji+NBv8YmAhmD37+5MHTAWV0n
+ j6iTmD8ZvUQAl9Gp5lMQo0eFbQ5ZjmXF4ifsLsxo0xYbNoNQkGiD7AEPrYztALGM
+ b7PGRo1vIB4+R3+p5VWRw==
+X-ME-Sender: <xms:Vnt8al2ONDQUROWw49KOvulH3bg_kit7T2bRHJP066Jf02c2M_OT_A>
+ <xme:Vnt8asieromKiFk8IoBEtus_8RzVH4uLn7L8IoQQP6P99sI_WAolOyXCGL-VPzBxr
+ cjpa2zqDaNtM2ETWmGGtvTl8easCsDyKOgEYuz8UgwYuobZkq0P9JmQ>
+X-ME-Received: <xmr:Vnt8alq7RLP_t11BZu-hEce89X6QKCsjstNU0wrpn3O4G0uFB3tIq6PwWf7j19MRg3plPg>
+X-ME-Proxy-Cause: dmFkZTGpny9W1s0p3xNlSlxCKU6BUw0/nkW0lH5LI01PqfNp6jwHd7zE8zv4zBu7aOaXZe
+ dxBW2lue3EeYgZ1yemV+Px5tWXmT7Y1AUFuIE5TeS/VoN2dp2tKKTlZLQjF1DV1fw4g/gh
+ +7uYWneW7c0G6Q7YMzQzU+eVtUMF0rAfx7P8e3f9voLcmyuIAQTOqo8y12s7khR5gRq7B/
+ 9xbmicUpEebrt3cbmugBU5MpxSbNsa33UM83LBKgAWKrRjnan+ZqqP1h/E1rT6uD11O9Kw
+ +m63xOdIEES1VfCtUALhvYvj1RWoZAUbSJfcDit4tINbcZpPbNH4hQd7dxdv7HTOfdY+lA
+ EP7rlJy1+/HkOk1pIzXE6fuQ7UaJ/2b/gzXLhbQnp2hfgd7h4m7Yw9WP8L+i/QHGwh4heN
+ abpVNhGGS4UNm383f2fld5wE8cNtSjSXq1e5ZJaqgV14yt665XqmIwLtylj5zsFfKKy7jL
+ A4uNfue97PXlMDfliOVhW13hYa3MCXHV4kxb4sPlt0fZCNka4SCSU7NBVjR3TUviAPg5BK
+ bgSxLrvg8Pb4i/udActzxZ7UqYKTupQYDDuMNazeQicUH39M8Hget/af6Dt5+LdGPBTBd2
+ 0pKs2J32DQfKAO/wDLaHnMir4f+rDyojhEUg16wLC5QqIxzzgcim/uLF3y1w
+X-ME-Proxy: <xmx:Vnt8avNwIC7DXHSrcNRpUPylRpVx11P04yrOt4CgNbc-FBiumkPGMw>
+ <xmx:Vnt8ah10-b2fVMpSnJ4Y7_6eyz9-CihGUHAAf05-1Z_2Cb00jhymtA>
+ <xmx:Vnt8atrd9-WrLxPX1DyqyRBH_Tt9izL5PymZL5miYxS3Hf26VyOriw>
+ <xmx:Vnt8arfZJEEXjfqWnvRjGWn0XEkROxQMQrjnond2Zg18HBrc-a5XCw>
+ <xmx:WHt8anzEn7z7NEvgn6EHrWmrIkslIOyis6v34LNptVCZpVeJgvyPKFWm>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 09:55:34 -0400 (EDT)
+Message-ID: <18a946ef5252d04cf2cfdea71464df7dba8ebfd4.camel@alistair23.me>
+Subject: Re: [PATCH v4 1/3] hw/misc/iommu-testdev: support PCI MSI test writes
+From: Alistair <alistair@alistair23.me>
+To: Flavien Solt <flavien.solt97@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, Tao
+ Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis	 <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier	 <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nutty Liu	 <nutty.liu@hotmail.com>
+Date: Wed, 12 Aug 2026 23:55:33 +1000
+In-Reply-To: <20260727-qemu-mrif-v4-v4-1-73e0890ad395@gmail.com>
+References: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
+ <20260727-qemu-mrif-v4-v4-1-73e0890ad395@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=103.168.172.159;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,221 +113,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---Apple-Mail=_E51B9375-9BFF-449C-8072-1866BF2C15C3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Hi all, sorry for pre wrong link with patch 5,now I add right link(rfc) =
-below, really sorry  for my mistake
-
-A polite ping for this RFC series.Thanks advice for Philippe advice and =
-I am ready for v2.
-Could anyone have other suggestions for my patch. I am appreciative for =
-your advice and ready to fix it in v2
-
-
-> 2026=E5=B9=B47=E6=9C=8826=E6=97=A5 22:51=EF=BC=8CJack Wang =
-<163wangjack@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
+On Mon, 2026-07-27 at 15:22 +0800, Flavien Solt wrote:
+> iommu-testdev writes ITD_DMA_WRITE_VAL with unspecified requester
+> attributes. RISC-V MSI remapping tests need to select an interrupt
+> identity in the payload. The MSI trap also identifies the device
+> through
+> MemTxAttrs.requester_id.
 >=20
-> Hi all,
+> Add a write-value register with the existing constant as its reset
+> default. Populate the requester ID from the PCI function. Existing
+> translation tests retain their payload while interrupt-remapping
+> tests
+> can issue a valid MSI for the test device.
 >=20
-> This RFC adds an STM32F1xx GPIO controller modelled in Rust, following =
-the
-> existing rust/hw/char/pl011 device as a template. The register logic =
-(CRL/CRH
-> mode+config decode and the IDR update algorithm) is a direct port of =
-the C
-> model in hw/gpio/stm32l4x5_gpio.c; the STM32F1xx GPIO block (RM0008) =
-is the
-> same IP used by the upstream stm32f100_soc.
->=20
-> This series is currently stacked on an out-of-tree STM32F103 SoC and =
-board
-> that are not yet upstream which is =
-https://github.com/shandianchengzi/qemu
-> But the commit(the initialize logic and gpio architecture) is both =
-capable=20
-> for stm32f100.This is the reason that struct name is  stm32f1xx. Patch =
-3=20
-> ("hw/arm/stm32f103: instantiate and mapGPIO ports") therefore touches =
-files=20
-> that do not exist in mainline and willnot apply cleanly on its own.=20
-> I am sending this as an RFC to get feedback onthe Rust device model =
-and=20
-> its integration now, before the SoC lands, rather than as an =
-apply-ready series
-> . Once the SoC is upstream (or if you I
-> can retarget the device at the existing stm32f100_soc), I will resend =
-a
-> non-RFC series.
->=20
-> checkpatch reports SPDX warnings on Kconfig/trace-events/Cargo.toml/
-> meson.build and "MAINTAINERS need updating" on the new files. These =
-are
-> false positives: matching rust/hw/char/pl011, these file types carry =
-no SPDX
-> header in-tree, and MAINTAINERS already gains an entry covering =
-rust/hw/gpio/
-> and the qtest in this series.
->=20
-> Anyway this is my first time to generate rust model build so sorry for =
-some
-> mistakes. And any help or tip are welcomed
->=20
-> Jack Wang (5):
->  hw/gpio: add stm32f1xx GPIO device model (Rust)
->  rust: add hw/gpio crate to the workspace
->  hw/arm/stm32f103: instantiate and map GPIO ports
->  tests/qtest: add stm32f103 GPIO test
->  rust/hw/gpio: add native unit tests
->=20
-> MAINTAINERS                       |   7 +
-> hw/arm/Kconfig                    |   1 +
-> hw/arm/stm32f103_board.c          |   2 +-
-> hw/arm/stm32f103_soc.c            |  54 ++-
-> hw/gpio/Kconfig                   |   5 +
-> hw/gpio/trace-events              |   7 +
-> include/hw/arm/stm32f103_soc.h    |   9 +
-> rust/Cargo.lock                   |  17 +-
-> rust/Cargo.toml                   |  18 +
-> rust/hw/Kconfig                   |   1 +
-> rust/hw/gpio/Cargo.toml           |  28 ++
-> rust/hw/gpio/Kconfig              |   2 +
-> rust/hw/gpio/meson.build          |  54 +++
-> rust/hw/gpio/src/bindings.rs      |  19 ++
-> rust/hw/gpio/src/gpio.rs          | 539 ++++++++++++++++++++++++++++++
-> rust/hw/gpio/src/lib.rs           |   3 +
-> rust/hw/gpio/tests/tests.rs       | 191 +++++++++++
-> rust/hw/meson.build               |   1 +
-> tests/qtest/meson.build           |   4 +
-> tests/qtest/stm32f103_gpio-test.c | 328 ++++++++++++++++++
-> 20 files changed, 1281 insertions(+), 9 deletions(-)
-> create mode 100644 rust/hw/gpio/Cargo.toml
-> create mode 100644 rust/hw/gpio/Kconfig
-> create mode 100644 rust/hw/gpio/meson.build
-> create mode 100644 rust/hw/gpio/src/bindings.rs
-> create mode 100644 rust/hw/gpio/src/gpio.rs
-> create mode 100644 rust/hw/gpio/src/lib.rs
-> create mode 100644 rust/hw/gpio/tests/tests.rs
-> create mode 100644 tests/qtest/stm32f103_gpio-test.c
->=20
-> --=20
-> 2.53.0
->=20
+> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
+> Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
---Apple-Mail=_E51B9375-9BFF-449C-8072-1866BF2C15C3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+Alistair
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><p style=3D"margin: 0px; font-width: =
-normal; line-height: normal; font-size-adjust: none; font-kerning: auto; =
-font-variant-alternates: normal; font-variant-ligatures: normal; =
-font-variant-numeric: normal; font-variant-east-asian: normal; =
-font-variant-position: normal; font-feature-settings: normal; =
-font-optical-sizing: auto; font-variation-settings: normal;"><font =
-color=3D"#000000">Hi all, sorry for pre wrong link with patch 5,now I =
-add right link(rfc) below, really sorry &nbsp;for my mistake</font><br =
-style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><br =
-style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);"><font =
-color=3D"#000000">A polite ping for this RFC series.Thanks advice for =
-Philippe advice and I am ready for v2.</font></p><p style=3D"margin: =
-0px; font-width: normal; line-height: normal; font-size-adjust: none; =
-font-kerning: auto; font-variant-alternates: normal; =
-font-variant-ligatures: normal; font-variant-numeric: normal; =
-font-variant-east-asian: normal; font-variant-position: normal; =
-font-feature-settings: normal; font-optical-sizing: auto; =
-font-variation-settings: normal;"><font color=3D"#000000">Could anyone =
-have other suggestions for my patch. I am appreciative for your advice =
-and ready to fix it in v2</font></p><br =
-class=3D"Apple-interchange-newline"><div><br><blockquote =
-type=3D"cite"><div>2026=E5=B9=B47=E6=9C=8826=E6=97=A5 22:51=EF=BC=8CJack =
-Wang &lt;163wangjack@gmail.com&gt; =E5=86=99=E9=81=93=EF=BC=9A</div><br =
-class=3D"Apple-interchange-newline"><div><div>Hi all,<br><br>This RFC =
-adds an STM32F1xx GPIO controller modelled in Rust, following =
-the<br>existing rust/hw/char/pl011 device as a template. The register =
-logic (CRL/CRH<br>mode+config decode and the IDR update algorithm) is a =
-direct port of the C<br>model in hw/gpio/stm32l4x5_gpio.c; the STM32F1xx =
-GPIO block (RM0008) is the<br>same IP used by the upstream =
-stm32f100_soc.<br><br>This series is currently stacked on an out-of-tree =
-STM32F103 SoC and board<br>that are not yet upstream which is =
-https://github.com/shandianchengzi/qemu<br>But the commit(the initialize =
-logic and gpio architecture) is both capable <br>for stm32f100.This is =
-the reason that struct name is &nbsp;stm32f1xx. Patch 3 =
-<br>("hw/arm/stm32f103: instantiate and mapGPIO ports") therefore =
-touches files <br>that do not exist in mainline and willnot apply =
-cleanly on its own. <br>I am sending this as an RFC to get feedback =
-onthe Rust device model and <br>its integration now, before the SoC =
-lands, rather than as an apply-ready series<br>. Once the SoC is =
-upstream (or if you I<br>can retarget the device at the existing =
-stm32f100_soc), I will resend a<br>non-RFC series.<br><br>checkpatch =
-reports SPDX warnings on Kconfig/trace-events/Cargo.toml/<br>meson.build =
-and "MAINTAINERS need updating" on the new files. These are<br>false =
-positives: matching rust/hw/char/pl011, these file types carry no =
-SPDX<br>header in-tree, and MAINTAINERS already gains an entry covering =
-rust/hw/gpio/<br>and the qtest in this series.<br><br>Anyway this is my =
-first time to generate rust model build so sorry for some<br>mistakes. =
-And any help or tip are welcomed<br><br>Jack Wang (5):<br> =
-&nbsp;hw/gpio: add stm32f1xx GPIO device model (Rust)<br> &nbsp;rust: =
-add hw/gpio crate to the workspace<br> &nbsp;hw/arm/stm32f103: =
-instantiate and map GPIO ports<br> &nbsp;tests/qtest: add stm32f103 GPIO =
-test<br> &nbsp;rust/hw/gpio: add native unit tests<br><br> MAINTAINERS =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
-&nbsp;&nbsp;7 +<br> hw/arm/Kconfig =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;1 +<br> =
-hw/arm/stm32f103_board.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;2 =
-+-<br> hw/arm/stm32f103_soc.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
-&nbsp;54 ++-<br> hw/gpio/Kconfig =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;5 +<br> =
-hw/gpio/trace-events =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;| &nbsp;&nbsp;7 +<br> include/hw/arm/stm32f103_soc.h =
-&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;9 +<br> rust/Cargo.lock =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;17 +-<br> rust/Cargo.toml =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;18 +<br> rust/hw/Kconfig =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;1 +<br> =
-rust/hw/gpio/Cargo.toml =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;28 =
-++<br> rust/hw/gpio/Kconfig =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;| &nbsp;&nbsp;2 +<br> rust/hw/gpio/meson.build =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;54 +++<br> =
-rust/hw/gpio/src/bindings.rs &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;19 =
-++<br> rust/hw/gpio/src/gpio.rs =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 539 =
-++++++++++++++++++++++++++++++<br> rust/hw/gpio/src/lib.rs =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
-&nbsp;&nbsp;3 +<br> rust/hw/gpio/tests/tests.rs =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 191 +++++++++++<br> =
-rust/hw/meson.build =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;| &nbsp;&nbsp;1 +<br> tests/qtest/meson.build =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| =
-&nbsp;&nbsp;4 +<br> tests/qtest/stm32f103_gpio-test.c | 328 =
-++++++++++++++++++<br> 20 files changed, 1281 insertions(+), 9 =
-deletions(-)<br> create mode 100644 rust/hw/gpio/Cargo.toml<br> create =
-mode 100644 rust/hw/gpio/Kconfig<br> create mode 100644 =
-rust/hw/gpio/meson.build<br> create mode 100644 =
-rust/hw/gpio/src/bindings.rs<br> create mode 100644 =
-rust/hw/gpio/src/gpio.rs<br> create mode 100644 =
-rust/hw/gpio/src/lib.rs<br> create mode 100644 =
-rust/hw/gpio/tests/tests.rs<br> create mode 100644 =
-tests/qtest/stm32f103_gpio-test.c<br><br>-- =
-<br>2.53.0<br><br></div></div></blockquote></div><br></body></html>=
-
---Apple-Mail=_E51B9375-9BFF-449C-8072-1866BF2C15C3--
+> ---
+> =C2=A0hw/misc/iommu-testdev.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 14 ++++++++++++--
+> =C2=A0include/hw/misc/iommu-testdev.h |=C2=A0 1 +
+> =C2=A02 files changed, 13 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
+> index 15eb6de..6428a57 100644
+> --- a/hw/misc/iommu-testdev.c
+> +++ b/hw/misc/iommu-testdev.c
+> @@ -28,6 +28,7 @@ struct IOMMUTestDevState {
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t dma_paddr;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t dma_len;
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t dma_result;
+> +=C2=A0=C2=A0=C2=A0 uint32_t dma_write_val;
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_armed; /* armed until a trigger consume=
+s the request */
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 AddressSpace *dma_as;=C2=A0=C2=A0 /* IOMMU-media=
+ted DMA AS for this device
+> */
+> @@ -80,6 +81,7 @@ static void
+> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 /* Initialize MemTxAttrs from generic register. =
+*/
+> =C2=A0=C2=A0=C2=A0=C2=A0 attrs.secure =3D ITD_ATTRS_GET_SECURE(s->dma_att=
+rs_cfg);
+> +=C2=A0=C2=A0=C2=A0 attrs.requester_id =3D pci_requester_id(&s->parent_ob=
+j);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 space_valid =3D ITD_ATTRS_GET_SPACE_VALID(s->dma=
+_attrs_cfg);
+> =C2=A0=C2=A0=C2=A0=C2=A0 if (space_valid) {
+> @@ -97,12 +99,12 @@ static void
+> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 as =3D s->dma_as;
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
+> +=C2=A0=C2=A0=C2=A0 /* Step 1: Write the configured test value to DMA add=
+ress */
+> =C2=A0=C2=A0=C2=A0=C2=A0 trace_iommu_testdev_dma_write(s->dma_vaddr, s->d=
+ma_len);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < s->dma_len; i++) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Data is written in li=
+ttle-endian order */
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 write_buf[i] =3D (ITD_DMA_WRI=
+TE_VAL >> ((i % 4) * 8)) & 0xff;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 write_buf[i] =3D (s->dma_writ=
+e_val >> ((i % 4) * 8)) & 0xff;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0 write_res =3D dma_memory_write(as, s->dma_vaddr,=
+ write_buf,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len, attrs);
+> @@ -186,6 +188,9 @@ static uint64_t iommu_testdev_mmio_read(void
+> *opaque, hwaddr addr,
+> =C2=A0=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_ATTRS:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D s->dma_attrs_c=
+fg;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> +=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_WRITE_VAL:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D s->dma_write_val;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> =C2=A0=C2=A0=C2=A0=C2=A0 default:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D 0;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> @@ -240,6 +245,9 @@ static void iommu_testdev_mmio_write(void
+> *opaque, hwaddr addr, uint64_t val,
+> =C2=A0=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_ATTRS:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D dat=
+a;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> +=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_WRITE_VAL:
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D data;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> =C2=A0=C2=A0=C2=A0=C2=A0 default:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> @@ -263,6 +271,7 @@ static void iommu_testdev_realize(PCIDevice
+> *pdev, Error **errp)
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_paddr =3D 0;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len =3D 0;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_result =3D ITD_DMA_RESULT_IDLE;
+> +=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D ITD_DMA_WRITE_VAL;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_armed =3D false;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D ITD_ATTRS_SET_SPACE(0,
+> ITD_ATTRS_SPACE_NONSECURE);
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_as =3D pci_device_iommu_address_space(pde=
+v);
+> @@ -280,6 +289,7 @@ static void iommu_testdev_reset(DeviceState *dev)
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_paddr =3D 0;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len =3D 0;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_result =3D ITD_DMA_RESULT_IDLE;
+> +=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D ITD_DMA_WRITE_VAL;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_armed =3D false;
+> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D ITD_ATTRS_SET_SPACE(0,
+> ITD_ATTRS_SPACE_NONSECURE);
+> =C2=A0}
+> diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-
+> testdev.h
+> index 3383659..2f4e931 100644
+> --- a/include/hw/misc/iommu-testdev.h
+> +++ b/include/hw/misc/iommu-testdev.h
+> @@ -81,6 +81,7 @@ enum {
+> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_ATTRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 =3D 0x18,
+> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_GPA_LO=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ =3D 0x1c,
+> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_GPA_HI=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ =3D 0x20,
+> +=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_WRITE_VAL=C2=A0=C2=A0 =3D 0x24,
+> =C2=A0=C2=A0=C2=A0=C2=A0 BAR0_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 0x1000,
+> =C2=A0};
+> =C2=A0
 
