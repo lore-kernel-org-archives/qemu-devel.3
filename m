@@ -4,54 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88DC1C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB9BC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8h7-0004n4-KM; Wed, 12 Aug 2026 09:08:33 -0400
+	id 1wu8fB-0002Dv-B4; Wed, 12 Aug 2026 09:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gn-0003tL-F8; Wed, 12 Aug 2026 09:08:13 -0400
+ id 1wu8f9-0002Ai-On; Wed, 12 Aug 2026 09:06:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gl-0005RZ-36; Wed, 12 Aug 2026 09:08:13 -0400
+ id 1wu8f8-00054T-0T; Wed, 12 Aug 2026 09:06:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=y3PyXnMwdMancwokW+pXsfcz7ujpa53MhIOktWM5oOQ=;
+ t=1786539783; bh=OnUQe6/rj299sZ5vaOOpySJvKJclMx9JJNtqpm/Qbm8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pyBcZfrH+Lk3WnnTlrNWkZ9X/mfFf+mrKw8HRHsKfvySkiA410ikq+c9rEaUQErTD
- nlrhVRckXSjd1KuNTGvLngE0mEl+ni+11gWxfzugyaaZaR4B7+pQBPx2sxpetDMRhr
- MKFyxpipYcT4kXJy07MUpYx+j14bznhEJdTMqDMWxAx0HYK9s8l5RCG9xYQb0Nz+Wf
- TMTg/p+SzwE1zSdXlva4ORhBGh5PCjHblDP019hRmAAr7TXASb0ORGYHxgllKnPp3F
- 7RbwAwtCpruk40eHmGesdHfT7Jl01BdSpkty7gKvG0+wcKpVgY5Ou+NcYU+2lHdDmf
- dPy1GDkt4Bp0Q==
+ b=OtKIs7PqVd5Tw5sVXxJyi6J1TWLTP0xCO4Izs+Q0CxAUZp67j7IjetnAFu+9fcnJG
+ dxK2fJ3XdUti8Wr47hWpoWQ1lCwyWxtRwyh5TmgwUoIbth/EI1VEvbY0uT4+wCVsGx
+ OsXa018cC8pkDOS/f9kWu/NUFJBI2to5M8WczLW61ayrWkZNrW88bzZjGwzaBvXLVa
+ uweU0kW5PO3wrl/INS6lzoR0dwFYAORZkgXQsW25k9F2R5uEvfYwldBrZPVZDOBQPV
+ /yXSphmspj/F7xaAELJHB+mxPBORUNuxTve1x9jfpv27BjioaDutWSAUaakUQ4xcOD
+ bHd9DYk5DW4cQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A8F61CA4B6;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C08BF1CA4A5;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4F091409B99;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 02E25409B88;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5A7D52F902; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 2E3A52F8E0; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Cl=C3=A9ment=20MATHIEU--DRIF?= <clement.mathieu--drif@bull.com>,
- huntr bubble <bubblehuntr@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 055/102] intel_iommu: Check address mask before using
- it in pasid-based iotlb invalidation
-Date: Wed, 12 Aug 2026 16:01:30 +0300
-Message-ID: <20260812130233.621965-55-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 038/102] libvhost-user: protect against OOB writes in
+ vu_set_inflight_fd
+Date: Wed, 12 Aug 2026 16:01:13 +0300
+Message-ID: <20260812130233.621965-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,51 +72,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-Prevent a buggy driver to execute malformed invalidation operations.
+vu_set_inflight_fd() trusts the num_queues value from the
+VHOST_USER_SET_INFLIGHT_FD message without checking it against
+dev->max_queues, so an oversized value causes out-of-bounds writes to
+dev->vq.
 
-Add the same assert as in vtd_iotlb_page_invalidate.
+Front end is generally trusted so not a security problem, but OOB isn't
+a nice way to handle frontend bugs.  Let's harden this a bit:
+check num_queues and panic if it's invalid.
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3619
-Fixes: 6ebe6cf2a066 ("intel_iommu: Process PASID-based iotlb invalidation")
-Reported-by: huntr bubble <bubblehuntr@gmail.com>
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Reported-by: xlabai <xlabai@tencent.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724111424.376680-1-clement.mathieu--drif@bull.com>
-(cherry picked from commit 0691bb257a7cbfd62127208b49988705bfa2dfe8)
+Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
+(cherry picked from commit fbdfdbb9920cb69408d53cb86a8e079a2054581e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a117a0b6b10..23b6cdef649 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2999,6 +2999,8 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
- {
-     VTDIOTLBPageInvInfo info;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 014d2107489..bdaa6917f19 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1919,6 +1919,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
  
-+    assert(am <= VTD_MAMV);
+     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
+         vmsg->payload.inflight.mmap_size = 0;
+         return true;
+     }
+@@ -1926,6 +1928,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        vmsg_close_fds(vmsg);
++        vmsg->fd_num = 0;
++        vmsg->payload.inflight.mmap_size = 0;
++        return true;
++    }
 +
-     info.domain_id = domain_id;
-     info.pasid = pasid;
-     info.addr = addr;
-@@ -3037,6 +3039,13 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
  
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-         am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-+        if (am > VTD_MAMV) {
-+            error_report_once("%s: invalid piotlb inv desc: hi=0x%"PRIx64
-+                              ", lo=0x%"PRIx64" (am=%u > VTD_MAMV=%llu)",
-+                              __func__, inv_desc->val[1], inv_desc->val[0],
-+                              am, VTD_MAMV);
-+            return false;
-+        }
-         addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
-         vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am);
-         break;
+@@ -1973,6 +1984,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+         vmsg->size != sizeof(vmsg->payload.inflight)) {
+         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
+                  vmsg->size, vmsg->fd_num);
++        vmsg_close_fds(vmsg);
+         return false;
+     }
+ 
+@@ -1982,6 +1994,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+     num_queues = vmsg->payload.inflight.num_queues;
+     queue_size = vmsg->payload.inflight.queue_size;
+ 
++    if (num_queues > dev->max_queues) {
++        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
++                 num_queues);
++        close(fd);
++        return false;
++    }
++
+     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
+     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
+     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
+@@ -1992,6 +2011,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     if (rc == MAP_FAILED) {
+         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
++        close(fd);
+         return false;
+     }
+ 
 -- 
 2.47.3
 
