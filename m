@@ -4,92 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45021C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0D7C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuCXD-0003O8-QQ; Wed, 12 Aug 2026 13:14:35 -0400
+	id 1wuCa9-0000Dx-8S; Wed, 12 Aug 2026 13:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuCXB-0003MT-4O; Wed, 12 Aug 2026 13:14:33 -0400
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wuCZo-0000Ar-K3; Wed, 12 Aug 2026 13:17:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuCX9-0008LU-1D; Wed, 12 Aug 2026 13:14:32 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id 2F5FAEC01EE;
- Wed, 12 Aug 2026 13:14:29 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 13:14:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786554869; x=1786641269; bh=xr4yRELDwWvCMjQYqFl8E8sNetRn3yD5
- UtuvfZE2jK0=; b=OCZtdTNhoNuJYK6e2LXBD4kPi7swvyONfocfs6GIxygdrjQR
- Quvn1fX3d3/oDfbyg7iYGD1BelF8oAeUC5TFPy+I400FeaZs33v9ZAMzkMfCuPS4
- a6oXl3BLrDlicGGicuFQrOPmAh6GmSis1scwtiiAf/uQH0y0NOodG4OxyKp9xamL
- B7bhLrKtRhismMvtt81mmcYol/zeAorCEd8fJ5TuAwUpWBLqqwEqCGTuw9lb8mpM
- JKUDQvoBP3Ahl/EBMrvVCwLimOKH1ZsNG+DeC7irFV0EMiW/oWklq825gIvJ5gSs
- UDQiC39adcIuZc4U+/0fCo2teZM4JHCWz2ETIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786554869; x=
- 1786641269; bh=xr4yRELDwWvCMjQYqFl8E8sNetRn3yD5UtuvfZE2jK0=; b=I
- BbtRiRVp2M/gJKdvRXsFH5spReNNOXbvnGeJ2adC/qK5n9tCfEvQYPqLbu73Knwe
- RkBs0zt9DmN49GybBMK8MDQtyQOMgVT5Qbcvi868YsBwvmZws/q6yB4Yn7w4vpSy
- yuzitTDhyEnrMndy40isJcyAHPYBj7t/32YuYovUojeHLkGfmM0N/H0gRBAAa3NB
- PwlL9Q1EyQkL3F+3cl5h2J/xWEhgBr9f3ZM8aG0/6Xqm4e50IW0p8h5F4SR/yANY
- RWKrzEDpSL+Kny+LqoJEvdOX9GHvIHG6tGMt4EAIPenwA04pa60qQodnrqUOrlDf
- HCJWALketBUfk5auMfpGA==
-X-ME-Sender: <xms:9Kl8arTRD1mRd1k2Z090QgZj2jpyLVujbnVTfjWP1c3_2egi8FZXcA>
- <xme:9Kl8auQrtRHiWoFFW7rdhoia6IoiXDkD3a_qOCwd5WptiRR8IQMmeHlR1mBNQHQny
- YyKcH-LfpnGq3lXxa5xJ8qTVexj-zC6da_NCskmnnGpJ2DQCVcVSmE>
-X-ME-Received: <xmr:9Kl8ag5F2LL9B-_SKlAbw1SwHLoq76IWyIVTMaBoEzx7B9cEpWswwiHkT0zZt9RZgy-Fkg>
-X-ME-Proxy-Cause: dmFkZTF48MaEr0QtEhMo0s7A1t+Xozm7xm9len1GLccLsheCWu0ixN3yDW+MlPXvr923tW
- PjXB837P8RjLoIMj8zp13r06YNvZqz+O/f8OWkfD45mx16oAEDs5jalus8dN5h1ZT9Y/pV
- p7BQq1sYpfysnbvX2ITP+zpH1Kyguf3ecnYGNZzIjZ5yNL8bxhXeqg+jFkP+SgF48EOR18
- Bb5TEtiBLOQ8UoqKvhLvRQmmbF+jw3C9DxlVM/ifxZeVS2tYsWGGKqo3C7+F68tcwhgHuc
- n49z/Y8kQzGVzWddF7njkkPW9nZblhoV3a+UdWLdK9RLUKk1DhSdqu7SzrbnOILTaR2xOO
- j7a5bWey/va1EtSPf4JaA3HMjpTZGWVsQMWMIwN+Eq4/OiaR1Gc067L5ZbgXDrXImIui6C
- vtgXwyf4g6PuwRApqpFcTiE+p3DbNhUAS8mAspM1QvIitLp82Zi7hwGtndAUW1iDfHj9qV
- /N3FO23dJVT4mYlu6UeE4C9O1J3/WDQUw1MlMdSjrhX7H/Z2polA2paJSbMP7/c1D5kZ2G
- KqrmMBxXQWaNeOkGDCUx42WlR1/5CMFpe0WKvvEZA0xJFqix7tsgLGP7aDNfZ5h1SZ7v6q
- F2IeekM/Zku73dW08ZaT1WifOnFs2rb8n+htXxHAsuQ8XicRBVqZiD3HWMFQ
-X-ME-Proxy: <xmx:9Kl8aq1UBEXyu-XfcM5st-icKhItsng_mgh80uAYZu6-vVh4lYDOqw>
- <xmx:9Kl8arDDoLJhSuwd6pDHa40jwR791nYXm8Vw3-xbgT0H6nU_1tPrCw>
- <xmx:9Kl8alOz9Hs7lce4e0CPUBWqQa-yxiblxS-e4BCbdHaBfHqmEiF-Sw>
- <xmx:9Kl8agZHlDM9uJj87sTeIH9sruaMTHC7Ps86LBvKf1ZImyP-LIUj2Q>
- <xmx:9al8amiJD1lPDtzBzVjyy_1SBBrsxWmrfVarT_BvxG2zVP3TyKQjRfY6>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 13:14:28 -0400 (EDT)
-Message-ID: <7f7bf135ace747e35d00d42d156eb6584322cd13.camel@alistair23.me>
-Subject: Re: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in
- linux-user mode
-From: Alistair <alistair@alistair23.me>
-To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com
-Date: Thu, 13 Aug 2026 03:14:27 +1000
-In-Reply-To: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
-References: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wuCZm-0000oE-AJ; Wed, 12 Aug 2026 13:17:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CH1U3l2217828; Wed, 12 Aug 2026 17:17:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Tl1lKCHRhNK+gdSaGRFd/2evLFj4xEySAUYuf0tuB
+ kw=; b=OPIMpeRXzuxxnRAlCn7IFUJL9eZRtwouj9lpBW1adqhKPHpA01R/OdvY1
+ WCuLc0/psrg+6tU12gklovmMonG7WNjfghtH2jfosuKa7rg48/ehTpUnSQPDwMzi
+ CaOsLFrMO1G6xtVLUcvH26zoOg6dT4hhIy5lnHhJexlu4OsBWWBmHmG0OHNnb022
+ B3eMk24M+tGgWuXNVB9PsiB7efvcVHL4EnSKMMqWrF/M7zWyfNghTbBSglKHkpp1
+ XCwhub685VKKSv2IdKhAvAmntXys1xLDBzY2hGs325M1TFKvhmGiAB7PUuMV1E79
+ l1KI0xQ4TdXSyT1dqjxt+kHRGsEEQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvk03qav-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 17:17:12 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CHBObI008043;
+ Wed, 12 Aug 2026 17:17:11 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxf5w78cc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 17:17:11 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67CHH9RY24183384
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Aug 2026 17:17:10 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DB9AD5805C;
+ Wed, 12 Aug 2026 17:17:09 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65CCE5805A;
+ Wed, 12 Aug 2026 17:17:09 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
+ [9.61.61.74]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Aug 2026 17:17:09 +0000 (GMT)
+From: Eric Farman <farman@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 00/15] s390x queue
+Date: Wed, 12 Aug 2026 13:16:52 -0400
+Message-ID: <20260812171707.1605637-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.144;
- envelope-from=alistair@alistair23.me; helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX4fwyk9Vo8W5V
+ IJV22TP/uaBdyxqH6VRBVQHqpDRSCj/PvJu+q4/wZoX18pqdDjoB6Xxg4L4K8pvMsqV5t1HQ9bs
+ Mq6o9GeyRnWXqLX65KuDvH1RgJxGuOfkRc+mN+4gdGAk59WLbZHU8Pdq1G2D7PGEwin1RaAnyAS
+ I2kBIIxiuaebvpLLS7Rpk17QRjzR8GkVtKyfqE7skTQthY5YYHL6rfvqgamOKttT/xSX9Nmt2Xp
+ rcKqq2+xqYaKhmIRnfVcMwv96nSzmjbScpyS7FaLDLuZ5Ss72AIs+8uGUjdvi1ySnMTXRlWoDoZ
+ JIBkrNE4vLXYbWDqYDj91tYnXL5S8xSwCirOxTFA7Y2ZA9vwJMOxneqAh/fcC1yE3OsP8Pdntfv
+ UrZAB38+NiCvBc87plHQ0+0vLDa4KhP0mPJbGOoTF/bliZLW5OTrpt9YmHTyvKyf/eOcYbiW7/w
+ dT/ioipZPCyjBnJMezg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX+ZGzEcvf4weW
+ ESrzZhDdrk2u4+youzGr4mIYFQijvVZiqeIDVyjjeZXgKB+yOdmFt9WbTs5kTZP4YVXSXSxiS1e
+ dYCS3RhSXvL03KtOAhyrYEU/Mx8Auwg=
+X-Authority-Analysis: v=2.4 cv=RqD16imK c=1 sm=1 tr=0 ts=6a7caa98 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8 a=dDm5mMPXSCKf8wx44mcA:9
+X-Proofpoint-GUID: L3l2LoUwovk6sPwxT5aevdPqBfqR_HPU
+X-Proofpoint-ORIG-GUID: L3l2LoUwovk6sPwxT5aevdPqBfqR_HPU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_05,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608120138
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,92 +118,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-08-11 at 09:14 +0800, wangyang wrote:
-> In user-only builds check_zicbo_envcfg() skipped the envcfg check
-> entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
-> cbo.zero retired unconditionally in linux-user even though the
-> machine-level envcfg fields are never initialized.=C2=A0 Give the
-> user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
-> reset when ext_zicboz is enabled so cbo.zero stays usable while
-> cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
-> typical firmware/kernel setup.
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
-> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+The following changes since commit 3e3ccab106f879b1512f8e0d51a827dd4de30e22:
 
-Thanks!
+  Update version for v11.1.0-rc3 release (2026-08-04 15:36:08 -0400)
 
-When sending multiple patches please include a cover letter. It makes
-it a lot easier to work with the patches in QEMU tooling.
+are available in the Git repository at:
 
-I'm travelling at the moment and having some troubles applying these.
-Do you mind resending them with a cover letter
+  https://gitlab.com/efarman/qemu.git tags/s390x-20260812
 
-Alistair
+for you to fetch changes up to 9b3d68edb24d4e04f49822c6e11641e4eb23dfd5:
 
-> ---
-> =C2=A02 files changed, 18 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5a82e6563bf..45b7610aa4f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1061,6 +1061,14 @@ static void riscv_cpu_reset_hold(Object *obj,
-> ResetType type)
-> =C2=A0#else
-> =C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D PRV_U;
-> =C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg =3D 0;
-> +=C2=A0=C2=A0=C2=A0 /*
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * Match the user-mode view of a typical firmwar=
-e/kernel setup
-> where
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * cbo.zero is enabled for user mode; the CBCFE/=
-CBIE bits stay
-> zero,
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * so the cache-management operations remain ill=
-egal in user
-> mode.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> +=C2=A0=C2=A0=C2=A0 if (riscv_cpu_cfg(env)->ext_zicboz) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg |=3D SENVCFG_CBZ=
-E;
-> +=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0 env->menvcfg =3D 0;
-> =C2=A0#endif /* !CONFIG_USER_ONLY */
-> =C2=A0
-> diff --git a/target/riscv/tcg/op_helper.c
-> b/target/riscv/tcg/op_helper.c
-> index ba3c7da375a..b9d0deacdfb 100644
-> --- a/target/riscv/tcg/op_helper.c
-> +++ b/target/riscv/tcg/op_helper.c
-> @@ -146,7 +146,16 @@ target_ulong helper_csrrw_i128(CPURISCVState
-> *env, int csr,
-> =C2=A0static void check_zicbo_envcfg(CPURISCVState *env, target_ulong
-> envbits,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uintptr_t ra)
-> =C2=A0{
-> -#ifndef CONFIG_USER_ONLY
-> +#if defined(CONFIG_USER_ONLY)
-> +=C2=A0=C2=A0=C2=A0 /*
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * linux-user: the machine-level envcfg fields a=
-re not part of
-> the
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * user-mode environment; only the user-mode vie=
-w of the
-> enabling
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * bits (senvcfg, as initialized for the guest) =
-applies.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> +=C2=A0=C2=A0=C2=A0 if (!get_field(env->senvcfg, envbits)) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(env, RI=
-SCV_EXCP_ILLEGAL_INST, ra);
-> +=C2=A0=C2=A0=C2=A0 }
-> +#else
-> =C2=A0=C2=A0=C2=A0=C2=A0 if ((env->priv < PRV_M) && !get_field(env->menvc=
-fg, envbits)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(en=
-v, RISCV_EXCP_ILLEGAL_INST, ra);
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
+  pc-bios/s390-ccw.img: update s390x bios (2026-08-12 11:13:28 -0400)
+
+----------------------------------------------------------------
+First batch of s390x updates for 11.2:
+ - compat machines for 11.2
+ - allow guest backing with 2G hugepages
+ - fixes to TCG (and a couple tests on them)
+ - hardening fixes in boot/sclp code
+ - regenerate s390-ccw.img
+
+----------------------------------------------------------------
+
+Christian Borntraeger (1):
+  hw/char/sclpconsole-lm: avoid guest triggerable assert
+
+Claudio Imbrenda (1):
+  target/s390x: Allow 2G hugepages guest backing
+
+Cornelia Huck (1):
+  hw: add compat machines for 11.2
+
+Eric Farman (1):
+  pc-bios/s390-ccw.img: update s390x bios
+
+Ilya Leoshkevich (6):
+  target/s390x: Make PRNO TRNG interruptible
+  tests/tcg/s390x: Test PRNO TRNG interruptibility
+  target/s390x: Fix DR/D INT64_MIN / -1 host crash
+  tests/tcg/s390x: Test DR overflow (INT64_MIN / -1)
+  target/s390x/tcg: Set STCK/STCKF condition code after the store
+  tests/tcg/s390x: Test STCKF condition code on a faulting store
+
+Jared Rossi (1):
+  pc-bios/s390-ccw: Fix off-by-one errors with loadparm and boot entries
+
+Joshua Daley (4):
+  s390x/ipl: validate num_comp against iplb length before iterating
+  pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
+  pc-bios/s390-ccw: bounds-check zipl menu entry index before array
+    write
+  pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in
+    zipl_print_entry
+
+ hw/arm/virt.c                    |   9 ++++-
+ hw/char/sclpconsole-lm.c         |   3 +-
+ hw/core/machine.c                |   3 ++
+ hw/i386/pc.c                     |   3 ++
+ hw/i386/pc_piix.c                |  13 +++++-
+ hw/i386/pc_q35.c                 |  13 +++++-
+ hw/loongarch/virt.c              |  11 ++++-
+ hw/m68k/virt.c                   |   9 ++++-
+ hw/ppc/spapr.c                   |  15 ++++++-
+ hw/s390x/ipl.h                   |   6 +++
+ hw/s390x/s390-virtio-ccw.c       |  14 ++++++-
+ include/hw/core/boards.h         |   3 ++
+ include/hw/i386/pc.h             |   3 ++
+ include/hw/s390x/ipl/qipl.h      |   2 +
+ pc-bios/s390-ccw.img             | Bin 104136 -> 104216 bytes
+ pc-bios/s390-ccw/bootmap.c       |   6 ++-
+ pc-bios/s390-ccw/helper.h        |  10 +++++
+ pc-bios/s390-ccw/menu.c          |  42 +++++++++++++++----
+ pc-bios/s390-ccw/netmain.c       |  11 +++--
+ pc-bios/s390-ccw/s390-ccw.h      |   4 +-
+ target/s390x/diag.c              |   2 +-
+ target/s390x/kvm/kvm.c           |  36 ++++++++---------
+ target/s390x/kvm/kvm_s390x.h     |   2 +-
+ target/s390x/kvm/stubs.c         |   2 +-
+ target/s390x/tcg/crypto_helper.c |  22 +++++++---
+ target/s390x/tcg/insn-data.h.inc |   4 +-
+ target/s390x/tcg/int_helper.c    |   3 +-
+ target/s390x/tcg/translate.c     |   2 +
+ tests/tcg/s390x/Makefile.target  |   2 +
+ tests/tcg/s390x/div.c            |  37 +++++++++++++++++
+ tests/tcg/s390x/prno-trng.c      |  67 +++++++++++++++++++++++++++++++
+ tests/tcg/s390x/stckf.c          |  44 ++++++++++++++++++++
+ 32 files changed, 344 insertions(+), 59 deletions(-)
+ create mode 100644 tests/tcg/s390x/prno-trng.c
+ create mode 100644 tests/tcg/s390x/stckf.c
+
+-- 
+2.55.0
+
 
