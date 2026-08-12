@@ -4,59 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2A3C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A2DC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuANI-0003uJ-EY; Wed, 12 Aug 2026 10:56:12 -0400
+	id 1wuAeH-0003l0-Qf; Wed, 12 Aug 2026 11:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAN7-0003jB-Jh; Wed, 12 Aug 2026 10:56:01 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMp-0008GT-Ov; Wed, 12 Aug 2026 10:56:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=8YDfj75hPmHH3p4o4htBXyDrOdADwPf2nHMldTHk/NA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ODutp7Q460SBl964/4wtlXE+fc/yKbkWxb8MQ8YfFXwOPsXvH3o7soBr/5qEMU2+p
- EPu1vsFoP9hOnOC0uUOnxHXir1Ia0cYusEZuuwoOgWhHbnxZxyMxdBiCsd+KOZ/RGP
- HtDEXZXCgIpgEPg6K8oT6fSW/jBX4BbJkOLYmW5P0m9t2+3z1Ys36eHTvTSXOgO4xZ
- tesSQB0Wo11XO5fmLo4XRu9hz2SYAKqffwqrqY78a4cFYw1o7GvEAGlqT6ptq7FFGe
- cQBAVcT+fuRI+DEra/OwOG6Sq58kdb2XLh8aKZedXqx6l9Yxdh++rH6i2CBcYBJK4x
- Wayinw53UAWDg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 420901CA63B;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9CDD1409D7D;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 06A332F9D1; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>, Pankaj Gupta <pagupta@redhat.com>,
- Jia Jia <physicalmtea@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 055/120] virtio-pmem: wait for flush requests on
- unrealize
-Date: Wed, 12 Aug 2026 17:48:38 +0300
-Message-ID: <20260812144955.649205-55-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wuAe8-0003R8-AB
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:13:36 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wuAe6-0006Z4-FY
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:13:35 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-84a2c90e383so1820181b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:13:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1786547612; x=1787152412; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=WZgfMBS2gc4uR2iYOICvH1C3kGfwanSdyD0m1/rVEZk=;
+ b=DgDz2412Nvdg/ou2DP8HnChrr+BEm4gtaqDAV7kLbCKqhQwVuSPmmzA9MJiYa354K+
+ C+R9XC2jBKzu2+GbYZAK37FngKYLccLVV/q7Yxyvbv3ah+8gcuO25laEvOOA0iqTG1Yh
+ UIPltRPif6bTR1fuPxpZa21qfExqLDyQCWx+CoGN0e34gwiAtCouL+2hdX/NScwAxIMN
+ ZKAAy2/zeYWAwurQ12aXfmIF/q2ad1EB3jTj91QTaGDX2ETr3mXAT65B/Soe+8QYiQR6
+ ILH7x1xTUgzTu7wNlACH0hVxnGMUG6Cb/9FEnTiimle5O+koBZP//hp+F6MfIzV/FgMQ
+ QPCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786547612; x=1787152412;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=WZgfMBS2gc4uR2iYOICvH1C3kGfwanSdyD0m1/rVEZk=;
+ b=RMInIJWe/seD9PHFkywUj4LbLh9LBoJ/fV72OjJ3wYbEfZNkdo9q7e+eOi/Nsi7BNo
+ wN6jLawq7FZ8I2c/mlM1cq+PosV/H7b6zwFysjtmGnydhbjnrRSP4yB9zMkpVcd97RFc
+ TbBtMWfhV6MEEsW+CLmndQ5+ovmgqwTq5nBvT5JuI7vA0iHYTueLgUQjEaCrP4fiNmu3
+ arivligQIAOwtHfT+KpEMu3yRymKeZzvbKBc/S77dWy2rE2Jb8/k+btfJ+vCS6hCp3aJ
+ vNcTn9Qz6HLDlWFJYtrd7T57qxl/0KG0PyRkN7XeHbnV4SWOwiHZdj5w4NHpCHrnPHCL
+ eFog==
+X-Gm-Message-State: AOJu0YyUv7AFxuUru16kKL+MunZRCtjZf+DLfdr3mlj7WxumUVyfjevp
+ KNoBCmDld3b0g/3cJsWih/2bpYiIC5HpWPUq2Ps8bi54XE9otl+9i2mBsTGZ1yk5HNI=
+X-Gm-Gg: AR+sD12Fv7B6stHSsqdMWGrANuzfuLMsMz42aFrsGbywUx1U7hvJwhA88mo2Pbov0/8
+ ZxaombC4+/C+ngdI6aC8bD1klxgPNqRmnEHQkvjfTXFlkitWTM0fuB0M9QpnAulsw3ODb4loXEc
+ CcpTsJleKE1bOJCoNgEhHzQ661X/ZdPybCfZabGMOi5cHtmANfP6+XycmMm8Hef4VGzCN7M9sVN
+ 39tyiDEdkD+6l9yyLXn7scoZWs9gesZg5RThifyl9Nexq1yQRvXmeDMeqtIRIXGWhfkb3zs9iS2
+ lu/u9O7HFnhno5MrHFbqRgndStP0NEzjpgsAbGI1M9YGPAirJC9kqa1Q6AgHLJdtGeBYuoUz78W
+ bDzuHLvptibR3clfRruwwrovyjbLERACEtus7Al0yErhS0hYhraBMkd7GuwmvIIBp77UjrAEaaP
+ YCCmyzh2psNNMNAXGrFxTxEYyJtZ4TwPC0nKMxgIh6UUbs1HOYT4hl5qBhAdUTVlEkUtLKRTAYZ
+ GGpb7nfLX/DEU0WKePkD8ioB35wfwPMncc=
+X-Received: by 2002:a05:6a00:987:b0:845:3033:6cbb with SMTP id
+ d2e1a72fcca58-84fafae81e3mr8762256b3a.11.1786547612164; 
+ Wed, 12 Aug 2026 08:13:32 -0700 (PDT)
+Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84fb1f71ee5sm1197674b3a.57.2026.08.12.08.13.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 08:13:31 -0700 (PDT)
+Date: Wed, 12 Aug 2026 23:13:27 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Zephyr Li <fritchleybohrer@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+Subject: Re: [PATCH v3] target/riscv: preserve vl on element-zero fault
+Message-ID: <anyNHaPM7jwM-a1w@sifive.com>
+References: <20260811025516.337888-1-fritchleybohrer@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260811025516.337888-1-fritchleybohrer@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,102 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+On 2026-08-11 10:55, Zephyr Li wrote:
+> A unit-stride fault-only-first load must leave vl unchanged when element
+> zero raises a synchronous exception. Keep the shortened value in a local
+> bound until all loads complete, and only then update the architectural vl.
+> 
 
-virtio_pmem_flush submits fsync requests to the thread pool and stores a
-VirtIOPMEM pointer in each request. If device is deleted e.g. by
-hot-unplug, once these complete, done_cb can run after
-virtio_pmem_unrealize frees the device, causing a use-after-free.
+The failing case is a corner case. When the element-0 faulting probe in
+vext_ldff() faults, it longjmps out of the helper, ProbeSuccess is never
+reached and env->vl is never touched -- that path was already correct.
 
-Track in-flight requests and wait in virtio_pmem_unrealize until
-their completions finish before tearing the device down.
+The broken path is element 0 in a mapped MMIO page: probe_access()
+succeeds there, but QEMU cannot know a device transaction will fail
+without issuing it that broken the assumption of the pre probe_access()
+checking.
 
-Fixes: CVE-2026-63323
-Fixes: 5f503cd9f3 ("virtio-pmem: add virtio device")
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Pankaj Gupta <pagupta@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3938
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <417b6685f37ce818c660ca3c84945992f5c30dcf.1784894206.git.mst@redhat.com>
-(cherry picked from commit 5cc182ba39a3ca8ec9ba0576de9696be76dc087d)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/test-vle32ff.S
+...
+> +     vsetvli t2, t1, e32, m1, ta, ma
+> +     li      t0, 0x18000000  /* Unmapped gap in the virt memory map.
+> */
 
-diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
-index c3b3299c9cd..6f7271c140a 100644
---- a/hw/virtio/virtio-pmem.c
-+++ b/hw/virtio/virtio-pmem.c
-@@ -23,6 +23,7 @@
- #include "standard-headers/linux/virtio_pmem.h"
- #include "system/hostmem.h"
- #include "block/thread-pool.h"
-+#include "qemu/aio-wait.h"
- #include "trace.h"
- 
- typedef struct VirtIODeviceRequest {
-@@ -54,14 +55,20 @@ static int worker_cb(void *opaque)
- static void done_cb(void *opaque, int ret)
- {
-     VirtIODeviceRequest *req_data = opaque;
-+    VirtIOPMEM *pmem = req_data->pmem;
-     int len = iov_from_buf(req_data->elem.in_sg, req_data->elem.in_num, 0,
-                               &req_data->resp, sizeof(struct virtio_pmem_resp));
- 
-     /* Callbacks are serialized, so no need to use atomic ops. */
--    virtqueue_push(req_data->pmem->rq_vq, &req_data->elem, len);
--    virtio_notify((VirtIODevice *)req_data->pmem, req_data->pmem->rq_vq);
-+    virtqueue_push(pmem->rq_vq, &req_data->elem, len);
-+    virtio_notify((VirtIODevice *)pmem, pmem->rq_vq);
-     trace_virtio_pmem_response();
-     g_free(req_data);
-+
-+    pmem->inflight--;
-+    if (!pmem->inflight) {
-+        aio_wait_kick();
-+    }
- }
- 
- static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
-@@ -85,6 +92,7 @@ static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
-     req_data->fd   = memory_region_get_fd(&backend->mr);
-     req_data->pmem = pmem;
-     req_data->vdev = vdev;
-+    pmem->inflight++;
-     thread_pool_submit_aio(worker_cb, req_data, done_cb, req_data);
- }
- 
-@@ -122,6 +130,7 @@ static void virtio_pmem_realize(DeviceState *dev, Error **errp)
-     host_memory_backend_set_mapped(pmem->memdev, true);
-     virtio_init(vdev, VIRTIO_ID_PMEM, sizeof(struct virtio_pmem_config));
-     pmem->rq_vq = virtio_add_queue(vdev, 128, virtio_pmem_flush);
-+    pmem->inflight = 1;
- }
- 
- static void virtio_pmem_unrealize(DeviceState *dev)
-@@ -129,6 +138,10 @@ static void virtio_pmem_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOPMEM *pmem = VIRTIO_PMEM(dev);
- 
-+    /* Release the device's own reference and wait for in-flight flushes */
-+    pmem->inflight--;
-+    AIO_WAIT_WHILE(NULL, pmem->inflight > 0);
-+
-     host_memory_backend_set_mapped(pmem->memdev, false);
-     virtio_delete_queue(pmem->rq_vq);
-     virtio_cleanup(vdev);
-diff --git a/include/hw/virtio/virtio-pmem.h b/include/hw/virtio/virtio-pmem.h
-index 9cce600d0b2..bb959d10cf6 100644
---- a/include/hw/virtio/virtio-pmem.h
-+++ b/include/hw/virtio/virtio-pmem.h
-@@ -32,6 +32,7 @@ struct VirtIOPMEM {
-     VirtQueue *rq_vq;
-     uint64_t start;
-     HostMemoryBackend *memdev;
-+    unsigned int inflight;
- };
- 
- struct VirtIOPMEMClass {
--- 
-2.47.3
+Actually it is not unmapped -- it is mapped as unassigned MMIO, and that
+is exactly why the bug reproduces: an unmapped address would make the
+element-0 probe fault and the test would pass even with the bug present.
 
+
+I think the fixed vext_ldff implementation is valid according to the
+RISC-V specification, considering the VL reduction rule and the
+non-idempotent constraint. Only the test case wording and the root
+cause explanation may need to be updated.
+
+As for the patch:
+Reviewed-by: Max Chou <max.chou@sifive.com>
 
