@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C79C5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91BFDC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8d4-00052a-8X; Wed, 12 Aug 2026 09:04:22 -0400
+	id 1wu8cz-0004bA-U5; Wed, 12 Aug 2026 09:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8co-000468-Fa; Wed, 12 Aug 2026 09:04:07 -0400
+ id 1wu8cM-0003dB-PO; Wed, 12 Aug 2026 09:03:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cm-0004NI-PB; Wed, 12 Aug 2026 09:04:06 -0400
+ id 1wu8cJ-0004L7-HC; Wed, 12 Aug 2026 09:03:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=Ahl70wrhjes1tB61twhbgD9TPZiO1nVGUaPZq4evW+g=;
+ t=1786539783; bh=fg98rH79oJ4M6xkqSQ54I0fiY790x532Wh5DyMjQx3g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=e93jq+Ve8ni6E3dI0nf+wpPPnxOrZwPowQZppXYCsMoSltrWRxk+mYF74eFRQAbWp
- Ej0nKOTA22SvW9hSavrm6ioRgzge+DnBbXYJUXCMGbKDOPylV1wMqpn30nSi/gCLcm
- dx0wYJzNxDAjEbLujVZ1cWrOigVfJC1YmZyVzMmCTBgORRQmEJVC+gk2AqjYeIltXj
- 6wNzDtSisBM+wUVCl/+YdPcaVj28DnD+/XuexkKHrPxCKCaRDoej4LSzlFtRdLtcy8
- 3nn2ONKOeehqiyLGuUEMbpv46VKAKWAWbZs0WnKV5TVg8CRGYXBUk/jVWqdMzo7LiM
- 91ifqTIwVcTog==
+ b=kr43RKpfibdiggG/7OUJH10t+5f/6ayhRQUd35nwJDM24TsRhuv2KbHOvkE53wtXC
+ Yxq8CmhG4z7U2KsPw6naJIY/vAAzTBmGC3BrJNsree0gCZH/AVN/CWo1H2gnSWin/0
+ P8OtDHapXfld2IuLrOLko5aFE9BugcU6ugjzjqnGWwQPDyvkKx1oVvZj/joj0tK7a2
+ +43KPCQ3VCwJxFYffmxsbFIhRiWj5fC2MryQqAbwbu8SrKeCt5hLuh4sGv6HsNyubY
+ 9bTU5bKH9or3VLkCYMzSoRPTSlPB9+RecGgBNta49n0Uw7HSIAyRgy04D8E7lSi6sN
+ 9mhR2C/cGeLDg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 447011CA48D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 35F2F1CA48A;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A83F409B70;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BCC1409B6D;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E4D392F8B0; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id DD1ED2F8AA; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Artem Nasonov <anasonov@astralinux.ru>,
- Fiona Ebner <f.ebner@proxmox.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 014/102] hw/ide: replace assert with proper error
- handling
-Date: Wed, 12 Aug 2026 16:00:49 +0300
-Message-ID: <20260812130233.621965-14-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 011/102] target/i386: helper_sysret(): Check that RCX
+ contains a canonical address when emulating an Intel CPU
+Date: Wed, 12 Aug 2026 16:00:46 +0300
+Message-ID: <20260812130233.621965-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,49 +73,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Artem Nasonov <anasonov@astralinux.ru>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
 
-In ide_dma_cb(), the call to prepare_buf() might return a negative
-result and cause an assertion failure. This was found during fuzzing
-and can be triggered with some qtest commands. Replace the assert with
-proper error handling in case the result is negative, but keep the
-assert for failing to respect the limit upon success. If that happens,
-it is an implementation error.
+Intel and AMD CPUs implement SYSRETQ instruction differently.
+One of these differences is whether a canonicality check of the address that
+will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
 
-Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
+Currently, QEMU does not perform this check when emulating Intel CPUs.
+This patch corrects this by implementing the canonlicality check on a new RIP
+value from RCX and performing it only when emulating Intel CPUs.
 
-Cc: qemu-stable@nongnu.org
-Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2777
-Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
-Link: https://lore.kernel.org/qemu-devel/20250116111600.2570490-1-anasonov@astralinux.ru
-[FE: improve commit message
-     keep assert for failing to respect the limit]
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Flags and segment registers' caches are updated only after checking the new RIP
+value to ensure that CPU state is not modified in case the #GP(0) exception
+is raised due to the check failure.
+
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 14ce26e75513 ("x86_64 target support")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Link: https://lore.kernel.org/r/20260608091815.31303-1-apolivodaa433@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 51aa3f3e05772c38cb6f6d8e79eca0f6afaaace0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 443e02410695b35a27fad18217424b6370358be7)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index bf616b77033..4b6066c3eca 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -921,8 +921,12 @@ static void ide_dma_cb(void *opaque, int ret)
-     s->io_buffer_index = 0;
-     s->io_buffer_size = n * 512;
-     prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
--    /* prepare_buf() must succeed and respect the limit */
--    assert(prep_size >= 0 && prep_size <= n * 512);
-+    if (prep_size < 0) {
-+        ide_dma_error(s);
-+        return;
-+    }
-+    /* If prepare_buf() succeeds, it must respect the limit. */
-+    assert(prep_size <= n * 512);
- 
-     /*
-      * Now prep_size stores the number of bytes in the sglist, and
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 603993ea03b..07ff1cb47eb 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1070,17 +1070,22 @@ void helper_sysret(CPUX86State *env, int dflag)
+     selector = (env->star >> 48) & 0xffff;
+ #ifdef TARGET_X86_64
+     if (env->hflags & HF_LMA_MASK) {
+-        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
+-                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
+-                        NT_MASK);
+         if (dflag == 2) {
++            uint64_t new_rip = env->regs[R_ECX];
++            if (IS_INTEL_CPU(env)) {
++                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
++                int64_t sext = (int64_t)new_rip >> shift;
++                if (sext != 0 && sext != -1) {
++                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
++                }
++            }
+             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
+                                    0, 0xffffffff,
+                                    DESC_G_MASK | DESC_P_MASK |
+                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
+                                    DESC_L_MASK);
+-            env->eip = env->regs[R_ECX];
++            env->eip = new_rip;
+         } else {
+             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
+                                    0, 0xffffffff,
+@@ -1094,6 +1099,10 @@ void helper_sysret(CPUX86State *env, int dflag)
+                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
+                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
+                                DESC_W_MASK | DESC_A_MASK);
++
++        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
++                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
++                        NT_MASK);
+     } else
+ #endif
+     {
 -- 
 2.47.3
 
