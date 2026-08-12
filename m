@@ -4,144 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4485C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E50FC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8oI-00069E-Bh; Wed, 12 Aug 2026 09:15:58 -0400
+	id 1wu8jC-0000dq-RO; Wed, 12 Aug 2026 09:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu8lI-0003nY-Un
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:12:54 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8iD-0007wa-Ue; Wed, 12 Aug 2026 09:09:44 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu8lG-0006Z9-LB
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:12:52 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CB489a3319901
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:12:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bJNJ71owOHpg6avfvSNvEMJvaX22jFH3qikkicdMvEc=; b=ltYxvqVFwHI26o/g
- 1fp9ZEhoNEGLRxXeHqXwEesNiLqOjeOX7ON560nH1Gg3TqkyGMKwacznn6zkhJw8
- u9+zpdvt4qHLz0wU3v6jIl2gv0zSMvrFkKu6uWowlR9ovsAhIZ/T94ShF/yLruC7
- 06n0m1iZTUus3hjp7K1ExJhT8IfNjs4a85Hj4Wkn3HmcUsuoP4BwkbN7xHA5xgI9
- UF6GSXuchXuHzRMl0gbHiyrkfkCg/4Su8LvTdmMNpOX1kBpE9K04wouYW2Y7AB6j
- stvU9fmfEn9rdZcDmD3MRCB1368alk9N4SvobcWn6RUfz6t65kPJ8Ts02yfbsjVD
- IdTzUw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0pmyrpnw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:12:48 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52d28f8737eso18265331cf.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786540367; x=1787145167; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bJNJ71owOHpg6avfvSNvEMJvaX22jFH3qikkicdMvEc=;
- b=QFPUfwBtR3l3Cbb6U9s1eEkCyo+KH2VgLpPDS9Q4nqiD+ZBEkUChmqqwC86v9UDpAg
- DWeXajicdXWaub6lCjN5njQR8uyqtMOXIY23yDfO/zChKM4RGqMsq2O6D3JbXTlQ9fxs
- aesQqEAAHVX8WBPZ9NbsKbRmymthWiB8+3vkzr4zo27JTLVzrqQOXI+vzGjsZpSDtnl9
- Dygc4KV46UOAJUjI/OwZsQSJqPGHa71JCQ2YMl/0bpBMv6yaoPV7nMyl3w3dM74DjOeb
- 41FhGQ4sOz7k3r0EwygjpffyBDjntQheZrvr8NXFcQnnqpockZ3sTvGmtX+KKAX9wFdR
- Kh5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786540367; x=1787145167;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bJNJ71owOHpg6avfvSNvEMJvaX22jFH3qikkicdMvEc=;
- b=cOCV0C8R8wh+f1+gOe6Dx+ZHx1OJM7dXWIgNvZCQWDzu+D0syTwkuvtzzvEa9zbtUZ
- /IJ/5SW4QTlZsimnOKICDyy0QFv+bAicbYqy8jhu5+w5rAVHyZIGZ46JRkk6vzFCixSe
- IHBlHR+eSfGmA4vnqg71XVtDG5JK7JBz6xzarX0q5LyFHYNHwQkWKwKKoWKnYbJRYeRk
- GZ8hg7D8jSCrIaeNNhTHlFUOFwOVZ9J01qUExvnjfJXB5YgBGvWwSz1BlBt0LqIxK0Kb
- zy3uYUd72OfEAfuAgHdUAysTJQhmrQrsK898DdTJiLdu0iKgt9mCW77VgvZyI5ao+ue0
- wSYw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr8JnGXZaJvKj7A98E7V4H5cADFSZVFpSMquhoHD/k2KIcdy1pWNl4mrOa+NcOk+K8XY2C/h73SZC27@nongnu.org
-X-Gm-Message-State: AOJu0YxEKL4VQRMK+RVeVebmPdfbET2835nm7tn/cFfu1sjYs2Rbrp6Z
- ef55ewKx3+hRedSVljClMgOMmAJi0TEB28ESKF8fonBAhXGvwrAmY5tK8iTlU8yK69TGCKoU6AP
- yLB/UJ7WhL9n5PqLukhlsMIV3RuZGUgClBRRMuE16vemHPb/tDl1bTfCQkA==
-X-Gm-Gg: AR+sD11SfEOcKRN52HKZTj5EqmoSozQDm6EiwFOkeWIJ6wtzqasr7gKFIW2ZRY7Tpar
- nT2KR6xGmu2tVwGDK4RsJm1k1rgWvUWiWWcS75fDRfdkm03Pnb0ZCFb4nvuOy9G8FjrCVZm42tE
- W6QLFlzPk4cciitiGWpi1bb/fNBQ8nyelI2qmysOMgzyR96x6OTP4JdvAfmHB7o0qjjLbK8J0i+
- y/PQgJl7NRamjCfEGgncMgmnVcs7KQ3UisSD9ZWr3tU2m3+L0iBMQAc5fziDcxnoo+rOgo1N/oI
- 03OgVy6RoLXctCmHAmFjNObgQdvivzx2oRTP31Xb3NbK+Ay8a5sHBjNJ24gT6xua4NeaXVQ9dPo
- taragGO5Soq4Rx+VaR2F2x+OeLQSRbYlIcoQqrknOiA==
-X-Received: by 2002:a05:622a:558a:b0:51c:775:c175 with SMTP id
- d75a77b69052e-52d64875bf2mr40966011cf.40.1786540367430; 
- Wed, 12 Aug 2026 06:12:47 -0700 (PDT)
-X-Received: by 2002:a05:622a:558a:b0:51c:775:c175 with SMTP id
- d75a77b69052e-52d64875bf2mr40965171cf.40.1786540366894; 
- Wed, 12 Aug 2026 06:12:46 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48150d709dfsm7268835f8f.35.2026.08.12.06.12.45
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Aug 2026 06:12:46 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 08/16] monitor: Include missing 'qemu/coroutine-core.h'
- header
-Date: Wed, 12 Aug 2026 15:11:39 +0200
-Message-ID: <20260812131147.83188-9-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260812131147.83188-1-philmd@oss.qualcomm.com>
-References: <20260812131147.83188-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8iB-0005jE-Eo; Wed, 12 Aug 2026 09:09:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786539784; bh=luZQ4rmtLyYcn41v/+r/ciOu+8ruc4vspm4XoHQvoZQ=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=mSAYQ2ze5rk3bn+d4BANZ9taCgHYNTb7lXBFft/v6sJzcEkBIvHMZfMPRlMwiJl17
+ 76kQ5jErNNNi0g9OQ6QPUfdeCGH3ybkvWguQehasaO1CpCmvf+2Vz7zD04tPNsfi5h
+ M5jcTx4hM3z6ZnYreda0to8Eda4wV45smCvHkTK/mZKCvYbVjOfPGS/4mVkMn4oRqJ
+ dUu25iY3ZhqpISmz1g9uzMGVUtRormeKcP2x6Q5mFKxECoiJYLcgqDAKzPQGBaRfsd
+ XeQmzhqs3FFs4Pi9Ped08SjZM5q534ecTcjCqJlLez9pa+SdnwCsMVMSVV4hmPX1Cd
+ zDvaPVvVtY1Yw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 52C4C1CA4C4;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89855409BA7;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 828B32F91E; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 069/102] hw/display/exynos4210_fimd: Pass width to
+ draw_line functions
+Date: Wed, 12 Aug 2026 16:01:44 +0300
+Message-ID: <20260812130233.621965-69-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
+References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX7M9ICXG1rYXS
- myzVnkAG+dAGVqEnjWPArffd9tj/ct1GejEhGQKMKOt4Nn8dhn6/L8pYcx71s6aBdLd8W2Eq0VE
- I/Q70kbOJl4bDMqZZVjkiLw0oJ3Uxlc=
-X-Proofpoint-ORIG-GUID: AainjCKa4WWjhfegtgEYEpc2zughJiGa
-X-Authority-Analysis: v=2.4 cv=C/fZDwP+ c=1 sm=1 tr=0 ts=6a7c7151 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=neFa9O3qn1L-Jj73aAYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: AainjCKa4WWjhfegtgEYEpc2zughJiGa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX/1Zd1kA/PE+Z
- /3DePM8BwrnNvvSpRCn0brUt/JqK1QiCJbWsz2PseeI9JftIQ3RBwLxfUHMlrDND4R8XQOkfvUt
- Ci4SKqTyZH9zSeyd0VjkZX7MoTRSMoC0ioFIPRP+39I9I2ByJnJcYllrqzqkf80cJBgqmlCs10s
- 1ias3xF5d5Ul+WXretmxib80I+3kXXDQsjMx7KG76KmwiRV0oll7+XGEei5DNbUVdhenotvSerQ
- oqnNgtKzfZbMg/xuCPQwlyumDtnnDOaUsPnErs1SY1tH3Bojf77E+5LMjAQ/EKNaCtHLOV5OKbb
- 9FjKy0Jg0nCp4AfC2yC5RYwIwO3yNF2N/iR+LzY/YY1AQG0IPb52cw8yFCKo5BWKWFQmLTMkb2z
- 6kAxTwXEg22Wd1VlQBQS9jZeK3y2cniD1tU49qP9ZTRlcDsDlYhzJ2Vmq0uihjb0Obpz9RWukBv
- +k/1jjZJWzzTk53R+NA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_03,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 phishscore=0 spamscore=0 malwarescore=0
- adultscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120107
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,33 +73,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"monitor/monitor.h" declares monitor_set_cur() which use the
-'Coroutine' type, itself declared in "qemu/coroutine-core.h".
-Include the latter to avoid when refactoring unrelated headers:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  In file included from ../../target/sh4/monitor.c:26:
-  qemu/include/monitor/monitor.h:32:26: error: unknown type name 'Coroutine'
-     32 | Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
-        |                          ^
+The draw_line functions currently assume the width of the line they
+need to draw is w->rightbot_x - w->lefttop_x + 1, i.e.  the full
+width of the guest-programmed window.  We want to be able to clamp
+this to the overall screen size, which we can calculate in the
+calling function.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/monitor/monitor.h | 1 +
- 1 file changed, 1 insertion(+)
+Refactor to do this calculation in the caller and pass the
+width as an argument to the draw_line functions.
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 890497b0d22..efdd2165aa9 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -4,6 +4,7 @@
- #include "block/block.h"
- #include "qapi/qapi-types-misc.h"
- #include "qapi/qapi-emit-events.h"
-+#include "qemu/coroutine-core.h"
- #include "qemu/readline.h"
- #include "exec/hwaddr.h"
- #include "qom/object.h"
+Stable CC because this is a prerequisite for an upcoming bugfix
+commit.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20260706173324.804340-3-peter.maydell@linaro.org
+(cherry picked from commit 7dd1e2218835f2c0bd754c092588110883a380a5)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
+index 744e065c51a..bafbaf89cf0 100644
+--- a/hw/display/exynos4210_fimd.c
++++ b/hw/display/exynos4210_fimd.c
+@@ -282,7 +282,7 @@ struct Exynos4210fimdWindow {
+ 
+     pixel_to_rgb_func *pixel_to_rgb;
+     void (*draw_line)(Exynos4210fimdWindow *w, uint8_t *src, uint8_t *dst,
+-            bool blend);
++                      uint32_t width, bool blend);
+     uint32_t (*get_alpha)(Exynos4210fimdWindow *w, uint32_t pix_a);
+     uint16_t lefttop_x, lefttop_y;   /* VIDOSD0 register */
+     uint16_t rightbot_x, rightbot_y; /* VIDOSD1 register */
+@@ -781,9 +781,9 @@ exynos4210_fimd_blend_pixel(Exynos4210fimdWindow *w, rgba p_bg, rgba *ret)
+ /* Draw line with index in palette table in RAM frame buffer data */
+ #define DEF_DRAW_LINE_PALETTE(N) \
+ static void glue(draw_line_palette_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
+-               uint8_t *dst, bool blend) \
++                                        uint8_t *dst, uint32_t width, \
++                                        bool blend)                   \
+ { \
+-    int width = w->rightbot_x - w->lefttop_x + 1; \
+     uint8_t *ifb = dst; \
+     uint8_t swap = (w->wincon & FIMD_WINCON_SWAP) >> FIMD_WINCON_SWAP_SHIFT; \
+     uint64_t data; \
+@@ -810,9 +810,8 @@ static void glue(draw_line_palette_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
+ /* Draw line with direct color value in RAM frame buffer data */
+ #define DEF_DRAW_LINE_NOPALETTE(N) \
+ static void glue(draw_line_, N)(Exynos4210fimdWindow *w, uint8_t *src, \
+-                    uint8_t *dst, bool blend) \
++                                uint8_t *dst, uint32_t width, bool blend) \
+ { \
+-    int width = w->rightbot_x - w->lefttop_x + 1; \
+     uint8_t *ifb = dst; \
+     uint8_t swap = (w->wincon & FIMD_WINCON_SWAP) >> FIMD_WINCON_SWAP_SHIFT; \
+     uint64_t data; \
+@@ -845,11 +844,10 @@ DEF_DRAW_LINE_NOPALETTE(32)
+ 
+ /* Special draw line routine for window color map case */
+ static void draw_line_mapcolor(Exynos4210fimdWindow *w, uint8_t *src,
+-                       uint8_t *dst, bool blend)
++                               uint8_t *dst, uint32_t width, bool blend)
+ {
+     rgba p, p_old;
+     uint8_t *ifb = dst;
+-    int width = w->rightbot_x - w->lefttop_x + 1;
+     uint32_t map_color = w->winmap & FIMD_WINMAP_COLOR_MASK;
+ 
+     do {
+@@ -1294,6 +1292,7 @@ static void exynos4210_fimd_update(void *opaque)
+     uint8_t *host_fb_addr;
+     bool is_dirty = false;
+     uint32_t global_width;
++    uint32_t window_width;
+ 
+     if (!s || !s->console || !s->enabled ||
+         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
+@@ -1309,6 +1308,8 @@ static void exynos4210_fimd_update(void *opaque)
+         if ((w->wincon & FIMD_WINCON_ENWIN) && w->host_fb_addr) {
+             scrn_height = w->rightbot_y - w->lefttop_y + 1;
+             scrn_width = w->virtpage_width;
++            /* Number of bytes to actually draw */
++            window_width = w->rightbot_x - w->lefttop_x + 1;
+             /* Total width of virtual screen page in bytes */
+             inc_size = scrn_width + w->virtpage_offsize;
+             host_fb_addr = w->host_fb_addr;
+@@ -1327,7 +1328,8 @@ static void exynos4210_fimd_update(void *opaque)
+                     last_line = line;
+                     w->draw_line(w, host_fb_addr, s->ifb +
+                         w->lefttop_x * RGBA_SIZE + (w->lefttop_y + line) *
+-                        global_width * RGBA_SIZE, blend);
++                                 global_width * RGBA_SIZE,
++                                 window_width, blend);
+                 }
+                 host_fb_addr += inc_size;
+                 fb_line_addr += inc_size;
 -- 
-2.53.0
+2.47.3
 
 
