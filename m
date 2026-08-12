@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C7AC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC3FC5CFEE
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7t9-0004hn-IT; Wed, 12 Aug 2026 08:16:55 -0400
+	id 1wu7t9-0004iK-KC; Wed, 12 Aug 2026 08:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7t2-0004KT-3a
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:48 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wu7t3-0004Pu-CM
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:49 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7t0-0008Vk-32
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:47 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-49558ce01afso6937215e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:44 -0700 (PDT)
+ id 1wu7t1-0008WJ-Ij
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:49 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-495635a85d2so6516295e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786537004; x=1787141804; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786537006; x=1787141806; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=zprv574hMUc1osPTRItRwojX5aCpqSuO6N7TCEXrs0g=;
- b=gucxTZoWBLu8fb1ie/4XuPGq0ZjlyfKuZEak13G+vj6EdW4BW7shsJ8gwpingsNuCd
- bBI5LmpXzmek0mxraDToVW86XcVtgpHaIqYpP4T9zNT2/pOGEfi+DwZj2K2Nbp5gDnEb
- 55qdsH0fddZoqLsMfHQ1Rh8x+yR4aehVUJq2Sm3OcKB/plizgRrfKT2T+HCzjjRJxuta
- xhCmAxqrKy7ul9feoU9cnsaEQbD3dpq43vxR/DF1JdXnq1AygibvAbkwOoJ7UqFTN/fR
- ahL48kysvJfJ+S2E0PsK9J5pBthnQwlmqOrDG8463omLwMdvw0qkC55ieLo/4k7OjpWW
- oKww==
+ bh=tkXuodvBhvgTHSiWMS4cHbyjpWJV4c1pD//lScFO3VY=;
+ b=Zt2ZDaYZiEBxeEqv8vuoAKn6Qu43lUax63ToVfM3xuuR5+HSRyA3B5EiJFkJIOwSSn
+ yYnrjKMNQAP52/gtkE0NIWyohZyAGNdCPcig4hFVYHeXc8NLbbqqZH2xy+nJDDEeq0dR
+ QK14TfVGDn8U1GN+9RJ4jUz1rAjPuvSgYUXFLhCQKyNHZU7l+ow5huIP3vAh6wk9eTqr
+ avW6Wn5BoiB6g+6Ac+6eQ1wGMday6DgWXvJYpCwu+bvc4fGPvJTu/z/PN++kUvYIvrgK
+ KLZ2yID/nvWijm6KD1hFYDuN0LR5MMGdcuKCYWXcoOeOGV73G3qM+OSJPDmLryBs0mEC
+ i5yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786537004; x=1787141804;
+ d=1e100.net; s=20251104; t=1786537006; x=1787141806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=zprv574hMUc1osPTRItRwojX5aCpqSuO6N7TCEXrs0g=;
- b=jTDDSjuzKIHl2HVG5bZKxlCfwwDwp6nCTg/UGPTqkXkKI06IEx8mrw3AxQEiL7gbaT
- 9fEpIOPumcYHeOmYHfXyF6wD93eC0/oEkCBdOSL2hSDT3UxlsmcnZ68/2hORBkBNcng7
- 2K9CbZwL8R8AxRuFUYmOfQlTNpHV5KicsPTbh9PKqrJd/wCubmoLBr862kukApPoEyuJ
- w4TGkwiGgrdqhExqeh7rvrX+RSX732BC02CpsYBlD9bxN+7jRfQYfAYoFMTrEGN72oBY
- 4C0v1RaYL0jUvvO/aMbZHVpohc/W2rh6Hy/djmXlBDiAsoooql1kaSP4k7RdpJMyeHYf
- d6gA==
-X-Gm-Message-State: AOJu0Yx+0ICIoE0Qq76wHtIs7PEpPONRVTe9bP0bThxSpO/1A6A8m3JP
- q6RkGwManF+zT0Zg0poo5h6UTuiqFl+gsKmyVcbAUfmFoRNPxtuj9cx/kvWEYvYCeozvSmDFmf8
- +T3XJ
-X-Gm-Gg: AR+sD12MO6c1kUDdROjS9bLKkV+oyWA8IGlyJ6ZyVe0kd5r/vTmBwV+BkmnbjU+EHPy
- cwHIMF/oqg2+K+D/JUEGOnPuLR2Aktz+JlWchEAEr+TR0gcmj1KPZinqr/lmwZtN3Dpq8XtkGhb
- kOdSooSmqGtXlxciXqS+iPWf4wRT6CRdD+KMcB2iIbPDCjvx1boO1Qv5HUA4gYpqAWca/AeQcii
- S+HP1O22E1l/ne3w4RrXUS4wI3dooCwpyKsQzdwoisX9slzZxKnfGjV86w/uVNa8ns8/GzagLGx
- jS4jwSS7YImi5YuS+sEA/lXPEbHsefCbEvxTj//hT0YTIDpITX0PLAjOp+Nlnq4xhQN0AYDgXus
- n8rG4FJt+2xjcQCIMK9oJrn9rrCk8dIl7M5/Lv4L7vCVI+PYjow5dl0IiOh4kl9oGcnVIv662gP
- 4h6m7d0iSX1qQ+Ur/W85BHbfuVG3W54Q+9LzSGPG3tFVdUpHMQUPW/E7+2zIwwawOvPFxDKD7Do
- N4rBJa0/I4yxhtTxTzA1l4ZrAwiUw6juMyPjnwFMAML4Fnc9JsOjw1MZe/1uBD80crBSA==
-X-Received: by 2002:a7b:cbc5:0:b0:499:7a86:4145 with SMTP id
- 5b1f17b1804b1-4997c1461f3mr40483935e9.13.1786537003608; 
- Wed, 12 Aug 2026 05:16:43 -0700 (PDT)
+ bh=tkXuodvBhvgTHSiWMS4cHbyjpWJV4c1pD//lScFO3VY=;
+ b=ULEJChBKDb2fVC+ci2eWabXVKLwCEyNSnPqeyU2XLBv7l9Oj3Cf6SxAe6dGANPfGzc
+ I0BqREgC33up0I2seCSJ3RoIfQR5WNrcrOf54YeeyZEGRs9TmmjO0tSwaXmDmyED6y1Q
+ KMWVNsOdQguhcR27ESByfX51P3meCozxbPlhKGKtPFhVRuHkUZj+HbD7uCTuFdZB6JH0
+ M1Qy3gxx5VI/jIDK4W/CZ2XfqozbLaqA0C5NzWxLwW05/c6xh5xbxvLpnTxS1PWQMsdc
+ uQIEAo6uOwjU8WbE/gMDd32/bJAVFK2nd7WkAJduiXRx0jy/GM0sl8UsJX5RQgsA3pWw
+ UC2Q==
+X-Gm-Message-State: AOJu0YwEhJZaTh+EF/gEuDODY+6M86z0/XCBSiY6mbd1dLVHyggVGPOA
+ WA3JLyoKZUG6/tSN7ORC6g+0hdQfn3R8WJTlPw3hknPIspBVXMHQpYteeKs/kxpD7/pYdFI2UjH
+ Pu+PZ
+X-Gm-Gg: AR+sD11ikRPtbdeXyvdYLrSxmviTj8no6/sRKTWNK7O4EQ3CRD1FWPY88rwkq4Sfj32
+ meSYyVvRo9nj5Iau01j0RmF3k42LuVT5OAi3xiBcR34Lhmf2rUnpJxwQAoG3f2MsRNFMKqfJkmZ
+ nkM+lwXG/YnX6uRcr4YLbT24DfDqOYn/g27QQo3yxuBFjmfmajl7bNuZ85HRj+94OqngcQxkWCn
+ oqG9Nu3iHhyUIdozP/F/HDkFASD2nWrJ8f6tYEkk5h720JN094l5d9FpS5Oxg0xCPrZY3Zp8HNR
+ BGSLG8bQ/HOs01Ap3tHWSq+hU8sK1NimMBqQDlE1f/yN0KCCc42H4zU/jN2M/9DrNNjP//U/zbK
+ F7hShO9sJgWInItFWYMfUFHVPg4WTP2+nOh9HF2SEZ3UL2P8zUix0QD49BOn82Ll+cmoyy21FAD
+ UZEC5n9w1bLs2HeZaqwyX7T0MzFAkTj25Tn0WUKglSzqGj/Pt9Ytmil5qkOtt+G5DQhrOdzTTIo
+ GLK/z5AmBqoOwnVHo2d/QQrlbfHOYXwAVnr405HHY9IEfcyKUlbCjeIdrhUOmlnRUG6mg==
+X-Received: by 2002:a05:600c:6305:b0:495:6396:8b67 with SMTP id
+ 5b1f17b1804b1-4997c0d7658mr51764725e9.4.1786537005917; 
+ Wed, 12 Aug 2026 05:16:45 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.42
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:42 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/26] hw/misc: Add AX3000 clock control
-Date: Wed, 12 Aug 2026 13:16:08 +0100
-Message-ID: <20260812121622.649730-13-peter.maydell@linaro.org>
+Subject: [PULL 13/26] hw/arm: ax3000-soc: Enable Ax3000 clock control
+Date: Wed, 12 Aug 2026 13:16:09 +0100
+Message-ID: <20260812121622.649730-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,168 +103,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kuan-Jui Chiu <kchiu@axiado.com>
 
-This patch adds a new model for Axiado AX3000 clock control which supports
-to read ID and status
-
 Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
-Message-id: 20260713073033.3883619-3-kchiu@axiado.com
-[PMM: use HWADDR_PRIx]
+Message-id: 20260713073033.3883619-4-kchiu@axiado.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/Kconfig              |  3 ++
- hw/misc/axiado_clk.c         | 79 ++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |  3 ++
- include/hw/misc/axiado_clk.h | 26 ++++++++++++
- 4 files changed, 111 insertions(+)
- create mode 100644 hw/misc/axiado_clk.c
- create mode 100644 include/hw/misc/axiado_clk.h
+ hw/arm/Kconfig              | 1 +
+ hw/arm/ax3000-soc.c         | 8 ++++++++
+ include/hw/arm/ax3000-soc.h | 2 ++
+ 3 files changed, 11 insertions(+)
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1543ee6653..b8860dd3e7 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
- config XLNX_ZYNQ_DDRC
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 2ed2c2c6e8..69161a439c 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -730,4 +730,5 @@ config AXIADO_SOC
      bool
+     select ARM_GIC
+     select CADENCE # UART
++    select AXIADO_CLK
+     select UNIMP
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index b528f8af53..aaeae11074 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -33,6 +33,8 @@ static void ax3000_init(Object *obj)
+         g_autofree char *name = g_strdup_printf("uart%d", i);
+         object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
+     }
++
++    object_initialize_child(obj, "clk", &s->ax3000_clk, TYPE_AX3000_CLK);
+ }
  
-+config AXIADO_CLK
-+    bool
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -157,6 +159,12 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+ 
+     /* Timer control */
+     create_unimplemented_device("ax3000.timerctrl", AX3000_TIMER_CTRL, 32);
 +
- source macio/Kconfig
-diff --git a/hw/misc/axiado_clk.c b/hw/misc/axiado_clk.c
-new file mode 100644
-index 0000000000..090beb38b5
---- /dev/null
-+++ b/hw/misc/axiado_clk.c
-@@ -0,0 +1,79 @@
-+/*
-+ * Axiado Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
++    /* Clock control */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ax3000_clk), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ax3000_clk), 0, AX3000_PLL_BASE);
+ }
+ 
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index b984d7a8ec..329aa4e769 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -12,6 +12,7 @@
+ #include "cpu.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/char/cadence_uart.h"
 +#include "hw/misc/axiado_clk.h"
-+#include "qemu/log.h"
-+
-+#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
-+#define CLKRST_CPU_PLL_STS_OFFSET       0x14
-+
-+static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    switch (offset) {
-+    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
-+        return 0x20891b;
-+    case CLKRST_CPU_PLL_STS_OFFSET:
-+        return 0x01;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
-+        break;
-+    }
-+    return 0x00;
-+}
-+
-+static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+    qemu_log_mask(LOG_UNIMP,
-+                  "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
-+}
-+
-+static const MemoryRegionOps pll_ops = {
-+    .read = pll_read,
-+    .write = pll_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
-+};
-+
-+static void ax3000_clk_init(Object *obj)
-+{
-+    Ax3000ClkState *s = AX3000_CLK(obj);
-+
-+    memory_region_init_io(&s->pll_ctrl, obj, &pll_ops, s,
-+                          TYPE_AX3000_CLK, AX3000_CLK_PLL_CTRL_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pll_ctrl);
-+}
-+
-+static void ax3000_clk_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "Axiado AX3000 Clock Control";
-+}
-+
-+static const TypeInfo ax3000_clk_info = {
-+    .parent             = TYPE_SYS_BUS_DEVICE,
-+    .name               = TYPE_AX3000_CLK,
-+    .instance_size      = sizeof(Ax3000ClkState),
-+    .instance_init      = ax3000_clk_init,
-+    .class_init         = ax3000_clk_class_init,
-+};
-+
-+static void axiado_clk_register_type(void)
-+{
-+    type_register_static(&ax3000_clk_info);
-+}
-+type_init(axiado_clk_register_type);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 23265f6035..e86d9ad6b3 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -1,4 +1,5 @@
- system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
-+
- system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
-@@ -168,3 +169,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
  
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
-+
-+system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-diff --git a/include/hw/misc/axiado_clk.h b/include/hw/misc/axiado_clk.h
-new file mode 100644
-index 0000000000..6e12a509d7
---- /dev/null
-+++ b/include/hw/misc/axiado_clk.h
-@@ -0,0 +1,26 @@
-+/*
-+ * Axiado AX3000 Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef AXIADO_AX3000_CLK_H
-+#define AXIADO_AX3000_CLK_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_AX3000_CLK "ax3000-clk"
-+OBJECT_DECLARE_SIMPLE_TYPE(Ax3000ClkState, AX3000_CLK)
-+
-+#define AX3000_CLK_PLL_CTRL_SIZE    0x1000
-+
-+typedef struct Ax3000ClkState {
-+    SysBusDevice        parent;
-+
-+    MemoryRegion        pll_ctrl;
-+} Ax3000ClkState;
-+
-+#endif /* AXIADO_AX3000_CLK_H */
+@@ -49,6 +50,7 @@ typedef struct Ax3000SoCState {
+     ARMCPU              cpu[AX3000_NUM_CPUS];
+     GICv3State          gic;
+     MemoryRegion        dram[AX3000_NUM_BANKS];
++    Ax3000ClkState      ax3000_clk;
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
+ } Ax3000SoCState;
+ 
 -- 
 2.43.0
 
