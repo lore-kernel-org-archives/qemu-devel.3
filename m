@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DB8C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF65C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu67v-0003Xj-Kj; Wed, 12 Aug 2026 06:24:04 -0400
+	id 1wu692-00040I-0w; Wed, 12 Aug 2026 06:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wu67p-0003XP-KT
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:23:58 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu68z-0003uz-4i
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:25:09 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wu67o-0001se-69
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:23:57 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so9395705e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:23:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu68w-00023W-3I
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:25:08 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-80dc4a68e4aso8665697b3.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:25:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786530304; cv=none;
+ d=google.com; s=arc-20260327;
+ b=rkemcF4AfZWJIs3pTTr6vyumkvyziWmNw6pgQbpmkAtG3MqS9LQnq8/b7vINABesGH
+ yJ6jp2mTHkDIV9Z7n2nh43/amlz7gRwRw0dftLp2EDGFBU1YO7N6/dfAVaZuFP/15+le
+ NRJ73HSmG8+F5yJhgGg8AhqQJrAj0navbWFDdQLmeMHQXZMVmeA+brrLf91HDH2rhKNF
+ miidrWdlx98D2CDx08lqZjjztNAgNUPNT/Y3h3AHK9JXvrx3+LjFgqDhD7ZjRdPYj/Dd
+ e5w0AwnITOq7IosgQIaeG750HOyv9hmpQ7uuVpHcax1dczu2NhhsO3yq2Q3HzCzCag2/
+ 0lqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
+ fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
+ b=TDaSNwCUTLekW+8DZzC9TueeDlHNjqJX8qIkytRJTCcAkqj+hefHXirAkfCil3Aacf
+ 7Qah+50SS12lcAkMaDqmCkJlx91PoK278c6HfmNEyIIyKC9EalASLBvjTwEJ7/OUrYnF
+ l56mHFeNWzJQRYaXIXdF4XocBrIclIorDUKtWAkv+Rqk0uyKzKK70i7S/AD9B24ZOEXQ
+ wyfiXCcHg2J0RWloprDfzN7dMqQF7qL8GLj4KztrBrcqojLyGHJRIiTSKGK+8yt3zVAB
+ JAJ0M5K+zXeVWWSRylx/wYN41EtudH+FIhSvP2e5XIoqUSarcggIVFL7TAKCJfO+LL8g
+ zgVQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786530234; x=1787135034; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=a32BofuPkjCcUJakrtJX3LjdPynwS/DMnY3BE6yCNDg=;
- b=MGNBFcnga6JrgYL5gglt6KArOIzbP+dBXdsXCWssZIPXDOroA3vFX2/XQ1edeORoZX
- c9BPoHRi0TepSj2Hm1U1NxzXizZ8lv+wyh4U5m8iS6Y4uzD7phcwgdZI5ABVObrprX5s
- 9xCIuzwJLjG83VH4FcyG7Ox7D3Pp1/JDeHsZFhyH+nFu3a2iGVc1iAj9vL2lYSlMg9z5
- GWF7eSsGIep7mGkAOIr2w2AqV2ZebQExZXCLrOAl085iRUsah5myacnB12RMpVvyDQV+
- m4IzjXwtujAxfgFLkDapW4c6CnfIzSaAAc8a8O+K4/X0AAe90YkZlXJl8iPd4Yq8SPMR
- Ml9g==
+ d=linaro.org; s=google; t=1786530304; x=1787135104; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
+ b=xim+a4DMGpOFzknSs1WSftlXLNsnwSMO2ONE8EU1jEnfCSI5xMjGUspJabtAbNs6Dc
+ D/HgttWB4fEbJuEaglkyx1NS6Cwu818aTU1zmAjoSD5KCrNrxrsLVWWaRGphNAPT5jAP
+ Yb/MIeJEMbpINsdBPL6/MRICMjjbtfriS4ziVEJGF7alFhaLuW3f1PbMt39I54jbNRC0
+ oYBgdbH34fF1coD8WpKZBfV6L8TPZ8E0yVP9KLxqWH//fixXfUKmwlZXQ5xp6aB+iVbn
+ 4kapkN0dp9yby6OBj5gK1hSoMstChsQQAqf+5q6kGYsIAzJbZ+SDCm9TSM5ATTKIu88s
+ 8vZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786530234; x=1787135034;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=a32BofuPkjCcUJakrtJX3LjdPynwS/DMnY3BE6yCNDg=;
- b=iYg1LKEf1ZmZZAr+hAVoXGt16foF6q7WKSAAsZ50o83qa1XGa5koaZ8Xnt9cBkU3Lf
- y03iiH4kUwubYPknGaIacA3uM5N7k07porBkrIYlAY5+nBJW6QSAff2q3f65VVjJNmSw
- DkAXxA9e9729T12pap8N8rJRh/RZJv3UihcnEsW34/PIrsCRk1/YGrvTfx20PClw0l/e
- asbHv8e5/Wx1jUoHYQyx/Z02sj8paNiVuXSTmnVXqiULuQ/ewKCn+5BuPb9pZtBb1Wzt
- AWeXTnXipF7//J8wyjHgzx6d4PHE3d6Q8kFQgRpc05/M5ATM9R84VQ5Ts1bHG3CMH0cT
- +Q7A==
-X-Gm-Message-State: AOJu0YyKQBTj2d/bkp+eqXSNjbGJclF+lgKfTTtwd6lz9+x2r2ti0pRY
- O/Fx/DWp3V89zilh6OcRUCrTEuUbn6vjcCXQFU/nsnWymBnt6pJn8le8Hm1z/e7IQ+8=
-X-Gm-Gg: AR+sD10NSG4zbbfdoFXCf6ZYCWoYs7Kwh7sCT6iWZzmFu3m25QkhesAn5QmK+gK4p0o
- ZYK5Kb2dFE6rRwSClvD8zlGfqr38QqsTqKUw77W/X8CAkT0HNuDqKX5rQR90stIZZRnX1k6UZ6L
- hy97/Wtuv4OEQeaInwgYDsEv61h3DuTEB9BcRebdI6Qlq8YLBnmVUArwls2lTN3g+eosj/gRW53
- 6hiFdGsfjbnCie87vVqTJ1Gg6Ek5LOf8kB7k/utiEutBIExHZCt/E0hB3gPB0rh5uEIrqRD3eeo
- 8Yb8Vd2QGNFR1ZNsmxs96KlojeSRjDKFoTA6U3Xhg/7Wh8yn/2rGdsx/tcw6nbHvXB0rGW9aNRO
- rFWw33NU3y6mXjGMALThwlPrFxIxA7ZB5u1hmh5nLKUPQp8yK1Gz0EZCz08nEgc0+c5pQnIvoRY
- OcyX29wlyVkcFzsjDyx+ICfgRqeziwVpSjs4++5t1q7ovLRtdpaGxx+0PlAE2o
-X-Received: by 2002:a05:600c:500d:b0:499:593b:a15b with SMTP id
- 5b1f17b1804b1-4997c0f76c5mr49854255e9.1.1786530233767; 
- Wed, 12 Aug 2026 03:23:53 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997c9942aesm34082995e9.13.2026.08.12.03.23.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 03:23:52 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF5BE5F886;
- Wed, 12 Aug 2026 11:23:51 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Brian Cain <brian.cain@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Ilya
- Leoshkevich <iii@linux.ibm.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Helge Deller <deller@gmx.de>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v6 098/103] configure: directly pass gdb path as a meson
- option
-In-Reply-To: <20260728044248.137626-99-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Mon, 27 Jul 2026 21:42:42 -0700")
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728044248.137626-99-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre5; emacs 30.1
-Date: Wed, 12 Aug 2026 11:23:51 +0100
-Message-ID: <87cxvn1vt4.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1786530304; x=1787135104;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
+ b=PLGPRpAK78k54GVkHD/b3Za+9hYPMW/K9sPkz4AYGyVLRn3B36nZ3mjq+Bi5EbuhD2
+ 39sMTPDtsWieysTeLxmpNTljbhTpFGENBOddUD7b9AT4JTxAk/khoznikxFgNwrM/Nyj
+ 5QsM/vDCx0tMakRUMss5mabqUgYLTmQbJFGui75zBi5cnPafePBcDanQHOUyJJYJs87+
+ wRVRzZWJeOoU4DbSWR/1rwNtDPDx4/XSNDSbIJKd2FllsJ7safO7CnXT9LFaJtbbZ6On
+ yBMU7dSHryLm64QqgFxhgKKgf4jD5NoHhXMv99ESvKTfpUPPmy/xxN+xDoGZ75XYOKia
+ /rdw==
+X-Gm-Message-State: AOJu0YxTt3xc9Y1hQkPav4n68upaTSd0F8VphKnavh/ztamjybSdXs6K
+ lRSYqQCkvJ/bq/YVY9PQAEIqq8nYxVUDbJGO5huodYAlMvyfLr8nZDVcK/k4hObTqhDQfuIVXjq
+ 09mg2xwHg7chWmrv/d5GFLARHp4GPq2yRbf/GSpVMLA==
+X-Gm-Gg: AR+sD10C4l7cBMRtAbpyeuGuVbula6vFvtiCVpqR+4W0yvIHBonyakGWQ4GfJWbLMZa
+ un2omj4ayJSyw9+wCgnjFKGfvVBaM4Qk6iwJs/+IfN9LD1mpRooJpIKOaxA96X9nmv6UIG2l3nJ
+ GWbqRJpFCOny7wdinEp4Fotxi4KGFJH5HTykktO/A/y15Rf9uYRx8G0v5OUE6n3pJtPuoqWZ4uH
+ abzQe3QG36vxtAtuCs4bHqF5wbVTgy8T8BeuktiOMkxi7+gHgbccgz9Yw/zHsbK9xg7sGHXYcHM
+ kjOXAUhSNx/dfg9ZABjAPKIVakTaWqa8Kk/07E9WXlM3Tkm/sP+CkXxbVx3fsRhP08vfF9j+6MC
+ TO2d/OsGiLKPbLMINST+FK4Ubkn7qzwJ6ApkI9s8=
+X-Received: by 2002:a05:690c:e0c:b0:81f:a595:2e19 with SMTP id
+ 00721157ae682-8310b73e8a0mr22080347b3.23.1786530303817; Wed, 12 Aug 2026
+ 03:25:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+References: <20260811143539.7835-1-marcelomanzo@gmail.com>
+In-Reply-To: <20260811143539.7835-1-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Aug 2026 11:24:51 +0100
+X-Gm-Features: AUfX_mwkmm23E6gGDgCu1vPUb_ezW7RKkcqYvLBMpMwup0kV7mLZVC5ThsCudKc
+Message-ID: <CAFEAcA_duyqT1F2m64jg10Xy+4QVikZfUbacvZ50v=isrcCKZg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] hw/arm/raspi4b: fix guest RAM capped at ~1 GiB
+ regardless of machine size
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,20 +116,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> Move the remaining bit of the detection logic to meson. We can assume
-> gdb can be probed since gdb-9 has been published more than 6 years ago.
-> If ./configure --gdb is set, make sure the given program exists by using
-> find_program(..., required: true).
+On Tue, 11 Aug 2026 at 15:35, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-> Also, using a proper meson option lists this at end of meson summary.
+> While working on unrelated raspi4b issues, I noticed the guest never
+> seemed to have as much RAM as I'd given it and tracked it down to
+> hw/arm/raspi4b.c's raspi4_modify_dtb(): it decides whether to add a
+> second memory node above the 1 GiB peripheral hole by checking
+> info->ram_size, but that field is the boot loader's RAM budget for
+> where it's allowed to place the kernel/initrd/dtb image, itself always
+> capped to at most UPPER_RAM_BASE - vcram_size by
+> raspi_base_machine_init(). Since that capped value can never exceed
+> UPPER_RAM_BASE by construction, the condition was never true for any
+> raspi4b configuration -- the second node was never added, and the
+> guest never saw more than ~1 GiB of RAM regardless of the machine's
+> nominal size. board_ram_size(info->board_id), computed one line above
+> in the same function, is the value that was actually needed.
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Patch 1 fixes it (one line); patch 2 adds a regression test.
+>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+Applied to target-arm.next, thanks.
+
+-- PMM
 
