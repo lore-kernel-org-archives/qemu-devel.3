@@ -4,120 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21611C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 21:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C544C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 21:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuGH6-0005Un-Rv; Wed, 12 Aug 2026 17:14:12 -0400
+	id 1wuGKE-0006aP-UO; Wed, 12 Aug 2026 17:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wuGH4-0005Tj-Mn
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 17:14:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wuGKB-0006a7-U8
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 17:17:23 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wuGH0-0006sB-Uj
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 17:14:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786569245;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jLCNCwndmRGYwkn8drh249fvKYzwAy15snYpSaVQ/ZA=;
- b=CIHbVd8w7OlxZ/u/mFje3bGcYb2VS1Q5ltFcPJPwB/2V8MD/rKBpzCjDpYW4frW7S63GI0
- uzF0pY8bg7BP+zUumCo88/n2d8GZhcqpVhYgv8fwMpb0LuU9+b7kgeMxvBhjD6Skm9yvPc
- 6ZJTet0g+kcQnV3HVHj11oQYHfj7p+k=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-Rl-yVLvcOhemdR54MOG5iw-1; Wed, 12 Aug 2026 17:14:03 -0400
-X-MC-Unique: Rl-yVLvcOhemdR54MOG5iw-1
-X-Mimecast-MFC-AGG-ID: Rl-yVLvcOhemdR54MOG5iw_1786569242
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47485fde05aso16966f8f.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 14:14:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wuGKA-0007kN-A6
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 17:17:23 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CK2bn84038352
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 21:17:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ wuO9FuvuiLBW9iBaej8zk2gCJXMV7JJPaKuAA2JzHl4=; b=BagT2OOKWsVvb54n
+ O6Jf89698PgWotI/UFSUXgtmak1ThDbbwpGFfhvkUkzmXVBfcpoUW3AJtQdKyQ7C
+ ERLise4ux/OvD7FdtkcZ9hinq/dn7YoY3bx/R32e0Iil18vdnK9v//dpp6k084Ji
+ 1EBaMQT7gox9Hmj84oqOy9rh7y1fZUY8iZ8+/5n3oQ34TLcVMUrAOQMpSteCoLwr
+ pK4iPMRShhyGWFfrIQ/iBKE4jqhEIcbC1znTQocE8SauXr//cMBdGtZYSLVLmcvk
+ UHd8rb032km5hEqTKsxNhQoq6JkuA86WcY/7tUkFV2EMWMFneXVBoq9o7nDKkYI9
+ OEY21A==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0mndbfk1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 21:17:20 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51bff5c7035so124671cf.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 14:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786569242; x=1787174042; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1786569439; x=1787174239; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=jLCNCwndmRGYwkn8drh249fvKYzwAy15snYpSaVQ/ZA=;
- b=KM4BkyuMjLOhCn5dTqF5594ikBMHZbLiaacnEPrTiPFjasMNWbc+NwgQcGqUp+bhdF
- iYuAPxN10UTTFWhOfot+KolVZN19CPrSM0x+oQkjXHzDktUx+6AonT8njS9XBOD/hptQ
- l6/NpcSUxrXi2Ex2+fBHehw9r8WyaULs52Ln9KC++7QGu9ktTZpcA5dTEMtCCo+qcUbY
- Pb7c+P8lTUKzjNL4XABhGnc/tzi3uOqdkVTb6Ri3c1b4HlUmUPmJJrnCtnpj0+2BzJIy
- GHr7fd9IyKz36BntSueHXKzkiouhr+rNmcGe6o6w7zHhn1+pjiHoG9JAxnI08HxmEjXT
- jGIg==
+ bh=wuO9FuvuiLBW9iBaej8zk2gCJXMV7JJPaKuAA2JzHl4=;
+ b=ARB17XjNUv59H4ZEw7UCSoN/cssyFe4Ug1RuKhwZo45aEJzFYbpCDD/P5r4KEYKlJU
+ CNWT7VXSY+kGyRBR3zZhdsVtaYvPACMBv1jJFmLgwzgO8GmZS9c23iYg1DxRmqOfw91R
+ 4mPHbwOMcE/q3P0HnDnTd/AnYzt/0l0Y2zv88cS26bbhoDhv68RM56I5PEWGogaboY6t
+ JUTxtArpTMGYjDWZNoVSKaFXD+UxwYAI6A3jK1BPiZP6N9ccK8HYf165NzvzcaZ/el4s
+ sNnx3/8Dj0v3xtwQfSbER6jmQ5S9Ti9iTCGN88OLq14j+2f7XpAEfPM3f3x1QYDeKs5i
+ +jYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786569242; x=1787174042;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1786569439; x=1787174239;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=jLCNCwndmRGYwkn8drh249fvKYzwAy15snYpSaVQ/ZA=;
- b=HoUZdq7OWBBZtS0pIddsOKRu35ar6TwY18Hni1ueu4uFUNAg0lH3CTg1s0c8fuyuoK
- rYd/gyt95/toAg1aT5DFFem0E/2stWd/RMSPnE4DW9kWeipE78gZ1QvJkfJTZKtH4Gjw
- 82/sGnThp4zVOM6JiDpHMu8Twx5IHqCeJT2NnVik520m6bzacFfXfq9vvKvs9pH5KJuT
- 7uJ0yi9TblSqs/j97TIgbHbc4lpf05ay/i4R5/SqdmDp7feN17ZtAvapFjS7WHYMcjg4
- hUM7gVYHOAItN22utPNJEUpAtuaWm4LXAqbUFKfXxV4tEvxGHcNa1fQEi/HxfeDwoTU1
- o+Vw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoTeWHkH7Q3yscCq/vhpJUaJNq+GlQVO6kNYIhyp1qm9IFcRTxjfhuha6XJpvj8Q2H0KoY0FnFnco+x@nongnu.org
-X-Gm-Message-State: AOJu0YzTjNkM5DjP4boOv/OfExZg9CcsgednaYDI7y0vznpug4Q/Mr2e
- wJh06ajJOPf6UdvliTLY2IHEXSBT7RlbNVK38MqkCHcFNkgH7R7efFcA59IrgbN2jWsKqzQRI1E
- eaKbwwf6aHliSJBhdTOg0jjC6eR7f1JZOTCjlEbAFhfffPuRjxBRQuV6Z
-X-Gm-Gg: AR+sD10hDyapLvxI1NRCKu/sukfKmRm7Xa2fTfthPlLQT1/6fpWdFeHXkjuE3Q5//ju
- VifZKmKfvH1KlG0k2tKGa47CleMUWPs9tNIehgUW3jMJAwXU7yNsM3kcqc4AFah35T9FjiTC4SW
- 6EBKREBiD9wcVSa/UTaiAFgjmNBbSEy9jN4SgZBKkYnJ5AKMrBX2VlugsmlUiSiVAu09IbyPXia
- rae+AI5m/nNS5u6i/5qWi99Ya7fAs+1oaNzdiAa39ZfAtszeeanc/Vlyhuv0vhPX7vhvD5H5/bX
- xEmzB94HIV0H7RLelRPHeVscLEQUH5Nk0j1kFk/OtWchpJwIQG8YBVgFolp1T+t7iERDanjluj5
- /BIGegHqSi7Xbzdu/C/6AMA==
-X-Received: by 2002:a05:6000:1841:b0:481:3db1:a62f with SMTP id
- ffacd0b85a97d-4815a01c6d7mr1091353f8f.17.1786569242206; 
- Wed, 12 Aug 2026 14:14:02 -0700 (PDT)
-X-Received: by 2002:a05:6000:1841:b0:481:3db1:a62f with SMTP id
- ffacd0b85a97d-4815a01c6d7mr1091306f8f.17.1786569241630; 
- Wed, 12 Aug 2026 14:14:01 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-39-98.inter.net.il. [80.230.39.98])
+ bh=wuO9FuvuiLBW9iBaej8zk2gCJXMV7JJPaKuAA2JzHl4=;
+ b=VriUVDdL70p3/G7zCaq9TByFawgclwQIqg8L9Pu2gq7XiRjBxHJRblxTegQblQJYpG
+ BmNHzsVQnl595wDJEGtPpAgwI/jJKJ96gJBZ0YsyM86O4BAZX72dg00CjRmhZ9oSwvU7
+ QZRsspkCx63TP4cc7oV9PLsdshqh+jOz57d0uOyY7qwMV/Ko6CMrE44ydTGhuaC6t2Rn
+ CKm7A6iHCIxg9WbnmeW6XpgATgv7f3uiXyMfmCxxKn+EzvV4XLhu9f3jmA9r8fx728hO
+ lQJotJp4o/tqdYMNnXUpvgSLUA6Ghh/HPgsfXJOIdcqTBNFCviOKhrM1QoQ+OvE6YC/f
+ 4foA==
+X-Gm-Message-State: AOJu0YxMl5pFKSgaaGrJ6nEm1hQuyT2DgpI07LgUDKS2oMKQcrUzQRVr
+ xzA7iStsakk7EeiewyuZ6HWAOXoCIuaqk2/X0y9t1vind2Sah9f02JISvLyPoqCoI0bLLQrJfQz
+ y/hyuA/D6T4i9lKuClD98Ek9Edv2V/QnZv7+JwAuJazEUYRFZ0wqQoW/wgg6QlkQN/w==
+X-Gm-Gg: AR+sD13bB2SRBoAaD0puv2W1Jgxcqm/qRJHz/Xvc43yOcTKhmXu8R/R6zoIc9FUdIzo
+ mXlUVew0gTzPdUxKCaBoQcqk3Ip0UYkDAteK/b+JdFsqgckasXo83yhN6fKm+geN0+rJiAEYtjz
+ 8bB8nLvIPIONilr32KUTGw1qxAAWkvvQjJw11jcQqcjT8Trr+t4U/1zx4xNCofQAjtuXb8M6E3z
+ Nk2ktha3mIaEmrVHbk23PIsmbcAL1ppkrckqK8Oi3ktgwJhxVECsP2K3hqTksnngd9wbW7Gn6H8
+ Tsh0LMkeVaiLWfvkDFRiTIPaO+uKBkj3S5vLTeZQ4eIq5D03pzyTt+mWnT5NlH/4A4VE2KiftIY
+ ZCqaZczsK4Bl9v1t/DoUtmlqkavuNtewWJrwD19Px7g==
+X-Received: by 2002:a05:622a:4c0c:b0:51c:849b:86b with SMTP id
+ d75a77b69052e-52d73e744cdmr11824341cf.43.1786569439064; 
+ Wed, 12 Aug 2026 14:17:19 -0700 (PDT)
+X-Received: by 2002:a05:622a:4c0c:b0:51c:849b:86b with SMTP id
+ d75a77b69052e-52d73e744cdmr11823711cf.43.1786569438672; 
+ Wed, 12 Aug 2026 14:17:18 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815a5b6f94sm501843f8f.32.2026.08.12.14.13.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 14:14:00 -0700 (PDT)
-Date: Wed, 12 Aug 2026 17:13:56 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ ffacd0b85a97d-4815a5af441sm705721f8f.22.2026.08.12.14.17.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 12 Aug 2026 14:17:18 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org
-Subject: Re: [PATCH for-11.2] hw: add compat machines for 11.2
-Message-ID: <20260812171349-mutt-send-email-mst@kernel.org>
-References: <20260723163806.368127-1-cohuck@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 01/23] hexagon: Remove unnecessary 'monitor/monitor.h'
+ header
+Date: Wed, 12 Aug 2026 23:16:45 +0200
+Message-ID: <20260812211708.92824-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260812211708.92824-1-philmd@oss.qualcomm.com>
+References: <20260812211708.92824-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260723163806.368127-1-cohuck@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDE3MSBTYWx0ZWRfXxqOGDqD1cBCV
+ xUelYegyDRJEMZcYWhTER1z+nIWk8VZYz7ojYsQMbthFwNY6sHTtY9t+NGeRVDBq6+u2K7ew4kQ
+ H5cw6JsiQ1yKH3g1FUFbRkw0IIUKt8s=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDE3MSBTYWx0ZWRfX73mSvkQE/XoB
+ AfemXXQuoauBNexY0TmYn3QHQjsIPcnuD48NSbnV/7oos48L3PulBKL+ArgnS4DWSVcss8koARK
+ WyIGqc69iMkkSLSuOtYtsi1JoyrLoqlwmdPTlhSODoqf31Tz+cBr8moU+JTnQYvRQ3goa5i/9wi
+ 7xIuzeCFN+7a3MJPsQtNnGMsn4/0s4Wun23Pd9+D+BZJUrfP4NDuCd3dMqnwE7RJN3fqa+w4xos
+ 8yPoFAxgEk/zpnk7d3f42NBe6kBIM/eGRYyeLQpWrPCPrEDnPHU5v55mt9nyOoaJLAi4gt6hRWH
+ hbfD6uvM1isc6c+KZFUsilECLGji0j2e7pSbYtkPvfZyFdyzsWzzdLR61IilwJT7QT54eea8vKu
+ 9iqy/qrpa9zYFA5yINlIK9ZFpAr8umhDDU/6TlUzWLtC6//LSozwoZ9IyumD3hML65xJhVGk8wt
+ pE9cqAa98MpdjZk72qg==
+X-Proofpoint-GUID: qb4aEVQO0R_EGoHYiexv0wIQObIaBR9K
+X-Authority-Analysis: v=2.4 cv=C87ZDwP+ c=1 sm=1 tr=0 ts=6a7ce2e0 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=-f94bmcIBZYFaPXTGXwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: qb4aEVQO0R_EGoHYiexv0wIQObIaBR9K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_06,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120171
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,287 +157,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 23, 2026 at 06:38:06PM +0200, Cornelia Huck wrote:
-> Add 11.2 machine types for arm/i440fx/loongarch/m68k/q35/s390x/spapr.
-> 
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+The Monitor type is used in these 2 files, as a pointer.
+Since the type is forward-declared in "qemu/typedefs.h",
+which all source files include via "qemu/osdep.h", we do
+not need to include it.
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Do however include "exec/hwaddr.h" and "exec/mmu-access-type.h"
+which declare the types used by hex_tlb_find_match prototype:
 
-> ---
->  hw/arm/virt.c              |  9 ++++++++-
->  hw/core/machine.c          |  3 +++
->  hw/i386/pc.c               |  3 +++
->  hw/i386/pc_piix.c          | 13 +++++++++++--
->  hw/i386/pc_q35.c           | 13 +++++++++++--
->  hw/loongarch/virt.c        | 11 +++++++++--
->  hw/m68k/virt.c             |  9 ++++++++-
->  hw/ppc/spapr.c             | 15 +++++++++++++--
->  hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
->  include/hw/core/boards.h   |  3 +++
->  include/hw/i386/pc.h       |  3 +++
->  11 files changed, 85 insertions(+), 11 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 219597cabd0b..e7a56e37f731 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -4441,10 +4441,17 @@ static void machvirt_machine_init(void)
->  }
->  type_init(machvirt_machine_init);
->  
-> +static void virt_machine_11_2_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
-> +
->  static void virt_machine_11_1_options(MachineClass *mc)
->  {
-> +    virt_machine_11_2_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
->  }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
-> +DEFINE_VIRT_MACHINE(11, 1)
->  
->  static void virt_machine_11_0_options(MachineClass *mc)
->  {
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 805148678d57..354b93c62037 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -40,6 +40,9 @@
->  #include "qemu/audio.h"
->  #include "hw/arm/smmuv3.h"
->  
-> +GlobalProperty hw_compat_11_1[] = {};
-> +const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
-> +
->  GlobalProperty hw_compat_11_0[] = {
->      { "chardev-vc", "encoding", "cp437" },
->      { "tpm-crb", "cap-chunk", "off" },
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index f064aa2b3e32..e9e4fc262b83 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -74,6 +74,9 @@
->  #include "hw/xen/xen-bus.h"
->  #endif
->  
-> +GlobalProperty pc_compat_11_1[] = {};
-> +const size_t pc_compat_11_1_len = G_N_ELEMENTS(pc_compat_11_1);
-> +
->  GlobalProperty pc_compat_11_0[] = {};
->  const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
->  
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 82457bdb167a..223a19cc4bbc 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -428,12 +428,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
->                       pc_piix_compat_defaults, pc_piix_compat_defaults_len);
->  }
->  
-> -static void pc_i440fx_machine_11_1_options(MachineClass *m)
-> +static void pc_i440fx_machine_11_2_options(MachineClass *m)
->  {
->      pc_i440fx_machine_options(m);
->  }
->  
-> -DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);
-> +DEFINE_I440FX_MACHINE_AS_LATEST(11, 2);
-> +
-> +static void pc_i440fx_machine_11_1_options(MachineClass *m)
-> +{
-> +    pc_i440fx_machine_11_2_options(m);
-> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
-> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
-> +}
-> +
-> +DEFINE_I440FX_MACHINE(11, 1);
->  
->  static void pc_i440fx_machine_11_0_options(MachineClass *m)
->  {
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 6c1e4eff5f1d..94cd71124b18 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -383,12 +383,21 @@ static void pc_q35_machine_options(MachineClass *m)
->                       pc_q35_compat_defaults, pc_q35_compat_defaults_len);
->  }
->  
-> -static void pc_q35_machine_11_1_options(MachineClass *m)
-> +static void pc_q35_machine_11_2_options(MachineClass *m)
->  {
->      pc_q35_machine_options(m);
->  }
->  
-> -DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
-> +DEFINE_Q35_MACHINE_AS_LATEST(11, 2);
-> +
-> +static void pc_q35_machine_11_1_options(MachineClass *m)
-> +{
-> +    pc_q35_machine_11_2_options(m);
-> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
-> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
-> +}
-> +
-> +DEFINE_Q35_MACHINE(11, 1);
->  
->  static void pc_q35_machine_11_0_options(MachineClass *m)
->  {
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 6693dea647be..9cc79929a8ab 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -1465,7 +1465,6 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->      mc->default_ram_id = "loongarch.ram";
->      mc->desc = "QEMU LoongArch Virtual Machine";
->      mc->max_cpus = LOONGARCH_MAX_CPUS;
-> -    mc->is_default = 1;
->      mc->default_kernel_irqchip_split = false;
->      mc->block_default_type = IF_VIRTIO;
->      mc->default_boot_order = "c";
-> @@ -1546,6 +1545,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->          MACHINE_VER_DEPRECATION(__VA_ARGS__); \
->          if (latest) { \
->              mc->alias = "virt"; \
-> +            mc->is_default = true; \
->          } \
->      } \
->      static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-> @@ -1600,7 +1600,14 @@ static void machvirt_machine_init(void)
->  
->  type_init(machvirt_machine_init);
->  
-> +static void virt_machine_11_2_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
-> +
->  static void virt_machine_11_1_options(MachineClass *mc)
->  {
-> +    virt_machine_11_2_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
->  }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
-> +DEFINE_VIRT_MACHINE(11, 1)
-> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-> index 51158ce1c08c..274970978ffb 100644
-> --- a/hw/m68k/virt.c
-> +++ b/hw/m68k/virt.c
-> @@ -367,10 +367,17 @@ type_init(virt_machine_register_types)
->  #define DEFINE_VIRT_MACHINE(major, minor) \
->      DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
->  
-> +static void virt_machine_11_2_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
-> +
->  static void virt_machine_11_1_options(MachineClass *mc)
->  {
-> +    virt_machine_11_2_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
->  }
-> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
-> +DEFINE_VIRT_MACHINE(11, 1)
->  
->  static void virt_machine_11_0_options(MachineClass *mc)
->  {
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index b79828b4e90c..7e284edd7d0b 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -4763,15 +4763,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
->  #define DEFINE_SPAPR_MACHINE(major, minor) \
->      DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
->  
-> +/*
-> + * pseries-11.2
-> + */
-> +static void spapr_machine_11_2_class_options(MachineClass *mc)
-> +{
-> +    /* Defaults for the latest behaviour inherited from the base class */
-> +}
-> +
-> +DEFINE_SPAPR_MACHINE_AS_LATEST(11, 2);
-> +
->  /*
->   * pseries-11.1
->   */
->  static void spapr_machine_11_1_class_options(MachineClass *mc)
->  {
-> -    /* Defaults for the latest behaviour inherited from the base class */
-> +    spapr_machine_11_2_class_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
->  }
->  
-> -DEFINE_SPAPR_MACHINE_AS_LATEST(11, 1);
-> +DEFINE_SPAPR_MACHINE(11, 1);
->  
->  /*
->   * pseries-11.0
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 25a9fa495540..55131c1a4445 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -925,14 +925,26 @@ static const TypeInfo ccw_machine_info = {
->      DEFINE_CCW_MACHINE_IMPL(false, major, minor)
->  
->  
-> +static void ccw_machine_11_2_instance_options(MachineState *machine)
-> +{
-> +}
-> +
-> +static void ccw_machine_11_2_class_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_CCW_MACHINE_AS_LATEST(11, 2);
-> +
->  static void ccw_machine_11_1_instance_options(MachineState *machine)
->  {
-> +    ccw_machine_11_2_instance_options(machine);
->  }
->  
->  static void ccw_machine_11_1_class_options(MachineClass *mc)
->  {
-> +    ccw_machine_11_2_class_options(mc);
-> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
->  }
-> -DEFINE_CCW_MACHINE_AS_LATEST(11, 1);
-> +DEFINE_CCW_MACHINE(11, 1);
->  
->  static void ccw_machine_11_0_instance_options(MachineState *machine)
->  {
-> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-> index 29c68931d8a7..a436d48c8e52 100644
-> --- a/include/hw/core/boards.h
-> +++ b/include/hw/core/boards.h
-> @@ -815,6 +815,9 @@ compat_props_add(GPtrArray *arr,
->      }
->  }
->  
-> +extern GlobalProperty hw_compat_11_1[];
-> +extern const size_t hw_compat_11_1_len;
-> +
->  extern GlobalProperty hw_compat_11_0[];
->  extern const size_t hw_compat_11_0_len;
->  
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index d4b6d3ed57fa..ac03da97b645 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -209,6 +209,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
->  /* sgx.c */
->  void pc_machine_init_sgx_epc(PCMachineState *pcms);
->  
-> +extern GlobalProperty pc_compat_11_1[];
-> +extern const size_t pc_compat_11_1_len;
-> +
->  extern GlobalProperty pc_compat_11_0[];
->  extern const size_t pc_compat_11_0_len;
->  
-> -- 
-> 2.55.0
+  extern bool hex_tlb_find_match(CPUHexagonState *env, uint32_t VA,
+                                 MMUAccessType access_type, hwaddr *PA, int *prot,
+                                 ^^^^^^^^^^^^^              ^^^^^^
+                                 uint64_t *size, int32_t *excp, int mmu_idx);
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/hw/hexagon/hexagon_tlb.h | 2 +-
+ target/hexagon/hex_mmu.h         | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/include/hw/hexagon/hexagon_tlb.h b/include/hw/hexagon/hexagon_tlb.h
+index 90d9ed84043..760dc1ea811 100644
+--- a/include/hw/hexagon/hexagon_tlb.h
++++ b/include/hw/hexagon/hexagon_tlb.h
+@@ -12,7 +12,7 @@
+ #include "qom/object.h"
+ #include "exec/hwaddr.h"
+ #include "exec/mmu-access-type.h"
+-#include "monitor/monitor.h"
++
+ #define TYPE_HEXAGON_TLB "hexagon-tlb"
+ OBJECT_DECLARE_SIMPLE_TYPE(HexagonTLBState, HEXAGON_TLB)
+ 
+diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
+index 4f556c715a9..6aa450b9413 100644
+--- a/target/hexagon/hex_mmu.h
++++ b/target/hexagon/hex_mmu.h
+@@ -7,8 +7,9 @@
+ #ifndef HEXAGON_MMU_H
+ #define HEXAGON_MMU_H
+ 
++#include "exec/hwaddr.h"
++#include "exec/mmu-access-type.h"
+ #include "cpu.h"
+-#include "monitor/monitor.h"
+ 
+ extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value);
+ extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA);
+-- 
+2.53.0
 
 
