@@ -4,101 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF57AC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCB0C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:05:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBRI-0002O8-EB; Wed, 12 Aug 2026 12:04:24 -0400
+	id 1wuBRH-0002L0-Tf; Wed, 12 Aug 2026 12:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBQw-0001eF-3T
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:04:11 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBQu-0000hb-AJ
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:04:01 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so14536935e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786550638; x=1787155438; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=u6D9UhjDK8cihmktW0F2d0ZO4IEhU767NFw/NHuhS3M=;
- b=tAt5M/QbpleBMoSg8NIBS2lusP61/OYe42Ls7K+ipGO4DRm+ki3MTie8HdygE2q38Q
- S2a6a7wdFw7NMFHTq3R1T3SBiDUbCKUqaOBx1WPDSdsR+GKOtlyFcCFfL2RFgRpUHMlW
- +d1knbINYbBKhwcnHpl9l59ScbwD+zBsqGAqtPOTSnHNIZrLNWG5z0Isqztb27F1oNkb
- UFSMrT/NVbwpoeKUq/P1hGNyuwFxivq1lQ12fAQLsf4PB5wjADVELOICxEGvCswCNFQa
- WPEV/k+f1ZCSrcUSAbXvq2P6mpu9hHNJbUXghGrfjJOlPTl7ULZ4vGYtarYLYW6x7m9t
- S/LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786550638; x=1787155438;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=u6D9UhjDK8cihmktW0F2d0ZO4IEhU767NFw/NHuhS3M=;
- b=MoPBJwexFATDpHDTQ0kSFWXtoyf3E54AkP4zkV5oOH4aspTXqHGGsMujdmIr8p1MFV
- q1SooZayjKfzYwJ8Izzp3D/d1ubjzFHD7QmVzSGL9aEi9aXwFV+fPCDulzqtRz2Ao0FL
- YwIvRYYnqOZwYDcyNs6K0yju4TvlvprEaV5XEK97UKIjU9Yt9UiNwGDl9TKE0NijNFZl
- MAhWkPUDgMWZlJ727/hKeuxYAUFSfAacjraYpUCXaAzqu6XsEfXfQLaPtvAfNTJWwJcF
- paNTptmV/NXU1InreXArwErszoDnQ0N5YNan64YGINzGvIGCFSlzFlW0QHoEorUI2L+z
- xNqg==
-X-Gm-Message-State: AOJu0Yz88etY2colcTWLscLdiBde2KCXlX1CAPYRBAniofsF+7UnSPyu
- omEu8iRexua5rzgs/q+Bbb3LV8Ty69WjRIfxsxzfKMauTKxbGB8XqtExm7pgkfukHX4=
-X-Gm-Gg: AR+sD128HxLNDhFxXNWqVJ0eym7XjzO5h8AyGSlF6KCO+58x/BWrffNjGNNzYhc+OL5
- BEd749li1edAY/w6fBrwb6aqt5Fq7G++PoweYTnGQ5OnXOBKug5b7j8rij6pt4C8fyFDhcIQd16
- jTURxC6oX0WEuOu5BXcsjKgWCiCeRk6Smy7OJlBfVIYHlVvuruYChJD1f2L396oDSdE1BuIQ1A3
- N62lcqfTfdgum53P3rOJRAgOI/DF5OOP7JHVgQ1Qfyrn8M9eSI7DSCP4xcOHoHkyIsE3p6gSmoN
- R3RMMTxpmWmimQGY8lNefmy9ZQ6IwIbq1vsb89SwPS55+Lx6h7ZAFYE4EeaC/tQjh1iX0vH21L4
- J61zFypq7OLVbjDHSEjC3jQLRXRjRPt8xWHriSIl11Ec5XLTD2fLK67MxS+aPCK/3Z1KFbxE7Xe
- bHggViEi9wXgORku+/YDclBLZuUIGhp38NpUIPaVgNh7b22irtHHuH6v9q8TNp
-X-Received: by 2002:a05:6000:982:b0:47e:9f16:c0bf with SMTP id
- ffacd0b85a97d-48152c892c8mr9211078f8f.30.1786550638472; 
- Wed, 12 Aug 2026 09:03:58 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48150d5cba0sm8437940f8f.25.2026.08.12.09.03.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 09:03:57 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 988D15F886;
- Wed, 12 Aug 2026 17:03:56 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Brian Cain <brian.cain@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Ilya
- Leoshkevich <iii@linux.ibm.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Helge Deller <deller@gmx.de>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v6 101/103] configure: remove cross_cc and gdb detection
- logic
-In-Reply-To: <20260728044248.137626-102-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Mon, 27 Jul 2026 21:42:45 -0700")
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728044248.137626-102-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3-pre5; emacs 30.1
-Date: Wed, 12 Aug 2026 17:03:56 +0100
-Message-ID: <87wltvxr4j.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBQ9-00019K-Vy; Wed, 12 Aug 2026 12:03:17 -0400
+Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBQ7-0000WZ-R2; Wed, 12 Aug 2026 12:03:13 -0400
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfout.phl.internal (Postfix) with ESMTP id B71D9EC0249;
+ Wed, 12 Aug 2026 12:03:09 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-11.internal (MEProxy); Wed, 12 Aug 2026 12:03:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786550589; x=1786636989; bh=vWMzfEhFXcpeWKq4KoS/WtO+SftT/Qe0
+ 3PScS2Ig1O4=; b=f0jbXldNNySlmEhwf9f/huMizDzS3c8oHC9pVm2bJm8Qq9q2
+ zqXy/fXDmWcHJPNq2MSJHntKcEAnKrECfFvBNhQW1tIvH4rqG+fyAH4GB9ZnZhAZ
+ AxBuuImbCgTDA1qvzdb9jw+n/n8GEaAo+ELZYQmota3WbplXVSS5w9jwDDKUs6L0
+ REYLCjiJ9ap/XzMifDzCaZmus4gbuPZV0H99cj6UGL5XH8pFwCzBoGkn8VQBdzwG
+ VUu1fQbE2ETk0GBzOwBorfVgp4hy4YpJ7cNRb8AbqQIpMbYxpwwBtVWTMmXwoYRC
+ 71Z5f9LIFhhcb193ZfvnwT13a0qTDq1yiPnsWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786550589; x=
+ 1786636989; bh=vWMzfEhFXcpeWKq4KoS/WtO+SftT/Qe03PScS2Ig1O4=; b=Z
+ IF4+XXQHIM6mgLsYIsGRBPIaxVIHpsYVXOZqNHSqtg8fCVadPpcX4TNDXFq2losr
+ Jfhpv07qJwFYY6rAHQpcN6rSaNNxvrModhWivFbBKG3Eq5DlZTS6iCs58lRXioxO
+ q6GPtZvFahmUSIFHXMwqeQJB0DryZo8/Y9gx8EpC3A9bjqN1/AHGOae7022oky/4
+ 1PsCaqG7tbtYkW9K3ZVxiHfI4j+wWRRgL9TcnuKqmQuj06XRnvnSOXSYpWSTd4yI
+ 1nzlPCR61ko0UNTHp5JQgA5IypJnqfLAffhJMtmZ2QauAv8HeBwwmaaRcLHhTuPV
+ Mk59j8mlTuHIWFL9ca/xw==
+X-ME-Sender: <xms:PZl8akxTyy4izxNPCfdW-UqdrGlf54exm8BYkp75Z5NxQpLgNmOeAQ>
+ <xme:PZl8ahkvZi_y3Zg2UkrOwLcUdOyVOxDSrZ2ofzYPW6bR5P7EgvtjIbYNnzEQo5LiJ
+ SpBDNmGHS4mgf09HYuvWrp3SPsiErjjVaqqu16Ekww8jfK7p-oMrwk>
+X-ME-Received: <xmr:PZl8atlSVHwoBJoEiSEnn7WIgkWej-c6x9VhJn--XxBQqDOQJHvoNhwjAUx05gJ-J1qnOQ>
+X-ME-Proxy-Cause: dmFkZTFd+Naju94P4S5rjiAlo/KWXFfynHNF+h6C77wsZE0S+/9TRI+idUiNEiC7r8bkS4
+ L6InKFFJPdOgaUobaz0fKh5r3KILhbxc2zyaZVRNB2F69tM2xPE5uMqPHeWznfxCOI1cto
+ LoQzgTJKsxmI2x0w1LZJwQV98ZqORwsZxPIImuSF/ra4YWgwFHhYiDwrcAI0FLe2SCjaa4
+ cQp3SJbyaad3NGVsQ1fpQH+OuIKLdP/XE4DHlFnfr2rOprWcAe5gAKzNGlDN4UoPXmPYRl
+ 9JuFedyOI3ITbzpJ63AdmFV1aOI7qTligWThsK++4SYrSnKv2f+MErSYaUbrIrvb29Oekt
+ COeiTmLbRoT0Qo4Y/jAKDwiG/zTuKteHTp7s8eQWZw1Ff/ycvLDDDLZ5DpOmfk3r4wPQ90
+ R6yNRiMQC4yiEw2AvRpmVl2CLOIRdHptOn7iD861qtmpHTDQn4HsOTf/PQ/IJoH/zi1kpE
+ Bat6XVrjPmYLRZdbv2KvFmwWDZvoTiAkSu8u6+m9/e7attY5Gtqze6t17ED6+2p2NJv0qY
+ 7fWO4ySJVR4RT1e4mPPUWZVF5fsZPGAB2t8hOUpVl7kfqb2JKY+6OyHHh45CUSXzBANiry
+ yXmSXeFykIf6QSIIuoM5r9xOitsQ9/88iUtyaH/ZVp1CCBm4aH4o6VmkjarQ
+X-ME-Proxy: <xmx:PZl8ajxbks--HX8d1rAoMsiYEUYD-6ARb6AvAOPh8JTRsyeMlawtqg>
+ <xmx:PZl8aio3oRAbG9fSgb97WmpBgL_YGHWmNBPWRrUfkqThSlKGyVJhVA>
+ <xmx:PZl8ai49ujF4DKV9_Jg79G7iYbu3KuLduQUQYFTGXOkU1-5G-9Bkyg>
+ <xmx:PZl8apc877TYfThGGrrMgaPxsvphi23Mgf1BsyAY8ZcRhS0sB7pbCg>
+ <xmx:PZl8apfNegBHbx1ZVVivDXHdmFXzpj7wAzomTAjTaS4PVDdhY_Kn2aC2>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 12:03:08 -0400 (EDT)
+Message-ID: <5f0550a38a1c6b614d7647d173d763f3d36f59fc.camel@alistair23.me>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: fix U-bit check to apply only to
+ leaf S/VS-stage PTEs
+From: Alistair <alistair@alistair23.me>
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, palmer@dabbelt.com, 
+ daniel.barboza@oss.qualcomm.com
+Date: Thu, 13 Aug 2026 02:03:08 +1000
+In-Reply-To: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
+References: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.146;
+ envelope-from=alistair@alistair23.me; helo=fout-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,17 +108,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+T24gRnJpLCAyMDI2LTA3LTE3IGF0IDEzOjIzICswMjAwLCBBbmRyZXcgSm9uZXMgd3JvdGU6Cj4g
+Q29tbWl0IGI3OTVlYTBiYTQ3MSAoImh3L3Jpc2N2L3Jpc2N2LWlvbW11LmM6IGZhdWx0IHdoZW4g
+IVBURV9VIGFuZAo+IG5vIHByaXYgYWNjZXNzIikgcGxhY2VkIGl0cyBjaGVjayBhaGVhZCBvZiB0
+aGUgbGVhZi12cy1ub24tbGVhZgo+IGJyYW5jaCBpbiByaXNjdl9pb21tdV9zcGFfZmV0Y2goKSwg
+c28gaXQgZmlyZXMgb24gZXZlcnkgUFRFIHdhbGtlZCwKPiBpbmNsdWRpbmcgbm9uLWxlYWYvdGFi
+bGUgZW50cmllcy4gUGVyIHRoZSBSSVNDLVYgcHJpdmlsZWdlZCBzcGVjJ3MKPiBhZGRyZXNzIHRy
+YW5zbGF0aW9uIGFsZ29yaXRobSAoU3YzOS9TdjQ4L2V0Yy4sIHRoZSAibGVhZiBQVEUgaGFzCj4g
+YmVlbiByZWFjaGVkIiBzdGVwLCBmb2xsb3dlZCBzZXBhcmF0ZWx5IGJ5IHRoZSBVLWJpdCBwZXJt
+aXNzaW9uCj4gY2hlY2spLCB0aGUgVSBiaXQgaXMgb25seSBkZWZpbmVkIGFuZCBjaGVja2VkIGZv
+ciB0aGUgbGVhZiBQVEUKPiByZWFjaGVkIGF0IHRoZSBlbmQgb2YgdGhlIHdhbGsgLS0gbm9uLWxl
+YWYgUFRFcyBkb24ndCBjYXJyeSBhCj4gbWVhbmluZ2Z1bCBVIGJpdCBhdCBhbGwuCj4gCj4gTW92
+ZSB0aGUgY2hlY2sgYWZ0ZXIgdGhlIGxlYWYvbm9uLWxlYWYgYnJhbmNoLCBhbG9uZ3NpZGUgdGhl
+IG90aGVyCj4gbGVhZi1vbmx5IGNoZWNrcywgbWlycm9yaW5nIGhvdyB0aGUgR19TVEFHRSBVLWJp
+dCBjaGVjayAoYWRkZWQgaW4KPiA5MTU4YzkwMGFiMzApIGlzIGFscmVhZHkgY29ycmVjdGx5IHBs
+YWNlZC4KPiAKPiBGaXhlczogYjc5NWVhMGJhNDcxICgiaHcvcmlzY3YvcmlzY3YtaW9tbXUuYzog
+ZmF1bHQgd2hlbiAhUFRFX1UgYW5kCj4gbm8gcHJpdiBhY2Nlc3MiKQo+IFNpZ25lZC1vZmYtYnk6
+IEFuZHJldyBKb25lcyA8YW5kcmV3LmpvbmVzQG9zcy5xdWFsY29tbS5jb20+CgpUaGFua3MhCgpB
+cHBsaWVkIHRvIHJpc2N2LXRvLWFwcGx5Lm5leHQKCkFsaXN0YWlyCgo+IC0tLQo+IMKgaHcvcmlz
+Y3YvcmlzY3YtaW9tbXUuYyB8IDE0ICsrKysrKystLS0tLS0tCj4gwqAxIGZpbGUgY2hhbmdlZCwg
+NyBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQo+IAo+IGRpZmYgLS1naXQgYS9ody9yaXNj
+di9yaXNjdi1pb21tdS5jIGIvaHcvcmlzY3YvcmlzY3YtaW9tbXUuYwo+IGluZGV4IGY2ODY1ZDFl
+MTY0ZS4uZWQ5ZmIwOWY4YmM3IDEwMDY0NAo+IC0tLSBhL2h3L3Jpc2N2L3Jpc2N2LWlvbW11LmMK
+PiArKysgYi9ody9yaXNjdi9yaXNjdi1pb21tdS5jCj4gQEAgLTQ3NiwxMyArNDc2LDYgQEAgc3Rh
+dGljIGludCByaXNjdl9pb21tdV9zcGFfZmV0Y2goUklTQ1ZJT01NVVN0YXRlCj4gKnMsIFJJU0NW
+SU9NTVVDb250ZXh0ICpjdHgsCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJyZWFrO8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBJbnZhbGlkIFBURSAqLwo+IMKgwqDCoMKgwqDC
+oMKgwqAgfSBlbHNlIGlmIChwdGUgJiBQVEVfUkVTRVJWRUQoZmFsc2UpKSB7Cj4gwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIGJyZWFrO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBS
+ZXNlcnZlZCBQVEUgYml0cyBzZXQgKi8KPiAtwqDCoMKgwqDCoMKgwqAgfSBlbHNlIGlmICghKHB0
+ZSAmIFBURV9VKSAmJiAhcHYpIHsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKgo+IC3CoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBBbGwgYWNjZXNzZXMgYXJlIGFzc3VtZWQgdG8gYmUgVXNl
+ciBtb2RlIHVubGVzcwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBwcm9jZXNzX2lkIGlz
+IHZhbGlkIChwdikuwqAgSW4gY2FzZSB3ZSBoYXZlIGEKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgICogbm9uLXVzZXIgbW9kZSBQVEUgYW5kICFwdiB3ZSBuZWVkIHRvIGZhdWx0Lgo+IC3CoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgKi8KPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsK
+PiDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAoIShwdGUgJiAoUFRFX1IgfCBQVEVfVyB8IFBU
+RV9YKSkpIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYmFzZSA9IFBQTl9QSFlTKHBwbik7
+IC8qIElubmVyIFBURSwgY29udGludWUgd2Fsa2luZyAqLwo+IMKgwqDCoMKgwqDCoMKgwqAgfSBl
+bHNlIGlmICgocHRlICYgKFBURV9SIHwgUFRFX1cgfCBQVEVfWCkpID09IFBURV9XKSB7Cj4gQEAg
+LTQ5MSw2ICs0ODQsMTMgQEAgc3RhdGljIGludCByaXNjdl9pb21tdV9zcGFfZmV0Y2goUklTQ1ZJ
+T01NVVN0YXRlCj4gKnMsIFJJU0NWSU9NTVVDb250ZXh0ICpjdHgsCj4gwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIGJyZWFrO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBSZXNlcnZl
+ZCBsZWFmIFBURSBmbGFnczogUFRFX1cKPiArIFBURV9YICovCj4gwqDCoMKgwqDCoMKgwqDCoCB9
+IGVsc2UgaWYgKHBwbiAmICgoMVVMTCA8PCAodmFfc2tpcCAtIFRBUkdFVF9QQUdFX0JJVFMpKSAt
+Cj4gMSkpIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7wqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIC8qIE1pc2FsaWduZWQgUFBOICovCj4gK8KgwqDCoMKgwqDCoMKgIH0g
+ZWxzZSBpZiAoIShwdGUgJiBQVEVfVSkgJiYgIXB2KSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgLyoKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogQWxsIGFjY2Vzc2VzIGFyZSBhc3N1
+bWVkIHRvIGJlIFVzZXIgbW9kZSB1bmxlc3MKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICog
+cHJvY2Vzc19pZCBpcyB2YWxpZCAocHYpLsKgIEluIGNhc2Ugd2UgaGF2ZSBhCj4gK8KgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCAqIG5vbi11c2VyIG1vZGUgbGVhZiBQVEUgYW5kICFwdiB3ZSBuZWVk
+IHRvIGZhdWx0Lgo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKi8KPiArwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBicmVhazsKPiDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAoKGlvdGxiLT5w
+ZXJtICYgSU9NTVVfUk8pICYmICEocHRlICYgUFRFX1IpKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGJyZWFrO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBSZWFkIGFjY2Vz
+cyBjaGVjayBmYWlsZWQgKi8KPiDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAoKGlvdGxiLT5w
+ZXJtICYgSU9NTVVfV08pICYmICEocHRlICYgUFRFX1cpKSB7Cg==
 
-> We have now implemented the same in meson directly, so no need to keep
-> it on configure side. Also, we have no more Makefile consumers, so we
-> don't need to export all those variables anymore.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
