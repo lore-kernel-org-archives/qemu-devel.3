@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86ED7C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 11:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C9CC5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 11:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu6jp-0001YJ-V7; Wed, 12 Aug 2026 07:03:13 -0400
+	id 1wu6xI-0005cw-Kg; Wed, 12 Aug 2026 07:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
- id 1wu6jn-0001V2-Dw
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 07:03:11 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu6wT-0005aV-S5
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 07:16:18 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
- id 1wu6jk-0007l0-Hx
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 07:03:11 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-38eca09faa2so166916a91.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 04:02:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu6wP-0003ja-Ef
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 07:16:17 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-80dc4a68e4aso9050777b3.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 04:16:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786533372; cv=none;
+ d=google.com; s=arc-20260327;
+ b=dQXfZyjVvjZcMsjfmzP4iBNSVMiv1Aq8Nj4Km3ShXVdb+jgnTPW/VuaJijrXuHpmEp
+ Ax3vz8gDlRRONsAGP1g49rFFHTrmdBZwtgo1FRUPwAcVrP9nQUl52Tu2dISS8/cgNhyR
+ ZUnHsZWp00knDKVpOpK2HDs3hlLsjOP72zOopsGyZpKhiXU71Im+8CYsuTeOcRvsQmgq
+ A+pPl7hLvkTrrgTR7LK6NyoIMmf6ac/i/acAtDXwEd0+K0oXMjYx4QQQTUiI3kveFSQo
+ elpV7BTtSG/XHweqLmiLDi+jvIZGMeNKwI9xTOCaeJrrhzwGB6/KqWXxfkTSZhVqh3DA
+ a5JQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=OjWcQUJKDi7jq2I4AWhV+OpD+ESWrsN8UirciFn/lyE=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=IHJ2hyE6Xya65UXUx1s4/yTE/JQZXfm0f1CiGYAGLWK/4mmJ5890a65dZUzM+w/5ik
+ LgOUmvBz6xcSm79RgQjYJq7Frq2qHUoqFvKUgrrtxK4TxzlvX/MsIdOQD4ZqAMjeMCa4
+ As+OcWQILBl2tJR0I5Kvszj72LSfL55heKqiXLMMTSNNBWpBGc3V0REwOBjtP1IgSpnw
+ CVMki3iKBlnM1+/kX4JvDttFVFrO4gFFFhd92ojTJAmNdsuTYXYdK1z1mlUrk16JEIHB
+ xQiHx9+NdXNZskmhUVOPe54esvzOrI6miMfrfsViRA0y+N9QQ+2Bi4Fpa/EDsqWC4pe5
+ hppQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786532543; x=1787137343; darn=nongnu.org;
- h=message-id:date:references:in-reply-to:cc:to:from:subject
- :content-transfer-encoding:content-type:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=mamAANzd/PbSQI1bxpiqo1MVM20pT8xJwz/gg+yIWD0=;
- b=L3/oKMriQoVSw6cavWjDrGdXcFIWk2Y7RbDyN5XPmBold3UeKuHO2fsamI3QmsnDyr
- bDXou7H/dFze8bwqBK38Dg3Hqc2iSuhVqvAaASNeyS4Cm7mk/SYb3nBH61HnFnn6bvSd
- qaaHipeg11RK73m2WAq/HyoSZMUE1nLv9TkxTaVskMz4SsZhvHoCvMcVZteiefjIo0jr
- DlSbEFZXiLNH0rXXiw24iqrmEpj/mlSfG/hFOPoeClFQDMAIDWreQmXE060EqOlSqqtU
- 91ivINTB3Q7FX38+c8gGJBhpmzwy5HMKch007/Gyq+a/8bN0Z47LZ6JLp21H0iS925tL
- MjLQ==
+ d=linaro.org; s=google; t=1786533372; x=1787138172; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=OjWcQUJKDi7jq2I4AWhV+OpD+ESWrsN8UirciFn/lyE=;
+ b=kixkMeLGgEzWS4rOnn3lH+aczPa64LfIx5WbPHkoZSIK+W3oQoFUj99q8Kvtp3Zfat
+ bCHgpbgTB4hw/5TYNaToqmSueuiPnxTJ/WRbj/6WekxxqEUwUJLzEU7TqG3kReEkal90
+ ODyd7N5g2LCRrR2ItgNhvU22rGymEML2VcPepnqoJXjPT46DfQTnsTP49HANESSVSTi7
+ yxXiHu+kAktcpUUMuKfJXPb5R88eFtjlEiUNC2Whw3nw8Xbz4zPH2Ryv4Nf6hdwRxYpC
+ QQjqBBuaoLHYIUHFox9RVR8A2phUZHM4khitn+FaVWx136dnWs94M+ie6vXCMGOeV/+6
+ NMbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786532543; x=1787137343;
- h=message-id:date:references:in-reply-to:cc:to:from:subject
- :content-transfer-encoding:content-type:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=mamAANzd/PbSQI1bxpiqo1MVM20pT8xJwz/gg+yIWD0=;
- b=Uam9elU7MoJwkLp0qWs3LMmZ4qtRHhH993g056qdpAZXSVRW5vOhBKkp4jN9BKV6QZ
- Ml44U3+Id+OLmFmK83ocMxbDoboexTJGMjXeIMiVBpn3qJmkc/0a4Ca0dGFMp7IF84UT
- tN25m88pk0383F0yuP6R6TcbNVcHuyq4+FauLP1Pzs22ld0klWFXbbXYZfjXjGZrXeSY
- KhJbTKxShbmYuhj2MKL7HsxvtxMHT4XP+p/vRkhAMiRgu0OaJh8DAO4LUt2zUnmhji/q
- X3C10w3aK2cinJWh+fhrs/P4fECJWpeI4WOpz5Zf99oCbXzz2pHm9rWn626RugvzaM+s
- 856g==
-X-Gm-Message-State: AOJu0Yz4noyLTADz4xFQ3ZnBHJq/UAAve2KqlZWRv/drjQgWEnoabAK3
- FZ6wuOK9PVsdJNnSTqaTIUDnAH/7AE9gcp87ebcT4uMAXh+1AxI6eBAx
-X-Gm-Gg: AR+sD13u32xuZ5kJeuM6S6mfemeUjhVPmhfMqi2pNAxioBrC/1Q4OQ+UA4gR6Y5jPio
- 7Ph2kHcqQwUxc/APiVS/nFVx9SyUanMLiMQ+e3iaONBkZsQBl+tBqOLaL2t0pH7wzPkZmmxYkuF
- Na4/YwWaSX5qy2qMTsk7RzaXabGf+GOpZNBIfKfVLWwI7b6M4Oe7S4YZMPQll0KsiDRxaHI4uCC
- heCgtMa2WWtAufPHVr86K1ZLHGnZqoBN2RUMrmWt8KnR5yqhgNQg0+MnR4dNoaLub5mQO2fl0fg
- 7FM95zkJT3oxiddzOwEaZAzoSc62DqYjbzn5EjEHAVOA/vBR1lNCUqEhE5V4ZBcRbYonXJ9DEY0
- OIrR1jGNzoqT2S9xtur6kf5NWY1Q8omj6CzRtI0XPBFd/1yHmjDmYmRGSbfbRzA9GWQz4dlTYl3
- rZAL5sYpA+83PRPy6lrvWrz5DEc41EJCBRwt+medzxZbQXzDRbCqRldWM59w==
-X-Received: by 2002:a17:90b:580f:b0:38e:6d4c:14df with SMTP id
- 98e67ed59e1d1-3930121d20bmr3140660a91.1.1786532542816; 
- Wed, 12 Aug 2026 04:02:22 -0700 (PDT)
-Received: from [127.0.0.1] ([38.34.7.236]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31cf3c08163sm9105729eec.7.2026.08.12.04.02.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 04:02:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786533372; x=1787138172;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=OjWcQUJKDi7jq2I4AWhV+OpD+ESWrsN8UirciFn/lyE=;
+ b=M7vHdObOG5lG9exNS0DCmBwuK0vn8FHNoyFcu9XhKR3ugvix/HQRxByrFflQO++xuD
+ WfSSULJNztvR+Gk+Jvy0V8JvKJlrxe1z0GE7f2cKitkyFrEBoR+fm4+Uj/NqxRfwLgpj
+ sEdRmkwRN5KNKNgr9X+MrrGw5aamjMDnuMw9SbZZ2SBr54kuuvaRMBKSv1R4quxjA7aH
+ socmqXzCG1hxv0UVtC9CUFrw4kNLFIorsJ1kNkQ8d8eiYqe9/G5sT8wA6M7WNkf2EzQG
+ oVsDeLUsTHw9HrZAx7PEFr+vhrQowbaxWULB13tPO248Txect160xQY6tfIk4oXHmgDL
+ TmGQ==
+X-Gm-Message-State: AOJu0YxwVF7WGcowSPqL0MBppFXM7mCq38ZU7NnCFTK+kyv9a9D9tqUT
+ jAS+uYGhk2tTG8eKsnfc1fiKnGVFDOrMZFzqWBrnTV03ABF+fgnpwC6UaXt3dIHjbDcAh5/18e7
+ hkOEaO/dDa4P4Qljnpkw3nE7ej3vwukVkUgBl1Ybb5A==
+X-Gm-Gg: AR+sD13NVUBifk71hz2E5PV2dvY249p8l4Xdc/HaN4KfY/0yeeUy0V2zKhia1pluqO7
+ +Yp5tCn3Q3zgmREe21IqMl6gvAnrQSPF2G4ooYeG2qUtwXdYwH4I6Fidtx4S/hiecmw7GdrzIAi
+ gj6CllL85sSuoLjxdKxS8F4f9khovQOEE/kLAVJ9yRO5qoyII8HI8MhP+pEPmFRVYBOlaCdZ3Br
+ BRcyhXlW1iFr1yLYPa6LFJeb2wIyJdmS6rNHGx96evx4esgZVLb2HSEsTSY/3G+s/a11vtjdcJy
+ 6K45fBard0UsjANslpx1Z9XzLs2umCQtDT6bB3HQ2u5K5AIr34DpxJR3iq0juLKrSZ10QiKox4y
+ zAfgn+lpb0aWRTlaIiOblwPLfXhQT7g==
+X-Received: by 2002:a05:690c:3746:b0:7dc:aa85:5c67 with SMTP id
+ 00721157ae682-83107542990mr25218167b3.11.1786533371673; Wed, 12 Aug 2026
+ 04:16:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v2 0/3] hw/riscv/k230: add IOMUX register block model
-From: Junze Cao <caojunze424@gmail.com>
-To: Kangjie Huang <flamboyant.h.01@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Chao Liu <chao.liu@processmission.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>
-In-Reply-To: <cover.1784022244.git.flamboyant.h.01@gmail.com>
-References: <cover.1784022244.git.flamboyant.h.01@gmail.com>
-Date: Wed, 12 Aug 2026 19:02:13 +0800
-Message-Id: <178653253397.92831.286711624996156567.b4-review@b4>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=caojunze424@gmail.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260806163939.328201-1-richard.henderson@linaro.org>
+ <CAFEAcA8stJZ6JZW1un++6zj+CDwkR-zTpA4G9ksTetO-xOn01w@mail.gmail.com>
+In-Reply-To: <CAFEAcA8stJZ6JZW1un++6zj+CDwkR-zTpA4G9ksTetO-xOn01w@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Aug 2026 12:15:58 +0100
+X-Gm-Features: AUfX_mzON05yEI6YGaZeENZTFRmfXETFaJMzdj2Q53bqbNlsUwJvbDPEEBYn1Bg
+Message-ID: <CAFEAcA_KTrt1=PstjYvtkatvWqhUYaSNwX1kq6NB5j-NxGcOwQ@mail.gmail.com>
+Subject: Re: [PATCH 0/7] target/arm: Introduce cpu types max-v8 and max-v9
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,18 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Jul 2026 18:21:59 +0800, Kangjie Huang <flamboyant.h.01@gmail.com> wrote:
-> hw/riscv/k230: add IOMUX register block model
-> 
-> Add a SysBus model for the 64 K230 Function IO configuration registers
-> documented by the K230 Technical Reference Manual. The model retains the
-> writable configuration fields needed by the SDK U-Boot and Linux
-> read-modify-write paths.
-> 
-> [...]
+On Wed, 12 Aug 2026 at 11:27, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Thu, 6 Aug 2026 at 17:41, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> >
+> > This is something that we've talked about for quite some time,
+> > having separate "max" cpu types for Armv{8,9}, because Armv9
+> > prohibits some deprecated Armv8 features.  Retaining all features
+> > simultaneously has the potential to cause confusion.
+> >
+> > r~
+> >
+> > Richard Henderson (7):
+> >   target/arm: Tidy cpu_max_initfn
+> >   target/arm: Pass ARMCPU to aarch64_aa32_a57_init
+> >   target/arm: Pass aarch64_enabled to aarch64_aa32_a57_init
+> >   target/arm: Sink aarch64_aa32_a57_init into aarch64_max_tcg_initfn
+>
+> I've taken these first four cleanup patches into target-arm.next.
 
-Reviewed-by: Junze Cao <caojunze424@gmail.com>
+Turns out the first patch causes the cross-arm-kvm-only and
+cross-arm-xen-only builds to fail:
 
--- 
-Junze Cao <caojunze424@gmail.com>
+/usr/lib/gcc-cross/aarch64-linux-gnu/14/../../../../aarch64-linux-gnu/bin/ld:
+libsystem_arm.a.p/target_arm_cpu-max.c.o: in function
+`cpu_max_initfn':
+/builds/pm215/qemu/build/../target/arm/cpu-max.c:223:(.text+0x4c0):
+undefined reference to `aarch64_max_tcg_initfn'
+
+I think this is because we used to have the call to
+aarch64_max_tcg_initfn() inside an "if (tcg_enabled())"
+block, so the compiler was able to eliminate it in the
+TCG-disabled config. Now we've dropped that, the call
+is still present and the link fails.
+
+I've dropped the series from target-arm.next.
+
+-- PMM
 
