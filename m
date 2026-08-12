@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA421C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E90C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAN7-0003ip-F6; Wed, 12 Aug 2026 10:56:01 -0400
+	id 1wuATI-0004y2-0d; Wed, 12 Aug 2026 11:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMP-0002AN-F0; Wed, 12 Aug 2026 10:55:17 -0400
+ id 1wuARj-000491-LS; Wed, 12 Aug 2026 11:00:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMI-0007vg-Mh; Wed, 12 Aug 2026 10:55:16 -0400
+ id 1wuARh-0002BO-NC; Wed, 12 Aug 2026 11:00:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=RU7PGg/8CgB1rXrLOry6ym2cJR/WFl9hoFv43FpgAfM=;
+ t=1786546233; bh=X3rI/qcWj9KRsNt0pTxo6IY1/iSXJfXRx0ptQaoiKfU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KRsbt/M/wlInnY4KDcCEKMbUP0krt0i8OqvdhrcAFG1J3SXx1o8ZV80mALoPRZ07Z
- FSOpFlLQM/Uw5m01IsAD5yBVx9YnFQYSLhARLUvJUSI5SSQXldACd5DziuoO3htFyw
- rkfBKCvNMPlBdQmihzZ8Hbhz2vDWrxoKuM5+eXesjxdeH5G5naP2FeEZGQEYJkkTJE
- nWvDKfsHfdwLPumX2Gt7LpVj0QBfWQgNC5+t/3FIa/m7r/c+GuWHbv3lXwQ/RxwkMY
- TIDUV/FJTSwziVYR7yP6AxSLSfd8ZlFtRboBQGRlP4rSLbpjzgQl5NPpZMqXRW5Vfx
- 0M5tldUrYocmQ==
+ b=Jb1Tn944r9rs4XvfKw6e8sasm1Bkxq/ivecu2MtEDv6gDl2Stk6jVbVYFmRj4tI5d
+ W1i7lnUdJyYXUTsLoRSaNruwjGjgm4fUSJgzwW/ndZbTvs7poD4qRFU31l91BID3Hm
+ XOotkgHXHVycNp3z88loRR4C5WcMRyZ8RiZxRI0g2cECV3rQHBNJrLU57T20xx8pkG
+ kEIc4ovfxiy7XnWFbmbAHvQmTWDWeO9iCxG0IrozYdkMY/fkbMqeEEP1i52MEBV1am
+ X8MYvNb4YMlf5Rlf06/kDUdbb5ye7Hj6QqynFjO+jHPeokduyZOfuuBBoxCxr0MrzL
+ u7+Mpfi9JtulQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 259CC1CA637;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AB0D21CA66B;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8086C409D79;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11A4A409DB0;
+ Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DE9502F9C9; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 6F5272FA31; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Feifan Qian <bea1e@proton.me>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 051/120] vhost: do not crash on ring map failure
-Date: Wed, 12 Aug 2026 17:48:34 +0300
-Message-ID: <20260812144955.649205-51-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 103/120] iotests: test O_TRUNC behavior for fuse
+ exports
+Date: Wed, 12 Aug 2026 17:49:26 +0300
+Message-ID: <20260812144955.649205-103-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -72,44 +71,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-When vhost_commit() rebuilds the memory region table after a flatview
-change, it revalidates cached host virtual addresses for active vring
-parts. If a mapping is stale, QEMU abort().
+The test cases for the blockdev-based export and for the file-based
+export with growable=on work before commit a94a1d7699 ("fuse: Manually
+process requests (without libfuse)"), then are broken until commit
+"block/export/fuse: fix regression with O_TRUNC when export is
+growable".
 
-This is not a security problem - only the priviledged guest
-can control make it invalid - but not nice e.g. for driver debugging.
+The test case for the blockdev-based export requires passwordless sudo
+for losetup and chmod similar to test 108.
 
-Let's call virtio_error() instead, marking the device as broken.
-
-Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-(cherry picked from commit 27806d2ddba2da97fb4137cba7d4172356c42914)
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260702132256.661429-3-f.ebner@proxmox.com>
+[kwolf: Catch OSError when probing sudo support]
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 7d06bbb2d9ba77e45b5a3131c9e7f934df99d5bc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index b9dc4ed13ba..623a17d650d 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -687,8 +687,9 @@ static void vhost_commit(MemoryListener *listener)
-                        (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
-                        dev->mem->regions[i].guest_phys_addr,
-                        dev->mem->regions[i].memory_size)) {
--            error_report("Verify ring failure on region %d", i);
--            abort();
-+            virtio_error(dev->vdev,
-+                         "Verify ring failure on region %d", i);
-+            goto out;
-         }
-     }
- 
+diff --git a/tests/qemu-iotests/tests/fuse-truncate b/tests/qemu-iotests/tests/fuse-truncate
+new file mode 100755
+index 00000000000..7eee35111c8
+--- /dev/null
++++ b/tests/qemu-iotests/tests/fuse-truncate
+@@ -0,0 +1,171 @@
++#!/usr/bin/env python3
++# group: rw
++#
++# Test how fuse exports behave with regard to O_TRUNC.
++#
++# Copyright (C) 2026 Proxmox Server Solutions GmbH
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++import subprocess
++from pathlib import Path
++
++import iotests
++from iotests import qemu_img, QemuStorageDaemon
++
++fuse_mount_point = os.path.join(iotests.test_dir, 'export.fuse')
++image_size = 1 * 1024 * 1024
++image = os.path.join(iotests.test_dir, 'image.' + iotests.imgfmt)
++
++def check_fuse_support():
++    Path(fuse_mount_point).touch()
++    test_qsd = QemuStorageDaemon('--blockdev', 'null-co,node-name=node0',
++                                 qmp=True)
++    res = test_qsd.qmp('block-export-add', {
++        'id': 'exp0',
++        'type': 'fuse',
++        'node-name': 'node0',
++        'mountpoint': fuse_mount_point,
++        'allow-other': 'off'
++    })
++    test_qsd.stop()
++    os.remove(fuse_mount_point)
++    if 'error' in res:
++        assert (res['error']['desc'] ==
++                "Parameter 'type' does not accept value 'fuse'")
++        iotests.notrun('No FUSE support')
++
++def check_sudo_support():
++    try:
++        subprocess.run(['sudo', '-n', 'losetup', '--version'],
++                       capture_output=True, check=True)
++    except (OSError, subprocess.CalledProcessError):
++        return False
++    try:
++        subprocess.run(['sudo', '-n', 'chmod', '--version'],
++                       capture_output=True, check=True)
++    except (OSError, subprocess.CalledProcessError):
++        return False
++    return True
++
++check_fuse_support()
++
++class TestTruncateBase(iotests.QMPTestCase):
++    growable = False
++    supports_preconditions = True
++
++    def evaluate_preconditions(self):
++        return
++
++    def add_blockdev(self):
++        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
++        self.qsd.cmd('blockdev-add', {
++            'node-name': 'node0',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'file',
++                'filename': image
++            }
++        })
++
++    def cleanup_blockdev(self):
++        os.remove(image)
++
++    def add_export(self):
++        self.qsd.cmd('block-export-add', {
++            'id': 'exp0',
++            'type': 'fuse',
++            'node-name': 'node0',
++            'mountpoint': fuse_mount_point,
++            'growable': self.growable,
++            'writable': True,
++            'allow-other': 'off'
++        })
++
++    def stop_qsd(self):
++        if self.qsd:
++            self.qsd.cmd('block-export-del', {'id': 'exp0'})
++            self.qsd.stop()
++            self.qsd = None
++
++    def setUp(self):
++        self.evaluate_preconditions()
++        if not self.supports_preconditions:
++            return
++        Path(fuse_mount_point).touch()
++        self.qsd = QemuStorageDaemon(qmp=True)
++        self.add_blockdev()
++        self.add_export()
++
++    def tearDown(self):
++        if not self.supports_preconditions:
++            return
++        self.stop_qsd()
++        self.cleanup_blockdev()
++        os.remove(fuse_mount_point)
++
++class TestTruncateFileGrowable(TestTruncateBase):
++    growable = True
++
++    def test_o_trunc(self):
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), 0)
++            file.write(b"test")
++        self.stop_qsd()
++
++class TestTruncateFileNotGrowable(TestTruncateBase):
++    growable = False
++
++    def test_o_trunc(self):
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), image_size)
++            file.seek(0, os.SEEK_SET)
++            file.write(b"test")
++        self.stop_qsd()
++
++class TestTruncateBlockdev(TestTruncateBase):
++    growable = False
++
++    def evaluate_preconditions(self):
++        self.supports_preconditions = check_sudo_support()
++
++    def add_blockdev(self):
++        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
++        res = subprocess.run(['sudo', '-n', 'losetup', '--show', '-f', image],
++                             check=True, capture_output=True, text=True)
++        self.loopdev = res.stdout.strip()
++        subprocess.run(['sudo', '-n', 'chmod', 'go+rw', self.loopdev],
++                       check=True, capture_output=True)
++        self.qsd.cmd('blockdev-add', {
++            'node-name': 'node0',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'host_device',
++                'filename': self.loopdev
++            }
++        })
++
++    def cleanup_blockdev(self):
++        subprocess.run(['sudo', '-n', 'losetup', '--detach', self.loopdev],
++                       check=True, capture_output=True)
++        os.remove(image)
++
++    def test_o_trunc(self):
++        if not self.supports_preconditions:
++            iotests.case_notrun('No passwordless sudo for losetup and chmod')
++            return
++
++        with open(fuse_mount_point, 'w+b') as file:
++            file.seek(0, os.SEEK_END)
++            self.assertEqual(file.tell(), image_size)
++            file.seek(0, os.SEEK_SET)
++            file.write(b"test")
++        self.stop_qsd()
++
++if __name__ == '__main__':
++    iotests.main(supported_fmts=['raw'],
++                 supported_protocols=['file'],
++                 supported_platforms=['linux'])
+diff --git a/tests/qemu-iotests/tests/fuse-truncate.out b/tests/qemu-iotests/tests/fuse-truncate.out
+new file mode 100644
+index 00000000000..8d7e9967009
+--- /dev/null
++++ b/tests/qemu-iotests/tests/fuse-truncate.out
+@@ -0,0 +1,5 @@
++...
++----------------------------------------------------------------------
++Ran 3 tests
++
++OK
 -- 
 2.47.3
 
