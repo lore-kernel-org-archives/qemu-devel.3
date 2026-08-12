@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18AAC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA366C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hI-0005Jo-Mv; Wed, 12 Aug 2026 09:08:44 -0400
+	id 1wu8j1-0000D0-FE; Wed, 12 Aug 2026 09:10:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gf-0003cb-SW; Wed, 12 Aug 2026 09:08:07 -0400
+ id 1wu8i7-0007t4-Ko; Wed, 12 Aug 2026 09:09:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gZ-0005NH-Tj; Wed, 12 Aug 2026 09:08:05 -0400
+ id 1wu8i5-0005em-51; Wed, 12 Aug 2026 09:09:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=SIYmYtDzMDsrvy/3Yqy+v0Flj9pa1bbX5Us8UZ2vm/c=;
+ t=1786539784; bh=oRC6/Quzig25Gy65AWgpj/Z1OJzeEhGrMhwUkwDSR14=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dKStcyElKxpqO46GrcC/c35hW/qHkDJ3/Xkk3cOJSjmk2laparr6YBijZ0CqTr1T1
- ezwQ2Jq9q4An1ytSw0qPewuJDeFjn1wKALIlfdmbOnEAgT83A+j6a4eRYw6zTuVTV6
- uhI1YqpQA6ItUictfMVQEfwljKjRmNXirMHngXnlNhULkLDgGkdVnIzW2f9hg623XZ
- 4/9YGLlQN7U+3vTB1CWR4bEQvMHEr38+D4AtQu5n+wWSzbKyd0zcL4N873DBr61wGq
- 9upV9wAznufz8uUj6CqujphDOvncgPYufNRtxSTHk0EfeXXYeNLU3TWcienjJJeTUC
- bREeJnS6jFPKg==
+ b=h2NMMmE/zeFGjbCenjoA4Wq0devkvh9xKvbEb5Z1CVuH3Oxh2DonTyMhQmoFaRiCq
+ 2OcV0xgFr/yACe1PMkp4w+0DNno0g5jBkprOBi1UOT+1h85a4ceqHEUiJfKae597O5
+ 5viSqm3G6TAyKjhRr1gwEs8iTanmaiDquTDGwFPgqpvCPYUCjWVgvKy7HZ+tSRtbtA
+ k+SAXQRqU/z3An35e3ZAmyTQJUa2nB/Sj/rUmbDoRnPocjn//FX3fpo4Oj/e6YyIei
+ DQz8Xt/xFT8y0S8yqJ9Ph7Hr3xPzOv332CAq/LRFuyFJCC0nJvcKQtM+J4g8KELcnQ
+ hggXxjgwnupUg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B2821CA4B3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A8511CA4C2;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 418C4409B96;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 80FDC409BA5;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 52A952F8FC; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 7CAB42F91A; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [Stable-10.0.13 052/102] hw/pci-host/q35.c: Avoid early return in
- mch_write_config()
-Date: Wed, 12 Aug 2026 16:01:27 +0300
-Message-ID: <20260812130233.621965-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, botszhuang <huang.botsz@gmail.com>,
+ botszhuang <botszhuang@gmail.com>, Nick Huang <sef1548@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 067/102] hw/i2c/bcm2835_i2c: Correct CLKT register
+ offset
+Date: Wed, 12 Aug 2026 16:01:42 +0300
+Message-ID: <20260812130233.621965-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -71,63 +72,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: botszhuang <huang.botsz@gmail.com>
 
-In mch_write_config() we return early if has_smm_ranges is false.
-This is slightly bug-prone because it leaves the door open to somebody
-later adding non-SMM-specific code at the bottom of the function.
+The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C
+controller is actually located at offset 0x1c, not 0x20.
 
-This case isn't as bad as the one in realize, because the function is
-a lot shorter.  But putting the handling of the three SMM specific
-ranges into an if() rather than having an early return seems better.
+Update the BCM2835_I2C_CLKT macro to match the hardware
+specification.
 
+Since QEMU's implementation ignores whatever value the guest
+writes to this register, and Linux only writes to CLKT and
+doesn't read it back, the main effect of this fix is to
+avoid an incorrect GUEST_ERROR log.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9cf3bc65afdb63 ("hw/i2c: Implement Broadcom Serial Controller (BSC)")
+Signed-off-by: botszhuang <botszhuang@gmail.com>
+Tested-by: Nick Huang <sef1548@gmail.com>
+Message-id: 20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com
+[PMM: removed commit message paragraph about effects which I think
+ is incorrect, substituted a different one]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260708121011.1653365-4-peter.maydell@linaro.org>
-(cherry picked from commit e07c67584c69da44a4d52df747a6fff1f411500d)
+(cherry picked from commit c4580a3a6d1cc542479602048d15556a18928a22)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index 26451d0538e..1e46e6e688f 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -475,22 +475,20 @@ static void mch_write_config(PCIDevice *d,
-         mch_update_pciexbar(mch);
-     }
+diff --git a/include/hw/i2c/bcm2835_i2c.h b/include/hw/i2c/bcm2835_i2c.h
+index 0a56df4720b..7e8cbb43b1b 100644
+--- a/include/hw/i2c/bcm2835_i2c.h
++++ b/include/hw/i2c/bcm2835_i2c.h
+@@ -38,7 +38,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2835I2CState, BCM2835_I2C)
+ #define BCM2835_I2C_FIFO    0x10                  /* FIFO */
+ #define BCM2835_I2C_DIV     0x14                  /* Clock Divider */
+ #define BCM2835_I2C_DEL     0x18                  /* Data Delay */
+-#define BCM2835_I2C_CLKT    0x20                  /* Clock Stretch Timeout */
++#define BCM2835_I2C_CLKT    0x1c                  /* Clock Stretch Timeout */
  
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
--                       MCH_HOST_BRIDGE_SMRAM_SIZE)) {
--        mch_update_smram(mch);
--    }
-+    if (mch->has_smm_ranges) {
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-+                           MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-+            mch_update_smram(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
--                       MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
--        mch_update_ext_tseg_mbytes(mch);
--    }
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-+                           MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-+            mch_update_ext_tseg_mbytes(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
--        mch_update_smbase_smram(mch);
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
-+            mch_update_smbase_smram(mch);
-+        }
-     }
- }
- 
+ #define BCM2835_I2C_C_I2CEN     BIT(15)           /* I2C enable */
+ #define BCM2835_I2C_C_INTR      BIT(10)           /* Interrupt on RXR */
 -- 
 2.47.3
 
