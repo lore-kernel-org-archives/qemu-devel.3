@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34854C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:21:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B945BC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hP-00062y-4S; Wed, 12 Aug 2026 09:08:51 -0400
+	id 1wu8oI-00069Q-Ib; Wed, 12 Aug 2026 09:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gq-0004Cn-Le; Wed, 12 Aug 2026 09:08:17 -0400
+ id 1wu8ka-0003Qv-V8; Wed, 12 Aug 2026 09:12:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8gn-0005S3-Tc; Wed, 12 Aug 2026 09:08:16 -0400
+ id 1wu8kY-0006KT-NE; Wed, 12 Aug 2026 09:12:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=4lW4Y8oNwvXpbcP6wAlNkYptzHhHc3HXNVUXv1TpEbA=;
+ t=1786539784; bh=tM+JxphRRw3tsSpip9z/jawKM33R9LI8QWEzsTQCAEM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=i6NtC6NQzIA94VKPWnsaSHbw6A7mdIuuRq0oN0psx2Cmun9Afe7KEWr+KLHvGCtA4
- icTPaf6V/CZZsMEP/yqt1ayTAhQsrhPgaE/VJs4pFEtFb8tFgzIbDCP17l42tHWbhL
- 4NzW/lFoB6ytKLwsALM/EEwVGCQ087MFlUYPjg0bPibmTVYskDORzrLehRALFcwQax
- tGF6SaViies5AGzyegOEGbv7zbzrHE6kT36moT4Okd4vK2Yj4tdIomZHArTX8aGu6m
- v230SzP3UoYC6o2HdSm6UPCIvEjvyEH2D2Sy+6WdNdBiMnPc0fXVpvuR2hmvzrPloQ
- KdW/Ge7vtPloA==
+ b=ATA4sZ1C0I8zUG2gnHWCqYXpq9YW/QeMgCh+GHD0whK8F07bIYlc3sNVCzGgsIcy8
+ d/Ig2dUTq82sS11xp3uur5B1uSd2EN4C5d84ctwMYu6QgD7xsm7IUMLJC7ONAudqfH
+ U2NM+WRwDyD2f6eEv9EOUs1F8UlYLuhmgS7rGfc31tcEkO4sITiKijBPUWBeP8RVWu
+ xPYpRpPLAnnQosmdv2IhxBJpqxxo+oFE+7sEOkfxAkqsYyFMZONb+4SvzsIrQ0y7Rs
+ Oo8o/TfksUm4cw24hyIZzL/r6HoV5t+PESnMi9FBLjnM1DS+CvyGmsQuGhVwgcCWS6
+ mgJXALy6E+QTA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CAFC1CA4B7;
+ by isrv.corpit.ru (Postfix) with ESMTP id B1AA91CA4DA;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 53360409B9A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7687409BBD;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5D3EC2F904; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id BEBD32F94A; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- alxndr@bu.edu, Giovanni Vignone <gio@octane.security>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 056/102] hw/net/virtio-net: Protect from DMA
- re-entrancy bugs
-Date: Wed, 12 Aug 2026 16:01:31 +0300
-Message-ID: <20260812130233.621965-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Cyber_black <Cyberblackk@proton.me>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 091/102] hw/display/virtio-gpu: fix offset wraparound
+ in scanout_blob_to_fb
+Date: Wed, 12 Aug 2026 16:02:06 +0300
+Message-ID: <20260812130233.621965-91-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,44 +75,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace qemu_bh_new_guarded() by virtio_bh_new_guarded()
-so the bus and device use the same guard. Otherwise the
-DMA-reentrancy protection can be bypassed.
+virtio_gpu_scanout_blob_to_fb() computes the framebuffer offset from
+guest-controlled offsets[0], r.x, r.y and stride using uint32_t
+arithmetic. When the sum exceeds UINT32_MAX, silent wraparound lets
+the guest steer the scanout to an arbitrary in-bounds region of the
+blob instead of the intended rectangle.
 
-This update was missing in CVE-2024-3446 fix.
+Compute the offset in uint64_t, reject values exceeding UINT32_MAX
+(the width of fb->offset), and only store into fb->offset once both
+range checks pass.
 
-Fixes: CVE-2026-66022
-Cc: qemu-stable@nongnu.org
-Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Cc: alxndr@bu.edu
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4073
-Reported-by: Giovanni Vignone <gio@octane.security>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260723233555.2970619-1-lvivier@redhat.com>
-(cherry picked from commit df12999cc81339ffb252875608919c72ccc37bcd)
+("[PATCH] hw/display/virtio-gpu: Remove the bytes_pp field")
+
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3871
+Based-on: <20260719-bpp-v1-1-9b91946d6cf3@rsg.ci.i.u-tokyo.ac.jp>
+Reported-by: Cyber_black <Cyberblackk@proton.me>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725122734.1775774-1-marcandre.lureau@redhat.com>
+(cherry picked from commit b8ef970532c30da2f3fa8985867a74f898ce96aa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 24256e866cd..4362e866d70 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3012,8 +3012,9 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
-         n->vqs[index].tx_vq =
-             virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-                              virtio_net_handle_tx_bh);
--        n->vqs[index].tx_bh = qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
--                                                  &DEVICE(vdev)->mem_reentrancy_guard);
-+        n->vqs[index].tx_bh = virtio_bh_new_guarded(DEVICE(vdev),
-+                                                    virtio_net_tx_bh,
-+                                                    &n->vqs[index]);
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 34b8bb053dc..bd32543dc70 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -773,7 +773,7 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+                                    struct virtio_gpu_set_scanout_blob *ss,
+                                    uint64_t blob_size)
+ {
+-    uint64_t fbend;
++    uint64_t fbend, offset;
+     uint32_t bytes_pp;
+ 
+     fb->format = virtio_gpu_get_pixman_format(ss->format);
+@@ -803,18 +803,20 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+         return false;
      }
  
-     n->vqs[index].tx_waiting = 0;
+-    fb->offset = ss->offsets[0] + ss->r.x * bytes_pp + ss->r.y * fb->stride;
++    offset = (uint64_t)ss->offsets[0] + (uint64_t)ss->r.x * bytes_pp +
++             (uint64_t)ss->r.y * fb->stride;
+ 
+-    fbend = fb->offset;
+-    fbend += (uint64_t) fb->stride * ss->r.height;
++    fbend = offset + (uint64_t)fb->stride * ss->r.height;
+ 
+-    if (fbend > blob_size) {
++    if (offset > UINT32_MAX || fbend > blob_size) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+-                      "%s: fb end out of range\n",
++                      "%s: invalid fb bounds\n",
+                       __func__);
+         return false;
+     }
+ 
++    fb->offset = offset;
++
+     return true;
+ }
+ 
 -- 
 2.47.3
 
