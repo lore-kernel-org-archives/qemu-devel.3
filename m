@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944F4C5CFEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9249DC5AD5A
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 19:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuEUC-0002LJ-TB; Wed, 12 Aug 2026 15:19:36 -0400
+	id 1wuEUR-0002aQ-58; Wed, 12 Aug 2026 15:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuEUC-0002LB-2M
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 15:19:36 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1wuEUP-0002ZG-Sp
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 15:19:49 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuEUA-0005Zv-Er
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 15:19:35 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so2332568a91.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 12:19:33 -0700 (PDT)
+ id 1wuEUO-0005at-Bv
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 15:19:49 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2d004f135b1so20185905ad.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 12:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786562372; x=1787167172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786562387; x=1787167187; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=aLH8zsGDhbjMC9URduZxHcCBZ3FzwEHnyLt5tXuOrGg=;
- b=v3mLlDJYIHyRyWVbj9Bcy/qAzSi7Tm8WXCLsvPVW/9rArQ5cysbpgVF0BZezgLgFJU
- hTpe/h6rp+CpOdXycCTfZEBNoASHhl+JPGzQt0LPmG1H5YJBb+BsuMtUJhE9nZ3NpNyl
- Tafgc0mBTRNoZr00wXMtqSk0F7qnxfeMu8PrVvOFLIBzBsu0bOscTHYR89YE3KR1lodl
- lLotpjREE3widbQskFK2gVho6PAFOiJWdvyMDNg6qumWDCylbayfrdKzr1L+a5gNTtDx
- PmbMYGrAi0uHVyA4jfJGm94aekKjGsr9+Yk/BVtMV+BdDO8AWarCGzNt8XXbRPx6r0nI
- 3VYQ==
+ bh=ehvAXe7x7L5kcboD1700O5NrmDLTAFVRc74cjLN/zOs=;
+ b=mbD3icrzOykUqqjsL/V6kgaq/8qLeleGwyiLTgjHHg8i/iW6INd4JFRDDcs9WuGd0K
+ u5LUVbAKJA8NFfJT4vwsbMSZozSp1T6yVgUuC0ZAUbKdZgv6F18YFFNprfXDkJx7jJbW
+ OAX4dO9SZpawA6tDmWyLaouz0OTiAF6wsOJBJ8JSoLSJGzNBGA0kKlMpNSAxIhyZIUET
+ OS2x4imWFFd1zwKVLjIqEy/fyu0q54hFKucbCa/Bql62qWeDVS2zXKq8lIMjoMM7ZBS4
+ I5smM6yn5m/PgtRigr2CWH/N5ThJ2nGEVoPnZcykDuGpWmdgkN06t7K5xKiMuSUXzq+P
+ QNYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786562372; x=1787167172;
+ d=1e100.net; s=20251104; t=1786562387; x=1787167187;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=aLH8zsGDhbjMC9URduZxHcCBZ3FzwEHnyLt5tXuOrGg=;
- b=Yr9I1AfF9HGmfGFvKYMJnWpsEOE3hgB3UIOjorVQWOGyF1WitRDaHl4FL9H50QkliD
- atVWtMKUGOzG0FI6Xdrbg6W7Y+ToHWB0YYoZ6UnIag6f0IX0rWxldWCY/NptEqAwKEuy
- xytCnJPNcjvWtKaldQAqHipA8iqOPJ/BZISo1Sz+NUA+qQ4jGcvf2W3t4+LbyR9xsbax
- D+P/VnJoT+Jyu+DYBPlZ6mvjVKgm+pDZaYAz90iuKF3QyVxmwW7XYc8ZKymSrS5AWCGp
- KllJ81uHRge+0GN+TXISfj5CDDQKYtf9RFjBlYJ6tzvVNL1K3EX0mmmVLXUGwNK0IBtr
- kxXA==
-X-Gm-Message-State: AOJu0YwaDaEUifihd/KHzWfXP7DA6gaBiDt8u4H549omQ+/1YOvvB7vp
- /KlrTwY8vXVbBiJB+cS6wCnJzvF3tw70Hem2ViEVJuoA23/YFHn8kBk1WjOyNGKmZXMibyMOc9l
- +Jkzo
-X-Gm-Gg: AR+sD13bZXXTtepkSLo/GciIQBcJCcEW+LddKYUJ4a7u5Mhj2euDNCnLK/qwo1E6W/c
- bXD8c9NQo0dvrTQGxl3Rw5VI4+hwFZsrl2Bzm4XD6zl6LBuUcJ+xQWi+mbHn5gnoyitk2+riBhV
- nuNmP5vVy99S8ZVgdzleELRYEfgkNdpgYhdeKGt4L8SKlW2IGVhI8VgabeBNUxIn1DECeByugNW
- iK7hBuTzXTTwjAhmmX0Fks/wAE/C9m/pJ9wxeC/tbB0KevgDZpuUxK6OK3shLKZW3TdDOklpEFr
- A1I5tlxsxCekB7Jun7ZCwwqFfqnfrfYURoBWM8FVI9H1TPep9fH9l4r1t4NJwZBB97cDTyGRPq+
- Z6o1tMq2A6GrteseafArXjFSXG8rmUE8erAhekG9NpbUQlZYQKhDGEbwutvE7Q69CaV5ZUH9keM
- XfiXpJjgrhgKj1kC0B2RXhStRYwQXLUvMqaLZhMaAjGAT0G6i+mAdPyEF1VAU4qGfQ4MeLIHWOr
- flQkaNE7GYmAwPtvFPiE03JRgsX
-X-Received: by 2002:a17:90b:46:b0:36d:b424:4f17 with SMTP id
- 98e67ed59e1d1-3931dfdd5bdmr604497a91.1.1786562371704; 
- Wed, 12 Aug 2026 12:19:31 -0700 (PDT)
+ bh=ehvAXe7x7L5kcboD1700O5NrmDLTAFVRc74cjLN/zOs=;
+ b=lkqCPDAS6rKYt/dZWMDZbEvJ+CM4UF3xM0cuVN0DiyPhwXjRHLWQRfx7OFIn6Yz2CI
+ uMlDSMOjqG/29s66ZrHA5LANYGCajY7seJJOcilxlvSQtqUz7Trayhy9yZn2wal3Rk3j
+ uwOavNWovwHpnngGlAqAmqzs8pFUW6u9spboPKWbKUn9h8i14iM8KRS2IJLTfu3AMN16
+ bLlbuq/Y4E5a43HHctRyN6CDJ6loOQbCgmkOcdrfl1iiBJeYXQbsIuDiDmVjUPO/IjFl
+ 3a7GeopFCADoMGdF2jY1oIGCqVfy1Wf95+c6ixS5l8eVuSB6gJRqFKm7ip/VUKmc7JUt
+ fxTw==
+X-Gm-Message-State: AOJu0YyjMeEPw3zALUipG3Zj2oyrwyLjGUnkji3JVob8iTeRZ5wSCwIW
+ Ko//80QUhAPc9sy3cmnl3KM6cbylTKb6Iuag+nfnNtbX6h+vkyrqaTGnwBgW5PkdQNdarhy20EG
+ ldsuH
+X-Gm-Gg: AR+sD130OAiba48z9LNDCsMmth4pkHmnh4UlBkEUQczqb+PIObZYL99HskUGJNFYybo
+ D26Hs77OowWRdVzMgI6lqphGap2uA+AZn3SifxG/v82oRPjuIeyf3YuBC777SLt2jYJqQdxapQo
+ jYEAuSQAixL/RGgaWueDJPv9deKxcVB66fe2LamOa7zHYrvWMO5nJhYgsFAjNmOEQZ4Db3EybJb
+ vhMZcZESRQmq1/HVPWxkKWSa9IMlRSo3/XE7skFIAAutFnr4kBYISkvgYm1cxBxwjVlFWDtXDdo
+ 9C7h02V+CYz5YMqKAZCdIFRcHEEyvSIpyfCoDcgK1NH8cdSMRiDArv0OMahMLhj05Wc/x6YKYdu
+ XNZ3elm2RBk0h3uozBbgfPAGBgyBmDAs4JzWAii4gx/SbsX39H0rpT+JlURw4WT2eRBeWLRW0KF
+ +0+cAo4HzkIK4XVbiUZtLvGQjNWCQK63Af+5e0e+SCKKq0GH9P2KvaqgIAX/q/O97IkrLT2tjwn
+ C3mTMBVhvV3uPH/9yYlaTfLtnrx
+X-Received: by 2002:a17:902:cf09:b0:2d3:716e:e2ae with SMTP id
+ d9443c01a7336-2d37d57d0aemr3568435ad.6.1786562386604; 
+ Wed, 12 Aug 2026 12:19:46 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931ed14197sm114472a91.2.2026.08.12.12.19.31
+ d9443c01a7336-2d37c49ce11sm844885ad.67.2026.08.12.12.19.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 12:19:31 -0700 (PDT)
-Message-ID: <513c5510-660d-48ff-b90d-8640af14dec2@linaro.org>
-Date: Wed, 12 Aug 2026 12:19:29 -0700
+ Wed, 12 Aug 2026 12:19:46 -0700 (PDT)
+Message-ID: <5aa94dc0-9887-499b-9901-3f21646ca342@linaro.org>
+Date: Wed, 12 Aug 2026 12:19:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/26] target-arm queue
+Subject: Re: [PULL v2 00/41] hex queue
 To: qemu-devel@nongnu.org
-References: <20260812121622.649730-1-peter.maydell@linaro.org>
+References: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
+In-Reply-To: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,34 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/26 05:15, Peter Maydell wrote:
-> Hi; here's the first arm pullreq for 11.2; contains one new
-> board model, emulation of another SME feature, and various
-> bugfixes.
-> 
-> thanks
-> -- PMM
-> 
+On 8/12/26 08:41, Brian Cain wrote:
 > The following changes since commit e8d693e12af9cbb89d724baadfcc08559669e279:
 > 
 >    tests/qtest: Do not use versioned pc-q35-5.2 machine anymore (2026-08-11 16:12:34 -0400)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260812
+>    https://github.com/qualcomm/qemu tags/pull-hex-20260812v2-1
 > 
-> for you to fetch changes up to 49aecf39008ebeb86127b5055cefa17d68370b20:
+> for you to fetch changes up to 2e555f5b44d1586517e44d47f73afa6062f48b93:
 > 
->    tests/functional/aarch64: add raspi4b full-RAM regression test (2026-08-12 11:41:56 +0100)
+>    tests/hexagon: add tests for HVX bfloat (2026-08-11 23:45:45 -0700)
 > 
 > ----------------------------------------------------------------
-> target-arm queue:
->   * Implement emulation of FEAT_SME_TMOP
->   * New board model: Axiado EVK SCM3003
->   * Fix various minor bugs in mps3-an547 model
->   * hw/i2c/bcm2835_i2c: Correct iomem size
->   * hw/misc/bcm2835_powermgt: implement a real watchdog timer
->   * hw/arm/raspi4b: fix guest never seeing more than ~1 GiB of RAM
+> Hexagon queue
+> 
+> v2 fixes build errors introduced while mitigating a checkpatch
+> failure.
+> 
+> Fixes:
+> * ssub32_saturate, ssub64_saturate fixes
+> 
+> Features:
+> 
+> * l2vic device
+> * qtimer device
+> * HVX-IEEE instructions (v68+)
+> * HVX GVec overrides for v{avg*,absdiff,sadd,*}
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
