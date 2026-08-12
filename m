@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FB9C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78B2C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:15:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAPp-0007as-Pg; Wed, 12 Aug 2026 10:58:50 -0400
+	id 1wuAOH-0004Ug-RW; Wed, 12 Aug 2026 10:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAPY-0006i6-AO; Wed, 12 Aug 2026 10:58:33 -0400
+ id 1wuANu-0004Ii-Nt; Wed, 12 Aug 2026 10:56:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAPW-0001Fh-0d; Wed, 12 Aug 2026 10:58:32 -0400
+ id 1wuANr-0000dm-TD; Wed, 12 Aug 2026 10:56:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=l0D09KU06IlF6XhbCg+2gCjeUISqqmYt3jBoagWhqM0=;
+ t=1786546232; bh=/5bI8CbkXuhLAz9DBCs0/cxXj6OkBC82Ca6dNN8glwg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y5aUMaqgqhl2GDgYLSl/FyBrI5WW7rPv1+dzTOu9NKsnVdYM7AL+1SplA3fIhwSWM
- ZZqGIRipy79q5HRuoxk3W43aUcQyrUgvZ29N+LUXrSuLM/TD0i7B9nKXlvDisyUybL
- P/xgmk7j27+dsmpK8ieKhsN01OGiE2jB2QfhfJdBIUnn0uCPlDP8Gyvip9oWlw0pY3
- 78yjTkDK0loLUH/gw2VbD8KE1TnOIRKvR+E+wtli9s8Sjv4VWb5xqP1CF5znqBH9LT
- LoM9xunZWp/klif+A+QPPV0uLgGn1c1JPUjbCl+NEvKQ8CXcOANyWGffkNh/9XkXuv
- LtGyDRVLFNJAQ==
+ b=iCtPtmvn7yvDwR65gULI0085BMuOKWST6V+vKWHTWX9ohI+jxhc6NHbwOH8srgyI9
+ NgGN52oPkt7lHUuN8EHH2le8Q1vhL420u3cGmcMPMVFuozcxpisf0dOl+/suD9KZ66
+ 04aBOXUb6YAJx5cqZNUPTisv6fpLRiMmmGPk2uwHATEleR289Ks3JpC/qJkwwxsRrc
+ XYkfKHMh8wiNo9vV3iIbh+2iFlA9Y/Fsiy3u0EsLxhoiQP11/zYGyjQL6YV6T22eMz
+ eLgyMl1TVhGQ8gKIofjQoxI1RhXiNEdXn4u0RQ5z9+UZQz8iuBPzQqSWqBq9a7tiol
+ j+IcaIrpX5qQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF4621CA653;
+ by isrv.corpit.ru (Postfix) with ESMTP id 62C261CA640;
  Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5632C409D95;
- Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BD6F8409D82;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B3A462FA01; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id 29B1A2F9DB; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 079/120] hw/display/exynos4210_fimd: Factor out
- finding screen width/height
-Date: Wed, 12 Aug 2026 17:49:02 +0300
-Message-ID: <20260812144955.649205-79-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>, Michael S. Tsirkin <mst@redhat.com>
+Subject: [Stable-11.0.4 060/120] hw/pci-host/q35.c: Always initialize
+ smram-region even if SMM disabled
+Date: Wed, 12 Aug 2026 17:48:43 +0300
+Message-ID: <20260812144955.649205-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,73 +73,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Currently we hard-code the expressions for getting the global screen
-width and height out of the VIDTCON2 register where we need them.
-Use functions instead.  Make the global_width variable in
-exynos4210_fimd_update() uint32_t for consistency.  (The values are
-clamped to well below INT_MAX, so there is no overflow risk here.)
+The MCHPCIState::smram_region looks like it ought to be SMM-specific,
+but it isn't, because its behaviour is "alias the PCI address space
+into system memory at the SMRAM_C_BASE offset", and it must be
+enabled for "hide SMRAM", and disabled for "show SMRAM".  If the
+SMRAM regions are disabled, we want "hide SMRAM", so we need to
+initialize and place this MR.  Do this in the minimal way, by moving
+the "bail out of realize if has_smm_ranges is false" check down below
+the initialization code.
 
-Stable CC because this is a prerequisite for an upcoming bugfix
-commit.
+This fixes a bug where disabling SMM causes the VGA screen to be
+blank during seabios output, until the OS graphics driver is
+initialized.  This is most obvious for accelerators which have no SMM
+support (e.g.  NVMM, HVF, WHPX) as there smm=off is the default, but
+you can also see it on KVM and TCG if you explicitly pass smm=off:
+ qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+
+The early return is bug-prone, so we can refactor the code to clean
+it up, but this is the minimal bug fix for backports, and is what
+Debian used to work around this:
+ https://salsa.debian.org/qemu-team/qemu/-/commit/6e0766f0f897dc2b75ab87dd59da0d4639bb37ee
+
+Another proposed fix for this:
+ https://patchew.org/QEMU/20260413170407.57574-1-mohamed@unpredictable.fr/
+also moves an early return in mch_update-smram() and tweaks
+mch_update_smram() accordingly.  This shouldn't be necessary, because
+in the no-SMM case smram_region should always be enabled and we don't
+want to allow the guest to make it disabled.
+
+NetBSD bug: https://gnats.NetBSD.org/59721
 
 Cc: qemu-stable@nongnu.org
+Fixes: b07bf7b7 ("q35: Introduce smm_ranges property for q35-pci-host")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2608
+Reported-by: Kroese (gitlab @kroese)
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-id: 20260706173324.804340-2-peter.maydell@linaro.org
-(cherry picked from commit 4f635bddf50c8c7783dbab7a584ebce4a07feee2)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260708121011.1653365-2-peter.maydell@linaro.org>
+(cherry picked from commit 7ea56dcc9406b1588699e510439f782da7067d3e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index 2d8fa7ee944..ff3a45339f3 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -1249,15 +1249,25 @@ static void exynos4210_fimd_update_irq(Exynos4210fimdState *s)
-     }
- }
- 
-+static uint32_t exynos4210_fimd_global_width(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
-+static uint32_t exynos4210_fimd_global_height(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
- static void exynos4210_update_resolution(Exynos4210fimdState *s)
- {
-     DisplaySurface *surface = qemu_console_surface(s->console);
- 
-     /* LCD resolution is stored in VIDEO TIME CONTROL REGISTER 2 */
--    uint32_t width = ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
--    uint32_t height = ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    uint32_t width = exynos4210_fimd_global_width(s);
-+    uint32_t height = exynos4210_fimd_global_height(s);
- 
-     if (s->ifb == NULL || surface_width(surface) != width ||
-             surface_height(surface) != height) {
-@@ -1283,14 +1293,14 @@ static void exynos4210_fimd_update(void *opaque)
-     bool blend = false;
-     uint8_t *host_fb_addr;
-     bool is_dirty = false;
--    int global_width;
-+    uint32_t global_width;
- 
-     if (!s || !s->console || !s->enabled ||
-         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
-         return;
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b37..cea8fc461a0 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -585,11 +585,14 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
      }
  
--    global_width = (s->vidtcon[2] & FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    global_width = exynos4210_fimd_global_width(s);
-     exynos4210_update_resolution(s);
-     surface = qemu_console_surface(s->console);
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+-    /* if *disabled* show SMRAM to all CPUs */
++    /*
++     * This memory region looks like it's SMM specific, but it is not.
++     * It's an alias that makes the pci_address_space appear in system
++     * memory at the SMRAM_C_BASE address. The alias is enabled when the
++     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
++     * visible. So for non-SMM configs we need to create the alias, and
++     * leave it permanently enabled.
++     */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+@@ -597,6 +600,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                                         &mch->smram_region, 1);
+     memory_region_set_enabled(&mch->smram_region, true);
  
++    if (!mch->has_smm_ranges) {
++        return;
++    }
++
+     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
+                              mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
 -- 
 2.47.3
 
