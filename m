@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693A6C5AD5A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CC9C5CFDB
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 20:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuFhl-0007UP-AC; Wed, 12 Aug 2026 16:37:41 -0400
+	id 1wuFhp-0007fU-G8; Wed, 12 Aug 2026 16:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhk-0007TE-3f
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:40 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhm-0007XT-G6
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:42 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhh-0001Ek-Cw
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:39 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhk-0001Fg-MP
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:41 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 2C75C4345E;
- Wed, 12 Aug 2026 20:37:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9666D1F00A3A;
- Wed, 12 Aug 2026 20:37:34 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id CFC4240388;
+ Wed, 12 Aug 2026 20:37:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA091F000E9;
+ Wed, 12 Aug 2026 20:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1786567056;
- bh=l9mybwz/TyY+oyBh3FK+zP6geKy0Ld5o+RX6e2KU+gs=;
+ s=k20260515; t=1786567059;
+ bh=2H7HVfwqlDxoeLXTzIQpGxDP5wgRXBpmf4KDHNqccOE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mzRT4v0UP+zCIb50s3u7PnoeIR4o+tgOZfsSBAf2bNr5AigHUYghMf5UUeXbDx/TH
- /MsSJbBU0ikAKMuwwVFLMdroJd6u1F2or1AZc8wrzJv9e2ivLTCVJeu+2B0EZU2/Ag
- XezX0mKgPb7HglLZE3daK0axWtVH9yI5y/kRtFnOy2QSulrCm/nhO7/GbN0nhnv9jZ
- fzQwhP6x3hHIISsvCEMrwG+IC+Soe5OUzQZYlj7Nr1XlqAb8l3Eh5l7Z6AZKJRJ+Kg
- ZRL0iCtBZ1sLFaQkAugt7DkbcvGrQz13QEX7n6ZUkv9LPvDmzP7cD7Uv1t7FyM7FkV
- M3L8qaJfc4Bbg==
+ b=OmsqnO4jW/VM/haUOgAINDVRNjvzdD8wfyDmUVdVv9PY1oCGvgL0dGvkJs6vRdf6S
+ A4mxOicrh/XjkFsxO6PldcRNYgi+FF2XXeGz2aaeovjbxdX1trWV4qyNKxYJXOI+nz
+ DdiYi+4J7rwlaxqoZfxN4rdfgZHJiMIJCg8IFqQ/N6sf2+SvtFsAUDvnmbh8QhxAgw
+ 39yxV+Z9TKdPx/JTHw9x18Em6Aywdf80attVmTb6O8klICil3q2VVNG3fhMOCwKI7a
+ d5+wfJrC5tJkJJ/NmNZjpuNnwR2441VM5i6RlsMQg0YGPFJ6qL4APXhDO3JUZ8zwWW
+ thSQ5tuAZSr6g==
 From: Helge Deller <deller@kernel.org>
 To: Stefan Hajnoczi <stefanha@gmail.com>,
 	qemu-devel@nongnu.org
@@ -40,18 +40,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 4/7] linux-user/mips: write the floating-point registers to a
+Subject: [PULL 6/7] linux-user/riscv: write the floating-point registers to a
  core dump
-Date: Wed, 12 Aug 2026 22:37:22 +0200
-Message-ID: <20260812203725.10694-5-deller@kernel.org>
+Date: Wed, 12 Aug 2026 22:37:24 +0200
+Message-ID: <20260812203725.10694-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260812203725.10694-1-deller@kernel.org>
 References: <20260812203725.10694-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -75,80 +74,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Write an NT_FPREGSET note for MIPS and MIPS64, matching the kernel's
-elf_fpregset_t layout (ELF_NFPREG = 33): fpr[0..31] hold f0-f31, and
-fcsr occupies the low 32 bits of slot 32.  The pad field rounds the
-struct to 33 × 8 bytes = 264 bytes.
+Write an NT_FPREGSET note for RISC-V, matching struct __riscv_d_ext_state
+from uapi/asm/ptrace.h: f0-f31 as 64-bit values followed by fcsr.
 
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/mips/elfload.c      |  8 ++++++++
- linux-user/mips/target_elf.h   | 13 +++++++++++++
- linux-user/mips64/target_elf.h | 13 +++++++++++++
- 3 files changed, 34 insertions(+)
+ linux-user/riscv/elfload.c    |  9 +++++++++
+ linux-user/riscv/target_elf.h | 11 +++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index ce2c4514f3..1d62ae0a4d 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -130,6 +130,14 @@ const char *get_elf_base_platform(CPUState *cs)
+diff --git a/linux-user/riscv/elfload.c b/linux-user/riscv/elfload.c
+index afe103a631..1bc8beacb1 100644
+--- a/linux-user/riscv/elfload.c
++++ b/linux-user/riscv/elfload.c
+@@ -11,6 +11,15 @@ const char *get_elf_cpu_model(uint32_t eflags)
+     return "max";
+ }
  
- #undef MATCH_PLATFORM_INSN
- 
-+void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPUMIPSState *env)
++void elf_core_copy_fpregs(target_elf_fpregset_t *r, const CPURISCVState *env)
 +{
 +    for (int i = 0; i < 32; i++) {
-+        r->fpr[i] = tswap64(env->active_fpu.fpr[i].d);
++        r->fpr[i] = tswap64(env->fpr[i]);
 +    }
-+    r->fcsr = tswap32(env->active_fpu.fcr31);
++    r->fcsr = tswap32(((uint32_t)env->frm << FSR_RD_SHIFT) |
++                      (riscv_cpu_get_fflags((CPURISCVState *)env) << FSR_AEXC_SHIFT));
 +}
 +
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
- #ifndef TARGET_MIPS64
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-diff --git a/linux-user/mips/target_elf.h b/linux-user/mips/target_elf.h
-index 157306f7a0..426f905d3a 100644
---- a/linux-user/mips/target_elf.h
-+++ b/linux-user/mips/target_elf.h
-@@ -26,4 +26,17 @@ typedef struct target_elf_gregset_t {
-     };
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPURISCVState *env)
+ {
+     r->pc = tswapal(env->pc);
+diff --git a/linux-user/riscv/target_elf.h b/linux-user/riscv/target_elf.h
+index 859f726578..185b81a2db 100644
+--- a/linux-user/riscv/target_elf.h
++++ b/linux-user/riscv/target_elf.h
+@@ -27,4 +27,15 @@ typedef struct target_elf_gregset_t {
+     abi_ulong regs[31];
  } target_elf_gregset_t;
  
 +#define HAVE_ELF_CORE_FPREGS    1
 +
 +/*
-+ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
-+ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
-+ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
++ * Matches struct __riscv_d_ext_state from uapi/asm/ptrace.h:
++ *   f0-f31 as 64-bit values followed by fcsr.
 + */
 +typedef struct target_elf_fpregset_t {
 +    uint64_t fpr[32];
 +    uint32_t fcsr;
-+    uint32_t pad;
-+} target_elf_fpregset_t;
-+
- #endif
-diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index 061471a0f1..efb5d97563 100644
---- a/linux-user/mips64/target_elf.h
-+++ b/linux-user/mips64/target_elf.h
-@@ -32,4 +32,17 @@ typedef struct target_elf_gregset_t {
-     };
- } target_elf_gregset_t;
- 
-+#define HAVE_ELF_CORE_FPREGS    1
-+
-+/*
-+ * Matches the kernel's elf_fpregset_t (ELF_NFPREG = 33):
-+ *   fpr[0..31] hold f0-f31; fcsr occupies the low 32 bits of slot 32.
-+ *   pad rounds the struct to 33 × 8 bytes = 264 bytes.
-+ */
-+typedef struct target_elf_fpregset_t {
-+    uint64_t fpr[32];
-+    uint32_t fcsr;
-+    uint32_t pad;
 +} target_elf_fpregset_t;
 +
  #endif
