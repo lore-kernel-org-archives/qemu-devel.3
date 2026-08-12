@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D926C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FB9C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMs-0002sx-IT; Wed, 12 Aug 2026 10:55:47 -0400
+	id 1wuAPp-0007as-Pg; Wed, 12 Aug 2026 10:58:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKq-00070j-CW; Wed, 12 Aug 2026 10:53:44 -0400
+ id 1wuAPY-0006i6-AO; Wed, 12 Aug 2026 10:58:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKo-0007Fe-1g; Wed, 12 Aug 2026 10:53:39 -0400
+ id 1wuAPW-0001Fh-0d; Wed, 12 Aug 2026 10:58:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=e9Yiez50CyAc97C5W2GTEJdMhwa/z8xGuqOgDjBHJFc=;
+ t=1786546232; bh=l0D09KU06IlF6XhbCg+2gCjeUISqqmYt3jBoagWhqM0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uRItuMTSn5uHIyaregwnOOMo7JjWvAzBLuVztHARolsK2ThKVBnywfryGdLdP5z1+
- uC8Rnt5WXLRNDz1mGLmcdxNUrnxght3zsY7JXLJ9oxNL5oMVkHZKCBhS3qA9Srn6EW
- fwGxPlW2/NBeErTkrVzU+e3aeapmggTTyt7SuFnwTM7h+t9ORGvf9pF/HbMiSAUUiu
- d+8bmYWxdANdbjViVlydiNOXtH9F3uDnVwzgRD0qpmtKbwvs4W64X2syWVXIF6Q63x
- T6Yh/ihVx5nlwMQD3DOftTbrVPbxC3eEDsFyCO8S+nWTBhAcs7+W3zMnQR7646QCSV
- XzIqJKQbstapQ==
+ b=Y5aUMaqgqhl2GDgYLSl/FyBrI5WW7rPv1+dzTOu9NKsnVdYM7AL+1SplA3fIhwSWM
+ ZZqGIRipy79q5HRuoxk3W43aUcQyrUgvZ29N+LUXrSuLM/TD0i7B9nKXlvDisyUybL
+ P/xgmk7j27+dsmpK8ieKhsN01OGiE2jB2QfhfJdBIUnn0uCPlDP8Gyvip9oWlw0pY3
+ 78yjTkDK0loLUH/gw2VbD8KE1TnOIRKvR+E+wtli9s8Sjv4VWb5xqP1CF5znqBH9LT
+ LoM9xunZWp/klif+A+QPPV0uLgGn1c1JPUjbCl+NEvKQ8CXcOANyWGffkNh/9XkXuv
+ LtGyDRVLFNJAQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B81811CA62A;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EF4621CA653;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1EF8A409D6C;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5632C409D95;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7EDC62F9AF; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id B3A462FA01; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 038/120] target/i386/sev: fix MemoryRegion reference
- leaks in gpa2hva callers
-Date: Wed, 12 Aug 2026 17:48:21 +0300
-Message-ID: <20260812144955.649205-38-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 079/120] hw/display/exynos4210_fimd: Factor out
+ finding screen width/height
+Date: Wed, 12 Aug 2026 17:49:02 +0300
+Message-ID: <20260812144955.649205-79-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -74,55 +73,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
-(inherited from memory_region_find()), but both SEV callers were failing
-to release it.
+Currently we hard-code the expressions for getting the global screen
+width and height out of the VIDTCON2 register where we need them.
+Use functions instead.  Make the global_width variable in
+exynos4210_fimd_update() uint32_t for consistency.  (The values are
+clamped to well below INT_MAX, so there is no overflow risk here.)
 
-Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
-(cherry picked from commit 415f2759d7b3294e15c783849a08deb26885cabc)
+Stable CC because this is a prerequisite for an upcoming bugfix
+commit.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20260706173324.804340-2-peter.maydell@linaro.org
+(cherry picked from commit 4f635bddf50c8c7783dbab7a584ebce4a07feee2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index d7b18b632d5..f38ad693cfa 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1343,6 +1343,8 @@ void memory_region_ref(MemoryRegion *mr);
-  */
- void memory_region_unref(MemoryRegion *mr);
+diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
+index 2d8fa7ee944..ff3a45339f3 100644
+--- a/hw/display/exynos4210_fimd.c
++++ b/hw/display/exynos4210_fimd.c
+@@ -1249,15 +1249,25 @@ static void exynos4210_fimd_update_irq(Exynos4210fimdState *s)
+     }
+ }
  
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
++static uint32_t exynos4210_fimd_global_width(Exynos4210fimdState *s)
++{
++    return ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
++            FIMD_VIDTCON2_SIZE_MASK) + 1;
++}
 +
- /**
-  * memory_region_init_io: Initialize an I/O memory region.
-  *
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 9dde972c118..9eddf921341 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1573,7 +1573,7 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
-     OvmfSevMetadataDesc *desc;
-     int type, ret, i;
-     void *hva;
--    MemoryRegion *mr = NULL;
-+    g_autoptr(MemoryRegion) mr = NULL;
++static uint32_t exynos4210_fimd_global_height(Exynos4210fimdState *s)
++{
++    return ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
++            FIMD_VIDTCON2_SIZE_MASK) + 1;
++}
++
+ static void exynos4210_update_resolution(Exynos4210fimdState *s)
+ {
+     DisplaySurface *surface = qemu_console_surface(s->console);
  
-     for (i = 0; i < metadata->num_desc; i++) {
-         desc = &metadata->descs[i];
-@@ -2067,7 +2067,7 @@ int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
-     int error, ret = 1;
-     void *hva;
-     gsize hdr_sz = 0, data_sz = 0;
--    MemoryRegion *mr = NULL;
-+    g_autoptr(MemoryRegion) mr = NULL;
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+     /* LCD resolution is stored in VIDEO TIME CONTROL REGISTER 2 */
+-    uint32_t width = ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
+-            FIMD_VIDTCON2_SIZE_MASK) + 1;
+-    uint32_t height = ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
+-            FIMD_VIDTCON2_SIZE_MASK) + 1;
++    uint32_t width = exynos4210_fimd_global_width(s);
++    uint32_t height = exynos4210_fimd_global_height(s);
  
-     if (!sev_common) {
+     if (s->ifb == NULL || surface_width(surface) != width ||
+             surface_height(surface) != height) {
+@@ -1283,14 +1293,14 @@ static void exynos4210_fimd_update(void *opaque)
+     bool blend = false;
+     uint8_t *host_fb_addr;
+     bool is_dirty = false;
+-    int global_width;
++    uint32_t global_width;
+ 
+     if (!s || !s->console || !s->enabled ||
+         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
+         return;
+     }
+ 
+-    global_width = (s->vidtcon[2] & FIMD_VIDTCON2_SIZE_MASK) + 1;
++    global_width = exynos4210_fimd_global_width(s);
+     exynos4210_update_resolution(s);
+     surface = qemu_console_surface(s->console);
+ 
 -- 
 2.47.3
 
