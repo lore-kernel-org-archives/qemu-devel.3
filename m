@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8A6C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 01:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13946C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 01:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtxu6-00082M-28; Tue, 11 Aug 2026 21:37:14 -0400
+	id 1wtxuC-00087a-Ki; Tue, 11 Aug 2026 21:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wtxtx-000821-AC; Tue, 11 Aug 2026 21:37:05 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1wtxu8-00084O-OK; Tue, 11 Aug 2026 21:37:16 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wtxtr-0001Wg-42; Tue, 11 Aug 2026 21:37:04 -0400
+ id 1wtxu7-0001Yf-6g; Tue, 11 Aug 2026 21:37:16 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NphtXcFLOlJWvVguC74WChEp9xDiSevVxuKG9UDn6Paan6QZFNg8hOo4I+CZ+C3NlLxZ2q9hjj5Fe14PhoJ7N6o28hLkTSlmeKfVYlzilu1PtSZ/hHfyhQqZW6cFr0Q84ZofUD4p73t6gq+1mRwK1crF69QdhS7uSzSY9HF7kPiK8i2mn4/JVBnO2ntdZRPcnGl/A+PY62ArECSVKV1TC3l2h0/CpQWEILL+WaIPpzX8dqo2s7++QAleLdHgXt8xpQnqqFawgogoLYrKxuZxveMctNicWhshrLbEAGTtiptRNY/tOg7A+YDI5zmfXgur0x5sFJDGI7O6bgyxxrxoLg==
+ b=JP5dtZzdBAboJLCuAE+DLHoqljPvcmwM9/H5MOT2hJpJk7BKl1ahgplz/e4+tfRfP1gDXzU0Kaz5lV0A+Q92XsEZV80OuI/Deg3jo974sjhfPcPfKAtt5Mh+Eihte3VrSjIgCtOOspVYmlYSR5nRn6tMTyNxUucNz4nNv3WFpvUZmiAm5bn1EcJkwBNo/pz4EtoN722tfUq+JlmtMIePf3Kx8pZ7gWglq4oL0dmlnty7Q+CVMn5H1F2dhnvWFoCYQ2jzfwBOGzwzwBVzQy6o6XbUH8KHoErORAuMyRl6/CXgynuGaj16r6izLBZGRDQyomZdM0Hz79rbRX2IlBRx9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Iborxq8amUwMZjFLJ+VkQN7n3BXXlTHzwKY6CEq1c+w=;
- b=tfFXhfu5WgtTtnoabEWJFA24QfA+f6snBUXpWqD7dmIvoASjaolgK0HcrS3/KebfXfuoFPYizrAz3J9/b2+PTNAfV91o11olrcd0GyLOrmZHtQymEPT3ndwbcTlO9NMKWmuB11c0/gYGlD37xdQ2PhdTlDbCd1Dwyf2EsIg6D/xy1rGGVdFxqFdASD7Ij1KlJzhlTnNhylpejQxrTsYFXDBw491DSbxe+Bji+bhYtjilb6DXrAZfquaefJRGs+WtABXDpeWUJ82xVvs+HUKBLtIocjWD7biKjlv9i7YdrwSWPTzxmjnVSwWOWSDuj7l/orfdOmTJkombwWwMUdc5iA==
+ bh=8Qyh8sdJAo8tito25CyyZJ6Lk/RMRsiJTYfUKRnpA4c=;
+ b=WGAVVKxc6Z/fOmYOxb9CAg6hBmePIIPezeQLgeqHwvP9l9EZ+NGTKDtABcOS7SOQy2bw0HuHi6yeHYdrNibwp4EaNV8k/YT8e9Bk8BjQ/mmeBqULTlmmto5BGLYFGzMHtw77cyhAIOMNz8gYg5X/VJc3/VSn1ZFtrLoTggAmp9J92fdw3Lo32Xk53nUb6jYU6pvzfJphxxLpauNTLjH2sycH+D2YG7zfySzn8nbBDsWue41tfpNTftaVS60TCdLhv4g16q4cujw6+RBRAPckI7OLi1YvDBwONntkdzEPmhPC5KAyl7mv3X0yyY6DELcAIgcdPviK3F9wMPe3d4LWDg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,31 +33,30 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Iborxq8amUwMZjFLJ+VkQN7n3BXXlTHzwKY6CEq1c+w=;
- b=EDwLOCIZYbyx07oiVXYCsAli4YvbVDKnU1hSof+QVC0rpAxkR2BTaIzWtE93x8a6BzFzXxS5Ou489hJlQqD3N8SpNH3K90aVJmqSmHxDAAqL0+C/mJctl5HnkTnnyyXq0GpAeT3vHdF8ujFIGhxFXmJU+NPlFFl5xAxdfqQkUNpoMuoiZtxpAJ7sThDeMaykr9WXvdvK+bpdUdDMHtUDA0F4gWPUC73e1LqTfXxhz00sd0jWDJOB+dV4294L11/Yxi62yLfRf2E2AkB6MHMYH/cZXm2YjE74zEc8M/6Usq/PeAkmdTxjJyA87+9t3Pq3lvG+qe9cksF/IkiId+teWA==
+ bh=8Qyh8sdJAo8tito25CyyZJ6Lk/RMRsiJTYfUKRnpA4c=;
+ b=RDj77pRR2Quox4YIX+N7M3J0N2wyT8vGCZ6paniisIKMy8D1kFyGV/KyP5fiPMYx/DU3ZB4/NTOG+m0m0+RllguEj7rloFdczWnHo9xD4833zn7pdexTrvIrtZjNiQb4yk+SOanTAooaoZJfsB/0iIiubIx78J89UP7CpRy+tJOCU1S/XE5o5A5GQmrrIXd7Z1ZVSq1wgOGnJxycSsXm8LZVd6bix0nJYpXBDm1lIdQQOnWVoLQUr8LaeHreiQjvuTqkLe2Q1GjDLuLV07ey7DRrymA5qV5IfxfKagLee1Iab5ANU02F1WrjzBnOrqJ29A9oOV+tCnD4dnbno9QGtA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by KUXPR02MB9309.apcprd02.prod.outlook.com (2603:1096:d10:9f::5) with
+ by SEZPR02MB7871.apcprd02.prod.outlook.com (2603:1096:101:216::11) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Wed, 12 Aug
- 2026 01:36:44 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Wed, 12 Aug
+ 2026 01:37:10 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.012; Wed, 12 Aug 2026
- 01:36:43 +0000
+ 01:37:10 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Bin Meng <bmeng.cn@gmail.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
  qemu-block@nongnu.org
-Subject: [PATCH 00/10] hw/arm: Enable U-Boot boot on MCIMX6UL-EVK
-Date: Wed, 12 Aug 2026 09:36:03 +0800
-Message-ID: <20260812013619.2134092-1-bin.meng@processmission.com>
+Subject: [PATCH 07/10] hw/sd: sdhci: Preserve uSDHC status enables for U-Boot
+Date: Wed, 12 Aug 2026 09:36:10 +0800
+Message-ID: <20260812013619.2134092-8-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260812013619.2134092-1-bin.meng@processmission.com>
+References: <20260812013619.2134092-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: DU6P191CA0007.EURP191.PROD.OUTLOOK.COM
@@ -65,66 +64,66 @@ X-ClientProxiedBy: DU6P191CA0007.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KUXPR02MB9309:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43cd3c56-dcdd-4765-5fc6-08def8122a31
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7871:EE_
+X-MS-Office365-Filtering-Correlation-Id: f56a48ac-6b65-4ba7-060b-08def81239eb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|23010399003|6133799003|56012099006|10067099003|18002099003;
-X-Microsoft-Antispam-Message-Info: rmgMlep/gUn3es+Mf9Yj9+AR+ku9OnWdiSLBS/RKXO6CI1KVcAcPKahRyTHiWw9m5NvGRjCF6AJO9KneFVISK06yYrAH8os2IZlN2lX4RNKi9Kug/LVSivjDgqyJEiKX6BkPrT+eU9/WWBeJYudqQHFk9Fqn39AW5gCoz3q9YUEXgHicXBzwQqWMkp91UdYHLzToHDxDUWx0BJjJS8zXEk5G1/pQBoyZLnRILjGMdj//oYzOvNZ1d4g+pr0zeiypJVHnv9WQgMCIWnxvk4FXT7VBAiBxNU3HsvM9u2lAEFyyaHPr/MkljXWrPqRtdr+i+3jYoaNHCCvml02RGY6svQ5DLQVYP8DEzCv5iev5ngL3eoKpN9BOmtm4+2T3sX4Jv+H2eW3ocKwYbWd9twts8tIiCOhauh1+aMUdIaF+Y5oenvq+DmvvHVSDehIgDOMN88zsh+Uo8bhanMc0BCNvEl5cxZ4TW41TRT7hiCO0624DVEFgX3Ko4jpUvGa1aBszD7e8czfNdu00oR9AFCxjF3tBl0jHkl4MT1xI1cJTfuBVVWORvcgCvW6xmqTKeIpXnvPd24+qOxu9DCfQ4nb+iru9LxQJ0MeedEYLdMKfPIm6g7GEnKwrE7rbVcR3QXDSCEpGCSmmh8CZly5PDBOls5kPMhR5ZbEBsxOUp5QX8Gg=
+ ARA:13230040|366016|376014|1800799024|23010399003|6133799003|22082099003|18002099003|56012099006|10067099003|3023799007;
+X-Microsoft-Antispam-Message-Info: QQGqllRPtn9XzrqG6oVjAKp9hAYs17SOWM93LoKZ/NqV72aCEHioOLs+9REYUDmP9Z+c9PpkcMnkoM/JhMf1T1RN0T9SUEdvhoKqgleXoK5dAbNKJQAG3CKXfykkCE0I/tLLcGd+T9R7A3OoWP12rjGdksUSrSZx1BFUOIBZ7/gvJQaQXguP6ZYjnrFNXxQEhVy2mz0tbQndb9TVf5VlfxBQIPx0HtfeuTK4boO5eRYMllPPQvYRKZq1eO2PjFmei/GFcwOqqm3r5K4W4TS0INIrqk4g5d3ZBf+hxGzcZc2ZMzzC33YFWJBTUpQFw4JxzZqZrhTqLEtxJFQ5WEp7mB5wGRq1ziP3fLobu38RG4sbuW35TBn9Q1DXk5sm0jOGpWspgr+4sUZGqSMWj9Marz3I9182MSmd1a+lEg704zuYfhlRKS+CL/prUqZgiYBcvHRu1spTsRwIMf140yuAxYoyQu8gNVTFwMAJNdsafmlzz+A9RM1GQtsQM0luUN2fCjB6IzO91K6UyhUCz/Ub27rRu4XhuQdKLAHKGAfML51auzLwLnzr9Di3iIziFZVqEcuzqfDYxroopKSe9VVveQ06syWHigaKiuNj8KDboGgtlXV9ZbB3R3C84sIziKbsL6H+P5BnO+nw2KBQBIY4PB1znrfT1hupQ2cuFKcTu0k=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(6133799003)(56012099006)(10067099003)(18002099003);
+ SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(6133799003)(22082099003)(18002099003)(56012099006)(10067099003)(3023799007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?viQgZ3IKD30/ajQCBDQgKr9OAFaZR5+rYDf8gXXMEkXz38XlJimR0L4VldzI?=
- =?us-ascii?Q?4S0pVv6fp45YTPQL9CyQ969K/1q1yuaNVj285h0P+LXdyo7FpVeh4eKwFt2x?=
- =?us-ascii?Q?kPgfmKhMppyLr4nAPG1OgA+/Pul6L6WKimpefQmAzyDJ/KtG8G7sZgvQN0qB?=
- =?us-ascii?Q?EWSsX5vbzH7zud5U3iEewqnURBtt13pem+TYZCup1qnlXbmTiqpImD4jRoxP?=
- =?us-ascii?Q?cQQRpCaZnc4udD3pZ0f6lFZ3VL93xNWh2/plD33gZmDE/AWLi48kKqkMWwfR?=
- =?us-ascii?Q?SPxCkhnPiWJU5idqsKlJqSg1CzzXAWREkXLasB34fKnEhuj21sWKnKzKFNRd?=
- =?us-ascii?Q?AtDp6WECYSh2wSEbyb1gYkJ7xge5a0XL7aoixmP5p0JPeJBEj7oRtBjtXRHs?=
- =?us-ascii?Q?IpeTjXNoFCUn+OcydSODRZnibYQDB4QLKc4wzY5wErrI252LYn8aL5wSP3Qb?=
- =?us-ascii?Q?ghXlbYQEhv6dBxQa+AHJz0B/6aaqbj1KK8MxDgRf0vLECUbaUzCGgn4x6aB5?=
- =?us-ascii?Q?DKZaErfwhWHl7i/DktOhTdL2IIFFjl+LvKCEbAs/00sLht41o3/x1oLF8mui?=
- =?us-ascii?Q?i2sAtC8TVzQbXD2Sg5rkkiueFMuHVEpjilcvw0x6IIHpfKKzDKAARR6Teh4v?=
- =?us-ascii?Q?LoZBUVmPCYPSEAeQm99GdorVIyOG3qJz1Rv3IMrcVANtBgGKJS+cFqIPL3FF?=
- =?us-ascii?Q?PRYOKEv4KyX2Gz0VeGjKJKNPa0TphUzYdLuQSD+gPglx8VgzOYlPdMjfsuQ6?=
- =?us-ascii?Q?k2M5S50UnlorY+VWtd1TXRizj03IGnP/ZGU/7ZnJhWN6wcLe11il2hvaIhWj?=
- =?us-ascii?Q?zHH4hQbh8Sn2OMcszdKU3WOFFq5ZifP8cP3IhtT2Jq1UqleohhhEdzKUlTFK?=
- =?us-ascii?Q?KfsEefOG5lVE95e5HFHj53ODcTz2zjpOME08unZix4pIy3XV0g/AHAmEtNqp?=
- =?us-ascii?Q?FLGlOXifdlUXWnRlX40+rZB50W7tDh+kAAegyLcJgxHibP7qh6RaBsE0DyVH?=
- =?us-ascii?Q?9Pgryy4+zQVOXdzrutG4PP8QkEj07MvfDBmMuZjT8fygNavrHEAL4P6uGImd?=
- =?us-ascii?Q?RgHcvJxcGOT0bpYffj5qYvAJFQ0WEs/cbhkxectcGRF6s2pwl2s2OOHfsOw6?=
- =?us-ascii?Q?HolkYDrfw2wpNGrgISLAfBGtJlY0ZLy5bEvs/25+QH//t2l6LGn98T1X7Lp2?=
- =?us-ascii?Q?DSfZwLmiI6hVgFRaQW4572wymOUnfcN19SOpOdin1vxlUluLDd6+zFsxFKzd?=
- =?us-ascii?Q?FBo1Z+NxXizq5ghX1DJ32fzzV3DZgW9jop+LZxSu6/aF9McXlHBUIXxTMYRb?=
- =?us-ascii?Q?3pB6vLgFxMQNC+7va0gz36Vvo4+MiAzoZb6VE5aOuCk8q9ZAoqCUt2kSBXgt?=
- =?us-ascii?Q?fnFFb+epPA2OR6cDrYn1sKYDDNPojkq4i3KBxkbhctjYKbRCJ+Idqz/5UgpW?=
- =?us-ascii?Q?csLMxqW01WBJb/qNS2CW5K8sqcAIi7GQtRHca6cqHYm4zPyr/Mnepm1Bx5W7?=
- =?us-ascii?Q?Ovc69qbtY8k7UOgRXMpqUruYG3Nr88/8MDiKLNFnvunNu2fjBkesCq1b2wZl?=
- =?us-ascii?Q?zOp2Qgh88oq3se/P4XcODmViMFuKSzMijKAKejz0sTnEfvYjx9QhOHMl3nN+?=
- =?us-ascii?Q?a7Q0DwW4X+usHyrRzII6OY96o7JaZ6c2HeqwQx29bCo8k7OcdpouaWzn6Kks?=
- =?us-ascii?Q?DyXKRAan7z5fSEMiEIIoklvS+4LmFTgFMxj1CFDI+AAOzLFrhU2Xde2h8G2F?=
- =?us-ascii?Q?lxnedUpLR6bmLewtnFVs/SsEqeJCNEs=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QneRquPvqNafPaPRoI7BxCax9fMfiiE18Bcd2tfa/3RfGeaowUnWqIxON7wM?=
+ =?us-ascii?Q?Molm7eymGu9XoBdDjU7V/VCMpiQjSdpblQXDcUsU5RFXQngnNILwOJGlIN3q?=
+ =?us-ascii?Q?vB9cBAHQOfZ5CWNO/8NitcAKQP+aN2fKUhtAcLaXEsto6kpf/6/Q3k+UUfyG?=
+ =?us-ascii?Q?YSt6RbaDpERVG+7hsHNACfTROAyW7vHUsfmbhbuuKnLdsGZBYsviWz5bPGrC?=
+ =?us-ascii?Q?pfKhXd1hhXR2An3D+qpRbQeywh/E6T28+/iXe92tFg+uUxQN1d9zkH7z29iP?=
+ =?us-ascii?Q?mQCbd0n/ba3XM7axlk04ctXzt04SS1tGmCvUfJYYhIWxFCH08M7VT6kMZll4?=
+ =?us-ascii?Q?5d57/H7s3XsLVkEkDCGZzibw3PN+CBpniUWzg4ThxPm25lkEp+Hxf1BcavKo?=
+ =?us-ascii?Q?YDm4+XDjnrS8uNE3Igqy4Cb8sxFhd12d8qSfrDmbI/1hYSGW4Wsx3zj/jfV9?=
+ =?us-ascii?Q?GJ/9gZQ9u9+34+jZWXrcv3rIHC85ErMsTsJcnQ7QX10roh+cXj9OVjBWOeCw?=
+ =?us-ascii?Q?2HRkWrCRyGyvxU/iG5xQiMg1GavPHW+GA9OnIQRrb0o8ZWeDTOYev28PPFmy?=
+ =?us-ascii?Q?iMmZja7xUtL7UABxkXBMfgS1u2qTPKo9h8sZg7Wly8OiM6qmcAtlgIL/1oC9?=
+ =?us-ascii?Q?7qwKrPTOdYhc8XFqs0FiskSMl24RU09iKiYopiilb6+Vrul6oM6F6tbk4GqZ?=
+ =?us-ascii?Q?6Mo6yqVcNFUFmlzKhBEo0Pcp2JpOw//3yyPPxqkwvI4iF/+wOVu5po6p2Djb?=
+ =?us-ascii?Q?uZ2z+bqGAX8lKxaoaMUqYwJ+ZUlbWhq3vgdHMXX+pVnbyWY5PgojE4wYQ1rU?=
+ =?us-ascii?Q?EC0ejk1TdZ/200SUvIPZmUFtzIFys/cD9h+tmt0EfGwbPJArPSL2jInQ5z3B?=
+ =?us-ascii?Q?ZHr5pNTU1ln0LhwkR0zlxE3jP80vrwKmL7y19QvVwA6MeYg8jbic3QPAUAeQ?=
+ =?us-ascii?Q?EesseMz6zghEGgzCbKm7eDQSxRtgTQpC4ytdiyOQVRpAjDJPtcF8UMpT48Lq?=
+ =?us-ascii?Q?W5euQedTV/lIxe4Vzh1e/UOjvVCrzuW76qGbdLYIpUbLR1rQ70pYsR9URolI?=
+ =?us-ascii?Q?SQnJ855GF5Ng0PtcvidVWlC/6lWFQzKx+7Ma+HOb0iC76mTqpU+BlxmFj3U6?=
+ =?us-ascii?Q?JyPeNha0dmpT0RCQndWSXwaRSUHMsDO+imzPygsffjFaFlO7DyKJZeFUyPmg?=
+ =?us-ascii?Q?QC0e6sk9hrgHllxILpvVwS/6/WMA4O9JjT0Z60MxJcWl7oIQ+00DYqyAesyo?=
+ =?us-ascii?Q?Fu3p6vCfrhB4YhqPwzdVlEvoro5im6mDbfX9uI77TtPiscNrd6ZwSvDB2y8n?=
+ =?us-ascii?Q?tyxtwYveUdu7yAY5f/pBL/4rxXz2iDr9NzdRDcrPW+sYkwpGG8Vluyn3or5Y?=
+ =?us-ascii?Q?rivewwSKw13ibLFkMBLgWI7KAE/7mS7/xWpDkH05LS7kM5AxQuRmfs0rKCpq?=
+ =?us-ascii?Q?le60pSv2wqIYUMXL6Y6waQghNB9vwWbNicYD0z9slrtlVvHJj1r7lQFidRxN?=
+ =?us-ascii?Q?Dy3XuBsjUN4J7gLqgGqLxiJ6q7YBamBoWaGzMte7lcXkZaXlL2lghSi9/G00?=
+ =?us-ascii?Q?u3hfby9dNuLtwi1nLlwtSMNncZsZpS1tRPbWI/Bmboq3FWfDMIfOjCgSxhK6?=
+ =?us-ascii?Q?dbDfQ3llrgGztdzq7pMgwNg+DE/atd16EjRWPwlyXiIk6471nPegpJ1QNE59?=
+ =?us-ascii?Q?1m46nVy4XSKlWuWVcC/45DH26czXKo+abaqNRprEHjs0SPMvTEXmi5UJLwWF?=
+ =?us-ascii?Q?6MIiZepKg1lx8yxdeYDXBZNJ2DUm8XA=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43cd3c56-dcdd-4765-5fc6-08def8122a31
+X-MS-Exchange-CrossTenant-Network-Message-Id: f56a48ac-6b65-4ba7-060b-08def81239eb
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 01:36:43.7195 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 01:37:09.9309 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3sjSel4MRibio2Dcib2QXIRMqlvFL5WcCwp6lKnsp5yTqrmCPpznQTFJttne5cgazP0PMO+4juVIzfR75fS914ls6q3cYG7LrSB4N+0pUP8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB9309
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: Um0HQvuS5dC/8rkpq3GlmYuq5akzxKhy5pPbH28xDLbfaElCq5eoH5p6frRWOErWpSOq8jaATPk/S1qi+z1Il93PU64B4W8UoyNBOXdI4TY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7871
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -141,53 +140,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+U-Boot's i.MX uSDHC probe calls fsl_esdhc_init(), which resets the
+controller and programs INT_STATUS_EN. It then calls
+esdhc_init_common(), which issues a second RSTA and only clears the
+BRR/BWR status enables afterward.
 
-The mcimx6ul-evk machine can boot Linux directly, but it cannot run the
-U-Boot proper produced by Buildroot far enough to load a kernel from its
-SD card. Early U-Boot boot test accesses currently abort or observe
-placeholder values, and the i.MX uSDHC model exposes several issues.
+The generic SDHCI reset clears QEMU's normal and error status-enable
+fields. Consequently, the second RSTA removes command-complete,
+transfer-complete, DMA, and error enables. Commands still reach the
+card, but QEMU does not latch completion status, so U-Boot times out
+and fails to expose an MMC block device.
 
-This series lets an unmodified Buildroot 2026.05 U-Boot 2024.07 image
-run on mcimx6ul-evk, load zImage and imx6ul-14x14-evk.dtb from USDHC2,
-start Linux, mount the SD card root file system, and reach the Buildroot
-login prompt. It also documents and tests the existing direct Linux boot
-path.
+Preserve the normal and error status-enable fields around RSTA in the
+i.MX uSDHC register path. Signal enables still follow the generic reset
+because U-Boot disables interrupt signaling and polls INT_STATUS.
 
-Patches 1 through 4 provide the minimum early-firmware-visible state.
-Patches 5 through 8 address i.MX uSDHC behavior needed by U-Boot. The
-last two patches document both boot paths and add functional tests for
-U-Boot and direct Linux boot.
+The IMX6ULRM describes RSTA as clearing read-write state and does not
+document INT_STATUS_EN as reset-persistent. Treat this as compatibility
+with U-Boot's established two-reset initialization sequence rather than
+as behavior directly specified by the reference manual.
 
-
-Bin Meng (10):
-  hw/arm: fsl-imx6ul: Add SCU compatibility window
-  hw/misc: imx6ul_ccm: Update PMU_MISC0 reset value
-  hw/arm: fsl-imx6ul: Map early firmware register placeholders
-  hw/arm: fsl-imx6ul: Add a minimal MMDC geometry model
-  hw/sd: sdhci: Use a QEMU-local no-busy IRQ quirk bit
-  hw/sd: sdhci: Honor i.MX uSDHC vendor clock gates
-  hw/sd: sdhci: Preserve uSDHC status enables for U-Boot
-  hw/sd: sdhci: Skip SDMA boundary stops for i.MX uSDHC
-  docs/system/arm: Document MCIMX6UL-EVK Buildroot boot
-  tests/functional/arm: Add MCIMX6UL-EVK boot tests
-
- MAINTAINERS                               |  1 +
- docs/system/arm/mcimx6ul-evk.rst          | 67 +++++++++++++++++
- hw/arm/fsl-imx6ul.c                       | 87 +++++++++++++++++++++-
- hw/arm/mcimx6ul-evk.c                     |  2 +
- hw/misc/imx6ul_ccm.c                      |  2 +-
- hw/sd/sdhci.c                             | 89 +++++++++++++++++++----
- include/hw/arm/fsl-imx6ul.h               |  2 +
- include/hw/sd/sdhci.h                     | 15 +++-
- tests/functional/arm/meson.build          |  2 +
- tests/functional/arm/test_mcimx6ul_evk.py | 70 ++++++++++++++++++
- 10 files changed, 315 insertions(+), 22 deletions(-)
- create mode 100644 tests/functional/arm/test_mcimx6ul_evk.py
-
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
-base-commit: e8d693e12af9cbb89d724baadfcc08559669e279
-branch: imx6ul-evk
 
+ hw/sd/sdhci.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 09aea733ba..2ee62847cb 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1625,6 +1625,7 @@ static void sdhci_bus_class_init(ObjectClass *klass, const void *data)
+ #define ESDHC_TUNING_CTRL               0xcc
+ #define ESDHC_TUNE_CTRL_STATUS          0x68
+ #define ESDHC_WTMK_LVL                  0x44
++#define ESDHC_SYSCTL_RSTA               BIT(24)
+ 
+ /* Undocumented register used by guests working around erratum ERR004536 */
+ #define ESDHC_UNDOCUMENTED_REG27        0x6c
+@@ -1920,6 +1921,32 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         sdhci_write(opaque, offset, val | s->trnmod, size);
+         break;
+ 
++    case SDHC_CLKCON:
++        if (value & ESDHC_SYSCTL_RSTA) {
++            uint16_t norintstsen = s->norintstsen;
++            uint16_t errintstsen = s->errintstsen;
++
++            esdhc_write(opaque, offset, val, size);
++
++            /*
++             * U-Boot programs INT_STATUS_EN in fsl_esdhc_init(), then issues
++             * another RSTA from esdhc_init_common(). It only clears BRR/BWR
++             * after that reset and relies on the remaining enables while
++             * polling INT_STATUS for command, transfer, and error completion.
++             *
++             * The generic SDHCI reset clears both status-enable fields,
++             * leaving U-Boot with no completion status. Preserve them across
++             * this uSDHC-specific RSTA path. Signal enables still follow
++             * generic reset semantics because U-Boot disables interrupt
++             * signaling for polling.
++             */
++            s->norintstsen = norintstsen;
++            s->errintstsen = errintstsen;
++        } else {
++            esdhc_write(opaque, offset, val, size);
++        }
++        break;
++
+     default:
+         esdhc_write(opaque, offset, val, size);
+         break;
 -- 
 2.53.0
 
