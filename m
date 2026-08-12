@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C0DC5CFCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6DACC5CFEE
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAQf-0001bQ-Ar; Wed, 12 Aug 2026 10:59:41 -0400
+	id 1wuAPm-0007BS-53; Wed, 12 Aug 2026 10:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAQX-0001Wa-B3; Wed, 12 Aug 2026 10:59:33 -0400
+ id 1wuAOf-0004vK-3N; Wed, 12 Aug 2026 10:57:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAQV-0001UW-Oa; Wed, 12 Aug 2026 10:59:33 -0400
+ id 1wuAOd-0000yX-GK; Wed, 12 Aug 2026 10:57:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=MJYPxo+463r2tN8uZYy7+D1TxlrCRWFFexblE/bup9o=;
+ t=1786546232; bh=/RUTqmnMJkUSxHtlT4PgzSEvdBuFo9f87JyzfIlm270=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tfwUNuRak/eL+xLoK4PMMRqTIOL/bgq35yfOFpgO8fgza0xLK88gvqLejZIBDW38s
- r7mFsMEUW3NDBfKbLY+W7+svc7AmYgmSazntTfwwKmmm7falHrDjknzbIbJt8+UZvU
- V5ElidElT7gCstYF5p/fdu+FvJNWAx7ASo8XsU0HhcwtQuMzQsMnuYFhasNGBhCWNd
- rh/+Et+Ku9eDgmgXRXNOgyd/aS2PSEgHb3AQxPGAScN55fqQteMd4IiG5RNSibxoOT
- W8xnDg4bdLYCeUwMqCvjpkFnj3xB5pSRYXONK3SMmEFHrfdHA+tx6YSZIcb21QyWar
- GwYTBtYWmqjdA==
+ b=NvBmK7VJ4mNaet6GV5FFujLymSnG/HKfShMsoIl1P9/CkrUQ0q691VbunkbhprABW
+ kagXXBNjgdX571XealdEymVRWMn3nqqIAIxNSulcws0zKaw2h6sTG61kECFwDh+mw1
+ gKy3UvmMV7KvBWIeYla4YcgyUMxsOkcj8XQPY94xc+ktC5Bl10fdOOPNFjbSUpAFNI
+ CBuJcRjcAJq4g7IbHXp6aukBnnlc7rHOnPD9kntX4yyTLWuDA7aglArVltwBtD6xRI
+ kJOpOL7czefrvIKlbaUiMGa0uIvopxC/0MmWBQ/CaCtPGp7A9ghf2xm5xABSggWkTP
+ 0zHfMc9Z7QorQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B7CA1CA65C;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BDCFA1CA64C;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 95C9B409D9E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24B5C409D8E;
  Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 005F42FA13; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id 817542F9F3; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 088/120] linux-user/aarch64: Fix SHADOW_STACK_SET_TOKEN
-Date: Wed, 12 Aug 2026 17:49:11 +0300
-Message-ID: <20260812144955.649205-88-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 072/120] linux-user: fix guards for the fsmount(2)
+ syscall series
+Date: Wed, 12 Aug 2026 17:48:55 +0300
+Message-ID: <20260812144955.649205-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,33 +71,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-The token is not computed via TARGET_PAGE_SIZE, but via a fixed 12-bit field.
+The fsopen(), fsconfig(), fsmount() and fspick() implementations are
+guarded by defined(NR_fsopen) rather than defined(__NR_fsopen). No such
+macro exists, so the guard is never true and the entire series compiles
+out. Guests calling any of the four get -ENOSYS, which for example makes
+systemd's credential setup fail with EXIT_CREDENTIALS for most units.
 
-Cc: qemu-stable@nongnu.org
-Fixes: ad1afe433fa ("linux-user/aarch64: Implement map_shadow_stack syscall")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4106
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+The strace bits for fsconfig() have the same typo.
+
+Check if FSCONFIG_SET_FLAG is defined to avoid build errors in the strace
+code on some older distributions (Helge).
+
+Fixes: 767c32fe6983 ("linux-user: implement fsmount(2) series of syscalls")
+Fixes: ee1ac6a68fae in 11.0.x
+Fixes: 6e0aa9f6c731 ("linux-user/strace: add fsmount series of syscalls")
+Fixes: 7e6f47e08cd8 in 11.0.x
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 8d0ac5933aa3476283c14680f165727268103fcd)
+(cherry picked from commit aba80ad9d853e436047899177f92334379de4537)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 3a81cc95f41..bc43a95a778 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -4344,7 +4344,7 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
+ 
+-#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig) && defined(FSCONFIG_SET_FLAG)
+ static void
+ print_fsconfig_cmd_name(int cmd)
+ {
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index e363892e0ae..25ace05187a 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1725,7 +1725,7 @@
+ #ifdef TARGET_NR_fsopen
+ { TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
+ #endif
+-#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++#if defined(TARGET_NR_fsconfig) && defined(__NR_fsconfig) && defined(FSCONFIG_SET_FLAG)
+ { TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
+ #endif
+ #ifdef TARGET_NR_fsmount
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index dcf461806ad..85ef8261e63 100644
+index ec249806b91..67106f1f59e 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -6848,7 +6848,8 @@ static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
-                 /* Leave an extra empty frame at top-of-stack. */
-                 cap_ptr -= 8;
-             }
--            cap_val = (cap_ptr & TARGET_PAGE_MASK) | 1;
-+            /* Note the 12 bit field is unaffected by current page size. */
-+            cap_val = deposit64(cap_ptr, 0, 12, 1);
-             if (put_user_u64(cap_val, cap_ptr)) {
-                 /* Allocation succeeded above. */
-                 g_assert_not_reached();
+@@ -9680,7 +9680,7 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
+            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
+ #endif
+ 
+-#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
++#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+ #define __NR_sys_fsopen __NR_fsopen
+ _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
+ #define __NR_sys_fsconfig __NR_fsconfig
+@@ -14421,7 +14421,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+ #endif
+ 
+-#if defined(TARGET_NR_fsopen) && defined(NR_fsopen)
++#if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+     case TARGET_NR_fsopen:
+         {
+             p = lock_user_string(arg1);
 -- 
 2.47.3
 
