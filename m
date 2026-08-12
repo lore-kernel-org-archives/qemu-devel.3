@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C209BC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A64F4C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8cC-0003Tf-RE; Wed, 12 Aug 2026 09:03:28 -0400
+	id 1wu8d9-0005kL-Ur; Wed, 12 Aug 2026 09:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8c3-0003QZ-6I; Wed, 12 Aug 2026 09:03:20 -0400
+ id 1wu8cl-000445-F8; Wed, 12 Aug 2026 09:04:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8c1-0004GL-8F; Wed, 12 Aug 2026 09:03:18 -0400
+ id 1wu8ci-0004Mg-Vb; Wed, 12 Aug 2026 09:04:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=DnuR9awghC/pSNqGppldMTXwl070xWC0v5RHgjPYQnI=;
+ t=1786539783; bh=5urx4lnyTA/UMxemH2m7xecn0edG6dcFB94ynde/GoE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QpRYshfv0hXeRLfGhIB+0P7U+WD4Wgj6PL3CKufMl6rFF2d0sfQwad3fq+fmaIT/z
- gYRg/wDf6ZNmAcKpbcwf1ax+Jv8+3Tk2oCDMwBXUpWZ/8US/e1eUYLcKdkG6PW69Gw
- KbcB1Dt24GGfoTv9DSkoOL3gO2DZrKU+PklL8dDg1TFz9pWamfzX0P137ZdKZ+1z1U
- 5BNj0BzGIADzla09+tqpdv1dV620zO7CAItHQY3HcsfQS4s2xeggarzXJ02APmsBDn
- 2iaQDFb5inhPtzGTu2k+YEmVqN8xL9whJ+C+mvYiBVLMnMnrndJrWbDkkLCgKwWf0U
- va2whxF59JvGA==
+ b=EY06z1R0S33wqBNSpAkoBp1HD18q2GEhoThXM2AoPJNp8/jS7N40W7ixY1rUDQ5gJ
+ 7fXTwmkQcV9TS9Vg7r1Qxj6liyZZMTMz1OA1w7BXY3hglH73NCxasTCoTKOih2Fd11
+ GNTmz7G1tk19sF2XXIhkZ7bW9suXdUzYBGnT0f9Ko310lfWhwyGoNlaVPKeawer3v8
+ MDd6CRYxjlsjJC8cMUh2hNUqDY2JSIrISrCfhVr8vCvaGyouqER6rIqpQUyq0U8Y7E
+ F7yiJpWzrPSUAOBSnfwosstaivo2qfPtWvmfv1TimAJE1ML4qMYwxyWqom5cCa9p+W
+ CoHmZh5IXJaNg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 08D4F1CA481;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4060E1CA48C;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F187409B64;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 75833409B6F;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C57A92F898; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id E22862F8AE; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 002/102] hw/uefi: remove debug function
-Date: Wed, 12 Aug 2026 16:00:37 +0300
-Message-ID: <20260812130233.621965-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 013/102] scsi-disk: fix off by one in assertion
+Date: Wed, 12 Aug 2026 16:00:48 +0300
+Message-ID: <20260812130233.621965-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -71,73 +72,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-This was never meant to be present in production builds.  It's a code
-path not hit on a normal boot (OVMF wouldn't try variable updates which
-are not allowed), so this went unnoticed.
+When documenting the invariant that mode pages need to fit the smallest
+output buffer of all callers (which is SCSI_MAX_MODE_LEN), the expression
+used by the assertion was incorrect.
 
-Remove the function.  If needed for debugging the git log is your
-friend.
+Even though SCSI_MAX_MODE_LEN is indeed 256, using "length < 256" had
+two issues: 1) it used the wrong operator, since "length < ..." is more
+related to having room for extra data; 2) it missed the extra two bytes
+for page number and length.
 
-Fixes: CVE-2026-58582
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3615
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260720143244.821889-3-kraxel@redhat.com>
-(cherry picked from commit ff5a9eb13c862ed274ea0d0682a6573411e31543)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit e2da3d92744d12b0c2e554ed533a4c9011dbd975)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index eeb648a6745..64811ef4c45 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -37,37 +37,6 @@ const VMStateDescription vmstate_uefi_var_policy = {
-     },
- };
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 755e0960ba2..831598688d1 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -1343,7 +1343,7 @@ static int mode_sense_page(SCSIDiskState *s, int page, uint8_t **p_outbuf,
+         return -1;
+     }
  
--static void print_policy_entry(variable_policy_entry *pe)
--{
--    uint16_t *name = (void *)pe + pe->offset_to_name;
--
--    fprintf(stderr, "%s:\n", __func__);
--
--    fprintf(stderr, "    name ´");
--    while (*name) {
--        fprintf(stderr, "%c", *name);
--        name++;
--    }
--    fprintf(stderr, "', version=%d.%d, size=%d\n",
--            pe->version >> 16, pe->version & 0xffff, pe->size);
--
--    if (pe->min_size) {
--        fprintf(stderr, "    size min=%d\n", pe->min_size);
--    }
--    if (pe->max_size != UINT32_MAX) {
--        fprintf(stderr, "    size max=%u\n", pe->max_size);
--    }
--    if (pe->attributes_must_have) {
--        fprintf(stderr, "    attr must=0x%x\n", pe->attributes_must_have);
--    }
--    if (pe->attributes_cant_have) {
--        fprintf(stderr, "    attr cant=0x%x\n", pe->attributes_cant_have);
--    }
--    if (pe->lock_policy_type) {
--        fprintf(stderr, "    lock policy type %d\n", pe->lock_policy_type);
--    }
--}
--
- static gboolean wildcard_str_equal(uefi_var_policy *pol,
-                                    uefi_variable *var)
- {
-@@ -173,7 +142,6 @@ efi_status uefi_vars_policy_check(uefi_vars_state *uv,
-     pe = pol->entry;
- 
-     uefi_trace_variable(__func__, var->guid, var->name, var->name_size);
--    print_policy_entry(pe);
- 
-     if ((var->attributes & pe->attributes_must_have) != pe->attributes_must_have) {
-         trace_uefi_vars_policy_deny("must-have-attr");
+-    assert(length < 256);
++    assert(length + 2 <= SCSI_MAX_MODE_LEN);
+     (*p_outbuf)[0] = page;
+     (*p_outbuf)[1] = length;
+     *p_outbuf += length + 2;
 -- 
 2.47.3
 
