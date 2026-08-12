@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02724C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D176FC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8go-0003uR-7y; Wed, 12 Aug 2026 09:08:14 -0400
+	id 1wu8iy-00008e-Ia; Wed, 12 Aug 2026 09:10:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fi-0002hK-Qn; Wed, 12 Aug 2026 09:07:08 -0400
+ id 1wu8iJ-00083N-0p; Wed, 12 Aug 2026 09:09:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8fg-00059s-QQ; Wed, 12 Aug 2026 09:07:06 -0400
+ id 1wu8iF-0005jw-2n; Wed, 12 Aug 2026 09:09:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=2Y4h0q+JwK205uVvWyfY14CVinsvqb37iYjnNMdYWRc=;
+ t=1786539784; bh=wZZjUk1Z/hUz3DWKPsezpMEnzXSSph+0sdM7FhmeqNQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ie/AMG0UHcVVd+MK8jYtyngkjr45qsyc2LnfzCWTsuMRcGZTXTmfRY6bXEbA9ZdrB
- FFui2FZWW3BkJSka5w2Gi08pyeZpHKywG40xIWdjMoAcJ7p6+IPIS69TGTQgBWajSt
- rARf5DIVQ0X7GEy1FLRRhHVBNAiB2eoDc+0UBml7WdswYzjUUS3n6knsRePYgtn8yE
- jm4e+z80pSJOU6g2vpty5wMJODUdNh0YP/LpGl/TfiHJq4uLJwesQeN6v/9CiOyIUV
- K6TdxBSOu9Vqg3b6gSE6JJ7AU+bnuVL9ra284nxG74pT8NaLpToPSToRiA1SyNwAw6
- j+Sxr1MlJHAvg==
+ b=aUKxvSy56G+9NogDA99DkD+fc9NSFqHNrjiBwRPuF4NoXgm37zqccQ7pM8jWgHqY8
+ hN3O7XdmDbK3u5OjSFhkFmVcuygIAERLHFQsflqtZrwT+yIdpA7nF+nyT9iS9VVSF3
+ T1OW3xkRrYQJIzVjrGlPoq6J0EN6T0cw0d337JzSvIlui5JHGY8bg8zuy3O8MFePdH
+ Cd2e8XYK7reHxfmOYmMG+O8Sv5n0H/0b9DySZI53+PwxldMoSmgPkI5UukO5w8bsei
+ RNZkMHWyX4+sFZQhcRqMpY6lg94vQrk8CWYVBL6hypGX7Q+TfcDZ6Y7bmwAToGP6LO
+ E4+87+4Va+iYQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E0EEE1CA4AC;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 579E11CA4C5;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 22EBA409B8F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D76B409BA8;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 407962F8EE; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 855672F920; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@kernel.org>, Pankaj Gupta <pagupta@redhat.com>,
- Jia Jia <physicalmtea@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 045/102] virtio-pmem: wait for flush requests on
- unrealize
-Date: Wed, 12 Aug 2026 16:01:20 +0300
-Message-ID: <20260812130233.621965-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 070/102] hw/display/exynos4210_fimd: Clamp windows to
+ screen size
+Date: Wed, 12 Aug 2026 16:01:45 +0300
+Message-ID: <20260812130233.621965-70-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,103 +73,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-virtio_pmem_flush submits fsync requests to the thread pool and stores a
-VirtIOPMEM pointer in each request. If device is deleted e.g. by
-hot-unplug, once these complete, done_cb can run after
-virtio_pmem_unrealize frees the device, causing a use-after-free.
+In exynos4210_fimd_update(), we iterate through the enabled windows,
+blitting them to the screen. We assume here that the guest has not
+programmed the window's coordinates to be outside the overall LCD
+screen resulation, but we never check this. This can result in the
+guest being able to cause us to access outside our allocated
+framebuffer backing memory.
 
-Track in-flight requests and wait in virtio_pmem_unrealize until
-their completions finish before tearing the device down.
+Since all the coordinates here are unsigned, they can't be off
+the left/top side of the screen, only the bottom/right. If
+the top left corner of the window is out of bounds, the whole
+window is invisible and we can skip it. If the bottom right
+corner is out of bounds, we clamp it to the screen size so that
+we only draw the visible part.
 
-Fixes: CVE-2026-63323
-Fixes: 5f503cd9f3 ("virtio-pmem: add virtio device")
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Pankaj Gupta <pagupta@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3938
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <417b6685f37ce818c660ca3c84945992f5c30dcf.1784894206.git.mst@redhat.com>
-(cherry picked from commit 5cc182ba39a3ca8ec9ba0576de9696be76dc087d)
-(Mjt: adjust aio-wait.h include across v10.2.0-154-g12e50722e444
- "block: rename block/aio-wait.h to qemu/aio-wait.h")
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3795
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20260706173324.804340-4-peter.maydell@linaro.org
+(cherry picked from commit a5f8d33682be079e6b9b41f07b2eb517121b3b46)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
-index 16c7367ab05..392edd093cf 100644
---- a/hw/virtio/virtio-pmem.c
-+++ b/hw/virtio/virtio-pmem.c
-@@ -24,6 +24,7 @@
- #include "system/hostmem.h"
- #include "block/aio.h"
- #include "block/thread-pool.h"
-+#include "block/aio-wait.h"
- #include "trace.h"
+diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
+index bafbaf89cf0..e3b99d0353b 100644
+--- a/hw/display/exynos4210_fimd.c
++++ b/hw/display/exynos4210_fimd.c
+@@ -1291,7 +1291,7 @@ static void exynos4210_fimd_update(void *opaque)
+     bool blend = false;
+     uint8_t *host_fb_addr;
+     bool is_dirty = false;
+-    uint32_t global_width;
++    uint32_t global_width, global_height;
+     uint32_t window_width;
  
- typedef struct VirtIODeviceRequest {
-@@ -55,14 +56,20 @@ static int worker_cb(void *opaque)
- static void done_cb(void *opaque, int ret)
- {
-     VirtIODeviceRequest *req_data = opaque;
-+    VirtIOPMEM *pmem = req_data->pmem;
-     int len = iov_from_buf(req_data->elem.in_sg, req_data->elem.in_num, 0,
-                               &req_data->resp, sizeof(struct virtio_pmem_resp));
+     if (!s || !s->console || !s->enabled ||
+@@ -1300,16 +1300,28 @@ static void exynos4210_fimd_update(void *opaque)
+     }
  
-     /* Callbacks are serialized, so no need to use atomic ops. */
--    virtqueue_push(req_data->pmem->rq_vq, &req_data->elem, len);
--    virtio_notify((VirtIODevice *)req_data->pmem, req_data->pmem->rq_vq);
-+    virtqueue_push(pmem->rq_vq, &req_data->elem, len);
-+    virtio_notify((VirtIODevice *)pmem, pmem->rq_vq);
-     trace_virtio_pmem_response();
-     g_free(req_data);
+     global_width = exynos4210_fimd_global_width(s);
++    global_height = exynos4210_fimd_global_height(s);
+     exynos4210_update_resolution(s);
+     surface = qemu_console_surface(s->console);
+ 
+     for (i = 0; i < NUM_OF_WINDOWS; i++) {
+         w = &s->window[i];
+         if ((w->wincon & FIMD_WINCON_ENWIN) && w->host_fb_addr) {
+-            scrn_height = w->rightbot_y - w->lefttop_y + 1;
++            uint32_t rightbot_x, rightbot_y;
 +
-+    pmem->inflight--;
-+    if (!pmem->inflight) {
-+        aio_wait_kick();
-+    }
- }
- 
- static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
-@@ -86,6 +93,7 @@ static void virtio_pmem_flush(VirtIODevice *vdev, VirtQueue *vq)
-     req_data->fd   = memory_region_get_fd(&backend->mr);
-     req_data->pmem = pmem;
-     req_data->vdev = vdev;
-+    pmem->inflight++;
-     thread_pool_submit_aio(worker_cb, req_data, done_cb, req_data);
- }
- 
-@@ -123,6 +131,7 @@ static void virtio_pmem_realize(DeviceState *dev, Error **errp)
-     host_memory_backend_set_mapped(pmem->memdev, true);
-     virtio_init(vdev, VIRTIO_ID_PMEM, sizeof(struct virtio_pmem_config));
-     pmem->rq_vq = virtio_add_queue(vdev, 128, virtio_pmem_flush);
-+    pmem->inflight = 1;
- }
- 
- static void virtio_pmem_unrealize(DeviceState *dev)
-@@ -130,6 +139,10 @@ static void virtio_pmem_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOPMEM *pmem = VIRTIO_PMEM(dev);
- 
-+    /* Release the device's own reference and wait for in-flight flushes */
-+    pmem->inflight--;
-+    AIO_WAIT_WHILE(NULL, pmem->inflight > 0);
++            if (w->lefttop_x >= global_width ||
++                w->lefttop_y >= global_height) {
++                /* Guest has put the window entirely offscreen: ignore */
++                continue;
++            }
 +
-     host_memory_backend_set_mapped(pmem->memdev, false);
-     virtio_delete_queue(pmem->rq_vq);
-     virtio_cleanup(vdev);
-diff --git a/include/hw/virtio/virtio-pmem.h b/include/hw/virtio/virtio-pmem.h
-index fc4fd1f7fe8..fc23f3d95d6 100644
---- a/include/hw/virtio/virtio-pmem.h
-+++ b/include/hw/virtio/virtio-pmem.h
-@@ -32,6 +32,7 @@ struct VirtIOPMEM {
-     VirtQueue *rq_vq;
-     uint64_t start;
-     HostMemoryBackend *memdev;
-+    unsigned int inflight;
- };
- 
- struct VirtIOPMEMClass {
++            /* Clamp right corner coords to be within the screen */
++            rightbot_x = MIN(w->rightbot_x, global_width - 1);
++            rightbot_y = MIN(w->rightbot_y, global_height - 1);
++            scrn_height = rightbot_y - w->lefttop_y + 1;
+             scrn_width = w->virtpage_width;
+             /* Number of bytes to actually draw */
+-            window_width = w->rightbot_x - w->lefttop_x + 1;
++            window_width = rightbot_x - w->lefttop_x + 1;
+             /* Total width of virtual screen page in bytes */
+             inc_size = scrn_width + w->virtpage_offsize;
+             host_fb_addr = w->host_fb_addr;
 -- 
 2.47.3
 
