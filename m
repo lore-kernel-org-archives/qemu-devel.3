@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F2AC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14C8C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAP6-0005b8-00; Wed, 12 Aug 2026 10:58:04 -0400
+	id 1wuAV6-0000oO-2i; Wed, 12 Aug 2026 11:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAO2-0004J0-AX; Wed, 12 Aug 2026 10:57:04 -0400
+ id 1wuATK-0005NE-To; Wed, 12 Aug 2026 11:02:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuANz-0000hc-3I; Wed, 12 Aug 2026 10:56:58 -0400
+ id 1wuATI-0002d3-7y; Wed, 12 Aug 2026 11:02:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=GZhYjmhSD6JPltTTY4LQ8wcYUAKdepxlLebQ1NiSWoo=;
+ t=1786546234; bh=YTI+OSziWNCvE0kFhsSMYplW9R3tAXytFe27FSTdG0o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=umcq3uV8GNJWH9MXBXzfyb71YzTbTjbqjTLqv4LMn4PAfJbDbnGdwLo4QOwowAm7C
- tdVQgK7Wdzjpw25egoRZ9yL4AiHd5C8FBT286D/ZMPdtjsIKfY6QwdoAixqxCPK81G
- RWlUdOVj/3TbQQIoysso4cEQpGgmQU9UkyPZjKWgw/Qm+yURTvTGKlX3HttRnwp1QW
- nzfyZizNAdXkflbsWpiCrsTATnfwA8GA9waCdt/YDYbzJbccUIbnLaAR+5MD9k6OVs
- 7bHhJS8T26zTrrFURmABWJsa6/K8eiDuhCEorqNmYlfNduvFC+gai8aizmQWOOp3hp
- eQ+5Y+FgQtBGA==
+ b=p7T66Kyd8M10dzVQrd+V7eaa0Akb8WiHS20Jz+5ODSPLIRjV8xdn3M3ptDsCfgc6M
+ bXfsK25RsF5KzCtwW2LR7TUiOFgCnKKbyHXaVX/qBbtM6VP34xGfuJ/C25FouU4NNZ
+ b+VpQVlcRDAsYe9G9Yl7DZbNQJb3/3FxUIobKhTO88jUXk5bV94MSqraKdgzQBFM/3
+ 3FKOWg8vpr4VB+8i/E+ezfUbTANnJrtbWoKO7BEj2Ez1E6E3B4wfSXD6ASnC9EIqR5
+ PkHKkrsfcQSfLIBnhV8LlcsFaj2voTCNp5G6X5d5Hfk/TRwtYor3SqIaflHyVTOMHl
+ R40PTj0D1YVsg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7987F1CA643;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 305811CA67B;
+ Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4B4F409D85;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8B4FA409DC3;
+ Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 406302F9E1; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id EB82A2FA51; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 063/120] hw/virtio/vdpa-dev: pass set_config buffer to
- vhost backend
-Date: Wed, 12 Aug 2026 17:48:46 +0300
-Message-ID: <20260812144955.649205-63-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 119/120] linux-user/sh4: Fix crashes on signal
+ delivery in conditional delay slot
+Date: Wed, 12 Aug 2026 17:49:42 +0300
+Message-ID: <20260812144955.649205-119-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,35 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-vhost_vdpa_device_set_config() receives the updated config buffer, but
-forwards s->config to the vhost backend. Since s->config is refreshed by
-get_config(), it may contain stale backend state.
+If we get a signal in the delay slot, we must roll-back the PC to the
+jump instruction. This was already fixed by the commit 3b894b699c9a
+("linux-user/sh4: Fix crashes on signal delivery"), however this fix
+omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
+by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
+the PC in this case, resulting in incorrect program execution.
 
-Pass the supplied config buffer to vhost_dev_set_config() instead.
+This patch fixes it.
 
-Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
-(cherry picked from commit 421f45d03f328267ebf77fab823a7a25ab3d6c83)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 7d98b23b471..2dcfc9d9297 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -213,7 +213,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
-     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-     int ret;
- 
--    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
-+    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
-                                VHOST_SET_CONFIG_TYPE_FRONTEND);
-     if (ret) {
-         error_report("set device config space failed");
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 7f246e750d0..047174ac8f3 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
+            the SP, otherwise we would be pushing the signal context to
+            invalid memory.  */
+         regs->gregs[15] = regs->gregs[1];
+-    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
++    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
+         /* If we are in a delay slot, push the previous instruction.  */
+         regs->pc -= 2;
+     }
 -- 
 2.47.3
 
