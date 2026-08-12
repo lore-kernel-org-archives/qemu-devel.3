@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A755CC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C23DC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hM-0005kz-Ks; Wed, 12 Aug 2026 09:08:48 -0400
+	id 1wu8fn-0002hG-3G; Wed, 12 Aug 2026 09:07:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hH-0005IS-AL; Wed, 12 Aug 2026 09:08:43 -0400
+ id 1wu8fZ-0002aF-I9; Wed, 12 Aug 2026 09:07:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hF-0005Z9-Af; Wed, 12 Aug 2026 09:08:42 -0400
+ id 1wu8fX-00055J-My; Wed, 12 Aug 2026 09:06:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=1Djt2ItzmZ5m06fuyXsqaplFKvYuZBAdz59TgwTXceA=;
+ t=1786539783; bh=qd1yTos6nxJWMo1T4teGiQB7bu25tbPlb9RkbHQPZlg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CEMROJRi74tatlGmkUjR6admyMt4tevPDIXqUAbMVRDDfLs+GXKr/+PMjVIQDjLY+
- 6yAxSAHe47+3QryBs9ij7JsGPod8zbAKAwJamGSqZ3R1CJv4GviW+Jgbx0qjPBDOC5
- JIPrtMupvYlcidpZG0PoDYf1TjXOtdhDFM1lvf9aiE/VHXhkymaJcjL67WaWVvQGFQ
- QGPLyEPG6AA/ynmQa2BwOxRWgP8Z5aYGmrtwzSkG7ByMh9+3Uv71CRKENjA650Jfm3
- Z9nxLI9Z4SWc0EZdE123kzquLXWZPOaZ9etY61UxIRsd1g8l9Qk8i3b7ICpcWHx7BU
- S3ZM08MRjPTCw==
+ b=fQXAR3iiDsDO87s/G5jQvKK9zH9fPW4zSMbG0SS19F9NjC4Lhm57Hlqk66M/JjVCc
+ E3eaRMxOlxkhhuaOpzAxCJKhp/XcFi64Y0Bu4TA+3nlPoUQKUZ39MHJ03BBkCPaVw4
+ O5WHtfOaEHHZWAQtiXQIdxdpnVh2enabsFHuwW8WQhzLDojzMShnieDjJENH6MtPKl
+ uI2Elike446Ny5k/TmtDeFO6811gY1/xYp785eQ+lzBOOiVQ76opj78KkZIIGai1w4
+ ucAyo2dsGwM47zGmAS3fCvhTI83ajJ5oks+w51KMyH+ZTU56Sfa9masu/vgTLyH3f8
+ u1X069ecnhLHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2DC031CA4BB;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CF88B1CA4A8;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 641E2409B9E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 107C1409B8B;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 689052F90C; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 3609B2F8E6; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 060/102] linux-user: Guard local FUTEX_CMD_MASK
- definition
-Date: Wed, 12 Aug 2026 16:01:35 +0300
-Message-ID: <20260812130233.621965-60-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Feifan Qian <bea1e@proton.me>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 041/102] vhost: do not crash on ring map failure
+Date: Wed, 12 Aug 2026 16:01:16 +0300
+Message-ID: <20260812130233.621965-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,41 +72,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-Building linux-user on a host with Linux 7.2 kernel headers fails with
-a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
-3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
-expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
-FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
-definition.
+When vhost_commit() rebuilds the memory region table after a flatview
+change, it revalidates cached host virtual addresses for active vring
+parts. If a mapping is stale, QEMU abort().
 
-Add a #ifndef guard so the host definition takes precedence when
-available. The local fallback is kept for older kernel headers
-(pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
-FUTEX_CLOCK_REALTIME.
+This is not a security problem - only the priviledged guest
+can control make it invalid - but not nice e.g. for driver debugging.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 8268d216a004d884a07db20e973158d81760a07c)
+Let's call virtio_error() instead, marking the device as broken.
+
+Fixes: 0ca1fd2d68 ("vhost: Simplify ring verification checks")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3783
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <71961a7dc157f552303aeea8c99a75c5e1ce904e.1784898432.git.mst@redhat.com>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+(cherry picked from commit 27806d2ddba2da97fb4137cba7d4172356c42914)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 1c546ce1a03..01f5d47b6ac 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2591,7 +2591,9 @@ struct target_drm_i915_getparam {
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 971460eb2a6..2e59a8aa0bd 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -681,8 +681,9 @@ static void vhost_commit(MemoryListener *listener)
+                        (void *)(uintptr_t)dev->mem->regions[i].userspace_addr,
+                        dev->mem->regions[i].guest_phys_addr,
+                        dev->mem->regions[i].memory_size)) {
+-            error_report("Verify ring failure on region %d", i);
+-            abort();
++            virtio_error(dev->vdev,
++                         "Verify ring failure on region %d", i);
++            goto out;
+         }
+     }
  
- #define FUTEX_PRIVATE_FLAG      128
- #define FUTEX_CLOCK_REALTIME    256
-+#ifndef FUTEX_CMD_MASK
- #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
-+#endif
- 
- #ifdef CONFIG_EPOLL
- #if defined(TARGET_X86_64)
 -- 
 2.47.3
 
