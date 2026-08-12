@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367F3C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8F0C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuC1i-0003zD-A1; Wed, 12 Aug 2026 12:42:02 -0400
+	id 1wuC51-0004nj-7x; Wed, 12 Aug 2026 12:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuC1g-0003z2-7a; Wed, 12 Aug 2026 12:42:01 -0400
+ id 1wuC4z-0004nP-4d; Wed, 12 Aug 2026 12:45:25 -0400
 Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuC1e-0006qb-EE; Wed, 12 Aug 2026 12:41:59 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id A26291400045;
- Wed, 12 Aug 2026 12:41:56 -0400 (EDT)
+ id 1wuC4h-0007dp-8S; Wed, 12 Aug 2026 12:45:11 -0400
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id A525B14000F3;
+ Wed, 12 Aug 2026 12:45:04 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 12:41:56 -0400
+ by phl-compute-11.internal (MEProxy); Wed, 12 Aug 2026 12:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786552916; x=1786639316; bh=JMoJ66msCCw7TE4+ZZbwdj3px1Pgc0Ur
- wUpbDD7YSDw=; b=jFmRx3WDzgDBYOXDkXC+VJMqVEEL8Ke6VX4bPTy+769rgMoR
- uOfz79qaPgMf2R145ACtTMbt+I4YPHoG9vMTck+D1yg5QR9Ft0rG7hQadl0lihT9
- 0jSE0Q2DQxma+lb5bRh8DLzrJxUVtADpTJGBBDo2UJFw9oXdSNmeymK5+dfVzHIv
- +IjBzYxDEXJp49uqv4TIv0/mQci/tJ7hMHsxlfgS49TLyPQ5oEV37twNpnhJgErM
- RXpC+0vkqh2+zDCcSGjNiwsGm76+q/J3BRbIaY211f7I+lSVrbMEym91bGbP4dR4
- NHDyYGT3WrZ560KPnDN1eiwpV/ffoouRKuAutg==
+ t=1786553104; x=1786639504; bh=YnwMMC6hTYEh4JU09+QoRitqXuYNG2Z0
+ blKLrhUT8Q8=; b=Kp8IDQehvDo/7K+WTybsEs06wK4bRzss6habMaHkeUonja4g
+ bYW95Dl9+TtwkFjvS+P5GPLdhJgKe2+hckB6PzsGi5NaS9VEiuo7UAg7g0RZAPV4
+ Od86twua2Qr5KtrWi2JBGsKAo50luKIMJNR2ANmDjn8v+pws5OW12H6/PO+qD35F
+ hgDdout28FoE/vmwpW+Br9tDM0xAGVKx3N0AN9OwU9WmNH9S8zXh2CeXG2e4j7pS
+ d7fVObTI6Tt4mSIJMkdOkmBEGFttqZL089+B2GJBzJBo2EmrxFy96JZUgzasOMlP
+ nckMiI9unRj4z7V8tqT0Rm5LwTIpV6gWn3+faQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786552916; x=
- 1786639316; bh=JMoJ66msCCw7TE4+ZZbwdj3px1Pgc0UrwUpbDD7YSDw=; b=T
- 9ud3N/JEcFpGlfG1FcvnFTzM7OfjaJrcRIA+iIVKZhg7wHXxAUfVmpo1GfFA2Yu5
- 3b4C67qbVu8A3rKoKKCZNtJIcRTGDTUFyGEi6euWPUxhqjKIPDCXYOw/3c00nEbK
- ZRYvvYNYRGBleYK9T5GO+sOrabRP9Iw4S577+qB8bbzfMAw5nquaNlHCV+QycIIz
- UQIZ8j4y6BdwRTL9TBSMFbyhoZVYR3QWiItWyvm60RsFY1xi6ENkzzgDQPfCDkTc
- voMVDgwUVRXby4FR276d8tNay+mVGm0UR8vKR1rAlzH5eukfi5f5Fa7uMIEoj8DT
- SBVlSmhIrXKva6uRt8ujg==
-X-ME-Sender: <xms:U6J8anTgjJ11i4MPgBj6mOJ4H38A1CpbLyUgsHbggKQrC9EtfOUOEA>
- <xme:U6J8aqTzNK9apymMkTnhBW0ffvldG6KaNCQAXBywWrfyIOzsS0AleyBqwSgnuAzes
- 3k9I48rQ717bW1K08jeyA_MFgomx6DkvyMFxaz4Kb7Mca1UfpB34Dfo>
-X-ME-Received: <xmr:U6J8as7RtjTwy4PoXG16Dbk3wPBqCYPwfJ7XJeaSStHOwdBUbg4--u6P2RBmnch2xBomQw>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786553104; x=
+ 1786639504; bh=YnwMMC6hTYEh4JU09+QoRitqXuYNG2Z0blKLrhUT8Q8=; b=m
+ Gfhs7/0uKcIVo1tOyS1rJMOhrovLSC9LshJAuQcohGgyU6DgzSHpbrtVo7rl0HNw
+ 4vv+2Bd0qvA8OQI43WsiUm0IJ4I+tdHMCCMyNJI24pxmACawJOlZQD44+IW4pTbv
+ HJa82QEGVdenF8O6Ek5DJNjJmqCUl6nEnnFBMyxpIlaUZFvu+45PKKAlUvTeXUd+
+ UL0KxWB6NHBqTGb200tTU3Z9yY8DCK2KpGyAJozCFGUA3BkKyA6cCU6qgcUZFBgj
+ 0Nhgb1nb1xSPy/6GVE5fKPjI4ZElv/fCx+2wp7IsJbMIEdNKHb/ND/5vgq1O6I4s
+ U125f/En99dbuvcDt40Ow==
+X-ME-Sender: <xms:EKN8ak_7FqmwJt6OhYLXmOgJaQt7QV8uaKAr18tQhn2ll6Q3d3Eewg>
+ <xme:EKN8auMkB1mTErCCGexoVxGyDXghI74_RH5hG8loLUGnj0NYFOYkRskFYJicaZCwu
+ rCw7JZ0cLfNP2LEdX5uftRc09rrya3rf2eSEwUekvVfs_W_ufCl9y8>
+X-ME-Received: <xmr:EKN8aqFjiGNUU94n-7oXqt8a0bBxbksIIvCBEY7n4k_ASd6L5ZnYnZWXiQki1sHmiIdx2g>
 X-ME-Proxy-Cause: dmFkZTEpZlKt9LLslbpY4viMGc+OBio+UBDT/BZi7wcWy0grcRDu6UkaDD3E8ph81x7BwS
  65Q0rprAtS6RYbaFuBKn056dlkH3s+il7F+nwLF8y+Cr7YhnKgRxgDXhLaFtym12DXN1dl
  u+Stx/tlR3a9FLwje/tBgA4LRSGTqpWVX2jg6sLw4pflHNXVAo21qMiXK+zlwt9xRgUAsi
  1B7DRLUC2ZRdNWFzyRhQDUMIciKZr06rWvlnxLK2NSVSI++Hh4oP5UK2Ie6fhgC9EPDPQv
- 9dKJQQ3aaGN2sZpUQdRXEYQRZrAvx6LKnG7s7PPU93Iwcd/n5wSHdwUb7tFh8pmsbzC7Pa
- /Q8m7MXyEUW2sXaj6P3Rx/RIhXSnTVb5eNilSpgoqij+kaZkcTbrlXMyWfrVQ14PQnSJFm
- 3KiommCGJ0OQl4Pvjfw87T8i+dXqMgzS1o4TfEgz1Y7xDxDaEltFTQ7j1tRB9vWDXnf64V
- HWquIlodVUPt5fiixFoWPuF2HxVw2UDotUa5RPfFHuBwf7yh2Kz8dmSxICIJyPPGEJkaQ8
- 58Ayb+ItywswSr8ImjNizNQwksislNIBTfa43CFq3sIdqxsQpJndvcji6EoW1PNQKxqufn
- rMiwOnzyuUrmXtv0FWg0leK9BxPjgmZbfPvv/oT4BBtEx75PVb0c6eNxnPlw
-X-ME-Proxy: <xmx:U6J8am3COsSm8AVEBoPrBhZjROP5Zo6psyRJ73WHxk6HcHQnDrXdMA>
- <xmx:U6J8anD-Z3A4q389OE9H9ATLKZYRgYZXla8OurynU05rtZ_IoyMtug>
- <xmx:U6J8ahM3kfEuZ9g1PBGJUwoUb11KtkH6h-G4R_iAyaWMQMefHK1w8Q>
- <xmx:U6J8asbfltrduQgqxTLM0YzYDy9jLHTIkUoN4GlN4tPIEes_WehL2g>
- <xmx:VKJ8aiinsA0EiYTE8CXG1tZ_ftClYta223GO6ePUhsspdXi1UIQaVg7m>
+ 9dKJQQ3aaGN2sZpUQdRXEYQRZrAvx6LKnG7s7PPU93Iwcd/n5wSHdwUb7tFh8pmsbzC7tt
+ jiRYMqPGqSs2bzydTSy2xcVxJyNw0GdXelOafja1vSWW8v5LUw3k+L6ozh3WCfWokne+fi
+ Hb7XB11mE8fcEoQpTgJbOdcJa5lbTCicf/S0vgKQpJZgUZGlrdvXVQ86IpztKuq3HzL6ST
+ VfohqelnHknFcghfB1RnV1sQF8NMeWjYi+DAB7BHT/rqFCV+EjaCSQD4fOOnhjVGvVwnGx
+ TQZkl8jPe+kLI8dM1l2aQSS+h9G/a7E1UT8r2n1XOEKVSlshoemHcKHJd0k3/lgaT58249
+ EHFpmuPeCT7iJgGpcsKiVAERv4j1MUByiVlUBCaLtU85iUzCo8mJo+2TkwyA
+X-ME-Proxy: <xmx:EKN8akRr_WRvvz-DWq6Rs084NlZcslCtIWY9-JrfLpuuhjM-5DuysQ>
+ <xmx:EKN8avsLL9_C_CIxvufOqKac5IyjljbZMOGImhJ2j9SGCvxgi-InNw>
+ <xmx:EKN8akLdoPgq2sAQTd6Hll_TiHhDI27vZdSguEnXkOE17fTNJz2bog>
+ <xmx:EKN8asnb4uAxEqut3t5MS3UAcu5ZZp3sOOaUphKXCXbSTaRiFJkYXQ>
+ <xmx:EKN8ar8i17_DHdt2qr3GpWy7z9-3zSdK4sQweb_iUnZqeqUgRhyDdxjZ>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 12:41:55 -0400 (EDT)
-Message-ID: <ae336dc61541b41ab95630f6d4267f5f9d63699c.camel@alistair23.me>
-Subject: Re: [PATCH 2/4] target/riscv: reject FMV.X.W/FMV.W.X under Zfinx
+ 12 Aug 2026 12:45:04 -0400 (EDT)
+Message-ID: <0180cf74e912a29d1eda72e3fa2760646554c795.camel@alistair23.me>
+Subject: Re: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in
+ linux-user mode
 From: Alistair <alistair@alistair23.me>
 To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com
-Date: Thu, 13 Aug 2026 02:41:55 +1000
-In-Reply-To: <a417fdc4ee2d4c4c9760786a4104d051@wangyang25.otcaix.iscas.ac.cn>
-References: SENT
- 0001-target-riscv--honor-zicbo--envcfg-gating-in-linux-user-mode.patch
- Subject: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in linux-user
- mode Message-ID:
- <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
- <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
- <a417fdc4ee2d4c4c9760786a4104d051@wangyang25.otcaix.iscas.ac.cn>
+Date: Thu, 13 Aug 2026 02:45:03 +1000
+In-Reply-To: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
+References: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
@@ -112,12 +107,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 2026-08-11 at 09:14 +0800, wangyang wrote:
-> Zfinx explicitly excludes the FMV transfer instructions, but
-> trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
-> CPU accepted them.=C2=A0 Require RVF instead so the transfers trap with
-> an illegal instruction when only Zfinx is present.
+> In user-only builds check_zicbo_envcfg() skipped the envcfg check
+> entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
+> cbo.zero retired unconditionally in linux-user even though the
+> machine-level envcfg fields are never initialized.=C2=A0 Give the
+> user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
+> reset when ext_zicboz is enabled so cbo.zero stays usable while
+> cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
+> typical firmware/kernel setup.
 >=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
 > Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -125,39 +124,68 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
-> =C2=A01 file changed, 4 insertions(+), 2 deletions(-)
+> =C2=A02 files changed, 18 insertions(+), 1 deletion(-)
 >=20
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-> b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-> index e935523c93c..305f545b494 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-> @@ -428,7 +428,8 @@ static bool trans_fmv_x_w(DisasContext *ctx,
-> arg_fmv_x_w *a)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* NOTE: This was FMV.X.S in an earlier version =
-of the ISA spec!
-> */
-> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_FPU;
-> -=C2=A0=C2=A0=C2=A0 REQUIRE_ZFINX_OR_F(ctx);
-> +=C2=A0=C2=A0=C2=A0 /* Zfinx explicitly excludes the FMV transfer instruc=
-tions. */
-> +=C2=A0=C2=A0=C2=A0 REQUIRE_EXT(ctx, RVF);
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 5a82e6563bf..45b7610aa4f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1061,6 +1061,14 @@ static void riscv_cpu_reset_hold(Object *obj,
+> ResetType type)
+> =C2=A0#else
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D PRV_U;
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg =3D 0;
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * Match the user-mode view of a typical firmwar=
+e/kernel setup
+> where
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * cbo.zero is enabled for user mode; the CBCFE/=
+CBIE bits stay
+> zero,
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * so the cache-management operations remain ill=
+egal in user
+> mode.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (riscv_cpu_cfg(env)->ext_zicboz) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg |=3D SENVCFG_CBZ=
+E;
+> +=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->menvcfg =3D 0;
+> =C2=A0#endif /* !CONFIG_USER_ONLY */
 > =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv dest =3D dest_gpr(ctx, a->rd);
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i64 src1 =3D get_fpr_hs(ctx, a->rs1);
-> @@ -531,7 +532,8 @@ static bool trans_fmv_w_x(DisasContext *ctx,
-> arg_fmv_w_x *a)
+> diff --git a/target/riscv/tcg/op_helper.c
+> b/target/riscv/tcg/op_helper.c
+> index ba3c7da375a..b9d0deacdfb 100644
+> --- a/target/riscv/tcg/op_helper.c
+> +++ b/target/riscv/tcg/op_helper.c
+> @@ -146,7 +146,16 @@ target_ulong helper_csrrw_i128(CPURISCVState
+> *env, int csr,
+> =C2=A0static void check_zicbo_envcfg(CPURISCVState *env, target_ulong
+> envbits,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uintptr_t ra)
 > =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* NOTE: This was FMV.S.X in an earlier version =
-of the ISA spec!
-> */
-> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_FPU;
-> -=C2=A0=C2=A0=C2=A0 REQUIRE_ZFINX_OR_F(ctx);
-> +=C2=A0=C2=A0=C2=A0 /* Zfinx explicitly excludes the FMV transfer instruc=
-tions. */
-> +=C2=A0=C2=A0=C2=A0 REQUIRE_EXT(ctx, RVF);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i64 dest =3D dest_fpr(ctx, a->rd);
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv src =3D get_gpr(ctx, a->rs1, EXT_ZERO);
+> -#ifndef CONFIG_USER_ONLY
+> +#if defined(CONFIG_USER_ONLY)
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * linux-user: the machine-level envcfg fields a=
+re not part of
+> the
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * user-mode environment; only the user-mode vie=
+w of the
+> enabling
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * bits (senvcfg, as initialized for the guest) =
+applies.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (!get_field(env->senvcfg, envbits)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(env, RI=
+SCV_EXCP_ILLEGAL_INST, ra);
+> +=C2=A0=C2=A0=C2=A0 }
+> +#else
+> =C2=A0=C2=A0=C2=A0=C2=A0 if ((env->priv < PRV_M) && !get_field(env->menvc=
+fg, envbits)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(en=
+v, RISCV_EXCP_ILLEGAL_INST, ra);
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
 
