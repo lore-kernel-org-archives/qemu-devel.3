@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6214C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F2AC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMr-0002lZ-Kl; Wed, 12 Aug 2026 10:55:45 -0400
+	id 1wuAP6-0005b8-00; Wed, 12 Aug 2026 10:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKM-0006jR-AI; Wed, 12 Aug 2026 10:53:12 -0400
+ id 1wuAO2-0004J0-AX; Wed, 12 Aug 2026 10:57:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAKK-00079f-Lk; Wed, 12 Aug 2026 10:53:10 -0400
+ id 1wuANz-0000hc-3I; Wed, 12 Aug 2026 10:56:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=9Iuwdnelw1WHAfxVLD86ANoX0VP05deWUNJmlAOSzcE=;
+ t=1786546232; bh=GZhYjmhSD6JPltTTY4LQ8wcYUAKdepxlLebQ1NiSWoo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=V4J3QItnfyc/iT62Ug6xFrVNfuIaCz7jaXBMLHUXaURwuWG00pOluR01aCqAxqyB8
- 4XlPZOaneM2sfQpZt6QeU0QJyGU1vRDhc0PhHzBhz0olsjsNd/Gci7ZFHg2snOJQvn
- +5ZJ5ZINCPKmu2a65fLRV4iJYFHZW0hYXu4l1zowQHclAtDgoz9Ibi55rWMIqhdCbf
- EMOaeribTN4hh3kjzY1Q4UGnzlihS3sbz/o6D+LSIb9Wg4+Hqj9spaD01fHG1Bxx+n
- NDpU4H/MjQLmIAa9EAcUt74iuQLTjr5kygRhrwVeD29uQ4FT2/3GL/DI9x2j9PZzaH
- nhqrcXjfyN0aA==
+ b=umcq3uV8GNJWH9MXBXzfyb71YzTbTjbqjTLqv4LMn4PAfJbDbnGdwLo4QOwowAm7C
+ tdVQgK7Wdzjpw25egoRZ9yL4AiHd5C8FBT286D/ZMPdtjsIKfY6QwdoAixqxCPK81G
+ RWlUdOVj/3TbQQIoysso4cEQpGgmQU9UkyPZjKWgw/Qm+yURTvTGKlX3HttRnwp1QW
+ nzfyZizNAdXkflbsWpiCrsTATnfwA8GA9waCdt/YDYbzJbccUIbnLaAR+5MD9k6OVs
+ 7bHhJS8T26zTrrFURmABWJsa6/K8eiDuhCEorqNmYlfNduvFC+gai8aizmQWOOp3hp
+ eQ+5Y+FgQtBGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 894B21CA623;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7987F1CA643;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4555409D62;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4B4F409D85;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 507202F9A1; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 406302F9E1; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 031/120] hw/display/virtio-gpu: validate stride
- against width on scanout
-Date: Wed, 12 Aug 2026 17:48:14 +0300
-Message-ID: <20260812144955.649205-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 063/120] hw/virtio/vdpa-dev: pass set_config buffer to
+ vhost backend
+Date: Wed, 12 Aug 2026 17:48:46 +0300
+Message-ID: <20260812144955.649205-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,65 +71,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Validate that the framebuffer stride is at least width * bytes_per_pixel
-in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout().
+vhost_vdpa_device_set_config() receives the updated config buffer, but
+forwards s->config to the vhost backend. Since s->config is refreshed by
+get_config(), it may contain stale backend state.
 
-A guest can set a very small stride while using a large width. The total
-size check (offset + stride * height <= blob_size) passes because
-stride * height is small, but pixman reads width * bytes_per_pixel per
-row, causing heap OOB reads. The leaked data is rendered to the host
-display.
+Pass the supplied config buffer to vhost_dev_set_config() instead.
 
-The check is added in virtio_gpu_do_set_scanout() to cover all paths:
-blob scanout, non-blob scanout and migration post_load. The additional
-early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
-configurations early.
-
-Fixes: CVE-2026-63109
-Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3989
-Reported-by: Tristan @TristanInSec
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 861372428b05f74a1cf9a8af22a863aa7b46c7ce)
+Fixes: b430a2bd2303 ("vdpa: add vdpa-dev support")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260709073225.2341642-1-zhaoguohan@kylinos.cn>
+(cherry picked from commit 421f45d03f328267ebf77fab823a7a25ab3d6c83)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 81d65ec57ca..10f55bd2ae8 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -646,6 +646,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         return false;
-     }
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 7d98b23b471..2dcfc9d9297 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -213,7 +213,7 @@ vhost_vdpa_device_set_config(VirtIODevice *vdev, const uint8_t *config)
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
+     int ret;
  
-+    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: stride %u too small for width %u at %u bpp\n",
-+                      __func__, fb->stride, fb->width, fb->bytes_pp);
-+        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return false;
-+    }
-+
-     g->parent_obj.enable = 1;
- 
-     if (res->blob) {
-@@ -757,6 +765,14 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
-     fb->width = ss->width;
-     fb->height = ss->height;
-     fb->stride = ss->strides[0];
-+
-+    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: stride %u too small for width %u at %u bpp\n",
-+                      __func__, fb->stride, fb->width, fb->bytes_pp);
-+        return false;
-+    }
-+
-     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
- 
-     fbend = fb->offset;
+-    ret = vhost_dev_set_config(&s->dev, s->config, 0, s->config_size,
++    ret = vhost_dev_set_config(&s->dev, config, 0, s->config_size,
+                                VHOST_SET_CONFIG_TYPE_FRONTEND);
+     if (ret) {
+         error_report("set device config space failed");
 -- 
 2.47.3
 
