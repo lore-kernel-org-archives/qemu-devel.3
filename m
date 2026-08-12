@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64EFBC5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C7AC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7t2-0004Lc-M7; Wed, 12 Aug 2026 08:16:48 -0400
+	id 1wu7t9-0004hn-IT; Wed, 12 Aug 2026 08:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sy-0004B3-La
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:46 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wu7t2-0004KT-3a
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:48 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sv-0008V4-O5
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:44 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-480001972b8so325299f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:41 -0700 (PDT)
+ id 1wu7t0-0008Vk-32
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:47 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-49558ce01afso6937215e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786537000; x=1787141800; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786537004; x=1787141804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=FnEhw5l35Ojo4FkzasV2AQd6Y48VBPRwnwdLMQCdWGQ=;
- b=t5Z2L0splvjjiRBnAx+uo5SEOwTWxA6US9L2VogY3ihcwtGYt+KnBG6lgGNh52/7DA
- Ubhawn21a3z+VSPXOWoIENndhVFPr3HMtAYHSs8YDsEXBhDVvmPLx+lcjdLK6yKxZnmd
- zcR1kUF7KRguMTIujjLRissgFuigEpIW+OPV2W+yyFcc+2zB4Snv2F4ORyOM5LmQ5pX2
- rrObmhzL+DYt8jb578HLSW4+peQGgvoq9U/lIpQRBxiALmo+yhR66q4ILGpWZq6GX2S8
- qOquto4Mzh81tLZrcSoNIusC7OY1yOfpisp7cFYJBS8JGnrDslKaRmZVLahyJu64SKGh
- spug==
+ bh=zprv574hMUc1osPTRItRwojX5aCpqSuO6N7TCEXrs0g=;
+ b=gucxTZoWBLu8fb1ie/4XuPGq0ZjlyfKuZEak13G+vj6EdW4BW7shsJ8gwpingsNuCd
+ bBI5LmpXzmek0mxraDToVW86XcVtgpHaIqYpP4T9zNT2/pOGEfi+DwZj2K2Nbp5gDnEb
+ 55qdsH0fddZoqLsMfHQ1Rh8x+yR4aehVUJq2Sm3OcKB/plizgRrfKT2T+HCzjjRJxuta
+ xhCmAxqrKy7ul9feoU9cnsaEQbD3dpq43vxR/DF1JdXnq1AygibvAbkwOoJ7UqFTN/fR
+ ahL48kysvJfJ+S2E0PsK9J5pBthnQwlmqOrDG8463omLwMdvw0qkC55ieLo/4k7OjpWW
+ oKww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786537000; x=1787141800;
+ d=1e100.net; s=20251104; t=1786537004; x=1787141804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=FnEhw5l35Ojo4FkzasV2AQd6Y48VBPRwnwdLMQCdWGQ=;
- b=NPPpNl3AUW2gKO4Jer/n1LiH0pGHZUAfqY8XVlLXx54BbDK4Wk5XwFx1x4+/BmXSE8
- OAVNJEClWo6ysoX9imluLs2v2Q2ySViG+Uix2RzDR+LYVUUNKDC942/5xXIs9sJGwHbR
- rd+bhcbH7tyre9qQmWPOUMwwGN7x5Pn0jMU4Uqe6hW4DWEzMrwCeXXiXcpq9GJwT25Fk
- EV+vKFkE2wJvKWbxdlDyW5ders+N/tKqGjFXuNqYnKZTjTfMHYHnTfsPndkMFhCYJFVv
- AFQkDdb1SNcnMcFUTQvDyfZZKkWeR7h5f62kn9T+OToQzHIBzg7q2tPEVP/RZJWLOf/I
- YUbQ==
-X-Gm-Message-State: AOJu0YzC6GVDV0if2XijZPHZTpF2P1SFFKPMm00V6RfBMYpvXCOxJEBo
- KdJsdY5Wax89pTggKj/aWufwPidCwaPLRCkwwzZHIQyINc0aTmZThNC9H2/cbQ/Lc8sjQtdleWd
- ZBfDU
-X-Gm-Gg: AR+sD12H0fFhur/0DCd+VwNmixMMCeu7aSidoDWVKdQ3MlmRxkeFEAU1OQpf/pQsFRU
- TcbZv4YxoJQxo42oF9xWTVSfQm08a6mIb7IkD7tOWf48SdVT73+fc/m07N39Gq3lhY5eX7FD1sT
- a/xCf/ZZgN3XkeHxnUlXlPI2IlyQuC5isTvxZEphNVuB31nzHoKWCtxtMi4XuWV8CwLrdzIKGDr
- z5HPRhCKtv3Z96nBZ811oufmW+iKH/NkB5K3vpjou4W3XWJgTdgXwLHxIpVfVJa0SLfJL8hlJx3
- Rk9C2vbALPHB0S1UfGcmwCI3N5vYPxBO04NcVWKMYuRzx10VQrpLqQvTw7IONyeSkRIhp/Xp5ol
- rcJpxyrhytwN0cyZeHOYB/Xv6vVbld2z6gd1Auf6Xefb/2vWA8VpzLVsi06G1hLgmowHi+U1fx6
- HP61f3hDyKK6d+erqOiJJYU6/3106+Nym2H1723TJ8w7W4sK+klZgtYCmBXCtzjpu+4JO/rkJdd
- IhdjR3wHd426rwa5jm0tgO9fWGiltTE+OeMA7KBjcX6Qw4iZtusVHLJ0qXTvAoik05ubQ==
-X-Received: by 2002:a05:600c:3ba6:b0:493:e451:a9e1 with SMTP id
- 5b1f17b1804b1-4997c0e3812mr57261625e9.2.1786537000109; 
- Wed, 12 Aug 2026 05:16:40 -0700 (PDT)
+ bh=zprv574hMUc1osPTRItRwojX5aCpqSuO6N7TCEXrs0g=;
+ b=jTDDSjuzKIHl2HVG5bZKxlCfwwDwp6nCTg/UGPTqkXkKI06IEx8mrw3AxQEiL7gbaT
+ 9fEpIOPumcYHeOmYHfXyF6wD93eC0/oEkCBdOSL2hSDT3UxlsmcnZ68/2hORBkBNcng7
+ 2K9CbZwL8R8AxRuFUYmOfQlTNpHV5KicsPTbh9PKqrJd/wCubmoLBr862kukApPoEyuJ
+ w4TGkwiGgrdqhExqeh7rvrX+RSX732BC02CpsYBlD9bxN+7jRfQYfAYoFMTrEGN72oBY
+ 4C0v1RaYL0jUvvO/aMbZHVpohc/W2rh6Hy/djmXlBDiAsoooql1kaSP4k7RdpJMyeHYf
+ d6gA==
+X-Gm-Message-State: AOJu0Yx+0ICIoE0Qq76wHtIs7PEpPONRVTe9bP0bThxSpO/1A6A8m3JP
+ q6RkGwManF+zT0Zg0poo5h6UTuiqFl+gsKmyVcbAUfmFoRNPxtuj9cx/kvWEYvYCeozvSmDFmf8
+ +T3XJ
+X-Gm-Gg: AR+sD12MO6c1kUDdROjS9bLKkV+oyWA8IGlyJ6ZyVe0kd5r/vTmBwV+BkmnbjU+EHPy
+ cwHIMF/oqg2+K+D/JUEGOnPuLR2Aktz+JlWchEAEr+TR0gcmj1KPZinqr/lmwZtN3Dpq8XtkGhb
+ kOdSooSmqGtXlxciXqS+iPWf4wRT6CRdD+KMcB2iIbPDCjvx1boO1Qv5HUA4gYpqAWca/AeQcii
+ S+HP1O22E1l/ne3w4RrXUS4wI3dooCwpyKsQzdwoisX9slzZxKnfGjV86w/uVNa8ns8/GzagLGx
+ jS4jwSS7YImi5YuS+sEA/lXPEbHsefCbEvxTj//hT0YTIDpITX0PLAjOp+Nlnq4xhQN0AYDgXus
+ n8rG4FJt+2xjcQCIMK9oJrn9rrCk8dIl7M5/Lv4L7vCVI+PYjow5dl0IiOh4kl9oGcnVIv662gP
+ 4h6m7d0iSX1qQ+Ur/W85BHbfuVG3W54Q+9LzSGPG3tFVdUpHMQUPW/E7+2zIwwawOvPFxDKD7Do
+ N4rBJa0/I4yxhtTxTzA1l4ZrAwiUw6juMyPjnwFMAML4Fnc9JsOjw1MZe/1uBD80crBSA==
+X-Received: by 2002:a7b:cbc5:0:b0:499:7a86:4145 with SMTP id
+ 5b1f17b1804b1-4997c1461f3mr40483935e9.13.1786537003608; 
+ Wed, 12 Aug 2026 05:16:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.38
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:39 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/26] target/arm: Implement {S,SU,US,U}TMOPA (4-way)
-Date: Wed, 12 Aug 2026 13:16:05 +0100
-Message-ID: <20260812121622.649730-10-peter.maydell@linaro.org>
+Subject: [PULL 12/26] hw/misc: Add AX3000 clock control
+Date: Wed, 12 Aug 2026 13:16:08 +0100
+Message-ID: <20260812121622.649730-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,84 +101,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Kuan-Jui Chiu <kchiu@axiado.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+This patch adds a new model for Axiado AX3000 clock control which supports
+to read ID and status
+
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+Message-id: 20260713073033.3883619-3-kchiu@axiado.com
+[PMM: use HWADDR_PRIx]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260713230244.70174-10-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-sme-defs.h |  5 +++++
- target/arm/tcg/sme.decode        |  5 +++++
- target/arm/tcg/sme_helper.c      | 14 ++++++++++++++
- target/arm/tcg/translate-sme.c   |  9 +++++++++
- 4 files changed, 33 insertions(+)
+ hw/misc/Kconfig              |  3 ++
+ hw/misc/axiado_clk.c         | 79 ++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build          |  3 ++
+ include/hw/misc/axiado_clk.h | 26 ++++++++++++
+ 4 files changed, 111 insertions(+)
+ create mode 100644 hw/misc/axiado_clk.c
+ create mode 100644 include/hw/misc/axiado_clk.h
 
-diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
-index 1de72b7472..b8cb643367 100644
---- a/target/arm/tcg/helper-sme-defs.h
-+++ b/target/arm/tcg/helper-sme-defs.h
-@@ -414,3 +414,8 @@ DEF_HELPER_FLAGS_6(sme_ftmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, env
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 1543ee6653..b8860dd3e7 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
+ config XLNX_ZYNQ_DDRC
+     bool
  
- DEF_HELPER_FLAGS_5(sme_stmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sme_utmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++config AXIADO_CLK
++    bool
 +
-+DEF_HELPER_FLAGS_5(sme_stmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_5(sme_sutmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_5(sme_utmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_5(sme_ustmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 08036c60c0..e8176fffdb 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1154,3 +1154,8 @@ FTMOPA_sb       1000 0000 011 ..... 000 ... .... .. 00 ..       @tmop_o2
- 
- STMOPA_sh       1000 0000 010 ..... 100 ... .... .. 10 ..       @tmop_o2
- UTMOPA_sh       1000 0001 010 ..... 100 ... .... .. 10 ..       @tmop_o2
+ source macio/Kconfig
+diff --git a/hw/misc/axiado_clk.c b/hw/misc/axiado_clk.c
+new file mode 100644
+index 0000000000..090beb38b5
+--- /dev/null
++++ b/hw/misc/axiado_clk.c
+@@ -0,0 +1,79 @@
++/*
++ * Axiado Clock Control
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+STMOPA_sb       1000 0000 010 ..... 100 ... .... .. 00 ..       @tmop_o2
-+SUTMOPA_sb      1000 0000 011 ..... 100 ... .... .. 00 ..       @tmop_o2
-+USTMOPA_sb      1000 0001 010 ..... 100 ... .... .. 00 ..       @tmop_o2
-+UTMOPA_sb       1000 0001 011 ..... 100 ... .... .. 00 ..       @tmop_o2
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 951cbbf58e..9de95428d2 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -3168,3 +3168,17 @@ IMOP4_4WAY(usmop4a_dh, +, int64_t, uint16_t, int16_t)
- IMOP4_4WAY(usmop4s_dh, -, int64_t, uint16_t, int16_t)
- 
- #undef IMOP4_4WAY
++#include "qemu/osdep.h"
++#include "hw/misc/axiado_clk.h"
++#include "qemu/log.h"
 +
-+#define ITMOP_4WAY(TNAME, MNAME)                                        \
-+void HELPER(sme_##TNAME)(void *vza, void *vzn, void *vzm,               \
-+                         void *vzk, uint32_t desc)                      \
-+{                                                                       \
-+    sme_tmop_4way_sb(vza, vzn, vzm, vzk, NULL, desc, inner_##MNAME);    \
++#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
++#define CLKRST_CPU_PLL_STS_OFFSET       0x14
++
++static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
++{
++    switch (offset) {
++    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
++        return 0x20891b;
++    case CLKRST_CPU_PLL_STS_OFFSET:
++        return 0x01;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
++        break;
++    }
++    return 0x00;
 +}
 +
-+ITMOP_4WAY(stmopa_sb, smop4a_sb)
-+ITMOP_4WAY(utmopa_sb, umop4a_sb)
-+ITMOP_4WAY(sutmopa_sb, sumop4a_sb)
-+ITMOP_4WAY(ustmopa_sb, usmop4a_sb)
++static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
++{
++    qemu_log_mask(LOG_UNIMP,
++                  "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
++}
 +
-+#undef ITMOP_4WAY
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index abdf98a40c..768b76f01e 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2202,3 +2202,12 @@ TRANS_FEAT(STMOPA_sh, aa64_sme_tmop, do_tmop_int,
-            a, MO_32, gen_helper_sme_stmopa_sh)
- TRANS_FEAT(UTMOPA_sh, aa64_sme_tmop, do_tmop_int,
-            a, MO_32, gen_helper_sme_utmopa_sh)
++static const MemoryRegionOps pll_ops = {
++    .read = pll_read,
++    .write = pll_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    }
++};
 +
-+TRANS_FEAT(STMOPA_sb, aa64_sme_tmop, do_tmop_int,
-+           a, MO_32, gen_helper_sme_stmopa_sb)
-+TRANS_FEAT(SUTMOPA_sb, aa64_sme_tmop, do_tmop_int,
-+           a, MO_32, gen_helper_sme_sutmopa_sb)
-+TRANS_FEAT(USTMOPA_sb, aa64_sme_tmop, do_tmop_int,
-+           a, MO_32, gen_helper_sme_ustmopa_sb)
-+TRANS_FEAT(UTMOPA_sb, aa64_sme_tmop, do_tmop_int,
-+           a, MO_32, gen_helper_sme_utmopa_sb)
++static void ax3000_clk_init(Object *obj)
++{
++    Ax3000ClkState *s = AX3000_CLK(obj);
++
++    memory_region_init_io(&s->pll_ctrl, obj, &pll_ops, s,
++                          TYPE_AX3000_CLK, AX3000_CLK_PLL_CTRL_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pll_ctrl);
++}
++
++static void ax3000_clk_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "Axiado AX3000 Clock Control";
++}
++
++static const TypeInfo ax3000_clk_info = {
++    .parent             = TYPE_SYS_BUS_DEVICE,
++    .name               = TYPE_AX3000_CLK,
++    .instance_size      = sizeof(Ax3000ClkState),
++    .instance_init      = ax3000_clk_init,
++    .class_init         = ax3000_clk_class_init,
++};
++
++static void axiado_clk_register_type(void)
++{
++    type_register_static(&ax3000_clk_info);
++}
++type_init(axiado_clk_register_type);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..e86d9ad6b3 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -1,4 +1,5 @@
+ system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
++
+ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
+ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+@@ -168,3 +169,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+ 
+ # HPPA devices
+ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
++
++system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
+diff --git a/include/hw/misc/axiado_clk.h b/include/hw/misc/axiado_clk.h
+new file mode 100644
+index 0000000000..6e12a509d7
+--- /dev/null
++++ b/include/hw/misc/axiado_clk.h
+@@ -0,0 +1,26 @@
++/*
++ * Axiado AX3000 Clock Control
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef AXIADO_AX3000_CLK_H
++#define AXIADO_AX3000_CLK_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_AX3000_CLK "ax3000-clk"
++OBJECT_DECLARE_SIMPLE_TYPE(Ax3000ClkState, AX3000_CLK)
++
++#define AX3000_CLK_PLL_CTRL_SIZE    0x1000
++
++typedef struct Ax3000ClkState {
++    SysBusDevice        parent;
++
++    MemoryRegion        pll_ctrl;
++} Ax3000ClkState;
++
++#endif /* AXIADO_AX3000_CLK_H */
 -- 
 2.43.0
 
