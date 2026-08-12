@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC737C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE2BC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAJd-0005oG-UL; Wed, 12 Aug 2026 10:52:26 -0400
+	id 1wuAJv-0006HJ-W2; Wed, 12 Aug 2026 10:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIO-0004Tb-RD; Wed, 12 Aug 2026 10:51:11 -0400
+ id 1wuAIV-0004XA-Vy; Wed, 12 Aug 2026 10:51:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIM-0006jQ-VE; Wed, 12 Aug 2026 10:51:08 -0400
+ id 1wuAIU-0006lc-0O; Wed, 12 Aug 2026 10:51:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546230; bh=2XnDISUFmJhjq7OY2XlvuVuko3shpVM4a6RDzXAfb7g=;
+ t=1786546231; bh=mSvmnGqGO/Cb4zu+AAeW+ToyoSkyL4u8VtuHxKWRus4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Q+QPzlfeIPcqNEupz35C7Fl6H17teSSg4SCb1wUZyJajfCfcRLU1Z0KxgiO/IjE8S
- I0x5YESxcI0+YRUMaoMCPcEiF5XPzPr1aFfe3NSDPlGtDBn+HPNdG2pSSuFsQIIs3b
- T10qkDvcYnooBnz4qi6kW76q14LCTH30i/a+X2nORpiZmQEkIX3fYntGvW2ii0aUMd
- 6CGrrL+6SvWdU0yfUpjeJ4ULdMsB8z0C6IH5qdIGw/RJGfLQtkJDd3QfphwIMh9O4t
- V0dRE6xIeo4O78ugnFC2PaDtSHqzOdRpRZEYRobNmeMerwFV7dP42Fdd5hNgBO3uU1
- nm9ud9G1FKN6g==
+ b=LM7diNx5pISS4UDPVY/e5pcJOS/YOjo9zkeKR4ZP4zsOvibSd0WRsjQs8awSkTi9x
+ i5pPH0/FDrAF3wBNQsR/eA1Z33QpfdCOMymOKHGdKHgNrqQ+BLtv/iotbQL4qz9iki
+ J/iSMrP8w0zFUe5fUmSEK6/6eo906RkdpMG3en0nhQyzhoL3hQnFUH0YrvqR82bKjg
+ +5mLIb57iAxhJkdUu35ply3kMxf2O5tTYYv1m23deixONs5Y4eIpHWtmel4ecnjAh9
+ 3mhltL0/T8Lz/U+NfmKAvCKatT5REPiGwULljunwEMAJXxusQm9wtnaiBu6dfLWIDl
+ mAuyNq6MlUz/A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DADF71CA60C;
- Wed, 12 Aug 2026 17:50:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 018F31CA610;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 41AF5409D46;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5C79B409D4C;
  Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9B3FB2F973; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
+ id B88492F97B; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mario Casquero <mcasquer@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 008/120] vfio/pci: Initialize rom_read_failed in
- vfio_pci_load_rom()
-Date: Wed, 12 Aug 2026 17:47:51 +0300
-Message-ID: <20260812144955.649205-8-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 012/120] vfio/pci: reject invalid PCI_INTERRUPT_PIN
+ values
+Date: Wed, 12 Aug 2026 17:47:55 +0300
+Message-ID: <20260812144955.649205-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -73,73 +75,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mario Casquero <mcasquer@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-When vfio_device_get_region_info() fails in vfio_pci_load_rom(),
-the function returns without setting vdev->rom_read_failed to true,
-and without allocating vdev->rom. This leaves vdev->rom as NULL.
+qemu-kvm aborts a few seconds after starting a VM with a
+passed-through GPU whose PCI_INTERRUPT_PIN comes back as an
+out-of-range value: vfio_intx_enable() only guards against pin == 0
+and stores vdev->intx.pin = pin - 1 with no upper-bound check. That
+value later reaches pci_irq_handler()'s
+assert(0 <= irq_num && irq_num < PCI_NUM_PINS) via
+pci_irq_deassert() -> pci_set_irq(), aborting the process.
 
-Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+Legal PCI_INTERRUPT_PIN values are 0 (no legacy interrupt) or
+1-PCI_NUM_PINS (INTA-INTD); reject anything else before it reaches
+vdev->intx.pin, whether the out-of-range value came from a read
+failure (now caught by the previous commit) or was handed back as
+data by the device itself.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Alex Williamson <alex@shazbot.org>
+CC: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260717122232.468955-3-den@openvz.org
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260602070857.356526-1-mcasquer@redhat.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit c822ecd806614fa24e7d3bd120a0f96b00d6d1a5)
+(cherry picked from commit 86abb10256a58d50513d1f9c65652b7b6b7faafc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 1945751ffd4..2b6e0c8386d 100644
+index b24c3b35113..5c192ee54b4 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -1031,7 +1031,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+@@ -346,6 +346,11 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+         return true;
      }
- }
  
--static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-+static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info = NULL;
-@@ -1045,7 +1045,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
- 
-     if (ret != 0) {
-         error_report("vfio: Error getting ROM info: %s", strerror(-ret));
--        return;
++    if (pin > PCI_NUM_PINS) {
++        error_setg(errp, "invalid PCI interrupt pin %d", pin);
 +        return false;
-     }
- 
-     trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
-@@ -1056,12 +1056,11 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     vdev->rom_offset = reg_info->offset;
- 
-     if (!vdev->rom_size) {
--        vdev->rom_read_failed = true;
-         error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-         error_printf("Device option ROM contents are probably invalid "
-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-                     "or load from file with romfile=\n");
--        return;
-+        return false;
-     }
- 
-     vdev->rom = g_malloc(size);
-@@ -1117,6 +1116,8 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-             data[6] = -csum;
-         }
-     }
++    }
 +
-+    return true;
- }
- 
- /* "Raw" read of underlying config space. */
-@@ -1150,7 +1151,7 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
- 
-     /* Load the ROM lazily when the guest tries to read it */
-     if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
--        vfio_pci_load_rom(vdev);
-+        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
-     }
- 
-     memcpy(&val, vdev->rom + addr,
+     /*
+      * Do not alter interrupt state during vfio_realize and cpr load.
+      * The incoming state is cleared thereafter.
 -- 
 2.47.3
 
