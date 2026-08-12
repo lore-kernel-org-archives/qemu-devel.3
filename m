@@ -4,53 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABE9C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83656C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8d5-00059S-2N; Wed, 12 Aug 2026 09:04:23 -0400
+	id 1wu8dd-0007O6-UK; Wed, 12 Aug 2026 09:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8co-000469-Fb; Wed, 12 Aug 2026 09:04:07 -0400
+ id 1wu8dc-0007N3-DH; Wed, 12 Aug 2026 09:04:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cm-0004Q5-PW; Wed, 12 Aug 2026 09:04:06 -0400
+ id 1wu8da-0004VF-Li; Wed, 12 Aug 2026 09:04:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=rAMeN9DidrHrnYAjK/RGpE/Y0dVSiuhrBSh4MT0hBDE=;
+ t=1786539783; bh=UVidIZ9yG0V3bcG4J5rL3qcDy2zclfjKzUSZ84t7TI8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FxqXCYTHleT4BmJulUICDbPUlWw4ZPFdBUJTHzYC3orT3ryZ6WF1bauHxCbEo6Blw
- dm5dxipoNT5kFR9CkfsGp01y9Z+fdApH5LDCzJP94T4+yNpbE+RnkZk37XOFh1U9EC
- ZOtqrdOWxffvXMxZ0zufwi4F0/mo29aJwYAly+5hRJvuuW8z308g25+dvjsVi2AmTF
- ZmNj68UPb8/ZdbJGAL1/jh3RFJp9ukNPMNeSKlNfNmLqalgkmFjoJ8OqqPQM4tUEgV
- pVyJ2TZOgB2vFsJ+rXmKzIgPQIUjgIGcRTb8xNZTUemBqyV9p+Ul3QazEQi87S5XMn
- GNNVD5zA0BfdA==
+ b=l8fpQFAEHIXfSfm3bE6nCbqBF12fdIt0hLXwFuOksXJYcCYeDhVCDPlptD5PxpSLB
+ DpPc7X8dLF3gFjGlv8LjNfDf8yqXOdrWK499Wh1lvgqlG+2FprrlgwlkOoFekdrz/8
+ pIm8W0WeOwp7vL9PEiLbmE1kQkUzfVQN1HlPO+lkS1G09OO6dz2ipeN4yjRgZYxP/e
+ J72DGzhBNhNQGWfT6FKGqd0TkZsL5DJ7Pc9DWHmKhnCRZVI4UvLNdX/d776YZxFIeN
+ AWoIq4zfHvMaTnfaIHDz4CCayhK2zmWPqp6iBhX92jG+KeoCHEZOs/42onCimpUcyS
+ D177oP587O3OA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4C56F1CA48E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B7311CA494;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F41E409B71;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A1458409B77;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E7A362F8B2; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id 033032F8BE; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- Tristan Madani <tristan@talencesecurity.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 015/102] hw/display/vmware_vga: Don't allow guest to
- trigger long running loop in host
-Date: Wed, 12 Aug 2026 16:00:50 +0300
-Message-ID: <20260812130233.621965-15-mjt@tls.msk.ru>
+ Yunhe Wang <yunhewwww@163.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 021/102] hw/usb/core: Avoid possible assert() in
+ do_parameter() --> usb_packet_copy()
+Date: Wed, 12 Aug 2026 16:00:56 +0300
+Message-ID: <20260812130233.621965-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -77,66 +73,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The code in the SVGA_CMD_DEFINE_ALPHA_CURSOR handler in vmsvga_fifo_run()
-basically does:
+usb_packet_copy() uses assert(p->actual_length + bytes <= iov->size)
+to make sure that there is enough space in the the iov. This assert()
+can be triggered from do_parameter() if the guest programs the XHCI
+in a weird way. Avoid the hard error by checking for the condition
+in do_parameter() first and signalling a USB_RET_STALL to the guest,
+just like it is done for another error condition here already some
+lines earlier.
 
-            x = vmsvga_fifo_read(s);
-            y = vmsvga_fifo_read(s);
-            args = x * y;
-            goto badcmd;
-            ...
-badcmd:
-            len -= args;
-            if (len < 0) {
-                goto rewind;
-            }
-            while (args--) {
-                vmsvga_fifo_read(s);
-            }
-
-Thus by supplying huge values for x and y that overflow the result of
-the multiplication, the guest can trigger a long-running loop here
-that burns the host's CPU cycles.
-
-Add some sanity checks so that this cannot happen anymore.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3782
-Reported-by: Feifan Qian <bea1e@proton.me>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4026
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4076
-Reported-by: Sunday Jiang
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3746
+Reported-by: Yunhe Wang <yunhewwww@163.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit f604b807a55acd3f81725bb7dbd98450c96adf00)
+Message-ID: <20260721185140.247775-1-thuth@redhat.com>
+(cherry picked from commit 68809288c7e5bf2a9a9edeb55af8c368f52442ad)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index 2dd661e3c13..fda3965ca3c 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -737,6 +737,10 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             vmsvga_fifo_read(s);
-             x = vmsvga_fifo_read(s);
-             y = vmsvga_fifo_read(s);
-+            if (x < 0 || x >= SVGA_MAX_WIDTH ||
-+                y < 0 || y >= SVGA_MAX_HEIGHT) {
-+                goto rewind;
-+            }
-             args = x * y;
-             goto badcmd;
-         case SVGA_CMD_RECT_ROP_FILL:
-@@ -776,7 +780,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
-             if (len < 0) {
-                 goto rewind;
-             }
--            while (args--) {
-+            while (args-- > 0) {
-                 vmsvga_fifo_read(s);
-             }
-             printf("%s: Unknown command 0x%02x in SVGA command FIFO\n",
+diff --git a/hw/usb/core.c b/hw/usb/core.c
+index 975f76250a1..975a601356d 100644
+--- a/hw/usb/core.c
++++ b/hw/usb/core.c
+@@ -26,6 +26,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/usb.h"
+ #include "qemu/iov.h"
++#include "qemu/log.h"
+ #include "trace.h"
+ 
+ void usb_pick_speed(USBPort *port)
+@@ -288,6 +289,15 @@ static void do_parameter(USBDevice *s, USBPacket *p)
+         p->status = USB_RET_STALL;
+         return;
+     }
++    if ((p->pid == USB_TOKEN_OUT || p->pid == USB_TOKEN_IN) &&
++        setup_len > p->iov.size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "xhci: setup state param length %u > iov size %zu\n",
++                      setup_len, p->iov.size);
++        p->status = USB_RET_STALL;
++        return;
++    }
++
+     s->setup_len = setup_len;
+ 
+     if (p->pid == USB_TOKEN_OUT) {
 -- 
 2.47.3
 
