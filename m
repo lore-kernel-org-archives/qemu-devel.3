@@ -4,138 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31067C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B63C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuB30-0002Ho-JG; Wed, 12 Aug 2026 11:39:18 -0400
+	id 1wuB6s-0004UH-R7; Wed, 12 Aug 2026 11:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wuB2y-0002GM-5P; Wed, 12 Aug 2026 11:39:16 -0400
-Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wuB6Y-0004LC-MH
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:42:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wuB2v-0007Ud-44; Wed, 12 Aug 2026 11:39:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vdSOful+5hBQ+STdk9YqO7f/iGZ8bbmQdcYbu+pEd4Hba2O6m6oixSfpMmB3gcMHR+AjtLjrPKYiV6PeleUCUFDLci8aPiPHFteD8uPr/9JVkLh3ctHMTdYWO0GlRHfDww6/O4rbaaNrc4XnhxuTUzvKiYR0FJuy3mQqIspPZ0oyauAk/2PdfOOyAwthO7M3TtTMYAVogcpgPFb3Vv3yVU3fx9/oVKTXO+oxo0FLf8dnbny40u+8YTvHyTKDqEGGovVJ4wSB0Nb5Sz9jZC50hEzhjee9rms0oewWA7Vsptj3wVUVin4EMqImEpQYvb1LBEpHJM+rjODhtPAkY3OiGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h1kf9yt+p9bzdlfYeLiTmzqe/pz+dvMRm8AqGc09ACI=;
- b=qXGDYvnbku+aqBXhZVVAd9kt9gu7gpWEgM2Aka09WYejTCCV5HQqpLkQPLANM0mxWxW75FwhfHg9DqR1QpHjXY0dzu5Us5v9JG5lx8t2vZRyItHet9wBuDcJ6GOSunRCGF3wBnv+lzA16+XVARYoyFK3HMI99+eHUvthw/Pl94HyoK/cxNzdoJ3pcRnpLC2oldSuDXFpvoBfhZETAMOnJIAWwXva5Z4ubV4Xr1ySIxY1WNkth5gwESpqw28jZFxJsyV+gRNVYqe7jUIXjnQqvO+nBU12TptIFeq5j0RdRGGeKwlfMvBdWhtHePJY2qUWXBvBP8YObOzJDVIuWMBCCg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h1kf9yt+p9bzdlfYeLiTmzqe/pz+dvMRm8AqGc09ACI=;
- b=VtMXCHNEhmq2L9L9QI9H/oKZrsH2Xxgsye5R3tY1vwf27lZUvWOfwETQJp2GihaOqpVzUtyEILDyJt6Bob9wWHNmUU51cjpvs5HExBohmr4GHLG8VFjgG1Bs76kgj4aXNShMa8XmYskXfC1bDdPChUYT1dFIYoStip84dBbvQ0gVc0v57iDR1y7Thc3c4qyWJNufvb0o6iwsq5tpYjgxUDr+bpFRPEK6VcLW3k0zcsXDpXJ4lHuQ9WQmDwYq9rXJvLNieEeB1yLk2min3LpTd3CaYafPQe2jGWpUSPI1rAuKC2E3RmZCpi+VeX02Z7FWVpvh/Y7m7AASSab6JdKOaQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com (2603:10a6:10:52d::7)
- by PAWPR08MB11558.eurprd08.prod.outlook.com (2603:10a6:102:509::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Wed, 12 Aug
- 2026 15:39:08 +0000
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::1b2a:832c:d136:a37c]) by DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::1b2a:832c:d136:a37c%5]) with mapi id 15.21.0315.008; Wed, 12 Aug 2026
- 15:39:08 +0000
-Message-ID: <afcab54a-d472-43c5-852c-87bbbd82f37f@virtuozzo.com>
-Date: Wed, 12 Aug 2026 18:39:07 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] qcow2: repair a dirty image when it becomes
- writable
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-stable@nongnu.org
-References: <20260811154213.184947-1-den@openvz.org>
- <20260811154213.184947-5-den@openvz.org>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260811154213.184947-5-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0202.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e5::12) To DBBPR08MB10650.eurprd08.prod.outlook.com
- (2603:10a6:10:52d::7)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wuB6V-0000FY-6Z
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:42:58 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CDcsTb3654846
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:42:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ qcppdkim1; bh=2TDWanm7s5saDWID0dlBmKuXPvzhlMSOUqamjpo0QYE=; b=bs
+ DckON7bSfbO85/gOsmdgeOEZHnJoDs+hoKMeAvq545kRtdazr6SH9ChEWTE3Ungn
+ QN9Fgk4Vhd5CMaame063EvXrFWETBGr5hQEi4BoTasstrL3s/XURvulbYdc0mZSh
+ T+C0O1s9TDyvZpdVhfdumEjWorPN2SNbCifY29eHWD7L4VgX3kgQ55IXHvbMWTii
+ jIg8FVZcDRBDHUZ3hbCSJYmgevMqT4ggcRnLYUZERkOJAqaoIS/L248xazgqXAw/
+ ONdQt0bEPudDazFZUP2o9qri5BBLfy393v6JDQFtVAadnHL2ep9uNDxsLb+vOS4K
+ TPIiJZRgoYFz562o0hMA==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0pmysfb9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:42:52 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cbee8d434b8so13931a12.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786549372; x=1787154172; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:content-type:mime-version
+ :references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=2TDWanm7s5saDWID0dlBmKuXPvzhlMSOUqamjpo0QYE=;
+ b=H+XLO9LHUYvwR8XSg+lg1b51idN3Olt+thV9JQOP3Fi7+C1n/3vfxtSOUbA+pGYR/h
+ h5MR++fB41ZhpXKgcoFhqsxWN/vFDOXGGZm+udRlbRiL05XqWug6nUhltNTPNEYoiZ6M
+ 9QoEXZ3wj8Fch6m8uC+7y2mZjlvTPC+i3FrupEhM4U58O1xcAe+WC+MHQw7WaNbMO9oV
+ hYNSxfGR4KF82G6HSyXrwFWoU9YUnfQDrZC0VHYMqFUq2C54jOKaSYinDAsaENV4vgFZ
+ sGf9Nct3mhrwyGYRF8mvrmjVlXAkV4jAVneBpzJDYZ5Idv77YEwy2xPHi07wNczfObcI
+ GWkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786549372; x=1787154172;
+ h=content-transfer-encoding:content-type:content-type:mime-version
+ :references:in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=2TDWanm7s5saDWID0dlBmKuXPvzhlMSOUqamjpo0QYE=;
+ b=d7Xbq0D3QgBcJIVEOqsaAy9xefQveb7vjmsyID+IZoCwvyxmEli0FGukqGTY77heTh
+ +u++g93vtRevx1qnVlP6xTgXytqze9pd7Et1zCAmfXVejW7UlD6OFJPJbP4StPCLWjR9
+ P9XehKu/eocLEbH9z7Utpf5sts6wl08roxWE9TN2ps+jAw8+uoQYzZ0ct8+1zVKhA0bM
+ IvsBT+xVKzFqbg7SgFujNpQK2C0Co9xFM6Q41db66YwJC5BOXAwovCZNUHBK1zRb4Y7t
+ 2kRiNcQ7z0xvc3OhED4V5aAMjMxhWo6PQuXm4lySUBVAOYpEiK8Wn1YRKuLcektZdOyz
+ lvsg==
+X-Gm-Message-State: AOJu0YzTdcelVETQqat6HURjR0bB0Z/VIjvGD/tNXZJA8Ka99s5Z9dyM
+ /NiDimiDeRkPt0/mhRnsEeqbZ9R6yQfA1Ra4Ukc8BEHriFHkoQA5YIDLtNZvBnacy6CxweDvjZm
+ 9IDUaMB9IgSeq9YvfeZWb/uJeiQ2arKhK78kZpsMxJ9e2K44wQke8osbecIBSUztO2Q==
+X-Gm-Gg: AR+sD130q+wL2D6y9Sg7RZCnQz7g8RR0LPuhHLT/PXZM1k7D33+pECzRuwVSVAOFGc4
+ 5tPitXLr3BvuI/IaINQtsWZoKWWypuiP2dUvkZ/TPT5wWAk/V53JYE5pwoh2TaTgYTx8JdVpr2Z
+ pxxnpK0fefZd5jwtI/+eS/hMlnNbcN3BoNU9/aJiiGf6AyThGuj2dvtvlyzW4T3Wm7S2AVIoMLi
+ tkfo0SU0tJ1goSzaMXz5QGWOdNNfEyGSO0tztUDd70JinkAvKAYaYBZ1AxP5V+mhEhD0CT63yKi
+ bZR/o56yqESiK0GQUlluJJP14JUqbJhpLb9A0+a+GcyoOM08+TAeMW1ftFumTbzBdDIUg9jela7
+ 8glJWxGt8oS0LOGaVYMdvkBaa6nQr2Evvu2QYxMh3Xhl6Ual/
+X-Received: by 2002:a05:6a21:3987:b0:3cb:b6b0:1b83 with SMTP id
+ adf61e73a8af0-3cc53129aeemr115554637.9.1786549371472; 
+ Wed, 12 Aug 2026 08:42:51 -0700 (PDT)
+X-Received: by 2002:a05:6a21:3987:b0:3cb:b6b0:1b83 with SMTP id
+ adf61e73a8af0-3cc53129aeemr115443637.9.1786549370899; 
+ Wed, 12 Aug 2026 08:42:50 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31da7bf64b5sm8121190eec.10.2026.08.12.08.42.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 08:42:49 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, stefanha@redhat.com
+Cc: brian.cain@oss.qualcomm.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL v2 08/41] hw/hexagon: extract get_reg_value/set_reg_value stubs
+ in globalreg
+Date: Wed, 12 Aug 2026 08:41:47 -0700
+Message-Id: <20260812154220.1029828-9-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
+References: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DBBPR08MB10650:EE_|PAWPR08MB11558:EE_
-X-MS-Office365-Filtering-Correlation-Id: 412daaf8-669f-4c82-2391-08def887d969
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|366016|376014|18002099003|56012099006|10067099003|5023799004|4143699003|6133799003|3023799007|22082099003;
-X-Microsoft-Antispam-Message-Info: dP0wTP4/j3q6ahw7dk87bZg7zawTfNs0XlXzAhLcAhaULSQKvlTTinrya+oyuWyIhLUDrUuU+ywQXlyOOOBQwWUpwlKLA8ZjqW/p/XapPHmx4qmhtulrgAKnvPOnC2g5kUYzojqf4avmnEgVACqcV0XUIHsNS6RAGZgwj4+z0syLYg3lb4LNPVXkV/0X0c1XvKQzMouzBhm8jFqPdtkRsmTKWxaxaj2LDTYKW1PGb30zN566Af5ECG+A2xlv3cUbBE6339/ypXH48DEP939BeRyTHRZlZVAyMfYlNyCMVwz1rHro22ftv+Je4DJmfrFbVIveGDjG+BlXi6rtesQdEI/X9oEJZxSoJUqfcV9FUpxyR4gaxywLGbeh62GK2AJj6j15Wf/KuFbj0tHfMaG0KhRGd2cekiz0yvmyrjn8tOHKYIpnUzrvEtYetLvCY8VbUHYAyb9PVT3d7WTXBUqlHsCKOag1u+io7ipegXEu358L7qrvSdkYUaYXHWZCAIRf27jKVftpitt9oTUq3/ZRoQWhho8kJXg0l9GI5WDv9Bdiwbc1+OWxgCDt3uSYmEHQrBCOA7Uxd7cApLqp06sXnC9ekL3882eiB6wwYidkAX7EjIhQcl33osaZFilbiGSRTSdMAssst9CAUpV3ZCrdgexRbr9TvLFjOXQrEjHvFag=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DBBPR08MB10650.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(18002099003)(56012099006)(10067099003)(5023799004)(4143699003)(6133799003)(3023799007)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QktUVGNNb0JadDZySXNhMmhvM0thWlA4Q2pZSjcvdVBFOUZNa0FLUzAvMm1D?=
- =?utf-8?B?QVN0MitDU2NTYmdGbmdPa3Jwa1JCUWlRSTlJS3RteTc2TUMvNkNob042Mjcw?=
- =?utf-8?B?YUd5YTVjMjdpY2Q2dzhXWXljV3VXTGJsZUQwYjhYTkVWM3JrWkcrc2RvV1FO?=
- =?utf-8?B?cFNicHNKcmRlTXE2VXJrYUtVRHc2Q2tEclJhQXVPOEtsNm9ic1NjUTd6L3JZ?=
- =?utf-8?B?aXc5NVRTbnBDbW1oazIvN1QrZlNIZXY4S2xZd3NtWCtROGIzWnBHbG5WMmwr?=
- =?utf-8?B?SHZWQ00wOTdUcDJaa3VxSkw3Vmtod3UzV3g3MU1UcFRudWVldUFENVVRaCs2?=
- =?utf-8?B?M1k2dDJJUk5zdUlxMCtob1JCNFJXYWVRSVN6OWtRbWkwM1VIRkV3STJQYlh6?=
- =?utf-8?B?anZidVZmUE1nRUVDSUhzWFBvcmR5ckRkZzBudTRYbzVnUDZhajYyWFlubkxo?=
- =?utf-8?B?Y3pBOUUwVjVTc3R1cnNCMURoeWlmU2FGSkNRd2V2cXMrNnZNZi9VSjZ5MzR2?=
- =?utf-8?B?RkpEclN3V1h1cCs5SG5OZDNnalJkTkREVTVoRHdZUnlteVdKd2JPaThYNVM4?=
- =?utf-8?B?SFQ0T3BhcjExcmttWGVMdzFIUC9QSlhYUWFrOFlEeTFLekZHN3d4QWpaMEVG?=
- =?utf-8?B?WVNHS2NTTmZTVVAzYXlCMzFPNnpnOFZEdGJLNjFjcjV4NkFWd0pBMFZFNW5W?=
- =?utf-8?B?SmFqZHh0Z0tuS1dGMUN6dUh6VW8rTkUzeEtvb3Z0YlRsZDdQV09VeEVxL1Iy?=
- =?utf-8?B?NUE0eStyVjBPUXI4bWI1aEhENytYOU9wK2xlMkIxUXlDYWhHT3F0R0l5RStl?=
- =?utf-8?B?ZVlsRUZ4N3FtTG53SmVLdm9xZ3Q1MFhCUE10WEhQV2FMQ3QzdzdqMFlxS2hv?=
- =?utf-8?B?WDhKWHUzekJFT1YwbmRibHZkRTBDbWhxWVhDSnhybklMcjB0QU9uNE1ReEg2?=
- =?utf-8?B?M0xEcjhTTkJSQmQwcEJ4WlNSK1duMENIcHhCZWw0UG4rb2lPNUtTeWlnbnJE?=
- =?utf-8?B?V0dhTTFNanp6NGRTeXU0TmNLOGhSUDdLNGg3Y1ZNajJqRVNxTGdHcVppN1c5?=
- =?utf-8?B?RDlzRE1ta1U4QU9UV3ZyTTN1U3l1eGx2N0ZtMWpNbXNHcUNSWVR0TllpOUEz?=
- =?utf-8?B?ZXRhb3RsV3QzbUlObGxIcnd4Q1hmRno0S2pqL1JuU3JGOVlMSm1GNDU2b0U0?=
- =?utf-8?B?Tzl5MSswTFIzelpVeFArSzJJZzZLcnhYSnF0K1hreDVvbVJCdGJoZGV6bjRv?=
- =?utf-8?B?ZWxOMTRpRFg4T0ppeDRkdzh6UmQ0ZVlnQ0hVRmhCbHFlemZSVFpyc0dJNXMx?=
- =?utf-8?B?a0hxN3U2dlNDQjZVSlc0cENEZnBuSS9ZOGwySVNRaExXNzkvV2Y5VzdkWFlh?=
- =?utf-8?B?VHVVVFRvV1JlL3picEVoQmpDMHFRSEF4UG80VFhGSXU4R1U5NkFHVGVPQzdl?=
- =?utf-8?B?UVZHQW5qeHl4eTg3TmpLK1lhSllWMXZwS29iZzV2UjlzbUV2Z1NhbjZKKzJS?=
- =?utf-8?B?R2JPTzhaVGhIbElQLzl4c1VONU15NldnMU9iSyt5dndRY2dGZStoVzRYUDJr?=
- =?utf-8?B?MmVZZklNNGp3VzhrUHNkek4vNWczSHphTmtGbDFxWVFjMDFYNXBrZDdqS0tH?=
- =?utf-8?B?WTRsMllJZVNtT0NzbGx3U2NKZGh3bG5wNW9UaWFFcUZ6dy9BblNqeHNBOUdq?=
- =?utf-8?B?bGZpREhLdE9aeUhiU0pXbGdSN01LMlRhK05qeXZ5SldQaFQ2V0lNWHVuTVJi?=
- =?utf-8?B?bVJzVDZBMjV2VFJtU2F0T3dCZHk4amEvUklwU0pHZGxHa1pic3pYeCtOS0Mz?=
- =?utf-8?B?STF6TDFNbUR1dWMzc1dPQUlPbGxaRmVqa0dTQkZOem1uRStEN1pEaDV1Sk1K?=
- =?utf-8?B?VW1ySWdPTTZNc1o3WDVUZXFlZ2ZPVmNqcVNmNUtyUVRTRlZPL0F1VHNrNzFx?=
- =?utf-8?B?VlBaRFh6OUFuRXN4aHJEYllkSEcvUGxPR0UwOXpqa2kvbzlxQXhNWG5qK2Jl?=
- =?utf-8?B?QjlLMGJiVjVJQTBtWmoyNWlxUnZ4ckxVODEzNi9qYTlCdHBnSlRjVk51aW9k?=
- =?utf-8?B?cWxCVnZ1VzdFdjRhSlF2SVZTQUVqVUFqeS9qUEdoZy9FaXBrZExqb0w4VFZE?=
- =?utf-8?B?NXRiWmZIN3lGWVRXS2tUVk9rYmxyWjZZNkplaEhCakdHTlBtUzJTUkkxV3Ux?=
- =?utf-8?B?cThONjdOa0Q1eTFOSlJWYlpJSWtNVm5EZTBFLzdTSVUzUVo4eFpLU200UEZD?=
- =?utf-8?B?ZkFqV1NFVTlDK1Z4TUJtSWVqdi94YjAvOGIzcWN2Wm9UZDNFMTZjd2ZNRVM4?=
- =?utf-8?B?c2FkRjQ3ZkJCUDFOQnVpeThWWjB2UDEwNjBBNnRJeGtibDMxNkkxanRJc2U3?=
- =?utf-8?Q?cHW9D86W34SO/rZo=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 412daaf8-669f-4c82-2391-08def887d969
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10650.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 15:39:08.6287 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bd+2voGgEMmxbZSheLxtAHv/WoQlldLg/oVhXIWocieiVYfjp/b28m7rOhmIQcfGpceJBzx0c6K+rN7R2naP3JVKKgtu9ZQQGs+kFEFIgS4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB11558
-Received-SPF: pass client-ip=2a01:111:f403:c201::6;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEyOCBTYWx0ZWRfXzBX6SLP1FqXy
+ 0V0EwGEXYoRResNcr9cYT/v61gYKL7Akk4lUcVrBPhwc1m4FgCP1WyF3s/8VigbzLiO//L7PouT
+ pjupxPHtyeZ0m+KDbpGCR2ynHhr0rnM=
+X-Proofpoint-ORIG-GUID: ZyBYnoTIQE5QnjErMFEeTnhcy8RLw1lt
+X-Authority-Analysis: v=2.4 cv=C/fZDwP+ c=1 sm=1 tr=0 ts=6a7c947c cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=9smrWREWR_s8Awy1JTMA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-GUID: ZyBYnoTIQE5QnjErMFEeTnhcy8RLw1lt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEyOCBTYWx0ZWRfX/mUWZoAmCuN7
+ Vc6WHWF+Xm+jbclwwmeHt10YoS6WFRx2td3KtKcy0KGqnthZu9SgMxCOYJUNfJhXNeVJeJE8qIL
+ hwrK5KOHAP7vvjltQw38pq/EV5vZvzcGdRraNGmQ5WH/Ii3lzsHgn/XpjwsJcQS8180/OYnnkM7
+ 6qEydJp+s2TnOoiMoNIOwKLANIOx2aCtzagMR+iND/4oFmR73z6B6YQrY95vU99bC5qr3Rkh8T/
+ fAlhu5CqWL+LC6HIOi/rPcOotnqf457FwWDc/2Zn7IqsxAZx1mm8Lug1WyAmpO3CNtLTbPx5LCm
+ BZNJkFo6C3seU9i09WBBF7NsTtf/jwpLsvuwCl5YXWgV5ueyH9mMTqoLx56Vs8glqlD3sg5xEIg
+ lcrc8xOcqIQ+W8ScMostJkMOxoVWwQ45wz3qohNzTTKG9hgCwJdFmpVFOaq4/9teMVLvbgU72fZ
+ tpv/KC8WeLmQY2n7AFg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 phishscore=0 spamscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120128
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,241 +154,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/26 6:42 PM, Denis V. Lunev wrote:
-> A dirty image must be repaired before anything allocates a cluster in
-> it. qcow2_do_open() does that, but only for a node that is writable
-> from the start. A node opened read-only skips it, and nothing revisits
-> the question once that node becomes writable, which block-commit does
-> routinely: commit_active_start() and commit_start() reopen the base
-> read-write for the duration of the job.
-> 
-> With lazy refcounts the on-disk refcount block then still accounts for
-> the metadata clusters only, so the allocator restarts at the front of
-> the image and hands out clusters that L2 entries point at. Two guest
-> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
-> stays clear, and a clean close clears the dirty bit, so no later open
-> repairs the image either.
-> 
-> Do the repair in qcow2_reopen_commit_post(). bdrv_reopen_prepare() runs
-> before bdrv_list_refresh_perms(), so it holds no BLK_PERM_WRITE and,
-> with auto-read-only, bs->file may still have an O_RDONLY descriptor.
-> commit_post cannot reject the reopen, so signal corruption if the
-> repair fails rather than let writes alias live clusters. That drops
-> bs->drv, so return the error and skip the bitmaps. An inactive node is
-> skipped: bdrv_activate() calls qcow2_do_open() again through
-> qcow2_co_invalidate_cache().
-> 
-> With lazy refcounts the dirty bit stays set for the whole writable
-> session, so a node that is merely writable says nothing. Repair only
-> when it has just become writable, which BDRVReopenState remembers:
-> a read-write to read-write reopen must not scan a live image.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Cc: qemu-stable@nongnu.org
-> ---
->  block/qcow2.c              | 17 +++++++++++
->  tests/qemu-iotests/039     | 60 ++++++++++++++++++++++++++++++++++++++
->  tests/qemu-iotests/039.out | 36 +++++++++++++++++++++++
->  3 files changed, 113 insertions(+)
-> 
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 553a94d003..bac3e49cf5 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -2147,8 +2147,25 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
->  
->  static int qcow2_reopen_commit_post(BDRVReopenState *state, Error **errp)
->  {
-> +    BDRVQcow2State *s = state->bs->opaque;
-> +
->      GRAPH_RDLOCK_GUARD_MAINLOOP();
->  
-> +    if (!state->was_writable && bdrv_is_writable(state->bs) &&
-> +        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
-
-Nit: qcow2_do_open() also guards this with !(flags & BDRV_O_CHECK).
-AFAICT we can't reach it here since the only place we open with
-BDRV_O_CHECK is qemu-img check, and it never does reopen.  Still, might
-consider adding the guard.
-
-> +        BdrvCheckResult result = {0};
-> +        int ret;
-> +
-> +        ret = bdrv_check(state->bs, &result, BDRV_FIX_ERRORS | BDRV_FIX_LEAKS);
-> +        if (ret < 0 || result.check_errors) {
-> +            /* This clears bs->drv, there is nothing left to reopen */
-> +            qcow2_signal_corruption(state->bs, true, -1, -1,
-> +                                    "Could not repair dirty image");
-> +            error_setg(errp, "Could not repair dirty image");
-
-Which image?  blockdev-reopen can process multiple nodes.  And we have
-no clue which one failed.  How about adding
-bdrv_get_device_or_node_name(state->bs)?
-
-> +            return -EIO;
-
-Path qcow2_do_open() -> qcow2_co_check_locked() does preserve the
-check's error: ret < 0 ? ret : -EIO; error_setg_errno(-ret).  Here a
--ENOMEM from the check comes back as -EIO.
-
-> +        }
-> +    }
-> +
-
-There's also a logical issue with this check.  qcow2_signal_corruption()
-does 'bs->drv = NULL', which explicitly makes the node unusable.  Now,
-block commit does reopen the base node to RW, remembering its previous
-state.  If reopen fails, it does rollback reopen to RO.  And on this 2nd
-reopen we'll likely end up asserting on:
-
-bdrv_reopen_set_read_only()
-  bdrv_reopen()
-    bdrv_reopen_multiple()
-      bdrv_reopen_prepare()
-        assert(reopen_state->bs->drv != NULL)
-
-on this unusable node.
-
-Can we afford making bdrv_reopen_prepare() return an error instead of
-crashing?  Or maybe guard this rollback in commit_start() by
-!bdrv_is_inserted(base).  IMO this is either a separate commit, or part
-of 2nd commit.
-
-And we should probably add a qmp_block_commit test which would cover
-exactly this problematic case.
-
-
-Also the QAPI docs for blockdev-reopen say:
-
-> ... if one of them fails then the whole transaction is cancelled.
-
-That no longer appears to be true.  Probably should amend the docs as well.
-
-Andrey
-
->      if (state->flags & BDRV_O_RDWR) {
->          Error *local_err = NULL;
->  
-> diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
-> index db52c580d1..dd4f48fa14 100755
-> --- a/tests/qemu-iotests/039
-> +++ b/tests/qemu-iotests/039
-> @@ -136,6 +136,66 @@ $QEMU_IO -c "write 0 512" "$TEST_IMG" | _filter_qemu_io
->  # The dirty bit must not be set
->  _qcow2_dump_header | grep incompatible_features
->  
-> +echo
-> +echo "== Reopening a dirty image read/write should repair it =="
-> +
-> +_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-> +
-> +_NO_VALGRIND \
-> +$QEMU_IO -c "write -P 0x5a 0 512" \
-> +         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
-> +    | _filter_qemu_io
-> +
-> +# The dirty bit must be set
-> +_qcow2_dump_header | grep incompatible_features
-> +
-> +# Without the repair this write would alias the cluster at offset 0
-> +$QEMU_IO -r -c "reopen -w" \
-> +            -c "write -P 0xb1 1M 512" \
-> +            -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
-> +
-> +# The dirty bit must not be set
-> +_qcow2_dump_header | grep incompatible_features
-> +_check_test_img
-> +
-> +echo
-> +echo "== A read/write reopen must not check the image =="
-> +
-> +_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-> +
-> +_NO_VALGRIND \
-> +$QEMU_IO -c "write -P 0x5a 0 512" \
-> +         -c "reopen -o l2-cache-size=1M" \
-> +         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
-> +    | _filter_qemu_io
-> +
-> +# The dirty bit must still be set, it belongs to the running session
-> +_qcow2_dump_header | grep incompatible_features
-> +
-> +echo
-> +echo "== A failed repair must fail the reopen =="
-> +
-> +_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-> +
-> +_NO_VALGRIND \
-> +$QEMU_IO -c "write -P 0x5a 0 512" \
-> +         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
-> +    | _filter_qemu_io
-> +
-> +cat > "$TEST_DIR/blkdebug.conf" <<EOF
-> +[inject-error]
-> +event = "none"
-> +iotype = "write"
-> +errno = "5"
-> +EOF
-> +
-> +# The repair cannot write, so the reopen itself must report the failure
-> +$QEMU_IO -r -c "reopen -w" -c "read -P 0x5a 0 512" \
-> +    "blkdebug:$TEST_DIR/blkdebug.conf:$TEST_IMG" 2>&1 \
-> +    | _filter_testdir | _filter_qemu_io
-> +
-> +rm -f "$TEST_DIR/blkdebug.conf"
-> +
->  echo
->  echo "== Creating an image file with lazy_refcounts=off =="
->  
-> diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-> index 3c71e5a3dd..c0e1bf0a09 100644
-> --- a/tests/qemu-iotests/039.out
-> +++ b/tests/qemu-iotests/039.out
-> @@ -64,6 +64,42 @@ wrote 512/512 bytes at offset 0
->  512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
->  incompatible_features     []
->  
-> +== Reopening a dirty image read/write should repair it ==
-> +Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
-> +wrote 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-> +incompatible_features     [0]
-> +ERROR cluster 5 refcount=0 reference=1
-> +Rebuilding refcount structure
-> +Repairing cluster 1 refcount=1 reference=0
-> +Repairing cluster 2 refcount=1 reference=0
-> +wrote 512/512 bytes at offset 1048576
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +read 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +incompatible_features     []
-> +No errors were found on the image.
-> +
-> +== A read/write reopen must not check the image ==
-> +Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
-> +wrote 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-> +incompatible_features     [0]
-> +
-> +== A failed repair must fail the reopen ==
-> +Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
-> +wrote 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-> +ERROR cluster 5 refcount=0 reference=1
-> +Rebuilding refcount structure
-> +qemu-io: ERROR writing refblock: Input/output error
-> +qcow2: Marking image as corrupt: Could not repair dirty image; further corruption events will be suppressed
-> +qemu-io: Could not repair dirty image
-> +read failed: No medium found
-> +
->  == Creating an image file with lazy_refcounts=off ==
->  Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
->  wrote 512/512 bytes at offset 0
-
+Um91dGUgdGhlIGdsb2JhbHJlZyByZWFkL3dyaXRlIGFjY2Vzc29ycyB0aHJvdWdoIG5ldwpnZXRf
+cmVnX3ZhbHVlKCkvc2V0X3JlZ192YWx1ZSgpIGhlbHBlcnMgaW5zdGVhZCBvZiB0b3VjaGluZwpz
+LT5yZWdzW3JlZ10gZGlyZWN0bHkuCgpUaGlzIHdpbGwgYmUgZXhwbG9pdGVkIGJ5IGEgc3Vic2Vx
+dWVudCBwYXRjaCB0aGF0IHJlZGlyZWN0cyBWSUQvVklEMQphY2Nlc3NlcyB0byB0aGUgTDJWSUMu
+CgpSZXZpZXdlZC1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBvc3MucXVhbGNv
+bW0uY29tPgpMaW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjYwODA2
+MDQyNzIzLjM3ODUzNjktOS1icmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20KU2lnbmVkLW9mZi1i
+eTogQnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIGh3L2hleGFn
+b24vaGV4YWdvbl9nbG9iYWxyZWcuYyB8IDIzICsrKysrKysrKysrKysrKysrKy0tLS0tCiAxIGZp
+bGUgY2hhbmdlZCwgMTggaW5zZXJ0aW9ucygrKSwgNSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
+YS9ody9oZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmMgYi9ody9oZXhhZ29uL2hleGFnb25fZ2xv
+YmFscmVnLmMKaW5kZXggYjVlNTkxMzUwN2UuLjEwNTQ3NTIxOWFiIDEwMDY0NAotLS0gYS9ody9o
+ZXhhZ29uL2hleGFnb25fZ2xvYmFscmVnLmMKKysrIGIvaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2Jh
+bHJlZy5jCkBAIC0xMzUsNiArMTM1LDE3IEBAIHN0YXRpYyBpbmxpbmUgdWludDMyX3QgYXBwbHlf
+d3JpdGVfbWFzayh1aW50MzJfdCBuZXdfdmFsLCB1aW50MzJfdCBjdXJfdmFsLAogICAgIHJldHVy
+biBuZXdfdmFsOwogfQogCitzdGF0aWMgdWludDMyX3QgZ2V0X3JlZ192YWx1ZShIZXhhZ29uR2xv
+YmFsUmVnU3RhdGUgKnMsIHVpbnQzMl90IHJlZykKK3sKKyAgICByZXR1cm4gcy0+cmVnc1tyZWdd
+OworfQorCitzdGF0aWMgdm9pZCBzZXRfcmVnX3ZhbHVlKEhleGFnb25HbG9iYWxSZWdTdGF0ZSAq
+cywgdWludDMyX3QgcmVnLAorICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50MzJfdCB2YWx1
+ZSkKK3sKKyAgICBzLT5yZWdzW3JlZ10gPSB2YWx1ZTsKK30KKwogdWludDMyX3QgaGV4YWdvbl9n
+bG9iYWxyZWdfcmVhZChIZXhhZ29uR2xvYmFsUmVnU3RhdGUgKnMsIHVpbnQzMl90IHJlZywKICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgaHRpZCkKIHsKQEAgLTE0Niw3
+ICsxNTcsNyBAQCB1aW50MzJfdCBoZXhhZ29uX2dsb2JhbHJlZ19yZWFkKEhleGFnb25HbG9iYWxS
+ZWdTdGF0ZSAqcywgdWludDMyX3QgcmVnLAogICAgIGdfYXNzZXJ0KHJlZyA8IE5VTV9TUkVHUyk7
+CiAgICAgZ19hc3NlcnQocmVnID49IEhFWF9TUkVHX0dMQl9TVEFSVCk7CiAKLSAgICB2YWx1ZSA9
+IHMtPnJlZ3NbcmVnXTsKKyAgICB2YWx1ZSA9IGdldF9yZWdfdmFsdWUocywgcmVnKTsKIAogICAg
+IHRyYWNlX2hleGFnb25fZ2xvYmFscmVnX3JlYWQoaHRpZCwgZ2V0X3NyZWdfbmFtZShyZWcpLCB2
+YWx1ZSk7CiAgICAgcmV0dXJuIHZhbHVlOwpAQCAtMTYwLDcgKzE3MSw3IEBAIHZvaWQgaGV4YWdv
+bl9nbG9iYWxyZWdfd3JpdGUoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcs
+CiAgICAgfQogICAgIGdfYXNzZXJ0KHJlZyA8IE5VTV9TUkVHUyk7CiAgICAgZ19hc3NlcnQocmVn
+ID49IEhFWF9TUkVHX0dMQl9TVEFSVCk7Ci0gICAgcy0+cmVnc1tyZWddID0gdmFsdWU7CisgICAg
+c2V0X3JlZ192YWx1ZShzLCByZWcsIHZhbHVlKTsKICAgICB0cmFjZV9oZXhhZ29uX2dsb2JhbHJl
+Z193cml0ZShodGlkLCBnZXRfc3JlZ19uYW1lKHJlZyksIHZhbHVlKTsKIH0KIApAQCAtMTY4LDYg
+KzE3OSw3IEBAIHVpbnQzMl90IGhleGFnb25fZ2xvYmFscmVnX21hc2tlZF92YWx1ZShIZXhhZ29u
+R2xvYmFsUmVnU3RhdGUgKnMsIHVpbnQzMl90IHJlZywKICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICB1aW50MzJfdCB2YWx1ZSkKIHsKICAgICB1aW50MzJfdCByZWdfbWFz
+azsKKyAgICB1aW50MzJfdCBjdXJfdmFsOwogCiAgICAgaWYgKCFzKSB7CiAgICAgICAgIHJldHVy
+biB2YWx1ZTsKQEAgLTE3NSw5ICsxODcsMTAgQEAgdWludDMyX3QgaGV4YWdvbl9nbG9iYWxyZWdf
+bWFza2VkX3ZhbHVlKEhleGFnb25HbG9iYWxSZWdTdGF0ZSAqcywgdWludDMyX3QgcmVnLAogICAg
+IGdfYXNzZXJ0KHJlZyA8IE5VTV9TUkVHUyk7CiAgICAgZ19hc3NlcnQocmVnID49IEhFWF9TUkVH
+X0dMQl9TVEFSVCk7CiAgICAgcmVnX21hc2sgPSBnbG9iYWxfc3JlZ19pbW11dF9tYXNrc1tyZWdd
+OworICAgIGN1cl92YWwgPSBnZXRfcmVnX3ZhbHVlKHMsIHJlZyk7CiAgICAgcmV0dXJuIHJlZ19t
+YXNrID09IElNTVVUQUJMRSA/Ci0gICAgICAgICAgICBzLT5yZWdzW3JlZ10gOgotICAgICAgICAg
+ICAgYXBwbHlfd3JpdGVfbWFzayh2YWx1ZSwgcy0+cmVnc1tyZWddLCByZWdfbWFzayk7CisgICAg
+ICAgICAgICBjdXJfdmFsIDoKKyAgICAgICAgICAgIGFwcGx5X3dyaXRlX21hc2sodmFsdWUsIGN1
+cl92YWwsIHJlZ19tYXNrKTsKIH0KIAogdm9pZCBoZXhhZ29uX2dsb2JhbHJlZ193cml0ZV9tYXNr
+ZWQoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzLCB1aW50MzJfdCByZWcsCkBAIC0xODYsNyArMTk5
+LDcgQEAgdm9pZCBoZXhhZ29uX2dsb2JhbHJlZ193cml0ZV9tYXNrZWQoSGV4YWdvbkdsb2JhbFJl
+Z1N0YXRlICpzLCB1aW50MzJfdCByZWcsCiAgICAgaWYgKCFzKSB7CiAgICAgICAgIHJldHVybjsK
+ICAgICB9Ci0gICAgcy0+cmVnc1tyZWddID0gaGV4YWdvbl9nbG9iYWxyZWdfbWFza2VkX3ZhbHVl
+KHMsIHJlZywgdmFsdWUpOworICAgIHNldF9yZWdfdmFsdWUocywgcmVnLCBoZXhhZ29uX2dsb2Jh
+bHJlZ19tYXNrZWRfdmFsdWUocywgcmVnLCB2YWx1ZSkpOwogfQogCiB1aW50NjRfdCBoZXhhZ29u
+X2dsb2JhbHJlZ19nZXRfcGN5Y2xlX2Jhc2UoSGV4YWdvbkdsb2JhbFJlZ1N0YXRlICpzKQotLSAK
+Mi4zNC4xCgo=
 
