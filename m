@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0117AC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3AAC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAM4-0001SO-Ln; Wed, 12 Aug 2026 10:54:57 -0400
+	id 1wuANl-0004G2-Bb; Wed, 12 Aug 2026 10:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJq-0006CQ-AQ; Wed, 12 Aug 2026 10:52:38 -0400
+ id 1wuANW-0003zU-Ti; Wed, 12 Aug 2026 10:56:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJo-000726-Ku; Wed, 12 Aug 2026 10:52:38 -0400
+ id 1wuAN9-0000Ap-8X; Wed, 12 Aug 2026 10:56:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=GxBvZdmNVw+XexaoMHeYdEt3/A2z0Tke7tfsJiyWlGI=;
+ t=1786546232; bh=OHeNzBUPPo52MwqOEEnKrj/hyObYUoiPmoCisIMr+xI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hFQU818m3cJCo5DT3EfuXV1cCBz+nEkEALMe3OPvG4gUatBE/UuYaoings5N/D+yJ
- bJgGrXuaEJdDy4YQqG2a0yJUJWJfi4IWNFb97vi6NKdPnEtpuOuH3yR6YCYoy9rj68
- kjCIZNjFRHNtMj5uuNT2mDXnPB2pCV+LC3UnJw9oVt5My500Zc9SZnMfbj0ocoAsqe
- GVUchqtB/U7uA/Vg4fJja35TKO0fr5dG/2ELPJmBVLO4B8026eRTxUz7D4MLQRd4Qe
- DW5dq22kJ/a/KTzI+om9RQO676b3E+oWkKYQtbdEY2OY4jok1kWItcqDwedlCA6oPR
- 7lhA96SVEApTQ==
+ b=i8jLVnX4dAfiWkE7Ns1CjHO/62sd44UlJJaet5lIw3TLp5W/V5xNLGYIQ0J5E4Gxs
+ 7UMzrxRsqgo0DlCs8amR01doIga9dT2118h5ikqDZCu2KJIwux+TjJNlZ7hoG7cFJr
+ 7hy0IiVJXNTH8dwiWUTAypL6QV8x39BXVNlqNpInNMSxeYO8nSg3cNj2ioE6XZIefB
+ eq0rsb+eMYhrabHVPIsb5wpPAp9JREQI35uPodkX2rQ/uBBTscfqFlPQzMc/DSro7a
+ fyamRz44FZfZk+r4UTTZvTq7uXyK5n4xJKejdBNZC7/dF/ehsHbReZ59tZ6bLFOSeT
+ uQN7ontIRsYAg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 654191CA61E;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 500B61CA63D;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF94D409D5D;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB08C409D7F;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 283352F997; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 14A762F9D5; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Feifan Qian <bea1e@proton.me>,
- Thomas Huth <thuth@redhat.com>, Jia Jia <physicalmtea@gmail.com>,
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Xie Yongji <xieyongji@bytedance.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 026/120] hw/cxl: Validate Set Feature payload bounds
-Date: Wed, 12 Aug 2026 17:48:09 +0300
-Message-ID: <20260812144955.649205-26-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 057/120] libvhost-user: fix heap overflow in
+ vu_check_queue_inflights
+Date: Wed, 12 Aug 2026 17:48:40 +0300
+Message-ID: <20260812144955.649205-57-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,101 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Feifan Qian <bea1e@proton.me>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-cmd_features_set_feature() derives bytes_to_copy from the mailbox input
-length and uses hdr->offset as the destination offset into per-feature
-write attribute buffers.
+vu_check_queue_inflights counts inflight descriptors using inflight == 1
+but copies entries using inflight != 0. If the inflight field contains
+an unexpected non-0/1 value, the function copies more entries than it
+allocates and overflows the heap buffer.
 
-The patrol scrub and ECS paths already reject writes where hdr->offset
-plus bytes_to_copy exceeds the destination structure. Add the same check
-to the soft PPR, hard PPR and memory sparing feature paths before
-copying into their write attribute buffers.
+Stop the copy pass once resubmit_num reaches the counted inuse value.
+Note: the value is not guest-accessible so not a security vulnerability.
 
-Without the check, a malformed Set Feature request can write past the
-selected write attribute object and corrupt adjacent CXL type 3 device
-state.
-
-Fixes: 5e5a86bab830 ("hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)")
-Fixes: da5cafdc4ddd ("hw/cxl: Add emulation for memory sparing control feature")
-Signed-off-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3458
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit b71a179148ff49ed236cffb98af8891aeed94159)
+Fixes: CVE-2026-63110
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Cc: Xie Yongji <xieyongji@bytedance.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
+Reported-by: BB CC <wywwzjj@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <e2315efc526c0ee918485df4be69e2b26e8b7a73.1784892981.git.mst@redhat.com>
+(cherry picked from commit b9d248dfaca5e31377ea4f7204aae788a050bafd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index d8ba7e86252..1724b09a6dc 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1813,6 +1813,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 037c6614018..9846de782c0 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1408,6 +1408,13 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
  
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->soft_ppr_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
-                sppr_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
-@@ -1832,6 +1836,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->hard_ppr_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
-                hppr_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
-@@ -1851,6 +1859,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->cacheline_sparing_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
-                mem_sparing_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
-@@ -1869,6 +1881,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->row_sparing_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
-                mem_sparing_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
-@@ -1887,6 +1903,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->bank_sparing_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
-                mem_sparing_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
-@@ -1905,6 +1925,10 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-             return CXL_MBOX_UNSUPPORTED;
-         }
- 
-+        if ((uint32_t)hdr->offset + bytes_to_copy >
-+            sizeof(ct3d->rank_sparing_wr_attrs)) {
-+            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-+        }
-         memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
-                mem_sparing_write_attrs, bytes_to_copy);
-         set_feat_info->data_size += bytes_to_copy;
+         for (i = 0; i < vq->inflight->desc_num; i++) {
+             if (vq->inflight->desc[i].inflight) {
++                /*
++                 * We earlier counted exactly vq->inuse in flight -
++                 * what is going on?
++                 */
++                if (vq->resubmit_num >= vq->inuse) {
++                    return -1;
++                }
+                 vq->resubmit_list[vq->resubmit_num].index = i;
+                 vq->resubmit_list[vq->resubmit_num].counter =
+                                         vq->inflight->desc[i].counter;
 -- 
 2.47.3
 
