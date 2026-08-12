@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A28EC5CFEE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCECC5B572
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAQE-0008V3-JU; Wed, 12 Aug 2026 10:59:14 -0400
+	id 1wuAT8-0004ek-DR; Wed, 12 Aug 2026 11:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAPU-0006fN-GB; Wed, 12 Aug 2026 10:58:29 -0400
+ id 1wuARi-00043m-5M; Wed, 12 Aug 2026 11:00:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAPS-00015F-RA; Wed, 12 Aug 2026 10:58:28 -0400
+ id 1wuARf-00029v-Tj; Wed, 12 Aug 2026 11:00:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=ixnMl8LV90Qy6bGmRervizdPJU0ngIMcfhvAryUecws=;
+ t=1786546233; bh=nvtJA9ypj+ZhaPi7pd3T2HSZCjIPTUVsDO+Hbgm5n4U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=e5bffYj00Nm5SmDLhMXORN0OqCygqIle8E/iSmmqti4NCd2xiq8Qe8N8l0oTgjeXd
- SD0/M0fjL8hSNFflmFVKOdsTkUGJX2GX7HN5MYb6qATPt8jqG+89gk6YNw1AtOEgI1
- YMQBj/1/GJEoy+wQbpJu20NdjIQ7wuFaaQvQv2du8LBznsTQad0ySaGLC5ltq3YHn4
- N+2lrcN0tFLQ7znMIlcN19giXZef6eek3HM8E5j6dBmxiYQyX8ACd9v3Kev42y2NxM
- PLVZZezg+jb+aLVnlG80ep+G16bM0abmHt3eEQPBBHTYtrKbiADJsFxdh+iPGCDaSX
- W0mweDUEBAWeA==
+ b=ozHoCpmdaKXmkgDjBrcKFHYCv3YBf5MKLf0XW6Klf1D7h1aBy3fyPwjpByu7VIzUH
+ tIlS+EUKlRGZXklo4F3rDXWiWpBB2e709RHeScSfN7ag1bOUSIUxDJOoe43OCRBFaH
+ jjgTzEknKJ/Bjqnp8W900Rl3kTIcQqI2jnlC1nBxZf3L7yqhLG6Mb0wJ4UC9vOOoW6
+ NFtkHtrNFNqFfyxkJfxVQdAPzom0o4SUV2m+kf8tORR+UpbXq3ZXVM17YWAVz5Fb4r
+ LeI2RldqgRtsYuAf6VpddHCS+TfiWiKPlM6HlHYqu+eOU4oYRxvQvx0kuZiA6k2394
+ VROshs0dxMaFQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE0971CA651;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A1B091CA66A;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4505F409D93;
- Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 08576409DAF;
+ Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A56512F9FD; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id 673D52FA2F; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 077/120] linux-user/sh4: allow full 32-bit address
- space
-Date: Wed, 12 Aug 2026 17:49:00 +0300
-Message-ID: <20260812144955.649205-77-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 102/120] block/export/fuse: fix regression with
+ O_TRUNC when export is not growable
+Date: Wed, 12 Aug 2026 17:49:25 +0300
+Message-ID: <20260812144955.649205-102-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -72,57 +71,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <laurent@vivier.eu>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-On real SH4 hardware, the address space is split between user mode
-(U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xffffffff),
-so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
+Before commit a94a1d7699 ("fuse: Manually process requests (without
+libfuse)"), the O_TRUNC flag when open()-ing an export would be
+ignored. This is because libfuse sets FUSE_CAP_ATOMIC_O_TRUNC, so the
+kernel lets user space handle the O_TRUNC flag, which is ignored by
+the fuse code for export. After the commit, FUSE_CAP_ATOMIC_O_TRUNC is
+not set anymore, so the O_TRUNC flag is handled by the kernel, which
+executes a truncate.
 
-However, qemu-user does not emulate the MMU, so this limit is not needed.
-The only effect is to restrict reserved_va to 2 GB, causing OOM failures
-for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
+For blockdev-based exports, this causes a regression, because opening
+with O_TRUNC would previously work, but results in an ENOTSUP after
+commit a94a1d7699. For file-based exports, the fact that truncate is
+executed can be considered an improvement in general. However, in
+combination with growable=off, this still results in a practical
+regression in combination with virt-fw-vars, which opens its output
+file with O_TRUNC and previously worked with a file-based export with
+growable=off. After commit a94a1d7699, the file is truncated upon open
+and then cannot grow, meaning virt-fw-vars won't be able to write the
+output.
 
-Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
-32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
-of 1u to avoid undefined behavior when shifting by 32.
+To fix these regressions, while keeping the improved behavior for
+file-based exports with growable=on, set the FUSE_CAP_ATOMIC_O_TRUNC
+flag again if growable=off.
 
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit db3abd36e4c7c2a72e00e5806cf4c47f5aa5c491)
+Cc: qemu-stable@nongnu.org
+Fixes: a94a1d7699 ("fuse: Manually process requests (without libfuse)")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260702132256.661429-2-f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit b9ad1c4396e7eb376f0f8dc7d20538980cfa08f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/target_mman.h b/linux-user/sh4/target_mman.h
-index dd9016081e9..2d05837c2f3 100644
---- a/linux-user/sh4/target_mman.h
-+++ b/linux-user/sh4/target_mman.h
-@@ -1,6 +1,6 @@
- /* arch/sh/include/asm/processor_32.h */
- #define TASK_UNMAPPED_BASE \
--    TARGET_PAGE_ALIGN((1u << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
-+    TARGET_PAGE_ALIGN((1ull << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index c0e8dfb6430..9ae22a2e003 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -859,6 +859,18 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+     uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
+     uint32_t flags2 = 0;
  
- /* arch/sh/include/asm/elf.h */
- #define ELF_ET_DYN_BASE       (TASK_UNMAPPED_BASE * 2)
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index c3b8114e538..9d72e35e312 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -9,10 +9,8 @@
- #define SH4_CPU_PARAM_H
- 
- #define TARGET_PAGE_BITS 12  /* 4k */
--#ifdef CONFIG_USER_ONLY
--# define TARGET_VIRT_ADDR_SPACE_BITS 31
--#else
--# define TARGET_VIRT_ADDR_SPACE_BITS 32
--#endif
++    if (!exp->growable) {
++        /*
++         * Back when libfuse was used, it would always set this flag and thus
++         * the kernel did not execute a truncate itself and passed along O_TRUNC
++         * to user space. Continue setting the flag for backwards compatibility
++         * when the export is not growable to avoid issues with O_TRUNC, i.e.
++         * blockdev-based exports running into ENOTSUP and file-based exports
++         * with growable=off to be truncated and then stuck with size 0.
++         */
++        supported_flags = FUSE_ATOMIC_O_TRUNC;
++    }
 +
-+/* qemu-user does not emulate the MMU, so no need to limit to 31 bits. */
-+#define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
+     if (in->major != 7) {
+         error_report("FUSE major version mismatch: We have 7, but kernel has %"
+                      PRIu32, in->major);
 -- 
 2.47.3
 
