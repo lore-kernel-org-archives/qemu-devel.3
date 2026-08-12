@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C20C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEA2C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAQE-0008UE-Aq; Wed, 12 Aug 2026 10:59:14 -0400
+	id 1wuAQc-0001Zx-8u; Wed, 12 Aug 2026 10:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAQ7-0007zp-Op; Wed, 12 Aug 2026 10:59:07 -0400
+ id 1wuAQU-0001V8-WB; Wed, 12 Aug 2026 10:59:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAQ4-0001Py-GF; Wed, 12 Aug 2026 10:59:07 -0400
+ id 1wuAQT-0001Sl-7K; Wed, 12 Aug 2026 10:59:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=YZd2o8ioWP3TLYC15aSzKKpuMufkREXIn4EkSL5U3i0=;
+ t=1786546233; bh=aiZCSFnMz0pMtvyoburQ32EHLBOXmosP6GCIUFFOIi8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wePOu7QKpMEv8P/IUYngb/4x1GG5PHv2H4I0zcERpwiLiInjPBjcbBhLa/TNyC1Ig
- pzyRYE2WT5ZRcaG1HZRdY/pZcdxJyNBNTqJI1+wLfF201ScLmu3i89Hkqgj92b/NLy
- W2hwCEtIt9keUo6P4IU1ZlHaBKkBya6HvwVtTjzeZFIrCSydkPxAHjwCHwKFQZz1qk
- 0QnK7g2o/6lMLvxj1+ezgTALTkdXkpfgDMKy2WONng8bdUAb4dYjNkKuIpHP8LSjR5
- lx17szf4dxPPARAIXzJEAu0lLzGIh1daVjeFqqPAPaFhr4T7XTzeYan53NTofp8Ira
- YLUOXlCjs+azQ==
+ b=oK6AsQkDK7QtLX8eO96A9VGRvSd85evzab6QP2tpYfPGkLdEbmFg4t4X95VmzSvVr
+ 2/ti8juBxt5qT7e6nuHUS/7ew5+QYvTWgpQBlEA4+LCNZyjO6ngW6+RUi8ed3+Xd7F
+ MNpzuO6nkiOpAG/WUYMaYdvynsBv0uXov+AEZlmleZA5HUaYrNKXb5xvjheCjuDNxV
+ xxE8MAIKmyKo3jZwQi5qCtJ59xegzkTtlV9yQbnI511eRAE175w88zfU/tKdKU8VCN
+ YGNOgL6g0eU9ILeCoqx1+vV9NwdXTw4L4upW8wAazwx5wrF+e0MPfSv9GHmFBhTmZR
+ EqE/zydrCEjGg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 24F011CA659;
+ by isrv.corpit.ru (Postfix) with ESMTP id 36B601CA65B;
  Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7FF57409D9B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 91703409D9D;
  Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DE1582FA0D; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id EE95D2FA11; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Paziyski <danielpaziyski@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 085/120] hw/nvme: fix assertion failure on subregion
- removal
-Date: Wed, 12 Aug 2026 17:49:08 +0300
-Message-ID: <20260812144955.649205-85-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, no92 <leo@managarm.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 087/120] linux-user: fix incorrect msg_l[sr]pid
+ members of target_msqid_ds
+Date: Wed, 12 Aug 2026 17:49:10 +0300
+Message-ID: <20260812144955.649205-87-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,53 +72,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Paziyski <danielpaziyski@gmail.com>
+From: no92 <leo@managarm.org>
 
-When a controller is created with a MSI-X exclusive BAR, the bar0 memory region
-is not used at all, and so, the iomem region is not added as a subregion of it.
-However, when removing a NVMe controller, the iomem region is unconditionally
-removed as a subregion of bar0, causing an assertion failure. Remove the iomem
-memory region as a subregion of bar0 only if not using a MSI-X exclusive BAR.
+The members are declared as __kernel_pid_t in Linux UAPI headers.
+Analogous members in struct target_shmid_ds (shm_[cl]pid) are also
+declared as abi_int.
 
-QEMU options (requires a hotunplug-aware OS):
-
-        -M q35 -device pcie-root-port,id=rp0 \
-        -device nvme,serial=ctrl0,id=ctrl0,bus=rp0,msix-exclusive-bar=on
-
-In the QEMU monitor, or by causing an ejection from the OS:
-
-        device_del ctrl0
-
-Message in stderr:
-
-qemu-system-x86_64: ../system/memory.c:2617: memory_region_del_subregion: Assertion `subregion->container == mr' failed.
-
-Fixes: fa905f65c554 ("hw/nvme: add machine compatibility parameter to enable msix exclusive bar")
-Fixes: 9162f1012576 ("hw/nvme: fix msix_uninit with exclusive bar")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4090
-Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 6e5ca34f3870a8cad7a61395f82d40df62cb5d52)
-(Mjt: context fixup across v11.0.0-2637-g5320d335fb8d
- "hw/nvme: add migration blockers for non-supported cases")
+Cc: qemu-stable@nongnu.org
+Fixes: 1c54ff97bbde ("linux-user: fix and cleanup IPCOP_msg* ipc calls handling")
+Signed-off-by: no92 <leo@managarm.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 518a4aa01b88ff814dbf8668016f3ec910426283)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 582a04542cd..164c0ab0d4b 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9392,9 +9392,9 @@ static void nvme_exit(PCIDevice *pci_dev)
-         msix_uninit_exclusive_bar(pci_dev);
-     } else {
-         msix_uninit(pci_dev, &n->bar0, &n->bar0);
-+        memory_region_del_subregion(&n->bar0, &n->iomem);
-     }
- 
--    memory_region_del_subregion(&n->bar0, &n->iomem);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index bf7c9af691e..dcf461806ad 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -4228,8 +4228,8 @@ struct target_msqid_ds
+     abi_ulong __msg_cbytes;
+     abi_ulong msg_qnum;
+     abi_ulong msg_qbytes;
+-    abi_ulong msg_lspid;
+-    abi_ulong msg_lrpid;
++    abi_int msg_lspid;
++    abi_int msg_lrpid;
+     abi_ulong __unused4;
+     abi_ulong __unused5;
+ };
+@@ -4249,8 +4249,8 @@ static inline abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
+     host_md->__msg_cbytes = tswapal(target_md->__msg_cbytes);
+     host_md->msg_qnum = tswapal(target_md->msg_qnum);
+     host_md->msg_qbytes = tswapal(target_md->msg_qbytes);
+-    host_md->msg_lspid = tswapal(target_md->msg_lspid);
+-    host_md->msg_lrpid = tswapal(target_md->msg_lrpid);
++    host_md->msg_lspid = tswap32(target_md->msg_lspid);
++    host_md->msg_lrpid = tswap32(target_md->msg_lrpid);
+     unlock_user_struct(target_md, target_addr, 0);
+     return 0;
  }
- 
- static const Property nvme_props[] = {
+@@ -4270,8 +4270,8 @@ static inline abi_long host_to_target_msqid_ds(abi_ulong target_addr,
+     target_md->__msg_cbytes = tswapal(host_md->__msg_cbytes);
+     target_md->msg_qnum = tswapal(host_md->msg_qnum);
+     target_md->msg_qbytes = tswapal(host_md->msg_qbytes);
+-    target_md->msg_lspid = tswapal(host_md->msg_lspid);
+-    target_md->msg_lrpid = tswapal(host_md->msg_lrpid);
++    target_md->msg_lspid = tswap32(host_md->msg_lspid);
++    target_md->msg_lrpid = tswap32(host_md->msg_lrpid);
+     unlock_user_struct(target_md, target_addr, 1);
+     return 0;
+ }
 -- 
 2.47.3
 
