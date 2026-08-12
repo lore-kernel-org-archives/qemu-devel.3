@@ -4,107 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162FAC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367F3C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuByx-0002tt-9P; Wed, 12 Aug 2026 12:39:11 -0400
+	id 1wuC1i-0003zD-A1; Wed, 12 Aug 2026 12:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wuByu-0002th-Ov
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:39:09 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wuByr-0005X6-FH
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:39:08 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-39f9d4bed90so750611fa.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:39:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786552743; cv=none;
- d=google.com; s=arc-20260327;
- b=HgpzLV9tEK9hd/IA1jI1vJsg5quSYkV/WlfOxfaqVPc9q1OiO2rq2rScmBSq2ScGUm
- nlsUhKdRZth6BRjHybN161RLPbuaADV2S7fMghRlHjrjPKY2FKd8u6xgbbQ+K9cIr10T
- ZemcYrWklz9m1mMeSzhf60h7Oha9CwrMj6llxsFqdUKKZ8o9t3M3hyAqHtGy4VAHnchi
- PD7AhOxTI07DTSi8iDQhsQjIpnv0fxA+aHghCRtH5XdlPZvbLwQSD0rGxpa6hKXaETOV
- g37fgCcYCtHYGEsjrIOdKQQc8mzCbN66QOWe1r3SNigcCoGav1fmtJ02NZBdSxzzOt4/
- uphg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ZMtepMRHBTAhSbOtOZZC2Dqkj89q/cnHC5zjcgMNH4w=;
- fh=YYFlP8b5nG0xp43ekYQGYSQr9uembBeNxJ16OtaRW/0=;
- b=sIdDWBRloz5EeqaTCgTR3bvtMTvVr1of7+D+YDONb0FrBXVJh1lnQyi1wm5pi+Tp1r
- lGsuY/VlQALCu4vbWLTI5OGBREB1sZcbIkbj2Fv94dzCm0i5JZD6Kbv77XDN0dJ8hsoQ
- ZAn+5jZJBn4/p2CWxMekfH4aeszaWOO2PNtBcYueEIV/nAl29yYQPC7HyFDgUp1zmt1B
- Tv4yCYkyKtMEimCOgltu/AXIt10ye2Bp/2unkc6C5/ZF6k93KKSafK40IEgJSGpVd+mU
- 5DeuLnfDu+RBAabtZ8RJrRO72CKhGru1HU+pCMVSjNiQEYddGUSTrlj+i247l2lawDSJ
- 7IXg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786552743; x=1787157543; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ZMtepMRHBTAhSbOtOZZC2Dqkj89q/cnHC5zjcgMNH4w=;
- b=j3qr/QsAebUqw5DAn20KaX2df74Fp5kdjdajzzZcrI16uViKBftJ7CSbyTSxEZggRT
- MNVT0bGbq6JiAE/YuTnpoAzB1o3zuXY+1Ozqfq+VnahFC1SejdKI7LqJ3o6NVMvGBq1S
- cqOewIaczSfpq2SIrPNdH98FhyPxUamiYv1PkYikG3s3/Lqes/9ftXdceePreWqzYnuQ
- CF+jV55nE+KOVkhVL9CZ8wtw9JqIa4pLnE4tpx5dpq0MeQ3R0BrctfWkJ/VKFXoVleWw
- yfMVdxCWNVcf/WWvPlq+12Y5xF4wTHRT9jvV2nOxXthR+vgXRLp+o2d+UJ7FnELwloTa
- w7Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786552743; x=1787157543;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ZMtepMRHBTAhSbOtOZZC2Dqkj89q/cnHC5zjcgMNH4w=;
- b=HoVIoC7L+vUli4IxHxm/CUBLhfjec0O7/+BNaQvVA899xTVXRR0FW4jzkrnbluLPU/
- B+GhOqAv/Tnc00jjN8Fy2uMmF4h/ZoFLkIhSf2y+mVYM3akGJv2DkSq4JvISPv+8W8iC
- VgeCdLTKd0rEUJGDv4/oJyw/Fc3jausNjdMDzZ0B5laZ4WPJ9y3rdKicBP68iAkuRoyT
- v5EdmuaAGT7A/kCVnH4bF/PrewQiac8h5gjkV4jP7e0tc8NL+vHbwXnw0vEyFWol0r/n
- GQiJ37wu5GaNN6e2SCiqfdePIzWVQrS1Si+AK8388sZ8tYXYR0bulq9AYgYjnH5JUaSV
- uPHg==
-X-Gm-Message-State: AOJu0YwLhNk3QQ61+kF0sS2jYeu88gXe0IVLVhjVAkGmO0JHDa/1BKzu
- keTE8PfPjhikXRY51k1ASnfHu/V+u9qgQNJToTAAWhi/v5ArDZ1kWLlU7qUcmjCyK/YD6y+WuvS
- iwvjB9qYmwPaZgKOQNSsQ/QMKoU+27+g=
-X-Gm-Gg: AR+sD131GR2Mbr8TDaFu2GLxqPjZeBFAkSrEtH5wySryVbxLIwL7e3Z38o+ozF87R7q
- 0FEMsDTuIt5wAg/kxD3rmBDre4LyKMxSTLE3mxa7tOfP8IqtCgQjMFd/uYA7gdgwCZ19I7469T1
- 3tp4mCYM0gavbYKf5P1mEERqMe9cz3s1eYUTUuVNU3YjR6BruvO28Or43FrjXm38w/b7ui/5mcM
- BQdv1KsoCQjEwdxjJMBwkJ0h7C39r5EKDySlJ8cQm/dz+xK9xqLyaFowGAPLW9V8KqUCcJzc3Z/
- tpI5PayZitRZtmor6QLvzyLMTIwm5Sv51H0wxG2HQoaeCcZ0OLK/ZNZdJhvN6zh8fPce6hOwsc7
- a
-X-Received: by 2002:a05:6512:687:b0:5ae:a500:e368 with SMTP id
- 2adb3069b0e04-5b45317e4ddmr115107e87.3.1786552742582; Wed, 12 Aug 2026
- 09:39:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260801023628.22665-1-aadeshveer07@gmail.com>
- <anogKPQgWvLLjOH3@x1.local>
-In-Reply-To: <anogKPQgWvLLjOH3@x1.local>
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
-Date: Wed, 12 Aug 2026 22:08:50 +0530
-X-Gm-Features: AUfX_mxUJM_WyMdQNBlx9Me0xhGj1WaX2wjfCV-aqiGkCrlUjdvFTTwABKNdkpE
-Message-ID: <CA++cPvJwQt0te1WLY1Aia77USnjuxOTDCE5R=d=sSvgr0CNEBg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/11] migration: fast snapshot load
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com, 
- philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com, 
- pierrick.bouvier@oss.qualcomm.com
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuC1g-0003z2-7a; Wed, 12 Aug 2026 12:42:01 -0400
+Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuC1e-0006qb-EE; Wed, 12 Aug 2026 12:41:59 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id A26291400045;
+ Wed, 12 Aug 2026 12:41:56 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 12:41:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786552916; x=1786639316; bh=JMoJ66msCCw7TE4+ZZbwdj3px1Pgc0Ur
+ wUpbDD7YSDw=; b=jFmRx3WDzgDBYOXDkXC+VJMqVEEL8Ke6VX4bPTy+769rgMoR
+ uOfz79qaPgMf2R145ACtTMbt+I4YPHoG9vMTck+D1yg5QR9Ft0rG7hQadl0lihT9
+ 0jSE0Q2DQxma+lb5bRh8DLzrJxUVtADpTJGBBDo2UJFw9oXdSNmeymK5+dfVzHIv
+ +IjBzYxDEXJp49uqv4TIv0/mQci/tJ7hMHsxlfgS49TLyPQ5oEV37twNpnhJgErM
+ RXpC+0vkqh2+zDCcSGjNiwsGm76+q/J3BRbIaY211f7I+lSVrbMEym91bGbP4dR4
+ NHDyYGT3WrZ560KPnDN1eiwpV/ffoouRKuAutg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786552916; x=
+ 1786639316; bh=JMoJ66msCCw7TE4+ZZbwdj3px1Pgc0UrwUpbDD7YSDw=; b=T
+ 9ud3N/JEcFpGlfG1FcvnFTzM7OfjaJrcRIA+iIVKZhg7wHXxAUfVmpo1GfFA2Yu5
+ 3b4C67qbVu8A3rKoKKCZNtJIcRTGDTUFyGEi6euWPUxhqjKIPDCXYOw/3c00nEbK
+ ZRYvvYNYRGBleYK9T5GO+sOrabRP9Iw4S577+qB8bbzfMAw5nquaNlHCV+QycIIz
+ UQIZ8j4y6BdwRTL9TBSMFbyhoZVYR3QWiItWyvm60RsFY1xi6ENkzzgDQPfCDkTc
+ voMVDgwUVRXby4FR276d8tNay+mVGm0UR8vKR1rAlzH5eukfi5f5Fa7uMIEoj8DT
+ SBVlSmhIrXKva6uRt8ujg==
+X-ME-Sender: <xms:U6J8anTgjJ11i4MPgBj6mOJ4H38A1CpbLyUgsHbggKQrC9EtfOUOEA>
+ <xme:U6J8aqTzNK9apymMkTnhBW0ffvldG6KaNCQAXBywWrfyIOzsS0AleyBqwSgnuAzes
+ 3k9I48rQ717bW1K08jeyA_MFgomx6DkvyMFxaz4Kb7Mca1UfpB34Dfo>
+X-ME-Received: <xmr:U6J8as7RtjTwy4PoXG16Dbk3wPBqCYPwfJ7XJeaSStHOwdBUbg4--u6P2RBmnch2xBomQw>
+X-ME-Proxy-Cause: dmFkZTEpZlKt9LLslbpY4viMGc+OBio+UBDT/BZi7wcWy0grcRDu6UkaDD3E8ph81x7BwS
+ 65Q0rprAtS6RYbaFuBKn056dlkH3s+il7F+nwLF8y+Cr7YhnKgRxgDXhLaFtym12DXN1dl
+ u+Stx/tlR3a9FLwje/tBgA4LRSGTqpWVX2jg6sLw4pflHNXVAo21qMiXK+zlwt9xRgUAsi
+ 1B7DRLUC2ZRdNWFzyRhQDUMIciKZr06rWvlnxLK2NSVSI++Hh4oP5UK2Ie6fhgC9EPDPQv
+ 9dKJQQ3aaGN2sZpUQdRXEYQRZrAvx6LKnG7s7PPU93Iwcd/n5wSHdwUb7tFh8pmsbzC7Pa
+ /Q8m7MXyEUW2sXaj6P3Rx/RIhXSnTVb5eNilSpgoqij+kaZkcTbrlXMyWfrVQ14PQnSJFm
+ 3KiommCGJ0OQl4Pvjfw87T8i+dXqMgzS1o4TfEgz1Y7xDxDaEltFTQ7j1tRB9vWDXnf64V
+ HWquIlodVUPt5fiixFoWPuF2HxVw2UDotUa5RPfFHuBwf7yh2Kz8dmSxICIJyPPGEJkaQ8
+ 58Ayb+ItywswSr8ImjNizNQwksislNIBTfa43CFq3sIdqxsQpJndvcji6EoW1PNQKxqufn
+ rMiwOnzyuUrmXtv0FWg0leK9BxPjgmZbfPvv/oT4BBtEx75PVb0c6eNxnPlw
+X-ME-Proxy: <xmx:U6J8am3COsSm8AVEBoPrBhZjROP5Zo6psyRJ73WHxk6HcHQnDrXdMA>
+ <xmx:U6J8anD-Z3A4q389OE9H9ATLKZYRgYZXla8OurynU05rtZ_IoyMtug>
+ <xmx:U6J8ahM3kfEuZ9g1PBGJUwoUb11KtkH6h-G4R_iAyaWMQMefHK1w8Q>
+ <xmx:U6J8asbfltrduQgqxTLM0YzYDy9jLHTIkUoN4GlN4tPIEes_WehL2g>
+ <xmx:VKJ8aiinsA0EiYTE8CXG1tZ_ftClYta223GO6ePUhsspdXi1UIQaVg7m>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 12:41:55 -0400 (EDT)
+Message-ID: <ae336dc61541b41ab95630f6d4267f5f9d63699c.camel@alistair23.me>
+Subject: Re: [PATCH 2/4] target/riscv: reject FMV.X.W/FMV.W.X under Zfinx
+From: Alistair <alistair@alistair23.me>
+To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com
+Date: Thu, 13 Aug 2026 02:41:55 +1000
+In-Reply-To: <a417fdc4ee2d4c4c9760786a4104d051@wangyang25.otcaix.iscas.ac.cn>
+References: SENT
+ 0001-target-riscv--honor-zicbo--envcfg-gating-in-linux-user-mode.patch
+ Subject: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in linux-user
+ mode Message-ID:
+ <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
+ <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
+ <a417fdc4ee2d4c4c9760786a4104d051@wangyang25.otcaix.iscas.ac.cn>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x22c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=103.168.172.153;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,49 +111,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Tue, 2026-08-11 at 09:14 +0800, wangyang wrote:
+> Zfinx explicitly excludes the FMV transfer instructions, but
+> trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
+> CPU accepted them.=C2=A0 Require RVF instead so the transfers trap with
+> an illegal instruction when only Zfinx is present.
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
+> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-Thanks for trying it out. I will take care of the disabling migration
-in the next version. I have replied to the page size issue in
-corresponding mail.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thank you,
-Aadeshveer Singh
+Alistair
 
-
-On Tue, Aug 11, 2026 at 12:32=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote=
-:
->
-> On Sat, Aug 01, 2026 at 08:06:17AM +0530, Aadeshveer Singh wrote:
-> > This series implements a "fast snapshot load" mechanism to
-> > significantly reduce the perceived resume time of a VM from a snapshot
-> > file.
->
-> I gave this one a quick shot, it ran all fine here.  It's a bit of a pity
-> that I still almost need to rely on postcopy-blocktime to get some more
-> info out of the async load process.. but I think it's still OK.
->
-> One other issue I found though, after applying this patch, QEMU will also
-> allow me to use QMP/HMP "migrate" (rather than "migrate_incoming") comman=
-d
-> when both postcopy and mapped-ram are enabled, which will ultimately lead=
-s
-> to an error:
->
-> (qemu) info migrate
-> Status:                 failed (Unable to read from file: Bad file descri=
-ptor)
->
-> What we can do is to disable it for qmp_migrate(), e.g.  migrate_prepare(=
-)
-> can bail out for outgoing migrations of such setup.
->
-> Other than that (and the page size issue I raised in the separate email),
-> I think it's ready.
->
-> Thanks,
->
-> --
-> Peter Xu
->
+> ---
+> =C2=A01 file changed, 4 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+> b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+> index e935523c93c..305f545b494 100644
+> --- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+> +++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+> @@ -428,7 +428,8 @@ static bool trans_fmv_x_w(DisasContext *ctx,
+> arg_fmv_x_w *a)
+> =C2=A0{
+> =C2=A0=C2=A0=C2=A0=C2=A0 /* NOTE: This was FMV.X.S in an earlier version =
+of the ISA spec!
+> */
+> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_FPU;
+> -=C2=A0=C2=A0=C2=A0 REQUIRE_ZFINX_OR_F(ctx);
+> +=C2=A0=C2=A0=C2=A0 /* Zfinx explicitly excludes the FMV transfer instruc=
+tions. */
+> +=C2=A0=C2=A0=C2=A0 REQUIRE_EXT(ctx, RVF);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv dest =3D dest_gpr(ctx, a->rd);
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i64 src1 =3D get_fpr_hs(ctx, a->rs1);
+> @@ -531,7 +532,8 @@ static bool trans_fmv_w_x(DisasContext *ctx,
+> arg_fmv_w_x *a)
+> =C2=A0{
+> =C2=A0=C2=A0=C2=A0=C2=A0 /* NOTE: This was FMV.S.X in an earlier version =
+of the ISA spec!
+> */
+> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_FPU;
+> -=C2=A0=C2=A0=C2=A0 REQUIRE_ZFINX_OR_F(ctx);
+> +=C2=A0=C2=A0=C2=A0 /* Zfinx explicitly excludes the FMV transfer instruc=
+tions. */
+> +=C2=A0=C2=A0=C2=A0 REQUIRE_EXT(ctx, RVF);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv_i64 dest =3D dest_fpr(ctx, a->rd);
+> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv src =3D get_gpr(ctx, a->rs1, EXT_ZERO);
 
