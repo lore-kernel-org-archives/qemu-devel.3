@@ -4,138 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF88CC5CFCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58049C5B56A
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAxE-0005dr-TA; Wed, 12 Aug 2026 11:33:20 -0400
+	id 1wuAxS-0005kw-1H; Wed, 12 Aug 2026 11:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wuAxD-0005cp-65; Wed, 12 Aug 2026 11:33:19 -0400
-Received: from mail-northeuropeazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c200::5] helo=DUZPR83CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuAxQ-0005jc-L4; Wed, 12 Aug 2026 11:33:32 -0400
+Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1wuAwS-00046H-Hm; Wed, 12 Aug 2026 11:33:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F6rsxt7W22LDY3VhVkJbcmOXqUK/LlO2DvptkQ3TmX9yFkpbq5dVJkmh1e5I+7waOZ1kXO2+Z1jJwrXAdpOeGBFpAvGCnA0kf2Dzm/F5fE+NwGaLqj6zR0csqBjbqiYBoTODOerHhNm+Ra57MYytIvxO9IYVsqZZLTbLSK0/54pILx6sQYBsztxfkXFmhROmuViOg+6QQS9JSJUoaEfMD1EAezvYrsFiKDPAzRQunhAgYCynZ6Tn2imY5jcaVep4lih70vRkuKowbVZ5zyQQeud7xFBed+4+bQ9n36bC/GHQgJWGRAVQJULAFQpAR7b+IQmZBAoMKjq7fASMqgVz+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=x5etyWA7RDfXihVOtH8jC0gCBq0Ew1Hz1DauVldISkg=;
- b=EGFd/OVqKr5ISj4CpJKXi7dYX6A+1CAI015FgQLQdRalo8VEWm/a/F7ADIejQVmjfXWwrkIstMHJ2b9SATjAAZrp8RjJ2ygAj/zC2F7cVZuBzTS7Pq3yrcv/20nMMZLYLFom8tweFLBvIXOmT2xX8ry/rbBAtQSNs1XO2CdJXJaop0PYC3vnmjZZ1A6kT1WQHw+d3oe/wYRxRQAT4AMVZBlrunXxlkuMre/1lrLS25PSY8K/+f2dhld9VN8WrLuLKBMYLN0boFvhwsGs2csPRdQfFlhO6sJsehZhd0lrpi8zgfrlU4TkxICSZmQUykhuxb+2b1UezbZiztqkt4a0ug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=x5etyWA7RDfXihVOtH8jC0gCBq0Ew1Hz1DauVldISkg=;
- b=joT+3XGcU6azJkWUDyTSJBt5DCutdUGHfmXZqj7ODfow4tY4+sQAQTekbRWujcjHUlcxRy9f8exnBRuBqG4N3Rkru7yhBsBoVtYF8EUvcBmOa8nbZl0W1AywaAjSJi9+E8W7LtlYOaSx0cRTlMne9JdmSLQn7YEGjQo6fRp+l91cZ2kcMxKvJtQGGrcU8FJLp+erA4HRrcPKUJIv+4VS9xVfgSHJpVCYTE+Wa95RdmbeFpiDydxY+WUjBYHjB6rvtKLLhWqHi7ng+vQ7GFhGvvn/IjuN++uloPwSFvy+cRLy4EINTR2iN7UdL3bA0P5aePIp0DtQz9fMgmKNeSZfTw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com (2603:10a6:10:52d::7)
- by PAWPR08MB11558.eurprd08.prod.outlook.com (2603:10a6:102:509::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Wed, 12 Aug
- 2026 15:32:25 +0000
-Received: from DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::1b2a:832c:d136:a37c]) by DBBPR08MB10650.eurprd08.prod.outlook.com
- ([fe80::1b2a:832c:d136:a37c%5]) with mapi id 15.21.0315.008; Wed, 12 Aug 2026
- 15:32:25 +0000
-Message-ID: <269bb712-7acd-4389-ace1-380bfb35be79@virtuozzo.com>
-Date: Wed, 12 Aug 2026 18:32:23 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] qcow2: do not clear the dirty bit when reopening a
- read-only node
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-stable@nongnu.org
-References: <20260811154213.184947-1-den@openvz.org>
- <20260811154213.184947-2-den@openvz.org>
-Content-Language: en-US
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20260811154213.184947-2-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0204.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e5::15) To DBBPR08MB10650.eurprd08.prod.outlook.com
- (2603:10a6:10:52d::7)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuAwg-0004Io-Nc; Wed, 12 Aug 2026 11:33:32 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 55B571400088;
+ Wed, 12 Aug 2026 11:32:45 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Wed, 12 Aug 2026 11:32:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786548765; x=1786635165; bh=CsjhMTXGP0SAlh4DyBpR6rK/ZxXLZ090
+ j/OjkAeH4Ls=; b=0s6zAb/q5nLrgjNYN2lnPvuKkb48+Tbmjz2CBkYy6GdA8skD
+ Nkc1OhE5qQ7HDkqtVQynRTocNfB9EDNvFWQsOJau7DrS/coe2i89FmX6PJZz7Da+
+ 6iV4rHKs9DAvPvl4hcl2Yx1i4zoQQEvjJO+MsvWZ+yQQI4nsBXXdvglvgn94XMVA
+ Wf87uflWGUVXPfi+jMek8oAVWz0NYFAKXR4bkbPvYa4Ja+DWdDkz1Wodx5v0po03
+ j4i2lXmgoymKdx9a/PkJ+Pa+WuYE1vwcVYBg3oTcrolQP5Iv0hBF+jRfleHcqii+
+ GHN7uQ7nc5ElTisJ9MpO+82me5KDmt5F/i3Wgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786548765; x=
+ 1786635165; bh=CsjhMTXGP0SAlh4DyBpR6rK/ZxXLZ090j/OjkAeH4Ls=; b=Z
+ vtnIgUUk4XUuIv9kOHHVUfCHnlBlqbRPIB0a6PL+oeSQa3YXzj/YqcP29jSSKb5e
+ 1yfRv5ZBp837dDKyRdABrJwPUbqkQbhkoEuTC58uQ2fY5cN4iXzmgfyKGOGRpAhO
+ kJiDWXOXaWLyPOSrhkhq5b7vXedhBeo3kGW1ZhwHkbrnjllhcM4IC2jXWVxcR52+
+ vYVEn0d/v7axI1Von+QjNEqVahNr5wf2moLKvdbJ0wXh1G8kn41MUbN6NAYylvhZ
+ eucwNHpG15wMu5XWsh6vKSbobkQSkYqFaZgx8DZSCdSYlrAj/s8oJZfFZnGzjwtK
+ tpwwDVbVo4mlXSCYbx/ow==
+X-ME-Sender: <xms:HZJ8ak5oslIaSQHJ4MZMFoHPbmyoVid2FFSYJsVAtkm2Sej0uQbtZw>
+ <xme:HZJ8au3WkE_JRIBDrjzNFuY39foXoCo58dn1LXP4B8_4RxZLjpJV6gr1VNDvk-D-h
+ yygRiTOScUKJHEzKG3MiT49tjrqBG-3wlVZr5BPbrXsRfgkwtizCwa2>
+X-ME-Received: <xmr:HZJ8avC4eQAKtvgc60A5tfDjRRSKL7LOZo1tPRS2gXpbcFdbLjwk89WvfXh0az7LSHrcsw>
+X-ME-Proxy-Cause: dmFkZTFFg8fCAL84k0YLJG4ddtLP/FaVD+vWuNUPplT24xuQu9TfrDrJHyL52wBMXbTnIt
+ DyCkDsJ4H6E4FN6Qca+9ukxr4Ao8zaXYKpdEEkeDEE2K4768oZpwpsqhyG2lcLKm1IxqWF
+ 0o2pl7ILNjod2q1X2556PtiFiHNt9TPrLYeVQ1nQBLoAkx0p6WiI6SBkgXHi1vVWr84Fqj
+ E4IbE5x/lVVur1qxF6ThfQdlYohTs5wItW/jjN9y4J4h4J3prqF10p1Wehco5thc8YS4Kc
+ bummzs7wZdUVQUOD4L7Rre8hGmdJLpECzP7XZqq3taWe3jEqW3rOfiyImSuFcgGFUuxoKU
+ clEJCXxtSHv91L+xeE3LH5WC4Wa9nKD3e/sF7WJvQI+XMqnCqWPhR5gMruWkI3VV12pUIJ
+ /H3IfryXGYY3nrKFfGM/ZM2Gn0SKNsl6U3HLjcu9eSD04ObioIJjdBVZyZ7acNLgYdc4kV
+ z8cgIsFrLAfmfskjIMft2EIvoZCtJEmtXLhWPT37kF2hec2aC0p8QiCkWmzuJhUZiuTnjG
+ Lg9GipGonVwlaUA2z52qKCMOScTSC5KeAyzSXjUGY8VmrcjWafKqo9UtzQg2Uq6x/NDw8r
+ 3AM20dzGGQFGhUOoRTFhDPt8KzPCoetndqUy0bUFNvqYaHMBv5S8L7yWTyTg
+X-ME-Proxy: <xmx:HZJ8apOfrCStchfO-S7cCxNtIgbJcEz8otvVTZ39lUjDKhMRjvUqew>
+ <xmx:HZJ8akZeJZMjhvRbQ9yUl0fGcQXngdNJTogTX0mNjhlY42Ia3VU15g>
+ <xmx:HZJ8aot3EbpVJsrN4XwsnRwSNbn-n-RruDFMtnN1eKRhmltuCNTshw>
+ <xmx:HZJ8amOXcA-wIuq1citif82iRh2WnYG3MULJpRycgCWmrY7pnn4XiQ>
+ <xmx:HZJ8aqNNwiKR_wkEgP4QArs5cG5aZcrnqGFP66qNUanWn73fhA-aHgY0>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 11:32:44 -0400 (EDT)
+Message-ID: <2446959f1e25d886cd3d7c05fb95a89082d9c5ad.camel@alistair23.me>
+Subject: Re: [PATCH 04/26] hw/misc: pfsoc: Model L2 cache controller registers
+From: Alistair <alistair@alistair23.me>
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Conor Dooley <conor@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-riscv@nongnu.org
+Date: Thu, 13 Aug 2026 01:32:44 +1000
+In-Reply-To: <20260723151853.2143177-5-bin.meng@processmission.com>
+References: <20260723151853.2143177-1-bin.meng@processmission.com>
+ <20260723151853.2143177-5-bin.meng@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DBBPR08MB10650:EE_|PAWPR08MB11558:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3f8a0111-7e0f-4b22-c555-08def886e8f4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|23010399003|1800799024|56012099006|10067099003|22082099003|6133799003|4143699003|18002099003;
-X-Microsoft-Antispam-Message-Info: mteq+N51A92C7SKTLSrlhEAEHW/VkLig+dE70twNdS0pHl5LdWYH+M6fR2z3DtisC7SNSOiXuKgd7G4VBhu1gDKAwniab/9vgc8iBs7VmFp/nBOCnWpjIkjDdUNdnNwEvUykYRYQFSuC7jvdyBZkkGB4OMgpmWBeHtQuei1l5T/We7QlMLIAL4KdzNQzkvSleWYTrZSA5HvqMkhSV3znBtnOM9+YkQXTdY+ssoIR8FVbTbrWYH9aOCv93468YS82+5vaX2QU5CtdRvi+b+i6qUkcjQbJDOscyZKnZM7PTOH2Ep2is2ilmPJP+xq8Ji+d2zxNqJKHBkMNX3qPeluIdoOcx8UkSOiRo5fq57VxmarIFT71D/0D4gyU3sl8DW4//rAufJ8orcCHqd23WnEpgjymoGy55xGDY6zsQfTFFUWw3+gMywKkNF4KBbfVY5RwYE8Jv2I70Z8c9iAPSNJbVncTJcPoX+M7gZDy/p/tZGbqsznHQ5YPRr5KvQyKj83eeui9ajha4F/Rn/3xprUq+hrIRkJs4voW9ZHSRrIuToAKMsrzwUOOQO5bTPIg0W67EaWTqETRP/u2HIH1YgWNfp6e2wqxNf2yOrgmI4001WRDwC3Q76UfAg2Dhe8fMuR1o54MCxZglfsEw81kubRFiFRczak7elZPROJ/G7LIq1g=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DBBPR08MB10650.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(10067099003)(22082099003)(6133799003)(4143699003)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SWhZRXN0ZnIrUHlqTmNlNmhYZDRQZzlLcnVpcldabTc5TERVR1cxMjBXZHU5?=
- =?utf-8?B?SDZPZXduOCtaSHNvdXVPaDlRSXJSZkVDY1hSVExsRzNGeXk3aU0zLzUza1hV?=
- =?utf-8?B?c2ZlRnU3amsvdVovQXQ4MlJWdzRjSXV6SjFLZWI0Y2I4V1RaWmw2NDE3VzJp?=
- =?utf-8?B?YUlzL0RLb0dqOWM2dW95SUZlOXRDNWRaR0ROaHJnU0ZDN0FrQkZ1ZjNCamNy?=
- =?utf-8?B?RmVSYitwbmtJeWlqRWJyS05UY0I0UlBrZGdOSHBMbHkzUy9paHAydkxhTTZK?=
- =?utf-8?B?bVoweDFjakdaekkwS2JNS256b0Fwc0s4Z0gyZEVIYS8xZVgyckpTUU80Q1FX?=
- =?utf-8?B?Tm9aZ1dUUUsrNEhTSTVpazJGM0YybjNaM3U0OFEvMm9ScGgxWit5bDZraEVE?=
- =?utf-8?B?VzIrajU1Q0ZzQVVDNE1nYjJVV3QyM3YveWQwa2JUWVpYTktKM28wSm9xdGtP?=
- =?utf-8?B?aW9Hakl6Um9DRlVDdmVVcko5cnVncGhybk1KdFJ1NVpqbDhHaHNWYXhRbm0w?=
- =?utf-8?B?NEpEVG1Cb05ndkt6Vmdpc25IeElTOVJLKzduMVpOMHdiUHZOTFppVnFtMEZy?=
- =?utf-8?B?M3Q3aElMQ1lHVXhqeWp4YTNENGpsVmp3dXZFNzhEbFBDc3QwRmdIS0hYdm5F?=
- =?utf-8?B?Wm9mSzgrcHpZZDZ5VEoxUzUvOWJIb1N5OEYwMTZGSEQyUVlGNjE4cFNhaGtJ?=
- =?utf-8?B?N2MxcTVTZTVYMUNTU29mdWR6Tk52MVUrZWZ3bU03QnMva2ZCQThQV1B3RFdR?=
- =?utf-8?B?U2xJS3EyTGpxcFl1Rkk5a25YWXJZMHQyaGl1bU5MMkdWT3dYK3crdzhQMFdt?=
- =?utf-8?B?dkdKaCtPRFUvdjFkYVBuMGlFZm5pUGNZdW1rVVdVQUw3b0pNejJQQ2pFaDRY?=
- =?utf-8?B?TmdDQlR2Zm90NlBXVTczdnB4TXFuYUZZY0lsL2srWXZuRkdtZkpHQmxiWThC?=
- =?utf-8?B?bmwySWFST0h0cnpZbkhhZ2Q0MUR3eGQzVUY2ZVgraVBucW9KajR6LytnRS9r?=
- =?utf-8?B?SmhSNjJTanZHcGZHWG5mb3JLT043Y0YzWlJUOVVZb05yYk9yQldEM3pPSWRS?=
- =?utf-8?B?TmcxT1JNcHFNcjhwRVhDWXRFYlg4OGhKdWFtSkNrUkd1YkM2WkpEaGx3RGth?=
- =?utf-8?B?SmdienI1Qm1VUGpwNGVRbWhzV1JibnVHRUw0QVQzOW9GMW5XandtU2ptbm1r?=
- =?utf-8?B?R2JMY081WUd4SW5xeGgxcEw3MzJpMGwxeGNVRmVEcCsyMkFrQjM1YksrNmN6?=
- =?utf-8?B?QnNOU01od1JIa2p0bDZIbzlNZmhJbTFpeDdPa0JQUlRMMHdLZmtqckJSTlUw?=
- =?utf-8?B?TElRaVE4clZvU2lLYXQ2Q2xGQ25wTEoweVl2ZnB2bjZMVUxtQUFNTzU5Q0dk?=
- =?utf-8?B?MVFhSEtUTTJFc3MyeHV1S0FPWGJLVXBvQ3dPQTkyV3ZkeHNjejdNU2lMZVBn?=
- =?utf-8?B?Qzc4M3VFZjlUeWNSWG5QMWxyT01RSmxDdjVnb0R6ZS9rTXVLUVVBMVYzSnU0?=
- =?utf-8?B?UnhrcDVuQm1NeTJIbzgyWmZTdjBhSkErT1RvM3d0cm5SZGxHdkdqYkY2VFZ6?=
- =?utf-8?B?VlNWb0lRd2d5ZmRkN1l2TnlVdG5tNU11Sy9QMnU3aXJlQnJNNkFYTDgrY2NJ?=
- =?utf-8?B?VFB1eVFBeUUzSmlJWDdDVjZRUTRWVzAvTUhUZjhscSs4MmYvYmNJVFE3TDBo?=
- =?utf-8?B?RGVLUjV3d2M2VTFpYTJmcHVtME53VFJ3d3dCYm80aUNMNmdPNmNmVEovNnNF?=
- =?utf-8?B?WmQrQ2R2RFY2SE1Ybk1PaXBsb1hsc3puemU2SkdNa0ZiaktQbjJOTGtUbG5E?=
- =?utf-8?B?SlJDVlU3djhSclYwTWtDdFlNSUxrazgvQkorWGZySEYvdDRqOHpaRStxdUJH?=
- =?utf-8?B?RTdRN3Q4R1k3U3p2dWJMSjJUTmVqNTFwVUZKUTYzWnZhREwrQ25iaHorU3JY?=
- =?utf-8?B?eitON0VVN0g4YkFNdmU0UmJDU2ErbXRmRm9jd1U4V1BZanpTRmtxbklKcUFm?=
- =?utf-8?B?WS9GWnA2T0JEUStrbmtkWURWVDFHTDVGTHMxSUtxQXliQS9wclRjRlFQbXUr?=
- =?utf-8?B?aDNaNEF5VFIyOHpVUlVTRzlQNUkrblNvWUo1Zi9nNTUwU2J4RGVWMEtvLzAy?=
- =?utf-8?B?R29ZeDZueTBNQ3k4WlRMUHFmdnY2Y0RzMHVoZmpsUnlac1hEYmhXTHpjSXh5?=
- =?utf-8?B?RVZJeXpkSG8yUU8remo1QWI1Tnl5R1J6VDRtRkVDbHN2a2FDUTZGdExKMXhN?=
- =?utf-8?B?MkdSbGV4bGZQZDViM0R2dGlZMWsxbTRtcWpxb0VjNWloYkl6dFFuQWlSZ1lU?=
- =?utf-8?B?WEQxSU9JSzA1aWpVdlRpWHgydjlzbmhrcFh6S2RoRzJ3UmJOWktvUERTUHNP?=
- =?utf-8?Q?tSPB8Nqt0KJiVx5g=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f8a0111-7e0f-4b22-c555-08def886e8f4
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10650.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 15:32:25.2226 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8tJkAdsa2C+oygdF6XV32tOOc6ESC6FgVa2S1wHUAw6gLVJnt2H41e4KMfyTGG2+Qnm21kkD53aJa3i8QIFiOJye5b0fS6B6gUF4v+dPfkk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB11558
-Received-SPF: pass client-ip=2a01:111:f403:c200::5;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DUZPR83CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.152;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,99 +107,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/26 6:42 PM, Denis V. Lunev wrote:
-> qcow2_reopen_prepare() clears the dirty bit whenever the node is
-> reopened read-only, with an unguarded header write. A read-only node
-> can still be dirty, inherited from an earlier writable session, and it
-> holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
-> reopen of a dirty image therefore fails outright:
-> 
->   $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
->   qemu-io: failed while preparing to reopen image 'dirty.qcow2'
-> 
-> Clear it only for a node that is writable now, the predicate
-> qcow2_do_open() already uses for the repair. bdrv_is_writable() also
-> excludes an inactive node, whose header must not be touched either.
-> 
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Cc: qemu-stable@nongnu.org
+On Thu, 2026-07-23 at 23:18 +0800, Bin Meng wrote:
+> Implement the Config, WayEnable, and per-master WayMask registers
+> described by the PolarFire SoC MSS reference manual. Make WayEnable
+> monotonic and report the remaining register space as unimplemented.
+>=20
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
 > ---
->  block/qcow2.c              |  8 +++++---
->  tests/qemu-iotests/039     | 10 ++++++++++
->  tests/qemu-iotests/039.out |  5 +++++
->  3 files changed, 20 insertions(+), 3 deletions(-)
-> 
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 7292dd036c..1543255eba 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -2102,9 +2102,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
->              goto fail;
->          }
->  
-> -        ret = qcow2_mark_clean(state->bs);
-> -        if (ret < 0) {
-> -            goto fail;
-> +        if (bdrv_is_writable(state->bs)) {
-> +            ret = qcow2_mark_clean(state->bs);
-> +            if (ret < 0) {
-> +                goto fail;
-> +            }
->          }
->      }
->  
-> diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
-> index 94a8bfe754..db52c580d1 100755
-> --- a/tests/qemu-iotests/039
-> +++ b/tests/qemu-iotests/039
-> @@ -95,6 +95,16 @@ $QEMU_IMG info --image-opts \
->  # The dirty bit must still be set: this open never wrote any guest data
->  _qcow2_dump_header | grep incompatible_features
->  
-> +echo
-> +echo "== Read-only reopen must not clear the dirty bit =="
+>=20
+> =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 |=C2=A0=C2=A0 2 +
+> =C2=A0include/hw/misc/mchp_pfsoc_l2cc.h |=C2=A0 30 +++++
+> =C2=A0hw/misc/mchp_pfsoc_l2cc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 180
+> ++++++++++++++++++++++++++++++
+> =C2=A0hw/misc/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +
+> =C2=A0hw/misc/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
+> =C2=A05 files changed, 216 insertions(+)
+> =C2=A0create mode 100644 include/hw/misc/mchp_pfsoc_l2cc.h
+> =C2=A0create mode 100644 hw/misc/mchp_pfsoc_l2cc.c
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index a28935c898..c0bb18c47a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1770,11 +1770,13 @@ F: hw/riscv/microchip_pfsoc.c
+> =C2=A0F: hw/char/mchp_pfsoc_mmuart.c
+> =C2=A0F: hw/misc/mchp_pfsoc_dmc.c
+> =C2=A0F: hw/misc/mchp_pfsoc_ioscb.c
+> +F: hw/misc/mchp_pfsoc_l2cc.c
+> =C2=A0F: hw/misc/mchp_pfsoc_sysreg.c
+> =C2=A0F: include/hw/riscv/microchip_pfsoc.h
+> =C2=A0F: include/hw/char/mchp_pfsoc_mmuart.h
+> =C2=A0F: include/hw/misc/mchp_pfsoc_dmc.h
+> =C2=A0F: include/hw/misc/mchp_pfsoc_ioscb.h
+> +F: include/hw/misc/mchp_pfsoc_l2cc.h
+> =C2=A0F: include/hw/misc/mchp_pfsoc_sysreg.h
+> =C2=A0
+> =C2=A0Shakti C class SoC
+> diff --git a/include/hw/misc/mchp_pfsoc_l2cc.h
+> b/include/hw/misc/mchp_pfsoc_l2cc.h
+> new file mode 100644
+> index 0000000000..1b5b3888d5
+> --- /dev/null
+> +++ b/include/hw/misc/mchp_pfsoc_l2cc.h
+> @@ -0,0 +1,30 @@
+> +/*
+> + * Microchip PolarFire SoC L2 cache controller
+> + *
+> + * Copyright (c) 2026 Process Mission
+> + *
+> + * Author:
+> + *=C2=A0=C2=A0 Bin Meng <bin.meng@processmission.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +# A read-only node cannot write the header, and must keep the dirty bit
-> +$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
-> +    | _filter_qemu_io
+> +#ifndef MCHP_PFSOC_L2CC_H
+> +#define MCHP_PFSOC_L2CC_H
 > +
-> +# The dirty bit must still be set
-> +_qcow2_dump_header | grep incompatible_features
+> +#include "hw/core/register.h"
+> +#include "hw/core/sysbus.h"
 > +
->  echo
->  echo "== Repairing the image file must succeed =="
->  
-> diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-> index c66361128f..3c71e5a3dd 100644
-> --- a/tests/qemu-iotests/039.out
-> +++ b/tests/qemu-iotests/039.out
-> @@ -27,6 +27,11 @@ incompatible_features     [0]
->  == Read-only open must not crash on close ==
->  incompatible_features     [0]
->  
-> +== Read-only reopen must not clear the dirty bit ==
-> +read 512/512 bytes at offset 0
-> +512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-> +incompatible_features     [0]
+> +#define MCHP_PFSOC_L2CC_REG_SIZE 0x1000
+> +#define MCHP_PFSOC_L2CC_REG_NUM=C2=A0 (MCHP_PFSOC_L2CC_REG_SIZE / 8)
 > +
->  == Repairing the image file must succeed ==
->  ERROR cluster 5 refcount=0 reference=1
->  Rebuilding refcount structure
+> +typedef struct MchpPfSoCL2ccState {
+> +=C2=A0=C2=A0=C2=A0 SysBusDevice parent;
+> +=C2=A0=C2=A0=C2=A0 uint64_t regs[MCHP_PFSOC_L2CC_REG_NUM];
+> +=C2=A0=C2=A0=C2=A0 RegisterInfo regs_info[MCHP_PFSOC_L2CC_REG_NUM];
+> +} MchpPfSoCL2ccState;
+> +
+> +#define TYPE_MCHP_PFSOC_L2CC "mchp.pfsoc.l2cc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(MchpPfSoCL2ccState, MCHP_PFSOC_L2CC)
+> +
+> +#endif
+> diff --git a/hw/misc/mchp_pfsoc_l2cc.c b/hw/misc/mchp_pfsoc_l2cc.c
+> new file mode 100644
+> index 0000000000..b320356572
+> --- /dev/null
+> +++ b/hw/misc/mchp_pfsoc_l2cc.c
+> @@ -0,0 +1,180 @@
+> +/*
+> + * Microchip PolarFire SoC L2 cache controller
+> + *
+> + * Copyright (c) 2026 Process Mission
+> + *
+> + * Author:
+> + *=C2=A0=C2=A0 Bin Meng <bin.meng@processmission.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "hw/core/register.h"
+> +#include "hw/core/registerfields.h"
+> +#include "hw/misc/mchp_pfsoc_l2cc.h"
+> +
+> +REG64(L2_CONFIG, 0x000)
+> +=C2=A0=C2=A0=C2=A0 FIELD(L2_CONFIG, BANKS, 0, 8)
+> +=C2=A0=C2=A0=C2=A0 FIELD(L2_CONFIG, WAYS, 8, 8)
+> +=C2=A0=C2=A0=C2=A0 FIELD(L2_CONFIG, SETS, 16, 8)
+> +=C2=A0=C2=A0=C2=A0 FIELD(L2_CONFIG, BYTES, 24, 8)
+> +REG64(L2_WAY_ENABLE, 0x008)
+> +=C2=A0=C2=A0=C2=A0 FIELD(L2_WAY_ENABLE, VALUE, 0, 8)
+> +REG64(L2_WAY_MASK_DMA, 0x800)
+> +REG64(L2_WAY_MASK_AXI4_PORT_0, 0x808)
+> +REG64(L2_WAY_MASK_AXI4_PORT_1, 0x810)
+> +REG64(L2_WAY_MASK_AXI4_PORT_2, 0x818)
+> +REG64(L2_WAY_MASK_AXI4_PORT_3, 0x820)
+> +REG64(L2_WAY_MASK_HART0_DCACHE, 0x828)
+> +REG64(L2_WAY_MASK_HART0_ICACHE, 0x830)
+> +REG64(L2_WAY_MASK_HART1_DCACHE, 0x838)
+> +REG64(L2_WAY_MASK_HART1_ICACHE, 0x840)
+> +REG64(L2_WAY_MASK_HART2_DCACHE, 0x848)
+> +REG64(L2_WAY_MASK_HART2_ICACHE, 0x850)
+> +REG64(L2_WAY_MASK_HART3_DCACHE, 0x858)
+> +REG64(L2_WAY_MASK_HART3_ICACHE, 0x860)
+> +REG64(L2_WAY_MASK_HART4_DCACHE, 0x868)
+> +REG64(L2_WAY_MASK_HART4_ICACHE, 0x870)
+> +
+> +#define L2_CONFIG_RESET=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+0x06091004
+> +
+> +static uint64_t mchp_pfsoc_l2cc_way_enable_pre_write(RegisterInfo
+> *reg,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 uint64_t value)
+> +{
+> +=C2=A0=C2=A0=C2=A0 uint64_t current =3D *(uint64_t *)reg->data;
+> +
+> +=C2=A0=C2=A0=C2=A0 return MAX(current, value);
+> +}
+> +
+> +#define WAY_MASK_REGISTER(_name)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0 {=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D "WAY_MASK_" #_name,=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .addr =3D A_L2_WAY_MASK_ ## _=
+name,=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .reset =3D UINT64_MAX,=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +static const RegisterAccessInfo mchp_pfsoc_l2cc_regs_info[] =3D {
+> +=C2=A0=C2=A0=C2=A0 {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D "CONFIG",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .addr =3D A_L2_CONFIG,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .reset =3D L2_CONFIG_RESET,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .ro =3D UINT64_MAX,
+> +=C2=A0=C2=A0=C2=A0 }, {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .name =3D "WAY_ENABLE",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .addr =3D A_L2_WAY_ENABLE,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .rsvd =3D ~R_L2_WAY_ENABLE_VA=
+LUE_MASK,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .pre_write =3D mchp_pfsoc_l2c=
+c_way_enable_pre_write,
+> +=C2=A0=C2=A0=C2=A0 },
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(DMA),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(AXI4_PORT_0),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(AXI4_PORT_1),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(AXI4_PORT_2),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(AXI4_PORT_3),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART0_DCACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART0_ICACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART1_DCACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART1_ICACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART2_DCACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART2_ICACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART3_DCACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART3_ICACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART4_DCACHE),
+> +=C2=A0=C2=A0=C2=A0 WAY_MASK_REGISTER(HART4_ICACHE),
+> +};
+> +
+> +static bool mchp_pfsoc_l2cc_register_implemented(hwaddr offset)
+> +{
+> +=C2=A0=C2=A0=C2=A0 size_t i;
+> +
+> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < ARRAY_SIZE(mchp_pfsoc_l2cc_regs_inf=
+o); i++) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (mchp_pfsoc_l2cc_regs_info=
+[i].addr =3D=3D offset) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retur=
+n true;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +=C2=A0=C2=A0=C2=A0 return false;
+> +}
+> +
+> +static uint64_t mchp_pfsoc_l2cc_read(void *opaque, hwaddr offset,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsig=
+ned size)
+> +{
+> +=C2=A0=C2=A0=C2=A0 if (mchp_pfsoc_l2cc_register_implemented(offset)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return register_read_memory(o=
+paque, offset, size);
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log_mask(LOG_UNIMP, "%s: unimplemented device re=
+ad "
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "(size %u, offset 0x%" HWADDR_PRIx ")\n",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __func__, size, offset);
+> +=C2=A0=C2=A0=C2=A0 return 0;
+> +}
+> +
+> +static void mchp_pfsoc_l2cc_write(void *opaque, hwaddr offset,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint64_t value, unsigne=
+d size)
+> +{
+> +=C2=A0=C2=A0=C2=A0 if (mchp_pfsoc_l2cc_register_implemented(offset)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 register_write_memory(opaque,=
+ offset, value, size);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log_mask(LOG_UNIMP, "%s: unimplemented device wr=
+ite "
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "(size %u, value 0x%" PRIx64
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ", offset 0x%" HWADDR_PRIx ")\n",
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __func__, size, value, offset);
+> +}
+> +
+> +static const MemoryRegionOps mchp_pfsoc_l2cc_ops =3D {
+> +=C2=A0=C2=A0=C2=A0 .read =3D mchp_pfsoc_l2cc_read,
+> +=C2=A0=C2=A0=C2=A0 .write =3D mchp_pfsoc_l2cc_write,
+> +=C2=A0=C2=A0=C2=A0 .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +=C2=A0=C2=A0=C2=A0 .valid =3D { .min_access_size =3D 1, .max_access_size=
+ =3D 8 },
+> +=C2=A0=C2=A0=C2=A0 .impl =3D { .min_access_size =3D 1, .max_access_size =
+=3D 8 },
+> +};
+> +
+> +static void mchp_pfsoc_l2cc_reset(DeviceState *dev)
+> +{
+> +=C2=A0=C2=A0=C2=A0 MchpPfSoCL2ccState *s =3D MCHP_PFSOC_L2CC(dev);
+> +=C2=A0=C2=A0=C2=A0 size_t i;
+> +
+> +=C2=A0=C2=A0=C2=A0 memset(s->regs, 0, sizeof(s->regs));
+> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < ARRAY_SIZE(mchp_pfsoc_l2cc_regs_inf=
+o); i++) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hwaddr addr =3D mchp_pfsoc_l2=
+cc_regs_info[i].addr;
+> +
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 register_reset(&s->regs_info[=
+addr / sizeof(uint64_t)]);
+> +=C2=A0=C2=A0=C2=A0 }
+> +}
+> +
+> +static void mchp_pfsoc_l2cc_init(Object *obj)
+> +{
+> +=C2=A0=C2=A0=C2=A0 MchpPfSoCL2ccState *s =3D MCHP_PFSOC_L2CC(obj);
+> +=C2=A0=C2=A0=C2=A0 RegisterInfoArray *reg_array;
+> +
+> +=C2=A0=C2=A0=C2=A0 reg_array =3D register_init_block64(
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 DEVICE(obj), mchp_pfsoc_l2cc_=
+regs_info,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ARRAY_SIZE(mchp_pfsoc_l2cc_re=
+gs_info), s->regs_info, s-
+> >regs,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &mchp_pfsoc_l2cc_ops, false, =
+MCHP_PFSOC_L2CC_REG_SIZE);
+> +=C2=A0=C2=A0=C2=A0 sysbus_init_mmio(SYS_BUS_DEVICE(obj), &reg_array->mem=
+);
+> +}
+> +
+> +static void mchp_pfsoc_l2cc_class_init(ObjectClass *klass, const
+> void *data)
+> +{
+> +=C2=A0=C2=A0=C2=A0 DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +=C2=A0=C2=A0=C2=A0 device_class_set_legacy_reset(dc, mchp_pfsoc_l2cc_res=
+et);
 
-bdrv_is_writable() checks pre-reopen state.  So IMHO it'd also be nice
-to check RW->RO reopen and that it does clear the dirty bit.  Smth like:
+Again, non-legacy reset would be best
 
-> _make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-> $QEMU_IO -c "write -P 0x5a 0 512" -c "reopen -r" "$TEST_IMG" | _filter_qemu_io
-> _qcow2_dump_header | grep incompatible_features
+Otherwise:
 
-A write operation with lazy refcounts must set dirty bit.  And upon
-RW->RO reopen the dirty bit must be cleared.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Still, with or without this case covered:
+Alistair
 
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> +}
+> +
+> +static const TypeInfo mchp_pfsoc_l2cc_info =3D {
+> +=C2=A0=C2=A0=C2=A0 .name =3D TYPE_MCHP_PFSOC_L2CC,
+> +=C2=A0=C2=A0=C2=A0 .parent =3D TYPE_SYS_BUS_DEVICE,
+> +=C2=A0=C2=A0=C2=A0 .instance_size =3D sizeof(MchpPfSoCL2ccState),
+> +=C2=A0=C2=A0=C2=A0 .instance_init =3D mchp_pfsoc_l2cc_init,
+> +=C2=A0=C2=A0=C2=A0 .class_init =3D mchp_pfsoc_l2cc_class_init,
+> +};
+> +
+> +static void mchp_pfsoc_l2cc_register_types(void)
+> +{
+> +=C2=A0=C2=A0=C2=A0 type_register_static(&mchp_pfsoc_l2cc_info);
+> +}
+> +
+> +type_init(mchp_pfsoc_l2cc_register_types)
+> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> index 1543ee6653..772a2d87b3 100644
+> --- a/hw/misc/Kconfig
+> +++ b/hw/misc/Kconfig
+> @@ -203,6 +203,9 @@ config MCHP_PFSOC_DMC
+> =C2=A0config MCHP_PFSOC_IOSCB
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool
+> =C2=A0
+> +config MCHP_PFSOC_L2CC
+> +=C2=A0=C2=A0=C2=A0 bool
+> +
+> =C2=A0config MCHP_PFSOC_SYSREG
+> =C2=A0=C2=A0=C2=A0=C2=A0 bool
+> =C2=A0
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index 23265f6035..5f45861d8a 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -30,6 +30,7 @@ system_ss.add(when: 'CONFIG_VIRT_CTRL', if_true:
+> files('virt_ctrl.c'))
+> =C2=A0# RISC-V devices
+> =C2=A0system_ss.add(when: 'CONFIG_MCHP_PFSOC_DMC', if_true:
+> files('mchp_pfsoc_dmc.c'))
+> =C2=A0system_ss.add(when: 'CONFIG_MCHP_PFSOC_IOSCB', if_true:
+> files('mchp_pfsoc_ioscb.c'))
+> +system_ss.add(when: 'CONFIG_MCHP_PFSOC_L2CC', if_true:
+> files('mchp_pfsoc_l2cc.c'))
+> =C2=A0system_ss.add(when: 'CONFIG_MCHP_PFSOC_SYSREG', if_true:
+> files('mchp_pfsoc_sysreg.c'))
+> =C2=A0system_ss.add(when: 'CONFIG_SIFIVE_TEST', if_true:
+> files('sifive_test.c'))
+> =C2=A0system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true:
+> files('sifive_e_prci.c'))
 
