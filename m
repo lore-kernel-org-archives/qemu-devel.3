@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFFAC5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719C1C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8f1-0001Yp-SJ; Wed, 12 Aug 2026 09:06:24 -0400
+	id 1wu8eb-0000dK-OB; Wed, 12 Aug 2026 09:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eb-0000ct-9t; Wed, 12 Aug 2026 09:05:57 -0400
+ id 1wu8eD-0008Ni-FT; Wed, 12 Aug 2026 09:05:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eZ-0004vN-0x; Wed, 12 Aug 2026 09:05:56 -0400
+ id 1wu8eB-0004ui-TH; Wed, 12 Aug 2026 09:05:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=P/AKWco2wBqO6jBi3zzf5fb2Ksg/gZsUwaS36yEb6bw=;
+ t=1786539783; bh=THRqQhoniwfIiGVPbnaFfyUgbCinvgJL79bo3zJZKKk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wQh/vO2D0hHVB+1VPglLg5CY+0MPtBIT6c86aY/sN9UgLyr7RBbgF466HVC8RYxrK
- s2RR/Twn2EReIwyxKNBWe08p3FT7nOq9hoPWq1wT6szU60Or2cV3ajHSXC9RlmP0UF
- nr+z8857Wns2jNc3CTKUFAnVWrkYdXlaP0CotEQzAfu13uXD30HaE4ot+LSpJ5cfor
- AcV4VROuXZkmh97HYQ12Bu55PMITlkaSwdyrBdWA3Yyo9ouvDXz3Pmu0pfrAeqlzOL
- ZWBoWgmPPeamm7sq+WckXmXUbMggxmXb4tRS+2JtO5xxioCMntoa5CG15/9IplJF0A
- FeiXOI02Clmgw==
+ b=jaeT7kvTvb9ssnFt2zk2NQWXiOnVOhXyRUuIUE1t9CsVXi/pLup1iQ+eFOlneHSvX
+ D5pGEXG84ztO3T9eeY0k3oAmv+NLqJovxeZo1nrRxMkUwZAIbBQQ7xEFzS2kuUvacs
+ 04SWG7o7MwhzlTLjlcojfXuf0CkvYEAeeEh/ytiqqcH4MXwfoCMfbM6ZbEWLximdBc
+ L24+BVHaRRev2Hm1vNvHEWAbo5SCwkgZHBkaofwl6cp8LBi4wTpNRkTn1mxko/R3Fk
+ 9cDuitx1gr4cpe5gXsrUnXkCGV3BtT9PH/0Wky1oACfb9rJebmbtRZrM1/7hY+B6yt
+ 5aDYZFnYNFIhg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A66E41CA49F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9CDCD1CA49D;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DC456409B82;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3586409B80;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1F7A82F8D4; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 1A7622F8D0; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 032/102] hw/display/virtio-gpu: Fix empty blob
- discrimination
-Date: Wed, 12 Aug 2026 16:01:07 +0300
-Message-ID: <20260812130233.621965-32-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 030/102] target/i386/sev: fix MemoryRegion reference
+ leaks in gpa2hva callers
+Date: Wed, 12 Aug 2026 16:01:05 +0300
+Message-ID: <20260812130233.621965-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -73,67 +74,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Discriminating blobs by checking whether blob_size is nonzero fails for
-empty blobs. Identify 2D resources by their non-NULL image instead.
+gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
+(inherited from memory_region_find()), but both SEV callers were failing
+to release it.
 
-Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 0fa3e1823b9b9ae1fc1ea0d290849578907a770b)
+Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
+(cherry picked from commit 415f2759d7b3294e15c783849a08deb26885cabc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 67ccc81e50c..598ee4026c1 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-         return;
-     }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index ef6af5caee2..e47f6c4639a 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -1257,6 +1257,8 @@ void memory_region_ref(MemoryRegion *mr);
+  */
+ void memory_region_unref(MemoryRegion *mr);
  
--    if (res->blob_size) {
--        if (res->blob_size < (s->current_cursor->width *
--                              s->current_cursor->height * 4)) {
--            return;
--        }
--        data = res->blob;
--    } else {
-+    if (res->image) {
-         if (pixman_image_get_width(res->image)  != s->current_cursor->width ||
-             pixman_image_get_height(res->image) != s->current_cursor->height) {
-             return;
-         }
-         data = pixman_image_get_data(res->image);
-+    } else {
-+        if (res->blob_size < (s->current_cursor->width *
-+                              s->current_cursor->height * 4)) {
-+            return;
-+        }
-+        data = res->blob;
-     }
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
++
+ /**
+  * memory_region_init_io: Initialize an I/O memory region.
+  *
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 0e1dbb6959e..d070014217e 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1269,7 +1269,7 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
+     OvmfSevMetadataDesc *desc;
+     int type, ret, i;
+     void *hva;
+-    MemoryRegion *mr = NULL;
++    g_autoptr(MemoryRegion) mr = NULL;
  
-     pixels = s->current_cursor->width * s->current_cursor->height;
-@@ -1281,7 +1281,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-     assert(QTAILQ_EMPTY(&g->cmdq));
+     for (i = 0; i < metadata->num_desc; i++) {
+         desc = &metadata->descs[i];
+@@ -1641,7 +1641,7 @@ int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
+     int error, ret = 1;
+     void *hva;
+     gsize hdr_sz = 0, data_sz = 0;
+-    MemoryRegion *mr = NULL;
++    g_autoptr(MemoryRegion) mr = NULL;
+     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
  
-     QTAILQ_FOREACH(res, &g->reslist, next) {
--        if (res->blob_size) {
-+        if (!res->image) {
-             continue;
-         }
-         qemu_put_be32(f, res->resource_id);
-@@ -1422,7 +1422,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-     assert(QTAILQ_EMPTY(&g->cmdq));
- 
-     QTAILQ_FOREACH(res, &g->reslist, next) {
--        if (!res->blob_size) {
-+        if (res->image) {
-             continue;
-         }
-         assert(!res->image);
+     if (!sev_common) {
 -- 
 2.47.3
 
