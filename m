@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7C2C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AB3C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7su-00042k-IX; Wed, 12 Aug 2026 08:16:40 -0400
+	id 1wu7t7-0004bf-W1; Wed, 12 Aug 2026 08:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sq-00041J-9X
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:36 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wu7t6-0004Ww-Hy
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:52 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sm-0008TX-So
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:34 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-49954b88fffso9460875e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:32 -0700 (PDT)
+ id 1wu7t4-00005j-Of
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:52 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4954df200ddso6379945e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786536991; x=1787141791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786537009; x=1787141809; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=7sEEgIbRAUTMgSc3I3kXrmftvB4wI6OE/YhjUnE5Qek=;
- b=syD4eHp5w6GaAVtckYoMIDvv2cCfWbmdrDOj3m3mFrll8Z2YG/QKH/tGUip6LSX4hl
- wNY+EId9l2h+uf/1lnKcv03BYVDqa3Wu3m2mg+oDmxjyQOv5yC9/njJAdhzit4bKKILq
- lGvrNlJbqiRU5RkqFk+gxfLSaAjl1X8bYarBY4T8aOjnzrQyEzADVZCUuqr3FzOFrauY
- 77nmK4NIDiY3ip0eS/6XjpiipL7YPsPoDG9uUZPoGK25g8Zy06J9qjbbtIHg68DvIIhS
- uLsG6FH8KZFLiaVBkdNJ0AoKY2zs0FZ3rBzQmV+ZVZimf5MVxwuvrvGmEZcPL3w9nEfg
- D3Og==
+ bh=zuwGx2HFEApiFHISSkbLdQ9wtICYLQqmdzOFnfBhNzI=;
+ b=ChnukK7FN4WqJNs+FwuKxF17jN2pVVLr6catk5l/TYTNICYR8lMjRRJvX0R9NDTF0c
+ I5eMFTVspMzPBxvkHLbGWSlf+eyO3SdnlU/GnOeXUAZmZuBFmk2tX4NpTGp+R+uTWl+b
+ iPi559SpighCcLgXjcA79w7IQ1HCZAsUNoUxj//f6nC/3GLOcfh94tPp6L1dycJbhrpz
+ 5TXjzjIRAu/Wbx1P2mt4CnFgYvZtezS1WS3ESevmQ7/o4/gsYrFcnoxepOYJnk1Q4IkJ
+ enFt+Pq+DwLFbJKwA4sORxT+Ov6IjA2J2R+PsHnvG9e7CEV1dwQJshFMVHH/3mJ9Hxpn
+ S/3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786536991; x=1787141791;
+ d=1e100.net; s=20251104; t=1786537009; x=1787141809;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=7sEEgIbRAUTMgSc3I3kXrmftvB4wI6OE/YhjUnE5Qek=;
- b=seAA0O7mwBRnHGmmLNGqapOc3IPsDbZ2Ad1K6vaYU1Vw77kYGI07eGyjq19r3/P/C+
- O5meY4o7f51g5l/naLKPthrrJgSHoSbl2SK9mu8r/VyrCqDetITq9MSMds0hSCxTNnsG
- Xv+9XHUwhFOoQqBDDmVdOspmdkUjrPMreeGmjYsQjZbHZORuVB7YbZJykmf+HxJVUtC8
- vXv85o9jwkV0rNsUg1S/A/vhiFFlTS7++/EKTtYSE8dJP+4OQYrMlGIrst9FO2XzF1er
- qhCjoFW0ihQXEWZFPI0lkgaRheCldJjrtDSAbIw//44QLlr2JdVTaqprD6/JE3X7gRck
- 3hlg==
-X-Gm-Message-State: AOJu0YzLHzEU6xTwr6ShYHFBS/+vJ68QZ6gg4oRj+4OAF2FPVQ8pl5X+
- +XkYJRGek4Ko9nOOPUUuBbYyRM79G6AV0CKZXPoDD0kRQkU+NlKu2m1Wx6Hr0o8KHQmX8Mpc/vC
- 4ihbD
-X-Gm-Gg: AR+sD12dF/4qqHrmtu12s3shxsbbROqOFxNjze+LoYHMyrQ8oS090AKL5umd4g792jO
- YKPku8cQCXQdSGXICgMgyb454cItITi/NmAJmiUxFvYpf5mIzHiRdt29mLi7XYkadfEyJWB1HJy
- O5W9jwhvz6yerm0FHv9af1JQO6Rjy25dedwU2TcQKqT9G0h4fH0WpQQ+jM432VQka9hy++iQ80g
- 2qXVDjbWtGuJ7JOo3dxDnWAbJ7BthEBTkB/QxKraa0hJjVU6bFcRva2bNyE8z3JLWyZVc7Mv8mi
- XJtgBwc95ZHb1cg5z8xU+KtBUVPFLYNr3JUVKddIY25AkbbW+LnC8Xbyfm2qzh6uvGayhpFbeui
- T24ZcYJniHo834+QU1hMCYpuhp7nVZVjrqT2psKCnlDrBjjlqlyOby5G5A7/nnMTsJ6tcFCoDhB
- dmL+MProb2NBgZF0V/IIyZ7VgM2PgWP1jYTZe7Lc3mthcKXxdsEPuLqCsLIY8nNeAPBLfx/6/g9
- N7CfQFTwVFXpcBuma9BYvErqvXYxM5M523QkWS3sPbkBlZDzYXrcaRNbWByZKea53g/Dw==
-X-Received: by 2002:a05:600c:4690:b0:499:728c:4704 with SMTP id
- 5b1f17b1804b1-4997c0fe705mr50145075e9.12.1786536991071; 
- Wed, 12 Aug 2026 05:16:31 -0700 (PDT)
+ bh=zuwGx2HFEApiFHISSkbLdQ9wtICYLQqmdzOFnfBhNzI=;
+ b=J5EALTxGAyG5UQTywuu/F1JPBpSIzSbci9wtGBrQ19vDfamjH96iLKa1+8NoOl2EO0
+ 6IYAQkkiU6PFP5EiCTlEHg+9NDdB2lwN2ANKJCAZ2mhDYb5xsd9F5QkVabktF2Hz/81Q
+ yS5jSCPmABOiCUQAee2mhsI/XDdiUGDn4kAjNVrwRKdumORCxX0S9T2iMNulbgLnjBBQ
+ V66s56qFIh01EmUOzxpDGSz+zdiokFUlOjVITAunq3GVZKqQfXrBJNIzB8rkL51fnVOx
+ YS4vp03/xgquOzXb8t5+A/at/K0wCAhPS3LDokr3kWhMIeRrXrAnP9H8cvHMkQbte+T4
+ 6itQ==
+X-Gm-Message-State: AOJu0YxNrjSd5ZH52rXaDW90MsFJby18FJT//20CWpYRNL2VzvGiQbA4
+ ILw/fOsTFzWs6WSwcpITdfxXd4DxdbJKBeIRW0fNamoi6u59tlgLjV6zT/Jye1FuthCveo9XliL
+ u9fMQ
+X-Gm-Gg: AR+sD13B+2iUM7yD6fb3LDisu4q0z+swWQpv8gI/JJoaVFOMob/SxQMtjcqgUQHnqMK
+ 9Mnm18LYkb/u19L8hKTcruWqn2QB4e+2rQW2QqzsmcsRSSIthCV129cCQjyE6MUFncxwp6x5Cw7
+ GZi4sTlGTjqaqfbfw6gNckw8jKAtKeIbJl6mrFvJYzOSJuqtOzeNozbrk1sasAD+ENVFHwyAPYW
+ qe6KXyG8n2nOADdaH5dcU4gvq1llINicRKs5YikNtZvA/8JIjvMvgO/0ol7Y3XGPNCsatkIKSfr
+ YQSRWIAAgf5zyVPh9HZQKKUy126E2/1cLx9wNYLKzLCoxnEJYEyaZlPSiCSSnli9rH9Sp//r+VT
+ xVI1h23XN93Nn+x2fZzCM8a3zWFqFqWq1huCcTh5mIbHUKy0HkSs0/hfEe7p20/UKHJAdMX4qCj
+ A39XEC6nWddqilboHiVbj/2dV8QhHfFpd3USsnsmR2KrJzMazN2jJKMDRlmVujWM3a+c5ybgxUl
+ k3Axl//g16ciLkH62qz8h1R/kgO69/EmJ1mXrbq5uvOzPd8PNYYCtBDnInBMaGBFh7qyZo=
+X-Received: by 2002:a05:600c:4f56:b0:499:7dfb:6e6a with SMTP id
+ 5b1f17b1804b1-4997dfb6ed4mr28030725e9.5.1786537009219; 
+ Wed, 12 Aug 2026 05:16:49 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.29
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:29 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/26] target/arm: Implement BFTMOPA (non-widening)
-Date: Wed, 12 Aug 2026 13:15:59 +0100
-Message-ID: <20260812121622.649730-4-peter.maydell@linaro.org>
+Subject: [PULL 15/26] hw/arm: ax3000-soc: Enable Axiado SD host controller
+Date: Wed, 12 Aug 2026 13:16:11 +0100
+Message-ID: <20260812121622.649730-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,88 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Kuan-Jui Chiu <kchiu@axiado.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Enable SD host controller into Axiado AX3000 SoC to load kernel and rootfs
+from eMMC.
+
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260713230244.70174-4-richard.henderson@linaro.org
+Message-id: 20260713073033.3883619-6-kchiu@axiado.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h        | 5 +++++
- target/arm/tcg/helper-sme-defs.h | 1 +
- target/arm/tcg/sme.decode        | 1 +
- target/arm/tcg/sme_helper.c      | 6 ++++++
- target/arm/tcg/translate-sme.c   | 2 ++
- 5 files changed, 15 insertions(+)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/ax3000-soc.c         | 22 ++++++++++++++++++++++
+ include/hw/arm/ax3000-soc.h |  7 +++++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 4190398a1d..d3bf0746cb 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1842,6 +1842,11 @@ static inline bool isar_feature_aa64_sme_mop4_i16i64(const ARMISARegisters *id)
-     return isar_feature_aa64_sme_mop4(id) && isar_feature_aa64_sme_i16i64(id);
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 69161a439c..32e7d83339 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -731,4 +731,5 @@ config AXIADO_SOC
+     select ARM_GIC
+     select CADENCE # UART
+     select AXIADO_CLK
++    select AXIADO_SDHCI
+     select UNIMP
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index aaeae11074..23903b081b 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -35,6 +35,7 @@ static void ax3000_init(Object *obj)
+     }
+ 
+     object_initialize_child(obj, "clk", &s->ax3000_clk, TYPE_AX3000_CLK);
++    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
  }
  
-+static inline bool isar_feature_aa64_sme_tmop_b16b16(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme_tmop(id) && isar_feature_aa64_sme_b16b16(id);
-+}
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -46,6 +47,7 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+     QList *redist_region_count;
+     SysBusDevice *sdhci0_sbd;
+     DeviceState *card;
++    DriveInfo *dinfo;
+ 
+     /* CPUs */
+     for (int i = 0; i < sc->num_cpus; i++) {
+@@ -165,6 +167,26 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->ax3000_clk), 0, AX3000_PLL_BASE);
 +
- static inline bool isar_feature_aa64_sme_tmop_f16f16(const ARMISARegisters *id)
- {
-     return isar_feature_aa64_sme_tmop(id) && isar_feature_aa64_sme_f16f16(id);
-diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
-index 84707e6c71..224de45294 100644
---- a/target/arm/tcg/helper-sme-defs.h
-+++ b/target/arm/tcg/helper-sme-defs.h
-@@ -405,5 +405,6 @@ DEF_HELPER_FLAGS_4(sme_usmop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sme_usmop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(sme_usmop4s_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
-+DEF_HELPER_FLAGS_6(sme_bftmopa_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_6(sme_ftmopa_hh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_6(sme_ftmopa_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, fpst, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 16ed3ca391..f0f9b3f61d 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1142,5 +1142,6 @@ USMOP4_dh       1010 0001 110. ...0 0000 00.. ..0. 1...         @mop4_o3
- @tmop_o2        .... .... ... zm:5 ... ... .... idx:2 .. zad:2 \
-                 &tmop zn=%zn_ax2 zk=%tmop_zk
- 
-+BFTMOPA_hh      1000 0001 011 ..... 000 ... .... .. 100 .       @tmop_o1
- FTMOPA_hh       1000 0001 010 ..... 000 ... .... .. 100 .       @tmop_o1
- FTMOPA_ss       1000 0000 010 ..... 000 ... .... .. 00 ..       @tmop_o2
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 49fd3d07e4..e57c56d5f2 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2831,6 +2831,12 @@ void HELPER(sme_bfmop4a_hh)(void *vza, void *vzn, void *vzm,
-     sme_mop4(vza, vzn, vzm, fpst, desc, sizeof(bfloat16), inner_bfmop4a_hh);
- }
- 
-+void HELPER(sme_bftmopa_hh)(void *vza, void *vzn, void *vzm, void *vzk,
-+                            float_status *fpst, uint32_t desc)
-+{
-+    sme_tmop(vza, vzn, vzm, vzk, fpst, desc, MO_16, inner_bfmop4a_hh);
-+}
++    /* SDHCI */
++    sdhci0_sbd = SYS_BUS_DEVICE(&s->sdhci0);
++    if (!sysbus_realize(sdhci0_sbd, errp)) {
++        return;
++    }
 +
- static void inner_bfmop4s_hh(void *vd, void *vn, void *vm, void *vinfo)
- {
-     bfloat16 *d = vd, *n = vn, *m = vm;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 5ad59ab99b..04e1550c05 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2156,6 +2156,8 @@ static bool do_tmop_fp(DisasContext *s, arg_tmop *a, MemOp esz,
-     return true;
++    sysbus_mmio_map(sdhci0_sbd, 0, AX3000_SDHCI0_BASE);
++    sysbus_mmio_map(sdhci0_sbd, 1, AX3000_EMMC_PHY_BASE);
++    sysbus_connect_irq(sdhci0_sbd, 0,
++                       qdev_get_gpio_in(gic_dev, AX3000_SDHCI0_IRQ));
++
++    dinfo = drive_get(IF_SD, 0, 0);
++    if (dinfo) {
++        card = qdev_new(TYPE_SD_CARD);
++        qdev_prop_set_drive_err(card, "drive",
++                                blk_by_legacy_dinfo(dinfo),
++                                &error_fatal);
++        qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
++    }
  }
  
-+TRANS_FEAT(BFTMOPA_hh, aa64_sme_tmop_b16b16, do_tmop_fp,
-+           a, MO_16, FPST_ZA, gen_helper_sme_bftmopa_hh)
- TRANS_FEAT(FTMOPA_hh, aa64_sme_tmop_f16f16, do_tmop_fp,
-            a, MO_16, FPST_ZA_F16, gen_helper_sme_ftmopa_hh)
- TRANS_FEAT(FTMOPA_ss, aa64_sme_tmop, do_tmop_fp,
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index 329aa4e769..52b47aa829 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -13,6 +13,7 @@
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/char/cadence_uart.h"
+ #include "hw/misc/axiado_clk.h"
++#include "hw/sd/axiado_sdhci.h"
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
+ 
+@@ -34,6 +35,9 @@ OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
+ #define AX3000_UART2_BASE       0x80620000
+ #define AX3000_UART3_BASE       0x80520800
+ 
++#define AX3000_SDHCI0_BASE      0x86000000
++#define AX3000_EMMC_PHY_BASE    0x80801C00
++
+ #define AX3000_TIMER_CTRL       0x8A020000
+ #define AX3000_PLL_BASE         0x80000000
+ 
+@@ -52,6 +56,7 @@ typedef struct Ax3000SoCState {
+     MemoryRegion        dram[AX3000_NUM_BANKS];
+     Ax3000ClkState      ax3000_clk;
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
++    AxiadoSDHCIState    sdhci0;
+ } Ax3000SoCState;
+ 
+ typedef struct Ax3000SoCClass {
+@@ -65,6 +70,8 @@ enum Ax3000Irqs {
+     AX3000_UART1_IRQ    = 113,
+     AX3000_UART2_IRQ    = 114,
+     AX3000_UART3_IRQ    = 170,
++
++    AX3000_SDHCI0_IRQ   = 123,
+ };
+ 
+ #endif /* AXIADO_AX3000_H */
 -- 
 2.43.0
 
