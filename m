@@ -4,113 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25001C5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45021C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuCSN-0007Zr-3Q; Wed, 12 Aug 2026 13:09:36 -0400
+	id 1wuCXD-0003O8-QQ; Wed, 12 Aug 2026 13:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wuCSI-0007Yu-Rn; Wed, 12 Aug 2026 13:09:30 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuCXB-0003MT-4O; Wed, 12 Aug 2026 13:14:33 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wuCSF-0007Fa-Go; Wed, 12 Aug 2026 13:09:30 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CH1ZUC3994359; Wed, 12 Aug 2026 17:09:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=bKGQvy3K/R/OLvNJq
- 73qPfskEnjdT256gSdKXG2HIwk=; b=FQ/j0q8Im18kYVJXIc1fpcYMLRDjvoD1f
- mZy1C7bBdcPWL+ENhXNxp4RcMeWKT1J9SJMal2S8JG+LFeQvlcO9BHW2n30jTWvz
- UPuppYw5ZmzCIxj+2AnBVOGfqI4T5y5XcxR6RfWHEhHelsRkTMJxS4IG1BhoZziT
- EnieAoZyHjdm6TJDRtuVQXqpXya0B0ik6CE0Acd0P3h8XzITQzs7dSnSWq6pMuUC
- 0r8vu1I3IqsQE9We9XX4NZkR7eHOuEihm7TslQ94Ujd4TGjAecnnHP9FxQlpTbCV
- kNyiV4nOZCkqZiV2IvrI8Q2TULl3aBqRptotxseUZz8cBCXleFvag==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp32ubv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 17:09:18 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CGuoVt006518;
- Wed, 12 Aug 2026 17:09:17 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy6vw3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 17:09:17 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67CH9DDk12845354
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 17:09:13 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9BAAE20043;
- Wed, 12 Aug 2026 17:09:13 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B0EDD2004D;
- Wed, 12 Aug 2026 17:09:10 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.39.26.117])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 12 Aug 2026 17:09:10 +0000 (GMT)
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Vaibhav Jain <vaibhav@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Gautam Menghani <gautam@linux.ibm.com>
-Subject: [PATCH v6 1/3] [DO_NOT_MERGE] linux-headers: Add uapi header changes
-Date: Wed, 12 Aug 2026 22:38:52 +0530
-Message-ID: <20260812170854.58709-2-amachhiw@linux.ibm.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260812170854.58709-1-amachhiw@linux.ibm.com>
-References: <20260812170854.58709-1-amachhiw@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuCX9-0008LU-1D; Wed, 12 Aug 2026 13:14:32 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id 2F5FAEC01EE;
+ Wed, 12 Aug 2026 13:14:29 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Wed, 12 Aug 2026 13:14:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786554869; x=1786641269; bh=xr4yRELDwWvCMjQYqFl8E8sNetRn3yD5
+ UtuvfZE2jK0=; b=OCZtdTNhoNuJYK6e2LXBD4kPi7swvyONfocfs6GIxygdrjQR
+ Quvn1fX3d3/oDfbyg7iYGD1BelF8oAeUC5TFPy+I400FeaZs33v9ZAMzkMfCuPS4
+ a6oXl3BLrDlicGGicuFQrOPmAh6GmSis1scwtiiAf/uQH0y0NOodG4OxyKp9xamL
+ B7bhLrKtRhismMvtt81mmcYol/zeAorCEd8fJ5TuAwUpWBLqqwEqCGTuw9lb8mpM
+ JKUDQvoBP3Ahl/EBMrvVCwLimOKH1ZsNG+DeC7irFV0EMiW/oWklq825gIvJ5gSs
+ UDQiC39adcIuZc4U+/0fCo2teZM4JHCWz2ETIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786554869; x=
+ 1786641269; bh=xr4yRELDwWvCMjQYqFl8E8sNetRn3yD5UtuvfZE2jK0=; b=I
+ BbtRiRVp2M/gJKdvRXsFH5spReNNOXbvnGeJ2adC/qK5n9tCfEvQYPqLbu73Knwe
+ RkBs0zt9DmN49GybBMK8MDQtyQOMgVT5Qbcvi868YsBwvmZws/q6yB4Yn7w4vpSy
+ yuzitTDhyEnrMndy40isJcyAHPYBj7t/32YuYovUojeHLkGfmM0N/H0gRBAAa3NB
+ PwlL9Q1EyQkL3F+3cl5h2J/xWEhgBr9f3ZM8aG0/6Xqm4e50IW0p8h5F4SR/yANY
+ RWKrzEDpSL+Kny+LqoJEvdOX9GHvIHG6tGMt4EAIPenwA04pa60qQodnrqUOrlDf
+ HCJWALketBUfk5auMfpGA==
+X-ME-Sender: <xms:9Kl8arTRD1mRd1k2Z090QgZj2jpyLVujbnVTfjWP1c3_2egi8FZXcA>
+ <xme:9Kl8auQrtRHiWoFFW7rdhoia6IoiXDkD3a_qOCwd5WptiRR8IQMmeHlR1mBNQHQny
+ YyKcH-LfpnGq3lXxa5xJ8qTVexj-zC6da_NCskmnnGpJ2DQCVcVSmE>
+X-ME-Received: <xmr:9Kl8ag5F2LL9B-_SKlAbw1SwHLoq76IWyIVTMaBoEzx7B9cEpWswwiHkT0zZt9RZgy-Fkg>
+X-ME-Proxy-Cause: dmFkZTF48MaEr0QtEhMo0s7A1t+Xozm7xm9len1GLccLsheCWu0ixN3yDW+MlPXvr923tW
+ PjXB837P8RjLoIMj8zp13r06YNvZqz+O/f8OWkfD45mx16oAEDs5jalus8dN5h1ZT9Y/pV
+ p7BQq1sYpfysnbvX2ITP+zpH1Kyguf3ecnYGNZzIjZ5yNL8bxhXeqg+jFkP+SgF48EOR18
+ Bb5TEtiBLOQ8UoqKvhLvRQmmbF+jw3C9DxlVM/ifxZeVS2tYsWGGKqo3C7+F68tcwhgHuc
+ n49z/Y8kQzGVzWddF7njkkPW9nZblhoV3a+UdWLdK9RLUKk1DhSdqu7SzrbnOILTaR2xOO
+ j7a5bWey/va1EtSPf4JaA3HMjpTZGWVsQMWMIwN+Eq4/OiaR1Gc067L5ZbgXDrXImIui6C
+ vtgXwyf4g6PuwRApqpFcTiE+p3DbNhUAS8mAspM1QvIitLp82Zi7hwGtndAUW1iDfHj9qV
+ /N3FO23dJVT4mYlu6UeE4C9O1J3/WDQUw1MlMdSjrhX7H/Z2polA2paJSbMP7/c1D5kZ2G
+ KqrmMBxXQWaNeOkGDCUx42WlR1/5CMFpe0WKvvEZA0xJFqix7tsgLGP7aDNfZ5h1SZ7v6q
+ F2IeekM/Zku73dW08ZaT1WifOnFs2rb8n+htXxHAsuQ8XicRBVqZiD3HWMFQ
+X-ME-Proxy: <xmx:9Kl8aq1UBEXyu-XfcM5st-icKhItsng_mgh80uAYZu6-vVh4lYDOqw>
+ <xmx:9Kl8arDDoLJhSuwd6pDHa40jwR791nYXm8Vw3-xbgT0H6nU_1tPrCw>
+ <xmx:9Kl8alOz9Hs7lce4e0CPUBWqQa-yxiblxS-e4BCbdHaBfHqmEiF-Sw>
+ <xmx:9Kl8agZHlDM9uJj87sTeIH9sruaMTHC7Ps86LBvKf1ZImyP-LIUj2Q>
+ <xmx:9al8amiJD1lPDtzBzVjyy_1SBBrsxWmrfVarT_BvxG2zVP3TyKQjRfY6>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 13:14:28 -0400 (EDT)
+Message-ID: <7f7bf135ace747e35d00d42d156eb6584322cd13.camel@alistair23.me>
+Subject: Re: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in
+ linux-user mode
+From: Alistair <alistair@alistair23.me>
+To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com
+Date: Thu, 13 Aug 2026 03:14:27 +1000
+In-Reply-To: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
+References: <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7ca8be cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=MBz6HKjOuQBNVPZFXNsA:9
-X-Proofpoint-GUID: HX299jUwSAbbP0ZEeBDz9GvT5WlG0-jY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfXxEbXiZrmYaUW
- 2ycUBPx5EcLW+rEWTUX151iFE5jCQwBFWwG/r8ACPGbKoAg3lyNvGF+0jbB5ayqbcIYcxAjXumf
- /TaGjIOhlQychok2fyG+hBEGj5r+sYghWmxsjdLjYaFmQfhfoGB0MzB9DBw5SFUmIT8jx2PSGHY
- 7HMCo6JcTFH5GKPuuDNC39MCYf+9rUukPggHEWRbvcIpLSrJa9p5OaNkO3RzKGzMA9g+GivAgD7
- 8GSk7ONePp+Zz8O80jzjgQ7FcqAjmgOwkeMswfoxQD9h2qRrf0zfATYETvLPSpqgzZ4wzdsqgv7
- OzalXQ3LMrlpvr57ETZUaO741HhIWK6UH1OhiDjDHaz4Qq42o8KO4xhOtAxjEM1RdLXkQ8BTtR1
- iVij8H8C0rCTWF2QrGqnNRlHxxmTtHfuaitbPPeMyYuA4QefHLWD9nMYGRwahSbO24nrDBSB8QG
- s+UaziENhVtXgmORJ1w==
-X-Proofpoint-ORIG-GUID: 3Tuc2kv3Z26UeQlcl1VOfo2fbaWuYnWW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfX8PNlPXgIKlja
- JsSvJYY9RXkw0DHLYbQb+8JJzRYb/hVHu4SEcRxWBuQPUDKSjzMl97X5e8eUdKOkFxmcg3KoUkG
- Mo3X4nYAXDXyq9+CUbbtq43JQDGa84w=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_05,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120138
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=alistair@alistair23.me; helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,85 +106,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a temporary patch intended for review and testing purposes only.
-It syncs the QEMU linux-headers with the kernel v9 changes that introduce
-the KVM_PPC_GET_COMPAT_CAPS ioctl for querying host CPU compatibility
-capabilities. The struct kvm_ppc_compat_caps places 'size' as the first
-field as required by copy_struct_from/to_user() versioning, with
-KVM_PPC_COMPAT_CAPS_SIZE_VER0 (24) defined as the frozen version-floor
-constant. The capability number is KVM_CAP_PPC_COMPAT_CAPS (250) and
-the ioctl is defined as _IO so the ioctl number remains stable if the
-struct grows in future versions. Capability bit definitions for POWER9,
-POWER10, and POWER11 compatibility modes are also included.
+On Tue, 2026-08-11 at 09:14 +0800, wangyang wrote:
+> In user-only builds check_zicbo_envcfg() skipped the envcfg check
+> entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
+> cbo.zero retired unconditionally in linux-user even though the
+> machine-level envcfg fields are never initialized.=C2=A0 Give the
+> user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
+> reset when ext_zicboz is enabled so cbo.zero stays usable while
+> cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
+> typical firmware/kernel setup.
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
+> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-The actual header sync will be done via scripts/update-linux-headers.sh
-once the kernel changes [1] are merged upstream.
+Thanks!
 
-[1] https://lore.kernel.org/all/20260808161148.66673-1-amachhiw@linux.ibm.com/
+When sending multiple patches please include a cover letter. It makes
+it a lot easier to work with the patches in QEMU tooling.
 
-Tested-by: Gautam Menghani <gautam@linux.ibm.com>
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
----
-No changes in this version.
+I'm travelling at the moment and having some troubles applying these.
+Do you mind resending them with a cover letter
 
- linux-headers/asm-powerpc/kvm.h | 19 +++++++++++++++++++
- linux-headers/linux/kvm.h       |  3 +++
- 2 files changed, 22 insertions(+)
+Alistair
 
-diff --git a/linux-headers/asm-powerpc/kvm.h b/linux-headers/asm-powerpc/kvm.h
-index 077c5437f521..2c229fe0562c 100644
---- a/linux-headers/asm-powerpc/kvm.h
-+++ b/linux-headers/asm-powerpc/kvm.h
-@@ -437,6 +437,25 @@ struct kvm_ppc_cpu_char {
- 	__u64	behaviour_mask;		/* valid bits in behaviour */
- };
- 
-+/* For KVM_PPC_GET_COMPAT_CAPS */
-+struct kvm_ppc_compat_caps {
-+	__u64	size;			/* Size of this structure */
-+	__u64	flags;			/* Reserved for future use */
-+	__u64	compat_capabilities;	/* Capabilities supported by the host */
-+};
-+#define KVM_PPC_COMPAT_CAPS_SIZE_VER0	24 /* sizeof first published struct */
-+
-+/*
-+ * Capability bits for compat_capabilities field in kvm_ppc_compat_caps.
-+ * These bits indicate which processor compatibility modes are supported.
-+ */
-+#define KVM_PPC_COMPAT_CAP_POWER9	(1ULL << 62)
-+#define KVM_PPC_COMPAT_CAP_POWER10	(1ULL << 61)
-+#define KVM_PPC_COMPAT_CAP_POWER11	(1ULL << 60)
-+#define KVM_PPC_COMPAT_BITMASK		(KVM_PPC_COMPAT_CAP_POWER9 | \
-+					 KVM_PPC_COMPAT_CAP_POWER10 | \
-+					 KVM_PPC_COMPAT_CAP_POWER11)
-+
- /*
-  * Values for character and character_mask.
-  * These are identical to the values used by H_GET_CPU_CHARACTERISTICS.
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index dd52e2a65bfd..aea4ab5c6953 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -986,6 +986,7 @@ struct kvm_enable_cap {
- #define KVM_CAP_S390_KEYOP 247
- #define KVM_CAP_S390_VSIE_ESAMODE 248
- #define KVM_CAP_S390_HPAGE_2G 249
-+#define KVM_CAP_PPC_COMPAT_CAPS 250
- 
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
-@@ -1330,6 +1331,8 @@ struct kvm_s390_keyop {
- /* Available with KVM_CAP_COUNTER_OFFSET */
- #define KVM_ARM_SET_COUNTER_OFFSET _IOW(KVMIO,  0xb5, struct kvm_arm_counter_offset)
- #define KVM_ARM_GET_REG_WRITABLE_MASKS _IOR(KVMIO,  0xb6, struct reg_mask_range)
-+/* Available with KVM_CAP_PPC_COMPAT_CAPS */
-+#define KVM_PPC_GET_COMPAT_CAPS	_IO(KVMIO,  0xb8)
- 
- /* ioctl for vm fd */
- #define KVM_CREATE_DEVICE	  _IOWR(KVMIO,  0xe0, struct kvm_create_device)
--- 
-2.50.1 (Apple Git-155)
-
+> ---
+> =C2=A02 files changed, 18 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 5a82e6563bf..45b7610aa4f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1061,6 +1061,14 @@ static void riscv_cpu_reset_hold(Object *obj,
+> ResetType type)
+> =C2=A0#else
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->priv =3D PRV_U;
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg =3D 0;
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * Match the user-mode view of a typical firmwar=
+e/kernel setup
+> where
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * cbo.zero is enabled for user mode; the CBCFE/=
+CBIE bits stay
+> zero,
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * so the cache-management operations remain ill=
+egal in user
+> mode.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (riscv_cpu_cfg(env)->ext_zicboz) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->senvcfg |=3D SENVCFG_CBZ=
+E;
+> +=C2=A0=C2=A0=C2=A0 }
+> =C2=A0=C2=A0=C2=A0=C2=A0 env->menvcfg =3D 0;
+> =C2=A0#endif /* !CONFIG_USER_ONLY */
+> =C2=A0
+> diff --git a/target/riscv/tcg/op_helper.c
+> b/target/riscv/tcg/op_helper.c
+> index ba3c7da375a..b9d0deacdfb 100644
+> --- a/target/riscv/tcg/op_helper.c
+> +++ b/target/riscv/tcg/op_helper.c
+> @@ -146,7 +146,16 @@ target_ulong helper_csrrw_i128(CPURISCVState
+> *env, int csr,
+> =C2=A0static void check_zicbo_envcfg(CPURISCVState *env, target_ulong
+> envbits,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uintptr_t ra)
+> =C2=A0{
+> -#ifndef CONFIG_USER_ONLY
+> +#if defined(CONFIG_USER_ONLY)
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * linux-user: the machine-level envcfg fields a=
+re not part of
+> the
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * user-mode environment; only the user-mode vie=
+w of the
+> enabling
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * bits (senvcfg, as initialized for the guest) =
+applies.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 if (!get_field(env->senvcfg, envbits)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(env, RI=
+SCV_EXCP_ILLEGAL_INST, ra);
+> +=C2=A0=C2=A0=C2=A0 }
+> +#else
+> =C2=A0=C2=A0=C2=A0=C2=A0 if ((env->priv < PRV_M) && !get_field(env->menvc=
+fg, envbits)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 riscv_raise_exception(en=
+v, RISCV_EXCP_ILLEGAL_INST, ra);
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
 
