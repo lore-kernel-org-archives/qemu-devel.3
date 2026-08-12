@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F54C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394E4C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBcS-0005HF-LC; Wed, 12 Aug 2026 12:15:56 -0400
+	id 1wuBff-000600-Go; Wed, 12 Aug 2026 12:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuBcR-0005GU-NX
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:15:55 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wuBfe-0005zl-Eo
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:19:14 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuBcP-0005fV-RD
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:15:55 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2ceaf8a1265so14974385ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:15:53 -0700 (PDT)
+ id 1wuBfc-0006Cd-MF
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:19:14 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2caced6038eso769475ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786551352; x=1787156152; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786551551; x=1787156351; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=sDnI/GYPbfThk6f+WbomkHUrj+g1FexXQDZHrMz9Gds=;
- b=gmPwhuu5DlQe6UTTUbGdsCtjTF+uCTRiS/pIuGgedTmsODdQuW4JddKr3fOdvEZWTw
- jJ0iuzuSKxsJpSdCSwdGd8+TIyaH4pRHhNZYkn+cBA9H5RJlEr/yNhsIdaVHQfW9KtUg
- SmbOqm5sQCKUU0l4xcDkFGO/8khw92WXxuGKduAdcgLxxWpT2qNioH5JbIwleIPBUSls
- uJbVP1yb9M/tX2XADIW8kMWccO/pWLu87CRZUm3pIT6BA5bJLiCTJM+KPuLNzgW9HI6g
- DmGUtWMofA5LXGSiNyYwkGLx6OmAac3vcDCGaf9LsF0aoLb+hj4+eErc6REIMUlMabIq
- X0nQ==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jAcg2JV5PZ9blWYuVZytqqv4nSdL1MxLg/AZRWrprBU=;
+ b=sKQT0mzYHjc8FUvei0B8NfV/h2x9E+6BXEewuP71VzCpXALmr5n14gbtOI4UDe599s
+ 9oRHookRNandyoDTBoGOIyBqkIN/4idcHgXUsaG1wgZxQnrbcqJ8zI81rU6/pvNTCRG9
+ w9fT/diQKe0Ro9a3XirQiGVpNB2C61idpBMRsZdAjFlLzm2QLx00QSQHT3/rkBwt92vX
+ Q2S5UqWJg5A6SDqcWX2s/4CEDCb7HnOeQmyC5Q+UHsrsxc5Q88GnS+BD442GOlaePVqY
+ PczSgFZBT7qG85RPdDg8z4VoY9g0Xzy5JBOhfaJCNIPjxrnmTvy16qMZOYB6JWug61oV
+ 81WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786551352; x=1787156152;
+ d=1e100.net; s=20251104; t=1786551551; x=1787156351;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=sDnI/GYPbfThk6f+WbomkHUrj+g1FexXQDZHrMz9Gds=;
- b=tBfUa+mCJjiNVqhcJr78CB9qquLlpXCRY8L6Q06ULequ/38EHLhLgPO8HFkaBcIBBa
- qFo74NFnd1t1NAtFt7LbOmI2bD52Bt8Hky7D8J2NM4AXv6qD8jkzwOp0CLJwcwJmklIa
- zpcpvW58hjFefKV0K0EhQDg8Ik+ZaCcg7j1zeLkdkrJ6Ap+MGxboKDytLcakknN3Tm2x
- fkTH+LpqkEs3gJw2RB3j5EYY61IL3+Ge78HHCmacNJUvCCB39RmyxMTRPlzEfOdFeq5K
- Up1ofkRyQo3AXSHulhZfV8EqAuOcG4m5UZx9K9jDQhxnroBK47K9gJ2/lGfvw77pi5Oe
- nJmQ==
-X-Gm-Message-State: AOJu0YyVcCulq41EChcO9jv59rE8QTeOST/HO+tO45Bxgp5of0UhZ+La
- n3EoCVBx75k5tXqrU6bPp9jLTVKe7B8z1vcR1YfNrp7xmb8gXzF7VZ7MgJMFmSuzrdkp8ho3Mhl
- FF4MF
-X-Gm-Gg: AR+sD134DB8ffV+kpYo9fsixM5MyITKpua0KAyl0SCbJPyVNfAkob7Qxre3d7U5/IsC
- rEeDPBDqOaRlNPVWmIZxDnndiBh+4+Ilkv47ThyomA64A7nUf9PLDbehTBC6snKzIedhv1KssHL
- hXjE33usrBA9NxvJpkij7jOJCN6AIQyTQdSX0xqUAHHeCnDWebZVMXcLj5k2whvF7ddIn5IqJ25
- WnxLsMG2ySoOtsYumpKWJMyigGfCcLRAQylzgEHnHm1IHjx1LOiYPkan3Rs4YPgs1NKMckcSDxt
- 2Eb1wl2CqIEjEFeQH7hW7r8WGQ8psc0+4WSAy4NdsmzxtcFcu/0nRGrgiFNqKxIltyU7jBcxm3T
- E+D0GPntCQPVAsYSP7GUCZ19kQNmYr4N4sSC0ztXPug97RWrjboP9xCudeAu2XKQ9X0TDVIBMJ1
- ljFDB93LE4qFF02FUDJcEyBhpgzg9Cs2Trwp9qY30WHcmeHBVKYYw58EFnjq9U95h3gkRYRch+S
- duDenckOn9kLmilKNwNlTw1fwAnDA==
-X-Received: by 2002:a17:90b:4c84:b0:38e:2e16:859b with SMTP id
- 98e67ed59e1d1-393017e569dmr6859193a91.20.1786551351735; 
- Wed, 12 Aug 2026 09:15:51 -0700 (PDT)
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jAcg2JV5PZ9blWYuVZytqqv4nSdL1MxLg/AZRWrprBU=;
+ b=OgtrabUiQ4ZifyKWj1jZQl+ev2NBrFRWyPtjoePmY3lmayXGNFAky7EcMSdhyg5R/E
+ T2PM6fb0U1CSwnDUCPDCWvnxHDMWazJwqwx/4QVF/2gEb/IVmabbqoVwVPyTAtU2E2tW
+ FVvL+OeInt057v3yExO+wspQfyx4Fw/P5yGV3G9kGM/E8P3t1bUUwKo+eTd07ZZ50g6H
+ ZcDGA9RZhCgNS93vLToiQzZxkX7gXCEOFUUYx9xgzFBhNr2Db9JC7R9JecRNvBU426uH
+ +1ZzbA5PgYp/o8bPHSUhLyksYe0rVWFQvJ5opAVj8rG/I8vBH/L1Tq2Jw2HIJlclMDL1
+ Vypg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrJ3Jidld30j1QFnToVueOxfAT865p7ZUyHatZrySZKkI5NOqvwzTfMLLg/U46n7y802+AdAOAn2SeN@nongnu.org
+X-Gm-Message-State: AOJu0YwwmEqT1WNUlcckW32m6mgK5FdLKx3ipyZcxUyJPP+AnpeeAfPC
+ O/vYPPIzfrZGzm59ha2P9MR/8+UgkVScOEBf62x86TPK6e63/RX4sepponV/9sp6dT0jHal1PtA
+ 7VI6m
+X-Gm-Gg: AR+sD10lkJMVOfnG5SbdfkvvZRKeBa6h5S0PpTxk/SxJNax9MlmSbV4N3gcTrU5OVSx
+ 04py+EesrbMK68EmwQwndaukQ5MOegTerWjKRnYCZFXlAPylJUU88DAWRUEqGW+Z7snVu2DWRY1
+ 9PTSPTtkhjWwOGH5Qdnk3ylfFDQcKHeqZPFyrCXc6nRRdVnmHQloE0KhOnh/wcokz/GjH2EdVb1
+ lCZMXfwKk8XDrNADrkXaJNJHS1UIr+5OHIPKTc24tgHTYKJ88We9o+E2Lco1vghzhjRHVIsZ6qz
+ wHYS+z3S0ZvBmcGusIpivlWmhAm55ZU2ag/Rylnq6aIaBMeZEITtbWfCpkKXJXpf1ofiiM43q+Y
+ CjYuqa11AXcVoxqu8jpUqokc9Ws2vr4lhywjhqRUnPvpxbLYKhX4/d6XKbAs0j0uw/H5gaiwfEA
+ yb673d9fav5sY8CmWUCXTOm7saFPwzxi6UsWlJFkGyesycp+BI657X4zJ375GEmweLfAJB9bOhm
+ ED4CpzLp6I3G1dxfdpbxURRW5Va4RtsRGp/iYc=
+X-Received: by 2002:a17:902:fd8c:b0:2cc:80d6:b72 with SMTP id
+ d9443c01a7336-2d371e10903mr2003945ad.20.1786551550987; 
+ Wed, 12 Aug 2026 09:19:10 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392fe464e68sm1629080a91.4.2026.08.12.09.15.50
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-2d3522019d3sm9153165ad.56.2026.08.12.09.19.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 09:15:50 -0700 (PDT)
-Message-ID: <1adc0202-0881-45d2-ba0b-464b53989369@linaro.org>
-Date: Wed, 12 Aug 2026 09:15:48 -0700
+ Wed, 12 Aug 2026 09:19:10 -0700 (PDT)
+Message-ID: <a4771466-dd4b-49b0-ba84-9cd2edeeccb8@linaro.org>
+Date: Wed, 12 Aug 2026 09:19:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/83] aspeed queue
-To: qemu-devel@nongnu.org
-References: <20260811162938.1403216-1-clg@redhat.com>
+Subject: Re: [PULL v2 0/7] IDE patches
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260804170015.3128363-1-den@openvz.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260811162938.1403216-1-clg@redhat.com>
+In-Reply-To: <20260804170015.3128363-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,49 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/11/26 09:28, Cédric Le Goater wrote:
-> The following changes since commit 84f07211cc5b4fc6a371559bf8a5de4fb068e648:
+On 8/4/26 10:00, Denis V. Lunev wrote:
+> The following changes since commit e1705a25aff35635c360bbaba4c2731d019a422a:
 > 
->    Update version for v11.1.0 release (2026-08-11 10:04:46 -0400)
+>    Update version for v11.1.0-rc2 release (2026-07-29 06:16:08 -0400)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/legoater/qemu/ tags/pull-aspeed-20260811
+>    https://gitlab.com/dlunev/qemu tags/pull-ide-2026-08-04
 > 
-> for you to fetch changes up to 0375f6498eee6188089924bb766c653492ff8857:
+> for you to fetch changes up to 9a249de6ae86124b436b5e839e285aeb333ea8c0:
 > 
->    tests/qtest/aspeed-hace: Test the crypto command on the AST2700 (2026-08-11 18:25:58 +0200)
-> 
-> ----------------------------------------------------------------
-> aspeed queue:
-> 
-> * Fixes missing Kconfig dependencies for Aspeed boards
-> * Adds 64-bit addressing support to the EHCI USB controller model.
->    Enable it on the AST2700
-> * Extends Aspeed SMC qtest coverage with fast-read, DOR and QOR
->    read modes
-> * Introduces a separate Aspeed2700SCUState type and shares the SCUIO,
->    FMC and SCU instances across the AST2700 PSP, SSP and TSP
->    coprocessors
-> * Adds Data FIFO-based flash access for the AST2700 FMC controller
-> * Adds the ADC128D818 12-bit 8-channel ADC sensor device with tests,
->    wired up on the Anacapa board
-> * Reworks the PCA9552/PCA9555 GPIO/LED driver: polarity inversion,
->    datasheet-conformant command handling, GPIO QOM properties, reset
->    via the Resettable interface, and extensive qtest coverage
-> * Reworks the PCA9554 GPIO driver: output-to-input reflection,
->    PCA9536 support, pin direction property, and qtest coverage
-> * Adds PCA9555 IO expanders and temperature sensors to the Catalina
->    board
-> * Adds AST2700 I2C master buffer mode support
-> * Updates ASPEED functional tests to SDK v11.03 and Zephyr SDK v03.08
-> * Adds AES-GCM support to the QEMU crypto cipher layer (gcrypt,
->    nettle, gnutls backends) with unit tests
-> * Adds crypto (AES) command emulation to the Aspeed HACE model:
->    direct access, scatter-gather, CTR, GCM modes, 64-bit DMA, with
->    qtest coverage on AST2500, AST2600, AST1030 and AST2700
+>    tests/qtest/ahci: regression test for ATAPI read vs. drain (2026-08-04 18:40:34 +0200)
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
+fatal: couldn't find remote ref tags/pull-ide-2026-08-04
+fatal: remote error: upload-pack: not our ref 9a249de6ae86124b436b5e839e285aeb333ea8c0
+
+Did you remove the tag?  In any case, please resend.
+
 
 r~
 
