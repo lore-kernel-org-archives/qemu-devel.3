@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62678C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D65C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8d1-0004l6-Cs; Wed, 12 Aug 2026 09:04:19 -0400
+	id 1wu8fF-0002Gk-Fy; Wed, 12 Aug 2026 09:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cQ-0003jB-IW; Wed, 12 Aug 2026 09:03:42 -0400
+ id 1wu8fB-0002Ek-L8; Wed, 12 Aug 2026 09:06:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cN-0004MQ-8e; Wed, 12 Aug 2026 09:03:42 -0400
+ id 1wu8f9-00054k-J0; Wed, 12 Aug 2026 09:06:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=GGgV/oMnXls5tB6xCK90r5yf8d8JMHjIWJQQK8+m9dY=;
+ t=1786539783; bh=AUKTEGb1amDyo2ifw4gohcGjTJjkUIHPy80FyWqS34M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SDt8me4fBbE0enhi+YBwn9wOetpAnkZtgttBxnQmB5PQp6oQAn6ifrMAbhFPQQmjd
- 3kc/5ExJyvaibgWPpPs1KhFbAa97sRGhCXNVVP/YWPrBBf99CxwPwMXUU8ifcu8lYU
- QzCEw1eVoPg5w56Lzu7rzhh2nrVKtJs6XZaWPZKDEqF1dC7pIsFDXM8RQNG0dKCshU
- YYM0YYGFVXudB8tFaRC84l4lo7PN+H5CrbicmFDNcqEcZhBMx0QBlPpeijV9lWhWLH
- QFmsHw6ZFHv+sq0m4yjilRBssMaj1wnB5Lusi9fjxusqu5ipHkPGi/ZOkZOPTQ6JJb
- onYnmUwXX9uYQ==
+ b=wmPR/LZqvOSxs7IgUf4hvoUN/lVUFVt25znhomJLXEvCtMlkACQZY9zE+vwom4HLb
+ X4nrAb8Tv6Tzsqa9SnyC/Hcqb2Nbc4ygu1WFp4BZPjO7GwdBWi1sgU+xOScYCZhPpx
+ 5yqsotynv3ErNjDbGn+bgxHQmaFVnrB9AxpgSgnBk1VXE0izlGZ6w0KqSJwIo5HiBn
+ Hr5xlBf7oDJSuqX0ZekHnCFqKr7jjIYMYS4sObx9zwaV+mom8J5DVs5bg12lxSw2Tp
+ Z7mv19zpZ+YkeKuR9ZrTvD3AOdOPBJf3h/ttwx57NymIsX+pPGnXI7HyOyRWQb+AR0
+ fH2xGCyAV5dEg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3A8031CA48B;
+ by isrv.corpit.ru (Postfix) with ESMTP id C578B1CA4A6;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 70A90409B6E;
- Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 077C5409B89;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DFE502F8AC; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id 30C572F8E2; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 012/102] scsi-disk: protect against guest sending
- truncated data for MODE SELECT commands
-Date: Wed, 12 Aug 2026 16:00:47 +0300
-Message-ID: <20260812130233.621965-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 039/102] libvhost-user: protect against OOB vring
+ queue access
+Date: Wed, 12 Aug 2026 16:01:14 +0300
+Message-ID: <20260812130233.621965-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,110 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-scsi-disk has a MODE SELECT path where a truncated mode page can be
-allowed by a compatibility quirk, but the parser continues to use the
-page's declared length rather than the number of bytes actually remaining
-in the request buffer.  This means that scsi_disk_check_mode_select() and
-scsi_disk_apply_mode_select() can read beyond the valid part of inbuf[],
-potentially up to the emulated age's length.
+SET_VRING_NUM, SET_VRING_ADDR, SET_VRING_BASE, and GET_VRING_BASE
+handlers all use the queue index from the message to access dev->vq[]
+without checking that it is below dev->max_queues, so a malformed
+message causes an out-of-bounds heap access.
 
-Clamping page_len (the size of the page) to len (whatever the
-guest provided) ensures that scsi_disk_check_mode_select() and
-scsi_disk_apply_mode_select() do not access anything beyond bounds;
-however, this requires care to accept and handle truncated input in
-those two functions.
+Frontend is trusted so not a security problem, but
+an OOB access is not a nice way to handle errors.
+Check, and panic.
 
-In particular, until scsi_disk_check_mode_select()'s first call to
-mode_sense_page() the number of bytes to be cleared in mode_current[] is
-unknown, so zero it completely.  And for everything else, be conservative
-and use len when providing inputs to other functions; but at the same time,
-ensure all accesses to inbuf[] are bound by expected_len.
-
-Note that pages longer than the emulated one are still rejected.
-
-Fixes: 389e18eb9aa4 ("scsi-disk: add SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED quirk for Macintosh")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4051
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d149a11c6c825e182cfb5db7d1d1492a049e82ab)
+Fixes: 7b2e5c65f4 ("contrib: add libvhost-user")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3741
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Reported-by: xlabai <xlabai@tencent.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <dbba777b25f86587c8d131891a2b4b2be97e5c5b.1784899069.git.mst@redhat.com>
+(cherry picked from commit 758ef96a2dba157e930af7709f327435a153f7a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index e59632e9b18..755e0960ba2 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -1546,7 +1546,7 @@ static void scsi_disk_emulate_read_data(SCSIRequest *req)
- static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
-                                        uint8_t *inbuf, int inlen)
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index bdaa6917f19..82e16c2c969 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1200,6 +1200,12 @@ vu_set_vring_num_exec(VuDev *dev, VhostUserMsg *vmsg)
+ 
+     DPRINT("State.index: %u\n", index);
+     DPRINT("State.num:   %u\n", num);
++
++    if (index >= dev->max_queues) {
++        vu_panic(dev, "Invalid vring_num index: %u", index);
++        return false;
++    }
++
+     dev->vq[index].vring.num = num;
+ 
+     return false;
+@@ -1210,7 +1216,7 @@ vu_set_vring_addr_exec(VuDev *dev, VhostUserMsg *vmsg)
  {
--    uint8_t mode_current[SCSI_MAX_MODE_LEN];
-+    uint8_t mode_current[SCSI_MAX_MODE_LEN] = { 0 };
-     uint8_t mode_changeable[SCSI_MAX_MODE_LEN];
-     uint8_t *p;
-     int len, expected_len, changeable_len, i;
-@@ -1565,21 +1565,21 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
-     }
+     struct vhost_vring_addr addr = vmsg->payload.addr, *vra = &addr;
+     unsigned int index = vra->index;
+-    VuVirtq *vq = &dev->vq[index];
++    VuVirtq *vq;
  
-     p = mode_current;
--    memset(mode_current, 0, inlen + 2);
-     len = mode_sense_page(s, page, &p, 0);
--    if (len < 0 || len != expected_len) {
-+    /* The guest may send a truncated page, but not a longer one.  */
-+    if (len < 0 || expected_len > len) {
-         return -1;
-     }
+     DPRINT("vhost_vring_addr:\n");
+     DPRINT("    index:  %d\n", vra->index);
+@@ -1220,6 +1226,12 @@ vu_set_vring_addr_exec(VuDev *dev, VhostUserMsg *vmsg)
+     DPRINT("    avail_user_addr:  0x%016" PRIx64 "\n", (uint64_t)vra->avail_user_addr);
+     DPRINT("    log_guest_addr:   0x%016" PRIx64 "\n", (uint64_t)vra->log_guest_addr);
  
-     p = mode_changeable;
--    memset(mode_changeable, 0, inlen + 2);
-+    memset(mode_changeable, 0, len);
-     changeable_len = mode_sense_page(s, page, &p, 1);
-     assert(changeable_len == len);
++    if (index >= dev->max_queues) {
++        vu_panic(dev, "Invalid vring_addr index: %u", index);
++        return false;
++    }
++
++    vq = &dev->vq[index];
+     vq->vra = *vra;
+     vq->vring.flags = vra->flags;
+     vq->vring.log_guest_addr = vra->log_guest_addr;
+@@ -1256,6 +1268,12 @@ vu_set_vring_base_exec(VuDev *dev, VhostUserMsg *vmsg)
  
-     /* Check that unchangeable bits are the same as what MODE SENSE
-      * would return.
-      */
--    for (i = 2; i < len; i++) {
-+    for (i = 2; i < expected_len; i++) {
-         if (((mode_current[i] ^ inbuf[i - 2]) & ~mode_changeable[i]) != 0) {
-             return -1;
-         }
-@@ -1587,11 +1587,15 @@ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
-     return 0;
- }
+     DPRINT("State.index: %u\n", index);
+     DPRINT("State.num:   %u\n", num);
++
++    if (index >= dev->max_queues) {
++        vu_panic(dev, "Invalid vring_base index: %u", index);
++        return false;
++    }
++
+     dev->vq[index].shadow_avail_idx = dev->vq[index].last_avail_idx = num;
  
--static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page, uint8_t *p)
-+/* Note p may be truncated, so check any bytes you access against len.  */
-+static void scsi_disk_apply_mode_select(SCSIDiskState *s, int page,
-+                                        uint8_t *p, int len)
- {
-     switch (page) {
-     case MODE_PAGE_CACHING:
--        blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
-+        if (len > 0) {
-+            blk_set_enable_write_cache(s->qdev.conf.blk, (p[0] & 4) != 0);
-+        }
-         break;
+     return false;
+@@ -1267,6 +1285,14 @@ vu_get_vring_base_exec(VuDev *dev, VhostUserMsg *vmsg)
+     unsigned int index = vmsg->payload.state.index;
  
-     default:
-@@ -1634,6 +1638,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
-                 goto invalid_param_len;
-             }
-             trace_scsi_disk_mode_select_page_truncated(page, page_len, len);
-+            page_len = len;
-         }
+     DPRINT("State.index: %u\n", index);
++
++    if (index >= dev->max_queues) {
++        vu_panic(dev, "Invalid vring_base index: %u", index);
++        vmsg->payload.state.num = 0;
++        vmsg->size = sizeof(vmsg->payload.state);
++        return true;
++    }
++
+     vmsg->payload.state.num = dev->vq[index].last_avail_idx;
+     vmsg->size = sizeof(vmsg->payload.state);
  
-         if (!change) {
-@@ -1641,7 +1646,7 @@ static int mode_select_pages(SCSIDiskReq *r, uint8_t *p, int len, bool change)
-                 goto invalid_param;
-             }
-         } else {
--            scsi_disk_apply_mode_select(s, page, p);
-+            scsi_disk_apply_mode_select(s, page, p, page_len);
-         }
- 
-         p += page_len;
 -- 
 2.47.3
 
