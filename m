@@ -4,64 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF9BC5AD5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 23:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04829C5DF65
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 23:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuIRH-0004QE-SI; Wed, 12 Aug 2026 19:32:51 -0400
+	id 1wuIRI-0004Qw-Vg; Wed, 12 Aug 2026 19:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wuIRE-0004PD-7b
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 19:32:48 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1wuIRE-0004PT-Jo
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 19:32:50 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wuIRC-0001Ro-5m
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 19:32:47 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ id 1wuIRC-0001S2-Dd
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 19:32:48 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CEooaT813932; Wed, 12 Aug 2026 23:32:39 GMT
+ 67CEq3uG2061644; Wed, 12 Aug 2026 23:32:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=l7DC6XjFIpBnBkC8J26vLiU4paiPG
- yHsrmqdczZ90vM=; b=fb7OKDTpGhwMRUHlKeN1bsTyQpK0U/JBU+ny4/U7oRAk0
- QJITRQNeizLN3Wh1bW7rjjaYNYuufVfcFs/m/v4uHVp0LrPBPuQ3JilBKPiXvtUi
- pfxxyHHUQ4aabdepjz319L5vHXL0Qr1rOsROmMLlu6kKLTL20ObWZh/lI9Las073
- Nzw0iJ+Y4ITCSBaFKTB7IAzevpJAXEo9ULB2VD+vdIHTfzBgnE9GA2cxNNEX3o+g
- RAfsQLQJzNO01uPKI7UE1Q4y6+XjJInx0Ach2A45gqjTi8UyUhLCCutXvg52CcDV
- cCXC6P/1mTo2UDLN+IuHNnkggCN8UuHn31wOLGOKA==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=2iAAH
+ zkxxl+aTx1UHB5srahyUI/g4UfINfpnU9fcf7E=; b=aMOqq4t38D9GbN7IEhR9V
+ VkFzgcvRJngcAB7coGawmSaOMXO82b6PKsqDOBiILff5V987f3GYWvisOEsmqL1r
+ xKU20WXEtZb8wxaGsuVYwlGjy4DDJ6lZlc/yNqMfQmIHPyC2vW7b8q7PeE7Qmxea
+ WUfBinyrLaiKp/kI1Tmc6g1VNHX+d9SIvwCDTXnlJ8meHyuvU2rhp6+lAZHGEIrq
+ PPqgJNPAGuOY5zz1rS+2Zu7q04GjQWK9frkbnbpf0jrY5Iw+3PKwS9Q59r/mhVbz
+ Y3QgwHSvHhYE3ktbQl+wvFk+wpPEAPLBM8ORT62ZrmwtYY/+K/6zCoe1CJS9i/yW
+ Q==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fww0sykh1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4fwvhdyssv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 23:32:38 +0000 (GMT)
+ Wed, 12 Aug 2026 23:32:42 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 67CNTxYn017358; Wed, 12 Aug 2026 23:32:38 GMT
+ with ESMTP id 67CNU0Ed017432; Wed, 12 Aug 2026 23:32:41 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4fwtwfngr1-1
+ 4fwtwfngsa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 23:32:38 +0000 (GMT)
+ Wed, 12 Aug 2026 23:32:41 +0000 (GMT)
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67CNWbHW025569;
- Wed, 12 Aug 2026 23:32:37 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67CNWbHe025569;
+ Wed, 12 Aug 2026 23:32:40 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4fwtwfngqu-1; Wed, 12 Aug 2026 23:32:37 +0000 (GMT)
+ 4fwtwfngqu-5; Wed, 12 Aug 2026 23:32:40 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
  maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com,
  pierrick.bouvier@oss.qualcomm.com, joe.jin@oracle.com
-Subject: [PATCH 0/5] Support diskless memfd transport for cpr-exec
-Date: Wed, 12 Aug 2026 16:27:45 -0700
-Message-ID: <20260812232842.470225-1-dongli.zhang@oracle.com>
+Subject: [PATCH 4/5] migration/cpr-exec: Support diskless memfd transport
+Date: Wed, 12 Aug 2026 16:27:49 -0700
+Message-ID: <20260812232842.470225-5-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260812232842.470225-1-dongli.zhang@oracle.com>
+References: <20260812232842.470225-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -72,31 +75,32 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  adultscore=0 spamscore=0
  phishscore=0 mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.19.0-2606160000 definitions=main-2608120190
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDE5MCBTYWx0ZWRfX5V1DqrHffEUJ
- S3wIiJ4o5nkS04DbfESBOBxjKd22TduQIoD0hZiZf8a3j10XX2FvhhVcDSF21QGvcXD7rJ0q3ul
- T95r2HYhgh8yBfRzj3weQ0CwVUjes9V+d2YRYx+6vSBpUYbHo7ot
-X-Proofpoint-ORIG-GUID: 17KjzQifoahG2VIvEZHlJVQRDfdlryWf
-X-Proofpoint-GUID: 17KjzQifoahG2VIvEZHlJVQRDfdlryWf
-X-Authority-Analysis: v=2.4 cv=FcAHAp+6 c=1 sm=1 tr=0 ts=6a7d0296 cx=c_pps
+X-Proofpoint-ORIG-GUID: 0gTV_cw7ZAN7CAdaNDjOPpguoMShJKCn
+X-Proofpoint-GUID: 0gTV_cw7ZAN7CAdaNDjOPpguoMShJKCn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDE5MCBTYWx0ZWRfX6Xv4AvkeS9F5
+ djqLTLhPeeLt7MpTjQ2SvIOjc+Xf8+K8S6ah79u5sw5ty1VmpBdr8777NLPXWiUNRVDA5qqVCTD
+ 1/HVxq4LAWBG5d6285H5yZVBWLpfNh87moSoCOSm3XQkFwofZT2USxulVQjPmf2Za7M4IhM38Uw
+ honLT8OzfDHV6hvSxYRuZlSQtXyeFFMyegWZo23m9p3EAJvbExdGkp476jSFiBJOSr6YIi9KutT
+ BoTJm9TXujXJ4oPshWFXDNrWth5rweb1EdB4h+ZoHyHVPleyjdvDTKOwgcxqoepwjOZ7VYR56SV
+ sk5PLbGWVoty8wBtCWJXbVc6snNxH922+6aTtiXUFoZxlcCTyZpXGG9Mb8uMiLfCTyQMDLIjyoz
+ c/lfAIycW9u5WQCisrFHhnm2PKiLGK8Bkv7CBXTJi1+LfQharQ6u+J1WZktjeoOwfeppO6hPNTT
+ ZgZDeB9OlnhKm3e1LKA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDE5MCBTYWx0ZWRfX6zNIFKu6tTfn
+ wpp7R3xB+d+yZ22mGyHiu9aprctaDIlHgO/JPC6EP1EQDq232nShi9nLDGv+8EeUzmVwDRHKpYM
+ P4ak6+UqFfx5PpAtC32TDEAiOS/G8HwysyD6rMxQBKbnQPJ/6u10
+X-Authority-Analysis: v=2.4 cv=L/YtheT8 c=1 sm=1 tr=0 ts=6a7d029a cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=7Gl3-_t3PgB9XO-mQDs3:22 a=1-XZeR_0vE17Cy7aLM4A:9 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDE5MCBTYWx0ZWRfXyl4jHg1rUn8W
- rvaYmeXUuJVLv9zqnWSe3ivE1OYh5ivgn8bVjpbP7FNRg1cLU+xcR4dNuhO/nsTPt+3ic8OlzqX
- NIMi4IykyiIUAmsJ2R0R1D6Pszy4vYt1fQafY9BW2pE+OOza/0NYnwZyo+tRCbA9s9W9LAqiQzQ
- p7p9rMpQCmzEX8X/KBSYb/N0rhIj/+WIRrtKh5ydiy5I31JADdBFZmhK6vuqxHOPwUc0aPXas7c
- 6ZiP3lcy3iV8LhxDFbRkK/i1dnApbWaHiZN1jkFwt1mC7t0JvNgfaAyvRT092SnkKCJBaBRGYH6
- mi6hOSO+VWGIcr5P444N7DzfHXZs1cbx/RCoDUXIlJgSQwVqA4f0CJUDL+okx5fTWka0S8WZ+99
- In7367fvDPGRfqLMkZ+vG5grKwp31dTiyylXS6HYpxirwm8yuYEifv7IwpweSZBRgDRNqws8Awy
- vQ33AYJrHcfMouImZZA==
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=l6aH6V--89kVnUN-eIUA:9
+ a=O8hF6Hzn-FEA:10
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,69 +117,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, cpr-exec requires a file to save and load VM/device state.
+Currently cpr-exec uses a file to pass the VM and device state between the
+old and new QEMU processes. Support using memfd as a migration transport so
+this state can be passed without creating a state file.
 
-Introduce a diskless approach so cpr-exec no longer relies on disk storage
-for this state. The main idea is to add a new memfd-based migration
-transport: instead of using a file, VM/device state is saved to and loaded
-from an inherited memfd.
-
-I tested this with virtio-blk, NVMe VFIO, and virtio-net.
-
-/home/opc/ext4/qemu/build/qemu-system-x86_64 \
--machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on \
--accel kvm -cpu host \
--name debug-threads=on \
--m 8G -smp 4 \
--object memory-backend-memfd,id=ram0,size=8G,share=on \
--device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 \
--drive file=ol89.qcow2,if=none,id=drive0 \
--object iommufd,id=iommufd0 \
--device vfio-pci,host=0000:82:00.0,iommufd=iommufd0,id=vfio0,x-no-mmap=on \
--device virtio-net-pci,netdev=tapnet,mq=true,vectors=9,mac=52:54:11:22:14:49 \
--netdev tap,id=tapnet,script=qemu-ifup,downscript=no,queues=2,vhost=off \
--vnc :8 -monitor stdio
+Here is an example of using the new memfd transport with cpr-exec.
 
 (qemu) migrate_set_parameter mode cpr-exec
-
-(qemu) migrate_set_parameter cpr-exec-command /home/opc/ext4/qemu/build/qemu-system-x86_64 -machine q35,dump-guest-core=off,memory-backend=ram0,aux-ram-share=on -accel kvm -cpu host -name debug-threads=on -m 8G -smp 4 -object memory-backend-memfd,id=ram0,size=8G,share=on -device virtio-blk-pci,drive=drive0,id=virtblk0,num-queues=4 -drive file=ol89.qcow2,if=none,id=drive0 -object iommufd,id=iommufd0 -device vfio-pci,host=0000:82:00.0,iommufd=iommufd0,id=vfio0,x-no-mmap=on -device virtio-net-pci,netdev=tapnet,mq=true,vectors=9,mac=52:54:11:22:14:49 -netdev tap,id=tapnet,script=qemu-ifup,downscript=no,queues=2,vhost=off -vnc :8 -monitor stdio -incoming defer
-
+(qemu) migrate_set_parameter cpr-exec-command qemu-kvm ... -incoming defer
 (qemu) migrate -d memfd:
 QEMU 11.1.50 monitor - type 'help' for more information
 
 (qemu) info status
 VM status: paused (inmigrate)
-
 (qemu) migrate_incoming memfd:
-
 (qemu) info status
 VM status: running
 
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
+ migration/channel.c   |  7 +++++++
+ migration/cpr-exec.c  |  9 +++++++++
+ migration/memfd.c     | 23 +++++++++++++++++++++++
+ migration/memfd.h     |  2 ++
+ migration/migration.c |  9 +++++++++
+ 5 files changed, 50 insertions(+)
 
-Dongli Zhang (5):
-  migration/qapi: Add memfd migration transport
-  migration: Add generic memfd channel helpers
-  migration/cpr-exec: Add memfd helpers
-  migration/cpr-exec: Support diskless memfd transport
-  migration: cpr-exec memfd transport documentation
-
- docs/devel/migration/CPR.rst | 24 +++++++++++
- migration/channel.c          |  7 +++
- migration/cpr-exec-memfd.c   | 90 +++++++++++++++++++++++++++++++++++++++
- migration/cpr-exec-memfd.h   | 18 ++++++++
- migration/cpr-exec.c         |  9 ++++
- migration/memfd.c            | 90 +++++++++++++++++++++++++++++++++++++++
- migration/memfd.h            | 19 +++++++++
- migration/meson.build        |  2 +
- migration/migration.c        |  9 ++++
- qapi/migration.json          | 32 +++++++++++---
- 10 files changed, 295 insertions(+), 5 deletions(-)
-
-base-commit: e8d693e12af9cbb89d724baadfcc08559669e279
-
-Thank you very much!
-
-Dongli Zhang
-
+diff --git a/migration/channel.c b/migration/channel.c
+index 1e2935f926..96de40c108 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -18,6 +18,7 @@
+ #include "file.h"
+ #include "io/channel-socket.h"
+ #include "io/channel-tls.h"
++#include "memfd.h"
+ #include "migration.h"
+ #include "multifd.h"
+ #include "options.h"
+@@ -62,6 +63,8 @@ void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
+         ioc = exec_connect_outgoing(s, addr->u.exec.args, errp);
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+         ioc = file_connect_outgoing(s, &addr->u.file, errp);
++    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_MEMFD) {
++        ioc = memfd_connect_outgoing(errp);
+     } else {
+         error_setg(errp, "uri is not a valid migration protocol");
+     }
+@@ -92,6 +95,8 @@ void migration_connect_incoming(MigrationAddress *addr, Error **errp)
+         exec_connect_incoming(addr->u.exec.args, errp);
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+         file_connect_incoming(&addr->u.file, errp);
++    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_MEMFD) {
++        memfd_connect_incoming(errp);
+     } else {
+         error_setg(errp, "unknown migration protocol");
+     }
+@@ -394,6 +399,8 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+                               errp)) {
+             return false;
+         }
++    } else if (g_str_equal(uri, "memfd:")) {
++        addr->transport = MIGRATION_ADDRESS_TYPE_MEMFD;
+     } else {
+         error_setg(errp, "unknown migration protocol: %s", uri);
+         return false;
+diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+index daa50916d2..388cfba80d 100644
+--- a/migration/cpr-exec.c
++++ b/migration/cpr-exec.c
+@@ -21,6 +21,7 @@
+ #include "migration/vmstate.h"
+ #include "system/runstate.h"
+ #include "trace.h"
++#include "cpr-exec-memfd.h"
+ 
+ #define CPR_EXEC_STATE_NAME "QEMU_CPR_EXEC_STATE"
+ 
+@@ -143,6 +144,11 @@ static void cpr_exec_cb(void *opaque)
+      * earlier because they should not persist across miscellaneous fork and
+      * exec calls that are performed during normal operation.
+      */
++    if (!cpr_exec_memfd_preserve_fd(&err)) {
++        g_clear_pointer(&argv, g_strfreev);
++        cpr_exec_memfd_cleanup();
++        goto fail;
++    }
+     cpr_exec_preserve_fds();
+ 
+     trace_cpr_exec();
+@@ -155,7 +161,9 @@ static void cpr_exec_cb(void *opaque)
+     error_setg_errno(&err, errno, "execvp %s failed", argv[0]);
+     g_clear_pointer(&argv, g_strfreev);
+     cpr_exec_unpreserve_fds();
++    cpr_exec_memfd_cleanup();
+ 
++fail:
+     error_report_err(error_copy(err));
+     migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+ 
+@@ -189,6 +197,7 @@ static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
+         qemu_notify_event();
+     } else if (e->type == MIG_EVENT_FAILED) {
+         cpr_exec_unpersist_state();
++        cpr_exec_memfd_cleanup();
+     }
+     return 0;
+ }
+diff --git a/migration/memfd.c b/migration/memfd.c
+index 0b5ef0234f..4ed185d844 100644
+--- a/migration/memfd.c
++++ b/migration/memfd.c
+@@ -10,6 +10,9 @@
+ #include "qemu/cutils.h"
+ #include "qemu/memfd.h"
+ #include "memfd.h"
++#include "cpr-exec-memfd.h"
++#include "migration/cpr.h"
++#include "options.h"
+ 
+ QIOChannel *memfd_create_outgoing(const char *name, int *dup_fdp,
+                                   Error **errp)
+@@ -65,3 +68,23 @@ QIOChannel *memfd_open_incoming(int fd, const char *name, Error **errp)
+     qio_channel_set_name(ioc, name);
+     return ioc;
+ }
++
++QIOChannel *memfd_connect_outgoing(Error **errp)
++{
++    if (migrate_mode() == MIG_MODE_CPR_EXEC) {
++        return cpr_exec_memfd_connect_outgoing(errp);
++    }
++
++    error_setg(errp, "memfd transport is only supported with cpr-exec");
++    return NULL;
++}
++
++void memfd_connect_incoming(Error **errp)
++{
++    if (cpr_get_incoming_mode() == MIG_MODE_CPR_EXEC) {
++        cpr_exec_memfd_connect_incoming(errp);
++        return;
++    }
++
++    error_setg(errp, "memfd transport is only supported with cpr-exec");
++}
+diff --git a/migration/memfd.h b/migration/memfd.h
+index cb6afe3eeb..9c50c84ad5 100644
+--- a/migration/memfd.h
++++ b/migration/memfd.h
+@@ -13,5 +13,7 @@
+ QIOChannel *memfd_create_outgoing(const char *name, int *dup_fdp,
+                                   Error **errp);
+ QIOChannel *memfd_open_incoming(int fd, const char *name, Error **errp);
++QIOChannel *memfd_connect_outgoing(Error **errp);
++void memfd_connect_incoming(Error **errp);
+ 
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 9df6da131c..9f3afe5a3a 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -248,6 +248,15 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
+         return false;
+     }
+ 
++    if (addr->transport == MIGRATION_ADDRESS_TYPE_MEMFD) {
++        if (migrate_mode() != MIG_MODE_CPR_EXEC &&
++            cpr_get_incoming_mode() != MIG_MODE_CPR_EXEC) {
++            error_setg(errp,
++                       "memfd transport is only supported with cpr-exec");
++            return false;
++        }
++    }
++
+     return true;
+ }
+ 
+-- 
+2.43.5
 
 
