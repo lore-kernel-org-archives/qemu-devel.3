@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF3AC5AD5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2010C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:19:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7tE-00055I-EH; Wed, 12 Aug 2026 08:17:00 -0400
+	id 1wu7tA-0004mO-Iy; Wed, 12 Aug 2026 08:16:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7tB-0004s2-L1
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:58 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wu7t5-0004VW-Ku
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:52 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7t8-00008f-Uf
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:57 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49978908b35so6612545e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:54 -0700 (PDT)
+ id 1wu7t3-00005C-Kp
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:51 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-49802c418b5so7806985e9.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786537013; x=1787141813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786537008; x=1787141808; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=vLzCtO/q0xkPG+tEhvDl6lmMcAmm/+QbfRTYtGckE5A=;
- b=QbuOM7lDuU7Q8WwL2tmr2E6EklstOgYVHT85Y1ho8DdqlyzUjTJzQVsKvAt/2U8pKI
- nyTTXyh2VwboggYKuI44+mpts2ScfQEDvXsCZIO7ESvHb7vV8j5hRCmOLSsgJJ005rfc
- /bB873dDhH+JOoAMOqdimZj/h+hyU6sgCaXdu5c5Z687/yQaZdPJ+Jnv21HptpN6Ryyo
- EP5LXUr8ZsVKGrqOPvWATdFqd9O41UyQWLzLMOTB6oI4cajz4Oo6WU/aUSBcfjMHNZNL
- ArUDiJ3RXUF2wx6PMC1GIEfKMh6wnEByRxnkZgcUlwnc7ojeE0D3OJ6suSNumg08iTlO
- ytdA==
+ bh=aWmA88nopEo3kPddFZ0DwQv7aPRUq6NvE3zd5dUEApk=;
+ b=Mm+yxILQRH/0khjiBjCorVqUEyX990/pi8ENS47TKVnS31ziSsoxzGSxWh3q9fvC9X
+ +ihtSCi2PU+11DQS0WtGHrpmM6SwIXhXLZtQffQ3a5gItqAVtkfChV9t3PKRIxCDC9kR
+ N93R/UJWO22feT3aS5c893n2ZIBgTDMoPZ2WQ5tJWgF3utzp7LQZlYpNSni5/yZTTboo
+ 3hnxWiBrYm60F/RoXF9dIwEHgNzZV0ljlPUn4HMUWViiP2LEuRgzm2u9qD1v1uWfRqTI
+ 8F8Ahkyd6wwZGCnC/haYxgCLuiitzA0JNIyEuEp3r+RB/XeB4lq+kenD++H6FULS41Am
+ vlsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786537013; x=1787141813;
+ d=1e100.net; s=20251104; t=1786537008; x=1787141808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=vLzCtO/q0xkPG+tEhvDl6lmMcAmm/+QbfRTYtGckE5A=;
- b=h4fIj3AW5o3T+tHJdkj78K17p5TKhYaV2sUMJ72GZJkuukKlgsFjbp2HfeJLEROotO
- IlDoxPsPcP7fsUoDjJvWe1YoHo2SikC6QbMJuiODhHVPGTfYstHzoG8h1zXICjR4rLYU
- zMP/pJcFVdJZ6mfi4qKUNgm/Ues3bBv6qdHO4EWV7iGVxCFYtdXkS0wOIqQ4GaHoRYL4
- mkuw74XAko5f3Gqlz/PPJaANDmO2CCSjGd2Q8H5XX28WeX7Nx2SYmzDDYG+X0RIFQ2f9
- AD5X7r6J0sih/93voF4DngG1c7boxtkoKgj3ibrZINzwL9EwRe60AHieNYwzLOAGcqul
- EKyA==
-X-Gm-Message-State: AOJu0YwkdsgiqU5SVmkqxsEj7R03CcMwqPkL+HrLJksbxUh6xKMApEPx
- t2aHz4v2mCZXhNtMbz60V/rFTtXOL2ZfGBoNP3b5r51xDhjxpojSTg7p48YC1xWewayCB4ji00V
- Qfuh3
-X-Gm-Gg: AR+sD11NLt2QSqkCQ30nwgTOmgTiaGEQMb/Sr2y20A+KXCCDn6l5Og9WY+pjbeDNPHE
- bns55tldP9fYVyBZyU7gekDhzI/E1E05gpOLTtgD/k1KGJ+88xn6eAXeneWwhy1BEq0Rx02ltMn
- A2xMa7RWa4Z6tazxrmQdQC4barvPVzEaDBuQaMuTzoucIAqPBZJlwIkf9KAw3vRiOgWFajkTnl3
- EP46O0LcjJX+aMSuO9NTSnb1+o39P6MpnRNHRKNFmhsjToZC2N8C1++nEpUqUrc1HxkjhNnpD+w
- drbCxG99Cwto3Fj3HukhnQh5YWhGSRYbJaJwih9rWW7V1Y7k7WJZlQT8/N4FWYXiqhIkygUoDTT
- P0rDml0wnoPsXhKhw6ztlIBVWY3uSSh7YsDfS9G7FaYAC84SmBc/k7Uajmvcmtped84ChRGjXKs
- dhwz/dAANjD9xs9+8TRZrpyttpKhLnL149poHx4R/Gw//C9cSB4mcjH3i2T7A/N2Vn9MANA/b6r
- 3OMdRoalPKWjQj6pT4AjlxgJlKc+NozmQ7gZSwulzKe4h41+0kQYeoQwgOmLKOvyg+NXA==
-X-Received: by 2002:a7b:c7ca:0:b0:495:4e89:3f30 with SMTP id
- 5b1f17b1804b1-4997c13c8ccmr46608175e9.15.1786537013338; 
- Wed, 12 Aug 2026 05:16:53 -0700 (PDT)
+ bh=aWmA88nopEo3kPddFZ0DwQv7aPRUq6NvE3zd5dUEApk=;
+ b=dD+zDhWYWOgzMH/uPm5kym0ZHdb02zBsquBo0XyF3o4XHwkpMndG72cRRWAB+gDGca
+ 5HDr0VDP9qDP843JySS6uPDT1pmCTU+zDvEvJt0DFVFmpa+2HBwHWgRCuzgJtosQQ8Pb
+ Umk/AM/Fjt7aoNKVwkKqt7GS2vkqXjFZ6FKzV9BJiLWPloKGKvSuS5Qmr6M2ViFI6Ykv
+ OqzkEFWAA/h1gQNC6FvtOlXdoFzEA7rN3vDnsHnkAtfZwj2En4SO1zzmP7UCpScVqNyX
+ atgADl08WC9CnCK9mBOmRBajnpRqoNsjZEQ/8Azueu1HrZXt5HFn1RIlKgHHoP03NKbY
+ sPOw==
+X-Gm-Message-State: AOJu0Yxp2NSQQVMKbkuhmLBunF8t+1aOhJolQvaYVdUMYHp0k5Qa+cIX
+ OH2coTxDsju/sYxA7v4CJTKx10W7TnBVdA8nctigzmejt693uCMSPmLbPVNVO/P4DKAix/3l2ZV
+ iNdLJ
+X-Gm-Gg: AR+sD10cCkYD5P9JADDr9fwpRisECTD0Mn6byVsA1jNJv/+5HRgsoTPvy+bjf15KVGW
+ mGmuD/yRrvuvK2+6C3dtbUhv+Sty05Ha7c+GQz0kfLjyzYBqsvsN/atRE2gGVs/nXQUbj5kOtGz
+ 4Bb3xTPiwJ2T0mSdhgDt9uZXoSSBM/UF35SYxg+bCtgFTygQUNvC0T4TfWu6+gIJA7E91J6F0RG
+ 9Zs30Xzot+N/zBefEbq0oXe44+x2keBHjOfkvFPeOaaSJ9Xs2+wZJlk1XYOy4RVrTXqRTahRg8d
+ tqzc9PmhzQarZO8ftPCRg+PIk9Xgmxgz73oz6ZBWibeFX+iSKp6LjXcJQdK7A+d8HLidhGTjuUP
+ 9k3Yl3aHwQFN8B939aj1kp0hHAzWcmkXj2zafhjYcVqz10O/LwxzCJsAu1xd5N1x1kXnM3+QGc9
+ j3ZIX5QM0ilHf4rLasjR38UY0ddd58rkVAztYoFQolGtph0HxEiFuBlEmCejANQzFBX5LB/joAr
+ nqwEg/Ph5Abm3K1W5HOytA/PAJ7Sc+/EwFwQaAEhTdMM4E6wJuIG8bDLNdeEMc/+rF0fQ==
+X-Received: by 2002:a05:600c:8b52:b0:495:4491:b8c2 with SMTP id
+ 5b1f17b1804b1-4997c0e6f2emr73920375e9.3.1786537008066; 
+ Wed, 12 Aug 2026 05:16:48 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.51
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:52 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/26] hw/gpio: Add Cadence GPIO controller
-Date: Wed, 12 Aug 2026 13:16:13 +0100
-Message-ID: <20260812121622.649730-18-peter.maydell@linaro.org>
+Subject: [PULL 14/26] hw/sd: Add Axiado SD host controller with eMMC PHY
+Date: Wed, 12 Aug 2026 13:16:10 +0100
+Message-ID: <20260812121622.649730-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,48 +103,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kuan-Jui Chiu <kchiu@axiado.com>
 
-This patch add a new model for Cadence GPIO controller which
-supports 32 pins and interrupts for level-triggered/edge-triggered type on
-input pins.
+This patch add a new model for Axiado SD host controller which is compatible
+with SDHCI 3.0 spec
 
-Also define new trace functions for analysis purpose and new configuration to
-enable this model.
+This device model also includes a eMMC PHY which helps to control SD/eMMC
 
 Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
-Message-id: 20260713073033.3883619-8-kchiu@axiado.com
-[PMM: drop unnecessary <private> and <public> marker comments]
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260713073033.3883619-5-kchiu@axiado.com
+[PMM: Use HWADDR_PRIx]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/gpio/Kconfig                |   3 +
- hw/gpio/cadence_gpio.c         | 292 +++++++++++++++++++++++++++++++++
- hw/gpio/meson.build            |   1 +
- hw/gpio/trace-events           |   5 +
- include/hw/gpio/cadence_gpio.h |  53 ++++++
- 5 files changed, 354 insertions(+)
- create mode 100644 hw/gpio/cadence_gpio.c
- create mode 100644 include/hw/gpio/cadence_gpio.h
+ MAINTAINERS                  |   2 +
+ hw/sd/Kconfig                |   4 ++
+ hw/sd/axiado_sdhci.c         | 119 +++++++++++++++++++++++++++++++++++
+ hw/sd/meson.build            |   1 +
+ include/hw/sd/axiado_sdhci.h |  21 +++++++
+ 5 files changed, 147 insertions(+)
+ create mode 100644 hw/sd/axiado_sdhci.c
+ create mode 100644 include/hw/sd/axiado_sdhci.h
 
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index a209294c20..fcc7c70bd5 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -30,3 +30,6 @@ config PCF8574
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fce65e370f..7a02fed0d6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1305,7 +1305,9 @@ M: Kuan-Jui Chiu <kchiu@axiado.com>
+ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/arm/ax3000*.c
++F: hw/*/axiado*.c
+ F: include/hw/arm/ax3000*.h
++F: include/hw/*/axiado*.h
  
- config ZAURUS_SCOOP
+ AVR Machines
+ -------------
+diff --git a/hw/sd/Kconfig b/hw/sd/Kconfig
+index 633b9afec9..c69bf24f8d 100644
+--- a/hw/sd/Kconfig
++++ b/hw/sd/Kconfig
+@@ -23,3 +23,7 @@ config SDHCI_PCI
+ config CADENCE_SDHCI
      bool
+     select SDHCI
 +
-+config CADENCE_GPIO
++config AXIADO_SDHCI
 +    bool
-diff --git a/hw/gpio/cadence_gpio.c b/hw/gpio/cadence_gpio.c
++    select SDHCI
+diff --git a/hw/sd/axiado_sdhci.c b/hw/sd/axiado_sdhci.c
 new file mode 100644
-index 0000000000..ce8256b381
+index 0000000000..2e88bffdd1
 --- /dev/null
-+++ b/hw/gpio/cadence_gpio.c
-@@ -0,0 +1,292 @@
++++ b/hw/sd/axiado_sdhci.c
+@@ -0,0 +1,119 @@
 +/*
-+ * Cadence GPIO emulation.
++ * Axiado SD Host Controller with embedded PHY
 + *
 + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 + *
@@ -152,206 +164,48 @@ index 0000000000..ce8256b381
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/gpio/cadence_gpio.h"
-+#include "hw/core/irq.h"
-+#include "migration/vmstate.h"
++#include "hw/sd/axiado_sdhci.h"
++#include "sdhci-internal.h"
++#include "qapi/error.h"
++#include "hw/core/qdev-properties.h"
 +#include "qemu/log.h"
-+#include "trace.h"
 +
-+static void cdns_gpio_update_irq(CadenceGPIOState *s)
++#define EMMC_PHY_ID     0x00
++#define EMMC_PHY_STATUS 0x50
++
++#define DLL_RDY  (1u << 0)
++#define CAL_DONE (1u << 6)
++
++static uint64_t emmc_phy_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    qemu_set_irq(s->irq, s->isr ? 1 : 0);
-+}
-+
-+static void cdns_gpio_update_isr_with_inpvr(CadenceGPIOState *s, uint32_t new)
-+{
-+    uint32_t new_isr = 0;
-+    uint32_t any_edges, rising_edges, falling_edges, deassert_mask;
-+
-+    /*
-+     * If ITR is set, this is level triggered:
-+     * set corresponding ISR bits when IVR matches new inpvr value.
-+     */
-+    new_isr |= s->itr & ~(s->ivr ^ new);
-+
-+    /*
-+     * If ITR is not set, this is edge-triggered:
-+     * If IOAR bit is set, trigger on any edge;
-+     * otherwise trigger on rising edge if IVR is set,
-+     * trigger on falling edge if IVR bit is 0.
-+     */
-+    any_edges = s->ioar & (s->inpvr ^ new);
-+    rising_edges = s->ivr & ~s->inpvr & new;
-+    falling_edges = ~s->ivr & s->inpvr & ~new;
-+    new_isr |= ~s->itr & (any_edges | rising_edges | falling_edges);
-+
-+    /*
-+     * In bypass mode or if this isn't an input pin, the corresponding ISR
-+     * bit is forced to zero.
-+     */
-+    deassert_mask = s->bmr | ~s->dmr | s->imr;
-+
-+    new_isr &= ~deassert_mask;
-+    s->isr = new_isr;
-+
-+    cdns_gpio_update_irq(s);
-+}
-+
-+static void cdns_gpio_update_isr(CadenceGPIOState *s)
-+{
-+    cdns_gpio_update_isr_with_inpvr(s, s->inpvr);
-+}
-+
-+static void cdns_gpio_set(void *opaque, int line, int level)
-+{
-+    CadenceGPIOState *s = CADENCE_GPIO(opaque);
-+    uint32_t new_inpvr = deposit32(s->inpvr, line, 1, level ? 1 : 0);
-+
-+    trace_cdns_gpio_set(DEVICE(s)->canonical_path, line, level);
-+
-+    cdns_gpio_update_isr_with_inpvr(s, new_inpvr);
-+
-+    /* Sync INPVR with new value */
-+    s->inpvr = new_inpvr;
-+}
-+
-+static inline void cdns_gpio_update_output_irq(CadenceGPIOState *s)
-+{
-+    uint32_t is_output = ~s->bmr & ~s->dmr & s->oer;
-+
-+    for (int i = 0; i < CDNS_GPIO_NUM; i++) {
-+        if (extract32(is_output, i, 1)) {
-+            /* Forward the output value to corresponding irq */
-+            qemu_set_irq(s->output[i], extract32(s->ovr, i, 1));
-+        }
-+    }
-+}
-+
-+static uint64_t cdns_gpio_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    CadenceGPIOState *s = CADENCE_GPIO(opaque);
-+    uint32_t reg_value = 0x0;
++    uint32_t val = 0x00;
 +
 +    switch (offset) {
-+    case CDNS_GPIO_BYPASS_MODE:
-+        reg_value = s->bmr;
++    case EMMC_PHY_ID:
++        val = 0x3dff6870;
 +        break;
-+
-+    case CDNS_GPIO_DIRECTION_MODE:
-+        reg_value = s->dmr;
++    case EMMC_PHY_STATUS:
++        val = DLL_RDY | CAL_DONE;
 +        break;
-+
-+    case CDNS_GPIO_OUTPUT_EN:
-+        reg_value = s->oer;
-+        break;
-+
-+    case CDNS_GPIO_OUTPUT_VALUE:
-+        reg_value = s->ovr;
-+        break;
-+
-+    case CDNS_GPIO_INPUT_VALUE:
-+        reg_value = s->inpvr;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_MASK:
-+        reg_value = s->imr;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_STATUS:
-+        reg_value = s->isr;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_TYPE:
-+        reg_value = s->itr;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_VALUE:
-+        reg_value = s->ivr;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_ANY_EDGE:
-+        reg_value = s->ioar;
-+        break;
-+
 +    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
-+                      HWADDR_PRIx "\n", TYPE_CADENCE_GPIO, __func__, offset);
++        qemu_log_mask(LOG_UNIMP,
++                      "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
 +        break;
 +    }
 +
-+    trace_cdns_gpio_read(DEVICE(s)->canonical_path, offset, reg_value);
-+
-+    return reg_value;
++    return val;
 +}
 +
-+static void cdns_gpio_write(void *opaque, hwaddr offset, uint64_t value,
-+                            unsigned size)
++static void emmc_phy_write(void *opaque, hwaddr offset, uint64_t value,
++                           unsigned size)
 +{
-+    CadenceGPIOState *s = CADENCE_GPIO(opaque);
-+
-+    trace_cdns_gpio_write(DEVICE(s)->canonical_path, offset, value);
-+
-+    switch (offset) {
-+    case CDNS_GPIO_BYPASS_MODE:
-+        s->bmr = value;
-+        cdns_gpio_update_output_irq(s);
-+        cdns_gpio_update_isr(s);
-+        break;
-+
-+    case CDNS_GPIO_DIRECTION_MODE:
-+        s->dmr = value;
-+        cdns_gpio_update_output_irq(s);
-+        cdns_gpio_update_isr(s);
-+        break;
-+
-+    case CDNS_GPIO_OUTPUT_EN:
-+        s->oer = value;
-+        cdns_gpio_update_output_irq(s);
-+        break;
-+
-+    case CDNS_GPIO_OUTPUT_VALUE:
-+        s->ovr = value;
-+        cdns_gpio_update_output_irq(s);
-+        break;
-+
-+    case CDNS_GPIO_IRQ_EN:
-+        s->imr &= ~value;
-+        cdns_gpio_update_isr(s);
-+        break;
-+
-+    case CDNS_GPIO_IRQ_DIS:
-+        s->imr |= value;
-+        cdns_gpio_update_isr(s);
-+        break;
-+
-+    case CDNS_GPIO_IRQ_TYPE:
-+        s->itr = value;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_VALUE:
-+        s->ivr = value;
-+        break;
-+
-+    case CDNS_GPIO_IRQ_ANY_EDGE:
-+        s->ioar = value;
-+        break;
-+
-+    case CDNS_GPIO_INPUT_VALUE:
-+    case CDNS_GPIO_IRQ_MASK:
-+    case CDNS_GPIO_IRQ_STATUS:
-+        /* Read-Only */
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
-+                      HWADDR_PRIx "\n", TYPE_CADENCE_GPIO, __func__, offset);
-+        break;
-+    }
++    qemu_log_mask(LOG_UNIMP,
++                  "Register 0x%" HWADDR_PRIx " not implemented\n", offset);
 +}
 +
-+static const MemoryRegionOps cdns_gpio_ops = {
-+    .read = cdns_gpio_read,
-+    .write = cdns_gpio_write,
++static const MemoryRegionOps emmc_phy_ops = {
++    .read = emmc_phy_read,
++    .write = emmc_phy_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .impl = {
 +        .min_access_size = 4,
@@ -363,159 +217,99 @@ index 0000000000..ce8256b381
 +    }
 +};
 +
-+static const VMStateDescription vmstate_cdns_gpio = {
-+    .name = TYPE_CADENCE_GPIO,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(bmr, CadenceGPIOState),
-+        VMSTATE_UINT32(dmr, CadenceGPIOState),
-+        VMSTATE_UINT32(oer, CadenceGPIOState),
-+        VMSTATE_UINT32(ovr, CadenceGPIOState),
-+        VMSTATE_UINT32(inpvr, CadenceGPIOState),
-+        VMSTATE_UINT32(imr, CadenceGPIOState),
-+        VMSTATE_UINT32(isr, CadenceGPIOState),
-+        VMSTATE_UINT32(itr, CadenceGPIOState),
-+        VMSTATE_UINT32(ivr, CadenceGPIOState),
-+        VMSTATE_UINT32(ioar, CadenceGPIOState),
-+        VMSTATE_END_OF_LIST()
++static void axiado_sdhci_realize(DeviceState *dev, Error **errp)
++{
++    AxiadoSDHCIState *s = AXIADO_SDHCI(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    SysBusDevice *sdhci_sbd;
++
++    qdev_prop_set_uint64(DEVICE(&s->sdhci), "capareg", 0x216737eed0b0);
++    qdev_prop_set_uint64(DEVICE(&s->sdhci), "sd-spec-version", 3);
++
++    sdhci_sbd = SYS_BUS_DEVICE(&s->sdhci);
++    if (!sysbus_realize(sdhci_sbd, errp)) {
++        return;
 +    }
-+};
 +
-+static void cdns_gpio_reset(DeviceState *dev)
-+{
-+    CadenceGPIOState *s = CADENCE_GPIO(dev);
++    sysbus_init_mmio(sbd, sysbus_mmio_get_region(sdhci_sbd, 0));
 +
-+    s->bmr      = 0;
-+    s->dmr      = 0;
-+    s->oer      = 0;
-+    s->ovr      = 0;
-+    s->inpvr    = 0;
-+    s->imr      = 0xffffffff;
-+    s->isr      = 0;
-+    s->itr      = 0;
-+    s->ivr      = 0;
-+    s->ioar     = 0;
++    /* Propagate IRQ from SDHCI and SD bus  */
++    sysbus_pass_irq(sbd, sdhci_sbd);
++    s->sd_bus = qdev_get_child_bus(DEVICE(sdhci_sbd), "sd-bus");
++
++    /* Initialize eMMC PHY MMIO */
++    memory_region_init_io(&s->emmc_phy, OBJECT(s), &emmc_phy_ops, s,
++                          "axiado.emmc-phy", 0x1000);
++
++    sysbus_init_mmio(sbd, &s->emmc_phy);
 +}
 +
-+static void cdns_gpio_init(Object *obj)
++static void axiado_sdhci_instance_init(Object *obj)
 +{
-+    CadenceGPIOState *s = CADENCE_GPIO(obj);
++    AxiadoSDHCIState *s = AXIADO_SDHCI(obj);
 +
-+    memory_region_init_io(&s->iomem, obj, &cdns_gpio_ops, s,
-+                          TYPE_CADENCE_GPIO, CDNS_GPIO_REG_SIZE);
-+
-+    qdev_init_gpio_in(DEVICE(s), cdns_gpio_set, CDNS_GPIO_NUM);
-+    qdev_init_gpio_out(DEVICE(s), s->output, CDNS_GPIO_NUM);
-+
-+    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++    object_initialize_child(OBJECT(s), "sdhci", &s->sdhci,
++                            TYPE_SYSBUS_SDHCI);
 +}
 +
-+static void cdns_gpio_class_init(ObjectClass *klass, const void *data)
++static void axiado_sdhci_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    device_class_set_legacy_reset(dc, cdns_gpio_reset);
-+    dc->vmsd = &vmstate_cdns_gpio;
-+    dc->desc = "Cadence GPIO controller";
++    dc->realize = axiado_sdhci_realize;
++    dc->desc = "Axiado SD Host Controller with eMMC PHY";
 +}
 +
-+static const TypeInfo cdns_gpio_info = {
-+    .name = TYPE_CADENCE_GPIO,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(CadenceGPIOState),
-+    .instance_init = cdns_gpio_init,
-+    .class_init = cdns_gpio_class_init,
++static const TypeInfo axiado_sdhci_info = {
++    .name          = TYPE_AXIADO_SDHCI,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(AxiadoSDHCIState),
++    .instance_init = axiado_sdhci_instance_init,
++    .class_init    = axiado_sdhci_class_init,
 +};
 +
-+static void cdns_gpio_register_types(void)
++static void axiado_sdhci_register_types(void)
 +{
-+    type_register_static(&cdns_gpio_info);
++    type_register_static(&axiado_sdhci_info);
 +}
 +
-+type_init(cdns_gpio_register_types)
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 6a67ee958f..0555f44b6a 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
- system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
-+system_ss.add(when: 'CONFIG_CADENCE_GPIO', if_true: files('cadence_gpio.c'))
-diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
-index cea896b28f..80ca783a03 100644
---- a/hw/gpio/trace-events
-+++ b/hw/gpio/trace-events
-@@ -46,3 +46,8 @@ stm32l4x5_gpio_read(char *gpio, uint64_t addr) "GPIO%s addr: 0x%" PRIx64 " "
- stm32l4x5_gpio_write(char *gpio, uint64_t addr, uint64_t data) "GPIO%s addr: 0x%" PRIx64 " val: 0x%" PRIx64 ""
- stm32l4x5_gpio_update_idr(char *gpio, uint32_t old_idr, uint32_t new_idr) "GPIO%s from: 0x%x to: 0x%x"
- stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s disconnected pins: 0x%x levels: 0x%x"
-+
-+# cadence_gpio.c
-+cdns_gpio_read(const char *path, uint64_t offset, uint32_t value) "%s:reg[0x%04" PRIx64 "] -> 0x%" PRIx32
-+cdns_gpio_write(const char *path, uint64_t offset, uint64_t value) "%s:reg[0x%04" PRIx64 "] <- 0x%04" PRIx64
-+cdns_gpio_set(const char *path, int line, int level) "%s:[%d] <- %d"
-diff --git a/include/hw/gpio/cadence_gpio.h b/include/hw/gpio/cadence_gpio.h
++type_init(axiado_sdhci_register_types);
+diff --git a/hw/sd/meson.build b/hw/sd/meson.build
+index b43d45bc56..ebf09e30a4 100644
+--- a/hw/sd/meson.build
++++ b/hw/sd/meson.build
+@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sdhci.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-sdhost.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_sdhci.c'))
+ system_ss.add(when: 'CONFIG_CADENCE_SDHCI', if_true: files('cadence_sdhci.c'))
++system_ss.add(when: 'CONFIG_AXIADO_SDHCI', if_true: files('axiado_sdhci.c'))
+diff --git a/include/hw/sd/axiado_sdhci.h b/include/hw/sd/axiado_sdhci.h
 new file mode 100644
-index 0000000000..69646ba639
+index 0000000000..85afebad93
 --- /dev/null
-+++ b/include/hw/gpio/cadence_gpio.h
-@@ -0,0 +1,53 @@
++++ b/include/hw/sd/axiado_sdhci.h
+@@ -0,0 +1,21 @@
 +/*
-+ * Cadence GPIO registers definition.
++ * Axiado SD Host Controller
 + *
 + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef CADENCE_GPIO_H
-+#define CADENCE_GPIO_H
-+
-+#include "hw/core/sysbus.h"
++#include "hw/sd/sdhci.h"
 +#include "qom/object.h"
 +
-+#define TYPE_CADENCE_GPIO "cadence_gpio"
-+OBJECT_DECLARE_SIMPLE_TYPE(CadenceGPIOState, CADENCE_GPIO)
++#define TYPE_AXIADO_SDHCI "axiado-sdhci"
++OBJECT_DECLARE_SIMPLE_TYPE(AxiadoSDHCIState, AXIADO_SDHCI)
 +
-+#define CDNS_GPIO_REG_SIZE      0x400
-+#define CDNS_GPIO_NUM           32
++typedef struct AxiadoSDHCIState {
++    SysBusDevice parent;
 +
-+#define CDNS_GPIO_BYPASS_MODE           0x00
-+#define CDNS_GPIO_DIRECTION_MODE        0x04
-+#define CDNS_GPIO_OUTPUT_EN             0x08
-+#define CDNS_GPIO_OUTPUT_VALUE          0x0c
-+#define CDNS_GPIO_INPUT_VALUE           0x10
-+#define CDNS_GPIO_IRQ_MASK              0x14
-+#define CDNS_GPIO_IRQ_EN                0x18
-+#define CDNS_GPIO_IRQ_DIS               0x1c
-+#define CDNS_GPIO_IRQ_STATUS            0x20
-+#define CDNS_GPIO_IRQ_TYPE              0x24
-+#define CDNS_GPIO_IRQ_VALUE             0x28
-+#define CDNS_GPIO_IRQ_ANY_EDGE          0x2c
-+
-+struct CadenceGPIOState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    uint32_t bmr;
-+    uint32_t dmr;
-+    uint32_t oer;
-+    uint32_t ovr;
-+    uint32_t inpvr;
-+    uint32_t imr;
-+    uint32_t isr;
-+    uint32_t itr;
-+    uint32_t ivr;
-+    uint32_t ioar;
-+    qemu_irq irq;
-+    qemu_irq output[CDNS_GPIO_NUM];
-+};
-+
-+#endif /* CADENCE_GPIO_H */
++    SDHCIState sdhci;
++    MemoryRegion emmc_phy;
++    BusState *sd_bus;
++} AxiadoSDHCIState;
 -- 
 2.43.0
 
