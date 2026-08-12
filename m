@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF65C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083D9C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu692-00040I-0w; Wed, 12 Aug 2026 06:25:12 -0400
+	id 1wu6B8-0004gr-7t; Wed, 12 Aug 2026 06:27:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu68z-0003uz-4i
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:25:09 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1wu6B6-0004gK-Iu
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:27:20 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu68w-00023W-3I
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:25:08 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-80dc4a68e4aso8665697b3.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:25:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786530304; cv=none;
+ id 1wu6B5-0002WA-7u
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:27:20 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-6689402c7bfso1023821d50.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:27:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786530438; cv=none;
  d=google.com; s=arc-20260327;
- b=rkemcF4AfZWJIs3pTTr6vyumkvyziWmNw6pgQbpmkAtG3MqS9LQnq8/b7vINABesGH
- yJ6jp2mTHkDIV9Z7n2nh43/amlz7gRwRw0dftLp2EDGFBU1YO7N6/dfAVaZuFP/15+le
- NRJ73HSmG8+F5yJhgGg8AhqQJrAj0navbWFDdQLmeMHQXZMVmeA+brrLf91HDH2rhKNF
- miidrWdlx98D2CDx08lqZjjztNAgNUPNT/Y3h3AHK9JXvrx3+LjFgqDhD7ZjRdPYj/Dd
- e5w0AwnITOq7IosgQIaeG750HOyv9hmpQ7uuVpHcax1dczu2NhhsO3yq2Q3HzCzCag2/
- 0lqA==
+ b=nM3UJYec5FGH3gIafbiJUi/0BHsxCa/Zc4Ohv3ASltZYdT4m26kAc3phOXp5gjC7tS
+ tUoMFwbvRq68M11ho8a0ntyPzwpNiu5P51b12qo2vKVvhcpLpw00lGWIDhd3xlBH0jyf
+ teUkOgGRgse2qPMDtr7wIqaX4XM0ZBgwfb597+y4kCakxEMTS3UoK9TJKJ4OtfGSkWA2
+ w+87WeiyQR8dNGBjzxmzgFBJrrvfYdvJjX1TgMzItIZZOdLhTWkMkeLKkcGOcPLgDPhF
+ Sj6tMI/JacnNJGq3oTRjBJJ8x1EM9UD3kC78ExGaJPLnaTM+AT+Xx4BAqnMcgoH8r+Ss
+ LJ9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
- fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
- b=TDaSNwCUTLekW+8DZzC9TueeDlHNjqJX8qIkytRJTCcAkqj+hefHXirAkfCil3Aacf
- 7Qah+50SS12lcAkMaDqmCkJlx91PoK278c6HfmNEyIIyKC9EalASLBvjTwEJ7/OUrYnF
- l56mHFeNWzJQRYaXIXdF4XocBrIclIorDUKtWAkv+Rqk0uyKzKK70i7S/AD9B24ZOEXQ
- wyfiXCcHg2J0RWloprDfzN7dMqQF7qL8GLj4KztrBrcqojLyGHJRIiTSKGK+8yt3zVAB
- JAJ0M5K+zXeVWWSRylx/wYN41EtudH+FIhSvP2e5XIoqUSarcggIVFL7TAKCJfO+LL8g
- zgVQ==; darn=nongnu.org
+ bh=6uBHImK2q22eZBBbSau2GPOmrCcmb9MHcdbO31DQD0s=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=POXDXUJe6OsU0x57Ik271Xt5CrwyKogzkiKr1yEttksSkN8lfNz8GCiLqDVYOe7dK/
+ +B8vIRDSpr1dfsI3zBNCFN4hwsGwDkBku1Uy4PYEx8h52LF9amrE/b6NPw3WJuoeDPBb
+ G57CyYYN8joWn45OmiaSuGbOW2655iUMB7rgKXQhfi3m99QoMG3qKJ5xe/FSQkOg6dAg
+ jMwTsqqig3dwcqjaTiPHBqz5q4JYgQKTu2xHEDuhR7E9we8rf2q84cQs3oyp/+03R7Mi
+ YdJLa7lSTklMRC2+6fWUi0PMsJ8xEfK62X9O7kEk4/M24BsuBo6d+A50OHb4+mHOpFMp
+ /wuA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786530304; x=1787135104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786530438; x=1787135238; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
- b=xim+a4DMGpOFzknSs1WSftlXLNsnwSMO2ONE8EU1jEnfCSI5xMjGUspJabtAbNs6Dc
- D/HgttWB4fEbJuEaglkyx1NS6Cwu818aTU1zmAjoSD5KCrNrxrsLVWWaRGphNAPT5jAP
- Yb/MIeJEMbpINsdBPL6/MRICMjjbtfriS4ziVEJGF7alFhaLuW3f1PbMt39I54jbNRC0
- oYBgdbH34fF1coD8WpKZBfV6L8TPZ8E0yVP9KLxqWH//fixXfUKmwlZXQ5xp6aB+iVbn
- 4kapkN0dp9yby6OBj5gK1hSoMstChsQQAqf+5q6kGYsIAzJbZ+SDCm9TSM5ATTKIu88s
- 8vZg==
+ :content-type; bh=6uBHImK2q22eZBBbSau2GPOmrCcmb9MHcdbO31DQD0s=;
+ b=uMbG0y2qZiPZQPIFhuSnRcW18jcT+QrGdGQEMvG1c/pfYSLPgJPOMq8QO5q14BeVTs
+ 0PucAql+io1zoHthtWGnEt1kpElb9oRJntN29KvZfhzaZe+C2MSx+hqx6EafufU/NJhx
+ /ltxUj9oHx2enD08Glpe4U77FVpNXsS3BNG2Or95MyDAFdQ4I+gcpGce/Z8CCSWsonXz
+ j0/kAhyz05bNDxYYhz76IQllHZ66hblXy8qw1BV6kf1LAvRRN3C5Eq5F4bGd4ar+XpST
+ hJUpciBPZR8Ghw4/0ZE4LSTqGIoMD3GAdXhTzb+mtfKVyrbQm73tw1aSDBYPbpork+U1
+ jLBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786530304; x=1787135104;
+ d=1e100.net; s=20251104; t=1786530438; x=1787135238;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=LXTqFzRPeF0ea5Y2BTsg4MEbZkafleniouizAQfpXjs=;
- b=PLGPRpAK78k54GVkHD/b3Za+9hYPMW/K9sPkz4AYGyVLRn3B36nZ3mjq+Bi5EbuhD2
- 39sMTPDtsWieysTeLxmpNTljbhTpFGENBOddUD7b9AT4JTxAk/khoznikxFgNwrM/Nyj
- 5QsM/vDCx0tMakRUMss5mabqUgYLTmQbJFGui75zBi5cnPafePBcDanQHOUyJJYJs87+
- wRVRzZWJeOoU4DbSWR/1rwNtDPDx4/XSNDSbIJKd2FllsJ7safO7CnXT9LFaJtbbZ6On
- yBMU7dSHryLm64QqgFxhgKKgf4jD5NoHhXMv99ESvKTfpUPPmy/xxN+xDoGZ75XYOKia
- /rdw==
-X-Gm-Message-State: AOJu0YxTt3xc9Y1hQkPav4n68upaTSd0F8VphKnavh/ztamjybSdXs6K
- lRSYqQCkvJ/bq/YVY9PQAEIqq8nYxVUDbJGO5huodYAlMvyfLr8nZDVcK/k4hObTqhDQfuIVXjq
- 09mg2xwHg7chWmrv/d5GFLARHp4GPq2yRbf/GSpVMLA==
-X-Gm-Gg: AR+sD10C4l7cBMRtAbpyeuGuVbula6vFvtiCVpqR+4W0yvIHBonyakGWQ4GfJWbLMZa
- un2omj4ayJSyw9+wCgnjFKGfvVBaM4Qk6iwJs/+IfN9LD1mpRooJpIKOaxA96X9nmv6UIG2l3nJ
- GWbqRJpFCOny7wdinEp4Fotxi4KGFJH5HTykktO/A/y15Rf9uYRx8G0v5OUE6n3pJtPuoqWZ4uH
- abzQe3QG36vxtAtuCs4bHqF5wbVTgy8T8BeuktiOMkxi7+gHgbccgz9Yw/zHsbK9xg7sGHXYcHM
- kjOXAUhSNx/dfg9ZABjAPKIVakTaWqa8Kk/07E9WXlM3Tkm/sP+CkXxbVx3fsRhP08vfF9j+6MC
- TO2d/OsGiLKPbLMINST+FK4Ubkn7qzwJ6ApkI9s8=
-X-Received: by 2002:a05:690c:e0c:b0:81f:a595:2e19 with SMTP id
- 00721157ae682-8310b73e8a0mr22080347b3.23.1786530303817; Wed, 12 Aug 2026
- 03:25:03 -0700 (PDT)
+ bh=6uBHImK2q22eZBBbSau2GPOmrCcmb9MHcdbO31DQD0s=;
+ b=nptwWb8TBzWQ3eeQK08zsIRMosBwjaQU6SU8XUFAr3GB4CCaltXD6rGOfZ7hCDwpyN
+ ADLHwPiR6UwpSYiH0NgEuoGZIO+q2CatiPodk5gRGpu8vy11dmzrf1fSax9sLcDluitF
+ FcHrWNBL0d5RLVkJjjAOBXwE6rR1WFSvamkrNVlR1yRsqXZjvBKjly9R/NpB6h9AfXCx
+ v9UXA8sFYtBt3wYFFR27dIJzWSkZ5PM4+Bq6awoQASIsgzkbdPUqK0EFFXbaJJFMPhmy
+ fsUPwWXjUugy0E9cq+S1FvFP1lxcmrxL8JIzRP7Hdsn7GTrFbOWaB1hyNrtZhqNJpYJ1
+ Ujlg==
+X-Gm-Message-State: AOJu0YwweKs1OG1jz5dm4TFVEd+0vC+lb9O4DJMO+F0Xpf4RYDzSg9Y2
+ FB5WRSL3a8AOJC4ZFu6XOKcENRSwGSVCHImp0qwX301lUufHWbm51qfCoDQjO1ifj3WxD8JTZ2e
+ 8KJOHqUUQLv/Bk105OCdJ3E7UcXF78qznsa8imvHxlQ==
+X-Gm-Gg: AR+sD115rBkaAJ8EI5oIG8Zm6aTwAWF35fbctfQ2XhsIKkLhN+dcgPWE8oHjCPU+nFJ
+ J7rtwaA9tkNYPehWekVvPGLeIVJ7BBg14EX6P3hk0C/F7OQINvD03jmgUJpFjemRVX2Ap+7unCG
+ cMNQrjMOOB5HZqO9UMRUqWkSQrW5AteryLD2EE6ZhmLw0tksBQjuA3MOo63oM2A5f+h7b2iqU5v
+ 2xQUGdzbWcL/y/1ThjXsP/q9GxJkpPTUoyWNLA8DVkvBh14SJ4l+mue+p715CRSQRbQZUNa0ASP
+ 2aBlDXs38ycTfqWVtft5WvhwjQmLqaEMk1+SZMCOJyJn/1QBIc6guDZsVCFynB8F3qImkmDONeq
+ yBfdYToQ+Wbram3Iiqz4XG93JYqkX
+X-Received: by 2002:a05:690e:c41:b0:669:484d:52c2 with SMTP id
+ 956f58d0204a3-66b3435501emr1894005d50.36.1786530436579; Wed, 12 Aug 2026
+ 03:27:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260811143539.7835-1-marcelomanzo@gmail.com>
-In-Reply-To: <20260811143539.7835-1-marcelomanzo@gmail.com>
+References: <20260806163939.328201-1-richard.henderson@linaro.org>
+In-Reply-To: <20260806163939.328201-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Aug 2026 11:24:51 +0100
-X-Gm-Features: AUfX_mwkmm23E6gGDgCu1vPUb_ezW7RKkcqYvLBMpMwup0kV7mLZVC5ThsCudKc
-Message-ID: <CAFEAcA_duyqT1F2m64jg10Xy+4QVikZfUbacvZ50v=isrcCKZg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] hw/arm/raspi4b: fix guest RAM capped at ~1 GiB
- regardless of machine size
-To: Marcelo Manzo <marcelomanzo@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 11:27:05 +0100
+X-Gm-Features: AUfX_my8DCGJ7Qq84Clv4Tuokm9LRf3FqNjYvMbskE7ET7s3uiakhj8pjdAGD68
+Message-ID: <CAFEAcA8stJZ6JZW1un++6zj+CDwkR-zTpA4G9ksTetO-xOn01w@mail.gmail.com>
+Subject: Re: [PATCH 0/7] target/arm: Introduce cpu types max-v8 and max-v9
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,28 +114,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Aug 2026 at 15:35, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
+On Thu, 6 Aug 2026 at 17:41, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> While working on unrelated raspi4b issues, I noticed the guest never
-> seemed to have as much RAM as I'd given it and tracked it down to
-> hw/arm/raspi4b.c's raspi4_modify_dtb(): it decides whether to add a
-> second memory node above the 1 GiB peripheral hole by checking
-> info->ram_size, but that field is the boot loader's RAM budget for
-> where it's allowed to place the kernel/initrd/dtb image, itself always
-> capped to at most UPPER_RAM_BASE - vcram_size by
-> raspi_base_machine_init(). Since that capped value can never exceed
-> UPPER_RAM_BASE by construction, the condition was never true for any
-> raspi4b configuration -- the second node was never added, and the
-> guest never saw more than ~1 GiB of RAM regardless of the machine's
-> nominal size. board_ram_size(info->board_id), computed one line above
-> in the same function, is the value that was actually needed.
+> This is something that we've talked about for quite some time,
+> having separate "max" cpu types for Armv{8,9}, because Armv9
+> prohibits some deprecated Armv8 features.  Retaining all features
+> simultaneously has the potential to cause confusion.
 >
-> Patch 1 fixes it (one line); patch 2 adds a regression test.
+> r~
 >
+> Richard Henderson (7):
+>   target/arm: Tidy cpu_max_initfn
+>   target/arm: Pass ARMCPU to aarch64_aa32_a57_init
+>   target/arm: Pass aarch64_enabled to aarch64_aa32_a57_init
+>   target/arm: Sink aarch64_aa32_a57_init into aarch64_max_tcg_initfn
 
+I've taken these first four cleanup patches into target-arm.next.
 
-
-Applied to target-arm.next, thanks.
-
+thanks
 -- PMM
 
