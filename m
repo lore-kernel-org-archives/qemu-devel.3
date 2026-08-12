@@ -4,107 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1F8C5B567
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06360C5B567
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:01:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu2wc-0006MJ-2d; Wed, 12 Aug 2026 03:00:10 -0400
+	id 1wu2xu-00079t-NC; Wed, 12 Aug 2026 03:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wu2wY-0006Is-KO
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:00:06 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wu2wV-0000ND-Pn
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:00:06 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-84f77cc7302so288180b3a.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 00:00:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786518002; cv=none;
- d=google.com; s=arc-20260327;
- b=gpl2MFSd6Oc6pfaZn4z9Mg3XMGQ2UMcqzd0fo5xlucldW4A/tri445S0uVXKrLnCZK
- YGLNi6dtIPwPA1YmWTpPoZpqjb/PtMpGqVdafSeprNZATmI/mQBMTxET99mSVE8KuEbV
- SopQ6eoQAX/xChOvZtN4fY5vwYfH1oKgPF1SGHKyQbhAwmedGx0Pn0F0Jk0vQWWdctd4
- qUNWz62ZxM9A0hMeTg9T0F24v3lIXFSTVZDe5gN9QwLV4LMHRcWuyZpZUDPkNw9Spgoq
- rLVvVwLDRKUKRdxsRZB0+gkNHevWNSdjUtu4WBnsge6rgsPhFDJLPL4+qkMDaYfcPpVY
- RM/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Ok0rGZzlwkjciQv+adIB8gMCbfh56M57LhucXvZnAEs=;
- fh=nMmB30uaIhDTpmtBZUvn0sOwGbCfGyYqBWkoOVEzeQU=;
- b=SVTSPSmluw4+UB7IqwaZnzLr8KZ2KKTVs0gsO77L9cHiJnPIOqo/11b9O8HK3lOjh5
- rbOifR4/ZjubUmvZ3iMBe0qcXJuTsqzcZMcidl88bLeoQTM97NrMumUV9QYykHV9vTEv
- 0utuw//yENip+wJBOyK+7N+0Ei9AHxpm+zvk5L6EgCqcZ3Vticffo1nwCNUsZCU76JF2
- 02lx8X5zbOdyFIrUXOI1s7K4+Yu4bAeicVVD8vUlJ/X1Bla0Ue5DQRiZoocpk7TvS82d
- MFAHqmrLL83Hq0Q3WXduEyNKVO94bW15uMfFxfbdshMdSNttm83ko/srDiTBuTIuS10b
- Bisw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wu2xr-00079U-Cg
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:01:28 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wu2xo-0000rt-Np
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:01:27 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67C62R612641623
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:01:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=; b=HMOXRVDuoSCfuBw5
+ 6uE7+SyfFlFuHKpPRQzPEUJDETAftc0rmLJNy4mkDgXOv+kqeEQQfdFcyD95svyD
+ BDyOp8uiLLGDHBEHrJ8Tg/DP2aVHxe+Bwzt7P9pVRZ0/Gk8tRWOnEaxIU9e1ecpj
+ +gSe54AgwZUWipxSRk3fT2Xrwz+z1O5vTrM4w+OaktlK6V6rrQ75o0kXgcBGanRW
+ PjmUHGcj8+pEQnye+KCi1cOi8WC1h5nni2pEQ7cmneeS7pYSu8b6LggxcvTPrYe4
+ 2CaM2JYZQanbraBB+Ce12sgiZctxdJ3bYT3H6+IjuDyAzr2OHDcr4YB396vq9vJc
+ Mn4hnQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049mkwgq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:01:14 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-381250979d5so835584a91.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 00:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786518002; x=1787122802; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1786518074; x=1787122874; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ok0rGZzlwkjciQv+adIB8gMCbfh56M57LhucXvZnAEs=;
- b=n87hbGd5U0+6CaEmpySoIth7XgGi3Yo6MpaVdUSdBBFChAmmDjfUqU3YLDUZFGPWat
- K0VhFk/a72cvSsbQ0WFdvf/0i9SnO6cAhxQY8kjM9+4jbDWKpbmMK6vlpOfH3EmvtKUN
- cyxKLCmUCK/aQsVB30BvQ4aviQMEzIgzJ1Rfi6XBW7gZWTo4bYpQHSZmIDUJ7glyUVka
- bdDWjtccU6dZoK2YZrgb65j70SkKKYtamHjk/3DLmCnJbcXELcyATasiUZx6OSTgowAM
- PQUoxEbDG1BgB3PUp4XifenzhznYrnDOy4hVzPrkjfefd6CJ3PYheAt7W7ny2qlZg0Rs
- 0zBg==
+ bh=iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=;
+ b=kPyv1p0tjL1d3WZiI4Mzoqglk/I1xXIFzIfXcKQJm6i0vtGBM72If00v5IoC1LHw7T
+ biBnaMAB06DTMcYBqMFxuz9M06YfYb52Be/5kNKRiiNbY/+gkSn4mH4yEKImd1NDzAXc
+ xXHAllLj7Ow61lTOTCUY5fP+mBF0Oox4WCNVCo98yBa3R+inm41M5qL8bWYCjju5q1YH
+ 3p/L+OrEpf5tOwEfTNj51zEIS6bMGKMltlyi1ajWSwFGZbft4aa1nUvH4wQ5pjwrBYo5
+ PO8XWQ2S51V7BK4sVUE2PsRLcllN8j6wFTYh9S/gmHYNjFFXNtAcWgVrcf0akgYwhke+
+ Wkuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786518002; x=1787122802;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1786518074; x=1787122874;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ok0rGZzlwkjciQv+adIB8gMCbfh56M57LhucXvZnAEs=;
- b=ZygA8iIqrRB8JLxyrgVvr2HBv00/i1gpgOXugIp+mpSMA7iXLcm2ic5y0pwSJI/nTV
- HoRjqsWF8WhZT6uUG7WfEBVvueQDRNI53LKxRqsZD4cANzXOQmpIJGmkoT7yxWBS2/0r
- G41KLNiNqK4CKpC6tYlZ6pwUnNaykvDEZCHGN6d4qAvIxXOEcYG86XVQDPY2hF2ct/4P
- 2/EGj11JktFvmo1+3y8YHyuxLmc4RoXyjnoQsKQnrMweDCWoTWUA0xu0bDt3u3bCn1uO
- nICKU9xlFV56hsjaOqf8USCD9481PdysrIoaX34gKNDYQlvOYyXAA3phMO/GGxoqzSba
- rwAw==
-X-Gm-Message-State: AOJu0Yxk/P3Mcg1l6Q9jLBQSY0D9Qcen/hGKWS9QHqihgiH9Vqq+hO47
- 28Pi9GCiu8ouR3B+X/H/nRuyXhdACr5ZCt6XEbdZx4dRTP4bwo2KIn/bNWTIP+7bTMWmY/li7yq
- 20xONEI7Wf+pqHZ3EZf2WvtxsbaaebYY=
-X-Gm-Gg: AR+sD10UZmXrc7oJp1Z9Snira26iCONxylUZgCZEF+0Cuqg5AuOOl2qyxeF+SQs6AcI
- qI/Gzej/YHCM7tKCO56WZaVaBhjdfwFWMOhzw2tCCPpqQnd4DQWdJDuVrmpl8QMskwDQmQ4eMHH
- /kW6vJxELs5XNaZdv6VZmdWuYQ3n1bYWP9Z/tVXJUIapkQOQ5SnVSGUSXdgimvsC2btMGscBeTn
- BIUjv/5N7uHRp8fGS0deb/nT/1ML/uFTa/oOWZmfSg11RmDbU+2gkl1aTJ61DSp4tGo9Sx5sR2R
- q/Fj6MtcOLiyLH338dnCItbbpLDHPJLIsqQ79yIO7ubJv0NaMk7KHVjJW+6gaMk8DQ3ACy+RKfA
- f
-X-Received: by 2002:a05:6a20:ad98:b0:3b4:6026:6c5d with SMTP id
- adf61e73a8af0-3cc3f528390mr3152890637.5.1786518001787; Wed, 12 Aug 2026
- 00:00:01 -0700 (PDT)
+ bh=iQO6vxZ1nSVOyP90Gwz/Ea8zHgLUH0ix0EcibAMjFC0=;
+ b=O5EuFCJfPMLd/+uLa50Gvu7N9CIpmG0FQb9FQQzeOeJMePySzXFFETy1p0vHgU6Ezl
+ f2WQldE6SimnVSj/CDsXDI/xxm3O/v2Wbowgf94VoC3s2kOIYDoCZckCU/cqoNpCJRug
+ iHcaKHYM6/bjRVII0R6kEq2qNclSJjbE+APUV4GlfGv5uB1p2H2KWJamoZUJIvqlwvGA
+ /4bCp/MIFft7/Apsm59CTvxeli/GN0FDw99Z1kpdd6xokI6Afb+CQ7uOrH/2HEMOZnPo
+ fESB1oqIBofC6CxrmMBqXh9quu3bWeT6bok9WoDXZbnYK3dpL3bAAlIrb1YOGkn/66I4
+ reiQ==
+X-Gm-Message-State: AOJu0Yxg6D60d359nvtyk1aZtmesuhWlvLZ9ue0rOoOThcjUwWdIG3m3
+ hQTe/0ObDTBAB9TpWNApof5+w/C682GjXbdcvXp6d5iRoqcGRTykCBeXPFQV2/lL8pXJl3V5ZY5
+ shcKOZMe0LvOTHSk821jAuW69HKeOPv6g3V8ndtrPi6eZ1iDGGNQUlKHJyQ2u/Sw1qw==
+X-Gm-Gg: AR+sD10KG2wmRqb9NamEi0a6kIdYJKc8KP7snB/y/HfGWExazJF5A1sTN/QgvAcuI2U
+ jDD2QW7I+rFKpVKKTRFkcXvZ3pK4jkeWAUXPCeKyDZOosCC3fagytC5JesoWHdWtuyGEHTlXj6Q
+ FImRaPHnE6oH/0hNXPD8uH+Ca+CfRsm1J0z6M5u7b4eKRPCoA0UUBlgcK5SiGoej5YZ1QN65uUI
+ yoAMZpL2JevLO5ANCxGcRqnj+GxQ9MbYQCHa8aRp0D7xHx3SR0yRno4vH1NYUIRdyATPTMjad/H
+ s0SIJlBHgGXM8a9GGfAb3+8VCG7MFpo1dGRNuFWPE2Ys1uOPfc8ulahh9C6BJzs5jIVOWec2Syj
+ ddHnGix1wb9mrurqMbOT94jaRwBhShywC/52UuD4AVz2tBqds
+X-Received: by 2002:a17:90b:4e84:b0:38d:adae:4866 with SMTP id
+ 98e67ed59e1d1-3930163e525mr3389471a91.21.1786518073563; 
+ Wed, 12 Aug 2026 00:01:13 -0700 (PDT)
+X-Received: by 2002:a17:90b:4e84:b0:38d:adae:4866 with SMTP id
+ 98e67ed59e1d1-3930163e525mr3389382a91.21.1786518072997; 
+ Wed, 12 Aug 2026 00:01:12 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-392f908a82bsm2412478a91.0.2026.08.12.00.01.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 00:01:12 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
+Cc: brian.cain@oss.qualcomm.com,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Taylor Simpson <ltaylorsimpson@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 41/41] tests/hexagon: add tests for HVX bfloat
+Date: Tue, 11 Aug 2026 23:29:32 -0700
+Message-Id: <20260812062932.543840-42-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
+References: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260611052857.3911981-1-brian.cain@oss.qualcomm.com>
- <20260611052857.3911981-35-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260611052857.3911981-35-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 12 Aug 2026 10:59:49 +0400
-X-Gm-Features: AUfX_mxpJTJ89_aI907rqmHlUVxQCukV8DsHvWMeEAietXYT8upKSlWLc2hGKsU
-Message-ID: <CAJ+F1CJb1rZPCE8euSqdwojNRTHtquOYcT+BTWjuO_c8oKYgqg@mail.gmail.com>
-Subject: Re: [PATCH v8] target/hexagon: Update TARGET_PAGE_BITS,
- stubs for modify_ssr/get_exe_mode
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
- pierrick.bouvier@oss.qualcomm.com, ltaylorsimpson@gmail.com, philmd@mailo.org, 
- philmd@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-GUID: nMkLfJYoWRq2IopsosCcKqJSfGlGuN5z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfX2hJntaWKF1rC
+ sArCT6ekC9vifjW4I7xz87ZiqlTp53qWTzh1eh5HJhRtrzkrQfAgd2aNRJrs5u3pCeuxW3x3Z2t
+ GDJitj80gqw7KzRtbp9C6Tozs21k/IWhRh9LmzBv/OR1EfKlOCBG8pvM3ZJkD9m5utv/FBOLarr
+ DNcCeGz0Rpcdhs0Knl/3uo7+k37t0/sV9NjcneeQ9ZVZyRLjQhoRvY+X1VJ7hRTxejWE8dIxxxE
+ DVqxMYskNabXg1ZYjKZkSRH39qrdXG6FOHqRQo42Bz6C38TKjFh9Z6Im/9Bs7reQHkaxjWlVjP5
+ H7O+fc9LDgQJL9HBbs1aqnjjBrj0WINlCsu4T+1E+x4V154Vht0+6eeLSbcC9JJhBuoW+PqNNWw
+ YdrDsOCf91lvCAvvBYxp8Nc+RJy8wbZ/obLLPA/tJgPWIV/X6yW2kF6Vhcn7754f6AbOHqMyH6/
+ /BKSSmPa6NE76+5ut7Q==
+X-Proofpoint-ORIG-GUID: nMkLfJYoWRq2IopsosCcKqJSfGlGuN5z
+X-Authority-Analysis: v=2.4 cv=FbkHAp+6 c=1 sm=1 tr=0 ts=6a7c1a3a cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=UXK3Z1TEhiG8phQMQjQA:9
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1NCBTYWx0ZWRfX6ZCVm6S7Afl8
+ 6yI8UKSHs9ok58g3Yc4kdxByfxx8VJL9McxqX5b8SQWnERvu/JE29T47L0Jo5CRs1xZN0iBbsP6
+ apy0bXa/+xs8jOjaq5ePBssHYJ/9kdQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 clxscore=1015 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608120054
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,584 +154,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Brian
-
-On Thu, Jun 11, 2026 at 9:31=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> Add hex_mmu.[ch], cpu mode helpers, and additional includes/stubs
-> that integrate the TLB device with the CPU model.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu-param.h  |   2 +-
->  target/hexagon/cpu.h        |  21 +++
->  target/hexagon/hex_mmu.h    |  26 ++++
->  target/hexagon/internal.h   |   9 ++
->  target/hexagon/sys_macros.h |   3 +
->  target/hexagon/cpu.c        |  36 +++++
->  target/hexagon/hex_mmu.c    | 268 ++++++++++++++++++++++++++++++++++++
->  7 files changed, 364 insertions(+), 1 deletion(-)
->  create mode 100644 target/hexagon/hex_mmu.h
->  create mode 100644 target/hexagon/hex_mmu.c
->
-> diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
-> index 1f0f22a7968..bfe9a868d63 100644
-> --- a/target/hexagon/cpu-param.h
-> +++ b/target/hexagon/cpu-param.h
-> @@ -18,7 +18,7 @@
->  #ifndef HEXAGON_CPU_PARAM_H
->  #define HEXAGON_CPU_PARAM_H
->
-> -#define TARGET_PAGE_BITS 16     /* 64K pages */
-> +#define TARGET_PAGE_BITS 12     /* 4K pages */
->
->  #define TARGET_VIRT_ADDR_SPACE_BITS 32
->
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 7ba1d3047df..dbdc456d732 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -27,6 +27,9 @@
->  #define SREG_WRITES_MAX 2
->  #endif
->
-> +typedef struct HexagonTLBState HexagonTLBState;
-> +typedef struct HexagonGlobalRegState HexagonGlobalRegState;
-> +
->  #include "cpu-qom.h"
->  #include "exec/cpu-common.h"
->  #include "exec/target_long.h"
-> @@ -39,6 +42,7 @@
->  #error "Hexagon does not support system emulation"
->  #endif
->
-> +
->  #define NUM_PREGS 4
->  #define TOTAL_PER_THREAD_REGS 64
->
-> @@ -47,10 +51,13 @@
->  #define REG_WRITES_MAX 32
->  #define PRED_WRITES_MAX 5                   /* 4 insns + endloop */
->  #define VSTORES_MAX 2
-> +#define MAX_TLB_ENTRIES 1024
->
->  #define CPU_RESOLVING_TYPE TYPE_HEXAGON_CPU
->  #ifndef CONFIG_USER_ONLY
->  #define CPU_INTERRUPT_SWI      CPU_INTERRUPT_TGT_INT_0
-> +#define CPU_INTERRUPT_K0_UNLOCK CPU_INTERRUPT_TGT_INT_1
-> +#define CPU_INTERRUPT_TLB_UNLOCK CPU_INTERRUPT_TGT_INT_2
->
->  #define HEX_CPU_MODE_USER    1
->  #define HEX_CPU_MODE_GUEST   2
-> @@ -67,6 +74,12 @@
->  #define MMU_GUEST_IDX        1
->  #define MMU_KERNEL_IDX       2
->
-> +typedef enum {
-> +    HEX_LOCK_UNLOCKED       =3D 0,
-> +    HEX_LOCK_WAITING        =3D 1,
-> +    HEX_LOCK_OWNER          =3D 2,
-> +    HEX_LOCK_QUEUED        =3D 3
-> +} hex_lock_state_t;
->  #endif
->
->
-> @@ -128,6 +141,10 @@ typedef struct CPUArchState {
->
->      /* This alias of CPUState.cpu_index is used by imported sources: */
->      uint32_t threadId;
-> +    hex_lock_state_t tlb_lock_state;
-> +    hex_lock_state_t k0_lock_state;
-> +    uint32_t tlb_lock_count;
-> +    uint32_t k0_lock_count;
->      uint64_t t_cycle_count;
->  #endif
->      uint32_t next_PC;
-> @@ -178,6 +195,10 @@ struct ArchCPU {
->      bool lldb_compat;
->      target_ulong lldb_stack_adjust;
->      bool short_circuit;
-> +#ifndef CONFIG_USER_ONLY
-> +    HexagonTLBState *tlb;
-> +    uint32_t htid;
-> +#endif
->  };
->
->  #include "cpu_bits.h"
-> diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
-> new file mode 100644
-> index 00000000000..4f556c715a9
-> --- /dev/null
-> +++ b/target/hexagon/hex_mmu.h
-> @@ -0,0 +1,26 @@
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HEXAGON_MMU_H
-> +#define HEXAGON_MMU_H
-> +
-> +#include "cpu.h"
-> +#include "monitor/monitor.h"
-> +
-> +extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t valu=
-e);
-> +extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint3=
-2_t VA);
-> +extern void hex_mmu_on(CPUHexagonState *env);
-> +extern void hex_mmu_off(CPUHexagonState *env);
-> +extern void hex_mmu_mode_change(CPUHexagonState *env);
-> +extern bool hex_tlb_find_match(CPUHexagonState *env, uint32_t VA,
-> +                               MMUAccessType access_type, hwaddr *PA, in=
-t *prot,
-> +                               uint64_t *size, int32_t *excp, int mmu_id=
-x);
-> +extern int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry,
-> +                                 uint64_t index);
-> +extern void hex_tlb_lock(CPUHexagonState *env);
-> +extern void hex_tlb_unlock(CPUHexagonState *env);
-> +void dump_mmu(Monitor *mon, CPUHexagonState *env);
-
-dump_mmu() is unused, should it be dropped or commented out (and
-reintroduced when wired to info tlb?)
-
-> +#endif
-> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-> index 33d73ed18d1..4338914efb5 100644
-> --- a/target/hexagon/internal.h
-> +++ b/target/hexagon/internal.h
-> @@ -36,6 +36,15 @@ void G_NORETURN do_raise_exception(CPUHexagonState *en=
-v,
->          uint32_t PC,
->          uintptr_t retaddr);
->
-> +#define hexagon_cpu_mmu_enabled(env) ({ \
-> +    HexagonCPU *cpu =3D env_archcpu(env); \
-> +    cpu->globalregs ? \
-> +        GET_SYSCFG_FIELD(SYSCFG_MMUEN, \
-> +            hexagon_globalreg_read(cpu->globalregs, \
-> +                                   HEX_SREG_SYSCFG, (env)->threadId)) : =
-\
-> +        0; \
-> +})
-> +
->  #ifndef CONFIG_USER_ONLY
->  extern const VMStateDescription vmstate_hexagon_cpu;
->  #endif
-> diff --git a/target/hexagon/sys_macros.h b/target/hexagon/sys_macros.h
-> index 09d78b002e6..8b81e1ca0af 100644
-> --- a/target/hexagon/sys_macros.h
-> +++ b/target/hexagon/sys_macros.h
-> @@ -139,6 +139,9 @@
->  #define fDCINVIDX(REG)
->  #define fDCINVA(REG) do { REG =3D REG; } while (0) /* Nothing to do in q=
-emu */
->
-> +#define fSET_TLB_LOCK()       hex_tlb_lock(env);
-> +#define fCLEAR_TLB_LOCK()     hex_tlb_unlock(env);
-> +
->  #define fTLB_IDXMASK(INDEX) \
->      ((INDEX) & (fPOW2_ROUNDUP( \
->          fCAST4u(hexagon_tlb_get_num_entries(env_archcpu(env)->tlb))) - 1=
-))
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 626100d43fd..73aca0a4217 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -23,9 +23,17 @@
->  #include "qapi/error.h"
->  #include "hw/core/qdev-properties.h"
->  #include "fpu/softfloat-helpers.h"
-> +#include "hw/hexagon/hexagon_tlb.h"
->  #include "tcg/tcg.h"
->  #include "exec/gdbstub.h"
->  #include "accel/tcg/cpu-ops.h"
-> +#include "cpu_helper.h"
-> +#include "hex_mmu.h"
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +#include "sys_macros.h"
-> +#include "accel/tcg/cpu-ldst.h"
-> +#endif
->
->  static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
->  {
-> @@ -43,6 +51,11 @@ static ObjectClass *hexagon_cpu_class_by_name(const ch=
-ar *cpu_model)
->  }
->
->  static const Property hexagon_cpu_properties[] =3D {
-> +#ifndef CONFIG_USER_ONLY
-> +    DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
-> +                     HexagonTLBState *),
-> +    DEFINE_PROP_UINT32("htid", HexagonCPU, htid, 0),
-> +#endif
->      DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
->      DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adj=
-ust, 0,
->                           qdev_prop_uint32, target_ulong),
-> @@ -269,7 +282,11 @@ static TCGTBCPUState hexagon_get_tb_cpu_state(CPUSta=
-te *cs)
->      }
->
->  #ifndef CONFIG_USER_ONLY
-> +    hex_flags =3D FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX,
-> +                           cpu_mmu_index(env_cpu(env), false));
->      hex_flags =3D FIELD_DP32(hex_flags, TB_FLAGS, PCYCLE_ENABLED, 1);
-> +#else
-> +    hex_flags =3D FIELD_DP32(hex_flags, TB_FLAGS, MMU_INDEX, MMU_USER_ID=
-X);
->  #endif
->
->      return (TCGTBCPUState){ .pc =3D pc, .flags =3D hex_flags };
-> @@ -289,11 +306,15 @@ static void hexagon_restore_state_to_opc(CPUState *=
-cs,
->      cpu_env(cs)->gpr[HEX_REG_PC] =3D data[0];
->  }
->
-> +
->  static void hexagon_cpu_reset_hold(Object *obj, ResetType type)
->  {
->      CPUState *cs =3D CPU(obj);
->      HexagonCPUClass *mcc =3D HEXAGON_CPU_GET_CLASS(obj);
->      CPUHexagonState *env =3D cpu_env(cs);
-> +#ifndef CONFIG_USER_ONLY
-> +    HexagonCPU *cpu =3D HEXAGON_CPU(cs);
-> +#endif
->
->      if (mcc->parent_phases.hold) {
->          mcc->parent_phases.hold(obj, type);
-> @@ -307,7 +328,14 @@ static void hexagon_cpu_reset_hold(Object *obj, Rese=
-tType type)
->      memset(env->t_sreg, 0, sizeof(uint32_t) * NUM_SREGS);
->      memset(env->greg, 0, sizeof(uint32_t) * NUM_GREGS);
->      env->wait_next_pc =3D 0;
-> +    env->tlb_lock_state =3D HEX_LOCK_UNLOCKED;
-> +    env->k0_lock_state =3D HEX_LOCK_UNLOCKED;
-> +    env->tlb_lock_count =3D 0;
-> +    env->k0_lock_count =3D 0;
->      env->next_PC =3D 0;
-> +
-> +    env->t_sreg[HEX_SREG_HTID] =3D cpu->htid;
-> +    env->threadId =3D cpu->htid;
->  #endif
->      env->cause_code =3D HEX_EVENT_NONE;
->  }
-> @@ -337,7 +365,15 @@ static void hexagon_cpu_realize(DeviceState *dev, Er=
-ror **errp)
->                               hexagon_hvx_gdb_write_register,
->                               gdb_find_static_feature("hexagon-hvx.xml"))=
-;
->
-> +#ifndef CONFIG_USER_ONLY
-> +    if (!HEXAGON_CPU(dev)->tlb) {
-> +        error_setg(errp, "hexagon cpu requires 'tlb' link property to be=
- set");
-> +        return;
-> +    }
-> +#endif
-> +
->      qemu_init_vcpu(cs);
-> +
->      cpu_reset(cs);
->      mcc->parent_realize(dev, errp);
->  }
-> diff --git a/target/hexagon/hex_mmu.c b/target/hexagon/hex_mmu.c
-> new file mode 100644
-> index 00000000000..c921e82b377
-> --- /dev/null
-> +++ b/target/hexagon/hex_mmu.c
-> @@ -0,0 +1,268 @@
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "qemu/main-loop.h"
-> +#include "qemu/qemu-print.h"
-> +#include "cpu.h"
-> +#include "system/cpus.h"
-> +#include "internal.h"
-> +#include "exec/cpu-interrupt.h"
-> +#include "cpu_helper.h"
-> +#include "exec/cputlb.h"
-> +#include "hex_mmu.h"
-> +#include "macros.h"
-> +#include "sys_macros.h"
-> +#include "hw/hexagon/hexagon_tlb.h"
-> +#include "hw/hexagon/hexagon_globalreg.h"
-> +
-> +static inline void hex_log_tlbw(uint32_t index, uint64_t entry)
-> +{
-> +    qemu_log_mask(CPU_LOG_MMU,
-> +                  "tlbw[%03" PRIu32 "]: 0x%016" PRIx64 "\n",
-> +                  index, entry);
-> +}
-> +
-> +void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value)
-> +{
-> +    uint32_t myidx =3D fTLB_NONPOW2WRAP(fTLB_IDXMASK(index));
-> +    HexagonTLBState *tlb =3D env_archcpu(env)->tlb;
-> +    uint64_t old_entry =3D hexagon_tlb_read(tlb, myidx);
-> +
-> +    bool old_entry_valid =3D extract64(old_entry, 63, 1);
-> +    if (old_entry_valid && hexagon_cpu_mmu_enabled(env)) {
-> +        CPUState *cs =3D env_cpu(env);
-> +        tlb_flush(cs);
-> +    }
-> +    hexagon_tlb_write(tlb, myidx, value);
-> +    hex_log_tlbw(myidx, value);
-> +}
-> +
-> +void hex_mmu_on(CPUHexagonState *env)
-> +{
-> +    CPUState *cs =3D env_cpu(env);
-> +    qemu_log_mask(CPU_LOG_MMU, "Hexagon MMU turned on!\n");
-> +    tlb_flush(cs);
-> +}
-> +
-> +void hex_mmu_off(CPUHexagonState *env)
-> +{
-> +    CPUState *cs =3D env_cpu(env);
-> +    qemu_log_mask(CPU_LOG_MMU, "Hexagon MMU turned off!\n");
-> +    tlb_flush(cs);
-> +}
-> +
-> +void hex_mmu_mode_change(CPUHexagonState *env)
-> +{
-> +    qemu_log_mask(CPU_LOG_MMU, "Hexagon mode change!\n");
-> +    CPUState *cs =3D env_cpu(env);
-> +    tlb_flush(cs);
-> +}
-> +
-> +bool hex_tlb_find_match(CPUHexagonState *env, uint32_t VA,
-> +                        MMUAccessType access_type, hwaddr *PA, int *prot=
-,
-> +                        uint64_t *size, int32_t *excp, int mmu_idx)
-> +{
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    uint32_t ssr =3D env->t_sreg[HEX_SREG_SSR];
-> +    uint8_t asid =3D GET_SSR_FIELD(SSR_ASID, ssr);
-> +    int cause_code =3D 0;
-> +
-> +    bool found =3D hexagon_tlb_find_match(cpu->tlb, asid, VA, access_typ=
-e,
-> +                                        PA, prot, size, excp, &cause_cod=
-e,
-> +                                        mmu_idx);
-> +    if (cause_code) {
-> +        env->cause_code =3D cause_code;
-> +    }
-> +    return found;
-> +}
-> +
-> +/* Called from tlbp instruction */
-> +uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA)
-> +{
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    uint8_t asid =3D GET_SSR_FIELD(SSR_ASID, ssr);
-> +    int cause_code =3D 0;
-> +
-> +    uint32_t result =3D hexagon_tlb_lookup(cpu->tlb, asid, VA, &cause_co=
-de);
-> +    if (cause_code) {
-> +        env->cause_code =3D cause_code;
-> +    }
-> +    return result;
-> +}
-> +
-> +/*
-> + * Return codes:
-> + * 0 or positive             index of match
-> + * -1                        multiple matches
-> + * -2                        no match
-> + */
-> +int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry, uint64_t=
- index)
-> +{
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    return hexagon_tlb_check_overlap(cpu->tlb, entry, index);
-> +}
-> +
-> +void dump_mmu(Monitor *mon, CPUHexagonState *env)
-> +{
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    hexagon_tlb_dump(mon, cpu->tlb);
-> +}
-> +
-> +static inline void print_thread(const char *str, CPUState *cs)
-> +{
-> +    g_assert(bql_locked());
-> +    CPUHexagonState *thread =3D cpu_env(cs);
-> +    bool is_stopped =3D cpu_is_stopped(cs);
-> +    int exe_mode =3D get_exe_mode(thread);
-> +    hex_lock_state_t lock_state =3D thread->tlb_lock_state;
-> +    qemu_log_mask(CPU_LOG_MMU,
-> +           "%s: threadId =3D %" PRIu32 ": %s, exe_mode =3D %s, tlb_lock_=
-state =3D %s\n",
-> +           str,
-> +           thread->threadId,
-> +           is_stopped ? "stopped" : "running",
-> +           exe_mode =3D=3D HEX_EXE_MODE_OFF ? "off" :
-> +           exe_mode =3D=3D HEX_EXE_MODE_RUN ? "run" :
-> +           exe_mode =3D=3D HEX_EXE_MODE_WAIT ? "wait" :
-> +           exe_mode =3D=3D HEX_EXE_MODE_DEBUG ? "debug" :
-> +           "unknown",
-> +           lock_state =3D=3D HEX_LOCK_UNLOCKED ? "unlocked" :
-> +           lock_state =3D=3D HEX_LOCK_WAITING ? "waiting" :
-> +           lock_state =3D=3D HEX_LOCK_OWNER ? "owner" :
-> +           "unknown");
-> +}
-> +
-> +static inline void print_thread_states(const char *str)
-> +{
-> +    CPUState *cs;
-> +    CPU_FOREACH(cs) {
-> +        print_thread(str, cs);
-> +    }
-> +}
-> +
-> +void hex_tlb_lock(CPUHexagonState *env)
-> +{
-> +    qemu_log_mask(CPU_LOG_MMU, "hex_tlb_lock: " TARGET_FMT_ld "\n",
-> +                  env->threadId);
-> +    BQL_LOCK_GUARD();
-> +    g_assert((env->tlb_lock_count =3D=3D 0) || (env->tlb_lock_count =3D=
-=3D 1));
-> +
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    uint32_t syscfg =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_SYSCFG,
-> +                               env->threadId) : 0;
-> +    uint8_t tlb_lock =3D GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
-> +    if (tlb_lock) {
-> +        if (env->tlb_lock_state =3D=3D HEX_LOCK_QUEUED) {
-> +            env->next_PC +=3D 4;
-> +            env->tlb_lock_count++;
-> +            env->tlb_lock_state =3D HEX_LOCK_OWNER;
-> +            SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
-> +            return;
-> +        }
-> +        if (env->tlb_lock_state =3D=3D HEX_LOCK_OWNER) {
-> +            qemu_log_mask(CPU_LOG_MMU | LOG_GUEST_ERROR,
-> +                          "Double tlblock at PC: 0x%" PRIx32 ", thread m=
-ay hang\n",
-> +                          env->next_PC);
-> +            env->next_PC +=3D 4;
-> +            CPUState *cs =3D env_cpu(env);
-> +            cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> +            return;
-> +        }
-> +        env->tlb_lock_state =3D HEX_LOCK_WAITING;
-> +        CPUState *cs =3D env_cpu(env);
-> +        cpu_interrupt(cs, CPU_INTERRUPT_HALT);
-> +    } else {
-> +        env->next_PC +=3D 4;
-> +        env->tlb_lock_count++;
-> +        env->tlb_lock_state =3D HEX_LOCK_OWNER;
-> +        SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 1);
-> +    }
-> +
-> +    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-> +        qemu_log_mask(CPU_LOG_MMU, "Threads after hex_tlb_lock:\n");
-> +        print_thread_states("\tThread");
-> +    }
-> +}
-> +
-> +void hex_tlb_unlock(CPUHexagonState *env)
-> +{
-> +    BQL_LOCK_GUARD();
-> +    g_assert((env->tlb_lock_count =3D=3D 0) || (env->tlb_lock_count =3D=
-=3D 1));
-> +
-> +    /* Nothing to do if the TLB isn't locked by this thread */
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    uint32_t syscfg =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_SYSCFG,
-> +                               env->threadId) : 0;
-> +    uint8_t tlb_lock =3D GET_SYSCFG_FIELD(SYSCFG_TLBLOCK, syscfg);
-> +    if ((tlb_lock =3D=3D 0) ||
-> +        (env->tlb_lock_state !=3D HEX_LOCK_OWNER)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "thread %" PRIu32 " attempted to tlbunlock without=
- having the "
-> +                      "lock, tlb_lock state =3D %d\n",
-> +                      env->threadId, env->tlb_lock_state);
-> +        g_assert(env->tlb_lock_state !=3D HEX_LOCK_WAITING);
-> +        return;
-> +    }
-> +
-> +    env->tlb_lock_count--;
-> +    env->tlb_lock_state =3D HEX_LOCK_UNLOCKED;
-> +    SET_SYSCFG_FIELD(env, SYSCFG_TLBLOCK, 0);
-> +
-> +    /* Look for a thread to unlock */
-> +    unsigned int this_threadId =3D env->threadId;
-> +    CPUHexagonState *unlock_thread =3D NULL;
-> +    CPUState *cs;
-> +    CPU_FOREACH(cs) {
-> +        CPUHexagonState *thread =3D cpu_env(cs);
-> +
-> +        /*
-> +         * The hardware implements round-robin fairness, so we look for =
-threads
-> +         * starting at env->threadId + 1 and incrementing modulo the num=
-ber of
-> +         * threads.
-> +         *
-> +         * To implement this, we check if thread is a earlier in the mod=
-ulo
-> +         * sequence than unlock_thread.
-> +         *     if unlock thread is higher than this thread
-> +         *         thread must be between this thread and unlock_thread
-> +         *     else
-> +         *         thread higher than this thread is ahead of unlock_thr=
-ead
-> +         *         thread must be lower then unlock thread
-> +         */
-> +        if (thread->tlb_lock_state =3D=3D HEX_LOCK_WAITING) {
-> +            if (!unlock_thread) {
-> +                unlock_thread =3D thread;
-> +            } else if (unlock_thread->threadId > this_threadId) {
-> +                if (this_threadId < thread->threadId &&
-> +                    thread->threadId < unlock_thread->threadId) {
-> +                    unlock_thread =3D thread;
-> +                }
-> +            } else {
-> +                if (thread->threadId > this_threadId) {
-> +                    unlock_thread =3D thread;
-> +                }
-> +                if (thread->threadId < unlock_thread->threadId) {
-> +                    unlock_thread =3D thread;
-> +                }
-> +            }
-> +        }
-> +    }
-> +    if (unlock_thread) {
-> +        cs =3D env_cpu(unlock_thread);
-> +        print_thread("\tWaiting thread found", cs);
-> +        unlock_thread->tlb_lock_state =3D HEX_LOCK_QUEUED;
-> +        SET_SYSCFG_FIELD(unlock_thread, SYSCFG_TLBLOCK, 1);
-> +        cpu_interrupt(cs, CPU_INTERRUPT_TLB_UNLOCK);
-> +    }
-> +
-> +    if (qemu_loglevel_mask(CPU_LOG_MMU)) {
-> +        qemu_log_mask(CPU_LOG_MMU, "Threads after hex_tlb_unlock:\n");
-> +        print_thread_states("\tThread");
-> +    }
-> +
-> +}
-> --
-> 2.34.1
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+RnJvbTogTWF0aGV1cyBUYXZhcmVzIEJlcm5hcmRpbm8gPG1hdGhldXMuYmVybmFyZGlub0Bvc3Mu
+cXVhbGNvbW0uY29tPgoKUmV2aWV3ZWQtYnk6IFRheWxvciBTaW1wc29uIDxsdGF5bG9yc2ltcHNv
+bkBnbWFpbC5jb20+ClNpZ25lZC1vZmYtYnk6IE1hdGhldXMgVGF2YXJlcyBCZXJuYXJkaW5vIDxt
+YXRoZXVzLmJlcm5hcmRpbm9Ab3NzLnF1YWxjb21tLmNvbT4KUmV2aWV3ZWQtYnk6IEJyaWFuIENh
+aW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KTGluazogaHR0cHM6Ly9sb3JlLmtlcm5l
+bC5vcmcvcWVtdS1kZXZlbC8zOTIxMTRjNGMxNmU2ZjdmMjgzNWE2NTEzOTg3YWFmZWE4MmI1NjVj
+LjE3NzYzMzk0NTEuZ2l0Lm1hdGhldXMuYmVybmFyZGlub0Bvc3MucXVhbGNvbW0uY29tClNpZ25l
+ZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0
+ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVzdC5oICAgfCAxMyArKysrKysrKysKIHRlc3RzL3RjZy9o
+ZXhhZ29uL2h2eF9taXNjLmggICB8IDMwICsrKysrKysrKysrKysrKysrKysrCiB0ZXN0cy90Y2cv
+aGV4YWdvbi9mcF9odnguYyAgICAgfCA0MSArKysrKysrKysrKysrKysrKysrKysrKysrKysKIHRl
+c3RzL3RjZy9oZXhhZ29uL2ZwX2h2eF9jbXAuYyB8IDUxICsrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysKIHRlc3RzL3RjZy9oZXhhZ29uL2ZwX2h2eF9jdnQuYyB8IDMxICsrKysrKysr
+KysrKysrKysrKysrKwogNSBmaWxlcyBjaGFuZ2VkLCAxNjYgaW5zZXJ0aW9ucygrKQoKZGlmZiAt
+LWdpdCBhL3Rlc3RzL3RjZy9oZXhhZ29uL2hleF90ZXN0LmggYi90ZXN0cy90Y2cvaGV4YWdvbi9o
+ZXhfdGVzdC5oCmluZGV4IDc5ZDMwZWM2MWM2Li5mODZlNmUxYTY5ZSAxMDA2NDQKLS0tIGEvdGVz
+dHMvdGNnL2hleGFnb24vaGV4X3Rlc3QuaAorKysgYi90ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVz
+dC5oCkBAIC0xMjYsNiArMTI2LDE5IEBAIGNvbnN0IHVpbnQxNl90IEhGX3NtYWxsX25lZyA9IDB4
+ODAxMDsKIGNvbnN0IHVpbnQxNl90IEhGX2FueSA9IDB4M2MwMDsKIGNvbnN0IHVpbnQxNl90IEhG
+X25lZ190d28gPSAweGMwMDA7CiAKK2NvbnN0IHVpbnQxNl90IEJGX0lORiAgICAgICAgICAgPSAw
+eDdmODA7Citjb25zdCB1aW50MTZfdCBCRl9JTkZfbmVnICAgICAgID0gMHhmZjgwOworY29uc3Qg
+dWludDE2X3QgQkZfUU5hTiAgICAgICAgICA9IDB4N2ZjMDsKK2NvbnN0IHVpbnQxNl90IEJGX1NO
+YU4gICAgICAgICAgPSAweDdmODE7Citjb25zdCB1aW50MTZfdCBCRl9RTmFOX25lZyAgICAgID0g
+MHhmZmMwOworY29uc3QgdWludDE2X3QgQkZfU05hTl9uZWcgICAgICA9IDB4ZmY4MTsKK2NvbnN0
+IHVpbnQxNl90IEJGX0hFWF9OYU4gICAgICAgPSAweDdmZmY7Citjb25zdCB1aW50MTZfdCBCRl96
+ZXJvICAgICAgICAgID0gMHgwMDAwOworY29uc3QgdWludDE2X3QgQkZfemVyb19uZWcgICAgICA9
+IDB4ODAwMDsKK2NvbnN0IHVpbnQxNl90IEJGX29uZSAgICAgICAgICAgPSAweDNmODA7Citjb25z
+dCB1aW50MTZfdCBCRl90d28gICAgICAgICAgID0gMHg0MDAwOworY29uc3QgdWludDE2X3QgQkZf
+Zm91ciAgICAgICAgICA9IDB4NDA4MDsKKwogY29uc3QgdWludDMyX3QgU0ZfSU5GID0gICAgICAg
+ICAgICAgIDB4N2Y4MDAwMDA7CiBjb25zdCB1aW50MzJfdCBTRl9JTkZfbmVnID0gICAgICAgICAg
+MHhmZjgwMDAwMDsKIGNvbnN0IHVpbnQzMl90IFNGX1FOYU4gPSAgICAgICAgICAgICAweDdmYzAw
+MDAwOwpkaWZmIC0tZ2l0IGEvdGVzdHMvdGNnL2hleGFnb24vaHZ4X21pc2MuaCBiL3Rlc3RzL3Rj
+Zy9oZXhhZ29uL2h2eF9taXNjLmgKaW5kZXggNDNkZTIwZGE2YWMuLmMyMWVhOTc1YzE2IDEwMDY0
+NAotLS0gYS90ZXN0cy90Y2cvaGV4YWdvbi9odnhfbWlzYy5oCisrKyBiL3Rlc3RzL3RjZy9oZXhh
+Z29uL2h2eF9taXNjLmgKQEAgLTQxLDYgKzQxLDcgQEAgdHlwZWRlZiB1bmlvbiB7CiAgICAgdWlu
+dDE2X3QgdWhbTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMl07CiAgICAgdWludDE2X3QgaGZbTUFYX1ZF
+Q19TSVpFX0JZVEVTIC8gMl07IC8qIGNvbnZlbmllbmNlIGFsaWFzICovCiAgICAgaW50MTZfdCAg
+IGhbTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMl07CisgICAgdWludDE2X3QgIGJmW01BWF9WRUNfU0la
+RV9CWVRFUyAvIDJdOwogICAgIHVpbnQ4X3QgIHViW01BWF9WRUNfU0laRV9CWVRFUyAvIDFdOwog
+ICAgIGludDhfdCAgICBiW01BWF9WRUNfU0laRV9CWVRFUyAvIDFdOwogfSBNTVZlY3RvcjsKQEAg
+LTczLDYgKzc0LDcgQEAgQ0hFQ0tfT1VUUFVUX0ZVTkModWgsIDIpCiBDSEVDS19PVVRQVVRfRlVO
+QyhoZiwgMikKIENIRUNLX09VVFBVVF9GVU5DKHViLCAgMSkKIENIRUNLX09VVFBVVF9GVU5DKGIs
+ICAxKQorQ0hFQ0tfT1VUUFVUX0ZVTkMoYmYsICAyKQogCiBzdGF0aWMgaW5saW5lIHZvaWQgaW5p
+dF9idWZmZXJzKHZvaWQpCiB7CkBAIC05Nyw2ICs5OSwxMiBAQCBzdGF0aWMgY29uc3QgdWludDMy
+X3QgRlBfVkFMVUVTW10gPSB7CiB9OwogI2RlZmluZSBGUF9WQUxVRVNfTUFYIEFSUkFZX1NJWkUo
+RlBfVkFMVUVTKQogCitzdGF0aWMgY29uc3QgdWludDE2X3QgQkZfVkFMVUVTW10gPSB7CisgICAg
+QkZfSU5GLCBCRl9JTkZfbmVnLCBCRl9RTmFOLCBCRl9TTmFOLCBCRl9RTmFOX25lZywgQkZfU05h
+Tl9uZWcsCisgICAgQkZfSEVYX05hTiwgQkZfemVybywgQkZfemVyb19uZWcsIEJGX29uZSwgQkZf
+dHdvLCBCRl9mb3VyLAorfTsKKyNkZWZpbmUgQkZfVkFMVUVTX01BWCBBUlJBWV9TSVpFKEJGX1ZB
+TFVFUykKKwogc3RhdGljIGlubGluZSB2b2lkIGluaXRfYnVmZmVyc19mcCh2b2lkKQogewogICAg
+IF9TdGF0aWNfYXNzZXJ0KEJVRlNJWkUgKiAoTUFYX1ZFQ19TSVpFX0JZVEVTIC8gNCkgPgpAQCAt
+MTE2LDYgKzEyNCwyNSBAQCBzdGF0aWMgaW5saW5lIHZvaWQgaW5pdF9idWZmZXJzX2ZwKHZvaWQp
+CiAgICAgfQogfQogCitzdGF0aWMgaW5saW5lIHZvaWQgaW5pdF9idWZmZXJzX2JmKHZvaWQpCit7
+CisgICAgX1N0YXRpY19hc3NlcnQoQlVGU0laRSAqIChNQVhfVkVDX1NJWkVfQllURVMgLyAyKSA+
+CisgICAgICAgICAgICAgICAgICAgQkZfVkFMVUVTX01BWCAqIEJGX1ZBTFVFU19NQVgsCisgICAg
+ICAgICAgICAgICAgICAgInRlc3QgYXJyYXlzIGNhbid0IGZpdCBhbGwgQkZfVkFMVUVTIGNvbWJp
+bmF0aW9ucyIpOworICAgIGludCBjb3VudGVyMSA9IDAsIGNvdW50ZXIyID0gMDsKKyAgICBmb3Ig
+KGludCBpID0gMDsgaSA8IEJVRlNJWkU7IGkrKykgeworICAgICAgICBmb3IgKGludCBqID0gMDsg
+aiA8IE1BWF9WRUNfU0laRV9CWVRFUyAvIDI7IGorKykgeworICAgICAgICAgICAgYnVmZmVyMFtp
+XS5iZltqXSA9IEJGX1ZBTFVFU1tjb3VudGVyMV07CisgICAgICAgICAgICBidWZmZXIxW2ldLmJm
+W2pdID0gQkZfVkFMVUVTW2NvdW50ZXIyXTsKKyAgICAgICAgICAgIGNvdW50ZXIyKys7CisgICAg
+ICAgICAgICBpZiAoY291bnRlcjIgPT0gQkZfVkFMVUVTX01BWCkgeworICAgICAgICAgICAgICAg
+IGNvdW50ZXIyID0gMDsKKyAgICAgICAgICAgICAgICBjb3VudGVyMSA9IChjb3VudGVyMSArIDEp
+ICUgQkZfVkFMVUVTX01BWDsKKyAgICAgICAgICAgIH0KKyAgICAgICAgfQorICAgIH0KK30KKwog
+I2RlZmluZSBWRUNfT1AxKEFTTSwgRUwsIElOLCBPVVQpIFwKICAgICBhc20oInYyID0gdm1lbSgl
+MCArICMwKVxuXHQiIFwKICAgICAgICAgInYyIiAjRUwgIiA9ICIgI0FTTSAiKHYyIiAjRUwgIilc
+blx0IiBcCkBAIC0yMTIsMTAgKzIzOSwxMyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgdGVzdF8jI05B
+TUUoYm9vbCBpbnZlcnQpIFwKIAogI2RlZmluZSBmbG9hdF9zZih4KSAoeyB0eXBlb2YoeCkgX3gg
+PSAoeCk7ICooKGZsb2F0ICopJihfeCkpOyB9KQogI2RlZmluZSBmbG9hdF9oZih4KSAoeyB0eXBl
+b2YoeCkgX3ggPSAoeCk7ICooKF9GbG9hdDE2ICopICYoX3gpKTsgfSkKKyNkZWZpbmUgZmxvYXRf
+YmYoeCkgKHsgdWludDMyX3QgX3UgPSAoKHVpbnQzMl90KSh4KSkgPDwgMTY7ICooKGZsb2F0ICop
+JihfdSkpOyB9KQogI2RlZmluZSByYXdfc2YoeCkgKHsgdHlwZW9mKHgpIF94ID0gKHgpOyAqKCh1
+aW50MzJfdCAqKSYoX3gpKTsgfSkKICNkZWZpbmUgcmF3X2hmKHgpICh7IHR5cGVvZih4KSBfeCA9
+ICh4KTsgKigodWludDE2X3QgKikmKF94KSk7IH0pCisjZGVmaW5lIHJhd19iZih4KSAoeyB0eXBl
+b2YoeCkgX3ggPSAoeCk7ICh1aW50MTZfdCkoKigodWludDMyX3QgKikmKF94KSkgPj4gMTYpOyB9
+KQogI2RlZmluZSBmbG9hdF9oZl90b19zZih4KSAoKGZsb2F0KXgpCiAjZGVmaW5lIGJ5dGVzX2hm
+IDIKICNkZWZpbmUgYnl0ZXNfc2YgNAorI2RlZmluZSBieXRlc19iZiAyCiAKICNlbmRpZgpkaWZm
+IC0tZ2l0IGEvdGVzdHMvdGNnL2hleGFnb24vZnBfaHZ4LmMgYi90ZXN0cy90Y2cvaGV4YWdvbi9m
+cF9odnguYwppbmRleCBkZWUwNzgxYmQ3Mi4uNDU0M2EwYWE4YzcgMTAwNjQ0Ci0tLSBhL3Rlc3Rz
+L3RjZy9oZXhhZ29uL2ZwX2h2eC5jCisrKyBiL3Rlc3RzL3RjZy9oZXhhZ29uL2ZwX2h2eC5jCkBA
+IC0yOSw2ICsyOSw3IEBAIGludCBlcnI7CiAjZGVmaW5lIENIRUNLX05BTihBLCBERUZfTkFOKSAo
+aXNuYW4oQSkgPyBERUZfTkFOIDogKEEpKQogI2RlZmluZSBOQU5fU0YgZmxvYXRfc2YoMHg3RkZG
+RkZGRikKICNkZWZpbmUgTkFOX0hGIGZsb2F0X2hmKDB4N0ZGRikKKyNkZWZpbmUgTkFOX0JGIGZs
+b2F0X2hmKDB4N0ZGRikKIAogLyoqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKgogICogQmluYXJ5IG9wZXJh
+dGlvbnMKQEAgLTkxLDExICs5Miw0MyBAQCBERUZfVEVTVF9PUF8yKHZtcHksIE1VTFRfSEYsIGhm
+LCBoZik7CiAjZGVmaW5lIE1BWF9IRihYLCBZKSBNQVgoWCwgWSwgTkFOX0hGKQogI2RlZmluZSBN
+SU5fU0YoWCwgWSkgTUlOKFgsIFksIE5BTl9TRikKICNkZWZpbmUgTUFYX1NGKFgsIFkpIE1BWChY
+LCBZLCBOQU5fU0YpCisjZGVmaW5lIE1JTl9CRihYLCBZKSBNSU4oWCwgWSwgTkFOX0JGKQorI2Rl
+ZmluZSBNQVhfQkYoWCwgWSkgTUFYKFgsIFksIE5BTl9CRikKIAogREVGX1RFU1RfT1BfMih2Zm1p
+biwgTUlOX1NGLCBzZiwgc2YpOwogREVGX1RFU1RfT1BfMih2Zm1heCwgTUFYX1NGLCBzZiwgc2Yp
+OwogREVGX1RFU1RfT1BfMih2Zm1pbiwgTUlOX0hGLCBoZiwgaGYpOwogREVGX1RFU1RfT1BfMih2
+Zm1heCwgTUFYX0hGLCBoZiwgaGYpOworREVGX1RFU1RfT1BfMih2bWluLCBNSU5fQkYsIGJmLCBi
+Zik7CitERUZfVEVTVF9PUF8yKHZtYXgsIE1BWF9CRiwgYmYsIGJmKTsKKworI2RlZmluZSBERUZf
+VEVTVF9PUF8yX0lOVEVSTEVBVkVEKHZvcCwgb3AsIHR5cGVfcmVzLCB0eXBlX2FyZykgXAorICAg
+IHN0YXRpYyB2b2lkIHRlc3RfIyN2b3AjI18jI3R5cGVfcmVzIyNfIyN0eXBlX2FyZyh2b2lkKSBc
+CisgICAgeyBcCisgICAgICAgIG1lbXNldChleHBlY3QsIDB4ZmYsIHNpemVvZihleHBlY3QpKTsg
+XAorICAgICAgICBtZW1zZXQob3V0cHV0LCAweGZmLCBzaXplb2Yob3V0cHV0KSk7IFwKKyAgICAg
+ICAgZm9yIChpbnQgaSA9IDA7IGkgPCBCVUZTSVpFIC8gMjsgaSsrKSB7IFwKKyAgICAgICAgICAg
+IEhWWF9WZWN0b3JQYWlyICpodnhfb3V0cHV0ID0gKEhWWF9WZWN0b3JQYWlyICopJm91dHB1dFsy
+ICogaV07IFwKKyAgICAgICAgICAgIEhWWF9WZWN0b3IgaHZ4X2J1ZmZlcjAgPSAqKEhWWF9WZWN0
+b3IgKikmYnVmZmVyMFtpXTsgXAorICAgICAgICAgICAgSFZYX1ZlY3RvciBodnhfYnVmZmVyMSA9
+ICooSFZYX1ZlY3RvciAqKSZidWZmZXIxW2ldOyBcCisgICAgICAgICAgICAqaHZ4X291dHB1dCA9
+IFwKKyAgICAgICAgICAgICAgICBRNl9XIyN0eXBlX3JlcyMjXyMjdm9wIyNfViMjdHlwZV9hcmcj
+I1YjI3R5cGVfYXJnKGh2eF9idWZmZXIwLCBcCisgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBodnhfYnVmZmVyMSk7IFwKKyAg
+ICAgICAgICAgIGZvciAoaW50IGogPSAwOyBqIDwgTUFYX1ZFQ19TSVpFX0JZVEVTIC8gYnl0ZXNf
+IyN0eXBlX3JlczsgaisrKSB7IFwKKyAgICAgICAgICAgICAgICBleHBlY3RbMiAqIGldLnR5cGVf
+cmVzW2pdID0gXAorICAgICAgICAgICAgICAgICAgICByYXdfIyN0eXBlX3JlcyhvcChmbG9hdF8j
+I3R5cGVfYXJnKGJ1ZmZlcjBbaV0udHlwZV9hcmdbMiAqIGpdKSwgXAorICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBmbG9hdF8jI3R5cGVfYXJnKGJ1ZmZlcjFbaV0udHlwZV9h
+cmdbMiAqIGpdKSkpOyBcCisgICAgICAgICAgICAgICAgZXhwZWN0WzIgKiBpICsgMV0udHlwZV9y
+ZXNbal0gPSBcCisgICAgICAgICAgICAgICAgICAgIHJhd18jI3R5cGVfcmVzKG9wKGZsb2F0XyMj
+dHlwZV9hcmcoYnVmZmVyMFtpXS50eXBlX2FyZ1syICogaiArIDFdKSwgXAorICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgZmxvYXRfIyN0eXBlX2FyZyhidWZmZXIxW2ldLnR5cGVf
+YXJnWzIgKiBqICsgMV0pKSk7IFwKKyAgICAgICAgICAgIH0gXAorICAgICAgICB9IFwKKyAgICAg
+ICAgY2hlY2tfb3V0cHV0XyMjdHlwZV9yZXMoX19MSU5FX18sIEJVRlNJWkUpOyBcCisgICAgfQor
+CitERUZfVEVTVF9PUF8yX0lOVEVSTEVBVkVEKHZhZGQsIFNVTV9TRiwgc2YsIGJmKTsKK0RFRl9U
+RVNUX09QXzJfSU5URVJMRUFWRUQodnN1YiwgU1VCX1NGLCBzZiwgYmYpOworREVGX1RFU1RfT1Bf
+Ml9JTlRFUkxFQVZFRCh2bXB5LCBNVUxUX1NGLCBzZiwgYmYpOwogCiAvKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqCiAgKiBPdGhlciB0ZXN0cwpAQCAtMTgwLDYgKzIxMywxNCBAQCBpbnQgbWFpbih2b2lk
+KQogICAgIHRlc3RfdmZtYXhfc2Zfc2YoKTsKICAgICB0ZXN0X3ZmbWF4X2hmX2hmKCk7CiAKKyAg
+ICAvKiBiZmxvYXQgKi8KKyAgICBpbml0X2J1ZmZlcnNfYmYoKTsKKyAgICB0ZXN0X3ZtaW5fYmZf
+YmYoKTsKKyAgICB0ZXN0X3ZtYXhfYmZfYmYoKTsKKyAgICB0ZXN0X3ZhZGRfc2ZfYmYoKTsKKyAg
+ICB0ZXN0X3ZzdWJfc2ZfYmYoKTsKKyAgICB0ZXN0X3ZtcHlfc2ZfYmYoKTsKKwogICAgIHB1dHMo
+ZXJyID8gIkZBSUwiIDogIlBBU1MiKTsKICAgICByZXR1cm4gZXJyID8gMSA6IDA7CiB9CmRpZmYg
+LS1naXQgYS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY21wLmMgYi90ZXN0cy90Y2cvaGV4YWdv
+bi9mcF9odnhfY21wLmMKaW5kZXggODA2OGQxYzNlZTQuLjYzZmI0MjM5NDFiIDEwMDY0NAotLS0g
+YS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY21wLmMKKysrIGIvdGVzdHMvdGNnL2hleGFnb24v
+ZnBfaHZ4X2NtcC5jCkBAIC0yMiw5ICsyMiwxMSBAQCBpbnQgZXJyOwogCiAjZGVmaW5lIE1BWF9U
+RVNUU19oZiAoTUFYX1ZFQ19TSVpFX0JZVEVTIC8gMikKICNkZWZpbmUgTUFYX1RFU1RTX3NmIChN
+QVhfVkVDX1NJWkVfQllURVMgLyA0KQorI2RlZmluZSBNQVhfVEVTVFNfYmYgKE1BWF9WRUNfU0la
+RV9CWVRFUyAvIDIpCiAKICNkZWZpbmUgVFJVRV9NQVNLX3NmIDB4ZmZmZmZmZmYKICNkZWZpbmUg
+VFJVRV9NQVNLX2hmIDB4ZmZmZgorI2RlZmluZSBUUlVFX01BU0tfYmYgMHhmZmZmCiAKIHN0YXRp
+YyBjb25zdCBjaGFyICpjb21wYXJpc29uc1tNQVhfVEVTVFNfc2ZdWzJdOwogc3RhdGljIEhWWF9W
+ZWN0b3IgKmh2eF9vdXRwdXQgPSAoSFZYX1ZlY3RvciAqKSZvdXRwdXRbMF07CkBAIC0xNjAsNiAr
+MTYyLDU0IEBAIHN0YXRpYyB2b2lkIHRlc3RfY21wX2hmKHZvaWQpCiAgICAgQ0hFQ0soaGYsIDIp
+OwogfQogCitzdGF0aWMgdm9pZCB0ZXN0X2NtcF9iZih2b2lkKQoreworICAgIC8qCisgICAgICog
+R2VuZXJhbCBvcmRlcmluZyBmb3IgYmY6CisgICAgICogUU5hTiA+IFNOYU4gPiArSW5mID4gbnVt
+YmVycyA+IC1JbmYgPiBTTmFOX25lZyA+IFFOYU5fbmVnCisgICAgICovCisKKyAgICAvKiBUZXN0
+IGVxdWFsaXR5ICovCisgICAgUFJFUF9URVNUKCk7CisgICAgQUREX1RFU1RfQ01QKGJmLCAwLCAg
+ICAgICAwLCAgICAgICBmYWxzZSk7CisgICAgQUREX1RFU1RfQ01QKGJmLCBCRl9TTmFOLCBCRl9T
+TmFOLCBmYWxzZSk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAgLyogQ29tbW9uIG51bWJlcnMg
+Ki8KKyAgICBQUkVQX1RFU1QoKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfdHdvLCBCRl9vbmUp
+OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9vbmUsIEJGX3plcm8pOworICAgIENIRUNLKGJmLCAy
+KTsKKworICAgIC8qIEluZmluaXR5IHZzIEluZmluaXR5L05hTiAqLworICAgIFBSRVBfVEVTVCgp
+OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9RTmFOLCAgICAgIEJGX0lORik7CisgICAgVEVTVF9D
+TVBfR1QoYmYsIEJGX1NOYU4sICAgICAgQkZfSU5GKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZf
+SU5GLCAgICAgICBCRl9JTkZfbmVnKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfSU5GLCAgICAg
+ICBCRl9TTmFOX25lZyk7CisgICAgVEVTVF9DTVBfR1QoYmYsIEJGX0lORiwgICAgICAgQkZfUU5h
+Tl9uZWcpOworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9JTkZfbmVnLCAgIEJGX1NOYU5fbmVnKTsK
+KyAgICBURVNUX0NNUF9HVChiZiwgQkZfSU5GX25lZywgICBCRl9RTmFOX25lZyk7CisgICAgVEVT
+VF9DTVBfR1QoYmYsIEJGX1NOYU4sICAgICAgQkZfSU5GX25lZyk7CisgICAgVEVTVF9DTVBfR1Qo
+YmYsIEJGX1FOYU4sICAgICAgQkZfSU5GX25lZyk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAg
+LyogTmFOIHZzIE5hTiAqLworICAgIFBSRVBfVEVTVCgpOworICAgIFRFU1RfQ01QX0dUKGJmLCBC
+Rl9RTmFOLCAgICAgIEJGX1NOYU4pOworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9TTmFOLCAgICAg
+IEJGX1NOYU5fbmVnKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfU05hTl9uZWcsICBCRl9RTmFO
+X25lZyk7CisgICAgQ0hFQ0soYmYsIDIpOworCisgICAgLyogTmFOIHZzIG5vbi1OYU4gKi8KKyAg
+ICBQUkVQX1RFU1QoKTsKKyAgICBURVNUX0NNUF9HVChiZiwgQkZfUU5hTiwgICAgICBCRl9vbmUp
+OworICAgIFRFU1RfQ01QX0dUKGJmLCBCRl9TTmFOLCAgICAgIEJGX29uZSk7CisgICAgVEVTVF9D
+TVBfR1QoYmYsIEJGX29uZSwgICAgICAgQkZfUU5hTl9uZWcpOworICAgIFRFU1RfQ01QX0dUKGJm
+LCBCRl9vbmUsICAgICAgIEJGX1NOYU5fbmVnKTsKKyAgICBDSEVDSyhiZiwgMik7Cit9CisKIHN0
+YXRpYyB2b2lkIGNoZWNrX2J5dGVfcHJlZChIVlhfVmVjdG9yUHJlZCBwcmVkLCBpbnQgYnl0ZV9p
+ZHgsIHVpbnQ4X3QgZXhwX21hc2ssCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW50IGxp
+bmUpCiB7CkBAIC0yMTcsNiArMjY3LDcgQEAgaW50IG1haW4odm9pZCkKIAogICAgIHRlc3RfY21w
+X3NmKCk7CiAgICAgdGVzdF9jbXBfaGYoKTsKKyAgICB0ZXN0X2NtcF9iZigpOwogICAgIHRlc3Rf
+Y21wX3ZhcmlhbnRzKCk7CiAKICAgICBwdXRzKGVyciA/ICJGQUlMIiA6ICJQQVNTIik7CmRpZmYg
+LS1naXQgYS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0LmMgYi90ZXN0cy90Y2cvaGV4YWdv
+bi9mcF9odnhfY3Z0LmMKaW5kZXggYjA4ZWJhOTJkYTguLjcxOTZiYzlhMzNkIDEwMDY0NAotLS0g
+YS90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0LmMKKysrIGIvdGVzdHMvdGNnL2hleGFnb24v
+ZnBfaHZ4X2N2dC5jCkBAIC0xOSw2ICsxOSw4IEBAIGludCBlcnI7CiAjaW5jbHVkZSAiaHZ4X21p
+c2MuaCIKICNpbmNsdWRlICJoZXhfdGVzdC5oIgogCisjZGVmaW5lIE5BTl9CRiAweDdGRkYKKwog
+I2RlZmluZSBURVNUX0VYUChUTywgRlJPTSwgVkFMLCBFWFApIGRvIHsgXAogICAgICgoTU1WZWN0
+b3IgKikmYnVmZmVyKS0+RlJPTVtpbmRleF0gPSBWQUw7IFwKICAgICBleHBlY3RbMF0uVE9baW5k
+ZXhdID0gRVhQOyBcCkBAIC0xNzIsNiArMTc0LDM0IEBAIERFRl9URVNUX1ZDT05WKHNmLCB3LCB7
+IFwKICAgICBURVNUX0VYUChzZiwgdywgMTY3NzcyMTksIHJhd19zZigoZmxvYXQpMTY3NzcyMjAp
+KTsgLyogcm91bmRzIFVQICovIFwKIH0pCiAKKyNkZWZpbmUgVEVTVF9FWFBfQkYoVkFMLCBFWFAp
+IGRvIHsgXAorICAgICgoTU1WZWN0b3IgKikmYnVmZmVyc1sxXSktPnNmW2luZGV4XSA9IFZBTDsg
+XAorICAgICgoTU1WZWN0b3IgKikmYnVmZmVyc1swXSktPnNmW2luZGV4XSA9IFZBTDsgXAorICAg
+IGV4cGVjdFswXS5iZlsyICogaW5kZXhdID0gRVhQOyBcCisgICAgZXhwZWN0WzBdLmJmWzIgKiBp
+bmRleCArIDFdID0gRVhQOyBcCisgICAgaW5kZXgrKzsgXAorfSB3aGlsZSAoMCkKKworc3RhdGlj
+IHZvaWQgdGVzdF92Y29udl9iZl9zZih2b2lkKQoreworICAgIEhWWF9WZWN0b3IgKmh2eF9vdXRw
+dXQgPSAoSFZYX1ZlY3RvciAqKSZvdXRwdXRbMF07CisgICAgSFZYX1ZlY3RvciBidWZmZXJzWzJd
+OworICAgIGludCBpbmRleCA9IDA7CisgICAgbWVtc2V0KCZidWZmZXJzLCAwLCBzaXplb2YoYnVm
+ZmVycykpOworICAgIG1lbXNldChleHBlY3QsIDAsIHNpemVvZihleHBlY3QpKTsKKworICAgIFRF
+U1RfRVhQX0JGKFNGX1FOYU4sIE5BTl9CRik7CisgICAgVEVTVF9FWFBfQkYoU0ZfU05hTiwgTkFO
+X0JGKTsKKyAgICBURVNUX0VYUF9CRihTRl9RTmFOX25lZywgTkFOX0JGKTsKKyAgICBURVNUX0VY
+UF9CRihTRl9JTkYsIEJGX0lORik7CisgICAgVEVTVF9FWFBfQkYoU0ZfSU5GX25lZywgQkZfSU5G
+X25lZyk7CisgICAgVEVTVF9FWFBfQkYoU0Zfb25lLCBCRl9vbmUpOworICAgIFRFU1RfRVhQX0JG
+KFNGX3plcm9fbmVnLCBCRl96ZXJvX25lZyk7CisKKyAgICAqaHZ4X291dHB1dCA9IFE2X1ZiZl92
+Y3Z0X1ZzZlZzZihidWZmZXJzWzBdLCBidWZmZXJzWzFdKTsKKyAgICBjaGVja19vdXRwdXRfaGYo
+X19MSU5FX18sIDEpOworfQorCiBpbnQgbWFpbih2b2lkKQogewogICAgIHRlc3RfdmN2dF91aF9o
+ZigpOwpAQCAtMTgyLDYgKzIxMiw3IEBAIGludCBtYWluKHZvaWQpCiAgICAgdGVzdF92Y29udl9z
+Zl93KCk7CiAgICAgdGVzdF92Y29udl9oX2hmKCk7CiAgICAgdGVzdF92Y29udl9oZl9oKCk7Cisg
+ICAgdGVzdF92Y29udl9iZl9zZigpOwogCiAgICAgcHV0cyhlcnIgPyAiRkFJTCIgOiAiUEFTUyIp
+OwogICAgIHJldHVybiBlcnIgPyAxIDogMDsKLS0gCjIuMzQuMQoK
 
