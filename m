@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3AAC5CFCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AD4C5B572
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuANl-0004G2-Bb; Wed, 12 Aug 2026 10:56:43 -0400
+	id 1wuAN2-0003Sy-8J; Wed, 12 Aug 2026 10:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuANW-0003zU-Ti; Wed, 12 Aug 2026 10:56:27 -0400
+ id 1wuALg-0000Cc-EG; Wed, 12 Aug 2026 10:54:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAN9-0000Ap-8X; Wed, 12 Aug 2026 10:56:26 -0400
+ id 1wuALd-0007Mr-Bu; Wed, 12 Aug 2026 10:54:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=OHeNzBUPPo52MwqOEEnKrj/hyObYUoiPmoCisIMr+xI=;
+ t=1786546231; bh=LGQV5mfvgB2ePbi6o9w3DSUZ+K/g17/haQs4LtKdqUA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=i8jLVnX4dAfiWkE7Ns1CjHO/62sd44UlJJaet5lIw3TLp5W/V5xNLGYIQ0J5E4Gxs
- 7UMzrxRsqgo0DlCs8amR01doIga9dT2118h5ikqDZCu2KJIwux+TjJNlZ7hoG7cFJr
- 7hy0IiVJXNTH8dwiWUTAypL6QV8x39BXVNlqNpInNMSxeYO8nSg3cNj2ioE6XZIefB
- eq0rsb+eMYhrabHVPIsb5wpPAp9JREQI35uPodkX2rQ/uBBTscfqFlPQzMc/DSro7a
- fyamRz44FZfZk+r4UTTZvTq7uXyK5n4xJKejdBNZC7/dF/ehsHbReZ59tZ6bLFOSeT
- uQN7ontIRsYAg==
+ b=iQpb1eHxJdCbnzeMnxnRH1K7wIrYM3noGCO/cgzZIzSBMhRXEaRmcfQVwjNCjwTOQ
+ w2xLkTPMwy6UNbTpzaDUiTyndnS4D7B6hqUEHTnZF0sx589HLKhoQm3CsgLRUrAiYf
+ VG3eDoFAEmaAt+Al1u+Hh+UhpXS78SndiIeLb0XlBFRsvHqik8XDsPqiw1CmK6FHmJ
+ O/iv1e9DpYAvsniaYUu1g+yTIZjG1JPaCEflwnXC35JWPZmnQ/mm/dMR4x9EuYEzl6
+ Vbr8xReAxHpFnfebHqVIThmchRtDMQqR6B923MPBIjrvsLsXTqr12cV0FiaNR7TB9G
+ KCKb2yic56s0Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 500B61CA63D;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E6E0C1CA630;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB08C409D7F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4DAC9409D72;
  Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 14A762F9D5; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id AB9E22F9BB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Xie Yongji <xieyongji@bytedance.com>,
- Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 057/120] libvhost-user: fix heap overflow in
- vu_check_queue_inflights
-Date: Wed, 12 Aug 2026 17:48:40 +0300
-Message-ID: <20260812144955.649205-57-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 044/120] hw/display/virtio-gpu: Block Rutabaga
+ migration
+Date: Wed, 12 Aug 2026 17:48:27 +0300
+Message-ID: <20260812144955.649205-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,45 +73,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-vu_check_queue_inflights counts inflight descriptors using inflight == 1
-but copies entries using inflight != 0. If the inflight field contains
-an unexpected non-0/1 value, the function copies more entries than it
-allocates and overflows the heap buffer.
+The migration stream encoding is not defined for Rutabaga yet.
 
-Stop the copy pass once resubmit_num reaches the counted inuse value.
-Note: the value is not guest-accessible so not a security vulnerability.
-
-Fixes: CVE-2026-63110
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Cc: Xie Yongji <xieyongji@bytedance.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
-Reported-by: BB CC <wywwzjj@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <e2315efc526c0ee918485df4be69e2b26e8b7a73.1784892981.git.mst@redhat.com>
-(cherry picked from commit b9d248dfaca5e31377ea4f7204aae788a050bafd)
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725-rutabaga-v1-1-4832b56e679d@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 5c9ef661a60ad737c61f4a872226376b5f2d424a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 037c6614018..9846de782c0 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1408,6 +1408,13 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index 17ccfa51170..aa94315543f 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -9,6 +9,7 @@
+ #include "hw/virtio/virtio-gpu.h"
+ #include "hw/virtio/virtio-gpu-pixman.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "migration/blocker.h"
  
-         for (i = 0; i < vq->inflight->desc_num; i++) {
-             if (vq->inflight->desc[i].inflight) {
-+                /*
-+                 * We earlier counted exactly vq->inuse in flight -
-+                 * what is going on?
-+                 */
-+                if (vq->resubmit_num >= vq->inuse) {
-+                    return -1;
-+                }
-                 vq->resubmit_list[vq->resubmit_num].index = i;
-                 vq->resubmit_list[vq->resubmit_num].counter =
-                                         vq->inflight->desc[i].counter;
+ #include <glib/gmem.h>
+ #include <rutabaga_gfx/rutabaga_gfx_ffi.h>
+@@ -1078,6 +1079,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ 
+ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+ {
++    ERRP_GUARD();
+     uint32_t num_capsets;
+     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
+     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
+@@ -1087,12 +1089,17 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+     return;
+ #endif
+ 
+-    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
++    error_setg(&bdev->migration_blocker, "rutabaga is not yet migratable");
++    if (migrate_add_blocker(&bdev->migration_blocker, errp) < 0) {
+         return;
+     }
+ 
++    if (!virtio_gpu_rutabaga_init(gpudev, errp)) {
++        goto fail;
++    }
++
+     if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
+-        return;
++        goto fail;
+     }
+ 
+     bdev->conf.flags |= (1 << VIRTIO_GPU_FLAG_RUTABAGA_ENABLED);
+@@ -1101,6 +1108,12 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+ 
+     bdev->virtio_config.num_capsets = num_capsets;
+     virtio_gpu_device_realize(qdev, errp);
++    if (!*errp) {
++        return;
++    }
++
++fail:
++    migrate_del_blocker(&bdev->migration_blocker);
+ }
+ 
+ static const Property virtio_gpu_rutabaga_properties[] = {
 -- 
 2.47.3
 
