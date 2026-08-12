@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2FA3C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A46C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8on-0006zF-7o; Wed, 12 Aug 2026 09:16:29 -0400
+	id 1wu8go-0003ua-Dz; Wed, 12 Aug 2026 09:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kq-0003d7-MQ; Wed, 12 Aug 2026 09:12:32 -0400
+ id 1wu8gj-0003eU-7t; Wed, 12 Aug 2026 09:08:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kh-0006Qb-2Z; Wed, 12 Aug 2026 09:12:20 -0400
+ id 1wu8gh-0005R1-Fh; Wed, 12 Aug 2026 09:08:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=kZblVJ3X3izdrsChWS2kwPvYy2L4WGgwsQTZfu0rPFo=;
+ t=1786539784; bh=ARdpUhihh9KGFrYxGMspPLFGshuWmIMOUHm7J27MYNU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KKTw5rOhxybQqlhwYGjL/SSc7X1esiXY57l2dhmqqYDsmTeBCN8YCIqcGyDOhCYWD
- /2CfXiEvtZFaBtnXANRexjIizANB4EbqWqCW/EAZ+olDLrMBb1Nxw8BQEAW0OZk4JY
- Qs7sCdEYDFf+joiKJfgQzi2ImvVoKpMzlX8oJhedVWw/XI/VzXPaCgosUKEnu421L/
- D0OTeSv/WAvEgfZPeam1qGsLTCvnL6yRefpspPgyFC95rgjkmjeif9GhLFcK8zJ/Mx
- bGp2j2taB9nJ2Pni2FS8j6KsnKnoblaiOj+7Os4py7ElEijP6b8ZCMMUNTTq8EWlN4
- GM97oOwrrHxNw==
+ b=mXH0z5b7V5kVFVWeiootyNGIydqt3WEY3mYh5XdstLZFUgp/TihjRPv2EzgIwQ7LI
+ r5boCAKIbCYgPe5TzCQhux1SPmF9u7tj73NI1eHweR0qOAeW6lMo4rYFP/83xtwRym
+ rIFtY9BwnjdqGiFhAEs4IHJWm9zSPRoZO7UwwdnTegMzIkNGt1gUTbHnm933VdGL9N
+ 6RmuNjJ24H79h1A+/c7oAmRvT2dNDX7OQKlPkBPb9VzTmkQpdCXbfkVrxWZrJ7A4ZL
+ Qxeu9+BbJYfG8eb7R3bE/T+rJa2TLeicnfZDZEQdQD48ltBxsZgycn0T8eccAIhbRi
+ oFsMrMRmhFOyQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD6621CA4DD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 147051CA4B5;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3E26409BC0;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AAF1409B98;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C72A92F950; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 57C8F2F900; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ Jonathan Cameron <jic23@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 094/102] hw/display/virtio-gpu: Unmap DMA regions on
- reset
-Date: Wed, 12 Aug 2026 16:02:09 +0300
-Message-ID: <20260812130233.621965-94-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 054/102] hw/cxl: fix OOB access in cxl_doe_cdat_rsp
+ via entry_handle
+Date: Wed, 12 Aug 2026 16:01:29 +0300
+Message-ID: <20260812130233.621965-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,40 +72,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Haotian Jiang <jianghaotian.sunday@gmail.com>
 
-virtio_gpu_reset() freed in-flight commands without unmapping the
-DMA regions acquired by virtqueue_pop().  Call virtqueue_detach_element()
-before g_free() in both drain loops.
+cxl_doe_cdat_rsp() takes ent = req->entry_handle (uint16_t, fully
+guest-controlled, 0..0xFFFF) and directly indexes cdat->entry[ent]
+without checking ent < cdat->entry_len. For a default cxl-type3 with
+one volatile memory region, entry_len = 1 + CT3_CDAT_NUM_ENTRIES = 7,
+so any entry_handle >= 7 reads past the CDATEntry array into host heap.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3467
+The OOB-read base/length are then used in
+memcpy(read_mbox + offset, base, len) at cxl_type3.c:298-299, leaking
+host heap memory to the guest via PCI_EXP_DOE_RD_DATA_MBOX, and
+potentially overflowing the 1 MiB read_mbox heap buffer when the OOB
+length field is large.
+
+The same bug exists in the cxl-upstream implementation.
+
+Existing checks do not bound ent: assert(cdat->entry_len) only ensures
+the table is loaded; the minimum-length check only guards against a
+truncated CDATReq; the entry_handle ternary at line 293 only decides
+the next-handle echo, not the current access; pcie_doe_get_obj_len
+reads header.length, not entry_handle.
+
+Reproduce: build QEMU with CONFIG_CXL, boot
+  -M q35,cxl=on -device pxb-cxl,bus_nr=52 ... -device cxl-type3,...
+then send a CDATReq with entry_handle=0xFFFF via the DOE mailbox at
+config offset 0x190. Under ASAN this reports SEGV in cxl_doe_cdat_rsp
+at cxl_type3.c:281.
+
+Fixes: f5ee7413d5 ("hw/mem/cxl-type3: Add CXL CDAT Data Object Exchange")
+Fixes: 882877fc35 ("hw/pci-bridge/cxl-upstream: Add a CDAT table access DOE")
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260803082158.62998-1-guobin@linux.alibaba.com>
-(cherry picked from commit 5ce01c92389a422389898df481ed441a80ece3c4)
+Reviewed-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260713072336.623604-2-jianghaotian.sunday@gmail.com>
+(cherry picked from commit 292902ae4e93dcf33414ec3c6951e02d497cc850)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 4f1c6e64b12..930b069c7ec 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1695,12 +1695,14 @@ void virtio_gpu_reset(VirtIODevice *vdev)
-     while (!QTAILQ_EMPTY(&g->cmdq)) {
-         cmd = QTAILQ_FIRST(&g->cmdq);
-         QTAILQ_REMOVE(&g->cmdq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g_free(cmd);
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 6fffa21ead1..b06f2ed32aa 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -271,6 +271,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
      }
  
-     while (!QTAILQ_EMPTY(&g->fenceq)) {
-         cmd = QTAILQ_FIRST(&g->fenceq);
-         QTAILQ_REMOVE(&g->fenceq, cmd, next);
-+        virtqueue_detach_element(cmd->vq, &cmd->elem, 0);
-         g->inflight--;
-         g_free(cmd);
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
++    }
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
+ 
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index 28b109c49af..01ef0d4fa9c 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -156,6 +156,9 @@ static bool cxl_doe_cdat_rsp(DOECap *doe_cap)
      }
+ 
+     ent = req->entry_handle;
++    if (ent >= cdat->entry_len) {
++        return false;
++    }
+     base = cdat->entry[ent].base;
+     len = cdat->entry[ent].length;
+ 
 -- 
 2.47.3
 
