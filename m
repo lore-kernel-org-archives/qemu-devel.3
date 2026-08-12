@@ -4,52 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62108C5B572
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B1CC5B56A
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8d1-0004i2-6u; Wed, 12 Aug 2026 09:04:19 -0400
+	id 1wu8h7-0004o0-O8; Wed, 12 Aug 2026 09:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cI-0003at-1F; Wed, 12 Aug 2026 09:03:35 -0400
+ id 1wu8gA-00033y-HU; Wed, 12 Aug 2026 09:07:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cG-0004KG-1W; Wed, 12 Aug 2026 09:03:33 -0400
+ id 1wu8g8-0005H5-Ly; Wed, 12 Aug 2026 09:07:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=upKlwLG17JLFkbce8F/J/p6p4b5+0ZbRse3GQxHTUj0=;
+ t=1786539783; bh=KYDusfv8W5vMSJ/hWZiHcqEKSFiEHge1/FKyemTCdpY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZjGwryNBQjvb63WkbNIleGDvpOwbHdX7MugFJhoQWyG9QFgBGUQLYs1YG59XqhJUd
- SHJ446kt47+GTtZSU8pQ8r0ZtSRFFVIRqUfwWTWcbWhHfxlLVB9bZnYnZ4Ha0Uum/U
- j2KOU3sNiCe2WlYPwOcIoZms4sIPH1AQZIRa5JsXg0+0ImOS4493eGzoH0k5j0P/2h
- 8USBAVEE4xIbhLZpDJ1ntCQDmX2Klt9hDH7DM2hLoagTVlpI0Rezi32SyIab/g01en
- JjLK4RmCrnPB9pAXXNLJeBmzFW4HkL+06fElc+ADfWCztdkNvox8Wvv9XrUIX3Cul3
- RPgHsGh+vYnOg==
+ b=f3Q/trCbf9eNLeXvluHhcRsKtp2jQLCLjLOnTWk/rWaHtsEI2mv5K5A9GAud0byL/
+ cfBee6fElQTtL3cTW+YnMGoZ2ltN9s2v+PoX4z44J7n8RGlqUWOGAW/z5CYuSlw8AN
+ DuhFqoeQqNg0cVCvSG5gayYHEhplvF6By7qFB0waWuwzvtOc6d5YboAx/uEe25CO5C
+ oAgI7CrKu0Up2lGzbJ8rABnYATSIWiOHcFX0e6Q22bL2THRaySiFPpCZgR07t/MRqq
+ BP1q8+VDS0s/DSLmf3+zKPtDV1S6fy5Ir8TgkZCkzmaOuSDU4Q4G1S/LgYo3ks3Q9G
+ XLPTCujk0yVmw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2B63C1CA488;
+ by isrv.corpit.ru (Postfix) with ESMTP id F1BDC1CA4B0;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 61373409B6B;
- Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 33E35409B93;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D78B02F8A6; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id 4ACA42F8F6; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 009/102] vfio/pci: don't narrow a failed config read
- to a plausible value
-Date: Wed, 12 Aug 2026 16:00:44 +0300
-Message-ID: <20260812130233.621965-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jia Jia <physicalmtea@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 049/102] virtio-iommu: fix OOM due to unbounded
+ call_rcu
+Date: Wed, 12 Aug 2026 16:01:24 +0300
+Message-ID: <20260812130233.621965-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,107 +73,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-vfio_pci_read_config() signals a failed host-side read by returning
-(uint32_t)-1, regardless of the requested length. vfio_intx_enable()
-and vfio_pci_pre_reset() both narrowed that return value straight
-into a uint8_t/uint16_t local before checking anything, which
-truncates -1 into 0xff or 0xffff - values a real 1- or 2-byte
-register read can legitimately produce. From that point on, a
-failed read and real all-ones content are indistinguishable.
+Currently, within virtio-iommu, handle_command processes the command vq
+without any limits on the number of entries processed.
+This can easily and repeatedly enable/disable multiple memory regions.
+Within the memory code, this causes an accumulation of an
+unbounded number of RCU-deferred FlatViews - each of these
+is supposed to be freed with call_rcu, but that never happens
+because the main thread never returns to the main loop.
 
-Keep the full uint32_t result and check it against (uint32_t)-1
-before narrowing. In vfio_pci_pre_reset(), skip the corresponding
-write-back on a failed read instead of writing back constructed
-garbage to the device.
+Given FlatView is big, it's easy to have this balloon out to multiple
+Gigabytes of memory.
 
-Resolves: Coverity CID 1663684
-Resolves: Coverity CID 1663688
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Alex Williamson <alex@shazbot.org>
-CC: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260717122232.468955-2-den@openvz.org
-[ clg: Added Coverity IDs ]
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit dff528657fc114119ece1478ad845b0292a87683)
-(Mjt: adjust for 10.0.x for missing v10.1.0-364-g77f143cc4181
- "vfio/pci.c: use QOM casts where appropriate" etc)
+Limit the loop defer any remaining work to a timer.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3930
+Cc: Eric Auger <eric.auger@redhat.com>
+Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <eb46ab360dbe28c29cfa78812a7440dcb7444d59.1784807826.git.mst@redhat.com>
+(cherry picked from commit 67550d65b4bfdbcbfee2dae7ae1ebbbccd01dfe5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index f1c8da3a81a..168f597e782 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -263,11 +263,17 @@ static void vfio_irqchip_change(Notifier *notify, void *data)
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index b6e7e01ef74..86deff70385 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -994,6 +994,18 @@ static int virtio_iommu_handle_probe(VirtIOIOMMU *s,
+     return ret ? ret : virtio_iommu_probe(s, &req, buf);
+ }
  
- static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
- {
--    uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-+    uint32_t val = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-+    uint8_t pin;
-     Error *err = NULL;
-     int32_t fd;
-     int ret;
- 
-+    if (val == (uint32_t)-1) {
-+        error_setg(errp, "failed to read PCI_INTERRUPT_PIN");
-+        return false;
++static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq);
++
++static void virtio_iommu_handle_command_timer(void *opaque)
++{
++    VirtIOIOMMU *s = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(s);
++
++    if (virtio_device_started(vdev, vdev->status) && !vdev->broken) {
++        virtio_iommu_handle_command(vdev, s->req_vq);
 +    }
-+    pin = val;
- 
-     if (!pin) {
-         return true;
-@@ -2409,6 +2415,7 @@ static bool vfio_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
- void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
++}
++
+ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
  {
-     PCIDevice *pdev = &vdev->pdev;
-+    uint32_t val;
-     uint16_t cmd;
+     VirtIOIOMMU *s = VIRTIO_IOMMU(vdev);
+@@ -1004,10 +1016,17 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+     struct iovec *iov;
+     void *buf = NULL;
+     size_t sz;
++    unsigned int batch = 0;
  
-     vfio_disable_interrupts(vdev);
-@@ -2417,23 +2424,34 @@ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
-      * Stop any ongoing DMA by disconnecting I/O, MMIO, and bus master.
-      * Also put INTx Disable in known state.
-      */
--    cmd = vfio_pci_read_config(pdev, PCI_COMMAND, 2);
--    cmd &= ~(PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
--             PCI_COMMAND_INTX_DISABLE);
--    vfio_pci_write_config(pdev, PCI_COMMAND, cmd, 2);
-+    val = vfio_pci_read_config(pdev, PCI_COMMAND, 2);
-+    if (val != (uint32_t)-1) {
-+        cmd = val;
-+        cmd &= ~(PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
-+                 PCI_COMMAND_INTX_DISABLE);
-+        vfio_pci_write_config(pdev, PCI_COMMAND, cmd, 2);
-+    }
+     for (;;) {
+         size_t output_size = sizeof(tail);
  
-     /* Make sure the device is in D0 */
-     if (pdev->pm_cap) {
-         uint16_t pmcsr;
-         uint8_t state;
- 
--        pmcsr = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-+        val = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-+        if (val == (uint32_t)-1) {
-+            return;
++        if (++batch > virtio_queue_get_num(vdev, virtio_get_queue_index(vq))) {
++            timer_mod(s->cmd_timer,
++                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
++            break;
 +        }
-+        pmcsr = val;
-         state = pmcsr & PCI_PM_CTRL_STATE_MASK;
-         if (state) {
-             pmcsr &= ~PCI_PM_CTRL_STATE_MASK;
-             vfio_pci_write_config(pdev, pdev->pm_cap + PCI_PM_CTRL, pmcsr, 2);
-             /* vfio handles the necessary delay here */
--            pmcsr = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-+            val = vfio_pci_read_config(pdev, pdev->pm_cap + PCI_PM_CTRL, 2);
-+            if (val == (uint32_t)-1) {
-+                return;
-+            }
-+            pmcsr = val;
-             state = pmcsr & PCI_PM_CTRL_STATE_MASK;
-             if (state) {
-                 error_report("vfio: Unable to power on device, stuck in D%d",
++
+         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+         if (!elem) {
+             return;
+@@ -1417,6 +1436,8 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+     s->req_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE,
+                              virtio_iommu_handle_command);
+     s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL);
++    s->cmd_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL_RT,
++                                virtio_iommu_handle_command_timer, s);
+ 
+     /*
+      * config.bypass is needed to get initial address space early, such as
+@@ -1499,6 +1520,7 @@ static void virtio_iommu_device_unrealize(DeviceState *dev)
+ 
+     qemu_rec_mutex_destroy(&s->mutex);
+ 
++    timer_free(s->cmd_timer);
+     virtio_delete_queue(s->req_vq);
+     virtio_delete_queue(s->event_vq);
+     virtio_cleanup(vdev);
+@@ -1510,6 +1532,8 @@ static void virtio_iommu_device_reset_exit(Object *obj, ResetType type)
+ 
+     trace_virtio_iommu_device_reset_exit();
+ 
++    timer_del(s->cmd_timer);
++
+     if (s->domains) {
+         g_tree_destroy(s->domains);
+     }
+@@ -1628,6 +1652,11 @@ static int iommu_post_load(void *opaque, int version_id)
+      * still correct.
+      */
+     virtio_iommu_switch_address_space_all(s);
++
++    if (virtio_device_started(VIRTIO_DEVICE(s), VIRTIO_DEVICE(s)->status)) {
++        timer_mod(s->cmd_timer,
++                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL_RT) + 1);
++    }
+     return 0;
+ }
+ 
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index 3b86050f2cf..1f265540ada 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -65,6 +65,7 @@ struct VirtIOIOMMU {
+     GTree *domains;
+     QemuRecMutex mutex;
+     GTree *endpoints;
++    QEMUTimer *cmd_timer;
+     bool boot_bypass;
+     Notifier machine_done;
+     bool granule_frozen;
 -- 
 2.47.3
 
