@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C0BC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38441C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8p5-0007uz-CN; Wed, 12 Aug 2026 09:16:48 -0400
+	id 1wu8ks-0003ZA-BJ; Wed, 12 Aug 2026 09:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8lI-0003nb-Vd; Wed, 12 Aug 2026 09:12:54 -0400
+ id 1wu8kD-0003G5-7Z; Wed, 12 Aug 2026 09:11:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8lE-0006Wa-Qm; Wed, 12 Aug 2026 09:12:51 -0400
+ id 1wu8kB-0006Jt-H0; Wed, 12 Aug 2026 09:11:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=MKn2ZR/R8lF/nHQOOCgJ12cs+ZEPufekBK83OaQgVDY=;
+ t=1786539784; bh=4VhK7UzLk2/59KcgVnyHm99bpE76fDii0vLHvALyFu4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fSJpp5lCk4bkgqU4VYatd53cnYJtzuPtWiZxAqKYKDrlDs5CiXfLOL6+ogSW/2qG5
- l7Lb4uQHPuC7JA2qOR41uww6PfV7N1nd0G7edmjhVG4sMh2ovOfZ5CkYLJuuBprJ+s
- 9aAKusTaL17Ea08oJFUeFXDCLrH4cefUKAyzdp/pin4+jcLQ4lkus4TqCuSaG7X0gF
- lYWk+9AHNraKXuLd2bN5e6zPir2BMPugl2L0zSvwIgf6TjOafzBpdT20Q5t6o9Cyuh
- CJZNSqASDzUlZGagnApC8OAkR8oG+ZR4tDhWdrxlFRyzvRqmhhFb1/PZi8hxLr4RCi
- wV8bvHu2UG3JQ==
+ b=X8rzJboGCEej5JAJoE1dg4wueBAl8Rk9fs2vyHO0vO100XhM94q4C9CmsnQ+wbfvQ
+ YHBs9QaR6wNSldiSI49ZybM+sERv4mlOwnVs21k7sQfUaMxsTRDt5iMrxXnjaB9Z8g
+ HsdLxZXx6FUd72vvqbpUzZAC3n1i9YTyj/XuWWaZrIjKwm+8eihLZ4TE42Cg8WlKsf
+ 9yyUGkFG6Juan1bax5Lwxc0sl2GrXurydqDHKQ4vdhA9q5J3tTAEHA3jegLpOIfp0j
+ wjjr84Q5Uk6XrzyVK+NLU/W+zV9RRumn4QT29FsJpL60WGBsk4K70fRS4n3Dx4F8Js
+ Akt5YJ+cGLqnQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D38721CA4E2;
+ by isrv.corpit.ru (Postfix) with ESMTP id A89B01CA4D8;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 151A8409BC5;
- Wed, 12 Aug 2026 16:03:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DEEB7409BBB;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D45362F95A; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id B96262F946; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 099/102] gitlab: disable provenance attestations to
- work around CI bug
-Date: Wed, 12 Aug 2026 16:02:14 +0300
-Message-ID: <20260812130233.621965-99-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Warisjeet Singh <sinxx198@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 089/102] hw/display/vga: fix panning_buf OOB after
+ text/graphics switch
+Date: Wed, 12 Aug 2026 16:02:04 +0300
+Message-ID: <20260812130233.621965-89-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,54 +75,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-QEMU's CI pipeline involves building container images that will be used
-to run builds and tests. A recent Docker change triggered the following
-error:
+The fields last_width and last_height serve two purposes: the text
+renderer counts in characters, the graphics renderer in pixels.
+panning_buf reallocation is guarded by geometry-change check, so the
+unit mismatch can trick it into thinking nothing changed when the
+resolution actually grew.
 
-  $ docker push "$TAG"
-  ...
-  error from registry: blob unknown to registry - sha256:4401f6f779caf8841cafd5f483e642fcac56a23a4e4a59523231e101c890dad9
+A guest can trigger this by switching graphics -> text -> graphics:
 
-https://gitlab.com/qemu-project/qemu/-/jobs/15701875927#L2372
+  1. Enter graphics mode with a small width (CR01=0x00, 8 pixels).
+     The predicate fires and panning_buf is allocated for that width.
 
-This happens because Docker now pushes out-of-order and the GitLab
-Container Registry rejects due to an unknown reference:
-https://forum.gitlab.com/t/started-yesterday-docker-push-error-from-registry-blob-unknown-to-registry/134733/5
+  2. Switch to text mode with a large width (CR01=0xFF, 256 chars).
+     The text renderer stores 256 into last_width. The text path
+     never touches panning_buf.
 
-It is unclear at this point whether GitLab will modify the behavior of
-Container Registry or whether Docker will ship a fix.
+  3. Switch back to graphics with a width that happens to equal 256
+     in pixels (CR01=0x1F, 32*8 = 256). The predicate sees
+     256 == 256 and skips the realloc. With horizontal pel panning
+     enabled, vga_draw_line4() then writes a full 256-pixel scanline
+     into the buffer still sized for 8 pixels -- a 960-byte heap
+     overflow on every scanline, every refresh.
 
-The current workaround is to disable the provenance attestation that is
-involved in this issue. QEMU's CI pipeline container images are used
-internally for testing and are not widely distributed. Provenance
-attestation can be disabled as there are no external consumers of these
-images. Expect to revert this commit in the future when GitLab or Docker
-have released their own fixes.
+Fix it by reallocating unconditionally panning_buf on
+vga_draw_graphic().
 
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260804165414.480435-1-stefanha@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 9232220004434db1f3be5b2c8b1bba935b043acd)
+Fixes: CVE-2026-17516
+Fixes: 973a724eb006 ("vga: implement horizontal pel panning in graphics modes")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4085
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Warisjeet Singh <sinxx198@gmail.com>
+[ Marc- André - drop realloc() resize condition & commit message ]
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
+(cherry picked from commit 95687639e647ec917226e6d3a6713a2b373e1ffe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/container-template.yml b/.gitlab-ci.d/container-template.yml
-index 4eec72f383d..ef22cf819fb 100644
---- a/.gitlab-ci.d/container-template.yml
-+++ b/.gitlab-ci.d/container-template.yml
-@@ -14,7 +14,7 @@
-     - echo "TAG:$TAG"
-     - echo "COMMON_TAG:$COMMON_TAG"
-     - docker build --tag "$TAG" --cache-from "$TAG" --cache-from "$COMMON_TAG"
--      --build-arg BUILDKIT_INLINE_CACHE=1
-+      --build-arg BUILDKIT_INLINE_CACHE=1 --provenance=false
-       -f "tests/docker/dockerfiles/$NAME.docker" "."
-     - docker push "$TAG"
-   after_script:
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index b01f67c65fb..af31f210e89 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1629,11 +1629,12 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+         s->last_line_offset = s->params.line_offset;
+         s->last_depth = depth;
+         s->last_byteswap = byteswap;
+-        /* 16 extra pixels are needed for double-width planar modes.  */
+-        s->panning_buf = g_realloc(s->panning_buf,
+-                                   (disp_width + 16) * sizeof(uint32_t));
+         full_update = 1;
+     }
++
++    /* 16 extra pixels are needed for double-width planar modes. */
++    s->panning_buf = g_realloc(s->panning_buf,
++                               (disp_width + 16) * sizeof(uint32_t));
+     if (surface_data(surface) != s->vram_ptr + (s->params.start_addr * 4)
+         && !surface_is_allocated(surface)) {
+         /* base address changed (page flip) -> shared display surfaces
 -- 
 2.47.3
 
