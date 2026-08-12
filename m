@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 252B4C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09829C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8ie-0008H9-2q; Wed, 12 Aug 2026 09:10:10 -0400
+	id 1wu8dK-0006ca-Tc; Wed, 12 Aug 2026 09:04:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8i5-0007st-0q; Wed, 12 Aug 2026 09:09:37 -0400
+ id 1wu8dI-0006Zx-K9; Wed, 12 Aug 2026 09:04:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8i3-0005e5-1H; Wed, 12 Aug 2026 09:09:32 -0400
+ id 1wu8dG-0004V7-HN; Wed, 12 Aug 2026 09:04:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=HJX3/iaF7LVUHvpdp8tP0vXs7VHeqO5/FwxOPf2+BrM=;
+ t=1786539783; bh=DuprwnKIUSmOsLpi/w3Pere0zLyeGEfTnRz085g//nY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HJjruDA62VehoI+6KTVU/fJ9ZyD0zngnFQa63rXcGAtD3acv6UQM/eQkWELIKn9v5
- U8g5UVRgUqgH+DqnWTSHJKhzel+67jGpiFL6GiBcpwUAOgA+K2ogyR/dCkmHKNeZyF
- i2U6FgW5CMI4ZC3lLxIIvESzZMFfmDhczwPwIcmq8fpXKxgI9vpEu0wC7+GZIWAJyP
- T6NfdMIj2Q6i9I50afTEYqnUdosPGv5s8aqrOFXNoTepkVuy4D1EqmawGtTwEBREsB
- myxUhclXDK1gyZh7xObh3V2L/TLZuIsYUByFhM0Fk9+7f2Y/75Ykq1FOulOEAZ8CpT
- /+Y3Ziqya1L9Q==
+ b=Woddk5cTOBbAKsgXTdQfxAaeu4MiYWIbag66+An1rjTKJzTTSMHWWYY6JxhykrRz3
+ gGD1zWmrH9+OlLgUTps862sy26moxXhbCc0xvst64cig39cKmKz2Jt51f0XQoeHva4
+ Jo93AfFDz6mXYSXB/mymgw4kDlrO+vTEdevnbOrNolJVWRbxfVQgYhS5SlFD7PLgBT
+ +UO2Es7R1htwpjMpBn1nheg7Glz6inBK6Ctn9hn+JcAUgTkiVqUWDL6m7UVzszru6Q
+ KF0slUHm0G6U2RhNqYfSfvUKfci7XFWkqfrsKTm1qNpV/1SJ71ifO6q5pGTXIzgf6k
+ cKkN6ZAgU/MOA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 465981CA4C1;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 65CE11CA493;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7CCAD409BA4;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B53A409B76;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 79B5B2F918; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 00A562F8BC; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 066/102] linux-user/sh4: allow full 32-bit address
- space
-Date: Wed, 12 Aug 2026 16:01:41 +0300
-Message-ID: <20260812130233.621965-66-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 020/102] hw/ide/core: Fix possible crash via NULL
+ pointer in ide_cancel_dma_sync()
+Date: Wed, 12 Aug 2026 16:00:55 +0300
+Message-ID: <20260812130233.621965-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,57 +71,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <laurent@vivier.eu>
+From: Thomas Huth <thuth@redhat.com>
 
-On real SH4 hardware, the address space is split between user mode
-(U0, 0x00000000-0x7fffffff) and kernel mode (P1-P4, 0x80000000-0xffffffff),
-so TARGET_VIRT_ADDR_SPACE_BITS was set to 31 for CONFIG_USER_ONLY.
+ide_cancel_dma_sync() is called with a "IDEState *s" for one of the
+two IDE drives on a bus (primary or secondary drive) to cancel all
+pending DMA transfers on the drive. The code then checks
+s->bus->dma->aiocb to see whether there is any IO in flight on the
+*bus* and then calls blk_drain(s->blk) to wait for its completion.
+However, s->bus->dma->aiocb might belong to the other drive on the
+bus, and if there is no disk attached to the current drive, s->blk
+is NULL. Since blk_drain() does not check its parameter for a NULL
+pointer, QEMU can crash in such a case.
 
-However, qemu-user does not emulate the MMU, so this limit is not needed.
-The only effect is to restrict reserved_va to 2 GB, causing OOM failures
-for memory-intensive builds (e.g. webkit2gtk on Debian sh4 buildds).
+To fix the problem, we have to check that "blk" is not NULL before
+calling blk_drain(). And we have to call blk_drain() for both drives,
+otherwise the assert(s->bus->dma->aiocb == NULL) statement after
+the blk_drain() might trigger if the IO in flight belongs to the
+the other drive.
 
-Set TARGET_VIRT_ADDR_SPACE_BITS to 32 unconditionally, like most other
-32-bit targets. Also fix the TASK_UNMAPPED_BASE macro to use 1ull instead
-of 1u to avoid undefined behavior when shifting by 32.
-
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit db3abd36e4c7c2a72e00e5806cf4c47f5aa5c491)
-(Mjt: context fixup for 10.0.x)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/905
+Reported-by: Alexander Bulekov <alxndr@bu.edu>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4052
+Reported-by: dong ling
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260721070216.82984-1-thuth@redhat.com>
+(cherry picked from commit 9b899ddb2706150ee1e5d0150a11bb021377ecb8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/target_mman.h b/linux-user/sh4/target_mman.h
-index dd9016081e9..2d05837c2f3 100644
---- a/linux-user/sh4/target_mman.h
-+++ b/linux-user/sh4/target_mman.h
-@@ -1,6 +1,6 @@
- /* arch/sh/include/asm/processor_32.h */
- #define TASK_UNMAPPED_BASE \
--    TARGET_PAGE_ALIGN((1u << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
-+    TARGET_PAGE_ALIGN((1ull << TARGET_VIRT_ADDR_SPACE_BITS) / 3)
- 
- /* arch/sh/include/asm/elf.h */
- #define ELF_ET_DYN_BASE       (TASK_UNMAPPED_BASE * 2)
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index 2b6e11dd0ac..3e058e3aaef 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -10,10 +10,7 @@
- 
- #define TARGET_PAGE_BITS 12  /* 4k */
- #define TARGET_PHYS_ADDR_SPACE_BITS  32
--#ifdef CONFIG_USER_ONLY
--# define TARGET_VIRT_ADDR_SPACE_BITS 31
--#else
--# define TARGET_VIRT_ADDR_SPACE_BITS 32
--#endif
-+/* qemu-user does not emulate the MMU, so no need to limit to 31 bits. */
-+#define TARGET_VIRT_ADDR_SPACE_BITS 32
- 
- #endif
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 4b6066c3eca..3769918d6f9 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -741,10 +741,17 @@ void ide_cancel_dma_sync(IDEState *s)
+      * In the future we'll be able to safely cancel the I/O if the
+      * whole DMA operation will be submitted to disk with a single
+      * aio operation with preadv/pwritev.
++     *
++     * Note: s->bus->dma->aiocb might belong to the adjacent IDEState,
++     * so we have to drain both drives to get it cleared.
+      */
+     if (s->bus->dma->aiocb) {
+         trace_ide_cancel_dma_sync_remaining();
+-        blk_drain(s->blk);
++        for (int i = 0; i < 2; i++) {
++            if (s->bus->ifs[i].blk) {
++                blk_drain(s->bus->ifs[i].blk);
++            }
++        }
+         assert(s->bus->dma->aiocb == NULL);
+     }
+ }
 -- 
 2.47.3
 
