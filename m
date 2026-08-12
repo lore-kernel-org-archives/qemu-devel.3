@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15504C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25EDCC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAgk-0008Ts-Rd; Wed, 12 Aug 2026 11:16:18 -0400
+	id 1wuAgx-00008F-HO; Wed, 12 Aug 2026 11:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgO-00086D-44
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:16:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgV-00087f-SX
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:16:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgM-0007Dc-Nc
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:55 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgU-0007EX-8X
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:16:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786547754;
+ s=mimecast20190719; t=1786547760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UuW++BxckSebbVYSJky3TOCAC5NfFrDSCOlGqtDgr60=;
- b=E3DvfXouY0OLwLrUStsuTb7C24VuSy8D69Xib8p5rwgwJwYK129dYXOGMP8rv9aFACxWGQ
- 7f0UKDfXoEK0n1HnZ/q/42QmofwfxliEWj327wmrigrTgFRdhcbaF1KXTrsn468O/Npbc8
- ziPiJwLniTZdq/7zJ6v7hRuYp3gU4ks=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wdsfDJq0N8HUdLIKKMBehusFJkGfXcTT0b2//0AMEHw=;
+ b=eH1xMEsGsblYPNsddahp+b8MktXHH6HwLS4HZ7f4AU/R6t8BmJfk5yYf1yIbzHC31dzIFd
+ uf24DZfCR3IjCiQG4BhVfUy/v+n51l3yG5xkUCdVAmb9GyvFopY6Z12wtU2IA1SHi1dgk/
+ 8u+EKiOwDDMM9OzL1jZMnb91hepWwPE=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-5eVdpf9YPqCRkfR6LRoNaw-1; Wed, 12 Aug 2026 11:15:51 -0400
-X-MC-Unique: 5eVdpf9YPqCRkfR6LRoNaw-1
-X-Mimecast-MFC-AGG-ID: 5eVdpf9YPqCRkfR6LRoNaw_1786547751
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52d28f8737eso20521831cf.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:51 -0700 (PDT)
+ us-mta-251-nX_UV4JAPwygHhN1Pp8Z4A-1; Wed, 12 Aug 2026 11:15:59 -0400
+X-MC-Unique: nX_UV4JAPwygHhN1Pp8Z4A-1
+X-Mimecast-MFC-AGG-ID: nX_UV4JAPwygHhN1Pp8Z4A_1786547758
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-526da7e3c9dso10747271cf.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786547751; x=1787152551; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UuW++BxckSebbVYSJky3TOCAC5NfFrDSCOlGqtDgr60=;
- b=IlPTwvaBWuNpK++N6d4uHB1swJswWrDjw1T18R6ZBkfhV1xT/wzzDBIIqNCLvbXx1u
- Ozc35sD12S5s72mciYw30LR7JULxmtamPBrLZ+btyIp7b1Kk9CYnUaNRxXQNQXOgGYJf
- 7wVNb1nfdjfqRNXDzFh4V+EpWdQ+kcrS8VfxED6OfbTa2BRwvZmL8Ry0HU0+/Yczbjvn
- IqxIExSHKzhFOEVV+/rtwI7KsuzaU7AsdPw7Fp4rBypvHtV3upg5movNgS+4XP/Rkkt1
- L/KDEZSS/mBz/gm3hou/IN93irsFoppYlyVZBvHXw10xgYJyZ1l1d+ISfyeZPJxFDYri
- wawQ==
+ d=redhat.com; s=google; t=1786547758; x=1787152558; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wdsfDJq0N8HUdLIKKMBehusFJkGfXcTT0b2//0AMEHw=;
+ b=dO15qFEETl1BRhNsCzA1d6RlMvM7GultG0mElWe4q9ZUyOFpQrSFv1pNxm+T8jhQE6
+ GyTk2AYgnt/V0KGKu0Ax68T464RS8eYs37l3ZoZwSS70e66PcCQuPsCi6yxNr4UAfrUg
+ yWKo9t7O6ZQJVm/UYHsUlFzKPAVYRaL9mfcps2Z8zzCX4UJySKosmA0tIOpTXMyPZiqu
+ eviFMB37H6o3a+MI1qr/tYAXxrlqZN+wNTjbPb3T67AGw8g6VDvEPEaigfIry6lcZDw5
+ THVLj18mXHCZG0FQhRG8GBaBUGde75/VUx3jXNk1vsKGzrKS3nsmmsGbJONt9Wr3kbIz
+ AAmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786547751; x=1787152551;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UuW++BxckSebbVYSJky3TOCAC5NfFrDSCOlGqtDgr60=;
- b=Gu7CQ9H7KMKVQ6LmC0rh3tiOEAJ3U0SxZiOCfy12qkb4YoMGmF31MzqobG5EBp09w4
- /SgQicmWndOdsP5J9mKZNJrqU37n5Uhf3RXInCXC47pLaPVT/LHoRG14VDlHV7fxSvh9
- cRdMu+yHBqrusRRt4tzjnGSnxk4kzNrVq7mNHiTJdcio+bb/wjf8k+js7kYKTn3yFBWw
- grx0luIItSOAkP3xTLlhmf/3SOYTPsdBwXOS2z6M9VoviaBxsMifsa8UO3/MD93RfBbG
- qS62XQ23T5DsSTcZr1i/UM5uPlLGIMj1eZKZhWyFx7/QeMgyGPk0iM8ACeOvaH45afuw
- W5XQ==
-X-Gm-Message-State: AOJu0Yy5fnyC6G+LHZrLT1TliwRxCz8Q0U2bFtoeEFTykZ9lgSSniCl0
- EnMhMtf60dfa/j/gfhnlVaDc9syeviz/imMzpfjIwyG5eqHkQg23u/eBmdeURBWkBrRoBlKRTj7
- +1qKpx6QNNkMTanVoRDGaK7DwMDVL2n54TfPZhlIV3IhbuVP5Cl6r9rW7X+tp0CLkuvDGAzLFp0
- FpgnibvjNcCurf+aHZ5qgvvDimYVLMyHa1DyQuXA==
-X-Gm-Gg: AR+sD12CxzXlF/EsiQsJAIYbCFJQkNbxHsvYQn/+e+pYxIxH2YHBB1FaU48LwtO+4Pp
- FXz9+amI/lHQ5DqpIuPJUmo67XuzrGdYPG4q9F1YZAvHauw1tRvGzN/ylwAjD3uKuyd6YoTtoCA
- DTM0JIAKChY6BHq2+EVxnTT38dDTwV/CoYsThwH/RJQ/l1tkc9zlGJ5Pp5SgGDftsmRUT32l6er
- VNAbjCMhwIpCv2vsePx76VYhikJ143yioF5X+AylWwqlF3hBqet87Zp4r9CXd/N9+sHCgwFNPUY
- AACUcC3KS4gfyRH8OlEa1fmDzhOsvGaxrJdAq5LrC2GFBWuRVpox0xWRq8sS3Zoppw==
-X-Received: by 2002:a05:622a:c08:b0:517:5add:e449 with SMTP id
- d75a77b69052e-52d647ec62cmr57551201cf.22.1786547750761; 
- Wed, 12 Aug 2026 08:15:50 -0700 (PDT)
-X-Received: by 2002:a05:622a:c08:b0:517:5add:e449 with SMTP id
- d75a77b69052e-52d647ec62cmr57550181cf.22.1786547750234; 
- Wed, 12 Aug 2026 08:15:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786547758; x=1787152558;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wdsfDJq0N8HUdLIKKMBehusFJkGfXcTT0b2//0AMEHw=;
+ b=OVy/JW6gNFVgDSzq22gyC++jr56Yjf4PjPbSELpYjagaMcajQk1sHIZANcB3xrn72z
+ yEo59rIyB2BeXa4FruOzwuhlrxfVuSoNP8uoK+yzsK2Z76wHqbNIZvp0PrOnl2lklBwA
+ COo/hgMug7M4HXERyJvBzoAIzbl5e2pCwJfLm4duy0kdtc+F3VZ8QwUaoY8GEP1q3vnn
+ Qru1AI51xPZ++7vISpVeoXBzGkfvpLlxGZm5AEsltCA856ZxXIudMIXZvjr3/GaiSlHZ
+ rjvrVadKuJ1ITIcMybc+pwzyXaZxx0s58TypSuL0UgR16gxtsTBPxu/gKTEvdIRTlfxh
+ nH6w==
+X-Gm-Message-State: AOJu0YzMhOjnSJIILekl1Q2KqFCv1GcqD6hZ/5sabIRZyLyV5u9QNbL2
+ OHLvMov6R8JUnibUrHBetIrVyaEUG0LdJiCA0b/Qx/oN8gSsySiurb8e8zU58ADfsk9K/a5yH+a
+ lc0BmfMUJmvlyv4LIttr5uItJDPQVUM5CoLCNSVSVPO7/ue864oU2eiyHepIiOC5+FpZYp/IOun
+ bGPbohYdjpeYNUMKgWQ2P/uNCetUtnSAaZDPK8Nw==
+X-Gm-Gg: AR+sD12m4FO3YO4iTopeymH1MdMtf6iLrhFM0H84/IJ/bUNQYdG5G9Tf8R+vhxoPZQC
+ TtkPv7oHx7kCgvxY/AmH33dNrVSWpuY1A5eGk32cwIRgx1WO4YXoAf4V2M2uptlf+9klSO2y2K7
+ a6vdq2b58R3lTau10y4HE4IFToTt1xTfq0x7AEnoVjeBZBerhFhWt0C3B/I83a9WgkzhcyXKIyS
+ e2cl/PC4rfHDEL20UuYCkbIjfIzhgVxBhLpELaljdJeEbHqo4Xfx+SzZUXbNrVakjpDQV6bf+Kq
+ CHmhGqxhHCtuIBerZ5NiOkbeJ3EJD+4CTC3OwoRZ2zBXmyG299xS3+gcCGDYfwvxcg==
+X-Received: by 2002:a05:622a:581a:b0:528:22:8c61 with SMTP id
+ d75a77b69052e-52d648b2a9emr49738331cf.38.1786547756938; 
+ Wed, 12 Aug 2026 08:15:56 -0700 (PDT)
+X-Received: by 2002:a05:622a:581a:b0:528:22:8c61 with SMTP id
+ d75a77b69052e-52d648b2a9emr49736781cf.38.1786547756149; 
+ Wed, 12 Aug 2026 08:15:56 -0700 (PDT)
 Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.48
+ d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 08:15:48 -0700 (PDT)
+ Wed, 12 Aug 2026 08:15:50 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Tristan Madani <tristan@talencesecurity.com>
-Subject: [PULL 09/10] migration/ram: Check for RAMBlock size mismatch when
- parsing
-Date: Wed, 12 Aug 2026 11:14:42 -0400
-Message-ID: <20260812151444.2611689-10-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 10/10] migration: Fix rare hang of migration_channel_read_peek()
+Date: Wed, 12 Aug 2026 11:14:43 -0400
+Message-ID: <20260812151444.2611689-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260812151444.2611689-1-peterx@redhat.com>
 References: <20260812151444.2611689-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -118,50 +119,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an underflow check for the subtract of total RAMBlock size to make sure
-it won't underflow.  It should not happen in production systems but only if
-the migration stream was hijacked, which is not a real concern since
-migration channel is trusted.  Still protect against it.
+In an unlikely case, when a migration stream is attached to the destination
+QEMU and only send <4 bytes to the channel as magic, it's possible that
+migration_channel_read_peek() may spin forever.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4013
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260728210417.1925078-6-peterx@redhat.com
+Fix it by adding a manual sleep for partial read.
+
+Since the path isn't attached to a coroutine, it means when partial read
+happens, there's yet not much we can do but hang the main thread, it will
+happen even for len==0 case.  It means monitors can hang due to this,
+either partial read or no data arrived (but connection established).
+
+Leave this for later, the hope is this is extremely rare in production.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3889
+Reported-by: Feifan Qian <bea1e@proton.me>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/20260812124327.2572363-1-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 11 +++++++++--
+ migration/channel.c | 11 +++++++++--
  1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 8918b2f03b..85feff578c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4268,7 +4268,7 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
-     int ret = 0;
+diff --git a/migration/channel.c b/migration/channel.c
+index 1e2935f926..266ae8f776 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -296,9 +296,16 @@ int migration_channel_read_peek(QIOChannel *ioc,
  
-     /* Synchronize RAM block list */
--    while (!ret && total_ram_bytes) {
-+    while (total_ram_bytes) {
-         RAMBlock *block;
-         char id[256];
-         ram_addr_t length;
-@@ -4285,8 +4285,15 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
-             error_report("Unknown ramblock \"%s\", cannot accept "
-                          "migration", id);
-             ret = -EINVAL;
-+            break;
-+        }
-+
-+        if (usub64_overflow(total_ram_bytes, length, &total_ram_bytes)) {
-+            error_report("%s: RAMBlock '%s' size underflow total RAM size",
-+                         __func__, block->idstr);
-+            ret = -EFAULT;
-+            break;
+         if (len == buflen) {
+             break;
++        } else if (len == QIO_CHANNEL_ERR_BLOCK) {
++            qio_channel_wait_cond(ioc, G_IO_IN);
++        } else {
++            /*
++             * When partially ready, we can't use qio_channel_wait_cond()
++             * because it will return immediately.  Apply a manual wait.
++             */
++            assert(!qemu_in_coroutine());
++            g_usleep(1000);
          }
--        total_ram_bytes -= length;
+-
+-        qio_channel_wait_cond(ioc, G_IO_IN);
      }
  
-     return ret;
+     return 0;
 -- 
 2.54.0
 
