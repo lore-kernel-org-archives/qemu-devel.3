@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D6DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:07:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6362C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8cM-0003b5-Md; Wed, 12 Aug 2026 09:03:38 -0400
+	id 1wu8eX-0000EO-UI; Wed, 12 Aug 2026 09:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8c9-0003SW-JO; Wed, 12 Aug 2026 09:03:25 -0400
+ id 1wu8eB-0008Nh-Ka; Wed, 12 Aug 2026 09:05:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8c7-0004Hu-HN; Wed, 12 Aug 2026 09:03:25 -0400
+ id 1wu8e8-0004uA-VK; Wed, 12 Aug 2026 09:05:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=ubNVwXuGjjsJb2/BHifSoUcHdF9d+BGn1cLMLlIkifQ=;
+ t=1786539783; bh=0WzhhckKXiySYuj9vkB0s8yPv8Nv4m1x3zGNeatnL2s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=P5xqz8UjqFNQvMD2Q2JQf2dekUQzrNnt+cjxLVDwUvk47J8H6ehu1S+MixvpSIcBT
- s437mRCiPTir3sPrSseOBR+hxYW5MNBLgWnbjnmiCx+qI7FJ3z5db3f2FoP8Igae1g
- oblBB7qhxq6v827EcHJ6NGLtPIpJ3+RDXZHnHyh5zo98YdrYWprJU+OYPG2cierYdA
- vx0Gb/GCq+9rQReshcFZjkVTeb8fwRbFeI0zVYj0MSD843WAGP9gRUT2kjKCKnSEfY
- VUvlhhnxz3/bZGC7gZSYmpgp+JHyHHUtS/wFm34uPuiwWbP5D7JwcGEkEG3ouzr7E+
- mR5SIpb+k7fWw==
+ b=AxEElnxXBqzDfHMn6+Qo6HqoI22stqkSkxepsGFFU5BeTQgQYAda3aTq6ckE/57Lp
+ ReAXFx1WZJpstBGWW+sC2wOLAOjpB7RH/9fVRkScCO3tMUUFDxSkZN7zlF4J7AdGFB
+ s9z/I0/vOctTaY5pgvpskdA9jWzWXAPhB14rOCfit1RXOlnyK3gT++weI/+eiRYu+7
+ rzUSUkrc/qGeQHU5cQT1Nmnsb9ILgqSFWbmnWpqI3G2x2nL4yKharSPlfMk5bYYfSa
+ +hFkm0fbh72XxP1anOMowd3Gs32YVTSrpULlfqBJVn7xd8sH3NUqYmHSYQuur72Gg3
+ G2ZcuySgvS9mA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 179F31CA484;
+ by isrv.corpit.ru (Postfix) with ESMTP id 974FD1CA49C;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4DC85409B67;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CCEA1409B7F;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CD2472F89E; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id 17E052F8CE; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 005/102] hw/uefi: add post_load checks
-Date: Wed, 12 Aug 2026 16:00:40 +0300
-Message-ID: <20260812130233.621965-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 029/102] net/colo: fix g_hash_table_destroy assertion
+ on uninitialized filter
+Date: Wed, 12 Aug 2026 16:01:04 +0300
+Message-ID: <20260812130233.621965-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,191 +73,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add sanity checks to uefi-vars state loaded from live migration data
-stream.  Fail migration if invalid data or inconsistencies are found.
+colo_rewriter_cleanup() unconditionally destroys connection_track_table,
+but the table is only allocated in colo_rewriter_setup(). When the
+filter-rewriter object is finalized without having been set up (e.g.
+during qom-test property enumeration), the pointer is NULL and
+g_hash_table_destroy() fires an assertion.
 
-Fixes: CVE-2026-61404
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3837
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3838
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3839
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3885
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260720143244.821889-6-kraxel@redhat.com>
-(cherry picked from commit acba2d78176d8235b81fd886b37642ae6c464982)
-(Mjt: back-port this fix across v10.2.0-2040-gb28c3ad1d63c
- "hw/uefi: add variable digest to vmstate")
+Use g_clear_pointer() to skip the destroy when the table was never
+initialized.
+
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Message-ID: <20260709111315.1108185-1-marcandre.lureau@redhat.com>
+(cherry picked from commit b28778131fad008fcb79204874d926c2433e518f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index 1b9ca3dc77a..41bdcdf2f08 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -5,6 +5,7 @@
-  */
- #include "qemu/osdep.h"
- #include "qemu/crc32c.h"
-+#include "qemu/error-report.h"
- #include "system/dma.h"
- #include "migration/vmstate.h"
- 
-@@ -28,9 +29,20 @@ static int uefi_vars_post_load(void *opaque, int version_id)
- {
-     uefi_vars_state *uv = opaque;
- 
-+    if (uv->buf_size > MAX_BUFFER_SIZE) {
-+        error_report("invalid buffer size");
-+        return -1;
-+    }
-+    uv->buffer = g_malloc(uv->buf_size);
-+
-     uefi_vars_update_storage(uv);
-+    if (uv->used_storage > uv->max_storage) {
-+        error_report("out of variable memory (%" PRId64 " > %" PRId64 ")",
-+                     uv->used_storage, uv->max_storage);
-+        return -1;
-+    }
-+
-     uefi_vars_json_save(uv);
--    uv->buffer = g_malloc(uv->buf_size);
-     return 0;
- }
- 
-diff --git a/hw/uefi/var-service-json.c b/hw/uefi/var-service-json.c
-index 8621b86c5c5..88757d58b6f 100644
---- a/hw/uefi/var-service-json.c
-+++ b/hw/uefi/var-service-json.c
-@@ -18,6 +18,7 @@
- #include "qobject/qobject.h"
- #include "qobject/qjson.h"
- 
-+#include "qapi/error.h"
- #include "qapi/dealloc-visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qobject-output-visitor.h"
-@@ -249,6 +250,10 @@ void uefi_vars_json_load(uefi_vars_state *uv, Error **errp)
-     if (!(*errp)) {
-         uefi_vars_from_qapi(uv, vs);
-         uefi_vars_update_storage(uv);
-+        if (uv->used_storage > uv->max_storage) {
-+            error_setg(errp, "out of variable memory (%" PRId64 " > %" PRId64 ")",
-+                       uv->used_storage, uv->max_storage);
-+        }
+diff --git a/net/filter-rewriter.c b/net/filter-rewriter.c
+index c18c4c20190..312085f9d98 100644
+--- a/net/filter-rewriter.c
++++ b/net/filter-rewriter.c
+@@ -373,7 +373,7 @@ static void colo_rewriter_cleanup(NetFilterState *nf)
+         g_free(s->incoming_queue);
      }
  
-     qapi_free_UefiVarStore(vs);
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 1e941a65fcc..5ccdc8193ad 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -7,6 +7,7 @@
-  * https://github.com/tianocore/edk2/blob/master/MdeModulePkg/Library/VariablePolicyLib/ReadMe.md
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "system/dma.h"
- #include "migration/vmstate.h"
- 
-@@ -16,14 +17,18 @@
- 
- #include "trace/trace-hw_uefi.h"
- 
--static void calc_policy(uefi_var_policy *pol);
-+static int check_calc_policy(uefi_var_policy *pol);
- 
- static int uefi_var_policy_post_load(void *opaque, int version_id)
- {
-     uefi_var_policy *pol = opaque;
-+    int rc;
- 
--    calc_policy(pol);
--    return 0;
-+    rc = check_calc_policy(pol);
-+    if (rc != 0) {
-+        error_report("invalid uefi variable policy");
-+    }
-+    return rc;
+-    g_hash_table_destroy(s->connection_track_table);
++    g_clear_pointer(&s->connection_track_table, g_hash_table_destroy);
  }
  
- const VMStateDescription vmstate_uefi_var_policy = {
-@@ -80,32 +85,45 @@ static uefi_var_policy *wildcard_find_policy(uefi_vars_state *uv,
-     return NULL;
- }
- 
--static void calc_policy(uefi_var_policy *pol)
-+static int check_calc_policy(uefi_var_policy *pol)
- {
-     variable_policy_entry *pe = pol->entry;
-     unsigned int i;
- 
-+    if (pol->entry_size != pe->size ||
-+        pe->offset_to_name >= pe->size) {
-+        return -1;
-+    }
-+
-     pol->name = (void *)pol->entry + pe->offset_to_name;
-     pol->name_size = pe->size - pe->offset_to_name;
- 
-+    if (!uefi_str_is_valid(pol->name, pol->name_size, false)) {
-+        return -1;
-+    }
-+
-     for (i = 0; i < pol->name_size / 2; i++) {
-         if (pol->name[i] == '#') {
-             pol->hashmarks++;
-         }
-     }
-+
-+    return 0;
- }
- 
- uefi_var_policy *uefi_vars_add_policy(uefi_vars_state *uv,
-                                       variable_policy_entry *pe)
- {
-     uefi_var_policy *pol, *p;
-+    int rc;
- 
-     pol = g_new0(uefi_var_policy, 1);
-     pol->entry = g_malloc(pe->size);
-     memcpy(pol->entry, pe, pe->size);
-     pol->entry_size = pe->size;
- 
--    calc_policy(pol);
-+    rc = check_calc_policy(pol);
-+    g_assert(rc == 0);
- 
-     /* keep list sorted by priority, add to tail of priority group */
-     QTAILQ_FOREACH(p, &uv->var_policies, next) {
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index dface7e8cd7..49ecbaec1f8 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -37,8 +37,23 @@ const VMStateDescription vmstate_uefi_time = {
-     },
- };
- 
-+static int uefi_vars_post_load(void *opaque, int version_id)
-+{
-+    uefi_variable *var = opaque;
-+
-+    if (!uefi_str_is_valid(var->name, var->name_size, true) ||
-+        var->attributes & ~EFI_VARIABLE_ATTRIBUTE_SUPPORTED ||
-+        (var->digest_size != 0 &&
-+         var->digest_size != 32 /* AUTHVAR_DIGEST_SIZE */)) {
-+        error_report("invalid uefi variable");
-+        return -1;
-+    }
-+    return 0;
-+}
-+
- const VMStateDescription vmstate_uefi_variable = {
-     .name = "uefi-variable",
-+    .post_load = uefi_vars_post_load,
-     .fields = (VMStateField[]) {
-         VMSTATE_UINT8_ARRAY_V(guid.data, uefi_variable, sizeof(QemuUUID), 0),
-         VMSTATE_UINT32(name_size, uefi_variable),
+ static void colo_rewriter_setup(NetFilterState *nf, Error **errp)
 -- 
 2.47.3
 
