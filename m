@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2456C5B56A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C79C5CFEE
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8dH-0006U7-D4; Wed, 12 Aug 2026 09:04:35 -0400
+	id 1wu8d4-00052a-8X; Wed, 12 Aug 2026 09:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8dF-0006LA-4V; Wed, 12 Aug 2026 09:04:33 -0400
+ id 1wu8co-000468-Fa; Wed, 12 Aug 2026 09:04:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8dD-0004U5-7s; Wed, 12 Aug 2026 09:04:32 -0400
+ id 1wu8cm-0004NI-PB; Wed, 12 Aug 2026 09:04:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=SndFf6wpDh9BKo52My83sPiQ67/6jnB04Xro4r75hK8=;
+ t=1786539783; bh=Ahl70wrhjes1tB61twhbgD9TPZiO1nVGUaPZq4evW+g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E0VZ5jRhVV/o/Mf/3Ie2dRBCwVwTT7LQ0Gw/BaX8NCpMZwKlkFqr0yxwmcctx7ZJl
- HyFCM65MZbI34R+9EJWw2gqk3BhNTc/NNbw4RAhfWsxZSme96TzTXzRnO3IPJgE6jn
- 4paGojBWm5LCEzg4AXjmNY0JLLVtvXMsL/GCpjTLkXut79sJl3wQU0Z0F9dlpioFzF
- qUDGvvS+61rgsvDKjeqApuAX7iAMQRigTDpQgrm5duYJTEghc+C/aN6SwgokvBJ2YN
- RmucHWl8C+CAqAPCfdRfhZIzLPB5YfUrxbXHyMuxOoIUaXV3aaSFAafGoy4CaAkdB2
- RTi8nmDT0f3Pg==
+ b=e93jq+Ve8ni6E3dI0nf+wpPPnxOrZwPowQZppXYCsMoSltrWRxk+mYF74eFRQAbWp
+ Ej0nKOTA22SvW9hSavrm6ioRgzge+DnBbXYJUXCMGbKDOPylV1wMqpn30nSi/gCLcm
+ dx0wYJzNxDAjEbLujVZ1cWrOigVfJC1YmZyVzMmCTBgORRQmEJVC+gk2AqjYeIltXj
+ 6wNzDtSisBM+wUVCl/+YdPcaVj28DnD+/XuexkKHrPxCKCaRDoej4LSzlFtRdLtcy8
+ 3nn2ONKOeehqiyLGuUEMbpv46VKAKWAWbZs0WnKV5TVg8CRGYXBUk/jVWqdMzo7LiM
+ 91ifqTIwVcTog==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FC561CA492;
+ by isrv.corpit.ru (Postfix) with ESMTP id 447011CA48D;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 95587409B75;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A83F409B70;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F23F92F8BA; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id E4D392F8B0; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Tristan Madani <tristan@talencesecurity.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 019/102] hw/usb/dev-uas: Fix guest-triggerable heap
- OOB access
-Date: Wed, 12 Aug 2026 16:00:54 +0300
-Message-ID: <20260812130233.621965-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Artem Nasonov <anasonov@astralinux.ru>,
+ Fiona Ebner <f.ebner@proxmox.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 014/102] hw/ide: replace assert with proper error
+ handling
+Date: Wed, 12 Aug 2026 16:00:49 +0300
+Message-ID: <20260812130233.621965-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,98 +72,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Artem Nasonov <anasonov@astralinux.ru>
 
-The stream ID is under control of the guest, and some spots in the
-code currently use it for indexing into the status3[] array without
-checking it for being in range first, so the code accesses the heap
-beyond the limit of the status3 array.
+In ide_dma_cb(), the call to prepare_buf() might return a negative
+result and cause an assertion failure. This was found during fuzzing
+and can be triggered with some qtest commands. Replace the assert with
+proper error handling in case the result is negative, but keep the
+assert for failing to respect the limit upon success. If that happens,
+it is an implementation error.
 
-Since our status delivery code depends on having a valid stream ID,
-we must not try to generate a fake sense code in this situation.
-Simply log a guest error and return early in usb_uas_command().
+Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
 
-And to make sure that we really cannot access the status3[] array
-beyond its limit anymore, add some assert() statements in the
-affected functions, too.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3612
-Reported-by: Reported-by: huntr bubble
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3986
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260720134809.573757-1-thuth@redhat.com>
-(cherry picked from commit b7520c9a59128d7e616876a511821c70edab2a90)
+Cc: qemu-stable@nongnu.org
+Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2777
+Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
+Link: https://lore.kernel.org/qemu-devel/20250116111600.2570490-1-anasonov@astralinux.ru
+[FE: improve commit message
+     keep assert for failing to respect the limit]
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 443e02410695b35a27fad18217424b6370358be7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
-index 44e30013d73..eea687cb821 100644
---- a/hw/usb/dev-uas.c
-+++ b/hw/usb/dev-uas.c
-@@ -363,6 +363,7 @@ static void usb_uas_send_status_bh(void *opaque)
- 
-     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
-         if (uas_using_streams(uas)) {
-+            assert(st->stream <= UAS_MAX_STREAMS);
-             p = uas->status3[st->stream];
-             uas->status3[st->stream] = NULL;
-         } else {
-@@ -384,8 +385,14 @@ static void usb_uas_send_status_bh(void *opaque)
- 
- static void usb_uas_queue_status(UASDevice *uas, UASStatus *st, int length)
- {
--    USBPacket *p = uas_using_streams(uas) ?
--        uas->status3[st->stream] : uas->status2;
-+    USBPacket *p;
-+
-+    if (uas_using_streams(uas)) {
-+        assert(st->stream <= UAS_MAX_STREAMS);
-+        p = uas->status3[st->stream];
-+    } else {
-+        p = uas->status2;
-+    }
- 
-     st->length += length;
-     QTAILQ_INSERT_TAIL(&uas->results, st, next);
-@@ -701,14 +708,22 @@ static void usb_uas_command(UASDevice *uas, uas_iu *iu)
-     uint16_t tag = be16_to_cpu(iu->hdr.tag);
-     size_t cdb_len = sizeof(iu->command.cdb) + iu->command.add_cdb_length;
- 
-+    if (uas_using_streams(uas) && tag > UAS_MAX_STREAMS) {
-+        /*
-+         * Our status delivery only works with valid tags, so in case the
-+         * stream ID is out of bounds, we have to return immediately here
-+         * without sending a fake sense_code_INVALID_TAG to the guest.
-+         */
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "invalid tag 0x%x for USB UAS command\n", tag);
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index bf616b77033..4b6066c3eca 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -921,8 +921,12 @@ static void ide_dma_cb(void *opaque, int ret)
+     s->io_buffer_index = 0;
+     s->io_buffer_size = n * 512;
+     prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
+-    /* prepare_buf() must succeed and respect the limit */
+-    assert(prep_size >= 0 && prep_size <= n * 512);
++    if (prep_size < 0) {
++        ide_dma_error(s);
 +        return;
 +    }
-+
-     if (iu->command.add_cdb_length > 0) {
-         qemu_log_mask(LOG_UNIMP, "additional adb length not yet supported\n");
-         goto unsupported_len;
-     }
++    /* If prepare_buf() succeeds, it must respect the limit. */
++    assert(prep_size <= n * 512);
  
--    if (uas_using_streams(uas) && tag > UAS_MAX_STREAMS) {
--        goto invalid_tag;
--    }
-     req = usb_uas_find_request(uas, tag);
-     if (req) {
-         goto overlapped_tag;
-@@ -745,10 +760,6 @@ unsupported_len:
-     usb_uas_queue_fake_sense(uas, tag, sense_code_INVALID_PARAM_VALUE);
-     return;
- 
--invalid_tag:
--    usb_uas_queue_fake_sense(uas, tag, sense_code_INVALID_TAG);
--    return;
--
- overlapped_tag:
-     usb_uas_queue_fake_sense(uas, tag, sense_code_OVERLAPPED_COMMANDS);
-     return;
+     /*
+      * Now prep_size stores the number of bytes in the sglist, and
 -- 
 2.47.3
 
