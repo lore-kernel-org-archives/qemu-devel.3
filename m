@@ -4,87 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E98DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A225C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBKE-0007EA-0H; Wed, 12 Aug 2026 11:57:07 -0400
+	id 1wuBKa-0007aI-Bg; Wed, 12 Aug 2026 11:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBJz-0007CO-C2
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:56:53 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBJt-0005N1-FT
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:56:48 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-49557167508so8604445e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:56:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wuBKZ-0007a2-GE
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:57:27 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wuBKX-0005Z7-6s
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:57:27 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CDcgLg104699
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:57:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BOcolcaa72g7qHVFbjnaZ4KobcI26QSgxtU7lmEkjk8=; b=oHioZKmkig4qFdmZ
+ JGXoSrCTnqYlWnFbY6OxUclF+lOgv23OO7GZUIFmXzlYOLb0fW0aI7lXfwK8CFxu
+ oDCxRNkHimpOUqB5v8VMRiTK4MXrsNxH+NAgQeIc2aLrRn8BBLx2cSxP4NNOhKmi
+ XVbT9rozBEn4wSf8ORTfYlI/JbJBgCYNognQ+2iHW4FxHI1u7BJR5PCAU5MCLnjF
+ L1k6wo5iy2iDuEBiJKFjtz2qoiuW48up8ZFRMcvZC5hfJlj5xco7AhlTdqSPCrCP
+ aCQ/kXtHRlUnxh9DfQzXpTy7QxzEvrs46UcDjsoUscvk1cZlXDxsT+v4EpnyRvoq
+ VQ8ulg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0nuchtaw-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:57:24 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38e475f83a2so1749204a91.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786550202; x=1787155002; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=c1fFJB0Iakhj/LbgbAF/f09z51LJNec8dSRHFCwHZrU=;
- b=ZtewRz+KxN+hclflI3s9xhoTkRhFVC/taMZC8VR0+LtOJ7L6CKoeyJvdus/uzfos+Z
- cuPKhXrVO0hnfJ1IwoVdGZJ+eS2QqFjHbcaW69bowwR3xV1GPEhGCfL04RGdwG0Iwc/P
- K/xplBAVXFLw+RL86JxkSBvfPifvYQuO/ngvuinyOyQ4dZ9OnRJjuH8LVk7A+8Qxmotm
- Ajy1Y83ipD1I4wKZM+/Xi4ociuX5SQ8UsIYyKtDb6BSXhJb2cIvMYVWOL8lhMdfT5gyL
- HYXmy41HlXqi29svZyfRMBUVm2vRNKD/ur417+C7jdePTFaWVAg1lX+cHBo4QKH7qihA
- BveQ==
+ d=oss.qualcomm.com; s=google; t=1786550243; x=1787155043; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BOcolcaa72g7qHVFbjnaZ4KobcI26QSgxtU7lmEkjk8=;
+ b=c188bD44P+z+vEPSoTQIYPZEskD55jwdeXEyKBxBwJ6Z2saEOCd5TPbgx9Wqq/lBn+
+ KMh9EXriGEQxaNDe6hyM5aFm6OJlA5PIIp3e08FwDcF6lorI+gmla+t7WHGzdFY8qhWX
+ aHByCAbeHe70eytQuOAkRXhCfxxy69ZClC1PjAeWLFHa5+4Z1uF97U1nVyRVEHCohGiv
+ DpUgfalVWpi9kpuv3jJt629PXjmsbJE2SAl9gUgCQvhLSCCKuWaQ6+m9yqXaJJ/yKhcB
+ Ntzz+7tz/FEHVNXYqtjAE6cr+0MrzftLIepBMadCfooiRWoYrQ9YyvbYDMPsw/Apk/kY
+ cJ0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786550202; x=1787155002;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=c1fFJB0Iakhj/LbgbAF/f09z51LJNec8dSRHFCwHZrU=;
- b=GPIKzOc7wQwuuni6+Txn5UEsX/rQfkK8bIfTJJFvyJjlrKOWhNMlX7kZOhkMQdt9Y5
- 1/UCaLxf1kV59Upb0IDkdo1dch/q8ypvlByZYUlk1FjZ10xzw9DnMLtac5+e8j+0aDJh
- 2nA0pPPzDuBcf92WgF2T8ziw/EoZddAdX4ALT2ElhElFuP2dEZj2iqeSOiC9SWFTELOf
- x0nvdvWqUGEf8vitlyc4BlDJuKIbpRMtOyrUeif0Y5rt9B2bCIG/YfBjXo9gLZR3I/q+
- Nq3MSOV5OUxMbMqytLgPpWnssfElxKwhvuUTuhbmQhgtePHkA1XnQz0r+2X4R4HG/qdH
- SaNg==
-X-Gm-Message-State: AOJu0YyWLNPI/AtL+nMOl08HHlMCeZSNPvY6Bqp1OPcQu/S38nzuzRT+
- 5bi8V1tfg5YAJnJoH1S29BTjtwtm/RIHQOJMV/iK0KKokXrwzbewlKADCkh4FoB0cSQ=
-X-Gm-Gg: AR+sD11HTYnP6MP883hrUGuslr+7AMX+a7UnReRs4hEHr3wwRwbv81uVN+A6cDKlrqw
- HTSVfya89fEcgUW8onW+H4hBa2g7Z6iktIJ4juUzXh+OY3VaoV6GTJX4sHXgxKrP//b88zYEaVH
- /ePrw15GknKBNIDmrlR28I3pxKU3OHtnuQzwMAo+SnWjclDyDBHLxmKU8o03kBh+xvIWhwsdRzk
- pOHMnNaynZWXqeb/trIVoMdDRz0yHaOxqvKm/WgepISPVKfwZKpKjWIcwbbCOhN4JgO/MA6JelN
- oNG1eYNkItlmz5X0vO9V6AX6aoNqVT257lMj6c8g3o/69CGZPjgfV1Kkl8/X2aZQeZQ8kC1fCBO
- ZB9FSQN83fSG2tFl56myTnoLMCMxiybf+Ad83W+4cbz4Vi1x92OBC7sfVcRlgz9HnkgkCMG+piX
- oLjPdAMPWZ6BUO8F0cfwUNmA/U4VvM0qnupxd4/98tCw1XHiHpKshSeHy+rLhq
-X-Received: by 2002:a05:600c:c84:b0:499:7aa7:eaa7 with SMTP id
- 5b1f17b1804b1-4997c130c54mr78689495e9.15.1786550202020; 
- Wed, 12 Aug 2026 08:56:42 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48150c06ab7sm7836410f8f.10.2026.08.12.08.56.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 08:56:41 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C8A495F886;
- Wed, 12 Aug 2026 16:56:39 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [RFC PATCH] scripts/feature_to_c.py: fix invalid escape
-Date: Wed, 12 Aug 2026 16:56:35 +0100
-Message-ID: <20260812155636.4158158-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ d=1e100.net; s=20251104; t=1786550243; x=1787155043;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BOcolcaa72g7qHVFbjnaZ4KobcI26QSgxtU7lmEkjk8=;
+ b=ikRIXMdBeO61d7xIX4zVDvbkv7GNj9UorI6lMYpjqBLEIWP9ekpoDnZg2lujwyL200
+ ERXBmLr0qOCs5sVQ3yZkaZlRdojHPKQ5h4vWp4Ihg9RLzT+wbDhuw9ly0iSXSUzqiUYj
+ pQyjT/Cj3mFP7LKz80hj4EULb81Zf1R6AGyTAA0oqO1/SsdFS8u2S/EhKNvwPGjbOEWB
+ BJlrgZyikH9mI79QCVAGKUpTpZSt+BPwkLdjcfpypw1f44NW7bmSn5NJOK7qhtj1++gu
+ oUxZA+u9Fh3/6wm817+ELWCavPxzuVd/Eyzc/kgMsTG+U3TKW76arba4n5RpAaFBLvAP
+ Jyow==
+X-Gm-Message-State: AOJu0YzHAiIwuBVky90yQoFjFv9yx1Yjr6ZNKdXO96nYKt3CzDXatsy8
+ GJvpgStGW6/t9PtH9ZOy61VUeXMNmRGriAdVr/fUpjidaikimVgJ1QwPln6JRQQOSHi+74PtXUA
+ +MgsnS8fza3V+Ut6nv6QbgdfMca1fsV5pa4tQWsyhvR1w9iY2TERhEyVz7A==
+X-Gm-Gg: AR+sD11ESVoVhvddnEnRCTIM+3Ps5CdwWBDbR2wSCsKeLpt477A/LUDXmFjAs5+btBL
+ 3mFfg+stwUC0IpXs4tBMEZUGFYQ5Kmm6PvwUhOecVkVldVcR5rxyIH7O7uqV8+Q8MZseGRJrryd
+ eOhpEy0JzvopKawlBH46dEXbeYz+Te/Mj/Khnnc77MWhANGWBbPKUft2V+/Icz0mRvY4m+r+gTj
+ ug74/tYoErjeUMgiw0kqYYo5n5Xjy4T04X8pUDpQoRXXr5GfdRwF0caYnjhpkFhJvQc/AvaAP4V
+ 7IQ3edo96WLHyTCg2667MVVdnq1cPkAmFgPQlCTCTE1vIAfqPxkJ7rS9tGq/ztfEZU3kZLEh66E
+ 1Nts7n0vbmhI1m/bLMxo+raz3ltR5wLd93xLvHXcg9OaeeUoU5qmeVNhm1ltcqLMFyGW0
+X-Received: by 2002:a17:90b:4c84:b0:38e:2e16:859b with SMTP id
+ 98e67ed59e1d1-393017e569dmr6705560a91.20.1786550243094; 
+ Wed, 12 Aug 2026 08:57:23 -0700 (PDT)
+X-Received: by 2002:a17:90b:4c84:b0:38e:2e16:859b with SMTP id
+ 98e67ed59e1d1-393017e569dmr6705485a91.20.1786550242635; 
+ Wed, 12 Aug 2026 08:57:22 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-392fe4fb406sm1460657a91.4.2026.08.12.08.57.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Aug 2026 08:57:22 -0700 (PDT)
+Message-ID: <9a1d9f99-ef41-451b-a8fb-fd1fae500e22@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 08:57:21 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 097/103] tests/tcg: remove remaining Makefiles
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Brian Cain
+ <brian.cain@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260728044248.137626-98-pierrick.bouvier@oss.qualcomm.com>
+ <87ecg3za53.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87ecg3za53.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: mcZxF_jv1KkUVqrqfIZewxmm4I9XPiNG
+X-Proofpoint-ORIG-GUID: mcZxF_jv1KkUVqrqfIZewxmm4I9XPiNG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzMCBTYWx0ZWRfXyrrXr0ey+Pcr
+ euJu9gLoiebQuvvMb0ckJoqP/M+OoxMotUUrETUSrCQNN1gUZUyCO5Uv01fHM4krn2Oiw91Ca2e
+ eq/cWezqNLxA3IyXBtdxDN0ZJ2DpDdhrg+6Zw7qL2RcH9hVijrSgjDCwLzdvpYgkS3d9XL7TrBo
+ mATlEdeZslht15A+Sis6xNLPcEyhTghkkXGP9IhgpaUs/oTHXm6JaeKzZYc8ZBJJvGWrPvgUcFR
+ EJDKeWo0AuIza7Xmp5Bhg0DrxO+RHIfK/teghEl+kXgEJDWHoq2yVHF4ntPepaezA7J10yVb/C8
+ 7usHuu143UdaFN4+GIqT8FrKqXhuAtct3HSxVhHnnKQ4RpWV8xSJHmxeyXzhg9Ku5gIZqmLO2xL
+ KWpDdd6Jg8Kzq2DcTX+tUyweRHAm3n9GvBZFg23LAM9vjTo54Onj0Hivs5ze2EDeaLeY/BJ54JX
+ ey2QrutqkbIoMe+hwhw==
+X-Authority-Analysis: v=2.4 cv=VcjH+lp9 c=1 sm=1 tr=0 ts=6a7c97e4 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=DlS8JDemCB7tWP6Nx8IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzMCBTYWx0ZWRfX4py8OLHECQgP
+ 7qQ+Ayptv7hdRyOOkEI0onFE6K0rmYnYpU9EFAp27uinmIfm2KAdV/VQXSCqEwfkpXj4fn+A0Kw
+ euWmjhmbK73sQgRTud4Ze0Jh3dcQlSU=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120130
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,32 +162,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This leg of the python code is trying to emit literal octal values but
-bodges the escape sequence. The newer python on my macOS box
-complained:
+On 8/12/2026 7:27 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> tests/tcg/mips/user/ has extra tests that are not currently run at the
+>> moment. Keep their Makefiles until they are implemented.
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> <snip>
+>> -else
+>> -# For system targets we include a different Makefile fragment as the
+>> -# build options for bare programs are usually pretty different. They
+>> -# are expected to provide their own build recipes.
+>> -EXTRA_CFLAGS += -ffreestanding -fno-stack-protector
+>> -
+> 
+> Ahh here is where -ffreestanding came in. We should also check why
+> -fno-stack-protector was added.
+> 
 
-  /Users/alex/lsrc/qemu.git/gdbstub/../scripts/feature_to_c.py:28: SyntaxWarning: "\{" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\{"? A raw string is also an option.
-    sys.stdout.write(f'\{c:03o}')
+I removed flags that didn't expose any difference in test
+compilation/results, thus skipped -ffreestanding and -fno-stack-protector.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- scripts/feature_to_c.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+For -fno-stack-protector, I don't see any good reason to have it. In
+worst case, there is a compiler that adds SSP by default and it breaks a
+specific test, and it would be a good idea to document that on concerned
+test, instead of globally applying the flag.
 
-diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
-index a52cd2e9ec6..4275b758172 100644
---- a/scripts/feature_to_c.py
-+++ b/scripts/feature_to_c.py
-@@ -25,7 +25,7 @@ def writeliteral(indent, bytes):
-         elif c >= 32 and c < 127:
-             sys.stdout.write(c.to_bytes(1, 'big').decode())
-         else:
--            sys.stdout.write(f'\{c:03o}')
-+            sys.stdout.write(f'\\{c:03o}')
- 
-     if quoted:
-         sys.stdout.write('"')
--- 
-2.47.3
-
+Regards,
+Pierrick
 
