@@ -4,110 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DD4C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCB7C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAlv-0002UG-4j; Wed, 12 Aug 2026 11:21:39 -0400
+	id 1wuAme-0004gm-RJ; Wed, 12 Aug 2026 11:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wuAll-0002LO-P0; Wed, 12 Aug 2026 11:21:33 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuAmY-0004TD-NY; Wed, 12 Aug 2026 11:22:18 -0400
+Received: from fout-a8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wuAli-0000MN-6C; Wed, 12 Aug 2026 11:21:28 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CE1f3k3687067; Wed, 12 Aug 2026 15:21:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=f1XMOTSKGgm3m+r0r5oSLBZLg61mZA2zTCXsVGSFB
- Vs=; b=EC0+v2d04i8lZvqkwFBYTfr8XQ/fFl3WSr+VuypVc6I0Z/lhC8jIteLlk
- 8W8D8Ognrkyy5YDicOyxDYgO+p0MzkLYkk9vlETHn3vNYyR3dwUDZvQ47SiblNQ5
- Zfl7lnf1nlk5FyMQvsd0kG/sAFiQSgrfIq3W5zhUDaF0IoXNVr0v/viU4ooN6aIL
- SoKT5oE9VcfmutT5Qm2kGuhDqajYY2uMVrFgiOZUvUf2Bcpf0f6g7Ztd0Rd03G9u
- Q0tpV/OFCna4nSd4fOSVALSYBCXypUgeNqhWV55xqtMSp9vRsPJ2YqXbyT9Ctva0
- 7zWzumY0+BsMUS7WJobvnsDy6fskA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvm9u7ca-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 15:21:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CFBKwT003252;
- Wed, 12 Aug 2026 15:21:16 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxhfy6e1d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2026 15:21:16 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67CFLDRa52035854
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2026 15:21:13 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EE1120043;
- Wed, 12 Aug 2026 15:21:13 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C7F1420040;
- Wed, 12 Aug 2026 15:21:12 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with SMTP;
- Wed, 12 Aug 2026 15:21:12 +0000 (GMT)
-Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 56370)
- id ADB14161205; Wed, 12 Aug 2026 17:21:12 +0200 (CEST)
-From: Joshua Daley <jdaley@linux.ibm.com>
-To: qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
- borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- cohuck@redhat.com, jdaley@linux.ibm.com
-Subject: [PATCH v1 0/3] Extend secure IPL support to virtio-blk-pci boot
- devices
-Date: Wed, 12 Aug 2026 17:21:09 +0200
-Message-ID: <20260812152112.3330493-1-jdaley@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuAmX-0000dJ-0V; Wed, 12 Aug 2026 11:22:18 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfout.phl.internal (Postfix) with ESMTP id 44F66EC0253;
+ Wed, 12 Aug 2026 11:22:15 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 11:22:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786548135; x=1786634535; bh=Bf6ruqCSqK+C+lYC+rb4LR9Kze0ANZL0
+ 4zA+Zc62UhQ=; b=QwastEhC6L4iWV5oJzIhGaAQBHfHAr9JX6mjD7/Ff2IUMzzu
+ 1eP+IyE8+yb5+XCssLFMRrOrLWmuVOHvfkZVKbmDJ/h2RLtFaPFTOfPw43pexBMg
+ 7FjbHI5Di3vuiPWoXZOAC+pk60SvzjPsDokIPa745jRfzM3kw61ANuw7V6uj8mGT
+ BE7Pe0EmTq37AdV8A7gO3lswGQJ2P4qZ+SYl0yKn9Z3seR31Mcid+RWuWjZimzeg
+ eiC52h/ZnzccSgf9z1MsHlktS2Q90nwEy6KcL+2sHxHr6QKaXghrXYCpDGCrbAzz
+ 4XpzttPWZHT4Cdkc/hcHIZm+lqZNzdVxifcnaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786548135; x=
+ 1786634535; bh=Bf6ruqCSqK+C+lYC+rb4LR9Kze0ANZL04zA+Zc62UhQ=; b=P
+ zDQZi2o2dz/fMF7o6Y+60H/R83w8hlWynvfUlSRPiimc4bd8+Wcn7Z/upHXfXkYd
+ Gpvk+KC6Xf9nU2AFEnjvwMIrQSlG/YP00HySCn/VqCLJMsAF7nPswLX0q9SKueMT
+ MR2BN7z6VbLw9Xrl8FxSckCGoMnCX5Nu85H9qXgsCryoBQ4q9K7QDwRdo5Qo51st
+ aGJpxPbIU0xr5dabY+mZniP0NdI2BkUIHoWzkm9EfdGfTcKATkJ3ogQdEOH75477
+ bOA2Z7NxHaURE+6bqLtcYmQidNri9MiTZ/WdJJPq0E49mq9GMdKygAHpFH2aeU0R
+ sjTCbo0IqxSjwrsNjzPXQ==
+X-ME-Sender: <xms:po98anXn_pc_HrPNe3t0Sg3eda8a8IToHwZw6fXf6miY1HSpwxts7Q>
+ <xme:po98at0w0PP6-D5_8BYFhc4DFUI79nVFAadxkxDOY3eyr-7_OD_VN5JuipkZ3cSnB
+ I60im_EAC2UGMmFY2ULnCEGUCXMO50OEBg6Y3BNKOQV9vjshKrSAxEq>
+X-ME-Received: <xmr:po98asuflYQ1mOYIiLxOAiSeNm_qs4RoQe3DM4oCAANwC1tsSIS2YN84sdnDlb6YyXfS4w>
+X-ME-Proxy-Cause: dmFkZTEcUVOi0bk1aRsvdSnXTqKAa3QBlko0iwctZrGHTeWS4rL9dDelty8i8D6lBffumr
+ NemaF9sQfxZr9RSXZc2hcvjJYRw6ZUfJk2q7LYaHvHRkEOY3um+0UJxEQtLwECK22MlEAr
+ oYhs0HaSLRNQawAdjT60PGLn38OK4FG/NQdD+pqUfXsenHXgO2YRFjJffo35X6xS27W1rn
+ 13P7wJWuynYQwZN3r56GpVD2owI9e3ANd8fpPC8zEfEJxxdow0xM2vrubUgm9kou76yPbn
+ TBds7vH/+vMj2PAnRAm6H88/RRcJhIkJwlC56+pf/AggZ/Vj/Vt/Zh4Dznx9Q6J04zzQSq
+ Kc8/P3yvVr7W9PBdpsCIj8rXVfvAHGhkRKLM3ofIyaHU4gmS2gLz2ySHm2F87/8aUhvmSK
+ QRkUrqGBA6BuNqlyoOMFzax+xq5+bjynoWfLiR+vFkADbwVxbKT5PmIsw+iSSjlR8/xuWj
+ M31oZaRbTG13tK81ltsE/xsggi+KN6SeQYNZnTibRXtdfCcRRWmK7bsW0cydy2NrNHlhHu
+ A0VmuMTz50qAPERs1QUHWU1qrLvUK8/WDcWkTLD6y+/x1AlT+fOAGA3N4HTvmJYH50YOCG
+ 5xkLlrWxHnYhldjAS5WwCz3l0DLw5n1LEGRsHErtyreyMTafSo8/xZyAkvjA
+X-ME-Proxy: <xmx:po98alU-TjGF889-_fQVUdPJKpyYrf2TEHP0Hni4MzxTw5Op81pYtw>
+ <xmx:po98akwDeEa4UA0t0QmS4tp0I8cRj6d3zFnoJOkQzXw1ywW4kjndsA>
+ <xmx:po98akEaUYPGpjFLVKrNcDTfnzVwbbg2L0ZIrWivaQYngTLZIG-cew>
+ <xmx:po98ahvNWyEFsnSbHZccgYgSIh8y8GWk_Y6odJzk2MeJ2C4_eHnupg>
+ <xmx:p498apM-PaB3xXv7VzQkhUFUfbauYZ46Qe77Rad8tJDFUxLT2zMGA5bl>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 11:22:13 -0400 (EDT)
+Message-ID: <0cf11d25bd390dc0fa2f7b55a8f7515869706739.camel@alistair23.me>
+Subject: Re: [PATCH 01/26] hw/riscv: pfsoc: Correct the L2LIM maximum mapped
+ size
+From: Alistair <alistair@alistair23.me>
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>, Chao Liu	
+ <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>, Daniel
+ Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt	 <palmer@dabbelt.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,  Weiwei Li
+ <liwei1518@gmail.com>, qemu-riscv@nongnu.org
+Date: Thu, 13 Aug 2026 01:22:13 +1000
+In-Reply-To: <20260723151853.2143177-2-bin.meng@processmission.com>
+References: <20260723151853.2143177-1-bin.meng@processmission.com>
+ <20260723151853.2143177-2-bin.meng@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEyMiBTYWx0ZWRfX8DKvh2tlc67h
- k92oGMuPZPmFWtIE2fP4i2hSW6QxW+6YI9CaVKdTyTemKGLTnDRey+T9oLVPIurR1CKgS01vHBh
- YDdZGuKVzgm78OcZnSpmTF1gKvBQPy/32wTRrEOd+AphZaXAiDBJbndv/7jtpubhgcYMg7DB0n+
- O9gpTP4OlFqA06QK9teBuEy+JPt+JHiAj/OzRPOju79jpjkRgnP3UHiIt+bKijYfwMw7VlJJnPx
- huvLcbTZEdL3vKKRBRhS2aYu3zn7rdhOi+yEUMhtdT9qGxUMh5vB7X68CN59lXwKWvsBtFR4hgd
- Ry95dHmmBWNd0MSeU5U5qk+aJ7jIOIW90anG36HdgqWbD8t3fjAVeAl6dZ3TBsDwzSnDozBTbhg
- 2l2aXyfkIajfnd0ENMoiBDO71K6inuQ567de4FOyuJ3EIZhB3xpx9PfI+KSDbmHO4XO2OdYWdlP
- k/edcnvZW3Mh2u8+WTg==
-X-Proofpoint-ORIG-GUID: abGBH85qeOHlLke6V_wasNRMbvqNd2_l
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEyMiBTYWx0ZWRfX1o8hhp4COrEE
- 9QC20efOBLOWMBt0DWznersnprLAP65Q8S5vwTerkBJ8v7q3zZyCp+NBMz3Aqk+kvkKjONCmBWF
- ZcplYfZ2qbtouI8ZyXVksT/dpc8CDRE=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7c8f6d cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=pCRGzWM9ABgFAt1Bl0kA:9
-X-Proofpoint-GUID: abGBH85qeOHlLke6V_wasNRMbvqNd2_l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120122
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jdaley@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=103.168.172.151;
+ envelope-from=alistair@alistair23.me; helo=fout-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,47 +112,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is based on Zhuoying Cai's series,
-"[PATCH v17 00/34] Secure IPL Support for SCSI Scheme of virtio-blk/virti=
-o-scsi Devices"
-https://lore.kernel.org/qemu-devel/20260730214624.2328883-1-zycai@linux.i=
-bm.com/
-
-Note, the above series is based on Cornelia Huck's patch,
-"[PATCH for-11.2] hw: add compat machines for 11.2"
-https://lore.kernel.org/qemu-devel/20260723163806.368127-1-cohuck@redhat.=
-com/
-which requires a small fix to apply (see Eric Farman's reply).
-
----
-
-To add support for secure IPL with a virtio-blk-pci boot device, we simpl=
-y
-write secure boot flags to the IPLB when using such a boot device.
-This is achieved by calling s390_apply_secure_boot() in the PCI boot
-device case of s390_build_iplb().
-
-The secure IPL functional verification test is updated with an additional
-subtest for the virtio-blk-pci boot device case. To run the FVT:
-
-  make check-functional-s390x MTESTARGS=3D"func-s390x-secure_ipl" \
-  QEMU_TEST_ALLOW_LARGE_STORAGE=3D1
-
-To test secure IPL yourself, view the "Secure IPL Quickstart" guide in:
-docs/system/s390x/secure-ipl.rst
-
-Joshua Daley (3):
-  hw/s390x/ipl: Add secure boot support to PCI dev IPLB builder
-  tests/functional/s390x/test_secure_ipl: Skip test if SIPL not
-    supported by hypervisor
-  tests/functional/s390x/test_secure_ipl: Add virtio-blk-pci boot dev
-    case
-
- hw/s390x/ipl.c                            |  8 +--
- tests/functional/s390x/test_secure_ipl.py | 88 +++++++++++++++++------
- 2 files changed, 68 insertions(+), 28 deletions(-)
-
---=20
-2.34.1
+T24gVGh1LCAyMDI2LTA3LTIzIGF0IDIzOjE4ICswODAwLCBCaW4gTWVuZyB3cm90ZToKPiBQb2xh
+ckZpcmUgU29DIGhhcyBhIDJNaUIgTDIgY2FjaGUsIHNvIHRoZSBtYXhpbXVtIG1hcHBlZCBzaXpl
+IG9mCj4gTDJMSU0gc2hvdWxkIGJlIHNldCB0byAyTWlCIHRvby4KPiAKPiBTaWduZWQtb2ZmLWJ5
+OiBCaW4gTWVuZyA8YmluLm1lbmdAcHJvY2Vzc21pc3Npb24uY29tPgoKQWNrZWQtYnk6IEFsaXN0
+YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZyYW5jaXNAd2RjLmNvbT4KCkFsaXN0YWlyCgo+IC0tLQo+
+IAo+IMKgaHcvcmlzY3YvbWljcm9jaGlwX3Bmc29jLmMgfCAyICstCj4gwqAxIGZpbGUgY2hhbmdl
+ZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvcmlz
+Y3YvbWljcm9jaGlwX3Bmc29jLmMgYi9ody9yaXNjdi9taWNyb2NoaXBfcGZzb2MuYwo+IGluZGV4
+IDQwMTcxMjljODMuLjIxOGNjY2FiNjkgMTAwNjQ0Cj4gLS0tIGEvaHcvcmlzY3YvbWljcm9jaGlw
+X3Bmc29jLmMKPiArKysgYi9ody9yaXNjdi9taWNyb2NoaXBfcGZzb2MuYwo+IEBAIC05Niw3ICs5
+Niw3IEBAIHN0YXRpYyBjb25zdCBNZW1NYXBFbnRyeSBtaWNyb2NoaXBfcGZzb2NfbWVtbWFwW10g
+PQo+IHsKPiDCoMKgwqDCoCBbTUlDUk9DSElQX1BGU09DX0NMSU5UXSA9wqDCoMKgwqDCoMKgwqDC
+oMKgwqAge8KgIDB4MjAwMDAwMCzCoMKgwqDCoMKgIDB4MTAwMDAKPiB9LAo+IMKgwqDCoMKgIFtN
+SUNST0NISVBfUEZTT0NfTDJDQ10gPcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAge8KgIDB4MjAxMDAw
+MCzCoMKgwqDCoMKgwqAgMHgxMDAwCj4gfSwKPiDCoMKgwqDCoCBbTUlDUk9DSElQX1BGU09DX0RN
+QV0gPcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB7wqAgMHgzMDAwMDAwLMKgwqDCoMKgIDB4MTAw
+MDAwCj4gfSwKPiAtwqDCoMKgIFtNSUNST0NISVBfUEZTT0NfTDJMSU1dID3CoMKgwqDCoMKgwqDC
+oMKgwqDCoCB7wqAgMHg4MDAwMDAwLMKgwqDCoCAweDIwMDAwMDAKPiB9LAo+ICvCoMKgwqAgW01J
+Q1JPQ0hJUF9QRlNPQ19MMkxJTV0gPcKgwqDCoMKgwqDCoMKgwqDCoMKgIHvCoCAweDgwMDAwMDAs
+wqDCoMKgwqAgMHgyMDAwMDAKPiB9LAo+IMKgwqDCoMKgIFtNSUNST0NISVBfUEZTT0NfUExJQ10g
+PcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAge8KgIDB4YzAwMDAwMCzCoMKgwqAgMHg0MDAwMDAwCj4g
+fSwKPiDCoMKgwqDCoCBbTUlDUk9DSElQX1BGU09DX01NVUFSVDBdID3CoMKgwqDCoMKgwqDCoMKg
+IHsgMHgyMDAwMDAwMCzCoMKgwqDCoMKgwqAgMHgxMDAwCj4gfSwKPiDCoMKgwqDCoCBbTUlDUk9D
+SElQX1BGU09DX1dET0cwXSA9wqDCoMKgwqDCoMKgwqDCoMKgwqAgeyAweDIwMDAxMDAwLMKgwqDC
+oMKgwqDCoCAweDEwMDAKPiB9LAo=
 
 
