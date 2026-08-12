@@ -4,132 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A88CFC5CFEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 06:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B45DC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 06:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu2Tf-00072G-OX; Wed, 12 Aug 2026 02:30:15 -0400
+	id 1wu2Yq-0000X1-0M; Wed, 12 Aug 2026 02:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wu2Td-00071X-0A
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:30:13 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wu2YV-0000Go-Ut
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:35:23 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wu2TY-0003kI-AG
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:30:12 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wu2YR-0004ua-Ki
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:35:14 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67C62KE02872339
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:30:06 GMT
+ 67C629D44090956
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:35:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- exQs9DjBwq76p7Mp+0s6+hokPY6BTeG8HROUYDekb68=; b=jYIxuwLbvZFcvtL/
- aK0gP3iDu7Py4d3+08e99sJh36T8iqSglGKxirwj8+85d+CaHfN2/DL7AuT1JBPs
- chwRGAfPhSPPeijoLjoH3WR5AHfzFLYLTZMKkxk5DT2pcuPQZb5jYXCtqX833way
- 6NOpE+RVrVOtj/x8G8UQrwopJFxWa9HJL/RXM3Zj7/we8iKkg4kV6K9uqCNe229C
- ZiX3xQtDP4qISLbCFp5dEPaGE/muK0JJmX8uWQBn144TaPXzn5vzpjD5NJak5my2
- +DLB0v5uxqAEJ7PTbr/oCgY9Hy6HWKU/OS0M+xZB887z/4oXLkPOKMBDGDMibCsF
- M1XcCA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0hj1gequ-1
+ PIm8nzkDw8izLQw0R7SbH4rIK5CZli3VK3581QUTHGQ=; b=CwOKUjRfWzDuxGRA
+ YkkPuMG+ghOGeQp0BG+RPZPD6oJL0yYBqH7sef0aCnHQU0UlcjWlcGd5kJxuX9cp
+ lmFQLp1MXgszVfLudZDqpvHCkshHIG/PfRJypIb8EGe9s+qfcbl15KEG0aOeEAMh
+ 2p8fJbKDZPXdZt71hd29A5pnStNPWJE8kbga2UDgszpU87zCJMmRLDYTeBi8j1VS
+ It6TBq/XTvZib2mcBkC6ztNFOXzGe1AJee72DX7/ENVM3bOthvpMRnb5xXoBGnDz
+ OeHkuibwIdm4vrko24d41RS7tnzlP5Wof/vtvcy+l/rpYm23SsThcNwvEGyO7RLh
+ BeKRDA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049buuew-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:30:05 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38e7621655eso987479a91.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 23:30:05 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:35:09 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-936aa3d9fbeso76941785a.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 23:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786516205; x=1787121005; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=exQs9DjBwq76p7Mp+0s6+hokPY6BTeG8HROUYDekb68=;
- b=SB6G2HX1NCFgunMZkTBzreGglTKdisdcyiSDuvGhzbhxrRFdoyy3yqyFJA3RAp36qQ
- 6GOhjwICtq8nbUKoOZBkTklvfdQ09MdWhWpmdyTFEgErfatBvKyv1b3JvFjRqHufhJln
- Unnrs8We3b77vV/NwkqaaJozNXAIsscSxZxgHGYMtI1wWX4nYX43beT9IktpbkXghWdN
- 8jhsArZyYHXfmthzyEozSsizfz+6BoUqi1uG8Q6X/PNpbY0xzvE+hxvKrtlhiRKwwutm
- BOYws1GVCTis5juWlA1WkRgYvI04rduzfN+sotGQUV0j0NgYacTgHMnzSHJXOAtoA5Qd
- CFqg==
+ d=oss.qualcomm.com; s=google; t=1786516509; x=1787121309; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PIm8nzkDw8izLQw0R7SbH4rIK5CZli3VK3581QUTHGQ=;
+ b=Ampjn9xkOij5m/2KHuVmbzdkhJbTdHH8Q7MFWGOZ/dAogodKmI2c/oOu2SE/LNltkN
+ lgnOitEizQpmL3lZJZlxWxMGcmaowkDpf4wCEoaSDNr/gC0akcGlHNnH2HcZwC/CDUHg
+ fVkKwOsut+dFZoPmxvAecDJ87viBNU2QIernDUxHEDqBKKqFuOi3/vmWlEdld5JkVAfl
+ 8lusjOlQ0rIfJrshiieQrYGWuRNWAdM5FXsHHXwy9lNjgVaq/PELCvmZZdDU04FG2He8
+ GhWUMae2pfDoI4qLycz3VQrC37AfxC0h+qpxnCVGe5tBAJsLkmyU7UHutEDR4R1uTa6n
+ ZOig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786516205; x=1787121005;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=exQs9DjBwq76p7Mp+0s6+hokPY6BTeG8HROUYDekb68=;
- b=oD07OXdFLRa2GarJqfc7yl9nF5AfX6whBw3Qk46ZAtPHeineMym6c2YIUMLojLwuX7
- zg8Hjm9AbbQI/+gdvQeZoxdx/1frcFxbAs+95VIaEhfIRWpwcZKQT0WIO9+JGqHk7qVF
- QjZdmGdRjZJeQm2Nfb3Ri22Bn1MfGRqqadmTOOiFnFu6+Je3n+yiDe+dYUfSb2bXWCYC
- ODUfSDIikcMm5xlI23Mt2yrDl4NvUP5v3Lj0ccrwqFRSIkMl53PG4M/I+eAdhcB9IY8r
- 3JQ+embXf/+cJH8wBai0uwEvoQPo748QI31kEsbIeAMj+fKY9+bqL0YsRhe+rf6U/1cS
- GdNQ==
-X-Gm-Message-State: AOJu0YwUe6BqsxnW1T+2gHLOIGNLoJqh6hWv+MtrOqQ8ydGJfqTKYn0t
- 7GwLsrzb+yIV7MkLZb5OhFrpeV5VKxNMcRs1QTRq9P9Q9yELOxfu6axDAdjvkUKysXmBwNYYEdI
- VqO6R2xmMyGwtxF/4gLw8cxS+OpHrZH9FaxtRbMY1ap1u22TIQ2S91SCo1EdruAhl3w==
-X-Gm-Gg: AR+sD131WIDiB7uuDfoNxTN9n1yunJmUVRQBPD7tC0xQ8cebnPqGAjrg2RIW8K1kyDP
- DK4v+oWTY8Xtmj+Ze1hLYTJQxeP13ILTemFKXOukHFy+R57BALi4y68DtWeOiIaIVMH8Cst6S1B
- T1r9c7ne8yPXsTLtTjumET11OKRgqjerdV5C6WfPa8tVrFmzozi7mffO0RDwf/PXt+g8CPkqbIU
- Gn/96QkmOMmQ/myTi/WeTDluIO6aIk2kzmXrHBEWq9lYurWm9trq4CzbHshMZVUtaQgWniY8g6B
- Uhv/YR9rujSu6vJ3WqO94kCLzEZI/EyugIk/OrlZy31h7F5N2GIgPDmeRcieKbtmDlhuw1cpFdx
- afQB3q8ipwz68fY22stAwcinqIygZl3VdvNXysXNCGgdvkoQJ
-X-Received: by 2002:a17:90b:4e8c:b0:381:11eb:d78e with SMTP id
- 98e67ed59e1d1-3930165f4c8mr2892014a91.14.1786516204610; 
- Tue, 11 Aug 2026 23:30:04 -0700 (PDT)
-X-Received: by 2002:a17:90b:4e8c:b0:381:11eb:d78e with SMTP id
- 98e67ed59e1d1-3930165f4c8mr2891970a91.14.1786516204074; 
- Tue, 11 Aug 2026 23:30:04 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392f985e9fcsm771402a91.1.2026.08.11.23.30.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 23:30:03 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 03/41] hw/hexagon: move global registers to hex-subsys
-Date: Tue, 11 Aug 2026 23:28:54 -0700
-Message-Id: <20260812062932.543840-4-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
-References: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1786516509; x=1787121309;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PIm8nzkDw8izLQw0R7SbH4rIK5CZli3VK3581QUTHGQ=;
+ b=LkXsnDUem+FCgGzcIt+J+Fiie4bKLgrUkT/700jddS+PTiWmo0YwkwCInJeXkVaQa0
+ 0wZvHCvzZ4gLpNyEaJSHl+CzvNojf3T9xFdy/iEMA+WwMX5lXLg5QjSO7sFbDbDQAxOq
+ AlCo72EtTIN/BYkZJlTjeOO3YZGrH9A2HQHlW2WrYpb61LyV1KW1MJZrHkQIR8e/QUO/
+ CJn+rz2xSPEeNuWRQS5LPm0BtL1pfiuePmiFnHdz+m2lGEY94AtSgEp07+CCQdcIz+nL
+ x3tYosJ6kU/m75qSssTL89Z+oi9LbPoPELN+NzgnfTCkZ8vgsUje4sXW1FLcqWqj9Ntz
+ phIg==
+X-Gm-Message-State: AOJu0YzZ04xe92qEAJRWuMl+isCK64yuCt21iSsTQE2i74j0HBMj9xfD
+ Cn5p+0AYe0oz7eT68Sw01tBqor9qIQABkr/6vFUKM87y/vGC9+4bYPtTxqNfgnRztIwGult5mBj
+ wEcZBSK1XXJQtEX8EF1qZFJeAREWBLWXfItqSohYz//LrgKhv6PNss/7E4xpzI/fgEQ==
+X-Gm-Gg: AR+sD12UJXCdeeCCDsOb43NrRq4aH0Mtg5wL0mITdcxmfOZyUbq8M+PFlkZlot3eqyi
+ 1LJf/s4dOTcIKSETVfCYg1JYIxxXK3htzRlLOc8A9qanw3K6HrLPlJ8G8128heE08YTFN2Z4xUy
+ j5bFZzcWeB/+YnFFeW6xwq11Ck7tuA9rwGTGfDkSdpZMoAU6FSN7/T1WO55AGRFEWwpyjgzQwdf
+ zx+XKVbxke0/21KlbejR7t5JdiZpLkAIJIKQvuM6eiKjGUGpMLeZwP+VKKLKBhgjpzBaJS3xAYL
+ 39KIrWcVcjj3waG10dt+3iTfYFeVD8BTiXaIqC3pJV/YrTRaFOjPWppO1iT7rNVKoI542JGo8mb
+ lUbeIsmL4cTY3Pru6DWf8WeQPhctRp/FyVMLpO0YuC85ObCyWehQkRDPtclje/l1P8Sz3wntWYx
+ touM30
+X-Received: by 2002:a05:620a:29d6:b0:930:a38d:4030 with SMTP id
+ af79cd13be357-936b3d539b8mr191097785a.29.1786516508857; 
+ Tue, 11 Aug 2026 23:35:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:29d6:b0:930:a38d:4030 with SMTP id
+ af79cd13be357-936b3d539b8mr191095985a.29.1786516508314; 
+ Tue, 11 Aug 2026 23:35:08 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-936b5f5ed49sm59698185a.44.2026.08.11.23.35.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Aug 2026 23:35:07 -0700 (PDT)
+Message-ID: <43768a99-f9df-439b-9048-03a40a3eb3ae@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 01:35:06 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: T9ex0gexVRTIrCvcOs7WM0V9Srfguurq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA0OSBTYWx0ZWRfX4Ardkc5TMzXJ
- iBR/VXrrptJbZgat6ObctVWPM0116ijguwy2P7+jifGeUjV6Eax0OHdcWpRyzEnAiF6XchhqYxu
- Ulr3vr4GLqBLVRIhtAopVmFG4FWAXjvUMuh9mRynulJ2HkjQcDvhE25sbWssJEPyS/Tjct39OlC
- IlyHcdVvarSczzqGCqjc07bqx4E6G+FTeUyC4DwG3fhKVE85gNicatxLZusZ59fg0w/CW5dZ5xb
- nxkk6unJxb0z5gHzWIY9niA3IGzZNdVJ15wTMp3amcrUCZGSv+yLq5BLhJDw6RBTJFJyaM954uB
- F4qlnJX3lTtJG2DKW163hx1IumNisffUPmiG8+mQ2zk8gIG3hr8w6q6d0KWCSM+1r1TPwAu/Dmm
- HBSq+JpBehq0I3v64DEAjIXuzSNEA3VjXsHPK4Pvy3A0WRn0cuCR0CMCTa7UCytVbqLXFVHGuAH
- eRnefxlkUjorl/rvNpg==
-X-Authority-Analysis: v=2.4 cv=K6ES2SWI c=1 sm=1 tr=0 ts=6a7c12ed cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/41] hexagon queue - disregard
+To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
+References: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: D96sMvk68qMa_Uh7E6bkWKc5HumVfpzU
+X-Authority-Analysis: v=2.4 cv=ENg2FVZC c=1 sm=1 tr=0 ts=6a7c141d cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=T2wWRslM62IwIIzloqEA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: T9ex0gexVRTIrCvcOs7WM0V9Srfguurq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA0OSBTYWx0ZWRfXwg5TuQlZGVoh
- iYm02961WWMspT7xAg/rw7HbNWKMHgO6Bx4hv+0yMYRSBDlxq/Lxb6DVCbW1Qvse7J3SPHusdjx
- rwmGlzXZoDO8Ez5ySu0iBSGVX4nnJdo=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=NEAV23lmAAAA:8 a=skoJhHZsW5WYc2IUAdcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: D96sMvk68qMa_Uh7E6bkWKc5HumVfpzU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1MCBTYWx0ZWRfX1rVd/uIePTW2
+ abkn7ATdmrS+S+glr+9xmTKwsoCrNYnxH0EGbCgYr9JRUG9ukqy1ODUYCZBxcjUINKTe9ZSUVqr
+ yKM9J67rvmHs/7CjPtfyl+9QU9kMDO/oM6csqiPOWU2NtZ9rWoswcXerJioslOwUDaM7kWzRpLw
+ dg5gtUAjfl1sB0eCIFlwI/5wXndDytPHCC+zGG4OoXAD1qm2aueI8QxotSH/ig+aQxwk8hv+MXK
+ 7xKhYP1FFPo9+ILibdANH8Gp+ILE6J9HGwd2NbuLKgJ8trxZ5gxncAL2eyI+c0k5boWBwcPsOlg
+ wy8iInZOiaec7LAKqssQbCJ27iW9yIWZ8qiQ6diHUQ6YwKz/4ZOkbNMgDppSglPw2HIWQUPrBX0
+ pBjzbmAU0FelDef9WhV0T4K7So0q5YdZLSn60PUa8b2q5pOwqgn1xNnlYXRJ++Qnn9f9Apn041u
+ HHLDtO7ZYjawA17Zfjw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1MCBTYWx0ZWRfX3fOEwbxm1KMp
+ 6EBuJ35dRaP20MZtx4Fzh9ABFTCgdUglEMKFn22293/XJzmzEs7zS1Lq4vBLhEq6DUUgTgpxMAO
+ JsqUTJ+tUW8F0V166r8BYZx48bHnT5M=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ suspectscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120049
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ definitions=main-2608120050
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,161 +152,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Qm90aCBtYWNoaW5lcyBjcmVhdGUgdGhlIGdsb2JhbCByZWdpc3RlciBkZXZpY2UgdGhlIHNhbWUg
-d2F5LCBzbyBsZXQKaGV4LXN1YnN5cyBvd24gaXQgYW5kIGxpbmsgaXQgdG8gZWFjaCBDUFUgYXMg
-aXQgaXMgcmVhbGl6ZWQuCgpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2su
-Ym91dmllckBvc3MucXVhbGNvbW0uY29tPgpMaW5rOiBodHRwczovL2xvcmUua2VybmVsLm9yZy9x
-ZW11LWRldmVsLzIwMjYwODA2MDQyNzIzLjM3ODUzNjktNC1icmlhbi5jYWluQG9zcy5xdWFsY29t
-bS5jb20KU2lnbmVkLW9mZi1ieTogQnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0u
-Y29tPgotLS0KIGluY2x1ZGUvaHcvaGV4YWdvbi9oZXgtc3Vic3lzLmggfCAgNiArKysrKy0KIGlu
-Y2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmggICAgfCAgMSArCiBody9oZXhhZ29uL2hleC1zdWJz
-eXMuYyAgICAgICAgIHwgMjkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0KIGh3L2hleGFn
-b24vaGV4YWdvbl9kc3AuYyAgICAgICAgfCAxNSArKy0tLS0tLS0tLS0tLS0KIGh3L2hleGFnb24v
-dmlydC5jICAgICAgICAgICAgICAgfCAyMyArKysrKy0tLS0tLS0tLS0tLS0tLS0tLQogNSBmaWxl
-cyBjaGFuZ2VkLCA0MSBpbnNlcnRpb25zKCspLCAzMyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQg
-YS9pbmNsdWRlL2h3L2hleGFnb24vaGV4LXN1YnN5cy5oIGIvaW5jbHVkZS9ody9oZXhhZ29uL2hl
-eC1zdWJzeXMuaAppbmRleCA2YmNkZTMwM2YyZS4uMDg3YzEwNWNmYTQgMTAwNjQ0Ci0tLSBhL2lu
-Y2x1ZGUvaHcvaGV4YWdvbi9oZXgtc3Vic3lzLmgKKysrIGIvaW5jbHVkZS9ody9oZXhhZ29uL2hl
-eC1zdWJzeXMuaApAQCAtOSw5ICs5LDEzIEBACiAjZGVmaW5lIEhXX0hFWEFHT05fSEVYX1NVQlNZ
-U19ICiAKICNpbmNsdWRlICJody9oZXhhZ29uL2hleGFnb24uaCIKKyNpbmNsdWRlICJody9jb3Jl
-L3FkZXYuaCIKIAogLyogQ3JlYXRlIHRoZSBzdWJzeXN0ZW0gc2hhcmVkIGJ5IGV2ZXJ5IEhleGFn
-b24gbWFjaGluZS4gKi8KIHZvaWQgaGV4X3N1YnN5c19jcmVhdGUoSGV4YWdvbkNvbW1vbk1hY2hp
-bmVTdGF0ZSAqaG1zLAotICAgICAgICAgICAgICAgICAgICAgICBjb25zdCBzdHJ1Y3QgaGV4YWdv
-bl9tYWNoaW5lX2NvbmZpZyAqbV9jZmcpOworICAgICAgICAgICAgICAgICAgICAgICBjb25zdCBz
-dHJ1Y3QgaGV4YWdvbl9tYWNoaW5lX2NvbmZpZyAqbV9jZmcsIFJldl90IHJldik7CisKKy8qIFJl
-YWxpemUgYSBDUFUgaW50byB0aGUgc3Vic3lzdGVtLiAqLwordm9pZCBoZXhfc3Vic3lzX3JlYWxp
-emVfY3B1KEhleGFnb25Db21tb25NYWNoaW5lU3RhdGUgKmhtcywgRGV2aWNlU3RhdGUgKmNwdSk7
-CiAKICNlbmRpZiAvKiBIV19IRVhBR09OX0hFWF9TVUJTWVNfSCAqLwpkaWZmIC0tZ2l0IGEvaW5j
-bHVkZS9ody9oZXhhZ29uL2hleGFnb24uaCBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmgK
-aW5kZXggOWM3M2NhZGIxNmQuLmVmNTcwMDA4MmNjIDEwMDY0NAotLS0gYS9pbmNsdWRlL2h3L2hl
-eGFnb24vaGV4YWdvbi5oCisrKyBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmgKQEAgLTE1
-Nyw2ICsxNTcsNyBAQCBzdHJ1Y3QgSGV4YWdvbkNvbW1vbk1hY2hpbmVTdGF0ZSB7CiAgICAgTWVt
-b3J5UmVnaW9uIHJhbTsKICAgICBNZW1vcnlSZWdpb24gY2ZndGFibGVfcm9tOwogICAgIE1lbW9y
-eVJlZ2lvbiB2dGNtOworICAgIERldmljZVN0YXRlICpnbG9iX3JlZ3M7CiB9OwogCiAjZW5kaWYK
-ZGlmZiAtLWdpdCBhL2h3L2hleGFnb24vaGV4LXN1YnN5cy5jIGIvaHcvaGV4YWdvbi9oZXgtc3Vi
-c3lzLmMKaW5kZXggMGMyMGNmMDJlN2QuLjY3ODliNmJiMjNkIDEwMDY0NAotLS0gYS9ody9oZXhh
-Z29uL2hleC1zdWJzeXMuYworKysgYi9ody9oZXhhZ29uL2hleC1zdWJzeXMuYwpAQCAtOCwxMSAr
-OCwyOSBAQAogI2luY2x1ZGUgInFlbXUvb3NkZXAuaCIKICNpbmNsdWRlICJxYXBpL2Vycm9yLmgi
-CiAjaW5jbHVkZSAiaHcvaGV4YWdvbi9oZXgtc3Vic3lzLmgiCisjaW5jbHVkZSAiaHcvaGV4YWdv
-bi9oZXhhZ29uX2dsb2JhbHJlZy5oIgogI2luY2x1ZGUgImh3L2NvcmUvbG9hZGVyLmgiCisjaW5j
-bHVkZSAiaHcvY29yZS9xZGV2LXByb3BlcnRpZXMuaCIKKyNpbmNsdWRlICJody9jb3JlL3FkZXYu
-aCIKKyNpbmNsdWRlICJody9jb3JlL3N5c2J1cy5oIgogI2luY2x1ZGUgInN5c3RlbS9hZGRyZXNz
-LXNwYWNlcy5oIgogCitzdGF0aWMgRGV2aWNlU3RhdGUgKmdsb2JhbHJlZ19jcmVhdGUoSGV4YWdv
-bkNvbW1vbk1hY2hpbmVTdGF0ZSAqaG1zLAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIGNvbnN0IHN0cnVjdCBoZXhhZ29uX21hY2hpbmVfY29uZmlnICptX2NmZywKKyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBSZXZfdCByZXYpCit7CisgICAgRGV2aWNl
-U3RhdGUgKmdsb2JfcmVncyA9IHFkZXZfbmV3KFRZUEVfSEVYQUdPTl9HTE9CQUxSRUcpOworCisg
-ICAgb2JqZWN0X3Byb3BlcnR5X2FkZF9jaGlsZChPQkpFQ1QoaG1zKSwgImdsb2JhbC1yZWdzIiwg
-T0JKRUNUKGdsb2JfcmVncykpOworICAgIHFkZXZfcHJvcF9zZXRfdWludDY0KGdsb2JfcmVncywg
-ImNvbmZpZy10YWJsZS1hZGRyIiwgbV9jZmctPmNmZ2Jhc2UpOworICAgIHFkZXZfcHJvcF9zZXRf
-dWludDMyKGdsb2JfcmVncywgImRzcC1yZXYiLCByZXYpOworICAgIHN5c2J1c19yZWFsaXplX2Fu
-ZF91bnJlZihTWVNfQlVTX0RFVklDRShnbG9iX3JlZ3MpLCAmZXJyb3JfZmF0YWwpOworCisgICAg
-cmV0dXJuIGdsb2JfcmVnczsKK30KKwogdm9pZCBoZXhfc3Vic3lzX2NyZWF0ZShIZXhhZ29uQ29t
-bW9uTWFjaGluZVN0YXRlICpobXMsCi0gICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IHN0cnVj
-dCBoZXhhZ29uX21hY2hpbmVfY29uZmlnICptX2NmZykKKyAgICAgICAgICAgICAgICAgICAgICAg
-Y29uc3Qgc3RydWN0IGhleGFnb25fbWFjaGluZV9jb25maWcgKm1fY2ZnLCBSZXZfdCByZXYpCiB7
-CiAgICAgTWFjaGluZVN0YXRlICptYWNoaW5lID0gTUFDSElORShobXMpOwogICAgIE1lbW9yeVJl
-Z2lvbiAqc3lzbWVtID0gZ2V0X3N5c3RlbV9tZW1vcnkoKTsKQEAgLTM3LDQgKzU1LDEzIEBAIHZv
-aWQgaGV4X3N1YnN5c19jcmVhdGUoSGV4YWdvbkNvbW1vbk1hY2hpbmVTdGF0ZSAqaG1zLAogICAg
-ICAgICBtZW1vcnlfcmVnaW9uX2FkZF9zdWJyZWdpb24oc3lzbWVtLCBtX2NmZy0+Y2ZndGFibGUu
-dnRjbV9iYXNlIDw8IDE2LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJmht
-cy0+dnRjbSk7CiAgICAgfQorCisgICAgaG1zLT5nbG9iX3JlZ3MgPSBnbG9iYWxyZWdfY3JlYXRl
-KGhtcywgbV9jZmcsIHJldik7Cit9CisKK3ZvaWQgaGV4X3N1YnN5c19yZWFsaXplX2NwdShIZXhh
-Z29uQ29tbW9uTWFjaGluZVN0YXRlICpobXMsIERldmljZVN0YXRlICpjcHUpCit7CisgICAgb2Jq
-ZWN0X3Byb3BlcnR5X3NldF9saW5rKE9CSkVDVChjcHUpLCAiZ2xvYmFsLXJlZ3MiLAorICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBPQkpFQ1QoaG1zLT5nbG9iX3JlZ3MpLCAmZXJyb3JfZmF0
-YWwpOworICAgIHFkZXZfcmVhbGl6ZV9hbmRfdW5yZWYoY3B1LCBOVUxMLCAmZXJyb3JfZmF0YWwp
-OwogfQpkaWZmIC0tZ2l0IGEvaHcvaGV4YWdvbi9oZXhhZ29uX2RzcC5jIGIvaHcvaGV4YWdvbi9o
-ZXhhZ29uX2RzcC5jCmluZGV4IGY5NGY3ZmQ0ZTExLi44NTk5ZjU4ODNiZiAxMDA2NDQKLS0tIGEv
-aHcvaGV4YWdvbi9oZXhhZ29uX2RzcC5jCisrKyBiL2h3L2hleGFnb24vaGV4YWdvbl9kc3AuYwpA
-QCAtMTUsNyArMTUsNiBAQAogI2luY2x1ZGUgImh3L2NvcmUvcWRldi1wcm9wZXJ0aWVzLmgiCiAj
-aW5jbHVkZSAiaHcvaGV4YWdvbi9oZXhhZ29uLmgiCiAjaW5jbHVkZSAiaHcvaGV4YWdvbi9oZXgt
-c3Vic3lzLmgiCi0jaW5jbHVkZSAiaHcvaGV4YWdvbi9oZXhhZ29uX2dsb2JhbHJlZy5oIgogI2lu
-Y2x1ZGUgImh3L2hleGFnb24vaGV4YWdvbl90bGIuaCIKICNpbmNsdWRlICJody9jb3JlL2xvYWRl
-ci5oIgogI2luY2x1ZGUgInFhcGkvZXJyb3IuaCIKQEAgLTEwOSw3ICsxMDgsNiBAQCBzdGF0aWMg
-dm9pZCBoZXhhZ29uX2NvbW1vbl9pbml0KE1hY2hpbmVTdGF0ZSAqbWFjaGluZSwgUmV2X3QgcmV2
-LAogewogICAgIEhleGFnb25Db21tb25NYWNoaW5lU3RhdGUgKmhtcyA9IEhFWEFHT05fQ09NTU9O
-X01BQ0hJTkUobWFjaGluZSk7CiAgICAgSGV4YWdvbkRzcE1hY2hpbmVTdGF0ZSAqZG1zID0gSEVY
-QUdPTl9EU1BfTUFDSElORShtYWNoaW5lKTsKLSAgICBEZXZpY2VTdGF0ZSAqZ2xvYl9yZWdzX2Rl
-djsKICAgICBEZXZpY2VTdGF0ZSAqdGxiX2RldjsKIAogICAgIG1lbXNldCgmaGV4YWdvbl9iaW5m
-bywgMCwgc2l6ZW9mKGhleGFnb25fYmluZm8pKTsKQEAgLTEyMCwxNCArMTE4LDcgQEAgc3RhdGlj
-IHZvaWQgaGV4YWdvbl9jb21tb25faW5pdChNYWNoaW5lU3RhdGUgKm1hY2hpbmUsIFJldl90IHJl
-diwKIAogICAgIG1hY2hpbmUtPmVuYWJsZV9ncmFwaGljcyA9IDA7CiAKLSAgICBoZXhfc3Vic3lz
-X2NyZWF0ZShobXMsIG1fY2ZnKTsKLQotICAgIGdsb2JfcmVnc19kZXYgPSBxZGV2X25ldyhUWVBF
-X0hFWEFHT05fR0xPQkFMUkVHKTsKLSAgICBvYmplY3RfcHJvcGVydHlfYWRkX2NoaWxkKE9CSkVD
-VChtYWNoaW5lKSwgImdsb2JhbC1yZWdzIiwKLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IE9CSkVDVChnbG9iX3JlZ3NfZGV2KSk7Ci0gICAgcWRldl9wcm9wX3NldF91aW50NjQoZ2xvYl9y
-ZWdzX2RldiwgImNvbmZpZy10YWJsZS1hZGRyIiwgbV9jZmctPmNmZ2Jhc2UpOwotICAgIHFkZXZf
-cHJvcF9zZXRfdWludDMyKGdsb2JfcmVnc19kZXYsICJkc3AtcmV2IiwgcmV2KTsKLSAgICBzeXNi
-dXNfcmVhbGl6ZV9hbmRfdW5yZWYoU1lTX0JVU19ERVZJQ0UoZ2xvYl9yZWdzX2RldiksICZlcnJv
-cl9mYXRhbCk7CisgICAgaGV4X3N1YnN5c19jcmVhdGUoaG1zLCBtX2NmZywgcmV2KTsKIAogICAg
-IHRsYl9kZXYgPSBxZGV2X25ldyhUWVBFX0hFWEFHT05fVExCKTsKICAgICBvYmplY3RfcHJvcGVy
-dHlfYWRkX2NoaWxkKE9CSkVDVChtYWNoaW5lKSwgInRsYiIsIE9CSkVDVCh0bGJfZGV2KSk7CkBA
-IC0xNDcsMTEgKzEzOCw5IEBAIHN0YXRpYyB2b2lkIGhleGFnb25fY29tbW9uX2luaXQoTWFjaGlu
-ZVN0YXRlICptYWNoaW5lLCBSZXZfdCByZXYsCiAgICAgICAgIGlmIChpID09IDApIHsKICAgICAg
-ICAgICAgIGhleGFnb25faW5pdF9ib290c3RyYXAoZG1zLCBjcHUpOwogICAgICAgICB9Ci0gICAg
-ICAgIG9iamVjdF9wcm9wZXJ0eV9zZXRfbGluayhPQkpFQ1QoY3B1KSwgImdsb2JhbC1yZWdzIiwK
-LSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE9CSkVDVChnbG9iX3JlZ3NfZGV2KSwg
-JmVycm9yX2ZhdGFsKTsKICAgICAgICAgb2JqZWN0X3Byb3BlcnR5X3NldF9saW5rKE9CSkVDVChj
-cHUpLCAidGxiIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE9CSkVDVCh0bGJf
-ZGV2KSwgJmVycm9yX2ZhdGFsKTsKLSAgICAgICAgcWRldl9yZWFsaXplX2FuZF91bnJlZihERVZJ
-Q0UoY3B1KSwgTlVMTCwgJmVycm9yX2ZhdGFsKTsKKyAgICAgICAgaGV4X3N1YnN5c19yZWFsaXpl
-X2NwdShobXMsIERFVklDRShjcHUpKTsKICAgICB9CiB9CiAKZGlmZiAtLWdpdCBhL2h3L2hleGFn
-b24vdmlydC5jIGIvaHcvaGV4YWdvbi92aXJ0LmMKaW5kZXggNTNlYWFmYWY4NWEuLjI5MDc4M2Q1
-MTFmIDEwMDY0NAotLS0gYS9ody9oZXhhZ29uL3ZpcnQuYworKysgYi9ody9oZXhhZ29uL3ZpcnQu
-YwpAQCAtMTQsNyArMTQsNiBAQAogI2luY2x1ZGUgImh3L2NvcmUvc3lzYnVzLWZkdC5oIgogI2lu
-Y2x1ZGUgImh3L2hleGFnb24vaGV4YWdvbi5oIgogI2luY2x1ZGUgImh3L2hleGFnb24vaGV4LXN1
-YnN5cy5oIgotI2luY2x1ZGUgImh3L2hleGFnb24vaGV4YWdvbl9nbG9iYWxyZWcuaCIKICNpbmNs
-dWRlICJody9oZXhhZ29uL2hleGFnb25fdGxiLmgiCiAjaW5jbHVkZSAiaHcvY29yZS9sb2FkZXIu
-aCIKICNpbmNsdWRlICJody9jb3JlL3FkZXYtcHJvcGVydGllcy5oIgpAQCAtMjI2LDkgKzIyNSw3
-IEBAIHN0YXRpYyB2b2lkIHZpcnRfaW5pdChNYWNoaW5lU3RhdGUgKm1zKQogewogICAgIEhleGFn
-b25WaXJ0TWFjaGluZVN0YXRlICp2bXMgPSBIRVhBR09OX1ZJUlRfTUFDSElORShtcyk7CiAgICAg
-Y29uc3Qgc3RydWN0IGhleGFnb25fbWFjaGluZV9jb25maWcgKm1fY2ZnID0gJnY2OG5fMTAyNDsK
-LSAgICBEZXZpY2VTdGF0ZSAqZ3NyZWdzX2RldjsKICAgICBEZXZpY2VTdGF0ZSAqdGxiX2RldjsK
-LSAgICBEZXZpY2VTdGF0ZSAqY3B1MDsKICAgICBpbnQzMl90IGNsa19waGFuZGxlOwogCiAgICAg
-Y3JlYXRlX2ZkdCh2bXMpOwpAQCAtMjQwLDcgKzIzNyw3IEBAIHN0YXRpYyB2b2lkIHZpcnRfaW5p
-dChNYWNoaW5lU3RhdGUgKm1zKQogICAgIHZtcy0+YXBiX2NsayA9IGNsb2NrX25ldyhPQkpFQ1Qo
-bXMpLCAiYXBiLXBjbGsiKTsKICAgICBjbG9ja19zZXRfaHoodm1zLT5hcGJfY2xrLCAyNDAwMDAw
-MCk7CiAKLSAgICBoZXhfc3Vic3lzX2NyZWF0ZSgmdm1zLT5wYXJlbnRfb2JqLCBtX2NmZyk7Cisg
-ICAgaGV4X3N1YnN5c19jcmVhdGUoJnZtcy0+cGFyZW50X29iaiwgbV9jZmcsIHY2OF9yZXYpOwog
-CiAgICAgaWYgKG1fY2ZnLT5sMnRjbV9zaXplKSB7CiAgICAgICAgIG1lbW9yeV9yZWdpb25faW5p
-dF9yYW0oJnZtcy0+dGNtLCBOVUxMLCAidGNtLnJhbSIsIG1fY2ZnLT5sMnRjbV9zaXplLApAQCAt
-MjUxLDQyICsyNDgsMzIgQEAgc3RhdGljIHZvaWQgdmlydF9pbml0KE1hY2hpbmVTdGF0ZSAqbXMp
-CiAKICAgICBmZHRfYWRkX2h2eCh2bXMsIG1fY2ZnKTsKIAotICAgIGdzcmVnc19kZXYgPSBxZGV2
-X25ldyhUWVBFX0hFWEFHT05fR0xPQkFMUkVHKTsKLSAgICBvYmplY3RfcHJvcGVydHlfYWRkX2No
-aWxkKE9CSkVDVChtcyksICJnbG9iYWwtcmVncyIsIE9CSkVDVChnc3JlZ3NfZGV2KSk7Ci0gICAg
-cWRldl9wcm9wX3NldF91aW50NjQoZ3NyZWdzX2RldiwgImNvbmZpZy10YWJsZS1hZGRyIiwgbV9j
-ZmctPmNmZ2Jhc2UpOwotICAgIHFkZXZfcHJvcF9zZXRfdWludDMyKGdzcmVnc19kZXYsICJkc3At
-cmV2IiwgdjY4X3Jldik7Ci0gICAgc3lzYnVzX3JlYWxpemVfYW5kX3VucmVmKFNZU19CVVNfREVW
-SUNFKGdzcmVnc19kZXYpLCAmZXJyb3JfZmF0YWwpOwotCiAgICAgdGxiX2RldiA9IHFkZXZfbmV3
-KFRZUEVfSEVYQUdPTl9UTEIpOwogICAgIG9iamVjdF9wcm9wZXJ0eV9hZGRfY2hpbGQoT0JKRUNU
-KG1zKSwgInRsYiIsIE9CSkVDVCh0bGJfZGV2KSk7CiAgICAgcWRldl9wcm9wX3NldF91aW50MzIo
-dGxiX2RldiwgIm51bS1lbnRyaWVzIiwKICAgICAgICAgICAgICAgICAgICAgICAgICBtX2NmZy0+
-Y2ZndGFibGUuanRsYl9zaXplX2VudHJpZXMpOwogICAgIHN5c2J1c19yZWFsaXplX2FuZF91bnJl
-ZihTWVNfQlVTX0RFVklDRSh0bGJfZGV2KSwgJmVycm9yX2ZhdGFsKTsKIAotICAgIGNwdTAgPSBO
-VUxMOwogICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbXMtPnNtcC5jcHVzOyBpKyspIHsKICAgICAg
-ICAgSGV4YWdvbkNQVSAqY3B1ID0gSEVYQUdPTl9DUFUob2JqZWN0X25ldyhtcy0+Y3B1X3R5cGUp
-KTsKICAgICAgICAgcWVtdV9yZWdpc3Rlcl9yZXNldChkb19jcHVfcmVzZXQsIGNwdSk7CiAKICAg
-ICAgICAgaWYgKGkgPT0gMCkgewotICAgICAgICAgICAgY3B1MCA9IERFVklDRShjcHUpOwogICAg
-ICAgICAgICAgaWYgKG1zLT5rZXJuZWxfZmlsZW5hbWUpIHsKICAgICAgICAgICAgICAgICB1aW50
-NjRfdCBlbnRyeSA9IGxvYWRfa2VybmVsKHZtcyk7Ci0gICAgICAgICAgICAgICAgcWRldl9wcm9w
-X3NldF91aW50MzIoY3B1MCwgImV4ZWMtc3RhcnQtYWRkciIsIGVudHJ5KTsKKyAgICAgICAgICAg
-ICAgICBxZGV2X3Byb3Bfc2V0X3VpbnQzMihERVZJQ0UoY3B1KSwgImV4ZWMtc3RhcnQtYWRkciIs
-IGVudHJ5KTsKICAgICAgICAgICAgIH0gZWxzZSBpZiAobXMtPmZpcm13YXJlKSB7CiAgICAgICAg
-ICAgICAgICAgdWludDY0X3QgZW50cnkgPSBsb2FkX2Jpb3Modm1zKTsKLSAgICAgICAgICAgICAg
-ICBxZGV2X3Byb3Bfc2V0X3VpbnQzMihjcHUwLCAiZXhlYy1zdGFydC1hZGRyIiwgZW50cnkpOwor
-ICAgICAgICAgICAgICAgIHFkZXZfcHJvcF9zZXRfdWludDMyKERFVklDRShjcHUpLCAiZXhlYy1z
-dGFydC1hZGRyIiwgZW50cnkpOwogICAgICAgICAgICAgfQogICAgICAgICB9CiAgICAgICAgIHFk
-ZXZfcHJvcF9zZXRfdWludDMyKERFVklDRShjcHUpLCAiaHRpZCIsIGkpOwogICAgICAgICBxZGV2
-X3Byb3Bfc2V0X2JpdChERVZJQ0UoY3B1KSwgInN0YXJ0LXBvd2VyZWQtb2ZmIiwgKGkgIT0gMCkp
-OwotICAgICAgICBvYmplY3RfcHJvcGVydHlfc2V0X2xpbmsoT0JKRUNUKGNwdSksICJnbG9iYWwt
-cmVncyIsCi0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBPQkpFQ1QoZ3NyZWdzX2Rl
-diksICZlcnJvcl9mYXRhbCk7CiAgICAgICAgIG9iamVjdF9wcm9wZXJ0eV9zZXRfbGluayhPQkpF
-Q1QoY3B1KSwgInRsYiIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBPQkpFQ1Qo
-dGxiX2RldiksICZlcnJvcl9mYXRhbCk7Ci0KLSAgICAgICAgcWRldl9yZWFsaXplX2FuZF91bnJl
-ZihERVZJQ0UoY3B1KSwgTlVMTCwgJmVycm9yX2ZhdGFsKTsKKyAgICAgICAgaGV4X3N1YnN5c19y
-ZWFsaXplX2NwdSgmdm1zLT5wYXJlbnRfb2JqLCBERVZJQ0UoY3B1KSk7CiAgICAgfQorCiAgICAg
-ZmR0X2FkZF9jcHVfbm9kZXModm1zKTsKICAgICBjbGtfcGhhbmRsZSA9IGZkdF9hZGRfY2xvY2tz
-KHZtcyk7CiAgICAgZmR0X2FkZF91YXJ0KHZtcywgVklSVF9VQVJUMCwgY2xrX3BoYW5kbGUpOwot
-LSAKMi4zNC4xCgo=
+
+On 8/12/2026 1:28 AM, Brian Cain wrote:
+> The following changes since commit e8d693e12af9cbb89d724baadfcc08559669e279:
+>
+>    tests/qtest: Do not use versioned pc-q35-5.2 machine anymore (2026-08-11 16:12:34 -0400)
+>
+> are available in the Git repository at:
+>
+>    https://github.com/qualcomm/qemu tags/pull-hex-20260811
+>
+> for you to fetch changes up to 87a03d3fb03d4450fdb7b4ef26e6185496555d1c:
+>
+>    tests/hexagon: add tests for HVX bfloat (2026-08-11 23:20:45 -0700)
+
+
+Sorry, Stefan!  Disregard this pull req.
+
+I was looking at the wrong test results when I thought this passed.
+
+
+> ----------------------------------------------------------------
+> Hexagon queue
+>
+> Fixes:
+> * ssub32_saturate, ssub64_saturate fixes
+>
+> Features:
+>
+> * l2vic device
+> * qtimer device
+> * HVX-IEEE instructions (v68+)
+> * HVX GVec overrides for v{avg*,absdiff,sadd,*}
+>
+> ----------------------------------------------------------------
+> Brian Cain (24):
+>        hw/hexagon: add hex-subsys
+>        hw/hexagon: move VTCM to the common machine state
+>        hw/hexagon: move global registers to hex-subsys
+>        hw/hexagon: move the TLB to hex-subsys
+>        hw/hexagon: group the CPUs in a cluster
+>        bitops.h: Add find_first_bit32()
+>        hw/hexagon: extract get_reg_value/set_reg_value stubs in globalreg
+>        hw/hexagon: connect l2vic device
+>        hw/hexagon/virt: instantiate virtio-mmio transports
+>        hw/hexagon/virt: add l2vic interrupt-controller and virtio-mmio FDT nodes
+>        hw/hexagon/virt: connect pl011 UART interrupt
+>        tests/qtest: add L2VIC qtest
+>        tests/functional/hexagon: add arch_tests functional test
+>        hw/timer: Add QCT QTimer device model
+>        hw/hexagon: connect qtimer device
+>        tests/qtest: add qct-qtimer qtest
+>        tests/functional/hexagon: enable more arch_tests cases
+>        host-utils: fix ssub32/64_saturate return type and clamp direction
+>        target/hexagon: add GVec overrides for HVX saturating add/sub
+>        target/hexagon: add GVec override for HVX vmpyih multiply
+>        target/hexagon: add GVec overrides for HVX absolute difference
+>        target/hexagon: add GVec overrides for HVX vector average
+>        tests/tcg/hexagon: add HVX test for V6_vsubwsat saturation
+>        tests/tcg/hexagon: add HVX tests for vabsdiff
+>
+> Matheus Tavares Bernardino (15):
+>        target/hexagon: fix incorrect/too-permissive HVX encodings
+>        target/hexagon/cpu: add HVX IEEE FP extension
+>        hexagon: group cpu configurations in their own struct
+>        hexagon: print info on "-d in_asm" for disabled IEEE FP instructions
+>        target/hexagon: add v68 HVX IEEE float arithmetic insns
+>        target/hexagon: add v68 HVX IEEE float min/max insns
+>        target/hexagon: add v68 HVX IEEE float misc insns
+>        target/hexagon: add v68 HVX IEEE float conversion insns
+>        target/hexagon: add v68 HVX IEEE float compare insns
+>        target/hexagon: add v73 HVX IEEE bfloat16 insns
+>        tests/hexagon: add tests for v68 HVX IEEE float arithmetics
+>        tests/hexagon: add tests for v68 HVX IEEE float min/max
+>        tests/hexagon: add tests for v68 HVX IEEE float conversions
+>        tests/hexagon: add tests for v68 HVX IEEE float comparisons
+>        tests/hexagon: add tests for HVX bfloat
+>
+> Sid Manning (1):
+>        hw/intc: Add l2vic interrupt controller
+>
+> Taylor Simpson (1):
+>        Hexagon (target/hexagon) Clean up disassembly of control and system regs
+>
+>   MAINTAINERS                                  |   7 +
+>   docs/devel/hexagon-l2vic.rst                 |  55 +++
+>   docs/devel/index-internals.rst               |   1 +
+>   include/hw/hexagon/hex-subsys.h              |  32 ++
+>   include/hw/hexagon/hexagon.h                 |   6 +
+>   include/hw/hexagon/hexagon_globalreg.h       |   8 +
+>   include/hw/hexagon/virt.h                    |   4 +-
+>   include/hw/intc/hex-l2vic.h                  |  61 +++
+>   include/hw/timer/qct-qtimer.h                |  43 ++
+>   include/qemu/bitops.h                        |  30 +-
+>   include/qemu/host-utils.h                    |  24 +-
+>   target/hexagon/cpu.h                         |  12 +-
+>   target/hexagon/cpu_bits.h                    |  12 +-
+>   target/hexagon/gen_tcg_hvx.h                 | 170 +++++++
+>   target/hexagon/genptr.h                      |   4 +
+>   target/hexagon/helper.h                      |   5 +
+>   target/hexagon/mmvec/hvx_ieee_fp.h           |  69 +++
+>   target/hexagon/mmvec/macros.h                |  10 +-
+>   target/hexagon/mmvec/mmvec.h                 |   3 +
+>   target/hexagon/printinsn.h                   |   2 +-
+>   target/hexagon/translate.h                   |   1 +
+>   tests/tcg/hexagon/hex_test.h                 |  32 ++
+>   tests/tcg/hexagon/hvx_misc.h                 |  73 +++
+>   target/hexagon/attribs_def.h.inc             |   9 +
+>   disas/hexagon.c                              |   4 +-
+>   hw/hexagon/hex-subsys.c                      | 175 +++++++
+>   hw/hexagon/hexagon_dsp.c                     |  45 +-
+>   hw/hexagon/hexagon_globalreg.c               |  65 ++-
+>   hw/hexagon/virt.c                            | 130 ++++--
+>   hw/intc/hex-l2vic.c                          | 556 ++++++++++++++++++++++
+>   hw/timer/qct-qtimer.c                        | 667 +++++++++++++++++++++++++++
+>   target/hexagon/arch.c                        |   8 +
+>   target/hexagon/cpu.c                         |  23 +-
+>   target/hexagon/decode.c                      |   4 +-
+>   target/hexagon/genptr.c                      |  70 +++
+>   target/hexagon/mmvec/hvx_ieee_fp.c           | 137 ++++++
+>   target/hexagon/op_helper.c                   |  37 +-
+>   target/hexagon/printinsn.c                   | 108 ++++-
+>   target/hexagon/translate.c                   |   5 +-
+>   tests/qtest/l2vic-test.c                     | 249 ++++++++++
+>   tests/qtest/qct-qtimer-test.c                | 385 ++++++++++++++++
+>   tests/tcg/hexagon/fp_hvx.c                   | 226 +++++++++
+>   tests/tcg/hexagon/fp_hvx_cmp.c               | 275 +++++++++++
+>   tests/tcg/hexagon/fp_hvx_cvt.c               | 219 +++++++++
+>   tests/tcg/hexagon/fp_hvx_disabled.c          |  57 +++
+>   tests/tcg/hexagon/hvx_misc.c                 |  77 ++++
+>   hw/hexagon/Kconfig                           |   3 +
+>   hw/hexagon/meson.build                       |   1 +
+>   hw/intc/Kconfig                              |   3 +
+>   hw/intc/meson.build                          |   2 +
+>   hw/intc/trace-events                         |   4 +
+>   hw/timer/Kconfig                             |   3 +
+>   hw/timer/meson.build                         |   2 +
+>   hw/timer/trace-events                        |   5 +
+>   target/hexagon/gen_printinsn.py              |  14 +-
+>   target/hexagon/gen_tcg_funcs.py              |  12 +
+>   target/hexagon/hex_common.py                 |  27 ++
+>   target/hexagon/imported/mmvec/encode_ext.def | 126 ++++-
+>   target/hexagon/imported/mmvec/ext.idef       | 369 ++++++++++++++-
+>   target/hexagon/meson.build                   |   1 +
+>   tests/functional/hexagon/test_arch_tests.py  |  38 ++
+>   tests/qtest/meson.build                      |   2 +-
+>   tests/tcg/hexagon/Makefile.target            |  14 +
+>   63 files changed, 4657 insertions(+), 164 deletions(-)
+>   create mode 100644 docs/devel/hexagon-l2vic.rst
+>   create mode 100644 include/hw/hexagon/hex-subsys.h
+>   create mode 100644 include/hw/intc/hex-l2vic.h
+>   create mode 100644 include/hw/timer/qct-qtimer.h
+>   create mode 100644 target/hexagon/mmvec/hvx_ieee_fp.h
+>   create mode 100644 hw/hexagon/hex-subsys.c
+>   create mode 100644 hw/intc/hex-l2vic.c
+>   create mode 100644 hw/timer/qct-qtimer.c
+>   create mode 100644 target/hexagon/mmvec/hvx_ieee_fp.c
+>   create mode 100644 tests/qtest/l2vic-test.c
+>   create mode 100644 tests/qtest/qct-qtimer-test.c
+>   create mode 100644 tests/tcg/hexagon/fp_hvx.c
+>   create mode 100644 tests/tcg/hexagon/fp_hvx_cmp.c
+>   create mode 100644 tests/tcg/hexagon/fp_hvx_cvt.c
+>   create mode 100644 tests/tcg/hexagon/fp_hvx_disabled.c
 
