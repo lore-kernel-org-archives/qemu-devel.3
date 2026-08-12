@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9169C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34771C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAND-0003oU-0H; Wed, 12 Aug 2026 10:56:07 -0400
+	id 1wuAMu-00033k-UN; Wed, 12 Aug 2026 10:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALu-00014n-Ri; Wed, 12 Aug 2026 10:54:47 -0400
+ id 1wuALH-0007eL-AX; Wed, 12 Aug 2026 10:54:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALp-0007Un-U2; Wed, 12 Aug 2026 10:54:46 -0400
+ id 1wuALE-0007L9-TJ; Wed, 12 Aug 2026 10:54:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=OnUQe6/rj299sZ5vaOOpySJvKJclMx9JJNtqpm/Qbm8=;
+ t=1786546231; bh=W/sSWn/v3/GknB5jcagXdDaAuRBXsS/cYOKTPCnBKog=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fvqV1zxzoik0lNmCo1KktJDpyjy61X4SXUstoXHZV/ah5V2LJE2YTl0IFwFQroUwT
- HoC92EibJ8cTPAkD5xxhiyylzsGIAnGTahaXD0RhS16jX8EKBoBKqfX7oh49pe4roq
- YJFODMI9jou1Y2cc1fQzXcHNu1Mn2GhouxQ5g0ZCkitPotLdJl97m8iVUn8n6rB0LM
- lZcC6BrCFuXFJQbf49rzdTk33dhxf91vTHGosB1w0fTAllftJarw5FBuf6vIKprbGX
- 1wK4miN6NYp4BhPkTKe8b/EaA4UWIpF7ZltlW1ZM7q6PlBDhPQF7MHCFjjr6SpIwiR
- r0rDRtfSnSZQg==
+ b=gGORxhqxqV+xLkXa0T52wMHmeH75wvXL2T7eOo8cqYLHm12Yp0RFCyV4V+9HmM5fH
+ wAYsnnF7JtNbAbqSR9cYbs+KOFChH1p6ZXRW/YuzmYxdc+o2Q4XOxonNOW6z3N8cZ2
+ ZBh4iihQ9slYEvj2lseRspqpdly+BDCzvVWKFNjU6TIL5h37SmXGomkhARKlYJtxEi
+ 67kKbs0v9/3SLcn2J4sN/jPmnJFp2Va9R4D1cYxad1mxD01q5Z+ZCbRexES4SOKq1j
+ eRc3mwiTgO3NzzPxdMtTFUE1Bjec/uehewTmllVUQlIgaUUsqhMxPTihCf1z/yvo2h
+ YGo0ZUO/cGh7A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0E6C61CA634;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D00451CA62D;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 697C3409D76;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36D88409D6F;
  Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C78782F9C3; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 94D462F9B5; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 048/120] libvhost-user: protect against OOB writes in
- vu_set_inflight_fd
-Date: Wed, 12 Aug 2026 17:48:31 +0300
-Message-ID: <20260812144955.649205-48-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 041/120] hw/display/virtio-gpu: Initialize blob
+ mapping for ATTACH_BACKING
+Date: Wed, 12 Aug 2026 17:48:24 +0300
+Message-ID: <20260812144955.649205-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,85 +73,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-vu_set_inflight_fd() trusts the num_queues value from the
-VHOST_USER_SET_INFLIGHT_FD message without checking it against
-dev->max_queues, so an oversized value causes out-of-bounds writes to
-dev->vq.
+It is necessary for blob cursor and scanout.
 
-Front end is generally trusted so not a security problem, but OOB isn't
-a nice way to handle frontend bugs.  Let's harden this a bit:
-check num_queues and panic if it's invalid.
-
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: xlabai <xlabai@tencent.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
-(cherry picked from commit fbdfdbb9920cb69408d53cb86a8e079a2054581e)
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 4ae1c5c7d6f33d1e9c030ec4d24ab272609188cc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 014d2107489..bdaa6917f19 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1919,6 +1919,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
- 
-     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-         vmsg->payload.inflight.mmap_size = 0;
-         return true;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index a8998e0d54c..d29406982f6 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -992,6 +992,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
      }
-@@ -1926,6 +1928,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
- 
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-+        vmsg->payload.inflight.mmap_size = 0;
-+        return true;
-+    }
 +
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
- 
-@@ -1973,6 +1984,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-         vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
-                  vmsg->size, vmsg->fd_num);
-+        vmsg_close_fds(vmsg);
-         return false;
-     }
- 
-@@ -1982,6 +1994,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
- 
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        close(fd);
-+        return false;
++    if (!res->image) {
++        virtio_gpu_init_udmabuf(res);
 +    }
-+
-     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
-     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-@@ -1992,6 +2011,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+ }
  
-     if (rc == MAP_FAILED) {
-         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
-+        close(fd);
-         return false;
-     }
- 
+ static void
 -- 
 2.47.3
 
