@@ -4,54 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3558CC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30FD7C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAQA-0008Br-9j; Wed, 12 Aug 2026 10:59:10 -0400
+	id 1wuARO-00037I-46; Wed, 12 Aug 2026 11:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAQ2-0007qG-Ep; Wed, 12 Aug 2026 10:59:04 -0400
+ id 1wuARB-0002P5-Iw; Wed, 12 Aug 2026 11:00:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAPx-0001IW-7I; Wed, 12 Aug 2026 10:58:59 -0400
+ id 1wuAR9-000211-Lj; Wed, 12 Aug 2026 11:00:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=6m0KfNMpkMt2yH+YY21NH0ofpaQn9cxtVt04yNZ3Ric=;
+ t=1786546233; bh=RuH3/VC+XSP6K86VR8TLpSkXB5Y10wYRD9jalb+DG9A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lPW7t7vUsilGzYF4cj2pBAoJi0E4a5ZSjSfq5V8zdb2bdvDcUUYqoH7fj5l8Fiu8e
- KGerXe5t6YjPXDKKKgIeZnXFL+F45hYslGetG3hhZebP8vWjcGuR+X7xemRws/yPlA
- P7HdfqioglL7dxXq+27DcwsvN+JC9/Wp9iRbXGjHNSL2Wyz0LID0LlhSQjfMKp7mJO
- gMFnKc/wFhwW2n50uOt9iTYhXIvcjr8u79LOA57YLP1+hAxEH/W184MoZws8Aj/oNa
- r2F3+tD1hwZl0z/S01mK1Hj1b1rrVQG+zcj8/hHSGOxvL2t7wg/Cf5DhviyH5QonSD
- Wv1Nla+orrE4A==
+ b=KjKLz+r7LnmPhYBVmvIM8UuiDRb4cYVEeVmFQzjIZi1H1ELmAwaG3XWfL1BNSfXOe
+ b8zau/sf6FPeHwYDBmz6Hu8rSJGGtK73STK3RWmU7mxoO7/i2ofm4XTuDQOOtLV9FF
+ QWO0pl9J2xi24m9Lc0pA9mmjL/l0q+3/R6OJsS1SBkhm2PUwIC0cYbgnxOyHVfkVRf
+ FZoanx7R3p7BiOmfr04D39/D3cTSC72jwq1+TfCk3LuSfXsG7qtZAu3IflDahM5dQb
+ 67DiolY/fkxv5aOLizStbz2bU+P5V93R6Y8x6Ui6Zm2zkyY/fczC2Bqs4LzwwLCp6Z
+ ufTQqlZmWD5Fg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 13C971CA657;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D1B41CA665;
  Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6EBC3409D99;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D79BE409DA7;
  Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CDC752FA09; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id 40AB92FA25; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
- Jihe Wang <wangjihe.mail@gmail.com>, boy juju <agx1657748706@gmail.com>,
- contact <contact@xchglabs.com>, david korczynski <david@adalogics.com>,
- "Brian Chastain (off_by_one / Curious-Keeper)" <brian@scalingsuccess.io>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 083/120] hw/nvme: fix cross-namespace copy dif buffer
- overflow
-Date: Wed, 12 Aug 2026 17:49:06 +0300
-Message-ID: <20260812144955.649205-83-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Tristan Madani <tristan@talencesecurity.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 097/120] dmg: refuse to open files with no chunks
+Date: Wed, 12 Aug 2026 17:49:20 +0300
+Message-ID: <20260812144955.649205-97-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,59 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-The NVMe specification allows a controller with multiple namespaces to
-use different LBA formats per namespace. One implication of this is that
-the destination namespace may have a metadata area for PI, but the
-source does not. In that case, the controller shall generate the
-protection information, but the bounce buffer is erroneously allocated
-without space for that, causing a buffer overflow.
+The dmg block driver expects the disk image file to contain at least one
+chunk. Refuse to open such files. This ensures that dmg block driver
+state always has non-NULL s->sectors[] and related fields.
 
-Fix the allocation.
+Note that the previous commit fixed the only known way to trigger a
+crash. This patch is just for defense - let's avoid opening the file and
+having NULL pointers in dmg block driver state.
 
-Cc: qemu-stable@nongnu.org
-Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3387
-Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
-Reported-by: boy juju <agx1657748706@gmail.com>
-Reported-by: contact <contact@xchglabs.com>
-Reported-by: david korczynski <david@adalogics.com>
-Reported-by: Brian Chastain (off_by_one / Curious-Keeper) <brian@scalingsuccess.io>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit df67805ee9b15f4c7d54f0e6276d8f9889ec36c4)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4021
+Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20260723144519.364701-3-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit ab7b872f0c38ee2a576b93cf37b9945f622d48fb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 76d024c81e5..e482685c8b0 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -3193,7 +3193,7 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
-     uint16_t prinfow = ((copy->control[2] >> 2) & 0xf);
-     uint64_t slba;
-     uint32_t nlb;
--    size_t len;
-+    size_t len, blen;
-     uint16_t status;
-     uint32_t dnsid = le32_to_cpu(req->cmd.nsid);
-     uint32_t snsid = dnsid;
-@@ -3314,10 +3314,13 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
+diff --git a/block/dmg.c b/block/dmg.c
+index e325127d144..6f8120e0338 100644
+--- a/block/dmg.c
++++ b/block/dmg.c
+@@ -559,6 +559,12 @@ static int dmg_open(BlockDriverState *bs, QDict *options, int flags,
+         goto fail;
      }
  
-     g_free(iocb->bounce);
--    iocb->bounce = g_malloc_n(le16_to_cpu(sns->id_ns.mssrl),
--                              sns->lbasz + sns->lbaf.ms);
-+    assert(g_size_checked_mul(&blen, le16_to_cpu(sns->id_ns.mssrl),
-+                              sns->lbasz + MAX(sns->lbaf.ms, dns->lbaf.ms)));
++    /* There must be at least one chunk */
++    if (s->n_chunks == 0) {
++        ret = -EINVAL;
++        goto fail;
++    }
 +
-+    iocb->bounce = g_malloc(blen);
- 
-     qemu_iovec_reset(&iocb->iov);
-+    assert(len <= blen);
-     qemu_iovec_add(&iocb->iov, iocb->bounce, len);
- 
-     block_acct_start(blk_get_stats(sns->blkconf.blk), &iocb->acct.read, 0,
+     /* initialize zlib engine */
+     s->compressed_chunk = qemu_try_blockalign(bs->file->bs,
+                                               ds.max_compressed_size + 1);
 -- 
 2.47.3
 
