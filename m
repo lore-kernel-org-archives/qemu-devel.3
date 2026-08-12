@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA366C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3D5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8j1-0000D0-FE; Wed, 12 Aug 2026 09:10:33 -0400
+	id 1wu8nc-0005WU-Gg; Wed, 12 Aug 2026 09:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8i7-0007t4-Ko; Wed, 12 Aug 2026 09:09:39 -0400
+ id 1wu8lN-0003qP-C2; Wed, 12 Aug 2026 09:12:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8i5-0005em-51; Wed, 12 Aug 2026 09:09:34 -0400
+ id 1wu8lK-0006aq-N9; Wed, 12 Aug 2026 09:12:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=oRC6/Quzig25Gy65AWgpj/Z1OJzeEhGrMhwUkwDSR14=;
+ t=1786539784; bh=YTI+OSziWNCvE0kFhsSMYplW9R3tAXytFe27FSTdG0o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h2NMMmE/zeFGjbCenjoA4Wq0devkvh9xKvbEb5Z1CVuH3Oxh2DonTyMhQmoFaRiCq
- 2OcV0xgFr/yACe1PMkp4w+0DNno0g5jBkprOBi1UOT+1h85a4ceqHEUiJfKae597O5
- 5viSqm3G6TAyKjhRr1gwEs8iTanmaiDquTDGwFPgqpvCPYUCjWVgvKy7HZ+tSRtbtA
- k+SAXQRqU/z3An35e3ZAmyTQJUa2nB/Sj/rUmbDoRnPocjn//FX3fpo4Oj/e6YyIei
- DQz8Xt/xFT8y0S8yqJ9Ph7Hr3xPzOv332CAq/LRFuyFJCC0nJvcKQtM+J4g8KELcnQ
- hggXxjgwnupUg==
+ b=Hssv07URl9ICeGgyud1lX1o9yxR4/mJxz/sL2qNDm3vInUysYVMYzuHwVW1uV3BVH
+ 9X97yJjMmWvKTUY61/LPzTFgrCXPNeqT3/0trVDn+kalviqJSxNXg+5jH1eW3dQcTw
+ BIQia2yHBB1dc3rBhuPJdvr+t9gvsDUTxDAOsBvJx7hcX4g3dlqSqoeP8rmAcE4xBe
+ xyqbZbjzPENkou94K1MaUocgH6scnk1G+nAOFgJushrjQUFJgCKZaXKzKcCQ63bT9R
+ PLFzUR86H3RXTYF9L/Bfha/bs9kOaBx4Kk5ZkLItlBZiE9wIAFOzO+bJHwQC5d9yOR
+ yiVMvMAoZhjCQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4A8511CA4C2;
+ by isrv.corpit.ru (Postfix) with ESMTP id E382C1CA4E5;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 80FDC409BA5;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 23E34409BC8;
+ Wed, 12 Aug 2026 16:03:16 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7CAB42F91A; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id DC3F32F960; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, botszhuang <huang.botsz@gmail.com>,
- botszhuang <botszhuang@gmail.com>, Nick Huang <sef1548@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 067/102] hw/i2c/bcm2835_i2c: Correct CLKT register
- offset
-Date: Wed, 12 Aug 2026 16:01:42 +0300
-Message-ID: <20260812130233.621965-67-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 102/102] linux-user/sh4: Fix crashes on signal
+ delivery in conditional delay slot
+Date: Wed, 12 Aug 2026 16:02:17 +0300
+Message-ID: <20260812130233.621965-102-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -72,44 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: botszhuang <huang.botsz@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-The Clock Stretch Timeout (CLKT) register for the BCM2835 I2C
-controller is actually located at offset 0x1c, not 0x20.
+If we get a signal in the delay slot, we must roll-back the PC to the
+jump instruction. This was already fixed by the commit 3b894b699c9a
+("linux-user/sh4: Fix crashes on signal delivery"), however this fix
+omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
+by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
+the PC in this case, resulting in incorrect program execution.
 
-Update the BCM2835_I2C_CLKT macro to match the hardware
-specification.
-
-Since QEMU's implementation ignores whatever value the guest
-writes to this register, and Linux only writes to CLKT and
-doesn't read it back, the main effect of this fix is to
-avoid an incorrect GUEST_ERROR log.
+This patch fixes it.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 9cf3bc65afdb63 ("hw/i2c: Implement Broadcom Serial Controller (BSC)")
-Signed-off-by: botszhuang <botszhuang@gmail.com>
-Tested-by: Nick Huang <sef1548@gmail.com>
-Message-id: 20260724124220.24152-1-22925483+botszhuang@users.noreply.github.com
-[PMM: removed commit message paragraph about effects which I think
- is incorrect, substituted a different one]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit c4580a3a6d1cc542479602048d15556a18928a22)
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/i2c/bcm2835_i2c.h b/include/hw/i2c/bcm2835_i2c.h
-index 0a56df4720b..7e8cbb43b1b 100644
---- a/include/hw/i2c/bcm2835_i2c.h
-+++ b/include/hw/i2c/bcm2835_i2c.h
-@@ -38,7 +38,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2835I2CState, BCM2835_I2C)
- #define BCM2835_I2C_FIFO    0x10                  /* FIFO */
- #define BCM2835_I2C_DIV     0x14                  /* Clock Divider */
- #define BCM2835_I2C_DEL     0x18                  /* Data Delay */
--#define BCM2835_I2C_CLKT    0x20                  /* Clock Stretch Timeout */
-+#define BCM2835_I2C_CLKT    0x1c                  /* Clock Stretch Timeout */
- 
- #define BCM2835_I2C_C_I2CEN     BIT(15)           /* I2C enable */
- #define BCM2835_I2C_C_INTR      BIT(10)           /* Interrupt on RXR */
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 7f246e750d0..047174ac8f3 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
+            the SP, otherwise we would be pushing the signal context to
+            invalid memory.  */
+         regs->gregs[15] = regs->gregs[1];
+-    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
++    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
+         /* If we are in a delay slot, push the previous instruction.  */
+         regs->pc -= 2;
+     }
 -- 
 2.47.3
 
