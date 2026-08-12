@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30FD7C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45FDAC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuARO-00037I-46; Wed, 12 Aug 2026 11:00:26 -0400
+	id 1wuAOR-0004fd-EX; Wed, 12 Aug 2026 10:57:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuARB-0002P5-Iw; Wed, 12 Aug 2026 11:00:13 -0400
+ id 1wuANw-0004Ip-A4; Wed, 12 Aug 2026 10:57:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAR9-000211-Lj; Wed, 12 Aug 2026 11:00:13 -0400
+ id 1wuANt-0000fd-CK; Wed, 12 Aug 2026 10:56:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=RuH3/VC+XSP6K86VR8TLpSkXB5Y10wYRD9jalb+DG9A=;
+ t=1786546232; bh=uLP/a/QcV0T+YEJpa7z43KYjjzg21NjN5jAGVeIN2j0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KjKLz+r7LnmPhYBVmvIM8UuiDRb4cYVEeVmFQzjIZi1H1ELmAwaG3XWfL1BNSfXOe
- b8zau/sf6FPeHwYDBmz6Hu8rSJGGtK73STK3RWmU7mxoO7/i2ofm4XTuDQOOtLV9FF
- QWO0pl9J2xi24m9Lc0pA9mmjL/l0q+3/R6OJsS1SBkhm2PUwIC0cYbgnxOyHVfkVRf
- FZoanx7R3p7BiOmfr04D39/D3cTSC72jwq1+TfCk3LuSfXsG7qtZAu3IflDahM5dQb
- 67DiolY/fkxv5aOLizStbz2bU+P5V93R6Y8x6Ui6Zm2zkyY/fczC2Bqs4LzwwLCp6Z
- ufTQqlZmWD5Fg==
+ b=QVahV31ifm9mqXlGNvGZ+RpczLFpTFKKGqyWFZSdAsSp+ZLQZR3B82DseIP0100oF
+ mWJjJ9fr+M5gC5BYrPaSr9E+jbKc3IA43G/SIKkaEIUz9kKFV9A9YmD9YIVpsQEo6T
+ 03w1mcuiio/KEv6+88FMk1c9OjscrT55bXETfq2XoO/TxJQJcZEc7goIItAZeJRq2B
+ zUY6HO4rekYHux8ecSsfrFRZGE9H7He/WOyCcQoCTJNFOCEG+TrBsM/u1NA13eCZnm
+ 2VRWFVQ4wraC3dSgLxwuTMuoHnbxGqiXWrma0bYKbxqP3SDM20bDqeM48UUJI4ph0h
+ R+9votfWCRk6A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D1B41CA665;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6CC621CA641;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D79BE409DA7;
- Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C7DAE409D83;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 40AB92FA25; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id 31CB12F9DD; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Tristan Madani <tristan@talencesecurity.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 097/120] dmg: refuse to open files with no chunks
-Date: Wed, 12 Aug 2026 17:49:20 +0300
-Message-ID: <20260812144955.649205-97-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Michael S. Tsirkin <mst@redhat.com>
+Subject: [Stable-11.0.4 061/120] hw/pci-host/q35.c: Factor out creation of
+ SMRAM MRs
+Date: Wed, 12 Aug 2026 17:48:44 +0300
+Message-ID: <20260812144955.649205-61-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,42 +71,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The dmg block driver expects the disk image file to contain at least one
-chunk. Refuse to open such files. This ensures that dmg block driver
-state always has non-NULL s->sectors[] and related fields.
+mch_realize has a large section that deals with initializing the
+SMRAM-specific MemoryRegions.  Currently we do an early return from
+the realize function if mch->has_smm_ranges is false, but this has
+the potential for bugs if somebody adds new code at the end of the
+function that isn't SMM-specific.  Pull the MR init code out into its
+own function, so we can do the smm-ranges specific handling in the
+realize function in a more obvious way.
 
-Note that the previous commit fixed the only known way to trigger a
-crash. This patch is just for defense - let's avoid opening the file and
-having NULL pointers in dmg block driver state.
+This commit shouldn't change behaviour at all.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4021
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20260723144519.364701-3-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit ab7b872f0c38ee2a576b93cf37b9945f622d48fb)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260708121011.1653365-3-peter.maydell@linaro.org>
+(cherry picked from commit a90fcf0080da2bd372f0a79dc243d8d2ede1b244)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/dmg.c b/block/dmg.c
-index e325127d144..6f8120e0338 100644
---- a/block/dmg.c
-+++ b/block/dmg.c
-@@ -559,6 +559,12 @@ static int dmg_open(BlockDriverState *bs, QDict *options, int flags,
-         goto fail;
-     }
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index cea8fc461a0..e44f23c1d9f 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -561,49 +561,9 @@ static void mch_reset(DeviceState *qdev)
+     mch_update(mch);
+ }
  
-+    /* There must be at least one chunk */
-+    if (s->n_chunks == 0) {
-+        ret = -EINVAL;
-+        goto fail;
+-static void mch_realize(PCIDevice *d, Error **errp)
++static void mch_init_smram_regions(MCHPCIState *mch)
+ {
+-    int i;
+-    MCHPCIState *mch = MCH_PCI_DEVICE(d);
+-
+-    if (mch->ext_tseg_mbytes > MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_MAX) {
+-        error_setg(errp, "invalid extended-tseg-mbytes value: %" PRIu16,
+-                   mch->ext_tseg_mbytes);
+-        return;
+-    }
+-
+-    /* setup pci memory mapping */
+-    pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
+-
+-    /* PAM */
+-    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
+-             mch->system_memory, mch->pci_address_space,
+-             PAM_BIOS_BASE, PAM_BIOS_SIZE);
+-    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
+-        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
+-                 mch->system_memory, mch->pci_address_space,
+-                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+-    }
+-
+-    /*
+-     * This memory region looks like it's SMM specific, but it is not.
+-     * It's an alias that makes the pci_address_space appear in system
+-     * memory at the SMRAM_C_BASE address. The alias is enabled when the
+-     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
+-     * visible. So for non-SMM configs we need to create the alias, and
+-     * leave it permanently enabled.
+-     */
+-    memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+-                             mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+-                             MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+-    memory_region_add_subregion_overlap(mch->system_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+-                                        &mch->smram_region, 1);
+-    memory_region_set_enabled(&mch->smram_region, true);
+-
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
++    /* Initialize all the SMRAM specific MemoryRegions */
+     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
+                              mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+@@ -659,9 +619,52 @@ static void mch_realize(PCIDevice *d, Error **errp)
+     memory_region_set_enabled(&mch->smbase_window, false);
+     memory_region_add_subregion(&mch->smram, MCH_HOST_BRIDGE_SMBASE_ADDR,
+                                 &mch->smbase_window);
++}
++
++static void mch_realize(PCIDevice *d, Error **errp)
++{
++    int i;
++    MCHPCIState *mch = MCH_PCI_DEVICE(d);
++
++    if (mch->ext_tseg_mbytes > MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_MAX) {
++        error_setg(errp, "invalid extended-tseg-mbytes value: %" PRIu16,
++                   mch->ext_tseg_mbytes);
++        return;
 +    }
 +
-     /* initialize zlib engine */
-     s->compressed_chunk = qemu_try_blockalign(bs->file->bs,
-                                               ds.max_compressed_size + 1);
++    /* setup pci memory mapping */
++    pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
++
++    /* PAM */
++    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
++             mch->system_memory, mch->pci_address_space,
++             PAM_BIOS_BASE, PAM_BIOS_SIZE);
++    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
++        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
++                 mch->system_memory, mch->pci_address_space,
++                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
++    }
+ 
+-    object_property_add_const_link(qdev_get_machine(), "smram",
+-                                   OBJECT(&mch->smram));
++    /*
++     * This memory region looks like it's SMM specific, but it is not.
++     * It's an alias that makes the pci_address_space appear in system
++     * memory at the SMRAM_C_BASE address. The alias is enabled when the
++     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
++     * visible. So for non-SMM configs we need to create the alias, and
++     * leave it permanently enabled.
++     */
++    memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
++                             mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
++                             MCH_HOST_BRIDGE_SMRAM_C_SIZE);
++    memory_region_add_subregion_overlap(mch->system_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
++                                        &mch->smram_region, 1);
++    memory_region_set_enabled(&mch->smram_region, true);
++
++    if (mch->has_smm_ranges) {
++        mch_init_smram_regions(mch);
++        object_property_add_const_link(qdev_get_machine(), "smram",
++                                       OBJECT(&mch->smram));
++    }
+ }
+ 
+ static const Property mch_props[] = {
 -- 
 2.47.3
 
