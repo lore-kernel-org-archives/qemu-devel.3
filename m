@@ -4,74 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA8AC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C1CC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAWe-0003DA-Ve; Wed, 12 Aug 2026 11:05:54 -0400
+	id 1wuARF-0002Zj-VV; Wed, 12 Aug 2026 11:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wuAVb-0002hD-CE
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:04:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAR7-0002G2-Qh; Wed, 12 Aug 2026 11:00:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wuAVT-0003Bj-Lj
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:04:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786547072;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cGvWi+UVsuWKsZ7t1YneryfhaE9NEB7DkYjLsW/aUaQ=;
- b=UtL34byuv9mFaHQx/h9bFxc6iVyJBiYTaSPembrY8CiPFTn6eT/VzzIC4maaoXLge0TB4y
- S1+cDcr9X/6m/7tiD+4pvNIINsWWfMY32ELfsXhcLx9fpuDLFlFKeWUoQo0UItkma4uhva
- D6nA/klQKcsIK6kA+NwyDFSpjT6bBrc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-5xiaBztaP52Y4Oq4J-Z9Xg-1; Wed,
- 12 Aug 2026 11:04:27 -0400
-X-MC-Unique: 5xiaBztaP52Y4Oq4J-Z9Xg-1
-X-Mimecast-MFC-AGG-ID: 5xiaBztaP52Y4Oq4J-Z9Xg_1786547066
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 128EB193531E; Wed, 12 Aug 2026 15:03:29 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 78395423; Wed, 12 Aug 2026 15:03:28 +0000 (UTC)
-Date: Wed, 12 Aug 2026 11:03:25 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>
-Subject: Re: [PATCH v2] file-posix: fix zone write granularity assignment for
- zoned block devices
-Message-ID: <20260812150324.GE244786@fedora>
-References: <20260811133236.1290092-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAR3-0001px-Ju; Wed, 12 Aug 2026 11:00:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786546233; bh=d4QtQB2ChNQxS5w7StMjwN4uOBLgz1lsI8tMgiYSi48=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=TA0S8kgKzQqQYj7rjD+MoUENshiFTicJBPQInrPoQ20mjFgnMtJUXe0PTgDgvZKmL
+ XDM/ELCSX4/xdL3oVr/RlvO0gbfSXr4YAWEjHwYhkAcTjb8/CNYGJKaM+bNYDnK02J
+ nMjuEyTOyTZZD3QA3SIRoYt75uHGBX3w6IHN/7gNn7e0ogb8Zpv6yo0/XX88OosCce
+ ksb4j4ZeQh0TCJKDNO08vw/w6RMMDhU2RSydrSRHlUPK6nGAvLXzjDAJqAKlkxxjcL
+ NqmXw0zZ9wdIxqlNeN/fpJ/HLZbcHB3ohtEzpvidO5cCsKII+PSdZvFwfjXsW1k4Iz
+ TtFKMAUicR1rw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6EF551CA663;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C90BB409DA5;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 337EB2FA21; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 095/120] tests/unit: add reproducer for BlockAcctStats
+ histogram locking race
+Date: Wed, 12 Aug 2026 17:49:18 +0300
+Message-ID: <20260812144955.649205-95-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="PDsGBemRbk08uWRx"
-Content-Disposition: inline
-In-Reply-To: <20260811133236.1290092-1-cassel@kernel.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,58 +74,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---PDsGBemRbk08uWRx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From: "Denis V. Lunev" <den@openvz.org>
 
-On Tue, Aug 11, 2026 at 03:32:36PM +0200, Niklas Cassel wrote:
-> In the ZBC and ZAC specifications, the requirement is that the write
-> granularity matches the physical block size.
->=20
-> However, in the ZNS specification, the requirement is simply that the
-> write granularity matches the logical block size.
->=20
-> See:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
-/?id=3Da805a4fa4fa376bbc145762bb8b09caa2fa8af48
->=20
-> In Linux, there is a zone_write_granularity sysfs property which abstracts
-> this away, so let's make use of it.
->=20
-> Currently, it is theoretically possible that QEMU presents an inflated
-> write granularity for NVMe devices where the physical block size is larger
-> than the logical block size.
->=20
-> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> Fixes: a3c41f06d5a8 ("file-posix: add tracking of the zone write pointers=
-")
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> ---
-> Changes since v1:
-> -Improved commit log.
-> -Picked up tag.
->=20
->  block/file-posix.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+block_latency_histogram_set() and block_latency_histograms_clear()
+replace BlockLatencyHistogram's nbins/boundaries/bins without taking
+stats->lock, while block_account_one_io() reads those same fields
+under that lock from whatever iothread completes the I/O.
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Add a test that races two real threads against
+block_latency_histogram_set() and
+block_acct_start()/block_acct_done() on the same BlockAcctStats.
+Applied here it passes, since the previous two commits already take
+the lock; reverting them locally reproduces the abort this series
+fixes, in about a second.
 
---PDsGBemRbk08uWRx
-Content-Type: application/pgp-signature; name=signature.asc
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-ID: <20260724111311.4086859-4-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 842c89281a20c3ea783609c5ac9da226e017e490)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmp8iz0ACgkQnKSrs4Gr
-c8jngAf/foeTuVnTXhwngNBXM0ejhby0A4hb9AoT5BBxvEuRZHARDwrfxAVBkrTC
-3GuFJwS7x+R1r366FFtQ82mkFPEG2xgwlGcbwphzPB4U/Jc4McGFJu75elk1iOmZ
-KzuqBKhnW7EubbAFMxcQM1G4/mmOcpIk/j4BHpOfKrrO/UilZ/5chpBXJw4Sjs97
-4o9rHWFBV8xFvI6zxtKZfUpuhXjKG6+m3vxjGe8Kg5bNRG7zUZ2MmRAQNCgAb6ta
-aFNuRfbSaSyrzLVtR06SVLlyMjgCptdCmy8HM2D8pRY1/hX4h9LMveZdnug3MFsO
-TdRxyXIw/jIpSawHOpBk7j8I4n2QtA==
-=gwc9
------END PGP SIGNATURE-----
-
---PDsGBemRbk08uWRx--
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index f768e882a4d..d453432e85d 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -74,6 +74,7 @@ if have_block
+     'test-blockjob': [testblock],
+     'test-blockjob-txn': [testblock],
+     'test-block-backend': [testblock],
++    'test-block-accounting': [testblock],
+     'test-block-iothread': [testblock],
+     'test-write-threshold': [testblock],
+     'test-crypto-hash': [crypto],
+diff --git a/tests/unit/test-block-accounting.c b/tests/unit/test-block-accounting.c
+new file mode 100644
+index 00000000000..7aae491cfc2
+--- /dev/null
++++ b/tests/unit/test-block-accounting.c
+@@ -0,0 +1,115 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * BlockAcctStats latency histogram locking regression test
++ *
++ * Copyright (c) 2026 Virtuozzo International GmbH.
++ *
++ * Regression test for missing stats->lock in
++ * block_latency_histogram_set()/block_latency_histograms_clear(),
++ * racing block_account_one_io() reading the same fields from an
++ * iothread. Aborts reliably before the fix, passes after it.
++ */
++
++#include "qemu/osdep.h"
++#include "block/block.h"
++#include "block/accounting.h"
++#include "system/block-backend.h"
++#include "system/block-backend-io.h"
++#include "qapi/error.h"
++#include "qemu/main-loop.h"
++#include "qemu/thread.h"
++
++#define RACE_DURATION_MS 2000
++#define NUM_READER_THREADS 8
++
++static bool stop_workers;
++
++/*
++ * Different bin counts, so the writer's g_free()/g_new() churn can be
++ * caught mid-update. Values are small enough (nanoseconds) that plain
++ * back-to-back start/done calls exercise every bin without sleeping.
++ */
++static uint64List boundaries_a[] = {
++    { .next = &boundaries_a[1], .value = 1000 },
++    { .next = &boundaries_a[2], .value = 5000 },
++    { .next = NULL,             .value = 50000 },
++};
++
++static uint64List boundaries_b[] = {
++    { .next = &boundaries_b[1], .value = 800 },
++    { .next = &boundaries_b[2], .value = 3000 },
++    { .next = &boundaries_b[3], .value = 20000 },
++    { .next = NULL,             .value = 200000 },
++};
++
++static void *writer_thread(void *opaque)
++{
++    BlockAcctStats *stats = opaque;
++
++    while (!qatomic_read(&stop_workers)) {
++        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_a);
++        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_b);
++        block_latency_histograms_clear(stats);
++    }
++
++    return NULL;
++}
++
++static void *reader_thread(void *opaque)
++{
++    BlockAcctStats *stats = opaque;
++
++    while (!qatomic_read(&stop_workers)) {
++        BlockAcctCookie cookie;
++
++        block_acct_start(stats, &cookie, 4096, BLOCK_ACCT_READ);
++        block_acct_done(stats, &cookie);
++    }
++
++    return NULL;
++}
++
++static void test_latency_histogram_race(void)
++{
++    BlockBackend *blk = blk_new(qemu_get_aio_context(),
++                                BLK_PERM_ALL, BLK_PERM_ALL);
++    BlockAcctStats *stats = blk_get_stats(blk);
++    QemuThread writer, readers[NUM_READER_THREADS];
++    int i;
++
++    /* Histogram has to be enabled (bins != NULL) before racing it. */
++    g_assert(block_latency_histogram_set(stats, BLOCK_ACCT_READ,
++                                         boundaries_a) == 0);
++
++    stop_workers = false;
++    qemu_thread_create(&writer, "hist-writer", writer_thread, stats,
++                       QEMU_THREAD_JOINABLE);
++    for (i = 0; i < NUM_READER_THREADS; i++) {
++        qemu_thread_create(&readers[i], "hist-reader", reader_thread, stats,
++                           QEMU_THREAD_JOINABLE);
++    }
++
++    g_usleep(RACE_DURATION_MS * 1000);
++    qatomic_set(&stop_workers, true);
++
++    qemu_thread_join(&writer);
++    for (i = 0; i < NUM_READER_THREADS; i++) {
++        qemu_thread_join(&readers[i]);
++    }
++
++    blk_unref(blk);
++}
++
++int main(int argc, char **argv)
++{
++    bdrv_init();
++    qemu_init_main_loop(&error_abort);
++
++    g_test_init(&argc, &argv, NULL);
++
++    g_test_add_func("/block-accounting/latency_histogram_race",
++                    test_latency_histogram_race);
++
++    return g_test_run();
++}
+-- 
+2.47.3
 
 
