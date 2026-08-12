@@ -4,142 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97497C5B567
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 06:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9567DC5B567
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 06:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu2Va-0000XJ-Vp; Wed, 12 Aug 2026 02:32:16 -0400
+	id 1wu2W9-0001sy-Lh; Wed, 12 Aug 2026 02:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wu2Un-00086f-Fk
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:31:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wu2Uk-0003wq-96
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:31:24 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67C62Or42872353
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:31:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2WTOMfuP4/EU2u/giN6RzuPxyfgSGr8jUiOBlC/ujX8=; b=CbkVNDgzeIBNaMgB
- yAjw7EL3UWkhMSrCkY0U9KZm7VQOUvFLjVDpgcD1wscpgiE5SQX/hKdNFul+XE6W
- U0o7kNiXPrQGNSmkG910VtMgRCOUIIm9rHEuHkLfebP+ikSvUiA8GBp/6vn63iVy
- q+dtekewkFQrcsVEJhxOn0zgnidkb/yAoZpmGuYAGxlwq+TAXXnrwBVaSyy6sYtA
- r13nwPMQJO8xOGHVVdkpjPxhBMBiPr2eIepXmz3cucY4Y9qp/fOVXlcLFIXTnDq2
- hYla2vW+slDKQf8F6ErYQNzPyYZzoM4EJmk5e4hzrRIrkCkGxJzGyeW2PAwUYhfu
- P37Jhw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0hj1geva-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:31:11 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38e4758ab46so834193a91.0
- for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 23:31:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wu2Vp-0000zg-Pr
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:32:34 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wu2Vk-00047m-RB
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 02:32:29 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2cacb8416a1so8172675ad.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Aug 2026 23:32:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786516270; x=1787121070; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2WTOMfuP4/EU2u/giN6RzuPxyfgSGr8jUiOBlC/ujX8=;
- b=HTAPf2bmhvxhstmIr7ntlGLn1CkXW/R+n+ES6BZcGmz77B5bmXeogaBBAnpriKTgPh
- /RgqDI4xixrH2M2EtFbKQPkB+/CEM+Im+bQ5YcRa447ypKGlzvYd908ebsWuE5ohx5zZ
- EdzJpM8xG10kRCDoLvvlnkGZeGScVEu0wsFPeaAFzNLfyljAEl1hjMKTFcxwcDV4KfSo
- Wk0i2ydv4r62braVS1WDyaymW3iBXceC5BTHmxyyup3Cu/2lRsCAzLx+2O8/gQyp+fmg
- iEXJBGS1oxkX1EPJ+RdHQoKm9uh2bUVvtl3rApOfpPyByyhongQBsdzedOPej+ekSV84
- lHQg==
+ d=gmail.com; s=20251104; t=1786516343; x=1787121143; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+BHWnBbixY8f05f9HpuT54nzFAEjgiYRdNAZSYh9faI=;
+ b=sFxvKQ4sj8V0r6El+2GTDbczBsIn8QYjPR/iTnVcsdmDRm0TBzVzDaMmwzqecrM3Yq
+ 5gsNfd4PQCALeCRmklAy3+yzZFk2wBBVslpA8Dq2XuT3X3Z/a3VjVl1snLmU0T0ny/uj
+ HANIGVtjgmgtG6HVLSIBcWJHvmWXG04g+ESOswfixOGFfUoK94FasPkrdVmJ1txdmFoS
+ 1CM4p1CQJkSrSsW5vTVi5x5cPqIl2qWax1eA9F58lM+7WoThihGmN39IAheSXZEHcb3V
+ QOofCdgzxjqtHFWqxefPk1G92RoG2iKDFFJlAEYbZEL7umLb8WEG8uVTVcq89dHyc3GJ
+ DpnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786516270; x=1787121070;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2WTOMfuP4/EU2u/giN6RzuPxyfgSGr8jUiOBlC/ujX8=;
- b=Uyrd9WFhxlAxZJ+FVtzXosYLGhAGqQFXL3jvv+ryeuGmTl6ImXTVXruLowk9HeclCe
- ffUMyZSdrelo4k7StngPMa6XSmN4qhQKXMGNOqUQ/yj2SeUuR14goTRW1+qprzYQjOen
- SwKMqrL09OEFWNpPTSEkyeAR/JNw4RtAifK1N5y+viCffz49rG67xRvGGH7h1Gub0fVa
- wsFIRoBtbDbVg+Oabkq7O2/yO3BwCGr38of3faTUipcnwtgYxz01QokJJTL9g5fCupW3
- ZRTJgsxst+EZRy6M828e4ci/KUKkqUn9EByCv/Pq663VjcW6e+Qmq0vc9FijVW3kKBiX
- MJJQ==
-X-Gm-Message-State: AOJu0Yw1JTXW1kH/M4ZVgV3xgdcsgM0f63ug6xo3y8Nh6va2vtW1hCl+
- qbMYoGH7wKk70LhLF9sXPudH5eRdLHIlPZ+ykuCCNvdNFAQJSJDKNHCIKsViVGPId6pDyaxlXXg
- 3CjOO0NDEzZwdAj1bkylcW39cInca6jWeZhTP2LGNCqyqmBrNqs/YnJzXQIjM+uXxzg==
-X-Gm-Gg: AR+sD12m5ZSnTachk9niLPxWXHf0rHyg4gpZa6jj0d4qNm1JaEiKJqPJ57LC2XUL/yM
- wshAwkKCvKy3yo3yunVkvRlfCJc9LX3uixfWKr19K+wg2kLRkl0M90rkyC+5DQifyspMZuy4tHm
- JhFvNKMad4EhUssTx1Z1HfPOHKc7YWz3qdwR05p+y+CUv9vb4UM9iFd+VhC93TxXTozv2hy0S+C
- VWEPXW2Rp/EpVmHitn2PqTGanyU35Uh/7F0J/fpQa1jBDaxm5yDjWUDMBhGvl2oXpRsvynlD3sr
- e/iDpseJTSFumrcadHzCShALon0rESFxg7Z1Z0zcqH9cGPH1foYXTzgVSF02CtnAEDtBrVZU2L0
- 6pjN3o9Y3FChzsJMTO0bjb6xSuIKI3wFxNFHSfqme7hg/I+bg
-X-Received: by 2002:a17:90b:2d87:b0:38d:ddc2:7ccb with SMTP id
- 98e67ed59e1d1-393012cedf9mr2885663a91.1.1786516270138; 
- Tue, 11 Aug 2026 23:31:10 -0700 (PDT)
-X-Received: by 2002:a17:90b:2d87:b0:38d:ddc2:7ccb with SMTP id
- 98e67ed59e1d1-393012cedf9mr2885599a91.1.1786516269557; 
- Tue, 11 Aug 2026 23:31:09 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392f985e9fcsm771402a91.1.2026.08.11.23.31.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2026 23:31:08 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, stefanha@redhat.com, peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
- Taylor Simpson <ltaylorsimpson@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 39/41] tests/hexagon: add tests for v68 HVX IEEE float
- conversions
-Date: Tue, 11 Aug 2026 23:29:30 -0700
-Message-Id: <20260812062932.543840-40-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
-References: <20260812062932.543840-1-brian.cain@oss.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: 3Pc82dAPSedAIkGS9vAcNn7zaX_6lc5k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1MCBTYWx0ZWRfX6Vj4ZN/yAT52
- H4bURONMniLuatxE4n9/rcX/KwPd4AnsZtTxlaAwZRPksqZ/qVVVepgQrLO5YTpPwk34Cguv7un
- x6RRGHjqOgGXlZo9x9XRaXflUhyYenLQf+xiADsf9mjb+L2huri4jME/wzWICXMPiZB1K/k/itN
- wfDiQ0bGbMl09kh2F1QOmerKSZ7GVGfQhR8ay/oL3TiBpNyFDBn09eZRjDQsY1xkNhp23ZC+bIL
- gEgnkCvdnRA4j5EiwfYB4FhfvOWd4E9QieIUxbKhibK++Q/02uGrgqYOrEvGFbeiy1CB0zv7t44
- fyim6Lr6E4qSzuH6uPWEpRUeG9ncqGV0nPcMXujb8R+HkD2AojnVQ7w2poMcGnX1i7EMlrk6Kv9
- x3xwpjyUSn3ze08K54vVd5xLfgPVmkaRgTFQ5/B+5qbgBXRmqXlXTz7bk4HDfZyfxlUfKcFvSJx
- 5RfKnN4RvvheW7oYQ6Q==
-X-Authority-Analysis: v=2.4 cv=K6ES2SWI c=1 sm=1 tr=0 ts=6a7c132f cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=OZRFAO6Uk6ULta4fWVgA:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: 3Pc82dAPSedAIkGS9vAcNn7zaX_6lc5k
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1MCBTYWx0ZWRfX+Pt52+Z7on/3
- YjSc9CtI2CHYg2lXm47vIhH8Mh7gkbCUasr6MfYQzlAJOnYNYVTqp9nmAXdtw/Rl1BDHUXY3QWw
- PCArnemxnHkbpfQcpOcxyEZ2KBFFmww=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 adultscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120050
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20251104; t=1786516343; x=1787121143;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+BHWnBbixY8f05f9HpuT54nzFAEjgiYRdNAZSYh9faI=;
+ b=Cx8l4qyHWlf2nJJ1DuTVxEEwotrWDeZmgRLGx26uxIpE3ITK07QlxZjIr0yQjojl+c
+ 0ex9ICORCgtePdCo87105qsn1ZmhAa86tzyU99vw1y3dtrbK6XnehyKx4se5IkN724bT
+ e2Vf8iRQ6ADuuQetPzkSRS99FGIVP9cW7xWHTpb1I1UPFsMht/GaLV99paoW4RWaY51c
+ hNSDcVspszIocg+mV5UD/p+JYUzFIrNHlGM5jli/wrCRaITN8uPka2c127mobGymbgSt
+ +MoZtroeSy09LWzcoIqhL/oIxHo9saMAh8udoP0mmbiqoR9k/tO1WA5a5LsG2B+KRj6R
+ tKPg==
+X-Gm-Message-State: AOJu0Ywux0tGpRzEPn2wXgzaPWLa8+jrZU5YE8jIMGQbYlgLqf7C3jmE
+ 5uZB1vqAvDkvZVFnCuJoaWJiGYBbnw8I7sah1sLJAmMxgI/07F14f/1szgwGJZyT
+X-Gm-Gg: AR+sD12TpY2W64J4vEZKAOq+Cuw71WBBK0vFOc541HM/67onre7jq1Slfled2e8A3wd
+ ygHZefQKUPNkbcL/bSFcRKoxdviOtxhL/8k0mJ/g42DR3tuPELlvDjeJw2+vdqLaJRXsOtkdL6i
+ uLuBE5rU34aWp5zwnF6aZMCBiEVpYSkWWDZqDNUZAE9AnJQ3kggl5zhhmMTX9ml08lO4w1X2y89
+ nO7dQOQLeZimHd2UldfCTxTvqUa7jacNT7nQ6C7B/tireg63/dmTh7UgVocNsx9nYgi+M4X90dJ
+ Qt+Lcf8mfQ7WlrZNTTfm0M8Ntq8Me1Wn61xWhQpCggH3uagn1vWpNWkkNPV+LXNDcXhc+hIsFlz
+ pntr54wSknsWbVOaoVGQmBbNN9vSWZUxJ6xyK/jPHmwEKloIcqc2ygNRo5t7XnG9xw9THA7/HmZ
+ da7LoMzqPbCaEsuxUtFZouvrSRg6tM0JPOGynr5H3el1hwkDk64xFXz8B8OxDkCWylkQ==
+X-Received: by 2002:a17:902:ec8a:b0:2c0:e2ea:6b0c with SMTP id
+ d9443c01a7336-2d3456dfed4mr31825545ad.21.1786516343206; 
+ Tue, 11 Aug 2026 23:32:23 -0700 (PDT)
+Received: from smtpclient.apple ([82.40.42.115])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d350ff0772sm2055865ad.21.2026.08.11.23.32.19
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 11 Aug 2026 23:32:22 -0700 (PDT)
+From: Jack wang <163wangjack@gmail.com>
+Message-Id: <776B3C22-7612-401E-B7F2-5658A942DEC8@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_6A6F271E-A998-4CFE-A70F-ECAC3DAAFC24"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [RFC PATCH v1 5/5] rust/hw/gpio: add native unit tests
+Date: Wed, 12 Aug 2026 14:31:59 +0800
+In-Reply-To: <20260726145119.19881-6-163wangjack@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ qemu-rust@nongnu.org, caojunze424@gmail.com
+To: qemu-devel@nongnu.org
+References: <20260726145119.19881-1-163wangjack@gmail.com>
+ <20260726145119.19881-6-163wangjack@gmail.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,169 +104,449 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogTWF0aGV1cyBUYXZhcmVzIEJlcm5hcmRpbm8gPG1hdGhldXMuYmVybmFyZGlub0Bvc3Mu
-cXVhbGNvbW0uY29tPgoKUmV2aWV3ZWQtYnk6IFRheWxvciBTaW1wc29uIDxsdGF5bG9yc2ltcHNv
-bkBnbWFpbC5jb20+ClNpZ25lZC1vZmYtYnk6IE1hdGhldXMgVGF2YXJlcyBCZXJuYXJkaW5vIDxt
-YXRoZXVzLmJlcm5hcmRpbm9Ab3NzLnF1YWxjb21tLmNvbT4KUmV2aWV3ZWQtYnk6IEJyaWFuIENh
-aW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KTGluazogaHR0cHM6Ly9sb3JlLmtlcm5l
-bC5vcmcvcWVtdS1kZXZlbC9lYzZhZjA3YTI4NWM0N2U1ZjZkZjM0Mzg2MGJmZWRjZTViZWQ5NDIx
-LjE3NzYzMzk0NTEuZ2l0Lm1hdGhldXMuYmVybmFyZGlub0Bvc3MucXVhbGNvbW0uY29tClNpZ25l
-ZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0
-ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVzdC5oICAgICAgfCAgMTQgKysrCiB0ZXN0cy90Y2cvaGV4
-YWdvbi9odnhfbWlzYy5oICAgICAgfCAgIDIgKwogdGVzdHMvdGNnL2hleGFnb24vZnBfaHZ4X2N2
-dC5jICAgIHwgMTg4ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKwogdGVzdHMvdGNnL2hl
-eGFnb24vTWFrZWZpbGUudGFyZ2V0IHwgICAzICsKIDQgZmlsZXMgY2hhbmdlZCwgMjA3IGluc2Vy
-dGlvbnMoKykKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0
-LmMKCmRpZmYgLS1naXQgYS90ZXN0cy90Y2cvaGV4YWdvbi9oZXhfdGVzdC5oIGIvdGVzdHMvdGNn
-L2hleGFnb24vaGV4X3Rlc3QuaAppbmRleCBlN2E2NjQ0ZDQxNi4uZDVkYThhZDI0MGMgMTAwNjQ0
-Ci0tLSBhL3Rlc3RzL3RjZy9oZXhhZ29uL2hleF90ZXN0LmgKKysrIGIvdGVzdHMvdGNnL2hleGFn
-b24vaGV4X3Rlc3QuaApAQCAtMTExLDYgKzExMSwyMCBAQCBzdGF0aWMgaW5saW5lIHZvaWQgX19j
-aGVjazY0X25lKGludCBsaW5lLCB1aW50NjRfdCB2YWwsIHVpbnQ2NF90IGV4cGVjdCkKICAgICAi
-dXNyID0gcjJcblx0IgogCiAvKiBTb21lIHVzZWZ1bCBmbG9hdGluZyBwb2ludCB2YWx1ZXMgKi8K
-K2NvbnN0IHVpbnQxNl90IEhGX0lORiA9IDB4N2MwMDsKK2NvbnN0IHVpbnQxNl90IEhGX0lORl9u
-ZWcgPSAweGZjMDA7Citjb25zdCB1aW50MTZfdCBIRl9RTmFOID0gMHg3ZTAwOworY29uc3QgdWlu
-dDE2X3QgSEZfU05hTiA9IDB4N2QwMDsKK2NvbnN0IHVpbnQxNl90IEhGX1FOYU5fbmVnID0gMHhm
-ZTAwOworY29uc3QgdWludDE2X3QgSEZfemVybyA9IDB4MDAwMDsKK2NvbnN0IHVpbnQxNl90IEhG
-X3plcm9fbmVnID0gMHg4MDAwOworY29uc3QgdWludDE2X3QgSEZfb25lID0gMHgzYzAwOworY29u
-c3QgdWludDE2X3QgSEZfb25lX3JlY2lwID0gMHgzYmY5OworY29uc3QgdWludDE2X3QgSEZfdHdv
-ID0gMHg0MDAwOworY29uc3QgdWludDE2X3QgSEZfc21hbGxfbmVnID0gMHg4MDEwOworY29uc3Qg
-dWludDE2X3QgSEZfYW55ID0gMHgzYzAwOworY29uc3QgdWludDE2X3QgSEZfbmVnX3R3byA9IDB4
-YzAwMDsKKwogY29uc3QgdWludDMyX3QgU0ZfSU5GID0gICAgICAgICAgICAgIDB4N2Y4MDAwMDA7
-CiBjb25zdCB1aW50MzJfdCBTRl9JTkZfbmVnID0gICAgICAgICAgMHhmZjgwMDAwMDsKIGNvbnN0
-IHVpbnQzMl90IFNGX1FOYU4gPSAgICAgICAgICAgICAweDdmYzAwMDAwOwpkaWZmIC0tZ2l0IGEv
-dGVzdHMvdGNnL2hleGFnb24vaHZ4X21pc2MuaCBiL3Rlc3RzL3RjZy9oZXhhZ29uL2h2eF9taXNj
-LmgKaW5kZXggMDMzMGNiMjg5ZGQuLjQzZGUyMGRhNmFjIDEwMDY0NAotLS0gYS90ZXN0cy90Y2cv
-aGV4YWdvbi9odnhfbWlzYy5oCisrKyBiL3Rlc3RzL3RjZy9oZXhhZ29uL2h2eF9taXNjLmgKQEAg
-LTY5LDcgKzY5LDkgQEAgQ0hFQ0tfT1VUUFVUX0ZVTkMoZCwgIDgpCiBDSEVDS19PVVRQVVRfRlVO
-Qyh3LCAgNCkKIENIRUNLX09VVFBVVF9GVU5DKHNmLCA0KQogQ0hFQ0tfT1VUUFVUX0ZVTkMoaCwg
-IDIpCitDSEVDS19PVVRQVVRfRlVOQyh1aCwgMikKIENIRUNLX09VVFBVVF9GVU5DKGhmLCAyKQor
-Q0hFQ0tfT1VUUFVUX0ZVTkModWIsICAxKQogQ0hFQ0tfT1VUUFVUX0ZVTkMoYiwgIDEpCiAKIHN0
-YXRpYyBpbmxpbmUgdm9pZCBpbml0X2J1ZmZlcnModm9pZCkKZGlmZiAtLWdpdCBhL3Rlc3RzL3Rj
-Zy9oZXhhZ29uL2ZwX2h2eF9jdnQuYyBiL3Rlc3RzL3RjZy9oZXhhZ29uL2ZwX2h2eF9jdnQuYwpu
-ZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwMDAwMC4uYjA4ZWJhOTJkYTgKLS0tIC9k
-ZXYvbnVsbAorKysgYi90ZXN0cy90Y2cvaGV4YWdvbi9mcF9odnhfY3Z0LmMKQEAgLTAsMCArMSwx
-ODggQEAKKy8qCisgKiAgQ29weXJpZ2h0IChjKSBRdWFsY29tbSBUZWNobm9sb2dpZXMsIEluYy4g
-YW5kL29yIGl0cyBzdWJzaWRpYXJpZXMuCisgKgorICogIFNQRFgtTGljZW5zZS1JZGVudGlmaWVy
-OiBHUEwtMi4wLW9yLWxhdGVyCisgKi8KKworI2luY2x1ZGUgPHN0ZGlvLmg+CisjaW5jbHVkZSA8
-c3RkaW50Lmg+CisjaW5jbHVkZSA8c3RkYm9vbC5oPgorI2luY2x1ZGUgPHN0cmluZy5oPgorI2lu
-Y2x1ZGUgPGhleGFnb25fdHlwZXMuaD4KKyNpbmNsdWRlIDxodnhfaGV4YWdvbl9wcm90b3MuaD4K
-KworI2lmIF9fSEVYQUdPTl9BUkNIX18gPiA3NQorI2Vycm9yICJBZnRlciB2NzUsIGNvbXBpbGVy
-IHdpbGwgcmVwbGFjZSBzb21lIEZQIEhWWCBpbnN0cnVjdGlvbnMuIgorI2VuZGlmCisKK2ludCBl
-cnI7CisjaW5jbHVkZSAiaHZ4X21pc2MuaCIKKyNpbmNsdWRlICJoZXhfdGVzdC5oIgorCisjZGVm
-aW5lIFRFU1RfRVhQKFRPLCBGUk9NLCBWQUwsIEVYUCkgZG8geyBcCisgICAgKChNTVZlY3RvciAq
-KSZidWZmZXIpLT5GUk9NW2luZGV4XSA9IFZBTDsgXAorICAgIGV4cGVjdFswXS5UT1tpbmRleF0g
-PSBFWFA7IFwKKyAgICBpbmRleCsrOyBcCit9IHdoaWxlICgwKQorCisjZGVmaW5lIERFRl9URVNU
-X0NWVChUTywgRlJPTSwgVEVTVFMpIFwKKyAgICBzdGF0aWMgdm9pZCB0ZXN0X3ZjdnRfIyNUTyMj
-XyMjRlJPTSh2b2lkKSBcCisgICAgeyBcCisgICAgICAgIEhWWF9WZWN0b3IgKmh2eF9vdXRwdXQg
-PSAoSFZYX1ZlY3RvciAqKSZvdXRwdXRbMF07IFwKKyAgICAgICAgSFZYX1ZlY3RvciBidWZmZXI7
-IFwKKyAgICAgICAgaW50IGluZGV4ID0gMDsgXAorICAgICAgICBtZW1zZXQoJmJ1ZmZlciwgMCwg
-c2l6ZW9mKGJ1ZmZlcikpOyBcCisgICAgICAgIG1lbXNldChleHBlY3QsIDAsIHNpemVvZihleHBl
-Y3QpKTsgXAorICAgICAgICBURVNUUyBcCisgICAgICAgICogaHZ4X291dHB1dCA9IFE2X1YjI1RP
-IyNfdmN2dF9WIyNGUk9NKGJ1ZmZlcik7IFwKKyAgICAgICAgY2hlY2tfb3V0cHV0XyMjVE8oX19M
-SU5FX18sIDEpOyBcCisgICAgfQorCitERUZfVEVTVF9DVlQodWgsIGhmLCB7IFwKKyAgICBURVNU
-X0VYUCh1aCwgaGYsIEhGX1FOYU4sIFVJTlQxNl9NQVgpOyBcCisgICAgVEVTVF9FWFAodWgsIGhm
-LCBIRl9TTmFOLCBVSU5UMTZfTUFYKTsgXAorICAgIFRFU1RfRVhQKHVoLCBoZiwgSEZfUU5hTl9u
-ZWcsIFVJTlQxNl9NQVgpOyBcCisgICAgVEVTVF9FWFAodWgsIGhmLCBIRl9JTkYsIFVJTlQxNl9N
-QVgpOyBcCisgICAgVEVTVF9FWFAodWgsIGhmLCBIRl9JTkZfbmVnLCAwKTsgXAorICAgIFRFU1Rf
-RVhQKHVoLCBoZiwgSEZfbmVnX3R3bywgMCk7IFwKKyAgICBURVNUX0VYUCh1aCwgaGYsIEhGX3pl
-cm9fbmVnLCAwKTsgXAorICAgIFRFU1RfRVhQKHVoLCBoZiwgcmF3X2hmKChfRmxvYXQxNikyLjEp
-LCAyKTsgXAorICAgIFRFU1RfRVhQKHVoLCBoZiwgSEZfb25lX3JlY2lwLCAxKTsgXAorfSkKKwor
-REVGX1RFU1RfQ1ZUKGgsIGhmLCB7IFwKKyAgICBURVNUX0VYUChoLCBoZiwgSEZfUU5hTiwgSU5U
-MTZfTUFYKTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCBIRl9TTmFOLCBJTlQxNl9NQVgpOyBcCisg
-ICAgVEVTVF9FWFAoaCwgaGYsIEhGX1FOYU5fbmVnLCBJTlQxNl9NQVgpOyBcCisgICAgVEVTVF9F
-WFAoaCwgaGYsIEhGX0lORiwgSU5UMTZfTUFYKTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCBIRl9J
-TkZfbmVnLCBJTlQxNl9NSU4pOyBcCisgICAgVEVTVF9FWFAoaCwgaGYsIEhGX25lZ190d28sIC0y
-KTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCBIRl96ZXJvX25lZywgMCk7IFwKKyAgICBURVNUX0VY
-UChoLCBoZiwgcmF3X2hmKChfRmxvYXQxNikyLjEpLCAyKTsgXAorICAgIFRFU1RfRVhQKGgsIGhm
-LCBIRl9vbmVfcmVjaXAsIDEpOyBcCit9KQorCisvKgorICogU29tZSBjdnQgb3BlcmF0aW9ucyB0
-YWtlIHR3byB2ZWN0b3JzIGFzIGlucHV0IGFuZCBwZXJmb3JtIHRoZSBmb2xsb3dpbmc6CisgKiAg
-ICBWZFYuVE9bNCppXSAgID0gT1AoVnVWLkZST01bMippXSk7CisgKiAgICBWZFYuVE9bNCppKzFd
-ID0gT1AoVnVWLkZST01bMippKzFdKTsKKyAqICAgIFZkVi5UT1s0KmkrMl0gPSBPUChWdlYuRlJP
-TVsyKmldKTsKKyAqICAgIFZkVi5UT1s0KmkrM10gPSBPUChWdlYuRlJPTVsyKmkrMV0pKQorICog
-V2UgdXNlIGJmX2luZGV4IGFuZCBpbmRleCBpbiBhIHdheSB0aGF0IHRoZSB0ZXN0cyBhcmUgYWx3
-YXlzIGRvbmUgZWl0aGVyCisgKiB1c2luZyB0aGUgZmlyc3Qgb3IgdGhpcmQgbGluZSBvZiB0aGUg
-YWJvdmUgc25pcHBldC4KKyAqLworI2RlZmluZSBURVNUX0VYUF8yKFRPLCBGUk9NLCBWQUwsIEVY
-UCkgZG8geyBcCisgICAgKChNTVZlY3RvciAqKSZidWZmZXJzW2JmX2luZGV4XSktPkZST01bMiAq
-IGluZGV4XSA9IFZBTDsgXAorICAgIGV4cGVjdFswXS5UT1soNCAqIGluZGV4KSArICgyICogYmZf
-aW5kZXgpXSA9IEVYUDsgXAorICAgIGluZGV4Kys7IFwKKyAgICBiZl9pbmRleCA9IChiZl9pbmRl
-eCArIDEpICUgMjsgXAorfSB3aGlsZSAoMCkKKworI2RlZmluZSBERUZfVEVTVF9DVlRfMihUTywg
-RlJPTSwgVEVTVFMpIFwKKyAgICBzdGF0aWMgdm9pZCB0ZXN0X3ZjdnRfIyNUTyMjXyMjRlJPTSh2
-b2lkKSBcCisgICAgeyBcCisgICAgICAgIEhWWF9WZWN0b3IgKmh2eF9vdXRwdXQgPSAoSFZYX1Zl
-Y3RvciAqKSZvdXRwdXRbMF07IFwKKyAgICAgICAgSFZYX1ZlY3RvciBidWZmZXJzWzJdOyBcCisg
-ICAgICAgIGludCBpbmRleCA9IDAsIGJmX2luZGV4ID0gMDsgXAorICAgICAgICBtZW1zZXQoJmJ1
-ZmZlcnMsIDAsIHNpemVvZihidWZmZXJzKSk7IFwKKyAgICAgICAgbWVtc2V0KGV4cGVjdCwgMCwg
-c2l6ZW9mKGV4cGVjdCkpOyBcCisgICAgICAgIFRFU1RTIFwKKyAgICAgICAgKiBodnhfb3V0cHV0
-ID0gUTZfViMjVE8jI192Y3Z0X1YjI0ZST00jI1YjI0ZST00oYnVmZmVyc1swXSwgYnVmZmVyc1sx
-XSk7IFwKKyAgICAgICAgY2hlY2tfb3V0cHV0XyMjVE8oX19MSU5FX18sIDEpOyBcCisgICAgfQor
-CitERUZfVEVTVF9DVlRfMih1YiwgaGYsIHsgXAorICAgIFRFU1RfRVhQXzIodWIsIGhmLCBIRl9R
-TmFOLCBVSU5UOF9NQVgpOyBcCisgICAgVEVTVF9FWFBfMih1YiwgaGYsIEhGX1NOYU4sIFVJTlQ4
-X01BWCk7IFwKKyAgICBURVNUX0VYUF8yKHViLCBoZiwgSEZfUU5hTl9uZWcsIFVJTlQ4X01BWCk7
-IFwKKyAgICBURVNUX0VYUF8yKHViLCBoZiwgSEZfSU5GLCBVSU5UOF9NQVgpOyBcCisgICAgVEVT
-VF9FWFBfMih1YiwgaGYsIEhGX0lORl9uZWcsIDApOyBcCisgICAgVEVTVF9FWFBfMih1YiwgaGYs
-IEhGX3NtYWxsX25lZywgMCk7IFwKKyAgICBURVNUX0VYUF8yKHViLCBoZiwgSEZfbmVnX3R3bywg
-MCk7IFwKKyAgICBURVNUX0VYUF8yKHViLCBoZiwgSEZfemVyb19uZWcsIDApOyBcCisgICAgVEVT
-VF9FWFBfMih1YiwgaGYsIHJhd19oZigoX0Zsb2F0MTYpMi4xKSwgMik7IFwKKyAgICBURVNUX0VY
-UF8yKHViLCBoZiwgSEZfb25lX3JlY2lwLCAxKTsgXAorfSkKKworREVGX1RFU1RfQ1ZUXzIoYiwg
-aGYsIHsgXAorICAgIFRFU1RfRVhQXzIoYiwgaGYsIEhGX1FOYU4sIElOVDhfTUFYKTsgXAorICAg
-IFRFU1RfRVhQXzIoYiwgaGYsIEhGX1NOYU4sIElOVDhfTUFYKTsgXAorICAgIFRFU1RfRVhQXzIo
-YiwgaGYsIEhGX1FOYU5fbmVnLCBJTlQ4X01BWCk7IFwKKyAgICBURVNUX0VYUF8yKGIsIGhmLCBI
-Rl9JTkYsIElOVDhfTUFYKTsgXAorICAgIFRFU1RfRVhQXzIoYiwgaGYsIEhGX0lORl9uZWcsIElO
-VDhfTUlOKTsgXAorICAgIFRFU1RfRVhQXzIoYiwgaGYsIEhGX3NtYWxsX25lZywgMCk7IFwKKyAg
-ICBURVNUX0VYUF8yKGIsIGhmLCBIRl9uZWdfdHdvLCAtMik7IFwKKyAgICBURVNUX0VYUF8yKGIs
-IGhmLCBIRl96ZXJvX25lZywgMCk7IFwKKyAgICBURVNUX0VYUF8yKGIsIGhmLCByYXdfaGYoKF9G
-bG9hdDE2KTIuMSksIDIpOyBcCisgICAgVEVTVF9FWFBfMihiLCBoZiwgSEZfb25lX3JlY2lwLCAx
-KTsgXAorfSkKKworI2RlZmluZSBERUZfVEVTVF9WQ09OVihUTywgRlJPTSwgVEVTVFMpIFwKKyAg
-ICBzdGF0aWMgdm9pZCB0ZXN0X3Zjb252XyMjVE8jI18jI0ZST00odm9pZCkgXAorICAgIHsgXAor
-ICAgICAgICBIVlhfVmVjdG9yICpodnhfb3V0cHV0ID0gKEhWWF9WZWN0b3IgKikmb3V0cHV0WzBd
-OyBcCisgICAgICAgIEhWWF9WZWN0b3IgYnVmZmVyOyBcCisgICAgICAgIGludCBpbmRleCA9IDA7
-IFwKKyAgICAgICAgbWVtc2V0KCZidWZmZXIsIDAsIHNpemVvZihidWZmZXIpKTsgXAorICAgICAg
-ICBtZW1zZXQoZXhwZWN0LCAwLCBzaXplb2YoZXhwZWN0KSk7IFwKKyAgICAgICAgVEVTVFMgXAor
-ICAgICAgICAqIGh2eF9vdXRwdXQgPSBRNl9WIyNUTyMjX2VxdWFsc19WIyNGUk9NKGJ1ZmZlcik7
-IFwKKyAgICAgICAgY2hlY2tfb3V0cHV0XyMjVE8oX19MSU5FX18sIDEpOyBcCisgICAgfQorCitE
-RUZfVEVTVF9WQ09OVih3LCBzZiwgeyBcCisgICAgVEVTVF9FWFAodywgc2YsIFNGX1FOYU4sIElO
-VDMyX01BWCk7IFwKKyAgICBURVNUX0VYUCh3LCBzZiwgU0ZfU05hTiwgSU5UMzJfTUFYKTsgXAor
-ICAgIFRFU1RfRVhQKHcsIHNmLCBTRl9RTmFOX25lZywgSU5UMzJfTUlOKTsgXAorICAgIFRFU1Rf
-RVhQKHcsIHNmLCBTRl9JTkYsIElOVDMyX01BWCk7IFwKKyAgICBURVNUX0VYUCh3LCBzZiwgU0Zf
-SU5GX25lZywgSU5UMzJfTUlOKTsgXAorICAgIFRFU1RfRVhQKHcsIHNmLCBTRl9zbWFsbF9uZWcs
-IDApOyBcCisgICAgVEVTVF9FWFAodywgc2YsIFNGX25lZ190d28sIC0yKTsgXAorICAgIFRFU1Rf
-RVhQKHcsIHNmLCBTRl96ZXJvX25lZywgMCk7IFwKKyAgICBURVNUX0VYUCh3LCBzZiwgcmF3X3Nm
-KDIuMWYpLCAyKTsgXAorICAgIFRFU1RfRVhQKHcsIHNmLCByYXdfc2YoMi44ZiksIDIpOyBcCit9
-KQorCitERUZfVEVTVF9WQ09OVihoLCBoZiwgeyBcCisgICAgVEVTVF9FWFAoaCwgaGYsIEhGX1FO
-YU4sIElOVDE2X01BWCk7IFwKKyAgICBURVNUX0VYUChoLCBoZiwgSEZfU05hTiwgSU5UMTZfTUFY
-KTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCBIRl9RTmFOX25lZywgSU5UMTZfTUlOKTsgXAorICAg
-IFRFU1RfRVhQKGgsIGhmLCBIRl9JTkYsIElOVDE2X01BWCk7IFwKKyAgICBURVNUX0VYUChoLCBo
-ZiwgSEZfSU5GX25lZywgSU5UMTZfTUlOKTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCBIRl9zbWFs
-bF9uZWcsIDApOyBcCisgICAgVEVTVF9FWFAoaCwgaGYsIEhGX25lZ190d28sIC0yKTsgXAorICAg
-IFRFU1RfRVhQKGgsIGhmLCBIRl96ZXJvX25lZywgMCk7IFwKKyAgICBURVNUX0VYUChoLCBoZiwg
-cmF3X2hmKChfRmxvYXQxNikyLjEpLCAyKTsgXAorICAgIFRFU1RfRVhQKGgsIGhmLCByYXdfaGYo
-KF9GbG9hdDE2KTIuOCksIDIpOyBcCit9KQorCitERUZfVEVTVF9WQ09OVihoZiwgaCwgeyBcCisg
-ICAgVEVTVF9FWFAoaGYsIGgsIDAsIEhGX3plcm8pOyBcCisgICAgVEVTVF9FWFAoaGYsIGgsIDIs
-IEhGX3R3byk7IFwKKyAgICBURVNUX0VYUChoZiwgaCwgLTIsIEhGX25lZ190d28pOyBcCisgICAg
-VEVTVF9FWFAoaGYsIGgsIDIwNDksIHJhd19oZigoX0Zsb2F0MTYpMjA0OCkpOyAvKiByb3VuZHMg
-RE9XTiAqLyBcCisgICAgVEVTVF9FWFAoaGYsIGgsIDIwNTEsIHJhd19oZigoX0Zsb2F0MTYpMjA1
-MikpOyAvKiByb3VuZHMgVVAgKi8gXAorfSkKKworREVGX1RFU1RfVkNPTlYoc2YsIHcsIHsgXAor
-ICAgIFRFU1RfRVhQKHNmLCB3LCAwLCBTRl96ZXJvKTsgXAorICAgIFRFU1RfRVhQKHNmLCB3LCAy
-LCBTRl90d28pOyBcCisgICAgVEVTVF9FWFAoc2YsIHcsIC0yLCBTRl9uZWdfdHdvKTsgXAorICAg
-IFRFU1RfRVhQKHNmLCB3LCAxNjc3NzIxNywgcmF3X3NmKChmbG9hdCkxNjc3NzIxNikpOyAvKiBy
-b3VuZHMgRE9XTiAqLyBcCisgICAgVEVTVF9FWFAoc2YsIHcsIDE2Nzc3MjE5LCByYXdfc2YoKGZs
-b2F0KTE2Nzc3MjIwKSk7IC8qIHJvdW5kcyBVUCAqLyBcCit9KQorCitpbnQgbWFpbih2b2lkKQor
-eworICAgIHRlc3RfdmN2dF91aF9oZigpOworICAgIHRlc3RfdmN2dF9oX2hmKCk7CisgICAgdGVz
-dF92Y3Z0X3ViX2hmKCk7CisgICAgdGVzdF92Y3Z0X2JfaGYoKTsKKyAgICB0ZXN0X3Zjb252X3df
-c2YoKTsKKyAgICB0ZXN0X3Zjb252X3NmX3coKTsKKyAgICB0ZXN0X3Zjb252X2hfaGYoKTsKKyAg
-ICB0ZXN0X3Zjb252X2hmX2goKTsKKworICAgIHB1dHMoZXJyID8gIkZBSUwiIDogIlBBU1MiKTsK
-KyAgICByZXR1cm4gZXJyID8gMSA6IDA7Cit9CmRpZmYgLS1naXQgYS90ZXN0cy90Y2cvaGV4YWdv
-bi9NYWtlZmlsZS50YXJnZXQgYi90ZXN0cy90Y2cvaGV4YWdvbi9NYWtlZmlsZS50YXJnZXQKaW5k
-ZXggMmE1OTU4NzExYmQuLjA5NzhlN2NhOTE2IDEwMDY0NAotLS0gYS90ZXN0cy90Y2cvaGV4YWdv
-bi9NYWtlZmlsZS50YXJnZXQKKysrIGIvdGVzdHMvdGNnL2hleGFnb24vTWFrZWZpbGUudGFyZ2V0
-CkBAIC01MSw2ICs1MSw3IEBAIEhFWF9URVNUUyArPSBzY2F0dGVyX2dhdGhlcgogSEVYX1RFU1RT
-ICs9IGh2eF9taXNjCiBIRVhfVEVTVFMgKz0gaHZ4X2hpc3RvZ3JhbQogSEVYX1RFU1RTICs9IGZw
-X2h2eAorSEVYX1RFU1RTICs9IGZwX2h2eF9jdnQKIEhFWF9URVNUUyArPSBmcF9odnhfZGlzYWJs
-ZWQKIEhFWF9URVNUUyArPSBpbnZhbGlkLXNsb3RzCiBIRVhfVEVTVFMgKz0gdmFsaWQtc2xvdHMK
-QEAgLTE0Miw2ICsxNDMsOCBAQCBmcF9odng6IGZwX2h2eC5jIGh2eF9taXNjLmggaGV4X3Rlc3Qu
-aAogZnBfaHZ4OiBDRkxBR1MgKz0gLW1odnggLW1odngtaWVlZS1mcAogZnBfaHZ4X2Rpc2FibGVk
-OiBmcF9odnhfZGlzYWJsZWQuYyBodnhfbWlzYy5oIGhleF90ZXN0LmgKIGZwX2h2eF9kaXNhYmxl
-ZDogQ0ZMQUdTICs9IC1taHZ4IC1taHZ4LWllZWUtZnAKK2ZwX2h2eF9jdnQ6IGZwX2h2eF9jdnQu
-YyBodnhfbWlzYy5oIGhleF90ZXN0LmgKK2ZwX2h2eF9jdnQ6IENGTEFHUyArPSAtbWh2eCAtbWh2
-eC1pZWVlLWZwCiAKIHJ1bi1mcF9odnhfZGlzYWJsZWQ6IFFFTVVfT1BUUyArPSAtY3B1IHY3Myxp
-ZWVlLWZwPWZhbHNlCiAKLS0gCjIuMzQuMQoK
+
+--Apple-Mail=_6A6F271E-A998-4CFE-A70F-ECAC3DAAFC24
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Hi all,
+
+A polite ping for this RFC series.Thanks advice for Philippe advice and =
+I am ready for v2.
+Could anyone have other suggestions for my patch. I am appreciative for =
+your advice and ready to fix it in v2
+
+> 2026=E5=B9=B47=E6=9C=8826=E6=97=A5 22:51=EF=BC=8CJack Wang =
+<163wangjack@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> Add native Rust unit tests that link GpioRegisters directly and =
+exercise
+> the CRL/CRH decode and IDR update algorithm in-process, without =
+booting a
+> machine or pulling in the softmmu memory subsystem.
+>=20
+> Signed-off-by: Jack Wang <163wangjack@gmail.com>
+> ---
+> rust/hw/gpio/tests/tests.rs | 191 ++++++++++++++++++++++++++++++++++++
+> 1 file changed, 191 insertions(+)
+> create mode 100644 rust/hw/gpio/tests/tests.rs
+>=20
+> diff --git a/rust/hw/gpio/tests/tests.rs b/rust/hw/gpio/tests/tests.rs
+> new file mode 100644
+> index 0000000000..ca4d5ed4d6
+> --- /dev/null
+> +++ b/rust/hw/gpio/tests/tests.rs
+> @@ -0,0 +1,191 @@
+> +// Native Rust unit tests for the STM32F1xx GPIO register logic.
+> +//
+> +// Copyright 2026, Jack Wang
+> +// Author(s): Jack Wang <163wangjack@gmail.com>
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +//
+> +// Unlike tests/qtest/stm32f103_gpio-test.c (which drives the device =
+over a
+> +// socket from an external qemu-system-arm process), these tests link =
+the
+> +// device crate directly and exercise `GpioRegisters` in-process. =
+This gives
+> +// fast, native Rust coverage of the CRL/CRH decode + IDR algorithm =
+without
+> +// booting a machine or pulling in the softmmu memory subsystem.
+> +//
+> +// `GpioRegisters` deliberately has no QOM object, no MemoryRegion =
+and no
+> +// InterruptSource, so it can be constructed with =
+`GpioRegisters::new()` and
+> +// called directly. Only the BQL mock (bql::start_test) is required, =
+because
+> +// the register cells are `BqlCell`s.
+> +//
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +use stm32f1xx_gpio::gpio::{
+> +    GpioRegisters, PinUpdate, REG_BRR, REG_BSRR, REG_CRH, REG_CRL, =
+REG_IDR, REG_ODR, RESET_CRH,
+> +    RESET_CRL,
+> +};
+> +
+> +/// Take the mock BQL so `BqlCell` accesses are permitted. =
+Integration tests
+> +/// run with `--test-threads=3D1`, so this is safe to call from every =
+test.
+> +fn regs() -> GpioRegisters {
+> +    bql::start_test();
+> +    GpioRegisters::new()
+> +}
+> +
+> +// 4-bit MODE[1:0]+CNF[1:0] pin configurations (RM0008).
+> +const CFG_INPUT_FLOATING: u32 =3D 0x4; // MODE=3D00 CNF=3D01 (reset =
+default)
+> +const CFG_INPUT_PULL: u32 =3D 0x8; // MODE=3D00 CNF=3D10, ODR selects =
+up/down
+> +const CFG_OUTPUT_PP: u32 =3D 0x1; // MODE=3D01 CNF=3D00, general =
+push-pull
+> +
+> +/// Set the 4-bit config nibble for `pin` in CRL/CRH via an MMIO =
+write.
+> +fn set_config(r: &GpioRegisters, pin: usize, cfg: u32) {
+> +    let reg =3D if pin < 8 { REG_CRL } else { REG_CRH };
+> +    let shift =3D ((pin % 8) * 4) as u32;
+> +    let old =3D r.read(reg);
+> +    r.write(reg, (old & !(0xF << shift)) | (cfg << shift));
+> +}
+> +
+> +fn set_odr_bit(r: &GpioRegisters, pin: usize, value: u32) {
+> +    let old =3D r.read(REG_ODR);
+> +    r.write(REG_ODR, (old & !(1 << pin)) | (value << pin));
+> +}
+> +
+> +/// True if pin `pin` is set in a [`PinUpdate`] and its reported =
+level is
+> +/// `level`.
+> +fn pin_changed_to(upd: PinUpdate, pin: usize, level: bool) -> bool {
+> +    (upd.mask & (1 << pin)) !=3D 0 && (((upd.levels >> pin) & 1) !=3D =
+0) =3D=3D level
+> +}
+> +
+> +#[test]
+> +/// A freshly created register block holds the RM0008 reset values.
+> +fn test_reset_values() {
+> +    let r =3D regs();
+> +    assert_eq!(r.read(REG_CRL), RESET_CRL);
+> +    assert_eq!(r.read(REG_CRH), RESET_CRH);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert_eq!(r.read(REG_ODR), 0);
+> +}
+> +
+> +#[test]
+> +/// `reset` restores the reset state after the registers are dirtied.
+> +fn test_reset_restores() {
+> +    let r =3D regs();
+> +    r.write(REG_CRL, 0xDEAD_BEEF);
+> +    r.write(REG_ODR, 0x0000_FFFF);
+> +    assert_ne!(r.read(REG_CRL), RESET_CRL);
+> +
+> +    r.reset();
+> +
+> +    assert_eq!(r.read(REG_CRL), RESET_CRL);
+> +    assert_eq!(r.read(REG_CRH), RESET_CRH);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert_eq!(r.read(REG_ODR), 0);
+> +}
+> +
+> +#[test]
+> +/// Push-pull output: IDR follows ODR; ODR written while input is =
+latched,
+> +/// and the out-pin change is reported.
+> +fn test_output_mode() {
+> +    let r =3D regs();
+> +    let pin =3D 5;
+> +
+> +    // Set ODR while still a floating input: IDR unaffected, no out =
+change.
+> +    let idle =3D set_odr_and_report(&r, pin, 1);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert_eq!(idle.mask & (1 << pin), 0);
+> +
+> +    // Switch to push-pull output: pin now follows ODR (high), and =
+flips.
+> +    let old =3D r.read(REG_CRL);
+> +    let to_output =3D r.write(
+> +        REG_CRL,
+> +        (old & !(0xF << (pin * 4))) | (CFG_OUTPUT_PP << (pin * 4)),
+> +    );
+> +    assert_eq!(r.read(REG_IDR), 1 << pin);
+> +    assert!(pin_changed_to(to_output, pin, true));
+> +
+> +    // Clear ODR bit: pin goes low, and flips back.
+> +    let to_low =3D set_odr_and_report(&r, pin, 0);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert!(pin_changed_to(to_low, pin, false));
+> +}
+> +
+> +/// Helper: write one ODR bit and return the resulting [`PinUpdate`].
+> +fn set_odr_and_report(r: &GpioRegisters, pin: usize, value: u32) -> =
+PinUpdate {
+> +    let old =3D r.read(REG_ODR);
+> +    r.write(REG_ODR, (old & !(1 << pin)) | (value << pin))
+> +}
+> +
+> +#[test]
+> +/// Floating input: an external drive is reflected in IDR and =
+reported.
+> +fn test_input_mode() {
+> +    let r =3D regs();
+> +    let pin =3D 6usize;
+> +
+> +    set_config(&r, pin, CFG_INPUT_FLOATING);
+> +
+> +    let drive_high =3D r.gpio_set(pin, 1);
+> +    assert_eq!(r.read(REG_IDR), 1 << pin);
+> +    assert!(pin_changed_to(drive_high, pin, true));
+> +
+> +    let drive_low =3D r.gpio_set(pin, 0);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert!(pin_changed_to(drive_low, pin, false));
+> +}
+> +
+> +#[test]
+> +/// Input pull mode: ODR selects pull-up (IDR=3D1) vs pull-down =
+(IDR=3D0),
+> +/// with no external driver connected.
+> +fn test_pull_up_down() {
+> +    let r =3D regs();
+> +    let pin =3D 0;
+> +
+> +    set_odr_bit(&r, pin, 1);
+> +    set_config(&r, pin, CFG_INPUT_PULL);
+> +    assert_eq!(r.read(REG_IDR), 1 << pin);
+> +
+> +    set_odr_bit(&r, pin, 0);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +}
+> +
+> +#[test]
+> +/// BSRR sets/resets ODR bits (set has priority); BRR resets ODR =
+bits.
+> +fn test_bsrr_brr() {
+> +    let r =3D regs();
+> +    let pin =3D 1;
+> +
+> +    r.write(REG_BSRR, 1 << pin);
+> +    assert_eq!(r.read(REG_ODR), 1 << pin);
+> +
+> +    r.write(REG_BSRR, 1 << (pin + 16));
+> +    assert_eq!(r.read(REG_ODR), 0);
+> +
+> +    r.write(REG_BSRR, 1 << pin);
+> +    r.write(REG_BRR, 1 << pin);
+> +    assert_eq!(r.read(REG_ODR), 0);
+> +
+> +    // Set has priority over reset within one BSRR write.
+> +    r.write(REG_BSRR, (1 << pin) | (1 << (pin + 16)));
+> +    assert_eq!(r.read(REG_ODR), 1 << pin);
+> +}
+> +
+> +#[test]
+> +/// A pin driven externally, then reconfigured as push-pull output, =
+is
+> +/// disconnected: IDR follows ODR, not the stale external level.
+> +fn test_push_pull_disconnect() {
+> +    let r =3D regs();
+> +    let pin =3D 7usize;
+> +
+> +    // Drive high externally as input.
+> +    set_config(&r, pin, CFG_INPUT_FLOATING);
+> +    r.gpio_set(pin, 1);
+> +    assert_eq!(r.read(REG_IDR), 1 << pin);
+> +    assert_eq!(r.disconnected_pins() & (1 << pin), 0); // now =
+connected
+> +
+> +    // Reconfigure as push-pull output with ODR=3D0: pin must drop to =
+0,
+> +    // and the external driver must be disconnected.
+> +    set_odr_bit(&r, pin, 0);
+> +    set_config(&r, pin, CFG_OUTPUT_PP);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +    assert_ne!(r.disconnected_pins() & (1 << pin), 0); // =
+disconnected again
+> +
+> +    // Further external drives are ignored while output push-pull.
+> +    r.gpio_set(pin, 1);
+> +    assert_eq!(r.read(REG_IDR), 0);
+> +}
+> --=20
+> 2.53.0
+>=20
+
+
+--Apple-Mail=_6A6F271E-A998-4CFE-A70F-ECAC3DAAFC24
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><p style=3D"margin: 0px; font-width: =
+normal; line-height: normal; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal;"><span =
+style=3D"color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+caret-color: rgb(0, 0, 0);">Hi all,</span><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px;"><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px;"><font color=3D"#000000"><span =
+style=3D"caret-color: rgb(0, 0, 0);">A polite ping for this RFC =
+series.Thanks advice for Philippe advice and I am ready for =
+v2.</span></font></p><p style=3D"margin: 0px; font-width: normal; =
+line-height: normal; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal;"><font =
+color=3D"#000000">Could anyone have other suggestions for my patch. I am =
+appreciative for your advice and ready to fix it in =
+v2</font></p><div><br><blockquote type=3D"cite"><div>2026=E5=B9=B47=E6=9C=88=
+26=E6=97=A5 22:51=EF=BC=8CJack Wang &lt;163wangjack@gmail.com&gt; =
+=E5=86=99=E9=81=93=EF=BC=9A</div><br =
+class=3D"Apple-interchange-newline"><div><div>Add native Rust unit tests =
+that link GpioRegisters directly and exercise<br>the CRL/CRH decode and =
+IDR update algorithm in-process, without booting a<br>machine or pulling =
+in the softmmu memory subsystem.<br><br>Signed-off-by: Jack Wang =
+&lt;163wangjack@gmail.com&gt;<br>---<br> rust/hw/gpio/tests/tests.rs | =
+191 ++++++++++++++++++++++++++++++++++++<br> 1 file changed, 191 =
+insertions(+)<br> create mode 100644 =
+rust/hw/gpio/tests/tests.rs<br><br>diff --git =
+a/rust/hw/gpio/tests/tests.rs b/rust/hw/gpio/tests/tests.rs<br>new file =
+mode 100644<br>index 0000000000..ca4d5ed4d6<br>--- /dev/null<br>+++ =
+b/rust/hw/gpio/tests/tests.rs<br>@@ -0,0 +1,191 @@<br>+// Native Rust =
+unit tests for the STM32F1xx GPIO register logic.<br>+//<br>+// =
+Copyright 2026, Jack Wang<br>+// Author(s): Jack Wang =
+&lt;163wangjack@gmail.com&gt;<br>+// SPDX-License-Identifier: =
+GPL-2.0-or-later<br>+//<br>+// Unlike tests/qtest/stm32f103_gpio-test.c =
+(which drives the device over a<br>+// socket from an external =
+qemu-system-arm process), these tests link the<br>+// device crate =
+directly and exercise `GpioRegisters` in-process. This gives<br>+// =
+fast, native Rust coverage of the CRL/CRH decode + IDR algorithm =
+without<br>+// booting a machine or pulling in the softmmu memory =
+subsystem.<br>+//<br>+// `GpioRegisters` deliberately has no QOM object, =
+no MemoryRegion and no<br>+// InterruptSource, so it can be constructed =
+with `GpioRegisters::new()` and<br>+// called directly. Only the BQL =
+mock (bql::start_test) is required, because<br>+// the register cells =
+are `BqlCell`s.<br>+//<br>+// SPDX-License-Identifier: =
+GPL-2.0-or-later<br>+<br>+use stm32f1xx_gpio::gpio::{<br>+ =
+&nbsp;&nbsp;&nbsp;GpioRegisters, PinUpdate, REG_BRR, REG_BSRR, REG_CRH, =
+REG_CRL, REG_IDR, REG_ODR, RESET_CRH,<br>+ =
+&nbsp;&nbsp;&nbsp;RESET_CRL,<br>+};<br>+<br>+/// Take the mock BQL so =
+`BqlCell` accesses are permitted. Integration tests<br>+/// run with =
+`--test-threads=3D1`, so this is safe to call from every test.<br>+fn =
+regs() -&gt; GpioRegisters {<br>+ =
+&nbsp;&nbsp;&nbsp;bql::start_test();<br>+ =
+&nbsp;&nbsp;&nbsp;GpioRegisters::new()<br>+}<br>+<br>+// 4-bit =
+MODE[1:0]+CNF[1:0] pin configurations (RM0008).<br>+const =
+CFG_INPUT_FLOATING: u32 =3D 0x4; // MODE=3D00 CNF=3D01 (reset =
+default)<br>+const CFG_INPUT_PULL: u32 =3D 0x8; // MODE=3D00 CNF=3D10, =
+ODR selects up/down<br>+const CFG_OUTPUT_PP: u32 =3D 0x1; // MODE=3D01 =
+CNF=3D00, general push-pull<br>+<br>+/// Set the 4-bit config nibble for =
+`pin` in CRL/CRH via an MMIO write.<br>+fn set_config(r: =
+&amp;GpioRegisters, pin: usize, cfg: u32) {<br>+ &nbsp;&nbsp;&nbsp;let =
+reg =3D if pin &lt; 8 { REG_CRL } else { REG_CRH };<br>+ =
+&nbsp;&nbsp;&nbsp;let shift =3D ((pin % 8) * 4) as u32;<br>+ =
+&nbsp;&nbsp;&nbsp;let old =3D r.read(reg);<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(reg, (old &amp; !(0xF &lt;&lt; shift)) | (cfg =
+&lt;&lt; shift));<br>+}<br>+<br>+fn set_odr_bit(r: &amp;GpioRegisters, =
+pin: usize, value: u32) {<br>+ &nbsp;&nbsp;&nbsp;let old =3D =
+r.read(REG_ODR);<br>+ &nbsp;&nbsp;&nbsp;r.write(REG_ODR, (old &amp; !(1 =
+&lt;&lt; pin)) | (value &lt;&lt; pin));<br>+}<br>+<br>+/// True if pin =
+`pin` is set in a [`PinUpdate`] and its reported level is<br>+/// =
+`level`.<br>+fn pin_changed_to(upd: PinUpdate, pin: usize, level: bool) =
+-&gt; bool {<br>+ &nbsp;&nbsp;&nbsp;(upd.mask &amp; (1 &lt;&lt; pin)) !=3D=
+ 0 &amp;&amp; (((upd.levels &gt;&gt; pin) &amp; 1) !=3D 0) =3D=3D =
+level<br>+}<br>+<br>+#[test]<br>+/// A freshly created register block =
+holds the RM0008 reset values.<br>+fn test_reset_values() {<br>+ =
+&nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_CRL), RESET_CRL);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_CRH), RESET_CRH);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), =
+0);<br>+}<br>+<br>+#[test]<br>+/// `reset` restores the reset state =
+after the registers are dirtied.<br>+fn test_reset_restores() {<br>+ =
+&nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_CRL, 0xDEAD_BEEF);<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_ODR, 0x0000_FFFF);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_ne!(r.read(REG_CRL), RESET_CRL);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;r.reset();<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_CRL), RESET_CRL);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_CRH), RESET_CRH);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), =
+0);<br>+}<br>+<br>+#[test]<br>+/// Push-pull output: IDR follows ODR; =
+ODR written while input is latched,<br>+/// and the out-pin change is =
+reported.<br>+fn test_output_mode() {<br>+ &nbsp;&nbsp;&nbsp;let r =3D =
+regs();<br>+ &nbsp;&nbsp;&nbsp;let pin =3D 5;<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;// Set ODR while still a floating input: IDR =
+unaffected, no out change.<br>+ &nbsp;&nbsp;&nbsp;let idle =3D =
+set_odr_and_report(&amp;r, pin, 1);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(idle.mask &amp; (1 &lt;&lt; pin), =
+0);<br>+<br>+ &nbsp;&nbsp;&nbsp;// Switch to push-pull output: pin now =
+follows ODR (high), and flips.<br>+ &nbsp;&nbsp;&nbsp;let old =3D =
+r.read(REG_CRL);<br>+ &nbsp;&nbsp;&nbsp;let to_output =3D r.write(<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;REG_CRL,<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(old &amp; !(0xF &lt;&lt; (pin =
+* 4))) | (CFG_OUTPUT_PP &lt;&lt; (pin * 4)),<br>+ =
+&nbsp;&nbsp;&nbsp;);<br>+ &nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), =
+1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;assert!(pin_changed_to(to_output, pin, =
+true));<br>+<br>+ &nbsp;&nbsp;&nbsp;// Clear ODR bit: pin goes low, and =
+flips back.<br>+ &nbsp;&nbsp;&nbsp;let to_low =3D =
+set_odr_and_report(&amp;r, pin, 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert!(pin_changed_to(to_low, pin, =
+false));<br>+}<br>+<br>+/// Helper: write one ODR bit and return the =
+resulting [`PinUpdate`].<br>+fn set_odr_and_report(r: =
+&amp;GpioRegisters, pin: usize, value: u32) -&gt; PinUpdate {<br>+ =
+&nbsp;&nbsp;&nbsp;let old =3D r.read(REG_ODR);<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_ODR, (old &amp; !(1 &lt;&lt; pin)) | =
+(value &lt;&lt; pin))<br>+}<br>+<br>+#[test]<br>+/// Floating input: an =
+external drive is reflected in IDR and reported.<br>+fn =
+test_input_mode() {<br>+ &nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ =
+&nbsp;&nbsp;&nbsp;let pin =3D 6usize;<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;set_config(&amp;r, pin, CFG_INPUT_FLOATING);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;let drive_high =3D r.gpio_set(pin, 1);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;assert!(pin_changed_to(drive_high, pin, =
+true));<br>+<br>+ &nbsp;&nbsp;&nbsp;let drive_low =3D r.gpio_set(pin, =
+0);<br>+ &nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert!(pin_changed_to(drive_low, pin, =
+false));<br>+}<br>+<br>+#[test]<br>+/// Input pull mode: ODR selects =
+pull-up (IDR=3D1) vs pull-down (IDR=3D0),<br>+/// with no external =
+driver connected.<br>+fn test_pull_up_down() {<br>+ =
+&nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ &nbsp;&nbsp;&nbsp;let pin =3D =
+0;<br>+<br>+ &nbsp;&nbsp;&nbsp;set_odr_bit(&amp;r, pin, 1);<br>+ =
+&nbsp;&nbsp;&nbsp;set_config(&amp;r, pin, CFG_INPUT_PULL);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 1 &lt;&lt; pin);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;set_odr_bit(&amp;r, pin, 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), =
+0);<br>+}<br>+<br>+#[test]<br>+/// BSRR sets/resets ODR bits (set has =
+priority); BRR resets ODR bits.<br>+fn test_bsrr_brr() {<br>+ =
+&nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ &nbsp;&nbsp;&nbsp;let pin =3D =
+1;<br>+<br>+ &nbsp;&nbsp;&nbsp;r.write(REG_BSRR, 1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), 1 &lt;&lt; pin);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_BSRR, 1 &lt;&lt; (pin + 16));<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), 0);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_BSRR, 1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;r.write(REG_BRR, 1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), 0);<br>+<br>+ =
+&nbsp;&nbsp;&nbsp;// Set has priority over reset within one BSRR =
+write.<br>+ &nbsp;&nbsp;&nbsp;r.write(REG_BSRR, (1 &lt;&lt; pin) | (1 =
+&lt;&lt; (pin + 16)));<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_ODR), 1 &lt;&lt; =
+pin);<br>+}<br>+<br>+#[test]<br>+/// A pin driven externally, then =
+reconfigured as push-pull output, is<br>+/// disconnected: IDR follows =
+ODR, not the stale external level.<br>+fn test_push_pull_disconnect() =
+{<br>+ &nbsp;&nbsp;&nbsp;let r =3D regs();<br>+ &nbsp;&nbsp;&nbsp;let =
+pin =3D 7usize;<br>+<br>+ &nbsp;&nbsp;&nbsp;// Drive high externally as =
+input.<br>+ &nbsp;&nbsp;&nbsp;set_config(&amp;r, pin, =
+CFG_INPUT_FLOATING);<br>+ &nbsp;&nbsp;&nbsp;r.gpio_set(pin, 1);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 1 &lt;&lt; pin);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.disconnected_pins() &amp; (1 &lt;&lt; =
+pin), 0); // now connected<br>+<br>+ &nbsp;&nbsp;&nbsp;// Reconfigure as =
+push-pull output with ODR=3D0: pin must drop to 0,<br>+ =
+&nbsp;&nbsp;&nbsp;// and the external driver must be disconnected.<br>+ =
+&nbsp;&nbsp;&nbsp;set_odr_bit(&amp;r, pin, 0);<br>+ =
+&nbsp;&nbsp;&nbsp;set_config(&amp;r, pin, CFG_OUTPUT_PP);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_ne!(r.disconnected_pins() &amp; (1 &lt;&lt; =
+pin), 0); // disconnected again<br>+<br>+ &nbsp;&nbsp;&nbsp;// Further =
+external drives are ignored while output push-pull.<br>+ =
+&nbsp;&nbsp;&nbsp;r.gpio_set(pin, 1);<br>+ =
+&nbsp;&nbsp;&nbsp;assert_eq!(r.read(REG_IDR), 0);<br>+}<br>-- =
+<br>2.53.0<br><br></div></div></blockquote></div><br></body></html>=
+
+--Apple-Mail=_6A6F271E-A998-4CFE-A70F-ECAC3DAAFC24--
 
