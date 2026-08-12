@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C61CC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F3CC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuALJ-0007kC-8D; Wed, 12 Aug 2026 10:54:09 -0400
+	id 1wuAMz-0003Lu-1p; Wed, 12 Aug 2026 10:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJP-0005R2-Iz; Wed, 12 Aug 2026 10:52:11 -0400
+ id 1wuAKn-0006y2-Vm; Wed, 12 Aug 2026 10:53:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJN-0006w9-SS; Wed, 12 Aug 2026 10:52:11 -0400
+ id 1wuAKm-0007Bw-2S; Wed, 12 Aug 2026 10:53:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=cxg0JvVPaUIJShLtSkNiaHa+VB9ioK46iHegzQ2vglM=;
+ t=1786546231; bh=tXmz/qg5fSfNsVHMY01o4JOcXqJrE+DZ0SHSy1agqi4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JCO/EMDxr0c5VWLBIJXLjPU/SV5jAto2d2ZF5xGARnn0XtrqZIBWoNlJoRJU4Yw4/
- vtrQncsBBqOmspqeL3ocuQIcmVl0RYfELFMdbzPD/CX/lkUemDdhQ6oWgVpfMJ+Cdi
- oHwYeDcI5AnGeYP53JIINL2z4SHqBK4/+a/0C7Q5oy0qiu/PL6Exf+YTFxCiEUk3v7
- SPz+Foq7YFkQx8YzZbqdt/KttE9CkYG3gwUxOp/jyiEIiIX8n8oM9dz9UGnqTvaItw
- RXlRtpXYV0KfsvqCsMaxS8/+Sp719WG6oQfb+6163TKiasjnE0bRQHZrdgu5RoA23u
- bE1soU72SjsGQ==
+ b=e1DBre4YfHFcZnsnXZNEwczXS7P7AYagh7OjH4wSc7GaEZIZ8rIuO5n/8hB91OeOs
+ vA2KcsSeOkaJeb+HbDd5V3RXsvx536WFPsY63XgelTZWMK8eMGF4hJUoi0yyy5QRXN
+ n/jrkie7UZsOBCUi2e7iIXNXkzl7hXcT5S7ECb/T9nFyaPzqNUSP2QapPd858dSSfc
+ zOSl/JoTH85nMVQtIX1nNim2KCRjG7v9f4oKcGGxcxpFQz/PVN950VmnZzDL8Cf7FJ
+ 1PL5CrEEIobImVP70tG3vF6oEkIGINNISHL6U1I0obgonrmsmG614UQO4JMyEzYb0/
+ uzb3HFZpWoa9g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 425ED1CA619;
+ by isrv.corpit.ru (Postfix) with ESMTP id AC8401CA628;
  Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9C723409D55;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 12E93409D68;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 04FD02F98D; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 7293E2F9AB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Artem Nasonov <anasonov@astralinux.ru>,
- Fiona Ebner <f.ebner@proxmox.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+ Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 021/120] hw/ide: replace assert with proper error
- handling
-Date: Wed, 12 Aug 2026 17:48:04 +0300
-Message-ID: <20260812144955.649205-21-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 036/120] hw/display/qxl: unregister vm_change_state
+ handler and BHs
+Date: Wed, 12 Aug 2026 17:48:19 +0300
+Message-ID: <20260812144955.649205-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,49 +74,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Artem Nasonov <anasonov@astralinux.ru>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-In ide_dma_cb(), the call to prepare_buf() might return a negative
-result and cause an assertion failure. This was found during fuzzing
-and can be triggered with some qtest commands. Replace the assert with
-proper error handling in case the result is negative, but keep the
-assert for failing to respect the limit upon success. If that happens,
-it is an implementation error.
+qxl_realize_common() registers a vm_change_state handler via
+qemu_add_vm_change_state_handler() and creates three bottom halves
+(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
+The return value of qemu_add_vm_change_state_handler() is discarded, so
+the handler is never removed from the global list, and there is no
+PCIDeviceClass.exit callback to delete the BHs.
 
-Found by Linux Verification Center (linuxtesting.org) with libFuzzer.
+When a secondary QXL device (hotpluggable by default) is hot-unplugged
+via device_del, the PCIQXLDevice memory is freed but the vm_state
+handler and BH entries remain with dangling opaque pointers. On the
+next VM state change (stop/cont/migrate) or BH dispatch, the callback
+dereferences freed memory, causing a use-after-free.
 
+Fix this by storing the VMChangeStateEntry returned by
+qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
+that deletes the vm_state handler, all three BHs, and the
+guest_surfaces.cmds allocation before the device memory is freed.
+
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: CVE-2026-63322
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: ed78352a59 ("ide: Fix incorrect handling of some PRDTs in ide_dma_cb()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2777
-Signed-off-by: Artem Nasonov <anasonov@astralinux.ru>
-Link: https://lore.kernel.org/qemu-devel/20250116111600.2570490-1-anasonov@astralinux.ru
-[FE: improve commit message
-     keep assert for failing to respect the limit]
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 443e02410695b35a27fad18217424b6370358be7)
+[ Marc-André - tweak commit message, add TODO ]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
+(cherry picked from commit 4727cc883b7e81d2c30b9801af54482d65b84292)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index f78b00220b8..4c1ee19d8e8 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -921,8 +921,12 @@ static void ide_dma_cb(void *opaque, int ret)
-     s->io_buffer_index = 0;
-     s->io_buffer_size = n * 512;
-     prep_size = s->bus->dma->ops->prepare_buf(s->bus->dma, s->io_buffer_size);
--    /* prepare_buf() must succeed and respect the limit */
--    assert(prep_size >= 0 && prep_size <= n * 512);
-+    if (prep_size < 0) {
-+        ide_dma_error(s);
-+        return;
-+    }
-+    /* If prepare_buf() succeeds, it must respect the limit. */
-+    assert(prep_size <= n * 512);
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 39a860c2468..c3639092ca9 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2204,7 +2204,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
+         error_report_err(err);
+     }
  
-     /*
-      * Now prep_size stores the number of bytes in the sglist, and
+-    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++    qxl->vmstate_handler =
++        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
+ 
+     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
+                                           &DEVICE(qxl)->mem_reentrancy_guard);
+@@ -2478,6 +2479,18 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
+ };
+ 
++static void qxl_exit(PCIDevice *dev)
++{
++    PCIQXLDevice *qxl = PCI_QXL(dev);
++
++    /* TODO: complete cleanup, error paths etc */
++    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
++    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
++    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
++}
++
+ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2485,6 +2498,7 @@ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+ 
+     k->vendor_id = REDHAT_PCI_VENDOR_ID;
+     k->device_id = QXL_DEVICE_ID_STABLE;
++    k->exit = qxl_exit;
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+     device_class_set_legacy_reset(dc, qxl_reset_handler);
+     dc->vmsd = &qxl_vmstate;
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index e0a85a5ca49..ddbab3d693a 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -83,6 +83,7 @@ struct PCIQXLDevice {
+ 
+     /* thread signaling */
+     QEMUBH             *update_irq;
++    VMChangeStateEntry *vmstate_handler;
+ 
+     /* ram pci bar */
+     QXLRam             *ram;
 -- 
 2.47.3
 
