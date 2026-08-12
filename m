@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E41C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFFAC5CFEE
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8eX-00007Q-JG; Wed, 12 Aug 2026 09:05:53 -0400
+	id 1wu8f1-0001Yp-SJ; Wed, 12 Aug 2026 09:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8e7-0008Kr-Hv; Wed, 12 Aug 2026 09:05:29 -0400
+ id 1wu8eb-0000ct-9t; Wed, 12 Aug 2026 09:05:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8e6-0004ei-26; Wed, 12 Aug 2026 09:05:27 -0400
+ id 1wu8eZ-0004vN-0x; Wed, 12 Aug 2026 09:05:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=K0RNsper823VnfRSK1pc37z55ocpHYZxFbBCKIQQOj0=;
+ t=1786539783; bh=P/AKWco2wBqO6jBi3zzf5fb2Ksg/gZsUwaS36yEb6bw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PCZ6DvaKdWB1sjIgER7IcCyi2C6r1mkQ4lp454YHHWmdNTxzRvyy5nuzcOcTRZzle
- /grbK0QVVCzljOWaKXkJ7cmo8WlHvp11pVeeVYBopEjXEpeZDYZ1XRddsFCU0FB6Mw
- KHdfmjzRjwahmAPumCM7YE1vpqAVad80FSdFXV11YLNZQO/UPQn9I7DgFKJT+0TODG
- cvqD9Rg6oh2mftt7z0XWiBimHrvN4oXcIhip90wuCXDTx5gY8Zvvw4rmeeFO4npbXk
- VUC9Vig7yC7Gm82wI+BpP1oY7mvUMN1xlCvFkf0wczUFS6oJrXpbWL9SFoh+tvrUM9
- C0uHwz2b04VCg==
+ b=wQh/vO2D0hHVB+1VPglLg5CY+0MPtBIT6c86aY/sN9UgLyr7RBbgF466HVC8RYxrK
+ s2RR/Twn2EReIwyxKNBWe08p3FT7nOq9hoPWq1wT6szU60Or2cV3ajHSXC9RlmP0UF
+ nr+z8857Wns2jNc3CTKUFAnVWrkYdXlaP0CotEQzAfu13uXD30HaE4ot+LSpJ5cfor
+ AcV4VROuXZkmh97HYQ12Bu55PMITlkaSwdyrBdWA3Yyo9ouvDXz3Pmu0pfrAeqlzOL
+ ZWBoWgmPPeamm7sq+WckXmXUbMggxmXb4tRS+2JtO5xxioCMntoa5CG15/9IplJF0A
+ FeiXOI02Clmgw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8C9E01CA49A;
+ by isrv.corpit.ru (Postfix) with ESMTP id A66E41CA49F;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C1A08409B7D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id DC456409B82;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 12C4B2F8CA; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 1F7A82F8D4; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 027/102] ui/vnc: remove redundant rows computation
-Date: Wed, 12 Aug 2026 16:01:02 +0300
-Message-ID: <20260812130233.621965-27-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 032/102] hw/display/virtio-gpu: Fix empty blob
+ discrimination
+Date: Wed, 12 Aug 2026 16:01:07 +0300
+Message-ID: <20260812130233.621965-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,31 +73,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-"rows" was already computed in an earlier commit 3543c2b855 ("ui/vnc:
-fix OOB write in vnc_refresh_lossy_rect").
-(Mjt: in 10.0.x this is commit 5ab666fda9d)
+Discriminating blobs by checking whether blob_size is nonzero fails for
+empty blobs. Identify 2D resources by their non-NULL image instead.
 
-Fixes: e650e4fe0f ("ui/vnc: fix out-of-bounds write in lossy refresh dirty marking")
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit efa7244b2a0bd5e40ec334dbec4a09af0134d91f)
+Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
+Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260725-image-v1-1-4698a805afde@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 0fa3e1823b9b9ae1fc1ea0d290849578907a770b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 8be69754e0e..ac03d42b32b 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3005,7 +3005,6 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y,
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 67ccc81e50c..598ee4026c1 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -56,18 +56,18 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+         return;
+     }
  
-     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
-     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
--    rows = MIN(VNC_STAT_RECT, height - y);
+-    if (res->blob_size) {
+-        if (res->blob_size < (s->current_cursor->width *
+-                              s->current_cursor->height * 4)) {
+-            return;
+-        }
+-        data = res->blob;
+-    } else {
++    if (res->image) {
+         if (pixman_image_get_width(res->image)  != s->current_cursor->width ||
+             pixman_image_get_height(res->image) != s->current_cursor->height) {
+             return;
+         }
+         data = pixman_image_get_data(res->image);
++    } else {
++        if (res->blob_size < (s->current_cursor->width *
++                              s->current_cursor->height * 4)) {
++            return;
++        }
++        data = res->blob;
+     }
  
-     rows = MIN(VNC_STAT_RECT, height - y);
-     if (rows <= 0) {
+     pixels = s->current_cursor->width * s->current_cursor->height;
+@@ -1281,7 +1281,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+     assert(QTAILQ_EMPTY(&g->cmdq));
+ 
+     QTAILQ_FOREACH(res, &g->reslist, next) {
+-        if (res->blob_size) {
++        if (!res->image) {
+             continue;
+         }
+         qemu_put_be32(f, res->resource_id);
+@@ -1422,7 +1422,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+     assert(QTAILQ_EMPTY(&g->cmdq));
+ 
+     QTAILQ_FOREACH(res, &g->reslist, next) {
+-        if (!res->blob_size) {
++        if (res->image) {
+             continue;
+         }
+         assert(!res->image);
 -- 
 2.47.3
 
