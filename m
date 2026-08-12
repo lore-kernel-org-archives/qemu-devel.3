@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8CAEC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A491C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8jo-0002aQ-L2; Wed, 12 Aug 2026 09:11:20 -0400
+	id 1wu8eZ-0000RI-KZ; Wed, 12 Aug 2026 09:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8jY-0002OT-O9; Wed, 12 Aug 2026 09:11:09 -0400
+ id 1wu8eA-0008MM-Eh; Wed, 12 Aug 2026 09:05:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8jW-00068R-Tc; Wed, 12 Aug 2026 09:11:04 -0400
+ id 1wu8e8-0004u1-PI; Wed, 12 Aug 2026 09:05:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=7YWQdyTPQ71s8nEbOO1oYKMkrB3yb9Sb9g3i6Nq0BRg=;
+ t=1786539783; bh=l+gqMS0oNGQKnhuV2H7zb9b46FmVN46P3CJ2NQuPNCM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=yLMF1W3T0Y4WOrAC+NmmGZ/1ZlxLxwn9FdWW7U6ympVrmQU1XO+1OoYztLjWBzy6O
- 7GW1akl8nwqeygkc9Dj1THExeqRX+GKpgJjjdSF33tPcmLUrw8ijZuArThbrWjgQqG
- p/6HEYwQvrqomjsxqzoMWcHryIGIMN4jRmAu54zOYuEZb5OE1CMFxvp66sNMsmCGxk
- PMklOsC6BrkxcPlA+m6E3gR73he4X9l8Uip5Q7EszN0/79Paw8ZYiytSxskzOuB0os
- Xo9xrdnsUpEHNmws78AEwjH/OCs9C3FqiMqhNYeuRSCPXrfxdWVTYvhLbTuL5/QUoW
- P/6loP2f1oOjA==
+ b=kS5Cpd6nVcK5j3QpxjoQx/rO37EX/36LGVCLy+6uPcgp616VBJqN5JFTQxY17WdwI
+ K+UTMGOJy3NiM16365owbDlbZ2xwUDZSzTzGcNX/bdPP8RDowbyx5qNu3KpQz1tkOI
+ vgdN8EKmJ+xyGZGqHGFs9XbPi4oDyj/uRkAkgR2a4mqR92GT7mil2wnnfpo9IKKxQM
+ cee9FeYrAKMai4ScYem87hSmDiMfvsFBeaHG/zPxoFfoxzq3yjf0vUiWeED3oXTwPw
+ o5MXxW0V+9Tg8t7r3D00Kk2w+mWjf2SVrVR45RIPMn7+ekC3LD0AT60jtr8cNrFrdh
+ /YLNw8kcpRYig==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 869031CA4D0;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 91C231CA49B;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BD183409BB3;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C6E8B409B7E;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A36452F936; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 155422F8CC; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+ Haotian Jiang <jianghaotian.sunday@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 081/102] tests/unit: add reproducer for
- BlockAcctStats histogram locking race
-Date: Wed, 12 Aug 2026 16:01:56 +0300
-Message-ID: <20260812130233.621965-81-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 028/102] hw/display/qxl: unregister vm_change_state
+ handler and BHs
+Date: Wed, 12 Aug 2026 16:01:03 +0300
+Message-ID: <20260812130233.621965-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,164 +74,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-block_latency_histogram_set() and block_latency_histograms_clear()
-replace BlockLatencyHistogram's nbins/boundaries/bins without taking
-stats->lock, while block_account_one_io() reads those same fields
-under that lock from whatever iothread completes the I/O.
+qxl_realize_common() registers a vm_change_state handler via
+qemu_add_vm_change_state_handler() and creates three bottom halves
+(update_irq, update_area_bh, cursor_bh), but none are ever cleaned up.
+The return value of qemu_add_vm_change_state_handler() is discarded, so
+the handler is never removed from the global list, and there is no
+PCIDeviceClass.exit callback to delete the BHs.
 
-Add a test that races two real threads against
-block_latency_histogram_set() and
-block_acct_start()/block_acct_done() on the same BlockAcctStats.
-Applied here it passes, since the previous two commits already take
-the lock; reverting them locally reproduces the abort this series
-fixes, in about a second.
+When a secondary QXL device (hotpluggable by default) is hot-unplugged
+via device_del, the PCIQXLDevice memory is freed but the vm_state
+handler and BH entries remain with dangling opaque pointers. On the
+next VM state change (stop/cont/migrate) or BH dispatch, the callback
+dereferences freed memory, causing a use-after-free.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260724111311.4086859-4-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 842c89281a20c3ea783609c5ac9da226e017e490)
+Fix this by storing the VMChangeStateEntry returned by
+qemu_add_vm_change_state_handler() and adding a qxl_exit() callback
+that deletes the vm_state handler, all three BHs, and the
+guest_surfaces.cmds allocation before the device memory is freed.
+
+Fixes: a19cbfb34642 ("spice: add qxl device")
+Fixes: CVE-2026-63322
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3607
+Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
+Cc: qemu-stable@nongnu.org
+[ Marc-André - tweak commit message, add TODO ]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260720024855.3757499-1-jianghaotian.sunday@gmail.com>
+(cherry picked from commit 4727cc883b7e81d2c30b9801af54482d65b84292)
+(Mjt: context fixup across v10.0.0-263-g12d1a768bdfe
+ "qom: Have class_init() take a const data argument")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 1a85f85d182..336f492cf4f 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -74,6 +74,7 @@ if have_block
-     'test-blockjob': [testblock],
-     'test-blockjob-txn': [testblock],
-     'test-block-backend': [testblock],
-+    'test-block-accounting': [testblock],
-     'test-block-iothread': [testblock],
-     'test-write-threshold': [testblock],
-     'test-crypto-hash': [crypto],
-diff --git a/tests/unit/test-block-accounting.c b/tests/unit/test-block-accounting.c
-new file mode 100644
-index 00000000000..7aae491cfc2
---- /dev/null
-+++ b/tests/unit/test-block-accounting.c
-@@ -0,0 +1,115 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * BlockAcctStats latency histogram locking regression test
-+ *
-+ * Copyright (c) 2026 Virtuozzo International GmbH.
-+ *
-+ * Regression test for missing stats->lock in
-+ * block_latency_histogram_set()/block_latency_histograms_clear(),
-+ * racing block_account_one_io() reading the same fields from an
-+ * iothread. Aborts reliably before the fix, passes after it.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "block/block.h"
-+#include "block/accounting.h"
-+#include "system/block-backend.h"
-+#include "system/block-backend-io.h"
-+#include "qapi/error.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/thread.h"
-+
-+#define RACE_DURATION_MS 2000
-+#define NUM_READER_THREADS 8
-+
-+static bool stop_workers;
-+
-+/*
-+ * Different bin counts, so the writer's g_free()/g_new() churn can be
-+ * caught mid-update. Values are small enough (nanoseconds) that plain
-+ * back-to-back start/done calls exercise every bin without sleeping.
-+ */
-+static uint64List boundaries_a[] = {
-+    { .next = &boundaries_a[1], .value = 1000 },
-+    { .next = &boundaries_a[2], .value = 5000 },
-+    { .next = NULL,             .value = 50000 },
-+};
-+
-+static uint64List boundaries_b[] = {
-+    { .next = &boundaries_b[1], .value = 800 },
-+    { .next = &boundaries_b[2], .value = 3000 },
-+    { .next = &boundaries_b[3], .value = 20000 },
-+    { .next = NULL,             .value = 200000 },
-+};
-+
-+static void *writer_thread(void *opaque)
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 04314eabe78..2a599761b5a 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2223,7 +2223,8 @@ static void qxl_realize_common(PCIQXLDevice *qxl, Error **errp)
+     }
+ #endif
+ 
+-    qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
++    qxl->vmstate_handler =
++        qemu_add_vm_change_state_handler(qxl_vm_change_state_handler, qxl);
+ 
+     qxl->update_irq = qemu_bh_new_guarded(qxl_update_irq_bh, qxl,
+                                           &DEVICE(qxl)->mem_reentrancy_guard);
+@@ -2498,6 +2499,18 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_BOOL("global-vmstate", PCIQXLDevice, vga.global_vmstate, false),
+ };
+ 
++static void qxl_exit(PCIDevice *dev)
 +{
-+    BlockAcctStats *stats = opaque;
++    PCIQXLDevice *qxl = PCI_QXL(dev);
 +
-+    while (!qatomic_read(&stop_workers)) {
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_a);
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_b);
-+        block_latency_histograms_clear(stats);
-+    }
-+
-+    return NULL;
++    /* TODO: complete cleanup, error paths etc */
++    g_clear_pointer(&qxl->vmstate_handler, qemu_del_vm_change_state_handler);
++    g_clear_pointer(&qxl->update_irq, qemu_bh_delete);
++    g_clear_pointer(&qxl->update_area_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->ssd.cursor_bh, qemu_bh_delete);
++    g_clear_pointer(&qxl->guest_surfaces.cmds, g_free);
 +}
 +
-+static void *reader_thread(void *opaque)
-+{
-+    BlockAcctStats *stats = opaque;
-+
-+    while (!qatomic_read(&stop_workers)) {
-+        BlockAcctCookie cookie;
-+
-+        block_acct_start(stats, &cookie, 4096, BLOCK_ACCT_READ);
-+        block_acct_done(stats, &cookie);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void test_latency_histogram_race(void)
-+{
-+    BlockBackend *blk = blk_new(qemu_get_aio_context(),
-+                                BLK_PERM_ALL, BLK_PERM_ALL);
-+    BlockAcctStats *stats = blk_get_stats(blk);
-+    QemuThread writer, readers[NUM_READER_THREADS];
-+    int i;
-+
-+    /* Histogram has to be enabled (bins != NULL) before racing it. */
-+    g_assert(block_latency_histogram_set(stats, BLOCK_ACCT_READ,
-+                                         boundaries_a) == 0);
-+
-+    stop_workers = false;
-+    qemu_thread_create(&writer, "hist-writer", writer_thread, stats,
-+                       QEMU_THREAD_JOINABLE);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_create(&readers[i], "hist-reader", reader_thread, stats,
-+                           QEMU_THREAD_JOINABLE);
-+    }
-+
-+    g_usleep(RACE_DURATION_MS * 1000);
-+    qatomic_set(&stop_workers, true);
-+
-+    qemu_thread_join(&writer);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_join(&readers[i]);
-+    }
-+
-+    blk_unref(blk);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    bdrv_init();
-+    qemu_init_main_loop(&error_abort);
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/block-accounting/latency_histogram_race",
-+                    test_latency_histogram_race);
-+
-+    return g_test_run();
-+}
+ static void qxl_pci_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2505,6 +2518,7 @@ static void qxl_pci_class_init(ObjectClass *klass, void *data)
+ 
+     k->vendor_id = REDHAT_PCI_VENDOR_ID;
+     k->device_id = QXL_DEVICE_ID_STABLE;
++    k->exit = qxl_exit;
+     set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
+     device_class_set_legacy_reset(dc, qxl_reset_handler);
+     dc->vmsd = &qxl_vmstate;
+diff --git a/hw/display/qxl.h b/hw/display/qxl.h
+index e0a85a5ca49..ddbab3d693a 100644
+--- a/hw/display/qxl.h
++++ b/hw/display/qxl.h
+@@ -83,6 +83,7 @@ struct PCIQXLDevice {
+ 
+     /* thread signaling */
+     QEMUBH             *update_irq;
++    VMChangeStateEntry *vmstate_handler;
+ 
+     /* ram pci bar */
+     QXLRam             *ram;
 -- 
 2.47.3
 
