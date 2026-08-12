@@ -4,146 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A456C5CFEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E5FC5CFDB
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 10:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu6Iu-0008RF-SH; Wed, 12 Aug 2026 06:35:24 -0400
+	id 1wu6Qa-0005ov-IU; Wed, 12 Aug 2026 06:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wu6Is-0008PT-Gy
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:35:23 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
- id 1wu6Ip-0003Xj-RN
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:35:22 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67C9fxN63997301
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:35:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=HpDyyuk+VUI
- pYCLU7kiFruhWT4DAQd7e5RboipFOpIw=; b=aV0GsMZwRIiYUrzFQFSAuosiLqn
- 93x3LKz9VN1y4dEOzdzzqjqX1EBfFY1lmVYMb//cbJwtgJyvUf5EZd/DJU0aEUG9
- svx7qqrmjddqduJjarttfPpfVCVJ/AFGzDGqzT5TIdulzGrloUwJ3Heyto9/IJ+J
- EQejTElKbaw3W0oLoXiTevn3Qvasqimr1LBBB0BqKTFNQ2zzzFU9e0aAZL/jF02Y
- vh9FcAZiR1xyOpeUzhgi40cn6u77m+ja1aJnNUCZqJ0ZVfAFWjjQduyQ2F8BqQMM
- Vj7lHAK7oRj4b5jg/m3dZCvfdwq4WG1QT57sF3n01D9jCH2Nc/K3GBo/2hw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g08j5kddu-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:35:17 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2cc98d6a88bso2471695ad.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:35:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu6QY-0005og-W8
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:43:19 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wu6QX-0004Sm-F2
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 06:43:18 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-81ed2a06b9eso9122527b3.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 03:43:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786531396; cv=none;
+ d=google.com; s=arc-20260327;
+ b=UZaSKMKUsCtQy7kBzMA7uHDIbxJHeMT60xJ92urYCVVlw6ys28F4EBJpC14PFJm3VJ
+ /+Wk8Ft51nH/zcsM26h7036iRHf3KqLALVSU6K9BK6mcCb6vcFGPjaLcwmlzeXdHRm79
+ UZjvLqJmGg/oNuSb4nGuVwo8BRcjWtYwCtMWOvp88AL6dIKXlN3EU6uME/a/WwBKEkad
+ UyWG7Us3A+I4CqEmzMUnMv6XbXctVpquqSEaVI586cCU92AXWYwdV7sqQu9X0/CyExMC
+ tlmcwB218ZTOAXanL3BgfMzQ4x81GUT4Ojk78F/5I1rVzcDtMzpS939vm46Nbfh1R1Vv
+ gVUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qXG5e6TLfXDlJCp2Kn32oPKIFBCqZDLXYnS/oDDCYb4=;
+ fh=sa54kRfqZCSJoqqovfbLshesdcnvoIzhJ6jhb/uDQ0k=;
+ b=sf/PATDlPTQAipi4T0JpP7W6aVyTVpVMEwrt8OiMdd5Wkgx1SLP/JyronX0Cw0o4EC
+ orr7qvA+3yErF52+OHxOce7Pgc0CvDtpPvaWNzSO9nqivu4OB0KGwIbw6Jd2o0f7Lki5
+ LsI1H7skMLIWRzyImIfR+QJHxClElSuUIdq55afAK4XiiYcqGeT2TUiVMxFCcwQTclE1
+ CvZAEKD3kEhtfvpbAAUSroqdws6zrjpuQHMHPfZiYcADtyidBiCMbHbZYIPG8pzco4mV
+ a/DuR69qQ7kRATh1Yq9ee3kNgXu5vWPIBUuErkH4eI08COfXWuazSMJvTSthKrWzJFxO
+ x4Lg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786530917; x=1787135717; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=HpDyyuk+VUIpYCLU7kiFruhWT4DAQd7e5RboipFOpIw=;
- b=EM2fQCZVk/shkIO+wHizI8/B3rLOjhH2vSP0cjPz/HLIN30SwIGFnCM0T6/nVb3aiZ
- 7YO8kV0cv1WRTDiSjLyYAmSYO76SAbQPYckj8rLpFex+r0Td9Tx95V4EXfJQ9TaF4EwJ
- dyRq352SnOVmRWmZvK9ROIdr2YJcBymX9Qp5XSsbYUKbWA0/+M9RckMxbeG4aXIVlzxJ
- o58SFTYCMwt2EgV95kYNUHKs4oK5qhSfpz2svuBZAxG2RU7oveTqHORnzPTCaOLusCNb
- QQanUINxry2L5X92aoQF2NEUCb2k5oSDTOgrV2MaEjmPtrofPkqrMrnSLatKGInyKv/V
- Q6ew==
+ d=linaro.org; s=google; t=1786531396; x=1787136196; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=qXG5e6TLfXDlJCp2Kn32oPKIFBCqZDLXYnS/oDDCYb4=;
+ b=DfEtTXHsS6M4KFFdhCUEjkw57odT8AcjjUZiMgg20SfFT5CQpnRS+bATK50elvejJ2
+ C40ufKHXMkI3EPC/Har6HHTUIvHfAoMiJkA6oNFGi/KmqSXneQYE/k4yxUaxqBhWGYLc
+ LB3QbNgSXOQAYK92+rmQza7Zr1rtLdcnMUqbDebf9F1EC4H026+kApUOk39Hyt3i2vID
+ drOHbI34cuYb6DiKOtAMi154taUCI9m/uAfDRtWlHXi4LjroTLd6S1mjVv0+7PQj14Ds
+ PvQ285btgA3mARFkdcOC4GFXY0D+EQIZ1AlbHM+Da80pZDZ4Trqwu2ADrjr401+YmShJ
+ tq6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786530917; x=1787135717;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HpDyyuk+VUIpYCLU7kiFruhWT4DAQd7e5RboipFOpIw=;
- b=HS4OQblcciSch5Uk/xuEymvclPpWCwGlcD3ArmXgFMzRsGgxw0dmn2bOn+QtN3lCkf
- jR8bqTccvs9nUJh2A/hQ/RrLONCwvM5KUJi3q0ypgW/XNpFHMw9+SyKvA5NVs/1KWthL
- V+bvqSRJe9Ssv5jDxLiff4onchzBHpWfIxxX51HmX9iRiT/s6YVRB2RBvRhFeLRYRECt
- RjHjkH8sQ7tMpqv2nXvqf4RZ8gVcbIRvrxZFcLhHgGbVU4RWMUhwRC53RDjd4m6LyzMB
- mwHsxJSjdcNv33fE5L+82SLW9YjL09kWPaa33e5FAsplThtLnnYk1w7xre5Lk9BsfTwZ
- /ogA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp3FJEL3LndWOr5EQx/7VctC9v8LCBOJsI0HuX8+jOnInXbxlXvl/H9ySMxwDaliCcPLi5HbgNaAu4P@nongnu.org
-X-Gm-Message-State: AOJu0Yz5eq8249/74/BtOmqkOfeHMGbljRsAHabzqnGKUVlNHP4deEYb
- OytqtkwQSjiNVJgWutTDWGtkqOIpG7vkaCCETFs5Sg0pvv6bMsMvpta5fF4BZWBA8yCuQ8LVTw8
- pcPuEs4rcxle3+lyif3LgNp698+d8L6nsWgX4SOI0g1ux3PE/Iuzzyxjk1g==
-X-Gm-Gg: AR+sD1251Kr8ryyd1bVcUCf30EX8nig9u3VkB7Jk6L8SlHdVBLC3ocRGhov/ZNoJZmk
- BIVMd3ectr+8seOlueAwhLF0ULICyh5ea741zYcreAOWEOW/ieLGNe7QEw5HdQFMLp45yKpRoIz
- zj1sKj0/7knHo+bfYFATSNZi08BG3o72jeBgLkdPQiSUdK+HHD8zJ1VxESoRjKTREH+s1SGe/W4
- iC5PYl4MVq2JWN309fAfhE2FsljTUVc6zFH9iW3PWYUmwGIpVuH1mS56C5666evW9XEVTxKHuDH
- OI2gwj8cTysPI2t8Paxz0rDWflyfL+s+XMH9Rx+438qCDj/HcJVXke8OItrWsps59o36W/4Pqey
- WZFRTBrAJRChZjShcFaTnJnJold+kcOv8n/yskWNPZUit11dPyXyZ298TP91jpS9qu+q05YpcDS
- b1UzcgPJBXxH3D1Hxhfrgg20Kr5w2kFBg=
-X-Received: by 2002:a17:903:19c6:b0:2ca:ecf6:9115 with SMTP id
- d9443c01a7336-2d3455f0d08mr35784545ad.2.1786530917214; 
- Wed, 12 Aug 2026 03:35:17 -0700 (PDT)
-X-Received: by 2002:a17:903:19c6:b0:2ca:ecf6:9115 with SMTP id
- d9443c01a7336-2d3455f0d08mr35784085ad.2.1786530916742; 
- Wed, 12 Aug 2026 03:35:16 -0700 (PDT)
-Received: from hu-slingapp-blr.qualcomm.com
- (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31d6aec3947sm6910326eec.17.2026.08.12.03.35.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 03:35:16 -0700 (PDT)
-From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org
-Cc: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH v7 04/10] hw/riscv/virt: add opt-in RPMI base support
-Date: Wed, 12 Aug 2026 16:04:38 +0530
-Message-ID: <20260812103445.3451960-5-subrahmanya.lingappa@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260812103445.3451960-1-subrahmanya.lingappa@oss.qualcomm.com>
-References: <20260812103445.3451960-1-subrahmanya.lingappa@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1786531396; x=1787136196;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=qXG5e6TLfXDlJCp2Kn32oPKIFBCqZDLXYnS/oDDCYb4=;
+ b=MrJOscxsr9ALDBjOAlB9ObKvRbN6ksLcSTilqxAzGyCE1xmqFAPda9DAnIlR0mhpCS
+ mpQfbSlCVCqbUs0FMv8LCh+01UfsQiE0fC7fnr/HvW0EzBzKf+GQbxkORgRmapc0oovF
+ O6owhPLJtU5hVuWxt1RnhsWc2EzS/KbjoFjgNF+6tP4+nMnQz4lo4Bioj0jgelXFeSUS
+ pgQ7q+bL0XqZbYu6pm+Lntr8CBuR30pJJCkZdym8DDdqUrp+3Uy4PT7EmgQqtV3B07nB
+ T5v/02jSML+v+Fnftltl4nyp9FJQGa6fX+LYM8ijHTruUzAY78vd7VWfxp89v/h1RFT5
+ laNg==
+X-Gm-Message-State: AOJu0YyICqROW3dQpEfjYezZz7Jps0tmm/aBkeoOSdqsIF6uvuI246fK
+ 38zeRW3ELZriuL4NYf5AoFF/bbeSHH51TcB1uitXiVzZE602/+d4W23rNpqJBhkuI7qmH98iXEZ
+ n+GFoV92VW3kt099jrI7rdMWZxPm4j21P8Qhngj4/V/FsPyt8hIV8Z4A=
+X-Gm-Gg: AR+sD13rJq6WiKreR8G2AegAgx4FP4NMqtECXMpUPKbLyso/CwkSvWacST90HlNGE+c
+ BlMv8HqsrSZA0Jzn61Jg8kumK2ieDtR9Upu4JDmWkMW5ShuKuuCEzCTsxCx8Tp7aVjgGCXaqaAg
+ uaWeGg4X9zHluYLOIn+c5L+wI8tbPUMPoB4MG9bPQCPMXQSEy9qPGDeLOPe2E+f4ek10jv8MIEQ
+ Hk7aQzpFQbTx5Hlm/PTNN61TjSNEtdBtvE1pnCUkZdhA/etARPaM819iWrnVUIC4pPyLRRBe2vR
+ zUHO504d73vCbxtdEqezd+zs2VOZTrMPPM+woQiptw+JGzdMwkkswU9v/3DDzYn3Fe5VOf5Y+dA
+ wvp1AC7Y5vwYrGa2hZq7Qo10GB+Nx
+X-Received: by 2002:a05:690c:112:b0:803:6bb9:1753 with SMTP id
+ 00721157ae682-8310a4c52aamr20156717b3.21.1786531395609; Wed, 12 Aug 2026
+ 03:43:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA4NCBTYWx0ZWRfXyMovoDvL+0Cn
- rNFshORSFrnBf/qPxFg/b/oUOG2+FQ+ayat9KCjmsAiSPSuSOkN1m2utYson1LCDlgjzFzClhYZ
- NtNQXUIBpfDZAEHZZVlMw332J2iPQ2U=
-X-Authority-Analysis: v=2.4 cv=evHvCIpX c=1 sm=1 tr=0 ts=6a7c4c66 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=HJcZEfycbju_5WdDyrcA:9 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-GUID: xqg5Ykis20TsjI___GXITa7-o1eFFKT5
-X-Proofpoint-ORIG-GUID: xqg5Ykis20TsjI___GXITa7-o1eFFKT5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA4NCBTYWx0ZWRfX3Yc9WeKGrJ1I
- TbnSW//z6AD9rTJfDpJ1B5rZJJlZWyA3ABWI2/VCHgg6sfXe//XTTrujpUDLQd/XNkkLFKVskG2
- CtoLutXXC04OMmgCHN2pCPllki8FCYITPVpBmoVzcd/aqKiGM7MfZT8cuaQ94OLAdERVC0heGxX
- JmfVRA3nPamkOHBHkucISePpXDWrXjwAT0CBxC+t2S3IziAS37hzWs5gMQYHtgizBlfFEyy8bCh
- l/e7XTHa/4SIfsWwga1ePql3+cuwuWH4GU59tKpbzvfUeWo6r3uDD2cTMHL03CYPbdd0eGwwGKn
- 60bK+UmxSKwGoB6fvKYxoAcF+tCgjcaEFKOrdUvwdh4vv+x/RSGWG/mHRCpcB0mTJXsQjR/IM8O
- ILiIg5fYKJOqHbwWtLcyczL1W+Gw0R6vX6xXi5gQli8SI6SmGpKmPi0pNusBfP1kFovzfneLTA3
- dbFyHPfEY/fsIdptXEA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_03,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 suspectscore=0 clxscore=1015 phishscore=0 spamscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120084
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260713073033.3883619-1-kchiu@axiado.com>
+ <CAFEAcA_=DVVwQYdpwnhbzF_GwR9gZp4sJa-C97caA0i7zofADA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_=DVVwQYdpwnhbzF_GwR9gZp4sJa-C97caA0i7zofADA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Aug 2026 11:43:04 +0100
+X-Gm-Features: AUfX_mwjvclEFWPTb8rczu4uepI7ZHC2Rv-ByP6PuXknCzsx3UiylzwIrswAEZg
+Message-ID: <CAFEAcA-CRhcSEQL8wWMjyLJR5j8x01d7dXRNpfHDds8qC1qzcw@mail.gmail.com>
+Subject: Re: [PATCH v7 0/8] Add Axiado SoC AX3000 and EVK board
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,315 +115,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the virt machine rpmi=on/off option and wire the initial RPMI Base
-transport into machine realization.
+On Mon, 10 Aug 2026 at 16:31, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 13 Jul 2026 at 08:31, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+> >
+> > This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
+> > The model for Axiado SoC AX3000 supports
+> >   4 Cortex-A53 CPUs
+> >   Arm Generic Interrupt Controller v3
+> >   4 Cadence UARTs
+> >   1 SDHCI controller with PHY
+> >   8 Cadence GPIOs
+>
+> Thanks; I've applied this to target-arm.next ready for when
+> the tree reopens for 11.2.
+>
+> I made a couple of minor fixes to save you doing another respin:
+>
+> (1) you can't use %lx in logging printf format strings for printing
+> a variable of type 'hwaddr' (it isn't a "long" on all hosts, and
+> this won't compile on some systems) -- you need HWADDR_PRIx . I
+> fixed some cases of this in patches 2 and 4.
+>
+> (2) we don't require the "<public>" and "<private>" marker comments
+> any more, so I removed them from patch 7.
 
-The option remains disabled by default and requires TCG plus librpmi.
-Invalid accelerator/build combinations fail during machine
-initialization. When enabled, virt allocates the RPMI shared-memory
-transport, creates the RPMI device, configures Base service metadata,
-and emits the corresponding device-tree nodes for firmware discovery.
+I also found that an issue with the Kconfig info caused a build
+failure when any non-arm target is enabled in configure. This
+fixes it (and makes the kconfig match how we do other board
+and SoC kconfig stanzas in hw/arm/Kconfig):
 
-Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
----
- hw/misc/meson.build       |  2 +-
- hw/misc/riscv_rpmi-stub.c | 16 +++++++
- hw/riscv/Kconfig          |  1 +
- hw/riscv/meson.build      |  4 +-
- hw/riscv/rpmi-fdt-stub.c  | 37 +++++++++++++++
- hw/riscv/virt.c           | 96 +++++++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h   |  3 ++
- 7 files changed, 157 insertions(+), 2 deletions(-)
- create mode 100644 hw/misc/riscv_rpmi-stub.c
- create mode 100644 hw/riscv/rpmi-fdt-stub.c
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d0ae131628..e22c34a2e1 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -728,7 +728,6 @@ config ARMSSE
 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e7c2ebe28f..92c9cd6064 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -170,4 +170,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
- system_ss.add(when: 'CONFIG_RISCV_RPMI', if_true: [files(
-   'riscv_rpmi.c',
--), librpmi])
-+), librpmi], if_false: files('riscv_rpmi-stub.c'))
-diff --git a/hw/misc/riscv_rpmi-stub.c b/hw/misc/riscv_rpmi-stub.c
-new file mode 100644
-index 0000000000..dc32b43227
---- /dev/null
-+++ b/hw/misc/riscv_rpmi-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * RISC-V RPMI stubs.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/misc/riscv_rpmi.h"
-+
-+DeviceState *riscv_rpmi_create(const RiscvRpmiConfig *cfg G_GNUC_UNUSED,
-+                               Error **errp)
-+{
-+    error_setg(errp, "RISC-V RPMI support is not compiled in");
-+    return NULL;
-+}
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 54e41a6afc..4e25be113a 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -49,6 +49,7 @@ config RISCV_VIRT
-     imply VIRTIO_VGA
-     imply TEST_DEVICES
-     imply TPM_TIS_SYSBUS
-+    imply RISCV_RPMI
-     select DEVICE_TREE
-     select RISCV_NUMA
-     select GOLDFISH_RTC
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index ae69426eb1..abc2200d22 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -3,7 +3,9 @@ riscv_ss.add(files('boot.c'))
- riscv_ss.add(files('fdt-common.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
--riscv_ss.add(when: 'CONFIG_RISCV_RPMI', if_true: files('rpmi-fdt.c'))
-+riscv_ss.add(when: 'CONFIG_RISCV_RPMI',
-+             if_true: files('rpmi-fdt.c'),
-+             if_false: files('rpmi-fdt-stub.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
- riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
-diff --git a/hw/riscv/rpmi-fdt-stub.c b/hw/riscv/rpmi-fdt-stub.c
-new file mode 100644
-index 0000000000..28e72adad5
---- /dev/null
-+++ b/hw/riscv/rpmi-fdt-stub.c
-@@ -0,0 +1,37 @@
-+/*
-+ * RISC-V RPMI device-tree helper stubs.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/riscv/rpmi-fdt.h"
-+
-+void riscv_rpmi_fdt_add_mbox(void *fdt G_GNUC_UNUSED,
-+                             const RiscvRpmiFdtMboxConfig *cfg G_GNUC_UNUSED,
-+                             uint32_t *phandle G_GNUC_UNUSED,
-+                             uint32_t *mbox_handle G_GNUC_UNUSED)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void riscv_rpmi_fdt_add_service(void *fdt G_GNUC_UNUSED,
-+                                hwaddr shmem_base G_GNUC_UNUSED,
-+                                const char *node_name G_GNUC_UNUSED,
-+                                const char *compatible G_GNUC_UNUSED,
-+                                uint32_t mbox_handle G_GNUC_UNUSED,
-+                                uint32_t service_group G_GNUC_UNUSED,
-+                                bool has_mpxy_channel G_GNUC_UNUSED,
-+                                uint32_t mpxy_channel G_GNUC_UNUSED)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void riscv_rpmi_fdt_add_service_node(void *fdt G_GNUC_UNUSED,
-+                                     hwaddr shmem_base G_GNUC_UNUSED,
-+                                     const RiscvRpmiServiceConfig *service
-+                                     G_GNUC_UNUSED,
-+                                     uint32_t mbox_handle G_GNUC_UNUSED)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 33775a61fd..e52ccfae1f 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -45,6 +45,8 @@
- #include "hw/intc/riscv_aplic.h"
- #include "hw/intc/sifive_plic.h"
- #include "hw/misc/sifive_test.h"
-+#include "hw/misc/riscv_rpmi.h"
-+#include "hw/riscv/rpmi-fdt.h"
- #include "hw/core/platform-bus.h"
- #include "chardev/char.h"
- #include "system/device_tree.h"
-@@ -97,6 +99,8 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_UART0] =        { 0x10000000,         0x100 },
-     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
-     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-+    [VIRT_RPMI_SHMEM] =   { 0x10200000,       0x20000 },
-+    [VIRT_RPMI_DOORBELL] = { 0x10230000,        0x1000 },
-     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
-     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-@@ -1002,6 +1006,40 @@ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
-     s->pci_iommu_bdf = bdf;
- }
- 
-+
-+static RiscvRpmiConfig virt_rpmi_config(RISCVVirtState *s,
-+                                        const uint32_t *hart_ids,
-+                                        uint32_t hart_count)
-+{
-+    return (RiscvRpmiConfig) {
-+        .doorbell_base = s->memmap[VIRT_RPMI_DOORBELL].base,
-+        .shmem_base = s->memmap[VIRT_RPMI_SHMEM].base,
-+        .shmem_size = s->memmap[VIRT_RPMI_SHMEM].size,
-+        .a2p_req_size = VIRT_RPMI_A2P_REQ_SIZE,
-+        .p2a_req_size = VIRT_RPMI_P2A_REQ_SIZE,
-+        .platform_info = "QEMU RISC-V virt RPMI",
-+        .hart_ids = hart_ids,
-+        .hart_count = hart_count,
-+    };
-+}
-+
-+static void create_fdt_rpmi(RISCVVirtState *s, uint32_t *phandle,
-+                            uint32_t msi_phandle)
-+{
-+    RiscvRpmiConfig rpmi_cfg = virt_rpmi_config(s, NULL, 0);
-+    uint32_t rpmi_mbox_handle;
-+    RiscvRpmiFdtMboxConfig cfg = {
-+        .shmem_base = rpmi_cfg.shmem_base,
-+        .doorbell_base = rpmi_cfg.doorbell_base,
-+        .a2p_req_size = rpmi_cfg.a2p_req_size,
-+        .p2a_req_size = rpmi_cfg.p2a_req_size,
-+        .doorbell_size = s->memmap[VIRT_RPMI_DOORBELL].size,
-+    };
-+
-+    riscv_rpmi_fdt_add_mbox(MACHINE(s)->fdt, &cfg, phandle,
-+                            &rpmi_mbox_handle);
-+}
-+
- static void finalize_fdt(RISCVVirtState *s)
- {
-     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
-@@ -1021,6 +1059,10 @@ static void finalize_fdt(RISCVVirtState *s)
-     create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
-                     iommu_sys_phandle);
- 
-+    if (s->have_rpmi) {
-+        create_fdt_rpmi(s, &phandle, msi_pcie_phandle);
-+    }
-+
-     create_fdt_reset(s, &phandle);
- 
-     create_fdt_uart(s, irq_mmio_phandle);
-@@ -1410,6 +1452,18 @@ static void virt_machine_init(MachineState *machine)
-         exit(1);
-     }
- 
-+
-+    if (s->have_rpmi) {
-+#ifndef CONFIG_LIBRPMI
-+        error_report("RISC-V RPMI support is not compiled in");
-+        exit(1);
-+#else
-+        if (kvm_enabled()) {
-+            error_report("RISC-V RPMI support is not available with KVM");
-+            exit(1);
-+        }
-+#endif
-+    }
-     /* Initialize sockets */
-     mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
-     for (i = 0; i < socket_count; i++) {
-@@ -1552,6 +1606,25 @@ static void virt_machine_init(MachineState *machine)
-     /* SiFive Test MMIO device */
-     sifive_test_create(s->memmap[VIRT_TEST].base);
- 
-+    if (s->have_rpmi) {
-+        MachineClass *mc = MACHINE_GET_CLASS(machine);
-+        const CPUArchIdList *possible_cpus = mc->possible_cpu_arch_ids(machine);
-+        g_autofree uint32_t *rpmi_hart_ids =
-+            g_new0(uint32_t, machine->smp.cpus);
-+        RiscvRpmiConfig rpmi_cfg;
-+        Error *local_err = NULL;
-+
-+        for (i = 0; i < machine->smp.cpus; i++) {
-+            rpmi_hart_ids[i] = possible_cpus->cpus[i].arch_id;
-+        }
-+
-+        rpmi_cfg = virt_rpmi_config(s, rpmi_hart_ids, machine->smp.cpus);
-+        if (!riscv_rpmi_create(&rpmi_cfg, &local_err)) {
-+            error_report_err(local_err);
-+            exit(1);
-+        }
-+    }
-+
-     /* VirtIO MMIO devices */
-     for (i = 0; i < VIRTIO_COUNT; i++) {
-         sysbus_create_simple("virtio-mmio",
-@@ -1636,6 +1709,7 @@ static void virt_machine_instance_init(Object *obj)
- 
-     s->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
-     s->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-+    s->have_rpmi = false;
-     s->acpi = ON_OFF_AUTO_AUTO;
-     s->iommu_sys = ON_OFF_AUTO_AUTO;
- }
-@@ -1710,6 +1784,21 @@ static void virt_set_aclint(Object *obj, bool value, Error **errp)
-     s->have_aclint = value;
- }
- 
-+
-+static bool virt_get_rpmi(Object *obj, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    return s->have_rpmi;
-+}
-+
-+static void virt_set_rpmi(Object *obj, bool value, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    s->have_rpmi = value;
-+}
-+
- bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
- {
-     return s->iommu_sys == ON_OFF_AUTO_ON;
-@@ -1831,6 +1920,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "enable/disable emulating "
-                                           "ACLINT devices");
- 
-+
-+    object_class_property_add_bool(oc, "rpmi", virt_get_rpmi,
-+                                   virt_set_rpmi);
-+    object_class_property_set_description(oc, "rpmi",
-+                                          "Set on/off to enable/disable "
-+                                          "RISC-V RPMI devices");
-+
-     object_class_property_add_str(oc, "aia", virt_get_aia,
-                                   virt_set_aia);
-     object_class_property_set_description(oc, "aia",
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 18a2a323a3..f7c48613bf 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -55,6 +55,7 @@ struct RISCVVirtState {
- 
-     int fdt_size;
-     bool have_aclint;
-+    bool have_rpmi;
-     RISCVVirtAIAType aia_type;
-     int aia_guests;
-     char *oem_id;
-@@ -79,6 +80,8 @@ enum {
-     VIRT_UART0,
-     VIRT_VIRTIO,
-     VIRT_FW_CFG,
-+    VIRT_RPMI_SHMEM,
-+    VIRT_RPMI_DOORBELL,
-     VIRT_IMSIC_M,
-     VIRT_IMSIC_S,
-     VIRT_FLASH,
--- 
-2.43.0
+ config AXIADO_SOC
+     bool
+-    depends on ARM
+     select ARM_GIC
+     select CADENCE # UART
+     select AXIADO_CLK
+@@ -739,4 +738,5 @@ config AXIADO_SOC
+ config AXIADO_EVK
+     bool
+     default y
++    depends on TCG && ARM
+     select AXIADO_SOC
 
+so I am squashing that in accordingly.
+
+-- PMM
 
