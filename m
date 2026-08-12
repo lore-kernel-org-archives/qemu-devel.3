@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22C0C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88115C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuHV1-00082U-LR; Wed, 12 Aug 2026 18:32:39 -0400
+	id 1wuHUZ-0007L2-G1; Wed, 12 Aug 2026 18:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHUm-0007ai-BH
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:24 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1wuHUV-0007HB-UZ
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:07 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHUi-00019H-W8
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:24 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-84a652535dcso64497b3a.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:32:20 -0700 (PDT)
+ id 1wuHUQ-0000zG-Nx
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:07 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-ca80d708489so267441a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:32:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786573939; x=1787178739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786573921; x=1787178721; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2MEPpwP7V/VysUFPJnM82l5c3GlLv6c1vZw6bhKwsxQ=;
- b=yONCBxdU3xdP1qUQXOln/2i4MLzRfC0sMamDBSqNEUnKQ71w3tBfvrOyBsJ9ulFHq+
- pGo70jTADmhzgYPUMaCk5VQPMesapFVsa8rv+rNy2Ktl/gpxUN4LAOYropebO0PU2RtQ
- NsZsrMMBXWjyUSJzikOmya0t9Zhm2KGoEe1cNqhxOrM1wt+esNGtgleHa7eWAaW3cWxN
- cl1iG9bJkYeXQzsgqHDU8tkoVlPXWzSARBwiflF5vQdPYguSZ8i2l3+LVJb8ElIdcPyI
- in/RX6IGQr59w04NJVk8Zn8np28hRnNvoZ3QNowtuZEpJh754kWT9QI7bCzMa8VNNGGh
- itlg==
+ bh=zAbQ1lW/UBeMCTj457GMk2iIu8DiRtvoUqBPQhy3IvM=;
+ b=F8o3Rc6JggEFypmShKKWmtM0U5WVgKiJ+jyGBsKD45b4OUdHXuc32MekIIpjgH7Xq4
+ Ye6zrtY1lqUO7vFiN5aoM0GIDkWOd8ELl8CZNKQD7ggPY8Psc9Brar8AnQYngsHS2DOy
+ nk25JAnYOIyZdwIvCKkm2yPmeB12gwgySjE4cbgGrlbVKuBKsT2/NbqwWvYd3/2KjTNl
+ e87a89PRKhqIhDFp/Ny6rz8pHYCZfo7SCfTk1a6RocQfW8UYuslukVZN4uUEbSMH+yaK
+ pi7t9slxIn/nTbULLyc3YHHCRkSgNjrQ59dTwHUXS43zXk9OewGV8znQdo7v7esrJzsG
+ 5TVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786573939; x=1787178739;
+ d=1e100.net; s=20251104; t=1786573921; x=1787178721;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2MEPpwP7V/VysUFPJnM82l5c3GlLv6c1vZw6bhKwsxQ=;
- b=DcArEHB59tojR4fVEUkf/rjwUKRkrbO2pVqecJ+0bv3huU3VDmCfQ9QHKMK/ubQvm8
- O/rkd5AMB9vo54KlbKsv39thK+FFpKXHfd6W0BoFWyOr+7XLsiqLTp78VO1A5clbeCgo
- vzfsgtHuHel6TB9WyOhkzRd8BPnRR90LCZeVEiCAd2Kxk+MrXT139ML7Rl9wWHB6yfFA
- lBb2u3mX6xTzvGb0Ab7QBthFCMhuqwAlk+wcppCe24kAb8BX8aAcvf9XFHKzk+N9+diO
- SSEYAbAGx3ChOgkCDvmGn8x+jJ8p/2/7yjFNkWJAxdhsSKhzL1MjBTCk1onOTmbHjLC1
- qyoA==
-X-Gm-Message-State: AOJu0Yzq8lM80qKpVUWchwpwNLq5G52MZddOWnXR3AUKGJzIUNyu6SL3
- e0HvSZFLueBatrG2yMK5Hz1LF4pTHDUFwBWH80zxStiCTpUul0DA87p8S3F4y3ILmoZKYdvpDj+
- rNgu9
-X-Gm-Gg: AR+sD12Z3ZtFsd5hQdQJM9gfN0hfrmM6UTf1IZpu3vVUWVZPx5uzYfjLV1T26sJrUeB
- 8vO+xhoOBcEcx7bhZHdwAIUmo5G30U64+Zl4OEqZdl6Ti+CYopZ+2BPdFIIQcnAvjMakNUeNU2x
- hUL2XtppdpgmFQ+oUNYREdcv6mMXrTHloKqm7Et90tnYd3IGyEkYsULl1luKVb3QLQ5IoX1r74U
- I4OW2XTHNMASJjNvY5LMHDneVS+DYxIl+Hm1KTBUJm7jvszieM9xoKEBPER6j4chw19LchaBQkP
- 4PDpGj22lhAIgAH29aAHOeFJe+SCA/JsrgNO/0MFNXxE3P5XH0RsY54c8xQGpZj6bc3TGkqB8pV
- YhUEYejtZyKW2ewWX2haA/E7V/3EyNANE1T1KihMqEyIQW2vlbHCiWOZ505PFbA34uXwxPibY9k
- QxxhoK7+NVtvxnCmDr6O2gKjzhGgD4tF2La6hhklfnGK+ZqfwCVfXqxKRyOiN3pJnVk8KMAnaUa
- rEBVLDn/XxGNl3tj5oUQoy1nqGsGQs=
-X-Received: by 2002:a05:6a00:1c92:b0:848:44c5:f801 with SMTP id
- d2e1a72fcca58-84fc763c541mr1216291b3a.33.1786573938928; 
- Wed, 12 Aug 2026 15:32:18 -0700 (PDT)
+ bh=zAbQ1lW/UBeMCTj457GMk2iIu8DiRtvoUqBPQhy3IvM=;
+ b=gtlGO21phzkKs7oQc68gpRXtz3lo77r9dVugVnj8KRVX7uYtiiMByEqYF1LeJkdsA9
+ XricacsMPIRM23mHujuAYShdxuZ3gAH3xvqmb1+ektB0L3p2Taoyiclw/Y2ZFs8/F9vY
+ 233oaz6VOm73JCikdf6xa0nls0q4xPBDH/8Dkm5KUTIgEPRGIy7tO1GQ6ElN0P4HY5lv
+ RerpegjVqFyX62iENg3UXcQx+jqGRgyfYd5rBaaQUAeF5j4i6wu7BBDNkr8AYajp97pR
+ dTEPNzkdLQPgUQL9py7xJnTnsFVUnyAihUlEGeHOJ8Rk4Joka1Pi8KavyHPT7XjBLMCG
+ kQow==
+X-Gm-Message-State: AOJu0YwsFt4bGPZCt3VGRPlbQO9BNXfRE+2xYMikNcx/QrtPA8Nf9SA6
+ 7nEUq+raTie3CC+M+dHngc2qVAX2H1rG/IAxoaH/Lvs/YGMEejR94j/+i2hYbYM5u5NwqGM+fly
+ 7qouZ
+X-Gm-Gg: AR+sD12Ie1j1oiRY7SEZRXbyDUCgzwjcjQYF2uFeBQy3+yds+WIltm30+R9qqOLPez8
+ grcV3yR4hm6S6sBc6PUsRG/rmjvwq0Zj90A2AKIL7vbTagyzOrTA9v1T3+4zrK3ieZuHJYwzw2k
+ u2rOl4m/H+hNkcZi8xfknGqGhg6IIgX3/nEgmHOPmM6CvjJ/u4knIA5Hcm6cq6DqDPnCUJUzIQR
+ t0ppIn9ANVy8Mo1sM6QHEB/KAnxNW0vDBLUrVBwVmyPrVC0Jl5ugZVB3QVabwZHrhQZTRW8xVMl
+ hhntjcWAle1goGWyMR9rpQWc7Jkx0XValFEEisUMAuWnQZEvcoLRjs0Cf3FesgoybGjjA+6I+QB
+ Tj/LNO6ovCIN7JbPB6jay169HQ0dH47wGZcMOEXxhkTPhkPjOVWSyo/Ogfqd34c/A8/rVp1x/d1
+ UoQbE0J6qCDodDeweFWBpO9SmDa9+B3nPzL4OSLIs3LXB5BJSjrtE+F+HlAscru9GgOtGuCt6Sc
+ 97hoD1xOH9bdmL7zGQF
+X-Received: by 2002:a05:6a21:58b:b0:3c3:750f:3cf9 with SMTP id
+ adf61e73a8af0-3cc57634f09mr1167650637.11.1786573921317; 
+ Wed, 12 Aug 2026 15:32:01 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbef721cb0bsm212031a12.26.2026.08.12.15.32.18
+ 41be03b00d2f7-cbef721cb0bsm212031a12.26.2026.08.12.15.32.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 15:32:18 -0700 (PDT)
+ Wed, 12 Aug 2026 15:32:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 37/52] disas/riscv: Reject all of OP-32 and OP-IMM-32 for
- RV32
-Date: Wed, 12 Aug 2026 15:31:27 -0700
-Message-ID: <20260812223142.349142-38-richard.henderson@linaro.org>
+Subject: [PATCH v2 16/52] disas/riscv: Handle c.{srli,srai} imm during decode
+Date: Wed, 12 Aug 2026 15:31:06 -0700
+Message-ID: <20260812223142.349142-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812223142.349142-1-richard.henderson@linaro.org>
 References: <20260812223142.349142-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These entire base opcodes are RV64.  Reject them all at once
-rather than one at a time.
+Zero shift immediate to c.srli and c.srai are not illegal,
+but are reserved as HINTs.  Go ahead and disassemble as
+shifts rather than falling back to invalid.
+
+On the other hand, shift immediate >= 32 with RV32 is
+reserved for custom extensions, and we need to reject those
+early so that the extension disassemblers get a look in.
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ disas/riscv.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index 75c2fa11e6..e650ad7688 100644
+index d6fbb3bca6..a8fbefb9bd 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -3311,6 +3311,10 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             }
-             break;
-         case 6:
-+            /* OP-IMM-32 */
-+            if (isa == rv32) {
-+                break;
-+            }
-             switch ((inst >> 12) & 0b111) {
-             case 0: op = rv_op_addiw; break;
+@@ -1906,9 +1906,9 @@ static const rv_opcode_data rvi_opcode_data[] = {
+     { "c.lui", rv_codec_ci_lui, rv_fmt_rd_uimm, NULL, rv_op_lui, rv_op_lui,
+       rv_op_lui },
+     { "c.srli", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_srli,
+-      rv_op_srli, rv_op_srli, rvcd_imm_nz },
++      rv_op_srli, rv_op_srli },
+     { "c.srai", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_srai,
+-      rv_op_srai, rv_op_srai, rvcd_imm_nz },
++      rv_op_srai, rv_op_srai },
+     { "c.andi", rv_codec_cb_imm, rv_fmt_rd_rs1_imm, NULL, rv_op_andi,
+       rv_op_andi, rv_op_andi },
+     { "c.sub", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_sub, rv_op_sub,
+@@ -3042,10 +3042,16 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+         case 4:
+             switch ((inst >> 10) & 0b11) {
+             case 0:
+-                op = rv_op_c_srli;
++                /* For rv32, shamt[5]=1 is designated for custom extensions. */
++                if (isa != rv32 || (inst & 0x1000) == 0) {
++                    op = rv_op_c_srli; /* or unspecified HINT */
++                }
+                 break;
              case 1:
-@@ -3557,6 +3561,10 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             break;
-         case 13: op = rv_op_lui; break;
-         case 14:
-+            /* OP-32 */
-+            if (isa == rv32) {
-+                break;
-+            }
-             switch (((inst >> 22) & 0b1111111000) |
-                     ((inst >> 12) & 0b0000000111)) {
-             case 0: op = rv_op_addw; break;
+-                op = rv_op_c_srai;
++                /* For rv32, shamt[5]=1 is designated for custom extensions. */
++                if (isa != rv32 || (inst & 0x1000) == 0) {
++                    op = rv_op_c_srai; /* or unspecified HINT */
++                }
+                 break;
+             case 2: op = rv_op_c_andi; break;
+             case 3:
 -- 
 2.43.0
 
