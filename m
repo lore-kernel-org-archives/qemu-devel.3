@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE3FC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37F7C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9Ql-0005Rs-UR; Wed, 12 Aug 2026 09:55:43 -0400
+	id 1wu9RT-0005gE-Gb; Wed, 12 Aug 2026 09:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9Qh-0005PR-Ke; Wed, 12 Aug 2026 09:55:39 -0400
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wu9Qf-0000mR-EB; Wed, 12 Aug 2026 09:55:39 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 2EE171400023;
- Wed, 12 Aug 2026 09:55:36 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Wed, 12 Aug 2026 09:55:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786542936; x=1786629336; bh=oZ4GmeYLOWk+0gmP6jzAgTfoqWqnwl8s
- RrLY7xMA8Nk=; b=iRwUpZO1iewpCsuhD10vNCZh5xVYAEDVMUxD16HNXVqrshvA
- k+tpk67VJLP3QvLsyV6jtMvHpA/jfzwc8BiYhmK0aCKC452BjrM6enmPFdOsPtfx
- 2QWneuE7GQfV8uFYVQr2oxKE0nM4WphAav/jz8AsZqPbSrU4Q+G+ASwrnn/kLb6c
- PLj1UOSjeHSZA5QLm6w5ABVL8ZeX7ZkmnHAQqtkqTHUhs7oWug8j8RXibhtREvi7
- oPl23I3iK8BCp3ryi3V5knDzH2mzec2v72INpwpZanYoo62aAsNyeTmegP0QYlxF
- edhN5Y937C6BtSMihmLKPMtyZuKULmvps7dRhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786542936; x=
- 1786629336; bh=oZ4GmeYLOWk+0gmP6jzAgTfoqWqnwl8sRrLY7xMA8Nk=; b=V
- ZlhnCz1SaHfnNQ9F04NukEeuwS9wvaDDNQ0S10e8rGTmKgXwyty4MC8Tgxxx/cMV
- S3oExrLMzlyKS4irpEY57XEaMHF7WXbu3WnA6f3paZs5nVWd5oPVyQzPRd7uM2YB
- /HntbHhvgt4FE9V0Q/gme0GhgJusk5U+/jsIoStQAn4/cJ+yPdUNjAAz1wUyKCGy
- /I5woC27MCbYEmOfye9CgDISf1dnBLugeycF7G3Ji+NBv8YmAhmD37+5MHTAWV0n
- j6iTmD8ZvUQAl9Gp5lMQo0eFbQ5ZjmXF4ifsLsxo0xYbNoNQkGiD7AEPrYztALGM
- b7PGRo1vIB4+R3+p5VWRw==
-X-ME-Sender: <xms:Vnt8al2ONDQUROWw49KOvulH3bg_kit7T2bRHJP066Jf02c2M_OT_A>
- <xme:Vnt8asieromKiFk8IoBEtus_8RzVH4uLn7L8IoQQP6P99sI_WAolOyXCGL-VPzBxr
- cjpa2zqDaNtM2ETWmGGtvTl8easCsDyKOgEYuz8UgwYuobZkq0P9JmQ>
-X-ME-Received: <xmr:Vnt8alq7RLP_t11BZu-hEce89X6QKCsjstNU0wrpn3O4G0uFB3tIq6PwWf7j19MRg3plPg>
-X-ME-Proxy-Cause: dmFkZTGpny9W1s0p3xNlSlxCKU6BUw0/nkW0lH5LI01PqfNp6jwHd7zE8zv4zBu7aOaXZe
- dxBW2lue3EeYgZ1yemV+Px5tWXmT7Y1AUFuIE5TeS/VoN2dp2tKKTlZLQjF1DV1fw4g/gh
- +7uYWneW7c0G6Q7YMzQzU+eVtUMF0rAfx7P8e3f9voLcmyuIAQTOqo8y12s7khR5gRq7B/
- 9xbmicUpEebrt3cbmugBU5MpxSbNsa33UM83LBKgAWKrRjnan+ZqqP1h/E1rT6uD11O9Kw
- +m63xOdIEES1VfCtUALhvYvj1RWoZAUbSJfcDit4tINbcZpPbNH4hQd7dxdv7HTOfdY+lA
- EP7rlJy1+/HkOk1pIzXE6fuQ7UaJ/2b/gzXLhbQnp2hfgd7h4m7Yw9WP8L+i/QHGwh4heN
- abpVNhGGS4UNm383f2fld5wE8cNtSjSXq1e5ZJaqgV14yt665XqmIwLtylj5zsFfKKy7jL
- A4uNfue97PXlMDfliOVhW13hYa3MCXHV4kxb4sPlt0fZCNka4SCSU7NBVjR3TUviAPg5BK
- bgSxLrvg8Pb4i/udActzxZ7UqYKTupQYDDuMNazeQicUH39M8Hget/af6Dt5+LdGPBTBd2
- 0pKs2J32DQfKAO/wDLaHnMir4f+rDyojhEUg16wLC5QqIxzzgcim/uLF3y1w
-X-ME-Proxy: <xmx:Vnt8avNwIC7DXHSrcNRpUPylRpVx11P04yrOt4CgNbc-FBiumkPGMw>
- <xmx:Vnt8ah10-b2fVMpSnJ4Y7_6eyz9-CihGUHAAf05-1Z_2Cb00jhymtA>
- <xmx:Vnt8atrd9-WrLxPX1DyqyRBH_Tt9izL5PymZL5miYxS3Hf26VyOriw>
- <xmx:Vnt8arfZJEEXjfqWnvRjGWn0XEkROxQMQrjnond2Zg18HBrc-a5XCw>
- <xmx:WHt8anzEn7z7NEvgn6EHrWmrIkslIOyis6v34LNptVCZpVeJgvyPKFWm>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 09:55:34 -0400 (EDT)
-Message-ID: <18a946ef5252d04cf2cfdea71464df7dba8ebfd4.camel@alistair23.me>
-Subject: Re: [PATCH v4 1/3] hw/misc/iommu-testdev: support PCI MSI test writes
-From: Alistair <alistair@alistair23.me>
-To: Flavien Solt <flavien.solt97@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>, Tao
- Tang <tangtao1634@phytium.com.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis	 <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Chao Liu	 <chao.liu@processmission.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier	 <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Nutty Liu	 <nutty.liu@hotmail.com>
-Date: Wed, 12 Aug 2026 23:55:33 +1000
-In-Reply-To: <20260727-qemu-mrif-v4-v4-1-73e0890ad395@gmail.com>
-References: <20260727-qemu-mrif-v4-v4-0-73e0890ad395@gmail.com>
- <20260727-qemu-mrif-v4-v4-1-73e0890ad395@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wu9RQ-0005dq-4G
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:56:24 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wu9RM-0000sy-IT
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:56:21 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8487214ad2bso1522022b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:56:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786542978; x=1787147778; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DJuHDWOagMs9ZfLtuuQKvgPLq/WyXyp5HlKuS5YzHis=;
+ b=CpNWG8t+4wW9Bw2GE3ujyv0pgWJrpXjrL9xxyxUM0WZEQiuOlUuj3mom7hrb+HQnou
+ QjqVfBm+stpLGRMcl+bh4YDzCzNt0EoAgekQh++yJxNBktrvpVe2FPpchHD67DFjASXx
+ /btgEPAo05GmcNCIVLKdJ1tap9bdCsVYCYxueS2w9HcyrCWA7C8S0vthiSOTeFOg+SND
+ s0ccPOe/V0UUq9vtCdjSkxM46n+E/sdl50ZwgbBSK729pjIO6bOudC8MRfEw3a64mHr0
+ SJaufnTyZCMrgKqf9LpL7Ib83GGjCoNz2pvJh186nvdZzXSPz8rt3iPqBYL8m/QE97yU
+ Z1yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786542978; x=1787147778;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=DJuHDWOagMs9ZfLtuuQKvgPLq/WyXyp5HlKuS5YzHis=;
+ b=Fb4j/l4LfCO50AOr0MVt1497n6fyENBNaudb5OgwVJp1kCQIQgA92G7THNPte3tSIU
+ 5b53RxZEmNQgIE4q91KVRV7XxIJknLY25AbsOa4kI45s6XmY5L7jYO3ifSxRJ8jv2FKb
+ kvq179CUZYG5lbC16ttXsUC//V42SVWc978Xz8Oq1+VUwwGSGWAk6wS+kmoRQGZ4jpLc
+ 9quj7tu3NvoDfgT4d5pQ16YN4mV0Gdiq4Py+EtndH7TPfU6lPNq7IgATyNzzyMN0L5l4
+ G38K09ZB5TFjh0rQGgOy9qHsHHM1ybyGLjASxugSOfrILEfLUw2lxuM0XyCOzWAE3CK5
+ Bt6g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rremx+rzRTI8wMMRClGFXig3GhuVP5G+ngyeWe0NubRaw91DuWgDYS4TWBMKW1yZ85v9zC7CfMdsE6z@nongnu.org
+X-Gm-Message-State: AOJu0YyzUvFcnL3NeRJS7Lm4vyrz42SO6TI2HGJOLdlKSd+SLDq6yUAG
+ 6nsxGmm67UgHZueT9BLGzxoZyBbe4MsOYTbDIALAI2TmNFI+sWHpyH/7OFt6tlJ4Pb7lmAwJ0Ti
+ FvTtW
+X-Gm-Gg: AR+sD10J/0PkNtZCFvJ1bUepuYMFgLGJ7FVINdwPbpwF6KraAg3ZUa4bYGQ9a3qG6Ta
+ DVU0jn16ghuwvThejW3VqYuS5b3RZQ0rSnVelg5LbCTFXByoT+t8D1+B//zLB/2Odeen/8/z90O
+ 6Hy94isE77onINZ7T9FOGX8xvngADCS7dtuc171tO/zAVkiAMEXBGeJ93dTPg3V6z/wzpMhMcWJ
+ gljRRcFZY6b441Ytqn7YEMmONLsIOTJKhRKE6CADzZP6E+i4YmnbsIrZBFbSHgyr08pQP9HMwjN
+ tE16MrC6ugwrxp+yzPajkkfX3uZPrw0zoZwi18Z3qre+8zuVoVvu9pz4MZkecIvKB/a6oexc9Po
+ 1mO+kAJlgoIH0kUwhTdxbVgWoXvqykGDee/5R7CDOCxpoEgzrSMeJCLgzOxY1BKqdburusHW2f6
+ 8hZdRroA0ui5LFuQt/rVuMDEuXpJLeNHokEXNHw5J7NBUTgeOiN6kQz+7grTVcnB/B/6G6gJK+T
+ aHhXaOAgIvN8oA92/9W7JcJGp2w
+X-Received: by 2002:a05:6a00:6ca7:b0:845:cf86:9469 with SMTP id
+ d2e1a72fcca58-84fb5543ef4mr5610765b3a.29.1786542977996; 
+ Wed, 12 Aug 2026 06:56:17 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84fb1d1ff99sm1136654b3a.13.2026.08.12.06.56.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Aug 2026 06:56:17 -0700 (PDT)
+Message-ID: <dd63055d-0770-4dcb-86f4-ce61ba864681@linaro.org>
+Date: Wed, 12 Aug 2026 06:56:15 -0700
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.159;
- envelope-from=alistair@alistair23.me; helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] util/cpuinfo-aarch64: Detect FEAT_CSSC
+To: Brad Smith <brad@comstyle.com>, qemu-devel@nongnu.org
+References: <20260812003143.225228-1-richard.henderson@linaro.org>
+ <20260812003143.225228-4-richard.henderson@linaro.org>
+ <8dcd5fde-7d99-441a-86c2-5e293d474e23@comstyle.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <8dcd5fde-7d99-441a-86c2-5e293d474e23@comstyle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,144 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-07-27 at 15:22 +0800, Flavien Solt wrote:
-> iommu-testdev writes ITD_DMA_WRITE_VAL with unspecified requester
-> attributes. RISC-V MSI remapping tests need to select an interrupt
-> identity in the payload. The MSI trap also identifies the device
-> through
-> MemTxAttrs.requester_id.
->=20
-> Add a write-value register with the existing constant as its reset
-> default. Populate the requester ID from the PCI function. Existing
-> translation tests retain their payload while interrupt-remapping
-> tests
-> can issue a valid MSI for the test device.
->=20
-> Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
-> Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+On 8/11/26 20:35, Brad Smith wrote:
+>> @@ -101,6 +103,15 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+>>           }
+>>       }
+>> +    mib[0] = CTL_MACHDEP;
+>> +    mib[1] = CPU_ID_AA64ISAR2;
+>> +    len = sizeof(isar2);
+>> +    if (sysctl(mib, 2, &isar2, &len, NULL, 0) != -1) {
+>> +        if (ID_AA64ISAR2_CSSC(isar2) >= ID_AA64ISAR2_CSSC_IMPL) {
+>> +            info |= CPUINFO_CSSC;
+>> +        }
+>> +    }
+>> +
+>>       mib[0] = CTL_MACHDEP;
+>>       mib[1] = CPU_ID_AA64PFR1;
+>>       len = sizeof(pfr1);
+> 
+> You can remove the bottom chunk. Any OpenBSD release that has the ID_AA64ISAR2_CSSC
+> and ID_AA64ISAR2_CSSC_IMPL constants is also covered by elf_aux_info() which is the
+> first chunk.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Right-o.  Thanks!
 
-Alistair
-
-> ---
-> =C2=A0hw/misc/iommu-testdev.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 14 ++++++++++++--
-> =C2=A0include/hw/misc/iommu-testdev.h |=C2=A0 1 +
-> =C2=A02 files changed, 13 insertions(+), 2 deletions(-)
->=20
-> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
-> index 15eb6de..6428a57 100644
-> --- a/hw/misc/iommu-testdev.c
-> +++ b/hw/misc/iommu-testdev.c
-> @@ -28,6 +28,7 @@ struct IOMMUTestDevState {
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t dma_paddr;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t dma_len;
-> =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t dma_result;
-> +=C2=A0=C2=A0=C2=A0 uint32_t dma_write_val;
-> =C2=A0=C2=A0=C2=A0=C2=A0 bool dma_armed; /* armed until a trigger consume=
-s the request */
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 AddressSpace *dma_as;=C2=A0=C2=A0 /* IOMMU-media=
-ted DMA AS for this device
-> */
-> @@ -80,6 +81,7 @@ static void
-> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* Initialize MemTxAttrs from generic register. =
-*/
-> =C2=A0=C2=A0=C2=A0=C2=A0 attrs.secure =3D ITD_ATTRS_GET_SECURE(s->dma_att=
-rs_cfg);
-> +=C2=A0=C2=A0=C2=A0 attrs.requester_id =3D pci_requester_id(&s->parent_ob=
-j);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 space_valid =3D ITD_ATTRS_GET_SPACE_VALID(s->dma=
-_attrs_cfg);
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (space_valid) {
-> @@ -97,12 +99,12 @@ static void
-> iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 as =3D s->dma_as;
-> =C2=A0
-> -=C2=A0=C2=A0=C2=A0 /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
-> +=C2=A0=C2=A0=C2=A0 /* Step 1: Write the configured test value to DMA add=
-ress */
-> =C2=A0=C2=A0=C2=A0=C2=A0 trace_iommu_testdev_dma_write(s->dma_vaddr, s->d=
-ma_len);
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 for (int i =3D 0; i < s->dma_len; i++) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Data is written in li=
-ttle-endian order */
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 write_buf[i] =3D (ITD_DMA_WRI=
-TE_VAL >> ((i % 4) * 8)) & 0xff;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 write_buf[i] =3D (s->dma_writ=
-e_val >> ((i % 4) * 8)) & 0xff;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0 write_res =3D dma_memory_write(as, s->dma_vaddr,=
- write_buf,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len, attrs);
-> @@ -186,6 +188,9 @@ static uint64_t iommu_testdev_mmio_read(void
-> *opaque, hwaddr addr,
-> =C2=A0=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_ATTRS:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D s->dma_attrs_c=
-fg;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> +=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_WRITE_VAL:
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D s->dma_write_val;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 default:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> @@ -240,6 +245,9 @@ static void iommu_testdev_mmio_write(void
-> *opaque, hwaddr addr, uint64_t val,
-> =C2=A0=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_ATTRS:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D dat=
-a;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> +=C2=A0=C2=A0=C2=A0 case ITD_REG_DMA_WRITE_VAL:
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D data;
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 default:
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> @@ -263,6 +271,7 @@ static void iommu_testdev_realize(PCIDevice
-> *pdev, Error **errp)
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_paddr =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_result =3D ITD_DMA_RESULT_IDLE;
-> +=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D ITD_DMA_WRITE_VAL;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_armed =3D false;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D ITD_ATTRS_SET_SPACE(0,
-> ITD_ATTRS_SPACE_NONSECURE);
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_as =3D pci_device_iommu_address_space(pde=
-v);
-> @@ -280,6 +289,7 @@ static void iommu_testdev_reset(DeviceState *dev)
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_paddr =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_len =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_result =3D ITD_DMA_RESULT_IDLE;
-> +=C2=A0=C2=A0=C2=A0 s->dma_write_val =3D ITD_DMA_WRITE_VAL;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_armed =3D false;
-> =C2=A0=C2=A0=C2=A0=C2=A0 s->dma_attrs_cfg =3D ITD_ATTRS_SET_SPACE(0,
-> ITD_ATTRS_SPACE_NONSECURE);
-> =C2=A0}
-> diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-
-> testdev.h
-> index 3383659..2f4e931 100644
-> --- a/include/hw/misc/iommu-testdev.h
-> +++ b/include/hw/misc/iommu-testdev.h
-> @@ -81,6 +81,7 @@ enum {
-> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_ATTRS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =3D 0x18,
-> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_GPA_LO=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- =3D 0x1c,
-> =C2=A0=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_GPA_HI=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- =3D 0x20,
-> +=C2=A0=C2=A0=C2=A0 ITD_REG_DMA_WRITE_VAL=C2=A0=C2=A0 =3D 0x24,
-> =C2=A0=C2=A0=C2=A0=C2=A0 BAR0_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 0x1000,
-> =C2=A0};
-> =C2=A0
+r~
 
