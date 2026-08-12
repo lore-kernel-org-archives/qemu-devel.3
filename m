@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E39EC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7814BC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8oV-0006NB-Nh; Wed, 12 Aug 2026 09:16:11 -0400
+	id 1wu8f4-0001sP-ET; Wed, 12 Aug 2026 09:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8ke-0003Vg-Vc; Wed, 12 Aug 2026 09:12:16 -0400
+ id 1wu8ef-0000wA-Fh; Wed, 12 Aug 2026 09:06:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kb-0006L8-QY; Wed, 12 Aug 2026 09:12:12 -0400
+ id 1wu8ec-0004xd-CY; Wed, 12 Aug 2026 09:06:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=4/UzLkysQzyYLqGqZVBFyzCw1aseDfeIxsziEJjsPvM=;
+ t=1786539783; bh=YLJwKxSB3vXemu0yIF4FzB2GoP6wgCrhgKepy0hx3io=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QzbOioWSoOoJxKbDVo5CmcDysDgEX5exJyCDaaB2UgwVI0+uGxLljK7mFj79lTJAV
- 6yRtNMNEQ7EN59jPU3+w3pcvBJiz0ufwHRO6D2AAnPy5+0/vNtSmzLB6JYIlgBv1Vt
- vug91tBp0QTvfjmSMyctx0IZnsRJRD95gkjb9P4UsjX3MvcYeEBpZBTrY53iTzQLnW
- 8WTRgZODMliB/G9hkFrS3tNNDcetkBpnGOxbinUVu5MMd+c/BWscFu8P3kBlWAbeNa
- tAl45Xs6FjlqPxBrBa1ZZqsRoLnqyl502LuZr9ztHPM9LHPJEPfDLsuh2Ch/cgitdT
- 8q2zfZs2U1a3g==
+ b=frvspU3XUxsdnupEuSengc8qDJOYcRh7ipclToFTxNwVwNnelwmXphpnhiVUMdC0R
+ awnjLN16rLCmO0vCQHzALsGGu5lMrzIwUkFvVgNOknobdkVzG71HQnOa+c3imkjPEB
+ EZ/Taeq4c/0jtS3CqwvnH/98JB2AHd3cvjEsH5wMOpOi1edXDTbIiTu08caj+55t9c
+ bb5FjwT7clIQolakvjZvluTQ3tBpL70bgVfiFvmXFrBcEMTjml9PCog/SwaFhQzA57
+ lIH+muZZJ4QrHlZLsljMakSXN+JTG6C/Ucxa86SZRYEAz2rqtwmQ741FsKa2EahSae
+ ClDGFwXx4T+Bg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B5A7C1CA4DB;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AA6231CA4A0;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EB9EA409BBE;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E0D19409B83;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C1BD32F94C; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 21D792F8D6; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ankur Saini <ankur98saini@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 092/102] virtio-gpu: reject requests with
- short/truncated control headers
-Date: Wed, 12 Aug 2026 16:02:07 +0300
-Message-ID: <20260812130233.621965-92-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 033/102] hw/display/virtio-gpu: Initialize blob
+ mapping for ATTACH_BACKING
+Date: Wed, 12 Aug 2026 16:01:08 +0300
+Message-ID: <20260812130233.621965-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,94 +73,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ankur Saini <ankur98saini@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-A short control request can leave command data partially initialized.
-For the common header, guest-controlled flags can then cause stale fence
-metadata to be returned to the guest.
+It is necessary for blob cursor and scanout.
 
-The command fill helpers detect a short copy but only log and return.
-For the common header this leaves the request without any completion;
-for type-specific commands the caller still completes the request but
-reports VIRTIO_GPU_RESP_OK_NODATA, masking the error. Make
-VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete the
-request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the same
-error through the existing vhost-user-gpu dispatcher. This also rejects
-truncated type-specific commands.
-
-The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
-clear it and complete the request directly when that copy is short.
-
-Fixes: CVE-2026-18054
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
-Reported-by: Ankur Saini <ankur98saini@gmail.com>
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
-(cherry picked from commit 1f24066fc88d33455ee54a20f29994d9e69997ba)
+Message-ID: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 4ae1c5c7d6f33d1e9c030ec4d24ab272609188cc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index ee9858c397c..78648815093 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -930,16 +930,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-         if (len != sizeof(cmd->cmd_hdr)) {
-             g_warning("%s: command size incorrect %zu vs %zu\n",
-                       __func__, len, sizeof(cmd->cmd_hdr));
--        }
--
--        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
--        g_debug("%d %s\n", cmd->cmd_hdr.type,
--                vg_cmd_to_string(cmd->cmd_hdr.type));
--
--        if (vg->virgl) {
--            vg_virgl_process_cmd(vg, cmd);
-+            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-+            vg_ctrl_response_nodata(
-+                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-         } else {
--            vg_process_cmd(vg, cmd);
-+            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-+            g_debug("%d %s\n", cmd->cmd_hdr.type,
-+                    vg_cmd_to_string(cmd->cmd_hdr.type));
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 598ee4026c1..c34a09e82b1 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -988,6 +988,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
+     }
 +
-+            if (vg->virgl) {
-+                vg_virgl_process_cmd(vg, cmd);
-+            } else {
-+                vg_process_cmd(vg, cmd);
-+            }
-         }
++    if (!res->image) {
++        virtio_gpu_init_udmabuf(res);
++    }
+ }
  
-         if (cmd->state != VG_CMD_STATE_FINISHED) {
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index 2374eb90cb9..aaf2870cb24 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
-         if (vugpufillcmd_s_ != sizeof(out)) {                   \
-             g_critical("%s: command size incorrect %zu vs %zu", \
-                        __func__, vugpufillcmd_s_, sizeof(out)); \
-+            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
-             return;                                             \
-         }                                                       \
-     } while (0)
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 9ee0737d9df..7f4dd42ff65 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -296,6 +296,9 @@ struct VirtIOGPURutabaga {
-             qemu_log_mask(LOG_GUEST_ERROR,                              \
-                           "%s: command size incorrect %zu vs %zu\n",    \
-                           __func__, virtiogpufillcmd_s_, sizeof(out));  \
-+            memset(&out, 0, sizeof(out));                               \
-+            virtio_gpu_ctrl_response_nodata(                            \
-+                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);         \
-             return;                                                     \
-         }                                                               \
-     } while (0)
+ static void
 -- 
 2.47.3
 
