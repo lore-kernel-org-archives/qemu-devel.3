@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C1CC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57685C5DF60
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuARF-0002Zj-VV; Wed, 12 Aug 2026 11:00:18 -0400
+	id 1wuAV2-0000NV-ET; Wed, 12 Aug 2026 11:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAR7-0002G2-Qh; Wed, 12 Aug 2026 11:00:11 -0400
+ id 1wuATE-00052P-1U; Wed, 12 Aug 2026 11:02:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAR3-0001px-Ju; Wed, 12 Aug 2026 11:00:08 -0400
+ id 1wuATC-0002bZ-3M; Wed, 12 Aug 2026 11:02:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=d4QtQB2ChNQxS5w7StMjwN4uOBLgz1lsI8tMgiYSi48=;
+ t=1786546234; bh=+MVzkzq08rQlGtjLqUheuQpzcQ4GmZjRhWK3JDW25O4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TA0S8kgKzQqQYj7rjD+MoUENshiFTicJBPQInrPoQ20mjFgnMtJUXe0PTgDgvZKmL
- XDM/ELCSX4/xdL3oVr/RlvO0gbfSXr4YAWEjHwYhkAcTjb8/CNYGJKaM+bNYDnK02J
- nMjuEyTOyTZZD3QA3SIRoYt75uHGBX3w6IHN/7gNn7e0ogb8Zpv6yo0/XX88OosCce
- ksb4j4ZeQh0TCJKDNO08vw/w6RMMDhU2RSydrSRHlUPK6nGAvLXzjDAJqAKlkxxjcL
- NqmXw0zZ9wdIxqlNeN/fpJ/HLZbcHB3ohtEzpvidO5cCsKII+PSdZvFwfjXsW1k4Iz
- TtFKMAUicR1rw==
+ b=WbGPx8uYdKK4arCMWB75eRKlAI7OqM516gMHgG5hIIZ4s1P7xriwR+XXN7YjLp5L2
+ cOFYvW2H9099NqIET03EqAZq5/KhSeZJsEwXDpvay6SSkZ1+7OZb9WRYpTXjj7ZKU9
+ Om/vmEwAFiVYV0fte3x/8X/9EyHqSRo/2DISU3x3jDOzeFR0RJuwQTsvmIU8BPZdN0
+ /w0OGb5+yJif5huWB01gF4QbH0Uqi82uEHfRs/b2eBwy5QSAGkKjli7To7OoivnNau
+ orWh1f0BJelAYPhK81FXoKpqXysRQ9rhtv0D94ZQhBAai0PBlQ0RB3VCGGXlkZuvp4
+ ZbZGB73M5bexg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6EF551CA663;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 23B291CA679;
+ Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C90BB409DA5;
- Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E74C409DC0;
+ Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 337EB2FA21; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id DC1CB2FA4D; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 095/120] tests/unit: add reproducer for BlockAcctStats
- histogram locking race
-Date: Wed, 12 Aug 2026 17:49:18 +0300
-Message-ID: <20260812144955.649205-95-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 117/120] linux-user/sh4: Deliver SIGILL on invalid
+ instruction
+Date: Wed, 12 Aug 2026 17:49:40 +0300
+Message-ID: <20260812144955.649205-117-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -74,164 +73,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-block_latency_histogram_set() and block_latency_histograms_clear()
-replace BlockLatencyHistogram's nbins/boundaries/bins without taking
-stats->lock, while block_account_one_io() reads those same fields
-under that lock from whatever iothread completes the I/O.
+On invalid instruction, deliver SIGILL rather than crashing the whole
+process unconditionally.
 
-Add a test that races two real threads against
-block_latency_histogram_set() and
-block_acct_start()/block_acct_done() on the same BlockAcctStats.
-Applied here it passes, since the previous two commits already take
-the lock; reverting them locally reproduces the abort this series
-fixes, in about a second.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260724111311.4086859-4-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 842c89281a20c3ea783609c5ac9da226e017e490)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit bc4681990bb6b065e78e7564cb431e44dd148b88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index f768e882a4d..d453432e85d 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -74,6 +74,7 @@ if have_block
-     'test-blockjob': [testblock],
-     'test-blockjob-txn': [testblock],
-     'test-block-backend': [testblock],
-+    'test-block-accounting': [testblock],
-     'test-block-iothread': [testblock],
-     'test-write-threshold': [testblock],
-     'test-crypto-hash': [crypto],
-diff --git a/tests/unit/test-block-accounting.c b/tests/unit/test-block-accounting.c
-new file mode 100644
-index 00000000000..7aae491cfc2
---- /dev/null
-+++ b/tests/unit/test-block-accounting.c
-@@ -0,0 +1,115 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * BlockAcctStats latency histogram locking regression test
-+ *
-+ * Copyright (c) 2026 Virtuozzo International GmbH.
-+ *
-+ * Regression test for missing stats->lock in
-+ * block_latency_histogram_set()/block_latency_histograms_clear(),
-+ * racing block_account_one_io() reading the same fields from an
-+ * iothread. Aborts reliably before the fix, passes after it.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "block/block.h"
-+#include "block/accounting.h"
-+#include "system/block-backend.h"
-+#include "system/block-backend-io.h"
-+#include "qapi/error.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/thread.h"
-+
-+#define RACE_DURATION_MS 2000
-+#define NUM_READER_THREADS 8
-+
-+static bool stop_workers;
-+
-+/*
-+ * Different bin counts, so the writer's g_free()/g_new() churn can be
-+ * caught mid-update. Values are small enough (nanoseconds) that plain
-+ * back-to-back start/done calls exercise every bin without sleeping.
-+ */
-+static uint64List boundaries_a[] = {
-+    { .next = &boundaries_a[1], .value = 1000 },
-+    { .next = &boundaries_a[2], .value = 5000 },
-+    { .next = NULL,             .value = 50000 },
-+};
-+
-+static uint64List boundaries_b[] = {
-+    { .next = &boundaries_b[1], .value = 800 },
-+    { .next = &boundaries_b[2], .value = 3000 },
-+    { .next = &boundaries_b[3], .value = 20000 },
-+    { .next = NULL,             .value = 200000 },
-+};
-+
-+static void *writer_thread(void *opaque)
-+{
-+    BlockAcctStats *stats = opaque;
-+
-+    while (!qatomic_read(&stop_workers)) {
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_a);
-+        block_latency_histogram_set(stats, BLOCK_ACCT_READ, boundaries_b);
-+        block_latency_histograms_clear(stats);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void *reader_thread(void *opaque)
-+{
-+    BlockAcctStats *stats = opaque;
-+
-+    while (!qatomic_read(&stop_workers)) {
-+        BlockAcctCookie cookie;
-+
-+        block_acct_start(stats, &cookie, 4096, BLOCK_ACCT_READ);
-+        block_acct_done(stats, &cookie);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void test_latency_histogram_race(void)
-+{
-+    BlockBackend *blk = blk_new(qemu_get_aio_context(),
-+                                BLK_PERM_ALL, BLK_PERM_ALL);
-+    BlockAcctStats *stats = blk_get_stats(blk);
-+    QemuThread writer, readers[NUM_READER_THREADS];
-+    int i;
-+
-+    /* Histogram has to be enabled (bins != NULL) before racing it. */
-+    g_assert(block_latency_histogram_set(stats, BLOCK_ACCT_READ,
-+                                         boundaries_a) == 0);
-+
-+    stop_workers = false;
-+    qemu_thread_create(&writer, "hist-writer", writer_thread, stats,
-+                       QEMU_THREAD_JOINABLE);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_create(&readers[i], "hist-reader", reader_thread, stats,
-+                           QEMU_THREAD_JOINABLE);
-+    }
-+
-+    g_usleep(RACE_DURATION_MS * 1000);
-+    qatomic_set(&stop_workers, true);
-+
-+    qemu_thread_join(&writer);
-+    for (i = 0; i < NUM_READER_THREADS; i++) {
-+        qemu_thread_join(&readers[i]);
-+    }
-+
-+    blk_unref(blk);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    bdrv_init();
-+    qemu_init_main_loop(&error_abort);
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/block-accounting/latency_histogram_race",
-+                    test_latency_histogram_race);
-+
-+    return g_test_run();
-+}
+diff --git a/linux-user/sh4/cpu_loop.c b/linux-user/sh4/cpu_loop.c
+index ee2958d0d93..0815b9c9bf3 100644
+--- a/linux-user/sh4/cpu_loop.c
++++ b/linux-user/sh4/cpu_loop.c
+@@ -64,6 +64,13 @@ void cpu_loop(CPUSH4State *env)
+             cpu_exec_step_atomic(cs);
+             arch_interrupt = false;
+             break;
++        case 0x180:
++            /* Illegal instruction */
++            /* fallthrough */
++        case 0x1a0:
++            /* Illegal instruction in delay slot */
++            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC, env->pc);
++            break;
+         default:
+             fprintf(stderr, "Unhandled trap: 0x%x\n", trapnr);
+             cpu_dump_state(cs, stderr, 0);
 -- 
 2.47.3
 
