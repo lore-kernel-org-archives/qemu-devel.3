@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC159C5DF65
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38DDC5DF61
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8gu-0004N3-2j; Wed, 12 Aug 2026 09:08:20 -0400
+	id 1wu8ec-0000fU-8O; Wed, 12 Aug 2026 09:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8g6-00033f-79; Wed, 12 Aug 2026 09:07:34 -0400
+ id 1wu8e7-0008KJ-Ak; Wed, 12 Aug 2026 09:05:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8g4-0005Ac-KS; Wed, 12 Aug 2026 09:07:29 -0400
+ id 1wu8e5-0004ea-FE; Wed, 12 Aug 2026 09:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=OHeNzBUPPo52MwqOEEnKrj/hyObYUoiPmoCisIMr+xI=;
+ t=1786539783; bh=esC6lqFQYnEgRwJ7pQH6fWu88/v93m0KiZTAkumr8hk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Bgmy7oPk7e6u6cfJyaBOjGhnqP6iF25hgDoA3434ami6mWiPSYevyb62XUT7+Vcv+
- +ffLf8R1/Ibh3jUiFmGWyu/qn/Xd6hTK7KBDY78dJCddsGH8lO+WOMdI8n9VgtMgBN
- yBWv7nbCPEL50QBCfbRNHs3LGW+VsCac4VLs1ZankW+ui6lL2Ov10X8JVW5LSzGlUn
- znDBNvDYSqrsro0T2wP1LAbCWMJp1mngSvJZiFMIVFtv2wcmC8lhrCyhauo2VDv9Wz
- aF4tiaOiwhmfLOdvxRXzW//ew2FoYHS6ul5qQyDY6CLMhx872gDuT87+fLcBQXssWG
- 0X7ip+/XkU8nA==
+ b=bv8KkO5YAVlFt3J1UjRj+ryCAzUXsnMAY5NkOlqcWUgh4y2JjDtB+SMkoJ13PZbk3
+ v9yCGUAESTVU5ALHUVLBsr2TypXiE646f+71JqVuK4UKi1iKdMvc99RJjVHG/4XvDC
+ CLCMBf/8utccrMfKvqtpXgFECmzw3Kf4LOV3bdXTzWFwfMg9v2z1kalLiBv/wNI4PW
+ ejuWKaE9uApGhR0ILa5zLg4P9S8Snww7HMmIhBh9ERu29gvS2T3XQWiDdE9GcQfOSV
+ 2dqdC7IoQzFaa5xz3Z5cc8uf7s6v2P5WkXI5kT0dLlB8hZqmtE5PHNJnSHLBHDFdfs
+ tCqZv5H2fdweA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E9BCE1CA4AE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 871F91CA499;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2B9F9409B91;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC67D409B7C;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 45A282F8F2; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 102FF2F8C8; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Xie Yongji <xieyongji@bytedance.com>,
- Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Thomas Huth <thuth@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 047/102] libvhost-user: fix heap overflow in
- vu_check_queue_inflights
-Date: Wed, 12 Aug 2026 16:01:22 +0300
-Message-ID: <20260812130233.621965-47-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 026/102] hw/display/vhost-user-gpu: validate message
+ payload sizes
+Date: Wed, 12 Aug 2026 16:01:01 +0300
+Message-ID: <20260812130233.621965-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,45 +74,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-vu_check_queue_inflights counts inflight descriptors using inflight == 1
-but copies entries using inflight != 0. If the inflight field contains
-an unexpected non-0/1 value, the function copies more entries than it
-allocates and overflows the heap buffer.
+A malicious or buggy vhost-user-gpu backend can send messages with
+undersized payloads, leading to out-of-bounds reads when the handler
+accesses struct fields beyond the allocated buffer. However,
+vhost-user-gpu is considered trusted by QEMU by design (it has access to
+shared memory etc).
 
-Stop the copy pass once resubmit_num reaches the counted inuse value.
-Note: the value is not guest-accessible so not a security vulnerability.
+Add a centralized minimum payload size check in vhost_user_gpu_chr_read()
+that rejects messages before dispatch, and a per-pixel bounds check in
+the VHOST_USER_GPU_UPDATE handler to ensure the variable-length data
+covers the declared width x height.
 
-Fixes: CVE-2026-63110
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Cc: Xie Yongji <xieyongji@bytedance.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
-Reported-by: BB CC <wywwzjj@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <e2315efc526c0ee918485df4be69e2b26e8b7a73.1784892981.git.mst@redhat.com>
-(cherry picked from commit b9d248dfaca5e31377ea4f7204aae788a050bafd)
+Fixes: 267f66465 ("hw/display: add vhost-user-vga & gpu-pci")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3866
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 1c1232c2ee0798e5f8446200005f045a153a5648)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 037c6614018..9846de782c0 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1408,6 +1408,13 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 2aed6243f6c..ff34d0b897d 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -118,6 +118,31 @@ static VhostUserGpuMsg m __attribute__ ((unused));
  
-         for (i = 0; i < vq->inflight->desc_num; i++) {
-             if (vq->inflight->desc[i].inflight) {
-+                /*
-+                 * We earlier counted exactly vq->inuse in flight -
-+                 * what is going on?
-+                 */
-+                if (vq->resubmit_num >= vq->inuse) {
-+                    return -1;
-+                }
-                 vq->resubmit_list[vq->resubmit_num].index = i;
-                 vq->resubmit_list[vq->resubmit_num].counter =
-                                         vq->inflight->desc[i].counter;
+ static void vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked);
+ 
++static size_t
++vhost_user_gpu_min_payload_size(VhostUserGpuRequest request)
++{
++    switch (request) {
++    case VHOST_USER_GPU_CURSOR_POS:
++    case VHOST_USER_GPU_CURSOR_POS_HIDE:
++        return sizeof(VhostUserGpuCursorPos);
++    case VHOST_USER_GPU_CURSOR_UPDATE:
++        return sizeof(VhostUserGpuCursorUpdate);
++    case VHOST_USER_GPU_GET_EDID:
++        return sizeof(VhostUserGpuEdidRequest);
++    case VHOST_USER_GPU_SCANOUT:
++        return sizeof(VhostUserGpuScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT:
++        return sizeof(VhostUserGpuDMABUFScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT2:
++        return sizeof(VhostUserGpuDMABUFScanout2);
++    case VHOST_USER_GPU_DMABUF_UPDATE:
++    case VHOST_USER_GPU_UPDATE:
++        return sizeof(VhostUserGpuUpdate);
++    default:
++        return 0;
++    }
++}
++
+ static void
+ vhost_user_gpu_handle_cursor(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ {
+@@ -319,6 +344,14 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
+             break;
+         }
++
++        if ((uint64_t)m->width * m->height >
++            (msg->size - sizeof(VhostUserGpuUpdate)) / sizeof(uint32_t)) {
++            error_report("vhost-user-gpu: update payload too small"
++                         " for %ux%u", m->width, m->height);
++            break;
++        }
++
+         s = &g->parent_obj.scanout[m->scanout_id];
+         con = s->con;
+         pixman_image_t *image =
+@@ -393,6 +426,11 @@ vhost_user_gpu_chr_read(void *opaque)
+     msg->flags = flags;
+     msg->size = size;
+ 
++    if (size < vhost_user_gpu_min_payload_size(request)) {
++        error_report("vhost-user-gpu: message %d payload too small", request);
++        goto end;
++    }
++
+     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
+         request == VHOST_USER_GPU_CURSOR_POS ||
+         request == VHOST_USER_GPU_CURSOR_POS_HIDE) {
 -- 
 2.47.3
 
