@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B25CC5CFEE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2B1C5DF60
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAPZ-0006ga-Kz; Wed, 12 Aug 2026 10:58:34 -0400
+	id 1wuAN5-0003eg-SL; Wed, 12 Aug 2026 10:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOb-0004rq-FE; Wed, 12 Aug 2026 10:57:35 -0400
+ id 1wuAMI-0001mh-Jc; Wed, 12 Aug 2026 10:55:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOW-0000wb-TB; Wed, 12 Aug 2026 10:57:31 -0400
+ id 1wuAMG-0007Yb-Gc; Wed, 12 Aug 2026 10:55:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=VOPB4WCD55uxq2KYuKgyk2kGQFVTYP2t7JDIwGKDNQU=;
+ t=1786546232; bh=Pv39CxwvaWTOB/zvHfIX8pZ3+0lcbm4b0+ujYjllghE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=F0SwwUga9E6iKgc0mH8BjHiBhaetBYA9i0lsJ0p+QlbIp0ZvnW0vU5OEkcAkSzShl
- BheaNqP4BryzhvQgEs6F52LLENXxWYizva6nbrc419nZnBSv/B0hB8jwwlYyZXBR3N
- p4IOpXB0+tstQsic1GO9wba3/Zzj1rm8vAT1y4KGH+HWOcKn9vrMxs/X2wPRZNHi7C
- fLLRKRwa4n2wLMzyswARHvvdkawqr9N7M86fMoEn9yR6ry5EWMMRlAeoYwPT2nizVY
- /Pia/NTgrJNXZrypnOOexQ71t8x0/Phr2DVIs6cg7Uub9Zvi3Y0pn5k4Ojc8jKa0mQ
- YOh653KyTHdnQ==
+ b=C0/e5dAQ/nLJGCpK91opAtoVd9hFLQTlvnDRGLVRzAxopluFzcF99dhc1h4MZ8Igs
+ W77AlgBtxL1tM9JRegsKtaPQ694OnNZVfGrDcqA2VxbwU+8mS/qkKKEecRqPLBvK8n
+ K28LufW/ANRb1skoPXIxoi0rGL81W+xlfrxkbyC0q2KGI/He7Z2SZKH/3dFz3yDCdQ
+ AnQTGivUlwHmIRMN2Iaql4o2pKtWxYE9FQHSLvOmuZdCXZr4mLdq+CcIcicTPOVxsp
+ OjId7imIwN1jN3J5Qzkh6heYo9M/SnGIxtZfUxNlypPRsmhHM68be+KZ1ejjFZAGLn
+ elBIz9akBq5HA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ADF661CA64A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1BFC91CA636;
  Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 14D94409D8C;
- Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 77090409D78;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 72D922F9EF; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id D620B2F9C7; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 070/120] linux-user: Guard local FUTEX_CMD_MASK
- definition
-Date: Wed, 12 Aug 2026 17:48:53 +0300
-Message-ID: <20260812144955.649205-70-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ jasowangio@gmail.com, dong ling <dongling226655@outlook.com>,
+ Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 050/120] hw/virtio: reject zero-length packed indirect
+ descriptor table
+Date: Wed, 12 Aug 2026 17:48:33 +0300
+Message-ID: <20260812144955.649205-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,41 +72,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-Building linux-user on a host with Linux 7.2 kernel headers fails with
-a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
-3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
-expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
-FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
-definition.
+The split-ring path already rejects a zero-length indirect descriptor
+table since commit 7423192912af ("virtio: add checks for the size of
+the indirect table"). The packed-ring path is missing the same check,
+allowing a guest to trigger an assertion in address_space_cache_init()
+with a packed indirect descriptor that has len=0.
 
-Add a #ifndef guard so the host definition takes precedence when
-available. The local fallback is kept for older kernel headers
-(pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
-FUTEX_CLOCK_REALTIME.
+Add the same !desc.len check to the packed-ring indirect validation
+in both virtqueue_packed_get_avail_bytes() and virtqueue_packed_pop().
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 8268d216a004d884a07db20e973158d81760a07c)
+Fixes: 86044b24e865 ("virtio: basic packed virtqueue support")
+Cc: jasowangio@gmail.com
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3984
+Reported-by: dong ling <dongling226655@outlook.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260715115040.2186274-1-lvivier@redhat.com>
+(cherry picked from commit 6dbdc271f56b42e921a662b65a862f503eb4448e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 5799769f832..e033c7db341 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2593,7 +2593,9 @@ struct target_drm_i915_getparam {
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index ddf8c13e99d..2f357519193 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1475,7 +1475,7 @@ static void virtqueue_packed_get_avail_bytes(VirtQueue *vq,
+         }
  
- #define FUTEX_PRIVATE_FLAG      128
- #define FUTEX_CLOCK_REALTIME    256
-+#ifndef FUTEX_CMD_MASK
- #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
-+#endif
- 
- #if defined(TARGET_X86_64)
- #define TARGET_EPOLL_PACKED QEMU_PACKED
+         if (desc.flags & VRING_DESC_F_INDIRECT) {
+-            if (desc.len % sizeof(VRingPackedDesc)) {
++            if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+                 virtio_error(vdev, "Invalid size for indirect buffer table");
+                 goto err;
+             }
+@@ -1927,7 +1927,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+     vring_packed_desc_read(vdev, &desc, desc_cache, i, true);
+     id = desc.id;
+     if (desc.flags & VRING_DESC_F_INDIRECT) {
+-        if (desc.len % sizeof(VRingPackedDesc)) {
++        if (!desc.len || (desc.len % sizeof(VRingPackedDesc))) {
+             virtio_error(vdev, "Invalid size for indirect buffer table");
+             goto done;
+         }
 -- 
 2.47.3
 
