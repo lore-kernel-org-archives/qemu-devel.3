@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0818DC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE04C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8jF-0000pv-04; Wed, 12 Aug 2026 09:10:45 -0400
+	id 1wu8my-0004pg-F2; Wed, 12 Aug 2026 09:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8iD-0007wZ-7U; Wed, 12 Aug 2026 09:09:44 -0400
+ id 1wu8jp-0002jl-Jx; Wed, 12 Aug 2026 09:11:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8i7-0005ik-NA; Wed, 12 Aug 2026 09:09:40 -0400
+ id 1wu8jn-0006Er-RB; Wed, 12 Aug 2026 09:11:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=7vQp8z0NgszPqiHyi/KNUnYAv2yjwf9q1jNnp1FUfCs=;
+ t=1786539784; bh=r7+A58AQn7ruh09AxJNbpuTbEaXrxbN/NDXhwpn61vg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l1aUg8Gfagb1Bd5DyO6C6NR5UD541d5Xwzcjz6FMBZ13kPeifV8WatzjVFYD93JWC
- Cx8gKs/BMi3ky+c1YyDVDGgfnCxs2zgP5YD8/QX1U3rvMmaIL4AtFueyXMoza5x8Uf
- jwBbUYFM5sG6nXHcvX1xaDiMptUHP0FywhwG9dcZA22Bq0Pmm//o6spTjM+tli2gSf
- Fi+a7+GGgM+ERSdyT49Io8uob13GO7oXusA+bUi8MaUnV1+QK1XxIeG5bR1ve3tjC8
- YM2er1qwifl4FeF4j7EOx1UOyzO48/NxBqhpjMmfEBVMlfxlZKiyRqMGfUOffPpppa
- tGjEQwig95aog==
+ b=OQjR5Lry0A1Xp2iTJu7BrXlm/imvj+ZO7e6SRU8s/dnNRz85Br7SOzNw6UKLvQhgv
+ 6L9z+KSWCocC+BmtNAh2FZsp/GehIlh4ABa0WH6ZIUoHlKW3mqjWKZtH5QugUH/aUx
+ X8PpU0Zq7+4N5918vgHQORc6eVlmZV6fo3fT+Xw1ngemzN6pIgIfITTL5aOZcxNjCC
+ g0ZRioHTVcKpIplb58dZWTCtnR6LUmSce9OSvL9nfti70VEcPDbUBF2Rk4snp6jLiS
+ DveAh+V0oSOd4n5pr9CHGervMuuVsdLfg+nvxSPUkhz2sRHItt3IFQrOd8sgPDXcQW
+ 5fuN2Aqe+CiGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4FE4A1CA4C3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D3C51CA4D5;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 854A5409BA6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D21F6409BB8;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7FAA22F91C; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id B0E4D2F940; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 068/102] hw/display/exynos4210_fimd: Factor out
- finding screen width/height
-Date: Wed, 12 Aug 2026 16:01:43 +0300
-Message-ID: <20260812130233.621965-68-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 086/102] iotests: run the test pool with the 'fork'
+ start method
+Date: Wed, 12 Aug 2026 16:02:01 +0300
+Message-ID: <20260812130233.621965-86-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -73,74 +74,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Currently we hard-code the expressions for getting the global screen
-width and height out of the VIDTCON2 register where we need them.
-Use functions instead.  Make the global_width variable in
-exynos4210_fimd_update() uint32_t for consistency.  (The values are
-clamped to well below INT_MAX, so there is no overflow risk here.)
+run_tests_pool() shares the runner via the class attribute
+TestRunner.shared_self, relying on worker processes to inherit it.
+That only works with the 'fork' start method. Python 3.14 switched
+the Linux default to 'forkserver', so workers see shared_self as
+None and parallel runs abort with:
 
-Stable CC because this is a prerequisite for an upcoming bugfix
-commit.
+  assert runner is not None
+  AssertionError
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-id: 20260706173324.804340-2-peter.maydell@linaro.org
-(cherry picked from commit 4f635bddf50c8c7783dbab7a584ebce4a07feee2)
+Only reproduces with Python 3.14+ and 'check -jN' (N > 1); meson
+runs one test per process and never calls run_tests_pool(), so CI
+is unaffected.
+
+Request get_context('fork') explicitly; it is available on all
+supported Python versions and a no-op before 3.14.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+Message-ID: <20260715103451.1930909-2-den@openvz.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 43e4791d99ab11c4bd12efaec061b3a43c8cde1c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index b3442d3b444..744e065c51a 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -1249,15 +1249,25 @@ static void exynos4210_fimd_update_irq(Exynos4210fimdState *s)
-     }
- }
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index 14cc8492f9f..859443f8cb2 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -26,7 +26,7 @@
+ import json
+ import shutil
+ import sys
+-from multiprocessing import Pool
++from multiprocessing import get_context
+ from typing import List, Optional, Any, Sequence, Dict
+ from testenv import TestEnv
  
-+static uint32_t exynos4210_fimd_global_width(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
-+static uint32_t exynos4210_fimd_global_height(Exynos4210fimdState *s)
-+{
-+    return ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
-+            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+}
-+
- static void exynos4210_update_resolution(Exynos4210fimdState *s)
- {
-     DisplaySurface *surface = qemu_console_surface(s->console);
+@@ -125,7 +125,7 @@ def run_tests_pool(self, tests: List[str],
+         assert TestRunner.shared_self is None
+         TestRunner.shared_self = self
  
-     /* LCD resolution is stored in VIDEO TIME CONTROL REGISTER 2 */
--    uint32_t width = ((s->vidtcon[2] >> FIMD_VIDTCON2_HOR_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
--    uint32_t height = ((s->vidtcon[2] >> FIMD_VIDTCON2_VER_SHIFT) &
--            FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    uint32_t width = exynos4210_fimd_global_width(s);
-+    uint32_t height = exynos4210_fimd_global_height(s);
- 
-     if (s->ifb == NULL || surface_width(surface) != width ||
-             surface_height(surface) != height) {
-@@ -1283,14 +1293,14 @@ static void exynos4210_fimd_update(void *opaque)
-     bool blend = false;
-     uint8_t *host_fb_addr;
-     bool is_dirty = false;
--    int global_width;
-+    uint32_t global_width;
- 
-     if (!s || !s->console || !s->enabled ||
-         surface_bits_per_pixel(qemu_console_surface(s->console)) == 0) {
-         return;
-     }
- 
--    global_width = (s->vidtcon[2] & FIMD_VIDTCON2_SIZE_MASK) + 1;
-+    global_width = exynos4210_fimd_global_width(s);
-     exynos4210_update_resolution(s);
-     surface = qemu_console_surface(s->console);
+-        with Pool(jobs) as p:
++        with get_context('fork').Pool(jobs) as p:
+             results = p.starmap(self.proc_run_test,
+                                 zip(tests, [test_field_width] * len(tests)))
  
 -- 
 2.47.3
