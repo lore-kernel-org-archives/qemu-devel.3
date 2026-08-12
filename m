@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C307DC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64EFBC5CFEE
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7tD-0004zd-Mk; Wed, 12 Aug 2026 08:16:59 -0400
+	id 1wu7t2-0004Lc-M7; Wed, 12 Aug 2026 08:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7t9-0004eg-5g
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wu7sy-0004B3-La
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:46 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7t7-000076-5P
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4980dc26022so8858375e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:52 -0700 (PDT)
+ id 1wu7sv-0008V4-O5
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:44 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-480001972b8so325299f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786537012; x=1787141812; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786537000; x=1787141800; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=h+cmZP9tIR8/f3Ux03T5Hyngz9RHSqaEs0VOCoIAJMU=;
- b=kfieIBTeGpy4cWOWaf3yeNIUizZLO7XZKtX7VwSHyp4NxJlTRWW6QIASlc2pA+OXud
- ZgaFTz1g08PD4EwtBljgOvVWr7oPjW7yKuuo+sfzm1dRM4m8Cv68yLOUtDeD4VT9N9uP
- t6Gv/8w1wT1ogEf0JyBZq5TIGnILdNVpOtd6Z07/wCwEeXhPpSTBkrqgW4y68IO4LXI8
- pV5szSLCmgaanu/qETvD6QFx2J+4A/w48f/5Sp5OVyr4OFm7vYAlTrllOhMqUQXpIDmc
- 3XpiIK4LMWP0e0BfgxMMJxmHm0KcvrAKdKUjOY5ADc1pdEVJQ+NkYwdHsjqcsJN65dor
- 6k3g==
+ bh=FnEhw5l35Ojo4FkzasV2AQd6Y48VBPRwnwdLMQCdWGQ=;
+ b=t5Z2L0splvjjiRBnAx+uo5SEOwTWxA6US9L2VogY3ihcwtGYt+KnBG6lgGNh52/7DA
+ Ubhawn21a3z+VSPXOWoIENndhVFPr3HMtAYHSs8YDsEXBhDVvmPLx+lcjdLK6yKxZnmd
+ zcR1kUF7KRguMTIujjLRissgFuigEpIW+OPV2W+yyFcc+2zB4Snv2F4ORyOM5LmQ5pX2
+ rrObmhzL+DYt8jb578HLSW4+peQGgvoq9U/lIpQRBxiALmo+yhR66q4ILGpWZq6GX2S8
+ qOquto4Mzh81tLZrcSoNIusC7OY1yOfpisp7cFYJBS8JGnrDslKaRmZVLahyJu64SKGh
+ spug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786537012; x=1787141812;
+ d=1e100.net; s=20251104; t=1786537000; x=1787141800;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=h+cmZP9tIR8/f3Ux03T5Hyngz9RHSqaEs0VOCoIAJMU=;
- b=Qq8Q5aetF23XwQSRX+N5lvXpSjYE5qFij7s05PtRBLVHBBaEprscxnwXj+jg301WQQ
- CaLkxyG6j1uOCoVz27Ny2CYrZobxAIT/gt4FY1N27cG1EwejJYAG8fS/+h4NpQniyBO/
- BmBKzTckyne2ew7+r3gR/7rgO2rtiGrcrfdOduk2RNxwCl1VUrknxrckhNJNmJN0drg8
- wVy7c4wpzRFKkpYsqz2oPUzBbzYIQCZL51WtgYiaOIJrP6msdi/fackP2PK1zCwgCiEM
- J00RiuDgupAsXhx05NmhUmgwpy7iqVJ/RD/hBkgCiMkrvEH20hvhfl+m7jkqqN6WlIg0
- ZStA==
-X-Gm-Message-State: AOJu0YxciBUnffBKpj87iLa7b6ogc6+Ve6rimHvUdBofxwfrI24TiztZ
- owbpK89SSIEp/T6YUrYnAk/kyZGK6iCj5sQsZrwXlIFmLiUORcPHDMIlbl69it4w5DrLyu/SDTA
- L/RRo
-X-Gm-Gg: AR+sD11KowUl3t2JhnC3m+yp111c6KfKAaYZ2MN1kEznZjXrCIF0dAd8SMbO7UZf756
- ZVxQ/gRTMVZZf3fQ9DScsyaryYsodkBa+sV3nrIu9AWpoCLCgFPpa4aPul49c8H6EL+yO+ESd/U
- /IiHLyrMfw40NtIx72J4FC250ZJlvITG18NbVgsTeP9vB8rr7rChKOsCOnn3BpA/qjNck7/31ZJ
- A5NxMe1GseK+sJoSvCXys2NlDyMhrJ5BDsN3EYIDHQGCiY559APsdDkRGlk9saKo5hGSsb/eEzD
- LzrAtAFwVlFfgvlenRT0k5WTawhQmV2NxGF4VRzHtZ5nzfwf2ex1IKfJvrPWkP6lwgnbfHc7tT6
- BjxvZjoo4Ik0cB6fo/eXcMS7TtmrYoNp/mt80DqfzSVHe4XzxBfZXTk39Ju0+wes6a/44yS3oCd
- 0Gl40zMqqb5Fql0tOgI8FJEjpR2OjuRb83A9b/5xbeXhq/yduOgR9EqhFY5g6nqA0cTVNCFNKhG
- cD8JF3lsnQXOdrSwLr+wIWOH5CMbZQQSJpj3LnyT5gSs3OU61kz08+5ZBMePKXnKAaQ6w==
-X-Received: by 2002:a05:600c:35c5:b0:499:79b9:e226 with SMTP id
- 5b1f17b1804b1-4997bf7c39fmr68421225e9.0.1786537011766; 
- Wed, 12 Aug 2026 05:16:51 -0700 (PDT)
+ bh=FnEhw5l35Ojo4FkzasV2AQd6Y48VBPRwnwdLMQCdWGQ=;
+ b=NPPpNl3AUW2gKO4Jer/n1LiH0pGHZUAfqY8XVlLXx54BbDK4Wk5XwFx1x4+/BmXSE8
+ OAVNJEClWo6ysoX9imluLs2v2Q2ySViG+Uix2RzDR+LYVUUNKDC942/5xXIs9sJGwHbR
+ rd+bhcbH7tyre9qQmWPOUMwwGN7x5Pn0jMU4Uqe6hW4DWEzMrwCeXXiXcpq9GJwT25Fk
+ EV+vKFkE2wJvKWbxdlDyW5ders+N/tKqGjFXuNqYnKZTjTfMHYHnTfsPndkMFhCYJFVv
+ AFQkDdb1SNcnMcFUTQvDyfZZKkWeR7h5f62kn9T+OToQzHIBzg7q2tPEVP/RZJWLOf/I
+ YUbQ==
+X-Gm-Message-State: AOJu0YzC6GVDV0if2XijZPHZTpF2P1SFFKPMm00V6RfBMYpvXCOxJEBo
+ KdJsdY5Wax89pTggKj/aWufwPidCwaPLRCkwwzZHIQyINc0aTmZThNC9H2/cbQ/Lc8sjQtdleWd
+ ZBfDU
+X-Gm-Gg: AR+sD12H0fFhur/0DCd+VwNmixMMCeu7aSidoDWVKdQ3MlmRxkeFEAU1OQpf/pQsFRU
+ TcbZv4YxoJQxo42oF9xWTVSfQm08a6mIb7IkD7tOWf48SdVT73+fc/m07N39Gq3lhY5eX7FD1sT
+ a/xCf/ZZgN3XkeHxnUlXlPI2IlyQuC5isTvxZEphNVuB31nzHoKWCtxtMi4XuWV8CwLrdzIKGDr
+ z5HPRhCKtv3Z96nBZ811oufmW+iKH/NkB5K3vpjou4W3XWJgTdgXwLHxIpVfVJa0SLfJL8hlJx3
+ Rk9C2vbALPHB0S1UfGcmwCI3N5vYPxBO04NcVWKMYuRzx10VQrpLqQvTw7IONyeSkRIhp/Xp5ol
+ rcJpxyrhytwN0cyZeHOYB/Xv6vVbld2z6gd1Auf6Xefb/2vWA8VpzLVsi06G1hLgmowHi+U1fx6
+ HP61f3hDyKK6d+erqOiJJYU6/3106+Nym2H1723TJ8w7W4sK+klZgtYCmBXCtzjpu+4JO/rkJdd
+ IhdjR3wHd426rwa5jm0tgO9fWGiltTE+OeMA7KBjcX6Qw4iZtusVHLJ0qXTvAoik05ubQ==
+X-Received: by 2002:a05:600c:3ba6:b0:493:e451:a9e1 with SMTP id
+ 5b1f17b1804b1-4997c0e3812mr57261625e9.2.1786537000109; 
+ Wed, 12 Aug 2026 05:16:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.49
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:50 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/26] hw/arm: Add Axiado EVK SCM3003
-Date: Wed, 12 Aug 2026 13:16:12 +0100
-Message-ID: <20260812121622.649730-17-peter.maydell@linaro.org>
+Subject: [PULL 09/26] target/arm: Implement {S,SU,US,U}TMOPA (4-way)
+Date: Wed, 12 Aug 2026 13:16:05 +0100
+Message-ID: <20260812121622.649730-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,183 +101,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Jui Chiu <kchiu@axiado.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add EVK axiado-scm3003 built with AX3000 SoC
-
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
-Message-id: 20260713073033.3883619-7-kchiu@axiado.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: KConfig for the board has to depend on TCG && ARM]
+Message-id: 20260713230244.70174-10-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig                 |  6 ++++
- hw/arm/ax3000-boards.c         | 56 ++++++++++++++++++++++++++++++++++
- hw/arm/ax3000-evk.c            | 27 ++++++++++++++++
- hw/arm/meson.build             |  3 ++
- include/hw/arm/ax3000-boards.h | 28 +++++++++++++++++
- 5 files changed, 120 insertions(+)
- create mode 100644 hw/arm/ax3000-boards.c
- create mode 100644 hw/arm/ax3000-evk.c
- create mode 100644 include/hw/arm/ax3000-boards.h
+ target/arm/tcg/helper-sme-defs.h |  5 +++++
+ target/arm/tcg/sme.decode        |  5 +++++
+ target/arm/tcg/sme_helper.c      | 14 ++++++++++++++
+ target/arm/tcg/translate-sme.c   |  9 +++++++++
+ 4 files changed, 33 insertions(+)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 32e7d83339..d16b3d2f47 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -733,3 +733,9 @@ config AXIADO_SOC
-     select AXIADO_CLK
-     select AXIADO_SDHCI
-     select UNIMP
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 1de72b7472..b8cb643367 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -414,3 +414,8 @@ DEF_HELPER_FLAGS_6(sme_ftmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, env
+ 
+ DEF_HELPER_FLAGS_5(sme_stmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sme_utmopa_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
 +
-+config AXIADO_EVK
-+    bool
-+    default y
-+    depends on TCG && ARM
-+    select AXIADO_SOC
-diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
-new file mode 100644
-index 0000000000..4b8deec15c
---- /dev/null
-+++ b/hw/arm/ax3000-boards.c
-@@ -0,0 +1,56 @@
-+/*
-+ * Axiado Boards
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++DEF_HELPER_FLAGS_5(sme_stmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(sme_sutmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(sme_utmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_5(sme_ustmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 08036c60c0..e8176fffdb 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1154,3 +1154,8 @@ FTMOPA_sb       1000 0000 011 ..... 000 ... .... .. 00 ..       @tmop_o2
+ 
+ STMOPA_sh       1000 0000 010 ..... 100 ... .... .. 10 ..       @tmop_o2
+ UTMOPA_sh       1000 0001 010 ..... 100 ... .... .. 10 ..       @tmop_o2
 +
-+#include "qemu/osdep.h"
-+#include "hw/arm/ax3000-boards.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/machines-qom.h"
-+#include "qemu/error-report.h"
-+#include "qom/object.h"
++STMOPA_sb       1000 0000 010 ..... 100 ... .... .. 00 ..       @tmop_o2
++SUTMOPA_sb      1000 0000 011 ..... 100 ... .... .. 00 ..       @tmop_o2
++USTMOPA_sb      1000 0001 010 ..... 100 ... .... .. 00 ..       @tmop_o2
++UTMOPA_sb       1000 0001 011 ..... 100 ... .... .. 00 ..       @tmop_o2
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 951cbbf58e..9de95428d2 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -3168,3 +3168,17 @@ IMOP4_4WAY(usmop4a_dh, +, int64_t, uint16_t, int16_t)
+ IMOP4_4WAY(usmop4s_dh, -, int64_t, uint16_t, int16_t)
+ 
+ #undef IMOP4_4WAY
 +
-+static struct arm_boot_info ax3000_binfo = {
-+    .loader_start = AX3000_DRAM0_BASE,
-+    .board_id = -1,
-+};
-+
-+static void ax3000_machine_init(MachineState *machine)
-+{
-+    Ax3000MachineState *ams = AX3000_MACHINE(machine);
-+
-+    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
-+    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
-+
-+    ax3000_binfo.ram_size = machine->ram_size;
-+    arm_load_kernel(&ams->soc->cpu[0], machine, &ax3000_binfo);
++#define ITMOP_4WAY(TNAME, MNAME)                                        \
++void HELPER(sme_##TNAME)(void *vza, void *vzn, void *vzm,               \
++                         void *vzk, uint32_t desc)                      \
++{                                                                       \
++    sme_tmop_4way_sb(vza, vzn, vzm, vzk, NULL, desc, inner_##MNAME);    \
 +}
 +
-+static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
++ITMOP_4WAY(stmopa_sb, smop4a_sb)
++ITMOP_4WAY(utmopa_sb, umop4a_sb)
++ITMOP_4WAY(sutmopa_sb, sumop4a_sb)
++ITMOP_4WAY(ustmopa_sb, usmop4a_sb)
 +
-+    mc->init = ax3000_machine_init;
-+    mc->default_cpus = AX3000_NUM_CPUS;
-+    mc->min_cpus = AX3000_NUM_CPUS;
-+    mc->max_cpus = AX3000_NUM_CPUS;
-+    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
-+}
++#undef ITMOP_4WAY
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index abdf98a40c..768b76f01e 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2202,3 +2202,12 @@ TRANS_FEAT(STMOPA_sh, aa64_sme_tmop, do_tmop_int,
+            a, MO_32, gen_helper_sme_stmopa_sh)
+ TRANS_FEAT(UTMOPA_sh, aa64_sme_tmop, do_tmop_int,
+            a, MO_32, gen_helper_sme_utmopa_sh)
 +
-+static const TypeInfo ax3000_machine_types[] = {
-+    {
-+        .name          = TYPE_AX3000_MACHINE,
-+        .parent        = TYPE_MACHINE,
-+        .instance_size = sizeof(Ax3000MachineState),
-+        .class_size    = sizeof(Ax3000MachineClass),
-+        .class_init    = ax3000_machine_class_init,
-+        .interfaces    = aarch64_machine_interfaces,
-+        .abstract      = true,
-+    }
-+};
-+
-+DEFINE_TYPES(ax3000_machine_types)
-diff --git a/hw/arm/ax3000-evk.c b/hw/arm/ax3000-evk.c
-new file mode 100644
-index 0000000000..a170848871
---- /dev/null
-+++ b/hw/arm/ax3000-evk.c
-@@ -0,0 +1,27 @@
-+/*
-+ * Axiado Evaluation Kit Emulation
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/arm/ax3000-boards.h"
-+
-+static void axiado_scm3003_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Axiado SCM3003 EVK Board";
-+}
-+
-+static const TypeInfo ax3000_evk_types[] = {
-+    {
-+        .name          = MACHINE_TYPE_NAME("axiado-scm3003"),
-+        .parent        = TYPE_AX3000_MACHINE,
-+        .class_init    = axiado_scm3003_class_init,
-+    }
-+};
-+
-+DEFINE_TYPES(ax3000_evk_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 0254b82df1..8ee5307a91 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -112,6 +112,9 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
- 
- arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
-   'ax3000-soc.c'))
-+arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
-+  'ax3000-boards.c',
-+  'ax3000-evk.c'))
- 
- arm_common_ss.add(files('boot.c'))
- 
-diff --git a/include/hw/arm/ax3000-boards.h b/include/hw/arm/ax3000-boards.h
-new file mode 100644
-index 0000000000..4a632661e1
---- /dev/null
-+++ b/include/hw/arm/ax3000-boards.h
-@@ -0,0 +1,28 @@
-+/*
-+ * Axiado Boards
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef AXIADO_BOARD_H
-+#define AXIADO_BOARD_H
-+
-+#include "hw/core/boards.h"
-+#include "hw/arm/ax3000-soc.h"
-+
-+#define TYPE_AX3000_MACHINE       MACHINE_TYPE_NAME("ax3000")
-+OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
-+
-+typedef struct Ax3000MachineState {
-+    MachineState parent;
-+
-+    Ax3000SoCState *soc;
-+} Ax3000MachineState;
-+
-+typedef struct Ax3000MachineClass {
-+    MachineClass parent;
-+
-+} Ax3000MachineClass;
-+#endif
++TRANS_FEAT(STMOPA_sb, aa64_sme_tmop, do_tmop_int,
++           a, MO_32, gen_helper_sme_stmopa_sb)
++TRANS_FEAT(SUTMOPA_sb, aa64_sme_tmop, do_tmop_int,
++           a, MO_32, gen_helper_sme_sutmopa_sb)
++TRANS_FEAT(USTMOPA_sb, aa64_sme_tmop, do_tmop_int,
++           a, MO_32, gen_helper_sme_ustmopa_sb)
++TRANS_FEAT(UTMOPA_sb, aa64_sme_tmop, do_tmop_int,
++           a, MO_32, gen_helper_sme_utmopa_sb)
 -- 
 2.43.0
 
