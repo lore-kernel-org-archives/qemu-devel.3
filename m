@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19BFC5DF65
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE661C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuHXk-00015y-I9; Wed, 12 Aug 2026 18:35:28 -0400
+	id 1wuHUW-0007Hx-Cw; Wed, 12 Aug 2026 18:32:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHXi-00012T-5r
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:26 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wuHUU-0007G0-Ni
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:06 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHXg-0001ov-2H
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:35:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-38101f85591so379020a91.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:35:23 -0700 (PDT)
+ id 1wuHUP-0000yu-Ls
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:06 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-84f3ab8750cso1366249b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786574122; x=1787178922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786573920; x=1787178720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=oHmxQeSr/dTTNzFrqNQqSRdCV/mZHqBgLnLzZSztk8w=;
- b=KvQ36ox++yOEj9MEQGfD1WGphXjPXb0CgDpP/g3d5llPgdcHhZbTcvoIg2WFiEMtrn
- UXiEcmVnvOlsnG1cnMNtoVvV7JXrbYtl7PGvjLfwe9skzy6U4N8nBCl7bA8zjbcicL1g
- CU659Zx0KWRQZ2856mjXhKiugGFRwTbJmrbfYRcYMM9mRjUeQFP/bMQbS/XI3SfrFPLL
- +9bvR2jCjamBhyEbxZ+Yg7G+QtK3u7vumMmmj+weF/w2yl7Z7BVdg0KR6xoQS0YvqZ7g
- 3zMucjAW+gySfO5jU9xrR7KJ9nH6j6EWJlCWZBDeH1xoXI0PmnYf01CYo42JN5grvxTr
- cB0g==
+ bh=f1cHhDDQS9k4fHmPQCoqY1V3PFVkrqSubkfXzA73XzM=;
+ b=M8QByCfGD+VUYAFbX84+dbJgPcFjPR1ImzxgDuHMNk2KyY8INcQaAe94S8cU4reFjW
+ DaE3MViephL/pyYdZJrtOEmCh8Ee8S/0tbwW9Cc0G4Z6W1vEteRg7HaWKKbfsSfjVGyN
+ lbR935hXaBfVhvmClux1eZDvoZEyHdL4yPfHHxv8wMJDdTF8AhIX5ytEZ9lEFcYUCS3S
+ /2P75pp4mFDfWki5Lpjw54U+r7T7G9C9Fnl3+M6RI3fRdU9hB2MgOX1Dzd2ldYQML/Ob
+ XYxeVZaGxSkIM6iOzFSBhlMJVNEKAOB7drJ2YvPJPnyLRDNumkIIEPMWARWKmL42XzcT
+ pH7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786574122; x=1787178922;
+ d=1e100.net; s=20251104; t=1786573920; x=1787178720;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=oHmxQeSr/dTTNzFrqNQqSRdCV/mZHqBgLnLzZSztk8w=;
- b=Wcok/MRm5bSix65zzrL6GD2v8hgnLPZVW6SORMJmxn0K14HAxj/hJl3PqObHeVvoUH
- M871nUjuxXXAd12hjicUWrXvXS99SkJMTNM36+EMA3Z6O4Z8slR+Mi4dyJ6+0m7FeRF6
- YFNg24h+H6lk0jvNQhXKxUE+sABof5ZXMnb8apR74pl2aDJW96aR0PMb/Bjs+bJrm5Gc
- MRPb9r6yd7OsmfKL7wNkAz1vUITHWkyqLhRXizEZrnrMy1xub8hJakcmyIlhBaqnw0x4
- p44wdkBpT800otuTRt1QCBKG4yDkHPPnniGRfoAtPMHWAb94u0q4/Hfv+haSHMT04Rv2
- o41A==
-X-Gm-Message-State: AOJu0YzPE7DQ6rxSlleUTchxw7aEPG4iqL46dDoKnuhVmSpK2d2xXaZj
- LKTULTxFLlRCvm7vvl45axKk80aemgDaEM+t2WdxBgkb4CAQviG0McA4HimwmIopby6p5TX/d9M
- E4xij
-X-Gm-Gg: AR+sD12JPJxjyu7V6uzfj/COFCOHJjcD15cnUkxj6EdgrHKcus/AL4sbPw99g8NJ5qI
- mHJaExkiyLyYwsVql56J/1U/KrKkaxFvKZFiQdbN2kx/9XQHah3GRC+SWUcMSnfFPyXTl1miYMs
- +lLCIXvZhjzDOzFUk+QFHCJtqzQ2oFuvGaHjphB8VhYgD/iR7PTdY6E+0OEx7sOfLrElzzTgLZX
- Rfh0vPwC7aruu6IIRfDYepbeiLkHCCEpD0j8lWz0l+XUUXvFeSlYmyv9Y6cFE+iIr0at7vv06xl
- Pz/vqHpSgPu0fH+BcMaq/JpXxVaFrvfTpyH4gpJsQShPSOB5FYJ2osONP3MWk/ORk0jh6bBIKkq
- 4Rsz1KcIHu//G4Hs+S26xnEREI0fWaNW5V6VwSbmBzEOBCUODElNHmDKxieszBAshxs8JcoDh73
- xI7iX94TpkM/mRycDvdw+xi+Z8dZEtCO8RJd1q/i49DnegwrClzb8eT7r1g7tluh6AktyJb+KAn
- N++mi4dGKkJfb53tujUY5IPrMVkHLA=
-X-Received: by 2002:a17:90b:53ce:b0:38e:4f42:d0d6 with SMTP id
- 98e67ed59e1d1-3931f9126e8mr399390a91.12.1786574122300; 
- Wed, 12 Aug 2026 15:35:22 -0700 (PDT)
+ bh=f1cHhDDQS9k4fHmPQCoqY1V3PFVkrqSubkfXzA73XzM=;
+ b=PiID/pGV4fJQ3FRKAsVC2doRT/B1ZF9zt5OdmJmlczSIX1vJaFk8NxMF90MzzF1kUY
+ yg15nDSYUSJlHHPd0uzlriGFsSB/YADUiKYfZPAlBScw7yU/J0zJOuWevKXIh3P41P/U
+ 8MWlbSc0epXzxQqX4q3UIVdAJptoNGrIWAvkeRV1UHm7fuAGBP2tPISlRma7LMR3gfX6
+ E5tILaQ5UFCnQUJB/elbrvfsdBPma1+vnpx4mjvnMV62WiK4zrU+CyaaJkveatbZG6kd
+ LAF8s9zBoxndmlxM3rIHvdaaKipitmPE96lsRe9s8KvzYlvbwY/JRqcFfa59p7NKr9f3
+ WCQg==
+X-Gm-Message-State: AOJu0Yyuz10gB43WvD1IHXS0poCeRowm1n4HHePrCZDxBdDEFkksJzzo
+ CIDRrYNBxmT5sxijKs8ULTNXy8uespiefmC+UOok0RXh1G/tLh5n53qPerzt3+mXaodymIMlluI
+ n+oSj
+X-Gm-Gg: AR+sD100LEp6wQeBmrqCXiDfAp4i4KNz6LAa3hZkUpiOp3VdWDscwZG8gv6T7obPgDh
+ 6hvG4m+NY+t1qqgfk3inzFlKin8lWjAdKIIGhQD1QR0eDL4TqjQ729TTeSeswD/fbgvroRehXY/
+ i0NK7nQTNUdXVOFxWHJ9bma5eJQh2kj/A8rMm5pcU7B7nxodG6VOekbRIpTEXPkBzXA+1OJDqK8
+ mwc2dTM2LVgnuBkMV3hD/uoFPpqTbqwA+9/W4Ae+2OwejylZ15egrOvshjflrhPXEnbIxRb8Wvk
+ LCSuXNyLs73s6x/qh7j5LKiyO5bcMl3fwuIaTZlv4yQoIFNzZTN3SE7mmJuXdezryrelZLwlVR3
+ 5+PeX0Y73tULEEyHCwIFWOIBZP/elJaRnCvb5ycVxnBqDDY0WeH69CzKcVB3JVmAg2WOxbkeySz
+ uN2qNliTuy+3Rs5/5naia5RrE0waUA0B1qi2fva03SVqXZfxm9OO5rhWMzlhzwonAK1ma6r34zi
+ cB2U6cXzHTHVF+F9bfoPmO6NuRkTWkj
+X-Received: by 2002:a05:6a00:300a:b0:84a:2a88:fbd3 with SMTP id
+ d2e1a72fcca58-84fc75c3be9mr1192891b3a.20.1786573920090; 
+ Wed, 12 Aug 2026 15:32:00 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931f41cd2fsm464854a91.12.2026.08.12.15.35.21
+ 41be03b00d2f7-cbef721cb0bsm212031a12.26.2026.08.12.15.31.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 15:35:21 -0700 (PDT)
+ Wed, 12 Aug 2026 15:31:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 41/52] disas/riscv: Split ventana_opcode_data
-Date: Wed, 12 Aug 2026 15:31:31 -0700
-Message-ID: <20260812223142.349142-42-richard.henderson@linaro.org>
+Subject: [PATCH v2 14/52] disas/riscv: Simplify c.addi
+Date: Wed, 12 Aug 2026 15:31:04 -0700
+Message-ID: <20260812223142.349142-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812223142.349142-1-richard.henderson@linaro.org>
 References: <20260812223142.349142-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,72 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the table to riscv-xventana-op.c.inc and massage
-the lines into OP() form.  Drop vt.illegal as unused.
-Return pointers to objects directly.
+While c.addi with imm == 0 and rd == 0 is c.nop,
+other c.addi with imm == 0 and rd != 0 are not illegal,
+but are reserved as HINTs.  Go ahead and disassemble as
+c.addi rather than falling back to invalid.
+
+Further, there's no reason to differentiate c.nop, since we have
+  c.addi -> addi -> nop
+vs
+  c.nop -> addi -> nop
+via decompress and pseudo translation steps.
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv-xventana.c        | 21 ++++++---------------
- disas/riscv-xventana-op.c.inc |  2 ++
- 2 files changed, 8 insertions(+), 15 deletions(-)
- create mode 100644 disas/riscv-xventana-op.c.inc
+ disas/riscv.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
-index a4e59312d0..5d2e07865f 100644
---- a/disas/riscv-xventana.c
-+++ b/disas/riscv-xventana.c
-@@ -8,35 +8,26 @@
- #include "disas/riscv.h"
- #include "disas/riscv-xventana.h"
- 
--typedef enum {
--    /* 0 is reserved for rv_op_illegal. */
--    ventana_op_vt_maskc = 1,
--    ventana_op_vt_maskcn = 2,
--} rv_ventana_op;
--
--static const rv_opcode_data ventana_opcode_data[] = {
--    { "vt.illegal", rv_codec_illegal, rv_fmt_none },
--    { "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2 },
--    { "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2 },
--};
-+#define OP(N, ...) static const rv_opcode_data op_##N = { __VA_ARGS__ };
-+#include "riscv-xventana-op.c.inc"
-+#undef OP
- 
- const rv_opcode_data *decode_xventanacondops(rv_decode *dec, rv_isa isa)
- {
-     rv_inst inst = dec->inst;
--    rv_opcode op = rv_op_illegal;
- 
-     switch (((inst >> 0) & 0b11)) {
-     case 3:
-         switch (((inst >> 2) & 0b11111)) {
-         case 30:
-             switch (((inst >> 22) & 0b1111111000) | ((inst >> 12) & 0b0000000111)) {
--            case 6: op = ventana_op_vt_maskc; break;
--            case 7: op = ventana_op_vt_maskcn; break;
-+            case 6: return &op_vt_maskc;
-+            case 7: return &op_vt_maskcn;
-             }
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 8a957e6a1e..7978ffb378 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -263,7 +263,6 @@ typedef enum {
+     rv_op_c_fsd = 231,
+     rv_op_c_sw = 232,
+     rv_op_c_fsw = 233,
+-    rv_op_c_nop = 234,
+     rv_op_c_addi = 235,
+     rv_op_c_jal = 236,
+     rv_op_c_li = 237,
+@@ -1896,10 +1895,9 @@ static const rv_opcode_data rvi_opcode_data[] = {
+     { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1, NULL, rv_op_sw, rv_op_sw,
+       rv_op_sw },
+     { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs1, NULL, rv_op_fsw, 0, 0 },
+-    { "c.nop", rv_codec_ci_none, rv_fmt_none, NULL, rv_op_addi, rv_op_addi,
+-      rv_op_addi },
++    { },
+     { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv_op_addi, rv_op_addi,
+-      rv_op_addi, rvcd_imm_nz },
++      rv_op_addi },
+     { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, NULL, rv_op_jal, 0, 0 },
+     { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, NULL, rv_op_addi, rv_op_addi,
+       rv_op_addi },
+@@ -3010,10 +3008,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+     case 1:
+         switch ((inst >> 13) & 0b111) {
+         case 0:
+-            switch ((inst >> 2) & 0b11111111111) {
+-            case 0: op = rv_op_c_nop; break;
+-            default: op = rv_op_c_addi; break;
+-            }
++            op = rv_op_c_addi; /* or unspecified HINT */
              break;
-         }
-         break;
-     }
- 
--    return op == rv_op_illegal ? NULL : &ventana_opcode_data[op];
-+    return NULL;
- }
-diff --git a/disas/riscv-xventana-op.c.inc b/disas/riscv-xventana-op.c.inc
-new file mode 100644
-index 0000000000..0fe4666aee
---- /dev/null
-+++ b/disas/riscv-xventana-op.c.inc
-@@ -0,0 +1,2 @@
-+OP(vt_maskc, "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2)
-+OP(vt_maskcn, "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2)
+         case 1:
+             if (isa == rv32) {
 -- 
 2.43.0
 
