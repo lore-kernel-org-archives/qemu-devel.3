@@ -4,60 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518A5C5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A3DC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAM7-0001Xo-8M; Wed, 12 Aug 2026 10:54:59 -0400
+	id 1wuAgh-0008DW-EM; Wed, 12 Aug 2026 11:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIx-00053L-M1; Wed, 12 Aug 2026 10:51:45 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgG-00082i-G0
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIw-0006qG-3J; Wed, 12 Aug 2026 10:51:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=KOEFUmlJ8sUsLa6+WoVu6B0boMIALbm69/xYypWjhC4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=t4GFXQFksalakHfieKXcgj8gu7G40eIT3Mgwz83VI3DkH8tzXJNW1nqusuZskQd+G
- zXByh86LywY5b2ZE93YzcE+N+gc4kmi228vVGW8qxb66iy8uLTsK9Ha3wug2GzWuDz
- pCXOUVuuQM8bY2SIsiFaZMBLVI59ajPsFqpd6rOtR+iztLFJ3ETAIqD4Xr+nYWwDAl
- xoCp82sQieDlaXVT/WPynhULob2WkaWC9gJB78FZ/ZEmr5HdJET4ark3EKVoV49XPZ
- s5wEcDx2H+kVqdihmY5oEIDz42xL/XftaqBciUQXWekFGIAuOevognCFd4k0nAfz/z
- m7qVdUkF72a8A==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1B7591CA614;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 760D6409D50;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D2FBC2F983; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgD-0007BF-P0
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786547745;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0iT8zWdwP/JoJO55pCA3wPGlSWkzRKH/4c+aZeB9UMc=;
+ b=MQz1k3UtgXQ/38kU3Z7RLtKuT9oCduekoxOCd5eFLpeeZvHdNpxNwJyvMYSWvotEvdkTDX
+ hjuXgRir9vgDLTwamKhNO7jYrvFBl+s0HOIeVEle/jras7OrdD/ryhcqoDAh8fXRrgCKI6
+ Y5VP1KWzV9rbROixaUfJi+YamXffO0Q=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-100-4qchVrk6NSWi7ThBL5m4IQ-1; Wed, 12 Aug 2026 11:15:38 -0400
+X-MC-Unique: 4qchVrk6NSWi7ThBL5m4IQ-1
+X-Mimecast-MFC-AGG-ID: 4qchVrk6NSWi7ThBL5m4IQ_1786547738
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c1b4d961dso10224001cf.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786547738; x=1787152538; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0iT8zWdwP/JoJO55pCA3wPGlSWkzRKH/4c+aZeB9UMc=;
+ b=oJ9NoN8V0DyoPpSNanukoD6ZVSVqiFR1k9tWTMEDrwJ5zX5OY07plA9xnyda5wHqSB
+ 5r2JD1/u/tWUS2zkq8glntWcjlm5AQuBGKOsW9BvBlcTK+qPHZXG3B+S8FJ1cJdSviG0
+ UHaS9g+Ek57LJFqUM6npnF3U4vqPnRblamMz1FrcslL6Q8JHU4y6o+GMvEwLAWW7Nxtl
+ rjcg18QmXwaaYEfw0meRE5G5W4UAARqAMqL7mgOh3082lM5xoU/RQVgi/d9fNIpk2DHe
+ HZOCSWE+GqP31/EEb/Oue5WM3CS6ft8hK7VABngKJ02QUDghpXE78BfDzMH1b3lRLZv3
+ rMQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786547738; x=1787152538;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0iT8zWdwP/JoJO55pCA3wPGlSWkzRKH/4c+aZeB9UMc=;
+ b=r42fpogVZQgS7TtW8D7GN/0qV4gE1V4G8p5YTTwenRu5dH9vNTOS4hu6mu8swhW0P9
+ 8vEvUCz3XDpkAXlmkCu5mMTQymi4eupHSt0Q+FX7tEbcr7IkUu6DwrlQeao7JvHy3u1A
+ 3gnS9kwgKCxpmqYZpBYE6owvrtP2HSI5rAKyOmbDwnv1yMxv7IQWg58MgOjoORRCiYzR
+ uBZ26BY9RJSfQDpR5g/qUYxj0WS2M/ZM/u0Oyxua5GGVnZa3rfB8a/8G6NvQCjP1gn43
+ Dn4SYudYsBuZmSqVpc8KNMBO83aeECG+y5xxb5jrz0UfDuGEAeB1EkeIeyre9PaQ4fe3
+ vvjQ==
+X-Gm-Message-State: AOJu0Yza0IKuTBaLBCxQfTX0bYKfLuJ6QPatIIeYPXCSp1lBf/9mXHSb
+ VsBxPOTgbuN1T8YV/TqNgno0HWfsOmeePN5weHRoM4GeKhN2nF4bHFgxAg3o0g3lP4ub0pGdy3P
+ qdslcYBNJ5Kqf9CoG1RiUH/SkhfgPja/gTTv5xH2M4e75okIam2t9QEBA67XJ5AwIOQ/r1kPHhj
+ ZlKW6boWVQbLb6f6O2gy/pfxXW9yTJQKMV3dhN1A==
+X-Gm-Gg: AR+sD128sZy6Ho4Bgv2hMnP86AfjSqxXRX21USob/mIe5q5xjIPzWfiXRklBYKXPXlV
+ OyMV2tJdgzhonek9VfnDFU2lQFiCPX+dPIexOL2HSs2QpH7tAbhYII5lKy30GyQlKyQ/Li/KJud
+ Tq2MCOB+WcW4Of3FQtPayjUT1RKVXfvSIoEjfeZQBvjxZEVdHgPjPLonzyu02llcw5a02/qKFNM
+ GJdUpAtdaw2zupPbS2wZs98IRJdFe2T4KhhycB8BHAqHGnpHgpXvxc900NFJHO3BKqGddT4e6ET
+ YEpwnBQIX7H2PUlwWUq98E01+zcxFOyeGMjdrRKeRnAQPBIVBuiNlLa5lx1lsMLYRw==
+X-Received: by 2002:a05:622a:544b:b0:51b:feee:b08f with SMTP id
+ d75a77b69052e-52d657dd626mr41570361cf.1.1786547737902; 
+ Wed, 12 Aug 2026 08:15:37 -0700 (PDT)
+X-Received: by 2002:a05:622a:544b:b0:51b:feee:b08f with SMTP id
+ d75a77b69052e-52d657dd626mr41569571cf.1.1786547737325; 
+ Wed, 12 Aug 2026 08:15:37 -0700 (PDT)
+Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 08:15:35 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 016/120] vfio-user: vfio_user_get_region_info: prevent
- excessive malloc
-Date: Wed, 12 Aug 2026 17:47:59 +0300
-Message-ID: <20260812144955.649205-16-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Sam Heney <github@me.samiser.xyz>
+Subject: [PULL 06/10] tests/qtest/migration: Only build tls_no_hostname test
+ with TASN1
+Date: Wed, 12 Aug 2026 11:14:39 -0400
+Message-ID: <20260812151444.2611689-7-peterx@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260812151444.2611689-1-peterx@redhat.com>
+References: <20260812151444.2611689-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,45 +117,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thanos Makatos <thanos.makatos@nutanix.com>
+From: Sam Heney <github@me.samiser.xyz>
 
-If the vfio-user server responds with a value larger than max_xfer_size
-vfio_device_get_region_info() blindly uses it in the next loop in
-g_realloc. An value larger than max_xfer_size is anyway rejected by the
-check at the beginning of vfio_user_get_region_info(), however that only
-happens _after_ the g_realloc, and if that value is excessively large it
-can cause g_realloc to fail, so check it here.
+The test_precopy_tcp_tls_no_hostname test and its start hook use
+TestMigrateTLSX509 and migrate_hook_start_tls_x509_common(), which
+are only defined when CONFIG_TASN1 is set. This means building with
+gnutls enabled but libtasn1 unavailable fails:
 
-Signed-off-by: Thanos Makatos <thanos.makatos@nutanix.com>
-Fixes: 667866d66620 ("vfio-user: implement VFIO_USER_DEVICE_GET_REGION_INFO")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260721122643.30985-5-thanos.makatos@nutanix.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 6a51aab908e0f043387b91ad6a198b0eae5f2b58)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  ../tests/qtest/migration/tls-tests.c: In function 'migrate_hook_start_tls_x509_no_host':
+  ../tests/qtest/migration/tls-tests.c:510:5: error: unknown type name 'TestMigrateTLSX509'
 
-diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index df86dabe1e6..580559d9b95 100644
---- a/hw/vfio-user/device.c
-+++ b/hw/vfio-user/device.c
-@@ -129,6 +129,16 @@ static int vfio_user_get_region_info(VFIOUserProxy *proxy,
-         return -EINVAL;
-     }
+Guard the test with CONFIG_TASN1 like the other x509 tests.
+
+Fixes: df9c38b19af8 ("tests/qtest/migration: Add a NULL parameters test for TLS")
+Signed-off-by: Sam Heney <github@me.samiser.xyz>
+Link: https://lore.kernel.org/r/5f24de0e-49af-45a7-927f-f79b203bb335@app.fastmail.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/qtest/migration/tls-tests.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index 827cc7bcf8..9bdb1165af 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -492,6 +492,7 @@ static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
+     test_precopy_common(args);
+ }
  
-+    /*
-+     * The server can respond with a larger argsz in the reply to request a
-+     * larger buffer on the next iteration via vfio_device_get_region_info().
-+     * Reject values that would trigger an oversized realloc.
-+     */
-+    if (msgp->argsz > proxy->max_xfer_size) {
-+        error_printf("vfio_user_get_region_info reply argsz too large\n");
-+        return -E2BIG;
-+    }
-+
-     memcpy(info, &msgp->argsz, info->argsz);
++#ifdef CONFIG_TASN1
+ static void *
+ migrate_hook_start_tls_x509_no_host(QTestState *from, QTestState *to)
+ {
+@@ -519,7 +520,6 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
+     test_precopy_common(args);
+ }
  
-     /*
+-#ifdef CONFIG_TASN1
+ static void test_precopy_tcp_tls_x509_default_host(char *name,
+                                                    MigrateCommon *args)
+ {
+@@ -719,8 +719,10 @@ void migration_test_add_tls(MigrationTestEnv *env)
+ 
+     migration_test_add("/migration/precopy/tcp/no-tls",
+                        test_precopy_tcp_no_tls);
++#ifdef CONFIG_TASN1
+     migration_test_add("/migration/precopy/tcp/tls/no-hostname",
+                        test_precopy_tcp_tls_no_hostname);
++#endif /* CONFIG_TASN1 */
+ 
+     migration_test_add("/migration/precopy/unix/tls/psk",
+                        test_precopy_unix_tls_psk);
 -- 
-2.47.3
+2.54.0
 
 
