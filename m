@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F12C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08484C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAUl-0007ls-KJ; Wed, 12 Aug 2026 11:03:55 -0400
+	id 1wuAT8-0004ej-Co; Wed, 12 Aug 2026 11:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASO-0004Ti-8X; Wed, 12 Aug 2026 11:01:38 -0400
+ id 1wuARc-0003vw-KP; Wed, 12 Aug 2026 11:00:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASJ-0002Mh-92; Wed, 12 Aug 2026 11:01:26 -0400
+ id 1wuARY-00028H-VN; Wed, 12 Aug 2026 11:00:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=uCv8R9QeQYTZbkfqzof2GB4doqzq3xPt2c9WjqmRSls=;
+ t=1786546233; bh=nplslQjoaiinuOQ62NDt6V4KoXLecatbvBDFFefFCXs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UtIDftXqUKaEz1iQhk0GRbCYOCQdYxpxLgiGto5/PUdJ/MjM4ZteMYP84sQAtO3uE
- C+q4LPV0NXxeRptwjkkRA8NMRY9s2wFwPW9am2DRJTyW+AZQZx6YXcg3dTqt+LLQTk
- DIsKotkbC5HarTm+JQMOxERC4FhyiVtrSNRG6/m9eUwwYRvAqW4YadYh7rH0aHvWDG
- igqIGqumSjzHMl5qcyb8c18JArR3vPXsR7ZdVEuVn66R+874wzd0oNx4I5XD3yL/MF
- Mk4ZiZLJ8BJD6TBEbq7ui+LNXy3b0aqAjEgYBM6DIGNtVgtqFaSPRAQLDNaB7d/91B
- mL6JS+N6yx9VA==
+ b=hHSuE/RGQ8k6qpf1SIu1sdRPOBoyFHaitv85qt0cu/GXKJjy4CgqXf7g6JSU//Esc
+ LlLtePEVdBMpAPoA0J6uG+dULlFIh3WicBWwfVTJs+k44YDP4iGzCLlyqmPwe1a75Q
+ LwDvMHKkV2OeIy7CoizgUt49vtW+UJl1grDSm674lCVAwpaoNu/D8XEC1Mdnraow9O
+ TrxcIX616eyIDd2fmCMtb0XKe0Ck954f8mur4ZLE4OqFhiwlnY/tajkIeeFw/zhqtN
+ ssJkO7H+czpywXd2hYBrKsFKAbuRJr5QltdleEpEo7NgtK9A8z+ZQgUCT+1d5Q/Y+t
+ vV7ZLRwAJyArw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D4B2F1CA670;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8AF461CA667;
  Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3B726409DB5;
- Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E5E1C409DA9;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 98AB82FA3B; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id 4F4112FA29; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ankur Saini <ankur98saini@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 108/120] virtio-gpu: reject requests with
- short/truncated control headers
-Date: Wed, 12 Aug 2026 17:49:31 +0300
-Message-ID: <20260812144955.649205-108-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 099/120] qcow2: do not try to clear the dirty bit on a
+ read-only node
+Date: Wed, 12 Aug 2026 17:49:22 +0300
+Message-ID: <20260812144955.649205-99-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,94 +72,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ankur Saini <ankur98saini@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-A short control request can leave command data partially initialized.
-For the common header, guest-controlled flags can then cause stale fence
-metadata to be returned to the guest.
+qcow2_do_close() -> qcow2_inactivate() clears the dirty bit with a
+plain write to bs->file, unconditionally. A read-only node can still
+be dirty, inherited from an earlier writable session, and that write
+then hits a missing BLK_PERM_WRITE and asserts in
+bdrv_co_write_req_prepare() (block/io.c) on an entirely ordinary
+close -- closing is expected, the dirty bit on a read-only node
+is not.
 
-The command fill helpers detect a short copy but only log and return.
-For the common header this leaves the request without any completion;
-for type-specific commands the caller still completes the request but
-reports VIRTIO_GPU_RESP_OK_NODATA, masking the error. Make
-VIRTIO_GPU_FILL_CMD() clear the partially copied object and complete the
-request with ERR_INVALID_PARAMETER. Make VUGPU_FILL_CMD() report the same
-error through the existing vhost-user-gpu dispatcher. This also rejects
-truncated type-specific commands.
+Skip the clear for read-only nodes, same as read access already does.
+Any other still-dirty node keeps the unguarded write: it is expected
+to hold write permission, and a missing one there is a bug worth
+seeing.
 
-The vhost-user-gpu common header is copied outside VUGPU_FILL_CMD(), so
-clear it and complete the request directly when that copy is short.
-
-Fixes: CVE-2026-18054
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4094
-Reported-by: Ankur Saini <ankur98saini@gmail.com>
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Ankur Saini <ankur98saini@gmail.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260803-virtio-gpu-short-header-v3-1-936c1daa8e61@gmail.com>
-(cherry picked from commit 1f24066fc88d33455ee54a20f29994d9e69997ba)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+Message-ID: <20260716153552.3376009-1-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit fe0f9e3ab2a8112dd9671bbb91365feba683f755)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/vhost-user-gpu.c b/contrib/vhost-user-gpu/vhost-user-gpu.c
-index ee9858c397c..78648815093 100644
---- a/contrib/vhost-user-gpu/vhost-user-gpu.c
-+++ b/contrib/vhost-user-gpu/vhost-user-gpu.c
-@@ -930,16 +930,19 @@ vg_handle_ctrl(VuDev *dev, int qidx)
-         if (len != sizeof(cmd->cmd_hdr)) {
-             g_warning("%s: command size incorrect %zu vs %zu\n",
-                       __func__, len, sizeof(cmd->cmd_hdr));
--        }
--
--        virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
--        g_debug("%d %s\n", cmd->cmd_hdr.type,
--                vg_cmd_to_string(cmd->cmd_hdr.type));
--
--        if (vg->virgl) {
--            vg_virgl_process_cmd(vg, cmd);
-+            memset(&cmd->cmd_hdr, 0, sizeof(cmd->cmd_hdr));
-+            vg_ctrl_response_nodata(
-+                vg, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);
-         } else {
--            vg_process_cmd(vg, cmd);
-+            virtio_gpu_ctrl_hdr_bswap(&cmd->cmd_hdr);
-+            g_debug("%d %s\n", cmd->cmd_hdr.type,
-+                    vg_cmd_to_string(cmd->cmd_hdr.type));
-+
-+            if (vg->virgl) {
-+                vg_virgl_process_cmd(vg, cmd);
-+            } else {
-+                vg_process_cmd(vg, cmd);
-+            }
-         }
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 19271b10a49..7292dd036c9 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2870,7 +2870,11 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+                      strerror(-ret));
+     }
  
-         if (cmd->state != VG_CMD_STATE_FINISHED) {
-diff --git a/contrib/vhost-user-gpu/vugpu.h b/contrib/vhost-user-gpu/vugpu.h
-index 2374eb90cb9..aaf2870cb24 100644
---- a/contrib/vhost-user-gpu/vugpu.h
-+++ b/contrib/vhost-user-gpu/vugpu.h
-@@ -179,6 +179,7 @@ struct virtio_gpu_ctrl_command {
-         if (vugpufillcmd_s_ != sizeof(out)) {                   \
-             g_critical("%s: command size incorrect %zu vs %zu", \
-                        __func__, vugpufillcmd_s_, sizeof(out)); \
-+            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER; \
-             return;                                             \
-         }                                                       \
-     } while (0)
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 2f60c72078b..f965defa6b2 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -315,6 +315,9 @@ struct VirtIOGPURutabaga {
-             qemu_log_mask(LOG_GUEST_ERROR,                              \
-                           "%s: command size incorrect %zu vs %zu\n",    \
-                           __func__, virtiogpufillcmd_s_, sizeof(out));  \
-+            memset(&out, 0, sizeof(out));                               \
-+            virtio_gpu_ctrl_response_nodata(                            \
-+                g, cmd, VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER);         \
-             return;                                                     \
-         }                                                               \
-     } while (0)
+-    if (result == 0) {
++    /*
++     * A read-only node cannot resolve an inherited dirty bit here;
++     * leave it dirty, same as plain read access already does.
++     */
++    if (result == 0 && !bdrv_is_read_only(bs)) {
+         qcow2_mark_clean(bs);
+     }
+ 
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index e43e7026ce3..94a8bfe754e 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -84,6 +84,17 @@ $QEMU_IO -r -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
+ # The dirty bit must be set
+ _qcow2_dump_header | grep incompatible_features
+ 
++echo
++echo "== Read-only open must not crash on close =="
++
++# We must not try to write the QCOW2 header to a read-only image.
++$QEMU_IMG info --image-opts \
++    "driver=$IMGFMT,read-only=on,file.driver=file,file.filename=$TEST_IMG,file.read-only=off" \
++    > /dev/null
++
++# The dirty bit must still be set: this open never wrote any guest data
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Repairing the image file must succeed =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index 8fdbcc528aa..c66361128f6 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -24,6 +24,9 @@ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ incompatible_features     [0]
+ 
++== Read-only open must not crash on close ==
++incompatible_features     [0]
++
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
 -- 
 2.47.3
 
