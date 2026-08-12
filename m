@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F174C5B56A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB508C5AD5A
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu7t1-0004JB-SO; Wed, 12 Aug 2026 08:16:47 -0400
+	id 1wu7tF-00059R-FA; Wed, 12 Aug 2026 08:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7sw-0004Ak-B0
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:44 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1wu7tD-0004xf-97
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:59 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wu7su-0008UO-Cf
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:42 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-47f7027ca11so551124f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:38 -0700 (PDT)
+ id 1wu7tA-00008v-LR
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:16:58 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so10845185e9.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786536997; x=1787141797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=WuaHOxeAnhceyL4m+VMh1cqQu77uUg/5cvN9Mt8k7Qo=;
- b=TezHC/Iz6H0EL5Be3CKQME7M4tuC+EWQgUzJnnoyOuJZmz0ZaSwIIJ0A5eXqHYhWzh
- NkHUeDi3GQVN5Bhg1TQoo0s/fFz2LrUV4t6/cIov87sclo2bPLQgi2sLovlOJJV37g4F
- tI69OXSCjXhi4K/HoPrNaLS/PC/75R4wlYuPBK7x+vTn/GiA9JJp8p2vNrO8XdjMaqn0
- M9LRnnzu3gK4DaqN8+ps+rmA6et1pp34NQ3UG506i8mntxf8sWaiVOlJDn8ZuW76H02M
- SXKGMRh2ErF92P8aim4ynRwDSsYCCbh/YB3OtWP0mHSok6wESaFD+wGxjtXQFowuet2j
- q/Ew==
+ d=linaro.org; s=google; t=1786537015; x=1787141815; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=e0YVN3WRoWrd/UG2bcPyhH+dTDALg7wvKBtIHRwrjZA=;
+ b=Xn6uV2jQX/qrwF3WZAVlijIL1/TdEst1chnKV06BlhmLTz/3k+RrbxY1uGfmpV+3JC
+ 8pje08xymUz52isVEwx7PB2rjVNjhXgaDZcfLUXEn6In67/RgqNKMTcPkMX1sdIKLX/M
+ Y1OGveQGq3rpPV80LVX3UrbzxTci/k10FCeiRki1t0uH0BExayX+txzoBt/WntX+YAJM
+ xIBcAIhUwegZxSObLYTNowuCoKek8RITLMvvj7kqHM11rvLG58KeQSo3OMYzEdA4kSBR
+ sRKYMIIZF3OGhE0Fi744Ac2yUInLgw7ZOd8tjrWkf4zQN+uPOksuOiYBxDoMlymk+GHG
+ sbuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786536997; x=1787141797;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=WuaHOxeAnhceyL4m+VMh1cqQu77uUg/5cvN9Mt8k7Qo=;
- b=nyPQkrXbs1yTQtwOY5FTZiQyq60HBcnGr4YFZBq1zdOHjpLFjJX9YXzgSP3qnJ7n++
- SvPE1GEDwGi29GfTwKFCPke2vanXTjV4zs+5X5d4AkAJ2XpuXVuQN9+8EMhO8/dzNOyl
- JouBwgq/ZdoqwI98B+30H8KlTDH9GfXxpJjjpcaJk8t7o/8+bWiaG724N+kPCwieBMOy
- CrvDLCSmvWcUPYN0BlMYFUvsgjte0DAS0ZmNQiAE3P6EuAsNlaCiIJvDeEX1dx+MgrbS
- q/Y9sVBcV9mfH3EoHqW8j9R/ZrG713KpDAoPIFP59tEBfz2ovyLOTyo8laAEF6wNqdNP
- GXaQ==
-X-Gm-Message-State: AOJu0YxstwEZmZnEgCdLDrQ9ZyztdpzCUx3iv8v4g6dhx+peu5WPULVp
- LDtTKFo0LDyn4Ppj4buHYk6N4BGrWJPvuiJ0m8XO3hRyRfKpOKGay8LYTw8wA+u4zcw5rI3Htnp
- dVC3W
-X-Gm-Gg: AR+sD12YUCORwMyG1GMoOHRY2E2xI0QsPaHIsht0pEexWHBHocsxoi8CP2Gqpv+AEI+
- 9PDQmVoNljgE2SdNuj/uBgNKaJSNCQr2//UuDoDcV0pvR4b6WJ6tN/cNh4+V5fZzjN5I/hEt6ln
- VKEca8lKlIl+FPesNmXvb8w6AeMXJ0QZB4tk3SOF/zNwCZeEPLd8mCkd0NH/zKy3SnuNwcTAl5b
- 7WJhT+9RgTAXpBhw43MnG/HAdL2MTfCqFQpQ6l3bmcHH61B/Bn3dwGX9lmb5Xj4zDNRU/EMBNgL
- PkKE86/e1nxtsTE9BFryszSZifXo5o5m/FteIdZFD+nOXrW/7Mrc9/trjr+fSREGEsMLDDgCdBt
- WG7kU6So87LEm8ZqXqKMgiwDejwKmaVU5fkyQB6fZxjcduX1PQeztpJOBxlrlMsu1SplyUUDmM6
- 5VoUbpjLd880+E4aAZAk+4SWBrSvEBw67mhtqVHj1cmCnLE+4p5/It5heNnm1QCbMZ0p1ClCCYz
- WOsdFdklxeFV/rOWNQ1j49yC9DF2koCotfdrHVxd3LcclTWV/yh9Em7zTtQgrQPvI1ADSNtVY7C
- rnte
-X-Received: by 2002:a05:600c:19c6:b0:499:7a5e:4c3f with SMTP id
- 5b1f17b1804b1-4997c0fcab7mr66816895e9.1.1786536997390; 
- Wed, 12 Aug 2026 05:16:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786537015; x=1787141815;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=e0YVN3WRoWrd/UG2bcPyhH+dTDALg7wvKBtIHRwrjZA=;
+ b=KSlzIUG80PIdt4nKRBoDU8zg9DDP3KKWsWQNWfasABOxGoI+gLtrGVh/ybf8X+Z6Rp
+ +TXphpgYNRymw3swc+9efnR+hS+HuNLKwzt2sY5ycOq0Et7yZvaj223ZIew3FjbdfXaK
+ ypXxX5MiOx2M05IsQa9FUweOE5rDUz0nQ36zdpq2wy4GD7ZJhGL5RlvNIK7zd098L6Xg
+ KmqiRIlMWO19c+krTJgTRTl10C5BPRzCPHFPhNMWJ+SLr1YCIuD+iNXLqAS1edwS7ohj
+ wpeCOeGeRyx/D9IHEHwWJA58QvlEz7Ttt0hepYKFpjpsMpQDSqKRNYeMBkSmC/N12iF8
+ 0etA==
+X-Gm-Message-State: AOJu0YzuFd4GK4VBdBkstN8D6Uw4pylKZ+7iycRoRqDfeJ9754n9ZBUq
+ uLnXNrDkrB8/CIhmuHkt1iMIc6Fs340mhq0rUh1Wohwyji0LhpRdW7qTBxinga9Yc2uI0sbKdk/
+ wbWaW
+X-Gm-Gg: AR+sD13aiC3w4oB82X/D5vh8SJ0a7gupK4VjrbVYCv8zvAd1KKMQ88DFqpSMB5LdaUV
+ GjC5CXBvbG/jVzsJk7bu0ucvvdwoN1XhC8B2gehLlq4zlVK+//Lq5XtJ2cZ/uScO3y8Nwy9l3Kg
+ F524lBugqE6DWRhD0Y+2+tv5HfYrCinhN1cZqEDQPWUrIO+lNpIRXSznormkSPV6qpASAbEBlgx
+ Rgs+pDQGv8UGkbKkU/dqiLHZ3hZ+fxtTzJ1sjrITFmRaHekNf9IJxbbZI81FlIzVrHLkmlZxvqk
+ M+UuwX1fYBFsKnk4ufduKK3DpC0PpaI9/d02hFN4PjdIm728ePR7mCasYrBd1ipTCL21DiqgCEl
+ Hjxu9gwpR+T5mD0VJ8h8fZQGxs/WEJHu5CsMVQ5rE4YEh5qjVOSqjBtj/vDVs7BmMzMZJ6ghBYq
+ ECWQUJz4ToPKoq1yZj1HGjZd7hmTxmDWYZ83VOhXMuK+jE7lkp4Z8iX8n21mz6S7r2JMmsHlFWZ
+ ws12KHaylyzl8ssU34sjjpunZt58C6ZNUQAYJBdSaBB3MopHHiljM73gGaOTmku2+8GUw==
+X-Received: by 2002:a05:600c:1d0c:b0:495:7a5a:d96c with SMTP id
+ 5b1f17b1804b1-4997c163b3fmr57113335e9.18.1786537015162; 
+ Wed, 12 Aug 2026 05:16:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.35
+ 5b1f17b1804b1-4997ad79e5csm36963805e9.3.2026.08.12.05.16.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 05:16:36 -0700 (PDT)
+ Wed, 12 Aug 2026 05:16:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/26] target/arm: Implement FTMOPA (widening, 4-way,
- FP8 to FP32)
-Date: Wed, 12 Aug 2026 13:16:03 +0100
-Message-ID: <20260812121622.649730-8-peter.maydell@linaro.org>
+Subject: [PULL 18/26] hw/arm: ax3000-soc: Enable Cadence GPIO controllers
+Date: Wed, 12 Aug 2026 13:16:14 +0100
+Message-ID: <20260812121622.649730-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812121622.649730-1-peter.maydell@linaro.org>
 References: <20260812121622.649730-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,152 +103,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Kuan-Jui Chiu <kchiu@axiado.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Enable 8 Cadence GPIO controllers into Axiado AX3000 SoC
+
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260713230244.70174-8-richard.henderson@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260713073033.3883619-9-kchiu@axiado.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h        |  5 ++++
- target/arm/tcg/fp8_helper.c      |  7 +++++
- target/arm/tcg/helper-fp8-defs.h |  1 +
- target/arm/tcg/sme.decode        |  1 +
- target/arm/tcg/sme_helper.c      | 44 ++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sme.c   |  2 ++
- target/arm/tcg/vec_internal.h    |  7 +++++
- 7 files changed, 67 insertions(+)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/ax3000-soc.c         | 30 ++++++++++++++++++++++++++++++
+ include/hw/arm/ax3000-soc.h | 21 +++++++++++++++++++++
+ 3 files changed, 52 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 1ab6c90b8c..280ead6f9c 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1857,6 +1857,11 @@ static inline bool isar_feature_aa64_sme_tmop_f8f16(const ARMISARegisters *id)
-     return isar_feature_aa64_sme_tmop(id) && isar_feature_aa64_sme_f8f16(id);
- }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d16b3d2f47..e22c34a2e1 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -731,6 +731,7 @@ config AXIADO_SOC
+     select ARM_GIC
+     select CADENCE # UART
+     select AXIADO_CLK
++    select CADENCE_GPIO
+     select AXIADO_SDHCI
+     select UNIMP
  
-+static inline bool isar_feature_aa64_sme_tmop_f8f32(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme_tmop(id) && isar_feature_aa64_sme_f8f32(id);
-+}
-+
- /*
-  * Feature tests for "does this exist in either 32-bit or 64-bit?"
-  */
-diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
-index 305cafdc9b..0be811e71b 100644
---- a/target/arm/tcg/fp8_helper.c
-+++ b/target/arm/tcg/fp8_helper.c
-@@ -1048,3 +1048,10 @@ void HELPER(sme_ftmopa_hb)(void *vza, void *vzn, void *vzm, void *vzk,
-         }
-     }
- }
-+
-+void HELPER(sme_ftmopa_sb)(void *vza, void *vzn, void *vzm, void *vzk,
-+                           CPUArchState *env, uint32_t desc)
-+{
-+    FP8MulContext ctx = fp8_mul_start(env, 0xf);
-+    sme_tmop_4way_sb(vza, vzn, vzm, vzk, &ctx, desc, inner_fmop4a_sb);
-+}
-diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
-index 13be62aa15..e2cf2ba8c7 100644
---- a/target/arm/tcg/helper-fp8-defs.h
-+++ b/target/arm/tcg/helper-fp8-defs.h
-@@ -49,3 +49,4 @@ DEF_HELPER_FLAGS_5(sme_fmop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32
- DEF_HELPER_FLAGS_5(sme_fmop4a_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index 23903b081b..71e31c6fb4 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -36,6 +36,11 @@ static void ax3000_init(Object *obj)
  
- DEF_HELPER_FLAGS_6(sme_ftmopa_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_6(sme_ftmopa_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index da6f4686d3..eab1f7e8fb 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -1150,3 +1150,4 @@ BFTMOPA_sh      1000 0001 010 ..... 000 ... .... .. 00 ..       @tmop_o2
- FTMOPA_sh       1000 0001 011 ..... 000 ... .... .. 00 ..       @tmop_o2
- 
- FTMOPA_hb       1000 0000 011 ..... 000 ... .... .. 100 .       @tmop_o1
-+FTMOPA_sb       1000 0000 011 ..... 000 ... .... .. 00 ..       @tmop_o2
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index c2b7c23d6c..3d7aefac5b 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -2723,6 +2723,50 @@ static void sme_tmop_2way_sh(uint32_t *za, uint16_t *zn0, uint32_t *zm,
-     }
- }
- 
-+void sme_tmop_4way_sb(uint32_t *za, uint8_t *zn0, uint32_t *zm,
-+                      uint64_t *zk, void *fn_opaque, uint32_t desc,
-+                      void (*fn)(void *, void *, void *, void *))
-+{
-+    intptr_t oprsz = simd_maxsz(desc);
-+    intptr_t dim = oprsz >> MO_32;
-+    intptr_t index = simd_data(desc);
-+    intptr_t ctrl_base = (index * oprsz) >> 1;
-+    uint8_t *zn1 = zn0 + sizeof(ARMVectorReg);
+     object_initialize_child(obj, "clk", &s->ax3000_clk, TYPE_AX3000_CLK);
+     object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
 +
-+    for (intptr_t row = 0; row < dim; row++) {
-+        uint32_t *za_row = za + tile_vslice_offset(row);
-+
-+        for (intptr_t col = 0; col < dim; col++) {
-+            uint32_t *e2 = zm + H4(col);
-+            uint32_t *e3 = za_row + H4(col);
-+            uint16_t e1l = 0, e1h = 0;
-+            uint32_t e1;
-+
-+            /*
-+             * Eight control bits select two elements from each row.
-+             * The elements may be non-contiguous, so assemble them
-+             * locally into e1.
-+             * Pseudo-code has a triple loop running forward, with a
-+             * test for (i < 2) to limit construction to 2 elements.
-+             * Easier to run a single loop backward, shifting extra
-+             * elements off the top.
-+             */
-+            uint64_t this_ctrl = extractn(zk, ctrl_base + col * 8, 8);
-+            for (int e = 3; e >= 0; e--) {
-+                if (this_ctrl & (0x01 << e)) {
-+                    e1l = (e1l << 8) | zn0[H1(4 * row + e)];
-+                }
-+                if (this_ctrl & (0x10 << e)) {
-+                    e1h = (e1h << 8) | zn1[H1(4 * row + e)];
-+                }
-+            }
-+            e1 = (e1h << 16) | e1l;
-+
-+            fn(e3, &e1, e2, fn_opaque);
-+        }
++    for (int i = 0; i < AX3000_NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%d", i);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_CADENCE_GPIO);
 +    }
-+}
-+
- static void inner_fmop4a_hh(void *vd, void *vn, void *vm, void *vinfo)
- {
-     float16 *d = vd, *n = vn, *m = vm;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 206f078bfb..ceed864da8 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -2179,3 +2179,5 @@ static bool do_tmop_fp8(DisasContext *s, arg_tmop *a, MemOp esz,
+ }
  
- TRANS_FEAT(FTMOPA_hb, aa64_sme_tmop_f8f16, do_tmop_fp8,
-            a, MO_16, gen_helper_sme_ftmopa_hb)
-+TRANS_FEAT(FTMOPA_sb, aa64_sme_tmop_f8f32, do_tmop_fp8,
-+           a, MO_32, gen_helper_sme_ftmopa_sb)
-diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
-index 038a2a3439..8f6d8a984b 100644
---- a/target/arm/tcg/vec_internal.h
-+++ b/target/arm/tcg/vec_internal.h
-@@ -555,4 +555,11 @@ void sme_mop4(void *vza, void *vzn, void *vzm, void *fn_opaque,
-               uint32_t desc, size_t esize,
-               void (*fn)(void *, void *, void *, void *));
- 
-+/*
-+ * Perform SME sparse outer product, 4-way, 8 to 32-bit.
-+ */
-+void sme_tmop_4way_sb(uint32_t *za, uint8_t *zn0, uint32_t *zm,
-+                      uint64_t *zk, void *fn_opaque, uint32_t desc,
-+                      void (*fn)(void *, void *, void *, void *));
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -187,6 +192,31 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+                                 &error_fatal);
+         qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
+     }
 +
- #endif /* TARGET_ARM_VEC_INTERNAL_H */
++    /* GPIOs */
++    const struct {
++        hwaddr addr;
++        unsigned int irq;
++    } gpio_table[] = {
++        { AX3000_GPIO0_BASE, AX3000_GPIO0_IRQ },
++        { AX3000_GPIO1_BASE, AX3000_GPIO1_IRQ },
++        { AX3000_GPIO2_BASE, AX3000_GPIO2_IRQ },
++        { AX3000_GPIO3_BASE, AX3000_GPIO3_IRQ },
++        { AX3000_GPIO4_BASE, AX3000_GPIO4_IRQ },
++        { AX3000_GPIO5_BASE, AX3000_GPIO5_IRQ },
++        { AX3000_GPIO6_BASE, AX3000_GPIO6_IRQ },
++        { AX3000_GPIO7_BASE, AX3000_GPIO7_IRQ }
++    };
++
++    for (int i = 0; i < AX3000_NUM_GPIOS; i++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
++                           qdev_get_gpio_in(gic_dev, gpio_table[i].irq));
++    }
+ }
+ 
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index 52b47aa829..344fcb6f3c 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -13,6 +13,7 @@
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/char/cadence_uart.h"
+ #include "hw/misc/axiado_clk.h"
++#include "hw/gpio/cadence_gpio.h"
+ #include "hw/sd/axiado_sdhci.h"
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
+@@ -38,6 +39,15 @@ OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
+ #define AX3000_SDHCI0_BASE      0x86000000
+ #define AX3000_EMMC_PHY_BASE    0x80801C00
+ 
++#define AX3000_GPIO0_BASE       0x80500000
++#define AX3000_GPIO1_BASE       0x80580000
++#define AX3000_GPIO2_BASE       0x80600000
++#define AX3000_GPIO3_BASE       0x80680000
++#define AX3000_GPIO4_BASE       0x80700000
++#define AX3000_GPIO5_BASE       0x80780000
++#define AX3000_GPIO6_BASE       0x80800000
++#define AX3000_GPIO7_BASE       0x80880000
++
+ #define AX3000_TIMER_CTRL       0x8A020000
+ #define AX3000_PLL_BASE         0x80000000
+ 
+@@ -46,6 +56,7 @@ enum Ax3000Configuration {
+     AX3000_NUM_IRQS     = 224,
+     AX3000_NUM_BANKS    = 2,
+     AX3000_NUM_UARTS    = 4,
++    AX3000_NUM_GPIOS    = 8,
+ };
+ 
+ typedef struct Ax3000SoCState {
+@@ -56,6 +67,7 @@ typedef struct Ax3000SoCState {
+     MemoryRegion        dram[AX3000_NUM_BANKS];
+     Ax3000ClkState      ax3000_clk;
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
++    CadenceGPIOState    gpio[AX3000_NUM_GPIOS];
+     AxiadoSDHCIState    sdhci0;
+ } Ax3000SoCState;
+ 
+@@ -72,6 +84,15 @@ enum Ax3000Irqs {
+     AX3000_UART3_IRQ    = 170,
+ 
+     AX3000_SDHCI0_IRQ   = 123,
++
++    AX3000_GPIO0_IRQ    = 183,
++    AX3000_GPIO1_IRQ    = 184,
++    AX3000_GPIO2_IRQ    = 185,
++    AX3000_GPIO3_IRQ    = 186,
++    AX3000_GPIO4_IRQ    = 187,
++    AX3000_GPIO5_IRQ    = 188,
++    AX3000_GPIO6_IRQ    = 189,
++    AX3000_GPIO7_IRQ    = 190,
+ };
+ 
+ #endif /* AXIADO_AX3000_H */
 -- 
 2.43.0
 
