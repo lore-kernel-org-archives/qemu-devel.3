@@ -4,91 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85185C982FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0F1C982FA
+	for <qemu-devel@archiver.kernel.org>; Tue, 22 Sep 2026 20:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1x971Z-0006RL-1O; Tue, 22 Sep 2026 16:23:33 -0400
+	id 1x974h-0004z5-Br; Tue, 22 Sep 2026 16:26:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970d-0002hu-Pw
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1x972N-0001Ks-Fj
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:24:26 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1x970c-0000IC-DM
- for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:22:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1790108553;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V4LM5aeuXcVbmLarJCZBwKIzCX8/oTrwbPV9HPdl34I=;
- b=UNaBj1aZhtaCEhL6gQMdXDq+miDYHZF7Q6whMnKfezylsdx58fXePjD0c61wF+uum4xXkR
- LwM5d25gOf3wbMIJmgZPo2Se3V8f6chthDhQaiTb7/ynN8k6Bnadxpc6xMjV1Dn9xRTkhY
- QpzcBRQS03cgG4Nx0h5Ne4UrtuVy3YI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-8dLI9xbVNfuSmBo1dYHF1Q-1; Tue,
- 22 Sep 2026 16:22:30 -0400
-X-MC-Unique: 8dLI9xbVNfuSmBo1dYHF1Q-1
-X-Mimecast-MFC-AGG-ID: 8dLI9xbVNfuSmBo1dYHF1Q_1790108549
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7244D180059C; Tue, 22 Sep 2026 20:22:29 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 809A11956095; Tue, 22 Sep 2026 20:22:28 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 23 Sep 2026 00:18:03 +0400
-Subject: [PATCH 56/88] qemu-iotests/119: migrate away from HMP
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260923-nohmp-v1-56-ebc029d4bd80@redhat.com>
-References: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
-In-Reply-To: <20260923-nohmp-v1-0-ebc029d4bd80@redhat.com>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1x972L-0000ag-6o
+ for qemu-devel@nongnu.org; Tue, 22 Sep 2026 16:24:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1790108661; x=1821644661;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=YyqRli4H608p1b8QxUUSqcO1vhTHgaeHPORppEXci70=;
+ b=elOzSlwJchgkhm1HvaJflAMhR8Ismg4q8Y0omaw4snGmJ7tB3er9P/gv
+ IILvrYIL/wTfrWVOvfJktX5UEwzAC/rioIVpv21fNLwyVo3TsPlWTb8Is
+ 56zP61/UdyKqW7r4P46DiQAlYHMY331+Nuw8bP5a4DZtG38tHbtatf7cK
+ h5mcti3FA0KTMAHqMiCLYpa1byqOh6rPI4SGvolttTmaU9z98H08weMg2
+ slIsTCNFsYe8sH8nzZSFVtWrWGYOh5IJ3+ePWSYsK4iUdg+3rvLlTs4Ug
+ 78Ho5JG5gIdl8Uy+so3tYbmyjqzXFkxzGpAapQ3tdVvkHp/Q8W78M30oB A==;
+X-CSE-ConnectionGUID: Rf6esumvSKKjR/fE0S4u1g==
+X-CSE-MsgGUID: P5DyqKevTr6aizMLNDA5ag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11913"; a="90619546"
+X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="90619546"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Sep 2026 13:24:13 -0700
+X-CSE-ConnectionGUID: HgTZd+/ERFmFbTC+KZ1Zlg==
+X-CSE-MsgGUID: RKtwJdw2S/W5LgY7k+Hvww==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,117,1787036400"; d="scan'208";a="272487006"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.80.113.172])
+ by fmviesa010.fm.intel.com with ESMTP; 22 Sep 2026 13:24:13 -0700
+From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1725;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GJxSfMxlvHeuJv+jKQIiEGaB13SWll4bTJtGajT1MwQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqsuKyfNiMp2VfkPiZGlcumTQa4UxmcpeLxSQBy
- eKtp2HbMNqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCarLisgAKCRDa6OEJdZac
- 5SBmEACqTMBnWgY6RhHLaM8YXHE/n7NsSQl/LoY/6HYfS2Q68JyR5/f/meY+YxiqXQuUSIgl/he
- 7gbCDU2nNExBxhUrhhv/xP4qdyTfSFnEmu99q06aMlrLGAbYtXWfPd7Hx184cq0TlX12pqzUxEA
- bkc42GnAFz728DHzWH1EkMZ7EAadpp4SgqMQe3DXhpf4LmDi30wwO1rYAc+pFGcGGTujlBWgcyq
- 2NUvtPc7iNTaaqCH3O+MhJ3rQLCcszbRUX+1XIjn6zdd4iRU+sZInqs6O/WtElGgH61waJlCguX
- LK0cQ70JOOvIaw/OVd+SGvLW5ZK4ZS35xKreZGlUqtiEupkI+IJe7obRNJU+Jb/VBRTg6l8jcuk
- 7MOUA/qeQAbYak7Ckeopz7/fatJtIpCzy+cgZ/0cTIldFbiWqwNa/mHvCcnX4euO1bTqRkCZyeV
- 5skl/8v5YLhxG51nPSOXwNGJa758Vh5MT6PswtpNtmxOQ4zIqJos1OCBhnkWu91GGI1tL/1VIsF
- UBXCuGPCVvDocMwV1qdTuNMiab1cii3INA4IFrUY8LlgAVjws67U6zpTT4SxDljgdSWBg5GonV0
- lck3R/F7QvZ12XmX27/bja29Ydup0d+FGeiVzTl+0s8qQUZHKOuizOc9ycL0/mXCtiN0XjUP8M2
- z/bTgHZ5jiPZpLA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Subject: [PATCH] hw/usb/hcd-xhci: Clamp overshot isochronous kick time
+Date: Wed, 12 Aug 2026 03:43:10 -0700
+Message-Id: <20260812104310.38292-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.17;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_96_XX=3.405,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,49 +77,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: "Chew, Tong Liang" <tong.liang.chew@intel.com>
+
+When an isochronous transfer's Frame ID is reconstructed from the current
+MFINDEX epoch, a delayed I/O thread can make the selected frame appear to
+be in the past. The existing recovery advances the kick by one MFINDEX
+epoch, which can place the transfer roughly two seconds in the future.
+
+The xHCI specification allows a Frame ID to be scheduled only up to
+895 ms (0x1BF8 microframes) ahead of the current MFINDEX. Clamp an
+epoch-adjusted kick beyond that range to the current MFINDEX so the
+missed transfer is dispatched immediately instead of waiting for the
+kick timer.
+
+Signed-off-by: Tong Liang Chew <tong.liang.chew@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- tests/qemu-iotests/119     | 5 ++---
- tests/qemu-iotests/119.out | 4 +---
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ hw/usb/hcd-xhci.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qemu-iotests/119 b/tests/qemu-iotests/119
-index ce1b62521f59..6b95f9224b3e 100755
---- a/tests/qemu-iotests/119
-+++ b/tests/qemu-iotests/119
-@@ -41,13 +41,12 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt raw
- _supported_proto nbd
- _supported_os Linux
--_require_hmp
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index d342aa2739..0642b5dc4f 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1763,12 +1763,30 @@ static void xhci_calc_iso_kick(XHCIState *xhci, XHCITransfer *xfer,
+             xfer->mfindex_kick = asap;
+         }
+     } else {
+-        xfer->mfindex_kick = ((xfer->trbs[0].control >> TRB_TR_FRAMEID_SHIFT)
+-                              & TRB_TR_FRAMEID_MASK) << 3;
++        uint32_t frame_id = (xfer->trbs[0].control >> TRB_TR_FRAMEID_SHIFT)
++                            & TRB_TR_FRAMEID_MASK;
++        xfer->mfindex_kick = (uint64_t)frame_id << 3;
+         xfer->mfindex_kick |= mfindex & ~0x3fff;
+         if (xfer->mfindex_kick + 0x100 < mfindex) {
+             xfer->mfindex_kick += 0x4000;
+         }
++        /*
++         * Guard against epoch-advance overshoot: when the IO thread is briefly
++         * delayed, mfindex can advance past frame_kick by more than the 0x100
++         * lookahead threshold above. Adding 0x4000 then places mfindex_kick
++         * ~2 seconds into the future, stalling all isochronous transfers until
++         * the kick timer fires (observed as periodic ~2.1 s USB audio/video
++         * stalls).
++         *
++         * Per xHCI specification section 4.11.2.5, a Frame ID is valid only
++         * up to 895 ms (0x1BF8 microframes) ahead of the current MFINDEX. If
++         * epoch reconstruction places the kick beyond that range, clamp it
++         * to the current MFINDEX so the missed transfer is dispatched
++         * immediately instead of stalling.
++         */
++        if (xfer->mfindex_kick > mfindex + 0x1BF8) {
++            xfer->mfindex_kick = mfindex;
++        }
+     }
+ }
  
- _make_test_img 64M
- # This should not crash
- echo "{'execute': 'qmp_capabilities'}
--      {'execute': 'human-monitor-command',
--       'arguments': {'command-line': 'qemu-io drv \"read -P 0 0 64k\"'}}
-+      {'execute': 'x-qemu-io',
-+       'arguments': {'device': 'drv', 'command': 'read -P 0 0 64k'}}
-       {'execute': 'quit'}" \
-     | $QEMU -nographic -drive id=drv,if=none,file="$TEST_IMG",driver=nbd \
-             -qmp stdio -nodefaults \
-diff --git a/tests/qemu-iotests/119.out b/tests/qemu-iotests/119.out
-index 45f82a4faa93..edd555fdd2d7 100644
---- a/tests/qemu-iotests/119.out
-+++ b/tests/qemu-iotests/119.out
-@@ -2,9 +2,7 @@ QA output created by 119
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
- QMP_VERSION
- {"return": {}}
--read 65536/65536 bytes at offset 0
--64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--{"return": ""}
-+{"return": {"human-readable-text": "read 65536/65536 bytes at offset 0\n64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)\n"}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
- {"return": {}}
- 
-
+@@ -1776,8 +1794,9 @@ static void xhci_check_intr_iso_kick(XHCIState *xhci, XHCITransfer *xfer,
+                                      XHCIEPContext *epctx, uint64_t mfindex)
+ {
+     if (xfer->mfindex_kick > mfindex) {
++        uint64_t delay_mf = xfer->mfindex_kick - mfindex;
+         timer_mod(epctx->kick_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+-                       (xfer->mfindex_kick - mfindex) * 125000);
++                       delay_mf * 125000);
+         xfer->running_retry = 1;
+     } else {
+         epctx->mfindex_last = xfer->mfindex_kick;
 -- 
-2.56.0.rc0.29.g47ce80527c56
+2.43.0
 
 
