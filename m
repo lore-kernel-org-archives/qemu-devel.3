@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF93C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD39C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAPA-00060U-Vz; Wed, 12 Aug 2026 10:58:09 -0400
+	id 1wuAQ8-00083f-Hx; Wed, 12 Aug 2026 10:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOV-0004mG-2Z; Wed, 12 Aug 2026 10:57:27 -0400
+ id 1wuAPb-0006lU-K5; Wed, 12 Aug 2026 10:58:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAOS-0000m0-GR; Wed, 12 Aug 2026 10:57:26 -0400
+ id 1wuAPZ-0001HD-RW; Wed, 12 Aug 2026 10:58:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=CWJSm0ZsPqWydPOQyCZZvmjcXXAdlxNk9V/JHctmuUs=;
+ t=1786546233; bh=mIGJChu2I6EzZeftepO1KM/E+wb6Blm1X3cW/WAqsTc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Q0gFXxO6XdEFUwryzdFh2LqBOgI+YSFJQfg/z6KdCU+0usdUOmDbB0lUKUtolm2jV
- AHAP4ipOfN2Waf+zJjuOl7pupAHf8XyrmAugKaeEKcXsBRUBu4iwr6szES+zDuyBYH
- ylWeNnL9sCrv+skC/o14sj+F8+RGUR7mGa9g8D2xDfmIezxHeGfXIROuqJb84hQal/
- BvzAql073aBKFvZOrEUaLbdJoExWHlbZxg2rLJL1KPlZPOjEzHvXwSVb5r50CqK5V6
- O47yCiW8GbvLABqGhw8xXLTSJXQBTvqabzkRWBLDSrJLKxvJnDiUpHOqyXUVZzXwsd
- N3iMhIAY5+87A==
+ b=d0yuUSQCLP8M689fV+ho2g6GRaZNskZAk2iVPbt5JkYobHdw8KtoJWQpTf70qi7q/
+ eNMIzAyswY3z75MUa6v8G+VbNnUecOMq2KFUNY0NmKW+I39lx5ymvnYrUW6iN75wvs
+ jEg8Eb61yEj/7XNypeh3a9oEBnfK0So0qY8ScKl8ofK+p7uo1MCHIXtNwcWJI4igyQ
+ a83Vf6UZ7vxJ0O9RoCBPtiy0Fip7oF3n8P6ZDseXpBCJiTuTnJeq0KAM36hcMgb+6m
+ 0u5cTYLa37dQAwYOAEqq6+K2lnO2S5Xnu0zdhEgQY5s4eG4tHt2hOCumUA3nctAYR6
+ jhvrbqq6GW4Pg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 94F4B1CA647;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 09A811CA655;
+ Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F020E409D89;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 63B55409D97;
+ Wed, 12 Aug 2026 17:50:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 5C54D2F9E9; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id C1A8E2FA05; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Jia Jia <physicalmtea@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael S. Tsirkin <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 067/120] hw/virtio-rng: Fix host use-after-free
- (CVE-2026-50624)
-Date: Wed, 12 Aug 2026 17:48:50 +0300
-Message-ID: <20260812144955.649205-67-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 081/120] hw/display/exynos4210_fimd: Clamp windows to
+ screen size
+Date: Wed, 12 Aug 2026 17:49:04 +0300
+Message-ID: <20260812144955.649205-81-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -74,86 +73,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Fix a heap-use-after-free in the virtio-rng frontend when a delayed
-rng-random backend completion arrives after the virtio-rng device has been
-hot-unplugged.
+In exynos4210_fimd_update(), we iterate through the enabled windows,
+blitting them to the screen. We assume here that the guest has not
+programmed the window's coordinates to be outside the overall LCD
+screen resulation, but we never check this. This can result in the
+guest being able to cause us to access outside our allocated
+framebuffer backing memory.
 
-Fixes: CVE-2026-50624
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3917
-Reported-by: Jia Jia <physicalmtea@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260724094931.3005968-1-lvivier@redhat.com>
-(cherry picked from commit 0be94d8d9c28e6b7235b34133d057090fe93be6c)
+Since all the coordinates here are unsigned, they can't be off
+the left/top side of the screen, only the bottom/right. If
+the top left corner of the window is out of bounds, the whole
+window is invisible and we can skip it. If the bottom right
+corner is out of bounds, we clamp it to the screen size so that
+we only draw the visible part.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3795
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-id: 20260706173324.804340-4-peter.maydell@linaro.org
+(cherry picked from commit a5f8d33682be079e6b9b41f07b2eb517121b3b46)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/rng.c b/backends/rng.c
-index ab94dfea850..7bed62616a5 100644
---- a/backends/rng.c
-+++ b/backends/rng.c
-@@ -68,6 +68,22 @@ static void rng_backend_free_request(RngRequest *req)
-     g_free(req);
- }
+diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
+index ee0002f0b1e..d505d9bc9c4 100644
+--- a/hw/display/exynos4210_fimd.c
++++ b/hw/display/exynos4210_fimd.c
+@@ -1291,7 +1291,7 @@ static void exynos4210_fimd_update(void *opaque)
+     bool blend = false;
+     uint8_t *host_fb_addr;
+     bool is_dirty = false;
+-    uint32_t global_width;
++    uint32_t global_width, global_height;
+     uint32_t window_width;
  
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque)
-+{
-+    RngRequest *req, *next;
-+
-+    QSIMPLEQ_FOREACH_SAFE(req, &s->requests, next, next) {
-+        if (req->receive_entropy != receive_entropy ||
-+            req->opaque != opaque) {
-+            continue;
-+        }
-+        QSIMPLEQ_REMOVE(&s->requests, req, RngRequest, next);
-+        rng_backend_free_request(req);
-+    }
-+}
-+
- static void rng_backend_free_requests(RngBackend *s)
- {
-     RngRequest *req, *next;
-diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
-index 66690a34dc9..d68d9011953 100644
---- a/hw/virtio/virtio-rng.c
-+++ b/hw/virtio/virtio-rng.c
-@@ -234,6 +234,8 @@ static void virtio_rng_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIORNG *vrng = VIRTIO_RNG(dev);
+     if (!s || !s->console || !s->enabled ||
+@@ -1300,16 +1300,28 @@ static void exynos4210_fimd_update(void *opaque)
+     }
  
-+    rng_backend_cancel_requests(vrng->rng, chr_read, vrng);
+     global_width = exynos4210_fimd_global_width(s);
++    global_height = exynos4210_fimd_global_height(s);
+     exynos4210_update_resolution(s);
+     surface = qemu_console_surface(s->console);
+ 
+     for (i = 0; i < NUM_OF_WINDOWS; i++) {
+         w = &s->window[i];
+         if ((w->wincon & FIMD_WINCON_ENWIN) && w->host_fb_addr) {
+-            scrn_height = w->rightbot_y - w->lefttop_y + 1;
++            uint32_t rightbot_x, rightbot_y;
 +
-     qemu_del_vm_change_state_handler(vrng->vmstate);
-     timer_free(vrng->rate_limit_timer);
-     virtio_del_queue(vdev, 0);
-diff --git a/include/system/rng.h b/include/system/rng.h
-index e383f87d20b..a2667d75efd 100644
---- a/include/system/rng.h
-+++ b/include/system/rng.h
-@@ -86,4 +86,18 @@ void rng_backend_request_entropy(RngBackend *s, size_t size,
-  * deleted.
-  */
- void rng_backend_finalize_request(RngBackend *s, RngRequest *req);
++            if (w->lefttop_x >= global_width ||
++                w->lefttop_y >= global_height) {
++                /* Guest has put the window entirely offscreen: ignore */
++                continue;
++            }
 +
-+/**
-+ * rng_backend_cancel_requests:
-+ * @s: the backend that created the request
-+ * @receive_entropy: the function invoked when entropy is available
-+ * @opaque: data passed to @receive_entropy
-+ *
-+ * This function is used by the front-end to cancel all requests to a
-+ * given backend. Requests to cancel are identified by the receive_entropy
-+ * function and the data passed to the function.
-+ */
-+void rng_backend_cancel_requests(RngBackend *s,
-+                                 EntropyReceiveFunc *receive_entropy,
-+                                 const void *opaque);
- #endif
++            /* Clamp right corner coords to be within the screen */
++            rightbot_x = MIN(w->rightbot_x, global_width - 1);
++            rightbot_y = MIN(w->rightbot_y, global_height - 1);
++            scrn_height = rightbot_y - w->lefttop_y + 1;
+             scrn_width = w->virtpage_width;
+             /* Number of bytes to actually draw */
+-            window_width = w->rightbot_x - w->lefttop_x + 1;
++            window_width = rightbot_x - w->lefttop_x + 1;
+             /* Total width of virtual screen page in bytes */
+             inc_size = scrn_width + w->virtpage_offsize;
+             host_fb_addr = w->host_fb_addr;
 -- 
 2.47.3
 
