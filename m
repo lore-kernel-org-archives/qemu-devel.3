@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA58FC5B56A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE3D5C5CFCF
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAIt-0004st-Qj; Wed, 12 Aug 2026 10:51:40 -0400
+	id 1wuAOE-0004Oy-Qm; Wed, 12 Aug 2026 10:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIG-0004Ph-0O; Wed, 12 Aug 2026 10:51:01 -0400
+ id 1wuANp-0004I8-JO; Wed, 12 Aug 2026 10:56:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAIC-0006fs-Qk; Wed, 12 Aug 2026 10:50:59 -0400
+ id 1wuANS-0000RW-6S; Wed, 12 Aug 2026 10:56:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546230; bh=3RFVQH8DG5t57EwQKAlm+0YwYLra1HqTSuyKnt2s0iE=;
+ t=1786546232; bh=9Zyp9mobdYce4neiIE89VgKtflEMyoLOJFmFLPgWnuk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lziZ173fJjKLxXT5qNY4TcsRY4zqP3FC7KHkxWFNCbvSgy3FBzT65bGz8W7nDFfsk
- QjMZCFeZgWB5HHg3N1amXbnXNML42wsvSIGBaTEwYuZJFt6IPzL9wqQCzkL6KmB7M1
- EYm6x44NCoczi5Z8Cr3cYXTLeKOzIHaCQR2R5mScfiLP8H3Cjx1yCE3aygd9k/6oXE
- A7NHyOgsfOblgz2Z70FKj3rTYGKbvmIA7QpZ65JcmII0gsU1SZZYC/eNtrfoZ7HjkF
- TefjJDkTV31ItsbtU0B1R6elrYjm7zLN5h/XpHGIaqlkIISlKeo+n5xBH+NQQu/Nn+
- KRmtYkOmG9HWA==
+ b=LI/lmWkC+e1qA3SRFSXHr+dPi1AfCpF51v6Fn1b0aOpRx045JznZSuj234k+GCdLH
+ 4vXgtjdt7jS3ScPeciGOwGAEtpxJb8z054RqJj7pEianiVy1sa3ZuXcIiJK+1tGacZ
+ h4DPJhRzjy6131QGxg9xvzlIKRFtmo6/Pleba13+tRGk2Pi78Ylo5BSrMY83SDIujf
+ FPKf0CQ0RPmym40VFG/CIcW//UrKbd+Ntn2+bnZnjHLiMhp8K393DO4b1BC5ZsPesm
+ tVzBSOLcQYTHXcP8gQ4/jP3xhF54Gavpo7qWrOR/WOtVtBBK3Bxs/h7mpE45Ai7mgB
+ vpQ6xGHXwpBDQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD2471CA608;
- Wed, 12 Aug 2026 17:50:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 547511CA63E;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2404B409D41;
- Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AF646409D80;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8398B2F96B; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
+ id 1B9DF2F9D7; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 004/120] hw/uefi: account variable policy entries
- against storage size
-Date: Wed, 12 Aug 2026 17:47:47 +0300
-Message-ID: <20260812144955.649205-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Jia Jia <physicalmtea@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 058/120] libvduse: validate vq size
+Date: Wed, 12 Aug 2026 17:48:41 +0300
+Message-ID: <20260812144955.649205-58-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,56 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-uefi-vars already tracks (and limits) the memory footprint of UEFI
-variables.  Do that for variable policies too.
+libvduse assumes that vq size (aka vq num) is below VIRTQUEUE_MAX_SIZE
+and maps logs large enough based on this assumption.
 
-Fixes: CVE-2026-61405
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3890
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260720143244.821889-5-kraxel@redhat.com>
-(cherry picked from commit 8e0ddb4a6ebd1c3d2dfd067f82b6d92de5b23e30)
+However, vduse_queue_enable() accepts the vq size returned through
+VDUSE_VQ_GET_INFO without validation, so a value above
+VIRTQUEUE_MAX_SIZE (1024) overruns the inflight log and causes
+out-of-bounds writes in vduse_queue_inflight_get().
+
+According to the virtio spec, vq size can only be reduced, not
+increased, so vq size must not exceed the previously configured
+max_size, but the kernel vduse module does not validate this for us, and
+we should not trust another process to follow the spec.
+
+Validate and reject vq size values above VIRTQUEUE_MAX_SIZE.
+
+Fixes: CVE-2026-61402
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3652
+Reported-by: Jia Jia <physicalmtea@gmail.com>
+Message-ID: <bf7e71b3139875e5e00fd53970c772d6c90dc2a1.1784888961.git.mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 733a98a552e4bd68932de1f58bd6ea39b57b261c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
-index 0880bfe074a..46c4ff2daca 100644
---- a/hw/uefi/var-service-policy.c
-+++ b/hw/uefi/var-service-policy.c
-@@ -283,7 +283,12 @@ static uint32_t uefi_vars_mm_check_policy_register(uefi_vars_state *uv,
-         return uefi_vars_mm_policy_error(mhdr, mchk, EFI_ALREADY_STARTED);
+diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
+index df9ca5e56f2..712b97b4c3b 100644
+--- a/subprojects/libvduse/libvduse.c
++++ b/subprojects/libvduse/libvduse.c
+@@ -902,6 +902,11 @@ static void vduse_queue_enable(VduseVirtq *vq)
+         return;
      }
  
-+    if (uv->used_storage + pe->size > uv->max_storage) {
-+        return uefi_vars_mm_policy_error(mhdr, mchk, EFI_OUT_OF_RESOURCES);
++    if (vq_info.num > VIRTQUEUE_MAX_SIZE) {
++        fprintf(stderr, "vq[%d] vring num %u exceeds max %u\n",
++                vq->index, vq_info.num, VIRTQUEUE_MAX_SIZE);
++        return;
 +    }
-+
-     uefi_vars_add_policy(uv, pe);
-+    uv->used_storage += pe->size;
- 
-     mchk->result = EFI_SUCCESS;
-     return sizeof(*mchk);
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 2c83130ebf6..fd07782f1e0 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -201,11 +201,15 @@ void uefi_vars_clear_all(uefi_vars_state *uv)
- void uefi_vars_update_storage(uefi_vars_state *uv)
- {
-     uefi_variable *var;
-+    uefi_var_policy *pol;
- 
-     uv->used_storage = 0;
-     QTAILQ_FOREACH(var, &uv->variables, next) {
-         uv->used_storage += variable_size(var);
-     }
-+    QTAILQ_FOREACH(pol, &uv->var_policies, next) {
-+        uv->used_storage += pol->entry->size;
-+    }
- }
- 
- static gboolean check_access(uefi_vars_state *uv, uefi_variable *var)
+     vq->vring.num = vq_info.num;
+     vq->vring.desc_addr = vq_info.desc_addr;
+     vq->vring.avail_addr = vq_info.driver_addr;
 -- 
 2.47.3
 
