@@ -4,157 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36799C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AA5C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu9eI-0006qJ-Pw; Wed, 12 Aug 2026 10:09:42 -0400
+	id 1wu9kr-0000gZ-49; Wed, 12 Aug 2026 10:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wu9eD-0006nC-IT
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:09:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wu9kc-0000d5-C6; Wed, 12 Aug 2026 10:16:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wu9eB-0003Zg-72
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 10:09:37 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CDbTR6320208
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 14:09:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- UvLCE+UKf7LdRqNhoyD92pl86OMH0Ydf74WQexXDtaI=; b=dt5Z7RrGiA8iYLZC
- yLoKMtc6atDzquFfjPBuAbaagkFndDzod4I0Q/699m0kyErkNsmhz5f5Se8ykLqi
- 8szrZ2/qX52F3KFmVV8/sFzCF6n47EIdVxp4NbU9cpQc3Vx7uE/CzPT4A0LXG9LZ
- 5Vdz3iRJabnlOnqqOUeYu75HiiJq1bdFQnOdcMQsXoQz3IKUQ1XUj0dmoKVmH2xQ
- yxmj55MJKbj5nUYlKTKFjxBIhCeRFnNGIlCTOMzTXfqxv+NlUvoNhPp24dWbP19K
- kHMJZMu6npTkrEDkHI+aK0fdd3fjnpkCUekMQMSOFZM1+7d7g0xCRUhbyD0HUHBL
- vppVDQ==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0sk407p3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 14:09:32 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2ccb687f82eso17030645ad.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786543772; x=1787148572; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UvLCE+UKf7LdRqNhoyD92pl86OMH0Ydf74WQexXDtaI=;
- b=dpHghkqlNtNniTXDItT6x2AljcmIBwu51hg3s0zmSF5WUP/sVqTlEO2lDLXAbRirxs
- 5pgw85adjK/iTo5Gq1cD4R7AtUQILXc47EnkHhJjbImDr6tR0ixRZsGVIt+2x3IRL067
- tquDPBlPr1YvSUoyjGYbHxSoaidetkIodsWmXIw+SeEUXzQFvZ6cgtnlSJQOq10gKKFS
- Zf/J582LljUq/gF7z6j4csvIgdv5DeZR6qM+rF+kiL5HXRqa0MO/rAY6zSACF9ywpYZ4
- MqLgaMDCrAF/6L5V5UYVmXC5QZx7ccRSaRb+oxxVWI478RVeuEGsruDEnGIRbwmpEOfz
- hLeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786543772; x=1787148572;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=UvLCE+UKf7LdRqNhoyD92pl86OMH0Ydf74WQexXDtaI=;
- b=g6sl9zF5DlbnXh5ZB3U5FaqV6/V7Y+LvzWxD0leF2W5DrdRzyJRYdATFwUc7NEggs9
- BxGgCCMcRqQnNbfQiS1fV90T9eR0lIbTG3HhpePoFubRgzQfe1vr92xBmPbs+XPI3uV7
- m+5j17uaGUlJ1lmd78iobzuOe5EXayqSyuOjf7kIsUyWAMdR9So6GQzAkA7Quy48uub3
- TB26z1WP7DNE5c0vWbQzyK91ugbi7xGis3Wv/N6bJAf1agMQO9S++m7FJy7ZSYmsy4WY
- MKEDBUhDBWjwap2FcNhfmotWix7gccG1PpmHjpOKRd8ADCGdVL0LgoDXtypbiJMl/fxr
- z5sA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqal02xWAop5/lxqqROndvTuhVeOUqQXk2f39l+sSr2GwntIPlOWdSRWT0FjabsK/BRpeAZYfeCpLZO@nongnu.org
-X-Gm-Message-State: AOJu0Yy0SL0Fq89QVRA5/mG3q9nL68pFRoIL1+h15Yu4YDY3sDYthttN
- 4gxQoA/8S1FGE2ixi0y4O4X6qG3ELnQhFipc0dPL4NB2puAq6I3QrGPjqfF076afJHluG8WgtsG
- 47ZntFLAK/PmL8KJvZZkSxi/qTkUut94y81FjJiXiPc4RgHCVp75ufHcSfQ==
-X-Gm-Gg: AR+sD13qfnYyN0hE5ig0rzXYyl1yLvh1UIF1Psn5cq3O5wIC25IhXaWOgNKegb+FIXA
- jefgrGJ4RO3AZB4+hbU6NPP7DQKvBGvGOpalRWXa04+5z5imp6CEhSK5EwZ8ZQdhk3qmG3f1fxZ
- t32pb4R2kWQ+Af9ya7Hdl3gTE4dujbpA2BDn37GXlDT5JoJ20NLOdJl0iJA8v90/yahvibYvktU
- hMRNn1TY6T3Q4BvECvACQsCnoDozrciBS2Ds8z39RZ2bIi7YSo55K/eyHIpvsBZIqTtjnQvXSQj
- NDJEXcdBxbkI7jxa+Z8VX+ZYvG7Sp+sJSd4gfZLjkFvxZbATPqwFCKK7kl0rqknino5XKLj6sqK
- EkwilY3Zn9uHBFuInCywFyCbb9sFCEg9qsfkOkR/0Ss6h7Ed3Asd7XgjHmxtQsYLJsBVA
-X-Received: by 2002:a17:902:ef11:b0:2ca:17e2:2acc with SMTP id
- d9443c01a7336-2d34574705fmr70143415ad.21.1786543771971; 
- Wed, 12 Aug 2026 07:09:31 -0700 (PDT)
-X-Received: by 2002:a17:902:ef11:b0:2ca:17e2:2acc with SMTP id
- d9443c01a7336-2d34574705fmr70141695ad.21.1786543771244; 
- Wed, 12 Aug 2026 07:09:31 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d350fb0cc5sm7280955ad.14.2026.08.12.07.09.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 07:09:30 -0700 (PDT)
-Message-ID: <9db3cc07-61e6-4740-823d-112ec80f216b@oss.qualcomm.com>
-Date: Wed, 12 Aug 2026 07:09:29 -0700
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wu9kZ-0005Jz-Kl; Wed, 12 Aug 2026 10:16:14 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CE25io3688021; Wed, 12 Aug 2026 14:15:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=PTlGKz
+ BNRMNFIzM14jO0DqygtImmA2pty6ARcKa0EH8=; b=k+zE+oc20LD4FFjiK8KSEg
+ MubjBMn5zhsgZKD/nvGjSMhqw3HvvI1kjdb5dzWo3vgPpLrapN9uG7xKhvoRXHsM
+ 3tRi7x0T6DqiZ54PBpJsIcyKo37bo1eufBwekt3pXIvbSV8R2q3brQs/xIlSXPlm
+ 34/yExPPuyxzQ/S0tcdFQ6hZuhbDu0r3XheLvf2yR21CWQ0HemXTS9huQfjtlPlI
+ HcZ3SWvjjClELWRs4FdlKhtFRB8GcKX4GsATBx6uL6OhT9WwvXbgAi72icPYg7cW
+ 8uUhtGnviSmoCquDUH589ozwnZ43ZAxBkU459UY/VCuUAQ3iH3KWptliCvDmoVrw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvm9tvhc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 14:15:55 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CEBKnn028700;
+ Wed, 12 Aug 2026 14:15:54 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsjxbvb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 14:15:54 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67CEFrQB30606004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Aug 2026 14:15:53 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 548C05805A;
+ Wed, 12 Aug 2026 14:15:53 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8B2B058056;
+ Wed, 12 Aug 2026 14:15:51 +0000 (GMT)
+Received: from [9.61.61.74] (unknown [9.61.61.74])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Aug 2026 14:15:51 +0000 (GMT)
+Message-ID: <efcd0101-703d-4f6b-87ec-86e9ebb82bc2@linux.ibm.com>
+Date: Wed, 12 Aug 2026 10:15:51 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/27] include/qemu/target-info-qom.h: declare
- TYPE_TARGET_SPECIFIC interface
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>,
+Subject: Re: [PATCH for-11.2] hw: add compat machines for 11.2
+To: Cornelia Huck <cohuck@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <adfd5a5f-c237-4634-9c0b-14389c0f3585@oss.qualcomm.com>
- <anNqhjSU5tEDC0br@redhat.com>
- <a9c89dd7-6317-42f1-9e03-30e48c2d08aa@oss.qualcomm.com>
- <anRgKw58IMYoR4p-@redhat.com>
- <5bda3566-5ce5-46dc-a281-2cc07a56dc6f@oss.qualcomm.com>
- <077fc585-a6b8-455a-abdc-fd72e13b8315@oss.qualcomm.com>
- <anTPOqFKWFKAX_3C@redhat.com>
- <102a3de8-ac17-429a-9294-e3b159aa642a@oss.qualcomm.com>
- <anxQdlwxAtqfl-N-@redhat.com>
- <cc88ff07-474f-48d6-a2a4-1a2c3f64f3fd@oss.qualcomm.com>
- <anxvMQpZlBUu5SaB@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <20260723163806.368127-1-cohuck@redhat.com>
 Content-Language: en-US
-In-Reply-To: <anxvMQpZlBUu5SaB@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 3t1wsLvt2Bm0bY3HQkeYLb5Vt7XXrO45
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDExNSBTYWx0ZWRfX/vDdoe50KP1D
- nT04U7wwJo6eXc/VYMcZ8MjUGyA1JcI2fGHRidlNBfUh3lwMvPZ4ahCKD/8Aj7bUBJuW8j1rdOU
- kGbrEqcjp5AIGH4Gn+So0qeY8d8HcZvtroJqYJpDoeZHEKjRrJJJqONxOam0WyerCs9BhsFEfEj
- bz9AUcKEO3754GYArg/IXld7ivx9ImPSBen5WKRjAbw+bQ/bnQyOA3D9uEsPINpziE6ujefsD8V
- yWU26l19d9dTkwYn7MLfmMbNMjHtpROsf9SJFP/aZS2wPCpdHTPjRzJUnF3lMVXha3uZAXHTKTc
- fehpSmlAtOPxaKTYc0tVC8LZmxXsAxWtgcOd2fvfXpb7KGrbDgAa2sX0Lex5hMNx9kuIvZKzCix
- RO0mGbUk6yPpnC7c4AlRnakIpO/8jLUXZzZH1xgD3V+5Bk8nftAGBqoV1AXWDez+DgPQotsnQ+B
- Q7EW6V+glrmXPxrebwA==
-X-Authority-Analysis: v=2.4 cv=E8n9Y6dl c=1 sm=1 tr=0 ts=6a7c7e9c cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=tfLtEAqYAw_bzBBtwT0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDExNSBTYWx0ZWRfX2eY8IsLeB8Xd
- HtoZHefOOErjfi8XF6xoypUoyAK6CZ9AOY9hz2CUck6GhjRWKYdFVlCresjdtthRQPlwgPN5lcW
- qHN+wCFDJIyM5F3GAJe4yAsmlTGYZ8Q=
-X-Proofpoint-ORIG-GUID: 3t1wsLvt2Bm0bY3HQkeYLb5Vt7XXrO45
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260723163806.368127-1-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDExNCBTYWx0ZWRfX6X156Y0j4HEX
+ Vji4IhigAwZzut3XQT1rpRQmQ7y8crBh5oP6ZzHsUnQE0ItxDAIYw0S6CQP9xKCX1cGo6WGwpKJ
+ MAtvmrrEkWTsMh+R5BSoTvkR9lslxwlK108KMlOTr5Am0tBy4X9Kngful6Bk0pNJ1PPjF6R5War
+ qM7+5754Kje1GyzEPoqKECRrYP72zmUgv5al3oAAQ2BCcjwm530n53csmIY4ie/pXimjj5jzo5f
+ /hShkmbMI4iT3jv7LxnzKHJ0levMJIqrII3LQXKFP6yFCUJlrOZigbCuZZAXiN7S9hsq1mSTfl/
+ Lu7FnrjacK5Bh5dVQhxBaklI5Fuq6S3r+xJg5r/HMbAbIK1cUfQmcNQ8m2jW9WJT+fyH1z5swrD
+ 0J7FK2/tZ8mbHxwdt3YeTBx1m+NzMSSd08ZVR3hSGbFOR8R2MaCwVzakeS3Wy5Je87FlpYv7c8+
+ FSoFrF4pjIZOFrp25oQ==
+X-Proofpoint-ORIG-GUID: jeEJgoylzkOMUKO_scrzRg22wbu3wVNu
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDExNCBTYWx0ZWRfX7WaNnf3w/Qba
+ 8j98qfU6ohhP0XQHp1JRiYtu5lZU413+VDyyyX1QJw+FnWf/56BY6iPuZUQpq14OkH7Rj2afSGP
+ oqaP9ZhoJTNPTL5x0DnqpVDPOKvskLQ=
+X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7c801c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=q1QqzxBElETWh38XZlcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: nqZL9eL4uj2H90IIbDkBXKN-S_DUuj0O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1011
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120115
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120114
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,172 +182,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/2026 6:03 AM, Daniel P. Berrangé wrote:
-> On Wed, Aug 12, 2026 at 05:54:49AM -0700, Pierrick Bouvier wrote:
->> On 8/12/2026 3:52 AM, Daniel P. Berrangé wrote:
->>> On Mon, Aug 10, 2026 at 03:26:26PM -0700, Pierrick Bouvier wrote:
->>>> I have been experimenting today with static filtering of types, as you
->>>> suggested, and came up with two possibilities. Before implementing this
->>>> for all types, I would like to get some feedback on which way is the
->>>> best for you.
->>>>
->>>> 1. Add a new callback is_available to TypeInfo, similar to existing
->>>> interface.
->>>> Pros: local information is present in type definition, making obvious
->>>>       why a type is available or not. Very easy to implement
->>>>       since only type_register_static has to be modified to check it.
->>>> Cons: Add a new field to each existing type. Not the end of the world
->>>>       in terms of memory consumption, but worth mentioning.
->>>> 2. Add conditional around each type_register_static, or add an
->>>> alternative type_register_static_cond function.
->>>> Pros: I don't see any
->>>> Cons: Decouples type information from type definition, makes it harder
->>>>       to follow why a type is available or not. Much more verbose since
->>>>       we need to modify all type_register_static buried in macros.
->>>>
->>>> Based on this, I'm much more in favor or 1. The fact availability
->>>> information is in the same location than type definition is the biggest
->>>> advantage for me.
->>>>
->>>> On example given above, this would give something like this:
->>>> static const TypeInfo emulated_card_info = {
->>>>      .name          = TYPE_EMULATED_CCID,
->>>>      .parent        = TYPE_CCID_CARD,
->>>>      .instance_size = sizeof(EmulatedState),
->>>>      .class_init    = emulated_class_initfn,
->>>>      .is_available  = target_config_X,
->>>> };
->>>>
->>>> Would that work for you?
->>>> Do you have a 3rd way to offer to solve the problem we have?
->>>
->>> In the case of user creatable objects, we represented a classes'
->>> conditional availablity in QAPI schema. For example:
->>>
->>>   { 'struct': 'InputLinuxProperties',
->>>     'data': { 'evdev': 'str',
->>>               '*grab_all': 'bool',
->>>               '*repeat': 'bool',
->>>               '*grab-toggle': 'GrabToggleKeys' },
->>>     'if': 'CONFIG_LINUX' }
->>>
->>> Now this isn't quite a match for what we want, as QAPI schema is
->>> common to all targets and used to control the code generator to
->>> turn off output. Thus the permitted CONFIG_xxx are only those in
->>> config-host.mak, not any from $TARGET-softmmu-config-devices.mak
->>>
->>> The other scenario in QAPI is the concept of features:
->>>
->>> { 'struct': 'SevCommonProperties',
->>>   'data': { '*sev-device': 'str',
->>>             '*cbitpos': 'uint32',
->>>             'reduced-phys-bits': 'uint32',
->>>             '*kernel-hashes': 'bool' },
->>>   'features': ['confidential-guest-reset']}
->>>
->>> where again we just have a list of named strings. Features are fully
->>> dynamic, and crucially they are introspectable so applications can
->>> query at runtime what is available.
->>>
->>> The introspection concept is something that is highly likely to be
->>> relevant to our use cases here. If we have a single binary with all
->>> types, it would be very valuable to be able to query it once to
->>> discover everything in one go, instead of havnig to query it over
->>> and over again for each target. That implies the application doing
->>> the query needs to be told about per-target usage restrictions on
->>> types it is querying.
->>>
->>> We don't have QAPI schema for QDev devices currently, but it is likely
->>> we will do so in the future. We can't wait for that though as there is
->>> no clear ETA.
->>>
->>> What this all says to me though, is that instead of an 'is_available'
->>> method, we should instead just list the conditions as data in the
->>> TypeInfo struct directly. IOW a list of const strings like this:
->>>
->>>  static const TypeInfo emulated_card_info = {
->>>       .name          = TYPE_EMULATED_CCID,
->>>       .parent        = TYPE_CCID_CARD,
->>>       .instance_size = sizeof(EmulatedState),
->>>       .class_init    = emulated_class_initfn,
->>>       .available     = (const char *[]){ TARGET_AARCH64, CONFIG_something .... },
->>>  };
->>>
->>> This will make it easy to add in introspection at a later date.
->>>
->>> The limitation is that this can only express an "AND" condition.
->>> You can not do complex AND+OR+grouping conditions that you could
->>> express in code, but IMHO that is not likely to be a problem.
->>> In the worst case you can define a higher level "CONFIG_BLAH"
->>> that encapsulates the complex condition.
->>>
->>
->> Those strings names reuse existing target config identifiers, which
->> can't be done because of config poisoning.
->> The string compare will definitively be visible at boot time, so we
->> should rely on enum instead if we go in this direction.
->>
->> I'm a bit worried about verbosity of the result:
->> .available     = (const char *[]){ ENUM_NAME_TARGET_AARCH64, {} }
->> versus:
->> is_available = target_aarch64
+
+
+On 7/23/26 12:38 PM, Cornelia Huck wrote:
+> Add 11.2 machine types for arm/i440fx/loongarch/m68k/q35/s390x/spapr.
 > 
-> The verbosity could be hidden behind a macro that takes a tar
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>   hw/arm/virt.c              |  9 ++++++++-
+>   hw/core/machine.c          |  3 +++
+>   hw/i386/pc.c               |  3 +++
+>   hw/i386/pc_piix.c          | 13 +++++++++++--
+>   hw/i386/pc_q35.c           | 13 +++++++++++--
+>   hw/loongarch/virt.c        | 11 +++++++++--
+>   hw/m68k/virt.c             |  9 ++++++++-
+>   hw/ppc/spapr.c             | 15 +++++++++++++--
+>   hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+>   include/hw/core/boards.h   |  3 +++
+>   include/hw/i386/pc.h       |  3 +++
+>   11 files changed, 85 insertions(+), 11 deletions(-)
 > 
-> #define QOM_AVAIL_TGT(name) \
->    .available = (const char *[]) ENUM_TARGET # name, NULL }
-> 
-> So usage becomes
-> 
->   static const TypeInfo emulated_card_info = {
->      .name          = TYPE_EMULATED_CCID,
->      .parent        = TYPE_CCID_CARD,
->      .instance_size = sizeof(EmulatedState),
->      .class_init    = emulated_class_initfn,
->      QOM_AVAIL_TGT(AARCH64),
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 219597cabd0b..e7a56e37f731 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -4441,10 +4441,17 @@ static void machvirt_machine_init(void)
 >   }
-> 
-> A separate macro could be defined for the more complex case
-> wanting multiple config options.
->
+>   type_init(machvirt_machine_init);
+>   
+> +static void virt_machine_11_2_options(MachineClass *mc)
+> +{
+> +}
+> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
+> +
+>   static void virt_machine_11_1_options(MachineClass *mc)
+>   {
+> +    virt_machine_11_2_options(mc);
+> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+>   }
+> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
+> +DEFINE_VIRT_MACHINE(11, 1)
+>   
+>   static void virt_machine_11_0_options(MachineClass *mc)
+>   {
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 805148678d57..354b93c62037 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -40,6 +40,9 @@
+>   #include "qemu/audio.h"
+>   #include "hw/arm/smmuv3.h"
+>   
+> +GlobalProperty hw_compat_11_1[] = {};
+> +const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
+> +
+>   GlobalProperty hw_compat_11_0[] = {
+>       { "chardev-vc", "encoding", "cp437" },
+>       { "tpm-crb", "cap-chunk", "off" },
 
-Then we'll have different macros for:
-one target, a collection of target, a mix of target and config, config
-only. Plus, we hide what was clear in the first place with:
-.is_available = target_aarch64.
+This hunk doesn't apply because of a5cff318f0 ("virtio-mmio: fix 
+QUEUE_NUM_MAX"), but is easy to resolve. I'll fix/pick this.
 
-I'm not super fond of the result to be honest.
- >> 99% of the types will be filtered by target only, for which we have
->> functions in target-info API. Only a few of them will need custom
->> functions. It would be worth having a nice/short way to write this
->> without having to declare all combination in a file.
->> One of your point was to not include more macros, and seems like we'll
->> end up this way.
-> 
-> In this case the macros expand to data that is machine consumable
-> at runtime, so I thjnk that's a good tradeoff.
-> 
->> The introspection argument is good, but will we really need that? The
->> whole point of conversation was to register only types available,
->> ignoring the rest. If you want introspection, it means registering all
->> types and selectively filter them.
-> 
-> Yes, introspection is critical to mgmt apps and places where we
-> forget/miss it cause endless pain.
->
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-We can easily make a mechanical replace on all '^\s*\.is_available'
-lines when it will be needed. Feels like we are anticipating a bit too
-much, and there would be no cost to change that later.
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index f064aa2b3e32..e9e4fc262b83 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -74,6 +74,9 @@
+>   #include "hw/xen/xen-bus.h"
+>   #endif
+>   
+> +GlobalProperty pc_compat_11_1[] = {};
+> +const size_t pc_compat_11_1_len = G_N_ELEMENTS(pc_compat_11_1);
+> +
+>   GlobalProperty pc_compat_11_0[] = {};
+>   const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
+>   
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 82457bdb167a..223a19cc4bbc 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -428,12 +428,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>                        pc_piix_compat_defaults, pc_piix_compat_defaults_len);
+>   }
+>   
+> -static void pc_i440fx_machine_11_1_options(MachineClass *m)
+> +static void pc_i440fx_machine_11_2_options(MachineClass *m)
+>   {
+>       pc_i440fx_machine_options(m);
+>   }
+>   
+> -DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_I440FX_MACHINE_AS_LATEST(11, 2);
+> +
+> +static void pc_i440fx_machine_11_1_options(MachineClass *m)
+> +{
+> +    pc_i440fx_machine_11_2_options(m);
+> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
+> +}
+> +
+> +DEFINE_I440FX_MACHINE(11, 1);
+>   
+>   static void pc_i440fx_machine_11_0_options(MachineClass *m)
+>   {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 6c1e4eff5f1d..94cd71124b18 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -383,12 +383,21 @@ static void pc_q35_machine_options(MachineClass *m)
+>                        pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+>   }
+>   
+> -static void pc_q35_machine_11_1_options(MachineClass *m)
+> +static void pc_q35_machine_11_2_options(MachineClass *m)
+>   {
+>       pc_q35_machine_options(m);
+>   }
+>   
+> -DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_Q35_MACHINE_AS_LATEST(11, 2);
+> +
+> +static void pc_q35_machine_11_1_options(MachineClass *m)
+> +{
+> +    pc_q35_machine_11_2_options(m);
+> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
+> +}
+> +
+> +DEFINE_Q35_MACHINE(11, 1);
+>   
+>   static void pc_q35_machine_11_0_options(MachineClass *m)
+>   {
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 6693dea647be..9cc79929a8ab 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -1465,7 +1465,6 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>       mc->default_ram_id = "loongarch.ram";
+>       mc->desc = "QEMU LoongArch Virtual Machine";
+>       mc->max_cpus = LOONGARCH_MAX_CPUS;
+> -    mc->is_default = 1;
+>       mc->default_kernel_irqchip_split = false;
+>       mc->block_default_type = IF_VIRTIO;
+>       mc->default_boot_order = "c";
+> @@ -1546,6 +1545,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+>           MACHINE_VER_DEPRECATION(__VA_ARGS__); \
+>           if (latest) { \
+>               mc->alias = "virt"; \
+> +            mc->is_default = true; \
+>           } \
+>       } \
+>       static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
+> @@ -1600,7 +1600,14 @@ static void machvirt_machine_init(void)
+>   
+>   type_init(machvirt_machine_init);
+>   
+> +static void virt_machine_11_2_options(MachineClass *mc)
+> +{
+> +}
+> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
+> +
+>   static void virt_machine_11_1_options(MachineClass *mc)
+>   {
+> +    virt_machine_11_2_options(mc);
+> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+>   }
+> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
+> +DEFINE_VIRT_MACHINE(11, 1)
+> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+> index 51158ce1c08c..274970978ffb 100644
+> --- a/hw/m68k/virt.c
+> +++ b/hw/m68k/virt.c
+> @@ -367,10 +367,17 @@ type_init(virt_machine_register_types)
+>   #define DEFINE_VIRT_MACHINE(major, minor) \
+>       DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+>   
+> +static void virt_machine_11_2_options(MachineClass *mc)
+> +{
+> +}
+> +DEFINE_VIRT_MACHINE_AS_LATEST(11, 2)
+> +
+>   static void virt_machine_11_1_options(MachineClass *mc)
+>   {
+> +    virt_machine_11_2_options(mc);
+> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+>   }
+> -DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
+> +DEFINE_VIRT_MACHINE(11, 1)
+>   
+>   static void virt_machine_11_0_options(MachineClass *mc)
+>   {
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index b79828b4e90c..7e284edd7d0b 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -4763,15 +4763,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+>   #define DEFINE_SPAPR_MACHINE(major, minor) \
+>       DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
+>   
+> +/*
+> + * pseries-11.2
+> + */
+> +static void spapr_machine_11_2_class_options(MachineClass *mc)
+> +{
+> +    /* Defaults for the latest behaviour inherited from the base class */
+> +}
+> +
+> +DEFINE_SPAPR_MACHINE_AS_LATEST(11, 2);
+> +
+>   /*
+>    * pseries-11.1
+>    */
+>   static void spapr_machine_11_1_class_options(MachineClass *mc)
+>   {
+> -    /* Defaults for the latest behaviour inherited from the base class */
+> +    spapr_machine_11_2_class_options(mc);
+> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+>   }
+>   
+> -DEFINE_SPAPR_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_SPAPR_MACHINE(11, 1);
+>   
+>   /*
+>    * pseries-11.0
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 25a9fa495540..55131c1a4445 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -925,14 +925,26 @@ static const TypeInfo ccw_machine_info = {
+>       DEFINE_CCW_MACHINE_IMPL(false, major, minor)
+>   
+>   
+> +static void ccw_machine_11_2_instance_options(MachineState *machine)
+> +{
+> +}
+> +
+> +static void ccw_machine_11_2_class_options(MachineClass *mc)
+> +{
+> +}
+> +DEFINE_CCW_MACHINE_AS_LATEST(11, 2);
+> +
+>   static void ccw_machine_11_1_instance_options(MachineState *machine)
+>   {
+> +    ccw_machine_11_2_instance_options(machine);
+>   }
+>   
+>   static void ccw_machine_11_1_class_options(MachineClass *mc)
+>   {
+> +    ccw_machine_11_2_class_options(mc);
+> +    compat_props_add(mc->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+>   }
+> -DEFINE_CCW_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_CCW_MACHINE(11, 1);
+>   
+>   static void ccw_machine_11_0_instance_options(MachineState *machine)
+>   {
+> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+> index 29c68931d8a7..a436d48c8e52 100644
+> --- a/include/hw/core/boards.h
+> +++ b/include/hw/core/boards.h
+> @@ -815,6 +815,9 @@ compat_props_add(GPtrArray *arr,
+>       }
+>   }
+>   
+> +extern GlobalProperty hw_compat_11_1[];
+> +extern const size_t hw_compat_11_1_len;
+> +
+>   extern GlobalProperty hw_compat_11_0[];
+>   extern const size_t hw_compat_11_0_len;
+>   
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index d4b6d3ed57fa..ac03da97b645 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -209,6 +209,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+>   /* sgx.c */
+>   void pc_machine_init_sgx_epc(PCMachineState *pcms);
+>   
+> +extern GlobalProperty pc_compat_11_1[];
+> +extern const size_t pc_compat_11_1_len;
+> +
+>   extern GlobalProperty pc_compat_11_0[];
+>   extern const size_t pc_compat_11_0_len;
+>   
 
-I would kindly ask again to consider if you would be ok to delay this to
-when it's effectively introduced on QAPI side.
-
-Would you be open to it?
-
-> With regards,
-> Daniel
-
-Regards,
-Pierrick
 
