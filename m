@@ -4,91 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8643C5DF64
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC159C5DF65
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8d5-0005Ax-6S; Wed, 12 Aug 2026 09:04:23 -0400
+	id 1wu8gu-0004N3-2j; Wed, 12 Aug 2026 09:08:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wu8ck-000444-G8
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:04:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8g6-00033f-79; Wed, 12 Aug 2026 09:07:34 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wu8ch-0004Oz-A5
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:04:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786539836;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vgoT/iolt/GV6d1wcNRhL1peIwSUBeaFoKFWCF4wWL0=;
- b=LSBQN3Jef5pHqifRblcuo4h/NLGhSCotIZRKBev/hVj8HLGOPg/adBYmXspV3SlG8qXE+J
- ExnhdfhVAeBz6yk0UGdZ4zKWdt/AnGC2I5vEEQ6zOksIqJpULeKp20IpEV4nBrDKqXSLjJ
- KD4cgmJfFxHpqr4HyuUVhXGrUSCtjQc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-7da1GSQNPPuh9swiucUG_g-1; Wed,
- 12 Aug 2026 09:03:53 -0400
-X-MC-Unique: 7da1GSQNPPuh9swiucUG_g-1
-X-Mimecast-MFC-AGG-ID: 7da1GSQNPPuh9swiucUG_g_1786539831
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A6F819560A1; Wed, 12 Aug 2026 13:03:51 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37A6F426; Wed, 12 Aug 2026 13:03:48 +0000 (UTC)
-Date: Wed, 12 Aug 2026 14:03:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH 01/27] include/qemu/target-info-qom.h: declare
- TYPE_TARGET_SPECIFIC interface
-Message-ID: <anxvMQpZlBUu5SaB@redhat.com>
-References: <adfd5a5f-c237-4634-9c0b-14389c0f3585@oss.qualcomm.com>
- <anNqhjSU5tEDC0br@redhat.com>
- <a9c89dd7-6317-42f1-9e03-30e48c2d08aa@oss.qualcomm.com>
- <anRgKw58IMYoR4p-@redhat.com>
- <5bda3566-5ce5-46dc-a281-2cc07a56dc6f@oss.qualcomm.com>
- <077fc585-a6b8-455a-abdc-fd72e13b8315@oss.qualcomm.com>
- <anTPOqFKWFKAX_3C@redhat.com>
- <102a3de8-ac17-429a-9294-e3b159aa642a@oss.qualcomm.com>
- <anxQdlwxAtqfl-N-@redhat.com>
- <cc88ff07-474f-48d6-a2a4-1a2c3f64f3fd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8g4-0005Ac-KS; Wed, 12 Aug 2026 09:07:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786539783; bh=OHeNzBUPPo52MwqOEEnKrj/hyObYUoiPmoCisIMr+xI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=Bgmy7oPk7e6u6cfJyaBOjGhnqP6iF25hgDoA3434ami6mWiPSYevyb62XUT7+Vcv+
+ +ffLf8R1/Ibh3jUiFmGWyu/qn/Xd6hTK7KBDY78dJCddsGH8lO+WOMdI8n9VgtMgBN
+ yBWv7nbCPEL50QBCfbRNHs3LGW+VsCac4VLs1ZankW+ui6lL2Ov10X8JVW5LSzGlUn
+ znDBNvDYSqrsro0T2wP1LAbCWMJp1mngSvJZiFMIVFtv2wcmC8lhrCyhauo2VDv9Wz
+ aF4tiaOiwhmfLOdvxRXzW//ew2FoYHS6ul5qQyDY6CLMhx872gDuT87+fLcBQXssWG
+ 0X7ip+/XkU8nA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E9BCE1CA4AE;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B9F9409B91;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 45A282F8F2; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Xie Yongji <xieyongji@bytedance.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, BB CC <wywwzjj@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 047/102] libvhost-user: fix heap overflow in
+ vu_check_queue_inflights
+Date: Wed, 12 Aug 2026 16:01:22 +0300
+Message-ID: <20260812130233.621965-47-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
+References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cc88ff07-474f-48d6-a2a4-1a2c3f64f3fd@oss.qualcomm.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,160 +70,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 12, 2026 at 05:54:49AM -0700, Pierrick Bouvier wrote:
-> On 8/12/2026 3:52 AM, Daniel P. Berrangé wrote:
-> > On Mon, Aug 10, 2026 at 03:26:26PM -0700, Pierrick Bouvier wrote:
-> >> I have been experimenting today with static filtering of types, as you
-> >> suggested, and came up with two possibilities. Before implementing this
-> >> for all types, I would like to get some feedback on which way is the
-> >> best for you.
-> >>
-> >> 1. Add a new callback is_available to TypeInfo, similar to existing
-> >> interface.
-> >> Pros: local information is present in type definition, making obvious
-> >>       why a type is available or not. Very easy to implement
-> >>       since only type_register_static has to be modified to check it.
-> >> Cons: Add a new field to each existing type. Not the end of the world
-> >>       in terms of memory consumption, but worth mentioning.
-> >> 2. Add conditional around each type_register_static, or add an
-> >> alternative type_register_static_cond function.
-> >> Pros: I don't see any
-> >> Cons: Decouples type information from type definition, makes it harder
-> >>       to follow why a type is available or not. Much more verbose since
-> >>       we need to modify all type_register_static buried in macros.
-> >>
-> >> Based on this, I'm much more in favor or 1. The fact availability
-> >> information is in the same location than type definition is the biggest
-> >> advantage for me.
-> >>
-> >> On example given above, this would give something like this:
-> >> static const TypeInfo emulated_card_info = {
-> >>      .name          = TYPE_EMULATED_CCID,
-> >>      .parent        = TYPE_CCID_CARD,
-> >>      .instance_size = sizeof(EmulatedState),
-> >>      .class_init    = emulated_class_initfn,
-> >>      .is_available  = target_config_X,
-> >> };
-> >>
-> >> Would that work for you?
-> >> Do you have a 3rd way to offer to solve the problem we have?
-> > 
-> > In the case of user creatable objects, we represented a classes'
-> > conditional availablity in QAPI schema. For example:
-> > 
-> >   { 'struct': 'InputLinuxProperties',
-> >     'data': { 'evdev': 'str',
-> >               '*grab_all': 'bool',
-> >               '*repeat': 'bool',
-> >               '*grab-toggle': 'GrabToggleKeys' },
-> >     'if': 'CONFIG_LINUX' }
-> > 
-> > Now this isn't quite a match for what we want, as QAPI schema is
-> > common to all targets and used to control the code generator to
-> > turn off output. Thus the permitted CONFIG_xxx are only those in
-> > config-host.mak, not any from $TARGET-softmmu-config-devices.mak
-> > 
-> > The other scenario in QAPI is the concept of features:
-> > 
-> > { 'struct': 'SevCommonProperties',
-> >   'data': { '*sev-device': 'str',
-> >             '*cbitpos': 'uint32',
-> >             'reduced-phys-bits': 'uint32',
-> >             '*kernel-hashes': 'bool' },
-> >   'features': ['confidential-guest-reset']}
-> > 
-> > where again we just have a list of named strings. Features are fully
-> > dynamic, and crucially they are introspectable so applications can
-> > query at runtime what is available.
-> > 
-> > The introspection concept is something that is highly likely to be
-> > relevant to our use cases here. If we have a single binary with all
-> > types, it would be very valuable to be able to query it once to
-> > discover everything in one go, instead of havnig to query it over
-> > and over again for each target. That implies the application doing
-> > the query needs to be told about per-target usage restrictions on
-> > types it is querying.
-> > 
-> > We don't have QAPI schema for QDev devices currently, but it is likely
-> > we will do so in the future. We can't wait for that though as there is
-> > no clear ETA.
-> > 
-> > What this all says to me though, is that instead of an 'is_available'
-> > method, we should instead just list the conditions as data in the
-> > TypeInfo struct directly. IOW a list of const strings like this:
-> > 
-> >  static const TypeInfo emulated_card_info = {
-> >       .name          = TYPE_EMULATED_CCID,
-> >       .parent        = TYPE_CCID_CARD,
-> >       .instance_size = sizeof(EmulatedState),
-> >       .class_init    = emulated_class_initfn,
-> >       .available     = (const char *[]){ TARGET_AARCH64, CONFIG_something .... },
-> >  };
-> > 
-> > This will make it easy to add in introspection at a later date.
-> > 
-> > The limitation is that this can only express an "AND" condition.
-> > You can not do complex AND+OR+grouping conditions that you could
-> > express in code, but IMHO that is not likely to be a problem.
-> > In the worst case you can define a higher level "CONFIG_BLAH"
-> > that encapsulates the complex condition.
-> >
-> 
-> Those strings names reuse existing target config identifiers, which
-> can't be done because of config poisoning.
-> The string compare will definitively be visible at boot time, so we
-> should rely on enum instead if we go in this direction.
-> 
-> I'm a bit worried about verbosity of the result:
-> .available     = (const char *[]){ ENUM_NAME_TARGET_AARCH64, {} }
-> versus:
-> is_available = target_aarch64
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-The verbosity could be hidden behind a macro that takes a tar
+vu_check_queue_inflights counts inflight descriptors using inflight == 1
+but copies entries using inflight != 0. If the inflight field contains
+an unexpected non-0/1 value, the function copies more entries than it
+allocates and overflows the heap buffer.
 
-#define QOM_AVAIL_TGT(name) \
-   .available = (const char *[]) ENUM_TARGET # name, NULL }
+Stop the copy pass once resubmit_num reaches the counted inuse value.
+Note: the value is not guest-accessible so not a security vulnerability.
 
-So usage becomes
+Fixes: CVE-2026-63110
+Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
+Cc: Xie Yongji <xieyongji@bytedance.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3974
+Reported-by: BB CC <wywwzjj@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <e2315efc526c0ee918485df4be69e2b26e8b7a73.1784892981.git.mst@redhat.com>
+(cherry picked from commit b9d248dfaca5e31377ea4f7204aae788a050bafd)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  static const TypeInfo emulated_card_info = {
-     .name          = TYPE_EMULATED_CCID,
-     .parent        = TYPE_CCID_CARD,
-     .instance_size = sizeof(EmulatedState),
-     .class_init    = emulated_class_initfn,
-     QOM_AVAIL_TGT(AARCH64),
-  }
-
-A separate macro could be defined for the more complex case
-wanting multiple config options.
-
-> 99% of the types will be filtered by target only, for which we have
-> functions in target-info API. Only a few of them will need custom
-> functions. It would be worth having a nice/short way to write this
-> without having to declare all combination in a file.
-> One of your point was to not include more macros, and seems like we'll
-> end up this way.
-
-In this case the macros expand to data that is machine consumable
-at runtime, so I thjnk that's a good tradeoff.
-
-> The introspection argument is good, but will we really need that? The
-> whole point of conversation was to register only types available,
-> ignoring the rest. If you want introspection, it means registering all
-> types and selectively filter them.
-
-Yes, introspection is critical to mgmt apps and places where we
-forget/miss it cause endless pain.
-
-With regards,
-Daniel
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 037c6614018..9846de782c0 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1408,6 +1408,13 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+ 
+         for (i = 0; i < vq->inflight->desc_num; i++) {
+             if (vq->inflight->desc[i].inflight) {
++                /*
++                 * We earlier counted exactly vq->inuse in flight -
++                 * what is going on?
++                 */
++                if (vq->resubmit_num >= vq->inuse) {
++                    return -1;
++                }
+                 vq->resubmit_list[vq->resubmit_num].index = i;
+                 vq->resubmit_list[vq->resubmit_num].counter =
+                                         vq->inflight->desc[i].counter;
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.47.3
 
 
