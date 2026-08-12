@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526D6C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052FAC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAP4-0005Hx-7u; Wed, 12 Aug 2026 10:58:02 -0400
+	id 1wuAN8-0003l0-R4; Wed, 12 Aug 2026 10:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAO1-0004Iz-8H; Wed, 12 Aug 2026 10:57:04 -0400
+ id 1wuAMg-0002SV-Ps; Wed, 12 Aug 2026 10:55:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuANw-0000gt-8b; Wed, 12 Aug 2026 10:56:53 -0400
+ id 1wuAMM-0007wg-AT; Wed, 12 Aug 2026 10:55:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=VomVhxY0qpKIttSRay7Qzb9XuAHdORaKXklaQ/i3WD0=;
+ t=1786546232; bh=K3+eiVNYa9juFmktEnzJs2Hi+ukUtduyVvdNjzmVwp4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DAV4PHtvnz5hi7PNvsqrLHM7boAQc/TPvkleKez+BC37htj14oeKyEzEo7qymzs/S
- eL50m2nO5ITYAmKplPQk9zxhbWq5T+3Xq9vRVPJe2+abq9RrIKLixUy+RFOwT/3ds/
- Asrgv6nmrwhC5xggO2Kf5nDGH5j0c42cU3beo5QywqtwvsmF35j6m+gEJISMZ2iirZ
- FzGuFgIqR0MStrV8383xBXS48YG9uQ5FFEMLl978d7kS8apJFxcTFUKZuuORMLgghX
- OgHbPlPbOL7R0mYJpMnJZE17haKpIJOc9d+exL1fC8NXK/dRall0sftxVZFi2+0z6Z
- BBRIMYyWv7KdA==
+ b=QQL3gSQJY6r6W2I3Ut+mTtOGxsLNjeQvPno559zksD2A8r5AQfSg3Qmp8BwMdlQ/P
+ MeXhvNXBsV9hvX+adMJ5ftJ+lbrmwEBz4P2KQ2Oqozlu/c80X6R1k8BgyOzmhBtLe0
+ i+lfvJQtQQ+sC6+kaXV3MpArgklfk/SpwOZtKRLkT11pRUeOALBMK8UzgTHapw6Bon
+ 8qFlsejFzaop4PkTCVBRHfDz5PAoHn32ZuI5D1a/9eRSYDYfZ6gagjDF1RSZo576GT
+ DkN/Ig5yNBj8Xr9MYGMGRVNaiploMCdFP0sfA4U9IH96rYDspMdeVkk/0PS1HAqGVg
+ 9lWWjmVkn3yPQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 754611CA642;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2DA8C1CA638;
  Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0250409D84;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8887D409D7A;
  Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 39C552F9DF; Wed, 12 Aug 2026 17:50:19 +0300 (MSK)
+ id E67182F9CB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Michael S. Tsirkin <mst@redhat.com>
-Subject: [Stable-11.0.4 062/120] hw/pci-host/q35.c: Avoid early return in
- mch_write_config()
-Date: Wed, 12 Aug 2026 17:48:45 +0300
-Message-ID: <20260812144955.649205-62-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 052/120] virtio-scsi: fix SCSIRequest leak on a bad
+ request
+Date: Wed, 12 Aug 2026 17:48:35 +0300
+Message-ID: <20260812144955.649205-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -71,63 +73,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-In mch_write_config() we return early if has_smm_ranges is false.
-This is slightly bug-prone because it leaves the door open to somebody
-later adding non-SMM-specific code at the bottom of the function.
+When virtio_scsi_handle_cmd_vq() cleans up prepared requests after a
+malformed element in the same batch, it drops only one reference even
+though virtio_scsi_handle_cmd_req_prepare() leaves each unsubmitted
+SCSIRequest with two references. This leaks the request and allows
+repeated bad batches to cause unbounded host memory growth.
 
-This case isn't as bad as the one in realize, because the function is
-a lot shorter.  But putting the handling of the three SMM specific
-ranges into an if() rather than having an early return seems better.
+Add a second scsi_req_unref() and clear hba_private first.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: CVE-2026-61476
+Fixes: 661e32fb3c ("virtio-scsi: convert virtio_scsi_bad_req() to use virtio_error()")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3875
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
+Cc: Greg Kurz <groug@kaod.org>
+Reported-by: Feifan Qian <bea1e@proton.me>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260708121011.1653365-4-peter.maydell@linaro.org>
-(cherry picked from commit e07c67584c69da44a4d52df747a6fff1f411500d)
+Message-ID: <5092cd4716e08d29731bfe85eea82a732b837ff4.1784895264.git.mst@redhat.com>
+(cherry picked from commit f404bf0e6504e0412a00ea64708f17d2a5e3f869)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e44f23c1d9f..0246317cbcf 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -474,22 +474,20 @@ static void mch_write_config(PCIDevice *d,
-         mch_update_pciexbar(mch);
-     }
- 
--    if (!mch->has_smm_ranges) {
--        return;
--    }
--
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
--                       MCH_HOST_BRIDGE_SMRAM_SIZE)) {
--        mch_update_smram(mch);
--    }
-+    if (mch->has_smm_ranges) {
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
-+                           MCH_HOST_BRIDGE_SMRAM_SIZE)) {
-+            mch_update_smram(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
--                       MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
--        mch_update_ext_tseg_mbytes(mch);
--    }
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
-+                           MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_SIZE)) {
-+            mch_update_ext_tseg_mbytes(mch);
-+        }
- 
--    if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
--        mch_update_smbase_smram(mch);
-+        if (ranges_overlap(address, len, MCH_HOST_BRIDGE_F_SMBASE, 1)) {
-+            mch_update_smbase_smram(mch);
-+        }
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index dccb2f25b2a..deb43d5560e 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -1513,6 +1513,13 @@ void scsi_req_unref(SCSIRequest *req)
      }
  }
  
++void scsi_req_unref_detach_hba(SCSIRequest *req)
++{
++    /* Unref when the HBA frees hba_private separately (e.g. virtio_scsi_free_req) */
++    req->hba_private = NULL;
++    scsi_req_unref(req);
++}
++
+ /* Tell the device that we finished processing this chunk of I/O.  It
+    will start the next chunk or complete the command.  */
+ void scsi_req_continue(SCSIRequest *req)
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 6c737680119..bf64d1231a8 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -931,7 +931,9 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
+                     req = QTAILQ_FIRST(&reqs);
+                     QTAILQ_REMOVE(&reqs, req, next);
+                     defer_call_end();
++                    /* Drop both the ref from _prepare and the initial ref */
+                     scsi_req_unref(req->sreq);
++                    scsi_req_unref_detach_hba(req->sreq);
+                     virtqueue_detach_element(req->vq, &req->elem, 0);
+                     virtio_scsi_free_req(req);
+                 }
+diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+index a3e246dbd92..332c2f04ebe 100644
+--- a/include/hw/scsi/scsi.h
++++ b/include/hw/scsi/scsi.h
+@@ -221,6 +221,7 @@ SCSIRequest *scsi_req_new(SCSIDevice *d, uint32_t tag, uint32_t lun,
+ int32_t scsi_req_enqueue(SCSIRequest *req);
+ SCSIRequest *scsi_req_ref(SCSIRequest *req);
+ void scsi_req_unref(SCSIRequest *req);
++void scsi_req_unref_detach_hba(SCSIRequest *req);
+ 
+ int scsi_bus_parse_cdb(SCSIDevice *dev, SCSICommand *cmd, uint8_t *buf,
+                        size_t buf_len, void *hba_private);
 -- 
 2.47.3
 
