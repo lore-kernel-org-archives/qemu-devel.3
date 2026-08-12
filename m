@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 489FCC5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74C7C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8cx-000485-1R; Wed, 12 Aug 2026 09:04:15 -0400
+	id 1wu8dD-0006AX-By; Wed, 12 Aug 2026 09:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8cA-0003Sl-TU; Wed, 12 Aug 2026 09:03:26 -0400
+ id 1wu8dB-0005zg-Ne; Wed, 12 Aug 2026 09:04:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8c8-0004IT-Kf; Wed, 12 Aug 2026 09:03:26 -0400
+ id 1wu8d9-0004Qi-Uw; Wed, 12 Aug 2026 09:04:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=5b/5hVO0uzX4Rv6m6buzYgdoIIHqTAw8nfX62Y067No=;
+ t=1786539783; bh=ET6C9e1evicLzMVE9bmdi1Y6qJCSZ5TmRj/WTts8YzE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QK/pwLkj49TEA/8CHqtit97eJZHe2YDLekkkiaEW0AURcSw+Vvek8nSMv8VB0yY4I
- 8zzZ4a6vXABpZK36UhCPG7YIzvG0LPu/8rKm4aIpKFdk2um5bLfONJ4qSOMjF1dR8P
- uDgzyW7XZhntz32g17aQH2BiBHb5XgUc9e0iRgM2iAEJTbhTFwFuSTTFs28R9Ok7cq
- +Hb4I6xdQQ5kjSx/WOChPJLqUUTfgtVrjcdzbPV/p2nXfrQc3pWVM5bZtt4yk+YkNR
- /iGmdkSdMQ//kQBiFkT6V/5LVZqYE6zkjmaDnO2uKiuURr49Bm3My5STQOzzhh3xWE
- 9tsd0p5jmvL/w==
+ b=mOUKAbw54uNh6dOeWbS8bElIoJlOrvnLoa14fOKxXJrCp19MoOut3crz2ARIPNA9o
+ swV4kjkJfLPMHv53EwH7h29Y6aJk318vEcT7TsbV5FRD6w3XB8C00jwql04Yyq3xN4
+ xy25xW1atBCR5j3O8QwqgEF1YNuOY73YvZDe6LVFdi7gyYKjEKRSW7wnnz59DkwBjn
+ Z/8V8BRDuFRYb5/SHA1dRtuGtRY1lZagFKKnYDrBALLDKynAgtGWs8Q+UC3KJVUSg3
+ KENlU4gxlJKJUBE7ei+RDxWbPjjoK2A3k/qbal21F2IGdwrLFzetSzXuI6fYcoNeJF
+ oy0c6bEhqmEeA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1BD251CA485;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5027E1CA48F;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 52653409B68;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 848EA409B72;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id CF9B02F8A0; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
+ id EA2CA2F8B4; Wed, 12 Aug 2026 16:02:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 006/102] hw/uefi: make SetupMode read-only
-Date: Wed, 12 Aug 2026 16:00:41 +0300
-Message-ID: <20260812130233.621965-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 016/102] hw/9pfs: fix O_TRUNC bypass on read-only
+ export
+Date: Wed, 12 Aug 2026 16:00:51 +0300
+Message-ID: <20260812130233.621965-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,37 +73,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-This is read-only variable which informs the OS about the
-secure boot state.  Reject any attempts to write to it.
+Guest 9p client opening a file with O_TRUNC on a read-only 9p file
+system using 9p2000.u protocol version, allowed to bypass 9p
+server's read-only check, eventually causing file(s) being
+truncated to empty file(s) on host's read-only export.
 
-Fixes: CVE-2026-16288
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4039
-Acked-by: Luigi Leonardi <leonardi@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260720143244.821889-7-kraxel@redhat.com>
-(cherry picked from commit bd9b3c50f458ce24fee084916cf0eba58bd9a33b)
+Root cause is that 9p server's read-only check is using Linux open
+flags like O_WRONLY, O_RDWR, O_TRUNC, but checking them against
+the 9p Topen request's "mode" parameter, which has a different
+encoding (Otrunc = 0x10 vs. O_TRUNC = 0x200).
+
+Fix this by checking against the "flags" variable instead of the
+protocol's "mode" option. Because the "flags" variable is already
+converted to Linux encoding by omode_to_uflags() for 9p2000.u and
+by get_dotl_openflags() for 9p2000.L protocol version.
+
+Only 9p2000.u was affected by this bypass, 9p2000.L uses the Linux
+format on protocol level already.
+
+Fixes: 2c74c2cb4b ("hw/9pfs: Read-only support for 9p export")
+Fixes: CVE-2026-63318
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4000
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/E1wk2Dq-0019kY-JK@kylie.crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit a0414545a212e27058fab7b057b018e75b8c4b13)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index f3dc9c6ca60..899444af12d 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -298,6 +298,13 @@ efi_status uefi_vars_check_secure_boot(uefi_vars_state *uv, uefi_variable *var)
-         return EFI_WRITE_PROTECTED;
-     }
- 
-+    /* reject SetupMode updates */
-+    if (qemu_uuid_is_equal(&var->guid, &EfiGlobalVariable) &&
-+        uefi_str_equal(var->name, var->name_size,
-+                       name_setup_mode, sizeof(name_setup_mode))) {
-+        return EFI_WRITE_PROTECTED;
-+    }
-+
-     return EFI_SUCCESS;
- }
- 
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index e337b45517f..bb263afe430 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -2144,8 +2144,8 @@ static void coroutine_fn v9fs_open(void *opaque)
+             flags = omode_to_uflags(mode);
+         }
+         if (is_ro_export(&s->ctx)) {
+-            if (mode & O_WRONLY || mode & O_RDWR ||
+-                mode & O_APPEND || mode & O_TRUNC) {
++            if (flags & O_WRONLY || flags & O_RDWR ||
++                flags & O_APPEND || flags & O_TRUNC) {
+                 err = -EROFS;
+                 goto out;
+             }
 -- 
 2.47.3
 
