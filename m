@@ -4,60 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052FAC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA8AC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAN8-0003l0-R4; Wed, 12 Aug 2026 10:56:02 -0400
+	id 1wuAWe-0003DA-Ve; Wed, 12 Aug 2026 11:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMg-0002SV-Ps; Wed, 12 Aug 2026 10:55:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wuAVb-0002hD-CE
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:04:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAMM-0007wg-AT; Wed, 12 Aug 2026 10:55:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546232; bh=K3+eiVNYa9juFmktEnzJs2Hi+ukUtduyVvdNjzmVwp4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QQL3gSQJY6r6W2I3Ut+mTtOGxsLNjeQvPno559zksD2A8r5AQfSg3Qmp8BwMdlQ/P
- MeXhvNXBsV9hvX+adMJ5ftJ+lbrmwEBz4P2KQ2Oqozlu/c80X6R1k8BgyOzmhBtLe0
- i+lfvJQtQQ+sC6+kaXV3MpArgklfk/SpwOZtKRLkT11pRUeOALBMK8UzgTHapw6Bon
- 8qFlsejFzaop4PkTCVBRHfDz5PAoHn32ZuI5D1a/9eRSYDYfZ6gagjDF1RSZo576GT
- DkN/Ig5yNBj8Xr9MYGMGRVNaiploMCdFP0sfA4U9IH96rYDspMdeVkk/0PS1HAqGVg
- 9lWWjmVkn3yPQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2DA8C1CA638;
- Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8887D409D7A;
- Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E67182F9CB; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 052/120] virtio-scsi: fix SCSIRequest leak on a bad
- request
-Date: Wed, 12 Aug 2026 17:48:35 +0300
-Message-ID: <20260812144955.649205-52-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wuAVT-0003Bj-Lj
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:04:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786547072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cGvWi+UVsuWKsZ7t1YneryfhaE9NEB7DkYjLsW/aUaQ=;
+ b=UtL34byuv9mFaHQx/h9bFxc6iVyJBiYTaSPembrY8CiPFTn6eT/VzzIC4maaoXLge0TB4y
+ S1+cDcr9X/6m/7tiD+4pvNIINsWWfMY32ELfsXhcLx9fpuDLFlFKeWUoQo0UItkma4uhva
+ D6nA/klQKcsIK6kA+NwyDFSpjT6bBrc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-5xiaBztaP52Y4Oq4J-Z9Xg-1; Wed,
+ 12 Aug 2026 11:04:27 -0400
+X-MC-Unique: 5xiaBztaP52Y4Oq4J-Z9Xg-1
+X-Mimecast-MFC-AGG-ID: 5xiaBztaP52Y4Oq4J-Z9Xg_1786547066
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 128EB193531E; Wed, 12 Aug 2026 15:03:29 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 78395423; Wed, 12 Aug 2026 15:03:28 +0000 (UTC)
+Date: Wed, 12 Aug 2026 11:03:25 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v2] file-posix: fix zone write granularity assignment for
+ zoned block devices
+Message-ID: <20260812150324.GE244786@fedora>
+References: <20260811133236.1290092-1-cassel@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="PDsGBemRbk08uWRx"
+Content-Disposition: inline
+In-Reply-To: <20260811133236.1290092-1-cassel@kernel.org>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,73 +87,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+--PDsGBemRbk08uWRx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-When virtio_scsi_handle_cmd_vq() cleans up prepared requests after a
-malformed element in the same batch, it drops only one reference even
-though virtio_scsi_handle_cmd_req_prepare() leaves each unsubmitted
-SCSIRequest with two references. This leaks the request and allows
-repeated bad batches to cause unbounded host memory growth.
+On Tue, Aug 11, 2026 at 03:32:36PM +0200, Niklas Cassel wrote:
+> In the ZBC and ZAC specifications, the requirement is that the write
+> granularity matches the physical block size.
+>=20
+> However, in the ZNS specification, the requirement is simply that the
+> write granularity matches the logical block size.
+>=20
+> See:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit=
+/?id=3Da805a4fa4fa376bbc145762bb8b09caa2fa8af48
+>=20
+> In Linux, there is a zone_write_granularity sysfs property which abstracts
+> this away, so let's make use of it.
+>=20
+> Currently, it is theoretically possible that QEMU presents an inflated
+> write granularity for NVMe devices where the physical block size is larger
+> than the logical block size.
+>=20
+> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> Fixes: a3c41f06d5a8 ("file-posix: add tracking of the zone write pointers=
+")
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> ---
+> Changes since v1:
+> -Improved commit log.
+> -Picked up tag.
+>=20
+>  block/file-posix.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Add a second scsi_req_unref() and clear hba_private first.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Fixes: CVE-2026-61476
-Fixes: 661e32fb3c ("virtio-scsi: convert virtio_scsi_bad_req() to use virtio_error()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3875
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>
-Cc: Greg Kurz <groug@kaod.org>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <5092cd4716e08d29731bfe85eea82a732b837ff4.1784895264.git.mst@redhat.com>
-(cherry picked from commit f404bf0e6504e0412a00ea64708f17d2a5e3f869)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+--PDsGBemRbk08uWRx
+Content-Type: application/pgp-signature; name=signature.asc
 
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index dccb2f25b2a..deb43d5560e 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -1513,6 +1513,13 @@ void scsi_req_unref(SCSIRequest *req)
-     }
- }
- 
-+void scsi_req_unref_detach_hba(SCSIRequest *req)
-+{
-+    /* Unref when the HBA frees hba_private separately (e.g. virtio_scsi_free_req) */
-+    req->hba_private = NULL;
-+    scsi_req_unref(req);
-+}
-+
- /* Tell the device that we finished processing this chunk of I/O.  It
-    will start the next chunk or complete the command.  */
- void scsi_req_continue(SCSIRequest *req)
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 6c737680119..bf64d1231a8 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -931,7 +931,9 @@ static void virtio_scsi_handle_cmd_vq(VirtIOSCSI *s, VirtQueue *vq)
-                     req = QTAILQ_FIRST(&reqs);
-                     QTAILQ_REMOVE(&reqs, req, next);
-                     defer_call_end();
-+                    /* Drop both the ref from _prepare and the initial ref */
-                     scsi_req_unref(req->sreq);
-+                    scsi_req_unref_detach_hba(req->sreq);
-                     virtqueue_detach_element(req->vq, &req->elem, 0);
-                     virtio_scsi_free_req(req);
-                 }
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index a3e246dbd92..332c2f04ebe 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -221,6 +221,7 @@ SCSIRequest *scsi_req_new(SCSIDevice *d, uint32_t tag, uint32_t lun,
- int32_t scsi_req_enqueue(SCSIRequest *req);
- SCSIRequest *scsi_req_ref(SCSIRequest *req);
- void scsi_req_unref(SCSIRequest *req);
-+void scsi_req_unref_detach_hba(SCSIRequest *req);
- 
- int scsi_bus_parse_cdb(SCSIDevice *dev, SCSICommand *cmd, uint8_t *buf,
-                        size_t buf_len, void *hba_private);
--- 
-2.47.3
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmp8iz0ACgkQnKSrs4Gr
+c8jngAf/foeTuVnTXhwngNBXM0ejhby0A4hb9AoT5BBxvEuRZHARDwrfxAVBkrTC
+3GuFJwS7x+R1r366FFtQ82mkFPEG2xgwlGcbwphzPB4U/Jc4McGFJu75elk1iOmZ
+KzuqBKhnW7EubbAFMxcQM1G4/mmOcpIk/j4BHpOfKrrO/UilZ/5chpBXJw4Sjs97
+4o9rHWFBV8xFvI6zxtKZfUpuhXjKG6+m3vxjGe8Kg5bNRG7zUZ2MmRAQNCgAb6ta
+aFNuRfbSaSyrzLVtR06SVLlyMjgCptdCmy8HM2D8pRY1/hX4h9LMveZdnug3MFsO
+TdRxyXIw/jIpSawHOpBk7j8I4n2QtA==
+=gwc9
+-----END PGP SIGNATURE-----
+
+--PDsGBemRbk08uWRx--
 
 
