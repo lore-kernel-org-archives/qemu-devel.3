@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34771C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD328C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMu-00033k-UN; Wed, 12 Aug 2026 10:55:49 -0400
+	id 1wuANF-0003sC-Ku; Wed, 12 Aug 2026 10:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALH-0007eL-AX; Wed, 12 Aug 2026 10:54:07 -0400
+ id 1wuAMm-0002XI-OU; Wed, 12 Aug 2026 10:55:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuALE-0007L9-TJ; Wed, 12 Aug 2026 10:54:07 -0400
+ id 1wuAMR-00082v-HJ; Wed, 12 Aug 2026 10:55:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=W/sSWn/v3/GknB5jcagXdDaAuRBXsS/cYOKTPCnBKog=;
+ t=1786546232; bh=uxm9A6AdRsxgK+6ZXunG1n5eURpGcO+drgTUYDsDxrk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gGORxhqxqV+xLkXa0T52wMHmeH75wvXL2T7eOo8cqYLHm12Yp0RFCyV4V+9HmM5fH
- wAYsnnF7JtNbAbqSR9cYbs+KOFChH1p6ZXRW/YuzmYxdc+o2Q4XOxonNOW6z3N8cZ2
- ZBh4iihQ9slYEvj2lseRspqpdly+BDCzvVWKFNjU6TIL5h37SmXGomkhARKlYJtxEi
- 67kKbs0v9/3SLcn2J4sN/jPmnJFp2Va9R4D1cYxad1mxD01q5Z+ZCbRexES4SOKq1j
- eRc3mwiTgO3NzzPxdMtTFUE1Bjec/uehewTmllVUQlIgaUUsqhMxPTihCf1z/yvo2h
- YGo0ZUO/cGh7A==
+ b=uIFWJ5pMdqwaBROY/JC80ffQDD2azCI8yNL2Sil3fuUfULzI1vjOcN0cAhbtkPUsi
+ 7Qol8MkvUdBXgOlALXxdJrGMLD8dFgpP9QJBbmY5oSxX+L+lFJaVDGBW9M/0BxAfvf
+ OHhH195bVjoVHIaxpOCli31xvB5rFXyWtuhj43RR9fV1gnCDpUdkofgGxkW0erCM3r
+ eNQYVw9Vmn++sIo6kl5u12zG1BaGKTDZvZh4lWmKa0ubJemUlZjA+47fLk+zXhn7Kf
+ +Wlt0xMtFX80ggo3/XOTr/W63J3CNpPV0W/pMSPFigr9WxVBvYPuBvxaqULPcsimv4
+ H4A/qmYzvLNvA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D00451CA62D;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3311A1CA639;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36D88409D6F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D1C2409D7B;
  Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 94D462F9B5; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id EDC172F9CD; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Feifan Qian <bea1e@proton.me>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 041/120] hw/display/virtio-gpu: Initialize blob
- mapping for ATTACH_BACKING
-Date: Wed, 12 Aug 2026 17:48:24 +0300
-Message-ID: <20260812144955.649205-41-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 053/120] virtio: fail early on bad config_len in
+ migration
+Date: Wed, 12 Aug 2026 17:48:36 +0300
+Message-ID: <20260812144955.649205-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,32 +72,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-It is necessary for blob cursor and scanout.
+virtio_load() attempts to load config_len bytes from the migration
+stream. If that's huge (e.g. 4g) this will uselessly spin
+beyond the end of the stream for seconds. Not nice.
+Check qemu_file_get_error() and bail out early, instead.
 
-Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260725-backing-v1-1-5b584bf7df5a@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit 4ae1c5c7d6f33d1e9c030ec4d24ab272609188cc)
+Also note that config_len is int32_t but is coerced to unsigned when
+used. Switch it to uint32_t to make this clearer.
+
+Fixes: 2f5732e964 ("Allow mismatched virtio config-len")
+Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3891
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <cfbefa358af5885eb386637216552bfeba5e7bbc.1784898922.git.mst@redhat.com>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+(cherry picked from commit 665c854390e0db15ed55b985ca850c36b28b0e57)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index a8998e0d54c..d29406982f6 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -992,6 +992,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
-+
-+    if (!res->image) {
-+        virtio_gpu_init_udmabuf(res);
-+    }
- }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 2f357519193..b290d8650b0 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3320,7 +3320,7 @@ int coroutine_mixed_fn
+ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+ {
+     int i, ret;
+-    int32_t config_len;
++    uint32_t config_len;
+     uint32_t num;
+     uint32_t features;
+     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+@@ -3368,6 +3368,9 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+     qemu_get_buffer(f, vdev->config, MIN(config_len, vdev->config_len));
  
- static void
+     while (config_len > vdev->config_len) {
++        if (qemu_file_get_error(f)) {
++            return -1;
++        }
+         qemu_get_byte(f);
+         config_len--;
+     }
 -- 
 2.47.3
 
