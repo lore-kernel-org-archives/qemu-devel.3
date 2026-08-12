@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0F4C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 09:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB15C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 09:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu4yL-0001CJ-De; Wed, 12 Aug 2026 05:10:05 -0400
+	id 1wu51v-0001zf-8a; Wed, 12 Aug 2026 05:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wu4yK-0001Bc-6u
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 05:10:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wu51p-0001z5-WE
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 05:13:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wu4yI-0001iv-Ii
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 05:10:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wu51m-0002CF-Dq
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 05:13:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786525801;
+ s=mimecast20190719; t=1786526017;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XMys7fGg9+Du+oGoQXQt3BYrsdB68Zl21vr+/B9GrVw=;
- b=Yo9jqhEuxSExeABIIiLT8AN1KVn7B3IDHOZgeO7BAQJub8U2/s2asRKkuxh6ShuSOFkkqI
- 8XpVo3TVFXN3fYMrbKQiizHgJzb6tHw0LKLlioH4T102aVGSlyEVRB2Q7wkwQLpnXZWt7Q
- tgMukUGO+o2wumUYxP8VLPKIOxrCFaM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JashMbt5f7t6dVjqumVlIA2t8OiLOavPKv27WC+CApI=;
+ b=CEqA5Kw/JLqTG/NBYcwleVMqe+lMEj8lojWr2bdHRhBJe0JJimmSrqrVMSZzK1nfE9efPK
+ 2efNlqH4Ix+3gpGoCcp6AW2UF17yog12WN/Kdbt3Rtm+swfobIfEKaUKcLzY2dBxi6HDFy
+ Cmvg9tVL4Q/98K5G/MnQjB1DQNw7kmo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-j8B-bGALNC-wv-yKETBhqg-1; Wed, 12 Aug 2026 05:09:53 -0400
-X-MC-Unique: j8B-bGALNC-wv-yKETBhqg-1
-X-Mimecast-MFC-AGG-ID: j8B-bGALNC-wv-yKETBhqg_1786525792
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f835ac1aeso461106f8f.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 02:09:53 -0700 (PDT)
+ us-mta-441-CYg6BE1XPDGF3_WS2MhUWg-1; Wed, 12 Aug 2026 05:13:34 -0400
+X-MC-Unique: CYg6BE1XPDGF3_WS2MhUWg-1
+X-Mimecast-MFC-AGG-ID: CYg6BE1XPDGF3_WS2MhUWg_1786526013
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47f84ac1990so446260f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 02:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786525792; x=1787130592; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786526013; x=1787130813; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=XMys7fGg9+Du+oGoQXQt3BYrsdB68Zl21vr+/B9GrVw=;
- b=eMmzj2y//aQnb7B/zflV9lZHIUTX/eJGRH1plOS9yhPwapsEX7O7Fo4Qj15CGQ3LUZ
- wxePEyqcFOSVxJAGDuM2D5+asN2dcmUalt76KN6sKwl2UL35em0nTzhSbxic6u4ad4ho
- a6Tm01oyYu1gyQNMRDdUXfMS62LQhOHhlwaI/jvIVDw+gK2JYLDKf4lbVTIwmlj7rKDm
- pf8pCxZMtICBUas6M9NaSvGJ5JBCJM+RUulYqrUglgTPjWaALu49x57r+qEnA79ii4R4
- bn4g47PzY8kR0rKBfdlKTEBIN4DQLY17K+3G/cTa8fphxvHj5AF3x9q/B+fN5yqshXVv
- FWRw==
+ :content-type; bh=JashMbt5f7t6dVjqumVlIA2t8OiLOavPKv27WC+CApI=;
+ b=kSQzVKTkt/3398i5nntg8N0XjFIrihs/YgA58Cf5cBnd3HXo3WgIQzbn3qCGl15JNo
+ S0HeocnoPHf+9jNqx8aqq29dgEpPm5msUTvB9UeBZBImEUXkAHxVFM8XIf7HviJJnpks
+ Hv2sQDrDpmtdFA/gRn6g2dP5jVF+2Hi4HTQ340FlSiM4wPl0tTEJQSo9xi5FJ7cAWhiF
+ aQzd0JkG90KVFYe6GxowmUY2dHhZ8mr7t2CMfakvrPl4bv89zVzeiODN08koKE2x1BoN
+ a3kCT6OpGq3uQnpt2D8+/RiGBdnjnT2E52RpDrP6auvu75pBRHYKer4VqTCT2zzoLvry
+ e6Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786525792; x=1787130592;
+ d=1e100.net; s=20251104; t=1786526013; x=1787130813;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XMys7fGg9+Du+oGoQXQt3BYrsdB68Zl21vr+/B9GrVw=;
- b=dB6O4n3pTOvlJJ+efRSPBAN1SuLTuLvUmjq6r1uPNxdhJUpF03sBZXVQ0YEMLSvz2c
- gGavI8xPqsmEUdb+fy8VyqjuUzR8dJcWoW5NzaTM8uHnyBb7q2doH9ygCLHjmH7Uw3XD
- 59/r/OgSKeTt5iHyOUuDkFhg8lREMhT11/GAxmEE3lzw93Om8raLeBhJBlaowWv+/9Wb
- lD0mIpulmHyV/J/lZ9SjQ+VY1AGdLCOD8Vf6CUdzE6knkcPvC0eSRdmenhB8mSfx1p4d
- FGGd2tea5Xavvba07CCNYbFa4FONHiIAS4AtcHDx3hEiF3z4MHjDzje8hAD1jhLUL29u
- wohg==
+ bh=JashMbt5f7t6dVjqumVlIA2t8OiLOavPKv27WC+CApI=;
+ b=sQJchPBbKlD1qxtEF5ylV1YOkNWB7kwUpGv6//YmS/NuXUzBOEKII8txfOKzac8mvW
+ jfg+mI43lZgkXuXJvnDX6TuGn5GcE9UdlXZY1KiQVaFggSVqpqxtPGlcWgeOGG2c8ROh
+ 1k1xmIuCmWhDqE1+ai8DGwssNzQq3xyei8+F9WoiQ2HLgyA191Tr1cLU9amhcC/6FDS9
+ 1GFduW8SIGJMbsX4UiHJooIgJq6uynmyPq0gquvMs2FZhklMeT4TPGi3za6kgwkxJMN9
+ 52GSCmf4zo5y0qofInjOHAte6gFDqvBfwlwsq6LAFy2iMbFpcZyVYdakgjilBqA9fvzn
+ untA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpD/cAV9Mr4YppxKumHEfruWRgIpQaorY6omtkeV4DjirTwWUGsW7PxfZ0xX6Qlvr32zP/VjDvquHfk@nongnu.org
-X-Gm-Message-State: AOJu0YwwtlbvrU0Wb2730FZ1EOqWjr6WGN3O4uw6+PSvBVdEkgpfRmL9
- 11hCa6+qtH4Lm9E4pF6CHx5oBL3mt6EUNGox1MQYfYY2Q58l68Tr5AUwm3GHRtrR614p3LU2pYp
- pryTOEUnXgU5+fxhtYlSOSa0XuCDrM5c5+8hCEheC55EyMKhqqsVIv9o8
-X-Gm-Gg: AR+sD11cYyu4pa6K1Ddt+dBf9p1bChv1iSypAJ7mVQrM+ne4PNGWPFnTTzl1qoVpMi9
- l++JuwVnoj2V9EXxwxvtNnVa6XHocldWBzq9U7B/T5vmgiobdNkKil7P+gDnblJMMGCM63f0VxH
- zCC1cOpwUoHLp2StSC5SFoLg06c88Va/5J85+lhmn/YJQ4+GNEmyy3NQzNxvn7rt19+27T5oCTf
- lc0vhTxk31JXrxVPOMS04j5d0bxQKmPPkOp/PVVZg4GAv54TGAMY8NPekNE4v8hWld4KuF5oUPp
- QVw0Cw+Tu7iPm/PulmcCwNUJvW62B5/p285WD+Uj+kATgyqKd25AXrN9M54rnzkaATcm5ypn
-X-Received: by 2002:a05:600c:524c:b0:499:7410:545 with SMTP id
- 5b1f17b1804b1-4997c145066mr40383125e9.12.1786525792351; 
- Wed, 12 Aug 2026 02:09:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:524c:b0:499:7410:545 with SMTP id
- 5b1f17b1804b1-4997c145066mr40382565e9.12.1786525791962; 
- Wed, 12 Aug 2026 02:09:51 -0700 (PDT)
+ AHgh+RrfMoquvorgEEM6ZNAJk+oNMFxrdwdjRNyN48xZPD8vL1Rv5osCzdnepljIqJX+2c3obPiBrQPTxOLk@nongnu.org
+X-Gm-Message-State: AOJu0Yz9oht5aleWqAi43GfqEvyyRlD9Ug2ghaXzPCS6n2RNpKGYdq9j
+ 2dfNi0QdiKy26Eo8SUiFzsz9ir+7Hob9FRtf5cC6I7O2uT8KUKx77keLZxe6Qk/M8+4IPqdqlf7
+ 9ojqPpvjotpAcPO0kTCIOdIpNJiYULqnXnKYz4CC05LTlHNJqaaWsXahh
+X-Gm-Gg: AR+sD13+dKSKCx/j6ZEPdPeCcIEWkskeODv6uIK4/0czWEdrteWP/lYSWxT5Ekbu/TH
+ +Yezh48Y02fe/Dec+JIpKJ7dbMZjXJ3j0LU1o1Bgl6fXRf0hqfZPu2KBconXncFUCP78CXCofWG
+ Mn7M5REldAx/nOIZd5ZyA6OKaMhgIXDR8Kn5REsEek0hvAVUtTdkRA1fiNOEsCnrKemZmcOC9V6
+ katFNYBKY3lTgvY6UbNQ7ueRVZ9D5plOPS4NuEO4dK6OXNltGFEboyQ27lW2t87tcc3rAxlvGsE
+ swyKg/ejlIIM8sj0N9foFmPQguHsMIoF51ehQcn4djhfxkpZ8WTxQ/CvX/aLh8Pjkb3VmvLz
+X-Received: by 2002:a05:6000:2613:b0:47f:cb39:10c4 with SMTP id
+ ffacd0b85a97d-48152c65dfbmr4558195f8f.12.1786526013239; 
+ Wed, 12 Aug 2026 02:13:33 -0700 (PDT)
+X-Received: by 2002:a05:6000:2613:b0:47f:cb39:10c4 with SMTP id
+ ffacd0b85a97d-48152c65dfbmr4558112f8f.12.1786526012747; 
+ Wed, 12 Aug 2026 02:13:32 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.115.27]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997b353138sm36431675e9.3.2026.08.12.02.09.50
+ ffacd0b85a97d-48150bf5c13sm5561771f8f.7.2026.08.12.02.13.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 02:09:51 -0700 (PDT)
-Message-ID: <95e5b58e-ef00-418b-97bb-9a75e6fdf1aa@redhat.com>
-Date: Wed, 12 Aug 2026 11:09:49 +0200
+ Wed, 12 Aug 2026 02:13:32 -0700 (PDT)
+Message-ID: <c3f0d138-ef6f-4b8c-bdcd-101f06ca5281@redhat.com>
+Date: Wed, 12 Aug 2026 11:13:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [qemu-web PATCH] _posts: fix 11.1 release announcement
+Subject: Re: [qemu-web PATCH] sponsors: update who hosts the Arm hardware
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, Michael Roth <michael.roth@amd.com>
-References: <20260812083645.3830831-1-alex.bennee@linaro.org>
+Cc: pbonzini@redhat.com
+References: <20260812083942.3833221-1-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -135,7 +135,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260812083645.3830831-1-alex.bennee@linaro.org>
+In-Reply-To: <20260812083942.3833221-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -162,24 +162,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/08/2026 10.36, Alex Bennée wrote:
+On 12/08/2026 10.39, Alex Bennée wrote:
+> The WorksOnArm project retired some time ago and we are now hosting
+> the Aarch64 CI at Linaro.
+> 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   _posts/2026-08-11-qemu-11-1-0.md | 2 +-
+>   sponsors.md | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/_posts/2026-08-11-qemu-11-1-0.md b/_posts/2026-08-11-qemu-11-1-0.md
-> index e2fe788..5935b00 100644
-> --- a/_posts/2026-08-11-qemu-11-1-0.md
-> +++ b/_posts/2026-08-11-qemu-11-1-0.md
-> @@ -1,6 +1,6 @@
->   ---
->   layout: post
-> -title:  "QEMU version 11.0.0 released"
-> +title:  "QEMU version 11.1.0 released"
->   date:   2026-08-11 18:56:00 -0500
->   categories: [releases, 'qemu 11.1']
->   ---
+> diff --git a/sponsors.md b/sponsors.md
+> index 8ac7d45..84b54ac 100644
+> --- a/sponsors.md
+> +++ b/sponsors.md
+> @@ -13,7 +13,7 @@ QEMU's continuous integration is supported by:
+>   * [Digital Ocean](https://digitalocean.com/) through the [DigitalOcean Open
+>     Source Credits](https://www.digitalocean.com/open-source/credits-for-projects)
+>     program
+> -* [Equinix](https://www.arm.com/markets/computing-infrastructure/works-on-arm?#Equinix),
+> +* [Linaro](https://www.linaro.org/)
+>   * [IBM LinuxONE Community Cloud](https://developer.ibm.com/articles/get-started-with-ibm-linuxone/)
+>   
+>   The [Oregon State University Open Source Labs](https://www.osuosl.org)
 
 Thanks, applied!
 
