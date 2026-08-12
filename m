@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3EFCC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD30C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAVC-0001p4-Ob; Wed, 12 Aug 2026 11:04:22 -0400
+	id 1wuAMH-0001f1-0t; Wed, 12 Aug 2026 10:55:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuATm-0005iq-5F; Wed, 12 Aug 2026 11:02:55 -0400
+ id 1wuAKj-0006ti-Ft; Wed, 12 Aug 2026 10:53:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuATd-0002e6-Ke; Wed, 12 Aug 2026 11:02:50 -0400
+ id 1wuAKh-0007Ah-PC; Wed, 12 Aug 2026 10:53:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546234; bh=rpcr4ChRwGjW2XlTovL/2kLdYjP32BLrKkoF0EPkVgI=;
+ t=1786546231; bh=wQSppIRnVOtI/EJeAnabdmFvHwBZRi6B4PHGE+18fkc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iqq6mlOpsB8Rx4bHMZVnRJQP5uquhkH/T16vRL2293pNM04gqQKaB4h7XqFw99MO3
- LEbq15DHYI5k+pnXjLuoZsHKcdMVBaLFzSHAdDEj7ynsCJh3GAl5vZpBrigg4tfn9O
- JZ36REuWePqEsbVHLCtAttv8cPwZlQ/quYj2aD1beqLx04VtQ3rw0oO/oxuTxKzY/8
- dWnlhA/MJEyb1/01+6I0+iZuVdAvHbLUYRsUU2VSlRSzY7s4cH06V0qlxplIOufdZU
- NdpXu0bvvpSyWAw3TMqyJAlJN/9zLT87l2VQKiOOzqyfuRq61WtlJ68NbvgxMf9zs+
- lkng3Xo6TDnBw==
+ b=tZq5bCvlDjm5SMEqrHpV7kH2lcQQpZ0ofTbTI14xOvIwJqNCD+d6saJJEXriS/Hca
+ mV/MX6XoldXkN2VkmNphCBHRUq0VLQx14s10Pnh2ySnlZAGpEM/m7nBq9lvIn07M/+
+ 36X0+jN/CBTTCXqt3GCr6+RGw+kcNzJVE+uMVjz0BzTG6yOsq0GEwfqBvh9Hj3rbE9
+ /qaeIis8S3Hb1tjHN5BeqrNQTGSQ6k1CKGDPI6jMo0lsF41iezZbSfchzPi0NBtM1I
+ PzEVdKf0RgfdsXHxuHrNyZ9exfkIwbhTgunPRQgCaGIzBD6DXGs3OQKcQbf8vFczax
+ Dlo/C1ZaVILmw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3AAF91CA67D;
- Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F4231CA626;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9579A409DC4;
- Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 05A8F409D65;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F2E3F2FA53; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id 652AC2F9A7; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Saul Freedman <fre3dm4n@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 120/120] target/i386/kvm: Fix CET SSP MSR read feature
- check
-Date: Wed, 12 Aug 2026 17:49:43 +0300
-Message-ID: <20260812144955.649205-120-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 034/120] hw/display/vhost-user-gpu: validate message
+ payload sizes
+Date: Wed, 12 Aug 2026 17:48:17 +0300
+Message-ID: <20260812144955.649205-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -73,42 +74,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Saul Freedman <fre3dm4n@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-kvm_get_msrs() adds U_CET and S_CET when CET shadow stacks or IBT are
-enabled, but it checks FEAT_7_0_EDX with the ECX-defined
-CPUID_7_0_ECX_CET_SHSTK bit before adding the PL0-PL3 SSP MSRs.
+A malicious or buggy vhost-user-gpu backend can send messages with
+undersized payloads, leading to out-of-bounds reads when the handler
+accesses struct fields beyond the allocated buffer. However,
+vhost-user-gpu is considered trusted by QEMU by design (it has access to
+shared memory etc).
 
-CPUID_7_0_ECX_CET_SHSTK belongs to FEAT_7_0_ECX. The current check
-therefore skips MSR_IA32_PL0_SSP through MSR_IA32_PL3_SSP even when
-guest shadow stacks are enabled.
+Add a centralized minimum payload size check in vhost_user_gpu_chr_read()
+that rejects messages before dispatch, and a per-pixel bounds check in
+the VHOST_USER_GPU_UPDATE handler to ensure the variable-length data
+covers the declared width x height.
 
-kvm_put_msrs() already uses FEAT_7_0_ECX for the same shadow-stack
-condition. Use the same feature word in kvm_get_msrs() so QEMU does
-not restore CET enablement with stale or zero SSP values.
-
-Fixes: b6f85c5e4527 ("i386/kvm: Add save/restore support for CET MSRs")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Saul Freedman <fre3dm4n@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260615033338.1563854-1-fre3dm4n@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 01b4e06b5225787139dae760e8b4fe0c39e5c04d)
+Fixes: 267f66465 ("hw/display: add vhost-user-vga & gpu-pci")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3866
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 1c1232c2ee0798e5f8446200005f045a153a5648)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 9e352882c8c..3f4a241b6db 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5021,7 +5021,7 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_IA32_U_CET, 0);
-         kvm_msr_entry_add(cpu, MSR_IA32_S_CET, 0);
+diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+index 3f6fb7a8033..25abdf86363 100644
+--- a/hw/display/vhost-user-gpu.c
++++ b/hw/display/vhost-user-gpu.c
+@@ -119,6 +119,31 @@ static VhostUserGpuMsg m __attribute__ ((unused));
  
--        if (env->features[FEAT_7_0_EDX] & CPUID_7_0_ECX_CET_SHSTK) {
-+        if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) {
-             kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, 0);
+ static void vhost_user_gpu_update_blocked(VhostUserGPU *g, bool blocked);
+ 
++static size_t
++vhost_user_gpu_min_payload_size(VhostUserGpuRequest request)
++{
++    switch (request) {
++    case VHOST_USER_GPU_CURSOR_POS:
++    case VHOST_USER_GPU_CURSOR_POS_HIDE:
++        return sizeof(VhostUserGpuCursorPos);
++    case VHOST_USER_GPU_CURSOR_UPDATE:
++        return sizeof(VhostUserGpuCursorUpdate);
++    case VHOST_USER_GPU_GET_EDID:
++        return sizeof(VhostUserGpuEdidRequest);
++    case VHOST_USER_GPU_SCANOUT:
++        return sizeof(VhostUserGpuScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT:
++        return sizeof(VhostUserGpuDMABUFScanout);
++    case VHOST_USER_GPU_DMABUF_SCANOUT2:
++        return sizeof(VhostUserGpuDMABUFScanout2);
++    case VHOST_USER_GPU_DMABUF_UPDATE:
++    case VHOST_USER_GPU_UPDATE:
++        return sizeof(VhostUserGpuUpdate);
++    default:
++        return 0;
++    }
++}
++
+ static void
+ vhost_user_gpu_handle_cursor(VhostUserGPU *g, VhostUserGpuMsg *msg)
+ {
+@@ -322,6 +347,14 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
+         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
+             break;
+         }
++
++        if ((uint64_t)m->width * m->height >
++            (msg->size - sizeof(VhostUserGpuUpdate)) / sizeof(uint32_t)) {
++            error_report("vhost-user-gpu: update payload too small"
++                         " for %ux%u", m->width, m->height);
++            break;
++        }
++
+         s = &g->parent_obj.scanout[m->scanout_id];
+         con = s->con;
+         pixman_image_t *image =
+@@ -396,6 +429,11 @@ vhost_user_gpu_chr_read(void *opaque)
+     msg->flags = flags;
+     msg->size = size;
+ 
++    if (size < vhost_user_gpu_min_payload_size(request)) {
++        error_report("vhost-user-gpu: message %d payload too small", request);
++        goto end;
++    }
++
+     if (request == VHOST_USER_GPU_CURSOR_UPDATE ||
+         request == VHOST_USER_GPU_CURSOR_POS ||
+         request == VHOST_USER_GPU_CURSOR_POS_HIDE) {
 -- 
 2.47.3
 
