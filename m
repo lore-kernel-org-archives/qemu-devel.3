@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67461C5CFEE
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA58FC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMH-0001ic-MZ; Wed, 12 Aug 2026 10:55:10 -0400
+	id 1wuAIt-0004st-Qj; Wed, 12 Aug 2026 10:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJt-0006H1-In; Wed, 12 Aug 2026 10:52:42 -0400
+ id 1wuAIG-0004Ph-0O; Wed, 12 Aug 2026 10:51:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJr-00072Y-PD; Wed, 12 Aug 2026 10:52:41 -0400
+ id 1wuAIC-0006fs-Qk; Wed, 12 Aug 2026 10:50:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=NdLa53NK2F6ikU6wh4ZnX/0M33p/hBHipzk/M9shWyM=;
+ t=1786546230; bh=3RFVQH8DG5t57EwQKAlm+0YwYLra1HqTSuyKnt2s0iE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uzFTuu5xnFZpX2j3mDJ556+PC9mHITaoSwwaEsiCx7gC3yI4J6c8wPpjxIjA1h1zY
- 89MviGd5/FKAYi2MozOC4rrYwVHc62W4ZOgcgy8pOtsYmvpUwcG1QurCs+vnKsXs38
- /6xDnPcoqJ9hdwiyYiUkgj2hxBPk5byBkfVMbJikyeLz74bnzU21X/1svsKasfg4jd
- qkImEJs4ZaXEkQCXskQ32tiBouQe8lCswmbNYhjtbXJV+FIC2+jXILffrjDUx5NlRv
- s9RhPoKREBKSfV81MBAvqs5gU8MCKGXDYwmkGk7cbgB3TELbdj9hSjLXXNfiw0yaku
- t7npkSum7rusw==
+ b=lziZ173fJjKLxXT5qNY4TcsRY4zqP3FC7KHkxWFNCbvSgy3FBzT65bGz8W7nDFfsk
+ QjMZCFeZgWB5HHg3N1amXbnXNML42wsvSIGBaTEwYuZJFt6IPzL9wqQCzkL6KmB7M1
+ EYm6x44NCoczi5Z8Cr3cYXTLeKOzIHaCQR2R5mScfiLP8H3Cjx1yCE3aygd9k/6oXE
+ A7NHyOgsfOblgz2Z70FKj3rTYGKbvmIA7QpZ65JcmII0gsU1SZZYC/eNtrfoZ7HjkF
+ TefjJDkTV31ItsbtU0B1R6elrYjm7zLN5h/XpHGIaqlkIISlKeo+n5xBH+NQQu/Nn+
+ KRmtYkOmG9HWA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6BE271CA61F;
- Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BD2471CA608;
+ Wed, 12 Aug 2026 17:50:30 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C5CF2409D5E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2404B409D41;
  Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 30C182F999; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+ id 8398B2F96B; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Tristan Madani <tristan@talencesecurity.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 027/120] hw/usb/dev-uas: Fix guest-triggerable heap
- OOB access
-Date: Wed, 12 Aug 2026 17:48:10 +0300
-Message-ID: <20260812144955.649205-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 004/120] hw/uefi: account variable policy entries
+ against storage size
+Date: Wed, 12 Aug 2026 17:47:47 +0300
+Message-ID: <20260812144955.649205-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -72,98 +71,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The stream ID is under control of the guest, and some spots in the
-code currently use it for indexing into the status3[] array without
-checking it for being in range first, so the code accesses the heap
-beyond the limit of the status3 array.
+uefi-vars already tracks (and limits) the memory footprint of UEFI
+variables.  Do that for variable policies too.
 
-Since our status delivery code depends on having a valid stream ID,
-we must not try to generate a fake sense code in this situation.
-Simply log a guest error and return early in usb_uas_command().
-
-And to make sure that we really cannot access the status3[] array
-beyond its limit anymore, add some assert() statements in the
-affected functions, too.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3612
-Reported-by: Reported-by: huntr bubble
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3986
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260720134809.573757-1-thuth@redhat.com>
-(cherry picked from commit b7520c9a59128d7e616876a511821c70edab2a90)
+Fixes: CVE-2026-61405
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3890
+Acked-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260720143244.821889-5-kraxel@redhat.com>
+(cherry picked from commit 8e0ddb4a6ebd1c3d2dfd067f82b6d92de5b23e30)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
-index 8576dfec96f..963c0433b38 100644
---- a/hw/usb/dev-uas.c
-+++ b/hw/usb/dev-uas.c
-@@ -362,6 +362,7 @@ static void usb_uas_send_status_bh(void *opaque)
- 
-     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
-         if (uas_using_streams(uas)) {
-+            assert(st->stream <= UAS_MAX_STREAMS);
-             p = uas->status3[st->stream];
-             uas->status3[st->stream] = NULL;
-         } else {
-@@ -383,8 +384,14 @@ static void usb_uas_send_status_bh(void *opaque)
- 
- static void usb_uas_queue_status(UASDevice *uas, UASStatus *st, int length)
- {
--    USBPacket *p = uas_using_streams(uas) ?
--        uas->status3[st->stream] : uas->status2;
-+    USBPacket *p;
-+
-+    if (uas_using_streams(uas)) {
-+        assert(st->stream <= UAS_MAX_STREAMS);
-+        p = uas->status3[st->stream];
-+    } else {
-+        p = uas->status2;
-+    }
- 
-     st->length += length;
-     QTAILQ_INSERT_TAIL(&uas->results, st, next);
-@@ -700,14 +707,22 @@ static void usb_uas_command(UASDevice *uas, uas_iu *iu)
-     uint16_t tag = be16_to_cpu(iu->hdr.tag);
-     size_t cdb_len = sizeof(iu->command.cdb) + iu->command.add_cdb_length;
- 
-+    if (uas_using_streams(uas) && tag > UAS_MAX_STREAMS) {
-+        /*
-+         * Our status delivery only works with valid tags, so in case the
-+         * stream ID is out of bounds, we have to return immediately here
-+         * without sending a fake sense_code_INVALID_TAG to the guest.
-+         */
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "invalid tag 0x%x for USB UAS command\n", tag);
-+        return;
-+    }
-+
-     if (iu->command.add_cdb_length > 0) {
-         qemu_log_mask(LOG_UNIMP, "additional adb length not yet supported\n");
-         goto unsupported_len;
+diff --git a/hw/uefi/var-service-policy.c b/hw/uefi/var-service-policy.c
+index 0880bfe074a..46c4ff2daca 100644
+--- a/hw/uefi/var-service-policy.c
++++ b/hw/uefi/var-service-policy.c
+@@ -283,7 +283,12 @@ static uint32_t uefi_vars_mm_check_policy_register(uefi_vars_state *uv,
+         return uefi_vars_mm_policy_error(mhdr, mchk, EFI_ALREADY_STARTED);
      }
  
--    if (uas_using_streams(uas) && tag > UAS_MAX_STREAMS) {
--        goto invalid_tag;
--    }
-     req = usb_uas_find_request(uas, tag);
-     if (req) {
-         goto overlapped_tag;
-@@ -744,10 +759,6 @@ unsupported_len:
-     usb_uas_queue_fake_sense(uas, tag, sense_code_INVALID_PARAM_VALUE);
-     return;
++    if (uv->used_storage + pe->size > uv->max_storage) {
++        return uefi_vars_mm_policy_error(mhdr, mchk, EFI_OUT_OF_RESOURCES);
++    }
++
+     uefi_vars_add_policy(uv, pe);
++    uv->used_storage += pe->size;
  
--invalid_tag:
--    usb_uas_queue_fake_sense(uas, tag, sense_code_INVALID_TAG);
--    return;
--
- overlapped_tag:
-     usb_uas_queue_fake_sense(uas, tag, sense_code_OVERLAPPED_COMMANDS);
-     return;
+     mchk->result = EFI_SUCCESS;
+     return sizeof(*mchk);
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 2c83130ebf6..fd07782f1e0 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -201,11 +201,15 @@ void uefi_vars_clear_all(uefi_vars_state *uv)
+ void uefi_vars_update_storage(uefi_vars_state *uv)
+ {
+     uefi_variable *var;
++    uefi_var_policy *pol;
+ 
+     uv->used_storage = 0;
+     QTAILQ_FOREACH(var, &uv->variables, next) {
+         uv->used_storage += variable_size(var);
+     }
++    QTAILQ_FOREACH(pol, &uv->var_policies, next) {
++        uv->used_storage += pol->entry->size;
++    }
+ }
+ 
+ static gboolean check_access(uefi_vars_state *uv, uefi_variable *var)
 -- 
 2.47.3
 
