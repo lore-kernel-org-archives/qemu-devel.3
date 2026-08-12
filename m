@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38441C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB830C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8ks-0003ZA-BJ; Wed, 12 Aug 2026 09:12:33 -0400
+	id 1wu8l5-0003hG-Nw; Wed, 12 Aug 2026 09:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kD-0003G5-7Z; Wed, 12 Aug 2026 09:11:46 -0400
+ id 1wu8jl-0002V0-9a; Wed, 12 Aug 2026 09:11:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8kB-0006Jt-H0; Wed, 12 Aug 2026 09:11:44 -0400
+ id 1wu8jj-0006Dn-IM; Wed, 12 Aug 2026 09:11:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=4VhK7UzLk2/59KcgVnyHm99bpE76fDii0vLHvALyFu4=;
+ t=1786539784; bh=WRKk7CrJYU/AnKU1EnLZLy5DF3vzs42vKULB6I9OD4s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=X8rzJboGCEej5JAJoE1dg4wueBAl8Rk9fs2vyHO0vO100XhM94q4C9CmsnQ+wbfvQ
- YHBs9QaR6wNSldiSI49ZybM+sERv4mlOwnVs21k7sQfUaMxsTRDt5iMrxXnjaB9Z8g
- HsdLxZXx6FUd72vvqbpUzZAC3n1i9YTyj/XuWWaZrIjKwm+8eihLZ4TE42Cg8WlKsf
- 9yyUGkFG6Juan1bax5Lwxc0sl2GrXurydqDHKQ4vdhA9q5J3tTAEHA3jegLpOIfp0j
- wjjr84Q5Uk6XrzyVK+NLU/W+zV9RRumn4QT29FsJpL60WGBsk4K70fRS4n3Dx4F8Js
- Akt5YJ+cGLqnQ==
+ b=w0TrTepfPLUPP+U37NuK/d4g6ZGdQEGUn2zFpteR32SwALIVdLKuM/b+vLRvIdi2I
+ VVaZ0l+mAjEZaBB2pXoyQYkWH8wWUQaeZnxxYuNVyxqblIfViB/PJidD12KmG2RtTH
+ jn0bbz8d/RTM/9NFcbNG8deW4/ZrtYyVhTIdFDlcVBODGEGeqNfNUZ3uf5T1l/ecg2
+ w7XdCKhvRAtNzbjd08opJD5/6weR7wvLB3xQYNzkjPnCyTYix0mna1iNPECgFY3GwB
+ sZBke5K01MBNxHx67PzquWpRw9ONOGMpXvnpxgAwzupoQu2DEDg7S0PJJRsP7syfQw
+ faxrc+wGc3Ieg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A89B01CA4D8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 983BD1CA4D4;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DEEB7409BBB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CD43C409BB7;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B96262F946; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id ADFB02F93E; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Warisjeet Singh <sinxx198@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 089/102] hw/display/vga: fix panning_buf OOB after
- text/graphics switch
-Date: Wed, 12 Aug 2026 16:02:04 +0300
-Message-ID: <20260812130233.621965-89-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 085/102] qcow2: do not try to clear the dirty bit on
+ a read-only node
+Date: Wed, 12 Aug 2026 16:02:00 +0300
+Message-ID: <20260812130233.621965-85-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,65 +72,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The fields last_width and last_height serve two purposes: the text
-renderer counts in characters, the graphics renderer in pixels.
-panning_buf reallocation is guarded by geometry-change check, so the
-unit mismatch can trick it into thinking nothing changed when the
-resolution actually grew.
+qcow2_do_close() -> qcow2_inactivate() clears the dirty bit with a
+plain write to bs->file, unconditionally. A read-only node can still
+be dirty, inherited from an earlier writable session, and that write
+then hits a missing BLK_PERM_WRITE and asserts in
+bdrv_co_write_req_prepare() (block/io.c) on an entirely ordinary
+close -- closing is expected, the dirty bit on a read-only node
+is not.
 
-A guest can trigger this by switching graphics -> text -> graphics:
+Skip the clear for read-only nodes, same as read access already does.
+Any other still-dirty node keeps the unguarded write: it is expected
+to hold write permission, and a missing one there is a bug worth
+seeing.
 
-  1. Enter graphics mode with a small width (CR01=0x00, 8 pixels).
-     The predicate fires and panning_buf is allocated for that width.
-
-  2. Switch to text mode with a large width (CR01=0xFF, 256 chars).
-     The text renderer stores 256 into last_width. The text path
-     never touches panning_buf.
-
-  3. Switch back to graphics with a width that happens to equal 256
-     in pixels (CR01=0x1F, 32*8 = 256). The predicate sees
-     256 == 256 and skips the realloc. With horizontal pel panning
-     enabled, vga_draw_line4() then writes a full 256-pixel scanline
-     into the buffer still sized for 8 pixels -- a 960-byte heap
-     overflow on every scanline, every refresh.
-
-Fix it by reallocating unconditionally panning_buf on
-vga_draw_graphic().
-
-Fixes: CVE-2026-17516
-Fixes: 973a724eb006 ("vga: implement horizontal pel panning in graphics modes")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4085
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Warisjeet Singh <sinxx198@gmail.com>
-[ Marc- André - drop realloc() resize condition & commit message ]
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260728151456.3704099-1-marcandre.lureau@redhat.com>
-(cherry picked from commit 95687639e647ec917226e6d3a6713a2b373e1ffe)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+Message-ID: <20260716153552.3376009-1-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit fe0f9e3ab2a8112dd9671bbb91365feba683f755)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index b01f67c65fb..af31f210e89 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1629,11 +1629,12 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         s->last_line_offset = s->params.line_offset;
-         s->last_depth = depth;
-         s->last_byteswap = byteswap;
--        /* 16 extra pixels are needed for double-width planar modes.  */
--        s->panning_buf = g_realloc(s->panning_buf,
--                                   (disp_width + 16) * sizeof(uint32_t));
-         full_update = 1;
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 6f1612a5d87..6f495c97d54 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2784,7 +2784,11 @@ static int GRAPH_RDLOCK qcow2_inactivate(BlockDriverState *bs)
+                      strerror(-ret));
      }
+ 
+-    if (result == 0) {
++    /*
++     * A read-only node cannot resolve an inherited dirty bit here;
++     * leave it dirty, same as plain read access already does.
++     */
++    if (result == 0 && !bdrv_is_read_only(bs)) {
+         qcow2_mark_clean(bs);
+     }
+ 
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index e43e7026ce3..94a8bfe754e 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -84,6 +84,17 @@ $QEMU_IO -r -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
+ # The dirty bit must be set
+ _qcow2_dump_header | grep incompatible_features
+ 
++echo
++echo "== Read-only open must not crash on close =="
 +
-+    /* 16 extra pixels are needed for double-width planar modes. */
-+    s->panning_buf = g_realloc(s->panning_buf,
-+                               (disp_width + 16) * sizeof(uint32_t));
-     if (surface_data(surface) != s->vram_ptr + (s->params.start_addr * 4)
-         && !surface_is_allocated(surface)) {
-         /* base address changed (page flip) -> shared display surfaces
++# We must not try to write the QCOW2 header to a read-only image.
++$QEMU_IMG info --image-opts \
++    "driver=$IMGFMT,read-only=on,file.driver=file,file.filename=$TEST_IMG,file.read-only=off" \
++    > /dev/null
++
++# The dirty bit must still be set: this open never wrote any guest data
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Repairing the image file must succeed =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index 8fdbcc528aa..c66361128f6 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -24,6 +24,9 @@ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ incompatible_features     [0]
+ 
++== Read-only open must not crash on close ==
++incompatible_features     [0]
++
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
 -- 
 2.47.3
 
