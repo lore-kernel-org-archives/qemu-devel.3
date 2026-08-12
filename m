@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719C1C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B759C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8eb-0000dK-OB; Wed, 12 Aug 2026 09:05:58 -0400
+	id 1wu8gl-0003eL-7V; Wed, 12 Aug 2026 09:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eD-0008Ni-FT; Wed, 12 Aug 2026 09:05:36 -0400
+ id 1wu8gE-00034s-FR; Wed, 12 Aug 2026 09:07:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eB-0004ui-TH; Wed, 12 Aug 2026 09:05:33 -0400
+ id 1wu8gB-0005IT-92; Wed, 12 Aug 2026 09:07:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=THRqQhoniwfIiGVPbnaFfyUgbCinvgJL79bo3zJZKKk=;
+ t=1786539784; bh=KhHzsDRHX6+Bd2Y+eJr7Btn0LoDcs31chUSFqfCnDGU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jaeT7kvTvb9ssnFt2zk2NQWXiOnVOhXyRUuIUE1t9CsVXi/pLup1iQ+eFOlneHSvX
- D5pGEXG84ztO3T9eeY0k3oAmv+NLqJovxeZo1nrRxMkUwZAIbBQQ7xEFzS2kuUvacs
- 04SWG7o7MwhzlTLjlcojfXuf0CkvYEAeeEh/ytiqqcH4MXwfoCMfbM6ZbEWLximdBc
- L24+BVHaRRev2Hm1vNvHEWAbo5SCwkgZHBkaofwl6cp8LBi4wTpNRkTn1mxko/R3Fk
- 9cDuitx1gr4cpe5gXsrUnXkCGV3BtT9PH/0Wky1oACfb9rJebmbtRZrM1/7hY+B6yt
- 5aDYZFnYNFIhg==
+ b=VlnLS3dCWEBX83bzNMFwLly3ul5W5WYKd51L0VIqSuD265igG+pWTENJO+WD3TuU6
+ vZRL5tyqL05Ex+1fqBCgen7Sckp3JKKPQlnrEwfIvw3PDhmNdF3+OzYdduIUQJ9aDO
+ 4Vww+CqQFq6w0eWEOB5MBeagrbE9+LHP5QSfRrGUpIcNOGq2Ome39udUGlaj7uhztR
+ zgftptP5pYOX3NvjkjjZOW18NMo8ySdyBLhh2eNw4kWVxkOf9a7HQ0awqOzggKBGyg
+ H5WYH3w9yc+c6urTih97TJuPQJ6zXO2k4TbRf6jKN57bH9BTt/seM7HE/mIFF17CFc
+ Td6NTa9Smvm9A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9CDCD1CA49D;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 017871CA4B1;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3586409B80;
- Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 38228409B94;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1A7622F8D0; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 4D8C02F8F8; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 030/102] target/i386/sev: fix MemoryRegion reference
- leaks in gpa2hva callers
-Date: Wed, 12 Aug 2026 16:01:05 +0300
-Message-ID: <20260812130233.621965-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [Stable-10.0.13 050/102] hw/pci-host/q35.c: Always initialize
+ smram-region even if SMM disabled
+Date: Wed, 12 Aug 2026 16:01:25 +0300
+Message-ID: <20260812130233.621965-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,55 +71,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-gpa2hva() returns a referenced MemoryRegion via its p_mr out-parameter
-(inherited from memory_region_find()), but both SEV callers were failing
-to release it.
+The MCHPCIState::smram_region looks like it ought to be SMM-specific,
+but it isn't, because its behaviour is "alias the PCI address space
+into system memory at the SMRAM_C_BASE offset", and it must be
+enabled for "hide SMRAM", and disabled for "show SMRAM".  If the
+SMRAM regions are disabled, we want "hide SMRAM", so we need to
+initialize and place this MR.  Do this in the minimal way, by moving
+the "bail out of realize if has_smm_ranges is false" check down below
+the initialization code.
 
-Fixes: c7f7e6970d3b ("sev: add sev-inject-launch-secret")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260521145451.1831984-1-marcandre.lureau@redhat.com>
-(cherry picked from commit 415f2759d7b3294e15c783849a08deb26885cabc)
+This fixes a bug where disabling SMM causes the VGA screen to be
+blank during seabios output, until the OS graphics driver is
+initialized.  This is most obvious for accelerators which have no SMM
+support (e.g.  NVMM, HVF, WHPX) as there smm=off is the default, but
+you can also see it on KVM and TCG if you explicitly pass smm=off:
+ qemu-system-x86_64 -machine q35,accel=kvm,smm=off
+
+The early return is bug-prone, so we can refactor the code to clean
+it up, but this is the minimal bug fix for backports, and is what
+Debian used to work around this:
+ https://salsa.debian.org/qemu-team/qemu/-/commit/6e0766f0f897dc2b75ab87dd59da0d4639bb37ee
+
+Another proposed fix for this:
+ https://patchew.org/QEMU/20260413170407.57574-1-mohamed@unpredictable.fr/
+also moves an early return in mch_update-smram() and tweaks
+mch_update_smram() accordingly.  This shouldn't be necessary, because
+in the no-SMM case smram_region should always be enabled and we don't
+want to allow the guest to make it disabled.
+
+NetBSD bug: https://gnats.NetBSD.org/59721
+
+Cc: qemu-stable@nongnu.org
+Fixes: b07bf7b7 ("q35: Introduce smm_ranges property for q35-pci-host")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2608
+Reported-by: Kroese (gitlab @kroese)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260708121011.1653365-2-peter.maydell@linaro.org>
+(cherry picked from commit 7ea56dcc9406b1588699e510439f782da7067d3e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index ef6af5caee2..e47f6c4639a 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1257,6 +1257,8 @@ void memory_region_ref(MemoryRegion *mr);
-  */
- void memory_region_unref(MemoryRegion *mr);
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 133b775444e..d93b0d7930f 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -586,11 +586,14 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+     }
  
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(MemoryRegion, memory_region_unref)
+-    if (!mch->has_smm_ranges) {
+-        return;
+-    }
+-
+-    /* if *disabled* show SMRAM to all CPUs */
++    /*
++     * This memory region looks like it's SMM specific, but it is not.
++     * It's an alias that makes the pci_address_space appear in system
++     * memory at the SMRAM_C_BASE address. The alias is enabled when the
++     * CPU should not see SMRAM, and *disabled* when the low SMRAM should be
++     * visible. So for non-SMM configs we need to create the alias, and
++     * leave it permanently enabled.
++     */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
+@@ -598,6 +601,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                                         &mch->smram_region, 1);
+     memory_region_set_enabled(&mch->smram_region, true);
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
 +
- /**
-  * memory_region_init_io: Initialize an I/O memory region.
-  *
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 0e1dbb6959e..d070014217e 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1269,7 +1269,7 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
-     OvmfSevMetadataDesc *desc;
-     int type, ret, i;
-     void *hva;
--    MemoryRegion *mr = NULL;
-+    g_autoptr(MemoryRegion) mr = NULL;
- 
-     for (i = 0; i < metadata->num_desc; i++) {
-         desc = &metadata->descs[i];
-@@ -1641,7 +1641,7 @@ int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
-     int error, ret = 1;
-     void *hva;
-     gsize hdr_sz = 0, data_sz = 0;
--    MemoryRegion *mr = NULL;
-+    g_autoptr(MemoryRegion) mr = NULL;
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
- 
-     if (!sev_common) {
+     memory_region_init_alias(&mch->open_high_smram, OBJECT(mch), "smram-open-high",
+                              mch->ram_memory, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+                              MCH_HOST_BRIDGE_SMRAM_C_SIZE);
 -- 
 2.47.3
 
