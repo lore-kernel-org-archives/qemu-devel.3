@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B53C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5410DC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAUi-0007Lz-IR; Wed, 12 Aug 2026 11:03:52 -0400
+	id 1wuAUc-0006nz-1K; Wed, 12 Aug 2026 11:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASf-0004Xn-Ou; Wed, 12 Aug 2026 11:01:53 -0400
+ id 1wuATA-0004s0-4r; Wed, 12 Aug 2026 11:02:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuASe-0002S6-5i; Wed, 12 Aug 2026 11:01:45 -0400
+ id 1wuAT6-0002Tn-JG; Wed, 12 Aug 2026 11:02:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=cjD3FK1fKKeUBrNfJ6lHawusnsaZT+/UDQNhmCtKVNY=;
+ t=1786546234; bh=LWPl/gwzPrn72pqcxKwoim174ys6hrFvWEHXncigkCs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CYIYCDZxAzdCRnJyS1Sh34MQgUdthy8B4nLXpiND9QJFGGAtNWHEPxiQStPonNIux
- qVcemiyM1XuJwwkRDliBJWMhMCPZjQEduUjPxqkqnwcgG/shs9mbJA2xolcRPA6M4K
- dtxXy/FdHXdQReivWyOMGIPKVAw2xs54oiUs1VjsVxcJ+qTol7fpVlmIU14SXnKUn1
- YPCL8bx1BIsu1WenllVDPvpVF9gDQm5rc4GjzRvnMNlYzGNzVmy9xk0CKn1MS1fzEd
- n+JoO4PJqOeN+pVM2sSmfKSrdvxUeXPod6zpwbOFWwfSoj1cbkTqujdP057wKfZeZB
- yG8aixwOD6JSw==
+ b=ck4Y6LeDhKCQfDiiBiZBQfIPZAGF3mboFthi1mhojur9r2gUx3QyVVBupt+ai4dYH
+ Tl0YZ0lI3ghk+e9fEXbMQ4oUjHFilAzkGehhxwz3z4+LylDysoJKjZxN/sxlPKrP3x
+ ITZLfGJH8ZSBNXHVsKbcjmaJ2sHaC9ehGm0hLuM5s3oJcd7l44XanYdTRya3IYB8d4
+ KwjNnuDTmh6Dfd939V+41Eo9TlIswM1msDB3OLImnpN5R7bQ/Fs+jR1Xs2/TKmo+Ok
+ 1bdzJR4q60nOl4rWek7fpl2Awj9BD7MQCnF4GJsut+7yvcMMQETcklmLcCa0S86cgI
+ t09gs76BILZDw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F30E51CA674;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 032FB1CA675;
+ Wed, 12 Aug 2026 17:50:34 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 58113409DB9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E07D409DBA;
  Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B55112FA43; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
+ id BC9AB2FA45; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Minwoo Im <minwoo.im.dev@gmail.com>,
  Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 112/120] hw/nvme: factor out nvme_sq_cancel_inflight()
-Date: Wed, 12 Aug 2026 17:49:35 +0300
-Message-ID: <20260812144955.649205-112-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 113/120] hw/nvme: cancel inflight requests on
+ controller reset
+Date: Wed, 12 Aug 2026 17:49:36 +0300
+Message-ID: <20260812144955.649205-113-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -73,65 +74,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Minwoo Im <minwoo.im.dev@gmail.com>
 
-Factor the cancel-and-wait loop used by nvme_del_sq() into
-nvme_sq_cancel_inflight(), so it can be reused to drain queues on
-controller reset.
+nvme_ctrl_reset() freed every SQ/CQ right after nvme_ns_drain(), which
+only waits out requests on a per-namespace BlockBackend. That is safe
+as long as the guest first tore down I/O queues gracefully (Delete
+I/O SQ/CQ), since nvme_del_sq() already cancels and waits for
+anything left on a queue before freeing it.
+
+A reset that happens without that graceful sequence first (e.g. an
+abrupt/asynchronous controller reset) can still have commands
+inflight on blk_aio_*. Freeing sq/cq before those complete leaves
+their completion callbacks (nvme_rw_cb() and friends) to run against
+already-freed NvmeRequest/NvmeSQueue/NvmeCQueue memory via
+nvme_enqueue_req_completion(), causing a use-after-free/segfault.
+
+Run nvme_sq_cancel_inflight() over every queue in nvme_ctrl_reset()
+before the free loops, so no in-flight blk_aio_* callback can fire
+after sq/cq memory is freed.
 
 Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3398
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3883
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4068
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4072
 Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 849ea354ddc1c9a4c2af03d57f75acf106ff6b45)
+(cherry picked from commit 86f938333e2faae7c60ca66c0809f5495c59aa4b)
+(Mjt: back-port across v11.0.0-2641-g9d378cab537d "hw/nvme: add basic live migration support"
+ which changed by-queue loops upper bound from `n->params.max_ioqpairs + 1'
+ to `n->num_queues')
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 4e5c6e65995..857dc4fa1d5 100644
+index 857dc4fa1d5..b39072673d3 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -4808,6 +4808,26 @@ static int nvme_init_sq_ioeventfd(NvmeSQueue *sq)
-     return 0;
- }
+@@ -7944,6 +7944,18 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
+         nvme_ns_drain(ns);
+     }
  
-+/*
-+ * A pending Async Event Request has no aiocb (nvme_aer() parks it without
-+ * issuing any block I/O), so there is nothing to cancel; just drop it.
-+ */
-+static void nvme_sq_cancel_inflight(NvmeSQueue *sq, uint16_t status)
-+{
-+    NvmeRequest *r;
-+
-+    while (!QTAILQ_EMPTY(&sq->out_req_list)) {
-+        r = QTAILQ_FIRST(&sq->out_req_list);
-+        r->status = status;
-+
-+        if (r->aiocb) {
-+            blk_aio_cancel(r->aiocb);
-+        } else {
-+            QTAILQ_REMOVE(&sq->out_req_list, r, entry);
++    /*
++     * Cancel and wait out every inflight command on every queue first. A
++     * reset is not required to be preceded by the guest's graceful
++     * Delete I/O SQ/CQ sequence, so sq/cq must not be freed below while a
++     * blk_aio_* completion for them could still be in flight.
++     */
++    for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
++        if (n->sq[i] != NULL) {
++            nvme_sq_cancel_inflight(n->sq[i], NVME_CMD_ABORT_SQ_DEL);
 +        }
 +    }
-+}
 +
- static void nvme_free_sq(NvmeSQueue *sq, NvmeCtrl *n)
- {
-     uint16_t offset = sq->sqid << 3;
-@@ -4842,16 +4862,7 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
-     trace_pci_nvme_del_sq(qid);
- 
-     sq = n->sq[qid];
--    while (!QTAILQ_EMPTY(&sq->out_req_list)) {
--        r = QTAILQ_FIRST(&sq->out_req_list);
--        r->status = NVME_CMD_ABORT_SQ_DEL;
--
--        if (r->aiocb) {
--            blk_aio_cancel(r->aiocb);
--        } else {
--            QTAILQ_REMOVE(&sq->out_req_list, r, entry);
--        }
--    }
-+    nvme_sq_cancel_inflight(sq, NVME_CMD_ABORT_SQ_DEL);
- 
-     if (!nvme_check_cqid(n, sq->cqid)) {
-         cq = n->cq[sq->cqid];
+     for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
+         if (n->sq[i] != NULL) {
+             nvme_free_sq(n->sq[i], n);
 -- 
 2.47.3
 
