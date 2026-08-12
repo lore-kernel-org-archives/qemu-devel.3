@@ -4,149 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91802C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B969C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBFy-0005A0-SF; Wed, 12 Aug 2026 11:52:42 -0400
+	id 1wuBHd-0005ne-Mk; Wed, 12 Aug 2026 11:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wuBFw-00058j-VT
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:52:40 -0400
+ id 1wuBHc-0005nQ-Ci
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:54:24 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wuBFu-0004BI-47
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:52:40 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wuBHa-0004YJ-Bm
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:54:24 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CDbt8Z2728899
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:52:36 GMT
+ 67CDbn4Z3971665
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:54:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WNqME8sMyP0ocgBqXPIWoieim6qWxLvjzL5WVX4xjvc=; b=QP/mRMJ1C7Vaclkz
- tZVuIun93fUvr8j3q4NsqHtKhNawg1xA8sE/IHUSIHkHto0JP2VvlI6iJOV5cEKl
- i2vwj8272ZpR/uGFTu9uWkcBGef36HrFZRstHrBWegBFoAcFopS9HJJzw8anHuJl
- KfBwM7hH3BjkdARaaXMtAVvNCYhwurC1+d+hbQ6DsDWpWpBk3kRlfM20HZq1ARza
- E9Z16CsFEFAfmN2kV5I23gp2gjCs+BxFixjEEaN9vpTWMXr7F4B95jInfLNjVOam
- y+oAGJ2oDSbMv7Y0akMwohx/Wd929LyPlZrJ5w6hoLsl294kbaZpGwIYuSWaEK0k
- 0wPF6Q==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0hfw2t7n-1
+ 9RiIQLNQNIpk+8ImTVvsyfvy34dmoBX5K5OHGEUgLKo=; b=Ot1X3Rtst5mOTQY4
+ U/9phpKCjRZwsDdrf/3CCWhvtqf39iT/LjmwAS5SYHiCnAof21Mx8973eGFUL7OW
+ rrH1S/62bwx5K8+Ti4a++GWLEmZsxL3WrY/5DD2yB26+VH6E1hPnfLEViE3XhWkD
+ 0BFwWiPnUWiNlONA5qdVGJCZXE/5k6VfgSpAYa4znV4pD5B3LLa1RafJsL8qbO3M
+ GfZpfzsfSZPiBuzK19jwOXgGmEMUdhZLryOIyMayH4UGRQ0tVORQPcP37EueGu9F
+ ZfzBcqJC0vV1mGUMhyqWsumsDOaB/Hm6SaiZ3Uw7Np3eBKSO99ZVayJPVoDKi8Ma
+ GGtwDQ==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0jgrjm9v-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:52:36 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2cec4226c70so15587805ad.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:52:36 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:54:20 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38e22137fb3so1566529a91.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786549955; x=1787154755; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786550060; x=1787154860; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=WNqME8sMyP0ocgBqXPIWoieim6qWxLvjzL5WVX4xjvc=;
- b=TLr8yACnVYRUlLtvTfA2dMb8RTnHsXcLqjjE38Daq9CmIXD9BK9Mc7ihwz87c3/jaf
- Is7bd4ICMvnnkBaPztZHt+/+SOXntxsoCs76SJ5tvuBF/rBKCrvR95BEdzxYOVY8yO3u
- WzQasIppKSxob7Sgg8YAF04JWO1nJU2hXjVlGXlvtvQKgplzQKLp3kG2Tn4NWnSj3IHI
- YZfaicR0Yne831T9T1k1tEQOr0KIzX0XNsVI6O+oMYNMDXkkkresWdZgh/zXND6Vgwes
- MOPqmHUC5YE8o244UAmYdftMKYvGHNuYOdAEY6u4T8t4yVRcFqXn1qCVnAMheKgg1j1r
- D06g==
+ bh=9RiIQLNQNIpk+8ImTVvsyfvy34dmoBX5K5OHGEUgLKo=;
+ b=eRhMWisZCThV1O+FeBisjdY81a8fhWXOqlFtobbA4tWKXd4BpXMmpoMeSdw00hT6GZ
+ Z1PyKSbO/kLLivt0jN5ADwK0UZOF1Mz4YuBoWkZCobZMnAoV+RjvxBA0YtdK1C7MJ97p
+ dCtknFUHYb+gOFWnFXVAiMKWxMwRn+bn7BiXaAVt4fbohSf21K4Ci9eqMWfXTsxg2Q0I
+ m2w+FbV6jDEt+SqGxP6X2U+9kPXc4Zk7vAF9tbqcey2p6y+k+vpcsVwyK4Hn6fVQxPg+
+ Yku0/cG9YDSRVPwd4qXqA1xlVH64G1tNus0WQirRiZx7kWhvnGVl0AkOEiegmtx3KJAV
+ b5zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786549955; x=1787154755;
+ d=1e100.net; s=20251104; t=1786550060; x=1787154860;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WNqME8sMyP0ocgBqXPIWoieim6qWxLvjzL5WVX4xjvc=;
- b=DSTQxgrILdhngv9oNJ5xMgRSZ8EbYWf2as0XRYpnlO3MiG1VXi7uo5qHKeodRvweys
- aOh2p6d+yuAnBSgUol3Mn224EWUgD4R8wRWWgZ0DeOhd2YmuSdfQcEK+o1rXwG3oJvB3
- Wi8MEkJJ71F4GjxCTaDMOIz4oGjVKyY9NRpH/j387d5U3+KwlQR9LU42zatI3l5GHjL+
- HPKZzr4ZgKlvf9P3Mq8A8i55h0ogWDYko4VpMfXLh5CczF8k49ono6TGC04qrF/fmHPc
- 6++hoPetVCTkuuu6uNCRhbcAtrQtuYILAtMXNI6LDZ6K4HthevLP9KYgwbETXrMQfTeG
- vBIg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoFj4kwSinbY9bTsGj9lyvCd1p9bWqzJVAccjzoYChD914Amyy4o3CxO75vkvxek1xdJqm01W0nyCmj@nongnu.org
-X-Gm-Message-State: AOJu0YxBUqvf0aU97IN07d4EM/sADxve9gYQaRGBtt13/WW3OdKhII2e
- bwG/mZ5ffhyl5SWv0JGrVnXD5M+TNQtsjiEMwNxc11cyI0IVw2Kk7EOnHLm08Hjn7gAMpH97Hpc
- BdgNE4+cKpoWcHQa5HOfVK9VEM3xJZE/yuA33U2ya1ThJ+G95i5dlLAjVXA==
-X-Gm-Gg: AR+sD1065TEjOnt7FNn3LdaDn15Es1OWchv7ZD5+OKblozBDacq5qA/FBW8YZ6ohWiO
- fxot6fYepJ2MxnSwpjKFoYjzmCb0jTMxU3jl4pxxp8NTCCIoR5TJoLA6cGZGvj5wsvE/gLGrHIa
- r7jKbn+1CDh3arGzfc9ToGGKy5gBysqyHlUeDWvBS43auLr/4GE6w38VQ+xHLnF08pSx1FvJVOd
- QdNtLxNTDaU0aH/MJia66fWRBIKuvhgIdPZpuJXNepTb2zvnqqmTF+J05gnX6TvmvIkxWiW0Agc
- 2VWtMmWO8cTsuMhlDMex2CbrIqDz+JEmuY6cIbCGt4Ci8LaDEWT1sMwfFdd17nAUNW8XeJgWRbE
- E0p2GsIR/W7gi6SiihaTb1VyKDQfHpiASuDg/DUC20gqXsKv20nUffL6a+TeZBVHkX9oC
-X-Received: by 2002:a17:90b:55c5:b0:381:bc4c:da5b with SMTP id
- 98e67ed59e1d1-393017b600dmr7263792a91.18.1786549955268; 
- Wed, 12 Aug 2026 08:52:35 -0700 (PDT)
-X-Received: by 2002:a17:90b:55c5:b0:381:bc4c:da5b with SMTP id
- 98e67ed59e1d1-393017b600dmr7263713a91.18.1786549954651; 
- Wed, 12 Aug 2026 08:52:34 -0700 (PDT)
+ bh=9RiIQLNQNIpk+8ImTVvsyfvy34dmoBX5K5OHGEUgLKo=;
+ b=DA5LfTQNkz+yFmgzCcLVf8K6r0v6FImD0GqSutnz1RLU5tW40PINBRhmpzd4ezxXde
+ Uz1D3UXKlluHDmrAuzVWb93+UKqB9Ny45VQkxbXohIQ9qSGi9o0+qRtE7uhnwxHpPl1V
+ t/XxEA5pvJqsW2VkOkkSj3qOtgCP7KcxLhHMhYzzVUjwf2yCM7mBzxi2nkdYciHBKOdS
+ FWp1h2gUPda6mNKLxUIxjiFeHc3vM+DBW0mY7PIRv52c6yyezruaMEI1L5JrFzrMLF/u
+ j/xwpv0s241OZFw59e7UIsbXhGWbpmKfTICINI0d9YUH8LjNsVMSU3NPcPCW/1KZVLHv
+ yF6g==
+X-Gm-Message-State: AOJu0Yz2gYINxf7WCbTqJFYQpRp+Bcxz/QEsUwOx/pzr/eicbUGrIeos
+ njxUttdXhHISycVm/2wPtTK+ZTtJ0jeRvUblwqlYVGiIBK5CHgEqvh39ciLKQ69ihSlmvawqnX4
+ ThWnd2SomeaumFlh5CbfNMTZy5TQRhvB3FI46J24nS4C+pevT3Nf3QsXjSQ==
+X-Gm-Gg: AR+sD10nH/H5XoBeNrYin4wxME/uFFZvfWXM7DwzQXqX7su4YI7gHmH+L3mQwf0vaEw
+ 5bpHPjEYYUW+ArvwUibL5Hzq5kR316oEK6AX8hIG8A/7bR9CBq4wT6vVZ7LPuk3tUKbhvz4mdJG
+ dDzz4gJFnY9lQHq9/09vnh1+HBG61sotgD2w6F6t//hF+4PI4cDUG4Cfeo0YB+QGAO9rKhuZ3pr
+ BYJTqSg01rxBIJU5KstHGidtipYQHt4lavMVuMiMnkpU9BRJRLEutSUPCyNBQpvL3Sv+7sScdAi
+ BzYuCl6lWSJt7mCIyF5imHvt4TqX7v3VVWdJU+Hkce7SMarLmV+WpwLe57B2xgJRbUSqfNwqyvI
+ 6Fnj7yvi7urggx2MgLRmRNIOkZIkq3BWIfAxZ7ktBH3c2Ti5HyCvUT6KXzKHPtyiPDOCP
+X-Received: by 2002:a17:90b:1dc6:b0:392:ca3b:370a with SMTP id
+ 98e67ed59e1d1-393013c4248mr8561573a91.2.1786550059531; 
+ Wed, 12 Aug 2026 08:54:19 -0700 (PDT)
+X-Received: by 2002:a17:90b:1dc6:b0:392:ca3b:370a with SMTP id
+ 98e67ed59e1d1-393013c4248mr8561509a91.2.1786550059004; 
+ Wed, 12 Aug 2026 08:54:19 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-392f908a82bsm4038603a91.0.2026.08.12.08.52.33
+ 98e67ed59e1d1-392f94adf39sm3943934a91.11.2026.08.12.08.54.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 08:52:34 -0700 (PDT)
-Message-ID: <e40e5a75-cb20-4608-b628-f363068a36ba@oss.qualcomm.com>
-Date: Wed, 12 Aug 2026 08:52:33 -0700
+ Wed, 12 Aug 2026 08:54:18 -0700 (PDT)
+Message-ID: <a169bf77-bc23-4648-9381-7064bf7d5d68@oss.qualcomm.com>
+Date: Wed, 12 Aug 2026 08:54:17 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/27] include/qemu/target-info-qom.h: declare
- TYPE_TARGET_SPECIFIC interface
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Bernhard Beschow <shentey@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <a9c89dd7-6317-42f1-9e03-30e48c2d08aa@oss.qualcomm.com>
- <anRgKw58IMYoR4p-@redhat.com>
- <5bda3566-5ce5-46dc-a281-2cc07a56dc6f@oss.qualcomm.com>
- <077fc585-a6b8-455a-abdc-fd72e13b8315@oss.qualcomm.com>
- <anTPOqFKWFKAX_3C@redhat.com>
- <102a3de8-ac17-429a-9294-e3b159aa642a@oss.qualcomm.com>
- <anxQdlwxAtqfl-N-@redhat.com>
- <cc88ff07-474f-48d6-a2a4-1a2c3f64f3fd@oss.qualcomm.com>
- <anxvMQpZlBUu5SaB@redhat.com>
- <9db3cc07-61e6-4740-823d-112ec80f216b@oss.qualcomm.com>
- <anyCswBYBZWeMt3I@redhat.com>
+Subject: Re: [PATCH v6 047/103] tests/tcg/arm: system tests
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Brian Cain
+ <brian.cain@oss.qualcomm.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260728044248.137626-48-pierrick.bouvier@oss.qualcomm.com>
+ <878q6bz6zt.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <anyCswBYBZWeMt3I@redhat.com>
+In-Reply-To: <878q6bz6zt.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEyOSBTYWx0ZWRfX4HlA1DFQk8Uf
- DjDQacGYuRl+9ZWqxBZ9OHGiuAHuoh+V5RxRBwTlzShpdSPpB4v6ZbV5A1HXIiFsoSleDYbdsz3
- OKqrhqb/nrmImbUty9tKyzxoC6nLOtk=
-X-Proofpoint-GUID: 93djMng1Qh8CuwAU1FZWa1JgdgxGYIm_
-X-Authority-Analysis: v=2.4 cv=fpDsol4f c=1 sm=1 tr=0 ts=6a7c96c4 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEyOSBTYWx0ZWRfX9NI5+c6zaYfd
+ 9iAm080XT6QpdW4ieX7d1dtGdl8W6Sqjbx9no1SMU0nWr0snmRt/Ddf53949RK/b/9AYQe8OYym
+ LOO28Dse/+q4cXmUw0wMDA5nG+NZnb0eqvJw6GrRwSJeeOyOxaeDTJpIr7uNUwkiTCxzNkEsy0T
+ q7B4dAKBRYGelYs0iiRFbLcyBQuRjByjQCw8UwKX9IPC0s9PEOophwcOjlEk4kkYen982NowTSb
+ psxRPbnf5BQCmwQQq3+5dXylFOZt62e+ZL1dso6cKJDLkfdkYjx3CXiITaeXNWSCDsLfER4Ps5K
+ N88OXuyKaSQNyxYbJ1odZwDBrYVlB/aUFEf+uFjDjYI0e7jeIvX//ayOesqykwI2R/zuQqZugtd
+ PSZmueS5DlmTbTK8fwvfBXJ1JnEMn9fpAvz9dcbSGqp9fB79l5CQ8NhVlTt8ghpeaE+x+RtVMGn
+ IJOYJ4R0Gl+bon4nAuA==
+X-Proofpoint-ORIG-GUID: 0ssZWPUSr3M-akZKLBvrO6lpfXqbhOof
+X-Authority-Analysis: v=2.4 cv=TNJ1jVla c=1 sm=1 tr=0 ts=6a7c972c cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=LZraz4wHKpTCNbm4znUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: 93djMng1Qh8CuwAU1FZWa1JgdgxGYIm_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEyOSBTYWx0ZWRfX1oH0Z9x7MMIG
- Ah8ny4Y9vM8jTgKmqmxis8nROL1Hnru4v3LKbuKwHgi2M1ivYG78dw+jN1Rh48FapS66CVv52Og
- P0xky6Sx7wlxhWGnFlJd40K5BvSSj6FMirwGdZr+3nB01U32CW84LkexTbn834zGcUUAwsSkN8J
- jXHZH822/tqpeOBLVg4CTabHrpoUkRVr1y6xySMpmjbAvFvoaUXbYWmMcGfHqfdYxGh4zAEwvUc
- 9hL/3rLTR3ts4jSOLwbUwtYblzfaO3M0apCV7DF4fPKzY6ZCOnd7Hv+k097DR2eFPdA8zyfEdcx
- 9Xq0VokKIz/CByjjwrLZAzSQD81BcRDUEGwL+da7esrQSCG0LTbK3ZLv68U8rEPTEt2r4t3qqx6
- i91F61iL9Z0O/p/NrL044qrGCFROgOXV2RAbXfrDuNVc3JY34hga58kgHAfbGdRFlVtFQ3zvd6P
- LwBGNFJQtJJrOPOjK9w==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=8wjV5V48YhLn6wfS8coA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-GUID: 0ssZWPUSr3M-akZKLBvrO6lpfXqbhOof
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEyOSBTYWx0ZWRfX9JQBcNAk2E6J
+ fCy8IOdWjbABe0lLoFUvtctSsX6RODxX6bMA4tU8nqzaolHgFliuzDewSPpUZrFe3s9YDi6KUG2
+ PlMrhxP0E5uKU+9ovOTltybbmYMOCbs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-12_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 impostorscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120129
+ clxscore=1015 priorityscore=1501 phishscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120129
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -172,199 +162,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/2026 7:26 AM, Daniel P. Berrangé wrote:
-> On Wed, Aug 12, 2026 at 07:09:29AM -0700, Pierrick Bouvier wrote:
->> On 8/12/2026 6:03 AM, Daniel P. Berrangé wrote:
->>> On Wed, Aug 12, 2026 at 05:54:49AM -0700, Pierrick Bouvier wrote:
->>>> On 8/12/2026 3:52 AM, Daniel P. Berrangé wrote:
->>>>> On Mon, Aug 10, 2026 at 03:26:26PM -0700, Pierrick Bouvier wrote:
->>>>>> I have been experimenting today with static filtering of types, as you
->>>>>> suggested, and came up with two possibilities. Before implementing this
->>>>>> for all types, I would like to get some feedback on which way is the
->>>>>> best for you.
->>>>>>
->>>>>> 1. Add a new callback is_available to TypeInfo, similar to existing
->>>>>> interface.
->>>>>> Pros: local information is present in type definition, making obvious
->>>>>>       why a type is available or not. Very easy to implement
->>>>>>       since only type_register_static has to be modified to check it.
->>>>>> Cons: Add a new field to each existing type. Not the end of the world
->>>>>>       in terms of memory consumption, but worth mentioning.
->>>>>> 2. Add conditional around each type_register_static, or add an
->>>>>> alternative type_register_static_cond function.
->>>>>> Pros: I don't see any
->>>>>> Cons: Decouples type information from type definition, makes it harder
->>>>>>       to follow why a type is available or not. Much more verbose since
->>>>>>       we need to modify all type_register_static buried in macros.
->>>>>>
->>>>>> Based on this, I'm much more in favor or 1. The fact availability
->>>>>> information is in the same location than type definition is the biggest
->>>>>> advantage for me.
->>>>>>
->>>>>> On example given above, this would give something like this:
->>>>>> static const TypeInfo emulated_card_info = {
->>>>>>      .name          = TYPE_EMULATED_CCID,
->>>>>>      .parent        = TYPE_CCID_CARD,
->>>>>>      .instance_size = sizeof(EmulatedState),
->>>>>>      .class_init    = emulated_class_initfn,
->>>>>>      .is_available  = target_config_X,
->>>>>> };
->>>>>>
->>>>>> Would that work for you?
->>>>>> Do you have a 3rd way to offer to solve the problem we have?
->>>>>
->>>>> In the case of user creatable objects, we represented a classes'
->>>>> conditional availablity in QAPI schema. For example:
->>>>>
->>>>>   { 'struct': 'InputLinuxProperties',
->>>>>     'data': { 'evdev': 'str',
->>>>>               '*grab_all': 'bool',
->>>>>               '*repeat': 'bool',
->>>>>               '*grab-toggle': 'GrabToggleKeys' },
->>>>>     'if': 'CONFIG_LINUX' }
->>>>>
->>>>> Now this isn't quite a match for what we want, as QAPI schema is
->>>>> common to all targets and used to control the code generator to
->>>>> turn off output. Thus the permitted CONFIG_xxx are only those in
->>>>> config-host.mak, not any from $TARGET-softmmu-config-devices.mak
->>>>>
->>>>> The other scenario in QAPI is the concept of features:
->>>>>
->>>>> { 'struct': 'SevCommonProperties',
->>>>>   'data': { '*sev-device': 'str',
->>>>>             '*cbitpos': 'uint32',
->>>>>             'reduced-phys-bits': 'uint32',
->>>>>             '*kernel-hashes': 'bool' },
->>>>>   'features': ['confidential-guest-reset']}
->>>>>
->>>>> where again we just have a list of named strings. Features are fully
->>>>> dynamic, and crucially they are introspectable so applications can
->>>>> query at runtime what is available.
->>>>>
->>>>> The introspection concept is something that is highly likely to be
->>>>> relevant to our use cases here. If we have a single binary with all
->>>>> types, it would be very valuable to be able to query it once to
->>>>> discover everything in one go, instead of havnig to query it over
->>>>> and over again for each target. That implies the application doing
->>>>> the query needs to be told about per-target usage restrictions on
->>>>> types it is querying.
->>>>>
->>>>> We don't have QAPI schema for QDev devices currently, but it is likely
->>>>> we will do so in the future. We can't wait for that though as there is
->>>>> no clear ETA.
->>>>>
->>>>> What this all says to me though, is that instead of an 'is_available'
->>>>> method, we should instead just list the conditions as data in the
->>>>> TypeInfo struct directly. IOW a list of const strings like this:
->>>>>
->>>>>  static const TypeInfo emulated_card_info = {
->>>>>       .name          = TYPE_EMULATED_CCID,
->>>>>       .parent        = TYPE_CCID_CARD,
->>>>>       .instance_size = sizeof(EmulatedState),
->>>>>       .class_init    = emulated_class_initfn,
->>>>>       .available     = (const char *[]){ TARGET_AARCH64, CONFIG_something .... },
->>>>>  };
->>>>>
->>>>> This will make it easy to add in introspection at a later date.
->>>>>
->>>>> The limitation is that this can only express an "AND" condition.
->>>>> You can not do complex AND+OR+grouping conditions that you could
->>>>> express in code, but IMHO that is not likely to be a problem.
->>>>> In the worst case you can define a higher level "CONFIG_BLAH"
->>>>> that encapsulates the complex condition.
->>>>>
->>>>
->>>> Those strings names reuse existing target config identifiers, which
->>>> can't be done because of config poisoning.
->>>> The string compare will definitively be visible at boot time, so we
->>>> should rely on enum instead if we go in this direction.
->>>>
->>>> I'm a bit worried about verbosity of the result:
->>>> .available     = (const char *[]){ ENUM_NAME_TARGET_AARCH64, {} }
->>>> versus:
->>>> is_available = target_aarch64
->>>
->>> The verbosity could be hidden behind a macro that takes a tar
->>>
->>> #define QOM_AVAIL_TGT(name) \
->>>    .available = (const char *[]) ENUM_TARGET # name, NULL }
->>>
->>> So usage becomes
->>>
->>>   static const TypeInfo emulated_card_info = {
->>>      .name          = TYPE_EMULATED_CCID,
->>>      .parent        = TYPE_CCID_CARD,
->>>      .instance_size = sizeof(EmulatedState),
->>>      .class_init    = emulated_class_initfn,
->>>      QOM_AVAIL_TGT(AARCH64),
->>>   }
->>>
->>> A separate macro could be defined for the more complex case
->>> wanting multiple config options.
->>>
+On 8/12/2026 8:35 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+> 
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>  tests/tcg/arm/Makefile.softmmu-target | 80 ---------------------------
+>>  tests/tcg/arm/meson.build             |  2 +
+>>  tests/tcg/arm/system/meson.build      | 66 ++++++++++++++++++++++
+>>  3 files changed, 68 insertions(+), 80 deletions(-)
+>>  delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
+>>  create mode 100644 tests/tcg/arm/system/meson.build
 >>
->> Then we'll have different macros for:
->> one target, a collection of target, a mix of target and config, config
->> only. Plus, we hide what was clear in the first place with:
->> .is_available = target_aarch64.
->> I'm not super fond of the result to be honest.
+>> diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
+>> deleted file mode 100644
+>> index b66074b0b43..00000000000
+>> --- a/tests/tcg/arm/Makefile.softmmu-target
+>> +++ /dev/null
+>> @@ -1,80 +0,0 @@
+>> -# -*- Mode: makefile -*-
+>> -#
+>> -# ARM SoftMMU tests - included from tests/tcg/Makefile
+>> -#
+>> -
+>> -ARM_SRC=$(SRC_PATH)/tests/tcg/arm/system
+>> -
+>> -# Set search path for all sources
+>> -VPATH 		+= $(ARM_SRC)
+>> -
+>> -# Specific Test Rules
+>> -
+>> -test-armv6m-undef: test-armv6m-undef.S
+>> -	$(CC) -mcpu=cortex-m0 -mfloat-abi=soft \
+>> -		-Wl,--build-id=none -x assembler-with-cpp \
+>> -		$< -o $@ -nostdlib -static \
+>> -		-T $(ARM_SRC)/$@.ld
+>> -
+>> -run-test-armv6m-undef: QEMU_OPTS=-semihosting-config enable=on,target=native,chardev=output -M microbit -kernel
+>> -
+>> -ARM_TESTS+=test-armv6m-undef
+>> -
+>> -# These objects provide the basic boot code and helper functions for all tests
+>> -CRT_OBJS=boot.o
+>> -
+>> -ARM_TEST_SRCS=$(wildcard $(ARM_SRC)/*.c)
+>> -ARM_TESTS+=$(patsubst $(ARM_SRC)/%.c, %, $(ARM_TEST_SRCS))
+>> -
+>> -CRT_PATH=$(ARM_SRC)
+>> -LINK_SCRIPT=$(ARM_SRC)/kernel.ld
+>> -LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+>> -CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+>> -LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+>> -
+>> -# building head blobs
+>> -.PRECIOUS: $(CRT_OBJS)
+>> -
+>> -%.o: $(ARM_SRC)/%.S
+>> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+>> -
+>> -# Build and link the tests
+>> -%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+>> -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+>> -
+>> -memory: CFLAGS+=-DCHECK_UNALIGNED=0
+>> -
+>> -# Running
+>> -QEMU_BASE_MACHINE=-M virt -cpu max -display none
+>> -QEMU_OPTS+=$(QEMU_BASE_MACHINE) -semihosting-config enable=on,target=native,chardev=output -kernel
+>> -
+>> -# console test is manual only
+>> -QEMU_SEMIHOST=-serial none -chardev stdio,mux=on,id=stdio0 -semihosting-config enable=on,chardev=stdio0 -mon chardev=stdio0,mode=readline
+>> -run-semiconsole: QEMU_OPTS=$(QEMU_BASE_MACHINE) $(QEMU_SEMIHOST)  -kernel
+>> -run-semiconsole: semiconsole
+>> -	$(call skip-test, $<, "MANUAL ONLY")
+>> -	$(if $(V),@printf "  %-7s %s %s\n" "TO RUN" $(notdir $(QEMU)) "$(QEMU_OPTS) $<")
+>> -run-plugin-semiconsole-with-%: semiconsole
+>> -	$(call skip-test, $<, "MANUAL ONLY")
+>> -
+>> -# Simple Record/Replay Test
+>> -.PHONY: memory-record
+>> -run-memory-record: memory-record memory
+>> -	$(call run-test, $<, \
+>> -	  $(QEMU) -monitor none -display none \
+>> -		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+>> -		  -icount shift=5$(COMMA)rr=record$(COMMA)rrfile=record.bin \
+>> -		  $(QEMU_OPTS) memory)
+>> -
+>> -.PHONY: memory-replay
+>> -run-memory-replay: memory-replay run-memory-record
+>> -	$(call run-test, $<, \
+>> -	  $(QEMU) -monitor none -display none \
+>> -		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+>> -		  -icount shift=5$(COMMA)rr=replay$(COMMA)rrfile=record.bin \
+>> -		  $(QEMU_OPTS) memory)
+>> -
+>> -EXTRA_RUNS+=run-memory-replay
+>> -
+>> -TESTS += $(ARM_TESTS) $(MULTIARCH_TESTS)
+>> -EXTRA_RUNS+=$(MULTIARCH_RUNS)
+>> diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
+>> index 08a863699fb..1b491cea026 100644
+>> --- a/tests/tcg/arm/meson.build
+>> +++ b/tests/tcg/arm/meson.build
+>> @@ -2,6 +2,8 @@ cc = 'arm-linux-gnueabihf-gcc'
+>>  cc_dockerfile = 'debian-all-test-cross'
+>>  cc_docker_host_arch = ['aarch64', 'x86_64']
+>>  
+>> +subdir('system')
+>> +
+>>  tests = []
+>>  
+>>  # Multi arch tests
+>> diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+>> new file mode 100644
+>> index 00000000000..d507cf980f6
+>> --- /dev/null
+>> +++ b/tests/tcg/arm/system/meson.build
+>> @@ -0,0 +1,66 @@
+>> +tests = []
+>> +
+>> +minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
+>> +minilib_printf = files(minilib_dir / 'printf.c')[0]
+>> +link_script = files('kernel.ld')[0]
+>> +boot = files('boot.S')[0]
+>> +cflags = ['-nostdlib',
+>> +          '-Wa,--noexecstack',
+>> +          '-I', minilib_dir, minilib_printf, boot,
+>> +          '-Wl,-T', link_script,
+>> +          '-lgcc']
 > 
-> That's a different interpration of "clear".
+> Needs to be:
 > 
-> What I'm proposing exposes the rules as data, and that ensures
-> the rules are clear to machines.
-> 
-> What you're proposing exposes the rules as code and that is only
-> clear to human reviewers.
+>    cflags = ['-march=armv7-a+fp',                                                                                                                                               
+>            '-ffreestanding',                                                                                                                                                  
+>            '-nostdlib',
+>            ...
 >
 
-Agree, I will always prefer what is clear for human to read/understand.
-That said, your requirement is fair also, and I see the value in
-describing rules instead of a function pointer.
-We both agree to add a field in TypeInfo, that's a good start.
+I'll add it, thanks.
 
-I'll do my best to add something that satisfies both in next version.
-
->>  >> 99% of the types will be filtered by target only, for which we have
->>>> functions in target-info API. Only a few of them will need custom
->>>> functions. It would be worth having a nice/short way to write this
->>>> without having to declare all combination in a file.
->>>> One of your point was to not include more macros, and seems like we'll
->>>> end up this way.
->>>
->>> In this case the macros expand to data that is machine consumable
->>> at runtime, so I thjnk that's a good tradeoff.
->>>
->>>> The introspection argument is good, but will we really need that? The
->>>> whole point of conversation was to register only types available,
->>>> ignoring the rest. If you want introspection, it means registering all
->>>> types and selectively filter them.
->>>
->>> Yes, introspection is critical to mgmt apps and places where we
->>> forget/miss it cause endless pain.
->>>
->>
->> We can easily make a mechanical replace on all '^\s*\.is_available'
->> lines when it will be needed. Feels like we are anticipating a bit too
->> much, and there would be no cost to change that later.
->>
->> I would kindly ask again to consider if you would be ok to delay this to
->> when it's effectively introduced on QAPI side.
->>
->> Would you be open to it?
 > 
-> Introspection has always been a critical problem in QEMU and rectifying
-> it after the fact is very costly. IMHO we need to do this as data from
-> day one rather than knowingly taking a path that makes introspection
-> harder.
+>> +qemu_base_args = ['-display', 'none',
+>> +                  '-semihosting-config', 'enable=on',
+>> +                  '-kernel']
+>> +qemu_def_args = ['-M', 'virt', '-cpu', 'max', qemu_base_args]
+>> +
+>> +# Multi arch tests
+>> +multi_src = []
+>> +foreach t: tcg_tests['multiarch-softmmu']['tests']
+>> +  foreach src, setup: t
+>> +    new_cflags = cflags
+>> +    if fs.stem(src) == 'memory'
+>> +      new_cflags += '-DCHECK_UNALIGNED=0'
+>> +    endif
+>> +    if src not in multi_src
+>> +      setup += {'cflags': [new_cflags]}
+>> +      multi_src += src
+>> +    endif
+>> +    tests += {src: setup + {'qemu_args': qemu_def_args}}
+>> +  endforeach
+>> +endforeach
+>> +
+>> +tests += {
+>> +  'test-armv6m-undef.S': {
+>> +    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
+>> +               '-T', files('test-armv6m-undef.ld')],
+>> +    'qemu_args': ['-M', 'microbit', qemu_base_args],
+>> +  },
+>> +  'semiconsole.c': {
+>> +    'cflags': cflags,
+>> +    'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
+>> +                  '-semihosting-config', 'enable=on,chardev=stdio0',
+>> +                  '-mon', 'chardev=stdio0,mode=readline',
+>> +                  qemu_def_args],
+>> +    'wrapper': [prog_run_with_input, 'X']
+>> +  },
+>> +  '../../multiarch/system/memory.c': {
+>> +    'test_name': 'memory-record-replay',
+>> +    'qemu_args': qemu_def_args,
+>> +    'wrapper': [prog_record_replay],
+>> +  },
+>> +}
+>> +
+>> +if 'qemu-system-arm' in emulators
+>> +  tcg_tests += {
+>> +    'arm-softmmu': {
+>> +      'cc': cc,
+>> +      'cc_dockerfile': cc_dockerfile,
+>> +      'cc_docker_host_arch': cc_docker_host_arch,
+>> +      'folder': 'arm/system',
+>> +      'gdb_arch': 'arm',
+>> +      'qemu': emulators['qemu-system-arm'],
+>> +      'tests': tests,
+>> +    }
+>> +  }
+>> +endif
 > 
-> 
-> With regards,
-> Daniel
 
-Thanks for the feedback, and glad we found a solution that works for
-both of us.
-
-Regards,
-Pierrick
 
