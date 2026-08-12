@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDAAC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC0EBC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8hk-0006o8-Ok; Wed, 12 Aug 2026 09:09:13 -0400
+	id 1wu8dn-0007iJ-IO; Wed, 12 Aug 2026 09:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hc-0006Rc-Rl; Wed, 12 Aug 2026 09:09:07 -0400
+ id 1wu8df-0007Rh-Nr; Wed, 12 Aug 2026 09:04:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8hZ-0005ZE-JU; Wed, 12 Aug 2026 09:09:04 -0400
+ id 1wu8dd-0004cc-Uw; Wed, 12 Aug 2026 09:04:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=4EACNSb41NykVhjIA0+ehmFV7QgSEePtQyRjDj2uJg8=;
+ t=1786539783; bh=/QzfJXfeZZLxYnBu6WLOlgsnTpONqiLMkccbtx9+hUE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=loXNTGdwMwqYBHPIo5jNksdjDrsfLLkfz6BkZbDcl19FYWXl/07kXgkTf/okAi7es
- VCQVxtq5hO7nWdRfaNJBPnfwH4FFljuJsUQ9c517N4WsnloKLdrxQ53dLxYidDaEu5
- XO8KOWpCjtm7pDrXeFsqOFcE7b0ym1mQjLhj40b+JGET0dRoG/lec1DaPQuHWlub2m
- 24aHssyzgxJ3F4Iz6QBZ09xP/lYHfSLwerDpDBDg/EIKCtlGkNtmXipcWsT1O7IihL
- XuqZD8bixAzQQGqwk9CRf40EMid5yKy4Z+tx387BTVICkGc7IuIsOSRLGsmuh7qLaQ
- S23Xg4CMKXImA==
+ b=Mg8y0+rOFwfDiYaiLWgEt9THpVQNeAU8rABJ65JBhQknFod4tjzMDrA7XpIXQ6vVw
+ ktrBnJmzuA8lcn6BTJ9CA06yrcIkSuOHHfEsEnJbAerc5N0ko/NwKlXpfZLgvlqTyL
+ 6HM7+AoWIJjxMY70Sx6F0BmdlIPjQZ1+UdCwUSZoIOeytECOfhK5nZrSXs1/SLKhfu
+ CKGplNeRh0k7LZYRuE2AEEeBFh4D3lAiwdD5ZroVU4UE9Lv2FvwwkJrZ38GKK42ptI
+ ewew5+TQHBmuduJgsIzeIvIxi322WMb1qD1Y377OfWA6womHXpH7rxog03WMXU0+2O
+ gvdYtp11h3Iwg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 31F991CA4BC;
- Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 75A9A1CA496;
+ Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 684AD409B9F;
- Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB8BD409B79;
+ Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6B7DA2F90E; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 0833A2F8C2; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 061/102] hw/net/xilinx_axienet: Don't write checksums
- off end of packet
-Date: Wed, 12 Aug 2026 16:01:36 +0300
-Message-ID: <20260812130233.621965-61-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 023/102] hw/display/virtio-gpu: validate stride
+ against width on scanout
+Date: Wed, 12 Aug 2026 16:00:58 +0300
+Message-ID: <20260812130233.621965-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,79 +74,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The xilinx_axienet device has ethernet checksum offloading, with a
-mode where the guest provides the offsets within the packet where
-the data to be checksummed starts, and where the final checksum
-should be written into the packet.
+Validate that the framebuffer stride is at least width * bytes_per_pixel
+in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout().
 
-We don't sanity check the TX_CSINSERT offset before writing the
-checksum data into it, which means the guest can pass us a value that
-is larger than the packet itself and cause us to write the checksum
-off the end of the buffer.  We also don't explicitly check the
-TX_CSBEGIN offset; this doesn't currently cause any problems because
-we will pass a negative length to net_checksum_add() which does
-nothing, but it's a potential trap for the future if the type
-used for the length gets changed to be unsigned.
+A guest can set a very small stride while using a large width. The total
+size check (offset + stride * height <= blob_size) passes because
+stride * height is small, but pixman reads width * bytes_per_pixel per
+row, causing heap OOB reads. The leaked data is rendered to the host
+display.
 
-Explicitly check the offsets.  The datasheet doesn't say what happens
-if the guest misprograms this, so we choose to log an error and send
-the packet as-is.
+The check is added in virtio_gpu_do_set_scanout() to cover all paths:
+blob scanout, non-blob scanout and migration post_load. The additional
+early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
+configurations early.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3599
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260706162704.787495-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 8cbcf7579355f995340aa27ad197ef61c4969c06)
+Fixes: CVE-2026-63109
+Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3989
+Reported-by: Tristan @TristanInSec
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 861372428b05f74a1cf9a8af22a863aa7b46c7ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-index d2f98db1026..d0b51851f48 100644
---- a/hw/net/xilinx_axienet.c
-+++ b/hw/net/xilinx_axienet.c
-@@ -918,20 +918,27 @@ xilinx_axienet_data_stream_push(StreamSink *obj, uint8_t *buf, size_t size,
-     if (s->hdr[0] & 1) {
-         unsigned int start_off = s->hdr[1] >> 16;
-         unsigned int write_off = s->hdr[1] & 0xffff;
--        uint32_t tmp_csum;
--        uint16_t csum;
- 
--        tmp_csum = net_checksum_add(s->txpos - start_off,
--                                    buf + start_off);
--        /* Accumulate the seed.  */
--        tmp_csum += s->hdr[2] & 0xffff;
-+        if (start_off > s->txpos || write_off + 2 > s->txpos) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: offsets outside packet, skipping checksum\n",
-+                          TYPE_XILINX_AXI_ENET);
-+        } else {
-+            uint32_t tmp_csum;
-+            uint16_t csum;
-+
-+            tmp_csum = net_checksum_add(s->txpos - start_off,
-+                                        buf + start_off);
-+            /* Accumulate the seed.  */
-+            tmp_csum += s->hdr[2] & 0xffff;
- 
--        /* Fold the 32bit partial checksum.  */
--        csum = net_checksum_finish(tmp_csum);
-+            /* Fold the 32bit partial checksum.  */
-+            csum = net_checksum_finish(tmp_csum);
- 
--        /* Writeback.  */
--        buf[write_off] = csum >> 8;
--        buf[write_off + 1] = csum & 0xff;
-+            /* Writeback.  */
-+            buf[write_off] = csum >> 8;
-+            buf[write_off + 1] = csum & 0xff;
-+        }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 2178f5edbb6..0121aac8051 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -642,6 +642,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         return false;
      }
  
-     qemu_send_packet(qemu_get_queue(s->nic), buf, s->txpos);
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
++    }
++
+     g->parent_obj.enable = 1;
+ 
+     if (res->blob) {
+@@ -753,6 +761,14 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+     fb->width = ss->width;
+     fb->height = ss->height;
+     fb->stride = ss->strides[0];
++
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        return false;
++    }
++
+     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
+ 
+     fbend = fb->offset;
 -- 
 2.47.3
 
