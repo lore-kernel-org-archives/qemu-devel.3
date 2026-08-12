@@ -4,50 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB9BC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A755CC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8fB-0002Dv-B4; Wed, 12 Aug 2026 09:06:33 -0400
+	id 1wu8hM-0005kz-Ks; Wed, 12 Aug 2026 09:08:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8f9-0002Ai-On; Wed, 12 Aug 2026 09:06:31 -0400
+ id 1wu8hH-0005IS-AL; Wed, 12 Aug 2026 09:08:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8f8-00054T-0T; Wed, 12 Aug 2026 09:06:31 -0400
+ id 1wu8hF-0005Z9-Af; Wed, 12 Aug 2026 09:08:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=OnUQe6/rj299sZ5vaOOpySJvKJclMx9JJNtqpm/Qbm8=;
+ t=1786539784; bh=1Djt2ItzmZ5m06fuyXsqaplFKvYuZBAdz59TgwTXceA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OtKIs7PqVd5Tw5sVXxJyi6J1TWLTP0xCO4Izs+Q0CxAUZp67j7IjetnAFu+9fcnJG
- dxK2fJ3XdUti8Wr47hWpoWQ1lCwyWxtRwyh5TmgwUoIbth/EI1VEvbY0uT4+wCVsGx
- OsXa018cC8pkDOS/f9kWu/NUFJBI2to5M8WczLW61ayrWkZNrW88bzZjGwzaBvXLVa
- uweU0kW5PO3wrl/INS6lzoR0dwFYAORZkgXQsW25k9F2R5uEvfYwldBrZPVZDOBQPV
- /yXSphmspj/F7xaAELJHB+mxPBORUNuxTve1x9jfpv27BjioaDutWSAUaakUQ4xcOD
- bHd9DYk5DW4cQ==
+ b=CEMROJRi74tatlGmkUjR6admyMt4tevPDIXqUAbMVRDDfLs+GXKr/+PMjVIQDjLY+
+ 6yAxSAHe47+3QryBs9ij7JsGPod8zbAKAwJamGSqZ3R1CJv4GviW+Jgbx0qjPBDOC5
+ JIPrtMupvYlcidpZG0PoDYf1TjXOtdhDFM1lvf9aiE/VHXhkymaJcjL67WaWVvQGFQ
+ QGPLyEPG6AA/ynmQa2BwOxRWgP8Z5aYGmrtwzSkG7ByMh9+3Uv71CRKENjA650Jfm3
+ Z9nxLI9Z4SWc0EZdE123kzquLXWZPOaZ9etY61UxIRsd1g8l9Qk8i3b7ICpcWHx7BU
+ S3ZM08MRjPTCw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C08BF1CA4A5;
- Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2DC031CA4BB;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 02E25409B88;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 641E2409B9E;
  Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2E3A52F8E0; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 689052F90C; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, xlabai <xlabai@tencent.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 038/102] libvhost-user: protect against OOB writes in
- vu_set_inflight_fd
-Date: Wed, 12 Aug 2026 16:01:13 +0300
-Message-ID: <20260812130233.621965-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 060/102] linux-user: Guard local FUTEX_CMD_MASK
+ definition
+Date: Wed, 12 Aug 2026 16:01:35 +0300
+Message-ID: <20260812130233.621965-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,85 +75,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Michael S. Tsirkin" <mst@redhat.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-vu_set_inflight_fd() trusts the num_queues value from the
-VHOST_USER_SET_INFLIGHT_FD message without checking it against
-dev->max_queues, so an oversized value causes out-of-bounds writes to
-dev->vq.
+Building linux-user on a host with Linux 7.2 kernel headers fails with
+a macro redefinition error for FUTEX_CMD_MASK. The kernel commit
+3ca9595d9fb6 ("futex: Add support for unlocking robust futexes")
+expanded the mask to include the new FUTEX_ROBUST_UNLOCK and
+FUTEX_ROBUST_LIST32 flags, which conflicts with QEMU's local
+definition.
 
-Front end is generally trusted so not a security problem, but OOB isn't
-a nice way to handle frontend bugs.  Let's harden this a bit:
-check num_queues and panic if it's invalid.
+Add a #ifndef guard so the host definition takes precedence when
+available. The local fallback is kept for older kernel headers
+(pre-2.6.29) that lack FUTEX_CMD_MASK or define a mask without
+FUTEX_CLOCK_REALTIME.
 
-Fixes: 5f9ff1eff3 ("libvhost-user: Support tracking inflight I/O in shared memory")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3740
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Reported-by: xlabai <xlabai@tencent.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <23b3f12388c1035f208550df9de9944c22d8d534.1784899127.git.mst@redhat.com>
-(cherry picked from commit fbdfdbb9920cb69408d53cb86a8e079a2054581e)
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 8268d216a004d884a07db20e973158d81760a07c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 014d2107489..bdaa6917f19 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1919,6 +1919,8 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 1c546ce1a03..01f5d47b6ac 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2591,7 +2591,9 @@ struct target_drm_i915_getparam {
  
-     if (vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid get_inflight_fd message:%d", vmsg->size);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-         vmsg->payload.inflight.mmap_size = 0;
-         return true;
-     }
-@@ -1926,6 +1928,15 @@ vu_get_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
+ #define FUTEX_PRIVATE_FLAG      128
+ #define FUTEX_CLOCK_REALTIME    256
++#ifndef FUTEX_CMD_MASK
+ #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
++#endif
  
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid get_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        vmsg_close_fds(vmsg);
-+        vmsg->fd_num = 0;
-+        vmsg->payload.inflight.mmap_size = 0;
-+        return true;
-+    }
-+
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-     DPRINT("set_inflight_fd queue_size: %"PRId16"\n", queue_size);
- 
-@@ -1973,6 +1984,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-         vmsg->size != sizeof(vmsg->payload.inflight)) {
-         vu_panic(dev, "Invalid set_inflight_fd message size:%d fds:%d",
-                  vmsg->size, vmsg->fd_num);
-+        vmsg_close_fds(vmsg);
-         return false;
-     }
- 
-@@ -1982,6 +1994,13 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
-     num_queues = vmsg->payload.inflight.num_queues;
-     queue_size = vmsg->payload.inflight.queue_size;
- 
-+    if (num_queues > dev->max_queues) {
-+        vu_panic(dev, "Invalid set_inflight_fd num_queues: %"PRId16,
-+                 num_queues);
-+        close(fd);
-+        return false;
-+    }
-+
-     DPRINT("set_inflight_fd mmap_size: %"PRId64"\n", mmap_size);
-     DPRINT("set_inflight_fd mmap_offset: %"PRId64"\n", mmap_offset);
-     DPRINT("set_inflight_fd num_queues: %"PRId16"\n", num_queues);
-@@ -1992,6 +2011,7 @@ vu_set_inflight_fd(VuDev *dev, VhostUserMsg *vmsg)
- 
-     if (rc == MAP_FAILED) {
-         vu_panic(dev, "set_inflight_fd mmap error: %s", strerror(errno));
-+        close(fd);
-         return false;
-     }
- 
+ #ifdef CONFIG_EPOLL
+ #if defined(TARGET_X86_64)
 -- 
 2.47.3
 
