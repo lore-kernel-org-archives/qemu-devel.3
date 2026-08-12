@@ -4,57 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E90C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E390C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuATI-0004y2-0d; Wed, 12 Aug 2026 11:02:24 -0400
+	id 1wuAjd-0000j7-Fj; Wed, 12 Aug 2026 11:19:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuARj-000491-LS; Wed, 12 Aug 2026 11:00:52 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuARh-0002BO-NC; Wed, 12 Aug 2026 11:00:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546233; bh=X3rI/qcWj9KRsNt0pTxo6IY1/iSXJfXRx0ptQaoiKfU=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Jb1Tn944r9rs4XvfKw6e8sasm1Bkxq/ivecu2MtEDv6gDl2Stk6jVbVYFmRj4tI5d
- W1i7lnUdJyYXUTsLoRSaNruwjGjgm4fUSJgzwW/ndZbTvs7poD4qRFU31l91BID3Hm
- XOotkgHXHVycNp3z88loRR4C5WcMRyZ8RiZxRI0g2cECV3rQHBNJrLU57T20xx8pkG
- kEIc4ovfxiy7XnWFbmbAHvQmTWDWeO9iCxG0IrozYdkMY/fkbMqeEEP1i52MEBV1am
- X8MYvNb4YMlf5Rlf06/kDUdbb5ye7Hj6QqynFjO+jHPeokduyZOfuuBBoxCxr0MrzL
- u7+Mpfi9JtulQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB0D21CA66B;
- Wed, 12 Aug 2026 17:50:33 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 11A4A409DB0;
- Wed, 12 Aug 2026 17:50:45 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6F5272FA31; Wed, 12 Aug 2026 17:50:20 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 103/120] iotests: test O_TRUNC behavior for fuse
- exports
-Date: Wed, 12 Aug 2026 17:49:26 +0300
-Message-ID: <20260812144955.649205-103-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuAjb-0000gr-AK
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:19:15 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuAjZ-0007oL-Ep
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:19:15 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-84a652535dcso835819b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:19:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786547952; x=1787152752; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=S3BpsElPE3ybFLvEH9dH2lOhj/5kYOv9gvb7uP+6PnE=;
+ b=CiSWr4jgXUoTmtnXpgNfndd+/dkiEyEwEAWMpKLcPOpiQyebisTFRTOhPwMjCyxghW
+ LX4fiTPaHCZtmYbRY6HaJ1H0oWryAV1fXwoNJBtDc3aZfA5yGiYswGMQ2ON6xhGPeBUk
+ ZX/pix0Pw6Izd5GaGP8bi2V4zfRuHQxm9MqIt9KhG1bT8gTGyoBFPzhfGH1d04HX2qiv
+ SihiOkRDUhlAlukk95NiiMDU824ThrKRGDDF1yaSjltofMizGchWcZw2rrHg62MGQo8t
+ 3TFuP2vHyBkhXL5atd0ukYtaguLlVHAU6oYNz4KCxVNQ9cMnmuVw/+8nUJeDxkjAX+si
+ 3V+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786547952; x=1787152752;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=S3BpsElPE3ybFLvEH9dH2lOhj/5kYOv9gvb7uP+6PnE=;
+ b=punECQ+j5LuEG0WqtL9hvl2eEVrGtIWK7vJyPxh2NRxvc46WypuBOACDE9qZMbi7Vp
+ xUx9r2bCdg/2zZ//AAkihSkjlsL8Zt66XAzuVw1dAgf2F4cQ/IW/IdBXIAU3GhHFBdtI
+ iE5Wv6UQu8fSHZy4jXsCJhrWm60gB/5ucCTfIbAwl9Ml/b3TqBH1riX49YR6xLhbEE7X
+ ogGMv8RzzEyo6875+iHoM6K1c3sWnhCw1c5FRxfAhKyl2lWyXyEB6RGldFcr+K9HN/Os
+ Q0QnBPEFPn205o6Q8raNJTcHhaLHNZhS/lC9lM7KeMNLJD3VreJi8Os7GcAZ2UXQMo06
+ 2pqQ==
+X-Gm-Message-State: AOJu0YwPQ98z85DmpXnRYcCqihUjc59fvGHz97BMBROf1JjrTgMKo0CP
+ Qh4TMAeHVuL7Bp2qxa9fwW6mgY1+iYiZw8lOJLXuYjzxiwzoA6yRWYRlomSKeBJwG5qpWSI/qhW
+ JGg0n
+X-Gm-Gg: AR+sD11FU3aS3RVOcm2XGTFoS7AwtABoIeeTCc33e69PaOoWoXEiWX642pVUv+of8Px
+ bZ9xeHaFctSQuGL+TDLBel9KTMstvwbQRHREOlgT5fLxJxvXoLKJ67y6g1HYYGEIcvf5X/WPzGB
+ yrmsaIPWC+dCDpOxbBnibzBWWiRqPhS/jye1EXsF/w3FiukvehSsqmedSAMszSdmKcaZHGG/oyr
+ Ogo5ISgbOPUX1snrq1d2U2ctNoRaauhXp1mfJK5zW+D/xW7Y89xBFmNqzidnCqVmwJeYVJKXyYc
+ o4947gEpPyK2UKXpbc9GQPPBEU//lZXBwfj/bM1UKWDZrrccd6e6e+Np4rev7K5s+5jzjbqJtPP
+ f9Vx6jxDlFglT4TlwZphgQVGnQUWgYNxQLpxbVLd/VALVP5W5HXjPU9tQm0k0BkymqirkOc+2hy
+ HeZRrVR/bg2UTZpSpQn7C8TII93/UeE1qpCSYk50ivTTRMLdE4UVzByimGqqmXQufC7ii5+i31O
+ vTU8T7B21lm5w3VzMXkCdOEOEag
+X-Received: by 2002:a05:6a00:288e:b0:847:9aa8:d3bb with SMTP id
+ d2e1a72fcca58-84fb540aa72mr6531826b3a.12.1786547951482; 
+ Wed, 12 Aug 2026 08:19:11 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84fb1f715f1sm1162437b3a.60.2026.08.12.08.19.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Aug 2026 08:19:11 -0700 (PDT)
+Message-ID: <90facdbb-3936-41ec-af2a-b9396a353f58@linaro.org>
+Date: Wed, 12 Aug 2026 08:19:09 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/elf_ops: defend against weird elf headers
+To: qemu-devel@nongnu.org
+References: <20260812081405.3811787-1-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260812081405.3811787-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,214 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+On 8/12/26 01:14, Alex Bennée wrote:
+> According to the ELF spec:
+> 
+>    PT_LOAD
+> 
+>    The array element specifies a loadable segment, described by
+>    p_filesz and p_memsz. The bytes from the file are mapped to the
+>    beginning of the memory segment. If the segment's memory
+>    size (p_memsz) is larger than the file size (p_filesz), the
+>    ``extra'' bytes are defined to hold the value 0 and to follow the
+>    segment's initialized area. The file size may not be larger than the
+>    memory size. Loadable segment entries in the program header table
+>    appear in ascending order, sorted on the p_vaddr member.
+> 
+> which implies while both p_filesz and p_memsz can be zero we should
+> never see a case where p_filesz is greater than the in memory size.
+> Indeed it has been reported such a hand crafted ELF can blow up, for
+> example during rom_reset():
+> 
+>    address_space_set(rom->as, rom->addr + rom->datasize, 0,
+>                      rom->romsize - rom->datasize,
+>                      MEMTXATTRS_UNSPECIFIED);
+> 
+> which could trigger and underflow leaving QEMU slowly filling a very
+> large buffer.
+> 
+> Fixes:https://gitlab.com/qemu-project/qemu/-/work_items/4056
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Cc:qemu-stable@nongnu.org
+> 
+> ---
+> v2
+>    - ret = ELF_LOAD_TOO_BIG
+>    - tweak subject
+> ---
+>   include/hw/elf_ops.h.inc | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-The test cases for the blockdev-based export and for the file-based
-export with growable=on work before commit a94a1d7699 ("fuse: Manually
-process requests (without libfuse)"), then are broken until commit
-"block/export/fuse: fix regression with O_TRUNC when export is
-growable".
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-The test case for the blockdev-based export requires passwordless sudo
-for losetup and chmod similar to test 108.
-
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260702132256.661429-3-f.ebner@proxmox.com>
-[kwolf: Catch OSError when probing sudo support]
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7d06bbb2d9ba77e45b5a3131c9e7f934df99d5bc)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/tests/qemu-iotests/tests/fuse-truncate b/tests/qemu-iotests/tests/fuse-truncate
-new file mode 100755
-index 00000000000..7eee35111c8
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-truncate
-@@ -0,0 +1,171 @@
-+#!/usr/bin/env python3
-+# group: rw
-+#
-+# Test how fuse exports behave with regard to O_TRUNC.
-+#
-+# Copyright (C) 2026 Proxmox Server Solutions GmbH
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import subprocess
-+from pathlib import Path
-+
-+import iotests
-+from iotests import qemu_img, QemuStorageDaemon
-+
-+fuse_mount_point = os.path.join(iotests.test_dir, 'export.fuse')
-+image_size = 1 * 1024 * 1024
-+image = os.path.join(iotests.test_dir, 'image.' + iotests.imgfmt)
-+
-+def check_fuse_support():
-+    Path(fuse_mount_point).touch()
-+    test_qsd = QemuStorageDaemon('--blockdev', 'null-co,node-name=node0',
-+                                 qmp=True)
-+    res = test_qsd.qmp('block-export-add', {
-+        'id': 'exp0',
-+        'type': 'fuse',
-+        'node-name': 'node0',
-+        'mountpoint': fuse_mount_point,
-+        'allow-other': 'off'
-+    })
-+    test_qsd.stop()
-+    os.remove(fuse_mount_point)
-+    if 'error' in res:
-+        assert (res['error']['desc'] ==
-+                "Parameter 'type' does not accept value 'fuse'")
-+        iotests.notrun('No FUSE support')
-+
-+def check_sudo_support():
-+    try:
-+        subprocess.run(['sudo', '-n', 'losetup', '--version'],
-+                       capture_output=True, check=True)
-+    except (OSError, subprocess.CalledProcessError):
-+        return False
-+    try:
-+        subprocess.run(['sudo', '-n', 'chmod', '--version'],
-+                       capture_output=True, check=True)
-+    except (OSError, subprocess.CalledProcessError):
-+        return False
-+    return True
-+
-+check_fuse_support()
-+
-+class TestTruncateBase(iotests.QMPTestCase):
-+    growable = False
-+    supports_preconditions = True
-+
-+    def evaluate_preconditions(self):
-+        return
-+
-+    def add_blockdev(self):
-+        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
-+        self.qsd.cmd('blockdev-add', {
-+            'node-name': 'node0',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': image
-+            }
-+        })
-+
-+    def cleanup_blockdev(self):
-+        os.remove(image)
-+
-+    def add_export(self):
-+        self.qsd.cmd('block-export-add', {
-+            'id': 'exp0',
-+            'type': 'fuse',
-+            'node-name': 'node0',
-+            'mountpoint': fuse_mount_point,
-+            'growable': self.growable,
-+            'writable': True,
-+            'allow-other': 'off'
-+        })
-+
-+    def stop_qsd(self):
-+        if self.qsd:
-+            self.qsd.cmd('block-export-del', {'id': 'exp0'})
-+            self.qsd.stop()
-+            self.qsd = None
-+
-+    def setUp(self):
-+        self.evaluate_preconditions()
-+        if not self.supports_preconditions:
-+            return
-+        Path(fuse_mount_point).touch()
-+        self.qsd = QemuStorageDaemon(qmp=True)
-+        self.add_blockdev()
-+        self.add_export()
-+
-+    def tearDown(self):
-+        if not self.supports_preconditions:
-+            return
-+        self.stop_qsd()
-+        self.cleanup_blockdev()
-+        os.remove(fuse_mount_point)
-+
-+class TestTruncateFileGrowable(TestTruncateBase):
-+    growable = True
-+
-+    def test_o_trunc(self):
-+        with open(fuse_mount_point, 'w+b') as file:
-+            file.seek(0, os.SEEK_END)
-+            self.assertEqual(file.tell(), 0)
-+            file.write(b"test")
-+        self.stop_qsd()
-+
-+class TestTruncateFileNotGrowable(TestTruncateBase):
-+    growable = False
-+
-+    def test_o_trunc(self):
-+        with open(fuse_mount_point, 'w+b') as file:
-+            file.seek(0, os.SEEK_END)
-+            self.assertEqual(file.tell(), image_size)
-+            file.seek(0, os.SEEK_SET)
-+            file.write(b"test")
-+        self.stop_qsd()
-+
-+class TestTruncateBlockdev(TestTruncateBase):
-+    growable = False
-+
-+    def evaluate_preconditions(self):
-+        self.supports_preconditions = check_sudo_support()
-+
-+    def add_blockdev(self):
-+        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
-+        res = subprocess.run(['sudo', '-n', 'losetup', '--show', '-f', image],
-+                             check=True, capture_output=True, text=True)
-+        self.loopdev = res.stdout.strip()
-+        subprocess.run(['sudo', '-n', 'chmod', 'go+rw', self.loopdev],
-+                       check=True, capture_output=True)
-+        self.qsd.cmd('blockdev-add', {
-+            'node-name': 'node0',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'host_device',
-+                'filename': self.loopdev
-+            }
-+        })
-+
-+    def cleanup_blockdev(self):
-+        subprocess.run(['sudo', '-n', 'losetup', '--detach', self.loopdev],
-+                       check=True, capture_output=True)
-+        os.remove(image)
-+
-+    def test_o_trunc(self):
-+        if not self.supports_preconditions:
-+            iotests.case_notrun('No passwordless sudo for losetup and chmod')
-+            return
-+
-+        with open(fuse_mount_point, 'w+b') as file:
-+            file.seek(0, os.SEEK_END)
-+            self.assertEqual(file.tell(), image_size)
-+            file.seek(0, os.SEEK_SET)
-+            file.write(b"test")
-+        self.stop_qsd()
-+
-+if __name__ == '__main__':
-+    iotests.main(supported_fmts=['raw'],
-+                 supported_protocols=['file'],
-+                 supported_platforms=['linux'])
-diff --git a/tests/qemu-iotests/tests/fuse-truncate.out b/tests/qemu-iotests/tests/fuse-truncate.out
-new file mode 100644
-index 00000000000..8d7e9967009
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-truncate.out
-@@ -0,0 +1,5 @@
-+...
-+----------------------------------------------------------------------
-+Ran 3 tests
-+
-+OK
--- 
-2.47.3
-
+r~
 
