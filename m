@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC3D5C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A10EC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8nc-0005WU-Gg; Wed, 12 Aug 2026 09:15:16 -0400
+	id 1wu8mu-0004Uz-VW; Wed, 12 Aug 2026 09:14:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8lN-0003qP-C2; Wed, 12 Aug 2026 09:12:58 -0400
+ id 1wu8ki-0003WR-OC; Wed, 12 Aug 2026 09:12:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8lK-0006aq-N9; Wed, 12 Aug 2026 09:12:57 -0400
+ id 1wu8kd-0006Ow-EL; Wed, 12 Aug 2026 09:12:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539784; bh=YTI+OSziWNCvE0kFhsSMYplW9R3tAXytFe27FSTdG0o=;
+ t=1786539784; bh=aQQGrRcKm5bHvJ7ZMCPVyBhjCqpWw2v2gqePAzmnCgg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Hssv07URl9ICeGgyud1lX1o9yxR4/mJxz/sL2qNDm3vInUysYVMYzuHwVW1uV3BVH
- 9X97yJjMmWvKTUY61/LPzTFgrCXPNeqT3/0trVDn+kalviqJSxNXg+5jH1eW3dQcTw
- BIQia2yHBB1dc3rBhuPJdvr+t9gvsDUTxDAOsBvJx7hcX4g3dlqSqoeP8rmAcE4xBe
- xyqbZbjzPENkou94K1MaUocgH6scnk1G+nAOFgJushrjQUFJgCKZaXKzKcCQ63bT9R
- PLFzUR86H3RXTYF9L/Bfha/bs9kOaBx4Kk5ZkLItlBZiE9wIAFOzO+bJHwQC5d9yOR
- yiVMvMAoZhjCQ==
+ b=sTbduJUMgyhaW59oyXYHIATvitD3Y0/EEdFlEDUnMmQwefeIR8ySMGg0MdfwxikzL
+ wn6aABiiARbnHiw0ofQlZhVfE7HSBEjDlpLsOywwsXjWJ7KWmdWTJTQe5HwEd+Ikx0
+ 75otRtsH8VQvzjTtrW4vfWOp2y4CLQkLOOwbdjLHJxdNwQp2bZG6Vxw1QhmYGmGtx9
+ 6ZsJxWhvNGk13UhsaIYWI2zs/cVFUs0iNIuIzNAhAcyYBbbBZLRZW0G/OTSLoUejNc
+ V9rnWlyq+uJjnzaoZYQR5VOHLR9Oryiq4Q5FP5IOVymwcX/uACeWo0FEWHClWSVdaM
+ PDi0sYXYQo8sw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E382C1CA4E5;
+ by isrv.corpit.ru (Postfix) with ESMTP id B911E1CA4DC;
  Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 23E34409BC8;
- Wed, 12 Aug 2026 16:03:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EFB7C409BBF;
+ Wed, 12 Aug 2026 16:03:15 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DC3F32F960; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id C475D2F94E; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 102/102] linux-user/sh4: Fix crashes on signal
- delivery in conditional delay slot
-Date: Wed, 12 Aug 2026 16:02:17 +0300
-Message-ID: <20260812130233.621965-102-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 093/102] hw/display/virtio-gpu: Always reject invalid
+ scanout bounds
+Date: Wed, 12 Aug 2026 16:02:08 +0300
+Message-ID: <20260812130233.621965-93-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,37 +74,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-If we get a signal in the delay slot, we must roll-back the PC to the
-jump instruction. This was already fixed by the commit 3b894b699c9a
-("linux-user/sh4: Fix crashes on signal delivery"), however this fix
-omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
-by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
-the PC in this case, resulting in incorrect program execution.
+virtio-gpu does not consistently check scanout bounds with wraparound
+handling. In the unchecked virgl SET_SCANOUT path, guest dimensions
+reach qemu_console_resize(), qemu_create_displaysurface(), and
+ultimately qemu_pixman_image_new_shareable(..., &error_abort), so an
+invalid rectangle can terminate QEMU. Implement a check with proper
+wraparound handling and apply it consistently.
 
-This patch fixes it.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041)
+Fixes: 9d9e152136bd ("virtio-gpu: add 3d mode and virgl rendering support.")
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
+Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260803-scanout-v1-1-c9831dafdab2@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit d513c644b89361ab645a50a627a1d846aefc3eb2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index 7f246e750d0..047174ac8f3 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
-            the SP, otherwise we would be pushing the signal context to
-            invalid memory.  */
-         regs->gregs[15] = regs->gregs[1];
--    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
-+    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
-         /* If we are in a delay slot, push the previous instruction.  */
-         regs->pc -= 2;
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index dbf9270fab0..cfa91b9e8a5 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -315,6 +315,12 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+     res = virtio_gpu_find_resource(g, ss.resource_id);
+     CHECK(res, cmd);
+ 
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         res->width, res->height, &ss.r,
++                                         &cmd->error)) {
++        return;
++    }
++
+     if (!res->image) {
+         pixman_format_code_t pformat;
+         pformat = virtio_gpu_get_pixman_format(res->format);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 30bf5b5029e..d4d46148b5d 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -438,7 +438,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
      }
+     g->parent_obj.enable = 1;
+ 
+-    if (ss.resource_id && ss.r.width && ss.r.height) {
++    if (ss.resource_id) {
+         struct virgl_renderer_resource_info info;
+         void *d3d_tex2d = NULL;
+ 
+@@ -459,6 +459,11 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+             return;
+         }
++        if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                             info.width, info.height, &ss.r,
++                                             &cmd->error)) {
++            return;
++        }
+         qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
+                             ss.r.width, ss.r.height);
+         virgl_renderer_force_ctx_0();
+@@ -856,16 +861,9 @@ static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    if (ss.width < 16 ||
+-        ss.height < 16 ||
+-        ss.r.x + ss.r.width > ss.width ||
+-        ss.r.y + ss.r.height > ss.height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, ss.scanout_id, ss.resource_id,
+-                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
+-                      ss.width, ss.height);
+-        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(ss.scanout_id, ss.resource_id,
++                                         ss.width, ss.height, &ss.r,
++                                         &cmd->error)) {
+         return;
+     }
+ 
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index bd32543dc70..4f1c6e64b12 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -629,6 +629,26 @@ static uint32_t virtio_gpu_format_bytes_pp(pixman_format_code_t format)
+     return DIV_ROUND_UP(PIXMAN_FORMAT_BPP(format), 8);
+ }
+ 
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error)
++{
++    if (r->width < 16 ||
++        r->height < 16 ||
++        (uint64_t)r->x + r->width > width ||
++        (uint64_t)r->y + r->height > height) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
++                      " resource %d, fb %d %d, rect (%d,%d)+%d,%d\n",
++                      __func__, scanout_id, resource_id, width, height,
++                      r->x, r->y, r->width, r->height);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
++    }
++
++    return true;
++}
++
+ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+                                       uint32_t scanout_id,
+                                       struct virtio_gpu_framebuffer *fb,
+@@ -642,20 +662,8 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+ 
+     scanout = &g->parent_obj.scanout[scanout_id];
+ 
+-    if (r->x > fb->width ||
+-        r->y > fb->height ||
+-        r->width < 16 ||
+-        r->height < 16 ||
+-        r->width > fb->width ||
+-        r->height > fb->height ||
+-        r->x + r->width > fb->width ||
+-        r->y + r->height > fb->height) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+-                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+-                      __func__, scanout_id, res->resource_id,
+-                      r->x, r->y, r->width, r->height,
+-                      fb->width, fb->height);
+-        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++    if (!virtio_gpu_check_scanout_bounds(scanout_id, res->resource_id,
++                                         fb->width, fb->height, r, error)) {
+         return false;
+     }
+ 
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 7f4dd42ff65..354c7ae515b 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -347,6 +347,11 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+                                    struct virtio_gpu_scanout *s,
+                                    uint32_t resource_id);
+ 
++bool virtio_gpu_check_scanout_bounds(uint32_t scanout_id, uint32_t resource_id,
++                                     uint32_t width, uint32_t height,
++                                     const struct virtio_gpu_rect *r,
++                                     uint32_t *error);
++
+ /**
+  * virtio_gpu_scanout_blob_to_fb() - fill out fb based on scanout data
+  * fb: the frame-buffer descriptor to fill out
 -- 
 2.47.3
 
