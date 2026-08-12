@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C326C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 01:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8A6C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 01:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wtxuJ-0008BJ-S9; Tue, 11 Aug 2026 21:37:27 -0400
+	id 1wtxu6-00082M-28; Tue, 11 Aug 2026 21:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wtxuH-0008Ab-GG; Tue, 11 Aug 2026 21:37:25 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1wtxtx-000821-AC; Tue, 11 Aug 2026 21:37:05 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wtxuF-0001Yf-No; Tue, 11 Aug 2026 21:37:25 -0400
+ id 1wtxtr-0001Wg-42; Tue, 11 Aug 2026 21:37:04 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZtV4g0l7KXSF/EO2vJiReSGAdUrIF0sERn3VVIZx+xwACGB6qiLoLw7w6OhgTdkwuKIQIjZljPrhFH12ViTP/atbrgImV/gfhQsdDVMVNDEg3D70EIIi9jE9n+iw2WTWkyljnmDBCzWhwb5WcqfShd2Dw9set01OMfUTJkzyQbIGK2iLw3LW5uw2eWaJONkAmRVqeYxdjsmKJrv7xD2CIBmAs+Mwm5EzjbcMCVYLoGxHSNyt567/YmaMZ32ojNge8rd/aOT0ddqXivn+YPIHoIqs2A2me8Xka3n012dNk6w6m/zRrVg3dXHsWT2pCsual3GV7r0LJu+04SyctoyCPQ==
+ b=NphtXcFLOlJWvVguC74WChEp9xDiSevVxuKG9UDn6Paan6QZFNg8hOo4I+CZ+C3NlLxZ2q9hjj5Fe14PhoJ7N6o28hLkTSlmeKfVYlzilu1PtSZ/hHfyhQqZW6cFr0Q84ZofUD4p73t6gq+1mRwK1crF69QdhS7uSzSY9HF7kPiK8i2mn4/JVBnO2ntdZRPcnGl/A+PY62ArECSVKV1TC3l2h0/CpQWEILL+WaIPpzX8dqo2s7++QAleLdHgXt8xpQnqqFawgogoLYrKxuZxveMctNicWhshrLbEAGTtiptRNY/tOg7A+YDI5zmfXgur0x5sFJDGI7O6bgyxxrxoLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VCkHlWOZAsi6jLicvlBFZLA1OwVmTJQWLh8Nx89+y8k=;
- b=H2REcpzazP6YqpwgVQlGB72o7e3XJNOuuU9V6QbmgF9tR7RiR83qcHVX6fDOTfx0umHy7yiOyAM6qpGdb/GwmGfRv+culpDT1yuq5tj8bQw2pETWCzODgElNUjQVCtIf+c8Xb70kuXmcEPqWkiqs6sw2DVh4JD6P5KZlUH+rG3Pbv4Foz+yJsst+ihhIoF7TLhI6Hri5b/RIgKBjDOUweo4A4s2KkWFAfHwWYZ5/zXMuKoo0Hvi3fIsHMcjtYIOrFYbKCIgP33/uavPA5YzoJJF2C4/F43ZJcpypoM5wgGTj6LFhp/KE62ZpvZVRCUzbf+Qx9uZIWO98LmB7cpaEdA==
+ bh=Iborxq8amUwMZjFLJ+VkQN7n3BXXlTHzwKY6CEq1c+w=;
+ b=tfFXhfu5WgtTtnoabEWJFA24QfA+f6snBUXpWqD7dmIvoASjaolgK0HcrS3/KebfXfuoFPYizrAz3J9/b2+PTNAfV91o11olrcd0GyLOrmZHtQymEPT3ndwbcTlO9NMKWmuB11c0/gYGlD37xdQ2PhdTlDbCd1Dwyf2EsIg6D/xy1rGGVdFxqFdASD7Ij1KlJzhlTnNhylpejQxrTsYFXDBw491DSbxe+Bji+bhYtjilb6DXrAZfquaefJRGs+WtABXDpeWUJ82xVvs+HUKBLtIocjWD7biKjlv9i7YdrwSWPTzxmjnVSwWOWSDuj7l/orfdOmTJkombwWwMUdc5iA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,29 +33,31 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VCkHlWOZAsi6jLicvlBFZLA1OwVmTJQWLh8Nx89+y8k=;
- b=pVlM8BN4URdYb0FT04X1UQEX4m7GX70a5H32a9h7tYKXCzqkCbviUz/7HPC5QBQhcPvG7R3pyvqP+0UeW9A/GE4EeAY4vXJwJEUavrouuaxvDxaPjGuVTtzQX4W1x74i/o4uWNGk6mN+jrtb7UzrLFBwy99/xt6zKZ+EFS+6/n+hsA02CykPG50j8ez+vEUqynQljBQysU4BRSwmrfiVnMsCTHXmbJYfQW1HlknrBJxLazD9A8SeLzh/wt9x1a9SYTqm+wqYHmC8ArS5moPmWUOtoSFMtYsOyNyGMjLhbgwopRYbcHumtNWVQaXtewTeJj4Y4CTpI4d632LcMI7xTg==
+ bh=Iborxq8amUwMZjFLJ+VkQN7n3BXXlTHzwKY6CEq1c+w=;
+ b=EDwLOCIZYbyx07oiVXYCsAli4YvbVDKnU1hSof+QVC0rpAxkR2BTaIzWtE93x8a6BzFzXxS5Ou489hJlQqD3N8SpNH3K90aVJmqSmHxDAAqL0+C/mJctl5HnkTnnyyXq0GpAeT3vHdF8ujFIGhxFXmJU+NPlFFl5xAxdfqQkUNpoMuoiZtxpAJ7sThDeMaykr9WXvdvK+bpdUdDMHtUDA0F4gWPUC73e1LqTfXxhz00sd0jWDJOB+dV4294L11/Yxi62yLfRf2E2AkB6MHMYH/cZXm2YjE74zEc8M/6Usq/PeAkmdTxjJyA87+9t3Pq3lvG+qe9cksF/IkiId+teWA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SEZPR02MB7871.apcprd02.prod.outlook.com (2603:1096:101:216::11) with
+ by KUXPR02MB9309.apcprd02.prod.outlook.com (2603:1096:d10:9f::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Wed, 12 Aug
- 2026 01:37:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.19; Wed, 12 Aug
+ 2026 01:36:44 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.012; Wed, 12 Aug 2026
- 01:37:21 +0000
+ 01:36:43 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH 10/10] tests/functional/arm: Add MCIMX6UL-EVK boot tests
-Date: Wed, 12 Aug 2026 09:36:13 +0800
-Message-ID: <20260812013619.2134092-11-bin.meng@processmission.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ qemu-block@nongnu.org
+Subject: [PATCH 00/10] hw/arm: Enable U-Boot boot on MCIMX6UL-EVK
+Date: Wed, 12 Aug 2026 09:36:03 +0800
+Message-ID: <20260812013619.2134092-1-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260812013619.2134092-1-bin.meng@processmission.com>
-References: <20260812013619.2134092-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: DU6P191CA0007.EURP191.PROD.OUTLOOK.COM
@@ -63,66 +65,66 @@ X-ClientProxiedBy: DU6P191CA0007.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7871:EE_
-X-MS-Office365-Filtering-Correlation-Id: e1994f86-dcbc-403f-7128-08def81240c3
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KUXPR02MB9309:EE_
+X-MS-Office365-Filtering-Correlation-Id: 43cd3c56-dcdd-4765-5fc6-08def8122a31
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|23010399003|22082099003|18002099003|56012099006|10067099003|3023799007;
-X-Microsoft-Antispam-Message-Info: 3r8G5tf7eUGmn59JvspZOw6YtGZC6bXE8nfZuilEKOCx07kqIXzwrwaBn6K7W3H0+S99k4TXmAXF4OgDHg861Qzv8uNBYN8EQoEO6vUeRWHIqRGHJ9+lpOTuIrBSBYAGMHlWA64txCNmS8IuO0ZG5SJr0ZajfmV92g0wTyBC7/pIzUBnXzlWVu3LPxta0cBhrWx0rKQ1VOdRpgKYBw3P9m2s+qdaicvrc0Gvh85jbLc1xhe/6i5ZmhvpcMIbffL3pQn0MbxRhNnxaN6GWs3h7lgNZTMvDjFAGgHS7FuVZrpbkqBpzvFEf/NuX/TH1EaC+XVsg0XU8fjo0TOYCfwJR8CcBkAS2bdgI3DNs3C4iFGfGgkPpKZZiPvt2MhmEdp5Ka5QMr/7dhRDNfP4zK7KEA8PO23RGOaW6fHmooy2e7nP8wGx/6qmfD69vVlGZAe8o3PYyULzU57RTsLzZ3uWSKoe0+8ltM3WFuWqFl/Whw0nGX/VqyrHj2pRMWTfkF+OJhR8O+Y0sxyR//LsFjSbVXXE6Y0Jma8Pd5IQ1PImClzRPhNF9XW9riRS7ZJtT7SMsndB0a8yeFryxvMUJLeHfPpLJ2CZW0zupPZmuz+6VIgJlGg29+MGt9rHGutcpMw6k3OytZEBDCEiEVwfOz46waTPOW5UCwk+cTxeIFYobA4=
+ ARA:13230040|366016|376014|1800799024|23010399003|6133799003|56012099006|10067099003|18002099003;
+X-Microsoft-Antispam-Message-Info: rmgMlep/gUn3es+Mf9Yj9+AR+ku9OnWdiSLBS/RKXO6CI1KVcAcPKahRyTHiWw9m5NvGRjCF6AJO9KneFVISK06yYrAH8os2IZlN2lX4RNKi9Kug/LVSivjDgqyJEiKX6BkPrT+eU9/WWBeJYudqQHFk9Fqn39AW5gCoz3q9YUEXgHicXBzwQqWMkp91UdYHLzToHDxDUWx0BJjJS8zXEk5G1/pQBoyZLnRILjGMdj//oYzOvNZ1d4g+pr0zeiypJVHnv9WQgMCIWnxvk4FXT7VBAiBxNU3HsvM9u2lAEFyyaHPr/MkljXWrPqRtdr+i+3jYoaNHCCvml02RGY6svQ5DLQVYP8DEzCv5iev5ngL3eoKpN9BOmtm4+2T3sX4Jv+H2eW3ocKwYbWd9twts8tIiCOhauh1+aMUdIaF+Y5oenvq+DmvvHVSDehIgDOMN88zsh+Uo8bhanMc0BCNvEl5cxZ4TW41TRT7hiCO0624DVEFgX3Ko4jpUvGa1aBszD7e8czfNdu00oR9AFCxjF3tBl0jHkl4MT1xI1cJTfuBVVWORvcgCvW6xmqTKeIpXnvPd24+qOxu9DCfQ4nb+iru9LxQJ0MeedEYLdMKfPIm6g7GEnKwrE7rbVcR3QXDSCEpGCSmmh8CZly5PDBOls5kPMhR5ZbEBsxOUp5QX8Gg=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(22082099003)(18002099003)(56012099006)(10067099003)(3023799007);
+ SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(6133799003)(56012099006)(10067099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZIKwHHp1PHW2RSVZrvE6wS6Q4QIHiCYfVmQSGF6LZgXq3eXug0iN56DSgyhA?=
- =?us-ascii?Q?IP1YhhPmunq3gk4tp/2Ur8ZFhcgV1FKj0tstcn1nTrPJbzXP0Ywu1E0Vw8pT?=
- =?us-ascii?Q?jpnWeLdc68mTSdVwLP0oGZUydhh4FSAZ+miojpEz5XcxscD6NIDWwEPHm1ID?=
- =?us-ascii?Q?7/nOECz/GQxuH6TygHzHQF9sRQVTyVHkQQchC0U80o1K1DZZnaVb/BBF4lDL?=
- =?us-ascii?Q?69GZXa47vztmHl+IRJhSfG+z1b+A8ZBgPqyN9WJQ6KlfcL/VgQmQP3EEmkHU?=
- =?us-ascii?Q?71zfE63y+oB4VAzleuptdHYfphYWKwYAsTERsM/o4vLQqRwOamMM4LpleRT8?=
- =?us-ascii?Q?LmFZy+ziuMvF9hq0aW0pYOwJhrSnaW+nVGAUd2Lit8mnSIxHgzFo7EgcT+Qz?=
- =?us-ascii?Q?B4FLnGsc8ep2TGGEK3jCd1j0viWKbEp6dQUK1swb/Wz25qW5J8NeqjKzBwZY?=
- =?us-ascii?Q?cN+9hegZQ2pj08uAMVu16gaEEhbMml44x5mOV/L8JC2smyO+wsTa+As05Zzt?=
- =?us-ascii?Q?r2GaGvjuF5AjnstwOku38aj7sdNoX4oW8P4bnnKltV/l1BUIit+YHwUNUIUY?=
- =?us-ascii?Q?QppDnv+cZdLLDO0iACqJdqg+qO9hey6L/KbHOdD6YSFRoDpDkwlv4WCqDgNc?=
- =?us-ascii?Q?mTHZCA/m5HMwo7Jcz0Kvq0EHNFpvkkjzEEbXFdNKYaEGEytXroCte8/7YE50?=
- =?us-ascii?Q?V7qXQtDO7wanAidCs1YUetyw/FC2DnTms70lKo9G8GkXj1tQebVEERgWaVTw?=
- =?us-ascii?Q?9C2VVZa+GmeHK4mSXY0hEcbnaGDgzFicVLK/bl5FYd8TG9tllNsYGBz0wCcS?=
- =?us-ascii?Q?+wPQ3i/w/vkIfX15/bgwial3TYvaQV/EwlOyrnGMWZx6RM6QegoTPlCK+HZI?=
- =?us-ascii?Q?A5B2szPRLktPMmk/tMrKUusrrVEgb6Tgmve6GubfOJI/hviX8dsZtAqsGmNB?=
- =?us-ascii?Q?pY2Jg+nwBYLhm31VUgqeiB6Iu/YV2HzNxnhNikvZXG415tAtR5H+XWp99EwZ?=
- =?us-ascii?Q?lLhjJIq18rBGM88khgZbfNr1Gue/ywVyAuJ0t4385bCyna2uOp7hQx2+/9sJ?=
- =?us-ascii?Q?8SrwyuKYuOjPxp2k1ri6uS1pn7zriSZJd/hx+7gj09AyehfUPQ1tcaUKn2Pl?=
- =?us-ascii?Q?6SnYTMpzmqH+jQOaCuZgi4v2O/Zk5q9B0NIUq+zydxqi7CSR5mzSKGE3SOnY?=
- =?us-ascii?Q?pNCBFdFtPxW2V7B8YDK43v3odNcFY/ux157Y/LewNf4uCRenB7TPc1hhcsUl?=
- =?us-ascii?Q?rhc6wKbQUOxhR+F9hKeyWckES8hGj9UeNDtL6p9yo8k9m1OJd8G3ALo+tqoT?=
- =?us-ascii?Q?PwxIuEPaYCvoF5l0/CeSMJRVeb3GVve0RfMybLNdIbJu8QUJcHuLUzHVfYsL?=
- =?us-ascii?Q?twkG6Ojqz2oiR2NbdoFzUvAoMgyPuSQiJdDNp8mioDffueKKaM87SLSK/3GQ?=
- =?us-ascii?Q?dD9b3TXgNJAP/YXNZBOrXs2oFBD2THHMQxchj/z/5lydfXDfaVH7a01sL35C?=
- =?us-ascii?Q?YqcAooWQGX5pv/8y7E1iD5DXo1LeHLPPWRW5T+TWrgWe4c6ON4zqa1i3jXYG?=
- =?us-ascii?Q?JyI2OvLDWrH7fJDgelNi8jG8DgY15JtxKBy5N8u4sJXGxYmdtHz7pElT+JkA?=
- =?us-ascii?Q?e9jQ2YoCs827YWX28rOQrMrdBJUxhtpQVqcdTRUsCbysEFRNgJrYXbGnaelj?=
- =?us-ascii?Q?wCUfeERe+IC+ABl+h6D9Rvk+7Lj2MxdUgY7WbpzZWWgVGQlLgTO3+kSQgZti?=
- =?us-ascii?Q?BvkBTsKO23CM5iUo+WNm5mDbKW701Uw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?viQgZ3IKD30/ajQCBDQgKr9OAFaZR5+rYDf8gXXMEkXz38XlJimR0L4VldzI?=
+ =?us-ascii?Q?4S0pVv6fp45YTPQL9CyQ969K/1q1yuaNVj285h0P+LXdyo7FpVeh4eKwFt2x?=
+ =?us-ascii?Q?kPgfmKhMppyLr4nAPG1OgA+/Pul6L6WKimpefQmAzyDJ/KtG8G7sZgvQN0qB?=
+ =?us-ascii?Q?EWSsX5vbzH7zud5U3iEewqnURBtt13pem+TYZCup1qnlXbmTiqpImD4jRoxP?=
+ =?us-ascii?Q?cQQRpCaZnc4udD3pZ0f6lFZ3VL93xNWh2/plD33gZmDE/AWLi48kKqkMWwfR?=
+ =?us-ascii?Q?SPxCkhnPiWJU5idqsKlJqSg1CzzXAWREkXLasB34fKnEhuj21sWKnKzKFNRd?=
+ =?us-ascii?Q?AtDp6WECYSh2wSEbyb1gYkJ7xge5a0XL7aoixmP5p0JPeJBEj7oRtBjtXRHs?=
+ =?us-ascii?Q?IpeTjXNoFCUn+OcydSODRZnibYQDB4QLKc4wzY5wErrI252LYn8aL5wSP3Qb?=
+ =?us-ascii?Q?ghXlbYQEhv6dBxQa+AHJz0B/6aaqbj1KK8MxDgRf0vLECUbaUzCGgn4x6aB5?=
+ =?us-ascii?Q?DKZaErfwhWHl7i/DktOhTdL2IIFFjl+LvKCEbAs/00sLht41o3/x1oLF8mui?=
+ =?us-ascii?Q?i2sAtC8TVzQbXD2Sg5rkkiueFMuHVEpjilcvw0x6IIHpfKKzDKAARR6Teh4v?=
+ =?us-ascii?Q?LoZBUVmPCYPSEAeQm99GdorVIyOG3qJz1Rv3IMrcVANtBgGKJS+cFqIPL3FF?=
+ =?us-ascii?Q?PRYOKEv4KyX2Gz0VeGjKJKNPa0TphUzYdLuQSD+gPglx8VgzOYlPdMjfsuQ6?=
+ =?us-ascii?Q?k2M5S50UnlorY+VWtd1TXRizj03IGnP/ZGU/7ZnJhWN6wcLe11il2hvaIhWj?=
+ =?us-ascii?Q?zHH4hQbh8Sn2OMcszdKU3WOFFq5ZifP8cP3IhtT2Jq1UqleohhhEdzKUlTFK?=
+ =?us-ascii?Q?KfsEefOG5lVE95e5HFHj53ODcTz2zjpOME08unZix4pIy3XV0g/AHAmEtNqp?=
+ =?us-ascii?Q?FLGlOXifdlUXWnRlX40+rZB50W7tDh+kAAegyLcJgxHibP7qh6RaBsE0DyVH?=
+ =?us-ascii?Q?9Pgryy4+zQVOXdzrutG4PP8QkEj07MvfDBmMuZjT8fygNavrHEAL4P6uGImd?=
+ =?us-ascii?Q?RgHcvJxcGOT0bpYffj5qYvAJFQ0WEs/cbhkxectcGRF6s2pwl2s2OOHfsOw6?=
+ =?us-ascii?Q?HolkYDrfw2wpNGrgISLAfBGtJlY0ZLy5bEvs/25+QH//t2l6LGn98T1X7Lp2?=
+ =?us-ascii?Q?DSfZwLmiI6hVgFRaQW4572wymOUnfcN19SOpOdin1vxlUluLDd6+zFsxFKzd?=
+ =?us-ascii?Q?FBo1Z+NxXizq5ghX1DJ32fzzV3DZgW9jop+LZxSu6/aF9McXlHBUIXxTMYRb?=
+ =?us-ascii?Q?3pB6vLgFxMQNC+7va0gz36Vvo4+MiAzoZb6VE5aOuCk8q9ZAoqCUt2kSBXgt?=
+ =?us-ascii?Q?fnFFb+epPA2OR6cDrYn1sKYDDNPojkq4i3KBxkbhctjYKbRCJ+Idqz/5UgpW?=
+ =?us-ascii?Q?csLMxqW01WBJb/qNS2CW5K8sqcAIi7GQtRHca6cqHYm4zPyr/Mnepm1Bx5W7?=
+ =?us-ascii?Q?Ovc69qbtY8k7UOgRXMpqUruYG3Nr88/8MDiKLNFnvunNu2fjBkesCq1b2wZl?=
+ =?us-ascii?Q?zOp2Qgh88oq3se/P4XcODmViMFuKSzMijKAKejz0sTnEfvYjx9QhOHMl3nN+?=
+ =?us-ascii?Q?a7Q0DwW4X+usHyrRzII6OY96o7JaZ6c2HeqwQx29bCo8k7OcdpouaWzn6Kks?=
+ =?us-ascii?Q?DyXKRAan7z5fSEMiEIIoklvS+4LmFTgFMxj1CFDI+AAOzLFrhU2Xde2h8G2F?=
+ =?us-ascii?Q?lxnedUpLR6bmLewtnFVs/SsEqeJCNEs=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1994f86-dcbc-403f-7128-08def81240c3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43cd3c56-dcdd-4765-5fc6-08def8122a31
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 01:37:21.3972 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 01:36:43.7195 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KiASD0T+0AEVwtmDQdqmXLLuQ0NPf301GgXWYJPbkNpayPy990TF0E4HA1rWaVfcNuega6ElDYT1ZlYR2xp+Kimnjcly0rbEdsRvFxZ+KtE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7871
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3sjSel4MRibio2Dcib2QXIRMqlvFL5WcCwp6lKnsp5yTqrmCPpznQTFJttne5cgazP0PMO+4juVIzfR75fS914ls6q3cYG7LrSB4N+0pUP8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB9309
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,134 +141,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MCIMX6UL-EVK machine supports loading U-Boot proper with the
-generic loader and booting Linux directly, but neither path has
-functional coverage.
 
-Add a versioned Buildroot asset containing U-Boot, a Linux kernel,
-the board DTB, and a 128 MiB SD card image. Exercise both boot paths
-and verify that they reach the Buildroot login prompt.
+The mcimx6ul-evk machine can boot Linux directly, but it cannot run the
+U-Boot proper produced by Buildroot far enough to load a kernel from its
+SD card. Early U-Boot boot test accesses currently abort or observe
+placeholder values, and the i.MX uSDHC model exposes several issues.
 
-Cover the new test in the existing MCIMX6UL EVK MAINTAINERS entry.
+This series lets an unmodified Buildroot 2026.05 U-Boot 2024.07 image
+run on mcimx6ul-evk, load zImage and imx6ul-14x14-evk.dtb from USDHC2,
+start Linux, mount the SD card root file system, and reach the Buildroot
+login prompt. It also documents and tests the existing direct Linux boot
+path.
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Patches 1 through 4 provide the minimum early-firmware-visible state.
+Patches 5 through 8 address i.MX uSDHC behavior needed by U-Boot. The
+last two patches document both boot paths and add functional tests for
+U-Boot and direct Linux boot.
 
----
+
+Bin Meng (10):
+  hw/arm: fsl-imx6ul: Add SCU compatibility window
+  hw/misc: imx6ul_ccm: Update PMU_MISC0 reset value
+  hw/arm: fsl-imx6ul: Map early firmware register placeholders
+  hw/arm: fsl-imx6ul: Add a minimal MMDC geometry model
+  hw/sd: sdhci: Use a QEMU-local no-busy IRQ quirk bit
+  hw/sd: sdhci: Honor i.MX uSDHC vendor clock gates
+  hw/sd: sdhci: Preserve uSDHC status enables for U-Boot
+  hw/sd: sdhci: Skip SDMA boundary stops for i.MX uSDHC
+  docs/system/arm: Document MCIMX6UL-EVK Buildroot boot
+  tests/functional/arm: Add MCIMX6UL-EVK boot tests
 
  MAINTAINERS                               |  1 +
+ docs/system/arm/mcimx6ul-evk.rst          | 67 +++++++++++++++++
+ hw/arm/fsl-imx6ul.c                       | 87 +++++++++++++++++++++-
+ hw/arm/mcimx6ul-evk.c                     |  2 +
+ hw/misc/imx6ul_ccm.c                      |  2 +-
+ hw/sd/sdhci.c                             | 89 +++++++++++++++++++----
+ include/hw/arm/fsl-imx6ul.h               |  2 +
+ include/hw/sd/sdhci.h                     | 15 +++-
  tests/functional/arm/meson.build          |  2 +
- tests/functional/arm/test_mcimx6ul_evk.py | 70 +++++++++++++++++++++++
- 3 files changed, 73 insertions(+)
+ tests/functional/arm/test_mcimx6ul_evk.py | 70 ++++++++++++++++++
+ 10 files changed, 315 insertions(+), 22 deletions(-)
  create mode 100644 tests/functional/arm/test_mcimx6ul_evk.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4628793dde..45288fb5b9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -909,6 +909,7 @@ F: include/hw/arm/fsl-imx6ul.h
- F: include/hw/display/imx6ul_lcdif.h
- F: include/hw/misc/imx6ul_ccm.h
- F: docs/system/arm/mcimx6ul-evk.rst
-+F: tests/functional/arm/test_mcimx6ul_evk.py
- 
- MCIMX7D SABRE / i.MX7
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-index 61b00932db..d8b1408b13 100644
---- a/tests/functional/arm/meson.build
-+++ b/tests/functional/arm/meson.build
-@@ -20,6 +20,7 @@ test_arm_timeouts = {
-   'bpim2u' : 500,
-   'collie' : 180,
-   'cubieboard' : 360,
-+  'mcimx6ul_evk' : 240,
-   'orangepi' : 540,
-   'quanta_gsj' : 240,
-   'raspi2' : 120,
-@@ -59,6 +60,7 @@ tests_arm_system_thorough = [
-   'emcraft_sf2',
-   'integratorcp',
-   'max78000fthr',
-+  'mcimx6ul_evk',
-   'microbit',
-   'orangepi',
-   'quanta_gsj',
-diff --git a/tests/functional/arm/test_mcimx6ul_evk.py b/tests/functional/arm/test_mcimx6ul_evk.py
-new file mode 100644
-index 0000000000..687a0e9032
---- /dev/null
-+++ b/tests/functional/arm/test_mcimx6ul_evk.py
-@@ -0,0 +1,70 @@
-+#!/usr/bin/env python3
-+#
-+# Functional tests for the NXP MCIMX6UL-EVK machine
-+#
-+# Copyright (c) 2026 Process Mission
-+#
-+# Author:
-+#   Bin Meng <bin.meng@processmission.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset, LinuxKernelTest, skipIfMissingCommands
-+
-+
-+class MCIMX6ULEVKMachine(LinuxKernelTest):
-+
-+    ASSET_BUILDROOT = Asset(
-+        ('https://github.com/processmission/qemu-machine-images/releases/download/'
-+         'v1.0.0/arm-mcimx6ul-evk-v1.0.0.tar.zst'),
-+        'bedda89c848224dfc5108629975bc379ae5f4d8896d681521f2d485a0fb517aa')
-+
-+    def _prepare_images(self):
-+        self.set_machine('mcimx6ul-evk')
-+
-+        archive_path = self.uncompress(
-+            self.ASSET_BUILDROOT,
-+            target='arm-mcimx6ul-evk-v1.0.0.tar',
-+            format='zstd')
-+        self.archive_extract(archive_path, format='tar')
-+
-+        self.vm.set_console()
-+        self.vm.add_args(
-+            '-m', '512M',
-+            '-drive',
-+            'file=' + self.scratch_file('images', 'sdcard.img') +
-+            ',if=sd,index=1,format=raw',
-+            '-no-reboot')
-+
-+    @skipIfMissingCommands('zstd')
-+    def test_uboot_boot(self):
-+        self._prepare_images()
-+
-+        self.vm.add_args(
-+            '-device',
-+            'loader,file=' + self.scratch_file('images', 'u-boot.bin') +
-+            ',addr=0x87800000,cpu-num=0')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern('U-Boot 2024.07')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern('buildroot login:')
-+
-+    @skipIfMissingCommands('zstd')
-+    def test_linux_boot(self):
-+        self._prepare_images()
-+
-+        self.vm.add_args(
-+            '-kernel', self.scratch_file('images', 'zImage'),
-+            '-dtb', self.scratch_file('images',
-+                                      'imx6ul-14x14-evk.dtb'),
-+            '-append',
-+            'console=ttymxc0,115200 root=/dev/mmcblk1p2 rootwait rw')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern('Linux version')
-+        self.wait_for_console_pattern('buildroot login:')
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+---
+base-commit: e8d693e12af9cbb89d724baadfcc08559669e279
+branch: imx6ul-evk
+
 -- 
 2.53.0
 
