@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF3F0C5B572
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B24E9C5CFCF
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuBRL-0002Y9-89; Wed, 12 Aug 2026 12:04:27 -0400
+	id 1wuBRN-0002fR-FH; Wed, 12 Aug 2026 12:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBQh-0001V3-G3
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:03:52 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wuBQe-0000en-Be
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 12:03:47 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-495437bb891so259595e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 09:03:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786550622; x=1787155422; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=LcDmUwfBIau8Yn0+4/7KEvRo2z4GgcaRgKndmqokrPI=;
- b=x1saXys6j8H1BjJEsysb8B18zLbwaolP77oremWslh9JQH8SI+3T7XNLEN0Gh5CGof
- 9piAPX6Z0O72nRelSu537HJehhT3BC/tBXC0fmwTFltWpcVuCNGi59KhhxsfbkDuf2ha
- dC7sWUKuc4lD6Jha3NoDNCcfD5urvAIa2LB4tqgN+i2d69u/J5xlvPXD57F/ZC16DO2p
- FtLgr/0nwzhLFtjETubl8dvjKSyfftw396MayJbNiXIO28WwiCYTAk5a63ZKqaLfY7LL
- r/PiahweI9PYhcXxSyOWbdmVIlq83oajjRKhYYL2Dl0SSIzVNMKmeUGnFUBTtvSQ0RBQ
- Dkqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786550622; x=1787155422;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LcDmUwfBIau8Yn0+4/7KEvRo2z4GgcaRgKndmqokrPI=;
- b=Tc6XKcP7ta95RzxI7rzgQiqkqXiSmdDc3lzFbVfwxIWITOXOciiG8ezR0pNWw45Aq8
- ncTTTD/RnHewvdVssdv9ALbaiNy4cs/ZJq+PXwmElLHi1Tbcvt8sdwnqdMqsjV4M4z/k
- MggEeA0mcfyz2SQHDrsXGF7LzUrv/D0Y4LMx2mK/uyTv809BEWX+GhLe0jyaAJoxk9uQ
- Uy3376iAjXxcStBdNqR3GYJpjXmuLYazpnY7F+Lr+T97KoIRAs8VK0cvgBWDTV7HZ3Bm
- 4uajonwLtpT66ZeI13+UYypZXAvqkZ+GlWMCF0NnoFzp17RltmElx1Nvh2NHfagvydEu
- 0sPQ==
-X-Gm-Message-State: AOJu0YxIPCdAbYLx05ZrIw+Lx36DVwO5ZKXvqQ2to4Wc+n3KW6gGL6BC
- VqV0BW+3TXUmP48kfUQriMwi8yKniMBFWwmS9NQ7TDv4ICUGutJgLQZlwZEkWpVnDmc=
-X-Gm-Gg: AR+sD11jQd6Dv2zheJ7oav9R1xfBVfr6Koe9grlGUtmMDnAsgMRSp0qrtipWrSQGFHB
- HTYPReM7QHQM/QSKShBraK+H9SBh9B+TdJTRfPOiRMBPIF01Tnyo/Se4qyDjPYc9D4C3XxNfhWI
- bAL46/b/4Fp6Qs9xR/28jenySMQcqKfVZQoJPP1QX05KG3u5iW53RcvWlk7ebRgF/nz7VQzX4W8
- vlKuQtMWQbGW4mLtoLxBORL0Vmfa/KSioGo6UghgxM5XSJ8tAR1AdzdYxRpTphpKOUyLodCQ+Ec
- RAZYNCzHJ2rY8kR2yB+82w49l7pHuoFO/SkgyGxjItRGLrSzflSAkOSTjFtcdoLGAL41X9iTd5r
- 5YW8CKoiMzfwYAD5WMcxrDrt6O0h0ZXqdN3VuF4PvN4sloqtvHiBwNrOUzSMdhS/SDjOJIUXCeg
- RmKhzAGcsq4MSWzauWkBJO/QJD1budKnq03pb/X8cELi1PUYswcq/4W2V8PgWg
-X-Received: by 2002:a05:600c:3103:b0:495:7aaf:77b with SMTP id
- 5b1f17b1804b1-49981947114mr4912125e9.0.1786550621932; 
- Wed, 12 Aug 2026 09:03:41 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48150d5f2fdsm8818852f8f.32.2026.08.12.09.03.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 09:03:40 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B6F9F5F886;
- Wed, 12 Aug 2026 17:03:39 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Brian Cain <brian.cain@oss.qualcomm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Ilya
- Leoshkevich <iii@linux.ibm.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,  Helge Deller <deller@gmx.de>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v6 100/103] tests/tcg/meson.build: implement ./configure
- -cross-cc-* options
-In-Reply-To: <87v79fzfqb.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Wed, 12 Aug 2026 13:27:08 +0100")
-References: <20260728044248.137626-1-pierrick.bouvier@oss.qualcomm.com>
- <20260728044248.137626-101-pierrick.bouvier@oss.qualcomm.com>
- <87v79fzfqb.fsf@draig.linaro.org>
-User-Agent: mu4e 1.14.3-pre5; emacs 30.1
-Date: Wed, 12 Aug 2026 17:03:39 +0100
-Message-ID: <8733wjz5pg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBRK-0002Ws-Pm; Wed, 12 Aug 2026 12:04:26 -0400
+Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
+ id 1wuBRI-0000lh-Hr; Wed, 12 Aug 2026 12:04:26 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfout.phl.internal (Postfix) with ESMTP id 34C57EC024B;
+ Wed, 12 Aug 2026 12:04:23 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-09.internal (MEProxy); Wed, 12 Aug 2026 12:04:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1786550663; x=1786637063; bh=erFFb7ps+Mr1RhyrdvRoi8iYOHh8XWvH
+ /Ewzq4Bxd5U=; b=o1wg6qzCQn5chbktEzdCObodRE76sRieEFymLt8Hy+GshWIf
+ R0aU3o86ElViTDMpwhSBQPS8Z1tytXe5Aq25LgTpEmtZZws3TQiypIrYuE/fCvU9
+ qjUlTbUtdSEZBZ4pEZbilDBiykLo3wllgo6rxgvXRII/3GFc/X5PH9SYQdG5foLH
+ Z/Ic1FpPI4DF6hBgYwWZJZKadpQcgYJ6NOAMTmbI/Yjlrwwo4pLWrbJQ+Mla9ipr
+ oPud6h/pTbWovuf36/kunKskbbcgYVjTy3VF8q6U+CiKTYbjQOSDxU0f/tNgRBqO
+ bC1ZQTdKMf1W6sMGUerg19kXyDrHKn4aOOV50w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786550663; x=
+ 1786637063; bh=erFFb7ps+Mr1RhyrdvRoi8iYOHh8XWvH/Ewzq4Bxd5U=; b=D
+ +dRzyRaR4EoUcgEySaI+6lXPbo0indZIxdhl3IhhMJi1kSpqdb20bhWmsin/iUmP
+ ylvnaQa+wqQl2RvxZv/HDkf4wt1TtjfEgj+ktNAzhjKD/kAdP/Qm8SsB89fM7xcN
+ 8bUVQp9m5VvFagKtou1I2FCrFMBrfdTOdiHywM0DPW47BtpNIC6zgNzhjfugdX0T
+ u9iQ38CmuG4cQf8hwYxx3YsAKc7VPoY33uFBv4kGIisLELPLOiy5pVTieUtJ7Dur
+ EqDkEMR8APAt1ApH9ae7cj/iEilbd+IyVBqyxknECQC3VsYEejztX0XAoBoFD6PZ
+ 9BrDwQnfZ4hDALduC8gMA==
+X-ME-Sender: <xms:hpl8ar8qryeRWQhCpk-dmoTxX38DJFSZn6D60G1O2FtsRprRRfunIQ>
+ <xme:hpl8ahA9_jNham63FuCyac3LWnDSAjCcKWutcVuqzGm9vOZMS33j1L8MFmG9jtkkE
+ Be-B5Nr5niywGBJy7er_kDqck_AJUryb7-_YF62Ot-YTAPriDiVYx0>
+X-ME-Received: <xmr:hpl8agQvUh9EPZXmz2Goirbs1PYRN_cniep6myPzDr_8ky0Qxe-mkCQr7YS43qavAliJmw>
+X-ME-Proxy-Cause: dmFkZTGDdESdjJVBdVXvOiyv8xrl1EhHVfvTDXSfuQkMUot8guFXFscT5xJ3woZYvzu8Lv
+ LiOM7uVOIkxpfVJIIRJUKa1VssijcLc9HrMKo0q76gHYzqN0uksg14QYFOE4DkwPxthIhq
+ guQ4QjEvSYTdzwL++hpS39rm9410v972dhnABQRYnfaFnNhjDHqM17YhfBcLNC9YdTa79z
+ K0SdKkCpzbibeq+Dx8J91dntlzCHetPfCkdnkAK30shHqe8b5tuK8E1KNXjeJREiFlxLZw
+ qNBk5b9s9mSygaDofHWntYKKsrwOzffOoKxzgZNfzlm37mMPaRIfU3/gPL353rKE/1xqTo
+ i5wiRUVJSaVrKGPFkJUCgy3bBlTUirLyNEfYBOaqiLwPYN+anopJillkzlZ+K23uEkiqKk
+ iCRqf1VdtjPZw836RyvjBm6MWY7FHbKUBHbJhjkdYFNpEG5Un+pENKFm9TLoATl5fJhZZm
+ xcKG38GzewCIYs5p0B1ATo11FLe9D3OWCpcr1VjF9OBcIwEssbv7Ea0gFBRx40np/XTFGq
+ O7zsH6togsFKJ32fca8c5gfASim/WZllKUcmW+wC3K2OATWKoO5YA/2NDkLBBXNylDHkQ4
+ x/CF8RhPjEFnj24ftZbd9EOkjhlERxw4lZqxkD/an+Z1w6q2yFu06sI4qgbQ
+X-ME-Proxy: <xmx:hpl8aou7G4sEFJpq1hp35LGYhtt5NVDXI8sfjQ2qDruS9RbMDIz9RQ>
+ <xmx:hpl8as0yeqFkMpjQwqOyiZ7f1bojVQLdIa3PzxW3FrKZCMGHHSVjBg>
+ <xmx:hpl8apXTdSSMU0VD_h1mzD8st49XpH1p5N84IeheB2YxOE87sAsfpw>
+ <xmx:hpl8anLQ4pDdNme5_dwu4Jw4Vf5lprfhh_-tjdPUcnPPCyheI_jdtA>
+ <xmx:h5l8apJZD2BReaNwv9GygXUxanDFhOpqy8A7XTA2esCcn0VJBAoXGHaB>
+Feedback-ID: ifd214418:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Aug 2026 12:04:22 -0400 (EDT)
+Message-ID: <4de79cfa68c0142d1eb64626f8cafc2445fbc46d.camel@alistair23.me>
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: preserve requested perm in
+ spa_fetch()
+From: Alistair <alistair@alistair23.me>
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, palmer@dabbelt.com, 
+ daniel.barboza@oss.qualcomm.com
+Date: Thu, 13 Aug 2026 02:04:22 +1000
+In-Reply-To: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
+References: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.146;
+ envelope-from=alistair@alistair23.me; helo=fout-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,262 +108,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+T24gRnJpLCAyMDI2LTA3LTE3IGF0IDE2OjQ1ICswMjAwLCBBbmRyZXcgSm9uZXMgd3JvdGU6Cj4g
+YjE4ZTNmMGUyZDBmIGZpeGVkIHNwYV9mZXRjaCgpIGZhdWx0cyB3aG9zZSBUVFlQIHVzZWQgdGhl
+IGxlYWYgUFRFCj4gcGVybWlzc2lvbiBpbnN0ZWFkIG9mIHRoZSBvcmlnaW5hbCByZXF1ZXN0IHBl
+cm1pc3Npb24uwqAgSG93ZXZlciwgaXQKPiBrZXB0Cj4gdGhhdCByZXF1ZXN0LW5hcnJvd2VkIHZh
+bHVlIGluIGlvdGxiLT5wZXJtIGFmdGVyIGEgc3VjY2Vzc2Z1bCB3YWxrLAo+IGFuZAo+IHJpc2N2
+X2lvbW11X3RyYW5zbGF0ZSgpIGNhY2hlcyBpb3RsYi0+cGVybSBmb3IgbGF0ZXIgYWNjZXNzZXMg
+dG8gdGhlCj4gc2FtZQo+IElPVkEuCj4gCj4gVGhhdCBtZWFucyBhIHdyaXRlIHRvIGFuIFJXIG1h
+cHBpbmcgY2FuIGNhY2hlIHRoZSBlbnRyeSBhcyB3cml0ZS0KPiBvbmx5Lgo+IEEgbGF0ZXIgcmVh
+ZCB0aGVuIGhpdHMgdGhlIGNhY2hlIGFuZCBmYXVsdHMgZXZlbiB0aG91Z2ggdGhlIG1hcHBpbmcK
+PiBhbGxvd3MKPiBpdCwgd2hpY2ggc2hvd2VkIHVwIGluIE5WTWUgdGVzdGluZyBhcyBib2d1cyBj
+b21wbGV0aW9ucyBhbmQKPiBjb250cm9sbGVyCj4gdGltZW91dHMuCj4gCj4gS2VlcCB0aGUgcmVx
+dWVzdGVkIHBlcm1pc3Npb24gaW4gYSBzZXBhcmF0ZSByZXFfcGVybSBhbmQgdXNlIGl0IGZvcgo+
+IGFsbAo+IHBlcm1pc3Npb24gY2hlY2tzIGFuZCBmYXVsdC10eXBlIGRlY2lzaW9ucy7CoCBBY2N1
+bXVsYXRlIHRoZSBsZWFmCj4gcGVybWlzc2lvbnMgc2VwYXJhdGVseSBhbmQgY29weSB0aGVtIHRv
+IGlvdGxiLT5wZXJtIG9ubHkgYWZ0ZXIgdGhlCj4gZnVsbAo+IHdhbGsgc3VjY2VlZHMsIHNvIGNh
+Y2hlZCBlbnRyaWVzIGRlc2NyaWJlIHRoZSBtYXBwaW5nIHJhdGhlciB0aGFuIHRoZQo+IGN1cnJl
+bnQgcmVxdWVzdC7CoCBTaW5jZSBmYXVsdHMgbGVhdmUgaW90bGItPnBlcm0gYXMgdGhlIG9yaWdp
+bmFsCj4gcmVxdWVzdCwKPiB0aGUgUy1zdGFnZSBhbmQgRy1zdGFnZSBUVFlQIGZpeGVzIHJlbWFp
+biBpbnRhY3QuCj4gCj4gRml4ZXM6IGIxOGUzZjBlMmQwZiAoImh3L3Jpc2N2L3Jpc2N2LWlvbW11
+LmM6IGZpeCBmYXVsdCB0eXBlIGZvcgo+IHNwYV9mZXRjaCgpIGZhdWx0cyIpCj4gU2lnbmVkLW9m
+Zi1ieTogQW5kcmV3IEpvbmVzIDxhbmRyZXcuam9uZXNAb3NzLnF1YWxjb21tLmNvbT4KClRoYW5r
+cyEKCkFwcGxpZWQgdG8gcmlzY3YtdG8tYXBwbHkubmV4dAoKQWxpc3RhaXIKCj4gLS0tCj4gwqBo
+dy9yaXNjdi9yaXNjdi1pb21tdS5jIHwgNTAgKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0t
+LS0tLS0tLS0tLQo+IC0tCj4gwqAxIGZpbGUgY2hhbmdlZCwgMjkgaW5zZXJ0aW9ucygrKSwgMjEg
+ZGVsZXRpb25zKC0pCj4gCj4gZGlmZiAtLWdpdCBhL2h3L3Jpc2N2L3Jpc2N2LWlvbW11LmMgYi9o
+dy9yaXNjdi9yaXNjdi1pb21tdS5jCj4gaW5kZXggZWQ5ZmIwOWY4YmM3Li4zMjNhMDQxYjRhNTUg
+MTAwNjQ0Cj4gLS0tIGEvaHcvcmlzY3YvcmlzY3YtaW9tbXUuYwo+ICsrKyBiL2h3L3Jpc2N2L3Jp
+c2N2LWlvbW11LmMKPiBAQCAtMjgxLDcgKzI4MSw3IEBAIHN0YXRpYyBod2FkZHIgcmlzY3ZfaW9t
+bXVfbmFwb3RfcGFnZV9tYXNrKGh3YWRkcgo+IHBwbiwgaHdhZGRyIGFkZHIsIGh3YWRkciAqb3V0
+KQo+IMKgc3RhdGljIGludCByaXNjdl9pb21tdV9zcGFfZmV0Y2goUklTQ1ZJT01NVVN0YXRlICpz
+LAo+IFJJU0NWSU9NTVVDb250ZXh0ICpjdHgsCj4gwqDCoMKgwqAgSU9NTVVUTEJFbnRyeSAqaW90
+bGIpCj4gwqB7Cj4gLcKgwqDCoCBJT01NVUFjY2Vzc0ZsYWdzIHB0ZV9wZXJtOwo+ICvCoMKgwqAg
+SU9NTVVBY2Nlc3NGbGFncyB0cmFuc19wZXJtID0gSU9NTVVfTk9ORTsKPiDCoMKgwqDCoCBkbWFf
+YWRkcl90IGFkZHIsIGJhc2U7Cj4gwqDCoMKgwqAgdWludDY0X3Qgc2F0cCwgZ2F0cCwgcHRlOwo+
+IMKgwqDCoMKgIGJvb2wgZW5fcywgZW5fZzsKPiBAQCAtMjk4LDYgKzI5OCwxNCBAQCBzdGF0aWMg
+aW50IHJpc2N2X2lvbW11X3NwYV9mZXRjaChSSVNDVklPTU1VU3RhdGUKPiAqcywgUklTQ1ZJT01N
+VUNvbnRleHQgKmN0eCwKPiDCoMKgwqDCoCB9IHBhc3M7Cj4gwqDCoMKgwqAgTWVtVHhSZXN1bHQg
+cmV0Owo+IMKgwqDCoMKgIGJvb2wgcHYgPSAhIWN0eC0+cHJvY2Vzc19pZDsKPiArwqDCoMKgIC8q
+Cj4gK8KgwqDCoMKgICogS2VlcCB0aGUgcmVxdWVzdCBwZXJtaXNzaW9uIHNlcGFyYXRlIGZyb20g
+aW90bGItPnBlcm0uwqAgRy0KPiBzdGFnZQo+ICvCoMKgwqDCoCAqIHdhbGtzIHRyYW5zbGF0ZSBT
+LXN0YWdlIFBURSBhZGRyZXNzZXMgYmVmb3JlIHRoZSByZWFsIGxlYWYgaXMKPiArwqDCoMKgwqAg
+KiByZWFjaGVkLCBidXQgcGVybWlzc2lvbiBjaGVja3MgYW5kIGZhdWx0IHR5cGVzIG11c3Qgc3Rp
+bGwgdXNlCj4gdGhlCj4gK8KgwqDCoMKgICogb3JpZ2luYWwgcmVxdWVzdC7CoCBBIHN1Y2Nlc3Nm
+dWwgd2FsayBsZWF2ZXMgaW90bGItPnBlcm0gd2l0aAo+IHRoZQo+ICvCoMKgwqDCoCAqIGVmZmVj
+dGl2ZSBsZWFmIHBlcm1pc3Npb24gZm9yIHRoZSB0cmFuc2xhdGlvbiBjYWNoZS4KPiArwqDCoMKg
+wqAgKi8KPiArwqDCoMKgIGNvbnN0IElPTU1VQWNjZXNzRmxhZ3MgcmVxX3Blcm0gPSBpb3RsYi0+
+cGVybTsKPiDCoAo+IMKgwqDCoMKgIHNhdHAgPSBnZXRfZmllbGQoY3R4LT5zYXRwLCBSSVNDVl9J
+T01NVV9BVFBfTU9ERV9GSUVMRCk7Cj4gwqDCoMKgwqAgZ2F0cCA9IGdldF9maWVsZChjdHgtPmdh
+dHAsIFJJU0NWX0lPTU1VX0FUUF9NT0RFX0ZJRUxEKTsKPiBAQCAtMzE2LDcgKzMyNCw3IEBAIHN0
+YXRpYyBpbnQgcmlzY3ZfaW9tbXVfc3BhX2ZldGNoKFJJU0NWSU9NTVVTdGF0ZQo+ICpzLCBSSVND
+VklPTU1VQ29udGV4dCAqY3R4LAo+IMKgwqDCoMKgwqAgKiBtZWFucyB3ZSBjYW4ndCBkbyBhbiBl
+YXJseSBNU0kgY2hlY2sgdW5sZXNzIHdlIGhhdmUKPiDCoMKgwqDCoMKgICogc3RyaWN0bHkgIWVu
+X3MuCj4gwqDCoMKgwqDCoCAqLwo+IC3CoMKgwqAgaWYgKCFlbl9zICYmIChpb3RsYi0+cGVybSAm
+IElPTU1VX1dPKSAmJgo+ICvCoMKgwqAgaWYgKCFlbl9zICYmIChyZXFfcGVybSAmIElPTU1VX1dP
+KSAmJgo+IMKgwqDCoMKgwqDCoMKgwqAgcmlzY3ZfaW9tbXVfbXNpX2NoZWNrKHMsIGN0eCwgaW90
+bGItPmlvdmEpKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoCBpb3RsYi0+dGFyZ2V0X2FzID0gJnMtPnRy
+YXBfYXM7Cj4gwqDCoMKgwqDCoMKgwqDCoCBpb3RsYi0+dHJhbnNsYXRlZF9hZGRyID0gaW90bGIt
+PmlvdmE7Cj4gQEAgLTQzNCwxMyArNDQyLDEzIEBAIHN0YXRpYyBpbnQKPiByaXNjdl9pb21tdV9z
+cGFfZmV0Y2goUklTQ1ZJT01NVVN0YXRlICpzLCBSSVNDVklPTU1VQ29udGV4dCAqY3R4LAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG1hc2tlZF9tc2JzID0gKGFkZHIgPj4gKHZh
+X2xlbiAtIDEpKSAmIG1hc2s7Cj4gwqAKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBpZiAobWFza2VkX21zYnMgIT0gMCAmJiBtYXNrZWRfbXNicyAhPSBtYXNrKSB7Cj4gLcKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiAoaW90bGItPnBlcm0gJiBJ
+T01NVV9XTykgPwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1
+cm4gKHJlcV9wZXJtICYgSU9NTVVfV08pID8KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFJJU0NWX0lPTU1VX0ZRX0NBVVNF
+X1dSX0ZBVUxUX1MgOgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgUklTQ1ZfSU9NTVVfRlFfQ0FVU0VfUkRfRkFVTFRfUzsK
+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIH0gZWxzZSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKChh
+ZGRyICYgdmFfbWFzaykgIT0gYWRkcikgewo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCByZXR1cm4gKGlvdGxiLT5wZXJtICYgSU9NTVVfV08pID8KPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIChyZXFfcGVybSAmIElPTU1VX1dP
+KSA/Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBSSVNDVl9JT01NVV9GUV9DQVVTRV9XUl9GQVVMVF9WUyA6Cj4gwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBSSVNDVl9JT01NVV9GUV9DQVVTRV9SRF9GQVVMVF9WUzsKPiDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCB9Cj4gQEAgLTQ2NSw4ICs0NzMsOCBAQCBzdGF0aWMgaW50IHJpc2N2X2lv
+bW11X3NwYV9mZXRjaChSSVNDVklPTU1VU3RhdGUKPiAqcywgUklTQ1ZJT01NVUNvbnRleHQgKmN0
+eCwKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIE1FTVRYQVRUUlNfVU5TUEVDSUZJRUQpOwo+IMKgwqDCoMKgwqDCoMKgwqAgfQo+IMKg
+wqDCoMKgwqDCoMKgwqAgaWYgKHJldCAhPSBNRU1UWF9PSykgewo+IC3CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIHJldHVybiAoaW90bGItPnBlcm0gJiBJT01NVV9XTykgPwo+IFJJU0NWX0lPTU1VX0ZR
+X0NBVVNFX1dSX0ZBVUxUCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDoKPiBSSVND
+Vl9JT01NVV9GUV9DQVVTRV9SRF9GQVVMVDsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCByZXR1
+cm4gKHJlcV9wZXJtICYgSU9NTVVfV08pID8KPiBSSVNDVl9JT01NVV9GUV9DQVVTRV9XUl9GQVVM
+VAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA6Cj4gUklTQ1ZfSU9NTVVfRlFfQ0FVU0VfUkRf
+RkFVTFQ7Cj4gwqDCoMKgwqDCoMKgwqDCoCB9Cj4gwqAKPiDCoMKgwqDCoMKgwqDCoMKgIHNjW3Bh
+c3NdLnN0ZXArKzsKPiBAQCAtNDkxLDEzICs0OTksMTMgQEAgc3RhdGljIGludAo+IHJpc2N2X2lv
+bW11X3NwYV9mZXRjaChSSVNDVklPTU1VU3RhdGUgKnMsIFJJU0NWSU9NTVVDb250ZXh0ICpjdHgs
+Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBub24tdXNlciBtb2RlIGxlYWYgUFRFIGFu
+ZCAhcHYgd2UgbmVlZCB0byBmYXVsdC4KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqLwo+
+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPiAtwqDCoMKgwqDCoMKgwqAgfSBlbHNl
+IGlmICgoaW90bGItPnBlcm0gJiBJT01NVV9STykgJiYgIShwdGUgJiBQVEVfUikpIHsKPiArwqDC
+oMKgwqDCoMKgwqAgfSBlbHNlIGlmICgocmVxX3Blcm0gJiBJT01NVV9STykgJiYgIShwdGUgJiBQ
+VEVfUikpIHsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7wqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIC8qIFJlYWQgYWNjZXNzIGNoZWNrIGZhaWxlZCAqLwo+IC3CoMKgwqDC
+oMKgwqDCoCB9IGVsc2UgaWYgKChpb3RsYi0+cGVybSAmIElPTU1VX1dPKSAmJiAhKHB0ZSAmIFBU
+RV9XKSkgewo+ICvCoMKgwqDCoMKgwqDCoCB9IGVsc2UgaWYgKChyZXFfcGVybSAmIElPTU1VX1dP
+KSAmJiAhKHB0ZSAmIFBURV9XKSkgewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogV3JpdGUgYWNjZXNzIGNoZWNrIGZhaWxl
+ZCAqLwo+IMKgwqDCoMKgwqDCoMKgwqAgfSBlbHNlIGlmICghYWRlICYmICEocHRlICYgUFRFX0Ep
+KSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJyZWFrO8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCAvKiBBY2Nlc3MgYml0IG5vdCBzZXQgKi8KPiAtwqDCoMKgwqDCoMKgwqAgfSBl
+bHNlIGlmICgoaW90bGItPnBlcm0gJiBJT01NVV9XTykgJiYgIWFkZSAmJiAhKHB0ZSAmCj4gUFRF
+X0QpKSB7Cj4gK8KgwqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAoKHJlcV9wZXJtICYgSU9NTVVfV08p
+ICYmICFhZGUgJiYgIShwdGUgJiBQVEVfRCkpCj4gewo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBicmVhazvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogRGlydHkgYml0IG5vdCBz
+ZXQgKi8KPiDCoMKgwqDCoMKgwqDCoMKgIH0gZWxzZSBpZiAocGFzcyA9PSBHX1NUQUdFICYmICEo
+cHRlICYgUFRFX1UpKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qCj4gQEAgLTUzMiwy
+MSArNTQwLDIwIEBAIHN0YXRpYyBpbnQKPiByaXNjdl9pb21tdV9zcGFfZmV0Y2goUklTQ1ZJT01N
+VVN0YXRlICpzLCBSSVNDVklPTU1VQ29udGV4dCAqY3R4LAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIGFkZHIgPSBpb3RsYi0+aW92YTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBjb250aW51ZTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+ICsKPiAr
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBDYWNoZSB0aGUgZWZmZWN0aXZlIHBlcm1pc3Npb24s
+IG5vdCB0aGlzIHJlcXVlc3Qncwo+IHN1YnNldC4gKi8KPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBJT01NVUFjY2Vzc0ZsYWdzIGxlYWZfcGVybSA9IChwdGUgJiBQVEVfVykgPwo+ICvCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCAoKHB0ZSAmIFBURV9SKSA/IElPTU1VX1JXIDoKPiBJT01NVV9XTykg
+Ogo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBJT01NVV9STzsKPiArCj4gK8KgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgdHJhbnNfcGVybSA9IHRyYW5zX3Blcm0gPT0gSU9NTVVfTk9ORSA/Cj4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBsZWFmX3Blcm0g
+OiB0cmFuc19wZXJtICYgbGVhZl9wZXJtOwo+ICsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+LyogVHJhbnNsYXRpb24gcGhhc2UgY29tcGxldGVkIChHUEEgb3IgU1BBKSAqLwo+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoCBpb3RsYi0+dHJhbnNsYXRlZF9hZGRyID0gYmFzZTsKPiDCoAo+IC3C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIERv
+IGEgYml0X2FuZCBiZXR3ZWVuIHRoZSBQVEUgYml0cyBhbmQgdGhlIG9yaWdpbmFsCj4gLcKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCAqIHJlcXVlc3QgZmxhZ3MgdG8gZGV0ZXJtaW5lIHRoZSBleGFj
+dCBwZXJtaXNzaW9uIHdlCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAqIG5lZWQsIGkuZS4g
+aWYgdGhlIG9yaWdpbmFsIHJlcXVlc3QgaXMgUk8gYW5kIHRoZQo+IC3CoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgKiBQVEUgaGFzIFJXIGZsYWdzIHRoZSBhY3R1YWwgcGVybSBpcyBSTy4KPiAtwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgICovCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcHRlX3Bl
+cm0gPSAocHRlICYgUFRFX1cpID8gKChwdGUgJiBQVEVfUikgPyBJT01NVV9SVyA6Cj4gSU9NTVVf
+V08pCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCA6IElPTU1VX1JPOwo+IC3CoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIGlvdGxiLT5wZXJtICY9IHB0ZV9wZXJtOwo+IC0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgLyogQ2hlY2sgTVNJIEdQQSBhZGRyZXNzIG1hdGNoICovCj4gLcKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgaWYgKHBhc3MgPT0gU19TVEFHRSAmJiAoaW90bGItPnBlcm0gJiBJT01NVV9XTykgJiYK
+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAocGFzcyA9PSBTX1NUQUdFICYmIChyZXFfcGVy
+bSAmIElPTU1VX1dPKSAmJgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJpc2N2
+X2lvbW11X21zaV9jaGVjayhzLCBjdHgsIGJhc2UpKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgLyogVHJhcCBNU0kgd3JpdGVzIGFuZCByZXR1cm4gR1BBIGFkZHJlc3MuICov
+Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaW90bGItPnRhcmdldF9hcyA9ICZz
+LT50cmFwX2FzOwo+IEBAIC01NjMsNiArNTcwLDcgQEAgc3RhdGljIGludCByaXNjdl9pb21tdV9z
+cGFfZmV0Y2goUklTQ1ZJT01NVVN0YXRlCj4gKnMsIFJJU0NWSU9NTVVDb250ZXh0ICpjdHgsCj4g
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29udGludWU7Cj4gwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIH0KPiDCoAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlvdGxiLT5wZXJt
+ID0gdHJhbnNfcGVybTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIDA7Cj4gwqDC
+oMKgwqDCoMKgwqDCoCB9Cj4gwqAKPiBAQCAtNTg3LDcgKzU5NSw3IEBAIHN0YXRpYyBpbnQgcmlz
+Y3ZfaW9tbXVfc3BhX2ZldGNoKFJJU0NWSU9NTVVTdGF0ZQo+ICpzLCBSSVNDVklPTU1VQ29udGV4
+dCAqY3R4LAo+IMKgwqDCoMKgwqAgKi8KPiDCoMKgwqDCoCBpb3RsYi0+dHJhbnNsYXRlZF9hZGRy
+ID0gYWRkcjsKPiDCoAo+IC3CoMKgwqAgcmV0dXJuIChpb3RsYi0+cGVybSAmIElPTU1VX1dPKSA/
+Cj4gK8KgwqDCoCByZXR1cm4gKHJlcV9wZXJtICYgSU9NTVVfV08pID8KPiDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCAocGFzcyA/IFJJU0NWX0lPTU1VX0ZRX0NBVVNFX1dSX0ZBVUxU
+X1ZTIDoKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+UklTQ1ZfSU9NTVVfRlFfQ0FVU0VfV1JfRkFVTFRfUykgOgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIChwYXNzID8gUklTQ1ZfSU9NTVVfRlFfQ0FVU0VfUkRfRkFVTFRfVlMgOgo=
 
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->
->> When a user set explicit cross cc, we ensure it's available and working.
->> When a user set explicit cross cflags, we ensure they work with default
->> or overriden cross_cc.
->>
->> Made the first implementation with a single meson option (array), which
->> proved to be absolutely unreadable.
->> By having one option per target, we directly detect issue at configure
->> time, either for user, or when iterating on all our targets. This
->> ensures user can't mispell any target name, and that we can't forget any
->> new one in the future.
->> Also, it shows them in the configuration summary, which is a bonus.
->>
->> Since we now only need to know compiler to write tcg tests, we can
->> simply alias -cross-prefix-* options to compiler override.
->>
->> Examples
->> --------
->>
->> wrong architecture:
->> $ ./configure --cross-cc-bad=3D'cc'
->> ../meson.build:1:0: ERROR: Unknown option: "tcg_tests_cross_cc_bad"
->>
->> wrong option:
->> $ ./configure --cross-cc-cflags-aarch64=3D'-bad-option'
->> ../tests/tcg/meson.build:228:10: ERROR: Command `/usr/bin/aarch64-linux-=
-gnu-gcc /home/pbouvier/.work/qemu/tests/tcg/test_cc.c -bad-option -static -=
-nostdlib -r -o /dev/null` failed with status 1.
->> A full log can be found at /qemu/build/meson-logs/meson-log.txt
->>
->> cross compile with clang (fails at the moment, since some tests have
->> compilation errors with it):
->> $ ./configure --target-list=3Daarch64-linux-user --cross-cc-aarch64=3D'c=
-lang' --cross-cc-cflags-aarch64=3D'-target aarch64-linux-gnu'
->>   User defined options
->>   ...
->>     tcg_tests_cross_cc_aarch64      : clang
->>     tcg_tests_cross_cflags_aarch64  : -target aarch64-linux-gnu
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>  configure             | 27 ++++++-------
->>  meson_options.txt     | 89 +++++++++++++++++++++++++++++++++++++++++++
->>  tests/tcg/meson.build | 30 ++++++++++++---
->>  3 files changed, 126 insertions(+), 20 deletions(-)
->>
->> diff --git a/configure b/configure
->> index 568de41dadd..c9e2cdcce5f 100755
->> --- a/configure
->> +++ b/configure
->> @@ -227,19 +227,6 @@ for opt do
->>    ;;
->>    --extra-ldflags=3D*) EXTRA_LDFLAGS=3D"$EXTRA_LDFLAGS $optarg"
->>    ;;
->> -  --cross-cc-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-cc-FO=
-O option"
->> -  ;;
->> -  --cross-cc-cflags-*) cc_arch=3D${opt#--cross-cc-cflags-}; cc_arch=3D$=
-{cc_arch%%=3D*}
->> -                      eval "cross_cc_cflags_${cc_arch}=3D\$optarg"
->> -  ;;
->> -  --cross-cc-*) cc_arch=3D${opt#--cross-cc-}; cc_arch=3D${cc_arch%%=3D*}
->> -                eval "cross_cc_${cc_arch}=3D\$optarg"
->> -  ;;
->> -  --cross-prefix-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-p=
-refix-FOO option"
->> -  ;;
->> -  --cross-prefix-*) cc_arch=3D${opt#--cross-prefix-}; cc_arch=3D${cc_ar=
-ch%%=3D*}
->> -                    eval "cross_prefix_${cc_arch}=3D\$optarg"
->> -  ;;
->>    --without-default-features) default_feature=3D"no"
->>    ;;
->>    --wasm64-32bit-address-limit) wasm64_memory64=3D"2"
->> @@ -632,9 +619,19 @@ for opt do
->>    ;;
->>    --extra-ldflags=3D*)
->>    ;;
->> -  --cross-cc-*)
->> +  --cross-cc-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-cc-FO=
-O option"
->>    ;;
->> -  --cross-prefix-*)
->> +  --cross-cc-cflags-*) arch=3D${opt#--cross-cc-cflags-}; arch=3D${arch%=
-%=3D*}
->> +                       meson_option_add "-Dtcg_tests_cross_cflags_${arc=
-h}=3D${optarg}"
->> +  ;;
->> +  --cross-cc-*) arch=3D${opt#--cross-cc-}; arch=3D${arch%%=3D*}
->> +                meson_option_add "-Dtcg_tests_cross_cc_${arch}=3D${opta=
-rg}"
->> +  ;;
->> +  --cross-prefix-*[!a-zA-Z0-9_-]*=3D*) error_exit "Passed bad --cross-p=
-refix-FOO option"
->> +  ;;
->> +  # cross-prefix is just used as a syntactic sugar for -cross-cc.
->> +  --cross-prefix-*) arch=3D${opt#--cross-prefix-}; arch=3D${arch%%=3D*}
->> +                    meson_option_add "-Dtcg_tests_cross_cc_${arch}=3D${=
-optarg}gcc"
->>    ;;
->>    --enable-docs) docs=3Denabled
->>    ;;
->> diff --git a/meson_options.txt b/meson_options.txt
->> index 5e91969414a..fd9ff0df893 100644
->> --- a/meson_options.txt
->> +++ b/meson_options.txt
->> @@ -389,3 +389,92 @@ option('containers', type: 'boolean', value: true,
->>         description: 'use containers to cross compile tcg tests')
->>  option('container_command', type: 'string',
->>         description: 'command to build/run containers')
->> +
->> +option('tcg_tests_cross_cc_aarch64', type: 'string',
->> +       description: 'cc for aarch64 tcg tests')
->> +option('tcg_tests_cross_cflags_aarch64', type: 'string',
->> +       description: 'cflags for aarch64 tcg tests')
->> +option('tcg_tests_cross_cc_aarch64_be', type: 'string',
->> +       description: 'cc for aarch64_be tcg tests')
->> +option('tcg_tests_cross_cflags_aarch64_be', type: 'string',
->> +       description: 'cflags for aarch64_be tcg tests')
->> +option('tcg_tests_cross_cc_alpha', type: 'string',
->> +       description: 'cc for alpha tcg tests')
->> +option('tcg_tests_cross_cflags_alpha', type: 'string',
->> +       description: 'cflags for alpha tcg tests')
->> +option('tcg_tests_cross_cc_arm', type: 'string',
->> +       description: 'cc for arm tcg tests')
->> +option('tcg_tests_cross_cflags_arm', type: 'string',
->> +       description: 'cflags for arm tcg tests')
->> +option('tcg_tests_cross_cc_hexagon', type: 'string',
->> +       description: 'cc for hexagon tcg tests')
->> +option('tcg_tests_cross_cflags_hexagon', type: 'string',
->> +       description: 'cflags for hexagon tcg tests')
->> +option('tcg_tests_cross_cc_hppa', type: 'string',
->> +       description: 'cc for hppa tcg tests')
->> +option('tcg_tests_cross_cflags_hppa', type: 'string',
->> +       description: 'cflags for hppa tcg tests')
->> +option('tcg_tests_cross_cc_i386', type: 'string',
->> +       description: 'cc for i386 tcg tests')
->> +option('tcg_tests_cross_cflags_i386', type: 'string',
->> +       description: 'cflags for i386 tcg tests')
->> +option('tcg_tests_cross_cc_loongarch64', type: 'string',
->> +       description: 'cc for loongarch64 tcg tests')
->> +option('tcg_tests_cross_cflags_loongarch64', type: 'string',
->> +       description: 'cflags for loongarch64 tcg tests')
->> +option('tcg_tests_cross_cc_m68k', type: 'string',
->> +       description: 'cc for m68k tcg tests')
->> +option('tcg_tests_cross_cflags_m68k', type: 'string',
->> +       description: 'cflags for m68k tcg tests')
->> +option('tcg_tests_cross_cc_mips', type: 'string',
->> +       description: 'cc for mips tcg tests')
->> +option('tcg_tests_cross_cflags_mips', type: 'string',
->> +       description: 'cflags for mips tcg tests')
->> +option('tcg_tests_cross_cc_mips64', type: 'string',
->> +       description: 'cc for mips64 tcg tests')
->> +option('tcg_tests_cross_cflags_mips64', type: 'string',
->> +       description: 'cflags for mips64 tcg tests')
->> +option('tcg_tests_cross_cc_mips64el', type: 'string',
->> +       description: 'cc for mips64el tcg tests')
->> +option('tcg_tests_cross_cflags_mips64el', type: 'string',
->> +       description: 'cflags for mips64el tcg tests')
->> +option('tcg_tests_cross_cc_or1k', type: 'string',
->> +       description: 'cc for or1k tcg tests')
->> +option('tcg_tests_cross_cflags_or1k', type: 'string',
->> +       description: 'cflags for or1k tcg tests')
->> +option('tcg_tests_cross_cc_ppc64', type: 'string',
->> +       description: 'cc for ppc64 tcg tests')
->> +option('tcg_tests_cross_cflags_ppc64', type: 'string',
->> +       description: 'cflags for ppc64 tcg tests')
->> +option('tcg_tests_cross_cc_ppc64le', type: 'string',
->> +       description: 'cc for ppc64le tcg tests')
->> +option('tcg_tests_cross_cflags_ppc64le', type: 'string',
->> +       description: 'cflags for ppc64le tcg tests')
->> +option('tcg_tests_cross_cc_riscv64', type: 'string',
->> +       description: 'cc for riscv64 tcg tests')
->> +option('tcg_tests_cross_cflags_riscv64', type: 'string',
->> +       description: 'cflags for riscv64 tcg tests')
->> +option('tcg_tests_cross_cc_s390x', type: 'string',
->> +       description: 'cc for s390x tcg tests')
->> +option('tcg_tests_cross_cflags_s390x', type: 'string',
->> +       description: 'cflags for s390x tcg tests')
->> +option('tcg_tests_cross_cc_sh4', type: 'string',
->> +       description: 'cc for sh4 tcg tests')
->> +option('tcg_tests_cross_cflags_sh4', type: 'string',
->> +       description: 'cflags for sh4 tcg tests')
->> +option('tcg_tests_cross_cc_tricore', type: 'string',
->> +       description: 'cc for tricore tcg tests')
->> +option('tcg_tests_cross_cflags_tricore', type: 'string',
->> +       description: 'cflags for tricore tcg tests')
->> +option('tcg_tests_cross_cc_x86_64', type: 'string',
->> +       description: 'cc for x86_64 tcg tests')
->> +option('tcg_tests_cross_cflags_x86_64', type: 'string',
->> +       description: 'cflags for x86_64 tcg tests')
->> +option('tcg_tests_cross_cc_xtensa', type: 'string',
->> +       description: 'cc for xtensa tcg tests')
->> +option('tcg_tests_cross_cflags_xtensa', type: 'string',
->> +       description: 'cflags for xtensa tcg tests')
->> +option('tcg_tests_cross_cc_xtensaeb', type: 'string',
->> +       description: 'cc for xtensaeb tcg tests')
->> +option('tcg_tests_cross_cflags_xtensaeb', type: 'string',
->> +       description: 'cflags for xtensaeb tcg tests')
->> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->> index ba73eecf1c9..8dd6623ad1d 100644
->> --- a/tests/tcg/meson.build
->> +++ b/tests/tcg/meson.build
->> @@ -180,6 +180,8 @@ foreach target, plan: tcg_tests
->>      continue
->>    endif
->>=20=20
->> +  cc_arch =3D target.replace('-linux-user', '').replace('-softmmu', '')
->> +
->>    # Detect duplicated executables/tests, and report an error to force u=
-ser to
->>    # choose how to deal with it.
->>    built_tests =3D {}
->> @@ -197,16 +199,34 @@ foreach target, plan: tcg_tests
->>    endforeach
->>=20=20
->>    cc =3D find_program(plan['cc'], required : false)
->> +  cc_cflags =3D []
->> +
->> +  check_flags =3D []
->> +  check_required =3D false
->> +  cross_cc =3D get_option('tcg_tests_cross_cc_' + cc_arch)
->> +  if cross_cc !=3D ''
->> +    # we make sure cross cc exists
->> +    cc =3D find_program(cross_cc, required: true)
->> +    check_required =3D true
->> +  endif
->> +  cross_cflags =3D get_option('tcg_tests_cross_cflags_' + cc_arch)
->> +  if cross_cflags !=3D ''
->> +    cc_cflags =3D cross_cflags.split()
->> +    # and that cross cc can compile programs
->> +    check_flags =3D cc_cflags
->> +    check_required =3D true
->> +  endif
->> +
->>    cc_from_system =3D cc.found()
->>    has_cc =3D cc.found()
->>    if has_cc
->> -    check_flags =3D ['-static']
->> +    check_flags +=3D ['-static']
->>      if target.endswith('softmmu')
->> -      check_flags =3D ['-nostdlib', '-r']
->> +      check_flags +=3D ['-nostdlib', '-r']
->>      endif
-
-What it needs is -ffreestanding - it gets away with it on linux as the
-compilers are mostly userspace compilers and it can fallback to those
-headers. On macOS or if you install a pure bare metal compiler it would
-fail.
-
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
