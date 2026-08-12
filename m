@@ -4,146 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D15C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443EDC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8oC-0005rU-DH; Wed, 12 Aug 2026 09:15:52 -0400
+	id 1wu8nP-0005Ny-Qk; Wed, 12 Aug 2026 09:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu8kX-0003Ov-ON
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:12:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8lD-0003kQ-WE; Wed, 12 Aug 2026 09:12:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu8kR-0006Mj-HX
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 09:12:04 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67CB4SW93963406
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:11:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bFuDeXoeC1GFIVZCw6cd7z1siQifytuqe3A3UCzq9WM=; b=IIm1S+Nwd/sm+xvn
- +Nodqtwklv2IJFtw95984gv4RjHnbm73JwbG6ZlK5VzbmhrNHnvEdqGxg+f0ESHp
- EUOauC4nB6BP0ffJbOBYvSSboif4+u9RDMrVLCu/PsmpbKPFRWkv/v0lYDfRkyn7
- bExNnJGxN9lj9A1KY7czQZjLJ/yPeTqlamDIsencWX7FGxFC02o4x9Dw3WGYtFIw
- /Q3JVH2sfSlwZw6/miSoAp7wWvVM8OY8b/0O3g7zIyA4YhHLsEoq2y0RKcGIg4De
- qYvXcy6MtfD52/8iiq8NNxf0ZH57i5OIZgw9sZhJVG211/RlDipOVqQBKZQWJSKU
- 4MC2Aw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0nucgwkw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:11:58 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5276aa86d00so10743681cf.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 06:11:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786540318; x=1787145118; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bFuDeXoeC1GFIVZCw6cd7z1siQifytuqe3A3UCzq9WM=;
- b=Rve4ha7Gf16006DRHRW5gmEnqHZ+zKrytAANDE9r/YzpgfKcr7odUwdQrswMZWk8tj
- HArg+BVegpDpxucys2CATo0hiSi5a8VHC3q7b9oIEwSDlauUTp80MLpUZ0wnR/W6ov4J
- t6wItsNLq55s7Ec0su4CgZKjI7tkOGALRegO5w8Tus9s++2lpJ7J1IkGh1weA01qMGdO
- Tg02aB64dyKkNohFgbrjOm7U10Ae1BMPkdgxB4495+yi7tiFkKihezpag5/44krh1XAf
- 5axWM8TWvV8pX8a6Y0U/ByHYxZiWcpcMT15/4s7IENWbXZMwybj7Rrh8rpHlD+CAwd/r
- xOUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786540318; x=1787145118;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bFuDeXoeC1GFIVZCw6cd7z1siQifytuqe3A3UCzq9WM=;
- b=QL8TSST1efSj47Cmj1Bp10aYmkiL61UwnqmAv4wccNxlXVCpCUsgoZ7jD6nG40sj7P
- RQp1Lk0UghuL6orSXHE8GNSmf3fKho+/ItAtlnlFQXc93qmWrK7PYGx+uIQWyBRjCuaQ
- eZoXqK43HoYyokwBtryQIH5gnCvy8KHY9Zvsz3pzHfX1pfNiZxir/KIcMMHUd7ekaP9p
- 6dr5T30lbpZg5O9sJs1OF7+4ogDp60Q6UVRERY9wmhnEXwXJdtSN5vDhfMGANOfN7sn7
- SBOkphzoSnOwhC6lUGK0GpWcBxwB5l4IDGwBP/n2U2YCDVFCczgG+tN+LwLlJgLcRT13
- slHw==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr5INJfz7Aczp/71CYDS/LMqdbIR//y2bRXtMM1NMRrwB0v2v/Pl1RqUGXlrYJixhCC1RjVvQ+lxRiu@nongnu.org
-X-Gm-Message-State: AOJu0YwBf8wF7jgFStdIkMHvNRyQeKi5zmes1sNkbyL5b1e6ecBWxJAU
- 1veSLHjbHMo4ShJJCCvntllH9OlMwYiFJZEriFURz9c3KomvKPSD+suQ9RMAQqKQRS3rp3fIvYH
- llEqQnBK64xFvH/e8n6GKuIgt3TtxX8rmsVbvA8vzZYdL7GHyLxMUIEPNtA==
-X-Gm-Gg: AR+sD10TJbtVe3EnWz1l1g+DLk120L8YDiXw0ZMH9mocMDeMImw/BFPwUJwkGEmwSB6
- kXpkT5BBqXHCUD9LyChPN0Wag0OkGFVVYhPbGCR7bAJa0HCopgxGI1Oy5GRNAacYoQ16LvN4Umo
- mR4SMo3hBixItNXS7JRhFFYPtIFLYqeGSU2ahlEHoIZD1MGMUSZx99ErhSOe2LKNf+HedV4ToYs
- WcTz9JR0Ns5d6b64q0JMNYS+3kfKXGUb6wP5iPUj8MoL6kUV/zhTMlPN8JGkZAmOogFgotGRYsF
- d5FQPwevSeoFOgIZDRtb0nl6gdyJWEq4KKTbFDooBrlw1eBWo6pp2l9TlSvtZCgI7lTryYqh9qC
- MT0p1e3yCczqNUboOZVDKcE+xxuSSwIDYaZJtckpOgg==
-X-Received: by 2002:a05:622a:2b07:b0:51b:f640:2a4f with SMTP id
- d75a77b69052e-52d646b88f2mr41231191cf.4.1786540317874; 
- Wed, 12 Aug 2026 06:11:57 -0700 (PDT)
-X-Received: by 2002:a05:622a:2b07:b0:51b:f640:2a4f with SMTP id
- d75a77b69052e-52d646b88f2mr41230251cf.4.1786540317407; 
- Wed, 12 Aug 2026 06:11:57 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997abf8fdcsm151719485e9.12.2026.08.12.06.11.56
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 12 Aug 2026 06:11:56 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v2 01/16] hexagon: Remove unnecessary 'monitor/monitor.h'
- header
-Date: Wed, 12 Aug 2026 15:11:32 +0200
-Message-ID: <20260812131147.83188-2-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260812131147.83188-1-philmd@oss.qualcomm.com>
-References: <20260812131147.83188-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wu8l3-0006VV-2U; Wed, 12 Aug 2026 09:12:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786539784; bh=MqGJGJ2p9s+7c+sdV17Sb4KX726gipI8TZT4FyBoIg0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=b68CPAKwSw7c68uq2XOg+/kcWjDm8AP/EYTfAvn4UW6koc4oncPDEfCnmnsSTRg2k
+ tMERPk8GwRzigE7aYYgX9Oqh8WA1eUqUib3XVD3L1TsyJ50HgDjK4hMBwVIzT95pgz
+ mgdVRun66r12wIa3EHeyxLvP6qAOHRV/mWMMaKJv9iSCXNZ2PxHcvG1qIidNj9tq7F
+ kJ9cuIzS98d/sJwijCj2Qb+3NMLSYLozr8GfYHf2Px6Kv8VSLbq3QOe9gh+eMySIMQ
+ +G/VJM8howLRcwYn8b6Ck2iur7j2iFbF+X0vKTZ8oWLSSiazOgQpkZMtivBustN3HN
+ Rg/JIsgxpgZ1g==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id CE8741CA4E1;
+ Wed, 12 Aug 2026 16:03:04 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10A36409BC4;
+ Wed, 12 Aug 2026 16:03:16 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id D1BF62F958; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Jesper Wendel Devantier <foss@defmacro.it>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 098/102] hw/nvme: fix leak on copy ranges
+Date: Wed, 12 Aug 2026 16:02:13 +0300
+Message-ID: <20260812130233.621965-98-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
+References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: wyyZ_egwnHO4vWGu8KzZNjWircu9Lsjz
-X-Proofpoint-ORIG-GUID: wyyZ_egwnHO4vWGu8KzZNjWircu9Lsjz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX7XzXykU2XTnS
- uHQkJwjTUtSL5BPUMMr0KmxjFRWDE/xaxX3mfS/10HzgtGUuJuTYSu0+DRK1nskTCKVpGXAyxoC
- sD6D1q/Y5NhYLGbQuX8dpn4tYQdzNssdUBV1jnmfAVE+Jn89/laXBUEpxvn2CJ5MTG3tucGrxN6
- 5klatFlrw3CWZK3Ey8x1c1uDSU+TayZgAqEBQByBydZ6LIpc7SWsoYI/hP/fzpM+Lz1Riex/g44
- EycNX5fvJ1Pjw280YojZkuAAb7FRclGDE3oF76GTt91kRorZQtkp1fXfGoUsegoEdq34kvFwYlu
- or+E41mKLpHmtO8I6DRPEw9Db2oRzeZTGq6qrRcpO2jjRzW7Dat+JBVLvqmGHgbuRMOOOdo3kGL
- laYu4RgfB+3exIttyljTLkaezHavw7YYOzkqtuQjkfPRSpK1E2H56pY9IMwDY8TC7Pm+wat9Pgo
- BAvWP+idGT/v/+lTnYA==
-X-Authority-Analysis: v=2.4 cv=VcjH+lp9 c=1 sm=1 tr=0 ts=6a7c711e cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=-f94bmcIBZYFaPXTGXwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEwNyBTYWx0ZWRfX40jFakep7C4x
- lO6GaITCf4+xOYn5BFYtclD7yyDU4ANcd/gr3zULWg7J/pRV56RMvy1nhIOKG5HBtTRgUTczABS
- lPWMk7wbTrSI9XXBE/u5D1skCzrWJ+8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_03,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608120107
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,54 +71,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Monitor type is used in these 2 files, as a pointer.
-Since the type is forward-declared in "qemu/typedefs.h",
-which all source files include via "qemu/osdep.h", we do
-not need to include it.
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Do however include "exec/hwaddr.h" and "exec/mmu-access-type.h"
-which declare the types used by hex_tlb_find_match prototype:
+The buffer holding the ranges for the copy command is not correctly
+deallocated.
 
-  extern bool hex_tlb_find_match(CPUHexagonState *env, uint32_t VA,
-                                 MMUAccessType access_type, hwaddr *PA, int *prot,
-                                 ^^^^^^^^^^^^^              ^^^^^^
-                                 uint64_t *size, int32_t *excp, int mmu_idx);
+Fix this.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/hw/hexagon/hexagon_tlb.h | 2 +-
- target/hexagon/hex_mmu.h         | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Cc: qemu-stable@nongnu.org
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/4072
+Fixes: 796d20681d9b ("hw/nvme: reimplement the copy command to allow aio cancellation")
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 7a34f7b8794b29cd1bd4dfa45f7d8e8daba7cff5)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/hexagon/hexagon_tlb.h b/include/hw/hexagon/hexagon_tlb.h
-index 90d9ed84043..760dc1ea811 100644
---- a/include/hw/hexagon/hexagon_tlb.h
-+++ b/include/hw/hexagon/hexagon_tlb.h
-@@ -12,7 +12,7 @@
- #include "qom/object.h"
- #include "exec/hwaddr.h"
- #include "exec/mmu-access-type.h"
--#include "monitor/monitor.h"
-+
- #define TYPE_HEXAGON_TLB "hexagon-tlb"
- OBJECT_DECLARE_SIMPLE_TYPE(HexagonTLBState, HEXAGON_TLB)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 325b06970c6..cc6d3bc1a7d 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -2791,6 +2791,7 @@ static void nvme_copy_done(NvmeCopyAIOCB *iocb)
  
-diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
-index 4f556c715a9..6aa450b9413 100644
---- a/target/hexagon/hex_mmu.h
-+++ b/target/hexagon/hex_mmu.h
-@@ -7,8 +7,9 @@
- #ifndef HEXAGON_MMU_H
- #define HEXAGON_MMU_H
+     qemu_iovec_destroy(&iocb->iov);
+     g_free(iocb->bounce);
++    g_free(iocb->ranges);
  
-+#include "exec/hwaddr.h"
-+#include "exec/mmu-access-type.h"
- #include "cpu.h"
--#include "monitor/monitor.h"
- 
- extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value);
- extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA);
+     if (iocb->ret < 0) {
+         block_acct_failed(stats, &iocb->acct.read);
 -- 
-2.53.0
+2.47.3
 
 
