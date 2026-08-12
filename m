@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597C4C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A6CC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuALE-0007JU-CZ; Wed, 12 Aug 2026 10:54:04 -0400
+	id 1wuALS-0008Pr-AV; Wed, 12 Aug 2026 10:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJL-0005P0-Qu; Wed, 12 Aug 2026 10:52:10 -0400
+ id 1wuAJv-0006J8-AB; Wed, 12 Aug 2026 10:52:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wuAJJ-0006rA-CO; Wed, 12 Aug 2026 10:52:07 -0400
+ id 1wuAJt-00072x-H1; Wed, 12 Aug 2026 10:52:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786546231; bh=PmkIdGMi5q9MKaWrAcvueum/91re/bdNn6rqWC5RO0c=;
+ t=1786546231; bh=stAxV7gNLR3BcCuDZ0PCzPqHZ3kHkrYdLVCFpRrSV+c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fO5MNKGybt/TrAfdeWHL/kZDjfHRLnhFuR9WqehfcVyDzn4f2xRU5rDEetJ55jCMk
- zdD6LtD1tWGsgayZ38du1GRSQgwH8+h3XFfQeQxWJiB1PSCeX06fbWB2IerIsBBaB8
- idfJwLYXieQxalsrFT6ZChdN+RMakvmi1XrLpA4LQuQ2tbeAM2rTpTCRIxRYd0RhKo
- 0HH/5AVTGiHmgrUwMPGYugDlJe1rDeIBKYmBzDBeaR/tgtdAIESaL4nv6C6n5ZQZjW
- 92gxxgpGRaORCruw9e6cgFaOX42XEaJyb6MWgmgGoJcRBjjJZQfH7hVKDfQHlxIEAA
- 1NkfmIGmWwfDA==
+ b=hf3zdL5MtiRQDDgQyszrJikOHTl4yGRTENIu2F8MXUxg+Wr00VJnXh+eJjcMfk74P
+ Uke1ofBtWx8yIuI7vpStLayMDYqvOcxxNDo4pbGGSan+q9LtTXCxF3d6D/VQsqhCyu
+ JpdB4qxyFXDEWzyn37wm72ihC+quotqCIoUp7GfThgYqC/wav8XxQh74NeltpUNmfV
+ gNWIYUCcPG//oXLq8bkaT67r1R3P+X9KKR7ifBO2pbVAg4RZxe5FgrRLmW3J04S/eR
+ /fqQSY5f6As1hhgd/9ZYY0NBxsJtKqQ2KacIin82H3sEEB9YX3f5ghZlb5fC+T+2aM
+ AfqTiz6uqHgvw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 293371CA616;
+ by isrv.corpit.ru (Postfix) with ESMTP id 74A411CA620;
  Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 83C89409D52;
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFB19409D5F;
  Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E2F292F987; Wed, 12 Aug 2026 17:50:17 +0300 (MSK)
+ id 39C052F99B; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 018/120] target/i386: helper_sysret(): Check that RCX
- contains a canonical address when emulating an Intel CPU
-Date: Wed, 12 Aug 2026 17:48:01 +0300
-Message-ID: <20260812144955.649205-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 028/120] hw/ide/core: Fix possible crash via NULL
+ pointer in ide_cancel_dma_sync()
+Date: Wed, 12 Aug 2026 17:48:11 +0300
+Message-ID: <20260812144955.649205-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
@@ -73,73 +71,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Intel and AMD CPUs implement SYSRETQ instruction differently.
-One of these differences is whether a canonicality check of the address that
-will be loaded to RIP is performed: Intel CPUs do this check, AMD CPUs don't.
+ide_cancel_dma_sync() is called with a "IDEState *s" for one of the
+two IDE drives on a bus (primary or secondary drive) to cancel all
+pending DMA transfers on the drive. The code then checks
+s->bus->dma->aiocb to see whether there is any IO in flight on the
+*bus* and then calls blk_drain(s->blk) to wait for its completion.
+However, s->bus->dma->aiocb might belong to the other drive on the
+bus, and if there is no disk attached to the current drive, s->blk
+is NULL. Since blk_drain() does not check its parameter for a NULL
+pointer, QEMU can crash in such a case.
 
-Currently, QEMU does not perform this check when emulating Intel CPUs.
-This patch corrects this by implementing the canonlicality check on a new RIP
-value from RCX and performing it only when emulating Intel CPUs.
+To fix the problem, we have to check that "blk" is not NULL before
+calling blk_drain(). And we have to call blk_drain() for both drives,
+otherwise the assert(s->bus->dma->aiocb == NULL) statement after
+the blk_drain() might trigger if the IO in flight belongs to the
+the other drive.
 
-Flags and segment registers' caches are updated only after checking the new RIP
-value to ensure that CPU state is not modified in case the #GP(0) exception
-is raised due to the check failure.
-
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 14ce26e75513 ("x86_64 target support")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3223
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Link: https://lore.kernel.org/r/20260608091815.31303-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 51aa3f3e05772c38cb6f6d8e79eca0f6afaaace0)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/905
+Reported-by: Alexander Bulekov <alxndr@bu.edu>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4052
+Reported-by: dong ling
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260721070216.82984-1-thuth@redhat.com>
+(cherry picked from commit 9b899ddb2706150ee1e5d0150a11bb021377ecb8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 58aac720119..d5c174b7fd7 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1096,17 +1096,22 @@ void helper_sysret(CPUX86State *env, int dflag)
-     selector = (env->star >> 48) & 0xffff;
- #ifdef TARGET_X86_64
-     if (env->hflags & HF_LMA_MASK) {
--        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
--                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
--                        NT_MASK);
-         if (dflag == 2) {
-+            uint64_t new_rip = env->regs[R_ECX];
-+            if (IS_INTEL_CPU(env)) {
-+                int shift = (get_pg_mode(env) & PG_MODE_LA57) ? 56 : 47;
-+                int64_t sext = (int64_t)new_rip >> shift;
-+                if (sext != 0 && sext != -1) {
-+                    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+                }
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 4c1ee19d8e8..fb9bf11b455 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -741,10 +741,17 @@ void ide_cancel_dma_sync(IDEState *s)
+      * In the future we'll be able to safely cancel the I/O if the
+      * whole DMA operation will be submitted to disk with a single
+      * aio operation with preadv/pwritev.
++     *
++     * Note: s->bus->dma->aiocb might belong to the adjacent IDEState,
++     * so we have to drain both drives to get it cleared.
+      */
+     if (s->bus->dma->aiocb) {
+         trace_ide_cancel_dma_sync_remaining();
+-        blk_drain(s->blk);
++        for (int i = 0; i < 2; i++) {
++            if (s->bus->ifs[i].blk) {
++                blk_drain(s->bus->ifs[i].blk);
 +            }
-             cpu_x86_load_seg_cache(env, R_CS, (selector + 16) | 3,
-                                    0, 0xffffffff,
-                                    DESC_G_MASK | DESC_P_MASK |
-                                    DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                    DESC_CS_MASK | DESC_R_MASK | DESC_A_MASK |
-                                    DESC_L_MASK);
--            env->eip = env->regs[R_ECX];
-+            env->eip = new_rip;
-         } else {
-             cpu_x86_load_seg_cache(env, R_CS, selector | 3,
-                                    0, 0xffffffff,
-@@ -1120,6 +1125,10 @@ void helper_sysret(CPUX86State *env, int dflag)
-                                DESC_G_MASK | DESC_B_MASK | DESC_P_MASK |
-                                DESC_S_MASK | (3 << DESC_DPL_SHIFT) |
-                                DESC_W_MASK | DESC_A_MASK);
-+
-+        cpu_load_eflags(env, (uint32_t)(env->regs[11]), TF_MASK | AC_MASK
-+                        | ID_MASK | IF_MASK | IOPL_MASK | VM_MASK | RF_MASK |
-+                        NT_MASK);
-     } else
- #endif
-     {
++        }
+         assert(s->bus->dma->aiocb == NULL);
+     }
+ }
 -- 
 2.47.3
 
