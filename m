@@ -4,142 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C86C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 07:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6129DC5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 08:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu3EX-0007ni-0U; Wed, 12 Aug 2026 03:18:41 -0400
+	id 1wu46L-0004di-Oz; Wed, 12 Aug 2026 04:14:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu3ES-0007mY-N8
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:18:36 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wu3EQ-0003b2-Q9
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 03:18:36 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67C62P392641588
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:18:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ktxQXaaZjQ80/lT02yjI8uyS0BSRBPrxGOMiFDg34Qk=; b=ShjNFn0MJeYwvAS2
- tqN0jfW9iXAKoJj7nbXQh0K9hcOtI82jaG7AqSwiYmX0iXpkWAoJZ/7lTB1sXrlM
- gpaxIdQSjuLGZhPkvG9M935hhvHz8hFYqTfTwLyqHmCHtqPnJooVwQqQpht1pG27
- tME0gpqpsBIHrbQ0hTLzlUs+fBhJLR/Ak6njhMEe77oABP10Glu/MovNh76zChSF
- xt51OE2YUNBKEyteRISEcZk/xAjl/Dcw3Cg774r3x/NXK3fMctZrQWckLrUy5trk
- XcBZVl/sONKkCSlWCZkLY1voKiKtnYBWjRC36wQSZhTT1zWWgyhrxh2c5sxkkcuR
- AaHIIg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g049mkypt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 07:18:32 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5283df62d68so4524461cf.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 00:18:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wu46J-0004dO-Sc
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:14:15 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wu46I-0002d7-8y
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:14:15 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-481412f1828so180812f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 01:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786519112; x=1787123912; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ktxQXaaZjQ80/lT02yjI8uyS0BSRBPrxGOMiFDg34Qk=;
- b=Xmy//WY/B1hX4irx6CD85pst9FQ1yFOEDyrTUU/PGBpGQP5pozrx3zluR5ujL7M/rA
- aNElOrETLkM9IsIypdL6/iam8vciYq/i9d3VZwagmkAufW3Q+ujFn144uA9Co+ZLWIKs
- y9y9+ABhHF/H+sIGtfO9O75u+RW4yUHvGeTp/tYxTRCuFkLLr63r+/LV5e3NzmwFgYYD
- LDNrGFbVBEt8XjaNAuizz8GqhutDnRRmUYYTYfcNB421ecH4s4IHKM9LY2NYfcuv0fNn
- CDj5qcDl7k3nTMJfQavixfNYfSAOJpVsAQdXd0dl8kilpfJt+tquYb0LKj8y2BAdNH1e
- 1hzg==
+ d=linaro.org; s=google; t=1786522452; x=1787127252; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rVxvOCgcb78Xd3FiuiBHiW/Quz4vh5vLpicOe1WljQ8=;
+ b=hiuER+8gqBQxbnBG4Lf34g5ZG2As+lY5ImdzIoigBO9FnFYf2FKn7fZSt/bhLtAHBa
+ GJl/dL31G1DOEX6OmLWMh6F7Wsl81Ag7T0PEhyDdVn6A4isgcb3en3ZRYIjlm2bxQkRH
+ Rfib4UtPGr1rQs9jSwZ59LXn18OkFjJM9kOZ8xq83hSrp+GF20W45BkVRp/W0FYBdY+k
+ uxWkGp/hWArUej9hhJ1lxHLxuXjaUVLMQ2GVGUERbjSZ8xdGJr9P6zDBlmRaFOJ/Z3a4
+ mpmzprSMxK2GcAoPBozCMeG1zMvy7V98qrIYWNQZ61rDq1oMswCBZhnaDCdFIOTMYRiv
+ Gcjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786519112; x=1787123912;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ktxQXaaZjQ80/lT02yjI8uyS0BSRBPrxGOMiFDg34Qk=;
- b=NgH4V+FeUG0KYbeGGdpPvlAnOMV2H5MA3DXQloK40YnPDFIhu9amkEUh+E/szBnAxX
- elOxPv49BoYzZnPCr/3ua1bRmnho/Fi+Dtn4iEDC+iGd86YusUvM8zkb9fAH6O068pWe
- Or6euxaRuYlY1tOag3GJ4y/22G/sLeO00SDM/+bPiNO/qsS0sw4D5j2T3sS5toyfVIZ9
- pNUKd0G0hIWpCSoHSyUabR2OSQB+U0zqAAAZRWKfJ9O9pMmLnmUeokXEKaG9P1NWzK5C
- CdRZlvaPTjpSMjiyVEipuR0CuFWzP5EL7ZFsZl5eSbiL9FONIcZ4Wmva0q+IQiouFZy6
- sTLg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rqf02J7StW8r1wJNrXl+6i+ryKwvUR2GOXahx1Xljt9je0VOYwd0726B9mjFvpEEcvDRzzl0Cc1zcGt@nongnu.org
-X-Gm-Message-State: AOJu0YwmCQDzZMK7amWUqvYR5WO2V6MoK9C1s0YqawGITOKK/SlXxdNk
- 50tlRqIei/37/MF0djXFy4oppcnfuC+fGMQpf3jWQGx5kk78+yopYlrA6TzjLhGqwry0dd3q9x+
- 3nyTQBV7ANjyQjtWsKyfsg0gcm9/SAW2NT55K6nZcIkModZ7UHBEpZWRwFQ==
-X-Gm-Gg: AR+sD10e55tOKjDYJLU7FX76lUo5qp0qLX3FSPWYQfpRNMCe9XOEUGxTk6WAukXUxos
- CBtih6HYieiqrpN5aIOkU8dx1QQ69UfEXr3nxWCRkYHFMwoGzBnbx5Pju3whTAzg/NJC6w+BAYl
- vG7QWnyHN+V2ihQ2T0i3czRO46CLF+EiNlLUl1ivHJgihvK86qJHD3NUI12vQ5BTqwByXyR+Y/T
- DhrUkTn+6O9eO627gS/3FInR4zGnko6mBZF5e70MnBOiXkiy/Vcg2tQRKcnpddhvBjzhOWh0URF
- icAJOjsZxdaH8u0wTdjr1lmC97BuyqdFdQLtevdMuRgCxOlnTR+Af/jdiL3+JCMa4jQqRnasU7a
- FMDXgVLGggWhk8bZGbOFIZoy9oEowfSaVKCg=
-X-Received: by 2002:a05:622a:4d43:b0:51b:8539:e8f7 with SMTP id
- d75a77b69052e-52d64865851mr25395821cf.42.1786519112382; 
- Wed, 12 Aug 2026 00:18:32 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d43:b0:51b:8539:e8f7 with SMTP id
- d75a77b69052e-52d64865851mr25395641cf.42.1786519111949; 
- Wed, 12 Aug 2026 00:18:31 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4997b33e038sm26686875e9.4.2026.08.12.00.18.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 00:18:31 -0700 (PDT)
-Message-ID: <c1d86e93-d571-41e7-894e-988287f92465@oss.qualcomm.com>
-Date: Wed, 12 Aug 2026 09:18:30 +0200
+ d=1e100.net; s=20251104; t=1786522452; x=1787127252;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rVxvOCgcb78Xd3FiuiBHiW/Quz4vh5vLpicOe1WljQ8=;
+ b=hiMt1aApA9eGgWRpsnv0u6Yge/AjJkRlNIOznU2VNG/mr1jlbmM4yL3xs9WX5MsA5Q
+ HCNlP4yqoAo4G5hFogP3oW9Bneomb79TZI0IcUJ7garICCwSXp50gWiMbXxt2vxbTrK8
+ uP01e4mzS9pUDmsLfdWa2Yjf+BHMXrbGlhQihFsCNKzFbIauOyOJ0gbOhQeayWOcDrn3
+ hHG8bxU+PFJiWSsserj8mTFjbf8Mgp4/MVCB5T3wcFe3WzX1AyRwE9ICvl6LfiQk3pjs
+ m2LkpEndJsX+V/rwprEY+vRg9jPhaxBg7oyIyGTXiuPriDw3d7wtmlKXScukU1m841pq
+ W4iA==
+X-Gm-Message-State: AOJu0Yw2fDNhrp/sT8P+SuwugHMMVCSS6HTG5L232TLPqfbln12A53MO
+ E93hhRQmY7xySH9YsoYetHBR1ylWUuzPvldoQ1qrHABB1OIEb9OvOeImlNWCQKegI0Q=
+X-Gm-Gg: AR+sD11E1aULV0+Wd1y0NxOgU13k3OJ1Ot8QM5vZ5G+NYzBUUCz5C19TpIyI7okZixg
+ /53b5Vi3FpLp7XJhzhJe06EFFYeH5FO40eAJuHV6SvwlQO2qURljMeygVkfkVkxSuPcD3lr1WXu
+ 0/Zd+v2h+9CYj1HxfEB01fsHCmlx8KLnCpm3PHRsbwepV0/uKXbHWed9cIv6/NQd/XUyXjFegO6
+ IpSuM84HGYDLPfSFn+I+Pjs8XfR7s7l6ehu2CziI17WYGnf9Df+4n8MrbJA03CWqeED7yLlgfvB
+ KmVZwcupFBvtlubYn7Zd4gzN5ksEQUpBZ0/l9bPafYxuESfE59T4AME/POW+kRYNoJUpwAvBfdm
+ haBcr5tykg43Ybzaz+8uw7yyNfe7PaaycJc+OnAexOk4D68v4gc4OhS8pZ7seE0SZZkejEgKm7W
+ 1j5Hc8FZHzfb8Yon0OKQhnO8l2Ip8+OuTze6Mvyw4MYZ/NlwF7NUKc9f21vQem
+X-Received: by 2002:a05:6000:200c:b0:481:5276:e4e3 with SMTP id
+ ffacd0b85a97d-48152c615cemr3998436f8f.19.1786522452141; 
+ Wed, 12 Aug 2026 01:14:12 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48150bf5f0esm4960390f8f.4.2026.08.12.01.14.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 01:14:11 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D98335F886;
+ Wed, 12 Aug 2026 09:14:09 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2] hw/elf_ops: defend against weird elf headers
+Date: Wed, 12 Aug 2026 09:14:05 +0100
+Message-ID: <20260812081405.3811787-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/optimize: INDEX_op_mul is commutative
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20260811225250.173812-1-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260811225250.173812-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: yOn-X6xijniAY4rf6N85ugtkHVRA5E59
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA1NyBTYWx0ZWRfX0AUaCUjBMWtH
- Xue9Md3eKqRF3Thb9XENfictCEz2ZmSpo+slC2qO5sOejPVitkCNtdHiZ1+biZajE67mlPJfynZ
- VKSXb5uuYkrsSRfam5ao+7l7OF+Q7+90rOtupKtKd2GvnUIJwg/XeDKlx4L7zpNDJDNoXNEi7rb
- SpJNlUtW635IZDe4uFUX+A3XmwxC5YbT9jvu0YppyrboIr7frjf96JsIIa0KTEXhaCZuVwQKs74
- mRqGgRGzWdYk+zhEqTrsETc2jL/4pJIyXV34FoqKC3Q6NOmA7RyHkCa77yhrZZB0AXce5eZXUnm
- SFTGonQdtcCl+8A7SC4KZxKqaggqcn3FCY/zOQTDJyVc9Tm8OmWmRFiBH7LcuMiv9j0VWpTvlZd
- g3TVOfZ8D9Zujuc6VNVeq1YUuvw4PUJch90aJCjUevvmQJTNRucFJfIg5fkszJxUfXCTC6VPCbw
- mpaZmePl1Rwxqgb3V/g==
-X-Proofpoint-ORIG-GUID: yOn-X6xijniAY4rf6N85ugtkHVRA5E59
-X-Authority-Analysis: v=2.4 cv=FbkHAp+6 c=1 sm=1 tr=0 ts=6a7c1e49 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDA1NyBTYWx0ZWRfX4dt9fsAPWJrz
- DdVZlyaHwmTJBdRtjJmgSQ7TDlZDJ06TSDGoLGXYS3Zi5bqvRDXUEUGNJGpXYTqLh4rs0GDf9/V
- LoVj7DVq/SiVlc3KVeHXRlO9iX9SXic=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-12_02,2026-08-10_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 bulkscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 spamscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608120057
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,13 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/26 00:52, Richard Henderson wrote:
-> Cc: qemu-stable@nongnu.org
-> Fixes: 7a2f7084525 ("tcg/optimize: Sink commutative operand swapping into fold functions")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/optimize.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+According to the ELF spec:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+  PT_LOAD
+
+  The array element specifies a loadable segment, described by
+  p_filesz and p_memsz. The bytes from the file are mapped to the
+  beginning of the memory segment. If the segment's memory
+  size (p_memsz) is larger than the file size (p_filesz), the
+  ``extra'' bytes are defined to hold the value 0 and to follow the
+  segment's initialized area. The file size may not be larger than the
+  memory size. Loadable segment entries in the program header table
+  appear in ascending order, sorted on the p_vaddr member.
+
+which implies while both p_filesz and p_memsz can be zero we should
+never see a case where p_filesz is greater than the in memory size.
+Indeed it has been reported such a hand crafted ELF can blow up, for
+example during rom_reset():
+
+  address_space_set(rom->as, rom->addr + rom->datasize, 0,
+                    rom->romsize - rom->datasize,
+                    MEMTXATTRS_UNSPECIFIED);
+
+which could trigger and underflow leaving QEMU slowly filling a very
+large buffer.
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+
+---
+v2
+  - ret = ELF_LOAD_TOO_BIG
+  - tweak subject
+---
+ include/hw/elf_ops.h.inc | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
+index 9c35d1b9da6..044e72de2a2 100644
+--- a/include/hw/elf_ops.h.inc
++++ b/include/hw/elf_ops.h.inc
+@@ -427,6 +427,11 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+             file_size = ph->p_filesz; /* Size of the allocated data */
+             data_offset = ph->p_offset; /* Offset where the data is located */
+ 
++            if (file_size > mem_size) {
++                ret = ELF_LOAD_TOO_BIG;
++                goto fail;
++            }
++
+             if (file_size > 0) {
+                 if (g_mapped_file_get_length(mapped_file) <
+                     file_size + data_offset) {
+-- 
+2.47.3
+
 
