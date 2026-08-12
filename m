@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80AC6C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 08:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2D9C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 08:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu4K8-0007Xw-4f; Wed, 12 Aug 2026 04:28:32 -0400
+	id 1wu4K4-0007Vo-7S; Wed, 12 Aug 2026 04:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wu4K6-0007XR-S0
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:30 -0400
-Received: from pv-2003l-snip6-10.eps.apple.com ([2a01:b747:3003:205::78]
+ id 1wu4K2-0007VC-Ov
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:26 -0400
+Received: from pv-2003h-snip6-2.eps.apple.com ([2a01:b747:3003:205::52]
  helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wu4K5-00052y-Av
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:30 -0400
+ id 1wu4K1-000529-Cd
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 04:28:26 -0400
 Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-1a-100-percent-10 (Postfix) with ESMTPS id
- 83A4D180096A; Wed, 12 Aug 2026 08:28:25 +0000 (UTC)
-X-ICL-RepId: 019ff516-45e3-755e-a964-dd6a1574f0bd
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdD1oAQAFKC1wDRQBHC0kEQAJGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ 8DA5A1800961; Wed, 12 Aug 2026 08:28:19 +0000 (UTC)
+X-ICL-RepId: 019ff516-2dde-78d2-9a48-7e5faae37e84
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVdD1oAQAFKC1wDRQBHC0kEQAZGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1786523308; x=1789115308;
- bh=UmbgY7zx2YTbIb9NF7G0shV9RsqD0iTOLo1LbE0fZvU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Q2HgJeLwI+OF/gdjCnV4avjPVyXDLxG96vreArkta2bKOqvw4siNEfvKLpgmrzpQ696jgFnoraZXorrBRiibcs4peD67daLCu0R3IInkdMUvrDCBJHeG/KhoTQ2LxsCvZxoGKwyNk0AdyF2/JgXiSPYgx/ZIuSrJaoeEw7yNgiV1u1vnCMLj0/6m4ll4n+ilwr22lFcDxC8xMjFQXwQUG+sBR9kw4DZ5nh6mByUKG9wqBDgpCm39uUOn9LSepR5ctAHdL7Xx6w32DMs2AN1GcLsVrx6UiQgZ32fDhZ+XWU4v6/HKvkTLWBgBErDCcKf4Oj3srsKTKgUlheV6SI/NDg==
+ s=sig1; t=1786523300; x=1789115300;
+ bh=BUBHt6pWcF2dXJ2z6oMGEzPrSy5M22fwYPpZYqJh0uE=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=vsd6cMCjxPN9hg3L9icG3/nr/lARMkc0hR2Bug6bGff3S273U/OfmNO5fu+FuCne9mLHL8Yd4NghJyeqrENdzBDCJifKE+bEdk5hSjqM7duuFN+CTqR3Csc5A3Ut006k+TvwcWS4hTRURkyeyeqTuZyFZDzt/qEE4HhD7+FTZzohkKTU+PHuelEQEVJkwxksXuY4ugy2M1B4IFWjHe8Jp1sp0/WNJND3jIwxP9ZwhUZeQsZOsOpm5MIvLIWuIUlASchaYCPF6QNd2b1qL4ChGXe5vHxicViBiWxih29Zr0rH58Uabih8bczraOQ44SLb3GMaEt7yJz4Y6KhIexspIg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.56.9.36])
  by p00-icloudmta-asmtp-us-west-1a-100-percent-10 (Postfix) with ESMTPSA id
- 989621800950; Wed, 12 Aug 2026 08:28:23 +0000 (UTC)
+ 79F391800954; Wed, 12 Aug 2026 08:28:17 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Pedro Barbuda <pbarbuda@microsoft.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 4/6] whpx: i386: synchronise PAT too
-Date: Wed, 12 Aug 2026 10:28:12 +0200
-Message-ID: <20260812082814.27217-5-mohamed@unpredictable.fr>
+Subject: [PATCH 0/6] whpx: i386: some fixes
+Date: Wed, 12 Aug 2026 10:28:08 +0200
+Message-ID: <20260812082814.27217-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260812082814.27217-1-mohamed@unpredictable.fr>
-References: <20260812082814.27217-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: JTnvClEPrnBC1RQLsnUEqwn0rnt6Rj20
-X-Authority-Info-Out: v=2.4 cv=VtYuwu2n c=1 sm=1 tr=0 ts=6a7c2eaa
+X-Proofpoint-GUID: xxLRih_TIXvO1527DVPVJCwvAeKtX_r6
+X-Proofpoint-ORIG-GUID: xxLRih_TIXvO1527DVPVJCwvAeKtX_r6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA2NyBTYWx0ZWRfXzGrQSZafjnlQ
+ 3RkEMJ7q8CI5N5jQFRS+3KYdw7DZObYEcMu0GPPG+UxknJFkO3eZ1uZhCkzyiUr5HCkEj6oZGn/
+ lIMW5BCRaJ7wzqDaBlA0NCgK7hu3pvKcvICDOizF4OV/61kT3OdTl1EckTXzpZlbr9sImGgW4yM
+ N9IWCHX6tDMq6rg3m9Av7gQQSG1J1ZmXnXS/9DoIGiz7GPDJ6QCqfEANndsBSk8n5HnuraQ0Xkc
+ rHHN0s8+4+NlplcrvwfKLG2qFn22riLihq13tWfHzZ7saUg3cqhHvjMKpKocmAvYuWg2uGim1rN
+ 7ov1PCMtIQ+9qLFGbDGRLLXqlZmKWp7xmJa7nhnFTGFFO3pNGndJUx7AYoEp9o=
+X-Authority-Info-Out: v=2.4 cv=IdiKmGqa c=1 sm=1 tr=0 ts=6a7c2ea4
  cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=pUpLrfO9kievb6knzj0A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDA2NyBTYWx0ZWRfX5/V52c2xYpJk
- SD9rKIz6K4pDX9qzOdBpeu++rz7gZ0QxLwKhjB2NKDv0s+uloDCZay9Brwi53RHvDbvDxrDOiEL
- qWUJTNEfZKFM/TQDEbllQyt+js974gRbfOE8ZQTpGhTxiIHfrVNuXgCvHp3y/TJspYP7M3Ti2SW
- +jXVuHvyVY91Ohm7DAmdWDpocIGA2ahhWKN7KlB6F/2RedlP7snXWa6n4erPOFavVRP43LF/iGn
- YlJePawCP06Sv0G9r5w8VLH7U/A5hpu0NFu523+3FBDXqtWuT0wS9hijj4+bMpEPeCqEs1mBqiQ
- OH4UOXkR26nkZlunYDURjgqjKcg66a/HmLWP6HqRF0B90tdTPR1lO1dG4zoTgw=
-X-Proofpoint-ORIG-GUID: JTnvClEPrnBC1RQLsnUEqwn0rnt6Rj20
-X-JNJ: AAAAAAABkhA89YGtKz2+Sp1TAcqiAByNvZHdp5hgPhKOmX8kkMmLzXxzN2oRbwb2Nzn26DizaLj0ANh1pS+ABsOuDmvwvMzEmGmWf6PRmbEs6gF4qxbfzWCRd2NRsDdO89IkNgX9fGysYRA9IawF+S7vPbhjecvccoiCWJnPn8r3d+MQDplRDQ1xBbEgo1xHMQi17dXbUroTRwAvjQ4x2qPSR/cZwjjDiQpROqqbz5pRJVgBm/k11Ietr7BcQCcYv4xizu6PiK+JzPFYTjenvMgISOCIXolBqaaxyu257504vQ/6nJWjqlQNDmSuk0V+dJV2v+U6GOeDuqL7IuSFb1F0nliRKLcWf79DUKgIqHi0ZVapqPuG9jWpZywMsb8qrgxk7nGHnOKcrlV5zd143/fhj2QxXWiabibHqt3PLgsAge1ExXeVscZKA1QWywznTWnVIaFP1TpOVGPmuvYoBH+feUygG28FIkQSNcLeGO1NMOyYaZfkxrnNo/ETfp6GiW+nOYgQTlonRhnB67oP7u9qbUQs9hcrNP+Un+dOw4HhRp+Z2+36wlMHesmkW3icZu7tLePc6qA69+2/6UWUNa4dRU1JVi+FNIkVj0hO95j6rlDPEv2zvAag1SEsJU4DiVkdFXazdueiu9qDkz6sSvp1369VX61Ic8uXio0UUZ9IoY+tOeT+wkJI1WO/ImqB53HknbcpEz6doh2Mpurg7T/xsDIc+45iC508LaRJd0hb
-Received-SPF: pass client-ip=2a01:b747:3003:205::78;
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=bIWHw9O_RvQ-l27VP0YA:9 a=QEXdDO2ut3YA:10
+X-JNJ: AAAAAAAB7wnCGHRs+lZ/HpAz5aOli1KH3ZAoWUAC6nCIHZ2nMcFBHSAoV2qr4Y1oJmOQlnN6WDNlcypR1rZQLB763x4ty7dST761HrPOJVV9XoHLFEEOCBtSMCVUR7i7t5BkrcNcTbE7RPLpj524m4DbTU/s6Vyd7fHJRtoWMrPFfax2kgPl1uzKD2zAAus6O2kSoNnPIuIUBe1XLLwTllXi33e2E+96q0OwYSlVxpxTNPjS5yJPZiO3o3b6Yi7Ff2N4DgLaFk5QxJ0qfGOZDht4HJQKpvWgsEI57UuCmHyOeU0fhwUZ86SJhFxqv/SVhN50bRtaUwq/dU4JAd6/A0JUJrQGoMO6DOOQnPEpf36VDjHD5HHn9SsP8oaVNkApBa2kzPrDfdUaKUO1FuS/+sLGlvDx/puvsvJcoR9i76X2kxxu4aC2UscH2ObcSg3qUukSmI4SqbR+ScyFL9iBsGGGjQd93sYgk3aVM/JWa869Ep5mfhmCklOurwKIIdfY2bXTkOA1kBD4IxoSbWu6wDpqFQIQSLiGFQKahUIzXzE2QMlSzDYtDopzJXxPuo+8oXJY3VYm5/zuYYUpayK+YAlwSnwCeHYK2RsZUHP+WAllfanWP0a6xZYT9gUMc1sxl7pWDlk6C1BpKDtmgEETEnvj8jW1HHv+gW6N/v52PO+WF0Sal8PjzZ9gUWTSDX/oMqANkyGY/r67nJv+DLH/UwvmwUFcwUBu/OAiXlFtDdXY8c5osJvGxnUfwNjh+kiTrUAKvNOeOcrnRYqx1DowD5xcXWEfRP/mLIKjowO9ri+ddEv7w4P+iZE6qqhZu//J840CKLk7YfrgQOKAO5mE+45WVx6xA2DLi6ZejE5wyoHkxLSUOT81GnKoEO6T8smYiDqnFGFCiZ+Op+1INtvnc5d8KTa0QC0aoBB7KBf3M9+5n1WQjALh9gc7QQeQ62ko2WUt37aIvoxujoLaBVbbkVUJ5NekmX7
+ TZY6vOCj1BYLUJhBAmdUl6+xWrpnJw35WUsaraD5rL+DEPmw7sdm8qTgAQcCpzb+1hFAXr4lF0CvSFJXwUQ8/aj/nk8e886WSXIgjvgISMLLHvEaUqM7zN5JvIZPg+OwCF8UlbLKO0ScS2i1rMaxitDhO34dNXXUVIjGC651X2yEyTFOkii/wnpatt5biy1wFpPJhteKq2eYga9pbhBpmRsDth0i63Az66wKpkM/7ikq4WA==
+Received-SPF: pass client-ip=2a01:b747:3003:205::52;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,52 +85,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-https://github.com/cmspam/winq-emu hints that
-this might be wanted for some use-cases and
-it's a step towards full state sync.
+Some (backportable) fixes for x86_64 whpx.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+-cpu host on Intel CPUs works again without needing a -cpu host,vmx=off
+workaround.
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 1800ba8eb1..2739a80da3 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -115,7 +115,7 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
- #ifdef TARGET_X86_64
-     WHvX64RegisterKernelGsBase,
- #endif
--    /* WHvX64RegisterPat, */
-+    WHvX64RegisterPat,
-     WHvX64RegisterSysenterCs,
-     WHvX64RegisterSysenterEip,
-     WHvX64RegisterSysenterEsp,
-@@ -624,9 +624,8 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-         vcxt.values[idx++].Reg64 = env->kernelgsbase;
- #endif
--
--        /* WHvX64RegisterPat - Skipped */
--
-+        assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+        vcxt.values[idx++].Reg64 = env->pat;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-         vcxt.values[idx++].Reg64 = env->sysenter_cs;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
-@@ -962,9 +961,8 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-     env->kernelgsbase = vcxt.values[idx++].Reg64;
- #endif
--
--    /* WHvX64RegisterPat - Skipped */
--
-+    assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+    env->pat = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-     env->sysenter_cs = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
+A floating point state sync fix and re-injecting exceptions on debug outside
+of the int1 case.
+
+Mohamed Mediouni (6):
+  whpx: i386: fix xsaves enablement in legacy probing path
+  hw/i386: fw_cfg: do not set VMX feature control on WHPX
+  whpx: i386: enable fast hypercall output
+  whpx: i386: synchronise PAT too
+  whpx: i386: work around Hyper-V FP state oddities
+  whpx: i386: inject back db
+
+ hw/i386/fw_cfg.c                   | 13 ++++++--
+ target/i386/whpx/whpx-all.c        | 51 ++++++++++++++++++++----------
+ target/i386/whpx/whpx-cpu-legacy.c |  2 +-
+ 3 files changed, 47 insertions(+), 19 deletions(-)
+
 -- 
 2.54.0 (Apple Git-156)
 
