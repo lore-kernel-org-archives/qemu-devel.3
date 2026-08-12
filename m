@@ -4,57 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C114C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 20:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4894C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 20:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuFhm-0007Wi-Hs; Wed, 12 Aug 2026 16:37:42 -0400
+	id 1wuFoc-0003UN-Dg; Wed, 12 Aug 2026 16:44:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhj-0007S5-1F
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:39 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wuFhh-0001EL-6e
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:37:38 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id E9F98600AF;
- Wed, 12 Aug 2026 20:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368D01F000E9;
- Wed, 12 Aug 2026 20:37:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1786567048;
- bh=501ZxrlyblIQ1h1McRWbS4xSN9a3lM3C17VvSRWKLsU=;
- h=From:To:Cc:Subject:Date;
- b=chugPWXfZ8Fa+44OnWLYZuBsILnY0shegWyBNfbvbBsywjRKZb41lg/OESQJEWHl3
- nWe0gprmI7JCCoB5fIfOnVewGU9IR5Xa4iO9BVyjiLtqvl915/9nCBBCa0MMDfXQOD
- prTv/NYonrfsc5XeYq0hg0Qybpd2GOfieeT9OYpgj7dLvzYdTplc+yVNpJFIlR2FHG
- n69xN4TIK2PwJAkaO30fGQ95tQlKZ5JB9uI+h/21IdzSeV3OOIo1wUpV9gYr5xCkON
- WOcu1UbHYNaAQi7d0yL78ocrg84WU/1Kih/XCTM+Amtoyej//AvPI+m4ua6GdNZ8BI
- h5YVomDNi3AMg==
-From: Helge Deller <deller@kernel.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>,
-	qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Matt Turner <mattst88@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>
-Subject: [PULL 0/7] Linux user patches
-Date: Wed, 12 Aug 2026 22:37:18 +0200
-Message-ID: <20260812203725.10694-1-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuFoY-0003TA-01
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:44:42 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuFoW-0002Dn-ES
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 16:44:41 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-84862b0d5f8so1350700b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 13:44:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786567477; x=1787172277; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=68LE8+61OFW02iv+EYPpEpeOsk4G9IcBG+Tp4v4ly/E=;
+ b=ax1RKfFdUq3p8rX+Kjh9aU9ZUDTUiT72io6psgEIIAXcI9R2l6J3b9WkDUnv0LlXa2
+ opyjvXtsQmp7HVhVwj/IuRjNMWR8sFs6RhutN0hQCoA2+2DsKaGUXzYoIa/8OUlF5/45
+ ieJzc5pof54qiDh11Bw2ynBlEWCJZW3mXvh0TltQobzqFvoPABzZ+UNqzVFcgMeH0+5W
+ oGenSuG3/uJkVlsoqj22uSKJTLwdpBjiOZaFac6iS7THIqIdQscdw15N5SimcWLQV1NV
+ h++tlI8HkK1G0E5b1n+DNcDQsflNsjCh+MBfIpsbSBinZ1JX6hRKNFlpyYpM1MJEypwV
+ r4Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786567477; x=1787172277;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=68LE8+61OFW02iv+EYPpEpeOsk4G9IcBG+Tp4v4ly/E=;
+ b=l23/SbSE5xhMhCkLD3Nl7aQ63ll9+cLRVstMzWbAkjS7jKWQLAg0A+UPnwCUzD4J3w
+ 6kpUC6kd4vzQyD218OGA89YSYIXJa4XmMVkzAR/3YFpaJecMaDL1JAhQoKHd8BDTfEFa
+ ROmMyhe6NcFWgI+HFUKXQLXTQqkQwFhU0jedNaYp0PDJ+WDGNsuES3ljaNd65clial2W
+ JOwqM4vL/UMbkYPVWvxE0nvGkHPcK7uLrQQGn+G8Zp7QJSi73YNNUavcva9a/PV0WRf9
+ QAlMq1JzndcttwH/9ptNhwESh4PyletAqSAFXyfQcLPy8as2pb3P2mTjOIRn/QGsXlaQ
+ e+kQ==
+X-Gm-Message-State: AOJu0YzWTy1ReH9CK4XB3Dp5mjEsFABC0umGSPz7fFZB5rzGBj0KuyBg
+ AnX2fBLQmReFgjiUsgcYuF96f3VnGlnrYLAHtX2+qZXAZzxhj4M3SS7vpRgb9PDYaaBfziwV6NU
+ IUui7
+X-Gm-Gg: AR+sD11VAhEvqz9yUovRBGdnaGRJ8Lhtuc18SW7RoIE9BFLVv3hzJBcIH+Vcdrm9oA9
+ DxAZ6rSQ+D+sGsvUYkxdE/x598JzBnrKgKZyuS9BdMwy3WPtxGVwG/qxx5K2yTVNuKUF6NbBqBm
+ MtpaFOYngPACzi5RWLgKmnxvDkzGh3agu2p0JcyJzrYXsEYwbkt8qpsvwvQ3+j+btXBQ6x/z8BJ
+ jseCn+znULIS2Ye6IgRtSMZBlpsw4ENDJR/sDAbX2gXSfbSdaa3wjujrXy3qeewNS53jdooDag0
+ Pr65gb+Uj+iOApFfN6ucUJe/ImhxsR0a1+MxzfkqxkIleqZavpaiavmG+PtGhKoE1eCBv5GL/eJ
+ Ir5fYvgRuKsP29G17g5azMAtL96f0+cvvqWy9DuFeqgeU++9fBcW7NZr9ciT+dqflM1b6agM28W
+ RpEAjfthyNpESWFSWNGZAj5Y3YDjqiZBAUsUc5vFy1CHRdrGiJLgmRxu7kONZ2rGtQGowoONLsX
+ 8/6NyaZ+u7K48neBjq6yMXm1gahaHs=
+X-Received: by 2002:a05:6a00:4211:b0:84a:29a7:f3b1 with SMTP id
+ d2e1a72fcca58-84fc6d4c6d5mr760781b3a.16.1786567476962; 
+ Wed, 12 Aug 2026 13:44:36 -0700 (PDT)
+Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84fc4787325sm125308b3a.23.2026.08.12.13.44.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 13:44:36 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 00/10] target/arm: Introduce cpu types max-v8 and max-v9
+Date: Wed, 12 Aug 2026 13:44:25 -0700
+Message-ID: <20260812204435.295067-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,56 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+This is something that we've talked about for quite some time,
+having separate "max" cpu types for Armv{8,9}, because Armv9
+prohibits some deprecated Armv8 features.  Retaining all features
+simultaneously has the potential to cause confusion.
 
-The following changes since commit 3e3ccab106f879b1512f8e0d51a827dd4de30e22:
+Changes for v2:
+  - Re-reorg cpu_max_initfn, avoiding the build failures without tcg.
+  - Move aarch32 tcg parts of cpu_max_initfn to tcg/cpu32.c.
+  - Separate patch updating feature comments in aarch64_max_tcg_initfn.
+  - Do not avoid aa32_max_features for v9 -- the registers still exist
+    and describe the features that might be present at EL0.
 
-  Update version for v11.1.0-rc3 release (2026-08-04 15:36:08 -0400)
+r~
 
-are available in the Git repository at:
+Richard Henderson (10):
+  target/arm: Tidy cpu_max_initfn
+  target/arm: Pass ARMCPU to aarch64_aa32_a57_init
+  target/arm: Pass aarch64_enabled to aarch64_aa32_a57_init
+  target/arm: Sink aarch64_aa32_a57_init into aarch64_max_tcg_initfn
+  target/arm: Split out aarch32_max_tcg_init
+  target/arm: Move aa32_max_features to tcg/cpu32.c
+  target/arm: Introduce cpu types max-v8 and max-v9
+  target/arm: Use -cpu max-v8 with aarch64=off
+  target/arm: Annotate arch revisions in aarch64_max_tcg_initfn
+  target/arm: Separate cpu types max-v8 and max-v9
 
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
-
-for you to fetch changes up to ce276ab1a92cad460930fada1bc2e2e4a96f7595:
-
-  linux-user/sh4: write the floating-point registers to a core dump (2026-08-07 18:14:13 +0200)
-
-----------------------------------------------------------------
-linux-user patches
-
-Patches from Mat Turner to support the mount_setattr() syscall and to add
-floating-point registers to core dumps on alpha, mips, hppa, riscv and sh4.
-
-----------------------------------------------------------------
-
-Matt Turner (7):
-  linux-user: implement mount_setattr(2)
-  linux-user: support writing floating-point registers to a core dump
-  linux-user/alpha: write the floating-point registers to a core dump
-  linux-user/mips: write the floating-point registers to a core dump
-  linux-user/hppa: write the floating-point registers to a core dump
-  linux-user/riscv: write the floating-point registers to a core dump
-  linux-user/sh4: write the floating-point registers to a core dump
-
- linux-user/alpha/elfload.c     | 10 ++++++++
- linux-user/alpha/target_elf.h  | 11 +++++++++
- linux-user/elfload.c           | 19 +++++++++++++++
- linux-user/hppa/elfload.c      |  7 ++++++
- linux-user/hppa/target_elf.h   |  9 +++++++
- linux-user/loader.h            |  3 +++
- linux-user/mips/elfload.c      |  8 +++++++
- linux-user/mips/target_elf.h   | 13 ++++++++++
- linux-user/mips64/target_elf.h | 13 ++++++++++
- linux-user/riscv/elfload.c     |  9 +++++++
- linux-user/riscv/target_elf.h  | 11 +++++++++
- linux-user/sh4/elfload.c       | 10 ++++++++
- linux-user/sh4/target_elf.h    | 12 ++++++++++
- linux-user/strace.list         |  3 +++
- linux-user/syscall.c           | 44 ++++++++++++++++++++++++++++++++++
- linux-user/syscall_defs.h      | 13 ++++++++++
- 16 files changed, 195 insertions(+)
+ target/arm/internals.h                        |   5 +-
+ hw/arm/sbsa-ref.c                             |   2 +
+ hw/arm/virt.c                                 |   2 +
+ target/arm/cpu-max.c                          | 131 +-----
+ target/arm/cpu64.c                            |   2 +-
+ target/arm/tcg/cpu32.c                        | 111 +++++
+ target/arm/tcg/cpu64.c                        | 397 +++++++++++-------
+ target/arm/tcg/stubs32.c                      |   2 +-
+ tests/qtest/arm-cpu-features.c                |   4 +-
+ docs/system/arm/emulation.rst                 |  11 +-
+ .../aarch64/test_virt_aarch64_off.py          |   4 +-
+ 11 files changed, 379 insertions(+), 292 deletions(-)
 
 -- 
-2.54.0
+2.43.0
 
 
