@@ -4,117 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103C5C5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212F3C5B56A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 12:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8Al-0008MR-UJ; Wed, 12 Aug 2026 08:35:07 -0400
+	id 1wu8Gz-0003xe-5N; Wed, 12 Aug 2026 08:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wu8Aj-0008Fw-Mj
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:35:05 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wu8Ah-0004nn-6h
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:35:05 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-8200ca16f26so12942567b3.3
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:35:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786538102; cv=none;
- d=google.com; s=arc-20260327;
- b=XiAD4aMTub+eQ674eEp656mz/JZY6bdtEHMJO1NNl19YMKwoVwCbsOdWsR8+NZUs56
- 4khq6IHmxxFEIARWImP1Ixz2byxAuDkKp4hjWtFIkaAJcU94NjcmC3JdTENLucVCJVDT
- Ej29v0uwtPiJCxeNMDEg0v35C2NgsCHrW8SZSZ1nKIlPZZEWPBZxcmIlkkYvqh33rDAW
- rc4lTR0eKtl5VcD2m56lMbk4aQEKWf4ec1hmlx6lTX75ZBGngQWXxl0ov4fnXM6Xuw0c
- SBAQYF7RII7MlGnPH7Puq3RQFgvQ4HJy7JdHcHvSoy1yT/1PjkSZC7KW67xOQsApG8gA
- zlVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ilnmWIgivWLzbRZEb6hNTrn/OAgof699jqHIBj8E7io=;
- fh=7JQWvXZzoi2yadYmYe7fqrda3blwmPgrRL3itXShXMU=;
- b=LikWXVLc6aBIgxOxeRhr6Edpps/GwJxFxal7QiuweVAzp7jE07L5H5XXH+MK9jLDtU
- pPZkq2dZPaCgFtLxo+m2vfG+bkyI0o5xfxv4Today4u1LKaKJspAksIROQPOFga67Cp5
- BXzLpt/LNR1j26YuzxE9q6lIRilZRcCZF1Jy345kcqX7jh8tOj3Tc7SDXjs0dow2PUTD
- I0DvQPVfaFT/OdPOlKhpgWK9oye+j9wGyl5fOQLLsIs9i00SwfPb0niNeoBj8gudTf3d
- dKWuDzRrfRrnHEXPeeSfCzEvoeLJYpHPF9WSFuKmwjHwcwkf+joAjwK9eFYyxYERW0jt
- gqDw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Gu-0003xG-MC
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:41:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wu8Gr-0006lz-Jz
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 08:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786538482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
+ b=MHrkMVEw3/r0PD4+SfiouNlpvPGRauaJmAdTwBG1+lPIfs3lqlkErfiQn9TVikXRDrBU9o
+ CORO9shAX5bhGma0+sXEf8aKWbxHC0cUjb93tfQ5b4omKxJsTEHURGdu1BVboBus+KH4ha
+ 7P4gzHTG1NXCWLr6SBbXqYkkCKNXoeQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-159-CoND65ZoPBGlXBoGBavs1A-1; Wed, 12 Aug 2026 08:41:21 -0400
+X-MC-Unique: CoND65ZoPBGlXBoGBavs1A-1
+X-Mimecast-MFC-AGG-ID: CoND65ZoPBGlXBoGBavs1A_1786538480
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93494cce712so77001585a.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 05:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786538102; x=1787142902; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ d=redhat.com; s=google; t=1786538480; x=1787143280; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ilnmWIgivWLzbRZEb6hNTrn/OAgof699jqHIBj8E7io=;
- b=TcfACfbZuR1VqH0dlL/+qnlfcuCfV7lBuwKxe9gjAP21LmMDlJKgYF+EDIilg3pSV7
- 8TRAKb3DThYXxBwAQdo5RfrbUwige1T/jZIk/iGskVYQmj2eGgbYEg9/n3vadY2JJGsw
- ZQ3axQ4RjnRtMnx7fne228/hMZJ6VReqXP3sqEVrriqsz8YMrU76zjJCWm1NjlcxeUyp
- TK9jHp5ZmS2hPWWsuaXvDiZFU1ZTyF4vErdlz/cSS9lSgL1gvylS2dxIgVuURF0p+rvW
- niPE26AglC1iUfyZltko66Mrj8ryQfjSNKhxXo9J2k2pUJ1mtLdTepQ70tjg5Jh0qhY1
- 6q4Q==
+ bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
+ b=IHmaOGjfrC2QHqQY8jIJhnHhXrkOAjY0s1zsAtwwIWIC20XZtPvQge51XWcsa6F/aO
+ IfW8LV6YmbgYKrJiDugtt4EMGM50Tbp8h20ZJ33RYt45Xf2c3kcZNtVoKnR/SEHWjW1i
+ ZisFZm0iH3mjbhQh5exR29iWQ8A8ejmbU96uNdgTFv5h+p796pz500XEpGroMHvM5FeK
+ DzrRaA05vZhyuxBZoy7zALPot01zWVEwLA3/Lcoc9FTGC3sI4OnDuFceePVN1S0kPT8I
+ UPCj7ycBVeWpED/Rx9plUVuwj91Zu9O9vg490KKmR1BIFwol1Jb3jVEHQxy+7kQ4ppUy
+ pMuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786538102; x=1787142902;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1786538480; x=1787143280;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ilnmWIgivWLzbRZEb6hNTrn/OAgof699jqHIBj8E7io=;
- b=ePmB3Ebn+C1ZcQ0k0VBnx4wBEycRxKaba2rVLfb+GlKCYXRHp7vGczMlv8C3mZ2PyG
- 9gcbsHok7ghZKBMYYN/7Vi0HiibEEtUo5TThiuiM8NMpjCcxY/dAEB/E0toBL3GZ6/x1
- d6tKnfY5x7p9lsGYNLmhNmXCe6SPHYWJ6GoVMvA92jn6miLMhdCiuxQ1TJ8dlQpJ9jcv
- vNRyavZBN6LyDt9k7D8wnGNbVf5F6WxL5plh6H0ZwqV9IME3MmgO/RNcEgKXVmfKs3uQ
- TMWcX9ZyRtQlzEv/8k/gD+SeoEHs21axOVCLDJ2zy7aGS01dY4cZE1gYr7WLHxTfq7G7
- 9Azw==
-X-Gm-Message-State: AOJu0YxMOj9SO4qsHM+m03FQcUP4oxnat+n/LjK/DYH4Tg5b9RLwSkbl
- Q5OR/kg8O03AG+jRVZyImQo9pYw4HRnFci1KPfCfZSw56m/XJl8U1Big7IzFh6EDSoo/EXNzAat
- iwFBJDtBYhNbIyIOsHO6I6rezvGMEySM=
-X-Gm-Gg: AR+sD126VgzT+JxOfDNv2e4nOocHUH1n5hCTE+I2RxICXtSzfBgpw/tvIZqfuKZeo8p
- qWZW3S/qLjvRBppd2CFTCiFmksqG7Wb9MnnxuOXFRg0NMLYqbiGrNWivkXcxXufrfMTzz9x2Cj6
- 2S2j8N60/ZXhLDgyYK3T6W801mCUDFd8aAITfFtk419EtzAqKkD9gqhdM5dySmVejMeZq94v2hk
- sjhqrJyI2NmMtcMQFFOz790hAVmt2EN3NMWhRQrkIEdj6OL7cPpumZRbmgL07QN06Hp8omUwIjK
- Xow5T6bByWtdf5GdhEmVmI4fQ9J44F3Zg8sFDW7Q8wWpjg==
-X-Received: by 2002:a05:690c:c677:b0:814:47f2:1ff with SMTP id
- 00721157ae682-83109640302mr19236817b3.27.1786538101798; Wed, 12 Aug 2026
- 05:35:01 -0700 (PDT)
+ bh=2Svx2JN4cshSWBDvCveU0FUJ1nwoe+VU75kCTnrvx7c=;
+ b=V0KPB5X6Xw7j2DwaaUcSusJjdV3c7UdwTq6gLxLL5lWFSrSHgbBEv8AFgJWe2AhQ4R
+ oMKz5tIV/wyOl/Q47WckqsqsHwZzQhfG+W+/sNUE5m4G25NSzEUF3WSe0kxX+IO8ARoF
+ V4qK1qCgi5YKbRjgvNqiHhbrD6XOp6FOJlwZr3gne/fXzusrIn1j3bN6TactENXGzTf3
+ 496p9tIXbNLEIi0mGwWSsUNG5yALo1pVv3njVHCc/wtgV2aHLqnn87BXzln+P/yB2yVZ
+ ILprHK7Mb4BE3SZCwkzgWpMvo/yaaNpVziClzXQZdws3y1Wzb4/OYIbiuv6hJ4LUhlqP
+ X/bg==
+X-Gm-Message-State: AOJu0YzVV7JrvUY2iR2246EjntYE2P6D8qugXAYGSVN626CZE3cuXRFf
+ oAvWOJ5hbT6mR0p39N+n9RaneM/04JEAcMnVrflABgZg82OBCRcmtTLNKFQSEvZEtzqYf6590dp
+ dsma/TGMTWep0ECvT2onplA+Z73Fg9hMAC5ZZ17CmVJK8/Vda1EVP6SMOomlPa4B0FrRqUjXeiC
+ P5aARN0xff5dchjl3oaY739i8wXMuYVYwxINp8NA==
+X-Gm-Gg: AR+sD100FkrFpWGcZGn/O0D9RtKqcez1c2u7lRbPHCtrz0OZDPSOuTYQsq5FB8gABTG
+ yBSGHXJd3PUIRzYB9wh7IMToYpw3tRQ7RF/1gKmE58RE/1i+sHaJiWgn9RQ8kCcxUcgTBNearm2
+ iTuwITxBPtQ4fwR8QWMz1n6h7cpMx8ked0FKYEwt57CrKKLFArzbi1rvAg3ppqGM1C42PAqEPUP
+ 8OU+eCFBXkf8wfHPAJASGpZMc/LDs1SzXBMD8YbI6u5FUk1f222UZIaL6fzHR7T9yioYGy+FWtM
+ zlQ0dUQF8AhLGmko/HKaEkrm3Nrdp9+ni+PwhnTdGBqUy0Jw0ZI6lrm++nvedPYYxgO6PkZ6asj
+ 88HyJyNYuZYyH0VlKRMOPIZ0ZGgKtvY5eFeQvcLhhIUMM9JL+sChM2dDALyg=
+X-Received: by 2002:a05:620a:d95:b0:934:aa56:45df with SMTP id
+ af79cd13be357-936b3a6417bmr421790185a.11.1786538480416; 
+ Wed, 12 Aug 2026 05:41:20 -0700 (PDT)
+X-Received: by 2002:a05:620a:d95:b0:934:aa56:45df with SMTP id
+ af79cd13be357-936b3a6417bmr421785185a.11.1786538479851; 
+ Wed, 12 Aug 2026 05:41:19 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-936b5f3b3afsm118301085a.35.2026.08.12.05.41.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 05:41:19 -0700 (PDT)
+Date: Wed, 12 Aug 2026 08:41:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH v2 0/5] migration: Hardening fixes for 11.2
+Message-ID: <anxp7qsWJOlqNPVm@x1.local>
+References: <20260728210417.1925078-1-peterx@redhat.com>
 MIME-Version: 1.0
-References: <20260723151853.2143177-1-bin.meng@processmission.com>
-In-Reply-To: <20260723151853.2143177-1-bin.meng@processmission.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Wed, 12 Aug 2026 20:34:50 +0800
-X-Gm-Features: AUfX_myKMVmA-5yyBHrhxFU4lK-2tMn4mcgUZi-E9i46v6AgpDMR0EX9mh11wAg
-Message-ID: <CAEUhbmU4myFTEA9NeGVcBpkW+195=N8YBX=gj+sScZUOfhWSBg@mail.gmail.com>
-Subject: Re: [PATCH 00/26] hw/riscv: Restore Microchip PolarFire SoC Icicle
- Kit firmware boot
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <alistair.francis@wdc.com>, 
- Alistair Francis <alistair@alistair23.me>,
- Chao Liu <chao.liu@processmission.com>, Conor Dooley <conor@kernel.org>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Thomas Huth <th.huth@posteo.eu>, 
- Weiwei Li <liwei1518@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260728210417.1925078-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,78 +118,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 24, 2026 at 10:03=E2=80=AFAM Bin Meng <bin.meng@processmission.=
-com> wrote:
->
->
-> The microchip-icicle-kit machine was originally validated with an older
-> Hart Software Services (HSS) firmware stack. HSS v2024.06 cannot boot
-> through U-Boot to Linux because several firmware-visible parts of the
-> PolarFire SoC are missing or incomplete.
->
-> The first failure occurs before the UART is initialized because the L2
-> zero window is not mapped. HSS then needs additional L2 cache controller
-> and DDR training behavior. Later boot stages exercise system services,
-> the RTC, SDHC version 4 DMA, and high-capacity SD card block sizing,
-> along with the complete DDR aliases. The existing models ither reject
-> these accesses or expose behavior that does not match the hardware
-> specifications.
->
-> This series restores the complete firmware boot flow. With these changes,
-> QEMU boots the HSS v2024.06 eNVM image, loads its U-Boot payload from an
-> SD card, and reaches the Buildroot 2026.05 Linux login prompt.
->
-> The changes are organized around the firmware boot sequence:
->
-> * Correct the L2-LIM size, map the L2 zero window, and provide the DMC
->   status transitions required by HSS DDR initialization.
-> * Model the documented L2CC Config, WayEnable, and WayMask registers,
->   and resize L2-LIM as cache ways are enabled.
-> * Complete SDHCI version 4 support used by the Cadence controller,
->   including Host Control 2, SDMA system addressing, 64-bit ADMA2
->   descriptors, and SDMA boundary continuation.
-> * Run ADMA from a bounded timer-driven engine instead of performing work
->   from command or unrelated MMIO accesses.  This keeps DMA progress
->   independent of guest register traffic and avoids consuming a polling
->   deadline inside the command write.
-> * Keep SDHC and SDXC memory transfers at their fixed 512-byte block
->   size, and advertise the Cadence controller's 64-bit system bus
->   support.
-> * Add the PolarFire SoC serial-number system service and RTC, and honor
->   the system-service notification control bit.
-> * Correct the DDR aliases and fix the board topology at its physical
->   configuration of 2 GiB of RAM and five harts.
-> * Document direct and HSS boot, add focused qtests and a full firmware
->   functional test, and restore the machine's Supported maintainer
->   status.
->
-> This series assumes that the following generic SDHCI prerequisite series
-> has already been applied:
->
-> - Message ID <20260715160731.29969-2-dingtao0430@163.com>
->
-> Testing performed:
->
-> * Built qemu-system-riscv64 and the documentation.
-> * Passed various newly added qtests.
-> * Booted HSS v2024.06, U-Boot, and Buildroot 2026.05 Linux to the login
->   prompt using the functional-test image.
->
-> The functional test downloads this versioned image archive:
->
-> https://github.com/processmission/qemu-machine-images/releases/download/
-> v1.0.0/riscv64-microchip-icicle-kit-v1.0.0.tar.zst
->
-> When restoring the HSS boot support, 3 potential bugs were identified in
-> the upstream HSS source codes that either blocks the DDR training from
-> succeed or traps in a multi-core race at the very beginning or after
-> a succesfully DDR training but stuck at OpenSBI/U-Boot hand-off. There
-> are already bug reports filed aginst various upstream projects.
->
->
+On Tue, Jul 28, 2026 at 05:04:12PM -0400, Peter Xu wrote:
+> v2:
+> - Added R-bs
+> - Patch 2/3, update commit message on wrong use of term "release buillds"
+> - Patch 4, fix bug Dan pointed out, use assert() for !coroutine, update
+>   commit log
+> 
+> This is a small batch of fixes from recent reports on migration, the plan
+> is this is only for 11.2; we don't need to rush on any of them.
+> 
+> RDMA migration has its own small batch.. It'll take slightly longer so I'll
+> send them separately.
+> 
+> Reviews welcomed.
+> 
+> Peter Xu (5):
+>   migration: Fix possible overflow in vmstate_handle_alloc()
+>   migration/multifd: Validate next_packet_size in zlib/zstd recv
+>   migration/multifd: Replace assert() with error_setg() in recv paths
+>   migration: Fix rare hang of migration_channel_read_peek()
+>   migration/ram: Check for RAMBlock size mismatch when parsing
 
-I see the RISC-V parts have been reviewed. How about other patches?
+I queued patch 2,3,5.
 
-REgards,
-Bin
+I'll drop 1, Fabiano, please pick up relevant tags when you repost with
+your other series to refactor num/size offsettings.
+
+I'll repost patch 4 separately.
+
+-- 
+Peter Xu
+
 
