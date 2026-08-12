@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88801C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BC3C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 22:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuHUZ-0007L3-HD; Wed, 12 Aug 2026 18:32:11 -0400
+	id 1wuHUL-0007Bv-ET; Wed, 12 Aug 2026 18:31:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHUX-0007Iq-JN
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:09 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1wuHUJ-0007As-LX
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:31:55 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuHUR-0000zT-UR
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:32:09 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-cbedbaba5fdso798778a12.0
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:32:03 -0700 (PDT)
+ id 1wuHUI-0000wH-3O
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 18:31:55 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-cbee846deecso1283341a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 15:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786573922; x=1787178722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786573913; x=1787178713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=iKoRvR9bnQdkcWpSiEAIwUjFioc1PQonXhV3mYvi0Qs=;
- b=DJaGsCLFgdyR2fiF1+FIDjeL8D5Cq9p44d2F+41M+z4FetonVY5uZxEsHaQFEm7u5n
- v1HVfEYR5hgTsNipsHl+VTP2AT9nj10Q4UO02SoyyOU75ySXDYYb4yhSeFH7enMWGmg2
- XruE/bBsmUo8B+iqWiNIB/82gECYf0H3oneCzofJPCrXD/lqUgErCefiSnnUu5TdZjKs
- ip2uG/YqcFnOtIJFdmZzn8UiH00bUrm6NcvHaRwDdGG2Jf0nuphPhMCTSIQu7jP2JhpE
- 3CCJs+p6Q0g3jIbgEWvW8keopC0DrEk1XV+11HvO23pmCdX+fvbQWZS7CSod7WGkwTWB
- Ur8A==
+ bh=63lJkhjE5NjzMRJjmXxoIck4WQcRpRq7JHbI5QrXX6o=;
+ b=CPuqso0yH8imqK6lTmIJa34No8qNIoHzroh0uSUk68XYsAIAc6i4m3EGAdlq9tOAmO
+ OmlOVPObcRG2HSN+n4J6yGwCORUze/fthCl7mv6jVLfOpiiS6jEbjiOOawXllPPddegF
+ wrn22pu1ViEv228yqb1q+uYzUCevpcmIxYKX+Qi80QSGL3uEgYcaOEekWxssXieF6+Pb
+ MLCSsEmHORHRkSpN2vYtVKDCGRNRWk/gtTa3UEL/hI3mgcHelD7oL2RrEL7/w8GPNIyQ
+ nzMk2+Z84jdAV/rad7biZvT2Z8dqlBZCuDNIFgbL8QvwQxwXaAQh5E8V1qF0gvDF5pkN
+ sHFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786573922; x=1787178722;
+ d=1e100.net; s=20251104; t=1786573913; x=1787178713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iKoRvR9bnQdkcWpSiEAIwUjFioc1PQonXhV3mYvi0Qs=;
- b=I9Y0AXwbjTjhMCupzKO6s1lXI+AOFh21u7mDJbxyX+fnDC21LNUncdGEAjNafqdvCX
- Zvfeh3br9i9+xE9yW1BjslR1Sngl+II4IV40Q9/KDiDr0dDYZoEU1KcAluZStnrIEOu5
- Qh2ddU8duH2cNGhdfasv8WwydqNrcNtaqdsVW6Xcrl6VBFN92Q3WlbApkuX4srf6diQP
- jJ9WR7GpVrzk5hTY//PdtEWQSdfeg3oKgnVwhV2sgJvGoeBxs5fpYXMUjnkX94O1F4eq
- peRWN6S4FMURZ6z/1lO6KgUxSsSg/DpS9UoUbq3fFGoOkaakMFY5cZmRz8VvzBhU8oyv
- K36A==
-X-Gm-Message-State: AOJu0YwaDBczBk1uSXbgiv6MTD1FkYo9m5jIKiT4a8a3HRMbsJtTs05S
- WvOtPCwamdubtJYFcxSa9waMmqf/6sUg+B+G7F6N0okoC7SN1gO4sbVPU4ZDu7cjqqGlpt0LF+9
- KCy7N
-X-Gm-Gg: AR+sD10rzdcdWXaiHvLxcIU7Q4locHBTDMiQD7B3qFElIanOTmzsVfWuplxyJhRESSW
- e/leevpbdeZuZnbpZmMhEBMNbmRZIkmShrqmx7+TdSKloKneCi29KoNnRneuipcEj0/rT95HRqs
- dHKNdS7cgQyTP5d0Vd09QTBo1j2iSL2tAOerkQ3sF5AVKwUvu3upmhW4WpJz4xDk/KOVgEr/n3g
- F+mJQPm5IPDPKN/vmQQXr7FePwB8xomJrPG+LnwkradtDnZkQWxttK3KEyoK9LAD3TU5KTvK99z
- lJr2ecyjJVgGFJGXWSnIGc2I3+N+tyl/AFVWlQ9y0P7jKal4tQSX5smdWMBjA4AX7fjrmMKFKPB
- 6nfSrDFHUMHKP4M+7qhbo65zZM0tUFvyIIOXP+h2TCBcCnQifz4VetJyL4CZ9ywuN+otu0sIlmR
- SHTO5G995zjGAVXdVvPUYxCdUlqFuYiJQPdp6YYmpic6NIkfc3yFj+6CSqjhNoc5rczA9ZrI8J5
- T/bJfcRBUzr2iKz8S6cVaOdDE3Jsoc=
-X-Received: by 2002:a05:6a21:2e14:b0:3cc:4d86:389c with SMTP id
- adf61e73a8af0-3cc54fe4420mr2337854637.13.1786573922131; 
- Wed, 12 Aug 2026 15:32:02 -0700 (PDT)
+ bh=63lJkhjE5NjzMRJjmXxoIck4WQcRpRq7JHbI5QrXX6o=;
+ b=XMVk/WNhjC3bXD9Kg567ophj4d2R1DPyo8uJcAEB7v8CkTRcvlII/M7BppP7YM+P04
+ rk0hkPSHJnOfCnVnQmdsutMRsxhuSObK6QQjBz8Lhi4h0ARCWbOZKJTl7GJS/PEFIELt
+ fX7S4X973W4JsmQhsVmu37mD0GoN0OH/viplenfAeVXop/widaPv07c6beyGoB+fnlQi
+ I2ry7Ef/sCpFxmm1XKdGzod35B7MnLLncZeZOVpJaIMV5Rupr4AXnQZBaZgMFNAY+Kqp
+ HiOWnhWfYcn9517R1f1HCgouJAVS2rDNamWqd8m8qdep3AjsTL1jqHbIYgUluJDe6+DX
+ roow==
+X-Gm-Message-State: AOJu0YwXmln/KTn2Veup0oY4AYrGmLydvA+7IkcI1hhD2/h7DAG8b4cd
+ qMhU4lpXm8uP2D0GNk0XQ93wlq3FefgyWijGuBz6hTFcE/SoCXD6uaQC4vGR8wvVuDHIwSUuYPh
+ NPeaC
+X-Gm-Gg: AR+sD11RBA0Zmk5cDyI9SfK+XVvA43lCwhaotgT4EyEEsBnATjhqjX4JoSoMgo70ZJF
+ H4UjnA4O+hAyzU9y9qK/B4rvculOHODJ1hU+VE5IETiA3EvXeViXAzN2p3Rcfx/wiclex1m3xJu
+ QcSJDZQtm9GjSYqEWF/1lszZQwLOvDwfuvX4nHvp2MqIBJ1FQmN56tzm9kfzfdkP/gkXpFIxqj/
+ OOAccI/tcstAPvjP4yPVXuKzA6jzCBK3qRptM5XPU4QycEnacniHQ+CYhSN6tuTE/gCwhwhzgY2
+ nex6tHYZPoYLFPjykfTww3qTna74A89M+muwvWAMVPYZLAvIonnHftCWf21suqDjmysXZ0QJzBg
+ 2jTuEVwI0wqbcVPtR9JbRqPjvMQeM4esCRZbzLg11qc9FS0kWTPWLpOmKp6+56cqbxP6eQqRfXL
+ p3KnuLzgMyTzBc8p2DpY9uUq/j3RGDWQCs71Wa+pvdln7ZicfR1dBX+cIEAWUN1GIIGQbaazX/Q
+ 9vwUwgFirJwgPY1aR1FelcI51DC6sM=
+X-Received: by 2002:a05:6a21:44ca:b0:3c4:2eb6:c3a0 with SMTP id
+ adf61e73a8af0-3cc5538c0d5mr2098330637.30.1786573912595; 
+ Wed, 12 Aug 2026 15:31:52 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cbef721cb0bsm212031a12.26.2026.08.12.15.32.01
+ 41be03b00d2f7-cbef721cb0bsm212031a12.26.2026.08.12.15.31.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 15:32:01 -0700 (PDT)
+ Wed, 12 Aug 2026 15:31:51 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 17/52] disas/riscv: Handle c.slli imm != 0 during decode
-Date: Wed, 12 Aug 2026 15:31:07 -0700
-Message-ID: <20260812223142.349142-18-richard.henderson@linaro.org>
+Subject: [PATCH v2 07/52] disas/riscv: Pass rv_opcode_data pointer to
+ format_inst
+Date: Wed, 12 Aug 2026 15:30:57 -0700
+Message-ID: <20260812223142.349142-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812223142.349142-1-richard.henderson@linaro.org>
 References: <20260812223142.349142-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,33 +106,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- disas/riscv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ disas/riscv.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index a8fbefb9bd..77347b557d 100644
+index 0be2f07612..70ea41f125 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -1930,7 +1930,7 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "c.bnez", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL, rv_op_bne, rv_op_bne,
-       rv_op_bne },
-     { "c.slli", rv_codec_ci_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_slli,
--      rv_op_slli, rv_op_slli, rvcd_imm_nz },
-+      rv_op_slli, rv_op_slli },
-     { "c.fldsp", rv_codec_ci_ldsp, rv_fmt_frd_offset_rs1, NULL, rv_op_fld,
-       rv_op_fld, rv_op_fld },
-     { "c.lwsp", rv_codec_ci_lwsp, rv_fmt_rd_offset_rs1, NULL, rv_op_lw,
-@@ -3085,7 +3085,9 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-     case 2:
-         switch ((inst >> 13) & 0b111) {
-         case 0:
--            op = rv_op_c_slli;
-+            if (isa != rv32 || (inst & 0x1000) == 0) {
-+                op = rv_op_c_slli; /* or unspecified HINT */
-+            }
+@@ -5111,17 +5111,16 @@ static size_t inst_length(rv_inst inst)
+ 
+ /* format instruction */
+ 
+-static GString *format_inst(size_t tab, rv_decode *dec)
++static GString *format_inst(size_t tab, rv_decode *dec,
++                            const rv_opcode_data *op)
+ {
+-    const rv_opcode_data *opcode_data = dec->opcode_data;
+     GString *buf = g_string_sized_new(64);
+-    const char *fmt;
++    const char *fmt = op->format;
+ 
+-    fmt = opcode_data[dec->op].format;
+     while (*fmt) {
+         switch (*fmt) {
+         case 'O':
+-            g_string_append(buf, opcode_data[dec->op].name);
++            g_string_append(buf, op->name);
              break;
-         case 1:
-             if (isa == rv128) {
+         case '(':
+         case ',':
+@@ -5466,7 +5465,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+     decode_inst_operands(&dec, isa, op);
+     op = decode_inst_decompress(&dec, isa, op);
+     op = decode_inst_lift_pseudo(&dec, op);
+-    return format_inst(24, &dec);
++    return format_inst(24, &dec, op);
+ }
+ 
+ #define INST_FMT_2 "%04x              "
 -- 
 2.43.0
 
