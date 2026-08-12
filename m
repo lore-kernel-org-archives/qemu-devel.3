@@ -4,92 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E18BC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A439EC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 14:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAMg-0002JJ-Is; Wed, 12 Aug 2026 10:55:41 -0400
+	id 1wuAMx-0003J3-V3; Wed, 12 Aug 2026 10:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuAKT-0006lG-5Z; Wed, 12 Aug 2026 10:53:21 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuALo-0000VV-6H; Wed, 12 Aug 2026 10:54:40 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuAKR-0007BF-Ny; Wed, 12 Aug 2026 10:53:16 -0400
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 098FA1400069;
- Wed, 12 Aug 2026 10:53:12 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-09.internal (MEProxy); Wed, 12 Aug 2026 10:53:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786546392; x=1786632792; bh=O9Gm1743cJhkRMH4eKoeKo2pU8aOSxAO
- e8EVMA+1aFs=; b=sZiLYK6oiyc+Y8iGVA0La2wJyMdCukoWQy79V1zY6BkKzlnF
- WYNcMEBRsdgDvNZibrC1iR0Rt4KXFO5uV1VS9GzBpvHQ0mx6SKt5BDR3uF2HiIFK
- Lnjj7GqduJrY9wBYqXBo5bg5+TF07a5vMYQ9WV/MWHKLDA6k/01q204OFH+L3snW
- e7xj+dO/Uxl0nPfHnwn0MNcX0EZgrHjJVTpy/Iq/bUCrWnhbBImGmVeSR0UZZ0Dn
- 1dsmBaQJHN7xRFFsT+oPCuOZHirTADNcPPZ+5Fy9Y0xPraCVcpV5LfVbHp8hJ81l
- 3g6i/nvcm9lz3VonE0HMuQNZs4S6O0ab/NJmUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786546392; x=
- 1786632792; bh=O9Gm1743cJhkRMH4eKoeKo2pU8aOSxAOe8EVMA+1aFs=; b=E
- co/ueGl+F1gMC/zYmTFbC6BaPTk3eWwt02OBKlRJpsda1PD4dngXlLyEG+8KXvzs
- TeO47kYLU869n4AOSo0wJwL8uIZcDPVMbgnvai6aCGZR9aA+iIQem1G8N5iB3dzI
- RSsg9KvBdta83kEMS0DKMEPDRPA/C3DBBe7OpjGhhLTc9F7iq/TM7i5mENzfzKes
- +4DVSlh7spMbp1jE5VCAhZ5jwo5aGdhAE1GMeoYog510MqhGyjysr2OkZiHWI0mS
- Nva5bGTn7mLJAKhu9k87JBZGfbqFu5H4Z0c0+DoG1ZBfQ3GpVHIJ0er9q0pgSkrL
- wuF4uJSPuFeqfnfMn2ppg==
-X-ME-Sender: <xms:14h8ajlCF8K0zeesEHbo67ItlY2QbaWpBDxg4iET32vpkOgN9Uo2EA>
- <xme:14h8ahyHIpMok23pTfCfJ7m0hVJtGJgCmf4slmG7lp9uww8574XMlduWOwdPsWTpk
- MkxCJPRMtKqzfCOA1tdQ_tTlANJQUYa9o7adHkzbTU1FwZyACQiZVY>
-X-ME-Received: <xmr:14h8aool746clIgJmKRbo9rWWAoN07t_vHK13RE_2LIl2tRfNmH71JGYVxb7juQHRW5sPg>
-X-ME-Proxy-Cause: dmFkZTEdCXacn7VNZfGMe+3gLNJXPW7rof2QxL+Af6CpHOxePYAI07EgJfkE42XyIIMYIV
- lRMF1NgKUOuWgci452MlUOXt5bbcWC5Jl95cVAkCgempXszDwr3DYc9JGrRUbUmLCxFxge
- FpWhCu5Y07oNP9z1nYYwf66AD1fkEhTV4SRZGBEah0R1WSzgRt5m9MhzKDRTqkoZZwpofl
- sP+UksXWNYg3TcSk2eyKA+aGNiBk55SLMMbWB0XW56lCMB9sy9gJmbNVvfG69zI06HwxAt
- cW7TTZdEl2Sdbl9zO2sN7LazJeR+32FIb+kGQseAm2lKnWCuVC3ulVsIHfeyAcHfV/LKAc
- KfzXTRMdNQh0k2ttH+iJjOfPlcEtwfoitDUTJDzECR+7xeOcJIR4aUPbvLmVH2nyN9gCUR
- mLqGfVBuMiXVKTeQis7Thvki5SZKFRkXaROIN6pvW4lARhFMY+uHClzC17PgC4beF0Gof0
- 8PP7ODrzxC4oknlbxM63R9SopnatXzCfaOQWikmRppw9ymBHjAZ5YVJ8rD7reoIxalmXI1
- Fol8bKx72jxkH377N1Y6WMd19w12XR4LmuXf8IAMf4jniEXB9BizIeXSYArJidqf/j2YUH
- Z+9ae/aZbCU1InWNQwazdTHmg96yUaTudRA3ssdEWovulO34FjUXnK6tzjQA
-X-ME-Proxy: <xmx:14h8ag78kv0xGPD4xJvGcQHtSeLni1VEFA9u1_BDjktuqUvNzsocEA>
- <xmx:14h8avfBNXKf-Wv8TtTZQ7Cb3U0fFSCk_u8c5i2w_XDepIqicxjy1A>
- <xmx:14h8al7uin3Nlv5L9swRoN8JPvC_mYg9YcFb9b3zVpnrdbxLAGEKaw>
- <xmx:14h8amvGrNCzHH_frRDh-4t6SWcqpdl7k9iMaRg7Dd9KnAoInto2gw>
- <xmx:2Ih8akoBVRayo7u7v_OVPLzLm7cTOSRQObfQYWbuXk4gplrHokqR6Oqu>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 10:53:11 -0400 (EDT)
-Message-ID: <b2cc4a8ecd23da5052aefbc839a8d7cce587907b.camel@alistair23.me>
-Subject: Re: [PATCH 0/2] target/riscv: Fix seed CSR sign extension
-From: Alistair <alistair@alistair23.me>
-To: Ivan Efremov <nendensu@ispras.ru>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com, 
- farosas@suse.de, lvivier@redhat.com
-Date: Thu, 13 Aug 2026 00:53:11 +1000
-In-Reply-To: <20260802113130.7818-1-nendensu@ispras.ru>
-References: <20260802113130.7818-1-nendensu@ispras.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuALk-0007Rg-5G; Wed, 12 Aug 2026 10:54:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786546232; bh=lxSGRkRrXyDUQbQkyAB0HOqLTUi2At9dNb4DpP3pJfY=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=XmyCLoPSIFJ3Fea0BIRpwR0rfM1ZDN63baSLMdz7xnOJtMYQXOEg8nSEVQs78A6sp
+ ETcJb5fMLWQLLGISqPseSHL2ZFXOidPCu/EHUMBZQAWElxINca+jwnV2/rBcLsMcko
+ JkEC5E1K78EoiYD4r6w53r+cQ812u2lGRnCrpXda2p0XCwwvPgb+C1BIhYVQUDMh8B
+ d0fdSXudRM1r2sDl8OcP2yLImHeEJvXnR5qT4x83skxg0joywbGelz0oHezTE8or6D
+ dNONEnr6LujXi1QAJrLWHWv2CA1bYySdiLaKFNVOnweR9L7+GvKFAQba4cbvG0terv
+ NF+YQJR6kL5RQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0237C1CA632;
+ Wed, 12 Aug 2026 17:50:32 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5CFAE409D74;
+ Wed, 12 Aug 2026 17:50:43 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id BA7622F9BF; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael S. Tsirkin <mst@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Yuri Benditovich <ybendito@redhat.com>,
+ Wei Xu <wexu@redhat.com>, huntr bubble <bubblehuntr@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 046/120] virtio-net: fix OOB read in RSC receive path
+Date: Wed, 12 Aug 2026 17:48:29 +0300
+Message-ID: <20260812144955.649205-46-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.152;
- envelope-from=alistair@alistair23.me; helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,31 +72,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-08-02 at 14:31 +0300, Ivan Efremov wrote:
-> The seed CSR value on RV64 was sign extended while converting to
-> target_ulong.
->=20
-> The first patch makes SEED_OPST_* unsigned.
-> The second patch adds qtest to check that upper 32 bits are zero.
->=20
-> Tests ran:
-> - riscv-csr-test
-> - make check: 324 passed, 11 skipped
-> - RISC-V Zkr-00 architectural test
+From: "Michael S. Tsirkin" <mst@redhat.com>
 
-Thanks!
+The RSC receive path parses incoming frames at guest_hdr_len byte
+offsets, but the backend buffer contains only host_hdr_len bytes of vnet
+header. If the lengths differ, RSC would read at the wrong offset and
+cause an OOB read.
 
-Applied to riscv-to-apply.next
+This is no longer possible after the previous patch, but the assumption
+seem fragile. Along the defense in depth lines, let's validate.  To
+ensure we are not breaking any valid setups by mistake, warn and fall
+back to the normal receive path when host_hdr_len != guest_hdr_len.
 
-Alistair
+Fixes: CVE-2026-63321
+Fixes: 2974e916df ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Cc: Jason Wang <jasowangio@gmail.com>
+Cc: Yuri Benditovich <ybendito@redhat.com>
+Cc: Wei Xu <wexu@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3623
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <f261dcd535edc890f8636d8ae5ac1007bc32b8b4.1784891251.git.mst@redhat.com>
+(cherry picked from commit 52c7bb369b23dfcafb6e6d90665c777797b55e88)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
->=20
-> Ivan Efremov (2):
-> =C2=A0 target/riscv: Fix seed CSR sign extension
-> =C2=A0 tests/qtest: Add seed CSR zero extension test
->=20
-> =C2=A0target/riscv/cpu_bits.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 +++++---=
---
-> =C2=A0tests/qtest/riscv-csr-test.c | 26 ++++++++++++++++++++++++++
-> =C2=A02 files changed, 31 insertions(+), 5 deletions(-)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index f0e3beb2903..2761644dfd9 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2674,6 +2674,13 @@ static ssize_t virtio_net_receive(NetClientState *nc, const uint8_t *buf,
+ {
+     VirtIONet *n = qemu_get_nic_opaque(nc);
+     if ((n->rsc4_enabled || n->rsc6_enabled)) {
++        /* this never happens with existing backends, but just in case. */
++        if (n->host_hdr_len != n->guest_hdr_len) {
++            warn_report_once("virtio-net: host_hdr_len %zu != guest_hdr_len %zu, "
++                             "skipping RSC",
++                             n->host_hdr_len, n->guest_hdr_len);
++            return virtio_net_do_receive(nc, buf, size);
++        }
+         return virtio_net_rsc_receive(nc, buf, size);
+     } else {
+         return virtio_net_do_receive(nc, buf, size);
+-- 
+2.47.3
+
 
