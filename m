@@ -4,98 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E89C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 16:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B088FC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuC8n-0006MW-UN; Wed, 12 Aug 2026 12:49:21 -0400
+	id 1wuCSM-0007ZV-KH; Wed, 12 Aug 2026 13:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuC8b-0006Ll-Re; Wed, 12 Aug 2026 12:49:10 -0400
-Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wuCSI-0007Yt-R2; Wed, 12 Aug 2026 13:09:30 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuC8a-0000tT-8d; Wed, 12 Aug 2026 12:49:09 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id 7763AEC019E;
- Wed, 12 Aug 2026 12:49:07 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Wed, 12 Aug 2026 12:49:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786553347; x=1786639747; bh=BGfYPcEK8Qz5xC59PM0p29DQgyoUZ/IC
- 7LYgDtnNk60=; b=GEE+DKRadeuzMxL7AB61g1CbHbPbbyOzFkNoz7tq2QG1f/ed
- 9uz2/2uYwUtfcRcYK50wseo9y7xAEQAUoK7gb6de13laqa+HTDXp5EO/WJrRy4iG
- wrDdFjp9+ZZdgqhNpsXNZXzXezGWFc/+5cAcYGYiWwkT0Rq8AnYw5UDzF+zSBD7F
- hannoEJN4I+gHVQglrksv7t0s+Z0vNV4JrmP2y4KXyxhUCfuV22M9o0qLhRlhuIr
- ZXeuCnaXapPkJ+DtNEgLEg1uI2++ttz0/cJYBUZdu1fY5vk8w1m/EdZqvVy/roC4
- O0gthBGIvQ6pMp/zha3jqtPYUhGGqvKVWS1Z3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786553347; x=
- 1786639747; bh=BGfYPcEK8Qz5xC59PM0p29DQgyoUZ/IC7LYgDtnNk60=; b=V
- 6rq+ULSRGgXp3Jy9d473FdfifBwYE3DVnFRm7/9e+lrz+XInK2jC6ZYZGe5m7vT7
- Q1xyDUJCyI8tyUObNmvTvJZeMi9u52JLTHevylfpt5OsbLTHeu9vZViZWoBsq9qH
- FdaJkodQb40BBpFa1gKar0R1soryEoA6+v4TCogVY1AQ3QY4NhRdmP2ZUd2uoqmp
- 4ZFgr6fJlr2aoYhTf9D70z24GkI5GHyx+tgqghlS1T1nRkhV+TWXXqdAsO90mK56
- CCG73YmeXSJALZc9ZRqcM3wFC79tJmSmlPeoWoqvk69RgCst9c+deu3vJFEI5aqc
- +Dp7t4ZJTp8MRf7j85w/w==
-X-ME-Sender: <xms:A6R8avd_7TuvLRtlRrqLbFklTpTpCsb6Y2yk5zTPyU0tP0E0dN2R5w>
- <xme:A6R8amuQbJTeaP-rKYBJffxf4bdxjMUlFN4YrXzES_wpJQqF85TlOk0sifQdlVrA5
- CYac4X7Uuk8LZPwrl9vYClIH9kXxPcr1wWJPauYO7SLzvJ4nQxVYOQS>
-X-ME-Received: <xmr:A6R8aolcs91S1f898IGhHRtoLMJd0Y-8FQcBqcL1gAtB3-PpGoXN3PKLCkIKVsNmGAP1Fw>
-X-ME-Proxy-Cause: dmFkZTGPjgCy9eRTbhRe2RXfR/tYtxiNRsfVkgaZ7qvW9PjmBbvGAaQX0C9fQzvbuCv4sD
- Ut79h7w3re4camkSV9VdENhh+t2IPVDPMXhNMUldHAFHi8J9BUQtT2hsVrojQz7DwNi/dl
- MMpmnl8hU/VGkT5lVNIFe8lTu62t1a7dsOt5kK3GQm5OCn1lRdrDKGDXYihGvhSCOw1SZP
- 1R363SGFTbbQdCnW/pATDijk5Ss3W6+P0A08IQ6XRRuXYIOkHd16XojoSIc0/OThpJhg08
- RyrfluUCtkp/C3t6StWNBveWG+3tTQTDcYsPcXUO+5G6HJjIjeiIAK+ZwpSR/BnzSlfACy
- m8K3YO0/m64VMdDx6Tl/DPxsRu93N87KqbCTBBVKsj11WwwYMRqYgfa7oTPSIa48FxPNDu
- R4m8sQevA4XLn4f0/LBEC4V4U/pf7Qc7JoZ2snF8lxf8/C2s9XorG/R3mGmiA+VY7GESQx
- qe4VFInRmW374BDin2P7DHFSKThLZPGtLzlynjXfaY9LplHyylmRTNKeQYnvgdc3rRRUKh
- ei9c5N2hT+M6A6Ldp+aCSEwos7GTI4V9OvvTRWd0iYjYXi4AIVumHgUhvCUMsR6oF4x5cb
- QXTtoqcmy9IwUY3+HHgma51vK8jG5zPgGeAlBkC2hwCS+c796TXpl1S7Kbvw
-X-ME-Proxy: <xmx:A6R8agzWyapQwBIkRQHXvdK7aMLiUTh0iRTRcDaMPYffB8-C6n7vwA>
- <xmx:A6R8aiMziB9zIWdnhCrWAPkMFUT4IxRn9xW4ai6bgo4ZrZRZK2Tv-g>
- <xmx:A6R8akp5pECY9-gS9hRXUkOyInwzyM8jGF1PpmaFcD5U3IUDYTTTIw>
- <xmx:A6R8ajF7-4-_sEMOtn6x4LOG_nV3N7htw7PflAfn16XikFD82cUANg>
- <xmx:A6R8aofXgeHVy0VKbFHqAOCCSrWJUwZ0V9SkKEp3tSlcqUAPmsKrBPsx>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Aug 2026 12:49:06 -0400 (EDT)
-Message-ID: <b67a7dc0e378b86b199cf89cc49733115c5c3e57.camel@alistair23.me>
-Subject: Re: [PATCH 4/4] target/riscv: make cm.mva01s/cm.mvsa01 high-sreg
- forms illegal on RV32E
-From: Alistair <alistair@alistair23.me>
-To: wangyang <wangyang25@otcaix.iscas.ac.cn>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com
-Date: Thu, 13 Aug 2026 02:49:06 +1000
-In-Reply-To: <506ceee00a6b4199b3efd87352bbe530@wangyang25.otcaix.iscas.ac.cn>
-References: SENT
- 0001-target-riscv--honor-zicbo--envcfg-gating-in-linux-user-mode.patch
- Subject: [PATCH 1/4] target/riscv: honor zicbo* envcfg gating in linux-user
- mode Message-ID:
- <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
- <bd5454f4047447d5b2f1e9756e5c1525@wangyang25.otcaix.iscas.ac.cn>
- <506ceee00a6b4199b3efd87352bbe530@wangyang25.otcaix.iscas.ac.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wuCSF-0007F8-3t; Wed, 12 Aug 2026 13:09:29 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67CH1bmH3994408; Wed, 12 Aug 2026 17:09:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=bDjdvjh6Uy0TA9n9krj/qzBdKdW3PaklSf2x3C4Il
+ nM=; b=cSQJoJb35ChUH9RblXFxb9/zsh46U+a+T7AuiLNHF6asM8nDp+Cw2qXW7
+ wE52Alc1/UKteaAOnC4bKdBdRYIB4LkVp83vtwxf89fxsXLYCYQR3VLvaXvlrheq
+ IiMIZYvJmd/hHzWqNPG3ZFzGyxcSeRnQcO1oNk7onxFLcDrlbcIn2HNk0UKW3FCy
+ QJIo+J2IGGDoN5Y+LyB9ca+wxK8Sk72ooyFhmZtBWBCHhlM8xwzE9wB4Z2dOKngZ
+ 5WPtA7VrwCf5zLamJoy/mTpme/Zh0280puJ/w8VfDylLdq1n1W1mBOQ5lELeP3f1
+ e8jX+YCQ3HHM9UqePVXl1G9AdYD+Q==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp32ubp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 17:09:14 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67CGutEl031265;
+ Wed, 12 Aug 2026 17:09:13 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9h71b3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Aug 2026 17:09:13 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67CH99pW43647370
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Aug 2026 17:09:09 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0A88D2004F;
+ Wed, 12 Aug 2026 17:09:09 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0DB4420043;
+ Wed, 12 Aug 2026 17:09:06 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.39.26.117])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 12 Aug 2026 17:09:05 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 0/3] ppc/kvm: Handle CPU compatibility mode correctly for
+ nested guests
+Date: Wed, 12 Aug 2026 22:38:51 +0530
+Message-ID: <20260812170854.58709-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.146;
- envelope-from=alistair@alistair23.me; helo=fout-a3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7ca8ba cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=2eESetWJmRnmctodxWgA:9
+X-Proofpoint-GUID: PRvUNZ0LNyyzvHdkxtrWP5tOpGZ5mVG7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfXxiD9V4+e8VmF
+ ybfMYK9iiBJD9AGDn1iRZj4mcbbULHq3jPERwPDLEbc14Pahf3PX/TeIaDuxFRcS1BmjBunE6hg
+ hG38dPmm3qe+SO+8iHR899Ac4shz+aB7aKnS4yfGJI+N+Fpy0H3JTEAGNZDs8MrypkW7SdfU9v0
+ yS8XEnvXBYRdPFb5erezo8jCp0Oh2TvFadS+23N+1u19rG29m50yfP2I3jTwAapsWwm2bpUCRm4
+ 7ndWOh561oKqks6Con1pvL+Zckpy9o20+iET0/yOBtFaeNTb3mjbJc+u9qRZaMf7EB8MUE5F8XS
+ 3SM0KFDappaHuLSqWrmWf0vlS8ohZbkNZYm9QhTYz+L77t72vOoV6s06pZyXW3AqUZ9zhrG2Ros
+ oH9/8mbXvD8I/Pm0QXhkiOHSoK3iS+a+XibA/TcgEjRHj+XOUO68BGUw+rjZCvjzPYwLF05Nxw/
+ Xyg8YRakvkoOJbTPdQA==
+X-Proofpoint-ORIG-GUID: 2yRRuWiwwy3sEoJGCA08XHKU9WDIZrSl
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEyMDEzOCBTYWx0ZWRfXy6D3UVnLLEOD
+ mzCw2thcluGYihPoixbEKVew+gCGmI4HYhAlOIAD26h2CUwrDx/DHmMaHYbHcwgh5HbspYqymLw
+ WPSSruhxTyqqLqyO4j9QytZvtd82Fco=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-12_05,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608120138
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,55 +127,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-08-11 at 09:14 +0800, wangyang wrote:
-> The Zcmp pseudocode marks cm.mva01s/cm.mvsa01 as reserved on RV32E
-> when either compressed saved-register selector is above s1, but the
-> translators only checked REQUIRE_ZCMP.=C2=A0 Since %r1s/%r2s map the
-> selectors to register numbers (x8/x9 for s0/s1, x18..x23 for
-> s2..s7), add a gate that returns false when RVE is enabled and
-> either operand exceeds x9, so the high-sreg forms raise an
-> illegal-instruction exception while the s0/s1 forms and all RV32I
-> forms keep retiring.
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4110
-> Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+On POWER systems, newer processor generations can operate in compatibility
+modes corresponding to earlier generations (e.g., a Power11 system running
+in Power10 compatibility mode). In such cases, the effective CPU level
+exposed to guests differs from the physical processor generation.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+This creates issues for nested virtualization. When booting a nested KVM
+guest, QEMU may derive the CPU model from the raw hardware PVR and attempt
+to configure the guest accordingly. However, the host is constrained by the
+compatibility level negotiated with the hypervisor, and requests exceeding
+that level are rejected by KVM, leading to guest boot failures such as:
 
-Alistair
+  KVM-NESTEDv2: couldn't set guest wide elements
 
-> ---
-> =C2=A01 file changed, 6 insertions(+), 0 deletions(-)
->=20
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-> b/target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-> index 71b4ca5473c..fef522d3932 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-> @@ -273,6 +273,10 @@ static bool trans_cm_mva01s(DisasContext *ctx,
-> arg_cm_mva01s *a)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_ZCMP(ctx);
-> =C2=A0
-> +=C2=A0=C2=A0=C2=A0 if (has_ext(ctx, RVE) && (a->rs1 > 9 || a->rs2 > 9)) =
-{
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv src1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
-> =C2=A0=C2=A0=C2=A0=C2=A0 TCGv src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
-> =C2=A0
-> @@ -286,6 +290,10 @@ static bool trans_cm_mvsa01(DisasContext *ctx,
-> arg_cm_mvsa01 *a)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 REQUIRE_ZCMP(ctx);
-> =C2=A0
-> +=C2=A0=C2=A0=C2=A0 if (has_ext(ctx, RVE) && (a->rs1 > 9 || a->rs2 > 9)) =
-{
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 if (a->rs1 =3D=3D a->rs2) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
+This series addresses the issue by preventing fallback to raw mode when the
+host itself is booted in a compatibility mode, and by querying the effective
+CPU compatibility modes supported by the host via KVM. The kernel interface
+uses copy_struct_from/to_user() for forward and backward ABI compatibility.
+With these changes, QEMU ensures that nested guests are configured with CPU
+models consistent with the host compatibility mode, allowing them to boot
+correctly.
+
+Patch summary:
+  [1/3] [DO_NOT_MERGE] linux-headers: Add uapi header changes
+  [2/3] target/ppc/kvm: Add support for querying host compatibility mode
+  [3/3] target/ppc/kvm: Use host compatibility mode for nested guests
+
+Changes in v6:
+  - Patch 3: Drop redundant #ifndef CONFIG_KVM / #error guard; kvm.c is
+    only compiled when CONFIG_KVM is set (enforced by meson.build), so
+    the check can never fire [BALATON]
+
+Testing (with kernel v9 patches):
+
+KVM APIv1 Testing
+=================
+  On P10 PowerNV machine (L0)
+  ---------------------------
+    - P10 L1 KVM guest -> works
+      - P10 nested L2 KVM guest -> works
+      - P9 compat nested L2 KVM guest -> works
+    - P9 compat L1 KVM guest -> works
+      - P9 nested L2 KVM guest -> works
+
+  On Powernv11 TCG Guest (L0)
+  ---------------------------
+    - P11 PowerNV TCG L0 guest -> works
+    - P11 L1 KVM guest -> works
+      - P11 L2 KVM guest -> works
+    - P10 compat L1 KVM guest -> works
+      - P10 L2 KVM guest -> works
+    - P9  compat L1 KVM guest -> works
+      - P9 L2 KVM guest -> works
+
+KVM APIv2 Testing
+=================
+  On P11 PowerVM LPAR (L1)
+  ------------------------
+    - P11 L2 KVM guest -> works
+    - P10 compat L2 KVM guest -> works
+    - P9 compat L2 KVM guest fails to boot as expected
+    - Without QEMU patches but Linux patches
+      - P11 L2 KVM guest -> works
+      - P10 compat L2 KVM guest -> works
+      - P9 compat L2 KVM guest fails to boot as expected
+    - Without Linux patches but QEMU patches
+      - P11 L2 KVM guest -> works
+      - P10 compat L2 KVM guest -> works
+
+  On P11 LPAR in P10 compat (L1)
+  ------------------------------
+    - P10 (host compat) L2 KVM guest -> works
+    - Without QEMU patch but Linux patches
+      - P10 guest fails to boot as expected (error: kvm run failed Invalid argument)
+    - Without Linux patch but QEMU patches
+      - P10 guest fails to boot as expected (KVM: unknown exit, hardware reason ffffffffffffffea)
+
+  On P10 PowerVM LPAR (L1)
+  ------------------------
+    - P10 L2 KVM guest -> works
+    - P9 compat L2 KVM guest fails to boot as expected
+
+TCG pSeries Guest
+=================
+    - P11 (default) pSeries guest boots fine
+
+ABI Extensibility Testing (struct size 32, extra member)
+=========================================================
+    - Newer struct on QEMU, older kernel -> works (kernel returns -E2BIG,
+      QEMU retries with correct size)
+    - New struct on Linux kernel, older QEMU -> works (kernel zero-pads
+      trailing fields, QEMU gets correct data)
+
+Note:
+1. Patch 1 is marked DO_NOT_MERGE as it contains linux-headers updates that
+   will be synced separately via scripts/update-linux-headers.sh once the
+   kernel changes are merged upstream.
+2. The corresponding Linux kernel patches (v9) have been accepted into the
+   ppc/next branch and will be included in the next pull request.
+
+v5: https://lore.kernel.org/all/20260804182914.83091-1-amachhiw@linux.ibm.com/
+v4: https://lore.kernel.org/all/20260701052341.62289-1-amachhiw@linux.ibm.com/
+v3: https://lore.kernel.org/all/20260616113915.25589-1-amachhiw@linux.ibm.com/
+v2: https://lore.kernel.org/all/20260502140021.69712-1-amachhiw@linux.ibm.com/
+v1: https://lore.kernel.org/all/20260430061333.37905-1-amachhiw@linux.ibm.com/
+
+Previous kernel patch versions:
+v9: https://lore.kernel.org/all/20260808161148.66673-1-amachhiw@linux.ibm.com/
+v8: https://lore.kernel.org/all/20260807172433.82045-1-amachhiw@linux.ibm.com/
+v7: https://lore.kernel.org/all/20260806170645.11892-1-amachhiw@linux.ibm.com/
+v6: https://lore.kernel.org/all/20260804180705.59160-1-amachhiw@linux.ibm.com/
+v5: https://lore.kernel.org/all/20260701051409.51820-1-amachhiw@linux.ibm.com/
+v4: https://lore.kernel.org/all/20260616123314.82721-1-amachhiw@linux.ibm.com/
+v3: https://lore.kernel.org/all/20260522152744.55251-1-amachhiw@linux.ibm.com/
+v2: https://lore.kernel.org/all/20260513100755.83195-1-amachhiw@linux.ibm.com/
+v1: https://lore.kernel.org/all/20260430054906.94401-1-amachhiw@linux.ibm.com/
+
+Amit Machhiwal (3):
+  [DO_NOT_MERGE] linux-headers: Add uapi header changes
+  target/ppc/kvm: Add support for querying host compatibility mode
+  target/ppc/kvm: Use host compatibility mode for nested guests
+
+ hw/ppc/spapr_hcall.c            | 14 ++++++
+ linux-headers/asm-powerpc/kvm.h | 19 ++++++++
+ linux-headers/linux/kvm.h       |  3 ++
+ target/ppc/kvm.c                | 84 +++++++++++++++++++++++++++++++++
+ target/ppc/kvm_ppc.h            |  7 +++
+ 5 files changed, 127 insertions(+)
+
+
+base-commit: e8d693e12af9cbb89d724baadfcc08559669e279
+-- 
+2.50.1 (Apple Git-155)
+
 
