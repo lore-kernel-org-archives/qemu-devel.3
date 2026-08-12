@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E0AC5B572
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E41C5CFDB
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 13:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wu8ee-0000k5-0X; Wed, 12 Aug 2026 09:06:01 -0400
+	id 1wu8eX-00007Q-JG; Wed, 12 Aug 2026 09:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eZ-0000RT-Dl; Wed, 12 Aug 2026 09:05:55 -0400
+ id 1wu8e7-0008Kr-Hv; Wed, 12 Aug 2026 09:05:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wu8eX-0004v2-4V; Wed, 12 Aug 2026 09:05:55 -0400
+ id 1wu8e6-0004ei-26; Wed, 12 Aug 2026 09:05:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786539783; bh=KqwNwYdsdt0qbhEE8LdCIG9z9/vEjNauruJK4ZjOCWA=;
+ t=1786539783; bh=K0RNsper823VnfRSK1pc37z55ocpHYZxFbBCKIQQOj0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pQyA6waO0ZVF/N0ZowAXEttm4CYjCuh/r5/pRqSrRIrcsZcDnawCSnJaYiMle37kG
- ECtSNqXhKs0UnRw4a+ur37asoEFQa+Q2ieHwGbzEQQrt5icLgaDRhMJvUwnnEF148z
- 6VZU4XPHaveFLtc+DbmEq41sF+dt48YRPKrYcXb+htamw+LtMTuExW2y76tZvlUwrR
- 9DUJrv+sH+Q747YwboJFMvERtk95xE5MVsIPwP+E4EDXs871IpBEC+lGZzoIxg+DGZ
- FZDMU0Ca+BHoPRKT27FWmVunqLPOdIraKl7pCWkKCGKvuM8S83W09qZ92rMG1e84oB
- iyhK9IRzMouLA==
+ b=PCZ6DvaKdWB1sjIgER7IcCyi2C6r1mkQ4lp454YHHWmdNTxzRvyy5nuzcOcTRZzle
+ /grbK0QVVCzljOWaKXkJ7cmo8WlHvp11pVeeVYBopEjXEpeZDYZ1XRddsFCU0FB6Mw
+ KHdfmjzRjwahmAPumCM7YE1vpqAVad80FSdFXV11YLNZQO/UPQn9I7DgFKJT+0TODG
+ cvqD9Rg6oh2mftt7z0XWiBimHrvN4oXcIhip90wuCXDTx5gY8Zvvw4rmeeFO4npbXk
+ VUC9Vig7yC7Gm82wI+BpP1oY7mvUMN1xlCvFkf0wczUFS6oJrXpbWL9SFoh+tvrUM9
+ C0uHwz2b04VCg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A23B91CA49E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8C9E01CA49A;
  Wed, 12 Aug 2026 16:03:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D7D30409B81;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C1A08409B7D;
  Wed, 12 Aug 2026 16:03:14 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1D0E52F8D2; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
+ id 12C4B2F8CA; Wed, 12 Aug 2026 16:02:50 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haotian Jiang <jianghaotian.sunday@gmail.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 031/102] virtio-gpu: fix NULL deref in rutabaga
- set_scanout
-Date: Wed, 12 Aug 2026 16:01:06 +0300
-Message-ID: <20260812130233.621965-31-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 027/102] ui/vnc: remove redundant rows computation
+Date: Wed, 12 Aug 2026 16:01:02 +0300
+Message-ID: <20260812130233.621965-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260812152851@cover.tls.msk.ru>
@@ -74,45 +74,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haotian Jiang <jianghaotian.sunday@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-rutabaga_cmd_set_scanout() checks scanout_id < VIRTIO_GPU_MAX_SCANOUTS
-(16), but does not check scanout_id < conf.max_outputs like the base
-class (virtio-gpu.c) and virgl backend (virtio-gpu-virgl.c) do.
+"rows" was already computed in an earlier commit 3543c2b855 ("ui/vnc:
+fix OOB write in vnc_refresh_lossy_rect").
+(Mjt: in 10.0.x this is commit 5ab666fda9d)
 
-With the default max_outputs=1, virtio_gpu_base_device_realize only
-initializes scanout[0].con. A guest submitting SET_SCANOUT with
-scanout_id >= 1 takes the con=NULL path, and
-qemu_console_set_surface(NULL, NULL) dereferences con->ds, crashing
-QEMU.
-
-Replace VIRTIO_GPU_MAX_SCANOUTS with vb->conf.max_outputs in the
-CHECK, since realization already ensures max_outputs <=
-VIRTIO_GPU_MAX_SCANOUTS.
-
-Fixes: 1dcc6adbc168 ("gfxstream + rutabaga: add initial support for gfxstream")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3897
-Cc: qemu-stable@nongnu.org
-Message-ID: <20260720071556.106003-1-jianghaotian.sunday@gmail.com>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Haotian Jiang <jianghaotian.sunday@gmail.com>
-(cherry picked from commit 8ac0a1c7b98e11693db8fc6b390cc892b6e3e6c8)
+Fixes: e650e4fe0f ("ui/vnc: fix out-of-bounds write in lossy refresh dirty marking")
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit efa7244b2a0bd5e40ec334dbec4a09af0134d91f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index a61454aeb99..c235c3d31b0 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -302,7 +302,7 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-     trace_virtio_gpu_cmd_set_scanout(ss.scanout_id, ss.resource_id,
-                                      ss.r.width, ss.r.height, ss.r.x, ss.r.y);
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 8be69754e0e..ac03d42b32b 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3005,7 +3005,6 @@ static int vnc_refresh_lossy_rect(VncDisplay *vd, int x, int y,
  
--    CHECK(ss.scanout_id < VIRTIO_GPU_MAX_SCANOUTS, cmd);
-+    CHECK(ss.scanout_id < vb->conf.max_outputs, cmd);
-     scanout = &vb->scanout[ss.scanout_id];
+     y = QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
+     x = QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
+-    rows = MIN(VNC_STAT_RECT, height - y);
  
-     if (ss.resource_id == 0) {
+     rows = MIN(VNC_STAT_RECT, height - y);
+     if (rows <= 0) {
 -- 
 2.47.3
 
