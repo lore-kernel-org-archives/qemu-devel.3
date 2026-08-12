@@ -4,105 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A4BC5DF60
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6214C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 15:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuAgk-0008Ul-VW; Wed, 12 Aug 2026 11:16:19 -0400
+	id 1wuAMr-0002lZ-Kl; Wed, 12 Aug 2026 10:55:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgN-00086B-18
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:16:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAKM-0006jR-AI; Wed, 12 Aug 2026 10:53:12 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuAgK-0007DN-W9
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 11:15:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786547752;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+OceRc3ZgDjagPSQ/pqT62JhQxrkVIS83abLwhmkN1c=;
- b=UKXgqXK3Xp+NTlpCJEQFZafqMdKeLbCC9gkRq4JCg+qr/KOtRz5Ke/wvLDippbr45HUNlB
- vcebf7GBkzwuX+1/a7U4JpnQtHPoHd7vvV668z5mFQpXpFHc7QxcWw7/yw7myx5Dv4k/Ak
- rv+PRVjMRFKbDDZ+8OY7OlzzSn76wsg=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-ua-GYnnaNKmYfpjxj5QeKg-1; Wed, 12 Aug 2026 11:15:49 -0400
-X-MC-Unique: ua-GYnnaNKmYfpjxj5QeKg-1
-X-Mimecast-MFC-AGG-ID: ua-GYnnaNKmYfpjxj5QeKg_1786547749
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1b4d961dso10224871cf.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 08:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786547749; x=1787152549; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+OceRc3ZgDjagPSQ/pqT62JhQxrkVIS83abLwhmkN1c=;
- b=ckwXRrMHLxqWohqrRzr8yvpnvHR1Afy+uUsd7XYPFntaOmNEtaMDiIxcW8RGyZqrOX
- 7eCqE+yx88s5BXHgxpCGB/IDdUTA7LfA8Cpa2wRWD+cfYa4HlVNV53V7XqjbA3ZugcPt
- qTfOVA1jIpUV4bqJJlT3PxguHITlrT5Z0AwKM7djsEa+R9cdj3tvqEyNqeMWoFiwTSVt
- TiKOzwVJJo3mSRM39/lZHYy8LjgJhO2vxerYhZzkhVeuhruj8LqVOZOx3aZqRi3d2eDU
- PUJ6ccs5WaIJimZiwAuNUOswQfugvTXLdt86TxKLAmUXA0RZJmG5i0qDOXiN9S3+j7An
- n8vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786547749; x=1787152549;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+OceRc3ZgDjagPSQ/pqT62JhQxrkVIS83abLwhmkN1c=;
- b=b50gXO4K0cgn4XYYKuKyKj0kQIQj2uR8Jmvuh3LmZkv111BSRRV02imhOHrsYUy17c
- lwEB+5h6EbNWfQol4BC17kTopb6528BZ+EZhbQ4umgPzQxkXdemLin/ok3oSB9NrPJiv
- j5Fy3NVQ8rqrO7bMBYK6YSJWWKqGa7fWwGxK9groBicmyizL3MpHlizsDjGUJSOKIqeq
- L18VuZhiRh1bYyX4SRnj+v6h0OqMQe+nd74iy0jWtqpn47RY0LVSOq7887UIBvbRdfjd
- MGeiWYxUtNr5F7RPhz5pbaCFQw5XfpEEQ+I3AZ7sd17sZLOXV6pzgPXD/mVjjQyfCJww
- qISg==
-X-Gm-Message-State: AOJu0YzBHF0e1xmjEAF1FmbNEOOYZlL/slGxIMQkjYz1TVuPJ1MnVrUs
- EuemAETY4u99pbJRp0+wBcdwA5NBo2VzRNyClgOJckdjpaLCD6+Up8pvgj30tkojqGzP+aP0LPv
- pqGcL1+SVuBM7i0USiho3Oo2e9LMSqi2jrRkKtgV2uxD3dALPKBzNzxB3HbG4iJgdmOGw6xExih
- LI6cVaVLqMjra5lln1MBUDjAnv3Uc+OUB6hlyyIg==
-X-Gm-Gg: AR+sD11PrWTWaqdGSaQz5yV5qMsvT/4hbKuLlPoobFmPF9PkTBMIvJeUXEjZTiIwgXC
- 7E8VMgZsGS/LfLR+cLdRiXmjJRk2TtJaL0I4rfCdzIlTctPHrow1DnXi37JqG7T3GdPYJlB5krQ
- P13R4e5rsgBf9xam3o/8wY9OY4iVoEZBWiImZCXOd2S0ERuBFoQYfdVzZfIhm68+0VXNT0PetKa
- 2Oe6CQoU+RpupP473Rrrkkq1tkeXQGYWj3Cr/go+tJnIUTT9+ALXFJY/8HIFAsQfog73Sx+ntvp
- mYjD+DDcPNsXbWA1dhbod2Gcnk/Znc4dFwR9oLytJdCYru1qFZE6lMc7TxdmlLj3Wg==
-X-Received: by 2002:a05:622a:248b:b0:521:103d:9f98 with SMTP id
- d75a77b69052e-52d659f7970mr41745531cf.19.1786547748639; 
- Wed, 12 Aug 2026 08:15:48 -0700 (PDT)
-X-Received: by 2002:a05:622a:248b:b0:521:103d:9f98 with SMTP id
- d75a77b69052e-52d659f7970mr41744501cf.19.1786547747923; 
- Wed, 12 Aug 2026 08:15:47 -0700 (PDT)
-Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52d61d948d6sm19552841cf.15.2026.08.12.08.15.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 08:15:42 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wuAKK-00079f-Lk; Wed, 12 Aug 2026 10:53:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786546231; bh=9Iuwdnelw1WHAfxVLD86ANoX0VP05deWUNJmlAOSzcE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=V4J3QItnfyc/iT62Ug6xFrVNfuIaCz7jaXBMLHUXaURwuWG00pOluR01aCqAxqyB8
+ 4XlPZOaneM2sfQpZt6QeU0QJyGU1vRDhc0PhHzBhz0olsjsNd/Gci7ZFHg2snOJQvn
+ +5ZJ5ZINCPKmu2a65fLRV4iJYFHZW0hYXu4l1zowQHclAtDgoz9Ibi55rWMIqhdCbf
+ EMOaeribTN4hh3kjzY1Q4UGnzlihS3sbz/o6D+LSIb9Wg4+Hqj9spaD01fHG1Bxx+n
+ NDpU4H/MjQLmIAa9EAcUt74iuQLTjr5kygRhrwVeD29uQ4FT2/3GL/DI9x2j9PZzaH
+ nhqrcXjfyN0aA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 894B21CA623;
+ Wed, 12 Aug 2026 17:50:31 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4555409D62;
+ Wed, 12 Aug 2026 17:50:42 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 507202F9A1; Wed, 12 Aug 2026 17:50:18 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>,
- Yuan Liu <yuan1.liu@intel.com>, Yichen Wang <yichen.wang@bytedance.com>
-Subject: [PULL 08/10] migration/multifd: Replace assert() with error_setg() in
- recv paths
-Date: Wed, 12 Aug 2026 11:14:41 -0400
-Message-ID: <20260812151444.2611689-9-peterx@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260812151444.2611689-1-peterx@redhat.com>
-References: <20260812151444.2611689-1-peterx@redhat.com>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 031/120] hw/display/virtio-gpu: validate stride
+ against width on scanout
+Date: Wed, 12 Aug 2026 17:48:14 +0300
+Message-ID: <20260812144955.649205-31-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
+References: <qemu-stable-11.0.4-20260812160441@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,146 +74,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QPL and UADK multifd backends use assert() to validate wire-controlled
-fields like per-page compressed lengths and packet size consistency.  These
-asserts will stop working with -DNDEBUG builds, so may stop working.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace all assert() calls in the receive path with proper error_setg() so
-validation failures are reported gracefully rather than crashing or
-silently ignored.
+Validate that the framebuffer stride is at least width * bytes_per_pixel
+in both virtio_gpu_scanout_blob_to_fb() and virtio_gpu_do_set_scanout().
 
-While at it, touch up an assert() in qatzip recv path too.
+A guest can set a very small stride while using a large width. The total
+size check (offset + stride * height <= blob_size) passes because
+stride * height is small, but pixman reads width * bytes_per_pixel per
+row, causing heap OOB reads. The leaked data is rendered to the host
+display.
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Cc: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260728210417.1925078-4-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/multifd-qatzip.c |  5 ++++-
- migration/multifd-qpl.c    | 24 ++++++++++++++++++++----
- migration/multifd-uadk.c   | 24 ++++++++++++++++++++----
- 3 files changed, 44 insertions(+), 9 deletions(-)
+The check is added in virtio_gpu_do_set_scanout() to cover all paths:
+blob scanout, non-blob scanout and migration post_load. The additional
+early check in virtio_gpu_scanout_blob_to_fb() rejects invalid blob
+configurations early.
 
-diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
-index 7419e5dc0d..0262e81eac 100644
---- a/migration/multifd-qatzip.c
-+++ b/migration/multifd-qatzip.c
-@@ -348,7 +348,10 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
- 
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
+Fixes: CVE-2026-63109
+Fixes: 7b5574225429 ("hw/display: check frame buffer can hold blob")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3989
+Reported-by: Tristan @TristanInSec
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 861372428b05f74a1cf9a8af22a863aa7b46c7ce)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 81d65ec57ca..10f55bd2ae8 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -646,6 +646,14 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
+         return false;
      }
  
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 52902eb00c..3826e7f340 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -664,26 +664,42 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
-     }
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed page lengths */
-     len = p->normal_num * sizeof(uint32_t);
--    assert(len < in_size);
-+    if (len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, len, in_size);
-+        return -1;
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
++        return false;
 +    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zlen, len, errp);
-     if (ret != 0) {
-         return ret;
-     }
-     for (int i = 0; i < p->normal_num; i++) {
-         qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
--        assert(qpl->zlen[i] <= multifd_ram_page_size());
-+        if (qpl->zlen[i] > multifd_ram_page_size()) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"
-+                       PRIu32" too large", p->id, i, qpl->zlen[i]);
-+            return -1;
-+        }
-         zbuf_len += qpl->zlen[i];
-         ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-     }
++
+     g->parent_obj.enable = 1;
  
-     /* read compressed pages */
--    assert(in_size == len + zbuf_len);
-+    if (in_size != len + zbuf_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, len, zbuf_len);
-+        return -1;
+     if (res->blob) {
+@@ -757,6 +765,14 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+     fb->width = ss->width;
+     fb->height = ss->height;
+     fb->stride = ss->strides[0];
++
++    if (fb->stride < (uint64_t)fb->width * fb->bytes_pp) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: stride %u too small for width %u at %u bpp\n",
++                      __func__, fb->stride, fb->width, fb->bytes_pp);
++        return false;
 +    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, zbuf_len, errp);
-     if (ret != 0) {
-         return ret;
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index fd7cd9b5e8..d373615ba8 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -245,12 +245,19 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
++
+     fb->offset = ss->offsets[0] + ss->r.x * fb->bytes_pp + ss->r.y * fb->stride;
  
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed data lengths */
--    assert(hdr_len < in_size);
-+    if (hdr_len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, hdr_len, in_size);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
-                                hdr_len, errp);
-     if (ret != 0) {
-@@ -259,12 +266,21 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
- 
-     for (int i = 0; i < p->normal_num; i++) {
-         uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
-+        if (uadk_data->buf_hdr[i] > page_size) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"PRIu32
-+                       " too large", p->id, i, uadk_data->buf_hdr[i]);
-+            return -1;
-+        }
-         data_len += uadk_data->buf_hdr[i];
--        assert(uadk_data->buf_hdr[i] <= page_size);
-     }
- 
-     /* read compressed data */
--    assert(in_size == hdr_len + data_len);
-+    if (in_size != hdr_len + data_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, hdr_len, data_len);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
-     if (ret != 0) {
-         return ret;
+     fbend = fb->offset;
 -- 
-2.54.0
+2.47.3
 
 
