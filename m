@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226ABC5B56A
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7290AC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Aug 2026 17:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuD0f-00030i-KF; Wed, 12 Aug 2026 13:45:01 -0400
+	id 1wuD0b-0002zk-OF; Wed, 12 Aug 2026 13:44:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wuD0V-0002uM-Ic
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:53 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wuD0N-0002sL-OW
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:45 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wuD0R-0007iG-2G
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:49 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-38e69bdb0fcso1313255a91.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:44:46 -0700 (PDT)
+ id 1wuD0J-0007ds-L8
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 13:44:43 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-38deea72eebso1435293a91.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 10:44:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1786556685; x=1787161485; darn=nongnu.org;
+ d=sifive.com; s=google; t=1786556678; x=1787161478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RtqKRI6KQb3+Alt3C6qeUDt/8N+6yEZSZI5ZRKNUH7k=;
- b=B2kBzpgOwun9mW4MLebw9TQ0DW2so7t3YwQHv2jjfNw1oBE6tQ1kQK2WtR9woKUaNB
- IPOH8sYpvDblrVV07talOPpS3ki/SectfxGSjBHk6pUfJqAMax/qSa/smICcBGKo3Win
- 88K8UmHa8PmGmOmQoZiHingf9IbrAkv4AgF+u9PmZ5zHvDiMZh2EP0VXxOMHjErbuQ2y
- ZMsrKrLuoy1JEF3dKbsta7UHmQZEPUnWwgYHac/l3f9jJXmBXKsnNz7vh1Iz+w9omRLX
- yFOJYDsRX+ZunabQmMl/V/bD5UHtodjc5+AU2qIy0SbLvWPXWbEzuS72pdiBWI2JeOrv
- ebkw==
+ bh=bOfQP/P1K7kFj3ubNy1v4DdxRk8JtgxA6LtLrm9P4BM=;
+ b=bS4+I2iW1PEM4wvMCtaFgIqMdv3ir5W3+rerQNaHT/WVChD0L3D3WT7WPn856eZA/L
+ B+EjUg21dsEK7g72TEyzyEjRM+kUb0mtY9HON9AsqQMQdapWjJyHT1wQmzamSGCmF9OF
+ j9pr+TAGsMgSAvY0GYq5ZLZvGPlfxNmt9Vj1ZYMuLfjt6P9AKsQtsHPVAlURhdxa5yeZ
+ 7woDQMATTB6UlBosoF0DptuhkMLGH11orJC8DIWshJy8NG0pMJ84ocvmde4PVyF6jXMi
+ ra4KqvAeCBFwYv66jiI5dkUi8tbALxT4wyjFVvKkLJ+rbkqHMsYEPE3EUrFikrMKozZm
+ MjIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786556685; x=1787161485;
+ d=1e100.net; s=20251104; t=1786556678; x=1787161478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RtqKRI6KQb3+Alt3C6qeUDt/8N+6yEZSZI5ZRKNUH7k=;
- b=EBbCjNvjx93XwA7Q0ANCWY3Pi8bZY6i6Q7mTvqSgl0t/wnMugX8JbLKpKNbjr3iFpd
- sUF7hpavEtp/d8Ap9VmD4lhaC6vXXqRBx1qASJhD096mQAPpt8aRbgvXKSuxwm1GlvL6
- tx3D5nMunLZd7OtbtRknxvz2jdQjNitBCLrtBafc403/jBEoTl8GiOWSPbfUEv5zS3D3
- wX2i7CMormDRgGi7zp3Hk1gyssisWpRuUod+3ZKcw0Nf4rPQ23+5Lmqobs71M6xxa+u3
- WQI3G+cXxcMoRFPQbE6GHvlnXbqEA29djNkyuS9erC0GoTjI1vmrZWkZhSBPmKBm+QUt
- v21w==
-X-Gm-Message-State: AOJu0YwzdJmHBt5WePj+emUuNqr4hKPpUQl/kPQbnB+KS0F+U6xZ6qHW
- 5cuJizBWXeSAIwWLzlXZ/S24i1IhsnqyrndvAE59br2B3cIhANcEWfhCCbdOpXCIWj3RxyrQX+8
- mnMwnurg21/4q8Qd6rCu5+AHZlpU9TugDKn53ppjxlRv9EOuDi2JOc1YPMj66kQ3qGbmwgR3NoV
- GMHi7mXQPcVwzPK52yqq4ffAcTK+7qsj3kHV9j0tQ=
-X-Gm-Gg: AR+sD10tpK2+icffAxYLHtZKuQEzJIzbuYqpRUrnKphNN7fKe734RKBb/dODdCNOrOh
- AcL5Mdkds8ycN/48Q0VbuME7BmT/4TrWNutAhAEpuZfKeLKc6gEV8UXzL89IBZmQoSTCPvwT6S6
- qRBNqTsZ8KH4JyW1oOfM+uG4ymwZDHiPJen8MCkanOrx3MCtfG9jGSaJ1fsdlfFhHBAl94EpPhr
- ZqiRHMdGgOqLqtAbZQryA9MMegCPIk5Z+A4hXEOqZCPrQrBT2Cj1/Mbot+M1qJIwyKAxEn8GuoC
- 1s0hZZdtQQ4sVTiIXw0+0asHOglbW/ike3KNdh5UxY/288wnxsxHOSGPu+k9ldayEbSuhQMTA6m
- 3hGrw2U0AQxmtnGQJ5BJ8CgALb2X1hZE7cq2vcYdedxqB6C3jXJbVmfE+14cchBp0R4KKJxU3Lf
- rvzlzwE+j3+bYm0zbCrHRQ3rpT9M0/dDCQyoyRz7rassRa8QQiAhGCIofsWUSFXM7jqRgmIjj1+
- V1yl3VGiMJi8/BSdcYPLElGH61FMTi5LtFXnA36N+yzdtinXlcbUOB6eWCz5yJr
-X-Received: by 2002:a17:90b:3c11:b0:390:b41a:b92f with SMTP id
- 98e67ed59e1d1-39301497fe9mr7786957a91.18.1786556685234; 
- Wed, 12 Aug 2026 10:44:45 -0700 (PDT)
+ bh=bOfQP/P1K7kFj3ubNy1v4DdxRk8JtgxA6LtLrm9P4BM=;
+ b=OjpS3HLWMNAOVlKTw0E+NVPjQtKarILVVVomPM+6jHG/UMeMG8IfbqkK0Bdkz++i2s
+ dPOpmtyhdStRkd9ZnqziMTUHsiQlUaFFfRHx7m4QjRkBNccoZYxY73MqBacC4/e/VM4B
+ lXVWtgsixlqGt/UvCJkfbcQ+YnhYUZo1Vj5/+u5Oz4kFt361ywb2krc4PRNFfAgxw4lP
+ V8gLSssE0j4vMrwJLBPDekxHJe1sia7tzr3WvDjmJtUL4z4+P1D4tgtimI7AgGRCluXj
+ Wl9ZfBwLfnzZZsHCLgdaiQZZc2jWay95R7mmy4vpWTXpYBBTdfU2JQSn18y54VBL1CCb
+ wl4A==
+X-Gm-Message-State: AOJu0YywYRL50uFJGeiaaRe06Gv8rwfqQUG0tjnJwikNTTh2wJbQtgDD
+ AElNDNjyiGcsaTIYWvyn2veIicUSXCYIEjNSyGfNbNOuVV0OiiSo6Fs3YVXgF0NaHrM4q/tpsts
+ O1RjwjRziDHCC47hf8DWDW+UzTSvejBKrXL5FexJeHsZGgPeXPCGQ+I8JIL+edEj30gmh2moUGb
+ tC5maGLZMSR9Q/MDfrcX87gtwOd6HVRf48HQX6zIs=
+X-Gm-Gg: AR+sD11uPn6xXhX8Hbxq8BLvb68j9wmHcZJlv/+oJbQLhmb3rthRUeQr2z6lL+A01yE
+ mxL+/ARqFH9K6IbbQOg3XpdehjKZAXEfyXBOm7hJQ3oY6ct8i5WsLQNFPRb6+PwCxxbl5fPaEwl
+ hxxfBsk4RxANgbS3W45vUWAz09/qeTUKCYQH8SrHnmRz47kEMT1OhhQQFGLtKBNChlqbpbiLx0j
+ pp/XvFT7aSw2ZSSutKZcPSy6m4cgeudq+M1v3Gn6w4ULEQVW9/9n53vRuHz9AswH6fvfVHAboKm
+ OOcECOj6mbr+IPAAwpxnh9QcTbaWYbojGU6KqTvtwveZUnsQaxCJfB0tPbguUDiKHCuJ1kepton
+ AFYj7Xhew4zQjZNBKYFrt/Zqz60k8ubpWREE87rm5NdAYxZNPWlJtYA0qPggo4L8mhMVjPSXc9k
+ ldQrD8oUTTeBQvF5n0E6ibRPhUt/cJ0qW3+uBvkAAOH5hp0YdP6ndZ+E1eUYPPXZcLHB0gAHUXR
+ B/Azxou8EQCjk+8Ul3ilg5OE9YWOSrper1118liJ2yA86goo5cmCTr9KyCygMFO
+X-Received: by 2002:a17:90b:3907:b0:381:a766:efcc with SMTP id
+ 98e67ed59e1d1-393014f6cc9mr7170205a91.14.1786556677945; 
+ Wed, 12 Aug 2026 10:44:37 -0700 (PDT)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931db13c3bsm13210a91.3.2026.08.12.10.44.41
+ 98e67ed59e1d1-3931db13c3bsm13210a91.3.2026.08.12.10.44.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 10:44:43 -0700 (PDT)
+ Wed, 12 Aug 2026 10:44:37 -0700 (PDT)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -76,18 +76,19 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Max Chou <max.chou@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>,
+ Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 6/6] tests/tcg/riscv64: Add tests for SiFive int8 matmul
- extensions
-Date: Thu, 13 Aug 2026 01:44:16 +0800
-Message-ID: <20260812174417.2468981-7-max.chou@sifive.com>
+Subject: [PATCH v2 4/6] target/riscv: rvv: Add SiFive custom int8 matmul
+ instructions
+Date: Thu, 13 Aug 2026 01:44:14 +0800
+Message-ID: <20260812174417.2468981-5-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260812174417.2468981-1-max.chou@sifive.com>
 References: <20260812174417.2468981-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,318 +111,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test that exercises all SiFive int8 matrix-multiply instructions
-from the Xsfvqmaccqoq and Xsfvqmaccdod extensions.
+From: Frank Chang <frank.chang@sifive.com>
 
-For each tile shape the test covers the four signedness variants
-(sf.vqmaccu / sf.vqmacc / sf.vqmaccus / sf.vqmaccsu) and the
-reserved-encoding path: with vl set to a value that is not a multiple
-of the tile size the helper raises an illegal-instruction exception.
+Add the 8 SiFive custom int8 matrix-multiply vector instructions:
+sf.vqmacc{u,,us,su}.4x8x4 and sf.vqmacc{u,,us,su}.2x8x2. Each name
+suffix encodes the signedness of vs1/vs2.
+The 4x8x4 forms multiply-accumulate a 4x8 by 8x4 int8 tile into a
+4x4 int32 result; the 2x8x2 forms use a 2x8 by 8x2 tile producing a
+2x2 int32 result. Both Xsfvqmaccqoq/Xsfvqmaccdod extensions are
+gated on vlenb >= 32, sew == 8 and vm == 1, per the SiFive Int8
+Matrix Multiplication Extensions Specification.
 
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- MAINTAINERS                               |   1 +
- tests/tcg/riscv64/Makefile.softmmu-target |   7 +
- tests/tcg/riscv64/test-xsfvqmacc.S        | 260 ++++++++++++++++++++++
- 3 files changed, 268 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
+ MAINTAINERS                                 |  8 ++
+ target/riscv/cpu_cfg.h                      |  5 ++
+ target/riscv/helper.h                       | 10 +++
+ target/riscv/meson.build                    |  1 +
+ target/riscv/tcg/insn_trans/trans_xsf.c.inc | 98 +++++++++++++++++++++
+ target/riscv/tcg/meson.build                |  1 +
+ target/riscv/tcg/translate.c                |  3 +
+ target/riscv/tcg/xsf_helper.c               | 87 ++++++++++++++++++
+ target/riscv/xsf.decode                     | 30 +++++++
+ 9 files changed, 243 insertions(+)
+ create mode 100644 target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ create mode 100644 target/riscv/tcg/xsf_helper.c
+ create mode 100644 target/riscv/xsf.decode
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 02ca1682099..97a641a0cb0 100644
+index 902db77218e..9c9f9bd645a 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -399,6 +399,7 @@ F: target/riscv/xsf.decode
- F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
- F: target/riscv/tcg/xsf_helper.c
- F: disas/riscv-xsf*
-+F: tests/tcg/riscv64/test-xsfvqmacc.S
+@@ -391,6 +391,14 @@ F: target/riscv/XVentanaCondOps.decode
+ F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+ F: disas/riscv-xventana*
  
++RISC-V SiFive (Xsf*) extensions
++M: Max Chou <max.chou@sifive.com>
++L: qemu-riscv@nongnu.org
++S: Supported
++F: target/riscv/xsf.decode
++F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
++F: target/riscv/tcg/xsf_helper.c
++
  RENESAS RX CPUs
  R: Yoshinori Sato <yoshinori.sato@nifty.com>
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 82be8a2c915..0615dc83e83 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -41,5 +41,12 @@ comma:= ,
- run-test-crc32: test-crc32
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
+ S: Orphan
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index 211d0708ba4..d6db1cfb7cc 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -51,6 +51,11 @@ static inline bool has_xthead_p(const RISCVCPUConfig *cfg)
+            cfg->ext_xtheadmempair || cfg->ext_xtheadsync;
+ }
  
-+# The SiFive int8 matmul instructions are reserved unless VLEN >= 256, so the
-+# runner selects vlen=256 along with both extensions.
-+EXTRA_RUNS += run-test-xsfvqmacc
-+XSFVQMACC_CPU = rv64$(comma)v=true$(comma)vlen=256$(comma)xsfvqmaccdod=true$(comma)xsfvqmaccqoq=true
-+run-test-xsfvqmacc: test-xsfvqmacc
-+	$(call run-test, $<, $(QEMU) -cpu $(XSFVQMACC_CPU) $(QEMU_OPTS)$<)
++static inline bool has_xsf_p(const RISCVCPUConfig *cfg)
++{
++    return cfg->ext_xsfvqmaccdod || cfg->ext_xsfvqmaccqoq;
++}
 +
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-xsfvqmacc.S b/tests/tcg/riscv64/test-xsfvqmacc.S
+ #define MATERIALISE_EXT_PREDICATE(ext) \
+     static inline bool has_ ## ext ## _p(const RISCVCPUConfig *cfg) \
+     { \
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 542b7c264fc..4234f462716 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1358,3 +1358,13 @@ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ 
+ /* Zalrsc SC write probe */
+ DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
++
++/* SiFive Custom int8 Matrix-Multiply */
++DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmacc_4x8x4, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmaccus_4x8x4, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmaccsu_4x8x4, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmaccu_2x8x2, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmacc_2x8x2, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmaccus_2x8x2, void, ptr, ptr, ptr, env, i32)
++DEF_HELPER_5(sf_vqmaccsu_2x8x2, void, ptr, ptr, ptr, env, i32)
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 42d0f6d538a..c06526adb26 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -6,6 +6,7 @@ gen = [
+   decodetree.process('XVentanaCondOps.decode', extra_args: '--static-decode=decode_XVentanaCodeOps'),
+   decodetree.process('xmips.decode', extra_args: '--static-decode=decode_xmips'),
+   decodetree.process('xlrbr.decode', extra_args: '--static-decode=decode_xlrbr'),
++  decodetree.process('xsf.decode', extra_args: '--static-decode=decode_xsf'),
+ ]
+ 
+ riscv_ss = ss.source_set()
+diff --git a/target/riscv/tcg/insn_trans/trans_xsf.c.inc b/target/riscv/tcg/insn_trans/trans_xsf.c.inc
 new file mode 100644
-index 00000000000..a116712e502
+index 00000000000..1677352689f
 --- /dev/null
-+++ b/tests/tcg/riscv64/test-xsfvqmacc.S
-@@ -0,0 +1,260 @@
++++ b/target/riscv/tcg/insn_trans/trans_xsf.c.inc
+@@ -0,0 +1,98 @@
 +/*
-+ * Test the SiFive Xsfvqmaccqoq/Xsfvqmaccdod custom int8 matrix-multiply
-+ * extensions.
++ * RISC-V translation routines for the SiFive vendor extensions (xsf*)
 + *
-+ * The eight instructions widen 8-bit integer inputs to 32 bits and perform
-+ * a matrix-multiply-accumulate into a vector of int32 accumulators:
-+ *
-+ *   C[j] += A * B[j]
-+ *
-+ * Xsfvqmaccqoq (4x8x4): A is 4x8, B[j] is 8x4, C[j] is 4x4 int32. One matrix
-+ * operation is performed per 32 elements of vl (TILE_SIZE = 32).
-+ * Xsfvqmaccdod (2x8x2): A is 2x8, B[j] is 8x2, C[j] is 2x2 int32. One matrix
-+ * operation is performed per 16 elements of vl (TILE_SIZE = 16).
-+ *
-+ * The input tiles below contain bytes >= 0x80 so that each signedness
-+ * variant produces a distinct result; the expected int32 tiles were computed
-+ * with an independent reference model of the specification. The accumulators
-+ * are cleared before every operation, so the expected value is the pure
-+ * matrix product.
-+ *
-+ * Test exits via semihosting with status 0 on success, or the 1-based index
-+ * of the first failing operation.
++ * Copyright (c) 2023 SiFive, Inc.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+	.option arch, +v
-+	.option norvc
-+
-+	.text
 +
 +/*
-+ * Run one 4x8x4 operation: load the 32-byte A and B tiles, clear the 4x4
-+ * int32 accumulator (vd = v4:v5, EMUL = 2), execute the op, then compare the
-+ * 16 int32 results against the expected tile.
++ * SiFive Xsfvqmaccdod/Xsfvqmaccqoq custom int8 matrix-multiply extensions
 + */
-+.macro RUN_QOQ id, word, exp
-+	li	a2, 32
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	la	t1, a_qoq
-+	vle8.v	v1, (t1)
-+	la	t1, b_qoq
-+	vle8.v	v2, (t1)
-+	vsetvli	t0, x0, e32, m2, ta, ma
-+	vmv.v.i	v4, 0
-+	li	a2, 32
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	\word
-+	vsetvli	t0, x0, e32, m2, ta, ma
-+	la	t1, result
-+	vse32.v	v4, (t1)
-+	la	a0, result
-+	la	a1, \exp
-+	li	a2, 16
-+	li	t6, \id
-+	call	check_words
-+.endm
++static bool sf_int8_matmul_check(DisasContext *s, arg_rmrr *a)
++{
++    return require_rvv(s) &&
++           vext_check_isa_ill(s) &&
++           s->vstart_eq_zero &&
++           (s->cfg_ptr->vlenb >= 32) &&
++           (s->sew == MO_8) &&
++           (a->vm == 1);
++}
 +
++static bool sf_int8_matmul_4x8x4_check(DisasContext *s, arg_rmrr *a)
++{
++    /*
++     * vd  has EMUL=2*LMUL
++     * vs2 has EMUL=LMUL
++     * vs1 has EMUL=1
++     * vd must not overlap vs1
++     */
++    return sf_int8_matmul_check(s, a) &&
++           (s->cfg_ptr->ext_xsfvqmaccqoq) &&
++           (s->lmul <= 2) &&
++           require_align(a->rd, s->lmul + 1) &&
++           require_align(a->rs2, s->lmul) &&
++           require_align(a->rs1, 0) &&
++           require_noover(a->rd, s->lmul + 1, a->rs2, s->lmul) &&
++           !is_overlapped(a->rd, 1 << MAX(s->lmul + 1, 0), a->rs1, 1);
++}
++
++static bool sf_int8_matmul_2x8x2_check(DisasContext *s, arg_rmrr *a)
++{
++    /*
++     * vd  has EMUL=LMUL
++     * vs2 has EMUL=LMUL
++     * vs1 has EMUL=1
++     * vd must not overlap vs1
++     */
++    return sf_int8_matmul_check(s, a) &&
++           (s->cfg_ptr->ext_xsfvqmaccdod) &&
++           require_align(a->rd, s->lmul) &&
++           require_align(a->rs2, s->lmul) &&
++           require_align(a->rs1, 0) &&
++           !is_overlapped(a->rd, 1 << MAX(s->lmul, 0), a->rs1, 1);
++}
++
++static bool sf_int8_matmul_op(DisasContext *s, arg_rmrr *a, uint8_t seq)
++{
++    static gen_helper_gvec_3_ptr * const fns[8] = {
++        gen_helper_sf_vqmaccu_4x8x4, gen_helper_sf_vqmacc_4x8x4,
++        gen_helper_sf_vqmaccus_4x8x4, gen_helper_sf_vqmaccsu_4x8x4,
++        gen_helper_sf_vqmaccu_2x8x2, gen_helper_sf_vqmacc_2x8x2,
++        gen_helper_sf_vqmaccus_2x8x2, gen_helper_sf_vqmaccsu_2x8x2,
++    };
++
++    /*
++     * The helper raises an illegal-instruction exception when vl is not a
++     * multiple of the tile size; save the opcode so mtval/stval report the
++     * faulting instruction if that exception is thrown.
++     */
++    decode_save_opc(s, 0);
++
++    tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs1),
++                       vreg_ofs(s, a->rs2), tcg_env,
++                       s->cfg_ptr->vlenb, s->cfg_ptr->vlenb, 0, fns[seq]);
++
++    finalize_rvv_inst(s);
++
++    return true;
++}
++
++#define GEN_SF_INT8_MATMUL_TRANS(NAME, CHECK, SEQ)       \
++static bool trans_##NAME(DisasContext *s, arg_rmrr *a)   \
++{                                                        \
++    if (CHECK(s, a)) {                                   \
++        return sf_int8_matmul_op(s, a, SEQ);             \
++    }                                                    \
++    return false;                                        \
++}
++
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccu_4x8x4,  sf_int8_matmul_4x8x4_check, 0)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmacc_4x8x4,   sf_int8_matmul_4x8x4_check, 1)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccus_4x8x4, sf_int8_matmul_4x8x4_check, 2)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccsu_4x8x4, sf_int8_matmul_4x8x4_check, 3)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccu_2x8x2,  sf_int8_matmul_2x8x2_check, 4)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmacc_2x8x2,   sf_int8_matmul_2x8x2_check, 5)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccus_2x8x2, sf_int8_matmul_2x8x2_check, 6)
++GEN_SF_INT8_MATMUL_TRANS(sf_vqmaccsu_2x8x2, sf_int8_matmul_2x8x2_check, 7)
+diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
+index a05ab642f41..86805b30cbc 100644
+--- a/target/riscv/tcg/meson.build
++++ b/target/riscv/tcg/meson.build
+@@ -15,6 +15,7 @@ riscv_ss.add(files(
+   'vcrypto_helper.c',
+   'vector_helper.c',
+   'vector_internals.c',
++  'xsf_helper.c',
+   'zce_helper.c'))
+ 
+ 
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index 9684dbe7528..41e3dd2fe21 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -1216,10 +1216,12 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "decode-xthead.c.inc"
+ #include "decode-xmips.c.inc"
+ #include "decode-xlrbr.c.inc"
++#include "decode-xsf.c.inc"
+ #include "insn_trans/trans_xthead.c.inc"
+ #include "insn_trans/trans_xventanacondops.c.inc"
+ #include "insn_trans/trans_xmips.c.inc"
+ #include "insn_trans/trans_xlrbr.c.inc"
++#include "insn_trans/trans_xsf.c.inc"
+ 
+ /* Include the auto-generated decoder for 16 bit insn */
+ #include "decode-insn16.c.inc"
+@@ -1240,6 +1242,7 @@ const RISCVDecoder decoder_table[] = {
+     { has_xthead_p, decode_xthead},
+     { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
+     { has_xlrbr_p, decode_xlrbr},
++    { has_xsf_p, decode_xsf },
+ };
+ 
+ const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
+diff --git a/target/riscv/tcg/xsf_helper.c b/target/riscv/tcg/xsf_helper.c
+new file mode 100644
+index 00000000000..6e953d12493
+--- /dev/null
++++ b/target/riscv/tcg/xsf_helper.c
+@@ -0,0 +1,87 @@
 +/*
-+ * Run one 2x8x2 operation: load the 16-byte A and B tiles, clear the 2x2
-+ * int32 accumulator (vd = v4, EMUL = 1), execute the op, then compare the
-+ * 4 int32 results against the expected tile.
++ * RISC-V translation helpers for the SiFive vendor extensions (xsf*)
++ *
++ * Copyright (c) 2023 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+.macro RUN_DOD id, word, exp
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	la	t1, a_dod
-+	vle8.v	v1, (t1)
-+	la	t1, b_dod
-+	vle8.v	v2, (t1)
-+	vsetvli	t0, x0, e32, m1, ta, ma
-+	vmv.v.i	v4, 0
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	\word
-+	vsetvli	t0, x0, e32, m1, ta, ma
-+	la	t1, result
-+	vse32.v	v4, (t1)
-+	la	a0, result
-+	la	a1, \exp
-+	li	a2, 4
-+	li	t6, \id
-+	call	check_words
-+.endm
 +
-+	.global _start
-+_start:
-+	/* Enable the vector unit (mstatus.VS = Initial). */
-+	li	t0, 1 << 9
-+	csrs	mstatus, t0
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "exec/helper-proto.h"
++#include "internals.h"
++#include "vector_internals.h"
 +
-+	/* Route synchronous traps to trap_handler (mtvec direct mode). */
-+	la	t0, trap_handler
-+	csrw	mtvec, t0
++#define QOP_SUU_B int32_t, uint8_t, uint8_t, int32_t, int32_t
++#define QOP_SUS_B int32_t, uint8_t, int8_t, int32_t, int32_t
++#define QOP_SSU_B int32_t, int8_t, uint8_t, int32_t, int32_t
++#define QOP_SSS_B int32_t, int8_t, int8_t, int32_t, int32_t
 +
-+	RUN_QOQ	1, 0xF220A25B, exp_qoq_u	/* sf.vqmaccu.4x8x4  */
-+	RUN_QOQ	2, 0xF620A25B, exp_qoq_s	/* sf.vqmacc.4x8x4   */
-+	RUN_QOQ	3, 0xFA20A25B, exp_qoq_us	/* sf.vqmaccus.4x8x4 */
-+	RUN_QOQ	4, 0xFE20A25B, exp_qoq_su	/* sf.vqmaccsu.4x8x4 */
-+	RUN_DOD	5, 0xB220A25B, exp_dod_u	/* sf.vqmaccu.2x8x2  */
-+	RUN_DOD	6, 0xB620A25B, exp_dod_s	/* sf.vqmacc.2x8x2   */
-+	RUN_DOD	7, 0xBA20A25B, exp_dod_us	/* sf.vqmaccus.2x8x2 */
-+	RUN_DOD	8, 0xBE20A25B, exp_dod_su	/* sf.vqmaccsu.2x8x2 */
-+
-+	/*
-+	 * Illegal-instruction reporting test (op 9).
-+	 *
-+	 * When vl is not a multiple of the tile size the instruction is
-+	 * reserved and the helper raises an illegal-instruction exception at
-+	 * runtime.
-+	 */
-+	la	t1, trap_mtval
-+	sd	zero, 0(t1)
-+	la	t1, trap_mcause
-+	sd	zero, 0(t1)
-+	/* vl = 16 is not a multiple of the 4x8x4 tile size (32 elements). */
-+	li	a2, 16
-+	vsetvli	t0, a2, e8, m1, ta, ma
-+	.word	0xF220A25B		/* sf.vqmaccu.4x8x4, traps */
-+	/* The handler skips the faulting insn, so control resumes here. */
-+	li	a0, 9			/* fail code for this check */
-+	la	t1, trap_mcause
-+	ld	t2, 0(t1)
-+	li	t3, 2			/* RISCV_EXCP_ILLEGAL_INST */
-+	bne	t2, t3, _exit
-+	la	t1, trap_mtval
-+	ld	t2, 0(t1)
-+	li	t3, 0xF220A25B
-+	bne	t2, t3, _exit
-+
-+	li	a0, 0
-+	j	_exit
-+
++/* SiFive Custom int8 Matrix-Multiply */
 +/*
-+ * Machine-mode trap handler: record mcause and mtval, then advance mepc
-+ * past the 4-byte faulting instruction and return.
++ * vd may overlap vs2, we need to allocate an additional vd array
++ * to save temporary results of vd and write them back at the end.
 + */
-+	.balign	4
-+trap_handler:
-+	csrr	t4, mcause
-+	la	t5, trap_mcause
-+	sd	t4, 0(t5)
-+	csrr	t4, mtval
-+	la	t5, trap_mtval
-+	sd	t4, 0(t5)
-+	csrr	t4, mepc
-+	addi	t4, t4, 4
-+	csrw	mepc, t4
-+	mret
++#define GEN_VEXT_SF_INT8_MATMUL(NAME, TD, T1, T2, TX1, TX2,           \
++                                HD, HS1, HS2, ROWS, COLS, TILE_SIZE)  \
++void HELPER(NAME)(void *vd, void *vs1, void *vs2,                     \
++                  CPURISCVState *env, uint32_t desc)                  \
++{                                                                     \
++    int it, il, in, im, ivd, ivs1, ivs2;                              \
++    TD *vds;                                                          \
++                                                                      \
++    if (env->vl % TILE_SIZE) {                                        \
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC()); \
++        return;                                                       \
++    }                                                                 \
++                                                                      \
++    VSTART_CHECK_EARLY_EXIT(env, env->vl);                            \
++                                                                      \
++    vds = g_malloc0(sizeof(TD) *                                      \
++                    ROWS * ROWS * (env->vl / TILE_SIZE));             \
++                                                                      \
++    for (it = 0; it < (env->vl / TILE_SIZE); it++) {                  \
++        for (il = 0; il < ROWS; il++) {                               \
++            for (in = 0; in < ROWS; in++) {                           \
++                ivd = ROWS * ROWS * it + ROWS * il + in;              \
++                vds[ivd] = *((TD *)vd + HD(ivd));                     \
++                for (im = 0; im < COLS; im++) {                       \
++                    ivs1 = il * COLS + im;                            \
++                    ivs2 = TILE_SIZE * it + im * ROWS + in;           \
++                    T1 s1 = *((T1 *)vs1 + HS1(ivs1));                 \
++                    T2 s2 = *((T2 *)vs2 + HS2(ivs2));                 \
++                    vds[ivd] += (TX1)s1 * (TX2)s2;                    \
++                }                                                     \
++            }                                                         \
++        }                                                             \
++    }                                                                 \
++                                                                      \
++    for (it = 0; it < (env->vl / TILE_SIZE); it++) {                  \
++        for (il = 0; il < ROWS; il++) {                               \
++            for (in = 0; in < ROWS; in++) {                           \
++                ivd = ROWS * ROWS * it + ROWS * il + in;              \
++                *((TD *)vd + HD(ivd)) = vds[ivd];                     \
++            }                                                         \
++        }                                                             \
++    }                                                                 \
++                                                                      \
++    env->vstart = 0;                                                  \
++    g_free(vds);                                                      \
++}
 +
-+/*
-+ * check_words(a0 = result, a1 = expected, a2 = word count).
-+ * Returns to the caller if every word matches; otherwise exits with the
-+ * operation index held in t6.
-+ */
-+check_words:
-+1:	beqz	a2, 2f
-+	lw	t2, 0(a0)
-+	lw	t3, 0(a1)
-+	bne	t2, t3, 3f
-+	addi	a0, a0, 4
-+	addi	a1, a1, 4
-+	addi	a2, a2, -1
-+	j	1b
-+2:	ret
-+3:	mv	a0, t6
-+	j	_exit
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccu_4x8x4, QOP_SUU_B, H4, H1, H1,
++        4, 8, 32)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmacc_4x8x4, QOP_SSS_B, H4, H1, H1,
++        4, 8, 32)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccus_4x8x4, QOP_SUS_B, H4, H1, H1,
++        4, 8, 32)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccsu_4x8x4, QOP_SSU_B, H4, H1, H1,
++        4, 8, 32)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccu_2x8x2, QOP_SUU_B, H4, H1, H1,
++        2, 8, 16)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmacc_2x8x2, QOP_SSS_B, H4, H1, H1,
++        2, 8, 16)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccus_2x8x2, QOP_SUS_B, H4, H1, H1,
++        2, 8, 16)
++RVVCALL(GEN_VEXT_SF_INT8_MATMUL, sf_vqmaccsu_2x8x2, QOP_SSU_B, H4, H1, H1,
++        2, 8, 16)
+diff --git a/target/riscv/xsf.decode b/target/riscv/xsf.decode
+new file mode 100644
+index 00000000000..bb585046ab1
+--- /dev/null
++++ b/target/riscv/xsf.decode
+@@ -0,0 +1,30 @@
++#
++# RISC-V translation routines for the SiFive vendor extensions
++#
++# Copyright (c) 2023 SiFive, Inc.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
-+_exit:
-+	la	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
++# Fields:
++%rs2       20:5
++%rs1       15:5
++%rd        7:5
++%vm        25:1
 +
-+	.data
-+	.balign	8
-+semiargs:
-+	.space	16
-+result:
-+	.space	64
-+trap_mcause:
-+	.space	8
-+trap_mtval:
-+	.space	8
++# Argument sets:
++&rmrr      vm rd rs1 rs2                           !extern
 +
-+/*
-+ * A (4x8, row-major) in bytes [0, 32) of vs1.
-+ */
-+a_qoq:
-+	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
-+	.byte	0xFF, 0x01, 0x00, 0x02, 0x7F, 0x03, 0x04, 0x05
-+	.byte	0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x08
-+	.byte	0x00, 0x00, 0x81, 0x00, 0x00, 0x02, 0x00, 0x03
-+/*
-+ * B (8x4, row-major) in bytes [0, 32) of vs2.
-+ */
-+b_qoq:
-+	.byte	0x01, 0x02, 0x03, 0x04
-+	.byte	0x05, 0x06, 0x07, 0x08
-+	.byte	0x80, 0x7F, 0xFF, 0x01
-+	.byte	0x00, 0x10, 0x20, 0x30
-+	.byte	0x02, 0x02, 0x02, 0x02
-+	.byte	0xFE, 0x01, 0x00, 0x7F
-+	.byte	0x03, 0x00, 0x81, 0x04
-+	.byte	0x40, 0x50, 0x60, 0x70
-+/*
-+ * A (2x8, row-major) in bytes [0, 16) of vs1.
-+ */
-+a_dod:
-+	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
-+	.byte	0xFF, 0x7F, 0x00, 0x02, 0x81, 0x03, 0x04, 0x05
-+/*
-+ * B (8x2, row-major) in bytes [0, 16) of vs2.
-+ */
-+b_dod:
-+	.byte	0x01, 0x02
-+	.byte	0x80, 0x7F
-+	.byte	0x03, 0xFF
-+	.byte	0x00, 0x10
-+	.byte	0x02, 0xFE
-+	.byte	0x7F, 0x01
-+	.byte	0x81, 0x04
-+	.byte	0x40, 0x50
++# Formats:
++@r_vm_1    ......  . ..... ..... ... ..... ....... &rmrr vm=1 %rs2 %rs1 %rd
 +
-+	.balign	4
-+exp_qoq_u:
-+	.word	0x0000279e, 0x000029db, 0x0000371f, 0x00003bf7
-+	.word	0x00000648, 0x000004b5, 0x00000826, 0x0000091f
-+	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
-+	.word	0x0000433c, 0x000040f1, 0x0000819f, 0x000002cf
-+exp_qoq_s:
-+	.word	0xffffde9e, 0xffffd9db, 0xffffcd1f, 0xffffcbf7
-+	.word	0x00000248, 0x000002b5, 0x00000126, 0x0000051f
-+	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
-+	.word	0x0000403c, 0xffffc1f1, 0x0000019f, 0x000001cf
-+exp_qoq_us:
-+	.word	0x00001e9e, 0x000029db, 0x00002d1f, 0x00003bf7
-+	.word	0x00000348, 0x000004b5, 0x00000426, 0x0000091f
-+	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
-+	.word	0xffffc03c, 0x000040f1, 0x0000009f, 0x000002cf
-+exp_qoq_su:
-+	.word	0xffffe79e, 0xffffd9db, 0xffffd71f, 0xffffcbf7
-+	.word	0x00000548, 0x000002b5, 0x00000526, 0x0000051f
-+	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
-+	.word	0xffffc33c, 0xffffc1f1, 0xffff829f, 0x000001cf
-+exp_dod_u:
-+	.word	0x00002795, 0x00003155, 0x00004642, 0x0000c2c0
-+exp_dod_s:
-+	.word	0xffffde95, 0xffffd955, 0xffffc042, 0x000041c0
-+exp_dod_us:
-+	.word	0x00001e95, 0x00002955, 0xffffc342, 0x000041c0
-+exp_dod_su:
-+	.word	0xffffe795, 0xffffe155, 0x00004342, 0xffffc2c0
++# *** Xsfvqmaccqoq: SiFive custom int8 matrix-multiply (4x8x4 tile) ***
++sf_vqmaccu_4x8x4    111100 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmacc_4x8x4     111101 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmaccus_4x8x4   111110 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmaccsu_4x8x4   111111 1 ..... ..... 010 ..... 1011011 @r_vm_1
++
++# *** Xsfvqmaccdod: SiFive custom int8 matrix-multiply (2x8x2 tile) ***
++sf_vqmaccu_2x8x2    101100 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmacc_2x8x2     101101 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmaccus_2x8x2   101110 1 ..... ..... 010 ..... 1011011 @r_vm_1
++sf_vqmaccsu_2x8x2   101111 1 ..... ..... 010 ..... 1011011 @r_vm_1
 -- 
 2.43.0
 
