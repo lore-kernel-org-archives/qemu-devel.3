@@ -4,129 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 774C2C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 08:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B24C5AC67
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 08:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuQPC-0005Ns-VT; Thu, 13 Aug 2026 04:03:15 -0400
+	id 1wuQjy-00086j-4h; Thu, 13 Aug 2026 04:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuQP8-0005NO-Td
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:03:11 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wuQjt-00086K-Pv
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuQP6-0001Ph-RI
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:03:10 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wuQjr-0000pd-0i
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786608186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vEaQkfmGmTr3IerMBUf2Pwakj0dxUfT/ZCuwk/9VqOc=;
- b=VOGKZH3iFSeM4o9I7k/BwJEgq5TFINOgqJiiZdA3ONvpG03gI6vaDev8b8ILvCK67ErpuI
- YckkBJePZi6VrW0NYlcbVB+p5hHx+HpOXZEfJYlm62zbUpHmL3V2zcpmrJmUkDQsFufJ4X
- qQYt+Dpunnl7Ka6J1jxM4J+dLEcTQ8k=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-656-TIyFGSeLPNmWLC-J14RlgQ-1; Thu, 13 Aug 2026 04:03:00 -0400
-X-MC-Unique: TIyFGSeLPNmWLC-J14RlgQ-1
-X-Mimecast-MFC-AGG-ID: TIyFGSeLPNmWLC-J14RlgQ_1786608179
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c89704da8c7so2459462a12.0
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 01:02:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786608179; cv=none;
- d=google.com; s=arc-20260327;
- b=AdyPJPliDTmdQ72PmxH4KOVvefQQTmaLApeDmd+SMTQbtJ5Ag38f4Nc5QSeamYBAsD
- iWXz7BPZUeUvkj2Vrp14jXRJm92HhxbIOp0PInn8WzxwHxGoXRZNUpi+HtD2WQy73j/C
- qf45kj7mLcS1d6jpWhWZ1F7GdxN4NuJNzdT72LtqiIEoY+91+Z+OwPV12k48Tt+jRXaM
- sNaD30D5XOoiQ/e0FcCE+znd45x93ejgm38qkkjCprrs8ogLx3kkkQRG3lIArQrAx8tl
- 9y3bgPVn/5E1WZLYnHcgGRHXiHJqaWcmkF0AFD9AxxUS7LIQX6RFzSSL5G3zfG5K2Fnc
- Fkow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vEaQkfmGmTr3IerMBUf2Pwakj0dxUfT/ZCuwk/9VqOc=;
- fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
- b=M5Vj3lh6DmXpAk5FClRpevOVsMUqXnX/phg8VyX/0Qr0tOEF2hmACiNEGZoG1rBXUK
- ygkfFQ0R4cjORTc6xtkvkm9lPGDDFuHyNuRcCVq6u47GcL2c8+QBZnakjQrqog2CwkAN
- qtlDh54zqzVdID5Eu4infxyQXL7l9BoicV5CX6QAKrUtderGXViKSsDN9RCIaSALasuM
- kgN86WYvQPTbImu61Aa25Ld3n51Ob0Y/Cczs80JmCnNUP8PrfQVDhzjmbhGvI6OY5zeA
- oNuLnTk/V14TMr8c7C8L8wiCXSKjOdwNREgcwyqbb/jiq7LVGeMxjBB/x47EFNdtsmxg
- mQ5g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786608179; x=1787212979; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vEaQkfmGmTr3IerMBUf2Pwakj0dxUfT/ZCuwk/9VqOc=;
- b=Jg0AsjLyW7K81jKNZWR5IuFcjkHH9IIHa73wTeqWyrAUjlWKPl+w18JH3tRjFl94te
- xlCgSRxqaaqjVGhlvlils+rWVI+k1q3/Z/Me3ezpY2fp0BTcQklLtniwxIdxAoxdykDw
- cAOZEh7N+XK/yXmDfDJjP30NKEZgJIR5kBBXDzCx0kC17GKYaGCZQZ2PCv6JyTjKopSC
- gZqNObrdwU83xudseiWE9jzBo8LYYBEZX2S32c2r0YcDQs/trtPkUsO1dptQOkdPWiuU
- gSoo5O5cw1Im6bq3tzGFBGUZuYJASWHPXCglI9aQQOyoe1LvoDCKCKxVfSw6ZPtXVQso
- QWJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786608179; x=1787212979;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vEaQkfmGmTr3IerMBUf2Pwakj0dxUfT/ZCuwk/9VqOc=;
- b=POqzS/CeS6Cv4HeqMLchGsALGr+vxmtt/oc2h0BI0rL3vl+C5B3xbF1lHgh8E6Nl9Y
- iW/ta8xV37I0cUhD2GGnWKaejGWAIFQ+Rh/J7ix9H01SuIh1H62Sp5URyhXijt0tOfFJ
- D7y4bJerT/tEkqgtgq2CJKK6MmUbhLtPZx3wcMjiZMcK1B+5QzDKAE8kjP9CQK0AKVU0
- gXRHhECRyReKKzIbnWmD2GLDzDU67v+YOu+VxrcnZ8DtvCZjdZoSgdwb6gWTkZD7ns5B
- 2oNHM7faHoFaj7elTgw+FsSggJ34Fs/lGB/2jaYMjKRHypphqhR5XX6LvoShTzr5XagQ
- JKDQ==
-X-Gm-Message-State: AOJu0YyNLGJWu6Cnt0gGLV3BWG2J2WVnAOEijN6hNBL5kawYN91v0Vlo
- tHv9wLTNK8y8Lgleogoi18OAXMAirLl2D/Uf55lCcGjRZPT6NkBoix+3OHsyXNLztjDsHzt/T3R
- WBdsrsG74QaX50BmGC5BV2mt1AwpZP35eFNbxPerNYDT9qMIQeX1Si2urUaAm/5AL3IbN8RKGKJ
- T3fFIAYhHfGm+TRjsUa5gEnjevjh+02jA=
-X-Gm-Gg: AR+sD12UlolBJ/genlxclM0StWbdy2G17DyloPq2B9MtK8joDCnlqHffLWtnQPlUwtU
- 0XXbLiAkBu7zUcKzKZAmkhGAx+R4IXIF+t0rGS6QfvzSFvy2VlABOIVM3U1hCDIUgvydm8J2u07
- EYR3Qlli8IR1+2w2UP/jSiFl4Ns1Fzt8d+5JdeSet7tIobmcfUOHoa5HdIfxaYWPclG4W+ZbSYC
- 312vYgm1v3U2SCfTyFv32m2UY3ugsGSvomZyQ+g66GedY1aWX2GduaChMxWKqV85pDVDqQuHrqa
- Ag==
-X-Received: by 2002:a05:6a20:2d26:b0:398:8870:b58f with SMTP id
- adf61e73a8af0-3cc55045770mr5860103637.14.1786608178926; 
- Thu, 13 Aug 2026 01:02:58 -0700 (PDT)
-X-Received: by 2002:a05:6a20:2d26:b0:398:8870:b58f with SMTP id
- adf61e73a8af0-3cc55045770mr5860033637.14.1786608178425; Thu, 13 Aug 2026
- 01:02:58 -0700 (PDT)
+ s=mimecast20190719; t=1786609473;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=Txvzx6zsExfyYyFYmP3uc51AplJ+YMZQrNZi3JFP944=;
+ b=I0Pg2JAg1meyA7h+SO4KkQHBBN6+FxSNugn0SIrsDJzQxNWbhEPrCjOvMCrOKGlveOhg+w
+ Oi/4Do0ZxNDI0egQEsxeWTgblur+w28CKoaRK1zsZ+N4GSk3L4z2EHaAdYT9Y65JGCDvEM
+ dfgqzNHjXv63R6JL7XkBUfd1sTKSPKs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-kNz-U3NnMjaAx4T36nzmKA-1; Thu,
+ 13 Aug 2026 04:24:29 -0400
+X-MC-Unique: kNz-U3NnMjaAx4T36nzmKA-1
+X-Mimecast-MFC-AGG-ID: kNz-U3NnMjaAx4T36nzmKA_1786609468
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2E754195609D; Thu, 13 Aug 2026 08:24:28 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87FF7180049F; Thu, 13 Aug 2026 08:24:25 +0000 (UTC)
+Date: Thu, 13 Aug 2026 09:24:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, jmarcin@redhat.com, david@kernel.org,
+ pbonzini@redhat.com, chenyi.qiang@intel.com, peterx@redhat.com,
+ farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
+Subject: Re: [PATCH v4 08/12] hostmem: Support fully shared guest memfd to
+ back a VM
+Message-ID: <an1_NmWhtHY_Cf9V@redhat.com>
+References: <20260812201938.198915-1-michael.roth@amd.com>
+ <20260812201938.198915-9-michael.roth@amd.com>
 MIME-Version: 1.0
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com> <87ik5mqnzl.fsf@pond.sub.org>
-In-Reply-To: <87ik5mqnzl.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 13 Aug 2026 12:02:47 +0400
-X-Gm-Features: AUfX_mxsYsaAmRG_5Z95B-aR_AsTn7pbtrXPE1xEOQFMQH8PgiGdCyBWBDeuI1w
-Message-ID: <CAMxuvax4MEWEPXcG6Bp4wycdMutkj56tqhwAr+gaFs=oM55HQg@mail.gmail.com>
-Subject: Re: [PATCH v2 08/53] qapi/qom: add qapi-type field to
- ObjectPropertyInfo
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260812201938.198915-9-michael.roth@amd.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,117 +86,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Wed, Aug 12, 2026 at 03:16:46PM -0500, Michael Roth wrote:
+> From: Peter Xu <peterx@redhat.com>
+> 
+> Host backends supports guest-memfd now by detecting whether it's a
+> confidential VM.  There's no way to choose it yet from the memory level to
+> use it fully shared.  If we use guest-memfd, it so far always implies we
+> need two layers of memory backends, while the guest-memfd only provides the
+> private set of pages.
+> 
+> This patch introduces a way so that QEMU can consume guest memfd as the
+> only source of memory to back the object (aka, fully shared).
+> 
+> To use the fully shared guest-memfd, one can add a memfd object with:
+> 
+>   -object memory-backend-memfd,guest-memfd=on,share=on
+> 
+> Note that share=on is required with fully shared guest_memfd.
+> 
+> PS: there's a trivial touch-up on fd<0 check, because the stub to create
+> guest-memfd may return negative but not -1.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> ---
+>  backends/hostmem-memfd.c | 56 ++++++++++++++++++++++++++++++++++++----
+>  qapi/qom.json            |  6 ++++-
+>  2 files changed, 56 insertions(+), 6 deletions(-)
+> 
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index ea93f034e4..fbe65b00be 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -18,6 +18,8 @@
+>  #include "qapi/error.h"
+>  #include "qom/object.h"
+>  #include "migration/cpr.h"
+> +#include "system/kvm.h"
+> +#include <linux/kvm.h>
+>  
+>  OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+>  
+> @@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
+>      bool hugetlb;
+>      uint64_t hugetlbsize;
+>      bool seal;
+> +    /*
+> +     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
+> +     * which represents an internally private guest-memfd that only backs
+> +     * private pages.  Instead, this flag marks the memory backend will
+> +     * 100% use the guest-memfd pages in-place.
+> +     */
+> +    bool guest_memfd;
+>  };
+>  
+>  static bool
+> @@ -47,11 +56,29 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>          goto have_fd;
+>      }
+>  
+> -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+> -                           m->hugetlb, m->hugetlbsize, m->seal ?
+> -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+> -                           errp);
+> -    if (fd == -1) {
+> +    if (m->guest_memfd) {
+> +        if (!backend->share) {
+> +            error_setg(errp, "guest-memfd=on must be used with share=on");
+> +            return false;
+> +        } else if (m->seal) {
+> +            error_setg(errp, "guest-memfd=on must be used with seal=off");
+> +            return false;
+> +        } else if (m->hugetlb) {
+> +            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
 
-On Fri, Aug 7, 2026 at 1:27=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > Add an optional 'qapi-type' field to ObjectPropertyInfo and
-> > ObjectPropertyValue. When present, it contains the masked type name tha=
-t
-> > can be looked up in query-qmp-schema output. Absent for properties
-> > without a QAPI type association.
->
-> Always absent at this point, isn't it?
+Reporting an error without returning false like the other cases.
 
-yes
+> +        }
+> +
+> +        fd = kvm_create_guest_memfd(backend->size,
+> +                                    GUEST_MEMFD_FLAG_MMAP |
+> +                                    GUEST_MEMFD_FLAG_INIT_SHARED,
+> +                                    errp);
+> +    } else {
+> +        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+> +                               m->hugetlb, m->hugetlbsize, m->seal ?
+> +                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+> +                               errp);
+> +    }
+> +
+> +    if (fd < 0) {
+>          return false;
+>      }
+>      cpr_save_fd(name, 0, fd);
+> @@ -65,6 +92,18 @@ have_fd:
+>                                            backend->size, ram_flags, fd, 0, errp);
+>  }
+>  
+> +static bool
+> +memfd_backend_get_guest_memfd(Object *o, Error **errp)
+> +{
+> +    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
+> +}
+> +
+> +static void
+> +memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
+> +{
+> +    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
+> +}
+> +
+>  static bool
+>  memfd_backend_get_hugetlb(Object *o, Error **errp)
+>  {
+> @@ -152,6 +191,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+>          object_class_property_set_description(oc, "hugetlbsize",
+>                                                "Huge pages size (ex: 2M, 1G)");
+>      }
+> +
+> +    object_class_property_add_bool(oc, "guest-memfd",
+> +                                   memfd_backend_get_guest_memfd,
+> +                                   memfd_backend_set_guest_memfd);
+> +    object_class_property_set_description(oc, "guest-memfd",
+> +                                          "Use guest memfd");
+> +
+>      object_class_property_add_bool(oc, "seal",
+>                                     memfd_backend_get_seal,
+>                                     memfd_backend_set_seal);
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c55776af7d..ee981fc44c 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -771,13 +771,17 @@
+>  # @seal: if true, create a sealed-file, which will block further
+>  #     resizing of the memory (default: true)
+>  #
+> +# @guest-memfd: if true, use guest-memfd to back the memory region.
+> +#     (default: false, since: 11.2)
+> +#
+>  # Since: 2.12
+>  ##
+>  { 'struct': 'MemoryBackendMemfdProperties',
+>    'base': 'MemoryBackendProperties',
+>    'data': { '*hugetlb': 'bool',
+>              '*hugetlbsize': 'size',
+> -            '*seal': 'bool' },
+> +            '*seal': 'bool',
+> +            '*guest-memfd': 'bool' },
+>    'if': 'CONFIG_LINUX' }
 
->
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  qapi/qom.json | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
-> >
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index dd45ac1087c..a655be0beaa 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -35,6 +35,11 @@
->    ##
->    # @ObjectPropertyInfo:
->    #
->    # @name: the name of the property
->    #
->    # @type: the type of the property.  This will typically come in one of
->    #     four forms:
->    #
->    #     1) A primitive type such as 'u8', 'u16', 'bool', 'str', or
->    #        'double'.  These types are mapped to the appropriate JSON
->    #        type.
->    #
->    #     2) A child type in the form 'child<subtype>' where subtype is a
->    #        qdev device type name.  Child properties create the
->    #        composition tree.
->    #
->    #     3) A link type in the form 'link<subtype>' where subtype is a
-> >  #        qdev device type name.  Link properties form the device model
-> >  #        graph.
->
-> The description of @type is problematic, and will need an update at some
-> time.
->
-> >  #
-> > +# @qapi-type: if the property was registered with a QAPI type
-> > +#     association, the type name as it appears in the output of
-> > +#     ``query-qmp-schema``.  Absent for properties without a QAPI
-> > +#     type association.  (since 11.1)
->
-> Whether "the property was registered with a QAPI type association" is
-> implementation detail.
->
-> Maybe
->
->    # @qapi-type: the name of the property's type name as it appears in
->    #     the output of ``query-qmp-schema``.  Absent if the type does not
->    #     occur there.  (since 11.2)
->
-> This is inaccurate now --- it can also be absent when we haven't gotten
-> around to fix the property --- but it hopefully becomes accurate soon,
-> and should be good enough until then.
->
-> > +#
-> >  # @description: if specified, the description of the property.
-> >  #
-> >  # @default-value: the default value, if any (since 5.0)
-> > @@ -44,6 +49,7 @@
-> >  { 'struct': 'ObjectPropertyInfo',
-> >    'data': { 'name': 'str',
-> >              'type': 'str',
-> > +            '*qapi-type': 'str',
-> >              '*description': 'str',
-> >              '*default-value': 'any' } }
-> >
-> > @@ -55,6 +61,11 @@
-> >  # @type: the type of the property, as described in
-> >  #     `ObjectPropertyInfo`.
-> >  #
-> > +# @qapi-type: if the property was registered with a QAPI type
-> > +#     association, the type name as it appears in the output of
-> > +#     ``query-qmp-schema``.  Absent for properties without a QAPI
-> > +#     type association.  (since 11.1)
-> > +#
->
-> Likewise.
+We're reusing the 'memory-backend-memfd' class, and then at runtime
+refusing allow the user to control any of properties in
+MemoryBackendProperties.
 
-adjusted, thanks
+"memory-backend-memfd,guest-memfd=on|off" is switching between two
+separate implementations of the class.
 
->
-> >  # @value: the value of the property.  Absent when the property cannot
-> >  #     be read.
-> >  #
-> > @@ -63,6 +74,7 @@
-> >  { 'struct': 'ObjectPropertyValue',
-> >    'data': { 'name': 'str',
-> >              'type': 'str',
-> > +            '*qapi-type': 'str',
-> >              '*value': 'any' } }
-> >
-> >  ##
->
+This whole thing is just shouting "use a different class".
+
+There is no meaningful sharing of code here, and the sharing of the
+public interface is offering apps no value as the impl prevents them
+from choosing the value of the properties - they have to be set of
+certain values which are not introspectable.
+
+Please introduce a "memory-backend-guest-memfd" backend instead.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
