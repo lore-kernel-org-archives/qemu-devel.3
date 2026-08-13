@@ -4,110 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB3FC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 12:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A3FC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 12:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuUY8-0007ya-MT; Thu, 13 Aug 2026 08:28:44 -0400
+	id 1wuUba-0000WW-BZ; Thu, 13 Aug 2026 08:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuUY6-0007yS-Uz
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 08:28:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuUY4-0003hi-P9
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 08:28:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786624118;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tydCjltfWAuFdXnDnOsSZ1PqFbfWbSS3q7Lmj92Umv8=;
- b=P0HQWHAt6ZaDLBLNoafUVQinuIEmXAEoqTu0YD9m47PWQzC65bmoYVelEsiK37TaAsGVq/
- vt9GSEINFchGb1ooLS1ZSIZTO38GY2Iqs5zixq0r4uuc2IuDUAav5zDFGXcXSMkojGYH5v
- /cI6MbfbCj9JoE3yeUCkZOrpmFHI1Ws=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-YQPX4cMwOPmbvNpn_PRAWg-1; Thu, 13 Aug 2026 08:28:37 -0400
-X-MC-Unique: YQPX4cMwOPmbvNpn_PRAWg-1
-X-Mimecast-MFC-AGG-ID: YQPX4cMwOPmbvNpn_PRAWg_1786624117
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-930b571432fso90415485a.0
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 05:28:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wuUbZ-0000Vq-8h
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 08:32:17 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wuUbW-000505-TC
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 08:32:17 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4a28cbdso1242068a12.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 05:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786624117; x=1787228917; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tydCjltfWAuFdXnDnOsSZ1PqFbfWbSS3q7Lmj92Umv8=;
- b=Glsn/hDXZhYCbVad3z6PUtVVk0BfXEt3/aw1+VzDREzW4laJZ7Kbwy6LJEoZL0on3z
- do9GZ/qScwXjqExwWpy782vUNUGKGe3odrq9NQNvbcwLrtn+I4Q5z6cujgdyDQMQ6v1r
- 8c+d0dLNub0QnB/Qvg+tLLuIN7oQfug1hq6U3IsiddOcfE3xTLawuQwhNDNVcCt2GtKJ
- 3CpLbJ2LBi1LCdjLT3jNKRMy/opBHEWxJKI99AspImQPizOT2oFSg53vl6BQ5GCr53kd
- lmZQhslQylY8NZTb81wlvrjmz73JmX8PI4QwpqBNehWbqIRkYILvnB2uc5qvFujSIhwu
- /Upw==
+ d=gmail.com; s=20251104; t=1786624333; x=1787229133; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JTf50H2KjEE9dRaDlPScRqHmYiVlaQA2BV2jrqegP6w=;
+ b=dpthDddwxFC3l5bMDJbwZOMPpUHc5NS7PYQXHBFPmwCdUAXM/BimeIGA2SRP2QCsuD
+ eDWkQ7jsL0W35rotJzF+5msPNRk9R518hbprESt3gx4eOGWcz7UYJzTFly3GErHMSegL
+ HIpjrXS4eMuYY4bA/OO9ucJuvfBYbXXQF0GjI5c0cw9t+Qak0bq6VkDY+tQf1ioaCbch
+ 6i6rt0Sriqie2OuYijvQUjtv7Nci0HtLhseQ+TYCvdHYET4t3O72dADRW5QFZXo77gxS
+ EtAAtvdYsroXFMN8/yE2hWJMjMLbUN/VNTXtohjzsCseLj9sVeBjLYvb7cOXabnJ7Cxi
+ rrMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786624117; x=1787228917;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=tydCjltfWAuFdXnDnOsSZ1PqFbfWbSS3q7Lmj92Umv8=;
- b=eSc3g9kmgrZQofFPuPGvFzz+mNqKjnJ1nYfwLe2MAJxZDjtVJqLxEURQ5Q6LALTQ/6
- 7M21lAKWvAW8Z7lrgGVvcFhHj8iFD+6EAEjpeIegIJPr/WAP46gIFjb/yRK5IUayaKGi
- kwFcuJ/cGyxVvBBcGIbeqqTmi/q367qywOCUn/XHjAn0TLrwILkFgJTzRNa1RPBsTIsd
- FVx7qhbCudXZoli67L8nW8xRh7J7tlsjub+QCtX2EOuu9a7MpCUcMnwaE054bTvuZBTT
- XJZiNL86Zow/c4//aoURYkTXOcGdK9/z1i74VDUqCuIaR/kUZPaZLmS9/ild9a7tcKsU
- IaMQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoAC661lHXTKLzzUlj7WFDsZVGt2hLOoqgkiQi0kzO+z0R0A0yDdaS3YzCagjTSMkPvcqPXntEAvdh/@nongnu.org
-X-Gm-Message-State: AOJu0YxbDKisYXo8csvWhUCQPikkRasLFY3GGe2ZrMPofxgG/HFnrpwC
- 4d/2FAxBDTCkpFyn5W/p5/xQXNQu41Gg4joAmw+cfLt3aSrspZH0F+y/p7cgLjPEuhsTansX05D
- UiTLkcPbLRn+phnGVKemIFbCbG4LpTnQ76QhjCRl5CijuH9Svy+F2hX9N
-X-Gm-Gg: AR+sD11oxtyx71A2U5lH0B4TdLJrUw4lvttoOs/X2o+CgOkS6bvNyWysw+aaSCYgGJP
- aoASXiBIkxMHvwrhF/Z5gWvEyR4n/e6VPvQ2NMwbRmgowHnjbmrSt9QSkDJ6g3l0HUhLnQnQJ07
- uPZxtNMjDGDSoBNxN2SYX2IAje0pY0cH9P/6OAgei2bfbTG67gw5WaCxmxCx2BdRzHK5zMCjUds
- PVM661h49VIwroNhpe7Y8G61yA9oVhmXJvWQwDnY8R2scj9sILkBjKTKjY9Ba2aIbDlB265fEaG
- u7FJ5PFULb17hlhTMI/mfPvI/d3u+SuRJSX9q99hgKa13FYveaHagIhjQMJHEyXkSeRc
-X-Received: by 2002:a05:620a:ac12:b0:936:5a38:2fe7 with SMTP id
- af79cd13be357-936c0b88e2emr403324585a.15.1786624116899; 
- Thu, 13 Aug 2026 05:28:36 -0700 (PDT)
-X-Received: by 2002:a05:620a:ac12:b0:936:5a38:2fe7 with SMTP id
- af79cd13be357-936c0b88e2emr403319285a.15.1786624116323; 
- Thu, 13 Aug 2026 05:28:36 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-936c1bac5b4sm134943185a.47.2026.08.13.05.28.35
+ d=1e100.net; s=20251104; t=1786624333; x=1787229133;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JTf50H2KjEE9dRaDlPScRqHmYiVlaQA2BV2jrqegP6w=;
+ b=pY3oy6vnqJfLJWGX770jYbXqDnMdbmbHKoQv2yjwVO799qw+pKI770thR1LVlvECKM
+ c4jPanPmX6c/2TP0bGfhAaoDKGgwUBWKe7nsjfClSECFzq60TDw1vGCjehDCnexInC6A
+ aig8AFpaH4wrb1ghL+K6GdZT09sMJLmq4KmhlfhCYr3SvZaxp1GHZilL+joVEj8AQumB
+ koT1e5lIjpiLRhCiB1gthJk7C0PaAzT2WXqhGNLIkpREn5//iCCC6S09T2D+egsnQC6p
+ /ZfhH9mRQRJrDQNHlWk39wv5POOh/u9Wa2Amu41KnDGSwQ7+aq1YQlBFrlFHmEe8AuMB
+ jAeg==
+X-Gm-Message-State: AOJu0YwV4jMFjH8TTU1tcV89Y55NIFrZf0D9Ytk1agf/NsD2/pWGG0+l
+ h/k2X05VNh3xhoeEFPmi1ziHflIvLaM/lB7fGvlJ643VMAybqD1NfB3AMhLHHbup
+X-Gm-Gg: AR+sD10d45T9FPYcwWCfDVWqlSSmG8tKX861jZZ5fEOWfYpDjzz05kOxPsBd72XZJbK
+ uIxpCRBx9rRb+pxLml7YUdR4DYvCZCsYFWyKPv98nClWjmOGxZutP8SmLGCCA+RyG1CfDWwBcWA
+ bqsQqBFivQtSgtKQNUSEfgfCgF/UlGztprrimJVWzDgudC59t7BnjrlB4q/4Q1Bzgk6jf5bA7OO
+ J1IzaxxgDojEIa3vgIK1M8MLtCH+9Hw4obxWID1LiL6HDvQvVp92n2eJz8ML0jrzB5r8Sysa/W9
+ ok2yedQVl+IeG+/Jkp4xbkuhzdg3v9ByjOA7o26URlfl3N65YSzvyQdHnoI4+nA7CjsI/XfgkLW
+ epkT4j9lyZr08Mq+cQ65lIlKUQ1C72pibC/r2/1sIrxx19iF1C0pW4XybFfDZfzvoFbV6oPZUQ9
+ SYwNUp7d45FW18XC5JA0xtkHJ7qHhLnJ0Pzef/25eG+UAsGj7TY7W7XKbLZk5zvJyDosbiVLD0t
+ 8SOvNSl
+X-Received: by 2002:a05:6402:50cc:b0:69e:8ad:515f with SMTP id
+ 4fb4d7f45d1cf-6a3805c6bc3mr2171957a12.6.1786624332607; 
+ Thu, 13 Aug 2026 05:32:12 -0700 (PDT)
+Received: from DE-PF5B95TD.clients.cmblu.de ([87.129.199.250])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a37f8cde03sm843270a12.27.2026.08.13.05.32.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 05:28:35 -0700 (PDT)
-Date: Thu, 13 Aug 2026 08:28:24 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- jmarcin@redhat.com, david@kernel.org, pbonzini@redhat.com,
- chenyi.qiang@intel.com, farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
-Subject: Re: [PATCH v4 08/12] hostmem: Support fully shared guest memfd to
- back a VM
-Message-ID: <an24aI4sAILoxncp@x1.local>
-References: <20260812201938.198915-1-michael.roth@amd.com>
- <20260812201938.198915-9-michael.roth@amd.com>
- <an1_NmWhtHY_Cf9V@redhat.com>
+ Thu, 13 Aug 2026 05:32:11 -0700 (PDT)
+From: Wadim Mueller <wafgo01@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: bmeng.cn@gmail.com,
+	qemu-block@nongnu.org,
+	philmd@linaro.org
+Subject: [PATCH] tests/qtest: add Cadence SDHCI ADMA pacing/MMIO reproducer
+Date: Thu, 13 Aug 2026 14:32:10 +0200
+Message-ID: <20260813123210.28987-1-wafgo01@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <an1_NmWhtHY_Cf9V@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=wafgo01@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,208 +98,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 13, 2026 at 09:24:22AM +0100, Daniel P. Berrangé wrote:
-> On Wed, Aug 12, 2026 at 03:16:46PM -0500, Michael Roth wrote:
-> > From: Peter Xu <peterx@redhat.com>
-> > 
-> > Host backends supports guest-memfd now by detecting whether it's a
-> > confidential VM.  There's no way to choose it yet from the memory level to
-> > use it fully shared.  If we use guest-memfd, it so far always implies we
-> > need two layers of memory backends, while the guest-memfd only provides the
-> > private set of pages.
-> > 
-> > This patch introduces a way so that QEMU can consume guest memfd as the
-> > only source of memory to back the object (aka, fully shared).
-> > 
-> > To use the fully shared guest-memfd, one can add a memfd object with:
-> > 
-> >   -object memory-backend-memfd,guest-memfd=on,share=on
-> > 
-> > Note that share=on is required with fully shared guest_memfd.
-> > 
-> > PS: there's a trivial touch-up on fd<0 check, because the stub to create
-> > guest-memfd may return negative but not -1.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > ---
-> >  backends/hostmem-memfd.c | 56 ++++++++++++++++++++++++++++++++++++----
-> >  qapi/qom.json            |  6 ++++-
-> >  2 files changed, 56 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> > index ea93f034e4..fbe65b00be 100644
-> > --- a/backends/hostmem-memfd.c
-> > +++ b/backends/hostmem-memfd.c
-> > @@ -18,6 +18,8 @@
-> >  #include "qapi/error.h"
-> >  #include "qom/object.h"
-> >  #include "migration/cpr.h"
-> > +#include "system/kvm.h"
-> > +#include <linux/kvm.h>
-> >  
-> >  OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
-> >  
-> > @@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
-> >      bool hugetlb;
-> >      uint64_t hugetlbsize;
-> >      bool seal;
-> > +    /*
-> > +     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
-> > +     * which represents an internally private guest-memfd that only backs
-> > +     * private pages.  Instead, this flag marks the memory backend will
-> > +     * 100% use the guest-memfd pages in-place.
-> > +     */
-> > +    bool guest_memfd;
-> >  };
-> >  
-> >  static bool
-> > @@ -47,11 +56,29 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-> >          goto have_fd;
-> >      }
-> >  
-> > -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-> > -                           m->hugetlb, m->hugetlbsize, m->seal ?
-> > -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-> > -                           errp);
-> > -    if (fd == -1) {
-> > +    if (m->guest_memfd) {
-> > +        if (!backend->share) {
-> > +            error_setg(errp, "guest-memfd=on must be used with share=on");
-> > +            return false;
-> > +        } else if (m->seal) {
-> > +            error_setg(errp, "guest-memfd=on must be used with seal=off");
-> > +            return false;
-> > +        } else if (m->hugetlb) {
-> > +            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
-> 
-> Reporting an error without returning false like the other cases.
-> 
-> > +        }
-> > +
-> > +        fd = kvm_create_guest_memfd(backend->size,
-> > +                                    GUEST_MEMFD_FLAG_MMAP |
-> > +                                    GUEST_MEMFD_FLAG_INIT_SHARED,
-> > +                                    errp);
-> > +    } else {
-> > +        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-> > +                               m->hugetlb, m->hugetlbsize, m->seal ?
-> > +                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-> > +                               errp);
-> > +    }
-> > +
-> > +    if (fd < 0) {
-> >          return false;
-> >      }
-> >      cpr_save_fd(name, 0, fd);
-> > @@ -65,6 +92,18 @@ have_fd:
-> >                                            backend->size, ram_flags, fd, 0, errp);
-> >  }
-> >  
-> > +static bool
-> > +memfd_backend_get_guest_memfd(Object *o, Error **errp)
-> > +{
-> > +    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
-> > +}
-> > +
-> > +static void
-> > +memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
-> > +{
-> > +    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
-> > +}
-> > +
-> >  static bool
-> >  memfd_backend_get_hugetlb(Object *o, Error **errp)
-> >  {
-> > @@ -152,6 +191,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
-> >          object_class_property_set_description(oc, "hugetlbsize",
-> >                                                "Huge pages size (ex: 2M, 1G)");
-> >      }
-> > +
-> > +    object_class_property_add_bool(oc, "guest-memfd",
-> > +                                   memfd_backend_get_guest_memfd,
-> > +                                   memfd_backend_set_guest_memfd);
-> > +    object_class_property_set_description(oc, "guest-memfd",
-> > +                                          "Use guest memfd");
-> > +
-> >      object_class_property_add_bool(oc, "seal",
-> >                                     memfd_backend_get_seal,
-> >                                     memfd_backend_set_seal);
-> > diff --git a/qapi/qom.json b/qapi/qom.json
-> > index c55776af7d..ee981fc44c 100644
-> > --- a/qapi/qom.json
-> > +++ b/qapi/qom.json
-> > @@ -771,13 +771,17 @@
-> >  # @seal: if true, create a sealed-file, which will block further
-> >  #     resizing of the memory (default: true)
-> >  #
-> > +# @guest-memfd: if true, use guest-memfd to back the memory region.
-> > +#     (default: false, since: 11.2)
-> > +#
-> >  # Since: 2.12
-> >  ##
-> >  { 'struct': 'MemoryBackendMemfdProperties',
-> >    'base': 'MemoryBackendProperties',
-> >    'data': { '*hugetlb': 'bool',
-> >              '*hugetlbsize': 'size',
-> > -            '*seal': 'bool' },
-> > +            '*seal': 'bool',
-> > +            '*guest-memfd': 'bool' },
-> >    'if': 'CONFIG_LINUX' }
-> 
-> We're reusing the 'memory-backend-memfd' class, and then at runtime
-> refusing allow the user to control any of properties in
-> MemoryBackendProperties.
+Add an image-free qtest for the microchip-icicle-kit machine that drives
+the generic SDHCI model (hw/sd/sdhci.c) through the Cadence wrapper
+(hw/sd/cadence_sdhci.c, SRS window at 0x20008200) directly over MMIO
+under "-accel qtest", where QEMU_CLOCK_VIRTUAL only advances when the
+test steps it.
 
-gmemfd should be able to use all ultimately.
+It reproduces two aspects of the ADMA2 engine objectively, without any
+guest firmware:
 
-For seal, IMHO it's already implied, kind of forced seal=on but it doesn't
-matter, gmemfd was introduced with sealing, at least what QEMU implies with
-"F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL".  So IMHO we could ignore what
-user selected and assume it's ON.
+  1. Pacing: a 12-descriptor (> SDHC_ADMA_DESCS_PER_DELAY) non-interrupt
+     ADMA2 CMD18 read completes after a model-dependent number of
+     SDHC_TRANSFER_DELAY virtual-clock steps, which the test reports.
 
-For hugetlb, we will support hugetlb (and allow specify hugetlb size) for
-gmem in the future I believe.  It's only that this is done one step at a
-time so we haven't supported it yet, while the kernel support is still in
-progress.
+  2. MMIO coupling: a chain carrying a DMA-boundary interrupt descriptor
+     yields mid-chain and reschedules on the virtual clock. With the
+     clock frozen, a bare interrupt-status read must not itself resume or
+     complete the transfer. This asserts the behaviour intended by "Run
+     ADMA independently of MMIO": it passes on the fixed model and fails
+     on a model that resumes ADMA from an MMIO read.
 
-> 
-> "memory-backend-memfd,guest-memfd=on|off" is switching between two
-> separate implementations of the class.
-> 
-> This whole thing is just shouting "use a different class".
-> 
-> There is no meaningful sharing of code here, and the sharing of the
-> public interface is offering apps no value as the impl prevents them
-> from choosing the value of the properties - they have to be set of
-> certain values which are not introspectable.
-> 
-> Please introduce a "memory-backend-guest-memfd" backend instead.
+The SD bring-up (CMD0/CMD8/ACMD41/CMD2/CMD3/CMD7/CMD16) and the ADMA2
+descriptor-table layout mirror the pattern already used by the SDHCI
+device model; SDHCI register offsets and ADMA attribute bits are
+reproduced locally because sdhci-internal.h is not standalone-includable
+from a qtest.
 
-This is indeed what Michael used to suggest, and we were discussing in
-previous version on which is better,
+Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
+---
+ MAINTAINERS                      |   1 +
+ tests/qtest/cadence-sdhci-test.c | 268 +++++++++++++++++++++++++++++++
+ tests/qtest/meson.build          |   1 +
+ 3 files changed, 270 insertions(+)
+ create mode 100644 tests/qtest/cadence-sdhci-test.c
 
-https://lore.kernel.org/r/rjqfiwh57gip3u3psqg33jhmo7ixaj2qwzupc7zdk7f3d26qnu@tglactz67ogk
-
-The hope is this is also easier for either libvirt or most users, but
-please correct me if it's not the case, especially for libvirt.  The plan
-is when CoCo flags are provided, all things will automatically switch to a
-CoCo-friendly implementation within QEMU.
-
-It also means here the guest-memfd= parameter shouldn't be needed in real
-CoCo contexts because they'll simply be implied (no cmdline change needed
-for the same "-object memory-backend-memfd" one used to use without CoCo).
-It's only needed for only special use of guest-memfd, in this case
-init-shared is the special case where CoCo doesn't use.
-
-Please check if you agree after reading above.  We can definitely still
-rethink the interfacing.
-
-Thanks,
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 63e9ba521b..12c657d000 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2277,6 +2277,7 @@ F: include/hw/sd/sd*
+ F: hw/sd/core.c
+ F: hw/sd/sd*
+ F: hw/sd/ssi-sd.c
++F: tests/qtest/cadence-sdhci-test.c
+ F: tests/qtest/fuzz-sdcard-test.c
+ F: tests/qtest/sdhci-test.c
+ 
+diff --git a/tests/qtest/cadence-sdhci-test.c b/tests/qtest/cadence-sdhci-test.c
+new file mode 100644
+index 0000000000..f2f06fdcaf
+--- /dev/null
++++ b/tests/qtest/cadence-sdhci-test.c
+@@ -0,0 +1,268 @@
++/*
++ * QTest for Cadence SDHCI ADMA2 pacing / MMIO coupling on the Microchip
++ * PolarFire SoC Icicle Kit (microchip-icicle-kit).
++ *
++ * Drives the generic SDHCI model (hw/sd/sdhci.c) through the Cadence wrapper
++ * directly over MMIO under "-accel qtest", where QEMU_CLOCK_VIRTUAL only
++ * advances when the test steps it; no guest firmware runs.
++ *
++ * Copyright (c) 2026 Wadim Mueller <wafgo01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++/*
++ * SDHCI register offsets and bits, mirrored from hw/sd/sdhci-internal.h,
++ * which is not standalone-includable from a qtest.
++ */
++#define SDHC_BLKSIZE               0x04
++#define SDHC_ARGUMENT              0x08
++#define SDHC_TRNMOD                0x0C
++#define SDHC_TRNS_DMA              0x0001
++#define SDHC_TRNS_BLK_CNT_EN       0x0002
++#define SDHC_TRNS_READ             0x0010
++#define SDHC_TRNS_MULTI            0x0020
++#define SDHC_CMDREG                0x0E
++#define SDHC_CMD_DATA_PRESENT      (1 << 5)
++#define SDHC_RSPREG0               0x10
++#define SDHC_PRNSTS                0x24
++#define SDHC_CARD_PRESENT          0x00010000
++#define SDHC_HOSTCTL               0x28
++#define SDHC_CTRL_ADMA2_32         0x10
++#define SDHC_CLKCON                0x2C
++#define SDHC_CLOCK_INT_EN          0x0001
++#define SDHC_CLOCK_SDCLK_EN        (1 << 2)
++#define SDHC_SWRST                 0x2F
++#define SDHC_RESET_ALL             0x01
++#define SDHC_NORINTSTS             0x30
++#define SDHC_NIS_ERR               0x8000
++#define SDHC_NIS_CMDCMP            0x0001
++#define SDHC_NIS_TRSCMP            0x0002
++#define SDHC_NIS_DMA               0x0008
++#define SDHC_NORINTSTSEN           0x34
++#define SDHC_ERRINTSTSEN           0x36
++#define SDHC_NORINTSIGEN           0x38
++#define SDHC_ADMASYSADDR           0x58
++#define SDHC_ADMA_ATTR_ACT_TRAN    (1 << 5)
++#define SDHC_ADMA_ATTR_INT         (1 << 2)
++#define SDHC_ADMA_ATTR_END         (1 << 1)
++#define SDHC_ADMA_ATTR_VALID       (1 << 0)
++#define SDHC_TRANSFER_DELAY        100      /* ns between ADMA batches */
++
++/* Cadence maps the generic SDHCI (SRS) register window at base + 0x200. */
++#define SDHCI_BASE           (0x20008000ULL + 0x200)
++
++/* Scratch in PolarFire DRAM (base 0x80000000): descriptor table + target. */
++#define ADMA_TABLE_ADDR   0x82000000ULL
++#define ADMA_BUF_ADDR     0x82100000ULL
++
++#define BLK_LEN           512
++#define NDESC             12      /* > SDHC_ADMA_DESCS_PER_DELAY (5) */
++#define INT_DESC          5       /* DMA-boundary interrupt descriptor */
++
++/* CMDREG response-type encodings (bits [1:0]). */
++#define RESP_NONE         0x0000
++#define RESP_R2           0x0001  /* 136-bit */
++#define RESP_R48          0x0002  /* 48-bit */
++#define RESP_R1B          0x0003  /* 48-bit with busy */
++
++#define ACMD41_ARG        0x40FF8000u   /* HCS + 3.3-3.6V window */
++#define CMD8_ARG          0x000001AAu   /* VHS 2.7-3.6V + check pattern */
++
++/* Issue an SD command and wait (bounded) for Command Complete. */
++static uint16_t sd_cmd(QTestState *qts, uint8_t cmd, uint32_t arg,
++                       uint16_t flags)
++{
++    uint16_t sts = 0;
++    int i;
++
++    qtest_writel(qts, SDHCI_BASE + SDHC_ARGUMENT, arg);
++    qtest_writew(qts, SDHCI_BASE + SDHC_CMDREG, ((uint16_t)cmd << 8) | flags);
++
++    for (i = 0; i < 1000; i++) {
++        sts = qtest_readw(qts, SDHCI_BASE + SDHC_NORINTSTS);
++        if (sts & SDHC_NIS_CMDCMP) {
++            break;
++        }
++    }
++    g_assert_cmphex(sts & SDHC_NIS_CMDCMP, ==, SDHC_NIS_CMDCMP);
++
++    qtest_writew(qts, SDHCI_BASE + SDHC_NORINTSTS, 0xffff);  /* w1c */
++    return sts;
++}
++
++/* Bring the SD card from idle to transfer state. */
++static void sd_bring_up_card(QTestState *qts)
++{
++    uint32_t rca;
++
++    g_assert_cmphex(qtest_readl(qts, SDHCI_BASE + SDHC_PRNSTS) &
++                    SDHC_CARD_PRESENT, ==, SDHC_CARD_PRESENT);
++
++    qtest_writeb(qts, SDHCI_BASE + SDHC_SWRST, SDHC_RESET_ALL);
++    qtest_writew(qts, SDHCI_BASE + SDHC_CLKCON,
++                 SDHC_CLOCK_INT_EN | SDHC_CLOCK_SDCLK_EN);
++    qtest_writew(qts, SDHCI_BASE + SDHC_NORINTSTSEN, 0xffff);
++    qtest_writew(qts, SDHCI_BASE + SDHC_ERRINTSTSEN, 0xffff);
++    qtest_writew(qts, SDHCI_BASE + SDHC_NORINTSIGEN, 0xffff);
++
++    sd_cmd(qts, 0,  0x00000000, RESP_NONE);  /* GO_IDLE_STATE */
++    sd_cmd(qts, 8,  CMD8_ARG,   RESP_R48);   /* SEND_IF_COND */
++    sd_cmd(qts, 55, 0x00000000, RESP_R48);   /* APP_CMD */
++    sd_cmd(qts, 41, ACMD41_ARG, RESP_R48);   /* SD_SEND_OP_COND */
++    sd_cmd(qts, 2,  0x00000000, RESP_R2);    /* ALL_SEND_CID */
++    sd_cmd(qts, 3,  0x00000000, RESP_R48);   /* SEND_RELATIVE_ADDR */
++
++    rca = qtest_readl(qts, SDHCI_BASE + SDHC_RSPREG0) >> 16;  /* R6 */
++
++    sd_cmd(qts, 7,  rca << 16,  RESP_R1B);   /* SELECT_CARD */
++    sd_cmd(qts, 16, BLK_LEN,    RESP_R48);   /* SET_BLOCKLEN */
++}
++
++/*
++ * Build a 32-bit ADMA2 table: per 8-byte entry word0 = (len << 16) | attr,
++ * word1 = target address.  When int_desc >= 0 that descriptor also carries
++ * the DMA-boundary interrupt attribute, so the model yields mid-chain
++ * (rescheduling on QEMU_CLOCK_VIRTUAL) instead of running to completion.
++ */
++static void build_adma_table(QTestState *qts, int int_desc)
++{
++    for (int i = 0; i < NDESC; i++) {
++        uint8_t attr = SDHC_ADMA_ATTR_VALID | SDHC_ADMA_ATTR_ACT_TRAN;
++        uint32_t addr = (uint32_t)(ADMA_BUF_ADDR + (uint64_t)i * BLK_LEN);
++
++        if (i == int_desc) {
++            attr |= SDHC_ADMA_ATTR_INT;
++        }
++        if (i == NDESC - 1) {
++            attr |= SDHC_ADMA_ATTR_END;
++        }
++        qtest_writel(qts, ADMA_TABLE_ADDR + (uint64_t)i * 8,
++                     ((uint32_t)BLK_LEN << 16) | attr);
++        qtest_writel(qts, ADMA_TABLE_ADDR + (uint64_t)i * 8 + 4, addr);
++    }
++}
++
++/* Program the ADMA2 engine, descriptor pointer and transfer geometry. */
++static void program_adma_read(QTestState *qts)
++{
++    qtest_writeb(qts, SDHCI_BASE + SDHC_HOSTCTL, SDHC_CTRL_ADMA2_32);
++    qtest_writel(qts, SDHCI_BASE + SDHC_ADMASYSADDR, (uint32_t)ADMA_TABLE_ADDR);
++    qtest_writel(qts, SDHCI_BASE + SDHC_ADMASYSADDR + 4,
++                 (uint32_t)(ADMA_TABLE_ADDR >> 32));
++    qtest_writel(qts, SDHCI_BASE + SDHC_BLKSIZE, BLK_LEN | (NDESC << 16));
++    qtest_writew(qts, SDHCI_BASE + SDHC_TRNMOD,
++                 SDHC_TRNS_DMA | SDHC_TRNS_BLK_CNT_EN |
++                 SDHC_TRNS_READ | SDHC_TRNS_MULTI);
++    qtest_writel(qts, SDHCI_BASE + SDHC_ARGUMENT, 0);  /* start block 0 */
++    qtest_writew(qts, SDHCI_BASE + SDHC_NORINTSTS, 0xffff);
++}
++
++/* CMD18 READ_MULTIPLE_BLOCK with data present -> kicks off ADMA. */
++static void kick_cmd18(QTestState *qts)
++{
++    qtest_writew(qts, SDHCI_BASE + SDHC_CMDREG,
++                 (18 << 8) | SDHC_CMD_DATA_PRESENT | RESP_R48);
++}
++
++/* Start a card-carrying icicle machine and bring the card to "tran". */
++static QTestState *icicle_start(char **tmp)
++{
++    int fd;
++    GError *err = NULL;
++    QTestState *qts;
++
++    fd = g_file_open_tmp("icicle-sdhci-XXXXXX.raw", tmp, &err);
++    g_assert_no_error(err);
++    g_assert_cmpint(fd, >=, 0);
++    g_assert_cmpint(ftruncate(fd, 1 * 1024 * 1024), ==, 0);
++    close(fd);
++
++    qts = qtest_initf("-machine microchip-icicle-kit -accel qtest "
++                      "-display none -drive if=sd,file=%s,format=raw", *tmp);
++    sd_bring_up_card(qts);
++    return qts;
++}
++
++/*
++ * Facet 1 -- pacing.  A non-interrupt chain completes after some number of
++ * SDHC_TRANSFER_DELAY steps (several for a batched model, none for one that
++ * runs a no-interrupt chain to completion); the count is reported, not
++ * asserted -- only a clean Transfer Complete is required.
++ */
++static void test_adma_pacing(void)
++{
++    char *tmp = NULL;
++    QTestState *qts = icicle_start(&tmp);
++    uint16_t sts;
++    int steps = 0;
++
++    build_adma_table(qts, -1);
++    program_adma_read(qts);
++    kick_cmd18(qts);
++
++    while (!((sts = qtest_readw(qts, SDHCI_BASE + SDHC_NORINTSTS)) &
++             SDHC_NIS_TRSCMP)) {
++        qtest_clock_step(qts, SDHC_TRANSFER_DELAY);
++        steps++;
++        g_assert_cmpint(steps, <, 1000);
++    }
++
++    g_assert_cmphex(sts & SDHC_NIS_TRSCMP, ==, SDHC_NIS_TRSCMP);
++    g_assert_cmphex(sts & SDHC_NIS_ERR, ==, 0);
++
++    g_test_message("ADMA %d descriptors: %d clock steps to Transfer Complete",
++                   NDESC, steps);
++
++    qtest_quit(qts);
++    unlink(tmp);
++    g_free(tmp);
++}
++
++/*
++ * Facet 2 -- MMIO coupling (regression for "Run ADMA independently of MMIO").
++ * With the clock frozen, a bare interrupt-status read must not resume the
++ * transfer left pending by the mid-chain interrupt descriptor: Transfer
++ * Complete must still be clear.  A model that resumes ADMA from an MMIO read
++ * completes it on that bare read and fails the assertion.
++ */
++static void test_adma_mmio_coupling(void)
++{
++    char *tmp = NULL;
++    QTestState *qts = icicle_start(&tmp);
++    uint16_t sts;
++    int steps = 0;
++
++    build_adma_table(qts, INT_DESC);
++    program_adma_read(qts);
++    kick_cmd18(qts);
++
++    sts = qtest_readw(qts, SDHCI_BASE + SDHC_NORINTSTS);
++    g_assert_cmphex(sts & SDHC_NIS_TRSCMP, ==, 0);
++
++    while (!((sts = qtest_readw(qts, SDHCI_BASE + SDHC_NORINTSTS)) &
++             SDHC_NIS_TRSCMP)) {
++        qtest_clock_step(qts, SDHC_TRANSFER_DELAY);
++        steps++;
++        g_assert_cmpint(steps, <, 1000);
++    }
++    g_assert_cmphex(sts & SDHC_NIS_ERR, ==, 0);
++
++    g_test_message("ADMA coupling: %d clock steps to complete after bare read",
++                   steps);
++
++    qtest_quit(qts);
++    unlink(tmp);
++    g_free(tmp);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/microchip/icicle/sdhci/adma-pacing", test_adma_pacing);
++    qtest_add_func("/microchip/icicle/sdhci/adma-mmio-coupling",
++                   test_adma_mmio_coupling);
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 54e2cb0461..78e47ee024 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -283,6 +283,7 @@ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
+ qtests_riscv64 = ['riscv-csr-test'] + \
++  (config_all_devices.has_key('CONFIG_MICROCHIP_PFSOC') ? ['cadence-sdhci-test'] : []) + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : [])
+ 
+ qos_test_ss = ss.source_set()
 -- 
-Peter Xu
+2.43.0
 
 
