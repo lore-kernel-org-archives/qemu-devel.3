@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBA1C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031F6C5AC67
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuM6B-0001z7-Ei; Wed, 12 Aug 2026 23:27:19 -0400
+	id 1wuMIM-0003a0-W1; Wed, 12 Aug 2026 23:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wuM68-0001yq-OD
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:27:16 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wuM66-0000Ak-9f
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:27:16 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c9e607d81fcso1093919a12.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 20:27:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786591632; x=1787196432; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xtMucBLIsypxqX0LKfF2YVgc26j6UtWYxPBlPYxAVu8=;
- b=fFprFauryXNhDUiUm1ywoS0hkJdCIOX2yoS9HbhS3Rap9KirzcvIn3SxBMlFk9XVsU
- QYmwpZkND4dNlUHDrqKv9t/qf3sJj+BDsFht5BBk8lF42xNBRZR9zY3ChmLdV84kTwGO
- SrT7sWpt4W3QWpJfxxrAbx8pkY1FtuecAWVIQjr0ZbhLnq8BC7tjZjUM550z3la9fjvl
- +U6uJkqozjH+iflIwrI6Dan7wGsvL7RWiCyTJY/e0SqI62ZMCjSbxr5HyOY+SA4LHJIu
- d5CdgJ86CKbgU/b14FY4n9apa6GsH7ayeJtlCqXav7YcSW6qrw2XPzGCKZmV05KYVhws
- rKmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786591632; x=1787196432;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xtMucBLIsypxqX0LKfF2YVgc26j6UtWYxPBlPYxAVu8=;
- b=LV2zFlMPmErqXd5SSx++9ptysfmNYQQT/f/isHznV8jIXIaFxv0zqPTf0ak8wfeFX2
- CfuW7CfTZa4tmOu/hZx6O7NshmIjzRbLhx5KO5Qc5NeLXcL4DJuLSdkWwapRmVNHewcg
- +qfL6+kYOxLTt+oYe9YHbghdqaBnvCi+7zIBdC6o/zXSf3iFaSWngMBvTEc3KxzFCqUs
- 1NQXhwacNcCu/MndCKthd7Z7c3QshvrWYK8TA4D/V4cjAMjhSMa9htQkCR85q1sbtqZg
- GxaIqMnovi4VGCG5JLa+X3eXcFq16qzVBBU3N98MfpW1ATBMSFfFoaQukpgfGnjBsvsa
- +6ow==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoNu2LvcAdsH17Tx6Dnk0RlkjhQikjxlqzEezEVKbMLRRO0tyGyMrKVsAmNJRvryDF6RjGebVCHahsS@nongnu.org
-X-Gm-Message-State: AOJu0YzzX3cNbDuW52Xtp8BaRIqtuCU9ZnpZsioDikRr4zi2CtMwUvEk
- 104N/MPOn1MWf9kUlhX3a+zh8i9GOL/7HuwByucI/sjIh8POPaWj/xxQ
-X-Gm-Gg: AR+sD10IKTLduTz876kHzkPpw7KqiGMpih7sfqDlHQGsVXZm726xZ9GWAhWWNRGFiZ5
- vdOi5Gqc/i8hB7XLViTO8bzaEXR6obdwUVp9dOeflqIpQBAjHuk5lOcRK/LBPpmcg72qxGq0K4k
- JmmwvWKN/WZXcAdXhb+9mLE8RIDRMhZSL6YkAVWkabqAY7NGbLxtW8wpzha8KXb/WE5LBBFIer4
- lYxfCwRLQWAURONIMN6bRz08b2GdpktKuiBoEWt56kOYtPn1n6fWfo0OiLMcarpr59tH/WBaFRc
- Fg5I6YhZeIGz+82QdtK//10PUTkv0TRjk1IIqrXssQ971iXwWFq1wRCbm7E6Tni4YxZQYJxKW5v
- wqivRFXDKogOJnlz+ofpf73JVh0iCtyxnACs3umDnNhqY4j2DFKgYOOvJMXHe0Xxa+yjfdoa0BT
- M0zc9sEwd6VLJ4VhfuXImGBO2m0JEmpfl801rqMpHz7JnoK/j0Xa4dSJOqg/F4yk6H2mN/ytQzC
- M69Uwz69SZPobAc7S0PBmOHx9KNIkgTP8tHOMi/FY1tk4bxgnrAj54Z202cWuOfa4nSG3GeD818
- 4H5Q+nkhAKP9pqKIIOP7zjlL/x5IKilnbmS3W4uSrr7kSESOY8wsdACfoBpt/3sDEg==
-X-Received: by 2002:a05:6a21:3204:b0:3b7:807b:3cd3 with SMTP id
- adf61e73a8af0-3cc55397c0bmr4079142637.23.1786591632218; 
- Wed, 12 Aug 2026 20:27:12 -0700 (PDT)
-Received: from donnager-debian.. (pa49-178-218-204.pa.nsw.optusnet.com.au.
- [49.178.218.204]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-31eb99e2556sm2708493eec.0.2026.08.12.20.27.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Aug 2026 20:27:11 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, Anton Johansson <anjo@rev.ng>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] target/riscv: Restore register dump zero padding
-Date: Thu, 13 Aug 2026 12:54:14 +0930
-Message-ID: <20260813032421.54438-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1wuMIL-0003ZA-4d
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:39:53 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1wuMIJ-0004Ss-7h
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:39:52 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8AxS_CCPH1qysgAAA--.2463S3;
+ Thu, 13 Aug 2026 11:39:46 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [10.40.46.54])
+ by front1 (Coremail) with SMTP id qMiowJBx6c2EPH1qVO8CAA--.4092S2;
+ Thu, 13 Aug 2026 11:39:48 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: Dongyan Qian <qiandongyan@loongson.cn>
+Subject: [PULL 4/5] tests/acpi: Update LoongArch virt MADT
+Date: Thu, 13 Aug 2026 11:40:51 +0800
+Message-ID: <20260813034052.79094-5-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260813034052.79094-1-maobibo@loongson.cn>
+References: <20260813034052.79094-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=joel.stan@gmail.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+X-CM-TRANSID: qMiowJBx6c2EPH1qVO8CAA--.4092S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Zw1fCr18CFWktr1UWFW5XFc_yoW8CF45p3
+ y7Awn2kr47tF9rGws5GFZ7XF1kJFZruanrWFWDXw17uF1DCryDZr13K3s2ga43A340vFWf
+ Zw1DKryrA3WrXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UMpBfUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,116 +76,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The register values lost their leading zeroes when the underlying type
-was changed, resulting in mismatched padding and harder to read output.
+From: Dongyan Qian <qiandongyan@loongson.cn>
 
-Print with a runtime field width based on MXL, so values are 16 hex
-digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
-adding target_ulong back into the dump.
+Regenerate the APIC and APIC.topology test data after correcting the
+LoongArch virt MADT revision.
 
-Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+The generated tables change only Header.Revision from 1 to 6 and the
+corresponding checksum. Their lengths and interrupt controller
+subtables remain unchanged.
+
+Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
-before:
+ tests/data/acpi/loongarch64/virt/APIC          | Bin 108 -> 108 bytes
+ tests/data/acpi/loongarch64/virt/APIC.topology | Bin 153 -> 153 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h    |   2 --
+ 3 files changed, 2 deletions(-)
 
- mvendorid     0000000000000000
- marchid       000000000000002a
- mimpid        0000000000000000
- mhartid       0000000000000000
- mconfigptr    0000000000000000
- x0/zero  0 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
- x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0 x7/t2    20646e65205b2d2d
- x8/s0    ff2000000000bc80 x9/s1    708 x10/a0   270f x11/a1   8
- x12/a2   0 x13/a3   120 x14/a4   14992a1 x15/a5   ffffffffffffffff
- x16/a6   fffff079 x17/a7   79 x18/s2   0 x19/s3   7d0
- x20/s4   ffffffff805ca228 x21/s5   31 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
- x24/s8   0 x25/s9   ffffffff804e3e90 x26/s10  0 x27/s11  0
- x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
- fflags        0000000000000000
- frm           0000000000000000
- fcsr          0000000000000000
- f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
- f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
- f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
- f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
- f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
- f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
- f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
- f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+diff --git a/tests/data/acpi/loongarch64/virt/APIC b/tests/data/acpi/loongarch64/virt/APIC
+index 3477789f422cad54f16734b3ec9ad1ff5135165d..e90c267e1fdd83143edc732df41ca5659415090d 100644
+GIT binary patch
+delta 16
+Xcmd1F;c^V{bk1R5U|{<&kt+!RBvAxk
 
-after:
+delta 16
+Xcmd1F;c^V{bk1R5U|{?@kt+!RBuoTf
 
- mvendorid     0000000000000000
- marchid       000000000000002a
- mimpid        0000000000000000
- mhartid       0000000000000000
- mconfigptr    0000000000000000
- x0/zero  0000000000000000 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
- x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0000000000000000 x7/t2    20646e65205b2d2d
- x8/s0    ff2000000000bc80 x9/s1    0000000000000e10 x10/a0   000000000000270f x11/a1   0000000000000008
- x12/a2   0000000000000000 x13/a3   0000000000000120 x14/a4   0000000002575fd6 x15/a5   ffffffffffffffff
- x16/a6   00000000fffff079 x17/a7   0000000000000079 x18/s2   0000000000000001 x19/s3   0000000000000ed8
- x20/s4   ffffffff805ca228 x21/s5   0000000000000060 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
- x24/s8   0000000000000000 x25/s9   ffffffff804e3e90 x26/s10  0000000000000000 x27/s11  0000000000000000
- x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
- fflags        0000000000000000
- frm           0000000000000000
- fcsr          0000000000000000
- f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
- f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
- f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
- f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
- f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
- f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
- f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
- f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+diff --git a/tests/data/acpi/loongarch64/virt/APIC.topology b/tests/data/acpi/loongarch64/virt/APIC.topology
+index da0089d57f608aca230a76b67e72f9f0ad8e71f2..d00b7241c7ad76867781d5649e2de5fb6a5f45bc 100644
+GIT binary patch
+delta 18
+ZcmbQqIFpgfF~HM#CIbTlTi`^legG=>1a<%b
 
-I also wrote a patch to align the first column of register values, but
-that creates the dilemma between aligning the numbers vs keeping the
-spacing between the registers and their value within a row. Aside from
-avoiding bikeshedding, it wastes more columns for an already wide
-output, so opted not to 'fix' that.
+delta 18
+ZcmbQqIFpgfF~HM#CIbTlW7tHlegG=+1a<%b
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- target/riscv/cpu.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 19b93f9c9794..c50dd5ee8771 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -650,6 +650,9 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-+    bool rv32 = riscv_cpu_is_32bit(cpu);
-+    int width = rv32 ? 8 : 16;
-+    uint64_t mask = rv32 ? UINT32_MAX : UINT64_MAX;
-     int i, j;
-     uint8_t *p;
- 
-@@ -664,7 +667,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         qemu_fprintf(f, " %-13s %d\n", "elp", env->elp);
-     }
- #endif
--    qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
-+    qemu_fprintf(f, " %-13s %0*" PRIx64 "\n", "pc", width, env->pc & mask);
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
-         int csrno = i;
-@@ -691,8 +694,8 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- #endif
- 
-     for (i = 0; i < 32; i++) {
--        qemu_fprintf(f, " %-8s %" PRIx64,
--                     riscv_int_regnames[i], env->gpr[i]);
-+        qemu_fprintf(f, " %-8s %0*" PRIx64,
-+                     riscv_int_regnames[i], width, env->gpr[i] & mask);
-         if ((i & 3) == 3) {
-             qemu_fprintf(f, "\n");
-         }
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 0e18673fcd..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,3 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/loongarch64/virt/APIC",
+-"tests/data/acpi/loongarch64/virt/APIC.topology",
 -- 
-2.47.3
+2.54.0
 
 
