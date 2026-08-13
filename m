@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE32EC5DF67
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E46C5DF66
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSmL-0005zV-NI; Thu, 13 Aug 2026 06:35:17 -0400
+	id 1wuSmD-0005xz-Pd; Thu, 13 Aug 2026 06:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSmK-0005zI-MZ
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:16 -0400
+ id 1wuSmC-0005xY-9x
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSmI-0000DP-Bp
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:16 -0400
+ id 1wuSmA-0000BS-Tz
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786617313;
+ s=mimecast20190719; t=1786617306;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w0kB6WTU3MJyfoKuVN9tFZMFuxsI1CHKvQTy9mgVknk=;
- b=Y9L7VzWi2q+VL0J9rdyii2ZPA1q4Q5rj/rDofQp6dTVwhc8C3afu+xmxZv/6by8AdrGcf2
- 0ee5mol8WAmkij8Xhcj4Vfg0JaIx4k4Re7O9NEGloCGKcbmvCdNIZ8xd2ux2ng8q1tc3ip
- xiQgQx4+mFdBGPIf/2ZyejEn36I17Mo=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
+ b=NXx+NLc6wU8Dsaz01fPm+esFP8s9tI00Art1IoNgpC5MkZ9KB4NmvR/FsYxykQpmhj8roi
+ 6JRprYUCb8BEfO7gwPZUL6AOkcPhPhv3vKXnqGCFsQzQkRKW6B/Yc/4bALMRqc6Xa6QfQi
+ 2eftEsvGepREU4i0Uz272RHk0RIH7g8=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-2-sM6iNbkYO0G_7v84jgOYsg-1; Thu, 13 Aug 2026 06:35:12 -0400
-X-MC-Unique: sM6iNbkYO0G_7v84jgOYsg-1
-X-Mimecast-MFC-AGG-ID: sM6iNbkYO0G_7v84jgOYsg_1786617311
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38e54b6556aso758736a91.2
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:12 -0700 (PDT)
+ us-mta-344-VVeHvi0EMByRj8FkW2KSUQ-1; Thu, 13 Aug 2026 06:35:05 -0400
+X-MC-Unique: VVeHvi0EMByRj8FkW2KSUQ-1
+X-Mimecast-MFC-AGG-ID: VVeHvi0EMByRj8FkW2KSUQ_1786617304
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38e475f83a2so3127931a91.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786617311; x=1787222111; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786617304; x=1787222104; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=w0kB6WTU3MJyfoKuVN9tFZMFuxsI1CHKvQTy9mgVknk=;
- b=Ux0MeRSHLct3u+AnN4Z6Be8GY6d4rCv7fm/oKbbXQMV8tczkDcgU5wnxLQfSdAU/kz
- 3YKjZkpcsvET96ZOtPUhgFEyGHs2GYXUazftCEldKcWPg6Ad/48uFvk77A95bNbvCvxE
- F7Q7s3WwIg56fmJBNhMluOYLx7xEiA4BfcHCb0vDI+XaHTt+SgFCr+2vsprgzuoQwFP3
- KorI0WFUP7LdJMLit1MljE8L+x87365jSmxwOGB+cB127gRi9hZpPbA+4GheKXVG1UvS
- 6IntX4kg+kmH2sKZbvsLhaJ1o7QBQ9Az49wLOJdxu/3TOT7ZIEQSDan/7h5Nk8DN30VH
- L4ew==
+ bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
+ b=PHUfR1mksJy2RIGC+5ZXSP7MmnG9wxoi2I7iKmthVEPUrJGEGIaSGvg8zC2ySNTgX9
+ kgq3zI59sbwQZtBpGJ+SzsqjnoEv9jgXepr16rrt3hemwA8OIM9tlocZur/697e4GQYn
+ PqgPn04c41vtx8t5al82SOcZkeZPT5OOa/wsUXVJUVjLxHgtzBgajqWhcUan8F1sgYKQ
+ A53RL3R7Z47lrDTq7XgnmLNSLmxcYrE/HoYXDj7Dp4yVxs2UWmu5qnmlWqZW4PTaZiY0
+ DT9NliP5xMVFj8vh+WfvfgLPFuNRzIMhc2accIqFkZHAqHvLwi/WVCP0NIbRYXZ5IS4C
+ EZkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786617311; x=1787222111;
+ d=1e100.net; s=20251104; t=1786617304; x=1787222104;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=w0kB6WTU3MJyfoKuVN9tFZMFuxsI1CHKvQTy9mgVknk=;
- b=Uwhor1q63JrptVMvaLSXRxqiKjMW/4lExYdcU1Jbqo1hsxu1wiU39Gw2PHaWiJq5AK
- VeA+lc1Vbsgjy9kRaUHe3o2r7kFnTwscgDWzORGSzB+PC0MVxy4LFKIwm0k+IPMQtobG
- zAYbe9cvRUV89cNjqrc2u8kFMD1qBxIlPmEqVclD7KumFGbNEPFJZIB2+DDvngfGi9n0
- aj8BwiZEeT2Ul+XWNsh+Z2yuJwUX39b7yhXAXAHL9QbaJ4pT0vUs5NhhTsdLnPm8Rp+U
- 6pnJTcdNHeyl7V5zz3KaFd5fw0WVbqxipZPwaM+uIxsAsrFQlKN2iYzNrTrCYBob16BH
- KnOA==
+ bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
+ b=d6tCoDqDdv0+tyeySm5NsGDmb+9aeKvhc09oJAHpvZSf/K+/KW6I37PG4iPR38+MkD
+ W1ROE/WHtwZldBiH38VnLy9S43s+arnp80mw8G4wNk0n3IzYo106wSg96dGFGP0oSvbq
+ p9wuL3Q3Iy2zbj1DU14rXQVZZ3ClWq1TyUt0MwocfvdvAdP+cICzn0wdwnbveWZ1uWcv
+ iGpNdwehjCnxo3tzaax1K3CbCufDZrhqJL6VWds+NpijYb0q0nCclkHWTSjlVWR96sDN
+ fqbaDO1Fsi0i5qz7WNVVQkkW7TmEjJsRwrwEIObOd0/b/V2+x6XVA3LccpGSJWKFZdyw
+ AAQQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoYKslXGD+A+M6dotJoW6XKPh4zCYDcWyv9vIddwTC52S3GpvI10ciSKBOjyvOhfvRqXmii/shuX8bE@nongnu.org
-X-Gm-Message-State: AOJu0YzbRaT9MqLfTUQRFlsZ8CYoa1JxBxS7VLq/3vcubVAw/2EqsSOf
- jCiQeWcxRkpbPLcXlXlrQg1FQaGsemaak42KeYR7JBRxL97HYP4avYz4tTLY9NGXkSfOXn5SPKx
- YkCr4jPBq/aPOc7ggyeKXCUxxjqkU3OYA7GhSDO8ioNkllcqMnkkHAXj+
-X-Gm-Gg: AR+sD117S3KAiRBUymYdZcyBDM0ZX5dbzdXjis5N9jpJLRZ4n+tt0PEjyacQhszWVMW
- oexHCCHcHqs3CUhVzafJMVwpTSAqc019gSjtdzqsejzjljzay++H2D2x5zKoiQO5lZUw8XgJ2vS
- VQfjsH1kSVS4qqDWsPEccbVevIEUquhNWIlbReEf1Cf6v66L8SwVFnOQEfw3OIzzdfBBHw+aecQ
- iFrC6dwptRwsfZmd9A95/OMtlyl4zLvjBe77hWcQBt3rWrb86cwDkXBoRDY5cFwFtqSzy4+c31Q
- D4vH1UXU2KhRvcm3d5EpzdPADi5nbyqWq3hrGbnGnFy1RJ8KCTmXuEb6phR4PvmojrW7rHOkEgp
- aYkpi1uR6wsAf5vvK3FZc/+K22c0z7CV+SA==
-X-Received: by 2002:a17:90b:264d:b0:380:540:d499 with SMTP id
- 98e67ed59e1d1-3931e0374f2mr5960778a91.6.1786617311027; 
- Thu, 13 Aug 2026 03:35:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:264d:b0:380:540:d499 with SMTP id
- 98e67ed59e1d1-3931e0374f2mr5960727a91.6.1786617310433; 
- Thu, 13 Aug 2026 03:35:10 -0700 (PDT)
+ AHgh+RonemQane/MDbATX1qW1N8McPt0b6MJN3j7NXaCAVFEmdITNRYtcjTuQYOxgsPMgAi3UiUEDWZb9nSQ@nongnu.org
+X-Gm-Message-State: AOJu0YxvPq7g39D5uuLWcH+wND/nuqfAstfaArYM/dqjU+8xKYZhWCp6
+ 8/GhA6qUKhk0ZigJIj/kNQJRx8YqZ10D7kCxWf0+y2ENzAm69IApIKiyv1tL1rPEIDBGJ1DkohY
+ 4jyvy6GHB/N0cBG7/qmMKtEQURvdMX0edNQB4YCPyyjumG5Sc3w4oohvlch8CjTg7
+X-Gm-Gg: AR+sD10vLPtckZRf/4iDEM2HfOViRTh/gUpFgKMCMlm+9RLH9GTRVvlWTl9qa4LcY7T
+ lkGJ+/JQcR4RM3qmc1xt5BPPUhTM2PSBemAPbIQ67W9+RftDie4rKjShbps6EYNgMyVQI8hHI22
+ 1nsFiKnWC8fejazb6V0dZkysuq6QjzDgVfGFQ14RQghdMmAKS1kNt9E2GNDyX3s1zFOvzheEvMj
+ ZYlc8Z/r2G97Vw0Bkd8+1u2pPW21ijrAoyvgTo8iFCSQP0jtQvlVyelwDS6Hb0nFIVxRSJfiWw3
+ N//uqkvLV2/hO7bGI+zC/Lr/faVANpePeH9Zo1W2irRmL36b6imNDcoBv+BvNa36uoCprZviSnt
+ 6F93vQNTERNkdyNY81uya+MbBmqcwctIV4w==
+X-Received: by 2002:a17:90b:5310:b0:38e:2524:724f with SMTP id
+ 98e67ed59e1d1-3931e232118mr5315307a91.12.1786617303837; 
+ Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
+X-Received: by 2002:a17:90b:5310:b0:38e:2524:724f with SMTP id
+ 98e67ed59e1d1-3931e232118mr5315260a91.12.1786617303326; 
+ Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
 Received: from rhel9-box.lan ([106.219.133.98])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.35.07
+ 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.35.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 03:35:10 -0700 (PDT)
+ Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>,
-	Gerd Hoffman <kraxel@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
 Cc: ani@anisinha.ca, agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org
-Subject: [PATCH v5 07/11] hw/misc/vmlaunchupdate: Introduce hypervisor fw-cfg
- interface support
-Date: Thu, 13 Aug 2026 16:04:09 +0530
-Message-ID: <20260813103425.24474-8-anisinha@redhat.com>
+Subject: [PATCH v5 05/11] backends/igvm: add a tracepoint for
+ qigvm_cleanup_memory
+Date: Thu, 13 Aug 2026 16:04:07 +0530
+Message-ID: <20260813103425.24474-6-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260813103425.24474-1-anisinha@redhat.com>
 References: <20260813103425.24474-1-anisinha@redhat.com>
@@ -122,464 +122,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VM launch update is a mechanism where the virtual machines can use IGVM
-file bundle to boot into a trusted execution environment without
-having to depend on a untrusted party to provide the IGVM bundle or firmware
-image. This is particularly useful for confidential virtual machines that
-are deployed in the cloud where the tenant and the cloud provider are two
-different entities. In this scenario, virtual machines can bring their own
-trusted IGVM file containing a trusted firmware image
-bundled as a part of their filesystem and then use this hypervisor interface
-to update to a trusted and deterministic boot state.
-This also allows the guests to have a consistent measurements on the firmware
-image.
+Useful for debugging memory region cleanups.
 
-Currently, this mechanism only works if the VM was started with IGVM in the
-first place.
-
-This change introduces support for the fw-cfg based hypervisor interface
-and the corresponding device. The interface is made generic
-enough so that guests are free to use their own ABI to pass required
-information between initial and trusted execution contexts (where they are
-running their own trusted boot state) without the hypervisor getting
-involved in between.
-
-Currently, this device is only supported for x86 machines. Presence of
-IGVM host libraries is also required for parsing IGVM files. Hence, the device
-cannot be initialized for other machine types or hosts where IGVM support
-is not present. Trying to initialize it for arm for example will lead to failure:
-
-$ ./qemu-system-arm -device vm-launch-update -machine virt
-qemu-system-arm: -device vmfwupdate: This machine does not support vm-launch-update device
-
-Functional and qtests will be added in a subsequent patch.
-
-CC: Alex Graf <graf@amazon.com>
-CC: Gerd Hoffman <kraxel@redhat.com>
-
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/misc/meson.build              |   3 +
- hw/misc/trace-events             |   6 +
- hw/misc/vmlaunchupdate.c         | 333 +++++++++++++++++++++++++++++++
- include/hw/misc/vmlaunchupdate.h |  38 ++++
- 4 files changed, 380 insertions(+)
- create mode 100644 hw/misc/vmlaunchupdate.c
- create mode 100644 include/hw/misc/vmlaunchupdate.h
+ backends/igvm.c       | 1 +
+ backends/trace-events | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e86d9ad6b3..858ca845a2 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -164,6 +164,9 @@ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 9b101c8182..7b7bdc72b7 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -1120,6 +1120,7 @@ void qigvm_cleanup_memory(IgvmCfg *cfg)
  
- specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
- specific_ss.add(when: 'CONFIG_RISCV_MIPS_CPC', if_true: files('riscv_cpc.c'))
-+if igvm.found()
-+   specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmlaunchupdate.c'))
-+endif
- 
- system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index c9a868b3ef..2d6d2238c5 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -442,3 +442,9 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
- iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
- iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
- iommu_testdev_dma_armed(bool armed) "armed=%d"
-+
-+# vmlaunchupdate.c
-+launch_update_write(void) ""
-+vmlaunch_reset_enter(void) ""
-+vm_launchupdate_finalize(void) ""
-+restore_host_x86_igvm(void) ""
-diff --git a/hw/misc/vmlaunchupdate.c b/hw/misc/vmlaunchupdate.c
-new file mode 100644
-index 0000000000..afa2d278ae
---- /dev/null
-+++ b/hw/misc/vmlaunchupdate.c
-@@ -0,0 +1,333 @@
-+/*
-+ * Guest driven VM launch component update (using IGVM) device
-+ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-+ *
-+ * Copyright (C) 2026 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "system/physmem.h"
-+#include "system/reset.h"
-+#include "qemu/target-info-qapi.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/i386/pc.h"
-+#include "exec/cpu-common.h"
-+#include "hw/misc/vmlaunchupdate.h"
-+#include "system/igvm.h"
-+#include "system/igvm-internal.h"
-+#include "qemu/error-report.h"
-+#include "trace.h"
-+
-+/* returns NULL unless there is exactly one device */
-+static VMLaunchUpdateState *vm_launchupdate_find(void)
-+{
-+    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
-+
-+    return o ? VMLAUNCHUPDATE(o) : NULL;
-+}
-+
-+static bool vmlaunchupdate_supported(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_X86_64;
-+}
-+
-+static void init_vm_launch_update(VMLaunchUpdateState *s)
-+{
-+    s->launch_update.capabilities = VM_LAUNCHUPDATE_FORMAT_IGVM;
-+    s->launch_update.control = 0;
-+
-+    if (s->disabled) {
-+        s->launch_update.control |= VM_LAUNCHUPDATE_CTL_DISABLE;
-+    }
-+
-+    s->launch_update.version = VM_LAUNCHUPDATE_VERSION;
-+    return;
-+}
-+
-+static void clear_init_vm_launch_update(VMLaunchUpdateState *s)
-+{
-+    memset(&s->launch_update, 0, sizeof(s->launch_update));
-+    init_vm_launch_update(s);
-+}
-+
-+static bool no_igvmcfg(X86MachineState *x86m)
-+{
-+    IgvmCfg *igvmc;
-+
-+    if (!x86m) {
-+        return true;
-+    }
-+
-+    igvmc = x86m->igvm;
-+
-+    if (!igvmc) {
-+        /* The VM was not started with an IGVM, bail */
-+        info_report("guest was not initially started with IGVM, "
-+                    "not changing launch state.");
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static int process_x86_igvm(VMLaunchUpdateState *s,
-+                            uint64_t fw_image_addr, uint64_t fw_image_size)
-+{
-+    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+    IgvmCfg *igvmc = x86machine->igvm;
-+    IgvmHandle igvm;
-+    void *image_addr_ptr;
-+    hwaddr len;
-+
-+    if (no_igvmcfg(x86machine)) {
-+        return -2;
-+    }
-+
-+    if (!fw_image_addr || !fw_image_size) {
-+        return -1;
-+    }
-+
-+    len = (hwaddr) fw_image_size;
-+    image_addr_ptr = physical_memory_map((hwaddr) fw_image_addr,
-+                                         (hwaddr *) &len, 0);
-+
-+    if (!image_addr_ptr || (len < fw_image_size)) {
-+        warn_report("vmlaunchupdate: Invalid guest addresses.");
-+        goto err;
-+    }
-+
-+    igvm = igvm_new_from_binary(image_addr_ptr, fw_image_size);
-+    if (igvm < 0) {
-+        warn_report("vmlaunchupdate: Unable to parse IGVM file %"
-+                    PRIx64 ": %" PRIx64, fw_image_addr, fw_image_size);
-+        goto err;
-+    }
-+
-+    /* free previous file context */
-+    if (igvmc->file >= 0) {
-+        igvm_free(igvmc->file);
-+    }
-+    /* set new context */
-+    igvmc->file = igvm;
-+
-+    physical_memory_unmap(image_addr_ptr, len, 0, 0);
-+    info_report("vmlaunchupdate: new IGVM context set.");
-+
-+    return 0;
-+ err:
-+    if (image_addr_ptr) {
-+        physical_memory_unmap(image_addr_ptr, len, 0, 0);
-+    }
-+    return -1;
-+}
-+
-+static void restore_host_x86_igvm(void)
-+{
-+    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+    IgvmCfg *igvmc = x86machine->igvm;
-+    Error *errp = NULL;
-+
-+    if (no_igvmcfg(x86machine)) {
-+        return;
-+    }
-+
-+    /* free previous file context */
-+    if (igvmc->file >= 0) {
-+        igvm_free(igvmc->file);
-+    }
-+
-+    info_report("restoring original host IGVM: %s", igvmc->filename);
-+    igvmc->file = qigvm_file_init(igvmc->filename, &errp);
-+    assert(!errp);
-+
-+    info_report("vmlaunchupdate: host IGVM context set.");
-+
-+    trace_restore_host_x86_igvm();
-+
-+    return;
-+}
-+
-+static bool fw_address_cleared(VMLaunchUpdateState *s)
-+{
-+    return !s->launch_update.fw_image_addr &&
-+        !s->launch_update.fw_image_size;
-+}
-+
-+static void launch_update_write(void *dev, off_t offset, size_t len)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    uint64_t addr;
-+    uint64_t size;
-+    int rc;
-+
-+    s->launch_update.status = VM_LAUNCHUPDATE_SUCCESS;
-+
-+    if (s->disabled) {
-+        goto end;
-+    }
-+
-+    if (s->launch_update.control & VM_LAUNCHUPDATE_CTL_DISABLE) {
-+        s->disabled = true;
-+        goto end;
-+    }
-+
-+    if (fw_address_cleared(s) &&
-+        (s->launch_update.control & VM_LAUNCHUPDATE_CTL_HOST_IGVM)) {
-+        /* restore host IGVM on immediate next reset */
-+        s->host_igvm_on_reset = true;
-+        goto end;
-+    }
-+
-+    if (!(s->launch_update.control & VM_LAUNCHUPDATE_FORMAT_IGVM) &&
-+        !fw_address_cleared(s)) {
-+        /* at least one address provided but the format is not IGVM */
-+        s->launch_update.status = VM_LAUNCHUPDATE_LOAD_FAIL;
-+        goto end;
-+    }
-+
-+    /* process guest provided IGVM image */
-+    if (s->launch_update.control & VM_LAUNCHUPDATE_FORMAT_IGVM) {
-+        if (target_arch() == SYS_EMU_TARGET_X86_64) {
-+            addr = le64_to_cpu(s->launch_update.fw_image_addr);
-+            size = le64_to_cpu(s->launch_update.fw_image_size);
-+            rc = process_x86_igvm(s, addr, size);
-+            if (rc < 0) {
-+                switch (rc) {
-+                case -2:
-+                    s->launch_update.status = VM_LAUNCHUPDATE_NOT_IGVM_INIT;
-+                    break;
-+                default:
-+                    s->launch_update.status = VM_LAUNCHUPDATE_LOAD_FAIL;
-+                }
-+                goto end;
-+            }
-+        }
-+        /* process other machines here when support is added */
-+    }
-+
-+    /* clear the addresses */
-+    s->launch_update.fw_image_addr = 0x0;
-+    s->launch_update.fw_image_size = 0x0;
-+
-+ end:
-+    trace_launch_update_write();
-+    return;
-+}
-+
-+static void launch_update_select(void *dev)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    init_vm_launch_update(s);
-+}
-+
-+static void vmlaunch_reset_enter(Object *obj, ResetType type)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(obj);
-+
-+    if (target_arch() != SYS_EMU_TARGET_X86_64) {
-+        return;
-+    }
-+
-+    if (s->host_igvm_on_reset) {
-+        restore_host_x86_igvm();
-+        s->host_igvm_on_reset = false;
-+        /* restoring host igvm enables the interface again */
-+        s->disabled = false;
-+        /* clear the host IGVM ctrl bit */
-+        s->launch_update.control &= ~VM_LAUNCHUPDATE_CTL_HOST_IGVM;
-+    }
-+
-+    if ((s->launch_update.control & VM_LAUNCHUPDATE_CTL_HOST_IGVM) &&
-+        (s->launch_update.status == VM_LAUNCHUPDATE_SUCCESS)) {
-+        info_report("vmlaunchupdate: next reset will use host igvm");
-+        s->host_igvm_on_reset = true;
-+    }
-+
-+    trace_vmlaunch_reset_enter();
-+}
-+
-+static ResettableState *vmlaunch_reset_state(Object *obj)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(obj);
-+
-+    return &s->reset_state;
-+}
-+
-+static void vm_launchupdate_realize(DeviceState *dev, Error **errp)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    FWCfgState *fw_cfg = fw_cfg_find();
-+
-+    /* multiple devices are not supported */
-+    if (!vm_launchupdate_find()) {
-+        error_setg(errp, "at most one %s device is permitted",
-+                   TYPE_VMLAUNCHUPDATE);
-+        return;
-+    }
-+
-+    /* if current machine is not supported, do not initialize */
-+    if (!vmlaunchupdate_supported()) {
-+        error_setg(errp,
-+                   "This machine does not support vm-launch-update device");
-+        return;
-+    }
-+
-+    /* fw_cfg with DMA support is necessary to support this device */
-+    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
-+        error_setg(errp, "%s device requires fw_cfg",
-+                   TYPE_VMLAUNCHUPDATE);
-+        return;
-+    }
-+
-+    fw_cfg_add_file_callback(fw_cfg, FILE_VMLAUNCHUPDATE,
-+                             launch_update_select, launch_update_write, s,
-+                             &s->launch_update,
-+                             sizeof(s->launch_update),
-+                             false);
-+
-+    clear_init_vm_launch_update(s);
-+    /*
-+     * This device requires to register a global reset because it is
-+     * not plugged to a bus (which, as its QOM parent, would reset it).
-+     */
-+    qemu_register_resettable(OBJECT(s));
-+}
-+
-+static void vm_launchupdate_finalize(Object *obj)
-+{
-+    qemu_unregister_resettable(obj);
-+    trace_vm_launchupdate_finalize();
-+}
-+
-+static void vmlaunchupdate_device_class_init(ObjectClass *klass,
-+                                             const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    /* we are not interested in migration - so no need to populate dc->vmsd */
-+    dc->desc = "VM launch state update device";
-+    dc->realize = vm_launchupdate_realize;
-+    dc->hotpluggable = false;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    rc->phases.enter = vmlaunch_reset_enter;
-+    rc->get_state = vmlaunch_reset_state;
-+}
-+
-+static const TypeInfo vmlaunchupdate_device_types[] = {
-+    {
-+        .name              = TYPE_VMLAUNCHUPDATE,
-+        .parent            = TYPE_DEVICE,
-+        .instance_size     = sizeof(VMLaunchUpdateState),
-+        .class_init        = vmlaunchupdate_device_class_init,
-+        .instance_finalize = vm_launchupdate_finalize,
-+    },
-+};
-+
-+DEFINE_TYPES(vmlaunchupdate_device_types)
-diff --git a/include/hw/misc/vmlaunchupdate.h b/include/hw/misc/vmlaunchupdate.h
-new file mode 100644
-index 0000000000..02f96cebdc
---- /dev/null
-+++ b/include/hw/misc/vmlaunchupdate.h
-@@ -0,0 +1,38 @@
-+/*
-+ * Guest driven VM launch state update device via IGVM.
-+ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-+ *
-+ * Copyright (C) 2026 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+#ifndef VMLAUNCHUPDATE_H
-+#define VMLAUNCHUPDATE_H
-+
-+#include "hw/core/qdev.h"
-+#include "qom/object.h"
-+#include "qemu/units.h"
-+#include "system/igvm-cfg.h"
-+#include "standard-headers/misc/vmlaunchupdate.h"
-+
-+#define TYPE_VMLAUNCHUPDATE "vm-launch-update"
-+
-+typedef struct VMLaunchUpdateState {
-+    DeviceState parent_obj;
-+    VMLaunchUpdate launch_update;
-+    bool disabled;
-+    bool host_igvm_on_reset;
-+    ResettableState reset_state;
-+} VMLaunchUpdateState;
-+
-+
-+typedef struct VMLaunchUpdateStateClass {
-+    ObjectClass parent_class;
-+} VMLaunchUpdateStateClass;
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VMLaunchUpdateState, VMLAUNCHUPDATE);
-+
-+#endif
+     QTAILQ_FOREACH_SAFE(imr, &cfg->memory_regions, next, tmp)
+     {
++        trace_qigvm_cleanup_memory(imr->mr->name);
+         memory_region_del_subregion(get_system_memory(), imr->mr);
+         vmstate_unregister_ram(imr->mr, NULL);
+         QTAILQ_REMOVE(&cfg->memory_regions, imr, next);
+diff --git a/backends/trace-events b/backends/trace-events
+index 009a25b0be..9b7b9b7d68 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -33,3 +33,4 @@ igvm_reset_hold(int type) "type=%u"
+ igvm_reset_exit(int type) "type=%u"
+ igvm_file_loaded(const char *fn, int32_t handle) "fn=%s, handle=0x%x"
+ igvm_process_file(int32_t handle, bool context_only) "handle=0x%x context-only=%d"
++qigvm_cleanup_memory(const char* name) "freeing mr %s"
 -- 
 2.42.0
 
