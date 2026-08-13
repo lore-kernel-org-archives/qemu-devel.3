@@ -4,76 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B24C5AC67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F51C5CFEB
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 08:25:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuQjy-00086j-4h; Thu, 13 Aug 2026 04:24:42 -0400
+	id 1wuQjb-000852-7d; Thu, 13 Aug 2026 04:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wuQjt-00086K-Pv
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wuQjX-00084h-5E
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wuQjr-0000pd-0i
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786609473;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Txvzx6zsExfyYyFYmP3uc51AplJ+YMZQrNZi3JFP944=;
- b=I0Pg2JAg1meyA7h+SO4KkQHBBN6+FxSNugn0SIrsDJzQxNWbhEPrCjOvMCrOKGlveOhg+w
- Oi/4Do0ZxNDI0egQEsxeWTgblur+w28CKoaRK1zsZ+N4GSk3L4z2EHaAdYT9Y65JGCDvEM
- dfgqzNHjXv63R6JL7XkBUfd1sTKSPKs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-kNz-U3NnMjaAx4T36nzmKA-1; Thu,
- 13 Aug 2026 04:24:29 -0400
-X-MC-Unique: kNz-U3NnMjaAx4T36nzmKA-1
-X-Mimecast-MFC-AGG-ID: kNz-U3NnMjaAx4T36nzmKA_1786609468
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E754195609D; Thu, 13 Aug 2026 08:24:28 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87FF7180049F; Thu, 13 Aug 2026 08:24:25 +0000 (UTC)
-Date: Thu, 13 Aug 2026 09:24:22 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, jmarcin@redhat.com, david@kernel.org,
- pbonzini@redhat.com, chenyi.qiang@intel.com, peterx@redhat.com,
- farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
-Subject: Re: [PATCH v4 08/12] hostmem: Support fully shared guest memfd to
- back a VM
-Message-ID: <an1_NmWhtHY_Cf9V@redhat.com>
-References: <20260812201938.198915-1-michael.roth@amd.com>
- <20260812201938.198915-9-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wuQjV-0000ii-7F
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 04:24:14 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67D5g8nb1072479
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 08:24:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /eGJOEZJCBV35v5Sw6T/yPImkz37I1jswQUb8IAtu8A=; b=hP5SBbCeacdeFfLu
+ De3k/cQ5hgfftF2wjquYQcnsPtCm9X3vM0++FwTzPWaIIDV3medFuq5TGAgjB13m
+ faFsZcQA6Adilird4156zNaEF2MxVNPKq3E+JSvOj7qfcvSeabl8F40jSIUjY1CC
+ ax5dDvo+VfwGiSKBFTNVf9U5w5+H9YFHAghvisCnZODrV1gGY89nQtmKOpjiOSWk
+ t3u6Bq+SwE5zuysiSoO7O+0Ka+CsfD1q5iovmwLnkS1mk+sB6yPNkGzuf3ZDZp9+
+ 36HFnSmRpxjsvwzk6H11WpSpbyV4ei1Ku4rfnnalWMcJG2vj1QTsBfkWzXS6gEps
+ 8yoTHw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g14syhbmq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 08:24:08 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-52d7b3adda4so1541371cf.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 01:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786609447; x=1787214247; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/eGJOEZJCBV35v5Sw6T/yPImkz37I1jswQUb8IAtu8A=;
+ b=dNrPFnjL6CRiXLqSUepksjl0Lji8+po2eVXkEw69v6w4SnYndWH9IKzxDMIJtz56oN
+ a0+oG4SSYUePUhamXcM9sQ3kdITQjs+gxQxXQ/KzrXc/Y6yc2aBl3Ha/H0Clmn/TSG9A
+ Up8chpHViDdkrlppZLkK+ufEJ8lafXdWEN32W6dRj1eRBqjzjqyCgmC+Sk8ULxPZpJJR
+ WbObuKlrPVZans0sClGBdUaDCZKRj6M/jIuS3nTZ5mOnpD+sizYbW4U98x9crqaU9mNW
+ cGxNCAqnaDsIlcLPo/Z9s/0plVTFP77un9u5J5djXw6Y6EiWH2H04o5r9etI1AIXegKy
+ qIFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786609447; x=1787214247;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/eGJOEZJCBV35v5Sw6T/yPImkz37I1jswQUb8IAtu8A=;
+ b=qLAKWCQgDF0+B8ueHqOWANVvEbGDmHAIczvsgnF2clY9KWUf9rVzHQaKiJLe73mSEQ
+ ykHcHbgOMd6tjCg0N/3rJlvNuPWQ+sQVnZ2nhO29N3xkcmT4NR5AHmrTPzzKKiQRLURB
+ iqbIvvKzC6dAJbS2V4nQmKSigeOP5iFDeBmZBy/Ga6XQxp7nTktX9zc/zdzvhmyEfcax
+ 41/+ZGh1fTBIz2dMM191XW97mRg+Lclp9jp5OhaBou/BVGogmYj4Ne3K+NS181cChM6Z
+ OxK5Ojy8CY0HYcBAU5zsqzNU+p+CW/LYvwm41DMXKLQWCqLSfBukxiwfAUhQFF38gium
+ mb/Q==
+X-Gm-Message-State: AOJu0Ywe92VpDz0saNauJEmpWH6hp8f6Ka9Np4ZJnE50FQ1Wb99R8fPw
+ iTsqjkAGMC4MYDsBwvTg82dYrlLANoYLw76yqoCi10+K6sdO49N+g9nbuulIXC0PJhOuUmmRHlN
+ IlVeBYJTCrX63HTN6/WkrgYLq07QqOqSy6WFkaEGgwymzcGJPLJpOqnAOOA==
+X-Gm-Gg: AR+sD10EbtMq8rUXo34u1DOMwQilSC1TreAiwANHsFgbcR1pVHEBm1jum7LZZf1z5D6
+ 43W5lggbzOFr7/6oiXS3TV32uDtwAFX+BYpUFhhGZEAeOexqDF2+0JTedKWAdyiGSwQqXf+hlXa
+ kliGaxEzwnyJoj3EajcEop2GK4UlwJQ23aZC2y1CyQU/GZRlixb6+BW/ppGVrODcsJ3Xm+RR6XU
+ fLyfOAJe059EwdtCTNbX9ZcUfwUtmWlg++P+3+m5l4g7+bYkfS+w+VMPuRecaUrIGwriImlaYH6
+ vEFsY535bD/evoIA2zRP2DKY3O7S+8LvsLUTs4wAXkZbaZtiktFIHgQBKVS9T61Bz/EYaZz3DRJ
+ oYBNerbeqYMnHBeUafYdE+Nj/51JKmgBLtHs=
+X-Received: by 2002:a05:622a:54b:b0:51c:c6c:9d65 with SMTP id
+ d75a77b69052e-52d73be13b1mr40165741cf.1.1786609447240; 
+ Thu, 13 Aug 2026 01:24:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:54b:b0:51c:c6c:9d65 with SMTP id
+ d75a77b69052e-52d73be13b1mr40165361cf.1.1786609446862; 
+ Thu, 13 Aug 2026 01:24:06 -0700 (PDT)
+Received: from [192.168.69.208] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49981e54b31sm22265595e9.4.2026.08.13.01.24.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Aug 2026 01:24:06 -0700 (PDT)
+Message-ID: <50260678-269c-47c6-86c5-a148b6156bb9@oss.qualcomm.com>
+Date: Thu, 13 Aug 2026 10:24:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260812201938.198915-9-michael.roth@amd.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 17/23] monitor: Rename MonitorQMP @mon -> @qmon
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260812211708.92824-1-philmd@oss.qualcomm.com>
+ <20260812211708.92824-18-philmd@oss.qualcomm.com>
+ <178660214825.3552881.16834360265143429528.b4-review@b4>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <178660214825.3552881.16834360265143429528.b4-review@b4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=ZcQt8MVA c=1 sm=1 tr=0 ts=6a7d7f28 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=2Jmwnru2tnUDhFS7Du0A:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDA1NyBTYWx0ZWRfXwBn6FcUAtdGb
+ KVtIObRoMk69t0DDe1iJWaI8flRVzLLSsI3dRrAcc/VeL/GiPTHlKGRgBfF3YRoUv6PRIotLyuM
+ FtwIsZJwPocRJbypnVLBIcAGvFzIAy02AbawP48m8OdDmwcbMRUfHakv0Q3vFgjt7zpIjPCGkSF
+ /sfcmvulUDvqoqqZasfjVtuROZEBxWJ53FlMrNPEc3pNxLWFnZAnj52YBOlLvicZsSz4h6IM9SP
+ YlipAfhNkOGvNvFOvgrgcopFCuOvum5T+zwJWIRp8ZZ3TBOqUpg0DO4VuqgLNeJA6djA8inl4j/
+ 5YVVSYsdR8QbKkvbBSpv6bxf0LxVxxXDHSBG22Mg1VQIdmAhT9kvIbE55eHnCeB26ygCZdgXH7X
+ tJYLlmrrgoF6aQ7c4ReHa41Y15O0UavNtRezj3rSME6EhmGRrRL+Z6HAVZp58hnyfd61ASRARva
+ pg8ULRdTzCBTi09ERjg==
+X-Proofpoint-ORIG-GUID: 9BLZDB39RqzbwfFNi5EAK_gDYoGg7E_m
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDA1NyBTYWx0ZWRfXzPnnlZcFBzqd
+ tJz95WHpry/2Dyx9WBJWbyhEPTZCcATJHebWa5DOg56Ik6NGeZeaXOjzWfUTBQTwuZZ4WBF8maj
+ 3Cswdwj8zUljeARHHdxIXzvGcE+/7Z4=
+X-Proofpoint-GUID: 9BLZDB39RqzbwfFNi5EAK_gDYoGg7E_m
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-13_02,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608130057
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,181 +152,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 12, 2026 at 03:16:46PM -0500, Michael Roth wrote:
-> From: Peter Xu <peterx@redhat.com>
+On 13/8/26 08:22, marcandre.lureau@redhat.com wrote:
+>> Mechanical change to sanitize using the following patterns:
+>>
+>>    MonitorQMP *qmon  (this patch)
+>>    MonitorHMP *hmon  (following one)
+>>    Monitor *mon
+>>
+>> Rename @mon (and @qmp_mon) as @qmon when the type is MonitorQMP.
 > 
-> Host backends supports guest-memfd now by detecting whether it's a
-> confidential VM.  There's no way to choose it yet from the memory level to
-> use it fully shared.  If we use guest-memfd, it so far always implies we
-> need two layers of memory backends, while the guest-memfd only provides the
-> private set of pages.
+> This patch and the following are conflicting quite directly with
+> the work I have for --disable-hmp.
+> (https://gitlab.com/marcandre.lureau/qemu/-/tree/no-hmp)
 > 
-> This patch introduces a way so that QEMU can consume guest memfd as the
-> only source of memory to back the object (aka, fully shared).
+> Can we delay them?
+
+I was expecting something like that, sure, no problem.
 > 
-> To use the fully shared guest-memfd, one can add a memfd object with:
+> fwiw, I picked Monitor *mon, MonitorHMP *hmp. I didn't touch MonitorQMP*.
 > 
->   -object memory-backend-memfd,guest-memfd=on,share=on
-> 
-> Note that share=on is required with fully shared guest_memfd.
-> 
-> PS: there's a trivial touch-up on fd<0 check, because the stub to create
-> guest-memfd may return negative but not -1.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> ---
->  backends/hostmem-memfd.c | 56 ++++++++++++++++++++++++++++++++++++----
->  qapi/qom.json            |  6 ++++-
->  2 files changed, 56 insertions(+), 6 deletions(-)
-> 
-> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-> index ea93f034e4..fbe65b00be 100644
-> --- a/backends/hostmem-memfd.c
-> +++ b/backends/hostmem-memfd.c
-> @@ -18,6 +18,8 @@
->  #include "qapi/error.h"
->  #include "qom/object.h"
->  #include "migration/cpr.h"
-> +#include "system/kvm.h"
-> +#include <linux/kvm.h>
->  
->  OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
->  
-> @@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
->      bool hugetlb;
->      uint64_t hugetlbsize;
->      bool seal;
-> +    /*
-> +     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
-> +     * which represents an internally private guest-memfd that only backs
-> +     * private pages.  Instead, this flag marks the memory backend will
-> +     * 100% use the guest-memfd pages in-place.
-> +     */
-> +    bool guest_memfd;
->  };
->  
->  static bool
-> @@ -47,11 +56,29 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
->          goto have_fd;
->      }
->  
-> -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-> -                           m->hugetlb, m->hugetlbsize, m->seal ?
-> -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-> -                           errp);
-> -    if (fd == -1) {
-> +    if (m->guest_memfd) {
-> +        if (!backend->share) {
-> +            error_setg(errp, "guest-memfd=on must be used with share=on");
-> +            return false;
-> +        } else if (m->seal) {
-> +            error_setg(errp, "guest-memfd=on must be used with seal=off");
-> +            return false;
-> +        } else if (m->hugetlb) {
-> +            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
 
-Reporting an error without returning false like the other cases.
-
-> +        }
-> +
-> +        fd = kvm_create_guest_memfd(backend->size,
-> +                                    GUEST_MEMFD_FLAG_MMAP |
-> +                                    GUEST_MEMFD_FLAG_INIT_SHARED,
-> +                                    errp);
-> +    } else {
-> +        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-> +                               m->hugetlb, m->hugetlbsize, m->seal ?
-> +                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-> +                               errp);
-> +    }
-> +
-> +    if (fd < 0) {
->          return false;
->      }
->      cpr_save_fd(name, 0, fd);
-> @@ -65,6 +92,18 @@ have_fd:
->                                            backend->size, ram_flags, fd, 0, errp);
->  }
->  
-> +static bool
-> +memfd_backend_get_guest_memfd(Object *o, Error **errp)
-> +{
-> +    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
-> +}
-> +
-> +static void
-> +memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
-> +{
-> +    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
-> +}
-> +
->  static bool
->  memfd_backend_get_hugetlb(Object *o, Error **errp)
->  {
-> @@ -152,6 +191,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
->          object_class_property_set_description(oc, "hugetlbsize",
->                                                "Huge pages size (ex: 2M, 1G)");
->      }
-> +
-> +    object_class_property_add_bool(oc, "guest-memfd",
-> +                                   memfd_backend_get_guest_memfd,
-> +                                   memfd_backend_set_guest_memfd);
-> +    object_class_property_set_description(oc, "guest-memfd",
-> +                                          "Use guest memfd");
-> +
->      object_class_property_add_bool(oc, "seal",
->                                     memfd_backend_get_seal,
->                                     memfd_backend_set_seal);
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index c55776af7d..ee981fc44c 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -771,13 +771,17 @@
->  # @seal: if true, create a sealed-file, which will block further
->  #     resizing of the memory (default: true)
->  #
-> +# @guest-memfd: if true, use guest-memfd to back the memory region.
-> +#     (default: false, since: 11.2)
-> +#
->  # Since: 2.12
->  ##
->  { 'struct': 'MemoryBackendMemfdProperties',
->    'base': 'MemoryBackendProperties',
->    'data': { '*hugetlb': 'bool',
->              '*hugetlbsize': 'size',
-> -            '*seal': 'bool' },
-> +            '*seal': 'bool',
-> +            '*guest-memfd': 'bool' },
->    'if': 'CONFIG_LINUX' }
-
-We're reusing the 'memory-backend-memfd' class, and then at runtime
-refusing allow the user to control any of properties in
-MemoryBackendProperties.
-
-"memory-backend-memfd,guest-memfd=on|off" is switching between two
-separate implementations of the class.
-
-This whole thing is just shouting "use a different class".
-
-There is no meaningful sharing of code here, and the sharing of the
-public interface is offering apps no value as the impl prevents them
-from choosing the value of the properties - they have to be set of
-certain values which are not introspectable.
-
-Please introduce a "memory-backend-guest-memfd" backend instead.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Are you OK I merge patches 1-16 (now all reviewed) in my next
+misc PR?
+I'd like to put #19 and #22 also, which are both HMP and removing
+the "monitor/monitor-internal.h" use out of monitor/ is a good
+cleanup IMHO. If you agree do you mind reviewing them, then I'll
+update the thread mentioning the queued patches.
 
