@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62037C5DF67
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EDCC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhx-00008A-Dl; Thu, 13 Aug 2026 11:51:05 -0400
+	id 1wuXlu-000882-Q1; Thu, 13 Aug 2026 11:55:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhw-00005m-04; Thu, 13 Aug 2026 11:51:04 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1wuXlr-00080s-5S; Thu, 13 Aug 2026 11:55:07 -0400
+Received: from mail-koreacentralazon11023107.outbound.protection.outlook.com
+ ([40.107.44.107] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhu-00023y-84; Thu, 13 Aug 2026 11:51:03 -0400
+ id 1wuXlp-0003Ci-5l; Thu, 13 Aug 2026 11:55:06 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PHf4BWa4/elHfeiXcwhXvsa1OCS8GMSj1h0rkA1ehMrWZpGfi9sbbA1odbHA4UBzHMFZMmTFRxXOq9Az/197tu1Y2AfxXHFHM+7OZTWtXBOl+6f8ygfHP2b1TGzm4wZoZOz9GyK5Fov1d2jn9CCu83HGQYl1NaGAgOS5ofau2exWBr3A++dqoeDSKK2WHp47E7d2mksmGG478iJvIRJY6LuuxDl2lhn8NLIWqtS+nbySrO14BJx++9MDtb96BpG8n6jOuVTXSWYgl8K988wV/2UTo3mCpVcPyWsbznCkfprHATRTQ7DPXFkla+sIyU35Mir+aMrlhRdHRByGDNNSfA==
+ b=Uer3DbMDHV1aXg49EBvBja42LK6T4IG+EoU+FroYX7eWIVgBlCz2/xtM6ptMiea+UT1mKJ6+r/E5iTTdBsko6oyRLfDO69LF+kHIRDeYbpnUdGTs+rPckVZQcK0mPK8Sv6vHWgpn5RWLVLqZoEi3IxxjJqNQxs6kQKT2xCY5qT/HqCk9wONB+aMRuU0LojQMSmTDNJJPKJWuOJHP5DkvItuqjMNnY644H+1E98y/GHZUlZgDgZEuY1SB+Xpyr3/dvQP87txjGrx2bwBwMpsgAek3EvXOGwPuJ76ZWFzKu8MT/TxUBl3H3K0Y57UNBr8UvLiuRUcpr9zWtv0M2LIGyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b2eyqV+OureVzySuOHWXva0mzCFRoF+S0CMJlpfqJxY=;
- b=UODycsDMiRSzr2QwDA6axXx95XllVflL1jcWEx9BLwHTVl4C9gSKgRS79LX6B2Av9A3eYEKIavcrCFlHTMnKUtSyX6OSjDU9EUKopzy1tbnMVW7GPjb+ieeIkwU+1Xs0XP82VyaywtcYaJnlAwpm7Ec/+mEI7v6eMkZVqY+Ez4EDGZYei0d+v9RvN7dckMCwJ5PDL+bh8bF7rmvQfVqotIJCrHa9oN7orp1/Emf4mfySiB2/wu1yfLB0MeExrtUimmkS61aF6mcK20cXEMmdS74EXeRA03bMkve7Ro55DofhgrsG7TaqFhFaTWy0dKOvl53qgZy9KhYySZglGmZQDw==
+ bh=s8XCJvmUtHuq8mMKu0PwcsZYT2wNqfFDyJQu0xcNFQc=;
+ b=jPiFDvpPhIK/0CpnC2+pN4llwx09fif0psKkPoJ9UrA3ktqV6B3KisjG6u/A4Dv3lBy3N4aPxu8EYo9cj/8ZqlD3dPCR1z791qXHvoA5pEJ66VNLnU/iODxeHWj2JUjDEv/P9Qlprl7A4qdITKa+h0UyzUzeN+VrN8FLVT4jGYlVilw2CI/YOmqDgVzu4o/HvAyAkEU79alA96gtyGgpqabG1A8/1jWOc2oubQl+0jSjnyPBMe16bTXtj9i7dInzNB/At98b5tXgxS5IrPOCWQ/EpbkLeJflWjJ4sMKX2FCJaIpc0x0T02bxU8ycfJVjXQyPynScNLnLYbb6upBV+A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,29 +33,39 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b2eyqV+OureVzySuOHWXva0mzCFRoF+S0CMJlpfqJxY=;
- b=eLfTSEUPgLwgsZmYLPjrEdykGiuzDPVUVOkX25Bv4UbYEAQz1aDbrcaZwXITr/r51isWhh98BsjB5jwqkybUgIH/HmjecR80YswxaGUnvdwo0dfb3L2LEGbip2NKZ72hX3SVOCv2h+bm/65caAWEBf6rvSk1hP+cdcCVQ4WKv6lT3FdtyO9dsBSv9QImCIrHM6hd8YyamXBEWqe7+ugzxHWPQ9mj2Urh5o+0WY+4G+qCcqwcmL0PpRo8181m8BnbMhZT4d4BrLRhO4G5xpBRS5Ax8sPiPdlbMKSTxvWW/LAc40Bha+oaxW+uPoi4Mopoo3zdnEkbWGfxVSXalO1awg==
+ bh=s8XCJvmUtHuq8mMKu0PwcsZYT2wNqfFDyJQu0xcNFQc=;
+ b=GGVCC8y6Z9pV+WeBqswl+1KDh46zMzboK51gyPBvxNwmkUsCDZm9JCvCy9mKQs3hfIH+92SBbMH/9h9ybMEHVMUYSzzTJn6gusBSlYmV7HZHBldFIjVqBE28GvfzNBrH3jNBE83ur2/dYxfceOUADULChf9+HG8mcoZyV9q4+ygLJf0yu347dt0djHt22b9HvJ/XeIQlsIjHuk3/WU7xKNnr9jVp/RUEowd6cy2cFjLx4rP8527mKApPtPA8rXPgfmD5jaRM4rTG6bPvVcbY0T35hoSM2j4cUoEhzgf8D4AUU64NQYvm+/n4k6+L7gH6YcypCUhJH9f+FxiZCxac1Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SEZPR02MB7537.apcprd02.prod.outlook.com (2603:1096:101:1f7::12) with
+ by TYZPR02MB5569.apcprd02.prod.outlook.com (2603:1096:400:1c7::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
- 2026 15:50:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
+ 2026 15:49:53 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:54 +0000
+ 15:49:53 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Hao Wu <wuhaotsh@google.com>, Peter Maydell <peter.maydell@linaro.org>,
- Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org
-Subject: [PATCH 14/20] hw/arm: npcm8xx: Store boot info in the machine state
-Date: Thu, 13 Aug 2026 23:49:02 +0800
-Message-ID: <20260813154918.996812-15-bin.meng@processmission.com>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Hao Wu <wuhaotsh@google.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Troy Lee <leetroy@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
+ qemu-arm@nongnu.org
+Subject: [PATCH 00/20] hw/arm: Store the ARM boot info in the machine state
+Date: Thu, 13 Aug 2026 23:48:48 +0800
+Message-ID: <20260813154918.996812-1-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
-References: <20260813154918.996812-1-bin.meng@processmission.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
@@ -63,66 +73,67 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7537:EE_
-X-MS-Office365-Filtering-Correlation-Id: 997c243c-ed19-46e9-efed-08def952a8b1
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB5569:EE_
+X-MS-Office365-Filtering-Correlation-Id: 96fe5235-6496-45ab-5048-08def952840c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|366016|1800799024|376014|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: eNozrVjRGDNmOVughZrRtK6tu1mZQbJmNYJwL00EqMlJKVqCH/oDvsJG+z6mKUxzoTmDaWfh4o9IeQJc5XyYU/e7HAFuh+IWWGc0IgrbzqxmzUJt2uq/NOw887Ho98HCwWD3SZNWn82YPTwGFQ5lKBNz739m5Umi3ufilgJ6iYWCtYMtxmO1mqVMqeZG1mNMl2iF2z98wsYp1LEii20/k2hT55JeA5QhSTKO1BsAbH4dMuBVIvZBqnT1+lU4K5mj6fPdQuErGI7jcx7Z1pVv24u+heAm9G/qu/EePLTqGIn5Joee8lW26QxpL2uur5YlLIChccLaMDcXWJfMuP6u1RRArZ80+p12z3nBmEvc4OHrZgbLB1Q7gw7nyEWR+kQsaJ1Dn9wIroHDsYWn23trFXc7qMjlnmuOks3BNdmRZKLA/33yZqe5QfL5fTbfDpO8wP4/s6pVHUcrTYmEFA8qlJCAwewEL0N7+/SQSSfstVg/ztJ+1z6pI4JmpYq//HIIk+HrCSVsyhKOJboRBbtPin3VnHVOWr75HA0dxHjjxueQXyGDt/T7tLoppZYlOoQzi3Xa9DKptyAv4AeK/kqEG2pCQtEPcR1/bCtQ+Vx3aqSUsZflb9PZAtVCfVrFzllqj9MEl09lENf2lZYDJhdEi0vRrggiOcBat9C1Xu5+KTc=
+ ARA:13230040|1800799024|376014|7416014|23010399003|366016|18002099003|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info: Bj4cQUCnaiYKU/VO9JVdPwxQEe/UpdGHDUlYeRP0yNV0NeQNl8PcuUPd/chKDWhAv78q8o79bypJiY6DQSrDiHefha1RNpio0l4bjIi+G75WsZXaPmjDRUE3TWSoQOWJA8j7XS0YhHmi42eiOBYOW/gZUrNdfYL42k3VcQJBbkinPJJ+4C45M8ESsxG+4jUSus82ut68//LZUS3P1/M4/WpNV2nv5tn/YM7Yt0x3WzSqITP1Fgm+zGZbFKHja3rUC/VPqDrP7NzBip0ySQY46/PtePC5X//FhuN1q4WeVmPzxFYTz8ovo2/AkGlMXkB9ufsdSg2LdvPu+Gogs2QEpspmWyIo8j9gISU0DSpZOgXxlWvNLDTE02ZpYYqBT1lfO6XTPGWFQ0osVRay+6qDxVhM+jRaMTzFPTNg3emxJxlFjm/AYSuLJuH0Vp7S6lg7yS+7hoL9Mzg4h87W6MHPvOjMYguY9aKAIjT9D0rVUAJbJbZsOpiZZrLa4EjkDjnDYDn2NZyWrHcm4C6PfHWAJI6mbU6xsz4vpdng0tGsIv61nhMyW9YlB6XSDt2eQUN/hzfs+3Z/LjE+RAeB6Sp8tARXEK8w5t1yYsUqa13a0Yn8pw5WcLzZr2CJB+foeVFsrtE6I5wk1wc6UxH6BrryVPQf9hmZNXvw8mNo60ufoeM=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(1800799024)(376014)(7416014)(23010399003)(366016)(18002099003)(56012099006)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zsfx8K/avTvOOBfrvLUO6XoFtti0Hwv7b+jNpBlMX2qBFzRDSiqv5Pit4Fa4?=
- =?us-ascii?Q?0R6kvbN6CHKFsXLaQ97wdY7vqOVE3U3Sw69mcBrEP38Tt4ZlE5W8WLJqmMBO?=
- =?us-ascii?Q?unL/IZ61lcPa4ClGiQhiWwGO3mEzCOYhYiS+Kf/QUbFBHxPH3TfQofpplUfN?=
- =?us-ascii?Q?t984FunR2Zd4ZRvDn2MkORgGc8DauFgOozfnjv3s8lOYZBx3v8kZOfgMipNa?=
- =?us-ascii?Q?c3AabLlDn1dtNAhbQN4TZZJZIxxkgDWzZg083cA1kMnxTcvDjwpaFRxD3RRE?=
- =?us-ascii?Q?sa966Y4NiA90M2oVQqteU78suJZbfd2MiJoDEEr1cLxHRFgv6YCS4rgL88pu?=
- =?us-ascii?Q?w31n6c/s6MYXYyPd0NW7If0kzst/oKr78C+jNSVYqYmtXB8lOn3k/eEoq6oA?=
- =?us-ascii?Q?SYY2TCB21uCGsCYbSEn0/EU3iPsWnKP+UURrTMsXndEfdcaeAtgWSLwBh1ml?=
- =?us-ascii?Q?00OnnTDtTbgt0cW3n2VRqXOfGGoSNc2qTUHiMtm3bB5aAXEnSkUrLeyUlhn+?=
- =?us-ascii?Q?ohZqTC40jLHqDWenV8tbJWWWhuHBJsPeK5s2A0X2Qsm9xQbCfikpHkT06r1C?=
- =?us-ascii?Q?lKntcOioPYGqyGUBqrmC7jz+D/ffd9Y6CEnDmf5R7R1VBvLAPOIjtUkHilQ5?=
- =?us-ascii?Q?kVgEDl4PmJmQ+omBzOSfwtPog9DiBz+6PyEUK6B0bxwOM1ePODEEsMYYCgc4?=
- =?us-ascii?Q?64zWxMoisxb4fJiMVoZmhrt8I1kxz8dH4uxaRQEpUGPZTC0zHYIRUcLuUdje?=
- =?us-ascii?Q?80XtkcYJfHEtTrPNzgHExFsLxIi07oaBUa5AA003Eo0gOlLqLcBZ82ObdvZA?=
- =?us-ascii?Q?NKHCqef9jGRZK6bSD+e6zboBBY5DBF1XUk35jVtem4U3RRqArhxRSf6xXE92?=
- =?us-ascii?Q?U5QDl0TvcVDkiR+ZA0pPTEcyU8INhxaP4fNdahwyFLR6I5W43VVT+14CFS1o?=
- =?us-ascii?Q?5+4VyVbD41rlnD96IrPY46QI2NlHnmIqaovz88Jd/eL3f6/QJuVJDpVqOoA1?=
- =?us-ascii?Q?8zz7p7HloIAr58FfLfUqi7ZM0od+HHK0+Ln888UVTyLCEKdkHwHIRcWXfWy/?=
- =?us-ascii?Q?h4F5ooENi0RqAQb61PTg6KKwyhK597Skc9wnPUxboZtbqiKEFfqyVFk26KUa?=
- =?us-ascii?Q?U3Oo3QVbvtatt67tTfjx4WhE1rgTJARURnzccLA6b1bFt/TIs9ZC+o7Or6Bk?=
- =?us-ascii?Q?XFK8hKKjWcaEYmPAaYwKduCQ4hQri0KBgilmLhLJloIrNuwKYNYyiWbQRBpB?=
- =?us-ascii?Q?hhdUHdYhDq0NSxnEngmIRj0tgA5uNXeAr6dUfatjcC4XIDpxhDiam76nkZRn?=
- =?us-ascii?Q?VczNM5Uz7zDiuabznzlGNeOUPlFemmz6bMh3H2DTjHRgkjy6N4lzpNviabL8?=
- =?us-ascii?Q?xYyqYS6Plyvr23DQHfWg/syHQ4aPdgq7IFLIRZg6XcxS01Qcw5Xh+DmCKupp?=
- =?us-ascii?Q?alITTsGNZb2DXg0B+w88q/e05GBF9G3gtOM0FbEFkr7o3DnGGy1FBLHcQcxX?=
- =?us-ascii?Q?GWnP2zp3qYptfkyDsDNaUye1sE9uUmJ2FcAxtyHJSLZMSiUChWytIxVSEufK?=
- =?us-ascii?Q?3OZjo2AAbszctDsUJtnGD1MC5fw3phtTeQER281Ukm0tkm5BiM/f5gZtfLgX?=
- =?us-ascii?Q?zgCN39wzAwY8yCV8vuKtFhdIEwxtQudo/TqcX9wMtogrrl2kYZnnejUnAhOv?=
- =?us-ascii?Q?1BRBH3w0IaHFvtpGX5znNMEC4YTLNKPyxWsF9io1mVQngzDGDx2bCkWrmSFQ?=
- =?us-ascii?Q?VlJTjAl9HPc7Tv9injA8WcJADlf6qIw=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?mqL1u90+WqlRz5o/poZXRbqoSY7yjOpVsaH0sVR0nqHs8U5lmHGiJQD364Zz?=
+ =?us-ascii?Q?tHyAgflyJG8+HmPsCUT0ztt1PeTH338AV5GS/V9JuwisJRWbnuZmFh9eOfjk?=
+ =?us-ascii?Q?xdtAbJCcJeoB3XOqRpRTr1j2aw942fHbjm+05F2hxueBi5FQXqJBjQ6aZ+K2?=
+ =?us-ascii?Q?dajHwuCS8VzdBHfczQtVx5eiEHzST2zOTAJyl7ErhVgQueiNEdUTVMaKX4Qx?=
+ =?us-ascii?Q?FKCmjKGqtcjAzjZaQ/0OohjgJpTnF9DAiPYifPhzvS6wWmwza67Kz5smZ0ub?=
+ =?us-ascii?Q?qsiGknplyxU3cCA887+KXt3bJCUzFLYN3MN+tqg7c2QKPmMbVCsLqcKpblTV?=
+ =?us-ascii?Q?OeAl7YytMjJBjRi36fm4ofgkMQhuJAaVfJprju0OM5Pp2s8qPR6wWCpdEh0H?=
+ =?us-ascii?Q?nEVPMyEXGDNo3899hg6KBZM8X7vPn8prrb3Md5C3gQRdmCWEe6FGjFRbqQna?=
+ =?us-ascii?Q?6m2VVzQXwzcFtZG2nTT/HBZrgMcfJtzwVs5vuL7hKVt9Ie0mLd2/YiDS90re?=
+ =?us-ascii?Q?Ax02k+TOYo+U9b2OfWwyc88T1TxlFO+bQX+d03/nJAM7ARZb3K+I2LH5froe?=
+ =?us-ascii?Q?aJSj3dG4Ou52k8zKzeHZ/2Q6ffUh+OqiNfEbZCfSi/a9BgVDLecjdEPICdwT?=
+ =?us-ascii?Q?RA0n4BRUef8vssHDoeyVVJvYfnxzFVuiBc12QAfnE/5jtIxZtZeD1+kMGZ3R?=
+ =?us-ascii?Q?xL6QODSIb1Llt1jbZbr/CjDZpsOKr4/EADh2Zi+iQhChQC6RBwYXK3Dt5fli?=
+ =?us-ascii?Q?/q7nIMQ9Pc4DqRQTgYUxwCcr+iDlnG76ISLlJl4rB9+CRucEKejOM8NYwf5f?=
+ =?us-ascii?Q?glRvAfUAr/6ucmuxe0EMlKcj1dSDm5f70wxX2cwvy7/gBgEQbAWUoU3kUmNs?=
+ =?us-ascii?Q?r8HGR/8XkJmBI3+9FWa7aBzItqWuj2GdXFM7ibY9rcSwL/gr1nEObCYwPvrp?=
+ =?us-ascii?Q?2YY7O2LQ8brGzdxUQoGfK0gH1Zyf3ZrPvHNGniXqQMBCmgA6GTpivKDPQvly?=
+ =?us-ascii?Q?DakXqnbL7PcDB4buvfWn4O/7NFy2bUyxtZSeygEH7qO9RlhH5FTvKnQVTq8O?=
+ =?us-ascii?Q?pmYXynj8+kacqjh96362RJfF7rPn2DdlJ/A1eZgV6VfT1rAJnaewFgVEtzVK?=
+ =?us-ascii?Q?8B2P7ucNe10MSNm6mws7818K+MB9gL26rFll3lYU3IHWZq+9EnELJe7dEobK?=
+ =?us-ascii?Q?gsHBG+kAhNNv8ZbTXRrr5O80FaZ061WNExA2ZxD2oFNSd4gGbx8T1vGQLCmu?=
+ =?us-ascii?Q?HWVDgabV2EXciQCRfdtlekPaxwiE35HRRjXxihBMDVnZnVaSDsefoQFLmFXo?=
+ =?us-ascii?Q?3xOaKt+D2v5VvxPImyN4TDFowZhVj6JVA7Vf7JeF5cLkQPDDmdVq7RVEZZgX?=
+ =?us-ascii?Q?4Ast5veR2/HuTKsORRjHjuUv4MR22v5GxW8aO8+B1GYQn87IcAKvNkM8bL58?=
+ =?us-ascii?Q?AXizWGjW+2MLM+H+0P9KQDd78fkbdtGDyc5IIFZt8WlMFacHSQXBA2EUYXP6?=
+ =?us-ascii?Q?upIsFoU0najnepn/8lo92T617OF3dOnDbWul9kPbPg+ChLxSBhCC52RtDhQP?=
+ =?us-ascii?Q?S1VDtvNCRSSWO7GXqfyQ0Xe1jI6BU6tmtzimDNaiFoX8pb88g9dfA5h3MV2X?=
+ =?us-ascii?Q?P3EO+S+o72YaLeEDr8Q4MFT7sTEV06Rd5/tUMmKFikGMvI2Gob86stftR2oe?=
+ =?us-ascii?Q?XP+l2zECdDUvFccMuceHXi85Ua03d0aYGD/HQclo+JcZP2lguGhRTRdnOn9W?=
+ =?us-ascii?Q?TPVT+P4JdQzTOjyEX29Ltx52UI053m8=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 997c243c-ed19-46e9-efed-08def952a8b1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96fe5235-6496-45ab-5048-08def952840c
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:54.7254 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:49:53.3530 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: oAuOdTL3b8nm6An1UONPGmBrgvKRz+cg79YSJWXbsbgBk2gIGbQzxANK4AIAA1F2owjev0ggdALJavB0s1nkvOhSzd489i1+D4XY+dfqFOU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7537
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-UserPrincipalName: RjiHrkpZD0EBQniypKMYW+wqVySOfcYyyDxBaRnOuVBpIGy4Ym5fFR1DEn2sYRfYt6yAqLth015n6DZvrtoAzFqaVfV4obppQ+zOPlW+PXQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB5569
+Received-SPF: pass client-ip=40.107.44.107;
  envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,123 +150,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-arm_load_kernel() keeps a pointer to the boot info struct for the
-lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object inside
-npcm8xx_load_kernel().
 
-Let the caller own the boot info: the board stores it in its
-NPCM8xxMachine and passes it to npcm8xx_load_kernel(), which only
-fills in the SoC specific values.
+Most ARM board files declare their struct arm_boot_info as a static
+object at file scope (or, occasionally, as a function-local static
+inside the machine init function). arm_load_kernel() stashes a pointer
+to that struct in every CPU and dereferences it from do_cpu_reset() on
+each reset, so the boot info conceptually belongs to the machine for the
+lifetime of the VM, not to a static object whose ownership is left
+implicit.
 
-As in the xlnx-zcu102 and raspi machines, the boot info belongs to
-the machine rather than to a static object:
+This is a longstanding leftover pattern: modern machines such as virt,
+raspi and xlnx-zcu102 already keep the boot info in their MachineState
+subclass. This series converts the remaining machines that still use
+a static object, moving the struct into their machine state so that its
+lifetime and ownership match how arm_load_kernel() actually uses it.
 
-4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
-0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Bin Meng (20):
+  hw/arm: aspeed: Store boot info in the machine state
+  hw/arm: aspeed_ast27x0-fc: Store boot info in the machine state
+  hw/arm: bananapi_m2u: Store boot info in the machine state
+  hw/arm: collie: Store boot info in the machine state
+  hw/arm: cubieboard: Store boot info in the machine state
+  hw/arm: exynos4_boards: Store boot info in the board state
+  hw/arm: imx25_pdk: Store boot info in the board state
+  hw/arm: imx8mm-evk: Store boot info in the machine state
+  hw/arm: integratorcp: Store boot info in the machine state
+  hw/arm: kzm: Store boot info in the board state
+  hw/arm: mcimx7d-sabre: Store boot info in the machine state
+  hw/arm: musicpal: Store boot info in the machine state
+  hw/arm: npcm7xx: Store boot info in the machine state
+  hw/arm: npcm8xx: Store boot info in the machine state
+  hw/arm: omap_sx1: Store boot info in the machine state
+  hw/arm: orangepi: Store boot info in the machine state
+  hw/arm: realview: Store boot info in the machine state
+  hw/arm: sabrelite: Store boot info in the machine state
+  hw/arm: versatilepb: Store boot info in the machine state
+  hw/arm: xilinx_zynq: Store boot info in the machine state
+
+ hw/arm/aspeed.c              | 17 +++++++--------
+ hw/arm/aspeed_ast27x0-fc.c   | 13 ++++++------
+ hw/arm/bananapi_m2u.c        | 37 ++++++++++++++++++++++++++-------
+ hw/arm/collie.c              | 14 ++++++-------
+ hw/arm/cubieboard.c          | 38 +++++++++++++++++++++++++++-------
+ hw/arm/exynos4_boards.c      | 26 +++++++++++------------
+ hw/arm/imx25_pdk.c           | 11 +++++-----
+ hw/arm/imx8mm-evk.c          | 34 +++++++++++++++++++++++++-----
+ hw/arm/integratorcp.c        | 40 +++++++++++++++++++++++++++++-------
+ hw/arm/kzm.c                 | 14 ++++++-------
+ hw/arm/mcimx7d-sabre.c       | 36 +++++++++++++++++++++++++++-----
+ hw/arm/musicpal.c            | 32 ++++++++++++++++++++++-------
+ hw/arm/npcm7xx.c             | 28 ++++++++++++-------------
+ hw/arm/npcm7xx_boards.c      | 15 +++++++++-----
+ hw/arm/npcm8xx.c             | 30 +++++++++++++--------------
+ hw/arm/npcm8xx_boards.c      |  3 ++-
+ hw/arm/omap_sx1.c            | 21 +++++++++++++------
+ hw/arm/orangepi.c            | 37 ++++++++++++++++++++++++++-------
+ hw/arm/realview.c            | 30 +++++++++++++++++++--------
+ hw/arm/sabrelite.c           | 24 +++++++++++-----------
+ hw/arm/versatilepb.c         | 16 +++++++++++----
+ hw/arm/xilinx_zynq.c         | 17 ++++++++-------
+ include/hw/arm/aspeed.h      |  2 ++
+ include/hw/arm/npcm7xx.h     | 10 +++++++--
+ include/hw/arm/npcm8xx.h     | 10 +++++++--
+ include/hw/arm/xilinx_zynq.h |  2 ++
+ 26 files changed, 382 insertions(+), 175 deletions(-)
+
 ---
+base-commit: 539bc315538afe036a4b99088659aa82e3b489f2
+branch: cleanup-arm-static-boot-info
 
- hw/arm/npcm8xx.c         | 30 +++++++++++++++---------------
- hw/arm/npcm8xx_boards.c  |  3 ++-
- include/hw/arm/npcm8xx.h | 10 ++++++++--
- 3 files changed, 25 insertions(+), 18 deletions(-)
-
-diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-index 9ce6ea52d9..136a5a7324 100644
---- a/hw/arm/npcm8xx.c
-+++ b/hw/arm/npcm8xx.c
-@@ -357,22 +357,22 @@ static const struct {
-     },
- };
- 
--static struct arm_boot_info npcm8xx_binfo = {
--    .loader_start           = NPCM8XX_LOADER_START,
--    .smp_loader_start       = NPCM8XX_SMP_LOADER_START,
--    .smp_bootreg_addr       = NPCM8XX_SMP_BOOTREG_ADDR,
--    .gic_cpu_if_addr        = NPCM8XX_GICC_BA,
--    .secure_boot            = false,
--    .board_id               = -1,
--    .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
--    .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
--};
--
--void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc)
-+void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
-+                         struct arm_boot_info *binfo)
- {
--    npcm8xx_binfo.ram_size = machine->ram_size;
--
--    arm_load_kernel(&soc->cpu[0], machine, &npcm8xx_binfo);
-+    *binfo = (struct arm_boot_info) {
-+        .loader_start           = NPCM8XX_LOADER_START,
-+        .smp_loader_start       = NPCM8XX_SMP_LOADER_START,
-+        .smp_bootreg_addr       = NPCM8XX_SMP_BOOTREG_ADDR,
-+        .gic_cpu_if_addr        = NPCM8XX_GICC_BA,
-+        .secure_boot            = false,
-+        .board_id               = -1,
-+        .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
-+        .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
-+        .ram_size               = machine->ram_size,
-+    };
-+
-+    arm_load_kernel(&soc->cpu[0], machine, binfo);
- }
- 
- static void npcm8xx_init_fuses(NPCM8xxState *s)
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-index 042a928857..01c22dbde1 100644
---- a/hw/arm/npcm8xx_boards.c
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -198,7 +198,8 @@ static void npcm845_evb_init(MachineState *machine)
-     npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-     npcm845_evb_i2c_init(soc);
-     npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
--    npcm8xx_load_kernel(machine, soc);
-+    npcm8xx_load_kernel(machine, soc,
-+                           &NPCM8XX_MACHINE(machine)->bootinfo);
- }
- 
- static void npcm8xx_set_soc_type(NPCM8xxMachineClass *nmc, const char *type)
-diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
-index a8377db490..676c82150d 100644
---- a/include/hw/arm/npcm8xx.h
-+++ b/include/hw/arm/npcm8xx.h
-@@ -23,6 +23,7 @@
- #include "hw/i2c/npcm7xx_smbus.h"
- #include "hw/intc/arm_gic_common.h"
- #include "hw/mem/npcm7xx_mc.h"
-+#include "hw/arm/boot.h"
- #include "hw/misc/npcm_clk.h"
- #include "hw/misc/npcm_gcr.h"
- #include "hw/misc/npcm7xx_mft.h"
-@@ -62,6 +63,7 @@ struct NPCM8xxMachine {
-      */
-     SplitIRQ            fan_splitter[NPCM8XX_NR_PWM_MODULES *
-                                      NPCM7XX_PWM_PER_MODULE];
-+    struct arm_boot_info bootinfo;
- };
- 
- 
-@@ -122,11 +124,15 @@ OBJECT_DECLARE_TYPE(NPCM8xxState, NPCM8xxClass, NPCM8XX)
-  * npcm8xx_load_kernel - Loads memory with everything needed to boot
-  * @machine - The machine containing the SoC to be booted.
-  * @soc - The SoC containing the CPU to be booted.
-+ * @binfo - Caller owned boot info structure to be filled in.
-  *
-  * This will set up the ARM boot info structure for the specific NPCM8xx
-  * derivative and call arm_load_kernel() to set up loading of the kernel, etc.
-- * into memory, if requested by the user.
-+ * into memory, if requested by the user.  The boot info is owned by the
-+ * caller because arm_load_kernel() keeps a pointer to it for the lifetime
-+ * of the CPUs.
-  */
--void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc);
-+void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
-+                         struct arm_boot_info *binfo);
- 
- #endif /* NPCM8XX_H */
 -- 
 2.53.0
 
