@@ -4,132 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6AEC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBA1C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuLyU-0000Pt-2M; Wed, 12 Aug 2026 23:19:23 -0400
+	id 1wuM6B-0001z7-Ei; Wed, 12 Aug 2026 23:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wuLyM-0000LZ-8z; Wed, 12 Aug 2026 23:19:15 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wuLyI-00054R-PC; Wed, 12 Aug 2026 23:19:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qjuqB+ntfs/1u5LbfNYFoNczagQIUZvSQ/k5pwCWzraw7z03cMHqyZWGJHVkH7Zi5QGmO7RndqOlIecQo8L+nB3GFK1H3Cj8Os7X/uDFERXdvtkl335Y18bUEEqeBXnYm0NtUlNNQQE5LttpH9mqHf/wX9javhN9V8kPzDZv/0lagqhnt5Kx8b8qWAc8r+B+Nutbii8Fq3UHlnX4DXXbv14qJuU4IuQaBoiYbCcO7auF9qKABJ1UdQbD/0+l0JttF0XSMR7lUPPT4p1vPwp325cxsqx4TZN8ulgxMY/flWSt9VySd7CSoyOiQuyxEwZeIBMs3m1mqUSyxOXCCSj5iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=udraiNYJOXBOLPAPMRA3LOB9TeRjpcFe3UtGimtFwqU=;
- b=mS7EkMZcxVBlVLV75+IAKgWyUnhs8Z5VbCK8kiRZuMa7BcYY4365qGCaKUubs4wM3aO2+E4gZ3npQNQbMmoKDmf8qOCrIaqergJ02HVxToDVq5+040h4y9yf1eTHTaV6CEjyxtMNhkZAuGVATm6K9wPUKCMY4I6+tFlDyTINpoiMMILO4kVK09XzAPLRoj5KJapeUgdgvIWeAE5I+4aKsx4yZRS4az6RjFm88++YigzuHYGAR4n9la9s2SwbYWlSo++HEMcEd52ncaOb0lpneMVD2GE6i3hbNVjFynDjgTynKtUuiG2bsATM+G37fYp5LwS8ULy00ingMOJ1SwXgkw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=udraiNYJOXBOLPAPMRA3LOB9TeRjpcFe3UtGimtFwqU=;
- b=V4dW+v2zCAi2X588/xjCCJt8RIpWQZH1SmR1UEv35q6eDR8XNP+Ghk8KXu9cZvbpnoj/N3ICrYiViO4YLAtokYRh0drObgQfDGHQd/TM0RkjuDXsfYmOdxAGO8hOo084s9Bv8tz/vsW1X7xhsos9iG0DF4S+WubJgj+33bcVUgaYv1388vrMPQx4SPWXOLuzn52bG29yeWOdYk9XdXq/7A3LqjyB07DPQmLBK/tx44+MUrLakCn94Ud/by5l420Xj+ZYEfWw14cHj6+0NlwCfk8rkncApKw1HFdgkLWUCa8rcWpYyZp1nre20QLsiF9e0ZjA1/jZQsR5UluXEQUmKg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SEZPR02MB9709.apcprd02.prod.outlook.com (2603:1096:101:338::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
- 2026 03:19:07 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0315.011; Thu, 13 Aug 2026
- 03:19:07 +0000
-Date: Thu, 13 Aug 2026 11:19:02 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Kangjie Huang <flamboyant.h.01@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v2 2/3] hw/riscv/k230: wire up the IOMUX device
-Message-ID: <an03n3VEmb-Wvt0r@ChaodeMacBook-Pro.local>
-References: <cover.1784022244.git.flamboyant.h.01@gmail.com>
- <43e4eb64d1c29419d5803e42ad692324bde2b6c7.1784022244.git.flamboyant.h.01@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <43e4eb64d1c29419d5803e42ad692324bde2b6c7.1784022244.git.flamboyant.h.01@gmail.com>
-X-ClientProxiedBy: SJ0PR13CA0128.namprd13.prod.outlook.com
- (2603:10b6:a03:2c6::13) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wuM68-0001yq-OD
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:27:16 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wuM66-0000Ak-9f
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:27:16 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c9e607d81fcso1093919a12.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 20:27:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786591632; x=1787196432; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xtMucBLIsypxqX0LKfF2YVgc26j6UtWYxPBlPYxAVu8=;
+ b=fFprFauryXNhDUiUm1ywoS0hkJdCIOX2yoS9HbhS3Rap9KirzcvIn3SxBMlFk9XVsU
+ QYmwpZkND4dNlUHDrqKv9t/qf3sJj+BDsFht5BBk8lF42xNBRZR9zY3ChmLdV84kTwGO
+ SrT7sWpt4W3QWpJfxxrAbx8pkY1FtuecAWVIQjr0ZbhLnq8BC7tjZjUM550z3la9fjvl
+ +U6uJkqozjH+iflIwrI6Dan7wGsvL7RWiCyTJY/e0SqI62ZMCjSbxr5HyOY+SA4LHJIu
+ d5CdgJ86CKbgU/b14FY4n9apa6GsH7ayeJtlCqXav7YcSW6qrw2XPzGCKZmV05KYVhws
+ rKmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786591632; x=1787196432;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xtMucBLIsypxqX0LKfF2YVgc26j6UtWYxPBlPYxAVu8=;
+ b=LV2zFlMPmErqXd5SSx++9ptysfmNYQQT/f/isHznV8jIXIaFxv0zqPTf0ak8wfeFX2
+ CfuW7CfTZa4tmOu/hZx6O7NshmIjzRbLhx5KO5Qc5NeLXcL4DJuLSdkWwapRmVNHewcg
+ +qfL6+kYOxLTt+oYe9YHbghdqaBnvCi+7zIBdC6o/zXSf3iFaSWngMBvTEc3KxzFCqUs
+ 1NQXhwacNcCu/MndCKthd7Z7c3QshvrWYK8TA4D/V4cjAMjhSMa9htQkCR85q1sbtqZg
+ GxaIqMnovi4VGCG5JLa+X3eXcFq16qzVBBU3N98MfpW1ATBMSFfFoaQukpgfGnjBsvsa
+ +6ow==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoNu2LvcAdsH17Tx6Dnk0RlkjhQikjxlqzEezEVKbMLRRO0tyGyMrKVsAmNJRvryDF6RjGebVCHahsS@nongnu.org
+X-Gm-Message-State: AOJu0YzzX3cNbDuW52Xtp8BaRIqtuCU9ZnpZsioDikRr4zi2CtMwUvEk
+ 104N/MPOn1MWf9kUlhX3a+zh8i9GOL/7HuwByucI/sjIh8POPaWj/xxQ
+X-Gm-Gg: AR+sD10IKTLduTz876kHzkPpw7KqiGMpih7sfqDlHQGsVXZm726xZ9GWAhWWNRGFiZ5
+ vdOi5Gqc/i8hB7XLViTO8bzaEXR6obdwUVp9dOeflqIpQBAjHuk5lOcRK/LBPpmcg72qxGq0K4k
+ JmmwvWKN/WZXcAdXhb+9mLE8RIDRMhZSL6YkAVWkabqAY7NGbLxtW8wpzha8KXb/WE5LBBFIer4
+ lYxfCwRLQWAURONIMN6bRz08b2GdpktKuiBoEWt56kOYtPn1n6fWfo0OiLMcarpr59tH/WBaFRc
+ Fg5I6YhZeIGz+82QdtK//10PUTkv0TRjk1IIqrXssQ971iXwWFq1wRCbm7E6Tni4YxZQYJxKW5v
+ wqivRFXDKogOJnlz+ofpf73JVh0iCtyxnACs3umDnNhqY4j2DFKgYOOvJMXHe0Xxa+yjfdoa0BT
+ M0zc9sEwd6VLJ4VhfuXImGBO2m0JEmpfl801rqMpHz7JnoK/j0Xa4dSJOqg/F4yk6H2mN/ytQzC
+ M69Uwz69SZPobAc7S0PBmOHx9KNIkgTP8tHOMi/FY1tk4bxgnrAj54Z202cWuOfa4nSG3GeD818
+ 4H5Q+nkhAKP9pqKIIOP7zjlL/x5IKilnbmS3W4uSrr7kSESOY8wsdACfoBpt/3sDEg==
+X-Received: by 2002:a05:6a21:3204:b0:3b7:807b:3cd3 with SMTP id
+ adf61e73a8af0-3cc55397c0bmr4079142637.23.1786591632218; 
+ Wed, 12 Aug 2026 20:27:12 -0700 (PDT)
+Received: from donnager-debian.. (pa49-178-218-204.pa.nsw.optusnet.com.au.
+ [49.178.218.204]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-31eb99e2556sm2708493eec.0.2026.08.12.20.27.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 20:27:11 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Anton Johansson <anjo@rev.ng>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] target/riscv: Restore register dump zero padding
+Date: Thu, 13 Aug 2026 12:54:14 +0930
+Message-ID: <20260813032421.54438-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEZPR02MB9709:EE_
-X-MS-Office365-Filtering-Correlation-Id: ad7be8f2-b785-4bae-0c32-08def8e9a270
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|23010399003|6133799003|18002099003|22082099003|4143699003|56012099006|10067099003;
-X-Microsoft-Antispam-Message-Info: NjV5DQ+57q3Bach3RV2mdKar8x/eVDxI/XHySZSrjuK5OxluMtpJhZmJNZnVDZwrsNYcz6fla0ItQVw8umjVxtRZEtkdw0QSAkpgOKxRDB+3jfYZU8a5XfpodBPOGfspF1xxUIOZE+hQExoQH+ni11FJlGT+Nfo70dCe0Zmc+RL333VzONaxZIFz3sqONkdJAGkddEIZxIw1hHuegDvW+e7Hq9HTdrbAUix2wNimA8oToqZk2xQcgOCPC428Uh3uqJ26sslUftJ6BSoGAhbEDdq3I7GjrlNm8tKmO41NXNOTfjYWEATTQf4sEWgUiRCNZgQsErC9ThIZaJLVFMoKnnVbla+dRn1DsncV9zA7nb4LBYk4uF+fml2hyP0Is2FkZeb/P+JX2YD45SksfNmcRikoNwQMXxSKPwCsvBzLzfWAII4JvJgsrMndD0JjBO85LckeFpsC5i9rp+8SiJH9eUllOdkydKzPXCrTd21Y2DvvCoVukjVNrALxt0wkbXMxr0Wvgyu/dCFT8uJOzKtGxxFMiSpnwFZ1qxCKuGy4+/Z9HuUTwuWBZvbHNMFv4SDd4YzSQyknYXGluTiyn3MmV1kqEeKrO7CqFImwSnmUxB3BZwNLDAvImkF+GiIa5uND/ty/3R3Wpx4Hdsl4cTxhM+EwAPChwFnggxTSBb1MlGU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(6133799003)(18002099003)(22082099003)(4143699003)(56012099006)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?y+sPmCNWS/wwZ7gfau3Q4ZKLrtvffZdM+Wq/bYgPyhsA9tdO/PeKRrJ/vPmb?=
- =?us-ascii?Q?CTrNslPgv/ZeR3uJwvWqHQV6VHSBalo3vBiGtCWGswxV0Tcn+05qF52vMeNB?=
- =?us-ascii?Q?7SVkcASHKd60PqdwPRVgevfJnuuB1bAxLDQ63hjuCDP7zt5eTIRmEfdypd8s?=
- =?us-ascii?Q?WyLWVPgzBc3n68JtV9b4cZXh85jmJ2cEVQ8tkB17UjgGRwP+Q0UcppmelZH3?=
- =?us-ascii?Q?sNv8fbp6w3bp2gjCeQLX/5W98w3x+3WjG7PUJXS2/kdWQpL+c5a9NaDHQ2o2?=
- =?us-ascii?Q?wFas1pG0V19H7l5JZBJyC+25V6sf7s0bA0px9d/W5Qf9qbgqrVX+0RteuqTy?=
- =?us-ascii?Q?5ToCc/LgYJymN2D82iocyzX+yrrPLNydx07jdDJGF6CP/AfC9g25pLsdD1+2?=
- =?us-ascii?Q?gmCgLAJPTfixvrjxRIZPh87MOajwkQ6c0p55cNiVvFf9o6raCAKVgi6SpZG5?=
- =?us-ascii?Q?zQmVVlFVnFeeCt7rPZRCfgRwxNX+9j1FOR2IiDc54mYsMynfYG8CHyiLx7iJ?=
- =?us-ascii?Q?vKOP9ygTOaE5h1E4QydfvZkqJhKH1EUr0OqeiZc6ZY2OlqQuJqy2W6JD+2xd?=
- =?us-ascii?Q?TaTnTVkDFgc7Q7GL/qdY1TQtE2vSePwpuY4+1YZgA50aocdkKr16DOLcp1QH?=
- =?us-ascii?Q?lIFQlmAauW3ikPzzW0HmvNlBG5FHA3BfPrUqqnWDTTfNz6MibgH1vvlwtTIF?=
- =?us-ascii?Q?zMYSBiliT56VYQcVWGuahozzS/FBRPsifFTJwWlZDkDTKWsuiBN8l1JBrSRP?=
- =?us-ascii?Q?hJpBh7ZUEIDn/0tisJUfjPFz8IDpTobuZxchPHFIKE1NJOiq8XugkMG5shfu?=
- =?us-ascii?Q?32rscnZfZXK8MZ+JpC7xS79C8LYEjMdsF+c+aSUjEXmV4R0ThqoX0q6HmP3m?=
- =?us-ascii?Q?QrDIhcdEVlMhkVKbjkoG3MsZRHarpV3SufTF0xRwmQNSWUYbCxskF8Xhbe79?=
- =?us-ascii?Q?9LeFWcuwmgWTNaO4EHuRBqj61vqVQ7aJJSNwrZeJ405yz4p7Ee7b0+gtU+VD?=
- =?us-ascii?Q?J27YEy6C02q43JBuQDyn5nWBc2/4pTmC4jO37Xs7WPNiuDKaOrVE7qx46xSZ?=
- =?us-ascii?Q?xp8EQQeoYgrmYeAyBzHeZ9IR0QG3b3+tGXRizbxtxB8FXx5bAusb3T6TRHol?=
- =?us-ascii?Q?g70kQT9sbHfyOMbwncK7HkeLOajoSHFhjFPwG+h2SWLHkc9AaHGZYcTesGFB?=
- =?us-ascii?Q?6AemLDTWBpIatA1KMchD4D9PDLzayMh+Fxa1Vjm4sttZRJygA8DQzqNNZcDX?=
- =?us-ascii?Q?Q5rsuX+u4zdAmNaAyCQb60laCeHhro+mTwGqgHok0vdz9xcbpJfyVGzcua2l?=
- =?us-ascii?Q?bzk3iCfWHJ4+5F3RNWRBD/EHTNfmVaaptf1FL5gnxavWmOXrYtUfMBnCmXoz?=
- =?us-ascii?Q?bKnlG36pc0kCZpFZS4kNUpAXdw/TZWuPIaYtYRF1rfAoJ9DZu1mRtMCkrDRw?=
- =?us-ascii?Q?oGnopksOH838IdDma2RI2LPdHnbTCsRUEpQkxDUzbqCMGLmV53CpvuFIx0Av?=
- =?us-ascii?Q?e+PK9DjXzgxKG+WGJhw8rW+DezgW7v/Fo0cc3mZwyXVdTIR5rF8y7r0hGGD/?=
- =?us-ascii?Q?fmuYvThF715Ylov+hL4dGFXySF7iri2y47ME7wO/mNbQ6zxmb/Hs3tB25xdF?=
- =?us-ascii?Q?vlS718Fd+oEmbGaodaJUqmTM9zeHQWhlr7T+vYxVQwRL9Zbx68NCnYnNM7mO?=
- =?us-ascii?Q?GfIPc/97DDn39FF/QbHLGN2aHF93ezYOCgYJOJYsq+wELseQchB1f1+ze5Z9?=
- =?us-ascii?Q?zDqg3YARysDTS+HJN6CJtzH2WdyvTjU=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ad7be8f2-b785-4bae-0c32-08def8e9a270
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 03:19:07.1164 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qkSri0d/MpPJwWmKDGYXqs7MlWSxFxQrRKpHAq2gI/damDJicMnnmzQRU9gWCQAV2ta48EGE4C/qiaTY/qtQ2IEvZvsMRaUD/dNIbDO86Ig=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB9709
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=chao.liu@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=joel.stan@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,112 +104,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 14, 2026 at 06:22:01PM +0800, Kangjie Huang wrote:
-> Instantiate the K230 IOMUX device and map its MMIO region at
-> 0x91105000, replacing the unimplemented device covering the same SoC
-> address window.
-> 
-> Select the model from the K230 machine configuration and document the
-> newly modeled device.
-> 
-> Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
+The register values lost their leading zeroes when the underlying type
+was changed, resulting in mismatched padding and harder to read output.
 
-Thanks,
-Chao
+Print with a runtime field width based on MXL, so values are 16 hex
+digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
+adding target_ulong back into the dump.
 
-> ---
->  docs/system/riscv/k230.rst |  1 +
->  hw/riscv/Kconfig           |  1 +
->  hw/riscv/k230.c            | 11 ++++++++---
->  include/hw/riscv/k230.h    |  2 ++
->  4 files changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-> index cea8202e55..b160c401fd 100644
-> --- a/docs/system/riscv/k230.rst
-> +++ b/docs/system/riscv/k230.rst
-> @@ -20,6 +20,7 @@ The ``k230`` machine supports the following devices:
->  * Platform-Level Interrupt Controller (PLIC)
->  * 2 K230 Watchdog Timer
->  * 5 UART
-> +* K230 IOMUX register block
->  
->  Boot options
->  ------------
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index de37c08cae..4c9fc3e7ad 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -162,3 +162,4 @@ config K230
->      select SERIAL_MM
->      select UNIMP
->      select K230_WDT
-> +    select K230_IOMUX
-> diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-> index 656f28190c..430c1646b5 100644
-> --- a/hw/riscv/k230.c
-> +++ b/hw/riscv/k230.c
-> @@ -110,6 +110,7 @@ static void k230_soc_init(Object *obj)
->      object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
->      object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
->      object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-> +    object_initialize_child(obj, "k230-iomux", &s->iomux, TYPE_K230_IOMUX);
->  
->      qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
->      qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-> @@ -198,6 +199,11 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->          }
->      }
->  
-> +    /* IOMUX */
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->iomux), errp)) {
-> +        return;
-> +    }
-> +
->      sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[0]), 0, memmap[K230_DEV_WDT0].base);
->      sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[0]), 0,
->                         qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT0_IRQ));
-> @@ -206,6 +212,8 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->      sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
->                         qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
->  
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->iomux), 0, memmap[K230_DEV_IOMUX].base);
-> +
->      /* unimplemented devices */
->      create_unimplemented_device("kpu.l2-cache",
->                                  memmap[K230_DEV_KPU_L2_CACHE].base,
-> @@ -280,9 +288,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->      create_unimplemented_device("ipcm", memmap[K230_DEV_MAILBOX].base,
->                                  memmap[K230_DEV_MAILBOX].size);
->  
-> -    create_unimplemented_device("iomux", memmap[K230_DEV_IOMUX].base,
-> -                                memmap[K230_DEV_IOMUX].size);
-> -
->      create_unimplemented_device("timer", memmap[K230_DEV_TIMER].base,
->                                  memmap[K230_DEV_TIMER].size);
->  
-> diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-> index 592e1c26bf..223e76b420 100644
-> --- a/include/hw/riscv/k230.h
-> +++ b/include/hw/riscv/k230.h
-> @@ -18,6 +18,7 @@
->  #include "hw/core/boards.h"
->  #include "hw/riscv/riscv_hart.h"
->  #include "hw/watchdog/k230_wdt.h"
-> +#include "hw/misc/k230_iomux.h"
->  
->  #define C908_CPU_HARTID   (0)
->  
-> @@ -33,6 +34,7 @@ typedef struct K230SoCState {
->      RISCVHartArrayState c908_cpu; /* Small core */
->  
->      K230WdtState wdt[2];
-> +    K230IomuxState iomux;
->      MemoryRegion sram;
->      MemoryRegion bootrom;
->  
-> -- 
-> 2.43.0
-> 
+Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+before:
+
+ mvendorid     0000000000000000
+ marchid       000000000000002a
+ mimpid        0000000000000000
+ mhartid       0000000000000000
+ mconfigptr    0000000000000000
+ x0/zero  0 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+ x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0 x7/t2    20646e65205b2d2d
+ x8/s0    ff2000000000bc80 x9/s1    708 x10/a0   270f x11/a1   8
+ x12/a2   0 x13/a3   120 x14/a4   14992a1 x15/a5   ffffffffffffffff
+ x16/a6   fffff079 x17/a7   79 x18/s2   0 x19/s3   7d0
+ x20/s4   ffffffff805ca228 x21/s5   31 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+ x24/s8   0 x25/s9   ffffffff804e3e90 x26/s10  0 x27/s11  0
+ x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+ fflags        0000000000000000
+ frm           0000000000000000
+ fcsr          0000000000000000
+ f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+ f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+ f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+ f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+ f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+ f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+ f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+ f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+
+after:
+
+ mvendorid     0000000000000000
+ marchid       000000000000002a
+ mimpid        0000000000000000
+ mhartid       0000000000000000
+ mconfigptr    0000000000000000
+ x0/zero  0000000000000000 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+ x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0000000000000000 x7/t2    20646e65205b2d2d
+ x8/s0    ff2000000000bc80 x9/s1    0000000000000e10 x10/a0   000000000000270f x11/a1   0000000000000008
+ x12/a2   0000000000000000 x13/a3   0000000000000120 x14/a4   0000000002575fd6 x15/a5   ffffffffffffffff
+ x16/a6   00000000fffff079 x17/a7   0000000000000079 x18/s2   0000000000000001 x19/s3   0000000000000ed8
+ x20/s4   ffffffff805ca228 x21/s5   0000000000000060 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+ x24/s8   0000000000000000 x25/s9   ffffffff804e3e90 x26/s10  0000000000000000 x27/s11  0000000000000000
+ x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+ fflags        0000000000000000
+ frm           0000000000000000
+ fcsr          0000000000000000
+ f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+ f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+ f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+ f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+ f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+ f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+ f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+ f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+
+I also wrote a patch to align the first column of register values, but
+that creates the dilemma between aligning the numbers vs keeping the
+spacing between the registers and their value within a row. Aside from
+avoiding bikeshedding, it wastes more columns for an already wide
+output, so opted not to 'fix' that.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ target/riscv/cpu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 19b93f9c9794..c50dd5ee8771 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -650,6 +650,9 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++    bool rv32 = riscv_cpu_is_32bit(cpu);
++    int width = rv32 ? 8 : 16;
++    uint64_t mask = rv32 ? UINT32_MAX : UINT64_MAX;
+     int i, j;
+     uint8_t *p;
+ 
+@@ -664,7 +667,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         qemu_fprintf(f, " %-13s %d\n", "elp", env->elp);
+     }
+ #endif
+-    qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
++    qemu_fprintf(f, " %-13s %0*" PRIx64 "\n", "pc", width, env->pc & mask);
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
+         int csrno = i;
+@@ -691,8 +694,8 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ #endif
+ 
+     for (i = 0; i < 32; i++) {
+-        qemu_fprintf(f, " %-8s %" PRIx64,
+-                     riscv_int_regnames[i], env->gpr[i]);
++        qemu_fprintf(f, " %-8s %0*" PRIx64,
++                     riscv_int_regnames[i], width, env->gpr[i] & mask);
+         if ((i & 3) == 3) {
+             qemu_fprintf(f, "\n");
+         }
+-- 
+2.47.3
+
 
