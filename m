@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6443C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 19:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC5DC5CFDB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 19:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuaud-0008Jr-5Y; Thu, 13 Aug 2026 15:16:23 -0400
+	id 1wuauk-0008OS-P0; Thu, 13 Aug 2026 15:16:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaub-0008Iq-Ix
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:21 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuauj-0008N7-Qw
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:29 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuauZ-0002ul-2K
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:21 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-47fd4531020so115360f8f.3
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 12:16:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaug-0002wu-PW
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:29 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so3811055e9.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 12:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786648577; x=1787253377; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786648584; x=1787253384; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/jTzn0HvG5hjaHr/PvyqXMhrx/ABtZyLjl0bHhnmnoA=;
- b=DYj5vMTD8XZH6DfDfpxwT/X2vXQDCxdtSN1Py27HKtmFlUEsv2KiExkI6FGLlmC221
- MVYE/HouUHdyfOaDM+/8pr/fyq3gq1W1tAKkB/J6v0rglcRWZBNc9ciXxz0pK0W324Et
- 1J42LnltTBXQ4eeHFqOBitq1ewANu85tH2QbLQamXgVppSBVvYzgQF2LdVGCI9KH2YhF
- 0ZUxJjo9u0lrJqnYb1Ur4vWJZJ6oHw+zCAEPPXPJjfszyOXpPjrdHkPqGectKy7/b5ce
- gSPjcznqZfGM0ebvos+e4WJ/T7vY55ESs+tNCW83u4nMJBhXy323Aymmcqin6j2EvsMd
- 9TFQ==
+ bh=HHNGOJ4JW6/xM+akzv3IjGDFyOH8vS5GN6tAHz20i80=;
+ b=K1kDNMtiWmV3TrXUWyGJpAkXrF9cm2D8wroERF3Ou4m5xolluLpRnB5cCnRWw7Pj2S
+ 7woo+Hf/vpwB33POfWZG3MXoV28ltJz99s8PM9fFjb1dWbobjwvSdC0v7xXf/Xy3QcSd
+ CCTFMZN7WQpkMxQjrwLQqDVxYpd7eBy9kAQXU/eAp7PYSnVwPlQQxtCcVw/caUoaMXt3
+ xFonIcYu403Dfs+4f7m1ZsNYAXl8NXRK6wHF4MR6NLxG4tmC4i493C7i9LNSmoBR0Aet
+ htyOcZJ9JTEsg92PBB16udH1c5rD0RP3lh18ms/Nh+B+wD+PU/ZLtBfcEbJzqFKxWUzi
+ 6JyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786648577; x=1787253377;
+ d=1e100.net; s=20251104; t=1786648584; x=1787253384;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/jTzn0HvG5hjaHr/PvyqXMhrx/ABtZyLjl0bHhnmnoA=;
- b=JDsPC/BXHKlNYYE5lx9YQtV4Ql+isGky39gDdIX9W0RMPlpD4QWOV32TB+V/XM/Vkq
- u+LZGRaBG3FohQUmkcncP2+EDQLvfbg+vrvGiOn7UsUbhJsBuMwiX3obUZSyVaJ98UoV
- Cm3+mkFC5Q/Un189nTJ/pt1aHG7+ASB/SvwGcGLE61Mp0K/qt15xbmp8kc4Goqqzq5VR
- knCqNclxpS2u9B98Zc1IO874hYDcCTa68Mh1Dd//0gUg7OkSvjhfIRuvGh8QvF2Itcj/
- /rZYsMaGDxpfF+OgrsxXhavklmOL9X/778UIx2as+bLmaRhFrPOPnz07wTGKUia5kGR8
- oyjQ==
-X-Gm-Message-State: AOJu0YwrZS7mxRavTpmIHL1XKFBpC3ibt/7mn7ELhHH2iiRfsaPCzP+S
- QgwZap2hqVCSi+rgNoq7wFy2tr0MZ/hlKuhEkc2vsWTtsvnCsGXR+KFtFCdHMvyuJyPxwgVF2Rh
- EVQEj
-X-Gm-Gg: AR+sD12lUvG66Kgy4YUAiDhNtpo/EZ6Fz3M8FvKpZPE1Hl713mWMjG6EqXsmT+4ai1+
- HA0Q99NEFTYNGQ7PwJE0S8Ic+egDxri/yCdea6Xs4kT7/26+8BIz75hgImtWaoCpAgtPM3luW30
- jA42z5XpbRJLXdtlZiXJnw1cw31U7eCBEFbT8gyVCTWlWw6HmyVenCnZX8HU9P707EdBm3fVCzf
- OO1zLkD4Whll4ybMInk9BNRp49VDs+cpPcKoMZT6PIPhd0QUKkNQ2zE469PgOwKFO/FyO/shyuI
- Z8Ml/1XoHr1zuzLAkOt9EWjvFEcnrJb82V+WMofi2QYt18VKH7o6RWo8rCzGmyzmQR49g8LRqop
- 6JkZpFzieNHsl5Z6vMNmpzpBxUVqxY7sqAvKHuysu6AkcxAT3yRRqQc16SLJ0GNGrXOimIjxE6H
- xZ1JwhguEmg6tJre0MTrOqdA/PxeroggeLdL1JIbuo/AU3kO+S7OU4Z9dQ
-X-Received: by 2002:adf:e18b:0:b0:481:568e:11b5 with SMTP id
- ffacd0b85a97d-4816070fc33mr716034f8f.5.1786648577283; 
- Thu, 13 Aug 2026 12:16:17 -0700 (PDT)
+ bh=HHNGOJ4JW6/xM+akzv3IjGDFyOH8vS5GN6tAHz20i80=;
+ b=W8TsMjzYuHBwWoZ4/BSnnaMhinmyKro3dMQ3uOURn+TzNdCqT/SI5Jod+8SxUH79WX
+ 86FAlAwwJV/P9TtsScZ2ia5HmPVhmVspht3jdvTd/EfCwj+PvvZY2LqvcVPRkOpofMjt
+ 21EyHULymqD+fyEa4gQwQq5xYc6NRgt7KDLKH083WtoFPv9E02KHnUMRzwxLUOR+3VC4
+ aPILDdcH8nivRvC4cPGx8N4rc9DBdLl1fGHPOqIM0V62TonPUlIRJMjGKRuXOcJk042s
+ xZfOqU6YUlW/pCGFthPYZjaabUqdAlbThq/jXaFkZ8Lw0ng2t9CLXvpkJzCnW2az/lGd
+ XYnA==
+X-Gm-Message-State: AOJu0Yzv+3v1xKbJAgiSNnmuoy344fvRRLk4iG+legr9PZCir76xRU7F
+ UdTmwENVhp+quLy90IJGZdSCMyf/pTbxCFpM6eBY62c9kUOCLbvdTPavYh2htia9w02XoUYl9k8
+ iD1g0
+X-Gm-Gg: AR+sD11SwIjMeJ+RWo7PbxMELUH5AcJEPcmAQxFlwmnJOwqs5LEo6UQR0moXAGY76rd
+ AF1L5shQrhQVI1UROPaYKfI5qRWvnxo7+g4DsgH/tCWLSx3ACkPc23qB+b0DUMIfhYXZkktXao+
+ /aNAPyqVGwqMoSW1eE641Yq+BsWv8KVexR2gWWseg7YZphL592shdxscb8xfyDziynuJW/jb3Te
+ bfwEYOgefzmz1Y77dP+yYWQ+6FSxnbDJ40FoB4f9CKdczjNbkyTKScw4u7xnO6SW9aNcFSunguX
+ vApNXdsJYjW73GgcxGejX5nfSeFWXKpbtKc33x+fuPcyrU0KKN7VvXJvJrFQhegCzUb0tbn1f70
+ I25AxZ4khP3rs9a2h8hf2WZT3i2E742g4dUOV3S84Tv5tomDU/mfc5DoX0N75XXLgJqlESUo45r
+ MODSpeRfRFP/2WAIXtlIdbKVbfiAlZbql2I6zyrSPCwPvPx6jHtm/fwh2V
+X-Received: by 2002:a05:600c:8714:b0:495:4d00:2fda with SMTP id
+ 5b1f17b1804b1-49987935852mr10229455e9.2.1786648584068; 
+ Thu, 13 Aug 2026 12:16:24 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:859:6d78:3324:fe2c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815f2b1f90sm1312493f8f.18.2026.08.13.12.16.16
+ ffacd0b85a97d-4815f2b1f90sm1312493f8f.18.2026.08.13.12.16.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 12:16:16 -0700 (PDT)
+ Thu, 13 Aug 2026 12:16:23 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, John Snow <jsnow@redhat.com>,
  philmd@oss.qualcomm.com, den@openvz.org
-Subject: [PULL v3 1/7] tests/qtest/ide-test: parametrize the ATAPI CD-ROM read
- test
-Date: Thu, 13 Aug 2026 21:16:06 +0200
-Message-ID: <20260813191613.2323728-2-den@openvz.org>
+Subject: [PULL v3 7/7] tests/qtest/ahci: regression test for ATAPI read vs.
+ drain
+Date: Thu, 13 Aug 2026 21:16:12 +0200
+Message-ID: <20260813191613.2323728-8-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813191613.2323728-1-den@openvz.org>
 References: <20260813191613.2323728-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=den@openvz.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,210 +103,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-cdrom_pio_impl() and test_cdrom_dma() duplicate the same image setup
-and data-integrity check around two different transfer mechanisms.
-Fold them into a single cdrom_read_impl(nblocks, flags) helper, with a
-CDROM_PIO/CDROM_DMA flag selecting the transfer, so further read
-coverage can be added once for both paths.
+Add /ahci/cdrom/drain/{pio,dma}: issue a multi-sector ATAPI read whose
+byte-count limit spans two sectors so the device must rebuffer in the
+middle of the DRQ burst, hold the backend read in flight with a
+blkdebug delay, and fire x-blockdev-set-iothread -- which runs
+bdrv_drain_all_begin() exactly like a guest reset does through
+virtio_blk_stop_ioeventfd().
 
-No functional change: /ide/cdrom/pio, pio_large and dma run exactly
-as before.
+On the unfixed PIO path the nested sector fetch is queued behind the
+drain and the main loop wedges, so the test hangs. The DMA variant
+never rebuffers and serves as a sanity twin.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/ide-test.c | 145 +++++++++++++++++++----------------------
- 1 file changed, 67 insertions(+), 78 deletions(-)
+ tests/qtest/ahci-test.c | 66 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index 721e78170b..c97bc17b67 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -1034,8 +1034,12 @@ static void ide_wait_intr(QTestState *qts, int irq)
-     g_assert_not_reached();
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 58bc04b3ef..71d23fe56a 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1754,6 +1754,70 @@ static void test_atapi_engine_restart_dma(void)
+     test_atapi_engine_restart_in_flight(true);
  }
  
--static void cdrom_pio_impl(int nblocks)
-+#define CDROM_PIO 0
-+#define CDROM_DMA (1 << 0)
++/*
++ * Regression test: a multi-sector ATAPI read fetches its later sectors from
++ * inside the first read's completion; a concurrent drain (as a guest reset
++ * triggers via bdrv_drain_all_begin) must not wedge on that nested read.
++ * blkdebug keeps the read in flight across x-blockdev-set-iothread.
++ */
++static void test_atapi_drain_in_flight(bool dma)
++{
++    AHCIQState *ahci;
++    AHCICommand *cmd;
++    unsigned char *tx;
++    char *iso;
++    int fd;
++    uint8_t port;
++    uint64_t buffer;
++    uint16_t bcl = ATAPI_SECTOR_SIZE * 2;
++    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * 3;
 +
-+static void cdrom_read_impl(int nblocks, unsigned flags)
- {
-+    bool dma = flags & CDROM_DMA;
-     QTestState *qts;
-     QPCIDevice *dev;
-     QPCIBar bmdma_bar, ide_bar;
-@@ -1063,57 +1067,75 @@ static void cdrom_pio_impl(int nblocks)
-     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-     qtest_irq_intercept_in(qts, "ioapic");
- 
--    /* PACKET command on device 0 */
--    qpci_io_writeb(dev, ide_bar, reg_device, 0);
--    qpci_io_writeb(dev, ide_bar, reg_lba_middle, BYTE_COUNT_LIMIT & 0xFF);
--    qpci_io_writeb(dev, ide_bar, reg_lba_high, (BYTE_COUNT_LIMIT >> 8 & 0xFF));
--    qpci_io_writeb(dev, ide_bar, reg_command, CMD_PACKET);
--    /* HP0: Check_Status_A State */
--    nsleep(qts, 400);
--    data = ide_wait_clear(qts, BSY);
--    /* HP1: Send_Packet State */
--    assert_bit_set(data, DRQ | DRDY);
--    assert_bit_clear(data, ERR | DF | BSY);
--
--    /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
--    send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
--
--    /* Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
--     * If BYTE_COUNT_LIMIT is odd, we transfer BYTE_COUNT_LIMIT - 1 bytes.
--     * We allow an odd limit only when the remaining transfer size is
--     * less than BYTE_COUNT_LIMIT. However, SCSI's read10 command can only
--     * request n blocks, so our request size is always even.
--     * For this reason, we assume there is never a hanging byte to fetch. */
--    g_assert(!(rxsize & 1));
--    limit = BYTE_COUNT_LIMIT & ~1;
--    for (i = 0; i < DIV_ROUND_UP(rxsize, limit); i++) {
--        size_t offset = i * (limit / 2);
--        size_t rem = (rxsize / 2) - offset;
--
--        /* HP3: INTRQ_Wait */
--        ide_wait_intr(qts, IDE_PRIMARY_IRQ);
-+    if (dma) {
-+        uintptr_t guest_buf = guest_alloc(&guest_malloc, rxsize);
-+        PrdtEntry prdt[1];
++    fd = prepare_iso(iso_size, &tx, &iso);
 +
-+        prdt[0].addr = cpu_to_le32(guest_buf);
-+        prdt[0].size = cpu_to_le32(rxsize | PRDT_EOT);
++    /* 1s read delay: a wide margin so the drain starts before it completes */
++    ahci = ahci_boot_and_enable(
++        "-blockdev driver=file,node-name=file0,filename=%s,read-only=on "
++        "-blockdev driver=blkdebug,node-name=cd0,image=file0,read-only=on,"
++        "inject-error.0.event=none,inject-error.0.iotype=read,"
++        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000000 "
++        "-M q35 "
++        "-device ide-cd,drive=cd0 ", iso);
++    port = ahci_port_select(ahci);
 +
-+        send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_PACKET, 0,
-+                             nblocks, prdt, ARRAY_SIZE(prdt),
-+                             send_scsi_cdb_read10);
- 
--        /* HP2: Check_Status_B (and clear IRQ) */
-+        qtest_memread(qts, guest_buf, rx, rxsize);
-+    } else {
-+        /* PACKET command on device 0 */
-+        qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+        qpci_io_writeb(dev, ide_bar, reg_lba_middle, BYTE_COUNT_LIMIT & 0xFF);
-+        qpci_io_writeb(dev, ide_bar, reg_lba_high,
-+                       (BYTE_COUNT_LIMIT >> 8 & 0xFF));
-+        qpci_io_writeb(dev, ide_bar, reg_command, CMD_PACKET);
-+        /* HP0: Check_Status_A State */
-+        nsleep(qts, 400);
-         data = ide_wait_clear(qts, BSY);
-+        /* HP1: Send_Packet State */
-         assert_bit_set(data, DRQ | DRDY);
-         assert_bit_clear(data, ERR | DF | BSY);
- 
--        /* HP4: Transfer_Data */
--        for (j = 0; j < MIN((limit / 2), rem); j++) {
--            rx[offset + j] = cpu_to_le16(qpci_io_readw(dev, ide_bar,
--                                                       reg_data));
-+        /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
-+        send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
++    buffer = ahci_alloc(ahci, bcl);
++    qtest_memset(ahci->parent->qts, buffer, 0x00, bcl);
 +
-+        /*
-+         * Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
-+         * If BYTE_COUNT_LIMIT is odd, we transfer BYTE_COUNT_LIMIT - 1 bytes.
-+         * We allow an odd limit only when the remaining transfer size is
-+         * less than BYTE_COUNT_LIMIT. However, SCSI's read10 command can only
-+         * request n blocks, so our request size is always even.
-+         * For this reason, we assume there is never a hanging byte to fetch.
-+         */
-+        g_assert(!(rxsize & 1));
-+        limit = BYTE_COUNT_LIMIT & ~1;
-+        for (i = 0; i < DIV_ROUND_UP(rxsize, limit); i++) {
-+            size_t offset = i * (limit / 2);
-+            size_t rem = (rxsize / 2) - offset;
++    cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, bcl, dma);
++    ahci_command_adjust(cmd, 0, buffer, bcl, 0);
++    ahci_command_commit(ahci, cmd, port);
++    ahci_command_issue_async(ahci, cmd);
 +
-+            /* HP3: INTRQ_Wait */
-+            ide_wait_intr(qts, IDE_PRIMARY_IRQ);
++    /* Drain (all nodes) while the delayed read is still in flight. */
++    qtest_qmp_assert_success(ahci->parent->qts,
++        "{ 'execute': 'x-blockdev-set-iothread',"
++        "  'arguments': { 'node-name': 'cd0', 'iothread': null,"
++        "                 'force': true } }");
 +
-+            /* HP2: Check_Status_B (and clear IRQ) */
-+            data = ide_wait_clear(qts, BSY);
-+            assert_bit_set(data, DRQ | DRDY);
-+            assert_bit_clear(data, ERR | DF | BSY);
++    /* Round-trip through the device to confirm qemu is still alive. */
++    ahci_px_rreg(ahci, port, AHCI_PX_TFD);
 +
-+            /* HP4: Transfer_Data */
-+            for (j = 0; j < MIN((limit / 2), rem); j++) {
-+                rx[offset + j] = cpu_to_le16(qpci_io_readw(dev, ide_bar,
-+                                                           reg_data));
-+            }
-         }
--    }
- 
--    /* Check for final completion IRQ */
--    ide_wait_intr(qts, IDE_PRIMARY_IRQ);
-+        /* Check for final completion IRQ */
-+        ide_wait_intr(qts, IDE_PRIMARY_IRQ);
- 
--    /* Sanity check final state */
--    data = ide_wait_clear(qts, DRQ);
--    assert_bit_set(data, DRDY);
--    assert_bit_clear(data, DRQ | ERR | DF | BSY);
-+        /* Sanity check final state */
-+        data = ide_wait_clear(qts, DRQ);
-+        assert_bit_set(data, DRDY);
-+        assert_bit_clear(data, DRQ | ERR | DF | BSY);
-+    }
- 
-     g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
++    ahci_command_free(cmd);
++    ahci_free(ahci, buffer);
++    g_free(tx);
++    ahci_shutdown(ahci);
++    remove_iso(fd, iso);
++}
 +
-     g_free(pattern);
-     g_free(rx);
-     test_bmdma_teardown(qts);
-@@ -1122,51 +1144,18 @@ static void cdrom_pio_impl(int nblocks)
++static void test_atapi_drain_pio(void)
++{
++    test_atapi_drain_in_flight(false);
++}
++
++static void test_atapi_drain_dma(void)
++{
++    test_atapi_drain_in_flight(true);
++}
++
+ /* Regression test: Test that a READ_CD command with a BCL of 0 but a size of 0
+  * completes as a NOP instead of erroring out. */
+ static void test_atapi_bcl(void)
+@@ -2177,6 +2241,8 @@ int main(int argc, char **argv)
+                    test_atapi_engine_restart_pio);
+     qtest_add_func("/ahci/cdrom/engine_restart/dma",
+                    test_atapi_engine_restart_dma);
++    qtest_add_func("/ahci/cdrom/drain/pio", test_atapi_drain_pio);
++    qtest_add_func("/ahci/cdrom/drain/dma", test_atapi_drain_dma);
  
- static void test_cdrom_pio(void)
- {
--    cdrom_pio_impl(1);
-+    cdrom_read_impl(1, CDROM_PIO);
- }
+     ret = g_test_run();
  
- static void test_cdrom_pio_large(void)
- {
-     /* Test a few loops of the PIO DRQ mechanism. */
--    cdrom_pio_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE);
-+    cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_PIO);
- }
- 
--
- static void test_cdrom_dma(void)
- {
--    QTestState *qts;
--    static const size_t len = ATAPI_BLOCK_SIZE;
--    size_t ret;
--    char *pattern = g_malloc(ATAPI_BLOCK_SIZE * 16);
--    char *rx = g_malloc0(len);
--    uintptr_t guest_buf;
--    PrdtEntry prdt[1];
--    FILE *fh;
--
--    qts = ide_test_start(
--            "-drive if=none,file=%s,media=cdrom,format=raw,id=sr0,index=0 "
--            "-device ide-cd,drive=sr0,bus=ide.0", tmp_path[0]);
--    qtest_irq_intercept_in(qts, "ioapic");
--
--    guest_buf = guest_alloc(&guest_malloc, len);
--    prdt[0].addr = cpu_to_le32(guest_buf);
--    prdt[0].size = cpu_to_le32(len | PRDT_EOT);
--
--    generate_pattern(pattern, ATAPI_BLOCK_SIZE * 16, ATAPI_BLOCK_SIZE);
--    fh = fopen(tmp_path[0], "wb+");
--    ret = fwrite(pattern, ATAPI_BLOCK_SIZE, 16, fh);
--    g_assert_cmpint(ret, ==, 16);
--    fclose(fh);
--
--    send_dma_request(qts, CMD_PACKET, 0, 1, prdt, 1, send_scsi_cdb_read10);
--
--    /* Read back data from guest memory into local qtest memory */
--    qtest_memread(qts, guest_buf, rx, len);
--    g_assert_cmpint(memcmp(pattern, rx, len), ==, 0);
--
--    g_free(pattern);
--    g_free(rx);
--    test_bmdma_teardown(qts);
-+    cdrom_read_impl(1, CDROM_DMA);
- }
- 
- int main(int argc, char **argv)
 -- 
 2.53.0
 
