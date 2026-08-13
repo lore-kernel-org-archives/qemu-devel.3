@@ -4,61 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ECAC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC15C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYGt-0004Oj-Od; Thu, 13 Aug 2026 12:27:13 -0400
+	id 1wuYOp-0004IF-UY; Thu, 13 Aug 2026 12:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYGe-00044D-Ej; Thu, 13 Aug 2026 12:27:00 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYGc-0001NA-VY; Thu, 13 Aug 2026 12:26:56 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwCnpq428H1qIVLmAA--.5092S2;
- Fri, 14 Aug 2026 00:26:30 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwBXQw8H1q7SwjAA--.59184S7;
- Fri, 14 Aug 2026 00:26:29 +0800 (CST)
-From: Tao Tang <tangtao1634@phytium.com.cn>
-To: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>,
- Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>,
- Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v5 26/28] hw/arm/smmuv3: Initialize the secure register bank
-Date: Fri, 14 Aug 2026 00:26:24 +0800
-Message-Id: <20260813162624.2809349-5-tangtao1634@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wuYOo-0004I1-O2
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:35:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wuYOn-0003lE-7b
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:35:22 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67DFWcLR2736699
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=akM+ln
+ DQvx5nYcLW+j+m63x43E1V5D4IpzvMtjPoIl0=; b=izj7grGiaiPOowB55tkOMN
+ qoF2LXtw9wH6Z6FOVMiqhaIUNWLVMZge2Y2qPvQUJaAfePlE3sYSU7p4bBmyIuo7
+ v1ysjonJNybOjpShSBBWY+r1+/rJtiwQpNBYvrKMZPBPgLpI80imM2uX1vZ7nAtz
+ AUPKpQU5QfvBOJGt0TLyzAkw9L3Yv8Fy16K4HIClHkyQOofWmKqu+iMIwDWAZWCw
+ vAkHae24gsuowaXbMSEV5hxntUySD9xOL1mR2v/omDD5POqb1vYIGCJPWNEwHxKk
+ W5HJThb3gyuyCyxa3iAk+PGfVfJJ1cflhlrEqFlQ2qOSg5sqTXvanZIeXmVAEQgg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvma0yps-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:19 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67DGQMG5010553
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:18 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0gkmyq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:18 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67DGZGpL27918664
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:16 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF50120043
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:16 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1856B20040
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:16 +0000 (GMT)
+Received: from [9.43.103.247] (unknown [9.43.103.247])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:35:15 +0000 (GMT)
+Message-ID: <e89bb6d3-3522-493c-8bac-106e374294c3@linux.ibm.com>
+Date: Thu, 13 Aug 2026 22:05:14 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwBXQw8H1q7SwjAA--.59184S7
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HtAABsi
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxGF15GFWfArW7ur4UuFyDZFb_yoW5Ww18pF
- ZrAr15Kw13KFn3X3y3A3y8AF13Wr4xtw1DCr9xWF1rC345KrWUJr4DGFyFvrZFvr1rua12
- qFySg3y5Wr45A3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/6] ppc/spapr: Add VFIO EEH error injection backend
+To: qemu-devel@nongnu.org
+References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
+ <20260520095446.64206-2-nnmlinux@linux.ibm.com>
+Content-Language: en-US
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+In-Reply-To: <20260520095446.64206-2-nnmlinux@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDExOSBTYWx0ZWRfXxKr4wAWrr4nb
+ AbKoiIa8SZRriIENoSejKlRd1sCcwLgTii16QpzBJCNgI3uBBg+G3CwNtGon1RUR3ZQ+fA2mnH9
+ eXkd7POJ2/3RttCJyrrJDfoOddCoETbiq+FxPItWWMXjgaTnwZDtS5FUVd6M5GxqxLMlwAMh3cH
+ 2tw8/ZqfR1IqPQUeWTfqO0eVWgFqm4BNMNEXgwMpQ8C/Kj5Ooi//p6fXIrJK0+eBRjKkvdvAWvE
+ K8CP+bx8M7TjCuQ4sehxMz7BkBvbgCkcOZn9RVAusLJ1F1tmHaKi4aYmDnS9R14q+fuX5rWl46P
+ Oq01JhmZIstpVBYa3p7bdXOgGNb/DzabW1DuqrOu0sP1PKnIzO0+N6+BUdQCGqNjj7boMlYXjII
+ 39ULZwwhQVmuUSqJOowQoN8KsjqyaFuNPMujBNavaWr10bgPdHQ/BoyZbUP/t/Oa4SLfGRpH0Ac
+ NIu5hH8fkSWlIKf6TUQ==
+X-Proofpoint-ORIG-GUID: MXQ-ZsRiRP3WYtxmaHn7P26rK6m4wXw_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDExOSBTYWx0ZWRfX0c7p2pw/XLjq
+ f/DTBWhHhq7fge6QV/jsE2zpxfOK+TNzrsdBWT5tA/MlF568XRwR3vxgU28VN3rezSQfRQ7YSCs
+ 7vyQAjCikpum6gv2nFkavPaEqoE7Idk=
+X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7df247 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=KqBAmHc-NpPwGoBe6oUA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: MXQ-ZsRiRP3WYtxmaHn7P26rK6m4wXw_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-13_05,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608130119
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -76,85 +125,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize the secure register bank (SMMU_SEC_SID_S) with sane default
-values during the SMMU's reset sequence.
 
-This change ensures that key fields, such as the secure ID registers,
-GBPA reset value, and queue entry sizes, are set to a known-good state.
-The SECURE_IMPL attribute of the S_IDR1 register will be introduced
-later via device properties.
 
-This is a necessary step to prevent undefined behavior when secure SMMU
-features are subsequently enabled and used by software.
+On 20/05/26 15:24, Narayana Murty N wrote:
+> +    VFIOLegacyContainer *container = vfio_eeh_as_container(&sphb->iommu_as);
+> +    struct vfio_eeh_pe_op op = {
+> +        .op = VFIO_EEH_PE_INJECT_ERR,
+> +        .argsz = sizeof(op),
+> +    };
+> +
+[...]
+> +    /* Perform the ioctl to inject the error */
+> +    if (ioctl(container->fd, VFIO_EEH_PE_OP, &op) < 0) {
+> +        return RTAS_OUT_HW_ERROR;
+> +    }
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- hw/arm/smmuv3.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+Hi Narayana,
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 2375b7a17a0..7e7376c65e2 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -293,6 +293,7 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
- static void smmuv3_init_id_regs(SMMUv3State *s)
- {
-     SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-+    SMMUv3RegBank *sbank = smmuv3_bank(s, SMMU_SEC_SID_S);
- 
-     /* Based on sys property, the stages supported in smmu will be advertised.*/
-     if (s->stage && !strcmp("2", s->stage)) {
-@@ -339,7 +340,14 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
-     bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN4K, 1);
-     bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN16K, 1);
-     bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, GRAN64K, 1);
--    s->aidr = 0x1;
-+
-+    /* Initialize Secure bank */
-+    memset(sbank->idr, 0, sizeof(sbank->idr));
-+    /* No stall */
-+    sbank->idr[0] = FIELD_DP32(sbank->idr[0], S_IDR0, STALL_MODEL, 1);
-+
-+    sbank->idr[1] = FIELD_DP32(sbank->idr[1], S_IDR1, S_SIDSIZE,
-+                               SMMU_IDR1_SIDSIZE);
-     smmuv3_accel_idr_override(s);
- }
- 
-@@ -352,6 +360,7 @@ bool smmuv3_ats_enabled(SMMUv3State *s)
- static void smmuv3_reset(SMMUv3State *s)
- {
-     SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-+    SMMUv3RegBank *sbank = smmuv3_bank(s, SMMU_SEC_SID_S);
- 
-     bank->cmdq.base = deposit64(bank->cmdq.base, 0, 5, SMMU_CMDQS);
-     bank->cmdq.prod = 0;
-@@ -371,6 +380,24 @@ static void smmuv3_reset(SMMUv3State *s)
-     bank->gerrorn = 0;
-     bank->gbpa = SMMU_GBPA_RESET_VAL;
- 
-+    sbank->cmdq.base = deposit64(sbank->cmdq.base, 0, 5, SMMU_CMDQS);
-+    sbank->cmdq.prod = 0;
-+    sbank->cmdq.cons = 0;
-+    sbank->cmdq.entry_size = sizeof(struct Cmd);
-+    sbank->eventq.base = deposit64(sbank->eventq.base, 0, 5, SMMU_EVENTQS);
-+    sbank->eventq.prod = 0;
-+    sbank->eventq.cons = 0;
-+    sbank->eventq.entry_size = sizeof(struct Evt);
-+
-+    sbank->features = 0;
-+    sbank->sid_split = 0;
-+    sbank->cr[0] = 0;
-+    sbank->cr0ack = 0;
-+    sbank->irq_ctrl = 0;
-+    sbank->gerror = 0;
-+    sbank->gerrorn = 0;
-+    sbank->gbpa = SMMU_GBPA_RESET_VAL;
-+
-     s->aidr = 0x1;
-     s->statusr = 0;
- }
--- 
-2.34.1
+Sorry, one detail I missed in my previous review:
 
+Could `container` be NULL here if `vfio_eeh_as_container()` fails or 
+returns NULL? If so, should we add a NULL check before dereferencing 
+`container->fd`?
+
+Thanks,
+Nikhil
 
