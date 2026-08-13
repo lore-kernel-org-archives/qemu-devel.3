@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD288C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EABEC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYch-0001To-2s; Thu, 13 Aug 2026 12:49:43 -0400
+	id 1wuYld-0004nK-AE; Thu, 13 Aug 2026 12:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wuYcf-0001Oz-DT
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:49:41 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wuYcd-0006Ak-Qf
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:49:41 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67DFX55D1630294
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aMEWLm
- Of778SdfE1swPDjq29xHKrYZZXxwjFZ16z7do=; b=lSfqOZBbv+9egOPrwGBgqS
- AaGwbwqhd0Y3fdKPlUtaife1u8vNhZY9IPFTuv6UyOJNJNbRG/hnmD6K66GBXqFM
- 8e93Mhh9ZNcHAipxi4JTSbsHae3UiIjA3MNDfQlDduF+eqVoYTQ5P0jfWB6Yq7QL
- nf+hR8Rbw6ZqIAqUuzU2NSyWDpshuY1yXmXF2495Z9ng+L+wUD1Qd9Ch+o8ZPpDZ
- n7gmPlO5TzfXZpFsdgUX72QlwuKtykhpBOLcrJGaINQUqHJBdiroi6/ZuKV8Fo++
- JXyyFXmyayBbnQ0II01S74Xe6Ym+TgdkIE1kDnP4hrr+pBxwiGtbxQWnffuYa6KA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fyb2419rh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:38 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67DGfOFt022867
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:37 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsk3t8b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:37 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67DGnZYB42467662
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:35 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6FF642004B
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:35 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E4FC020040
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:34 +0000 (GMT)
-Received: from [9.43.103.247] (unknown [9.43.103.247])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 16:49:34 +0000 (GMT)
-Message-ID: <5ae721cc-d0d7-4cdd-9312-73a6fd6eaaa0@linux.ibm.com>
-Date: Thu, 13 Aug 2026 22:19:33 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wuYlc-0004n2-64
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:58:56 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wuYla-0007Xw-Lf
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:58:55 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-836d2861a39so1115207b3.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 09:58:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786640332; cv=none;
+ d=google.com; s=arc-20260327;
+ b=G3dzBzcDGSCS0XKJ+oTwUcytpTB3ENJRQjZ/0qxzSN6/DQ8COh2rov7erN2QBIXR5E
+ 0qsgizMbWReH35HdFDZfEo+w1bpvVKCr2OzmsznxPnqhQFkkhITCH1cjcK3+Pd7BfcJE
+ UYPko9BZvRWo0IJ9MAE9uCMA+aDv0Ln8zbt5qn4fMxCduolM+zUnLZPKfwvUTM81xfNO
+ QqBD6V2+REBznfjjpxpvPLVPyaEeMeeIyAvwS7qPU4g1ZdAHPzX0gxpt/Ygvcipov1DF
+ pv5Dzb0nAzpoMPfli3tfTnzep3LQR9TcNTrOksVv0i3PqQ4y7nNm8vgRQkmzIyrkeQhz
+ +M5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
+ fh=ETXTBPOzNiWPh6W4ECmIvO7kfsb53R8ucT1RDsY0Uog=;
+ b=f2VSqIfUIecJrN80jdJVb5HYyeWeMWsB17VrfmVH8op6lMxtnqbhQ2uYppjRmBb08B
+ Ba2bbVt7HieALelSbwEozECqP9pUPPATzqYWY1c/AuyK452mHbjajw1y8RBq822FwBP/
+ 3Gv8+Btqd10TFr4H2acF/HC/wEyyXaIXhqCL5WULf03FlfEJa9ajwfhhbMpFNenqvdN/
+ c0eSaqAYeqw24A4aYvQNFdGScmo5brW9ZxT6/sM8A0/ybKtu+8zA4eR38S9wZ7nnQVAP
+ LfpSVDuVeGydVMkGT/Vw8w4FXMIu14YIpTmYtBWoGustS/+8xlVLj/M0yf/jkBdcFF+r
+ zI3A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786640332; x=1787245132; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
+ b=LgJKqU50G3C9Cgr354hgoJ1HavMMz3+UPekm+VFRKlBl216kQCxH8QbR/QDEbmNKp8
+ irsO7UBbS6mEDerg30zvTTNi9/fyDSwlIbDrsvcAvThEFM1mdHZ/8+qzOZtrKN6vsksO
+ sHQLCfbM9XtZDgX0ySJEAGoMbpr0kkCYvTc79GWzZIDa4ZuqippHCqjxkylRAtEiZut+
+ Z1O1H1s+QDYGKoZlv4uk2u0Vf7vfw4JALQZocSV17lSY7Tf6FBYMIj7IqxfWghYGFqfa
+ Yifl1fVWS31+e5YGM326UDS+QN0VnFqoUsLP4OmAB6ejGAcShUl0XoBRx+nDnT5iaBaz
+ QJUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786640332; x=1787245132;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
+ b=B5zyEabcDObkuNFJusEiTBvZx8YWT7fI0mj3LrbpA7V6blAQosXrx2n9jvYp0rKiOl
+ 0rfKJ5pRRgYkhESt7L3lOLt+m/LR9z3nNPRxLvLUyhwZIZZ8Yjca2E1hU6MdL/29h460
+ hdd7eHAI8fMfQVlNVoc4frFq6xAMzef0AdBT43TL14pTyXb+oJG00JI1pi+rcvg0Y4Zv
+ z6aU9og8RnwFZaUmvqH01FSqC/DEUAKnHIZ0TY6cOJkjVDb2B8QjNrydU4VnJlXom0NW
+ AKhbEjRCqIOO35rrFijXAFqiKH1e5OQ5uV9JYxrh9syUue4SGvJgzJyxevPw5Y6fQ+bP
+ J6Mw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpelCTQSdw0sF1eBpI9RBhSz0m8nrojXUvGX+IKxSlx0ChsOQiaHBxoZ6xKiNE9PrT9wUEzY95cx/AC@nongnu.org
+X-Gm-Message-State: AOJu0Yz+4lQNMwePyiGFSKUAs1IwuESWQMZswY9GuWtoz2iBax331VeQ
+ xDjNtcEpfX2rrbKImoUBpkRqTifOmUZYPpVHnkp+JNEMvK1fYZfbpOWoswVwWBvzwkS71jULnjp
+ ypElQ5UjOymJ4gqm6a5YoL2Vnswhu/YP26IqwCz5+qg==
+X-Gm-Gg: AR+sD13BUieXX43/ScUm+XwNj7DKmFTdO2bSoK0iaeOaZAFJ9Khgc4Mj27rAWZlb7wL
+ Roz14psU/wRaKA4UVtzK/L3S2Xp9I2hk/QoIsIZLVCV0yD6sujph0AGzoI/imVUW/USbfhW4Hkw
+ 0Ctl5faOMf8/hQ0tJYWfLQjqfEDDw/7obD+K73TRZSlqbyNo6RXkiHmnOUgrCykqNE8ixbYmsaj
+ +NCF5YnIsz2jzed4r0kpTPtUk+mciDDvnJAXRzDVb2kFVfaojXYuPSkuuL2kcsbyICUYDQ5T7MM
+ LmfjUPL0sG4rb6dptZEPGFe+we4YYp+BGxB4SML4dt8U39Ofkv78ZG/7Wi5BAh80skfGlWfr88F
+ hU3V6yPoUMfa8N3NC62hYbuD872S4
+X-Received: by 2002:a05:690c:19:b0:81f:e85b:f9f4 with SMTP id
+ 00721157ae682-8347623df87mr34724367b3.27.1786640331935; Thu, 13 Aug 2026
+ 09:58:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/6] ppc/spapr: Advertise RTAS error injection call
- support via FDT property
-To: qemu-devel@nongnu.org
-References: <20260520095446.64206-1-nnmlinux@linux.ibm.com>
- <20260520095446.64206-5-nnmlinux@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260520095446.64206-5-nnmlinux@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XqfK/1F9 c=1 sm=1 tr=0 ts=6a7df5a2 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=3ec0P_QH1TykPd80vQYA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDExOSBTYWx0ZWRfXzkWAY8f/H/1q
- 7ZclvJx/6jS4Nz+UmFM3FziIiuBEoeueuKzauZmumj0z4spJgxm7YR44Oqw0YI9MVZ5+bFTPgTq
- S8eDE13xAIHP9y3+xBbjS4MHj9E+qjnXU4N0k7KbXl7QSbV325TssmPufSbHaEp43juyPXkM3OQ
- 0l2V3MKu76/N0d4O3Z01tUXYXEp3t+hIvvdaF1BsW5YcFiREN7jSKeH5pejnYy9V3tDEEIp6QKi
- c/WBq/1YVOZND4IoOVdvTfnQWwlQBagfwDL8IDCVw3Q6gfgh4GBkTkRnz2h9/tqR59dCfp5giiG
- y7DknHvrUKYfvACtxCAjH6Yef4dKif1adJzJJ5ShFNdiLQWgwG+TyQ1mGiWgJ2uGFkV/KK4tSX/
- rneigBEtJ8lOanj8URTnCX7hU1B27DMyGsWrrSpCZpOYA/3jnLbsif+IHvlST8Et4ugCVaSQsla
- veaCYiydIzQiKx9PyJw==
-X-Proofpoint-ORIG-GUID: CXB-pCrAJCWkMHossnerqMa5XTqJmqiX
-X-Proofpoint-GUID: CXB-pCrAJCWkMHossnerqMa5XTqJmqiX
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDExOSBTYWx0ZWRfX3+J9JOqX1RGb
- 5d+BBPzhvQXAKj+Ka2g1yUKufBy64DMTLGCgF5YnMUK9tkSABKxBi01ut/2njXbxsEia7ZXpFMG
- in6fUK3ltY8hKRObsYoV8g5hzFodHiQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-13_05,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608130119
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260717135254.508701-1-mark.caveayland@nutanix.com>
+ <an2epcdoZPrz1T9Y@redhat.com>
+ <1e3fe188-2406-4ab4-9555-bf04b6d1498e@nutanix.com>
+In-Reply-To: <1e3fe188-2406-4ab4-9555-bf04b6d1498e@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 13 Aug 2026 17:58:39 +0100
+X-Gm-Features: AUfX_mx0B9boXQiDDXpcsVHdH4AGA06dYluUNfZqmKV6mlSTfSOcAqoZXM2wsvQ
+Message-ID: <CAFEAcA_u4zec+O1q9ZQHpih7EoH6nf4swbHDxhY6QEXGugE_nQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] qom: tidy-ups and preparation for class property
+ conversion
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ pbonzini@redhat.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,22 +125,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 13 Aug 2026 at 17:42, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> On 13/08/2026 11:38, Daniel P. Berrang=C3=A9 wrote:
+>
+> > On Fri, Jul 17, 2026 at 02:51:40PM +0100, Mark Cave-Ayland wrote:
+> >> Based upon feedback from my existing efforts to start converting from =
+object
+> >> properties to class properties, here is an initial preparation series =
+which
+> >> I hope can be applied soon after 11.1 is released.
+> >
+> > IMHO this version is suitable for merge and could be include as part of=
+ a
+> > general tree-wide PULL that does a broader set of class property conver=
+sions,
+> > unless Paolo really wants to queue it in a dedicated QOM series.
+> Thanks Daniel. In theory I could send a PR for this, however I'm unsure
+> as to how to handle that my current signed GPG key is for a different
+> email address from my work email address which is where the series
+> originated.
+>
+> Does anyone in a similar situation have an idea as to how best to handle
+> this?
 
+What we care about for signed pull requests is that the identity who
+signed the pull request has a GPG key that the person processing
+pullrequests knows about. The email address used as the author
+address on the patches/commits doesn't matter.
 
-On 20/05/26 15:24, Narayana Murty N wrote:
->   static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
->   {
->       MachineState *ms = MACHINE(spapr);
->       int rtas;
-> +    size_t size_tokens = 0;
-> +    g_autofree char *errinject_tokens;
+You can either:
 
+(1) send a pullreq where the tag is signed by your personal address's
+GPG key, as you have been doing up til now. (I mention this mostly for
+completeness: if you expect to be doing QEMU work including compiling
+and sending pull requests on work time you probably want to do that
+labelled up under your work address.)
 
-Hi Narayana,
+(2) update your existing GPG key to add your work address to it,
+upload that key to the keyservers, and tell us that we should update;
+then send a pullreq signed by the key from your work address.
 
-It would be safer to initialize `errinject_tokens` to `NULL`:
-     g_autofree char *errinject_tokens = NULL;
+(3) create a brand new separate GPG key with your work address,
+sign your new work key with your personal GPG key, upload the signed
+key to the keyservers, and tell us that we should update; then send a
+pullreq signed by your work key from your work address.
 
-Thanks
-~ Nikhil
+In any of these cases, if you're sending the pullreq as an
+identity that isn't the same as the one that authored the patches,
+you should add a signed-off-by line for you-as-pullreq-submitter
+to each commit, just as you would for any other contributor's patch
+that you're putting into a pullreq. Nothing checks this or fails if
+you don't do it, it's just a bit of bookkeeping that tracks "this
+thing from me with one hat on went through a pullreq handled by me
+with my other hat on".
+
+I have no opinion about whether (2) or (3) is preferable here.
+I think (looking at 'gpg --list-keys' output) that generally
+people add both work and personal IDs to a single GPG key, but
+I don't know GPG well enough to know if this has downsides.
+
+thanks
+-- PMM
 
