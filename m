@@ -4,100 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF08C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 20:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB5F1C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 21:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wucCy-0002Fd-3J; Thu, 13 Aug 2026 16:39:24 -0400
+	id 1wuchG-0006cB-Tp; Thu, 13 Aug 2026 17:10:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wucCw-0002FR-6I; Thu, 13 Aug 2026 16:39:22 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wucCt-0000rU-LF; Thu, 13 Aug 2026 16:39:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786653523; bh=1INQlZ0UVuxeCzbSGwc2Gkl44IaYGUkpPGHTrTNRsUA=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=OlMcAVPTQb3yEm2et0AnzH2NrbXEjkONrNZgOGj054YDa7VHELcBG8rgglB46xAt1
- RgGz2rMvYaCTn9sSdoMs4Ai0o3KZE86CHOoVsLvjn7QXnZW74CS8hF15EoDTJ/ApZe
- O0R2GWoENjQNFEXWsv9dfDRg0+NGNFD7+XdKcyZHchQoQWkhfR4G28fbznNMdUjI81
- dcQ1yEoP8k6ATjNizorvQu7t6Ej99KeBgT9Zx8KAfrd8Ak5aGWyis3fgeutoNntgOe
- Ez8nZOBlbPiX1E+fLChSKZZEtKvlmhnfVxLM54U0GQNH/hdq9cwkYVUCsiBg7vT1Cs
- BlDnPQhaGFRbg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EFB121CAE25;
- Thu, 13 Aug 2026 23:38:43 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9D78B40AA00;
- Thu, 13 Aug 2026 23:38:57 +0300 (MSK)
-Message-ID: <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
-Date: Thu, 13 Aug 2026 23:38:31 +0300
+ (Exim 4.90_1) (envelope-from <nieklinnenbank@gmail.com>)
+ id 1wuchC-0006b8-Gw
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 17:10:38 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nieklinnenbank@gmail.com>)
+ id 1wuchA-0007x0-HM
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 17:10:38 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-6ae88f4e4f4so251647eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 14:10:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786655435; cv=none;
+ d=google.com; s=arc-20260327;
+ b=F/LBOLckHjyaffH3UQnY/is8asntEQZsgb22Xnzxp3tTsx9BKai92Y0QrFSE+3acZO
+ NGirHc5yzjEafBh+CpDHfSwj7qLVK3ySNyIDmmTREvUunpv+28CE4J1loQeZtHuD00Mw
+ jmpYt3EYHZ8OL0EmQnJur4Q/LFqLVX7CtAed4KNAdou2FUXaxnkjgAj6bNfGFCmaHvZO
+ /MY12Nwu1tJXtxB6dVQZBio3AyZwqIZU2OOwLeUs4Iis3EecKDVgEu+DTQvHsf/1ZQzs
+ gCvwiYL8aI1oBLM1Ml3F8/wAZYyvODrXZoCkK0yPbTaMhazWAHsO4MECdbZMA6xk5zbc
+ D5yQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=f56CoFxFguticBzD2aaadsF5hA52TrO6cNg9NRRTkBw=;
+ fh=8THZ04zpF3kLX/97Wi/+EZPHVfKaalmwxkKpJngdYYo=;
+ b=j1RnKOUwn0YvhHR3BzCixs1ib0LQFPk8j5NEoNOVrtuRxOOIBVadwgTqOpKVdTOC5Q
+ 2IcRmjRwChEjfhleGxRK0s5zBKKHRhSz+6CW1QkUUuHBab2/F12nmRlIRRBK5wp1om2J
+ j5kHkF5vZYuCzSsDlYQaCVux4mRnnSJrMO2MEeGvOcDBoyZhBXfYNA+c+3ifxMoSI6B4
+ ONwfkUFUS04mrA+yoO9KnEEWyrewQ5RenJxw7o9rL57btR8w48J2LvYhkRo3gjPjFtHl
+ KNGV9bKEc8Cs6firPZlSVoAXXhjwYy4uDtUtA4RtqZfMDSVZDGErtktNBZfg+EyW4Jxu
+ egLQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786655435; x=1787260235; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=f56CoFxFguticBzD2aaadsF5hA52TrO6cNg9NRRTkBw=;
+ b=QIDAyOV8xBZd64D5lT5e/y0RboNXl3XQgpJ64VtPoHWDyaTHBvrfLc3+D/ZXMzMS4v
+ aTxYxnj5Eh4wMMuW/lkXHCh1uGzuA08GvdeJZVprJuuWSknpu6r+G4KxIw0iqAJoACqx
+ hSLq2m1uNAVkWAH/FBVVajfJEDpFO2uTMxS8qyO7pMFMdI1HHfxhFlAYPRfMbKr0/w5k
+ bkxoSLDCgKxI7i5aULHo+pX8UHYJRAHllX3v0CgkkKZqOlgqKfbrrXGgs7Bs7RyeKLOx
+ a2LqV+gvvN6iikvM7ZHLuDrybLNOCORRFrCUDMuQPuuBMGC08AtDy/zzVD22QmLT2vMi
+ QzlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786655435; x=1787260235;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=f56CoFxFguticBzD2aaadsF5hA52TrO6cNg9NRRTkBw=;
+ b=WjvfRAB6TxLtKhul5xTtgs6Ic1VxlDvN7/Bm7n9I3GBCu//hnJYBQewXwro0hRJECc
+ QkUEv2FM5eHgc8pgTJBARlVBVPL2FiLwVbWv8FT02ccBxwesg7i3vPSmPhnHf5ofxTLR
+ KVvKne0gTseInDAu7ZpTNPvXhew+kWgvf75Dej+vyTi9daOT7yZ97Y2vAx0MiKaDgnCX
+ fInM3RK1/l4sli5WhWDhjVSuGiVrSTVNPBjN8GTynuFIlthTeA8qUYiSHM1VJlwKxSiY
+ oYv/QZcYan4qWTCog5qsCy5xlVwMDSOM5RJZTiAN1a+jys5xOw/YTJWRZo81JSDnBKzA
+ A62A==
+X-Gm-Message-State: AOJu0Yw5I07qDUABCJeKcFwRS30mVPdIiPhOUSdjfBhCCpb/fh1s7+PM
+ HPG+iI9K29hpUCGhXQ9/1QGQxP5Zp9xg5e1emKaEhVbrNw9W/kyFvuYKYW04qAxtOn9TRB4DfsG
+ BkMO8DryqkE48Bz86q0nmXzvdy+0z1LM=
+X-Gm-Gg: AR+sD11jVHQR2EXmyLFjUVsdtFtm8kmv5cb9pcyw6yCl0Nu4q8aRoEFbn6rIbJYGmtN
+ Fwbof4c0SV7wALI7Nq5ZUULjU5Ua9AHXZxZ4erWy1gpQDoaUXCU4RDXQTvhGS9tAh42rw2P6lX8
+ A1+72JLsVyVBd7pkQ5uO441rDHwG3GxR1G+40OMWveq3sDwoyB5WX1KegE/DSY9p6/s0/jiCoLm
+ t38WnjSidmDS8O7LkPMHDLpCBj+dtTJ6lCH4LcN9VqdbPgHMSslrKE5pPgLmZ/arvhynaJifuXf
+ MCIg4c7CKBomXpSn2F6SbdyNHdS629Rjsudm2Wk64TsqcpM6HHLPVKx/KlxUgbW1ON0KmZ8nzm/
+ 4qZg10XVNcmxROMeXpsSWdEv1i1VAUQ==
+X-Received: by 2002:a05:6820:4ccc:b0:6a3:7341:f6ed with SMTP id
+ 006d021491bc7-6b0d5fca9famr1250294eaf.1.1786655434868; Thu, 13 Aug 2026
+ 14:10:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
-To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20260812171707.1605637-1-farman@linux.ibm.com>
- <20260812171707.1605637-16-farman@linux.ibm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260812171707.1605637-16-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260813154918.996812-1-bin.meng@processmission.com>
+ <20260813154918.996812-17-bin.meng@processmission.com>
+In-Reply-To: <20260813154918.996812-17-bin.meng@processmission.com>
+From: Niek Linnenbank <nieklinnenbank@gmail.com>
+Date: Thu, 13 Aug 2026 23:10:23 +0200
+X-Gm-Features: AUfX_mxetUI3LzQGsQe_zY8IZFIeRFbSFh3N1oolDgO64cqiD4UkDiLhv3x6PYQ
+Message-ID: <CAPan3WoTubzEHGdCKs0tbDKLAms3Y9JG2QVd2Uydh4sVec7u4w@mail.gmail.com>
+Subject: Re: [PATCH 16/20] hw/arm: orangepi: Store boot info in the machine
+ state
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-arm <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000880a240658f42277"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=nieklinnenbank@gmail.com; helo=mail-oo1-xc2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,69 +117,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/26 20:17, Eric Farman wrote:
-> Update the s390 bios with recent fixes for out-of-bounds accesses.
-> 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   pc-bios/s390-ccw.img | Bin 104136 -> 104216 bytes
->   1 file changed, 0 insertions(+), 0 deletions(-)
+--000000000000880a240658f42277
+Content-Type: text/plain; charset="UTF-8"
 
-How do you guys build s390x-ccw.img - which compiler version(s) are
-used for that?
+Op do 13 aug. 2026 17:51 schreef Bin Meng <bin.meng@processmission.com>:
 
-Since we're updating source files in the stable series, where this
-image is not the same as in current master, I'll have to rebuild
-it after patching.  Now I wonder how should I build it.
+> arm_load_kernel() keeps a pointer to the boot info struct for the
+> lifetime of the VM, so the struct logically belongs to the machine
+> rather than to a file scoped static object.
+>
+> Move it into a new OrangePiMachineState and register the machine type
+> explicitly instead of through the DEFINE_MACHINE_ARM macro.
+>
+> As in the xlnx-zcu102 and raspi machines, the boot info belongs to
+> the machine rather than to a static object:
+>
+> 4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
+> 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to
+> RaspiMachineState")
+>
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+>
+Reviewed-by: Niek Linnenbank <nieklinnenbank@gmail.com>
 
-In official debian we always build it from source, and there were no
-complains - maybe because no one uses debian to run qemu-system-s390x? :)
+---
+>
+>  hw/arm/orangepi.c | 37 ++++++++++++++++++++++++++++++-------
+>  1 file changed, 30 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
+> index d84443bb7b..5b2c13f364 100644
+> --- a/hw/arm/orangepi.c
+> +++ b/hw/arm/orangepi.c
+> @@ -28,10 +28,18 @@
+>  #include "hw/arm/boot.h"
+>  #include "hw/arm/machines-qom.h"
+>
+> -static struct arm_boot_info orangepi_binfo;
+> +#define TYPE_ORANGEPI_MACHINE MACHINE_TYPE_NAME("orangepi-pc")
+> +OBJECT_DECLARE_SIMPLE_TYPE(OrangePiMachineState, ORANGEPI_MACHINE)
+> +
+> +struct OrangePiMachineState {
+> +    MachineState parent;
+> +
+> +    struct arm_boot_info bootinfo;
+> +};
+>
+>  static void orangepi_init(MachineState *machine)
+>  {
+> +    OrangePiMachineState *opms = ORANGEPI_MACHINE(machine);
+>      AwH3State *h3;
+>      DriveInfo *di;
+>      BlockBackend *blk;
+> @@ -98,14 +106,16 @@ static void orangepi_init(MachineState *machine)
+>          /* Use Boot ROM to copy data from SD card to SRAM */
+>          allwinner_h3_bootrom_setup(h3, blk);
+>      }
+> -    orangepi_binfo.loader_start = h3->memmap[AW_H3_DEV_SDRAM];
+> -    orangepi_binfo.ram_size = machine->ram_size;
+> -    orangepi_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+> -    arm_load_kernel(&h3->cpus[0], machine, &orangepi_binfo);
+> +    opms->bootinfo.loader_start = h3->memmap[AW_H3_DEV_SDRAM];
+> +    opms->bootinfo.ram_size = machine->ram_size;
+> +    opms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+> +    arm_load_kernel(&h3->cpus[0], machine, &opms->bootinfo);
+>  }
+>
+> -static void orangepi_machine_init(MachineClass *mc)
+> +static void orangepi_machine_class_init(ObjectClass *oc, const void *data)
+>  {
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +
+>      static const char * const valid_cpu_types[] = {
+>          ARM_CPU_TYPE_NAME("cortex-a7"),
+>          NULL
+> @@ -125,4 +135,17 @@ static void orangepi_machine_init(MachineClass *mc)
+>      mc->auto_create_sdcard = true;
+>  }
+>
+> -DEFINE_MACHINE_ARM("orangepi-pc", orangepi_machine_init)
+> +static const TypeInfo orangepi_machine_typeinfo = {
+> +    .name = TYPE_ORANGEPI_MACHINE,
+> +    .parent = TYPE_MACHINE,
+> +    .class_init = orangepi_machine_class_init,
+> +    .instance_size = sizeof(OrangePiMachineState),
+> +    .interfaces = arm_machine_interfaces,
+> +};
+> +
+> +static void orangepi_machine_register_types(void)
+> +{
+> +    type_register_static(&orangepi_machine_typeinfo);
+> +}
+> +
+> +type_init(orangepi_machine_register_types)
+> --
+> 2.53.0
+>
+>
 
-Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
-building the image?
+--000000000000880a240658f42277
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
-here's the list:
+<div dir=3D"auto"><div><div><br></div><div class=3D"gmail_quote gmail_quote=
+_container"><div dir=3D"ltr" class=3D"gmail_attr">Op do 13 aug. 2026 17:51 =
+schreef Bin Meng &lt;<a href=3D"mailto:bin.meng@processmission.com">bin.men=
+g@processmission.com</a>&gt;:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">arm_l=
+oad_kernel() keeps a pointer to the boot info struct for the<br>
+lifetime of the VM, so the struct logically belongs to the machine<br>
+rather than to a file scoped static object.<br>
+<br>
+Move it into a new OrangePiMachineState and register the machine type<br>
+explicitly instead of through the DEFINE_MACHINE_ARM macro.<br>
+<br>
+As in the xlnx-zcu102 and raspi machines, the boot info belongs to<br>
+the machine rather than to a static object:<br>
+<br>
+4d1ac883a7 (&quot;hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102&q=
+uot;)<br>
+0f15c6e338 (&quot;hw/arm/raspi: Move arm_boot_info structure to RaspiMachin=
+eState&quot;)<br>
+<br>
+Signed-off-by: Bin Meng &lt;<a href=3D"mailto:bin.meng@processmission.com" =
+target=3D"_blank" rel=3D"noreferrer">bin.meng@processmission.com</a>&gt;<br=
+></blockquote></div></div><div dir=3D"auto">Reviewed-by: Niek Linnenbank &l=
+t;<a href=3D"mailto:nieklinnenbank@gmail.com">nieklinnenbank@gmail.com</a>&=
+gt;</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
+quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+---<br>
+<br>
+=C2=A0hw/arm/orangepi.c | 37 ++++++++++++++++++++++++++++++-------<br>
+=C2=A01 file changed, 30 insertions(+), 7 deletions(-)<br>
+<br>
+diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c<br>
+index d84443bb7b..5b2c13f364 100644<br>
+--- a/hw/arm/orangepi.c<br>
++++ b/hw/arm/orangepi.c<br>
+@@ -28,10 +28,18 @@<br>
+=C2=A0#include &quot;hw/arm/boot.h&quot;<br>
+=C2=A0#include &quot;hw/arm/machines-qom.h&quot;<br>
+<br>
+-static struct arm_boot_info orangepi_binfo;<br>
++#define TYPE_ORANGEPI_MACHINE MACHINE_TYPE_NAME(&quot;orangepi-pc&quot;)<b=
+r>
++OBJECT_DECLARE_SIMPLE_TYPE(OrangePiMachineState, ORANGEPI_MACHINE)<br>
++<br>
++struct OrangePiMachineState {<br>
++=C2=A0 =C2=A0 MachineState parent;<br>
++<br>
++=C2=A0 =C2=A0 struct arm_boot_info bootinfo;<br>
++};<br>
+<br>
+=C2=A0static void orangepi_init(MachineState *machine)<br>
+=C2=A0{<br>
++=C2=A0 =C2=A0 OrangePiMachineState *opms =3D ORANGEPI_MACHINE(machine);<br=
+>
+=C2=A0 =C2=A0 =C2=A0AwH3State *h3;<br>
+=C2=A0 =C2=A0 =C2=A0DriveInfo *di;<br>
+=C2=A0 =C2=A0 =C2=A0BlockBackend *blk;<br>
+@@ -98,14 +106,16 @@ static void orangepi_init(MachineState *machine)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Use Boot ROM to copy data from SD card=
+ to SRAM */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0allwinner_h3_bootrom_setup(h3, blk);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-=C2=A0 =C2=A0 orangepi_binfo.loader_start =3D h3-&gt;memmap[AW_H3_DEV_SDRA=
+M];<br>
+-=C2=A0 =C2=A0 orangepi_binfo.ram_size =3D machine-&gt;ram_size;<br>
+-=C2=A0 =C2=A0 orangepi_binfo.psci_conduit =3D QEMU_PSCI_CONDUIT_SMC;<br>
+-=C2=A0 =C2=A0 arm_load_kernel(&amp;h3-&gt;cpus[0], machine, &amp;orangepi_=
+binfo);<br>
++=C2=A0 =C2=A0 opms-&gt;bootinfo.loader_start =3D h3-&gt;memmap[AW_H3_DEV_S=
+DRAM];<br>
++=C2=A0 =C2=A0 opms-&gt;bootinfo.ram_size =3D machine-&gt;ram_size;<br>
++=C2=A0 =C2=A0 opms-&gt;bootinfo.psci_conduit =3D QEMU_PSCI_CONDUIT_SMC;<br=
+>
++=C2=A0 =C2=A0 arm_load_kernel(&amp;h3-&gt;cpus[0], machine, &amp;opms-&gt;=
+bootinfo);<br>
+=C2=A0}<br>
+<br>
+-static void orangepi_machine_init(MachineClass *mc)<br>
++static void orangepi_machine_class_init(ObjectClass *oc, const void *data)=
+<br>
+=C2=A0{<br>
++=C2=A0 =C2=A0 MachineClass *mc =3D MACHINE_CLASS(oc);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0static const char * const valid_cpu_types[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ARM_CPU_TYPE_NAME(&quot;cortex-a7&quot;),=
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL<br>
+@@ -125,4 +135,17 @@ static void orangepi_machine_init(MachineClass *mc)<br=
+>
+=C2=A0 =C2=A0 =C2=A0mc-&gt;auto_create_sdcard =3D true;<br>
+=C2=A0}<br>
+<br>
+-DEFINE_MACHINE_ARM(&quot;orangepi-pc&quot;, orangepi_machine_init)<br>
++static const TypeInfo orangepi_machine_typeinfo =3D {<br>
++=C2=A0 =C2=A0 .name =3D TYPE_ORANGEPI_MACHINE,<br>
++=C2=A0 =C2=A0 .parent =3D TYPE_MACHINE,<br>
++=C2=A0 =C2=A0 .class_init =3D orangepi_machine_class_init,<br>
++=C2=A0 =C2=A0 .instance_size =3D sizeof(OrangePiMachineState),<br>
++=C2=A0 =C2=A0 .interfaces =3D arm_machine_interfaces,<br>
++};<br>
++<br>
++static void orangepi_machine_register_types(void)<br>
++{<br>
++=C2=A0 =C2=A0 type_register_static(&amp;orangepi_machine_typeinfo);<br>
++}<br>
++<br>
++type_init(orangepi_machine_register_types)<br>
+-- <br>
+2.53.0<br>
+<br>
+</blockquote></div></div></div>
 
-  b2b5dec9295 s390x: Enable boot menu for virtio pci device
-  d0473643803 pc-bios/s390-ccw: write IPLB location for non-net virtio devices
-  e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI device on s390x
-  084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for multi-queue virtio configurations
-  730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
-  c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
-
-I think I can pick all that stuff for 11.0.x series just fine, to avoid
-(re)building the image for 11.0.x series.
-
-For 10.0.x, things are really much larger:
-
-  14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling with DEBUG enabled
-  d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
-  40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
-  5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
-  d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
-  4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
-  ada7a60056c pc-bios/s390-ccw: Store device type independent of sense data
-  4228a92b2a3 s390x: Remove duplicate definitions of IPL types
-  dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed boot attempt
-  5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
-  1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
-  acb00a7aae4 pc-bios/s390-ccw: link statically
-  fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via pxelinux.cfg
-  47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
-  108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
-  a4adf071dc7 pc-bios/s390-ccw: Allow to select a different pxelinux.cfg entry via loadparm
-
-basically it's whole virtio and pci support added, which might be too much?
-Please note that 10.0.x is an LTS series, also used in current debian stable
-(trixie), so maybe it is also okay to pick everything up to this series, to
-bring the image in-line with current development.
-
-In this case I'll just pick the commits updating the image too :)
-
-What do you think?
-
-Thanks,
-
-/mjt
+--000000000000880a240658f42277--
 
