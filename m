@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB54C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EB9C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYEp-0000Fo-W0; Thu, 13 Aug 2026 12:25:04 -0400
+	id 1wuYEr-0000Lu-0F; Thu, 13 Aug 2026 12:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYEm-0000AV-7w; Thu, 13 Aug 2026 12:25:00 -0400
+ id 1wuYEk-00006U-1K; Thu, 13 Aug 2026 12:24:58 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYEi-0000hd-58; Thu, 13 Aug 2026 12:24:58 -0400
+ id 1wuYEf-0000gB-8E; Thu, 13 Aug 2026 12:24:55 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwA3PhrT731qTx5vAw--.34715S2; 
- Fri, 14 Aug 2026 00:24:51 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwF3PO731q3ywjAA--.59573S6;
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwCXK1DR731qGh5vAw--.15399S2; 
  Fri, 14 Aug 2026 00:24:49 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAf8DwF3PO731q3ywjAA--.59573S4;
+ Fri, 14 Aug 2026 00:24:48 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -35,21 +35,21 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chao Liu <chao.liu@processmission.com>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v5 09/28] hw/arm/smmu: Add PTE NS/NSTable helpers
-Date: Fri, 14 Aug 2026 00:24:45 +0800
-Message-Id: <20260813162446.2806393-4-tangtao1634@phytium.com.cn>
+Subject: [RFC v5 07/28] hw/arm/smmuv3: Reject secure STEs with stage-2 enabled
+Date: Fri, 14 Aug 2026 00:24:43 +0800
+Message-Id: <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwF3PO731q3ywjAA--.59573S6
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HmQABsP
+X-CM-TRANSID: AQAAf8DwF3PO731q3ywjAA--.59573S4
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HlwAAsA
 Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7uFW7tFW5Wr4fAr4UXw1DZFb_yoW8JFyrp3
- 4DKwn3Kry5Ja1xKa1xGw4SkFn5Xws5JF1UGr9F9r98ua1Yqa4rXr12yr4rKa4DKFyrJwnx
- ur4qv348WrWjqr7anT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW7tr4UtFWxtr4kWFWfGw4xCrg_yoW8WrWxpr
+ 4DGws5Kr4ftas3ZrZxZw48Za9xWa97Jr97GFy29as3AF4qvr1UJrnFk3W5Kr9xuryftFyU
+ XayIgFn8ZF1qyFDanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -76,47 +76,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper macros for NS and NSTable bits and group PTE attribute
-accessors for clarity. No functional change beyond the new helpers.
+Pass sec_sid into decode_ste() and treat a secure STE that enables stage-2
+translation as an illegal STE.
+
+The current model does not implement Secure stage-2 translation, so reject
+Secure STE configurations that enable stage 2 and report BAD_STE. This
+restriction can be relaxed when SEL2 and Secure stage-2 support are
+implemented.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/smmu-internal.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/arm/smmuv3.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
-index d143d296f34..004abd58bca 100644
---- a/hw/arm/smmu-internal.h
-+++ b/hw/arm/smmu-internal.h
-@@ -58,16 +58,27 @@
-     ((level == 3) &&                                                    \
-      ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index b5dc67dcb01..3ff2f498a3b 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -597,7 +597,7 @@ static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
  
-+/* Stage 1 attribute fields in VMSAv8-64 Block and Page descriptors */
-+/* Non-secure bit */
-+#define PTE_NS(pte) \
-+    (extract64(pte, 5, 1))
+ /* Returns < 0 in case of invalid STE, 0 otherwise */
+ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+-                      STE *ste, SMMUEventInfo *event)
++                      STE *ste, SMMUEventInfo *event, SMMUSecSID sec_sid)
+ {
+     uint32_t config;
+     /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
+@@ -651,6 +651,14 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+         if (ret) {
+             goto bad_ste;
+         }
 +
- /* access permissions */
++        /*
++         * It is ILLEGAL to set STE.Config == 0b11x according to (IHI 0070G.b)
++         * 5.2 STE, Stream Table Entry, Page 218.
++         */
++        if (sec_sid == SMMU_SEC_SID_S) {
++            goto bad_ste;
++        }
+     }
  
- #define PTE_AP(pte) \
-     (extract64(pte, 6, 2))
+     /* Multiple context descriptors require SubstreamID support */
+@@ -916,7 +924,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
+         return ret;
+     }
  
-+/* Stage 1 VMSAv8-64 Table descriptor fields */
- #define PTE_APTABLE(pte) \
-     (extract64(pte, 61, 2))
- 
-+#define PTE_NSTABLE(pte) \
-+    (extract64(pte, 63, 1))
-+
-+/* Access flag: defined for both Block/Page and Table descriptors. */
- #define PTE_AF(pte) \
-     (extract64(pte, 10, 1))
-+
- /*
-  * TODO: At the moment all transactions are considered as privileged (EL1)
-  * as IOMMU translation callback does not pass user/priv attributes.
+-    ret = decode_ste(s, cfg, &ste, event);
++    ret = decode_ste(s, cfg, &ste, event, sec_sid);
+     if (ret) {
+         return ret;
+     }
 -- 
 2.34.1
 
