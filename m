@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7BEC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 19:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47C56C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 19:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuauk-0008No-Bg; Thu, 13 Aug 2026 15:16:30 -0400
+	id 1wuauf-0008Kb-3p; Thu, 13 Aug 2026 15:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaui-0008Lr-BC
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:28 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaud-0008Jf-1i
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:23 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaue-0002wO-R3
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:28 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-472326ca506so129569f8f.2
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 12:16:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wuaua-0002vN-SB
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 15:16:22 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47f7854678cso148551f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 12:16:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786648582; x=1787253382; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786648579; x=1787253379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=O7T4Trc836AVrEIefselYZIhl3b4OWCl4A790SBnZvs=;
- b=my9QsuVpJP94eUl8ZyDcn9ykq26oFJpQ0lNwV+bmjuaeH4s9tP7WTpbJny2yGejnLo
- H2W3VnqOFYE1vyyZWeQZugTQkFzG3kYPJhiLXlO0canDHdRFo2Ok+WV/1gUZCbU87XT2
- NPdAELjMOUiVu0RlJH/SFtbNF6S6WgnzzUfc38nKzJm/MI0ynhkHWjk//KjRL3wrdSq4
- qCKrGk3Lif3ai1fdivG+KCDnMZHS4pcea69VgqTpYsf/GE+TOwJQZkHco1AyDQeBKqjF
- NIELh441pvUn6bXMkvVaF+Pa+wLSMW44dcl+FwrO7oGEE6Zjy8ivvTF/QXVVO7hqJx8i
- g2DQ==
+ bh=ZV7lk03ivDAVRjiYPzcPDM1p8aqYpF7wvqB8znajYWk=;
+ b=gHM+3uwYxbnLVole7BdnsV5NvB52VPcOzZrp4msHXdNTdq2WxpGc+nYSZ2j+0jnCsE
+ KsY6EpLipXFFmjPDyjmsDEvRK2YJomNtXGv5gH1QgkkuSCeuE0jUMfjuuquLPCP+ZsFX
+ rGz83hwqgbfCENUy3NUImrmNOeJMS9yRR04J7AiRO0o5GX1QcZJRlMbwAv6nTfYU7yPy
+ afdFPML6yjHRBFeTuADil3FQo57G/Fh/wV/t1fVb7KY9fTUmpwp8heoQ19i7FoQ5vLhw
+ jHVzPM5Hg16kINH6iFSuhw71ThqZWv0Tru1BX2ztWFy7H0445rnYAUdRIt/gFJQPY8rK
+ mXFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786648582; x=1787253382;
+ d=1e100.net; s=20251104; t=1786648579; x=1787253379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=O7T4Trc836AVrEIefselYZIhl3b4OWCl4A790SBnZvs=;
- b=Iy+JQ3B4Xsuz405WhCWfoC7fp+yuD5A5ZRgjdMqSr583AxmQ3HK76DQeU1t01l+dWl
- I7ZMETrp/c2KaO+RnByav+HI/S+SAsJVi3EqBkhqHuctfcp+BkpRiMoF0XM4JuXL6rEN
- IbEBEobhzjeyYR9vVajn9fXmM4xtiaiibunQ62wLXAJ/rTpOg0ZXsxY7trS+FVP0adAp
- Pj7/zBjLPQQCqP2Id320+90AesgicLYLx5Z+DkLI+kQ/GmfVyfQrDqVR8zTx0CJAZUNk
- rdrO+Yq488Cre5oGKZRHwRCHnHkTs2ZknXHHRiD6ryN9nSeuirl587B+zgB4Mf0ALfRk
- 3cmw==
-X-Gm-Message-State: AOJu0Yx+ZjfBJHvYDWj7qD9tMwvQU4WboLBBZKpOofaFA6bt2CyM9k8k
- do7kNP1s4SoQXWlgrSi7BFpvSzASx/8MEf+cNa7v4UO9dMHqHWMpKfK3DcIPtQuepFenIdQGCns
- jnPov
-X-Gm-Gg: AR+sD115n6xmoXpQfHYFY482qK29aBb6dpK8nNkCid5shVif7ixO99PDJNXuFgpl9vs
- xFjyiX+f1Qf2D+ytSEFF3wYC2pM9sRkj62wCSwm6U2Do3qKrN+2Pv6EZ9Gf2t3HAis0ww5+JT+G
- FyUAarfFo3E6LbNygQSXrWaSXqAOwO7L51a4X4/CVrX+idQV7VMbfvVVAInUWhP0g2zE168pAD+
- 3zrHycNTM6vHTbceExWflB9bJuGDIDdpxkX/av6kz29mNEpE8TLQ7XIxPmE99SBYbk/byW7dN7V
- 6+G8mkfqtv+T2MDMpb5eXd3gf8Z/SmdvZyLvEfozdVrtWO0FS2alkpb+bzb9ATZbYxNSroXFEwo
- 1+nbKnXXuHq1c/1M6mLBWPjYqGyp9fQpxX9QpoxQ4Nzx47ktQM9MIHv/SWTlmasLaaZcLUezSDj
- wxNOIia+of3Iq8IgJN2L99Ak/VUaR4k3NUbcR271A1/KamKbGbkhIgDGoe
-X-Received: by 2002:adf:f252:0:b0:477:47c6:36e5 with SMTP id
- ffacd0b85a97d-48160788330mr514448f8f.25.1786648581932; 
- Thu, 13 Aug 2026 12:16:21 -0700 (PDT)
+ bh=ZV7lk03ivDAVRjiYPzcPDM1p8aqYpF7wvqB8znajYWk=;
+ b=pEbEd44+BT9zkLyDrnVvkOg1CszTjXh/L+DZuvo8fRdSPSZb46BuJrjK7jV7JgdShV
+ NoukE7X4r0khcnTtMVoABmMcr5An4Ut+EF21wDgWJQAUNPE3aiEKm1zmJ53rBdmNXIlY
+ hO7r0oAbcAO8cmhnNQMXo2zyTDeX0TyA9uJaFMEaN/uTbCLBcbaH5HtJ0jvEVqZGowMY
+ cnBq//Jl5m7k0kEZG78W/3A4TZez6VeAa2YC3j6Gi4p2aZDDFGjRVmnJ9QRsZdgqhSDh
+ 00H0RS8nmTCIPJAkEqT+qRNVvIZZMc874INvtNcHNOLqatQ0Wmy2PaeOdB3L1g423WYF
+ Ywdg==
+X-Gm-Message-State: AOJu0Yz0sIMIX02NAl8I3GQx1F/58n31FT55ZQOO1qya9RzZ4zZ6WTn6
+ fn+hxJfK116UeJ2Vlj7YSrD8co1JmlLrPm0igOz1kFuZXJy3OOKMdMVdVkqhFcIMeDJh3Y6Dy/E
+ Vhgws
+X-Gm-Gg: AR+sD13Qza2x2BNHbfJekeT/Mu8oCP31jkUTcQ2VIR7cbJ4GsRx2OoUEHmfiMPIP8hx
+ ED2EA+D8Otdbd5UjIHrlbhdRUxuitYPZ6Mg09O5QwHuYLROEkHLip+rkfUdwIpX86JmtgrYQDz4
+ 1+zalVKLwQEjcJhETXxa3XTAg1llaxLrCQjrqs+dIea36JHbCyu5cSV+2Rpn5I33m5AtQvxobTh
+ trjAInTOvZSDbAd3cddG2ovofV0MEjDoWxhsG2C2ATUG93zk7b7zpux8mZBaSrXR3RHpAhbokzL
+ Rl1uCCTMi/J3bV4ZBpccEona7q6eK9cUX09P0EEvTx6Xoxf4YYdWDyOMEOE79cC3Tpi2+YwjDZr
+ CoO1a+xLwwodD2jonq1Wa2YO833c0qpQMIWznlPBTTqy1kq92g5QNPp3wtwN+U5dnAEh9nluLVb
+ kFRObAycmLSA/RXW9kBUdG6Ci2aNpQf3YdN1WaqrVZKkKrb53y137N83qa
+X-Received: by 2002:a05:6000:460b:b0:47f:9176:da23 with SMTP id
+ ffacd0b85a97d-481606a7015mr823589f8f.0.1786648579258; 
+ Thu, 13 Aug 2026 12:16:19 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:859:6d78:3324:fe2c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815f2b1f90sm1312493f8f.18.2026.08.13.12.16.21
+ ffacd0b85a97d-4815f2b1f90sm1312493f8f.18.2026.08.13.12.16.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 12:16:21 -0700 (PDT)
+ Thu, 13 Aug 2026 12:16:18 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>, John Snow <jsnow@redhat.com>,
  philmd@oss.qualcomm.com, den@openvz.org
-Subject: [PULL v3 5/7] tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
-Date: Thu, 13 Aug 2026 21:16:10 +0200
-Message-ID: <20260813191613.2323728-6-den@openvz.org>
+Subject: [PULL v3 3/7] tests/qtest/ide-test: cover raw (2352-byte) ATAPI CD
+ reads
+Date: Thu, 13 Aug 2026 21:16:08 +0200
+Message-ID: <20260813191613.2323728-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813191613.2323728-1-den@openvz.org>
 References: <20260813191613.2323728-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=den@openvz.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=den@openvz.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,115 +103,167 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Add /ahci/cdrom/{pio,dma}/raw: read several sectors with READ CD in
-raw mode (atapi_raw), so the ATAPI 2352-byte unpack path is exercised
-through the AHCI delivery, which IDE coverage does not reach. Each
-sector's 2048-byte payload is verified at its in-sector offset.
-
-The PIO case uses a byte-count limit of one raw sector per DRQ burst:
-libqos asserts a one-sector PIO transfer, and the multi-sector unpack
-loop is already covered by the IDE raw test.
+READ CD with the field-selector set to 0xf8 returns full 2352-byte
+raw sectors (sync + header + 2048 data + EDC/ECC), driving the ATAPI
+raw read path that READ10 never touches. Add a send_scsi_cdb_read_cd()
+helper and a CDROM_RAW flag to cdrom_read_impl(), then exercise both
+PIO and DMA. The PIO case uses a byte-count limit spanning several
+raw sectors so the device must rebuffer mid-burst, and each sector's
+2048-byte payload is verified at its in-sector offset.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/ahci-test.c | 68 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+ tests/qtest/ide-test.c | 76 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 70 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 44799eea15..58bc04b3ef 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1565,6 +1565,31 @@ static int ahci_cb_cmp_buff(AHCIQState *ahci, AHCICommand *cmd,
-     return 0;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 6e59197566..b36b0f8875 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -48,6 +48,10 @@
+ 
+ #define ATAPI_BLOCK_SIZE 2048
+ 
++/* Raw READ CD sector: 12 sync + 4 header + 2048 data + 288 EDC/ECC. */
++#define ATAPI_RAW_SIZE   2352
++#define ATAPI_RAW_DATA   16
++
+ /* How many bytes to receive via ATAPI PIO at one time.
+  * Must be less than 0xFFFF. */
+ #define BYTE_COUNT_LIMIT 5120
+@@ -982,6 +986,41 @@ static void send_scsi_cdb_read10(QPCIDevice *dev, QPCIBar ide_bar,
+     }
  }
  
-+static int ahci_cb_cmp_raw(AHCIQState *ahci, AHCICommand *cmd,
-+                           const AHCIOpts *opts)
++typedef struct ReadCDCDB {
++    uint8_t opcode;
++    uint8_t sector_type;
++    uint32_t lba;
++    uint8_t length[3];
++    uint8_t main_channel;
++    uint8_t sub_channel;
++    uint8_t control;
++} __attribute__((__packed__)) ReadCDCDB;
++
++static void send_scsi_cdb_read_cd(QPCIDevice *dev, QPCIBar ide_bar,
++                                  uint64_t lba, int nblocks)
 +{
-+    unsigned char *tx = opts->opaque;
-+    unsigned char *rx;
-+    unsigned i, nsectors;
++    ReadCDCDB pkt = { };
++    int i;
 +
-+    if (!opts->size) {
-+        return 0;
++    g_assert_cmpint(lba, <=, UINT32_MAX);
++    g_assert_cmpint(nblocks, >=, 0);
++    g_assert_cmpint(nblocks, <=, 0xffffff);
++
++    /* Construct SCSI CDB packet */
++    pkt.opcode = 0xbe;
++    pkt.lba = cpu_to_be32(lba);
++    pkt.length[0] = (nblocks >> 16) & 0xff;
++    pkt.length[1] = (nblocks >> 8) & 0xff;
++    pkt.length[2] = nblocks & 0xff;
++    pkt.main_channel = 0xf8; /* sync + headers + user data + EDC/ECC: 2352 */
++
++    /* Send Packet */
++    for (i = 0; i < sizeof(ReadCDCDB) / 2; i++) {
++        qpci_io_writew(dev, ide_bar, reg_data,
++                       le16_to_cpu(((uint16_t *)&pkt)[i]));
 +    }
-+
-+    nsectors = opts->size / ATAPI_RAW_SECTOR_SIZE;
-+    rx = g_malloc0(opts->size);
-+    qtest_bufread(ahci->parent->qts, opts->buffer, rx, opts->size);
-+    /* Each raw sector carries its 2048-byte payload past a 16-byte header. */
-+    for (i = 0; i < nsectors; i++) {
-+        g_assert_cmphex(memcmp(rx + i * ATAPI_RAW_SECTOR_SIZE + 16,
-+                               tx + i * ATAPI_SECTOR_SIZE,
-+                               ATAPI_SECTOR_SIZE), ==, 0);
-+    }
-+    g_free(rx);
-+
-+    return 0;
 +}
 +
- static void ahci_test_cdrom(int nsectors, bool dma, uint8_t cmd,
-                             bool override_bcl, uint16_t bcl)
+ static void nsleep(QTestState *qts, int64_t nsecs)
  {
-@@ -1625,6 +1650,47 @@ static void test_cdrom_pio_multi(void)
-     ahci_test_cdrom_read10(3, false);
+     const struct timespec val = { .tv_nsec = nsecs };
+@@ -1036,10 +1075,12 @@ static void ide_wait_intr(QTestState *qts, int irq)
+ 
+ #define CDROM_PIO 0
+ #define CDROM_DMA (1 << 0)
++#define CDROM_RAW (1 << 1)
+ 
+ static void cdrom_read_impl(int nblocks, unsigned flags)
+ {
+     bool dma = flags & CDROM_DMA;
++    bool raw = flags & CDROM_RAW;
+     QTestState *qts;
+     QPCIDevice *dev;
+     QPCIBar bmdma_bar, ide_bar;
+@@ -1047,8 +1088,11 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+     int patt_blocks = MAX(16, nblocks);
+     size_t patt_len = ATAPI_BLOCK_SIZE * patt_blocks;
+     char *pattern = g_malloc(patt_len);
+-    size_t rxsize = ATAPI_BLOCK_SIZE * nblocks;
++    unsigned xfer = raw ? ATAPI_RAW_SIZE : ATAPI_BLOCK_SIZE;
++    size_t rxsize = xfer * nblocks;
+     uint16_t *rx = g_malloc0(rxsize);
++    void (*send_cdb)(QPCIDevice *, QPCIBar, uint64_t, int) =
++        raw ? send_scsi_cdb_read_cd : send_scsi_cdb_read10;
+     int i, j;
+     uint8_t data;
+     uint16_t limit;
+@@ -1075,8 +1119,7 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         prdt[0].size = cpu_to_le32(rxsize | PRDT_EOT);
+ 
+         send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_PACKET, 0,
+-                             nblocks, prdt, ARRAY_SIZE(prdt),
+-                             send_scsi_cdb_read10);
++                             nblocks, prdt, ARRAY_SIZE(prdt), send_cdb);
+ 
+         qtest_memread(qts, guest_buf, rx, rxsize);
+     } else {
+@@ -1093,8 +1136,7 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         assert_bit_set(data, DRQ | DRDY);
+         assert_bit_clear(data, ERR | DF | BSY);
+ 
+-        /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
+-        send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
++        send_cdb(dev, ide_bar, 0, nblocks);
+ 
+         /*
+          * Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
+@@ -1134,7 +1176,17 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         assert_bit_clear(data, DRQ | ERR | DF | BSY);
+     }
+ 
+-    g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
++    if (raw) {
++        /* The 2048-byte payload of each raw sector sits past its header. */
++        for (i = 0; i < nblocks; i++) {
++            uint8_t *sec = (uint8_t *)rx + i * ATAPI_RAW_SIZE + ATAPI_RAW_DATA;
++
++            g_assert_cmpint(memcmp(sec, pattern + i * ATAPI_BLOCK_SIZE,
++                                   ATAPI_BLOCK_SIZE), ==, 0);
++        }
++    } else {
++        g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
++    }
+ 
+     g_free(pattern);
+     g_free(rx);
+@@ -1163,6 +1215,16 @@ static void test_cdrom_dma_large(void)
+     cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_DMA);
  }
  
-+static void ahci_test_cdrom_raw(int nsectors, bool dma)
++static void test_cdrom_pio_raw(void)
 +{
-+    AHCIQState *ahci;
-+    unsigned char *tx;
-+    char *iso;
-+    int fd;
-+    AHCIOpts opts = {
-+        .size = (uint64_t)ATAPI_RAW_SECTOR_SIZE * nsectors,
-+        .atapi = true,
-+        .atapi_dma = dma,
-+        .atapi_raw = true,
-+        .set_bcl = true,
-+        .bcl = ATAPI_RAW_SECTOR_SIZE, /* one raw sector per DRQ burst */
-+        .post_cb = ahci_cb_cmp_raw,
-+    };
-+    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * (nsectors + 1);
-+
-+    fd = prepare_iso(iso_size, &tx, &iso);
-+    opts.opaque = tx;
-+
-+    ahci = ahci_boot_and_enable("-drive if=none,id=drive0,file=%s,format=raw "
-+                                "-M q35 "
-+                                "-device ide-cd,drive=drive0 ", iso);
-+
-+    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_CD, &opts);
-+
-+    g_free(tx);
-+    ahci_shutdown(ahci);
-+    remove_iso(fd, iso);
++    cdrom_read_impl(4, CDROM_RAW);
 +}
 +
 +static void test_cdrom_dma_raw(void)
 +{
-+    ahci_test_cdrom_raw(3, true);
++    cdrom_read_impl(4, CDROM_DMA | CDROM_RAW);
 +}
 +
-+static void test_cdrom_pio_raw(void)
-+{
-+    ahci_test_cdrom_raw(3, false);
-+}
-+
- /*
-  * Regression test: a buffered ATAPI read completing after a command
-  * engine restart must not dereference the cleared cur_cmd. Cover both
-@@ -2100,8 +2166,10 @@ int main(int argc, char **argv)
+ int main(int argc, char **argv)
+ {
+     const char *base;
+@@ -1223,6 +1285,8 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/cdrom/pio_large", test_cdrom_pio_large);
+     qtest_add_func("/ide/cdrom/dma", test_cdrom_dma);
+     qtest_add_func("/ide/cdrom/dma_large", test_cdrom_dma_large);
++    qtest_add_func("/ide/cdrom/pio_raw", test_cdrom_pio_raw);
++    qtest_add_func("/ide/cdrom/dma_raw", test_cdrom_dma_raw);
  
-     qtest_add_func("/ahci/cdrom/dma/single", test_cdrom_dma);
-     qtest_add_func("/ahci/cdrom/dma/multi", test_cdrom_dma_multi);
-+    qtest_add_func("/ahci/cdrom/dma/raw", test_cdrom_dma_raw);
-     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
-     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
-+    qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
+     ret = g_test_run();
  
-     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
-     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
 -- 
 2.53.0
 
