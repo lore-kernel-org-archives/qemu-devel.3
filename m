@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDD7C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F4CC5AC67
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuMIM-0003ZV-G5; Wed, 12 Aug 2026 23:39:54 -0400
+	id 1wuMIO-0003a9-0v; Wed, 12 Aug 2026 23:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wuMIK-0003Yu-NX
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:39:52 -0400
+ id 1wuMIM-0003ZJ-0y; Wed, 12 Aug 2026 23:39:54 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wuMII-0004Rq-Ea
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 23:39:52 -0400
+ (envelope-from <maobibo@loongson.cn>)
+ id 1wuMIJ-0004Rj-Dk; Wed, 12 Aug 2026 23:39:53 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxD9OAPH1qxsgAAA--.2517S3;
- Thu, 13 Aug 2026 11:39:44 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxC9J_PH1qxcgAAA--.2375S3;
+ Thu, 13 Aug 2026 11:39:43 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxCc56PH1qT+8CAA--.4096S4;
- Thu, 13 Aug 2026 11:39:45 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJDxCc56PH1qT+8CAA--.4096S3;
+ Thu, 13 Aug 2026 11:39:42 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Dongyan Qian <qiandongyan@loongson.cn>
-Subject: [PULL 2/5] tests/acpi: Allow LoongArch virt MADT changes
-Date: Thu, 13 Aug 2026 11:40:49 +0800
-Message-ID: <20260813034052.79094-3-maobibo@loongson.cn>
+Cc: Bin Guo <guobin@linux.alibaba.com>,
+	qemu-stable@nongnu.org
+Subject: [PULL 1/5] hw/intc/loongarch_pch_pic: Validate htmsi_vector before
+ indexing parent_irq
+Date: Thu, 13 Aug 2026 11:40:48 +0800
+Message-ID: <20260813034052.79094-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260813034052.79094-1-maobibo@loongson.cn>
 References: <20260813034052.79094-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxCc56PH1qT+8CAA--.4096S4
+X-CM-TRANSID: qMiowJDxCc56PH1qT+8CAA--.4096S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7GF4xGr4kWrWDGryfKF45Arc_yoWDCFgEgF
- 4Iq3WkG3WDJFWkG3y8XFn5ZryUu3W7Aw18uw15tFs3u34xJ34rAFykXF4kZa42grnxCr43
- tw4kZrWI9ryUAosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb78YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY1x0267AKxVW8
- JVW8Jr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8zwZ7UUUUU==
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZrWxXF18CFWfXF4DuFW3Jwc_yoW8uF47pF
+ ZrCasIgr4ktr17Zr93C348ZF1ruF97Wr1IvFn3Kas2k39xAr18WFn3Xry7XF1xCas8JFyj
+ v3yFg3yjqa1j9abCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
+ vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
+ jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
+ x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
+ 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9UUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -76,29 +77,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongyan Qian <qiandongyan@loongson.cn>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-The LoongArch virt MADT revision will be corrected to match the
-interrupt controller structures it contains.
+pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
+index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
+the array, but only 32 are used by the virt machine) causes an out-of-bounds
+read and a guest-triggerable QEMU crash.
 
-Allow the APIC and APIC.topology test data to change so that the source
-change can be reviewed separately from the regenerated binary tables.
+Validate the vector before calling qemu_set_irq() in both the raise and lower
+paths and log a guest error if it is out of range.
 
-Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/intc/loongarch_pch_pic.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..0e18673fcd 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,3 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/loongarch64/virt/APIC",
-+"tests/data/acpi/loongarch64/virt/APIC.topology",
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 82e16be391..e87c7497c1 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+ {
+     uint64_t val;
+     int irq;
++    uint8_t vector;
+ 
+     if (level) {
+         val = mask & s->intirr & ~s->int_mask;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr |= MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            qemu_set_irq(s->parent_irq[vector], 1);
+         }
+     } else {
+         /*
+@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+         val = mask & s->intisr & ~s->intirr;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            qemu_set_irq(s->parent_irq[vector], 0);
+         }
+     }
+ }
 -- 
 2.54.0
 
