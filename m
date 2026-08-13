@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15449C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D06C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhV-0008Gb-Vj; Thu, 13 Aug 2026 11:50:38 -0400
+	id 1wuXi3-0000D1-2T; Thu, 13 Aug 2026 11:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhT-0008GH-GV; Thu, 13 Aug 2026 11:50:35 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1wuXi1-0000CD-HM; Thu, 13 Aug 2026 11:51:09 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhO-0001rl-RW; Thu, 13 Aug 2026 11:50:32 -0400
+ id 1wuXhw-00023y-Qs; Thu, 13 Aug 2026 11:51:09 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jFBAExnjduaBh5fR+BhaYUTR0KPFBvJtX8mdaiHLj7COiq/JDt0vfKnRLZfBkfI4WiOvGre94KrIJBbReWzIVmAcJDf3PB91pZsToab6cdVJYuVbcNWAkb7T/0ShxpENDwX7zlpLrXgho/qhZzFzNQ+ycOWywt6/iqemptZQfYho5nWGwvRxA/T3JbyobXT74Ve0xrNQqNQeGLQCJs7IylHmHgOzBoz+wVPd6Yq+hlWSF+g2JhcV9+b+7V98HqT3LDdRfxFK5C/pWPpCtOBHOTi1+MWwlmONgUsJr1b5StuQnIh6yUIPBYpDTH5/nLd157OAeGCF35XwFhveGmjbvg==
+ b=hUKfe+ov0PxMQuBqxmZU8fMMhiKXEaurzidGexZ3IeUrBcKN2tVx70bz0gwS7Gzx8pK77a0UFCa1hw4seEr9HWMh/fxiKfar9RGEnLsuS814X930J+3WmF8R+YbfqfX0mtSrcy+Yy09ZqHEfYodaYodDi9HejBkhKPqSY0nsSJYbuj3YUXM4lmTWzBsWlkFWKfYlH1UT4P9xxw1DDmaDLn4kCM3ZputG9aL7e6jfDKADN01BP2lK4b+usRaY9JkHuvk8yXR7qHkvwMg2qhwSEiQHiNnGGLLyVum/7w3DFP62XnFOhDeNQXkTc2uXmqMHmLUElrx25kdnBx8/Oiw+rA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KLHBjZ7VjmMIGrOCz2xXzQaj47Zv4Hp/lcFm0AE597Q=;
- b=QOFYqm/Ha3LY8RKJig7E+kkwjVtjO0IOX3puLmNR+hdDC0Dr6Uk3iXNauou/Pp7QGHqYy8aCnL0Kit9RijyFJqemoSsqwUJF8kHslEnMcaSeRKkDxnSOd9QmaKLFVqEbKhtHtJ/RJcRG3I1OcI0VgpVpvOYx8GFBUmzK33tJpCRtbby0vUbieKL9kWvXT2S/gk5OzOeA2G2UFaHaiJB+vJNJlNeQtHA3FzD3oXU9cwcl9BkVdFeqKmxUT3U4UfK8Zci/M1X96IW6wQPbtkaS8MgFS9G2CsNV7PjT7Fxg+SMQzruR3ro7Hh+affvbLRAfzWr7M9OAzwxtxfRd2Ipcuw==
+ bh=rDvtXfiSonJWrvYeKqpEJNZKMv4iqF2/w8gfqiAqfTQ=;
+ b=RbDQWUZeTWQ27Kuwr6DkI61+uSsbYeJsaOWDhjxgNdcRpBSHMCOARZzAtaAQGfmdl4Oyu9R9otEgwY5wViPwAUdrl2zDhOQu8IvtOIGFHBZWvSv4i1GPs1nu6PQqfNj5JhCjNCmNQO16aSlB/WkbU1lm42Oxqr29395B12Mxxo0QtDLuTv85la7o9zf82lJqH7JHNpq/z8HKxdG+k8p45/XPil0ZHUt6mIGtBe4QqD546olHBGfID/9g8QyXxBHrVzAYjrfmPp/9M0V3IUo/1iLzYxvsrmy9SZsIV9BGZlUAPxf1Tr3n6nQwHjdencbCC6p5rgZwUGBIS7VqJ525JA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KLHBjZ7VjmMIGrOCz2xXzQaj47Zv4Hp/lcFm0AE597Q=;
- b=NXoyEhA5h/ITaygYgUHZYpdcVfjF+r/iLPmqWdHoaClfooZkYeraflPHviP+doq0MaaruH5229otmixqfjYqv+DJDBKYePFkLCX9s0cP/6eMOq3Tfv9CV/pvMW/Hz+591LfuM01J0PJU9apwGjpMtih1cGrb1ZOnX/7bWGUasdTLZv2xZ0ZIG1LakYr6n/i+3mpzhjaCX3iYkVeOTEKyKZi9aoKyN+Jv64hpyDM4ctwQyPtC7DWvgGo6LbqiQljwHrAdhGPxP8VIxxSE1F8wLTVwi6/HADpzqoYZBhFF8dJuu5ZVbtxsxTptldsQV2prul8V1wWeGkWU0cksyrEHuQ==
+ bh=rDvtXfiSonJWrvYeKqpEJNZKMv4iqF2/w8gfqiAqfTQ=;
+ b=IY+svVhrXZtfq3Gn11W/vnv+F9mU4xRYkTxx8ObhYYMKCvv/eXcXdg25xR6FfKXP/Yn1TcOXrFllr2UsMMRX1IJzWx8kFhZlFxk2fZMoC1xJd8AiEJlivZyzEqJ4cPbIF5WZ4EJw8IVpVkosZfxYaeko5GIPjPl56pUl2T5egAif+ho1KRojZQgZ2TEbsidDOwfkpFf5hdaR/561ZL0X7H4+9izF9OZzhvU8MbrIsAUaLTsyPpVo7d2OGHj5h/tIl5cAU9iHLRZUV8R41TA3ZaCR4LNnX9P5MtBuQmUA4VVIMoGUgCSh0ciY1+4zkQUxPpfqKgF/1LIlxAH6V063CQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SI2PR02MB5490.apcprd02.prod.outlook.com (2603:1096:4:1a1::8) with
+ by SEZPR02MB7537.apcprd02.prod.outlook.com (2603:1096:101:1f7::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Thu, 13 Aug
- 2026 15:50:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 15:50:58 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:26 +0000
+ 15:50:58 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Subject: [PATCH 07/20] hw/arm: imx25_pdk: Store boot info in the board state
-Date: Thu, 13 Aug 2026 23:48:55 +0800
-Message-ID: <20260813154918.996812-8-bin.meng@processmission.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-arm@nongnu.org
+Subject: [PATCH 15/20] hw/arm: omap_sx1: Store boot info in the machine state
+Date: Thu, 13 Aug 2026 23:49:03 +0800
+Message-ID: <20260813154918.996812-16-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
 References: <20260813154918.996812-1-bin.meng@processmission.com>
@@ -63,66 +63,66 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SI2PR02MB5490:EE_
-X-MS-Office365-Filtering-Correlation-Id: e00e72fa-b441-4010-2438-08def952980b
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7537:EE_
+X-MS-Office365-Filtering-Correlation-Id: eb8057cd-0314-4496-ccb5-08def952aad6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: Ra7jt7XZsyofI2Imtzi4dP33PJLiKuWX3/hJMZ5+/WCxbNhmsxHnudmjH54mxZA2oc9tz59Vl6GuabxmnzF7fPYryfDzjwsZRw+LuolEhqsV/f1L3u2bPNy/vfDU22Oa9fqvhziD/nL3dZPccNSv0NlJy3gwLaZwJG/Y5lnEq8s1ijehQzUK5NFr/o0mllNQAm+vHB46C5faTd2HLCmnNM9pi/LfXSdM70pUZAyFOAPl4UWmMKsb7Q/CL2gRZqGKYenuOIhDsfIimWPGA9gMKOTsASGPtdEuVep7wvcxBLFI4Yz8At50EA1uOjFJK+aBlCOWxUCNlo49Pd1iF/qVtT2uX4xwrfTC3GcazyVqKBqdjgYJ+R1/xICX/Z/R33TfmPl90DK7DWR7x3/77j/pr4gKQ43lK0kf0nYzCjB0WsLLDRDQJLN3LC948xgtwS2b2VNtrkxAMnI0StMhMXK3ie9mNlLTU/hoXrJ01Dy3awJy5evVwsxPomoqxgYeTUXS90YKNKQH6IzaS9+kfCv2FjlE8qPF9Nyl20846L9vOn5PPFmjiy3EOH+c/sRya9rBYSP1Ws/r75ZTHW5QoJuD1z6+hVTm2Qilsv6dA9yC0MII9eYm+V/3rNygjcWIa1Px0n+G2cHcINHD0G6tIJxGddjljzKClamSZZj6s4fszV0=
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 2ovVd5SFuVJ81irRjwDmj2VUgwV/X+K1d+Ipj/K2dIkO3XhrhLW65OKwxIE+odjHZ/Nj8E26VU0u1FINjWyeaGrJHFvGYfDY+D8Kz5SPz9PbDNyzWVy4JP139qvZHQLibs3fe/8cbNA50WrETE+vcfrpeCxv/9lJT3t5q8VZPImbYbsXwELtSaAUFwL98QCDduKLykzANyn5AT756rk0kkYCwdCkmCOBgYbw3lxy+S/v17I9seD3c1NMNOxvCu9FAdFTq4uU/lniBQpMPfzGc5ZlFaItkxHJeeL+PaKAAemHHH+kFyxnjOe61s3klIuy2uNmRPcEFiTes+APml8pOaVNS1ZaCedrViXSDbd1XPqbeZPmt/B407rM/v2DWsBx78vim4FxAIG0ABFLWKcI6CHO5aQPd+9HyTCbYlYn6nAYDVFuf51fzTNNMdSPqvtW11KvP8LULI7pf309NpodV1oV/ertA2MxGbrczerTQOvCskkoYZ4bQC59s1SNuIt1Ylcl0znyONK4ezBn5I4VlOcxdSphHLGSA2tIsQfIROQT28fbLN6KdLvDyrTR+TE4fGLnV8FQmmqzq7ZcodoJ/t1q4VhNQ/TFUaxBbehwzCnAlq93yZNwhc4pWhbDG0m7jU5f/a7cTUVR3425RCa/PidK8F/oZWwj62jvbzOHJ5g=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zrWlJNRugLoPiLaL3yfKOqelMzJLzXSe3jCSOWJBltgqIzlvq8u20ECv9s21?=
- =?us-ascii?Q?PPpXJLwmR9vLpckKZkGumtzIQgj3I4JABuTxkmekg1XduXZaK6S0bGBigEBY?=
- =?us-ascii?Q?6ft4CHNOdpHsmwytg8rf7IaHiuQy4cMZtbG4tDRIVKTohY2FbBo/+OUwnY9X?=
- =?us-ascii?Q?2KEU1TFBTiG3haF2XGn8ofwvYEfHhW1WWQ7kSI96fFqS7oNZ7g5Xj1rmwK+l?=
- =?us-ascii?Q?b58NIX3vIFaH8D1UW5YP15kgLEkKsV9xKoH9S+bmsnJcAUjjZsAj1CjsHe7I?=
- =?us-ascii?Q?IT3+ozT8V1qFXlRFSTz9uMSXScV+kKdT0QXAgo9IEBpUDd6+bn0k3+5h9Sc6?=
- =?us-ascii?Q?d28Zwc9XyvTWHKGBMnHRFdVZVOS5BroLECQXBuFWCQJTVBU69FrBTsSu7WR+?=
- =?us-ascii?Q?M51SykdapPt7bUwBEl3b6iKpWOpJSjI8gwXzs6QvVj3LkoMbhCihQSG/9uuW?=
- =?us-ascii?Q?G78GkqAHkWotr5eHp+eXkZnfT5crQ5VRsZu0y9oexTDlIqYGV56dofyO8zZ1?=
- =?us-ascii?Q?Y+dljygpKyeUEhT9J8+Eg49BYIJ0ZqGFaEBfom14DFcnLiOB1tZdQnyQLCpo?=
- =?us-ascii?Q?xk3vuweXM0nzlz5I2bQLfA3Zk08ceSdqdM2wWMoRB93Q41GYp0X/rvtyJbqz?=
- =?us-ascii?Q?cyynUke1C6GszWuAPeYXN3nO4e8HhziQFJhHVKP5VIZVSQJHE8FtYTfDfJfm?=
- =?us-ascii?Q?fTIydsCJA8KV8llhMlspn0j2mTciGZt2HfGkJLqGYpgJSJNvkY0Kbxw2NJ4z?=
- =?us-ascii?Q?+prqBwAR6SBPIpKcfa68MuZxrghvGFLwRFQ3LAShgMA9tlCenitfSbEgcjby?=
- =?us-ascii?Q?uSuOO4K75NbdWmskYiHoVFilDJlSm1mk4fas4t9B7n/CYDg4TOW9cyK4EWbU?=
- =?us-ascii?Q?jysn0z4tuoLtQPuCrJK7rJyhzBuj/WivSUyyCfwhvQApBOA5rf7MaAilqNE2?=
- =?us-ascii?Q?/dtQhmbYuYWyC1r6x/owsPe/xO2HQv3vrAArdP3X47iQsi5FxB4YeIhfzdmo?=
- =?us-ascii?Q?JvVWibEQsaUOV4La1gscAcTDwFMgOHhk5QPglwzl+d37ABkNdUJGrKXIrsp6?=
- =?us-ascii?Q?FcrDPR6NUUPD2iGVNpCRZCNUFDwmo0zHW0YQdLEqmxFu2kLr0FahGg4Qe9Cp?=
- =?us-ascii?Q?OSg54gJ+jYg2gNY5F0jvnNndVqhOlDGXxbgfmB5lM+XFX8rmNjZwHVWEM2Vj?=
- =?us-ascii?Q?GUyPoAYnelNcfCZNC0F9f072OfA5XqDCdA+ONi1/mDtlBFY5F/L55vB4hzV+?=
- =?us-ascii?Q?bfgrz7/bF3fTlJSrNeiuwbsI9JjnZWGW4MvoI0zGc8rvnvViCeqF53Cn+eam?=
- =?us-ascii?Q?nsrjwCh3svnwLTONZ+fMsanLkNEJOyq8IvE1j3wvfeYfIJMheKxuQyTK6kdj?=
- =?us-ascii?Q?QxrdJd15ofPVkJDfOXUQXGstrZQxdg3yacI2+v0+orzmHESI4QKM5o6xLQKg?=
- =?us-ascii?Q?fdUHTM6Slwl19ekxy32WMXomUVPWZ1uvsX4l65ya2AyDpR2smF+re7PNtDKL?=
- =?us-ascii?Q?lB2nsSdB3+xV9PsU8UNj9x33TLOaJxZ1NsbkyL9HjRQrEcalw6f28qSLfvLl?=
- =?us-ascii?Q?isDKhwrpw/RQmOaFL1GsiojBTNzcafpEokHLBm18wiPa0PehoCfRtPbk67UW?=
- =?us-ascii?Q?EBxWHkecAGQsWMi9rlQK2XbIaZLz5MvMYB6r2LHvJzN3Wa4xWV56hL9O0dCR?=
- =?us-ascii?Q?ALoRH950QLwrJ/tCRO9/QQZnOpCdXJB3JiV8xIWWE2tbtsfrJVCqjJUYujH8?=
- =?us-ascii?Q?NNALr//mLb7T0ahIW5zI4dni4w8e/rk=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?nYXE279NHTiI1C8cxgngTgbIVZb63EJpDg6LETK49htejhs1C8NKfBplbM9J?=
+ =?us-ascii?Q?5u0JB0YHMSfO80Vl5rbEmlRcTBO9Ox+L9JZn5BmbOhJVrHy6bjr5kPKKJv3U?=
+ =?us-ascii?Q?9BWaQJMebeTDtYSNiC5YNpySqJKC5NZcPHJoLgZHXmP3lhaKdOTraR+2neI+?=
+ =?us-ascii?Q?OBbYGhlt7dwy8qRNNvNEH1QME1iPDDEBCD8WTgOT2QXv0K0l+5UMG3ysv5C+?=
+ =?us-ascii?Q?mqswTVYVLxfvDcmFoJvzqZFT/IXQopZhYA/eCzPIhl36Ht781myztpPB0BXB?=
+ =?us-ascii?Q?dyU/mtcTbJvYY3JqoOl+cXBldv4y7iWXdaNgzEseG2PgmxTxSTB+Fcf8CYPp?=
+ =?us-ascii?Q?gew5tyd4cjpLvHL/Ae82dRzRBLzrIgdVlClhIdI2ttJIrpGwp1yfkmpVtT3p?=
+ =?us-ascii?Q?SiNtCyHCqhDTbZ705PhODi0SPs9mYugu5Av3NOeF/ciu+5dIFyLFj9SeShev?=
+ =?us-ascii?Q?1eDzOMN8eyHYlwMe81r8xrHEPMuAFKaDXa6T4/ZU8lLAKKERgMRztgxflK73?=
+ =?us-ascii?Q?Xj5lPRgbRfXm8BnyPcYfzSvPC8jfZJAfN6QXCOVvXLfZtw5nB0dkDFKLmx4d?=
+ =?us-ascii?Q?biMwSJO0CmfpEg+K2Vbiv+8DlhB8eAvuGPYr938CIUdSZbtbvQ1ydI/+FikO?=
+ =?us-ascii?Q?3+wDs5n7rGNP7Okrue8RUui4xkUDaf1FxPDnSHybqxvn0KYbTZahWtKTf7qH?=
+ =?us-ascii?Q?kdrX/z6iHNZXN5UZTeUX4Ogdfn+uH69hMSWEi84xStY7hbcEv9PHrBajx02w?=
+ =?us-ascii?Q?+O/tT8AeyFbrE9nBZq59B1gIvPrjzIcoRXe6t6Ye/49n3MxMRvZ33pM9Lj5x?=
+ =?us-ascii?Q?A8XYpnFkFqZLHeebaXEdc/9k+dMlZQs5HS21GkoCmdC1EeoatxjLJ2lr72PK?=
+ =?us-ascii?Q?j9y1oQztw4AB/siK6qrMtgXI+dOVqQY4FHpymrpnnSCu/3TFXxRo5ci9CTlq?=
+ =?us-ascii?Q?iBmfTFf5s38taUmd38m4yTTNTpYlw9gLyguHs4yD1LaxmsA45UmwuxohRw1f?=
+ =?us-ascii?Q?ZUpiDOo+fx+0P9q1+mRnj6jVykAWaRjrYXNM5EZbemcPGJE+1Lvjxgfq/SV8?=
+ =?us-ascii?Q?SruTHpRL2+MRMqadu+eo3qRs5+OD5bjPfLcjORDr6QPV84qRv6cvadGmIcHw?=
+ =?us-ascii?Q?2vxsphGMm0PbtEJ/IkGNnXUH0TW4KMX6z66RXo2BmUZkrUIbpQtHkLEX/BUR?=
+ =?us-ascii?Q?FMduX2M0UAUIx0KxxyTzCzh3XtGv5aXMoWoj6z7GMDG02V7Z1VvJ9TeEOCif?=
+ =?us-ascii?Q?KhmVxEAwUfac4GI9blhQEF9DGnX22P4ujTrW4eiAU0p68IlIi88NnpgeRfrH?=
+ =?us-ascii?Q?+meDUc7whdAf/v3ApuPOJjWTk2tB8NHH6wIVbKxo2/IsI+8O0u4f2LV4Y+P+?=
+ =?us-ascii?Q?HSJ+WbGH8UjLEKxL5uKJuch2H4tebA/zOQ89PB9fSW0ppqOkj8Rhzwe1nhpf?=
+ =?us-ascii?Q?XS0StV6t1XGG0PqY527XeoTXutTfxa2WwRFF/AetwX5+lAwA+KxC49P84yHg?=
+ =?us-ascii?Q?OkgZRH87qn6+cM/0tN0I1m6hrPuteZIub8PvvDwYc25kLbmv8z7PUelearuC?=
+ =?us-ascii?Q?iURhgTj8gSMHe9aDM2O64v+8/ZwMGsitR1NR0mqwmZjiENZHvT5oeuRJrSGZ?=
+ =?us-ascii?Q?uaaXUBB/qEafcum2YicM4n+mLlssCLe1WTNd+Vu9EisLgDHJJuzSQhZ38RYI?=
+ =?us-ascii?Q?1AOuqPgjqYanQP4iFbmpUl8RUYkJ10qzoMPBTBV07G8EYNLXbaTEYDIQOVLS?=
+ =?us-ascii?Q?lykJS9nIuXPgXXsMZvDF9PZ8a2kYw7g=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e00e72fa-b441-4010-2438-08def952980b
+X-MS-Exchange-CrossTenant-Network-Message-Id: eb8057cd-0314-4496-ccb5-08def952aad6
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:26.7542 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:58.2950 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TziZANaaMhuTXqZ1vMwxWsGylOpGIrwLQe5NTq30raYGAKwSXEYzvU8C2Caz4vKynArdvBr/D0oDfcLfWshaCAzvAlrvdDLGfh0Ht+rk5yY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR02MB5490
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: ISFtEMwVU5cDmJYVZ86d79tW2tuuy/2jOvyKhmb6mlC3MBIxw1twUXaEUC1e8YEvWQefMFOqT/vK1YDKPeqWCf1oyRALrn1O7niBaf17OXU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7537
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,8 +143,8 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-The IMX25PDK struct is already allocated per machine instance, so
-move the boot info there.
+Give both the sx1 and sx1-v1 machine types the same Sx1MachineState
+instance struct and store the boot info there.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -155,46 +155,64 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/imx25_pdk.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ hw/arm/omap_sx1.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/imx25_pdk.c b/hw/arm/imx25_pdk.c
-index 7ebd6c8eb9..f7a51481af 100644
---- a/hw/arm/imx25_pdk.c
-+++ b/hw/arm/imx25_pdk.c
-@@ -61,10 +61,9 @@
- typedef struct IMX25PDK {
-     FslIMX25State soc;
-     MemoryRegion ram_alias;
+diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
+index bcb7105323..d60b5cf392 100644
+--- a/hw/arm/omap_sx1.c
++++ b/hw/arm/omap_sx1.c
+@@ -91,14 +91,16 @@ static const MemoryRegionOps static_ops = {
+ #define FLASH1_SIZE     (8 * MiB)
+ #define FLASH2_SIZE     (32 * MiB)
+ 
+-static struct arm_boot_info sx1_binfo = {
+-    .loader_start = OMAP_EMIFF_BASE,
+-    .ram_size = SDRAM_SIZE,
+-    .board_id = 0x265,
+-};
++typedef struct Sx1MachineState {
++    MachineState parent;
++
 +    struct arm_boot_info bootinfo;
- } IMX25PDK;
++} Sx1MachineState;
  
--static struct arm_boot_info imx25_pdk_binfo;
--
- static void imx25_pdk_init(MachineState *machine)
+ static void sx1_init(MachineState *machine, const int version)
  {
-     IMX25PDK *s = g_new0(IMX25PDK, 1);
-@@ -114,9 +113,9 @@ static void imx25_pdk_init(MachineState *machine)
-         alias_offset += ram[i].size;
++    /* Both sx1 and sx1-v1 embed the same state as their first member */
++    Sx1MachineState *sms = (Sx1MachineState *)machine;
+     struct omap_mpu_state_s *mpu;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     MemoryRegion *address_space = get_system_memory();
+@@ -187,7 +189,12 @@ static void sx1_init(MachineState *machine, const int version)
      }
  
--    imx25_pdk_binfo.ram_size = machine->ram_size;
--    imx25_pdk_binfo.loader_start = FSL_IMX25_SDRAM0_ADDR;
--    imx25_pdk_binfo.board_id = 1771;
-+    s->bootinfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = FSL_IMX25_SDRAM0_ADDR;
-+    s->bootinfo.board_id = 1771;
+     /* Load the kernel.  */
+-    arm_load_kernel(mpu->cpu, machine, &sx1_binfo);
++    sms->bootinfo = (struct arm_boot_info) {
++        .loader_start = OMAP_EMIFF_BASE,
++        .ram_size = SDRAM_SIZE,
++        .board_id = 0x265,
++    };
++    arm_load_kernel(mpu->cpu, machine, &sms->bootinfo);
  
-     for (i = 0; i < FSL_IMX25_NUM_ESDHCS; i++) {
-         BusState *bus;
-@@ -138,7 +137,7 @@ static void imx25_pdk_init(MachineState *machine)
-      * fail.
-      */
-     if (!qtest_enabled()) {
--        arm_load_kernel(&s->soc.cpu, machine, &imx25_pdk_binfo);
-+        arm_load_kernel(&s->soc.cpu, machine, &s->bootinfo);
-     }
- }
+     /* TODO: fix next line */
+     //~ qemu_console_resize(ds, 640, 480);
+@@ -220,6 +227,7 @@ static const TypeInfo sx1_machine_v2_type = {
+     .name = MACHINE_TYPE_NAME("sx1"),
+     .parent = TYPE_MACHINE,
+     .class_init = sx1_machine_v2_class_init,
++    .instance_size = sizeof(Sx1MachineState),
+     .interfaces = arm_machine_interfaces,
+ };
+ 
+@@ -240,6 +248,7 @@ static const TypeInfo sx1_machine_v1_type = {
+     .name = MACHINE_TYPE_NAME("sx1-v1"),
+     .parent = TYPE_MACHINE,
+     .class_init = sx1_machine_v1_class_init,
++    .instance_size = sizeof(Sx1MachineState),
+     .interfaces = arm_machine_interfaces,
+ };
  
 -- 
 2.53.0
