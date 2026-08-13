@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B9EC5DF67
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991CDC5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuVAb-0006YA-Q4; Thu, 13 Aug 2026 09:08:29 -0400
+	id 1wuVA2-0006OE-S5; Thu, 13 Aug 2026 09:07:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuVAa-0006TF-1Q; Thu, 13 Aug 2026 09:08:28 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ id 1wuV9u-0006Ks-F4; Thu, 13 Aug 2026 09:07:47 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuVAT-0005RY-WA; Thu, 13 Aug 2026 09:08:27 -0400
+ id 1wuV9s-0005Hc-RX; Thu, 13 Aug 2026 09:07:46 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nbQQpN+cQPBNwmk/0aSryqlNOCHl1BFkQlSP9Los4mC9PxNyZvUnwaqZDAFodZQAGKqMTqj8hyw5uTvQMg7xDqThNaBLY+zH0NGhAfYLrDyWYJvVrkh9emUwVBqNikgLS/bVpUGXvvf3xniS179/t9AkS9N8Sr+I+i6bnOLTXXejU61cv1s1k3P1v3dew4pFEDjjfEnzhjsXrLw0p6WXC2ysalnQBJZiAr//N2UYzmvhykTDvkWhujMuCvWlsQLNFMVRZjQe0Ljy9qwWjrkaMiOwK5UHHQPOlsU+g74DwegnA7CWz2MtORYKcGXMtwdCNktKpiNiHeqIOVdFR8oGhA==
+ b=Vg6UK8fUO3BGj3c5q5jslObeMAgFWntfQkKZhnX11gsDajsB7ZIZiZWZDZiW6o7Gy11+as7uxxJqpLFHlqFtFpk5AH29/debLLQL1IcqLmr4M0s9Nj0FWsB6+ufqabixtk9fLHi9k/B4MSuc1AI+LLgThl+WtPGvVP9yroMzsYqsrwaaUzZ35WgJUGYlr7jNgtoDCdkVJ6S+sOz1RZu/x7l9ExvCzDcuRmvGcEFQ2BwPtvH64CwMlsqLnXoERQZ39mHsD7uOlZIjZSALeepT47gmeb8d6NRP+rfeVQycmpWbmLVdCYGzx3Juz5rhoRBG/vOaVJ/ayqgDHHPJ2prWLA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3oe7bwLG7Hmc6CmtwNCZPDQP3gsR+F8rNeoLXuBB59Q=;
- b=tG+aWKnS3tfwXRpmTv8BwhJLxmGjB9/NLrJD9sm6nVuPg3LpFmkitZuaIwvZdzxdWuMRzUZ+YiHPF6DMSS6jOVFU2w34PH1dMrqNVQiiV4+xTPUnhrcLSVQ2hWHwf5SbBBCz70D+mYgWTL0IiBzjc/XhFsUPI2coJOaZKnLsLnKPxJ8tEXz/kXpiRb2QKd2YRg3h18dEeZQB80X/mALHJADAhliVzdIpqzuEeEYP7Wdy/1WZoJFBkAomGIjdbIORlyGAp62bUXYIIKHrvxzpmrEPDVxlBsOK0ZYNRb3diOvmvl6c0n5gfV8xy445hSYEpRK2GZRbylJ32KLR+2Dlsw==
+ bh=4I/ClDKmMU8jHsRzY5L/WmC6q5lyry5DadmczCJuW+Y=;
+ b=K2pXbAkQssCcuiXmWti2jn6q6LC3xNb20cZg2uLwZR5Nkbju1LnrIW4cf7oxz6akxrXoXV9PgUL7vOZlBReHC9HCUslu9H5AJvxFuprg8wL5Hi6PQ9G3FHQZru/PI9f0JAEAL/YglOtmib8cSSov1CJBxRxiDXUZVa3j/KFbh7AEDmhGwwF/CDl37kCwVY5ThHpS1o6KBweC4leVMn41f7czAGDZqp5zSqq12d1H0JA3LmpJY3GI3j6zgIMoATvugETGzNV7r/k9ubQvVb9Cw+TaOBbOw0o7KCvV1Z+/c9lzY69P8NZZPFD11Lwuoy9tTESu3mzLalNuuI7HIMwIlQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3oe7bwLG7Hmc6CmtwNCZPDQP3gsR+F8rNeoLXuBB59Q=;
- b=fpWJSEvBiKVCNsLaJ7+xVqaDMIYScWxKYWlKMA6M7wympQZnFMiggCr44w4RK9vIqF5EDLGrMHOs/teUX9KBYi6ZNUV8vIDWHirCcYexmoUt4tDPHD7Qo/O3G848NcDFkIlnrsvgsYWuIcwgmrc1KPTDwSr6qfK+eAxf/oCFuiqxyo+PY9Vu4LKZUMn8V9UD9Dx4z0uSDoNmVbUbvtJhdPoLVInkWlTg3B9bpSciywBsItdr+IWlt8Sxezuk/x3eVmVJ/CcPNtMRXzx/7ymZ1JFy9KwUpp6Z/SMU5tPnvPX4IQV0fg5mDNTaKdrLfYR6xtueoApvfP8MMvy/Ypnvkg==
-Received: from SJ0PR12MB6735.namprd12.prod.outlook.com (2603:10b6:a03:479::8)
- by PH7PR12MB7427.namprd12.prod.outlook.com (2603:10b6:510:202::21)
+ bh=4I/ClDKmMU8jHsRzY5L/WmC6q5lyry5DadmczCJuW+Y=;
+ b=lKJhKQo0gTGw/NKOoz0DPZs/zaq9iruN3pMVzF9WMwsII8E+v0Ckf7rU5v+GlFfPNH9omWl2r21HjaSAAIiOUP7IhnZbuPLQFYh4GP86vHQm1ZyUL5T4xKfk/HO/aVweTplCpgM94/xd5bfD7eNPxjRdcE/cDg4hQBAHYihJf75COCp10UF3n7jNNdsLLGgz5s2/xHP0cIoyPRXuWRwCY3ADVBKztyNtpEoLd92ger2fiozMMrk7WhProTsWnICbrhAigsJP4EqP8Jq95UKacSuNSArsIeuhmY3qMAtgqEykb7wWo5axVb3ExBvwes/eZ7XsbGYHfv5X4pDIMFy6iQ==
+Received: from MW6PR12MB7087.namprd12.prod.outlook.com (2603:10b6:303:238::14)
+ by PH7PR12MB9175.namprd12.prod.outlook.com (2603:10b6:510:2e6::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
- 2026 13:08:08 +0000
-Received: from SJ0PR13CA0115.namprd13.prod.outlook.com (2603:10b6:a03:2c5::30)
- by SJ0PR12MB6735.namprd12.prod.outlook.com (2603:10b6:a03:479::8)
+ 2026 13:07:34 +0000
+Received: from BN9PR03CA0621.namprd03.prod.outlook.com (2603:10b6:408:106::26)
+ by MW6PR12MB7087.namprd12.prod.outlook.com (2603:10b6:303:238::14)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Thu, 13 Aug
- 2026 13:07:56 +0000
-Received: from CO1PEPF00012E7F.namprd03.prod.outlook.com
- (2603:10b6:a03:2c5:cafe::1b) by SJ0PR13CA0115.outlook.office365.com
- (2603:10b6:a03:2c5::30) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.3 via Frontend Transport; Thu, 13
- Aug 2026 13:07:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 13:07:33 +0000
+Received: from BN2PEPF000044A0.namprd02.prod.outlook.com
+ (2603:10b6:408:106:cafe::39) by BN9PR03CA0621.outlook.office365.com
+ (2603:10b6:408:106::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.14 via Frontend Transport; Thu,
+ 13 Aug 2026 13:07:33 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF00012E7F.mail.protection.outlook.com (10.167.249.54) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN2PEPF000044A0.mail.protection.outlook.com (10.167.243.151) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.339.3 via Frontend Transport; Thu, 13 Aug 2026 13:07:55 +0000
+ 15.21.339.3 via Frontend Transport; Thu, 13 Aug 2026 13:07:32 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 13 Aug
- 2026 06:07:30 -0700
+ 2026 06:07:08 -0700
 Received: from nvidia-4028GR-scsim.nvidia.com (10.126.230.37) by
  rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 13 Aug 2026 06:07:21 -0700
+ 15.2.2562.20; Thu, 13 Aug 2026 06:07:02 -0700
 From: <mhonap@nvidia.com>
 To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
  <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
@@ -78,10 +78,10 @@ To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
  <richard.henderson@linaro.org>, <clg@redhat.com>, <cohuck@redhat.com>
 CC: <kjaju@nvidia.com>, <vsethi@nvidia.com>, <zhiw@nvidia.com>,
  <mhonap@nvidia.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-Subject: [PATCH 07/10] hw/vfio/pci: Map the CXL memory on the guest decoder
- commit
-Date: Thu, 13 Aug 2026 18:36:20 +0530
-Message-ID: <20260813130623.2499506-8-mhonap@nvidia.com>
+Subject: [PATCH 04/10] hw/vfio/pci: Enforce the passthrough topology for a CXL
+ device
+Date: Thu, 13 Aug 2026 18:36:17 +0530
+Message-ID: <20260813130623.2499506-5-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260813130623.2499506-1-mhonap@nvidia.com>
 References: <20260813130623.2499506-1-mhonap@nvidia.com>
@@ -93,32 +93,32 @@ X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7F:EE_|SJ0PR12MB6735:EE_|PH7PR12MB7427:EE_
-X-MS-Office365-Filtering-Correlation-Id: 661adbe3-0852-4767-21a6-08def93be439
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A0:EE_|MW6PR12MB7087:EE_|PH7PR12MB9175:EE_
+X-MS-Office365-Filtering-Correlation-Id: caf7d344-5450-4848-bc7c-08def93bd672
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|376014|7416014|82310400026|1800799024|23010399003|18002099003|22082099003|56012099006|11063799006|6133799003|10067099003|921020;
-X-Microsoft-Antispam-Message-Info: O1hPUerq9o8DX+6GBQ1eQWFJoF0dEZMz6cSSPa1AuPoHSUK6nHKCmEauyiveCAji8tj+/J1YXPWemWCUHi1ObP2jbxFICjvK+jcB/H/j/wbLC19R2XI9yrx5xVoovJCz4XYVPTbMjuZy0oKbCQicIf3M+f63nAAVMekEj7iLERpD0HQkIYig1VLfjJFX8lMdt/ym2qIXLtB/ETo2ju/nq7UUj+BBrYP80GtbIL/sbRXwlnM5qSK0KOR2Gqk0jxjiwfkrvM2qCrbbtTGXcBJ9bmxBo0E42As/xrf4lz7iWo3rinE37R+Xff7kaL0dbNP7ktPMKbhGr76fZkuTyAUis3yWtifgcEd/4+g+sxxJedGeJxSskONyBGkZkNS+rnnTvDWdFVU+9RAjiHbq92aJIuqkkx5kHItXBEdCTSn0AsFCxXBYKorJTFWOVlQ2xiBgqn5uxpt7aWEp5GxRT/3qWTyGDuGApRCCTOcS9fQLnM0i2sjpSq4K6+7CW5z+gVe1SWlj+qhTzsQ8xfX1zhI1pRvb7toWthdCXTevvX7vUp9SE2xXeCF49jgl7fby6eoeUbkgpfj9yUm/WNDXJcVIbHhSeR5UxKJCyI0ceDJ2gBCxmnFbTKtvuPrgJxOYd6SMtsc7BYaAYQletEdHOzv4L4ke+2Z8zf2RUMcwXUG7eUIFJe48aUpqV0WrVZ+Zl9oTRYm/HgDFupgHTLYAllId9A6XKB0PuzVgV7TB76IUXJ8p6FHUV9qivkfFL1r8F3II
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700016)(376014)(7416014)(82310400026)(1800799024)(23010399003)(18002099003)(22082099003)(56012099006)(11063799006)(6133799003)(10067099003)(921020);
+ ARA:13230040|376014|7416014|1800799024|82310400026|23010399003|36860700016|18002099003|22082099003|56012099006|11063799006|10067099003|921020;
+X-Microsoft-Antispam-Message-Info: T7Sihn1kDBzg4gSEdiL5T3mMTpB4UojJ4cnA6alZr+6b4lti7nGjs1o98bAdjASGZ/RttMBcrikyzj/1qfC4aMhGsg61nnDyozA6CT3PSPPMUXaTrp7Z9Po1HJuthZZh1q9FOhPiITv2IECfoWGcSEY4RkgD3kF57zUtZEZUGFknI/8qtETFejUUUm6UFXjcRT54tOkd7NbNHTl0HMNNeonHj+MVgDX2wKdCiug8ioi09i6M8U6KqW03Wb1y9UjCjL+6z3fUIE+zuB58wdbrCpxjsFZDGdyYlPH/XcKeYPX4jPAKKjfNT0XVQ5jOgcvff3QD2XPXisHv6L8MLsOML7ltjhGfY23fr/v0YUzqhzEbKewQyoO7TKj4AXdTN1gwBcdAqLQKHYtK7K9LCRzRY0SHSJp6LMxkGaWbsUHHFz/Q05hypVNxdJPLah72Mz4A0YvgP2L3Qy5n3MrHQbHe787zEWuQQitEScEe0SN6AtxnnEUjaoG99w+Jg7U7QuCfX6ARQhI4hFRqz+hM2wFU7pNLV//+CjNzxb2EHm5F3gV3rKp/jcGq1ERwycqn4bPPXVJhCBzqv3aKg6bGpi8OS15RQjOFgouk5YbxjS81pdbNKEy8lcL53Lt8PIVkYAOvPTlRkD+4Ht3uCMzo66iiBJMRn1d/YGwJIxWW8POFc/KpA4zUAhFZCkNNCYa8fhCRqH+MwU4o0Zns9JaQkmb3MCkrND2rmZiE4Rx4Z/A1/LzEW6UN/wy619w4taxFX/SK
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(23010399003)(36860700016)(18002099003)(22082099003)(56012099006)(11063799006)(10067099003)(921020);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: JVtgLUvarCeucQBR8Z0wFQGATKnMr5xReHfCpKsmpvF+mbFtJHc1Lka0vd5IEZyTGfW77XD9B8ytsf/IN1rbBnnQ+hVn2R0m2xqH2xHb7owzOSl11XkXEEeZ3EPbW6rsc01WKIe4f0o812GpyyZSvBuSK+RAYuTTNluwMgwOX2qDdEVIqramZpDRNvkKxHrScIApcBt/Gds2qGRZ8PAghJT60OPFSRJBBlHOrKceqlPVLkZbsZczZ0VCfJ5Rjg/F/rkUi3T+YPwO+0Ujmi5EOM3wwrliHilAOmX/he27JB12vtJdNAsj1QTiH8EPgr0NVycCztiwoc5gZDpeLOt6oEca+juvRRI0DdRQV8tdIPFnAg1cHUELyVQFYE7WwQvk0wEwVmhtPXN1dQfwVxb+U2N2Kqg6GTDR6YAltZw1snmt6R9SM7D9DllS6T15fkdU
+X-MS-Exchange-AntiSpam-MessageData-0: E4izKhoUi8WCpJfvENeTOUUAaGoGpFrMBPC8P+oFITwOmWr0+5gOXue8jPO//MtQBxzVKNv6RtCRNnj3G0Fa0/bRbuoMJdZe/SdDYQo8jD0YMI6rD0/MAknDY/yDpBA7FcuOIJITvnLRlAvQOlLlu36f/IcmTSJCL74hKrMwMvtpAucI2hGLuYCkJYK6dSnEwk0zu0+Q0/EbDs2pYJ08P4YIl+XM9/ydN368VwBoP7zCQfDmZRdWZZztYTbHlM+gSf9Y/7i9XgC+woOr+iO6MpFv07PGE/2iWYrp8mkGbsoGGqvY06SmydVbsQ0aqXZj2ceDPhaZMKLkhFHnxDt411z4xHSmptbrl0nuzwH2aEUeVh8/9uEg5N/3iun+Nn2RrF//4BlsbI62aP3tko7eWaxtmqECPbRr3sU7ROyYWObqmpoBOXJqwt/YTXec5VW8
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 13:07:55.9089 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 661adbe3-0852-4767-21a6-08def93be439
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 13:07:32.7516 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: caf7d344-5450-4848-bc7c-08def93bd672
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E7F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A0.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7427
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9175
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
  envelope-from=mhonap@nvidia.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
 X-Spam_bar: --
@@ -142,482 +142,126 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manish Honap <mhonap@nvidia.com>
 
-Overlay the trapped HDM decoder block over the component BAR and forward
-its accesses to the kernel, which runs the lock-on-commit FSM. This
-hardware presents a firmware-fixed decoder, so QEMU does not honor the
-base the guest programmed: when a decoder is committed, QEMU maps the HDM
-memory at the base of the device's CFMWS window and presents that same
-base back to the guest through the trapped decoder read, so the guest
-works purely in GPA and never sees the host physical base. A decommit
-removes the mapping.
-
-Overlap the CFMWS window MemoryRegion the CXL host bridge maps at that
-base, at a higher priority, so precedence is defined by priority rather
-than subregion insertion order.
-
-The trapped component region and its err: cleanup exist here, so this is
-also where a hotplugged device is bound: validate the CFMWS from realize
-and report through errp, so a bad device_add fails cleanly instead of
-aborting the running VM. A cold-plugged device is still validated from
-the machine-init-done notifier.
+Only the guest's endpoint HDM decoder is programmed by the guest; the
+decoders above it are covered only while the pxb-cxl host bridge stays in
+passthrough mode. Reject a switch in the path, or a host bridge taken out
+of passthrough, at realize before any mapping exists. The topology walk
+lives in one helper so switch support later relaxes it in one place.
 
 Signed-off-by: Manish Honap <mhonap@nvidia.com>
 ---
- hw/vfio/pci.c | 371 ++++++++++++++++++++++++++++++++++++++++++++++++--
- hw/vfio/pci.h |   5 +
- 2 files changed, 368 insertions(+), 8 deletions(-)
+ hw/vfio/pci.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
 
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index bf6f36d514..dac3011739 100644
+index 157786df72..1f21da9513 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -1453,6 +1453,39 @@ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
-     return val;
- }
- 
-+static void vfio_cxl_decoder_changed(VFIOPCIDevice *vdev);
-+static void vfio_cxl_unmap_mem(VFIOPCIDevice *vdev);
-+
-+/*
-+ * Return true if this config write sets a Function Level Reset bit the kernel
-+ * acts on: the PCIe Device Control FLR bit or the Advanced Features FLR bit.
-+ * FLR bits are write-1-to-trigger and self-clearing, so inspect the written
-+ * value rather than the post-write config.
-+ */
-+static bool vfio_cxl_flr_write(VFIOPCIDevice *vdev, uint32_t addr,
-+                               uint32_t val, int len)
-+{
-+    PCIDevice *pdev = &vdev->parent_obj;
-+    uint32_t off;
-+
-+    if (pdev->exp.exp_cap) {
-+        /* PCI_EXP_DEVCTL_BCR_FLR (bit 15) is the high byte of Device Ctrl. */
-+        off = pdev->exp.exp_cap + PCI_EXP_DEVCTL + 1;
-+        if (off >= addr && off < addr + len &&
-+            ((val >> (8 * (off - addr))) & (PCI_EXP_DEVCTL_BCR_FLR >> 8))) {
-+            return true;
-+        }
-+    }
-+    if (vdev->cxl.af_offset) {
-+        off = vdev->cxl.af_offset + PCI_AF_CTRL;
-+        if (off >= addr && off < addr + len &&
-+            ((val >> (8 * (off - addr))) & PCI_AF_CTRL_FLR)) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
- void vfio_pci_write_config(PCIDevice *pdev,
-                            uint32_t addr, uint32_t val, int len)
- {
-@@ -1522,9 +1555,74 @@ void vfio_pci_write_config(PCIDevice *pdev,
-                 vfio_sub_page_bar_update_mapping(pdev, bar);
-             }
-         }
-+
-+        /*
-+         * A firmware-committed CXL decoder is already committed at boot, so no
-+         * guest control write triggers the HDM mapping. Map it once the guest
-+         * enables memory decoding, so the region enters the guest address space
-+         * and the IOAS while the device is live. On a clear of memory decoding,
-+         * withdraw the overlay: the kernel revokes the HDM PTEs on the same
-+         * write, so a retained memslot would fault a guest access during the
-+         * disabled interval onto a zapped VMA and stop the VM; the enable path
-+         * re-maps it.
-+         */
-+        if (vdev->cxl.enabled &&
-+            range_covers_byte(addr, len, PCI_COMMAND)) {
-+            if (pci_get_word(pdev->config + PCI_COMMAND) & PCI_COMMAND_MEMORY) {
-+                vfio_cxl_decoder_changed(vdev);
-+            } else {
-+                vfio_cxl_unmap_mem(vdev);
-+            }
-+        }
-     } else {
-         /* Write everything to QEMU to keep emulated bits correct */
-         pci_default_write_config(pdev, addr, val, len);
-+
-+        /*
-+         * A guest CXL reset is a write to the CXL Device DVSEC ctrl2 register,
-+         * forwarded to the kernel above, which re-commits this firmware-fixed
-+         * decoder. If the guest decommitted the decoder before the reset, which
-+         * unmapped the HDM memory, that re-commit is not otherwise visible to
-+         * QEMU, so rescan the decoder here to restore the mapping. Gated on
-+         * memory decoding still being enabled, like the enable path above.
-+         */
-+        if (vdev->cxl.enabled && vdev->cxl.dvsec_offset &&
-+            ranges_overlap(addr, len,
-+                           vdev->cxl.dvsec_offset +
-+                               offsetof(CXLDVSECDevice, ctrl2),
-+                           sizeof_field(CXLDVSECDevice, ctrl2)) &&
-+            (pci_get_word(pdev->config + PCI_COMMAND) & PCI_COMMAND_MEMORY)) {
-+            vfio_cxl_decoder_changed(vdev);
-+        }
-+
-+        /*
-+         * A NoSoftRst- device the guest cycles D3hot->D0 has its physical
-+         * decoder restored by the kernel on resume, which re-commits this
-+         * firmware-fixed decoder just like a reset. That re-commit is not
-+         * otherwise visible to QEMU, so on the transition back to D0 rescan
-+         * the decoder to restore a mapping the guest dropped before it
-+         * suspended. Gated on memory decoding, like the paths above.
-+         */
-+        if (vdev->cxl.enabled && pdev->pm_cap &&
-+            range_covers_byte(addr, len, pdev->pm_cap + PCI_PM_CTRL) &&
-+            (pci_get_word(pdev->config + pdev->pm_cap + PCI_PM_CTRL) &
-+             PCI_PM_CTRL_STATE_MASK) == 0 &&
-+            (pci_get_word(pdev->config + PCI_COMMAND) & PCI_COMMAND_MEMORY)) {
-+            vfio_cxl_decoder_changed(vdev);
-+        }
-+
-+        /*
-+         * A Function Level Reset the guest triggers through the PCIe Device
-+         * Control or Advanced Features FLR bit is forwarded to the kernel,
-+         * which re-commits this firmware-fixed decoder just like a CXL reset.
-+         * That re-commit is not otherwise visible to QEMU, so rescan the
-+         * decoder to restore a mapping the guest dropped before the FLR. Gated
-+         * on memory decoding, like the paths above.
-+         */
-+        if (vdev->cxl.enabled && vfio_cxl_flr_write(vdev, addr, val, len) &&
-+            (pci_get_word(pdev->config + PCI_COMMAND) & PCI_COMMAND_MEMORY)) {
-+            vfio_cxl_decoder_changed(vdev);
-+        }
-     }
- }
- 
-@@ -3838,6 +3936,219 @@ static void vfio_cxl_bind_fmws(Notifier *n, void *data)
-     }
+@@ -27,6 +27,7 @@
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pci_bridge.h"
++#include "hw/cxl/cxl.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
+ #include "hw/vfio/vfio-cpr.h"
+@@ -3570,6 +3571,84 @@ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
+     return true;
  }
  
 +/*
-+ * HDM decoder registers, relative to the trapped decoder block. The block holds
-+ * the HDM Decoder Capability register followed by one register set per decoder,
-+ * each VFIO_CXL_HDM_DECODER_STRIDE apart. Index the sets by decoder so
-+ * multi-decoder support is a loop bound rather than a rewrite; this generation
-+ * commits a single decoder.
++ * Walk the endpoint's ancestor bridges up to its pxb-cxl host bridge. A CXL
++ * switch in the path is rejected: the guest would then have to program switch
++ * decoders, which the passthrough model does not cover. This is the single
++ * place the supported-topology assumption lives, so switch support later
++ * relaxes it here.
 + */
-+#define VFIO_CXL_HDM_CAP                  0x00
-+#define VFIO_CXL_HDM_DECODER_STRIDE       0x20
-+#define VFIO_CXL_HDM_DECODER_BASE_LOW(n) \
-+    (0x10 + (n) * VFIO_CXL_HDM_DECODER_STRIDE)
-+#define VFIO_CXL_HDM_DECODER_BASE_HIGH(n) \
-+    (0x14 + (n) * VFIO_CXL_HDM_DECODER_STRIDE)
-+#define VFIO_CXL_HDM_DECODER_CTRL(n) \
-+    (0x20 + (n) * VFIO_CXL_HDM_DECODER_STRIDE)
-+#define VFIO_CXL_HDM_CTRL_COMMITTED       (1 << 10)
-+#define VFIO_CXL_HDM_BASE_LOW_MASK        0xf0000000U
-+
-+static void vfio_cxl_unmap_mem(VFIOPCIDevice *vdev)
++static PXBCXLDev *vfio_cxl_find_pxb(VFIOPCIDevice *vdev, Error **errp)
 +{
-+    VFIOCXL *cxl = &vdev->cxl;
-+
-+    if (!cxl->dpa_mapped) {
-+        return;
-+    }
-+    memory_region_del_subregion(get_system_memory(), cxl->mem_region.mem);
-+    cxl->dpa_mapped = false;
-+    cxl->mapped_base = 0;
-+}
-+
-+/*
-+ * The HDM Decoder Capability register encodes the decoder count in its low
-+ * nibble (0 -> 1, 1 -> 2, 2 -> 4, 3 -> 6, 4 -> 8 ...). Read it from the trapped
-+ * block so the commit handler walks every decoder rather than assuming decoder
-+ * 0. An unreadable or unknown encoding is treated as a single decoder.
-+ */
-+static unsigned vfio_cxl_decoder_count(VFIOPCIDevice *vdev)
-+{
-+    off_t off = vdev->cxl.comp_regs_region.fd_offset;
-+    uint32_t cap = 0;
-+
-+    if (pread(vdev->vbasedev.fd, &cap, 4, off + VFIO_CXL_HDM_CAP) != 4) {
-+        return 1;
-+    }
-+    switch (le32_to_cpu(cap) & 0xf) {
-+    case 0:  return 1;
-+    case 1:  return 2;
-+    case 2:  return 4;
-+    case 3:  return 6;
-+    case 4:  return 8;
-+    default: return 1;
-+    }
-+}
-+
-+/*
-+ * The guest committed or tore down an endpoint decoder. Walk each decoder in
-+ * the trapped HDM block, not just decoder 0. QEMU does not honor the base the
-+ * guest programmed: the host decoder is firmware-fixed, so QEMU maps the HDM
-+ * memory at the base of the device's CFMWS window and presents that same base
-+ * back to the guest (see vfio_cxl_comp_regs_read). The guest works purely in
-+ * GPA and never sees the host physical base the kernel shadow holds; the shadow
-+ * base and size are not consulted here.
-+ *
-+ * This generation commits a single, non-interleaved decoder (the kernel
-+ * refuses to bind otherwise) and exposes one HDM memory region, so the walk
-+ * stops at the first committed decoder. Keeping it indexed makes multi-decoder
-+ * support a kernel-gate relaxation rather than a QEMU rewrite.
-+ */
-+static void vfio_cxl_decoder_changed(VFIOPCIDevice *vdev)
-+{
-+    VFIOCXL *cxl = &vdev->cxl;
-+    VFIODevice *vbasedev = &vdev->vbasedev;
-+    off_t off = cxl->comp_regs_region.fd_offset;
-+    unsigned n, count = vfio_cxl_decoder_count(vdev);
-+
-+    for (n = 0; n < count; n++) {
-+        uint32_t ctrl = 0;
-+
-+        if (pread(vbasedev->fd, &ctrl, 4,
-+                  off + VFIO_CXL_HDM_DECODER_CTRL(n)) != 4) {
-+            return;
-+        }
-+        if (!(le32_to_cpu(ctrl) & VFIO_CXL_HDM_CTRL_COMMITTED)) {
-+            continue;
-+        }
-+
-+        /*
-+         * Map the HDM memory at the guest physical base of the device's CFMWS
-+         * window, which is also the base QEMU presents to the guest for this
-+         * decoder (see vfio_cxl_comp_regs_read). The guest never sees the host
-+         * physical base the kernel shadow holds.
-+         */
-+        if (cxl->dpa_mapped && cxl->mapped_base == cxl->fmws_base) {
-+            return;
-+        }
-+        /*
-+         * Overlap the CFMWS window MemoryRegion the CXL host bridge already
-+         * maps at this base, at a higher priority, so precedence is defined by
-+         * priority rather than subregion insertion order.
-+         */
-+        memory_region_transaction_begin();
-+        vfio_cxl_unmap_mem(vdev);
-+        memory_region_add_subregion_overlap(get_system_memory(),
-+                                            cxl->fmws_base,
-+                                            cxl->mem_region.mem, 1);
-+        memory_region_transaction_commit();
-+        cxl->mapped_base = cxl->fmws_base;
-+        cxl->dpa_mapped = true;
-+        return;
-+    }
-+
-+    /* No committed decoder in the block: tear down any existing mapping. */
-+    vfio_cxl_unmap_mem(vdev);
-+}
-+
-+static uint64_t vfio_cxl_comp_regs_read(void *opaque, hwaddr addr,
-+                                        unsigned size)
-+{
-+    VFIORegion *region = opaque;
-+    VFIODevice *vbasedev = region->vbasedev;
-+    VFIOPCIDevice *vdev =
-+        container_of(region, VFIOPCIDevice, cxl.comp_regs_region);
-+    VFIOCXL *cxl = &vdev->cxl;
-+    uint32_t val = 0xffffffff;
-+
-+    if (pread(vbasedev->fd, &val, size, region->fd_offset + addr) != size) {
-+        error_report("vfio-cxl: %s: HDM decoder read at 0x%" HWADDR_PRIx
-+                     " failed", vbasedev->name, addr);
-+    }
-+    val = le32_to_cpu(val);
++    PCIBus *bus = pci_get_bus(&vdev->parent_obj);
 +
 +    /*
-+     * The kernel shadow holds the host physical base for a firmware-committed
-+     * decoder. Never expose that to the guest: present the guest physical base
-+     * QEMU maps the HDM memory at (the device's CFMWS window). Any decoder's
-+     * base registers are virtualized; ctrl, size and the capability header pass
-+     * through. The base registers repeat every VFIO_CXL_HDM_DECODER_STRIDE.
++     * The endpoint must sit directly on a CXL root port's downstream bus. A
++     * cxl-rp carries QEMU_PCIE_CAP_CXL, so it builds a TYPE_CXL_BUS downstream
++     * bus; a generic pcie-root-port builds a TYPE_PCIE_BUS yet still counts as
++     * the single downstream port checked at bind, so without this the guest
++     * could realize a Type-2 device with no CXL root port above it: bound in
++     * appearance but unusable. The bus type is the right test here, not
++     * pci_bus_is_cxl(): the PCI_BUS_CXL flag is set only on the pxb-cxl root
++     * bus (where the root ports sit), not on the root port's downstream bus.
 +     */
-+    if (addr >= VFIO_CXL_HDM_DECODER_BASE_LOW(0) &&
-+        (addr - VFIO_CXL_HDM_DECODER_BASE_LOW(0)) %
-+                VFIO_CXL_HDM_DECODER_STRIDE == 0) {
-+        val = (val & ~VFIO_CXL_HDM_BASE_LOW_MASK) |
-+              ((uint32_t)cxl->fmws_base & VFIO_CXL_HDM_BASE_LOW_MASK);
-+    } else if (addr >= VFIO_CXL_HDM_DECODER_BASE_HIGH(0) &&
-+               (addr - VFIO_CXL_HDM_DECODER_BASE_HIGH(0)) %
-+                       VFIO_CXL_HDM_DECODER_STRIDE == 0) {
-+        val = (uint32_t)(cxl->fmws_base >> 32);
++    if (!object_dynamic_cast(OBJECT(bus), TYPE_CXL_BUS)) {
++        error_setg(errp,
++                   "vfio-cxl: %s: endpoint is not on a CXL root port (cxl-rp)",
++                   vdev->vbasedev.name);
++        return NULL;
 +    }
 +
-+    return val;
++    for (; bus; ) {
++        PCIDevice *bridge = bus->parent_dev;
++
++        if (!bridge) {
++            break;
++        }
++        if (object_dynamic_cast(OBJECT(bridge), TYPE_CXL_USP) ||
++            object_dynamic_cast(OBJECT(bridge), TYPE_CXL_DSP)) {
++            error_setg(errp,
++                       "vfio-cxl: %s: switch-attached topology not supported",
++                       vdev->vbasedev.name);
++            return NULL;
++        }
++        if (object_dynamic_cast(OBJECT(bridge), TYPE_PXB_CXL_DEV)) {
++            return PXB_CXL_DEV(bridge);
++        }
++        if (pci_bus_is_root(bus)) {
++            break;
++        }
++        bus = pci_get_bus(bridge);
++    }
++
++    error_setg(errp, "vfio-cxl: %s: not attached below a pxb-cxl host bridge",
++               vdev->vbasedev.name);
++    return NULL;
 +}
-+
-+static void vfio_cxl_comp_regs_write(void *opaque, hwaddr addr, uint64_t data,
-+                                     unsigned size)
-+{
-+    VFIORegion *region = opaque;
-+    VFIODevice *vbasedev = region->vbasedev;
-+    VFIOPCIDevice *vdev =
-+        container_of(region, VFIOPCIDevice, cxl.comp_regs_region);
-+    uint32_t val = cpu_to_le32((uint32_t)data);
-+
-+    if (pwrite(vbasedev->fd, &val, size, region->fd_offset + addr) != size) {
-+        error_report("vfio-cxl: %s: HDM decoder write at 0x%" HWADDR_PRIx
-+                     " failed", vbasedev->name, addr);
-+        return;
-+    }
-+
-+    /*
-+     * The kernel runs the lock-on-commit FSM in the write above, so the
-+     * committed state is settled by now; a control write on any decoder can
-+     * change the mapping.
-+     */
-+    if (addr >= VFIO_CXL_HDM_DECODER_CTRL(0) &&
-+        (addr - VFIO_CXL_HDM_DECODER_CTRL(0)) %
-+        VFIO_CXL_HDM_DECODER_STRIDE == 0) {
-+        vfio_cxl_decoder_changed(vdev);
-+    }
-+}
-+
-+static const MemoryRegionOps vfio_cxl_comp_regs_ops = {
-+    .read = vfio_cxl_comp_regs_read,
-+    .write = vfio_cxl_comp_regs_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = { .min_access_size = 4, .max_access_size = 4 },
-+    .impl = { .min_access_size = 4, .max_access_size = 4 },
-+};
 +
 +/*
-+ * Locate the CXL Device DVSEC (CXL r3.1 8.1.3) in config space. The guest
-+ * triggers a CXL reset by writing its ctrl2 register; QEMU rescans the decoder
-+ * after that write so the HDM mapping is restored (see vfio_pci_write_config).
-+ * Returns the DVSEC config offset, or 0 if the device does not expose it.
++ * Option I enforcement: only the guest's endpoint decoder is programmed, so
++ * the host bridge must stay in HDM passthrough mode (decoders above the
++ * endpoint are then trivially correct). Reject anything else at realize, before
++ * a mapping is built. cxl_get_hb_passthrough() reflects reset state and is not
++ * settled yet here, so gate on the static hdm_for_passthrough property.
 + */
-+static uint16_t vfio_cxl_find_device_dvsec(PCIDevice *pdev)
++static bool vfio_cxl_check_topology(VFIOPCIDevice *vdev, Error **errp)
 +{
-+    uint16_t offset;
++    PXBCXLDev *pxb = vfio_cxl_find_pxb(vdev, errp);
 +
-+    for (offset = PCI_CONFIG_SPACE_SIZE; offset;
-+         offset = PCI_EXT_CAP_NEXT(pci_get_long(pdev->config + offset))) {
-+        uint32_t hdr = pci_get_long(pdev->config + offset);
-+
-+        if (PCI_EXT_CAP_ID(hdr) == PCI_EXT_CAP_ID_DVSEC &&
-+            (pci_get_long(pdev->config + offset + PCI_DVSEC_HEADER1) & 0xffff)
-+                == CXL_VENDOR_ID &&
-+            pci_get_word(pdev->config + offset + PCI_DVSEC_HEADER2)
-+                == PCIE_CXL_DEVICE_DVSEC) {
-+            return offset;
-+        }
++    if (!pxb) {
++        return false;
 +    }
-+
-+    return 0;
++    if (pxb->hdm_for_passthrough) {
++        error_setg(errp,
++                   "vfio-cxl: %s: the pxb-cxl must be in HDM passthrough mode "
++                   "(do not set hdm_for_passthrough)", vdev->vbasedev.name);
++        return false;
++    }
++    return true;
 +}
 +
  /*
   * Learn the CXL geometry the kernel reports: the HPA-backed HDM memory region
   * and the trapped HDM decoder block (which BAR carries it and at what offset).
-@@ -3900,6 +4211,8 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
+@@ -3619,6 +3698,11 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
      cxl->dpa_size = mem_info->size;
      cxl->comp_bar = cap->bar;
      cxl->hdm_offset = cap->offset;
-+    cxl->dvsec_offset = vfio_cxl_find_device_dvsec(&vdev->parent_obj);
-+    cxl->af_offset = pci_find_capability(&vdev->parent_obj, PCI_CAP_ID_AF);
- 
-     if (!vfio_cxl_check_topology(vdev, errp)) {
-         return false;
-@@ -3916,31 +4229,73 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
-     if (vfio_region_mmap(&cxl->mem_region)) {
-         error_setg(errp, "vfio-cxl: %s: failed to mmap the HDM memory region",
-                    vbasedev->name);
--        vfio_region_exit(&cxl->mem_region);
--        vfio_region_finalize(&cxl->mem_region);
--        return false;
-+        goto err;
-     }
- 
--    cxl->machine_done.notify = vfio_cxl_bind_fmws;
--    qemu_add_machine_init_done_notifier(&cxl->machine_done);
-+    /*
-+     * Trap the HDM decoder block: overlay it, priority 1, over the directly
-+     * mapped component BAR, so guest decoder accesses reach the kernel FSM and
-+     * the commit becomes visible to QEMU.
-+     */
-+    if (!vdev->bars[cxl->comp_bar].mr) {
-+        error_setg(errp, "vfio-cxl: %s: component BAR %u is not present",
-+                   vbasedev->name, cxl->comp_bar);
-+        goto err;
-+    }
-+    if (vfio_region_setup_with_ops(OBJECT(vdev), vbasedev,
-+                                   &cxl->comp_regs_region,
-+                                   cxl->comp_regs_region_index, "cxl-comp-regs",
-+                                   &vfio_cxl_comp_regs_ops, errp)) {
-+        goto err;
-+    }
-+    memory_region_add_subregion_overlap(vdev->bars[cxl->comp_bar].mr,
-+                                        cxl->hdm_offset,
-+                                        cxl->comp_regs_region.mem, 1);
 +
-+    if (DEVICE(vdev)->hotplugged) {
-+        /*
-+         * The machine is already up, so the CFMWS windows are placed and the
-+         * binding can be validated now. Report a failure through errp so a bad
-+         * device_add fails cleanly instead of aborting the running VM.
-+         */
-+        if (!vfio_cxl_do_bind_fmws(vdev, errp)) {
-+            goto err;
-+        }
-+    } else {
-+        cxl->machine_done.notify = vfio_cxl_bind_fmws;
-+        qemu_add_machine_init_done_notifier(&cxl->machine_done);
++    if (!vfio_cxl_check_topology(vdev, errp)) {
++        return false;
 +    }
- 
++
      cxl->enabled = true;
  
      return true;
-+
-+err:
-+    vfio_cxl_teardown(vdev);
-+    return false;
- }
- 
- static void vfio_cxl_teardown(VFIOPCIDevice *vdev)
- {
-     VFIOCXL *cxl = &vdev->cxl;
- 
--    if (!cxl->enabled) {
--        return;
-+    if (cxl->comp_regs_region.mem) {
-+        if (vdev->bars[cxl->comp_bar].mr) {
-+            memory_region_del_subregion(vdev->bars[cxl->comp_bar].mr,
-+                                        cxl->comp_regs_region.mem);
-+        }
-+        vfio_region_exit(&cxl->comp_regs_region);
-+        vfio_region_finalize(&cxl->comp_regs_region);
-     }
--    qemu_remove_machine_init_done_notifier(&cxl->machine_done);
-+    vfio_cxl_unmap_mem(vdev);
-     if (cxl->mem_region.mem) {
-         vfio_region_exit(&cxl->mem_region);
-         vfio_region_finalize(&cxl->mem_region);
-     }
-+    if (cxl->machine_done.notify) {
-+        qemu_remove_machine_init_done_notifier(&cxl->machine_done);
-+        cxl->machine_done.notify = NULL;
-+    }
- }
- 
- static void vfio_pci_realize(PCIDevice *pdev, Error **errp)
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 6f184520bf..c6c07a2185 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -133,11 +133,16 @@ typedef struct VFIOCXL {
-     uint32_t comp_regs_region_index; /* trapped HDM decoder register block */
-     uint32_t comp_bar;               /* component BAR carrying that block */
-     uint64_t hdm_offset;             /* block offset within the component BAR */
-+    uint16_t dvsec_offset;           /* CXL Device DVSEC offset, 0 if none */
-+    uint16_t af_offset;              /* PCI Advanced Features cap, 0 if none */
-     uint64_t dpa_size;               /* size of the HDM memory region */
-     VFIORegion mem_region;           /* HDM memory, mapped at committed GPA */
-     Notifier machine_done;           /* CFMWS validated at machine_done */
-     hwaddr fmws_base;                /* base of the memory window */
-     uint64_t fmws_size;              /* size of that window */
-+    VFIORegion comp_regs_region;     /* trapped HDM decoder block */
-+    hwaddr mapped_base;              /* GPA the HDM memory is mapped at */
-+    bool dpa_mapped;                 /* HDM memory currently in system memory */
- } VFIOCXL;
- 
- struct VFIOPCIDevice {
 -- 
 2.25.1
 
