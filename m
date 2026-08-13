@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991A9C5CFDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01BCC5CFEB
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 09:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSA5-0006EM-KX; Thu, 13 Aug 2026 05:55:45 -0400
+	id 1wuSA6-0006EY-ME; Thu, 13 Aug 2026 05:55:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wuS9u-0006Cm-EU
+ id 1wuS9s-0006Cb-K5
  for qemu-devel@nongnu.org; Thu, 13 Aug 2026 05:55:39 -0400
-Received: from [115.124.30.112] (helo=out30-112.freemail.mail.aliyun.com)
+Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wuS9r-0005sx-OL
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 05:55:34 -0400
+ id 1wuS9p-0005sq-HU
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 05:55:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
  t=1786614904; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=40y1RV1ifjLY5kLqdvBtOkbrea1HokAB7lurYvj6RQE=;
- b=fxYpCTLknncvUeY2NlODFO4XpocdKITcjKUIhtQi/KHkyS7QBCuO56V9NVUrlINgYXyYcMX0S0D4FCkS7UgEPqLIPB4vUOVHFlX4l/a5UE/6qmiHZKbpAk6gXMFe96oewEBxzKgSaRZj7TFBTYJsmJV28Ot4sUF6Phy+p6Q1Hcc=
+ bh=pHGjh55usKOPqSNHUu914m1Rda0mEK2+CbO6sTSHggY=;
+ b=aJkHkGxwsERDTcMcxy+ZHf71fms/xErlVayiVPVVQx8TD9Lwjukk5e6YvTqBnllHv9jAmg/t8V/cS+RVp0tZlnAfUV9HrqftUF1lQqH6ydoXeiXcB6nRR4zW0/U3cEithKKj4rb/PCKVKgaO3xHnv/qwPHZVh+ar/PPMJ0qJlMg=
 X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X8u77R7_1786614904; 
+ TI=SMTPD_---0X8u77Qj_1786614903; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X8u77R7_1786614904 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 13 Aug 2026 17:55:04 +0800
+ fp:SMTPD_---0X8u77Qj_1786614903 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 13 Aug 2026 17:55:03 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 2/2] libvhost-user: return the backend mapping address for
- added regions
-Date: Thu, 13 Aug 2026 17:55:01 +0800
-Message-ID: <20260813095501.20282-3-guobin@linux.alibaba.com>
+Subject: [PATCH 1/2] libvhost-user: accept the postcopy client base ack in
+ vu_add_mem_reg()
+Date: Thu, 13 Aug 2026 17:55:00 +0800
+Message-ID: <20260813095501.20282-2-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260813095501.20282-1-guobin@linux.alibaba.com>
 References: <20260813095501.20282-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.112 (deferred)
-Received-SPF: pass client-ip=115.124.30.112;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
+Received-SPF: pass client-ip=115.124.30.110;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-110.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -72,44 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In postcopy mode the backend must tell QEMU where it mapped a region, so
-that QEMU can translate the backend's fault addresses back into a RAMBlock
-and offset.  vu_add_mem_reg() works on a copy of the region and lets
-_vu_add_mem_reg() fill the mapping address into that copy, but never writes
-it back into the reply payload.  QEMU then stores its own address as the
-postcopy client base, so fault resolution fails:
+In postcopy mode QEMU signals that it has collected all the postcopy client
+bases by sending a VHOST_USER_ADD_MEM_REG message with a u64 payload of 0
+and no file descriptor (see vhost_user_add_remove_regions()).
+vu_add_mem_reg() has a case for that message, but only reaches it after
+validating the fd count of a regular region, so the ack is rejected first:
 
-  vhost_user_postcopy_fault_handler: Failed to find region for fault ...
+  VHOST_USER_ADD_MEM_REG received 0 fds - only 1 fd should be sent for
+  this message type
 
-The VHOST_USER_SET_MEM_TABLE path is unaffected, it fills the payload
-directly.  Put the updated region back into the payload before replying; a
-pointer into the payload cannot be used instead, as VhostUserMsg is packed.
+This kills the backend during memory table setup, making postcopy unusable
+for any libvhost-user backend that negotiates
+VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS.
 
-Fixes: ec94c8e621 ("Support adding individual regions in libvhost-user")
+Recognise the ack before validating the fd count.
+
+Fixes: 9f4e63491b ("libvhost-user: Add vu_add_mem_reg input validation")
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ subprojects/libvhost-user/libvhost-user.c | 26 ++++++++++++-----------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 248550aae1..2fed792e85 100644
+index a74d814bb4..248550aae1 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -989,7 +989,13 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+@@ -948,6 +948,20 @@ static bool
+ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+     VhostUserMemoryRegion m = vmsg->payload.memreg.region, *msg_region = &m;
+ 
++    /*
++     * If we are in postcopy mode and we receive a u64 payload with a 0 value
++     * we know all the postcopy client bases have been received, and we
++     * should start generating faults.  This message carries no file
++     * descriptor, so it has to be recognised before the fd count of a real
++     * region is validated below.
++     */
++    if (dev->postcopy_listening &&
++        vmsg->size == sizeof(vmsg->payload.u64) &&
++        vmsg->payload.u64 == 0) {
++        (void)generate_faults(dev);
++        return false;
++    }
++
+     if (vmsg->fd_num != 1) {
+         vmsg_close_fds(vmsg);
+         vu_panic(dev, "VHOST_USER_ADD_MEM_REG received %d fds - only 1 fd "
+@@ -971,18 +985,6 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+         return false;
+     }
+ 
+-    /*
+-     * If we are in postcopy mode and we receive a u64 payload with a 0 value
+-     * we know all the postcopy client bases have been received, and we
+-     * should start generating faults.
+-     */
+-    if (dev->postcopy_listening &&
+-        vmsg->size == sizeof(vmsg->payload.u64) &&
+-        vmsg->payload.u64 == 0) {
+-        (void)generate_faults(dev);
+-        return false;
+-    }
+-
+     _vu_add_mem_reg(dev, msg_region, vmsg->fds[0]);
      close(vmsg->fds[0]);
  
-     if (dev->postcopy_listening) {
--        /* Send the message back to qemu with the addresses filled in. */
-+        /*
-+         * Send the message back to qemu with the addresses filled in.
-+         * _vu_add_mem_reg() worked on our copy of the region, so it has to be
-+         * put back into the message payload.  A pointer into the payload
-+         * cannot be handed out instead, VhostUserMsg is packed.
-+         */
-+        vmsg->payload.memreg.region = m;
-         vmsg->fd_num = 0;
-         DPRINT("Successfully added new region in postcopy\n");
-         return true;
 -- 
 2.50.1 (Apple Git-155)
 
