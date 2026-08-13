@@ -4,131 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348F5C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 07:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F3BC5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 07:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuPn9-0000s4-VS; Thu, 13 Aug 2026 03:23:55 -0400
+	id 1wuPyH-0002ji-TZ; Thu, 13 Aug 2026 03:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuPn8-0000rU-SH
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:23:54 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuPn6-0005aj-7G
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:23:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DGBaf+wOUU79TpU9sNQ8bfJH4RJ9KYdL9jg+6eeYpatfGCqt+bl9b6pq0EDk+o521EvVtV64KhpxeZ15HK5ZtCFBIepgeihYQiRhTUAg1+fg4AkdvrVde+0Cr5dkVU+UU6vtvLCtyv73jdBtEndeT/FtOh51e+ccx9QHJeEG2H6Wg5ufF3RN837/FbkbBUbVJPg0GvJTkbIi8F5nHP7jbI5ePHMI5pasKBeLQ3YzKzfX2bOW/nCcQ7yawIRv74xTTwxKHsElmH8eIfCsZo06TLketZnz7U1GzjAAGbCodGnpnia9a6j2GaXdfcZRBJLqVee/ekrEmMMGXjs/JVj9nw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y2UcG8OA/WsCbju1OlfIos7usouwAAkZNGGyA6Coq8g=;
- b=zCismiRGec6/JfUSxmiOJJXOib1uAt8nvCvKNwn04RWMwQHBpocNh5PH4xI1RNccp5nXE5cyiLt7U1OIkQZz9GT2H2S26Zu3BLZaosT3kZJW19cJ458RVNa+SsQKRfeT4gfYMNs56Jamh2f16dorpPega26czP7Xbpq/9Z3uOziZvwPDBDfwyh0TjQw47A4AU84mfugMK3SaUIWjeae8uCorGZLjrU384r+XpO6A7kuQoiC12V5NCrmWQIJjdODInByfJIh5S+X3L5D/ThnBdqIteypw/NX27S4tZhAegI3bkXNSvQCaDCRzM6p4gmTFhoht7phn0ve9sNdPdmEe5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y2UcG8OA/WsCbju1OlfIos7usouwAAkZNGGyA6Coq8g=;
- b=XSn9oD/vzT7daGJsFdKIuT2O7ldEGcf2pUAKxXdDzwHCUYjWjPr3+IMSk9NWOMHuI68YlyaXZjbahynuasWvzwa9WNXmpdzAUsjZQEbSVPizc0FRVHQQjuVf60h4S0EsrF8tc9XUVOwQjuFkbPQ29j3/5FfUMZR9nDr6xmHkyv+2swruwS5Qfh8+RGDHOOs6hmBQvzeCkWJ+CPDIoSCrUnAbxkwNFPlKIdkmzM9GiSX3wyptfa5cG5SwMEVEXii3Q++JCra1ROzzEU2tz1YstlCpelNiOCg+Ie55li6cni/ihWpFHY27Pr+ARwc7/RWBeUFuGMBSO8I4AeZZZi9u7w==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TYQPR06MB8129.apcprd06.prod.outlook.com (2603:1096:405:376::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.11; Thu, 13 Aug
- 2026 07:23:43 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.012; Thu, 13 Aug 2026
- 07:23:43 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: "clg@redhat.com" <clg@redhat.com>,
- =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in async
- writeback
-Thread-Topic: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in
- async writeback
-Thread-Index: AQHdKvSrYy6CS2yN20qVd8jbUP7gcQ==
-Date: Thu, 13 Aug 2026 07:23:42 +0000
-Message-ID: <20260813072340.637657-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYQPR06MB8129:EE_
-x-ms-office365-filtering-correlation-id: 1a5f260e-c3ee-4cf8-41e8-08def90bcdd8
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|23010399003|18002099003|56012099006|10067099003|38070700021;
-x-microsoft-antispam-message-info: dmBmzaiPwUL6HxiEJwtrfACRcuE8+BpOTcCuhDbLGfXzkxjhf6kX6194VKRonOULzUYQ6F77u9m71rU65mtBCs7400woa4GW9OUaPm9FrKQ0weM++RkGqEQ4wy3MqtyjWou+scFTfmxzIl+UF9p8dYKbzPhwOcPCaunaGO6XT9CASOaMHVQNjCqOJGoY79siLpIvh1q539ZuiXOT0V5/Z/og46fvL3rwhJyRy5sbM3c+Py33+4gKQyD25Q7fortKKFy5NaLVfHtbCXYwrCNsEA6VD4dVXxMLNImzFrLcHZxPxe9kFFZLlgmK09v3I4MUsZzmCUoD5ZZNpoDmzJyYQuR2ivd1I5vCBPaBLTeGCjik3Njy2L7PLWNvVEIwdtWqsXQv0OEdfyQVT8q+NUk/xlaSgxe2W1hq9UE3dmWrylgnSeBJfI2Fw8tjZt15heMo6nkWF3oC0jXUgXwrUHS+loYkCs6sC2OECAYvxlK0K6M/gbg2K0hMLKOvAL8hxBzhzCJh7NnZA4WDR4PLJ0C/NnsS0PygFEpnBwSj3Rub8wk8Ud07S3jS5Xs/f+8haP5TjyCWIJWhVNfF9YObNcf+F3+IqVa0VoV3lHLCglRyqyV3IG52p8eD/OTxAhsqbPUYPi7ZcyKRXwjQlJyZHMVOJbUd2l1rVTadB4v8Lm3iu0d1uuZz2P10JBDcjYI3Yx7ZVnZM54VBnL9lrU6IvCjh4toE46HxX9YESPVrEElDBm0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(18002099003)(56012099006)(10067099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?e651N35GSorGov1TBrvcGTRhmQgMl2UVZRlXipJ+0vVLe81YxFXmsY6RzS?=
- =?iso-8859-1?Q?pBC5luj1L76LJyS4M7dwICzgz10BNSZ6Cv1NumFW2i3qNBuAy+Gp0v8b2h?=
- =?iso-8859-1?Q?JD//GjxrpvOjOLop/H/XdrabDrqd2FYF41deIxWdkaqncJEYZ25ddnRp1V?=
- =?iso-8859-1?Q?0TUa3nwmX2uTfKaqqE0pnK2/M8FVg7geatq04G5wnP9Tg/FZx76+PuoE1h?=
- =?iso-8859-1?Q?AqmGi6HFm/pIBdprYXV0gtUYCgtpWq0GmbuNTkb+XMLxhrcE/fWu2KLf4E?=
- =?iso-8859-1?Q?tjsmwGXfVpQy9obE7a+FKxJD7hYwrFDY+V5wWhPtqLpMv3H3PDQYqDQiJR?=
- =?iso-8859-1?Q?adZEE+5K+O5bueKBPTURhHIRn73bdXZrNgEni5ttesMqNigoUNebWiQsKf?=
- =?iso-8859-1?Q?v9i8p9HV4ze1bM8gAWrp/35NWbTebMDWNEIJL9zYba+qpG2bobgqld97ci?=
- =?iso-8859-1?Q?bhFBfT7uakm7FYWY9k0pJJxRE+RBBryaWAPjEvb0DPCVXMY0HTuzdlfZu0?=
- =?iso-8859-1?Q?sd09FPfFYuW5mp2cwWsdhpqBDt4tv+CFaGS/vo+8WSqOnf15fpjXaIkIjm?=
- =?iso-8859-1?Q?iwP5XMjuJsUs+qQOPXsApMBPpXlGnvIPXgS2A/FlsPdWFWzsMoEqfWvm6U?=
- =?iso-8859-1?Q?JwyaQkn9pt94ZJCinMJYHQlvjAin1wL+Y2jWeO/OyhhAVmFrXS7vaD8dHa?=
- =?iso-8859-1?Q?79qOAtokO5jyiO7Cct0ljVk2SLO06eXfGJOOcDZRcj3ozFzaMyHbfjUH4/?=
- =?iso-8859-1?Q?oIq1zam/8pZ4XJk+vZFxLSoQ9buZMfnrip8BRrf/JwQr2o9c9JNcXpDS6q?=
- =?iso-8859-1?Q?EhGM7NRoNfIGp7qymA/4CXht81Sqq3E6MtaLO1M8A85d+jNgE1IwMkqU3H?=
- =?iso-8859-1?Q?Ri5jAaS00PUW01ibrI/QCbz9Ayvo5NRZJiJ3c/6OlejfSovqwuEMJ2xQsz?=
- =?iso-8859-1?Q?s64+luGKlQKVzYSF2AT8cTkHLsJfPeKMId9nzMyZiJcqWF5DDHfnOBKxB6?=
- =?iso-8859-1?Q?EyS87VrcyHoQJXRbJ3CKisWS7zwwz9iVtnXObc45qoP4Z1YEtF9BNgL3k6?=
- =?iso-8859-1?Q?VxP50/IaowBBin+tEEt6j7UDpZ/V2u77Oj5W85r9WolHOO5k8yp1luoDnY?=
- =?iso-8859-1?Q?Qyx6Lox2JbtSsZUrCwAbvlhVzWNYyg53i54HgbtD7Ol/bv4XIk9b414gpt?=
- =?iso-8859-1?Q?/dkiqtIZmeWtWS+6hp0xq9pMthaJeCqfBj1qA+F8n6gBBzyR/yVB3dd2KG?=
- =?iso-8859-1?Q?eXxORO/ylNJfxEOUfbd3JmyJgZcIGfvKDm5edNyQKaZp8Ipuc0xYNoSrs+?=
- =?iso-8859-1?Q?db6AW5dqVj5mhQgg5/GX9t7E09E1D7XeJERpqrLBOKSaNS4RE8hYdW/ffq?=
- =?iso-8859-1?Q?onKUi14lCA6UU8r+RJkfZHCDNABB/Uu4T6uN8A2Ft62kQrj6yU5oBcPYMX?=
- =?iso-8859-1?Q?TL/Fjzl204Jvg98s4PbBFOSQmTxdPlig1PpXydATBmednPa3PUWf1eh9JV?=
- =?iso-8859-1?Q?pzFhK1kgZ5+T6GA408BNlF1zhbJg8eliuhuNiC5hlI5mju4wRCK6kKJJc+?=
- =?iso-8859-1?Q?kOKpIZ8PpSW2pMsuun8CBPIMKMwA9uOBuzM3ejlibMbEQ/F2WXxDlQuy0p?=
- =?iso-8859-1?Q?nO/kwCMi/LjoNYpkpYye57D/ZosVPxQBTtMfs4dGQXQPkJ+nDdyFYtirxH?=
- =?iso-8859-1?Q?XfBTvLcgZTPrTl5gi1XdtSIngxeE5cBDxEzBM398sPOBAdeiMYZNcxKUYd?=
- =?iso-8859-1?Q?ubPFMfyKzDNbrGTMLGfhh/LWgilEyO5u4GJztRF5NC+hBs5OX0psto9jJl?=
- =?iso-8859-1?Q?C9sqSBdwrQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <msuchanek@suse.de>)
+ id 1wuPyG-0002jO-6N; Thu, 13 Aug 2026 03:35:24 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <msuchanek@suse.de>)
+ id 1wuPyE-0001PI-4V; Thu, 13 Aug 2026 03:35:23 -0400
+Received: from kunlun.suse.cz (unknown [IPv6:2a07:de40:b306:2000::2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits)
+ server-digest SHA256) (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C99F13E6D;
+ Thu, 13 Aug 2026 07:35:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1786606515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+ohbpP4PWX0hIpf6SvEkZ4BNtZVxfmbgo05EbbLFYhw=;
+ b=iqGI6biKSqg2QBAxper2lkTlKrcJBZpnQgfBROnMYrEv5dMRcZmdCKx/OCO4jGc2X6mJfS
+ d59ho5LalGo9RHob2zCdIvA191Muf7iieCWRYsu4SK6HDiBFCh3qFQeg4bWPk4tfX4rhYL
+ 8THU3mpt4fnjwb/7koUaNpYpx2AGpjY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1786606515;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+ohbpP4PWX0hIpf6SvEkZ4BNtZVxfmbgo05EbbLFYhw=;
+ b=hFkLVeuTB1LSSQxKQrDrYNw8dgWtAby7BJExZkje3yC8gcwW1q6Cvo6ojVMAJcBcST5rnX
+ pm6VPTwBiyCPbxCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=owFWtnMF;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=8oJpsy9O
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1786606510; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+ohbpP4PWX0hIpf6SvEkZ4BNtZVxfmbgo05EbbLFYhw=;
+ b=owFWtnMFiLLkxo4e+Xs3U+f70Atf2GY1mewfj+hZk2hBsadqgV4CGFI9YOru3KPYgf9i8g
+ V+01bxeggG3OxM6ThvwgefmBk5xnBlYgv69vVq3fXO0UTnTcZ6fzXf81Hl5KBREXafOAYX
+ eEPGmYeB5AoGDEqRon3K9WVa3TGno5o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1786606510;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+ohbpP4PWX0hIpf6SvEkZ4BNtZVxfmbgo05EbbLFYhw=;
+ b=8oJpsy9Oqz0wtQUanWzulF6mnGZZ4PdaCAseOPc18xUIFrJaKfQHMo9frCW49DKpuRpoFy
+ Jv533hhl6wozJMBg==
+Date: Thu, 13 Aug 2026 09:35:09 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Amit Machhiwal <amachhiw@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, Gautam Menghani <gautam@linux.ibm.com>
+Subject: Re: [PATCH v6 1/3] [DO_NOT_MERGE] linux-headers: Add uapi header
+ changes
+Message-ID: <an1zrUhbu_RYkJ-y@kunlun.suse.cz>
+References: <20260812170854.58709-1-amachhiw@linux.ibm.com>
+ <20260812170854.58709-2-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a5f260e-c3ee-4cf8-41e8-08def90bcdd8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Aug 2026 07:23:42.5844 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: MgSVwwH8vPUobqRJvj46FOC0LOAaYFcPmh+jL2K+DrOFfHWfOJc/c2gVKRGTElRTBai7fceOPCyP0l2bc7M4ylHw6iG8Ej6xldAx9nAnSuE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYQPR06MB8129
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260812170854.58709-2-amachhiw@linux.ibm.com>
+X-Spamd-Result: default: False [15.15 / 50.00]; SPAM_FLAG(5.00)[];
+ NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_SPAM_SHORT(2.96)[0.988];
+ HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
+ ONCE_RECEIVED(1.20)[]; HFILTER_HELO_IP_A(1.00)[kunlun.suse.cz];
+ HFILTER_HELO_NORES_A_OR_MX(0.30)[kunlun.suse.cz];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_TWELVE(0.00)[13];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_ZERO(0.00)[0];
+ DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
+ FREEMAIL_CC(0.00)[nongnu.org,linux.ibm.com,eik.bme.hu,gmail.com,redhat.com,vger.kernel.org];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim]
+X-Spamd-Bar: +++++++++++++++
+X-Rspamd-Queue-Id: C99F13E6D
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: add header
+X-Spam: Yes
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=msuchanek@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,40 +124,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reports that ehci_writeback_async_complete_packet() ignores=0A=
-the return value of get_dwords() when reading the QH and qTD.=0A=
-=0A=
-Handle read failures in the same way as QH and qTD verification=0A=
-failures by freeing the packet and returning early.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/usb/hcd-ehci.c | 10 +++++-----=0A=
- 1 file changed, 5 insertions(+), 5 deletions(-)=0A=
-=0A=
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index 451a918e9f..d43951975a 100644=0A=
---- a/hw/usb/hcd-ehci.c=0A=
-+++ b/hw/usb/hcd-ehci.c=0A=
-@@ -533,11 +533,11 @@ static void ehci_writeback_async_complete_packet(EHCI=
-Packet *p)=0A=
-     /* Verify the qh + qtd, like we do when going through fetchqh & fetchq=
-td */=0A=
-     memset(&qh, 0, sizeof(qh));=0A=
-     memset(&qtd, 0, sizeof(qtd));=0A=
--    get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
--               (uint32_t *) &qh, ehci_qh_dwords(q->ehci));=0A=
--    get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
--               (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci));=0A=
--    if (!ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
-+    if (get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
-+                   (uint32_t *) &qh, ehci_qh_dwords(q->ehci)) < 0 ||=0A=
-+        get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
-+                   (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci)) < 0 ||=0A=
-+        !ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
-         p->async =3D EHCI_ASYNC_INITIALIZED;=0A=
-         ehci_free_packet(p);=0A=
-         return;=0A=
--- =0A=
-2.43.0=0A=
+Hello,
+
+some version of the kernel patches seems to be merged in the powerpc
+tree now.
+
+Cant his be merged now or is a refresh required?
+
+Thanks
+
+Michal
+
+On Wed, Aug 12, 2026 at 10:38:52PM +0530, Amit Machhiwal wrote:
+> This is a temporary patch intended for review and testing purposes only.
+> It syncs the QEMU linux-headers with the kernel v9 changes that introduce
+> the KVM_PPC_GET_COMPAT_CAPS ioctl for querying host CPU compatibility
+> capabilities. The struct kvm_ppc_compat_caps places 'size' as the first
+> field as required by copy_struct_from/to_user() versioning, with
+> KVM_PPC_COMPAT_CAPS_SIZE_VER0 (24) defined as the frozen version-floor
+> constant. The capability number is KVM_CAP_PPC_COMPAT_CAPS (250) and
+> the ioctl is defined as _IO so the ioctl number remains stable if the
+> struct grows in future versions. Capability bit definitions for POWER9,
+> POWER10, and POWER11 compatibility modes are also included.
+> 
+> The actual header sync will be done via scripts/update-linux-headers.sh
+> once the kernel changes [1] are merged upstream.
+> 
+> [1] https://lore.kernel.org/all/20260808161148.66673-1-amachhiw@linux.ibm.com/
+> 
+> Tested-by: Gautam Menghani <gautam@linux.ibm.com>
+> Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
+> Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> ---
+> No changes in this version.
+> 
+>  linux-headers/asm-powerpc/kvm.h | 19 +++++++++++++++++++
+>  linux-headers/linux/kvm.h       |  3 +++
+>  2 files changed, 22 insertions(+)
+> 
+> diff --git a/linux-headers/asm-powerpc/kvm.h b/linux-headers/asm-powerpc/kvm.h
+> index 077c5437f521..2c229fe0562c 100644
+> --- a/linux-headers/asm-powerpc/kvm.h
+> +++ b/linux-headers/asm-powerpc/kvm.h
+> @@ -437,6 +437,25 @@ struct kvm_ppc_cpu_char {
+>  	__u64	behaviour_mask;		/* valid bits in behaviour */
+>  };
+>  
+> +/* For KVM_PPC_GET_COMPAT_CAPS */
+> +struct kvm_ppc_compat_caps {
+> +	__u64	size;			/* Size of this structure */
+> +	__u64	flags;			/* Reserved for future use */
+> +	__u64	compat_capabilities;	/* Capabilities supported by the host */
+> +};
+> +#define KVM_PPC_COMPAT_CAPS_SIZE_VER0	24 /* sizeof first published struct */
+> +
+> +/*
+> + * Capability bits for compat_capabilities field in kvm_ppc_compat_caps.
+> + * These bits indicate which processor compatibility modes are supported.
+> + */
+> +#define KVM_PPC_COMPAT_CAP_POWER9	(1ULL << 62)
+> +#define KVM_PPC_COMPAT_CAP_POWER10	(1ULL << 61)
+> +#define KVM_PPC_COMPAT_CAP_POWER11	(1ULL << 60)
+> +#define KVM_PPC_COMPAT_BITMASK		(KVM_PPC_COMPAT_CAP_POWER9 | \
+> +					 KVM_PPC_COMPAT_CAP_POWER10 | \
+> +					 KVM_PPC_COMPAT_CAP_POWER11)
+> +
+>  /*
+>   * Values for character and character_mask.
+>   * These are identical to the values used by H_GET_CPU_CHARACTERISTICS.
+> diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> index dd52e2a65bfd..aea4ab5c6953 100644
+> --- a/linux-headers/linux/kvm.h
+> +++ b/linux-headers/linux/kvm.h
+> @@ -986,6 +986,7 @@ struct kvm_enable_cap {
+>  #define KVM_CAP_S390_KEYOP 247
+>  #define KVM_CAP_S390_VSIE_ESAMODE 248
+>  #define KVM_CAP_S390_HPAGE_2G 249
+> +#define KVM_CAP_PPC_COMPAT_CAPS 250
+>  
+>  struct kvm_irq_routing_irqchip {
+>  	__u32 irqchip;
+> @@ -1330,6 +1331,8 @@ struct kvm_s390_keyop {
+>  /* Available with KVM_CAP_COUNTER_OFFSET */
+>  #define KVM_ARM_SET_COUNTER_OFFSET _IOW(KVMIO,  0xb5, struct kvm_arm_counter_offset)
+>  #define KVM_ARM_GET_REG_WRITABLE_MASKS _IOR(KVMIO,  0xb6, struct reg_mask_range)
+> +/* Available with KVM_CAP_PPC_COMPAT_CAPS */
+> +#define KVM_PPC_GET_COMPAT_CAPS	_IO(KVMIO,  0xb8)
+>  
+>  /* ioctl for vm fd */
+>  #define KVM_CREATE_DEVICE	  _IOWR(KVMIO,  0xe0, struct kvm_create_device)
+> -- 
+> 2.50.1 (Apple Git-155)
+> 
+> 
 
