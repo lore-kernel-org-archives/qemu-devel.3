@@ -4,109 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4893C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DF1C5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSmA-0005xF-A6; Thu, 13 Aug 2026 06:35:06 -0400
+	id 1wuSmf-0006AS-7p; Thu, 13 Aug 2026 06:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSm9-0005wv-Aw
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSm7-0000AU-V1
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786617303;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rpjpCejkLojUCVc87ev/0WjmuneloovioFsqiimDyY4=;
- b=XlUHTCB/8qh1iYtGloUl6+Vph3PUMHlFYo5YVbfDh9AGv3vE+vm1K6mh+WlDbEej1z5Fcd
- 1IY5QXSA9TOyqLFiJKIDKrTQ/TWPRW6tsxElvaY8Y6eRo9FygPzpsNC7NiWdm3+N/cZdhS
- fWOlfz7wFL4q/f/vxyYCH4wr2AcB1Hg=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-ZjYsrEx6PymzUvq7RNAdCg-1; Thu, 13 Aug 2026 06:35:01 -0400
-X-MC-Unique: ZjYsrEx6PymzUvq7RNAdCg-1
-X-Mimecast-MFC-AGG-ID: ZjYsrEx6PymzUvq7RNAdCg_1786617301
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cf7dd9fd91so21624355ad.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wuSmS-00060n-LR
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wuSmP-0000EW-KY
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4954aff6088so14134475e9.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786617300; x=1787222100; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rpjpCejkLojUCVc87ev/0WjmuneloovioFsqiimDyY4=;
- b=jm8THkhY7Un9hkSwNQB0RF9lO9XF9fYcrcc+Cre8H87Mi+fWHgSF1JGJF5osdlYP2h
- uAvFPB4RiaWb+dOTE4yR4nWA4Tw5jxSRUJl4pjqn46nWLF5rurbdbIyQ6hopojnfqrqX
- hPNf7vnyRjFobZpl45SwMKXYgEWYHSv7J4TlRQeXWGX99Uz3QaQpA71a6SOcUqKGp3Ta
- 1cothxtg19VzRloeDCP5QuXp0DWenfPlLvsDwaVCQzm7YUBaNmHxxjzK1zmbGEYh1dQH
- cNqhlQzi91aecjHKK7YBouBVsX3YMSYblTGspFAFhTAGT0PhHTBlzKm3ZaEp8+7A87wt
- 5b4Q==
+ d=suse.com; s=google; t=1786617317; x=1787222117; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=E6bsn9NFfxkJnh520dPejRsEERuDcuHfX7DObfEzi1s=;
+ b=dKDtzo9+irPUkQSNWrZgnn0JhQMpOOhQu0b8dKaJU2GyUh0dbiB+49Hpa7FP63kumH
+ NcCptDO1BVuOp+QuqxcD/js/yHSgzYWDVGq1RLFk3n42Lr2aRX1sxJjuUnSaEHS00HeO
+ +CXDCk+eQY8XClqQQIk7ffyu08DGXL9Su1b27YeU2Egoi0Rey49a3U9SaYxo3zWlPVyV
+ hhJVc9ofwMwzvEK826flqoQoSxL6omz70e5ppLRU7J9j+jNKrRVJhbiIzcczalM6RujO
+ CNIQq2lA9ChJzN5Gx5dThcr/pe4eVbkYmG3Xr49/1xw3JI86jchT93/ptj4pK3spN2HF
+ WL6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786617300; x=1787222100;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rpjpCejkLojUCVc87ev/0WjmuneloovioFsqiimDyY4=;
- b=ax1IdYcCU3CsQBCNpRkQ6hkePaY9DRpZgwJiIr0o2mhH4MyLea/fDK9JmtzQLHkcnI
- 32+a7gZhFfZQ8nQMLJ/rHCHiqmpl36rtfzFmKfrdq9rZvBkZVRtEuJ31gF+xYSmCudrm
- aRTm14yPSXS407y9SoKXqBP9X04QHO9KfsoKxk5ZlURbZcYeJi4yUdamfoyJWcpmhWy2
- BieUWWOc5Zg8s1EZUnD4jyFF4fkUAeEgIc/IDbEcTpfYsGjAkN9X2wBsZJbIsYSFFMm2
- 3FUm0OlUQ+D0iihXdYXnVpM9/ecQ/p5VKqcdW8aFjrru9n5u+iS301U9I8Z0QVqE4BsC
- yTrw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqdNwLMwMFG/Nlj2qm8DcMueMOHVzzFx3bKIu84E0J66PsGU2OXarRrdaewgvaEG2wV2QIWZUpl8Nra@nongnu.org
-X-Gm-Message-State: AOJu0YxIKYHj6pv8Qu0D71uMkWea+IVIgA9ixqHZM1xVBJt5rEJfL549
- PaRp2Y7WMUSRMOXcXFpb5MTLibjThz5bUMis3woYlJwimN51eUiUKxDOUJlXR2egQpHK23OqQlj
- twKIkuNyLFzCpdMlgdo3hDdmcWDYPv0wduqdvGNs1EHrbA3cP74tRl8qW
-X-Gm-Gg: AR+sD139eJqjNSFoFkzPGjarNxv+di/DUpl+fgNpsHm2GEXFUcXTIOecHi3qvxXye5I
- /dl6e3bZN692hnpXUNspbPT1xqEeO9TXm5MUzqc1Ig6qxXjLaBt2p48c3IBjR2NbY7LWcZu1r9p
- VQCcelv1HDUCpjL4Xh9ERUHNo6XAKnocZf5LE3AoJVd/Xc3dVKxOnBaVTa2ZS/pY6JsJp8ZoZLu
- 1CVbtPKKs6UWaNWvuoMO73XNKf2cqtf8tI0KyOsBAkyg4PBFnC9YNmfoL8QsC4YXvbiF0UwRdsO
- lvd5GXMcL+3KbctM6uC2xoxTqn2Xp3ht8lI6hzzUYf81iwCZMtmx4z3vFeRW4Kge4Sf2oU6ATWb
- scoh35PTpP+lpEg223LrTE+PMfBk0JQ+hiQ==
-X-Received: by 2002:a17:90b:35cc:b0:38e:5ab7:ce9b with SMTP id
- 98e67ed59e1d1-3931e2ba863mr6262589a91.21.1786617300499; 
- Thu, 13 Aug 2026 03:35:00 -0700 (PDT)
-X-Received: by 2002:a17:90b:35cc:b0:38e:5ab7:ce9b with SMTP id
- 98e67ed59e1d1-3931e2ba863mr6262541a91.21.1786617300006; 
- Thu, 13 Aug 2026 03:35:00 -0700 (PDT)
-Received: from rhel9-box.lan ([106.219.133.98])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.34.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 03:34:59 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Cc: Ani Sinha <anisinha@redhat.com>, ani@anisinha.ca, agraf@csgraf.de,
- graf@amazon.com, qemu-devel@nongnu.org, kraxel@redhat.com
-Subject: [PATCH v5 04/11] system/memory: add a tracepoint for
- memory_region_finalize
-Date: Thu, 13 Aug 2026 16:04:06 +0530
-Message-ID: <20260813103425.24474-5-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260813103425.24474-1-anisinha@redhat.com>
-References: <20260813103425.24474-1-anisinha@redhat.com>
+ d=1e100.net; s=20251104; t=1786617317; x=1787222117;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=E6bsn9NFfxkJnh520dPejRsEERuDcuHfX7DObfEzi1s=;
+ b=Kp5i6ya5koesvZ/KZjbqNqk/Dx6Mr9ETJpaTiegqgGuZl0ErdVYu4MLBYZJmtHR6DH
+ zXK49VR124UCP14+k8yw/Gx0+WnDF2uRaNh20yDGcxRijY6HCAxDgAsSsGrq+Jzg4wCp
+ tWVWhf9LD19NWQqgdYZ4/5rMQfcNiYucF9HbvEJZCQLdbPu5zCBadfaSNydJ5tZ+FkbC
+ W7mFei+ycoFuXrTLpg8hPMkuXFpOKmBySuhSDBz7PbdzGlcbJKCHsq75djIiISBGiWG5
+ 2hwZF9cmvjWX7W4wjKGBdSatqteZ0zZ8eah2Xakr4g8HJqgc5ervg1B0eg5uD559E2kV
+ gnOQ==
+X-Gm-Message-State: AOJu0YxjiqSTOFTDyVFGgPV4tpL/tbFlYnozq7Vh0TNQ1LoHkETcDbsR
+ pRzeGcqbg8krDqfHJ835UDS/g7eyh0Is6VAfw/ssZJOw9unm0hk8uy6XSqmnCU8T9Q==
+X-Gm-Gg: AR+sD11jUxw3IsddOeS31SKezDd7CWXxFsxyVrYNNjzKnfnyN6Q9wolz7Zxud7Wd6LF
+ PIt1em5W1UZZlcuak8wkof2+MLbUbTqc6ihNF8OKJJOh7lUAvJh1ywFHecPhFkCFQMhGooDv0G5
+ Ur6BGDF4iroPshn2u3BgXBO2PPCkWQDqnCuYhlxcE6sg2QmuQP8l84NsaQu5JCblM67R7s0OjhY
+ 3ExWlxModWIy52gu1TPjLVoN0to5NYbjGnhCaDzsFnxttxPBmNaYNComjwM5wsawkVRL7F7v/Uw
+ 8VUAJIShp5nRK5PtJnEr/FEve6K5T+MRKzNXss5XXnLyCyj2O1lJe7gxQrPy/UCVKw1WyjDO8LD
+ IuYgWZ0T5M5ejJ0lf0kC55AK8NLOIPjEbjhD5yY09/6Z/Wtv+bLfIA/ekRsDtqhzYXfNLf0Za/z
+ BN+XXBtbgBMHpV8Xke8htEAABdvYMqA6r5wTdH1on5eFKUHDTpdvQkLLf3LDWeWTt+NmYQN1A+V
+ XcfK8oem8Qq9CmH27BrdSnYfPf+XVSTlFKpxd1DN1yBhD8DpWRw
+X-Received: by 2002:a05:600c:3113:b0:493:c634:952 with SMTP id
+ 5b1f17b1804b1-499821aa438mr45883185e9.7.1786617317332; 
+ Thu, 13 Aug 2026 03:35:17 -0700 (PDT)
+Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
+ [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49981e47441sm41360855e9.4.2026.08.13.03.35.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Aug 2026 03:35:16 -0700 (PDT)
+Message-ID: <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
+Date: Thu, 13 Aug 2026 12:35:15 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Chuck Zmudzinski <brchuckz@aol.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel@lists.xenproject.org
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <20260802050824.10554-1-brchuckz@aol.com>
+Content-Language: en-US
+From: Jan Beulich <jbeulich@suse.com>
+Autocrypt: addr=jbeulich@suse.com; keydata=
+ xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
+ hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
+ 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
+ /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
+ O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
+ MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
+ nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
+ 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
+ Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
+ AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
+ e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
+ hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
+ IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
+ FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
+ t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
+ AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
+ HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
+ mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
+ m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
+ EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
+ wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
+ nAuWpQkjM1ASeQwSHEeAWPgskBQL
+In-Reply-To: <20260802050824.10554-1-brchuckz@aol.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=jbeulich@suse.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,41 +129,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cosmetic: add a tracepoint to track when memory regions are getting freed.
-Useful for debugging and tracking all freed memory regions.
+On 02.08.2026 07:08, Chuck Zmudzinski wrote:
+> Modern Intel IGD devices do not work well with the current
+> implementation of support for the Intel IGD in hvmloader because
+> it lacks support for an extended video bios table (VBT).
+> 
+> Code 43 errors in Windows guests and failure of the guest screen
+> to light up are some of the problems that occur with the
+> current implementation.
+> 
+> To address this problem, this patch implements support for
+> Intel IGD devices with an extended VBT and OpRegion version 2
+> and higher which is required for most modern Intel IGD devices.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- system/memory.c     | 1 +
- system/trace-events | 1 +
- 2 files changed, 2 insertions(+)
+First of all: Where's the spec of all of this?
 
-diff --git a/system/memory.c b/system/memory.c
-index 5fc36708ec..9485ba316f 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1730,6 +1730,7 @@ static void memory_region_finalize(Object *obj)
- {
-     MemoryRegion *mr = MEMORY_REGION(obj);
- 
-+    trace_memory_region_finalize(mr->name);
-     /*
-      * Each memory region (that can be freed) must have an owner, and it
-      * always has the same lifecycle of its owner.  It means when reaching
-diff --git a/system/trace-events b/system/trace-events
-index 51b4a4679a..0e1a4c5865 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -27,6 +27,7 @@ flatview_new(void *view, void *root) "%p (root %p)"
- flatview_destroy(void *view, void *root) "%p (root %p)"
- flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
- global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
-+memory_region_finalize(const char* name) "mr %s"
- 
- # physmem.c
- address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
--- 
-2.42.0
+> ---
+>[...]
+> 
+>  tools/firmware/hvmloader/Makefile         |   1 +
+>  tools/firmware/hvmloader/config.h         |  15 +-
+>  tools/firmware/hvmloader/e820.c           |   4 +-
+>  tools/firmware/hvmloader/intel_opregion.c | 297 ++++++++++++++++++++++
 
+Nit: Please use dashes in favor of underscores in new files' names.
+
+> --- a/tools/firmware/hvmloader/Makefile
+> +++ b/tools/firmware/hvmloader/Makefile
+> @@ -35,6 +35,7 @@ OBJS += smp.o cacheattr.o xenbus.o vnuma.o
+>  OBJS += e820.o pci.o pir.o ctype.o
+>  OBJS += hvm_param.o
+>  OBJS += ovmf.o seabios.o
+> +OBJS += intel_opregion.o
+
+While this list isn't well sorted, I think your addition still wants to move
+up by a line.
+
+> --- a/tools/firmware/hvmloader/config.h
+> +++ b/tools/firmware/hvmloader/config.h
+> @@ -7,9 +7,6 @@
+>  enum virtual_vga { VGA_none, VGA_std, VGA_cirrus, VGA_pt };
+>  extern enum virtual_vga virtual_vga;
+>  
+> -extern unsigned long igd_opregion_pgbase;
+> -#define IGD_OPREGION_PAGES 3
+> -
+>  struct bios_config {
+>      const char *name;
+>  
+> @@ -43,6 +40,18 @@ extern struct bios_config ovmf_config;
+>  
+>  #define PAGE_SHIFT 12
+>  #define PAGE_SIZE  (1ul << PAGE_SHIFT)
+> +#define IGD_OPREGION_PAGES 3
+> +#define IGD_OPREGION_SIZE ((IGD_OPREGION_PAGES - 1) << PAGE_SHIFT)
+
+This is odd, and hence wants a comment.
+
+> +#define IGD_OPREGION_RVDA 0x3ba
+> +#define IGD_OPREGION_RVDS 0x3c2
+> +#define IGD_OPREGION_VERSION 0x16
+> +#define IGD_OPREGION_MASK 0xfff
+> +#define IGD_OPREGION2_SUPPORT_MASK 0x1
+> +#define IGD_OPREGION_SIGNATURE "IntelGraphicsMem"
+> +#define IGD_VBT_SIGNATURE "$VBT"
+> +extern unsigned long igd_opregion_pgbase;
+> +extern uint32_t igd_opregion_e820_pages;
+> +void intel_opregion_setup(uint32_t vga_devfn);
+
+Blank lines please ahead of the new #define-s you add and between those new
+#define-s and the new decls.
+
+For igd_opregion_e820_pages I further cannot spot any use which would justify
+the use of a fixed-width type; unsigned int will do, and will then be in line
+with ./CODING_STYLE.
+
+> --- a/tools/firmware/hvmloader/e820.c
+> +++ b/tools/firmware/hvmloader/e820.c
+> @@ -243,11 +243,11 @@ int build_e820_table(struct e820entry *e820,
+>          nr++;
+>  
+>          e820[nr].addr = igd_opregion_base;
+> -        e820[nr].size = IGD_OPREGION_PAGES * PAGE_SIZE;
+> +        e820[nr].size = igd_opregion_e820_pages * PAGE_SIZE;
+>          e820[nr].type = E820_NVS;
+>          nr++;
+>  
+> -        e820[nr].addr = igd_opregion_base + IGD_OPREGION_PAGES * PAGE_SIZE;
+> +        e820[nr].addr = igd_opregion_base + igd_opregion_e820_pages * PAGE_SIZE;
+
+Are these new multiplications at risk of overflowing? I.e. how many pages can
+there be in an extreme case?
+
+> --- /dev/null
+> +++ b/tools/firmware/hvmloader/intel_opregion.c
+> @@ -0,0 +1,297 @@
+> +/*
+> + * intel_opregion.c: HVM Intel OpRegion setup.
+> + *
+> + * Leendert van Doorn, leendert@watson.ibm.com
+> + * Copyright (c) 2005, International Business Machines Corporation.
+> + *
+> + * Copyright (c) 2006, Keir Fraser, XenSource Inc.
+
+What do these cover?
+
+> + * Copyright (c) 2026, Charles Zmudzinski.
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program; If not, see <http://www.gnu.org/licenses/>.
+> + */
+
+Please use an SPDX line instead in new files.
+
+> +#include "util.h"
+> +#include "config.h"
+> +#include "pci_regs.h"
+> +
+> +unsigned long igd_opregion_pgbase = 0;
+> +uint32_t igd_opregion_e820_pages = IGD_OPREGION_PAGES;
+> +
+> +static bool verify_opregion(const uint32_t addr)
+> +{
+> +    const char *opregion_signature = IGD_OPREGION_SIGNATURE;
+> +    if ( memcmp((const void *)addr, (const void *)opregion_signature, 16) )
+> +        return false;
+> +    return true;
+> +}
+
+Style: Blank line please between declaration(s) and statement(s) as well as
+ahead of the main "return" of a function. There further isn't really a need
+for an if() or two return statements here. Also please avoid casts wherever
+possible. Finally, the local variable isn't really needed here either - the
+string literal can be passed directly to memcmp(). All of this helps
+readability as well.
+
+> +static bool verify_vbt(const uint32_t addr)
+> +{
+> +    const char *vbt_signature = IGD_VBT_SIGNATURE;
+> +    if ( memcmp((const void *)addr, (const void *)vbt_signature, 4) )
+> +        return false;
+> +    return true;
+> +}
+
+Same comments here, obviously (and potentially elsewhere).
+
+> +void intel_opregion_setup(uint32_t vga_devfn)
+> +{
+> +    uint32_t igd_guest_opregion;
+> +    uint32_t pages_needed; /* for OpRegion + VBT */
+
+The former probably wants to be fixed-width, but for the latter I see no need.
+
+> +    void *opregion_scratch;
+> +    void *vbt_scratch;
+> +    void *vbt_source;
+> +    /*
+> +     * absolute value in the host/guest except
+> +     * as noted in the comments
+> +     */
+
+Nit: Comment style (see ./CODING_STYLE).
+
+> +    static unsigned long rvda_host;
+> +    static unsigned long rvda_guest;
+
+Why static? The function can't be called more than once, if I'm not mistaken.
+
+> +    igd_opregion_pgbase = mem_hole_alloc(IGD_OPREGION_PAGES);
+> +    /*
+> +     * Tentative value for the number of pages to reserve
+> +     * in the E820 map for the OpRegion and VBT.
+> +     *
+> +     * This will be the final value for the E820 map if
+> +     * the device model lacks support for OpRegion 2 or
+> +     * if the host OpRegion version is < 2 or if we never
+> +     * allocate more pages in the E820 map for the VBT.
+> +     */
+> +    igd_opregion_e820_pages = IGD_OPREGION_PAGES;
+> +
+> +    /*
+> +     * Read the value the device model is initialized with.
+> +     * If the device model supports OpRegion 2, it will
+> +     * return the host IGD OpRegion address. If not, it
+> +     * will return 0. If the device model does not support
+> +     * OpRegion 2, the device model expects us to give it
+> +     * the address to which it will map the OpRegion in the
+> +     * guest and then expects us to do nothing more to setup
+> +     * the OpRegion, so that is all we will do in that case.
+> +     */
+
+Hmm, exposing the host opregion to a guest certainly feels like an issue.
+
+> +    const uint32_t igd_host_opregion = pci_readl(vga_devfn,
+> +                                                 PCI_INTEL_OPREGION);
+> +    if ( !igd_host_opregion ) {
+
+Nit (style) Brace placement (throughout).
+
+> +        printf("device model lacks extended VBT "
+> +               "support. Continuing with legacy support only\n");
+
+This message can easily confuse / worry people. (If it was to be kept, it
+would also need style adjustment.)
+
+> +        /*
+> +         * Write the the OpRegion offset to give the OpRegion
+> +         * address to the device model. The device model will trap
+> +         * and map the OpRegion at the give address.
+> +         */
+> +        pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+> +                   igd_opregion_pgbase << PAGE_SHIFT);
+> +        return;
+> +    } else {
+
+No need for "else" after an unconditional "return".
+
+> +        printf("host OpRegion address: 0x%x\n",
+
+The shorter %#x please (also elsewhere).
+
+> +               igd_host_opregion);
+> +    }
+> +
+> +    const uint32_t igd_host_opregion_page_offset =
+> +                   igd_host_opregion & IGD_OPREGION_MASK;
+
+I think like in the hypervisor we don't want to mix declarations and
+statements just yet.
+
+> +    igd_guest_opregion = (igd_opregion_pgbase << PAGE_SHIFT) |
+> +                          igd_host_opregion_page_offset;
+> +
+> +    /*
+> +     * We know at this point the device model supports
+> +     * OpRegion 2.
+> +     *
+> +     * Indicate to the device model that we support
+> +     * OpRegion 2 by setting the least significant bit
+> +     * of the address we give to the device model.
+> +     * The device model will notice this bit set and
+> +     * respond appropriately to our writes to the
+> +     * register where the OpRegion address is stored.
+> +     */
+
+Specifically noticeable here: Please make better use of line length in
+long(ish) comments.
+
+> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+> +               (igd_opregion_pgbase << PAGE_SHIFT) |
+> +                IGD_OPREGION2_SUPPORT_MASK);
+
+This looks to imply qemu is the only possible device model.
+
+> +    printf("guest OpRegion tentative "
+> +           "address: 0x%x\n", igd_guest_opregion);
+> +
+> +    if ( !verify_opregion(igd_guest_opregion) ) {
+> +        printf("error: IGD OpRegion signature "
+> +               "not found.\n");
+
+No full stop in messages please.
+
+> +        BUG();
+> +    }
+> +
+> +    opregion_scratch = scratch_alloc(IGD_OPREGION_SIZE, 0);
+> +    memcpy(opregion_scratch, (const void *)igd_guest_opregion,
+> +           IGD_OPREGION_SIZE);
+> +
+> +    /* Read OpRegion version, rvda_host, and rvds */
+> +    const uint16_t version = *(uint16_t *)(opregion_scratch +
+> +                                           IGD_OPREGION_VERSION);
+> +    printf("OpRegion version: 0x%x\n", version);
+> +    if ( version >= 0x0200 ) {
+> +        rvda_host = *(unsigned long *)(opregion_scratch +
+> +                                       IGD_OPREGION_RVDA);
+> +        /* It is convenient to make rvda_host absolute */
+> +        if ( version > 0x0200 )
+> +            rvda_host += igd_host_opregion;
+> +        printf("host VBT address: 0x%lx\n", rvda_host);
+> +    } else {
+> +        printf("guest OpRegion address: 0x%x\n", igd_guest_opregion);
+> +        rvda_host = 0;
+> +    }
+> +    const uint32_t rvda_host_page_offset = rvda_host &
+> +                                           IGD_OPREGION_MASK;
+
+Why host_page_offset here when ...
+
+> +    const uint32_t rvds = *(uint32_t *)(opregion_scratch +
+> +                                        IGD_OPREGION_RVDS);
+> +    const uint32_t rvds_page_offset = rvds & IGD_OPREGION_MASK;
+
+... it's just page_offset here, and when further you use it below to set
+rvda_guest?
+
+> +    printf("VBT size: 0x%x\n", rvds);
+> +
+> +    if ( !rvds || !rvda_host ) {
+> +        printf("guest OpRegion address: 0x%x\n", igd_guest_opregion);
+> +        rvda_host = 0;
+> +    }
+> +    /*
+> +     * Write rvda_host as 2 successive 32-bit values
+> +     * to communicate location of the VBT to the device
+> +     * model. If rvda_host is not 0, The device model
+> +     * unmaps the OpRegion and eventually maps the VBT
+> +     * after we also write the guest address where the
+> +     * VBT will be mapped.
+> +     *
+> +     * If we send rvda_host = 0 to the device model, it
+> +     * will assume we do not need OpRegion 2 support and
+> +     * it will not unmap the OpRegion.
+> +     */
+> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+> +               (uint32_t)(rvda_host & 0xfffffffful));
+> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
+> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+> +               (uint32_t)rvda_host_upper_32);
+
+Why would you need to communicate a host property to the DM?
+
+> +    /* In this case, we use the mapped OpRegion */
+> +    if ( !rvda_host )
+> +        return;
+> +
+> +    /*
+> +     * Update the number of pages the device model
+> +     * needs to map for us to get a copy of the VBT.
+> +     *
+> +     * N.B.: Here, igd_opregion_pgbase is really the page
+> +     * base of the location where the device model will
+> +     * map the VBT.
+> +     */
+> +    uint32_t vbt_pages_needed = rvds >> PAGE_SHIFT;
+> +    if ( rvds & IGD_OPREGION_MASK )
+> +        vbt_pages_needed++;
+> +    if ( vbt_pages_needed > igd_opregion_e820_pages ) {
+> +        igd_opregion_pgbase = mem_hole_alloc
+> +                              (vbt_pages_needed - igd_opregion_e820_pages);
+
+Nit: Indentation.
+
+> --- a/tools/firmware/hvmloader/pci.c
+> +++ b/tools/firmware/hvmloader/pci.c
+> @@ -43,7 +43,6 @@ uint64_t pci_hi_mem_start = 0, pci_hi_mem_end = 0;
+>  #define BAR_RELOC_THRESH GB(1)
+>  
+>  enum virtual_vga virtual_vga = VGA_none;
+> -unsigned long igd_opregion_pgbase = 0;
+>  
+>  /* Check if the specified range conflicts with any reserved device memory. */
+>  static bool check_overlap_all(uint64_t start, uint64_t size)
+> @@ -190,14 +189,7 @@ void pci_setup(void)
+>                  virtual_vga = VGA_pt;
+>                  if ( vendor_id == 0x8086 )
+>                  {
+> -                    igd_opregion_pgbase = mem_hole_alloc(IGD_OPREGION_PAGES);
+> -                    /*
+> -                     * Write the the OpRegion offset to give the opregion
+> -                     * address to the device model. The device model will trap 
+> -                     * and map the OpRegion at the give address.
+> -                     */
+> -                    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+> -                               igd_opregion_pgbase << PAGE_SHIFT);
+> +                    intel_opregion_setup(vga_devfn);
+>                  }
+
+With this preferably also drop the figure braces.
+
+Jan
 
