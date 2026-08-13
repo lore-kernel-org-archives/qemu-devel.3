@@ -4,64 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F4CC5AC67
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 03:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F0FC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 04:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuMIO-0003a9-0v; Wed, 12 Aug 2026 23:39:56 -0400
+	id 1wuMpX-0000QD-Om; Thu, 13 Aug 2026 00:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wuMIM-0003ZJ-0y; Wed, 12 Aug 2026 23:39:54 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1wuMIJ-0004Rj-Dk; Wed, 12 Aug 2026 23:39:53 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8DxC9J_PH1qxcgAAA--.2375S3;
- Thu, 13 Aug 2026 11:39:43 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [10.40.46.54])
- by front1 (Coremail) with SMTP id qMiowJDxCc56PH1qT+8CAA--.4096S3;
- Thu, 13 Aug 2026 11:39:42 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wuMpU-0000Pp-KQ
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 00:14:09 -0400
+Received: from mail-pz2-x00.google.com ([2607:f8b0:4864:3b::])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fritchleybohrer@gmail.com>)
+ id 1wuMpQ-0000Re-Uv
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 00:14:08 -0400
+Received: by mail-pz2-x00.google.com with SMTP id
+ 41be03b00d2f7-ca92f36c4acso523262a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 21:14:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786594441; x=1787199241; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=3XrzIrA1JuucWpBjA8Dkb9lEhb/qMMWIJ3x1kaDWT+c=;
+ b=j25KtU4AAY/a1HhNtG+CVXbFZtxZzIQEhilhbfoKA/N5BdDRmolIcwy/JTedHb6rN0
+ fMvKQFf7zaepkbPpRYrqmqQjNutdI9o5fxzVeqPQzejs1XoDzIJaDrrVQ4P+VWTo3UUD
+ isJZjpfQ2qa/Z3qaN9aplm/yDzJFD6t7MrXAV3l9fTSyAKNap2bPKXOahaedqSwdME86
+ w6gXN6pjJICCAXZotyuj9otANAhHLZ7ifJdjzIMsxTDcUrVfOBBOxYtbvX1gh1nxwjky
+ t4Lhrn0VKp/aAXsi1YadyZCSDQEbCRj0/RFDNv3rr0hL3hH/OKqW8C7DCbBKJQ4Fim7q
+ 9hXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786594441; x=1787199241;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=3XrzIrA1JuucWpBjA8Dkb9lEhb/qMMWIJ3x1kaDWT+c=;
+ b=qj6c5uoeD1pbhIOQ/ChBMs6IfAlF4GFgrGuDfJxGIt7wbnDcdDc5TokKld2dNne3Bc
+ Q9ZEXG+F6buwSyZD1tnWDsKGAb0Ml0OP5kwnL/LdjzN3lXtXPnT+iZkmDlRc+8oIJGfm
+ beG3AtFGjxtWTnmqwWaa3yLe+EJXrrRrWtdyG/VOMgH7lLnXWyVklCGSt8XINl0sXmju
+ fV0e9tVDY9ni88xfsctWfZZ8t4IpGzmMFnTR1DvObroP4IGVYsPxtbt2vQSDfV7pIhmD
+ Z9wzDSIpvyUFlCUM0w8pqAOF8Ujbpq9rlApZ/tJFzizLWNxCuZtaNPfwsi8k0muZ7PPs
+ 6ZRg==
+X-Gm-Message-State: AOJu0YwzgiA9FclIBzxogTVOHSZUWmrfkpPgRzZq1bPqGI5hp3TaJzNZ
+ MAWGr+cLJ/fGtPIGp+8T32dQOFPnNF46RacBB946mQUmD1vNUdKCOpVL+Cc974bi8uo=
+X-Gm-Gg: AR+sD13QvEttk16SihZ7p9ORSRRBnuAv70bLiTYB9ogYuy5Ym92/7LEPl9ZJlXKHtdY
+ N6/0HCEEHuwa2M2+jfbwRgcMma4akq+EqOGIdhVk7kdnm0Mp7/Cg1KH2QonxyZVrSb4Oubgh5Iv
+ NE43yPb4usLJCEQdCg2TC18LLgH/kNF1oWfNMayDmKKCbEzmA1tMA/ll4eibWD48JCAx00IH+GJ
+ 6lTbhEpATvu9sdT7mbB6wC2MtRYn+zxSf1HLOKwBeVLl/8QdexGMEnFN3wVYAHS/kA3ttHPsC3Q
+ FC6X1ZQBKJQy+WcPBcnNwiGsOLaYxz5Xz+fpn/blFgb5B1eUNpYkAUxcW/Se0/Xs6VWOIgzPstU
+ nMtbpiDTzHzmRLdZnzCiit2U5CEvKHljJ32gGS17knA2l/8ww1q7NsdidaMrnWnPKwwcAjMyf6N
+ P4aJFZ/L801DtWq8vtEk1cy8l//mokBAlmXRGPJW2viKvt/EbePCwaG2n+hbB9T2qacMSTWkjCY
+ Yqy3XsS1rZDyku/
+X-Received: by 2002:a05:6a00:331b:b0:84c:1cd2:142e with SMTP id
+ d2e1a72fcca58-84fc6e04488mr3122453b3a.23.1786594440970; 
+ Wed, 12 Aug 2026 21:14:00 -0700 (PDT)
+Received: from Dell-WorkStation.localdomain ([149.118.62.92])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cbef5cc4c9dsm423483a12.0.2026.08.12.21.13.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 21:14:00 -0700 (PDT)
+From: Zephyr Li <fritchleybohrer@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Bin Guo <guobin@linux.alibaba.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 1/5] hw/intc/loongarch_pch_pic: Validate htmsi_vector before
- indexing parent_irq
-Date: Thu, 13 Aug 2026 11:40:48 +0800
-Message-ID: <20260813034052.79094-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260813034052.79094-1-maobibo@loongson.cn>
-References: <20260813034052.79094-1-maobibo@loongson.cn>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Zephyr Li <fritchleybohrer@gmail.com>
+Subject: [PATCH] target/riscv: reject FMV.X.W and FMV.W.X with Zfinx
+Date: Thu, 13 Aug 2026 12:13:03 +0800
+Message-ID: <20260813041304.7618-1-fritchleybohrer@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxCc56PH1qT+8CAA--.4096S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZrWxXF18CFWfXF4DuFW3Jwc_yoW8uF47pF
- ZrCasIgr4ktr17Zr93C348ZF1ruF97Wr1IvFn3Kas2k39xAr18WFn3Xry7XF1xCas8JFyj
- v3yFg3yjqa1j9abCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
- vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
- jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1YL9UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:3b::;
+ envelope-from=fritchleybohrer@gmail.com; helo=mail-pz2-x00.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,70 +100,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+Zfinx excludes FMV.X.W and FMV.W.X, but QEMU currently accepts both
+instructions when Zfinx is enabled without the F extension.
 
-pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
-index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
-the array, but only 32 are used by the virt machine) causes an out-of-bounds
-read and a guest-triggerable QEMU crash.
+Require the F extension for these instructions so they raise an illegal
+instruction exception on Zfinx-only CPUs.
 
-Validate the vector before calling qemu_set_irq() in both the raise and lower
-paths and log a guest error if it is out of range.
+Add TCG regression tests for both instructions.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4108
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
 ---
- hw/intc/loongarch_pch_pic.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ target/riscv/tcg/insn_trans/trans_rvf.c.inc |  4 +--
+ tests/tcg/riscv64/Makefile.target           | 10 +++++++
+ tests/tcg/riscv64/test-zfinx-fmv-w-x.S      | 33 +++++++++++++++++++++
+ tests/tcg/riscv64/test-zfinx-fmv-x-w.S      | 33 +++++++++++++++++++++
+ 4 files changed, 78 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-zfinx-fmv-w-x.S
+ create mode 100644 tests/tcg/riscv64/test-zfinx-fmv-x-w.S
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 82e16be391..e87c7497c1 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+index e935523c93..70c66e9e25 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+@@ -428,7 +428,7 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
  {
-     uint64_t val;
-     int irq;
-+    uint8_t vector;
+     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    REQUIRE_EXT(ctx, RVF);
  
-     if (level) {
-         val = mask & s->intirr & ~s->int_mask;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr |= MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
-+            qemu_set_irq(s->parent_irq[vector], 1);
-         }
-     } else {
-         /*
-@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
-         val = mask & s->intisr & ~s->intirr;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
-+            qemu_set_irq(s->parent_irq[vector], 0);
-         }
-     }
- }
+     TCGv dest = dest_gpr(ctx, a->rd);
+     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
+@@ -531,7 +531,7 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
+ {
+     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    REQUIRE_EXT(ctx, RVF);
+ 
+     TCGv_i64 dest = dest_fpr(ctx, a->rd);
+     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index 4da5b9a3b3..23e1152a10 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -18,3 +18,13 @@ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
+ test-fcvtmod: LDFLAGS += -static
+ run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
++
++TESTS += test-zfinx-fmv-x-w
++test-zfinx-fmv-x-w: LDFLAGS = -nostdlib -static
++run-test-zfinx-fmv-x-w: QEMU_OPTS += \
++	-cpu rv64,f=false,d=false,zfa=false,zfh=false,zfhmin=false,zfinx=true
++
++TESTS += test-zfinx-fmv-w-x
++test-zfinx-fmv-w-x: LDFLAGS = -nostdlib -static
++run-test-zfinx-fmv-w-x: QEMU_OPTS += \
++	-cpu rv64,f=false,d=false,zfa=false,zfh=false,zfhmin=false,zfinx=true
+diff --git a/tests/tcg/riscv64/test-zfinx-fmv-w-x.S b/tests/tcg/riscv64/test-zfinx-fmv-w-x.S
+new file mode 100644
+index 0000000000..73c5c2b2bf
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zfinx-fmv-w-x.S
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include <asm/unistd.h>
++
++        .text
++        .globl  _start
++_start:
++        .option norvc
++
++        li      a0, 4
++        la      a1, sa
++        li      a2, 0
++        li      a3, 8
++        li      a7, __NR_rt_sigaction
++        scall
++
++        .word   0xf0030453
++
++        li      a0, 1
++        j       exit
++
++pass:
++        li      a0, 0
++
++exit:
++        li      a7, __NR_exit
++        scall
++
++        .data
++        .type   sa, @object
++        .size   sa, 32
++sa:
++        .dword  pass
++        .zero   24
+diff --git a/tests/tcg/riscv64/test-zfinx-fmv-x-w.S b/tests/tcg/riscv64/test-zfinx-fmv-x-w.S
+new file mode 100644
+index 0000000000..c4e853036f
+--- /dev/null
++++ b/tests/tcg/riscv64/test-zfinx-fmv-x-w.S
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include <asm/unistd.h>
++
++        .text
++        .globl  _start
++_start:
++        .option norvc
++
++        li      a0, 4
++        la      a1, sa
++        li      a2, 0
++        li      a3, 8
++        li      a7, __NR_rt_sigaction
++        scall
++
++        .word   0xe0030453
++
++        li      a0, 1
++        j       exit
++
++pass:
++        li      a0, 0
++
++exit:
++        li      a7, __NR_exit
++        scall
++
++        .data
++        .type   sa, @object
++        .size   sa, 32
++sa:
++        .dword  pass
++        .zero   24
 -- 
-2.54.0
+2.43.0
 
 
