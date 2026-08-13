@@ -4,116 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DF1C5CFEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4532CC5CFDB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSmf-0006AS-7p; Thu, 13 Aug 2026 06:35:37 -0400
+	id 1wuSmg-0006Ax-Cm; Thu, 13 Aug 2026 06:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wuSmS-00060n-LR
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:28 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wuSmP-0000EW-KY
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4954aff6088so14134475e9.3
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wuSmb-00069k-Nz
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wuSmW-0000RX-V6
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786617328;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1di8ahNryfKffmMgviXYdVAvvdxZpHsDhSvxH8DUWnU=;
+ b=Xj8Giu0+cAM/zddSQlnf1cvfdfGVDSlZ7vB+I5+5pSoyia2Sa1ExnNHF5hLW0T34jYCD/a
+ XL8vFTq00wuYUCKpRcRX28iaOCyyI6TmJlXGsnW33rtMokI4YWeYTf5xonxDRDPntXA3Rw
+ wgqjoOdsUo2GuiaTwsjgz7Lawbm6Qmc=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-257-pIeToWPwPA6IXOZdyv9dUw-1; Thu, 13 Aug 2026 06:35:24 -0400
+X-MC-Unique: pIeToWPwPA6IXOZdyv9dUw-1
+X-Mimecast-MFC-AGG-ID: pIeToWPwPA6IXOZdyv9dUw_1786617324
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38e5a616d07so2468261a91.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1786617317; x=1787222117; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=E6bsn9NFfxkJnh520dPejRsEERuDcuHfX7DObfEzi1s=;
- b=dKDtzo9+irPUkQSNWrZgnn0JhQMpOOhQu0b8dKaJU2GyUh0dbiB+49Hpa7FP63kumH
- NcCptDO1BVuOp+QuqxcD/js/yHSgzYWDVGq1RLFk3n42Lr2aRX1sxJjuUnSaEHS00HeO
- +CXDCk+eQY8XClqQQIk7ffyu08DGXL9Su1b27YeU2Egoi0Rey49a3U9SaYxo3zWlPVyV
- hhJVc9ofwMwzvEK826flqoQoSxL6omz70e5ppLRU7J9j+jNKrRVJhbiIzcczalM6RujO
- CNIQq2lA9ChJzN5Gx5dThcr/pe4eVbkYmG3Xr49/1xw3JI86jchT93/ptj4pK3spN2HF
- WL6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786617317; x=1787222117;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1786617324; x=1787222124; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=E6bsn9NFfxkJnh520dPejRsEERuDcuHfX7DObfEzi1s=;
- b=Kp5i6ya5koesvZ/KZjbqNqk/Dx6Mr9ETJpaTiegqgGuZl0ErdVYu4MLBYZJmtHR6DH
- zXK49VR124UCP14+k8yw/Gx0+WnDF2uRaNh20yDGcxRijY6HCAxDgAsSsGrq+Jzg4wCp
- tWVWhf9LD19NWQqgdYZ4/5rMQfcNiYucF9HbvEJZCQLdbPu5zCBadfaSNydJ5tZ+FkbC
- W7mFei+ycoFuXrTLpg8hPMkuXFpOKmBySuhSDBz7PbdzGlcbJKCHsq75djIiISBGiWG5
- 2hwZF9cmvjWX7W4wjKGBdSatqteZ0zZ8eah2Xakr4g8HJqgc5ervg1B0eg5uD559E2kV
- gnOQ==
-X-Gm-Message-State: AOJu0YxjiqSTOFTDyVFGgPV4tpL/tbFlYnozq7Vh0TNQ1LoHkETcDbsR
- pRzeGcqbg8krDqfHJ835UDS/g7eyh0Is6VAfw/ssZJOw9unm0hk8uy6XSqmnCU8T9Q==
-X-Gm-Gg: AR+sD11jUxw3IsddOeS31SKezDd7CWXxFsxyVrYNNjzKnfnyN6Q9wolz7Zxud7Wd6LF
- PIt1em5W1UZZlcuak8wkof2+MLbUbTqc6ihNF8OKJJOh7lUAvJh1ywFHecPhFkCFQMhGooDv0G5
- Ur6BGDF4iroPshn2u3BgXBO2PPCkWQDqnCuYhlxcE6sg2QmuQP8l84NsaQu5JCblM67R7s0OjhY
- 3ExWlxModWIy52gu1TPjLVoN0to5NYbjGnhCaDzsFnxttxPBmNaYNComjwM5wsawkVRL7F7v/Uw
- 8VUAJIShp5nRK5PtJnEr/FEve6K5T+MRKzNXss5XXnLyCyj2O1lJe7gxQrPy/UCVKw1WyjDO8LD
- IuYgWZ0T5M5ejJ0lf0kC55AK8NLOIPjEbjhD5yY09/6Z/Wtv+bLfIA/ekRsDtqhzYXfNLf0Za/z
- BN+XXBtbgBMHpV8Xke8htEAABdvYMqA6r5wTdH1on5eFKUHDTpdvQkLLf3LDWeWTt+NmYQN1A+V
- XcfK8oem8Qq9CmH27BrdSnYfPf+XVSTlFKpxd1DN1yBhD8DpWRw
-X-Received: by 2002:a05:600c:3113:b0:493:c634:952 with SMTP id
- 5b1f17b1804b1-499821aa438mr45883185e9.7.1786617317332; 
- Thu, 13 Aug 2026 03:35:17 -0700 (PDT)
-Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
- [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49981e47441sm41360855e9.4.2026.08.13.03.35.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Aug 2026 03:35:16 -0700 (PDT)
-Message-ID: <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
-Date: Thu, 13 Aug 2026 12:35:15 +0200
+ bh=1di8ahNryfKffmMgviXYdVAvvdxZpHsDhSvxH8DUWnU=;
+ b=C5fOAN6sqpRhVndSc7p6gFEPAyAYoOe2hsgQO1foWdeZLR+4KhRD6EwwoBu0Q7GxWv
+ T0C0084qM5SasqZXgQbsM+y9Nx82si9ZD2doi55JnNho3pmBkT2IY6AJf4JsWY94qC3n
+ IAmzGtNZCDKKtWsuGLL8fKryapVEpigEfFu0YxzEH47K23uplovlf+c6aee2X779JLIK
+ S1vZOCcvmtPVAXodc1ip1g/jPF1WAz+KNQULMyrAVe/VozBATegXYD4a2kXxa9F9HMBB
+ zXRPYi1gRbf8bHteYBDI7DJUZzHJocfxYO0hdZtF/AykUxxzrqf5oB2gm8JyrJcoB6tu
+ PEWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786617324; x=1787222124;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1di8ahNryfKffmMgviXYdVAvvdxZpHsDhSvxH8DUWnU=;
+ b=TmOWpSxhcsW+3OABZMb/2TKBGkhKlSo5o3w12M0yGCuJbamIH8prt7QBJifj05122S
+ RNzu8TRYvyTrYzBORrf9pO7Ga6w0m7LE1zup1zjlgnns4abPtUuAPcMO83NovTrqJuEO
+ rYFLOdBLpJVDROLQDKxhRSvQvguLEBXni30terVP2FHk/+CQWqQB+ws5ZSBZWSRpbNqF
+ DU+/lPLJwxN1AlKlEbThdFFceaBlrp3ScAQ+laRb1TbvOmNnUqdQyOnukuM70mP/qsNn
+ TW7/ZsDk+v3kapM6ezkh7MNiUl4i2a0rSVOhMFdVeSXkFhJXN8pfXRgVzZqNZ3EUT8EB
+ 4Sfg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqpIzBxYaL4IJPttb+TFvAHGw47JpQCnh7PktzrCT0kY9J0zHDCXv4RGbSl6XZhgZjUGfJF72SaBP9v@nongnu.org
+X-Gm-Message-State: AOJu0YyPC7tjNH3iRPNQm7Is6Hl+1zewfuQYtetdbw0VAj5I7GfBFRL9
+ zp58PnrQfyUNt2efGK5q07z4DuUQoJ9HSOAmaV4woe14bKK/tzKmJAn+ZqCq1V3lw3qLMgMioYr
+ I/XNH04IhdxpTKP0bjUrwuFGT4YROZ6gjG2SzHIrIrPg/o//PwHdiBjvP
+X-Gm-Gg: AR+sD13xmytdfzne8RWrLvUfrgVlqZtsHYXD/0HxscIz0hEPnAh1c3hsS6S6M4DljJE
+ rjEp+u2q02xU3u236GNOZFN/ukHUqfkcJ7C+o7KWMDVnZAX62IggizhQOyZi63j2+rXorbqPB9+
+ KnUMn72fSNVJ4ib8WmuYuVcOT6a47yNmA9BK8eps9CH2s4HBVFRj6Ekbeo/s6jydZ66dpV+NHPJ
+ ELsVtYHxDAb2jGqoFA6ZOwARhUYrlvbfhxt5ehN48cmfUbwXNotSftEtbqucr+QZhZT4dgqMpT0
+ toWuwtDK1txCAe8Q8oiLy6ksRvdwccNPG7LNfbiw57XVtSrNbvNSyuYCMBRzncaTcNOaJ7o84nw
+ xaoXHcL4KjOW5pmc3NmI0cXDeZ+zGXWmIaQ==
+X-Received: by 2002:a17:90b:4d08:b0:38e:9ef9:eb97 with SMTP id
+ 98e67ed59e1d1-3931e2bc877mr4615181a91.16.1786617323235; 
+ Thu, 13 Aug 2026 03:35:23 -0700 (PDT)
+X-Received: by 2002:a17:90b:4d08:b0:38e:9ef9:eb97 with SMTP id
+ 98e67ed59e1d1-3931e2bc877mr4615107a91.16.1786617322543; 
+ Thu, 13 Aug 2026 03:35:22 -0700 (PDT)
+Received: from rhel9-box.lan ([106.219.133.98])
+ by smtp.googlemail.com with ESMTPSA id
+ 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.35.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Aug 2026 03:35:22 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffman <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: ani@anisinha.ca, agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Subject: [PATCH v5 10/11] Add functional and unit tests for the
+ vm-launch-update device
+Date: Thu, 13 Aug 2026 16:04:12 +0530
+Message-ID: <20260813103425.24474-11-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20260813103425.24474-1-anisinha@redhat.com>
+References: <20260813103425.24474-1-anisinha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Chuck Zmudzinski <brchuckz@aol.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel@lists.xenproject.org
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
-Content-Language: en-US
-From: Jan Beulich <jbeulich@suse.com>
-Autocrypt: addr=jbeulich@suse.com; keydata=
- xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
- hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
- 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
- /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
- O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
- MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
- nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
- 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
- Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
- AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
- e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
- hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
- IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
- FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
- t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
- AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
- HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
- mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
- m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
- EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
- wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
- nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <20260802050824.10554-1-brchuckz@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=jbeulich@suse.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,384 +125,619 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02.08.2026 07:08, Chuck Zmudzinski wrote:
-> Modern Intel IGD devices do not work well with the current
-> implementation of support for the Intel IGD in hvmloader because
-> it lacks support for an extended video bios table (VBT).
-> 
-> Code 43 errors in Windows guests and failure of the guest screen
-> to light up are some of the problems that occur with the
-> current implementation.
-> 
-> To address this problem, this patch implements support for
-> Intel IGD devices with an extended VBT and OpRegion version 2
-> and higher which is required for most modern Intel IGD devices.
+This patchset adds functional and unit tests that exercize various functions
+and behaviors of vm-launch-update device. It uses the IGVM files that were
+introduced in the previous patch for exercizing the hypervisor interface.
 
-First of all: Where's the spec of all of this?
+CC: Alex Graf <graf@amazon.com>
+CC: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ tests/functional/aarch64/meson.build          |   4 +
+ .../aarch64/test_vm_launch_update_aarch.py    |  33 ++
+ tests/functional/x86_64/meson.build           |   4 +
+ .../x86_64/test_vm_launch_update.py           |  48 ++
+ tests/qtest/launchupdate-test.c               | 450 ++++++++++++++++++
+ tests/qtest/meson.build                       |   2 +
+ 6 files changed, 541 insertions(+)
+ create mode 100755 tests/functional/aarch64/test_vm_launch_update_aarch.py
+ create mode 100755 tests/functional/x86_64/test_vm_launch_update.py
+ create mode 100644 tests/qtest/launchupdate-test.c
 
-> ---
->[...]
-> 
->  tools/firmware/hvmloader/Makefile         |   1 +
->  tools/firmware/hvmloader/config.h         |  15 +-
->  tools/firmware/hvmloader/e820.c           |   4 +-
->  tools/firmware/hvmloader/intel_opregion.c | 297 ++++++++++++++++++++++
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index e81afd6c39..f0881bed16 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -25,6 +25,10 @@ tests_aarch64_system_quick = [
+   'vmstate',
+ ]
+ 
++if igvm.found()
++  tests_aarch64_system_quick += [ 'vm_launch_update_aarch' ]
++endif
++
+ tests_aarch64_system_thorough = [
+   'aspeed_ast2700a1',
+   'aspeed_ast2700a2',
+diff --git a/tests/functional/aarch64/test_vm_launch_update_aarch.py b/tests/functional/aarch64/test_vm_launch_update_aarch.py
+new file mode 100755
+index 0000000000..2b3d7cf4a3
+--- /dev/null
++++ b/tests/functional/aarch64/test_vm_launch_update_aarch.py
+@@ -0,0 +1,33 @@
++#!/usr/bin/env python3
++#
++# Check for vm-launch-update device.
++#
++# Copyright (c) 2026 Red Hat, Inc.
++#
++# Author:
++#  Ani Sinha <anisinha@redhat.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest
++
++class VmLaunchUpdateDeviceCheck(QemuSystemTest):
++
++    def aarch64_fail_test(self):
++        """
++        Currently the device is only supported for pc platforms.
++        """
++        self.vm.add_args('-machine', 'virt', '-device',
++                         'vm-launch-update,id=fwupd1')
++        self.vm.set_qmp_monitor(enabled=False)
++        self.vm.launch()
++        self.vm.wait()
++        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
++        self.assertRegex(self.vm.get_log(),
++                    r'This machine does not support vm-launch-update device')
++
++    def test_vm_launch_update(self):
++        self.aarch64_fail_test()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index 27b31f2e96..0353b2af8e 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -28,6 +28,10 @@ if not get_option('asan')
+   tests_x86_64_system_quick += [ 'memlock' ]
+ endif
+ 
++if igvm.found()
++  tests_x86_64_system_quick += [ 'vm_launch_update' ]
++endif
++
+ tests_x86_64_system_thorough = [
+   'acpi_bits',
+   'hotplug_blk',
+diff --git a/tests/functional/x86_64/test_vm_launch_update.py b/tests/functional/x86_64/test_vm_launch_update.py
+new file mode 100755
+index 0000000000..aac7ef915f
+--- /dev/null
++++ b/tests/functional/x86_64/test_vm_launch_update.py
+@@ -0,0 +1,48 @@
++#!/usr/bin/env python3
++#
++# Check for vm-launch-update device.
++#
++# Copyright (c) 2026 Red Hat, Inc.
++#
++# Author:
++#  Ani Sinha <anisinha@redhat.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest
++import time
++
++class VmLaunchUpdateDeviceCheck(QemuSystemTest):
++    DELAY_BOOT_SEQUENCE = 1
++
++    def vm_launch_update_pass(self):
++        """
++        Basic test to make sure vm-launch-update device can be instantiated.
++        """
++        self.vm.add_args('-device', 'vm-launch-update,id=fwupd1')
++        self.vm.set_qmp_monitor(enabled=False)
++        self.vm.launch()
++        time.sleep(self.DELAY_BOOT_SEQUENCE)
++        self.vm.shutdown()
++        self.assertEqual(self.vm.exitcode(), 0, "QEMU exit code should be 0")
++
++    def multiple_device_fail(self):
++        """
++        Only one vm-launch-update device can be instantiated. Ensure failure if
++        user tries to create more than one device.
++        """
++        self.vm.add_args('-device', 'vm-launch-update,id=fw1',
++                         '-device', 'vm-launch-update,id=fw2')
++        self.vm.set_qmp_monitor(enabled=False)
++        self.vm.launch()
++        self.vm.wait()
++        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
++        self.assertRegex(self.vm.get_log(),
++                         r'at most one vm-launch-update device is permitted')
++
++    def test_vm_launch_update(self):
++        self.vm_launch_update_pass()
++        self.multiple_device_fail()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/qtest/launchupdate-test.c b/tests/qtest/launchupdate-test.c
+new file mode 100644
+index 0000000000..89a117dfe4
+--- /dev/null
++++ b/tests/qtest/launchupdate-test.c
+@@ -0,0 +1,450 @@
++/*
++ * vmlaunchupdate device fwcfg test.
++ *
++ * Copyright (c) 2026 Red Hat, Inc.
++ *
++ * Author:
++ *   Ani Sinha <anisinha@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqos/libqos-pc.h"
++#include "libqtest.h"
++#include "standard-headers/linux/qemu_fw_cfg.h"
++#include "libqos/fw_cfg.h"
++#include "qemu/bswap.h"
++#include "hw/misc/vmlaunchupdate.h"
++
++#define WAIT_SEC 10
++static bool debug;
++static bool trace;
++static bool confidential;
++
++static void test_vm_launch_update_capability(void)
++{
++    QFWCFG *fw_cfg;
++    QTestState *s;
++    VMLaunchUpdate launch_update;
++    size_t filesize;
++    uint64_t capabilities;
++
++    if (!qtest_has_device("vm-launch-update")) {
++        g_test_skip("Device vm-launch-update is not available");
++        return;
++    }
++
++    s = qtest_init("-device vm-launch-update");
++    fw_cfg = pc_fw_cfg_init(s);
++
++    filesize = qfw_cfg_get_file(fw_cfg, FILE_VMLAUNCHUPDATE,
++                                &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++    capabilities = le64_to_cpu(launch_update.capabilities);
++    g_assert_cmpint(capabilities, ==, VM_LAUNCHUPDATE_FORMAT_IGVM);
++    pc_fw_cfg_uninit(fw_cfg);
++    qtest_quit(s);
++}
++
++
++static void test_vm_launch_update_disable(void)
++{
++    QFWCFG *fw_cfg;
++    QOSState *qs;
++    VMLaunchUpdate launch_update;
++    uint64_t control;
++    size_t filesize;
++
++    if (!qtest_has_device("vm-launch-update")) {
++        g_test_skip("Device vm-launch-update is not available");
++        return;
++    }
++
++    /* use default accelerator */
++    qs = qtest_pc_boot("-device vm-launch-update");
++
++    fw_cfg = pc_fw_cfg_init(qs->qts);
++
++    filesize = qfw_cfg_get_file(fw_cfg, FILE_VMLAUNCHUPDATE,
++                                &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++    control = le64_to_cpu(launch_update.control);
++    g_assert_cmpint(VM_LAUNCHUPDATE_CTL_DISABLE & control, ==, 0);
++
++    /* disable the device */
++    memset(&launch_update, 0, sizeof(launch_update));
++    launch_update.control |= VM_LAUNCHUPDATE_CTL_DISABLE;
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    /* try to clear the dsable flag */
++    memset(&launch_update, 0, sizeof(launch_update));
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    /* check if the device is still disabled */
++    filesize = qfw_cfg_get_file(fw_cfg, FILE_VMLAUNCHUPDATE,
++                                &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++    control = le64_to_cpu(launch_update.control);
++    g_assert_cmpint(VM_LAUNCHUPDATE_CTL_DISABLE & control, ==, 1);
++
++    pc_fw_cfg_uninit(fw_cfg);
++    qtest_shutdown(qs);
++}
++
++static void check_error(void)
++{
++    QFWCFG *fw_cfg;
++    QOSState *qs;
++    VMLaunchUpdate launch_update;
++    uint16_t status;
++    size_t filesize;
++
++    if (!qtest_has_device("vm-launch-update")) {
++        g_test_skip("Device vm-launch-update is not available");
++        return;
++    }
++
++    /* guest not started with IGVM and with default accelerator */
++    qs = qtest_pc_boot("-device vm-launch-update");
++
++    fw_cfg = pc_fw_cfg_init(qs->qts);
++
++    memset(&launch_update, 0, sizeof(launch_update));
++    launch_update.fw_image_size = 50;
++    launch_update.fw_image_addr = cpu_to_le64(0xdeadbeef);
++    launch_update.control |= VM_LAUNCHUPDATE_FORMAT_IGVM;
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    memset(&launch_update, 0, sizeof(launch_update));
++    filesize = qfw_cfg_get_file(fw_cfg, FILE_VMLAUNCHUPDATE,
++                                &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++    status = le64_to_cpu(launch_update.status);
++    /* should fail with NOT_IGVM_INIT */
++    g_assert_cmpint(status, ==, VM_LAUNCHUPDATE_NOT_IGVM_INIT);
++
++    memset(&launch_update, 0, sizeof(launch_update));
++    launch_update.fw_image_size = 50;
++    launch_update.fw_image_addr = cpu_to_le64(0xdeadbeef);
++    /* control set to 0, not VM_LAUNCHUPDATE_FORMAT_IGVM */
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    memset(&launch_update, 0, sizeof(launch_update));
++    filesize = qfw_cfg_get_file(fw_cfg, FILE_VMLAUNCHUPDATE,
++                                &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++    status = le64_to_cpu(launch_update.status);
++    /* should fail with LOAD_FAIL since it was not IGVM format */
++    g_assert_cmpint(status, ==, VM_LAUNCHUPDATE_LOAD_FAIL);
++}
++
++static int64_t get_image_size(const char *filename)
++{
++    int fd;
++    int64_t size;
++    fd = open(filename, O_RDONLY | O_BINARY);
++    g_assert_true(fd > 0);
++    size = lseek(fd, 0, SEEK_END);
++    close(fd);
++    return size;
++}
++
++static ssize_t load_image(const char *igvm_f, void **addr, size_t *size)
++{
++    ssize_t actsize = 0, l = 0;
++    int f_igvm_f;
++    size_t l_size;
++
++    f_igvm_f = open(igvm_f, O_RDONLY | O_BINARY);
++    g_assert_true(f_igvm_f);
++    l_size = get_image_size(igvm_f);
++    g_assert_true(l_size > 0);
++    *addr = g_malloc0(l_size);
++    g_assert_true(*addr);
++
++    while (l < l_size) {
++        actsize = read(f_igvm_f, *addr + l, 1);
++        if (actsize < 0) {
++            break;
++        }
++        l += actsize;
++    }
++
++    close(f_igvm_f);
++    *size = l_size;
++    return actsize < 0 ? -1 : l;
++}
++
++static guint32 match_string(char *serial_f, const char *exp_out)
++{
++    GError *error = NULL;
++    g_autofree gchar *f_contents = NULL;
++    g_autofree GRegex *regex = NULL;
++    g_autofree GMatchInfo *match_info = NULL;
++    gsize len;
++    guint32 count = 0;
++    gboolean ret;
++
++    ret = g_file_get_contents(serial_f, &f_contents, &len, &error);
++    g_assert(ret);
++    g_assert_no_error(error);
++
++    regex = g_regex_new(exp_out, G_REGEX_CASELESS, 0, &error);
++    g_assert_no_error(error);
++
++    ret = g_regex_match_full(regex, f_contents, -1, 0, 0, &match_info, &error);
++    g_assert_no_error(error);
++
++    while (g_match_info_matches(match_info)) {
++        gchar *word = g_match_info_fetch(match_info, 0);
++        g_free(word);
++        g_match_info_next(match_info, &error);
++        count++;
++    }
++    g_regex_unref(regex);
++    return count;
++}
++
++static int wait_for_match(char *serial_f,
++                          const char *exp_out, int64_t timeout_s,
++                          guint32 count)
++{
++    time_t start, delta;
++    int ret = -1;
++
++    start = time(NULL);
++    while (1) {
++        if (match_string(serial_f, exp_out) == count) {
++            ret = 0;
++            break;
++        }
++
++        delta = time(NULL) - start;
++        if (delta >= timeout_s) {
++            fprintf(stderr, "timed out waiting to read serial output\n");
++            break;
++        }
++
++        /* wait 20 ms before trying again */
++        if (false) {
++            fprintf(stderr,
++                    "sleeping 20 ms before checking serial output again.\n");
++        }
++        g_usleep(20000);
++    }
++    return ret;
++}
++
++static void test_load_igvm(void)
++{
++    const char *igvm_f;
++    const char *igvm_init;
++    int ser_fd;
++    g_autofree void *igvm_blob = NULL;
++    g_autofree char *serialtmp = NULL;
++    const char exp_out[] = "Hello world!";
++    const char exp_out2[] = "Test succeeded!";
++    const char exp_out3[] = "boot process complete with initial igvm";
++    const char *tracepoints = "--trace memory_region_finalize "
++        "--trace qigvm_cleanup_memory -D /tmp/qemu-debug.log ";
++    const char *snp, *cgs;
++    uint64_t gaddr;
++    size_t igvm_sz;
++    size_t filesize;
++    QFWCFG *fw_cfg;
++    QOSState *qs;
++    VMLaunchUpdate launch_update;
++
++    if (confidential) {
++        snp = "-object \'{\"qom-type\":\"sev-snp-guest\",\"id\":\"lsec0\","
++            "\"cbitpos\":51,\"reduced-phys-bits\":1,\"policy\":196608}\'";
++        cgs = "confidential-guest-support=lsec0";
++        /*
++         * The following two IGVM files can be built from the source
++         * present in https://gitlab.com/anisinha/virt-firmware-rs .
++         * Typing 'make' from the top of this repository will build the
++         * IGVM files for both confidential and
++         * non-confidential tests. The IGVM files for the non-coco
++         * case has been checked-in into the QEMU repository for
++         * convenience and easy CI pipeline testing.
++         */
++        igvm_f = "tests/data/igvm/snptest.igvm"; /*
++                                                  * this prints 'hello world'
++                                                  * on console
++                                                  */
++        igvm_init = "tests/data/igvm/snptest-nohello.igvm";
++    } else {
++        igvm_f = "tests/data/igvm/hello.igvm";
++        igvm_init = "tests/data/igvm/qemuinit.igvm";
++        snp = "";
++        cgs = "";
++    }
++
++    if (!trace) {
++        tracepoints = "";
++    }
++
++    if (!g_file_test(igvm_f, G_FILE_TEST_EXISTS) ||
++        !g_file_test(igvm_init, G_FILE_TEST_EXISTS)) {
++        g_test_skip("igvm file bundle(s) does not exist!");
++        return;
++    }
++
++    if (!qtest_has_machine("q35")) {
++        g_test_skip("q35 machine not available");
++        return;
++    }
++
++    if (!qtest_has_accel("kvm")) {
++        g_test_skip("No KVM accelerator available");
++        return;
++    }
++
++    if (!qtest_has_device("vm-launch-update")) {
++        g_test_skip("Device vm-launch-update is not available");
++        return;
++    }
++
++    ser_fd = g_file_open_tmp("launchupdate-qtest-serial-sXXXXXX",
++                             &serialtmp, NULL);
++    g_assert_true(ser_fd != -1);
++
++    if (debug) {
++        fprintf(stderr, "serial console file is %s\n", serialtmp);
++    }
++
++    qs = qtest_pc_boot("-machine q35,igvm-cfg=igvm0,%s -m 1G -accel kvm "
++                       "-device vm-launch-update %s "
++                       "-chardev file,id=serial0,path=%s "
++                       "-serial chardev:serial0 "
++                       "-object igvm-cfg,id=igvm0,file=%s %s",
++                       cgs, tracepoints, serialtmp, igvm_init, snp);
++
++    fw_cfg = pc_fw_cfg_init(qs->qts);
++
++    if (debug) {
++        fprintf(stderr, "target endianness: %s\n",
++                qtest_big_endian(qs->qts) ? "big" : "little");
++    }
++
++    /* exp_out3 should be printed once from initial boot */
++    g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 1) == 0);
++    g_assert_true(load_image(igvm_f, &igvm_blob, &igvm_sz) == igvm_sz);
++
++    /* create a data buffer in guest memory */
++    gaddr = guest_alloc(&qs->alloc, igvm_sz);
++
++    if (debug) {
++        fprintf(stderr, "guest paddr: %"PRIx64 "  igvm size: %lu\n",
++                gaddr, igvm_sz);
++    }
++
++    if (debug) {
++        fprintf(stderr, "writing igvm file into the guest memory\n");
++    }
++
++    qtest_bufwrite(qs->qts, gaddr, igvm_blob, igvm_sz);
++
++    if (debug) {
++        fprintf(stderr,
++                "tell hypervisor where igvm is loaded in guest memory\n");
++    }
++
++    /* now tell hypervisor where we loaded the bios */
++    memset(&launch_update, 0, sizeof(launch_update));
++    launch_update.fw_image_size = cpu_to_le64(igvm_sz);
++    launch_update.fw_image_addr = cpu_to_le64(gaddr);
++    launch_update.control |= VM_LAUNCHUPDATE_FORMAT_IGVM;
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    if (debug) {
++        fprintf(stderr, "resetting the virtual machine now\n");
++    }
++
++    qtest_system_reset(qs->qts);
++
++    /* expected string should be printed on the console */
++    g_assert_true(wait_for_match(serialtmp, exp_out, WAIT_SEC, 1) == 0);
++    g_assert_true(wait_for_match(serialtmp, exp_out2, WAIT_SEC, 1) == 0);
++
++    if (debug) {
++        fprintf(stderr, "hello world found on console\n");
++    }
++
++    /* check if VM_LAUNCHUPDATE_CTL_HOST_IGVM function works */
++
++    /* set VM_LAUNCHUPDATE_CTL_HOST_IGVM control */
++    memset(&launch_update, 0, sizeof(launch_update));
++    launch_update.control |= VM_LAUNCHUPDATE_CTL_HOST_IGVM;
++
++    filesize = qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
++                                  &launch_update, sizeof(launch_update));
++    g_assert_cmpint(filesize, ==, sizeof(launch_update));
++
++    /* now reset the guest */
++    if (debug) {
++        fprintf(stderr,
++                "resetting again in order to restore host provided IGVM\n");
++    }
++    qtest_system_reset(qs->qts);
++
++    /*
++     * exp_out3 should be printed twice, once from initial boot,
++     * once from restoring host igvm.
++     */
++    g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 2) == 0);
++
++    close(ser_fd);
++    guest_free(&qs->alloc, gaddr);
++    pc_fw_cfg_uninit(fw_cfg);
++    /* qtest_quit() kils QEMU, first by sending SIGTERM, then SIGKILL */
++    qtest_quit(qs->qts);
++}
++
++int main(int argc, char **argv)
++{
++    const char *arch = qtest_get_arch();
++
++    g_test_init(&argc, &argv, NULL);
++
++    if (strcmp(arch, "i386") && strcmp(arch, "x86_64")) {
++        g_printerr("vmlaunchupdate tests are only available on x86\n");
++        exit(EXIT_FAILURE);
++    }
++
++    g_test_add_func("/vm-launch-update/cap", test_vm_launch_update_capability);
++    g_test_add_func("/vm-launch-update/disabled",
++                    test_vm_launch_update_disable);
++
++    g_test_add_func("/vm-launch-update/errorcheck", check_error);
++    g_test_add_func("/vm-launch-update/load_igvm",
++                    test_load_igvm);
++
++    if (getenv("LAUNCHUPDATE_DEBUG")) {
++        debug = true;
++    }
++    if (getenv("LAUNCHUPDATE_TRACE")) {
++        trace = true;
++    }
++    if (getenv("COCO")) {
++        confidential = true;
++    }
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f7c7d06620..12ed368997 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -61,6 +61,8 @@ qtests_i386 = \
+   (config_all_devices.has_key('CONFIG_Q35') ? ['e820-test'] : []) +                          \
+   (config_all_devices.has_key('CONFIG_FW_CFG_DMA') ? ['vmcoreinfo-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_Q35') ? ['dump-test'] : []) +                         \
++  (igvm.found() and
++   config_all_devices.has_key('CONFIG_FW_CFG_DMA') ? ['launchupdate-test'] : []) +          \
+   (config_all_devices.has_key('CONFIG_I440FX') ? ['i440fx-test'] : []) +                    \
+   (config_all_devices.has_key('CONFIG_I440FX') ? ['ide-test'] : []) +                       \
+   (config_all_devices.has_key('CONFIG_I440FX') ? ['numa-test'] : []) +                      \
+-- 
+2.42.0
 
-Nit: Please use dashes in favor of underscores in new files' names.
-
-> --- a/tools/firmware/hvmloader/Makefile
-> +++ b/tools/firmware/hvmloader/Makefile
-> @@ -35,6 +35,7 @@ OBJS += smp.o cacheattr.o xenbus.o vnuma.o
->  OBJS += e820.o pci.o pir.o ctype.o
->  OBJS += hvm_param.o
->  OBJS += ovmf.o seabios.o
-> +OBJS += intel_opregion.o
-
-While this list isn't well sorted, I think your addition still wants to move
-up by a line.
-
-> --- a/tools/firmware/hvmloader/config.h
-> +++ b/tools/firmware/hvmloader/config.h
-> @@ -7,9 +7,6 @@
->  enum virtual_vga { VGA_none, VGA_std, VGA_cirrus, VGA_pt };
->  extern enum virtual_vga virtual_vga;
->  
-> -extern unsigned long igd_opregion_pgbase;
-> -#define IGD_OPREGION_PAGES 3
-> -
->  struct bios_config {
->      const char *name;
->  
-> @@ -43,6 +40,18 @@ extern struct bios_config ovmf_config;
->  
->  #define PAGE_SHIFT 12
->  #define PAGE_SIZE  (1ul << PAGE_SHIFT)
-> +#define IGD_OPREGION_PAGES 3
-> +#define IGD_OPREGION_SIZE ((IGD_OPREGION_PAGES - 1) << PAGE_SHIFT)
-
-This is odd, and hence wants a comment.
-
-> +#define IGD_OPREGION_RVDA 0x3ba
-> +#define IGD_OPREGION_RVDS 0x3c2
-> +#define IGD_OPREGION_VERSION 0x16
-> +#define IGD_OPREGION_MASK 0xfff
-> +#define IGD_OPREGION2_SUPPORT_MASK 0x1
-> +#define IGD_OPREGION_SIGNATURE "IntelGraphicsMem"
-> +#define IGD_VBT_SIGNATURE "$VBT"
-> +extern unsigned long igd_opregion_pgbase;
-> +extern uint32_t igd_opregion_e820_pages;
-> +void intel_opregion_setup(uint32_t vga_devfn);
-
-Blank lines please ahead of the new #define-s you add and between those new
-#define-s and the new decls.
-
-For igd_opregion_e820_pages I further cannot spot any use which would justify
-the use of a fixed-width type; unsigned int will do, and will then be in line
-with ./CODING_STYLE.
-
-> --- a/tools/firmware/hvmloader/e820.c
-> +++ b/tools/firmware/hvmloader/e820.c
-> @@ -243,11 +243,11 @@ int build_e820_table(struct e820entry *e820,
->          nr++;
->  
->          e820[nr].addr = igd_opregion_base;
-> -        e820[nr].size = IGD_OPREGION_PAGES * PAGE_SIZE;
-> +        e820[nr].size = igd_opregion_e820_pages * PAGE_SIZE;
->          e820[nr].type = E820_NVS;
->          nr++;
->  
-> -        e820[nr].addr = igd_opregion_base + IGD_OPREGION_PAGES * PAGE_SIZE;
-> +        e820[nr].addr = igd_opregion_base + igd_opregion_e820_pages * PAGE_SIZE;
-
-Are these new multiplications at risk of overflowing? I.e. how many pages can
-there be in an extreme case?
-
-> --- /dev/null
-> +++ b/tools/firmware/hvmloader/intel_opregion.c
-> @@ -0,0 +1,297 @@
-> +/*
-> + * intel_opregion.c: HVM Intel OpRegion setup.
-> + *
-> + * Leendert van Doorn, leendert@watson.ibm.com
-> + * Copyright (c) 2005, International Business Machines Corporation.
-> + *
-> + * Copyright (c) 2006, Keir Fraser, XenSource Inc.
-
-What do these cover?
-
-> + * Copyright (c) 2026, Charles Zmudzinski.
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program; If not, see <http://www.gnu.org/licenses/>.
-> + */
-
-Please use an SPDX line instead in new files.
-
-> +#include "util.h"
-> +#include "config.h"
-> +#include "pci_regs.h"
-> +
-> +unsigned long igd_opregion_pgbase = 0;
-> +uint32_t igd_opregion_e820_pages = IGD_OPREGION_PAGES;
-> +
-> +static bool verify_opregion(const uint32_t addr)
-> +{
-> +    const char *opregion_signature = IGD_OPREGION_SIGNATURE;
-> +    if ( memcmp((const void *)addr, (const void *)opregion_signature, 16) )
-> +        return false;
-> +    return true;
-> +}
-
-Style: Blank line please between declaration(s) and statement(s) as well as
-ahead of the main "return" of a function. There further isn't really a need
-for an if() or two return statements here. Also please avoid casts wherever
-possible. Finally, the local variable isn't really needed here either - the
-string literal can be passed directly to memcmp(). All of this helps
-readability as well.
-
-> +static bool verify_vbt(const uint32_t addr)
-> +{
-> +    const char *vbt_signature = IGD_VBT_SIGNATURE;
-> +    if ( memcmp((const void *)addr, (const void *)vbt_signature, 4) )
-> +        return false;
-> +    return true;
-> +}
-
-Same comments here, obviously (and potentially elsewhere).
-
-> +void intel_opregion_setup(uint32_t vga_devfn)
-> +{
-> +    uint32_t igd_guest_opregion;
-> +    uint32_t pages_needed; /* for OpRegion + VBT */
-
-The former probably wants to be fixed-width, but for the latter I see no need.
-
-> +    void *opregion_scratch;
-> +    void *vbt_scratch;
-> +    void *vbt_source;
-> +    /*
-> +     * absolute value in the host/guest except
-> +     * as noted in the comments
-> +     */
-
-Nit: Comment style (see ./CODING_STYLE).
-
-> +    static unsigned long rvda_host;
-> +    static unsigned long rvda_guest;
-
-Why static? The function can't be called more than once, if I'm not mistaken.
-
-> +    igd_opregion_pgbase = mem_hole_alloc(IGD_OPREGION_PAGES);
-> +    /*
-> +     * Tentative value for the number of pages to reserve
-> +     * in the E820 map for the OpRegion and VBT.
-> +     *
-> +     * This will be the final value for the E820 map if
-> +     * the device model lacks support for OpRegion 2 or
-> +     * if the host OpRegion version is < 2 or if we never
-> +     * allocate more pages in the E820 map for the VBT.
-> +     */
-> +    igd_opregion_e820_pages = IGD_OPREGION_PAGES;
-> +
-> +    /*
-> +     * Read the value the device model is initialized with.
-> +     * If the device model supports OpRegion 2, it will
-> +     * return the host IGD OpRegion address. If not, it
-> +     * will return 0. If the device model does not support
-> +     * OpRegion 2, the device model expects us to give it
-> +     * the address to which it will map the OpRegion in the
-> +     * guest and then expects us to do nothing more to setup
-> +     * the OpRegion, so that is all we will do in that case.
-> +     */
-
-Hmm, exposing the host opregion to a guest certainly feels like an issue.
-
-> +    const uint32_t igd_host_opregion = pci_readl(vga_devfn,
-> +                                                 PCI_INTEL_OPREGION);
-> +    if ( !igd_host_opregion ) {
-
-Nit (style) Brace placement (throughout).
-
-> +        printf("device model lacks extended VBT "
-> +               "support. Continuing with legacy support only\n");
-
-This message can easily confuse / worry people. (If it was to be kept, it
-would also need style adjustment.)
-
-> +        /*
-> +         * Write the the OpRegion offset to give the OpRegion
-> +         * address to the device model. The device model will trap
-> +         * and map the OpRegion at the give address.
-> +         */
-> +        pci_writel(vga_devfn, PCI_INTEL_OPREGION,
-> +                   igd_opregion_pgbase << PAGE_SHIFT);
-> +        return;
-> +    } else {
-
-No need for "else" after an unconditional "return".
-
-> +        printf("host OpRegion address: 0x%x\n",
-
-The shorter %#x please (also elsewhere).
-
-> +               igd_host_opregion);
-> +    }
-> +
-> +    const uint32_t igd_host_opregion_page_offset =
-> +                   igd_host_opregion & IGD_OPREGION_MASK;
-
-I think like in the hypervisor we don't want to mix declarations and
-statements just yet.
-
-> +    igd_guest_opregion = (igd_opregion_pgbase << PAGE_SHIFT) |
-> +                          igd_host_opregion_page_offset;
-> +
-> +    /*
-> +     * We know at this point the device model supports
-> +     * OpRegion 2.
-> +     *
-> +     * Indicate to the device model that we support
-> +     * OpRegion 2 by setting the least significant bit
-> +     * of the address we give to the device model.
-> +     * The device model will notice this bit set and
-> +     * respond appropriately to our writes to the
-> +     * register where the OpRegion address is stored.
-> +     */
-
-Specifically noticeable here: Please make better use of line length in
-long(ish) comments.
-
-> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
-> +               (igd_opregion_pgbase << PAGE_SHIFT) |
-> +                IGD_OPREGION2_SUPPORT_MASK);
-
-This looks to imply qemu is the only possible device model.
-
-> +    printf("guest OpRegion tentative "
-> +           "address: 0x%x\n", igd_guest_opregion);
-> +
-> +    if ( !verify_opregion(igd_guest_opregion) ) {
-> +        printf("error: IGD OpRegion signature "
-> +               "not found.\n");
-
-No full stop in messages please.
-
-> +        BUG();
-> +    }
-> +
-> +    opregion_scratch = scratch_alloc(IGD_OPREGION_SIZE, 0);
-> +    memcpy(opregion_scratch, (const void *)igd_guest_opregion,
-> +           IGD_OPREGION_SIZE);
-> +
-> +    /* Read OpRegion version, rvda_host, and rvds */
-> +    const uint16_t version = *(uint16_t *)(opregion_scratch +
-> +                                           IGD_OPREGION_VERSION);
-> +    printf("OpRegion version: 0x%x\n", version);
-> +    if ( version >= 0x0200 ) {
-> +        rvda_host = *(unsigned long *)(opregion_scratch +
-> +                                       IGD_OPREGION_RVDA);
-> +        /* It is convenient to make rvda_host absolute */
-> +        if ( version > 0x0200 )
-> +            rvda_host += igd_host_opregion;
-> +        printf("host VBT address: 0x%lx\n", rvda_host);
-> +    } else {
-> +        printf("guest OpRegion address: 0x%x\n", igd_guest_opregion);
-> +        rvda_host = 0;
-> +    }
-> +    const uint32_t rvda_host_page_offset = rvda_host &
-> +                                           IGD_OPREGION_MASK;
-
-Why host_page_offset here when ...
-
-> +    const uint32_t rvds = *(uint32_t *)(opregion_scratch +
-> +                                        IGD_OPREGION_RVDS);
-> +    const uint32_t rvds_page_offset = rvds & IGD_OPREGION_MASK;
-
-... it's just page_offset here, and when further you use it below to set
-rvda_guest?
-
-> +    printf("VBT size: 0x%x\n", rvds);
-> +
-> +    if ( !rvds || !rvda_host ) {
-> +        printf("guest OpRegion address: 0x%x\n", igd_guest_opregion);
-> +        rvda_host = 0;
-> +    }
-> +    /*
-> +     * Write rvda_host as 2 successive 32-bit values
-> +     * to communicate location of the VBT to the device
-> +     * model. If rvda_host is not 0, The device model
-> +     * unmaps the OpRegion and eventually maps the VBT
-> +     * after we also write the guest address where the
-> +     * VBT will be mapped.
-> +     *
-> +     * If we send rvda_host = 0 to the device model, it
-> +     * will assume we do not need OpRegion 2 support and
-> +     * it will not unmap the OpRegion.
-> +     */
-> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
-> +               (uint32_t)(rvda_host & 0xfffffffful));
-> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
-> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
-> +               (uint32_t)rvda_host_upper_32);
-
-Why would you need to communicate a host property to the DM?
-
-> +    /* In this case, we use the mapped OpRegion */
-> +    if ( !rvda_host )
-> +        return;
-> +
-> +    /*
-> +     * Update the number of pages the device model
-> +     * needs to map for us to get a copy of the VBT.
-> +     *
-> +     * N.B.: Here, igd_opregion_pgbase is really the page
-> +     * base of the location where the device model will
-> +     * map the VBT.
-> +     */
-> +    uint32_t vbt_pages_needed = rvds >> PAGE_SHIFT;
-> +    if ( rvds & IGD_OPREGION_MASK )
-> +        vbt_pages_needed++;
-> +    if ( vbt_pages_needed > igd_opregion_e820_pages ) {
-> +        igd_opregion_pgbase = mem_hole_alloc
-> +                              (vbt_pages_needed - igd_opregion_e820_pages);
-
-Nit: Indentation.
-
-> --- a/tools/firmware/hvmloader/pci.c
-> +++ b/tools/firmware/hvmloader/pci.c
-> @@ -43,7 +43,6 @@ uint64_t pci_hi_mem_start = 0, pci_hi_mem_end = 0;
->  #define BAR_RELOC_THRESH GB(1)
->  
->  enum virtual_vga virtual_vga = VGA_none;
-> -unsigned long igd_opregion_pgbase = 0;
->  
->  /* Check if the specified range conflicts with any reserved device memory. */
->  static bool check_overlap_all(uint64_t start, uint64_t size)
-> @@ -190,14 +189,7 @@ void pci_setup(void)
->                  virtual_vga = VGA_pt;
->                  if ( vendor_id == 0x8086 )
->                  {
-> -                    igd_opregion_pgbase = mem_hole_alloc(IGD_OPREGION_PAGES);
-> -                    /*
-> -                     * Write the the OpRegion offset to give the opregion
-> -                     * address to the device model. The device model will trap 
-> -                     * and map the OpRegion at the give address.
-> -                     */
-> -                    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
-> -                               igd_opregion_pgbase << PAGE_SHIFT);
-> +                    intel_opregion_setup(vga_devfn);
->                  }
-
-With this preferably also drop the figure braces.
-
-Jan
 
