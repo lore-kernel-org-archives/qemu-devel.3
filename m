@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C41C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 20:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF08C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 20:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wubhe-0004tr-Uv; Thu, 13 Aug 2026 16:07:02 -0400
+	id 1wucCy-0002Fd-3J; Thu, 13 Aug 2026 16:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wubhd-0004ti-J5
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 16:07:01 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wubhb-0002c8-Bt
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 16:07:00 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-81f3b227a4aso4588997b3.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 13:06:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786651618; cv=none;
- d=google.com; s=arc-20260327;
- b=FFtlfns/rRDcAenYM562ks7FQlklkey9G1knEm3t1DKsGwV+4ZvpUJC+VC3KnwsbzC
- mCBElFw6ixSTJzrEnh/GgfwxmKbMl6ujh8sNq5Fgb0qhyCpPisLnyTpi5bU9dPENs6Ar
- BD6+binciuVtoKURQs2LbWUscEzGuJH01vurh3bidd5vuxf5397TW8UtgwGUxK5lUXfY
- i29xBy7rWiEFr1jeQCGdfBp7890OuiIyg9KZdr6dWIaRBvoJNHgcTvC9+IubrYxu/1oX
- vV8/h/EcKtvZlwKo4wgxZ+aGXSpU+isJPbLVlikqLWPy+FSfSaKL5usQEQENPcfJUpYN
- BE/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=KHOgdoFsf+8CJ+0Rgi6BCfAS0yth824lzhfMBC7rq0U=;
- fh=3/HqoMUL958dxlf20leouQVYNacWzO7FmfKgXVQh2Sw=;
- b=iKGXwSMRtjma8Qa6LyoY+TL3G9D8K9QveSq9ldfv7HXOvmAH4C4yZpuCrCgrUeGOJx
- keWYvLnZu8d4Mal8XW342optZ+dhBCTBWm+Z3pgm5yQ6K+utLZX5yy8Azr7YD49pyJ+y
- eptYrzKDV8WZHCPBfsqqytMUn+gduF8XUjkd0wha6WZuRtkKharAnAcx/Yrxg13p7vz1
- d8DIqzeQXRh/37/Yls8e2ULX3RAImI3DVzuGJZKIuCzX9YlcW9gnTe0vszbWlFVOE4j3
- HI62da1PXy8dbRoCDM8aBVZWN3uJt7c44GIXlxShKygPbVzgKZndwxWOlx3vSNJ+37Qz
- qJhw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786651618; x=1787256418; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KHOgdoFsf+8CJ+0Rgi6BCfAS0yth824lzhfMBC7rq0U=;
- b=Ck1iYoSZFr0Zi5zPqLQuVrND/y57wzK5D1scXH3fQAbW1881y9HSkCCmNjaWzCm5FD
- 9fgq4AMTPU68j+yrzxwaEHKEzH7nmhpcFJKqEH5q6Mcg3gtwIoKiPrcrRhWhepqtxFRH
- ojFIaFGXP0fhV0nb3k8zxHrPRblp7UL1dpdZZ+StOkhiMSv/0iYysYSgdPRUQACJqp+B
- GbdxKQCpRXIYhuPYyG+ZBuDmMO/mg/NmmdCLvlJ6JC9KR6krIibyDvmQLr8IvxPnzSqL
- 0jyDwZnEcwyBloYVTfgppx2a9YeH/kmnnYPNXF0ORmBruyAKqUsejyPaqQcepZDjrTVS
- zWnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786651618; x=1787256418;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=KHOgdoFsf+8CJ+0Rgi6BCfAS0yth824lzhfMBC7rq0U=;
- b=KIHR8mLUhNJZy0Dbzfm7TqdyXJgFM4ymAumHjk3waSP6eTn7L4gmZdsScoA8lJzTNS
- rpKO6fTGEEu8ECd55yg5eHzstjcIg5uuQJlf6cKHdcQyQn1XxNfkUiBh5zyWfqUgcp0B
- bCt8ofblHqTXhtuaqUoEP4nt3MzSk0P4dwQa5WSUcBu8mf+qmcEyoTubHNRGDwEexU5n
- xUcId20Vjg4kand1kAKux9Pg+e4FalNvCGuUksxUkoDIYtH4Oqh7olUVpliVijxCJCEw
- lM0PhpsZbKHIc735YWNXm14oYWcn08+HoSiS7V4vF+XNYUIAJSEuaJO8PKZ1XoOCHhog
- kVQg==
-X-Gm-Message-State: AOJu0YxPMXPyAbEWDtMP78sDJtVkN7pVfLMuc+NztnEMSSwz1lxLfrGw
- SZwj0okwDuU1FkX/q3SOW0ttb/+abQ/2aMTq+dzQ5qJh1cAXEsnf0U6rBkACLE9dDilTGKf372n
- f4Ed6gtp8BmiZ22gL9Gtd1t2ON/GIE1ba4t5G7grfvg==
-X-Gm-Gg: AR+sD12CT0fVcRZi3EIv/Cgs/mAyCfclO0S8aRASk/SUok6duCUsDzgaOE3g0WdgDVV
- 1ZsG3qiHdqcyNoVDDYUqjw0+GeuuvjSSE+rOcWa7AJHjhenAPqCxdhJebIGgsphrDHsgFNGv/t9
- IyoNJWVA7QIJ+EgQmoTSlBOwxePfCQYTT6DYCsDNbdCy9eriDE28huGZot+3fIhfPmvLaQjLWHy
- fJ5IsgGuo+Vjeae2oVkKF0QkF3YFNNDGDUEd9cVQi5gBBpkCLBCXbF5OXyHnfGtD4iHLv0/lR9P
- rXSb6umwa3wNrxMTc2huF/Hg7x7S5v6K2ZbmQM9a7Mt2guT54xJaytYXlU45TyZn7VRQIqDeWg8
- okfFzkvWOjj7sZ4XgQt16CP52WA5o
-X-Received: by 2002:a05:690c:4987:b0:81e:3965:40b5 with SMTP id
- 00721157ae682-83712ac4781mr3160807b3.28.1786651611521; Thu, 13 Aug 2026
- 13:06:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wucCw-0002FR-6I; Thu, 13 Aug 2026 16:39:22 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wucCt-0000rU-LF; Thu, 13 Aug 2026 16:39:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786653523; bh=1INQlZ0UVuxeCzbSGwc2Gkl44IaYGUkpPGHTrTNRsUA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=OlMcAVPTQb3yEm2et0AnzH2NrbXEjkONrNZgOGj054YDa7VHELcBG8rgglB46xAt1
+ RgGz2rMvYaCTn9sSdoMs4Ai0o3KZE86CHOoVsLvjn7QXnZW74CS8hF15EoDTJ/ApZe
+ O0R2GWoENjQNFEXWsv9dfDRg0+NGNFD7+XdKcyZHchQoQWkhfR4G28fbznNMdUjI81
+ dcQ1yEoP8k6ATjNizorvQu7t6Ej99KeBgT9Zx8KAfrd8Ak5aGWyis3fgeutoNntgOe
+ Ez8nZOBlbPiX1E+fLChSKZZEtKvlmhnfVxLM54U0GQNH/hdq9cwkYVUCsiBg7vT1Cs
+ BlDnPQhaGFRbg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id EFB121CAE25;
+ Thu, 13 Aug 2026 23:38:43 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D78B40AA00;
+ Thu, 13 Aug 2026 23:38:57 +0300 (MSK)
+Message-ID: <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
+Date: Thu, 13 Aug 2026 23:38:31 +0300
 MIME-Version: 1.0
-References: <20260812154220.1029828-1-brian.cain@oss.qualcomm.com>
- <20260812154220.1029828-8-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260812154220.1029828-8-brian.cain@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 13 Aug 2026 21:06:40 +0100
-X-Gm-Features: AUfX_myJxvymJ6UBdzb6yCkuoAZlDyjZJhrVhlz5izfqLlu0Cq2rMMBIMefJNU8
-Message-ID: <CAFEAcA_K46rbeDZb7adfLFpQnbd8FrBDanEv9xZ6423eBbgHZQ@mail.gmail.com>
-Subject: Re: [PULL v2 07/41] hw/intc: Add l2vic interrupt controller
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- Sid Manning <sidneym@quicinc.com>, 
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- Damien Hedde <damien.hedde@dahe.fr>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
+To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20260812171707.1605637-1-farman@linux.ibm.com>
+ <20260812171707.1605637-16-farman@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260812171707.1605637-16-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,80 +114,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Aug 2026 at 16:48, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> From: Sid Manning <sidneym@quicinc.com>
->
-> The Hexagon DSP requires an L2VIC to route up to 1024 external
-> interrupt sources through 4 VID output groups into the core's 8
-> interrupt inputs.  Add a device model for it.
+On 8/12/26 20:17, Eric Farman wrote:
+> Update the s390 bios with recent fixes for out-of-bounds accesses.
+> 
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw.img | Bin 104136 -> 104216 bytes
+>   1 file changed, 0 insertions(+), 0 deletions(-)
 
-Hi; Coverity spotted an issue in this commit. I have also a drive-by
-observation or two since I was reading this patch anyway, which
-you can feel free to ignore if you like. The actual bug is the last thing.
+How do you guys build s390x-ccw.img - which compiler version(s) are
+used for that?
 
-> diff --git a/hw/intc/hex-l2vic.c b/hw/intc/hex-l2vic.c
-> new file mode 100644
-> index 00000000000..f07ec850d49
-> --- /dev/null
-> +++ b/hw/intc/hex-l2vic.c
-> @@ -0,0 +1,556 @@
-> +/*
-> + * QEMU L2VIC Interrupt Controller
-> + *
-> + * Arm PrimeCell PL190 Vector Interrupt Controller was used as a reference.
+Since we're updating source files in the stable series, where this
+image is not the same as in current master, I'll have to rebuild
+it after patching.  Now I wonder how should I build it.
 
-Side note: the pl190 model is very old code and I wouldn't
-necessarily recommend using it as a reference for anything new.
+In official debian we always build it from source, and there were no
+complains - maybe because no one uses debian to run qemu-system-s390x? :)
 
-> +static void bitmap32_write_word(uint32_t *bitmap, int word_offset, uint32_t val)
-> +{
-> +    bitmap[word_offset] = val;
-> +}
-> +
-> +static void bitmap32_clear_word(uint32_t *bitmap, int word_offset,
-> +                                uint32_t mask)
-> +{
-> +    bitmap[word_offset] &= ~mask;
-> +}
-> +
-> +static void bitmap32_set_word(uint32_t *bitmap, int word_offset, uint32_t mask)
-> +{
-> +    bitmap[word_offset] |= mask;
-> +}
-> +
-> +static uint32_t bitmap32_read_word(uint32_t *bitmap, int word_offset)
-> +{
-> +    return bitmap[word_offset];
-> +}
+Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
+building the image?
 
-You might also consider the approach the gicv3 takes for these
-bitmap arrays, where we have a gic_bmp_ptr32() function that returns
-a uint32_t* of the appropriate word in the bitmap. That lets you
-write arbitrary operations like
+Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
+here's the list:
 
-   *gic_bmp_ptr32(bmp, irq) |= value;
+  b2b5dec9295 s390x: Enable boot menu for virtio pci device
+  d0473643803 pc-bios/s390-ccw: write IPLB location for non-net virtio devices
+  e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI device on s390x
+  084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for multi-queue virtio configurations
+  730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
+  c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
 
-   *gic_bmp_ptr32(bmp, irq) &= ~value;
+I think I can pick all that stuff for 11.0.x series just fine, to avoid
+(re)building the image for 11.0.x series.
 
-etc
+For 10.0.x, things are really much larger:
 
-rather than having to write a function for every operation you want to do.
+  14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling with DEBUG enabled
+  d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
+  40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
+  5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
+  d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
+  4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
+  ada7a60056c pc-bios/s390-ccw: Store device type independent of sense data
+  4228a92b2a3 s390x: Remove duplicate definitions of IPL types
+  dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed boot attempt
+  5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
+  1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
+  acb00a7aae4 pc-bios/s390-ccw: link statically
+  fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via pxelinux.cfg
+  47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
+  108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
+  a4adf071dc7 pc-bios/s390-ccw: Allow to select a different pxelinux.cfg entry via loadparm
 
-> +static void fastl2vic_write(void *opaque, hwaddr offset, uint64_t val,
-> +                            unsigned size)
-> +{
-> +    if (offset == 0) {
-> +        uint32_t cmd = (val >> 16) & 0x3;
-> +        uint32_t irq = val & 0x3ff;
-> +        uint32_t slice = (irq / 32) * 4;
-> +        val = 1 << (irq % 32);
+basically it's whole virtio and pci support added, which might be too much?
+Please note that 10.0.x is an LTS series, also used in current debian stable
+(trixie), so maybe it is also okay to pick everything up to this series, to
+bring the image in-line with current development.
 
-Anyway, this is the Coverity issue: this should be "1ULL << ...".
-Otherwise the shift happens on "int", and if we shifted by 31 then
-the value gets sign extended into val rather than zero extended
-as you might have expected. This is CID 1685261.
+In this case I'll just pick the commits updating the image too :)
 
-thanks
--- PMM
+What do you think?
+
+Thanks,
+
+/mjt
 
