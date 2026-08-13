@@ -4,112 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EABEC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6427C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 17:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYld-0004nK-AE; Thu, 13 Aug 2026 12:58:57 -0400
+	id 1wuYoC-0005ai-5V; Thu, 13 Aug 2026 13:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wuYlc-0004n2-64
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:58:56 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuYoA-0005aR-If
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 13:01:34 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wuYla-0007Xw-Lf
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 12:58:55 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-836d2861a39so1115207b3.2
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 09:58:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786640332; cv=none;
- d=google.com; s=arc-20260327;
- b=G3dzBzcDGSCS0XKJ+oTwUcytpTB3ENJRQjZ/0qxzSN6/DQ8COh2rov7erN2QBIXR5E
- 0qsgizMbWReH35HdFDZfEo+w1bpvVKCr2OzmsznxPnqhQFkkhITCH1cjcK3+Pd7BfcJE
- UYPko9BZvRWo0IJ9MAE9uCMA+aDv0Ln8zbt5qn4fMxCduolM+zUnLZPKfwvUTM81xfNO
- QqBD6V2+REBznfjjpxpvPLVPyaEeMeeIyAvwS7qPU4g1ZdAHPzX0gxpt/Ygvcipov1DF
- pv5Dzb0nAzpoMPfli3tfTnzep3LQR9TcNTrOksVv0i3PqQ4y7nNm8vgRQkmzIyrkeQhz
- +M5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
- fh=ETXTBPOzNiWPh6W4ECmIvO7kfsb53R8ucT1RDsY0Uog=;
- b=f2VSqIfUIecJrN80jdJVb5HYyeWeMWsB17VrfmVH8op6lMxtnqbhQ2uYppjRmBb08B
- Ba2bbVt7HieALelSbwEozECqP9pUPPATzqYWY1c/AuyK452mHbjajw1y8RBq822FwBP/
- 3Gv8+Btqd10TFr4H2acF/HC/wEyyXaIXhqCL5WULf03FlfEJa9ajwfhhbMpFNenqvdN/
- c0eSaqAYeqw24A4aYvQNFdGScmo5brW9ZxT6/sM8A0/ybKtu+8zA4eR38S9wZ7nnQVAP
- LfpSVDuVeGydVMkGT/Vw8w4FXMIu14YIpTmYtBWoGustS/+8xlVLj/M0yf/jkBdcFF+r
- zI3A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wuYo8-00084D-Uk
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 13:01:34 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-cbedbaba5fdso54449a12.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 10:01:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786640332; x=1787245132; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
- b=LgJKqU50G3C9Cgr354hgoJ1HavMMz3+UPekm+VFRKlBl216kQCxH8QbR/QDEbmNKp8
- irsO7UBbS6mEDerg30zvTTNi9/fyDSwlIbDrsvcAvThEFM1mdHZ/8+qzOZtrKN6vsksO
- sHQLCfbM9XtZDgX0ySJEAGoMbpr0kkCYvTc79GWzZIDa4ZuqippHCqjxkylRAtEiZut+
- Z1O1H1s+QDYGKoZlv4uk2u0Vf7vfw4JALQZocSV17lSY7Tf6FBYMIj7IqxfWghYGFqfa
- Yifl1fVWS31+e5YGM326UDS+QN0VnFqoUsLP4OmAB6ejGAcShUl0XoBRx+nDnT5iaBaz
- QJUA==
+ d=linaro.org; s=google; t=1786640491; x=1787245291; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DLfpUBMP/6htYTpWi7cMeNlaRu5yNDjLu/vsvmKG3tI=;
+ b=KFN2ElWrmbGIkml/JZS8wyWlta2AkyfGOCggRWUehoBnmjqk6hbOsI/Kfl54hEmixF
+ WaVRb7ftxtohLwPIDpOtTG8fbSB8DJbS+0HbozfE2td90b2Eu4zedcPdBzLQKrtaZXAW
+ +rFDFCaoxoBD+2yCYrP4Mk/i6Khz/XkxSUXsZO5/5wo/wBpCHNQDYUZiAScphLJ2+ebN
+ LsTMtXs5qzHRmQd5ie5wXex8jVf31e8/EIC3B2Ml6+h4/+/7vpmh4hY1whTKQ8d2RLUg
+ 4Do9LSTQyxSpqSnPwQB4g+lDHU6tPoFdupd1CtZd9fb1ExoGdDfnGxK4VWJwNVyCdw9r
+ D/TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786640332; x=1787245132;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MP18d/TC71YUOxdO0/YRDfuHPRMgw0QU6l5dRxileKk=;
- b=B5zyEabcDObkuNFJusEiTBvZx8YWT7fI0mj3LrbpA7V6blAQosXrx2n9jvYp0rKiOl
- 0rfKJ5pRRgYkhESt7L3lOLt+m/LR9z3nNPRxLvLUyhwZIZZ8Yjca2E1hU6MdL/29h460
- hdd7eHAI8fMfQVlNVoc4frFq6xAMzef0AdBT43TL14pTyXb+oJG00JI1pi+rcvg0Y4Zv
- z6aU9og8RnwFZaUmvqH01FSqC/DEUAKnHIZ0TY6cOJkjVDb2B8QjNrydU4VnJlXom0NW
- AKhbEjRCqIOO35rrFijXAFqiKH1e5OQ5uV9JYxrh9syUue4SGvJgzJyxevPw5Y6fQ+bP
- J6Mw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpelCTQSdw0sF1eBpI9RBhSz0m8nrojXUvGX+IKxSlx0ChsOQiaHBxoZ6xKiNE9PrT9wUEzY95cx/AC@nongnu.org
-X-Gm-Message-State: AOJu0Yz+4lQNMwePyiGFSKUAs1IwuESWQMZswY9GuWtoz2iBax331VeQ
- xDjNtcEpfX2rrbKImoUBpkRqTifOmUZYPpVHnkp+JNEMvK1fYZfbpOWoswVwWBvzwkS71jULnjp
- ypElQ5UjOymJ4gqm6a5YoL2Vnswhu/YP26IqwCz5+qg==
-X-Gm-Gg: AR+sD13BUieXX43/ScUm+XwNj7DKmFTdO2bSoK0iaeOaZAFJ9Khgc4Mj27rAWZlb7wL
- Roz14psU/wRaKA4UVtzK/L3S2Xp9I2hk/QoIsIZLVCV0yD6sujph0AGzoI/imVUW/USbfhW4Hkw
- 0Ctl5faOMf8/hQ0tJYWfLQjqfEDDw/7obD+K73TRZSlqbyNo6RXkiHmnOUgrCykqNE8ixbYmsaj
- +NCF5YnIsz2jzed4r0kpTPtUk+mciDDvnJAXRzDVb2kFVfaojXYuPSkuuL2kcsbyICUYDQ5T7MM
- LmfjUPL0sG4rb6dptZEPGFe+we4YYp+BGxB4SML4dt8U39Ofkv78ZG/7Wi5BAh80skfGlWfr88F
- hU3V6yPoUMfa8N3NC62hYbuD872S4
-X-Received: by 2002:a05:690c:19:b0:81f:e85b:f9f4 with SMTP id
- 00721157ae682-8347623df87mr34724367b3.27.1786640331935; Thu, 13 Aug 2026
- 09:58:51 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786640491; x=1787245291;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=DLfpUBMP/6htYTpWi7cMeNlaRu5yNDjLu/vsvmKG3tI=;
+ b=sJQKoOMK6wMqxgCXm06DH4LpnKXl3/GUVuMk+wW3bHItQFosUp5S5dP/qWcuP1prST
+ R+0D6Ts0GmwbM4y3qI5TcN1BFeBbrJH567/qYAWvneUcBK4vkvBHPMswxMfz4ELuOYHD
+ X/DbDgyxOZxIGwRQF5VEu0jLGa9HOvDDahvDuYg4++Pt1qVJcD+r/Ha39oBAY72pv1jV
+ 0oDcxjNOWMplj1938hSwiEoajvgj0D9yIInKcP/FF6RqUd05wvEYo5x17PfN44MixAwk
+ ISyhPncABVXKb58rkRpPlBs7xvNLpOmYiz7cWYvBM0WNNud7XjC4hqycM+X3NU0PHQGA
+ HbqQ==
+X-Gm-Message-State: AOJu0Yy2pE/sY25BvwRr4KrAUs60CHDMr1T5ISRkEQhD7DDoeaC5vS58
+ t+DMZT70jymAhbWOWNJD9TB0jOfuE4R2VuB6jHrt5lUF8bwp6/nDr7IGm/B6MpIHsrg=
+X-Gm-Gg: AR+sD12SuSnK8WQd6rEBJRA+3dchFtzdpUY4JWxuw2epsXG4DxrzFChGLdBi7tUwxR6
+ judccdM6aSKaFQhXohZRzXqROrSTCIzMk3qJUfxWxdJNLIBP3xQRRLH60C3FVO5/RRCCcTOgqoi
+ jtu4x5hlOYIcGGi09f20W9gZxTFSLbUSmxsYaZZzVdjwBV8M/EicEudh8nC1O4tCM3kREjZfZZt
+ UpRFlHrPcrq9fvVzqAm0+3A1y3WZOxkyadge470VKJPJ1lxqmPh/1ggehXzoqPDUApeh/at3IlB
+ gJbT72hFR5fRmX//W07RBUPqtWBbPeAKDagEWh1eDAYZq1V3Pcz+zeyx/SlqMJKBSADks3MP50J
+ wmYKGgeCRrAV2d7BAWM5r5LWJXyVClKuBNCXCiFPRXaXOMspuDezeIBJAURMg2PYVEgrllugk+i
+ /vGLjNr1diU2Kco6iWkf79aiD3EWD+5SoxzduPVfGfuBIA4r8TcJo1P/Yqj60qpHGtjl/bsR3qW
+ oSbZJXFKIObKFrHxrLUmrx9UYtm
+X-Received: by 2002:a05:6a21:4c85:b0:3c3:9c4e:de3a with SMTP id
+ adf61e73a8af0-3cc54f42b93mr10451913637.6.1786640491153; 
+ Thu, 13 Aug 2026 10:01:31 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cbef7217132sm1385488a12.23.2026.08.13.10.01.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Aug 2026 10:01:30 -0700 (PDT)
+Message-ID: <ce3a48b5-9847-4cc4-a02f-86db497c91ae@linaro.org>
+Date: Thu, 13 Aug 2026 10:01:28 -0700
 MIME-Version: 1.0
-References: <20260717135254.508701-1-mark.caveayland@nutanix.com>
- <an2epcdoZPrz1T9Y@redhat.com>
- <1e3fe188-2406-4ab4-9555-bf04b6d1498e@nutanix.com>
-In-Reply-To: <1e3fe188-2406-4ab4-9555-bf04b6d1498e@nutanix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 13 Aug 2026 17:58:39 +0100
-X-Gm-Features: AUfX_mx0B9boXQiDDXpcsVHdH4AGA06dYluUNfZqmKV6mlSTfSOcAqoZXM2wsvQ
-Message-ID: <CAFEAcA_u4zec+O1q9ZQHpih7EoH6nf4swbHDxhY6QEXGugE_nQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] qom: tidy-ups and preparation for class property
- conversion
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- pbonzini@redhat.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/17] target/arm: Raise alignment fault for DC_ZVA on
+ Device memory
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260717232306.378988-1-richard.henderson@linaro.org>
+ <20260717232306.378988-6-richard.henderson@linaro.org>
+ <CAFEAcA9gNvMD5YVTy2Zj51riyY9j+eCurQpH8M-ymb4yaf4-Kw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9gNvMD5YVTy2Zj51riyY9j+eCurQpH8M-ymb4yaf4-Kw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,67 +106,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Aug 2026 at 17:42, Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
->
-> On 13/08/2026 11:38, Daniel P. Berrang=C3=A9 wrote:
->
-> > On Fri, Jul 17, 2026 at 02:51:40PM +0100, Mark Cave-Ayland wrote:
-> >> Based upon feedback from my existing efforts to start converting from =
-object
-> >> properties to class properties, here is an initial preparation series =
-which
-> >> I hope can be applied soon after 11.1 is released.
-> >
-> > IMHO this version is suitable for merge and could be include as part of=
- a
-> > general tree-wide PULL that does a broader set of class property conver=
-sions,
-> > unless Paolo really wants to queue it in a dedicated QOM series.
-> Thanks Daniel. In theory I could send a PR for this, however I'm unsure
-> as to how to handle that my current signed GPG key is for a different
-> email address from my work email address which is where the series
-> originated.
->
-> Does anyone in a similar situation have an idea as to how best to handle
-> this?
+On 7/28/26 07:21, Peter Maydell wrote:
+>> +    flags = probe_access_full(env, addr, 0, MMU_DATA_STORE, mmu_idx,
+>> +                              false, &mem, &full, ra);
+> 
+> Is 0 really the right size to pass in here? Looking at
+> probe_access_full(), if you pass in a 0 size then it will
+> call notdirty_write() with a dirtysize parameter of 1,
+> which will then not invalidate or set the VGA/migration
+> dirty bits on the full range of memory we're about to clear.
+> This would be OK if we then went through the slowpath and
+> did a set of byte accesses, but probe_access_full() will
+> clear TLB_NOTDIRTY from the flags it returns to us if it
+> called notdirty_write(), so we will take the fastpath if
+> that was the only flag set.
+> 
+> Maybe probe_access_full(), probe_access_full_mmu() and
+> probe_access_flags() should not call notdirty_write() and
+> clear TLB_NOTDIRTY from the flags they return if the passed
+> in size is 0 ?
+> 
+> The notdirty_write() API also wants the base address of the
+> DC ZVA block (since that's where we will be writing from),
+> not the address from the guest.
+> 
+> (We may be getting away with some of this because of various
+> functions rounding up/down to full page addresses, but none
+> of these functions seem to document that, so we shouldn't
+> rely on it.)
 
-What we care about for signed pull requests is that the identity who
-signed the pull request has a GPG key that the person processing
-pullrequests knows about. The email address used as the author
-address on the patches/commits doesn't matter.
+That's exactly what's happening: physical_memory_set_dirty_range takes a range, but then 
+widens it to the surrounding page boundaries as does tb_invalidate_phys_range_fast.
 
-You can either:
+I'm certainly open to rearranging the (entire) API here, but it's not immediately clear 
+what form that should take.
 
-(1) send a pullreq where the tag is signed by your personal address's
-GPG key, as you have been doing up til now. (I mention this mostly for
-completeness: if you expect to be doing QEMU work including compiling
-and sending pull requests on work time you probably want to do that
-labelled up under your work address.)
+Perhaps instead of the (addr, size) pair, we should have (addr, first, last) triple, where
 
-(2) update your existing GPG key to add your work address to it,
-upload that key to the keyservers, and tell us that we should update;
-then send a pullreq signed by the key from your work address.
+     first <= addr <= last
 
-(3) create a brand new separate GPG key with your work address,
-sign your new work key with your personal GPG key, upload the signed
-key to the keyservers, and tell us that we should update; then send a
-pullreq signed by your work key from your work address.
+Normally, addr == first.  But for these cases like DC_ZVA, addr would be what is reported 
+to when faulting, but the surrounding [first, last] would be used for 
+watchpoints/notdirty, etc.  With this api, the rather confusing size == 0 is not a thing.
 
-In any of these cases, if you're sending the pullreq as an
-identity that isn't the same as the one that authored the patches,
-you should add a signed-off-by line for you-as-pullreq-submitter
-to each commit, just as you would for any other contributor's patch
-that you're putting into a pullreq. Nothing checks this or fails if
-you don't do it, it's just a bit of bookkeeping that tracks "this
-thing from me with one hat on went through a pullreq handled by me
-with my other hat on".
+Hmm, if we remove size, what to do when passing size down to tlb_fill?  Do we need to 
+expand that API too for the benefit of the range-based protection mechanisms (Arm PMSA, 
+RISC-V PMP).
 
-I have no opinion about whether (2) or (3) is preferable here.
-I think (looking at 'gpg --list-keys' output) that generally
-people add both work and personal IDs to a single GPG key, but
-I don't know GPG well enough to know if this has downsides.
+Thoughts?
 
-thanks
--- PMM
+
+r~
 
