@@ -4,128 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EECAC5CFEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 06:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348F5C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 07:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuPMT-0000eV-JW; Thu, 13 Aug 2026 02:56:21 -0400
+	id 1wuPn9-0000s4-VS; Thu, 13 Aug 2026 03:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuPMP-0000e9-TD
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 02:56:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wuPn8-0000rU-SH
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:23:54 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuPMO-0006Xl-1T
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 02:56:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786604175;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8dAWPZHvgbmCS2S1X3+ocYiL8FTFOsjHgTnEh82+wKE=;
- b=KEL66MO0wEuJ/uHlCisHxsokW1n6IAVoQ1G7sb5QwHgU5ulwQr6PMXor4lYtMygi8RKd3R
- WfRiPtL9GWh/zimppgRR9xGpZdN/d7FjRM2B4PTNKTy6ejDp9kJ5VpWmmAaSiad1SDbsyB
- qB/iT2HAdnIRe+2waVrC5/4uk17+vnA=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-vnXxOiuVPJqipMF_J1w88w-1; Thu, 13 Aug 2026 02:55:58 -0400
-X-MC-Unique: vnXxOiuVPJqipMF_J1w88w-1
-X-Mimecast-MFC-AGG-ID: vnXxOiuVPJqipMF_J1w88w_1786604157
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-848860def2cso514145b3a.2
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 23:55:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786604157; cv=none;
- d=google.com; s=arc-20260327;
- b=hHS4i0w5y86z2m4jfNZHOTvsFa4HRpZ+azm2ItVCaT72dqnq106yLZTwGliWH6tCXd
- zXEdy4UXj6R8j+tk+WlhbfGfX1a72VGT/VJJgwf5S7wyWN4zfFIV8NN7OZKUagXmy2bJ
- LN2rkVlllnYU0eUDaMofHhQ6YoyN6zYotxvNThuJuGvGZ2rCMCCNHlGDVH0s6r+c4PL/
- SHFgjy1JUi7HKzuvuQ5F9wJy6+UwHS1OjK9Pw8MRtPqk8vuYpoYBu3J7jH1V2LvnKcpF
- nJukQlOb5P92iqIznWTTgDBU1UMHSq4LiN6a/+bvixyfJaFSDFNMabN+yPiA8CeIt1hf
- Ieog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8dAWPZHvgbmCS2S1X3+ocYiL8FTFOsjHgTnEh82+wKE=;
- fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
- b=nKN74yKMqx3l2wE+kj2GsFVTbQs/ID0hHR0DDHXQW1N99A9JPdwD3F8wddPOA/UNv8
- RITYYoVKXzj7vx3gnBrznwTfWScoPrUFa1MKibXqZ/BL8wLzrqpaWs742vxmrBwU2rHA
- PZf30k5djFtdnlLtVrIV+sr/q/rzvFroYtNddnJlZj5OpChmyQayz+W0Tm0LWUVNhcdY
- wsS7jP7EEhbO2TKJcwN58Pm2+u9alxkSjgSlRCGYKg5EjFohDpfslcEUWmW52fOa7BEw
- h+Mtsy5zTdPoV2d8J7DkePbO8ERPo3duy1TiqjKulI/voDyDMW5kG6RwYb3oSWCWxmoW
- DIxA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786604157; x=1787208957; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8dAWPZHvgbmCS2S1X3+ocYiL8FTFOsjHgTnEh82+wKE=;
- b=DEYD5V2R0vJ1Hm4nhd906fYSOpYXybhUdxG1fGMK+XVHV1ZlW0iWdgh8/y13otDnL3
- cBoNvfDk+p9VKlTTv2TFISdzqswCpruuUT6tSixJijt4SqQskaU5MtunjQSGZw9Mb+zs
- 4QpMtnx50n7n46fXnpEMJz26FUP2dLRUEQiYt2bhvm2K881tcP1kcR3zn/qcAPzJDTtp
- //m5XGZ0tTUmL2nun/kIyBRJVZtF9ALSLP+cAvOSshUbsaaRemDc+DDMouN2WKIHqzYU
- nOsEv+AGlxKqoeOprWYYNanMz04yLmuTyupCMPpQdQeMrm6lt8Wk7nYztK8BmizNDpJp
- zCAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786604157; x=1787208957;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8dAWPZHvgbmCS2S1X3+ocYiL8FTFOsjHgTnEh82+wKE=;
- b=G1k3+rfe725cIG3cxDjozmb62mzkORuzrlQ9+9QkzqF1lPllhtMliycNYwdIgVcXk5
- 4m5jC/cKU3qU9nJ0IpW8bN11FELrOTPW0UZ8QvT13xkh9lDG0TSlz5lgtnEs8V6L1nsL
- RwgRJu3QwcpYeT3nvCKIO9RiEeclDxz7YLFcCFJE0QzRJUiKkD57kj5rxuhnlxI1Oxrr
- 33LX/9fJwVlpd8V14Y5L1s0KKZtvcDT1znnsDvzDWYVfeJntQRB/SAVxmdQY6RkxDNDo
- gAOWQ/MDSBAlavjxYdjlGHoXhwEeGwI8l59dv5o6A16G/lnMa9UvJ89MII1cpyydXR4J
- Q2eg==
-X-Gm-Message-State: AOJu0Yyn1TEogtsl5mnSyUzz3TDzROKAeW+WYTqOScarE1Ak6WFF8arl
- bxiR2MrpGZXa7dr9ZnUtdJpY2lhDSh7aE2/e4iYC5ziyS4dVh5qscdtDtx/U7u1U+1sUNC0IU7Z
- DhBTulAu3Lw6rX/HKfwz4VaQCEfXxCd/uDwTkXoivpU47CnIwVgMfM3+fghOGyNZw57Ve2KvwzH
- fe8TYjE0cn04JxmTd5h+Uj1C6NgyNefqY=
-X-Gm-Gg: AR+sD12ZqnKvU74yuP352TFbDkU6caleB1pv0SMhGrDdQ3KczxsP6FU1JgguYo5IL1A
- s8oZiOR6XVmtEANTRT3E7ceQq5/NXcPw1jHNZHEoK6NodfnZyFjGhu5M+4hsipdTSkM7Z7diyz5
- KNPmipOCYmBJxX5GCk1pqti+Fczp2dbK40umkl73lhHMUFCT82RLV110Vq56rfEb0+0Yedu6Dq/
- nU4pMRSap3r3AktSvZtgsAjPjsclaT0oFFfej8lEwV9pAR0oUriMWUjTi6qRYCfl4ks277v+p3a
- XA==
-X-Received: by 2002:a05:6a00:6c8e:b0:847:83bd:6671 with SMTP id
- d2e1a72fcca58-84fc6e286e4mr4094249b3a.19.1786604157085; 
- Wed, 12 Aug 2026 23:55:57 -0700 (PDT)
-X-Received: by 2002:a05:6a00:6c8e:b0:847:83bd:6671 with SMTP id
- d2e1a72fcca58-84fc6e286e4mr4094189b3a.19.1786604156513; Wed, 12 Aug 2026
- 23:55:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-1-cc9396b9c18c@redhat.com> <87mrv78jwb.fsf@pond.sub.org>
-In-Reply-To: <87mrv78jwb.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 13 Aug 2026 10:55:45 +0400
-X-Gm-Features: AUfX_mwZ0sy5qfDtgHilGyvbgeHRn6od5jPRmF1rwvNeqAIfSHZYYP2ip0kmTeo
-Message-ID: <CAMxuvax5Bnz7fK9DE+jWBfYg2ZX=YYA4W-j9gzU4gJmRTQVToQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/53] qapi: add QAPITypeInfo struct definition
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wuPn6-0005aj-7G
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:23:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DGBaf+wOUU79TpU9sNQ8bfJH4RJ9KYdL9jg+6eeYpatfGCqt+bl9b6pq0EDk+o521EvVtV64KhpxeZ15HK5ZtCFBIepgeihYQiRhTUAg1+fg4AkdvrVde+0Cr5dkVU+UU6vtvLCtyv73jdBtEndeT/FtOh51e+ccx9QHJeEG2H6Wg5ufF3RN837/FbkbBUbVJPg0GvJTkbIi8F5nHP7jbI5ePHMI5pasKBeLQ3YzKzfX2bOW/nCcQ7yawIRv74xTTwxKHsElmH8eIfCsZo06TLketZnz7U1GzjAAGbCodGnpnia9a6j2GaXdfcZRBJLqVee/ekrEmMMGXjs/JVj9nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Y2UcG8OA/WsCbju1OlfIos7usouwAAkZNGGyA6Coq8g=;
+ b=zCismiRGec6/JfUSxmiOJJXOib1uAt8nvCvKNwn04RWMwQHBpocNh5PH4xI1RNccp5nXE5cyiLt7U1OIkQZz9GT2H2S26Zu3BLZaosT3kZJW19cJ458RVNa+SsQKRfeT4gfYMNs56Jamh2f16dorpPega26czP7Xbpq/9Z3uOziZvwPDBDfwyh0TjQw47A4AU84mfugMK3SaUIWjeae8uCorGZLjrU384r+XpO6A7kuQoiC12V5NCrmWQIJjdODInByfJIh5S+X3L5D/ThnBdqIteypw/NX27S4tZhAegI3bkXNSvQCaDCRzM6p4gmTFhoht7phn0ve9sNdPdmEe5w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Y2UcG8OA/WsCbju1OlfIos7usouwAAkZNGGyA6Coq8g=;
+ b=XSn9oD/vzT7daGJsFdKIuT2O7ldEGcf2pUAKxXdDzwHCUYjWjPr3+IMSk9NWOMHuI68YlyaXZjbahynuasWvzwa9WNXmpdzAUsjZQEbSVPizc0FRVHQQjuVf60h4S0EsrF8tc9XUVOwQjuFkbPQ29j3/5FfUMZR9nDr6xmHkyv+2swruwS5Qfh8+RGDHOOs6hmBQvzeCkWJ+CPDIoSCrUnAbxkwNFPlKIdkmzM9GiSX3wyptfa5cG5SwMEVEXii3Q++JCra1ROzzEU2tz1YstlCpelNiOCg+Ie55li6cni/ihWpFHY27Pr+ARwc7/RWBeUFuGMBSO8I4AeZZZi9u7w==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by TYQPR06MB8129.apcprd06.prod.outlook.com (2603:1096:405:376::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.11; Thu, 13 Aug
+ 2026 07:23:43 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.012; Thu, 13 Aug 2026
+ 07:23:43 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: "clg@redhat.com" <clg@redhat.com>,
+ =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in async
+ writeback
+Thread-Topic: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in
+ async writeback
+Thread-Index: AQHdKvSrYy6CS2yN20qVd8jbUP7gcQ==
+Date: Thu, 13 Aug 2026 07:23:42 +0000
+Message-ID: <20260813072340.637657-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYQPR06MB8129:EE_
+x-ms-office365-filtering-correlation-id: 1a5f260e-c3ee-4cf8-41e8-08def90bcdd8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|23010399003|18002099003|56012099006|10067099003|38070700021;
+x-microsoft-antispam-message-info: dmBmzaiPwUL6HxiEJwtrfACRcuE8+BpOTcCuhDbLGfXzkxjhf6kX6194VKRonOULzUYQ6F77u9m71rU65mtBCs7400woa4GW9OUaPm9FrKQ0weM++RkGqEQ4wy3MqtyjWou+scFTfmxzIl+UF9p8dYKbzPhwOcPCaunaGO6XT9CASOaMHVQNjCqOJGoY79siLpIvh1q539ZuiXOT0V5/Z/og46fvL3rwhJyRy5sbM3c+Py33+4gKQyD25Q7fortKKFy5NaLVfHtbCXYwrCNsEA6VD4dVXxMLNImzFrLcHZxPxe9kFFZLlgmK09v3I4MUsZzmCUoD5ZZNpoDmzJyYQuR2ivd1I5vCBPaBLTeGCjik3Njy2L7PLWNvVEIwdtWqsXQv0OEdfyQVT8q+NUk/xlaSgxe2W1hq9UE3dmWrylgnSeBJfI2Fw8tjZt15heMo6nkWF3oC0jXUgXwrUHS+loYkCs6sC2OECAYvxlK0K6M/gbg2K0hMLKOvAL8hxBzhzCJh7NnZA4WDR4PLJ0C/NnsS0PygFEpnBwSj3Rub8wk8Ud07S3jS5Xs/f+8haP5TjyCWIJWhVNfF9YObNcf+F3+IqVa0VoV3lHLCglRyqyV3IG52p8eD/OTxAhsqbPUYPi7ZcyKRXwjQlJyZHMVOJbUd2l1rVTadB4v8Lm3iu0d1uuZz2P10JBDcjYI3Yx7ZVnZM54VBnL9lrU6IvCjh4toE46HxX9YESPVrEElDBm0=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(18002099003)(56012099006)(10067099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?e651N35GSorGov1TBrvcGTRhmQgMl2UVZRlXipJ+0vVLe81YxFXmsY6RzS?=
+ =?iso-8859-1?Q?pBC5luj1L76LJyS4M7dwICzgz10BNSZ6Cv1NumFW2i3qNBuAy+Gp0v8b2h?=
+ =?iso-8859-1?Q?JD//GjxrpvOjOLop/H/XdrabDrqd2FYF41deIxWdkaqncJEYZ25ddnRp1V?=
+ =?iso-8859-1?Q?0TUa3nwmX2uTfKaqqE0pnK2/M8FVg7geatq04G5wnP9Tg/FZx76+PuoE1h?=
+ =?iso-8859-1?Q?AqmGi6HFm/pIBdprYXV0gtUYCgtpWq0GmbuNTkb+XMLxhrcE/fWu2KLf4E?=
+ =?iso-8859-1?Q?tjsmwGXfVpQy9obE7a+FKxJD7hYwrFDY+V5wWhPtqLpMv3H3PDQYqDQiJR?=
+ =?iso-8859-1?Q?adZEE+5K+O5bueKBPTURhHIRn73bdXZrNgEni5ttesMqNigoUNebWiQsKf?=
+ =?iso-8859-1?Q?v9i8p9HV4ze1bM8gAWrp/35NWbTebMDWNEIJL9zYba+qpG2bobgqld97ci?=
+ =?iso-8859-1?Q?bhFBfT7uakm7FYWY9k0pJJxRE+RBBryaWAPjEvb0DPCVXMY0HTuzdlfZu0?=
+ =?iso-8859-1?Q?sd09FPfFYuW5mp2cwWsdhpqBDt4tv+CFaGS/vo+8WSqOnf15fpjXaIkIjm?=
+ =?iso-8859-1?Q?iwP5XMjuJsUs+qQOPXsApMBPpXlGnvIPXgS2A/FlsPdWFWzsMoEqfWvm6U?=
+ =?iso-8859-1?Q?JwyaQkn9pt94ZJCinMJYHQlvjAin1wL+Y2jWeO/OyhhAVmFrXS7vaD8dHa?=
+ =?iso-8859-1?Q?79qOAtokO5jyiO7Cct0ljVk2SLO06eXfGJOOcDZRcj3ozFzaMyHbfjUH4/?=
+ =?iso-8859-1?Q?oIq1zam/8pZ4XJk+vZFxLSoQ9buZMfnrip8BRrf/JwQr2o9c9JNcXpDS6q?=
+ =?iso-8859-1?Q?EhGM7NRoNfIGp7qymA/4CXht81Sqq3E6MtaLO1M8A85d+jNgE1IwMkqU3H?=
+ =?iso-8859-1?Q?Ri5jAaS00PUW01ibrI/QCbz9Ayvo5NRZJiJ3c/6OlejfSovqwuEMJ2xQsz?=
+ =?iso-8859-1?Q?s64+luGKlQKVzYSF2AT8cTkHLsJfPeKMId9nzMyZiJcqWF5DDHfnOBKxB6?=
+ =?iso-8859-1?Q?EyS87VrcyHoQJXRbJ3CKisWS7zwwz9iVtnXObc45qoP4Z1YEtF9BNgL3k6?=
+ =?iso-8859-1?Q?VxP50/IaowBBin+tEEt6j7UDpZ/V2u77Oj5W85r9WolHOO5k8yp1luoDnY?=
+ =?iso-8859-1?Q?Qyx6Lox2JbtSsZUrCwAbvlhVzWNYyg53i54HgbtD7Ol/bv4XIk9b414gpt?=
+ =?iso-8859-1?Q?/dkiqtIZmeWtWS+6hp0xq9pMthaJeCqfBj1qA+F8n6gBBzyR/yVB3dd2KG?=
+ =?iso-8859-1?Q?eXxORO/ylNJfxEOUfbd3JmyJgZcIGfvKDm5edNyQKaZp8Ipuc0xYNoSrs+?=
+ =?iso-8859-1?Q?db6AW5dqVj5mhQgg5/GX9t7E09E1D7XeJERpqrLBOKSaNS4RE8hYdW/ffq?=
+ =?iso-8859-1?Q?onKUi14lCA6UU8r+RJkfZHCDNABB/Uu4T6uN8A2Ft62kQrj6yU5oBcPYMX?=
+ =?iso-8859-1?Q?TL/Fjzl204Jvg98s4PbBFOSQmTxdPlig1PpXydATBmednPa3PUWf1eh9JV?=
+ =?iso-8859-1?Q?pzFhK1kgZ5+T6GA408BNlF1zhbJg8eliuhuNiC5hlI5mju4wRCK6kKJJc+?=
+ =?iso-8859-1?Q?kOKpIZ8PpSW2pMsuun8CBPIMKMwA9uOBuzM3ejlibMbEQ/F2WXxDlQuy0p?=
+ =?iso-8859-1?Q?nO/kwCMi/LjoNYpkpYye57D/ZosVPxQBTtMfs4dGQXQPkJ+nDdyFYtirxH?=
+ =?iso-8859-1?Q?XfBTvLcgZTPrTl5gi1XdtSIngxeE5cBDxEzBM398sPOBAdeiMYZNcxKUYd?=
+ =?iso-8859-1?Q?ubPFMfyKzDNbrGTMLGfhh/LWgilEyO5u4GJztRF5NC+hBs5OX0psto9jJl?=
+ =?iso-8859-1?Q?C9sqSBdwrQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a5f260e-c3ee-4cf8-41e8-08def90bcdd8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Aug 2026 07:23:42.5844 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: MgSVwwH8vPUobqRJvj46FOC0LOAaYFcPmh+jL2K+DrOFfHWfOJc/c2gVKRGTElRTBai7fceOPCyP0l2bc7M4ylHw6iG8Ej6xldAx9nAnSuE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYQPR06MB8129
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,125 +145,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-giHi
-
-On Fri, Jul 31, 2026 at 3:43=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > Introduce a minimal struct that pairs a QAPI type's internal name with
-> > its "masked" introspection name. Generated constants of this type will
-> > let QOM property registration carry a reliable reference to the QAPI
-> > schema and possibly other associated data.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  include/qapi/qapi-type-info.h | 32 ++++++++++++++++++++++++++++++++
-> >  1 file changed, 32 insertions(+)
-> >
-> > diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-inf=
-o.h
-> > new file mode 100644
-> > index 00000000000..a7a470af731
-> > --- /dev/null
-> > +++ b/include/qapi/qapi-type-info.h
-> > @@ -0,0 +1,32 @@
-> > +/*
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef QAPI_TYPE_INFO_H
-> > +#define QAPI_TYPE_INFO_H
-> > +
-> > +#include "qapi/util.h"
-> > +
-> > +/**
-> > + * QAPITypeInfo - QAPI type metadata
-> > + *
-> > + * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
-> > + *        QOM uses this as the property type string.
-> > + * @schema_name: Name of the type in the QAPI introspection schema, as=
-signed by
-> > + *        scripts/qapi/introspect.py (e.g. "368"). NULL for builtin ty=
-pes not
-> > + *        individually present in the schema.
->
-> "Schema" is ambiguous here: there's the QAPI schema
-> (e.g. qapi/qapi-schema.json and its sub-modules), and the SchemaInfo
-> returned by query-qmp-schema.  Could well lead to confusion.
->
-> What about @masked_name?
-
-works for me
-
->
-> > + * @lookup: QEnumLookup for this type, or NULL for non-enum types.
-> > + *        visit_type_enum(), qapi_enum_parse(), and qapi_enum_lookup()
-> > + *        all rely on it.
->
-> Not yet.  Either mention that in the commit message, or add the member
-> later, when the comment is correct.
->
-> > + * @list: The list-type counterpart, or NULL if none exists.
-> > + *        str_type_info.list points to strList_type_info.  qdev array
-> > + *        properties follow this to find the list type for their eleme=
-nt.
->
-> Likewise.
-
-ok
-
->
-> > + */
-> > +typedef struct QAPITypeInfo {
-> > +    const char *name;
-> > +    const char *schema_name;
-> > +    const QEnumLookup *lookup;
-> > +    const struct QAPITypeInfo *list;
-> > +} QAPITypeInfo;
-> > +
-> > +#endif /* QAPI_TYPE_INFO_H */
->
-> This is somewhat related to SchemaInfo, which is also meta-data about
-> QAPI types (and also commands and events).
->
-> SchemaInfo only has the masked name[*].  It has a reference from array
-> type to element type instead of the other way round.  Everything else in
-> QAPITypeInfo is also in SchemaInfo, I believe.
->
-> So far, QEMU uses SchemaInfo only around qmp_query_qmp_schema().
-> qmp_query_qmp_schema() a SchemaInfoList on the fly from something else,
-> and the QMP core (it's only caller) then converts it via QObject to a
-> string reply.
->
-> Now I need to digress into history a bit.
->
-> The value of query-qmp-schema is fixed at compile time.  My initial
-> version simply generated the fixed reply as string.  Efficient, because
-> it doesn't build a (bulky!) QObject reply.  Also a bit hacky.
->
-> This got in the way of QAPI 'if' conditionals, so commit 7d0f982b
-> switched to a pointer-less variation of the QObject that can be
-> generated as data more easily: QLitObject[].  query-qmp-schema converts
-> this to QObject every time it runs.  The QLitObject[] would be awkward
-> to use for anything else.
->
-> End of digression.
->
-> I wonder whether it could make sense to have a single repository of QAPI
-> type meta data, usable both for query-qmp-schema and for your QOM work.
-> Something QOM could use about as easily as QAPITypeInfo, and
-> query-qmp-schema could convert to its reply.
->
-> At this time, this is an idea phrased as a question.  Is it a good idea?
-> I'm not sure.  Even if it is, I'm not sure it should be implemented
-> right away.  I'm just sharing the idea.
-
-I am not sure what you mean by "a single repository of QAPI type
-metadata". Whatever it is, I don't think it is required for this
-series. If you mean that we could generate one big structure holding
-all QAPI metadata, that sounds challenging and it's not clear to me
-what the benefit would be, beside a bit of memory saving.
-
+Coverity reports that ehci_writeback_async_complete_packet() ignores=0A=
+the return value of get_dwords() when reading the QH and qTD.=0A=
+=0A=
+Handle read failures in the same way as QH and qTD verification=0A=
+failures by freeing the packet and returning early.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ hw/usb/hcd-ehci.c | 10 +++++-----=0A=
+ 1 file changed, 5 insertions(+), 5 deletions(-)=0A=
+=0A=
+diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
+index 451a918e9f..d43951975a 100644=0A=
+--- a/hw/usb/hcd-ehci.c=0A=
++++ b/hw/usb/hcd-ehci.c=0A=
+@@ -533,11 +533,11 @@ static void ehci_writeback_async_complete_packet(EHCI=
+Packet *p)=0A=
+     /* Verify the qh + qtd, like we do when going through fetchqh & fetchq=
+td */=0A=
+     memset(&qh, 0, sizeof(qh));=0A=
+     memset(&qtd, 0, sizeof(qtd));=0A=
+-    get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
+-               (uint32_t *) &qh, ehci_qh_dwords(q->ehci));=0A=
+-    get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
+-               (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci));=0A=
+-    if (!ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
++    if (get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
++                   (uint32_t *) &qh, ehci_qh_dwords(q->ehci)) < 0 ||=0A=
++        get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
++                   (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci)) < 0 ||=0A=
++        !ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
+         p->async =3D EHCI_ASYNC_INITIALIZED;=0A=
+         ehci_free_packet(p);=0A=
+         return;=0A=
+-- =0A=
+2.43.0=0A=
 
