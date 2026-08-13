@@ -4,59 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01BCC5CFEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 09:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DB4C5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSA6-0006EY-ME; Thu, 13 Aug 2026 05:55:46 -0400
+	id 1wuSIr-0000ca-4V; Thu, 13 Aug 2026 06:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wuS9s-0006Cb-K5
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 05:55:39 -0400
-Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wuS9p-0005sq-HU
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 05:55:32 -0400
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wuSIq-0000c4-7R
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:04:48 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wuSIo-0008R9-3S
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:04:47 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8114a4542b2so9033917b3.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:04:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786615484; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Ve3T9JQLJn7So0MGG4v77BJjwyRdQlDzoVYYtDAXOv3QdAkgAgksS6R6lTPPQrgv4E
+ hn5cxKoE4j2N9dcSeXosuCanG75f533HQjyu9QvBlLpLzS8emffqyd2J985Td4kIwmsq
+ zFuLq3o22lDAwLwfCPMTGWlnXz+yXiSKRSOL1dMOgk0gawIqtj4uYnwvJWQEnFOYfqUS
+ yho8T0PCbPNy0XGp03TlYFHhW58BywT336CXDOD++VyGfaMxldG+lcw/njDe31mc+/Wc
+ bVDIVKH8vZ4BV73oQLVsiL1nJcbU+BXJnGa1jKT9t6F0ipjTbEkH1ECWcsJ4ZUYpbch/
+ 7UYw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=onW2dnaF2GCB9RsEW/cJS52ANjiN85srWkj3FUbQj2o=;
+ fh=7cW1dwdjdaAB3R6mHOtMEB+YqIHRauAuoGGZN0AodcY=;
+ b=JeUfvuul77NixiWRcZY/OcElltIS6DBffREWTLUqdHHi8rcB1XtZSxFFZbjDWkkI5G
+ +7Hg+MzSC8TtyUl7alFkevwI0TDDXJ1Tn/3oeBGHEY32tMWhKoMFKQudobFDAfohXIrk
+ APzkWJ0u6jPLRXnbqnKhUeklAksxJIjQQ1iJ5cmQBtXMxG7poQwTRzYlOWWq394oDolW
+ mWdcruuqmQVLlFQSDd6t414mt4rlO340VDHiDIYecC176CX1wzap95oimbXW3f7rQzoi
+ OJXv2tv2Csp2dMOQWHZn4CIodG6TRG4hKAaXxEf0pNWGN56A+ZMwx44EeqsTpOHm9r/z
+ AicA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1786614904; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=pHGjh55usKOPqSNHUu914m1Rda0mEK2+CbO6sTSHggY=;
- b=aJkHkGxwsERDTcMcxy+ZHf71fms/xErlVayiVPVVQx8TD9Lwjukk5e6YvTqBnllHv9jAmg/t8V/cS+RVp0tZlnAfUV9HrqftUF1lQqH6ydoXeiXcB6nRR4zW0/U3cEithKKj4rb/PCKVKgaO3xHnv/qwPHZVh+ar/PPMJ0qJlMg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X8u77Qj_1786614903; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X8u77Qj_1786614903 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 13 Aug 2026 17:55:03 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH 1/2] libvhost-user: accept the postcopy client base ack in
- vu_add_mem_reg()
-Date: Thu, 13 Aug 2026 17:55:00 +0800
-Message-ID: <20260813095501.20282-2-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260813095501.20282-1-guobin@linux.alibaba.com>
-References: <20260813095501.20282-1-guobin@linux.alibaba.com>
+ d=gmail.com; s=20251104; t=1786615484; x=1787220284; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=onW2dnaF2GCB9RsEW/cJS52ANjiN85srWkj3FUbQj2o=;
+ b=CGBbL8d1IZelqF9MQdiQD/OVdDiNqPgR5sJQknBTou++lhJ6+8c9occjC6vVmjUEWl
+ 8kfdCyd9ub8xBmlWg3qTAs7w2gtHkz3ZociNwlzz5NWL8Qfga0nM1h47r1sfX42pJlTR
+ vMzKb02epWUpqSD77S+oUMwOtCZyxOsymchvCSNwM+iakjj96AckQ8W+oDjRr0cx9b7N
+ VPhF9k0Dak4AzSOmICR2ZWR0veEP/QmDdm8PF6dfxI1j8b0RnWFoD3CoDEMEIbkggIij
+ cCOJw4mRHCYdLSTjGj4Uy8CA//6X8O/9klyJ/lcZ6FUJIJuhgVDM31SVdRoRDCxv5zPH
+ UMDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786615484; x=1787220284;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=onW2dnaF2GCB9RsEW/cJS52ANjiN85srWkj3FUbQj2o=;
+ b=czyrqOU/OB/AKOfrnLKgzqr2cLrVT7lUzQSlWVbAlpM8Rg/GW8YKA8Z9rNDVMLknEY
+ pntR6uIeDpRDauEIL6qpjw1NNsphTN463lLeFow9XS04f2R3jWiFQGevwpsX89xu9qT8
+ rFptvkkjCN1ro/BzOMxSIc0bcVdcYgW3fzicBTeYpgNvQ3PzZj6fEXy6NCgT6CY3Hviv
+ nPMwUhKM0TcIf2GsSPbR2vb76F9HHZDzZsHry4EChV+Ot2c6Ad6ePRKCVUFGPD4LXlnV
+ FVxBLAca9oaIN+lQBQ26Nsk81beWdrqg6leAs4hwRifY8W62pCQ1AEwJX0Jlcy1mlMXV
+ az6Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoyxW8HaPQ0OOyh4imPwTYEsk1Dd3cSJLMnRlXQHTIcoO0ZChV/vn8jL10MYqUIET54FfUCaWIPS7mN@nongnu.org
+X-Gm-Message-State: AOJu0Yzrk317Z3aj3EFvrCoEc/sKTrPlDhEp4FMUonfyQCns4e7XsMrE
+ tiiuez2dsZO80UskeuzrjlEwQstBRZ4kczxRpHz/va/UHgrHci3vGNJu3Q58nXpE+1t/ltj5UMA
+ MkpXZInjKh48gcn1rXdLi78bMFl7X+N8=
+X-Gm-Gg: AR+sD13YBTZEq9L8VrGLeKncIKjK46nMDj64297q1s6Df4Lut3NfAWwzLFrNMMqM/Pc
+ jPnr+OZipsuSoLUx8D0QlJB4U5vDZhpIxXKf9D4DgBigdHrMNwTt+ve0WWpNSc6d2Glo+zcmW1+
+ OSkjB85OqNxnT8q8ImHzXRAnHDbfDxOHO6hYLTtx9aDW4Dznz2oAd4Np0Uo4eLhqvH7nLoFS+MP
+ Zu3zNY/KTvGEvDNXRH60JsFIqD7NF2le1nfLYHhzutqMOKdrczClCjPip3omhXqgca3Pa0TUJf2
+ 2KlVqFfGArZQDrOjzyrlwiKpwEpU6zCO+BajenZ1B5rVO030
+X-Received: by 2002:a05:690c:397:b0:81e:a3a0:701b with SMTP id
+ 00721157ae682-8347181ef65mr21737977b3.9.1786615484002; Thu, 13 Aug 2026
+ 03:04:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
-Received-SPF: pass client-ip=115.124.30.110;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+References: <20260813054329.35425-1-chao.liu@processmission.com>
+In-Reply-To: <20260813054329.35425-1-chao.liu@processmission.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Thu, 13 Aug 2026 18:04:32 +0800
+X-Gm-Features: AUfX_myMmBKgRtscE2ficTPYlRhCK-lMKXUnysIcc8zt8Bxxh_vnsjbLeTtfE3k
+Message-ID: <CAEUhbmUqMbnqWXuxn-FAV5YXofMuc6+L=aGuc=YmF7e=BBMUDw@mail.gmail.com>
+Subject: Re: [PATCH] tests/qtest: remove trace output from k230 watchdog test
+To: Chao Liu <chao.liu@processmission.com>
+Cc: alistair.francis@wdc.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, bin.meng@processmission.com, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,72 +121,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In postcopy mode QEMU signals that it has collected all the postcopy client
-bases by sending a VHOST_USER_ADD_MEM_REG message with a u64 payload of 0
-and no file descriptor (see vhost_user_add_remove_regions()).
-vu_add_mem_reg() has a case for that message, but only reaches it after
-validating the fd count of a regular region, so the ack is rejected first:
+On Thu, Aug 13, 2026 at 1:44=E2=80=AFPM Chao Liu <chao.liu@processmission.c=
+om> wrote:
+>
+> The interrupt mode test does not depend on trace output, but passes a
+> trace file to QEMU. This makes startup fail when QEMU is built without
+> the log or simple trace backend, so qtest cannot connect.
+>
+> Drop the unnecessary trace option.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4126
+>
+> Signed-off-by: Chao Liu <chao.liu@processmission.com>
+> ---
+>  tests/qtest/k230-wdt-test.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
 
-  VHOST_USER_ADD_MEM_REG received 0 fds - only 1 fd should be sent for
-  this message type
-
-This kills the backend during memory table setup, making postcopy unusable
-for any libvhost-user backend that negotiates
-VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS.
-
-Recognise the ack before validating the fd count.
-
-Fixes: 9f4e63491b ("libvhost-user: Add vu_add_mem_reg input validation")
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- subprojects/libvhost-user/libvhost-user.c | 26 ++++++++++++-----------
- 1 file changed, 14 insertions(+), 12 deletions(-)
-
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a74d814bb4..248550aae1 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -948,6 +948,20 @@ static bool
- vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-     VhostUserMemoryRegion m = vmsg->payload.memreg.region, *msg_region = &m;
- 
-+    /*
-+     * If we are in postcopy mode and we receive a u64 payload with a 0 value
-+     * we know all the postcopy client bases have been received, and we
-+     * should start generating faults.  This message carries no file
-+     * descriptor, so it has to be recognised before the fd count of a real
-+     * region is validated below.
-+     */
-+    if (dev->postcopy_listening &&
-+        vmsg->size == sizeof(vmsg->payload.u64) &&
-+        vmsg->payload.u64 == 0) {
-+        (void)generate_faults(dev);
-+        return false;
-+    }
-+
-     if (vmsg->fd_num != 1) {
-         vmsg_close_fds(vmsg);
-         vu_panic(dev, "VHOST_USER_ADD_MEM_REG received %d fds - only 1 fd "
-@@ -971,18 +985,6 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
-         return false;
-     }
- 
--    /*
--     * If we are in postcopy mode and we receive a u64 payload with a 0 value
--     * we know all the postcopy client bases have been received, and we
--     * should start generating faults.
--     */
--    if (dev->postcopy_listening &&
--        vmsg->size == sizeof(vmsg->payload.u64) &&
--        vmsg->payload.u64 == 0) {
--        (void)generate_faults(dev);
--        return false;
--    }
--
-     _vu_add_mem_reg(dev, msg_region, vmsg->fds[0]);
-     close(vmsg->fds[0]);
- 
--- 
-2.50.1 (Apple Git-155)
-
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
 
