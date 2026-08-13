@@ -4,96 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49531C5DF66
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55D9C5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 14:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuVwe-0002xV-Ln; Thu, 13 Aug 2026 09:58:08 -0400
+	id 1wuW4n-0006Gw-Hy; Thu, 13 Aug 2026 10:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wuVwc-0002x8-Eb
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:58:06 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wuVwa-00020P-8P
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:58:06 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2ceb096e675so9579475ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 06:58:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuW4m-0006GO-57
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 10:06:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuW4j-0003vw-Is
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 10:06:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786629987;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=b16fmMwKu+HWDYKJLuFLIupEmUyJiO3RjwTtt8deoC0=;
+ b=KYATVETf+p9ZdfKPZD8Lw4YX6k/WLC66R1C+eire814OK9M1q9QfH7mEEsAJw4R43dUTnJ
+ 89PNw+0ecv0pm3kOEb5IGZqbdhyn9dy05ioZqkQ3sjv9KBw25TfqfQc9KE5O18TQRfremA
+ zd+MZLqIdsn6HUqOUPmlNoDVtRynoHU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-53-ys4PERW8NYGJwBD0fdVdnA-1; Thu, 13 Aug 2026 10:06:25 -0400
+X-MC-Unique: ys4PERW8NYGJwBD0fdVdnA-1
+X-Mimecast-MFC-AGG-ID: ys4PERW8NYGJwBD0fdVdnA_1786629984
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c1f74261f67so211116066b.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 07:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786629483; x=1787234283; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=kImMqM9I7Obc8QnqaPPg9PomF+UcCTs/QXeVwz4lXlw=;
- b=h4xBWmc8ins2Z76q9BH1+YIUdV34dG7BtYFM8+8CdSnEfkmy1WubM8TMQg+w7SaLrN
- etbPQZ44Xtjci8BIBMZ1GoTqFDP3oDVSiUAR5CJ5lAlb3Ht75ZWh4LsCEnTqzgWbU6n5
- K+5nyG7TTqtsjnGNbOc0yxdxibQCjFa3St8hmBBoqF13b72zpvY6pS3kZcO6MCMtQtY7
- Wm94s30S7V2zoNDdFgR1JfkLZnaEQS/rylrF4mZz7CJU4I4bvIBjrJs19c3oXC1FjKu0
- FrMmhjXO8BKhU5UAb0yua1WMl+9fAasdQbTBZ4kDtG82HgPmZ/PlFkF42GevMYCwHiWQ
- txZQ==
+ d=redhat.com; s=google; t=1786629984; x=1787234784; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=b16fmMwKu+HWDYKJLuFLIupEmUyJiO3RjwTtt8deoC0=;
+ b=Qpusgk2jPgn0qY6Jnp4Svr/pM/1W3LeTZc0ON5oWhQ6c0DIXSteuHJQ/6WwE1PnLr8
+ CJPy0dNJAN5mbw/6eU/OoURtA/5QhmlEQr+n4jOvWcZJ+QHuMEuBC57Q2HM95FV7AHp9
+ X5H+SGU+qjYbYPEgB3giqFa0VhhU2Yy8WKOeB5UOcltU+ptTnTV1hFRz/fsM6xJbufiG
+ g3mnv6VonQxzFLu9wpfF6Uhku0AcPFrnZbXyQLVJ6NrwGFZO0T+BtYLryWuy1K6bxqzC
+ +GjlKA+fG1jAaimg26dXrH/O0N7Zxs7dAUCRZWcN36cU4ujkMsDOJLvaafKyHA8PSQ4B
+ TFJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786629483; x=1787234283;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kImMqM9I7Obc8QnqaPPg9PomF+UcCTs/QXeVwz4lXlw=;
- b=FyWmCrwsOu5q5M22HOq8v+RtQX+9LeukkkrGuH1LDwvve4U1hyI/84XGmMO3svsKsT
- u/nT2HUFGTrAAjmxD5WyXww7zWuM+SRFWIx1NPONq37qeiDlLi46A/hWnSXQfd/+ZEEU
- RPKWT9SzdniC1ipH+DTcyxX3HjrbRwmowOzQYhi+fJJZI0CjFMkfCmYq59eRUefP20jR
- N3Q5CfCiNJ+RhMMc3NomJe8oWoWntJFfvYIj9e5Ch2vf2O732vdNlmotxPHjUFXhyJv5
- SrqQQ/DGN7JMFOLysD8gIWvLVwTX94WB3C3v1VUlXmm37SdPfe2IA23TcF85tbFcscrg
- 3tKw==
-X-Gm-Message-State: AOJu0Yz039k6mreSYW+wcgIcb3yewu/31i9viSqtC3zySUCIiM2FM08N
- G/hxAxz6nBPybkTYk3InCg7cuo53dC7ydp3aUJNT5pGVfqAxnSKAqmDvzKr6TCpxMoM=
-X-Gm-Gg: AR+sD12Z2YEG0DoA5/VHJF9t0KCXwPgue0lWAg/Uc4YFiCQYR9xI4pcaI+yIUonX7po
- OfUUOUdzo+WdEd1Djar2KlpWLXG1wJ/uaeKdXbPLrnfJoNwFIlTOTFS5thcFgCmGr+e8p/O5ih6
- 3xwoKkAf4CV28BcURE0vSh9/j0oqc65B7mOHrRN8O/dwfBibpl5ji+n7xSnNcvQF4gHN67IY+Ps
- 9m1Y9Q/KmS1ETmfG9gVjFsbr+5xy0Ml0pDx32Yme4QFZGEaUrBAbkkfrGpqKHFkVz6WTiqUGjrr
- RPxvPScsubfmd5rF07Flng2r9N1Q8VOHMy0qlwsib18yNRnK04LT0CXbF7JNycupo9EJcNuu0o8
- uubGx+hbCY3+wUZo+Rf0N/DfR6R4nMGy/MUaw1KMRddz0iE0o73WMfmVa8W499hhvWC+WdDSQSG
- W5JpJP0lWootX/SEY+mGUXyADQ1Z0Z9Vl0PhCGacRPxpZj6G5uHrEwCzy7yRa6h5cNonAJonub6
- Kq2Dm0pDg==
-X-Received: by 2002:a17:902:d2cc:b0:2ca:d172:7228 with SMTP id
- d9443c01a7336-2d37e855129mr61764005ad.11.1786629482726; 
- Thu, 13 Aug 2026 06:58:02 -0700 (PDT)
-Received: from localhost.localdomain ([111.198.227.173])
+ d=1e100.net; s=20251104; t=1786629984; x=1787234784;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=b16fmMwKu+HWDYKJLuFLIupEmUyJiO3RjwTtt8deoC0=;
+ b=QArGmmHFuSfMvV469uzm3e3vinNRyy/hxzOUNUyMvwyhKLNL+ieNY1gcV5/8hBKxNg
+ gj4TNr+Kxm/tjLBKCRE4hkbYZuKn+iShycv9ubWDUkReZsMi5Ll3WvWAaplNHCQv8YvO
+ k8a6cvIr1kcM7SI+4FT2l3qiLHlmSqdoK6GOlkXNY1n3moCBF1A3tt01U4ziAJJ8SkII
+ p71OcTHyd1I+w4w0tcz5ZE7LC28WcFEdplW4LylGO4xXjROp16tMogzlzoxXXg/QIbA9
+ Qot/UignJXH585sXjlMrAhaL829N6SOwZjxZsfD61VZxu6wopniDZlQIKaW7XOgNUCOF
+ ZvWw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro/+pXqwtcmyraf2TNiD8S06DlsWpAr0XzA6OSNkosQ8Snne3PTwBI25oHlyEbxgpg3FELtivDKbUjn@nongnu.org
+X-Gm-Message-State: AOJu0YxD+g60+5xdAXEgkCnvGEUzFy8i9XQ43lc4DcjjM6Ador/poToe
+ /YnAjGSxrgH+UQ8lf/0U8w6/nCNbdEvbhwIU/j6RSmLSSYNRm1VsuxlMuOaCuYwB66larg5oec7
+ dcn8qzgj/gT3IBbhFitNr/f7yVNV37Q00vfZcSxApOShRpFSTbvgOsA0d
+X-Gm-Gg: AR+sD13JXk7dQvhkg4sY0K6VqR1J3lhM2bN35Opf6b6HnI8hLg9fZz92pDqM4kNSW5R
+ sh0IS75/cHJoI8kiZOgNF2PxId62L28IAjB3XggAmfA8dNTLE1cpcdqcNq4abZefBAUvJruOyIY
+ +qEJNG8uOwdVoqXUbZWnvT/4gAB44iElWANCVFVykB5iNmsDkohRK1JHFv8v5/UZRA6bRMbbKkk
+ AkCF9Nh6qwAm+d3ln4NOHeVYiA9k6fsujOtlwQRGAhVQfITPMSDW8CiZq0JTgHif85jZofavAyi
+ SvI50WOIAeQa4w3VmVefB2qGqWUfVHBkvnyOrG2YcBA0PrGcB1iNFFpB+yOkeFCf8gtURV/M
+X-Received: by 2002:a17:907:7246:b0:c1f:983f:d8a with SMTP id
+ a640c23a62f3a-c2108fc8906mr283789166b.24.1786629983907; 
+ Thu, 13 Aug 2026 07:06:23 -0700 (PDT)
+X-Received: by 2002:a17:907:7246:b0:c1f:983f:d8a with SMTP id
+ a640c23a62f3a-c2108fc8906mr283785066b.24.1786629983325; 
+ Thu, 13 Aug 2026 07:06:23 -0700 (PDT)
+Received: from x1.local ([2605:8d80:6cc9:637f:db7f:22cd:4098:82fd])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d37c486531sm10024395ad.57.2026.08.13.06.57.59
+ a640c23a62f3a-c210889558fsm94183866b.61.2026.08.13.07.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 06:58:02 -0700 (PDT)
-From: Kangjie Huang <flamboyant.h.01@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Junze Cao <caojunze424@gmail.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Kangjie Huang <flamboyant.h.01@gmail.com>
-Subject: [PATCH v3 1/3] hw/misc/k230_iomux: add Kendryte K230 IOMUX model
-Date: Thu, 13 Aug 2026 21:57:15 +0800
-Message-ID: <20260813135717.2758-2-flamboyant.h.01@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260813135717.2758-1-flamboyant.h.01@gmail.com>
-References: <20260813135717.2758-1-flamboyant.h.01@gmail.com>
+ Thu, 13 Aug 2026 07:06:22 -0700 (PDT)
+Date: Thu, 13 Aug 2026 10:06:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ jmarcin@redhat.com, david@kernel.org, pbonzini@redhat.com,
+ chenyi.qiang@intel.com, farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
+Subject: Re: [PATCH v4 08/12] hostmem: Support fully shared guest memfd to
+ back a VM
+Message-ID: <an3PWdPIdb6afDsS@x1.local>
+References: <20260812201938.198915-1-michael.roth@amd.com>
+ <20260812201938.198915-9-michael.roth@amd.com>
+ <an1_NmWhtHY_Cf9V@redhat.com> <an24aI4sAILoxncp@x1.local>
+ <an29FY93x45qnJuR@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <an29FY93x45qnJuR@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,264 +125,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a SysBus model for the 64 K230 Function IO configuration
-registers documented by the K230 Technical Reference Manual.
+On Thu, Aug 13, 2026 at 01:48:21PM +0100, Daniel P. Berrangé wrote:
+> On Thu, Aug 13, 2026 at 08:28:24AM -0400, Peter Xu wrote:
+> > On Thu, Aug 13, 2026 at 09:24:22AM +0100, Daniel P. Berrangé wrote:
+> > > On Wed, Aug 12, 2026 at 03:16:46PM -0500, Michael Roth wrote:
+> > > > From: Peter Xu <peterx@redhat.com>
+> > > > 
+> > > > Host backends supports guest-memfd now by detecting whether it's a
+> > > > confidential VM.  There's no way to choose it yet from the memory level to
+> > > > use it fully shared.  If we use guest-memfd, it so far always implies we
+> > > > need two layers of memory backends, while the guest-memfd only provides the
+> > > > private set of pages.
+> > > > 
+> > > > This patch introduces a way so that QEMU can consume guest memfd as the
+> > > > only source of memory to back the object (aka, fully shared).
+> > > > 
+> > > > To use the fully shared guest-memfd, one can add a memfd object with:
+> > > > 
+> > > >   -object memory-backend-memfd,guest-memfd=on,share=on
+> > > > 
+> > > > Note that share=on is required with fully shared guest_memfd.
+> > > > 
+> > > > PS: there's a trivial touch-up on fd<0 check, because the stub to create
+> > > > guest-memfd may return negative but not -1.
+> > > > 
+> > > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > > > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > > > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> > > > ---
+> > > >  backends/hostmem-memfd.c | 56 ++++++++++++++++++++++++++++++++++++----
+> > > >  qapi/qom.json            |  6 ++++-
+> > > >  2 files changed, 56 insertions(+), 6 deletions(-)
+> > > > 
+> > > > diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> > > > index ea93f034e4..fbe65b00be 100644
+> > > > --- a/backends/hostmem-memfd.c
+> > > > +++ b/backends/hostmem-memfd.c
+> > > > @@ -18,6 +18,8 @@
+> > > >  #include "qapi/error.h"
+> > > >  #include "qom/object.h"
+> > > >  #include "migration/cpr.h"
+> > > > +#include "system/kvm.h"
+> > > > +#include <linux/kvm.h>
+> > > >  
+> > > >  OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+> > > >  
+> > > > @@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
+> > > >      bool hugetlb;
+> > > >      uint64_t hugetlbsize;
+> > > >      bool seal;
+> > > > +    /*
+> > > > +     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
+> > > > +     * which represents an internally private guest-memfd that only backs
+> > > > +     * private pages.  Instead, this flag marks the memory backend will
+> > > > +     * 100% use the guest-memfd pages in-place.
+> > > > +     */
+> > > > +    bool guest_memfd;
+> > > >  };
+> > > >  
+> > > >  static bool
+> > > > @@ -47,11 +56,29 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+> > > >          goto have_fd;
+> > > >      }
+> > > >  
+> > > > -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+> > > > -                           m->hugetlb, m->hugetlbsize, m->seal ?
+> > > > -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+> > > > -                           errp);
+> > > > -    if (fd == -1) {
+> > > > +    if (m->guest_memfd) {
+> > > > +        if (!backend->share) {
+> > > > +            error_setg(errp, "guest-memfd=on must be used with share=on");
+> > > > +            return false;
+> > > > +        } else if (m->seal) {
+> > > > +            error_setg(errp, "guest-memfd=on must be used with seal=off");
+> > > > +            return false;
+> > > > +        } else if (m->hugetlb) {
+> > > > +            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
+> > > 
+> > > Reporting an error without returning false like the other cases.
+> > > 
+> > > > +        }
+> > > > +
+> > > > +        fd = kvm_create_guest_memfd(backend->size,
+> > > > +                                    GUEST_MEMFD_FLAG_MMAP |
+> > > > +                                    GUEST_MEMFD_FLAG_INIT_SHARED,
+> > > > +                                    errp);
+> > > > +    } else {
+> > > > +        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+> > > > +                               m->hugetlb, m->hugetlbsize, m->seal ?
+> > > > +                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+> > > > +                               errp);
+> > > > +    }
+> > > > +
+> > > > +    if (fd < 0) {
+> > > >          return false;
+> > > >      }
+> > > >      cpr_save_fd(name, 0, fd);
+> > > > @@ -65,6 +92,18 @@ have_fd:
+> > > >                                            backend->size, ram_flags, fd, 0, errp);
+> > > >  }
+> > > >  
+> > > > +static bool
+> > > > +memfd_backend_get_guest_memfd(Object *o, Error **errp)
+> > > > +{
+> > > > +    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
+> > > > +}
+> > > > +
+> > > > +static void
+> > > > +memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
+> > > > +{
+> > > > +    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
+> > > > +}
+> > > > +
+> > > >  static bool
+> > > >  memfd_backend_get_hugetlb(Object *o, Error **errp)
+> > > >  {
+> > > > @@ -152,6 +191,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
+> > > >          object_class_property_set_description(oc, "hugetlbsize",
+> > > >                                                "Huge pages size (ex: 2M, 1G)");
+> > > >      }
+> > > > +
+> > > > +    object_class_property_add_bool(oc, "guest-memfd",
+> > > > +                                   memfd_backend_get_guest_memfd,
+> > > > +                                   memfd_backend_set_guest_memfd);
+> > > > +    object_class_property_set_description(oc, "guest-memfd",
+> > > > +                                          "Use guest memfd");
+> > > > +
+> > > >      object_class_property_add_bool(oc, "seal",
+> > > >                                     memfd_backend_get_seal,
+> > > >                                     memfd_backend_set_seal);
+> > > > diff --git a/qapi/qom.json b/qapi/qom.json
+> > > > index c55776af7d..ee981fc44c 100644
+> > > > --- a/qapi/qom.json
+> > > > +++ b/qapi/qom.json
+> > > > @@ -771,13 +771,17 @@
+> > > >  # @seal: if true, create a sealed-file, which will block further
+> > > >  #     resizing of the memory (default: true)
+> > > >  #
+> > > > +# @guest-memfd: if true, use guest-memfd to back the memory region.
+> > > > +#     (default: false, since: 11.2)
+> > > > +#
+> > > >  # Since: 2.12
+> > > >  ##
+> > > >  { 'struct': 'MemoryBackendMemfdProperties',
+> > > >    'base': 'MemoryBackendProperties',
+> > > >    'data': { '*hugetlb': 'bool',
+> > > >              '*hugetlbsize': 'size',
+> > > > -            '*seal': 'bool' },
+> > > > +            '*seal': 'bool',
+> > > > +            '*guest-memfd': 'bool' },
+> > > >    'if': 'CONFIG_LINUX' }
+> > > 
+> > > We're reusing the 'memory-backend-memfd' class, and then at runtime
+> > > refusing allow the user to control any of properties in
+> > > MemoryBackendProperties.
+> > 
+> > gmemfd should be able to use all ultimately.
+> > 
+> > For seal, IMHO it's already implied, kind of forced seal=on but it doesn't
+> > matter, gmemfd was introduced with sealing, at least what QEMU implies with
+> > "F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL".  So IMHO we could ignore what
+> > user selected and assume it's ON.
+> 
+> Then we should not have a 'seal' property defined for guest memfd
+> at all. Defining a property and then ignoring it, or only ever
+> allowing 1 value to be set is a design mistake. The property should
+> not exist if it can't ever be changed by the user/app.
+> 
+> > For hugetlb, we will support hugetlb (and allow specify hugetlb size) for
+> > gmem in the future I believe.  It's only that this is done one step at a
+> > time so we haven't supported it yet, while the kernel support is still in
+> > progress.
+> 
+> The problem with this idea is that it makes it impossible for a mgmt
+> app to know if hugetlb is supported or not, as QEMU will always
+> report it supported against memory-backend-memfd.
+> 
+> Having a memory-backend-guest-memfd ensures the public interface
+> matches what is actually implemented/permitted for guest memfd.
+> 
+> > > "memory-backend-memfd,guest-memfd=on|off" is switching between two
+> > > separate implementations of the class.
+> > > 
+> > > This whole thing is just shouting "use a different class".
+> > > 
+> > > There is no meaningful sharing of code here, and the sharing of the
+> > > public interface is offering apps no value as the impl prevents them
+> > > from choosing the value of the properties - they have to be set of
+> > > certain values which are not introspectable.
+> > > 
+> > > Please introduce a "memory-backend-guest-memfd" backend instead.
+> > 
+> > This is indeed what Michael used to suggest, and we were discussing in
+> > previous version on which is better,
+> > 
+> > https://lore.kernel.org/r/rjqfiwh57gip3u3psqg33jhmo7ixaj2qwzupc7zdk7f3d26qnu@tglactz67ogk
+> > 
+> > The hope is this is also easier for either libvirt or most users, but
+> > please correct me if it's not the case, especially for libvirt.  The plan
+> > is when CoCo flags are provided, all things will automatically switch to a
+> > CoCo-friendly implementation within QEMU.
+> > 
+> > It also means here the guest-memfd= parameter shouldn't be needed in real
+> > CoCo contexts because they'll simply be implied (no cmdline change needed
+> > for the same "-object memory-backend-memfd" one used to use without CoCo).
+> > It's only needed for only special use of guest-memfd, in this case
+> > init-shared is the special case where CoCo doesn't use.
+> 
+> Reading all this, IMHO reusing memory-backend-memfd for the current
+> Coco support was a design mistake, it should have have a
+> memory-backend-guest-memfd object from the start.
+> 
+> Given that we need to be able to control memfd vs guest-memfd for
+> the non-Coco case, it is still worth introducing the new object
+> class today.
+> 
+> Even if the two classes shared all their properties (which they
+> don't given the comment about 'seal' being always on), then a
+> "foo=on|off" that toggles two separate impls is still creating
+> a pair of sub-classes by the backdoor. 
 
-Preserve the writable configuration fields across aligned 32-bit
-accesses, apply the documented reset values, and ignore writes to
-read-only and reserved fields. Offsets outside the documented register
-list read as zero and ignore writes.
+The idea of that, at least in my mind.. is an user shouldn't need to worry
+about differences of guest-memfd and memfd, QEMU should just do it for the
+users, based on the machine configurations.  Memfd is a concept more widely
+spread, the hope is anyone using guest-memfd should simply treat it as one
+memfd, no matter it is shared, in-place converted, two-layer-backed, or
+whatever is happening underneath.
 
-This provides the register behavior used by the Kendryte SDK U-Boot
-pinctrl-single driver and Linux IOMUX configuration code.
+Now we do create guest-memfd via a separate ioctl, what if we can create it
+via memfd_create() syscall too?  Then do we need to do the separation from
+QEMU layer?
 
-Suggested-by: Alistair Francis <Alistair.Francis@wdc.com>
-Suggested-by: Chao Liu <chao.liu@processmission.com>
-Suggested-by: Junze Cao <caojunze424@gmail.com>
-Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
----
- MAINTAINERS                  |   2 +
- hw/misc/Kconfig              |   3 +
- hw/misc/k230_iomux.c         | 125 +++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |   1 +
- hw/misc/trace-events         |   4 ++
- include/hw/misc/k230_iomux.h |  43 ++++++++++++
- 6 files changed, 178 insertions(+)
- create mode 100644 hw/misc/k230_iomux.c
- create mode 100644 include/hw/misc/k230_iomux.h
+IMHO that is now an ioctl is not required; it really can be part of
+memfd_create() syscall, it's just easier to manage, e.g. it's completely
+KVM alone, and it also has attached to the KVM instance.  The idea is still
+similar, and we can see that from possibly shared properties here on huge
+pages and so.  I don't treat seal= a block just to introduce a new object
+for that, and I expect as gmemfd evolves it will gradually get most
+features memfd supports.. like folio migration and so.. but I could be
+wrong.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f249be744e..adcff4bbdb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1845,8 +1845,10 @@ S: Maintained
- F: docs/system/riscv/k230.rst
- F: hw/riscv/k230.c
- F: hw/watchdog/k230_wdt.c
-+F: hw/misc/k230_iomux.c
- F: include/hw/riscv/k230.h
- F: include/hw/watchdog/k230_wdt.h
-+F: include/hw/misc/k230_iomux.h
- F: tests/functional/riscv64/test_k230.py
- F: tests/qtest/k230-wdt-test.c
- 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index b8860dd3e7..5011c10c53 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -260,4 +260,7 @@ config XLNX_ZYNQ_DDRC
- config AXIADO_CLK
-     bool
- 
-+config K230_IOMUX
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/k230_iomux.c b/hw/misc/k230_iomux.c
-new file mode 100644
-index 0000000000..11fcc22a09
---- /dev/null
-+++ b/hw/misc/k230_iomux.c
-@@ -0,0 +1,125 @@
-+/*
-+ * Kendryte K230 IOMUX
-+ *
-+ * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Provides the Function IO configuration registers documented by the K230
-+ * Technical Reference Manual.
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ *
-+ * For more information, see <https://www.kendryte.com/en/proDetail/230>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/k230_iomux.h"
-+#include "migration/vmstate.h"
-+#include "qemu/module.h"
-+#include "trace.h"
-+
-+/* TRM V0.3.1 section 12.9.2.1 Function IO register list. */
-+static const uint32_t k230_iomux_reset_values[K230_IOMUX_NUM_REGS] = {
-+    0x944, 0x944, 0x929, 0x908, 0x888, 0x908, 0x948, 0x890,
-+    0x890, 0x890, 0x910, 0x890, 0x890, 0x8a9, 0xa9e, 0xabf,
-+    0xb9e, 0xb9e, 0xb9e, 0xb9e, 0xb9e, 0xb9e, 0xb9e, 0xb9e,
-+    0xb1e, 0xa90, 0xabf, 0xb9e, 0xb9e, 0xb9e, 0xb9e, 0xb9e,
-+    0xbd0, 0xbd0, 0xbd0, 0xbd0, 0xbd0, 0xbd0, 0x890, 0x910,
-+    0x890, 0x910, 0x890, 0x910, 0x890, 0x910, 0x890, 0x910,
-+    0x890, 0x910, 0x890, 0x910, 0x890, 0x910, 0x89e, 0x89f,
-+    0x99e, 0x99e, 0x99e, 0x99e, 0x890, 0x890, 0x8a9, 0x8a9,
-+};
-+
-+static uint64_t k230_iomux_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    K230IomuxState *s = K230_IOMUX(opaque);
-+    uint32_t value = 0;
-+
-+    if (offset < K230_IOMUX_REGS_SIZE) {
-+        value = s->regs[offset >> 2];
-+    }
-+
-+    trace_k230_iomux_read(offset, value);
-+    return value;
-+}
-+
-+static void k230_iomux_write(void *opaque, hwaddr offset,
-+                             uint64_t value, unsigned size)
-+{
-+    K230IomuxState *s = K230_IOMUX(opaque);
-+
-+    trace_k230_iomux_write(offset, value);
-+    if (offset < K230_IOMUX_REGS_SIZE) {
-+        s->regs[offset >> 2] = value & K230_IOMUX_WRITABLE_MASK;
-+    }
-+}
-+
-+static const MemoryRegionOps k230_iomux_ops = {
-+    .read = k230_iomux_read,
-+    .write = k230_iomux_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+        .unaligned = false,
-+    },
-+};
-+
-+static void k230_iomux_enter_reset(Object *obj, ResetType type)
-+{
-+    K230IomuxState *s = K230_IOMUX(obj);
-+
-+    memcpy(s->regs, k230_iomux_reset_values,
-+           sizeof(k230_iomux_reset_values));
-+}
-+
-+static void k230_iomux_init(Object *obj)
-+{
-+    K230IomuxState *s = K230_IOMUX(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &k230_iomux_ops, s,
-+                          TYPE_K230_IOMUX, K230_IOMUX_MMIO_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static const VMStateDescription vmstate_k230_iomux = {
-+    .name = "k230.iomux",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, K230IomuxState, K230_IOMUX_NUM_REGS),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void k230_iomux_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    dc->desc = "Kendryte K230 IOMUX";
-+    dc->vmsd = &vmstate_k230_iomux;
-+    rc->phases.enter = k230_iomux_enter_reset;
-+}
-+
-+static const TypeInfo k230_iomux_info = {
-+    .name          = TYPE_K230_IOMUX,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(K230IomuxState),
-+    .instance_init = k230_iomux_init,
-+    .class_init    = k230_iomux_class_init,
-+};
-+
-+static void k230_iomux_register_types(void)
-+{
-+    type_register_static(&k230_iomux_info);
-+}
-+
-+type_init(k230_iomux_register_types)
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e86d9ad6b3..fab6336c91 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -171,3 +171,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
- 
- system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-+system_ss.add(when: 'CONFIG_K230_IOMUX', if_true: files('k230_iomux.c'))
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index c9a868b3ef..388967c9e1 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -405,6 +405,10 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
- iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
- iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
- 
-+# k230_iomux.c
-+k230_iomux_read(uint64_t offset, uint32_t value) "offset=0x%" PRIx64 " value=0x%" PRIx32
-+k230_iomux_write(uint64_t offset, uint64_t value) "offset=0x%" PRIx64 " value=0x%" PRIx64
-+
- # aspeed_sli.c
- aspeed_sli_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
- aspeed_sli_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-diff --git a/include/hw/misc/k230_iomux.h b/include/hw/misc/k230_iomux.h
-new file mode 100644
-index 0000000000..0a637c6292
---- /dev/null
-+++ b/include/hw/misc/k230_iomux.h
-@@ -0,0 +1,43 @@
-+/*
-+ * Kendryte K230 IOMUX
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-+ * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-+ *
-+ * Copyright (c) 2026 Kangjie Huang <flamboyant.h.01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_K230_IOMUX_H
-+#define HW_MISC_K230_IOMUX_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_K230_IOMUX "riscv.k230.iomux"
-+OBJECT_DECLARE_SIMPLE_TYPE(K230IomuxState, K230_IOMUX)
-+
-+#define K230_IOMUX_MMIO_SIZE 0x800
-+#define K230_IOMUX_NUM_REGS 64
-+#define K230_IOMUX_REGS_SIZE \
-+    (K230_IOMUX_NUM_REGS * sizeof(uint32_t))
-+
-+/*
-+ * Register layout (TRM V0.3.1, section 12.9.2.2):
-+ *   bit 31     DI: RO, input data from outside the chip to the PAD,
-+ *               reads as zero; the model does not simulate external
-+ *               pin input
-+ *   bits 30-14 RSV: RO, reserved
-+ *   bits 13-0  RW configuration fields
-+ */
-+#define K230_IOMUX_WRITABLE_MASK 0x00003fff
-+
-+struct K230IomuxState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    uint32_t regs[K230_IOMUX_NUM_REGS];
-+};
-+
-+#endif /* HW_MISC_K230_IOMUX_H */
+IMHO one major question to ask is, is it more convenient for libvirt to
+have that new object?  Please keep in mind that after we introduce this as
+a new object, we may start to introduce even more *-guest-memfd in the
+future, we roughly talked about DAX in the previous discussion.  My goal is
+to make it most convenient for either user or libvirt to maintain the
+cmdlines for QEMU, but if you think that makes libvirt live harder instead,
+I've no strong feeling to go back to what Michael initially suggested.
+
+For example, if libvirt wants to detect hugetlb supports for an object, it
+can still pass in the parameters and test-boot a QEMU and then IIUC it'll
+still correctly capture an error for gmemfd case.  It might be that I
+didn't really get what will make libvirt complex by reusing the object, but
+I'll definitely follow your judgement on that.
+
+Thanks,
+
 -- 
-2.43.0
+Peter Xu
 
 
