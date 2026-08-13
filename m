@@ -4,142 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3CEC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 14:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F39CC5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuWmc-0003Ci-40; Thu, 13 Aug 2026 10:51:50 -0400
+	id 1wuX0P-00006r-45; Thu, 13 Aug 2026 11:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wuWmZ-0003CC-M3
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 10:51:47 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuX0O-00006f-3b
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 11:06:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wuWmW-00067b-Lx
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 10:51:46 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67DCL9aN1519947
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 14:51:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Y8ckVKjYLbcQChEv8+GikNCitpge7F3SB+rvHJpseCA=; b=Ua/0d4Tq/X2Z/EGJ
- egx8HGyTcFOztR0TRPh45XvN8DqWMkkxDO+0vWk+6fEE1q0uUy1xt+WLz/eslLXh
- v3EdWcjJGWIem2JEb8rCu+F1Mat5mZEuDUUpeF0+/DFWcTPJQ4GbXPlwr0eSI8gt
- mXumCEmU1hQHerdT1Zpeg+MADrV4vcjsUsAWKjtkprR48i1hX4v5yAe/+/Og/vPn
- jNA9QmmUpzcR4LAaljA3q0VyzpJUOObAWxH38oAiPJVKQNTqjDqZK+wxhWG/dzl/
- 8952A62mYDm+yapOohq6wmqkv/Q7IaQwrUotiSUXRdKjcFJb59LnRPBQIiZbjncj
- UfXEsQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g0xsk478v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 14:51:42 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52d7b3b6aa2so5085751cf.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 07:51:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuX0K-0000jj-VZ
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 11:06:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786633558;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/lMsXCB5Z6ufqzJ+9dDe/Rj1Ait1z22Lv4L9W/5wNFo=;
+ b=bxjp9hnabeklAVlT2sjfCGQb8oNM9KuMOWdXlADHU5jDAsYZwgumN0uRuutV/cYJjt7Zul
+ TrvrOVBs25ccq2amsz9ti4wy6ddB7y7res9G6pYlnx9ogOhgL4wNLr5gZIfemZdH7kOF80
+ 62R6x6y84bbcMtDHaV/Bxtb8ZGx7SjI=
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-488-8tQa6GhOMYe2NGBIMxO2fQ-1; Thu, 13 Aug 2026 11:05:51 -0400
+X-MC-Unique: 8tQa6GhOMYe2NGBIMxO2fQ-1
+X-Mimecast-MFC-AGG-ID: 8tQa6GhOMYe2NGBIMxO2fQ_1786633550
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-5c2ae99c28cso276258e0c.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 08:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786632702; x=1787237502; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Y8ckVKjYLbcQChEv8+GikNCitpge7F3SB+rvHJpseCA=;
- b=ftl4ItNfiXMHJEj/E6Vz9ymviS+VIljMY0TVEHyOOptTbNma5bALLSoOIy24jcjIwz
- qi/xz6gUx8oH8MNVZIbFOdY4V5Jcpp8E9jRWOcaptl6VHg1Azeg9QvnsBko8CrBinznX
- +DVmF2RSx5OHFI6RRLWSDLLNrcO2VoW8wPZhzvi1Rzt6SnNGpV3bz/vaffFBFtj7fyl2
- 2vjunwQnJq6/KWQ1wfEPjRb+BjijQbUTBF+qo3mV0CJKv34O4zwz8jCeBffAWPa0QySA
- 3rJanHnRE5nGxl5NCKAVZyf/AN+lowD4WTUPWFSPun8uXArKpKw+RZngIvR9AQTaRr3a
- 6Zpg==
+ d=redhat.com; s=google; t=1786633550; x=1787238350; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/lMsXCB5Z6ufqzJ+9dDe/Rj1Ait1z22Lv4L9W/5wNFo=;
+ b=I66BDizowMn3NYT1L9HUrMYvk33ZEKHmfW7I+roD60NcDYNchX/wEPDduOdqZUgO+l
+ DCoiAaIgdNqgo6gwZmyXOCzxG0uxjizuYJNSaW4tTORqb8a6H0TaTDHjZdOsMIQ20NMC
+ sjQjJ1Y3m9xkX08LnRSrWtM9MlMrJp4LzXKcY4cDs6fH+8yccABPQ+zMYClkw4Q15cZv
+ FJXwL7MeffNNakvSekt561KWpQO7dfuiGIuOzaCp9Lfzs9F0cX2ChDdcqsalGR2f6Uar
+ NFR6lvvN785nrRu+3ag9yU26P3zli65zr84WgmONJ2KdemJ+oufi8w36vO3tFGvndZxq
+ X/2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786632702; x=1787237502;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Y8ckVKjYLbcQChEv8+GikNCitpge7F3SB+rvHJpseCA=;
- b=kZANNXQSiwyJkKLL3xLmerhSbrBkqUEwFd286vyEdZ4CriKWDcTpaYTwUqTwhKws2p
- 5czPYJJOLyrkm+dN2p9UChU53LByiWqNAITGyO8GiTVaBUB7aFhDyDB++L0oZhWACqqm
- nVL3AVpwb2i1wQEoweKYftb6JsGDpy1w3x8UZ04RuKJLdcjlHYpYiJ8nrOjmM+G4gW4D
- MDSgKWjrjFIfePU/Qw4A109WUoubWNNLWVVHv6xoauxVEcLb0xPwia+29kXhvH2ysr1d
- WO0hLW1cvb0lusd1uH06+F36KA6Dv08Ya1V5bGo0uUjYfFXOH6CF7zgp2qpSmoYwKETN
- uUeQ==
-X-Gm-Message-State: AOJu0YzU4u8EIA8Gr4ZVKKsK3HjJ2/FhiBELEVw4nP5fL6V8df551Ccm
- tK9obMst3rWOsTc9/UBvmKbiY12nAhq1Qg0SjvvNlBmi7SZc3faRIs9NCioljTYalX5uSWCQZ7z
- A0+GeUJ+v1JEwziAPY9ha5vppXxjMBheJ5iN06ptG1oRnazYB/naz7CObAQ==
-X-Gm-Gg: AR+sD13hxPlNUJrO1eae3HLb1/HxwTbfE6jCGihaGHWqC8ub3G5CNu+xS+bFfj2OkOx
- GjPrrcIQ0E09vf31GOdnxkV7XWpeAGJYR5fNIu5AqTScyN/O3y0AAFMicNMNMeCjmNzcZhOQkla
- g3Ce0uyzAlpB6e7E+T4Kv+s//46tmOisfOpHW5au6e1b6rttYTd4xlYTjEN6XcHZd2TkDr4nBJd
- G9UQOTXx0VX+YzJOQt03Zmkf3G/uf/D4h+UG3ICUmVz6lDa73t6930tUmL6bbzHX6zwuaMqbjzc
- dfxzNSx2hJEnHq2KW7CwkTf6qN22zwx1lrgxMi0EIu7g8GYNWUwwxAh4G/IgkXdeAY861o9u7Ah
- yn5Wer2dN1R1kI7Yfxu4EMTfJ6GAh+GnXx30=
-X-Received: by 2002:a05:622a:5c13:b0:528:162e:29d3 with SMTP id
- d75a77b69052e-52d73dd2dacmr69317561cf.32.1786632701891; 
- Thu, 13 Aug 2026 07:51:41 -0700 (PDT)
-X-Received: by 2002:a05:622a:5c13:b0:528:162e:29d3 with SMTP id
- d75a77b69052e-52d73dd2dacmr69317061cf.32.1786632701407; 
- Thu, 13 Aug 2026 07:51:41 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49981b1bd61sm67203035e9.8.2026.08.13.07.51.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Aug 2026 07:51:40 -0700 (PDT)
-Message-ID: <e02f8fb8-3ee3-4471-9748-8a26b95134a7@oss.qualcomm.com>
-Date: Thu, 13 Aug 2026 16:51:39 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ d=1e100.net; s=20251104; t=1786633550; x=1787238350;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=/lMsXCB5Z6ufqzJ+9dDe/Rj1Ait1z22Lv4L9W/5wNFo=;
+ b=bMcFupirEZLmQBafOw0aYa1OthU7kxTkrFb5qursnhrfgS0brEvhunfd1oX8wxcf8S
+ hlUTvhTJJ65v0niA14jeYyHWlM7cJ10+rOEoUjHFCcgi0Qu65Tat4ht6/jvEjxQlXmZI
+ rfb7SYNSFN1qHzucmXIsyEsBEWjO46IqDf2gES65j9k55xqC9nzl28N41G33J/uYXtcR
+ ExJ9iuItPJoUdjYCx1yCtaJjY/v3QG8gyebNJhSzWyzb57liSPHz2xtYWeyaQ0tvM17S
+ Pqea2QYQ82De89op7wQpSv8luihcc4w+gGsvljzQUqk+wag9bZGoleCwIoBMsOv21dIn
+ Fz1Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqrEWwjEtTHlT1oU6ReJEBJTIhlfAeJjIlEQVCdN30WstoXm6viijIEih30yurZaP+2A+A61mjT/TsK@nongnu.org
+X-Gm-Message-State: AOJu0Yx9vi4VCGtxjcIY71Q/A2otpYODAtvGIh5o0i9sNF3JVBEzA5Q8
+ Czkiu74FEWMnUg68A2suNn/IOEdOCen5vRHMI9AH7Japy0zi/1DfLkoFxJ9TvADUfV+xTwWQtIV
+ l2sNLdaqAX8JNjv3FrqolE0hVhIQSuXUC9+OABRAumCciwm3IZPU8bXSk
+X-Gm-Gg: AR+sD12muOCwgujkYqi9eZuRODVaaBirvsyNxFOXZ5DIvnAaP5TPUcR0kVQs8F9+5NW
+ 9CxqpaKwQ9XumThMSnXaalKwjXIDUAnW8zcUn0Gu/NuJMrdV1I5vkobbLreB8N0hwvLbtK6BYxx
+ esB/Wb+LgTB7eQCEw/7CLD1Jtllqifk+V3tpNZJzWhVxfJhyasnBZVh7RjqRYrbFwCr1rZL2PhQ
+ mk7rR7hfSQ3U8E2sNahrYVfRkzF6LuxcggBeJMrLqRrctWG1KbOM82K5s+qPGGm6UA0FWuJBENX
+ tPpcCUx9zKoVrXMKp/IcyYQFqWuo+4Ics+SYP03rVf1mXGlbOP7UT3m65Bpfw1wNUljw
+X-Received: by 2002:a05:6123:148:b0:5c1:25d4:e29c with SMTP id
+ 71dfb90a1353d-5c579708bfbmr753795e0c.0.1786633550104; 
+ Thu, 13 Aug 2026 08:05:50 -0700 (PDT)
+X-Received: by 2002:a05:6123:148:b0:5c1:25d4:e29c with SMTP id
+ 71dfb90a1353d-5c579708bfbmr753776e0c.0.1786633549428; 
+ Thu, 13 Aug 2026 08:05:49 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-5c57ba66bfbsm919682e0c.2.2026.08.13.08.05.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Aug 2026 08:05:48 -0700 (PDT)
+Date: Thu, 13 Aug 2026 11:05:45 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Subject: Re: [PULL 00/10] Next patches
-To: Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
+Message-ID: <an3dSch6yhK52d2X@x1.local>
 References: <20260812151444.2611689-1-peterx@redhat.com>
- <f0a852af-1859-4133-9d96-be8b9231888d@linaro.org> <an26zg9zVW-JrV9f@x1.local>
- <an3JcZvNNS8o_UFg@x1.local> <f6f159d5-4740-49b6-949c-cdcb1ec3c71f@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <f6f159d5-4740-49b6-949c-cdcb1ec3c71f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <f0a852af-1859-4133-9d96-be8b9231888d@linaro.org>
+ <an26zg9zVW-JrV9f@x1.local> <an3JcZvNNS8o_UFg@x1.local>
+ <f6f159d5-4740-49b6-949c-cdcb1ec3c71f@linaro.org>
+ <e02f8fb8-3ee3-4471-9748-8a26b95134a7@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: mYT1A319wojYOo03SRdPT9aJw1ZCS3I0
-X-Authority-Analysis: v=2.4 cv=M7J97Sws c=1 sm=1 tr=0 ts=6a7dd9fe cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=Vs8K37Lm-pY0MMZWHV4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDEwNiBTYWx0ZWRfXxrjMQ6J/2356
- QaA6lxcExZus98N7TaWxu6FgaPspQdUtppPI9ngCbola+LXybe8KTD0rkVAXZSLj+PbIIpDHFbR
- DMP/CJnxuG5KbVfojDqVUt0b2pRgGaU=
-X-Proofpoint-ORIG-GUID: mYT1A319wojYOo03SRdPT9aJw1ZCS3I0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDEwNiBTYWx0ZWRfX3EwNVGIVPk2e
- th9ihW3jJ4NWwy93X52xovOP3P2EkpCo2HA3lvmqiNiGyirzF07w20KskNhhK7D89w5YhMIx1Wt
- 8u0CngCN2BkxjnNHa+CLRlWgJaqQR3fnRqilp4IoU5HLwUfAoJZIs9KENAG7W3C/7mjAkooUmlB
- 5/z7N0m1fyZcoE+PkWd0qskN6HBz8LEVEG4KjiopXRlEI6EdDjRFrEoELQkBSlqXFZO2udyQTiY
- S8N2tXXBRtwcDrw6aFvfXo5Rr1vDjNwYvD9cAuKKlJF8eEFP9Z0KPQUTf++LqhX2SBR7RMw0U+J
- PDPruZNVH/bCl3+piwTak/7onxYoijxLn6NGirM7X+pE5BnxRec/LRQjrdMIS9xfXCFhfvle+1D
- ZkvLV7yepxB+VYQDMmIpTfva6MtHubi613yD1kQ0bg7Wvk06SDEjeCcZzoMv/H0Cxul5UEhk04X
- tJk9vBcQ01uwMiphsug==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-13_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608130106
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <e02f8fb8-3ee3-4471-9748-8a26b95134a7@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,37 +123,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/26 16:14, Richard Henderson wrote:
-> On 8/13/26 06:41, Peter Xu wrote:
->> Now when I think about it from the root, I tend to like what Xen defines
->> with ram_addr_t:
->>
->> /* address in the RAM (different from a physical address) */
->> #if defined(CONFIG_XEN_BACKEND)
->> typedef uint64_t ram_addr_t;
->> #  define RAM_ADDR_MAX UINT64_MAX
->> #  define RAM_ADDR_FMT "%" PRIx64
->> #else
->> typedef uintptr_t ram_addr_t;
->> #  define RAM_ADDR_MAX UINTPTR_MAX
->> #  define RAM_ADDR_FMT "%" PRIxPTR
->> #endif
->>
->> I don't know how we supported 32bit host emulating anything larger, but
->> logically it's doable, then IIUC uintptr_t won't be enough allocating
->> anything >4G? 
-> 
-> ram_addr_t != hwaddr or vaddr -- it's just an internal token.
-> 
-> So a 32-bit machine could put 1G of ram (identified by ram_addr_t) at 8G 
-> (hwaddr) just fine.  But obviously it couldn't put 8G of ram anywhere.  :-)
-> 
-> That said, Xen was weird in that it used to be possible to have an i386 
-> qemu command-line talking to a x86_64 dom0 kernel controlling x86_64 
-> guests.
-> 
-> So, yeah, now we should drop this ram_addr_t distinction and always use 
-> uint64_t.
+On Thu, Aug 13, 2026 at 04:51:39PM +0200, Philippe Mathieu-Daudé wrote:
+> On 13/8/26 16:14, Richard Henderson wrote:
+> > On 8/13/26 06:41, Peter Xu wrote:
+> > > Now when I think about it from the root, I tend to like what Xen defines
+> > > with ram_addr_t:
+> > > 
+> > > /* address in the RAM (different from a physical address) */
+> > > #if defined(CONFIG_XEN_BACKEND)
+> > > typedef uint64_t ram_addr_t;
+> > > #  define RAM_ADDR_MAX UINT64_MAX
+> > > #  define RAM_ADDR_FMT "%" PRIx64
+> > > #else
+> > > typedef uintptr_t ram_addr_t;
+> > > #  define RAM_ADDR_MAX UINTPTR_MAX
+> > > #  define RAM_ADDR_FMT "%" PRIxPTR
+> > > #endif
+> > > 
+> > > I don't know how we supported 32bit host emulating anything larger, but
+> > > logically it's doable, then IIUC uintptr_t won't be enough allocating
+> > > anything >4G?
+> > 
+> > ram_addr_t != hwaddr or vaddr -- it's just an internal token.
+> > 
+> > So a 32-bit machine could put 1G of ram (identified by ram_addr_t) at 8G
+> > (hwaddr) just fine.  But obviously it couldn't put 8G of ram anywhere. 
+> > :-)
 
-🩷🩷🩷 lovely 🩷🩷🩷
+Yep, I should have described it as allocating >4G in total, rather in one
+shot.  So it's about the address space we can allocate that is limited..
+
+> > 
+> > That said, Xen was weird in that it used to be possible to have an i386
+> > qemu command-line talking to a x86_64 dom0 kernel controlling x86_64
+> > guests.
+> > 
+> > So, yeah, now we should drop this ram_addr_t distinction and always use
+> > uint64_t.
+> 
+> 🩷🩷🩷 lovely 🩷🩷🩷
+
+I can throw a patch, just to double check one last thing: we don't support
+any form of 32bit hosts anymore, am I right?
+
+-- 
+Peter Xu
+
 
