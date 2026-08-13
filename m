@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF44AC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E6AC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhA-0008BN-OM; Thu, 13 Aug 2026 11:50:16 -0400
+	id 1wuXhb-0008IH-60; Thu, 13 Aug 2026 11:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXh8-0008Ad-SC; Thu, 13 Aug 2026 11:50:14 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1wuXhZ-0008I4-Js; Thu, 13 Aug 2026 11:50:41 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXh7-0001nZ-5C; Thu, 13 Aug 2026 11:50:14 -0400
+ id 1wuXhW-0001rl-JF; Thu, 13 Aug 2026 11:50:41 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=iOYQMZHsdwwiptIhRn+BD2zL3khIKFMTMSsMr1fwBqZLwNpseY4pRLktEKscJG7QYqOTC27xJoiJ5YUNWBlVBwnLbHxbPc2lxONa639qckTnF8ejS48sOC8vDqMcKaMr8Va2jSgRl9G8ngnNOSO4g9QC6oa0d0Rl4rs9H7MzIgZpQkVyL+PtBPUh935i5XzuDNxh1ZQjlXrRPCfTLTPi5ENhtS8Yom0pkWI2uko4TT9MK6nx9CFdZoGL/KDh/mMxddt/O/Re94VE56ygeki6Z5vY41DWferFF8G95afhEoEDUmLuyP+qt5LXDESK7zvACWAkr2xCU6Y/fsawTum3fA==
+ b=DDytenMuPFe2lgTRWvZeYpBRMFG4rqK4ISW7H2p1bF9Leh9Me6h/3ev2cjzUsuoLZxWxzYigsC2wmUqJRCLClJwGEyMNI5MxVhRBdFBEDIxhVZ5ndhA56STXTsyk6JX8FnmG+t2DxpwBaGFF3m9vq/8/P7bPQMiVEnO++RWRfLB48+XslN7Utq5CJzlIQyGOITp/2wvPHvWr/Lx5JtcWLnSPGUz63Wlc/Df2sg6zsoiMdqMrKBzP4Hz5zrNtkvjWWafOXFBanqSOdPXlzK0CqUFLosJn8ofJmCLDOHH5zQLVhJxjC5K7aMsuQ7E8jrT3VX5YeFgQdTiV+C85mmMWWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NmlEv9nl1xY0eIcRl4LqtEwxfCVmFK4/Oq+FFSCYM2o=;
- b=GrghIMYH6KZDMxw4/8FPEBmfsdDRnwFGAUi5XUfYWSAXngsKzTz8kG32EcqJYQX6pJpkPdI1I4nocjkV85lPPGqayKOcFy5obrEXc3hwD6Hi7XpIOrotcsbyzOWZrnKLTKUXG765gLh3/PugJ1uD19X9yq1LRZHzBTckuhW+DvUpa0dpNXUdJ8BEkIVfqwNJDzBJNPbdetkf+eTdTDiM2pohx1fcOXEN2t8EYxhgZdVIWoekF8juCPPCFgFwMxjvpE69zoPqjtIop1/ZzeySR6zbac+PLZJiUwjTbYjkAgZUUQEk5V1R98vErXUWlJVnwu3+9f6IM1dZl5zl8bqoLg==
+ bh=69+/qvXgw+ev8PHydR3sI6ZXDYC0WgmYP8scvizzU/s=;
+ b=RFsLrq9G03M6d/4NrZeA15Fkhg8Ozv4YF9p5h+oEeNpMnJgkWeF7w7DL7AGUUzCzCxAryeodmrd/7xwnbIJ2VVquYFdSsSEtY491TwiaXfNG0SeQXEOiVCDXWX6yJph0VaFbATP+VpR5bVtnOk4oTP+my1S6K5WskxSo8AE7rRntS4wbRv7MrU5D5KTbkF2RRgKZ6z43dDNJGXp8BPgBu0NnZfqU0MLXePEBZ287ijyKmWwRlzSUVbE2wggtfYrbS2fBASWEX7VApAhQSGBp9uzx4ULsJRsICjx0nQGlBHHlHaMQLUw5UwsP2iUuvedbJoITZjPhopAHgDRH62T/AA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NmlEv9nl1xY0eIcRl4LqtEwxfCVmFK4/Oq+FFSCYM2o=;
- b=OhdgIaDagPaqLj/6bOlCD6MzMpfyVOx86ClQcNi15Nzd2qCBfB14Zwm3bObI4x4We3k6G/oe/bIGVf3PRNzaQhZbGLXANH7jhyU1Dpe2KgL9LiBjeBjSFK9RghgMz5p+ZmPQ63lWRhom107ZT5uL5iDoYleZLifvOTh88R1oS2w+aPU/X9uWRVpEEBkm/DcxofgxdVW1RBpcViyv86Diz1T1CMPkFePxwy72ZNBb1SXd3VSEN3lWKQ2f5lUwcesDetTyPFa8Msbi8T7Qb4G8n59E/X2t6kTuAsBLGhvZ1iPp20LVvGEszS20EaDWWS3zetL7QXyQIhm2c7WRwFe5BA==
+ bh=69+/qvXgw+ev8PHydR3sI6ZXDYC0WgmYP8scvizzU/s=;
+ b=moJkRO54WoVSndLGaR/9VXX12cUIrhDDQZ/z3X7U+rl8s/oi28dnS2THWaclJfFihj5tmwH9x07UOynfmudMURlt0WRDRT97+ZWP2XCj1nrHyiyshG1JgopXo2wYAQM2eMr77ofHCTfC6/ucMYwf9RPfRJu3v7Tr9Y2EezayvhANlmix/c1F/Do13jTytsi5fNRv56kypQ5lCLTlbfK0iBT0W59MFTzke5qPJtLzn0AlOJJg9x53nqLqM8/lgCRjk75PaQF9HXvePw0o1RmVmJbOWl2mm+OEdCOm9UhEAcOkFqJ3uk2LncRRmy60XraRLNOKl4IwtWQQe+57MbLeXg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by SI2PR02MB5490.apcprd02.prod.outlook.com (2603:1096:4:1a1::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Thu, 13 Aug
- 2026 15:50:07 +0000
+ 2026 15:50:30 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:07 +0000
+ 15:50:30 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH 02/20] hw/arm: aspeed_ast27x0-fc: Store boot info in the
- machine state
-Date: Thu, 13 Aug 2026 23:48:50 +0800
-Message-ID: <20260813154918.996812-3-bin.meng@processmission.com>
+Cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 08/20] hw/arm: imx8mm-evk: Store boot info in the machine state
+Date: Thu, 13 Aug 2026 23:48:56 +0800
+Message-ID: <20260813154918.996812-9-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
 References: <20260813154918.996812-1-bin.meng@processmission.com>
@@ -70,65 +64,65 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SI2PR02MB5490:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb4ecc2b-be8d-4530-219c-08def9528c84
+X-MS-Office365-Filtering-Correlation-Id: 68eed20d-2dc6-40ce-2c86-08def9529a75
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|7416014|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: QwBfc62PRZ35X9OqJ6/BMuWZt1ofUUx75svMuGlMq1p9aonWFeZ0MBydOrbmVmSrvI8kx/pJ9MHfOJzfIDL7hHTzrOi/WRRHetPlReQwpmo/bOaUbZZHh1ppgh2BmpKMBIFj5l4OieWBdXJCHrhAMCHOJSmio0/4sz/VCcsceiYkUdxj7i9bCnzRGNofbHRDpVSriBhH95b9nH97bkuPtKYf4FiPe5PrDg+0i9TdzuVZio5bNxGpIBQgPsmqaFf3zJZl3GIUcBvLMwUjoR+QIRKrq+hL9rw/8teODkyTIWhYMiUpN/HY7yVHST+rX82avLL7ZTRWj/hG/EEURYKobOpvSSmU4zczzBsNs/vrL8g5Vh8lJ+4XTohivO9IO1N4DG6Hu7uwdpMZn1zZB9y2ui5a826aDmIFVtvR1YKDvSGw+xzynKu1Zh8Z3xCc7CcscLW22Sj/aH8hzaQgV87nTVFmX6suSFuyuWLyo79jajUbtUQA/xiIqrvV8a9PDn7bxWo2Rsr7JY6V4t6x2Xt3D0W0ahtLbPoBPRT0rq2DZyjVU2w4ZQ6cfK13Jajz6hIuJK9jIrN8XAfkStNkg11VJ6eomhSPZo1CKcwxkRpNZDpQAba/bpUXKXfrA6+pmpFjG/uevcbGL37ANPEdqbBwjusrOUmToGWX5t1RHMUU6WM=
+ ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: jK6rNDtRfMHf76GW02WHB88LzReJLJlczOELj+Nj80tjpT6QCBRW7VYr+UHaHj+bA7cBG694gd6qmXXw+BhV/DtEhTlBTv63kuUsnbzwvDlZ1HMRwEbc7ErUmv3ly4sDy22DdjK0ylCx5nj4RsAW1Z0nAVeWD47baysaGuyAPG+FaMWpgcj7FQU1ZigPOk66J984uaXnyaX06weL1EYTUOBEDP4ANHpbrvSLVaxIp731S3+pzZdIL95Uc8bIXqqVrjb6Wk/5XuIPe60EgANT9W5CPaqkpGsrGXel1A9JJA6yYGClhO7/H376kzWcVn7CM5N+vGhamTbTQYGYTf9X75koMWl4s/TL6kiu6mxQVERmt8XtI5GxABrHBHUqDz26Aox0OF7QhL3yEtWZhcuu3c4pNwK2jIxqL+OoQVLPZa45cTTaOgV5Uq1tr4v+DOyBgY61enL2MohGuokuWt7h82VPQuJ8P+GJ+au7dx0kKgLYOIKprBFRXK38G3Hv5NlTb4oiY4mlpC6tp/+ojKg+rfs0yuj57SRuKSPVRhM4efmP3Lmg2uO2happWor4w0dH+3cmrL/Qfvs/EDiyjN+SpsO0UTdTgqmofrOZFW0Wf5qwpDbHxUMv6aWjhKKKk6k7b0qe6OhfXm0cUlpm4e6K/bsDwDG3YMch2z4hoLrZvgM=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RbREh3NanjbsP9O9vi/abMPg6J9q9dQNd8hhoxTuXyCEy2W5lfFndVP3h8ZZ?=
- =?us-ascii?Q?RwpwpuyJ+PzdewuqHuExdqswzTySxnuYWneDvGO9ayTF5m8dtPIKv6KOxvMC?=
- =?us-ascii?Q?HitC7kbJBkklhIWkh2O+/NlwAV4ZUCp1R1AWUSIytpkS1YsxdCR+Aqesg0+6?=
- =?us-ascii?Q?p9bvvG9mtdy8mo3zWY/pAcQqQA2ECwrcc7PqHI/2DRY8qJVtEdo+zHsP6VAP?=
- =?us-ascii?Q?7cbYpfsa3bcSmXM0FNA8vcNzCyb0M74S6lz3lvStlOYB6ya8d5tNIFWocMkP?=
- =?us-ascii?Q?PKTFEPSTUN+Dmmwbc2G6DPykl0Lc4F63IwE9erkbbe52MMUVscyqekYLktOe?=
- =?us-ascii?Q?xDL36/Az7RD598yQE7n1f9r85XyN/YEnMufS7z9/UBxbTL0i30eSmWmp0RJy?=
- =?us-ascii?Q?FmCSvYPQl1Wk7X6wwFTbOWKYZUiHN6drAx3vhJsdYMF7POsNUkVuBOM9GY2U?=
- =?us-ascii?Q?/Kifiq3O3k4zUakgbTY0NUkZ9cYrh/J1nJ37MoHcldJIH72pbyi6rAXJfy0t?=
- =?us-ascii?Q?VA0IlmaFCWUCX9DOA/zH83p3Oe8W0CRKoTQap9TZHIh0fvaGwOI1se56dMjJ?=
- =?us-ascii?Q?lPRiBHyyo37fcVNfsEUHuKEu5qRn4vN3deaBoFk4z2ZFLrFjZcwGxqrP09GV?=
- =?us-ascii?Q?RFGy1SED/9A4yD9I2SFbHpXmr+xrdtREnkvPjqs4K1vknzPUHS7rsmlwZl74?=
- =?us-ascii?Q?7e4gpQo+1k8JFrdJtAj3t2wNMAnR7WHFDLH/84gqXOJdF/iaE+r/uFoPC7xI?=
- =?us-ascii?Q?vfr9j4w3RLSVTwGf2GskvNbi6xgvs5XhJxO3Ycix5C/AQmxfy7nL8tr9XkpH?=
- =?us-ascii?Q?OU7xzA8zUHrhkGTqw+E6ZxFPSxeVzrvr+sVvPF+iHAkLWyyV/LfMhpcLVHkG?=
- =?us-ascii?Q?E8u+xkndDWrr8JpV3fNBqZwofLXQOV5AWai9x8Z3acAlxNQIf7keLm+gLkq6?=
- =?us-ascii?Q?o8bA1RXoae+lGh2xCG1x4G+NwzgEYtYH9yaXpq9lZibT/6CE1aIKbD0yNnyx?=
- =?us-ascii?Q?5rFsfW2wjLlDZePEYOh5WB00cibOCbmZJ9pvpWjN8hKi0MOeuX34qB/ytgCu?=
- =?us-ascii?Q?tuf0Tq4S9ky8r73p/T/BqMHnVW2X9ayetlY51KKOThT/AOE+405pb0nvYIcs?=
- =?us-ascii?Q?Ck89XK7hnchdsCsF56D4/EuD5QAbh3vp5g/Y1v9HI0Eyo6qGXVBwBXShcfZA?=
- =?us-ascii?Q?j3cSeeQlWMNTOF6QVZ1pAYbHZcQIr84Z5zJTlggPR2Vjs5FpmrEorcEebR7w?=
- =?us-ascii?Q?gBj0wLDwfyuo6/YarDjfqVU8K/P1fIoYcl5wJXcF+JkEfpgATddn4q2C3WU6?=
- =?us-ascii?Q?wtWfDeU2En0YbocHdw3p/BR5tuh8UobzKYkB4IWSAv8DXI62ssLqlW7DtHJ6?=
- =?us-ascii?Q?baOl99z4xysHPZTaox1hnZqOCsLmKVaHbPVgCJnLctgKhTVPJIxVTRYj9vq4?=
- =?us-ascii?Q?fR5xmiPDC6x9+9/M1DAFxe0ipTskkLdGvdewGbTeQwr5nzlY3PHPqAPliu4u?=
- =?us-ascii?Q?2DDIspQbwDEWEFRiVKhsmKLOS9A3NT8FzgjaduhgO/ur5MVphxvwxT207MsL?=
- =?us-ascii?Q?oIfr6XH2gmf9e5awg2zfi0Fs7TTwOYLveFenLB7QW5HRT+2+jcue2YyoROiw?=
- =?us-ascii?Q?pdFIsv5C1dOpfpzTI+zVu17Y1v6tp+pkMBcUDOo0ZUithXAMyoQuMsPBrobc?=
- =?us-ascii?Q?9Nnryf+wC4cFp+3vS5LSwT9jpTmItarjjBLs97zn+E4M8K4QmnM4fJDlRsOP?=
- =?us-ascii?Q?ieR8NqYgUArQjClH5Vc7xZkGO+Jpj/U=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?lJnxZ/uFhQ5cVkSlEv88RYrX8btUUp0dZ7wth4CiO4UhXC/QgQ4etgtj8k87?=
+ =?us-ascii?Q?OlV9Q/yBJ4qreY6Osz4o6gPOk21xCRjKQGv/04tZfB8ZF7Z6GVnFPv1VpxKu?=
+ =?us-ascii?Q?lGNgM7LyFQgi0RpeVRxk29Ui6c2iCFxUtoBombSebluw55Y6syXtWI6gyjhJ?=
+ =?us-ascii?Q?Tmm5JHTpSCUzTYagpemzPC2LwWca8CTm++xJRFYTNR8l43hJt6yBUdjLEC1d?=
+ =?us-ascii?Q?oDlbALBLAmBkqwM4KsQqrXYUaB2BJAHLAzn+myPC3E2xAQwdP9H79tIwk26e?=
+ =?us-ascii?Q?0a/z+sepqylyruQTsWqVy1pK/yfAuZrJMUdSzrzNB+2vmgN2OFqPQFFMFxkj?=
+ =?us-ascii?Q?+cMm3CmLYqGbNwVkbU//a48FR3agEebc68JS7joNCDOh8GRIjbtxQSPqxcMj?=
+ =?us-ascii?Q?U33Q/VtTgOIopMwGbBrrZa+LG0H79ouKfYqWUKzhShBgUdYgpTNiBEunYgFC?=
+ =?us-ascii?Q?3B/CmwQ0zSXBlhITq6Nc5aG+yvKM8PTpIpvY/sWNDBVKSvpCg1QrYYWnFcfD?=
+ =?us-ascii?Q?El1CTy6Pjr5sRRMKhgt/cOlJa3FtLheqEBN2/ZrlhUjVc1bRzushtdjzOP9o?=
+ =?us-ascii?Q?Ac+pSuCkzKeDbXcoiMi6T4+74Gr5YebBoH9wgfuhg2K9BUFVHyxYFKiEW04z?=
+ =?us-ascii?Q?ZulQ43diO0Clp+9P2J/9xREZxSK9PZUS6XEdv+d56qSHE+fM+BIJ7zOfKKR+?=
+ =?us-ascii?Q?5NfW5m5IlDg0bkDPBBYkLxlDlZorM+eAnxkXTCYjP6JU0keeOgGwDcKeZ3Sa?=
+ =?us-ascii?Q?K/RiB2I+7N1CXUnd1hvt3lYTFEEVMMj42yis6ce07VvoWp8jtvYCGbVwBXx0?=
+ =?us-ascii?Q?TK+yj8pv74I+C/RsuNAUr8Ry1Xcl7NuszzeEVgQISn8rN1lEjo0S1Q1X6lmK?=
+ =?us-ascii?Q?XIo+kQOWXMvR0y36u7X8ZlZZsqva3ADu98hhzCaywsrjVd053UH0ydaSzpbF?=
+ =?us-ascii?Q?0QjQi3lOapeMnAzfkcOuac8skF0PwXXjXO6u77NSxAWUdFs5+XdgM5GD3daZ?=
+ =?us-ascii?Q?T7+61bw7oIGhxiPWXZvLyEGsZvli4wqety+z+7uMAhMsA+d7xeDPValyXqhK?=
+ =?us-ascii?Q?wJbzO7DuChLSUAKqDeAOJ+4wl8RgbeQfmjp88LfxjN9/ntEk+IZl9dwZ6GEJ?=
+ =?us-ascii?Q?4s4tR+Z3r3wYUXSs60y94zKtIWtPcE+ZDkqgwXbxwQKnVjRa5dfFth0IGZk+?=
+ =?us-ascii?Q?iQttxevBozzAmmnL/cryT0dBznMcxGFDQ3DgAdSbpzZH6TNHEAXxg1Gk+MfJ?=
+ =?us-ascii?Q?jrZabz7di1iUQtPmJsyehKkujnPJo9+8mlYkK/cbXXg9Eydi8An/XXTAa2Al?=
+ =?us-ascii?Q?RRb7Sttfo3SGqSLgAbRRxI5X7qlIlDgGlX2AYyv9rLwiBOANznQKgZjPqjrG?=
+ =?us-ascii?Q?jkbHTC6eq8y3tjbK4DCTlL5aIXfC/5YrJBWr1i4QCzRYou9b7ShSIAZM4pBN?=
+ =?us-ascii?Q?XpHfndWYJ7DsniayXi+sDpne4QXxJd3xLntIQCfUAy3r8LZU4G6guN3AkObf?=
+ =?us-ascii?Q?9QjXQuhW5swmsGUqSpZU2526sak4Wgmd0W2TuO1pvJYE4JNYy5b2vaGl4Q0K?=
+ =?us-ascii?Q?P7a1qvtwViFuv87O32sVfvgi54AlArNYd6eXqBOu/RkCcNCHj3JeS7oUH+dG?=
+ =?us-ascii?Q?StVkTl1W3k+HNYq/BoW22mnYhxHqX9zfvK4mG8JL5ioDrKszt3ENMoBDV2Bn?=
+ =?us-ascii?Q?dZlA3pUA3I25wMCySph31wOQxFMh0YPuPNpGuFoOacMaG+kMIpV+MRTIVDe0?=
+ =?us-ascii?Q?kH2aZYKu+JFGPDq9pUEnDDh4Ge80ukM=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb4ecc2b-be8d-4530-219c-08def9528c84
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68eed20d-2dc6-40ce-2c86-08def9529a75
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:07.4298 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:30.8218 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gi01hXvmUabRTe7BX6lq0bCBpLS1IH4wL8cGhOLjFYgOubhpqtipusjmSGjtuXIkyzoLQYcztQ8GtO4nQiN9BIcWP87paiHWtm2QmoNpOKk=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5M67CU18IDxLs30a2nMjiCOhiYApM4CKRldPT1XyaClEnNADowUH/L1iIar9w1MXEedKqfpXig2Ny6mmtjm/+0/3JNo2RcPMAJZh9/ZykSI=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR02MB5490
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,9 +141,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object.
+rather than to a function scoped static object.
 
-Move the boot info into the existing Ast2700FCState.
+Move it into a new Imx8mmEvkMachineState and register the machine type
+explicitly instead of through the DEFINE_MACHINE_AARCH64 macro.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -160,54 +155,87 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ hw/arm/imx8mm-evk.c | 34 +++++++++++++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 058cea42ed..ceeae336df 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -27,10 +27,6 @@
- #define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
- OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index 6b7774d3e2..cbab8e4307 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -20,6 +20,15 @@
+ #include "qapi/error.h"
+ #include <libfdt.h>
  
--static struct arm_boot_info ast2700fc_board_info = {
--    .board_id = -1, /* device-tree-only board */
--};
--
- struct Ast2700FCState {
-     MachineState parent_obj;
- 
-@@ -46,6 +42,8 @@ struct Ast2700FCState {
-     Aspeed27x0SoCState ca35;
-     Aspeed27x0CoprocessorState ssp;
-     Aspeed27x0CoprocessorState tsp;
++#define TYPE_IMX8MM_EVK_MACHINE MACHINE_TYPE_NAME("imx8mm-evk")
++OBJECT_DECLARE_SIMPLE_TYPE(Imx8mmEvkMachineState, IMX8MM_EVK_MACHINE)
++
++struct Imx8mmEvkMachineState {
++    MachineState parent;
 +
 +    struct arm_boot_info bootinfo;
- };
++};
++
+ static void imx8mm_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
+ {
+     int i, offset;
+@@ -60,7 +69,7 @@ static void imx8mm_evk_modify_dtb(const struct arm_boot_info *info, void *fdt)
  
- #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-@@ -114,8 +112,9 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
-     aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
+ static void imx8mm_evk_init(MachineState *machine)
+ {
+-    static struct arm_boot_info boot_info;
++    Imx8mmEvkMachineState *ims = IMX8MM_EVK_MACHINE(machine);
+     FslImx8mmState *s;
  
--    ast2700fc_board_info.ram_size = machine->ram_size;
--    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.board_id = -1; /* device-tree-only board */
+     if (machine->ram_size > FSL_IMX8MM_RAM_SIZE_MAX) {
+@@ -69,7 +78,7 @@ static void imx8mm_evk_init(MachineState *machine)
+         exit(1);
+     }
  
-     dev = ssi_get_cs(soc->fmc.spi, 0);
-     fmc0 = dev ? m25p80_get_blk(dev) : NULL;
-@@ -129,7 +128,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-     aspeed_load_vbootrom(soc, bios_name, errp);
+-    boot_info = (struct arm_boot_info) {
++    ims->bootinfo = (struct arm_boot_info) {
+         .loader_start = FSL_IMX8MM_RAM_START,
+         .board_id = -1,
+         .ram_size = machine->ram_size,
+@@ -103,7 +112,7 @@ static void imx8mm_evk_init(MachineState *machine)
+     }
  
--    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &s->bootinfo);
- 
-     return true;
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &boot_info);
++        arm_load_kernel(&s->cpu[0], machine, &ims->bootinfo);
+     }
  }
+ 
+@@ -116,8 +125,10 @@ static const char *imx8mm_evk_get_default_cpu_type(const MachineState *ms)
+     return ARM_CPU_TYPE_NAME("cortex-a53");
+ }
+ 
+-static void imx8mm_evk_machine_init(MachineClass *mc)
++static void imx8mm_evk_machine_class_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
++
+     mc->desc = "NXP i.MX 8MM EVK Board";
+     mc->init = imx8mm_evk_init;
+     mc->max_cpus = FSL_IMX8MM_NUM_CPUS;
+@@ -127,4 +138,17 @@ static void imx8mm_evk_machine_init(MachineClass *mc)
+     mc->get_default_cpu_type = imx8mm_evk_get_default_cpu_type;
+ }
+ 
+-DEFINE_MACHINE_AARCH64("imx8mm-evk", imx8mm_evk_machine_init)
++static const TypeInfo imx8mm_evk_machine_typeinfo = {
++    .name = TYPE_IMX8MM_EVK_MACHINE,
++    .parent = TYPE_MACHINE,
++    .class_init = imx8mm_evk_machine_class_init,
++    .instance_size = sizeof(Imx8mmEvkMachineState),
++    .interfaces = aarch64_machine_interfaces,
++};
++
++static void imx8mm_evk_machine_register_types(void)
++{
++    type_register_static(&imx8mm_evk_machine_typeinfo);
++}
++
++type_init(imx8mm_evk_machine_register_types)
 -- 
 2.53.0
 
