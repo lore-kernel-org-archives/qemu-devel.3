@@ -4,128 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E07BC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C59C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuVAd-0006b3-Kn; Thu, 13 Aug 2026 09:08:31 -0400
+	id 1wuVcZ-0005op-C6; Thu, 13 Aug 2026 09:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuVAY-0006St-4d; Thu, 13 Aug 2026 09:08:26 -0400
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuVAU-0005RF-8f; Thu, 13 Aug 2026 09:08:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wLjLiQuEkEoHpEzH8FfOslekZg3cWRmhxxaZxN2Q3WMFRYEyNzNoW1eMZYwj0zcw0BIOoL0C4WwEmpnOyfYSXVRvWre5eh2+R6VDg5EK2SMd4Xfgr5ywUvp0xbpCiOxGGsxMdUjLzaQHZenmPn7WWDczRfqDD8DTXlwIQMwusZfcwpLkBL5a/qxp5V4DULdAUAuT9oq8RPbWmaMcNVlzP+0/crEiROsCJBYBqhaLLgTvw/eYaX8vQt7kxmLp/ym6WE3dmZ+QEMNHDREFOJAnCxXHlLllZPGKrhr83rCYTp5txlmbwou0yIH4Ejc0UYudee3cp77SbgbOo1eVlDWKhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w2z+jBRT+Mb/Xc1Xaxj7RiosNs44MfVTACU9UAfKXYY=;
- b=aB3nepKRTC3K7hyeyEkEm/uf2ySr4PGzVrMrMmEzsBU4KHpIAUNEdtep3fWwkv+PXB0hfwi2zpEHGV1RKogjQeQF+Rbnp4agC/bUyoqO6m4SAQVMv+4xS85aqCYTWG+218teOqqA4/6W0Krx1FF2szW+NIC+OC/tVVzQ2j29H0XykB8ULK/FqBA4XRqbuVHNPKTRz/0nhXhI4QYkufmmco1qm5avgzUypbZFErT/Rmgbrt82vRWBqnmWaH5t/JKCCqeo/C375RQmTHZMugw8RZYc8njipVaDSMJLTzQWX0HDm49sYmL8Y2i8h6KNDVow4KfDZ/R+q0ajlgXRtMhFOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w2z+jBRT+Mb/Xc1Xaxj7RiosNs44MfVTACU9UAfKXYY=;
- b=o/O/kYMv98xWBZxcgCoPUxweLNmJJahPs00+k2lZDtz74mn74nlHThmmzduoIbKrRu5DzC/RhoVVYi9ElQkFf36SrkV9TfK9zpmfL2iVgGEQrN5z+A8w8oVIRYVpWtVj7aSaF5w0L6L0XV25dSGX/3Wp8jhhxw2WuFW4YhvoEPwKdWCKzqDk4sJlbS3MTUYLS6a0T9WKiAc6Nd7MG5bFBv1589QOBfmUi2B/c3/12vVsYwoGWO2Hmt2vSMSpyESfMCnigIB37jjCTEgbi8bSI5XxyZJYqqp2EhZIBAx7KpQX07oi/eI/wC6DAsvQuq10EVfUXBbejQ7eaesEipAs6A==
-Received: from IA0PR12MB8349.namprd12.prod.outlook.com (2603:10b6:208:407::17)
- by BN5PR12MB9510.namprd12.prod.outlook.com (2603:10b6:408:2ac::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
- 2026 13:08:11 +0000
-Received: from SJ0PR13CA0095.namprd13.prod.outlook.com (2603:10b6:a03:2c5::10)
- by IA0PR12MB8349.namprd12.prod.outlook.com (2603:10b6:208:407::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
- 2026 13:08:08 +0000
-Received: from CO1PEPF00012E7F.namprd03.prod.outlook.com
- (2603:10b6:a03:2c5:cafe::7d) by SJ0PR13CA0095.outlook.office365.com
- (2603:10b6:a03:2c5::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.3 via Frontend Transport; Thu, 13
- Aug 2026 13:08:08 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF00012E7F.mail.protection.outlook.com (10.167.249.54) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.339.3 via Frontend Transport; Thu, 13 Aug 2026 13:08:08 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 13 Aug
- 2026 06:07:40 -0700
-Received: from nvidia-4028GR-scsim.nvidia.com (10.126.230.37) by
- rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 13 Aug 2026 06:07:34 -0700
-From: <mhonap@nvidia.com>
-To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
- <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
- <smadhavan@nvidia.com>, <pierrick.bouvier@oss.qualcomm.com>,
- <mst@redhat.com>, <imammedo@redhat.com>, <anisinha@redhat.com>,
- <pbonzini@redhat.com>, <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <richard.henderson@linaro.org>, <clg@redhat.com>, <cohuck@redhat.com>
-CC: <kjaju@nvidia.com>, <vsethi@nvidia.com>, <zhiw@nvidia.com>,
- <mhonap@nvidia.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-Subject: [PATCH 09/10] hw/arm/smmu-common: Allow pxb-cxl as an SMMUv3 primary
- bus
-Date: Thu, 13 Aug 2026 18:36:22 +0530
-Message-ID: <20260813130623.2499506-10-mhonap@nvidia.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260813130623.2499506-1-mhonap@nvidia.com>
-References: <20260813130623.2499506-1-mhonap@nvidia.com>
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wuVcX-0005oQ-Nv
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:37:21 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wuVcV-0005Ul-71
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:37:21 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-cbb8b54fcf8so1941501a12.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 06:37:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786628238; x=1787233038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=UOxWjh1VbJP+voQHQuYFBnTFHTsWZfsA6DkNnXcCLlk=;
+ b=sP+GEpCsnC/YqQqRNEE4YvtSJldIvDn7aLkqLN+0Apwvs932DnR5WMG1biZQ0EDYbU
+ FLL7nAKFQ/IgvHhkWbWJPm99SWXVDWDL7r/CcBpCCLOF3xmAyxjf/IRf5kopIaqhtJxz
+ UghTD3nwYc353hhCtfp4qlDCVzvH5c1Sy/YXzdLhde6vf3ml0yERJkexqCymm0xjz/Op
+ SqFTqgd2Bv76Gf/DXwYOf/45TnPTay740n+UcgfVM6RDLy9kAUCdDQtCjxEziiGUliLs
+ Loi7ytPUJF9G+Si6zWorIxyust1Pa8qsmqaN+kVTqx+kMBXWHOpYY77Bnzdd/lpofWjV
+ p/2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786628238; x=1787233038;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=UOxWjh1VbJP+voQHQuYFBnTFHTsWZfsA6DkNnXcCLlk=;
+ b=KFsQ0hLJdHri9265R1RSs2psOe04MR14VBMXmwKnezqQmv0CvD5z35cE0Plez+CN48
+ Xa+nTX+fUgH92XKypHDhFS0yAT6Xiipurr7jWgfCO3/oCo9lt7fUxUsm0Y278/cm6Wl5
+ vqILnn8vZ5luDe3UEYP7bqT+TXLjceezIH0XnpdBka2neXNuxJFDOVz+c2K0I2yM5KHF
+ i1afxmUEsu9w/vZbnpaKF5BK37lC1GBU3P7u+QeuSUwm399pAcJXlpA883d+MVjVrZqC
+ Iavz8Mn0r/H0hqKMn4cIDkzgRvU4HUk9F9bePuIK7ZEe+Ry2Y0HW1H8XIHX2vlJnY8l0
+ ifXA==
+X-Gm-Message-State: AOJu0YxKrHFFs8DvfmzJWyQKQmAjULZ9mVAxqD6KUiUeXFhrm9E05+fM
+ Dl2WrNBjPwuMD6ml2dMIFiuIKmSKoPfusiYtdtGT4Dcm9ZWBcGyJ3Q68YO3PVLtZWvk=
+X-Gm-Gg: AR+sD11Elq8JfAhgsyPlInOc0IPfNDhV7ZR1EdcDcp1124fk7kRreMy1HeNlAEzrcVy
+ PZEgNyyJQOo4LgaPfwjMlONOgoc5xqhPW0h7cbIhKL5uYBnTcb9T60wtaLLTtAuUmLcqQLF4Z9z
+ 1ZTZdAEXitNFl3efnE4dV20SdCu/d7UteSs5dUQaoXvnOayref/MlaTv1JMQVXG4IO9iZN22Oyt
+ tqq3BCX7FKcHohmcLZcFSXjii/yOR/U5mSQEeMudrCdObhK0+7ZAKb6/FJdtaMt67hBHd68YwJf
+ SjELZLoqYCxhLMKDv67E0MkGdz3XjhEIjUnaJJKSkzcJtJW8E2RxZ9UBMZt/v2GtWd3oOmn89QB
+ WV1ki71GMCfE4JBHmiPd8Oo3T1ik1tAPkYGs2nNYvY5OBmcBQnvCX4OfuQIyE6leVq5AhSdjben
+ maHOgZCWgSFpr2rYGSBBry3I38fVyYxZSfF/CcHoTQDuRGyeng5RSCsCnGg9g=
+X-Received: by 2002:a05:6a21:a38d:b0:3c8:f98f:475b with SMTP id
+ adf61e73a8af0-3cc5539ee7amr8292980637.19.1786628237713; 
+ Thu, 13 Aug 2026 06:37:17 -0700 (PDT)
+Received: from DESKTOP-DFGP8OG ([2409:8a55:ad2:6951::258])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cbef6849625sm1078901a12.1.2026.08.13.06.37.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Aug 2026 06:37:17 -0700 (PDT)
+From: raoyi <rao232328@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ bmeng.cn@gmail.com, philmd@oss.qualcomm.com, pbonzini@redhat.com,
+ lvivier@redhat.com, farosas@suse.de, caojunze424@gmail.com,
+ raoyi <rao232328@gmail.com>
+Subject: [PATCH v4 1/3] hw/timer: add DesignWare APB timer model
+Date: Thu, 13 Aug 2026 21:36:41 +0800
+Message-ID: <20260813133643.20380-2-rao232328@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260813133643.20380-1-rao232328@gmail.com>
+References: <20260813133643.20380-1-rao232328@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.230.37]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF00012E7F:EE_|IA0PR12MB8349:EE_|BN5PR12MB9510:EE_
-X-MS-Office365-Filtering-Correlation-Id: b1fd7ff3-8bd2-4257-38e9-08def93beb8d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|7416014|376014|1800799024|23010399003|36860700016|11063799006|56012099006|10067099003|22082099003|18002099003|921020;
-X-Microsoft-Antispam-Message-Info: W4a3NJp3s1F9y4+hvwu8LLJGl3EhuXkCouDh5OiCiDtdcRnQyf+BA4X9ypKmrIzPEA8XyWN2KExuAV1fDCygM8cjbW8mdx2m+HDE9BT8Y2DHYztJUSTUFS22vXKLIxkrj+vm+S3om1TsirHtmn/ZumfNZBKwwI8uba37cBPuyZOUaeBCnA8xx70la1oIHeyM/FJErF4h0cRyUUBVoMzhsu87PpDcUdONtRcz5zgxKwxbXokuNUN+5MPFE6KyyDYvnpw2/BNcnzFA8vdB8JugObWkerv8Sv8OLT5Py1zw6NOaE/4PeKPg0AF1eAeH6dXdBu5FctpSvEQWRzqcvlvDus6I9YsLI0rJIGDj5oDw2+VH5cX+6LawHPaMxTIStkFKSqHwS3fsIydk3OHLvFVPmN2B+bhMkIxybBqFzHVq/4sdCklT2uGe8MjixF8JZeZevyH4j/2ge95NHO3kLZtqZcyhx72hrsjZPhdgwWRHiheD41bLx+e+fjHGMTt4gqdayzHC6wgOiJhywAAIBNb8vl8mtWlBRqI8fC5+x/YmqJHxS06/aEG/w3Gy+KHkhn3SKfZIt2XDwjz9l3ll8tiBgYN2BhjAOvI+G5/V1BORVnI+Ypdc0+q74yQfyiqwFfq6Sza362XfPfuhFKBCyLNpl4TBQ+dyhIuU+aGmnp3Jb0p9WxYE54JYnZCgkn485W3RAARdTo1CrddG3V+AW6Zl/DHqXjO5TJe9bqaMLTqglI19556XiWcYX/crxGUyOAT2
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(7416014)(376014)(1800799024)(23010399003)(36860700016)(11063799006)(56012099006)(10067099003)(22082099003)(18002099003)(921020);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 1zRN9/4qeKDKOYEV3+zN4TwuaGitjBc6XDQpvXH60KVdAsjZV92hrt6HO40i9eFYzonizYPaUoQu6ZYP37vFMoHn+Xcbgii7v5Tf30EaqdPJ6r0RVcMX4SxvoFQR8kNMmmZKCYNWas6N+D1OmbgPpMwZGOvzsuoi3Y2U/4XsHu8y3J5uH3Tgi10Ws1INDJqSRJvELx2nSR42lB1m548ydCXDFr9b1ZzonsL51qtnKECKGA3k0HOPx9z8kBB+9MppvdQh5hW1b5MhGUq67oqMYvmkIv/VJfMxuced4G2xsD/ZpsawvGBfDYS+omwgtGzs2nM/rG0WTBiFoDFNDlUyW9UzYW6ylOTpeVfojicHTt3UBNsRBriz8SC6bBcNLmKiOX9AEy79djt5+A3A0kujCs+dpU8ioIt7aLx4NthoLTtOh8Vww3CeowNJcwGNOnum
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 13:08:08.1916 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b1fd7ff3-8bd2-4257-38e9-08def93beb8d
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E7F.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9510
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=mhonap@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=rao232328@gmail.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,68 +105,506 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manish Honap <mhonap@nvidia.com>
+Add generic DesignWare APB timer device model. The number
+of timer channels is configurable via the num-timers property.
 
-The SMMUv3 primary-bus check only accepted pxb-pcie as a valid extra
-root complex, so a CXL device behind a pxb-cxl could not reach the
-IOMMU: attaching an arm-smmuv3 to a pxb-cxl bus failed at realize with
-"SMMU should be attached to a default PCIe root complex (pcie.0) or a
-pxb-pcie based root complex".
+Add timer files to MAINTAINERS.
 
-A pxb-cxl uses the same PCIe-compatible bus as a pxb-pcie, so accept it
-too. A CXL Type-2 device passed through with vfio-pci sits behind a
-pxb-cxl and needs SMMU translation for its DMA and ATS just like a
-pxb-pcie device.
-
-Signed-off-by: Manish Honap <mhonap@nvidia.com>
+Signed-off-by: raoyi <rao232328@gmail.com>
 ---
- hw/arm/smmu-common.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ MAINTAINERS                     |   2 +
+ hw/timer/Kconfig                |   4 +
+ hw/timer/dw-apb-timer.c         | 376 ++++++++++++++++++++++++++++++++
+ hw/timer/meson.build            |   1 +
+ hw/timer/trace-events           |   8 +
+ include/hw/timer/dw-apb-timer.h |  40 ++++
+ 6 files changed, 431 insertions(+)
+ create mode 100644 hw/timer/dw-apb-timer.c
+ create mode 100644 include/hw/timer/dw-apb-timer.h
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 8e40ba603d..42fb098ab2 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -963,19 +963,20 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-         s->iommu_ops = &smmu_ops;
-     }
-     /*
--     * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
--     * root complexes to be associated with SMMU.
-+     * We only allow the default PCIe root complex (pcie.0) or pxb-pcie /
-+     * pxb-cxl based extra root complexes to be associated with SMMU.
-      */
-     if (pci_bus_is_express(pci_bus) && pci_bus_is_root(pci_bus) &&
-         object_dynamic_cast(OBJECT(pci_bus)->parent, TYPE_PCI_HOST_BRIDGE)) {
-         /*
--         * This condition matches either the default pcie.0, pxb-pcie, or
--         * pxb-cxl. For both pxb-pcie and pxb-cxl, parent_dev will be set.
--         * Currently, we don't allow pxb-cxl as it requires further
--         * verification. Therefore, make sure this is indeed pxb-pcie.
-+         * pcie.0 has no parent_dev; pxb-pcie and pxb-cxl do. Accept both bus
-+         * types explicitly so other root complexes are still rejected. A
-+         * pxb-cxl uses the same PCIe-compatible bus, so a CXL device behind it
-+         * needs the SMMU just like a pxb-pcie one.
-          */
-         if (pci_bus->parent_dev) {
--            if (!object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_PCIE_BUS)) {
-+            if (!object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_PCIE_BUS) &&
-+                !object_dynamic_cast(OBJECT(pci_bus), TYPE_PXB_CXL_BUS)) {
-                 goto out_err;
-             }
-         }
-@@ -990,8 +991,8 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- out_err:
--    error_setg(errp, "SMMU should be attached to a default PCIe root complex"
--               "(pcie.0) or a pxb-pcie based root complex");
-+    error_setg(errp, "SMMU should be attached to a default PCIe root complex "
-+               "(pcie.0), a pxb-pcie, or a pxb-cxl based root complex");
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6171cc7494..cf689433ff 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1826,8 +1826,10 @@ S: Maintained
+ F: docs/system/riscv/k230.rst
+ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
++F: hw/timer/dw-apb-timer.c
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
++F: include/hw/timer/dw-apb-timer.h
+ F: tests/qtest/k230-wdt-test.c
  
- /*
+ RX Machines
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index b3d823ce2c..b533cf1ba9 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -65,3 +65,7 @@ config STELLARIS_GPTM
+ 
+ config AVR_TIMER16
+     bool
++
++config DW_APB_TIMER
++    bool
++    select PTIMER
+diff --git a/hw/timer/dw-apb-timer.c b/hw/timer/dw-apb-timer.c
+new file mode 100644
+index 0000000000..0b994e1570
+--- /dev/null
++++ b/hw/timer/dw-apb-timer.c
+@@ -0,0 +1,376 @@
++/*
++ * Synopsys DesignWare APB timer
++ *
++ * Copyright (c) 2026 raoyi <rao232328@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bitops.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "migration/vmstate.h"
++#include "hw/core/ptimer.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/timer/dw-apb-timer.h"
++#include "trace.h"
++
++#define DW_APB_TIMER_STRIDE       0x14
++#define DW_APB_TIMER_MMIO_SIZE    0x100
++
++/* Per-timer register offsets */
++#define DW_APB_TIMER_N_LOAD_COUNT    0x00
++#define DW_APB_TIMER_N_CURRENT_VALUE 0x04
++#define DW_APB_TIMER_N_CONTROL       0x08
++#define DW_APB_TIMER_N_EOI           0x0c
++#define DW_APB_TIMER_N_INT_STATUS    0x10
++/* Global register offsets */
++#define DW_APB_TIMER_INT_STATUS        0xa0
++#define DW_APB_TIMER_EOI               0xa4
++#define DW_APB_TIMER_RAW_INT_STATUS    0xa8
++#define DW_APB_TIMER_COMP_VERSION      0xac
++
++/* Control register bits */
++#define DW_APB_TIMER_CONTROL_ENABLE        BIT(0)
++/* 1: periodic, 0: free running. */
++#define DW_APB_TIMER_CONTROL_MODE_PERIODIC BIT(1)
++#define DW_APB_TIMER_CONTROL_INT           BIT(2)
++#define DW_APB_TIMER_CONTROL_RW_MASK       0x7
++
++/*
++ * Component version of the DW_apb_timers IP, fixed in silicon.
++ * Decodes as the ASCII string "211*" (2.11a series); the model reports
++ * the version integrated in K230. Linux does not read this register.
++ */
++#define DW_APB_TIMER_COMP_VERSION_VAL 0x3231312A
++
++static void dw_apb_timer_update_irq(DWAPBTimerChannel *t)
++{
++    qemu_set_irq(t->irq, t->int_status &&
++                 !(t->control & DW_APB_TIMER_CONTROL_INT));
++}
++
++static void dw_apb_timer_clk_update(void *opaque, ClockEvent event)
++{
++    DWAPBTimerChannel *t = opaque;
++
++    if (!t->ptimer) {
++        return;
++    }
++    ptimer_transaction_begin(t->ptimer);
++    ptimer_set_period_from_clock(t->ptimer, t->clk, 1);
++    ptimer_transaction_commit(t->ptimer);
++}
++
++static void dw_apb_timer_enable(DWAPBTimerChannel *t)
++{
++    trace_dw_apb_timer_enable(t->id, t->load);
++
++    ptimer_transaction_begin(t->ptimer);
++    ptimer_set_limit(t->ptimer, t->load ? t->load : 1, 1);
++    ptimer_run(t->ptimer, 1);
++    ptimer_transaction_commit(t->ptimer);
++}
++
++static void dw_apb_timer_disable(DWAPBTimerChannel *t)
++{
++    trace_dw_apb_timer_disable(t->id);
++
++    ptimer_transaction_begin(t->ptimer);
++    ptimer_stop(t->ptimer);
++    ptimer_transaction_commit(t->ptimer);
++
++    t->int_status = 0;
++    dw_apb_timer_update_irq(t);
++}
++
++static void dw_apb_timer_tick(void *opaque)
++{
++    DWAPBTimerChannel *t = opaque;
++    uint32_t reload;
++
++    trace_dw_apb_timer_tick(t->id);
++
++    t->int_status = 1;
++    dw_apb_timer_update_irq(t);
++
++    if (t->control & DW_APB_TIMER_CONTROL_MODE_PERIODIC) {
++        reload = t->load ? t->load : 1;
++    } else {
++        reload = UINT32_MAX;
++    }
++
++    ptimer_set_limit(t->ptimer, reload, 1);
++    ptimer_run(t->ptimer, 1);
++}
++
++static uint64_t dw_apb_timer_read(void *opaque, hwaddr addr,
++                                  unsigned int size)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(opaque);
++    uint32_t value = 0;
++
++    if (addr < DW_APB_TIMER_INT_STATUS) {
++        unsigned int idx = addr / DW_APB_TIMER_STRIDE;
++        hwaddr reg = addr % DW_APB_TIMER_STRIDE;
++
++        if (idx < s->num_timers) {
++            DWAPBTimerChannel *t = &s->timers[idx];
++
++            switch (reg) {
++            case DW_APB_TIMER_N_LOAD_COUNT:
++                value = t->load;
++                break;
++            case DW_APB_TIMER_N_CURRENT_VALUE:
++                if (t->control & DW_APB_TIMER_CONTROL_ENABLE) {
++                    value = ptimer_get_count(t->ptimer);
++                }
++                break;
++            case DW_APB_TIMER_N_CONTROL:
++                value = t->control;
++                break;
++            case DW_APB_TIMER_N_EOI:
++                t->int_status = 0;
++                dw_apb_timer_update_irq(t);
++                trace_dw_apb_timer_irq_clear(t->id);
++                break;
++            case DW_APB_TIMER_N_INT_STATUS:
++                value = t->int_status &&
++                        !(t->control & DW_APB_TIMER_CONTROL_INT);
++                break;
++            default:
++                break;
++            }
++        }
++    } else {
++        switch (addr) {
++        case DW_APB_TIMER_INT_STATUS:
++            for (int i = 0; i < s->num_timers; i++) {
++                DWAPBTimerChannel *t = &s->timers[i];
++
++                value |= (t->int_status &&
++                          !(t->control & DW_APB_TIMER_CONTROL_INT)) << i;
++            }
++            break;
++        case DW_APB_TIMER_EOI:
++            for (int i = 0; i < s->num_timers; i++) {
++                DWAPBTimerChannel *t = &s->timers[i];
++
++                t->int_status = 0;
++                dw_apb_timer_update_irq(t);
++            }
++            break;
++        case DW_APB_TIMER_RAW_INT_STATUS:
++            for (int i = 0; i < s->num_timers; i++) {
++                value |= s->timers[i].int_status << i;
++            }
++            break;
++        case DW_APB_TIMER_COMP_VERSION:
++            value = DW_APB_TIMER_COMP_VERSION_VAL;
++            break;
++        default:
++            break;
++        }
++    }
++
++    trace_dw_apb_timer_read(addr, value);
++    return value;
++}
++
++static void dw_apb_timer_write(void *opaque, hwaddr addr,
++                               uint64_t value, unsigned int size)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(opaque);
++
++    if (addr < DW_APB_TIMER_INT_STATUS) {
++        unsigned int idx = addr / DW_APB_TIMER_STRIDE;
++        hwaddr reg = addr % DW_APB_TIMER_STRIDE;
++
++        if (idx < s->num_timers) {
++            DWAPBTimerChannel *t = &s->timers[idx];
++
++            switch (reg) {
++            case DW_APB_TIMER_N_LOAD_COUNT:
++                t->load = value;
++                break;
++            case DW_APB_TIMER_N_CONTROL: {
++                uint32_t old_control = t->control;
++                uint32_t new_control = value & DW_APB_TIMER_CONTROL_RW_MASK;
++
++                t->control = new_control;
++                if ((new_control ^ old_control) &
++                    DW_APB_TIMER_CONTROL_ENABLE) {
++                    if (new_control & DW_APB_TIMER_CONTROL_ENABLE) {
++                        dw_apb_timer_enable(t);
++                    } else {
++                        dw_apb_timer_disable(t);
++                    }
++                }
++                if ((new_control ^ old_control) &
++                    DW_APB_TIMER_CONTROL_INT) {
++                    dw_apb_timer_update_irq(t);
++                }
++                break;
++            }
++            default:
++                break;
++            }
++        }
++    }
++
++    trace_dw_apb_timer_write(addr, value);
++}
++
++static const MemoryRegionOps dw_apb_timer_ops = {
++    .read = dw_apb_timer_read,
++    .write = dw_apb_timer_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void dw_apb_timer_reset_hold(Object *obj, ResetType type)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(obj);
++
++    for (int i = 0; i < s->num_timers; i++) {
++        DWAPBTimerChannel *t = &s->timers[i];
++
++        ptimer_transaction_begin(t->ptimer);
++        ptimer_stop(t->ptimer);
++        ptimer_transaction_commit(t->ptimer);
++
++        t->load = 0;
++        t->control = 0;
++        t->int_status = 0;
++        dw_apb_timer_update_irq(t);
++    }
++}
++
++static const VMStateDescription vmstate_dw_apb_timer_channel = {
++    .name = "dw-apb-timer-channel",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PTIMER(ptimer, DWAPBTimerChannel),
++        VMSTATE_CLOCK(clk, DWAPBTimerChannel),
++        VMSTATE_UINT32(load, DWAPBTimerChannel),
++        VMSTATE_UINT32(control, DWAPBTimerChannel),
++        VMSTATE_UINT32(int_status, DWAPBTimerChannel),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_dw_apb_timer = {
++    .name = "dw-apb-timer",
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT_VARRAY_UINT32(timers, DWAPBTimerState,
++                                     num_timers, 0,
++                                     vmstate_dw_apb_timer_channel,
++                                     DWAPBTimerChannel),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const Property dw_apb_timer_properties[] = {
++    DEFINE_PROP_UINT32("num-timers", DWAPBTimerState, num_timers, 1),
++};
++
++static void dw_apb_timer_init(Object *obj)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(obj);
++
++    for (int i = 0; i < DW_APB_TIMER_MAX_TIMERS; i++) {
++        DWAPBTimerChannel *t = &s->timers[i];
++        g_autofree char *name = g_strdup_printf("timer[%d]", i);
++
++        t->id = i;
++        t->clk = qdev_init_clock_in(DEVICE(obj), name,
++                                    dw_apb_timer_clk_update, t,
++                                    ClockUpdate);
++    }
++}
++
++static void dw_apb_timer_realize(DeviceState *dev, Error **errp)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    if (s->num_timers == 0 || s->num_timers > DW_APB_TIMER_MAX_TIMERS) {
++        error_setg(errp, "dw-apb-timer: num-timers must be between 1 and %u",
++                   DW_APB_TIMER_MAX_TIMERS);
++        return;
++    }
++
++    for (int i = 0; i < s->num_timers; i++) {
++        DWAPBTimerChannel *t = &s->timers[i];
++
++        if (!clock_has_source(t->clk)) {
++            error_setg(errp, "dw-apb-timer: timer[%u] clock must be connected",
++                       i);
++            return;
++        }
++    }
++
++    for (int i = 0; i < s->num_timers; i++) {
++        DWAPBTimerChannel *t = &s->timers[i];
++
++        t->ptimer = ptimer_init(dw_apb_timer_tick, t,
++            PTIMER_POLICY_NO_IMMEDIATE_TRIGGER |
++            PTIMER_POLICY_NO_IMMEDIATE_RELOAD |
++            PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
++        ptimer_transaction_begin(t->ptimer);
++        ptimer_set_limit(t->ptimer, UINT32_MAX, 1);
++        ptimer_transaction_commit(t->ptimer);
++        sysbus_init_irq(sbd, &t->irq);
++
++        /* The source may have been connected before the ptimer existed. */
++        dw_apb_timer_clk_update(t, ClockUpdate);
++    }
++
++    memory_region_init_io(&s->mmio, OBJECT(dev), &dw_apb_timer_ops,
++                          s, TYPE_DW_APB_TIMER, DW_APB_TIMER_MMIO_SIZE);
++    sysbus_init_mmio(sbd, &s->mmio);
++}
++
++static void dw_apb_timer_unrealize(DeviceState *dev)
++{
++    DWAPBTimerState *s = DW_APB_TIMER(dev);
++
++    for (int i = 0; i < s->num_timers; i++) {
++        ptimer_free(s->timers[i].ptimer);
++    }
++}
++
++static void dw_apb_timer_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = dw_apb_timer_realize;
++    dc->unrealize = dw_apb_timer_unrealize;
++    dc->vmsd = &vmstate_dw_apb_timer;
++    dc->desc = "Synopsys DesignWare APB timer";
++    rc->phases.hold = dw_apb_timer_reset_hold;
++    device_class_set_props(dc, dw_apb_timer_properties);
++}
++
++static const TypeInfo dw_apb_timer_info = {
++    .name          = TYPE_DW_APB_TIMER,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(DWAPBTimerState),
++    .instance_init = dw_apb_timer_init,
++    .class_init    = dw_apb_timer_class_init,
++};
++
++static void dw_apb_timer_register_type(void)
++{
++    type_register_static(&dw_apb_timer_info);
++}
++
++type_init(dw_apb_timer_register_type)
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 201b5d8316..fccc36540c 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -34,3 +34,4 @@ specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
+ 
+ system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
++system_ss.add(when: 'CONFIG_DW_APB_TIMER', if_true: files('dw-apb-timer.c'))
+diff --git a/hw/timer/trace-events b/hw/timer/trace-events
+index 634ba1da27..7f592a96c8 100644
+--- a/hw/timer/trace-events
++++ b/hw/timer/trace-events
+@@ -1,5 +1,13 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
++# dw-apb-timer.c
++dw_apb_timer_read(uint64_t addr, uint32_t val) "DW APB timer read: [0x%" PRIx64 "] -> 0x%" PRIx32
++dw_apb_timer_write(uint64_t addr, uint64_t val) "DW APB timer write: [0x%" PRIx64 "] <- 0x%" PRIx64
++dw_apb_timer_tick(int idx) "DW APB timer %d tick"
++dw_apb_timer_irq_clear(int idx) "DW APB timer %d IRQ cleared"
++dw_apb_timer_enable(int idx, uint32_t load) "DW APB timer %d enabled load=0x%" PRIx32
++dw_apb_timer_disable(int idx) "DW APB timer %d disabled"
++
+ # slavio_timer.c
+ slavio_timer_get_out(uint64_t limit, uint32_t counthigh, uint32_t count) "limit 0x%"PRIx64" count 0x%x0x%08x"
+ slavio_timer_irq(uint32_t counthigh, uint32_t count) "callback: count 0x%x0x%08x"
+diff --git a/include/hw/timer/dw-apb-timer.h b/include/hw/timer/dw-apb-timer.h
+new file mode 100644
+index 0000000000..f6b83ae5ca
+--- /dev/null
++++ b/include/hw/timer/dw-apb-timer.h
+@@ -0,0 +1,40 @@
++/*
++ * Synopsys DesignWare APB timer
++ *
++ * Copyright (c) 2026 raoyi <rao232328@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef DW_APB_TIMER_H
++#define DW_APB_TIMER_H
++
++#include "hw/core/sysbus.h"
++#include "hw/core/irq.h"
++#include "hw/core/clock.h"
++#include "qom/object.h"
++
++#define TYPE_DW_APB_TIMER "dw-apb-timer"
++OBJECT_DECLARE_SIMPLE_TYPE(DWAPBTimerState, DW_APB_TIMER)
++
++#define DW_APB_TIMER_MAX_TIMERS   8
++
++typedef struct DWAPBTimerChannel {
++    struct ptimer_state *ptimer;
++    Clock *clk;
++    qemu_irq irq;
++    unsigned int id;
++    uint32_t load;
++    uint32_t control;
++    uint32_t int_status;
++} DWAPBTimerChannel;
++
++struct DWAPBTimerState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint32_t num_timers;
++    DWAPBTimerChannel timers[DW_APB_TIMER_MAX_TIMERS];
++};
++
++#endif
 -- 
-2.25.1
+2.53.0
 
 
