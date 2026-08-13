@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABC75C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D7FC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhl-0008NA-Ph; Thu, 13 Aug 2026 11:50:53 -0400
+	id 1wuXi5-0000HJ-Ej; Thu, 13 Aug 2026 11:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhk-0008MD-6c; Thu, 13 Aug 2026 11:50:52 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1wuXi3-0000ET-W8; Thu, 13 Aug 2026 11:51:12 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhi-0001rl-K9; Thu, 13 Aug 2026 11:50:51 -0400
+ id 1wuXi2-00023y-D8; Thu, 13 Aug 2026 11:51:11 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZrGi36nHa+UkXh0j2e7NAw9z2+CySdcpiusy5e08QC2H0qN/WIsKgQCAfFjReQY34PSBlXnNejqEaRnIu81+fL4YbHQ6XKSpG2I9hvwozwB8dNqMzjK0omLYTgeqRRxXmXTOQZcFLXk4mZYovQcZfPe92a67d9D3zAGv+L4VfhGV9lrwNGHJS1Cv3zp/Py7E4rzlSBWTbvoF+AOENDM5YNgGBEI5cw4WoeghGjRrDIKfJaOhTYVxtHB62wHPIylxxuuBY6t0eTc/VYsfOppCPMaot6ZzG9OtN8frvy/mNy9Blt5P9utt7I0rCXUF2m0551t8YfPyY1lS6Ky3bc5QWw==
+ b=DOuWSHppVKXHLZCJKPDIGyVrQewa8ybNWePsDsLSstTYQJdqU9SFga8gblDtemz+7P8ZyPxFnGQoK8Vj17/2Vl+jD8G7isn9xN3DDMjSBh+zprn7ul9XR7UvOVluxamcTq7TjBxk3ZC4hA05NEZWD/VYbbpvQ7zeR1bLMlBOd3oo8zKQnbqRIXbBNEy2W10ISG+y/I6s3bevRdO16nOIDfE+KgwtGPPZLynFiSNffW9WjyRlcTyP89RZJJWwV8+o7m5nX9aXDv3LVr/+Nxbteo1hpbrbXW2YTgzw+xwAzkFDTVykCeHtekI3fRg/P0D3s8XTVcdipHmBZ0zZzO5NUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=19Bw+RMIYTnqATMJj9/SYXtw7VkM+CbPt9ouj/bhMNY=;
- b=HBj60U3q6Yl0x1ulimNoNS9uSQgDhgB4ByKSS5ljnPZp/e2k5X6M9KyTmGjcya1bOEne6oYxInXnIBeyvFyc79mtlQxpYdrxjzCvG76zYBXLW06V7i0UgVFoOewmNZvsA6g2kkCpYoFcz3IAsQaiwW4VVuPY2hdQrgMIRp8/vUkdWLFZXddt2awvj4mxyQPyZRsNF/kQo5nPJTOTeQrOA7eqnbvZEG9e/W3pvnT9DLBSJ6cgUzoEMGBrme1TlsEpnJOrv+HqvI44n4ZAnr6I7WMsz6Wxts+6Xaj/Sc9//6vznJMd1XhO728KKz0NS9L8Xz3UvX+woum/35sqmBIhJA==
+ bh=CjP6ePO9vPArWf2CSSzFlCq9g97uurX56I4ZNbKeb3A=;
+ b=rWT0as3yfPiOSVM83TZk8r/bOyU4dZvz1hViH05hemH8YbYg5JxL69ytgAajKqfEV3FBgeWS0MecxCHN5wtopPEprnxaujpZ2XPfvhRXdcJRqcJWe6Qg2Yg/poEFTL7IpdgNH1+/gROiFgjUipTSHIcDcRV/ToogCZIa5R/A9XQQPe76Vc6RPbmuEMwXXaDrQpiAkWl1WP1uLtUapxdpg6CsiuYc2hnf1xcwp0iobZLeAkAdH32JBUx4+FB02bACIFxV3YKo1Mj45GlwbrAFNiyk/5QxF4VCYESIHgz1XVPrZcANg+KQ4nhnZwuIB03IFINjoijFfFbiOoL45ygMlg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=19Bw+RMIYTnqATMJj9/SYXtw7VkM+CbPt9ouj/bhMNY=;
- b=O+leTCiab+spg7nTfyQPhIMEf0K0AhZ32ehhr7jummJl+SfK+D1EzVLCblJMQVn+jJ26jnOlXHOtL6grsI8db4Lwpe40FHtRUZdVP8HarS1DlhEhotUr5j8lcRyKopGy0vCaNEdPTy5A8j+ZQ/IF466rNBRBcjaCqMdR0rNEdFsgM92f++s7tWIh5dAWlM13wzrE6BfOWWby9G5hYPYZfLnrlFfasRTkjWJOSibUfCCnFKgLrXmTHlznh0kJXhgaf6XqXH+OnjEgsWymjxrJmou4IGO0L2JzM73Wut3jq6smPlVlNNy85IBkHE+7abARAl8gj8ZkLe3PA5fGUBAa0A==
+ bh=CjP6ePO9vPArWf2CSSzFlCq9g97uurX56I4ZNbKeb3A=;
+ b=dDgYPoPlFNv6mdNUi9Vgagj7X5DomKYXx6NmLjfwrcCsi/KNS5zjZvgOXGjSLJN+Jr/iJMfKVw753/iTXNlD8BplnzSsghqdpuIcE8ObLrh6duf/Vfcwt4u147hvfaZqRG56jhkG2kGsQi1wQ8MQ+KVVysPXlQ6wquo15iRkhCyrSI3KOzMsogMU17PG2k43VJHQKYc3G1hInCiXv/P9Dv8ZVtEjFABDkNT4Y8DHEBn9VhEI7rUEehVqvwYe3nuY1J1ktVvxOHu7nnttSUzZwZHmieK4OenF6RtXrh/MrZsfsaMaZc62GGmAJp02MucgSXwSgB2VlPv9zyYYLu/shQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SI2PR02MB5490.apcprd02.prod.outlook.com (2603:1096:4:1a1::8) with
+ by SEZPR02MB7537.apcprd02.prod.outlook.com (2603:1096:101:1f7::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Thu, 13 Aug
- 2026 15:50:45 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 15:51:02 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:45 +0000
+ 15:51:02 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-Subject: [PATCH 12/20] hw/arm: musicpal: Store boot info in the machine state
-Date: Thu, 13 Aug 2026 23:49:00 +0800
-Message-ID: <20260813154918.996812-13-bin.meng@processmission.com>
+Cc: Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 16/20] hw/arm: orangepi: Store boot info in the machine state
+Date: Thu, 13 Aug 2026 23:49:04 +0800
+Message-ID: <20260813154918.996812-17-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
 References: <20260813154918.996812-1-bin.meng@processmission.com>
@@ -63,66 +63,66 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SI2PR02MB5490:EE_
-X-MS-Office365-Filtering-Correlation-Id: c394fad8-1cd2-4466-96ef-08def952a33e
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7537:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0324ba31-7672-49c8-3f57-08def952ad3e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: pU9i1g0WyetycOrNCiYxExYQpA6u7MEe1f3KbFJD3zV/JNIjTxDNsukF3g63FJRqKLkjUW+q4YrwydgYVVANbQPNXANGA8DXJzTIfJ9QuPm1STBuYsWOiRU5waRjz+kDYHK4k24gbWyAPGjJu2PhN4x1jI45ipXV5+Dlk2mDgjLzepziWX7UwFrGslzL/Yhj1GWGlYADvb7j9TrBg+R0SBduaI9x9Vb3x/NPWm0gTku4Vunozo3YPjHTWK6BX3ZeDzwMmhUr5vPfmJoI99uJkY5ThRH4/+SNPYhrQbL7kCMKoh2k41ki0dX+mK30L+ROHWEeKgyznWpg4GjbPSIu+fdH5CyLSIR/9PAigyUCPZCf0E7y26cZqS4TBV00fPqa95Dm8djpXqzdqs8eLE0rY0hrKpcRmE4iYwmUjRFJ3wxE3j4WpPB6Kqi7EuggATkfUycTzeOzrtHGfsxImvY3UsvBARbI48S+lkSW5/wmQl3FlMBbz3eo8vtn9x7qQPragxYtA/VWUo793ScjpKyz6j8305phU9azcs1p0MkeeqUI7XICAtPrL7jC37Yes7rUrOZoDTXpGOL+5GjRTPfhf8Mg5WyFlBGP+RZB7r4hjLO0Q3+nIJIImNCKr/sEujbidjaqPY+EVvtkNgMkTkVzgx33Yqtjeb7PiKS7nP8BCRE=
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: qCNfCWB0vs/G+9z9LaupY5SIpC4X8aiMLRWkUpyN6Xp9EZ8HzebiL6f/ubzFMHK3a3gNVyNFPCtmvmmoDWPs7Yit5xpTMt+zDBU1fF02Tw+ie50EylRCXQi+etAexrOCUyhFtz0Dq8blkWWD+wP/wHXJiIMl3oi7m9LtRanvIn/WHHmsg8Mv2OT5ji0636nmDlxp+EpKI7+dQtSVKfY/s2LT+UDa3E/YrYYme56M3K6q2mwS0jdyudldmJFFfwmTlLrxWzYCHen8vmQtAKzKm6FNXaYnNaPyTRnzb1XrI7OEQKBBrSV5LRGcBcQDg3RFRDW8SlhfcBdZVubpuWNVVVoFzo+t+bLHPvefWlL+Iolp5Q4TxcZ5lKXr1jgAjSYg2PgEVImZm6Y2SutKhDCBku12flt0kWaDEXM13BsACJFqzejHhOjjso8YT81YwBCHz4GWat51g1RFO4LSMJTR08nOLm0ZEGCkuAdoc5TbVU9ZAzGCt/CPSo02n8AXakvBz0aCe0nBcvuzZb9/SxAZ0qaRHLUqgU9b3Nbtu95S+K0Frjrj/zN7gnZOcySzxDl3tmu75UXEevO6ytdm6iA5D8rDznCtX1kVZkDxnD4LYQeGwWIvYrAaIfmuNnHdGYaBV07xlzGfjDFecwkMOL6rGqKKni5DC5ZJMXvCbf1RiAU=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3IfP0epvlVgOilbwHT7cZYFtEGbKkkooSnEOt0c+MzJpiB/g+KE3scAxf7rQ?=
- =?us-ascii?Q?RESEotEU1zzCgvqp6gwC+QL42oz+SKo5xI4eISrfpact3PTXcF/DTxsQzvaS?=
- =?us-ascii?Q?wTkDC1oaWUKKagreBtsOZ4n7J55dwELn+HGm10Bz+YVGdXQHAcq0o+ZsXl4y?=
- =?us-ascii?Q?O5h19kQD14Xju2+Wn+ksgpBs8mJ0Pk3b6b1MxA7BZGzGrDdSGMcbCGhI6KV2?=
- =?us-ascii?Q?jVVobV7Dn/t9GOpjElvbTQU4AeCBJ7Ak5lSEpj1K5Cn4eDr/l2vpmIY8oKjF?=
- =?us-ascii?Q?eKB6x/KOTLsZ4Hcmg1yOqeeHPgFPsFlkwFV9xbGFmkZPftYTyintj+htesTN?=
- =?us-ascii?Q?kvjjaotkZpMSCiaGEua27npjMT1yCPUqI1OXwsEFsDX1vZjShHCm6oRGl0Nf?=
- =?us-ascii?Q?nyNhk43QAC5Mq1OkFuU+jXK/JZd139QQQc6uMAk+RjOqT7rsM4RcBhFnbra2?=
- =?us-ascii?Q?v1uBSyiTzZYUpsyBz/PpvyDBeU4OuGbSNx5oXRCDYxUpIBBY7a83eA550Qkc?=
- =?us-ascii?Q?a0h2CfmwBe4zOum6wp0/oKonn6gQrimiQB1NNWAVrrzBuPjjGavfyoW2LdDB?=
- =?us-ascii?Q?Iwu7kAwPX0oViRFeGT43bN6S4zGwqKjQJm/Pw2oyT3qdh2qk49wN98NZX7kX?=
- =?us-ascii?Q?LgZqxY0PDJdtxagzAVgzl2nj0jy3Oo3QqLC0ASP0XAFkq2jP5HeAPJnyxKEq?=
- =?us-ascii?Q?UIM5HhB1UwKrglQH+TgREdlIsxN4NQlnlQVjTPGfXV3sie1Q5QaFhyv5MX8b?=
- =?us-ascii?Q?/cyUd/hUraXS2OBCNVydQ1uBzZ2cYfUs2n/kWcnLO5T3oG2/vQWBtoeocoDz?=
- =?us-ascii?Q?iOZoG/J1dM1HSuOGwRmJUzht+o9QXOQJ51Zd2ahHdnebNFZy9jO1CmRNcjnv?=
- =?us-ascii?Q?cPhKNfhvnL2L/b1qY70QYs2j3Tta/3tAxVcxuHDvYjp/5sKQzeM3ipQudAlI?=
- =?us-ascii?Q?8HcEnHly2KSUkkd2HfrG0U6JDl/XCvyRgBDKpg/UoZz+3VO7wLMcZ1Jdu4pT?=
- =?us-ascii?Q?jvaxnZQO+ozov+GejLY6nzqUDbqm2CH46FCAyzZfF8XNAlooX9C/D7RwNMkw?=
- =?us-ascii?Q?1rMozWObK1nby4Qr376O7VQeR+Z3s2yPSyts6p4RZYbM6tzmdjW/f0JGDhr6?=
- =?us-ascii?Q?w9poN7OQTmbm+8Xpn+qWGgg4VeFnXAVUGBsWk6TBDNPG0t0jNfNsV03UgphM?=
- =?us-ascii?Q?KP/5ZDInoM3q1tCwZli8pJpIRG+wKVAaQy3n2bL3wm9XkIXOcT50Wh8Te9C/?=
- =?us-ascii?Q?CT3syU3xJvqLSZbV+b1lei5Q0kOyz4VdIWcoKdA8YXbU7Co1L0fWbL7j4Kta?=
- =?us-ascii?Q?jF7Ocb5/ij4OTDbJuZRz0L8UmgkZoqY1NTmCszP8UL3OIuOe2LQRA0jZ44mg?=
- =?us-ascii?Q?31obrIoqPUNaJiIML/caCwgrq6QtJAiHXfudWuFek/Kao13i0Wiq1RupPS3W?=
- =?us-ascii?Q?Ozn0k3QFgc95uQxaV8t7CTZkkXTnF5ZyzvZr7mgjMUng3iHaSMqz3yHXKnRa?=
- =?us-ascii?Q?TWL7WgEH3a4f2uNeLz+KYj9hxxK4KlPmRmaiAksD2Vqn7MgjUhhFeNniXShn?=
- =?us-ascii?Q?rApPARXxr7R3TVpqJ1FqdTP9d4KDdTJgUcbzt+6Z05DI1UJQtRxOlztRKm/F?=
- =?us-ascii?Q?av01hf/bq0bkszS1RoG2+RtQbwsrdzeSjLcIcnwf2osllDOlggksh2G5SiPW?=
- =?us-ascii?Q?3RJJoRDrNpt5CybrXtJuQrLCEyZM3VJCr+q2MtEA4XO3QsPY5hQFzO9v6Gst?=
- =?us-ascii?Q?GgoL7Xvzlq+HsZozwpwwU7tltLa+Vpc=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?MG3fo/VzPTYh48mrBXbiLFbbhOyYvHShInOAsIlGAnvV35+dazBf/ISsH31K?=
+ =?us-ascii?Q?bpm7MlAvd8lQXccYHPx+0au+aiFj/RbvrWEEhAxxd4Ga/5s6y4nE1xmccTIe?=
+ =?us-ascii?Q?VVrlT8XU3qNgLdDs986qlmjwMHnoJmTkbHrOLH7vR5xfWcOGlZNkp9OdqHpU?=
+ =?us-ascii?Q?+qs17ieOU2FxXVJS4JYPEp1GSeAuv9FyVPh+tDX1feq+cErwDeDoPPJ2uLoM?=
+ =?us-ascii?Q?l9e/8DxWy2oZmqUlSYVjbImVCEDfMBzPsNhSt+iEl06BzQrnnJVbfZBTh6zK?=
+ =?us-ascii?Q?kz9illkW6I2av26KJFo0PtjPMCblxDxyhH/8IIi54KMrhF2OwtWHsTLRMZO2?=
+ =?us-ascii?Q?XotRiN1Q/iJYUJOGtNHxDnlnOG+AyQX8Ao+XLrEq90elR/FizgTdxy+YHolu?=
+ =?us-ascii?Q?OsfNKoUBZJKrJUlnzCKfWCRCSm1AwFQprG6M5Px/X89/+Cn+vCAKwuW/EVNP?=
+ =?us-ascii?Q?FHG/b4xycHyCXAvV3LMYfzJu79HlRknCToKeDXxnGUJ7OUEkKERdghZv5Nvi?=
+ =?us-ascii?Q?fYX1tI7pN0AqMAL3/x/ruwpMzg2IeNxGul5jikcYct4+15N+u3w5VDz/Glfs?=
+ =?us-ascii?Q?Wj1bT0US8ncLydLKYPyvR9xxwmXcO+tuETGsLJLe6ALCSNK8s6zoY8ZGIsMm?=
+ =?us-ascii?Q?SDCeYnygB6LvG0Y2EM2k0ighYcuyym/+1lZ3VhCeVAVL1DhV8ylH5cnP9V9e?=
+ =?us-ascii?Q?8O+MMDebNZKyIEvtXh/OeHILs389rPhUglgH6iMcmCmXcgqDuW+HLJWBPNGE?=
+ =?us-ascii?Q?kXkIv/GRSzeSYwwG/Vh5obGLP1RBDAepjoS0+y1o5C7L0OFkAjnKwvuJ5HND?=
+ =?us-ascii?Q?5ENvq2v/PHC4Gabk3cmwhYDTvEIujH6CyD8voAnVRO78rIfSoXOdqV5Aa1Mz?=
+ =?us-ascii?Q?c36f56s86eeBYzIyGqhIYdBoGGoN1jCV8ozyPiXF5Hp4KY+UV8eL/dow50JI?=
+ =?us-ascii?Q?U7OTgwC1w5OyZgn3cPYzKnnkRp4nz0pfoy3AmsTV/Zo065WkTMYosilYfsx5?=
+ =?us-ascii?Q?OlSM14LeOmP83ek+HLqOvYjsXxVxFacjM30+Pwab7fMBP4hW0t4DaXSgKJ/+?=
+ =?us-ascii?Q?XgyWwqvb21vvIsMOaU1g4CTMtFlJfXUCKDUoWRwqZa71bVyab3Jc8hT7lADy?=
+ =?us-ascii?Q?cHZMxAiiF7aNee4oPIrgz2RTOto8pHAk4qxShVzPhqZDAuQYYL6uZ9DTl9Vq?=
+ =?us-ascii?Q?+4hUj4xPOjso8kjvlAlyhdZ0h1y5i7i1fdUgGkRwoSLvNUgrXCCcT/N0rdGB?=
+ =?us-ascii?Q?5DQJRqeOEHfS9RE7A7PiaoggCu2FNp5X8+kNFsezsgJvjUdf04ftDIWqTYxg?=
+ =?us-ascii?Q?pCCbCmVCze2T4IZI6922LqL5NXQ/qnrY5Q+tA6shGlCvLLw6KCgJc2s+lE88?=
+ =?us-ascii?Q?AhoizTupjCM4tJ6LYQJCaUEWUK6Ui9AuazMHTfoUQELY3Thxwcx8IF0KW03z?=
+ =?us-ascii?Q?+WGLoBYsVIdVXmTQvGdIBwBYW3P/awKOh90G1huufY5VCtSL+AISNJG6by0B?=
+ =?us-ascii?Q?S/z42jF+nRdLbSJNSNTgjxhmz67PDgN8HLFM/4BftTsOd8Vf4z6XGcEDulXD?=
+ =?us-ascii?Q?12Ood/eYGfeLX28FEW0ND4oZV/l67LnnI0c1F+ijT0Qx8GI5ZSaR0BX3z/5l?=
+ =?us-ascii?Q?Xk7ttRMmEtNA4VxLod63PNw3IHFlJ0VMJm/tNH+lCqsOhK6sr9Zw4M+v2+ly?=
+ =?us-ascii?Q?WXST84xP3nvUdL65jcvtL1vH36ueQsFDBNj9gUpaIikBvyXgaAOTl90raeeR?=
+ =?us-ascii?Q?Ai3YK8MmBXgRKHYxXqb5iLxN/S+tkRI=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c394fad8-1cd2-4466-96ef-08def952a33e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0324ba31-7672-49c8-3f57-08def952ad3e
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:45.5664 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:51:02.3307 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3qhTcmPh45T+T2wDAi2TdHqTOh0NJ1PbP6fQ6fY4S6C+VMObAxw/KM8wCaPWV+MKX538h7EPLxgqs1w22BMO7ZHceSdumhLYGD+iKdk2/hk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR02MB5490
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: qHMJKvnl5+eXw9CDSTIkxBOPiCdPuy2SyDs8o3pMIkC1+3OdVXB5v0znNhRDCun1jLvkmqy2yHsaZt68xIurvVoX7KMze70HZGcE0n4ZRVw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7537
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,7 +143,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move it into a new MusicPalMachineState and register the machine type
+Move it into a new OrangePiMachineState and register the machine type
 explicitly instead of through the DEFINE_MACHINE_ARM macro.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
@@ -155,80 +155,74 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/musicpal.c | 32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ hw/arm/orangepi.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index 69e83bdd97..158a3ccae4 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1200,13 +1200,18 @@ static const TypeInfo musicpal_key_info = {
+diff --git a/hw/arm/orangepi.c b/hw/arm/orangepi.c
+index d84443bb7b..5b2c13f364 100644
+--- a/hw/arm/orangepi.c
++++ b/hw/arm/orangepi.c
+@@ -28,10 +28,18 @@
+ #include "hw/arm/boot.h"
+ #include "hw/arm/machines-qom.h"
  
- #define FLASH_SECTOR_SIZE   (64 * KiB)
- 
--static struct arm_boot_info musicpal_binfo = {
--    .loader_start = 0x0,
--    .board_id = 0x20e,
-+#define TYPE_MUSICPAL_MACHINE MACHINE_TYPE_NAME("musicpal")
-+OBJECT_DECLARE_SIMPLE_TYPE(MusicPalMachineState, MUSICPAL_MACHINE)
+-static struct arm_boot_info orangepi_binfo;
++#define TYPE_ORANGEPI_MACHINE MACHINE_TYPE_NAME("orangepi-pc")
++OBJECT_DECLARE_SIMPLE_TYPE(OrangePiMachineState, ORANGEPI_MACHINE)
 +
-+struct MusicPalMachineState {
++struct OrangePiMachineState {
 +    MachineState parent;
 +
 +    struct arm_boot_info bootinfo;
- };
++};
  
- static void musicpal_init(MachineState *machine)
+ static void orangepi_init(MachineState *machine)
  {
-+    MusicPalMachineState *mpms = MUSICPAL_MACHINE(machine);
-     ARMCPU *cpu;
-     DeviceState *dev;
-     DeviceState *pic;
-@@ -1341,12 +1346,18 @@ static void musicpal_init(MachineState *machine)
-     sysbus_mmio_map(s, 0, MP_AUDIO_BASE);
-     sysbus_connect_irq(s, 0, qdev_get_gpio_in(pic, MP_AUDIO_IRQ));
- 
--    musicpal_binfo.ram_size = MP_RAM_DEFAULT_SIZE;
--    arm_load_kernel(cpu, machine, &musicpal_binfo);
-+    mpms->bootinfo = (struct arm_boot_info) {
-+        .loader_start = 0x0,
-+        .board_id = 0x20e,
-+        .ram_size = MP_RAM_DEFAULT_SIZE,
-+    };
-+    arm_load_kernel(cpu, machine, &mpms->bootinfo);
++    OrangePiMachineState *opms = ORANGEPI_MACHINE(machine);
+     AwH3State *h3;
+     DriveInfo *di;
+     BlockBackend *blk;
+@@ -98,14 +106,16 @@ static void orangepi_init(MachineState *machine)
+         /* Use Boot ROM to copy data from SD card to SRAM */
+         allwinner_h3_bootrom_setup(h3, blk);
+     }
+-    orangepi_binfo.loader_start = h3->memmap[AW_H3_DEV_SDRAM];
+-    orangepi_binfo.ram_size = machine->ram_size;
+-    orangepi_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+-    arm_load_kernel(&h3->cpus[0], machine, &orangepi_binfo);
++    opms->bootinfo.loader_start = h3->memmap[AW_H3_DEV_SDRAM];
++    opms->bootinfo.ram_size = machine->ram_size;
++    opms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    arm_load_kernel(&h3->cpus[0], machine, &opms->bootinfo);
  }
  
--static void musicpal_machine_init(MachineClass *mc)
-+static void musicpal_machine_class_init(ObjectClass *oc, const void *data)
+-static void orangepi_machine_init(MachineClass *mc)
++static void orangepi_machine_class_init(ObjectClass *oc, const void *data)
  {
 +    MachineClass *mc = MACHINE_CLASS(oc);
 +
-     mc->desc = "Marvell 88w8618 / MusicPal (ARM926EJ-S)";
-     mc->init = musicpal_init;
-     mc->ignore_memory_transaction_failures = true;
-@@ -1357,7 +1368,13 @@ static void musicpal_machine_init(MachineClass *mc)
-     machine_add_audiodev_property(mc);
+     static const char * const valid_cpu_types[] = {
+         ARM_CPU_TYPE_NAME("cortex-a7"),
+         NULL
+@@ -125,4 +135,17 @@ static void orangepi_machine_init(MachineClass *mc)
+     mc->auto_create_sdcard = true;
  }
  
--DEFINE_MACHINE_ARM("musicpal", musicpal_machine_init)
-+static const TypeInfo musicpal_machine_typeinfo = {
-+    .name = TYPE_MUSICPAL_MACHINE,
+-DEFINE_MACHINE_ARM("orangepi-pc", orangepi_machine_init)
++static const TypeInfo orangepi_machine_typeinfo = {
++    .name = TYPE_ORANGEPI_MACHINE,
 +    .parent = TYPE_MACHINE,
-+    .class_init = musicpal_machine_class_init,
-+    .instance_size = sizeof(MusicPalMachineState),
++    .class_init = orangepi_machine_class_init,
++    .instance_size = sizeof(OrangePiMachineState),
 +    .interfaces = arm_machine_interfaces,
 +};
- 
- static void mv88w8618_wlan_class_init(ObjectClass *klass, const void *data)
- {
-@@ -1383,6 +1400,7 @@ static void musicpal_register_types(void)
-     type_register_static(&musicpal_gpio_info);
-     type_register_static(&musicpal_key_info);
-     type_register_static(&musicpal_misc_info);
-+    type_register_static(&musicpal_machine_typeinfo);
- }
- 
- type_init(musicpal_register_types)
++
++static void orangepi_machine_register_types(void)
++{
++    type_register_static(&orangepi_machine_typeinfo);
++}
++
++type_init(orangepi_machine_register_types)
 -- 
 2.53.0
 
