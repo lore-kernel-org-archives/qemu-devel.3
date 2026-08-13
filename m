@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB323C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 00:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49D8C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 00:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuJEI-0007wB-Gv; Wed, 12 Aug 2026 20:23:30 -0400
+	id 1wuJem-0000eJ-P0; Wed, 12 Aug 2026 20:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuJEG-0007w2-Kh
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 20:23:28 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ id 1wuJeY-0000cU-BU
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 20:50:38 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuJEE-0007n5-Rt
- for qemu-devel@nongnu.org; Wed, 12 Aug 2026 20:23:28 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-38101f85591so432421a91.1
- for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 17:23:26 -0700 (PDT)
+ id 1wuJeV-0003zs-Da
+ for qemu-devel@nongnu.org; Wed, 12 Aug 2026 20:50:38 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2cf6d65d8a7so24701185ad.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 17:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786580605; x=1787185405; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MvUIngn5UnlN6Av1h/W2TzJe9/h2Fh6Y7NSkxl1TwZY=;
- b=e7ZKU4E4tx2J6gohxGK2EF4+P+VFJchfcXGpFhtlx8qXSGTlv+pzc/69LD0pGvAx+K
- R+rFy+MbQ/RhrfhVaHWP+LiMcAwhPQl/79jgyN8CIw85/oOofrNVtPGSX9yooO+VGI9u
- REJq1p7c8xw0P0jy+G0Fie0rBdJ8GTl+mAU3zzSpbdHnNYQL5wEQprtz+IE5N4OU859N
- 5s1lLVY1xYd89qwhJ8GOmDCW+LIfTqZbNQRWyI+B3LgDE3Th+LwdhzSZMKR0gD2MEmzB
- bMbitTGZ3wDETYLDXL3jC7UhzhIYiQFhxg4TVPaiPiqnfx5nOU8EehP3U0bKHIKzxotZ
- MXrA==
+ d=linaro.org; s=google; t=1786582233; x=1787187033; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+K0TRBn0btkMesDXAbUcRtIlrFR7ztFn+SHBFR89EaM=;
+ b=q/lvkdoTNTQz09p655bGsQPRZQj85FXFEfTsQ9rSTuW68RM4xlJF0Q9E4iE6buHZf2
+ Th13JLrDC28ZdDmRoMbe5J0tvc9JoB7mha6M27BYYvRPIGkj4oKLTeJ3YmjNYvUmqth5
+ IJt1gHbsrPLXI0ImyHnTkyU9ElB0Ggasl/wW706q+FCS0V4Sy4g3D14JxD3UXziKylH+
+ HamNutAM1wupy9StRP6/Gq9yEua9Mur6y6m39uqD69wZDWxwUKpv3bYfD9uM7mPKiRIR
+ ZZ/ipODhWL3lt8RFSqeZgQpVHFNhKrtCNj8B1Zd9aed78WJ8BC5uR5fa2YRBE3kgYlOz
+ N/3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786580605; x=1787185405;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=MvUIngn5UnlN6Av1h/W2TzJe9/h2Fh6Y7NSkxl1TwZY=;
- b=CrbFBBRSOnuX1gMvo3cF99BEMjxdaIk3KKMc9Wuu0x2PGit3FCeXkKB5e34b479fWx
- rBEsRt/7y6KC2ZTBqcVVcBaiy9eZXBrPhnd9Sv4QxKK93xmfJ1ovSQ4Pky9wz5BfXe0+
- O+/pXwyp+ls48LVlqTV8SnlealQleYmNvPpGlD5953kIk6Tdpw4GMVafz39MBLqqg8oS
- 3PfMEF1WGd4F2N/l8oN5J7qgZRHZrO2h0ZaMySto26neKPzsuCqVMgJeg9mS9OlXteeO
- 3vgbDBveGoZ0iqXM0ZADSNox/VO62JIalUJUdxZgPGFie4mR9UyrJgUMiO9HSA+ojGwS
- w0yQ==
-X-Gm-Message-State: AOJu0YxAWZSsCJxoau7dQUTQElvWRQGATBeQ2kLwODTgtO1p/6W7yG7F
- JJ2W/gNSr2suCxEkG4bAp3CxM5D8XwwldeuqPNUcedD7LsPf1Toz+/MPf7Ngg78fbSen04qz3tV
- YD13E
-X-Gm-Gg: AR+sD107eIC2j07q5Lu47nI9PxM2DL4Rbgs1VVrUUSuFwfJkMXgVe3wJBah+j19kH9z
- oQwF273Sw/na3+q1Jg5tBuHXo9CDGu0OUtmMnzrz8DAvWbWpG9l/N5mC9QVJuxk4nwaKE0W3JLe
- e4OxVkazlfbENcis5/hTBLhs7VPJyqD4q6gEru7GYAoXF4xDqqJ6ymh9gP+EtDXJIeq6sBGiBk0
- KXee5p+uYdnvn5jNTr+peOVIDfvxcxVEhjPxqggC1ga8g3opIF3FvSijl8FtLb9oXmHcDTUd/gJ
- ZHlPvQ/mLwWZ7G6ntKNZDWQfJ2JAKxExUs5GTKdq+tpTPuK1/RYtJ0eHJ5t22SQLNOvDVoe5PcS
- MzrzpuN0FUa2UKTczo3uaQB0cg4wJpmQR1NNUUnKFH3uokeNWU6LJEli3JtKORGZLJPS+NNpu13
- bn2ft6htq+j+7TnbGg0kVcUsCagjVccQ09qdkNYW+myXno3PsdIuBsDrlPCgWrdH+8j0bWsgvEG
- s7YZfKDIGSrQkTDTNZiIL5XgprH
-X-Received: by 2002:a17:90b:4b8d:b0:390:b3c5:e2c9 with SMTP id
- 98e67ed59e1d1-3931f965f34mr598794a91.17.1786580604865; 
- Wed, 12 Aug 2026 17:23:24 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ d=1e100.net; s=20251104; t=1786582233; x=1787187033;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+K0TRBn0btkMesDXAbUcRtIlrFR7ztFn+SHBFR89EaM=;
+ b=UzLhOXQq6AcCqMxyCPmnFKl/6t1GNg6ERZWhRuMskPf3S8y6xsCcsrn/ixKkMUuUXR
+ eSxytXmmY0nz3fIOvRubt4ENfvfhsjK3WaxLZkdxPKUE/ljCNWSITcZGxp6u4uI9290B
+ jUfZVSsips81+b3wDSW5ST9a1vaTphKw+r3m8NWP3MDfo5GQUwLFTLjfUiO68BoNEPGa
+ RBlfabzRpdc7BKQaGZDWPrEGn6G+x9R4shgCjFBnEg8S5R/qyyvRKalE0zcSCBbroq9t
+ 4bNjnq2Mrh6tzmIdXqn9Au9vnapCvsksbPOeUowcc5G/f6hNanmReXQDARtCL4G/nVYF
+ XtuA==
+X-Gm-Message-State: AOJu0Yx3hOlthYgYnDkkpkMOHpNMKLmooLVFFbVxHKNN5tpyWfw45rPo
+ dmw1+nLi65xAaZBTmIm5Q1nqA3VRAWWzhLV7L/aFKloEgdlpt5yyRdfLKOyYv+JyJhdm+qeRLp/
+ 54g+/
+X-Gm-Gg: AR+sD12LHuI9nsV8OMb1EJj8CJZ5P0z1aAQ64Ow8B9v7JEFKpAl9klLhE5CC1Tv1m+B
+ npk0f/p5+KhNTtwrO1328bPRs6Owtos/y9Y+42wM4fDRWlS1gdXoP6N46rEubp3/LAhUWe6InQR
+ BEy4weXLX5DihzdIoVy3F1jNwhQdRCFhocJ4ibYKloAGY7YUFikWTkl8w0u4yw2SiPmBkP5p+P2
+ bbe4J6LGZgtxrqNH+EJbKzCeGphWtYIRY92qHaPTILuzZTUD4jpx8y/5SwaXFYtofGZcjtUWa6J
+ lDN72478egC8fSH/8/4avynKUpUZ7k8jOcKY9nQYtT1QvWXbjNz60EeaQl/umCPGEoy8gJvkeTw
+ L8y6Kd/sF5WAFcgOIAU3/VUt2VEKUvcxoDwO5rWNWpY4dpCgjCpfB/oEhqqSi34jyiE3f5dSeRB
+ mFkdE8THCc5PUpAhLkRr0zsRhtrrx4JunzAU8bF7NsxQhm48M7UBK+m/EYOYfHbN1loedZVWuC7
+ Q87p8Nd6xw5CiX/Zi5o
+X-Received: by 2002:a17:90b:46:b0:36d:b424:4f17 with SMTP id
+ 98e67ed59e1d1-3931dfdd5bdmr2658776a91.1.1786582232667; 
+ Wed, 12 Aug 2026 17:50:32 -0700 (PDT)
+Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3931db4e1d9sm330527a91.4.2026.08.12.17.23.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Aug 2026 17:23:24 -0700 (PDT)
-Message-ID: <3305e838-5687-41de-a07c-9f9aaaee4c6e@linaro.org>
-Date: Wed, 12 Aug 2026 17:23:22 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/7] Linux user patches
-To: qemu-devel@nongnu.org
-References: <20260812203725.10694-1-deller@kernel.org>
+ 98e67ed59e1d1-3931ca612e7sm1259918a91.0.2026.08.12.17.50.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Aug 2026 17:50:32 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260812203725.10694-1-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+To: qemu-devel@nongnu.org
+Cc: yvyas1991@gmail.com, qemu-ppc@nongnu.org, rathc@linux.ibm.com,
+ anushree.mathur@linux.ibm.com, npiggin@gmail.com, harshpb@linux.ibm.com
+Subject: [PATCH v2 0/3] tcg: Defer tb_flush when initial thread region alloc
+ fails
+Date: Wed, 12 Aug 2026 17:50:28 -0700
+Message-ID: <20260813005031.518387-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/26 13:37, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
-> 
-> The following changes since commit 3e3ccab106f879b1512f8e0d51a827dd4de30e22:
-> 
->    Update version for v11.1.0-rc3 release (2026-08-04 15:36:08 -0400)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
-> 
-> for you to fetch changes up to ce276ab1a92cad460930fada1bc2e2e4a96f7595:
-> 
->    linux-user/sh4: write the floating-point registers to a core dump (2026-08-07 18:14:13 +0200)
-> 
-> ----------------------------------------------------------------
-> linux-user patches
-> 
-> Patches from Mat Turner to support the mount_setattr() syscall and to add
-> floating-point registers to core dumps on alpha, mips, hppa, riscv and sh4.
+Hi Yogesh,
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
+The main problem with your patch is where you've placed the change:
+tcg_region_initial_alloc__locked is also used by tcg_region_reset_all,
+used by tb_flush.  Along that path, we really can't have a failure.
+The path on which we can defer allocation is via tcg_register_thread.
+
+The second change I made is to use code_buf_ptr == NULL to signal
+reallocation is required.  In addition, tcg_tb_alloc doesn't need
+to immediately fail: in the interim since thread creation, we may
+well have performed a tb_flush already.
+
+Please have a try vs your hotplug test case.
+
 
 r~
+
+
+Richard Henderson (3):
+  tcg: Return success from tcg_region_alloc__locked
+  tcg: Return success from tcg_region_alloc
+  tcg: Defer tb_flush when initial thread region alloc fails
+
+ tcg/tcg-internal.h |  2 +-
+ tcg/region.c       | 40 ++++++++++++++++++++++++++++++----------
+ tcg/tcg.c          | 24 +++++++++++++++---------
+ 3 files changed, 46 insertions(+), 20 deletions(-)
+
+-- 
+2.43.0
+
 
