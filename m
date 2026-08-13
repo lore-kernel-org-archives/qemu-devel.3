@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4EB9C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D7AC5DF6A
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYEr-0000Lu-0F; Thu, 13 Aug 2026 12:25:05 -0400
+	id 1wuYEs-0000Ou-5f; Thu, 13 Aug 2026 12:25:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYEk-00006U-1K; Thu, 13 Aug 2026 12:24:58 -0400
+ id 1wuYEk-00006z-4k; Thu, 13 Aug 2026 12:24:58 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYEf-0000gB-8E; Thu, 13 Aug 2026 12:24:55 -0400
+ id 1wuYEg-0000h5-9j; Thu, 13 Aug 2026 12:24:56 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwCXK1DR731qGh5vAw--.15399S2; 
- Fri, 14 Aug 2026 00:24:49 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwDX3_fT731qaFDmAA--.4893S2;
+ Fri, 14 Aug 2026 00:24:51 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8DwF3PO731q3ywjAA--.59573S4;
- Fri, 14 Aug 2026 00:24:48 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8DwF3PO731q3ywjAA--.59573S7;
+ Fri, 14 Aug 2026 00:24:50 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -35,21 +35,21 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chao Liu <chao.liu@processmission.com>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v5 07/28] hw/arm/smmuv3: Reject secure STEs with stage-2 enabled
-Date: Fri, 14 Aug 2026 00:24:43 +0800
-Message-Id: <20260813162446.2806393-2-tangtao1634@phytium.com.cn>
+Subject: [RFC v5 10/28] hw/arm/smmuv3: Store CD NSCFG in TT info
+Date: Fri, 14 Aug 2026 00:24:46 +0800
+Message-Id: <20260813162446.2806393-5-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwF3PO731q3ywjAA--.59573S4
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HlwAAsA
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAf8DwF3PO731q3ywjAA--.59573S7
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HmQACsM
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7tr4UtFWxtr4kWFWfGw4xCrg_yoW8WrWxpr
- 4DGws5Kr4ftas3ZrZxZw48Za9xWa97Jr97GFy29as3AF4qvr1UJrnFk3W5Kr9xuryftFyU
- XayIgFn8ZF1qyFDanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW7ZF4rWF13urWDAFWkJr4kCrg_yoW8Gr4rpa
+ s7Cr98KrWxCF129r9Fvr47u3ZrWw4kGr4UKrW7Wr9av398t39xAr1Ut3Z0kr97urW5Kr47
+ uF1Ivr95JF1UtrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -76,56 +76,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass sec_sid into decode_ste() and treat a secure STE that enables stage-2
-translation as an illegal STE.
-
-The current model does not implement Secure stage-2 translation, so reject
-Secure STE configurations that enable stage 2 and report BAD_STE. This
-restriction can be relaxed when SEL2 and Secure stage-2 support are
-implemented.
+With NSCFG definitions in place, record the per-table NSCFG bits
+in SMMUTransTableInfo during CD decode for later use.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/smmuv3.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ hw/arm/smmuv3.c              | 1 +
+ include/hw/arm/smmu-common.h | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index b5dc67dcb01..3ff2f498a3b 100644
+index a01175cc672..6b34f76f11b 100644
 --- a/hw/arm/smmuv3.c
 +++ b/hw/arm/smmuv3.c
-@@ -597,7 +597,7 @@ static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
- 
- /* Returns < 0 in case of invalid STE, 0 otherwise */
- static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
--                      STE *ste, SMMUEventInfo *event)
-+                      STE *ste, SMMUEventInfo *event, SMMUSecSID sec_sid)
- {
-     uint32_t config;
-     /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
-@@ -651,6 +651,14 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
-         if (ret) {
-             goto bad_ste;
+@@ -881,6 +881,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+             tt->ttb = CACHED_ENTRY_TO_ADDR(entry, tt->ttb);
          }
-+
-+        /*
-+         * It is ILLEGAL to set STE.Config == 0b11x according to (IHI 0070G.b)
-+         * 5.2 STE, Stream Table Entry, Page 218.
-+         */
-+        if (sec_sid == SMMU_SEC_SID_S) {
-+            goto bad_ste;
-+        }
-     }
  
-     /* Multiple context descriptors require SubstreamID support */
-@@ -916,7 +924,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
-         return ret;
++        tt->nscfg = CD_NSCFG(cd, i);
+         tt->had = CD_HAD(cd, i);
+         trace_smmuv3_decode_cd_tt(i, tt->tsz, tt->ttb, tt->granule_sz, tt->had);
      }
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index bd83648b14c..1aa4e3208da 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -83,6 +83,7 @@ typedef struct SMMUTransTableInfo {
+     uint8_t tsz;               /* input range, ie. 2^(64 -tsz)*/
+     uint8_t granule_sz;        /* granule page shift */
+     bool had;                  /* hierarchical attribute disable */
++    int nscfg;                 /* Non-secure attribute of Starting-level TT */
+ } SMMUTransTableInfo;
  
--    ret = decode_ste(s, cfg, &ste, event);
-+    ret = decode_ste(s, cfg, &ste, event, sec_sid);
-     if (ret) {
-         return ret;
-     }
+ typedef struct SMMUTLBEntry {
 -- 
 2.34.1
 
