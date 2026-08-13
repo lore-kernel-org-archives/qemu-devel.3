@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE46C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F46C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhP-0008EY-B2; Thu, 13 Aug 2026 11:50:31 -0400
+	id 1wuXiF-0000X5-Kw; Thu, 13 Aug 2026 11:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhK-0008Dj-64; Thu, 13 Aug 2026 11:50:26 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ id 1wuXiD-0000P7-Ur; Thu, 13 Aug 2026 11:51:21 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhI-0001rl-8Q; Thu, 13 Aug 2026 11:50:25 -0400
+ id 1wuXiC-00023y-FG; Thu, 13 Aug 2026 11:51:21 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oCqRlCbTWFQGNKkQoL8zcSf3Y5ZwzW3QIYlM7rHV8PF3z5cwuuzZMwTs1Ih61SRtpUY02uApNKkVzgH8gOMehWpxQzr6RhA3tZHS8Xjst8mXmuMLgtU0G4J6ffmelFdW2+rG9Eis8PZKc1FgO6KPflPZq4YpX+AmhvqduNlQHkgV0Rt9sl/Woju2LkvzO5ztclUM2K/e2rSNZNjS9fKcMti8PGwF+46wEuhrzjQ6mEV32B0HIY6Q6L3br3LPq49M19EstJQno6e9PWe6vV2A2NnP3w18cGo1Jen3ZD7jfv7PfJ3UkSHgb5kAqLEFiwrMVfImUS21vUwbdQBSLFO0Ig==
+ b=H1SsSbIzFXEVzccjSkqUpIS3+RaD5Ie1LuQPQIKlwdhKSeIsR0H7tkQyaQKlT1nwn6wNmzQeUwEpiwQFrODjjtPNF55tMlIVYwe+vZn1GFhMJSbJRFAM9H1g80vNKtoDIUUYasumpPB7Sg3nnfD7gIjaKRCbX88+gml3JPbuid3sWF+lloMH+u98a6FVNBVSFPugF5Lr7VGWsxzZcm9KtkKnRwabqK5uEUqv03PM0xSlTBfWNRZGg+fe2gW0NAquljjqpaQerky4FpkXJUcn77VXSUEJIiuAL67mjFUGwJZAz/2RCN3jHlhx86d/kOMP8i2+4VZzLVYblNeydIPpig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c4NfL0LxMbffGyg0xp4lOmX9ve3/FIikUEAgtxvo5bg=;
- b=HJgf/udNfcRE3Dn2MwwMns0hO+RAi8dq40wOOO5tTnZfyoQIwLMrgQNPkeUdO78WpSlNa0E9oVnppc8yt/WQGzp2QKtECHrZU81zvH0wk/tByBQpXiSxO1ydt7SRTQCUKih2KSX5Zomzzb8dXe1n39eThbppqwhzbfW48SQH+v7lqYaJKBzLXREUu16+YNpYP22+tXatXmT7m0+tDtBjykZiBGDUL0iCoBVqbsBjQn9K6FK5YkUf5TvDErBniYbbCrkkv7x9pFesqiuHj9WhtHycwnUP2grGrIyeHQFAqnzLoOOzys3i7RE7QCXx7EAj5PF4vjZDDBuNPwd0lWCOcA==
+ bh=e5Um5TfOnfDwsQ8j3tk5u72odNM7zqEpRE//RsJuFbI=;
+ b=BO5xi8z/Rkh9T2rSqqG/cxoiuPP5FgGjF2EJfHL1l6Q4518cS38Czk2wsd/KAiVhyygci6Q/z0wVBGLg2RYxguZNxdj0/dsgiS9ik2rL2PifTXPruyJLZheUotO7I1ghnWnmm5s5tXde7AZjcQZ6uMkuGL+uXDm7WES5GjQIAdKjmXX5gYaBwvqw8HBD0idUs44G0TS/qzkWj1p0JEoow5kjCF/jpjBgqxa4vbIXNDgNCKhSVy14KJL9yJ5EaR1jcyTSpLwyxEvucBac8e5oRLd2zWL8NuvKL1qMZxbV/67ZTJOI5kEkzLScBelk+V9EpRKhscooQvz6FEmf1HuL8g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c4NfL0LxMbffGyg0xp4lOmX9ve3/FIikUEAgtxvo5bg=;
- b=TYisPFh/zsMuDUirEAHARG4IqKTncZ30KBiA8c6bZmK5PAYJ/NSrAR223nFWv+XQkWyMuNoE8Xni7RVLR/8rrh7ekUbrXgthfa/2VZRGU0PjV9X18DEbbK0L3mbpXo1edih9AjWqB4kQX5Bn22ixrNU2tvukdbRAuvQZ5aDKhR3NLdjKWJ2d4Y5OeHCQWkBgs9GE4bj1+HK9kNLZbHXRhVjJyGkZkhEUZrxyaYyRxYbOA+Wzq+Wvkvwm4M5mLcM/QO9h2qSM1EoZJC0D73L8utNYBdMGSxpD183oBYr70SU4wXOrPAdN2FB+12fk3LuwSxD4M2n/YMW3fFUQtByrCw==
+ bh=e5Um5TfOnfDwsQ8j3tk5u72odNM7zqEpRE//RsJuFbI=;
+ b=HDFm/4anbUGc1U3cq/VrIEoD8O3EkA+RXIopS7gwx0SaXNZ0uqF0yFyPLCd5eelmEmQOkN8SuLK6Jtzcv88B5PQr4fMEjEWBOXI73D+avU40kSMG6YXYulVes+VEdHWv5+wwXCESCJTf4VN3p+Tu+ALepOwosYojC9Zt9riYGakm+VwU8mLJfYiw9Rce8BRNygtkaU4ML5LfVb9AadsdQ4DBNLtdT2HAr1ewl+jqWucLGHZvrbhFdOmxzEbdt7H8V2LYl9pEBUZ0cVUO6kNT+cijBQGhq7yI8N3gj3HU8QG7PORuAcMZLq53TWhryZY//Y/ksu84GGEOeMdyQduuRQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by SI2PR02MB5490.apcprd02.prod.outlook.com (2603:1096:4:1a1::8) with
+ by SEZPR02MB7537.apcprd02.prod.outlook.com (2603:1096:101:1f7::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Thu, 13 Aug
- 2026 15:50:18 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 15:51:18 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:18 +0000
+ 15:51:18 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org
-Subject: [PATCH 05/20] hw/arm: cubieboard: Store boot info in the machine state
-Date: Thu, 13 Aug 2026 23:48:53 +0800
-Message-ID: <20260813154918.996812-6-bin.meng@processmission.com>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Subject: [PATCH 20/20] hw/arm: xilinx_zynq: Store boot info in the machine
+ state
+Date: Thu, 13 Aug 2026 23:49:08 +0800
+Message-ID: <20260813154918.996812-21-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
 References: <20260813154918.996812-1-bin.meng@processmission.com>
@@ -63,66 +65,66 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SI2PR02MB5490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 30258186-8596-4718-6ce9-08def9529334
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SEZPR02MB7537:EE_
+X-MS-Office365-Filtering-Correlation-Id: fbc52ecc-9cdf-4580-b442-08def952b6cc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: tN16AYXB+/8Ju70MFNrQ7QEWwBInmoGZkUBFDu//MqA9SCZ6HQCvHDT8cx6TlmwjJgmzBTBz6G605GWK8Ds+4T0r4cSWblgWz+Jiz2h6QLus7PJ/om/pBAux4+7ukdIjJFqxwsJfz3A+y9izAYT/FELds3Sq1HFpZjJlgZmNjQbRnFjOgu7dZH2y6hsauwrXp4lmzAjZc/j3jWID3IVaZNwPREtIE57VZ8U+SvnGPZJxb8Hsn0Ufj5yhEkbQKvySUK+oJVYrj6HX2HggPnx2Z8gIAjC4+/HFXRrCqae3rNJktKkMqDnQnRccwSvcE3bsoTdIiz7gWbzWWOqHEvhZfm3dOoiyGd59NcD+3VPhlrSS5YtjeQr2JA0Ya6mR1BspDZaA0pgIZZqY/3Jj1lT0aJrn5PHN+NpjgeuJ+6xbiPF3JjgV+8t6M+xpqYSL8rGQ/IAiyvHcW9r5wx7u+7NFagubwisa8HE67q+ZmHrIfV0xlxmtbAbXFATYEthVBTudwFUwNH3KwtRDnyy0nT9gWJOTvFX6KNPtIx+u7+PucXLKetXKCgKIIYBpNSveQuOawRyMpjvlIwtfxoxG5+kfXL6//LasIRSldwbe03BX4zw0arWC87A50sGo+xmrM6fgmdEUI7OLPlrA1bUJ1ih9Aeeu0CtmXNqQTnnRBXllmuo=
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: MNs03MZ9ShyV039A5ngP/b0XYQeakDFuP4ZVKP4crCCsSX5dvEe8m+oqvmVAI42EWMXSq7s8yF9HG4+QgDYAdbL0sRArJ9ep2OSiIP8GH/2xL0DEmu/1EQfOawAEzuSAmltvEi0AapzjeQWQWwX8S0DyrFurj8z4QHC8uU/lMBgC0x0PPdMcpH7UVncnRuy2m6UyIsgOQSwcBMRAYM/OSxTsYYHMrUM4VRjYD0qhpbaZcsXVPG6LsQCbjEDiKXCV0uU7Y1Ld4LHfGu6ASSd9EIQt/Tx8H9dnqgxbTixwzptdbqwH6JnPsm6TAcQnsedR7+o/xIgw861ynNa9klV8fP70GnihLNm6/WvWSYmfQ93CrlXLnwcoako6SKuPbW1w/p99uejhVDeVuFsB2xJWv9j1PQ8TqMKry1g7t0nxuRVuSON7mA9pH7aZa/qXEhdSkHjvl/GUZt4wAsXvimBLxjSVE1WreSdvGa0c7RjvLATUsrUi9+J7KU38hqcuTWKgYsihH6A6SRlORBFdXWfti5/oG15w8heBdxeynT78oztPvihZbB6YM53+dYCtj836MnNGsj++4e58SOzDBjyxE9KGCZXjRo/GoOQqaQnmnfkihBxhTz8dXXDPWlTzG+B0LK9viekzxFSTkdPqZndxjFPhTidJCjp9sYzCZvMERfY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Xk3lPAxG7kHwQTmryFtrf0C3P0WTMEdr7fOizcc9HfR2OPG59l5e0F8e8Dcz?=
- =?us-ascii?Q?cu/8TXMpHIOuZyNf9z7Rz0t190o3sW6rq2LR4D87YmLqpja9Q4vppM+fbT6L?=
- =?us-ascii?Q?tf4tgF8tOKUrDGCcwa0jJouBNMEzK+neeWqPhPIHDMOprWfd3rPLztuJIhtC?=
- =?us-ascii?Q?hfQah0L5F0qNk29QSY4NtmDx/q+rEpelIItOlhLodrls5GpuF0gf7KvpR3l9?=
- =?us-ascii?Q?fxdnvhmjBFvgqhWoofkQ1CNWcM6NdQ29xJCJGXWJonVv5Rnm67cSGrYZOXTI?=
- =?us-ascii?Q?6vzRT/jHMiO2xmdwHyCZO2C5vpVVFxbUq5wIx37lRqffsWv+Q0HGBZrApgOB?=
- =?us-ascii?Q?e81IJoCkSXi5oTggrnghqChkWHBCHPCiR0m0YYlcVeeMubsk/DqpeMhKneq5?=
- =?us-ascii?Q?Ff1zEY2uO3HD/FIvBKGpGttEPRt8+QnHfHJyg+PEDL9u1D4CCVuSSCqUgUfX?=
- =?us-ascii?Q?xbvjpcg2dbDeReFTsUbGaDjd2RNjHyP6IQgXnLmC1cr2L+hrvWkV3GseG8VX?=
- =?us-ascii?Q?Hcm7Z9lJCL0Xc49NJfq+XQnoLyof4INlmEqhIM+RFeNSJUjSUzbRojmhk9p4?=
- =?us-ascii?Q?NW6ewqkEchPz1HFS2j2rif6SK1gDIOePS26/u84vcO29Z14NBMTGi05fqOa8?=
- =?us-ascii?Q?8WYGbw/qix09vGCK3t5cpbKFH8T5QPQMW4NBuvV8HzEhaRj1Q2V9AtaR1XVb?=
- =?us-ascii?Q?B/OKjsD/acfgiesM0SHOyOvGJzE2R6V9cT3+0/S88uk0gn6YLQKL+mI+2cb+?=
- =?us-ascii?Q?JkyfFcqL3hr4VTjiNO2DG7Ut6w2IvvbTKN5qhl7XH4v9R8RVirIRV0kcU3HT?=
- =?us-ascii?Q?xuumxpCzaYUPs4xMWIZi6FhhNQhQZoy0rPmlkwHNCh0C7R1/Tom1u3uostl2?=
- =?us-ascii?Q?aeecxh9OlbjCYfGBDOV5ifqDcZE4hQU1eBZ6JN5jneKLOZxlU+k7EpW/Mywa?=
- =?us-ascii?Q?nQyWy246lXY+ozOwNqP7mpCnYUc71oDW2FjZnjmpdRKQ9OJHaMs7ZEz9nObS?=
- =?us-ascii?Q?4k2hIwQBJak62k3tN8eWaOcSQ/0hNMdDfY5capwI9hh3D3aqAmxrHTfP7KiG?=
- =?us-ascii?Q?YVVGaA8WaoAnfqMB7GbYFI/zGdU83Q4KFa49zCA1tDy1lyZi8Ko8AgJEEZwB?=
- =?us-ascii?Q?u6OQJAyzHe7s7ebbN5uHCbaiD1NgvZrSzq6SzgtVFTS/w8NRJt1M15g0yUr2?=
- =?us-ascii?Q?L4AUIlKW+u3t8Wln53A90SLWBIfTltswr30yzu4m+aiV3f8X2s5PYLcm72UK?=
- =?us-ascii?Q?k+W4DSyez10rdQpGJbfhFOj5/G4pqH91H0iiDbS17B/4lMr5DJuSyqZCvF7+?=
- =?us-ascii?Q?vto4ssohs7UAmrTkeAzZYDEa781v6Fx5ZhWQQ6sZ55XSlUF8tlUi+WB23qWA?=
- =?us-ascii?Q?4yURj/CB1rbds+ihjr9hTlzV6+nLQWL9JhVLjqOGOiejqwXRyYSaqT0ym5VY?=
- =?us-ascii?Q?ncDC10/L+b8z68ofYnqoQiglcgVmY4g95maZbyhWp4Qv5bdpdBy5KxRZbwmv?=
- =?us-ascii?Q?xARE6tkp0js5it33OKtD95xXSIjQF6t6aqX+o5JLDRtxfzVwiQCIse5xn5y+?=
- =?us-ascii?Q?x7v7BESUXRomhLxetnRXhnvp4r2dNvpz/8q8YkZ8ft8JinI0Gslbl8tVOJ1P?=
- =?us-ascii?Q?7wnuqafcZ65t8+vxT+UF0oQnhAjUoWEVMTIVppY2UyZOCI8+imClnHRW7m1j?=
- =?us-ascii?Q?BbGqQLLuJNV/HItGyupuQ4mtZypdAPHlYgF+CRGjZZDo6RupUwt3kVGApDbl?=
- =?us-ascii?Q?sE4M0NlW5aLoYb5botAt1kmgfdhEcuE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?XmsZQyp/6NVXLpMcjjXxlfCQyLWMSjqYHJkeoUF7tmsbr+BjtxHx9D4VyyMT?=
+ =?us-ascii?Q?BvT2JK+O8JW/mXZ8cTO5nEdYSVRicbtsSHmVZMRd3OEG6lYDB2gSY4mSm8RR?=
+ =?us-ascii?Q?7/ua6Oli/hDx917u56Bx3TYOM3fQA6MHUNTco1BSBkTyh2c1Tio5D8OsVTmj?=
+ =?us-ascii?Q?kHIE41gRlpHEB/Ff9Ugiy13WZH16W6/7uLJy78punZOMZIyUGAnlWtwNRb+6?=
+ =?us-ascii?Q?MMhRnLN15RRKAHgBAbjt5yQBW96EFl+6eBavfCqn1NhrTbFQgTiDPsNBhgF8?=
+ =?us-ascii?Q?xghYDMVPbRUAhBsAXWY5X9DQ0iVNXbJ7E5MNNFJgWhWwF8NCHodMcnZatKfb?=
+ =?us-ascii?Q?1cVv6rtGKx6SAclo0T8t3bZ/N+HCqEoyuEG66qTS/ZaYnTmMcvf5tEcMvQHC?=
+ =?us-ascii?Q?HWfd/C4pdSTpdlL7r53dDYl18e9vzuVGiqRaKOqXSA7UASlsbQLbcfHQN+C3?=
+ =?us-ascii?Q?XPp250tdkhT+HHtRC2gd/KzQtB7wcL4IDypJOUa9QenHb1v0ajkPjrjSTiHi?=
+ =?us-ascii?Q?LoMa2TQR+HflbAtJ1ollZjLrOng+1GrPG2sjEon352aqY3hhJO+kUZXyi/5W?=
+ =?us-ascii?Q?ozNgqhj9xl61Ap7IeFzkGBkNvpGc1O+GMn1zjlNv4jBmaBBq5cy6ufKTin92?=
+ =?us-ascii?Q?0Pc+43xQcZie1ik5zxFY2/3/lCQMeO3gNmfJx0qis5ksKjsEVBzhLwJTABVK?=
+ =?us-ascii?Q?uNU25opmYpg1PjXkHzz4Mdo4am1AJSZCo071d+ikLaLPPO/gT5xlClbmfOik?=
+ =?us-ascii?Q?F+nMtA9MWebRi41Q/s45wFsF9UwPAJlV82Yqojv0+vU3wVrYS7YHLeMkaGBz?=
+ =?us-ascii?Q?SZ0m0ikOXi2CNj+iJYzxh1/9eGD08frVRMoxuRyUIjN3SLUDTiJ7nrhJPH80?=
+ =?us-ascii?Q?LpEBMA6rsWOqNUPfUEGMlaVCCiBhI+zFY3cyUuo52tgysxW90J7jPPbeDVj5?=
+ =?us-ascii?Q?4kmxYTy8j+k9KyEGqIbQpg31PJqirl5+S78cUuOUkeqOiSHTamlR3GW8K8Ss?=
+ =?us-ascii?Q?V1ktACPRTt/O2EMh2gBPx9mzI8y2FkTZzvrDi52AUA+9lXuQ2oo4xsblEg3F?=
+ =?us-ascii?Q?pnZQS6FeMBKbT2+8z07G9Bwey2tKrjCjVnvt0bC2V5IeMYMTCvrPE1aJ+DzA?=
+ =?us-ascii?Q?crmGc0pCEXfavIGOAbeLUzWfEpCzU6K3Yu81i0Q/9vXzdh+xAAGQlbuFWfkd?=
+ =?us-ascii?Q?4XQX7UKWg97AbzfPon/Nei96kzlrOWJvdolKw/K1aDpXn0vYxhw/FCxSnLl3?=
+ =?us-ascii?Q?m/hTTnNKuBJ2+f6aaA/H3thoSNUuyRq4irvOezynwA8HCVIhQE2omuHlcufB?=
+ =?us-ascii?Q?U9iM4ekwcootdumhN0ht7gFxqKeAxak8FdkcYLq1Qvr6rljH5D3yYN2O5tAZ?=
+ =?us-ascii?Q?1VuKOBU7XV+RC/JgbMY3x/QJKyxdsQWdo3Hsw6nx4su1lRYiAZ+Np1QyJUWC?=
+ =?us-ascii?Q?iVZ00F09yaZCN6/2y4aS1W0ulOgcahvzas0QSYE8iQPBka+vgT4KYevNJzSG?=
+ =?us-ascii?Q?V5fZqUBcbcSZ5+jJEw9F6RkJ9qTy/YmctJwckBZi0bCvzeHPsRZvdkyTcQg2?=
+ =?us-ascii?Q?84633kvJTefK8yAHWYMPXDA1dKezBD9mGeMcGb8fUy0gWwi4liOtJ9bVvS2a?=
+ =?us-ascii?Q?Jthif8qHDxwg466lT3QHUMLD05T0tbf7J8pn0KRbkIquoHOa7RuXdl2DguOg?=
+ =?us-ascii?Q?zR/OBAch3+f/0bPLV8sxsQCxhXBZqGI3PUv94EhDEcoPNhfhTWmq+EetumRf?=
+ =?us-ascii?Q?UnIvhRmtQnJonGSKxMRL94+P+tIrOvM=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30258186-8596-4718-6ce9-08def9529334
+X-MS-Exchange-CrossTenant-Network-Message-Id: fbc52ecc-9cdf-4580-b442-08def952b6cc
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:18.6531 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:51:18.3841 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ipySL4OqsSnhfBwZQlBfkLzclEzrnPI6Rqn+c9EyO0zQ5EBeMUgJJn7ha1Z9Lqxha4gIQRCFPAzi4pRjW3+MaBJnR4sM5hVJtowdRH328Z4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR02MB5490
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+X-MS-Exchange-CrossTenant-UserPrincipalName: FDkmRr4yoKyw2XKQdM3hPakwbXQVVBhX6dVt0Z8N8QeeKGvA22egC1p44p6sE/FkxzJL1u/M4SnCzT4oy6Ik/jSUANtb5EASauWRl8oSfAA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7537
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,8 +145,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move it into a new CubieboardMachineState and register the machine
-type explicitly instead of through the DEFINE_MACHINE_ARM macro.
+Move the boot info into the existing ZynqMachineState.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -153,78 +154,76 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
+
 ---
 
- hw/arm/cubieboard.c | 38 +++++++++++++++++++++++++++++++-------
- 1 file changed, 31 insertions(+), 7 deletions(-)
+ hw/arm/xilinx_zynq.c         | 17 ++++++++---------
+ include/hw/arm/xilinx_zynq.h |  2 ++
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index a643ae4e27..45099747ba 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -25,13 +25,18 @@
- #include "hw/arm/machines-qom.h"
- #include "hw/i2c/i2c.h"
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 6c83439017..f314897540 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -103,8 +103,6 @@ static void zynq_write_board_setup(ARMCPU *cpu,
+                        sizeof(board_setup_blob), BOARD_SETUP_ADDR);
+ }
  
--static struct arm_boot_info cubieboard_binfo = {
--    .loader_start = AW_A10_SDRAM_BASE,
--    .board_id = 0x1008,
-+#define TYPE_CUBIEBOARD_MACHINE MACHINE_TYPE_NAME("cubieboard")
-+OBJECT_DECLARE_SIMPLE_TYPE(CubieboardMachineState, CUBIEBOARD_MACHINE)
-+
-+struct CubieboardMachineState {
-+    MachineState parent;
-+
+-static struct arm_boot_info zynq_binfo = {};
+-
+ static void gem_init(uint32_t base, qemu_irq irq)
+ {
+     DeviceState *dev;
+@@ -268,7 +266,7 @@ static void zynq_init(MachineState *machine)
+     busdev = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(busdev, &error_fatal);
+     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+-    zynq_binfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
++    zynq_machine->bootinfo.gic_cpu_if_addr = MPCORE_PERIPHBASE + 0x100;
+     sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE + 0x2000, NULL);
+     for (n = 0; n < smp_cpus; n++) {
+         /* See "hw/intc/arm_gic.h" for the IRQ line association */
+@@ -444,13 +442,14 @@ static void zynq_init(MachineState *machine)
+     create_unimplemented_device("zynq.qos301_dmac", 0xF8947000, 0x130);
+     create_unimplemented_device("zynq.qos301_iou", 0xF8948000, 0x130);
+ 
+-    zynq_binfo.ram_size = machine->ram_size;
+-    zynq_binfo.board_id = 0xd32;
+-    zynq_binfo.loader_start = 0;
+-    zynq_binfo.board_setup_addr = BOARD_SETUP_ADDR;
+-    zynq_binfo.write_board_setup = zynq_write_board_setup;
++    zynq_machine->bootinfo.ram_size = machine->ram_size;
++    zynq_machine->bootinfo.board_id = 0xd32;
++    zynq_machine->bootinfo.loader_start = 0;
++    zynq_machine->bootinfo.board_setup_addr = BOARD_SETUP_ADDR;
++    zynq_machine->bootinfo.write_board_setup = zynq_write_board_setup;
+ 
+-    arm_load_kernel(zynq_machine->cpu[0], machine, &zynq_binfo);
++    arm_load_kernel(zynq_machine->cpu[0], machine,
++                    &zynq_machine->bootinfo);
+ }
+ 
+ static void zynq_machine_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/xilinx_zynq.h b/include/hw/arm/xilinx_zynq.h
+index cefb7789ff..669c516ad1 100644
+--- a/include/hw/arm/xilinx_zynq.h
++++ b/include/hw/arm/xilinx_zynq.h
+@@ -14,6 +14,7 @@
+ 
+ #include "target/arm/cpu-qom.h"
+ #include "hw/core/qdev-clock.h"
++#include "hw/arm/boot.h"
+ 
+ #define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
+ OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
+@@ -25,6 +26,7 @@ struct ZynqMachineState {
+     Clock *ps_clk;
+     ARMCPU *cpu[ZYNQ_MAX_CPUS];
+     uint8_t boot_mode;
 +    struct arm_boot_info bootinfo;
  };
  
- static void cubieboard_init(MachineState *machine)
- {
-+    CubieboardMachineState *cbs = CUBIEBOARD_MACHINE(machine);
-     AwA10State *a10;
-     Error *err = NULL;
-     DriveInfo *di;
-@@ -103,12 +108,18 @@ static void cubieboard_init(MachineState *machine)
-     }
-     /* TODO create and connect IDE devices for ide_drive_get() */
- 
--    cubieboard_binfo.ram_size = machine->ram_size;
--    arm_load_kernel(&a10->cpu, machine, &cubieboard_binfo);
-+    cbs->bootinfo = (struct arm_boot_info) {
-+        .loader_start = AW_A10_SDRAM_BASE,
-+        .board_id = 0x1008,
-+        .ram_size = machine->ram_size,
-+    };
-+    arm_load_kernel(&a10->cpu, machine, &cbs->bootinfo);
- }
- 
--static void cubieboard_machine_init(MachineClass *mc)
-+static void cubieboard_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     static const char * const valid_cpu_types[] = {
-         ARM_CPU_TYPE_NAME("cortex-a8"),
-         NULL
-@@ -126,4 +137,17 @@ static void cubieboard_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("cubieboard", cubieboard_machine_init)
-+static const TypeInfo cubieboard_machine_typeinfo = {
-+    .name = TYPE_CUBIEBOARD_MACHINE,
-+    .parent = TYPE_MACHINE,
-+    .class_init = cubieboard_machine_class_init,
-+    .instance_size = sizeof(CubieboardMachineState),
-+    .interfaces = arm_machine_interfaces,
-+};
-+
-+static void cubieboard_machine_register_types(void)
-+{
-+    type_register_static(&cubieboard_machine_typeinfo);
-+}
-+
-+type_init(cubieboard_machine_register_types)
+ #endif /* QEMU_ARM_ZYNQ_H */
 -- 
 2.53.0
 
