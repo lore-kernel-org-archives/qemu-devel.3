@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E46C5DF66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C1B7C5CFEB
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSmD-0005xz-Pd; Thu, 13 Aug 2026 06:35:09 -0400
+	id 1wuSmf-0006Ad-Pd; Thu, 13 Aug 2026 06:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSmC-0005xY-9x
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:08 -0400
+ id 1wuSmb-00069l-Q0
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wuSmA-0000BS-Tz
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:08 -0400
+ id 1wuSmZ-0000Rv-7a
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:35:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786617306;
+ s=mimecast20190719; t=1786617330;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
- b=NXx+NLc6wU8Dsaz01fPm+esFP8s9tI00Art1IoNgpC5MkZ9KB4NmvR/FsYxykQpmhj8roi
- 6JRprYUCb8BEfO7gwPZUL6AOkcPhPhv3vKXnqGCFsQzQkRKW6B/Yc/4bALMRqc6Xa6QfQi
- 2eftEsvGepREU4i0Uz272RHk0RIH7g8=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HEynkQAuetadjiXXgnnb/1Qn5LV1t0jsCpsOMBFblu8=;
+ b=fxnqZrQQNS21u5rfa4xKRoD7Kzx/CdeOfidc7GA3kDdRCvgA3YmjI4uaN1r5BmlZRxkC3r
+ 0uJnh9RFvjIj3+rp5HZEkk3N6MYp4bGSHGDsityCdp1bfBKlsZK65KF59zGiruh2nHh6rG
+ DmDxkk9P8SifHyIwHh9SgqF1GGQcNHY=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-VVeHvi0EMByRj8FkW2KSUQ-1; Thu, 13 Aug 2026 06:35:05 -0400
-X-MC-Unique: VVeHvi0EMByRj8FkW2KSUQ-1
-X-Mimecast-MFC-AGG-ID: VVeHvi0EMByRj8FkW2KSUQ_1786617304
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-38e475f83a2so3127931a91.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:04 -0700 (PDT)
+ us-mta-226-8WmeWZZFM6aNAw49gJEfOA-1; Thu, 13 Aug 2026 06:35:27 -0400
+X-MC-Unique: 8WmeWZZFM6aNAw49gJEfOA-1
+X-Mimecast-MFC-AGG-ID: 8WmeWZZFM6aNAw49gJEfOA_1786617326
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cbb20f82a0eso1784279a12.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786617304; x=1787222104; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
- b=PHUfR1mksJy2RIGC+5ZXSP7MmnG9wxoi2I7iKmthVEPUrJGEGIaSGvg8zC2ySNTgX9
- kgq3zI59sbwQZtBpGJ+SzsqjnoEv9jgXepr16rrt3hemwA8OIM9tlocZur/697e4GQYn
- PqgPn04c41vtx8t5al82SOcZkeZPT5OOa/wsUXVJUVjLxHgtzBgajqWhcUan8F1sgYKQ
- A53RL3R7Z47lrDTq7XgnmLNSLmxcYrE/HoYXDj7Dp4yVxs2UWmu5qnmlWqZW4PTaZiY0
- DT9NliP5xMVFj8vh+WfvfgLPFuNRzIMhc2accIqFkZHAqHvLwi/WVCP0NIbRYXZ5IS4C
- EZkA==
+ d=redhat.com; s=google; t=1786617326; x=1787222126; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HEynkQAuetadjiXXgnnb/1Qn5LV1t0jsCpsOMBFblu8=;
+ b=dNMcbfmoGL8wD/z2y/DKyJ4zLflqdZMmM0cecgGLmaj14TXwfa+9gSZXbudloJVntB
+ aJxv6PovXD/iPcGTd7lJl7dOvkqOamkgVz7wym4GBQU3twR7IkgA5jj2A/HdiUVmrdkG
+ U+KihEjpllXLd453+dRvmo8nZFhWRK39Vl3rElOcWRjFfeTeqmveSnhzusve9akJwSMg
+ 5lgMMYX04OLUYTsRF2ZHd/ZmhoRV2NNVjFO2WsDfvGwiYxSU9VRblhz6DOsL9gcbBasx
+ vuJX77iJFLAuHbWgDiEnDp6hk1TX3GYGCO8RTB5ggpvh9c6eWT/OR7TusxS7OQRIk83F
+ CBYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786617304; x=1787222104;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ds3ELgiFjPHuwUmXMHjb6LoAFKBT/u0B05y4PCqDrU0=;
- b=d6tCoDqDdv0+tyeySm5NsGDmb+9aeKvhc09oJAHpvZSf/K+/KW6I37PG4iPR38+MkD
- W1ROE/WHtwZldBiH38VnLy9S43s+arnp80mw8G4wNk0n3IzYo106wSg96dGFGP0oSvbq
- p9wuL3Q3Iy2zbj1DU14rXQVZZ3ClWq1TyUt0MwocfvdvAdP+cICzn0wdwnbveWZ1uWcv
- iGpNdwehjCnxo3tzaax1K3CbCufDZrhqJL6VWds+NpijYb0q0nCclkHWTSjlVWR96sDN
- fqbaDO1Fsi0i5qz7WNVVQkkW7TmEjJsRwrwEIObOd0/b/V2+x6XVA3LccpGSJWKFZdyw
- AAQQ==
+ d=1e100.net; s=20251104; t=1786617326; x=1787222126;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HEynkQAuetadjiXXgnnb/1Qn5LV1t0jsCpsOMBFblu8=;
+ b=M3zjEZOINHK1/eVie7CoAjCDsruXtpgmTmEsdFRiNOwAgJufs3uCRmlpmXNSWbbWPI
+ KPCO5NAFngY+LV932bCd6GJ18eqUZ1BSJWEmAishYLYQciF4LwMzmDfLy3QAD5OYr4sF
+ pdg3Cea7EHpPWM6TA0XBxl6JhO5WeAbYwkVleMmi2lQEM9ARPidXg9p1PuDC/vy/1bNR
+ hoVfdADKxONx5kACWOlw0/lDMJgQQ5sS2GOQnUexFT5w7Hrvjnsx3IZpMELWTyftHvK4
+ CxBATFICTT9zNoFi3BbP/8PERJdBP+R30d/kieFz9YooVhhoObgtELagyBOY1QtFiOCw
+ WKAQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RonemQane/MDbATX1qW1N8McPt0b6MJN3j7NXaCAVFEmdITNRYtcjTuQYOxgsPMgAi3UiUEDWZb9nSQ@nongnu.org
-X-Gm-Message-State: AOJu0YxvPq7g39D5uuLWcH+wND/nuqfAstfaArYM/dqjU+8xKYZhWCp6
- 8/GhA6qUKhk0ZigJIj/kNQJRx8YqZ10D7kCxWf0+y2ENzAm69IApIKiyv1tL1rPEIDBGJ1DkohY
- 4jyvy6GHB/N0cBG7/qmMKtEQURvdMX0edNQB4YCPyyjumG5Sc3w4oohvlch8CjTg7
-X-Gm-Gg: AR+sD10vLPtckZRf/4iDEM2HfOViRTh/gUpFgKMCMlm+9RLH9GTRVvlWTl9qa4LcY7T
- lkGJ+/JQcR4RM3qmc1xt5BPPUhTM2PSBemAPbIQ67W9+RftDie4rKjShbps6EYNgMyVQI8hHI22
- 1nsFiKnWC8fejazb6V0dZkysuq6QjzDgVfGFQ14RQghdMmAKS1kNt9E2GNDyX3s1zFOvzheEvMj
- ZYlc8Z/r2G97Vw0Bkd8+1u2pPW21ijrAoyvgTo8iFCSQP0jtQvlVyelwDS6Hb0nFIVxRSJfiWw3
- N//uqkvLV2/hO7bGI+zC/Lr/faVANpePeH9Zo1W2irRmL36b6imNDcoBv+BvNa36uoCprZviSnt
- 6F93vQNTERNkdyNY81uya+MbBmqcwctIV4w==
-X-Received: by 2002:a17:90b:5310:b0:38e:2524:724f with SMTP id
- 98e67ed59e1d1-3931e232118mr5315307a91.12.1786617303837; 
- Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
-X-Received: by 2002:a17:90b:5310:b0:38e:2524:724f with SMTP id
- 98e67ed59e1d1-3931e232118mr5315260a91.12.1786617303326; 
- Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
+ AHgh+RqxZOnn4+Bsdpe8aP0KjBr397KfMMD6DrRPjPYLFvmGr3IvwLsvW0r+91YFr7FH6lco5SoX123utjgx@nongnu.org
+X-Gm-Message-State: AOJu0Yzd0hqbKV1rCE6o7swp9qXMtnlCb9bOPKmleeBhoUhWFi2mY+Uc
+ RuMBGMQQbk11Y/ZXmG860AXL4qXYPnA0Zz+4q4IYafBbwadSOjJ4SffXZxwCnZ1Vx2xASW1dvXA
+ DEBWOAmiHOkozYq3OnKqr2qquF/KVO0C7UAxF5KLaWfdQEMe9DMSAzAne
+X-Gm-Gg: AR+sD10/0tTNOl/x50oGq/YT6ExAaHB/glLchKgpC8Bp4y+HZHxN823c7KRHRVjcEGw
+ EVN9GpNFPntjsJ3jQQEmTboWF+4bPBjE5qu1KVPrN9ClK2b2hoHs8OyIAvKQMGbsuXJTC8ifa0R
+ FzN4jAB3x+qzp3DCUJzRF/osFei1+OuDwfJpx8PQTeXlcYd4AIITGuw68qb/+e0pAr8TuWEfx86
+ G7DDAYmIfnfWdWTsGr8KnU/8Wxt2yC/p4ftAeL/KVgEhLKx0mW+464dyolFAXnFZVRgGxr/jt65
+ rYiiHMg5kjecztb6Q6Bg+epiiH91RZNPYZtpRdRL7Q6WukDVLloc/7+6NAQ2iLR7u9q39qR4voq
+ L3hqizN+yEcFcb0MZzWnkydCnozE/VB2ShQ==
+X-Received: by 2002:a17:90b:4fcd:b0:381:11eb:d78e with SMTP id
+ 98e67ed59e1d1-3931e233613mr5647551a91.14.1786617326003; 
+ Thu, 13 Aug 2026 03:35:26 -0700 (PDT)
+X-Received: by 2002:a17:90b:4fcd:b0:381:11eb:d78e with SMTP id
+ 98e67ed59e1d1-3931e233613mr5647494a91.14.1786617325588; 
+ Thu, 13 Aug 2026 03:35:25 -0700 (PDT)
 Received: from rhel9-box.lan ([106.219.133.98])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.35.00
+ 98e67ed59e1d1-3931ced0781sm2918093a91.11.2026.08.13.03.35.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 03:35:03 -0700 (PDT)
+ Thu, 13 Aug 2026 03:35:25 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: ani@anisinha.ca, agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org
-Subject: [PATCH v5 05/11] backends/igvm: add a tracepoint for
- qigvm_cleanup_memory
-Date: Thu, 13 Aug 2026 16:04:07 +0530
-Message-ID: <20260813103425.24474-6-anisinha@redhat.com>
+To: 
+Cc: Ani Sinha <anisinha@redhat.com>, ani@anisinha.ca, agraf@csgraf.de,
+ graf@amazon.com, qemu-devel@nongnu.org, kraxel@redhat.com
+Subject: [PATCH v5 11/11] Update MAINTAINERS
+Date: Thu, 13 Aug 2026 16:04:13 +0530
+Message-ID: <20260813103425.24474-12-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260813103425.24474-1-anisinha@redhat.com>
 References: <20260813103425.24474-1-anisinha@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,35 +123,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Useful for debugging memory region cleanups.
+Add maintainers for vm-launch-update device and associated documentation and
+test code.
 
+Reviewed-by: Alexander Graf <graf@amazon.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- backends/igvm.c       | 1 +
- backends/trace-events | 1 +
- 2 files changed, 2 insertions(+)
+ MAINTAINERS | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 9b101c8182..7b7bdc72b7 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -1120,6 +1120,7 @@ void qigvm_cleanup_memory(IgvmCfg *cfg)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f249be744e..bbee4e565e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2850,6 +2850,19 @@ F: include/hw/acpi/vmgenid.h
+ F: docs/specs/vmgenid.rst
+ F: tests/qtest/vmgenid-test.c
  
-     QTAILQ_FOREACH_SAFE(imr, &cfg->memory_regions, next, tmp)
-     {
-+        trace_qigvm_cleanup_memory(imr->mr->name);
-         memory_region_del_subregion(get_system_memory(), imr->mr);
-         vmstate_unregister_ram(imr->mr, NULL);
-         QTAILQ_REMOVE(&cfg->memory_regions, imr, next);
-diff --git a/backends/trace-events b/backends/trace-events
-index 009a25b0be..9b7b9b7d68 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -33,3 +33,4 @@ igvm_reset_hold(int type) "type=%u"
- igvm_reset_exit(int type) "type=%u"
- igvm_file_loaded(const char *fn, int32_t handle) "fn=%s, handle=0x%x"
- igvm_process_file(int32_t handle, bool context_only) "handle=0x%x context-only=%d"
-+qigvm_cleanup_memory(const char* name) "freeing mr %s"
++VM Launch Update
++M: Ani Sinha <anisinha@redhat.com>
++M: Gerd Hoffman <kraxel@redhat.com>
++S: Maintained
++F: hw/misc/vmlaunchupdate.c
++F: include/hw/misc/vmlaunchupdate.h
++F: include/standard-headers/misc/vmlaunchupdate.h
++F: docs/specs/vmlaunchupdate.rst
++F: tests/functional/aarch64/test_vm_launch_update_aarch.py
++F: tests/functional/x86_64/test_vm_launch_update.py
++F: tests/qtest/launchupdate-test.c
++F: tests/data/igvm/*
++
+ LED
+ M: Philippe Mathieu-Daudé <philmd@mailo.com>
+ S: Maintained
 -- 
 2.42.0
 
