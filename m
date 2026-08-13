@@ -4,133 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5505C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 06:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A2AC5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 06:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuOru-0001Yf-Gz; Thu, 13 Aug 2026 02:24:46 -0400
+	id 1wuPM8-0000cZ-Ad; Thu, 13 Aug 2026 02:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuOrY-00019w-97; Thu, 13 Aug 2026 02:24:24 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wuPM3-0000Zz-M1
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 02:55:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuOrW-0003FQ-JS; Thu, 13 Aug 2026 02:24:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Tq6gBP0eZ5Fv+5cP/IzbYZ0PJACJ0NzbMlUxU02UO/pblrLfP/qJ0Sm4OczkH7XYE10ecFgBmw9gGjWPEy8kGc74EuFjAshFGOTqwJXjFTZS/uvnEYkF38flyUR7euHjlYY4SJ401C79vyMSwhGv+8LZjZUzcTaDh3NUpQJWu9IkK5SX+oSs536kBCPqJPBAqQDNBSn1551EMsfqcz8W8tQ5d9WWxgu4ZuPbq6lnuwyclcxaZtG0OYPEqEiHGIeuPCAJK8Ek9cX+hWgmvT7PPwF/OI5e+8+6eV8nzp+w3LiuKhR9pfoFe17Sf8f6JKT6Pvkl8UgcYAW2Ac7IJP02ug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BLK86TSGu35Kx08sfLKmpYOBUp4eCZ8WTV0OI5zuXIM=;
- b=W9DT84pokCc7+63ztc5uuOHCvmZI5YO680w9qaag2f6QSrMIRynJm0LBrINIZ39MvOrTbaUoCUjdTjIZHzW65FjAXUVKOVaYUwz+pvvtiPSSjXM7kF9XNyRrfQSCPr7GsTqVc1+ciocOtACCvea9mKK4pZPbnOIEcF/rekzNzjNQGwVvJY1F61lgnNC2iZ8X9+Whwm3mHjKLKXU/YIrkV5eLGNaVx8DErCEWd+XlAYut96CA0i7DS3VMTFMJgvO26rMJQwZSIwKeUuf8/RH6zgmGZxFc7tpBPCNHhvy/06DCQUIj1vpx5MiTFimMN0YDjzIQMA8DdeAz5L9PsbNMgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BLK86TSGu35Kx08sfLKmpYOBUp4eCZ8WTV0OI5zuXIM=;
- b=imm+BWhi2kY/iE6z0i7KvbLeuwEHMMSz8S/wxE87KQsbjlnJJ4vJA4LA8uBDeJz+SYHv1xApMejQrylQMqNN5/t+DW7ORkwFEUylpMY7bkkpZZ+D0aRWcfPvLKDSdIwaw9hrAjQ7zxKVPXR9jHk8pvP0IPLCfg7YC4gLN3G9frR/iXKgtKh79zP+Ll+mTa4nac+FbobncUgUC0yfbEOxwQpDXnGeUgVU30q/02L2QIDOVd7jjvxXvVWOFXj+2NFm3cDQi3iJC0is4KI2bDxJMXi1ErO+UM2nAtT6K1Tiag8bC5HbXBC+mteZueo2qDs90jQg9nVfUSqLFYmQG5VuZw==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by KU2PPF56FB370CE.apcprd06.prod.outlook.com (2603:1096:d18::496)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Thu, 13 Aug
- 2026 06:24:06 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.012; Thu, 13 Aug 2026
- 06:24:06 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
- list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 4/5] hw/arm/aspeed_ast2600: Wire up the ACRY model
-Thread-Topic: [PATCH v1 4/5] hw/arm/aspeed_ast2600: Wire up the ACRY model
-Thread-Index: AQHdKuxXaUO1MAwdxUmSzukN2Gc9LA==
-Date: Thu, 13 Aug 2026 06:24:06 +0000
-Message-ID: <20260813062359.425268-5-jamin_lin@aspeedtech.com>
-References: <20260813062359.425268-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260813062359.425268-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KU2PPF56FB370CE:EE_
-x-ms-office365-filtering-correlation-id: 8f5fa8de-f9eb-4d74-4902-08def9037a5d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|23010399003|1800799024|38070700021|56012099006|10067099003|921020|18002099003|22082099003;
-x-microsoft-antispam-message-info: tMFo6Iu+W4p9SD3CvX3obKU7n3SwHMYxi7QuM9f+lvpFluFeYKdLPl6nuN+K+5bguidhStAu9Lm9B1+/AbEsmPzaFQJ/tJoHs68z1ZomRwKzs9lw6MDoLUPF3rG6/VOWhFMT6X9invjJ4a2Z1FwO74Xsf9Q8hRtht70e2L+1E0eY6slXgWAnvS9b+1E3IohWggJeOz7xYiXq9wv5RV+tD01bS0a9KL17P0uU0QKqjfQazkNEo4SyNreOvegyAaf27ymZRlclz9rKlmj7HkYqy7fW+Aro0RuybEfk3yv3V+8NozJ+kp1GMO2yPOE8+u1LEqOTT8Cwy4g2qew/ox+Sg3kZCgdOreBpfw9os9qoEyL9Zi1Q48LgRElfAUSBt90ncYJsllJuMh/xWCxt+PkL6ZX0pGznR4QKnSeJ20Bex5rQPT5hmywPDH2RSNaW0+1mJrBjjpG+pFZcdvVA4iZC1Hc1DsgvAdTMuqPOEpH5BtSfY8k07UEmDvjqL5fyNflSHIP+kqqYXm0Gv8vdOCbX5DCb8oRTJFbbd0gxkSnYLVuY/uEn/ODDnu5MtKnvpcpHcIEvD9mkmrCvOWcE5PFJFSVW7fZTwX6zNJGHdg436c7mtK1ac0+vvo19rH3V0RJ7X2TmyRxzM+ZTtrV7IGvNaNSB8a0ODv69RAtnOF+Llu6eeP3KTBtquFBZzUyO5ZwEtlZ6+tgy8/3CUORS3lK8h8ivuUK+vX4MVeizyJ8zy2v2+MI8x023++8rDKiWIhAG
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(23010399003)(1800799024)(38070700021)(56012099006)(10067099003)(921020)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?2Ja0F3l3T/3Qeck1V3HJ7y3sv8kGwSaaQ4DegEdlhKZ3ZoSA7wnom835hX?=
- =?iso-8859-1?Q?yYBGuvw41wcOKEM/POOZiUn6+5mzWotgEnflXXGg5DD8x0seR/PwxUKuS8?=
- =?iso-8859-1?Q?xYA6Ctoy9avBkKyBHw+2H5SAOZTUV91vhE0xRxt82WfGwpiASTQAM4x+tz?=
- =?iso-8859-1?Q?9IychcZDxxhOI/JIpRKyZpKV9Wq1cw5x2w+A5Nm66evLy+B+PydciZqjkj?=
- =?iso-8859-1?Q?dH/4pXPX6LWt+AKhShoOO/86PMxGjta8HXzpx0vglJ+C4+y+eTTR3qYX7/?=
- =?iso-8859-1?Q?MG2TQeewrT13oupUJZwUxIhlSl1qEHT+gwmKpqghjA0xHfzcCG59kX7d1P?=
- =?iso-8859-1?Q?YoaRo/e30wQ49gmuM9Zd+ExQaQXxhIJ/L/dO7a6zL7OG6MD6bIL6xH9mwh?=
- =?iso-8859-1?Q?CgoHGZvWaGariv6X7CdrRgMHS0vq7irZc7IB5/Ubg4FXeggq9Kwq/ylm3j?=
- =?iso-8859-1?Q?MPFLlhErxNH/mHBlAZqpUQVof6y5wXjffK+rCHJ3yX9cgIbTQVaelziqcJ?=
- =?iso-8859-1?Q?nyHan+FcwkmVqLwT3gPSkYIsDFhjRH7MtyGEjGw9OkyCQVcXBoUewx/WMf?=
- =?iso-8859-1?Q?8B33eAZ8JrTQCjdkP5nng9VRs3kUCXOWO2neuEyvnO5J3DCxjsKZAy6ZsJ?=
- =?iso-8859-1?Q?kjQ0Z3Hf0dWTAQIMPQ4CLxCdNbrt+UHeiNPgwr3ZxceFd+flfsLcbd8ofQ?=
- =?iso-8859-1?Q?VhSzyqO4Ldhb7xlNzk0EoM3HA7PnBjJODuWG476kQEZMonjBG06MOe3btS?=
- =?iso-8859-1?Q?ZKovk3ghE78hMOD3M0zBExTQDoPskLUNPdrGip4YNWo7Mg2K8acWScLaBH?=
- =?iso-8859-1?Q?7yA56ycR+S95DCLxAbddSNKkLJrFzgSEVw1Ldtw9RqPEK2v6OO1iBKkKNk?=
- =?iso-8859-1?Q?nYnnfyuDxamJxkqLHqg7dfM64rPkT6uKj/SIfApWn4SB0pZtVz4qKg+But?=
- =?iso-8859-1?Q?qsUkWvO5OofCCHPvni+AtQvqLLqOZky8QX88ErEHRf8Au1Jnb5RmtNvgrs?=
- =?iso-8859-1?Q?FOTFH6AP1+2cu72WuHYEt7QB9UsUHSsaBvpoxEIJ3DBJ9s8i5LFi1C6N78?=
- =?iso-8859-1?Q?vAakXFHY6e/Cw5BH/IqtdcLE2k/GhxWi/lwxF1QXzzDT3BVIc+9hGjpWBQ?=
- =?iso-8859-1?Q?G4W/ZpmpUK7q+axgpUnNqqyQmVEiSc7ZQjzmigLfTs2u1ZyZ+PmTxIyE4v?=
- =?iso-8859-1?Q?0W930ILJ+BI0cKhRG+0jyvfENTQEbzvpTjpu4dYtNdTDBE4XruV+KW1NrJ?=
- =?iso-8859-1?Q?RrJAFJw5fOv3bl5GNy96BgMySqJnZ8LKfsGfGPBMzy9Jbh2Z/tovpg7SBg?=
- =?iso-8859-1?Q?GSLuVX6AOqrlmT27VgpVqHRFQrsWfeymUWJf5aMtG3676JewJUxi5rAcnc?=
- =?iso-8859-1?Q?sETMq/7E92mUDKt38/tnIdt1Bjn0I+sWXSIE2G117R6A7xcZr6BZbxNXXz?=
- =?iso-8859-1?Q?kXhb9icnyGaJ9ix24UE84HomjNHwnbneYyZxYo7H4myFFEZh+cMV115s2Q?=
- =?iso-8859-1?Q?G1QC2wxou33db1rSNVU8fdXCXCLUyWLQ3k1ZnBeTyJCi9ergvvd/fnlqFs?=
- =?iso-8859-1?Q?H4Q/he/TjzEJsCpulsf8HjCvKXTZPk2spWGv3OuzxEpFdmVqpcbSk6PjHT?=
- =?iso-8859-1?Q?QLkL7IZpfHLgnx1HB+csVC26GtRpTgRXvK6LELq4ENWOIzyPUcblbuI0LY?=
- =?iso-8859-1?Q?rJDkcPT6J9U8UYe2HbSTJQxxmUbEJ9H/CBECphuL0n3VHstn4/ebjqJcb9?=
- =?iso-8859-1?Q?tdCAL3idbUrJFvHJo5aHVkhSkZfafsu8wyWVZplWiMCNuySPKShj15ubd+?=
- =?iso-8859-1?Q?BBADdpFErw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wuPLz-0006QD-PD
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 02:55:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786604149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OeC+DnIXCtvYDxO9rGSs/Cdw7aoQXpY6Q3CZiFkm1gE=;
+ b=SP/uEZXwxjVKEA2DxUQ6Av0nmnjIhsBW/KKpzn7UUKWqMOgyrviVGjx3jGXAT2T0FB7/PR
+ R7ivIPDil+UECdH3quU3TT68XGcWwJPtaX+lXYt4mOapYcCr+9b2yvyb8VGNsQmFJKLP/y
+ U86HPyQNL1ECZFqIeeOljst+uFsoAFs=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-47-SR-EHHCBM6OZqRCMavwKaQ-1; Thu, 13 Aug 2026 02:55:47 -0400
+X-MC-Unique: SR-EHHCBM6OZqRCMavwKaQ-1
+X-Mimecast-MFC-AGG-ID: SR-EHHCBM6OZqRCMavwKaQ_1786604146
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cbb467e56aaso1452505a12.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Aug 2026 23:55:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786604146; cv=none;
+ d=google.com; s=arc-20260327;
+ b=JJp5BrTTbCYlxHRMhCEi3v014pUZ5OVIRe4IYaarfW/5sgK2ZZQD6lMNlZ4T/KW1sO
+ hm69/LjBK/1m51EhxticuBrW2RZDkDOpB5EBgpO+DVmBeGlFj5wYXPQ/WuKpQkUnWDrA
+ xCXX+0OHMzrPALJyOifJI4HYyMzepVBsyCmCenoYKTai1NXL1e64NZljvFwXvMnF6Sfi
+ wdnXOPjAwA7GTvk9z5wWjYYFWx0kC4JopytsPAT2h7Fn+J5vnGqD8Sb/nLHZUfgZcNm8
+ shtFonZIHcGMSUP4P1OeUyfhwb6gLFFnwjuY0AmbsKaR3ex13pFuMScdcPo0JmTe7DgI
+ 1djw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=OeC+DnIXCtvYDxO9rGSs/Cdw7aoQXpY6Q3CZiFkm1gE=;
+ fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
+ b=moNty3p5dDl5vQGOneKimwvd8QM0WlTrP/UbYdx7PakyC0tQ74CPaKrd6oMMl5jFQL
+ k0h473bBwi0nze7Uuayld/a2HRfGMSmS8Qkvk4KO/ficN+gyFz2atI7aIUoaIquq8mj/
+ TIk+SsYQgbX4MxbPNPvF7vBY+TP7K9cCaOLwJbZo8JjBxY0RzWifuZdrlzY8HJdnDOMF
+ vVjPIO7WXTLexeagJJ/yqPS1YVpTZF1spVK1zPNQdF8mBKBo0irBngF5FqhOYYsdplkP
+ /Ps5s7Le1QKPGybfN2C27rUfqfICttZG8W6S4tOZqU2GIWQilZfi3J2IsZhHZar15wMW
+ 6+Jg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786604146; x=1787208946; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=OeC+DnIXCtvYDxO9rGSs/Cdw7aoQXpY6Q3CZiFkm1gE=;
+ b=VPtHXRVNNoEJpLlHliRBFzefjhptyomaXSQnZc5JuNYqWlQk5YdH6/AZCSgRZvdIZq
+ cHbq06nbn33Qb2V4c4g+UOg4nXPBpd5/C/E+Ivp7NZVTlkUwZt8fGvcaGpEZnv9iwx3N
+ P3baQkrgOjZ7YT6tW4isr7pKHlG51RPsT9jbmvQt9uTXjks2EpcommkdgM3AwwSA1e2y
+ EtkXfmFfWqdPTOdMA3BWx+GSrWgNFdQ6VRK/+avniKUT9wCW0Rqk2j9TkWVdm4qstA3r
+ kQpOa1ofZ6X79iRzrZU58sj0y/9sH+h1n2Q6qWr55C1t0VJ9ODJGeZ7GjklFPIqz1Fgp
+ q81g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786604146; x=1787208946;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=OeC+DnIXCtvYDxO9rGSs/Cdw7aoQXpY6Q3CZiFkm1gE=;
+ b=jNyNdKhtv9aEmAybj3qnEITWMRJ9M4SiknJ5eHjOI+xRCQTlJwW0y07GuZ2eEzIKaa
+ OCigaulrENHXzWEDXTj/zWrgy6BWZWGBaIPN8MIgttLyjyEccQtor95yms8KQKvmuqcT
+ t1WI+H5AcVMSUulywEzlHenQtXXC6pkDiqtkjSeIHtnLMFNuapzRbElmdLPK8Bs07dHG
+ xtJwIF6bJVLkt3IkGf5Psybjggq9K+zOZAXELpk3Thmht1BLZvYFrofmp7v0a0HIhdlt
+ q0eVBimzOe4dGISTGDGFqOoYjsD8AJuj0L0b0jU6bU797y9RHDNVvh+tBHFIKMz+7S4n
+ Sylw==
+X-Gm-Message-State: AOJu0YxcKQ32QVvaCmS/7AHMxd6fHb91zqD82EqA7EspLCEKulXnKLB8
+ NMNby88d4QeFlQbDzwxd9Cj7KlJEBQ+fqak3oq3e7ND41FOvh7KGb93e+iGTMCic5edfuObKuHw
+ QQaHLTp6iPTnpUjYvIiHk6rZxOFvAIkwQxNOoJq71wm/Prqao8bqt1wJKB3UXhjwmk+HYEoZNHO
+ QcnqQPr2jqKM/JqRacLuelxEbwjcQr3fc=
+X-Gm-Gg: AR+sD10nAdK9JfKGkBHnpBAoBW1imn6BJ7BxSED6T1NTHpYhdsAfaNyXV9NVxsFaLIf
+ l54qghMamjHkskxKiQ5Lv/LAbzNavbex/oSkyu1zv/qH5G77xPuA1CPELLAAuup6fLyq3oEAzze
+ zKUlSu+8I8gZVi4VgrgA8+UK3w2NvJKlrbPYFOokW/CE0gtB9DI+nR892hm5wkrf4KWP1AniK4p
+ uNK06yTj1BDt33+krDHHbih+6oFqoWUx/6ce+EZ+ok/F2dcPrntCDdrQKvejh8VI8QqXKxqwrPQ
+ jA==
+X-Received: by 2002:a05:6a21:e0a2:b0:3cc:3d08:da2b with SMTP id
+ adf61e73a8af0-3cc5503a46dmr4954100637.15.1786604146293; 
+ Wed, 12 Aug 2026 23:55:46 -0700 (PDT)
+X-Received: by 2002:a05:6a21:e0a2:b0:3cc:3d08:da2b with SMTP id
+ adf61e73a8af0-3cc5503a46dmr4954047637.15.1786604145757; Wed, 12 Aug 2026
+ 23:55:45 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: MXjzEfF5kXhMumuja1GUFzOBQ3Zf6JlHDwLiQr08cxNrFdxCTcBcZdP8qZdCX9vWv+WpwhMziTFJsqNpN/lDZv9EOgrfePNNdSUWG1jUntTJ6rcGbDtdi50TH2/bEOdv67gjpf27M4Zw/5TKKdXYaiJH7qZKLOokl2wRmOxVB/dT5OE2QMHQgb8/ISa4ko02dZgdoZTNWDFQpxw64BsGKjtSSz++c15VC/MdBf2qM/3wdbT2QHJ46QpOKwNRg+2u5gGyYXTTiK7ICUYa8XFA9C70vVVeBJo0gYYB6d0dOFHtFAUFm4J2aWI58K8deQPcNzsEMo2Tq0vmoMpUhkwxJw==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8f5fa8de-f9eb-4d74-4902-08def9037a5d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Aug 2026 06:24:06.5666 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vrfWqRXHI3I/eeYyS/D93K7PyIv/W2DyLB5UWT+VhycXC3vLpBiYAQCV1Nn91sljwUM+Oi2Tg8vkurvYNh4g/vTIsPzZmM3/5GTbm/gRDAI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU2PPF56FB370CE
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-3-cc9396b9c18c@redhat.com> <87zeyztkcs.fsf@pond.sub.org>
+In-Reply-To: <87zeyztkcs.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 13 Aug 2026 10:55:31 +0400
+X-Gm-Features: AUfX_myDtune3dxeFB4N1UGBZgubGfSJEIuhGFFWhPSidWRsCUEsUtUj1OlFN-k
+Message-ID: <CAMxuvazV=Fq6kYQ_1iPrLUHHxF2CwYTd7EbHnE-W5csT-pOsgQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/53] qapi: add type-infos generator
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,72 +141,465 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instantiate the new ACRY model on the AST2600 SoC using its=0A=
-real-silicon register address and IRQ:=0A=
-=0A=
-- ACRY register region 0x1e6fa000-0x1e6fafff=0A=
-- IRQ 160=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/arm/aspeed_ast2600.c | 19 +++++++++++++++++++=0A=
- 1 file changed, 19 insertions(+)=0A=
-=0A=
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c=0A=
-index 3d1cd8e2d7..2c96700a92 100644=0A=
---- a/hw/arm/aspeed_ast2600.c=0A=
-+++ b/hw/arm/aspeed_ast2600.c=0A=
-@@ -52,6 +52,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] =3D {=0A=
-     [ASPEED_DEV_DP]        =3D 0x1E6EB000,=0A=
-     [ASPEED_DEV_PCIE_PHY1] =3D 0x1E6ED200,=0A=
-     [ASPEED_DEV_SBC]       =3D 0x1E6F2000,=0A=
-+    [ASPEED_DEV_ACRY]      =3D 0x1E6FA000,=0A=
-     [ASPEED_DEV_EMMC_BC]   =3D 0x1E6f5000,=0A=
-     [ASPEED_DEV_VIDEO]     =3D 0x1E700000,=0A=
-     [ASPEED_DEV_SDHCI]     =3D 0x1E740000,=0A=
-@@ -144,6 +145,7 @@ static const int aspeed_soc_ast2600_irqmap[] =3D {=0A=
-     [ASPEED_DEV_FSI1]      =3D 100,=0A=
-     [ASPEED_DEV_FSI2]      =3D 101,=0A=
-     [ASPEED_DEV_I3C]       =3D 102,   /* 102 -> 107 */=0A=
-+    [ASPEED_DEV_ACRY]      =3D 160,=0A=
- };=0A=
- =0A=
- static qemu_irq aspeed_soc_ast2600_get_irq(AspeedSoCState *s, int dev)=0A=
-@@ -269,6 +271,8 @@ static void aspeed_soc_ast2600_init(Object *obj)=0A=
-     snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);=0A=
-     object_initialize_child(obj, "hace", &s->hace, typename);=0A=
- =0A=
-+    object_initialize_child(obj, "acry", &s->acry, TYPE_ASPEED_ACRY);=0A=
-+=0A=
-     object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);=0A=
- =0A=
-     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);=
-=0A=
-@@ -723,6 +727,21 @@ static void aspeed_soc_ast2600_realize(DeviceState *de=
-v, Error **errp)=0A=
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,=0A=
-                        aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_HACE));=0A=
- =0A=
-+    /* ACRY */=0A=
-+    object_property_set_link(OBJECT(&s->acry), "dram", OBJECT(s->dram_mr),=
-=0A=
-+                             &error_abort);=0A=
-+    object_property_set_link(OBJECT(&s->acry), "sram", OBJECT(&s->sram[1])=
-,=0A=
-+                             &error_abort);=0A=
-+    qdev_prop_set_uint64(DEVICE(&s->acry), "sram-base",=0A=
-+                         sc->memmap[ASPEED_DEV_SRAM1]);=0A=
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->acry), errp)) {=0A=
-+        return;=0A=
-+    }=0A=
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->acry), 0,=0A=
-+                    sc->memmap[ASPEED_DEV_ACRY]);=0A=
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->acry), 0,=0A=
-+                       aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_ACRY));=0A=
-+=0A=
-     /* I3C */=0A=
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {=0A=
-         return;=0A=
--- =0A=
-2.43.0=0A=
+Hi
+
+On Thu, Aug 6, 2026 at 6:06=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
+>
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>
+> > New QAPISchemaGenTypeInfoVisitor produces per-module
+> > qapi-type-infos-*.h/c files. Each file declares QAPITypeInfo constants
+> > pairing the QAPI type name with its masked introspection name.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  docs/devel/qapi-code-gen.rst |  90 +++++++++++++++++++++
+> >  meson.build                  |   1 +
+> >  scripts/qapi/type_infos.py   | 182 +++++++++++++++++++++++++++++++++++=
+++++++++
+> >  3 files changed, 273 insertions(+)
+> >
+> > diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rs=
+t
+> > index 3a632b4a648..bb2e8d9c675 100644
+> > --- a/docs/devel/qapi-code-gen.rst
+> > +++ b/docs/devel/qapi-code-gen.rst
+> > @@ -2103,3 +2103,93 @@ Example::
+> >      }));
+> >
+> >      [Uninteresting stuff omitted...]
+> > +
+> > +
+> > +Code generated for type information
+> > +-----------------------------------
+> > +
+> > +The following files are created:
+> > +
+> > + ``$(prefix)qapi-type-infos.c``
+> > +     A ``QAPITypeInfo`` instance for each schema-defined type, providi=
+ng
+> > +     a mapping between the C type name and the schema name used by
+> > +     introspection, along with optional enum lookup table and list-ele=
+ment
+> > +     pointers.
+> > +
+> > + ``$(prefix)qapi-type-infos.h``
+> > +     Declarations for the above type info instances
+> > +
+> > +Each ``QAPITypeInfo`` struct has the following fields:
+> > +
+> > +``name``
+> > +    The C identifier of the type (e.g. ``"UserDefOne"``).
+>
+> Isn't this the name used in the QAPI schema source?
+
+correct
+
+>
+> > +
+> > +``schema_name``
+> > +    The masked name used in ``query-qmp-schema`` output, or ``NULL``
+> > +    for built-in types whose schema name equals their C name.  This
+> > +    allows management tools to cross-reference a QOM property's
+> > +    ``qapi-type`` against the introspection schema.
+>
+> I believe it can also be null when query-qmp-schema omits the type.
+> More on that below.
+
+Yes, that's a current limitation. Only types reachable from QMP are in
+the introspection schema. I will try to address this
+
+>
+> > +
+> > +``lookup``
+> > +    For enum types, a pointer to the corresponding ``QEnumLookup``
+> > +    table.  ``NULL`` for non-enum types.
+> > +
+> > +``list``
+> > +    For types that have an array variant, a pointer to the list type's
+> > +    ``QAPITypeInfo``.  ``NULL`` when no list type exists.
+>
+> Confusing mix of "array" and "list" in the same sentence.  Suggest "the
+> array type's".
+>
+> QAPI can't decide whether to call the thing an array (like JSON) or a
+> list (like the C implementation).  Unfortunate.
+> docs/devel/qapi-code-gen.rst generally sticks to array, but there are a
+> few lapses.
+
+fixed
+
+>
+> > +
+> > +These type info instances are used by QOM property registration
+> > +functions (``object_property_add_qapi()``,
+> > +``object_class_property_add_qapi_enum()``, etc.) to associate each
+> > +property with its QAPI schema type.
+>
+> You're using "schema type" like you do above, i.e. for the masked type
+> name.  Correct?
+
+I mean the type in general
+
+>
+> >                                       The ``qom-list`` and
+> > +``device-list-properties`` QMP commands then expose the ``qapi-type``
+> > +field, giving management tools a formal type reference into the
+> > +introspection schema.
+>
+> As far as I understand, we connect a property of QAPI type to the type's
+> QAPITypeInfo, the commands you mentioned then use it to emit the masked
+> type name, so that management applications can use that to find a
+> property's type in the output of query-qmp-schema.
+>
+> Problem (already discussed elsewhere): only works when the type is used
+> in QMP.  If it isn't, we still have QAPITypeInfo, but its .schema_name
+> is null.  This needs to be documented as a known shortcoming.
+
+ok
+
+>
+> Other uses of QAPITypeInfo may emerge in the future.  We might also
+> replace it by something that supports additional uses; see my ramblings
+> in review of PATCH 01.  In this series, however, connecting QOM
+> properties to their masked QAPI type name is their only use.  I
+> understand we emit QAPITypeInfo for any QAPI type that could be used as
+> QOM property type.  Dead data unless it is actually used as QOM property
+> type.  This is acceptable; we already generate similarly dead visitors.
+> But it's worth mentioning in the commit message, I think.
+>
+> > +
+> > +Implicit types (names starting with ``q_``) are skipped.
+>
+> This isn't quite correct.  Array types are also implicitly defined, and
+> their names don't start with 'q_'.
+>
+> Possible fixes:
+>
+> * Drop the sentence (only if we believe it's not needed)
+>
+> * Drop the parenthesis, add "other than arrays" or something like that.
+>
+> * Positive instead of negative: only user-defined and built-in types.
+>   This could perhaps be worked into the text under "The following files
+>   are created".  May want to add why: only these may be used as property
+>   types.
+
+rephrased, thanks
+
+>
+> > +
+> > +Example::
+> > +
+> > +    $ cat qapi-generated/example-qapi-type-infos.h
+> > +    [Uninteresting stuff omitted...]
+> > +
+> > +    #ifndef EXAMPLE_QAPI_TYPE_INFOS_H
+> > +    #define EXAMPLE_QAPI_TYPE_INFOS_H
+> > +
+> > +    #include "qapi/qapi-builtin-type-infos.h"
+> > +
+> > +    extern const QAPITypeInfo UserDefOne_type_info;
+> > +
+> > +    extern const QAPITypeInfo UserDefOneList_type_info;
+> > +
+> > +    #endif /* EXAMPLE_QAPI_TYPE_INFOS_H */
+> > +    $ cat qapi-generated/example-qapi-type-infos.c
+> > +    [Uninteresting stuff omitted...]
+> > +
+> > +    const QAPITypeInfo UserDefOne_type_info =3D {
+> > +        .name =3D "UserDefOne",
+> > +        .schema_name =3D "1",
+> > +        .list =3D &UserDefOneList_type_info,
+> > +    };
+> > +
+> > +    const QAPITypeInfo UserDefOneList_type_info =3D {
+> > +        .name =3D "UserDefOneList",
+> > +        .schema_name =3D "[1]",
+> > +    };
+> > +
+> > +    [Uninteresting stuff omitted...]
+> > +
+> > +For a modular QAPI schema (see section `Include directives`_), code fo=
+r
+> > +each sub-module SUBDIR/SUBMODULE.json is actually generated into ::
+> > +
+> > + SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.h
+> > + SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.c
+> > +
+> > +If qapi-gen.py is run with option --builtins, additional files are
+> > +created:
+> > +
+> > + ``qapi-builtin-type-infos.h``
+> > +     Type info instances for built-in types
+> > +
+> > + ``qapi-builtin-type-infos.c``
+> > +     Definitions for the above type info instances
+> > diff --git a/meson.build b/meson.build
+> > index 19e123423b5..f135eddad12 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -3487,6 +3487,7 @@ qapi_gen_depends =3D [ meson.current_source_dir()=
+ / 'scripts/qapi/__init__.py',
+> >                       meson.current_source_dir() / 'scripts/qapi/parser=
+.py',
+> >                       meson.current_source_dir() / 'scripts/qapi/schema=
+.py',
+> >                       meson.current_source_dir() / 'scripts/qapi/source=
+.py',
+> > +                     meson.current_source_dir() / 'scripts/qapi/type_i=
+nfos.py',
+> >                       meson.current_source_dir() / 'scripts/qapi/types.=
+py',
+> >                       meson.current_source_dir() / 'scripts/qapi/visit.=
+py',
+> >                       meson.current_source_dir() / 'scripts/qapi-gen.py=
+'
+> > diff --git a/scripts/qapi/type_infos.py b/scripts/qapi/type_infos.py
+> > new file mode 100644
+> > index 00000000000..dc7e2bace9e
+> > --- /dev/null
+> > +++ b/scripts/qapi/type_infos.py
+>
+> Please use '-' instead of '_' in filenames for local consistency.
+
+It has to use _ for import, afaik
+
+>
+> > @@ -0,0 +1,182 @@
+> > +"""
+> > +QAPI type info generator
+> > +
+> > +SPDX-License-Identifier: GPL-2.0-or-later
+> > +"""
+> > +
+> > +from typing import (
+> > +    Dict,
+> > +    List,
+> > +    Optional,
+> > +    Set,
+> > +)
+> > +
+> > +from .common import c_name, mcgen
+> > +from .gen import QAPISchemaModularCVisitor, ifcontext
+> > +from .schema import (
+> > +    QAPISchema,
+> > +    QAPISchemaAlternatives,
+> > +    QAPISchemaBranches,
+> > +    QAPISchemaEnumMember,
+> > +    QAPISchemaFeature,
+> > +    QAPISchemaIfCond,
+> > +    QAPISchemaObjectType,
+> > +    QAPISchemaObjectTypeMember,
+> > +    QAPISchemaType,
+> > +    QAPISchemaVisitor,
+> > +)
+> > +from .source import QAPISourceInfo
+> > +
+> > +
+> > +class _ArrayTypeCollector(QAPISchemaVisitor):
+> > +    def __init__(self) -> None:
+> > +        self.list_types: Set[str] =3D set()
+> > +
+> > +    def visit_array_type(self,
+> > +                         name: str,
+> > +                         info: Optional[QAPISourceInfo],
+> > +                         ifcond: QAPISchemaIfCond,
+> > +                         element_type: QAPISchemaType) -> None:
+> > +        self.list_types.add(name)
+> > +
+> > +
+> > +class QAPISchemaGenTypeInfoVisitor(QAPISchemaModularCVisitor):
+> > +
+> > +    def __init__(self, prefix: str, name_map: Dict[str, str],
+> > +                 list_types: Set[str]):
+> > +        super().__init__(
+> > +            prefix, 'qapi-type-infos',
+> > +            ' * Schema-defined QAPI type info',
+> > +            ' * Built-in QAPI type info', __doc__)
+> > +        self._name_map =3D name_map
+> > +        self._list_types =3D list_types
+> > +
+> > +    def _begin_builtin_module(self) -> None:
+> > +        self._genc.preamble_add(mcgen('''
+> > +#include "qemu/osdep.h"
+> > +#include "qapi/qapi-builtin-types.h"
+> > +#include "qapi/qapi-builtin-type-infos.h"
+> > +'''))
+> > +        self._genh.preamble_add(mcgen('''
+> > +#include "qapi/qapi-type-info.h"
+> > +'''))
+> > +
+> > +    def _begin_user_module(self, name: str) -> None:
+> > +        type_infos =3D self._module_basename('qapi-type-infos', name)
+> > +        types =3D self._module_basename('qapi-types', name)
+> > +        self._genc.preamble_add(mcgen('''
+> > +#include "qemu/osdep.h"
+> > +#include "%(types)s.h"
+> > +#include "%(type_infos)s.h"
+> > +''',
+> > +                                      types=3Dtypes,
+> > +                                      type_infos=3Dtype_infos))
+> > +        self._genh.preamble_add(mcgen('''
+> > +#include "qapi/qapi-builtin-type-infos.h"
+> > +'''))
+> > +
+> > +    def _gen_type_info(self, name: str,
+> > +                       ifcond: Optional[QAPISchemaIfCond] =3D None,
+> > +                       with_lookup: bool =3D False,
+> > +                       with_list: bool =3D False,
+> > +                       schema_name: Optional[str] =3D None) -> None:
+> > +        c_id =3D c_name(name + '_type_info')
+> > +        lookup =3D ''
+> > +        if with_lookup:
+> > +            lookup =3D mcgen('''
+> > +    .lookup =3D &%(c_name)s_lookup,
+> > +''',
+> > +                           c_name=3Dc_name(name))
+> > +        list_ref =3D ''
+> > +        if with_list:
+> > +            list_ref =3D mcgen('''
+> > +    .list =3D &%(list_id)s,
+> > +''',
+> > +                             list_id=3Dc_name(name + 'List_type_info')=
+)
+> > +        if schema_name is None:
+> > +            masked =3D self._name_map.get(name)
+> > +            schema_name =3D '"%s"' % masked if masked is not None else=
+ 'NULL'
+> > +        else:
+> > +            schema_name =3D '"%s"' % schema_name
+> > +        with ifcontext(ifcond or QAPISchemaIfCond(),
+> > +                       self._genh, self._genc):
+> > +            self._genh.add(mcgen('''
+> > +
+> > +extern const QAPITypeInfo %(c_id)s;
+> > +''',
+> > +                                 c_id=3Dc_id))
+> > +            self._genc.add(mcgen('''
+> > +
+> > +const QAPITypeInfo %(c_id)s =3D {
+> > +    .name =3D "%(name)s",
+> > +    .schema_name =3D %(schema_name)s,
+> > +%(lookup)s%(list_ref)s};
+>
+> This substitutes values of mcgen() into mcgen().  That's not how it
+> wants to be used.  Please ...
+>
+> > +''',
+> > +                                 c_id=3Dc_id, name=3Dname,
+> > +                                 schema_name=3Dschema_name,
+> > +                                 lookup=3Dlookup,
+> > +                                 list_ref=3Dlist_ref))
+>
+> ... try something like
+>
+>                self._genh.add(mcgen('''
+>
+>    extern const QAPITypeInfo %(c_id)s;
+>    ''',
+>                                     c_id=3Dc_id))
+>                self._genc.add(mcgen('''
+>
+>    const QAPITypeInfo %(c_id)s =3D {
+>        .name =3D "%(name)s",
+>        .schema_name =3D %(schema_name)s,
+>    ''',
+>                                     c_id=3Dc_id, name=3Dname,
+>                                     schema_name=3Dschema_name))
+>
+>                if with_lookup:
+>                    self._genc.add(mcgen('''
+>        .lookup =3D &%(c_name)s_lookup,
+>    ''',
+>                               c_name=3Dc_name(name))
+>
+> and so forth.
+
+ok
+
+>
+> > +
+> > +    def _has_list(self, name: str) -> bool:
+> > +        return name + 'List' in self._list_types
+>
+> Simpler, I think:
+>
+>            return self._schema.lookup_type(name + 'List')
+>
+> where self._schema is set in .visit_begin().
+
+ok
+
+>
+> > +
+> > +    def visit_builtin_type(self,
+> > +                           name: str,
+> > +                           info: Optional[QAPISourceInfo],
+> > +                           json_type: str) -> None:
+> > +        self._gen_type_info(name, with_list=3Dself._has_list(name))
+> > +
+> > +    def visit_enum_type(self,
+> > +                        name: str,
+> > +                        info: Optional[QAPISourceInfo],
+> > +                        ifcond: QAPISchemaIfCond,
+> > +                        features: List[QAPISchemaFeature],
+> > +                        members: List[QAPISchemaEnumMember],
+> > +                        prefix: Optional[str]) -> None:
+> > +        self._gen_type_info(name, ifcond, with_lookup=3DTrue,
+> > +                            with_list=3Dself._has_list(name))
+> > +
+> > +    def visit_object_type(self,
+> > +                          name: str,
+> > +                          info: Optional[QAPISourceInfo],
+> > +                          ifcond: QAPISchemaIfCond,
+> > +                          features: List[QAPISchemaFeature],
+> > +                          base: Optional[QAPISchemaObjectType],
+> > +                          members: List[QAPISchemaObjectTypeMember],
+> > +                          branches: Optional[QAPISchemaBranches]) -> N=
+one:
+> > +        if name.startswith('q_'):
+>
+> Duplicates QAPISchemaObjectType.is_implicit().  Similar code in types.py
+> and visit.py.  Not this patch's fault; moving on.
+>
+> > +            return
+> > +        self._gen_type_info(name, ifcond,
+> > +                            with_list=3Dself._has_list(name))
+> > +
+> > +    def visit_array_type(self,
+> > +                         name: str,
+> > +                         info: Optional[QAPISourceInfo],
+> > +                         ifcond: QAPISchemaIfCond,
+> > +                         element_type: QAPISchemaType) -> None:
+> > +        elem_schema =3D self._name_map.get(element_type.name,
+> > +                                         element_type.name)
+> > +        self._gen_type_info(name, ifcond,
+> > +                            schema_name=3D'[' + elem_schema + ']')
+> > +
+> > +    def visit_alternate_type(self,
+> > +                             name: str,
+> > +                             info: Optional[QAPISourceInfo],
+> > +                             ifcond: QAPISchemaIfCond,
+> > +                             features: List[QAPISchemaFeature],
+> > +                             alternatives: QAPISchemaAlternatives) -> =
+None:
+> > +        self._gen_type_info(name, ifcond,
+> > +                            with_list=3Dself._has_list(name))
+> > +
+> > +
+> > +def gen_type_infos(schema: QAPISchema,
+> > +                   output_dir: str,
+> > +                   prefix: str,
+> > +                   opt_builtins: bool,
+> > +                   name_map: Dict[str, str]) -> None:
+> > +    collector =3D _ArrayTypeCollector()
+> > +    schema.visit(collector)
+> > +    vis =3D QAPISchemaGenTypeInfoVisitor(prefix, name_map,
+> > +                                       collector.list_types)
+> > +    schema.visit(vis)
+> > +    vis.write(output_dir, opt_builtins)
+>
+
 
