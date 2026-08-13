@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3531AC5CFEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 06:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C48C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 06:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuOrv-0001bm-9o; Thu, 13 Aug 2026 02:24:47 -0400
+	id 1wuOrt-0001TY-L6; Thu, 13 Aug 2026 02:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuOrd-0001CI-5F; Thu, 13 Aug 2026 02:24:30 -0400
+ id 1wuOrU-00014v-J3; Thu, 13 Aug 2026 02:24:21 -0400
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wuOrY-0003Ho-BT; Thu, 13 Aug 2026 02:24:27 -0400
+ id 1wuOrR-0003Ho-Ix; Thu, 13 Aug 2026 02:24:20 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IBeu3IIXPoQhUk9KnsT7dXOockLjd2q+Kamv1GX8x56V9sPLXNaPKk2371obxvevqoeqhp4DNgMDBUhfS2RxLwVHtecoj+yzMHCxqENJr5GHPAQkLpsv3GDmMLtCjSOtdA08DhJ4aTCfVI8s+PvTzWeO+++1PWgWptijYym8E4xshKp+IeFzWAi1dADhoKMw6u7PpcoF8G8lZozI5D/IueCIWtKgqk2mMmk8YAufm3YRRRENQLxgMlm37H2Th9m8c8Tva3CPfWJZYnXFbnpULMSm9ChtMfgGGS+SgD4gW4JApFToqdghBA3v++/zRnlOvEsUoN2HOZVv4SZoZICqCQ==
+ b=WqJCHM/jgtqv4b4t1RV7GgoVTGiSok7EZ1tTSg8dUGnQPqbH13ffoZdsImUvVB0rHWbbj0hCeL1m44zni2gSjOtsH0qZmT0AjwwXp4AAHA/arYzaGL9nMeW/WGgUdRz6HqHVxdFrUgM7FdB/FK4elwkwZGagLQ1H+JkDqJQOX0Av/r0CWAj/KH2LRz4nnIH1NtDqZOCydUEbv+S1vdl8rz1bKJm1driTY8VmLCA/wxnUOP4bxoJ/nz/AlNWBD2z09qTxPXW2/DoY8/Q8UzqM/azqgYzTliDHZ9swGA35OO8ezg/qzvWibAVxgMTb8jQhM4U1aAWqnZl8tVAcZVhjeQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XQg/oD1hJmxkiIkSt4NCHle7hqYLXJKtJNVnc/LLYPE=;
- b=JAZzAev9xBZa4y5Vl+1h55eP0fIefW10EZBaZutJMQ5N0ujz/p3iu5Jhand/4+3sn0p23cexSJD3gu3f/vuEaMtK3zPdtK8NfSNz4aCN6e5rORyuSgbZ3TM1b26rcp4muz0ltV7o9AKPpq60IysdUlgzBlhn77c/5efqjM/PdICh1GvgPa46PYnpTy1yRj+IsL3RHUU8Gviy6ojhyjh5fY7ORybQOwl+IPAL2GaR7I7TUuJwx0e880mKRNaxRrYlCInfTp9QyNqr5yu7epmZftqA+GxvRvmHtyEgfag7++PfDvjKJhD/miCSdxCUoJTuxM6Ufk1T8n4wmDsxqgLdog==
+ bh=Zr2Xo9iGxU9SAVkzciuI2jZwC8ZxJSHMWnSV1iOqJxY=;
+ b=wqX7Iuv7OEqRTjwAyhsG+4iB+VBWdw4xRBvUx1kz9c9BS++eXHZBoE+rXLya4XGrn2KORqdIlz3PbgA0+p29O6yYkqWkYM4zJFdODudHl2SfnmkVcTejMZC5A3Q8fNg5BlC0bkwsdLrmMr045pqds3bGt6tNoGQtE2X3q5anI4sjMXeorRtZnvpeOfr0wL96eFxLLAKAGs+ddH1KSO7zh3ckqdRNE0Qe7hJ9tumvvvab3fVV7ikX5I/OXZnkUntugLIVWwe5O+YLLhpfAoGUXYJLFrFkNDbm+SUPEy4YqY6cm3x+yi7R5lCm7tef83vFOD/50zBQlxYyjcNvwra57w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XQg/oD1hJmxkiIkSt4NCHle7hqYLXJKtJNVnc/LLYPE=;
- b=Uz+b4Uh9oFM0fav9IDwS56pxJUnDtErg0EkTgXxbfG2Bcz4j51Ig0lnWoF0eU//tHuGF1/AyTEUt/iANWv9p60F2zYgX+Eh7VspxecQVlM1K54zXrd1w5lgc3TZ3eTB46IrGARWmuFViZ+WsT+ekqHfvEQXOZMoQQjtEClTMjdBvtzBnQtNbXVOpz8OOxfEJj3SNFvKVfIJxWcoct2qe1jfxtnbSas8tTwVYZVmE8667c++wZ+njKSln2KyaeEn3Ltk170S+bFmAQGF4cVG0BL0Ot8yKvaN2yigDj5ozz4FlfY7EMpgN3vo4Fx+697xIIqIqHKLqSzqZD/f0yvEP5g==
+ bh=Zr2Xo9iGxU9SAVkzciuI2jZwC8ZxJSHMWnSV1iOqJxY=;
+ b=LFHUUxMll35pyhPuoQnmXvChvVLzjbuKIYY8HFj3oNlNMnHLdFZt/oJ51f98muhUt7oSqOdIDhHB4IwGNkSslW1PZKw7+6LVAbA2CPyb41+1iSOI3SvWrToNID13VmxTKuL4v/amJ6xqeiDiSXI1Md0E4HwYm1P+6W7f8z8Hx2yM4UUqzPtCPZ7trBdX+nsK1/f/cUISXfz0Vje/fyytOzQ3lddT6rndwDETQnGUZwjvduYYzIaEFNgyxdokUm32eyeM45QCGmAHHheFn8fTBpOGmzNs049bj5POEpnLnyI3K3Uu8HUNpuwWv+8DUj7rzk/CINWhj2OEjkJaGdxhKQ==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by KU2PPF56FB370CE.apcprd06.prod.outlook.com (2603:1096:d18::496)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.13; Thu, 13 Aug
- 2026 06:24:09 +0000
+ 2026 06:24:03 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.012; Thu, 13 Aug 2026
- 06:24:08 +0000
+ 06:24:03 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -52,11 +52,11 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
  list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1 5/5] tests/qtest/aspeed-acry-test: Add RSA ModExp tests
-Thread-Topic: [PATCH v1 5/5] tests/qtest/aspeed-acry-test: Add RSA ModExp tests
-Thread-Index: AQHdKuxY12b8IMHqMkK9P9n45xduFA==
-Date: Thu, 13 Aug 2026 06:24:07 +0000
-Message-ID: <20260813062359.425268-6-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 1/5] hw/misc/aspeed_acry: Add ASPEED ACRY model
+Thread-Topic: [PATCH v1 1/5] hw/misc/aspeed_acry: Add ASPEED ACRY model
+Thread-Index: AQHdKuxVQHXfHVUN1k2e0Iz8ybst6g==
+Date: Thu, 13 Aug 2026 06:24:02 +0000
+Message-ID: <20260813062359.425268-2-jamin_lin@aspeedtech.com>
 References: <20260813062359.425268-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260813062359.425268-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -67,61 +67,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|KU2PPF56FB370CE:EE_
-x-ms-office365-filtering-correlation-id: 79120349-f79f-4897-12ae-08def9037b27
+x-ms-office365-filtering-correlation-id: 46a6577a-17c7-4baf-f79a-08def9037828
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|7416014|376014|366016|23010399003|1800799024|38070700021|3023799007|56012099006|10067099003|6133799003|921020|18002099003|22082099003;
-x-microsoft-antispam-message-info: YU1RXtEZCzQuRFERtOhluSA53UuTnvf+AihnYsPSotGLH18kJqj1SaJfLlOdL6GEiZxvzdCILIfKRIj5J1q1fLEVQPqFke0yrPSpeIVSPUheJcReG84wz/9cPCfiM/DbaDViPRtgugySybUCObUbULFF6LLQFCqbsviUKlpqZ0hgLpwBTdwn/aO/HkYvmgOFMvEOi8+MC4dzGb3yjAFGSbBC5xMIaXJ+cUTLKfKoh+cM4OOqUfz7BQ0F28Lm8KckI9X20PhnkVLJhgheHVI6f8iwwjPrPgMTLKEP891HyLTJXUpXvkRuoAgLml4qisYqe+dF3U7pYPQEzvk1qIwy8sGQfFcbMWUeDFQTwe9JAdNgdFpO76BeiF66yg7AXvcTF3VR8IAsNpkcFBz3B/liJhyiCwjn24RiEnqIsHoQkVi4Eurq0mIjQTt5HM3KDFNgw7vMqznHWfRV899nM7ETl6GJP3s39F+riVo7MZqvh4PUyIbSyZXth74DwNRYSixaGXqrx+sITMenohmd5Ulw9noFZ9/qi55AtL0Hlu7RfDFOHS5HFs0QNuqavv5PoqUEctgIFs4PBcLKiJzVbsme/RvWdOn5NaY5J4WKft906XBL2P9jyBKmJRMjz/XxAGOg9HjXYG/SrqAdVvaEZZu/+iKC8xuqvQ9bLJ79OxKXWDUpD4JYyZng0axAvayK8tD+AfDHG3kUUK0sYwgT6Vimm86EIpzuDxN5ZB0OuGzUVk0SEJNm7NFRMbZ93+zNFGTF
+x-microsoft-antispam-message-info: M2PsIRaZ5bSm4M6EKMc8YFQkrR8Wr9s/a7chl1lAFx3z7WHlNYxtX/Tx3XapJq+7C5Y6dWhpeYcm++DKYHkSzOjdHQJUXH67HKxV9H1GuYzYIrSEQOL3yDZdhz0xU8cOzarW4DJK76lPe4mzRC8I6C5jwV4EAg4VEivT0oF9iKJKdxrtxIkY1XHP0ySxZpdDHA2iYui3W4H8RrFvXi7OnTU2SO5l8DquznNushpDw1mtoYzH8YTzh057nOUPtJaq9nbst56jVJ3WXRypvoe1+9w6pMRO1UapgiO0JUsQFIZluEZo+nUduu0X5EaeLLZC6lZi0lbrC76vsWOuNjrJyifGIyw6QGPHv3r7VPBG4neBjYUmMMhfTcHmrT3GCzyDlbtj+4DE+cyBFrq4aqH3CK+ZiGl49W8rhxQXWwNItmDn/wX3d8oqtbdnmoF6niXLqgrx2l5B0XHk6iUqDo4PSqmNVtMA4lZ7F8nDYM/+UaSe5QCNXLuVptkCLvYZm9sOCxXfzOgVL+eOC0DL7ZV1sICExSlSR4CgeAsB6IEs6SIx6B5p07krC8d/MLIMAjgTEFEc7IwQTzsIjsy89ZWCyzvjJpqJVrEnCXNY848iiisujrZnKMVqs+ukfasA9okhspBbTyHa/auVX3nqvgzxTNJ1Yk1owx/QiWi3jo4/04f9uhRktMcblwysdIWN6j63L5ulnyEU6Hz5xhG80sm2CMi8ooyXvKDXi1LMbIs0/QQ=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(376014)(366016)(23010399003)(1800799024)(38070700021)(3023799007)(56012099006)(10067099003)(6133799003)(921020)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?whSDjyv0tjWu3Sos8L5AHWcSIhwTXc1crpj99H3pueOkFSlKlis1H4+8+0?=
- =?iso-8859-1?Q?ILBe0cxRgIxz2X0/BAlIaMMj7gWKVrxqJ2NmpAV+RlM7ZdCQAdU4dLSu5p?=
- =?iso-8859-1?Q?lkndQWZJ3hgC1VWo2mrBqDZj4smHVWzGe8ql/lEadarZez97GGK/WJ1U/5?=
- =?iso-8859-1?Q?JRvsZ5DPaGpFmj5Ko9db9wzILk8Eiw8NKc0jha89/f5B7sl1ajvE7Sv9l+?=
- =?iso-8859-1?Q?HwHnHIz+gyzoZugycUzqfrExkGjs+UTS4HHWZyxAT8/Q94gMyvhXsEC1B/?=
- =?iso-8859-1?Q?802ELKsn8pPWI+j2ADx8MiIPfNc7ouAPcAaHdKJglvuIVnZP5nJAcexRur?=
- =?iso-8859-1?Q?bvQ0Lyxso2A5uAg6gj7zCHHjoM2C44vBsEzoIZ8OnvPtVFaJGYRCYX9TdR?=
- =?iso-8859-1?Q?ybI4f+dwbbW7pQmZv3zYnzmTasUwPp0SKcG3e3bHFQPZq+VtXWNB+KCRXN?=
- =?iso-8859-1?Q?DwzC2j4pGSMuBeXAnwXzLGv4QYVnfyzPbGvMMa40wNv9/NawMV7q5DjXSA?=
- =?iso-8859-1?Q?9YePof7Vwiq3BGCBIq7Sf91IZyeWWHUB9yy5XDwbCWEJ/N6/TVTpw+yhuZ?=
- =?iso-8859-1?Q?JAEpev1YgJhl9iLX2Lm0eZzy4IWSIzd9zEmBIDLrxvnVJnz29hJUhzDRg7?=
- =?iso-8859-1?Q?C3yyLTqpTashEukpZVoP0tC2HJCEnovk9SY78cuHDBeQtmInZSiXpho3DG?=
- =?iso-8859-1?Q?e3/YryXmpRngRv8t8djSGMi/om8LPwCBBnfLB6Roizcotx3fWOFaj/ufpB?=
- =?iso-8859-1?Q?2o+iCAWlSbgmMzRDQHibmVO+fJ2bjAILWAE0lhvY56LArh0r40PzHPboqx?=
- =?iso-8859-1?Q?K8D7GT/Y2jlH2FSYh9pGWMeJpovrvbsMEPMxHsLSAI2uT0LYZRVY4R4e1+?=
- =?iso-8859-1?Q?q27vn8J+YVb0M57w9Ojyu00eWMdqQCD5BuFL4i5XFysnH/0UicJXdOq9LQ?=
- =?iso-8859-1?Q?e7LchSpgSUBCSCnisI92tmTcr3Hswg2FkWTiLBxwvmYCmTtARkfZonfC0Z?=
- =?iso-8859-1?Q?TGn++28p60ASGd3hfdNJX6Kye57id0nGs1/Pt5oP7HAf3IztBwOnPlFQX+?=
- =?iso-8859-1?Q?N2Ex9eXyY8o8CnwEiCjLX4q+EW3bJPsJMfRd2MzqJGfG21puEJeMoiYphl?=
- =?iso-8859-1?Q?XWWpXHm9eo2hpvs8PuPVMNJ4MtWvglPkpVRK5829Iuxw0SdGLgKU9aJqH/?=
- =?iso-8859-1?Q?diKFcNs0d6vUuJkfy8e+Yg3XOejORHffEvnPk0OYPLg7fvhLh1hsfFJ0yg?=
- =?iso-8859-1?Q?nzMFZNCpOHRc6Di+IithpTv7J0d3y+y5AabZrgGKJYNCXeTglstcAQyEvS?=
- =?iso-8859-1?Q?wzGqKfMO2+gvgDRuxfYHxR6Nkbj0J00LFLXoae+x8Iysf/0hOmKqtAcJ8I?=
- =?iso-8859-1?Q?4xik7x/0KEUdTwThjXu8XF9y3fZ4eRMTfsWzLinprOrxJzfcIY8JxvNgiU?=
- =?iso-8859-1?Q?ucS+QQZMxGtOxtS5Ik9V/S7ZnEwEQMsCceQONFE85Yp0nvET3gCUgsoiwy?=
- =?iso-8859-1?Q?jdq6Wx/sYApFQkil+XmApzXmUbDftt8q4H24Mro19d3bo9IV4xEWL2Ppqs?=
- =?iso-8859-1?Q?cQzB2J/V0i7pmoItQqMl/uF5mZ3YySg9rMoTXWnBvAZaPgCwUH5FyoJe6j?=
- =?iso-8859-1?Q?GgVP/VDSJ2LZ+V83fWsdRD4bw3dzyy+8YmP3KJDjWI2mcU1WjST+PuCAcl?=
- =?iso-8859-1?Q?3AEk5S3sv2Wzovlmg3ZU4VkSjb5hl2+2vS9T3HrKCn97ceZJBlhUtrYIm7?=
- =?iso-8859-1?Q?pVf0x26/plLiBVSMt3WigSF8IpeYJABsU6WUGMtZ7ecpUcbpdKSuu9q2lq?=
- =?iso-8859-1?Q?bKjiYKZXkQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?V8YBg70b+LO49bgFfe1V1dV7zGud+LWAFtH/l5IXYOfa1EDqkGkZQMak1c?=
+ =?iso-8859-1?Q?KVvo/2/7bhC+pdrWl0AeGQ0me/+6UZyxfQtfGEJ6KiGhyecDz+2nvH2kyG?=
+ =?iso-8859-1?Q?dT92Ydi/gyyJhwDW94nd5tKSUaEY1O22YujXrihw55puxenvd1Af2yr2oU?=
+ =?iso-8859-1?Q?DPk00KfWPDiFbohc2z3223Osj4YBZWrQrY7T0sfpouqo1JAuC1ZaXqiccR?=
+ =?iso-8859-1?Q?OETJGruE8ZXi5aY6dxdLprcL68lgqUspRUEPRBMXUfZlTfbWg7QWjVM6SQ?=
+ =?iso-8859-1?Q?hfX7oJ75Xjpsh/HWCU0On75ezpxiKT24nmKM31uU8Ni+oyHiNzr3IfPVMo?=
+ =?iso-8859-1?Q?8dpEAnBC83SQAVWCff1TVG2VtThhotKL0UT9iJ9EVkPU98cbBHJ54pbRdl?=
+ =?iso-8859-1?Q?ba+gc51NJisOGAVWCQkpdGVKeeAwSWrOlAQw/AHLuQAraGcJHnKeOCjBr0?=
+ =?iso-8859-1?Q?geECkm1VHazkKrzNZrnWFvndaQCQ1ZPtGPq5lsa+pJt30QvC+zZwWVgnWz?=
+ =?iso-8859-1?Q?G+tn9hkkyIxermqUzwYi9rfqjc8KeUuMTycGg/r7stUcPR/r2eBQ5djDed?=
+ =?iso-8859-1?Q?77wHZLS4zxrXOggG5U4KzjE6grAYYFa4eZIyknG+BAG8A6ayesMFu03ncL?=
+ =?iso-8859-1?Q?57FH1gHT8M29pY6370S+vD8zz9TCMt8CCQZlLd7XD0qQ39KWM34GshuMA7?=
+ =?iso-8859-1?Q?J0ZzJz4fY1Y/rEOHj8aOJGlLLKUiSCysLoKnowKFDsJWoCCE2Fz7928Iiw?=
+ =?iso-8859-1?Q?tiqY87dnCGOua4JNkKd8K0Tt9OD30wx9coAUQ1HquYrDae+lk2bc1Mu2Rn?=
+ =?iso-8859-1?Q?MCTAU0sfp/gspt55sxBlT4HG3hnzv/Tn1BSwHH555Odfe7im4gu79iMNm0?=
+ =?iso-8859-1?Q?ZXLH8h+d7xnWq8UTJva0+5ZGq3rQJ/5CV//6LuQvnf0LPu0mwUon1M33Fg?=
+ =?iso-8859-1?Q?FJ8qQlRYrIUNXjpN48kg05UNN86lobyDnXkuuAbmXgp4ChlurmO9EvCNEE?=
+ =?iso-8859-1?Q?jr6DY+nv99JSOGeJrhPMYmUFbB0Eod/Adi6gry9F4dcpBAT4pqGZKT/aSa?=
+ =?iso-8859-1?Q?WoZUAix4WMjWEW3nzYu/Ohn9Rm9WqUmhzRBjw/RXQZ3qidSYsb7xIdXo7S?=
+ =?iso-8859-1?Q?Rdp3DdmdJOEcuNG8ekhEiU+ebSA9jPh92zMbFMDpQPsBphtHsrExI9qrtF?=
+ =?iso-8859-1?Q?p6zqdSzTxSo67qwAhqeCB14tRPGmp3SrCcwKY9/cZtW/knGngkPKHodKn3?=
+ =?iso-8859-1?Q?76dIbkMiLO7uf9kowkP4XelU1q6XJTBWSMONXtfQ117CqVbvYbK/bscNVP?=
+ =?iso-8859-1?Q?ew3BHREyrkrDDDAUwYRbsIIDmKO9AZzoi4PHIFBPSszbRA3p28cNf2XZeT?=
+ =?iso-8859-1?Q?oAml4pU/wdADgQpUQr0I5u1WxP56pCa/NIKhPIZDdhHP3d5R3lNjrcj5+4?=
+ =?iso-8859-1?Q?Sn8vVECicMiYinVE/HneJi3Vn4DupNwpnDo6/KxTD6ZAoC842LafOnV6ej?=
+ =?iso-8859-1?Q?fV9L7T7//q63i0RD9gLu52vjUzi6AS5/GgYGteKBMhoEseNJQBnPRaGhsY?=
+ =?iso-8859-1?Q?0kXVtnsljKZHpx3Ge7MwH+mLiAuuFwgsrwMyBX+I9ygsbCCKyHe/ws5B4A?=
+ =?iso-8859-1?Q?wm1zQS32HPtlIbHx2i17rKzXQb7DkW7r0DScrkdmVRlnA4VtPgebLy/ELQ?=
+ =?iso-8859-1?Q?TjOBMVIR7sq17I6dImi++wBzaaZuA5N9bLtVHT28wtn9LUL4IsmFXqbXgw?=
+ =?iso-8859-1?Q?f9ouqMT/g6YJ3cT8k+YuYKdDrwv5jkS1AwTWR6bj7mQU2P4ntE2fLpuoiD?=
+ =?iso-8859-1?Q?9dEKUirTuA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: lvfYSa+BuS/1AFHlfeV3b+HtZitn5inpfmGN/kwOARxwPZgTQKo0lFjETZIkzpWdq3gVQ1fApwoq5zyjBSCkQdI4okgeE6LwTy7xDpSZmPKKD3ICFW3vr0uhrHByVuPwsI4Blw10y69X025jNmmuqMhV9i1yt2O/Ab8Awb5hWXqdjWjpS4i+025gH3SR/KlK7iZwKCdlPjX+w6Z8BeXp+48tV0hRLFj5DZWYEVifICiAZF0rS0nAQKpFBpb/8KBg6X3gy/FqfolC/mdSGMLmTMEjj7RtiSMmdnmZ1r0UoYsDDnLc2bU+VUvvTDUgLphOoRT2AkrUzaGRZCQZ9isqRg==
+X-Exchange-RoutingPolicyChecked: GqJYGalsBiykA4BxsPoXhLHMRBfpCN8dXqLDw6MiMYkglbJ96Jjd6+aUO5Gd424shAS89W/AYmtVlA+GqrJ21zwV+JT9wCYuCSLxbGA0vRc4kvdA1l4pKmI/ZnYKRui+D6Vq4hefVQ4vi67rGrltlt5+FAVA5Vh/kS2nzqVA4v3k/MCqMyrBIyVr5XTJBnuPsjU0kAIrv4WOR3jtZCVU/YBuN2NOlvBHHmcD7TNHw4a9SDCXdmGhlpA0DI7D2GH1uZ9ul6TNiwsbbIhXQdP/Hs5ofGWcsc8NiSw8Eouv3hikrVrKB031gsI+wJ0yxjm+OL3ibO/c/1XDAgdmmA2hnQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79120349-f79f-4897-12ae-08def9037b27
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Aug 2026 06:24:07.9139 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46a6577a-17c7-4baf-f79a-08def9037828
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Aug 2026 06:24:02.3120 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kSLDXuT+6Nw8bhHJHqn265rFijJf2zQe2b1+xVvM3cfYhDGXjFFhSDXwAwsH+9lL9okSntx4fA8efuml2oBMWa/CNRtKYfrTKEzLzYPgxfE=
+X-MS-Exchange-CrossTenant-userprincipalname: kCN6usf0PSw0y+fsvrSh1LIseETrwKbkkMl2SZgTOgYFzuBjnDWyiNM9325ek0An805OK6YxY6ZosohMwq1hwuoyIAg2yB6fW6TiwmsNs+s=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU2PPF56FB370CE
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -147,389 +147,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add qtest cases exercising the AST2600 ACRY RSA ModExp engine end to=0A=
-end. Each case lays out the exponent, modulus and message in the=0A=
-scattered SRAM byte layout the engine expects, triggers the=0A=
-engine, checks that both completion bits (RSA_ENG_DONE and=0A=
-RSA_DMA_DONE) are asserted together in the status register, reads the=0A=
-result back from the result SRAM, and checks the status bits clear=0A=
-afterwards.=0A=
+Introduce a ASPEED ACRY model, which performs RSA modular=0A=
+exponentiation. The datasheet documents the engine as=0A=
+supporting both RSA and ECDSA, but ECDSA is broken on this=0A=
+hardware, so only RSA is modelled.=0A=
 =0A=
-Comparing the result against a known-answer ciphertext=0A=
-also validates the SRAM byte mapping end to end.=0A=
+The engine DMAs its operands (data, exponent, modulus) from a guest=0A=
+DRAM buffer and writes the result back into a memory-mapped SRAM=0A=
+region. Both regions share the same interleaved byte/dword layout:=0A=
+repeating 12-dword blocks of [4 dwords exponent][4 dwords modulus][4=0A=
+dwords data], index 0 holding the least-significant word/byte of each=0A=
+value.=0A=
 =0A=
-The cases cover raw (unpadded) public-exponent RSA, c =3D m^e mod n -=0A=
-exactly what the "rsa" akcipher transform backed by the ACRY FW=0A=
-performs, since PKCS1 padding is applied by a separate template=0A=
-layered on top in Linux, not by the ACRY hardware. QEMU's akcipher=0A=
-backend only implements raw RSA via libgcrypt, so the tests skip=0A=
-rather than fail when the build lacks it.=0A=
+The engine accesses DRAM by relative offset, so the CPU-visible=0A=
+address written to the DMA source register has its top (base) bit=0A=
+masked off.=0A=
 =0A=
-The 2048- and 4096-bit vectors are rsa_tv_template[2] and [3] from the=0A=
-Linux kernel crypto self-test suite (crypto/testmgr.h, v6.18); the=0A=
-4096-bit one matches the sha512,rsa4096 key size the FW uses.=0A=
+The modular exponentiation itself is delegated to QEMU's generic=0A=
+akcipher crypto API (crypto/akcipher.c) using raw (unpadded) RSA,=0A=
+matching what the real hardware performs - PKCS1 padding is handled=0A=
+by the guest's software crypto stack, not by this engine.=0A=
+=0A=
+The RSA public-key operand DER encoding needed by that API is built with=0A=
+crypto/der.h's generic encoder. Raw (unpadded) RSA is only implemented=0A=
+by that API's libgcrypt backend (its nettle backend rejects raw=0A=
+padding), so this device needs QEMU built with --enable-gcrypt.=0A=
+=0A=
+When that support is missing, the engine still completes and raises its=0A=
+completion IRQ as real hardware would, but produces an all-zero result=0A=
+so that whatever signature check the guest performs on it fails cleanly=0A=
+instead of the guest hanging forever waiting for an interrupt that=0A=
+would otherwise never come.=0A=
 =0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- tests/qtest/aspeed-acry-test.c | 408 +++++++++++++++++++++++++++++++++=0A=
- tests/qtest/meson.build        |   5 +-=0A=
- 2 files changed, 412 insertions(+), 1 deletion(-)=0A=
- create mode 100644 tests/qtest/aspeed-acry-test.c=0A=
+ include/hw/misc/aspeed_acry.h |  50 ++++=0A=
+ hw/misc/aspeed_acry.c         | 447 ++++++++++++++++++++++++++++++++++=0A=
+ hw/misc/meson.build           |   1 +=0A=
+ hw/misc/trace-events          |   6 +=0A=
+ 4 files changed, 504 insertions(+)=0A=
+ create mode 100644 include/hw/misc/aspeed_acry.h=0A=
+ create mode 100644 hw/misc/aspeed_acry.c=0A=
 =0A=
-diff --git a/tests/qtest/aspeed-acry-test.c b/tests/qtest/aspeed-acry-test.=
-c=0A=
+diff --git a/include/hw/misc/aspeed_acry.h b/include/hw/misc/aspeed_acry.h=
+=0A=
 new file mode 100644=0A=
-index 0000000000..a774844701=0A=
+index 0000000000..5af2296830=0A=
 --- /dev/null=0A=
-+++ b/tests/qtest/aspeed-acry-test.c=0A=
-@@ -0,0 +1,408 @@=0A=
++++ b/include/hw/misc/aspeed_acry.h=0A=
+@@ -0,0 +1,50 @@=0A=
 +/*=0A=
-+ * QTest testcase for the ASPEED ACRY Engine=0A=
++ * ASPEED ACRY Engine=0A=
 + *=0A=
 + * Copyright (C) 2026 ASPEED Technology Inc.=0A=
 + *=0A=
 + * SPDX-License-Identifier: GPL-2.0-or-later=0A=
 + */=0A=
 +=0A=
-+#include "qemu/osdep.h"=0A=
-+#include "libqtest.h"=0A=
-+#include "qemu/bitops.h"=0A=
-+#include "crypto/akcipher.h"=0A=
++#ifndef ASPEED_ACRY_H=0A=
++#define ASPEED_ACRY_H=0A=
 +=0A=
-+#define ACRY_TRIGGER                0x000=0A=
-+#define  ACRY_TRIGGER_RSA_START     BIT(0)=0A=
-+#define  ACRY_TRIGGER_RSA_DMA_DATA  BIT(1)=0A=
-+#define ACRY_DMA_CMD                0x048=0A=
-+#define  ACRY_DMA_CMD_DMEM_AHB      BIT(8)=0A=
-+#define  ACRY_DMA_CMD_SRAM_MODE_RSA (0x3 << 4)=0A=
-+#define ACRY_DMA_SRC                0x04C=0A=
-+#define ACRY_DMA_LEN                0x050=0A=
-+#define ACRY_RSA_KEY_LEN            0x058=0A=
-+#define ACRY_INT_MASK               0x3F8=0A=
-+#define  ACRY_INT_MASK_RSA_ENG_MASK BIT(1)=0A=
-+#define  ACRY_INT_MASK_RSA_DMA_MASK BIT(2)=0A=
-+#define ACRY_STATUS                 0x3FC=0A=
-+#define  ACRY_STATUS_RSA_ENG_DONE   BIT(1)=0A=
-+#define  ACRY_STATUS_RSA_DMA_DONE   BIT(2)=0A=
-+#define  ACRY_STATUS_RSA_DONE       (ACRY_STATUS_RSA_ENG_DONE | \=0A=
-+                                     ACRY_STATUS_RSA_DMA_DONE)=0A=
++#include "hw/core/sysbus.h"=0A=
++#include "system/memory.h"=0A=
 +=0A=
-+#define ACRY_DATA_MAX_LEN 0x800=0A=
-+#define ACRY_SRAM_SIZE    (3 * ACRY_DATA_MAX_LEN)=0A=
-+#define ACRY_MAX_BITS     4096=0A=
-+#define ACRY_MAX_BYTES    (ACRY_MAX_BITS / 8)=0A=
++#define TYPE_ASPEED_ACRY "aspeed.acry"=0A=
++OBJECT_DECLARE_SIMPLE_TYPE(AspeedACRYState, ASPEED_ACRY)=0A=
 +=0A=
-+/*=0A=
-+ * Raw (unpadded) RSA known-answer vectors: c =3D m^e mod n with=0A=
-+ * e =3D 0x10001 (65537) - exactly what the "rsa" akcipher transform backe=
-d by=0A=
-+ * the ACRY FW computes. PKCS1 padding is a separate "pkcs1pad(rsa)" templ=
-ate=0A=
-+ * layered on top in Linux, not done by the ACRY hardware.=0A=
-+ *=0A=
-+ * rsa2048_* and rsa4096_* are from the Linux kernel crypto/testmgr.h (v6.=
-18),=0A=
-+ * rsa_tv_template[2] and [3]. Grep that file's own comment to find them:=
++#define ASPEED_ACRY_NR_REGS     (0x400 >> 2)=0A=
++/* Max size of the "data" (message) field within the SRAM buffer. */=0A=
++#define ASPEED_ACRY_DATA_MAX_LEN 0x800=0A=
++#define ASPEED_ACRY_MAX_BITS     4096=0A=
++/* Max exponent/modulus size for a 4096-bit RSA key, in bytes. */=0A=
++#define ASPEED_ACRY_MAX_BYTES    (ASPEED_ACRY_MAX_BITS / 8)=0A=
++=0A=
++struct AspeedACRYState {=0A=
++    SysBusDevice parent_obj;=0A=
++=0A=
++    MemoryRegion iomem;=0A=
++    qemu_irq irq;=0A=
++=0A=
++    uint32_t regs[ASPEED_ACRY_NR_REGS];=0A=
++=0A=
++    /*=0A=
++     * Byte-position lookup tables: exp_map[k] / mod_map[k] / data_map[k]=
 =0A=
++     * give the offset in the scattered buffer of byte k (k =3D 0 =3D=0A=
++     * least significant) of the exponent / modulus / data.=0A=
++     */=0A=
++    uint32_t exp_map[ASPEED_ACRY_MAX_BYTES];=0A=
++    uint32_t mod_map[ASPEED_ACRY_MAX_BYTES];=0A=
++    uint32_t data_map[ASPEED_ACRY_DATA_MAX_LEN];=0A=
++=0A=
++    MemoryRegion *dram_mr;=0A=
++    AddressSpace dram_as;=0A=
++=0A=
++    MemoryRegion *sram_mr;=0A=
++    AddressSpace sram_as;=0A=
++    uint64_t sram_base;=0A=
++};=0A=
++=0A=
++#endif /* ASPEED_ACRY_H */=0A=
+diff --git a/hw/misc/aspeed_acry.c b/hw/misc/aspeed_acry.c=0A=
+new file mode 100644=0A=
+index 0000000000..53ef68d284=0A=
+--- /dev/null=0A=
++++ b/hw/misc/aspeed_acry.c=0A=
+@@ -0,0 +1,447 @@=0A=
++/*=0A=
++ * ASPEED ACRY Engine=0A=
 + *=0A=
-+ *   RSA test vectors. Borrowed from openSSL.=0A=
++ * Copyright (C) 2026 ASPEED Technology Inc.=0A=
 + *=0A=
-+ *   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
-ee/crypto/testmgr.h?h=3Dv6.18=0A=
++ * SPDX-License-Identifier: GPL-2.0-or-later=0A=
 + *=0A=
-+ * There the modulus n is DER-encoded in the .key field (not a raw field),=
- the=0A=
-+ * ciphertext is .c, and every entry reuses the same 8-byte .m message.=0A=
++ * The datasheet documents the ACRY engine as supporting both RSA and=0A=
++ * ECDSA, but ECDSA is broken on this hardware, so only RSA is modelled=0A=
++ * here.=0A=
 + */=0A=
-+/* rsa_tv_template[].m, shared by every entry */=0A=
-+static const uint8_t rsa_m[8] =3D {=0A=
-+    0x54, 0x85, 0x9B, 0x34, 0x2C, 0x49, 0xEA, 0x2A,=0A=
-+};=0A=
-+/* public exponent e =3D 65537, DER-encoded in every .key */=0A=
-+static const uint8_t rsa_e[3] =3D { 0x01, 0x00, 0x01 };=0A=
 +=0A=
-+/* rsa_tv_template[2].key, modulus n */=0A=
-+static const uint8_t rsa2048_n[256] =3D {=0A=
-+    0xDB, 0x10, 0x1A, 0xC2, 0xA3, 0xF1, 0xDC, 0xFF, 0x13, 0x6B, 0xED, 0x44=
-,=0A=
-+    0xDF, 0xF0, 0x02, 0x6D, 0x13, 0xC7, 0x88, 0xDA, 0x70, 0x6B, 0x54, 0xF1=
-,=0A=
-+    0xE8, 0x27, 0xDC, 0xC3, 0x0F, 0x99, 0x6A, 0xFA, 0xC6, 0x67, 0xFF, 0x1D=
-,=0A=
-+    0x1E, 0x3C, 0x1D, 0xC1, 0xB5, 0x5F, 0x6C, 0xC0, 0xB2, 0x07, 0x3A, 0x6D=
-,=0A=
-+    0x41, 0xE4, 0x25, 0x99, 0xAC, 0xFC, 0xD2, 0x0F, 0x02, 0xD3, 0xD1, 0x54=
-,=0A=
-+    0x06, 0x1A, 0x51, 0x77, 0xBD, 0xB6, 0xBF, 0xEA, 0xA7, 0x5C, 0x06, 0xA9=
-,=0A=
-+    0x5D, 0x69, 0x84, 0x45, 0xD7, 0xF5, 0x05, 0xBA, 0x47, 0xF0, 0x1B, 0xD7=
-,=0A=
-+    0x2B, 0x24, 0xEC, 0xCB, 0x9B, 0x1B, 0x10, 0x8D, 0x81, 0xA0, 0xBE, 0xB1=
-,=0A=
-+    0x8C, 0x33, 0xE4, 0x36, 0xB8, 0x43, 0xEB, 0x19, 0x2A, 0x81, 0x8D, 0xDE=
-,=0A=
-+    0x81, 0x0A, 0x99, 0x48, 0xB6, 0xF6, 0xBC, 0xCD, 0x49, 0x34, 0x3A, 0x8F=
-,=0A=
-+    0x26, 0x94, 0xE3, 0x28, 0x82, 0x1A, 0x7C, 0x8F, 0x59, 0x9F, 0x45, 0xE8=
-,=0A=
-+    0x5D, 0x1A, 0x45, 0x76, 0x04, 0x56, 0x05, 0xA1, 0xD0, 0x1B, 0x8C, 0x77=
-,=0A=
-+    0x6D, 0xAF, 0x53, 0xFA, 0x71, 0xE2, 0x67, 0xE0, 0x9A, 0xFE, 0x03, 0xA9=
-,=0A=
-+    0x85, 0xD2, 0xC9, 0xAA, 0xBA, 0x2A, 0xBC, 0xF4, 0xA0, 0x08, 0xF5, 0x13=
-,=0A=
-+    0x98, 0x13, 0x5D, 0xF0, 0xD9, 0x33, 0x34, 0x2A, 0x61, 0xC3, 0x89, 0x55=
-,=0A=
-+    0xF0, 0xAE, 0x1A, 0x9C, 0x22, 0xEE, 0x19, 0x05, 0x8D, 0x32, 0xFE, 0xEC=
-,=0A=
-+    0x9C, 0x84, 0xBA, 0xB7, 0xF9, 0x6C, 0x3A, 0x4F, 0x07, 0xFC, 0x45, 0xEB=
-,=0A=
-+    0x12, 0xE5, 0x7B, 0xFD, 0x55, 0xE6, 0x29, 0x69, 0xD1, 0xC2, 0xE8, 0xB9=
-,=0A=
-+    0x78, 0x59, 0xF6, 0x79, 0x10, 0xC6, 0x4E, 0xEB, 0x6A, 0x5E, 0xB9, 0x9A=
-,=0A=
-+    0xC7, 0xC4, 0x5B, 0x63, 0xDA, 0xA3, 0x3F, 0x5E, 0x92, 0x7A, 0x81, 0x5E=
-,=0A=
-+    0xD6, 0xB0, 0xE2, 0x62, 0x8F, 0x74, 0x26, 0xC2, 0x0C, 0xD3, 0x9A, 0x17=
-,=0A=
-+    0x47, 0xE6, 0x8E, 0xAB,=0A=
-+};=0A=
-+/* rsa_tv_template[2].c */=0A=
-+static const uint8_t rsa2048_c[256] =3D {=0A=
-+    0xB2, 0x97, 0x76, 0xB4, 0xAE, 0x3E, 0x38, 0x3C, 0x7E, 0x64, 0x1F, 0xCC=
-,=0A=
-+    0xA2, 0x7F, 0xF6, 0xBE, 0xCF, 0x49, 0xBC, 0x48, 0xD3, 0x6C, 0x8F, 0x0A=
-,=0A=
-+    0x0E, 0xC1, 0x73, 0xBD, 0x7B, 0x55, 0x79, 0x36, 0x0E, 0xA1, 0x87, 0x88=
-,=0A=
-+    0xB9, 0x2C, 0x90, 0xA6, 0x53, 0x5E, 0xE9, 0xEF, 0xC4, 0xE2, 0x4D, 0xDD=
-,=0A=
-+    0xF7, 0xA6, 0x69, 0x82, 0x3F, 0x56, 0xA4, 0x7B, 0xFB, 0x62, 0xE0, 0xAE=
-,=0A=
-+    0xB8, 0xD3, 0x04, 0xB3, 0xAC, 0x5A, 0x15, 0x2A, 0xE3, 0x19, 0x9B, 0x03=
-,=0A=
-+    0x9A, 0x0B, 0x41, 0xDA, 0x64, 0xEC, 0x0A, 0x69, 0xFC, 0xF2, 0x10, 0x92=
-,=0A=
-+    0xF3, 0xC1, 0xBF, 0x84, 0x7F, 0xFD, 0x2C, 0xAE, 0xC8, 0xB5, 0xF6, 0x41=
-,=0A=
-+    0x70, 0xC5, 0x47, 0x03, 0x8A, 0xF8, 0xFF, 0x6F, 0x3F, 0xD2, 0x6F, 0x09=
-,=0A=
-+    0xB4, 0x22, 0xF3, 0x30, 0xBE, 0xA9, 0x85, 0xCB, 0x9C, 0x8D, 0xF9, 0x8F=
-,=0A=
-+    0xEB, 0x32, 0x91, 0xA2, 0x25, 0x84, 0x8F, 0xF5, 0xDC, 0xC7, 0x06, 0x9C=
-,=0A=
-+    0x2D, 0xE5, 0x11, 0x2C, 0x09, 0x09, 0x87, 0x09, 0xA9, 0xF6, 0x33, 0x73=
-,=0A=
-+    0x90, 0xF1, 0x60, 0xF2, 0x65, 0xDD, 0x30, 0xA5, 0x66, 0xCE, 0x62, 0x7B=
-,=0A=
-+    0xD0, 0xF8, 0x2D, 0x3D, 0x19, 0x82, 0x77, 0xE3, 0x0A, 0x5F, 0x75, 0x2F=
-,=0A=
-+    0x8E, 0xB1, 0xE5, 0xE8, 0x91, 0x35, 0x1B, 0x3B, 0x33, 0xB7, 0x66, 0x92=
-,=0A=
-+    0xD1, 0xF2, 0x8E, 0x6F, 0xE5, 0x75, 0x0C, 0xAD, 0x36, 0xFB, 0x4E, 0xD0=
-,=0A=
-+    0x66, 0x61, 0xBD, 0x49, 0xFE, 0xF4, 0x1A, 0xA2, 0x2B, 0x49, 0xFE, 0x03=
-,=0A=
-+    0x4C, 0x74, 0x47, 0x8D, 0x9A, 0x66, 0xB2, 0x49, 0x46, 0x4D, 0x77, 0xEA=
-,=0A=
-+    0x33, 0x4D, 0x6B, 0x3C, 0xB4, 0x49, 0x4A, 0xC6, 0x7D, 0x3D, 0xB5, 0xB9=
-,=0A=
-+    0x56, 0x41, 0x15, 0x67, 0x0F, 0x94, 0x3C, 0x93, 0x65, 0x27, 0xE0, 0x21=
-,=0A=
-+    0x5D, 0x59, 0xC3, 0x62, 0xD5, 0xA6, 0xDA, 0x38, 0x26, 0x22, 0x5E, 0x34=
-,=0A=
-+    0x1C, 0x94, 0xAF, 0x98,=0A=
-+};=0A=
++#include "qemu/osdep.h"=0A=
++#include "qemu/cutils.h"=0A=
++#include "qemu/log.h"=0A=
++#include "hw/misc/aspeed_acry.h"=0A=
++#include "hw/core/qdev-properties.h"=0A=
++#include "hw/core/irq.h"=0A=
++#include "hw/core/registerfields.h"=0A=
++#include "qapi/error.h"=0A=
++#include "crypto/akcipher.h"=0A=
++#include "crypto/der.h"=0A=
++#include "trace.h"=0A=
 +=0A=
-+/* rsa_tv_template[3].key, modulus n */=0A=
-+static const uint8_t rsa4096_n[512] =3D {=0A=
-+    0xC3, 0x8B, 0x55, 0x7B, 0x73, 0x4D, 0xFF, 0xE9, 0x9B, 0xC6, 0xDC, 0x67=
-,=0A=
-+    0x3C, 0xB4, 0x8E, 0xA0, 0x86, 0xED, 0xF2, 0xB9, 0x50, 0x5C, 0x54, 0x5C=
-,=0A=
-+    0xBA, 0xE4, 0xA1, 0xB2, 0xA7, 0xAE, 0x2F, 0x1B, 0x7D, 0xF1, 0xFB, 0xAC=
-,=0A=
-+    0x79, 0xC5, 0xDF, 0x1A, 0x00, 0xC9, 0xB2, 0xC1, 0x61, 0x25, 0x33, 0xE6=
-,=0A=
-+    0x9C, 0xE9, 0xCF, 0xD6, 0x27, 0xC4, 0x4E, 0x44, 0x30, 0x44, 0x5E, 0x08=
-,=0A=
-+    0xA1, 0x87, 0x52, 0xCC, 0x6B, 0x97, 0x70, 0x8C, 0xBC, 0xA5, 0x06, 0x31=
-,=0A=
-+    0x0C, 0xD4, 0x2F, 0xD5, 0x7D, 0x26, 0x24, 0xA2, 0xE2, 0xAC, 0x78, 0xF4=
-,=0A=
-+    0x53, 0x14, 0xCE, 0xF7, 0x19, 0x2E, 0xD7, 0xF7, 0xE6, 0x0C, 0xB9, 0x56=
-,=0A=
-+    0x7F, 0x0B, 0xF1, 0xB1, 0xE2, 0x43, 0x70, 0xBD, 0x86, 0x1D, 0xA1, 0xCC=
-,=0A=
-+    0x2B, 0x19, 0x08, 0x76, 0xEF, 0x91, 0xAC, 0xBF, 0x20, 0x24, 0x0D, 0x38=
-,=0A=
-+    0xC0, 0x89, 0xB8, 0x9A, 0x70, 0xB3, 0x64, 0xD9, 0x8F, 0x80, 0x41, 0x10=
-,=0A=
-+    0x5B, 0x9F, 0xB1, 0xCB, 0x76, 0x43, 0x00, 0x21, 0x25, 0x36, 0xD4, 0x19=
-,=0A=
-+    0xFC, 0x55, 0x95, 0x10, 0xE4, 0x26, 0x74, 0x98, 0x2C, 0xD9, 0xBD, 0x0B=
-,=0A=
-+    0x2B, 0x04, 0xC2, 0xAC, 0x82, 0x38, 0xB4, 0xDD, 0x4C, 0x04, 0x7E, 0x51=
-,=0A=
-+    0x36, 0x40, 0x1E, 0x0B, 0xC4, 0x7C, 0x25, 0xDD, 0x4B, 0xB2, 0xE7, 0x20=
-,=0A=
-+    0x0A, 0x57, 0xF9, 0xB4, 0x94, 0xC3, 0x08, 0x33, 0x22, 0x6F, 0x8B, 0x48=
-,=0A=
-+    0xDB, 0x03, 0x68, 0x5A, 0x5B, 0xBA, 0xAE, 0xF3, 0xAD, 0xCF, 0xC3, 0x6D=
-,=0A=
-+    0xBA, 0xF1, 0x28, 0x67, 0x7E, 0x6C, 0x79, 0x07, 0xDE, 0xFC, 0xED, 0xE7=
-,=0A=
-+    0x96, 0xE3, 0x6C, 0xE0, 0x2C, 0x87, 0xF8, 0x02, 0x01, 0x28, 0x38, 0x43=
-,=0A=
-+    0x21, 0x53, 0x84, 0x69, 0x75, 0x78, 0x15, 0x7E, 0xEE, 0xD2, 0x1B, 0xB9=
-,=0A=
-+    0x23, 0x40, 0xA8, 0x86, 0x1E, 0x38, 0x83, 0xB2, 0x73, 0x1D, 0x53, 0xFB=
-,=0A=
-+    0x9E, 0x2A, 0x8A, 0xB2, 0x75, 0x35, 0x01, 0xC3, 0xC3, 0xC4, 0x94, 0xE8=
-,=0A=
-+    0x84, 0x86, 0x64, 0x81, 0xF4, 0x42, 0xAA, 0x3C, 0x0E, 0xD6, 0x4F, 0xBC=
-,=0A=
-+    0x0A, 0x09, 0x2D, 0xE7, 0x1B, 0xD4, 0x10, 0xA8, 0x54, 0xEA, 0x89, 0x84=
-,=0A=
-+    0x8A, 0xCB, 0xF7, 0x5A, 0x3C, 0xCA, 0x76, 0x08, 0x29, 0x62, 0xB4, 0x6A=
-,=0A=
-+    0x22, 0xDF, 0x14, 0x95, 0x71, 0xFD, 0xB6, 0x86, 0x39, 0xB8, 0x8B, 0xF8=
-,=0A=
-+    0x91, 0x7F, 0x38, 0xAA, 0x14, 0xCD, 0xE5, 0xF5, 0x1D, 0xC2, 0x6D, 0x53=
-,=0A=
-+    0x69, 0x52, 0x84, 0x7F, 0xA3, 0x1A, 0x5E, 0x26, 0x04, 0x83, 0x06, 0x73=
-,=0A=
-+    0x52, 0x56, 0xCF, 0x76, 0x26, 0xC9, 0xDD, 0x75, 0xD7, 0xFC, 0xF4, 0x69=
-,=0A=
-+    0xD8, 0x7B, 0x55, 0xB7, 0x68, 0x13, 0x53, 0xB9, 0xE7, 0x89, 0xC3, 0xE8=
-,=0A=
-+    0xD6, 0x6E, 0xA7, 0x6D, 0xEA, 0x81, 0xFD, 0xC4, 0xB7, 0x05, 0x5A, 0xB7=
-,=0A=
-+    0x41, 0x0A, 0x23, 0x8E, 0x03, 0x8A, 0x1C, 0xAE, 0xD3, 0x1E, 0xCE, 0xE3=
-,=0A=
-+    0x5E, 0xFC, 0x19, 0x4A, 0xEE, 0x61, 0x9B, 0x8E, 0xE5, 0xE5, 0xDD, 0x85=
-,=0A=
-+    0xF9, 0x41, 0xEC, 0x14, 0x53, 0x92, 0xF7, 0xDD, 0x06, 0x85, 0x02, 0x91=
-,=0A=
-+    0xE3, 0xEB, 0x6C, 0x43, 0x03, 0xB1, 0x36, 0x7B, 0x89, 0x5A, 0xA8, 0xEB=
-,=0A=
-+    0xFC, 0xD5, 0xA8, 0x35, 0xDC, 0x81, 0xD9, 0x5C, 0xBD, 0xCA, 0xDC, 0x9B=
-,=0A=
-+    0x98, 0x0B, 0x06, 0x5D, 0x0C, 0x5B, 0xEE, 0xF3, 0xD5, 0xCC, 0x57, 0xC9=
-,=0A=
-+    0x71, 0x2F, 0x90, 0x3B, 0x3C, 0xF0, 0x8E, 0x4E, 0x35, 0x48, 0xAE, 0x63=
-,=0A=
-+    0x74, 0xA9, 0xFC, 0x72, 0x75, 0x8E, 0x34, 0xA8, 0xF2, 0x1F, 0xEA, 0xDF=
-,=0A=
-+    0x3A, 0x37, 0x2D, 0xE5, 0x39, 0x39, 0xF8, 0x57, 0x58, 0x3C, 0x04, 0xFE=
-,=0A=
-+    0x87, 0x06, 0x98, 0xBC, 0x7B, 0xD3, 0x21, 0x36, 0x60, 0x25, 0x54, 0xA7=
-,=0A=
-+    0x3D, 0xFA, 0x91, 0xCC, 0xA8, 0x0B, 0x92, 0x8E, 0xB4, 0xF7, 0x06, 0xFF=
-,=0A=
-+    0x1E, 0x95, 0xCB, 0x07, 0x76, 0x97, 0x3B, 0x9D,=0A=
-+};=0A=
-+/* rsa_tv_template[3].c */=0A=
-+static const uint8_t rsa4096_c[512] =3D {=0A=
-+    0x5C, 0xCE, 0x9C, 0xD7, 0x9A, 0x9E, 0xA1, 0xFE, 0x7A, 0x82, 0x3C, 0x68=
-,=0A=
-+    0x27, 0x98, 0xE3, 0x5D, 0xD5, 0xD7, 0x07, 0x29, 0xF5, 0xFB, 0xC3, 0x1A=
-,=0A=
-+    0x7F, 0x63, 0x1E, 0x62, 0x31, 0x3B, 0x19, 0x87, 0x79, 0x4F, 0xEC, 0x7B=
-,=0A=
-+    0xF3, 0xCB, 0xEA, 0x9B, 0x95, 0x52, 0x3A, 0x40, 0xE5, 0x87, 0x7B, 0x72=
-,=0A=
-+    0xD1, 0x72, 0xC9, 0xFB, 0x54, 0x63, 0xD8, 0xC9, 0xD7, 0x2C, 0xFC, 0x7B=
-,=0A=
-+    0xC3, 0x14, 0x1E, 0xBC, 0x18, 0xB4, 0x34, 0xA1, 0xBF, 0x14, 0xB1, 0x37=
-,=0A=
-+    0x31, 0x6E, 0xF0, 0x1B, 0x35, 0x19, 0x54, 0x07, 0xF7, 0x99, 0xEC, 0x3E=
-,=0A=
-+    0x63, 0xE2, 0xCD, 0x61, 0x28, 0x65, 0xC3, 0xCD, 0xB1, 0x38, 0x36, 0xA5=
-,=0A=
-+    0xB2, 0xD7, 0xB0, 0xDC, 0x1F, 0xF5, 0xEF, 0x19, 0xC7, 0x53, 0x32, 0x2D=
-,=0A=
-+    0x1C, 0x26, 0xDA, 0xE4, 0x0D, 0xD6, 0x90, 0x7E, 0x28, 0xD8, 0xDC, 0xE4=
-,=0A=
-+    0x61, 0x05, 0xD2, 0x25, 0x90, 0x01, 0xD3, 0x96, 0x6D, 0xA6, 0xCF, 0x58=
-,=0A=
-+    0x20, 0xBB, 0x03, 0xF4, 0x01, 0xBC, 0x79, 0xB9, 0x18, 0xD8, 0xB8, 0xBA=
-,=0A=
-+    0xBD, 0x93, 0xFC, 0xF2, 0x62, 0x5D, 0x8C, 0x66, 0x1E, 0x0E, 0x84, 0x59=
-,=0A=
-+    0x93, 0xDD, 0xE2, 0x93, 0xA2, 0x62, 0x7D, 0x08, 0x82, 0x7A, 0xDD, 0xFC=
-,=0A=
-+    0xB8, 0xBC, 0xC5, 0x4F, 0x9C, 0x4E, 0xBF, 0xB4, 0xFC, 0xF4, 0xC5, 0x01=
-,=0A=
-+    0xE8, 0x00, 0x70, 0x4D, 0x28, 0x26, 0xCC, 0x2E, 0xFE, 0x0E, 0x58, 0x41=
-,=0A=
-+    0x8B, 0xEC, 0xAF, 0x7C, 0x4B, 0x54, 0xD0, 0xA0, 0x64, 0xF9, 0x32, 0xF4=
-,=0A=
-+    0x2E, 0x47, 0x65, 0x0A, 0x67, 0x88, 0x39, 0x3A, 0xDB, 0xB2, 0xDB, 0x7B=
-,=0A=
-+    0xB5, 0xF6, 0x17, 0xA8, 0xD9, 0xC6, 0x5E, 0x28, 0x13, 0x82, 0x8A, 0x99=
-,=0A=
-+    0xDB, 0x60, 0x08, 0xA5, 0x23, 0x37, 0xFA, 0x88, 0x90, 0x31, 0xC8, 0x9D=
-,=0A=
-+    0x8F, 0xEC, 0xFB, 0x85, 0x9F, 0xB1, 0xCE, 0xA6, 0x24, 0x50, 0x46, 0x44=
-,=0A=
-+    0x47, 0xCB, 0x65, 0xD1, 0xDF, 0xC0, 0xB1, 0x6C, 0x90, 0x1F, 0x99, 0x8E=
-,=0A=
-+    0x4D, 0xD5, 0x9E, 0x31, 0x07, 0x66, 0x87, 0xDF, 0x01, 0xAA, 0x56, 0x3C=
-,=0A=
-+    0x71, 0xE0, 0x2B, 0x6F, 0x67, 0x3B, 0x23, 0xED, 0xC2, 0xBD, 0x03, 0x30=
-,=0A=
-+    0x79, 0x76, 0x02, 0x10, 0x10, 0x98, 0x85, 0x8A, 0xFF, 0xFD, 0x0B, 0xDA=
-,=0A=
-+    0xA5, 0xD9, 0x32, 0x48, 0x02, 0xA0, 0x0B, 0xB9, 0x2A, 0x8A, 0x18, 0xCA=
-,=0A=
-+    0xC6, 0x8F, 0x3F, 0xBB, 0x16, 0xB2, 0xAA, 0x98, 0x27, 0xE3, 0x60, 0x43=
-,=0A=
-+    0xED, 0x15, 0x70, 0xD4, 0x57, 0x15, 0xFE, 0x19, 0xD4, 0x9B, 0x13, 0x78=
-,=0A=
-+    0x8A, 0xF7, 0x21, 0xF1, 0xA2, 0xA2, 0x2D, 0xB3, 0x09, 0xCF, 0x44, 0x91=
-,=0A=
-+    0x6E, 0x08, 0x3A, 0x30, 0x81, 0x3E, 0x90, 0x93, 0x8A, 0x67, 0x33, 0x00=
-,=0A=
-+    0x59, 0x54, 0x9A, 0x25, 0xD3, 0x49, 0x8E, 0x9F, 0xC1, 0x4B, 0xE5, 0x86=
-,=0A=
-+    0xF3, 0x50, 0x4C, 0xBC, 0xC5, 0xD3, 0xF5, 0x3A, 0x54, 0xE1, 0x36, 0x3F=
-,=0A=
-+    0xE2, 0x5A, 0xB4, 0x37, 0xC0, 0xEB, 0x70, 0x35, 0xEC, 0xF6, 0xB7, 0xE8=
-,=0A=
-+    0x44, 0x3B, 0x7B, 0xF3, 0xF1, 0xF2, 0x1E, 0xDB, 0x60, 0x7D, 0xD5, 0xBE=
-,=0A=
-+    0xF0, 0x71, 0x34, 0x90, 0x4C, 0xCB, 0xD4, 0x35, 0x51, 0xC7, 0xDD, 0xD8=
-,=0A=
-+    0xC9, 0x81, 0xF5, 0x5D, 0x57, 0x46, 0x2C, 0xB1, 0x7B, 0x9B, 0xAA, 0xCB=
-,=0A=
-+    0xD1, 0x22, 0x25, 0x49, 0x44, 0xA3, 0xD4, 0x6B, 0x29, 0x7B, 0xD8, 0xB2=
-,=0A=
-+    0x07, 0x93, 0xBF, 0x3D, 0x52, 0x49, 0x84, 0x79, 0xEF, 0xB8, 0xE5, 0xC4=
-,=0A=
-+    0xAD, 0xCA, 0xA8, 0xC6, 0xF6, 0xA6, 0x76, 0x70, 0x5B, 0x0B, 0xE5, 0x83=
-,=0A=
-+    0xC6, 0x0E, 0xEF, 0x55, 0xF2, 0xE7, 0xFF, 0x04, 0xEA, 0xE6, 0x13, 0xBE=
-,=0A=
-+    0x40, 0xE1, 0x40, 0x45, 0x48, 0x66, 0x75, 0x31, 0xAE, 0x35, 0x64, 0x91=
-,=0A=
-+    0x11, 0x6F, 0xDA, 0xEE, 0x26, 0x86, 0x45, 0x6F, 0x0B, 0xD5, 0x9F, 0x03=
-,=0A=
-+    0xB1, 0x65, 0x5B, 0xDB, 0xA4, 0xE4, 0xF9, 0x45,=0A=
-+};=0A=
++REG32(ACRY_TRIGGER, 0x000)=0A=
++    FIELD(ACRY_TRIGGER, RSA_DMA_DATA, 1, 1)=0A=
++    FIELD(ACRY_TRIGGER, RSA_START, 0, 1)=0A=
++REG32(ACRY_DMA_CMD, 0x048)=0A=
++REG32(ACRY_DMA_SRC, 0x04C)=0A=
++REG32(ACRY_DMA_LEN, 0x050)=0A=
++REG32(ACRY_RSA_KEY_LEN, 0x058)=0A=
++REG32(ACRY_INT_MASK, 0x3F8)=0A=
++    FIELD(ACRY_INT_MASK, RSA_DMA_MASK, 2, 1)=0A=
++    FIELD(ACRY_INT_MASK, RSA_ENG_MASK, 1, 1)=0A=
++REG32(ACRY_STATUS, 0x3FC)=0A=
++    FIELD(ACRY_STATUS, RSA_DMA_DONE, 2, 1)=0A=
++    FIELD(ACRY_STATUS, RSA_ENG_DONE, 1, 1)=0A=
 +=0A=
 +/*=0A=
-+ * Build the ACRY SRAM byte-offset lookup tables: exp_map[k] / mod_map[k] =
-/=0A=
-+ * data_map[k] give the offset in the scattered buffer of byte k=0A=
-+ * (k =3D 0 =3D least significant) of the exponent / modulus / data. This =
-is the=0A=
-+ * byte layout the ACRY engine mandates, so the test lays out its DMA inpu=
-t=0A=
-+ * and decodes the result buffer the same way the hardware does.=0A=
++ * Total size of the interleaved SRAM buffer. Data is 4 of every 12=0A=
++ * dwords of a block (see aspeed_acry_init_mapping()), i.e. one third of=
+=0A=
++ * the buffer, so the whole buffer is 3x the data region.=0A=
 + */=0A=
-+static void acry_sram_mapping(uint32_t *exp_map, uint32_t *mod_map,=0A=
-+                              uint32_t *data_map)=0A=
++#define ASPEED_ACRY_SRAM_SIZE   (3 * ASPEED_ACRY_DATA_MAX_LEN)=0A=
++=0A=
++static void aspeed_acry_hexdump(const char *desc, const uint8_t *buf,=0A=
++                                size_t size)=0A=
++{=0A=
++    g_autoptr(GString) str =3D g_string_sized_new(64);=0A=
++    size_t len;=0A=
++    size_t i;=0A=
++=0A=
++    for (i =3D 0; i < size; i +=3D len) {=0A=
++        len =3D MIN(16, size - i);=0A=
++        g_string_truncate(str, 0);=0A=
++        qemu_hexdump_line(str, buf + i, len, 1, 4);=0A=
++        trace_aspeed_acry_hexdump(desc, i, str->str);=0A=
++    }=0A=
++}=0A=
++=0A=
++/*=0A=
++ * The SRAM buffer is a series of 12-dword blocks, each split into=0A=
++ * three 4-dword regions - exp, mod, data:=0A=
++ *=0A=
++ *   dword in block:  0    1    2    3    4    5    6    7    8    9   10 =
+  11=0A=
++ *   region:          \---- exp ----/    \---- mod ----/    \---- data ---=
+-/=0A=
++ *   lane:            0    1    2    3    0    1    2    3    0    1    2 =
+   3=0A=
++ *=0A=
++ * Successive blocks hold the next 4 dwords of each operand, so operand=0A=
++ * dword d is in block (d / 4), lane (d % 4). Dwords are little-endian, so=
+=0A=
++ * byte b of the dword at SRAM dword D is at byte D * 4 + b.=0A=
++ *=0A=
++ * exp_map[op_byte] / mod_map[op_byte] / data_map[op_byte] give the buffer=
+=0A=
++ * offset of operand byte op_byte (op_byte =3D 0 =3D least significant).=
+=0A=
++ */=0A=
++static void aspeed_acry_init_mapping(AspeedACRYState *s)=0A=
 +{=0A=
 +    int byte_in_dword;=0A=
 +    int block_base;=0A=
@@ -538,7 +344,8 @@ t=0A=
 +    int block;=0A=
 +    int lane;=0A=
 +=0A=
-+    for (op_byte =3D 0; op_byte < ACRY_DATA_MAX_LEN; op_byte++) {=0A=
++    for (op_byte =3D 0; op_byte < ASPEED_ACRY_DATA_MAX_LEN; op_byte++) {=
+=0A=
 +        op_dword =3D op_byte / 4;=0A=
 +        byte_in_dword =3D op_byte % 4;=0A=
 +        block =3D op_dword / 4;=0A=
@@ -546,228 +353,437 @@ t=0A=
 +        block_base =3D block * 12;=0A=
 +=0A=
 +        /* exp starts each block; mod is +4 dwords, data +8 dwords. */=0A=
-+        data_map[op_byte] =3D (block_base + 8 + lane) * 4 + byte_in_dword;=
-=0A=
-+        if (op_byte < ACRY_MAX_BYTES) {=0A=
-+            exp_map[op_byte] =3D (block_base + 0 + lane) * 4 + byte_in_dwo=
++        s->data_map[op_byte] =3D (block_base + 8 + lane) * 4 + byte_in_dwo=
 rd;=0A=
-+            mod_map[op_byte] =3D (block_base + 4 + lane) * 4 + byte_in_dwo=
-rd;=0A=
++        if (op_byte < ASPEED_ACRY_MAX_BYTES) {=0A=
++            s->exp_map[op_byte] =3D (block_base + 0 + lane) * 4 + byte_in_=
+dword;=0A=
++            s->mod_map[op_byte] =3D (block_base + 4 + lane) * 4 + byte_in_=
+dword;=0A=
 +        }=0A=
 +    }=0A=
 +}=0A=
 +=0A=
 +/*=0A=
-+ * Write a big-endian (most significant byte first) bignum of 'be_len'=0A=
-+ * bytes into the region addressed by 'map' (exponent, modulus, or data),=
++ * Read one operand out of the buffer as a big-endian magnitude.=0A=
++ *=0A=
++ * The operand's bytes are scattered through buf: buf[map[k]] is the byte=
 =0A=
-+ * where map[k] gives the position in the scattered buffer of the=0A=
-+ * byte at significance level k (k =3D 0 is the least significant byte).=
++ * at significance level k (k =3D 0 is the least significant). Walk from t=
+he=0A=
++ * top down, drop leading zero bytes, and write the result most significan=
+t=0A=
++ * byte first into out[]. Returns the number of bytes written (the value 0=
 =0A=
++ * yields a single 0x00 byte, so always >=3D 1).=0A=
 + */=0A=
-+static void put_bignum_be_bytes(uint8_t *buf, const uint32_t *map,=0A=
-+                                const uint8_t *be, int be_len)=0A=
++static int aspeed_acry_extract_be(const uint8_t *buf, const uint32_t *map,=
+=0A=
++                                  int max_bytes, uint8_t *out)=0A=
 +{=0A=
-+    int be_index;=0A=
++    int msb;=0A=
++    int len;=0A=
 +    int k;=0A=
 +=0A=
-+    /* be[0] (MSB) maps to the highest level; be_index walks up from 0. */=
-=0A=
-+    be_index =3D 0;=0A=
-+    for (k =3D be_len - 1; k >=3D 0; k--) {=0A=
-+        buf[map[k]] =3D be[be_index++];=0A=
++    /* Highest significance level holding a non-zero byte (skip leading 0s=
+). */=0A=
++    msb =3D max_bytes - 1;=0A=
++    while (msb >=3D 0 && buf[map[msb]] =3D=3D 0) {=0A=
++        msb--;=0A=
 +    }=0A=
-+}=0A=
 +=0A=
-+/* Inverse of put_bignum_be_bytes(): gather a big-endian bignum back out. =
-*/=0A=
-+static void get_bignum_be_bytes(const uint8_t *sram, const uint32_t *map,=
-=0A=
-+                                uint8_t *out_be, int be_len)=0A=
-+{=0A=
-+    int be_index;=0A=
-+    int k;=0A=
-+=0A=
-+    /* Inverse of put_bignum_be_bytes(): highest level -> out_be[0] (MSB).=
- */=0A=
-+    be_index =3D 0;=0A=
-+    for (k =3D be_len - 1; k >=3D 0; k--) {=0A=
-+        out_be[be_index++] =3D sram[map[k]];=0A=
++    /* All bytes zero: the value is 0. */=0A=
++    if (msb < 0) {=0A=
++        out[0] =3D 0;=0A=
++        return 1;=0A=
 +    }=0A=
++=0A=
++    /* Copy most significant byte first: level msb down to level 0. */=0A=
++    len =3D 0;=0A=
++    for (k =3D msb; k >=3D 0; k--) {=0A=
++        out[len++] =3D buf[map[k]];=0A=
++    }=0A=
++=0A=
++    return len;=0A=
 +}=0A=
-+=0A=
-+typedef struct AspeedACRYModExp {=0A=
-+    const char *name;=0A=
-+    const uint8_t *n;=0A=
-+    size_t n_len;=0A=
-+    const uint8_t *e;=0A=
-+    size_t e_len;=0A=
-+    const uint8_t *m;=0A=
-+    size_t m_len;=0A=
-+    const uint8_t *c;=0A=
-+    size_t c_len;=0A=
-+} AspeedACRYModExp;=0A=
-+=0A=
-+static const AspeedACRYModExp acry_modexp_tests[] =3D {=0A=
-+    {=0A=
-+        .name =3D "modexp_rsa2048",=0A=
-+        .n =3D rsa2048_n,=0A=
-+        .n_len =3D sizeof(rsa2048_n),=0A=
-+        .e =3D rsa_e,=0A=
-+        .e_len =3D sizeof(rsa_e),=0A=
-+        .m =3D rsa_m,=0A=
-+        .m_len =3D sizeof(rsa_m),=0A=
-+        .c =3D rsa2048_c,=0A=
-+        .c_len =3D sizeof(rsa2048_c),=0A=
-+    },=0A=
-+    {=0A=
-+        .name =3D "modexp_rsa4096",=0A=
-+        .n =3D rsa4096_n,=0A=
-+        .n_len =3D sizeof(rsa4096_n),=0A=
-+        .e =3D rsa_e,=0A=
-+        .e_len =3D sizeof(rsa_e),=0A=
-+        .m =3D rsa_m,=0A=
-+        .m_len =3D sizeof(rsa_m),=0A=
-+        .c =3D rsa4096_c,=0A=
-+        .c_len =3D sizeof(rsa4096_c),=0A=
-+    },=0A=
-+};=0A=
 +=0A=
 +/*=0A=
-+ * One registered ACRY test: per-machine location (register base, result S=
-RAM=0A=
-+ * base, DRAM scratch) plus an index into acry_modexp_tests[]. Passed as t=
-he=0A=
-+ * qtest_add_data_func_full() data pointer.=0A=
++ * Return a DER INTEGER body for the unsigned big-endian magnitude 'be'.=
+=0A=
++ *=0A=
++ * DER INTEGERs are signed, so if the top byte has bit 7 set the value=0A=
++ * would decode as negative; prepend a 0x00 guard byte in that case.=0A=
++ *=0A=
++ * The padded copy is written into 'pad_buf' (caller-owned, sized len + 1)=
+=0A=
++ * rather than a local, because qcrypto_der_encode_int() only stores the=
+=0A=
++ * pointer we hand it - the bytes are not copied until=0A=
++ * qcrypto_der_encode_ctx_flush_and_free() - so the body must stay valid=
+=0A=
++ * until then. Returns a pointer into 'be' or 'pad_buf' as appropriate,=0A=
++ * with the body length in *body_len.=0A=
 + */=0A=
-+typedef struct AspeedACRYTest {=0A=
-+    const char *machine;=0A=
-+    uint64_t dram_addr;=0A=
-+    uint32_t sram_base;=0A=
-+    uint32_t base;=0A=
-+    int index;=0A=
-+} AspeedACRYTest;=0A=
-+=0A=
-+static void test_modexp_rsa(const void *opaque)=0A=
++static const uint8_t *aspeed_acry_der_uint_body(const uint8_t *be, size_t =
+len,=0A=
++                                                uint8_t *pad_buf,=0A=
++                                                size_t *body_len)=0A=
 +{=0A=
-+    const AspeedACRYTest *c =3D opaque;=0A=
-+    const AspeedACRYModExp *t =3D &acry_modexp_tests[c->index];=0A=
-+    QTestState *qts =3D qtest_init(c->machine);=0A=
-+    uint32_t data_map[ACRY_DATA_MAX_LEN];=0A=
-+    uint8_t buf[ACRY_SRAM_SIZE] =3D { 0 };=0A=
-+    uint32_t exp_map[ACRY_MAX_BYTES];=0A=
-+    uint32_t mod_map[ACRY_MAX_BYTES];=0A=
-+    uint8_t result[ACRY_MAX_BYTES];=0A=
-+    uint8_t sram[ACRY_SRAM_SIZE];=0A=
++    if (be[0] & 0x80) {=0A=
++        pad_buf[0] =3D 0x00;=0A=
++        memcpy(pad_buf + 1, be, len);=0A=
++        *body_len =3D len + 1;=0A=
++        return pad_buf;=0A=
++    }=0A=
 +=0A=
-+    g_assert_cmpuint(t->c_len, <=3D, sizeof(result));=0A=
-+=0A=
-+    acry_sram_mapping(exp_map, mod_map, data_map);=0A=
-+=0A=
-+    put_bignum_be_bytes(buf, exp_map, t->e, t->e_len);=0A=
-+    put_bignum_be_bytes(buf, mod_map, t->n, t->n_len);=0A=
-+    put_bignum_be_bytes(buf, data_map, t->m, t->m_len);=0A=
-+=0A=
-+    qtest_memwrite(qts, c->dram_addr, buf, sizeof(buf));=0A=
-+=0A=
-+    qtest_writel(qts, c->base + ACRY_DMA_CMD, ACRY_DMA_CMD_DMEM_AHB);=0A=
-+    qtest_writel(qts, c->base + ACRY_DMA_SRC, c->dram_addr);=0A=
-+    qtest_writel(qts, c->base + ACRY_RSA_KEY_LEN,=0A=
-+                ((uint32_t)(t->e_len * 8) << 16) | (uint32_t)(t->n_len * 8=
-));=0A=
-+    qtest_writel(qts, c->base + ACRY_DMA_LEN, ACRY_SRAM_SIZE);=0A=
-+    qtest_writel(qts, c->base + ACRY_INT_MASK,=0A=
-+                ACRY_INT_MASK_RSA_ENG_MASK | ACRY_INT_MASK_RSA_DMA_MASK);=
-=0A=
-+    qtest_writel(qts, c->base + ACRY_DMA_CMD, ACRY_DMA_CMD_SRAM_MODE_RSA);=
-=0A=
-+    qtest_writel(qts, c->base + ACRY_TRIGGER,=0A=
-+                ACRY_TRIGGER_RSA_START | ACRY_TRIGGER_RSA_DMA_DATA);=0A=
-+=0A=
-+    /* Completion requires both RSA_ENG_DONE and RSA_DMA_DONE to be assert=
-ed. */=0A=
-+    g_assert_cmphex(qtest_readl(qts, c->base + ACRY_STATUS), =3D=3D,=0A=
-+                    ACRY_STATUS_RSA_DONE);=0A=
-+=0A=
-+    qtest_memread(qts, c->sram_base, sram, sizeof(sram));=0A=
-+    get_bignum_be_bytes(sram, data_map, result, t->c_len);=0A=
-+    g_assert_cmpmem(result, t->c_len, t->c, t->c_len);=0A=
-+=0A=
-+    /* Clear IRQ status and check it is deasserted */=0A=
-+    qtest_writel(qts, c->base + ACRY_STATUS, ACRY_STATUS_RSA_DONE);=0A=
-+    g_assert_cmphex(qtest_readl(qts, c->base + ACRY_STATUS), =3D=3D, 0);=
-=0A=
-+=0A=
-+    qtest_quit(qts);=0A=
++    *body_len =3D len;=0A=
++    return be;=0A=
 +}=0A=
 +=0A=
-+static void aspeed_add_acry_tests(const char *prefix, const char *machine,=
++/*=0A=
++ * DER-encode a "RsaPubKey ::=3D SEQUENCE { n INTEGER, e INTEGER }" (see=
 =0A=
-+                                  uint32_t base, uint32_t sram_base,=0A=
-+                                  uint64_t dram_addr)=0A=
++ * crypto/rsakey.h), the format expected by qcrypto_akcipher_new(). n and =
+e=0A=
++ * are minimal big-endian magnitudes (as produced by=0A=
++ * aspeed_acry_extract_be()); the engine does a raw modexp, so the guest's=
+=0A=
++ * exponent is always encoded here as the public 'e'.=0A=
++ */=0A=
++static uint8_t *aspeed_acry_der_encode_pubkey(const uint8_t *n, size_t n_l=
+en,=0A=
++                                              const uint8_t *e, size_t e_l=
+en,=0A=
++                                              size_t *out_len)=0A=
++{=0A=
++    QCryptoEncodeContext *ctx =3D qcrypto_der_encode_ctx_new();=0A=
++    uint8_t n_pad[ASPEED_ACRY_MAX_BYTES + 1];=0A=
++    uint8_t e_pad[ASPEED_ACRY_MAX_BYTES + 1];=0A=
++    const uint8_t *n_body;=0A=
++    const uint8_t *e_body;=0A=
++    size_t n_body_len;=0A=
++    size_t e_body_len;=0A=
++    uint8_t *buf;=0A=
++=0A=
++    n_body =3D aspeed_acry_der_uint_body(n, n_len, n_pad, &n_body_len);=0A=
++    e_body =3D aspeed_acry_der_uint_body(e, e_len, e_pad, &e_body_len);=0A=
++=0A=
++    qcrypto_der_encode_seq_begin(ctx);=0A=
++    qcrypto_der_encode_int(ctx, n_body, n_body_len);=0A=
++    qcrypto_der_encode_int(ctx, e_body, e_body_len);=0A=
++    qcrypto_der_encode_seq_end(ctx);=0A=
++=0A=
++    *out_len =3D qcrypto_der_encode_ctx_buffer_len(ctx);=0A=
++    buf =3D g_malloc(*out_len);=0A=
++    qcrypto_der_encode_ctx_flush_and_free(ctx, buf);=0A=
++=0A=
++    return buf;=0A=
++}=0A=
++=0A=
++/*=0A=
++ * Store the RSA result into the output SRAM, scattered through the data=
+=0A=
++ * region via data_map[] (result_be is big-endian; the region above the=0A=
++ * result is zeroed).=0A=
++ *=0A=
++ * data_map[] holds SRAM-relative offsets, but sram_as is an AddressSpace=
+=0A=
++ * over the SoC memory, where the SRAM is mapped at sram_base - so the=0A=
++ * absolute address is sram_base + data_map[k].=0A=
++ */=0A=
++static void aspeed_acry_store_result(AspeedACRYState *s,=0A=
++                                     const uint8_t *result_be, int result_=
+len)=0A=
++{=0A=
++    uint8_t value;=0A=
++    int src;=0A=
++    int k;=0A=
++=0A=
++    /* result_be is MSB-first, so its last byte is the least significant. =
+*/=0A=
++    src =3D result_len - 1;=0A=
++    for (k =3D 0; k < ASPEED_ACRY_DATA_MAX_LEN; k++) {=0A=
++        value =3D 0;=0A=
++        if (src >=3D 0) {=0A=
++            value =3D result_be[src--];=0A=
++        }=0A=
++        address_space_write(&s->sram_as, s->sram_base + s->data_map[k],=0A=
++                            MEMTXATTRS_UNSPECIFIED, &value, 1);=0A=
++    }=0A=
++}=0A=
++=0A=
++static void aspeed_acry_do_rsa(AspeedACRYState *s)=0A=
 +{=0A=
 +    QCryptoAkCipherOptions opts =3D {=0A=
 +        .alg =3D QCRYPTO_AK_CIPHER_ALGO_RSA,=0A=
-+        .u.rsa.padding_alg =3D QCRYPTO_RSA_PADDING_ALGO_RAW,=0A=
++        .u.rsa =3D {=0A=
++            .padding_alg =3D QCRYPTO_RSA_PADDING_ALGO_RAW,=0A=
++        },=0A=
 +    };=0A=
-+    int i;=0A=
++    uint8_t result[ASPEED_ACRY_MAX_BYTES] =3D { 0 };=0A=
++    uint64_t src_addr =3D s->regs[R_ACRY_DMA_SRC];=0A=
++    uint8_t buf[ASPEED_ACRY_SRAM_SIZE] =3D { 0 };=0A=
++    uint8_t data[ASPEED_ACRY_DATA_MAX_LEN];=0A=
++    uint32_t len =3D s->regs[R_ACRY_DMA_LEN];=0A=
++    g_autofree uint8_t *der_key =3D NULL;=0A=
++    uint8_t n[ASPEED_ACRY_MAX_BYTES];=0A=
++    uint8_t e[ASPEED_ACRY_MAX_BYTES];=0A=
++    QCryptoAkCipher *cipher =3D NULL;=0A=
++    Error *local_err =3D NULL;=0A=
++    int result_len =3D 0;=0A=
++    size_t der_len;=0A=
++    int data_len;=0A=
++    int n_len;=0A=
++    int e_len;=0A=
++=0A=
++    if (len =3D=3D 0 || len > ASPEED_ACRY_SRAM_SIZE) {=0A=
++        len =3D ASPEED_ACRY_SRAM_SIZE;=0A=
++    }=0A=
++=0A=
++    trace_aspeed_acry_rsa_trigger(src_addr, len);=0A=
++=0A=
++    if (address_space_read(&s->dram_as, src_addr, MEMTXATTRS_UNSPECIFIED,=
+=0A=
++                           buf, len) !=3D MEMTX_OK) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                     "%s: failed to read DMA buffer at 0x%" PRIx64 "\n",=
+=0A=
++                     __func__, src_addr);=0A=
++    }=0A=
++=0A=
++    n_len =3D aspeed_acry_extract_be(buf, s->mod_map, ASPEED_ACRY_MAX_BYTE=
+S, n);=0A=
++    e_len =3D aspeed_acry_extract_be(buf, s->exp_map, ASPEED_ACRY_MAX_BYTE=
+S, e);=0A=
++    data_len =3D aspeed_acry_extract_be(buf, s->data_map,=0A=
++                                      ASPEED_ACRY_DATA_MAX_LEN, data);=0A=
++=0A=
++    if (trace_event_get_state_backends(TRACE_ASPEED_ACRY_HEXDUMP)) {=0A=
++        aspeed_acry_hexdump("buf", buf, len);=0A=
++        aspeed_acry_hexdump("n", n, n_len);=0A=
++        aspeed_acry_hexdump("e", e, e_len);=0A=
++        aspeed_acry_hexdump("data", data, data_len);=0A=
++    }=0A=
 +=0A=
 +    if (!qcrypto_akcipher_supports(&opts)) {=0A=
-+        g_printerr("# skip ACRY tests: raw RSA not supported by the crypto=
- "=0A=
-+                   "backend\n");=0A=
++        qemu_log_mask(LOG_UNIMP,=0A=
++                     "%s: RSA ModExp not supported by the crypto backend; =
+"=0A=
++                     "completing with an invalid result\n", __func__);=0A=
 +        return;=0A=
 +    }=0A=
 +=0A=
-+    for (i =3D 0; i < ARRAY_SIZE(acry_modexp_tests); i++) {=0A=
-+        g_autofree char *path =3D NULL;=0A=
-+        AspeedACRYTest *t;=0A=
-+=0A=
-+        path =3D g_strdup_printf("%s/acry/%s", prefix,=0A=
-+                               acry_modexp_tests[i].name);=0A=
-+        t =3D g_new0(AspeedACRYTest, 1);=0A=
-+        t->machine =3D machine;=0A=
-+        t->base =3D base;=0A=
-+        t->sram_base =3D sram_base;=0A=
-+        t->dram_addr =3D dram_addr;=0A=
-+        t->index =3D i;=0A=
-+        qtest_add_data_func_full(path, t, test_modexp_rsa, g_free);=0A=
-+    }=0A=
-+}=0A=
-+=0A=
-+int main(int argc, char **argv)=0A=
-+{=0A=
-+    g_test_init(&argc, &argv, NULL);=0A=
-+=0A=
-+    aspeed_add_acry_tests("ast2600", "-machine ast2600-evb",=0A=
-+                          0x1e6fa000, 0x1e710000, 0x80000000 + 0x1000);=0A=
-+=0A=
-+    return g_test_run();=0A=
-+}=0A=
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build=0A=
-index f7c7d06620..c58be94c25 100644=0A=
---- a/tests/qtest/meson.build=0A=
-+++ b/tests/qtest/meson.build=0A=
-@@ -220,7 +220,8 @@ qtests_npcm7xx =3D \=0A=
- qtests_npcm8xx =3D \=0A=
-   ['npcm_gmac-test']=0A=
- qtests_aspeed =3D \=0A=
--  ['aspeed_gpio-test',=0A=
-+  ['aspeed-acry-test',=0A=
-+   'aspeed_gpio-test',=0A=
-    'aspeed_hace-test',=0A=
-    'aspeed_scu-test',=0A=
-    'aspeed_smc-test']=0A=
-@@ -392,6 +393,8 @@ if get_option('replication').allowed()=0A=
- endif=0A=
- =0A=
- qtests =3D {=0A=
-+  'aspeed-acry-test': [files('aspeed-acry-test.c'),=0A=
-+                       crypto],=0A=
-   'aspeed_hace-test': [files('aspeed-hace-utils.c', 'aspeed_hace-test.c'),=
++    der_key =3D aspeed_acry_der_encode_pubkey(n, n_len, e, e_len, &der_len=
+);=0A=
++    cipher =3D qcrypto_akcipher_new(&opts, QCRYPTO_AK_CIPHER_KEY_TYPE_PUBL=
+IC,=0A=
++                                  der_key, der_len, &local_err);=0A=
++    if (!cipher) {=0A=
++        qemu_log_mask(LOG_GUEST_ERROR,=0A=
++                     "%s: failed to create RSA cipher: %s\n",=0A=
++                     __func__, error_get_pretty(local_err));=0A=
++        error_free(local_err);=0A=
++    } else {=0A=
++        result_len =3D qcrypto_akcipher_encrypt(cipher, data, data_len,=0A=
++                                              result, sizeof(result),=0A=
++                                              &local_err);=0A=
++        if (result_len < 0) {=0A=
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: RSA modexp failed: %s\n",=
 =0A=
-                        crypto],=0A=
-   'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),=0A=
++                         __func__, error_get_pretty(local_err));=0A=
++            error_free(local_err);=0A=
++            result_len =3D 0;=0A=
++        }=0A=
++=0A=
++        qcrypto_akcipher_free(cipher);=0A=
++    }=0A=
++=0A=
++    if (trace_event_get_state_backends(TRACE_ASPEED_ACRY_HEXDUMP)) {=0A=
++        aspeed_acry_hexdump("result", result, result_len);=0A=
++    }=0A=
++=0A=
++    aspeed_acry_store_result(s, result, result_len);=0A=
++}=0A=
++=0A=
++static uint64_t aspeed_acry_read(void *opaque, hwaddr addr, unsigned int s=
+ize)=0A=
++{=0A=
++    AspeedACRYState *s =3D ASPEED_ACRY(opaque);=0A=
++=0A=
++    addr >>=3D 2;=0A=
++=0A=
++    trace_aspeed_acry_read(addr << 2, s->regs[addr]);=0A=
++=0A=
++    return s->regs[addr];=0A=
++}=0A=
++=0A=
++static void aspeed_acry_write(void *opaque, hwaddr addr, uint64_t data,=0A=
++                              unsigned int size)=0A=
++{=0A=
++    AspeedACRYState *s =3D ASPEED_ACRY(opaque);=0A=
++=0A=
++    addr >>=3D 2;=0A=
++=0A=
++    trace_aspeed_acry_write(addr << 2, data);=0A=
++=0A=
++    switch (addr) {=0A=
++    case R_ACRY_DMA_SRC:=0A=
++        /*=0A=
++         * The DMA source register holds a CPU-visible DRAM address (e.g.=
+=0A=
++         * 0x8xxxxxxx on AST2600); the engine addresses DRAM from offset 0=
+,=0A=
++         * so mask off the top bit to get the DRAM-relative offset.=0A=
++         */=0A=
++        data &=3D 0x7FFFFFFF;=0A=
++        break;=0A=
++    case R_ACRY_STATUS:=0A=
++        data =3D s->regs[R_ACRY_STATUS] & ~data;=0A=
++        if (!(data & (R_ACRY_STATUS_RSA_ENG_DONE_MASK |=0A=
++                      R_ACRY_STATUS_RSA_DMA_DONE_MASK))) {=0A=
++            qemu_irq_lower(s->irq);=0A=
++        }=0A=
++        break;=0A=
++    case R_ACRY_TRIGGER:=0A=
++        if (FIELD_EX32(data, ACRY_TRIGGER, RSA_START)) {=0A=
++            aspeed_acry_do_rsa(s);=0A=
++=0A=
++            s->regs[R_ACRY_STATUS] |=3D R_ACRY_STATUS_RSA_ENG_DONE_MASK |=
+=0A=
++                                      R_ACRY_STATUS_RSA_DMA_DONE_MASK;=0A=
++            if (s->regs[R_ACRY_INT_MASK] &=0A=
++                (R_ACRY_INT_MASK_RSA_ENG_MASK_MASK |=0A=
++                 R_ACRY_INT_MASK_RSA_DMA_MASK_MASK)) {=0A=
++                qemu_irq_raise(s->irq);=0A=
++            }=0A=
++        }=0A=
++        break;=0A=
++    default:=0A=
++        break;=0A=
++    }=0A=
++=0A=
++    s->regs[addr] =3D data;=0A=
++}=0A=
++=0A=
++static const MemoryRegionOps aspeed_acry_ops =3D {=0A=
++    .read =3D aspeed_acry_read,=0A=
++    .write =3D aspeed_acry_write,=0A=
++    .endianness =3D DEVICE_LITTLE_ENDIAN,=0A=
++    .valid =3D {=0A=
++        .min_access_size =3D 1,=0A=
++        .max_access_size =3D 4,=0A=
++    },=0A=
++};=0A=
++=0A=
++static void aspeed_acry_reset_hold(Object *obj, ResetType type)=0A=
++{=0A=
++    AspeedACRYState *s =3D ASPEED_ACRY(obj);=0A=
++=0A=
++    memset(s->regs, 0, sizeof(s->regs));=0A=
++}=0A=
++=0A=
++static void aspeed_acry_instance_init(Object *obj)=0A=
++{=0A=
++    AspeedACRYState *s =3D ASPEED_ACRY(obj);=0A=
++=0A=
++    aspeed_acry_init_mapping(s);=0A=
++}=0A=
++=0A=
++static void aspeed_acry_realize(DeviceState *dev, Error **errp)=0A=
++{=0A=
++    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);=0A=
++    AspeedACRYState *s =3D ASPEED_ACRY(dev);=0A=
++=0A=
++    sysbus_init_irq(sbd, &s->irq);=0A=
++=0A=
++    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_acry_ops, s,=0A=
++                          TYPE_ASPEED_ACRY, ASPEED_ACRY_NR_REGS << 2);=0A=
++    sysbus_init_mmio(sbd, &s->iomem);=0A=
++=0A=
++    if (!s->dram_mr) {=0A=
++        error_setg(errp, TYPE_ASPEED_ACRY ": 'dram' link not set");=0A=
++        return;=0A=
++    }=0A=
++    address_space_init(&s->dram_as, s->dram_mr, "dram");=0A=
++=0A=
++    if (!s->sram_mr) {=0A=
++        error_setg(errp, TYPE_ASPEED_ACRY ": 'sram' link not set");=0A=
++        return;=0A=
++    }=0A=
++    address_space_init(&s->sram_as, s->sram_mr, "sram");=0A=
++}=0A=
++=0A=
++static const Property aspeed_acry_properties[] =3D {=0A=
++    DEFINE_PROP_LINK("dram", AspeedACRYState, dram_mr,=0A=
++                     TYPE_MEMORY_REGION, MemoryRegion *),=0A=
++    DEFINE_PROP_LINK("sram", AspeedACRYState, sram_mr,=0A=
++                     TYPE_MEMORY_REGION, MemoryRegion *),=0A=
++    DEFINE_PROP_UINT64("sram-base", AspeedACRYState, sram_base, 0),=0A=
++};=0A=
++=0A=
++static void aspeed_acry_class_init(ObjectClass *klass, const void *data)=
+=0A=
++{=0A=
++    DeviceClass *dc =3D DEVICE_CLASS(klass);=0A=
++    ResettableClass *rc =3D RESETTABLE_CLASS(klass);=0A=
++=0A=
++    dc->desc =3D "ASPEED ACRY Engine";=0A=
++    dc->realize =3D aspeed_acry_realize;=0A=
++    rc->phases.hold =3D aspeed_acry_reset_hold;=0A=
++    device_class_set_props(dc, aspeed_acry_properties);=0A=
++}=0A=
++=0A=
++static const TypeInfo aspeed_acry_types[] =3D {=0A=
++    {=0A=
++        .name =3D TYPE_ASPEED_ACRY,=0A=
++        .parent =3D TYPE_SYS_BUS_DEVICE,=0A=
++        .instance_size =3D sizeof(AspeedACRYState),=0A=
++        .instance_init =3D aspeed_acry_instance_init,=0A=
++        .class_init =3D aspeed_acry_class_init,=0A=
++    },=0A=
++};=0A=
++=0A=
++DEFINE_TYPES(aspeed_acry_types)=0A=
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build=0A=
+index e86d9ad6b3..3912dc2bce 100644=0A=
+--- a/hw/misc/meson.build=0A=
++++ b/hw/misc/meson.build=0A=
+@@ -137,6 +137,7 @@ system_ss.add(when: 'CONFIG_PVPANIC_PCI', if_true: file=
+s('pvpanic-pci.c'))=0A=
+ system_ss.add(when: 'CONFIG_PVPANIC_MMIO', if_true: files('pvpanic-mmio.c'=
+))=0A=
+ system_ss.add(when: 'CONFIG_AUX', if_true: files('auxbus.c'))=0A=
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(=0A=
++  'aspeed_acry.c',=0A=
+   'aspeed_hace.c',=0A=
+   'aspeed_lpc.c',=0A=
+   'aspeed_ltpi.c',=0A=
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events=0A=
+index c9a868b3ef..bbec0d2178 100644=0A=
+--- a/hw/misc/trace-events=0A=
++++ b/hw/misc/trace-events=0A=
+@@ -331,6 +331,12 @@ aspeed_peci_read(uint64_t offset, uint64_t data) "offs=
+et 0x%" PRIx64 " data 0x%"=0A=
+ aspeed_peci_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
+ta 0x%" PRIx64=0A=
+ aspeed_peci_raise_interrupt(uint32_t ctrl, uint32_t status) "ctrl 0x%" PRI=
+x32 " status 0x%" PRIx32=0A=
+ =0A=
++# aspeed_acry.c=0A=
++aspeed_acry_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " dat=
+a 0x%" PRIx64=0A=
++aspeed_acry_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
+ta 0x%" PRIx64=0A=
++aspeed_acry_rsa_trigger(uint64_t src_addr, uint32_t len) "src_addr 0x%" PR=
+Ix64 " len 0x%" PRIx32=0A=
++aspeed_acry_hexdump(const char *desc, uint32_t offset, const char *s) "%s:=
+ 0x%08x: %s"=0A=
++=0A=
+ # aspeed_hace.c=0A=
+ aspeed_hace_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " dat=
+a 0x%" PRIx64=0A=
+ aspeed_hace_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " da=
+ta 0x%" PRIx64=0A=
 -- =0A=
 2.43.0=0A=
 
