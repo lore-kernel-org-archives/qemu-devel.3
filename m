@@ -4,101 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD6DC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77515C5CFEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuVjq-0000uI-VL; Thu, 13 Aug 2026 09:44:56 -0400
+	id 1wuVwb-0002wX-Gl; Thu, 13 Aug 2026 09:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuVjj-0000tr-RA
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:44:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wuVjf-00072q-Nv
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:44:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786628682;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=6zFk2ryYhvlN8BTlzFrzDqs2Qvsl528I2HnQquLxGPw=;
- b=RuNfThx2AcX4EwOGTd2HmJW4e2XtM5jPDx6Y6AjmPPTuJ/NKho2tqwtWJKzx+s8lhAcxqe
- AxhEtdLognD65D5BmUz46YINLh6WwbX1HS+MiJ1mXoAcTWEX+Cz4QNNv/F6+W63kQ4i89h
- 6QO0VJp7Vw40LZCPGCkDclEH8zKvoAo=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-IJ7PhRfcMeqrMX5nZsFDLQ-1; Thu, 13 Aug 2026 09:44:35 -0400
-X-MC-Unique: IJ7PhRfcMeqrMX5nZsFDLQ-1
-X-Mimecast-MFC-AGG-ID: IJ7PhRfcMeqrMX5nZsFDLQ_1786628675
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92ef13b61bcso94782585a.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 06:44:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wuVwY-0002wG-En
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:58:02 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wuVwW-000202-Av
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 09:58:02 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2cfbbdfa60bso20766415ad.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 06:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786628675; x=1787233475; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=6zFk2ryYhvlN8BTlzFrzDqs2Qvsl528I2HnQquLxGPw=;
- b=JDXxJiGHxuRlc9ZzDdg+pGG+mVbInDxptI+VFWWLWwYPo+xn18bx4EhOLILX2RGv+q
- UzhYRk7waYLNJai0mlqDmjAJYV+GlaD5sUKJvhPs1S9iQhG7+bB+VYpdL20rKraFQIHF
- VqZO0AyNvd22Hqu9HYsFe74YxhUlGmUbtdj36WUGOmuoRMrtFCuz7WawROOPWE8RT2Mf
- PBKOYzXiN/hKpATg00h/rhq3PHZDL/qh4j6hcUIbpOXcNKk0OAYzqpdYuH3evV/Yzo8h
- vVMsqmhAjPIpO7wwV7CL7B6TPeoMkGAG/1bST9TRuHN0VxAyX+oIyoe/RM1lHj5zI4vS
- ZGlw==
+ d=gmail.com; s=20251104; t=1786629479; x=1787234279; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ortSojCF4MD4GaSWJ2LixTOkSzJRkp5zenv//2r71a0=;
+ b=MqkVZNEaEHlsx1E8jWJCc7yKCjy9Ybmoha2FHrzluJsomDBzv6vf1ldQnJ+1/G/oh0
+ BKFDo4J5+I85kDvtKLDm2D75/AEYfUDPsooTNpxfFxJzl+qNzF3hOKxeTyiqqtebrgWO
+ 1z3XOHVCl3/4jVaDq5X3kZQWH1ktLNo6R4ym72asCC+7Fvbot6L3Wx6/rPBmMiQz/y0g
+ Qfr+qAsfuT2wCZPO26fFUMHqurfJ/hJeFXTXHHPo0vRhREayiFg9LJdJieUThPutI26F
+ OlbFWU+jU2vVZ5TBUn9Sp+HrqcacAjCN3cNn0r8JztwUw1NdZKdlDLLbbJ50dEIVbbW2
+ QW9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786628675; x=1787233475;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6zFk2ryYhvlN8BTlzFrzDqs2Qvsl528I2HnQquLxGPw=;
- b=dLnTGAo/O3T2I1IOveMM2P83Er/qijiIaEFTid+Ha96yhzTnHlEOKqiMeLM9IbLZ9J
- Vr4EG2YO+6f7GUCfqkwG7FpsrrMkX9qPAfu6r/OalP8LByXu0rTiJrlWh5/+0p9DC7Ki
- i0IQQkMsCMORORdViw03KVp6b6GkscMjqxKbODAn2lnrqwHelq6QpWC3kDsqcwzlRzMU
- z0e69Vg+vP5JbTao5i/0ZGOMCU52xnx6pD+hBm73rn7Kdd+HrzUt5U9lOvrEtUhe3WUE
- pCTbfaZQhJdUxa+4Is2XmZvxPMjmlKdJoJuTASy3aLXdjsrnL+fnlI6lmAQPp/eua405
- Sirg==
-X-Gm-Message-State: AOJu0YyIihnY2RY7vb3rAV3baT5MdZOuPyyrmh/nMh+6H0pdg/gD5se+
- Qz/twhn1rxUMZBgY+nacxGCtX5QU/R1CN3dz450cyXJsuiFN+MKNq90j94XHI1pMfcqG/yZSRkk
- JgnR/3+Mcttkc+8CuwpXcesOSURXuwpKlhMTEzxQPT8jeWGh2YxFXZW/+PMKrOZMzBMJ4ig6IJ7
- h1g4g6Apfz8qdk3GYq4GDXGJ9VL6a8IS7I1Vk8WA==
-X-Gm-Gg: AR+sD13a3L/S/HTo1GcVGudbPYm4c1KC8udx0VQT1IyJngq2K4W1aoiWpynBoIfOfB0
- eIBIfVl9fVlSSn76TNYfp+fhgePsnWpa32ujE+nV7rbCHxHr/S4N2hrI+SQb7emKK7Be69Tzd38
- ZTn4jWN69ey37mny3+weD7/NlKUk6hYhsB3wTvlYpPovEdNT04ulkZZSAghNHs5F0/L3mdGV3A2
- Osvq4hb1Qgy1ikedqmQXKy26frcE7j8g63erDHbnN64wrpDXYN7j3w8AJUqyxKObgyCP2RRt8de
- z0yxRpdywTStsRcWRFDegfmT4Nu+GBHHfSLoDlJgKgLn7fDaA2mFpPZlmoswaoNjrwm96YXd
-X-Received: by 2002:a05:620a:2685:b0:930:f1db:b9e7 with SMTP id
- af79cd13be357-936bfade9c4mr547258585a.38.1786628674680; 
- Thu, 13 Aug 2026 06:44:34 -0700 (PDT)
-X-Received: by 2002:a05:620a:2685:b0:930:f1db:b9e7 with SMTP id
- af79cd13be357-936bfade9c4mr547250085a.38.1786628674034; 
- Thu, 13 Aug 2026 06:44:34 -0700 (PDT)
-Received: from x1.local ([2605:8d80:6cc9:637f:db7f:22cd:4098:82fd])
+ d=1e100.net; s=20251104; t=1786629479; x=1787234279;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ortSojCF4MD4GaSWJ2LixTOkSzJRkp5zenv//2r71a0=;
+ b=OIM60m94HMbpFk3SjSZ0eey+XxvPSVnoVbXcV36Uhkx9A1XdM98i3+wO7EHJ46JZGy
+ BYat2rdVSBjp+xHXr+y7ZqbP7SRuoSGAGgNA2p/FlD4rXr+kriE5mVOVQbPF46nrSUPy
+ L54ud0HeObcisjMKvDNTrc7NRm4144vxpWphRKqZCK7zlNxYxtZDhxq9JKUkOlr6RyFn
+ VWhyDmPpRovUpoBzeMVhm8YmbNO+2UTlHfwvDa6CTBLX0rrnG4h5tAWbU2hiepFXL5qj
+ RwmEhgqUTF/JkLLxG+RYY39H2rRpDiPsT4nGdf5SGv3/gpZ4UStsEaeN7wwicveiAJrQ
+ /7UQ==
+X-Gm-Message-State: AOJu0YyEKGUIi5psuVVRZAgpqOMHEqD9r7aAEO5HwK0c05itkbgsDAnm
+ 4y+3r9EH+aZfW7rc4g4IqIyb6DmjcNbv9QdlLV+XDYQhS9KzMRPmCQ86GAGopoCGVQo=
+X-Gm-Gg: AR+sD10t06mH+YOhn+nEKrogB9KOuck0Ibz4vP/29bC1m9w7iUeTM9uZdAjQK7oBCGk
+ d8yVJEsKTuNDR0EWABPueeXfFxrs1PalltgYi2lb0unwsUcUoe2xB1hZ81QzOMvbsEj/JuetK2a
+ TORuTkdATS77brlmkEkLbdWcOj9IKKdmnYS2R91iwdO7BfAE1w9VG9GlJGGEtQfw/YbTQLwsaEt
+ xlJwf8342QLBSEFTNHaLWXi7UCtKFV/Cw5pCUI/zpOAKsOzKdxsls7lrt9qzWHPS0PGZ0Ra3Xsn
+ 0ldT+g4K8cBB33TZSWxKQnzXI7/OD6m4YaQwi3w4tRn26bbUgp3sJsD4XuJjSgJzRCnW0EeBK7l
+ +1UO+TCJY4XYjhGMQCfkXg2Y2FnYrfhIdYskG754AFOGonW2Zcue+giTbyxbKAhf77MQmxRfPGq
+ tW6o15bGeRd1JklIDIzJ5MUJIwbO1aUJL0hPCfZO8o0KpjN0HY1wMR1M8Hx2mqazEMyX6RF5f1h
+ g3KSORrcg==
+X-Received: by 2002:a17:903:2987:b0:2c9:e846:a57e with SMTP id
+ d9443c01a7336-2d37d1c4a58mr73337325ad.0.1786629478749; 
+ Thu, 13 Aug 2026 06:57:58 -0700 (PDT)
+Received: from localhost.localdomain ([111.198.227.173])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-936c199b579sm150352885a.21.2026.08.13.06.44.32
+ d9443c01a7336-2d37c486531sm10024395ad.57.2026.08.13.06.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Aug 2026 06:44:33 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ Thu, 13 Aug 2026 06:57:58 -0700 (PDT)
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>
-Subject: [PULL v2 00/10] Next patches
-Date: Thu, 13 Aug 2026 09:44:31 -0400
-Message-ID: <20260813134431.2678787-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.54.0
+Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>,
+ Junze Cao <caojunze424@gmail.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Kangjie Huang <flamboyant.h.01@gmail.com>
+Subject: [PATCH v3 0/3] hw/riscv/k230: add IOMUX register block model
+Date: Thu, 13 Aug 2026 21:57:14 +0800
+Message-ID: <20260813135717.2758-1-flamboyant.h.01@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,70 +107,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 84f07211cc5b4fc6a371559bf8a5de4fb068e648:
+Add a SysBus model for the 64 K230 Function IO configuration registers
+documented by the K230 Technical Reference Manual. The model retains the
+writable configuration fields needed by the SDK U-Boot and Linux
+read-modify-write paths.
 
-  Update version for v11.1.0 release (2026-08-11 10:04:46 -0400)
+The series adds the device model, wires it into the K230 SoC at
+0x91105000, and adds qtest coverage.
 
-are available in the Git repository at:
+Changes in v3:
+- Migrated the model from the deprecated device_class_set_legacy_reset()
+  to the Resettable interface.
+- Added a comment to the model stating that bit 31 (DI) is read-only and
+  reads as zero, since the model does not simulate external pin input
+  (TRM V0.3.1, section 12.9.2.2).
+- Added MAINTAINERS entries for the model and the qtest.
+- Defined an independent K230_IOMUX_EXPECTED_WRITABLE_MASK (0x00003fff)
+  in the test instead of reusing the implementation mask, with a comment
+  explaining the bit layout.
 
-  https://gitlab.com/peterx/qemu.git tags/next-pull-request
+Changes in v2:
+- Split the device model, SoC wiring, and qtest coverage into separate
+  patches.
+- Removed redundant MMIO bounds, access-size, and alignment checks.
+- Limited register storage to the 64 documented Function IO registers.
+- Applied the documented 0x00003fff writable mask.
+- Treated offsets 0x100 through 0x7ff as reserved.
+- Added tests for write masking, read-modify-write accesses, IO63,
+  reserved offsets, and system reset.
 
-for you to fetch changes up to 89f15c1362970150bf5711cdb84b9742c0db0cd8:
+Tested with:
+- qtest-riscv64/k230-iomux-test
+- U-Boot and Linux boot tests with no unimplemented-device warnings
+  for the IOMUX region
 
-  migration: Fix rare hang of migration_channel_read_peek() (2026-08-13 09:41:40 -0400)
+Thanks to Alistair Francis and Chao Liu for the v1 review comments that
+shaped the v2 series structure and the register semantics.
 
-----------------------------------------------------------------
-migration/mem pull for 11.2
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
 
-v2: fixes macos build error
+v2:
+https://lore.kernel.org/qemu-devel/cover.1784022244.git.flamboyant.h.01@gmail.com/
 
-- Dongli's patch to add cpr-transfer support for HMP
-- Fabiano's doc update for migration on security issues
-- Gavin's fix for MMIO access support for memory APIs, reverting ram_device ops
-- Sam's migration test build fix for !ASN1
-- Peter's a few migration hardening fixes
+v1:
+https://lore.kernel.org/qemu-devel/20260710041845.67170-1-flamboyant.h.01@gmail.com/
 
-----------------------------------------------------------------
+Kangjie Huang (3):
+  hw/misc/k230_iomux: add Kendryte K230 IOMUX model
+  hw/riscv/k230: wire up the IOMUX device
+  tests/qtest: add test for K230 IOMUX
 
-Dongli Zhang (1):
-  migration/cpr: Add HMP support for cpr-transfer
+ MAINTAINERS                   |   3 +
+ docs/system/riscv/k230.rst    |   1 +
+ hw/misc/Kconfig               |   3 +
+ hw/misc/k230_iomux.c          | 125 ++++++++++++++++++++++++++
+ hw/misc/meson.build           |   1 +
+ hw/misc/trace-events          |   4 +
+ hw/riscv/Kconfig              |   1 +
+ hw/riscv/k230.c               |  11 ++-
+ include/hw/misc/k230_iomux.h  |  43 +++++++++
+ include/hw/riscv/k230.h       |   2 +
+ tests/qtest/k230-iomux-test.c | 160 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   5 +-
+ 12 files changed, 355 insertions(+), 4 deletions(-)
+ create mode 100644 hw/misc/k230_iomux.c
+ create mode 100644 include/hw/misc/k230_iomux.h
+ create mode 100644 tests/qtest/k230-iomux-test.c
 
-Fabiano Rosas (1):
-  docs: Add security considerations for migration
 
-Gavin Shan (3):
-  system/memory: Use memmove() for directly accessible regions
-  system/memory: Use qemu_ram_move() for directly accessible regions
-  system/memory: Make ram device region directly accessible
-
-Peter Xu (4):
-  migration/multifd: Validate next_packet_size in zlib/zstd recv
-  migration/multifd: Replace assert() with error_setg() in recv paths
-  migration/ram: Check for RAMBlock size mismatch when parsing
-  migration: Fix rare hang of migration_channel_read_peek()
-
-Sam Heney (1):
-  tests/qtest/migration: Only build tls_no_hostname test with TASN1
-
- docs/system/security.rst          | 22 +++++++++++---
- include/system/memory.h           | 46 ++++++++++++++++++++++-------
- hw/remote/vfio-user-obj.c         |  4 +--
- migration/channel.c               | 11 +++++--
- migration/migration-hmp-cmds.c    | 18 ++++++++++++
- migration/multifd-qatzip.c        |  5 +++-
- migration/multifd-qpl.c           | 24 +++++++++++++---
- migration/multifd-uadk.c          | 24 +++++++++++++---
- migration/multifd-zlib.c          | 11 ++++++-
- migration/multifd-zstd.c          | 11 ++++++-
- migration/ram.c                   | 15 +++++++---
- system/memory.c                   | 41 +-------------------------
- system/physmem.c                  | 48 +++++++++++++++++++++++++++++--
- tests/qtest/migration/tls-tests.c |  4 ++-
- hmp-commands.hx                   | 12 +++++---
- system/trace-events               |  2 --
- 16 files changed, 216 insertions(+), 82 deletions(-)
-
+base-commit: d49f87606ac1a6e15701b26c1b16c5d7e948ffcb
 -- 
-2.54.0
-
+2.43.0
 
