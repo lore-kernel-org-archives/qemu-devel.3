@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D7DC5DF67
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0D4C5DF67
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 16:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuYGA-0003VC-Hv; Thu, 13 Aug 2026 12:26:28 -0400
+	id 1wuYGj-000468-2J; Thu, 13 Aug 2026 12:27:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYFu-0003GB-Nl; Thu, 13 Aug 2026 12:26:10 -0400
+ id 1wuYGG-0003hx-Tx; Thu, 13 Aug 2026 12:26:34 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wuYFr-0001BV-O6; Thu, 13 Aug 2026 12:26:09 -0400
+ id 1wuYGF-0001Kt-87; Thu, 13 Aug 2026 12:26:32 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwCnpq4d8H1qm1HmAA--.5091S2;
- Fri, 14 Aug 2026 00:26:05 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with UTF8SMTP id AQAAfwAX+EA08H1qQiRvAw--.16386S2; 
+ Fri, 14 Aug 2026 00:26:28 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAf8Dw4XUX8H1q5iwjAA--.55915S6;
- Fri, 14 Aug 2026 00:26:03 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAf8DwBXQw8H1q7SwjAA--.59184S4;
+ Fri, 14 Aug 2026 00:26:25 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -35,21 +35,21 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chao Liu <chao.liu@processmission.com>,
  Jim MacArthur <jim.macarthur@linaro.org>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v5 19/28] hw/arm/smmuv3: Determine register bank from MMIO offset
-Date: Fri, 14 Aug 2026 00:25:57 +0800
-Message-Id: <20260813162558.2808607-4-tangtao1634@phytium.com.cn>
+Subject: [RFC v5 22/28] hw/arm/smmuv3: Harden security checks in MMIO handlers
+Date: Fri, 14 Aug 2026 00:26:21 +0800
+Message-Id: <20260813162624.2809349-2-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Dw4XUX8H1q5iwjAA--.55915S6
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HqAABs+
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAf8DwBXQw8H1q7SwjAA--.59184S4
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWp8yc0HsAAAsn
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxAr4rZr4xGFy7Jr43uF15Arb_yoW7Jryfpr
- WkJr1FgF4DKF4SqFs3Ja1DC3WxZwn2gr9Iyrn3Ka4DC3y8tw1xXay0k34furyDuFyUAws8
- WrW5Gr13WF4qy3DanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxZryfCFy3AFW3Zr4UZw1DJrb_yoWrWr17pr
+ WkCw1YgrWDG3W3AFs3ta1DA3WrK3ykXr13J3sxG34UZayUtw4rXF10k34YgFsrWryUZws7
+ Wr4fCr4xCr1jy3DanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -76,149 +76,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify the main MMIO handlers to select the target register bank from the
-memory-mapped offset.
+This patch hardens the security validation within the main MMIO
+dispatcher functions (smmu_read_mmio and smmu_write_mmio).
 
-Offsets in the Secure register window select SMMU_SEC_SID_S and are
-normalized by subtracting SMMU_SECURE_REG_START. Other offsets select the
-Non-secure bank. Pass the selected SEC_SID to the register access helpers,
-where the normalized bank-local offset identifies the register.
+First, accesses to the Secure register space are gated by whether
+SECURE_IMPL is enabled. When it is disabled, all SMMU_S_* registers are
+read-as-zero and write-ignored.
 
-Keep bank-specific differences explicit, such as S_IDR5 being unimplemented.
-This patch implements Non-secure and Secure bank dispatch and prepares for
-later access checks; Realm and Root programming interfaces are not modeled.
+Second, the check for the input stream's security is made more robust.
+It now validates not only the legacy MemTxAttrs.secure bit, but also
+the .space field. This improves compatibility with Arm security space
+handling.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/arm/smmuv3.c | 44 ++++++++++++++++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ hw/arm/smmuv3.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
 diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index efa78869251..b36bc4a54e0 100644
+index dc3fa618883..e5f0bc18415 100644
 --- a/hw/arm/smmuv3.c
 +++ b/hw/arm/smmuv3.c
-@@ -1889,9 +1889,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+@@ -1605,6 +1605,12 @@ static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
+     return smmu_irq_cfg_writable(s, sec_sid, SMMU_IRQ_EVTQ);
  }
  
- static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
--                               uint64_t data, MemTxAttrs attrs)
-+                                uint64_t data, MemTxAttrs attrs,
-+                                SMMUSecSID reg_sec_sid)
++/* Check if the SMMU hardware itself implements secure state features */
++static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
++{
++    return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
++}
++
+ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
  {
--    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
- 
-     switch (offset) {
-@@ -1959,10 +1959,10 @@ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+     SMMUState *bs = ARM_SMMU(s);
+@@ -1905,6 +1911,38 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+     return 0;
  }
  
- static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
--                               uint64_t data, MemTxAttrs attrs)
-+                               uint64_t data, MemTxAttrs attrs,
-+                               SMMUSecSID reg_sec_sid)
- {
-     Error *local_err = NULL;
--    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
- 
-     switch (offset) {
-@@ -2223,16 +2223,26 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
-     SMMUState *sys = opaque;
-     SMMUv3State *s = ARM_SMMUV3(sys);
-     MemTxResult r;
-+    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
- 
-     /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
-     offset &= ~0x10000;
- 
-+    /*
-+     * Dispatch the Non-secure window directly. After access validation,
-+     * translate the Secure window to its bank-local register offsets.
-+     */
-+    if (offset >= SMMU_SECURE_REG_START) {
-+        reg_sec_sid = SMMU_SEC_SID_S;
-+        offset -= SMMU_SECURE_REG_START;
++/*
++ * Helper function for Secure register access validation.
++ *
++ * Follow S_IDR1.SECURE_IMPL accessibility rules for SMMU_S_*:
++ *  - SECURE_IMPL == 0: Secure state is not implemented; SMMU_S_* are RAZ/WI to
++ *    all accesses.
++ *  - SECURE_IMPL == 1: Non-secure accesses to SMMU_S_* are RAZ/WI.
++ */
++static bool smmu_check_secure_access(SMMUv3State *s, MemTxAttrs attrs,
++                                     hwaddr offset, bool is_read)
++{
++    /* Check if the access is secure */
++    if (!(attrs.space == ARMSS_Secure ||
++          attrs.secure == 1)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "%s: Non-secure %s attempt at offset 0x%" PRIx64 " (%s)\n",
++            __func__, is_read ? "read" : "write", offset,
++            is_read ? "RAZ" : "WI");
++        return false;
 +    }
 +
-     switch (size) {
-     case 8:
--        r = smmu_writell(s, offset, data, attrs);
-+        r = smmu_writell(s, offset, data, attrs, reg_sec_sid);
-         break;
-     case 4:
--        r = smmu_writel(s, offset, data, attrs);
-+        r = smmu_writel(s, offset, data, attrs, reg_sec_sid);
-         break;
-     default:
-         r = MEMTX_ERROR;
-@@ -2244,9 +2254,9 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
- }
- 
- static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
--                               uint64_t *data, MemTxAttrs attrs)
-+                               uint64_t *data, MemTxAttrs attrs,
-+                               SMMUSecSID reg_sec_sid)
- {
--    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
- 
-     switch (offset) {
-@@ -2285,9 +2295,9 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
- }
- 
- static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
--                              uint64_t *data, MemTxAttrs attrs)
-+                              uint64_t *data, MemTxAttrs attrs,
-+                              SMMUSecSID reg_sec_sid)
- {
--    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-     SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
- 
-     switch (offset) {
-@@ -2295,6 +2305,10 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
-         *data = smmuv3_idreg(offset - A_IDREGS);
-         return MEMTX_OK;
-     case A_IDR0 ... A_IDR5:
-+        /* IDR5 does not support Secure or Realm state. */
-+        if ((reg_sec_sid != SMMU_SEC_SID_NS) && (offset == A_IDR5)) {
-+            goto unhandled;
++    /* Check if the secure state is implemented. */
++    if (!smmu_hw_secure_implemented(s)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "%s: Secure %s attempt at offset 0x%" PRIx64 ". But Secure state "
++            "is not implemented (RES0)\n",
++            __func__, is_read ? "read" : "write", offset);
++        return false;
++    }
++    return true;
++}
++
+ static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+                                 uint64_t data, MemTxAttrs attrs,
+                                 SMMUSecSID reg_sec_sid)
+@@ -2272,6 +2310,18 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
+      * translate the Secure window to its bank-local register offsets.
+      */
+     if (offset >= SMMU_SECURE_REG_START) {
++        if (!smmu_check_secure_access(s, attrs, offset, false)) {
++            trace_smmuv3_write_mmio(offset, data, size, MEMTX_OK);
++            /*
++             * RAZ/WI/RES0 are deterministic register-level behaviors and do not
++             * imply a bus protocol error or abort. Therefore we acknowledge the
++             * MMIO transaction with MEMTX_OK and implement
++             * "Read-As-Zero / Write-Ignored" in the register model, instead of
++             * returning MEMTX_*_ERROR which is reserved for real decode/access
++             * failures.
++             */
++            return MEMTX_OK;
 +        }
-         *data = bank->idr[(offset - A_IDR0) / 4];
-         return MEMTX_OK;
-     case A_IIDR:
-@@ -2429,6 +2443,7 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
-         *data = bank->eventq_irq_cfg2;
-         return MEMTX_OK;
-     default:
-+    unhandled:
-         *data = 0;
-         qemu_log_mask(LOG_UNIMP,
-                       "%s unhandled 32-bit access at 0x%"PRIx64" (RAZ)\n",
-@@ -2443,16 +2458,21 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
-     SMMUState *sys = opaque;
-     SMMUv3State *s = ARM_SMMUV3(sys);
-     MemTxResult r;
-+    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
- 
+         reg_sec_sid = SMMU_SEC_SID_S;
+         offset -= SMMU_SECURE_REG_START;
+     }
+@@ -2508,6 +2558,11 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
      /* CONSTRAINED UNPREDICTABLE choice to have page0/1 be exact aliases */
      offset &= ~0x10000;
-+    if (offset >= SMMU_SECURE_REG_START) {
-+        reg_sec_sid = SMMU_SEC_SID_S;
-+        offset -= SMMU_SECURE_REG_START;
-+    }
- 
-     switch (size) {
-     case 8:
--        r = smmu_readll(s, offset, data, attrs);
-+        r = smmu_readll(s, offset, data, attrs, reg_sec_sid);
-         break;
-     case 4:
--        r = smmu_readl(s, offset, data, attrs);
-+        r = smmu_readl(s, offset, data, attrs, reg_sec_sid);
-         break;
-     default:
-         r = MEMTX_ERROR;
+     if (offset >= SMMU_SECURE_REG_START) {
++        if (!smmu_check_secure_access(s, attrs, offset, true)) {
++            *data = 0;
++            trace_smmuv3_read_mmio(offset, *data, size, MEMTX_OK);
++            return MEMTX_OK;
++        }
+         reg_sec_sid = SMMU_SEC_SID_S;
+         offset -= SMMU_SECURE_REG_START;
+     }
 -- 
 2.34.1
 
