@@ -4,114 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2490C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 07:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D59C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 07:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuQE2-0008Cc-Ca; Thu, 13 Aug 2026 03:51:44 -0400
+	id 1wuQEb-0000MN-DZ; Thu, 13 Aug 2026 03:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wuQDt-0007v4-3j
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:51:33 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wuQDr-0005vj-Mi
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:51:32 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-81ed000b507so18607407b3.0
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 00:51:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786607490; cv=none;
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wuQEY-0000Ih-Uh
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:52:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wuQEW-00068c-T4
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 03:52:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786607531;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VIte8VSnxTbthIyt0DLLzwiQPoCeS1ANCSyE35TJpnk=;
+ b=HxsvteWEfdTI6EruRGxvZqZnSjWHamw6Sk43G4LPilnY01QyCl1Rf2aj/tmbhEBKEptWXU
+ v99EYeCy3vSW21/WZRqOQuhW4l5bU8CUk7A84LoTSUObcbJsA9NKJArSD/rTZwmITYcGSV
+ CetlOYdRwzJoeqtUnfTz9Vdwnkc7dLs=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-205-6WX5HuN3Mca6xEmpNvPSaA-1; Thu, 13 Aug 2026 03:52:10 -0400
+X-MC-Unique: 6WX5HuN3Mca6xEmpNvPSaA-1
+X-Mimecast-MFC-AGG-ID: 6WX5HuN3Mca6xEmpNvPSaA_1786607530
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c9fe4c5eb39so374105a12.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 00:52:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786607529; cv=none;
  d=google.com; s=arc-20260327;
- b=omDZVgm+ye3Tt9XYg3TeckC1bUzEcwhfZj8W4O5z2kZTJjiTSEVRYNJk3BUHooLRtv
- fKUH26yPTmS23ksSVIQHMdO11vrJyi1nLSrUzROvl0fogwzXFJ9hn+3holwncTmy+yM3
- 9O7u7K4i/fNkjjBuIj2PlYqVVWjRCjRU2Bx/EuJ689qbdb4i7BTVgNqLqf7DK4k+XBNL
- SWm0NJYihfpjNCm114WZMN96gKjS2TvM92EIUOcn1mEgXM5zvssq3GeWjM6m9tlp3xAD
- whPvH69xt+tsCUY8egR09pY+jHvYTBLC6r0YLEyY1X6hy/0QfbcaFdy37orU/dSIP81Z
- HUvA==
+ b=JMZffxUM4cFzCIb3HadDSs9c11TFRKVef1l550faeYl7ZYTqRliY/20mt0ylq8JZ6r
+ 3n0Tb0EkTtl/pUgkMlRuaudaVDfdf2F/35/DgQE3mm5fqdDv1Q0c/f7BQYvesqeG20Cz
+ /2oucbmIYdr409y2sAD6BWcdf+NO028WeXsGhK4eXHREn4umLpgj8wMef4jYhSzXfYyd
+ jegS3tbBDaNYkhugmRvy5k7LEwOIWeolJ5bwwiDUgDuNIp2gjnrQ0vEv2TZRYqlFn12Y
+ VLEjGEiFSEnmSVQIEYQA8eciZs6jgf/BTpDF9SiPkZy9lXcbZxkU5VseJfOJNfG/0QMF
+ O9lA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=zLY6XVyEJwjjdlR9796icQpjJYNCoOvvo7uxpuoaiRU=;
- fh=JLdhO+mcoEIPztBBYj+nSHu/CdxBGW6q2laimeDlze4=;
- b=V++nBbzonezE8rYkLDVJ6Uo0BepIfbmy2G7TbGzubaJzku4w2JDnJ/4PX2HnHfPx/P
- R74/x6JIq9cdeq3IOmty4xCbrcYcYsaeqPyA36ZeIVNGonCvWMMIQjiKzJMKE9xAawiv
- Ba15HouROy9WrzG/8/GFXKIXgooGOAYk6m9IF+VxiDrFS6lTUtfzfDPIf+kJ62UfgxlH
- EU7QaFrx1PCXRFMA2rYJC+LPZVwnW1FYKjwq/4A94TnNoDdvhsYp+/YIrkWRQR7XyZ3G
- gvvZFp7uuKbX6zebUk4GTZtS5LO4b9Vn4c9SbMbjLpFEIBGjHRpWwBXbRZGlpTjxJpMP
- /eqg==; darn=nongnu.org
+ bh=VIte8VSnxTbthIyt0DLLzwiQPoCeS1ANCSyE35TJpnk=;
+ fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
+ b=rq/KGy0gGvPEhqchaAKQ7QopsQvCG19p67KYGiytdpPggJYIPN5Q5twKQRMkKcqz6e
+ J2FZsyoLOJtt1ahgkcA9t66lUdbzHYRM7mgZQX6CBBASI2pLdztHAt0i4cJlTQgBCoLH
+ XlRyGplMx5F4vX5oVntcbNuIfEmQLiRhwdTyFtNeE656VrCfxZ2fYGV+UJ7nPVXhoZXq
+ 0w12HZr+4x4b6UgDKL20QblMY2ugPXbHAwVPdqdf5ySxBlwm74IyqSrO50tGfdcxTTRS
+ a6p8NadibgNjXYYJFVZ6ikzXGO7ny1I6PsKU232ZrVT9QiP/bwl9YEEoEaiuPYEHjf9R
+ TZ9Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786607490; x=1787212290; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786607529; x=1787212329; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=zLY6XVyEJwjjdlR9796icQpjJYNCoOvvo7uxpuoaiRU=;
- b=kUTfvxejVNDXfNCl0YZnpr/zwEPapM1tpr1nAvXoqOFZHBqHMrD53tRzQlBaoHkZvn
- X+kLGrESC9Q6cZ6MducxYeU+q+W8eDGQJVOwb5AgXA/h4aPrgQy0VfiOY682HB/crVyR
- grzDVvz5Wkn5hH3HxnPQjylLO6sSA1Ja4pJ3WfkW5M8MAZ0ncOQxIoFsuagK5J6D+3Ka
- 5VJpEBR5+LGoLcCqINDrRwSkRniIZL/sxMW5+wo4KHtjh6jzGTCeQxbZxf1ANZnpRwtL
- LypBpNpL1Jwajs24hlPBZPIc/TDdhM0wT07yfKBckPpHo8pNMSEm6PAA8GNSPsI3axNm
- H2sw==
+ bh=VIte8VSnxTbthIyt0DLLzwiQPoCeS1ANCSyE35TJpnk=;
+ b=hM//X3LK8C+D0b8wflMqAC6Do67nmVCNIcWBuUcEJ7/ym1S2UQNsK4xDUdrVTThcyB
+ DtzcJ1OqKcshk00Ovm5tqcd0MIzCFkQ9xIMZ0BaFKIwtqRZoVN4JvYS1KlWTdoSOd3v6
+ BJoIAwlmQoawghI7vMJ8tt2kv/sIgQ3eSey0ITtE/LxRyvCcMw/ysVlVf+Al0xRcx6jE
+ QhMDSN3aIB4D4pBBTlldqzvor6kilCpC70SXLZjF6Yahbpr3Rk4W7IGIRxPsrSXFjNS4
+ ldH35gtV1mSAFfo/uISWdvd0CNLU8CpsPFPdh1qYxQhICoXzw8r0mnpaF/v5f3nWtI+B
+ bmmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786607490; x=1787212290;
+ d=1e100.net; s=20251104; t=1786607529; x=1787212329;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=zLY6XVyEJwjjdlR9796icQpjJYNCoOvvo7uxpuoaiRU=;
- b=QQUPui78IWzoRpo5tsG/Q/zTao1nqMPT3WKo6vyBd3zG44zKL+UPmAHri+CN6MUYW2
- lKHOJrHvBjiKWsqxz++FVhSok9TaxB+1JfIlmaQ/Bs6PR66VZoePns1hxImm65itY432
- LDn1jxiKQQ6ku5vRklzXGDLHLoD/+FkzymJPHwcJQFKIgMvJp6drcDryMVZ1ZlLkaA75
- vQKlQfaBHXsurzz6qeElXDWAQBKWaYdBTbNnHI3OYtmuuUrNwH474Tb7RGOEyEL6Oc/+
- 1L1LdV73/dTq4ZvhzStWeOASyHus2DZD+1V5DV0h17M0TJU4U1802b9gWS6Frl+hXPVC
- lj+g==
-X-Gm-Message-State: AOJu0YzubyZabOARdd68HEb741qm0LCyIOq3CADmsl+u4/UhSJCe4m4z
- OLxOIxAgb355B063+fC845OOxraBJ6ToyxBKtvEvJRLd+yT/Fo8uD/oo2oGjRWmvbi9qq6p4Uxa
- M9aGecVIiF7ceE24lq4CmRisRl23Y3WQ=
-X-Gm-Gg: AR+sD12ajlcRq7Wo7FrFDRrnoqd7zY1u57gSc4HDXFWLuFFD+KNqMRsJLGY3bLsy7YN
- xT1ZWgYbdoJeTWfJT9pA7CTnH/yTNPbDEHSAIYfRMo6rbqOUiHUQM5JLJKxKgnkER1WcgWEiz+O
- 1wGGnosGIPQf4ySM07iXWzDomLtCbd30jMyn03n0EYIRGKZsWzHYozk5sjUj0X0es7FTCfcEDLX
- Uv0gNL0bWiFeQ2Mwn6ACreJRrvSV/GPvY/TOvr+RMyBZXyeHHgSzMKDKbrY6AhwqxLuIV+j5gFi
- V4XzRGRfEuo1/nVKpnZdDXl5bbhT5H04z2Ee9XYpYsg12ikChXu3
-X-Received: by 2002:a05:690c:31a:b0:81e:c436:c530 with SMTP id
- 00721157ae682-834723c8b1dmr23257777b3.14.1786607489888; Thu, 13 Aug 2026
- 00:51:29 -0700 (PDT)
+ bh=VIte8VSnxTbthIyt0DLLzwiQPoCeS1ANCSyE35TJpnk=;
+ b=C7/m2bH0FWsXKlL4yYWWG6nYoZQTgh8Ac/D942yhN8EU7KkrQn50GjDL6aUAclwtFu
+ 8thNpHNEtO6WLa4vqRWy6q8FYdNKNIOqDEn2SC3vMIBelE+Mov39AJ7JZ5RdZRQyHso8
+ 16g8pwvsiS5eINF5rtV/D6So8CWzfgsEZeYfuRIvATvoj+cf8i7QEEZPN0lI7lMRJ2Ad
+ nULlrjf/gFT4P/MkE9pyn0q+68XQlaue/Rl01LmdhXN9izB+9IjzBY2kGoI0b2VAowIN
+ jwCZZxmgsgat2qZfaT8Wp1lfYpa+c5bvrapX+U4+5Tpc4t4JwX02jfA+CCwsmFJduW/O
+ 9GbQ==
+X-Gm-Message-State: AOJu0Yx4ICQKKDdUwDgcq0xhCzrw2H2O7hg2+6QEbxNwYc8WM78E+teq
+ wmuUR2lzMyyjmTVkTYiKXBGvN+/67jtHsBdxoP+207vJU4xOCUAKml1aQzS7joqPyQqEgv09T2u
+ 0NZ/Nb+7KFEKYRyAATlrFl6jHHhKx6ORv9Y71DPpbFGpX6S9qvGtI0yyMVXzTmuAfSMYtTx0GKG
+ 9Ylj5nd6EhSt2xLC85Yc99aS7dYCTB8j8=
+X-Gm-Gg: AR+sD10x1hjbJ00514hlxRZdji4Q+iIBhECYF6CCoHkXMhQ4RdX6XObPIAhB3rw7PtY
+ XpCaFeVcBoaNDb1NcVUoD420TjZqba9gEgPFEGndw+ylkpBbPyh+70Dt85OBwR1ulXGSQ0+cjaY
+ IeYo8KVCLGTrkFvES0q4LWx52IiOhdAxicE3nYdknsQ1JLgiu/otMv9Qc+IKw2xsNz2S0VRejtn
+ cBlLIL9/1lED3ZrRVI+vfDRbNpUz5Ex5rHyTX+kp6RV1mqDIOO1zp2u+660TpWYPzpulY0Osk66
+ kw==
+X-Received: by 2002:a05:6a20:2443:b0:3c8:e140:63c3 with SMTP id
+ adf61e73a8af0-3cc554894bdmr5235244637.37.1786607529522; 
+ Thu, 13 Aug 2026 00:52:09 -0700 (PDT)
+X-Received: by 2002:a05:6a20:2443:b0:3c8:e140:63c3 with SMTP id
+ adf61e73a8af0-3cc554894bdmr5235192637.37.1786607528972; Thu, 13 Aug 2026
+ 00:52:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1784022244.git.flamboyant.h.01@gmail.com>
- <42d005d6e530e2cf2c7df8634e8b82c0f77d1702.1784022244.git.flamboyant.h.01@gmail.com>
- <an0wcQahXAB6UCCB@ChaodeMacBook-Pro.local>
-In-Reply-To: <an0wcQahXAB6UCCB@ChaodeMacBook-Pro.local>
-From: Kangjie Huang <flamboyant.h.01@gmail.com>
-Date: Thu, 13 Aug 2026 15:51:17 +0800
-X-Gm-Features: AUfX_mzrdsTYQgtzlU-Ct7QniI_NzOG1UNbuZhVOcmE1BGbAfpF2y1yOWx5mPdk
-Message-ID: <CAAW0U4atycRToaPbd8tRo1KoNUe54zLdi_72oCFqYHv8E81=2w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] hw/misc/k230_iomux: add Kendryte K230 IOMUX model
-To: Chao Liu <chao.liu@processmission.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>, caojunze424@gmail.com, 
- Kangjie Huang <flamboyant.h.01@gmail.com>
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-6-cc9396b9c18c@redhat.com> <87o6fes8t3.fsf@pond.sub.org>
+In-Reply-To: <87o6fes8t3.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 13 Aug 2026 11:51:56 +0400
+X-Gm-Features: AUfX_mwbExFaF1egMB-WiK7prkuD8SSkRXIbEMcO2Xy-AAw46Gdaes1aXCR1mQw
+Message-ID: <CAMxuvayGHh4Lfk50rTYZ_C6p3qhWzuTMQjPZVJLJWxrgoOx90Q@mail.gmail.com>
+Subject: Re: [PATCH v2 06/53] meson: add qapi-type-infos-*.c/h to build
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,29 +142,138 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi
-Chao Liu <chao.liu@processmission.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=8813=
-=E6=97=A5=E5=91=A8=E5=9B=9B 11:18=E5=86=99=E9=81=93=EF=BC=9A
->
-> According to the K230 Manual, Section 12.9.2.2, IOMUX register bit 31 (DI=
-)
-> is a read-only field described as =E2=80=9CInput data from outside the Ch=
-ip to the PAD=E2=80=9D:
->
->   > bits: 31
->   > Field Name: DI
->   > Access: RO
->   > Field Description: Input data from outside the Chip to the PAD
->
-> We don't need to simulate external input here, but I suggest adding a
-> comment explaining that this is set to zero.
->
-> I checked the K230 SDK and there are no dependencies on this part,
-> but from the standpoint of modeling completeness, it's worth noting.
-Hi Junze, Alistair, and Chao,
 
-Thank you very much for the reviews. The suggestions are very helpful.
-I will address them in v3.
+On Fri, Aug 7, 2026 at 11:12=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>
+> > Register the new per-module type-infos output files so they are
+> > generated during the QAPI code generation step and compiled into
+> > the build.
+>
+> Actually, they're generated before this patch already, they just aren't
+> compiled.
 
-Thanks,
-Kangjie
+right
+
+>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  qapi/meson.build              | 4 ++++
+> >  tests/include/meson.build     | 2 ++
+> >  tests/meson.build             | 6 ++++++
+> >  tests/qapi-schema/meson.build | 1 +
+> >  4 files changed, 13 insertions(+)
+> >
+> > diff --git a/qapi/meson.build b/qapi/meson.build
+> > index a46269b5a0c..7ae3843de6e 100644
+> > --- a/qapi/meson.build
+> > +++ b/qapi/meson.build
+> > @@ -80,6 +80,7 @@ endif
+> >  qapi_nonmodule_outputs =3D [
+> >    'qapi-introspect.c', 'qapi-introspect.h',
+> >    'qapi-types.c', 'qapi-types.h',
+> > +  'qapi-type-infos.c', 'qapi-type-infos.h',
+> >    'qapi-visit.h', 'qapi-visit.c',
+> >    'qapi-commands.h', 'qapi-commands.c',
+> >    'qapi-init-commands.h', 'qapi-init-commands.c',
+> > @@ -90,6 +91,7 @@ qapi_nonmodule_outputs =3D [
+> >  qapi_outputs =3D qapi_nonmodule_outputs + [
+> >    'qapi-builtin-types.c', 'qapi-builtin-visit.c',
+> >    'qapi-builtin-types.h', 'qapi-builtin-visit.h',
+> > +  'qapi-builtin-type-infos.c', 'qapi-builtin-type-infos.h',
+> >  ]
+> >
+> >  qapi_inputs =3D []
+> > @@ -100,6 +102,8 @@ foreach module : qapi_all_modules
+> >      'qapi-types-@0@.h'.format(module),
+> >      'qapi-visit-@0@.c'.format(module),
+> >      'qapi-visit-@0@.h'.format(module),
+> > +    'qapi-type-infos-@0@.c'.format(module),
+> > +    'qapi-type-infos-@0@.h'.format(module),
+> >    ]
+> >    if have_system or have_tools
+> >      qapi_module_outputs +=3D [
+> > diff --git a/tests/include/meson.build b/tests/include/meson.build
+> > index 8e8d1ec4e69..026480d9685 100644
+> > --- a/tests/include/meson.build
+> > +++ b/tests/include/meson.build
+> > @@ -4,6 +4,8 @@ test_qapi_outputs_extra =3D [
+> >    'test-qapi-commands-sub-module.h',
+> >    'test-qapi-events-sub-module.c',
+> >    'test-qapi-events-sub-module.h',
+> > +  'test-qapi-type-infos-sub-module.c',
+> > +  'test-qapi-type-infos-sub-module.h',
+> >    'test-qapi-types-sub-module.c',
+> >    'test-qapi-types-sub-module.h',
+> >    'test-qapi-visit-sub-module.c',
+> > diff --git a/tests/meson.build b/tests/meson.build
+> > index 9ba04bbedd3..71dc4ac8bf9 100644
+> > --- a/tests/meson.build
+> > +++ b/tests/meson.build
+> > @@ -2,6 +2,8 @@ subdir('bench')
+> >  subdir('qemu-iotests')
+> >
+> >  test_qapi_outputs =3D [
+> > +  'qapi-builtin-type-infos.c',
+> > +  'qapi-builtin-type-infos.h',
+> >    'qapi-builtin-types.c',
+> >    'qapi-builtin-types.h',
+> >    'qapi-builtin-visit.c',
+> > @@ -22,6 +24,10 @@ test_qapi_outputs =3D [
+> >    'test-qapi-init-commands.h',
+> >    'test-qapi-introspect.c',
+> >    'test-qapi-introspect.h',
+> > +  'test-qapi-type-infos-sub-sub-module.c',
+> > +  'test-qapi-type-infos-sub-sub-module.h',
+> > +  'test-qapi-type-infos.c',
+> > +  'test-qapi-type-infos.h',
+> >    'test-qapi-types-sub-sub-module.c',
+> >    'test-qapi-types-sub-sub-module.h',
+> >    'test-qapi-types.c',
+> > diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.bu=
+ild
+> > index debff633ac1..b10f081554d 100644
+> > --- a/tests/qapi-schema/meson.build
+> > +++ b/tests/qapi-schema/meson.build
+> > @@ -232,6 +232,7 @@ custom_target('QAPI doc',
+> >                         'doc-good-qapi-init-commands.c', 'doc-good-qapi=
+-init-commands.h',
+> >                         'doc-good-qapi-introspect.c', 'doc-good-qapi-in=
+trospect.h',
+> >                         'doc-good-qapi-types.c', 'doc-good-qapi-types.h=
+',
+> > +                       'doc-good-qapi-type-infos.c', 'doc-good-qapi-ty=
+pe-infos.h',
+> >                         'doc-good-qapi-visit.c', 'doc-good-qapi-visit.h=
+' ],
+> >                input: files('doc-good.json'),
+> >                command: [ qapi_gen, '-o', meson.current_build_dir(),
+>
+> You add *type-infos* before *types* in some places, and after *types* in
+> others.  I'd prefer same order everywhere.  Slight preference for
+> before, so the order is alphabetical.
+>
+> You don't add them to qga/meson.build.  Makes sense; the guest agent has
+> no use for them at this time.  They're still generated, though, which is
+> fine, except "make clean" doesn't delete them.  Unclean :)
+>
+
+fixed
+
+> Related: PATCH 04 generates files with bad names
+> qapi-builtin-type-builtin-infos.[ch], PATCH 05 fixes them to
+> qapi-builtin-type-infos.[ch], but "make clean" doesn't delete the bad
+> ones.  Only "hurts" people compiling between PATCH 04 and 05, so no big
+> deal.  I'd reorder to avoid this anyway.  The fix's commit message needs
+> to be adjusted then.
+
+reordered
+
+>
+> Similar dirtiness predates this series: qapi-features.[ch]
+> qapi-commands.trace-events qapi-init-commands.trace-events.
+>
+
 
