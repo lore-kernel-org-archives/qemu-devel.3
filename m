@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991CDC5CFEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9497C5DF66
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 13:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuVA2-0006OE-S5; Thu, 13 Aug 2026 09:07:54 -0400
+	id 1wuV9r-0006K8-PI; Thu, 13 Aug 2026 09:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuV9u-0006Ks-F4; Thu, 13 Aug 2026 09:07:47 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ id 1wuV9d-0006Ji-De; Thu, 13 Aug 2026 09:07:30 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
- id 1wuV9s-0005Hc-RX; Thu, 13 Aug 2026 09:07:46 -0400
+ id 1wuV9a-0005F3-B8; Thu, 13 Aug 2026 09:07:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Vg6UK8fUO3BGj3c5q5jslObeMAgFWntfQkKZhnX11gsDajsB7ZIZiZWZDZiW6o7Gy11+as7uxxJqpLFHlqFtFpk5AH29/debLLQL1IcqLmr4M0s9Nj0FWsB6+ufqabixtk9fLHi9k/B4MSuc1AI+LLgThl+WtPGvVP9yroMzsYqsrwaaUzZ35WgJUGYlr7jNgtoDCdkVJ6S+sOz1RZu/x7l9ExvCzDcuRmvGcEFQ2BwPtvH64CwMlsqLnXoERQZ39mHsD7uOlZIjZSALeepT47gmeb8d6NRP+rfeVQycmpWbmLVdCYGzx3Juz5rhoRBG/vOaVJ/ayqgDHHPJ2prWLA==
+ b=VovlAFgDaoyUgFbeVznnxh31MfpnHyNjdG4gbigVUcGNDFJXjrrDDkiZ0BxcbMDX/ithfDV17iUJe1fJd1rGYMd8kCxM0KiWkRdgRwOng0T4gSDYT9rNpn8qfXT2wul/K2GK7HI+CaOQvO7VZ4JmrlfmOcx3XDvZPDg3DpvY2P6O/XvMGJh3Zpi4J7ukL6aUFo770mK1ZzyrOIyh2sawXLYDam8M9wUfXTJ7XjBgB7P5zNKUblCRkCcRhPYlpjQF/Qw9DtRAdtf2C5UZjKD5wLe40V+ZAqiewTa0imJbXG/8/5/RF5Wn8Si4kpyh8ELb1dfX3gpSP4ZHgDIEbmCsNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4I/ClDKmMU8jHsRzY5L/WmC6q5lyry5DadmczCJuW+Y=;
- b=K2pXbAkQssCcuiXmWti2jn6q6LC3xNb20cZg2uLwZR5Nkbju1LnrIW4cf7oxz6akxrXoXV9PgUL7vOZlBReHC9HCUslu9H5AJvxFuprg8wL5Hi6PQ9G3FHQZru/PI9f0JAEAL/YglOtmib8cSSov1CJBxRxiDXUZVa3j/KFbh7AEDmhGwwF/CDl37kCwVY5ThHpS1o6KBweC4leVMn41f7czAGDZqp5zSqq12d1H0JA3LmpJY3GI3j6zgIMoATvugETGzNV7r/k9ubQvVb9Cw+TaOBbOw0o7KCvV1Z+/c9lzY69P8NZZPFD11Lwuoy9tTESu3mzLalNuuI7HIMwIlQ==
+ bh=qZZtbEB7F5TZsDCRBUKxcst8CtHvtk1q2iU4Jd8gXak=;
+ b=NqU5Oah/nWKntr0ZdB0JNAqoxQlOViFJkVhfHCcC1FjdFu2SxR1ADxUToikA2MiTs7+IOeJTgIjCUnd8kxQgJguZBzTgRLzB/LlE5hlwL5XVbPTnfWXvIapvTHb1aTOfbUNpYRBWb2AyeTIo9zS2v9Wl8Wacf+OCG+3a66LYP3eor4DZM1bLcf6vDdExr+z+/R0jrIitxRrxN8pjx4yHMCPkWnIi9uWvLI9VOCZ0pH4DpgasloDg4Hq6JMVpq6bPCcKqk5EZSfFtyN7jVI/hIBpsC+28BGIdO4hdHDzhvN0Ek/k1qnlNmm3hG94NfiVyuECFls/UFqkEOHGQeEOh2w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
+ 216.228.117.160) smtp.rcpttodomain=shazbot.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4I/ClDKmMU8jHsRzY5L/WmC6q5lyry5DadmczCJuW+Y=;
- b=lKJhKQo0gTGw/NKOoz0DPZs/zaq9iruN3pMVzF9WMwsII8E+v0Ckf7rU5v+GlFfPNH9omWl2r21HjaSAAIiOUP7IhnZbuPLQFYh4GP86vHQm1ZyUL5T4xKfk/HO/aVweTplCpgM94/xd5bfD7eNPxjRdcE/cDg4hQBAHYihJf75COCp10UF3n7jNNdsLLGgz5s2/xHP0cIoyPRXuWRwCY3ADVBKztyNtpEoLd92ger2fiozMMrk7WhProTsWnICbrhAigsJP4EqP8Jq95UKacSuNSArsIeuhmY3qMAtgqEykb7wWo5axVb3ExBvwes/eZ7XsbGYHfv5X4pDIMFy6iQ==
-Received: from MW6PR12MB7087.namprd12.prod.outlook.com (2603:10b6:303:238::14)
- by PH7PR12MB9175.namprd12.prod.outlook.com (2603:10b6:510:2e6::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
- 2026 13:07:34 +0000
-Received: from BN9PR03CA0621.namprd03.prod.outlook.com (2603:10b6:408:106::26)
- by MW6PR12MB7087.namprd12.prod.outlook.com (2603:10b6:303:238::14)
+ bh=qZZtbEB7F5TZsDCRBUKxcst8CtHvtk1q2iU4Jd8gXak=;
+ b=h3Sd4jccGRUhuHPbnDAMm4Fuj4/a8N/IOyuLBiyhrdAGSUeWHErmDsFPMGcwkLSo3BKrMZbd1gOOjYMQxpwty8C5z1XPobZSyMiSTnfCbQ43AEyN1RmoM4wYDRppFjDQqRJsxb5dFRHAY2euO5X3UXth0KN5SDM0kE0tLJtO9jQbkf9PeqHubsKo1mXZU6soQoTGMZ4vO6knykJghsZl1AqzE2E7stI5gDbEH9WbmaJO6H46yzHyaZ3QPelB0rhDVbcXDUAuz8P6PKw5NHAvNTeY2EiAxsjeSv/oBfEdAQKFwLcDzVo/jwcWo7aOq4t98KamDz2I8b+bI2HPbC/ruQ==
+Received: from IA1PR12MB6332.namprd12.prod.outlook.com (2603:10b6:208:3e2::13)
+ by PH0PR12MB8149.namprd12.prod.outlook.com (2603:10b6:510:297::7)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
- 2026 13:07:33 +0000
-Received: from BN2PEPF000044A0.namprd02.prod.outlook.com
- (2603:10b6:408:106:cafe::39) by BN9PR03CA0621.outlook.office365.com
- (2603:10b6:408:106::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.14 via Frontend Transport; Thu,
- 13 Aug 2026 13:07:33 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ 2026 13:07:18 +0000
+Received: from MW4PR03CA0285.namprd03.prod.outlook.com (2603:10b6:303:b5::20)
+ by IA1PR12MB6332.namprd12.prod.outlook.com (2603:10b6:208:3e2::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Thu, 13 Aug
+ 2026 13:07:13 +0000
+Received: from CO1PEPF00012E82.namprd03.prod.outlook.com
+ (2603:10b6:303:b5:cafe::95) by MW4PR03CA0285.outlook.office365.com
+ (2603:10b6:303:b5::20) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.315.15 via Frontend Transport; Thu,
+ 13 Aug 2026 13:07:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN2PEPF000044A0.mail.protection.outlook.com (10.167.243.151) with Microsoft
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CO1PEPF00012E82.mail.protection.outlook.com (10.167.249.57) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.339.3 via Frontend Transport; Thu, 13 Aug 2026 13:07:32 +0000
+ 15.21.339.3 via Frontend Transport; Thu, 13 Aug 2026 13:07:12 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.46; Thu, 13 Aug
- 2026 06:07:08 -0700
+ 2026 06:06:50 -0700
 Received: from nvidia-4028GR-scsim.nvidia.com (10.126.230.37) by
  rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Thu, 13 Aug 2026 06:07:02 -0700
+ 15.2.2562.20; Thu, 13 Aug 2026 06:06:43 -0700
 From: <mhonap@nvidia.com>
 To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
  <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
@@ -78,10 +78,9 @@ To: <alex@shazbot.org>, <ankita@nvidia.com>, <jic23@kernel.org>,
  <richard.henderson@linaro.org>, <clg@redhat.com>, <cohuck@redhat.com>
 CC: <kjaju@nvidia.com>, <vsethi@nvidia.com>, <zhiw@nvidia.com>,
  <mhonap@nvidia.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-Subject: [PATCH 04/10] hw/vfio/pci: Enforce the passthrough topology for a CXL
- device
-Date: Thu, 13 Aug 2026 18:36:17 +0530
-Message-ID: <20260813130623.2499506-5-mhonap@nvidia.com>
+Subject: [PATCH 01/10] linux-headers: Update vfio.h for CXL Type-2 passthrough
+Date: Thu, 13 Aug 2026 18:36:14 +0530
+Message-ID: <20260813130623.2499506-2-mhonap@nvidia.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260813130623.2499506-1-mhonap@nvidia.com>
 References: <20260813130623.2499506-1-mhonap@nvidia.com>
@@ -93,38 +92,39 @@ X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A0:EE_|MW6PR12MB7087:EE_|PH7PR12MB9175:EE_
-X-MS-Office365-Filtering-Correlation-Id: caf7d344-5450-4848-bc7c-08def93bd672
+X-MS-TrafficTypeDiagnostic: CO1PEPF00012E82:EE_|IA1PR12MB6332:EE_|PH0PR12MB8149:EE_
+X-MS-Office365-Filtering-Correlation-Id: 500c7a61-168e-43fa-d316-08def93bca94
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|82310400026|23010399003|36860700016|18002099003|22082099003|56012099006|11063799006|10067099003|921020;
-X-Microsoft-Antispam-Message-Info: T7Sihn1kDBzg4gSEdiL5T3mMTpB4UojJ4cnA6alZr+6b4lti7nGjs1o98bAdjASGZ/RttMBcrikyzj/1qfC4aMhGsg61nnDyozA6CT3PSPPMUXaTrp7Z9Po1HJuthZZh1q9FOhPiITv2IECfoWGcSEY4RkgD3kF57zUtZEZUGFknI/8qtETFejUUUm6UFXjcRT54tOkd7NbNHTl0HMNNeonHj+MVgDX2wKdCiug8ioi09i6M8U6KqW03Wb1y9UjCjL+6z3fUIE+zuB58wdbrCpxjsFZDGdyYlPH/XcKeYPX4jPAKKjfNT0XVQ5jOgcvff3QD2XPXisHv6L8MLsOML7ltjhGfY23fr/v0YUzqhzEbKewQyoO7TKj4AXdTN1gwBcdAqLQKHYtK7K9LCRzRY0SHSJp6LMxkGaWbsUHHFz/Q05hypVNxdJPLah72Mz4A0YvgP2L3Qy5n3MrHQbHe787zEWuQQitEScEe0SN6AtxnnEUjaoG99w+Jg7U7QuCfX6ARQhI4hFRqz+hM2wFU7pNLV//+CjNzxb2EHm5F3gV3rKp/jcGq1ERwycqn4bPPXVJhCBzqv3aKg6bGpi8OS15RQjOFgouk5YbxjS81pdbNKEy8lcL53Lt8PIVkYAOvPTlRkD+4Ht3uCMzo66iiBJMRn1d/YGwJIxWW8POFc/KpA4zUAhFZCkNNCYa8fhCRqH+MwU4o0Zns9JaQkmb3MCkrND2rmZiE4Rx4Z/A1/LzEW6UN/wy619w4taxFX/SK
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(23010399003)(36860700016)(18002099003)(22082099003)(56012099006)(11063799006)(10067099003)(921020);
+ ARA:13230040|23010399003|82310400026|36860700016|1800799024|376014|7416014|56012099006|18002099003|22082099003|10067099003|11063799006|921020;
+X-Microsoft-Antispam-Message-Info: UNLj35yTS21LKBunvRble1Ygx+kSFxerEf1kyB9KWC4gyKYjmf6dBWiZ0ZT7RcpFno7XbavW4cvkSXYSAFCoMcZjTR+zZXJpF387IimkHsmEyorozVLw8Wbw2OjvLxrk2O82NwT6ts52EJSQiUtCZUdeNUFIqQHKR+QuZgafOH/Jz91UeMIskmw2Mjfpi5EMGQYD4YFUQg8xQkTlZTgTTG4kAdJueYmJQiTi7zy+zEA4G/ba1Ngsg9s7U96aGhbQHfEPuhPU0nC96N4zTxvFI4lV1ydyOQPH8dkSjGnzLcSxngyTHV7/qmUHxxk6bfpLIW7LrdS/IQCkUofrF/nvpmtaE62TnzRj6OYyW2FQtRvVFSlLd+zjugzFgmwpOcEFVinNAJjB4/dz2iApj0Xq34lRWviXPxgY2vE7a6wA+5cGqD0D4n2yKXYsCd9ETGewi7cv8He0NWiUYDoA7P3R8nvtrQ3QixvcgixdQ+GbEdZ9crZYEDZHsDI2iHZu5tJ+4Q1uMYmhg9T0A01ntodP+Qanli3+Ko7P9f67upTzHYNEsq4456YFNDzFoax+0cyGXDvqBHRqG8J0dqrha5NB1fMkf7sWEzTA8A0MMTLC8p8vBDC6rdB3bP9uQcxMKvzsLPww8mXVR1McZ43vx6JZvF+7b8jlMsDJyxVtCYpAjNr6pDsPISZgUe+4ljoqhs9F1svWy5RYuLclUG1ONKH3/wzeWjPq/tEa9txt+0vfkS8WkJouwetxdNX75n/ip+v7
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(23010399003)(82310400026)(36860700016)(1800799024)(376014)(7416014)(56012099006)(18002099003)(22082099003)(10067099003)(11063799006)(921020);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: E4izKhoUi8WCpJfvENeTOUUAaGoGpFrMBPC8P+oFITwOmWr0+5gOXue8jPO//MtQBxzVKNv6RtCRNnj3G0Fa0/bRbuoMJdZe/SdDYQo8jD0YMI6rD0/MAknDY/yDpBA7FcuOIJITvnLRlAvQOlLlu36f/IcmTSJCL74hKrMwMvtpAucI2hGLuYCkJYK6dSnEwk0zu0+Q0/EbDs2pYJ08P4YIl+XM9/ydN368VwBoP7zCQfDmZRdWZZztYTbHlM+gSf9Y/7i9XgC+woOr+iO6MpFv07PGE/2iWYrp8mkGbsoGGqvY06SmydVbsQ0aqXZj2ceDPhaZMKLkhFHnxDt411z4xHSmptbrl0nuzwH2aEUeVh8/9uEg5N/3iun+Nn2RrF//4BlsbI62aP3tko7eWaxtmqECPbRr3sU7ROyYWObqmpoBOXJqwt/YTXec5VW8
+X-MS-Exchange-AntiSpam-MessageData-0: 6/+WaJcDfltzyFs/u1XwyDu4eNR8qp7OSQJpM9Cg0t53bMDVimHSjSB++zpAoN/GyCfp8ytdpgfBKsx8T62sGhT7RZSkRvyqSkUcxJCDGWztAFJc8O5tNRR7wCXZTvaoLyiPGClJkAeXxCwbY0fK3QgucSC3u5cRJLdTTYr2RuXuCdbj+nZvmkfycwBocA5Hb/R437oAzUyoETNV2kzKllatuCM/5ZFFnDOd9uShsU6WAXRTIJV7zlLOs2eOGZR8pK6m3JjDvY7rxzKPrfq+EL7MLRzW71j3/+cTy/Kq6IXAWVCgEH+Di3AT31Yw9bTqeu53FTn+SBy2eGvklKnX7fVgEs0eRrqelBKu1TJ+TjOWt3ewPnup38FfbxgEHb/Zhddnvhd8/1kKCeLhmx6vQexz9bTDt55qB+ohZjoyQF2G+QvK4y04tLp68DWGqjqW
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 13:07:32.7516 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: caf7d344-5450-4848-bc7c-08def93bd672
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 13:07:12.8951 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 500c7a61-168e-43fa-d316-08def93bca94
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A0.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF00012E82.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9175
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8149
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
  envelope-from=mhonap@nvidia.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,126 +142,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manish Honap <mhonap@nvidia.com>
 
-Only the guest's endpoint HDM decoder is programmed by the guest; the
-decoders above it are covered only while the pxb-cxl host bridge stays in
-passthrough mode. Reject a switch in the path, or a host bridge taken out
-of passthrough, at realize before any mapping exists. The topology walk
-lives in one helper so switch support later relaxes it in one place.
+Sync the vfio.h additions from the kernel vfio-cxl series: the
+VFIO_DEVICE_FLAGS_CXL device flag, the VFIO_REGION_TYPE_CXL region type
+with the HDM memory and component-register sub-types, and the
+component-register geometry capability that reports the BAR and offset of
+the trapped HDM decoder block.
+
+The capability ID is provisional until the kernel series lands, at which
+point this becomes a scripted linux-headers update.
 
 Signed-off-by: Manish Honap <mhonap@nvidia.com>
 ---
- hw/vfio/pci.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ linux-headers/linux/vfio.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 157786df72..1f21da9513 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -27,6 +27,7 @@
- #include "hw/pci/msi.h"
- #include "hw/pci/msix.h"
- #include "hw/pci/pci_bridge.h"
-+#include "hw/cxl/cxl.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/vfio/vfio-cpr.h"
-@@ -3570,6 +3571,84 @@ bool vfio_pci_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
-     return true;
- }
+diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
+index f3282b8e86..f3e6c94b00 100644
+--- a/linux-headers/linux/vfio.h
++++ b/linux-headers/linux/vfio.h
+@@ -215,6 +215,7 @@ struct vfio_device_info {
+ #define VFIO_DEVICE_FLAGS_FSL_MC (1 << 6)	/* vfio-fsl-mc device */
+ #define VFIO_DEVICE_FLAGS_CAPS	(1 << 7)	/* Info supports caps */
+ #define VFIO_DEVICE_FLAGS_CDX	(1 << 8)	/* vfio-cdx device */
++#define VFIO_DEVICE_FLAGS_CXL	(1 << 9)	/* vfio-cxl device */
+ 	__u32	num_regions;	/* Max region index + 1 */
+ 	__u32	num_irqs;	/* Max IRQ index + 1 */
+ 	__u32   cap_offset;	/* Offset within info struct of first cap */
+@@ -345,6 +346,7 @@ struct vfio_region_info_cap_type {
+ #define VFIO_REGION_TYPE_GFX                    (1)
+ #define VFIO_REGION_TYPE_CCW			(2)
+ #define VFIO_REGION_TYPE_MIGRATION_DEPRECATED   (3)
++#define VFIO_REGION_TYPE_CXL			(4)
+ 
+ /* sub-types for VFIO_REGION_TYPE_PCI_* */
+ 
+@@ -373,6 +375,12 @@ struct vfio_region_info_cap_type {
+ /* sub-types for VFIO_REGION_TYPE_GFX */
+ #define VFIO_REGION_SUBTYPE_GFX_EDID            (1)
+ 
++/* sub-types for VFIO_REGION_TYPE_CXL */
++/* CXL.mem HDM memory window of a Type-2 device, mmap-able */
++#define VFIO_REGION_SUBTYPE_CXL_MEM		(1)
++/* CXL HDM decoder registers, trapped so the guest programs a GPA it never owns */
++#define VFIO_REGION_SUBTYPE_CXL_COMP_REGS	(2)
++
+ /**
+  * struct vfio_region_gfx_edid - EDID region layout.
+  *
+@@ -497,6 +505,20 @@ struct vfio_region_info_cap_nvlink2_lnkspd {
+ 	__u32 __pad;
+ };
  
 +/*
-+ * Walk the endpoint's ancestor bridges up to its pxb-cxl host bridge. A CXL
-+ * switch in the path is rejected: the guest would then have to program switch
-+ * decoders, which the passthrough model does not cover. This is the single
-+ * place the supported-topology assumption lives, so switch support later
-+ * relaxes it here.
++ * Geometry of a CXL Type-2 device's HDM decoder registers, so a VMM can place
++ * the trapped component register window where the guest expects it. The cap ID
++ * is provisional pending an upstream allocation.
 + */
-+static PXBCXLDev *vfio_cxl_find_pxb(VFIOPCIDevice *vdev, Error **errp)
-+{
-+    PCIBus *bus = pci_get_bus(&vdev->parent_obj);
++#define VFIO_REGION_INFO_CAP_CXL_COMP_REGS	6
 +
-+    /*
-+     * The endpoint must sit directly on a CXL root port's downstream bus. A
-+     * cxl-rp carries QEMU_PCIE_CAP_CXL, so it builds a TYPE_CXL_BUS downstream
-+     * bus; a generic pcie-root-port builds a TYPE_PCIE_BUS yet still counts as
-+     * the single downstream port checked at bind, so without this the guest
-+     * could realize a Type-2 device with no CXL root port above it: bound in
-+     * appearance but unusable. The bus type is the right test here, not
-+     * pci_bus_is_cxl(): the PCI_BUS_CXL flag is set only on the pxb-cxl root
-+     * bus (where the root ports sit), not on the root port's downstream bus.
-+     */
-+    if (!object_dynamic_cast(OBJECT(bus), TYPE_CXL_BUS)) {
-+        error_setg(errp,
-+                   "vfio-cxl: %s: endpoint is not on a CXL root port (cxl-rp)",
-+                   vdev->vbasedev.name);
-+        return NULL;
-+    }
++struct vfio_region_info_cap_cxl_comp_regs {
++	struct vfio_info_cap_header header;
++	__u32 bar;
++	__u32 __resv;
++	__aligned_u64 offset;
++};
 +
-+    for (; bus; ) {
-+        PCIDevice *bridge = bus->parent_dev;
-+
-+        if (!bridge) {
-+            break;
-+        }
-+        if (object_dynamic_cast(OBJECT(bridge), TYPE_CXL_USP) ||
-+            object_dynamic_cast(OBJECT(bridge), TYPE_CXL_DSP)) {
-+            error_setg(errp,
-+                       "vfio-cxl: %s: switch-attached topology not supported",
-+                       vdev->vbasedev.name);
-+            return NULL;
-+        }
-+        if (object_dynamic_cast(OBJECT(bridge), TYPE_PXB_CXL_DEV)) {
-+            return PXB_CXL_DEV(bridge);
-+        }
-+        if (pci_bus_is_root(bus)) {
-+            break;
-+        }
-+        bus = pci_get_bus(bridge);
-+    }
-+
-+    error_setg(errp, "vfio-cxl: %s: not attached below a pxb-cxl host bridge",
-+               vdev->vbasedev.name);
-+    return NULL;
-+}
-+
-+/*
-+ * Option I enforcement: only the guest's endpoint decoder is programmed, so
-+ * the host bridge must stay in HDM passthrough mode (decoders above the
-+ * endpoint are then trivially correct). Reject anything else at realize, before
-+ * a mapping is built. cxl_get_hb_passthrough() reflects reset state and is not
-+ * settled yet here, so gate on the static hdm_for_passthrough property.
-+ */
-+static bool vfio_cxl_check_topology(VFIOPCIDevice *vdev, Error **errp)
-+{
-+    PXBCXLDev *pxb = vfio_cxl_find_pxb(vdev, errp);
-+
-+    if (!pxb) {
-+        return false;
-+    }
-+    if (pxb->hdm_for_passthrough) {
-+        error_setg(errp,
-+                   "vfio-cxl: %s: the pxb-cxl must be in HDM passthrough mode "
-+                   "(do not set hdm_for_passthrough)", vdev->vbasedev.name);
-+        return false;
-+    }
-+    return true;
-+}
-+
- /*
-  * Learn the CXL geometry the kernel reports: the HPA-backed HDM memory region
-  * and the trapped HDM decoder block (which BAR carries it and at what offset).
-@@ -3619,6 +3698,11 @@ static bool vfio_cxl_setup(VFIOPCIDevice *vdev, Error **errp)
-     cxl->dpa_size = mem_info->size;
-     cxl->comp_bar = cap->bar;
-     cxl->hdm_offset = cap->offset;
-+
-+    if (!vfio_cxl_check_topology(vdev, errp)) {
-+        return false;
-+    }
-+
-     cxl->enabled = true;
- 
-     return true;
+ /**
+  * VFIO_DEVICE_GET_IRQ_INFO - _IOWR(VFIO_TYPE, VFIO_BASE + 9,
+  *				    struct vfio_irq_info)
 -- 
 2.25.1
 
