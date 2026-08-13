@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B7A8C5B572
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78596C5DF67
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 15:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuXhF-0008D4-Pc; Thu, 13 Aug 2026 11:50:21 -0400
+	id 1wuXhD-0008Bg-4l; Thu, 13 Aug 2026 11:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhD-0008C0-Mo; Thu, 13 Aug 2026 11:50:19 -0400
+ id 1wuXhB-0008BS-CH; Thu, 13 Aug 2026 11:50:17 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wuXhC-0001nZ-Ah; Thu, 13 Aug 2026 11:50:19 -0400
+ id 1wuXh9-0001nZ-Rj; Thu, 13 Aug 2026 11:50:17 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EArkJN6Cc2AwrVtIeYbI6sgYZa1Qi8pkqXD3L62mXaem+hOtwvLgBnsdObBloey4KZzKx8nf05JowMm6urBAaDTaiA5RKt+J8iHZoOBeOhO6CRXF2Mj4OeDotuz7omd3tH7dQcYLie1EO4Rxag9G0MLPTZhbkDa7eHbVZJ6Vwtw7pDoLb5O2HpNVKrzKS3DLPp9H7j0m7k9ZL7UlswmBucTQtgzyIJdQIX/FBjZtD2r01DxSReI64mIvnNZQTulBTNd7aSAgL02nSd+MvexKyhWBHthbRDIjw8YBow9klB7KHrJ5/3BC2xG8K6haxa/Ohbpace1c1ZhOlHq35pHkPQ==
+ b=WYqHsk2+sh94b/cByZTLrLfavij+q0L1kyHUA1qOWlTTDp5xoRv89On9nh+zqqMdHlcLaFf7qaADOO6vsV5wHHgakgqW26fz8WN+gqONNCMIbrVFFjM1cUcv3UP3bMgGtNAJ8UaRWwv4SW7lfjejM5yQBT1HEpQseSUWRk954cUnz20hWye/z1xKBywulqGyIV/3/ix1/bV1POhj23I92cByL2iLHaSghK/nnlxHXkZwFGBcYCPX1x7ii2g17SrxvSQLvFIGMGFder0ey16sM3hCttIvCykUu+bwMwmxkwIUpDqWkYQzK6qVGb8RlEMeXhJLo9x1/Z2JsuuULDxqQQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FItJiPb02XI7Z0vvGUWPXgbyIdGr+JjrEJkCAPDoC34=;
- b=LrUEWZJzd4OQ4aEUfbEjBoNRfzYCgjGgJuPxP2QWavg+xPpIVkWl7Kg+/X30vRkVxWF4EpSQoXqTdjz9FzYH+45zN7rGSv2fS6EN0CUI63gHptXx2HaCqEMf0+L3hjuzvDl4MXiDp5O4T3xdC3vl8E+LARwNibiDjyydmKFUb+d33XHehIr4blMigr0tKMu2r62H9W4Ztl0Ub5S7BdDmUHJlnkPgs+ZpARdJGDh4GgBOpHJtMBtw+dI7vqidONdJIgKo2wiCJUMOMg8Lpi5yBEmeHfct+AVlWrWENP4mEuUZ2h4rigzor504TwxtZMW8nMIobLZWvjRyTyKS6UDbgA==
+ bh=xzh/0lrjyIbB2T3UjXiUS2joY+n2qcJ/cqNnKenUYIw=;
+ b=ehWeg/6pxdmMO9JBptePf3aoeG8BfcElPzVyhKXtYPOHgl6dVGsbQ4GkNE/lKy3EJPtVtzHU/thyLCj/WiBC5Gi1NrtFNp5M+J4t8EqJ2ZjB8SSo/M572NEgSb2EBhcNaI12LclRXb/C7CsEnoHtFwO4JCFNzCE//yqWYV+Qcj/Cstc5b9eshySF6laSuVGMP7nJlG5CSaNEbnDftCQ+5JhawqAjRTsCNeoJpbSbZMUFUag0d+NMejYg6QUkG4cqAdEmSepfVcCvftMAXX0m2qfN++HP7geidXw4k9OcvTWfl68aC1fXyBf5ZwFtuawB+Eh9/0S6lZxxwFXyiUSf+Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FItJiPb02XI7Z0vvGUWPXgbyIdGr+JjrEJkCAPDoC34=;
- b=hRhaA40vONAGXLG8hDe3O7XS5c1BYHAYrMrwl42aE7JHCwIIhvoHuRYC6fyyAAs2eXwUeshLD5ZFwuczWRUVCgrbuN729LodVvNxFw2OmymozxnzBWa8jbGej31TyL59ehPWbDjIUNhyK6BJJqCwOAl2V7NpB9Bu+hnjji7yhTGq/UhTg7Y99Y9Jt7gQZnzU8bznwbKlgdGd9aIy8HFXfPenXHOuuyEUPtQBbuRnA+BHZHt1G8dSwFDJsBqEjdkru8RK0xL0VgggxGZAH8mM2jY5XzCImaf+V+QOyCF8jcR92w5kVB6GWuLdcaeNZsTuEJ3p1Rz9wJ+JoGD3pxdXkg==
+ bh=xzh/0lrjyIbB2T3UjXiUS2joY+n2qcJ/cqNnKenUYIw=;
+ b=IT66SYeFyForNBBum2Bc8yFOoKOAb2v9RI9P9HomcDfBynwDvJ5DZASaX7+CFVau+bx22OlTNO5y3wmEN3B0cwpm1POVHrlObRuxpz8MJLS9JZ0NAs9w+neKDl6jHSqx3dfnzGRZrdpXhYfSqohE7781PKo58mg6ycLQ1kiaNasWALk3vU3/Dp4DysLZIxrC3g0rx89VNX7dJqfkn1cJwzzKD0b0Wu9CAurd9Ap8xj0tpejcxHewwFFA78/gMFKI4OPAamawnaJiBxtlU+cH12cAhJ9jzpRNbgw9kEL2nW1nIBlfh0SxOUgXhXuIKA49jJxnOh/nmwVEmDhOsfkcPQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by SI2PR02MB5490.apcprd02.prod.outlook.com (2603:1096:4:1a1::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Thu, 13 Aug
- 2026 15:50:14 +0000
+ 2026 15:50:11 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 15:50:14 +0000
+ 15:50:11 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
 Cc: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-arm@nongnu.org
-Subject: [PATCH 04/20] hw/arm: collie: Store boot info in the machine state
-Date: Thu, 13 Aug 2026 23:48:52 +0800
-Message-ID: <20260813154918.996812-5-bin.meng@processmission.com>
+Subject: [PATCH 03/20] hw/arm: bananapi_m2u: Store boot info in the machine
+ state
+Date: Thu, 13 Aug 2026 23:48:51 +0800
+Message-ID: <20260813154918.996812-4-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260813154918.996812-1-bin.meng@processmission.com>
 References: <20260813154918.996812-1-bin.meng@processmission.com>
@@ -64,56 +65,56 @@ X-ClientProxiedBy: DU6P191CA0001.EURP191.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|SI2PR02MB5490:EE_
-X-MS-Office365-Filtering-Correlation-Id: f7c8f062-dfb2-4d33-9fed-08def95290cd
+X-MS-Office365-Filtering-Correlation-Id: 0deae7c8-5de3-4d17-d84e-08def9528ea7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|1800799024|366016|23010399003|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 8MmtAEy4mAmSdyV0QXwCAT2l9ZcE3kW/J1QIaNExkdJQ9kU/qJpLRlGc1u3xgGjbWjxrG8l5ayoLjh1sMgYE01VxPMWYQpztUuBKw7oIjQutCnHjRoO3vX/GVyG3n9cyGbENHxMPSEeLH7nD+5ZPHJgMRopfBkMwDVkjmIBjMlo2E6cg0Q15O57+P0xhew+nwLxv3QJMU8S+hyDYP5Z3N3jBrmhDbwmOBBmtQN/4U9/TlhNEghA79ugpFCVVBqDCNRQaKYE1uaYUfUTN/Llp+8ZSFFep15RAe0OKAyenjvGZ6ofFv+7z7CR8GTvw2VRc4enVRSLxC+a/H5jqvLM28+DpE+Vk0xrba1RLcgcWnpxFFS7kx4LQ38DiKLn7Pwj4Z4mFgKeKue5dNzbpvGR7bRpuU3cOEkh0Hz3OXv3l9PxAvnWekCT13jjyDPQ/DqtbW1r6LoHAaE4WlCtXqmAYNYmMaQq/OT/XwD1haBI+z3LxxKe5LKLyalmpOruhIYZ834UrwS5IJbmZPCQyGSCG8XfXAe1NoIN3gyb6VUu59VaqdoM0kxyLH60K7BwDsIfpX3MiDVcWPn4mIa6HAW40pMoSBSVx4LUjP9Ko1+B2L0hpuegUMTkzkmQwro3mVLiu6Gj9ipoFhBMIV82ziCVkAb+8Ngtacdv39Msv7BQrft8=
+X-Microsoft-Antispam-Message-Info: qgfYnCG+uOmhaOL0UjY0PlO8XIG+u6p/ZhFc/SdEbYtiahxX5qpwm3IPkLXn1g4nLaKH8sA8+ZKtjuujwUBN/2MQlkxa2Rp0OOypYNp08e5hfY92A7N+9di6tHIxlMmdqMtvsng8qzS4t9ElcQizLRlI5DpnKvqpTAtVEo8Cx+vRFItVYqeKkn8TAfzuNB6V0x/OJ42YYpD2J1OnO3D0HxM+cNlmgsfxIDPmMwUBUNc91JRF8as+0iN+XA59J64HJY7u09dO95xByPpSr+9O8fw9+ZT+CEeEPxRT+ZIh0hzh0LbjkqE1MMsraqHTFGRjoIecf+8gX0+yiLXb+n1EyuXLPCP5rF1MWJOiJZQ7x4Ck3DQrmUjxn7lIRVLBqZl9n0K9Mpf8u/+mSop+HfzLx3QNmC8na+g2VvwdKiAG+puwbILzzuUoVkBHuyVie/jrtD6a71NQMqMHjuwKfbPoB9socdAGIdcZwokWR5/p60wkHGWfnGbptybhh1M7171k/IkXfc1XjmEa3LEEu8BxKgbtD90KzOMQd9hipF+O78QK0kvs01reU/yFKPsuPzV4mXtZ7zEWYhmDYWPGyZRUejRc7AcK298b4pyc8RVPnCzvQS69GRYqMo8lDKm/7OAuqgn/xvZ8Szlt621sLERcc8o826txUyIftps1yhJpP1k=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hS9TRrnTK5Fom5HewXlIKd56JMoWl2NGd55ABf7SXBqFxb1pIdrrfS0NmCXb?=
- =?us-ascii?Q?0jaM3enHfC9UVWP9MoNvBZu38SJuPkozaa2cD4WfIEnsRAhZxF9jVd17FKDs?=
- =?us-ascii?Q?3cDwxDzgDKOicEQY8AptyDB80BdRl9oXIc2mwZoPUKl6OEuIo+J3U5rjXqew?=
- =?us-ascii?Q?R/PJhlXEwtRB7Npn3i+TQ4YMJjt4Kk4G935o3HhNMyL98oLYcuMGqEIiFFMN?=
- =?us-ascii?Q?KWBlQIHBZiv/qKyFGZ9IXnPODGPSOVGMKMH4KkDsov8yXEDSe1z/NxASWKXP?=
- =?us-ascii?Q?8vRxKl/0LbXfYNRnQgCGUYSqalyP4jdWwwQtB0JHAcfMeyGr7UxaNJAwWk6C?=
- =?us-ascii?Q?1qC3SfDP/IByE9VF2YW5u/0zNEW1mnZ53DlNdfyLN+EGR99erQh/7U45ONdI?=
- =?us-ascii?Q?ot/D29+JOcEur3UXQQo+DZyNrWlh3tLFP0TnVtUIqV0pMJNANjZCrtnc4hDU?=
- =?us-ascii?Q?hnXyARxxClBOPfS3S296bwyEt1d0mkOdqpNcZ5lg7W2UrsMpxEPN60Lx9Bfg?=
- =?us-ascii?Q?fEOvEG9W0qqRJYZ9u8LIcM5M4+vV4ae0Bf8O3TIg853EyAZ9LIrMmTjDQx6q?=
- =?us-ascii?Q?PdOkqkAOUAZFTGET4lN3VLlr/lIQ2yYuyHB2g+yq2J3+YTNacntB4lcCMSas?=
- =?us-ascii?Q?ke6D4nxVIUH3fVkK5jyYUM9ZGTacOtHqF+IqEhZYosjWfYR13xaKOoxr+Fgb?=
- =?us-ascii?Q?sQJlRjqtRMVZg/jYb3ZoeQ+qJ0qCsYxzhApyc3F9SL+2/1P1q/kYlHEBkm0w?=
- =?us-ascii?Q?Tx99f86We2jQvNrEla5UgAa1d7RPDoi/ggvClfM8vUJ9an45fgDDVJh9no23?=
- =?us-ascii?Q?FrEgQi6EROqGB9jncjg867ydIvRhoxyjL9WiKUh1OBWFGlAnHgSX5WTFqRaU?=
- =?us-ascii?Q?zrQayHFGx1bv/92KpIrqkDjGI+vbk06fbTjbORaYVMFdC5Gw1hiqoQXgGWeG?=
- =?us-ascii?Q?i0tvYlIBFjXDCblPEWjirJXHJ+VP7faxdeqePWOSRgNG/fE0yQAdbCsWlQ3v?=
- =?us-ascii?Q?nCr0l74ycb7uDSsvncAdtfwI7Jha0Kj/jG9K4V9UVD23b9quatw3JQ/TtocX?=
- =?us-ascii?Q?mvvHFHmm8Np4TUDEQdFqz8UiZXK1GvcRGZqoR9yV/HgyYzoBemytNxkHzppS?=
- =?us-ascii?Q?6d4nlJcPSrVpAMMKDHt+y19BKS1ZxcJ4l96LM/8fO96svBMgy7/MEQMtp2Ru?=
- =?us-ascii?Q?KiV7yAvVIJ3oYef/u1UN3Bf2JOu4K6Z7AKqHQpxT0h1l9f7DPdDPsa5Gsqxc?=
- =?us-ascii?Q?xdcqAJgrhxxHX+svZt9MMXZK8eFPUSZoZUIlzn5B11f6eiIPiTIyMorKXxZh?=
- =?us-ascii?Q?3rZiD6wlz2/sSwYLAPU6zMHsynji8aJRRjX8UIBnJGbc6wTAcz7fDkwyp3NN?=
- =?us-ascii?Q?9tpKKuXIvfBR5JcKo2GdfXcpyzvXp8Efy33KZ/rCMajhkI3IGxf8gSrUh8hQ?=
- =?us-ascii?Q?lsFiP0+Qpimp3FSwMM8/l+sTjY3vxpsTsw8x8jEaLcpku5WedxCqvmJT2ygJ?=
- =?us-ascii?Q?/CSjEEWfqyqAt34wx+ALiEGCLLbbl3gsmGPNytApDrFilrgDSg81fsG5ST8Y?=
- =?us-ascii?Q?t5b/NOys7Zh2Hu9vOzyVkhxqBhAWbPCOTIjmn7YZeAtuivYHVtGRlMCSj1H9?=
- =?us-ascii?Q?0DSefn41K3eTpLLriO37rBOJfhWhZ8Se7Oy20RMMqp5nFc7+Xj26y1wSiJT8?=
- =?us-ascii?Q?l0O2Q5LiVdTQuUK4Dg33YKJhOTEzRs9ccGsErmL9YABPAdms+r3anpNAO/9J?=
- =?us-ascii?Q?hiFMV0ZW1i8wlS7Kxc+Ia9DWDaBnzCk=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Q0xoWZ1innZG5yy0lv8+wL0GJyvM3WwmJQIl+wJyLtR9b8iM5QGKBSOhueZr?=
+ =?us-ascii?Q?/JINNGtkdlu8zvjh2KOmwRf0u6nrliEz3tYVaIwTl/WUXVxQCbGOMHM7TOW1?=
+ =?us-ascii?Q?yCVXmO63BkHkPD+x7ZEA6XAlfk4ByScKjYg+N1fTb2Koh/m7cSbhqI5GdtAf?=
+ =?us-ascii?Q?mXnzy8oxubpaTyW/ga/hYKINxq5YA7daJDHqCYu3aNWkXeo+Snec8Obo+hxv?=
+ =?us-ascii?Q?9pOj7Zc1ekW97n+GGJ1y6hoDiCsFEHZf1QxIsie9gk893NvbeAtRNf+PFZUz?=
+ =?us-ascii?Q?64oONRrzoiWE4VucGdkKeN+o3qgnMarkN8tKIC3Qx3wBttvF+0bn0n3gb6lq?=
+ =?us-ascii?Q?lwuMlVkobgTSg3o1hGCiE+vN8IjbzATVJ87DvXtnUU9920nnhmMzyyvh6ZrY?=
+ =?us-ascii?Q?mLYpcoADmSUXBPfx56u6KHJJd8rSLlUbpDkbrEZufsbfvJNTMMtctvRhqEg3?=
+ =?us-ascii?Q?uIhAvPimrrj+TZIFCWSxpuNNxGsU5lO2QF2Gz2fYysQMh9C9yAmFaqP7V21c?=
+ =?us-ascii?Q?eljcdA6oukEXs4nc3/0ICc9FT9PT7ZItviI7M1pz5+cVYNqd9hVsLDf42v5+?=
+ =?us-ascii?Q?Wq9CZfCcimmS90sfv4N8n98IlMszyqjxJlphGuXqLs0HoIqEum2iWvQ55RAu?=
+ =?us-ascii?Q?twDv3BxxKQaEe6FsqhCaToKjByoJS85+OrYDjCe8DBQqrmsLELLK+SVkDAdY?=
+ =?us-ascii?Q?dJnODArSOl6vDOHXEXkGlYHoyQSM0TJc48INx9RW9ociZIuwMmHzNPK8wbS3?=
+ =?us-ascii?Q?f+FjuEQqLPm3EbMLLnpSu/uMkcOcmFd9Ps/fhJQywkCWxc/JzZFvca1N2/F5?=
+ =?us-ascii?Q?yF28Pnrw2yYBLkEU64Qf1kkx44RJx0zWqEqnJj8fRnOh5th2xi0mzO5oSf1L?=
+ =?us-ascii?Q?SIhat6IruG/lVz+3opFPdhKxLSD9eqMm7AllbPOaT6v5WulA0NVnNkBwGAR1?=
+ =?us-ascii?Q?sdg8GHL/ccE4J2dYr+yiZFfxb4e9/kjYPwKMnH9xTQJG/T+XX9hFicdP3b8P?=
+ =?us-ascii?Q?PnS+xhCNKBm8dGI0+n2OK0a09ZYNkW6VowGTa4uhqkJf41/Uvo+oZvEB7oMr?=
+ =?us-ascii?Q?QyikqtsOyENCjrTSNuUTY2JH4l3txWbd+VUa0EiPBWOht9NOm1DjF4JyhBTT?=
+ =?us-ascii?Q?q+bsNPiBHe+hazj4yPUrm2f+/ttlxXYo68Dh3DBxL1wt/VX3Xccduzl7XLrk?=
+ =?us-ascii?Q?2qU69tue+rrTh1q+kIH92g2d7YhwipoaVAX++v/6Wj7hv8tU1lZwweTWNLfK?=
+ =?us-ascii?Q?+CAf2QVDGgiCJMrjoeqb7VY7q4Kk075NrgEUnHmBybwfw/iNQcgHLyqicTC+?=
+ =?us-ascii?Q?8AC7kVyQIAf6MqM2kxmvBQtgtuCQAA+ha8i8hqNke1Snh/Et+6lCiHsbVEEW?=
+ =?us-ascii?Q?32pe06M2J5tt2GTPsjLa8+/+u83gSjiKvtZnRPFwCN1fXE3hS59wzVqpb2pZ?=
+ =?us-ascii?Q?4J8ti75pRUTzKhrO8+z2BascmsUrh+9nioYn/LYf4vmtOSlPscm9vssx2bBb?=
+ =?us-ascii?Q?pQEz4Zyh0hf9WwrCNk5qOvOU8ar+Z9ryzJHSB9LS5ysL6X8/lJD39HiyQHSl?=
+ =?us-ascii?Q?yXXqW44jTJ7mQsi+bCONYrTMnLNWvHgOmP+1mnD0eG0D7jvHq64DwFc4CFBa?=
+ =?us-ascii?Q?2kBtVdZbG28z6TyFL+CZqbMRhzmIqdwZQW3pTClYUTqKfw1jNpiximDd0oeL?=
+ =?us-ascii?Q?CHzRGTtmDhmCXNssuk11G1OrdJE6fFuwR+BnTFeUZ8P2BMHpL0JjtO+k7hiK?=
+ =?us-ascii?Q?tNP6OomKWIwLerh3qeNc6vDxUkhOs1I=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f7c8f062-dfb2-4d33-9fed-08def95290cd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0deae7c8-5de3-4d17-d84e-08def9528ea7
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:14.6097 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 15:50:11.0336 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fKRwL1t/AWb2I2pj4UAhh06fF/gJg3Xmi1BcJYLOAq7c41/QZrxMzZ0UGV8xp5LyGjmSQ/4rDBX+rc7YC2fdIRcdeW9Jznjjfbi/zhrI8OU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: FwIVCQHEp1GzpB+FlQEENRlauBkmutczxHKkMs0YWdcxq8Ef6NoDZiTegeQqW2FKHgwXKh3Tamx0KvNNcuVfEJJgU16yJIor8Ti+foqoFS0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR02MB5490
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=bin.meng@processmission.com;
@@ -143,7 +144,8 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move the boot info into the existing CollieMachineState.
+Move it into a new Bpim2uMachineState and register the machine type
+explicitly instead of through the DEFINE_MACHINE_ARM macro.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -154,46 +156,78 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/collie.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ hw/arm/bananapi_m2u.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/collie.c b/hw/arm/collie.c
-index 91f0a94b6f..2deca04fd0 100644
---- a/hw/arm/collie.c
-+++ b/hw/arm/collie.c
-@@ -30,16 +30,12 @@ struct CollieMachineState {
-     MachineState parent;
+diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
+index 9b468cd8ac..4648d915ae 100644
+--- a/hw/arm/bananapi_m2u.c
++++ b/hw/arm/bananapi_m2u.c
+@@ -29,7 +29,14 @@
+ #include "hw/arm/boot.h"
+ #include "hw/arm/machines-qom.h"
  
-     StrongARMState *sa1110;
+-static struct arm_boot_info bpim2u_binfo;
++#define TYPE_BPIM2U_MACHINE MACHINE_TYPE_NAME("bpim2u")
++OBJECT_DECLARE_SIMPLE_TYPE(Bpim2uMachineState, BPIM2U_MACHINE)
++
++struct Bpim2uMachineState {
++    MachineState parent;
++
 +    struct arm_boot_info bootinfo;
- };
++};
  
- #define TYPE_COLLIE_MACHINE MACHINE_TYPE_NAME("collie")
- OBJECT_DECLARE_SIMPLE_TYPE(CollieMachineState, COLLIE_MACHINE)
+ /*
+  * R40 can boot from mmc0 and mmc2, and bpim2u has two mmc interface, one is
+@@ -62,6 +69,7 @@ static void mmc_attach_drive(AwR40State *s, AwSdHostState *mmc, int unit,
  
--static struct arm_boot_info collie_binfo = {
--    .loader_start = SA_SDCS0,
--    .ram_size = RAM_SIZE,
--};
--
- static void collie_init(MachineState *machine)
+ static void bpim2u_init(MachineState *machine)
  {
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-@@ -66,8 +62,12 @@ static void collie_init(MachineState *machine)
++    Bpim2uMachineState *bpms = BPIM2U_MACHINE(machine);
+     bool bootroom_loaded = false;
+     AwR40State *r40;
+     I2CBus *i2c;
+@@ -120,14 +128,16 @@ static void bpim2u_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(),
+                                 r40->memmap[AW_R40_DEV_SDRAM], machine->ram);
  
-     sysbus_create_simple("scoop", 0x40800000, NULL);
- 
--    collie_binfo.board_id = 0x208;
--    arm_load_kernel(cms->sa1110->cpu, machine, &collie_binfo);
-+    cms->bootinfo = (struct arm_boot_info) {
-+        .loader_start = SA_SDCS0,
-+        .ram_size = RAM_SIZE,
-+        .board_id = 0x208,
-+    };
-+    arm_load_kernel(cms->sa1110->cpu, machine, &cms->bootinfo);
+-    bpim2u_binfo.loader_start = r40->memmap[AW_R40_DEV_SDRAM];
+-    bpim2u_binfo.ram_size = machine->ram_size;
+-    bpim2u_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+-    arm_load_kernel(&r40->cpus[0], machine, &bpim2u_binfo);
++    bpms->bootinfo.loader_start = r40->memmap[AW_R40_DEV_SDRAM];
++    bpms->bootinfo.ram_size = machine->ram_size;
++    bpms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    arm_load_kernel(&r40->cpus[0], machine, &bpms->bootinfo);
  }
  
- static void collie_machine_class_init(ObjectClass *oc, const void *data)
+-static void bpim2u_machine_init(MachineClass *mc)
++static void bpim2u_machine_class_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
++
+     static const char * const valid_cpu_types[] = {
+         ARM_CPU_TYPE_NAME("cortex-a7"),
+         NULL
+@@ -145,4 +155,17 @@ static void bpim2u_machine_init(MachineClass *mc)
+     mc->auto_create_sdcard = true;
+ }
+ 
+-DEFINE_MACHINE_ARM("bpim2u", bpim2u_machine_init)
++static const TypeInfo bpim2u_machine_typeinfo = {
++    .name = TYPE_BPIM2U_MACHINE,
++    .parent = TYPE_MACHINE,
++    .class_init = bpim2u_machine_class_init,
++    .instance_size = sizeof(Bpim2uMachineState),
++    .interfaces = arm_machine_interfaces,
++};
++
++static void bpim2u_machine_register_types(void)
++{
++    type_register_static(&bpim2u_machine_typeinfo);
++}
++
++type_init(bpim2u_machine_register_types)
 -- 
 2.53.0
 
