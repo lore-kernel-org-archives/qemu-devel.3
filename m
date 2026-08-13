@@ -4,128 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1CAC5CFDB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E68EC5CFDB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSIm-0000bE-AZ; Thu, 13 Aug 2026 06:04:44 -0400
+	id 1wuSMZ-0001pS-Cq; Thu, 13 Aug 2026 06:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuSIk-0000aW-Ck
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:04:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wuSMV-0001p3-RZ
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:08:36 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wuSIh-0008PZ-Hm
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:04:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786615478;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zP7HbvyvjrO+6yJGINL2eoGYq/lWWxabI7Z/Bc7olFg=;
- b=jPC4q2R1xPm3cReZylD0jnyumKtRWJgT98X8XhU4wqgYShyz7nsxGLIeGqkOG7hpIl9ptc
- rrx169nmT7AVWSr/gp9ASre0o3BxE3wWJu0ouOPIkjoxRkihIiK24TOt7K7dy5ICKMy4RP
- eMFywTixLSs5PIHz03g5satIa2iB7fA=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-Cfuw9CNuPIyijEpjKk3R8w-1; Thu, 13 Aug 2026 06:04:36 -0400
-X-MC-Unique: Cfuw9CNuPIyijEpjKk3R8w-1
-X-Mimecast-MFC-AGG-ID: Cfuw9CNuPIyijEpjKk3R8w_1786615475
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-cbee5bab340so2251992a12.2
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:04:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786615475; cv=none;
- d=google.com; s=arc-20260327;
- b=LZdhNfRcjI7+zxSNgfYrHfhH3Wn2m+Zz705cJF4HsYqWhbK5MLm1XDn5v1ImF5jHYM
- w0KA5JHX4NdS0H2XpHuFe8vFXkn/NNhd4tEzerGh/HQlIDZ7QX0vDnz3gNpo5LLALJHH
- zG4gnei/YLlERutC1v5X3adjLAXk+mxDVHlMt4kRpjLtunwyhcrJr+yjHKxGWD0xB9Tu
- 4YsZE4+WMT4D/xigCBc7sZ5IN336xwCAQ+b24y1B8jWtcb2QMTeVIEKu58FucpI6672u
- gRZanVdM2OKjFsjI1hw+mmXRUxKQ/d5xQC3gD/uv04t7DJ223s5ibB0bNkjFhvWdzm5N
- loig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zP7HbvyvjrO+6yJGINL2eoGYq/lWWxabI7Z/Bc7olFg=;
- fh=/dMNiWP/UJp0ib95kJpEXmCAYazcCM53J8+UCiPYHqE=;
- b=IkxkzwTeOD135sdropHBX9Nsd2GwltKOW7+BecTGbjZRCoI70fK93JOq3q5TO80ykQ
- igGIdciQF6++IVpF3Ap1H9hX7CnvgxwI01tX6jEWwIQ83qYxM9dHZnqTORM5gMAioZ+l
- 1vNpP+xROc7we5mCnld198lyzyX6Fc/PqGSznXabaaPbz+IUEGvnDi71hAmyRnGCCgeW
- BUfGYKDz0fS8h5fEh3WRPcjA2QuFtx46i6KUVXgFnIXvHv/BMqAF5SZYG5yV9lMOb9DO
- 8gRUxYqJ8RGWiMQ/yDJXtftt+iGs+30d3HuIofdDx1VGUMcl1fGeI/ixO0N2WpTQ5rTk
- uY+A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786615475; x=1787220275; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zP7HbvyvjrO+6yJGINL2eoGYq/lWWxabI7Z/Bc7olFg=;
- b=jV3HHkl0WpcuPLjSkaXk9HAKHL7aS9dmQ7vGcUvBj0O4RLpK7iM26hT0wVLtAtveBc
- qEDofMe+xBo5NQktTocthzB9gh4vOePVECo4ijpaJfrNmtYlmWdpsnvQO9W4PfRblsNB
- kN8qgR2piTGP91np3RaOawLqEAh5uUcJn5GzSrn+ZPKr2Xwmt6qUOFskjswIIDjTaN9f
- od2XdXVrQDIPyvBC9ExaTYUiDVU0OHtgJCsUcKPHozSUXToGpF3nJcf+kYl9Y0rcHvEX
- qbyWNaS5ki0+FnRhC6SJjy0SC527DQHkCYlamLBlQAM8SsOGcWdPR0y31mJCZO0pm6nt
- GCIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786615475; x=1787220275;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zP7HbvyvjrO+6yJGINL2eoGYq/lWWxabI7Z/Bc7olFg=;
- b=PVwieprzA1pGo687Sdj2Sv77OwHEsEVhnw0lP1Tdzx11fTT8Oox0CrfjibtFKvFZNd
- dyKb94GpWnwKGcy41rFXHaFvLL95FsL9f6j6Mb5qSALwmHdqI755+a9I/q9CtEc36ML2
- ckaeif7sB8U4pzNNrhxxemf/ofjgUg5P9/4SgNN4SIAa35cyPPZd7u9R1fo4TVg1qinw
- ENVjPK/y56uy2C8w2I+h7pLrVo4dNWQ+73jtZGZxG9RqsHlUQ0KGf51yYyeyR5WluDEk
- zJr+8MzAyE6eh8SCw5C9g9lqzE4vmhG0OTwL9hNaigr5BXi09jvkHxDPokG8372xnI+n
- YSMg==
-X-Gm-Message-State: AOJu0YzxLBQBKc7fbDh6LIOzNg92u2UCUu2GCk1nzvUU/v5Zd1pYUMr2
- ItGZP9SeUB2rQdAJvpVG7fMIsAc2CBRhLNsalRsdwWKh9+HUPMo4004P20BpCWiql84WsTFE9IQ
- DOCRgobE/6iRAFGnm1woN1ANHLGj8opFbhlqmdRo0CtNym4dMHdiiJVAlTEY1WEaNgKYbdpgjcj
- p6oE23/DKH1M982nXcCXy6FGWJJTqw2Xg=
-X-Gm-Gg: AR+sD117+Z3UXbTRwZmJrQQkTF1tlf/Rckfym5TReLOVSlRbh/2ikEl9ipOMAJ2Smv1
- xCkhyVFh6RpezcXJzk/EH5KEwFfx0a1EGBkAScprAq/8SqlKOZFT1Nb41RztuM4CGlh2UU2Xh0M
- HQoBotbi1euj96gGqRLuWtOO60UGE0fWmxgxlYT/nGpQxTHk5v3lxgjkgcGZ9++TColjlgNLp/c
- 8nYVu3RAgC/X90uh/B2yiuQH+bAnmxzw44giAhoC068LrFBxlCR8Bidm3NHlg9mxLAQIBzu03mY
- pA==
-X-Received: by 2002:a05:6a21:1786:b0:3c3:719d:dfe2 with SMTP id
- adf61e73a8af0-3cc55543bccmr7275855637.36.1786615475110; 
- Thu, 13 Aug 2026 03:04:35 -0700 (PDT)
-X-Received: by 2002:a05:6a21:1786:b0:3c3:719d:dfe2 with SMTP id
- adf61e73a8af0-3cc55543bccmr7275771637.36.1786615474493; Thu, 13 Aug 2026
- 03:04:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wuSMT-0001Y7-9Q
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:08:35 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67D92l072435960; Thu, 13 Aug 2026 03:08:28 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=proofpoint20171006; bh=A/zoU3z+TOOgsoW
+ g2Us1xA8x2Sn93bGqGqUbyMMnp8c=; b=O+pldWARizFzlUWMerRCirlXXDZAiP+
+ gpe0fztd5G4Omo+KzNmNLfm5z9FmYK1SfOm+a42+9Cjf79LHG7NDw0EtoKl6yWNZ
+ ngn0cPiK3mVDuxk8n2bEA7X/H3ldBjzqjcO1gnd4O1DeAxApBOCXejAGk/2QmXUU
+ l8CuCqtqQN7ILGFdE3pTsdZ9F9tAiKuggLlHnghiQx0Zs8exd81Pfa1C16tq68L+
+ y0aq10+KvZwSLGpuw6qEuo70p4OkzRfwLlokM/JDgOBWO2AJtoM17Yc/cIEOuzm3
+ Qi+nktEG39xmZEs9emyOnwvdqPJVAe0q9FY4eamZfdBygbur4Js0Mfw==
+Received: from bn8pr05cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11021118.outbound.protection.outlook.com [52.101.57.118])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g0a1fvn4y-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 13 Aug 2026 03:08:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YAdL5dxATk5ajgVWdOJi1u6uAFYooxhGfOk5YdPLpRe2EFikE9kML486nJdWDP1AMrrtut2J+iibkmjaS/zlzqHOvhBeIknimXAI2JtYNDYDh4GoldPzFl6NOGxyZx21X+prfn+xxsLMsj6YfTc8meA9YstUDwEcSO5/xeZKDctin608XlsCIeRGMbnZfX2WtNWSQjjOK8SyVc99kPGjlykk9/ZiqNmQQ0GlAsHF8q7Ktlt06Ho2tFt+uiwme683LUw3+BmNdO+w+6A89sMDWM1HprIaft/jtG3aeJzgMO+tq2G/QSKeOdxDCmbWW86KKhMFeUuAPG+VUX9yCvsDfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=A/zoU3z+TOOgsoWg2Us1xA8x2Sn93bGqGqUbyMMnp8c=;
+ b=kKqjpUZUkA1jA1Wq/RTyKGHlIgb7yDIggeKcxxbS9vuZ1/m2+TfKrp0gnWxw4MlrjRfMBNWMx4cY2rL4iLhKbc6njh8R98Sjodkk49/aW8R9wc4raalSV4OeQSnjPpuAVGOc2lAMdVtTcNw0RSBCXTS7UxTFVgX18zaa/Y2QvZ3i+f27x8Mw10fppg0Pla9fY26QoJLz44n3U+XhI3G6ZpOPJiX8eNxM5dRczihKHck9Zx5GpjncSA57MjWUsB2LUiBcdqOACeG9c60W2qRk2J4MlOwQlX9xB+KVAXWAqqGWRA2zWopGcIZNl+l4fgn5k169Yt9Qzz80pfAt32BKMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=A/zoU3z+TOOgsoWg2Us1xA8x2Sn93bGqGqUbyMMnp8c=;
+ b=O1MubbO76PMk54CRMVGEYJdGgaR06rcpmTEkfx5ACFx2UL9VtOm55fVvv4fRwubeOf4leKLRP8ENJeGeeolEuJXj4GKeZoTGN2KWFclld4lt/WsG+3/ec//r96st7Z7hUz+5P/c6ZN4855QNqNzGxzQMZlqjv/xZQf9KigvWZIUDwNTDZ+OvVQ5IYywezjmZ+KxmfE/wdzn77mb89sxv0O12CLTOb/yF/bWdWplvVDksaFvWEfOlG2n15L2PUfUpHtE81YicmIJv7awhq5wTSSVLKIfflFGXskFySLmpCb0SmshgLo9H9wstueeYJ4EZ1w1b0j0uQeBxhfhCBHYJ9w==
+Received: from BY5PR02MB6180.namprd02.prod.outlook.com (2603:10b6:a03:1fd::16)
+ by BN0PR02MB8239.namprd02.prod.outlook.com (2603:10b6:408:156::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 10:08:26 +0000
+Received: from BY5PR02MB6180.namprd02.prod.outlook.com
+ ([fe80::5bab:a96b:f604:d7e1]) by BY5PR02MB6180.namprd02.prod.outlook.com
+ ([fe80::5bab:a96b:f604:d7e1%6]) with mapi id 15.21.0315.011; Thu, 13 Aug 2026
+ 10:08:26 +0000
+Date: Thu, 13 Aug 2026 11:08:21 +0100
+From: John Levon <john.levon@nutanix.com>
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] vfio-user: reject failover during init
+Message-ID: <an2XlewmwjalSWtZ@lent>
+References: <20260813092959.76-1-hugo.komatsu@nutanix.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260813092959.76-1-hugo.komatsu@nutanix.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P123CA0195.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1a4::20) To BY5PR02MB6180.namprd02.prod.outlook.com
+ (2603:10b6:a03:1fd::16)
 MIME-Version: 1.0
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
- <20260616-qom-qapi-v2-10-cc9396b9c18c@redhat.com>
- <87o6fep313.fsf@pond.sub.org>
-In-Reply-To: <87o6fep313.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Thu, 13 Aug 2026 14:04:22 +0400
-X-Gm-Features: AUfX_my3qVpMx9wtmUNIGE93p0d6sUKX8gQqXDgaQ9yHSO0A2NIbJLramqxMa8c
-Message-ID: <CAMxuvayi0yrruLMxHvSfyv4H27Xg9PamM5-YQjxf4yF7LRehkg@mail.gmail.com>
-Subject: Re: [PATCH v2 10/53] qom: add QAPI-aware property registration
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR02MB6180:EE_|BN0PR02MB8239:EE_
+X-MS-Office365-Filtering-Correlation-Id: de1ac3d6-8284-4971-1f7a-08def922d0bf
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|23010399003|22082099003|18002099003|56012099006|6133799003|10067099003;
+X-Microsoft-Antispam-Message-Info: 1q9PiwHAwjmCdbvON2cpDxvqEAeKCBsVd3By655vLMEifHJZOaGkpdbvaxZs6DipE6YeUTO+QmAtPvpgDCud95p7bzHuTt5qpshQr+cUjwb3POQwB4quUWq1vciVLcCoSNoCBoy2zHVX2LN3SdScNBEZePs3V58o1kfsEWl1PuRZcTtq7csBjwsr8BU1DDKkoMdfW0OZ4sei37ZIdX2xfOgsIRGLehUyfJNjNyFiS07I3bYkEDK6pg2IXfwwpll0WylwNKeP+x3EKKp58oB4lB4+ddPKIq8kmTo0WoXvR1g0AOWslOwEa2gh0AN8L1c6BkHUzdzOtAZ6BLbVdYGa3deudAX5u4BKyslfGCjnIbhkDg3lnBz1Pfi6dYj4TZagMn1DU3W7R3zYRe0q7hXo9IQ0cpvdmpOiHooNuWNn2LCJuVB72oAl/2+MVrTas+Hf8N2u/Z+ob/ImB21T8CV1OUf2g3MX2Eza8/qFYY3Xrw+NP/uYJKJvT/g0ID0utVSpFhab6vobB0cMau9/nmfHDt1o8Ld8DadGbZAEGp72DTuf+wz8RV4V+fxeLjdnxXR9ivFObRR/Ke/yQBEH6o7SUfxFlveqw1Yn5enLG/gMyxlYLKpyuhZPdEgUBSebePMD4j4ZWop+dVCqIGD+Fpaf8sbyzemuBUoDvjaoiYadB1s=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR02MB6180.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(22082099003)(18002099003)(56012099006)(6133799003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4jmwFff7Aw//IqjppdyuyaZAW6OOzS0Aq7ArTG0vK0J5pcRtHgsQqMrYim5O?=
+ =?us-ascii?Q?0YpOOKtIPwm9AXaQ6Jh7RYeV6f+yjUnFhHEYXbkxyiCu5qukd0QoxKVSOH9t?=
+ =?us-ascii?Q?asd/Y+uPLKlmGU67FsSSBnbgxEZTtW7iEaR9nhPNjfLL3Z402YT/3jSu6VQd?=
+ =?us-ascii?Q?GVh0YKwupnQ6z4lrY5EUdlP2ejnjb0UhiaiQJYQnBPveuXkRzBLUVSnmZkxm?=
+ =?us-ascii?Q?C8BsfmxamLmCLefCyFlYwTbQWHstSAu6P6O+WobhklmXMf9g6pCTLgHkiR9u?=
+ =?us-ascii?Q?EsIivikLDomjSzo2Y7p84TC+zUZreewnVgGOqmFIRdEh1a2tT6pVifhkbmj8?=
+ =?us-ascii?Q?GFy1E9cjIelPR8o/CDkSfDWg052yB29cMafUiGyUP1xpw9gK4ONkk1bEbSVC?=
+ =?us-ascii?Q?GyOivH9kFD0+B2Pif4vU84NwfWGK8k+TmP+t99JApQs4VazAJ/IonWErCCbv?=
+ =?us-ascii?Q?QUDvchGnsBs2vTl81AiGrRPpA6kg6qL5dPoxm4ZivKUb139VPv2wO3ERpn/K?=
+ =?us-ascii?Q?Es+dV6sxzW7kawRYaRCwYimNNdMCwqh8dZDBHifM9lO9SjKfejBdd33c6Iuj?=
+ =?us-ascii?Q?nM0IcNV+crabfkRAp4evDejZ0xx6TRQiLtdfRIo6sZe+MDJZFWculOz/2tKp?=
+ =?us-ascii?Q?wHxT/uWOmwASJIybIVJ7R0o/cX5RcZOYYztIjis4ATOqP4ywFxnmPobZbPXi?=
+ =?us-ascii?Q?/IciIro4/618y9HEB1X8kKp3L0pdCgsLd5ECEZ5nFAdb8bvWA/i2Z1dgJl07?=
+ =?us-ascii?Q?qdc3+Ww/gQvgwrOBbsZRyBLw7r8kpzzAX0dbE/cqOEpzMkVlLSiTeq2Hr5C3?=
+ =?us-ascii?Q?pCzn75MTeBu1D7uqdbhpaVOmLICDSB+lhIklwHK5dLEwH20p8qjdfZZS3D7g?=
+ =?us-ascii?Q?uk/DJu0D+qwJRKwOjUTx8nnr4LOWg2JFoqs/5KJGkP331/cmEpuldTWTFzxZ?=
+ =?us-ascii?Q?KifnbC/4btR2AtMX6PsIqcTLAXlaVHOzGkqJ4aj/BEgnFWrRK+t/U0uGZSNP?=
+ =?us-ascii?Q?i8WcGxEwtXhq67Zs1rb+hJpRmikjCXnuC+VDXWElXhonVi2ksl5CZEZxt8AL?=
+ =?us-ascii?Q?xFBafIoulGFugXtTeCODRxPYoKfLj1bimHl76wpQrUGKLGxw9cK2aRXLHrN3?=
+ =?us-ascii?Q?Sq/QUkaiMnACDxev2//9hAD6tfbIPo67437cfom5GcHuhwkQLRyK0S45t2bx?=
+ =?us-ascii?Q?qklzp4uR/5P+WQ0FGDgvkK0Vv/muYd+if+vHEH1ZKjjgS7pr7ubdqIk4lF6t?=
+ =?us-ascii?Q?Q/qww3LyC733DbaQCdQYJIXaHVgVlNpueD8sDoo20hBJartTpdT1dOaWJfVB?=
+ =?us-ascii?Q?mvwKlag18mQcbPvEgwf4+OTvmscoYXlq9NAwHVp5QsQt8iPo/X3UVMKmjlD4?=
+ =?us-ascii?Q?WB9viaq7xMVHZtsdlYYQsY0KgKWtYAG6ZJoc70Z7de1h6iHn5AJ+qwRMuw6q?=
+ =?us-ascii?Q?f6r20xqB0tg9wBVm4giZ/uxPb1mVMYsF4k0GbkSe8n8bYO+UWQwhKps6jrKS?=
+ =?us-ascii?Q?1K9om4Y2/PyE4PWQyymzs8Eq0xKGunHsz43maagZAkTxI1elgqDYQEgwgfMi?=
+ =?us-ascii?Q?98ySV1wNt1XGd24fPmd5dkl8bNxR/qcDeVcwLFGXdwzxd3KzRTKxKu4nUHYX?=
+ =?us-ascii?Q?niurslzOw7fxwbzxd/XiG0LmjxAiAIWsbAXR489VcMB7ppfj/LZokHkrhaEF?=
+ =?us-ascii?Q?nLH/9yB843L9GSs7TGBweCOhPqDw6oNikJI91DGNrm3emB0NufALsJaOQl77?=
+ =?us-ascii?Q?bABUF93uBg=3D=3D?=
+X-Exchange-RoutingPolicyChecked: O4c/HsLQ0pZwGdNeg+WPFd31tpG+T9pVs39HgUe4xTHM/r2RqU6fwij0UVTeSHIGa4ihetXcM7ZWVGAnCJ+I4ULNW4aebZ/w8FmigCtzoaKkiCVtK55wQOFbMVfXA2Rbh5RFgle/I6gwckjWleE+2DwWozBjLcAj41elZd83uLkRBqwFDt9pJZjLj2JWPD3tStkXAwoEqiN71HT8NGBw547PbuV47b5nM3ETUveHy8fEN63AYxndBzRxAuUovwPDSJ2TSj3P721N7k0ZI+v0ne+GA6nGSe8GRg9QOGdq93fTPWf+dlVG0FuNEi86CHkMGm4snui2bV6lTfx0RZgyog==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de1ac3d6-8284-4971-1f7a-08def922d0bf
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6180.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 10:08:26.0959 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UYHTd9ICFBME+BrU7HEBUHAjCE9sQJM0XdYNTEwK6SWrwNm29Nmz3OwZ1ItIdIuoBQjQ3dzI+pWJNXW6S+Zj+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR02MB8239
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODEzMDA3MCBTYWx0ZWRfX5I/XuO/1Mjh3
+ b4KSMRVaPuxD+fpsi3k+RxjngfDz18URwsMjkUYbq9LA+uh8xCaCrL1Il/dEC84HrWyqo+T02H/
+ bNMlyKcP8n+oeWArbw/yl3xUlq2N9Hwbw4Hlw98JnoEOrBLpoA2JoR4HQtnNqRlkzKEHJToBo9l
+ h7OlxWZmzMrFcJfy5oEkRm1LbsYWloAlWoHnNCwO0jNSX0UzzDbcuAVpB+8FcB3vub/aFsmTNPT
+ 2X4xir90xb27yJTsf1zk6Whnq1BIS5jtsI68nOx0V+H9Bfs/0cLG9VZRampya2NpzUlvUDvsGMD
+ VAIdPpoT1FyJfsYrgoRXDNYwi8RgbMErx4DmaVleOQccczDkxHnBM3TDuUpYd1kob/GlR/pNZF3
+ kDKtdZ0eGrQQ/ro1mgHtbuBK4pB6+6et6dfoY+Zc8FLTYf9LIO3JG3PsBxHU1RZu7rL/9necmqJ
+ KWoyPtZ194nMciwjpIg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODEzMDA3MCBTYWx0ZWRfX3kOlYauSQ73k
+ D7oR/AiF15CPI6B2FXiHP6ePhCT6UmDoTtzF0X7LpQ7b7P6hHJ2AgCkAA+TfeMaSHFRRxE5rdWP
+ 6xG1iYfjsFvJXOWZrZKVvX6QGfZ/26E=
+X-Proofpoint-GUID: fV54kLlW9pxt_uXuSU6f5qiUFyaN1FZS
+X-Proofpoint-ORIG-GUID: fV54kLlW9pxt_uXuSU6f5qiUFyaN1FZS
+X-Authority-Analysis: v=2.4 cv=HfwkiCE8 c=1 sm=1 tr=0 ts=6a7d979c cx=c_pps
+ a=Fp6ZGEvu10dMZ3IStNZSqA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=64Cc0HZtAAAA:8 a=2WcVyZ2Tw0x2aDQjdfcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-13_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -142,443 +180,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Thu, Aug 13, 2026 at 10:30:44AM +0100, Hugo Komatsu wrote:
 
-On Fri, Aug 7, 2026 at 3:46=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > Add object{_class}_property_add_qapi_enum(), and
-> > object_{_class}_property_add_qapi() functions. Set the qapi_type pointe=
-r
-> > on the resulting ObjectProperty.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> The patch appars to do two things: general QAPI-aware property add, and
-> special enum property add.  Would it make sense to split it?
->
+> Virtio-net failover is a networking feature that relies on a primary
+> and standby device pair. This is not currently supported for vfio-user.
+> Refuse initialization if this property is set.
+> 
+> Change-Id: I80989ddb08a1cd3eba84bcf9b0edc26cb4a65669
 
-sure
+Please drop the Change-Id, that's a gerrit thing.
 
-> > ---
-> >  include/qom/object.h | 105 +++++++++++++++++++++++++++++++++++++++++
-> >  qom/object.c         | 131 +++++++++++++++++++++++++++++++++++++++++++=
-++++++--
-> >  2 files changed, 232 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/include/qom/object.h b/include/qom/object.h
-> > index d96a9afe21d..ebfdbff9a94 100644
-> > --- a/include/qom/object.h
-> > +++ b/include/qom/object.h
-> > @@ -1223,6 +1223,15 @@ void object_property_set_default_bool(ObjectProp=
-erty *prop, bool value);
-> >   */
-> >  void object_property_set_default_str(ObjectProperty *prop, const char =
-*value);
-> >
-> > +/**
-> > + * object_property_set_default_enum:
-> > + * @prop: the property to set
-> > + * @value: the value to be written to the property
-> > + *
-> > + * Set the property default value.
-> > + */
-> > +void object_property_set_default_enum(ObjectProperty *prop, int value)=
-;
-> > +
->
-> This addition isn't mentioned in the commit message, unlike the others.
-> So the patch actually does three things.
->
-> Peeking ahead to find users...  there's just one, in PATCH 12.  It
-> replaces object_property_set_default_str() there.
->
-> >  /**
-> >   * object_property_set_default_list:
-> >   * @prop: the property to set
-> > @@ -1915,6 +1924,102 @@ ObjectProperty *object_class_property_add_enum(=
-ObjectClass *klass,
-> >                                      int (*get)(Object *, Error **),
-> >                                      void (*set)(Object *, int, Error *=
-*));
-> >
-> > +/**
-> > + * struct QapiEnumProp - Descriptor for a QOM property backed by a QAP=
-I enum type
-> > + *
-> > + * Binds a QOM object property to a QAPI enum, providing automatic
-> > + * string<->int conversion through QAPI visitors and optional
-> > + * default-value initialization during object instance init.
-> > + *
-> > + * Use the QAPI_ENUM_PROP() macro to construct instances inline.
-> > + *
-> > + * @name: property name exposed on the QOM object
-> > + * @description: human-readable description (shown in ``-device help``=
-, etc.)
-> > + * @default_value: initial enum value applied via @set during instance=
- init,
-> > + *                 or -1 (the QAPI_ENUM_PROP default) to skip initiali=
-zation
-> > + * @qapi_type: pointer to the generated QAPITypeInfo for the enum
-> > + *             (provides the string<->int lookup table)
-> > + * @get: getter that returns the current enum value as int, or -1 on e=
-rror
-> > + * @set: setter that receives the enum value as int; %NULL for read-on=
-ly props
-> > + */
-> > +typedef struct QapiEnumProp {
-> > +    const char *name;
-> > +    const char *description;
-> > +    const int default_value;
-> > +    const QAPITypeInfo *qapi_type;
-> > +    int (*get)(Object *, Error **);
-> > +    void (*set)(Object *, int, Error **);
-> > +} QapiEnumProp;
-> > +
-> > +#define QAPI_ENUM_PROP(...) ({                                        =
-   \
-> > +    static const QapiEnumProp _prop =3D {                             =
-     \
-> > +        .default_value =3D -1, __VA_ARGS__                            =
-     \
-> > +    };                                                                =
-   \
-> > +    &_prop; })
-> > +
-> > +/**
-> > + * object_property_add_qapi_enum:
-> > + * @obj: the object to add a property to
-> > + * @prop: property descriptor
-> > + *
-> > + * Add an enum property with QAPI type association.
-> > + *
-> > + * Use the QAPI_ENUM_PROP() macro to construct the property descriptor
-> > + * inline. If .default_value is not set, the property is not initializ=
-ed
-> > + * (default_value is -1). Otherwise, the setter is called with
-> > + * default_value during object instance init.
-> > + *
-> > + * Example::
-> > + *
-> > + *   object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> > + *       .name =3D "policy",
-> > + *       .description =3D "Set the NUMA policy",
-> > + *       .default_value =3D HOST_MEM_POLICY_DEFAULT,
-> > + *       .qapi_type =3D &HostMemPolicy_type_info,
-> > + *       .get =3D my_get_policy,
-> > + *       .set =3D my_set_policy,
-> > + *   ));
->
-> I'm not sure the macro is a good idea.  Could we use a simple compound
-> literal instead?
+Otherwise, 
 
-A plain compound literal has automatic storage.. the macro just eases
-this. You can always open code if it helps.
+Reviewed-by: John Levon <john.levon@nutanix.com>
 
->
-> > + *
-> > + * Returns: The newly added property on success, or %NULL on failure.
-> > + */
-> > +ObjectProperty *
-> > +object_property_add_qapi_enum(Object *obj, const QapiEnumProp *prop);
-> > +
-> > +ObjectProperty *
-> > +object_class_property_add_qapi_enum(ObjectClass *klass, const QapiEnum=
-Prop *prop);
->
-> Observation, not pointing out flaws in your work: I still have to write
-> a .get and a .set in order to define a property, and most of these are
-> 100% stupid.  I wish I could simply specify "read/write this member" and
-> be done, like in qdev.
->
-> Are there enum properties whose type is *not* a QAPI enum type?  Hmm we
-> do have enum-like string properties, e.g. "boot-mode" in
-> hw/arm/xilinx_zynq.c, and "riscv-aia" in target/riscv/kvm/kvm-cpu.c.
-> Not a fan.
->
-> Should only these functions be used to define enum properties going
-> forward?  If yes, the _qapi part in their name is redundant (but might
-> be desirable for consistency, I don't know).
->
-> > +
-> > +/**
-> > + * object_property_add_qapi:
-> > + * @obj: the object to add a property to
-> > + * @name: the name of the property
-> > + * @qapi_type: QAPI type info descriptor
-> > + * @get: the getter or %NULL if the property is write-only.
->
-> Either end all your descriptions with punctuation, or none.
-
-fixed
-
->
-> > + * @set: the setter or %NULL if the property is read-only
-> > + * @release: called when the property is removed from the object
-> > + * @opaque: opaque pointer for get/set/release
-> > + *
-> > + * Add a property with a QAPI type association. The property type name
-> > + * is derived from @qapi_type->name.
-> > + *
-> > + * Returns: The newly added property on success, or %NULL on failure.
-> > + */
-> > +ObjectProperty *
-> > +object_property_add_qapi(Object *obj, const char *name,
-> > +                         const QAPITypeInfo *qapi_type,
-> > +                         ObjectPropertyAccessor *get,
-> > +                         ObjectPropertyAccessor *set,
-> > +                         ObjectPropertyRelease *release,
-> > +                         void *opaque);
->
-> This is like object_property_add() with char *type replaced by
-> QAPITypeInfo *qapi_type.  Good.
->
-> Not so good: the argument descriptions in the function comment differ.
-> Let's pick the best one, and use it everywhere.
-
-fixed
-
->
-> > +
-> > +ObjectProperty *
-> > +object_class_property_add_qapi(ObjectClass *klass,
-> > +                               const char *name,
-> > +                               const QAPITypeInfo *qapi_type,
-> > +                               ObjectPropertyAccessor *get,
-> > +                               ObjectPropertyAccessor *set,
-> > +                               ObjectPropertyRelease *release,
-> > +                               void *opaque);
->
-> Likewise, except there's no function comment.  Can't fault your patch
-> for that; the existing class property functions lack comments, too.  I
-> do fault the code before your series, though: we have pairs of functions
-> where we want people to use one, and document only the other.  Perhaps
-> we could figure out how to transmit mild electric shocks via the
-> keyboard to further deter the use of the better one?
->
-> Do we want people to use QAPI-aware functions like these to define
-> properties whenever possible?  I figure we do.  What about telling
-> people in the comments?
->
-> Function to add properties always come in pairs, one for properties tied
-> to the class, and one for properties tied to the object.  Most users of
-> the latter should use the former instead.  Questions for the QOM
-> maintainers:
->
-> 1. Is it time to stop requiring the latter?
->    object_property_add_qapi_enum() remains unused at the end of the
->    series...
->
-> 2. Should the preferred one at least have a shorter name than the other
->    one?
-
-There is certainly room for future improvements, I don't try to
-address everything at once :)
-
->
-> > +
-> >  /**
-> >   * object_property_add_tm:
-> >   * @obj: the object to add a property to
->
-> Just skimming the remainder for now.
->
-> > diff --git a/qom/object.c b/qom/object.c
-> > index a085e78557f..e5e2f09a0a2 100644
-> > --- a/qom/object.c
-> > +++ b/qom/object.c
-> > @@ -24,6 +24,7 @@
-> >  #include "qapi/forward-visitor.h"
-> >  #include "qapi/qapi-builtin-visit.h"
-> >  #include "qobject/qdict.h"
-> > +#include "qapi/qapi-type-info.h"
-> >  #include "qobject/qjson.h"
-> >  #include "qemu/id.h"
-> >  #include "qapi/qmp/qerror.h"
-> > @@ -1717,6 +1718,15 @@ void object_property_set_default_str(ObjectPrope=
-rty *prop, const char *value)
-> >      object_property_set_default(prop, QOBJECT(qstring_from_str(value))=
-);
-> >  }
-> >
-> > +void object_property_set_default_enum(ObjectProperty *prop, int value)
-> > +{
-> > +    assert(prop && prop->qapi_type && prop->qapi_type->lookup);
-> > +
-> > +    object_property_set_default(prop, QOBJECT(qstring_from_str(
-> > +        qapi_enum_lookup(prop->qapi_type->lookup, value)
-> > +    )));
-> > +}
-> > +
-> >  void object_property_set_default_list(ObjectProperty *prop)
-> >  {
-> >      object_property_set_default(prop, QOBJECT(qlist_new()));
-> > @@ -1775,7 +1785,6 @@ int object_property_get_enum(Object *obj, const c=
-har *name,
-> >      char *str;
-> >      int ret;
-> >      ObjectProperty *prop =3D object_property_find_err(obj, name, errp)=
-;
-> > -    EnumProperty *enumprop;
-> >
-> >      if (prop =3D=3D NULL) {
-> >          return -1;
-> > @@ -1788,14 +1797,17 @@ int object_property_get_enum(Object *obj, const=
- char *name,
-> >          return -1;
-> >      }
-> >
-> > -    enumprop =3D prop->opaque;
-> > -
-> >      str =3D object_property_get_str(obj, name, errp);
-> >      if (!str) {
-> >          return -1;
-> >      }
-> >
-> > -    ret =3D qapi_enum_parse(enumprop->lookup, str, -1, errp);
-> > +    if (prop->qapi_type) {
-> > +        ret =3D qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp=
-);
-> > +    } else {
-> > +        EnumProperty *enumprop =3D prop->opaque;
-> > +        ret =3D qapi_enum_parse(enumprop->lookup, str, -1, errp);
-> > +    }
-> >      g_free(str);
-> >
-> >      return ret;
-> > @@ -2598,6 +2610,117 @@ object_class_property_add_enum(ObjectClass *kla=
-ss, const char *name,
-> >                                       prop);
-> >  }
-> >
-> > +static void get_qapi_enum(Object *obj, Visitor *v, const char *name,
-> > +                          void *opaque, Error **errp)
-> > +{
-> > +    const QapiEnumProp *prop =3D opaque;
-> > +    int value;
-> > +    Error *err =3D NULL;
-> > +
-> > +    value =3D prop->get(obj, &err);
-> > +    if (err) {
-> > +        error_propagate(errp, err);
-> > +        return;
-> > +    }
-> > +
-> > +    visit_type_enum(v, name, &value, prop->qapi_type->lookup, errp);
-> > +}
-> > +
-> > +static void set_qapi_enum(Object *obj, Visitor *v, const char *name,
-> > +                          void *opaque, Error **errp)
-> > +{
-> > +    const QapiEnumProp *prop =3D opaque;
-> > +    int value;
-> > +
-> > +    if (!visit_type_enum(v, name, &value, prop->qapi_type->lookup, err=
-p)) {
-> > +        return;
-> > +    }
-> > +    prop->set(obj, value, errp);
-> > +}
-> > +
-> > +static void init_qapi_enum(Object *obj, ObjectProperty *prop)
-> > +{
-> > +    const QapiEnumProp *e =3D prop->opaque;
-> > +
-> > +    if (e->set && e->default_value >=3D 0) {
-> > +        e->set(obj, e->default_value, &error_abort);
-> > +    }
-> > +}
-> > +
-> > +ObjectProperty *
-> > +object_property_add_qapi_enum(Object *obj, const QapiEnumProp *e)
-> > +{
-> > +    ObjectProperty *prop;
-> > +
-> > +    assert(e && e->qapi_type && e->qapi_type->lookup);
-> > +
-> > +    prop =3D object_property_add(obj, e->name, e->qapi_type->name,
-> > +                               e->get ? get_qapi_enum : NULL,
-> > +                               e->set ? set_qapi_enum : NULL,
-> > +                               NULL,
-> > +                               (void *)e);
-> > +    prop->qapi_type =3D e->qapi_type;
->
-> Shouldn't this wrap around object_property_add_qapi()?
-
-ok
-
->
-> > +    prop->description =3D g_strdup(e->description);
-> > +    if (e->default_value >=3D 0) {
-> > +        prop->init =3D init_qapi_enum;
-> > +    }
-> > +
-> > +    return prop;
-> > +}
-> > +
-> > +ObjectProperty *
-> > +object_class_property_add_qapi_enum(ObjectClass *klass, const QapiEnum=
-Prop *e)
-> > +{
-> > +    ObjectProperty *prop;
-> > +
-> > +    assert(e && e->qapi_type && e->qapi_type->lookup);
-> > +
-> > +    prop =3D object_class_property_add(klass, e->name, e->qapi_type->n=
-ame,
-> > +                                     e->get ? get_qapi_enum : NULL,
-> > +                                     e->set ? set_qapi_enum : NULL,
-> > +                                     NULL,
-> > +                                     (void *)e);
-> > +    prop->qapi_type =3D e->qapi_type;
->
-> Shouldn't this wrap around object_class_property_add_qapi()?
->
-> > +    prop->description =3D g_strdup(e->description);
-> > +    if (e->default_value >=3D 0) {
-> > +        prop->init =3D init_qapi_enum;
-> > +    }
-> > +
-> > +    return prop;
-> > +}
-> > +
-> > +ObjectProperty *
-> > +object_property_add_qapi(Object *obj, const char *name,
-> > +                         const QAPITypeInfo *qapi_type,
-> > +                         ObjectPropertyAccessor *get,
-> > +                         ObjectPropertyAccessor *set,
-> > +                         ObjectPropertyRelease *release,
-> > +                         void *opaque)
-> > +{
-> > +    ObjectProperty *prop;
-> > +
-> > +    prop =3D object_property_add(obj, name, qapi_type->name,
-> > +                               get, set, release, opaque);
-> > +    prop->qapi_type =3D qapi_type;
-> > +    return prop;
-> > +}
-> > +
-> > +ObjectProperty *
-> > +object_class_property_add_qapi(ObjectClass *klass, const char *name,
-> > +                               const QAPITypeInfo *qapi_type,
-> > +                               ObjectPropertyAccessor *get,
-> > +                               ObjectPropertyAccessor *set,
-> > +                               ObjectPropertyRelease *release,
-> > +                               void *opaque)
-> > +{
-> > +    ObjectProperty *prop;
-> > +
-> > +    prop =3D object_class_property_add(klass, name, qapi_type->name,
-> > +                                     get, set, release, opaque);
-> > +    prop->qapi_type =3D qapi_type;
-> > +    return prop;
-> > +}
-> > +
-> >  typedef struct TMProperty {
-> >      void (*get)(Object *, struct tm *, Error **);
-> >  } TMProperty;
->
-
+regards
+john
 
