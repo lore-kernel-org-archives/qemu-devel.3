@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB2BC5CFDB
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 11:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32A5C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 11:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuTdm-0001R5-If; Thu, 13 Aug 2026 07:30:30 -0400
+	id 1wuTxg-0001nm-Vd; Thu, 13 Aug 2026 07:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wuTdh-0001Pq-PU
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 07:30:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wuTdb-0004Ed-T5
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 07:30:24 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxYdHAqn1qwOMAAA--.2859S3;
- Thu, 13 Aug 2026 19:30:08 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxOs6+qn1q5lQDAA--.4396S3;
- Thu, 13 Aug 2026 19:30:08 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn
-Subject: [PATCH v4 1/3] target/loongarch: Add kvm support dintc
-Date: Thu, 13 Aug 2026 19:09:58 +0800
-Message-Id: <20260813111000.446232-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260813111000.446232-1-gaosong@loongson.cn>
-References: <20260813111000.446232-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wuTxb-0001mv-2d; Thu, 13 Aug 2026 07:50:59 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wuTxZ-0002KJ-4R; Thu, 13 Aug 2026 07:50:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=I67k8YxoLBe9J/4gOxpVNagKSR4dzDYl4ybXJ796l3g=; b=XAjHe18rGOsRLOo
+ q429HA3+y1MfvPN9soww8gIXdQ06WSpbu7Wi0HRM/0mWB+PGofW7uy1xOK9TShw0EZH46MAMcgxcz
+ mJ7UhYqjpdGA+DW3lf95cNUgIxgpOUHDdQaWbwYwMJm3DfTs2cdIqfYbKaSNYMH2lqvccqnwkU0Ra
+ Z4=;
+Date: Thu, 13 Aug 2026 13:56:02 +0200
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/riscv: Restore register dump zero padding
+Message-ID: <an2wqzgtLnuCUq3C@hive.localdomain>
+References: <20260813032421.54438-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxOs6+qn1q5lQDAA--.4396S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260813032421.54438-1-joel@jms.id.au>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -61,175 +63,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds Kvm put/get msgint CSRs and check msgint feature.
+On 13/08/26, Joel Stanley wrote:
+> The register values lost their leading zeroes when the underlying type
+> was changed, resulting in mismatched padding and harder to read output.
+> 
+> Print with a runtime field width based on MXL, so values are 16 hex
+> digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
+> adding target_ulong back into the dump.
+> 
+> Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+> before:
+> 
+>  mvendorid     0000000000000000
+>  marchid       000000000000002a
+>  mimpid        0000000000000000
+>  mhartid       0000000000000000
+>  mconfigptr    0000000000000000
+>  x0/zero  0 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+>  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0 x7/t2    20646e65205b2d2d
+>  x8/s0    ff2000000000bc80 x9/s1    708 x10/a0   270f x11/a1   8
+>  x12/a2   0 x13/a3   120 x14/a4   14992a1 x15/a5   ffffffffffffffff
+>  x16/a6   fffff079 x17/a7   79 x18/s2   0 x19/s3   7d0
+>  x20/s4   ffffffff805ca228 x21/s5   31 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+>  x24/s8   0 x25/s9   ffffffff804e3e90 x26/s10  0 x27/s11  0
+>  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+>  fflags        0000000000000000
+>  frm           0000000000000000
+>  fcsr          0000000000000000
+>  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+>  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+>  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+>  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+>  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+>  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+>  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+>  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> 
+> after:
+> 
+>  mvendorid     0000000000000000
+>  marchid       000000000000002a
+>  mimpid        0000000000000000
+>  mhartid       0000000000000000
+>  mconfigptr    0000000000000000
+>  x0/zero  0000000000000000 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+>  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0000000000000000 x7/t2    20646e65205b2d2d
+>  x8/s0    ff2000000000bc80 x9/s1    0000000000000e10 x10/a0   000000000000270f x11/a1   0000000000000008
+>  x12/a2   0000000000000000 x13/a3   0000000000000120 x14/a4   0000000002575fd6 x15/a5   ffffffffffffffff
+>  x16/a6   00000000fffff079 x17/a7   0000000000000079 x18/s2   0000000000000001 x19/s3   0000000000000ed8
+>  x20/s4   ffffffff805ca228 x21/s5   0000000000000060 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+>  x24/s8   0000000000000000 x25/s9   ffffffff804e3e90 x26/s10  0000000000000000 x27/s11  0000000000000000
+>  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+>  fflags        0000000000000000
+>  frm           0000000000000000
+>  fcsr          0000000000000000
+>  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+>  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+>  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+>  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+>  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+>  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+>  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+>  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> 
+> I also wrote a patch to align the first column of register values, but
+> that creates the dilemma between aligning the numbers vs keeping the
+> spacing between the registers and their value within a row. Aside from
+> avoiding bikeshedding, it wastes more columns for an already wide
+> output, so opted not to 'fix' that.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  target/riscv/cpu.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c     |  5 ++-
- target/loongarch/cpu.h     |  1 +
- target/loongarch/kvm/kvm.c | 74 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 3 deletions(-)
+Nice, thank you!:)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index fb03424ffa..a241135227 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -450,9 +450,6 @@ static void loongarch_max_initfn(Object *obj)
- 
-     cpu->ptw = ON_OFF_AUTO_AUTO;
-     if (tcg_enabled()) {
--        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
--        cpu->msgint = ON_OFF_AUTO_AUTO;
--
-         uint32_t data = cpu->env.cpucfg[2];
-         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
-         /* Enable LA v1.1 instructions */
-@@ -467,6 +464,8 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-         cpu->env.cpucfg[3] = data;
-     }
-+    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    cpu->msgint = ON_OFF_AUTO_AUTO;
- }
- 
- #if defined(CONFIG_KVM)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..97db3b453f 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -301,6 +301,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_PV_IPI,
-     LOONGARCH_FEATURE_STEALTIME,
-     LOONGARCH_FEATURE_PTW,
-+    LOONGARCH_FEATURE_MSGINT,
- };
- 
- typedef struct  LoongArchBT {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 4d0cad5732..15082a01f8 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -36,6 +36,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
-+static bool kvm_cpu_has_msgint(CPUState *cs)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-+}
-+
- static int kvm_get_stealtime(CPUState *cs)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -362,6 +369,25 @@ static int kvm_loongarch_get_csr(CPUState *cs)
- 
-     ret |= kvm_loongarch_get_pmu(cs);
- 
-+    /*
-+     * CSR register MSGIS getting must be put after CSR register CSR_ESTAT,
-+     * Since register CSR_ESTAT will sync software pending MSGINT status to
-+     * hardware register and modify HW CSR MSGIS registers.
-+     */
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &sys->CSR_MSGIS[0]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &sys->CSR_MSGIS[1]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &sys->CSR_MSGIS[2]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &sys->CSR_MSGIS[3]);
-+    }
-+
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
-                            &sys->CSR_TVAL);
- 
-@@ -538,6 +564,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
- 
-     ret |= kvm_loongarch_put_pmu(cs);
- 
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &sys->CSR_MSGIS[0]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &sys->CSR_MSGIS[1]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &sys->CSR_MSGIS[2]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &sys->CSR_MSGIS[3]);
-+    }
-+
-     /*
-      * timer cfg must be put at last since it is used to enable
-      * guest timer
-@@ -993,6 +1033,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_MSGINT:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     default:
-         return false;
-     }
-@@ -1166,6 +1212,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
-+    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
-+    if (cpu->msgint == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+        } else {
-+            error_setg(errp, "'msgint' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    }
-+
-+    return 0;
-+}
-+
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return 0;
-@@ -1221,6 +1289,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return ret;
-     }
- 
-+    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
--- 
-2.47.3
-
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 
