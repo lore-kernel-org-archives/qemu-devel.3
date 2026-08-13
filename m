@@ -4,108 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BCAC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9216C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Aug 2026 10:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuSY6-000494-2Q; Thu, 13 Aug 2026 06:20:34 -0400
+	id 1wuSbw-00056A-4g; Thu, 13 Aug 2026 06:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wuSY4-00048H-KP
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:20:32 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wuSY2-0004uA-V8
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 06:20:32 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-66b3803ef19so2469311d50.2
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 03:20:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786616429; cv=none;
- d=google.com; s=arc-20260327;
- b=nFreikkq47IPeU+ab7DndASvLC3chNe0W/lYLfVBnYmXVolIvkGR6yzt5bnLL7OrJF
- IqwOZ+BNh1Bj6wj8Hfnh5raS6augqccgwhOJOPPwsTBfHYdGC6oavO0Vpvc2Sd5mz1mL
- Ik/ZH4auNKPdGxkiDpaz2MwNi76JeQ+1ORLtYOjXiijANBkZ2++Z4y7VelJXp5gPYdZ6
- tG7b+pcmAUqYL12zv4IBEDFANd7QetfiDUnStl1dglTYhs5l7mBFk1WfxzhwuKBpK5TV
- 8WzPgJwXY5Wgh2qgcprceR8v4i97fEULSCjjkBFIxu8o/lImEical/I6BSE318R872ye
- XvQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2KJ9zAe7qCB3LtGaL4rohPUD7uiks0q+L7rs3t64H4Q=;
- fh=p4UgEI9ZQbhm37RJ/NYuyLAOtG8No9JOvDsPJ8ysidY=;
- b=iOQuzwD480Zmq9BTB6ns6SoXSV28SuAhP7N1k2ZKWqtgekTGHQphUEXkyG7LKqAcms
- kP7JIoeGBIPJdxkCZJDqZ/cwpZWwjSulQczYHwMzrzUZ7DwpHdC8WVQN4J97oojFxpEc
- n6BoYfCN/+bYNrzA2lcayMajHFBBxMetTpb7CYMlWlHQptNYBUZF93W6IHRIwDBof8YN
- Q/TABbG1PYhgX6N01v+hOQi4kF3WMAMVACMMZjgCsiT+LxwDDhLUZnkYDzzvopG/70Ak
- CHQwjFfVULvJNZZjWpOFYUaVLDZZFcg69cZbZOKDn3I58J0g76P90ZjbPJ3UvTgMFVz8
- avmQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1786616429; x=1787221229; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2KJ9zAe7qCB3LtGaL4rohPUD7uiks0q+L7rs3t64H4Q=;
- b=iblVl3ggEaGyCUQB5uduliLtwCmZC8FLgGJa5VNo+LKYYrAFstl+ywcAQ/ts4bivQe
- Twct1lOa2LYAZZqUVLN9dPGhwVU3IyoQ3JuyrGabBr4k7e6aOk/ab5QdI1LRdVLgo8+l
- 6i6ypyhzj+dKW9qxPssrJuTBG0w7ehheho0I4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786616429; x=1787221229;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2KJ9zAe7qCB3LtGaL4rohPUD7uiks0q+L7rs3t64H4Q=;
- b=Nz+F3wlntp+Qcr/uU9d7d7yhLW/FtJsdmpWbcGf4HH4uxVfFspKfcWUXgJhM/yp+mA
- /V3QG9Rgu8VCQXGUqyB3GrISVgLnaYbvt8gA9vLvbGSuIGV4DbOkVY9OrrnqyfGp+aXX
- m1cyFzaP1c7nS5m/Rarcu3oI3smoxWIuo4LCAllVbZzbdXEZCXnwL1LTQ5Qi7X4p7W7u
- 2N+3TY112maLA03CUA0sUpD6Ote7mWQmtHedXmL9W3NT3i6tUX2ujJ3YZWh5Y4/K6CSx
- +1F5lIxXT6w+K9DHQ4XfCvkAjmas0n5D/kSIF6zn2SDg/528bATsJBMOljaiTiLiWoaS
- JYDQ==
-X-Gm-Message-State: AOJu0Yyjh++2+43dgp8+6nq+mWMbAkVzkz28rDldnbsfpheJxuRcbG3G
- 1z7zTFqay57OBq6Dt0IL9btdpcwZRV6mNVS8PsN57swNW4FwVytUYG3AionRpbB30Vrp2ULldVu
- UZtM17qGzm2RqUgLqZYtkwCf2QV2uZYM=
-X-Gm-Gg: AR+sD13DRF/j7MrbBsi8AQ/I2Dh/TLU2bSYwJnFdqvXe5QUVOvrkR/A2m/DeSKTmD+O
- H+WTSlVR9oNv2Ro6s6XKYva9AktyxceTbgZXQDMuSNjhR4kakvYxwNBgZZ+sqM6CiY+DgKwHYPp
- PeH0a3mLEmhFa3N26AekjCkX8xVhTIOClw7706N4ktLsbGmMp5DM0qfL9c2e9CfIfAzIVHqrESn
- JSKGf9BMGD6spz0Zzs9FAIHtJMLJot/MxL1rQIcJShO1nstNJJUE09YbpGLykmHKPRyJ6sxZNAM
- F3eoluO8S7rlyoPTNXUXG5i3CfXvACKI3hPoLVSJPnRtLb64W5she0DWb7/bsl2Y435rFzvvfmG
- GbKpJ7jcOyeC2uEy1IQIqsgznzSaMO/t1nDE/8W4OMvggTHOrheiCVYs6KyARQovhKw/DJ0Jt9W
- 8Et2jHbHxY+yxeqj6F
-X-Received: by 2002:a53:b4c9:0:b0:668:8bca:3c41 with SMTP id
- 956f58d0204a3-66c514c07f6mr1531729d50.17.1786616429530; Thu, 13 Aug 2026
- 03:20:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wuSbt-00054m-Ir; Thu, 13 Aug 2026 06:24:29 -0400
+Received: from fhigh-a6-smtp.messagingengine.com ([103.168.172.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wuSbr-0005oj-HP; Thu, 13 Aug 2026 06:24:29 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 16B6B1400032;
+ Thu, 13 Aug 2026 06:24:24 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-02.internal (MEProxy); Thu, 13 Aug 2026 06:24:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1786616664; x=
+ 1786703064; bh=CIPTDFIxzIko/PB0EkGq2M6/R/F9JQGIqlUWeIy0LZ8=; b=y
+ 1J0LWHFNYt2ChCwHjkOWv2DGzDorWHhxrxHY5wgswRS94jqftolVTN96uZHNjyU6
+ /eeoFqM3+XwwL91vNUzn3hmneIuBnHzb5eq4VF5//my6FYvv95RZlC1yDt4t8BLt
+ Mlb940jQAMQ7Rg+GqWGtT3y9bAAIZ2pCq7Z51H8bx89V9knQSl5b68lMAW4aqV6B
+ hnvbzzI1jI1CS+Kjo36KQdnAk8iUi+alHDaud8+BDB6yLvC+RxVUJjMFJkWpJ3Ce
+ wpioefLNwncu3uwOngtCYnlZc0YONKpaJdTtgbHOIPLONzsbP+swJcdiI8yYCtUf
+ JDdwg/YW778ikaYnclPxg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1786616664; x=1786703064; bh=CIPTDFIxzIko/PB0EkGq2M6/R/F9JQGIqlU
+ WeIy0LZ8=; b=XdTkWwiIq0zVfdmcVUP/H72FH3urvqPqkEyI3TqTu8tft4jTAFI
+ nzHCRFErrwy7vHNo1hvzdOs/RMzARJDAzi++G9a3LkYYN4OAYqHZIGm5PFyv0Yf7
+ ZIb1BXV1RNMmmg+5NVJedxn3PKK2/vNP9ZCXlXM+m8FukYcWgJGhdA4MQo5wDI8X
+ 1eY+URdV72qCNxqetNS/3EBfsvVxWQy18bcQq6TcUx/myxgg86yX1HA8X+w66rz6
+ FlGCvlKDGz7LmE+K4YvZuQ9Lpm1aMO9lSpIRkBjTLWE/8XdSlfLFCIj8Roqzxrug
+ lbPxIXLwGPxwdCbdtKT/huOPw+cjyX4HnMQ==
+X-ME-Sender: <xms:Vpt9agdwtmLaPi03r4-DImUwUIQv5YKQKkejjrDBjCPGnG5nuZLBAA>
+ <xme:Vpt9ai5rd9eM3bLQJMGFKfHP17J9ueEeV1NWlKMtdsTra6Uht7LnzT6cpUTXSdWTT
+ Sd1_rWs0KRuAOAi2GSVnaDyxcI8Mz0iVLQlqrMFZbcYTW0ImmxzopI0>
+X-ME-Received: <xmr:Vpt9avvKQAIwdQN_JKbRGd9e8jPd6JJxmYEGhffySRvImb0TrBvXMIqAfWOLqw>
+X-ME-Proxy-Cause: dmFkZTE3UVaQ/Sk05L4JTJXTs5ZxU42ngCUEBQY+gDxKqk4Lghi3fJhtl7j7TxyunWAjOj
+ ik/ovrM25fsRFS6GJozahG06L5nisPkQVLPqWwS1Ayv62LH8FS5XiKjLE00woKZnyddhft
+ U81y2iMyZNtNP/6faaUZiycl+BEfGpCRJ9QhmGhFC81NxF3uamdj591Nq8LLbdSjQLlhDg
+ g5qpw5BO1D4Lh3LMtnK1SdXR6ziDI9JZFpmyyx+QqX+pGriGjmVEXkHzVWdgvkZ+19wOJJ
+ CdZXi1bbuWLquHb5ZP1xGpr424fK+pSlWSxoJRriyOQk/npYaqpZcBvETnrIi4/0KjM1Oy
+ akpvQ17PRWbyrCrqbt5QymmMpZMhmnsQwJ6VbLUpjv/6IdzsACQfZ6ZdCYpQ9UR7XG7nXJ
+ JayguvdHSN1t01Ldf6KGR8N4WydQY3yVkBcJURXRWmtmHcwQ0doWIsnPwe/0kQMgbOrzvo
+ sMWxQd9Nnr1/0vIt4+Wh9AlX12PHf9vHbkyjAD33PmKG0CfQsPCv5s4/TY9z5erdvZ9Ohk
+ F+if3YfOqpb/K79HSL15UTvSa74K3HXV7B4aW5GONvzZu2Q967kotp8rCHFa541sR+Vz6S
+ ThAOXlMdWvQNcBr4tczgWOCgFSEsrrFZGcoqUJs3HqhZuWVF85inspsI4ZZg
+X-ME-Proxy: <xmx:Vpt9aqhOpUftK5JV3ei6C8hhqCG4yghdhO2B8cHvfjJdp1YqoSRrsw>
+ <xmx:Vpt9airJx6wSsDwYyqPP7j5F83eCEKawV2U4xynhHeWAUpbsERumYw>
+ <xmx:Vpt9avtd7Xy8_OJZR9EvrNAPL-8r0MLcS9LO_X0nC5N71F-ds36KSg>
+ <xmx:Vpt9atZDcVS9QxQXnKipqEOvUcrPmkb_vyuuBJOBiFv4jEPd5tmBCg>
+ <xmx:WJt9alikfo9HRvy0A-6Aj-QwkOlVoEIWaEnbldhNr5IhB79EHYU7IRLs>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Aug 2026 06:24:22 -0400 (EDT)
+Date: Thu, 13 Aug 2026 12:24:21 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Leo Cheng <leo-cheng@vip.qq.com>
+Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs/nvme: fix doubled word in detached namespace
+ description
+Message-ID: <an2bUneTLSavGFTp@AALNPWKJENSEN.aal.scsc.local>
+References: <tencent_7CCA5131E298B98FB02B48E362186F801A09@qq.com>
 MIME-Version: 1.0
-References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
-In-Reply-To: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 13 Aug 2026 19:50:18 +0930
-X-Gm-Features: AUfX_mxMXl61z8KLSJ8kDOShwc_2crFn0jV7a2KzgZ4VeOsrDkfJFzM3rb-6Ihw
-Message-ID: <CACPK8Xfgj+AUx0h_46f=qG_UEE_o7kTZ0=Buxr7+bdHDODHpgw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] riscv: Add K230 DW 8250-compatible UART
-To: WX Chen <wxchen0913@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
- Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- qemu-riscv@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="m87OjnaRIprNlkWW"
+Content-Disposition: inline
+In-Reply-To: <tencent_7CCA5131E298B98FB02B48E362186F801A09@qq.com>
+Received-SPF: pass client-ip=103.168.172.157; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,57 +107,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 8 Aug 2026 at 12:02, WX Chen <wxchen0913@gmail.com> wrote:
->
-> This series adds a QEMU model for the K230 SoC DesignWare 8250-compatible
-> UART controller, wires it into the K230 SoC, and adds qtest coverage.
->
-> The implementation supports the registers and features required by the
-> Linux 8250_dw driver, providing an interactive shell over the serial port.
+--m87OjnaRIprNlkWW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is a model for the same hardware as this patch:
-
-https://lore.kernel.org/qemu-riscv/20260616190147.1286316-2-visitorckw@gmail.com/
-
-I'm not fussed which one we end up with in the tree, but it would be
-good to name it generically so other machines can use it.
-
-Cheers,
-
-Joel
-
->
-> Signed-off-by: WX Chen <wxchen0913@gmail.com>
+On Aug 11 19:40, Leo Cheng wrote:
+> Signed-off-by: Leo Cheng <leo-cheng@vip.qq.com>
 > ---
-> Changes in v3:
-> - Removed all hardwired preprocessor #if conditionals from the logic
-> - Added a helper for the receiver line status interrupt check
-> - Encapsulated CPR and UCV register values in header macros
-> - Replaced g_usleep() with qtest_clock_step() in the qtest
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com
->
-> ---
-> WX Chen (3):
->       hw/char: add K230 DW 8250-compatible UART
->       hw/riscv: k230: connect DW 8250 UART
->       tests/qtest: add K230 UART test
->
->  hw/char/Kconfig              |   3 +
->  hw/char/k230_uart.c          | 816 +++++++++++++++++++++++++++++++++++++++++++
->  hw/char/meson.build          |   1 +
->  hw/riscv/k230.c              |  33 +-
->  include/hw/char/k230_uart.h  | 198 +++++++++++
->  include/hw/riscv/k230.h      |   6 +-
->  tests/qtest/k230-uart-test.c | 514 +++++++++++++++++++++++++++
->  tests/qtest/meson.build      |   2 +-
->  8 files changed, 1559 insertions(+), 14 deletions(-)
-> ---
-> base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
-> change-id: 20260808-feat-k230-uart-v3-0ff3651d70ef
->
-> Best regards,
-> --
-> WX Chen <wxchen0913@gmail.com>
->
->
+>  docs/system/devices/nvme.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
+> index 98a4401..531f156 100644
+> --- a/docs/system/devices/nvme.rst
+> +++ b/docs/system/devices/nvme.rst
+> @@ -142,7 +142,7 @@ linked to an ``nvme-subsys`` device allows additional=
+ ``nvme-ns`` parameters:
+>    are hotplugged).
+> =20
+>  ``detached`` (default: ``off``)
+> -  If set to ``on``, the namespace will be be available in the subsystem,=
+ but
+> +  If set to ``on``, the namespace will be available in the subsystem, but
+>    not attached to any controllers initially. A shared namespace with thi=
+s set
+>    to ``on`` will never be automatically attached to controllers.
+> =20
+> --=20
+> 2.43.0
+>=20
+>=20
+>=20
+
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
+Thanks, queued!
+
+--m87OjnaRIprNlkWW
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmp9m1IACgkQTeGvMW1P
+Dekdygf+JzMqVDo1msBRPY/9JajgodINhGicqXStvb225T8NhEULLtmWrLctVlcW
+yxe7tdq0xB/nUOFjkUAoUao89pXrIb7o8ar5nfAgpLwnrzfYRZYXWt4/cvQWOQ/h
+Gqh40wxKa7xXXHR9fdiK2UMrqLR4tFgEBDNK6nheuHIKJ5iXjnfCQ6bWuYUX7iQr
+lZIkrv7ocD9bL2X9P0bITFTgQd19WOQD0aK38xafKfyHrjLsCI0owIgKmfVQRVIJ
+YG3YdhNCHtz6om0eNqQYz4QutqLvzwjFp6vk7fnuC3DSPH/16uUaacWDoOybPdiS
+Yn9QT+Ku42//DPSMJu+3BD65U6Fy9Q==
+=zVhg
+-----END PGP SIGNATURE-----
+
+--m87OjnaRIprNlkWW--
 
