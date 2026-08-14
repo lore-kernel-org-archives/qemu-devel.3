@@ -4,111 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06774C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 08:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57127C5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 08:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuncL-0001HR-87; Fri, 14 Aug 2026 04:50:21 -0400
+	id 1wuneC-0001q3-8B; Fri, 14 Aug 2026 04:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wuncJ-0001Gi-Ju
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 04:50:19 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wuncG-0004Zu-Mu
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 04:50:19 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-66c70f0e0e6so597287d50.1
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 01:50:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786697415; cv=none;
- d=google.com; s=arc-20260327;
- b=VQEcifXjw2VcTXlgdn4ykZX1k0P9v5aPEXYWI785jA7xs/Rl3JcHEIhizwGhGQbmpT
- YXdz5TdSFFX3UvfI/lmZX4zcut4qtaFjAi/oYdFCk5CaxWvTPYC8sy8qgFmfrGQhxA+l
- PGyy8bgkK32UaCscqd33f41oigN8N0djappm8vcqh+EkZVaO+lEMeDvkj7qN1rygFH0C
- onhpOnbqR7yfDkuzWsNtKOaKLMxjIXytb2KfwaaGv2FlNofCGgfzK/sRGe6R9ImWgRvP
- MD8Y2I36/9LNoLLAMxCyJPsMZhAL6e8raH9D0ssvDtjNaoG1nnoLdjGMhhTSQd6Lq5QY
- xK0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=5ug2Cwv5CY9AJzlLXhtbf4pElyeEH/Yo0tsTt3yjTOo=;
- fh=zRNh30C6eo+SccpBSZ0xYa8/oxmUsEvaFi9YJ97S6RU=;
- b=YVIBO3agYxwPV2WAkA+js+MJ4/4ASjs1jBhCxnDso9LJLiCc9lxb5Ytvbaezly+WyE
- 4prXOmtV88JVlSXXgJGu9DOL3/TVAcU92IaHF2o1kGFOPZnMiUZTj4MCpPLjS0UyU117
- Ii98FmDmO546P0jKiDfgnY4pMDyQCmRaoNxgTEBDjLx07YoNXBz/y3bysQfpyknQ6XN9
- 6Cdk9HjPdd5qL4D2KvSxfKDtcvRA7ul2pWNd5bsrmEd01CWNETB7JiJxSm8MpFAK8jpd
- s+pP+5MnR+NvXH3/E6NisW/D+pyMN29SBKp4Coa9r4F9i2mJbnDWOxTqEgUrcUmt8U6z
- swiA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786697415; x=1787302215; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5ug2Cwv5CY9AJzlLXhtbf4pElyeEH/Yo0tsTt3yjTOo=;
- b=dV/wbSnP4yKjT95HyjOKL+yNhoirPoPB4J6o8p6O/Rax54IlxjA0BHjj6Mn/jieGEu
- KKK0p6wgjT/kaU265KcTK7BRrViaeXmxTPjxY+rYkYy/q6d+ju533LCRMYsIYhl/y/ou
- HTSoBC8vgjEm5PAG7NXijnWTNwStEciPKCmb12/RF0olORJo37uC0kmEo7K9stuQ1tW+
- POkxIKVBuT9wqnC6NciNJ7/IoD7N+mbxTZA3OGrveCABtgvI1Lk7vEuWco373BJE+KRm
- Vsf7bEOAOJn9qak/3QTQaIS7lpI+YXFInnreeSPlxaz0LQ7hJfv/JmIZelC3H6TrsZvG
- xHLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786697415; x=1787302215;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5ug2Cwv5CY9AJzlLXhtbf4pElyeEH/Yo0tsTt3yjTOo=;
- b=OzI6SR0FfaqazMFQlumblPxUaKn7Ze1Zigmzlu7SgZnu5bO1mmPaGB36YilzDlyYRk
- 8Ai5EPT2EPGIXOjGXsq0AlSiqHJRmp1wjmY501TDGTSBYG7NcCW/b1fq8h9EM9ENJSYs
- j9Ju1n1rLG/BTJ9wUq2Ak1Uwy/DT1D14rARD3c9nwdHkgQLgnsZTCZEh7TwRuJgSAy01
- SPU3hXYDQJlat2fpTD367SkkXWR8QBvuGQ6VsrDOGXjm94ZaU8VLCXidrm/E4v4J/uZk
- l8hrSl5vVI2lBRwFT5v3Obye0Af/er7XtfFTVaMHXAqFpuhIr47wL3Ld4dg1gwzBL7Jy
- HIMA==
-X-Gm-Message-State: AOJu0YwFDwJrT6GJmAKgNsLY4kGXemFUD3c2ax845ntDR1GIm/e5kHz+
- bufAf+ID5rWtQ3OGw5FVLzCXkdYUpY37Z4mbJWLRVQZmuX1aN7IUYmrCTstraSkE2q/Y/cV+xGk
- T4j8g2pVFIjogDX1hgtzr31RGcMn1opw=
-X-Gm-Gg: AR+sD12/jYin3gv2ITMSyirzAk84dh174FcHVrCl6/wqhzAdPMlR0RzQcwl0FeT0I4Z
- CLgMuAO1RP+GDrAQP+HsMWsDrKAoUFsO5nA6mplacje7oRwB9XY0/fXX41pNwiUz0qrs1+10ULw
- NHqC3J4md99yfv6WBdTrHIX6qiPj7Quq/LwJWCI+hEs1lfNZh3ng1ANnaMX5irwz0BFYtof4/0k
- enFanyfsk00sHXmGCrpWzhc9bkAMo2KYLpOxpZhg4MZf2dzqdnSqhryuKDRdq6ooHuo0BT1WyG9
- WXtabrGS6e5JdM3Sl37g3yn8KOLKjYrCgUNBQe21xcF3Ens8EDkfatQ=
-X-Received: by 2002:a53:d645:0:b0:66c:5045:d9aa with SMTP id
- 956f58d0204a3-66c72c81967mr1236135d50.29.1786697414955; Fri, 14 Aug 2026
- 01:50:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260729105904.272939-1-xinxie908@gmail.com>
- <20260729105904.272939-2-xinxie908@gmail.com>
-In-Reply-To: <20260729105904.272939-2-xinxie908@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Fri, 14 Aug 2026 16:50:03 +0800
-X-Gm-Features: AUfX_mznuXqkAog_imAg2PoCVfyZfdTgWnR7V6SGw08zn5I14p25jN1botuRwhg
-Message-ID: <CAEUhbmXYYzy8=Sj7cBvFGLx8ArERHqHF6wtECLp_9yz+7_dm0A@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] hw/sd: add Kendryte K230 SDHCI controller
-To: Xin Xie <xinxie908@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wune8-0001pn-4S
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 04:52:12 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wune6-0004iH-DS
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 04:52:11 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67E7h0l91204336; Fri, 14 Aug 2026 01:52:07 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=e8eDyiiPrIgDEp+6F7DzItLWOlS1PadsSfOQeB5ot
+ kA=; b=Js0Him+e9QofLRlPlxhwvSSnPRjOftGrS3Y4NXmkXmDChXeKtr59/XBmm
+ KqP4MlZFKo/x4/dd9Q0P/6ZDuFeIF48z7kYsKIDuwZ8KnRZ0yw80dbxp21/gNDuv
+ He7uqy/4mimlboQffwn0PNdfiAMBo4asenRNR+P5dQ645q2UA7DLvzVJxWiUKdHj
+ GwLSlKDcTP7ZOfH8t2F62WCqUki2an04NhKnveMCAKOhl9NV3sW91i98PPOsMPzu
+ WqTYv191yzwA/JG8T7WHOovmaZ/BXxLCkoDCqf/Sp2pCUAt+CuVZ7W0HzSCmoNCz
+ D1eIATG0TpNy0BPG2Fo0+DB48QPgw==
+Received: from dm1pr04cu001.outbound.protection.outlook.com
+ (mail-centralusazon11020102.outbound.protection.outlook.com [52.101.61.102])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g1nygs4qh-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 14 Aug 2026 01:52:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MCtNw0Ahy200T7ZUtHsplP4WTr2ijF/LOFxNYmXmEOwwljIQ8WWiXX5evSwmzu2kNzEObPxvVnoQJQc8ytLFSELfDK842bONNx9sbh/T8HeItx8HeI1rdbQzydVf1HKntFMdlp5KGwdKIXY5U6de/4viYmGkNk241uHpq1d9CSZI1rikB9eOJrbHuhG0mm2/LimoWtxUxGlbwAS3wWmV3apMdtbUjT5UulMr5PdbWTh0tJNkP6U5sxfi+t/y5058f/nH6npiwdGeKKQKCDsWXaBd/t3WScd9dCKmuekT+vP9DuWiNxBxcyrGaBKivr4Ka9XBupqTcgXhbM9LaUHjsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=04saYxt9Bboi9Fy49jJrPjdEQFzMMtmCrb13FjbucgA=;
+ b=MzUgawyDvkEhoeadRB2F/YogX7CPh1ZCJW9aTTQm/Nedb9JBqpGEKW1yAH5rCwuuYf0PyNVb8KEjxGiiG5xXYupqWbxTcYyQc+muy1UlxN3mpA4pyulPxRdTxtKO2kajjIAnIB9SSQGLzsftL3UTsV6lGmVtrWrwIzHsTxkip8A3P/89BWXrBAZBxdg53cenKmHcgeKdsxBiQOHnuoO3MbtJqG6dMLQX0ZeyckJuB84UUSwuAwgW2B8yFHLDcMaOEsb0DyMBByO/A8t5HQmlQCD/jQejt6a/I4p3HqN+toNZ3RRUzLxPF4jw+XYKQIv+xqyWnymG8xePBVnt33A1gg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=04saYxt9Bboi9Fy49jJrPjdEQFzMMtmCrb13FjbucgA=;
+ b=j/2NBNf2WEJJ+wneW/fAogjD/4Z9aZCKopAFzphwkxHGlFDPXQZUk8YbMkLMtxEmmlkfvBfsHnGKT3Rdd9QbTsr9RQle3POYSsHM/dmaf6+FwabHHpFPmZpEZNmTDsGq6Ca/dpQe9saBc3I9klcVfkrySRpdeFsTJnqhm3NseQfdN7MTujCdq0cOD80A1flhV3jF2JwK4b/Wdc+NSJ0lINRLIy3mJIPmDyUTGS3lkrU0r8hLau3usGqVbkk+F9ZmUYx70tWMXRfjXgLf9ZZ/et3TXQvjaFoQdJheoR+CKqflq4S0VTNPtzF92j9qg6BVbGyFi/iq1qXYf3NzbJsACw==
+Received: from BY5PR02MB6180.namprd02.prod.outlook.com (2603:10b6:a03:1fd::16)
+ by SA3PR02MB10973.namprd02.prod.outlook.com (2603:10b6:806:45f::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
+ 2026 08:52:05 +0000
+Received: from BY5PR02MB6180.namprd02.prod.outlook.com
+ ([fe80::5bab:a96b:f604:d7e1]) by BY5PR02MB6180.namprd02.prod.outlook.com
+ ([fe80::5bab:a96b:f604:d7e1%6]) with mapi id 15.21.0315.011; Fri, 14 Aug 2026
+ 08:52:05 +0000
+Date: Fri, 14 Aug 2026 09:52:00 +0100
+From: John Levon <john.levon@nutanix.com>
+To: Naman Gulati <namangulati@google.com>
+Cc: qemu-devel@nongnu.org, Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Alex Williamson <alex@shazbot.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ Matt Evans <matt@ozlabs.org>
+Subject: Re: [RFC PATCH 2/3] vfio: mmap sparse regions backed by multiple FDs
+Message-ID: <an7XMMoApuo3ye1d@lent>
+References: <20260811233930.401797-1-namangulati@google.com>
+ <20260811233930.401797-3-namangulati@google.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260811233930.401797-3-namangulati@google.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P302CA0029.GBRP302.PROD.OUTLOOK.COM
+ (2603:10a6:600:2c1::20) To BY5PR02MB6180.namprd02.prod.outlook.com
+ (2603:10b6:a03:1fd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR02MB6180:EE_|SA3PR02MB10973:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7a175115-830f-40f4-56ae-08def9e150aa
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|22082099003|18002099003|56012099006|6133799003|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info: oWpz+BR8ke4sg57GSD608/KUDb4aERRQFwZaN3wIBSnUBpfjf+wnIjfazZu8rCDIr837BWnf9Wwx/DI7Mj0EfbR8TM2WjLZXnJw7ho+eqwS06fz56QswbKJnm/vLOtLbD0AxEcqscsMDaw2OarBZH480IEgECQPPs2m49OJ2h/cgpJxARg+nF6qbUrBG0xBXw1+e8KtiH24hCv8o7Xty/HgQurQwt3JfF994yseiZn+9dNhQQiRl+O+Ni6itihe6xluoVwSQOo/6MUrA8AQ1DuPe0cKh2cZ72IukjefNNGTudkTfchYCylf2yq0ib178IVLGFWYAUjnvNmhwTUmNsxL/pPSh9j+WkfRK7MrmPmj9yHj8VbvNfnso/emukwjGCQ7RWKk4Vbp1ESs8qOBCEXnl+M9mAhCf1pKgucShqQYWjpwWdTShhzFtR6oa5GNZywk4g8SjCkuKEHRMeEVVXDZkajojGLAEQhL8MKpDqAYeVacH83aoWI85HULDWy5x2YlGWSBSn4nt4y8hxUxzHluM3JjsvA7BYP2vbm0cBJlfcDghN1NOy0MNPkAof5niYxRWYfjzLfNomH+qFPF5naxqLn74pSIreYR0TkgPVZRJfnLav++A787STI/lHJOFDWskaO1GH5vDEmJt+UcaJKdfIUMQF9RJpYJUUNUc38g=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR02MB6180.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(22082099003)(18002099003)(56012099006)(6133799003)(4143699003)(10067099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?j2HXq8KmyHh/EtaESGw7mrzm2MYp92+hIZpNFgtm1caRkiPYZscenJ3iqe?=
+ =?iso-8859-1?Q?wmJLDSOHtgRWRCP1jXGa6zfBaix5Sm079EVvCUj7C5+co/XRUeJQItPpqF?=
+ =?iso-8859-1?Q?eOOzqwEKJEF7l8kT4nVdIKgl0t3ECugV6Y1mMi2Q4y+qBVUe4LMGgloaOd?=
+ =?iso-8859-1?Q?MOzjBXID5YpB5G+KFi7sYfWEen7wo4w9VWUYptD+ihQos2+B2jYKQhggxl?=
+ =?iso-8859-1?Q?8pkP+EowfDaW81GwLFaZtr+ZH1750s+mWb53XaTc0OcTbKjdA3bHN5tFVx?=
+ =?iso-8859-1?Q?it4rE4FISumwhGgeHKbqU95K9IAZ9t4YE6QDfdq/r5pkRhsqmMdau8I3js?=
+ =?iso-8859-1?Q?pHQXVgEq1g6bG+hEHLCu05tRNfL5ZfczJBkWNoiyCojEEuoEonN8XUcXs4?=
+ =?iso-8859-1?Q?3RYV3gMFqCT/WLqVf9Go7RFWopWg6w3Pur7c9jAOLVEol/htKzAvcSQQYP?=
+ =?iso-8859-1?Q?wgPKR+YgQJkVVWxRKwfSVFcTeY7G+Jz9R4GENyi52xG55mhCXnEG5/bG/T?=
+ =?iso-8859-1?Q?XolBuMeWkwHqnkqFsnfz9ZUbPosSet2q+6JSKaCM5Nwk4kCcXQ8wyolVbJ?=
+ =?iso-8859-1?Q?Q+G2QwmbT+HYHyaJomGCsp+MCHV8VYkhiX/baf0tWW/TynsraHv0pGMnqH?=
+ =?iso-8859-1?Q?55+c1ZjToba0+fQ4c1fgmjlw4S2b4xt8LV0BBxrijZCci6B+5SY6f7Ra1c?=
+ =?iso-8859-1?Q?mT+m0gnquLXUFdsrQorMIG7H8i1xmYxSdZn/88stxsRpJxnnR8JNLqD8Nu?=
+ =?iso-8859-1?Q?HsPqpjGmjo+4Y13AFJ/nkj9OK5/GVJS0+OWVHlVpXSdbTUw2wW48owefLm?=
+ =?iso-8859-1?Q?s6hvc3hgMSKSl6lwnnT1XShj6bNYoTknrrcMWcVnXRZk4KLBXz0xFIZyBb?=
+ =?iso-8859-1?Q?C2v598vEHBiHijZe+EQRmEqO+CE9BSc6LpVU/GRfwt8hPHao11sVSEVTKc?=
+ =?iso-8859-1?Q?BsKPOoB3deoQ3BMm2aXXFCe+rt8Y/ZTTFOYj8325BUIZkRk8R8geFLoEFD?=
+ =?iso-8859-1?Q?R8jmDVouIUIS7tVGuFqpmM7lQ5WeFhAZU/Ucl99Wa0kyrhKFu8zeucl4+2?=
+ =?iso-8859-1?Q?FBraVpWkcEO/b/D2NEt2hzVsOwQ8c8saGayCuBNPXiJ+3CmZYlHXEXL5zS?=
+ =?iso-8859-1?Q?IK7dS0sSRuChEQe7WpgB9Vt8CAkHhqFnE3BInNM4cZQaFEvIW2FvNL/Vyr?=
+ =?iso-8859-1?Q?4QmKHINb8ymYTQRbrxKRzoL3Dr54gLaOABU8ccCu8n5Ecgo3P0HymaZ+/t?=
+ =?iso-8859-1?Q?q8lLiQMBZQ6lRMTLgIgaVhNJhnhPVzki28e/aXxayEQy+EQvcRYwTnNbaK?=
+ =?iso-8859-1?Q?BYybv1KLbgKfu47PGzlW+sFox0waQp7U54NDyd8JwrlP1PJCD4Za8tyQMU?=
+ =?iso-8859-1?Q?0/H2o4FLi+8ZaewTs4RE/3YQIM6AHUVUy1WMVmR/gGHKHj3PBSd3RGsG0m?=
+ =?iso-8859-1?Q?3ev4r4DFl+ryzrK9tvjtV7RRGhEQfwHRneB6/HXrCi+2MfbbuQ5Js3eBJV?=
+ =?iso-8859-1?Q?ASWv6eI7VjjXvfjDGcAhs94iWjbc17OpHfzoySgkll97zp9Pnz/+MeW605?=
+ =?iso-8859-1?Q?m61c59jWyl2joleiFU7Vh7ZcCBCZz9cKOuM2wwTu4EtLWZU+YCwwxGaPTH?=
+ =?iso-8859-1?Q?3rcjbYFQAquTsyWvfifU3pZ9s9eOAVGMYgH6jxUA81r6rJHpsyF8pEOAq1?=
+ =?iso-8859-1?Q?dLT4iR/AN2Am6S8KEeswVrf5T1s2Cb2hpnRZAF0hSY83RZSr+1kmqXWpOJ?=
+ =?iso-8859-1?Q?aVjovkR57Q0mZy3kvICH4AdJbJqgtSUrU5jMuLDFEctUvBdEPMnAqeUnce?=
+ =?iso-8859-1?Q?icgsw2keyQ=3D=3D?=
+X-Exchange-RoutingPolicyChecked: a9dDkKwE1stVX1EzhxJ31t7tNRCW58KqHHn1BANAyfcgEsSp/z/oHJXi1NBEukqPUJeWfEnheKmfD3PFRQJrRsRRDUbBQblo4FscMJHyDY71MlYUiajPZ9M7vlp4fbH5MPN4YAcPUZtY/uiUfgvJsWA/cYT9UuLVGFPvlXKs5fLn3DTTzk6YGIvsVJ+gNKXZw0k8X63OecHfk3RHhBIRHNLfrUE9WM5POHa4mee11afHzyIMRlAHJ3A8swLhUcuIKdfxizoKtKtjKaWZYfhSvvTFPNA7GCwsz5uL6N/sRzYn15Fr3Htxo2iSek6pI6mAaxo8YfRKdnpAJgh2HuPBfg==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a175115-830f-40f4-56ae-08def9e150aa
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6180.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 08:52:05.1235 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NwRxKYLgHdm0DUEyEzvxLESrjRep5V/tdiXIUbo2WdwyFSnzU1HvgENTZM653LGqZrr/AGGEtEvhtc3H1mqHUA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR02MB10973
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA2NyBTYWx0ZWRfX+42mXF9cAv8z
+ RRjYn0T7BwXbyBf+F3K5euNZwjxlaNyCIbr4ABAOCidDEkTCZs+Qt82KpbqYCsjj3lxFJjFopnc
+ FdN4jtNktSGPGuf7aOx2oeJBZpV0hPY=
+X-Proofpoint-GUID: 2XcT6WvBuXqv7Jp-ib9JX3BXhiLlsoVb
+X-Proofpoint-ORIG-GUID: 2XcT6WvBuXqv7Jp-ib9JX3BXhiLlsoVb
+X-Authority-Analysis: v=2.4 cv=BPeDalQG c=1 sm=1 tr=0 ts=6a7ed737 cx=c_pps
+ a=M2+OpPQAT0SLGkNgjpGDNg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=KIBNCuwn9UVIqJGXsAsA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA2NyBTYWx0ZWRfX8HNBmOluaHhB
+ xE/tqz2WAR/2R4H0Wh1ZTNJPjg3kW0EJczTpAueEawLiwbExYmLJfcXRnxFUhmKnLOiepApYeKb
+ SjdjJkIdaFUaym8rhKLZhveqynwCHud4O/G2MyOCDTzYWP72aPj5AGBYYw18XSso9DNTHbwjOlQ
+ wusC04R1+nfnxl/t5aF8W3ht/+7ziWJOn5LVRhKLMwrOHXgXmP4Gjba1EYp7v0r3zY32NHLrhil
+ rN9qYf4e3bRFp3PJJ9I6j7bd8ie49TXRWFN268N6fthDWSIlBAcbGYsRw0q3FBIrdCAbbm5+xol
+ DdMDjXO43TaKPgEriNQozeYS7IIkhS7+1EKGEJWBo2Z18h13AGNIHaORlfxKteK0Ya0dLiFtYpu
+ d6XQLyhhKp/yh74hFUNNyzKfcoKhuFuK+FSeJfMEB9+rWb2nFEKckidLjKO9C8W+MlhrcGWJrk5
+ mYxs3sNgdPk40IJF+hQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-14_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,520 +186,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 29, 2026 at 7:56=E2=80=AFPM Xin Xie <xinxie908@gmail.com> wrote=
-:
->
-> Add a minimal K230 SDHCI model based on the generic SDHCI model. Reuse
-> the generic commands and data paths while providing the extended register
-> layout and documented reset values.
->
-> K230 SDHCI controller contains the standard SDHCI register block followed
-> by preset, extension pointer, PHY and vendor-specific registers. This mod=
-el
-> implements the preset and extension pointer registers as read-only, retai=
-n
-> writes to most PHY and vendor-specific registers, and keep PHY_PWRGOOD
-> asserted so that the K230 SDK reset sequence can complete.
->
+On Tue, Aug 11, 2026 at 11:39:29PM +0000, Naman Gulati wrote:
 
-Please split the k230_sdhci model into 2 separate models:
+> Generalize QEMU's VFIO core layer to support mapping sparse memory
+> subregions from distinct file descriptors within a single device
+> region.
+> 
+> Replace list of region_fds in VFIODevice with a collection of struct
+> VFIORegionFDs that internally holds a collection of FDs to mmap per
+> region.
 
-- One is generic Synopsys DesignWare Mobile Storage Host Controller IP
-model (hw/sd/dw_mshc.c)
-- Optional Canann K230 specific wrapper glue model to the dw_mshc IP
-(if the generic Synopsys DesignWare MSHC IP model, or plus some unimp
-region, is good enough to make the software happy, no need to create
-this one)
+This is getting a bit non-obvious to me, we now have a region_fds array where
+each member is also an array.
 
-> The SDHCI version is set to 3 due to the absence of ADMA3 support in the
-> generic model.
->
-> Signed-off-by: Xin Xie <xinxie908@gmail.com>
-> ---
->  MAINTAINERS                |   2 +
->  hw/sd/Kconfig              |   4 +
->  hw/sd/k230_sdhci.c         | 311 +++++++++++++++++++++++++++++++++++++
->  hw/sd/meson.build          |   1 +
->  include/hw/sd/k230_sdhci.h |  82 ++++++++++
->  5 files changed, 400 insertions(+)
->  create mode 100644 hw/sd/k230_sdhci.c
->  create mode 100644 include/hw/sd/k230_sdhci.h
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6171cc7494..06285352c4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1826,8 +1826,10 @@ S: Maintained
->  F: docs/system/riscv/k230.rst
->  F: hw/riscv/k230.c
->  F: hw/watchdog/k230_wdt.c
-> +F: hw/sd/k230_sdhci.c
->  F: include/hw/riscv/k230.h
->  F: include/hw/watchdog/k230_wdt.h
-> +F: include/hw/sd/k230_sdhci.h
->  F: tests/qtest/k230-wdt-test.c
->
->  RX Machines
-> diff --git a/hw/sd/Kconfig b/hw/sd/Kconfig
-> index 633b9afec9..e9a5d63b4d 100644
-> --- a/hw/sd/Kconfig
-> +++ b/hw/sd/Kconfig
-> @@ -23,3 +23,7 @@ config SDHCI_PCI
->  config CADENCE_SDHCI
->      bool
->      select SDHCI
-> +
-> +config K230_SDHCI
-> +    bool
-> +    select SDHCI
-> diff --git a/hw/sd/k230_sdhci.c b/hw/sd/k230_sdhci.c
-> new file mode 100644
-> index 0000000000..34c972a2f7
-> --- /dev/null
-> +++ b/hw/sd/k230_sdhci.c
-> @@ -0,0 +1,311 @@
-> +/*
-> + * Kendryte K230 SDHCI controller
-> + *
-> + * Copyright (c) 2026 Xin Xie <xinxie908@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "hw/sd/k230_sdhci.h"
-> +#include "hw/sd/sdhci-internal.h"
-> +#include "migration/vmstate.h"
-> +
-> +/*
-> + * The TRM describes an SDHCI v4.20 DWC MSHC, including the v4 block-cou=
-nt
-> + * mode, ADMA3, and extension-area registers.  QEMU's generic controller
-> + * supports up to v3 and does not implement those v4 transfer semantics.
-> + */
-> +#define K230_SDHCI_SPEC_VERSION 3
-> +
-> +/*
-> + * K230's Capabilities registers describe more functionality than the ge=
-neric
-> + * QEMU SDHCI data path currently implements.  Do not expose the followi=
-ng TRM
-> + * capabilities to the guest:
-> + *
-> + * - ASYNC_INT requires an SDIO card-interrupt input and asynchronous in=
-terrupt
-> + *   signalling while the SD clock is stopped.  SDBus has no such input.
-> + * - TIMER_RETUNING and RETUNING_MODE require a re-tuning timer and gene=
-ration
-> + *   of a re-tuning request.  The generic controller only completes an i=
-nitial
-> + *   command-based tuning operation; it never schedules periodic re-tuni=
-ng.
-> + * - ADMA3 requires the SDHCI v4.20 ADMA3 descriptor and command semanti=
-cs,
-> + *   whereas the generic controller implements SDMA and ADMA2 only.
-> + */
-> +#define K230_SDHCI_CAPABILITIES_UNSUPPORTED \
-> +    (R_SDHC_CAPAB_ASYNC_INT_MASK | \
-> +     R_SDHC_CAPAB_TIMER_RETUNING_MASK | \
-> +     R_SDHC_CAPAB_RETUNING_MODE_MASK | \
-> +     R_SDHC_CAPAB_ADMA3_MASK)
+Given that you've introduced a dependency on VFIORegion in the
+include/hw/vfio/vfio-device.h for the other callback, I'm wondering why we don't
+just store an array of VFIORegions in VFIODevice instead of reginfo+region_fds ?
 
-The reset value of the capability does not agree with the TRM. Please
-confirm the value on the real hardware, or just use the value from the
-TRM.
+And I'm wondering if we really have to have two separate callbacks for getting
+region info.
+ 
 
-> +#define K230_SDHCI_CAPAREG_IMPLEMENTED \
-> +    (K230_SDHCI_CAPAREG_RESET & ~K230_SDHCI_CAPABILITIES_UNSUPPORTED)
-> +
-> +#define K230_LO8(value)     ((value) & 0xff)
-> +#define K230_HI8(value)     (((value) >> 8) & 0xff)
-> +
-> +static const uint8_t k230_sdhci_preset_reset[K230_SDHCI_PRESET_SIZE] =3D=
- {
-> +    [K230_SDHCI_PRESET_INIT - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_INIT_RESET),
-> +    [K230_SDHCI_PRESET_INIT - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_INIT_RESET),
-> +    [K230_SDHCI_PRESET_DEFAULT_SPEED - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_DEFAULT_SPEED_RESET),
-> +    [K230_SDHCI_PRESET_DEFAULT_SPEED - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_DEFAULT_SPEED_RESET),
-> +    [K230_SDHCI_PRESET_HIGH_SPEED - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_HIGH_SPEED_RESET),
-> +    [K230_SDHCI_PRESET_HIGH_SPEED - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_HIGH_SPEED_RESET),
-> +    [K230_SDHCI_PRESET_SDR12 - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_SDR12_RESET),
-> +    [K230_SDHCI_PRESET_SDR12 - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_SDR12_RESET),
-> +    [K230_SDHCI_PRESET_SDR25 - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_SDR25_RESET),
-> +    [K230_SDHCI_PRESET_SDR25 - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_SDR25_RESET),
-> +    [K230_SDHCI_PRESET_SDR50 - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_SDR50_RESET),
-> +    [K230_SDHCI_PRESET_SDR50 - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_SDR50_RESET),
-> +    [K230_SDHCI_PRESET_SDR104 - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_SDR104_RESET),
-> +    [K230_SDHCI_PRESET_SDR104 - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_SDR104_RESET),
-> +    [K230_SDHCI_PRESET_DDR50 - K230_SDHCI_PRESET_BASE] =3D
-> +        K230_LO8(K230_SDHCI_PRESET_DDR50_RESET),
-> +    [K230_SDHCI_PRESET_DDR50 - K230_SDHCI_PRESET_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_PRESET_DDR50_RESET),
-> +};
-> +
-> +static uint64_t k230_sdhci_preset_read(void *opaque, hwaddr addr,
-> +                                      unsigned int size)
-> +{
-> +    return ldn_le_p(&k230_sdhci_preset_reset[addr], size);
-> +}
-> +
-> +static void k230_sdhci_preset_write(void *opaque, hwaddr addr, uint64_t =
-value,
-> +                                   unsigned int size)
-> +{
-> +    qemu_log_mask(LOG_GUEST_ERROR,
-> +                  "K230 SDHCI: write to read-only Preset Value register =
-"
-> +                  "0x%03" HWADDR_PRIx "\n",
-> +                  K230_SDHCI_PRESET_BASE + addr);
-> +}
-> +
-> +static const MemoryRegionOps k230_sdhci_preset_ops =3D {
-> +    .read =3D k230_sdhci_preset_read,
-> +    .write =3D k230_sdhci_preset_write,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> +    .valid =3D {
-> +        .min_access_size =3D 1,
-> +        .max_access_size =3D 4,
-> +        .unaligned =3D false,
-> +    },
-> +};
-> +
-> +static const uint8_t k230_sdhci_pointer_reset[K230_SDHCI_POINTER_SIZE] =
-=3D {
-> +    [K230_SDHCI_P_UHS2_SETTINGS - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_UHS2_SETTINGS_RESET),
-> +    [K230_SDHCI_P_UHS2_SETTINGS - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_UHS2_SETTINGS_RESET),
-> +    [K230_SDHCI_P_UHS2_HOST_CAPAB - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_UHS2_HOST_CAPAB_RESET),
-> +    [K230_SDHCI_P_UHS2_HOST_CAPAB - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_UHS2_HOST_CAPAB_RESET),
-> +    [K230_SDHCI_P_UHS2_TEST - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_UHS2_TEST_RESET),
-> +    [K230_SDHCI_P_UHS2_TEST - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_UHS2_TEST_RESET),
-> +    [K230_SDHCI_P_EMBEDDED_CNTRL - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_EMBEDDED_CNTRL_RESET),
-> +    [K230_SDHCI_P_EMBEDDED_CNTRL - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_EMBEDDED_CNTRL_RESET),
-> +    [K230_SDHCI_P_VENDOR_AREA1 - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_VENDOR_AREA1_RESET),
-> +    [K230_SDHCI_P_VENDOR_AREA1 - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_VENDOR_AREA1_RESET),
-> +    [K230_SDHCI_P_VENDOR_AREA2 - K230_SDHCI_POINTER_BASE] =3D
-> +        K230_LO8(K230_SDHCI_P_VENDOR_AREA2_RESET),
-> +    [K230_SDHCI_P_VENDOR_AREA2 - K230_SDHCI_POINTER_BASE + 1] =3D
-> +        K230_HI8(K230_SDHCI_P_VENDOR_AREA2_RESET),
-> +};
-> +
-> +static uint64_t k230_sdhci_pointer_read(void *opaque, hwaddr addr,
-> +                                       unsigned int size)
-> +{
-> +    return ldn_le_p(&k230_sdhci_pointer_reset[addr], size);
-> +}
-> +
-> +static void k230_sdhci_pointer_write(void *opaque, hwaddr addr, uint64_t=
- value,
-> +                                    unsigned int size)
-> +{
-> +    qemu_log_mask(LOG_GUEST_ERROR,
-> +                  "K230 SDHCI: write to read-only pointer register "
-> +                  "0x%03" HWADDR_PRIx "\n",
-> +                  K230_SDHCI_POINTER_BASE + addr);
-> +}
-> +
-> +static const MemoryRegionOps k230_sdhci_pointer_ops =3D {
-> +    .read =3D k230_sdhci_pointer_read,
-> +    .write =3D k230_sdhci_pointer_write,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> +    .valid =3D {
-> +        .min_access_size =3D 1,
-> +        .max_access_size =3D 4,
-> +        .unaligned =3D false,
-> +    },
-> +};
-> +
-> +/*
-> + * K230 uses the standard SDHCI register set at offset zero, followed by
-> + * UHS-II, DWC MSHC PHY, Embedded Control, and vendor-specific blocks. M=
-ost
-> + * side effects of analogue PHY behaviors not simulated.
-> + *
-> + * PHY_PWRGOOD is the sole synthesized status bit.  Real hardware assert=
-s it
-> + * after PHY power and reset sequencing; the SDK driver polls it during =
-every
-> + * full controller reset.  A virtual PHY has no settling interval or fai=
-lure
-> + * condition, so the bit is permanently asserted and cannot be cleared b=
-y a
-> + * guest write.
-> + */
-> +static uint64_t k230_sdhci_fallback_read(void *opaque, hwaddr addr,
-> +                                        unsigned int size)
-> +{
-> +    K230SDHCIState *s =3D opaque;
-> +    uint64_t value =3D ldn_le_p(&s->fallback_regs[addr], size);
-> +
-> +    if (ranges_overlap(addr, size, K230_SDHCI_PHY_CNFG,
-> +                       sizeof(uint32_t)) && addr <=3D K230_SDHCI_PHY_CNF=
-G) {
-> +        unsigned int shift =3D (K230_SDHCI_PHY_CNFG - addr) * 8;
-> +
-> +        value |=3D (uint64_t)K230_SDHCI_PHY_CNFG_PWRGOOD << shift;
+> @@ -184,6 +184,12 @@ static int vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+>          return ret;
+>      }
+>  
+> +    if (fds.recv_fds > 0 && info->index < vbasedev->num_initial_regions) {
+> +        vbasedev->region_fds[info->index].fds = g_new0(int, 1);
+> +        vbasedev->region_fds[info->index].nr_fds = 1;
+> +        vbasedev->region_fds[info->index].fds[0] = fd;
 > +    }
 > +
-> +    return value;
-> +}
-> +
-> +static void k230_sdhci_fallback_write(void *opaque, hwaddr addr,
-> +                                     uint64_t value, unsigned int size)
-> +{
-> +    K230SDHCIState *s =3D opaque;
-> +
-> +    stn_le_p(&s->fallback_regs[addr], size, value);
-> +
-> +    /* PWRGOOD reflects PHY state and is not software writable. */
-> +    s->fallback_regs[K230_SDHCI_PHY_CNFG] |=3D
-> +        K230_SDHCI_PHY_CNFG_PWRGOOD;
-> +}
-> +
-> +static const MemoryRegionOps k230_sdhci_fallback_ops =3D {
-> +    .read =3D k230_sdhci_fallback_read,
-> +    .write =3D k230_sdhci_fallback_write,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> +    .valid =3D {
-> +        .min_access_size =3D 1,
-> +        .max_access_size =3D 4,
-> +        .unaligned =3D false,
-> +    },
-> +};
-> +
-> +static void k230_sdhci_reset(DeviceState *dev)
-> +{
-> +    K230SDHCIState *s =3D K230_SDHCI(dev);
-> +
-> +    memset(s->fallback_regs, 0, sizeof(s->fallback_regs));
-> +    s->fallback_regs[K230_SDHCI_PHY_CNFG] =3D
-> +        K230_SDHCI_PHY_CNFG_PWRGOOD;
-> +    device_cold_reset(DEVICE(&s->sdhci));
-> +}
-> +
-> +static void k230_sdhci_realize(DeviceState *dev, Error **errp)
-> +{
-> +    K230SDHCIState *s =3D K230_SDHCI(dev);
-> +    SysBusDevice *sbd =3D SYS_BUS_DEVICE(dev);
-> +    SysBusDevice *sdhci_sbd =3D SYS_BUS_DEVICE(&s->sdhci);
-> +
-> +    memory_region_init(&s->container, OBJECT(s), "k230.sdhci-container",
-> +                       K230_SDHCI_REG_SIZE);
-> +    sysbus_init_mmio(sbd, &s->container);
-> +
-> +    memory_region_init_io(&s->iomem_fallback, OBJECT(s),
-> +                          &k230_sdhci_fallback_ops, s,
-> +                          "k230.sdhci-fallback",
-> +                          K230_SDHCI_REG_SIZE);
-> +    memory_region_add_subregion(&s->container, 0, &s->iomem_fallback);
-> +
-> +    if (!sysbus_realize(sdhci_sbd, errp)) {
-> +        return;
-> +    }
-> +    memory_region_add_subregion_overlap(
-> +        &s->container, 0, sysbus_mmio_get_region(sdhci_sbd, 0), 1);
-> +
-> +    memory_region_init_io(&s->iomem_preset, OBJECT(s),
-> +                          &k230_sdhci_preset_ops, s,
-> +                          "k230.sdhci-preset", K230_SDHCI_PRESET_SIZE);
-> +    memory_region_add_subregion_overlap(&s->container,
-> +                                        K230_SDHCI_PRESET_BASE,
-> +                                        &s->iomem_preset, 2);
-> +
-> +    memory_region_init_io(&s->iomem_pointer, OBJECT(s),
-> +                          &k230_sdhci_pointer_ops, s,
-> +                          "k230.sdhci-pointers", K230_SDHCI_POINTER_SIZE=
-);
-> +    memory_region_add_subregion_overlap(&s->container,
-> +                                        K230_SDHCI_POINTER_BASE,
-> +                                        &s->iomem_pointer, 2);
-> +
-> +    sysbus_pass_irq(sbd, sdhci_sbd);
-> +    s->bus =3D qdev_get_child_bus(DEVICE(sdhci_sbd), "sd-bus");
-> +}
-> +
-> +static const VMStateDescription vmstate_k230_sdhci =3D {
-> +    .name =3D TYPE_K230_SDHCI,
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_UINT8_ARRAY(fallback_regs, K230SDHCIState,
-> +                            K230_SDHCI_REG_SIZE),
-> +        VMSTATE_END_OF_LIST()
-> +    },
-> +};
-> +
-> +static void k230_sdhci_instance_init(Object *obj)
-> +{
-> +    K230SDHCIState *s =3D K230_SDHCI(obj);
-> +
-> +    object_initialize_child(obj, "generic-sdhci", &s->sdhci,
-> +                            TYPE_SYSBUS_SDHCI);
-> +
-> +    object_property_set_uint(OBJECT(&s->sdhci), "sd-spec-version",
-> +                             K230_SDHCI_SPEC_VERSION,
-> +                             &error_abort);
-> +    object_property_set_uint(OBJECT(&s->sdhci), "capareg",
-> +                             K230_SDHCI_CAPAREG_IMPLEMENTED,
-> +                             &error_abort);
-> +    object_property_set_uint(OBJECT(&s->sdhci), "uhs", UHS_I, &error_abo=
-rt);
-> +}
-> +
-> +static void k230_sdhci_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +
-> +    dc->desc =3D "Kendryte K230 SDHCI Controller";
-> +    dc->realize =3D k230_sdhci_realize;
-> +    device_class_set_legacy_reset(dc, k230_sdhci_reset);
-> +    dc->vmsd =3D &vmstate_k230_sdhci;
-> +    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-> +}
-> +
-> +static const TypeInfo k230_sdhci_type_info =3D {
-> +    .name =3D TYPE_K230_SDHCI,
-> +    .parent =3D TYPE_SYS_BUS_DEVICE,
-> +    .instance_size =3D sizeof(K230SDHCIState),
-> +    .instance_init =3D k230_sdhci_instance_init,
-> +    .class_init =3D k230_sdhci_class_init,
-> +};
-> +
-> +static void k230_sdhci_register_types(void)
-> +{
-> +    type_register_static(&k230_sdhci_type_info);
-> +}
-> +
-> +type_init(k230_sdhci_register_types)
-> diff --git a/hw/sd/meson.build b/hw/sd/meson.build
-> index b43d45bc56..a109635233 100644
-> --- a/hw/sd/meson.build
-> +++ b/hw/sd/meson.build
-> @@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files=
-('aspeed_sdhci.c'))
->  system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-sdh=
-ost.c'))
->  system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_sdhci.c'))
->  system_ss.add(when: 'CONFIG_CADENCE_SDHCI', if_true: files('cadence_sdhc=
-i.c'))
-> +system_ss.add(when: 'CONFIG_K230_SDHCI', if_true: files('k230_sdhci.c'))
-> diff --git a/include/hw/sd/k230_sdhci.h b/include/hw/sd/k230_sdhci.h
-> new file mode 100644
-> index 0000000000..a8389f1de4
-> --- /dev/null
-> +++ b/include/hw/sd/k230_sdhci.h
-> @@ -0,0 +1,82 @@
-> +/*
-> + * Kendryte K230 SDHCI controller
-> + *
-> + * Copyright (c) 2026 Xin Xie <xinxie908@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_SD_K230_SDHCI_H
-> +#define HW_SD_K230_SDHCI_H
-> +
-> +#include "qemu/bitops.h"
-> +#include "hw/sd/sdhci.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_K230_SDHCI "k230.sdhci"
-> +OBJECT_DECLARE_SIMPLE_TYPE(K230SDHCIState, K230_SDHCI)
-> +
-> +#define K230_SDHCI_REG_SIZE             0x1000
-> +
-> +/* K230 TRM reset values for Capabilities Registers 1 and 2. */
-> +#define K230_SDHCI_CAPABILITIES1_RESET  0x256ec881ULL
-> +#define K230_SDHCI_CAPABILITIES2_RESET  0x0800a177ULL
-> +#define K230_SDHCI_CAPAREG_RESET \
-> +    ((K230_SDHCI_CAPABILITIES2_RESET << 32) \
-> +    | K230_SDHCI_CAPABILITIES1_RESET)
-> +
-> +/* SDHCI Preset Value registers. */
-> +#define K230_SDHCI_PRESET_BASE           0x060
-> +#define K230_SDHCI_PRESET_SIZE           0x010
-> +#define K230_SDHCI_PRESET_INIT           0x060
-> +#define K230_SDHCI_PRESET_DEFAULT_SPEED  0x062
-> +#define K230_SDHCI_PRESET_HIGH_SPEED     0x064
-> +#define K230_SDHCI_PRESET_SDR12          0x066
-> +#define K230_SDHCI_PRESET_SDR25          0x068
-> +#define K230_SDHCI_PRESET_SDR50          0x06a
-> +#define K230_SDHCI_PRESET_SDR104         0x06c
-> +#define K230_SDHCI_PRESET_DDR50          0x06e
-> +#define K230_SDHCI_PRESET_INIT_RESET          0x00fa
-> +#define K230_SDHCI_PRESET_DEFAULT_SPEED_RESET 0x0004
-> +#define K230_SDHCI_PRESET_HIGH_SPEED_RESET    0x0002
-> +#define K230_SDHCI_PRESET_SDR12_RESET         0x0004
-> +#define K230_SDHCI_PRESET_SDR25_RESET         0x0002
-> +#define K230_SDHCI_PRESET_SDR50_RESET         0x0001
-> +#define K230_SDHCI_PRESET_SDR104_RESET        0x0000
-> +#define K230_SDHCI_PRESET_DDR50_RESET         0x0002
-> +
-> +/* SDHCI v4 extension-area pointer registers. */
-> +#define K230_SDHCI_POINTER_BASE         0x0e0
-> +#define K230_SDHCI_POINTER_SIZE         0x00c
-> +#define K230_SDHCI_P_UHS2_SETTINGS      0x0e0
-> +#define K230_SDHCI_P_UHS2_HOST_CAPAB    0x0e2
-> +#define K230_SDHCI_P_UHS2_TEST          0x0e4
-> +#define K230_SDHCI_P_EMBEDDED_CNTRL     0x0e6
-> +#define K230_SDHCI_P_VENDOR_AREA1       0x0e8
-> +#define K230_SDHCI_P_VENDOR_AREA2       0x0ea
-> +#define K230_SDHCI_P_UHS2_SETTINGS_RESET    0x0000
-> +#define K230_SDHCI_P_UHS2_HOST_CAPAB_RESET  0x0f58
-> +#define K230_SDHCI_P_UHS2_TEST_RESET        0x0f68
-> +#define K230_SDHCI_P_EMBEDDED_CNTRL_RESET   0x0f6c
-> +#define K230_SDHCI_P_VENDOR_AREA1_RESET     0x0500
-> +#define K230_SDHCI_P_VENDOR_AREA2_RESET     0x0384
-> +
-> +/* DWC MSHC PHY register block. */
 
-nits: remove the ending period.
-Please fix this globally in this patch series.
+This seems quite surprising behaviour in particular - if we happen to be asking
+about a "standard" region, then we'll store its fd info in vbasedev. But we
+might not be setting device->reginfo[index] at the same time.
 
-> +#define K230_SDHCI_PHY_CNFG             0x300
-> +#define K230_SDHCI_PHY_CNFG_RSTN        BIT(0)
-> +#define K230_SDHCI_PHY_CNFG_PWRGOOD     BIT(1)
-> +
-> +struct K230SDHCIState {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion container;
-> +    MemoryRegion iomem_fallback;
-> +    MemoryRegion iomem_preset;
-> +    MemoryRegion iomem_pointer;
-> +    BusState *bus;
-> +    uint8_t fallback_regs[K230_SDHCI_REG_SIZE];
-> +
-> +    SDHCIState sdhci;
-> +};
-> +
-> +#endif
+I'd expect vbasedev to be const in these callbacks.
 
-Regards,
-Bin
+And what about the special regions > num_initial_regions?
+
+I feel like this callback should be passing in a VFIORegion to be filled in,
+then the caller can do as they wish with it. We could even embed the
+vfio_region_info into VFIORegion for convenience for the callers that want caps
+etc.
+
+Alternatively, if we don't want to do this, then at least get_region_info()
+should take a VFIORegionFds out parameter, that the caller can then do what they
+like with.
+
+Thoughts Cédric ?
+
+I'm also not sure why we have a sparse mmaps callback - why can't that be
+generic code that handles both capabilities? Are you concerned about the cap
+number clashing in future vfio kernel versions perhaps?
+
+regards
+john
 
