@@ -4,107 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39409C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 01:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4899C5DF66
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 02:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wugQ5-00083W-Au; Thu, 13 Aug 2026 21:09:14 -0400
+	id 1wuhLu-0000vd-WE; Thu, 13 Aug 2026 22:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wugPz-000813-0j
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 21:09:08 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
- id 1wugPx-0001cy-3Q
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 21:09:06 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-39c953950dfso3935361fa.1
- for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 18:09:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786669741; cv=none;
- d=google.com; s=arc-20260327;
- b=bJQpt0mio/SEBDkPJopFjhwqzsRHBxiwmupoPU2S99Z3wF2jevOEnZuZNRLgn2d63O
- bCDjoCo7AXiT3yNFg5BHfSV2FY14HxlmiDxJ6RnO4CMT24OijbRnFZfdQVXGecyvw/wS
- L4l+lY9qZGesReTVxSx5uVKOXPb5Q5QYGTnaTKhiBol/SJZUjCtpvp1LWoI+xWeJBtVB
- fw4c/ijFruVjpkNQj4dzqBRUwEJA+fXcfZkeGyhNCJODmjr4ujdMtIony4FxH3uNsI3R
- VKuehLe0yuTgrLBeWhopNlSss02MJlGkgqIblSZFY69TXSFYZJDEzErvd/orQorTY03w
- ZaYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
- fh=1CqkjN8Um0ylFfNHuTEBIg+39t7zmW9dKsKeQ2FICMw=;
- b=IEke8BAHKaplt4pUf9V07YjYBf8yJ5f0zEsiYXxsRkunVPP/AsvCXC9WVX01tbyhi+
- 24+g7kXFbBZ9lp05cc8b4tY+5lc0klrp0lMt+ctTKf7JYkNZlUGPfk+fIToR9i2QzTTd
- GtlerZ6f+4g8efwP6KDiaMwB2qWEb9OEjPA6XI1Y45AD5K+Lh3GvmKuHYrzaZrss1Jlt
- gsmKFrdh48PQt1L1BmtZ9xD8IzehvPDfHVgZ79alSUECOrDC5P6E/hy9agF6xfYD3dZK
- a7bFwHaV9cDIcgIJSXoiJniIupVYEJruJpk7+pS52/21bpCV6Ht+zkNJ7+VoiKnIO8aM
- H42A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bitdeer.com; s=google; t=1786669741; x=1787274541; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
- b=ml+0HCyhbGGK3zAeN3YTrTC6fZY42POKqeUhZun7YmPfqKNLCI71mQEZqCsJks8+tK
- NFuEE/pJqc+kGmQ5zGfg4g2pNAQO9tjxib6Xnboi/aGWlcfefR4jghmS+YM3TbBkUl7+
- iClhJYYgS4OVjwtQB7PIjDwBaqOuCWKWs7h6WSrqiCyK0NlnCEvVDeCn3qYyqaoifXgM
- NhHq20hO7z9xnMxd9kN8wTPgI802FIyhqN/L2qdfNUd/McyXqqD9BQQ4PjYl9mO6Ap5R
- 5pPQJY7z4JsJa11WIpw0dEPZ+f9GSlZu5UwTBEMxcL7iEIU+5HDOCGRGj2Ra+K8D742X
- Tzjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786669741; x=1787274541;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
- b=Xve1IJECmrmpkOVmASYcddcCnffN+vbIdsDfbe24NZseIchPRF/Zc48OHWsYfzZlbQ
- DX/+Su57hPAAnadJW0LevouansIPvXIVB3zPscfWSVsF2N5qkVuSENhd8KWrOMtNnU0e
- 3T9doKtkqSPths0ODflH6UgTUaJCnhzqzJrCiA/wIO3Vx/YQ/A3FIoTlGgIDfOwVba0J
- 2NxLDnyRcfW6On1/QhTK+8RewxtWJWuEtyWva4ReyqXVh5sfsbQd02sXY3Fc3LPs0bn0
- /2lXyFqzVAmu7AcvL1KgrHYuiWCVLD6XDFunLFrm15nhsehLXrsn4uqgltmx+61wJxHz
- wiCw==
-X-Gm-Message-State: AOJu0YzO/jnpmHI0ZmnV61uBA6EhPdl16nejJsoqMPSCnUYRxjKTh1Dx
- 3SxO8+d4v8k52kjbtBCalsuRVzGrULULnXTnAfklwh3eRvuLfLh/HVP81aWoRC1nRfcZRLrvDUl
- FksrQ7S1dHmz0DQALs6qPUQ4raAfxX+RoEgeFtEKjMA==
-X-Gm-Gg: AR+sD10S0cbjqiwIoRY6SIzUv/Dv20tPO1tjn1BzIQjd0pRsZxLMeQtooMLCg6n5wG9
- iAoPws2ObZyScj2lsPfMPHkwROfgI1unIynPmUh8T37bBApFr2slUWWwXWxp/WwFEgKzue0ByZT
- qywVMtgaEqtf5TnpAWjxmITji3qNoSyt2hYCSsr7q1xs5cYS/wKyx4i8Z1Vtx1HAKGyU+uNTGRg
- KAjeMrYzUju/W/13sq6CsaP59PblfglnEs++efSZxbAK3lq3zDPz6WHXcpowJ/xptdFhe+QTcnn
- CE5keXLekQlQL1wtc1TuTQm6vugFHQmEyxbzy8jaFHja
-X-Received: by 2002:a2e:bc15:0:b0:39f:119b:cb36 with SMTP id
- 38308e7fff4ca-3a1324bceaamr1925071fa.20.1786669741436; Thu, 13 Aug 2026
- 18:09:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260812211708.92824-1-philmd@oss.qualcomm.com>
- <20260812211708.92824-14-philmd@oss.qualcomm.com>
-In-Reply-To: <20260812211708.92824-14-philmd@oss.qualcomm.com>
-From: Hy Man <infra.ai.cloud@bitdeer.com>
-Date: Fri, 14 Aug 2026 09:08:48 +0800
-X-Gm-Features: AUfX_mzLIX6waKK6NYbjsfQw0NLHpeLJRLgDgWu2a0Yq5_LUdYeKWxOXH4MzZdU
-Message-ID: <CAFWXh4yc+nFPTEe6m5uvgNq1kkkP7bie6N=VabjkTYnfzCYYfg@mail.gmail.com>
-Subject: Re: [PATCH v3 13/23] system/dirtylimit: Extract HMP code to
- dirtylimit-hmp-cmds.c
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wuhLj-0000uy-UE; Thu, 13 Aug 2026 22:08:48 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wuhLh-0007wD-Gc; Thu, 13 Aug 2026 22:08:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rGpNaAvP646ypAKgtzriYpiuTk4Em9p024ZWTUbKsR5A7P3U3rT4H4ccTy1C09zh8oZWHMnrv4SvrXI4ScXkfnPFQePfEJGqgfXOcba0EHrCKalYiokRZEY2H/Og2c2KSHEQmEL7PwfslyH2Bhr+/17jqIB1EYgpbIMi9PEZoZra/gvOTC+gkW1IyWgbY5OG9PZK0fL+ZrhlDasBXVZXVOFPufOUUeJuyIaT5wqi9PxLvfGWQ5Nk/Ny4cbDzS1m89Nw18h/dLsExfW/HIE9liSERvBtgkRtvPTZ/ywLnimXPUEZEDgpe8Q/5ebFQcTXQjDinm+kl522jdlbXVyHPog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fyVJmTNVdKeeopOE8KUf/Ts927qrJBpsHdd9eI+iqo4=;
+ b=TaHhX6DZYfOtZRJKxCYSNfgYyYANLqPlOcMscB70bjEWxKDiarQknCifu5YYzrtnmvuAPwMixUbt0Qrcf9Az1Y9IZ0ok7VV69cP0wE4Q9dTAr1ywc2Cvmzw5AUKS9DBHRvkw4shH2/AZs7o0uIkN244gnQZ47FUpMCmpRLIj76wNC1RAH2becew4Id/cUz8ft6s1LoTpd8JR8n41YWxkeeGeUmig3zckPDO21wlOswA2TRwCZ0FjNqmdoS3cTJETD0vuCcyL7gNHL6gD1jHQkfxGq7al7ogr6DAWjdzvL27zXNB/oJlhZuO4AsIEu7X04WfTmzJNARswtqIOiMFiIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fyVJmTNVdKeeopOE8KUf/Ts927qrJBpsHdd9eI+iqo4=;
+ b=E8OJ379UhQhfbG0n3sKPTVLsgcZ5forPEBxUEeUrFCP8RGEjYM7DAe9Qjn05Pn7Vq0Ev5PfQj8hitfjBVMrp/uI/grSq0DR3sDCV39Q8Y6zYgUzeZ3JVXHY6nM8lmOXzNh17jjCPsruGrQ8CnOp35ze0vjrtV06Cj/WvW99wGZX6GWaqBsYNCDKMmZsvpoMxWNAQRpLMgJcMN5JAaObIJ6pksOv+wFMJe+AGD7SJEFwZjc8qQ10FdEkXhtpKzhir+v4FMPIP5ITWn5ac5g+/ubgBaNDRFZ4bG7kFvBESNUgeF7mEOwZkHjf1cSw5yPyYgQAUREmK8r7pz4mgvPZZfQ==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by SE1PPF997DECE08.apcprd06.prod.outlook.com (2603:1096:108:1::421)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Fri, 14 Aug
+ 2026 02:08:37 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 02:08:37 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: "Mikail.Sadic@ibm.com" <Mikail.Sadic@ibm.com>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ Mikail Sadic <mikail.sadic@ibm.com>
+Subject: [PATCH v2] hw/i2c/aspeed_i2c: Latch received bytes for SMBus block
+ reads
+Thread-Topic: [PATCH v2] hw/i2c/aspeed_i2c: Latch received bytes for SMBus
+ block reads
+Thread-Index: AQHdK5HRkJd3Xmgm+k+UKKVBfqUr1w==
+Date: Fri, 14 Aug 2026 02:08:37 +0000
+Message-ID: <20260814020836.3119613-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SE1PPF997DECE08:EE_
+x-ms-office365-filtering-correlation-id: 4812e988-aa8b-4803-306a-08def9a8f3ab
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|10067099003|56012099006|6133799003|921020|18002099003|38070700021;
+x-microsoft-antispam-message-info: VUz3IK10Uboqu8UIfoAxyhtVI0SA/ASNH+ziTqCLJ8PAw7uRTW/vvRi9/ZxssttFJwq57johKzoSLcf0/fccR2E4tZHPuBINM/mf8+3Epa9hKLLw/x5tcMibo/iHJaHwBbkhLyjb8utqdXC8HA3xplkenCylKZNxNZKc2yQa/GmBFkUc8sZc+QINy15rWPt4FcGPEgxkGqPZBTFzLNAPODN7GzpPiMYTwtxwMX1cNMLmUIV2xVPztVu/w6O4w93sStaxLcjBBwh1nZ0IljZuE/z3AcUYxJYjdL8kC1oE3PbH43lZsvQ/9fnIIQUy0E6OkaZLJHZbO0Luqlnoo8GTFqzoS3uASMs6qlT8p6aur55Ni3mMrnFNSv5Je0Kva4kv8E4Vda+0cs9yVzpRUiyJMmYd12IauIcQuqGdlu6NsTOS2imGVlnES61tRha04tr4lO6uiWNvQYxTF2GwS772bWNIkILiAJoCm8l5+dfuw4D/ZP1zvAT4qrtnlwdL/6WQt4FMKuxzDqYmfrQwfL2o5ogOlNVzP+fNCiFtCllbGAM5PEFL5MkQbBMPgIgh6//PbfGyJTrWUYIXijrmqC4TUG9kSMUwW/420MH3LsHPYJCXCmvYnlf1ihAO/Yf8ksHVRYtGJPNb+k0JlGMbpsgOSlrDYM+am2ETY8cPRhE36n3dqAS7b1q7BItMNLACRJiHvv6D1WN1DTX6sDxlXKDVhYc7cIlX+CHaZxOWK5WmqCeA4/KC8FG27Jlpuu0dn7/t
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(10067099003)(56012099006)(6133799003)(921020)(18002099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Wq96VtwQzl+IO8E5TaqzquUz7g1K6/C53w/kQaMv6mlXwnO7DnBepBCJa5?=
+ =?iso-8859-1?Q?jvUwTBIT6aeeZC0S+IjlCenvhpDeIS7WjHvz7nX0wbNp5Cn5YRKnU9MPw2?=
+ =?iso-8859-1?Q?jE9FhpvbzJX0kdmTKNJZ+UwtaA1pUEB0YuOiJYbOdVk6JZ/dojz7ZLEGRX?=
+ =?iso-8859-1?Q?3cbREZEqTKi92GzS7EPanq5CGOvoSConCEgJ8mW+6tQ6N/N9cu3JfrUx3Z?=
+ =?iso-8859-1?Q?LuIdfO5+sxKb6ti7M7ngXhKWaFc7zSYXd/3kZf8QUlvQacC03FpvAhYgzt?=
+ =?iso-8859-1?Q?fZTTA3blQyunQiPDGhh/CCeb2T8d3iFD+1QHZina2R/jOqe1cF47wiBDx/?=
+ =?iso-8859-1?Q?0W388C6SbE9DMjH9qCSDvnzGIdf3AAAI8vta+vw77Q4QXqUP/qKAfCJYBL?=
+ =?iso-8859-1?Q?9JaVe0RmJnfDnYSs2RoVU3yJD+Rvko5CKCa6/t7RLzg7bBBAPsTeGhuEfC?=
+ =?iso-8859-1?Q?hvMBloIbXGPXUK8Gcaj29gmk33uiripCZ8IXxkHNl3gzlljLNJB3b6tKj4?=
+ =?iso-8859-1?Q?hjfHHlz6puID89C5e7LE7qTPrIFtf6IAqHrXwBUBQbpjzun3nIFw/r7NB5?=
+ =?iso-8859-1?Q?XJXXOARPkD+Zyb4XlmhFPlHwhAduiH7ifoLxEwyHFuaDqz8jAXd5WzV+g9?=
+ =?iso-8859-1?Q?MFGNAwnbCBmITLpIUBw/mkpIy5zWwDttQHoud6jiK5SWfk9MJUEEE/URU3?=
+ =?iso-8859-1?Q?ejNtj++/nSPmmPnRcJ5J0nceomXs4Bo2A3gZ9u8ltJ6KZVT0bCqymcEsZx?=
+ =?iso-8859-1?Q?06MaJf68/JcBv5XtvNPsq0GZ/k0HsvRGd9KIEc9wDVKCURn8I/zHeqTMJS?=
+ =?iso-8859-1?Q?J8W19zNghGN8Z8zA7lgu+1fdSInkMW1SLD+yqFppltw6bsN0Xuw9QG49t/?=
+ =?iso-8859-1?Q?on6PGcdH2iru20WOwi9XviXx9TPk00D0LIu7sRKst/6DMxHbfH7PxrH97X?=
+ =?iso-8859-1?Q?8mnUFy110TXai5S+jUz3NSF6x+qucTazpHVIpZlZ0dCP9McSDYa0FKVm9O?=
+ =?iso-8859-1?Q?LPkpcOdaX9g8AQ31E+eoXIqsUIz5uIsD+t/jnLu32M1d21vYYMXNwQ7rE+?=
+ =?iso-8859-1?Q?es98jG+NoT+jCfuR6f4S4ak5TEeTklL0wdAZZJi1cjIdpSnUWOfrmznEaI?=
+ =?iso-8859-1?Q?TJfNbDS5lb1L9YU3y57gNPqHQXyyzHvwPwUjgQ+VA7NUfmDCxwLcvHUtMt?=
+ =?iso-8859-1?Q?NhTlDoDPUavL96zaNysIDo2oXT+n1mmm5h3B+rwWBcIkdOx37ZzSqxtuRQ?=
+ =?iso-8859-1?Q?NOB79sYmAhLJNcu7AGv+o+sGTdfegjAXTolch80AtftbYpjTaaB7CHNo/v?=
+ =?iso-8859-1?Q?TAefq9XqP3O+AJ4z1ZtAXqm7uiJpUv9sAQ8zzfJjNHb18ALZIz6PXFKG0S?=
+ =?iso-8859-1?Q?6YNirMm3FYOFICVVjxmCBpeaxq1lTf44j7iAwqOXRGy63FTZVGW6VjYgGA?=
+ =?iso-8859-1?Q?MdFCzEitncxDgCZaIuxCXTigJva6ogDLKCuVomAHftEu7asOZ08ns/axvo?=
+ =?iso-8859-1?Q?YM+qv+EVkvnIW+nHvj61wxrCme5G9qhr6odwgmLhdCAgqE38mnMPICjEJo?=
+ =?iso-8859-1?Q?IWNRIKUjEAZ/Cvy90h1hz7teBlBWHsCK+UJCc4P2lN7LRzOZZuq+jjnID2?=
+ =?iso-8859-1?Q?TPxkE6o/l2rBsj+X/J+5YevpiYdfUoSpK7iplP0TdU6gXWpaEUFtWE7Axm?=
+ =?iso-8859-1?Q?EHKy2znCY7/E4LTz7LfzR0qdjGuhwsy8OX5RPATXd7Q/pUwV44aUKYEZBb?=
+ =?iso-8859-1?Q?dpndCEDgT7oL/WKPzJ5z8acUeokSYBArNoncKEa7WsdJnAG8HLeQAkLV1P?=
+ =?iso-8859-1?Q?Ajs3Sw0Z5w=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x22d.google.com
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: n/nc947jelgg+Ejbh8r62vU9UlOe9uo7OrE/Tg/aJpfmQbBFSAqnN/9TCW5OEbNKoIpMA/UXfDEUUxJqwL0tP13xzbmTut5HfxH+X47e1TvOsxQ7xlMzDTdfwGczn0gSSp4DKvoA86hqqUdLlAkgRO/g+V0MD7Cj+lxYWaY6i9G0NcKozKIRBHpQrYGwgyzgeqhgRqKTBlCdDDc6zpycuqBZlxx6VEhLkUDPnQZcVfku4XdpQTFZmYxDAecTnTRJF75uq5sReWvf/5xvL1lp3ywr6nCxikbqV/I+cjuM1tE6f+eZ1/dr9PX0Wc9Q443M30xCUQXiZ7qRAxCuwwK0QQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4812e988-aa8b-4803-306a-08def9a8f3ab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2026 02:08:37.1072 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +x/bJ0lZXZKi+vjunOblZ98lE9aWSHiSOWB8HA75CWAfju1kp0lVKRLhQwPqYOztr9o41XXni84KubMRYrrYF9AfVTsjKAcw1qwVraLv+FA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPF997DECE08
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,223 +149,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Hyman Huang <yong.huang@bitdeer.com>
-
-
-On Thu, Aug 13, 2026 at 5:18=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  MAINTAINERS                  |  1 +
->  system/dirtylimit-hmp-cmds.c | 74 ++++++++++++++++++++++++++++++++++++
->  system/dirtylimit.c          | 60 -----------------------------
->  system/meson.build           |  1 +
->  4 files changed, 76 insertions(+), 60 deletions(-)
->  create mode 100644 system/dirtylimit-hmp-cmds.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4628793dde6..a33fbeebf61 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3858,6 +3858,7 @@ Migration dirty limit and dirty page rate
->  M: Hyman Huang <infra.ai.cloud@bitdeer.com>
->  S: Maintained
->  F: system/dirtylimit.c
-> +F: system/dirtylimit-hmp-cmds.c
->  F: include/system/dirtylimit.h
->  F: migration/dirtyrate.c
->  F: migration/dirtyrate.h
-> diff --git a/system/dirtylimit-hmp-cmds.c b/system/dirtylimit-hmp-cmds.c
-> new file mode 100644
-> index 00000000000..4928d57cc8e
-> --- /dev/null
-> +++ b/system/dirtylimit-hmp-cmds.c
-> @@ -0,0 +1,74 @@
-> +/*
-> + * HMP commands related to migration dirty page rate limit
-> + *
-> + * Copyright (c) 2022 CHINA TELECOM CO.,LTD.
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qapi/qapi-commands-migration.h"
-> +#include "qobject/qdict.h"
-> +#include "monitor/hmp.h"
-> +#include "monitor/monitor.h"
-> +#include "system/dirtylimit.h"
-> +
-> +void hmp_cancel_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> +{
-> +    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
-> +    Error *err =3D NULL;
-> +
-> +    qmp_cancel_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, &err);
-> +    if (err) {
-> +        hmp_handle_error(mon, err);
-> +        return;
-> +    }
-> +
-> +    monitor_printf(mon, "[Please use 'info vcpu_dirty_limit' to query "
-> +                   "dirty limit for virtual CPU]\n");
-> +}
-> +
-> +void hmp_set_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> +{
-> +    int64_t dirty_rate =3D qdict_get_int(qdict, "dirty_rate");
-> +    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
-> +    Error *err =3D NULL;
-> +
-> +    if (dirty_rate < 0) {
-> +        error_setg(&err, "invalid dirty page limit %" PRId64, dirty_rate=
-);
-> +        goto out;
-> +    }
-> +
-> +    qmp_set_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, dirty_rat=
-e, &err);
-> +
-> +out:
-> +    hmp_handle_error(mon, err);
-> +}
-> +
-> +void hmp_info_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> +{
-> +    DirtyLimitInfoList *info;
-> +    g_autoptr(DirtyLimitInfoList) head =3D NULL;
-> +    Error *err =3D NULL;
-> +
-> +    if (!dirtylimit_in_service()) {
-> +        monitor_printf(mon, "Dirty page limit not enabled!\n");
-> +        return;
-> +    }
-> +
-> +    head =3D qmp_query_vcpu_dirty_limit(&err);
-> +    if (err) {
-> +        hmp_handle_error(mon, err);
-> +        return;
-> +    }
-> +
-> +    for (info =3D head; info !=3D NULL; info =3D info->next) {
-> +        monitor_printf(mon, "vcpu[%"PRIi64"], limit rate %"PRIi64 " (MB/=
-s),"
-> +                            " current rate %"PRIi64 " (MB/s)\n",
-> +                            info->value->cpu_index,
-> +                            info->value->limit_rate,
-> +                            info->value->current_rate);
-> +    }
-> +}
-> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-> index 50fa67f3d6a..70bb7bac2d0 100644
-> --- a/system/dirtylimit.c
-> +++ b/system/dirtylimit.c
-> @@ -17,8 +17,6 @@
->  #include "qapi/error.h"
->  #include "system/dirtyrate.h"
->  #include "system/dirtylimit.h"
-> -#include "monitor/hmp.h"
-> -#include "monitor/monitor.h"
->  #include "system/memory.h"
->  #include "exec/target_page.h"
->  #include "hw/core/boards.h"
-> @@ -491,21 +489,6 @@ void qmp_cancel_vcpu_dirty_limit(bool has_cpu_index,
->      dirtylimit_state_unlock();
->  }
->
-> -void hmp_cancel_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> -{
-> -    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
-> -    Error *err =3D NULL;
-> -
-> -    qmp_cancel_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, &err);
-> -    if (err) {
-> -        hmp_handle_error(mon, err);
-> -        return;
-> -    }
-> -
-> -    monitor_printf(mon, "[Please use 'info vcpu_dirty_limit' to query "
-> -                   "dirty limit for virtual CPU]\n");
-> -}
-> -
->  void qmp_set_vcpu_dirty_limit(bool has_cpu_index,
->                                int64_t cpu_index,
->                                uint64_t dirty_rate,
-> @@ -548,23 +531,6 @@ void qmp_set_vcpu_dirty_limit(bool has_cpu_index,
->      dirtylimit_state_unlock();
->  }
->
-> -void hmp_set_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> -{
-> -    int64_t dirty_rate =3D qdict_get_int(qdict, "dirty_rate");
-> -    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
-> -    Error *err =3D NULL;
-> -
-> -    if (dirty_rate < 0) {
-> -        error_setg(&err, "invalid dirty page limit %" PRId64, dirty_rate=
-);
-> -        goto out;
-> -    }
-> -
-> -    qmp_set_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, dirty_rat=
-e, &err);
-> -
-> -out:
-> -    hmp_handle_error(mon, err);
-> -}
-> -
->  /* Return the max throttle time of each virtual CPU */
->  uint64_t dirtylimit_throttle_time_per_round(void)
->  {
-> @@ -646,29 +612,3 @@ struct DirtyLimitInfoList *qmp_query_vcpu_dirty_limi=
-t(Error **errp)
->  {
->      return dirtylimit_query_all();
->  }
-> -
-> -void hmp_info_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
-> -{
-> -    DirtyLimitInfoList *info;
-> -    g_autoptr(DirtyLimitInfoList) head =3D NULL;
-> -    Error *err =3D NULL;
-> -
-> -    if (!dirtylimit_in_service()) {
-> -        monitor_printf(mon, "Dirty page limit not enabled!\n");
-> -        return;
-> -    }
-> -
-> -    head =3D qmp_query_vcpu_dirty_limit(&err);
-> -    if (err) {
-> -        hmp_handle_error(mon, err);
-> -        return;
-> -    }
-> -
-> -    for (info =3D head; info !=3D NULL; info =3D info->next) {
-> -        monitor_printf(mon, "vcpu[%"PRIi64"], limit rate %"PRIi64 " (MB/=
-s),"
-> -                            " current rate %"PRIi64 " (MB/s)\n",
-> -                            info->value->cpu_index,
-> -                            info->value->limit_rate,
-> -                            info->value->current_rate);
-> -    }
-> -}
-> diff --git a/system/meson.build b/system/meson.build
-> index cd3193d170b..377adce8035 100644
-> --- a/system/meson.build
-> +++ b/system/meson.build
-> @@ -9,6 +9,7 @@ system_ss.add(files(
->    'cpus.c',
->    'cpu-timers.c',
->    'dirtylimit.c',
-> +  'dirtylimit-hmp-cmds.c',
->    'dma-helpers.c',
->    'exit-with-parent.c',
->    'globals.c',
-> --
-> 2.53.0
->
+An SMBus block read takes the block length from the first byte of the=0A=
+transfer, and firmware reads that byte back from a register rather than=0A=
+from the transfer buffer. The receive paths never updated those=0A=
+registers, so block reads reported a bogus length.=0A=
+=0A=
+On AST2600 the driver reads the length from the receive byte buffer,=0A=
+I2CC_MS_TXRX_BYTE_BUF[15:8]. The datasheet documents that field as valid=0A=
+while the DMA buffer is not enabled. The byte mode receive path already=0A=
+updated it, but the pool buffer path did not, and the driver selects=0A=
+buffer mode by default.=0A=
+=0A=
+On AST2700 the driver reads the length from offset 0x84 instead.=0A=
+=0A=
+Add I2CC_BYTE_DATA_LOG at 0x84 and latch received bytes into it. The pool=
+=0A=
+buffer, DMA-to-pool and DMA-to-DRAM paths latch their first byte, the byte=
+=0A=
+mode path latches every byte. Each latch also updates the receive byte=0A=
+buffer unless RX_DMA_EN is set, which is the datasheet condition and does=
+=0A=
+not depend on FUNC_CFG_DMA_EN. The byte data log only exists on AST2700=0A=
+and AST1040, so it is gated on a class flag.=0A=
+=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Tested-by: Mikail Sadic <mikail.sadic@ibm.com>=0A=
+---=0A=
+ hw/i2c/aspeed_i2c.c         | 38 +++++++++++++++++++++++++++++++++++--=0A=
+ include/hw/i2c/aspeed_i2c.h |  3 +++=0A=
+ 2 files changed, 39 insertions(+), 2 deletions(-)=0A=
+=0A=
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c=0A=
+index 68bdcd0e25..0bc4bb6fbe 100644=0A=
+--- a/hw/i2c/aspeed_i2c.c=0A=
++++ b/hw/i2c/aspeed_i2c.c=0A=
+@@ -159,6 +159,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *b=
+us, hwaddr offset,=0A=
+     case A_I2CS_INTR_CTRL:=0A=
+     case A_I2CS_DMA_LEN_STS:=0A=
+     case A_I2CS_INTR_STS:=0A=
++    case A_I2CC_BYTE_DATA_LOG:=0A=
+     case A_I2CC_VERSION_CTRL:=0A=
+         value =3D bus->regs[offset / sizeof(*bus->regs)];=0A=
+         break;=0A=
+@@ -334,6 +335,27 @@ static int aspeed_i2c_bus_send_dma_pool(AspeedI2CBus *=
+bus)=0A=
+     return ret;=0A=
+ }=0A=
+ =0A=
++/*=0A=
++ * Latch a received byte where firmware reads it back from: the receive by=
+te=0A=
++ * buffer, only valid while the DMA buffer is disabled, and the byte data =
+log,=0A=
++ * which AST2700 uses instead. Buffer and DMA transfers latch only the fir=
+st=0A=
++ * byte, read back as the SMBus block length.=0A=
++ */=0A=
++static void aspeed_i2c_bus_latch_rx_byte(AspeedI2CBus *bus, uint8_t data)=
+=0A=
++{=0A=
++    AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
++    uint32_t reg_byte_buf =3D aspeed_i2c_bus_byte_buf_offset(bus);=0A=
++    uint32_t reg_cmd =3D aspeed_i2c_bus_cmd_offset(bus);=0A=
++=0A=
++    if (aic->has_byte_data_log) {=0A=
++        ARRAY_FIELD_DP32(bus->regs, I2CC_BYTE_DATA_LOG, RX_BUF, data);=0A=
++    }=0A=
++=0A=
++    if (!SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, RX_DMA_EN)) {=0A=
++        SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);=0A=
++    }=0A=
++}=0A=
++=0A=
+ static void aspeed_i2c_bus_recv_dma_pool(AspeedI2CBus *bus)=0A=
+ {=0A=
+     AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(bus->controller);=0A=
+@@ -349,6 +371,9 @@ static void aspeed_i2c_bus_recv_dma_pool(AspeedI2CBus *=
+bus)=0A=
+         pool_base[offset + i] =3D i2c_recv(bus->bus);=0A=
+         trace_aspeed_i2c_bus_recv("BUFF", i + 1, bus->regs[reg_dma_len],=
+=0A=
+                                   pool_base[offset + i]);=0A=
++        if (i =3D=3D 0) {=0A=
++            aspeed_i2c_bus_latch_rx_byte(bus, pool_base[offset]);=0A=
++        }=0A=
+         bus->regs[reg_dma_len]--;=0A=
+         ARRAY_FIELD_DP32(bus->regs, I2CM_DMA_LEN_STS, RX_LEN, i + 1);=0A=
+     }=0A=
+@@ -443,6 +468,9 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
+             pool_base[i] =3D i2c_recv(bus->bus);=0A=
+             trace_aspeed_i2c_bus_recv("BUF", i + 1, pool_rx_count,=0A=
+                                       pool_base[i]);=0A=
++            if (i =3D=3D 0) {=0A=
++                aspeed_i2c_bus_latch_rx_byte(bus, pool_base[0]);=0A=
++            }=0A=
+         }=0A=
+ =0A=
+         /* Update RX count */=0A=
+@@ -460,7 +488,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
+         }=0A=
+ =0A=
+         aspeed_i2c_set_rx_dma_dram_offset(bus);=0A=
+-        while (bus->regs[reg_dma_len]) {=0A=
++        for (i =3D 0; bus->regs[reg_dma_len]; i++) {=0A=
+             MemTxResult result;=0A=
+ =0A=
+             data =3D i2c_recv(bus->bus);=0A=
+@@ -476,6 +504,10 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
+                 return;=0A=
+             }=0A=
+ =0A=
++            if (i =3D=3D 0) {=0A=
++                aspeed_i2c_bus_latch_rx_byte(bus, data);=0A=
++            }=0A=
++=0A=
+             bus->dma_dram_offset++;=0A=
+             bus->regs[reg_dma_len]--;=0A=
+             /* In new mode, keep track of how many bytes we RXed */=0A=
+@@ -489,7 +521,7 @@ static void aspeed_i2c_bus_recv(AspeedI2CBus *bus)=0A=
+     } else {=0A=
+         data =3D i2c_recv(bus->bus);=0A=
+         trace_aspeed_i2c_bus_recv("BYTE", 1, 1, bus->regs[reg_byte_buf]);=
+=0A=
+-        SHARED_ARRAY_FIELD_DP32(bus->regs, reg_byte_buf, RX_BUF, data);=0A=
++        aspeed_i2c_bus_latch_rx_byte(bus, data);=0A=
+     }=0A=
+ }=0A=
+ =0A=
+@@ -1758,6 +1790,7 @@ static void aspeed_1040_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x2000;=0A=
+     aic->has_dma64 =3D true;=0A=
++    aic->has_byte_data_log =3D true;=0A=
+     aic->dma_addr_lo_mask =3D 0x00ffffff;=0A=
+ }=0A=
+ =0A=
+@@ -1780,6 +1813,7 @@ static void aspeed_2700_i2c_class_init(ObjectClass *k=
+lass, const void *data)=0A=
+     aic->has_dma =3D true;=0A=
+     aic->mem_size =3D 0x2000;=0A=
+     aic->has_dma64 =3D true;=0A=
++    aic->has_byte_data_log =3D true;=0A=
+     aic->dma_addr_lo_mask =3D 0xffffffff;=0A=
+ }=0A=
+ =0A=
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h=0A=
+index 05937a7a0b..480c6418fe 100644=0A=
+--- a/include/hw/i2c/aspeed_i2c.h=0A=
++++ b/include/hw/i2c/aspeed_i2c.h=0A=
+@@ -231,6 +231,8 @@ REG32(I2CS_DMA_TX_ADDR_HI, 0x68)=0A=
+     FIELD(I2CS_DMA_TX_ADDR_HI, ADDR_HI, 0, 7)=0A=
+ REG32(I2CS_DMA_RX_ADDR_HI, 0x6c)=0A=
+     FIELD(I2CS_DMA_RX_ADDR_HI, ADDR_HI, 0, 7)=0A=
++REG32(I2CC_BYTE_DATA_LOG, 0x84)=0A=
++    FIELD(I2CC_BYTE_DATA_LOG, RX_BUF, 0, 8)=0A=
+ REG32(I2CC_VERSION_CTRL, 0x94)=0A=
+     FIELD(I2CC_VERSION_CTRL, FUNC_CFG_DMA_EN, 2, 1)=0A=
+ =0A=
+@@ -302,6 +304,7 @@ struct AspeedI2CClass {=0A=
+     bool has_share_pool;=0A=
+     uint64_t mem_size;=0A=
+     bool has_dma64;=0A=
++    bool has_byte_data_log;=0A=
+     uint32_t dma_addr_lo_mask;=0A=
+ };=0A=
+ =0A=
+-- =0A=
+2.53.0=0A=
 
