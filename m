@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420BEC5CFC1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F3A4C5CFCF
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 18:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuwGK-0005Ar-UQ; Fri, 14 Aug 2026 14:04:13 -0400
+	id 1wuwFw-00058W-QN; Fri, 14 Aug 2026 14:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuwGB-00059s-VW
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 14:04:05 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wuwFu-00057t-JW
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 14:03:46 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wuwG9-0004xQ-AP
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 14:04:03 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38125cebfdaso2006763a91.1
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 11:04:00 -0700 (PDT)
+ id 1wuwFs-0004sO-3X
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 14:03:46 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-ca7c1176317so1106321a12.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 11:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786730640; x=1787335440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786730622; x=1787335422; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=FoEeosqa2/i37onoWr9gmcc3wDKMx15tBxBVC66EVIU=;
- b=zIadNw6yIwphg2CSCkWlAGJFfe3gVK5C4O8xytLuA593kTE9wjVjBfQ+r/wRtNSVkU
- MzrOuiHTODVme0veew4tLGp6JBi15HyRBizLGZIm5znkS6xjcEmpfddaXGVbcTa7fHvt
- vEMRAfHzozsOXv0XUJfssBAxkCqWok6LI1CCx4TFgtO4n2GCK9/Onm6aSfwXhT77zobS
- KrH7nnFX5QWits811uXwmG5FK7IZZ6MDISuuzuHN2+g1DHDhNlTtPQRCgy39ArqA45ID
- HiMBlGtJtQ3imRX4I9puRi8DHeUSChpjSGQo2uptABgH+5NUIWL5M8YlNfLjg67y/r6J
- C3Ow==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=wkV2uOkAVJu8OzkVwqrTMK1WhRmunmPVh9+h+z5X2Cc=;
+ b=JyeBBdno1uZ1hxE0WN4E7vnpygFWD2ZbGzwsykt+F814SstZ8++W8mVnAv/8qOQC+T
+ ilTwrv+voJyfQ0w/99gYv0L5xdg5gme7a3G3cpdFLaahRFRA07J7gY4nHAvuFC+zW76d
+ vGE3gDkA0dyqWiMpkwYFe3cGp436kRvI8537JAfMFgqQT1LLB7oBEJfIhspGWSvAMimg
+ +2BcLVuVXmcvsp+uhlHwJPfYyUPcYEpYq2BS1OX33pVdfrEca7fLn5ekxgN699xZJgv7
+ KGKEA4iE0pHu/s6VDVWD5LaFv/QDKzoVGQC09PMvO9Swn2NflbIvbWqmYWkV73xKJg52
+ 5zQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786730640; x=1787335440;
+ d=1e100.net; s=20251104; t=1786730622; x=1787335422;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=FoEeosqa2/i37onoWr9gmcc3wDKMx15tBxBVC66EVIU=;
- b=W+4B8tbPUSm4I0018NDiKDlnQz2Aup3mysFV5TdWJh1+Qd9jdhGfjl2+dk+tsBkcq4
- /fHiCSK+mSuCigvGhMPcYmG27qXaDmU1vqYf+040zvmPi7gQNfLCM66RbYGulFtOxD0e
- CGHadjT5ncw4UYvuDJR/6JoSdl49qYShCp6wa7Qm2c+2aGlsYWdK6W95CbguE2H2950Z
- 9YNocdFHP9v+hXt4pp4JCmXRTBJUbqwMqU1m8xEpmOPpoZrC1u9Kh0OaOLxwoUe3J+Fe
- 9pvPvU4ij66mSpE0NzVXOSasv7co2wMQyDvt5shbuEChM92T2rSY5CFL5cVcgALdU9Po
- I41Q==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=wkV2uOkAVJu8OzkVwqrTMK1WhRmunmPVh9+h+z5X2Cc=;
+ b=Z4zxXqCX8q10i0ZQsHynhuJEXeELfCTnChd8T6huPa3YUTY1TOQrDi2Df63fB4otfH
+ ZLLhOxz3zKqeGUBzKv23Yqy8N0JBFaczKUjE1LluS/demJ97NjYaWfK7Npc9kmfyWnKW
+ xoRFxcT+o7vmVbBMxAWjdvbfVhBQvm5Rzsj4WBP08c3ULC+I6/mvlBoc4yO0sDV6JYEj
+ SfvV1RGvdHGz8S1GL1NZAO6oMqiS94/6+OgL+Zb995f2SFeQqBM4lC0JWAb3b61oirzn
+ hYigNgf+CYqjhe9b0xWQXdCt2xxo4lQ3XSi2xCahHP4RUMQsbicV4Zbg7D4V51zBkGjb
+ TsJw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpDFnD823fG4DrZ1nIlrGiPW/zSAyIHb5BGMAeGZ4yb2b1iqhLxDCAbKccGk8JAbopyj1F53kVoukYK@nongnu.org
-X-Gm-Message-State: AOJu0YyrAqDVM9CWFjeyzEn/CPDlZfxegDjXVPbJ8WP/QLcRgHbRBmP/
- izVQATWfAtIDVtpbuY17R9f0/a38RadPtgGdKltGT/01HpGiF9PdKA08mUXEMUkTa5s=
-X-Gm-Gg: AR+sD117vZEydJjaznM1hgttiJGa+TWpjA+UqVrWU4Ay4wfTeNfZ7O3qd79d4W8/cd7
- 86nc5/zHCAn6b9BtVL/45Nwv4U/i0BUxUJXwFcqB4VGIGtPcF2z8/asVua/+V1jBlO3uVBjCJsZ
- GIYKJYlOUrjonrsa835u38qH5h9wP+oaBLyMKaDUrNRMMV9GxV2tNnkgENvTscTLiCmWSbIOm+m
- PqztQ2Sp1FM5Yv3AAmtawTnpiWzabvM9Oeqz/6ltPQ4VAAZBpr0utTKinXbRDwJDtupEtby2qY1
- ykkyVKrjQK4BO2vYdzVheQBoLRM0kIgVWbET81UCCXDqPdbN9g4cIDzCG+O8E8pTHkUydsEdVDE
- 8C0mnIOJjkxnxaJcPxjV7i62zITKO8+hSajvB9kN8kYXH85vfXhGJD52d8yMEHPXjoiXi4fUDHJ
- 7MOkZl3FxZ1a5FABGHVPV52IngEjMdnrrFoUdJKpg+DwwnzYWzH2Sm52dYfUxeQz/K7Cyv5QbR3
- JGgRoy8zILpzp3XA6gGzwKKXOZD
-X-Received: by 2002:a17:90b:5745:b0:38e:49c0:75a7 with SMTP id
- 98e67ed59e1d1-3933b7a6986mr9595430a91.8.1786730639598; 
- Fri, 14 Aug 2026 11:03:59 -0700 (PDT)
+ AHgh+RqsQC5QJeGbdMl6kpnWcuSkKopg4V5mz3BB4Br2eNn0G2tnivHOjwj+N+dti7f2alVBkJO6fNLeoQNP@nongnu.org
+X-Gm-Message-State: AOJu0YyiPP3c+Az8ka+xEEB8++RkapV2fxi8xil38FjXGapahFsoYw9g
+ HhWu0TMGWXpPygP/SSFj6JuLDwk9t/MgiozQb87MBPOeAl18R/9xL7JzABWetpn5bfc=
+X-Gm-Gg: AR+sD13h8G9jIHKZaKB1g3+d7lWS5iUE6I7TxEQd7j4QLdDC2lzECEU26f4OAi18DAr
+ W4ijC84QLfIMuGVXqbTrLPLXgsmcSLGfoPDjpMJpvnPvLQDTGssAokwiksjy7scGfKDNovzEoDh
+ 4sdWhVLAyuwtr8g1+CcjUhG/R+yPSQ4PZgX4sOENk+PZ1W0ldLcv0Eth1rFL4TEeihvc4ufvpKe
+ VxYxxgva8ghi8gp9Rpa7LU4UVaSGR6yrBV5z9yp5rhgO9zXzEbpOtuzzZhIm0shZZZnPBuHudEJ
+ mGvWkb56IZWZQH4gInC9ZB/0VhDiSOlkrvYB8mT7XHwaHvpsFdfNz2ek7r73tUgS0iMhBaVG+I+
+ ihlSCfHnA4Iiq3nSMNw/PkOdNT9pt0zli0vvqMrKr1xDg330P2wjob77ECAgB2/zoM5bBdR6Ek+
+ Q0F5T0v7Krnp6HFMxuszdgwouxV66w7FzFMLhfEOmyGyyUXPBOs9FSQ6Vy7UYCZzWpdWCwebL+J
+ oVfUwEj/bAiwt1I+sxTlVlMN2mD
+X-Received: by 2002:a17:90b:3c02:b0:38d:dfd1:7a8 with SMTP id
+ 98e67ed59e1d1-3933b6e9788mr9504859a91.2.1786730621866; 
+ Fri, 14 Aug 2026 11:03:41 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-394ebbcc34csm3441604a91.15.2026.08.14.11.03.58
+ 98e67ed59e1d1-394ea9723casm3458753a91.2.2026.08.14.11.03.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Aug 2026 11:03:59 -0700 (PDT)
-Message-ID: <3b2fb487-b603-4d07-8848-a5c28c74ee5f@linaro.org>
-Date: Fri, 14 Aug 2026 11:03:57 -0700
+ Fri, 14 Aug 2026 11:03:41 -0700 (PDT)
+Message-ID: <4d87a37d-d227-4bc0-86a9-c0db2a5e4cf3@linaro.org>
+Date: Fri, 14 Aug 2026 11:03:39 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/6] Functional test framework improvements & bug fixes
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20260814100917.163448-1-thuth@redhat.com>
+Subject: Re: [PULL v3 0/7] IDE patches
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ John Snow <jsnow@redhat.com>, philmd@oss.qualcomm.com
+References: <20260813191613.2323728-1-den@openvz.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260814100917.163448-1-thuth@redhat.com>
+In-Reply-To: <20260813191613.2323728-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/26 03:09, Thomas Huth wrote:
->   Hi Richard!
-> 
+On 8/13/26 12:16, Denis V. Lunev wrote:
 > The following changes since commit 539bc315538afe036a4b99088659aa82e3b489f2:
 > 
 >    Merge tag 'pull-loongarch-20260813' ofhttps://github.com/bibo-mao/qemu into staging (2026-08-13 07:16:25 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2026-08-14
+>    https://gitlab.com/dlunev/qemu tags/pull-ide-2026-08-13
 > 
-> for you to fetch changes up to 4adfb431c0c3abd84909d1228b4954bfd68a1dbc:
+> for you to fetch changes up to be1ee6a8f6e3b7192d57e900497b81a048f8d193:
 > 
->    hw/i386/amd_iommu: Avoid undefined behavior in amdvi_setevent_bits() (2026-08-14 09:14:58 +0200)
+>    tests/qtest/ahci: regression test for ATAPI read vs. drain (2026-08-13 20:59:49 +0200)
 > 
 > ----------------------------------------------------------------
-> * Some minor updates to the functional testing framework
-> * Fix a guest-triggerable abort() in the usb uas code
-> * Fix a guest-triggerable abort() in the vmxnet3 code
-> * Fix a undefined behavior problem in the amd_iommu code
+> IDE patches
+> 
+> - fix a main-loop deadlock when an ATAPI PIO read spanning several
+>    sectors is in flight while a drain starts: the nested sector fetch
+>    was issued synchronously from inside the completion of the first
+>    read and queued behind the drain, which then never finished
+> - read the whole ATAPI elementary transfer in one asynchronous
+>    request instead, removing cd_read_sector_sync()
+> - extend the IDE/AHCI qtest coverage of ATAPI CD reads: parametrized
+>    read helper, multi-sector DMA, raw 2352-byte READ CD on both
+>    delivery paths, and a regression test for the deadlock above
+> 
+> Changes since v2:
+> - resend: the v2 tag was never pushed, so the tree advertised in that
+>    pull request could not be fetched
+> - rebased onto current master, no code changes
+> 
+> Changes since v1:
+> - MAINTAINERS patch dropped
+> - spare blank line no longer added and removed within the series
+> 
+> NOTE: 'hw/ide: Don't divide by zero if guest specifies 0 sectors requires'
+> is not ready for me, skipped from this submission.
+> 
+> Signed-off-by: Denis V. Lunev<den@openvz.org>
+> CC: Richard Henderson<richard.henderson@linaro.org>
+> CC: Stefan Hajnoczi<stefanha@redhat.com>
+> CC: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
