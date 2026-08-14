@@ -4,109 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E688C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 12:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F66C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 13:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wurH2-0002Xt-Jt; Fri, 14 Aug 2026 08:44:36 -0400
+	id 1wurVE-0005Aq-Nw; Fri, 14 Aug 2026 08:59:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wurH1-0002Xi-Gj
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 08:44:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wurVC-0005AJ-19; Fri, 14 Aug 2026 08:59:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wurGz-0002P0-6F
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 08:44:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786711470;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tIYjRs7E32ypbJb9uV2XnoOdHfy9d9fgCX8Y89QnFbo=;
- b=MD3lqvqzL2KwbjArwRZHbXG2nRKsJXZzM8VZWEE5o5IhNP/Ha6faCxE9AmDMQj0HQD+/z5
- LoAshLZ2NBd3kMOZrqIDicOvtQEsd62muQpZKpz9G+OYSVXrsjCM3MKUhvHYfCGmdTLn6W
- JIWEY8i7uXUpJYJtHTKoaq+lZB8u6bk=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-161-2AYVKfU-MxOhGQIUFbVgig-1; Fri, 14 Aug 2026 08:44:28 -0400
-X-MC-Unique: 2AYVKfU-MxOhGQIUFbVgig-1
-X-Mimecast-MFC-AGG-ID: 2AYVKfU-MxOhGQIUFbVgig_1786711468
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c0e702df8so13232421cf.2
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 05:44:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786711468; x=1787316268; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tIYjRs7E32ypbJb9uV2XnoOdHfy9d9fgCX8Y89QnFbo=;
- b=PywPVVdpeeWYLTTU2b7Y+u/jdKJvCnPsBRqg0V5aotuHYjOSMh2IF7Bwrfbr8mNGxy
- xHECQ/1j6sHspPdjAwnF21MXFXPV0Hg1otsoOJE8dUd4n1SVDS8Y7zCF5JNDQy7bGZ2J
- mDexCbo0DKWQXWeO2fMrGcCV+3czD0zduRh2TK7pbw+lDSD6e6GMMA2d9Dlm5vXNHlul
- K+8AFLdVqe3Wp82mzrcHrEfR7prUZeVUY++qCSeBiuykVKnCXLQv9gtKSOG34FdsJGrZ
- lNrzBnNam37sihvh2jXQmCZhTarEJGU8Ds8MqIdDKfMZCuCyDG2RH4sZyVZTPngJKDus
- jkNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786711468; x=1787316268;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=tIYjRs7E32ypbJb9uV2XnoOdHfy9d9fgCX8Y89QnFbo=;
- b=hgXdhWHKPV+Q8pv9xOIKeMz6YviNf9cPMcwFPpav8Huflj4picVuo4pp2W00GlI2FI
- m/3oOoTr2q3LnlQuNR109W6VfG6r3tz9Jva7Y6er4bgbUaqar5uesXFob7U3UgvlDm/K
- S5NcA3CJwflHxtztaTMeqfYVoEKLNbnXat2M1bzy/IDw8xF3SSpkNEUqmHewk5MOCUVJ
- Wgr0lUP1B9iaTWC+JIX2p9Yn1kQbco1PTRZ+EcfGiRcKPwO38qEc3OVbyCbmwijIXJnS
- 7zm0JmC66xDlHHDja61/KKj6Jz+huiXt8Sr0HMxyniJFT3a7uJM+y/xQt3YmjYdYQnZJ
- TnzQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq2YfV4QvU7kdTamuUaVy82KS9nL8tHxX51yfbZknZig1YCVyTntCxNeTZbfuzDwJRYoBBFuq11k2M4@nongnu.org
-X-Gm-Message-State: AOJu0YxrWMIR9Yex0OxbJg1MLdwssQui7At7HbocAT5OHYpWcflFLU15
- z+Ge7n65eXrNAnwMUJBLJMKpCQ1pz/li+A8hbx4F/9jEYpH97Qd0ut8qlGiIyQ9PKpWGE2r17E8
- uDSKNYdngFxzAwRaVRFi1OvNbVBA5BJpy1PYJTFqhZ0v9ok5XkRSHT2MI
-X-Gm-Gg: AR+sD12hRE++mydAxjWcGc9OtNRcUbylqpHR9cqMQL+fnBP5YGv7iFOGKRf2lneWI5y
- runJL7Lyd0XDAJap3VGJSBq/CEsVqK+8UKxvslkhf1V3YidKzHhOq1M7N4Zip/mrYYZcJJ7Xdw7
- 2Ce5nrMZb9G5zxRXDOnLc/ttRp0lZEnLKtQjW+cAJEU1FoQWtxBQuk9kSm2PUrnwZaMS16VSTo0
- K3fPdRQvwy+MKxgg0qQsCNPb0H1OgNnbTo66wqu/mTBBx1fn6zi0xLClGnuo0Tl8gU0JNg6yHrn
- PETT5X8stBpt8+j20GuVCng3c1cT0lKUdwMAnmVu4xwpHbRPO6Zq/5IWuyFGLHgiBr1d
-X-Received: by 2002:a05:620a:2613:b0:930:f7bc:4868 with SMTP id
- af79cd13be357-936d2341ff1mr578036685a.30.1786711468114; 
- Fri, 14 Aug 2026 05:44:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:2613:b0:930:f7bc:4868 with SMTP id
- af79cd13be357-936d2341ff1mr578029385a.30.1786711467567; 
- Fri, 14 Aug 2026 05:44:27 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-936ce24564asm265534485a.40.2026.08.14.05.44.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Aug 2026 05:44:26 -0700 (PDT)
-Date: Fri, 14 Aug 2026 08:44:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- jmarcin@redhat.com, david@kernel.org, pbonzini@redhat.com,
- chenyi.qiang@intel.com, farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
-Subject: Re: [PATCH v4 03/12] kvm: Provide explicit error for
- kvm_create_guest_memfd()
-Message-ID: <an8Nn5cb52ev4MF2@x1.local>
-References: <20260812201938.198915-1-michael.roth@amd.com>
- <20260812201938.198915-4-michael.roth@amd.com>
- <cc83a207-c89f-4ec7-864a-db0115c4f641@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wurV8-0005T7-MG; Fri, 14 Aug 2026 08:59:13 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67EB1bZJ903560; Fri, 14 Aug 2026 12:59:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=/500p+CqkBphHrT0nsH8X9TjBuMOm+s2uXVTdRDP+
+ EU=; b=k5Kd/0fT6bFfOjqnDly8ZCRweNXTLegqbiLwtMX3T8+4Bp4nA3F9Pr9hC
+ HezyQa/6YeA27QifrhwxQIlEB/ZTV5t/5uQT62BrR7MXVFvi1P6tz77FgutMG7HI
+ 4Ny+kuSoCSi11JYS8bcJzrLUPbbs+fErWGmXHMNgFb1cwFc0vnZsOyHYvY+Df0SG
+ CQItIPTtLeEs0p+4X90x1gQMHu0vCkbZbJbo/ZknbNOpVldxDPz2QjAFj4fQnx5s
+ do+eCQ1Na6pdjpuV6Kgqu3GIa2CBk8h4WA7Z8dMQQWxqzxP7zkNpUI1SpARPM+st
+ 05OB1hMj/Ja6oS264JWAPK2DGyLnA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9vt90-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 Aug 2026 12:59:04 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ECuJkt028798;
+ Fri, 14 Aug 2026 12:59:03 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxfsk7am5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 Aug 2026 12:59:03 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67ECwNqm10748446
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Aug 2026 12:58:24 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3ED7758060;
+ Fri, 14 Aug 2026 12:59:02 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B0D75803F;
+ Fri, 14 Aug 2026 12:59:00 +0000 (GMT)
+Received: from li-d98989cc-2c66-11b2-a85c-93ab83b7dd53.ehn-de.ibm.com (unknown
+ [9.224.77.173]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 14 Aug 2026 12:59:00 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@de.ibm.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Janosch Frank <frankja@linux.vnet.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PATCH] s390x/sclp: pv: only copy the original SCCB buffer
+Date: Fri, 14 Aug 2026 14:58:57 +0200
+Message-ID: <20260814125857.1729543-1-borntraeger@de.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cc83a207-c89f-4ec7-864a-db0115c4f641@oss.qualcomm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: gUNc4vcnfS0j5QCyHcjjFHKtqW93gRJG
+X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7f1118 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=wqyRmatkV8wIHynnhxEA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA5NSBTYWx0ZWRfXz5AOOsB05w+r
+ og1YMsBza5S0lkwQOwaOi8av4f2NKF+MwD3jm27HRmwUINkMnlcwQcv61+/mGmfjdz5Q87pp9O3
+ Nb9B49LnZdpmnOhp2UlNSzYBDZ0/RJIGwey6BL1scMRXjafea/fGZp+JDILR1Ndgv5lrRxJtz5X
+ roV96I7fjUl/xH4y8jaofckxBJlc1AuY+KM64060CSYwmrFnwZEZcUTU4u1HoHZC4So8uMpwlIL
+ 7YWgSS10/ABG2EdxpNJFGZmrnAiih0CKMkcLe3v8Z+KitYyfHGfw3XyzP6ZD3RJ1yNNZShBr/Oe
+ ZsloqwiMtChTN4BWz2QKcQAamlv3s4G3ti9trsLtbOEMClS8hDky89IdK9Rqo7FfghXmBUHf4YS
+ sDqw4/UeCXPXb7ltW9d+0asxxEl1jJwopHsrbFR3pFnHc/G4EbteeokfQAe07SIMoEW9WooA0vU
+ AIsPXNb1ed8LW+u+XVA==
+X-Proofpoint-ORIG-GUID: gUNc4vcnfS0j5QCyHcjjFHKtqW93gRJG
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA5NSBTYWx0ZWRfX2/YJj1/IEB/y
+ O4HCrinSeMoEVirbf4peJTquvi+NPdoCncBP77sJD5pTj/TWyBHZ1hulk5Q/OlPgEaK+qcrMBzp
+ G7JzdVEJjWjDEwsQ37/S98i7VGKim7s=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-14_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ clxscore=1011 priorityscore=1501 suspectscore=0 phishscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608140095
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.751,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,130 +124,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 07:56:42AM +0200, Philippe Mathieu-Daudé wrote:
-> Hi Peter, Michael,
-> 
-> On 12/8/26 22:16, Michael Roth wrote:
-> > From: Peter Xu <peterx@redhat.com>
-> > 
-> > So that there will be a verbal string returned when kvm not enabled, or
-> > kvm not compiled.
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> > Reviewed-by: Michael Roth <michael.roth@amd.com>
-> > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > ---
-> >   accel/kvm/kvm-all.c    | 5 +++++
-> >   accel/stubs/kvm-stub.c | 1 +
-> >   2 files changed, 6 insertions(+)
-> > 
-> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> > index 120cab1e22..bda2e25a66 100644
-> > --- a/accel/kvm/kvm-all.c
-> > +++ b/accel/kvm/kvm-all.c
-> > @@ -4758,6 +4758,11 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
-> >           .flags = flags,
-> >       };
-> > +    if (!kvm_enabled()) {
-> > +        error_setg(errp, "guest-memfd requires KVM accelerator");
-> > +        return -1;
-> 
-> This doesn't sound right withing a KVM-specific method. We want to
-> assert() here.
-> 
-> The call in ram_block_add() is already protected:
-> 
-> 2147 static void ram_block_add(RAMBlock *new_block, Error **errp)
-> 2148 {
-> ...
-> 2185     if (new_block->flags & RAM_GUEST_MEMFD) {
-> 2188         if (!kvm_enabled()) {
-> 2189             error_setg(errp, "cannot set up private guest memory for
-> %s: KVM required",
-> 2190 object_get_typename(OBJECT(current_machine->cgs)));
-> 2191             goto out_free;
-> 2192         }
-> ...
-> 2203         new_block->guest_memfd =
-> kvm_create_guest_memfd(new_block->max_length,
-> 2204                                                         0, errp);
-> 
-> The other one is:
-> 
-> 2823 int ram_block_rebind(Error **errp)
-> 2824 {
-> ...
-> 2829     RAMBLOCK_FOREACH(block) {
-> ...
-> 2834             block->guest_memfd =
-> kvm_create_guest_memfd(block->max_length,
-> 2835                                                         0, errp);
-> 
-> which is only called from KVM:
-> 
-> 2776 static int kvm_reset_vmfd(MachineState *ms)
-> 2777 {
-> ...
-> 2827     /* rebind memory to new vm fd */
-> 2828     ret = ram_block_rebind(&err);
-> 
-> So maybe what we want is:
-> 
-> -- >8 --
-> diff --git a/system/physmem.c b/system/physmem.c
-> index b97016b1303..66ff74541aa 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2824,6 +2824,8 @@ int ram_block_rebind(Error **errp)
->  {
->      RAMBlock *block;
-> 
-> +    assert(kvm_enabled()); /* Only supported by KVM so far */
-> +
->      qemu_mutex_lock_ramlist();
-> 
->      RAMBLOCK_FOREACH(block) {
-> ---
-> 
-> Or less aggressive:
-> 
-> -- >8 --
-> diff --git a/system/physmem.c b/system/physmem.c
-> index b97016b1303..2988d1dd6c9 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2824,6 +2824,11 @@ int ram_block_rebind(Error **errp)
->  {
->      RAMBlock *block;
-> 
-> +    if (!kvm_enabled()) {
-> +        error_setg(errp, "guest-memfd requires KVM accelerator");
-> +        return -1;
-> +    }
-> +
->      qemu_mutex_lock_ramlist();
-> 
->      RAMBLOCK_FOREACH(block) {
-> ---
-> 
-> WDYT?
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-Fine by me.
+With variable length and EXTENDED_LENGTH_SCCB, some callbacks might
+change the length field. For example read SCP info might write a new
+length into the SCCB header. We must not use that new length for the
+buffer copy, since the buffer was allocated with the original length.
+Only the length field in the work SCCB is changed, to indicate the
+"necessary" size. Using the new length reads past the allocation, so
+tools like ASAN might detect a buffer overrun.
 
-IMHO it's normally more of an issue the other way round, if we used an
-assert() where we should use error_setg() (hence, user triggerable
-assert()s).  Here we expect it to never happen, so either way should not
-happen..
+Secure guests do not have EXTENDED_LENGTH_SCCB, and the ultravisor checks
+and sanitizes the length field, so no qemu heap contents are exposed to
+the guest and the non pv-path already has the same header.length.
 
-If so, we could also assert() in ram_block_rebind(), as it's only used in
-kvm_reset_vmfd() only, so I don't see how it can be reached if KVM is not
-enabled first..
+Fixes: 0f73c5b30b8b ("s390x: protvirt: SCLP interpretation")
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+---
+ hw/s390x/sclp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 3c8cb164888..b452f2ce54d 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -287,7 +287,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
+     sclp_c->execute(sclp, work_sccb, code);
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+-                          be16_to_cpu(work_sccb->h.length));
++                          be16_to_cpu(header.length));
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
+ }
 -- 
-Peter Xu
+2.55.0
 
 
