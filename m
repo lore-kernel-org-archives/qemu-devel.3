@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE3A0C5CFDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D82C5CFC1
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 17:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuvXX-0003PP-C6; Fri, 14 Aug 2026 13:17:55 -0400
+	id 1wuvXm-0003SU-7W; Fri, 14 Aug 2026 13:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuvXJ-0003O5-2T; Fri, 14 Aug 2026 13:17:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wuvXj-0003Rf-Mk; Fri, 14 Aug 2026 13:18:07 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuvXH-0005uP-Aj; Fri, 14 Aug 2026 13:17:40 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wuvXi-0005zQ-A3; Fri, 14 Aug 2026 13:18:07 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67EH1eTb1721762; Fri, 14 Aug 2026 17:17:36 GMT
+ 67EH1dEd1626778; Fri, 14 Aug 2026 17:18:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=yYdEKU
- zpHwI1BRFxRFq3dJF7pRguFoNMAm5VQZ1ayGQ=; b=rw+IHxZ2fns1O8guFOHZkT
- +Hj7oz11nafB2mZWA36wuMU2lXR+zJJzQ7qMGKntgzD/v/JWhxO+xFffI73rjmZp
- HoXGS5pwGHrvEzdcIfoAIAIm4zedP6KK9+usudk0tMkmK2/jhSpgq56VVm5yTH5h
- EpAYNUD9S8qIxpq9jNBv34lFqWj3+yw6H993emgFw3BjvY/K2Zj0EaaQKS13yoqU
- Nff+jSomhGZG9RJrARMVymMQ9EmV9Uz+SNGAXF5l8EptdVCl3N4qUsrKs7cZHljo
- Ce/wbMBvs2j41sM9n7MC4tDcyCYPFyJq760hoRyGZc4qjWqVtdZGuW8BIQyuHldw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=IRXp/+
+ UO6Bm6TNoHvsfRb6qgrjiiyVUKTmBB/O9AiHE=; b=dKwvS1h071nWasAVVpWdpY
+ Bhl6YpLtzjYycCnWfHRQL3skk5CDieDmgBHzNalEAi99KILlTCcG4vZBJXbEl6qB
+ Ab0zv20Wmm8UFZQCF81bekdlns6/xbJs6BvD6/qDdHN73XGsg14YhE/gsIzjRnzj
+ iiN+DOjP14qDn50+vWEeWqiXv2oEOH7MrVT+mWj/F1r86KdYO4vV/LAgZwhVOo58
+ PdeoCiHiFNAe5InZBZX1FYH0VMUE+qBy4qksG8xeIp6vmrBHCl8UXlB4rIVHyvEq
+ dVaRpIrGlNtiP6HNqEAUcvDelA6/yxAcSMFIu35tC/aZhxdv1CQCULU6CrN6+guQ
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvma60e5-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvp3cqfk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 17:17:36 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EHBIuX006662;
- Fri, 14 Aug 2026 17:17:35 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxesqgca2-1
+ Fri, 14 Aug 2026 17:18:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EHBTVd015595;
+ Fri, 14 Aug 2026 17:18:03 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g1rpvaxjp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 17:17:35 +0000 (GMT)
+ Fri, 14 Aug 2026 17:18:03 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67EHHXfq60228022
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67EHI14G4195028
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Aug 2026 17:17:33 GMT
+ Fri, 14 Aug 2026 17:18:01 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 35A8E5805A;
- Fri, 14 Aug 2026 17:17:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 72AC958056;
+ Fri, 14 Aug 2026 17:18:01 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4CE0B5803F;
- Fri, 14 Aug 2026 17:17:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 69CF65803F;
+ Fri, 14 Aug 2026 17:18:00 +0000 (GMT)
 Received: from [9.61.136.224] (unknown [9.61.136.224])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Aug 2026 17:17:32 +0000 (GMT)
-Message-ID: <7ff0a033-a73c-421e-963d-48249d4ed64a@linux.ibm.com>
-Date: Fri, 14 Aug 2026 13:17:31 -0400
+ Fri, 14 Aug 2026 17:18:00 +0000 (GMT)
+Message-ID: <ef8d5bf4-fdfd-40b7-95d3-8e3a1775f66c@linux.ibm.com>
+Date: Fri, 14 Aug 2026 13:18:00 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] s390x/css: Fix css stsch detection to go beyond 8192
- devices
+Subject: Re: [PATCH] s390x/sclp: pv: only copy the original SCCB buffer
 To: Christian Borntraeger <borntraeger@de.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
@@ -73,7 +72,7 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
  <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Matthew Rosato
  <mjrosato@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20260814152226.1834819-1-borntraeger@de.ibm.com>
+References: <20260814125857.1729543-1-borntraeger@de.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -120,44 +119,45 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260814152226.1834819-1-borntraeger@de.ibm.com>
+In-Reply-To: <20260814125857.1729543-1-borntraeger@de.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDEzMCBTYWx0ZWRfXwQUL4JcGTmTf
- HaV6B8X0iOezWyDuhxmuy4717MO0r3g3XyjOmHIkfUCMrJHCBpNmSXDBI36KqwB6621wcaqAe8r
- /wxb1hCmgwUudd9AYD27pCdL/Oy0HXC3bgtrVnLTETdXl0Wlw89Eg78x5C1maya9qDun8ordHv2
- KunU0wnUlprClIDYszciFjqQ2tvXW6QAu9/JclgcwdwOZSOQg81oQkJfVxmyShVfiJbPa93K/Uc
- lfJYi5XiSTk6Q4Pj5qAjcKikRXP55luuMTH4YzdIpdjcGRnLmpav12lF09SL9JEdRyzsb8Qi17b
- Oc/sujAZQH767JlRhGa+smzyZ3LVVoYalRgIjpxhVIuqXXaXLuGN9aCe2QOUhsJc8XDkhjBX9zP
- iNJbZQe/m0La3GrkhN2r1pghYzsOSG5KP+QtAncOAEjnfNbvVBXz7rNcQma5MohLfXKR1ODKigk
- xQLOT1wKIGMi+iT0jwA==
-X-Proofpoint-ORIG-GUID: oEXwuRI0QFsKpizMGOnTC5FLCLkPtsGn
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDEzMCBTYWx0ZWRfX1YI/Atpkodds
- mgBLvR1dS6Zp9gb3GeGwNhKfa/sLdkp3naC/K47+eRREZ3DIfJOcpB0puW80qU/ZQsiDaHXnLVH
- oEvGYr+jyoLWaUrLjtW3YL4V7pnSzTs=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7f4db0 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=AMtp2X5w c=1 sm=1 tr=0 ts=6a7f4dcc cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=RoCUfBOtFCEzv88T6vwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: oEXwuRI0QFsKpizMGOnTC5FLCLkPtsGn
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=W-VJT65oNsJsZzwwAdAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: u8IlBHVCfZUqevhkbxuWxR0zGTnbPBoY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDEzMCBTYWx0ZWRfX0WpRHq9QcuDx
+ dfnuO4FJGx7ETAOIsEvzHvWsljSCDO3uOo7CGfZ1wJmbtnrzgnx1gHQvXPKAGaFBdG35mOaY+vp
+ zjppuCC0kHDq/TdmHmcLFmI7MGppwis+drcRSyDK5AV4O862pUdjbfvD06J5XbaIr+ocqDI7Y9e
+ ZmwQO2VqLG7DXkMHcKSgH8sTwGX9qQyBwFUIsSdtEBgfPeG1h3aqlHJm8EmVdsqQYLXRnsC00gt
+ k8TCZOuXKAg/oLDYCJ7ATtVSrVerUQG6hHADf0NDj7dTsn1YfqqQE53f4Z+E1+o5kOmqjZW4/HX
+ uzLdYXzh6zr26+3kvUkIQHHHtRxYCCKBKnnN2sux+gFr+MEcIb7vdIwLbyniaNfvjCjNymf99po
+ xSNKvWc3uu/EheAS1ZqLOgmG67Ue8pLP3bOFcknkZv4ItGXDtgjJ5doPyDJj41qF8JgZJoHpXQa
+ KeQMi5XloCCF8D5wBoQ==
+X-Proofpoint-ORIG-GUID: u8IlBHVCfZUqevhkbxuWxR0zGTnbPBoY
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDEzMCBTYWx0ZWRfXy3Xc0ja9B2qw
+ 7Rx6LTXxZ9hR1a3sEkK+/6j+WYkvyB3Lutzr7IhVwlHd8k219ceIEsd6h1P3KqVrOnrRGyFW1SC
+ qaYzcEexSW9q+yy9Z5OqjzcXMrIIDHQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-14_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608140130
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608140130
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,18 +176,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 8/14/26 11:22 AM, Christian Borntraeger wrote:
+On 8/14/26 8:58 AM, Christian Borntraeger wrote:
 > From: Christian Borntraeger <borntraeger@linux.ibm.com>
 > 
-> find_last_bit expects a size in bits and not in words. the calculation
-> limits the number of guest devices to 8192.  This probably does not
-> matter in reality, its wrong anyway.
+> With variable length and EXTENDED_LENGTH_SCCB, some callbacks might
+> change the length field. For example read SCP info might write a new
+> length into the SCCB header. We must not use that new length for the
+> buffer copy, since the buffer was allocated with the original length.
+> Only the length field in the work SCCB is changed, to indicate the
+> "necessary" size. Using the new length reads past the allocation, so
+> tools like ASAN might detect a buffer overrun.
 > 
-> Fixes: df1fe5bb49241 ("s390: Virtual channel subsystem support")
+> Secure guests do not have EXTENDED_LENGTH_SCCB, and the ultravisor checks
+> and sanitizes the length field, so no qemu heap contents are exposed to
+> the guest and the non pv-path already has the same header.length.
+> 
+> Fixes: 0f73c5b30b8b ("s390x: protvirt: SCLP interpretation")
 > Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 > ---
->   hw/s390x/css.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-
+>   hw/s390x/sclp.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
+
 
