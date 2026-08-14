@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD7A6C5CFDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 11:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9167C5CFDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 12:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuqE7-0006b6-8q; Fri, 14 Aug 2026 07:37:31 -0400
+	id 1wuqi8-0003Xg-E0; Fri, 14 Aug 2026 08:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wuqE6-0006ao-Fq
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:37:30 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wuqi0-0003WK-LU
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 08:08:28 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wuqE4-0007Jp-P4
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:37:30 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2cf6d65d8a7so11883065ad.0
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 04:37:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wuqhy-000473-Pe
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 08:08:24 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-836c590b61eso14381727b3.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 05:08:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786709301; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ceP754fXscHdZ5PstqRUd87CIY/I9d84DG+bGKI1iqQAQj0RkqR2GjO+HVRrzD638d
+ jBg/Us3yPqZ6ZvcgKZ8y/kj1IvGttTLaL/0J0Y7t5XR+pDX9++gBjrnl3CvfKd/r6bRM
+ CQ9+GtPeXHU9pyNEnbEzIKGGqOupI8zlZGi9LfFOergvPhXqeaA9IIB8YDMLanRajhDm
+ HGgxLr4qImRn7l/ZNMD/8ay2wVyv9/Lu3sPqrNmbhWSO97vCL66nRD8hrf1Xjl3jitUb
+ SolRuWZFYWFOF0rOJkTOP5Vq9QGvMakBMvXiwtZD4hszrZPbvNtbUNgBxFMXWQAB281w
+ 96/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=+aKHDmXyLoTYJ2f5FAdpr+11saZGBxcd09WIhmDvk7w=;
+ fh=TWBYEUau0XqVCXPvBYqDOgwWH+zMbgRMG70MkxJkFFY=;
+ b=Ri9F3GLcuGLj7BBwvS2Z7eFLtv2PiLb4FiN00I2xGkjmorYsKQnsf9osHVs9BHL1Gn
+ QTgL4YdW2jAe1MG4vRQ7GB5ToTPI+86sSUZZeA/XNRsx57T+Lkvv0PK+6gp4hwrM9X67
+ IHfjQfOCtLWGEGmY2Kv/dQyzpTjqzDzM27Gr1DMpe+aTkeQwZAT5Xxp03+SivERtXiiY
+ KKucBMGdmzxftdlXDRL6Qipvx1MIknCbkWWNfkb/nHDvrFFHm6iTFJCywR/rx6AUBmVq
+ BZEvNpaQG254tdsgV2+Bzw4cuAL61C5m4bauLELVaf+6awE9FzY983TxWEaWVbl7Vtax
+ sKAA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786707447; x=1787312247; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8XDSjibgMTV3XWum35vrlTytl2FLR9rc+9sSmrpjMeQ=;
- b=RwWdlznPvB6QUGEdJZ1ssaHszAsk+gjrKH/HIk2ANPgJ0v86JpMeVr2PUK7JjxD+UX
- 48SM6FRiHb3NyVXGNPB+5Y90QmbtE9qkMwEputqYJYcaTL78sVJ52deoZ3zOkAhQNl4X
- 5vQL7XENsNxbJj2jAmGfWsVs1BjNz6MCwn/6qamo4W7uGKP8t3S1ocfotPNbdPBtCP5i
- 1HJZ67Migtw6+wNyucOLcVldYUhn1vl0hvUh1Fw6QRrQwrGRm2U8VtGCKFKynzHgl6dl
- CWmNmCgGwrqCmxjT+KZA/7PjDTgWUqQU4VOE5RFduhs0nN/Uj9gmJJWvldA1IQdDn+Kj
- m+Yg==
+ d=linaro.org; s=google; t=1786709301; x=1787314101; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+aKHDmXyLoTYJ2f5FAdpr+11saZGBxcd09WIhmDvk7w=;
+ b=gwsgdv15DvNXfWc4QleEgcu6t2lmV1s5gw7X2JHgFpclyNawkiHXNswYa7E0DYXZ6u
+ HCodGMmGMfSMxS7yuko5yt6kQCj5GqfUP2JUr83H7OO1nTJDjAwwqFWz1E066q+YCLXG
+ 7MDwiJE0XMMryStG1y3fjJbLNZog0Mb873j8UK3ouiI+/bNz9pI3q7TkT5MOLnxfVvSm
+ L3+fkVcb9IYjoDtLgGPd+1z0defZMkPp5fxdWVni4Y0EtUowx1yvAKunCrf3ffnzkjXa
+ +hEnd2UVbKgk7LA1PyB5vW2+YuGV7jakNiIVI7/6hwA0N5N7x/PRx60KUDOnjz9HwKrV
+ bFZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786707447; x=1787312247;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8XDSjibgMTV3XWum35vrlTytl2FLR9rc+9sSmrpjMeQ=;
- b=GkQ7RnB5SgCmEcyyvCv+4e6QhCmyrI4cJOn0RYDXi4XAM8+SofO6zULJBIoBJEQOV0
- bd5rrplBbL6q4e46RBxnRk+fbmHhGbn2j0US4CaSqAxpR4PdBe3fC48CLxAbCtHSI0Fw
- 1ov/ZYrvOtOu+cJm8fVkTD6JbxP0NEEAWGcF80fBqTgeft8IjhvDUuQnAslletPqvPO/
- jP1E0UXxAA7ErGf9oW4J8azKlR/Wji9krlg231WYWxJVYB28KFY0OMKaA1R+R8SHyNXx
- LyeJoqMeSXBQOZ1kCK7Tm0FOOMFl7iMw9IIjfK2LaNdOjIc5uKEgjwD9ILKaRdsVQ3dG
- NnAQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoHkPjUcNeUQwOsj9oiXr45CPJGeNTIRVILpejPd6GMlUQLjrSvZGnqGOta/UZ9xNS/GYdS7Sn9t8Gv@nongnu.org
-X-Gm-Message-State: AOJu0YwLdxMu08mXByp+SBu+mKadl27A7bnMhiCo1Dvf6lf2WH2rQGs7
- 5a32vbg3WXPODLvd786nq1DaM2SmRMIno1KP0ckia1wmgqooV2u1brIm
-X-Gm-Gg: AR+sD12uxENtASmfY/eiywAqp6p0u1cgCY3/utrak4/PQfSILMgiuRknuH61XQ4rvHV
- z/IekOYIKkoDZ+hjiJSPrNwswbWr/bQ2daRsALK4y9qXhfwoStlXtsYMzaXrTZi2957TpPvhO69
- kbyxQs7vZYXvG6SHVxCzUl4VVfhd82mJFW8arLBtuHhRg/VaTKYpx4E/UeX5Hg9z7+BW8+ZO6wo
- +T6mQL3utkRPVQANpwWrTMdEEP6PmCRi4hNu/FqHGstG4jt8nny6XU/u5mLbGUHv6wYPgo6txf5
- 7hH5S4fJIbqEaXTBFsthKEt660MKIPyX2STXDhisPMAStywD59hw7uGdQ+3o7VjOsKcvbiHSWXc
- a6ALBL1kiuvFUzvvnDG2hAxojwZTJQ0gv8dqKruJrh0ZMCjbauHf4TKVEXM9NZfzOMvgNYW0kpn
- wM7qIAwyh1kVOka78tyLwKLVXpBebX98UFww2o6hXSaLWxFRhPQh/e6z8Aeb4lybLuMKNCWMBu0
- Hb7z8/UUs56Ed09dFt1OZCHjxFvK7oH
-X-Received: by 2002:a17:902:da83:b0:2ca:6d87:cda0 with SMTP id
- d9443c01a7336-2d3b08589ddmr43214855ad.6.1786707446926; 
- Fri, 14 Aug 2026 04:37:26 -0700 (PDT)
-Received: from google.com (114-137-1-217.emome-ip.hinet.net. [114.137.1.217])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d3ae7a32bbsm8533725ad.26.2026.08.14.04.37.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Aug 2026 04:37:26 -0700 (PDT)
-Date: Fri, 14 Aug 2026 19:37:16 +0800
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Cc: WX Chen <wxchen0913@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v3 0/3] riscv: Add K230 DW 8250-compatible UART
-Message-ID: <an797N3cUZj5EX0h@google.com>
-References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
- <CACPK8Xfgj+AUx0h_46f=qG_UEE_o7kTZ0=Buxr7+bdHDODHpgw@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1786709301; x=1787314101;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=+aKHDmXyLoTYJ2f5FAdpr+11saZGBxcd09WIhmDvk7w=;
+ b=glucMN8BNGZFAZrFHRSx9CwepNqMTasiy3wT7ollApRKs3jwD1vBpAGL6dyWB9VNkB
+ wr/SbGfLqngheE80XnU0fOCLefD3N3fvEpuYLnNddnd3YHIp3Gm0ax/eaVME8ErQWN4F
+ 6/nRThC3RqJVVZSvMnRUKUL5mCbQ/8SYei0LrxXtdqkawOIElx6EMYimg+KgYc4VPTIO
+ lnLmXX37fJELbTjo0COxBo3IWai2Y+nuDfyL4xGU8swo/Kl5RtvpNjYP/scdw4XDOpmP
+ PD7YlUXUprMftc10PPu1wjoNwqr4I/6RUycf5kDIBz+w2gfFkIJX98ESRvWNhv569gc9
+ c6mw==
+X-Gm-Message-State: AOJu0YzuZmktibZvh4MPUDMTxe6sPpUCuOJVUJ7WbwCXxtBUrBBNb3Hm
+ Lxsjd4OsUMvQFl0nwvyWYW+6Vu68MV3GpsRUdB3orIe83wsS24RsI4BGL0bSZEGzrPgTgHGdR9L
+ A0e29qqOOEQvL/jn2mggqRH4c5M32atI19OdEbPg0IA==
+X-Gm-Gg: AR+sD13CdxVp1eXuQCvXhYWMF8JxqZmWC1Q6MyCZknLG5XryXfQ4tJom24bF9CI2qpT
+ YxEiw+zjJqABvggu1bY05Mg8i2BCyy5ijY7NZcQgbni8q0IriFXWL+xPVTeOkMl36NCJFpyRNom
+ Y7ypHcWbhHz9zxtcUD/lVxdFQ2/Scpc3WjLmKWeQrD97CrmIJwSnY4v5Md4/nvyQlhf4hQphHyN
+ SpFaioWNnleIZ1zTAc1gEtk/T8o29HGQZfoRbqkFB7KI2sYJw7FXNIO1qBxr6VAS9M7X1hPRA1Y
+ ORzcnGXaBC75DEDroU7mceGaOC13WXGmTgAtpLi9/I0nMZkfyoM8F/EnA90gKFEIR+l7bBLHcbY
+ 1ETyYJ61PVo4NT+4NvW7emBMt+fvDjBBCMQ==
+X-Received: by 2002:a05:690c:39d:b0:833:968e:c236 with SMTP id
+ 00721157ae682-8370e1b7cb8mr22526867b3.13.1786709300973; Fri, 14 Aug 2026
+ 05:08:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8Xfgj+AUx0h_46f=qG_UEE_o7kTZ0=Buxr7+bdHDODHpgw@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=visitorckw@gmail.com; helo=mail-pl1-x629.google.com
+References: <20260814113044.2416794-1-mark.caveayland@nutanix.com>
+In-Reply-To: <20260814113044.2416794-1-mark.caveayland@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 14 Aug 2026 13:08:08 +0100
+X-Gm-Features: AUfX_myr5QIMRQsEf9CpvioQGInYD0aGVEiDQ-mEL81YU508ex-erX7rh75Ycqc
+Message-ID: <CAFEAcA8p3OvB8S+dY5nTZ1Hq7us239yPyOufKzmrAT1qszsXEA@mail.gmail.com>
+Subject: Re: [PULL 0/6] qom-qdev queue 20260814
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,67 +114,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 13, 2026 at 07:50:18PM +0930, Joel Stanley wrote:
-> On Sat, 8 Aug 2026 at 12:02, WX Chen <wxchen0913@gmail.com> wrote:
-> >
-> > This series adds a QEMU model for the K230 SoC DesignWare 8250-compatible
-> > UART controller, wires it into the K230 SoC, and adds qtest coverage.
-> >
-> > The implementation supports the registers and features required by the
-> > Linux 8250_dw driver, providing an interactive shell over the serial port.
-> 
-> This is a model for the same hardware as this patch:
-> 
-> https://lore.kernel.org/qemu-riscv/20260616190147.1286316-2-visitorckw@gmail.com/
-> 
-> I'm not fussed which one we end up with in the tree, but it would be
-> good to name it generically so other machines can use it.
-> 
-> 
-Ah, I've been a bit busy lately and totally forgot to send out the next
-version of the milk-v duo patchset. I will probably make the changes
-and send it out soon.
+On Fri, 14 Aug 2026 at 12:32, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> [MCA: This PR is signed using a new, separate Nutanix key: please update your
+>  gpg keys first before processing! ]
 
-As for the dw 8250 uart part, I'm not sure if I should keep my uart
-patch in my series, or if I should wait for WX to respin his patchset
-and get it merged into the riscv tree, and then rebase my patchset on
-top of it?
+Which keyserver(s) did you upload it to? Unfortunately there's
+no longer a single set of interconnected servers, so it's
+helpful to specify here.
 
-Regards,
-Kuan-Wei
-
-> >
-> > Signed-off-by: WX Chen <wxchen0913@gmail.com>
-> > ---
-> > Changes in v3:
-> > - Removed all hardwired preprocessor #if conditionals from the logic
-> > - Added a helper for the receiver line status interrupt check
-> > - Encapsulated CPR and UCV register values in header macros
-> > - Replaced g_usleep() with qtest_clock_step() in the qtest
-> > - Link to v2: https://lore.kernel.org/qemu-devel/20260725-feat-k230-uart-v2-v2-0-d5fe82c47c28@gmail.com
-> >
-> > ---
-> > WX Chen (3):
-> >       hw/char: add K230 DW 8250-compatible UART
-> >       hw/riscv: k230: connect DW 8250 UART
-> >       tests/qtest: add K230 UART test
-> >
-> >  hw/char/Kconfig              |   3 +
-> >  hw/char/k230_uart.c          | 816 +++++++++++++++++++++++++++++++++++++++++++
-> >  hw/char/meson.build          |   1 +
-> >  hw/riscv/k230.c              |  33 +-
-> >  include/hw/char/k230_uart.h  | 198 +++++++++++
-> >  include/hw/riscv/k230.h      |   6 +-
-> >  tests/qtest/k230-uart-test.c | 514 +++++++++++++++++++++++++++
-> >  tests/qtest/meson.build      |   2 +-
-> >  8 files changed, 1559 insertions(+), 14 deletions(-)
-> > ---
-> > base-commit: 30e8a06b64aa58a3990ba39cb5d09531e7d265e0
-> > change-id: 20260808-feat-k230-uart-v3-0ff3651d70ef
-> >
-> > Best regards,
-> > --
-> > WX Chen <wxchen0913@gmail.com>
-> >
-> >
+thanks
+-- PMM
 
