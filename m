@@ -4,155 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 849ECC5CFCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 16:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF2BC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 16:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuuRf-0002ta-HM; Fri, 14 Aug 2026 12:07:48 -0400
+	id 1wuucA-0008LS-Mg; Fri, 14 Aug 2026 12:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuuRN-0002sb-GE; Fri, 14 Aug 2026 12:07:30 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wuuRL-0003fR-Ds; Fri, 14 Aug 2026 12:07:28 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67EE5bds1342777; Fri, 14 Aug 2026 16:07:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=McVfK0
- mvOBFhiFgEjkbXNOPpejgzGK7CgrZ84E2BMFk=; b=qQ3mpHwP9vV/iRdd1s3sMv
- /C5YCWP5GRggX1jmzRKNxK/nKwQeuIL7/b+RiqpGYT8eDTqs6YhbcKrFXhn0ANOX
- ppE7CTj4Q0fEaKpuuo9DuvTciiRkXQTs9JaQ/47mIXxUqcKP3MAGbIvRFjmfW8lG
- n+VhGTxd8hz+d+P4WDin9k+/VGl/RSNN2B0fBdjB5z/odNuQX9OxBLCcvi8JlpPP
- KEae8dpN29LWqFkzgtYAiyDHJcebjXxxMdiHzHewiefpYukMN1G58YQvoP7dRbJh
- 4UEBhmIbcwxdy5fTeWBp73/uP+OU+pZ2uj53F9NW8nbPaBjO6twQzsQEXJxyub/g
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvma5pqq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 16:07:25 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EFuLXW008430;
- Fri, 14 Aug 2026 16:07:23 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9hfw2w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 16:07:23 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67EG7MJn32113288
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Aug 2026 16:07:22 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 72EE758059;
- Fri, 14 Aug 2026 16:07:22 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 55A0E58055;
- Fri, 14 Aug 2026 16:07:21 +0000 (GMT)
-Received: from [9.61.14.149] (unknown [9.61.14.149])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Aug 2026 16:07:21 +0000 (GMT)
-Message-ID: <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
-Date: Fri, 14 Aug 2026 12:07:20 -0400
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wuuc8-0008L4-Pu
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 12:18:36 -0400
+Received: from sonic301-22.consmr.mail.gq1.yahoo.com ([98.137.64.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wuuc6-0006qC-RX
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 12:18:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
+ t=1786724311; bh=sZ2U0ZHbr1dOUcGv8Quuw66Z7ftlvoQtcvfayzdgWQw=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To:From:Subject:Reply-To;
+ b=Jvgo/H+jlQPsdqphZXsdSX/FlYIHbhT9JUyxuNlQKMwfWNZVEGe7Fct/xnz8DOycCW2YEK5+Sz45GuW7S3kLrMcS7qe5GJd/nLcYUndtdHcrxhRuAKqPh8ljlCWq/8KbGiT5aNryFmbF736Z84OFeZcQV9kUQgEwdm/373OpvQZwB5OSNex6HaofmaRqry7Jtr9cP318bIGIGXxVz30v0RCiqD5BcadjKyuN456XuKVUv5mXF3RY5drMC1zkIooDmXv5+q47pZlvvGI4L+TUvNViPPsII0bC879AwauILGDtfagbFPL+anJwo6C6pXfBp/XXvW/zD1Yw1F+VMIDRuA==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1786724311; bh=UTWYcY0Ukx5zq3PjBqv7g7E/uZqyleHthvEJnpNUFcc=;
+ h=X-Sonic-MF:Date:Subject:From:To:From:Subject;
+ b=Qw1NJVsUJmr4wc7AioDXdMRjq747ZgtNgLWXYTvgehC0vWLaMSmJzmRKdDMq1zeEJzYIa20rVbXpydF+hmIz6G7QxI0glBS3tKPjBBzHSQz/GNcWF6+m8fJ5TCTad9U4rAgKePI5ih+ng27EBmEtK7RswjVRwi9H80/7FXUn92P6LY4P8rCW7H3q5zQ9BrYYzkSC+FKUvc8oHnefWxBSvPzMHhZs10+jep8MD7+yFJonzV/ea9QjbKNVOQ7+s6kaggOLBW1+5eF5I0GtUWknn3hX55QnAubI887G7Jz25TzyAl202pn5C0ZzJER8oZU0fAm2OVP/4ppVJ1M1fUnIjQ==
+X-YMail-OSG: Os7DNC8VM1kKN70GE6kcUT8_Oq835oQDRm_ae4i03DweMwSJspxFt_NrIvUblkT
+ EMXlDa.wrDjdnLIKFWYNZeQXQDLHQvGl7pR892Y2Sqewz18pDgakFbVKOODOaZCCjazNpF_eJ0QN
+ kTt0A6iRAtIVkh9RtRV0Raj_Vr0jG_7EZL7g0P2AXWfVKnh.PW1vyuUDYG_nM0WFlWNu2igwMexg
+ n.JhxGqdkNVxVaF9y7_KMnRbvIto84__vw60j2xr51Ni.qZxh2UKK4taUOqRS45R_lgSbQHR5ec8
+ m5HUFT2n6pOdKqJDqwCWxI6uMYqZHnKt1Tnb1pbJkwpqpO1_a5CIZUYI68FUffeNmfKj88oC96VZ
+ aR5K1qn5IIsYqjPaMfloaW329SkLm2M0clML_DNhQU18AhRd4wJqLumbsD.ZkW5kf0.FVHmWobgt
+ e47yl.vuhfa1e0yWk1x5nozpe2FZbD2mUqx9R_h0_6dgdXc68PhM20UUgCOayepGecsb2_d2eLLZ
+ ZCTZqSkT_Kp.KeM4aUHxl1zIEfwaemyRjmPsF78h91HnLZtSci7U.jrM.5T41JG6hVHIu_vMit_C
+ mliiFlfjniU9QuSphtkWnFEWJCbuwFKQDqtb3x50vCg9EuONEDy7ltQfuFBmXT2tJr3hOP2wpcLR
+ eZewrDphCWDukD5lxYiUEnMPVATSRZQyQ1JCkO_nNGvDZCwQ4r9CYWH6STwh0MA4d0YU7vGBs_Vv
+ yWscYisX_mdcp2VcB0J8rqVJuv3T1QQV.pnjIoa8LmTsgjjt.BErlNWCk5wmNfc6dcX5bT4ux0ec
+ YFMo740wnDzuSbxuoTXLjPjrdVKAXsaISnD22q1gDnwiLu4NUI0JWzs253UG6NUYMm6XLVSzcsXG
+ kQV5Qz_87t1LpmXW2VgsNO82hMsqoCUd9wL6racK8mAUEomXvhq1Accx8KTjrIk_Bc3lwnf_CfMs
+ K9YgQw9CuKYwhIzgHADP7EuIaHZsdXKRPPm5lcHSR_2yvhrD3ebo0zCdtQvrAjfbe_E.FQk2xIlK
+ gAvNh2Uihs1.0KlwKE0zKHuYyJcbajU7ix9ijTAcdb3NcwV5R6VKpI.g6kQ06ERTmjCF3BHyZa1e
+ 22DqvsxhtVnlh5deI6SWmestCKzSDFBcWLJCUH9rRcxzDcCRZEvnXA3DPtPnkfUQ02T2dKZqErN.
+ nRC4kHraHIkjeCgKOgs9Nmk7Qy50r6vlmqoKwFv9GmwjvMbfZkqYF5vaK_Sxsir3nPTD72aF7U6D
+ X3YSGzKatVc.ttXU77aEp5CSv_24MyfAUlcQF8DPUR3spzfZBdV2ROoIdtXaI2J_O_NgnajqRWZ4
+ Z7Wt9HOI7kq4f4zgm_IGnuPiD78yBjBIgpTn8I0x_tI865ZJgh3UnwA3FHOceXt9vna9Liov.3V3
+ .ZZNUoF9_iaJg.NSukllRKMPAsA34dElIHxUpYAeOAS3bB2MMV1ngfmnfhPk7gDjGgBbnJeyFELe
+ 9gt8rhGJMdSPohKnYdeCI7tyY5.52ldpoBtOQz7_8TFy4A14g6P.DLKeoqYT5jxkmH4T2olmOIwa
+ SwdB33U41SL7XX8wb2v85g.dgdxW5TUXYBDeLf1LQCSEqe8F3A6gMMuICCgHJMFpg4gtjTSW6fxB
+ FEORjJkuhXmPBBQ3tHfMRd9x0UCHByKcou.zsirOzocOGqU8kP2zQFIlSsdzTqqjq7zX_kC1Njs.
+ BVgOyYXeG353j1tVisCXvbcKN4.FvXKnWLO93apxLqjJr7lC83rF7LGwv0dLctXl.YeOrjufru2Z
+ aUc3fyahR3mMfn_TloHA.YySi34EA14R3oIYtvPY.52VT4HsIoBT4P4jRH16Kwt0LCr2DKQnJaMs
+ n68HxaxiTBPCKJB9reZvcE3P02hGbfztlRLTbeajagXH8UF4ESU0vNYOezLWPQGmwCyGOX.EfEMy
+ NN.lRZRyHtAZQCPak5BEEp4Gq5gg1DMfDtJLZ.Rl_HnnxeREkasSWQDg4rttWrlBvKS3o8FjWqkq
+ Lpb89l8bE5IVDYYTyz3ULMrGmaY6RsHAOa3rQepAJ7fwjMXZffCNBARD3d3hSxnckohu0n1VvOvI
+ 5aDUHnQ9nVVmmqHatNAvmhbdnz3YhUq7aRukyWtW7aLyYVoJAZ_xQQ1b.qmLVoUjXam1l2ee4hJd
+ dHpnL3MWXDAL4KFJmJClOeSl_JPTB0xb3OGqkcRrA.yOg8swos.UbYOr91vbgYQ8ZmzVLpQWuw.Z
+ Ajh5WwouIBj2lwD8oXKCgRZJkC.HL_B_GjRzO_W2fuA--
+X-Sonic-MF: <brchuckz@aol.com>
+X-Sonic-ID: b8452a40-21fd-4249-b0e5-ba6658385c4b
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic301.consmr.mail.gq1.yahoo.com with HTTP; Fri, 14 Aug 2026 16:18:31 +0000
+Received: by hermes--production-bf1-54b5569bdc-z2x8g (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 4cc625440026d205cb1396754a1ab4df; 
+ Fri, 14 Aug 2026 16:18:27 +0000 (UTC)
+Message-ID: <1522d7a3-eb9d-40df-9a34-7b1cfeb3680e@aol.com>
+Date: Fri, 14 Aug 2026 12:18:26 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20260812171707.1605637-1-farman@linux.ibm.com>
- <20260812171707.1605637-16-farman@linux.ibm.com>
- <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+From: Chuck Zmudzinski <brchuckz@aol.com>
+To: Jan Beulich <jbeulich@suse.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>,
+ Anthony PERARD <anthony.perard@citrix.com>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <20260802050824.10554-1-brchuckz@aol.com>
+ <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
+ <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
+ <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
+ <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
 Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDEyMiBTYWx0ZWRfX0/H/kLIC7qOw
- 2S08hNn5jnNWmVhm9jTeRRSZ+KqqwAfUM8Ku+8mXpi/TeTt8XtOU6TauPwd7MCYiVF/DLxl5HPX
- +10Ycio4cr+1n4Gdz2TNC9d5c/hDQ2/KNeEY2t8XNpqlrxElsRIoEUBQgaLN+r5CNKhcuUvUGYb
- Jlvze2FIwyJTsiEgLx/Pyw5+cyeoMtu37CIMkvtlrqRbiopRjeGw5OPOOWT0WkPrVYIaCn3c3GE
- 3fe3ruSECdIGBgOtq6JB3Y+pb1icGhfufbBgy3DXlQG/oMQpJNx+tNkTI10zpP4GKCLRwSwYiR5
- PlmBubC5dnwLzeHO8+nlFYfMWajTHDRMIQ/hSJLi+revdZ2YOL04JeF9+lZlHR4yBujGn/qO0EQ
- O9KPRcp6nWeqJ3X91hRxj4hQxExHhJm4WgKOuEUujM+PJEJ0jNdVnwZR9TM+ZaCIPI4TMVAvnYH
- ltXae3W/jDw5t2q6VmA==
-X-Proofpoint-ORIG-GUID: WsI9KukQnpLeQmjHqD3CQELqB_K2-i2x
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDEyMiBTYWx0ZWRfXxrHah5D2EQl8
- qw1YmTyJEN6syy0kIaXgE8NNzXeIFOwcNt19Yu7vJkyWiTZ/rBD5Jofig5oojpUs9fQ0uALCHJ2
- 7JulDIpf3yZ5cdrQ7bZ4NY6+h9p3MBw=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7f3d3d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=I5e9eXzb_jZjufu3kuIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WsI9KukQnpLeQmjHqD3CQELqB_K2-i2x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-14_05,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608140122
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.26254
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
+Received-SPF: pass client-ip=98.137.64.148; envelope-from=brchuckz@aol.com;
+ helo=sonic301-22.consmr.mail.gq1.yahoo.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,94 +115,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/14/2026 11:23 AM, Chuck Zmudzinski wrote:
+> On 8/14/2026 9:46 AM, Jan Beulich wrote:
+>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
+>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
+>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
+>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
+>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
+>>>>>>> -- snip --
+>>>>
+>>>> I don't follow this: Anything the guest can access should also be accessible
+>>>> by its DM.
+>>> 
+>>> I think the host OpRegion is not currently accessible by the DM.
+>> 
+>> Can you explain to me how the region becomes accessible to the guest?
+>> That would then (hopefully) help me understand why the DM would not have
+>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
+>> guest are also assigned to its DM.
+> 
+> Currently, in the device model (Qemu) we have:
+> 
+>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
+>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
+>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
+>             XEN_PCI_INTEL_OPREGION_PAGES,
+>             DPCI_ADD_MAPPING);
+> 
+> That statement is in the igd_write_opregion(...) function in the
+> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
+
+I forgot to mention: In our current implementation, this statement is
+executed in the DM when hvmloader executes this statement, currently in
+hvmloader/pci:
+
+                    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+                               igd_opregion_pgbase << PAGE_SHIFT);
 
 
-On 8/13/26 4:38 PM, Michael Tokarev wrote:
-> On 8/12/26 20:17, Eric Farman wrote:
->> Update the s390 bios with recent fixes for out-of-bounds accesses.
->>
->> Signed-off-by: Eric Farman <farman@linux.ibm.com>
->> ---
->>   pc-bios/s390-ccw.img | Bin 104136 -> 104216 bytes
->>   1 file changed, 0 insertions(+), 0 deletions(-)
-> 
-> How do you guys build s390x-ccw.img - which compiler version(s) are
-> used for that?
-
-This was gcc-16.1.1
 
 > 
-> Since we're updating source files in the stable series, where this
-> image is not the same as in current master, I'll have to rebuild
-> it after patching.  Now I wonder how should I build it.
+> If I understand our current implementation correctly, this statement
+> is what gives the guest access to the host OpRegion (3 pages as defined
+> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
+> in hvmloader code). I don't think this statement makes the host OpRegion
+> accessible to the device model, though, so I think, if I understand your
+> comment in an earlier about my patch resulting in what you called a "layering
+> violation" correctly, that our current implementation is also guilty of this
+> same kind of "layering violation."
 > 
-> In official debian we always build it from source, and there were no
-> complains - maybe because no one uses debian to run qemu-system-s390x? :)
+> So, how do you suggest we fix that?
 > 
-> Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
-> building the image?
-
-I should think so. But if it doesn't work, let's look into why.
-
-> 
-> Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
-> here's the list:
-> 
->   b2b5dec9295 s390x: Enable boot menu for virtio pci device
->   d0473643803 pc-bios/s390-ccw: write IPLB location for non-net virtio 
-> devices
->   e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting from 
-> virtio PCI device on s390x
->   084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for 
-> multi-queue virtio configurations
->   730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI 
-> notifications
->   c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
-> 
-> I think I can pick all that stuff for 11.0.x series just fine, to avoid
-> (re)building the image for 11.0.x series.
-> 
-> For 10.0.x, things are really much larger:
-> 
->   14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling with 
-> DEBUG enabled
->   d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
->   40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
->   5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
->   d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
->   4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
->   ada7a60056c pc-bios/s390-ccw: Store device type independent of sense data
->   4228a92b2a3 s390x: Remove duplicate definitions of IPL types
->   dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed 
-> boot attempt
->   5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
->   1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
->   acb00a7aae4 pc-bios/s390-ccw: link statically
->   fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via 
-> pxelinux.cfg
->   47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
->   108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
->   a4adf071dc7 pc-bios/s390-ccw: Allow to select a different pxelinux.cfg 
-> entry via loadparm
-> 
-> basically it's whole virtio and pci support added, which might be too much?
-> Please note that 10.0.x is an LTS series, also used in current debian 
-> stable
-> (trixie), so maybe it is also okay to pick everything up to this series, to
-> bring the image in-line with current development.
-> 
-> In this case I'll just pick the commits updating the image too :)
-> 
-> What do you think?
-
-Yeah, might be a bit much. The smaller fixes were contained enough that 
-targeting them for stable made sense. Of the four fixes that were in 
-this rebuild, three of the blamed commits date to the v2/v3 days. The 
-fourth went in in 9.2.
-
-Everything else in your lists is new function and whatnot, so my gut 
-says leave it there.
-
-Thanks,
-Eric
+...
 
