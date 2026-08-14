@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90A6C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 13:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3827C5B572
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 13:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuriI-0000Mz-Rm; Fri, 14 Aug 2026 09:12:46 -0400
+	id 1wurkH-0000r1-Cu; Fri, 14 Aug 2026 09:14:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wuriG-0000Mj-3g
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 09:12:44 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wurkF-0000qQ-LX
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 09:14:47 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wuriE-0000nr-O1
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 09:12:43 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-84f38f3b36eso605410b3a.1
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 06:12:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wurkD-0001qb-Tw
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 09:14:47 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8487214ad2bso1204479b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 06:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786713161; x=1787317961; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786713284; x=1787318084; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:organization
  :autocrypt:from:cc:content-language:references:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=pVO0gQa3IhGHm2rsc/wKo5/kWzeV9v7mTlTjfwhKrHk=;
- b=BBIRlDSJRcqc3oIZ2E3UvW55BQ3MFfWcml9VzqX7P1aL9rX6LHbuneXbxPV1sKidmU
- S2NatZa7bW+nc+MQpaPrmLjilbxxdQ5b/+UyjRS63UwF7OY5L+NmS4zm2fzZRG4d2I7e
- xuSJ3t2bOkJLO75s5gQSLmT5P7ks6wNn8UzsusO9H8ENw1fBotWDVVCFsKqObef7O1dl
- PbJx3Pq3fEfF7DKfgrS4QbuoKMq5XERVJf6A4YsoEKipX91SnaW34TzO6t83PcuSDUbG
- yERNZp+qnaNGreeyx96SqxHlaedtefa/0Kg07mZ2N89roTA/btdLJ1Gi9U60JK+2AYsP
- 6eZQ==
+ bh=KiJrrFmkL3w89WslWTqOoKAyRosvdq0KSC6jmp6i7yg=;
+ b=SRGwD3a4b/v0ipyLrOD1KeoCuxbm/aaJsBOM10Sj2ULqfGxeTxPQtCZ4jTyIL2OwJY
+ Lk5bB2WfazQR6famvOYdyozv65pqYCK90M1ykZ9NfWUPlNNGDEzTz5LPSmBuIRTRZ7eB
+ SVaCeLQGG/fh6TRHLMs/dMYZwgRpynp0fVHckBNfkOSRnPWRoOtV7BrKx19hq60i5r3V
+ REUpJd//g2PXgCDm5s/Jsaa87BQBVOT0u8RPgpxZ1aLZ9iRugTM9fggVxB97zZcbimUa
+ NPDCzK13/DTxl3zPtaHu48xgFW8uqtwNRnDaFyAMLk9hfdyp5NpyDgqfJ3V0ouqad1Ef
+ Gvzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786713161; x=1787317961;
+ d=1e100.net; s=20251104; t=1786713284; x=1787318084;
  h=content-transfer-encoding:content-type:in-reply-to:organization
  :autocrypt:from:cc:content-language:references:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=pVO0gQa3IhGHm2rsc/wKo5/kWzeV9v7mTlTjfwhKrHk=;
- b=KgLkyEcgyA/B6Ulhg9G7qdFt4QEX3dSxaU9PHOFwrql/vmYR+Eg1f6h4j4KnC9NSRk
- J265eQ4YGRKiYbuw7FvGSL8EaR47RKSWTbuOjcf7H8wa02QtlIJkKypyojeNfFKIEZ9q
- CB6JBGsZOAtDXmLmXZ7bqf8QMT3X5ks1by8WlP7KuHF+0ZN3iEWxxuQBBYc6Qk2tT8v3
- 4EnM8umGDZMkL+lcWqIp2gn9G5ciOBXQvsLQVPdSeMoseuKV85skkBrEAlWJMpsgDzfQ
- +8olnMubMJrjStfke0z0IVFQQHmfD3LRJxlmcyPzoE943MktadKdHrieYA4aQsBD/TtA
- ncYQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Ro8IzWSjiiWDVBAp8StIsMEKgslDYnls5X2pB1HBJUrFa5NxW1i3wEAlpW2EqrzuBPFkBk3o0ArQFJP@nongnu.org
-X-Gm-Message-State: AOJu0YwrqkF+DksIVfi084xe7pYodzfFXVYHC7LgCkd/rLTtnIFRhbms
- ak7FpGEaUNG69Z3VbvRX+6dPHcJnPjnizbMiLXWVSC6djwL5jHDFNeMc
-X-Gm-Gg: AR+sD13vsvtHHdrsdbSypcANzsakKM5oe0e2vmzpQbPLRRPHq5x6Bc04DIssvWx/JrF
- cX6bGyOHzUH7Z7Z3vqLc5lcFtwXdo10Ele/Qm33Mh18A0bu30XgFBi7DYFPbbuuX8c+L8sFczfp
- ZYRSSN8+itY8PrYC/toSN1cehvFcI2Y3snWpnPBT4cL+byT3zusHxGwPX7SsW6Dvzgv3pI4oFD1
- VbV1IbI65eTDXcj3rGuxrFX3YKfILR4HhS539fC6wQa8m+kqACY54pCVCJQ6oBaEsWQucZk2vce
- Z2qbmDmH/DBgF5WSFU+ulzD4MgW+X3J89dNKqk41UczIxU8JcSwe6FrHcM/0dDr3If9R3IQ1AOt
- 4xsmpRnmeT85lDUEJ0+T5D7CgwKxJ65Qlh/Udot/tDGmNQD43uBxPEN/3x1N1jJRrcGulB5iev4
- MVLyZJWo6OjE3kfmKVuRWX931c+xBbHwPJLKV+thBxfXW2jaLmnkhQE8VTuOCX
-X-Received: by 2002:a05:6a21:e8c:b0:3c3:954d:279a with SMTP id
- adf61e73a8af0-3cc71d8eafdmr6482572637.33.1786713160901; 
- Fri, 14 Aug 2026 06:12:40 -0700 (PDT)
-Received: from [192.168.1.35] ([112.133.246.25])
+ bh=KiJrrFmkL3w89WslWTqOoKAyRosvdq0KSC6jmp6i7yg=;
+ b=EHFz1qDX9X8ByROJzKqMt4IGVm9Ag6V/ShktiqE2PKwDy9bbWOiYatLztW1LRKY28H
+ XGTh96rnbfuJdUt9jR6chryy6WyYSCLr/keCvdd17CYwjzsSY7Ypvef/+v0w23N0ZdxL
+ /QExu4huycCTKGASFlb234UdMMjH9F4OcdoZHqfa140eSGqp8zXWdEWDa2tsr7SQqnL5
+ rJRmuQ5dGq/AvqwLDLeZHBnE+JW7LG8hmYQm9To5l0KO7tPudAM8kuSuYhgT32SaVm/A
+ 772apgSAcSbcBDP0QDRdXEPhzshOIVNSK2xB1d7aH6WrCS8CBb3U3BABNkduKsPD+Vgj
+ XM+A==
+X-Gm-Message-State: AOJu0YzAa96tnchfygzMDyykjxfhsbA2mk++dnJS4QMXqP6030mWiA8j
+ rYniv1CuJthkI/jdRjL2tnl7NH64uBivHcmS6WBto7UAymisslmf8ug1
+X-Gm-Gg: AR+sD13wm6digF83gfAAsstoWQ1pJ3uKM/WXJG17j4ltDsg2X0rOfIQZmq7xo2BTbUL
+ kHqqGcbnYyC7ZtxiEqtXQQthwhw5wa+d0gAN2zCKDqIQYB6ND76GaKrqEKlx78kBs6u8XRaJjf2
+ Jnfu8V0A6N68pP5YFQsI3hcA0LmrEjoqhTv+bj1OVJc/jd127eUgdA+xMngFc4zDIR7zkRtmCHU
+ hb+cZOA32TMhtnAEppdrtfKQnMGVoSes74w4qeVzYvgHJD1VQ8Uto8BSfjLYcJgM44t7rUEP/yQ
+ dhQBYroe+O19YQYvmI7LqGqV5jC5DhtvoC9pPsjESlzPp8hhqSu1TQpvmqaOOrR/G4j61CTjaEK
+ r4kYaUzcEWc1YtTuPkXkj0G1cjvkhINe1YYVXtu/nZqxLmdTjSL9x9oC799c0SR4wTZ+iwLzcTl
+ 1VFLps3Jv/7hr3BSSL933lfivYdNBfOLUkxAF3hXrnNp8eipLfR8n5yh1gHmk=
+X-Received: by 2002:a05:6a00:1a87:b0:848:44ae:47c4 with SMTP id
+ d2e1a72fcca58-84fde20e8a4mr5445646b3a.20.1786713284228; 
+ Fri, 14 Aug 2026 06:14:44 -0700 (PDT)
+Received: from [192.168.1.35] ([112.133.246.4])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc095a43327sm542621a12.28.2026.08.14.06.12.36
+ 41be03b00d2f7-cc08f3aba73sm591336a12.14.2026.08.14.06.14.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Aug 2026 06:12:40 -0700 (PDT)
-Message-ID: <c02148e5-9fb1-44fc-8652-e2f79b4730db@gmail.com>
-Date: Fri, 14 Aug 2026 18:42:34 +0530
+ Fri, 14 Aug 2026 06:14:43 -0700 (PDT)
+Message-ID: <8163c2b0-0994-4cee-bf6f-9384f1e9e155@gmail.com>
+Date: Fri, 14 Aug 2026 18:44:39 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: fix invalid sstc predicate in gdbstub
+Subject: Re: [PATCH] target/riscv: prevent abrupt abortion on unassigned value
+ write to tdata
 To: qemu-riscv@nongnu.org
-References: <20260530053200.902591-1-314abh@gmail.com>
+References: <20260729230028.1797355-1-314abh@gmail.com>
 Content-Language: en-US
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, chao.liu@processmission.com,
+ zhiwei_liu@linux.alibaba.com, daniel.barboza@oss.qualcomm.com,
+ liwei1518@gmail.com, alistair.francis@wdc.com, palmer@dabbelt.com
 From: abh <314abh@gmail.com>
 Autocrypt: addr=314abh@gmail.com; keydata=
  xjMEaaCh3xYJKwYBBAHaRw8BAQdAVM1RsDD2FeoNQaZK2QC/kzkYIIfu2q/KFJAYfDCpNIjN
@@ -88,11 +87,11 @@ Autocrypt: addr=314abh@gmail.com; keydata=
  AhsMBQkFo5qAAAoJEHUzAekWp6jSrWoBAMgbTZK/HqjOv6Vqwl4uy02pZkeymtrbjARfNUJF
  K/7DAQCooyWGaQ6m0RM3RC+fjSCVa8qyuppeq2wSa84UBhmXDg==
 Organization: The Public Safety Devil Hunters
-In-Reply-To: <20260530053200.902591-1-314abh@gmail.com>
+In-Reply-To: <20260729230028.1797355-1-314abh@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=314abh@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=314abh@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -115,41 +114,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/30/26 11:02 AM, Abhigyan Kumar wrote:
-> sstc function incorrectly checks for avaibility of env->rdtime_fn.
-> This causes it to fail each time it's called because rdtime_fn is setup
-> later in the procedure (when timer devices are created). This prevents
-> stimecmp's addition to gdb.
+On 7/30/26 4:30 AM, Abhigyan Kumar wrote:
+> tdata_csr_write is approachable by guest programs. In case of unassigned
+> values written to a tdata CSR in debug mode, the switch-case falls
+> through straight to default causing an immediate abort. The risc-v spec
+> says:
 > 
-> This change ensures only the riscv_cpu_cfg(env) check is done. rdtime_fn
-> will always be NULL otherwise and fail.
+>      All tdata registers follow write-any-read-legal semantics. If a debugger
+>      writes an unsupported configuration, the register will read back a value
+>      that is supported (which may simply be a disabled trigger). This means
+>      that a debugger must always read back values it writes to tdata
+>      registers, unless it already knows what is supported.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3496
+> This fix correctly ensures that the WARL behaviour of tdata CSRs.
+> 
+> Fixes: a42bd001 ("target/riscv: debug: Determine the trigger type from
+> tdata1.type")
 > Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
 > ---
->   target/riscv/csr.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/riscv/tcg/debug.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index f5b0895fd..d72df945f 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -590,7 +590,7 @@ static RISCVException sstc(CPURISCVState *env, int csrno)
->   {
->       bool hmode_check = false;
->   
-> -    if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn) {
-> +    if (!riscv_cpu_cfg(env)->ext_sstc) {
->           return RISCV_EXCP_ILLEGAL_INST;
+> diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+> index 3c0fe7010..ae493235d 100644
+> --- a/target/riscv/tcg/debug.c
+> +++ b/target/riscv/tcg/debug.c
+> @@ -913,7 +913,8 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>                         trigger_type);
+>           break;
+>       default:
+> -        g_assert_not_reached();
+> +        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d is unassigned\n",
+> +                trigger_type);
 >       }
+>   }
 >   
 
-Greetings. It has been over two and a half months since I submitted this 
-patch. It's my humble request to know the status of the 
-review/acceptance for my patch. Please inform me about any required amends.
+Greetings. It has been over two weeks since I submitted this patch. It's 
+my humble request to know the status of the review/acceptance for my 
+patch. Please inform me about any required amends.
 
 Thank you for your patience and attention.
-
--- 
-Abhigyan Kumar
 
