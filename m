@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8718DC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55E0C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:32:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wutq7-0008Vl-DD; Fri, 14 Aug 2026 11:28:59 -0400
+	id 1wuttN-0000zi-MA; Fri, 14 Aug 2026 11:32:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wutq6-0008VW-5z; Fri, 14 Aug 2026 11:28:58 -0400
-Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
+ id 1wuttK-0000zH-D3; Fri, 14 Aug 2026 11:32:19 -0400
+Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wutq4-0005Pg-2j; Fri, 14 Aug 2026 11:28:57 -0400
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfout.phl.internal (Postfix) with ESMTP id 963F4EC013B;
- Fri, 14 Aug 2026 11:28:54 -0400 (EDT)
+ id 1wuttI-0006X7-PZ; Fri, 14 Aug 2026 11:32:18 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id A37BA1400041;
+ Fri, 14 Aug 2026 11:32:15 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-12.internal (MEProxy); Fri, 14 Aug 2026 11:28:54 -0400
+ by phl-compute-03.internal (MEProxy); Fri, 14 Aug 2026 11:32:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786721334; x=1786807734; bh=k5txefdKVlBQTruGaTnr4/IznN2uBx9D
- txM/DOqgE0o=; b=GmYlaSG0eLg8lHwDUC9IhASf9S+tYK+NuoNrxcFaoh+eUmPr
- dvJLrwS5E3W0VUs24IOGv9sqLDJR63KlExA6h8fUOcim1iDKA5O0fcc8KnskVHhv
- oRixEzcxIok/r7MYI9/+Ppl5bFZNwT7jUauRrssQXlFS7/OBkeNHKWxaZCnmqgVQ
- UEsqilFufYmu/SPjFV9OSIE0AWgj07CcDEnIQgAsXY7RwBjeVWkvpJOdZap4VWhd
- K6qit1Uy/Frp4k6eF9JfOiWz3AggP6dtlvYG2R7EKEKUqD63n056y4vplRA2s6jI
- jsjr0ddcxvmkXusIuP7/G3VShmn9YS0GYBkP9A==
+ t=1786721535; x=1786807935; bh=/R2+qfqo89CJTk5A9ZfK/lTuy9hfMRLo
+ 37jFOzHuERw=; b=Tbf5Ykjw1T2orzedWP5Ijq7Ntn9X5Gwsia0PQez1nA0MsJQU
+ rhn52cjMaI80azkbq3LZbyST18JkhsLOp5NP+xPV+3PZV2OT3eSLeQWEwTM9hjjf
+ V360k3IlWba37IJApGMagm0iGBEkQpkbud9rySAy2BU53pKKhypzp8LDl/pgFN7w
+ ZV4ces/lHG5tAREYIVtdvaC0UHlbm1TRpswaVFTgZwl+MUwE1RZJIsf/RkcBSg2J
+ YxrkJOKkdZ0zWrUdM6vJSbonyvHXJ+zjdSXNzE30Mn0zd8F/+jiNpxBmXgPpkx7J
+ iB8W6KhVqkXBJ/cliLxbdGlp6znetgsl9tx6qQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786721334; x=
- 1786807734; bh=k5txefdKVlBQTruGaTnr4/IznN2uBx9DtxM/DOqgE0o=; b=H
- 89nYy/Ovn5JGOhm+Y0pB0VKjB9Ba82bAaWWJE6EHHXIfeucMssG2QqYu4JNFDF4/
- GhfvF/3rQVGX3usM4oAjGH3jOzBA5+1hdJj2w27o466JSDcZcvsORsB6uoRA+zWr
- 5/E1SpYvweVL/QTHpTFQQKx287JCAQLVzLry4cUwaOKjH+00YK4wOG1YK8+qB2tP
- SlXEDFVfiEeGwL106YqTZ9/sUDy6nK42s4kxuPGv/fWVt26MpuBusxPwCnDQc6LY
- QZGjYqkc1+uBJwbw00GVHptBaQTuz6y4cXp8wdmi6IyvM19TgQF7KcAkg5nEqEh+
- vtoF1CVhPuTpUYuWCruzA==
-X-ME-Sender: <xms:NjR_atzmY0MN9SvqRMSzfKi9HSgz9c5m3R4bb1IsjHuEyrLSdiToTw>
- <xme:NjR_atZ0VBiYM5V1IX-wsldqDB0FI07wFiwktruNZvUkDYIPACQDONssMWg2-fq7W
- MMrJrzVWro3n-cEZMj-5x3UQDajEnbbvYYPJKh0Uw5jg0hMw1VMRx7G>
-X-ME-Received: <xmr:NjR_avQMCfQfpzGuXBYH2qm1lI9xjYYEet_TGPJFQIOz67KjCt21byjua471Ye_X6OA86g>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786721535; x=
+ 1786807935; bh=/R2+qfqo89CJTk5A9ZfK/lTuy9hfMRLo37jFOzHuERw=; b=J
+ IvHpiiz6xQWZ1IJIebdAcOTWcuHeOcfn6rcsAyeX8e2vyJlk8GE/5kGeEPTvoqnw
+ kaxpnzSaT6wgf1rMO2PR00m9eyhUy0fpCHzVtTTqkKmsCRa4qasGn4MMf+Bu7FXH
+ 8h11MacI6TmK5w4ioivpFLIlsGtLl0O4GAfSblhruI9CtNZrz+4w1uCZF/DMoOwl
+ kuT75sb6H0Wt5ZxH3vLB0aZdKpLu2wW9poNiHaTrhg4ZoXHXLA/kK9bCKdlXTKK5
+ ge0FsqiRjI3ZCg6IPOsXFUuJYTf5WWWK6vFggg+eP8ylF+BKGfo4Ubva5PE8hN7P
+ UC+o3KPsXEpuBRVTLMZIg==
+X-ME-Sender: <xms:_zR_aiD_ipvsZt-LatjVIaNZmzrmhQN0L6WzmO6VhJEPTECURIh2Gg>
+ <xme:_zR_an-ue1uhX-zcLSG_I1kif2wMBzrbtKXFRurCRT2VLKMgUqflqH5UDS2xGuK6v
+ vvnPqnuu4d2aEq0tQtIyAH-Rpzx8nHkbncRXRnDgzzJMzEh0pxNz7U5>
+X-ME-Received: <xmr:_zR_apF5bpkpMwEfcfZ2yOQ1MhV8OJiMJ-YNsurajP6z4qUqVD0yNozkX36MuLOHj_69ZQ>
 X-ME-Proxy-Cause: dmFkZTFlcj0k83MDKof4hWght9wvWbkOEwpuDE0fkMrVuocNeArmHJvdtT3rMdqqS6m02n
  7G9VwTmOi+iFCwtEEtGd5g+HURCZegAA3VRKonw6oNd9hCxrBsSdMb5WcJxoxnocI1jCs0
  LjVabEAzdNLrkARToj04UtE1/VO8+PN1epJRjYUcf3ArmuxMm5RJIT4Yt+xZbVBidK8PbN
  wwoA5U9URoTlQlh4RcNcswyv+srWLgMXTBQUhLL0uGD0WJmcf5qKks7Jma28s6ep1TiN8o
- gNaImo+biO3HSch2MzzB7c6Ah++9GMQjO7ZiFNRFf78KMv6sxke13FdjYxkStrg/08hDmz
- FHH2AYbXoHcDOr1MMoZJ8b5UcE2+kt7Dh2wInlBpKXQKjZrQUdfdQBMhXtO3YoTYC8xgvY
- KKINEzOsZSh49VWzaJecCc4qtKgN0ZKJWUUGlklCNHWxbSwzARkLkCR5M/7x5EFnw+m37o
- lu997ih6/t62mAWWFkgJGnKgXz/avw+MIC/MZ+07UihBcSpWJArejM097K2fhwFCqYeJ/N
- SnNPf6kVkac/DtqSKkcdhN3ZsXmj3JAzAr2Nh2H10C4KOBlGnMhvr4mBjg3QWKjGDD4vaF
- waeX67j7ac3tjsf9EajQpBLslWrSyrHBfO/Dmh2rmNZLTxGDtCkd0xAyVkCQ
-X-ME-Proxy: <xmx:NjR_anx8nPV_i1MxzAiM0rNNHovZFAySx9Zd_IesEgsGrIZNkU8YGg>
- <xmx:NjR_ap12suOpRHhduf-3-gINcqyxZX9g8sNKnKtTy1sQp7_7ZDD3Ew>
- <xmx:NjR_at6caaH0Ium77K0AxXCgBmN1QzrLJVVo-_NgtIhfeMqb8sOimA>
- <xmx:NjR_akV00GqbHHJXZ25f1RuRaG7c-vYliRF5sQUGJGugtF4EdJ1u2g>
- <xmx:NjR_aiak4Qk7B4DS-38mf9vtb0J_1os2oZ5vakhi7TcMUMO-P27TToXw>
+ gNaImo+biO3HSch2MzzB7c6Ah++9GMQjO7ZiFNRFf78KMv6sxke13FdjYxkStrg/08hDtC
+ 0a0+b/uTiuedGHXhMqSDax5b4hZvwXU4dTC6BDPF/xOYds/yiyIPit2sNLMO3HEYJewpWM
+ cuPJCyHVpFDxHepVG445Y0xoV2z2KFJrHLcHIv/1YfsS6k6kOVt+q1wBN9QyHJfgPLxvQB
+ 40JMwqBGmgY3X1nKZc3Yatcl3wNamJi1oUz0jYCYTzNr6UEJ7Nxnve/uLNYeHxWKzipr3k
+ Mq3SJj/NG2mPoWtP9cP5NpSv7GyTQdwqTI/e8fc7EmqrHeHzVmL3PwRl4kNKV/F5ve54hf
+ iinRycae2bXIAv2SXz1AgRT9I+HZ2we9kkRAgdJngctIVQ1UJ1D0rFx0UAbA
+X-ME-Proxy: <xmx:_zR_alPvGoDY4nTveZFrzAj9bWMARQij_Pcsjq1tjg68Bphhvwv4fw>
+ <xmx:_zR_ajcLE_wlZgZatQh5-IFQtNu5LYRnZAS9ZGCMEK-gdj5E3AvQwQ>
+ <xmx:_zR_aqtahP6IQeqiuUnnhNC8z8RkSmakQgr2p-WcmV43BuGTeRINsA>
+ <xmx:_zR_asn5iVzT7_A0NDY_3LHcXubZoxzewnr4scfz67WseawUBmfrKw>
+ <xmx:_zR_ar1oDIx1EW1ELVmmuE9Cks8wbk0FyUwyRXATAVZMpxs61T479i8W>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 11:28:54 -0400 (EDT)
-Message-ID: <544d0aec6fc1edc1fd3d16f2f2adc659b9c57715.camel@alistair23.me>
-Subject: Re: [PATCH v2 00/52] disas/riscv: Reorganize the disassembler
+ 14 Aug 2026 11:32:15 -0400 (EDT)
+Message-ID: <8316af1480bdd869f8b2e81eb60ac24fa1d8698d.camel@alistair23.me>
+Subject: Re: [PATCH 20/20] hw/arm: xilinx_zynq: Store boot info in the
+ machine state
 From: Alistair <alistair@alistair23.me>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Alistair.Francis@wdc.com
-Date: Sat, 15 Aug 2026 01:28:53 +1000
-In-Reply-To: <20260812223142.349142-1-richard.henderson@linaro.org>
-References: <20260812223142.349142-1-richard.henderson@linaro.org>
+To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, qemu-arm@nongnu.org
+Date: Sat, 15 Aug 2026 01:32:14 +1000
+In-Reply-To: <20260813154918.996812-21-bin.meng@processmission.com>
+References: <20260813154918.996812-1-bin.meng@processmission.com>
+ <20260813154918.996812-21-bin.meng@processmission.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.145;
- envelope-from=alistair@alistair23.me; helo=fout-a2-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.154;
+ envelope-from=alistair@alistair23.me; helo=fhigh-a3-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -105,125 +108,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-08-12 at 15:30 -0700, Richard Henderson wrote:
-> One of my pet peeves is the non-automatic addition of indexes to
-> rv_op
-> which must match entries in rvi_opcode_data[].
+On Thu, 2026-08-13 at 23:49 +0800, Bin Meng wrote:
+> arm_load_kernel() keeps a pointer to the boot info struct for the
+> lifetime of the VM, so the struct logically belongs to the machine
+> rather than to a file scoped static object.
 >=20
-> Reorganize the disassembler to pass around pointers to individual
-> opcodes
-> rather than pointer to table + index.=C2=A0 To do that, rewrite how pseud=
-o
-> ops
-> are processed, replacing indexes with pointers.=C2=A0 Merge the
-> decompression
-> of compressed opcodes into the pseudo ops mechanism.
+> Move the boot info into the existing ZynqMachineState.
 >=20
-> Fix quite a few bugs found in the process, mostly related to isa
-> level.
+> As in the xlnx-zcu102 and raspi machines, the boot info belongs to
+> the machine rather than to a static object:
 >=20
-> Changes for v2:
-> =C2=A0 - Rebase on riscv-to-apply.next, which now contains Tiancheng's
-> fixes.
-> =C2=A0 - Adjust the DECOMP macro to make clang happy.
-> =C2=A0 - new patch: "disas/riscv: Skip post-processing of illegal insns"
+> 4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into
+> XlnxZCU102")
+> 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to
+> RaspiMachineState")
 >=20
-> The only unreviewed patch is the new one.
->=20
->=20
-> r~
->=20
->=20
-> Richard Henderson (52):
-> =C2=A0 disas/riscv: Move operand extractors earlier in file
-> =C2=A0 disas/riscv: Reduce rv_insn to uint32_t
-> =C2=A0 disas/riscv: Tidy dec initialization in disasm_inst
-> =C2=A0 disas/riscv: Pass rv_opcode_data pointer to decode_inst_operands
-> =C2=A0 disas/riscv: Pass rv_opcode_data pointer to/from
-> =C2=A0=C2=A0=C2=A0 decode_inst_decompress
-> =C2=A0 disas/riscv: Pass rv_opcode_data pointer to/from
-> =C2=A0=C2=A0=C2=A0 decode_inst_lift_pseudo
-> =C2=A0 disas/riscv: Pass rv_opcode_data pointer to format_inst
-> =C2=A0 disas/riscv: Tidy disasm_inst main loop
-> =C2=A0 disas/riscv: Set dec->opcode_data in decode function
-> =C2=A0 disas/riscv: Drop explicit zero of rv_opcode_data fields
-> =C2=A0 disas/riscv: Drop useless const in structures
-> =C2=A0 disas/riscv: Drop codec from rv_decode
-> =C2=A0 disas/riscv: Handle c.addi4spn imm !=3D 0 during decode
-> =C2=A0 disas/riscv: Simplify c.addi
-> =C2=A0 disas/riscv: Handle c.lui imm !=3D 0 during decode
-> =C2=A0 disas/riscv: Handle c.{srli,srai} imm during decode
-> =C2=A0 disas/riscv: Handle c.slli imm !=3D 0 during decode
-> =C2=A0 disas/riscv: Do not recognize c.{addw,subw} with rv32
-> =C2=A0 disas/riscv: Remove rvcd_imm_nz
-> =C2=A0 disas/riscv: Unify decomp_rv{32,64,128}
-> =C2=A0 disas/riscv: Drop always true branch pseudos
-> =C2=A0 disas/riscv: Handle aliases of csrrw during decode
-> =C2=A0 disas/riscv: Handle aliases of csrrs during decode
-> =C2=A0 disas/riscv: Handle aliases of csrrwi during decode
-> =C2=A0 disas/riscv: Break pseudo loop for jal and jalr
-> =C2=A0 disas/riscv: Allow decode_inst_lift_pseudo to loop
-> =C2=A0 disas/riscv: Handle decompression via decode_inst_lift_pseudo
-> =C2=A0 disas/riscv: Drop format from DECOMP insns
-> =C2=A0 disas/riscv: Tidy rv_comp_data terminators
-> =C2=A0 disas/riscv: Chain "ret" pseudo off "jr" pseudo
-> =C2=A0 disas/riscv: Chain "nop" pseudo off "mv" pseudo
-> =C2=A0 disas/riscv: Use rv_codec_illegal for pseudos
-> =C2=A0 disas/riscv: Simplify some insn decompressions
-> =C2=A0 disas/riscv: Store op pointer in rv_comp_data
-> =C2=A0 disas/riscv: Return rv_opcode_data pointer from decoders
-> =C2=A0 disas/riscv: Skip post-processing of illegal insns
-> =C2=A0 disas/riscv: Reject all of OP-32 and OP-IMM-32 for RV32
-> =C2=A0 disas/riscv: Fix rv32 encoding of zext.h
-> =C2=A0 disas/riscv: Fix isa decoding of rev8
-> =C2=A0 disas/riscv: Fix typo in th.lbib format
-> =C2=A0 disas/riscv: Split ventana_opcode_data
-> =C2=A0 disas/riscv: Split xlrbr_opcode_data
-> =C2=A0 disas/riscv: Split xthead_opcode_data
-> =C2=A0 disas/riscv: Move rv_op_illegal to riscv.c
-> =C2=A0 disas/riscv: Split out riscv-op.c.inc
-> =C2=A0 disas/riscv: Merge all mop.r.n to one pattern
-> =C2=A0 disas/riscv: Merge all mop.rr.n to one pattern
-> =C2=A0 disas/riscv: Merge all c.mop.n to one pattern
-> =C2=A0 disas/riscv: Tidy decode of c.mop.n
-> =C2=A0 disas/riscv: Tidy decode of mop.r.n and mop.rr.n
-> =C2=A0 disas/riscv: Split rvi_opcode_data
-> =C2=A0 disas/riscv: Sort riscv-op.c.inc
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 >=20
-> =C2=A0disas/riscv-xlrbr.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0 4 +-
-> =C2=A0disas/riscv-xthead.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0=C2=A0 24 +-
-> =C2=A0disas/riscv-xventana.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0=C2=A0 4 +-
-> =C2=A0disas/riscv.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 46 +-
-> =C2=A0disas/riscv-xlrbr.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0=C2=A0 57 +-
-> =C2=A0disas/riscv-xthead.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 503 +--
-> =C2=A0disas/riscv-xventana.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 23 +-
-> =C2=A0disas/riscv.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 6390 +++++++++++--------------=
-------
-> --
-> =C2=A0disas/riscv-op.c.inc=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 |=C2=A0 913 +++++
-> =C2=A0disas/riscv-xlrbr-op.c.inc=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0 8 =
-+
-> =C2=A0disas/riscv-xthead-op.c.inc=C2=A0=C2=A0 |=C2=A0 125 +
-> =C2=A0disas/riscv-xventana-op.c.inc |=C2=A0=C2=A0=C2=A0 2 +
-> =C2=A012 files changed, 3411 insertions(+), 4688 deletions(-)
-> =C2=A0create mode 100644 disas/riscv-op.c.inc
-> =C2=A0create mode 100644 disas/riscv-xlrbr-op.c.inc
-> =C2=A0create mode 100644 disas/riscv-xthead-op.c.inc
-> =C2=A0create mode 100644 disas/riscv-xventana-op.c.inc
+> ---
+>=20
+> =C2=A0hw/arm/xilinx_zynq.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 | 17 ++++++++---------
+> =C2=A0include/hw/arm/xilinx_zynq.h |=C2=A0 2 ++
+> =C2=A02 files changed, 10 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+> index 6c83439017..f314897540 100644
+> --- a/hw/arm/xilinx_zynq.c
+> +++ b/hw/arm/xilinx_zynq.c
+> @@ -103,8 +103,6 @@ static void zynq_write_board_setup(ARMCPU *cpu,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sizeof(b=
+oard_setup_blob), BOARD_SETUP_ADDR);
+> =C2=A0}
+> =C2=A0
+> -static struct arm_boot_info zynq_binfo =3D {};
+> -
+> =C2=A0static void gem_init(uint32_t base, qemu_irq irq)
+> =C2=A0{
+> =C2=A0=C2=A0=C2=A0=C2=A0 DeviceState *dev;
+> @@ -268,7 +266,7 @@ static void zynq_init(MachineState *machine)
+> =C2=A0=C2=A0=C2=A0=C2=A0 busdev =3D SYS_BUS_DEVICE(dev);
+> =C2=A0=C2=A0=C2=A0=C2=A0 sysbus_realize_and_unref(busdev, &error_fatal);
+> =C2=A0=C2=A0=C2=A0=C2=A0 sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.gic_cpu_if_addr =3D MPCORE_PERIPHBASE + 0x=
+100;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.gic_cpu_if_addr =3D MPCORE_PER=
+IPHBASE +
+> 0x100;
+> =C2=A0=C2=A0=C2=A0=C2=A0 sysbus_create_varargs("l2x0", MPCORE_PERIPHBASE =
++ 0x2000, NULL);
+> =C2=A0=C2=A0=C2=A0=C2=A0 for (n =3D 0; n < smp_cpus; n++) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* See "hw/intc/arm_gic.=
+h" for the IRQ line association */
+> @@ -444,13 +442,14 @@ static void zynq_init(MachineState *machine)
+> =C2=A0=C2=A0=C2=A0=C2=A0 create_unimplemented_device("zynq.qos301_dmac", =
+0xF8947000,
+> 0x130);
+> =C2=A0=C2=A0=C2=A0=C2=A0 create_unimplemented_device("zynq.qos301_iou", 0=
+xF8948000,
+> 0x130);
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.ram_size =3D machine->ram_size;
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.board_id =3D 0xd32;
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.loader_start =3D 0;
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.board_setup_addr =3D BOARD_SETUP_ADDR;
+> -=C2=A0=C2=A0=C2=A0 zynq_binfo.write_board_setup =3D zynq_write_board_set=
+up;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.ram_size =3D machine->ram_size=
+;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.board_id =3D 0xd32;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.loader_start =3D 0;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.board_setup_addr =3D BOARD_SET=
+UP_ADDR;
+> +=C2=A0=C2=A0=C2=A0 zynq_machine->bootinfo.write_board_setup =3D
+> zynq_write_board_setup;
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 arm_load_kernel(zynq_machine->cpu[0], machine, &zynq_=
+binfo);
+> +=C2=A0=C2=A0=C2=A0 arm_load_kernel(zynq_machine->cpu[0], machine,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &zynq_machine->bootinfo);
+> =C2=A0}
+> =C2=A0
+> =C2=A0static void zynq_machine_class_init(ObjectClass *oc, const void
+> *data)
+> diff --git a/include/hw/arm/xilinx_zynq.h
+> b/include/hw/arm/xilinx_zynq.h
+> index cefb7789ff..669c516ad1 100644
+> --- a/include/hw/arm/xilinx_zynq.h
+> +++ b/include/hw/arm/xilinx_zynq.h
+> @@ -14,6 +14,7 @@
+> =C2=A0
+> =C2=A0#include "target/arm/cpu-qom.h"
+> =C2=A0#include "hw/core/qdev-clock.h"
+> +#include "hw/arm/boot.h"
+> =C2=A0
+> =C2=A0#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
+> =C2=A0OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
+> @@ -25,6 +26,7 @@ struct ZynqMachineState {
+> =C2=A0=C2=A0=C2=A0=C2=A0 Clock *ps_clk;
+> =C2=A0=C2=A0=C2=A0=C2=A0 ARMCPU *cpu[ZYNQ_MAX_CPUS];
+> =C2=A0=C2=A0=C2=A0=C2=A0 uint8_t boot_mode;
+> +=C2=A0=C2=A0=C2=A0 struct arm_boot_info bootinfo;
+> =C2=A0};
+> =C2=A0
+> =C2=A0#endif /* QEMU_ARM_ZYNQ_H */
 
