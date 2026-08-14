@@ -4,144 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC296C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 00:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39409C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 01:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wug5S-0005fG-EH; Thu, 13 Aug 2026 20:47:54 -0400
+	id 1wugQ5-00083W-Au; Thu, 13 Aug 2026 21:09:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wug5Q-0005f6-OK
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 20:47:52 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wug5O-0007bI-8C
- for qemu-devel@nongnu.org; Thu, 13 Aug 2026 20:47:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lsNT5hr8j/i5yKitnqrGrkWVsaf8ts3kYG/XOB4nt+93Z1tuI8dqFHl7CbIqbeFCclcoHV/NbCgrVfGLiEP1ryZorjPlYVGrW/VZPcQt0U88Pe9dz8Q75GtrVFYnlDTGtc/OAAk/le5XDqulQDkH7lpZ/GXlqwN3HXWKUlujdgqiKy22x+W0HW6d8tSjXyDf9BTiroo3lfC34b5AD3Qk53xqXn8DYQ2tecJkmYrB0kV+DUe29a9pjwdQUaelFViVZYtFycWxQYao0RAbkIHgiUdx8oQuLIr5Q3PZtFRoGA1thirJAqCEQcG7poucg6Y1yUbdsOcBkakLKF+dLOv7Gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YuKBdl/NuxVVDLKxqkglX7lAPF1b0R27GPl9w4UNfnQ=;
- b=S5d6LJkTCiyCdW0k1CQ9nwjQawunyErB+LKhrAqe/mJBKy/sbdEnTRZARoDfnLzgkAWQOWg2D6TV7bjyj1cH/HHz0gyDSlxTewy9KO4yy3kkpUem79iE8nRgbSJX/Ecy9g9J1XoSikuguaUQm9c7Bsyb3tIvg9pRud0ajkOACVmu7QpRaatYlskDCTv2Mw+amWszXfnk3q3WZTYUZ7tjbxy3lHW3NbR8ceQwy40PgCSaWxC0J4XrGPP22LU0HjiwIK7LjCnHYWwRz9RAc+mU9onVPXUPLRuHQFFvPzUQp9dY7pUoVEXawZ2BBpZzq9EeaN5EK2zryqnHkxztooiwGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YuKBdl/NuxVVDLKxqkglX7lAPF1b0R27GPl9w4UNfnQ=;
- b=heCd0ECLx901eTOQR2oa4xuiGS/j6dzATimPFLB18CwZGxwA1RtIX3zj079yzCccvfzo98CDQtIP9vODJcgHF9OC+deaKDDrpN+pzuDRJaayvisICIkpRPSNDn7zuMrz0mspeATfX8rbGsoqLjRiwQ9zEDoJUK6QCdSQJKjoG6qvKOjq8KGWRfLAjG/TI8TH+WbyRoNKKzkzWhefviyb5kDATUsX6MZ1GW5+ZnCwYwzhqkkuFoxizt+5CM+M9B8AEytpj+XifO24Rf9KwiiYUEx+1tesYLa6/MYYykDuRA9IxdsXs831avPf+F1QhWK15UtCAo3bTWHXFSsxOUwbOw==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by SG2PR06MB5214.apcprd06.prod.outlook.com (2603:1096:4:1d3::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Fri, 14 Aug
- 2026 00:47:40 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 00:47:39 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@oss.qualcomm.com>,
- "clg@redhat.com" <clg@redhat.com>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@mailo.com>, Paolo
- Bonzini <pbonzini@redhat.com>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "clg@kaod.org" <clg@kaod.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in async
- writeback
-Thread-Topic: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in
- async writeback
-Thread-Index: AQHdKvSrYy6CS2yN20qVd8jbUP7gcbabul8AgAD7jRA=
-Date: Fri, 14 Aug 2026 00:47:39 +0000
-Message-ID: <TYZPR06MB49808E3AB5205940589E3CF6FCDA2@TYZPR06MB4980.apcprd06.prod.outlook.com>
-References: <20260813072340.637657-1-jamin_lin@aspeedtech.com>
- <0ab8c434-cb0f-48d8-ae00-b329c7c742b9@oss.qualcomm.com>
-In-Reply-To: <0ab8c434-cb0f-48d8-ae00-b329c7c742b9@oss.qualcomm.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SG2PR06MB5214:EE_
-x-ms-office365-filtering-correlation-id: d4ae608e-8bf9-4747-62cb-08def99da45a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|23010399003|376014|10067099003|56012099006|38070700021|4143699003|22082099003|18002099003;
-x-microsoft-antispam-message-info: Xy1/KNjP6VzWgfhFDQXjg9OPNQWGykzmDuYJZA2T1veU3dc5KcBQZq7YghJDQLXKRhZ/sGJJOoCscCQNVsa9LdBEfkJI8ieHDzJIZQnwRXqSz3kVT2V1eE71uw8hVGbKBsM9XZ5LKIPcYAkVVTCO6926EUIo4MykVDHwvjGssM29bOCBNZ8QpLCb3vF1/jIouN91DExipj4RO6N42M15CgnzPt82Ox60ZHW8nCEiFbyLdl0hg6Sxkz/EQN2k52cvGpB2mvmpSPdK7fIh4niFASV9mNZhDmV4phOe5zusaWFrgpq9Y7ClVWG8rOCA6Eh+esfrHRnNsNJZb+6fiGCP3B2kE2rMSk8XmeYZusg1yWz3+BCQ4ZR+Bje6/27OpgB0kfOOp88okV4iPstKgKa+n4Ym08xK8GzchSSmxSQo1ovi8F1HBACOBXhvva7s7eRgXLjbCdfVdOfNyLwl+W8sZy7u6CsLFDO2P6BpoWSULoiwlV0rXaBPUWPqMegGlyc+nIshjndyGKeLj9VZ024cqW7eZD8Qa09IwPJOvpldUNM/wSZrVqvp4OBcZl4gy+5dHhfsO6ZYu5g/vAl+qr2puBWqc308fJ9+AkoVlBjZncXDjhWsCMDp/TvcY8XYBynS5G/4y4XwRATZ5fLuSG700QPZLOp2EDDqLTmfUTRxbyS9nyzpKigCmSt3z5MPVgvEEPOhQvILM+2NcppSus7d8Z6Kr2OAfABVnpmR9Dk1X9U=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(10067099003)(56012099006)(38070700021)(4143699003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L1UzOENzVWdIRnVXMWN3M0dkMXZrYk5mV2RaZFFtRzh2VXo1VVIxTmt4b0NX?=
- =?utf-8?B?VTRlT0ZJbWJiaXp6ZzVIbnVQVm82c2JuQmk0M29WOEJzaGsvaFpkTDZvN3JB?=
- =?utf-8?B?bzJ4RUF4VXJiTVl3YzJBNUF1Rnl4OWdZbWZhaVhqU0tGaEFsN3BMOUFzRHhM?=
- =?utf-8?B?QkNjQ1NWZlg1b0JpWVFDVmRvTWc5NlExSDBrQlJncVFseVhIUXd0UGo2MmJH?=
- =?utf-8?B?dXBhM29wT0xwVk52eXRQeEw1Sm9tanN5eitPRnRIK09jTkpwT0J6a29EbVdW?=
- =?utf-8?B?MXhmT0tQQjY5UjJGOENrc0tjejR5V1lJMWxYbmFjQ1h3OHBOY1dKT0s4d29F?=
- =?utf-8?B?MGRwQXZXSGdJRnNaNzdjQkYza2tNWElsTnFGa2NEcWhBK29EYkk3bW0yY09L?=
- =?utf-8?B?YmRrME0vbVdvK1VCYnkxTnh4V0ZYQ0xsZFltZmRYT3ZXODlrRTg1SnBHQlpN?=
- =?utf-8?B?cXZZUkx2MXVyUFRZRzF2YzdUZEV4YnRzUEN2cFowVDNUQzVFbTJjbkEwWnZT?=
- =?utf-8?B?Z2Jlbmp6UnlVbEFRb1g0SXR5dyszK215MGNjZVVlUEFIUjU3cjNZYkdkYjRw?=
- =?utf-8?B?alZYY2YxS1VsVjBUVm5LRlA4a1Z3TlJ2eVErZkZMY2dsbS9GUEtVLzFSQ0Ey?=
- =?utf-8?B?TFc3aENPNkVnUldadHdhYWo2QXNJUUlud25zVGRqbzhkeDlIaGJEdXBxYmd5?=
- =?utf-8?B?bERiUStSNXZFZW9SWE9Sall3bHV6M2NsMDZxbzMzVSt1TlRtRXExTGNWSDVV?=
- =?utf-8?B?aHA5NmwyRlhVMjh5VW16ZWk2WWVoQVZPdEEzWWlxQm1nUkVLTGk4MGgvQlJY?=
- =?utf-8?B?VDU1SmRLSUtHWHkwL0IyR1k3MEhINTY2dXgvc2pZQUJFVjkraEJMdzFDYXNS?=
- =?utf-8?B?bnF6aVllNXZoWEltS1dhL1ZqU0VrOURlcktXQnlBRE41b3pRRXFGanBjcWcz?=
- =?utf-8?B?b3oyWTUvWTVlSDBxYXZKLzE1MVVodHZmcENMVFZFdTlxYWt6L3AwcGpHSEJH?=
- =?utf-8?B?MDhKVUZ5cnVCNlprcHVZck9WTmliTmZOS0hLTGJreXNreW90YmJYaHdBa3BU?=
- =?utf-8?B?czJNNHdGM1VGcTQzMEtqczZWU3c2MHhqVnBzZWowT2w3dXhGdnNlYXRHRlUv?=
- =?utf-8?B?T3F6dTFuUVJpbUxraGpIWUdYWTZualA3MVhNSmJpQjR3MjFpM2lpUUVLU21u?=
- =?utf-8?B?eFVDZENCNnJtZ1FoK2d1c2hOVkFlZFFCdjVKYUF0amU3SnZCUktCQ3QvUXZ3?=
- =?utf-8?B?ellHVEY2cGZSK1I0VjBDQ0pOcUlhcE5vakpzRnhaMDdXdk5ianZyTFprN3dE?=
- =?utf-8?B?VlJtODQ1bFVBRWxuTFBXditKdTZ5eEJYV245NGI3Wk4yMzNxL0xiR2RnMjNa?=
- =?utf-8?B?KzlybHJzd2pKV0VNTVVUVHhYU1RmMFduNWMvS3hwdFVDbndIVlJFU3F6endR?=
- =?utf-8?B?QUdmemVGZVBiYkprRHp6RTZNdW9LcGJsc05jaGhiVVJ0UW9JaUZzMVpmKzc1?=
- =?utf-8?B?K0s0Mi9raHFUZWswL3kyL1dITVJ6QjM2VEZhbkRYZnNjU0QxZ2x2WnN5VGlU?=
- =?utf-8?B?Y3hSQWJQNm5sUGoyYXdPbHdHNjZkcUFLQnZ0NXNWYUd6Y0RiN3l6cUpBNDEx?=
- =?utf-8?B?YUxtd0FsQ0ZPdjVNa0x0dGVDRS91YmNHMHBVR3NtSEk0MVErRjdBOS8vUEZN?=
- =?utf-8?B?NDF1UDhiN2xSMVpEcm1rWDNOV0M5VHRYZ3A4NlVxd3JLeHRDbnVFd2VkMVZy?=
- =?utf-8?B?ZWtzYTd2K09SbW9QS05GZlBWeCsrYlFSazRDU1JWOWJnd1IvVHhXc0pJZFFt?=
- =?utf-8?B?aVY3MXV4ZVI2N21GZXVBaDM1VG9LeDFwbnJLeHFVY2xIVnkwc3lFRnUwYnBC?=
- =?utf-8?B?cndvQVM3c3VqTDE0QmxwMEdpaFczT21URUxUWndUYkZqaDlVcy9hWFQvRWN1?=
- =?utf-8?B?NDc4ZmluYUxOUC9LRjNxdVhJSnJLYzRFZUtBYVgrV0FDd3ZreWtmWlVvSUFa?=
- =?utf-8?B?cElOQzZqbjFheVNuUGE0RFd5UWw1Qnp4ZVpwaVJxVEQyVkQ5UHVHeDZCQTli?=
- =?utf-8?B?ZUF1N01uZ2lsZSt3ekVJNE5Ib1FuQTV4MkxPMlBML3VyU29QSll6VjBaVHBi?=
- =?utf-8?B?NFgrOGhoc2RBdG50Unp1QVVINzZ0TlJFSFpqTDM3Z2hsOTdVVDY0ZEd5OStv?=
- =?utf-8?B?VlZBVFF3N0lQT3FLSmt6WjgzdzR5TnRYYjBBOHUxNU9MOTVtbjI1bG5FUXl3?=
- =?utf-8?B?M043OWh6UnBaODE2T1pzWWFYN203amVLVjd1VC80VHVwWHdXbWNQNFd0QzN5?=
- =?utf-8?B?RWovSVludVNuSlFVaHVFUk9zMlgvOERrMjkrNmM5OWRuMmhRRVVpdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wugPz-000813-0j
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 21:09:08 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wugPx-0001cy-3Q
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 21:09:06 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-39c953950dfso3935361fa.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 18:09:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786669741; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bJQpt0mio/SEBDkPJopFjhwqzsRHBxiwmupoPU2S99Z3wF2jevOEnZuZNRLgn2d63O
+ bCDjoCo7AXiT3yNFg5BHfSV2FY14HxlmiDxJ6RnO4CMT24OijbRnFZfdQVXGecyvw/wS
+ L4l+lY9qZGesReTVxSx5uVKOXPb5Q5QYGTnaTKhiBol/SJZUjCtpvp1LWoI+xWeJBtVB
+ fw4c/ijFruVjpkNQj4dzqBRUwEJA+fXcfZkeGyhNCJODmjr4ujdMtIony4FxH3uNsI3R
+ VKuehLe0yuTgrLBeWhopNlSss02MJlGkgqIblSZFY69TXSFYZJDEzErvd/orQorTY03w
+ ZaYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
+ fh=1CqkjN8Um0ylFfNHuTEBIg+39t7zmW9dKsKeQ2FICMw=;
+ b=IEke8BAHKaplt4pUf9V07YjYBf8yJ5f0zEsiYXxsRkunVPP/AsvCXC9WVX01tbyhi+
+ 24+g7kXFbBZ9lp05cc8b4tY+5lc0klrp0lMt+ctTKf7JYkNZlUGPfk+fIToR9i2QzTTd
+ GtlerZ6f+4g8efwP6KDiaMwB2qWEb9OEjPA6XI1Y45AD5K+Lh3GvmKuHYrzaZrss1Jlt
+ gsmKFrdh48PQt1L1BmtZ9xD8IzehvPDfHVgZ79alSUECOrDC5P6E/hy9agF6xfYD3dZK
+ a7bFwHaV9cDIcgIJSXoiJniIupVYEJruJpk7+pS52/21bpCV6Ht+zkNJ7+VoiKnIO8aM
+ H42A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bitdeer.com; s=google; t=1786669741; x=1787274541; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
+ b=ml+0HCyhbGGK3zAeN3YTrTC6fZY42POKqeUhZun7YmPfqKNLCI71mQEZqCsJks8+tK
+ NFuEE/pJqc+kGmQ5zGfg4g2pNAQO9tjxib6Xnboi/aGWlcfefR4jghmS+YM3TbBkUl7+
+ iClhJYYgS4OVjwtQB7PIjDwBaqOuCWKWs7h6WSrqiCyK0NlnCEvVDeCn3qYyqaoifXgM
+ NhHq20hO7z9xnMxd9kN8wTPgI802FIyhqN/L2qdfNUd/McyXqqD9BQQ4PjYl9mO6Ap5R
+ 5pPQJY7z4JsJa11WIpw0dEPZ+f9GSlZu5UwTBEMxcL7iEIU+5HDOCGRGj2Ra+K8D742X
+ Tzjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786669741; x=1787274541;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=h+r01o2zpiNjFq1GvIQlvTkWum+F5eUto/ae6Y7m77g=;
+ b=Xve1IJECmrmpkOVmASYcddcCnffN+vbIdsDfbe24NZseIchPRF/Zc48OHWsYfzZlbQ
+ DX/+Su57hPAAnadJW0LevouansIPvXIVB3zPscfWSVsF2N5qkVuSENhd8KWrOMtNnU0e
+ 3T9doKtkqSPths0ODflH6UgTUaJCnhzqzJrCiA/wIO3Vx/YQ/A3FIoTlGgIDfOwVba0J
+ 2NxLDnyRcfW6On1/QhTK+8RewxtWJWuEtyWva4ReyqXVh5sfsbQd02sXY3Fc3LPs0bn0
+ /2lXyFqzVAmu7AcvL1KgrHYuiWCVLD6XDFunLFrm15nhsehLXrsn4uqgltmx+61wJxHz
+ wiCw==
+X-Gm-Message-State: AOJu0YzO/jnpmHI0ZmnV61uBA6EhPdl16nejJsoqMPSCnUYRxjKTh1Dx
+ 3SxO8+d4v8k52kjbtBCalsuRVzGrULULnXTnAfklwh3eRvuLfLh/HVP81aWoRC1nRfcZRLrvDUl
+ FksrQ7S1dHmz0DQALs6qPUQ4raAfxX+RoEgeFtEKjMA==
+X-Gm-Gg: AR+sD10S0cbjqiwIoRY6SIzUv/Dv20tPO1tjn1BzIQjd0pRsZxLMeQtooMLCg6n5wG9
+ iAoPws2ObZyScj2lsPfMPHkwROfgI1unIynPmUh8T37bBApFr2slUWWwXWxp/WwFEgKzue0ByZT
+ qywVMtgaEqtf5TnpAWjxmITji3qNoSyt2hYCSsr7q1xs5cYS/wKyx4i8Z1Vtx1HAKGyU+uNTGRg
+ KAjeMrYzUju/W/13sq6CsaP59PblfglnEs++efSZxbAK3lq3zDPz6WHXcpowJ/xptdFhe+QTcnn
+ CE5keXLekQlQL1wtc1TuTQm6vugFHQmEyxbzy8jaFHja
+X-Received: by 2002:a2e:bc15:0:b0:39f:119b:cb36 with SMTP id
+ 38308e7fff4ca-3a1324bceaamr1925071fa.20.1786669741436; Thu, 13 Aug 2026
+ 18:09:01 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4ae608e-8bf9-4747-62cb-08def99da45a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2026 00:47:39.3880 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0VrGYk+tTw2rb73GGdLOYP5CzzNbA3fj8oBNBy7tBgEvbMWefbz5wgmjA0o40wHvzIbor6SrgVCPD/4MpH3QKqVa+BB7B4XAZvYAN+a3n2E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5214
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+References: <20260812211708.92824-1-philmd@oss.qualcomm.com>
+ <20260812211708.92824-14-philmd@oss.qualcomm.com>
+In-Reply-To: <20260812211708.92824-14-philmd@oss.qualcomm.com>
+From: Hy Man <infra.ai.cloud@bitdeer.com>
+Date: Fri, 14 Aug 2026 09:08:48 +0800
+X-Gm-Features: AUfX_mzLIX6waKK6NYbjsfQw0NLHpeLJRLgDgWu2a0Yq5_LUdYeKWxOXH4MzZdU
+Message-ID: <CAFWXh4yc+nFPTEe6m5uvgNq1kkkP7bie6N=VabjkTYnfzCYYfg@mail.gmail.com>
+Subject: Re: [PATCH v3 13/23] system/dirtylimit: Extract HMP code to
+ dirtylimit-hmp-cmds.c
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,27 +121,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KyBDw6lkcmljIExlIEdvYXRlciA8Y2xnQGthb2Qub3JnPg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVz
-c2FnZS0tLS0tDQo+IEZyb206IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAb3NzLnF1
-YWxjb21tLmNvbT4NCj4gU2VudDogVGh1cnNkYXksIEF1Z3VzdCAxMywgMjAyNiA1OjQzIFBNDQo+
-IFRvOiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT47IGNsZ0ByZWRoYXQuY29t
-OyBQaGlsaXBwZQ0KPiBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQG1haWxvLmNvbT47IFBhb2xvIEJv
-bnppbmkgPHBib256aW5pQHJlZGhhdC5jb20+Ow0KPiBvcGVuIGxpc3Q6QWxsIHBhdGNoZXMgQ0Mg
-aGVyZSA8cWVtdS1kZXZlbEBub25nbnUub3JnPg0KPiBDYzogVHJveSBMZWUgPHRyb3lfbGVlQGFz
-cGVlZHRlY2guY29tPg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxXSBody91c2IvaGNkLWVoY2k6
-IEhhbmRsZSBnZXRfZHdvcmRzKCkgZmFpbHVyZXMgaW4gYXN5bmMNCj4gd3JpdGViYWNrDQo+IA0K
-PiBPbiAxMy84LzI2IDA5OjIzLCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4gQ292ZXJpdHkgcmVwb3J0
-cyB0aGF0IGVoY2lfd3JpdGViYWNrX2FzeW5jX2NvbXBsZXRlX3BhY2tldCgpIGlnbm9yZXMNCj4g
-PiB0aGUgcmV0dXJuIHZhbHVlIG9mIGdldF9kd29yZHMoKSB3aGVuIHJlYWRpbmcgdGhlIFFIIGFu
-ZCBxVEQuDQo+ID4NCj4gPiBIYW5kbGUgcmVhZCBmYWlsdXJlcyBpbiB0aGUgc2FtZSB3YXkgYXMg
-UUggYW5kIHFURCB2ZXJpZmljYXRpb24NCj4gPiBmYWlsdXJlcyBieSBmcmVlaW5nIHRoZSBwYWNr
-ZXQgYW5kIHJldHVybmluZyBlYXJseS4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEphbWluIExp
-biA8amFtaW5fbGluQGFzcGVlZHRlY2guY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcvdXNiL2hjZC1l
-aGNpLmMgfCAxMCArKysrKy0tLS0tDQo+ID4gICAxIGZpbGUgY2hhbmdlZCwgNSBpbnNlcnRpb25z
-KCspLCA1IGRlbGV0aW9ucygtKQ0KPiANCj4gRml4ZXM6IDJiM2RlNmFkYTVkICgiZWhjaTogd3Jp
-dGViYWNrX2FzeW5jX2NvbXBsZXRlX3BhY2tldDogdmVyaWZ5IHFoIGFuZA0KPiBxdGQiKQ0KPiBS
-ZXZpZXdlZC1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBvc3MucXVhbGNvbW0u
-Y29tPg0KDQpUaGFua3MgZm9yIGFkZGluZyB0aGUgRml4ZXMgdGFnLg0KSeKAmXZlIGFsc28gYWRk
-ZWQgdGhlIFJlc29sdmVzIHRhZy4NCg0KUmVzb2x2ZXM6IENvdmVyaXR5IENJRCAxNjg1MjM2DQoN
-CkphbWluDQo=
+Reviewed-by: Hyman Huang <yong.huang@bitdeer.com>
+
+
+On Thu, Aug 13, 2026 at 5:18=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  MAINTAINERS                  |  1 +
+>  system/dirtylimit-hmp-cmds.c | 74 ++++++++++++++++++++++++++++++++++++
+>  system/dirtylimit.c          | 60 -----------------------------
+>  system/meson.build           |  1 +
+>  4 files changed, 76 insertions(+), 60 deletions(-)
+>  create mode 100644 system/dirtylimit-hmp-cmds.c
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4628793dde6..a33fbeebf61 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3858,6 +3858,7 @@ Migration dirty limit and dirty page rate
+>  M: Hyman Huang <infra.ai.cloud@bitdeer.com>
+>  S: Maintained
+>  F: system/dirtylimit.c
+> +F: system/dirtylimit-hmp-cmds.c
+>  F: include/system/dirtylimit.h
+>  F: migration/dirtyrate.c
+>  F: migration/dirtyrate.h
+> diff --git a/system/dirtylimit-hmp-cmds.c b/system/dirtylimit-hmp-cmds.c
+> new file mode 100644
+> index 00000000000..4928d57cc8e
+> --- /dev/null
+> +++ b/system/dirtylimit-hmp-cmds.c
+> @@ -0,0 +1,74 @@
+> +/*
+> + * HMP commands related to migration dirty page rate limit
+> + *
+> + * Copyright (c) 2022 CHINA TELECOM CO.,LTD.
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-commands-migration.h"
+> +#include "qobject/qdict.h"
+> +#include "monitor/hmp.h"
+> +#include "monitor/monitor.h"
+> +#include "system/dirtylimit.h"
+> +
+> +void hmp_cancel_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> +{
+> +    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
+> +    Error *err =3D NULL;
+> +
+> +    qmp_cancel_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, &err);
+> +    if (err) {
+> +        hmp_handle_error(mon, err);
+> +        return;
+> +    }
+> +
+> +    monitor_printf(mon, "[Please use 'info vcpu_dirty_limit' to query "
+> +                   "dirty limit for virtual CPU]\n");
+> +}
+> +
+> +void hmp_set_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> +{
+> +    int64_t dirty_rate =3D qdict_get_int(qdict, "dirty_rate");
+> +    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
+> +    Error *err =3D NULL;
+> +
+> +    if (dirty_rate < 0) {
+> +        error_setg(&err, "invalid dirty page limit %" PRId64, dirty_rate=
+);
+> +        goto out;
+> +    }
+> +
+> +    qmp_set_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, dirty_rat=
+e, &err);
+> +
+> +out:
+> +    hmp_handle_error(mon, err);
+> +}
+> +
+> +void hmp_info_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> +{
+> +    DirtyLimitInfoList *info;
+> +    g_autoptr(DirtyLimitInfoList) head =3D NULL;
+> +    Error *err =3D NULL;
+> +
+> +    if (!dirtylimit_in_service()) {
+> +        monitor_printf(mon, "Dirty page limit not enabled!\n");
+> +        return;
+> +    }
+> +
+> +    head =3D qmp_query_vcpu_dirty_limit(&err);
+> +    if (err) {
+> +        hmp_handle_error(mon, err);
+> +        return;
+> +    }
+> +
+> +    for (info =3D head; info !=3D NULL; info =3D info->next) {
+> +        monitor_printf(mon, "vcpu[%"PRIi64"], limit rate %"PRIi64 " (MB/=
+s),"
+> +                            " current rate %"PRIi64 " (MB/s)\n",
+> +                            info->value->cpu_index,
+> +                            info->value->limit_rate,
+> +                            info->value->current_rate);
+> +    }
+> +}
+> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+> index 50fa67f3d6a..70bb7bac2d0 100644
+> --- a/system/dirtylimit.c
+> +++ b/system/dirtylimit.c
+> @@ -17,8 +17,6 @@
+>  #include "qapi/error.h"
+>  #include "system/dirtyrate.h"
+>  #include "system/dirtylimit.h"
+> -#include "monitor/hmp.h"
+> -#include "monitor/monitor.h"
+>  #include "system/memory.h"
+>  #include "exec/target_page.h"
+>  #include "hw/core/boards.h"
+> @@ -491,21 +489,6 @@ void qmp_cancel_vcpu_dirty_limit(bool has_cpu_index,
+>      dirtylimit_state_unlock();
+>  }
+>
+> -void hmp_cancel_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> -{
+> -    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
+> -    Error *err =3D NULL;
+> -
+> -    qmp_cancel_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, &err);
+> -    if (err) {
+> -        hmp_handle_error(mon, err);
+> -        return;
+> -    }
+> -
+> -    monitor_printf(mon, "[Please use 'info vcpu_dirty_limit' to query "
+> -                   "dirty limit for virtual CPU]\n");
+> -}
+> -
+>  void qmp_set_vcpu_dirty_limit(bool has_cpu_index,
+>                                int64_t cpu_index,
+>                                uint64_t dirty_rate,
+> @@ -548,23 +531,6 @@ void qmp_set_vcpu_dirty_limit(bool has_cpu_index,
+>      dirtylimit_state_unlock();
+>  }
+>
+> -void hmp_set_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> -{
+> -    int64_t dirty_rate =3D qdict_get_int(qdict, "dirty_rate");
+> -    int64_t cpu_index =3D qdict_get_try_int(qdict, "cpu_index", -1);
+> -    Error *err =3D NULL;
+> -
+> -    if (dirty_rate < 0) {
+> -        error_setg(&err, "invalid dirty page limit %" PRId64, dirty_rate=
+);
+> -        goto out;
+> -    }
+> -
+> -    qmp_set_vcpu_dirty_limit(!!(cpu_index !=3D -1), cpu_index, dirty_rat=
+e, &err);
+> -
+> -out:
+> -    hmp_handle_error(mon, err);
+> -}
+> -
+>  /* Return the max throttle time of each virtual CPU */
+>  uint64_t dirtylimit_throttle_time_per_round(void)
+>  {
+> @@ -646,29 +612,3 @@ struct DirtyLimitInfoList *qmp_query_vcpu_dirty_limi=
+t(Error **errp)
+>  {
+>      return dirtylimit_query_all();
+>  }
+> -
+> -void hmp_info_vcpu_dirty_limit(Monitor *mon, const QDict *qdict)
+> -{
+> -    DirtyLimitInfoList *info;
+> -    g_autoptr(DirtyLimitInfoList) head =3D NULL;
+> -    Error *err =3D NULL;
+> -
+> -    if (!dirtylimit_in_service()) {
+> -        monitor_printf(mon, "Dirty page limit not enabled!\n");
+> -        return;
+> -    }
+> -
+> -    head =3D qmp_query_vcpu_dirty_limit(&err);
+> -    if (err) {
+> -        hmp_handle_error(mon, err);
+> -        return;
+> -    }
+> -
+> -    for (info =3D head; info !=3D NULL; info =3D info->next) {
+> -        monitor_printf(mon, "vcpu[%"PRIi64"], limit rate %"PRIi64 " (MB/=
+s),"
+> -                            " current rate %"PRIi64 " (MB/s)\n",
+> -                            info->value->cpu_index,
+> -                            info->value->limit_rate,
+> -                            info->value->current_rate);
+> -    }
+> -}
+> diff --git a/system/meson.build b/system/meson.build
+> index cd3193d170b..377adce8035 100644
+> --- a/system/meson.build
+> +++ b/system/meson.build
+> @@ -9,6 +9,7 @@ system_ss.add(files(
+>    'cpus.c',
+>    'cpu-timers.c',
+>    'dirtylimit.c',
+> +  'dirtylimit-hmp-cmds.c',
+>    'dma-helpers.c',
+>    'exit-with-parent.c',
+>    'globals.c',
+> --
+> 2.53.0
+>
 
