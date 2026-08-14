@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78233C5CFDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5E3C5DF6A
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 17:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuw1x-0004Gy-OK; Fri, 14 Aug 2026 13:49:21 -0400
+	id 1wuw1u-0004GY-C3; Fri, 14 Aug 2026 13:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wuw1w-0004Gl-HC
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 13:49:20 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wuw1s-0004GN-ND
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 13:49:16 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wuw1v-0007x6-4b
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 13:49:20 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2cca0c5799eso12817715ad.0
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 10:49:18 -0700 (PDT)
+ id 1wuw1r-0007w7-89
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 13:49:16 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38dd55ad76cso1350263a91.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 10:49:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786729758; x=1787334558; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786729754; x=1787334554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Hyx0MSmriiqZnzNWR+feT0XuJTWw3S3P95V3QuChHSA=;
- b=X1QQs3AfKlyLHZnM7FFqNp5A0hHAx1Lfv64RNtAYF4RRd/aZoou0cIAG7zfjhXJigd
- bEflTKDJ+zpxzuX2l2UJegDa6goM+xNNPr0q+9zXwxxFd5OV8GRriqpBJKIw6Sn8+oa9
- FQxwdkwq6nwrdQVgJT2Ki5Pqul8kfM6k6zOcSZNDzbsqWcS94lOP1CPDL/DJp0d1a2gQ
- 0ay+sTdZMVsxnTJ/eWUVVh//hXM1YqvsdzOtmN6jrcm2jNyQzVedN1heAHL8U31sS6PR
- x0I6+R5zV/bOIYOC4rZcXEc3wIUzdCi+Re3mWs7JSOKvoR9zvYL4sXyjA3u6GYzhQhW7
- +14w==
+ bh=B8RUC1JCJT1IGRrGG9rSVZntTX017g3c7OdoveZ6uM8=;
+ b=VkWSc5jvdBPxQtDZAAyJ3I4v+19BHH3R4JtZuTmZRAOQepG5m9q+5GghC52RrZ+JQX
+ /nlL4HFsYnYhTPJ/1f4I6K7Qm6+vcYW8X8n8TtcIyKNWMReKlouKf/MTT2DyHuujscQS
+ 258FaBK+Ex0yvrVboIZgUGrhBx9nyRiSwDCuGBs/hBk49HeIbPr3EtK87endAdujAwjW
+ 9i7oO8VLY39XF4zcjdDam5I7sqh6Jzo1FX7XPfnKGK7dFz+xFRjgFs1eQDb/vTxkzmGQ
+ OeF3EK70fdWj/i54RHXI1b0NZTdeZug1CYrQ8ckW3aIgg55VK6nGafoda+/xqqk3AtmE
+ VEQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786729758; x=1787334558;
+ d=1e100.net; s=20251104; t=1786729754; x=1787334554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Hyx0MSmriiqZnzNWR+feT0XuJTWw3S3P95V3QuChHSA=;
- b=DFOf7JCvj3OtRIsMK+Kls1WDBXsSSwl7lBHtr0HakqDWQqOwGeWfwEhOKd+auxbCAi
- 5qVCKZ83x/i3rMko9rrWLx1+sutkSaNJJfRWMYvcxtd3Udk7/2DhI9n9dcu/LJNfcXR2
- ZWtbwJWUIMoy0PdGQlRCglQpuGlMPjc7UUMgc/Uel8Yv+0IF3zG7nAAuydY52mXCr8ZY
- 2Pc6wPnZDgc+QQ5iH9ebTpgLfeX+OHhB9qTCGuZSW0ThbxrmLvng0R8puVAB5mBsr1Se
- 8chE8doJnVFPhm85gP5H/yd5mAZ7hsVG0J0Ix56JoN2ovXXW40s/ULD+1BXpNfOtHun8
- Jw8Q==
-X-Gm-Message-State: AOJu0YwVXrWap+kC9qv+8AQH0vLIqtKIF+bhgBKMYgzDpk5oPr0tNhvu
- KBNsy9N8F3iTCPQl5dGgDWr13Y1+FgLk4mqk2pvRTPTPq6ENDAcgC/G0RIS+ibu8th+hpA==
-X-Gm-Gg: AR+sD12jVn38HyY7/E8b++zKkUvKBDIM3ZQweCp5g+/A3bHElMyZYdPCrpLHdG2xBTc
- KGkaoepMJ0Nix6d1ATYu6/orFtLlqayXGZBcfteXw/hobmhhKK5mc0nVuyfwkz4pE0zFzcaw78s
- 4KSvEzxNK2AEwpxiFduAzTQLjjtIo1NDaaySxY2x3ByDdMu2kPk3BObJiR4mMBB2YSgBdovPyAn
- wJtg6my/KRJ0Dj+0aX+cR31bENSahgnnzjTK2hj/xbqfWHjx7ewP4aPh+uhccqpx+ORgrtqjaK6
- dZrHhh6ht32BNsnuMncZ/Nwp4A8Es5poMsnLlNMJqVTnkZFuKf68jACQ/nV0G1SYmNizwwg6XBy
- PwdTQHmiHqg0+eLXADxBAPXgnv6iAtKBzmxJuA5RLUBC4RHtjWPA6XtQG9wpJwHUcyTC24j0pLV
- U6j3CAGgzPRNNg55UrY4ZZ75vKvMFodxkQ7m1JoiTffkA3gf2Cyht6Y07iSy+6/gStyEd2aRUEO
- ocqxiLrUTMfaiSptm4=
-X-Received: by 2002:a17:903:9cf:b0:2bf:27b2:4b80 with SMTP id
- d9443c01a7336-2d3b0d1302amr95401795ad.14.1786729757616; 
- Fri, 14 Aug 2026 10:49:17 -0700 (PDT)
+ bh=B8RUC1JCJT1IGRrGG9rSVZntTX017g3c7OdoveZ6uM8=;
+ b=iK97eEh4z/WjK955CIEpQ8Q4ExAgnkjgsCyfnR9mbfs1wDEZSV6V8jwZ0TgyXA9sJ8
+ FhwcvSGrPKMRKFkq+9RqZixVe4skIB/2Mwg5iSdBN0nA7f0ngwlA0EeSqXWEDveRAIpu
+ PyFrybddVIV1sCD+muK0w2Zz8xj0ULb0mYRD/XG5TIefu76Ukw0NDRcBZgAenTjSiIcm
+ GbjbcWXGTVu2ySJF5O+O3QSGUFfRNmiwop6PvdS5CYQP1ZN5nd+8c6UclQ8KfWSufDce
+ THmZFKZ3uLDGNqF/+n+KeRf9XSx/yAsOXbOxpW2nAq22+rxyY3DTz9+CXGNHAHebBfXH
+ zpsw==
+X-Gm-Message-State: AOJu0YyoRUQIzfVcIePkqJ77YUyIyeEZk3ACNsB/5K+PH2nInVTLsFAT
+ y6hkaUjLt+oERh6fp5FjzJHrR/6lClSZJS/gB/QdbdndUq73IETz623KWnkbfw==
+X-Gm-Gg: AR+sD13qZf7povaJ+so1NOz8jKnmy9C6TYjziSOFhWwftLl6McAdFF3v+n/AQqvfyp8
+ UFYqHoIQ2oijl8yA7U8JClEGTn1C3CvKX/Ia1dagaQvzXuO+Be9MZOZXVTeIwacLoFfFupEVgX6
+ hH8pVu+svmmB5PTChWzeqbGC7xL61QajKHLEOoq00NlCeqNgFjZIIyrWOFpjyTY9pz1rHUPd33q
+ 4EAFDeo5s53qqr21xBFh4DdTgs48TV23K8d5XFsFCSfmNEiEPiNZfyIFILh921cR1Sax5GLGNg6
+ 1AsNn8LoAfRwr4KzdJi1SMTVxRPa2Xe+Cthjkh54Fhs7qsAteLAfDiWPnw1xrV8u7V47s7zfK1h
+ F43B7IBWs5H27uPbM7NK0xMtSXv4DZnIVTbAupLLD98m9Sssn1dT1oL70IXK2eEKuXegJSRU9/U
+ DxLelItfL1Rp7e9UYQVkpUd+YV0vPi0Z+bR9w35disZAOnC4r1rlgK0ZGR4Mz9O8vVYCU/X2+U6
+ uCv9iez
+X-Received: by 2002:a17:90a:d407:b0:38e:4f42:d0d6 with SMTP id
+ 98e67ed59e1d1-3933b09f4f3mr6139427a91.12.1786729753702; 
+ Fri, 14 Aug 2026 10:49:13 -0700 (PDT)
 Received: from catgo-fnos.taila0cd24.ts.net ([104.28.233.73])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-320e9df03f9sm6708081eec.19.2026.08.14.10.49.14
+ 5a478bee46e88-320e9df03f9sm6708081eec.19.2026.08.14.10.49.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Aug 2026 10:49:17 -0700 (PDT)
+ Fri, 14 Aug 2026 10:49:13 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V12 10/15] virtio-balloon: Update tracking iothread users with
- holder
-Date: Sat, 15 Aug 2026 01:48:24 +0800
-Message-ID: <20260814174830.1691540-11-zhangckid@gmail.com>
+Subject: [PATCH V12 09/15] net/colo: track IOThread references using
+ path-based holder
+Date: Sat, 15 Aug 2026 01:48:23 +0800
+Message-ID: <20260814174830.1691540-10-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260814174830.1691540-1-zhangckid@gmail.com>
 References: <20260814174830.1691540-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=zhangckid@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: 26
 X-Spam_score: 2.6
 X-Spam_bar: ++
@@ -107,60 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace raw object_ref/unref calls with
-iothread_ref_and_get/unref_and_put_aio_context.
+Convert colo-compare to use the iothread_ref_and_get_aio_context() and
+iothread_unref_and_put_aio_context() APIs. This ensures that
+IOThread references are tracked using the COLO object's canonical
+QOM path as the holder ID.
+
+This refactoring improves IOThread lifecycle traceability and aligns
+the code with modern QEMU iothread reference management patterns.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- hw/virtio/virtio-balloon.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ net/colo-compare.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 4c5f486ba2..7c9c8d2a41 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -892,14 +892,20 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-     s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index 5986fb1e88..361ee32729 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -130,6 +130,7 @@ struct CompareState {
+     GHashTable *connection_track_table;
  
-     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-+        const IOThreadHolder io_holder = {
-+            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+            .u.qom_object.qom_path = path,
-+        };
+     IOThread *iothread;
++    AioContext *iothread_ctx;
+     GMainContext *worker_context;
+     QEMUTimer *packet_check_timer;
+ 
+@@ -922,9 +923,7 @@ void colo_notify_compares_event(void *opaque, int event, Error **errp)
+ 
+ static void colo_compare_timer_init(CompareState *s)
+ {
+-    AioContext *ctx = iothread_get_aio_context(s->iothread);
+-
+-    s->packet_check_timer = aio_timer_new(ctx, QEMU_CLOCK_HOST,
++    s->packet_check_timer = aio_timer_new(s->iothread_ctx, QEMU_CLOCK_HOST,
+                                 SCALE_MS, check_old_packet_regular,
+                                 s);
+     timer_mod(s->packet_check_timer, qemu_clock_get_ms(QEMU_CLOCK_HOST) +
+@@ -964,8 +963,15 @@ static void colo_compare_handle_event(void *opaque)
+ 
+ static void colo_compare_iothread(CompareState *s)
+ {
+-    AioContext *ctx = iothread_get_aio_context(s->iothread);
+-    object_ref(OBJECT(s->iothread));
++    g_autofree char *path = object_get_canonical_path(OBJECT(s));
++    const IOThreadHolder io_holder = {
++        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++        .u.qom_object.qom_path = path,
++    };
 +
-         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
-                                            virtio_balloon_handle_free_page_vq);
-         precopy_add_notifier(&s->free_page_hint_notify);
- 
--        object_ref(OBJECT(s->iothread));
--        s->free_page_bh = aio_bh_new_guarded(iothread_get_aio_context(s->iothread),
--                                             virtio_ballloon_get_free_page_hints, s,
--                                             &dev->mem_reentrancy_guard);
-+        s->free_page_bh = aio_bh_new_guarded(
-+                      iothread_ref_and_get_aio_context(s->iothread, &io_holder),
-+                      virtio_ballloon_get_free_page_hints, s,
-+                      &dev->mem_reentrancy_guard);
-     }
- 
-     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_REPORTING)) {
-@@ -919,9 +925,15 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
- 
-     qemu_unregister_resettable(OBJECT(dev));
-     if (s->free_page_bh) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-+        const IOThreadHolder io_holder = {
-+            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+            .u.qom_object.qom_path = path,
-+        };
++    AioContext *ctx = iothread_ref_and_get_aio_context(s->iothread, &io_holder);
 +
-         qemu_bh_delete(s->free_page_bh);
++    s->iothread_ctx = ctx;
+     s->worker_context = iothread_get_g_main_context(s->iothread);
+ 
+     qemu_chr_fe_set_handlers(&s->chr_pri_in, compare_chr_can_read,
+@@ -1404,6 +1410,7 @@ static void colo_compare_finalize(Object *obj)
+ {
+     CompareState *s = COLO_COMPARE(obj);
+     CompareState *tmp;
++    g_autofree char *path = object_get_canonical_path(OBJECT(s));
+ 
+     qemu_mutex_lock(&colo_compare_mutex);
+     QTAILQ_FOREACH(tmp, &net_compares, next) {
+@@ -1430,18 +1437,20 @@ static void colo_compare_finalize(Object *obj)
+     g_clear_pointer(&s->event_bh, qemu_bh_delete);
+ 
+     if (s->iothread) {
+-        AioContext *ctx = iothread_get_aio_context(s->iothread);
+-
+-        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
++        AIO_WAIT_WHILE(s->iothread_ctx, !s->out_sendco.done);
+         if (s->notify_dev) {
+-            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
++            AIO_WAIT_WHILE(s->iothread_ctx, !s->notify_sendco.done);
+         }
+ 
+         /* Release all unhandled packets after compare thread exited */
+         g_queue_foreach(&s->conn_list, colo_flush_packets, s);
+         AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
+ 
 -        object_unref(OBJECT(s->iothread));
-         virtio_balloon_free_page_stop(s);
++        const IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = path,
++        };
 +        iothread_unref_and_put_aio_context(s->iothread, &io_holder);
-         precopy_remove_notifier(&s->free_page_hint_notify);
      }
-     balloon_stats_destroy_timer(s);
+ 
+     g_queue_clear(&s->conn_list);
 -- 
 2.54.0
 
