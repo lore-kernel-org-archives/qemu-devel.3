@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41F8C5B572
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2584C5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuorF-0002bV-0u; Fri, 14 Aug 2026 06:09:49 -0400
+	id 1wup5I-0006qk-Pz; Fri, 14 Aug 2026 06:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wuor8-0002Zy-7c
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:09:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wuor4-0001ij-8R
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:09:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786702176;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=weNCvrYxiG1ry/VVeRBPbdMpdQuUb6BkoTQLxb0Mqas=;
- b=HyKYou2YcmzgNFfXMocUtvPxGZmURLMbBORCpaHginr/A2vxkVKxS5KiVuGFVa6utBl2mZ
- +Aj8RV2BwXYrRdqHy9mwWSvKy9MVxiAWJGZJ2cUFb5WT75+DMg6GYr94zxvO1hxM1+iRfR
- BSl2i2zr0PiTniD9W7ZXN/Gzae5B8e8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-Ym4cSchnN3iQCUNHilpgIw-1; Fri,
- 14 Aug 2026 06:09:33 -0400
-X-MC-Unique: Ym4cSchnN3iQCUNHilpgIw-1
-X-Mimecast-MFC-AGG-ID: Ym4cSchnN3iQCUNHilpgIw_1786702172
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F6C71956080; Fri, 14 Aug 2026 10:09:32 +0000 (UTC)
-Received: from thuth-p1g4.redhat.corp
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 01876422; Fri, 14 Aug 2026 10:09:30 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Subject: [PULL 6/6] hw/i386/amd_iommu: Avoid undefined behavior in
- amdvi_setevent_bits()
-Date: Fri, 14 Aug 2026 12:09:17 +0200
-Message-ID: <20260814100917.163448-7-thuth@redhat.com>
-In-Reply-To: <20260814100917.163448-1-thuth@redhat.com>
-References: <20260814100917.163448-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wup5H-0006op-GN
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:24:19 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1wup5F-0003Zb-EK
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:24:19 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3900e39d935so788754a91.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 03:24:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1786703055; x=1787307855; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=W3OKx8jnAFP/D/NKUHKpjVFXIZDJdsjTAwKwI6AXav8=;
+ b=TFy986CFCvAkdz00eEoHjUa9dqEElB9cG6zkSDrGVEna4LL5tjWszl7nk71Gl+lOI5
+ eS/0W8s5uNmbOjdxTBM0YSubOoAeo7DiCOl3bBXfmjxcJLl8hWTqYuwaQU459ele8rpc
+ /qY/DjQ4mkvPNv2S/XKRMqnSUV8tJToitUkI6//6yW/ZIT0xyIPGb+C1eDCcSjdeL0Bo
+ dJ30rrQwA722kpDn232ijQmwL88fpXgfsxynhOSTH0uP/QFl7BrEzIU3g7FUKBHv5jN5
+ oC53sOxyZUXK2D1LXvy+VK6At7oJr0YXpzA/Sc/fuLqe3vyDs9eWoC67C0r5wdWvYXT/
+ m8Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786703055; x=1787307855;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=W3OKx8jnAFP/D/NKUHKpjVFXIZDJdsjTAwKwI6AXav8=;
+ b=Sm1c9o0Vz7AyBrgyGTn39cHqdHDAsECHz8nOPI0dIIKcwO1iGZJwMSarD9ymYiSznd
+ KpMqHcW9hNrna9VnVirPn2oayULHXotYYKA6jdDCYm0YXEulSROf8jVnokzAq/UWXAQr
+ IGlMjqccFT5E8tyoYIsqIAxqlMxH5yQj41fuumFLmmq7FLEaAD5i2v9tpbf2oSWzKUB/
+ UPoi5FYZQtlZbvySLyCSJuClPFPXq/iGK6cgmDujOBV6jezAYXZWrIj9DiF9aOPFm0wi
+ W0xnW7aAh3r/gJcdFQNHUDrpmcDkwOPbnxXm3TRTHAMuufSCiHPHsSjaVAn7poluYJSa
+ G8wA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrohY2R+FeUbaAOQnu/8zwUOWSJmGh6AM2kPSJOuyfWPNVjW0Vl8ibqKgt6SEjUwu3Vu2xFSsJ++MbF@nongnu.org
+X-Gm-Message-State: AOJu0YxWXp3vClWvDqjwGjWnWU4eX09BbR8WzpsKVzKbYKfF7kbSqLtv
+ /o0ycR63BHamNAP0sn/yGEv0cqzrV61lQkeyfSqUxoq8X6ts1WKwgVI67y+uwhKq6WE=
+X-Gm-Gg: AR+sD12op5xmmPOkOvzZcdie3d2OZ36jqZo/UsPGlOK/tFnEEzZCac7nKmgTEuyFE+4
+ D9HbxC2IKsf2GQMBman7zfdbGLBAuUV4GCq7C8wbgYz07XzXC508JZYH7WIWOiVcUfwSqzpFsg0
+ ksiSRemXhgI3UCBb66q3wt94q/nFAZ4wY4ivaUAfng+jr/COXjWBY0hEu4rIXpagdicEFSX5UOG
+ ztTAsI2MCuPWNaPoWoKnuClMhc+UH6a5e3cMrST2vdLja+LfXxiz7cHTsPJQblWSRdJoPHu9Seh
+ F4RokTx87MGUQvDziO8v2Hxc7KtkWKQ0PuJMFjDqh8Lm5bJFCX45cOe4YXiBCFWo66FoW2tGDUW
+ oAxdN7Z5HbiSKetv9BcGZCJXMwya7swbGsu/aZLBh+2y6auga9+fOsYyK2d6Iwj17RzjnA7g6iC
+ pAO8R6SHRUU2VB1ExUIQELhisGssv8xb6o+b2ql1WoAIHv1FQQ05V40PSBmGyut4TTuh8S0mT0w
+ DQM7+fdBW6LFX+brifDceFKL8URyWyiffc=
+X-Received: by 2002:a17:90a:e7c1:b0:36a:8240:2477 with SMTP id
+ 98e67ed59e1d1-3933ed1ba09mr4661848a91.19.1786703055410; 
+ Fri, 14 Aug 2026 03:24:15 -0700 (PDT)
+Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-394eb7539d3sm2183480a91.15.2026.08.14.03.24.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Aug 2026 03:24:14 -0700 (PDT)
+Date: Fri, 14 Aug 2026 18:24:10 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, 
+ Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/riscv: Restore register dump zero padding
+Message-ID: <an7r7xkz0lppBISj@sifive.com>
+References: <20260813032421.54438-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.759,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260813032421.54438-1-joel@jms.id.au>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,45 +107,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code in amdvi_encode_event() calls amdvi_setevent_bits() with
-start = 64:
+On 2026-08-13 12:54, Joel Stanley wrote:
+> The register values lost their leading zeroes when the underlying type
+> was changed, resulting in mismatched padding and harder to read output.
+> 
+> Print with a runtime field width based on MXL, so values are 16 hex
+> digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
+> adding target_ulong back into the dump.
+> 
+> Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+> before:
+> 
+>  mvendorid     0000000000000000
+>  marchid       000000000000002a
+>  mimpid        0000000000000000
+>  mhartid       0000000000000000
+>  mconfigptr    0000000000000000
+>  x0/zero  0 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+>  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0 x7/t2    20646e65205b2d2d
+>  x8/s0    ff2000000000bc80 x9/s1    708 x10/a0   270f x11/a1   8
+>  x12/a2   0 x13/a3   120 x14/a4   14992a1 x15/a5   ffffffffffffffff
+>  x16/a6   fffff079 x17/a7   79 x18/s2   0 x19/s3   7d0
+>  x20/s4   ffffffff805ca228 x21/s5   31 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+>  x24/s8   0 x25/s9   ffffffff804e3e90 x26/s10  0 x27/s11  0
+>  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+>  fflags        0000000000000000
+>  frm           0000000000000000
+>  fcsr          0000000000000000
+>  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+>  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+>  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+>  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+>  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+>  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+>  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+>  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> 
+> after:
+> 
+>  mvendorid     0000000000000000
+>  marchid       000000000000002a
+>  mimpid        0000000000000000
+>  mhartid       0000000000000000
+>  mconfigptr    0000000000000000
+>  x0/zero  0000000000000000 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
+>  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0000000000000000 x7/t2    20646e65205b2d2d
+>  x8/s0    ff2000000000bc80 x9/s1    0000000000000e10 x10/a0   000000000000270f x11/a1   0000000000000008
+>  x12/a2   0000000000000000 x13/a3   0000000000000120 x14/a4   0000000002575fd6 x15/a5   ffffffffffffffff
+>  x16/a6   00000000fffff079 x17/a7   0000000000000079 x18/s2   0000000000000001 x19/s3   0000000000000ed8
+>  x20/s4   ffffffff805ca228 x21/s5   0000000000000060 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
+>  x24/s8   0000000000000000 x25/s9   ffffffff804e3e90 x26/s10  0000000000000000 x27/s11  0000000000000000
+>  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
+>  fflags        0000000000000000
+>  frm           0000000000000000
+>  fcsr          0000000000000000
+>  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
+>  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
+>  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
+>  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
+>  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
+>  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
+>  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
+>  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> 
+> I also wrote a patch to align the first column of register values, but
+> that creates the dilemma between aligning the numbers vs keeping the
+> spacing between the registers and their value within a row. Aside from
+> avoiding bikeshedding, it wastes more columns for an already wide
+> output, so opted not to 'fix' that.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  target/riscv/cpu.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 
-    amdvi_setevent_bits(evt, addr, 64, 64);
+Reviewed-by: Max Chou <max.chou@sifive.com>
 
-and amdvi_setevent_bits() then calculates:
-
-    uint64_t mask = MAKE_64BIT_MASK(start, length);
-
-but this MAKE_64BIT_MASK() macro shifts a value left by "start" bit
-positions. Shifting left by more than 63 is undefined behavior and
-could have unexpected results with different compilers / architectures.
-
-Fix it by using "bitpos" instead, which was likely the original
-intended behavior anyway. (bitpos is calculated as bitpos = start % 64).
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3633
-Fixes: 1d5b128cbeea ("hw/iommu: Fix problems reported by Coverity scan")
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260731140229.259272-1-thuth@redhat.com>
----
- hw/i386/amd_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 90252c52af4..578c27ccbef 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -323,7 +323,7 @@ static void amdvi_setevent_bits(uint64_t *buffer, uint64_t value, int start,
-                                 int length)
- {
-     int index = start / 64, bitpos = start % 64;
--    uint64_t mask = MAKE_64BIT_MASK(start, length);
-+    uint64_t mask = MAKE_64BIT_MASK(bitpos, length);
-     buffer[index] &= ~mask;
-     buffer[index] |= (value << bitpos) & mask;
- }
--- 
-2.55.0
-
+Thanks,
+rnax
 
