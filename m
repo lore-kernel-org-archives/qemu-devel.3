@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13314C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3734AC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wupSF-0002n6-TP; Fri, 14 Aug 2026 06:48:03 -0400
+	id 1wupU1-0003Pf-15; Fri, 14 Aug 2026 06:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupSE-0002mu-UQ; Fri, 14 Aug 2026 06:48:02 -0400
+ id 1wupTy-0003Op-J6; Fri, 14 Aug 2026 06:49:50 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupSB-0007FX-Jp; Fri, 14 Aug 2026 06:48:01 -0400
+ id 1wupTv-0007R1-U2; Fri, 14 Aug 2026 06:49:50 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67E82PEJ534480; Fri, 14 Aug 2026 10:47:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KqUIDr
- HWYJQHLVmzmeZfLpZdbBFSdsRTSb6S3nRU3dM=; b=QXHjtUcYRv8mdcj0Zx1GZI
- P383QQjFnFE8lIHlvzlxnlbX/TCN7kmFys2tW7cvg0iBs7qlYdqpFzpjZWhm/5kT
- razgGBcQvegYjKbzCQ476p2IIwCv3omVq+ZkEPUQxIz2LnEP0v+6ahyStrzrji3H
- +aNnDr2PV9+BYjPVlHLcCAZwNMINZrckzRQCcguGnxlLk/asMb27wL10XRvMnxw+
- KN0mIxBDPNQK8DP6FhYcODjKmg4iZa2zcs2qLSMaWJdgu2afTctl5+wK7+u55mK1
- a4aiWzY7IgK4U192EqEWoXrPMze3KEZTp7jviDfNn+pqT1g5cuIAAghKhEgRnNmA
+ 67E81YgO533164; Fri, 14 Aug 2026 10:49:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HRAQ1k
+ Ku4En4sm1UzHAyBs37IvRZ1PWyjkTT+XMN5uE=; b=mHXuSqguimfGgaKZ528EMF
+ HSXpY3W9MmbJ99Hnj9MHrKEZjgAGzgSQn1p8YIISdFxnjh8Ba8aiF8d368Fc/ELV
+ fqPo1bXJk1L2V7zNmkFaV/NS91Wio0p3iapu+fGQodmr/odcY4+MawCl/mp/+DfA
+ o0Z+Y++CKP8spv39IieihEAQqJzvxpPwuefTsyZY49/1q86faufnCd/a6hrwkC+C
+ XeBnFudQPZOLc/3zGP2W7dfTTMW1v9f4MTwkb0CgTYJ3Eol6lU3tlQPkSFmRQpb/
+ yPDkbS144rQd9QNPX0FPUB+MUe8GZtryUVx9bsAfKOUcI/3h7qoLMSCGx9ShhkfQ
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9vbde-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9vbkg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:47:46 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EAfeWW016198;
- Fri, 14 Aug 2026 10:47:45 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4fxh0gpufk-1
+ Fri, 14 Aug 2026 10:49:44 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EAffid000432;
+ Fri, 14 Aug 2026 10:49:43 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9hew5v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:47:45 +0000 (GMT)
+ Fri, 14 Aug 2026 10:49:43 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67EAliJm15139492
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67EAngoK20316678
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Aug 2026 10:47:44 GMT
+ Fri, 14 Aug 2026 10:49:42 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1869F58058;
- Fri, 14 Aug 2026 10:47:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1ECAB58058;
+ Fri, 14 Aug 2026 10:49:42 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10A1358059;
- Fri, 14 Aug 2026 10:47:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2FDCE5805C;
+ Fri, 14 Aug 2026 10:49:38 +0000 (GMT)
 Received: from [9.124.210.243] (unknown [9.124.210.243])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Aug 2026 10:47:39 +0000 (GMT)
-Message-ID: <9906f082-bc01-4ab6-9f10-5c546dc2bd46@linux.ibm.com>
-Date: Fri, 14 Aug 2026 16:17:37 +0530
+ Fri, 14 Aug 2026 10:49:37 +0000 (GMT)
+Message-ID: <8e1412e8-dd0f-486d-84d4-be1763a9c0f6@linux.ibm.com>
+Date: Fri, 14 Aug 2026 16:19:36 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] powernv: boot OpenBSD on POWER9
-To: "Kirill A. Korinsky" <kirill@korins.ky>, shivangu@linux.ibm.com,
- adityag@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- npiggin@gmail.com, harshpb@linux.ibm.com, milesg@linux.ibm.com,
- brad@comstyle.com
-References: <20260719145559.94342-1-kirill@korins.ky>
+Subject: Re: [PATCH 1/7] target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, tommusta@gmail.com, Glenn Miles
+ <milesg@linux.ibm.com>, Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: richard.henderson@linaro.org
+References: <20260715125634.2107320-1-rathc@linux.ibm.com>
+ <20260715125634.2107320-2-rathc@linux.ibm.com>
 Content-Language: en-US
 From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260719145559.94342-1-kirill@korins.ky>
+In-Reply-To: <20260715125634.2107320-2-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: sthLg9TOaHN68NxuNekoT-Q9GOXsL93r
-X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7ef252 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: siVbIz-jvpO1xJDnLCsaaRx69JxPi5AV
+X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7ef2c9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=ZXJNRhq1AAAA:8
- a=VnNF1IyMAAAA:8 a=cFAuUl7JGljrGlWkidAA:9 a=QEXdDO2ut3YA:10
- a=v5IQ3Wrm8lavPYTLLTww:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX/XPHnWquc9cu
- tma1eVQtbN3K4ASuXGcg0NGzCuJkiyYpLJ4X1Xxw9xGkphSRKsustCeJkMqP/AbOqkSIDfu1uvf
- L2EMH3GKs89GR02stPE7n49kosQ+iLBwqQAXDN8BMSVnCe6QwevVPQkOqbfsilI1n7rAy558CW+
- f7uvo/FgJ5GfDUuyk8VpOs0DUlsPOKTAc2rTlXMsvLBzFw081iAQRQmYUJDuBf76BHlROhsueP6
- nl06yrpJi1n3tVdXkkQDPcy+3zq898i4idtkjQxdXl7WioTzwgqkoIo0zCfcdOmJfuiQ6yzNIiu
- IJQ1Fa26J/U1grpx4enelKtjDjxOOD2kWB1zoBtkJBUtqABt5GYwY/SJIXsKe9QfZf7MhRUrOEd
- PWH9GSmF7TiqznodB6OqNzCVMA+bnHH8nzoYaoAkiu9ph3M1ESLctub5yDq9gkFetlFTqjTJZAd
- XAqKz86nY2fNbcPa9ow==
-X-Proofpoint-ORIG-GUID: LAMjxmIPB5UW64-8EL4u-ZXHUayrUcnT
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX6fcSfW/4ciH2
- oTanSSiY65k81maGCEFfgDyzQEHG/uEALfMb8fdIRk/h9Bgazh5lUzckmE979sxAnTOp7ERhisz
- Ug7U4X9Nnpz7DM3D0BV5PoSO4aBKDhU=
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=y_V3cqzgbyVwEE-ZGgcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX0Bmhr5IzJmWB
+ YVCgIei3CwYC0Cy2AjvkcAJw5R+W0mwNGviFZIZuIwdiAoIk2CSgw08+m/EBnyaZr7/M5H7VoOO
+ qpx4xyD9zDHGOBdgGg5gmQOTYgn6/usV7n+h761Jj6PYFTzx06j+dGEsWgxvVMCAXGf+CJ6nQ1a
+ k4AegVPbKeSas6w76X7Cy4FOrFK8zawdja3Gn/yQNAys7XsO/L6OlXhM9Z600EW3u+wlYRiookI
+ ICdcfCxfv7MCrplIE6Ck1myfrkB87AANn/d7Gd/8acwwxEkQUzO99Thb13hualrNHYMqNJaAMF4
+ v42HzVGI06yNeAIUM+7Csu+Ov/Tg8AsX/ijr1vy7i3/ayzvKVZgBvhtC3U76uMcLmUtgauzJr2K
+ jSW3+9sfBjrIiQsCvKMxcIc7em0rgo3Z3fMGMdqYCFXx1hLsLtbB2vkPyTgzw8TRdKV6SUGa3k+
+ Bz8QtgeiIlJX3BNLq/w==
+X-Proofpoint-ORIG-GUID: QWhYraO_MdcgahXaoXIRqON4YYn3I8js
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX+zTxpzVJuxL+
+ M7gbVX12/HUzMsH4bYFJOeAbz00nB9IZX3jT+nwhQC2476ACci0yqhxvozJN47eh3YnoqMYhyXk
+ 6TvfEz+gtHZEJv5VujVGNth6KXhb6Xo=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-14_03,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
- clxscore=1011 priorityscore=1501 suspectscore=0 phishscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
  lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608140080
@@ -127,189 +127,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ping,
+Could someone please help review this.
+cc: Shivang, Glenn.
 
-On 7/19/26 20:25, Kirill A. Korinsky wrote:
-> The POWER9 Processor User's Manual, section 4.9.4, specifies that POWER9
-> ignores PTCR[PATS] and only supports a 64 KiB partition table. Use an
-> effective PATS value of 4 on POWER9; other processors keep the existing
-> ISA v3.0 interpretation.
+On 7/15/26 18:26, Chinmay Rath wrote:
+> There are several flags for Power ISA 2.07 currently in use, namely :
+> PPC2_VSX207, PPC2_BCTAR_ISA207, PPC2_LSQ_ISA207, etc, but most of them
+> are used together without any individual use.
 >
-> The PSI model now exposes POWER9 IRQ level and pending status registers,
-> and keeps both updated while delivering through the existing XIVE LSI
-> source. This lets guests that select the POWER9 PSI LSI IRQ method
-> continue to receive LPC interrupts.
+> Create a generic ISA 2.07 flag and switch usage of PPC2_VSX207 to it
+> instead. Next commits would consolidate the remaining flags.
 >
-> The blast radius is probably minimal: the PTCR change is limited to
-> POWER9, while the PSI change only touches POWER9 PSI state and reuses
-> the existing delivery path.
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->   hw/ppc/pnv_psi.c                       | 11 ++++--
->   target/ppc/mmu-book3s-v3.c             | 21 +++++++++--
-Acked-by: Chinmay Rath <rathc@linux.ibm.com>
->   tests/functional/ppc64/meson.build     |  2 +
->   tests/functional/ppc64/test_openbsd.py | 52 ++++++++++++++++++++++++++
->   4 files changed, 79 insertions(+), 7 deletions(-)
->   create mode 100755 tests/functional/ppc64/test_openbsd.py
+>   target/ppc/cpu.h                    |  6 ++--
+>   target/ppc/cpu_init.c               |  2 +-
+>   target/ppc/cpu_init.h               |  2 +-
+>   target/ppc/translate/fp-impl.c.inc  |  4 +--
+>   target/ppc/translate/vsx-impl.c.inc | 56 ++++++++++++++---------------
+>   target/ppc/translate/vsx-ops.c.inc  | 24 ++++++-------
+>   6 files changed, 47 insertions(+), 47 deletions(-)
 >
-> diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-> index e8701c6100..39ec448f3c 100644
-> --- a/hw/ppc/pnv_psi.c
-> +++ b/hw/ppc/pnv_psi.c
-> @@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
->       case PSIHB9_ESB_CI_BASE:
->       case PSIHB9_ESB_NOTIF_ADDR:
->       case PSIHB9_IVT_OFFSET:
-> +    case PSIHB9_IRQ_LEVEL:
-> +    case PSIHB9_IRQ_STAT:
->           val = psi->regs[reg];
->           break;
->       default:
-> @@ -818,17 +820,20 @@ static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index cbd5964b1a..91ef34cb21 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -2565,8 +2565,8 @@ enum {
+>       PPC2_DBRX          = 0x0000000000000010ULL,
+>       /* Book I 2.05 PowerPC specification                                     */
+>       PPC2_ISA205        = 0x0000000000000020ULL,
+> -    /* VSX additions in ISA 2.07                                             */
+> -    PPC2_VSX207        = 0x0000000000000040ULL,
+> +    /* POWER ISA 2.07                                                        */
+> +    PPC2_ISA207        = 0x0000000000000040ULL,
+>       /* ISA 2.06B bpermd                                                      */
+>       PPC2_PERM_ISA206   = 0x0000000000000080ULL,
+>       /* ISA 2.06B divide extended variants                                    */
+> @@ -2607,7 +2607,7 @@ enum {
+>       PPC2_PPE42XM       = 0x0000000002000000ULL,
+>   
+>   #define PPC_TCG_INSNS2 (PPC2_BOOKE206 | PPC2_VSX | PPC2_PRCNTL | PPC2_DBRX | \
+> -                        PPC2_ISA205 | PPC2_VSX207 | PPC2_PERM_ISA206 | \
+> +                        PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
+>                           PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
+>                           PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
+>                           PPC2_BCTAR_ISA207 | PPC2_LSQ_ISA207 | \
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index f404c7e549..de33ac3a88 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -6346,7 +6346,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
+>                          PPC_SEGMENT_64B | PPC_SLBI |
+>                          PPC_POPCNTB | PPC_POPCNTWD |
+>                          PPC_CILDST;
+> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
+> +    pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
+>                           PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
+>                           PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
+>                           PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
+> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
+> index f8fd6ff5cd..1c41c0d349 100644
+> --- a/target/ppc/cpu_init.h
+> +++ b/target/ppc/cpu_init.h
+> @@ -15,7 +15,7 @@
+>   #define PPC_INSNS_FLAGS_POWER11 PPC_INSNS_FLAGS_POWER10
+>   
+>   #define PPC_INSNS_FLAGS2_POWER_COMMON                                \
+> -    (PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |                 \
+> +    (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
+>        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
+>        PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |   \
+>        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
+> diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
+> index 464fb1d90f..e0d9fa2e24 100644
+> --- a/target/ppc/translate/fp-impl.c.inc
+> +++ b/target/ppc/translate/fp-impl.c.inc
+> @@ -342,7 +342,7 @@ static bool trans_FCPSGN(DisasContext *ctx, arg_FCPSGN *a)
+>   static bool trans_FMRGEW(DisasContext *ctx, arg_FMRGEW *a)
 >   {
->       PnvPsi *psi = opaque;
->       uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
-> +    uint64_t irq_bit = PPC_BIT(irq);
->   
->       if (irq_method & PSIHB9_IRQ_METHOD) {
->           qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
->           return;
->       }
->   
-> -    /* Update LSI levels */
-> +    /* Update LSI levels and pending status */
->       if (state) {
-> -        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
-> +        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
-> +        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
->       } else {
-> -        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
-> +        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
-> +        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
->       }
->   
->       qemu_set_irq(psi->qirqs[irq], state);
-> diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
-> index 3865556310..f329a7a0f2 100644
-> --- a/target/ppc/mmu-book3s-v3.c
-> +++ b/target/ppc/mmu-book3s-v3.c
-> @@ -23,24 +23,37 @@
->   #include "mmu-hash64.h"
->   #include "mmu-book3s-v3.h"
->   
-> +#define PPC64_V3_PATE_SIZE 16 /* two 64-bit words */
-> +
->   bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+>       TCGv_i64 t0, t1, t2;
+> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
+>       REQUIRE_FPU(ctx);
+>       t0 = tcg_temp_new_i64();
+>       t1 = tcg_temp_new_i64();
+> @@ -358,7 +358,7 @@ static bool trans_FMRGEW(DisasContext *ctx, arg_FMRGEW *a)
+>   static bool trans_FMRGOW(DisasContext *ctx, arg_FMRGOW *a)
 >   {
->       uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
->       uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
-> +    uint64_t table_size;
-> +    uint64_t entries;
-> +
-> +    /*
-> +     * The POWER9 Processor User's Manual, section 4.9.4, specifies that
-> +     * POWER9 ignores PTCR[PATS] and only supports a 64 KiB partition table.
-> +     */
-> +    if (cpu->env.excp_model == POWERPC_EXCP_POWER9) {
-> +        pats = 4;
-> +    }
-> +    table_size = 1ULL << (pats + 12);
+>       TCGv_i64 t0, t1, t2;
+> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
+>       REQUIRE_FPU(ctx);
+>       t0 = tcg_temp_new_i64();
+>       t1 = tcg_temp_new_i64();
+> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+> index 00ad57c628..78311dcba9 100644
+> --- a/target/ppc/translate/vsx-impl.c.inc
+> +++ b/target/ppc/translate/vsx-impl.c.inc
+> @@ -50,11 +50,11 @@ static bool do_lxs(DisasContext *ctx, arg_X *a,
+>   }
 >   
->       /* Check if partition table is properly aligned */
-> -    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
-> +    if (patb & (table_size - 1)) {
->           return false;
->       }
+>   TRANS_FLAGS2(VSX, LXSDX, do_lxs, gen_qemu_ld64_i64);
+> -TRANS_FLAGS2(VSX207, LXSIWAX, do_lxs, gen_qemu_ld32s_i64);
+> +TRANS_FLAGS2(ISA207, LXSIWAX, do_lxs, gen_qemu_ld32s_i64);
+>   TRANS_FLAGS2(ISA300, LXSIBZX, do_lxs, gen_qemu_ld8u_i64);
+>   TRANS_FLAGS2(ISA300, LXSIHZX, do_lxs, gen_qemu_ld16u_i64);
+> -TRANS_FLAGS2(VSX207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
+> -TRANS_FLAGS2(VSX207, LXSSPX, do_lxs, gen_qemu_ld32fs);
+> +TRANS_FLAGS2(ISA207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
+> +TRANS_FLAGS2(ISA207, LXSSPX, do_lxs, gen_qemu_ld32fs);
 >   
->       /* Calculate number of entries */
-> -    pats = 1ull << (pats + 12 - 4);
-> -    if (pats <= lpid) {
-> +    entries = table_size / PPC64_V3_PATE_SIZE;
-> +    if (entries <= lpid) {
->           return false;
->       }
+>   static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
+>   {
+> @@ -304,8 +304,8 @@ static bool do_stxs(DisasContext *ctx, arg_X *a,
+>   TRANS_FLAGS2(VSX, STXSDX, do_stxs, gen_qemu_st64_i64);
+>   TRANS_FLAGS2(ISA300, STXSIBX, do_stxs, gen_qemu_st8_i64);
+>   TRANS_FLAGS2(ISA300, STXSIHX, do_stxs, gen_qemu_st16_i64);
+> -TRANS_FLAGS2(VSX207, STXSIWX, do_stxs, gen_qemu_st32_i64);
+> -TRANS_FLAGS2(VSX207, STXSSPX, do_stxs, gen_qemu_st32fs);
+> +TRANS_FLAGS2(ISA207, STXSIWX, do_stxs, gen_qemu_st32_i64);
+> +TRANS_FLAGS2(ISA207, STXSSPX, do_stxs, gen_qemu_st32fs);
 >   
->       /* Grab entry */
-> -    patb += 16 * lpid;
-> +    patb += PPC64_V3_PATE_SIZE * lpid;
->       entry->dw0 = ldq_phys(CPU(cpu)->as, patb);
->       entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
->       return true;
-> diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
-> index f0f8ab8f61..cb3c745624 100644
-> --- a/tests/functional/ppc64/meson.build
-> +++ b/tests/functional/ppc64/meson.build
-> @@ -4,6 +4,7 @@ test_ppc64_timeouts = {
->     'fadump' : 480,
->     'hv' : 1000,
->     'mac99' : 120,
-> +  'openbsd' : 240,
->     'powernv' : 480,
->     'pseries' : 480,
->     'replay' : 210,
-> @@ -20,6 +21,7 @@ tests_ppc64_system_thorough = [
->     'fadump',
->     'hv',
->     'mac99',
-> +  'openbsd',
->     'powernv',
->     'pseries',
->     'replay',
-> diff --git a/tests/functional/ppc64/test_openbsd.py b/tests/functional/ppc64/test_openbsd.py
-> new file mode 100755
-> index 0000000000..bdbef6bf82
-> --- /dev/null
-> +++ b/tests/functional/ppc64/test_openbsd.py
-> @@ -0,0 +1,52 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Test that OpenBSD boots on a ppc powernv machine and reaches the installer.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +
-> +
-> +class OpenBSDPowerNV(QemuSystemTest):
-> +
-> +    ASSET_MINIROOT = Asset(
-> +        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/miniroot79.img',
-> +        '7829e42b75d81cafd732038b9d63228b79c1f5828d8375872a4bb655e1d6b13c')
-> +
-> +    ASSET_BOOTKERNEL = Asset(
-> +        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/pnor.BOOTKERNEL',
-> +        '397ce43ce61910e1a2c4f13d301f957e61513a9ec5371bc3e87d3095411fae7b')
-> +
-> +    def test_powernv9_openbsd_installer(self):
-> +        self.set_machine('powernv9')
-> +        self.require_accelerator('tcg')
-> +
-> +        miniroot_path = self.ASSET_MINIROOT.fetch()
-> +        bootkernel_path = self.ASSET_BOOTKERNEL.fetch()
-> +
-> +        self.vm.set_console()
-> +        self.vm.add_args('-cpu', 'power9',
-> +                         '-accel', 'tcg,thread=single',
-> +                         '-smp', '1,cores=1,threads=1',
-> +                         '-m', '2g',
-> +                         '-kernel', bootkernel_path,
-> +                         '-device',
-> +                         'ich9-ahci,id=sata0,bus=pcie.0,addr=0x0',
-> +                         '-drive',
-> +                         f'file={miniroot_path},format=raw,if=none,'
-> +                         'id=bootdisk,snapshot=on',
-> +                         '-device',
-> +                         'ide-hd,bus=sata0.0,unit=0,drive=bootdisk,'
-> +                         'bootindex=1')
-> +        self.vm.launch()
-> +
-> +        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
-> +        wait_for_console_pattern(
-> +            self,
-> +            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
-> +            'panic:')
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
+>   static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
+>   {
+> @@ -988,7 +988,7 @@ GEN_VSX_HELPER_R2_AB(xscmpuqp, 0x04, 0x14, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_X2(xscvdphp, 0x16, 0x15, 0x11, PPC2_ISA300)
+>   GEN_VSX_HELPER_X2(xscvdpsp, 0x12, 0x10, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_R2(xscvdpqp, 0x04, 0x1A, 0x16, PPC2_ISA300)
+> -GEN_VSX_HELPER_XT_XB_ENV(xscvdpspn, 0x16, 0x10, 0, PPC2_VSX207)
+> +GEN_VSX_HELPER_XT_XB_ENV(xscvdpspn, 0x16, 0x10, 0, PPC2_ISA207)
+>   GEN_VSX_HELPER_R2(xscvqpsdz, 0x04, 0x1A, 0x19, PPC2_ISA300)
+>   GEN_VSX_HELPER_R2(xscvqpswz, 0x04, 0x1A, 0x09, PPC2_ISA300)
+>   GEN_VSX_HELPER_R2(xscvqpudz, 0x04, 0x1A, 0x11, PPC2_ISA300)
+> @@ -1185,7 +1185,7 @@ bool trans_XSCVSPDPN(DisasContext *ctx, arg_XX2 *a)
+>   {
+>       TCGv_i64 tmp;
+>   
+> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
+>       REQUIRE_VSX(ctx);
+>   
+>       tmp = tcg_temp_new_i64();
+> @@ -1210,16 +1210,16 @@ GEN_VSX_HELPER_X2(xsrdpic, 0x16, 0x06, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_X2(xsrdpim, 0x12, 0x07, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_X2(xsrdpip, 0x12, 0x06, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_X2(xsrdpiz, 0x12, 0x05, 0, PPC2_VSX)
+> -GEN_VSX_HELPER_XT_XB_ENV(xsrsp, 0x12, 0x11, 0, PPC2_VSX207)
+> +GEN_VSX_HELPER_XT_XB_ENV(xsrsp, 0x12, 0x11, 0, PPC2_ISA207)
+>   GEN_VSX_HELPER_R2(xsrqpi, 0x05, 0x00, 0, PPC2_ISA300)
+>   GEN_VSX_HELPER_R2(xsrqpxp, 0x05, 0x01, 0, PPC2_ISA300)
+>   GEN_VSX_HELPER_R2(xssqrtqp, 0x04, 0x19, 0x1B, PPC2_ISA300)
+>   GEN_VSX_HELPER_R3(xssubqp, 0x04, 0x10, 0, PPC2_ISA300)
+> -GEN_VSX_HELPER_X2(xsresp, 0x14, 0x01, 0, PPC2_VSX207)
+> -GEN_VSX_HELPER_X2(xssqrtsp, 0x16, 0x00, 0, PPC2_VSX207)
+> -GEN_VSX_HELPER_X2(xsrsqrtesp, 0x14, 0x00, 0, PPC2_VSX207)
+> -GEN_VSX_HELPER_X2(xscvsxdsp, 0x10, 0x13, 0, PPC2_VSX207)
+> -GEN_VSX_HELPER_X2(xscvuxdsp, 0x10, 0x12, 0, PPC2_VSX207)
+> +GEN_VSX_HELPER_X2(xsresp, 0x14, 0x01, 0, PPC2_ISA207)
+> +GEN_VSX_HELPER_X2(xssqrtsp, 0x16, 0x00, 0, PPC2_ISA207)
+> +GEN_VSX_HELPER_X2(xsrsqrtesp, 0x14, 0x00, 0, PPC2_ISA207)
+> +GEN_VSX_HELPER_X2(xscvsxdsp, 0x10, 0x13, 0, PPC2_ISA207)
+> +GEN_VSX_HELPER_X2(xscvuxdsp, 0x10, 0x12, 0, PPC2_ISA207)
+>   
+>   GEN_VSX_HELPER_X2(xvredp, 0x14, 0x0D, 0, PPC2_VSX)
+>   GEN_VSX_HELPER_X2(xvsqrtdp, 0x16, 0x0C, 0, PPC2_VSX)
+> @@ -1409,14 +1409,14 @@ TRANS_FLAGS2(VSX, XSNMADDADP, do_xsmadd_XX3, true, gen_helper_XSNMADDDP)
+>   TRANS_FLAGS2(VSX, XSNMADDMDP, do_xsmadd_XX3, false, gen_helper_XSNMADDDP)
+>   TRANS_FLAGS2(VSX, XSNMSUBADP, do_xsmadd_XX3, true, gen_helper_XSNMSUBDP)
+>   TRANS_FLAGS2(VSX, XSNMSUBMDP, do_xsmadd_XX3, false, gen_helper_XSNMSUBDP)
+> -TRANS_FLAGS2(VSX207, XSMADDASP, do_xsmadd_XX3, true, gen_helper_XSMADDSP)
+> -TRANS_FLAGS2(VSX207, XSMADDMSP, do_xsmadd_XX3, false, gen_helper_XSMADDSP)
+> -TRANS_FLAGS2(VSX207, XSMSUBASP, do_xsmadd_XX3, true, gen_helper_XSMSUBSP)
+> -TRANS_FLAGS2(VSX207, XSMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSMSUBSP)
+> -TRANS_FLAGS2(VSX207, XSNMADDASP, do_xsmadd_XX3, true, gen_helper_XSNMADDSP)
+> -TRANS_FLAGS2(VSX207, XSNMADDMSP, do_xsmadd_XX3, false, gen_helper_XSNMADDSP)
+> -TRANS_FLAGS2(VSX207, XSNMSUBASP, do_xsmadd_XX3, true, gen_helper_XSNMSUBSP)
+> -TRANS_FLAGS2(VSX207, XSNMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSNMSUBSP)
+> +TRANS_FLAGS2(ISA207, XSMADDASP, do_xsmadd_XX3, true, gen_helper_XSMADDSP)
+> +TRANS_FLAGS2(ISA207, XSMADDMSP, do_xsmadd_XX3, false, gen_helper_XSMADDSP)
+> +TRANS_FLAGS2(ISA207, XSMSUBASP, do_xsmadd_XX3, true, gen_helper_XSMSUBSP)
+> +TRANS_FLAGS2(ISA207, XSMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSMSUBSP)
+> +TRANS_FLAGS2(ISA207, XSNMADDASP, do_xsmadd_XX3, true, gen_helper_XSNMADDSP)
+> +TRANS_FLAGS2(ISA207, XSNMADDMSP, do_xsmadd_XX3, false, gen_helper_XSNMADDSP)
+> +TRANS_FLAGS2(ISA207, XSNMSUBASP, do_xsmadd_XX3, true, gen_helper_XSNMSUBSP)
+> +TRANS_FLAGS2(ISA207, XSNMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSNMSUBSP)
+>   
+>   static bool do_xsmadd_X(DisasContext *ctx, arg_X_rc *a,
+>           void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr),
+> @@ -1590,9 +1590,9 @@ TRANS_FLAGS2(VSX, XXLANDC, do_logical_op, MO_64, tcg_gen_gvec_andc);
+>   TRANS_FLAGS2(VSX, XXLOR, do_logical_op, MO_64, tcg_gen_gvec_or);
+>   TRANS_FLAGS2(VSX, XXLXOR, do_logical_op, MO_64, tcg_gen_gvec_xor);
+>   TRANS_FLAGS2(VSX, XXLNOR, do_logical_op, MO_64, tcg_gen_gvec_nor);
+> -TRANS_FLAGS2(VSX207, XXLEQV, do_logical_op, MO_64, tcg_gen_gvec_eqv);
+> -TRANS_FLAGS2(VSX207, XXLNAND, do_logical_op, MO_64, tcg_gen_gvec_nand);
+> -TRANS_FLAGS2(VSX207, XXLORC, do_logical_op, MO_64, tcg_gen_gvec_orc);
+> +TRANS_FLAGS2(ISA207, XXLEQV, do_logical_op, MO_64, tcg_gen_gvec_eqv);
+> +TRANS_FLAGS2(ISA207, XXLNAND, do_logical_op, MO_64, tcg_gen_gvec_nand);
+> +TRANS_FLAGS2(ISA207, XXLORC, do_logical_op, MO_64, tcg_gen_gvec_orc);
+>   
+>   #define VSX_XXMRG(name, high)                               \
+>   static void glue(gen_, name)(DisasContext *ctx)             \
+> @@ -2682,10 +2682,10 @@ TRANS_FLAGS2(ISA300, XSMINCDP, do_helper_XX3, gen_helper_XSMINCDP)
+>   TRANS_FLAGS2(ISA300, XSMAXJDP, do_helper_XX3, gen_helper_XSMAXJDP)
+>   TRANS_FLAGS2(ISA300, XSMINJDP, do_helper_XX3, gen_helper_XSMINJDP)
+>   
+> -TRANS_FLAGS2(VSX207, XSADDSP, do_helper_XX3, gen_helper_XSADDSP)
+> -TRANS_FLAGS2(VSX207, XSSUBSP, do_helper_XX3, gen_helper_XSSUBSP)
+> -TRANS_FLAGS2(VSX207, XSMULSP, do_helper_XX3, gen_helper_XSMULSP)
+> -TRANS_FLAGS2(VSX207, XSDIVSP, do_helper_XX3, gen_helper_XSDIVSP)
+> +TRANS_FLAGS2(ISA207, XSADDSP, do_helper_XX3, gen_helper_XSADDSP)
+> +TRANS_FLAGS2(ISA207, XSSUBSP, do_helper_XX3, gen_helper_XSSUBSP)
+> +TRANS_FLAGS2(ISA207, XSMULSP, do_helper_XX3, gen_helper_XSMULSP)
+> +TRANS_FLAGS2(ISA207, XSDIVSP, do_helper_XX3, gen_helper_XSDIVSP)
+>   
+>   TRANS_FLAGS2(VSX, XSADDDP, do_helper_XX3, gen_helper_XSADDDP)
+>   TRANS_FLAGS2(VSX, XSSUBDP, do_helper_XX3, gen_helper_XSSUBDP)
+> diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
+> index e553b5b8fa..ae3df2c13d 100644
+> --- a/target/ppc/translate/vsx-ops.c.inc
+> +++ b/target/ppc/translate/vsx-ops.c.inc
+> @@ -1,9 +1,9 @@
+> -GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_VSX207),
+> -GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_VSX207),
+> -GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_VSX207),
+> +GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_ISA207),
+> +GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_ISA207),
+> +GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_ISA207),
+>   #if defined(TARGET_PPC64)
+> -GEN_HANDLER_E(mfvsrd, 0x1F, 0x13, 0x01, 0x0000F800, PPC_NONE, PPC2_VSX207),
+> -GEN_HANDLER_E(mtvsrd, 0x1F, 0x13, 0x05, 0x0000F800, PPC_NONE, PPC2_VSX207),
+> +GEN_HANDLER_E(mfvsrd, 0x1F, 0x13, 0x01, 0x0000F800, PPC_NONE, PPC2_ISA207),
+> +GEN_HANDLER_E(mtvsrd, 0x1F, 0x13, 0x05, 0x0000F800, PPC_NONE, PPC2_ISA207),
+>   GEN_HANDLER_E(mfvsrld, 0X1F, 0x13, 0x09, 0x0000F800, PPC_NONE, PPC2_ISA300),
+>   GEN_HANDLER_E(mtvsrdd, 0X1F, 0x13, 0x0D, 0x0, PPC_NONE, PPC2_ISA300),
+>   GEN_HANDLER_E(mtvsrws, 0x1F, 0x13, 0x0C, 0x0000F800, PPC_NONE, PPC2_ISA300),
+> @@ -127,7 +127,7 @@ GEN_VSX_XFORM_300(xscmpoqp, 0x04, 0x04, 0x00600001),
+>   GEN_VSX_XFORM_300(xscmpuqp, 0x04, 0x14, 0x00600001),
+>   GEN_XX2FORM_EO(xscvdphp, 0x16, 0x15, 0x11, PPC2_ISA300),
+>   GEN_XX2FORM(xscvdpsp, 0x12, 0x10, PPC2_VSX),
+> -GEN_XX2FORM(xscvdpspn, 0x16, 0x10, PPC2_VSX207),
+> +GEN_XX2FORM(xscvdpspn, 0x16, 0x10, PPC2_ISA207),
+>   GEN_XX2FORM_EO(xscvhpdp, 0x16, 0x15, 0x10, PPC2_ISA300),
+>   GEN_VSX_XFORM_300_EO(xscvsdqp, 0x04, 0x1A, 0x0A, 0x00000001),
+>   GEN_XX2FORM(xscvspdp, 0x12, 0x14, PPC2_VSX),
+> @@ -145,12 +145,12 @@ GEN_XX2FORM(xsrdpip, 0x12, 0x06, PPC2_VSX),
+>   GEN_XX2FORM(xsrdpiz, 0x12, 0x05, PPC2_VSX),
+>   
+>   GEN_VSX_XFORM_300(xsdivqp, 0x04, 0x11, 0x0),
+> -GEN_XX2FORM(xsresp,  0x14, 0x01, PPC2_VSX207),
+> -GEN_XX2FORM(xsrsp, 0x12, 0x11, PPC2_VSX207),
+> -GEN_XX2FORM(xssqrtsp,  0x16, 0x00, PPC2_VSX207),
+> -GEN_XX2FORM(xsrsqrtesp,  0x14, 0x00, PPC2_VSX207),
+> -GEN_XX2FORM(xscvsxdsp, 0x10, 0x13, PPC2_VSX207),
+> -GEN_XX2FORM(xscvuxdsp, 0x10, 0x12, PPC2_VSX207),
+> +GEN_XX2FORM(xsresp,  0x14, 0x01, PPC2_ISA207),
+> +GEN_XX2FORM(xsrsp, 0x12, 0x11, PPC2_ISA207),
+> +GEN_XX2FORM(xssqrtsp,  0x16, 0x00, PPC2_ISA207),
+> +GEN_XX2FORM(xsrsqrtesp,  0x14, 0x00, PPC2_ISA207),
+> +GEN_XX2FORM(xscvsxdsp, 0x10, 0x13, PPC2_ISA207),
+> +GEN_XX2FORM(xscvuxdsp, 0x10, 0x12, PPC2_ISA207),
+>   
+>   GEN_XX2FORM(xvredp,  0x14, 0x0D, PPC2_VSX),
+>   GEN_XX2FORM(xvsqrtdp,  0x16, 0x0C, PPC2_VSX),
 
