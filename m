@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB017C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D72C5CFCF
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wutXa-0002Z8-L7; Fri, 14 Aug 2026 11:09:50 -0400
+	id 1wutcJ-0003S6-HU; Fri, 14 Aug 2026 11:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wutXW-0002Yi-Ui; Fri, 14 Aug 2026 11:09:46 -0400
-Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
+ id 1wutcI-0003Ru-PM; Fri, 14 Aug 2026 11:14:42 -0400
+Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wutXU-0000zQ-9B; Fri, 14 Aug 2026 11:09:46 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 8BE6114000DA;
- Fri, 14 Aug 2026 11:09:41 -0400 (EDT)
+ id 1wutcG-00025u-E1; Fri, 14 Aug 2026 11:14:42 -0400
+Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
+ by mailfout.phl.internal (Postfix) with ESMTP id 61B99EC01DD;
+ Fri, 14 Aug 2026 11:14:39 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Fri, 14 Aug 2026 11:09:41 -0400
+ by phl-compute-10.internal (MEProxy); Fri, 14 Aug 2026 11:14:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786720181; x=1786806581; bh=BhuZxPfXMqwNoilE6VOXt5ocaXoNt3jZ
- 3levfHFYTCk=; b=zIcaBI944AB9ORQ/N4G6ncYK5QGY6/Sjas9XjkdwlWNsetX0
- x4mFKK8sVxFwCCUZsYIyrGJpBy4c/h7WyaFEvzh7mSZLNdDW9693uZkjP3thjy78
- AaHU74bxjHfXZuwJ1eCn5l8pWtQjilOcE2+wDGSvc6paJUqrk1KP9J8w2cGU4QCQ
- 8xdb6HeqV83FMF+QqOefivdcqHI7iAS3PB0/PthRvcJBeLQ4DVBlb1aPzoO3LrnC
- tvdyIpjpxGs+wNaHPmAkM6CDYZJzOdDZf/q9qiv6wg4oGYTowl97ApgdWtNwh/OB
- 9fJE6sVo7J413yv78y28C4H9t2QgIY0P4IrJRA==
+ t=1786720479; x=1786806879; bh=naTs+bdBCz/5xVv2l2/vQ6xhQ6CCcFqr
+ Z60UeySpEeg=; b=ZvtFjXrkGBS1r+JEF3Ein95J8rGJwtMq0Pea1/JXa7ZUUNP+
+ xq5tl2KGeliunrSRmaWXLQQo7ustltlh5+qa4lJ7V/AZBYE+q1GHijdhQEwBj4y4
+ chL6Xt31rOx1rmz9u5MNXZhnspyIgVNjw6/jnBAYrfHDVW9xCEJghrBL1MGTLq+S
+ SPiT48Oyz5RzLe/qv4C9s3a7hZzOycPBmnj05BXv03PPCNXPnfXcOPzRy0xt4uuX
+ g/8B6MFfqS2eyi1++GawKLghEu4qKhLu0hMZ6geaMbfv1c/jKn1cicmHbWgvo/l8
+ eAlJlaYZQZoSQrYZ4sBDtCvf50jbVNIiZs337A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786720181; x=
- 1786806581; bh=BhuZxPfXMqwNoilE6VOXt5ocaXoNt3jZ3levfHFYTCk=; b=m
- lS0aZ008F8im792n+EzFKa6uSRmCHK1fbGl3zekCJg4lHvoif+B1SR13bvnXmXTs
- qgf/U8QjiAt/Yd/A9E8cgaMEKDd4nEvJlkKjJ2owtravyNC8D/eRV2BIFkiK8dmG
- O6y7WT4F5994n6MPwKZ8xLw4caz31btOt9e92OBsJlWfesl6z5uFdO6CTuMwfgm4
- U57PiGXgj1WogtUwDMYEh/EEnmZynW5PoeFEB/iXdrH0kib/uHIOcZ125Ioxc3Iy
- 7Zso1Ht7QRo5UQ+pIY4aLvSkHE3lCjYmFzn5cgllq4b2hBwkNfdI5tLuRaHznwDz
- 8sHD2cHZ7HddzqdRA6Kmw==
-X-ME-Sender: <xms:tC9_auqRitlvROXgOmB3YciP-IuqMDXKcOYPpmHXrZJdTrN9FqRACA>
- <xme:tC9_asOb7iwWrWfXHQTsrC30lyR8zOgq5dhpI52erVgpP49AailRbQ8B-7dBkwQkA
- gB9Q6EuWDeOp3fSQoDETnzNPtDthWfoHHac_sR3NkxNypulj95q>
-X-ME-Received: <xmr:tC9_angXyRUcoteNUpUH6YfzyomwoWVYVRZHV4SRRYS254BbbLSfzrqrCT4dEBnA8dr0NA>
-X-ME-Proxy-Cause: dmFkZTFi041px9O28KxGoIsMTDiV10DiQhDiGnZovfA+SuMgUI3gy5B7JkKsTRXO44QAjO
- LYt3HbipEpemjP0Wz3UF1NEeQG6BJ5wPUQINDnjfPMmOMmJ61ahfW2SGOHj6tye4Vu5gkD
- PTIBQrjykuQ5bctOPQwBYCIYAiTQA4Flvqmm2AZsw/1LSSULT0QaRa21YKX7szzinJiZag
- nuJrD9J2kYApEuZB7mQf2t11lNQ9/1qItkVLxiOcbJms6RHF1yDuAUsUZRg9rILm4wAkFc
- 1nb/WQ8YiHtNQOuaPiUWbRA422JBLvOifmI1zNVke89Z0hEpk079qBaLeMgWe3sb5jD0PK
- c0JXu2iHFNrJNNoTN6YtlsrNtJTauDFWVT8ii4J9DBiHPJuv0iYbKnj0hAFqhJMh/0ROgJ
- EXtZ++kfbTUuJK0kYZSAqMkWA6e2kGICEy/an+fOZOqBcKkQp1R5MXYUw9f6IHEQlbByq2
- SeVtwbQR2wXOTeHCQ2ZEVy/m+DDD/hNRTU7X80Zv+J/gKyLy5hANlKARZywjsGopf4XDvS
- eWDalbbjEjn2lDMo2q2NXGyA4tQpKlOY4kT4rzPTLFxfZBGvjQfXnhUSFBsav/knqVP0Uv
- hRo7fpuZDWjMH9/oQf/TmNx2PUFQ/pVcuUE0DSoHFUG9O8iQ+V5GbWNlUM4g
-X-ME-Proxy: <xmx:tC9_agZONeVtlLEgoOCfy-wqf9ramlQZyrYW9BYXejd_VyUJV8YNDA>
- <xmx:tC9_argtD-Bpos34UhV1Ou-qOIoxVHL-1Db2CCGcYcQznj6oZhVPNw>
- <xmx:tC9_aibcXkZR7frHhtN_YyY4oUhI8LzGTeiRg9l-p2-hWxT8GXAkBg>
- <xmx:tC9_ahOA_MO0LalT9Nm8ukfx4eoNyTryIyZ6UmBnEKuDnSMha0-VnA>
- <xmx:tS9_ajZQvEYALxVTCcJbIIdXZZrsU6E9wSCq9Yp888mO-21SLlXH7UMG>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786720479; x=
+ 1786806879; bh=naTs+bdBCz/5xVv2l2/vQ6xhQ6CCcFqrZ60UeySpEeg=; b=i
+ HbTgew7vmu0l/isDkcUR3XvI7MZC/WYgB4LCYJSR7QupeFR8ySWfUvJI0miMJQNQ
+ foolcZLUwdtK+3zja2piR3Ud2KD62D9nZOxp1ykcOJwjtNwfH6Ubnd2JORNNh0kS
+ 88Fp2RA+LhiNS/xxJN0IwfKKyPCD6b7kxJ22ccR7QPembe52r8lvLDE9Wec7Ww44
+ 78Y5fBriup48HJF7SfQmfvRy/Ww+amoxqB4ty2logAMsqm5jikmJOA5mVO3DO7X/
+ uGQqn3ovgGJmT5My9dtr78xrnEFkf76ejqvClp8iAid0j1aLjiTmCOttRwlF2jyG
+ /AxENkTzrQs9uVuDzyRAA==
+X-ME-Sender: <xms:3jB_apsakPhw7_GbepBDPbY9Bhded5CZyTIFsR6SQ6C2XVQwKB38wQ>
+ <xme:3jB_akua9DwKs_HA1xcAG22kfOQejpVzmGI-7Lsli_ku8l_sw71HWPaLz3RdYuQBG
+ EiydfYqttyp8P0MhJiQ-b1w96SB0H1sxZsUlV43dE1X1UtDwbuh_O0>
+X-ME-Received: <xmr:3jB_avDvLOkJtzKXOOIYFx3AMGy0p-WZwDCn-ywSkLdVeq-RM4M5IsotV-X2zSliw7yhtw>
+X-ME-Proxy-Cause: dmFkZTFpvmmDfbqKco3jPHkGR7+ykrliUBFBG1keBBjoCbLjXflxTNdl3HAqLJsh9zF1hD
+ dqkWJVDSJgji/QKCs6kkwWlexiJ790lZNTMfudje/3Fdvm96MSGvydvCltRiYK4YJaSV+t
+ YPmhFn5c9XvIocn3e5Qm8NHkKDF7RM5jGhW78JG8Q8xBFiE6C0pDUUhzumGE5EAhFZdtI4
+ FBZXOIYaaGC4tzfJc1vBTEJyXjMGr4hImAlrKIuiW4AZIS95aXelN5aTs1VZCuDQg2QwUh
+ nKBuUWvKQM//ClTY4ZVRk0hE2SU+SlSFoNT1wDbCApwMf2ThI1tCxyfs/BDvk3qsoMD9Gh
+ fNPZgUyZmXDYNY61b7YUOYWDw37N/Q1NcBCfDOufxhSPg8vEA6Lu0uApBT6yYwWxlYVTGT
+ 0BglHyKGePLHvKXM9511rHc3ggWbvGYK4+lYk76iM/VsoGQDzfelsh3aQPNf/5tInhpvUj
+ 9crQUvxERS6GNh3lNza3xfp8RTzpZ65XoJkjc24JYqfLDKWO2czjX8iPTTSrmvnL8yzGOp
+ 4uJ7vJnJewf9aemtaFanTMDwGk6ODMNc/JzN77ixkYJKnH+CGk71nxMFTdWc0ohKdLjGkU
+ AR4vEZAnwvRTWlRBhVDWUuCvnrJrYFk9v2gcL0UpqD4as1OWCwuqpVwtIzNg
+X-ME-Proxy: <xmx:3jB_amM3o4e9VJxybzLn58YtBLZwEUxpQY5hr_WPToipL6dSnXwoeQ>
+ <xmx:3jB_aoxbOpV81h_ZazMF59hqaA-5m8EpdBNBX38-lfNQ_lNpWf1s8g>
+ <xmx:3jB_amUidhdMxFfJKTMD9CXucAB26ql81V6FK5c1jbinGz5IgZWviQ>
+ <xmx:3jB_aqO-Kd--TxtuI076NeHpIk7M6xLwt1NRdLx8pq0KcV_kXEYJrg>
+ <xmx:3zB_auevfBaT6_KWdHbv3r8RitgddEeuE9erCuy2KygW4Dj5IJKDgH82>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 11:09:39 -0400 (EDT)
-Message-ID: <8004347514ec6b8f002d9f47189e97e17f42429f.camel@alistair23.me>
-Subject: Re: [PATCH v3 1/3] hw/misc/k230_iomux: add Kendryte K230 IOMUX model
+ 14 Aug 2026 11:14:36 -0400 (EDT)
+Message-ID: <899163cdf2fe47a08ca57770cc1be6c8eb6443d0.camel@alistair23.me>
+Subject: Re: =?UTF-8?Q?=E5=9B=9E=E5=A4=8D=EF=BC=9A=5BRFC?= PATCH v1 00/17]
+ target/riscv: Add KVM CoVE confidential VM support
 From: Alistair <alistair@alistair23.me>
-To: Kangjie Huang <flamboyant.h.01@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>, Junze Cao
- <caojunze424@gmail.com>, Alistair Francis <Alistair.Francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, Daniel Henrique Barboza	
- <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Fabiano Rosas <farosas@suse.de>, Laurent
- Vivier <lvivier@redhat.com>
-Date: Sat, 15 Aug 2026 01:09:39 +1000
-In-Reply-To: <CAAW0U4ZRqfcNmWi8davsvu-zVFmq4fJgbjjESb+_As3vPnu7jQ@mail.gmail.com>
-References: <20260813135717.2758-1-flamboyant.h.01@gmail.com>
- <20260813135717.2758-2-flamboyant.h.01@gmail.com>
- <CAAW0U4ZRqfcNmWi8davsvu-zVFmq4fJgbjjESb+_As3vPnu7jQ@mail.gmail.com>
+To: blduan <blduan@linux.alibaba.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: qemu-riscv <qemu-riscv@nongnu.org>, alistair23 <alistair23@gmail.com>, 
+ dbarboza <dbarboza@ventanamicro.com>, cxx194832
+ <cxx194832@alibaba-inc.com>, "zengxiangyi.zxy"	
+ <zengxiangyi.zxy@alibaba-inc.com>
+Date: Sat, 15 Aug 2026 01:14:36 +1000
+In-Reply-To: <14dcd084-b9ab-4ce1-80cd-3ba91038a4b4.blduan@linux.alibaba.com>
+References: <20260731035011.4178103-1-blduan@linux.alibaba.com>
+ ,<9e606a9e83adafb2f58ea2c5386f7fb6d5fbf6c1.camel@alistair23.me>
+ <14dcd084-b9ab-4ce1-80cd-3ba91038a4b4.blduan@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=103.168.172.154;
- envelope-from=alistair@alistair23.me; helo=fhigh-a3-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.145;
+ envelope-from=alistair@alistair23.me; helo=fout-a2-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -114,36 +111,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2026-08-14 at 11:17 +0800, Kangjie Huang wrote:
-> Hi all
-> Kangjie Huang <flamboyant.h.01@gmail.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=
-=8813=E6=97=A5=E5=91=A8=E5=9B=9B 21:58=E5=86=99=E9=81=93=EF=BC=9A
-> >=20
-> > Add a SysBus model for the 64 K230 Function IO configuration
-> > registers documented by the K230 Technical Reference Manual.
-> ......
-> > Suggested-by: Alistair Francis <Alistair.Francis@wdc.com>
-> > Suggested-by: Chao Liu <chao.liu@processmission.com>
-> > Suggested-by: Junze Cao <caojunze424@gmail.com>
-> > Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
-> =C2=A0 Hi all,
-> =C2=A0 Just to clarify, I added the Suggested-by tags for Alistair Franci=
-s
-> and
-> =C2=A0 Junze Cao in this patch just based on their concrete suggestions
-> during the
-> =C2=A0 public review. Neither tag was explicitly provided by them. Sorry
-> =C2=A0 for any confusion this may have caused.
+On Fri, 2026-08-14 at 14:24 +0800, blduan wrote:
+> Hi Alistair,
 >=20
+> Thanks for the review and the encouraging words!
+>=20
+> > Thanks for the RFC. When it comes time to send patches make sure
+> > you
+> > check against
+> > https://wiki.qemu.org/Documentation/Platforms/RISCV#RISC-V_Foundation_E=
+xtensions
+> > .
+> >=20
+> > Notably:
+> > =C2=A0 - You need to be clear about which exact spec release you are
+> > using
+>=20
+> Will specify the exact spec version and tag in v2 cover letter.
+> We are based on CoVE v0.7:
+> https://github.com/riscv-non-isa/riscv-ap-tee
+>=20
+> > =C2=A0 - You will need to add tests
+>=20
+> Understood. Will add qtest cases for v2.
+>=20
+> > =C2=A0 - The support needs to be experimental for a draft spec
+>=20
+> Acknowledged. In v2 we plan to migrate to the
+> ConfidentialGuestSupport
+> framework (as noted in my reply to patch 11), so the user interface
+> will become:
+> =C2=A0 -object riscv-cove-guest,id=3Dcove0 \
+> =C2=A0 -machine confidential-guest-support=3Dcove0
+>=20
+> We will mark it experimental following the wiki guidelines.
+>=20
+> > =C2=A0 - You will need to link to kernel patches to support CoVE
+>=20
+> Acknowledged. The KVM CoVE kernel support is currently developed
+> against a vendor tree. We are working on rebasing the relevant KVM
+> interface patches onto mainline Linux and will provide a public
+> branch or patches for review before sending v2.
+>=20
+> > What firmware are you using? OpenSBI? You must need a fair few
+> > changes
+> > for this to work right?
+>=20
+> We follow CoVE Deployment Model 1 (DP1). The firmware stack is:
+> =C2=A0 - M-mode: OpenSBI extended with RDSM (Root Domain Security Manager=
+)
+> =C2=A0 - HS-mode Confidential Supervisor Domain: TSM (TEE Security
+> Manager)
+> =C2=A0 - HS-mode Hosting Supervisor Domain: Host OS / VMM
+>=20
+> The RDSM patches are being prepared for contribution to the OpenSBI
+> community. The TSM is developed in-house and we are working toward
+> open-sourcing it. Our colleague Vincent Cui will present the full
+> CoVE DP1 PoC at the next AP-TEE meeting, covering the end-to-end
+> firmware and software stack.
+>=20
+> > Are we able to access and test this setup?
+>=20
+> We will provide reproduction instructions as part of Vincent's
+> presentation. Happy to follow up on that after the meeting.
 
-Please don't add Suggested-by tags just for review comments. Generally
-you would only add Suggested-by for new patches where the idea was
-largely contributed by someone
+Great! Just to be clear, those meetings aren't open and I (and lots of
+other people) don't have access to that.
+
+This would need some open documentation of how to run this. Exciting to
+see it coming along though. I would be interested in seeing the TSM
+code as well when that's available.
 
 Alistair
 
-> =C2=A0 Thank you again for your suggestions.
 >=20
-> =C2=A0 Best regards,
-> =C2=A0 Kangjie
+> > > docs/system/riscv/virt: document the cove-vm machine option
+> >=20
+> > Add the docs after adding the feature
+> >=20
+> > > hw/riscv/virt: add the cove-vm machine property
+> >=20
+> > This is in the wrong order. We want to add the feature then expose
+> > it
+> > to users, not the other way around.
+>=20
+> Agreed. Will reorder in v2: implementation patches first, user-facing
+> interface last, docs at the end.
+>=20
+> Thanks,
+> Baolong
+>=20
+>=20
+> > ------------------------------------------------------------------
+> > =E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=9AAlistair <alistair@alistair23.me>
+> > =E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4=EF=BC=9A2026=E5=B9=B48=E6=9C=8813=
+=E6=97=A5(=E5=91=A8=E5=9B=9B) 00:36
+> > =E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9ABaolong Duan<blduan@linux.alibaba.c=
+om>; "qemu-
+> > devel"<qemu-devel@nongnu.org>
+> > =E6=8A=84=E3=80=80=E9=80=81=EF=BC=9A"qemu-riscv"<qemu-riscv@nongnu.org>=
+;
+> > alistair23<alistair23@gmail.com>;
+> > dbarboza<dbarboza@ventanamicro.com>;
+> > cxx194832<cxx194832@alibaba-inc.com>;
+> > "zengxiangyi.zxy"<zengxiangyi.zxy@alibaba-inc.com>
+> > =E4=B8=BB=E3=80=80=E9=A2=98=EF=BC=9ARe: [RFC PATCH v1 00/17] target/ris=
+cv: Add KVM CoVE
+> > confidential VM support
+> >=20
+> > On Fri, 2026-07-31 at 11:49 +0800, Baolong Duan wrote:
+> > > This series adds RISC-V CoVE (Confidential VM Extension) support
+> > > to
+> > > the
+> > > virt machine when running with KVM acceleration.
+> > >=20
+> > > CoVE is the RISC-V equivalent of AMD SEV / Intel TDX, defined by
+> > > the
+> > > RISC-V AP-TEE specification [1].=C2=A0 A CoVE guest is a TEE VM (TVM)
+> >=20
+> > Cool!
+> >=20
+> > > whose
+> > > memory and vCPU state are owned by the TEE Security Manager
+> > > (TSM),
+> > > making them inaccessible to the host.
+> > >=20
+> > > The series adds a "cove-vm" machine property to the virt board
+> > > and
+> > > adapts
+> > > the boot flow, interrupt routing, memory registration and device
+> > > model to
+> > > the constraints of a confidential guest:
+> >=20
+> > Awesome! I'm excited to see RISC-V CC coming along.
+> >=20
+> > Thanks for the RFC. When it comes time to send patches make sure
+> > you
+> > check against
+> > https://wiki.qemu.org/Documentation/Platforms/RISCV#RISC-V_Foundation_E=
+xtensions
+> > .
+> >=20
+> > Notably:
+> > =C2=A0- You need to be clear about which exact spec release you are
+> > using
+> > =C2=A0- You will need to add tests
+> > =C2=A0- The support needs to be experimental for a draft spec
+> > =C2=A0- You will need to link to kernel patches to support CoVE
+> >=20
+> > >=20
+> > > =C2=A0 - kernel, initrd and device tree are measured before the guest
+> > > starts
+> > > =C2=A0 - interrupts are MSI-only (IMSIC mandatory, APLIC emulated by
+> > > QEMU)
+> > > =C2=A0 - virtio uses modern PCI transport with
+> > > VIRTIO_F_ACCESS_PLATFORM
+> > > =C2=A0 - vhost is disabled (host kernel has no access to guest memory=
+)
+> > > =C2=A0 - vCPU threads are pinned (TSM binds vCPUs to harts)
+> >=20
+> > What firmware are you using? OpenSBI? You must need a fair few
+> > changes
+> > for this to work right?
+> >=20
+> > >=20
+> > > The KVM interface used here (KVM_VM_TYPE_RISCV_COVE and
+> > > KVM_RISCV_COVE_MEASURE_REGION) is not yet part of an upstream
+> > > Linux
+> > > release.=C2=A0 The definitions are kept locally and will be replaced
+> > > by a
+> > > linux-headers update once the kernel side has been merged.
+> > >=20
+> > > Patches 15 and 17 contain known workarounds and explicitly ask
+> > > for
+> > > design
+> > > guidance:
+> > >=20
+> > > =C2=A0 - Patch 15 pins vCPU threads and adds a yield after KVM_RUN to
+> > > avoid
+> > > =C2=A0 =C2=A0 host RCU stalls.=C2=A0 Thread placement should be left =
+to the user
+> > > or
+> > > =C2=A0 =C2=A0 management layer.
+> > >=20
+> > > =C2=A0 - Patch 17 converts system_reset into a shutdown because a TVM
+> > > cannot be
+> > > =C2=A0 =C2=A0 recreated.=C2=A0 The proper approach may be to implemen=
+t
+> > > =C2=A0 =C2=A0 ConfidentialGuestSupport and use the existing
+> > > can_rebuild_state()
+> > > =C2=A0 =C2=A0 machinery.
+> > >=20
+> > > Tested with QEMU TCG emulating a CoVE-capable Xuantie C930
+> > > platform.
+> >=20
+> > Are we able to access and test this setup?
+> >=20
+> > >=20
+> > > [1] https://github.com/riscv-non-isa/riscv-ap-tee
+> > >=20
+> > > Baolong Duan (17):
+> > > =C2=A0 docs/system/riscv/virt: document the cove-vm machine option
+> >=20
+> > Add the docs after adding the feature
+> >=20
+> > > =C2=A0 hw/riscv/virt: add the cove-vm machine property
+> >=20
+> > This is in the wrong order. We want to add the feature then expose
+> > it
+> > to users, not the other way around.
+> >=20
+> > Alistair
+> >=20
+> > > =C2=A0 target/riscv/kvm: create and measure a CoVE TEE VM
+> > > =C2=A0 accel/kvm: add kvm_gpa_to_userspace_addr()
+> > > =C2=A0 hw/riscv/boot: load and measure the images of a CoVE guest
+> > > =C2=A0 hw/riscv/virt: measure the device tree of a CoVE guest
+> > > =C2=A0 hw/riscv: adapt the device tree of a CoVE guest
+> > > =C2=A0 hw/riscv/virt: use MSIs only for a CoVE guest
+> > > =C2=A0 hw/intc/riscv_aplic: emulate the APLIC for a CoVE guest
+> > > =C2=A0 target/riscv/kvm: skip unsupported KVM requests for a CoVE
+> > > guest
+> > > =C2=A0 hw/virtio: force modern virtio for a CoVE guest
+> > > =C2=A0 hw/net/virtio-net: do not use vhost for a CoVE guest
+> > > =C2=A0 accel/kvm: only register the DRAM slot of a CoVE guest
+> > > =C2=A0 accel/kvm: skip MSI route updates for a CoVE guest
+> > > =C2=A0 accel/kvm: pin the vCPU threads of a CoVE guest
+> > > =C2=A0 accel/kvm: terminate on a system event of a CoVE guest
+> > > =C2=A0 hw/core/machine-qmp-cmds: shut down a CoVE guest on reset
+> > >=20
+> > > =C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 | =C2=A0 6 ++
+> > > =C2=A0 accel/kvm/kvm-accel-ops.c=C2=A0 =C2=A0 |=C2=A0 16 +++++
+> > > =C2=A0 accel/kvm/kvm-all.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =
+60 +++++++++++++++++
+> > > =C2=A0 docs/system/riscv/virt.rst =C2=A0 |=C2=A0 39 +++++++++++
+> > > =C2=A0 hw/core/machine-qmp-cmds.c =C2=A0 |=C2=A0 10 +++
+> > > =C2=A0 hw/core/machine.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=
+=C2=A0 18 +++++
+> > > =C2=A0 hw/intc/riscv_aplic.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 9 ++=
++
+> > > =C2=A0 hw/net/virtio-net.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0=
+ 9 +++
+> > > =C2=A0 hw/riscv/boot.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 91 +++++++++++++++++++++++++
+> > > =C2=A0 hw/riscv/fdt-common.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 4 +-
+> > > =C2=A0 hw/riscv/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 4 ++
+> > > =C2=A0 hw/riscv/virt.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 | 125
+> > > +++++++++++++++++++++++++++++----
+> > > --
+> > > =C2=A0 hw/virtio/virtio-bus.c =C2=A0 =C2=A0 =C2=A0 |=C2=A0 12 ++++
+> > > =C2=A0 hw/virtio/virtio-pci.c =C2=A0 =C2=A0 =C2=A0 | =C2=A0 9 ++-
+> > > =C2=A0 include/hw/riscv/cove.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 24 +++++++
+> > > =C2=A0 include/hw/riscv/virt.h=C2=A0 =C2=A0 =C2=A0 | =C2=A0 1 +
+> > > =C2=A0 include/system/kvm.h =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 18 ++=
++++
+> > > =C2=A0 target/riscv/kvm/kvm-cpu.c =C2=A0 |=C2=A0 67 +++++++++++++++++=
++-
+> > > =C2=A0 target/riscv/kvm/kvm_riscv.h |=C2=A0 10 +++
+> > > =C2=A0 19 files changed, 508 insertions(+), 24 deletions(-)
+> > > =C2=A0 create mode 100644 include/hw/riscv/cove.h
 
