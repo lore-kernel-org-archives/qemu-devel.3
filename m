@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2584C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C71C5B572
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wup5I-0006qk-Pz; Fri, 14 Aug 2026 06:24:20 -0400
+	id 1wupK0-0001Dr-N9; Fri, 14 Aug 2026 06:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wup5H-0006op-GN
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:24:19 -0400
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wupJy-0001DZ-PB
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:39:30 -0400
 Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wup5F-0003Zb-EK
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:24:19 -0400
+ (Exim 4.90_1) (envelope-from <caojunze424@gmail.com>)
+ id 1wupJw-00055U-78
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 06:39:30 -0400
 Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3900e39d935so788754a91.0
- for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 03:24:16 -0700 (PDT)
+ 98e67ed59e1d1-384caf7b168so132029a91.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Aug 2026 03:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1786703055; x=1787307855; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=W3OKx8jnAFP/D/NKUHKpjVFXIZDJdsjTAwKwI6AXav8=;
- b=TFy986CFCvAkdz00eEoHjUa9dqEElB9cG6zkSDrGVEna4LL5tjWszl7nk71Gl+lOI5
- eS/0W8s5uNmbOjdxTBM0YSubOoAeo7DiCOl3bBXfmjxcJLl8hWTqYuwaQU459ele8rpc
- /qY/DjQ4mkvPNv2S/XKRMqnSUV8tJToitUkI6//6yW/ZIT0xyIPGb+C1eDCcSjdeL0Bo
- dJ30rrQwA722kpDn232ijQmwL88fpXgfsxynhOSTH0uP/QFl7BrEzIU3g7FUKBHv5jN5
- oC53sOxyZUXK2D1LXvy+VK6At7oJr0YXpzA/Sc/fuLqe3vyDs9eWoC67C0r5wdWvYXT/
- m8Yg==
+ d=gmail.com; s=20251104; t=1786703966; x=1787308766; darn=nongnu.org;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=KkI20Wd6i+g6jIBnL48L4rzD5+qRhzeivRs8UHng65w=;
+ b=EkDAvSJeJt/NLbed+nVujQp65yMAG0sfEXOR2xpeVYGmEUrrtWpwVxnhlG2LCvgem4
+ VxFuONz1vo8ehHZ+qqs31EqYQLx5HJthrzVWhTdHM2FLGToqCYCeKY3y9EBJShVOeHkV
+ vc46JiZan1qihL/3tB3wUGhM1hkXQCotkseOVnrQYx8NheVyKwrE7EZQYfkAVpNHrLTS
+ gIniO7FFmIpFTJqzUXSM+axc6rcMegswG0i0f0AUIKwGIDhl0K+xDsaqehd1WJV2P9AX
+ eX8Q1KbTM/3ZTARbteZFDWJjEA/QIoD/Nh1JilXaZtZ/+mZ2kCdgNLcQKt96fcSoj/R8
+ t06Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786703055; x=1787307855;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1786703966; x=1787308766;
+ h=message-id:date:references:in-reply-to:cc:to:from:subject
+ :content-transfer-encoding:content-type:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W3OKx8jnAFP/D/NKUHKpjVFXIZDJdsjTAwKwI6AXav8=;
- b=Sm1c9o0Vz7AyBrgyGTn39cHqdHDAsECHz8nOPI0dIIKcwO1iGZJwMSarD9ymYiSznd
- KpMqHcW9hNrna9VnVirPn2oayULHXotYYKA6jdDCYm0YXEulSROf8jVnokzAq/UWXAQr
- IGlMjqccFT5E8tyoYIsqIAxqlMxH5yQj41fuumFLmmq7FLEaAD5i2v9tpbf2oSWzKUB/
- UPoi5FYZQtlZbvySLyCSJuClPFPXq/iGK6cgmDujOBV6jezAYXZWrIj9DiF9aOPFm0wi
- W0xnW7aAh3r/gJcdFQNHUDrpmcDkwOPbnxXm3TRTHAMuufSCiHPHsSjaVAn7poluYJSa
- G8wA==
+ bh=KkI20Wd6i+g6jIBnL48L4rzD5+qRhzeivRs8UHng65w=;
+ b=S8y+wju3opi72aNH8m+uwLmZbvnm1moVIbf45xQCnJgQPb3H738l+toU7I25PmL6A0
+ mQoccN574CSy9H7t+S/mfhhZ+yqhW5kii5Yu1TYdvWTsBtg7LV0CO8/S70qMspv5/Pcw
+ uboA3r5gGN+WxbKU2hIm/OwVcLUXhy2I+HFZQMcbLhnYU+nuSYGDN1pD51eCOZ7Q1XTd
+ dDMFUasTtD9oBiYGbvmyG/AI4T6/AxjbxHYWp1q23aQ/me8/O6tRtekK1iqSvNDLpYIL
+ auohas/C07w/hZOKdoIlB8MzGHbawoxkxLmpiznyRoMKtju2LgEoq6JbDRA4bXDNosu5
+ vkkQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrohY2R+FeUbaAOQnu/8zwUOWSJmGh6AM2kPSJOuyfWPNVjW0Vl8ibqKgt6SEjUwu3Vu2xFSsJ++MbF@nongnu.org
-X-Gm-Message-State: AOJu0YxWXp3vClWvDqjwGjWnWU4eX09BbR8WzpsKVzKbYKfF7kbSqLtv
- /o0ycR63BHamNAP0sn/yGEv0cqzrV61lQkeyfSqUxoq8X6ts1WKwgVI67y+uwhKq6WE=
-X-Gm-Gg: AR+sD12op5xmmPOkOvzZcdie3d2OZ36jqZo/UsPGlOK/tFnEEzZCac7nKmgTEuyFE+4
- D9HbxC2IKsf2GQMBman7zfdbGLBAuUV4GCq7C8wbgYz07XzXC508JZYH7WIWOiVcUfwSqzpFsg0
- ksiSRemXhgI3UCBb66q3wt94q/nFAZ4wY4ivaUAfng+jr/COXjWBY0hEu4rIXpagdicEFSX5UOG
- ztTAsI2MCuPWNaPoWoKnuClMhc+UH6a5e3cMrST2vdLja+LfXxiz7cHTsPJQblWSRdJoPHu9Seh
- F4RokTx87MGUQvDziO8v2Hxc7KtkWKQ0PuJMFjDqh8Lm5bJFCX45cOe4YXiBCFWo66FoW2tGDUW
- oAxdN7Z5HbiSKetv9BcGZCJXMwya7swbGsu/aZLBh+2y6auga9+fOsYyK2d6Iwj17RzjnA7g6iC
- pAO8R6SHRUU2VB1ExUIQELhisGssv8xb6o+b2ql1WoAIHv1FQQ05V40PSBmGyut4TTuh8S0mT0w
- DQM7+fdBW6LFX+brifDceFKL8URyWyiffc=
-X-Received: by 2002:a17:90a:e7c1:b0:36a:8240:2477 with SMTP id
- 98e67ed59e1d1-3933ed1ba09mr4661848a91.19.1786703055410; 
- Fri, 14 Aug 2026 03:24:15 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-394eb7539d3sm2183480a91.15.2026.08.14.03.24.12
+ AHgh+RoEFisIVjBILkvsDAdaT/K72tjEAhZLsdPPXnoWvKWlnq5OYEtFEa6bteSGeZDaF7hjWJvvhsLOn5cm@nongnu.org
+X-Gm-Message-State: AOJu0YyiuMefYFT2bVBpHhV7exCLaz4AlkwC+K2NEt/JoVveYPXMU5Ab
+ 9cYsPzSlo8zpLH6lx3R6iShU/71zXIcWnSubrvunqVA/hZhm08QjTDyS
+X-Gm-Gg: AR+sD11fLNgjG6lMw9xE+l9SGHVPKJEsUUYnthBwFhdduKEGjpvf8YP8FIC68hyqwFL
+ FJPwD0WVllhCiyXOlg4XrRcHMSe3mkRosmR6WhDBRo6yXTdJI7DDmRGdvLToeBfNV7cpugri6BD
+ +ViQKZPpCTleNM0XWhkYsRk9XUkUilZLuRtMKXVjweDuBXd02ZI51KCe2kJahvvgkVHWJbM+ktF
+ XIL8oTOS1CX32KreXHweIorjAfYcmfPhJEMlMR33qN0UWxxHKCyHNrqArbT1IeE1vqF/Th1Y4io
+ eNrdd6ommq5pVTSe+YJBqYdX99u0c4eISQ4OvFuu+oRZ7rAOon3UP+CMlUPDF0qT8jxOYLviuyv
+ fgim62AvmJNxkBCRalKnGmamvpap5HTPoasUtiYL9PhqLQSRfw0NmcOgWybPkgBzmABw/F2g1A7
+ I0fkG1fofg+pTo9ti7OaQJXWfrCt1PbN9FB7vcPT0iY98+h7eTb/6+tW2kmb4=
+X-Received: by 2002:a17:90b:1651:b0:38e:6a7c:abbc with SMTP id
+ 98e67ed59e1d1-3933e6465ccmr3447163a91.3.1786703966448; 
+ Fri, 14 Aug 2026 03:39:26 -0700 (PDT)
+Received: from [127.0.0.1] ([38.34.7.236]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1413887e3e7sm7833627c88.9.2026.08.14.03.39.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Aug 2026 03:24:14 -0700 (PDT)
-Date: Fri, 14 Aug 2026 18:24:10 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, 
- Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/riscv: Restore register dump zero padding
-Message-ID: <an7r7xkz0lppBISj@sifive.com>
-References: <20260813032421.54438-1-joel@jms.id.au>
+ Fri, 14 Aug 2026 03:39:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260813032421.54438-1-joel@jms.id.au>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3 1/2] hw/gpio: add K230 GPIO controller model
+From: Junze Cao <caojunze424@gmail.com>
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: Junze Cao <caojunze424@gmail.com>, 
+ guochun wang <guochun.wang@foxmail.com>, qemu-devel@nongnu.org, 
+ chao.liu@processmission.com, pbonzini@redhat.com, farosas@suse.de, 
+ lvivier@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
+In-Reply-To: <CAEUhbmXMKug9v2x9PaJTXiwnF+o0HqQsiY+PtCL6eYtGZ8_ViA@mail.gmail.com>
+References: <tencent_EF996EEB2215272639C89FAE1491CEF43908@qq.com>
+ <be7afd5c-55dd-4af1-b828-9a2f401e3bfc@smtp-relay.sendinblue.com>
+ <CAEUhbmWjR3cc4jkdBAqpXcmt9z3ExHWsPzCthX7d+G1wgqTbTQ@mail.gmail.com>
+ <178669925995.92831.6332189576763663701.b4-reply@b4>
+ <CAEUhbmXMKug9v2x9PaJTXiwnF+o0HqQsiY+PtCL6eYtGZ8_ViA@mail.gmail.com>
+Date: Fri, 14 Aug 2026 18:39:19 +0800
+Message-Id: <178670395948.644010.10747276999132854035.b4-reply@b4>
+X-Mailer: b4 0.15.2
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ envelope-from=caojunze424@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -107,84 +112,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-08-13 12:54, Joel Stanley wrote:
-> The register values lost their leading zeroes when the underlying type
-> was changed, resulting in mismatched padding and harder to read output.
+On 2026-08-14 17:50:55+08:00, Bin Meng wrote:
+> Hi Junze,
 > 
-> Print with a runtime field width based on MXL, so values are 16 hex
-> digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
-> adding target_ulong back into the dump.
+> On Fri, Aug 14, 2026 at 5:21 PM Junze Cao <caojunze424@gmail.com> wrote:
 > 
-> Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
-> before:
+> > On 2026-08-14 15:26:41+08:00, Bin Meng wrote:
+> >
+> > Hi Bin Meng,
+> >
+> > Thanks for the detailed review.
+> > Regarding the suggestion to abstract this into a generic Synopsys DesignWare APB GPIO model, I have a question: do you know of any other QEMU SoCs that use this IP and would benefit from a shared model?
+> > If there is no immediate second user, I wonder whether it might be premature to generalize now, especially while we still need to complete the K230-specific behavior.
 > 
->  mvendorid     0000000000000000
->  marchid       000000000000002a
->  mimpid        0000000000000000
->  mhartid       0000000000000000
->  mconfigptr    0000000000000000
->  x0/zero  0 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
->  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0 x7/t2    20646e65205b2d2d
->  x8/s0    ff2000000000bc80 x9/s1    708 x10/a0   270f x11/a1   8
->  x12/a2   0 x13/a3   120 x14/a4   14992a1 x15/a5   ffffffffffffffff
->  x16/a6   fffff079 x17/a7   79 x18/s2   0 x19/s3   7d0
->  x20/s4   ffffffff805ca228 x21/s5   31 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
->  x24/s8   0 x25/s9   ffffffff804e3e90 x26/s10  0 x27/s11  0
->  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
->  fflags        0000000000000000
->  frm           0000000000000000
->  fcsr          0000000000000000
->  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
->  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
->  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
->  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
->  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
->  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
->  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
->  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> There is no other immediate second user as far as I know. But Synopsys
+> DesignWare IP is not like others, and it's commonly seen on many SoCs.
 > 
-> after:
+> For RISC-V, I can see Eswin EIC7700, Sophgo CV1800B (Milk-V Duo),
+> Sophgo SG2042 / SG2044 and T-Head TH1520 (Lichee Pi 4A) all use the
+> same Synopsys GPIO IP, and they are all good candidate of QEMU models
+> in the future.
 > 
->  mvendorid     0000000000000000
->  marchid       000000000000002a
->  mimpid        0000000000000000
->  mhartid       0000000000000000
->  mconfigptr    0000000000000000
->  x0/zero  0000000000000000 x1/ra    ffffffff803f10f6 x2/sp    ff2000000000bc70 x3/gp    ffffffff805c94c0
->  x4/tp    ff60000000c78000 x5/t0    ffffffff803f132c x6/t1    0000000000000000 x7/t2    20646e65205b2d2d
->  x8/s0    ff2000000000bc80 x9/s1    0000000000000e10 x10/a0   000000000000270f x11/a1   0000000000000008
->  x12/a2   0000000000000000 x13/a3   0000000000000120 x14/a4   0000000002575fd6 x15/a5   ffffffffffffffff
->  x16/a6   00000000fffff079 x17/a7   0000000000000079 x18/s2   0000000000000001 x19/s3   0000000000000ed8
->  x20/s4   ffffffff805ca228 x21/s5   0000000000000060 x22/s6   ff60000000e15000 x23/s7   ffffffff804228c8
->  x24/s8   0000000000000000 x25/s9   ffffffff804e3e90 x26/s10  0000000000000000 x27/s11  0000000000000000
->  x28/t3   ff60000000c60f00 x29/t4   ff60000000c60f00 x30/t5   ff60000000c60000 x31/t6   ff2000000000bc28
->  fflags        0000000000000000
->  frm           0000000000000000
->  fcsr          0000000000000000
->  f0/ft0   ffffffff00000000 f1/ft1   ffffffff00000000 f2/ft2   ffffffff00000000 f3/ft3   ffffffff00000000
->  f4/ft4   ffffffff00000000 f5/ft5   ffffffff00000000 f6/ft6   ffffffff00000000 f7/ft7   ffffffff00000000
->  f8/fs0   ffffffff00000000 f9/fs1   ffffffff00000000 f10/fa0  ffffffff00000000 f11/fa1  ffffffff00000000
->  f12/fa2  ffffffff00000000 f13/fa3  ffffffff00000000 f14/fa4  ffffffff00000000 f15/fa5  ffffffff00000000
->  f16/fa6  ffffffff00000000 f17/fa7  ffffffff00000000 f18/fs2  ffffffff00000000 f19/fs3  ffffffff00000000
->  f20/fs4  ffffffff00000000 f21/fs5  ffffffff00000000 f22/fs6  ffffffff00000000 f23/fs7  ffffffff00000000
->  f24/fs8  ffffffff00000000 f25/fs9  ffffffff00000000 f26/fs10 ffffffff00000000 f27/fs11 ffffffff00000000
->  f28/ft8  ffffffff00000000 f29/ft9  ffffffff00000000 f30/ft10 ffffffff00000000 f31/ft11 ffffffff00000000
+> What K230-specific behavior are you concerned about?
 > 
-> I also wrote a patch to align the first column of register values, but
-> that creates the dilemma between aligning the numbers vs keeping the
-> spacing between the registers and their value within a row. Aside from
-> avoiding bikeshedding, it wastes more columns for an already wide
-> output, so opted not to 'fix' that.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  target/riscv/cpu.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+> Regards,
+> Bin
 
-Reviewed-by: Max Chou <max.chou@sifive.com>
+Hi Bin,
 
-Thanks,
-rnax
+Thank you for the clarification and for pointing out the other potential users of this IP.
+
+After reconsidering the issue, I realize that my earlier concerns about K230-specific behavior were unfounded. 
+I agree that abstracting this into a generic Synopsys DesignWare APB GPIO model would be a worthwhile approach, and I support moving forward in that direction.
+
+Thank you again for your guidance.
+
+Best regards,
+Junze
+
 
