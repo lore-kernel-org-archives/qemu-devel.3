@@ -4,67 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F108C5CFCF
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 03:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE0DC5CFCF
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 03:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuiOp-0002HH-67; Thu, 13 Aug 2026 23:16:03 -0400
+	id 1wuiQM-0002kX-KV; Thu, 13 Aug 2026 23:17:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sesame_h@qq.com>)
- id 1wuiOk-0002Gf-TG; Thu, 13 Aug 2026 23:15:59 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sesame_h@qq.com>)
- id 1wuiOh-0001Bt-OF; Thu, 13 Aug 2026 23:15:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1786677334; bh=ZvqiNnhJLzVfV4ZDQ//KWrQGj+NR+ZoObKuFv8dT4ww=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KiThw1MTa20VVMDiOYh51zixV/v/V+Mwbqa8/V9zpYjO5/+9keResBygMxmAO+Q+G
- ExzyswmEMTbL/GLkjdVnExPlEXrm5oQDojikfxXQkEW2uoK07GY88EjknM/KWL+BfW
- hRZi+17KDLT3mf0Ba+3qVklB+64km6VKeHFlJx0c=
-Received: from minhang-zhang-KVM.. ([116.128.244.169])
- by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
- id 1B614215; Fri, 14 Aug 2026 11:06:54 +0800
-X-QQ-mid: xmsmtpt1786676814tz73bneu8
-Message-ID: <tencent_1240029E1F2CBA785372451BC8D2A7869409@qq.com>
-X-QQ-XMAILINFO: NnYhxYSyuBnLVMEIrSeVwEM8ASXUoApwbsluxKtw9jqI5lgvi2oGUb7meWTtmQ
- WdW6xTSkmtdQswq1/CetjysOQU5MUrJd6e+1CKs8+I1dZexEw5BvS4+a0c1pqBOTEWU7QpmQW6g7
- ut8ORA32gyEl31GUzDtJOnVq1ljZUin/muZJe7z40fHbpS705dj9IigjhqwORZ9SBvr2wi4yFefl
- xVD/3VpFFqGbp6Cn1dEOlZHHBI0CfHg1BsD4lTxkdzfscw/Q8Q9pOgFP8+rqYCPmWiRMPO79d4Mh
- aOPD8zpHaxmLylAQIHkPMDEiokR4tRSMTobDwBmb25BE4u/kcv0RozLWtnXabxyVhxpYrTszPkTR
- 9WwWVDONpTT7sxum6eUgN2r28t9j/ZQThvYezak+l5eDTxCUY6NpqdyO9PU8UGkcij7scpvuneOj
- 8tKUhbPRkzx+G3UvRPcXvOHLv3PNaP5yd+gfHdHD50ttfBNo7sdOPbnYs/hObn6RN98alhDYbmi7
- 7Aci4ItzJYipsoBCDvSIRXYbgB91YfXQOnKtEvqEgSJyekSQ8/5EgAyJZkVCOcRZJRXK6ZFrEZJE
- tJDcwxf7W06jLh/16hvG0CsbXlKoYkYrntKRhDv+wbaZM3ZiiD6UH4p1sIk2xQHzHmEJFF7zuooo
- 7uFXbBv3XtXbyYyW8f8cI54fuHqUOYTNTvSTCxC5QqMTpfkuSgEyyNbynHcvQbb1XEj/ImZ+Uy0j
- SnIoLnfs7oJQd81JTRqiKG6BSRCb1LmC2ohhcA/B/VsFVy95j0F9v2SeH1RSzlrpPXiwAO8SJ7ca
- duWnkO5/QpinPT4llSj7s4w9+5QX4iWL0+M4MoYF+IsVcA6LAh2sTlpO5olnAMy5ehq17TmiXjOD
- bvfoVpJxSyurrTTY/icyYeamXxc1QZ1iQVHteMI+pYIJkjWDp22vuB9BqkKmyFc5aF+KBgh3QzRz
- TV25nRx43RCQS/7Agi7/h97WPgiqmSivJzz47Sg/2MG+8h7lqE+vwvBJ1pPyV0
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
-From: sesame_h@qq.com
-To: qemu-devel@nongnu.org,
-	qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, adityag@linux.ibm.com, milesg@linux.vnet.ibm.com,
- harshpb@linux.ibm.com, Minhang Zhang <zhangminhang@kylinos.cn>
-Subject: [PATCH] target/ppc: Validate HTABMASK and reserved bits in SDR1 for
- 32-bit mode
-Date: Fri, 14 Aug 2026 11:06:33 +0800
-X-OQ-MSGID: <20260814030633.18523-1-sesame_h@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <8611cad6-bfc9-4d3d-9fe2-322fdb34e1ca@linux.ibm.com>
-References: <8611cad6-bfc9-4d3d-9fe2-322fdb34e1ca@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wuiQJ-0002ju-3u
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 23:17:35 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wuiQH-0001N1-Kp
+ for qemu-devel@nongnu.org; Thu, 13 Aug 2026 23:17:34 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-81f36179d72so8564017b3.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Aug 2026 20:17:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786677452; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XtyLkIYD7gtoj1bQAaw6k4tyqwsp3USzJ7OXJPpWk4V5UfNtG8amja2o2R3A+npFCu
+ sSWUGWH3cgJUHiFao8FpUY05zLv3kO+ZX/43zrmRWw4593ZcZ2JmXaiueSfQCV6L9h4+
+ q4WTPvvw/14/U6coGBX9/4gbmM+WXlpRJM8b5sIVuRH7hMc/sYeLgqbG0FvmlaIleQp/
+ ReE69dP6wW2Rr8AgCPzTAsVsick+c1nyWU+tGsPS/Opsf/IN3DnLWAJpM6b9FYjtQJcL
+ pUK0ZDyNNPdx1jPZZv/Gi5rl9G/apBJjTJijNDOTSW7fsU9Ggaxgy+oO36plM6HzHQdQ
+ nF0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LAo5Gy+mb3KfoeHG45swKeR0Q2XMDagQYa4jkeN61nQ=;
+ fh=haLNj98yzJ7MW0dFw28W2yq7EziWkSgrkndTeabeQDg=;
+ b=sSZ/mG/d8WqdzDPONZOC/furjuf4qhkdKlhEuYPlWaiLJ+8LWBKiZcIGWPyq1flH9k
+ LEWvJ9cyGF4zCFCXBaiDAzmcqV/5JqHzkE3e5/LQYQrYs+9Cs1Nl+CPr3Nm3xKT7I/tZ
+ /cba1izO5Yu4f/mXby1BUEHbDT712IufvND50GUc02y1Qy8Vud77IgJ7tKC699n8toxg
+ dpo8pNf4aREAqG+JI+6mAwR9kvNzfzFOy535gt825XjVWKyuLyx4neVY/9qykKtC4TUI
+ JcaQ2wTnxr5JhpxHsUbdQKMIhk6Gj6uVjl77zCsjP17EHMfj6uKKblA71HdUjaI8SjR0
+ 6vaA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786677452; x=1787282252; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=LAo5Gy+mb3KfoeHG45swKeR0Q2XMDagQYa4jkeN61nQ=;
+ b=F4+5oH+TlNghwTbsQUv6+w8j3deYtlorO+ZENv5AOeEHhloPy2ZuuAVf5ZiQmXsqBO
+ P3W07quU9fmNOtjLGNam/06FJ4QuCrE6kDPmU/DmGvOwR9al7An/ztuxGvVCcxKzm0MC
+ Y+bh/pKSzn2Z5b476aFxK8UiauulfftSKrzanF4bNe7CznTRz6Q7e1vekUyXpC+gobfg
+ 5rRdnLP8Mgdgi65nlDRciohSJSho8sj5c2igDNNqvCXER1xJ1plfBcKl2miQUEcE7M1p
+ OLjEmRN923jG7jihYBKcs4u+D3ocrh0xv1szvbXFiw2tCLQfxLeFBem/rNJ4vPKv+pEi
+ 7b4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786677452; x=1787282252;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LAo5Gy+mb3KfoeHG45swKeR0Q2XMDagQYa4jkeN61nQ=;
+ b=CeuT7GwP3hejY26Z2zMszESNeJQTqU1eiBeyWCYQ3ZOGp605f8Ki3KGadlMlalJsys
+ oiuNDM8EkSUZAjInsoK3ax+uAYzDmHAT7FTXFHPBNpPdZI8iYFggROoMmsAvL5NbaA0L
+ LApH/r/ffzEidNqbNG9XNS/LL4r2uMOSzuwiMgNOi+XdB5qTYVaV6Orjdo8Qn+Udd2Pl
+ OS/6Y0MaTRWbbI2pQdYDAE59ZoEy9uC1ZsH5ciHxJi4I3S1ooWkJqj5UEXg9r20zfWUI
+ 9PelAoiSqZMf3U0kVy97yjazh4azA6m61v9ndA+CJC79SiD0e09cjFLKpJ7aTySQKbpc
+ WbrQ==
+X-Gm-Message-State: AOJu0Yzdoa8Pqjvvuw+79gIu4r/YArtM6+fGMGR4uv82L3Drytt/FBxn
+ LJLxgykiIxUeH+XS4o9+id/co0TM0KaXQG3ZYhDKqk31C5vONhUDtkVPbO5iQX9u0sYMQM04IMZ
+ D+UqXzEVS+BYwp7IBsy1KWeuJe2AsaUWELa6xLpJEyg==
+X-Gm-Gg: AR+sD12yrTtJYoyegSTM+igCDOzyII6rlYLJIg/lnlcC/PgepClWXhPUHxXrjlfYRzJ
+ B7s9hgrWHAbP8664qijHB0Uvdak4frBGtYyitI+Pw7hYHoe3YgTQmiDEoslHAkmG8/jiWR9JScG
+ gvS9PCYgmHa72xZnCrB9ZrbL0icCpb4t45Op2SYjGuSFVqAfRIQZcjfvv+VwRZM+EtuUH81oSJx
+ 0ANZRqhainQH3Xx6TLI0uNYWjHToZsoVk7vHnpW1bJJiN8xQ4V4Z/iL3U38Zv6lLtlc+7ua/fWB
+ zUueO4ZTVZy+NMuOFaXx+ds/uEJT0mRCuYItUBm6iZN66g==
+X-Received: by 2002:a05:690c:c3a8:b0:81f:49e1:1f03 with SMTP id
+ 00721157ae682-83712ac29femr12092307b3.31.1786677452302; Thu, 13 Aug 2026
+ 20:17:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.49; envelope-from=sesame_h@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20260813135717.2758-1-flamboyant.h.01@gmail.com>
+ <20260813135717.2758-2-flamboyant.h.01@gmail.com>
+In-Reply-To: <20260813135717.2758-2-flamboyant.h.01@gmail.com>
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+Date: Fri, 14 Aug 2026 11:17:20 +0800
+X-Gm-Features: AUfX_my9ql4fyazm6jdEDPv4jN8X_4o_k1bPa5PeyDwWtGM6LR9FpZjDyvzSI0I
+Message-ID: <CAAW0U4ZRqfcNmWi8davsvu-zVFmq4fJgbjjESb+_As3vPnu7jQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] hw/misc/k230_iomux: add Kendryte K230 IOMUX model
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Chao Liu <chao.liu@processmission.com>, 
+ Junze Cao <caojunze424@gmail.com>, Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,74 +125,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minhang Zhang <zhangminhang@kylinos.cn>
+Hi all
+Kangjie Huang <flamboyant.h.01@gmail.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=881=
+3=E6=97=A5=E5=91=A8=E5=9B=9B 21:58=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Add a SysBus model for the 64 K230 Function IO configuration
+> registers documented by the K230 Technical Reference Manual.
+......
+> Suggested-by: Alistair Francis <Alistair.Francis@wdc.com>
+> Suggested-by: Chao Liu <chao.liu@processmission.com>
+> Suggested-by: Junze Cao <caojunze424@gmail.com>
+> Signed-off-by: Kangjie Huang <flamboyant.h.01@gmail.com>
+  Hi all,
+  Just to clarify, I added the Suggested-by tags for Alistair Francis and
+  Junze Cao in this patch just based on their concrete suggestions during t=
+he
+  public review. Neither tag was explicitly provided by them. Sorry
+  for any confusion this may have caused.
 
-ppc_store_sdr1() had validation for 64-bit SDR1 values but lacked
-corresponding checks for the 32-bit case.  According to the Power ISA,
-in 32-bit mode SDR1 bits 16-22 are reserved (must be zero) and
-HTABMASK (bits 23-31) must consist of a consecutive string of
-1-bits starting from the LSB, i.e., be of the form 2^n-1.
+  Thank you again for your suggestions.
 
-Add checks to reject invalid HTABMASK values and log a guest error
-for non-zero reserved bits, following the same pattern used by the
-existing 64-bit validation.
-
-Signed-off-by: Minhang Zhang <zhangminhang@kylinos.cn>
-
-Hi Chinmay,
-
-Thanks a lot for your careful review and pointing out these issues.
-
-You are absolutely right, I messed up the reserved-bits mask. I misread
-the Power ISA bit numbering: the correct reserved-bits mask should be
-0x0000FE00, not 0x007F0000.
-
-I also agree with your suggestion to avoid hard-coded magic numbers, so
-I constructed the mask using the existing SDR_32_HTABORG and
-SDR_32_HTABMASK macros from mmu-hash32.h, following the same pattern as
-the 64-bit implementation in ppc_store_sdr1().
-
-Both issues are fixed in the v2 patch below.
-
-Regards,
-Minhang Zhang
----
- target/ppc/mmu_common.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 2499e61..31a221d 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -57,9 +57,25 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
-                      " stored in SDR1", htabsize);
-             return;
-         }
--    }
-+    } else
- #endif /* defined(TARGET_PPC64) */
--    /* FIXME: Should check for valid HTABMASK values in 32-bit case */
-+    {
-+        target_ulong sdr_mask = SDR_32_HTABORG | SDR_32_HTABMASK;
-+        target_ulong htabmask = value & SDR_32_HTABMASK;
-+
-+        if (value & ~sdr_mask) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Invalid bits 0x" TARGET_FMT_lx
-+                          " set in SDR1\n", value & ~sdr_mask);
-+            value &= sdr_mask;
-+        }
-+        if ((htabmask & (htabmask + 1)) != 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Invalid HTABMASK 0x" TARGET_FMT_lx
-+                          " in SDR1 (must be of form 2^n-1)\n", htabmask);
-+            return;
-+        }
-+    }
-     env->spr[SPR_SDR1] = value;
- }
- 
--- 
-2.43.0
-
+  Best regards,
+  Kangjie
 
