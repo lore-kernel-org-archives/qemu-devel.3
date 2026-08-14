@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3734AC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4209AC5B572
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wupU1-0003Pf-15; Fri, 14 Aug 2026 06:49:53 -0400
+	id 1wupUD-0003U2-8j; Fri, 14 Aug 2026 06:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupTy-0003Op-J6; Fri, 14 Aug 2026 06:49:50 -0400
+ id 1wupUC-0003Tk-Bz; Fri, 14 Aug 2026 06:50:04 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupTv-0007R1-U2; Fri, 14 Aug 2026 06:49:50 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wupU9-0007Sc-Mm; Fri, 14 Aug 2026 06:50:04 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67E81YgO533164; Fri, 14 Aug 2026 10:49:45 GMT
+ 67E81bi1585891; Fri, 14 Aug 2026 10:49:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HRAQ1k
- Ku4En4sm1UzHAyBs37IvRZ1PWyjkTT+XMN5uE=; b=mHXuSqguimfGgaKZ528EMF
- HSXpY3W9MmbJ99Hnj9MHrKEZjgAGzgSQn1p8YIISdFxnjh8Ba8aiF8d368Fc/ELV
- fqPo1bXJk1L2V7zNmkFaV/NS91Wio0p3iapu+fGQodmr/odcY4+MawCl/mp/+DfA
- o0Z+Y++CKP8spv39IieihEAQqJzvxpPwuefTsyZY49/1q86faufnCd/a6hrwkC+C
- XeBnFudQPZOLc/3zGP2W7dfTTMW1v9f4MTwkb0CgTYJ3Eol6lU3tlQPkSFmRQpb/
- yPDkbS144rQd9QNPX0FPUB+MUe8GZtryUVx9bsAfKOUcI/3h7qoLMSCGx9ShhkfQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=t8wc5v
+ RAbovtt2Fkl0jwcEFmqDgiV5UjSZpyaqYAcqY=; b=lbgF6k/vpPtQsK6yx8GARq
+ y51fg0C7Dz07dX1URE80+ntHYB3MshKvvSic1S2itGiObiRIejHDsRNILK53Eylx
+ PgN7tXva8KoRxHewjIeoo96akhQ0lxbeTpEbw41Nh0CIO0xY/Tm6q5JIzqbLjG58
+ jIlxfVmWoXR9FQ27e+w63mfbkD+yxcyZx7yzOLdI5BsZib//wcDwoKEKYmIV6+5A
+ 838MrlAG9FjBn7O208eZ62LPXIUsHMQROTkEL1uY4dA8Wjpc+cH0S5H2q68Ygirz
+ HR1ALZLmHv9QRQUnKRFtNJ41An6e40LfCuI5i/HQsipuQGZOKzK9mDMP3iGMjwfA
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvq9vbkg-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvma4f0v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:49:44 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EAffid000432;
- Fri, 14 Aug 2026 10:49:43 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4fxg9hew5v-1
+ Fri, 14 Aug 2026 10:49:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EAfkgR012297;
+ Fri, 14 Aug 2026 10:49:57 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g1rpv9py1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:49:43 +0000 (GMT)
+ Fri, 14 Aug 2026 10:49:57 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67EAngoK20316678
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67EAnuYI26673754
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Aug 2026 10:49:42 GMT
+ Fri, 14 Aug 2026 10:49:57 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1ECAB58058;
- Fri, 14 Aug 2026 10:49:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9347F58059;
+ Fri, 14 Aug 2026 10:49:56 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FDCE5805C;
- Fri, 14 Aug 2026 10:49:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 67AD158058;
+ Fri, 14 Aug 2026 10:49:52 +0000 (GMT)
 Received: from [9.124.210.243] (unknown [9.124.210.243])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Aug 2026 10:49:37 +0000 (GMT)
-Message-ID: <8e1412e8-dd0f-486d-84d4-be1763a9c0f6@linux.ibm.com>
-Date: Fri, 14 Aug 2026 16:19:36 +0530
+ Fri, 14 Aug 2026 10:49:51 +0000 (GMT)
+Message-ID: <33688841-f8cd-4b74-9279-6181f83e20f0@linux.ibm.com>
+Date: Fri, 14 Aug 2026 16:19:50 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/7] target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
@@ -76,33 +76,32 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: siVbIz-jvpO1xJDnLCsaaRx69JxPi5AV
-X-Authority-Analysis: v=2.4 cv=PbDPQChd c=1 sm=1 tr=0 ts=6a7ef2c9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX2YLSq2taGpbV
+ yV5YojCvCjO98iPczF2FEQtRtj5POd5POhVQgcDjzpUFE3hQfqx6bFCbMRiyPL8qtIe9zdbxju8
+ /7JF9pI5/0R+YyysQYdImQ576paaSNF4T6ppe/uyM1Qn2HNDqvGZeZnJel7TR/ekU6Ax0CU8GMG
+ xfoLkIeOXJUGg9kWWARugEUYz2WrgVbUZjQTDdj0d+AS+qo8g4lmtF/qjpujnEv97zJuEwTi8hD
+ 0XEHyay1GjdUv3MG2Tb63Lx4fjxZd9o4cpIc0bkbMo4DmJ0vLxLGTBJG8nBqcILmIY28EZv3kCx
+ TW7S80g2YpdxJDx1VdW2f3bN10innxqnOhqpHzstVRCGILs8u7OPxgwubT5ZA3509c1S8W4QB61
+ t5tSIWQNTUBoVKB8WMZh45BK6TfRhNu5zJBkTvd5l1C6dw0O69V8LLDgIg2g3IXZ9ORzTNeYt3e
+ DvgsmVBrGBwXWGj1E6w==
+X-Proofpoint-ORIG-GUID: djroDLCW1-AyT9qYCGXKZrY-sMjQaOBg
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX8wtewkE6hpxu
+ Uw/ElqggJd9wyulkC+7GuwcSGA5e/scuajTJUqdptJ7BdNZ2u5sCewGWYU45cNH8toMm57TawN3
+ /YJEXpveuaZof2ooraYRT/AV5GT35SY=
+X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7ef2d7 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
  a=y_V3cqzgbyVwEE-ZGgcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX0Bmhr5IzJmWB
- YVCgIei3CwYC0Cy2AjvkcAJw5R+W0mwNGviFZIZuIwdiAoIk2CSgw08+m/EBnyaZr7/M5H7VoOO
- qpx4xyD9zDHGOBdgGg5gmQOTYgn6/usV7n+h761Jj6PYFTzx06j+dGEsWgxvVMCAXGf+CJ6nQ1a
- k4AegVPbKeSas6w76X7Cy4FOrFK8zawdja3Gn/yQNAys7XsO/L6OlXhM9Z600EW3u+wlYRiookI
- ICdcfCxfv7MCrplIE6Ck1myfrkB87AANn/d7Gd/8acwwxEkQUzO99Thb13hualrNHYMqNJaAMF4
- v42HzVGI06yNeAIUM+7Csu+Ov/Tg8AsX/ijr1vy7i3/ayzvKVZgBvhtC3U76uMcLmUtgauzJr2K
- jSW3+9sfBjrIiQsCvKMxcIc7em0rgo3Z3fMGMdqYCFXx1hLsLtbB2vkPyTgzw8TRdKV6SUGa3k+
- Bz8QtgeiIlJX3BNLq/w==
-X-Proofpoint-ORIG-GUID: QWhYraO_MdcgahXaoXIRqON4YYn3I8js
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX+zTxpzVJuxL+
- M7gbVX12/HUzMsH4bYFJOeAbz00nB9IZX3jT+nwhQC2476ACci0yqhxvozJN47eh3YnoqMYhyXk
- 6TvfEz+gtHZEJv5VujVGNth6KXhb6Xo=
+X-Proofpoint-GUID: J5CunRJPp_igypeAKe74adwq8R7HmLLe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-14_03,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0 adultscore=0
- clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608140080
+ phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608140080
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -130,6 +129,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Ping,
 Could someone please help review this.
 cc: Shivang, Glenn.
+
+TIA,
+Chinmay
 
 On 7/15/26 18:26, Chinmay Rath wrote:
 > There are several flags for Power ISA 2.07 currently in use, namely :
