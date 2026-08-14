@@ -4,171 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19F8C5B572
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 11:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C37DC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 11:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuq37-0002BP-1K; Fri, 14 Aug 2026 07:26:09 -0400
+	id 1wuq8J-0002Cu-DN; Fri, 14 Aug 2026 07:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
- id 1wuq31-000299-Na
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:26:05 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wuq8H-0002CF-NI
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:31:29 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
- id 1wuq2y-0005y8-WC
- for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:26:03 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67EAbsSO4082956; Fri, 14 Aug 2026 04:25:56 -0700
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wuq8F-0006hX-IT
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:31:29 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67EAdTAA1547207; Fri, 14 Aug 2026 04:31:23 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=proofpoint20171006; bh=0BVZ140R7VA0kXD
- wUbtW2Ts+o4efE7tV7qsT03Spo/c=; b=Wv+7snFzipGjdvUFvMiCsHEhEVG0lXo
- uAzy8ygoBqrpelKj1G6s61+UkHDULNSmRXkTy699Rugu/EEf3uvRxAqbmonmzhAE
- IkJyYOX/gxa3zW/MGnnfJRMrJlXSnrEJ/zApATGeERUNFk1pzJkW9txJS8wrQpkS
- hr0g2+OcAxG+CgJGNFIgrU46IWMPusUfCqJLBC5FwSP8JEfC1boYX8BIPO0cUgPK
- 71TpshiRnzWFGI5bJL7e9o99rVHWxjVDkmv7fJu8CFDEN6X+I5HcAAyQHUNT8eL1
- fVwKCKyz3Nff+jbv/vanKEOjWMYSFl4ftnGjSuXzGkM90TH8vTmzSNQ==
-Received: from bn1pr04cu002.outbound.protection.outlook.com
- (mail-eastus2azon11020143.outbound.protection.outlook.com [52.101.56.143])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g1nye1e3p-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=JscWcajTGo2rEAPaBGWzZO14m3igdU3CIU/IBbWhb
+ Wk=; b=LkdRAVBKRv+rUJw8HodNMgk8NObi7KWE2ZCF8++dmSRIWYp1i5SQJUIRu
+ caEl+IgX4GE5woRYL/FLYw+4Q09KRgWykXs0pDmpWdjaGcSHQL9+SO1t3SvaLZm7
+ POERjMnuJQJv6rcg1BYcETdT8+4iKfl8LWYLepBoGfhaM3Dhj/QE5YQ2dG1FqdwD
+ 4gJGGt4RyVwoHVRjZSSDnpOzWFEMTQKbQY1RpBdI0zpXtfx5yNpAPy8DTo/j6Jzk
+ QDlBAViJI1Bh2UqZwvr68Zl1552eOaYl1RBeJavUvHHZeDyJOTOb+7xdZJUxPt0l
+ OKBAOxvULqwjrgMNi60pu3o8b0Mtw==
+Received: from bn8pr05cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11021089.outbound.protection.outlook.com [52.101.57.89])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g1p1d1dx1-2
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 04:25:56 -0700 (PDT)
+ Fri, 14 Aug 2026 04:31:22 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cLuuRSneVqpg9m/cwqAKJfknCi254UndPtPm1h3rYPuCTAI1oMRPZXV+1LAZN8BIpGblDr2T0pc9apmye94VovR7oU5To6tQ0y75d91kSSh+9hgLda5Vc9oOVNGtXD1ERHi7QIOlmy+yKzTWEKaD/Ye92m1aY2sKvJ2FE1GavJbCv2HizmNjw1+qpQW2oS6T5N+6A7XZLac0+V2gShcGERWiJaNr3j0U6gXkfP9ni7Po3zHL7tmee+ESHj1gGaBh/Zte3TvmRSjDiwTnnpyETBATVdj3KruZ/GKm6HigGZQ4epBEUCWOExTOFxJ8WwHlFvz2pRedV3maDHhQ8sYzOw==
+ b=jmMJV+7SZuH5BcK7d8tSG0GakbYD9AsoCEage3aL0GgpS0a6Dzh9ERxkL7iP54DlFCQkErflPTvM9TYJKxFo6lcJISXfVmRhoIFCvfmubHMbHNCK6/xTbKPCzE9TUgfuIB+9C8vd58qmnEKTyGhzk84WvtFG+h12znV8vcS2SvfdaVFwk97AQXDJN0ldWGG17vkj1VOJxS2zCJcrfYmzbnTIBG03keef6lG0DFRYeZGEErH4mJ2CnObQ07cLJn0eccLw36qrgQ/M6gq4OhQreeiq0foeN1m01JFbPaCagalp9TqKqjUl0djbqlY9dL8WV18zSs6i0Tsf0/wZRPF21g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0BVZ140R7VA0kXDwUbtW2Ts+o4efE7tV7qsT03Spo/c=;
- b=SZ1FMP4SEH+zbuEMbwE6e+DkqUfSoi5WJfDfUkNFVO8vUQQJCx7wew8HFhaEWYoEikmu2KpI5MLwaYAjkcOIEGO56mIfIUPviAuyWpEdFR1rTMgt8gmp07c/fCoXehNtUxvSaTQXUBXh6CMaFPNpQ95BdufFtmgGjRhzugNmgM1wky+6dIS3IqGgRDRF+Ol0D1LNdpDFvDQAXhxuJOvdN+0irzSBVXYS6fK3lHoh6Sngwr6cLC9zqeUOORDTa/YmPpPCnNvESVZbS+a32GARREgm4c1AwSTS9Vvy5nTdhKyEyLbCsBAmE05zQHAGniaRW4tsDHQrbssUop2Pl1nTzg==
+ bh=JscWcajTGo2rEAPaBGWzZO14m3igdU3CIU/IBbWhbWk=;
+ b=PzfiWv8kXurQ5s7ofr3Zr4mC4p9HUT407POm9U+R4xvpAn5uXTC4HiYrVsENDLuYpUf7TO4kuSGgR8Tz3Es5xR17l7cznBN9Na3MsncQ5jgSk/auQnb90QLwq78bYDMYsqvVPpbikkwoLhwFqNajHHO7gXXiz9p1yo4SCOZ/et87xNcBBDnumDgQXCwwKzA5ye3AF3eSuh8ZizlJ8w8mv/8+k5EDmPEVsPC2nI7ogbb34vZWzrlpqEzqwB96rTNUTOViOgykR7EKg+UPvkCJF1MvK1o8z7sZkKfM1a6iCTUybSxQUAjC+2lWkDhj1S0m4CBjJ3JSBs0cjUsGRzzJ+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0BVZ140R7VA0kXDwUbtW2Ts+o4efE7tV7qsT03Spo/c=;
- b=bOuPVDYHqdGfqHcnTt30nqGEV1DdkODBjKPJ1pkYnj+aQ9AZoCJfNhWASJe9j/tJRJhtEclHniSmXF2nQhOr0Mh8hxP3bUM8aiAW2cnSe/JtYFQvRUiBjQGUZlK52b0fXbKRG1G8asc13wr4Ct9pxqyho6yvzXT/u6F/rGjKsUKCOksRHjsX7K7PUznkXMkKNQ2ZQNIoJZHGdW+rpXw3Q28Yne5KvfDX+Iutiss1AA3OSou9WSaYVTmZM21a7+/aymfzMgLHmmj/CmdnvzITNc3CakwckSaJbpgOMnqD2Zg6ficaKw/PW+yxHV3uRM/Gk4MtsOfqJDHijDyLPMjE6w==
-Received: from DM6PR02MB6172.namprd02.prod.outlook.com (2603:10b6:5:1fe::18)
- by CO6PR02MB7762.namprd02.prod.outlook.com (2603:10b6:303:b1::22) with
+ bh=JscWcajTGo2rEAPaBGWzZO14m3igdU3CIU/IBbWhbWk=;
+ b=wHwUKO5ikTPgvWywaAJjsuenmMt33MY0+GXPhEfyDYwrT0HpMgdiIdYpZMy73JaW000pgWNHIifbmiPo5MkUwEUUGQ/xwqU5IHiOFMyqk4mhYg++8iPFYol94CMoypddozBhg+jumB46vXuZBwd7cb6IRAX3d96f/yqjBicPD0mx/6VrjhJprMvkAQ85nQw19HxfVrPKwYIa1QOhnaMS/VrVf9ZQ7dpBkpQ2ruPgLoi8YMzQBVniLMsaYdDVVS191s9mNDRq2GZ+cTxL3pH8ueJZ1O04ows8BPi3Ldv6TZccVAA0P2azYUPupKIBj1SQPXyIQVHK4Z17WTkpiKql0Q==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by IA3PR02MB11199.namprd02.prod.outlook.com (2603:10b6:208:542::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
- 2026 11:25:54 +0000
-Received: from DM6PR02MB6172.namprd02.prod.outlook.com
- ([fe80::39c3:beef:21c:b4bd]) by DM6PR02MB6172.namprd02.prod.outlook.com
- ([fe80::39c3:beef:21c:b4bd%6]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
- 11:25:54 +0000
-From: Hugo Komatsu <hugo.komatsu@nutanix.com>
-To: Thanos Makatos <thanos.makatos@nutanix.com>, John Levon
- <john.levon@nutanix.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] vfio-user: reject failover during init
-Thread-Topic: [PATCH] vfio-user: reject failover during init
-Thread-Index: AQHdKwZq3QjQg49MDUmMavF3ugimobadFkGQgABSiRs=
-Date: Fri, 14 Aug 2026 11:25:54 +0000
-Message-ID: <DM6PR02MB6172F3449E452FEA752C930985DA2@DM6PR02MB6172.namprd02.prod.outlook.com>
-References: <20260813092959.76-1-hugo.komatsu@nutanix.com>
- <IA0PR02MB9462D1D113274A2FC18BF6188BDA2@IA0PR02MB9462.namprd02.prod.outlook.com>
-In-Reply-To: <IA0PR02MB9462D1D113274A2FC18BF6188BDA2@IA0PR02MB9462.namprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR02MB6172:EE_|CO6PR02MB7762:EE_
-x-ms-office365-filtering-correlation-id: dd6bde69-f553-47ab-554d-08def9f6cdc1
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|23010399003|366016|38070700021|6133799003|56012099006|10067099003|4143699003|22082099003|8096899003|18002099003;
-x-microsoft-antispam-message-info: 8LLYEe4bDOI0ZWAOVTxjAucACXReeE1fDN6eoPHDmEMzgB+xl5DeF5GLwASbPB0CA50KgCpLJyW4/qmePdiUcoe87rEahwDJz1fuYDRA5z7Uay/H9dvYgJnv4pfwVULIlRR51D+zvhZ8eyPGtmBd9TrT8pbAxrtKocCNe4HM7IPGtY96o1Xwp4TC4oOjLHN2UJoXByexUpSFGurNCFBbnQzCXEUYh6T84rGKFzMabwQy5zmy0cbhmLz86iSCz/2IMDxcSQBcZFJQFdZfSo19AVxQn/whqz1SkAZgw96cISZekMWhjg3AqODrMfVNI9c5WRatJL3+KYhIB2lAIBO6PTcL8lfFBTqZGhxy7GN1/0acl7Rm+d3WKLFNBUcQNWgLmic6Z41UL6dqHKfAY7Et3VwlBnIs8b0m7xLwy7f0Lkw0MLj4YQNW4efALatr8DDo5L19uH3oxuZcRr2mAlU7Jyn7G1DB2fvKWhtZpo7x2C14U7gzp3m/aBNu9kHIuU3CSZuNObzvSyM0uklDZ6SazB1gNwYGBN1mw5gVFnpbu2VZ7/lrGnPziULCW4B5ORtd0ffTaeqeDmSWw4N6KmwHvfBueA+JguhriUg+SyF03bILhtLzDEF1TN2PuCZeUlzY573I8a75ixnHznUbDIXKoRgYByn/bY9eYD4D8a/MbIhmomKBDaH8yJ6V7S198e9Hg3WdJhiILK1cdvYIJlGLLA/7rthDBGBI06rUIkr9jmw=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR02MB6172.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(38070700021)(6133799003)(56012099006)(10067099003)(4143699003)(22082099003)(8096899003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Vw75i4M09lKgQOe9mIqR317nJVuPitIU+4ojmsa/mgGfzeg8VRX0O28/pI?=
- =?iso-8859-1?Q?ExQrv5284x19HbPj0vYEx50eWdYvlQIcByq8T/PnSbBZu/YkSNepq0CuQk?=
- =?iso-8859-1?Q?6M8JCDoNe9fcTQE/U52SIpqFRrr/Jpx3FMmxbWljA0xcn4JLsfKHa4CgcB?=
- =?iso-8859-1?Q?DG5yZZSqd5e6qN+6Am3/vNKvPIaAh7NkNplzY9YIXLG4IrH0eY9nBHnLYy?=
- =?iso-8859-1?Q?8CmQvubGnFLBVBOUWZ5sVkQpq+xfH+rBQgGTS8m/qLlmW41ju2CJi1c0FY?=
- =?iso-8859-1?Q?TbXFiFhlfWZPJaGxFqfr7Gy0b2vZptUqmIQRjGlL0wqpynCP5vjCDBCK+O?=
- =?iso-8859-1?Q?A2HsS9sqESuqPaiBlCgSEYq35pkp58w0iJsifGrC5t/ykOD+na96c6XCo7?=
- =?iso-8859-1?Q?FUmwSwxxi8SmEXIoJFTc5qHgcN0dBZ/3JYaDj8epS+4rCJlo7i5nsK7Q9N?=
- =?iso-8859-1?Q?fV7Z2kPs19Qm77/OkztwBgZ94DSQ1TrC5YOa0OTpY4PdZNjS1JqdOMmDdY?=
- =?iso-8859-1?Q?wH0vFuYaLzK0mvMDx8MuX3DnMr8RYKUWZ5nhYnWZ3ecjQWU6fZsekBCylK?=
- =?iso-8859-1?Q?cNldJXSppERdJVryFUIzyWNrBXl5n1ZpujeKaAaxKEmUzHsQxhCuCWBqEQ?=
- =?iso-8859-1?Q?1pFPG0Vcvb57Nm2Hm4JBr+4Z9BWLVARyx8odmese2F/YZhP+nyxoX+zAe1?=
- =?iso-8859-1?Q?TBUjOVh2+K3Wrm/wQ+iuDLjeQCfWRwF5UAiEibtY0Wgn9gN5Hm3a5rtZ+I?=
- =?iso-8859-1?Q?e9oBQQJhgOxZihNZyjcjoGATvs7GbgOQfFbYlsYv5e2FD1cPvioTVVG89U?=
- =?iso-8859-1?Q?e6Q1yIUTUoocOJ56upthO1SraMkvLFe/zec5di/SwMbkmr31+IQRPMTzla?=
- =?iso-8859-1?Q?5YfJnS3PoSKGWhVk37EnOR6N+uUVqQ4ovb5B4gRKI0DJaJjgoJGSbzuMHb?=
- =?iso-8859-1?Q?uVbJn1rhdR835mqOkL0vUyVKav2dOqh5qnD78Rj4R4M9JYLFWTwODvK/rA?=
- =?iso-8859-1?Q?hWUO4Tq4tdeATwaWBRJE3yk4gtCVTrrg5AW6K/3nabOjV1oO3RS0mH6hn0?=
- =?iso-8859-1?Q?SWdPwfmSb5C46TVV0wEvsL5qXhlQwIu8VoGGp3hDYv2VHCPoMw+SK51cCT?=
- =?iso-8859-1?Q?lSDx1d8bU7MknnHnb5UpoUSQJjYaBQU6Z5JvlL+cEZUSic3zbh5RtLAkc6?=
- =?iso-8859-1?Q?HZZKW5Es4sJa7GAcIv4zIMUIUE2+qQsI/z0x6vfMW/g6vJg5j3nSj88WC5?=
- =?iso-8859-1?Q?ENZJh9MRkqYR+8DLiAtC/9MmmK53BSXouskgjfbuATGSbq57qKnC/EYm0P?=
- =?iso-8859-1?Q?p+1YGxaLXXcLqr5xhDfAOJgoXo98yvTp0UcSnhQc6QDBkq/QRTfoOkBaYu?=
- =?iso-8859-1?Q?JFgY39QxUFpSDxFoZA7Twty+s/15TFJJm0yEhLRa6FjX2s4fmUUbaOXh1m?=
- =?iso-8859-1?Q?ETgrVUyqacwsfRtFMccJ+fzgylv0RJwWhVxEzLznuABY75ZmZQ6Tml0wik?=
- =?iso-8859-1?Q?+bSQkUNy/fa1w3E5mEzw7rxkqzOO0HcQPbIpj04pSO16+jdDCWenhMKCz6?=
- =?iso-8859-1?Q?Wfro2BdjH7JeDBmDInmgjx434hMwrMN9uFV0gD2Kuvd67chfDj0WaPcj/K?=
- =?iso-8859-1?Q?7Q6Vf8h8ADqYe978/3yheTDxMg+1tvbGWWMJ02T5utSEzOakwGpsBhLC0J?=
- =?iso-8859-1?Q?MCmAwuch5bO11kk+iQRwRzdpOLLK6guZEVPECbN6llewmowQZu/a8qpx70?=
- =?iso-8859-1?Q?KJoKf2LCW4uIRe+m5labStW52EIEU9h2lEqYejtdl1le00GK+bfVPg6CVd?=
- =?iso-8859-1?Q?p47+DSpwuw=3D=3D?=
-Content-Type: multipart/alternative;
- boundary="_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_"
+ 2026 11:31:20 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 11:31:20 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 2/6] qom/object.c: introduce
+ OBJECT_PROPERTY_SCALAR_SETTER(type) macro
+Date: Fri, 14 Aug 2026 12:30:20 +0100
+Message-ID: <20260814113044.2416794-3-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260814113044.2416794-1-mark.caveayland@nutanix.com>
+References: <20260814113044.2416794-1-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0655.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:316::9) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: a/lZmzeTUeGOWoUZ/y5ShXXKx9iAKwwsc420Hw6vIbSC6HtDW6DDIpgDFKZzeEo6Skf8qgu4YCKzb66jTOuYZCSDX5+1N9jKS6gJXAT/ETvntvXCcCejwl/32JLrCfAEc/QLUuFSlmHeAC6zIpY6ARlzs03ZKfyvXxJWrOa9owUWQ2SR4N5WtvbrPOTmM1a/oLzh3D62f35cNzEU/1/8xfEHex4FwOH8gfssfBiIKsJLs5gwVVF6NcgC2M4E8ArjAqsCq5gjJi8Y3CZ5Hgfj8ObookytCJ55S5D5/bF4jAPCTVv0V9VDBHBO2en8wIzPcPbIXhdNtrMee+xEZWZN+g==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|IA3PR02MB11199:EE_
+X-MS-Office365-Filtering-Correlation-Id: f9ca364e-67ed-426c-22e8-08def9f78fec
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|366016|1800799024|6133799003|56012099006|10067099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: XBqcByCIrKzVxxVporAvQZnXZemgpS0LAsmc3NhyG6xmUqlzS/qVTcOsfXm4HU6rDRsAV3m+Ln5L6LFMW/dUttEoIc64olkeqrLyfiHX7t3HNbb8RtpV4KiWPIIC0DyoeaJs2C5ihJjvjgGEIP1CD0vp5tBF+HNZ3jsOaRvosxDRZF6ELatV22M/tUQ7QXvqdGwH4ArtAASxtmHqqOm2SvRcPBDwOQaFhmK+XaL4gBRYkaBfnj7YgoClV06ebJWjK3jjhSSYNWRmzZHtkux2DxS7y82T7C9TfiRWaxpeTbQYI2PIVLon/XSjaGhAePxGKghgpblwqArPzlyP8ae5wB9C7F7stZPpT0pq4tUwW4Szjey0pPzGUKxxFRrGoBVkpbbMv+RryOcIQ5rp3NIUahp9rk/m1kK9E/vf3av90XhKeUi1RAzRienI4qalSB4U7TsoqjVkryaDriw54DoxHO3rnVBiiyeJrWJez6PRC0z1iuWuO7dEzYGXHuWaEwj7bObe2CEZu+rnhUs5BDo93glOTA9PfDO/dDhtUVFla4qyqB8lnOQb4Mbvw3UGijgna/GvT7HMLHFPP8om4n+9W7t0bEtvc7BLDrTlMp3YLvw6gr3a19SKEQ/mjSo1F7aEe4wuVWIeqwXTCRs4RdCC03fktFuQq320UIA1I5BrijM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QTNwNFZzMGVWN2ViR3hMWndjakp4U3BQc3cwVFV0MDNScUw0M1BxbWlZMHlp?=
+ =?utf-8?B?enJhVFcveHMxZ3Z2eC9McGJqWWc3YVVoQXhVTHRtS2tRR0cyOVVzNU8wU21Q?=
+ =?utf-8?B?VHBnR0pySDh0djM0Y3YrNVFZRTJ3U05wTjc3RzdVQXVhbUVJenJTZkxMQU5C?=
+ =?utf-8?B?cGkrdjE5aWZ5VmNPVW5iclVlTlJiM2pnZ3FoSEVoKzBmTkZ0d1pQME91cmFx?=
+ =?utf-8?B?SFBJMEFaUnltMW5uNytPc3IrQmVFUmlrT09rTlhIanFTMjRDcW91QWh1MTA3?=
+ =?utf-8?B?T3NLZkNkS0RZcUM1ZktBdXc5ZE15S1R2L0tQUS9kNk9IQU91dXU0d2VmbGkx?=
+ =?utf-8?B?SDJvUEFhYTF4MXp1aWZnclhsTHRqU0FXMnhlVFZVcmV3WFNvbldRTHcrWDV3?=
+ =?utf-8?B?enpmMHRuc2NNZE8zb2Z3Z1pxK0tNMUhKb1ZZWWJ2TzRpMkR5cnJsQjcrWmVy?=
+ =?utf-8?B?Wm1FTHh6Rm5rbSt1OG5BdGc5SjREdDUzMzllOWM4OEpZcU4wYnpOQ2tQblV0?=
+ =?utf-8?B?a2xsYXlEWDlRTjVzeWY3ejB1MVp3SlllNlRZSUlZTVYzQ3VUeHJBNEY1b3Nl?=
+ =?utf-8?B?Q3lMZDFIK09JWnVTTlZBRG5XSnlmZy9abnNxbE4rbytFOS95ODRMTHlnTUcz?=
+ =?utf-8?B?N1RLYzNZLzVWYzVhRUkyN3VtYmRxbmY1bXMyRGQ1MHBpNmsrL0wyaWFyaVIy?=
+ =?utf-8?B?NGpwL2lTOFlxY2cxMFFsYXI4eU5kS0FXMS9Nd1QyUkk5WSt3VU1wOHZ4dTdr?=
+ =?utf-8?B?Z3NZR2lYbkprcEYrWXlJQWpYWUZzY1loZC9ncVluVUg1MUsvOU5CTVNEb3lC?=
+ =?utf-8?B?VHJNb3pZeUJNWStjQk9ZcnNITVhiS3pJRTZtZXZPRUVVZnd2SW5YYmp2V1BY?=
+ =?utf-8?B?Y1F0QjhlZEJ6SGxjdjVsdXR6NUhnQjd2NnhyNkJKcXFxN1ZyYXJsUUpZT0FP?=
+ =?utf-8?B?OUZPbWZKTXVCb0JFbndpejkxYk8xYWw1YjlHU1RBRlNicWFZYW9nM3NwY3Vl?=
+ =?utf-8?B?ZTNYTXVXSkpRdVR3Rzc1azlLRkhYSUdacTZzOWVFVS94VkpmMElxMGVlUW9j?=
+ =?utf-8?B?T2dUWjZYRFRqSmt1RmRFWjBnYTM5b3pmZGc4d0t2MWJRbm1RS2hhOGEvUG53?=
+ =?utf-8?B?NlRLTjYzeU5mWlp5QVh0bi8xbXdlSDRtc3hjS1YxUWQvQk9GTWl4SVpBS25y?=
+ =?utf-8?B?UWgzQ0lDNllpNFRweW1XdEdIMGlzaWZVVHc5b2hIMmFraHI3N2c2dFN0NXNZ?=
+ =?utf-8?B?QURnbFFrZG5DSTByNWNUZCtjNGIrWlNJdTlybUtWdTl2YmNDR2p5ZU03SlBU?=
+ =?utf-8?B?L1hwM2NrYU1tbE1zcm1WamhkU3ZyRmM5SnhCWTZQa1dpbzN6YmFqWjlsRlZx?=
+ =?utf-8?B?NkpQTnhaaUdUVFZaUjZqWTFRVHo2NXVqVVMyU05vbzBWZTNUeUhMTVlOaWFy?=
+ =?utf-8?B?YWs3REhPcHNWYjVBbXBuMXZoaVhtaFduNUdXQk1ZZmFoeHRnU2U5QlkySmRI?=
+ =?utf-8?B?a2l6N3dNUUhsTkE2QmZBUFBaZWttZVlhbW56ZTIrUXFRRmdrZWowMHFzUlJx?=
+ =?utf-8?B?KzBZZFhFN1l0Qmp6N2l1ZWxWQmYwaS9Gdk5MbkE2bVNKamc5K3hSaEZNekll?=
+ =?utf-8?B?ejJPUmsvTjFScFhZamkydXRLZDd4QWVYYXVxMmVxeHJkM3U4UmJDenJBNTB4?=
+ =?utf-8?B?KytqbTNOWHhSVUFzMkZzUmRRRm9EdHNIbGpQSkRaeDcvSytpcEVIR2kxVk11?=
+ =?utf-8?B?bFdMU1pjNmhvTnhzdndDMTlvK0pLdFYyZng1eUEwUXltOW5wKzRmRzdQczZn?=
+ =?utf-8?B?a2p2ckdoVUU4YmpZVGhNMHNqdm5PZ0Via2RpRU01NHdGTDFPZVZlbWlPbnYx?=
+ =?utf-8?B?bE9DTUNlRmpUOGFUVkVtWjYrS1pTK1hFcnM3LzQ5amhOdk81SDErTWdHdEhX?=
+ =?utf-8?B?Q20zMDRyN0VqQUFNU2QrQ3dNaXhxaHIvVFNVam8xdUQ3QVdWWUc2cnNVcE5m?=
+ =?utf-8?B?dms0YW1SR0dkb3RHRnhnUjZWZ05md1ZyNm51S3g2cmZieTVvRjVOSzVSYk1C?=
+ =?utf-8?B?SXBHdGxNWVNBbGtRZ1lwWElLNFFyMWhiYUFldkYvQlE0cVYrdDBoaUhCK3lT?=
+ =?utf-8?B?WXlUa3c3VU9Vb3lqQXFVaEVHRWRRaEN6WHdnMkgwTWpnOEIvUVBCaDFYUkpY?=
+ =?utf-8?B?emxxcTA3ZkJwNmNxNUg0UGlKeVMzYWRpS3VMVWFBNkVSeXZKQ1I5MVFOT2lw?=
+ =?utf-8?B?UFJ4RFNVS0w1SEgrZ2M4dkVzRHR4d1FDYzVXY3pkaHNXWWRIbUhJN0hCT0M5?=
+ =?utf-8?B?UmdDUEpxRnE5c2xyZ2hjdE5qUElsdVBXcXZVcnRjdUphUHJBOWt3elpGMUw1?=
+ =?utf-8?Q?fqPOGqAXzDRJ7bHo=3D?=
+X-Exchange-RoutingPolicyChecked: nXiujsrVCoNjinDhlgToQqk0l8Wy67YuL2RCIjlwL3M+jrTeEYV9Kd6JtF3rOXDKptUyZSR1vrFliX9Ws7Yk6RADpBcE1bNqmN2DBlg4XgKXITbaCljuF5zCQYbg29smjE4lq2HuGyKeTKt8yjgJc1GB6ZiCPvvtuRyoLp87tBaEmTnUz2Hn9wkEbnBDZiMonr+ShczlkO802cYntuoWtic/kefmLSzuUMLAPF7lxtbnV8O5XwPXrNxlVl96E6WtM/g25lIXdKLLdlVxkxLNVzIZJV3kmnnB0jObb4FXeHmKha7F1htYKzaD4nCNT2j96KnRUIeG5gczP7Obk36hfg==
 X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9ca364e-67ed-426c-22e8-08def9f78fec
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR02MB6172.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd6bde69-f553-47ab-554d-08def9f6cdc1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2026 11:25:54.2155 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xq1Upk+Ot9tZfYdMIlBuXnhipL2Z21VRitVojBzNa6zc07JXQAIGEWyYM0xaY3vXtdxbfWJN/BcHZw5rUifkEK+h4uCDEZHzbbomWyWzIBU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7762
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4NiBTYWx0ZWRfX90UGQv1Exbze
- 9fXp60w8yeoSJAtVgnSOUe9zLtac9oOJjBfGoYTRkh92wv92Ml+v6VneSiL4Phwky0nOOM4ZzCn
- 24HgquawoJHzru7PYlo/XJ/PHWX0EASunT6llqDRoDlOfCUMyd5mITVwha9GJU9iwsjnBwSSwI1
- Tc/NJUufdE3PkVUdl8PtJqJQck0bVUYq2JOuI6njbgobfEfhuyjj6F4cPdOLC5PyPYeTtxiz1DS
- Lj/0MzEqUajnF65ZKEfU62bL8GQ/6uMB86D7351EbePMFd3Uv36DiAcHubFKPzlRWZef6s3DCvT
- DzfJddrHs7a/11nEoe4hFR48H31V3COZlUblItllVG3elYoDcu1IXZGcfVGnH7mH1w2aWqOWw3i
- 9VntnqDSTPc+FbDhMFCROM+Ennp/YwyL+o2oqnfiEbFoO5QWQhTUljdgk3j7Or+b6oLHD8c7ZuN
- qlYIVVLRSuLHohJJAcw==
-X-Authority-Analysis: v=2.4 cv=Rr/16imK c=1 sm=1 tr=0 ts=6a7efb44 cx=c_pps
- a=9wgRWqjVWX0WYWV/j6UgmQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10
- a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22
- a=VUi8bpU7OL1Oj2-RSIOF:22 a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8
- a=uqWhNtoaQTk3GqIFXJIA:9 a=wPNLvfGTeEIA:10 a=-nUuIw_CUlTfXVXV:21
- a=frz4AuCg-hUA:10 a=_W_S_7VecoQA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: Vd41WsfcveQRMutKHzE4YsO9E-NPQRQM
-X-Proofpoint-ORIG-GUID: Vd41WsfcveQRMutKHzE4YsO9E-NPQRQM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4NiBTYWx0ZWRfX9pIWd6lQXjE/
- svsLzp3qLQgvexWFqflBZPDR2QANYpGyg7C43sma6cEZY+sZ9Xx9aL/bcEd0K4Q5t5ZeNkBWkyg
- esj5jL6Ur1bL8EQ3m+J9utjRlGfWknU=
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2026 11:31:20.2097 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MV+lT+s3wWd2E4fnYJW4UGDBze2cmh19LpVKpaf8cvekFoWyeoh/9btsC6PFSp3Ytzp47MWTF66ZKXgrF6UFXg3+MATQRIohMMSVdDsfS6E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA3PR02MB11199
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4NyBTYWx0ZWRfXzIjrN+ROwpY9
+ 6a9Ad02GFOTzEI3u/MGTMwtawJ6azaiMs/+LWTlem3JdoY6/htSJHIkdS/uakPPC094KX+xY6iG
+ C/1uxi3vZ49PAXg5Y+VhoILdGKIegAspDXhKZbKoo7BDZ1kj+wYcJaExq886Np8/Ij0RpHwI2ac
+ zPmsAb7bR1WNp0FIdaa8FvHKAFG0GejZ3wbidIGzardRTQXGniyf50n3U/AHv7A7G35wAzJKurw
+ DGV9eQFwFdr/19PaXPy1Fi8ncaRaZC6DiEfYsTM1+LDaekK+eQQE9n5JCmfiZ8dt2VIpxoIjY/A
+ /vnqgEVM+HO7EJ9y927RKTBjp1ac38mE0O+uemdM8oWWVaErAAaVpp627MJYh/+aIjgKcWTOCDT
+ rKX74u6jhyJ4VeaCGz3i0A0eORyeQTSmUb2s0yPPSh1ZSWeUQR6+fNp8KlAukL+anHJDR7tn0kX
+ T4Q89iBHAnnqw5rukWw==
+X-Proofpoint-ORIG-GUID: 2p1tbGroq_UuRRX_UOCvM4vbXq2odJ9J
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4NyBTYWx0ZWRfX5X0KINRmN5dr
+ 45meLOm9jq3vR5L+Z/s9Jm7NzW1fVBONJQr0YZEqRZMGSEjVJeY4ZzWBK3ACQo6XHy6GlO4uDvJ
+ yJzF7WB4elxCx+qZW1X43mNj8XzjHg8=
+X-Authority-Analysis: v=2.4 cv=ApbeGu9P c=1 sm=1 tr=0 ts=6a7efc8a cx=c_pps
+ a=Sq/50nUKxlEOOe6u8VXKPA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=fKZFoM0pQB3ZjpgBshEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 2p1tbGroq_UuRRX_UOCvM4vbXq2odJ9J
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-14_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=hugo.komatsu@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
 X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.751,
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.751,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -185,147 +192,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+This macro can be used to generate the boilerplate property_set_type_ptr()
+QOM set function for the specified scalar type. Replace the existing scaler set
+functions with the new macro.
 
-Thanks Thanos and I actually fired off a v2 to the list yesterday that drop=
-s the Change-Id per John's feedback.
-________________________________
-From: Thanos Makatos <thanos.makatos@nutanix.com>
-Sent: Friday, August 14, 2026 7:29 AM
-To: Hugo Komatsu <hugo.komatsu@nutanix.com>; John Levon <john.levon@nutanix=
-.com>; C=E9dric Le Goater <clg@redhat.com>; qemu-devel@nongnu.org <qemu-dev=
-el@nongnu.org>
-Subject: RE: [PATCH] vfio-user: reject failover during init
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20260717135254.508701-3-mark.caveayland@nutanix.com>
+---
+ qom/object.c | 72 ++++++++++++++++------------------------------------
+ 1 file changed, 22 insertions(+), 50 deletions(-)
 
-> -----Original Message-----
-> From: Hugo Komatsu <hugo.komatsu@nutanix.com>
-> Sent: 13 August 2026 12:31
-> To: John Levon <john.levon@nutanix.com>; Thanos Makatos
-> <thanos.makatos@nutanix.com>; C=E9dric Le Goater <clg@redhat.com>;
-> qemu-devel@nongnu.org
-> Cc: Hugo Komatsu <hugo.komatsu@nutanix.com>
-> Subject: [PATCH] vfio-user: reject failover during init
->
-> Virtio-net failover is a networking feature that relies on a primary
-> and standby device pair. This is not currently supported for vfio-user.
-> Refuse initialization if this property is set.
->
-> Change-Id: I80989ddb08a1cd3eba84bcf9b0edc26cb4a65669
-> Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
-> ---
->  hw/vfio-user/pci.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-> index ecc59a9642..34fa2f22b3 100644
-> --- a/hw/vfio-user/pci.c
-> +++ b/hw/vfio-user/pci.c
-> @@ -251,6 +251,11 @@ static void vfio_user_pci_realize(PCIDevice *pdev,
-> Error **errp)
->          return;
->      }
->
-> +    if (pdev->failover_pair_id) {
-> +        error_setg(errp, "vfio-user: failover is not supported");
-> +        return;
-> +    }
-> +
->      sock_name =3D udev->socket->u.q_unix.path;
->
->      vbasedev->name =3D g_strdup_printf("vfio-user:%s", sock_name);
-> --
-> 2.39.3
+diff --git a/qom/object.c b/qom/object.c
+index 34aef7ca9f..8a1f80f613 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2671,62 +2671,34 @@ static char *object_get_type(Object *obj, Error **errp)
+         visit_type_##type(v, name, &value, errp); \
+     }
+ 
++
++#define OBJECT_PROPERTY_SCALAR_SETTER(type) \
++    static void property_set_##type##_ptr(Object *obj, Visitor *v, \
++                                          const char *name, \
++                                          void *opaque, Error **errp) \
++    { \
++        type##_t *field = opaque; \
++        type##_t value; \
++        \
++        if (!visit_type_##type(v, name, &value, errp)) { \
++            return; \
++        } \
++        \
++        *field = value; \
++    }
++
+ OBJECT_PROPERTY_SCALAR_GETTER(uint8)
++OBJECT_PROPERTY_SCALAR_SETTER(uint8)
+ OBJECT_PROPERTY_SCALAR_GETTER(uint16)
++OBJECT_PROPERTY_SCALAR_SETTER(uint16)
+ OBJECT_PROPERTY_SCALAR_GETTER(uint32)
++OBJECT_PROPERTY_SCALAR_SETTER(uint32)
+ OBJECT_PROPERTY_SCALAR_GETTER(uint64)
++OBJECT_PROPERTY_SCALAR_SETTER(uint64)
+ 
+-static void property_set_uint8_ptr(Object *obj, Visitor *v, const char *name,
+-                                   void *opaque, Error **errp)
+-{
+-    uint8_t *field = opaque;
+-    uint8_t value;
+-
+-    if (!visit_type_uint8(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_set_uint16_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint16_t *field = opaque;
+-    uint16_t value;
+-
+-    if (!visit_type_uint16(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_set_uint32_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint32_t *field = opaque;
+-    uint32_t value;
+-
+-    if (!visit_type_uint32(v, name, &value, errp)) {
+-        return;
+-    }
+-
+-    *field = value;
+-}
+-
+-static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
+-{
+-    uint64_t *field = opaque;
+-    uint64_t value;
+-
+-    if (!visit_type_uint64(v, name, &value, errp)) {
+-        return;
+-    }
++#undef OBJECT_PROPERTY_SCALAR_GETTER
++#undef OBJECT_PROPERTY_SCALAR_SETTER
+ 
+-    *field = value;
+-}
+ 
+ ObjectProperty *
+ object_property_add_uint8_ptr(Object *obj, const char *name,
+-- 
+2.43.0
 
-LGTM except the ChangeId John mentioned.
-
-Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
-
---_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Thanks Thanos and I actually fired off a v2 to the list yesterday that drop=
-s the Change-Id per John's feedback.</div>
-<div id=3D"appendonsend"></div>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Thanos Makatos &lt;th=
-anos.makatos@nutanix.com&gt;<br>
-<b>Sent:</b> Friday, August 14, 2026 7:29 AM<br>
-<b>To:</b> Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;; John Levon &lt;jo=
-hn.levon@nutanix.com&gt;; C=E9dric Le Goater &lt;clg@redhat.com&gt;; qemu-d=
-evel@nongnu.org &lt;qemu-devel@nongnu.org&gt;<br>
-<b>Subject:</b> RE: [PATCH] vfio-user: reject failover during init</font>
-<div>&nbsp;</div>
-</div>
-<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
-">
-<div class=3D"PlainText">&gt; -----Original Message-----<br>
-&gt; From: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
-&gt; Sent: 13 August 2026 12:31<br>
-&gt; To: John Levon &lt;john.levon@nutanix.com&gt;; Thanos Makatos<br>
-&gt; &lt;thanos.makatos@nutanix.com&gt;; C=E9dric Le Goater &lt;clg@redhat.=
-com&gt;;<br>
-&gt; qemu-devel@nongnu.org<br>
-&gt; Cc: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
-&gt; Subject: [PATCH] vfio-user: reject failover during init<br>
-&gt; <br>
-&gt; Virtio-net failover is a networking feature that relies on a primary<b=
-r>
-&gt; and standby device pair. This is not currently supported for vfio-user=
-.<br>
-&gt; Refuse initialization if this property is set.<br>
-&gt; <br>
-&gt; Change-Id: I80989ddb08a1cd3eba84bcf9b0edc26cb4a65669<br>
-&gt; Signed-off-by: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
-&gt; ---<br>
-&gt;&nbsp; hw/vfio-user/pci.c | 5 +++++<br>
-&gt;&nbsp; 1 file changed, 5 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c<br>
-&gt; index ecc59a9642..34fa2f22b3 100644<br>
-&gt; --- a/hw/vfio-user/pci.c<br>
-&gt; +++ b/hw/vfio-user/pci.c<br>
-&gt; @@ -251,6 +251,11 @@ static void vfio_user_pci_realize(PCIDevice *pdev=
-,<br>
-&gt; Error **errp)<br>
-&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
-&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-&gt; <br>
-&gt; +&nbsp;&nbsp;&nbsp; if (pdev-&gt;failover_pair_id) {<br>
-&gt; +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;vfi=
-o-user: failover is not supported&quot;);<br>
-&gt; +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
-&gt; +&nbsp;&nbsp;&nbsp; }<br>
-&gt; +<br>
-&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sock_name =3D udev-&gt;socket-&gt;u.q_un=
-ix.path;<br>
-&gt; <br>
-&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vbasedev-&gt;name =3D g_strdup_printf(&q=
-uot;vfio-user:%s&quot;, sock_name);<br>
-&gt; --<br>
-&gt; 2.39.3<br>
-<br>
-LGTM except the ChangeId John mentioned.<br>
-<br>
-Reviewed-by: Thanos Makatos &lt;thanos.makatos@nutanix.com&gt;<br>
-</div>
-</span></font></div>
-</body>
-</html>
-
---_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_--
 
