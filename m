@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FDEC5CFDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1381BC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 15:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wuuBT-0003SQ-R9; Fri, 14 Aug 2026 11:51:03 -0400
+	id 1wuuDH-0004YS-5I; Fri, 14 Aug 2026 11:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuuBS-0003S4-DD; Fri, 14 Aug 2026 11:51:02 -0400
+ id 1wuuDG-0004Y4-64; Fri, 14 Aug 2026 11:52:54 -0400
 Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wuuBQ-0004n7-BW; Fri, 14 Aug 2026 11:51:02 -0400
+ id 1wuuDE-0005cs-Cb; Fri, 14 Aug 2026 11:52:53 -0400
 Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id BBCEAEC019C;
- Fri, 14 Aug 2026 11:50:58 -0400 (EDT)
+ by mailfout.phl.internal (Postfix) with ESMTP id 639CCEC01E0;
+ Fri, 14 Aug 2026 11:52:51 -0400 (EDT)
 Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Fri, 14 Aug 2026 11:50:58 -0400
+ by phl-compute-02.internal (MEProxy); Fri, 14 Aug 2026 11:52:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1786722658; x=1786809058; bh=HZZdXR4pgMzKpLWzK6qwwU8XPOaOufQG
- q40+Nzb+hos=; b=bjOKkZS3M7UOmdlv4MGtomBVfrbThDhmXpdAYi8cY7Kmy/7V
- DHFMKudga53zDcqepn/4SaEsG45622MKkhA/sqM2QnVi2PcOpy+UPbxq5IIyJJVO
- Mc8RsT5f+1CUhRVojd5kzW/f4xM7e9FMD5W1Gv8dV47UKagyu4x60KtIdUumsa/l
- UMpymVyMwWQFAopuMuTxwLHVvxqK8tks56mqVIforblvwlDML8uf/7Yb/bd7keaX
- 063yHdapaKxWwk/wxrQKawkctFh7S24A0y9Y2BdfBUctkfnV8cMNRb70rbFFFD7a
- 4YhdsvW0bWOlJKHeEOo9CFMoWEd1DHeUIzB2Cw==
+ t=1786722771; x=1786809171; bh=0gD56VyifDOJoHCk30eX+LSVWg+cTMBD
+ QasUEj5XK5A=; b=wq4qrTbLB8m+Ou81SMiQaMMH/N3TS1MZYr9XxaX/nbXSRQHu
+ nGYx7ZmFMESgBCFC+43/zQRbqzopvZ+kVoUG4nTkrmpdBbYMLVNjj8vGUFq2t45U
+ OIRxjTFbljzCUQXtzR+GKKJLcYLvYS6qrOuAGZu1Nu75Z+BsAvl1JRtdrfEAztqM
+ Ydlp602vbiYmhSBqH8KHEFHUFeKH9hlIL3AfpDMVkYn5jSH0kptfneNxWJ+7+pt+
+ ZnzERbAwOA3XqxCWXLhCuO+k3qGAZrZfylq7EyF5gyfEDuhBRVUORecgdcl81K5b
+ XOS+5vs06seF1xqG2XCWBD2R0Pr1j5FrlKQMRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786722658; x=
- 1786809058; bh=HZZdXR4pgMzKpLWzK6qwwU8XPOaOufQGq40+Nzb+hos=; b=J
- ZJ1r4jF/eVSxYQBMytFJt1cQ8UgMc7HDx669NrXwVxtXWAWnTgir3E2VbvSiNSaO
- 1bszDev7DfgwRKmWAcBS3jCUQ7UXP8kh9RbRt5ToDzyARKs2VCRjlHW8HXZFv0yC
- kdo/ZA9ODYTdkkrP2ixTZBY4qYRemjKtDauOqGTb0h80U1i8LQATTpsGVIA21IFS
- kiFKQwt2DVJp74Tb5VCs7AvJuNRr5hXZUAB3K/a1FWDX962pwbUwh8rGDUzTfsKn
- NkdDXaaY0Q7ke18/gq3rDk4Etke7wx5WSWozkz9Lpp/y/vV336knmdiCf6bb9e5Y
- RDEWvHVKL4Ib+zzdvQgtg==
-X-ME-Sender: <xms:Yjl_apcT2ZlpmOkV3IXRnlx7WSBX2HOfMBweEAJ_N7m1yI49XwXiww>
- <xme:Yjl_ahRhiNxPs-vOXiiMAa_3tIMOAAa_bm7pBUN7dH8mB8_Bo6W9WCGdwKM5EdH8c
- -03XZQdrhilUvo6-EL9hJ77tId9sfcX91-9jKV23DZc5FTW2P3rwww>
-X-ME-Received: <xmr:Yjl_aiapk7dB7l9jcucnfzb1DFVLZYVeggKOhhiaB2iGbmWwHNo9I82HT-5fVrLbWCCpZQ>
-X-ME-Proxy-Cause: dmFkZTGu3eW0Z/5hbWCQZQFQyyykLEGLGSUhTjp8ZIY2edQjwBxOaYxzfJTxeIOnQ4+oJ+
- U+s7XccINIyJ/HcMIQJebuaP5fxe5NyMyiTdcXL85zqOXzg5h7K7aCDdoZFjY/WZgkWgwQ
- JKUiAT/mJ0N6KYfNfouOgfnzAv2kI3eqi9/yO6kfaaoqIuvjhmcijqNXzksaAh4tACrU+X
- cuPVr0aRM48UX8cZ8I8lDHHydozGZPYSbNp3VEt9iG7mGikUCeyl47qJM61f9qwgtBy7It
- Pq/hZoru/IL2ZqhBBgNLag5fb9EBYipdCV/OJENQN+eUCvp3NNhyB6MgOir6v6Ege3T8Zl
- JtRrdufXBrzzXObO4l5kejBAnXutyWg6gh/4IOz0scKVb1rsx8FmrLceiIBh7oQWYEtAXO
- xRRszLNkSsPQWAEoKsRGfPw1mAhqoGjXy2sJyIrGJtDiBE7+xScnQ8kTTGKLl0g0mtDN0k
- XFWRaRpiueNTSfQCdi6kLcPNc0eMa8kpo2QA0Gs43SADmDy5Kyp1n46efTSEjtDiCLCP7n
- G5xFuMd4pvwUqFeP/fcZ88+lShrJuEk1Bve01Kwp5r8EhHRvIBjTnNEqA7/GUcSfNwDwdP
- vMWqOqNzsNN7Fld7+pXtwc+dPUVJSGcvC2zt0sLHnS3Rj1m/8Lc/skj2Jpvg
-X-ME-Proxy: <xmx:Yjl_akckSEWGk7GlX-UvswX0bFaPB00qoLzZH8HoB-hVoTaqAHrwXA>
- <xmx:Yjl_ajL6T-di3HR9c7idHDKYzaypXvrAz2d8JIXxU9RyvWi4eUTKNw>
- <xmx:Yjl_ahKR187htOLSwzpmK95KWTV3AozHwg7LoDr1ZGUx15NyOdBxxA>
- <xmx:Yjl_aiV_9T50DadwUU5vsxbfxDa-eae3cqLfin1eQ1bypRLDEw3tWQ>
- <xmx:Yjl_aiuoMIszbS4L702yO_yux4gIfgIzWonbxUL53FZ5pH2io_xIaXvr>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1786722771; x=
+ 1786809171; bh=0gD56VyifDOJoHCk30eX+LSVWg+cTMBDQasUEj5XK5A=; b=l
+ A+3eEf6FOQ/VPNO8SZTmAKOaIOWCGfeEMk12Rapr0dEhTHFrECA/oI+gJcb65nCx
+ x5JPfWIsmCN8vShdprcOA1BPegoUZ2c46GjPyBhzNUtmZrQjLL2loMJtiX/ewcrH
+ DoJMtoHEZXzn9ZZY1cY6zdwFFL/NmoH8srki1ak4slJDqqDIfphb3NO1clM+cDU0
+ lTklQazhCAib/AoAy5YDFrroIpYav4BCXa/dbljzRk7sgpKSpWewt/Mjxwf7SAon
+ Gz2CbpGg4ir24zZ4yUct63y7UD/CE7L/kLuUOFMrG2xMkoIpjKs+Jgv8w0YXeuXQ
+ PGqK9fMPLTMVl50WopsYg==
+X-ME-Sender: <xms:0jl_ahsf8kNBDgkrjnY6OmyYWwoHP8OxL_013NfkM8de-hVFqCFRqw>
+ <xme:0jl_agDgoEA0XxsOmuBeBCinADugu5Qtx3hQk5KNUG9fvAMH5uWRonH_P6MQYVIhx
+ aaIGCjB717qfqkVi98LgonCQGKDs-kS5Mr_EQtJ402-_C4nhmyJnVE>
+X-ME-Received: <xmr:0jl_auXnEKIqTarSv_YNvXMS9IH2m1iV_R2jTnWb30SkNaFThM7yXrusMYrvoN7Iqkc56g>
+X-ME-Proxy-Cause: dmFkZTGsvnB7JPB5A/m7+aqgf7QfMAC3iN5dMoLDySJ6UxxAkqDZnHTxEVTOUttVtFfPXU
+ +ch5OHok8XRoAOoboU/RePCsQlD4FikdbcdmbETEYvCGYuT3pBGDKr3wTJtRQO6fnx6NTk
+ TtKjVzcMZWg3uuiAqP1SXNZWLJw71H6MPQsbaIBoLR5iRxKhJA2kOdSxmQtNGFEzuanzZl
+ WCsx4wbkXYyuDra63+6p2py1jLSZtmz+aPL2OtSP3ga1d7OfcMWH0GE4+du0zjg/XL4hNi
+ 2CSb7e3vDc+wb90qXJF+slMbE/0qQezdUaHilsy6g+X+NW7wj2EhNblUXUsyf3qmzQxHsn
+ E5qMjZt/isSy7Bg7T13lWJhLxDsJNyM1dE5o2ArX2vYnRuC1NDZLDj58LzGNdaz3tvL8dr
+ OjThMFd4PLgXK7t4jVobObbXIpE9ubfqfM7YqGUKAXBs2YeupK5jqq1Tzmt5+qUC71/2Gk
+ dyh2jeJICPN5duZqvlmq/4s2ZKuIrTW4NVvbpq+kE64891G8iIkhqkevRQ3clJXJMYw99s
+ yG+304cA7WTVtDBJUz5c+kTJ4VIXTZCUxQuqQ/sr2C5CPqfPctAfxJD6R85BtUo9+aSt1p
+ zDbPT/p8RJdPBRwRVKAFSH2YO+K1Nu9XsGP9rlckGv06XrNPRuNQ9N4FhVZw
+X-ME-Proxy: <xmx:0jl_apG4LG50LMhN469fha-jyeYYR09wLyLOPEePItkJ0M7c9BWPTw>
+ <xmx:0jl_apP3hHDaKyE_s1EEB0MboFSJkXimQ5T6B4ygGPevTRLFESeCDQ>
+ <xmx:0jl_alXH9eVBjh8jMhYog6hjY18USl-V0DdAXga8PzRvguHscKw6qg>
+ <xmx:0jl_agx7FwMXt1haCVN7Fntndru3AhPhkE__PARhi1_q6GWuTbZMLQ>
+ <xmx:0zl_arfybNOc1UwvtEEsWv9DsVh6Cr2C_uPH1XyRIlZR4Xd89vPiGFBL>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Aug 2026 11:50:57 -0400 (EDT)
-Message-ID: <d6664eb41fb32ff02503e5eb15fced34b52cc2c1.camel@alistair23.me>
-Subject: Re: [PATCH] tests/qtest: remove trace output from k230 watchdog test
+ 14 Aug 2026 11:52:49 -0400 (EDT)
+Message-ID: <068899e5a13d1fc6fab8052736f143dae187dbdc.camel@alistair23.me>
+Subject: Re: [PATCH v3 0/3] riscv: Add K230 DW 8250-compatible UART
 From: Alistair <alistair@alistair23.me>
-To: Chao Liu <chao.liu@processmission.com>, alistair.francis@wdc.com, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Cc: bin.meng@processmission.com, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Date: Sat, 15 Aug 2026 01:50:57 +1000
-In-Reply-To: <20260813054329.35425-1-chao.liu@processmission.com>
-References: <20260813054329.35425-1-chao.liu@processmission.com>
+To: Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>
+Cc: WX Chen <wxchen0913@gmail.com>, Alistair Francis
+ <alistair.francis@wdc.com>,  Kuan-Wei Chiu <visitorckw@gmail.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	 <marcandre.lureau@redhat.com>, Chao
+ Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, Daniel Henrique Barboza	
+ <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, 	qemu-riscv@nongnu.org, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier	 <lvivier@redhat.com>
+Date: Sat, 15 Aug 2026 01:52:49 +1000
+In-Reply-To: <CAEUhbmWJzY4qZA6DvTKu3gbP=BEe_Byw6+cpiKEruvVCyL-jiw@mail.gmail.com>
+References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
+ <CACPK8Xfgj+AUx0h_46f=qG_UEE_o7kTZ0=Buxr7+bdHDODHpgw@mail.gmail.com>
+ <CAEUhbmWJzY4qZA6DvTKu3gbP=BEe_Byw6+cpiKEruvVCyL-jiw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.60.2 (by Flathub.org) 
@@ -107,41 +115,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-08-13 at 13:43 +0800, Chao Liu wrote:
-> The interrupt mode test does not depend on trace output, but passes a
-> trace file to QEMU. This makes startup fail when QEMU is built
-> without
-> the log or simple trace backend, so qtest cannot connect.
+On Fri, 2026-08-14 at 14:27 +0800, Bin Meng wrote:
+> On Thu, Aug 13, 2026 at 6:21=E2=80=AFPM Joel Stanley <joel@jms.id.au> wro=
+te:
+> >=20
+> > On Sat, 8 Aug 2026 at 12:02, WX Chen <wxchen0913@gmail.com> wrote:
+> > >=20
+> > > This series adds a QEMU model for the K230 SoC DesignWare 8250-
+> > > compatible
+> > > UART controller, wires it into the K230 SoC, and adds qtest
+> > > coverage.
+> > >=20
+> > > The implementation supports the registers and features required
+> > > by the
+> > > Linux 8250_dw driver, providing an interactive shell over the
+> > > serial port.
+> >=20
+> > This is a model for the same hardware as this patch:
+> >=20
+> > https://lore.kernel.org/qemu-riscv/20260616190147.1286316-2-visitorckw@=
+gmail.com/
+> >=20
+> > I'm not fussed which one we end up with in the tree, but it would
+> > be
+> > good to name it generically so other machines can use it.
+> >=20
 >=20
-> Drop the unnecessary trace option.
+> Agree.
 >=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4126
+> Hi Alistair,
 >=20
-> Signed-off-by: Chao Liu <chao.liu@processmission.com>
+> I suggest we drop the series from your riscv-to-apply.next tree and
+> ask WX Chen to respin another version.
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Done!
 
 Alistair
 
-> ---
-> =C2=A0tests/qtest/k230-wdt-test.c | 2 +-
-> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
 >=20
-> diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-
-> test.c
-> index c8eaeaf1ae..b1131f42e3 100644
-> --- a/tests/qtest/k230-wdt-test.c
-> +++ b/tests/qtest/k230-wdt-test.c
-> @@ -76,7 +76,7 @@ static void test_counter_restart(void)
-> =C2=A0
-> =C2=A0static void test_interrupt_mode(void)
-> =C2=A0{
-> -=C2=A0=C2=A0=C2=A0 QTestState *qts =3D qtest_init("-machine k230 --trace
-> k230_*,file=3Dk230.log");
-> +=C2=A0=C2=A0=C2=A0 QTestState *qts =3D qtest_init("-machine k230");
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0 /* Set interrupt mode and enable watchdog */
-> =C2=A0=C2=A0=C2=A0=C2=A0 qtest_writel(qts, WDT_BASE + K230_WDT_CR,
+> The DesignWare series IP should be modeled separately instead of the
+> SoC version to allow other machines to re-use the same DW IP.
+>=20
+> Regards,
+> Bin
 
