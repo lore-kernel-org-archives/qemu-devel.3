@@ -4,112 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4209AC5B572
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 10:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19F8C5B572
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Aug 2026 11:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wupUD-0003U2-8j; Fri, 14 Aug 2026 06:50:05 -0400
+	id 1wuq37-0002BP-1K; Fri, 14 Aug 2026 07:26:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupUC-0003Tk-Bz; Fri, 14 Aug 2026 06:50:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
+ id 1wuq31-000299-Na
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:26:05 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wupU9-0007Sc-Mm; Fri, 14 Aug 2026 06:50:04 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67E81bi1585891; Fri, 14 Aug 2026 10:49:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=t8wc5v
- RAbovtt2Fkl0jwcEFmqDgiV5UjSZpyaqYAcqY=; b=lbgF6k/vpPtQsK6yx8GARq
- y51fg0C7Dz07dX1URE80+ntHYB3MshKvvSic1S2itGiObiRIejHDsRNILK53Eylx
- PgN7tXva8KoRxHewjIeoo96akhQ0lxbeTpEbw41Nh0CIO0xY/Tm6q5JIzqbLjG58
- jIlxfVmWoXR9FQ27e+w63mfbkD+yxcyZx7yzOLdI5BsZib//wcDwoKEKYmIV6+5A
- 838MrlAG9FjBn7O208eZ62LPXIUsHMQROTkEL1uY4dA8Wjpc+cH0S5H2q68Ygirz
- HR1ALZLmHv9QRQUnKRFtNJ41An6e40LfCuI5i/HQsipuQGZOKzK9mDMP3iGMjwfA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4fwvma4f0v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:49:58 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67EAfkgR012297;
- Fri, 14 Aug 2026 10:49:57 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g1rpv9py1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Aug 2026 10:49:57 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67EAnuYI26673754
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Aug 2026 10:49:57 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9347F58059;
- Fri, 14 Aug 2026 10:49:56 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 67AD158058;
- Fri, 14 Aug 2026 10:49:52 +0000 (GMT)
-Received: from [9.124.210.243] (unknown [9.124.210.243])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Aug 2026 10:49:51 +0000 (GMT)
-Message-ID: <33688841-f8cd-4b74-9279-6181f83e20f0@linux.ibm.com>
-Date: Fri, 14 Aug 2026 16:19:50 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, tommusta@gmail.com, Glenn Miles
- <milesg@linux.ibm.com>, Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: richard.henderson@linaro.org
-References: <20260715125634.2107320-1-rathc@linux.ibm.com>
- <20260715125634.2107320-2-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <hugo.komatsu@nutanix.com>)
+ id 1wuq2y-0005y8-WC
+ for qemu-devel@nongnu.org; Fri, 14 Aug 2026 07:26:03 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67EAbsSO4082956; Fri, 14 Aug 2026 04:25:56 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=proofpoint20171006; bh=0BVZ140R7VA0kXD
+ wUbtW2Ts+o4efE7tV7qsT03Spo/c=; b=Wv+7snFzipGjdvUFvMiCsHEhEVG0lXo
+ uAzy8ygoBqrpelKj1G6s61+UkHDULNSmRXkTy699Rugu/EEf3uvRxAqbmonmzhAE
+ IkJyYOX/gxa3zW/MGnnfJRMrJlXSnrEJ/zApATGeERUNFk1pzJkW9txJS8wrQpkS
+ hr0g2+OcAxG+CgJGNFIgrU46IWMPusUfCqJLBC5FwSP8JEfC1boYX8BIPO0cUgPK
+ 71TpshiRnzWFGI5bJL7e9o99rVHWxjVDkmv7fJu8CFDEN6X+I5HcAAyQHUNT8eL1
+ fVwKCKyz3Nff+jbv/vanKEOjWMYSFl4ftnGjSuXzGkM90TH8vTmzSNQ==
+Received: from bn1pr04cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11020143.outbound.protection.outlook.com [52.101.56.143])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g1nye1e3p-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 14 Aug 2026 04:25:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cLuuRSneVqpg9m/cwqAKJfknCi254UndPtPm1h3rYPuCTAI1oMRPZXV+1LAZN8BIpGblDr2T0pc9apmye94VovR7oU5To6tQ0y75d91kSSh+9hgLda5Vc9oOVNGtXD1ERHi7QIOlmy+yKzTWEKaD/Ye92m1aY2sKvJ2FE1GavJbCv2HizmNjw1+qpQW2oS6T5N+6A7XZLac0+V2gShcGERWiJaNr3j0U6gXkfP9ni7Po3zHL7tmee+ESHj1gGaBh/Zte3TvmRSjDiwTnnpyETBATVdj3KruZ/GKm6HigGZQ4epBEUCWOExTOFxJ8WwHlFvz2pRedV3maDHhQ8sYzOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0BVZ140R7VA0kXDwUbtW2Ts+o4efE7tV7qsT03Spo/c=;
+ b=SZ1FMP4SEH+zbuEMbwE6e+DkqUfSoi5WJfDfUkNFVO8vUQQJCx7wew8HFhaEWYoEikmu2KpI5MLwaYAjkcOIEGO56mIfIUPviAuyWpEdFR1rTMgt8gmp07c/fCoXehNtUxvSaTQXUBXh6CMaFPNpQ95BdufFtmgGjRhzugNmgM1wky+6dIS3IqGgRDRF+Ol0D1LNdpDFvDQAXhxuJOvdN+0irzSBVXYS6fK3lHoh6Sngwr6cLC9zqeUOORDTa/YmPpPCnNvESVZbS+a32GARREgm4c1AwSTS9Vvy5nTdhKyEyLbCsBAmE05zQHAGniaRW4tsDHQrbssUop2Pl1nTzg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0BVZ140R7VA0kXDwUbtW2Ts+o4efE7tV7qsT03Spo/c=;
+ b=bOuPVDYHqdGfqHcnTt30nqGEV1DdkODBjKPJ1pkYnj+aQ9AZoCJfNhWASJe9j/tJRJhtEclHniSmXF2nQhOr0Mh8hxP3bUM8aiAW2cnSe/JtYFQvRUiBjQGUZlK52b0fXbKRG1G8asc13wr4Ct9pxqyho6yvzXT/u6F/rGjKsUKCOksRHjsX7K7PUznkXMkKNQ2ZQNIoJZHGdW+rpXw3Q28Yne5KvfDX+Iutiss1AA3OSou9WSaYVTmZM21a7+/aymfzMgLHmmj/CmdnvzITNc3CakwckSaJbpgOMnqD2Zg6ficaKw/PW+yxHV3uRM/Gk4MtsOfqJDHijDyLPMjE6w==
+Received: from DM6PR02MB6172.namprd02.prod.outlook.com (2603:10b6:5:1fe::18)
+ by CO6PR02MB7762.namprd02.prod.outlook.com (2603:10b6:303:b1::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.16; Fri, 14 Aug
+ 2026 11:25:54 +0000
+Received: from DM6PR02MB6172.namprd02.prod.outlook.com
+ ([fe80::39c3:beef:21c:b4bd]) by DM6PR02MB6172.namprd02.prod.outlook.com
+ ([fe80::39c3:beef:21c:b4bd%6]) with mapi id 15.21.0315.014; Fri, 14 Aug 2026
+ 11:25:54 +0000
+From: Hugo Komatsu <hugo.komatsu@nutanix.com>
+To: Thanos Makatos <thanos.makatos@nutanix.com>, John Levon
+ <john.levon@nutanix.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] vfio-user: reject failover during init
+Thread-Topic: [PATCH] vfio-user: reject failover during init
+Thread-Index: AQHdKwZq3QjQg49MDUmMavF3ugimobadFkGQgABSiRs=
+Date: Fri, 14 Aug 2026 11:25:54 +0000
+Message-ID: <DM6PR02MB6172F3449E452FEA752C930985DA2@DM6PR02MB6172.namprd02.prod.outlook.com>
+References: <20260813092959.76-1-hugo.komatsu@nutanix.com>
+ <IA0PR02MB9462D1D113274A2FC18BF6188BDA2@IA0PR02MB9462.namprd02.prod.outlook.com>
+In-Reply-To: <IA0PR02MB9462D1D113274A2FC18BF6188BDA2@IA0PR02MB9462.namprd02.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260715125634.2107320-2-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX2YLSq2taGpbV
- yV5YojCvCjO98iPczF2FEQtRtj5POd5POhVQgcDjzpUFE3hQfqx6bFCbMRiyPL8qtIe9zdbxju8
- /7JF9pI5/0R+YyysQYdImQ576paaSNF4T6ppe/uyM1Qn2HNDqvGZeZnJel7TR/ekU6Ax0CU8GMG
- xfoLkIeOXJUGg9kWWARugEUYz2WrgVbUZjQTDdj0d+AS+qo8g4lmtF/qjpujnEv97zJuEwTi8hD
- 0XEHyay1GjdUv3MG2Tb63Lx4fjxZd9o4cpIc0bkbMo4DmJ0vLxLGTBJG8nBqcILmIY28EZv3kCx
- TW7S80g2YpdxJDx1VdW2f3bN10innxqnOhqpHzstVRCGILs8u7OPxgwubT5ZA3509c1S8W4QB61
- t5tSIWQNTUBoVKB8WMZh45BK6TfRhNu5zJBkTvd5l1C6dw0O69V8LLDgIg2g3IXZ9ORzTNeYt3e
- DvgsmVBrGBwXWGj1E6w==
-X-Proofpoint-ORIG-GUID: djroDLCW1-AyT9qYCGXKZrY-sMjQaOBg
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4MCBTYWx0ZWRfX8wtewkE6hpxu
- Uw/ElqggJd9wyulkC+7GuwcSGA5e/scuajTJUqdptJ7BdNZ2u5sCewGWYU45cNH8toMm57TawN3
- /YJEXpveuaZof2ooraYRT/AV5GT35SY=
-X-Authority-Analysis: v=2.4 cv=IfK3n2qa c=1 sm=1 tr=0 ts=6a7ef2d7 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=y_V3cqzgbyVwEE-ZGgcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: J5CunRJPp_igypeAKe74adwq8R7HmLLe
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR02MB6172:EE_|CO6PR02MB7762:EE_
+x-ms-office365-filtering-correlation-id: dd6bde69-f553-47ab-554d-08def9f6cdc1
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|23010399003|366016|38070700021|6133799003|56012099006|10067099003|4143699003|22082099003|8096899003|18002099003;
+x-microsoft-antispam-message-info: 8LLYEe4bDOI0ZWAOVTxjAucACXReeE1fDN6eoPHDmEMzgB+xl5DeF5GLwASbPB0CA50KgCpLJyW4/qmePdiUcoe87rEahwDJz1fuYDRA5z7Uay/H9dvYgJnv4pfwVULIlRR51D+zvhZ8eyPGtmBd9TrT8pbAxrtKocCNe4HM7IPGtY96o1Xwp4TC4oOjLHN2UJoXByexUpSFGurNCFBbnQzCXEUYh6T84rGKFzMabwQy5zmy0cbhmLz86iSCz/2IMDxcSQBcZFJQFdZfSo19AVxQn/whqz1SkAZgw96cISZekMWhjg3AqODrMfVNI9c5WRatJL3+KYhIB2lAIBO6PTcL8lfFBTqZGhxy7GN1/0acl7Rm+d3WKLFNBUcQNWgLmic6Z41UL6dqHKfAY7Et3VwlBnIs8b0m7xLwy7f0Lkw0MLj4YQNW4efALatr8DDo5L19uH3oxuZcRr2mAlU7Jyn7G1DB2fvKWhtZpo7x2C14U7gzp3m/aBNu9kHIuU3CSZuNObzvSyM0uklDZ6SazB1gNwYGBN1mw5gVFnpbu2VZ7/lrGnPziULCW4B5ORtd0ffTaeqeDmSWw4N6KmwHvfBueA+JguhriUg+SyF03bILhtLzDEF1TN2PuCZeUlzY573I8a75ixnHznUbDIXKoRgYByn/bY9eYD4D8a/MbIhmomKBDaH8yJ6V7S198e9Hg3WdJhiILK1cdvYIJlGLLA/7rthDBGBI06rUIkr9jmw=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR02MB6172.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(38070700021)(6133799003)(56012099006)(10067099003)(4143699003)(22082099003)(8096899003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Vw75i4M09lKgQOe9mIqR317nJVuPitIU+4ojmsa/mgGfzeg8VRX0O28/pI?=
+ =?iso-8859-1?Q?ExQrv5284x19HbPj0vYEx50eWdYvlQIcByq8T/PnSbBZu/YkSNepq0CuQk?=
+ =?iso-8859-1?Q?6M8JCDoNe9fcTQE/U52SIpqFRrr/Jpx3FMmxbWljA0xcn4JLsfKHa4CgcB?=
+ =?iso-8859-1?Q?DG5yZZSqd5e6qN+6Am3/vNKvPIaAh7NkNplzY9YIXLG4IrH0eY9nBHnLYy?=
+ =?iso-8859-1?Q?8CmQvubGnFLBVBOUWZ5sVkQpq+xfH+rBQgGTS8m/qLlmW41ju2CJi1c0FY?=
+ =?iso-8859-1?Q?TbXFiFhlfWZPJaGxFqfr7Gy0b2vZptUqmIQRjGlL0wqpynCP5vjCDBCK+O?=
+ =?iso-8859-1?Q?A2HsS9sqESuqPaiBlCgSEYq35pkp58w0iJsifGrC5t/ykOD+na96c6XCo7?=
+ =?iso-8859-1?Q?FUmwSwxxi8SmEXIoJFTc5qHgcN0dBZ/3JYaDj8epS+4rCJlo7i5nsK7Q9N?=
+ =?iso-8859-1?Q?fV7Z2kPs19Qm77/OkztwBgZ94DSQ1TrC5YOa0OTpY4PdZNjS1JqdOMmDdY?=
+ =?iso-8859-1?Q?wH0vFuYaLzK0mvMDx8MuX3DnMr8RYKUWZ5nhYnWZ3ecjQWU6fZsekBCylK?=
+ =?iso-8859-1?Q?cNldJXSppERdJVryFUIzyWNrBXl5n1ZpujeKaAaxKEmUzHsQxhCuCWBqEQ?=
+ =?iso-8859-1?Q?1pFPG0Vcvb57Nm2Hm4JBr+4Z9BWLVARyx8odmese2F/YZhP+nyxoX+zAe1?=
+ =?iso-8859-1?Q?TBUjOVh2+K3Wrm/wQ+iuDLjeQCfWRwF5UAiEibtY0Wgn9gN5Hm3a5rtZ+I?=
+ =?iso-8859-1?Q?e9oBQQJhgOxZihNZyjcjoGATvs7GbgOQfFbYlsYv5e2FD1cPvioTVVG89U?=
+ =?iso-8859-1?Q?e6Q1yIUTUoocOJ56upthO1SraMkvLFe/zec5di/SwMbkmr31+IQRPMTzla?=
+ =?iso-8859-1?Q?5YfJnS3PoSKGWhVk37EnOR6N+uUVqQ4ovb5B4gRKI0DJaJjgoJGSbzuMHb?=
+ =?iso-8859-1?Q?uVbJn1rhdR835mqOkL0vUyVKav2dOqh5qnD78Rj4R4M9JYLFWTwODvK/rA?=
+ =?iso-8859-1?Q?hWUO4Tq4tdeATwaWBRJE3yk4gtCVTrrg5AW6K/3nabOjV1oO3RS0mH6hn0?=
+ =?iso-8859-1?Q?SWdPwfmSb5C46TVV0wEvsL5qXhlQwIu8VoGGp3hDYv2VHCPoMw+SK51cCT?=
+ =?iso-8859-1?Q?lSDx1d8bU7MknnHnb5UpoUSQJjYaBQU6Z5JvlL+cEZUSic3zbh5RtLAkc6?=
+ =?iso-8859-1?Q?HZZKW5Es4sJa7GAcIv4zIMUIUE2+qQsI/z0x6vfMW/g6vJg5j3nSj88WC5?=
+ =?iso-8859-1?Q?ENZJh9MRkqYR+8DLiAtC/9MmmK53BSXouskgjfbuATGSbq57qKnC/EYm0P?=
+ =?iso-8859-1?Q?p+1YGxaLXXcLqr5xhDfAOJgoXo98yvTp0UcSnhQc6QDBkq/QRTfoOkBaYu?=
+ =?iso-8859-1?Q?JFgY39QxUFpSDxFoZA7Twty+s/15TFJJm0yEhLRa6FjX2s4fmUUbaOXh1m?=
+ =?iso-8859-1?Q?ETgrVUyqacwsfRtFMccJ+fzgylv0RJwWhVxEzLznuABY75ZmZQ6Tml0wik?=
+ =?iso-8859-1?Q?+bSQkUNy/fa1w3E5mEzw7rxkqzOO0HcQPbIpj04pSO16+jdDCWenhMKCz6?=
+ =?iso-8859-1?Q?Wfro2BdjH7JeDBmDInmgjx434hMwrMN9uFV0gD2Kuvd67chfDj0WaPcj/K?=
+ =?iso-8859-1?Q?7Q6Vf8h8ADqYe978/3yheTDxMg+1tvbGWWMJ02T5utSEzOakwGpsBhLC0J?=
+ =?iso-8859-1?Q?MCmAwuch5bO11kk+iQRwRzdpOLLK6guZEVPECbN6llewmowQZu/a8qpx70?=
+ =?iso-8859-1?Q?KJoKf2LCW4uIRe+m5labStW52EIEU9h2lEqYejtdl1le00GK+bfVPg6CVd?=
+ =?iso-8859-1?Q?p47+DSpwuw=3D=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_"
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: a/lZmzeTUeGOWoUZ/y5ShXXKx9iAKwwsc420Hw6vIbSC6HtDW6DDIpgDFKZzeEo6Skf8qgu4YCKzb66jTOuYZCSDX5+1N9jKS6gJXAT/ETvntvXCcCejwl/32JLrCfAEc/QLUuFSlmHeAC6zIpY6ARlzs03ZKfyvXxJWrOa9owUWQ2SR4N5WtvbrPOTmM1a/oLzh3D62f35cNzEU/1/8xfEHex4FwOH8gfssfBiIKsJLs5gwVVF6NcgC2M4E8ArjAqsCq5gjJi8Y3CZ5Hgfj8ObookytCJ55S5D5/bF4jAPCTVv0V9VDBHBO2en8wIzPcPbIXhdNtrMee+xEZWZN+g==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR02MB6172.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd6bde69-f553-47ab-554d-08def9f6cdc1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Aug 2026 11:25:54.2155 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xq1Upk+Ot9tZfYdMIlBuXnhipL2Z21VRitVojBzNa6zc07JXQAIGEWyYM0xaY3vXtdxbfWJN/BcHZw5rUifkEK+h4uCDEZHzbbomWyWzIBU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7762
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE0MDA4NiBTYWx0ZWRfX90UGQv1Exbze
+ 9fXp60w8yeoSJAtVgnSOUe9zLtac9oOJjBfGoYTRkh92wv92Ml+v6VneSiL4Phwky0nOOM4ZzCn
+ 24HgquawoJHzru7PYlo/XJ/PHWX0EASunT6llqDRoDlOfCUMyd5mITVwha9GJU9iwsjnBwSSwI1
+ Tc/NJUufdE3PkVUdl8PtJqJQck0bVUYq2JOuI6njbgobfEfhuyjj6F4cPdOLC5PyPYeTtxiz1DS
+ Lj/0MzEqUajnF65ZKEfU62bL8GQ/6uMB86D7351EbePMFd3Uv36DiAcHubFKPzlRWZef6s3DCvT
+ DzfJddrHs7a/11nEoe4hFR48H31V3COZlUblItllVG3elYoDcu1IXZGcfVGnH7mH1w2aWqOWw3i
+ 9VntnqDSTPc+FbDhMFCROM+Ennp/YwyL+o2oqnfiEbFoO5QWQhTUljdgk3j7Or+b6oLHD8c7ZuN
+ qlYIVVLRSuLHohJJAcw==
+X-Authority-Analysis: v=2.4 cv=Rr/16imK c=1 sm=1 tr=0 ts=6a7efb44 cx=c_pps
+ a=9wgRWqjVWX0WYWV/j6UgmQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10
+ a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22
+ a=VUi8bpU7OL1Oj2-RSIOF:22 a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8
+ a=uqWhNtoaQTk3GqIFXJIA:9 a=wPNLvfGTeEIA:10 a=-nUuIw_CUlTfXVXV:21
+ a=frz4AuCg-hUA:10 a=_W_S_7VecoQA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: Vd41WsfcveQRMutKHzE4YsO9E-NPQRQM
+X-Proofpoint-ORIG-GUID: Vd41WsfcveQRMutKHzE4YsO9E-NPQRQM
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE0MDA4NiBTYWx0ZWRfX9pIWd6lQXjE/
+ svsLzp3qLQgvexWFqflBZPDR2QANYpGyg7C43sma6cEZY+sZ9Xx9aL/bcEd0K4Q5t5ZeNkBWkyg
+ esj5jL6Ur1bL8EQ3m+J9utjRlGfWknU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-14_03,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608140080
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ definitions=2026-08-14_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=hugo.komatsu@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.751,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,270 +185,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping,
-Could someone please help review this.
-cc: Shivang, Glenn.
+--_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-TIA,
-Chinmay
+Thanks Thanos and I actually fired off a v2 to the list yesterday that drop=
+s the Change-Id per John's feedback.
+________________________________
+From: Thanos Makatos <thanos.makatos@nutanix.com>
+Sent: Friday, August 14, 2026 7:29 AM
+To: Hugo Komatsu <hugo.komatsu@nutanix.com>; John Levon <john.levon@nutanix=
+.com>; C=E9dric Le Goater <clg@redhat.com>; qemu-devel@nongnu.org <qemu-dev=
+el@nongnu.org>
+Subject: RE: [PATCH] vfio-user: reject failover during init
 
-On 7/15/26 18:26, Chinmay Rath wrote:
-> There are several flags for Power ISA 2.07 currently in use, namely :
-> PPC2_VSX207, PPC2_BCTAR_ISA207, PPC2_LSQ_ISA207, etc, but most of them
-> are used together without any individual use.
+> -----Original Message-----
+> From: Hugo Komatsu <hugo.komatsu@nutanix.com>
+> Sent: 13 August 2026 12:31
+> To: John Levon <john.levon@nutanix.com>; Thanos Makatos
+> <thanos.makatos@nutanix.com>; C=E9dric Le Goater <clg@redhat.com>;
+> qemu-devel@nongnu.org
+> Cc: Hugo Komatsu <hugo.komatsu@nutanix.com>
+> Subject: [PATCH] vfio-user: reject failover during init
 >
-> Create a generic ISA 2.07 flag and switch usage of PPC2_VSX207 to it
-> instead. Next commits would consolidate the remaining flags.
+> Virtio-net failover is a networking feature that relies on a primary
+> and standby device pair. This is not currently supported for vfio-user.
+> Refuse initialization if this property is set.
 >
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> Change-Id: I80989ddb08a1cd3eba84bcf9b0edc26cb4a65669
+> Signed-off-by: Hugo Komatsu <hugo.komatsu@nutanix.com>
 > ---
->   target/ppc/cpu.h                    |  6 ++--
->   target/ppc/cpu_init.c               |  2 +-
->   target/ppc/cpu_init.h               |  2 +-
->   target/ppc/translate/fp-impl.c.inc  |  4 +--
->   target/ppc/translate/vsx-impl.c.inc | 56 ++++++++++++++---------------
->   target/ppc/translate/vsx-ops.c.inc  | 24 ++++++-------
->   6 files changed, 47 insertions(+), 47 deletions(-)
+>  hw/vfio-user/pci.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index cbd5964b1a..91ef34cb21 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -2565,8 +2565,8 @@ enum {
->       PPC2_DBRX          = 0x0000000000000010ULL,
->       /* Book I 2.05 PowerPC specification                                     */
->       PPC2_ISA205        = 0x0000000000000020ULL,
-> -    /* VSX additions in ISA 2.07                                             */
-> -    PPC2_VSX207        = 0x0000000000000040ULL,
-> +    /* POWER ISA 2.07                                                        */
-> +    PPC2_ISA207        = 0x0000000000000040ULL,
->       /* ISA 2.06B bpermd                                                      */
->       PPC2_PERM_ISA206   = 0x0000000000000080ULL,
->       /* ISA 2.06B divide extended variants                                    */
-> @@ -2607,7 +2607,7 @@ enum {
->       PPC2_PPE42XM       = 0x0000000002000000ULL,
->   
->   #define PPC_TCG_INSNS2 (PPC2_BOOKE206 | PPC2_VSX | PPC2_PRCNTL | PPC2_DBRX | \
-> -                        PPC2_ISA205 | PPC2_VSX207 | PPC2_PERM_ISA206 | \
-> +                        PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
->                           PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
->                           PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
->                           PPC2_BCTAR_ISA207 | PPC2_LSQ_ISA207 | \
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index f404c7e549..de33ac3a88 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6346,7 +6346,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
->                          PPC_SEGMENT_64B | PPC_SLBI |
->                          PPC_POPCNTB | PPC_POPCNTWD |
->                          PPC_CILDST;
-> -    pcc->insns_flags2 = PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |
-> +    pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
->                           PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->                           PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
->                           PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
-> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-> index f8fd6ff5cd..1c41c0d349 100644
-> --- a/target/ppc/cpu_init.h
-> +++ b/target/ppc/cpu_init.h
-> @@ -15,7 +15,7 @@
->   #define PPC_INSNS_FLAGS_POWER11 PPC_INSNS_FLAGS_POWER10
->   
->   #define PPC_INSNS_FLAGS2_POWER_COMMON                                \
-> -    (PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |                 \
-> +    (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
->        PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
->        PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |   \
->        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
-> diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
-> index 464fb1d90f..e0d9fa2e24 100644
-> --- a/target/ppc/translate/fp-impl.c.inc
-> +++ b/target/ppc/translate/fp-impl.c.inc
-> @@ -342,7 +342,7 @@ static bool trans_FCPSGN(DisasContext *ctx, arg_FCPSGN *a)
->   static bool trans_FMRGEW(DisasContext *ctx, arg_FMRGEW *a)
->   {
->       TCGv_i64 t0, t1, t2;
-> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
-> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
->       REQUIRE_FPU(ctx);
->       t0 = tcg_temp_new_i64();
->       t1 = tcg_temp_new_i64();
-> @@ -358,7 +358,7 @@ static bool trans_FMRGEW(DisasContext *ctx, arg_FMRGEW *a)
->   static bool trans_FMRGOW(DisasContext *ctx, arg_FMRGOW *a)
->   {
->       TCGv_i64 t0, t1, t2;
-> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
-> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
->       REQUIRE_FPU(ctx);
->       t0 = tcg_temp_new_i64();
->       t1 = tcg_temp_new_i64();
-> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-> index 00ad57c628..78311dcba9 100644
-> --- a/target/ppc/translate/vsx-impl.c.inc
-> +++ b/target/ppc/translate/vsx-impl.c.inc
-> @@ -50,11 +50,11 @@ static bool do_lxs(DisasContext *ctx, arg_X *a,
->   }
->   
->   TRANS_FLAGS2(VSX, LXSDX, do_lxs, gen_qemu_ld64_i64);
-> -TRANS_FLAGS2(VSX207, LXSIWAX, do_lxs, gen_qemu_ld32s_i64);
-> +TRANS_FLAGS2(ISA207, LXSIWAX, do_lxs, gen_qemu_ld32s_i64);
->   TRANS_FLAGS2(ISA300, LXSIBZX, do_lxs, gen_qemu_ld8u_i64);
->   TRANS_FLAGS2(ISA300, LXSIHZX, do_lxs, gen_qemu_ld16u_i64);
-> -TRANS_FLAGS2(VSX207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
-> -TRANS_FLAGS2(VSX207, LXSSPX, do_lxs, gen_qemu_ld32fs);
-> +TRANS_FLAGS2(ISA207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
-> +TRANS_FLAGS2(ISA207, LXSSPX, do_lxs, gen_qemu_ld32fs);
->   
->   static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
->   {
-> @@ -304,8 +304,8 @@ static bool do_stxs(DisasContext *ctx, arg_X *a,
->   TRANS_FLAGS2(VSX, STXSDX, do_stxs, gen_qemu_st64_i64);
->   TRANS_FLAGS2(ISA300, STXSIBX, do_stxs, gen_qemu_st8_i64);
->   TRANS_FLAGS2(ISA300, STXSIHX, do_stxs, gen_qemu_st16_i64);
-> -TRANS_FLAGS2(VSX207, STXSIWX, do_stxs, gen_qemu_st32_i64);
-> -TRANS_FLAGS2(VSX207, STXSSPX, do_stxs, gen_qemu_st32fs);
-> +TRANS_FLAGS2(ISA207, STXSIWX, do_stxs, gen_qemu_st32_i64);
-> +TRANS_FLAGS2(ISA207, STXSSPX, do_stxs, gen_qemu_st32fs);
->   
->   static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
->   {
-> @@ -988,7 +988,7 @@ GEN_VSX_HELPER_R2_AB(xscmpuqp, 0x04, 0x14, 0, PPC2_VSX)
->   GEN_VSX_HELPER_X2(xscvdphp, 0x16, 0x15, 0x11, PPC2_ISA300)
->   GEN_VSX_HELPER_X2(xscvdpsp, 0x12, 0x10, 0, PPC2_VSX)
->   GEN_VSX_HELPER_R2(xscvdpqp, 0x04, 0x1A, 0x16, PPC2_ISA300)
-> -GEN_VSX_HELPER_XT_XB_ENV(xscvdpspn, 0x16, 0x10, 0, PPC2_VSX207)
-> +GEN_VSX_HELPER_XT_XB_ENV(xscvdpspn, 0x16, 0x10, 0, PPC2_ISA207)
->   GEN_VSX_HELPER_R2(xscvqpsdz, 0x04, 0x1A, 0x19, PPC2_ISA300)
->   GEN_VSX_HELPER_R2(xscvqpswz, 0x04, 0x1A, 0x09, PPC2_ISA300)
->   GEN_VSX_HELPER_R2(xscvqpudz, 0x04, 0x1A, 0x11, PPC2_ISA300)
-> @@ -1185,7 +1185,7 @@ bool trans_XSCVSPDPN(DisasContext *ctx, arg_XX2 *a)
->   {
->       TCGv_i64 tmp;
->   
-> -    REQUIRE_INSNS_FLAGS2(ctx, VSX207);
-> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
->       REQUIRE_VSX(ctx);
->   
->       tmp = tcg_temp_new_i64();
-> @@ -1210,16 +1210,16 @@ GEN_VSX_HELPER_X2(xsrdpic, 0x16, 0x06, 0, PPC2_VSX)
->   GEN_VSX_HELPER_X2(xsrdpim, 0x12, 0x07, 0, PPC2_VSX)
->   GEN_VSX_HELPER_X2(xsrdpip, 0x12, 0x06, 0, PPC2_VSX)
->   GEN_VSX_HELPER_X2(xsrdpiz, 0x12, 0x05, 0, PPC2_VSX)
-> -GEN_VSX_HELPER_XT_XB_ENV(xsrsp, 0x12, 0x11, 0, PPC2_VSX207)
-> +GEN_VSX_HELPER_XT_XB_ENV(xsrsp, 0x12, 0x11, 0, PPC2_ISA207)
->   GEN_VSX_HELPER_R2(xsrqpi, 0x05, 0x00, 0, PPC2_ISA300)
->   GEN_VSX_HELPER_R2(xsrqpxp, 0x05, 0x01, 0, PPC2_ISA300)
->   GEN_VSX_HELPER_R2(xssqrtqp, 0x04, 0x19, 0x1B, PPC2_ISA300)
->   GEN_VSX_HELPER_R3(xssubqp, 0x04, 0x10, 0, PPC2_ISA300)
-> -GEN_VSX_HELPER_X2(xsresp, 0x14, 0x01, 0, PPC2_VSX207)
-> -GEN_VSX_HELPER_X2(xssqrtsp, 0x16, 0x00, 0, PPC2_VSX207)
-> -GEN_VSX_HELPER_X2(xsrsqrtesp, 0x14, 0x00, 0, PPC2_VSX207)
-> -GEN_VSX_HELPER_X2(xscvsxdsp, 0x10, 0x13, 0, PPC2_VSX207)
-> -GEN_VSX_HELPER_X2(xscvuxdsp, 0x10, 0x12, 0, PPC2_VSX207)
-> +GEN_VSX_HELPER_X2(xsresp, 0x14, 0x01, 0, PPC2_ISA207)
-> +GEN_VSX_HELPER_X2(xssqrtsp, 0x16, 0x00, 0, PPC2_ISA207)
-> +GEN_VSX_HELPER_X2(xsrsqrtesp, 0x14, 0x00, 0, PPC2_ISA207)
-> +GEN_VSX_HELPER_X2(xscvsxdsp, 0x10, 0x13, 0, PPC2_ISA207)
-> +GEN_VSX_HELPER_X2(xscvuxdsp, 0x10, 0x12, 0, PPC2_ISA207)
->   
->   GEN_VSX_HELPER_X2(xvredp, 0x14, 0x0D, 0, PPC2_VSX)
->   GEN_VSX_HELPER_X2(xvsqrtdp, 0x16, 0x0C, 0, PPC2_VSX)
-> @@ -1409,14 +1409,14 @@ TRANS_FLAGS2(VSX, XSNMADDADP, do_xsmadd_XX3, true, gen_helper_XSNMADDDP)
->   TRANS_FLAGS2(VSX, XSNMADDMDP, do_xsmadd_XX3, false, gen_helper_XSNMADDDP)
->   TRANS_FLAGS2(VSX, XSNMSUBADP, do_xsmadd_XX3, true, gen_helper_XSNMSUBDP)
->   TRANS_FLAGS2(VSX, XSNMSUBMDP, do_xsmadd_XX3, false, gen_helper_XSNMSUBDP)
-> -TRANS_FLAGS2(VSX207, XSMADDASP, do_xsmadd_XX3, true, gen_helper_XSMADDSP)
-> -TRANS_FLAGS2(VSX207, XSMADDMSP, do_xsmadd_XX3, false, gen_helper_XSMADDSP)
-> -TRANS_FLAGS2(VSX207, XSMSUBASP, do_xsmadd_XX3, true, gen_helper_XSMSUBSP)
-> -TRANS_FLAGS2(VSX207, XSMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSMSUBSP)
-> -TRANS_FLAGS2(VSX207, XSNMADDASP, do_xsmadd_XX3, true, gen_helper_XSNMADDSP)
-> -TRANS_FLAGS2(VSX207, XSNMADDMSP, do_xsmadd_XX3, false, gen_helper_XSNMADDSP)
-> -TRANS_FLAGS2(VSX207, XSNMSUBASP, do_xsmadd_XX3, true, gen_helper_XSNMSUBSP)
-> -TRANS_FLAGS2(VSX207, XSNMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSNMSUBSP)
-> +TRANS_FLAGS2(ISA207, XSMADDASP, do_xsmadd_XX3, true, gen_helper_XSMADDSP)
-> +TRANS_FLAGS2(ISA207, XSMADDMSP, do_xsmadd_XX3, false, gen_helper_XSMADDSP)
-> +TRANS_FLAGS2(ISA207, XSMSUBASP, do_xsmadd_XX3, true, gen_helper_XSMSUBSP)
-> +TRANS_FLAGS2(ISA207, XSMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSMSUBSP)
-> +TRANS_FLAGS2(ISA207, XSNMADDASP, do_xsmadd_XX3, true, gen_helper_XSNMADDSP)
-> +TRANS_FLAGS2(ISA207, XSNMADDMSP, do_xsmadd_XX3, false, gen_helper_XSNMADDSP)
-> +TRANS_FLAGS2(ISA207, XSNMSUBASP, do_xsmadd_XX3, true, gen_helper_XSNMSUBSP)
-> +TRANS_FLAGS2(ISA207, XSNMSUBMSP, do_xsmadd_XX3, false, gen_helper_XSNMSUBSP)
->   
->   static bool do_xsmadd_X(DisasContext *ctx, arg_X_rc *a,
->           void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr),
-> @@ -1590,9 +1590,9 @@ TRANS_FLAGS2(VSX, XXLANDC, do_logical_op, MO_64, tcg_gen_gvec_andc);
->   TRANS_FLAGS2(VSX, XXLOR, do_logical_op, MO_64, tcg_gen_gvec_or);
->   TRANS_FLAGS2(VSX, XXLXOR, do_logical_op, MO_64, tcg_gen_gvec_xor);
->   TRANS_FLAGS2(VSX, XXLNOR, do_logical_op, MO_64, tcg_gen_gvec_nor);
-> -TRANS_FLAGS2(VSX207, XXLEQV, do_logical_op, MO_64, tcg_gen_gvec_eqv);
-> -TRANS_FLAGS2(VSX207, XXLNAND, do_logical_op, MO_64, tcg_gen_gvec_nand);
-> -TRANS_FLAGS2(VSX207, XXLORC, do_logical_op, MO_64, tcg_gen_gvec_orc);
-> +TRANS_FLAGS2(ISA207, XXLEQV, do_logical_op, MO_64, tcg_gen_gvec_eqv);
-> +TRANS_FLAGS2(ISA207, XXLNAND, do_logical_op, MO_64, tcg_gen_gvec_nand);
-> +TRANS_FLAGS2(ISA207, XXLORC, do_logical_op, MO_64, tcg_gen_gvec_orc);
->   
->   #define VSX_XXMRG(name, high)                               \
->   static void glue(gen_, name)(DisasContext *ctx)             \
-> @@ -2682,10 +2682,10 @@ TRANS_FLAGS2(ISA300, XSMINCDP, do_helper_XX3, gen_helper_XSMINCDP)
->   TRANS_FLAGS2(ISA300, XSMAXJDP, do_helper_XX3, gen_helper_XSMAXJDP)
->   TRANS_FLAGS2(ISA300, XSMINJDP, do_helper_XX3, gen_helper_XSMINJDP)
->   
-> -TRANS_FLAGS2(VSX207, XSADDSP, do_helper_XX3, gen_helper_XSADDSP)
-> -TRANS_FLAGS2(VSX207, XSSUBSP, do_helper_XX3, gen_helper_XSSUBSP)
-> -TRANS_FLAGS2(VSX207, XSMULSP, do_helper_XX3, gen_helper_XSMULSP)
-> -TRANS_FLAGS2(VSX207, XSDIVSP, do_helper_XX3, gen_helper_XSDIVSP)
-> +TRANS_FLAGS2(ISA207, XSADDSP, do_helper_XX3, gen_helper_XSADDSP)
-> +TRANS_FLAGS2(ISA207, XSSUBSP, do_helper_XX3, gen_helper_XSSUBSP)
-> +TRANS_FLAGS2(ISA207, XSMULSP, do_helper_XX3, gen_helper_XSMULSP)
-> +TRANS_FLAGS2(ISA207, XSDIVSP, do_helper_XX3, gen_helper_XSDIVSP)
->   
->   TRANS_FLAGS2(VSX, XSADDDP, do_helper_XX3, gen_helper_XSADDDP)
->   TRANS_FLAGS2(VSX, XSSUBDP, do_helper_XX3, gen_helper_XSSUBDP)
-> diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
-> index e553b5b8fa..ae3df2c13d 100644
-> --- a/target/ppc/translate/vsx-ops.c.inc
-> +++ b/target/ppc/translate/vsx-ops.c.inc
-> @@ -1,9 +1,9 @@
-> -GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_VSX207),
-> -GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_VSX207),
-> -GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_VSX207),
-> +GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_ISA207),
-> +GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_ISA207),
-> +GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_ISA207),
->   #if defined(TARGET_PPC64)
-> -GEN_HANDLER_E(mfvsrd, 0x1F, 0x13, 0x01, 0x0000F800, PPC_NONE, PPC2_VSX207),
-> -GEN_HANDLER_E(mtvsrd, 0x1F, 0x13, 0x05, 0x0000F800, PPC_NONE, PPC2_VSX207),
-> +GEN_HANDLER_E(mfvsrd, 0x1F, 0x13, 0x01, 0x0000F800, PPC_NONE, PPC2_ISA207),
-> +GEN_HANDLER_E(mtvsrd, 0x1F, 0x13, 0x05, 0x0000F800, PPC_NONE, PPC2_ISA207),
->   GEN_HANDLER_E(mfvsrld, 0X1F, 0x13, 0x09, 0x0000F800, PPC_NONE, PPC2_ISA300),
->   GEN_HANDLER_E(mtvsrdd, 0X1F, 0x13, 0x0D, 0x0, PPC_NONE, PPC2_ISA300),
->   GEN_HANDLER_E(mtvsrws, 0x1F, 0x13, 0x0C, 0x0000F800, PPC_NONE, PPC2_ISA300),
-> @@ -127,7 +127,7 @@ GEN_VSX_XFORM_300(xscmpoqp, 0x04, 0x04, 0x00600001),
->   GEN_VSX_XFORM_300(xscmpuqp, 0x04, 0x14, 0x00600001),
->   GEN_XX2FORM_EO(xscvdphp, 0x16, 0x15, 0x11, PPC2_ISA300),
->   GEN_XX2FORM(xscvdpsp, 0x12, 0x10, PPC2_VSX),
-> -GEN_XX2FORM(xscvdpspn, 0x16, 0x10, PPC2_VSX207),
-> +GEN_XX2FORM(xscvdpspn, 0x16, 0x10, PPC2_ISA207),
->   GEN_XX2FORM_EO(xscvhpdp, 0x16, 0x15, 0x10, PPC2_ISA300),
->   GEN_VSX_XFORM_300_EO(xscvsdqp, 0x04, 0x1A, 0x0A, 0x00000001),
->   GEN_XX2FORM(xscvspdp, 0x12, 0x14, PPC2_VSX),
-> @@ -145,12 +145,12 @@ GEN_XX2FORM(xsrdpip, 0x12, 0x06, PPC2_VSX),
->   GEN_XX2FORM(xsrdpiz, 0x12, 0x05, PPC2_VSX),
->   
->   GEN_VSX_XFORM_300(xsdivqp, 0x04, 0x11, 0x0),
-> -GEN_XX2FORM(xsresp,  0x14, 0x01, PPC2_VSX207),
-> -GEN_XX2FORM(xsrsp, 0x12, 0x11, PPC2_VSX207),
-> -GEN_XX2FORM(xssqrtsp,  0x16, 0x00, PPC2_VSX207),
-> -GEN_XX2FORM(xsrsqrtesp,  0x14, 0x00, PPC2_VSX207),
-> -GEN_XX2FORM(xscvsxdsp, 0x10, 0x13, PPC2_VSX207),
-> -GEN_XX2FORM(xscvuxdsp, 0x10, 0x12, PPC2_VSX207),
-> +GEN_XX2FORM(xsresp,  0x14, 0x01, PPC2_ISA207),
-> +GEN_XX2FORM(xsrsp, 0x12, 0x11, PPC2_ISA207),
-> +GEN_XX2FORM(xssqrtsp,  0x16, 0x00, PPC2_ISA207),
-> +GEN_XX2FORM(xsrsqrtesp,  0x14, 0x00, PPC2_ISA207),
-> +GEN_XX2FORM(xscvsxdsp, 0x10, 0x13, PPC2_ISA207),
-> +GEN_XX2FORM(xscvuxdsp, 0x10, 0x12, PPC2_ISA207),
->   
->   GEN_XX2FORM(xvredp,  0x14, 0x0D, PPC2_VSX),
->   GEN_XX2FORM(xvsqrtdp,  0x16, 0x0C, PPC2_VSX),
+> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+> index ecc59a9642..34fa2f22b3 100644
+> --- a/hw/vfio-user/pci.c
+> +++ b/hw/vfio-user/pci.c
+> @@ -251,6 +251,11 @@ static void vfio_user_pci_realize(PCIDevice *pdev,
+> Error **errp)
+>          return;
+>      }
+>
+> +    if (pdev->failover_pair_id) {
+> +        error_setg(errp, "vfio-user: failover is not supported");
+> +        return;
+> +    }
+> +
+>      sock_name =3D udev->socket->u.q_unix.path;
+>
+>      vbasedev->name =3D g_strdup_printf("vfio-user:%s", sock_name);
+> --
+> 2.39.3
+
+LGTM except the ChangeId John mentioned.
+
+Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
+
+--_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Thanks Thanos and I actually fired off a v2 to the list yesterday that drop=
+s the Change-Id per John's feedback.</div>
+<div id=3D"appendonsend"></div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Thanos Makatos &lt;th=
+anos.makatos@nutanix.com&gt;<br>
+<b>Sent:</b> Friday, August 14, 2026 7:29 AM<br>
+<b>To:</b> Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;; John Levon &lt;jo=
+hn.levon@nutanix.com&gt;; C=E9dric Le Goater &lt;clg@redhat.com&gt;; qemu-d=
+evel@nongnu.org &lt;qemu-devel@nongnu.org&gt;<br>
+<b>Subject:</b> RE: [PATCH] vfio-user: reject failover during init</font>
+<div>&nbsp;</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">&gt; -----Original Message-----<br>
+&gt; From: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
+&gt; Sent: 13 August 2026 12:31<br>
+&gt; To: John Levon &lt;john.levon@nutanix.com&gt;; Thanos Makatos<br>
+&gt; &lt;thanos.makatos@nutanix.com&gt;; C=E9dric Le Goater &lt;clg@redhat.=
+com&gt;;<br>
+&gt; qemu-devel@nongnu.org<br>
+&gt; Cc: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
+&gt; Subject: [PATCH] vfio-user: reject failover during init<br>
+&gt; <br>
+&gt; Virtio-net failover is a networking feature that relies on a primary<b=
+r>
+&gt; and standby device pair. This is not currently supported for vfio-user=
+.<br>
+&gt; Refuse initialization if this property is set.<br>
+&gt; <br>
+&gt; Change-Id: I80989ddb08a1cd3eba84bcf9b0edc26cb4a65669<br>
+&gt; Signed-off-by: Hugo Komatsu &lt;hugo.komatsu@nutanix.com&gt;<br>
+&gt; ---<br>
+&gt;&nbsp; hw/vfio-user/pci.c | 5 +++++<br>
+&gt;&nbsp; 1 file changed, 5 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c<br>
+&gt; index ecc59a9642..34fa2f22b3 100644<br>
+&gt; --- a/hw/vfio-user/pci.c<br>
+&gt; +++ b/hw/vfio-user/pci.c<br>
+&gt; @@ -251,6 +251,11 @@ static void vfio_user_pci_realize(PCIDevice *pdev=
+,<br>
+&gt; Error **errp)<br>
+&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&gt; <br>
+&gt; +&nbsp;&nbsp;&nbsp; if (pdev-&gt;failover_pair_id) {<br>
+&gt; +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;vfi=
+o-user: failover is not supported&quot;);<br>
+&gt; +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+&gt; +&nbsp;&nbsp;&nbsp; }<br>
+&gt; +<br>
+&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sock_name =3D udev-&gt;socket-&gt;u.q_un=
+ix.path;<br>
+&gt; <br>
+&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vbasedev-&gt;name =3D g_strdup_printf(&q=
+uot;vfio-user:%s&quot;, sock_name);<br>
+&gt; --<br>
+&gt; 2.39.3<br>
+<br>
+LGTM except the ChangeId John mentioned.<br>
+<br>
+Reviewed-by: Thanos Makatos &lt;thanos.makatos@nutanix.com&gt;<br>
+</div>
+</span></font></div>
+</body>
+</html>
+
+--_000_DM6PR02MB6172F3449E452FEA752C930985DA2DM6PR02MB6172namp_--
 
