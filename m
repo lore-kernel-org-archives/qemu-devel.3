@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADF3C5AD5A
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C57C5DF70
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvKKl-0007Nm-0E; Sat, 15 Aug 2026 15:46:23 -0400
+	id 1wvKKp-0007SA-93; Sat, 15 Aug 2026 15:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKX-0007Iq-MH
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:13 -0400
+ id 1wvKKb-0007JC-G0
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:18 -0400
 Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKV-0008HL-6R
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:08 -0400
+ id 1wvKKY-0008Ih-OD
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:12 -0400
 Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2cca0c5799eso19521675ad.0
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:05 -0700 (PDT)
+ d9443c01a7336-2ccf2360620so21440535ad.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786823165; x=1787427965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786823169; x=1787427969; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=US7bLFAj81tqEBwMk45KMnHmQvxx6oAKzY8BWowRu2M=;
- b=KepZacLOtB4brD0XpMunciNYfhQJaDkIyXSD0tospxRtVcfscK1k8g2ZVjmvGG5iZn
- tBwhLsnypIYeur9UKmQKCSuSkjllZ7S6wYvui7t3+7PvJYMUIDw41/Hd06B20l9Eorwz
- TBnwBPzX1zQGgIMNQpnurYzz30ZoXbEZP29L0SQ2tVzCZIBt6qBoeQ73HbdlmjFhgw0k
- EI4I5ToBvZt8dclBjLkKB3dyXTyacof3pUiNa3UuAl6DgnqEiFwnh3hLheSp/NPdRwB6
- UMa61IsLXk7US1BEuC8Y9hKzO+uB4eavcGG3W9bjHhKdHgSyr+w2Kqj1t14GwOtmEqWY
- rYsQ==
+ bh=GgeC2Gz0Cy5NIUncliWwHs8r8iCx5AzYcDVo3ksrI48=;
+ b=PgqeUTJALDRCrFqF9ysOwv1NejWOoeDT8+YqgaeTrGPlRHV88HjgQszNxu4XyupCKj
+ uyUzJWNfCtg4H0EL3MpSW9XpBTrbwMm8pwEnRWMNRgbkzR3UojunpQCFotTLBQd0DkqP
+ snSTri5iqa2ncIwz27aw6r5VpYKsquTLjyDUZsoyHrH6awIswtRyWjGNLvx6ULxhd7ya
+ JEgU4pcn9vKbTaqdvhAGfZL35FktTZSw0CP8PhzAm09GrUzHuCARJUJzi8+Hk63MCi3O
+ +Ne0fmdmLX1uWNjq7bTQ0vi4oHZLVEg2km7xC776h0iphmDt99hv3SgsdShLSQzq26Dm
+ 3XXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786823165; x=1787427965;
+ d=1e100.net; s=20251104; t=1786823169; x=1787427969;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=US7bLFAj81tqEBwMk45KMnHmQvxx6oAKzY8BWowRu2M=;
- b=ixgVUiCSyGxHUS/iOonQmb9SoFk5XIu22D3POrcN08J0Xeu6Hy9+D242xTwO9kesJU
- fH4KcuJ0IZ1n8ji4yjp9Oq7CUmE93d1F/JOKthmza+gQsyDbwcbrQ777oFrbMIjiMblk
- dwk8B/pjlBVcswiQXlr/pzO0XF9zmUHJq1AEJ2l+0GVNM8vkevdW1eAIJg31AB2LddOu
- gAhr9kudsbP4x0+jYnTcCy2S+OaYFVkb3DiF+JNWPfksSFZpaLvUX0mc1CRw4n9dvkjj
- Z9BQC1L7xXaDMIOyOOJrgXDPxMBzvPMWAatJFLvklmM+DDzBYEbE4ZMr9hpqV6RaHXVV
- Zucw==
-X-Gm-Message-State: AOJu0YysISL18MDPzABrgwB6kYpPNr0srNb4G569iE3KLUXpjY1Zc2vi
- UesUTcbizRn2OYySiZEcho6mw8TOItSPNaNu8xQLxY1WOGTOUMoTU66dpxcixUVIvkDcG30Rv/M
- JDDZB
-X-Gm-Gg: AR+sD13xYL4V5zYzvhVg2Vw/9k/wd6QJV+aRqmKkvHNcE7h5FjYf6Ne6kKL5qXxadJ0
- 2PldS5Avp/+fbOGP0oOVme5ze9ds/gLrdXrLd+LCEez261r5WYuz9PHYYClg/8QsewwK6eS+hB2
- c4pdtgfltR6NMBg1ed8HcL48Er9Iz8HZAWfzD33aFYIZVKv1QTKLfDDnUQmSymbvq3Mi9yvyfNQ
- rYJ5TjLAT1UxFElMqDNY6byPCRTYgnhOV3aAT+p2oecyFR35nyDdQF5rHN1rGZIluF2fFrarGvl
- XAoBHElOF8he7vp1lM45I6Kzkwr1js2KH6wQxiQa0ukcJLvdSYKJID7Lz/1tOlucC01320Ocd+k
- ymIVG0hu0nhwecAXBJ0cJKhcWnaelTYAoUQxYN2qMDVwF+ArD207XxBDmUptm7Yl/+D5VlRcN81
- Yso74BGFNOCvr1pXKsvWn8gyVCmKcdRblEOlLhM1Z2HoAymfXsBVsOlbGK9kxrL56cJOhjmy9Xb
- WikDbNKOpzCfB9zP8HtF40ccE2nq54=
-X-Received: by 2002:a17:902:fdab:b0:2c9:b8b7:5d1c with SMTP id
- d9443c01a7336-2d3b0d43f16mr170532915ad.16.1786823164851; 
- Sat, 15 Aug 2026 12:46:04 -0700 (PDT)
+ bh=GgeC2Gz0Cy5NIUncliWwHs8r8iCx5AzYcDVo3ksrI48=;
+ b=PK22vNRwzRhbPNTLW8Piy/La5U0lRsKGQvh+ksHhm+Eiq8eAxN/cE2QycW1pB/1T4U
+ T/W2pTgntJnHUvlhLUpJ1RI3BIHKcmdOFUAsjwa6S2N98oLd/mi3Tiv0nYTucLbIquVV
+ fwkaTdjP/xf6Ho3QBgreLFgVWGRChV0ZIu80b9vwX7E4cqaZU7J54LGztUxgtzsIi72K
+ pqmN9s6LXU/2GyaV2Vq1+dqTA7Ak5MYHPu1csgt0VeYx4RoiECYLe1qiJ7a4jx9Co7s8
+ +UZKufa+dDncH6skslH3U7R1X5PjmqHA1nzZnjEz8j46ujmpUjyH7ju62U5vj7FjE/Oz
+ JXCA==
+X-Gm-Message-State: AOJu0Yw0qR/il+YcyQ7EyYygPsp7e/B2L2DbLNMy/qQYcQH4kTOdKHsD
+ MhLlZE3E9a7T0P/YCQ54AvLHcCc90CitbX4QLG7x9qQLpNn6Sm9qRAI+tCteR4wFjI8l+nbloQy
+ wAu1J
+X-Gm-Gg: AR+sD11tLxBqhuzHbVQfZ9UXSVnaGtOLxIlcChBFE8cECatP4hTXUBEnLzZA+541nlv
+ yM7Z6cOLqmTEU5zs9ly0uC3mUFl95cYgtYHP+FyN6nRldgVPE73j8irAucmX57KG7q4QLKc43QS
+ quxYs1jVFDqOovfmefH9EPR5z4I3jEVou8MxDVUHK6lLOiLT/i0YyPkm6B3ZK0RJmroBeP5PovH
+ TJexUyHvkhwRmpYlm3BkWojh92TgXfeUAsg4cvuBIU81+uVNHIIkESts6+6rku93DXnXjSZwpWs
+ fbGW+9agO18VWnEl+5iUc3EiGkgPAruiqt3zYv8ImW6biXND57CGWHlIRNb0EFfhSKv2qDyyWOj
+ PDNPrUlIWfozmY/QsAiqDLBUTNHvNForp8ZWFUQv2A8ashGu2KxLYQSzOAs6ZERF8Eq9Zl678ro
+ zVL6os8BfuHk4hOfRyMVgoJVq2Imc7BJkYkg/0TyrVeHXLacDJ/fu6Po9hTalt6bCrngH+KzTZ6
+ u7Tek9jxJD8/OvTgB5P
+X-Received: by 2002:a17:903:360c:b0:2ca:b8fd:f31 with SMTP id
+ d9443c01a7336-2d3b0d5e37amr160724755ad.15.1786823169041; 
+ Sat, 15 Aug 2026 12:46:09 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.04
+ d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 12:46:04 -0700 (PDT)
+ Sat, 15 Aug 2026 12:46:08 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: frank.chang@sifive.com,
 	max.chou@sifive.com,
 	qemu-riscv@nongnu.org
-Subject: [PATCH 06/23] target/riscv: Drop is_load parameter from
- vext_continuous_ldst_tlb
-Date: Sat, 15 Aug 2026 12:45:31 -0700
-Message-ID: <20260815194549.1377505-7-richard.henderson@linaro.org>
+Subject: [PATCH 09/23] target/riscv: Split out vext_page_ldst_us_{host,tlb}
+Date: Sat, 15 Aug 2026 12:45:34 -0700
+Message-ID: <20260815194549.1377505-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260815194549.1377505-1-richard.henderson@linaro.org>
 References: <20260815194549.1377505-1-richard.henderson@linaro.org>
@@ -104,52 +103,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This parameter is unused.
+Split out the tail of vext_page_ldst_us, after probing.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/tcg/vector_helper.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ target/riscv/tcg/vector_helper.c | 60 ++++++++++++++++++++------------
+ 1 file changed, 38 insertions(+), 22 deletions(-)
 
 diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 3786a17231..a571982388 100644
+index 12ef020840..7f721dc24d 100644
 --- a/target/riscv/tcg/vector_helper.c
 +++ b/target/riscv/tcg/vector_helper.c
-@@ -299,9 +299,8 @@ GEN_VEXT_HOST_ST_ELEM(ste_d, uint64_t, H8, stq_le)
+@@ -403,6 +403,39 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d_tlb)
+  */
  
+ /* unmasked unit-stride load and store operation */
++static inline QEMU_ALWAYS_INLINE void
++vext_page_ldst_us_host(void *vd, void *host, uint32_t i, uint32_t evl,
++                       uint32_t nf, uint32_t log2_esz, uint32_t max_elems,
++                       vext_ldst_elem_fn_host *ldst_host)
++{
++    if (nf == 1) {
++        ldst_host(vd, host, i, evl);
++    } else {
++        uint32_t esz = 1 << log2_esz;
++        uint32_t msize = nf << log2_esz;
++        do {
++            vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
++            host += msize;
++        } while (++i < evl);
++    }
++}
++
++static inline QEMU_ALWAYS_INLINE void
++vext_page_ldst_us_tlb(CPURISCVState *env, void *vd, target_ulong addr,
++                      uint32_t i, uint32_t evl, uint32_t nf,
++                      uint32_t log2_esz, uint32_t max_elems,
++                      vext_ldst_elem_fn_tlb *ldst_tlb,
++                      int mmu_index, uintptr_t ra)
++{
++    uint32_t esz = 1 << log2_esz;
++    uint32_t msize = nf << log2_esz;
++    do {
++        vext_ldst_nf_tlb(env, vd, addr, i, nf, esz, max_elems, ldst_tlb, ra);
++        addr += msize;
++        env->vstart = ++i;
++    } while (i < evl);
++}
++
  static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
--                       void *vd, uint32_t evl, target_ulong addr,
--                       uint32_t reg_start, uintptr_t ra, uint32_t esz,
--                       bool is_load)
-+                         void *vd, uint32_t evl, target_ulong addr,
-+                         uint32_t reg_start, uintptr_t ra, uint32_t esz)
+ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+                   uint32_t elems, uint32_t nf, uint32_t max_elems,
+@@ -412,38 +445,21 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
  {
-     uint32_t i;
-     for (i = env->vstart; i < evl; env->vstart = ++i, addr += esz) {
-@@ -458,8 +457,8 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+     void *host;
+     int flags;
+-    uint32_t esz = 1 << log2_esz;
+     uint32_t size = (elems * nf) << log2_esz;
+-    uint32_t msize = nf * esz;
+-    uint32_t evl = env->vstart + elems;
++    uint32_t i = env->vstart;
+     MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
+ 
+-    /*
+-     * Maximum vector length is VLMAX == 2^16 == LMUL * VL / SEW, and
+-     * occurs for LMUL == 8, SEW == 8, VL == 2^16.
+-     */
+-    g_assert(env->vstart < UINT16_MAX && UINT16_MAX - env->vstart >= elems);
+-
+     /* Check page permission/pmp/watchpoint/etc. */
+     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
+                 true);
+ 
+     if (flags == 0) {
+-        if (nf == 1) {
+-            ldst_host(vd, host, env->vstart, evl);
+-        } else {
+-            for (uint32_t i = env->vstart; i < evl; ++i) {
+-                vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
+-                host += msize;
+-            }
+-        }
++        vext_page_ldst_us_host(vd, host, i, i + elems, nf,
++                               log2_esz, max_elems, ldst_host);
          env->vstart += elems;
      } else {
-         if (nf == 1) {
--            vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart,
--                                   ra, esz, is_load);
-+            vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr,
-+                                     env->vstart, ra, esz);
-         } else {
-             for (uint32_t i = env->vstart; i < evl; env->vstart = ++i) {
-                 vext_ldst_nf_tlb(env, vd, addr, i, nf, esz,
-@@ -493,9 +492,8 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-      */
-     if (nf == 1 && (evl << log2_esz) <= 6) {
-         addr = base + (env->vstart << log2_esz);
--        vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart, ra,
--                                 esz, is_load);
--
-+        vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr,
-+                                 env->vstart, ra, esz);
-         env->vstart = 0;
-         if (vma) {
-             vext_set_tail_elems_1s(evl, vd, nf, esz, max_elems);
+-        for (uint32_t i = env->vstart; i < evl; env->vstart = ++i) {
+-            vext_ldst_nf_tlb(env, vd, addr, i, nf, esz,
+-                             max_elems, ldst_tlb, ra);
+-            addr += msize;
+-        }
++        vext_page_ldst_us_tlb(env, vd, addr, i, i + elems, nf, log2_esz,
++                              max_elems, ldst_tlb, mmu_index, ra);
+     }
+ }
+ 
 -- 
 2.43.0
 
