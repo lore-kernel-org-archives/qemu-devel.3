@@ -4,148 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3450AC5DF6A
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 13:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB1CC5DF6A
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 14:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvEtj-0005og-O4; Sat, 15 Aug 2026 09:58:07 -0400
+	id 1wvEvE-0006LI-6P; Sat, 15 Aug 2026 09:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvEti-0005oB-EO
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 09:58:06 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wvEvB-0006JF-AL
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 09:59:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvEtg-0003fd-Ig
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 09:58:06 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wvEv9-0003tm-7v
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 09:59:37 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67FDNK3I980300
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:58:02 GMT
+ 67FDMdah642797
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:59:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 5LWHdVx1Zf4lW3z4pAOhboppNvxoPMiM5ape0K/TM5I=; b=djQh75X3DckF7hG9
- 44v4xz12oKv1jqqmx6EaoVGZRviJ+BYED8eXpwo7YCbZZ0nfaZ16LFuTcxtFW3E/
- 8EWjDPBuZGb8IuFNdwzdpKhVE4ezZ37TE4SKuHL0SOD6BLgAad1h3rPgMXfkLvIC
- MAm89ifFH21LO4WINFRQ1GNg+7kaNbbxBEilMdKQ8AluPK2kasQw9/GAyPmRCvXj
- AUy+OQrfT4YIC5A3zBQSE3kOe7yYyk5ONR2pWt8CjGTj9dk+2+303ETdFbn2hoOE
- GaqIcXC7YNbXy/gMp0VcBKW3Kimi6wQNusLO8qSqyq8GfW7ZUrbUbEIj/lzxcMWg
- 0LjIjw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghns2ws-1
+ oxEhByDE68f3uMvm/IT1zYO75Qyc8mfPBNs6GENLEH0=; b=JHipOcWEXbj6Y/Y0
+ LjiMeQ32lcishYs6Fo88GhZCu5ycaMwhEmNvxXkanc0J2+yBJalZC+a4r0VQ6Nki
+ bI9JrmIuu4ga/OHm4L5bl8MulmfHOvfiODaisIgaIfPlIsSqWqv6VxjJpAS83Son
+ Eo3Ta6eWE8w31BNkbVe2m4Kr47K5BwHx89pJ2quhBj2GFT91IMd52thUqQ05/P02
+ XWv6+YiA3E9dodvHnvfJeISq1r0LHhJv2yv9ewbyZzoB1GRZKIL7vt0WaAgcHgoR
+ 7/hmLb5AQBDvecYNasCm+T/0NdhcOHBcr3xS97jiFdAgaQ5E78zGbYHXAvZjy7bL
+ DRuuAg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfs1tu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:58:02 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9349c5af52bso345764385a.0
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 06:58:02 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:59:32 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-930b571432fso189966685a.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 06:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786802282; x=1787407082; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786802370; x=1787407170; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=5LWHdVx1Zf4lW3z4pAOhboppNvxoPMiM5ape0K/TM5I=;
- b=QfsnFOsDc8wkuTWiUtnhvhFcb1pj/45IPhzsMiEcEt+UoZpqPyCzCC+tZIdHNKX5cP
- B/BWlaOMwme3xb1m323gBlqYyJsgru0fwdcDtcVe6mqvCWikkQLXwqCpqgfYE2ZZ5mC1
- wwtHQoIMrEr+cIdI4vTsiaxqgoGIZfF6GdJvt0lzy6efWjI3Cp5G1McxX+yoCU5PP1XL
- DLt0Qw1klCJmZTsOGjDk40DBARtHY+J9l0YRshsmpkPTR57S0fP1pZ0vSKNhoEKPJKWW
- G6U7q2U3gExX0PQ0M9WAJxhV6kQwB9143AHUT0FMf036P3KLvYcP/rC93VRN2rtk9hsg
- rERw==
+ bh=oxEhByDE68f3uMvm/IT1zYO75Qyc8mfPBNs6GENLEH0=;
+ b=BgyxKBKKCpAXVHRNnE47ErvRz0HN4X77/Bw+HdB8CElqaPZuR7bTt0hoTIMgT2J1qn
+ 4IQQl8ge3kVnhnrx2uOyM3sz5Y1+Q6JND3BVslWm7nJBNtLUEZpJ+oo1a/PXTudyiT0y
+ kuGe8ASbkNVG2DLYaGwhAeQkIyZ/yPVyn9OpQe2E1CyKy/dE0aQLGrVWPopnvwipkQwN
+ +vkDC9G4CVO/WNItjchZMn5ltvaPz0/TRxw8VFR7S2fOrey59DSRYxb0VdVJrjAOP5LR
+ C++Kj0GHJodgTlWVX+sDkxQcvNIW2D1kAR+iEPojXx1Rz9b60pQoxtFaLeLk2jk4ujZc
+ 74pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786802282; x=1787407082;
+ d=1e100.net; s=20251104; t=1786802370; x=1787407170;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5LWHdVx1Zf4lW3z4pAOhboppNvxoPMiM5ape0K/TM5I=;
- b=ek+aIZMwJXxz16kz2lvH7sD5RtxWSFTJxpTu79g0VqVeUHq3Y5PDxx91jN+ia9Rq5Y
- 6spgwOwHsTl7ZEQYB498QfaxnWyXrdMvmys4yH115wX6O7fr0ghzwKKIPQ9TsSRGgP0e
- QpNZm1O9Rm8BZNqCC/7swM7HUjih1grpFhlHDV56ddMzIQnb7Bh5VLkEqSj+GH83QnNT
- KUUMhr5tVTZpyMnFs45PG3r15YN4mJXL5aW+yEiIJloNoyNDat2bklbIgjERD2/p1SaP
- RXl/JiaGj1BAyUQd1JZM0A5Ow9GmKjTSy8nu4L4R1JIO/3ErU/00XjHtJCCrz2R2rlSC
- mORw==
+ bh=oxEhByDE68f3uMvm/IT1zYO75Qyc8mfPBNs6GENLEH0=;
+ b=IqsK1tnuL3yClUjzXwffkKTcM85/j90GKNgDqUq44D7NwQBwe221C58NglrK823MXu
+ 3Agzk9dPSWooUIwbZa4zSdTRs94rPp0YUOPr5tFUiZvwYffVg+DCWXvDK5qjUhleR8Km
+ iHEt9onusWs+4pYK3++wauyqN4xBi5QQ+vS8RigGvQAsjvH6vuYe9h7lAJYgtxXnHddq
+ MJbs9s0yIKYp3913RaA3hr4buRBRf8ehkA/oL64A/vpUY/R9bJtLBnOMpijV7KdkxHlW
+ CbGgPzwg59VjmMRCL/uL4cBbQo6pWqccyvVy4vUdY5y3SlqGmgX0RYs/9DNcGVIot+NM
+ +kHg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp+IwAp9wwCmXB6E9rUNvA1N2ax1QCIyIAKJufihLuNuTgF0nrrhXwXs5Kf9VSEz8ti0xVOi3kcDPcN@nongnu.org
-X-Gm-Message-State: AOJu0YzZFDLVMCkjBI7Qf4/hitKysaKKhbEAWOuw9xa4RsUX5dvZgXg9
- FdW/oqmWhVk7Zg7Lj1/eB2LFUsWAgpKNplU90b6zo4OwooJG8x1NlTQHh3uiMIdyyPOfVxEbHxF
- GXJg9rSYaEovRaXu550GuLEkxemAMl2Vf+ZRM9valn9c4JQgYVYEGI5BT8g==
-X-Gm-Gg: AR+sD11Hpu3w+0NK6XenVLb+q3c/qf2FOwUFx7hM7NAHCo6e6SVzKurMlriOwTTGrk7
- tCNEKGxqAPsZBoLroDED8OypKBccEyPg6FprVRDKDE3SQN33R0eatoxhdLFis+3b17ewdHRmvAN
- NBoYCgvmFBDBVz9AcZrHGFehlBeA4ImWW+zygU9VSAQTQCh2OISa2nIR+Xx9WjSF5yMYRz2iCq6
- qgpBMx+qnspjvx42gtdO0QMYa6cK8MwULgJ/OnOIuYirUnDH3mDig5PYuzmZJY5wbeDJe3gpoZG
- HSMQoS4sjPmSqa7WeDjubG3MZO8UwIRH3QNA8YRJYSfBb7rQl40YFrgK5Tu6A0UlquWRb9jsT/H
- jDFQ6rz/Tg/vmXhSTi0h1w4q7k91RkK4d++o=
-X-Received: by 2002:a05:622a:8614:10b0:52d:8743:bc52 with SMTP id
- d75a77b69052e-52d8743be05mr84968841cf.34.1786802281925; 
- Sat, 15 Aug 2026 06:58:01 -0700 (PDT)
-X-Received: by 2002:a05:622a:8614:10b0:52d:8743:bc52 with SMTP id
- d75a77b69052e-52d8743be05mr84968641cf.34.1786802281517; 
- Sat, 15 Aug 2026 06:58:01 -0700 (PDT)
+ AHgh+RrlOr6OcCJh68jtyzg4W5PBzvpOkkvHmdP9gwI9SAaXLyF0wb01eb5LH5YeyXA/Ix2d3BujS4B+6Yfa@nongnu.org
+X-Gm-Message-State: AOJu0YztnGF9GMyiOXtYqIlNCip01ZBxYdLrqKhEmfmG8zwXccIkjFym
+ 0zFhpxcAUWjgKU2ZL5GcwkLvv3mLDZoK9B5Au5ipUeXWZXAmFmHwrWebaRM/sEkqBw5RJNhzXxP
+ jZyPRj2c9Tmj7FThB7Uk2qf4GWoJ2nBhHbygvqIzoWuHbLRVpbHvNxwVtKQ==
+X-Gm-Gg: AR+sD10voBRfj3ntirRQ9bxHcVLwTKlg7SmnIIU9/7SES3cx82nxZULKg6wPj+LkMu+
+ MdcCdshU+YISFaaHlrpq7rR4kb0a5dZT7Woc5fo2YxIsuOi2aYPWmntM17822+5SZ2G5eDLhUOP
+ UDueSwj4QX3Z07EtU7Vk4kuAn0AeRF4ULG2L/5Se3hxNOGeNPPE1n7fr56XS4XsTJeo9jr4qNkh
+ HppK3fWfnLVyLDnS/CNR2WpIDIAun6CF+gbDggKQ+YpV+9U7hWVf+qN/TDDlgb1Xrr9Nq5XSlKi
+ jjh8dL2242xp+e0+luRYO+c3skjSW08IZzGQaESp3STX1txsAWvBcZsPFy0VIbq8E9kSidhNmsq
+ FPdxcLdYK0t8vBPuZ8Oc+iJ2+LU2Woz09n1k=
+X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
+ af79cd13be357-936c07231e8mr2029781885a.15.1786802370486; 
+ Sat, 15 Aug 2026 06:59:30 -0700 (PDT)
+X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
+ af79cd13be357-936c07231e8mr2029777285a.15.1786802370055; 
+ Sat, 15 Aug 2026 06:59:30 -0700 (PDT)
 Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49988b25625sm147572165e9.13.2026.08.15.06.58.00
+ ffacd0b85a97d-4815f2b1fc2sm17208328f8f.20.2026.08.15.06.59.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 15 Aug 2026 06:58:00 -0700 (PDT)
-Message-ID: <0ccb0d65-b185-4700-af98-faa27a806aa4@oss.qualcomm.com>
-Date: Sat, 15 Aug 2026 15:57:59 +0200
+ Sat, 15 Aug 2026 06:59:29 -0700 (PDT)
+Message-ID: <b8ea980a-dff4-44ef-83ee-6cc1402a313a@oss.qualcomm.com>
+Date: Sat, 15 Aug 2026 15:59:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/char: add K230 DW 8250-compatible UART
+Subject: Re: [PATCH for-11.2 v3 00/15] qdev: Clarify and enforce the device
+ realization lifecycle
 Content-Language: en-US
-To: WX Chen <wxchen0913@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
- <20260808-feat-k230-uart-v3-v3-1-d73b31f0034b@gmail.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Luc Michel <luc@lmichel.fr>, Fam Zheng <fam@euphon.net>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260808-feat-k230-uart-v3-v3-1-d73b31f0034b@gmail.com>
+In-Reply-To: <20260721-qdev-v3-0-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE1MDEwMSBTYWx0ZWRfXxE3Uf+i/zXSZ
- hJVXxNdlELAWRhj2R2U5m9kvFYEQCXRO6A+jQcQ7yQgBJ9/3u62Z6cq47hCZIXupy0MQA6Nac0U
- YmQZyg3PVeTwQF06Nz2TnVbW1J1NjMExJ+JI4SI17ZH7zJwjrCRdjuDK2spdfXwX8PCgNJpP369
- 1WgceUThZUl4frrpvx3QZzbxScmjFlKqNFYYR/4XnrLk1LXQhvU9iBP57sfkF98vcBMTiiD2vba
- TcJ3XhHAgQdENNM1lZs7GQYZ+oEnscxS9AfSqLhEfvW3UO1Za1g/pvwkm96rY+s6EE3wZSWMRIT
- D2Q1/xNbIhumbeZNiBGeqx1MOlhSVMj16TyauONhqr+H2oDwPY4MGnjMTC3VRx7vK7ClEM8Wmlf
- OMi06xi7QH/RKZeaqFAG2IDOBsSISSDRyV8vfKZtSqjlxVR0/sLBc3VbXQCwCv381Vh2qbjs7Md
- LhN3JoIMLjZmaa4bEiA==
-X-Proofpoint-ORIG-GUID: 7ZfTaHli5sCTGNtOrMnxPFnLGU8g-BY0
-X-Authority-Analysis: v=2.4 cv=QN5YgALL c=1 sm=1 tr=0 ts=6a80706a cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE1MDEwMSBTYWx0ZWRfX7fOKPVXvgapG
+ mXkPxs5xXz5Yb7PYznT3GciUhlSo8g2i0rhpFBzpCoOfuiCptmi4yygjh7sdN48Er+En443dQag
+ JnbaXkdVUEKRN6d8mPuezubzyMs6C+4=
+X-Proofpoint-ORIG-GUID: -Fy4OOGMoWBC-RbNOzSUKVP6spRqAGvS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE1MDEwMSBTYWx0ZWRfX9fhf08Orzbsi
+ ITWs/Q9aDSCgUNFpSgVxKQlfsOLRe4ksheYb1bVX+K0RWnfm7j39p5dSxpGjmd/qBE6QbCY6xvV
+ TA0Yo4ASXf5XErCcHfpTC0jclQNOoNkTySk3hKPScM2PFeDbePP0rVJGcVGazNj6KvAT+YbidHV
+ lcuQmc7bwmsYQ+vU/raxAa9ZCiQmDAe/xhCcGnyR9tZWvRQYnyOSJmcHxYRTCfvFYjbTlnoYTFB
+ MR3ttfb2EOcezzHHDeMQpGjNXQ2MKNIewbzA3IE369GgMWJRnzQBMYTvYaW+LjLU9zB6pUT7l9N
+ Hdw3gQUlBs0Ezu3/VPR6O6RLk8rj/YInrxocwG8aqmWXVEJH0+sz9EQXytdDIGzc4eHGz+ijKEL
+ 1Hc+BVCPLVv324mIyqev0tM/M2FdW3/Aggnz9n9xF7YtezhAF20czPaRYFXgRJy6XC5XGmC8fSO
+ QRtIhRxE+gVzvsIlYug==
+X-Authority-Analysis: v=2.4 cv=TMJ1jVla c=1 sm=1 tr=0 ts=6a8070c4 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=pGLkceISAAAA:8 a=moOIGioJgd6YXtDZ1I4A:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE1MDEwMSBTYWx0ZWRfX9zcPNm2vuWZq
- kU12DzUvF6fsiZ3FqmV7QnNbwqv0tShDhlxVZshivNDPbaphQ6qaZpdDDKwv3AKOxS1bBrwaZwK
- 422D7RY2bSuDRz6IiI13Mn1YLRbrC38=
-X-Proofpoint-GUID: 7ZfTaHli5sCTGNtOrMnxPFnLGU8g-BY0
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=N8Ew14HRFJzZzxbwEQcA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: -Fy4OOGMoWBC-RbNOzSUKVP6spRqAGvS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-15_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608150101
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ malwarescore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608150101
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,65 +175,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 21/7/26 10:16, Akihiko Odaki wrote:
 
-On 8/8/26 04:32, WX Chen wrote:
-> Implement a K230 SoC DesignWare 8250-compatible UART controller model for
-> QEMU, capable of running the Linux 8250_dw driver and providing an
-> interactive shell.
-> 
-> Implemented:
->    - Standard 16550 registers (RBR/THR/DLL, IER/DLH, IIR/FCR, LCR, MCR,
->      LSR, MSR, SCR) and DesignWare-specific registers (USR, TFL, RFL, SRR,
->      SRTS, SBCR, SDMAM, SFE, SRT, STET, HTX, CPR, UCV, CTR)
->    - DLAB switching; 32-byte TX/RX FIFO; synchronous transmit with
->      backpressure handling
->    - Loopback mode; chardev BREAK routed to LSR.BI/FE via CHR_EVENT_BREAK
->    - Four-level prioritized interrupt scheme (ELSI / RX Data / Timeout /
->      THRE), with edge-triggered THRE
->    - RX Character Timeout interrupt (IID=0xc) with 4-char-time timer that
->      tracks the programmed divisor latch
->    - Busy Detect interrupt (IID=0x7): LCR (and its shadow SBCR) writes
->      while USR.BUSY=1 are rejected and raise IID=0x7, cleared by reading
->      USR; USR.BUSY reflects TX-not-empty / RX-data-ready
->    - Shadow registers alias their underlying fields
->    - SRR (UR/RFR/XFR) self-clearing software reset
-> 
-> Not implemented:
->    - RS485 transceiver control (TCR/DE_EN/RE_EN/DET/TAT)
->    - 9-bit multidrop (LCR_EXT/RAR/TAR)
->    - Fractional baud rate (DLF)
->    - Auto Flow Control (MCR.AFCE)
->    - IrDA SIR mode (MCR.SIRE)
->    - Low-power divisor latch (LPDLL/LPDLH)
->    - FIFO access test mode (FAR/TFR/RFW)
->    - DMA Software Acknowledge (DMASA)
-> 
-> Signed-off-by: WX Chen <wxchen0913@gmail.com>
 > ---
->   hw/char/Kconfig             |   3 +
->   hw/char/k230_uart.c         | 816 ++++++++++++++++++++++++++++++++++++++++++++
+> Akihiko Odaki (15):
+>        qdev: Clarify instantiation and realization
+>        qdev: Make qdev_is_realized() take a const DeviceState *
+>        hw/hyperv/balloon: Use qdev_is_realized()
+>        hw/intc/apic: Use qdev_is_realized()
+>        hw/mem/memory-device: Use qdev_is_realized()
+>        hw/mem/pc-dimm: Use qdev_is_realized()
+>        hw/nvram: Use qdev_is_realized()
+>        hw/ppc/pnv_xscom: Use qdev_is_realized()
+>        hw/vfio: Use qdev_is_realized()
+>        hw/virtio/virtio-mem: Use qdev_is_realized()
+>        hw/virtio/virtio-qmp: Use qdev_is_realized()
+>        target/i386/cpu: Use qdev_is_realized()
+>        target/s390x: Use qdev_is_realized()
+>        hw/qdev: Parent device before setting parent bus
 
-How much this diverges of the generic 8250 model we have?
+First 14 non-controvesial patches queued. Waiting for Igor or
+Michael to comment on the last one.
 
-In order to reduce maintenance burden with duplicated code, the
-project preference is to use the inheritance pattern of oriented
-bject programming, in particular with QOM APIs.
-
-This model could inherit from our generic model with:
-
-   TypeInfo::parent = TYPE_SERIAL
-
-then override its specific methods.
-
-Could you have a look and justify the full rewrite?
-
-Thanks,
-
-Phil.
-
->   hw/char/meson.build         |   1 +
->   include/hw/char/k230_uart.h | 198 +++++++++++
->   4 files changed, 1018 insertions(+)
-
+>        hw/qdev: Prevent devices from being realized more than once
 
