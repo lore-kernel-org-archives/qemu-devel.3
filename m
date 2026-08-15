@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88519C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C27C5CFC1
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvKKl-0007O7-LZ; Sat, 15 Aug 2026 15:46:23 -0400
+	id 1wvKKz-0007ax-De; Sat, 15 Aug 2026 15:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKf-0007JU-GT
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:21 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1wvKKp-0007SH-Do
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:27 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKb-0008Jc-93
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:16 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2ceaf8a1265so31519335ad.2
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:12 -0700 (PDT)
+ id 1wvKKn-0008OW-PI
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:27 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2d530328efbso15065065ad.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786823171; x=1787427971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786823184; x=1787427984; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SDG8brCROUt59NSkp02IKoNqQYLa+S3EnhwTp/+RG4Q=;
- b=r7GmYVaxN9OGiG/NNXaVB82rJ3S41P1jsjPYOfCQJbJEUwp/G2mNGIiSkQtR47uG+n
- a1qNf48b7C5h1mNLFgZsFp8szbFs8u8b5/pOKQcq8PQYLdkRq9VY4tyEL3R28gDV9bnv
- b/b/PL/8h8msHYlG7nVJVF7DqppLTQJQ4Eo/e8lHKz8pFfinQRjsuxxEEwMXu/vsY0VK
- OA7zR+OwEOELrRYObl2FV7inPW0N8bjdy7h7Yr4U7j7+Mb9EXtv7d+XW6u3WT4n0XDUS
- DYnfPW5oAvAToeIWsozACEfL2yddzn1HmxYgd2cQmJhmRcxPRyUAgBCGpAXXTMKB6CJH
- OG4w==
+ bh=+ncRv98FOpWWg4cYJGCijDVpUQGTeB1NBMwEEckvxpo=;
+ b=p+JdtOB7POAyvBs0/t1maqls8vcl6UiAjRw6KCc8rDMIjx4w09zdQ1Xgd/Thky9EdB
+ 8zjmOVAkoH8UpNQyNIOpmYMFykfqnfjMij9KcludMnXFR7PJyY2xB9ufi9ZD2C4Urilp
+ O3Ap3YSrh6bNO+/kYmC/crxtYI2s5G5pr1HDGzDc29JZXcbjkZkT/HmWN3JrcxdbR1pL
+ dr8STordK4fVJTsqDYLFGcq1/yHruT7NyPWT1SdP9XoXi0agl+wsXR+/aRvbAQuqpHAG
+ Oa5qtmBHKSC5JYAh54EHZAqpipvhHMY3jbvYXVFh7VaFPd8ft8hTN+FdvAuwzNbEMZd7
+ QRHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786823171; x=1787427971;
+ d=1e100.net; s=20251104; t=1786823184; x=1787427984;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SDG8brCROUt59NSkp02IKoNqQYLa+S3EnhwTp/+RG4Q=;
- b=jzy8vz2zvv6OsvSm772joynUsfOcK25NdxFAhVXB+nwbN1POqN4es61tqunjv5jCFD
- /vljqJOTRwjjACfHczFYkSSRTbGW4Y8tRfsTJa2xleQaGdPK3hsOFy2v9gf2baccxhIf
- /L9K2X7MSMp2pchcxIdGkdV1ZY/2rM/pkUYZBhmNaEuYaeHRuhIacGsL+eNWHLYlts3V
- Uo4oJASyI1ZW1j79eVc5DUsMlfVGSIwsNVpqiWmHrQQaY1aA7u07VXOvukmtU3E1GB/4
- k0YLNPAibseOkNyrhrhrZoS82XoPy/z3e3DGVLCmOo/9+ekeF3kiE215J7aTFJDbaoNI
- HBgQ==
-X-Gm-Message-State: AOJu0YyaNyxo2qn5xe1SMX1eEqz68bv6KAQKamP/5u9eT3RC8SURYEiD
- vnj/sTj5lZQvXq59gmzSmvhM1hmXTGdGP5ln6/Lo41vHhiGiOGAP5OntZ0AFYqT1YqD6pcUZwwp
- W2UVv
-X-Gm-Gg: AR+sD12cd7M2Zyktgn/lD78heFPkWhGoH5EtRJLVREBCc9EZifpTl93xNWWKTFQZvKk
- I44ZlUvYHHzpBlaEI9hL4i+lRe1TEd1GRN4pndM+FpJfmDO6j9ojl5oPqFCvqkxUS1FgP+S6ZkI
- wON1+LwMbNFjINcltZzCibHq/4v6yR+znYHGNRtOZ5Mm7S2LOfynx4SJKSReYwYViPHxWphMOwt
- 28DeY3xKfNiqywWZml3wPe7CN3rSvqxOZcW877xCI70GlgNh5Ts4Ga9jmzXu1/PKoHxfaRZdzLR
- ghTDMfSgvkX2mvdxblqa/lDOw4XTDwczTMlwdxOal6U0oLqL+ZzCzMDUBdhe33w2yoLRXoDNGcL
- dab4aOLQe8nQ21udeiBdozcVoya7sjlFI1OK6cPEU7hG3qUOUF/rgf95OhrWuaQue+m9xZo3Aif
- j4RCWrEBmBJhTaniFB9FmFxQavMHpfaLuaiIf9f/SLjnJo1iPLWXMnblCLKMBk1Gc9gvdpkI06n
- eu/gS5Hsbt4OSLMXJQ8VShWkAY94iA=
-X-Received: by 2002:a17:903:22c6:b0:2c0:db23:4c4 with SMTP id
- d9443c01a7336-2d3b0c8852emr168380435ad.16.1786823171044; 
- Sat, 15 Aug 2026 12:46:11 -0700 (PDT)
+ bh=+ncRv98FOpWWg4cYJGCijDVpUQGTeB1NBMwEEckvxpo=;
+ b=LF/s0jkItxhooFG9rt5uOgwCIWHgrXzvJGQYMmoBeBUE9R2XSthTQNyJZwYfWvzlXQ
+ gq4mgGOdBvHPCmFCL/xR2E3hWlfBSdJr2iUhgFNLrsi6VYaP2GUHjZJoS9ayaIaSomS4
+ A80QlS4/fae3hIYsGlpioNPjz4V2/7xMeKNiivlwou3DQ3yWlGWcil63nLRnF5xILbcD
+ T8Ci42yoGta4L1jd7Gf5ApIKDrtd6oqB/WWnrAEwjkzqkupHvtIm1WW/uM597INohoeQ
+ V7feOyxF4PJ41pRkfalZfixLmT/CzB2Vkc8f0KE597SNa6EPq1TeXc6eNUsg3vLsRKiJ
+ jnUQ==
+X-Gm-Message-State: AOJu0YwPzjdPoyCQ/DmKhexXPmmGfBD8GBl5juT3Cqw2e7uH/dqA551e
+ QINFh7ofhnM+3e5gOM3l+gNYyDtzrZM6bFisAjvgjbQZX4qfODxV0xtX4zMHGyRKEtWszos7iP3
+ g1Gqm
+X-Gm-Gg: AR+sD126/nYIKXkTJFBWtnLkmhyv9q9qz0lyJpfNWTyfGMLhtDfbnN5G7MCk/Z9JsCG
+ P8hG3YItnzggubsB78/nIOjAXfKn4LF0y6Djzz1CjpRCVcARApTQPWOqC6N5rtXuu8wMunteFfP
+ 1FertwHYHJa9kuLO5izGYKerfPIyqDJ8QBJF8qFZoWMKRUUwPuB6RkuYDwjI+CypolLMJL9LEEa
+ 3zdQ8ZApyDU8TvTkEC4E17CC87NZqZt1/6N3kN8tsNDGlgDcqoyxS4Eao5jTyjLhPEDjOkeni+7
+ z2BL+L6u3Tr1qszTm9ElfzyC6bBK+T1X395wnewTUNQfuqbNaVHy04G70XjRC5/vm9dC1me0/Ih
+ 9cqJmzT/0hMUrJsQhg+Fffep26mVyasSMUpmGqCFFooLYZyPXXHDD9gcfw1sFEvGPXYV6YhJL9b
+ 7+ZYnVFjIi+bwmTCy3ex422y1NDvWb5IzJ4BbQDj7ISJ6wC5+eM2KyeSqJedmM3chIZkHgbUHg0
+ m/HkWiim1g1wZXv903S
+X-Received: by 2002:a17:903:950:b0:2c9:9a2e:dab0 with SMTP id
+ d9443c01a7336-2d3b0827064mr172243755ad.3.1786823184307; 
+ Sat, 15 Aug 2026 12:46:24 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.10
+ d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 12:46:10 -0700 (PDT)
+ Sat, 15 Aug 2026 12:46:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: frank.chang@sifive.com,
 	max.chou@sifive.com,
 	qemu-riscv@nongnu.org
-Subject: [PATCH 11/23] target/riscv: Rewrite vext_ldff
-Date: Sat, 15 Aug 2026 12:45:36 -0700
-Message-ID: <20260815194549.1377505-12-richard.henderson@linaro.org>
+Subject: [PATCH 22/23] target/riscv: Drop v0 argument from
+ gen_helper_ldst_stride
+Date: Sat, 15 Aug 2026 12:45:47 -0700
+Message-ID: <20260815194549.1377505-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260815194549.1377505-1-richard.henderson@linaro.org>
 References: <20260815194549.1377505-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,327 +104,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not call probe_pages for every active element.
-We can make do with no more than 2 such calls for
-the two pages the insn might reference.
+Since we're also passing env, v0 is always env->vreg.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/tcg/vector_helper.c | 258 ++++++++++++++++++++-----------
- 1 file changed, 172 insertions(+), 86 deletions(-)
+ target/riscv/helper.h                       | 16 ++++++++--------
+ target/riscv/tcg/vector_helper.c            | 10 ++++------
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 16 +++++-----------
+ 3 files changed, 17 insertions(+), 25 deletions(-)
 
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index ffd759aef3..82a478962b 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -180,14 +180,14 @@ DEF_HELPER_4(vse32_v_mask, void, ptr, tl, env, i32)
+ DEF_HELPER_4(vse64_v_mask, void, ptr, tl, env, i32)
+ DEF_HELPER_4(vlm_v, void, ptr, tl, env, i32)
+ DEF_HELPER_4(vsm_v, void, ptr, tl, env, i32)
+-DEF_HELPER_6(vlse8_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vlse16_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vlse32_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vlse64_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vsse8_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vsse16_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vsse32_v, void, ptr, ptr, tl, tl, env, i32)
+-DEF_HELPER_6(vsse64_v, void, ptr, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vlse8_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vlse16_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vlse32_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vlse64_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vsse8_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vsse16_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vsse32_v, void, ptr, tl, tl, env, i32)
++DEF_HELPER_5(vsse64_v, void, ptr, tl, tl, env, i32)
+ DEF_HELPER_6(vlxei8_8_v, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(vlxei8_16_v, void, ptr, ptr, tl, ptr, env, i32)
+ DEF_HELPER_6(vlxei8_32_v, void, ptr, ptr, tl, ptr, env, i32)
 diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 5b03e23fc3..b482537f40 100644
+index 2548ad9c2c..354c0b0da5 100644
 --- a/target/riscv/tcg/vector_helper.c
 +++ b/target/riscv/tcg/vector_helper.c
-@@ -759,135 +759,221 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
-           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
+@@ -322,9 +322,8 @@ vext_ldst_stride(void *vd, target_ulong base, target_ulong stride,
+ }
+ 
+ #define GEN_VEXT_LD_STRIDE(NAME, ETYPE, LOAD_FN)                        \
+-void HELPER(NAME)(void *vd, void * v0, target_ulong base,               \
+-                  target_ulong stride, CPURISCVState *env,              \
+-                  uint32_t desc)                                        \
++void HELPER(NAME)(void *vd, target_ulong base, target_ulong stride,     \
++                  CPURISCVState *env, uint32_t desc)                    \
+ {                                                                       \
+     uint32_t vm = vext_vm(desc);                                        \
+     vext_ldst_stride(vd, base, stride, env, desc, vm, LOAD_FN,          \
+@@ -337,9 +336,8 @@ GEN_VEXT_LD_STRIDE(vlse32_v, int32_t, lde_w_tlb)
+ GEN_VEXT_LD_STRIDE(vlse64_v, int64_t, lde_d_tlb)
+ 
+ #define GEN_VEXT_ST_STRIDE(NAME, ETYPE, STORE_FN)                       \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,                \
+-                  target_ulong stride, CPURISCVState *env,              \
+-                  uint32_t desc)                                        \
++void HELPER(NAME)(void *vd, target_ulong base, target_ulong stride,     \
++                  CPURISCVState *env, uint32_t desc)                    \
+ {                                                                       \
+     uint32_t vm = vext_vm(desc);                                        \
+     vext_ldst_stride(vd, base, stride, env, desc, vm, STORE_FN,         \
+diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+index 3d32564660..5e352dbf41 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+@@ -878,32 +878,26 @@ GEN_VEXT_TRANS(vsm_v, MO_8, vsm_v, st_us_mask_op, st_us_mask_check)
+ /*
+  *** stride load and store
+  */
+-typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
+-                                    TCGv, TCGv_env, TCGv_i32);
++typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv, TCGv, TCGv_env, TCGv_i32);
+ 
+ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+                               uint32_t data, gen_helper_ldst_stride *fn,
+                               DisasContext *s)
  {
--    uint32_t i, vl = 0;
-+    uint32_t i = env->vstart, vl = env->vl;
-     uint32_t nf = vext_nf(desc);
-     uint32_t vm = vext_vm(desc);
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-     uint32_t esz = 1 << log2_esz;
-     uint32_t msize = nf * esz;
-     uint32_t vma = vext_vma(desc);
--    target_ulong addr, addr_i, offset, remain, page_split, elems;
-+    target_ulong addr, last, last_in_page, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
-+    bool first_active;
-     int flags;
-     void *host;
+-    TCGv_ptr dest, mask;
+-    TCGv base, stride;
++    TCGv_ptr dest = tcg_temp_new_ptr();
++    TCGv base = get_gpr(s, rs1, EXT_NONE);
++    TCGv stride = get_gpr(s, rs2, EXT_NONE);
+     TCGv_i32 desc;
  
-     VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
--    /* Search for the first active element. */
--    if (!vm) {
--        for (i = env->vstart; i < env->vl; ++i) {
-+    /* Skip forward to the first active element. */
-+    if (vm) {
-+        first_active = i == 0;
-+    } else if (i == 0 && vext_elem_mask(v0, 0)) {
-+        first_active = true;
-+    } else {
-+        first_active = false;
-+        while (1) {
-             if (vext_elem_mask(v0, i)) {
-                 break;
-             }
-             if (vma) {
-                 vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-             }
-+            if (++i == vl) {
-+                goto tail;
-+            }
-         }
--        if (i == env->vl) {
--            goto tail;
--        }
--        env->vstart = i;
-     }
+-    dest = tcg_temp_new_ptr();
+-    mask = tcg_temp_new_ptr();
+-    base = get_gpr(s, rs1, EXT_NONE);
+-    stride = get_gpr(s, rs2, EXT_NONE);
 -
--    addr = base + ((env->vstart * nf) << log2_esz);
-+    addr = base + i * msize;
+     data = vdata_add_memopidx(s, data);
+     desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
+                                       s->cfg_ptr->vlenb, data));
  
-     /* Recognize alignment fault before memory protection fault. */
-     vext_test_alignment(env, addr, esz, MMU_DATA_LOAD, mmu_index, ra);
+     tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
+-    tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
  
--    page_split = -(addr | TARGET_PAGE_MASK);
--    /* Get number of elements */
--    elems = page_split / msize;
--    if (unlikely(env->vstart + elems >= env->vl)) {
--        elems = env->vl - env->vstart;
-+    /* Calculate the page range of first page. */
-+    last = base + vl * msize - 1;
-+    last_in_page = addr | ~TARGET_PAGE_MASK;
-+    page_split = last_in_page - addr;
-+
-+    /*
-+     * If the first element is active, it must succeed.
-+     * If it also crosses the page, just go ahead and load it.
-+     */
-+    if (unlikely(page_split < msize) && first_active) {
-+        vext_ldst_nf_tlb(env, vd, addr, 0, nf, esz, max_elems, ldst_tlb, ra);
-+        env->vstart = i = 1;
-+        addr += msize;
-+        page_split = -(addr | TARGET_PAGE_MASK);
-+        first_active = false;
-     }
+     mark_vs_dirty(s);
  
--    /* Check page permission/pmp/watchpoint/etc. */
--    probe_pages(env, addr, (env->vl - env->vstart) * msize, ra, MMU_DATA_LOAD,
--                mmu_index, &host, &flags, true);
-+    /*
-+     * Test whether the first page is accessible.
-+     * If the first element is active, it must succeed.
-+     */
-+    flags = probe_access_flags(env, adjust_addr(env, addr),
-+                               MIN(last, last_in_page) - addr + 1,
-+                               MMU_DATA_LOAD, mmu_index, !first_active,
-+                               &host, ra);
+-    fn(dest, mask, base, stride, tcg_env, desc);
++    fn(dest, base, stride, tcg_env, desc);
  
--    if (flags & ~TLB_WATCHPOINT) {
--        /* probe every access */
--        for (i = env->vstart; i < env->vl; i++) {
--            if (!vm && !vext_elem_mask(v0, i)) {
--                continue;
--            }
--            addr_i = adjust_addr(env, base + i * (nf << log2_esz));
--            if (i == 0) {
--                /* Allow fault on first element. */
--                probe_pages(env, addr_i, nf << log2_esz, ra, MMU_DATA_LOAD,
--                            mmu_index, &host, NULL, false);
-+    /* Get number of complete elements in the first page. */
-+    elems = MIN(page_split / msize, vl - i);
-+
-+    /* Load complete elements from the first page. */
-+    if (likely(elems)) {
-+        uint32_t page_evl = i + elems;
-+
-+        if (flags == 0) {
-+            if (vm) {
-+                vext_page_ldst_us_host(vd, host, i, page_evl, nf,
-+                                       log2_esz, max_elems, ldst_host);
-             } else {
--                remain = nf << log2_esz;
--                while (remain > 0) {
--                    offset = -(addr_i | TARGET_PAGE_MASK);
--
--                    /* Probe nonfault on subsequent elements. */
--                    probe_pages(env, addr_i, offset, 0, MMU_DATA_LOAD,
--                                mmu_index, &host, &flags, true);
--
--                    /*
--                     * Stop if invalid (unmapped) or mmio (transaction may
--                     * fail). Do not stop if watchpoint, as the spec says that
--                     * first-fault should continue to access the same
--                     * elements regardless of any watchpoint.
--                     */
--                    if (flags & ~TLB_WATCHPOINT) {
--                        vl = i;
--                        goto ProbeSuccess;
-+                host -= addr - base;
-+                do {
-+                    if (vext_elem_mask(v0, i)) {
-+                        vext_ldst_nf_host(vd, host + i * msize, i, nf, esz,
-+                                          max_elems, ldst_host);
-+                    } else if (vma) {
-+                        vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-                     }
--                    if (remain <= offset) {
--                        break;
-+                } while (++i < page_evl);
-+            }
-+        } else {
-+            /*
-+             * If the first element is active, it must succeed.
-+             * This will load from MMIO or fault from INVALID.
-+             */
-+            if (first_active) {
-+                vext_ldst_nf_tlb(env, vd, addr, 0, nf, esz,
-+                                 max_elems, ldst_tlb, ra);
-+                i = 1;
-+                addr += msize;
-+            }
-+
-+            /* Stop if invalid (unmapped) or mmio (transaction may fail). */
-+            if (flags & (TLB_INVALID_MASK | TLB_MMIO)) {
-+                env->vl = i;
-+                goto tail;
-+            }
-+
-+            /* None of these ldst_tlb calls may fault. */
-+            if (vm) {
-+                vext_page_ldst_us_tlb(env, vd, addr, i, page_evl, nf,
-+                                      log2_esz, max_elems,
-+                                      ldst_tlb, mmu_index, ra);
-+            } else {
-+                do {
-+                    if (vext_elem_mask(v0, i)) {
-+                        vext_ldst_nf_tlb(env, vd, base + i * msize, i, nf,
-+                                         esz, max_elems, ldst_tlb, ra);
-+                    } else if (vma) {
-+                        vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-                     }
--                    remain -= offset;
--                    addr_i = adjust_addr(env, addr_i + offset);
--                }
-+                } while (++i < page_evl);
-+            }
-+        }
-+
-+        /* Usually the first page contains the entire vector. */
-+        if (likely(page_evl == vl)) {
-+            goto tail;
-+        }
-+        i = page_evl;
-+    }
-+
-+    /* Skip forward to the next active element. */
-+    if (!vm) {
-+        while (1) {
-+            if (vext_elem_mask(v0, i)) {
-+                break;
-+            }
-+            if (vma) {
-+                vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-+            }
-+            if (++i == vl) {
-+                goto tail;
-             }
-         }
-     }
--ProbeSuccess:
--    /* load bytes from guest memory */
--    if (vl != 0) {
--        env->vl = vl;
-+
-+    addr = base + i * msize;
-+    page_split = -(addr | TARGET_PAGE_MASK);
-+
-+    /* Validate the second page is accessible. */
-+    if (unlikely(page_split < msize)) {
-+        /*
-+         * Cross page element which isn't first.
-+         * We have not yet advanced addr to the next page.
-+         */
-+        target_ulong next_page = addr + page_split;
-+        flags |= probe_access_flags(env, adjust_addr(env, next_page),
-+                                    last - next_page + 1, MMU_DATA_LOAD,
-+                                    mmu_index, true, &host, ra);
-+
-+        /* Stop if invalid (unmapped) or mmio (transaction may fail). */
-+        if (flags & (TLB_INVALID_MASK | TLB_MMIO)) {
-+            env->vl = i;
-+            goto tail;
-+        }
-+
-+        vext_ldst_nf_tlb(env, vd, addr, i, nf, esz, max_elems, ldst_tlb, ra);
-+        if (++i == vl) {
-+            goto tail;
-+        }
-+        addr += msize;
-+        if (host) {
-+            host += addr - next_page;
-+        }
-+    } else {
-+        flags = probe_access_flags(env, adjust_addr(env, addr),
-+                                   last - addr + 1, MMU_DATA_LOAD,
-+                                   mmu_index, true, &host, ra);
-+
-+        /* Stop if invalid (unmapped) or mmio (transaction may fail). */
-+        if (flags & (TLB_INVALID_MASK | TLB_MMIO)) {
-+            env->vl = i;
-+            goto tail;
-+        }
-     }
- 
--    if (env->vstart < env->vl) {
-+    /* Load complete elements from the second page. */
-+    if (flags == 0) {
-         if (vm) {
--            /* Load/store elements in the first page */
--            if (likely(elems)) {
--                vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
--                                  log2_esz, true, mmu_index, ldst_tlb,
--                                  ldst_host, ra);
--            }
--
--            /* Load/store elements in the second page */
--            if (unlikely(env->vstart < env->vl)) {
--                addr = base + env->vstart * msize;
--
--                /* Cross page element */
--                if (unlikely(page_split % msize)) {
--                    vext_ldst_nf_tlb(env, vd, addr, env->vstart, nf,
--                                     esz, max_elems, ldst_tlb, ra);
--                    env->vstart++;
--                    addr += msize;
--                }
--
--                /* Get number of elements of second page */
--                elems = env->vl - env->vstart;
--
--                /* Load/store elements in the second page */
--                vext_page_ldst_us(env, vd, addr, elems, nf, max_elems,
--                                  log2_esz, true, mmu_index, ldst_tlb,
--                                  ldst_host, ra);
--            }
-+            vext_page_ldst_us_host(vd, host, i, vl, nf,
-+                                   log2_esz, max_elems, ldst_host);
-         } else {
--            for (i = env->vstart; i < env->vl; i++) {
-+            host -= addr - base;
-+            do {
-+                if (vext_elem_mask(v0, i)) {
-+                    vext_ldst_nf_host(vd, host + i * msize, i, nf, esz,
-+                                      max_elems, ldst_host);
-+                } else if (vma) {
-+                    vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-+                }
-+            } while (++i < vl);
-+        }
-+    } else {
-+        /* None of these ldst_tlb calls may fault. */
-+        if (vm) {
-+            vext_page_ldst_us_tlb(env, vd, addr, i, vl, nf,
-+                                  log2_esz, max_elems,
-+                                  ldst_tlb, mmu_index, ra);
-+        } else {
-+            do {
-                 if (vext_elem_mask(v0, i)) {
-                     vext_ldst_nf_tlb(env, vd, base + i * msize, i, nf,
-                                      esz, max_elems, ldst_tlb, ra);
-                 } else if (vma) {
-                     vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-                 }
--            }
-+            } while (++i < vl);
-         }
-     }
- 
+     finalize_rvv_inst(s);
+     return true;
 -- 
 2.43.0
 
