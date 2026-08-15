@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE2EC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 23:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1FEC5DF67
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 23:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvNYI-0003Gf-KN; Sat, 15 Aug 2026 19:12:34 -0400
+	id 1wvNca-00049T-Sr; Sat, 15 Aug 2026 19:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNYE-0003G7-4m
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:12:30 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNcY-00048u-Ez
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:16:58 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNYA-0007Cb-FF
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:12:29 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2d01663d816so19192115ad.1
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 16:12:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786835544; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNcV-0007nk-PF
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:16:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ce7d2adef4so37271785ad.3
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 16:16:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786835811; cv=none;
  d=google.com; s=arc-20260327;
- b=phyCyLPQVKEZHNwxlSrrqPu5l3R8xQi0W/3l5IySna8be3Kk1oIZa/4RoJ6V8RoUEH
- zfTt22UZn4hs4ZLkeV8uNCtQCR7TvfjKg1ts46odGze0LjVTBYohoZI8Ee6W9sOC2YQR
- a/IJR1bHVmr6sdMQVIA/BLyQb2cSMiqgWTDJoR39E9jA0XDg6V7SdTA1KBTCuzLzrfUz
- BYz5i706lFfOHVzH+dccb1Ub6PJ20Ao2HJjft2E49VU6yyu0ZFA2AVF3kzFrq7n/P8xQ
- OgsaNjbQF3Grpc/qfFmTFGV/58jqcc5GSpliaCOWyH+c3lhvbuprjrv//9LWN9FrKU9V
- 015g==
+ b=tC56vhKbYfgQP6zyic4/+gDCMD8XA+mssUavJZ4nzTXxfTuHXMsg/Pt3uLbKsplzFM
+ hGc6uDbY418sAJZKiz4N206gKiiLRHFFRlYU7BSNA1otWUxu6vE+L7uSeekkTQCSkGy2
+ 1GoNqqUWnbxz2Q5iCpidEUqdh7mjNLVW/TnQeB6WUKF+fifCebotzo9jR9zMSOvg67i7
+ eucwURQHC1o944e6Q5qpeaNT9l+TDguElw/Ke1K2YNRsUQqj/ifLJHK4zAkBAe3fcVBG
+ cFY8O/Gd2pkV6/wQcPgIVAAJlMx5G8OAfWcKEwWo1ir5YJxyhMo27Rkl6OGMebRoq/hL
+ pTkA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
+ bh=cnrNWTHTxgcUKJHU1uTwHWYRPxL6RxH9z2vKglZDzNg=;
  fh=tChWmEYzjNiE2nQuOWKQCmsYiesBT8hJmZNJMxAXoz0=;
- b=DJdH7+EqGTmpcDFOHtw1C9dWhWt3jhW8tII/dVUSrAehseOlVdNdN+wX4gmy/DA6g/
- PAd7HBlUprRq8j9n4vht70sCt4Pzm5H6d9xE+o43H+geQOq6HGBgCgmUlhOM+EQgQXJR
- 19kCMHuibJWC5DqQcelY1UNXLGPZrwqU9o/jeCfwnXR8kGtt40Wfboq1/Is3pzQjC2SJ
- pUD6tNwfA2vsKDdaIaGx0GAs1jXL7q4dQcLpPH7iEIT7A8gwMYzR5KtFhe4yh7hQcybD
- Rjn9+Mr7D5ixnbTwUhHFD1xMQt7WiV8gUI5vDpqzwr7BXkeRLdKFp/ZGHbW53C5Yqpeq
- 6S9w==; darn=nongnu.org
+ b=qtHEjcPn7WKHQvW3qvy7tr4XfzydlmzNuixMtMK2/B4iwyyz5SoiA0qnxLuwezXwV3
+ EF1hdtol3Kdpj+zVwZ1cg5FYcT5ZSHyZVj3YPiJH/W+oaeMvDg9QI3UvZPWQKkMeRaV3
+ 24iMDVabmoWJw7lzjp4XFBg8UcAYDnEmQ24Uo9uNnKbaYHvpeS2dFrlnNDmB8iWLSbU1
+ clyYBdUx3mPzKSoiYbrUGusqbUqsmIpTGFK4vGVmKp9Oj99dmcyLpjQfx5SHe4f5re6L
+ sACbQYxQsJ/7Jogjdy52YK8nfDI+Ayj2dptewRlJAgc+PaGXwQvxeJp6tK4Gv1e2MHfv
+ OPoQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1786835544; x=1787440344;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1786835811; x=1787440611;
  darn=nongnu.org; 
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
- b=P0ml0UAZ20kZJF0y8TfC9UsNP5p6QjefAi93EAfsiZJPIgBMA5KulFub09nrKo3+QC
- JKCRmhQVkIEF3xybl6D8r1zr7TRrXFqh6JrEH4hW78PZsgvngGzFa1DckF4d76bhEr3U
- YGkmw76FmAFMJPWgevT12CiekdXRnbZyV96ICZJNV9gVajw6D/aG9o7+AQV7fUC9H6DY
- F1hrK8DaeDkzflW9b36N6Mqm/+i5dZzdlmezqZDVlmNaQebPC276kn1vj/oGWnK8vlt/
- LAbknT03hTqddJUuZVg2CaetjVAz/fhXsyMiptLks66un5w3jKXIsHYPyWwSfXyVaEaS
- 6ayA==
+ :content-type; bh=cnrNWTHTxgcUKJHU1uTwHWYRPxL6RxH9z2vKglZDzNg=;
+ b=LNPdjrMgxJ8vZ1PaeD9YbCh60ANDn7mYR+tUprzTzDr4bXDSK6/ktVlD26DIjsgqKo
+ oKZwIZ4KE6jivRx3Pb71O4NFdCPgEruMoq/80Euk81LLHLvwSs/mfGwnJ7tE7ckrOzPh
+ VysxkTS4G8yU2rq5UqZQuKGRWF56RcTAgG8OGEXMbWevWkFR6uQlD/fhOYl73LXvHxmX
+ XPtMGna4AVxhmyyek+LkDZWFeMYEb0FL1yeOBA9pKHh75+6SfKWUJOxa8/ppSFQEVRGk
+ 2TUHKM1bUVldJkpTX2pcBD37Oe2C+WDU3hHJwgkrbaunxKSJFbLsTovYMDFZARFWLUvE
+ 1BtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786835544; x=1787440344;
+ d=1e100.net; s=20251104; t=1786835811; x=1787440611;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
- b=gP28laOVApFNNWyk88T1R/agj7Owgzfyk69GnQTR2g0JjoUhn0ICQvv0QHpPqMPdtM
- 80d+uaQpNAXHK3Wtl3SAz8EPcOHsSbUK1qEPdoeggnPDs8zihDFg3khk2OeRxvflKnrk
- GLcEYsnTjMwGE5RAIl6dFIVUlljewGNTpxvyk7S8oGcvRRrQKShIsXq1Z7UisCq4VXGC
- ZhINaGOCwNlf1fuSULgQDj5293Dk5wkTleOWZWzmBVBFCTGaY+/yHswdJwFbI0pKXIPV
- XQZVt4HSYGTonoRaXZSpLHLaAspGR0NTulbvwPGk1W08J0dUVeGakzWqV1Eae8Qrs3QM
- JOBQ==
-X-Gm-Message-State: AOJu0YyP39JkWelaMVDqF/dvNnoP6K7j5GCJijmOEK4tkDVHxhlakJiE
- G+BMmM9Rcl44zQxjR/fOWPkkc6/Y5yniTkhahvirC7U9uMk1WqFQ8QyjbqPbsNnNyx4HhcHH9ol
- lDl9j6ddwaj0NFn4ZNoNfMKyRTqyH2HqIooKDoCWpMw==
-X-Gm-Gg: AR+sD11Xj52a+GUQ/eJzoNNA+Bep/zDcte9ouytow3mCwUs0hL8x5QqFn3TWRuFEuEZ
- 9EJqpTRT+TCPJ/53aNary/45X40FgWcSk2Z2lxOau9T7Ir3BDhSOZZtRofE3r4dMvy1rPrnjTJ+
- iHLFw5ZtxUKMCQErmogomuN5IRGW4NGfRKdLpFmMFXPBI1R12chXlEC6S3c5yrzq+knXZCyy8RY
- n/IOMKDoQnHhPXg0XhPWOs6Bnnc6ls4kvhAqxcSC94MtMLbDvXatjHP2MtMRK8EX7yFoIhUmtjx
- uyueZBtFB2HEEw4Kj9tGabcdrRKnrmb0qIWLUJeG3ivb
-X-Received: by 2002:a17:902:d592:b0:2c2:62ee:5a0d with SMTP id
- d9443c01a7336-2d3b0d5cec9mr187307545ad.14.1786835543787; Sat, 15 Aug 2026
- 16:12:23 -0700 (PDT)
+ bh=cnrNWTHTxgcUKJHU1uTwHWYRPxL6RxH9z2vKglZDzNg=;
+ b=gq+4T1stO5OqTOp1BZ+fLTWx/otrYA0eGb1ZKTXJOXxQS5FIgUol8oB73yplhTCbwF
+ W7LhCMqqZKLv2hq5jLY0f5Cxa1PP8xBLu0sh0FksobkiiBZ2gnpMd3yV+JiIqUEnImuy
+ Ah3b07xbZ6mESMTkU54Q3SgJUTau+ut5AzwETMUF6iaI6A4wg9ymGH3IgR5UoZBLO9nz
+ 8v0ZZjc83B4oiO7mz3/qqQuRwWLZSLrX9EmIMWltnAnIJ0XZaz2BAjWwHavj0Y2HvCeB
+ +uEv0flt1Wdip/Q0ZWgWS1W0CSdKJt+hWWbQ2BtJw5X0yjeUKEJ9bwf0IZDj4CXG2IoB
+ K6UQ==
+X-Gm-Message-State: AOJu0YxtxtAnYfdrqtazmFot6jTiEb1hexP03gPgJzwBThjXUSFWvgma
+ ipGgpT46OeeDBwkxts6vAMKL1vjOQErdDzBFSlhRc6/fF31KbrHoOgbVVKUYhhfdfCRtov/S/nL
+ VizqQvP2klI+emsml8FInKGyqqkFxXtMR7/6uCmOZuw==
+X-Gm-Gg: AR+sD11C9EQhDMWWdL4jLJcOvQ7TJ4uovc4jrAdKn6kigknTzNPNddS89ivqmOvRYHt
+ 2q10OGOkmWezVbOoPwjEA7IW2c5XpQB2PZF0Nd7pFxkK0wb7KzKGxI/PDXjJdx7eecyKhtH0c0e
+ hKHbBCYR7wxIBvIoaIwBtc+hHOeq5VxgqtuikhKXrK140UNr0gkG44Jd5XFeJbR62WCgifNerI3
+ 6YgJz2f6tohezU7F9JtOV/+vlA59EK0D/5n3xJxX5j2ZRfpmAMFnFJNwYPqB+1dzLwsHC5o7KD5
+ iQpaAj+bLN+/2rurk1eQ/NeUFhYW0ywW04SoxjXtqiJ2
+X-Received: by 2002:a17:903:1a08:b0:2d3:7887:7e7f with SMTP id
+ d9443c01a7336-2d3b0c5de30mr187111545ad.11.1786835811257; Sat, 15 Aug 2026
+ 16:16:51 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
- <20260518-misc-2026q2-v2-18-6c16fe448301@bsdimp.com>
- <efaa34ff-ffc2-4c70-b435-bd5d3d041b5c@oss.qualcomm.com>
-In-Reply-To: <efaa34ff-ffc2-4c70-b435-bd5d3d041b5c@oss.qualcomm.com>
+ <20260518-misc-2026q2-v2-19-6c16fe448301@bsdimp.com>
+ <c75ecfed-2dbf-4517-b240-7ca8a623e4a6@oss.qualcomm.com>
+In-Reply-To: <c75ecfed-2dbf-4517-b240-7ca8a623e4a6@oss.qualcomm.com>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 15 Aug 2026 17:12:12 -0600
-X-Gm-Features: AUfX_mw8UCh6pMjVM6BPduMApAQr4xEagQPv9XaE9eg2UVktJhu1o-GpmFNs8LE
-Message-ID: <CANCZdfpqwkUCLVmW3aQoHa1wuhSS6DKpRYf7k7mR1H98Cgax2g@mail.gmail.com>
-Subject: Re: [PATCH v2 18/37] bsd-user: Add utimes, futimes, and ktimer
- functions to os-time.h
+Date: Sat, 15 Aug 2026 17:16:38 -0600
+X-Gm-Features: AUfX_mwnOk2obQNZU0yR6V_nwvB8Ge332TunLMtIF22pBGYYWyl7287bbahjfvc
+Message-ID: <CANCZdfooM-hzozBKdFPaudPMCkJYBA7rvkaOEigyvskAQjeXkg@mail.gmail.com>
+Subject: Re: [PATCH v2 19/37] bsd-user: Add select, pselect,
+ and ppoll to os-time.h
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
  Stacey Son <sson@freebsd.org>,
  =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000dc18f006591e11d2"
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
+Content-Type: multipart/alternative; boundary="000000000000cd5f0e06591e2117"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,17 +116,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000dc18f006591e11d2
+--000000000000cd5f0e06591e2117
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 22, 2026 at 5:38=E2=80=AFPM Pierrick Bouvier <
+On Fri, May 22, 2026 at 5:46=E2=80=AFPM Pierrick Bouvier <
 pierrick.bouvier@oss.qualcomm.com> wrote:
 
 > On 5/18/2026 2:27 PM, Warner Losh wrote:
-> > Add time-related system call shims: utimes, lutimes, futimes,
-> > futimesat, ktimer_create, ktimer_delete, ktimer_settime, and
-> > ktimer_gettime.
+> > Add I/O multiplexing system call shims: select, pselect, and ppoll
+> > with proper fd_set, timespec/timeval, and signal mask conversion.
 > >
 > > Signed-off-by: Stacey Son <sson@FreeBSD.org>
 > > Signed-off-by: Mika=C3=ABl Urankar <mikael.urankar@gmail.com>
@@ -135,283 +133,273 @@ pierrick.bouvier@oss.qualcomm.com> wrote:
 > > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > > Assisted-by: Claude Opus 4.6 (1M context)
 > > ---
-> >  bsd-user/freebsd/os-time.h | 210
+> >  bsd-user/freebsd/os-time.h | 202
 > +++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 210 insertions(+)
+> >  1 file changed, 202 insertions(+)
 > >
 > > diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
-> > index 16b71e6234..05fa043442 100644
+> > index 05fa043442..12c5ba02e8 100644
 > > --- a/bsd-user/freebsd/os-time.h
 > > +++ b/bsd-user/freebsd/os-time.h
-> > @@ -217,5 +217,215 @@ static inline abi_long
-> do_freebsd_ntp_gettime(abi_ulong target_ntv_addr)
+> > @@ -427,5 +427,207 @@ static inline abi_long
+> do_freebsd_ktimer_gettime(abi_long arg1, abi_long arg2)
+> >      return ret;
 > >  }
 > >
-> >
-> > +/* utimes(2) */
-> > +static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2)
+> > +/* select(2) */
+> > +static inline abi_long do_freebsd_select(CPUArchState *env, int n,
+> > +        abi_ulong rfd_addr, abi_ulong wfd_addr, abi_ulong efd_addr,
+> > +        abi_ulong target_tv_addr)
 > > +{
-> > +    abi_long ret;
-> > +    void *p;
-> > +    struct timeval *tvp, tv[2];
+> > +    fd_set rfds, wfds, efds;
+> > +    fd_set *rfds_ptr, *wfds_ptr, *efds_ptr;
+> > +    struct timeval tv, *tvp;
+> > +    abi_long ret, error;
 > > +
-> > +    if (arg2 !=3D 0) {
-> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-> > +                t2h_freebsd_timeval(&tv[1], arg2 +
-> > +                        sizeof(struct target_freebsd_timeval))) {
-> > +            return -TARGET_EFAULT;
-> > +        }
-> > +        tvp =3D tv;
-> > +    } else {
-> > +        tvp =3D NULL;
+> > +    ret =3D copy_from_user_fdset_ptr(&rfds, &rfds_ptr, rfd_addr, n);
+> > +    if (ret !=3D 0) {
+> > +        return ret;
 > > +    }
-> > +    p =3D lock_user_string(arg1);
-> > +    if (p =3D=3D NULL) {
-> > +        return -TARGET_EFAULT;
+> > +    ret =3D copy_from_user_fdset_ptr(&wfds, &wfds_ptr, wfd_addr, n);
+> > +    if (ret !=3D 0) {
+> > +        return ret;
 > > +    }
-> > +    ret =3D get_errno(utimes(p, tvp));
-> > +    unlock_user(p, arg1, 0);
-> > +
-> > +    return ret;
-> > +}
-> > +
-> > +/* lutimes(2) */
-> > +static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg2=
-)
-> > +{
-> > +    abi_long ret;
-> > +    void *p;
-> > +    struct timeval *tvp, tv[2];
-> > +
-> > +    if (arg2 !=3D 0) {
-> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-> > +                t2h_freebsd_timeval(&tv[1], arg2 +
-> > +                        sizeof(struct target_freebsd_timeval))) {
-> > +            return -TARGET_EFAULT;
-> > +        }
-> > +        tvp =3D tv;
-> > +    } else {
-> > +        tvp =3D NULL;
+> > +    ret =3D copy_from_user_fdset_ptr(&efds, &efds_ptr, efd_addr, n);
+> > +    if (ret !=3D 0) {
+> > +        return ret;
 > > +    }
-> > +    p =3D lock_user_string(arg1);
-> > +    if (p =3D=3D NULL) {
-> > +        return -TARGET_EFAULT;
-> > +    }
-> > +    ret =3D get_errno(lutimes(p, tvp));
-> > +    unlock_user(p, arg1, 0);
-> > +
-> > +    return ret;
-> > +}
-> > +
-> > +/* futimes(2) */
-> > +static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg2=
-)
-> > +{
-> > +    struct timeval *tvp, tv[2];
-> > +
-> > +    if (arg2 !=3D 0) {
-> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-> > +                t2h_freebsd_timeval(&tv[1], arg2 +
-> > +                        sizeof(struct target_freebsd_timeval))) {
-> > +            return -TARGET_EFAULT;
-> > +        }
-> > +        tvp =3D tv;
-> > +    } else {
-> > +        tvp =3D NULL;
-> > +    }
-> > +
-> > +    return get_errno(futimes(arg1, tvp));
-> > +}
-> > +
-> > +/* futimesat(2) */
-> > +static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long
-> arg2,
-> > +        abi_long arg3)
-> > +{
-> > +    abi_long ret;
-> > +    void *p;
-> > +    struct timeval *tvp, tv[2];
-> > +
-> > +    if (arg3 !=3D 0) {
-> > +        if (t2h_freebsd_timeval(&tv[0], arg3) ||
-> > +                t2h_freebsd_timeval(&tv[1], arg3 +
-> > +                        sizeof(struct target_freebsd_timeval))) {
-> > +            return -TARGET_EFAULT;
-> > +        }
-> > +        tvp =3D tv;
-> > +    } else {
-> > +        tvp =3D NULL;
-> > +    }
-> > +
-> > +    p =3D lock_user_string(arg2);
-> > +    if (p =3D=3D NULL) {
-> > +        return -TARGET_EFAULT;
-> > +    }
-> > +    ret =3D get_errno(futimesat(arg1, p, tvp));
-> > +    unlock_user(p, arg2, 0);
-> > +
-> > +    return ret;
-> > +}
 > > +
 >
-> The functions above are quite duplicated.
-> We could factor the first part at least, setting tvp.
-> The lock_user_string part can be replaced with LOCK_PATH.
+> We can factor this with a macro
+>
+> > +    if (target_tv_addr !=3D 0) {
+> > +        if (t2h_freebsd_timeval(&tv, target_tv_addr)) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        tvp =3D &tv;
+> > +    } else {
+> > +        tvp =3D NULL;
+> > +    }
+> > +
+> > +    ret =3D get_errno(safe_select(n, rfds_ptr, wfds_ptr, efds_ptr, tvp=
+));
+> > +
+> > +    if (!is_error(ret)) {
+>
+> We can simplify depth here by using an early return.
+> if (is_error(ret)) {
+>   return ret;
+> }
+>
+> > +        if (rfd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(rfd_addr, &rfds, n);
+> > +            if (error !=3D 0) {
+> > +                return error;
+> > +            }
+> > +        }
+> > +        if (wfd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(wfd_addr, &wfds, n);
+> > +            if (error !=3D 0) {
+> > +                return error;
+> > +            }
+> > +        }
+> > +        if (efd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(efd_addr, &efds, n);
+> > +            if (error !=3D 0) {
+> > +                return error;
+> > +            }
+> > +        }
+>
+> Same, reuse the macro defined above.
+>
+> > +        if (target_tv_addr !=3D 0) {
+> > +            error =3D h2t_freebsd_timeval(&tv, target_tv_addr);
+> > +            if (is_error(error)) {
+> > +                return error;
+> > +            }
+> > +        }
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +/* pselect(2) */
+> > +static inline abi_long do_freebsd_pselect(CPUArchState *env, int n,
+> > +        abi_ulong rfd_addr, abi_ulong wfd_addr, abi_ulong efd_addr,
+> > +        abi_ulong ts_addr, abi_ulong set_addr)
+> > +{
+> > +    CPUState *cpu =3D env_cpu(env);
+> > +    TaskState *tstate =3D cpu->opaque;
+> > +    fd_set rfds, wfds, efds;
+> > +    fd_set *rfds_ptr, *wfds_ptr, *efds_ptr;
+> > +    sigset_t *set_ptr;
+> > +    struct timespec ts, *ts_ptr;
+> > +    void *p;
+> > +    abi_long ret, error;
+> > +
+> > +    ret =3D copy_from_user_fdset_ptr(&rfds, &rfds_ptr, rfd_addr, n);
+> > +    if (is_error(ret)) {
+> > +        return ret;
+> > +    }
+> > +    ret =3D copy_from_user_fdset_ptr(&wfds, &wfds_ptr, wfd_addr, n);
+> > +    if (is_error(ret)) {
+> > +        return ret;
+> > +    }
+> > +    ret =3D copy_from_user_fdset_ptr(&efds, &efds_ptr, efd_addr, n);
+> > +    if (is_error(ret)) {
+> > +        return ret;
+> > +    }
+> > +
+>
+> Same than above.
 >
 
-This is a good suggestion. I hesitated to implement it when I last had time
-to work
-on bsd-user upstreaming. I've created
-https://github.com/qemu-bsd-user/qemu-bsd-user/issues/65 since I'd like to
-defer
-changes here. There's no good regression tests for these functions and I'd
-like
-to do the refactoring when I have the time to focus on ensuring they
-continue to
-be correct. In all the rebasing, I've somehow created a hang that I can't
-recreate
-in a small test case sometime during the last several years. I'd like to
-get what
-we've been using upstreamed and then focus on improving the code.
+I like these suggestions, but due to lack of good regression tests, I'm
+going to defer them
+since I know the code that's there works.
+https://github.com/qemu-bsd-user/qemu-bsd-user/issues/66
+memorializes the issue.
 
 Warner
 
 
-> > +/* timer_create(2) */
-> > +static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_lon=
-g
-> arg2,
-> > +        abi_long arg3)
-> > +{
-> > +    /* args: clockid_t clockid, struct sigevent *sevp, int *timerid */
-> > +    abi_long ret;
-> > +
-> > +    struct sigevent host_sevp =3D { 0 }, *phost_sevp =3D NULL;
-> > +
-> > +    int clkid =3D arg1;
-> > +    int timer_index =3D next_free_host_timer();
-> > +
-> > +    if (timer_index < 0) {
-> > +        ret =3D -TARGET_EAGAIN;
-> > +    } else {
-> > +        int *phtimer =3D g_posix_timers  + timer_index;
-> > +
-> > +        if (arg2) {
-> > +            phost_sevp =3D &host_sevp;
-> > +            ret =3D target_to_host_sigevent(phost_sevp, arg2);
-> > +            if (ret !=3D 0) {
-> > +                return -TARGET_EFAULT;
-> > +            }
-> > +        }
-> > +
-> > +        ret =3D get_errno(__sys_ktimer_create(clkid, phost_sevp,
-> phtimer));
-> > +        if (ret) {
-> > +            phtimer =3D NULL;
-> > +        } else {
-> > +            if (put_user(TIMER_MAGIC | timer_index, arg3, int)) {
-> > +                ret =3D -TARGET_EFAULT;
-> > +            }
-> > +        }
-> > +    }
-> > +    return ret;
-> > +}
-> > +
-> > +/* timer_delete(2) */
-> > +static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)
-> > +{
-> > +    /* args: int timerid */
-> > +    abi_long ret;
-> > +    int timerid =3D get_timer_id(arg1);
-> > +
-> > +    if (timerid < 0) {
-> > +        ret =3D timerid;
-> > +    } else {
-> > +        int htimer =3D g_posix_timers[timerid];
-> > +        ret =3D get_errno(__sys_ktimer_delete(htimer));
-> > +        g_posix_timers[timerid] =3D 0;
-> > +    }
-> > +    return ret;
-> > +}
-> > +
-> > +/* timer_settime(2) */
-> > +static inline abi_long do_freebsd_ktimer_settime(abi_long arg1,
-> abi_long arg2,
-> > +        abi_long arg3, abi_long arg4)
-> > +{
-> > +    /*
-> > +     * args: int timerid, int flags, const struct itimerspec *new_valu=
-e,
-> > +     * struct itimerspec * old_value
-> > +     */
-> > +    abi_long ret;
-> > +    int timerid =3D get_timer_id(arg1);
-> > +
-> > +    if (timerid < 0) {
-> > +        ret =3D timerid;
-> > +    } else if (arg3 =3D=3D 0) {
-> > +        ret =3D -TARGET_EINVAL;
-> > +    } else {
-> > +        int htimer =3D g_posix_timers[timerid];
-> > +        struct itimerspec hspec_new =3D {{0},}, hspec_old =3D {{0},};
-> > +
-> > +        if (target_to_host_itimerspec(&hspec_new, arg3)) {
+> > +    /* Unlike select(), pselect() uses struct timespec instead of
+> timeval */
+> > +    if (ts_addr) {
+> > +        if (t2h_freebsd_timespec(&ts, ts_addr)) {
 > > +            return -TARGET_EFAULT;
 > > +        }
-> > +        ret =3D get_errno(
-> > +            __sys_ktimer_settime(htimer, arg2, &hspec_new, &hspec_old)=
-);
-> > +        if (arg4 && host_to_target_itimerspec(arg4, &hspec_old)) {
+> > +        ts_ptr =3D &ts;
+> > +    } else {
+> > +        ts_ptr =3D NULL;
+> > +    }
+> > +
+> > +    if (set_addr !=3D 0) {
+> > +        p =3D lock_user(VERIFY_READ, set_addr, sizeof(target_sigset_t)=
+,
+> 1);
+> > +        if (p =3D=3D NULL) {
 > > +            return -TARGET_EFAULT;
 > > +        }
-> > +    }
-> > +    return ret;
-> > +}
-> > +
-> > +/* timer_gettime(2) */
-> > +static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1,
-> abi_long arg2)
-> > +{
-> > +    /* args: int timerid, struct itimerspec *curr_value */
-> > +    abi_long ret;
-> > +    int timerid =3D get_timer_id(arg1);
-> > +
-> > +    if (timerid < 0) {
-> > +        ret =3D timerid;
-> > +    } else if (!arg2) {
-> > +        ret =3D -TARGET_EFAULT;
+> > +        target_to_host_sigset(&tstate->sigsuspend_mask, p);
+> > +        unlock_user(p, set_addr, 0);
+> > +        set_ptr =3D &tstate->sigsuspend_mask;
 > > +    } else {
-> > +        int htimer =3D g_posix_timers[timerid];
-> > +        struct itimerspec hspec;
-> > +        ret =3D get_errno(__sys_ktimer_gettime(htimer, &hspec));
+> > +        set_ptr =3D NULL;
+> > +    }
 > > +
-> > +        if (host_to_target_itimerspec(arg2, &hspec)) {
-> > +            ret =3D -TARGET_EFAULT;
+> > +    ret =3D get_errno(safe_pselect(n, rfds_ptr, wfds_ptr, efds_ptr,
+> ts_ptr,
+> > +        set_ptr));
+> > +    if (ret !=3D -TARGET_ERESTART)  {
+> > +        tstate->in_sigsuspend =3D true;
+> > +    }
+> > +    if (!is_error(ret)) {
+> > +        if (rfd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(rfd_addr, &rfds, n);
+> > +            if (is_error(error)) {
+> > +                return error;
+> > +            }
+> > +        }
+> > +        if (wfd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(wfd_addr, &wfds, n);
+> > +            if (is_error(error)) {
+> > +                return error;
+> > +            }
+> > +        }
+> > +        if (efd_addr !=3D 0) {
+> > +            error =3D copy_to_user_fdset(efd_addr, &efds, n);
+> > +            if (is_error(error)) {
+> > +                return error;
+> > +            }
 > > +        }
 > > +    }
 > > +    return ret;
 > > +}
 > > +
+> > +/* ppoll(2) */
+> > +static inline abi_long do_freebsd_ppoll(CPUArchState *env, abi_long
+> arg1,
+> > +        abi_long arg2, abi_ulong arg3, abi_ulong arg4)
+> > +{
+> > +    CPUState *cpu =3D env_cpu(env);
+> > +    TaskState *tstate =3D cpu->opaque;
+> > +    abi_long ret;
+> > +    nfds_t i, nfds =3D arg2;
+> > +    struct pollfd *pfd;
+> > +    struct target_pollfd *target_pfd;
+> > +    struct timespec ts, *ts_ptr;
+> > +    sigset_t *set_ptr;
+> > +    void *p;
+> > +
+> > +    target_pfd =3D lock_user(VERIFY_WRITE, arg1,
+> > +                           sizeof(struct target_pollfd) * nfds, 1);
+> > +    if (!target_pfd) {
+> > +        return -TARGET_EFAULT;
+> > +    }
+> > +    pfd =3D alloca(sizeof(struct pollfd) * nfds);
+> > +    for (i =3D 0; i < nfds; i++) {
+> > +        pfd[i].fd =3D tswap32(target_pfd[i].fd);
+> > +        pfd[i].events =3D tswap16(target_pfd[i].events);
+> > +    }
+> > +
+> > +    /* Unlike poll(), ppoll() uses struct timespec. */
+> > +    if (arg3) {
+> > +        if (t2h_freebsd_timespec(&ts, arg3)) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        ts_ptr =3D &ts;
+> > +    } else {
+> > +        ts_ptr =3D NULL;
+> > +    }
+> > +
+> > +    if (arg4 !=3D 0) {
+> > +        p =3D lock_user(VERIFY_READ, arg4, sizeof(target_sigset_t), 1)=
+;
+> > +        if (p =3D=3D NULL) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        target_to_host_sigset(&tstate->sigsuspend_mask, p);
+> > +        unlock_user(p, arg4, 0);
+> > +        set_ptr =3D &tstate->sigsuspend_mask;
+> > +    } else {
+> > +        set_ptr =3D NULL;
+> > +    }
+> > +
+> > +    ret =3D get_errno(ppoll(pfd, nfds, ts_ptr, set_ptr));
+> > +    if (ret !=3D -TARGET_ERESTART) {
+> > +        tstate->in_sigsuspend =3D true;
+> > +    }
+> > +    if (!is_error(ret)) {
+> > +        for (i =3D 0; i < nfds; i++) {
+> > +            target_pfd[i].revents =3D tswap16(pfd[i].revents);
+> > +        }
+> > +    }
+> > +    unlock_user(target_pfd, arg1, sizeof(struct target_pollfd) * nfds)=
+;
+> > +
+> > +    return ret;
+> > +}
+> > +
+> > +/* kqueue(2) */
 > >
 > >  #endif /* FREEBSD_OS_TIME_H */
 > >
 >
 >
 
---000000000000dc18f006591e11d2
+--000000000000cd5f0e06591e2117
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 22,=
- 2026 at 5:38=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bo=
+ 2026 at 5:46=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bo=
 uvier@oss.qualcomm.com">pierrick.bouvier@oss.qualcomm.com</a>&gt; wrote:<br=
 ></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
 border-left:1px solid rgb(204,204,204);padding-left:1ex">On 5/18/2026 2:27 =
 PM, Warner Losh wrote:<br>
-&gt; Add time-related system call shims: utimes, lutimes, futimes,<br>
-&gt; futimesat, ktimer_create, ktimer_delete, ktimer_settime, and<br>
-&gt; ktimer_gettime.<br>
+&gt; Add I/O multiplexing system call shims: select, pselect, and ppoll<br>
+&gt; with proper fd_set, timespec/timeval, and signal mask conversion.<br>
 &gt; <br>
 &gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
 &gt; Signed-off-by: Mika=C3=ABl Urankar &lt;<a href=3D"mailto:mikael.uranka=
@@ -421,299 +409,293 @@ r@gmail.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
 t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
 &gt; Assisted-by: Claude Opus 4.6 (1M context)<br>
 &gt; ---<br>
-&gt;=C2=A0 bsd-user/freebsd/os-time.h | 210 +++++++++++++++++++++++++++++++=
+&gt;=C2=A0 bsd-user/freebsd/os-time.h | 202 +++++++++++++++++++++++++++++++=
 ++++++++++++++<br>
-&gt;=C2=A0 1 file changed, 210 insertions(+)<br>
+&gt;=C2=A0 1 file changed, 202 insertions(+)<br>
 &gt; <br>
 &gt; diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h<b=
 r>
-&gt; index 16b71e6234..05fa043442 100644<br>
+&gt; index 05fa043442..12c5ba02e8 100644<br>
 &gt; --- a/bsd-user/freebsd/os-time.h<br>
 &gt; +++ b/bsd-user/freebsd/os-time.h<br>
-&gt; @@ -217,5 +217,215 @@ static inline abi_long do_freebsd_ntp_gettime(ab=
-i_ulong target_ntv_addr)<br>
+&gt; @@ -427,5 +427,207 @@ static inline abi_long do_freebsd_ktimer_gettime=
+(abi_long arg1, abi_long arg2)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return ret;<br>
 &gt;=C2=A0 }<br>
 &gt;=C2=A0 <br>
-&gt;=C2=A0 <br>
-&gt; +/* utimes(2) */<br>
-&gt; +static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2=
-)<br>
+&gt; +/* select(2) */<br>
+&gt; +static inline abi_long do_freebsd_select(CPUArchState *env, int n,<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong rfd_addr, abi_ulong wfd_addr, a=
+bi_ulong efd_addr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong target_tv_addr)<br>
 &gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 void *p;<br>
-&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
+&gt; +=C2=A0 =C2=A0 fd_set rfds, wfds, efds;<br>
+&gt; +=C2=A0 =C2=A0 fd_set *rfds_ptr, *wfds_ptr, *efds_ptr;<br>
+&gt; +=C2=A0 =C2=A0 struct timeval tv, *tvp;<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret, error;<br>
 &gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
- ||<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
-imeval(&amp;tv[1], arg2 +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;rfds, &amp;rfds_p=
+tr, rfd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (ret !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
 &gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg1);<br>
-&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;wfds, &amp;wfds_p=
+tr, wfd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (ret !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
 &gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 ret =3D get_errno(utimes(p, tvp));<br>
-&gt; +=C2=A0 =C2=A0 unlock_user(p, arg1, 0);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* lutimes(2) */<br>
-&gt; +static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg=
-2)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 void *p;<br>
-&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
- ||<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
-imeval(&amp;tv[1], arg2 +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;efds, &amp;efds_p=
+tr, efd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (ret !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
 &gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg1);<br>
-&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 ret =3D get_errno(lutimes(p, tvp));<br>
-&gt; +=C2=A0 =C2=A0 unlock_user(p, arg1, 0);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* futimes(2) */<br>
-&gt; +static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg=
-2)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
- ||<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
-imeval(&amp;tv[1], arg2 +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return get_errno(futimes(arg1, tvp));<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* futimesat(2) */<br>
-&gt; +static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long a=
-rg2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 void *p;<br>
-&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg3 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg3)=
- ||<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
-imeval(&amp;tv[1], arg3 +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg2);<br>
-&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 ret =3D get_errno(futimesat(arg1, p, tvp));<br>
-&gt; +=C2=A0 =C2=A0 unlock_user(p, arg2, 0);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
 &gt; +<br>
 <br>
-The functions above are quite duplicated.<br>
-We could factor the first part at least, setting tvp.<br>
-The lock_user_string part can be replaced with LOCK_PATH.<br></blockquote><=
-div><br></div><div>This is a good suggestion. I hesitated to implement it w=
-hen I last had time to work</div><div>on bsd-user upstreaming.=C2=A0<span s=
-tyle=3D"background-color:transparent">I&#39;ve created</span></div><div><sp=
-an style=3D"background-color:transparent"><a href=3D"https://github.com/qem=
-u-bsd-user/qemu-bsd-user/issues/65">https://github.com/qemu-bsd-user/qemu-b=
-sd-user/issues/65</a> since I&#39;d like to defer</span></div><div><span st=
-yle=3D"background-color:transparent">changes=C2=A0</span><span style=3D"bac=
-kground-color:transparent">here. There&#39;s no good regression tests for t=
-hese functions and I&#39;d like</span></div><div><span style=3D"background-=
-color:transparent">to do the refactoring when I have the time to focus on e=
-nsuring they continue to</span></div><div><span style=3D"background-color:t=
-ransparent">be correct. In all the rebasing, I&#39;ve somehow created a han=
-g that I can&#39;t recreate</span></div><div><span style=3D"background-colo=
-r:transparent">in a small test case sometime during the last several years.=
- I&#39;d like to get what</span></div><div><span style=3D"background-color:=
-transparent">we&#39;ve been using upstreamed and then focus on improving th=
-e code.</span></div><div><span style=3D"background-color:transparent"><br><=
-/span></div><div><span style=3D"background-color:transparent">Warner</span>=
-</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; +/* timer_create(2) */<br>
-&gt; +static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_lo=
-ng arg2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 /* args: clockid_t clockid, struct sigevent *sevp, int =
-*timerid */<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 struct sigevent host_sevp =3D { 0 }, *phost_sevp =3D NU=
-LL;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 int clkid =3D arg1;<br>
-&gt; +=C2=A0 =C2=A0 int timer_index =3D next_free_host_timer();<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (timer_index &lt; 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EAGAIN;<br>
+We can factor this with a macro<br>
+<br>
+&gt; +=C2=A0 =C2=A0 if (target_tv_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv, target_t=
+v_addr)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D &amp;tv;<br>
 &gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int *phtimer =3D g_posix_timers=C2=A0 + t=
-imer_index;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
 &gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (arg2) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 phost_sevp =3D &amp;host_se=
-vp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D target_to_host_sige=
-vent(phost_sevp, arg2);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGE=
-T_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(safe_select(n, rfds_ptr, wfds_ptr, ef=
+ds_ptr, tvp));<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (!is_error(ret)) {<br>
+<br>
+We can simplify depth here by using an early return.<br>
+if (is_error(ret)) {<br>
+=C2=A0 return ret;<br>
+}<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rfd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(rfd_addr, &amp;rfds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (error !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_create(clk=
-id, phost_sevp, phtimer));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 phtimer =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (put_user(TIMER_MAGIC | =
-timer_index, arg3, int)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARG=
-ET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (wfd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(wfd_addr, &amp;wfds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (error !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (efd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(efd_addr, &amp;efds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (error !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+Same, reuse the macro defined above.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_tv_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D h2t_freebsd_timev=
+al(&amp;tv, target_tv_addr);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(error)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 return ret;<br>
 &gt; +}<br>
 &gt; +<br>
-&gt; +/* timer_delete(2) */<br>
-&gt; +static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 /* args: int timerid */<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
+&gt; +/* pselect(2) */<br>
+&gt; +static inline abi_long do_freebsd_pselect(CPUArchState *env, int n,<b=
 r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_delete(hti=
-mer));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_posix_timers[timerid] =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong rfd_addr, abi_ulong wfd_addr, a=
+bi_ulong efd_addr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_ulong ts_addr, abi_ulong set_addr)<br=
+>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 CPUState *cpu =3D env_cpu(env);<br>
+&gt; +=C2=A0 =C2=A0 TaskState *tstate =3D cpu-&gt;opaque;<br>
+&gt; +=C2=A0 =C2=A0 fd_set rfds, wfds, efds;<br>
+&gt; +=C2=A0 =C2=A0 fd_set *rfds_ptr, *wfds_ptr, *efds_ptr;<br>
+&gt; +=C2=A0 =C2=A0 sigset_t *set_ptr;<br>
+&gt; +=C2=A0 =C2=A0 struct timespec ts, *ts_ptr;<br>
+&gt; +=C2=A0 =C2=A0 void *p;<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret, error;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;rfds, &amp;rfds_p=
+tr, rfd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;wfds, &amp;wfds_p=
+tr, wfd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 ret =3D copy_from_user_fdset_ptr(&amp;efds, &amp;efds_p=
+tr, efd_addr, n);<br>
+&gt; +=C2=A0 =C2=A0 if (is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+<br>
+Same than above.<br></blockquote><div><br></div><div>I like these suggestio=
+ns, but due to lack of good regression tests, I&#39;m going to defer them</=
+div><div>since I know the code that&#39;s there works.</div><div><a href=3D=
+"https://github.com/qemu-bsd-user/qemu-bsd-user/issues/66">https://github.c=
+om/qemu-bsd-user/qemu-bsd-user/issues/66</a></div><div>memorializes the iss=
+ue.</div><div><br></div><div>Warner</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 /* Unlike select(), pselect() uses struct timespec inst=
+ead of timeval */<br>
+&gt; +=C2=A0 =C2=A0 if (ts_addr) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timespec(&amp;ts, ts_addr=
+)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts_ptr =3D &amp;ts;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts_ptr =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (set_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 p =3D lock_user(VERIFY_READ, set_addr, si=
+zeof(target_sigset_t), 1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_to_host_sigset(&amp;tstate-&gt;sig=
+suspend_mask, p);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(p, set_addr, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_ptr =3D &amp;tstate-&gt;sigsuspend_ma=
+sk;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_ptr =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(safe_pselect(n, rfds_ptr, wfds_ptr, e=
+fds_ptr, ts_ptr,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_ptr));<br>
+&gt; +=C2=A0 =C2=A0 if (ret !=3D -TARGET_ERESTART)=C2=A0 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tstate-&gt;in_sigsuspend =3D true;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 if (!is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (rfd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(rfd_addr, &amp;rfds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(error)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (wfd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(wfd_addr, &amp;wfds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(error)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (efd_addr !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error =3D copy_to_user_fdse=
+t(efd_addr, &amp;efds, n);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(error)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error;=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 return ret;<br>
 &gt; +}<br>
 &gt; +<br>
-&gt; +/* timer_settime(2) */<br>
-&gt; +static inline abi_long do_freebsd_ktimer_settime(abi_long arg1, abi_l=
-ong arg2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3, abi_long arg4)<br>
+&gt; +/* ppoll(2) */<br>
+&gt; +static inline abi_long do_freebsd_ppoll(CPUArchState *env, abi_long a=
+rg1,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg2, abi_ulong arg3, abi_ulong =
+arg4)<br>
 &gt; +{<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* args: int timerid, int flags, const struct itim=
-erspec *new_value,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* struct itimerspec * old_value<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 CPUState *cpu =3D env_cpu(env);<br>
+&gt; +=C2=A0 =C2=A0 TaskState *tstate =3D cpu-&gt;opaque;<br>
 &gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
+&gt; +=C2=A0 =C2=A0 nfds_t i, nfds =3D arg2;<br>
+&gt; +=C2=A0 =C2=A0 struct pollfd *pfd;<br>
+&gt; +=C2=A0 =C2=A0 struct target_pollfd *target_pfd;<br>
+&gt; +=C2=A0 =C2=A0 struct timespec ts, *ts_ptr;<br>
+&gt; +=C2=A0 =C2=A0 sigset_t *set_ptr;<br>
+&gt; +=C2=A0 =C2=A0 void *p;<br>
 &gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
-&gt; +=C2=A0 =C2=A0 } else if (arg3 =3D=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EINVAL;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct itimerspec hspec_new =3D {{0},}, h=
-spec_old =3D {{0},};<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_to_host_itimerspec(&amp;hspec_=
-new, arg3)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __sys_ktimer_settime(htimer=
-, arg2, &amp;hspec_new, &amp;hspec_old));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (arg4 &amp;&amp; host_to_target_itimer=
-spec(arg4, &amp;hspec_old)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 target_pfd =3D lock_user(VERIFY_WRITE, arg1,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(struct target_pollfd) * nfds, 1);<br>
+&gt; +=C2=A0 =C2=A0 if (!target_pfd) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
 &gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* timer_gettime(2) */<br>
-&gt; +static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1, abi_l=
-ong arg2)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 /* args: int timerid, struct itimerspec *curr_value */<=
+&gt; +=C2=A0 =C2=A0 pfd =3D alloca(sizeof(struct pollfd) * nfds);<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; nfds; i++) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pfd[i].fd =3D tswap32(target_pfd[i].fd);<=
 br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pfd[i].events =3D tswap16(target_pfd[i].e=
+vents);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
 &gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
-&gt; +=C2=A0 =C2=A0 } else if (!arg2) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 /* Unlike poll(), ppoll() uses struct timespec. */<br>
+&gt; +=C2=A0 =C2=A0 if (arg3) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timespec(&amp;ts, arg3)) =
+{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts_ptr =3D &amp;ts;<br>
 &gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct itimerspec hspec;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_gettime(ht=
-imer, &amp;hspec));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ts_ptr =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
 &gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (host_to_target_itimerspec(arg2, &amp;=
-hspec)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 if (arg4 !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 p =3D lock_user(VERIFY_READ, arg4, sizeof=
+(target_sigset_t), 1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_to_host_sigset(&amp;tstate-&gt;sig=
+suspend_mask, p);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(p, arg4, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_ptr =3D &amp;tstate-&gt;sigsuspend_ma=
+sk;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 set_ptr =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(ppoll(pfd, nfds, ts_ptr, set_ptr));<b=
+r>
+&gt; +=C2=A0 =C2=A0 if (ret !=3D -TARGET_ERESTART) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tstate-&gt;in_sigsuspend =3D true;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 if (!is_error(ret)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; nfds; i++) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_pfd[i].revents =3D t=
+swap16(pfd[i].revents);<br>
 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 unlock_user(target_pfd, arg1, sizeof(struct target_poll=
+fd) * nfds);<br>
+&gt; +<br>
 &gt; +=C2=A0 =C2=A0 return ret;<br>
 &gt; +}<br>
 &gt; +<br>
+&gt; +/* kqueue(2) */<br>
 &gt;=C2=A0 <br>
 &gt;=C2=A0 #endif /* FREEBSD_OS_TIME_H */<br>
 &gt; <br>
 <br>
 </blockquote></div></div>
 
---000000000000dc18f006591e11d2--
+--000000000000cd5f0e06591e2117--
 
