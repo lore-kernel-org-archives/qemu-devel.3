@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D16C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F625C5AD5A
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 19:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvKKm-0007P3-VF; Sat, 15 Aug 2026 15:46:24 -0400
+	id 1wvKKm-0007OD-94; Sat, 15 Aug 2026 15:46:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKY-0007It-8T
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:13 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1wvKKj-0007L0-NP
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:21 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvKKT-0008GW-1p
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:10 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2cc61541f8cso39476925ad.0
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:04 -0700 (PDT)
+ id 1wvKKi-0008M6-96
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 15:46:21 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ce98cb8165so20040305ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 12:46:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786823163; x=1787427963; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786823178; x=1787427978; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=s86Xnn5/dpDzfSJV6NAIFZxa3V37+nMyLlFJu9gce9M=;
- b=f4LpFnQCSi1qQUpQEKDkbaM61OtRPO9ZdVXjEQBe+ynxZqZiwtilfBN2o15vB+tP0x
- 0MVJgis6cEEbCO9RI1yvvftDhS68FbKYhVuJ7M0Kr4tV+/H9FaMPDKn+DgOHbpqX2hVn
- yEpDbrrUsCabq4TtCWxlO04K2JTBP+Dle4RlT7Y7t6gTvb86HmSW8b+43jjZhCyJCeth
- TVcTGR4swheUgjRwlrPmv9o8/VPpTEk80OVtrVq49xeXFqR+XQFbspoXVrOffKqOyqNr
- NMm7dPZA2RDyHL4Y+UkiekQAZHzEBE6VOVpDgtS3tBxVSV7GQDmoS7QYLEMkB2J9ZW+T
- XkLQ==
+ bh=A0aLKOztLw78X0OgZcDJCRDvYWBytKazqo7YQ2T67oc=;
+ b=QDtStq+FgM+3/MUf7syK6CrTyWckeeD/IZuLSXXzIsPBSihsZXODa7Vs1bDzB87WBV
+ O/Nc75y+4BnRQzoP1HnXEfh4IOONPFwWMcvkTzgtDU3nrEPudPovK2Dq3E3a+dVeg9vf
+ Tp9sXrwdV7il0gfZvinRXf++x+JvTMMX4rTZkulANBGgjgMj8g1DEhwr14CsvJ2/EwAh
+ f6xDAlZlVNr023ix84hjG+NtTLFqCzKNlm0L/7jILPAN4lQTrZt9P8zC1jm/xsW/wP4b
+ GFyB7y9i+j4zv02KlvNIJkX8b9dvbRgx+EFJpTXvqMtKFoIc4QMc6ElxCGl2S772fAah
+ zJ7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786823163; x=1787427963;
+ d=1e100.net; s=20251104; t=1786823178; x=1787427978;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=s86Xnn5/dpDzfSJV6NAIFZxa3V37+nMyLlFJu9gce9M=;
- b=RBbF9RKCPysbemuxFqUSUN8zerJq3231r62/rZQF4bFUmcmb5nTQJk/FK8YStf34/o
- 0nRvG2GQcpYAFdnX/hOK5yv25K3Em7NpedEN51Kiubc0yzIjGAB5nnZVtQzi93A1quPu
- EBhKFfON9GyGwkpNfo3Q2hDkrPxj0hUaPsDQiQ9Y11pDFQEhimel3d9cCTKuIX1zd7LU
- JM+09YVCupmxFPuFItt+PsuWLcrj3OLbnL0zzX4rxxBxQ/mfXE1hijV3oFXHZ4edVNHe
- MVMR4gG9Zv4g2FvKpAVplP/oyCPvpN5mCxU6zFsYHOxZoIqeR+hk/zfMhb0OKjzQFp7H
- ta8w==
-X-Gm-Message-State: AOJu0YyruEVSxP8kgvnYs2iHerWyAKyeNKog7T+c8i6r1/GOfW1PLRra
- CierTP2NymraYjfhQ+5w2ttYirsexpJJh4Dhy8UtcWe/4Vhj/u7tlFyq83vYY3vFKJ2jWV+f7Nn
- UcAgb
-X-Gm-Gg: AR+sD11V0t4rwOuT6kxJA9UktMquEwllHvrC6KGlC5s8FFf07IxWPZO1Y9YpSxaCveb
- hF01HMhrCnuq6KTpk8sB2LvpS8OU69KFTHueW+2SPw3Nm47OvR1ky2WXqDlhWXtiOtszdC0HNAU
- zLXKp37wMeTxSgRrHTckth2Vx5RVFZCa2s/aG9njtSYfMR67KRJ1GI3uOQ9Et5a4stBpR8fl1l+
- Dj8MufBJ2nvlQk5wRPz4LSbnoo1Uvcpp1iMgfFTnfHOe9xYT7HB2/yHocWpdKMlbMoX7ixUOoT4
- QjY+DkupcuwddQey19/8UDsG1fhHWk1HYbbBGDIm+ekRxa85Gt0uvNGiebTN8qdu9jFa7dTYRYt
- LdBZb7a2chBGzBtbb1uCmztmjItza4hNZA5OxW0tWXCHF84zGQQviK47fWY2OYtTnSINRKc3bzy
- 98HnhKMNRdXdMv2dqq2aM0CTjYqDMkyqTsEKQzx1+5s28iyfHuu1HeYLVZAWws36SqAJTvk9X49
- cvPVGDqNSZIP/r0fC5u
-X-Received: by 2002:a17:902:ce83:b0:2ca:e496:5f19 with SMTP id
- d9443c01a7336-2d3b0043318mr120672885ad.19.1786823163368; 
- Sat, 15 Aug 2026 12:46:03 -0700 (PDT)
+ bh=A0aLKOztLw78X0OgZcDJCRDvYWBytKazqo7YQ2T67oc=;
+ b=Hsx0Gk1/c+jS2Sxub8eb+1VhJnPbwr0aaqu8nJWwO/ZSqPaPFtCdIyH4Aryq+uYSZb
+ JHABS0aPq4xlFvP1JZGmTtHsxT/NbDMZHNdzs1krjwuRLINbK32NTUfOR+nmfsMIYRS7
+ nHebTw7oHmUe+PaukammCCCsrihTABFNhVrLfosDQqTVIfaTO0MouYFfMxdGhZn+lOId
+ NNmNHu4cZ9wQkb9W12+W5+9PDBKXlxq/NTmF0v6bhauoRcbfWihzaLlEW24wH/cXJFK9
+ 6VT+UhTqRENpsmO0ZD6QshV5Jp1FMmYy4qT9KeuAEi/P1y+cgSNsbzINxJAus/0KDEd6
+ HzLw==
+X-Gm-Message-State: AOJu0YxNlCcHbEPu3BOtvKUSvnl2lqm7vaUBklH5jm6ta0DCCDaRJ8Vo
+ wKVkSU+tILDGVXOQ543nL2PI50tGnaRcKDT3bvSzwbPjByW834WwmA63ouHhzBiThTktBp5M84A
+ dunUX
+X-Gm-Gg: AR+sD11z6d+wWVcfuVbs853NYX0gKG39iuOJKgvRw4RdPXw3GapWC9jw5lMMsz9qC79
+ rYRqx0Wfl5f4R0MPjr4fLtFavRSWBiIDUMAR0yVW3clSC8S96Tn+o2l1NsxNrUCaA/H5QhY8mAM
+ p5h0ccaZwTPnWFqJ6njuHkH5TUpCuRsJAjTY4H3uIJN5BZustRzgU0Hb1O7233p5LYvlcbpSWpb
+ mTNBIN859wj3KN+uc369oTCzNubb6FcReh6wPFPA98NFfd2F7JpR/bDY1B5YW1MApvjWbbrPTYc
+ eXrxqGfRycRaR/GPLNICb23S0BfywaEi1sMGoPpLJ4Yhm89lNuL8GxACjzosiPRgSgxP2CEgOjh
+ kEblx82k4M64u+GK/1oZvZdLYfl9RjRXOpwrDEZpGSVZpOKTDF3pW3JbZZH6lc0ho0vOQ1RBVJi
+ Lw/rO9vvfI3F6HF2r1B05laEeXtpJuhY2SvtL7diBXlcKeXHoagP45dYkBVDxIX5GW8JoTIHzwq
+ UFYdQjocgl63ykrkkdl
+X-Received: by 2002:a17:903:1b46:b0:2cf:7db9:e13e with SMTP id
+ d9443c01a7336-2d3afdaf598mr128004755ad.3.1786823178266; 
+ Sat, 15 Aug 2026 12:46:18 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.02
+ d9443c01a7336-2d3ae753ebcsm21179465ad.5.2026.08.15.12.46.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 12:46:03 -0700 (PDT)
+ Sat, 15 Aug 2026 12:46:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: frank.chang@sifive.com,
 	max.chou@sifive.com,
 	qemu-riscv@nongnu.org
-Subject: [PATCH 04/23] target/riscv: Split out vext_ldst_nf_host
-Date: Sat, 15 Aug 2026 12:45:29 -0700
-Message-ID: <20260815194549.1377505-5-richard.henderson@linaro.org>
+Subject: [PATCH 18/23] target/riscv: Build MemOpIdx to vext_ldff
+Date: Sat, 15 Aug 2026 12:45:43 -0700
+Message-ID: <20260815194549.1377505-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260815194549.1377505-1-richard.henderson@linaro.org>
 References: <20260815194549.1377505-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a helper that calls ldst_host for all NF vectors.
+Use mmu data passed in with VDATA.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/tcg/vector_helper.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ target/riscv/tcg/vector_helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 9c0cbcac16..661f1ab2f6 100644
+index 5ead4cd6fe..9c643f60ec 100644
 --- a/target/riscv/tcg/vector_helper.c
 +++ b/target/riscv/tcg/vector_helper.c
-@@ -329,6 +329,15 @@ static void vext_set_nf_elems_1s(void *vd, uint32_t i, uint32_t nf,
-     }
- }
- 
-+static void vext_ldst_nf_host(void *vd, void *host, uint32_t i, uint32_t nf,
-+                              uint32_t esz, uint32_t max_elems,
-+                              vext_ldst_elem_fn_host *ldst_host)
-+{
-+    for (uint32_t k = 0; k < nf; k++, host += esz) {
-+        ldst_host(vd, i + k * max_elems, host);
-+    }
-+}
-+
- static void vext_ldst_nf_tlb(CPURISCVState *env, void *vd, target_ulong addr,
-                              uint32_t i, uint32_t nf,
-                              uint32_t esz, uint32_t max_elems,
-@@ -413,7 +422,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-                   vext_ldst_elem_fn_host *ldst_host, uintptr_t ra)
- {
-     void *host;
--    int i, k, flags;
-+    int flags;
-     uint32_t esz = 1 << log2_esz;
-     uint32_t size = (elems * nf) << log2_esz;
+@@ -720,7 +720,8 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
      uint32_t msize = nf * esz;
-@@ -444,13 +453,9 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-             vext_continuous_ldst_host(env, ldst_host, vd, evl, env->vstart,
-                                       host, esz, is_load);
-         } else {
--            for (i = env->vstart; i < evl; ++i) {
--                k = 0;
--                while (k < nf) {
--                    ldst_host(vd, i + k * max_elems, host);
--                    host += esz;
--                    k++;
--                }
-+            for (uint32_t i = env->vstart; i < evl; ++i) {
-+                vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
-+                host += msize;
-             }
-         }
-         env->vstart += elems;
-@@ -459,7 +464,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-             vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart,
-                                    ra, esz, is_load);
-         } else {
--            for (i = env->vstart; i < evl; env->vstart = ++i) {
-+            for (uint32_t i = env->vstart; i < evl; env->vstart = ++i) {
-                 vext_ldst_nf_tlb(env, vd, addr, i, nf, esz,
-                                  max_elems, ldst_tlb, ra);
-                 addr += msize;
+     uint32_t vma = vext_vma(desc);
+     target_ulong addr, last, last_in_page, page_split, elems;
+-    int mmu_index = riscv_env_mmu_index(env, false);
++    MemOpIdx oi = vext_oi(desc, log2_esz);
++    int mmu_index = get_mmuidx(oi);
+     bool first_active;
+     int flags;
+     void *host;
 -- 
 2.43.0
 
