@@ -4,127 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A032C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 23:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE2EC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 23:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvNSn-0001xo-PL; Sat, 15 Aug 2026 19:06:53 -0400
+	id 1wvNYI-0003Gf-KN; Sat, 15 Aug 2026 19:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wvNSm-0001xY-SH
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:06:52 -0400
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNYE-0003G7-4m
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:12:30 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wvNSl-0006Ee-1G
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:06:52 -0400
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-51c149c5722so14668611cf.0
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 16:06:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786835209; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNYA-0007Cb-FF
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:12:29 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2d01663d816so19192115ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 16:12:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786835544; cv=none;
  d=google.com; s=arc-20260327;
- b=OGcrH3pikcDqTvnh0B8eqXXHnoqjfyGDefV6gTgfjAWywO/GV48wKiR1TnODIOCwiV
- j7TrRxUMY2yMkNVQxN/oLTDU/H+L57TW6pm9x6HTQAYiF2tt2Cfvh3suwuNHd/CsjKLQ
- b1yslq9eh/3I1pLH8vRyIV2MbUzikF0APxAwiTKpE6M/UU392h3NGYUap0xytRLMe0JZ
- veryqcCdzqykbjmZ13yhI43pPjzPqrsV1yPPoO4mOM9dj0jvJvJ+eRpi0K8FVsnMU5G5
- fgys4HVMcnol+dXmHfl9xh811GrgYjLTn72pqFgqCaHzcJXkaaa6zUm4nqRHpcmiuwy5
- aJuw==
+ b=phyCyLPQVKEZHNwxlSrrqPu5l3R8xQi0W/3l5IySna8be3Kk1oIZa/4RoJ6V8RoUEH
+ zfTt22UZn4hs4ZLkeV8uNCtQCR7TvfjKg1ts46odGze0LjVTBYohoZI8Ee6W9sOC2YQR
+ a/IJR1bHVmr6sdMQVIA/BLyQb2cSMiqgWTDJoR39E9jA0XDg6V7SdTA1KBTCuzLzrfUz
+ BYz5i706lFfOHVzH+dccb1Ub6PJ20Ao2HJjft2E49VU6yyu0ZFA2AVF3kzFrq7n/P8xQ
+ OgsaNjbQF3Grpc/qfFmTFGV/58jqcc5GSpliaCOWyH+c3lhvbuprjrv//9LWN9FrKU9V
+ 015g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ACamN608LlVcQYgc7KvwUxPHxL2uAxs3qXDqYIboXB4=;
- fh=xsRg86ZwBm0LGRQZIEC1R+b8QTOodxCX7/oSmDWEnOY=;
- b=Gk58P4jfJ3bm7gVux93V0DD8t9rH9d07ufacIwH4NKpJaBnuh101FQCWkJbrCJH5RI
- mLGNeRyeJ6tOUGR1muMFSIj3j0jbGhU2Nq+hp8vsooxuq5K0LKdAGMMkXpaB8qHZnfTq
- OwLhhNaW5W8p0hDf1ky++ZH61os3VJJRAp2/tX3r5Z3PCbbQJx2YuDjwS+bvb/V1BMw6
- F0VGWlkvB1Q236F4FWzv3pT05H/08367E4X7HBKou5jAmWHcsIhjBTamArCuHVOqTi8g
- lrvEHF9t92TzDVMFsYz6xxvUySLlpQDSwIRlnWRwDcnM5hPFYuBUkYRlwKcDadvgZGxC
- 5j+A==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
+ fh=tChWmEYzjNiE2nQuOWKQCmsYiesBT8hJmZNJMxAXoz0=;
+ b=DJdH7+EqGTmpcDFOHtw1C9dWhWt3jhW8tII/dVUSrAehseOlVdNdN+wX4gmy/DA6g/
+ PAd7HBlUprRq8j9n4vht70sCt4Pzm5H6d9xE+o43H+geQOq6HGBgCgmUlhOM+EQgQXJR
+ 19kCMHuibJWC5DqQcelY1UNXLGPZrwqU9o/jeCfwnXR8kGtt40Wfboq1/Is3pzQjC2SJ
+ pUD6tNwfA2vsKDdaIaGx0GAs1jXL7q4dQcLpPH7iEIT7A8gwMYzR5KtFhe4yh7hQcybD
+ Rjn9+Mr7D5ixnbTwUhHFD1xMQt7WiV8gUI5vDpqzwr7BXkeRLdKFp/ZGHbW53C5Yqpeq
+ 6S9w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786835209; x=1787440009; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ACamN608LlVcQYgc7KvwUxPHxL2uAxs3qXDqYIboXB4=;
- b=PQ6QfLnhuyiG8yjPMC3Gl3bGnkwkAq7oRPnhCFDJhhMl7BpXCeVp7OJRk3N1KBwFlB
- g27CBrcDXBxQnyfWNOklAqbJQGYVK/wXDAzBYybfB05bixcsvmkErxZFbPjn5jpMvRoW
- T83YJPrVBAs4GFxBazkRkT2TDXnQjsazK1kBXRuZvwGbF0MT+gaS3TiAWL2q0PoM5Y1j
- NKRz4dmufI5LauBDAfcI5ciKDwoIrvA9Mz1NiLfmp/LSj9SWnn/BGAy5mZVqUeMYLPqW
- 8KQBi8zbbvPyenLnF3IXsM0LzilaE9IM2Wl9rg5zVAxeGLuTiFw5l4hFdG4UbFbHrHlG
- OeZA==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1786835544; x=1787440344;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
+ b=P0ml0UAZ20kZJF0y8TfC9UsNP5p6QjefAi93EAfsiZJPIgBMA5KulFub09nrKo3+QC
+ JKCRmhQVkIEF3xybl6D8r1zr7TRrXFqh6JrEH4hW78PZsgvngGzFa1DckF4d76bhEr3U
+ YGkmw76FmAFMJPWgevT12CiekdXRnbZyV96ICZJNV9gVajw6D/aG9o7+AQV7fUC9H6DY
+ F1hrK8DaeDkzflW9b36N6Mqm/+i5dZzdlmezqZDVlmNaQebPC276kn1vj/oGWnK8vlt/
+ LAbknT03hTqddJUuZVg2CaetjVAz/fhXsyMiptLks66un5w3jKXIsHYPyWwSfXyVaEaS
+ 6ayA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786835209; x=1787440009;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ACamN608LlVcQYgc7KvwUxPHxL2uAxs3qXDqYIboXB4=;
- b=Zd7m9Ko0GrkCuIpWeS5ZiB9BKnamd7czXrP5YrGf9xcd6Y1eqZQ0j6HYK2/r00zI0G
- I84I4nYFMq88f8oQ8xjWhaiZNskpMOKjoe8FC4fq+4J1XIbJnr0ThxumDbrIO8pnVkW3
- tGsDLCANtycDzj/RMIo+86VisQaNaAoUnqLbOEt7uYYaPCbBir9JSd54yp4NaeREq8YN
- PBnYYIU/NIHMcebIxXW79W0s9+n22j77zxNATvCtAeNmsuANsVNbUE6bH3boS9EokzgH
- DOfsUQ3ObYL9B3ZVr3j/un7I5JhmfkClp+6oCaxVvwjpLikKVKAhBfTjiElcMynKnNyb
- utrQ==
-X-Gm-Message-State: AOJu0YxrtjxD+6YrJCF6ImJ24PUCrLG5KEA56x9uHCd8nz/Z8TIhzAEN
- 4nCIbSbxex4MCXn4K1RXdPH3Ph4JtYTef6Ea/Spe0vVcA3srcHKGkD9KcIdTjhjw4bUqJhEEiSz
- wXFFjdhsTg7kYow0tEwXKJpTdEhRFcCc=
-X-Gm-Gg: AR+sD13yE4/rAf2oBb9icEuKLIOQKDEbHUcfk3pgsx2tG2hu368eqiidRkcHfxpf8df
- z24oBTNV5BWIN+4IlOSuWJQs0Vu/DUC4pQJ5eY5xN6ZCDF2MkSVFAT3qlWsalsKlBpL60x2bA5A
- CvCHV6AIFqttcDKdns6RTrwGzxSqs0ek5LmBMAG+rc7ruQpv1u3p1M9q9GKRx1TibtGKZesZFTz
- 8m8rH2K2XdjBpoNT4Knnqyp/Ie8Sin6IHFfpyVWkYyXouudM8FLZ9kTL9T7mCBMm08U7BkrWb4o
- ljH6Bd8OSMXVXNKE4zFVTTqRvkrdbDFwkJlxl/VqoLr/Qj/7RR0/12FYh94wZaS88k3pU45tkQ/
- xhZE=
-X-Received: by 2002:a05:622a:5c08:b0:528:ce0:e9f8 with SMTP id
- d75a77b69052e-52d74a35420mr251080611cf.3.1786835209204; Sat, 15 Aug 2026
- 16:06:49 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786835544; x=1787440344;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gXFetRX5mXcySIeSgSjr6Yy9ds0rVhf996YlmO9zgFw=;
+ b=gP28laOVApFNNWyk88T1R/agj7Owgzfyk69GnQTR2g0JjoUhn0ICQvv0QHpPqMPdtM
+ 80d+uaQpNAXHK3Wtl3SAz8EPcOHsSbUK1qEPdoeggnPDs8zihDFg3khk2OeRxvflKnrk
+ GLcEYsnTjMwGE5RAIl6dFIVUlljewGNTpxvyk7S8oGcvRRrQKShIsXq1Z7UisCq4VXGC
+ ZhINaGOCwNlf1fuSULgQDj5293Dk5wkTleOWZWzmBVBFCTGaY+/yHswdJwFbI0pKXIPV
+ XQZVt4HSYGTonoRaXZSpLHLaAspGR0NTulbvwPGk1W08J0dUVeGakzWqV1Eae8Qrs3QM
+ JOBQ==
+X-Gm-Message-State: AOJu0YyP39JkWelaMVDqF/dvNnoP6K7j5GCJijmOEK4tkDVHxhlakJiE
+ G+BMmM9Rcl44zQxjR/fOWPkkc6/Y5yniTkhahvirC7U9uMk1WqFQ8QyjbqPbsNnNyx4HhcHH9ol
+ lDl9j6ddwaj0NFn4ZNoNfMKyRTqyH2HqIooKDoCWpMw==
+X-Gm-Gg: AR+sD11Xj52a+GUQ/eJzoNNA+Bep/zDcte9ouytow3mCwUs0hL8x5QqFn3TWRuFEuEZ
+ 9EJqpTRT+TCPJ/53aNary/45X40FgWcSk2Z2lxOau9T7Ir3BDhSOZZtRofE3r4dMvy1rPrnjTJ+
+ iHLFw5ZtxUKMCQErmogomuN5IRGW4NGfRKdLpFmMFXPBI1R12chXlEC6S3c5yrzq+knXZCyy8RY
+ n/IOMKDoQnHhPXg0XhPWOs6Bnnc6ls4kvhAqxcSC94MtMLbDvXatjHP2MtMRK8EX7yFoIhUmtjx
+ uyueZBtFB2HEEw4Kj9tGabcdrRKnrmb0qIWLUJeG3ivb
+X-Received: by 2002:a17:902:d592:b0:2c2:62ee:5a0d with SMTP id
+ d9443c01a7336-2d3b0d5cec9mr187307545ad.14.1786835543787; Sat, 15 Aug 2026
+ 16:12:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260723-vhost-user-isolated-memory-v1-0-6b97c439eb28@gmail.com>
- <20260723-vhost-user-isolated-memory-v1-13-6b97c439eb28@gmail.com>
- <13594665-16ec-47e5-9075-f7bd5552b0a3@redhat.com>
- <CA+spn3r7+pEb7e6=8JixTpk7M3rNhWv=JkGZchj2-3FK9ZQGYQ@mail.gmail.com>
- <c549061c-8e9e-48a6-a149-2da743154c10@redhat.com>
-In-Reply-To: <c549061c-8e9e-48a6-a149-2da743154c10@redhat.com>
-From: Connor Kite <connorkite@gmail.com>
-Date: Sat, 15 Aug 2026 16:06:37 -0700
-X-Gm-Features: AUfX_mxgB49cuSbTwPK00Nmro3M7CZjdoHhWzzFGXSUGQymC0ePi45vIit5flQA
-Message-ID: <CA+spn3rcK7c5xoCPP_t+M96UmZUWCaNDpNno-L6q9AoOoddw5w@mail.gmail.com>
-Subject: Re: [PATCH RFC 13/15] hw/virtio/vhost-user: add shadow virtqueues and
- eventfd intercepts
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x829.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
+ <20260518-misc-2026q2-v2-18-6c16fe448301@bsdimp.com>
+ <efaa34ff-ffc2-4c70-b435-bd5d3d041b5c@oss.qualcomm.com>
+In-Reply-To: <efaa34ff-ffc2-4c70-b435-bd5d3d041b5c@oss.qualcomm.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Sat, 15 Aug 2026 17:12:12 -0600
+X-Gm-Features: AUfX_mw8UCh6pMjVM6BPduMApAQr4xEagQPv9XaE9eg2UVktJhu1o-GpmFNs8LE
+Message-ID: <CANCZdfpqwkUCLVmW3aQoHa1wuhSS6DKpRYf7k7mR1H98Cgax2g@mail.gmail.com>
+Subject: Re: [PATCH v2 18/37] bsd-user: Add utimes, futimes, and ktimer
+ functions to os-time.h
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
+ Stacey Son <sson@freebsd.org>,
+ =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000dc18f006591e11d2"
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,90 +117,603 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 11, 2026 at 4:42=E2=80=AFAM Hanna Czenczek <hreitz@redhat.com> =
-wrote:
->
-> On 11.08.26 04:32, Connor Kite wrote:
-> > On Mon, Aug 3, 2026 at 6:52=E2=80=AFAM Hanna Czenczek <hreitz@redhat.co=
-m> wrote:
-> >>> +    struct vhost_user *u =3D dev->opaque;
-> >>> +    int svq_idx =3D file->index - dev->vq_index;
-> >>> +    if (u->user->memory_isolation) {
-> >>> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(u->shadow_vq=
-s,
-> >>> +                                                      svq_idx);
-> >> Bounds checking via `vhost_user_get_vq_index()` would be nice. (Same b=
-elow.)
-> >>
-> > Adding the bounds checking outside of the memory-isolation only code pa=
-th, since
-> > file->index wasn't being checked previously.
+--000000000000dc18f006591e11d2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, May 22, 2026 at 5:38=E2=80=AFPM Pierrick Bouvier <
+pierrick.bouvier@oss.qualcomm.com> wrote:
+
+> On 5/18/2026 2:27 PM, Warner Losh wrote:
+> > Add time-related system call shims: utimes, lutimes, futimes,
+> > futimesat, ktimer_create, ktimer_delete, ktimer_settime, and
+> > ktimer_gettime.
 > >
-> >>> +        if (svq->hdev_kick.initialized =3D=3D false) {
-> >>> +            int r =3D event_notifier_init(&svq->hdev_kick, 0);
-> >>> +            if (r) {
-> >>> +                error_report("Failed to create kick event notifier")=
-;
-> >>> +                return r;
-> >>> +            }
-> >>> +        }
-> >>> +
-> >>> +        file->fd =3D event_notifier_get_fd(&svq->hdev_kick);
-> >> What if `file->fd` was -1, i.e. `VHOST_FILE_UNBIND`? Should we put a
-> >> real FD here then or just continue with -1?
-> >>
-> > Good point!  I think we need to propagate the -1 to the backend device,=
- and
-> > run event_notifier_cleanup on the existing svq->hdev_kick.
+> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> > Signed-off-by: Mika=C3=ABl Urankar <mikael.urankar@gmail.com>
+> > Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+> > Signed-off-by: Warner Losh <imp@bsdimp.com>
+> > Assisted-by: Claude Opus 4.6 (1M context)
+> > ---
+> >  bsd-user/freebsd/os-time.h | 210
+> +++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 210 insertions(+)
 > >
-> > ...
+> > diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
+> > index 16b71e6234..05fa043442 100644
+> > --- a/bsd-user/freebsd/os-time.h
+> > +++ b/bsd-user/freebsd/os-time.h
+> > @@ -217,5 +217,215 @@ static inline abi_long
+> do_freebsd_ntp_gettime(abi_ulong target_ntv_addr)
+> >  }
 > >
-> >>> +
-> >>> +        if (svq->hdev_call.initialized =3D=3D false) {
-> >>> +            int r =3D event_notifier_init(&svq->hdev_call, 0);
-> >> Do we need to check if the call event FD is already active?
-> >>
-> > Do you mean, do we need to call event_notifier_test_and_clear to see if=
- it's
-> > been set and potentially run the call handler at this stage?
+> >
+> > +/* utimes(2) */
+> > +static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2)
+> > +{
+> > +    abi_long ret;
+> > +    void *p;
+> > +    struct timeval *tvp, tv[2];
+> > +
+> > +    if (arg2 !=3D 0) {
+> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
+> > +                t2h_freebsd_timeval(&tv[1], arg2 +
+> > +                        sizeof(struct target_freebsd_timeval))) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        tvp =3D tv;
+> > +    } else {
+> > +        tvp =3D NULL;
+> > +    }
+> > +    p =3D lock_user_string(arg1);
+> > +    if (p =3D=3D NULL) {
+> > +        return -TARGET_EFAULT;
+> > +    }
+> > +    ret =3D get_errno(utimes(p, tvp));
+> > +    unlock_user(p, arg1, 0);
+> > +
+> > +    return ret;
+> > +}
+> > +
+> > +/* lutimes(2) */
+> > +static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg2=
+)
+> > +{
+> > +    abi_long ret;
+> > +    void *p;
+> > +    struct timeval *tvp, tv[2];
+> > +
+> > +    if (arg2 !=3D 0) {
+> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
+> > +                t2h_freebsd_timeval(&tv[1], arg2 +
+> > +                        sizeof(struct target_freebsd_timeval))) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        tvp =3D tv;
+> > +    } else {
+> > +        tvp =3D NULL;
+> > +    }
+> > +    p =3D lock_user_string(arg1);
+> > +    if (p =3D=3D NULL) {
+> > +        return -TARGET_EFAULT;
+> > +    }
+> > +    ret =3D get_errno(lutimes(p, tvp));
+> > +    unlock_user(p, arg1, 0);
+> > +
+> > +    return ret;
+> > +}
+> > +
+> > +/* futimes(2) */
+> > +static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg2=
+)
+> > +{
+> > +    struct timeval *tvp, tv[2];
+> > +
+> > +    if (arg2 !=3D 0) {
+> > +        if (t2h_freebsd_timeval(&tv[0], arg2) ||
+> > +                t2h_freebsd_timeval(&tv[1], arg2 +
+> > +                        sizeof(struct target_freebsd_timeval))) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        tvp =3D tv;
+> > +    } else {
+> > +        tvp =3D NULL;
+> > +    }
+> > +
+> > +    return get_errno(futimes(arg1, tvp));
+> > +}
+> > +
+> > +/* futimesat(2) */
+> > +static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long
+> arg2,
+> > +        abi_long arg3)
+> > +{
+> > +    abi_long ret;
+> > +    void *p;
+> > +    struct timeval *tvp, tv[2];
+> > +
+> > +    if (arg3 !=3D 0) {
+> > +        if (t2h_freebsd_timeval(&tv[0], arg3) ||
+> > +                t2h_freebsd_timeval(&tv[1], arg3 +
+> > +                        sizeof(struct target_freebsd_timeval))) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        tvp =3D tv;
+> > +    } else {
+> > +        tvp =3D NULL;
+> > +    }
+> > +
+> > +    p =3D lock_user_string(arg2);
+> > +    if (p =3D=3D NULL) {
+> > +        return -TARGET_EFAULT;
+> > +    }
+> > +    ret =3D get_errno(futimesat(arg1, p, tvp));
+> > +    unlock_user(p, arg2, 0);
+> > +
+> > +    return ret;
+> > +}
+> > +
 >
-> Yes, that is what I=E2=80=99m wondering. `vhost_svq_set_svq_kick_fd()` ha=
-s this
-> comment:
->
->  > event_notifier_set_handler already checks for guest's notifications if
->  > they arrive at the new file descriptor in the switch, so there is no
->  > need to explicitly check for them.
->
-> So it sounds like there is some mechanism that will ensure that when the
-> kick FD is set on a shadow virtqueue, it is checked for activity
-> (notification), and if it is active, this is=E2=80=A6 handled? Which I su=
-ppose
-> means the installed handler will be called.
->
-> But it=E2=80=99s entirely possible I misunderstand something because the =
-same
-> code in `vhost_svq_set_svq_kick_fd()` also just calls
-> `event_notifier_set(svq_kick)`, so=E2=80=A6 kinda always emulates a kick,=
- I assume?
->
-> In any case, there seems to be worry about pending checking kicks from
-> the guest in this switch, and so I wonder if the same needs to be done
-> for the call FD.
->
-> Hanna
+> The functions above are quite duplicated.
+> We could factor the first part at least, setting tvp.
+> The lock_user_string part can be replaced with LOCK_PATH.
 >
 
-I haven't noticed any difference from setting the notifier here, and
-on further thought,
-I think I know why.  I do not believe a call notifier FD is ever sent
-to the back-end without
-getting intercepted in vhost_user_set_vring_call, and once
-svq->hdev_call is initialized,
-it should never change unless the device is reset.  Since
-svq->hdev_call is the only
-notifier shared with the back-end, it should never miss notifications
-from the device.
+This is a good suggestion. I hesitated to implement it when I last had time
+to work
+on bsd-user upstreaming. I've created
+https://github.com/qemu-bsd-user/qemu-bsd-user/issues/65 since I'd like to
+defer
+changes here. There's no good regression tests for these functions and I'd
+like
+to do the refactoring when I have the time to focus on ensuring they
+continue to
+be correct. In all the rebasing, I've somehow created a hang that I can't
+recreate
+in a small test case sometime during the last several years. I'd like to
+get what
+we've been using upstreamed and then focus on improving the code.
 
-Connor
+Warner
+
+
+> > +/* timer_create(2) */
+> > +static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_lon=
+g
+> arg2,
+> > +        abi_long arg3)
+> > +{
+> > +    /* args: clockid_t clockid, struct sigevent *sevp, int *timerid */
+> > +    abi_long ret;
+> > +
+> > +    struct sigevent host_sevp =3D { 0 }, *phost_sevp =3D NULL;
+> > +
+> > +    int clkid =3D arg1;
+> > +    int timer_index =3D next_free_host_timer();
+> > +
+> > +    if (timer_index < 0) {
+> > +        ret =3D -TARGET_EAGAIN;
+> > +    } else {
+> > +        int *phtimer =3D g_posix_timers  + timer_index;
+> > +
+> > +        if (arg2) {
+> > +            phost_sevp =3D &host_sevp;
+> > +            ret =3D target_to_host_sigevent(phost_sevp, arg2);
+> > +            if (ret !=3D 0) {
+> > +                return -TARGET_EFAULT;
+> > +            }
+> > +        }
+> > +
+> > +        ret =3D get_errno(__sys_ktimer_create(clkid, phost_sevp,
+> phtimer));
+> > +        if (ret) {
+> > +            phtimer =3D NULL;
+> > +        } else {
+> > +            if (put_user(TIMER_MAGIC | timer_index, arg3, int)) {
+> > +                ret =3D -TARGET_EFAULT;
+> > +            }
+> > +        }
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +/* timer_delete(2) */
+> > +static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)
+> > +{
+> > +    /* args: int timerid */
+> > +    abi_long ret;
+> > +    int timerid =3D get_timer_id(arg1);
+> > +
+> > +    if (timerid < 0) {
+> > +        ret =3D timerid;
+> > +    } else {
+> > +        int htimer =3D g_posix_timers[timerid];
+> > +        ret =3D get_errno(__sys_ktimer_delete(htimer));
+> > +        g_posix_timers[timerid] =3D 0;
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +/* timer_settime(2) */
+> > +static inline abi_long do_freebsd_ktimer_settime(abi_long arg1,
+> abi_long arg2,
+> > +        abi_long arg3, abi_long arg4)
+> > +{
+> > +    /*
+> > +     * args: int timerid, int flags, const struct itimerspec *new_valu=
+e,
+> > +     * struct itimerspec * old_value
+> > +     */
+> > +    abi_long ret;
+> > +    int timerid =3D get_timer_id(arg1);
+> > +
+> > +    if (timerid < 0) {
+> > +        ret =3D timerid;
+> > +    } else if (arg3 =3D=3D 0) {
+> > +        ret =3D -TARGET_EINVAL;
+> > +    } else {
+> > +        int htimer =3D g_posix_timers[timerid];
+> > +        struct itimerspec hspec_new =3D {{0},}, hspec_old =3D {{0},};
+> > +
+> > +        if (target_to_host_itimerspec(&hspec_new, arg3)) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +        ret =3D get_errno(
+> > +            __sys_ktimer_settime(htimer, arg2, &hspec_new, &hspec_old)=
+);
+> > +        if (arg4 && host_to_target_itimerspec(arg4, &hspec_old)) {
+> > +            return -TARGET_EFAULT;
+> > +        }
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +/* timer_gettime(2) */
+> > +static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1,
+> abi_long arg2)
+> > +{
+> > +    /* args: int timerid, struct itimerspec *curr_value */
+> > +    abi_long ret;
+> > +    int timerid =3D get_timer_id(arg1);
+> > +
+> > +    if (timerid < 0) {
+> > +        ret =3D timerid;
+> > +    } else if (!arg2) {
+> > +        ret =3D -TARGET_EFAULT;
+> > +    } else {
+> > +        int htimer =3D g_posix_timers[timerid];
+> > +        struct itimerspec hspec;
+> > +        ret =3D get_errno(__sys_ktimer_gettime(htimer, &hspec));
+> > +
+> > +        if (host_to_target_itimerspec(arg2, &hspec)) {
+> > +            ret =3D -TARGET_EFAULT;
+> > +        }
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> >
+> >  #endif /* FREEBSD_OS_TIME_H */
+> >
+>
+>
+
+--000000000000dc18f006591e11d2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 22,=
+ 2026 at 5:38=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bo=
+uvier@oss.qualcomm.com">pierrick.bouvier@oss.qualcomm.com</a>&gt; wrote:<br=
+></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex">On 5/18/2026 2:27 =
+PM, Warner Losh wrote:<br>
+&gt; Add time-related system call shims: utimes, lutimes, futimes,<br>
+&gt; futimesat, ktimer_create, ktimer_delete, ktimer_settime, and<br>
+&gt; ktimer_gettime.<br>
+&gt; <br>
+&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Mika=C3=ABl Urankar &lt;<a href=3D"mailto:mikael.uranka=
+r@gmail.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
+&gt; Signed-off-by: Kyle Evans &lt;kevans@FreeBSD.org&gt;<br>
+&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
+t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
+&gt; Assisted-by: Claude Opus 4.6 (1M context)<br>
+&gt; ---<br>
+&gt;=C2=A0 bsd-user/freebsd/os-time.h | 210 +++++++++++++++++++++++++++++++=
+++++++++++++++<br>
+&gt;=C2=A0 1 file changed, 210 insertions(+)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h<b=
+r>
+&gt; index 16b71e6234..05fa043442 100644<br>
+&gt; --- a/bsd-user/freebsd/os-time.h<br>
+&gt; +++ b/bsd-user/freebsd/os-time.h<br>
+&gt; @@ -217,5 +217,215 @@ static inline abi_long do_freebsd_ntp_gettime(ab=
+i_ulong target_ntv_addr)<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 <br>
+&gt; +/* utimes(2) */<br>
+&gt; +static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2=
+)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 void *p;<br>
+&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
+ ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
+imeval(&amp;tv[1], arg2 +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg1);<br>
+&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(utimes(p, tvp));<br>
+&gt; +=C2=A0 =C2=A0 unlock_user(p, arg1, 0);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* lutimes(2) */<br>
+&gt; +static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg=
+2)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 void *p;<br>
+&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
+ ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
+imeval(&amp;tv[1], arg2 +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg1);<br>
+&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(lutimes(p, tvp));<br>
+&gt; +=C2=A0 =C2=A0 unlock_user(p, arg1, 0);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* futimes(2) */<br>
+&gt; +static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg=
+2)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (arg2 !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg2)=
+ ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
+imeval(&amp;tv[1], arg2 +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return get_errno(futimes(arg1, tvp));<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* futimesat(2) */<br>
+&gt; +static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long a=
+rg2,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 void *p;<br>
+&gt; +=C2=A0 =C2=A0 struct timeval *tvp, tv[2];<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (arg3 !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timeval(&amp;tv[0], arg3)=
+ ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t2h_freebsd_t=
+imeval(&amp;tv[1], arg3 +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 sizeof(struct target_freebsd_timeval))) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D tv;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tvp =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 p =3D lock_user_string(arg2);<br>
+&gt; +=C2=A0 =C2=A0 if (p =3D=3D NULL) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 ret =3D get_errno(futimesat(arg1, p, tvp));<br>
+&gt; +=C2=A0 =C2=A0 unlock_user(p, arg2, 0);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+<br>
+The functions above are quite duplicated.<br>
+We could factor the first part at least, setting tvp.<br>
+The lock_user_string part can be replaced with LOCK_PATH.<br></blockquote><=
+div><br></div><div>This is a good suggestion. I hesitated to implement it w=
+hen I last had time to work</div><div>on bsd-user upstreaming.=C2=A0<span s=
+tyle=3D"background-color:transparent">I&#39;ve created</span></div><div><sp=
+an style=3D"background-color:transparent"><a href=3D"https://github.com/qem=
+u-bsd-user/qemu-bsd-user/issues/65">https://github.com/qemu-bsd-user/qemu-b=
+sd-user/issues/65</a> since I&#39;d like to defer</span></div><div><span st=
+yle=3D"background-color:transparent">changes=C2=A0</span><span style=3D"bac=
+kground-color:transparent">here. There&#39;s no good regression tests for t=
+hese functions and I&#39;d like</span></div><div><span style=3D"background-=
+color:transparent">to do the refactoring when I have the time to focus on e=
+nsuring they continue to</span></div><div><span style=3D"background-color:t=
+ransparent">be correct. In all the rebasing, I&#39;ve somehow created a han=
+g that I can&#39;t recreate</span></div><div><span style=3D"background-colo=
+r:transparent">in a small test case sometime during the last several years.=
+ I&#39;d like to get what</span></div><div><span style=3D"background-color:=
+transparent">we&#39;ve been using upstreamed and then focus on improving th=
+e code.</span></div><div><span style=3D"background-color:transparent"><br><=
+/span></div><div><span style=3D"background-color:transparent">Warner</span>=
+</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +/* timer_create(2) */<br>
+&gt; +static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_lo=
+ng arg2,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 /* args: clockid_t clockid, struct sigevent *sevp, int =
+*timerid */<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 struct sigevent host_sevp =3D { 0 }, *phost_sevp =3D NU=
+LL;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 int clkid =3D arg1;<br>
+&gt; +=C2=A0 =C2=A0 int timer_index =3D next_free_host_timer();<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (timer_index &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EAGAIN;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int *phtimer =3D g_posix_timers=C2=A0 + t=
+imer_index;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (arg2) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 phost_sevp =3D &amp;host_se=
+vp;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D target_to_host_sige=
+vent(phost_sevp, arg2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret !=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGE=
+T_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_create(clk=
+id, phost_sevp, phtimer));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 phtimer =3D NULL;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (put_user(TIMER_MAGIC | =
+timer_index, arg3, int)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARG=
+ET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* timer_delete(2) */<br>
+&gt; +static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 /* args: int timerid */<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_delete(hti=
+mer));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_posix_timers[timerid] =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* timer_settime(2) */<br>
+&gt; +static inline abi_long do_freebsd_ktimer_settime(abi_long arg1, abi_l=
+ong arg2,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3, abi_long arg4)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* args: int timerid, int flags, const struct itim=
+erspec *new_value,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* struct itimerspec * old_value<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
+&gt; +=C2=A0 =C2=A0 } else if (arg3 =3D=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EINVAL;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct itimerspec hspec_new =3D {{0},}, h=
+spec_old =3D {{0},};<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_to_host_itimerspec(&amp;hspec_=
+new, arg3)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __sys_ktimer_settime(htimer=
+, arg2, &amp;hspec_new, &amp;hspec_old));<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (arg4 &amp;&amp; host_to_target_itimer=
+spec(arg4, &amp;hspec_old)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/* timer_gettime(2) */<br>
+&gt; +static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1, abi_l=
+ong arg2)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 /* args: int timerid, struct itimerspec *curr_value */<=
+br>
+&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
+&gt; +=C2=A0 =C2=A0 int timerid =3D get_timer_id(arg1);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (timerid &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D timerid;<br>
+&gt; +=C2=A0 =C2=A0 } else if (!arg2) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 int htimer =3D g_posix_timers[timerid];<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct itimerspec hspec;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(__sys_ktimer_gettime(ht=
+imer, &amp;hspec));<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (host_to_target_itimerspec(arg2, &amp;=
+hspec)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EFAULT;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 #endif /* FREEBSD_OS_TIME_H */<br>
+&gt; <br>
+<br>
+</blockquote></div></div>
+
+--000000000000dc18f006591e11d2--
 
