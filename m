@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD5CC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 20:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C141CC5DF67
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 20:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvL8q-0008QF-OU; Sat, 15 Aug 2026 16:38:08 -0400
+	id 1wvL8T-00084k-L3; Sat, 15 Aug 2026 16:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvL8o-0008NR-Hn
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:38:06 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wvL8S-000839-1l
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:37:44 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvL8f-0008Su-2i
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:38:06 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-38101f85591so2947443a91.1
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:37:56 -0700 (PDT)
+ id 1wvL8P-0008AH-1I
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:37:43 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso3293658a91.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:37:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786826276; x=1787431076; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sNSRw7T5qMfkeTeB0OeailLl5LcE+oeHtK4hx8s+Ock=;
- b=htzb+QWS8V2oJANVr3KCprmNAOB8TJow+kaI+IMqKUGYZXZrWLtK1f4jTrxgZQf2UA
- oKTwCCLi/KXET1en3Hc+uaq4DeppFsf1ci/Wd6SCL02g+iRRzKNQiisEPV03+Q7RkDqE
- U1cbWgO0H1V+bNhqSWPekLH/mZMxrknNDeHicxEpajyPEbrVMfu7D4dGzCDs/fATD7Oi
- PYC+480trzHTg6MvcgwviIeawBvLZj4wdd0iTlPig0+3NP/is8Ts8aMrk43M2Wq4/Fxh
- qhaqnp0cHHmgslL6zlcwZxZ8hYnqnL7L94HrJR97g5hWAlPNevCLMQ7VkU+SEpFKfNwc
- EiBw==
+ d=linaro.org; s=google; t=1786826259; x=1787431059; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=p1tuew/8yZ3WUepEtCLWv5OHi9k/pwAQkc4Skx4oIwo=;
+ b=LNzjA/LnIYLGqFRYhQh5V2Qe3RnNvKD1fu/1bp0yoaaGjapKvB3Z+s89K6y58rHEQg
+ HVAUdRAfaoHbaSQIyvvKWWyg7AMB7zmBW6+rgUsZvgL9t5zAofrc6nA5z/fOftvL3foU
+ NsIBhFIsqdJytK8hb+8A6HXK5liyz2AT08scQNwuC+aTzgcH4gkq1yfyN5QdkwXe3S4V
+ UcGZVmDCkhpFXr9NzG8ed12rI+IDZFn4W+IOwmrIXXmvyYKqzdyy+q8Q+WgGDD6q5Ofx
+ XnUZyz6smiR9RdelNEVDx3UzFkX0sqxTkF42t+fH2xj5qPjd+WbmkUbF7EISbUfNeNDS
+ qWeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786826276; x=1787431076;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sNSRw7T5qMfkeTeB0OeailLl5LcE+oeHtK4hx8s+Ock=;
- b=XX4W1AbTrySU5szAgpD/dgrl6xZqRsEP/s9U5wZEbYt8nVnwRvGpTIvnQL6NyIg1H+
- hnZdYBQVmM6iANFOz7FOHBQvDLA0S3swl7AuxQS9tKpW0ba4XXpd/l1719UeHfUgnafO
- Gari/XzDDpdW+Eso+KEQfwEboed9yFZolnZio5jtBkzF0GgZmcnsx6C/bXKXuFaVf7We
- 7qtfmEQEE+tpHScVL8eom+D3w4QRLuGKkP8fTMvn6Sn8gdCdeuOatldf67DpVKkKHBxS
- 27BP6ahwYWUPb84a9xbT/AdtptLOQ3+K72wDwUthVm+sBrw6col8mThJuvK7HvcanymL
- NMrQ==
-X-Gm-Message-State: AOJu0Yz76zHIH8WQs3lSvwKeOa0ShvyRwbVOjuLcAEDRR+gR8bwTy5GA
- UYbD/U67PgfgU8yLdqD3K5yoc/WmdXeoEKBHU7o53DL+/Z4/3C1eIDdoICn5YH/eGPt+OWqUhq6
- bgkyO
-X-Gm-Gg: AR+sD13U7fqs1QrIAgk0iX6zdMfzif7TWGVEqXKfXjChDOiTUkcyJ+ZJ2w8ckvFWIi4
- 0a5ZA91jNvbWmS5HmCX3/WiJ1AfE9PAkcyPQPjh2bHwQunut7sIpnH57Z1qjj9OBz8K+hqsDhiK
- mUqQiZaDyq3zaGyYRkz6W6AHbtT/lSjU6NRFy0AMaqhrTtm100+LKH6TjCnXAc4xx98TxVDf8GF
- VhWVbUukdwxHa6tnSu9Qn858sMElztyGkSGgg+Xa/TykCXzUTqiBk3ebK6Bd88x6F0Um+gvq8ya
- eNnlkUHSFP+q2ZjN4gj5wn1zYYx+mzqz+jR7LjTmPF9XQWNr28sh6spxmHiEJTAOQGXVRs71RjG
- TM+N6bt+VebBteT77Gs/CgZ4VoWI5yD/Z4P4Br0gw6JQnAaSFHK4g00vmmGQ7mcVXFESjQ1ZaFy
- NdEmqxVVBmOOQm80xy4N9pYJSsj3R88mqDJ1t8PHVl9/HePZqbgRHIzpO/uLsV3ZvWLPtUV5TmS
- IiZZJsPVoPS4Uu5leXo
-X-Received: by 2002:a17:90b:37c3:b0:390:84db:888e with SMTP id
- 98e67ed59e1d1-3933afb4ba2mr11985428a91.7.1786826275580; 
- Sat, 15 Aug 2026 13:37:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786826259; x=1787431059;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=p1tuew/8yZ3WUepEtCLWv5OHi9k/pwAQkc4Skx4oIwo=;
+ b=LAndilEacj9Mg1V/xkolbhCRqmm7qBgVmR1MTpgWUSUt96kUPM+7xWas/hH/tevZ7y
+ +yUjFG/+5JrV5T+p3ntA3v3rOxGU6DYgNqVJt96YwbOSPwhpZInE/wQrvbyKX5DRoTP4
+ ESIGSA8S29oKP8cgYL4AAm6qk1erC9lrm9PzsFXEnsdwwae3oGX95tXNLKlqjebwCEac
+ okTaYhpz8xuV7tPLXf6kTySFtrU8RZ862gX8hnC6WjaA6qnrpakHp8mRN6lNyvsYcksX
+ H3GCNk49GjgmXMC44VEqsbt33DPWTf5cQf9D44PjzAoEc/0Es8MFzDwd7Jyr32eGBqBT
+ uzog==
+X-Gm-Message-State: AOJu0YwLHj5IbnnWhL7C52Chhslak1PIkeL6srOf3syqDqYBXjsyhVyO
+ rBA99itSAq+F/68lcV5PtKCX/HrgMRyF2NlJ81gEyxwuF2XVAgNU8BPr77bcwqLz+pX1NGolGHs
+ /r4QV
+X-Gm-Gg: AR+sD10eL69XqSklizi9tSa180oRO+C9w+wdrgd8ckRe+Ks1ylPbAMYltyD8vZJa4kx
+ b5jjDXoTALbGaOx0+2e/42QzgMlqLm/X10W0nId8QWm6q9ksSusleuhUWElh36FiANmoyqr4kZx
+ f97gEhcpIvxVvg3YA4YkcZRMf8F3z3FzI+5oN25SbaHJaxY4veiRQdGr4urp33ocEgsZokF9bAI
+ PvAaRocin+I/0jYOnAaWvsVqW7m4QJTk1xx4YyHT4DA13UgkTMhL+EXnBZ4hrhwbJp9ZI/kQ4h9
+ hgbTvlcAmAWviHihiZHx2SddMEqVV82u5bWHFWz6WqtcYG+ovgHuD+dU60YOYQOfjUFHUA8az7F
+ aOyumbbLw688UTH4dqMx6XGYNzJd3FoJtbbBv40asdvQNroVnYPh+7tolQ1OpDv7DdIdZvlTNYr
+ 4IzKckJX/SompVUuHN/JwI0UTNrfb8rNI3mjhkZcG5oOIBBVYY7+LJOgOO77oP3cbGcNESTeg/5
+ FhrDW+BO0NyXlOOx3Nc
+X-Received: by 2002:a17:90b:2b8e:b0:38e:4f41:83df with SMTP id
+ 98e67ed59e1d1-3933b8aa611mr17329444a91.15.1786826259247; 
+ Sat, 15 Aug 2026 13:37:39 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-394ea97207fsm7066853a91.1.2026.08.15.13.37.54
+ 98e67ed59e1d1-394ea97207fsm7066853a91.1.2026.08.15.13.37.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 13:37:55 -0700 (PDT)
+ Sat, 15 Aug 2026 13:37:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	qemu-riscv@nongnu.org
-Subject: [RFC PATCH 18/18] target/riscv: Pass first/last to pmp_hart_has_privs
-Date: Sat, 15 Aug 2026 13:37:30 -0700
-Message-ID: <20260815203730.1468365-19-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [RFC PATCH 02/18] target/arm: Simplify invalid page test in
+ allocation_tag_mem_internal
+Date: Sat, 15 Aug 2026 13:37:14 -0700
+Message-ID: <20260815203730.1468365-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260815203730.1468365-1-richard.henderson@linaro.org>
 References: <20260815203730.1468365-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,96 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This eliminates an ambiguity with size == 0 and also
-aligns with the underlying hw representation.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/tcg/pmp.h        |  5 ++---
- target/riscv/tcg/cpu_helper.c |  2 +-
- target/riscv/tcg/pmp.c        | 24 ++++--------------------
- 3 files changed, 7 insertions(+), 24 deletions(-)
+ target/arm/tcg/mte_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/tcg/pmp.h b/target/riscv/tcg/pmp.h
-index 4c95c2767a..eacb5b5349 100644
---- a/target/riscv/tcg/pmp.h
-+++ b/target/riscv/tcg/pmp.h
-@@ -70,9 +70,8 @@ typedef struct {
- 
- typedef struct CPUArchState CPURISCVState;
- 
--bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        int size, pmp_priv_t privs,
--                        pmp_priv_t *allowed_privs,
-+bool pmp_hart_has_privs(CPURISCVState *env, hwaddr first, hwaddr last,
-+                        pmp_priv_t privs, pmp_priv_t *allowed_privs,
-                         privilege_mode_t mode);
- uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
- void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index fb1250a4b8..7ef5ab5277 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -916,7 +916,7 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot,
-         return TRANSLATE_SUCCESS;
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index a1d8618ddb..e3952fcabf 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -132,10 +132,10 @@ allocation_tag_mem_internal(CPUARMState *env, int ptr_mmu_idx,
+      */
+     flags = probe_access_full(env, ptr, 0, ptr_access, ptr_mmu_idx,
+                               ra == 0, &host, &full, ra);
+-    if (probe && (flags & TLB_INVALID_MASK)) {
++    if (unlikely(flags & TLB_INVALID_MASK)) {
++        assert(probe);
+         return NULL;
      }
+-    assert(!(flags & TLB_INVALID_MASK));
  
--    pmp_has_privs = pmp_hart_has_privs(env, first, last - first + 1,
-+    pmp_has_privs = pmp_hart_has_privs(env, first, last,
-                                        1 << access_type, &pmp_priv, mode);
-     if (!pmp_has_privs) {
-         *prot = 0;
-diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-index fc035c95cf..d3cbb2cb2e 100644
---- a/target/riscv/tcg/pmp.c
-+++ b/target/riscv/tcg/pmp.c
-@@ -372,12 +372,10 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-  * pmpcfg but is not acted upon during access checks. Cache attributes
-  * have no functional impact in QEMU emulation.
-  */
--bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        int size, pmp_priv_t privs,
--                        pmp_priv_t *allowed_privs,
-+bool pmp_hart_has_privs(CPURISCVState *env, hwaddr first, hwaddr last,
-+                        pmp_priv_t privs, pmp_priv_t *allowed_privs,
-                         privilege_mode_t mode)
- {
--    int pmp_size = 0;
-     uint8_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
-     /* Short cut if no rules */
-@@ -385,20 +383,6 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-         return pmp_hart_has_privs_default(env, privs, allowed_privs, mode);
-     }
- 
--    if (size == 0) {
--        if (riscv_cpu_cfg(env)->mmu) {
--            /*
--             * If size is unknown (0), assume that all bytes
--             * from addr to the end of the page will be accessed.
--             */
--            pmp_size = -(addr | TARGET_PAGE_MASK);
--        } else {
--            pmp_size = 2 << riscv_cpu_mxl(env);
--        }
--    } else {
--        pmp_size = size;
--    }
--
-     /*
-      * 1.10 draft priv spec states there is an implicit order
-      * from low to high
-@@ -410,8 +394,8 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-             continue;
-         }
- 
--        s = pmp_is_in_range(env, i, addr);
--        e = pmp_is_in_range(env, i, addr + pmp_size - 1);
-+        s = pmp_is_in_range(env, i, first);
-+        e = pmp_is_in_range(env, i, last);
- 
-         /* fully inside */
-         if (s && e) {
+     switch (full->extra.arm.pte_attrs) {
+     case 0xf0: /* Tagged */
 -- 
 2.43.0
 
