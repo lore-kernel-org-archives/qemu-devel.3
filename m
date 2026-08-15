@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211C5C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 20:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37226C5CFC1
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 20:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvL8e-00089z-NT; Sat, 15 Aug 2026 16:37:56 -0400
+	id 1wvL8m-0008KD-Ki; Sat, 15 Aug 2026 16:38:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvL8c-000889-UH
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:37:55 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wvL8k-0008Ho-1e
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:38:02 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wvL8T-0008Fl-4r
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:37:47 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3900e39d935so2062006a91.0
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:37:44 -0700 (PDT)
+ id 1wvL8c-0008M4-Ir
+ for qemu-devel@nongnu.org; Sat, 15 Aug 2026 16:38:01 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2cf452def93so25334675ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 13:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786826264; x=1787431064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1786826271; x=1787431071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Xpi+58NLvsNGE5roXXmz2yeQ2sLTmSOVbtvh5q+nBos=;
- b=jgoCNRYvKoHMjLVl8EppgSe84GSLFa/GaWoqDpsZwZClgDBCPZ8BeUANhq6wJkUyo1
- qJ/7B9pJgUKOI0fzIlCYCaLJST85qbtE+Arf8MA1hzQmW3XPWu7+vFkMBkVwaxWkmX6D
- qg8Zvu+PvjC0NNkAowvl5PwVDNMrLXVpZu8U8Mav1PiU804MHxcE1Vq5JmVEBqg3a9hw
- g1IBJzwv1YHXjjRRWL7pjKRmNqNpEnByY/Y8swNwL2l21gyd61StJcF2E2aGvyCQ8Rjn
- Y9JG0aZS0lNNue4yssU2ghgir0TpZ3wb8EZ2V08RKiRFxaQGeVMN0ytefb/GEZH67Ea+
- Wlhw==
+ bh=huYYxmonle9nqEQnUjnQGUQR5AICjj+SiFqAyTmaqDk=;
+ b=ciNBTV24uJDwZWxz1yv8WN83AK60mqsIV8znpuvg+5m9hHhcBkXan1xXG3Ort1ozuR
+ ASz7UMZ4ghS6pvMJrtlQ9FtF2Llvq+gSBy2kGwJKI/KgRusMpyqagCpYCGumt0XAmr0M
+ Ifbtxeu5U2Qvsv94mmDzi+DyTU9KVQtgGpVqHICIkowaCDg++jfXuqd0ZDqvolzEdrNx
+ 2iAogrqUteTHD2O5gvg/MAhCQrLLky0LkJ1ay/IOg4XSEdxQ1bR5BCQmauz5kvNgZAMZ
+ xrdP/R3DoP3DZ6/7oi8gJ6ZYBjGfQuOcAEp6sqw3tt30m96wuL9fcCC1ZkJPF+rhuhFR
+ 02Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786826264; x=1787431064;
+ d=1e100.net; s=20251104; t=1786826271; x=1787431071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Xpi+58NLvsNGE5roXXmz2yeQ2sLTmSOVbtvh5q+nBos=;
- b=HYHajh6MkY+OF3oDkU+uXbbUtFv1qfyS+2J0WLxZ19qt4QQofeebHvngybOSdBhYma
- AhicGw1sj22z3Ynb+GwwtcQuPKq5i7i8nGF+dE0eB64zq8mhehzHaM7hYbKU2z2F+X4c
- oswLExJe3m2uqc+ecukG1gysGl7xo/1n8nyAp7swBICAoyNtdP7VuLxq0hfyGA1volCd
- V9ZrSxZjLsbfwIp8vgKKK4f4zuifDdDCNEyNN5wkOzJlQjZTeSJsGQqcfin7o/riGh3E
- IyERVGHvNBI1uMU16Sy6yV4SV0unNihZO/ib6cvlTCG7bLZ6sqIXhMO38eRfq3L0kCcV
- guXA==
-X-Gm-Message-State: AOJu0YzO7SuM7bLahK4C2sZGrTEdeskilyzs+TzrTsghQxNHwJX/HcMX
- 3fzmVErqmtSHAcrEzTAsJsFaZSOKIwTPZiZsTNLHWs/uFdaeXT2+EAz2IA0nmcy6e/quKrkI1xA
- 5Od0h
-X-Gm-Gg: AR+sD12skMLBkKcKRR0Z0PyBJx5T3mm7mVgc2NoX58VBAZiTQxH26jPznVwAfsXqnU/
- LOJ3lgx2/JAMSh2cE+t23e7V6paX8eMz82q89Zxx1WSa4xtE9vb6kY2Vfkeea1jI6KIS1P3uqoQ
- jwg+daSKEILkNYfV3h58sFIjesMgwbXA8BLKMiFtTwrEN/17P2bCUtKuNOqsqq0Trfww/lrOXwV
- AZqxr8kJOcgyf420s4T7+w1RS8Et0VA5TG26XhgSwz0gyQyjqGYPkbp8m5nLfZYAGJGIlupJxb+
- uxme7jUxAp3up7sk3qaRfkXsZx633vKYeFIptgYo1RaJxP5klYnqoLe/ipa02/LCV/NWbH16V8I
- zyqpFPQpaJ++J6HS6CFKdobNlC9fey7HdZi0JlzCAK/4bd1RkL2nPxMhDNsHuROjrULP4Cp+Z9c
- p5nKgXaSv8GCd3dthG515H+gMFlTzCmkp/y7puGUSAsq9I4mVLLEJwqXvEk7v95A2UJxfNVubkt
- mbVAXWYO7WA8ISCN3j6
-X-Received: by 2002:a17:90b:53cf:b0:381:1c96:829b with SMTP id
- 98e67ed59e1d1-3933bd204d0mr16889988a91.3.1786826263584; 
- Sat, 15 Aug 2026 13:37:43 -0700 (PDT)
+ bh=huYYxmonle9nqEQnUjnQGUQR5AICjj+SiFqAyTmaqDk=;
+ b=sAqN+87mNdjnWADZB+kZ8f7wfShUY176G66bGXyannLX2GOf980Fek6hVxk8NGG6JR
+ Etpggrpms+1bcC2u+UQ1iC773Q9iOx1iBzAJyXHPBIZIAkPqlAtC6PymZtGGbKdgRvfU
+ radqNVHJ/bqKu/1PTQdqmrG/QFx9+LEM8pjVKzzi89SEvKZn/hBOR+JhM8/5sJIQ6y+N
+ PGhSKeetcOFYkuzrBCbA6DQFFWcEX0BXyMEMeOCFFMIB+5YzkNBmXIOqAy/gCBCQPAgH
+ 8RkwLmlwF/oZsSlXJ6sS+N6d6FrXKzdWq8ME4uJ7LQcM8Z6x6Nd83W0I5uwGRn8NEG+h
+ EpZw==
+X-Gm-Message-State: AOJu0Yw26FURUOWQU6h5C27YVS+dMwu/LVA2LGgqftl5QNzQwmYRdHH8
+ LzgVoa+XTP03yOEpLX0un4GMnT4VvQhQgxBr+1ze3w3lizt9ua80mlhRXGZQ0I9YJyPEPMpwblL
+ PPfMi
+X-Gm-Gg: AR+sD10ZomHBU5su54F7XLrcZ+Xpplm+CPytX7UMCkM2gtwIfgs9ZxRaAjH/3COAWNh
+ STFAe9UofoqieaqR1ZP2wsQhSB3gehiL0ECvApGNqBQSzDph/eJKBbj1wjwUHlJjVaGvX/PhQwj
+ Oi1P4fhgkCLzozNlnsXx8A6aLUjgOOdOPgogsLNZnSQVwvTfAWJ/MwLM3Sm0BTmALDZfHkqKgXu
+ AJJTp+6tUqRVTm1CocyuN8ZFYRZALLEwCjQsVx8JTR32GOXscZsV4Hd19TJ4NOdIFk+Tl03F6v+
+ hRE4rQleDylI19UmlwDnhK2HWrlqKIH60RK3xUtYfZ4JXgpSy5kpExfzcLihLMal+nuLWwegjFH
+ 08KhLgfTkcZ1u5jkI7ZKyPnOBlqdKbRNpZUT5h499QUTNpH8xn6M86qgAC9AUkoIf8bY1DuTP1I
+ HLTwcE4OUpTFVJwttz+m1DHQX88w8BVecD03OtZnopxfhWVWFNZfHphyxYqAbpoanjgE1aTRCfQ
+ T7Wg4kgEvgZkid0C/we
+X-Received: by 2002:a17:90b:2e87:b0:38e:6d55:b1a6 with SMTP id
+ 98e67ed59e1d1-3933af038ccmr12391331a91.3.1786826271518; 
+ Sat, 15 Aug 2026 13:37:51 -0700 (PDT)
 Received: from stoup.. (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-394ea97207fsm7066853a91.1.2026.08.15.13.37.43
+ 98e67ed59e1d1-394ea97207fsm7066853a91.1.2026.08.15.13.37.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 13:37:43 -0700 (PDT)
+ Sat, 15 Aug 2026 13:37:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-riscv@nongnu.org
-Subject: [RFC PATCH 06/18] accel/tcg: Drop fault_size from user-only
- probe_access_internal
-Date: Sat, 15 Aug 2026 13:37:18 -0700
-Message-ID: <20260815203730.1468365-7-richard.henderson@linaro.org>
+Subject: [RFC PATCH 15/18] target/riscv: Use boolean logic in
+ pmp_hart_has_privs
+Date: Sat, 15 Aug 2026 13:37:27 -0700
+Message-ID: <20260815203730.1468365-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260815203730.1468365-1-richard.henderson@linaro.org>
 References: <20260815203730.1468365-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,53 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This argument is unused.
+While addition with bool variables isn't wrong, as they promote
+to int, it's odd.  Use normal boolean operators instead.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/user-exec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/riscv/tcg/pmp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index a35aca7889..3724e5d98e 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -749,7 +749,7 @@ int page_unprotect(CPUState *cpu, tb_page_addr_t address, uintptr_t pc)
- }
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 5ea0e5b6c3..fc035c95cf 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -413,16 +413,8 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+         s = pmp_is_in_range(env, i, addr);
+         e = pmp_is_in_range(env, i, addr + pmp_size - 1);
  
- static int probe_access_internal(CPUArchState *env, vaddr addr,
--                                 int fault_size, MMUAccessType access_type,
-+                                 MMUAccessType access_type,
-                                  bool nonfault, uintptr_t ra)
- {
-     int acc_flag;
-@@ -797,7 +797,7 @@ int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-     int flags;
+-        /* partially inside */
+-        if ((s + e) == 1) {
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "pmp violation - access is partially inside\n");
+-            *allowed_privs = 0;
+-            return false;
+-        }
+-
+         /* fully inside */
+-        if (s + e == 2) {
++        if (s && e) {
+             /*
+              * If the PMP entry is not off and the address is in range,
+              * do the priv check
+@@ -517,6 +509,14 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
+              */
+             return (privs & *allowed_privs) == privs;
+         }
++
++        /* partially inside */
++        if (s || e) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "pmp violation - access is partially inside\n");
++            *allowed_privs = 0;
++            return false;
++        }
+     }
  
-     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
--    flags = probe_access_internal(env, addr, size, access_type, nonfault, ra);
-+    flags = probe_access_internal(env, addr, access_type, nonfault, ra);
-     *phost = (flags & TLB_INVALID_MASK) ? NULL : g2h_vaddr(env_cpu(env), addr);
-     return flags;
- }
-@@ -808,7 +808,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
-     int flags;
- 
-     g_assert(-(addr | TARGET_PAGE_MASK) >= size);
--    flags = probe_access_internal(env, addr, size, access_type, false, ra);
-+    flags = probe_access_internal(env, addr, access_type, false, ra);
-     g_assert((flags & ~TLB_FORCE_SLOW) == 0);
- 
-     return size ? g2h_vaddr(env_cpu(env), addr) : NULL;
-@@ -825,7 +825,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
- {
-     int flags;
- 
--    flags = probe_access_internal(env, addr, 1, MMU_INST_FETCH, false, 0);
-+    flags = probe_access_internal(env, addr, MMU_INST_FETCH, false, 0);
-     g_assert(flags == 0);
- 
-     *hostp = g2h_untagged_vaddr(addr);
+     /* No rule matched */
 -- 
 2.43.0
 
