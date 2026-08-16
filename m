@@ -4,126 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C22C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F460C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:49:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcAQ-0004If-Bb; Sun, 16 Aug 2026 10:49:02 -0400
+	id 1wvcAn-0004gT-1b; Sun, 16 Aug 2026 10:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc9b-0003ep-7b
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:07 -0400
+ id 1wvcA2-0003zd-EP
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:32 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc9Z-0000oR-Nb
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:02 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wvc9y-0000pl-Ge
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:28 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDl0EX3214626
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:00 GMT
+ 67GDmMA13633961
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- W6XLpQEYOSu8dtevCqvevES5FCDZtbRvU20Y1amii/U=; b=NYRka8RSspKu0iHt
- X1aOmkIZiSKjXbxyWek9FmzhKmZU5dkEuy2folU5W2hIQKKY/doPvAAnWIBrM7mz
- UJTOFMw77uV6p27CSurQrL9/RQTxB7r6mJxdmVxbXTgJqoWiV+uHq8aejOMSE+KL
- xNCK8CtPFG6ZnG53TKAei6Ay2FnCZRxLQceW0ZsW5z5h7iGKba1EYnp6FwbUir4E
- m6fOz9apUaSiiYKH059P8ng+Z5sD2HDMIF+2IKohTsef3vg4mNuqhTs5tjN+L2F3
- JGzULR4yJILjPd/0/2uh/3mRvw5sVdGkoEHeIFmp3s99kFIYVAWggNHZO+nYIcJd
- q6EnLg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfbn73-1
+ a+WcWjDtr6Aqfvb7rgsLeTX+z7O13m3aV0M2b3rFLZE=; b=ZSqBE0VrkZ8vRrpm
+ IYGJrWBeya/29axMK0CQN053zRGJKVIT4Ekoxx3U8+38XCNEN4i96zd5IcUEG30j
+ MBWX8XcNAydtA3/guWngASU7DMb48F9bn0M79h1938vBynV2XT1lot5ge4KeQYV+
+ 2TEUiXpKeVrEtfvNEpze6QiskZLDFFqC0Rl/nk5P/23ToiW2nOc/nZthqWpZzsfk
+ teNdXLsDuHthnLt38fNye5k+dOVHUipzWWnI70b1QrSPF5Exqt9pa94JcqraQl7x
+ uOnCqjzoFp1L5GtVrBfIDGgBuRp2OAKYMFJWoo4LXsjah5YLnOQ0D2WuJdFjA0te
+ VibJcQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghekq1y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:00 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1a97644aso30644611cf.2
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:48:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:23 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52b4f6ac06aso49068561cf.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891680; x=1787496480; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891703; x=1787496503; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=W6XLpQEYOSu8dtevCqvevES5FCDZtbRvU20Y1amii/U=;
- b=WhXR4eUngpCK+eETwNNhmDgBaFvYC0IRuKqIcmI54DRAurGNUuzFZvGLosZVCGZd6O
- pslDK2xpt6wD6bvm3vN8bxDcv1AHqkOtiNZTX/7Poy0jUpENJkOsxHy5A9nTx4R0aV9k
- IV58yR4kp5NqlYitAfRKuvkCA9023F2QdLdltZv6w+OEl+jIRvBvFU+1sTvGejadZHOF
- 5yGhlbAFxTqj+XDtCf16CYnaXKwO/G4lUUWGJ4NnHet96byrk+iOS2RnOCCyeLmKXAXO
- eBQp8Ih8dMF+MWto8botkawdVKeYk/zRK6qcB18nf47eCt7PvQzaOTOeQRTScy6nqIYQ
- y9WQ==
+ bh=a+WcWjDtr6Aqfvb7rgsLeTX+z7O13m3aV0M2b3rFLZE=;
+ b=LC26JNdrD4/aNgo5XYo4OBefTsJKDhzNdgJ+mpswhkCfVMXacVGBdV+zRLqmPfR1uJ
+ w4+MIFN9S6o6vHsx1P5S5DJApf3d5gMNeY9kvkjphc1BmhfnxWSeRufGQzJhpbKvitZA
+ SjDqoGtkHXh/+PnONAHKXwoLqiyMBHHdnS8dd532xrBNUvosLu0DspYBt1ebMtdB19fa
+ JR96IP6YH4+D1etFOoEQYMOK4Zvag/Sle+U2dYNshiJGLsW5UD1+Rj8Clf1TW6wOV6wv
+ 0nYBqU5ZWbweyRKKgrBPYC6MRs11jxlCR/ryeJi1IJDYNVWpoezKCdsxiO8WTWD2a6v1
+ 2r8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891680; x=1787496480;
+ d=1e100.net; s=20251104; t=1786891703; x=1787496503;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=W6XLpQEYOSu8dtevCqvevES5FCDZtbRvU20Y1amii/U=;
- b=n4DVEKdMBH30ksYaFHFU3uz50ExRI9iNPqXlV9Y70gekI/Q8EPZu+fFVIo0Xi+7Isx
- 3wPHSH7Zdm9lsbgbJjhKY7hI6ORQj0E/og8ATfNzF6YdC9wm4tAU1LUssvpHgWm72gCc
- yB03ZLCaiV47m3Ysst4TGzRC87DvHFd3U17/O24nWAQloZjNGnHsxc3wkNLNnC5cPcZR
- oEfwFgLc+I6ZMRZnyTQlH/MKiPTiBJ0DHE8qHJ4RJBCGbwmEwy4MTSNtacln7JvvPGn7
- l+u6to19YWN89abUoKjVDGeZHOiZXKmgzF3GV5NuL2TjwzzegBhpWIsF92Ni2Q3T2aYm
- fc7w==
-X-Gm-Message-State: AOJu0Yy6Xmt0IjXQFw7HaiCIEoz1TREjxtr9c6Sc2Dhku80TVTCtFMl+
- Cdeg3mpScs6TyXz3Q5W4TgwIBKkvKG43uE0E++xHsoDbd2wJzPZWrKqvR4I6bq6ZqTQTjLM6jBQ
- oW+vaxeQiMrLDG+9JF1gTwrzPFU+CI5cslBtC57XXYE5nmL0GDeI2bK8NAktq/N5vAA==
-X-Gm-Gg: AR+sD12v7LJbl++S9qsvn4g2SfPOnt/mrJRpXW3x6fGO3Hxz5JIEdpUl/59IUk1V+jB
- qh7QHgXVCwJKCevH+v1rWMpJGym9TB6xp4PAsaAbJPiFnSvBmqGoF4jQHNHojWQqSwOt9rGeXRm
- W6/N4oGUS7XSgh9WoW9UykYFU8jp9XX6aVVEDDyjGPF+VFg/rnBb8C98swNaoODKIOolS0uvTP7
- mdvDgfGDVBmrqQ0UzkA5cm3v9nKjH1JM8VPlUPC+mmY75lgvEgP9mK7FihufmkoglAl+LJPCkW+
- mvuQbYp6dTK3D2z0PuNJzHTo5s6f3CEZpLNI2UgDf1PG2sMPru3mBd865MT1KrBgDdHkthMiNed
- lxar7iAug39dgvQ+9r6lPPm3Uj316sadA6da6EqN8BQ==
-X-Received: by 2002:a05:622a:905:b0:51b:fb4f:afdc with SMTP id
- d75a77b69052e-52d853d001dmr211400891cf.11.1786891679903; 
- Sun, 16 Aug 2026 07:47:59 -0700 (PDT)
-X-Received: by 2002:a05:622a:905:b0:51b:fb4f:afdc with SMTP id
- d75a77b69052e-52d853d001dmr211400681cf.11.1786891679511; 
- Sun, 16 Aug 2026 07:47:59 -0700 (PDT)
+ bh=a+WcWjDtr6Aqfvb7rgsLeTX+z7O13m3aV0M2b3rFLZE=;
+ b=hgQUwoz+bICx7Xq7HemHpR9pdbYncxpLx5IHvpBoZAH09DnBemCjftlGpxZ6unNU/z
+ U7e6WG0PDahasuZZ1HK/kSG/5Nx23T8OhRFGebPvX4gFnuYuPX8odfRYakqKKE1eMxbk
+ EeCnVlYtJnym5+axmzZAEndrORabAZPc1ZX0MzF8eaVQPzoT/cnwRwQZFXnnDyphkCuZ
+ DqyFYEc3dI1IuJvQ3tgD5K50KXL1RzXjMkmifF7iIUiCMD7YD/Y2Z4fR47TJ98ezcsl6
+ 3iFR7TcQwpa27aR6y1KcFnZrWYoiZvf0+qkdc+mgRFuaXfV8T/23q1U8HC5RnSdGOyZh
+ /ozA==
+X-Gm-Message-State: AOJu0YywnKAPwydY26M9vmjLnMVwTxXe0zhARS4TZqMOdSI/q6MpKHW9
+ F6Y+eeogBcTbhXk5fZl0lOWNflciLU5WGrcN2QUOBHAPo9pM+NyvM/D8lUTzjEnV1NaBKlvh0Nf
+ SkuIT/g6fuR21CAuNrzyVe0gk/B2riwQ9Lm42bVXMzp+oPZRw2ziWL5kKGRmuVxtNsw==
+X-Gm-Gg: AR+sD12QsGZWh5ilwdrPdNIYqxDinNfzoTFcn+U8FjGqi1Bw6dAhiUUy5P7BLs1LTLK
+ pLMxntYgFY5H2u/5e8hKq+0q0ji2xfXSiCpYgM++yvNKy4T24IER0jfrJfEB1jECxVdJ1dkfvdX
+ Hi6tBSY6ztkOrODgAZU4k5xPQUiKXNhuTeHeje+T3ufZk3W+FX39MKC3f4dmJTLzgDi32oiJM5Z
+ ysPrPReaSaKMknPyzW8myACo7UlVPrHNg/KwBYfd4dMZ8d/k20KIfpMdpPWSM7zuVy2HhEC0Nqo
+ e06cN/QF2Go2aASJ7oH/fVAGU1axsNA8X1vXNlCg2JxsF+7Td7JqAdb5ShdkI8DNkj0cRrqp6w/
+ dhhnYOhbFhZEGEkF2p3799BK47PPT/OP1ARPkcC7/tQ==
+X-Received: by 2002:a05:622a:1a88:b0:51c:51e:661c with SMTP id
+ d75a77b69052e-52d8543f3c0mr200751061cf.25.1786891703473; 
+ Sun, 16 Aug 2026 07:48:23 -0700 (PDT)
+X-Received: by 2002:a05:622a:1a88:b0:51c:51e:661c with SMTP id
+ d75a77b69052e-52d8543f3c0mr200750801cf.25.1786891702972; 
+ Sun, 16 Aug 2026 07:48:22 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996127629sm48348565e9.14.2026.08.16.07.47.58
+ ffacd0b85a97d-4815f2b1fb7sm24526763f8f.17.2026.08.16.07.48.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:47:58 -0700 (PDT)
+ Sun, 16 Aug 2026 07:48:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/56] target/s390x: Use qdev_is_realized()
-Date: Sun, 16 Aug 2026 16:45:13 +0200
-Message-ID: <20260816144556.69009-15-philmd@oss.qualcomm.com>
+Subject: [PULL 17/56] hw/net/rtl8139: Fix handling of VLAN tags on incoming
+ short packets
+Date: Sun, 16 Aug 2026 16:45:16 +0200
+Message-ID: <20260816144556.69009-18-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfXwzYPhHdvdGtr
- DKCrIoyTIbCopN270sLx1JplfpU/VtNMXXPiRgwEdpnwo56hRYJ6oBIwejHBNq2pKZWaz9pm5PE
- rcAu2ion6rC5zctTRsJP0/3RdVL6OaI=
-X-Proofpoint-ORIG-GUID: 2WFKqP7-DUjAU15LVmn9J79eeciZjSdS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX1xFVL8VOtPn7
- PsB2IEumGzAKi9r6r/L0uGS3axB0IevKiyZ40TmeHstUfHByNUOzSH7BP2FyPQ7UdiGv0PAzgYY
- +W/TTEOrobc2IKGS6Sz15NdJI3lQ1XQXu53KGSJUkCKjsAMrZNcLxg4zep2ZbzLo9Iexlj45RRA
- MYKMo66Hf2debtVO+FlN4gD0F+V8wGhrVinR4hX3/MznMheYg2d76j+nNN/tLrPZn/7deShU1iB
- CCIT5VJBk6/QChUPcpoZcfYZ8xF0rWUG7P350OZKluAe50DN1fGaJUn7g3SL8p7cl514UCYbnV8
- fNeRP5wrucz0GQPqRmKI+RkA0jhMAAvBzyl9xfN04673DT5eNxkDV5Q57132heoskDZ7cBNUWSV
- mgzTvj0BlnBSkU94dajM4aM3xiUR0rKeG1SC0f+ZbaMPOlgiJN8Dtl6GA9VspshLe5iDd4cxiA6
- 8TVJ9S89vvknlCBMmJg==
-X-Proofpoint-GUID: 2WFKqP7-DUjAU15LVmn9J79eeciZjSdS
-X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=6a81cda0 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=EKc2FVZC c=1 sm=1 tr=0 ts=6a81cdb8 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=uRxLgUfnyXHAhkBXUOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8
+ a=RxFCA_QbULDqiWA6Y9gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX5kuzTRClWW6C
+ CvuyV73k3WHGxqDdzP74BplWy3fuT2Pem+3t7BDNMo34JzUvoFHxMmOSr6p7e+DjCvmwDk+5l3X
+ bSS6ktSJ7bHuccqvrgS8fDyvFo6RBtw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX+R0o2Ycjx9qs
+ 8Q+WPiUHXnVe0DfXmpd6wwI4YdDD2AJMQUgFkA03ZNuw4baWMmg+SPWZN52tfl48tnFamf7aZVM
+ J4glkYY2x77kSogzfZxXwyROziIZkkt0FlHNT6z/Vh0Q1S80OlPXl9s1pjW4ZnEk40ascAJCtSU
+ KgB5iknKQt1GfDMfG0AnnjXFx1XeyJpltEf39F9HeaYv7yfSHh1KVjzYtJpJGlGASNI3rmGkfnG
+ Nf/Yn18Nt33PZOOKyGQLQoIzZOoUyNuGzFuAt09Y4YmagZUAqEPcNlPPqqsM4oOxZ6ZOeoAQesf
+ TWzBreb4fkr4KUQl31O7TKFhCOrfRiPuwtdN5imHk4XUJRHuSaNimul816x8VaFWlqoDVpe/Ptb
+ 1YhNeuPn3AcnzxqyhSWnxghcooRSi4NyIla3M9zq8d9RXR3wTeOjODxng4YKpwsCHX2Q76EnQNc
+ sQ2N85yZl/I1U6fJCgg==
+X-Proofpoint-GUID: 5QvN0APf8r-sICTdkTDTx2iBB6PgNE95
+X-Proofpoint-ORIG-GUID: 5QvN0APf8r-sICTdkTDTx2iBB6PgNE95
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
+ phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160118
 Received-SPF: pass client-ip=205.220.180.131;
@@ -150,42 +152,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-DeviceState fields should be accessed through qdev helpers rather than
-directly. Use qdev_is_realized() instead of reading
-DeviceState::realized directly.
+The rtl8139 receive code handles VLAN tags in incoming packets by
+copying the VLAN tag to a special field in the receive descriptor,
+and copying only the actual payload data to the receive buffer.  This
+code tries to ensure that it pads out the payload to at least
+MIN_BUF_SIZE bytes.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+In commit 63b901bfd30 we removed the main "pad short frames" code
+from this device because we switched to requiring net backends to do
+the padding.  However we didn't notice that this broke the VLAN tag
+handling, which relied on the old code making the buffer at least
+MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
+bytes into the receive buffer even after removing the VLAN tag.  The
+result is that the guest can make us read 4 bytes off the end of a
+buffer by feeding itself a suitable short packet in loopback mode.
+
+The old behaviour is actually not correct, because the IEEE802.1Q
+standard says that the minimum ethernet frame size remains 64 bytes
+including the 4 checksum bytes, and so when a tag is present the
+payload data only needs to be 56 bytes.  (A bridge implementation can
+choose to pad tagged frames out to 68 bytes, but it doesn't have to,
+and so all devices have to correctly handle incoming tagged frames
+that are 64 bytes long.)
+
+The RTL8139 datasheet isn't very communicative on this topic, but
+there's nothing that suggests it adds extra padding on receive that
+didn't exist in the incoming packet.
+
+Drop the last remnants of the padding handling from this device;
+this avoids overcopying into the guest when we receive a short
+VLAN tagged packet.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Message-ID: <20260731093618.2961031-2-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260721-qdev-v3-13-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 ---
- target/s390x/cpu_models.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/net/rtl8139.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 2dd9aac8078..f292af7ad01 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -714,7 +714,7 @@ static void set_feature(Object *obj, Visitor *v, const char *name,
-     S390CPU *cpu = S390_CPU(obj);
-     bool value;
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 424af73a18f..2b61c171f2a 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -778,7 +778,6 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
+     s->RxBufAddr += size;
+ }
  
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         error_setg(errp, "Attempt to set property '%s' on '%s' after "
-                    "it was realized", name, object_get_typename(obj));
-         return;
-@@ -770,7 +770,7 @@ static void set_feature_group(Object *obj, Visitor *v, const char *name,
-     S390CPU *cpu = S390_CPU(obj);
-     bool value;
+-#define MIN_BUF_SIZE 60
+ static inline dma_addr_t rtl8139_addr64(uint32_t low, uint32_t high)
+ {
+     return low | ((uint64_t)high << 32);
+@@ -1007,10 +1006,6 @@ static ssize_t rtl8139_receive(NetClientState *nc,
+             lduw_be_p(&buf[ETH_ALEN * 2]) == ETH_P_VLAN) {
+             dot1q_buf = &buf[ETH_ALEN * 2];
+             size -= VLAN_HLEN;
+-            /* if too small buffer, use the tailroom added duing expansion */
+-            if (size < MIN_BUF_SIZE) {
+-                size = MIN_BUF_SIZE;
+-            }
  
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         error_setg(errp, "Attempt to set property '%s' on '%s' after "
-                    "it was realized", name, object_get_typename(obj));
-         return;
+             rxdw1 &= ~CP_RX_VLAN_TAG_MASK;
+             /* BE + ~le_to_cpu()~ + cpu_to_le() = BE */
 -- 
 2.53.0
 
