@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062D9C5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 13:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75535C5DF76
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 13:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvaiC-0001fv-Si; Sun, 16 Aug 2026 09:15:41 -0400
+	id 1wvaim-0001tQ-0i; Sun, 16 Aug 2026 09:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wvai7-0001bJ-Aw; Sun, 16 Aug 2026 09:15:35 -0400
+ id 1wvaiC-0001fw-Rv; Sun, 16 Aug 2026 09:15:41 -0400
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wvai5-0005Tk-OQ; Sun, 16 Aug 2026 09:15:35 -0400
+ id 1wvaiB-0005Tk-0z; Sun, 16 Aug 2026 09:15:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FwrZkRY+cumDy7KwSd8wQWSCQlpqXUw5wX0pgUfvX63BcbnsEr/bAXF31+EzqIp82vrE/kVIWyzwxD9Ng9Se14ooDYc0uAnIohcu/qhK0pRtdXQPdu6O3DMZhV7cmVRoCp8HYcathkntbWyb5+AYMAgaKZ2P8FJYQa+p51m/Att0lwNMDCn5wRk3Tu+GUS9OmZY6oYNAkb8km8lcE1BSsftuhqlLl8WK0U/vnfYEnzvAjv3ikb1LIkiKc/WsdsZugUlvzfjy9KWcazZpXwjYFTYc1SF49zYCx2SilN2QIr6cqBkIxwO1zXD61vZta4MkEwcQaNMq5VigF0/z2jg3ag==
+ b=cLr3JTSLEOIMXxW+FVu/Rzkv8ZdBE1+dTcFrPNkz4Muc//r0BwiFD9h2tqdh5bHg6Tc4rJ27kd5RcZJ3hlSjtsUClE79QA4mF+0z8rn5vBHDhH4hD7ttdPx0jYmTbdZMwn9qAssz57m257075GmYsCoPubKLeEZW4mG+TFlmvSilMmUNVqXqP/bA2Stiy5XN3aukZIuejRrzwsy2lxuq7HMGPL/WVTKbAqPeNA9UeMpZ30PpPVscKBWHdDaOanMl+Ys77HBMqDCtPYV3mSskVfbkGoSGa0pJE4+M+U/K9JwUtT6cAgd1nX+3GH1ckIfK734zKT720+6Ui99rOvvdjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m6OBoPXCRXWxsrpkkMrNPCgNfT4emr1+yZJEQf0Dk6c=;
- b=zTYlDni7H91XRnceuWoAA+v/XLJex087p7goyGfbF0tzPO1rMtEK2M67VH6J4IxQu93m+pCT5hl08LRT8z5xhTWd5ewpdcZnM57HzKeJamBRth3y58HyIq6NWlLN9R2lWAbqBnYlN6P+ZVubKeskRTWgjTvrAWYN7KViCi1Xrk//h4gB4/JzrUAkTqt3wkww04jOFHDIudIZM1PJ52w42RZAW0jcKmkZ1x79u+CaiJ02YHwON3bKjb0IV1zM+OC388DnVxwDeeEaMRYIBiaQKq2+zQGYeK819jkwQkqlynEnyaokAgqUswnsczDV3W6XFhVYzX64LbsKC63kTiTxcw==
+ bh=K8nKHrbB1EywJy4tcYKX3Z+Za/VhlmUzxEWaL83SYCQ=;
+ b=oIBDvApHqUHtWJeiSvpNEyDS9tHknGH4kzVXXuZ3iTpGdYbKYaTyxMqQElVx6OVsVSHl9b1WG+PUTHdc0bCAvVsrbpF6RkmHmwFfAGfxambRtlhEt83JymnsUw+JBf20CGCQo0MdQNFbvwjTmqnRNxjF8zyln/OWImTA7oCFguFMcHRSggT/aM0uSYXA44PjbH+uGJdhwgbmgyZNHpFjR3vxnSTzy2P/gnGvCUWzM8brmp1n0saU0MpN8o5djC8aawaqBKrU+rmM6W9LZq+W/ZGt6hpoKqu5FBCKnh6TVu5RzcOo24miw5uDC7HOa27vNCNm/AYTheJZTnvyf3jEZg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,26 +33,26 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m6OBoPXCRXWxsrpkkMrNPCgNfT4emr1+yZJEQf0Dk6c=;
- b=UHlFCvPZiV+MgD7gAeqc5IluejSxZSnxktY4NZilPzc7y4v4b0YnpiXpRIBYHCtjM7sQJNlE5eTbHQaJt+o3PAcznQZq/oAF4aE5KLIe3Y1rczflLJJojvljgJ7Qc/ai4F31gvnLM2ZYRaAYCEN4UmcGgJI0WgKL4DmF4FOtHAHxNABACPzRRSdGLFbqVhrmnHnn8kTIO292j+yDQHLPrDik7A0WFO+4K0Z+WG29EKe8PjF0mkitFmmyIYYmD2P9+0u4EaAr1VB14BEgaL/orxT6X9iRxL0g0I0dwHYgTicBuxw4jNPr6Ln4KpJ1BRl4Xn3OTMPUsV7MPB3SDR1SXA==
+ bh=K8nKHrbB1EywJy4tcYKX3Z+Za/VhlmUzxEWaL83SYCQ=;
+ b=a+kHSUy8e6FDSdhilJOnBrNL/FRK2DqbEKQ226B2V3vP+H244wGZ54NE7wC3T3DmOQm/DMv9NLWuqZyCzOvdW1Et3TC+wgouUuW3RyKDgEA82wZQWZgt57RZp1dPFf3I/+8wZM2SB/j6fnJMTC9HMdQMrUfJWnzthVx0Yv4tue2ky/vBo6P9l5yhC0lAagcWCiLOozNDU9A0GtzR6UvRXaxkGkJDkLEK3RsOcvOUTDugVwICnxiwlTs8zICoXqOKJ7rQtEUzNM6qFJjl6094l6a9R6dPW7o5wBJz3Pr7vwi+r5QYUO7/syZf/OUDc8VSx2dpWCalGp7IXpv/YEjriw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by KUXPR02MB9310.apcprd02.prod.outlook.com (2603:1096:d10:9f::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Sun, 16 Aug
- 2026 13:15:26 +0000
+ 2026 13:15:33 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.016; Sun, 16 Aug 2026
- 13:15:25 +0000
+ 13:15:33 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-arm@nongnu.org
-Subject: [PATCH v2 10/20] hw/arm: kzm: Store boot info in the board state
-Date: Sun, 16 Aug 2026 21:12:40 +0800
-Message-ID: <20260816131300.51799-11-bin.meng@processmission.com>
+Cc: Hao Wu <wuhaotsh@google.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org
+Subject: [PATCH v2 14/20] hw/arm: npcm8xx: Store boot info in the machine state
+Date: Sun, 16 Aug 2026 21:12:44 +0800
+Message-ID: <20260816131300.51799-15-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816131300.51799-1-bin.meng@processmission.com>
 References: <20260816131300.51799-1-bin.meng@processmission.com>
@@ -64,56 +64,56 @@ X-ClientProxiedBy: TY6P301CA0004.JPNP301.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KUXPR02MB9310:EE_
-X-MS-Office365-Filtering-Correlation-Id: ba84ac17-8618-4c24-197b-08defb986f87
+X-MS-Office365-Filtering-Correlation-Id: c10b68ab-d2c7-47ba-9c35-08defb98741f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|23010399003|376014|1800799024|366016|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 1xX2gtzBm2uq7htrkEpEwmAwSW+r30ZM/ZP09aknzj/nA8uPpNb2OpWXA098f+tgNa1lSN+M8ZTZXRlEGZ/eYy6mCE2bYNnihWA4/mc5elxy3FG9mItcLiIh8kSIGFuj5y+TyLd/fovVaYac6m20FpPPf/2oZfI/VaHP/v5O76BIMJUeKuZtfHoSs1vx7x+C5F4c7kDcvkuarlwdi/9Ezmhl3sR3DW5VxJlbIdGapuzD0jIz6LNN3H4YVVeUm342sAdzq8UH8EaS3hu5oauQYhE5rWDUC5aYgqAd8PrkVrg0Sb0zL311Fj10+UIBsEIiZGU8UPg4Jd/g+uDtzah9JdIn4Ic5Zq99gZ2YeegTwBV6wcUX1irqB5VWQp60o6EmgWhTtoF51PMCjGq6fL4I3oBBYJOe9iLdBj7Kh+DJzbe6HC0NnBF5bJl+3NDwskZrlI7QhiCx4PVfxTdNgY5N6cDUFlavryphcvVZjB5VKPCZqgFlwE4QDGC7L/bNsRGa6EHlCK9+L9eL4jwF3gVbUk0FNOdkzL1TVPawaud8188z85bgk28i5a/ZM3KKIjVg6BJGIrXDizx3qub9bObhDU0K+3f1pFkq/+WkqL9YvhZfSiUcFmCIhxQ4cjJaNbc1KFz+OTszn5qqQ/0kR2srnNrh0nvio7J9z1MUxjXzmZc=
+X-Microsoft-Antispam-Message-Info: sOb8NAIiaD0MBPrxIx6qgoWHfzvwz6il+OwP2NAQ9wEBf8IsFl2qo7nVk25daqXuKyECOHcZXnXaKFv3GA0uF07plnTJashtFPOe4UXcRlZLWCbh66f/eJ8CZCgic7VeqcsesNDe7hLDI1CR962KO6lxuhdMLz51hIB2wIVSPOl/5sAUW+cuyo3GGXl0y+gtOwyHnWYR9M04JEh17457So4PFGcS70Pf16Z1nYBJ+k3U0/FjjBuaNWZxeee2QbVi2KlgKUoPU5jTTA/5SbkymfgCWVjzUu8OFETVW6lVXQwn8hs4usRrMnk2/VB7gHiFALqvw6LiKe8Yz756fJs4m5yeGzDNbVLUoWx7NUyFmitpaegEyzIzVefqiXDFZOK5IUzSIrAssZZpd67l/R/igYb2ehu6LpjCVYMyALw56vXCyyLF/3a/qyhSr50UoCjHUyVrlQKdSndEdQopv8xH8bYEKh5ABF0IRd+fpsMk0Re1BD+GAJgVrsYQXAdvQEd4RWy7+74vGS63HIi3QypfExYiJVI4+9M0Kgi0bXQ05r2QSuzxNyiQ+2deeYv5+ot3qU4J53OrsgqnzBpNPXOErsBoL6rgYk4ggJjqnq1ASn30iU0A5vVWiWXy3R9+2mKI5KKIyx/taFD34AHvnNg96YkGoqu+/MkpjiIWw4NofJ0=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?yLNBtvNpHXfKbKlNn5CBgdrdX9GtRqqUQ/uI/wFh+T2AqwHHmsMq47uCbbrl?=
- =?us-ascii?Q?irvqWF3X3WAPKZKLHj2dbzjO4RA8l43kEtZ2JWoKxfWm3/+O4HUIGGn/Q7Gy?=
- =?us-ascii?Q?n7YhR9HPOmTu9rhjuSm0q6G7joyJ2y5evIqucmv/KVBtx8E2iRWJTj5Xvrfq?=
- =?us-ascii?Q?ZPaoMH/hXd5c+/Qw+LHSx73SiTuD/0g3HWB5YXNp/ZpMZReUINaQY/fyXbII?=
- =?us-ascii?Q?70KoFdaTgBTBUOPz/cY9+wR2QHdAjlMNUlbHSAeUD5I1MYJuPywfZTzqL8sb?=
- =?us-ascii?Q?DFMh0e2Iv7Q63/MugblAYiGwwxLbSR4DLs9fNKKjs8izn5GQ2300VN3bV4te?=
- =?us-ascii?Q?fn5A2fZTfc/GthXVDc222ptv7W3X6CVjdf980qSbPFaQwiKpFfRcuV86d9xs?=
- =?us-ascii?Q?4fjfllg9ZzxJ2gJ5PsXOpAjkh5Zv6ONvRXHb3qqb7CLQ0oGlANytRZolYvE/?=
- =?us-ascii?Q?l5nH1Msrp4DQFgEyS5mGR4G1Ejmi0MzqcoPdOGksHd8Y3TsjHuYrpYFPhSmr?=
- =?us-ascii?Q?38ZtL2j2/mTDYKc0RhYuD082pXdOWe6IKK9bxW4a1DihN2PjYTp3+QRiK5sk?=
- =?us-ascii?Q?mMMGM7PsvSZjFDXsS0O+7zZXR74+LHtJPkFIQHmFoj9Fsv5aPDK+WLQrSrgB?=
- =?us-ascii?Q?kaczVzUfEl7wmJV1LK/uRyJGjPt3reE5zyZXTBVBP9hZVyr156zipjWWNxLs?=
- =?us-ascii?Q?otD1t2ccohhh58SQwdBRHUyTHLIV7rywh6kOWH+oIbRRQhOkwYCuIZFj8yCV?=
- =?us-ascii?Q?VthO5qZsowS1IEkgZrr0nXrHwR0Vp6SnKHo6wX0vt2lzXhEg8ScLAwmPV0uZ?=
- =?us-ascii?Q?BPxpKEkcAmQjdakwyyqxlmUSVdvw2Zl4E7ji3m+733iHHHo0jZ9SUHtvtL1t?=
- =?us-ascii?Q?D756HRJ4IygdxfC2eWu4AWinKMkk5ZgB98nnPnmokv4+r6MDxXPLDxsl7ZYY?=
- =?us-ascii?Q?DnLqqyy+LGU6CAYjvF2SewPmuPGfbVL2fBmX9x51Y06W5F+ViGxkpSQxkdrX?=
- =?us-ascii?Q?1xlX7fsO7qwYoA4YCgn/T1U5QsjdQ0wUuUogjAl/a3IqfOgNK8r1XWqxfy9x?=
- =?us-ascii?Q?gm7kG8E5waYCKoHhteyh41azaZENCBirTKJyzf8HHM3zF8npdMKb/1Y9uKop?=
- =?us-ascii?Q?e2MXRZscz8KTQtdwuqswO2Vbw9c4JvD0DmmK0zA2GzcuD8HeepuXs5e60JG+?=
- =?us-ascii?Q?5qlr5+8c2X0thb8oAooKFeiVhhriQ5rZ3D9XfzH3SO6PO04iBuV+pqJLCZKS?=
- =?us-ascii?Q?mfRwZTAw7H1HXwRIo1K4ONa9cGvI10LTKIVjAecEQXfcnay/2xPfgu0klPxl?=
- =?us-ascii?Q?yOb1g3VuPL4tJjXo3eXBngp3BQbQxq0oqdPQqFAooLYvFUPjQBw/79DJLDfK?=
- =?us-ascii?Q?LV6yCzoqt9wnt2NxyYf/KBk7ezp16s72FSpjvvtQnix7b5RPqkcjkW7QBVJw?=
- =?us-ascii?Q?aOYnDbISOhGRj1+Xmw5O2eIEDzs8CVhw4IpRs1OVAMukxs6Y6yf8R9/ZgAOQ?=
- =?us-ascii?Q?CH64+xyhDeDVks4d+VDVuDGYCRhAWo8apocJO+eDBucI13MLdAIsa5SE3Wua?=
- =?us-ascii?Q?+K0ci/ENyl7+/qlbdb3QNZL46fhm1l4M6v6eQ1V9DRJkvcu5AArbWrt8xzIQ?=
- =?us-ascii?Q?0uuYeQzoB8yEmhBq1XTiD3o35EKwU56wJTPgFTfXkTQzIWyeA7mH13LCyesD?=
- =?us-ascii?Q?hmGY1eVZN5m6icJMAE5jRnjpAy2X5H2yYOGv+SwynbZZS6IXSQ1YCSATIQ1w?=
- =?us-ascii?Q?fAO8ZskrJhjxW5vabXuunbEEhQhhEgM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?XiEYtzvK3CjTYgZAlEOeX1lYsWZND8n9b+bb0lb4nDOWsJLqA1nv7FjGUjWW?=
+ =?us-ascii?Q?nmUxtORChWMtEiVyDNNuBSXJp58XScBKStSsRC0XFssYtvi+trtjwCKrWFmF?=
+ =?us-ascii?Q?iTfVL1R662if/5z0+0sErn3LBycX8xUb5dF19zbrJDsYn+l+jvVuHWyXwueD?=
+ =?us-ascii?Q?QnjzGYcT04jwtedUI3re8cz/zDiyUYjakm52BPxIitHGt8FwUvBzvDlJk0ID?=
+ =?us-ascii?Q?xv63XIwsH3Y9s/T67TDL4vNeBt1jc8suvMqmBvUjWIl7YG+Ne4plXEDBmyVq?=
+ =?us-ascii?Q?ueNhJ8PdNorPSaIcs1atb2tUMWqx9SmL0Nw2cOZ4YBK+dolnexQII+QmIQtA?=
+ =?us-ascii?Q?6eAl5fP+CfbdQuRh5fEBifc1RtmcV48wg6FiqiZosMmAYbu8NSkCTJEuU8QK?=
+ =?us-ascii?Q?3vKbdrOAsQhq/TEVBjFnTkzQmvKS8Rnw+grxAE9rpNb02aah4u0SAQ1To55g?=
+ =?us-ascii?Q?X172ONC5xn7VFGZq7rbhnT1l88JAAUwW2wtFmQcwM+YfiQyaTJR3Ef6eatDi?=
+ =?us-ascii?Q?JXJ4mqtJRpoNXg3m+h1Ub8s6Uw8wbKld/u5HyaGhzdL7085t+IFKVafUzlt5?=
+ =?us-ascii?Q?znF2K+jVpCu7a7rSBWMLsW/mTzNJ32MKOsPMfoz9KxVfjl1FSGqL4wjmHymk?=
+ =?us-ascii?Q?8zxvF2+wcwy+LVsOkRbouQzWP+JqYRk0sdj1awI6aAobk+yOSHnVfQOWxeCi?=
+ =?us-ascii?Q?amyEwD2zRAkPQV3IrCbmntChXJSwqAmleuKBeS2ivVA8qjO2xs5CjZ8MIcLz?=
+ =?us-ascii?Q?jIpdJUz9spmSMxW0fMDj+mUS99IpYRQdWUCiRCXXmg9oRjpWMGTSE2KhTXd7?=
+ =?us-ascii?Q?JGHEf0uWL1Ge+E24ehvHOQ0k7H/W66zMlDUSL1E6wcHwds9MHzomckcwYrN9?=
+ =?us-ascii?Q?TToet86duOTf7qLu1rMbQn5BxgrtEVZeC8y/7CK65qmhAU7azkFywxFzA6q0?=
+ =?us-ascii?Q?YRJO2FzzTvEhRWE4kxcgqGUpOOyf4VXQpqYUB7SqxY0yYCwicskdCrKh39xQ?=
+ =?us-ascii?Q?tkYpJyo1UMllkIzP/hqK6CL5jvwbqYqHFUKYNs4rMSu17KpGoqwHXivM4sds?=
+ =?us-ascii?Q?xSQzOjYpfCht1bPlzuQ09JSe9qrWVuG/3FivgVp68qitIIxaCF/r6WFrUwDf?=
+ =?us-ascii?Q?xInvXT0xaXDZ2QQcanU4K3fYAFMLSlLw0ryfwo15RR0cmJrD7HLBPCEHwDw2?=
+ =?us-ascii?Q?k4Fp73/puiGRGW7nwL04JpFjhVWr2kpkydkSA2wmBjof2igNHQSzYNN1SbCv?=
+ =?us-ascii?Q?5FonwyzutbfeB1tu3DF/BYPRo5Odci0q6HLNkm786DjB+vv7hV85sKL8BXj5?=
+ =?us-ascii?Q?9Y0v1KI+swrL1as6Uv98LyfQQLs8xC+Q5E/7VU/330hCxk1oE9liAAWMImLY?=
+ =?us-ascii?Q?dgBjAR2PH3DoxT61uGbvt2KlKm8KzEzP5tPdAcTGECNKhEb+DYeJtqW1qPS/?=
+ =?us-ascii?Q?0QsDsbs9nX4QFx2Zzzn9EbpnmJPa0GhwoDcJRlFeP/dvCmtkKFPZJkmwVBiV?=
+ =?us-ascii?Q?sGcQ5bRbOskV1j2Bx/CHtqKMAnO3rF6q3WsIzJwYst1EVXIeQAn6XlZzBmwR?=
+ =?us-ascii?Q?wT+/h7Qws8bTtIELlielvfto+LlSfHxGtskxBmx82ufsLjUXnO8FM/OvI40k?=
+ =?us-ascii?Q?z5Jwfr8iE4GNKzjTP36ADeuLGN6a38lzoYhOMp8iPgrqJGhl2qshjtUh1X/S?=
+ =?us-ascii?Q?E6EhvLGcr0hpRxeE+CWxkMqnU4o71AfXThQwRm+JfBttEyyRkH+pswgVt4Ds?=
+ =?us-ascii?Q?k/bXXTeYDKlFLTtz8sHCWrZ4qfsSpSw=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba84ac17-8618-4c24-197b-08defb986f87
+X-MS-Exchange-CrossTenant-Network-Message-Id: c10b68ab-d2c7-47ba-9c35-08defb98741f
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 13:15:25.9259 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 13:15:33.6365 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TJ6G0Pu95ZYa20KWycf65rbuGQD6zNLL3ekQ8fXBUmqp5NxwKkWoeFzvxHVm1cF37yhTM8tYgDCIkmPJczX3ArYltRUEZvsq/c0Mnt+sssU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: UXJ4H3pke84+th+Z8v6bWJp4uNmHxpwzNxwEwt2MDYETtp85+kcJv0Zrt7NE4Kz5KipSNwaXJTp1hmzVw9yFwHbZ6JMq8Y47IoZQAsJzjEE=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB9310
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=bin.meng@processmission.com;
@@ -141,10 +141,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object.
+rather than to a file scoped static object inside
+npcm8xx_load_kernel().
 
-The IMX31KZM struct is already allocated per machine instance, so
-move the boot info there.
+Let the caller own the boot info: the board stores it in its
+NPCM8xxMachine and passes it to npcm8xx_load_kernel(), which only
+fills in the SoC specific values.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -155,47 +157,102 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/kzm.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ hw/arm/npcm8xx.c         | 28 +++++++++++++---------------
+ hw/arm/npcm8xx_boards.c  |  2 +-
+ include/hw/arm/npcm8xx.h | 10 ++++++++--
+ 3 files changed, 22 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 168ecf35d0..1aa5b49de9 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -54,17 +54,13 @@
- typedef struct IMX31KZM {
-     FslIMX31State soc;
-     MemoryRegion ram_alias;
-+    struct arm_boot_info bootinfo;
- } IMX31KZM;
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index 9ce6ea52d9..7d707a09b4 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -357,22 +357,20 @@ static const struct {
+     },
+ };
  
- #define KZM_RAM_ADDR            (FSL_IMX31_SDRAM0_ADDR)
- #define KZM_FPGA_ADDR           (FSL_IMX31_CS4_ADDR + 0x1040)
- #define KZM_LAN9118_ADDR        (FSL_IMX31_CS5_ADDR)
- 
--static struct arm_boot_info kzm_binfo = {
--    .loader_start = KZM_RAM_ADDR,
--    .board_id = 1722,
+-static struct arm_boot_info npcm8xx_binfo = {
+-    .loader_start           = NPCM8XX_LOADER_START,
+-    .smp_loader_start       = NPCM8XX_SMP_LOADER_START,
+-    .smp_bootreg_addr       = NPCM8XX_SMP_BOOTREG_ADDR,
+-    .gic_cpu_if_addr        = NPCM8XX_GICC_BA,
+-    .secure_boot            = false,
+-    .board_id               = -1,
+-    .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
+-    .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
 -};
 -
- static void kzm_init(MachineState *machine)
+-void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc)
++void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
++                         struct arm_boot_info *binfo)
  {
-     IMX31KZM *s = g_new0(IMX31KZM, 1);
-@@ -125,10 +121,12 @@ static void kzm_init(MachineState *machine)
-                        14745600, serial_hd(2), DEVICE_NATIVE_ENDIAN);
-     }
- 
--    kzm_binfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = KZM_RAM_ADDR;
-+    s->bootinfo.board_id = 1722;
-+    s->bootinfo.ram_size = machine->ram_size;
- 
-     if (!qtest_enabled()) {
--        arm_load_kernel(&s->soc.cpu, machine, &kzm_binfo);
-+        arm_load_kernel(&s->soc.cpu, machine, &s->bootinfo);
-     }
+-    npcm8xx_binfo.ram_size = machine->ram_size;
+-
+-    arm_load_kernel(&soc->cpu[0], machine, &npcm8xx_binfo);
++    binfo->loader_start = NPCM8XX_LOADER_START;
++    binfo->smp_loader_start = NPCM8XX_SMP_LOADER_START;
++    binfo->smp_bootreg_addr = NPCM8XX_SMP_BOOTREG_ADDR;
++    binfo->gic_cpu_if_addr = NPCM8XX_GICC_BA;
++    binfo->secure_boot = false;
++    binfo->board_id = -1;
++    binfo->board_setup_addr = NPCM8XX_BOARD_SETUP_ADDR;
++    binfo->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    binfo->ram_size = machine->ram_size;
++
++    arm_load_kernel(&soc->cpu[0], machine, binfo);
  }
  
+ static void npcm8xx_init_fuses(NPCM8xxState *s)
+diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
+index 042a928857..f462369bea 100644
+--- a/hw/arm/npcm8xx_boards.c
++++ b/hw/arm/npcm8xx_boards.c
+@@ -198,7 +198,7 @@ static void npcm845_evb_init(MachineState *machine)
+     npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
+     npcm845_evb_i2c_init(soc);
+     npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
+-    npcm8xx_load_kernel(machine, soc);
++    npcm8xx_load_kernel(machine, soc, &NPCM8XX_MACHINE(machine)->bootinfo);
+ }
+ 
+ static void npcm8xx_set_soc_type(NPCM8xxMachineClass *nmc, const char *type)
+diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
+index a8377db490..676c82150d 100644
+--- a/include/hw/arm/npcm8xx.h
++++ b/include/hw/arm/npcm8xx.h
+@@ -23,6 +23,7 @@
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/intc/arm_gic_common.h"
+ #include "hw/mem/npcm7xx_mc.h"
++#include "hw/arm/boot.h"
+ #include "hw/misc/npcm_clk.h"
+ #include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+@@ -62,6 +63,7 @@ struct NPCM8xxMachine {
+      */
+     SplitIRQ            fan_splitter[NPCM8XX_NR_PWM_MODULES *
+                                      NPCM7XX_PWM_PER_MODULE];
++    struct arm_boot_info bootinfo;
+ };
+ 
+ 
+@@ -122,11 +124,15 @@ OBJECT_DECLARE_TYPE(NPCM8xxState, NPCM8xxClass, NPCM8XX)
+  * npcm8xx_load_kernel - Loads memory with everything needed to boot
+  * @machine - The machine containing the SoC to be booted.
+  * @soc - The SoC containing the CPU to be booted.
++ * @binfo - Caller owned boot info structure to be filled in.
+  *
+  * This will set up the ARM boot info structure for the specific NPCM8xx
+  * derivative and call arm_load_kernel() to set up loading of the kernel, etc.
+- * into memory, if requested by the user.
++ * into memory, if requested by the user.  The boot info is owned by the
++ * caller because arm_load_kernel() keeps a pointer to it for the lifetime
++ * of the CPUs.
+  */
+-void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc);
++void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
++                         struct arm_boot_info *binfo);
+ 
+ #endif /* NPCM8XX_H */
 -- 
 2.53.0
 
