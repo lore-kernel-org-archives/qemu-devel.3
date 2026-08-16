@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E8DC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 714F0C5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgJK-0000hU-BX; Sun, 16 Aug 2026 15:14:23 -0400
+	id 1wvgKo-00005u-63; Sun, 16 Aug 2026 15:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJB-0000Yd-4c
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:13 -0400
+ id 1wvgKe-000823-I6
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJ9-0007Zh-2Z
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:12 -0400
+ id 1wvgKc-0008Oj-SV
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907650;
+ s=mimecast20190719; t=1786907742;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5me9IKB/1eEE3FMoQ1tv4Jcm7F9fMPCSAmLmmud3nJs=;
- b=LV3sGlpEEHVCB4gvk9imYUpUXs4aOA8vxqafjBYh4wVok12QbVI/jkIO9s/e/SHAlxBrZv
- iS3OHrqZWjfT0kDvF2nRFdoP4QD0eaLbHS+8rlsWSqzK15jlfy2fJfO4gCNvCX0vlLe4u/
- tsowuou+xoE9c+XAMIvrK15hAilP0F8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8HaEyNXB0qSnMx4k2VRgXbY/jwtfrkq9X/04xldHvec=;
+ b=XeNeXjFXhvAvFX1Tci0lPK+rfTonIn4smVNnr/2N9TJRLbVZsgHCfwCpS8Uyxq5F9GgZdX
+ IL2UaBzQWukbEfelegexGHdr4gj2Q4PlIo66mxIXG7PsJjPPJmrZUPY8Qx8isRVFbk9Lfx
+ it4TSqsrqZpbgnhhHAM6H1ci8U3Xckw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-_6zVyEdNORiSaWcwdIyV8w-1; Sun,
- 16 Aug 2026 15:14:07 -0400
-X-MC-Unique: _6zVyEdNORiSaWcwdIyV8w-1
-X-Mimecast-MFC-AGG-ID: _6zVyEdNORiSaWcwdIyV8w_1786907646
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-o5utE6VEPpOi7PpIEYOjNw-1; Sun,
+ 16 Aug 2026 15:15:40 -0400
+X-MC-Unique: o5utE6VEPpOi7PpIEYOjNw-1
+X-Mimecast-MFC-AGG-ID: o5utE6VEPpOi7PpIEYOjNw_1786907739
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F6B6195608D; Sun, 16 Aug 2026 19:14:06 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6ED191800344; Sun, 16 Aug 2026 19:15:39 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A0C9180049F; Sun, 16 Aug 2026 19:14:04 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 559BF1956041; Sun, 16 Aug 2026 19:15:37 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:46 +0400
-Subject: [PATCH v3 19/49] tests/qtest/netdev-socket: replace HMP with
- x-query-network QMP
+Date: Sun, 16 Aug 2026 23:13:09 +0400
+Subject: [PATCH v3 42/49] target: guard MonitorDef tables with CONFIG_HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-19-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-42-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12768;
+ Markus Armbruster <armbru@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4543;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=YA9IeNRf5eE0PbcbZTc2CKcxjqnSRjTaO3sj+6MVCNQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguxi/vpWK9Z2C/+UcFydxT2pbpB3UBu8NIai
- 3A5SRhSjjCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsQAKCRDa6OEJdZac
- 5V0ZEACowKQf/VH/NmcYBCsbUjL4vmyuXDPgNytr2rl5ZsZ4NPpkiqP360+vM5knjSG1HIWuG12
- yCYiUvD1wJbGkj/3prB7P9gh+l2lT2MM8B2qocCIgh2jPSiRKM7Flqxsfs80GijXY53qhrR1ZsO
- lnAeq2jk+Cy9SlPUP0wYmewkSTTDWU7UuaOZFw52r3PbYsfGhFsYYTuYwd3LSqYu7ZxpCaM4xIw
- dfC8+Rf0JiTjGeoFZzPC4AMvCnN+4twAhH87msbA7dQ4PJHpD23UqazXAT0QLxpq00QAUrAX8Qt
- M51kpJUBAUMRH0I4kNwSt79sL3+90c9vS7Rlsu32LQPkZ0YpLoweDCFKLos+APugyi5jhNVzwcq
- eJNzb3iEl9GOH/nxWc3xV77huTnxb1Pfu9KsMR0UnL/Whi3we/0jk+El+59IBNatkllqQ5vTk+4
- gADgdeO9bQVcFRLaHmLm/bbM3QefjYwgG1VfErgT0wvYPk6xxPNasWt4BVJrbxbjC+QxwW0XfUy
- UQ8DlTBXhnXkYBue/6fCzu/RkfW+zR7msVIV3hTy+PpeaA8qEY0EfwsMrm9bYkijfAmbX+wQ/qD
- cUQuYTRYy5sgeLFlGb4Xi0aYmOPfsRiaVNSWx5ev+hdgUuL5W0gALGTdiNC5iBWFT+H/Ug6zl7S
- PjHeM84uqG4ewoA==
+ bh=a2CAPWNLyN2I8KF8hmrre4KD8lqPdChd4IBTVlywrdo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu0lz+qE4RQ6LlYvCJpu7FSiEcSsBDBzVZyt
+ PEWwfpKrgmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtAAKCRDa6OEJdZac
+ 5flWD/4pvBDgRxQJnQbgYx3MNM8wpEFOW4V6kkUD+CP+3lOMgrW1ZI81yoVSZBzt/AIarRjar/H
+ MQQLH0VBM5o0DDdOVpckBuCmvRJdy7wlCi99HC3G4SFIt4RLoFxvgB9OWINkAIHhmMhehB+vblw
+ 0gMopFXFsaw7WG+UsLwhRlUmS5KMhtLF/hFb8Cqs+LC+flAfjc+QQIbbVmG/fgHiKA7zaBEN8MX
+ +SlXXhPijnOsGN034aIKwQw/qRPY2bG2X6iA9av/NO+780RzCPbEKzO2FxSz6+MCTB3s9amA+Up
+ f4iAQRP/GOc/XDb/yO4AJ1X6/lND7oVf2itolBZ9CYnBVt5QodI22pjxuJzTbQ+GluCOToffrW4
+ zm2JwLFwNhahuI58Kd4P0Lvm9L7eT624fcQuOU5vgkqJqQ3xveQcI3h903M9bw7Y9oLd5wRu7SJ
+ 6JPu4ObEhmraWb4pvot6euyhoFTRQFvLPmyplFuGZQ97e9UgvHOVx+TnU/8Dl/4p9wGYuuLdIzu
+ 5xIZNbQv9+wcIyGowQ8/ZJzxvTWwB3ViKDw0pzgxmDiEMWw1/MMdRSehIjhp7jl1pKipenlk3iS
+ qZgtErr7GQ95hjNdz5bwn1tO5VraF/7MfPRinG5FyTHoVYgSUdeNFJ++ZjardPkuYctn3KzBgYz
+ VWefAzQr2ykBfKw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,313 +110,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the HMP "info network" text parsing with the structured
-x-query-network QMP command. This makes the test assertions more robust
-by matching individual fields (info-str) instead of parsing the full HMP
-line format.
-
-The EXPECT_STATE macro now takes an explicit netdev id argument to look
-up the client by name in the QMP response. The strrchr truncation is
-made NULL-safe: if the truncation character is not found, the full
-string is compared (and the final g_assert_cmpstr will catch
-mismatches).
-
-While at it, fix the pre-existing duplicate "qemu/sockets.h" include,
-and reorder includes.
+Guard SysemuCPUOps::monitor_defs field and the per-target MonitorDef
+arrays with CONFIG_HMP. These tables are only used by HMP 'print' and
+'info registers' commands.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/netdev-socket.c | 143 +++++++++++++++++++++++++-------------------
- 1 file changed, 82 insertions(+), 61 deletions(-)
+ include/hw/core/sysemu-cpu-ops.h | 2 ++
+ monitor/hmp.c                    | 4 +++-
+ target/i386/cpu.c                | 4 ++++
+ target/m68k/cpu.c                | 4 ++++
+ target/sparc/cpu.c               | 5 +++--
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/netdev-socket.c b/tests/qtest/netdev-socket.c
-index b731af0ad959..30005c2e0015 100644
---- a/tests/qtest/netdev-socket.c
-+++ b/tests/qtest/netdev-socket.c
-@@ -7,33 +7,62 @@
-  */
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index 9a45596169a3..e56eea18b785 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -109,11 +109,13 @@ typedef struct SysemuCPUOps {
+      */
+     int (*monitor_get_register)(CPUState *cs, const char *name, int64_t *pval);
  
- #include "qemu/osdep.h"
--#include "qemu/sockets.h"
- #include <glib/gstdio.h>
- #include "../unit/socket-helpers.h"
- #include "libqtest.h"
--#include "qobject/qstring.h"
--#include "qemu/sockets.h"
--#include "qapi/qobject-input-visitor.h"
- #include "qapi/qapi-visit-sockets.h"
-+#include "qapi/qobject-input-visitor.h"
-+#include "qemu/sockets.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qlist.h"
-+#include "qobject/qstring.h"
++#ifdef CONFIG_HMP
+     /**
+      * @monitor_defs: Array of MonitorDef entries. This field is legacy,
+      *                use @gdb_core_xml_file to dump registers instead.
+      */
+     const MonitorDef *monitor_defs;
++#endif
  
- #define CONNECTION_TIMEOUT    60
+     /**
+      * @legacy_vmsd: Legacy state for migration.
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index e5f8b9c576e0..3c70adcd35bb 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1725,13 +1725,15 @@ void monitor_register_hmp_info_hrt(const char *name,
+ static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
+ {
+     CPUState *cs = monitor_hmp_get_cpu(hmp);
+-    const MonitorDef *md;
++    const MonitorDef *md = NULL;
+     void *ptr;
  
--#define EXPECT_STATE(q, e, t)                             \
--do {                                                      \
--    char *resp = NULL;                                    \
--    g_test_timer_start();                                 \
--    do {                                                  \
--        g_free(resp);                                     \
--        resp = qtest_hmp(q, "info network");              \
--        if (t) {                                          \
--            strrchr(resp, t)[0] = 0;                      \
--        }                                                 \
--        if (g_str_equal(resp, e)) {                       \
--            break;                                        \
--        }                                                 \
--    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT); \
--    g_assert_cmpstr(resp, ==, e);                         \
--    g_free(resp);                                         \
-+/*
-+ * Only checks info-str; type is implicit from the netdev created by each test
-+ */
-+static char *query_net_info_str(QTestState *q, const char *name)
-+{
-+    QDict *ret;
-+    QList *clients;
-+    QListEntry *entry;
-+
-+    ret = qtest_qmp_assert_success_ref(q, "{'execute': 'x-query-network'}");
-+    clients = qdict_get_qlist(ret, "clients");
-+    g_assert_nonnull(clients);
-+
-+    QLIST_FOREACH_ENTRY(clients, entry) {
-+        QDict *client = qobject_to(QDict, qlist_entry_obj(entry));
-+        if (g_str_equal(qdict_get_str(client, "name"), name)) {
-+            char *info = g_strdup(qdict_get_str(client, "info-str"));
-+            qobject_unref(ret);
-+            return info;
-+        }
-+    }
-+
-+    g_assert_not_reached();
-+}
-+
-+#define EXPECT_STATE(q, id, e, t)                           \
-+do {                                                        \
-+    char *info = NULL;                                      \
-+    g_test_timer_start();                                   \
-+    do {                                                    \
-+        g_free(info);                                       \
-+        info = query_net_info_str(q, id);                   \
-+        if (t) {                                            \
-+            char *p = strrchr(info, t);                     \
-+            if (p) {                                        \
-+                p[0] = 0;                                   \
-+            }                                               \
-+        }                                                   \
-+        if (g_str_equal(info, e)) {                         \
-+            break;                                          \
-+        }                                                   \
-+    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT);  \
-+    g_assert_cmpstr(info, ==, e);                           \
-+    g_free(info);                                           \
- } while (0)
+     if (cs == NULL) {
+         return -1;
+     }
++#ifdef CONFIG_HMP
+     md = cs->cc->sysemu_ops->monitor_defs;
++#endif
+     if (md == NULL) {
+         return -1;
+     }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index f0687b5c482d..84e805ee85e2 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10853,6 +10853,7 @@ static const Property x86_cpu_properties[] = {
  
- static gchar *tmpdir;
-@@ -127,20 +156,19 @@ static void test_stream_inet_ipv4(void)
-                        "addr.ipv4=on,addr.ipv6=off,"
-                        "addr.host=127.0.0.1,addr.port=%d", port);
+ #ifndef CONFIG_USER_ONLY
  
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
++#ifdef CONFIG_HMP
+ static int64_t monitor_get_pc(MonitorHMP *hmp, const struct MonitorDef *md,
+                               int offset)
+ {
+@@ -10878,6 +10879,7 @@ static const MonitorDef x86_monitor_defs[] = {
+     { NULL },
+ #undef SEG
+ };
++#endif
  
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=inet,"
-                        "addr.ipv4=on,addr.ipv6=off,"
-                        "addr.host=127.0.0.1,addr.port=%d", port);
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    expect = g_strdup_printf("st0: index=0,type=stream,tcp:127.0.0.1:%d\r\n",
--                             port);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("tcp:127.0.0.1:%d", port);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
+@@ -10892,7 +10894,9 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
+     .write_elf64_note = x86_cpu_write_elf64_note,
+     .write_elf32_qemunote = x86_cpu_write_elf32_qemunote,
+     .write_elf64_qemunote = x86_cpu_write_elf64_qemunote,
++#ifdef CONFIG_HMP
+     .monitor_defs = x86_monitor_defs,
++#endif
+     .legacy_vmsd = &vmstate_x86_cpu,
+ };
+ #endif
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index ce2707dee5aa..aafcca3489b3 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -603,6 +603,7 @@ static const VMStateDescription vmstate_m68k_cpu = {
+     },
+ };
  
-     /* the port is unknown, check only the address */
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:127.0.0.1", ':');
-+    EXPECT_STATE(qts0, "st0", "tcp:127.0.0.1", ':');
++#ifdef CONFIG_HMP
+ static const MonitorDef m68k_monitor_defs[] = {
+     { "ssp", offsetof(CPUM68KState, sp[0]) },
+     { "usp", offsetof(CPUM68KState, sp[1]) },
+@@ -618,13 +619,16 @@ static const MonitorDef m68k_monitor_defs[] = {
+     { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
+     { NULL },
+ };
++#endif
  
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -200,7 +228,7 @@ static void test_stream_unix_reconnect(void)
-                        "-netdev stream,id=st0,server=true,addr.type=unix,"
-                        "addr.path=%s", path);
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
+ static const struct SysemuCPUOps m68k_sysemu_ops = {
+     .has_work = m68k_cpu_has_work,
+     .get_phys_addr_debug = m68k_cpu_get_phys_addr_debug,
++#ifdef CONFIG_HMP
+     .monitor_defs = m68k_monitor_defs,
++#endif
+ };
+ #endif /* !CONFIG_USER_ONLY */
  
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=unix,"
-@@ -250,20 +278,19 @@ static void test_stream_inet_ipv6(void)
-                        "addr.ipv4=off,addr.ipv6=on,"
-                        "addr.host=::1,addr.port=%d", port);
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 1bc14b586bb9..ae9bdca9df82 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -997,7 +997,7 @@ static const Property sparc_cpu_properties[] = {
  
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,server=false,id=st0,addr.type=inet,"
-                        "addr.ipv4=off,addr.ipv6=on,"
-                        "addr.host=::1,addr.port=%d", port);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,tcp:::1:%d\r\n",
--                             port);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("tcp:::1:%d", port);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
- 
-     /* the port is unknown, check only the address */
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:::1", ':');
-+    EXPECT_STATE(qts0, "st0", "tcp:::1", ':');
- 
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -282,16 +309,16 @@ static void test_stream_unix(void)
-                        "addr.type=unix,addr.path=%s,",
-                        path);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,server=false,"
-                        "addr.type=unix,addr.path=%s",
-                        path);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
--    EXPECT_STATE(qts1, expect, 0);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("unix:%s", path);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
-     g_free(path);
- 
-@@ -314,16 +341,16 @@ static void test_stream_unix_abstract(void)
-                        "addr.abstract=on",
-                        path);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "listening", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,server=false,"
-                        "addr.type=unix,addr.path=%s,addr.abstract=on",
-                        path);
- 
--    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
--    EXPECT_STATE(qts1, expect, 0);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("unix:%s", path);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
-     g_free(path);
- 
-@@ -346,14 +373,14 @@ static void test_stream_fd(void)
-                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
-                        sock[0]);
- 
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
-+    EXPECT_STATE(qts0, "st0", "unix:", 0);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
-                        sock[1]);
- 
--    EXPECT_STATE(qts1, "st0: index=0,type=stream,unix:\r\n", 0);
--    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
-+    EXPECT_STATE(qts1, "st0", "unix:", 0);
-+    EXPECT_STATE(qts0, "st0", "unix:", 0);
- 
-     qtest_quit(qts1);
-     qtest_quit(qts0);
-@@ -379,10 +406,9 @@ static void test_dgram_inet(void)
-                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
-                         port[0], port[1]);
- 
--    expect = g_strdup_printf("st0: index=0,type=dgram,"
--                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
-+    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
-                              port[0], port[1]);
--    EXPECT_STATE(qts0, expect, 0);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-@@ -391,10 +417,9 @@ static void test_dgram_inet(void)
-                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
-                         port[1], port[0]);
- 
--    expect = g_strdup_printf("st0: index=0,type=dgram,"
--                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
-+    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
-                              port[1], port[0]);
--    EXPECT_STATE(qts1, expect, 0);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
- 
-     qtest_quit(qts1);
-@@ -410,7 +435,7 @@ static void test_dgram_mcast(void)
-                       "-netdev dgram,id=st0,"
-                       "remote.type=inet,remote.host=230.0.0.1,remote.port=1234");
- 
--    EXPECT_STATE(qts, "st0: index=0,type=dgram,mcast=230.0.0.1:1234\r\n", 0);
-+    EXPECT_STATE(qts, "st0", "mcast=230.0.0.1:1234", 0);
- 
-     qtest_quit(qts);
- }
-@@ -431,9 +456,8 @@ static void test_dgram_unix(void)
-                        "remote.type=unix,remote.path=%s",
-                        path0, path1);
- 
--    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
--                             path0, path1);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("udp=%s:%s", path0, path1);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-@@ -441,10 +465,8 @@ static void test_dgram_unix(void)
-                        "remote.type=unix,remote.path=%s",
-                        path1, path0);
- 
+ #ifdef TARGET_SPARC64
+ #include "monitor/hmp.h"
 -
--    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
--                             path1, path0);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("udp=%s:%s", path1, path0);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
++#ifdef CONFIG_HMP
+ static const MonitorDef sparc64_monitor_defs[] = {
+     { "asi", offsetof(CPUSPARCState, asi) },
+     { "pstate", offsetof(CPUSPARCState, pstate) },
+@@ -1009,6 +1009,7 @@ static const MonitorDef sparc64_monitor_defs[] = {
+     { NULL },
+ };
+ #endif
++#endif
  
-     unlink(path0);
-@@ -470,17 +492,16 @@ static void test_dgram_fd(void)
-                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
-                        sv[0]);
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[0]);
--    EXPECT_STATE(qts0, expect, 0);
-+    expect = g_strdup_printf("fd=%d unix", sv[0]);
-+    EXPECT_STATE(qts0, "st0", expect, 0);
-     g_free(expect);
- 
-     qts1 = qtest_initf("-nodefaults -M none "
-                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
-                        sv[1]);
- 
--
--    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[1]);
--    EXPECT_STATE(qts1, expect, 0);
-+    expect = g_strdup_printf("fd=%d unix", sv[1]);
-+    EXPECT_STATE(qts1, "st0", expect, 0);
-     g_free(expect);
- 
-     qtest_quit(qts1);
+@@ -1016,7 +1017,7 @@ static const struct SysemuCPUOps sparc_sysemu_ops = {
+     .has_work = sparc_cpu_has_work,
+     .get_phys_addr_debug = sparc_cpu_get_phys_addr_debug,
+     .legacy_vmsd = &vmstate_sparc_cpu,
+-#if defined(TARGET_SPARC64)
++#if defined(TARGET_SPARC64) && defined(CONFIG_HMP)
+     .monitor_defs = sparc64_monitor_defs,
+ #endif
+ };
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
