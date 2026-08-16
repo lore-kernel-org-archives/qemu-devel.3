@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DADFC5DF66
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA87CC5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgJW-0001Xl-Lc; Sun, 16 Aug 2026 15:14:34 -0400
+	id 1wvgJb-0002GG-NA; Sun, 16 Aug 2026 15:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJU-0001Kw-HX
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:32 -0400
+ id 1wvgJZ-0001yo-LY
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJT-0007eh-2I
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:32 -0400
+ id 1wvgJX-0007fh-Cs
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907670;
+ s=mimecast20190719; t=1786907674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Li9eaIRd/wq0aVwn/Br8is5mFw0E+0GI7agP3g+jan8=;
- b=EjCdmixSYjfvTJO+gxGy/HZ4PAOMQ0n4MWoPLnN890LwuYRXKgLXdBglveYd5/+w0/N5gD
- r20EkI9v4oH3GiQJ+kN36rSjhSPwgFgVZz5HH78wsKprYZ4iN3s99/uQ0d1Sdkrn1FHHFc
- hqm9RiQz/F19smBaovSCKl/2yUeKNNM=
+ bh=Xio5ek/DtZoSh6Qdxkpsfo2CpELN36wjvQz9OIm/oog=;
+ b=OsLYw8IRdlMENcubdrzNeWNpQB63iT6NU6a7ZyDwnhKBZg/1qy8We37oP/utUZLWRQjcT1
+ kWfNpzNoxkD4Hp0yaLCmauZ40EctBQklhRIDLIi7qc/LSA47ZfQAovIrfBJJaaTAUryiTV
+ yFsx2CdvFX//L0Mfn69gc2Hl/VkSqHg=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-xBFrfoJvNxmnvNihVQcVKw-1; Sun,
- 16 Aug 2026 15:14:28 -0400
-X-MC-Unique: xBFrfoJvNxmnvNihVQcVKw-1
-X-Mimecast-MFC-AGG-ID: xBFrfoJvNxmnvNihVQcVKw_1786907668
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-5aWXx9BvPCWJI8buowCAAQ-1; Sun,
+ 16 Aug 2026 15:14:32 -0400
+X-MC-Unique: 5aWXx9BvPCWJI8buowCAAQ-1
+X-Mimecast-MFC-AGG-ID: 5aWXx9BvPCWJI8buowCAAQ_1786907671
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F00711800344; Sun, 16 Aug 2026 19:14:27 +0000 (UTC)
+ id A7FDD1800471; Sun, 16 Aug 2026 19:14:31 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 030CC195608A; Sun, 16 Aug 2026 19:14:26 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A42A31956041; Sun, 16 Aug 2026 19:14:30 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:52 +0400
-Subject: [PATCH v3 25/49] tests/qemu-iotests: convert pause/resume_drive()
- to QMP
+Date: Sun, 16 Aug 2026 23:12:53 +0400
+Subject: [PATCH v3 26/49] build-sys: add 'hmp' option
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-25-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-26-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1251;
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3106;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/L0hVAFEx3XIWnCzmZ1t+k9L/2lgK8hla0QlNAoAMqw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguyHbad6hO7UA5n2apRt9oG1p8gXUFgkOtuu
- B1oAasvG9qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsgAKCRDa6OEJdZac
- 5Q8YEACp9eZDrHLMgPz+mMf+BcqCfYtYS9fUKcSU+cI9xPTJpEKBQwIVvlvW8uF7LBO96jDNNT/
- Oyp42Si9ro9Nsmfbt3fZjRhJskhXj8hFWdXV8qq3JQ1EtWVXBWBq+iFJPme9UH20sP7F63yLlP1
- hiitzPup9ZLRpHnsMAQZAPuIxUD8CwD3qmIHdkjLxgpUQbJJyMdjoMS7gD5WTvSm9wDAd03ffd3
- O/DUjrHTCq6B6hfXpq4vomosL+Bb2qqMz6wAOm6pa/XGRcx8xXafyB15Ot29hCPRvJhU5//nShg
- WqvwEML37bkqYcNhwWHMJeohH96shaWwmytliYGKC3/GDlf96EC6Sj3Hl1SCjMQ2+eqbwYLwL3A
- t2saxzorssyWc6hMhi1ZbZyLr3xYiZOwuttY4kOjK5sKg3rW+q1pnM88LwuCzVEzyYi7a1EgrQR
- b9UHpVaSIxlsghx086ER5+Z4OWpcau2P9fG7uSXJgq2ZCOZutKJoGjn1cCQhHXlKRJJrDjAX8HD
- xmzz9O4d1vxVajvCEZ9/PW3QFHoLehTNe7Mc3YZg8EgZDeJVlTh7oWdkyQtBh/Zfd2n8I38wc4e
- uEAr7JoaN2MrsI5xMfLxP0dLeaUH1LH4W1nqz+LJvdnvJSMeoXQDX6dvJmrpT39tTzGW+Z+/Q0s
- Bo92E9e8nUXZfgA==
+ bh=GN8UARHzBp9ZPX0/G1E3GbVjjCI7VPL7U4mo31Lr1Pc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguy/fx+Y4rUEZFW3W7pOnvWUfb08jkQ1Ope1
+ eeWRyK/e1iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsgAKCRDa6OEJdZac
+ 5ZrWEACrN7AJNtRGbFfjOoB9VpPRt/viosgi+XGNrvIflQvj0OzUy6hSZjK19Qz6iG/qcI+cMTU
+ hegE3R74GasdSJlGrLRG47Q3FaFy7AuELRDirhvc+OMIzcMUAvdViCDj2/69+htXb8KyuMaPl+/
+ Q8K3X4RSx0Wqh9Erd3VCT9NhfJE0othalqDIJ4F+M7EH4pH2L8UXpqX+71eHkap1+FarLD6QB6d
+ BMpDMzPjPIE59TroyOlvYW7mevDqNb15WFnU/14l6tQHVBMtkhpDTU4nmUQs936P4aqlNrEBXDG
+ 9R9cIdiCYdDy0+oHkUPE16GZ/gg51lfhowiYAOkeEobdbhS+nfrMynZEzEZwzLh7GZGbXzt8rEi
+ qSRg5JgaeakC5DjUMghrmNcCD6G/H5VrinFMy08rgxBROAB05yDr0nEUNRvD/JPWglMbXLbh9YH
+ gHn3T/bLJkQRNvN3wF51N70Rad1hsKGPOC4UEy9xJRvmtSMDbYV/8LY6/Zskt7qcYvcbl+G3k2P
+ mY0et2O98un9Hu3D5TpvfLpD29WaKaJbUr/cNbduFk2MjjEvq8b95TfI8vWa3VpFoRFudFG9eUD
+ uP1nDRHezK1C5U0mFqJfSxrMao0I3D1TbgAdoxcEzZ+UEv8MB21uCc3R1A3pBxAT2y4quUyz4nY
+ NJY4lFF5rIYrbYg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -107,33 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert pause_drive() and resume_drive() to use x-qemu-io directly
-instead of routing through hmp().
+Add an option to enable/disable HMP support, default to true. The
+following commits are going to make --disable-hmp gradually work.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/iotests.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ meson.build                   | 4 ++++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index c24f1e3767c4..f36bcf316429 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -941,11 +941,11 @@ def pause_drive(self, drive: str, event: Optional[str] = None) -> None:
-             self.pause_drive(drive, "read_aio")
-             self.pause_drive(drive, "write_aio")
-             return
--        self.hmp(f'qemu-io {drive} "break {event} bp_{drive}"')
-+        self.qmp_qemu_io(drive, f'break {event} bp_{drive}')
+diff --git a/meson.build b/meson.build
+index 49a5baf5b52f..03b334549f23 100644
+--- a/meson.build
++++ b/meson.build
+@@ -247,6 +247,9 @@ have_vhost_net = have_vhost_net_kernel or have_vhost_net_user or have_vhost_net_
  
-     def resume_drive(self, drive: str) -> None:
-         """Resume drive r/w operations"""
--        self.hmp(f'qemu-io {drive} "remove_break bp_{drive}"')
-+        self.qmp_qemu_io(drive, f'remove_break bp_{drive}')
+ have_tcg = get_option('tcg').allowed() and (have_system or have_user)
  
-     def hmp_qemu_io(self, drive: str, cmd: str,
-                     use_log: bool = False, qdev: bool = False) -> QMPMessage:
++have_hmp = get_option('hmp') \
++  .disable_auto_if(not have_system) \
++  .allowed()
+ have_tools = get_option('tools') \
+   .disable_auto_if(not have_system) \
+   .allowed()
+@@ -2266,6 +2269,7 @@ endif
+ config_host_data = configuration_data()
+ 
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
++config_host_data.set('CONFIG_HMP', have_hmp)
+ audio_drivers_selected = []
+ if have_system
+   audio_drivers_available = {
+diff --git a/meson_options.txt b/meson_options.txt
+index a07cb47d35e9..d8f59cf92cae 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -111,6 +111,8 @@ option('cfi', type: 'boolean', value: false,
+        description: 'Control-Flow Integrity (CFI)')
+ option('cfi_debug', type: 'boolean', value: false,
+        description: 'Verbose errors in case of CFI violation')
++option('hmp', type : 'feature', value : 'auto',
++       description: 'HMP monitor support')
+ option('multiprocess', type: 'feature', value: 'auto',
+        description: 'Out of process device emulation support')
+ option('relocatable', type : 'boolean', value : true,
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c003985047c0..5a67e59a1671 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -125,6 +125,7 @@ meson_options_help() {
+   printf "%s\n" '  gtk             GTK+ user interface'
+   printf "%s\n" '  guest-agent     Build QEMU Guest Agent'
+   printf "%s\n" '  guest-agent-msi Build MSI package for the QEMU Guest Agent'
++  printf "%s\n" '  hmp             HMP monitor support'
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
+@@ -339,6 +340,8 @@ _meson_option_parse() {
+     --disable-guest-agent-msi) printf "%s" -Dguest_agent_msi=disabled ;;
+     --enable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=true ;;
+     --disable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=false ;;
++    --enable-hmp) printf "%s" -Dhmp=enabled ;;
++    --disable-hmp) printf "%s" -Dhmp=disabled ;;
+     --enable-hv-balloon) printf "%s" -Dhv_balloon=enabled ;;
+     --disable-hv-balloon) printf "%s" -Dhv_balloon=disabled ;;
+     --enable-hvf) printf "%s" -Dhvf=enabled ;;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
