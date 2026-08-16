@@ -4,125 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063C5C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85834C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvc7x-0000Gz-1r; Sun, 16 Aug 2026 10:46:21 -0400
+	id 1wvc7y-0000NC-9G; Sun, 16 Aug 2026 10:46:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc7i-0000Av-Ly
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wvc7n-0000BC-3k
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc7g-0000bB-1I
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:06 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wvc7k-0000bP-Hy
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:09 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDlSL23162140
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:01 GMT
+ 67GDlKgO3215381
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=TEX7gmbTv08ZMByqhnznws
- K8r64Phob7AwSP54MX2AY=; b=hRVcgNcepqzv0bOz8otEPNJE+e1/tKTrFH3WHx
- TivtMvsVZVNK8X47D+P8ot0gjzNfxlzI6GanJ0toD8JYWdvgGzv4peqCJ47MTwLa
- mo6gH+cJfzQ/ccc2kdXCQjBtGbiUZdZ6oHA+ez6VlDWtKiJ3cbNzyPeZ83ZbcJE8
- izOiV0xinmIjH3Jnl8+Vm3SzC9tHy124cMscEEoMPgqt0d/Nvgm60AwUjhPdCWYl
- HY+zqTytbYXcX4xCHNkK1xDi6cxMdwZn1QYkngsHYYPmxPQAb8bZm5hjTWTQlgbr
- OgDbhnhKAuNVFcJPR7tdhOgm4qrnROSl5yyjsk1MaYWuSHhg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2hd7ufyk-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=; b=R7KyYi/66giORQFv
+ BSVKts61J9D/3I2nJDoyELtIxdsrIlqkwry0L3m2gtDOeDGmn1OXox+5f8zScx+3
+ rb6Xub/q49Vu57diNLdIcRUfMt28EG+Uz/Hb5xmSm0vawbgz4j4rGQzqbxPasJZ4
+ BhrPWI9J7FJWCQ34IJv/5yGqroUvAUwZnfTWWurtf1bDyABXn/n+hUwe80RQfuUW
+ vdLLg4aR7l+dKBjZKs4D5o9wEmHdxz6dWDjEIUX5wfpxE09zanNp3dzzSuWDh6G2
+ KSA8SmmAn4Uf32219IFTWehuB94L7MT9A6VpJHkH9ezYFZJSHcJXNjA1Qja2ORVG
+ cd7cBA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfbn3q-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:01 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52ce3c7cb2eso46854891cf.3
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:46:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:07 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-936d067836eso255733785a.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891560; x=1787496360; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TEX7gmbTv08ZMByqhnznwsK8r64Phob7AwSP54MX2AY=;
- b=Af6JaVhT4Cil0gSSUommhlaHzAwVq6CXkkwd6L5CJbo1QUeSiv03lUve//25wVhrf6
- sMMG/Ee1TW2z37sZNZKF4GBohTgMFl9MDsS3vgY3uc6JLrILS//k6TIC/ENRLHYojt1Z
- Ea0ldVzwzC0Ka3AJefpQrZpDbPuMkbeJ1b5ffoYvQlkr7zIbQZaWhsA8hn6UpOd6kQsF
- RLXeEnLTcFXMrD6tZOqX9DCT1E6JhCdqALDaqJNIq1/2kukNahwDnH298XUhRxugjpwZ
- ZJ3EIpL3iROsgyPjPvEDxcER7x7nV6R06lshEd3mWr5W1pRtLm63oUrUT7bDuifuCtlf
- A4Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891560; x=1787496360;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1786891567; x=1787496367; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TEX7gmbTv08ZMByqhnznwsK8r64Phob7AwSP54MX2AY=;
- b=filtG5Jw1zBRTAJFGgDEpBnJ1E98/HqRMYv1SFH6s2KCAbqC1G0XoaLt/yGED+LujY
- C4cTZOjEjXseGR+9QN9pLkfQWjHLotHvMWad1afXWDbjp8nKYu89QDtMQfmQmB99CbYm
- zrM5bqHB8DlsqZq+ZQNgOYYzJq4PWb8z3AJf3q1KgwaH4v+0Fk0pwqNFHP7Kotxr91/K
- JrAMjkVmorP3w3HcPHrTn61Iwn+0caAlPYoK5vdvwY9Oi4edczhPwXq1meZOiYqqfd2P
- ZPQHCDrYVeK6mvkYbGnVZK10kK7SjvcyULq13FEmIaGtLRFwoVs93C2qKnzpaOa+JKJz
- haew==
-X-Gm-Message-State: AOJu0YwZ7VysqrmEEaDulXmSy2saQwo2t+ForD0bo+z0hC6iAaVz/dbQ
- FFe0tOFhywv8eE2kCfk7sL+OVdf54UWAhV6NNvssXdTjT2BK4DQWlfb9ikTPHblrcYVlxiaBHaN
- IYscWwokBEl1hqS1DJZtTR7oO3hr/42n8g4xHADVKSoyg1I0+ZyT4eQGDjwKJruwu6A==
-X-Gm-Gg: AR+sD13aCL+eG5Xpn81WvfwlhAsioWM5pCZowfUME78wYvEc51gUA7daU1ZxXNHhHCQ
- pseb4AOv7S1TTWW4y2f3PyZD60C856PPpjQGLs75j/KsmLTWe5JVpcQ8P7MUn60uE7UQKArmSCh
- sxxyr06OMOSnjCDUPyMK36ZUpK8T39xaQtgQMUdJOpENC0tElB91iva3a7rYWZjYaaHAqhjH87M
- E242GUjFrMbY07rq4Qmh5sq9IRGSX6/Bgkkrqhl9gH9tv+t9xOdsZPDUN73+1WOMQGzOiDqiwF6
- X5ibEMaJ/zTTfyVLNXg6L33Mxw3ba0txmg+6LWOrdTnzQV2b1I6zSPBSfsDA8A23R92OqOUiTlW
- hvIxzBnrovDML/GqIWSNqYhiNEh+D2cb4/kdQZuES1A==
-X-Received: by 2002:a05:622a:1901:b0:51b:fe3c:6c1 with SMTP id
- d75a77b69052e-52d85444130mr185409081cf.27.1786891559592; 
- Sun, 16 Aug 2026 07:45:59 -0700 (PDT)
-X-Received: by 2002:a05:622a:1901:b0:51b:fe3c:6c1 with SMTP id
- d75a77b69052e-52d85444130mr185408711cf.27.1786891559090; 
- Sun, 16 Aug 2026 07:45:59 -0700 (PDT)
+ bh=g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=;
+ b=MlCT/ocZQ87b7bDmEcf1E5zXDjP2j6ZHGOowZTRB1vLvHNKXHislX3Jy3pFQEAv1b/
+ sjyTFcN07zvvHDwnRYduddbdOHs/f7ffo7gPjJNwl5US+41EMi22VOJ2zxDliY1MbhWr
+ oVJwye9HPanrktF9ZHUUJeoeQHq8gRMbyQEMS3Suo2Ts9kKQbwqjHYDTBe0P3lj52S3d
+ LxTFDMK/+0FSi5bYGGYAscBNqf4LQv8g1LK7+IOZmKCkJ0XiBP7uPJaWHfDVAmIqH1kX
+ XgFSP7Xo2cJbpTAQxGF/I5FSflUit9BYEZfij3q/XMW7MoZQ1XUuHaOoRhg3PP3uq8wf
+ +hkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786891567; x=1787496367;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=;
+ b=YhDtmIJ9ntqEMcHPSkyk20HyerWLK8R0mZ/8uPtTTP+bfNwKMBL2ovwBi7cgj7tXqA
+ mFaaVmouI+BEuv93SGLJqc/MG3L6hMZsPEcZZJpZvKWPtIYjfXmddmdErSd0m44rK9Bt
+ PMg6re6gA0GQRmPm8JZB2+9k0sC3zw3qYv0MGrcKABOIui2X5Nw+bCIdWLfUnzwJvyWk
+ usQFrSf9CFvpWWKHtQvFfp0UgMtX6eNpv2J/D4xcJyQ9oaqou+EibUhqsI6QKRPPCg67
+ 7P0Uw9vC8S63Ja8SliH4h2+KW0vCNYnD1Ele/zd7iUuYBvMBuw1L2B16hfLqaNN/hvEB
+ No0w==
+X-Gm-Message-State: AOJu0Yynz51vh0q3z21k3DByMVmjjV3zHYrFk5JMSxM6ORqg+ivg76Oc
+ Ocwo6MXg6N8m4OXr6eHp6spY5ZwHVBw5Y5bSH7J9RjY03fZg+mXHZ081n/a7vVRP7VkAjEDgFGF
+ ou6z/YdN9oDS3lxFgtFpPZi828ni3rO/Xd+QkbZUEy2XDCg+wtQZar7/u8Jl+3T3+Bg==
+X-Gm-Gg: AR+sD10sZRFlh3AUW3bYs2LW/5fAOGcaa+UKdi+PlkO4CQIM/rBwieZRiG+byeEuhoP
+ neMd0NaaR56NZpbISax3lGWdATN2WpS/+Jvw4TkYZwgwx9Z4R5dhLmv/6OWu5t7sPtBWUW/PR0w
+ 32MXIVI8UGJEVGlG8eSoKgEMfHmMnEnpOABnyTDL1+9EcplHERLJXG23YLMp7bnyhLiYbsVXK8Z
+ sqgOmUJTsUBySLlV31bO+oiPkbUvIlaqVxi8fIYHEm8g6reU4nC5fBuluK1eBfs/Hg4h3oDvJdq
+ DPynB6SfA6753+Vjp2eztXaDcIcbdUVgQPx9qn0blNbuC+ondgeh+Ngdlex97sryW2dDWF8J9q6
+ WDSlWhufpbsTMzn7eBKjvArKUz2J5mOXBVRJURrFoLw==
+X-Received: by 2002:a05:620a:8812:b0:936:d2a2:5fe with SMTP id
+ af79cd13be357-936d2a24ffemr2037459985a.6.1786891566975; 
+ Sun, 16 Aug 2026 07:46:06 -0700 (PDT)
+X-Received: by 2002:a05:620a:8812:b0:936:d2a2:5fe with SMTP id
+ af79cd13be357-936d2a24ffemr2037455685a.6.1786891566437; 
+ Sun, 16 Aug 2026 07:46:06 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999610ecf4sm46234895e9.7.2026.08.16.07.45.57
+ 5b1f17b1804b1-499960fef95sm62372555e9.1.2026.08.16.07.46.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:45:57 -0700 (PDT)
+ Sun, 16 Aug 2026 07:46:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/56] Misc HW patches for 2026-08-16
-Date: Sun, 16 Aug 2026 16:44:59 +0200
-Message-ID: <20260816144556.69009-1-philmd@oss.qualcomm.com>
+Subject: [PULL 01/56] hw/qdev: Remove DEFINE_PROP_DMAADDR() and 'hw/qdev-dma.h'
+Date: Sun, 16 Aug 2026 16:45:00 +0200
+Message-ID: <20260816144556.69009-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
+References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfXwH/dvMaKMCw5
- rFJln15ZQl1vFbhxnqVD7U9gxY+w8zFcIU3uH3OennJFkKco+MPMfusWTDgd865LZF0aQ1zk8Cc
- 6DdPwSSEZMAkdEOz/cYqvoBmeQp3gGGTnref2XXmlH+/hmrYiwJT2fBT7limQBQjLeFhKv3yqpJ
- 21pX03PjaOdhJ1PeJWuPxEBXdmXZxStMQ1tRybnjjKMSdYcrY+I6lj5+JLqYmqG9DIUp5jvm1Yp
- Jo1qBNCV+SykhjzWwPn0/FQqI+zRuAs8s+lTYOkpsVUdz6xHpSxJfYuJes9tQqM+7xNx6pm+vmv
- AkYpEyPxlo0vsJu8xV/VvCtXdFv/D47Q9KtEnA1w0wPZrOOAemk+Ax4MclsN9idGWf5Aha4N5jz
- KfwX1ef1+bJzxzQD0mkuqW6Q+VW/fR0IOQ75EG8nyzNfTD33iYMn8QZjZB689m2gSdCf2pU+6yM
- TUHUJHYWb9O+iHIBrGw==
-X-Proofpoint-GUID: TXKPY_S-JQFrYvKFK6J_IzIQpMqddS_z
-X-Authority-Analysis: v=2.4 cv=Ja2Ma0KV c=1 sm=1 tr=0 ts=6a81cd29 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfX/DKFBFnBSJPT
+ BbGpWLp58EvqtEITNklLwH34OgnGEDwr96p3TD/faNaYwwYajwdIewVbt5nEAKW97zokqBwlX/h
+ dmOjgHJbGZlTnXUjha1mPlYqRPlaw+k=
+X-Proofpoint-ORIG-GUID: Fd9QdIiNFeh4YOvqT4L9ZNidi92P9U-4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfXz0Tu7rG5Fd0C
+ YH9XtCHe6UDDpwJevgQe1SkXaXV75UIDxMEqM2FYqgmzBZD9LFJC/+032HwqcyIeNfhhuyw1DbH
+ GNJgXX1vKpUqqQzKbFc8z7qnpd8RMSiKMwwtdXyF6jc52e7anXpvEtmeUm8gc7VRdatTT/5xQGm
+ SnpbTXvvXVEslh278PnKbKXfkpwt6wuQYOM5Gt5iopgCMhPK6uQSX8bqmO671eToo1Q2XJXazZ2
+ h9uCJiycxttgh3WSO0sf6TbW6HraS7B6vwzMWPsnSHqjE+OKSWTnkPqSsRPKT/0zgWJm2BTVooi
+ Q7Z9Q0WBy5C0yJNutIpfGICK5nwRuKwKALbK9YuNtbGzWa7H6igtZu0l4cxod59Ru37OF5Xazmf
+ Hr0X55Jh84T6t5wXj8b1q+l2SFXXlKgaN53HQuELfEtb/I4eFtMGuhNPUaAlnrbMmImZP3HcR97
+ y/W7caGWsBZjKB0HQrg==
+X-Proofpoint-GUID: Fd9QdIiNFeh4YOvqT4L9ZNidi92P9U-4
+X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=6a81cd2f cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8 a=P5CfKFitDfONB5l4hMEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: TXKPY_S-JQFrYvKFK6J_IzIQpMqddS_z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfXw8dPZYGfizNs
- CONxPAhKHEwUGLO1d0LvDIHbfCjWvIR1OR6uF+HVs8aE3gY55FwY/m/D8q2KYSrQhpQGNDWm3TM
- szpuyepqsZr2nwqtFJp7eTAhr/wUe9s=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ofTg0gqHf28Bx6alXq0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 adultscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160117
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -145,216 +151,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit af06b5df2610fe5de6c02d17c17bced9e9f0d47d:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Merge tag 'qom-qdev-20260814' of https://gitlab.com/mcayland-ntx/qemu into staging (2026-08-14 08:44:51 -0700)
+DEFINE_PROP_DMAADDR() is only used once. Since it doesn't
+add much value, simply remove it, along with the header
+defining it.
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20260816
-
-for you to fetch changes up to b409523587c49a08b1ddadd51212a320092347b1:
-
-  hw/core/machine: Move EHCI migration compat properties to 11.1 (2026-08-16 16:35:27 +0200)
-
-----------------------------------------------------------------
-Misc HW and Monitor patch queue
-
-- Bug fixes
-
- . Reinstate x86/pc 'xenfv' machine alias
- . Defend against malformed ELF headers to prevent underflows
- . Restore ROMD mode after migration for Intel PFlash (CFI01)
- . Fix VLAN tag handling on incoming packets on RTL8139 model
-
-- Refactoring (Monitor, common CPU, NMI)
-
- . Add missing inclusions and remove unnecessary ones
- . Use qdev_is_realized() consistently (no direct field access)
- . Remove deprecated DEFINE_PROP_DMAADDR() macro
- . Renaming churn around cpu_{exec,common}* helpers
- . Simplify NMI API hanlding
- . Move QMP handlers (physmem, nmi) to appropriate subsystems
- . Replace container_of() casts with HMP typed accessors
- . Rename @mon to @hmp in MonitorHMP for clarity
-
-----------------------------------------------------------------
-
-Akihiko Odaki (13):
-  qdev: Make qdev_is_realized() take a const DeviceState *
-  hw/hyperv/balloon: Use qdev_is_realized()
-  hw/intc/apic: Use qdev_is_realized()
-  hw/mem/memory-device: Use qdev_is_realized()
-  hw/mem/pc-dimm: Use qdev_is_realized()
-  hw/nvram: Use qdev_is_realized()
-  hw/ppc/pnv_xscom: Use qdev_is_realized()
-  hw/vfio: Use qdev_is_realized()
-  hw/virtio/virtio-mem: Use qdev_is_realized()
-  hw/virtio/virtio-qmp: Use qdev_is_realized()
-  target/i386/cpu: Use qdev_is_realized()
-  target/s390x: Use qdev_is_realized()
-  hw/qdev: Parent device before setting parent bus
-
-Alex Bennée (1):
-  hw/elf_ops: defend against weird elf headers
-
-Bin Guo (1):
-  hw/block/pflash_cfi01: Restore ROMD mode after migration
-
-Dario Faggioli (1):
-  hw/i386/pc: xen: reinstate the "xenfv" machine alias
-
-Jamin Lin (1):
-  hw/core/machine: Move EHCI migration compat properties to 11.1
-
-Marc-André Lureau (1):
-  hw/mem/nvdimm: fix "size" property typename
-
-Peter Maydell (2):
-  hw/net/rtl8139: Fix handling of VLAN tags on incoming short packets
-  hw/net/rtl8139: Send whole of vlan-tagged packet when doing loopback
-
-Philippe Mathieu-Daudé (35):
-  hw/qdev: Remove DEFINE_PROP_DMAADDR() and 'hw/qdev-dma.h'
-  hw/cpu: Correct CPU_GET_CLASS() comment
-  hw/cpu: Include missing 'qemu/accel.h' header
-  hw/cpu: Move internal declarations to new 'cpu-internal.h' header
-  hw/cpu: Rename cpu_common_realizefn() -> cpu_exec_realize()
-  hw/cpu: Rename cpu_exec_realizefn() -> cpu_common_realize()
-  hw/cpu: Rename cpu_exec_unrealizefn() -> cpu_common_unrealize()
-  hw/cpu: Extract cpu_exec_realize() out of cpu_common_realizefn()
-  hw/cpu: Move system-specific cpu_exec_realize() to cpu-system.c
-  hw/nmi: Use object_child_foreach_recursive() in nmi_children()
-  hw/s390x/virtio-ccw: Always inject NMI to first CPU
-  hw/nmi: Remove @cpu_index argument from
-    NMIClass::nmi_monitor_handler()
-  hw/nmi: Remove @cpu_index argument from nmi_inject()
-  hw/nmi: Rename nmi_monitor_handler() -> raise_nmi()
-  hw/nmi: Remove unused @errp argument from raise_nmi()
-  hw/nmi: Raise NMI line only once
-  hexagon: Remove unnecessary 'monitor/monitor.h' header
-  net/vhost-vdpa: Include missing 'qemu/iov.h' header
-  tests/unit: Include 'qemu/main-loop.h' header in test-util-sockets.c
-  qapi/qmp-dispatch: Include 'qemu/aio-wait.h' and 'monitor/monitor.h'
-  qapi/qmp-registry: Remove unnecessary 'monitor/monitor.h' header
-  migration/hmp-cmds: Include 'block/block-global-state.h' header
-  monitor: Include missing 'qemu/aio-wait.h' header
-  monitor: Include missing 'qemu/lockable.h' header
-  monitor: Include missing 'qemu/coroutine-core.h' header
-  monitor: Reduce inclusion of 'qapi/qapi-emit-events.h' header
-  monitor: Remove unnecessary 'block/block.h' header
-  system: Remove unnecessary 'monitor/monitor.h' header
-  system/dirtylimit: Extract HMP code to dirtylimit-hmp-cmds.c
-  system: Move qmp_inject_nmi() to hw/core/machine-qmp-cmds.c
-  system: Extract QMP memsave/pmemsave commands to physmem-qmp-cmds.c
-  system: Move runstate-related code from cpus.c to runstate.c
-  monitor: Rename MonitorHMP @mon -> @hmp
-  monitor: Better express monitor_read()'s opaque arg is of Monitor type
-  monitor: Replace container_of(MonitorHMP, parent_obj) -> MONITOR_HMP()
-
-Stefan Hajnoczi (1):
-  hw/nvme: add SPDM_SOCKET Kconfig dependency
-
- MAINTAINERS                      |   3 +
- qapi/machine.json                |   7 +-
- qapi/run-state.json              |   6 +-
- hw/core/cpu-internal.h           |  23 +++
- include/hw/core/cpu.h            |  15 +-
- include/hw/core/nmi.h            |  33 +++-
- include/hw/core/qdev-dma.h       |  16 --
- include/hw/core/qdev.h           |   2 +-
- include/hw/hexagon/hexagon_tlb.h |   2 +-
- include/monitor/monitor.h        |   7 +-
- include/qapi/qmp-registry.h      |   1 -
- monitor/monitor-internal.h       |   3 +-
- target/hexagon/hex_mmu.h         |   3 +-
- include/hw/elf_ops.h.inc         |   5 +
- hw/block/pflash_cfi01.c          |  10 ++
- hw/core/cpu-common.c             |  32 +---
- hw/core/cpu-system.c             |  30 +++-
- hw/core/cpu-user.c               |   8 +-
- hw/core/machine-qmp-cmds.c       |   6 +
- hw/core/machine.c                |   7 +-
- hw/core/nmi.c                    |  48 ++----
- hw/core/qdev.c                   |  51 ++++---
- hw/hppa/machine.c                |   4 +-
- hw/hyperv/hv-balloon.c           |   2 +-
- hw/i386/pc_piix.c                |   1 +
- hw/i386/x86.c                    |   4 +-
- hw/intc/apic_common.c            |   2 +-
- hw/intc/m68k_irqc.c              |   4 +-
- hw/ipmi/ipmi.c                   |   3 +-
- hw/m68k/q800-glue.c              |   4 +-
- hw/mem/memory-device.c           |   4 +-
- hw/mem/nvdimm.c                  |   2 +-
- hw/mem/pc-dimm.c                 |   2 +-
- hw/misc/macio/gpio.c             |   4 +-
- hw/net/rtl8139.c                 |   6 +-
- hw/nvram/xlnx-bbram.c            |   2 +-
- hw/nvram/xlnx-efuse.c            |   2 +-
- hw/ppc/pnv.c                     |   4 +-
- hw/ppc/pnv_xscom.c               |   2 +-
- hw/ppc/spapr.c                   |   4 +-
- hw/s390x/s390-virtio-ccw.c       |   8 +-
- hw/usb/hcd-ohci-pci.c            |   1 -
- hw/usb/hcd-ohci-sysbus.c         |   3 +-
- hw/usb/hcd-ohci.c                |   1 -
- hw/vfio/container-legacy.c       |   4 +-
- hw/vfio/device.c                 |   4 +-
- hw/vfio/iommufd.c                |   2 +-
- hw/virtio/virtio-mem.c           |   4 +-
- hw/virtio/virtio-qmp.c           |   4 +-
- hw/watchdog/watchdog.c           |   2 +-
- migration/migration-hmp-cmds.c   |   1 +
- monitor/fds.c                    |   1 +
- monitor/hmp-cmds.c               |   6 +-
- monitor/hmp.c                    | 136 ++++++++---------
- monitor/monitor.c                |   2 +
- monitor/qmp.c                    |   3 +-
- net/vhost-vdpa.c                 |   1 +
- qapi/qmp-dispatch.c              |   2 +
- system/cpus.c                    | 248 -------------------------------
- system/device_tree.c             |   1 -
- system/dirtylimit-hmp-cmds.c     |  74 +++++++++
- system/dirtylimit.c              |  60 --------
- system/physmem-qmp-cmds.c        | 107 +++++++++++++
- system/physmem.c                 |   2 -
- system/runstate.c                | 154 +++++++++++++++++++
- target/alpha/cpu.c               |   2 +-
- target/arm/cpu.c                 |   2 +-
- target/avr/cpu.c                 |   2 +-
- target/hexagon/cpu.c             |   2 +-
- target/hppa/cpu.c                |   2 +-
- target/i386/cpu.c                |  12 +-
- target/i386/kvm/kvm-cpu.c        |   4 +-
- target/loongarch/cpu.c           |   2 +-
- target/m68k/cpu.c                |   2 +-
- target/microblaze/cpu.c          |   2 +-
- target/mips/cpu.c                |   2 +-
- target/or1k/cpu.c                |   2 +-
- target/ppc/cpu_init.c            |   4 +-
- target/riscv/cpu.c               |   2 +-
- target/riscv/kvm/kvm-cpu.c       |   2 +-
- target/riscv/tcg/tcg-cpu.c       |   2 +-
- target/rx/cpu.c                  |   2 +-
- target/s390x/cpu.c               |   2 +-
- target/s390x/cpu_models.c        |   4 +-
- target/sh4/cpu.c                 |   2 +-
- target/sparc/cpu.c               |   2 +-
- target/tricore/cpu.c             |   2 +-
- target/xtensa/cpu.c              |   2 +-
- tests/unit/test-qdev.c           |  13 ++
- tests/unit/test-util-sockets.c   |   1 +
- ui/ui-hmp-cmds.c                 |   6 +-
- hmp-commands.hx                  |   7 +-
- hw/nvme/Kconfig                  |   1 +
- system/meson.build               |   2 +
- 94 files changed, 702 insertions(+), 595 deletions(-)
- create mode 100644 hw/core/cpu-internal.h
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-Id: <20230203145536.17585-14-philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/hw/core/qdev-dma.h | 16 ----------------
+ hw/usb/hcd-ohci-pci.c      |  1 -
+ hw/usb/hcd-ohci-sysbus.c   |  3 +--
+ hw/usb/hcd-ohci.c          |  1 -
+ 4 files changed, 1 insertion(+), 20 deletions(-)
  delete mode 100644 include/hw/core/qdev-dma.h
- create mode 100644 system/dirtylimit-hmp-cmds.c
- create mode 100644 system/physmem-qmp-cmds.c
 
+diff --git a/include/hw/core/qdev-dma.h b/include/hw/core/qdev-dma.h
+deleted file mode 100644
+index b00391aa0c3..00000000000
+--- a/include/hw/core/qdev-dma.h
++++ /dev/null
+@@ -1,16 +0,0 @@
+-/*
+- * Support for dma_addr_t typed properties
+- *
+- * Copyright (C) 2012 David Gibson, IBM Corporation.
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- */
+-
+-#ifndef HW_QDEV_DMA_H
+-#define HW_QDEV_DMA_H
+-
+-#define DEFINE_PROP_DMAADDR(_n, _s, _f, _d)                               \
+-    DEFINE_PROP_UINT64(_n, _s, _f, _d)
+-
+-#endif
+diff --git a/hw/usb/hcd-ohci-pci.c b/hw/usb/hcd-ohci-pci.c
+index 18b58f5fcbc..70c9e9ac4f5 100644
+--- a/hw/usb/hcd-ohci-pci.c
++++ b/hw/usb/hcd-ohci-pci.c
+@@ -25,7 +25,6 @@
+ #include "migration/vmstate.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/core/sysbus.h"
+-#include "hw/core/qdev-dma.h"
+ #include "hw/core/qdev-properties.h"
+ #include "trace.h"
+ #include "hcd-ohci.h"
+diff --git a/hw/usb/hcd-ohci-sysbus.c b/hw/usb/hcd-ohci-sysbus.c
+index 1a2cf29bed8..4f51eebccb2 100644
+--- a/hw/usb/hcd-ohci-sysbus.c
++++ b/hw/usb/hcd-ohci-sysbus.c
+@@ -26,7 +26,6 @@
+ #include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/sysbus.h"
+-#include "hw/core/qdev-dma.h"
+ #include "hw/core/qdev-properties.h"
+ #include "trace.h"
+ #include "hcd-ohci.h"
+@@ -61,7 +60,7 @@ static const Property ohci_sysbus_properties[] = {
+     DEFINE_PROP_STRING("masterbus", OHCISysBusState, masterbus),
+     DEFINE_PROP_UINT32("num-ports", OHCISysBusState, num_ports, 3),
+     DEFINE_PROP_UINT32("firstport", OHCISysBusState, firstport, 0),
+-    DEFINE_PROP_DMAADDR("dma-offset", OHCISysBusState, dma_offset, 0),
++    DEFINE_PROP_UINT64("dma-offset", OHCISysBusState, dma_offset, 0),
+ };
+ 
+ static void ohci_sysbus_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index c4a9741bd42..23990115abe 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -34,7 +34,6 @@
+ #include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/sysbus.h"
+-#include "hw/core/qdev-dma.h"
+ #include "hw/core/qdev-properties.h"
+ #include "trace.h"
+ #include "hcd-ohci.h"
 -- 
 2.53.0
 
