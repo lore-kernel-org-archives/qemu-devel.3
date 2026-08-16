@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B432C5DF70
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E7DC5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgIg-0008Q7-TY; Sun, 16 Aug 2026 15:13:44 -0400
+	id 1wvgId-0008PZ-F4; Sun, 16 Aug 2026 15:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgIb-0008PW-Fl
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:39 -0400
+ id 1wvgIO-0008Kk-FM
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgIZ-0007N0-Au
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:36 -0400
+ id 1wvgII-0007EA-Qm
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907613;
+ s=mimecast20190719; t=1786907584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SQ3k0bOKS5GQKJg6KQ1y4RmKrPluHHk47PS3dTfcuK0=;
- b=Ju48hxyiuKFy4fBbX1Z47gTp3Tk39Bk/sVQq37fotc75VcyQRgnqPXNe+rGDQwvcbyUz6G
- eypDjToG6UPFUF/Aqlj0u3bpo1AwzpChQ8syfbTAeLgsBYJyscxtcmUQawwEV0fy6S/u4I
- PvUbvWoBQiSf8oy89WMZalkPWWFYbGc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=JHUWUIlV1L88EuNWpXBRzIO9zHPWAXRW9+Hdx8pgeCk=;
+ b=f1zdj52CkvY0OWPJ3k1g7bGmC5DpLl+Bi7r5JjvoonhZive5PEnfAJZOdnoV9nr55gs37q
+ L18o5rSTqJRCPinqIzLZd8lte6PpQeEojVVj4w/iKiHUAddvnD4UEnfWkGP3OUJy9Qkzo5
+ KBiboGI6+HgrZvJCLfGEJ3RlK99E6fA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-XA3-cFr2OjaXlfYezbIFUw-1; Sun,
- 16 Aug 2026 15:13:31 -0400
-X-MC-Unique: XA3-cFr2OjaXlfYezbIFUw-1
-X-Mimecast-MFC-AGG-ID: XA3-cFr2OjaXlfYezbIFUw_1786907610
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-qdTL-OdPNCeDIVnFyWGogQ-1; Sun,
+ 16 Aug 2026 15:13:02 -0400
+X-MC-Unique: qdTL-OdPNCeDIVnFyWGogQ-1
+X-Mimecast-MFC-AGG-ID: qdTL-OdPNCeDIVnFyWGogQ_1786907582
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9901C1800471; Sun, 16 Aug 2026 19:13:30 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BB941956080; Sun, 16 Aug 2026 19:13:01 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3891195608A; Sun, 16 Aug 2026 19:13:29 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 314FF30001A2; Sun, 16 Aug 2026 19:12:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:36 +0400
-Subject: [PATCH v3 09/49] tests/functional: use query-version QMP command
- instead of HMP
+Date: Sun, 16 Aug 2026 23:12:28 +0400
+Subject: [PATCH v3 01/49] vl: fix -monitor none prefix matching
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-9-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-1-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1415;
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=937;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=E12bnf1BnZYcd0xThQbrRXQW65sQtsWdYsKbNPUWaYA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguwSy2zHKpRBjLGI1wyFExGyKY4WbVVpXVEy
- MyLFbkcU3WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsAAKCRDa6OEJdZac
- 5UanD/99stKWn8ev0/PxOkHsHV+5zDOyIpWg9nz5HI7IWZPJTXBy4xzD9kyJWCjAZVPy5EQDI88
- ejiUGKFD/1JxR2qEPGaotKy/5a4ROMlk4bazCN+qHdZSJLSvonuT6uhVL75tMrmgUrpnE6KFNzT
- qhAeHANRo2QHvnJ/aNj1U/JJBoWxYvUwuPW5dcX/j0IuCF8eYbJnMVaSQU+VKBCbU6htLE/XNZy
- xYRNtpGcC9/BwdL6wzJW2moHUa1OeXJcUqPssXZC+HNRfVMtS4V0MbrMVL5rKd/x7zP18Mi/u4Y
- EouEQvx3iF8qmE6Guo3qtTbsW0P9gfupXamfV4ZSnH3mQwPgre7nczTuY18/fDwzVM6DyHPuXM0
- OQ3a8KeB+C0QwkbZ4fIiEuH4szVvoGlShgh1GKVBGfsqwUy9MPRJx3m6j5b49p9RIsIw/z14OFr
- W4jvyGjvn/KdB2T0MXNmJsmlSQp8/T+NdduffMdh2+OH3N+z8Up2LJpAsUNmTyEHV96Tjf6+FWP
- FMyrsZZC82txnSWbcbVpdRXjt4C0LtJCLOElOt3nbdz+eJwGKzyWf7C3SFJWxRO9msKnQVjxhl1
- 9cD9BYGGSAJmGXahWFHfoVuSk7MsSlggA6HNJvgWZdBSfRb1SrAHCJrVnDX2Z3nlsDVTeC05fgR
- aQx8rvSq6dPmc2w==
+ bh=3iiRReSd94lLGBmuGE+7JzjtOZA9/s2KBjEkNLxXG5k=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguv3dVdsIPiywaCP8/+YKQQp+he4LmMAWzRo
+ NOHvmYA3p2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILrwAKCRDa6OEJdZac
+ 5czZD/9XOIzzMt3YF6dJj7V8Wi8JGFJND5a3UFxv7tVn5RDF37mxwjZbQ2kkaDi36PZAZ5x3NNd
+ Q1WZXVIMqOCoW0Ito0BG6SX48B53Fs1nviJF0TgJMWu43ziUyS4gRxBGSHOijqct2b/yRXz4Q2R
+ aVD7ZQsy0h5EdGhxnE/RCrGhmRBMndtI0LJukSNCD7Bbx6d8Gt9M1E0CfTV4qFozE3x9bebU3wY
+ xmcZWkupQk9o6NYs8k/w9+voIUIGWBWBqbwAgie692atim8cHj+0gLT2jEh6ffxVtff7krPVY5S
+ zm6MNjz/vCeSdYgXtGejKWV4OtwogDvy+QHehk5SpWtfsqLYbfd2wvNFqYQ98fEvgvrYq7aHPcv
+ DM9iHeLB7EBN4Waxe+6WZwKob/mnjmiNJ/3pbF4rsdUHx277QhBt5SXqb/FsFc63JG91xPJ2ZKn
+ 1+WD++7lJg2zglDYIJ2SVXlHsnms8bo67o6rJlGOt1a4kD0qZ8FrFAFcYRf40YmsSzLY3bQ0TA8
+ Zb04/xNhDEjwk/B+n3KFVSukFuKum3vW0eoCIQFcPTCjFvXaKGSspQaSbaEdsFwSRvBLFU9umgz
+ wjZ8OmkAe6L3piBcmjWFoasPO9gR9UWslz+cv39NNCuJiY8WrxrUv4MVZhUoxUIZILu7YRsVsGi
+ Ojl5MYS80XvJdvQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the human-monitor-command based version test with the native
-QMP query-version command, which returns structured version data.
+Use g_strcmp0() for exact match instead of strncmp() which would
+incorrectly treat any string starting with "none" as disabling
+the monitor.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 70e098af88f ("monitor: allow to disable the default monitor")
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/functional/generic/test_version.py | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ system/vl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/generic/test_version.py b/tests/functional/generic/test_version.py
-index 3ab3b67f7e39..7764424826e0 100755
---- a/tests/functional/generic/test_version.py
-+++ b/tests/functional/generic/test_version.py
-@@ -16,13 +16,15 @@
- 
- class Version(QemuSystemTest):
- 
--    def test_qmp_human_info_version(self):
-+    def test_qmp_query_version(self):
-         self.set_machine('none')
-         self.vm.add_args('-nodefaults')
-         self.vm.launch()
--        res = self.vm.cmd('human-monitor-command',
--                          command_line='info version')
--        self.assertRegex(res, r'^(\d+\.\d+\.\d)')
-+        res = self.vm.cmd('query-version')
-+        version = res['qemu']
-+        self.assertIsInstance(version['major'], int)
-+        self.assertIsInstance(version['minor'], int)
-+        self.assertIsInstance(version['micro'], int)
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
+diff --git a/system/vl.c b/system/vl.c
+index 061cbdf860bf..5ccc19282ba2 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3226,7 +3226,7 @@ void qemu_init(int argc, char **argv)
+                 }
+             case QEMU_OPTION_monitor:
+                 default_monitor = 0;
+-                if (strncmp(optarg, "none", 4)) {
++                if (g_strcmp0(optarg, "none")) {
+                     monitor_parse(optarg, "readline", false);
+                 }
+                 break;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
