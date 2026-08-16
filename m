@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB64C5DF70
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9555C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgJJ-0000gw-So; Sun, 16 Aug 2026 15:14:22 -0400
+	id 1wvgId-0008PY-Ex; Sun, 16 Aug 2026 15:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJB-0000Yj-6D
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wvgIO-0008Kl-Fc
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJ9-0007Zf-01
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:12 -0400
+ id 1wvgII-0007GE-Qi
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907650;
+ s=mimecast20190719; t=1786907592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L1xp1lTvd3MdMUX8dmf1CMEjnTVNcsxKTotSufqvHi0=;
- b=JN/+maie+mORTGdiXcLpp/34OYLPyx1swOAPrwt+tyFzSbH4PcokvijZRTPOv2TWrnsAtE
- oBrTf/XWKHzECO+65LvTDb6RR7FXjf+DCcY1Hki46TGpDWM1QTW+5x1yrkqSa44VpXOEVX
- +sOw4s3GJcBV6B08vJ714Nn4b7vT300=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qaQYG1H2oF9no6iriDY3ykgSDxSgRzfHezuBUJQmjVE=;
+ b=CVOIIyBdcKesDTFgJ0O0ggHarA/fdQqYWzq+NmH1gLpKTwRSUlSUllLvbQyxdYvgoOWd2b
+ oMNpzBqLEzyPbSETXwMHnHVzX0QGAHPkmKR0qqRh9FiDBP7Y40ih61Mi3muqBdFrRzg4jJ
+ kxVE9aAOB8U69VCm7p4pJg830WbKMns=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-JtaLwHRvOP-gGKvlWJboJA-1; Sun,
- 16 Aug 2026 15:14:04 -0400
-X-MC-Unique: JtaLwHRvOP-gGKvlWJboJA-1
-X-Mimecast-MFC-AGG-ID: JtaLwHRvOP-gGKvlWJboJA_1786907643
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-upEl9lcnNSikbqhNB2YGqw-1; Sun,
+ 16 Aug 2026 15:12:59 -0400
+X-MC-Unique: upEl9lcnNSikbqhNB2YGqw-1
+X-Mimecast-MFC-AGG-ID: upEl9lcnNSikbqhNB2YGqw_1786907578
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E394C1800611; Sun, 16 Aug 2026 19:14:02 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0A3F195608E; Sun, 16 Aug 2026 19:12:57 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E5AB330001A2; Sun, 16 Aug 2026 19:14:01 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0CA4D1956041; Sun, 16 Aug 2026 19:12:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:45 +0400
-Subject: [PATCH v3 18/49] net: add x-query-network QMP command
+Subject: [PATCH v3 00/49] Make HMP optional (and later standalone)
+Date: Sun, 16 Aug 2026 23:12:27 +0400
+Message-Id: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-18-e53fc35bc550@redhat.com>
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
-In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22N0Q6CIBhGX8VxHQ1QSbvqPVoXCD9Bm2KgrOZ89
+ 8AumluXZ/vO+RYUwFsI6FwsyEO0wbohQXkokDRiuAO2KjFihHFSM4qf0M94cNj0IwahSk06fWo
+ lQckYPWj72mrX25fD3D1ATjmRF8aGyfn3dhdp3v0vR4oJVpRUuiEt0Kq+eFBGTEfpepTTkf1kz
+ vheZkluhC5pJ+tKcrqT13X9APKjgA32AAAA
+X-Change-ID: 20260521-qemu-no-hmp-ead3f0bf79c0
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
- Eric Blake <eblake@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13471;
+ Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=22501;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=5ogvqlrNxwtpqR/CR70+i3muFtGVdTJv35bVBwQ7mug=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguxiWDneMcMQp3ZEh6DwVxZwJ/JDuRvKdCKx
- AH7kUujW7aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsQAKCRDa6OEJdZac
- 5cZDD/9aPiEh2GkPM0cnAL5u0riohBy3ENYT0d6PSIUZh8EebmFm64yatZOwvVdzBgbWDMcS5Pe
- bPkOHztkj/abolMD//n/4nC/0byWWd0UiiixckvEIG24/dD7+SGLxRB53ToL/le0amXkGQ6Dqop
- iyl2QZnlFor4h2lPQEniwIQdubSb9GmeH6nqTkwpXAw6KNtfh+QjoXkzCJ377InKHwGB6+8Me8u
- b5HVwCS0Ks546otjug5dVX08VEhVy4HIwccG5paZqYa+d5LP5dljGbyxSvWlpIC3xqLb6Fd22Fv
- 3k4QxghedPg9u+zRvDhXzJTv0PZ5WS2spYVwo7SKbRT0VFLYY5uqw7igG2L0smvPM8llenVPa+I
- Qd19192hunH/tErd1Y+bggaUCp5kDMdwppFacyJwZZwnp2c5GgAxOUadpUr5k0dcolWsYwf6U5d
- nOLejmeD+IyHb/0DS7wk0sCO9YYFFKCVQcn90Cu8EFRXaV38IyGqyaB8la+14PuvQcCcJlcpKrw
- idpviYxMNUnJqbAT1TbpsoDhq8aWoi6cnF/12I60D2eBFt+466tsp2KmuelVwubcyQJ4gQG/ncJ
- ghbs1apXCyvGpHZsiwofqTbR2L0liUDEItLWT9iC/3THiJ61fu80dXquM8gKixbuDPMTSjzVjmw
- eOpPcb2FMcFpLeg==
+ bh=Jr5dbNembcFP6dIfkkrqH6AZwISlVZ8T/Ki40R9FjzI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguvnI58v3cDvsN3nUOvU2En4vcb8GyLzYxW9
+ jOOsaJH/mSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILrwAKCRDa6OEJdZac
+ 5Y53D/4wQp5Iaafqw/iRgvA7tHcwcPekvXvR3856hFPHLPb4+Vh8lDnB3RC/TkX0dcs74EEKMmR
+ GYQX+PfB4G36dszNVIM/YloTD1cD3UHoTUZ/sR0OAQzLU5OdoD+L5KAYGVselR4UdrhvnRj8Poe
+ UL6URpMtgPqFR7XQXBbii/8c5ZJsAZeywN0/8wynYXNr2lPSFt+VI8zYdcJ9SysHFoGmk2qmksu
+ BfaLvHZDgK8kWW83ZceVwXca850ZNcwcijs7b8weIdm8O0PdYTd4C1vg9a8P1Yo+FCzU/xh+Z9g
+ a0HskTUcZ8hYyii6TkP3Ffy0nz0kwdQeCxAV+FR41NqMHM2Rf8a8uXTts6lg9e0oA9RSotixHCp
+ REiSoB2fjPe+4FJ+pms2TM7S+NxEoIDB2YLBXXyf6qwOCDIfEnz0d/HkDtWmIvbqBHY7nHep1/l
+ EWIu7LtXwnea/FWQfrd9KRv9ndXQrQNXOlcTqBOAcaIKRfI1HOtHxRoWwraQTHZLJhQct+9lPOI
+ LoT6U2QvmsM/JABOTOiFtQmQfj2O6pLrvfDqRlmEXlYpJCSk7nk3AyRwrP/L+UeNcN60liWGThR
+ MjWT5YeZov2dae1Z0O7T66OIzZWks7UvseDX2Cvd5YalfSwiaEC5RRPoDwKIhyR2WFxDbta1BKL
+ y4udTVPPRZFsKtQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,443 +109,403 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a structured x-query-network QMP command that returns network
-configuration as a NetworkInfo struct with pre-grouped hub information
-and a flat list of non-hub clients. Each hub includes its ports with
-inlined peer client info, and each client includes attached netfilter
-details.
+Hi,
 
-Refactor hmp_info_network() to consume only the QMP result instead of
-directly accessing internal net_clients state. This decouples HMP from
-internal data structures, making it possible to remove HMP support
-without losing programmatic network introspection.
+This series makes HMP compile-time optional via --disable-hmp. The
+resulting binary speaks only QMP - reducing the attack surface, binary
+size and enforcing a separation between machine-readable interface and
+interactive debugging console.
+
+QMP offers almost all the functionality HMP could provide, so a separate
+standalone "HMP-like" console could be implemented on top of it. The
+rough list of missing commands (+complexity estimation) after this
+series:
+
+Debugging / introspection:
+- info registers (medium) - plus $reg expression handling
+- x/xp read memory (medium)
+- gpa2hpa/gpa2hva/gva2gpa address translation (medium)
+- info lapic (high) - deep x86 APIC state, lots of registers
+- info mem (high) - virtual memory mappings, different per arch
+- info tlb (high) - virt-to-phys mappings, also per arch
+- info mtree (high) - memory region tree, multiple view modes
+- info skeys (medium) - s390x storage keys
+- info cmma (medium) - s390x CMMA values
+- info qdm (easy) - could probably be folded into QOM introspection
+- info qtree (medium) - same, maybe QOM introspection is enough
+- info snapshots (medium)
+- info usbhost (medium)
+- info via (medium) -- VIA south bridge state
+
+Simple actions / settings:
+- gdbserver (trivial)
+- boot_set (easy)
+- mce (easy) - x86 MCE injection
+- sum (easy) - memory checksum
+- sync-profile (easy) - enable/disable/reset
+- info sync-profile (medium)
+- one-insn-per-tb (easy) - could be a QOM property on the accelerator
+- pcie_aer_inject_error (easy)
+- migration_mode (medium?)
+- i/o ioport read/write (easy)
+- hostfwd-add/hostfwd-remove (medium) - slirp port forwarding
+- log/logfile (medium)
+- trace-file (medium)
+
+Also, to let clients do disassembly on their side, it'd be useful to
+have something like "query-disassemble-info" that gives the client what
+architecture and endianness is used etc.
+
+In the meantime, being able to build without HMP is valuable and helps
+identifying the missing pieces. The series does so by steps:
+
+- preparatory cleanups and bug fixes
+- add commands without QMP equivalent and needed for tests
+- convert most iotests and qtests from HMP to QMP
+- guard HMP-only code paths
+- make HMP source files conditional in the build system
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/net/net.h  |   3 +-
- net/hub.c          |  29 +++++++------
- net/hub.h          |   4 +-
- net/net-hmp-cmds.c |  57 +++++++++++++++++++------
- net/net.c          |  70 +++++++++++++++++++++++-------
- qapi/net.json      | 122 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 242 insertions(+), 43 deletions(-)
+Changes in v3:
+- adapted to QOM refactoring of the Monitor subsystem, use type-system
+  enforced MonitorHMP 
+- adjusted hmp_snapshot_blkdev() code for non-optional filename
+- dropped patch 39/40 "monitor: guard HMP internal helpers with CONFIG_HMP"
+- guard new tests for HMP dependency
+- rebase, minor fixups
+- Link to v2: https://lore.kernel.org/qemu-devel/20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com
 
-diff --git a/include/net/net.h b/include/net/net.h
-index 9edfacf827ca..a7c49c543783 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -274,7 +274,6 @@ DeviceState *qemu_create_nic_device(const char *typename, bool match_default,
- void qemu_create_nic_bus_devices(BusState *bus, const char *parent_type,
-                                  const char *default_model,
-                                  const char *alias, const char *alias_target);
--void print_net_client(Monitor *mon, NetClientState *nc);
- void net_socket_rs_init(SocketReadState *rs,
-                         SocketReadStateFinalize *finalize,
-                         bool vnet_hdr);
-@@ -325,6 +324,8 @@ void netdev_add(QemuOpts *opts, Error **errp);
- 
- int net_hub_id_for_client(NetClientState *nc, int *id);
- 
-+NetworkClientInfo *net_client_info(NetClientState *nc);
-+
- #define DEFAULT_NETWORK_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifup"
- #define DEFAULT_NETWORK_DOWN_SCRIPT CONFIG_SYSCONFDIR "/qemu-ifdown"
- #define DEFAULT_BRIDGE_HELPER CONFIG_QEMU_HELPERDIR "/qemu-bridge-helper"
-diff --git a/net/hub.c b/net/hub.c
-index ee5881f6d5cb..b53a4cc872ca 100644
---- a/net/hub.c
-+++ b/net/hub.c
-@@ -14,7 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "monitor/monitor.h"
-+#include "qapi/util.h"
- #include "net/net.h"
- #include "clients.h"
- #include "hub.h"
-@@ -199,26 +199,31 @@ NetClientState *net_hub_add_port(int hub_id, const char *name,
-     return &port->nc;
- }
- 
--/**
-- * Print hub configuration
-- */
--void net_hub_info(Monitor *mon)
-+NetHubInfoList *net_hub_query_info(void)
- {
-+    NetHubInfoList *head = NULL, **tail = &head;
-     NetHub *hub;
--    NetHubPort *port;
- 
-     QLIST_FOREACH(hub, &hubs, next) {
--        monitor_printf(mon, "hub %d\n", hub->id);
-+        NetHubInfo *hi = g_new0(NetHubInfo, 1);
-+        NetHubPortInfoList **ptail = &hi->ports;
-+        NetHubPort *port;
-+
-+        hi->id = hub->id;
-+
-         QLIST_FOREACH(port, &hub->ports, next) {
--            monitor_printf(mon, " \\ %s", port->nc.name);
-+            NetHubPortInfo *pi = g_new0(NetHubPortInfo, 1);
-+            pi->name = g_strdup(port->nc.name);
-             if (port->nc.peer) {
--                monitor_printf(mon, ": ");
--                print_net_client(mon, port->nc.peer);
--            } else {
--                monitor_printf(mon, "\n");
-+                pi->peer = net_client_info(port->nc.peer);
-             }
-+            QAPI_LIST_APPEND(ptail, pi);
-         }
-+
-+        QAPI_LIST_APPEND(tail, hi);
-     }
-+
-+    return head;
- }
- 
- /**
-diff --git a/net/hub.h b/net/hub.h
-index ce45f7b399d3..cab6b1459b1a 100644
---- a/net/hub.h
-+++ b/net/hub.h
-@@ -15,10 +15,12 @@
- #ifndef NET_HUB_H
- #define NET_HUB_H
- 
-+#include "qapi/qapi-types-net.h"
-+
- NetClientState *net_hub_add_port(int hub_id, const char *name,
-                                  NetClientState *hubpeer);
--void net_hub_info(Monitor *mon);
- void net_hub_check_clients(void);
- bool net_hub_flush(NetClientState *nc);
-+NetHubInfoList *net_hub_query_info(void);
- 
- #endif /* NET_HUB_H */
-diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
-index 2b24c9e60498..52ac8da770d9 100644
---- a/net/net-hmp-cmds.c
-+++ b/net/net-hmp-cmds.c
-@@ -19,37 +19,66 @@
- #include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "net/net.h"
--#include "net/hub.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/qapi-commands-net.h"
- #include "qapi/qapi-visit-net.h"
-+#include "qapi/error.h"
- #include "qobject/qdict.h"
- #include "qemu/config-file.h"
- #include "qemu/help_option.h"
- #include "qemu/option.h"
- 
-+static void hmp_print_client_info(Monitor *mon, NetworkClientInfo *ci)
-+{
-+    NetFilterInfoList *f;
-+
-+    monitor_printf(mon, "%s: index=%" PRIu32 ",type=%s,%s\n",
-+                   ci->name, ci->queue_index,
-+                   NetClientDriver_str(ci->type), ci->info_str);
-+    if (ci->filters) {
-+        monitor_printf(mon, "filters:\n");
-+        for (f = ci->filters; f; f = f->next) {
-+            monitor_printf(mon, "  - %s: type=%s%s%s\n",
-+                           f->value->name, f->value->type,
-+                           f->value->info[0] ? "," : "", f->value->info);
-+        }
-+    }
-+}
-+
- void hmp_info_network(Monitor *mon, const QDict *qdict)
- {
--    NetClientState *nc, *peer;
--    NetClientDriver type;
-+    Error *err = NULL;
-+    g_autoptr(NetworkInfo) info = qmp_x_query_network(&err);
-+    NetHubInfoList *h;
-+    NetworkClientInfoList *entry;
- 
--    net_hub_info(mon);
-+    if (hmp_handle_error(mon, err)) {
-+        return;
-+    }
- 
--    QTAILQ_FOREACH(nc, &net_clients, next) {
--        peer = nc->peer;
--        type = nc->info->type;
-+    for (h = info->hubs; h; h = h->next) {
-+        NetHubPortInfoList *p;
- 
--        /* Skip if already printed in hub info */
--        if (net_hub_id_for_client(nc, NULL) == 0) {
--            continue;
-+        monitor_printf(mon, "hub %d\n", (int)h->value->id);
-+        for (p = h->value->ports; p; p = p->next) {
-+            if (p->value->peer) {
-+                monitor_printf(mon, " \\ %s: ", p->value->name);
-+                hmp_print_client_info(mon, p->value->peer);
-+            } else {
-+                monitor_printf(mon, " \\ %s\n", p->value->name);
-+            }
-         }
-+    }
- 
--        if (!peer || type == NET_CLIENT_DRIVER_NIC) {
--            print_net_client(mon, nc);
-+    for (entry = info->clients; entry; entry = entry->next) {
-+        NetworkClientInfo *ci = entry->value;
-+
-+        if (!ci->peer || ci->type == NET_CLIENT_DRIVER_NIC) {
-+            hmp_print_client_info(mon, ci);
-         } /* else it's a netdev connected to a NIC, printed with the NIC */
--        if (peer && type == NET_CLIENT_DRIVER_NIC) {
-+        if (ci->peer && ci->type == NET_CLIENT_DRIVER_NIC) {
-             monitor_printf(mon, " \\ ");
--            print_net_client(mon, peer);
-+            hmp_print_client_info(mon, ci->peer);
-         }
-     }
- }
-diff --git a/net/net.c b/net/net.c
-index 0a30579ca4a7..1161183e183d 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -1525,14 +1525,14 @@ void qmp_netdev_del(const char *id, Error **errp)
-     }
- }
- 
--static void netfilter_print_info(Monitor *mon, NetFilterState *nf)
-+static char *netfilter_get_info_str(NetFilterState *nf)
- {
-     char *str;
-     ObjectProperty *prop;
-     ObjectPropertyIterator iter;
-     Visitor *v;
-+    GString *buf = g_string_new(NULL);
- 
--    /* generate info str */
-     object_property_iter_init(&iter, OBJECT(nf));
-     while ((prop = object_property_iter_next(&iter))) {
-         if (!strcmp(prop->name, "type")) {
-@@ -1542,29 +1542,69 @@ static void netfilter_print_info(Monitor *mon, NetFilterState *nf)
-         object_property_get(OBJECT(nf), prop->name, v, NULL);
-         visit_complete(v, &str);
-         visit_free(v);
--        monitor_printf(mon, ",%s=%s", prop->name, str);
-+        if (buf->len > 0) {
-+            g_string_append_c(buf, ',');
-+        }
-+        g_string_append_printf(buf, "%s=%s", prop->name, str);
-         g_free(str);
-     }
--    monitor_printf(mon, "\n");
-+
-+    return g_string_free(buf, false);
- }
- 
--void print_net_client(Monitor *mon, NetClientState *nc)
-+static NetworkClientInfo *net_client_info_no_peer(NetClientState *nc)
- {
-+    NetworkClientInfo *info = g_new0(NetworkClientInfo, 1);
-     NetFilterState *nf;
- 
--    monitor_printf(mon, "%s: index=%d,type=%s,%s\n", nc->name,
--                   nc->queue_index,
--                   NetClientDriver_str(nc->info->type),
--                   nc->info_str);
-+    info->name = g_strdup(nc->name);
-+    info->queue_index = nc->queue_index;
-+    info->type = nc->info->type;
-+    info->info_str = g_strdup(nc->info_str);
-+
-     if (!QTAILQ_EMPTY(&nc->filters)) {
--        monitor_printf(mon, "filters:\n");
-+        NetFilterInfoList **ftail = &info->filters;
-+        QTAILQ_FOREACH(nf, &nc->filters, next) {
-+            NetFilterInfo *fi = g_new0(NetFilterInfo, 1);
-+            fi->name = g_strdup(
-+                object_get_canonical_path_component(OBJECT(nf)));
-+            fi->type = g_strdup(object_get_typename(OBJECT(nf)));
-+            fi->info = netfilter_get_info_str(nf);
-+            QAPI_LIST_APPEND(ftail, fi);
-+        }
-     }
--    QTAILQ_FOREACH(nf, &nc->filters, next) {
--        monitor_printf(mon, "  - %s: type=%s",
--                       object_get_canonical_path_component(OBJECT(nf)),
--                       object_get_typename(OBJECT(nf)));
--        netfilter_print_info(mon, nf);
-+
-+    return info;
-+}
-+
-+NetworkClientInfo *net_client_info(NetClientState *nc)
-+{
-+    NetworkClientInfo *info = net_client_info_no_peer(nc);
-+
-+    if (nc->peer) {
-+        info->peer = net_client_info_no_peer(nc->peer);
-     }
-+
-+    return info;
-+}
-+
-+NetworkInfo *qmp_x_query_network(Error **errp)
-+{
-+    NetworkInfo *info = g_new0(NetworkInfo, 1);
-+    NetworkClientInfoList **tail = &info->clients;
-+    NetClientState *nc;
-+
-+    info->hubs = net_hub_query_info();
-+
-+    QTAILQ_FOREACH(nc, &net_clients, next) {
-+        /* Skip if already gathered in hub info */
-+        if (net_hub_id_for_client(nc, NULL) == 0) {
-+            continue;
-+        }
-+        QAPI_LIST_APPEND(tail, net_client_info(nc));
-+    }
-+
-+    return info;
- }
- 
- RxFilterInfoList *qmp_query_rx_filter(const char *name, Error **errp)
-diff --git a/qapi/net.json b/qapi/net.json
-index 5d3342fba23b..85c78710fe88 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1305,3 +1305,125 @@
-   'returns': ['UsernetInfo'],
-   'if': 'CONFIG_SLIRP',
-   'features': [ 'unstable' ] }
-+
-+##
-+# @NetFilterInfo:
-+#
-+# Information about a netfilter attached to a network client.
-+#
-+# @name: filter object name (QOM path component)
-+#
-+# @type: QOM type name (e.g. "filter-mirror")
-+#
-+# @info: filter properties as comma-separated key=value pairs
-+#        (excluding @type)
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'NetFilterInfo',
-+  'data': {
-+    'name': 'str',
-+    'type': 'str',
-+    'info': 'str' } }
-+
-+##
-+# @NetworkClientInfo:
-+#
-+# Information about a network client.
-+#
-+# @name: unique network client identifier
-+#
-+# @queue-index: index of this queue (0 for single-queue clients)
-+#
-+# @type: network client driver type
-+#
-+# @info-str: driver-specific formatted information string (e.g.
-+#            "model=e1000,macaddr=52:54:00:12:34:56")
-+#
-+# @peer: the connected peer client (always a leaf; the peer's own
-+#        peer field is never populated)
-+#
-+# @filters: attached netfilters
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'NetworkClientInfo',
-+  'data': {
-+    'name': 'str',
-+    'queue-index': 'uint32',
-+    'type': 'NetClientDriver',
-+    'info-str': 'str',
-+    '*peer': 'NetworkClientInfo',
-+    'filters': ['NetFilterInfo'] } }
-+
-+##
-+# @NetHubPortInfo:
-+#
-+# Information about a hub port.
-+#
-+# @name: hub port identifier
-+#
-+# @peer: the network client connected through this port
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'NetHubPortInfo',
-+  'data': {
-+    'name': 'str',
-+    '*peer': 'NetworkClientInfo' } }
-+
-+##
-+# @NetHubInfo:
-+#
-+# Information about a network hub.
-+#
-+# @id: hub identifier
-+#
-+# @ports: list of ports on this hub
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'NetHubInfo',
-+  'data': {
-+    'id': 'int',
-+    'ports': ['NetHubPortInfo'] } }
-+
-+##
-+# @NetworkInfo:
-+#
-+# Information about the network configuration.
-+#
-+# @hubs: network hubs and their ports
-+#
-+# @clients: network clients not associated with a hub
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'NetworkInfo',
-+  'data': {
-+    'hubs': ['NetHubInfo'],
-+    'clients': ['NetworkClientInfo'] } }
-+
-+##
-+# @x-query-network:
-+#
-+# Query the network configuration including hubs and clients.
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: @NetworkInfo describing hubs and clients.
-+#
-+# Since: 11.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "x-query-network" }
-+#     <- { "return": { "clients": [ { "name": "st0",
-+#                      "queue-index": 0, "type": "stream",
-+#                      "info-str": "listening" } ] } }
-+##
-+{ 'command': 'x-query-network',
-+  'returns': 'NetworkInfo',
-+  'features': [ 'unstable' ] }
+Changes in v2:
+- add "target/i386: return an error for invalid CPU in hmp_mce()",
+  suggested by Philippe
+- drop all the patches converting iotests to QMP - instead skip
+  when HMP is disabled. The series was getting significantly bigger with
+  those, we can address the remaining conversion later.
+- clean up the series to be fully bisectable
+- rebased, add r-b trailers
+- Link to v1: https://lore.kernel.org/qemu-devel/20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+
+---
+Marc-André Lureau (49):
+      vl: fix -monitor none prefix matching
+      hmp: remove 'vcpu' argument from trace-event help
+      hmp: fix snapshot_blkdev argument type
+      target/i386: decouple cpu_x86_inject_mce() from Monitor
+      target/i386: return an error for invalid CPU in hmp_mce()
+      system: move gpa2hva() to system memory unit
+      system: decouple qmp_inject_nmi() from Monitor
+      monitor: move HMP-only fields from Monitor to MonitorHMP
+      tests/functional: use query-version QMP command instead of HMP
+      net/qapi: add x-query-usernet command
+      python, tests: switch usernet queries from HMP to QMP
+      tests/qtest/pnv: drop unnecessary -serial mon:stdio
+      tests/qtest/qmp-test: don't depend on human-monitor-command
+      tests/qtest/numa-test: replace HMP "info numa" with QMP query-cpus-fast
+      tests/qtest/cdrom-test: replace HMP "info block" with QMP query-block
+      tests/qtest/device-introspect-test: fix test without HMP
+      tests/qemu-iotests/205: fix race in assertExportNotFound
+      net: add x-query-network QMP command
+      tests/qtest/netdev-socket: replace HMP with x-query-network QMP
+      qemu-io: propagate errors through Error API instead of printf
+      block: add x-qemu-io QMP command
+      qtest: add qemu-io command to the qtest protocol
+      qtest/ide-test: convert to use qtest qemu-io command
+      tests/qemu-iotests: add qmp_qemu_io()
+      tests/qemu-iotests: convert pause/resume_drive() to QMP
+      build-sys: add 'hmp' option
+      monitor: reject readline monitor when HMP is disabled
+      system: guard HMP initialization paths with CONFIG_HMP
+      tests: skip HMP-dependent tests when HMP is disabled
+      monitor: isolate HMP declarations in hmp.h
+      monitor: change HMPCommand cmd to take MonitorHMP
+      monitor: make hmp_handle_error() take MonitorHMP
+      monitor: add monitor_cur_hmp() helper
+      qemu-print: switch to use monitor_cur_hmp()
+      error-report: switch to use monitor_cur_hmp()
+      monitor: tighten monitor_set_cpu()/get_cpu()
+      monitor: tighten monitor_printf*()
+      hexagon: make dump_mmu() take MonitorHMP
+      qdev-monitor: make print_dev() callback take MonitorHMP
+      qapi: make HMP-specific schema entries conditional on CONFIG_HMP
+      Guard HMP command implementations with CONFIG_HMP
+      target: guard MonitorDef tables with CONFIG_HMP
+      hw: guard BusClass::print_dev with CONFIG_HMP
+      hexagon: condition HMP-specific code
+      build-sys: make HMP source files conditional on have_hmp
+      stubs: split monitor-core stubs into separate compilation units
+      monitor: move monitor_hmp_print*() functions to hmp.c
+      monitor: move HMP-specific to monitor-hmp-internal.h
+      gitlab: --disable-hmp in build-without-defaults
+
+ .gitlab-ci.d/buildtest.yml                         |   1 +
+ accel/accel-system.c                               |   3 +
+ accel/tcg/monitor.c                                |   3 +
+ audio/audio-hmp-cmds.c                             |  10 +-
+ audio/meson.build                                  |   4 +-
+ backends/cryptodev-hmp-cmds.c                      |  10 +-
+ backends/meson.build                               |   5 +-
+ block/monitor/block-hmp-cmds.c                     | 341 +++++++----------
+ block/monitor/meson.build                          |   5 +-
+ block/monitor/qmp-cmds.c                           |  79 ++++
+ chardev/char-hmp-cmds.c                            |  36 +-
+ chardev/char.c                                     |  11 +-
+ chardev/meson.build                                |   5 +-
+ disas/disas-mon.c                                  |  11 +-
+ disas/meson.build                                  |   4 +-
+ docs/devel/style.rst                               |   2 +-
+ docs/devel/writing-monitor-commands.rst            |   8 +-
+ dump/dump-hmp-cmds.c                               |  12 +-
+ dump/meson.build                                   |   5 +-
+ gdbstub/system.c                                   |  10 +-
+ hmp-commands-info.hx                               |   6 +-
+ hmp-commands.hx                                    |   9 +-
+ hw/char/virtio-serial-bus.c                        |  21 +-
+ hw/core/machine-hmp-cmds.c                         | 263 +++++++------
+ hw/core/meson.build                                |   5 +-
+ hw/core/sysbus.c                                   |  15 +-
+ hw/hexagon/hexagon_tlb.c                           |  87 ++---
+ hw/i386/kvm/xen-stubs.c                            |  10 +-
+ hw/i386/kvm/xen_evtchn.c                           |  28 +-
+ hw/i386/meson.build                                |   4 +-
+ hw/i386/sgx-hmp-stub.c                             |   4 +-
+ hw/i386/sgx.c                                      |  32 +-
+ hw/misc/auxbus.c                                   |  29 +-
+ hw/misc/mos6522-stub.c                             |   6 +-
+ hw/misc/mos6522.c                                  |   7 +-
+ hw/net/meson.build                                 |   4 +-
+ hw/net/rocker/rocker-hmp-cmds.c                    | 158 ++++----
+ hw/pci/meson.build                                 |   4 +-
+ hw/pci/pci-hmp-cmds.c                              | 121 +++---
+ hw/pci/pci-internal.h                              |   2 +-
+ hw/pci/pci-stub.c                                  |   8 +-
+ hw/pci/pci.c                                       |   2 +
+ hw/s390x/s390-skeys.c                              |  14 +-
+ hw/s390x/s390-stattrib.c                           |  26 +-
+ hw/uefi/ovmf-log.c                                 |  10 +-
+ hw/usb/bus.c                                       |  21 +-
+ hw/usb/host-libusb.c                               |  29 +-
+ hw/virtio/meson.build                              |   4 +-
+ hw/virtio/virtio-hmp-cmds.c                        | 312 ++++++++--------
+ hw/xen/xen-bus.c                                   |  11 +-
+ include/block/block-hmp-cmds.h                     |  55 +--
+ include/disas/disas.h                              |   4 +-
+ include/hw/core/qdev.h                             |   5 +-
+ include/hw/core/sysemu-cpu-ops.h                   |   2 +
+ include/hw/hexagon/hexagon_tlb.h                   |   5 +-
+ include/hw/usb/usb.h                               |   3 +-
+ include/monitor/hmp.h                              | 334 +++++++++--------
+ include/monitor/monitor.h                          |  21 --
+ include/monitor/qdev.h                             |   5 +-
+ include/net/net.h                                  |   8 +-
+ include/net/slirp.h                                |   8 +-
+ include/qemu-io.h                                  |   4 +-
+ include/system/memory.h                            |   2 +
+ meson.build                                        |   6 +-
+ meson_options.txt                                  |   2 +
+ migration/dirtyrate.c                              |  52 +--
+ migration/meson.build                              |   4 +-
+ migration/migration-hmp-cmds.c                     | 363 +++++++++---------
+ monitor/hmp-cmds.c                                 | 290 +++++++--------
+ monitor/hmp.c                                      | 257 +++++++------
+ monitor/meson.build                                |   9 +-
+ monitor/monitor-hmp-internal.h                     | 106 ++++++
+ monitor/monitor-internal.h                         | 104 ------
+ monitor/monitor.c                                  |  74 +---
+ monitor/qmp-cmds.c                                 |   5 +-
+ net/hub.c                                          |  29 +-
+ net/hub.h                                          |   4 +-
+ net/meson.build                                    |   4 +-
+ net/net-hmp-cmds.c                                 |  85 +++--
+ net/net.c                                          |  70 +++-
+ net/slirp.c                                        |  70 ++--
+ python/qemu/utils/__init__.py                      |   5 +-
+ qapi/block.json                                    |  34 ++
+ qapi/control.json                                  |   4 +-
+ qapi/machine.json                                  |   8 +-
+ qapi/misc.json                                     |   3 +-
+ qapi/net.json                                      | 166 +++++++++
+ qemu-io-cmds.c                                     | 414 +++++++++++----------
+ qemu-io.c                                          |  17 +-
+ qemu-options.hx                                    |   6 +-
+ qom/meson.build                                    |   4 +-
+ qom/qom-hmp-cmds.c                                 |  46 +--
+ replay/replay-debugging.c                          |  20 +-
+ replay/stubs-system.c                              |  14 +-
+ scripts/meson-buildoptions.sh                      |   3 +
+ stats/meson.build                                  |   5 +-
+ stats/stats-hmp-cmds.c                             |  60 +--
+ stubs/hmp-cmd-info_sev.c                           |   4 +-
+ stubs/meson.build                                  |  15 +-
+ stubs/monitor-core.c                               |  21 +-
+ stubs/monitor-cur.c                                |  14 +
+ stubs/monitor-hmp.c                                |   9 +
+ stubs/monitor-internal.c                           |   4 +-
+ stubs/qapi-event-emit.c                            |   8 +
+ system/dirtylimit-hmp-cmds.c                       |  20 +-
+ system/meson.build                                 |  11 +-
+ system/physmem.c                                   |  31 ++
+ system/qdev-monitor.c                              |  39 +-
+ system/qtest.c                                     |  14 +
+ system/runstate-hmp-cmds.c                         |  22 +-
+ system/tpm-hmp-cmds.c                              |  30 +-
+ system/vl.c                                        |   6 +-
+ target/hexagon/hex_mmu.c                           |   6 +-
+ target/hexagon/hex_mmu.h                           |   3 +-
+ target/i386/cpu-apic.c                             |   8 +-
+ target/i386/cpu.c                                  |   8 +-
+ target/i386/cpu.h                                  |   4 +-
+ target/i386/helper.c                               |  49 +--
+ target/i386/kvm/kvm.c                              |   4 +-
+ target/i386/monitor.c                              | 173 ++++-----
+ target/i386/sev.c                                  |  38 +-
+ target/m68k/cpu.c                                  |   4 +
+ target/m68k/monitor.c                              |   8 +-
+ target/ppc/monitor.c                               |   8 +-
+ target/riscv/monitor.c                             |  61 +--
+ target/rx/disas.c                                  |   1 +
+ target/sh4/monitor.c                               |  34 +-
+ target/sparc/cpu.c                                 |   5 +-
+ target/sparc/monitor.c                             |   8 +-
+ target/xtensa/monitor.c                            |   8 +-
+ tests/functional/generic/test_version.py           |  10 +-
+ tests/functional/qemu_test/utils.py                |   8 +-
+ tests/qemu-iotests/004.out                         |  20 +-
+ tests/qemu-iotests/021.out                         |  60 +--
+ tests/qemu-iotests/026.out                         | 228 ++++++------
+ tests/qemu-iotests/028                             |   1 +
+ tests/qemu-iotests/045                             |   3 +-
+ tests/qemu-iotests/051                             |   1 +
+ tests/qemu-iotests/056                             |   3 +-
+ tests/qemu-iotests/060                             |   1 +
+ tests/qemu-iotests/060.out                         |  44 ++-
+ tests/qemu-iotests/068                             |   1 +
+ tests/qemu-iotests/071                             |   1 +
+ tests/qemu-iotests/071.out                         |  10 +-
+ tests/qemu-iotests/072.out                         |   2 +-
+ tests/qemu-iotests/080.out                         |   4 +-
+ tests/qemu-iotests/081                             |   1 +
+ tests/qemu-iotests/081.out                         |   2 +-
+ tests/qemu-iotests/083.out                         |  36 +-
+ tests/qemu-iotests/089.out                         |   4 +-
+ tests/qemu-iotests/091                             |   1 +
+ tests/qemu-iotests/093                             |   3 +-
+ tests/qemu-iotests/102                             |   1 +
+ tests/qemu-iotests/114.out                         |   2 +-
+ tests/qemu-iotests/117                             |   1 +
+ tests/qemu-iotests/119                             |   1 +
+ tests/qemu-iotests/120                             |   1 +
+ tests/qemu-iotests/124                             |   3 +-
+ tests/qemu-iotests/130                             |   1 +
+ tests/qemu-iotests/132                             |   3 +-
+ tests/qemu-iotests/134.out                         |   2 +-
+ tests/qemu-iotests/136                             |   3 +-
+ tests/qemu-iotests/137.out                         |   2 +-
+ tests/qemu-iotests/142                             |   1 +
+ tests/qemu-iotests/145                             |   1 +
+ tests/qemu-iotests/146                             |   1 +
+ tests/qemu-iotests/148                             |   3 +-
+ tests/qemu-iotests/151                             |   3 +-
+ tests/qemu-iotests/152                             |   3 +-
+ tests/qemu-iotests/153                             |   1 +
+ tests/qemu-iotests/153.out                         |  12 +-
+ tests/qemu-iotests/156                             |   1 +
+ tests/qemu-iotests/157                             |   1 +
+ tests/qemu-iotests/161                             |   1 +
+ tests/qemu-iotests/165                             |   3 +-
+ tests/qemu-iotests/171                             |   2 +-
+ tests/qemu-iotests/171.out                         |  68 ++--
+ tests/qemu-iotests/172                             |   1 +
+ tests/qemu-iotests/181                             |   1 +
+ tests/qemu-iotests/185                             |   1 +
+ tests/qemu-iotests/186                             |   1 +
+ tests/qemu-iotests/192                             |   1 +
+ tests/qemu-iotests/201                             |   1 +
+ tests/qemu-iotests/205                             |   6 +-
+ tests/qemu-iotests/214.out                         |   2 +-
+ tests/qemu-iotests/216                             |   3 +-
+ tests/qemu-iotests/220.out                         |   2 +-
+ tests/qemu-iotests/225                             |   1 +
+ tests/qemu-iotests/225.out                         |   4 +-
+ tests/qemu-iotests/232                             |   1 +
+ tests/qemu-iotests/236                             |   3 +-
+ tests/qemu-iotests/244.out                         |  12 +-
+ tests/qemu-iotests/245                             |   3 +-
+ tests/qemu-iotests/246                             |   3 +-
+ tests/qemu-iotests/249                             |   1 +
+ tests/qemu-iotests/249.out                         |   6 +-
+ tests/qemu-iotests/254                             |   3 +-
+ tests/qemu-iotests/255                             |   3 +-
+ tests/qemu-iotests/257                             |   3 +-
+ tests/qemu-iotests/260                             |   3 +-
+ tests/qemu-iotests/264                             |   3 +-
+ tests/qemu-iotests/267                             |   1 +
+ tests/qemu-iotests/271.out                         |  14 +-
+ tests/qemu-iotests/274                             |   3 +-
+ tests/qemu-iotests/280                             |   1 +
+ tests/qemu-iotests/281                             |   3 +-
+ tests/qemu-iotests/283                             |   1 +
+ tests/qemu-iotests/286                             |   1 +
+ tests/qemu-iotests/289.out                         |   2 +-
+ tests/qemu-iotests/298                             |   3 +-
+ tests/qemu-iotests/300                             |   3 +-
+ tests/qemu-iotests/304                             |   3 +-
+ tests/qemu-iotests/305.out                         |   2 +-
+ tests/qemu-iotests/307.out                         |   2 +-
+ tests/qemu-iotests/310                             |   3 +-
+ tests/qemu-iotests/common.rc                       |   8 +
+ tests/qemu-iotests/iotests.py                      |  32 +-
+ tests/qemu-iotests/tests/backup-discard-source     |   7 +-
+ tests/qemu-iotests/tests/copy-before-write         |  69 ++--
+ tests/qemu-iotests/tests/file-io-error.out         |   2 +-
+ tests/qemu-iotests/tests/image-fleecing            |   3 +-
+ tests/qemu-iotests/tests/image-fleecing.out        |  12 +-
+ tests/qemu-iotests/tests/inactive-node-nbd.out     |   8 +-
+ tests/qemu-iotests/tests/iothreads-create          |   3 +-
+ tests/qemu-iotests/tests/luks-detached-header      |   3 +-
+ .../tests/migrate-bitmaps-postcopy-test            |   3 +-
+ tests/qemu-iotests/tests/migrate-bitmaps-test      |   3 +-
+ tests/qemu-iotests/tests/mirror-change-copy-mode   |   3 +-
+ tests/qemu-iotests/tests/mirror-ready-cancel-error |   3 +-
+ tests/qemu-iotests/tests/qcow2-internal-snapshots  |   1 +
+ tests/qemu-iotests/tests/qsd-migrate               |   3 +-
+ tests/qemu-iotests/tests/reopen-file               |   3 +-
+ tests/qemu-iotests/tests/write-zeroes-unmap        |   1 +
+ tests/qtest/ahci-test.c                            |   5 +-
+ tests/qtest/cdrom-test.c                           |  29 +-
+ tests/qtest/device-introspect-test.c               | 111 ++++--
+ tests/qtest/drive_del-test.c                       |  25 ++
+ tests/qtest/ide-test.c                             |   4 +-
+ tests/qtest/libqtest.c                             |  14 +
+ tests/qtest/libqtest.h                             |  11 +
+ tests/qtest/meson.build                            |   8 +-
+ tests/qtest/netdev-socket.c                        | 143 ++++---
+ tests/qtest/numa-test.c                            |  63 +++-
+ tests/qtest/pnv-host-i2c-test.c                    |   2 +-
+ tests/qtest/pnv-xive2-test.c                       |   2 +-
+ tests/qtest/qmp-test.c                             |  13 +-
+ tests/unit/test-util-sockets.c                     |   1 -
+ tests/vm/basevm.py                                 |  13 +-
+ tools/qemu-vnc/clipboard.c                         |   4 +-
+ tools/qemu-vnc/stubs.c                             |   5 -
+ trace/meson.build                                  |   5 +-
+ trace/trace-hmp-cmds.c                             |  17 +-
+ ui/meson.build                                     |   4 +-
+ ui/ui-hmp-cmds.c                                   | 151 ++++----
+ util/error-report.c                                |  75 ++--
+ util/qemu-print.c                                  |  14 +-
+ 256 files changed, 3915 insertions(+), 2940 deletions(-)
+---
+base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
+change-id: 20260521-qemu-no-hmp-ead3f0bf79c0
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
