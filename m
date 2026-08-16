@@ -4,133 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3254BC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B6E3C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcAm-0004et-KY; Sun, 16 Aug 2026 10:49:16 -0400
+	id 1wvcBp-0000uY-0r; Sun, 16 Aug 2026 10:50:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcAH-0004HD-KF
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wvcBm-0000dH-Ri
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:50:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcAE-0000wa-9q
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:45 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wvcBk-0001ba-Vr
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:50:18 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDkkFD3609380
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:39 GMT
+ 67GDkqSS3448447
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:50:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mJ52XJEm/Ufrioi10sFwL6GNYhnPWGnTfcMAWm7npzw=; b=HZpowZd8psKDf4Ws
- pMVaUphwlYVjhTzKzkfNNeIlJFzPS1q+gF1im4b06GfAPg45h5r0Ba3pU2oTLFDb
- PFK90QS8AJmygU3v9Sen4Cpq3WgN5J5NH0jwO8cRLXc8feM9krlfvd13RXIWAf5u
- 7ZBbllU9TESWyzZ/vDPdYD4B8H1Yqhm8OqdvPaj0c8UGIGoD7D+/xF34jPNYZTOI
- cePqitKI9AjIv1f7+hJWUsGIuw+LOatIFZC4Ls9hjJpPt4zDegfG23D0b87FwnQF
- wfdzDhNlQqdzX+yJ2zmPavCBKEbB6vIhz5uFlZqRFACexWtwFFWiiH3MoLEh2ThR
- eeLHqA==
+ QqIkE/I0/yFqdHPM6vpD2vvVo379ilSQzNAkLmO2waE=; b=BAzB6Xq/+BhYkwBt
+ zY1Hnk7IR2WPOdn4vRk3+RP+3yD+Us6Q/nelIkiuHxEuuVpUr8YFuugUKN2hUV4s
+ J9fcdvpcyN5Uh/xrR6S/84tMxBJUXp6JxAeqBgHwdHGozOHFjUVxm41C60hhy8d5
+ lENO/FjM+ASUEdQ6gu7qneN8Wk24pOuka5Ygo5XKTOVqab8Jq2VceEnGf9bHKExt
+ cID5SNkZiAyjkZgwOIWhIHXC2wRLPiftYZSHTws9grbl3HaCwZ0MpIxS5i8Am3Zy
+ 2CQgd8B3XQdcHQAgNjIFtgYPJMqbdSvE311yWqcp4RpKW7DUfvDDYHR7iclnTk1k
+ 1ngPCw==
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfuk22-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghk3mwg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:38 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:50:15 +0000 (GMT)
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-936cadb0e8bso220330085a.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:48:38 -0700 (PDT)
+ af79cd13be357-936aa34873bso234183285a.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891718; x=1787496518; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891815; x=1787496615; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mJ52XJEm/Ufrioi10sFwL6GNYhnPWGnTfcMAWm7npzw=;
- b=eVIT0LRKk9VVQRG013TwmhlSXbK2hl+lEic3xdcRnBh8atqa8VpistW0K5DbbsMAgk
- a/t//nzEBVDN1UDQhzdD08r4Hwk+K9tGeHPl6vegvMuFKsFm21kMQYLSPjRNeSK40Zrf
- d/+4AwoFUZamoswrV1n1DCw06GJkkwNkCSscTOBBYnBMQgugOBPi9wJ6B0F/ShzAt3Fl
- fWcz7XBApi7GpQXzQCutqdWCGXBk1evwGS92/pAtOmmNLaHu/gIkmOjAj2Zfy1us/7qa
- zckX0Y1amjfP2ijAQ63Jhfwp1RW1btCVoUPh+Vx577gvagZV9yzBG9zSsx4zG0viISO0
- 1jTA==
+ bh=QqIkE/I0/yFqdHPM6vpD2vvVo379ilSQzNAkLmO2waE=;
+ b=QMyXmHExsCmpIoImUcUtCYSFeBj31nAFOWLYWYVJq3IE5amSxVx/dMyO2UHP0admCG
+ Aza7qZqsNnQdwWJR/5h1S6LehImDgZ4unK1JS2oCgXNsczECINfgwrahIu73jdET1bBk
+ o9pcAW2wRpuddBs9kZiPtsU79fOYvV7c9PtPU9Q4B+JLo1i++ZHN4jqZhaLmhM1r24ME
+ AoACwgmcJLDWq3z/XEslv1zZCBoTGvVhWYxLvOsdTNbn9AaEBmy8jOYFyTfbaGSdAau4
+ ZR/ioV40wQOzgd7/08UIEwRtHj7t3oSc9NmU1xIWeIufaBtZ8ZGmx57lMjlrmf2WAY+J
+ YbnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891718; x=1787496518;
+ d=1e100.net; s=20251104; t=1786891815; x=1787496615;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mJ52XJEm/Ufrioi10sFwL6GNYhnPWGnTfcMAWm7npzw=;
- b=HA/F/LcCR9N9TFToRasoDnxIoUIiSDRX5X1gZqri/0ZDOmbkMq3DhJwdwWqxEf1W3Z
- QzMqskbYFhwtKHUR5ad5jhjoVKrZAG4/EKc5eY/8IFf14QwwokMBtzW6ngt88kXGmoeK
- PN4VbpO1gs2JN2YYEP+D8ngd2cYlNODEjfH4+++icg6TshT+UEfaVV4XsX8YiwjuWwYp
- +j70k7+Iee5Rrcu5M9K8uZMm9SZFO43NKm6BUEoKaTqh12Fs+ilZbI+KwTwf5GuPPRbI
- ny1zB6JLNNX98R4qfpdG1GWe6c2PloHgnOJopUFNIsGdfx6G3w4pFy7FsRk72jJJabMj
- HK1A==
-X-Gm-Message-State: AOJu0Yx8M18BdExrT56Cn1c2LGez/hQ856BRMivuE6w/JHLzu2I7G2D+
- tClyMYxa2WG4TI27E/FvWFKSNdmhRNFRzOBwsaBalOlkIuRfbgdzhpxM214P3+sCp2AaEHsmX+T
- luv6RMjljEwYrb7tKJkAiywDWo8/EKS/7dV6mSNs/ynlC85HQrdzvvdhjWrGdNuNbiQ==
-X-Gm-Gg: AR+sD11gt8PwfwVxyy9glAZ1JB6dxnR1iAXreugBQGwHXEQnL+AGzrC7zEJItgDFaYX
- oipm99+q7+cu3NjkeV1pU1bG+TeuyVD/ZPa/+NDJZB2L0HE9soin48GUS/vW9jTpXK/g49gle6g
- DlR8pWQn6bKK0+DnUv5Tl9GfD5UqQccaZiRrc5mQw5kyF+DfR9+NM28Bd68e6nemRXcF8jqUkmp
- 2iP6vYnNtsS8NMwzVjH6S+x5YnxK8FrOFdZeAmhvyRNfECRjZAwtpKQEFKE/RFS9TxGRTPW+1Ot
- wgV+etCUt9jrxkqvQFDIpKQ3wXAZk0MqtFtAIBNwkfhWQG8oISkM51IeIq2D4UZZ4EztN4KZYu3
- GsAbF9hG811TM/UZ0k4949umLfqmkxgSL0yCUMf2q1g==
-X-Received: by 2002:a05:620a:2941:b0:936:7a4e:db1 with SMTP id
- af79cd13be357-936d22e985amr1944916385a.23.1786891717778; 
- Sun, 16 Aug 2026 07:48:37 -0700 (PDT)
-X-Received: by 2002:a05:620a:2941:b0:936:7a4e:db1 with SMTP id
- af79cd13be357-936d22e985amr1944911585a.23.1786891717085; 
- Sun, 16 Aug 2026 07:48:37 -0700 (PDT)
+ bh=QqIkE/I0/yFqdHPM6vpD2vvVo379ilSQzNAkLmO2waE=;
+ b=Jptqi5U5NTU7AxBKbN1KMoid/iJAEGC9cK6E/0mpmonhDyfdjtU9ikEQgi7jN9cZWP
+ 6KqCDFWBYkmrq/W9Y5sfSJM9UaG4AzKe4435bEcnFJWCHjmjChZlvKFZPAwE22tSujkl
+ msNPwa2Qt8VTDp1s8ejJXWnJZkkvqb7/M+/9vibyc+m6ZpP3QwoV1+PbbMLxAQAINvCU
+ zbEz/IMSY3yCq5aGlVAdac5bV7N/wMXZ+cbDbd03k0wsDy7iFJCF1Qc8GdGuFOBCxm4F
+ r+zDS+LpjTM6NsL/SX4p3srtIz8gTSmLRAB0zcmjMcEKB9QQyPh4wtG7bIJsYbbG0Lsu
+ MD7g==
+X-Gm-Message-State: AOJu0YwIczO/t2Su+KvzyM8TmHWtIfdlWYGb/vEF1F/4ekpjfO5F5SOf
+ M7DXRYQ6Py7w12GpLkEcNfmjz/50rPfCe4otD4WOmNQOkNMSpMBWtsAwWZJOa/hvpK0G6CcoNDy
+ 3ThW1j1MsE9imWxU6x+S11xX53AmKp+vVelp+3mbe5EstfLfk1txk8mjtg4Xk05LQ3A==
+X-Gm-Gg: AR+sD11yPrZUpDy3y/xwKTGzvaMt8p6V8RMQL8jtAjP1JpedY9pA8tswBRvlozNy1Q2
+ 0J5rl0m8oLwDh4BSEQyjk0S5Qcw5zEkvYBvfmEyZl1oJn0MfoEmcCaBoDOZ8OP5TIWyQ+c4A5/G
+ +Nvhm6nWrJTT5NfdNGFmcN8SuEqWetRwtTKmfiKiLnXP0g0d6Qma820o+oHKG9UlAInXwkc0H+P
+ KwNsygE5Z+uQ02a5FlhNmwi0K+jW/Jm88MGqaur4qUYRzZM8HcZOHOA+4zN11hQdB/lmFH+KdEC
+ WyJGKHUqZ9dJKrNEGN9gzpjGfBpyZsuQ16DSiUm8qj7oj7qcYAng5wIVQmFHlfmC82Xac32T/W0
+ BgpFKalybogI++ACzhCWLeHmlfmabJ/DyRsWn8GCwXA==
+X-Received: by 2002:a05:620a:6881:b0:931:2:65b6 with SMTP id
+ af79cd13be357-936d238c122mr2345954085a.38.1786891814856; 
+ Sun, 16 Aug 2026 07:50:14 -0700 (PDT)
+X-Received: by 2002:a05:620a:6881:b0:931:2:65b6 with SMTP id
+ af79cd13be357-936d238c122mr2345949185a.38.1786891814353; 
+ Sun, 16 Aug 2026 07:50:14 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996108141sm46894005e9.6.2026.08.16.07.48.36
+ 5b1f17b1804b1-4999610e381sm72886405e9.9.2026.08.16.07.50.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:48:36 -0700 (PDT)
+ Sun, 16 Aug 2026 07:50:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/56] hw/block/pflash_cfi01: Restore ROMD mode after migration
-Date: Sun, 16 Aug 2026 16:45:18 +0200
-Message-ID: <20260816144556.69009-20-philmd@oss.qualcomm.com>
+Subject: [PULL 30/56] hw/s390x/virtio-ccw: Always inject NMI to first CPU
+Date: Sun, 16 Aug 2026 16:45:29 +0200
+Message-ID: <20260816144556.69009-31-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX6ScCrEoqOO44
- wCdNqiHbx8aHDkzbiDrH3R5DZNv5xJAX0cdrKHbgjhAatlDLrH8CRKz067wktSja84Vwph4UzI/
- hzFbmkXqnAa3lzPLF2AMsF8EKXVuCgU=
-X-Proofpoint-ORIG-GUID: wlDgjguj5PzaMOMh3gxYtvnAqE9HaneI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfXxVdYFWzO2yfG
- tD2ZDI97OR7uouHczb1MXifDZpE4wW16H6dcYDDo9Pt4NaDe2A24HL+jCG7EyKtOOTG6qBHHzWQ
- +urRUtOYViXTUo9z8+dXe4P7uUjEnHpZ5fseJXniJdMssE3UsJ0LO3bTUoNTkY0F5VmwhBweZoo
- TAUMNimYb01Ystr55PtO0tn1zUvu/NZeGueZrtG/YpRxACgNOv1by254/Ls6gMBqZcn45XoLUgQ
- cZ5mpRsqurq9aEfgyeGMlGSkqgoA0zB8k3tDUHhgFDI1TASxL05e6rMu5nyjAdTCHGz0rRuM3tq
- Z2L8WiAHyCEmZ3LLhl7P+7SbCaMgNo+bHe+OR3nBhC/duYquy2RgjKGmWXAUC18QgGUXskDfxZA
- 989z6nx1J2523ohmzOYA9C7Zzhp+lY0fRY4eyy4OQZLoA/ybjkVBY01eCi7EPd5jMLiM32pD/U0
- T0wYTLMHKQ6ZfcnUkKQ==
-X-Authority-Analysis: v=2.4 cv=TMJ1jVla c=1 sm=1 tr=0 ts=6a81cdc6 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX1Ir1Vrt3dh7k
+ LcnymkwJF+j13pFmNCytlX1K80+5ElQN1uFqi8l5Rx8T3NAAJpISew7Pzx+64WiTtKy+P53aK35
+ 6dsRupLUZxe/JJZWSiNd5JpvWrRs/r0=
+X-Proofpoint-GUID: fDCa-W4CmhhBi_LRlKSfMUtHV65MhCSV
+X-Authority-Analysis: v=2.4 cv=f+14wuyM c=1 sm=1 tr=0 ts=6a81ce27 cx=c_pps
  a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=SRrdq9N9AAAA:8
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Ri07d896u8T7sB93P0wA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: wlDgjguj5PzaMOMh3gxYtvnAqE9HaneI
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8
+ a=43zqHlSF2DfHiYptYdwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX5RzeQ99M8GvZ
+ 6W2wCqrtG1RkZbpJ0dlS/3XyELithapWNVN1Y3cc6nuTlbXECVsOVRSD8s0FyoEBXeTWSUGzoC3
+ 427kVzu6Dr06s6KxEV5kt7ToBd8Ea2GNStweLwsFRloyKLsW5yPiJ3TDelyWblwMjcGsoSFaXF5
+ /lO0KW8JQXY/XJgBMXIF8W/K8/V93+JXKjuTxPBQNIR1p6BWLKmqV2WGiQ6EZ+MRwllHptWGNp8
+ /j2l4EI1D9kA5VuTAfCj5fj/D1+6M++ZY0HozYMtfwUAiR7DWXnxopsZvckMAaqlNUQii78vEBG
+ FLFJapZQ8XG5+Dk9/tzlGrfyYhE/l7X/Kg2SdJ/VCRHPLEZKHpoOPyKwnqSKbpj1wJJ5ipbOBOj
+ IirZUIpL2KlsoaIQonERhBBbbzOWYLl+mEJpy8dZ/5ffXAHCO3aMNbRswlxIEZ73mCXP3vTFw+9
+ kgIphMYRokE9iitIiNQ==
+X-Proofpoint-ORIG-GUID: fDCa-W4CmhhBi_LRlKSfMUtHV65MhCSV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608160118
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ priorityscore=1501 spamscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160118
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,68 +151,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-pflash_post_load() did not restore the ROMD mode of the memory region.
-Although cmd and wcycle are migrated, the destination retains the
-default ROMD = true from realize.  When the source was in a non-array
-mode (e.g. ID read, cmd = 0x90), reads on the destination bypass
-pflash_read() via the ROM fast path and return raw storage bytes
-instead of the command-specific response.
+We can trigger NMI from HMP or QMP.
 
-Derive ROMD from the migrated cmd/wcycle in pflash_post_load.
+QEMU maps the NMI to the s390x per-CPU 'RESTART' interrupt.
+Linux guests usually setup this interrupt to trigger kdump
+or crash. Such crashdump can be triggered in QEMU by HMP
+"nmi" or QMP "inject-nmi" commands.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4042
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Using QMP, since we can not select a particular CPU, the first
+CPU is used (CPU#0). See the documentation from commit 795dc6e4
+("watchdog: Add new Virtual Watchdog action INJECT-NMI"):
+
+  @inject-nmi: a non-maskable interrupt is injected into the
+               first VCPU (all VCPUS on x86) (since 2.4)
+
+While we can select a particular CPU on HMP, the guest behavior
+is expected to be the same if using CPU #N or CPU #0. Since
+always using CPU#0 simplifies API maintenance , update s390_nmi()
+to inject NMI to the first CPU.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMD: Including review comments from
- https://lore.kernel.org/qemu-devel/CAFEAcA-P6RH7nJK0KQ1H8576ULFA7nocB0EkhhZf6Rw3g0WCag@mail.gmail.com/
-
- Confirming that this is correct is a bit tricky. It relies on:
-  * when we set romd mode to true we also set wcycle = 0, cmd = 0
-    (which we do, in reset and in the mode_read_array code)
-  * when we set romd mode to false at the top of pflash_write(),
-    all paths out of that function either go through the
-    mode_read_array path, or else update pfl->cmd to something
-    non-zero
-  * nowhere outside pflash_write() udpates cmd or wcycle except
-    for the "clear them to 0 and set romd mode" places
-
- This is almost but not quite true. In pflash_read(), the default
- case for the pfl->cmd switch sets wcycle = 0 cmd = 0 but doesn't
- change the romd state. Luckily the "this should never happen"
- comment is true -- there's no way to get a pfl->cmd that falls
- into the default (except for being deliberately fed a bogus value
- via inbound migration).
-]
-Message-ID: <20260803041808.58174-1-guobin@linux.alibaba.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20260812121232.71958-3-philmd@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/block/pflash_cfi01.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ qapi/machine.json          | 7 ++++---
+ qapi/run-state.json        | 6 ++++--
+ hw/s390x/s390-virtio-ccw.c | 4 +---
+ hmp-commands.hx            | 5 +++--
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 5b9ddb20b18..a13b91967ed 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -1030,6 +1030,16 @@ static int pflash_post_load(void *opaque, int version_id)
- {
-     PFlashCFI01 *pfl = opaque;
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 9b2248038fc..2d63c1bac3b 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -432,9 +432,10 @@
+ ##
+ # @inject-nmi:
+ #
+-# Injects a Non-Maskable Interrupt into the default CPU (x86/s390) or
+-# all CPUs (ppc64).  The command fails when the guest doesn't support
+-# injecting.
++# Injects a Non-Maskable Interrupt (machine specific: for example on
++# s390x CCW only the first vCPU receives the NMI, but on x86 machines
++# all vCPUs receive it).  The command fails when the guest doesn't
++# support injecting.
+ #
+ # Since: 0.14
+ #
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index a5771ad4681..e4fdead1e0b 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -317,8 +317,10 @@
+ #
+ # @none: nothing is done
+ #
+-# @inject-nmi: a non-maskable interrupt is injected into the first
+-#     VCPU (all VCPUS on x86) (since 2.4)
++# @inject-nmi: a non-maskable interrupt is injected (machine
++#     specific: for example on s390x CCW only the first vCPU
++#     receives the NMI, but on x86 machines all vCPUs receive
++#     it).  (since 2.4)
+ #
+ # Since: 2.1
+ ##
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 55131c1a444..a2f373b1190 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -727,9 +727,7 @@ static HotplugHandler *s390_get_hotplug_handler(MachineState *machine,
  
-+    /*
-+     * ROMD mode is not in the VMState; derive it from the migrated
-+     * cmd and wcycle.  Only (wcycle == 0, cmd == 0x00) is read-array.
-+     */
-+    if (pfl->wcycle == 0 && pfl->cmd == 0x00) {
-+        memory_region_rom_device_set_romd(&pfl->mem, true);
-+    } else {
-+        memory_region_rom_device_set_romd(&pfl->mem, false);
-+    }
-+
-     if (!pfl->ro) {
-         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
-                                                         pfl);
+ static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
+ {
+-    CPUState *cs = qemu_get_cpu(cpu_index);
+-
+-    s390_cpu_restart(S390_CPU(cs));
++    s390_cpu_restart(S390_CPU(first_cpu));
+ }
+ 
+ static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 7f43cf537fc..a29f02b623e 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -865,12 +865,13 @@ ERST
+         .name       = "nmi",
+         .args_type  = "",
+         .params     = "",
+-        .help       = "inject an NMI",
++        .help       = "Inject an NMI, in a machine-specific way",
+         .cmd        = hmp_nmi,
+     },
+ SRST
+ ``nmi`` *cpu*
+-  Inject an NMI on the default CPU (x86/s390) or all CPUs (ppc64).
++  Inject an NMI, in a machine-specific way.
++  Not all machines implement NMI handling.
+ ERST
+ 
+     {
 -- 
 2.53.0
 
