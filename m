@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933ECC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F2AC5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgLH-0001D1-PI; Sun, 16 Aug 2026 15:16:23 -0400
+	id 1wvgKo-00009N-Jk; Sun, 16 Aug 2026 15:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgLA-0000mK-5x
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:17 -0400
+ id 1wvgKb-0007yh-MR
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgL8-000080-5j
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:15 -0400
+ id 1wvgKZ-0008My-TH
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907773;
+ s=mimecast20190719; t=1786907738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YJKjhueKFH6fO293pZu/kieeolLZstxWiOEM7pJAUd8=;
- b=E6ZcyvTeesdFmdXw2GlB8N9NBi9bG2qXI2n4mpnnw0S1oet7nHgec3BbDaIzYY86M+AR1H
- jw9Is8PVr2DQqFmKJjUyG1QLKcC7LiyKX0X+OrSJlVEHeukajGH3RknxnaskkdFFs1cv0e
- nF+FihLJvTGlSn/RJfenFHyPTX1YID0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GVgf88yxf4OiR3btXpgx8RuP28ErYGVixAx6FRNWd/w=;
+ b=gZvvmwZEhBfth2fuPS8AQDtldRp/2/eho+eBn5fxdTn+JYIw0Dvqpw7A+wdkpTToQQnbxi
+ RKTlHXS4w4/q8MMhJ1x+0j1bQtwgr6Da3hmy0ThGjJCCiznk6QwJPs9F4K/i3BtnGtDXPF
+ jgY3XLY78YQmK2dJbpIol9H3zBmJ9uE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-7vm2xFJlPByihTKfMluXFQ-1; Sun,
- 16 Aug 2026 15:15:58 -0400
-X-MC-Unique: 7vm2xFJlPByihTKfMluXFQ-1
-X-Mimecast-MFC-AGG-ID: 7vm2xFJlPByihTKfMluXFQ_1786907757
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-DDIgMlasNvaONFEdV4qiFw-1; Sun,
+ 16 Aug 2026 15:15:32 -0400
+X-MC-Unique: DDIgMlasNvaONFEdV4qiFw-1
+X-Mimecast-MFC-AGG-ID: DDIgMlasNvaONFEdV4qiFw_1786907731
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9602E19560AB; Sun, 16 Aug 2026 19:15:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 699F31956096; Sun, 16 Aug 2026 19:15:31 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9E66218005BB; Sun, 16 Aug 2026 19:15:56 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8F9A8195DF93; Sun, 16 Aug 2026 19:15:30 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:13:14 +0400
-Subject: [PATCH v3 47/49] monitor: move monitor_hmp_print*() functions to hmp.c
+Date: Sun, 16 Aug 2026 23:13:07 +0400
+Subject: [PATCH v3 40/49] qapi: make HMP-specific schema entries
+ conditional on CONFIG_HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-47-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-40-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,25 +63,25 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4855;
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2918;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=f8oQG0VaVSMSlz37NAD46saX6MrPKO3jars6q2wPBXY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu1AHKyKuL4Kxhx5QK6x5FYxfRZTZtmyvwBh
- 9Hnl7gSF6iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtQAKCRDa6OEJdZac
- 5Z4OD/9t1I00kqSUTmAGYAkmsrbSToRsjr7WkwQ6GrVi/WVBUNkZINshPuCEZtXfX8Gli+VKD4J
- UOUNAnXo+AbjCPfuj309g3O+gQDiUW8LQUujymlemeADbpFGZpIqnMDZDii9etci8uxqDKfMKMV
- v/5AtmOYOnU0AcgF/aMNvLxmMi6H+OfE8sTAtv/lzeW/jwEIiJ2Mrl4gwW52a0JkQf/4fpLMf6l
- SN0UwAaudMT04wrkrQBAwcDjkNgoRKEtDUc4LBMZ71aEJx4Lk9MnCsnSsJSE28pd065cAfp5MRp
- +FhKjWjwTD80YFLuB5SX4fT7uX37sMLRT3pE+7iHclgFTxyfFI3TcRCgKMNQzo6OtT7HgwYBdlB
- ATjldOTfJvhdEm3k2X3lB2Nmvk5ox1Rf/8FARLJPgVPfJLxztKTv2UNyuJ29PZ3QHjRk0CIvE+F
- Ec+CYxtvCoqtNSkbuSO4bG3cS/9cdd1Zl7/USnl9gFbYyRXemUFUw4p5eNguAozX9g7qSnGP6xL
- ANKdb1qyKFATTwTTDHMfIYswdwrqIa/xu52H6YUyKbjNGC2NUlT7IfZccJczm/fWrqO5UMJkUU7
- wvBxeyk/u1r4aFq9W/iQgFuQepjZfOCLQL8XsRUw0Kst0zrnRPs5VC9+Tah1ktqmuQhqLNfUDt8
- 5anGIWwpl+Hz2GA==
+ bh=p2oNQmnbGN2ePnZJfFBD36d0h/cN/EbTAaiQ9LpY6Uk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu0ZZivjQl3TY9MKieBpx7DXsZvWbrTFB6Yk
+ yXDX8fwCkiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtAAKCRDa6OEJdZac
+ 5ZsbD/9SsTIB0RL5KKiabvswCfCYJLv0DrhMLlGyvfnRf2U3mR7GP06Tznn9fIhSVFsgvCcBITI
+ YbzxMsVrBmlDJa1zYDDJXfZVC4/TOYqEEJS05t2yEj0u6DPahYw/lUjS5B8+fF1XXFtcJMvS/DE
+ cl601ImAlBEjHZjqxg1ElMzpowPq2NcW8ixglRKzQWrKnYzA2vaaGNPJCuLYucxPcyoj0yARYUk
+ jCgcWb/KNNmByJ5yeA4jRNI5wX1TiwIy7cJs5oOW5EvcWZQ26ZzPANttvNdkavUU48kCwe0KcFl
+ CeJPJ2Ovp2T/oXk7M0Sb2QBKaXSCKT31+J/aTObpzghAt4cthAEXpRJHUpzArALGmZpyQwV33Xx
+ zovF+8FISwaHq2SDZKMDmKd8Hbfw/Ey4mc0YIsi+qpL7CPGztamODafugwsdbc188Or1bzG2XT5
+ SsBuH4LC0AXdz8xfpNpKk52xNlOVtJMVk1k9c5Pah22WxgaLL/8oPP4f9ucdjqnvfubcoqpN2vv
+ rwNbkskbP1Qd2t2eEOU1xiApwHA4nzyt0BSCRHevYYoT8RujMKg8/KWMKM032qrmaexr0FbXuWJ
+ D6eOCYVRONrzTpduDM+4o1pHgb4j+HmY5GNoY3cBZ3hjO9wevIBDccrIDUEUzp81U6J/Ih/wPa1
+ XS/cI+EVY2DZ30Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,187 +107,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those functions are only used when CONFIG_HMP, compile them out, and add
-conditions for the calling code.
+Make the 'readline' value of MonitorMode and the
+'human-monitor-command' command conditional on CONFIG_HMP, so
+they are only available when HMP support is compiled in.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-# The commit message #2 will be skipped:
-
-# fixup! monitor: move monitor_hmp_print*() functions to hmp.c
 ---
- monitor/hmp.c       | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- monitor/monitor.c   | 49 -------------------------------------------------
- util/error-report.c |  3 ++-
- util/qemu-print.c   |  4 ++++
- 4 files changed, 55 insertions(+), 50 deletions(-)
+ monitor/monitor.c  | 8 +++++++-
+ monitor/qmp-cmds.c | 2 ++
+ qapi/control.json  | 4 +++-
+ qapi/misc.json     | 3 ++-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 10bcbe2a33cb..e3fc05f521a8 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1754,3 +1754,52 @@ static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
-     }
-     return cs->cc->sysemu_ops->monitor_get_register(cs, name, pval);
- }
-+
-+int monitor_hmp_vprintf(MonitorHMP *hmp, const char *fmt, va_list ap)
-+{
-+    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
-+
-+    if (!hmp) {
-+        return -1;
-+    }
-+
-+    return monitor_puts(MONITOR(hmp), buf);
-+}
-+
-+int monitor_hmp_printf(MonitorHMP *hmp, const char *fmt, ...)
-+{
-+    int ret;
-+
-+    va_list ap;
-+    va_start(ap, fmt);
-+    ret = monitor_hmp_vprintf(hmp, fmt, ap);
-+    va_end(ap);
-+    return ret;
-+}
-+
-+void monitor_hmp_printc(MonitorHMP *hmp, int c)
-+{
-+    monitor_hmp_printf(hmp, "'");
-+    switch (c) {
-+    case '\'':
-+        monitor_hmp_printf(hmp, "\\'");
-+        break;
-+    case '\\':
-+        monitor_hmp_printf(hmp, "\\\\");
-+        break;
-+    case '\n':
-+        monitor_hmp_printf(hmp, "\\n");
-+        break;
-+    case '\r':
-+        monitor_hmp_printf(hmp, "\\r");
-+        break;
-+    default:
-+        if (c >= 32 && c <= 126) {
-+            monitor_hmp_printf(hmp, "%c", c);
-+        } else {
-+            monitor_hmp_printf(hmp, "\\x%02x", c);
-+        }
-+        break;
-+    }
-+    monitor_hmp_printf(hmp, "'");
-+}
 diff --git a/monitor/monitor.c b/monitor/monitor.c
-index da0c8eda86b0..7979cd1cbcfd 100644
+index da76e6e4ac19..da0c8eda86b0 100644
 --- a/monitor/monitor.c
 +++ b/monitor/monitor.c
-@@ -272,55 +272,6 @@ int monitor_puts(Monitor *mon, const char *str)
-     return monitor_puts_locked(mon, str);
- }
+@@ -740,13 +740,18 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+     ERRP_GUARD();
  
--int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
--{
--    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
--
--    if (!mon) {
--        return -1;
--    }
--
--    return monitor_puts(MONITOR(mon), buf);
--}
--
--int monitor_hmp_printf(MonitorHMP *mon, const char *fmt, ...)
--{
--    int ret;
--
--    va_list ap;
--    va_start(ap, fmt);
--    ret = monitor_hmp_vprintf(mon, fmt, ap);
--    va_end(ap);
--    return ret;
--}
--
--void monitor_hmp_printc(MonitorHMP *mon, int c)
--{
--    monitor_hmp_printf(mon, "'");
--    switch(c) {
--    case '\'':
--        monitor_hmp_printf(mon, "\\'");
--        break;
--    case '\\':
--        monitor_hmp_printf(mon, "\\\\");
--        break;
--    case '\n':
--        monitor_hmp_printf(mon, "\\n");
--        break;
--    case '\r':
--        monitor_hmp_printf(mon, "\\r");
--        break;
--    default:
--        if (c >= 32 && c <= 126) {
--            monitor_hmp_printf(mon, "%c", c);
--        } else {
--            monitor_hmp_printf(mon, "\\x%02x", c);
--        }
--        break;
--    }
--    monitor_hmp_printf(mon, "'");
--}
--
- static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     /* Limit guest-triggerable events to 1 per second */
-     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-diff --git a/util/error-report.c b/util/error-report.c
-index c20e157780fa..68471d8055a1 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -35,12 +35,13 @@ const char *error_guest_name;
- static int G_GNUC_PRINTF(1, 0)
- error_vprintf_mon(const char *fmt, va_list ap)
- {
+     if (!opts->has_mode) {
+-        opts->mode = allow_hmp ? MONITOR_MODE_READLINE : MONITOR_MODE_CONTROL;
++        opts->mode =
 +#ifdef CONFIG_HMP
-     MonitorHMP *hmp = monitor_cur_hmp();
- 
-     if (hmp) {
-         return monitor_hmp_vprintf(hmp, fmt, ap);
-     }
--
++            allow_hmp ? MONITOR_MODE_READLINE :
 +#endif
-     return vfprintf(stderr, fmt, ap);
- }
++            MONITOR_MODE_CONTROL;
+     }
  
-diff --git a/util/qemu-print.c b/util/qemu-print.c
-index aabe670fda01..f4a7ce4c0682 100644
---- a/util/qemu-print.c
-+++ b/util/qemu-print.c
-@@ -21,10 +21,12 @@
-  */
- int qemu_vprintf(const char *fmt, va_list ap)
- {
+     switch (opts->mode) {
+     case MONITOR_MODE_CONTROL:
+         monitor_new_qmp(opts->id, opts->chardev, opts->pretty, errp);
+         break;
 +#ifdef CONFIG_HMP
-     MonitorHMP *hmp = monitor_cur_hmp();
-     if (hmp) {
-         return monitor_hmp_vprintf(hmp, fmt, ap);
+     case MONITOR_MODE_READLINE:
+         if (!allow_hmp) {
+             error_setg(errp, "Only QMP is supported");
+@@ -758,6 +763,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+         }
+         monitor_new_hmp(opts->id, opts->chardev, true, errp);
+         break;
++#endif /* CONFIG_HMP */
+     default:
+         g_assert_not_reached();
      }
-+#endif
-     return vprintf(fmt, ap);
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index b16119f4858c..c9f24febdc96 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -162,6 +162,7 @@ void qmp_add_client(const char *protocol, const char *fdname,
+     }
  }
  
-@@ -52,10 +54,12 @@ int qemu_printf(const char *fmt, ...)
-  */
- int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
- {
 +#ifdef CONFIG_HMP
-     if (!stream) {
-         MonitorHMP *hmp = monitor_cur_hmp();
-         return hmp ? monitor_hmp_vprintf(hmp, fmt, ap) : -1;
-     }
-+#endif
-     return vfprintf(stream, fmt, ap);
+ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+                                 int64_t cpu_index, Error **errp)
+ {
+@@ -187,6 +188,7 @@ out:
+     object_unref(hmp);
+     return output;
  }
++#endif /* CONFIG_HMP */
  
+ static void __attribute__((__constructor__)) monitor_init_qmp_commands(void)
+ {
+diff --git a/qapi/control.json b/qapi/control.json
+index 9a5302193d67..9898552814b1 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -186,7 +186,9 @@
+ #
+ # Since: 5.0
+ ##
+-{ 'enum': 'MonitorMode', 'data': [ 'readline', 'control' ] }
++{ 'enum': 'MonitorMode', 'data': [
++    { 'name': 'readline', 'if': 'CONFIG_HMP' },
++    'control' ] }
+ 
+ ##
+ # @MonitorOptions:
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 22b7afed9f65..a21ba61b96e0 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -247,7 +247,8 @@
+ { 'command': 'human-monitor-command',
+   'data': {'command-line': 'str', '*cpu-index': 'int'},
+   'returns': 'str',
+-  'features': [ 'savevm-monitor-nodes' ] }
++  'features': [ 'savevm-monitor-nodes' ],
++  'if': 'CONFIG_HMP' }
+ 
+ ##
+ # @getfd:
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
