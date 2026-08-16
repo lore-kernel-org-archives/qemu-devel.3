@@ -4,105 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C475C5CFC1
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Aug 2026 23:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88568C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 08:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvNf0-00050R-Ka; Sat, 15 Aug 2026 19:19:30 -0400
+	id 1wvWbf-0000TZ-1k; Sun, 16 Aug 2026 04:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNez-00050G-4h
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:19:29 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wvNew-00087V-Fr
- for qemu-devel@nongnu.org; Sat, 15 Aug 2026 19:19:28 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-84830c774a0so1840567b3a.1
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 16:19:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786835965; cv=none;
- d=google.com; s=arc-20260327;
- b=fBvAUyYWkjkP0icbMpAXm1l2ee3i3cKDrtGCHpR2Mu1VX7iAxmPVvbNWP9tW7Ol6lm
- GZ8MeqxYOg4hRlRMsu2JrhUimwexJBHKFPUY9Y99rxGB6bq/SOejwOc1cYCx5nUlXhc9
- t/uP1i6I5xZpuiEJayFr59QyIxSaNRjypDMOujuPWCp5KheEwlefZowRvENJEg4OawKx
- 069tU1cV98GNVAApsr3SofDSJxT1mHERHS3E6if5X50DC4TwTa1JSRDMykN3hYFLAzz8
- EvRhWKTKjkgaAYzxxq7YfVXHGyrYLcVF57DhQ/a+JMPv0VdxQAu+6ZFVZc53upg29+to
- qhiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Z/Ov6dcVTWXc/r8poo8MJNrU77vD+68g0r+UyuM0rAU=;
- fh=Dr8Vecsy77sRT7MZw4BAX84bgC3kPDutw0JQ5v0KlWM=;
- b=GCGcdYsurKbNIixPT+WSn/Sh+/2AM3/Z1xbEzb2pyx820YhjZ+0plR9EKt0ipXpkbF
- DcT1s32jBS7AYp3WTc9Sdv+lQ5Ejiph6KBLStxlS8XI1Tqmw6pimy1egf6YsdllPdBxF
- DoGfpvt+/+V+XAVW1qN+i58YLI9QDctLglDU/Uey2toCPy8VRv9z4xIB5F4EVaek21M2
- FSGWBWwTARK3AQsZVwwWb9wS0BcrlgP6RASfAV6aSOEGyGSnSbfKPjni29fJhK7b7ohq
- fYy+OxYWy9l4kaUZMzVqd3EOMFwgNLCGkaXNziaKZN5LKhznK63P5f9ue4ZaOk/4Jf/Y
- wRNQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wvWbd-0000Sz-Sl
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 04:52:37 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wvWbc-00063A-3q
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 04:52:37 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67G72hxe3129574
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 08:52:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ T5Ov2WEgzcQAZaQvNAgyhHLjZ6dHTw3sZRy4aWjj9+g=; b=FrPybcfxepLcKNdY
+ RzU0JNit5vxxybFkRzM5JY6llOz/xbBu7+M8xb2IyGSE8geAvohoYztcLmMIk6s0
+ 7u7AcMimjLm4X2ejYPHUAkmzGs35pZbpM4thRO0bC6kDeQYusewpmkeeMsa04pVw
+ 8qdM8ISe/xe9EM+uMM9Zy66EcNgOBpW9Tt82+k7k/Vxzyx/k4ueRAMqgRJqxZ1tj
+ yjvHbNAmunuXR+njsss2EAH14h0qeFuuOESMwTUd5gAT0Me08MILvWotBDPcNQ2G
+ iQDIGGbv7IOD85JwBUcrVilr5OS6RcbjG9H6ESkuzWY6RmlGFSlvu11W3yYRnVlN
+ qram3g==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghnu3sx-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 08:52:34 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-934979ee9f1so300258585a.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 01:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1786835965; x=1787440765;
- darn=nongnu.org; 
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Z/Ov6dcVTWXc/r8poo8MJNrU77vD+68g0r+UyuM0rAU=;
- b=fUO/fHOw/HXd6rVIe2do806a/anX3Z3ypSgNvvgfzUMLgntz4dxiLrFM+5wFPuGGpg
- 1z2sMcAsO38ImDl+7sfiasvkk0aXXcLVk7dbAwOP5SNJuO9SOONxrQq2c8loFy4gP2Y3
- CJ+Ebd88ZlA1rANvKwMHeSWJdnQegydbCffyNcfgKDL3lHxAuIJm4LUjvP+U4MFEWWUK
- UYODqSG/HRXyvVlIHf9+EZM9hiICB3UY/KoG7v7S/e8vcWAh0sp2/RE3DE8CfOWs45zv
- 9XQ1ml9DpZHwQoLyrsLajSocXKyMOXBg0rGb1ccmNixcwHoSIdMIKdQ2Do28x965IZlt
- lEkg==
+ d=oss.qualcomm.com; s=google; t=1786870354; x=1787475154; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=T5Ov2WEgzcQAZaQvNAgyhHLjZ6dHTw3sZRy4aWjj9+g=;
+ b=aosLHRFOndWPlt1RfnmFrwgc1AmNzOkThtc7n7PmQoOxmAeIcxpmOesPrRE37eW/p+
+ QqXoA8kVXq1iSYgo9qEvrl/hAqWIdLWDjiOSjoU6/d75U5EriomUxDq9i4tvkgPgdIcj
+ 3pIjj/WwHMzzoqJkM4vdotxN/gRCXUiPRKvtatiynKrJ5G98uNeoOrcejnpIlUYA+j7n
+ myQcg/oGTcaZUUODneZPBBiEMByxvAhrUJv7YhT8yZmDwZKP7pvQDLhcgcaSHocHPxJv
+ 5vIYek8ml/wQbgi8jej/tLNoGih3JapTw7utmWnwPgfOO2fXM2RWLudZKLMt8aWVY7LL
+ qZsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786835965; x=1787440765;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Z/Ov6dcVTWXc/r8poo8MJNrU77vD+68g0r+UyuM0rAU=;
- b=fJuwv0tBlsfDcHKlTaWkKpNFTmFSJO4vtEymZb4YD6OGCo0OHF6X/Ny1kSK7H6xfFo
- rhjUWOAvdUETu7IALyC4mCk0n3WITtIxb7K7rPsHxvlejQJ7jsDYqXsUZJSOwcr7Gv6v
- 7i7XKJ1QDTZ5JQuDTKJQHH9VNXe13eTWPakYXJrohxMp1aHQywMap6HsGrWmM5AZzqpv
- zA0GR0WKJGPyqSDZcGng+Vxgor2jV3/infw0WJD7faWsU787DlMJ3I4tX6FYFqd21KVp
- G8mLEFqKikPPmuTrJuSrBZXS7n88yRBlfhShUOueTVPHT+6WlbJiUDJfUy4NJixKFKg2
- iHIA==
-X-Gm-Message-State: AOJu0YxPyPzBQn22M92Xq5AcodLpNUnNAu6LS48ac6DpXrqkTbpBzVZg
- 5NFKGo8pyaFNo4OfYYj/6/25j2ETHT0PCThYQbnKHuFXaYdHPtkzKvksD0JgdjH2iFkWFrJeQIt
- 1zCVmWQapqr50BMpx12em5HJymjaI7VG1hvMrbvWoyA==
-X-Gm-Gg: AR+sD11iRgxUh1i7GXNwQ99OVzT62wxsJh3muA5q3q5NUYtYaewNZlOCAkIH1BN5aql
- /jQ5HMSV+U9OKpLWwvA78XZ089ANQDVswNbwCsCSZNiZIVg+quPOI7tIN/WmIArJyHdgLd7j1Cs
- y4AdoPsk9G2V5dnHffNGDBqR6UoU3nYZ0CqtGvNvyJ6ZTwh4flZut5UDx4YnlsSGvfYHdib49uI
- CN8tT8izNB7KMmR+5CrkJrFbDY/7mJNouXrYMaeRDmpao0I2UsYY0dkIKyUnMopOD4Lp7EIYIlq
- sMrcRAb420OYDn2mj2PAfPJGyDeFy3oU10XbmXBE789MeZnhd6I3jt0=
-X-Received: by 2002:a05:6a00:bb0f:b0:848:4080:afe8 with SMTP id
- d2e1a72fcca58-84fde38e7d2mr13409604b3a.22.1786835964647; Sat, 15 Aug 2026
- 16:19:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786870354; x=1787475154;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=T5Ov2WEgzcQAZaQvNAgyhHLjZ6dHTw3sZRy4aWjj9+g=;
+ b=Sx988/2aNSNekji4MbBUArFxEOKYP8hEZ+povKw+3dNLXgqSTWRQqOrKTfcEmp1OYu
+ K0+zOTG4jc7knCPMC7vCMRDwyezcMQy97ouFClTxNZ+2FAOFuY69pZS0V08MxHDN6ek0
+ ntfK4IfZ3c9xcN8uz43EY5nGI394W8EwLJ6nUgm7SG5E//Bpkhg/Vnz0+VH2wybiipzp
+ aAmdaiwhHAu26TqEKNWJDRhIwOqIR9cJnVEH6rgRB0pGLYWwSCmFKtMdg8L21XP0+dJv
+ yWwEFvBM9fV7sPWCDPD/CLZr0J/zk/mwLQZFUkggqB6RB/p/cM9hisD3rOSV/tsBz/z+
+ fE3Q==
+X-Gm-Message-State: AOJu0YyEzKL3F3qSukDSzl/JE27FnusHg9D9DpBovakgTVFnlycXnYnx
+ /+Px8TQZhdglrvLqWj4xMyHA0bEuN9dKnZXfp0462BYGgnfPWt6bpMQqShEoBUzDX/aZBT9NBoL
+ AIV0qU9B0gR8mcyiWxUou6Ralv44ppU80SF0b/xQBjvjz8ZFKHnYYurxjUQ==
+X-Gm-Gg: AR+sD13QdSyAvV1F8VRHz6V7dsOXvS3enXa5Wi6LrLTAZNLTvykH2N/LwwwhyMfW7Mh
+ HRdpZRwnK40ZEQJUePIMdHJ0ZI4ml1z8uEZXKgLAmgrPEa9N1+DAmIoxyKJjSHvZjyocjYQtXAV
+ ZRbse5SvYQFTxPnQbOd1u+wXi6C30eMxISUlfA181LcicKjN+2WiQ13qaHKb/viEzS26fw+6Wlu
+ LwAD1KREApNeN5qANc9Fn0zBXVNotlUSCxcxcZQU+0EXwhFRGzrTB4wClNkTB2zaurTFAcqYLRG
+ 7PdOvr7HTGAGpnre4CK8H/zPRpe3fEa/cAYINVE7ceRR73EGwRA2ubUk8tPYD/LPl8wpmPNF1mS
+ bdO7bvRMdx1bEol234+awUpErSBdnRYjMlN0=
+X-Received: by 2002:a05:620a:6e19:b0:915:f96b:8f5a with SMTP id
+ af79cd13be357-936d2331185mr1543191685a.36.1786870353705; 
+ Sun, 16 Aug 2026 01:52:33 -0700 (PDT)
+X-Received: by 2002:a05:620a:6e19:b0:915:f96b:8f5a with SMTP id
+ af79cd13be357-936d2331185mr1543190685a.36.1786870353194; 
+ Sun, 16 Aug 2026 01:52:33 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499877d20fdsm169309725e9.1.2026.08.16.01.52.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 16 Aug 2026 01:52:32 -0700 (PDT)
+Message-ID: <351e6d2a-20bb-48a6-a1f6-0800cf2a969a@oss.qualcomm.com>
+Date: Sun, 16 Aug 2026 10:52:31 +0200
 MIME-Version: 1.0
-References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
- <20260518-misc-2026q2-v2-20-6c16fe448301@bsdimp.com>
- <422b450f-2a19-4bd6-b4b5-25e554b75e8b@oss.qualcomm.com>
- <CANCZdfqUQ2U6CuKFph3+LT=TFXS6_xPcTidEtPEbr9Wgkv0yHQ@mail.gmail.com>
-In-Reply-To: <CANCZdfqUQ2U6CuKFph3+LT=TFXS6_xPcTidEtPEbr9Wgkv0yHQ@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 15 Aug 2026 17:19:12 -0600
-X-Gm-Features: AUfX_myJEGdPp9HTqinKQdHoxvj5_NPajql46jp5W4Br2VKldKK2k9cDQ23VZ0I
-Message-ID: <CANCZdfr+NnAAUqyJ7F+MbM-w-a6LYGZS2RDXZqLcSEwa=gKJhA@mail.gmail.com>
-Subject: Re: [PATCH v2 20/37] bsd-user: Add kqueue and kevent functions to
- os-time.h
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Stacey Son <sson@freebsd.org>,
- =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
- Sean Bruno <sbruno@freebsd.org>
-Content-Type: multipart/alternative; boundary="000000000000f1ebd006591e2abb"
-Received-SPF: none client-ip=2607:f8b0:4864:20::435;
- envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/arm_gicv3: Have GIC kconfig select GICv3 for HVF
+ and WHPX
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20260812220816.94034-1-philmd@oss.qualcomm.com>
+ <CAFEAcA-NUOtTPuvxKja+bNU6wy6EQFVMfX9nmQ_LbtAPKHqMXA@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-NUOtTPuvxKja+bNU6wy6EQFVMfX9nmQ_LbtAPKHqMXA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDA2NSBTYWx0ZWRfX4gUHAWngArZK
+ vPUSpzs8uysnHqVPpEbwcNABN9lD1AyJAha8MpS+V3WS/PoQYL6L2PM7rWfnedjw4FgLMlZ63cY
+ acs6a6oFGo6kiEAwNpXj8erDr2mHR1awX6RlBb9Gk+8vp8kHZOLGvsmSPMy6tNCj9cdmAnkLsC2
+ ybQXeI+YMtq3A/+O3LNIcmasq3pKFbeJy1TQRByCXKnQhWWwAiZohxDtHO5/RmLsiIf3AXSKWwG
+ jwiFECLlp1engt3344rJWp+vcMSVCjoCd1onfXE6jaRJfKDC5DLsQLBhfDoQ9ak7pnFX4KI8Pk7
+ IEeduHc3MTDGeqQi5ZDQAm9LhM5jqqxL9D0roDl0RUSYt2BZicWsI8j8O7woHtDXaoTaiHQP87l
+ sSEbdH8Yyly4v68Ls+0Gfln/NVsvv5D25ajuPtDB8mCX9U/ezS+Hov7mUdCMooTQojkHhiTC8fD
+ 6xUux8FifcD/bWqzxGg==
+X-Proofpoint-ORIG-GUID: kk2iFmBLWdcH7tqoC55eG8xFCjYGiE_E
+X-Authority-Analysis: v=2.4 cv=QN5YgALL c=1 sm=1 tr=0 ts=6a817a52 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=sjlnlqp1G4b0nBOF4k8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDA2NSBTYWx0ZWRfX7lXQ8ZFhMbUE
+ wOaGULdF4CDgHjMLCjg3Fi6HGiJ9I6oEnkknjMMWbSDbGN6TVVi0ZXfMiSoxk9CBmSyukZyq0Q9
+ u3GXGfplPKme71b6fpT+e0DGTVsq8qU=
+X-Proofpoint-GUID: kk2iFmBLWdcH7tqoC55eG8xFCjYGiE_E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-16_02,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160065
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,608 +155,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f1ebd006591e2abb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jun 19, 2026 at 8:30=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
-
->
->
-> On Fri, May 22, 2026 at 7:49=E2=80=AFPM Pierrick Bouvier <
-> pierrick.bouvier@oss.qualcomm.com> wrote:
->
->> On 5/18/2026 2:27 PM, Warner Losh wrote:
->> > Add event notification system call shims: kqueue, freebsd11_kevent
->> > (legacy 32-bit data field), and kevent (with 64-bit ext fields).
->> >
->> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
->> > Signed-off-by: Mika=C3=ABl Urankar <mikael.urankar@gmail.com>
->> > Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
->> > Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
->> > Signed-off-by: Warner Losh <imp@bsdimp.com>
->> > Assisted-by: Claude Opus 4.6 (1M context)
->> > ---
->> >  bsd-user/freebsd/os-time.h | 173
->> +++++++++++++++++++++++++++++++++++++++++++++
->> >  1 file changed, 173 insertions(+)
->> >
->> > diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
->> > index 12c5ba02e8..078355392d 100644
->> > --- a/bsd-user/freebsd/os-time.h
->> > +++ b/bsd-user/freebsd/os-time.h
->> > @@ -629,5 +629,178 @@ static inline abi_long
->> do_freebsd_ppoll(CPUArchState *env, abi_long arg1,
->> >  }
->> >
->> >  /* kqueue(2) */
->> > +static inline abi_long do_freebsd_kqueue(void)
->> > +{
->> > +
->> > +    return get_errno(kqueue());
->> > +}
->> > +
->> > +/* kevent(2) */
->> > +/* XXX Maybe some day, consolidate these two... */
->> > +static inline abi_long do_freebsd_freebsd11_kevent(abi_long arg1,
->> > +    abi_ulong arg2, abi_long arg3, abi_ulong arg4, abi_long arg5,
->> abi_long arg6)
->> > +{
->> > +    abi_long ret;
->> > +    struct kevent *changelist =3D NULL, *eventlist =3D NULL;
->> > +    struct target_freebsd11_kevent *target_changelist,
->> *target_eventlist;
->> > +    struct timespec ts;
->> > +    int i;
->> > +
->> > +    if (arg3 !=3D 0) {
->> > +        target_changelist =3D lock_user(VERIFY_READ, arg2,
->> > +                                      sizeof(*target_changelist) *
->> arg3, 1);
->> > +        if (target_changelist =3D=3D NULL) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +
->> > +        changelist =3D alloca(sizeof(struct kevent) * arg3);
->> > +        memset(changelist, '\0', sizeof(struct kevent) * arg3);
->> > +        for (i =3D 0; i < arg3; i++) {
->> > +            __get_user(changelist[i].ident,
->> &target_changelist[i].ident);
->> > +            __get_user(changelist[i].filter,
->> &target_changelist[i].filter);
->> > +            __get_user(changelist[i].flags,
->> &target_changelist[i].flags);
->> > +            __get_user(changelist[i].fflags,
->> &target_changelist[i].fflags);
->> > +            __get_user(changelist[i].data, &target_changelist[i].data=
-);
->> > +            /* __get_user(changelist[i].udata,
->> &target_changelist[i].udata); */
->> > +#if TARGET_ABI_BITS =3D=3D 32
->> > +            changelist[i].udata =3D (void
->> *)(uintptr_t)target_changelist[i].udata;
->> > +            tswap32s((uint32_t *)&changelist[i].udata);
->> > +#else
->> > +            changelist[i].udata =3D (void
->> *)(uintptr_t)target_changelist[i].udata;
->> > +            tswap64s((uint64_t *)&changelist[i].udata);
->> > +#endif
->> > +        }
->> > +        unlock_user(target_changelist, arg2,
->> sizeof(*target_changelist) * arg3);
->> > +    }
->> > +
->> > +    if (arg5 !=3D 0) {
->> > +        eventlist =3D alloca(sizeof(struct kevent) * arg5);
->> > +    }
->> > +    if (arg6 !=3D 0) {
->> > +        if (t2h_freebsd_timespec(&ts, arg6)) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +    }
->> > +    ret =3D get_errno(safe_kevent(arg1, changelist, arg3, eventlist,
->> arg5,
->> > +                                arg6 !=3D 0 ? &ts : NULL));
->> > +
->> > +    if (arg5 =3D=3D 0) {
->> > +        return ret;
->> > +    }
->> > +
->> > +    if (!is_error(ret)) {
->> > +        target_eventlist =3D lock_user(VERIFY_WRITE, arg4,
->> > +                                     sizeof(*target_eventlist) * arg5=
-,
->> 0);
->> > +        if (target_eventlist =3D=3D NULL) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +        for (i =3D 0; i < ret; i++) {
->> > +            __put_user(eventlist[i].ident, &target_eventlist[i].ident=
-);
->> > +            __put_user(eventlist[i].filter,
->> &target_eventlist[i].filter);
->> > +            __put_user(eventlist[i].flags, &target_eventlist[i].flags=
-);
->> > +            __put_user(eventlist[i].fflags,
->> &target_eventlist[i].fflags);
->> > +            __put_user(eventlist[i].data, &target_eventlist[i].data);
->> > +            /* __put_user(eventlist[i].udata,
->> &target_eventlist[i].udata);*/
->> > +#if TARGET_ABI_BITS =3D=3D 32
->> > +            tswap32s((uint32_t *)&eventlist[i].udata);
->> > +            target_eventlist[i].udata =3D (uintptr_t)eventlist[i].uda=
-ta;
->> > +#else
->> > +            tswap64s((uint64_t *)&eventlist[i].udata);
->> > +            target_eventlist[i].udata =3D (uintptr_t)eventlist[i].uda=
-ta;
->> > +#endif
->> > +        }
->> > +        unlock_user(target_eventlist, arg4,
->> > +                    sizeof(*target_eventlist) * ret);
->> > +    }
->> > +    return ret;
->> > +}
->> > +
->> > +/* kevent(2) */
->> > +static inline abi_long do_freebsd_kevent(abi_long arg1, abi_ulong arg=
-2,
->> > +        abi_long arg3, abi_ulong arg4, abi_long arg5, abi_long arg6)
->> > +{
->> > +    abi_long ret;
->> > +    struct kevent *changelist =3D NULL, *eventlist =3D NULL;
->> > +    struct target_freebsd_kevent *target_changelist, *target_eventlis=
-t;
->> > +    struct timespec ts;
->> > +    int i;
->> > +
->> > +    if (arg3 !=3D 0) {
->> > +        target_changelist =3D lock_user(VERIFY_READ, arg2,
->> > +                sizeof(struct target_freebsd_kevent) * arg3, 1);
->> > +        if (target_changelist =3D=3D NULL) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +
->> > +        changelist =3D alloca(sizeof(struct kevent) * arg3);
->> > +        for (i =3D 0; i < arg3; i++) {
->> > +            __get_user(changelist[i].ident,
->> &target_changelist[i].ident);
->> > +            __get_user(changelist[i].filter,
->> &target_changelist[i].filter);
->> > +            __get_user(changelist[i].flags,
->> &target_changelist[i].flags);
->> > +            __get_user(changelist[i].fflags,
->> &target_changelist[i].fflags);
->> > +            __get_user(changelist[i].data, &target_changelist[i].data=
-);
->> > +            /* __get_user(changelist[i].udata,
->> &target_changelist[i].udata); */
->> > +#if TARGET_ABI_BITS =3D=3D 32
->> > +            changelist[i].udata =3D (void
->> *)(uintptr_t)target_changelist[i].udata;
->> > +            tswap32s((uint32_t *)&changelist[i].udata);
->> > +#else
->> > +            changelist[i].udata =3D (void
->> *)(uintptr_t)target_changelist[i].udata;
->> > +            tswap64s((uint64_t *)&changelist[i].udata);
->> > +#endif
->> > +            __get_user(changelist[i].ext[0],
->> &target_changelist[i].ext[0]);
->> > +            __get_user(changelist[i].ext[1],
->> &target_changelist[i].ext[1]);
->> > +            __get_user(changelist[i].ext[2],
->> &target_changelist[i].ext[2]);
->> > +            __get_user(changelist[i].ext[3],
->> &target_changelist[i].ext[3]);
->> > +        }
->> > +        unlock_user(target_changelist, arg2, 0);
->> > +    }
->> > +
->> > +    if (arg5 !=3D 0) {
->> > +        eventlist =3D alloca(sizeof(struct kevent) * arg5);
->> > +    }
->> > +    if (arg6 !=3D 0) {
->> > +        if (t2h_freebsd_timespec(&ts, arg6)) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +    }
->> > +    ret =3D get_errno(safe_kevent(arg1, changelist, arg3, eventlist,
->> arg5,
->> > +                                arg6 !=3D 0 ? &ts : NULL));
->> > +
->> > +    if (arg5 =3D=3D 0) {
->> > +        return ret;
->> > +    }
->> > +
->> > +    if (!is_error(ret)) {
->> > +        target_eventlist =3D lock_user(VERIFY_WRITE, arg4,
->> > +            sizeof(struct target_freebsd_kevent) * arg5, 0);
->> > +        if (target_eventlist =3D=3D NULL) {
->> > +            return -TARGET_EFAULT;
->> > +        }
->> > +        for (i =3D 0; i < ret; i++) {
->> > +            __put_user(eventlist[i].ident, &target_eventlist[i].ident=
-);
->> > +            __put_user(eventlist[i].filter,
->> &target_eventlist[i].filter);
->> > +            __put_user(eventlist[i].flags, &target_eventlist[i].flags=
-);
->> > +            __put_user(eventlist[i].fflags,
->> &target_eventlist[i].fflags);
->> > +            __put_user(eventlist[i].data, &target_eventlist[i].data);
->> > +            /* __put_user(eventlist[i].udata,
->> &target_eventlist[i].udata);*/
->> > +#if TARGET_ABI_BITS =3D=3D 32
->> > +            tswap32s((uint32_t *)&eventlist[i].udata);
->> > +            target_eventlist[i].udata =3D (uintptr_t)eventlist[i].uda=
-ta;
->> > +#else
->> > +            tswap64s((uint64_t *)&eventlist[i].udata);
->> > +            target_eventlist[i].udata =3D (uintptr_t)eventlist[i].uda=
-ta;
->> > +#endif
->> > +            __put_user(eventlist[i].ext[0],
->> &target_eventlist[i].ext[0]);
->> > +            __put_user(eventlist[i].ext[1],
->> &target_eventlist[i].ext[1]);
->> > +            __put_user(eventlist[i].ext[2],
->> &target_eventlist[i].ext[2]);
->> > +            __put_user(eventlist[i].ext[3],
->> &target_eventlist[i].ext[3]);
->> > +        }
->> > +        unlock_user(target_eventlist, arg4,
->> > +                sizeof(struct target_freebsd_kevent) * ret);
->> > +    }
->> > +    return ret;
->> > +}
->> > +
->> > +/* sigtimedwait(2) */
->> >
->> >  #endif /* FREEBSD_OS_TIME_H */
->> >
+On 15/8/26 16:53, Peter Maydell wrote:
+> On Wed, 12 Aug 2026 at 23:08, Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
 >>
->> If I understand correctly, the difference between the two is only in
->> get/put user for eventlist[i].ext[*].
->> It seems worth to factorize the two and add a parameter to switch
->> between the two.
+>> While trying to fix the GICv3 dependency on KVM and WHPX in
+>> commit 39a8c3941eb, we missed the Kconfig ARM_GIC symbol only
+>> selects GICv3 for TCG, not HVF and WHPX. Fix that.
 >>
->
-> It's close, but the structures have slightly different layouts, so it's
-> hard
-> to refactor. I know there's an XXX comment suggesting that we should
-> combine these, but I'd kinda like to postpone that. It may be that we'll
-> just delete the kevent11 which may happen soon (we kept it long past
-> the end of FreeBSD 11 support because it was one of the system calls
-> that rust used, and that may finally be deployed widely enough to retire
-> it).
->
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 39a8c3941eb ("hw/intc/arm_gicv3: Fix ARM_GICV3 dependency for KVM / WHPX")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> ---
+>>   hw/intc/Kconfig | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+>> index 097de4efc5d..05e697967d0 100644
+>> --- a/hw/intc/Kconfig
+>> +++ b/hw/intc/Kconfig
+>> @@ -26,7 +26,7 @@ config APIC
+>>
+>>   config ARM_GIC
+>>       bool
+>> -    select ARM_GICV3 if TCG
+>> +    select ARM_GICV3 if TCG || HVF || WHPX
+>>       select ARM_GIC_KVM if KVM
+>>       select MSI_NONBROKEN
+> 
+> Is this instead of RTH's patch "hw/intc: Fix arm kvm gicv3 selection",
+> or do we need both?
 
-I'm going to defer this.
-https://github.com/qemu-bsd-user/qemu-bsd-user/issues/67
-captures the suggestion, which I'll return to once I have the bulk of
-the fork upstreamed and can focus on the (many many) code improvement
-issues that are there.
+Richard's patch only touch KVM, so we surely need both.
 
-Warner
-
---000000000000f1ebd006591e2abb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jun 19,=
- 2026 at 8:30=E2=80=AFPM Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">=
-imp@bsdimp.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D=
-"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 22, 2026 at=
- 7:49=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@os=
-s.qualcomm.com" target=3D"_blank">pierrick.bouvier@oss.qualcomm.com</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 5/18/=
-2026 2:27 PM, Warner Losh wrote:<br>
-&gt; Add event notification system call shims: kqueue, freebsd11_kevent<br>
-&gt; (legacy 32-bit data field), and kevent (with 64-bit ext fields).<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Mika=C3=ABl Urankar &lt;<a href=3D"mailto:mikael.uranka=
-r@gmail.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Sean Bruno &lt;sbruno@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Kyle Evans &lt;kevans@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; Assisted-by: Claude Opus 4.6 (1M context)<br>
-&gt; ---<br>
-&gt;=C2=A0 bsd-user/freebsd/os-time.h | 173 +++++++++++++++++++++++++++++++=
-++++++++++++++<br>
-&gt;=C2=A0 1 file changed, 173 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h<b=
-r>
-&gt; index 12c5ba02e8..078355392d 100644<br>
-&gt; --- a/bsd-user/freebsd/os-time.h<br>
-&gt; +++ b/bsd-user/freebsd/os-time.h<br>
-&gt; @@ -629,5 +629,178 @@ static inline abi_long do_freebsd_ppoll(CPUArchS=
-tate *env, abi_long arg1,<br>
-&gt;=C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 /* kqueue(2) */<br>
-&gt; +static inline abi_long do_freebsd_kqueue(void)<br>
-&gt; +{<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 return get_errno(kqueue());<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* kevent(2) */<br>
-&gt; +/* XXX Maybe some day, consolidate these two... */<br>
-&gt; +static inline abi_long do_freebsd_freebsd11_kevent(abi_long arg1,<br>
-&gt; +=C2=A0 =C2=A0 abi_ulong arg2, abi_long arg3, abi_ulong arg4, abi_long=
- arg5, abi_long arg6)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 struct kevent *changelist =3D NULL, *eventlist =3D NULL=
-;<br>
-&gt; +=C2=A0 =C2=A0 struct target_freebsd11_kevent *target_changelist, *tar=
-get_eventlist;<br>
-&gt; +=C2=A0 =C2=A0 struct timespec ts;<br>
-&gt; +=C2=A0 =C2=A0 int i;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg3 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_changelist =3D lock_user(VERIFY_RE=
-AD, arg2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sizeof(*tar=
-get_changelist) * arg3, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_changelist =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist =3D alloca(sizeof(struct keven=
-t) * arg3);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(changelist, &#39;\0&#39;, sizeof(s=
-truct kevent) * arg3);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; arg3; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].id=
-ent, &amp;target_changelist[i].ident);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].fi=
-lter, &amp;target_changelist[i].filter);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].fl=
-ags, &amp;target_changelist[i].flags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ff=
-lags, &amp;target_changelist[i].fflags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].da=
-ta, &amp;target_changelist[i].data);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* __get_user(changelist[i]=
-.udata, &amp;target_changelist[i].udata); */<br>
-&gt; +#if TARGET_ABI_BITS =3D=3D 32<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist[i].udata =3D (vo=
-id *)(uintptr_t)target_changelist[i].udata;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap32s((uint32_t *)&amp;c=
-hangelist[i].udata);<br>
-&gt; +#else<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist[i].udata =3D (vo=
-id *)(uintptr_t)target_changelist[i].udata;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap64s((uint64_t *)&amp;c=
-hangelist[i].udata);<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(target_changelist, arg2, size=
-of(*target_changelist) * arg3);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg5 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 eventlist =3D alloca(sizeof(struct kevent=
-) * arg5);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 if (arg6 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timespec(&amp;ts, arg6)) =
-{<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 ret =3D get_errno(safe_kevent(arg1, changelist, arg3, e=
-ventlist, arg5,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arg6 !=3D 0 ? &amp;ts : NULL));<=
-br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg5 =3D=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!is_error(ret)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist =3D lock_user(VERIFY_WRI=
-TE, arg4,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sizeof(*targ=
-et_eventlist) * arg5, 0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_eventlist =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; ret; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ide=
-nt, &amp;target_eventlist[i].ident);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].fil=
-ter, &amp;target_eventlist[i].filter);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].fla=
-gs, &amp;target_eventlist[i].flags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ffl=
-ags, &amp;target_eventlist[i].fflags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].dat=
-a, &amp;target_eventlist[i].data);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* __put_user(eventlist[i].=
-udata, &amp;target_eventlist[i].udata);*/<br>
-&gt; +#if TARGET_ABI_BITS =3D=3D 32<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap32s((uint32_t *)&amp;e=
-ventlist[i].udata);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist[i].udata =
-=3D (uintptr_t)eventlist[i].udata;<br>
-&gt; +#else<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap64s((uint64_t *)&amp;e=
-ventlist[i].udata);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist[i].udata =
-=3D (uintptr_t)eventlist[i].udata;<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(target_eventlist, arg4,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- sizeof(*target_eventlist) * ret);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* kevent(2) */<br>
-&gt; +static inline abi_long do_freebsd_kevent(abi_long arg1, abi_ulong arg=
-2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 abi_long arg3, abi_ulong arg4, abi_long a=
-rg5, abi_long arg6)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret;<br>
-&gt; +=C2=A0 =C2=A0 struct kevent *changelist =3D NULL, *eventlist =3D NULL=
-;<br>
-&gt; +=C2=A0 =C2=A0 struct target_freebsd_kevent *target_changelist, *targe=
-t_eventlist;<br>
-&gt; +=C2=A0 =C2=A0 struct timespec ts;<br>
-&gt; +=C2=A0 =C2=A0 int i;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg3 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_changelist =3D lock_user(VERIFY_RE=
-AD, arg2,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sizeof(struct=
- target_freebsd_kevent) * arg3, 1);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_changelist =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist =3D alloca(sizeof(struct keven=
-t) * arg3);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; arg3; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].id=
-ent, &amp;target_changelist[i].ident);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].fi=
-lter, &amp;target_changelist[i].filter);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].fl=
-ags, &amp;target_changelist[i].flags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ff=
-lags, &amp;target_changelist[i].fflags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].da=
-ta, &amp;target_changelist[i].data);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* __get_user(changelist[i]=
-.udata, &amp;target_changelist[i].udata); */<br>
-&gt; +#if TARGET_ABI_BITS =3D=3D 32<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist[i].udata =3D (vo=
-id *)(uintptr_t)target_changelist[i].udata;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap32s((uint32_t *)&amp;c=
-hangelist[i].udata);<br>
-&gt; +#else<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 changelist[i].udata =3D (vo=
-id *)(uintptr_t)target_changelist[i].udata;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap64s((uint64_t *)&amp;c=
-hangelist[i].udata);<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ex=
-t[0], &amp;target_changelist[i].ext[0]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ex=
-t[1], &amp;target_changelist[i].ext[1]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ex=
-t[2], &amp;target_changelist[i].ext[2]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(changelist[i].ex=
-t[3], &amp;target_changelist[i].ext[3]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(target_changelist, arg2, 0);<=
-br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg5 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 eventlist =3D alloca(sizeof(struct kevent=
-) * arg5);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 if (arg6 !=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (t2h_freebsd_timespec(&amp;ts, arg6)) =
-{<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 ret =3D get_errno(safe_kevent(arg1, changelist, arg3, e=
-ventlist, arg5,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 arg6 !=3D 0 ? &amp;ts : NULL));<=
-br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (arg5 =3D=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ret;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!is_error(ret)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist =3D lock_user(VERIFY_WRI=
-TE, arg4,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sizeof(struct target_freebs=
-d_kevent) * arg5, 0);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (target_eventlist =3D=3D NULL) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EFAULT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; ret; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ide=
-nt, &amp;target_eventlist[i].ident);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].fil=
-ter, &amp;target_eventlist[i].filter);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].fla=
-gs, &amp;target_eventlist[i].flags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ffl=
-ags, &amp;target_eventlist[i].fflags);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].dat=
-a, &amp;target_eventlist[i].data);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* __put_user(eventlist[i].=
-udata, &amp;target_eventlist[i].udata);*/<br>
-&gt; +#if TARGET_ABI_BITS =3D=3D 32<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap32s((uint32_t *)&amp;e=
-ventlist[i].udata);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist[i].udata =
-=3D (uintptr_t)eventlist[i].udata;<br>
-&gt; +#else<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tswap64s((uint64_t *)&amp;e=
-ventlist[i].udata);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_eventlist[i].udata =
-=3D (uintptr_t)eventlist[i].udata;<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ext=
-[0], &amp;target_eventlist[i].ext[0]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ext=
-[1], &amp;target_eventlist[i].ext[1]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ext=
-[2], &amp;target_eventlist[i].ext[2]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __put_user(eventlist[i].ext=
-[3], &amp;target_eventlist[i].ext[3]);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlock_user(target_eventlist, arg4,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sizeof(struct=
- target_freebsd_kevent) * ret);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* sigtimedwait(2) */<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 #endif /* FREEBSD_OS_TIME_H */<br>
-&gt; <br>
-<br>
-If I understand correctly, the difference between the two is only in<br>
-get/put user for eventlist[i].ext[*].<br>
-It seems worth to factorize the two and add a parameter to switch<br>
-between the two.<br></blockquote><div><br></div><div>It&#39;s close, but th=
-e structures have slightly different layouts, so it&#39;s hard</div><div>to=
- refactor. I know there&#39;s an XXX comment suggesting that we should</div=
-><div>combine these, but I&#39;d kinda like to postpone that. It may be tha=
-t we&#39;ll</div><div>just delete the kevent11 which may happen soon (we ke=
-pt it long past</div><div>the end of FreeBSD 11 support because it was one =
-of the system calls</div><div>that rust used, and that may finally be deplo=
-yed widely enough to retire</div><div>it).</div></div></div></blockquote><d=
-iv><br></div><div>I&#39;m going to defer this.</div><div><a href=3D"https:/=
-/github.com/qemu-bsd-user/qemu-bsd-user/issues/67">https://github.com/qemu-=
-bsd-user/qemu-bsd-user/issues/67</a></div><div>captures the suggestion, whi=
-ch I&#39;ll return to once I have the bulk of</div><div>the fork upstreamed=
- and can focus on the (many many) code improvement</div><div>issues that ar=
-e there.</div><div><br></div><div>Warner=C2=A0</div></div></div>
-
---000000000000f1ebd006591e2abb--
+I haven't tested KVM but rth's reported error is the same error
+I'm having on HVF and WHPX. The ARM GIC Kconfig are confuse to
+me, so I don't feel confident to review his change. My gut feeling
+is what we have is too complex and could be simplified, but I
+haven't spent time thinking about it.
 
