@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF08C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 17:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DE8C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvexE-00086N-M9; Sun, 16 Aug 2026 13:47:28 -0400
+	id 1wvgIk-0008QX-O2; Sun, 16 Aug 2026 15:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvexC-000801-EE
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:26 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvexA-00038y-Kc
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:26 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-38759bcd877so3015480a91.2
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:47:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786902443; x=1787507243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LEb4IeU8xhFAOEs1BVpDht8XPPtt6nino35RRBxs/u4=;
- b=R2HUu3Mb1BlMdIwuMD/uBm4BQ+xdCFoALR1rMo6DhaLiHaoJgSX3kWtfyuzBl/sJOL
- 7W/jmaFn6ppOX4fBo6Y8N2Y6VzluUCp0iX6jaYxkJC73pFMO7NfUiFfm92tq5B7koc+R
- sCe1pEo3oeUGIX8VjCwBqiqYJgdUqHOmY41KJpSTCgErxINagBPk2ORjb6U/hr08G75o
- kNDzFaqsTqfq7i+q8rKLJnRP00QJAo/Z4VehVrJD350W2w/mwn4xn4+s7AafvikmKjux
- QRfUBGxNp09sRw7H8k8UP8eF+LfOqMgcwo/9VaGMhHhe/3do8eWQqj9hc+0ODS0WK7wh
- F2NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786902443; x=1787507243;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LEb4IeU8xhFAOEs1BVpDht8XPPtt6nino35RRBxs/u4=;
- b=hFiohO+00KX+uYKYzebexLHSYH3ZzD5e65gvUL3sWhdXGX8q/+xSMBNKqDHmU67+2j
- aY2IjXL8NM1IC/+W1CQXpNkFmUvMDzuxzZINWTNJZMm7XGorfLnB3fqmJ9lNmslYBfw2
- YixtYyU5Wgy19IK9QnGxXd3ubxikIUDIT9AbeEd8xQR5dDdfbDVzRs1i7T/ohrQOZn0g
- gP4JIyKIlcWyRdLL7t/rOXDnBu26saMEeyOY6Fi09FMGdA+yuFXhnwCcgkszpZbKwm1M
- 8kWZ7xZi3PWP4UZNbVR++UvOiMo5ygveBneuyFohJQdXo15Kz99yE8PHu6mwWfvn+qXG
- j7Xw==
-X-Gm-Message-State: AOJu0YzIpgoColtW4+ZCjZ0abgB8Oc4SPg5rOeeSkXzUy5JLs861ZtZG
- 6N8Jf4L4CZIrUnWWoMxn5sBC1Za6gQn5QMtK9BvOwfsg0PCCtHnMKGBnr+NfWAAr
-X-Gm-Gg: AR+sD10IdeNGFQxrlk4Qi3eCNbt/e6CDrbMorsBWQy5bBRtIYdWCdtJZWa/DdSZYIOI
- QHWFp1fLXcaiuM4y4JT8/0xm5L4yUgQ/oLLvLuZMd1CtQ6nFGfJtEz62fSvTqaxHFJuJ2WjXxPX
- UKlfwi/L9pEHFCg7uYXSa+oCYRsCV7c+ppOXVWfLtvlrb7vHS4X2kjQ6VHXmePp6Nl6BLtboe0h
- fGE8XKfXF+xGSi/GUZs+HRy2G6ZtMhMCT2EYs9yGdFDMY30BNBpaG3pPybVBS/E5RET5qCdClxK
- KJOw17510+1OeXoGPa/vatQO8bxk3t5F/PdQFhAembnJ2GJP8PYyGXCbvPKpXDgPmVlF0ZSzK2a
- WeAVysWEFM7R0fskv3r02FxkbP7dNx10vP+SQrkmneyxgGK5MDRxzt4KoHH2zA+OKxYEC6kBAKt
- IR8uucp5fOix3PV09wkzkkkPQtaEUV9bz1kCO2P5prQKtngwzL9U+USuhUwXnEHuzfTWq3yCnkD
- kDa+pkbECh2TjY=
-X-Received: by 2002:a17:90b:384f:b0:390:b41a:b92f with SMTP id
- 98e67ed59e1d1-3933e648702mr19122496a91.18.1786902442753; 
- Sun, 16 Aug 2026 10:47:22 -0700 (PDT)
-Received: from setun ([223.228.54.80]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-320ead105a9sm28343674eec.31.2026.08.16.10.47.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Aug 2026 10:47:22 -0700 (PDT)
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
- lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
- Aadeshveer Singh <aadeshveer07@gmail.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v5 05/11] migration: Make qemu_get_buffer_at() thread-safe
-Date: Sun, 16 Aug 2026 23:16:25 +0530
-Message-ID: <20260816174631.1547811-6-aadeshveer07@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260816174631.1547811-1-aadeshveer07@gmail.com>
-References: <20260816174631.1547811-1-aadeshveer07@gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wvgIU-0008N3-0c
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wvgIS-0007LA-73
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786907607;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+5wpuBZXAGueWMmgc7XSO8gFuXPjkb9QB1fhiVwJj/Q=;
+ b=BDgHJUk1SNfLAikPqxYBUuh61njzdT2W8JOZkfmMwgq4O49uYBWI9A01eURfuXpkEY7MK9
+ XqXZS7CprrF1t1IWzaB1BTFD/Wce2hNAX0lb6RUJKJG4JqSffOaO5wLBIGhEMfI4LkeIge
+ ec/lIgpG+26sbC/ty69/ucjHUqxrU5k=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-8siE_Vi6M-287743nMDNgA-1; Sun,
+ 16 Aug 2026 15:13:13 -0400
+X-MC-Unique: 8siE_Vi6M-287743nMDNgA-1
+X-Mimecast-MFC-AGG-ID: 8siE_Vi6M-287743nMDNgA_1786907592
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCF231800471; Sun, 16 Aug 2026 19:13:12 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7718718005BB; Sun, 16 Aug 2026 19:13:11 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Sun, 16 Aug 2026 23:12:31 +0400
+Subject: [PATCH v3 04/49] target/i386: decouple cpu_x86_inject_mce() from
+ Monitor
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260816-qemu-no-hmp-v3-4-e53fc35bc550@redhat.com>
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ kvm@vger.kernel.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7649;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=o/yEwsZkXnbE4yqKZMMJ1dRx5P6T3KLfXBYSN+saGmk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguw/K+6+Wb9ySL/wnYLu5qf6JBMHQdY2tXNP
+ VxBIKL3BauJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsAAKCRDa6OEJdZac
+ 5S6+D/9p5VmubM0NyBiQerNIxYrPJ3uhqE5TBYq5YReIM6GfwQ6g7aPmIf19hoYReKkQyPmr+aS
+ dwMB3FvsB2H/hZiJqHn4DQo+7WeYIDdkLiNCem1jK2iIUKyExZo2G2CIzYHN55pVQ+OU2bffnPP
+ xMVkbYv3eKVOZJBMm03FNwRfbeinpZ+XPgsAWytQ0F3Yc2DmVerK0UhhmWKWSd7ktWI9WaFfd0t
+ ihitg+AY8oKUlfIUPslTKGqLJ+CN4qFZGzT29BaBHmLPnSa99SNrQm2l60dutYhMGsnEQNWHcu4
+ 8HHWCulkyMz0RPtijPv+YYB9L3UEV/MjUMft203Q6yd+Yk5UMDuz6LoHJ3erzk8iquWqgHow/Tz
+ aeeztJ126yNZRFbBWyTTJXookfh5iuvg02tsGrigewxx0xW+rkR+pmEM4c68eujaLfNlPBjBq5i
+ Hmlp+gaLhjUOzl004g/KrS7ZNiP4GDb05eOy8qNJeNe7bbA3m4y+EJ+/vpdEarhy7SixYxrymI5
+ sLyjOUcvF21kExh7eayYhMR2/6769Vtg7r7ygcjLDcceFfer0BXnwf53edTmjo4teAP8acm55AR
+ lQVNUIXIU/ThhS6ta9OQ0B4VDtNgDvx7GPcYXXd+WbvHrk2XCpjUpEYCMwwXGF4nj//upx9BDjK
+ XSskOL3YhU9mfgA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,98 +109,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the internal QEMUFile error state modification from
-qemu_get_buffer_at(). This function is called by two functions, both of
-which already check for unexpected return values and handle their own
-error reporting.
+Replace monitor_printf() error reporting with the standard **errp
+pattern. Drop the Monitor *mon parameter and return bool to indicate
+success, improving the function usage from non-HMP contexts. Update the
+KVM MCE injection path and hmp_mce() accordingly.
 
-Removing this shared state modification makes qemu_get_buffer_at()
-strictly thread-safe for concurrent disk reads, serving as a
-preparatory change for the upcoming fast snapshot load feature.
+Notes:
+ - we may want to print the error in KVM path too
 
-Removed local error by passing errp to improve on error handling,
-consequently also change caller to use error_prevent and not error_setg.
-
-Set errp in case of f->last_error as function should set errp in case it
-fails, and caller can simply use error_prepend without checking errp in
-case of error.
-
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- migration/qemu-file.c | 11 +++++------
- migration/qemu-file.h |  4 ++--
- migration/ram.c       |  6 +++---
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ target/i386/cpu.h     |  4 ++--
+ target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
+ target/i386/kvm/kvm.c |  4 ++--
+ target/i386/monitor.c |  6 ++++--
+ 4 files changed, 36 insertions(+), 27 deletions(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index d5a48115bd..2feaeb8982 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -550,17 +550,16 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e6a197602d87..4f342b69f471 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2847,9 +2847,9 @@ void do_cpu_init(X86CPU *cpu);
+ #define MCE_INJECT_BROADCAST    1
+ #define MCE_INJECT_UNCOND_AO    2
+ 
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags);
++                        uint64_t misc, int flags, Error **errp);
+ 
+ uint32_t cpu_cc_compute_all(CPUX86State *env1);
+ 
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 683621416213..4133b5f244c6 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "qapi/qapi-events-run-state.h"
+ #include "cpu.h"
+ #include "exec/cputlb.h"
+@@ -27,7 +28,6 @@
+ #ifndef CONFIG_USER_ONLY
+ #include "system/hw_accel.h"
+ #include "system/memory.h"
+-#include "monitor/monitor.h"
+ #include "kvm/kvm_i386.h"
+ #endif
+ #include "qemu/log.h"
+@@ -381,7 +381,7 @@ out:
  }
  
+ typedef struct MCEInjectionParams {
+-    Monitor *mon;
++    Error **errp;
+     int bank;
+     uint64_t status;
+     uint64_t mcg_status;
+@@ -428,9 +428,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled
+          */
+         if ((cenv->mcg_cap & MCG_CTL_P) && cenv->mcg_ctl != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled\n",
+-                           cs->cpu_index);
++            error_setg(params->errp,
++                "CPU %d: Uncorrected error reporting disabled",
++                cs->cpu_index);
+             return;
+         }
  
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos)
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp)
+@@ -439,10 +439,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled for the bank
+          */
+         if (banks[0] != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled for"
+-                           " bank %d\n",
+-                           cs->cpu_index, params->bank);
++            error_setg(params->errp,
++                "CPU %d: Uncorrected error reporting disabled for bank %d",
++                cs->cpu_index, params->bank);
+             return;
+         }
+ 
+@@ -459,7 +458,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+         if (need_reset) {
+             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
+                                       recursive);
+-            monitor_printf(params->mon, "%s", msg);
++            error_setg(params->errp, "%s", msg);
+             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
+             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+             return;
+@@ -488,14 +487,15 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+     emit_guest_memory_failure(MEMORY_FAILURE_ACTION_INJECT, ar, recursive);
+ }
+ 
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags)
++                        uint64_t misc, int flags, Error **errp)
  {
--    Error *err = NULL;
--
-     if (f->last_error) {
-+        error_setg(errp, "Cannot read from file: stream is in error state %d",
-+                   f->last_error);
-         return 0;
++    ERRP_GUARD();
+     CPUState *cs = CPU(cpu);
+     CPUX86State *cenv = &cpu->env;
+     MCEInjectionParams params = {
+-        .mon = mon,
++        .errp = errp,
+         .bank = bank,
+         .status = status,
+         .mcg_status = mcg_status,
+@@ -506,24 +506,27 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+     unsigned bank_num = cenv->mcg_cap & 0xff;
+ 
+     if (!cenv->mcg_cap) {
+-        monitor_printf(mon, "MCE injection not supported\n");
+-        return;
++        error_setg(errp, "MCE injection not supported");
++        return false;
+     }
+     if (bank >= bank_num) {
+-        monitor_printf(mon, "Invalid MCE bank number\n");
+-        return;
++        error_setg(errp, "Invalid MCE bank number");
++        return false;
+     }
+     if (!(status & MCI_STATUS_VAL)) {
+-        monitor_printf(mon, "Invalid MCE status code\n");
+-        return;
++        error_setg(errp, "Invalid MCE status code");
++        return false;
+     }
+     if ((flags & MCE_INJECT_BROADCAST)
+         && !cpu_x86_support_mca_broadcast(cenv)) {
+-        monitor_printf(mon, "Guest CPU does not support MCA broadcast\n");
+-        return;
++        error_setg(errp, "Guest CPU does not support MCA broadcast");
++        return false;
      }
  
--    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
--        qemu_file_set_error_obj(f, -EIO, err);
-+    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
-         return 0;
-     }
+     run_on_cpu(cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
++    if (*errp) {
++        return false;
++    }
+     if (flags & MCE_INJECT_BROADCAST) {
+         CPUState *other_cs;
  
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 8f824c124d..966766788d 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
- off_t qemu_get_offset(QEMUFile *f);
- void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-                         off_t pos);
--size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
--                          off_t pos);
-+size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
-+                          Error **errp);
- 
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- int qemu_file_put_fd(QEMUFile *f, int fd);
-diff --git a/migration/ram.c b/migration/ram.c
-index 4728f14d73..967db7c0db 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4127,7 +4127,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                               block->pages_offset + offset);
-             } else {
-                 read = qemu_get_buffer_at(f, host, size,
--                                          block->pages_offset + offset);
-+                                          block->pages_offset + offset, errp);
+@@ -537,8 +540,12 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+                 continue;
              }
+             run_on_cpu(other_cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
++            if (*errp) {
++                return false;
++            }
+         }
+     }
++    return true;
+ }
  
-             if (!read) {
-@@ -4196,8 +4196,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
-     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
--                           header.bitmap_offset) != bitmap_size) {
--        error_setg(errp, "Error reading dirty bitmap");
-+                           header.bitmap_offset, errp) != bitmap_size) {
-+        error_prepend(errp, "Error reading dirty bitmap");
-         return;
+ static inline target_ulong get_memio_eip(CPUX86State *env)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 644c45fb0a02..1eeadb99adac 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -748,8 +748,8 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
+         flags = 0;
      }
  
+-    cpu_x86_inject_mce(NULL, cpu, 9, status, mcg_status, paddr,
+-                       (MCM_ADDR_PHYS << 6) | 0xc, flags);
++    cpu_x86_inject_mce(cpu, 9, status, mcg_status, paddr,
++                       (MCM_ADDR_PHYS << 6) | 0xc, flags, NULL);
+ }
+ 
+ static void emit_hypervisor_memory_failure(MemoryFailureAction action, bool ar)
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index a536712c755a..785a13dd7107 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     uint64_t addr = qdict_get_int(qdict, "addr");
+     uint64_t misc = qdict_get_int(qdict, "misc");
+     int flags = MCE_INJECT_UNCOND_AO;
++    Error *err = NULL;
+ 
+     if (qdict_get_try_bool(qdict, "broadcast", false)) {
+         flags |= MCE_INJECT_BROADCAST;
+@@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     cs = qemu_get_cpu(cpu_index);
+     if (cs != NULL) {
+         cpu = X86_CPU(cs);
+-        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
+-                           flags);
++        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
++                           flags, &err);
++        hmp_handle_error(mon, err);
+     }
+ }
+
 -- 
-2.55.0
+2.55.0.543.g5ebe2ebe4ea8
 
 
