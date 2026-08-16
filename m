@@ -4,146 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB225C5DF6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC8AC5B572
 	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 17:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wveM6-00023w-MP; Sun, 16 Aug 2026 13:09:06 -0400
+	id 1wveLv-00020h-Jz; Sun, 16 Aug 2026 13:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wveM4-00023E-D6
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:09:05 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wveM2-0003pk-Rw
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:09:04 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDlr333611549
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 17:09:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- P471K91sSjLLshmItQyYGmAoYtVybZk/mKncMzbt4Sc=; b=C4EOZBfrTjS5+E1y
- +EMJ+gh20gvqwtWSOzpwu21AlS+ZtnF+gp06j75Z+l5kgYWTjmPFmK1rxbN/IsUa
- fmVFuOGPSPI+fvXIyL2Z/23aDBDH66/7n2EGwbexE4cI4lu5zTrzzxySFelpM7ic
- mpPTKdP0eXsGyHbaogXpOClx+R4RUINBrs1cY1GKXrXjWXmTk7XC/uEMeh9viRIG
- pnoUdgqrgZ4mHKhz+XwZpCcsi4hdrscbdYLwUG81gn5hTSjtMVu10IjFKx/l7Bee
- RWtN/u29pWg30Wn3oJuHdezpCrtrREVRSmgxL+uKywBiQbEGkS/lbfnnEZ/aZoTu
- YZfJvg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfuuaq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 17:09:00 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52d827597fbso40319031cf.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:08:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1wveLt-00020O-Re
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:08:54 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yvyas1991@gmail.com>)
+ id 1wveLs-0003oC-8M
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:08:53 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5aebf96bc89so603610e87.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:08:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786900130; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ETx9QFXhmBbgo1vGxMVqwhdyvGhjPrTy0vX0eHLcN99Rg8sCaI6TRQGQOc3uC0K059
+ Ri3IxTm7egUi7f9T3t2/K+vCdbwnDZmRAxXEEvl6W/2fzIMEnutLnmiptKXyp4/rOjLX
+ 9HJeEyDE7B4IYMBgKnrHHzXVkskqTvkmqt7Dj2+zu8o7shK1ebZcn//6FZbtg6x0hvnS
+ T9gAZh7BjaTbobvxzoPIoSrm/Yr1Ngp4EOpVX7VTcF9cD7kIALwim7KE5KZgjpfLRE5t
+ dtOcsn5Qjv9d9UtamI90xlboYB7vR5WGkYkBXcAmPfpR4C6pnb2tofL1KRzczL7vkuwm
+ /oLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=SP2wb4V/ypsjOyENnQjhQISPT75bcf+KFoXHsbQSvE4=;
+ fh=sKJfdWmlXdbO0ULypAS3MiGzy7Q3ZwsXwppXqdFH4Zs=;
+ b=NjOHBKfLqp2XZJ/AtQvTXxvCgRk6K2Zra2Oz+vq7a/CVjZR7lAaZEUybwiLqoGtlg0
+ sKw5Chn03nx2jy4lviIt0K847GYRk+eYv63QU275SJylHICBZEFgG0RLKEF/J0PoRUVw
+ /63hvz7TCQ0D+8vgeLFPmuovvtR3zWJt1op7EqqcQP2q1q2O6LWUwHMx7sTXzByE3Iua
+ f0s84Dc50Y8ZAPOHlu7JnSEEmqlV6cG8kFi4B89tGmERllHCzNX+sRrH/LNz/eiJp0hV
+ 1fo1ECCc1ECcZRDv6DZGohwUmHXk+4iInW34HX53hP1vmAeSdn7sMtYlm8WGBtOQ2wR7
+ ET6w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786900134; x=1787504934; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=P471K91sSjLLshmItQyYGmAoYtVybZk/mKncMzbt4Sc=;
- b=YfD2LharAJwQhzimbWRMNj8WeQKeqy4BNCrbfSiOMrQb078mwWftdCAbEWXYPVbsO1
- vTj4DpJ0EkjGae/t21eQSdCD28a0Ev8WXQP0H6cGDTuuxG2x5peHrNXgAK0XOqsTyeJB
- VUNsnNvhOj579P1hAKA7QRLxGKUTvPJg7QuKdtFjAJP5AaTVDOzTwVtfntLLeFUesCW1
- sOdhk/qFFRzCY9EkZvBlfrhBjdRHT6UbJ9JKyV5x85YlzmWiBjvRV0xqScwF619IAKim
- 0s8r22U+kGntayUPbdTlO9nE4J3Blo1qrlwsaCk0714/cVFSNxPiyTCQu454cJIX7VGF
- w5ug==
+ d=gmail.com; s=20251104; t=1786900130; x=1787504930; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=SP2wb4V/ypsjOyENnQjhQISPT75bcf+KFoXHsbQSvE4=;
+ b=cZPluhsYRsZG2L6i2zhiXwtfQX1CDwuISCklQyWQCgJ9UWg43n/JWw7PzbAZ66KnG1
+ yj3/ymbGUPTNl+lu/ezgCXfgOVQ0akWXEVYo+O2i8udacU/8D6iH+uMUZgOI2SWQdZwO
+ vD3TvFAysRK9EfHp7mmn7jXfIJCwOwTSs+Ko6+dwfktNb5gPu2kwugcSxK7ByDs+0pvN
+ RsSaxcFdS1XHDFSkCYJ2JIjhU7fMt/stRpfSBsSJXqgfB3uxQCq1DvpGWHpweNmuhsMP
+ x5jctY9DbBB24ccdaFzdpN3fHP0UT0tRmh+A/NZC0MDaMpjyRUbRCS9KX5ruHmjbiqgZ
+ O/ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786900134; x=1787504934;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=P471K91sSjLLshmItQyYGmAoYtVybZk/mKncMzbt4Sc=;
- b=eCpdjZMzW/HLKbQWIE/iN44bHJArcaJpFvx3SA4U/ng+uw211vN+n0rfkkErUVEggE
- WeclgpXd83zN3v5AQPhMi8uIB1po+7Ptb6U4yIVCwOwzsK6+W8q4Mbaa+rzB/rjzBJrY
- gYdF0lAFQFYzhTRq2WPHoAV1KaYvJtr2vR+y+yEeRLkWZYPGy9HmoMsubiCAB7Ybc/9Z
- yZJE0S8XbicllP8Zr1Cc5WhvAtxRmzuejLs1hH+DOqfozuIRxZ8XjHFazEeR7w9j0D7o
- vhUuaX6wkosBUpbmUQHOwbVr8IDjjjrLX5bHcNsqp1dVPzZMvcMkqjZN6r2J75yvxCuU
- 2nSg==
-X-Gm-Message-State: AOJu0Yw4FA3cwuB1sjFjSWOPTcCmEedQfr5btJVRGH4VccBJCJ+03/cK
- 0dihgIPFXJDplGVdTpnUlPjNC6rrWExurYSuncHqMiFc5loMR6mL2YwSIknT9C24sUtSyGa5yAY
- oRECAVvxaNOqvYUhN+yQhZe3o+0sDLGiixPQIJIhrghSMZiZKvyahFiD47BqKcChnJTlA
-X-Gm-Gg: AR+sD13aysfMQWeKX/vTks8yh5uj1MUuDUu1lJlpBlFJeNWAHb6nzXNr5RaqKlk4Yxt
- zz3L+OKXWUU9LR+gSa5fuThSOQ8HsYS4IlwF+TcBX7Y9z9AvRwLKiy8GxbihyFrf4eo2wOcu2HN
- 6CFRp9FDrVLqoD4a3r7H9NJj1SGg904yCVpAVZ1RNSPs9MTMH/cTaFL0jpk9WBfG8tW/HRuad5d
- ZPHFwINm648p8E/XOn6JhJ+hC0xnZe7z/RMt1r+3bGLMtjTzILQjzp1jc2PXQlsIBXE1mgzhXG/
- NkaM6ZqPzFqb8ixfbEKVkbajG5rcpx5+NkqPVWkJIqwT0e8cQvjqJ27oBGmdAX2RlFZaur9+tdB
- 9h0YihksXTalBaH4pfsYJnLw=
-X-Received: by 2002:a05:622a:c6:b0:51c:1e2f:1281 with SMTP id
- d75a77b69052e-52d854f1871mr212658311cf.42.1786900134157; 
- Sun, 16 Aug 2026 10:08:54 -0700 (PDT)
-X-Received: by 2002:a05:622a:c6:b0:51c:1e2f:1281 with SMTP id
- d75a77b69052e-52d854f1871mr212657691cf.42.1786900133685; 
- Sun, 16 Aug 2026 10:08:53 -0700 (PDT)
-Received: from [10.111.141.238] ([212.136.9.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4998780397dsm96599925e9.3.2026.08.16.10.08.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Aug 2026 10:08:52 -0700 (PDT)
-Message-ID: <0f89046e-6889-42a4-a967-0bfaaab869db@oss.qualcomm.com>
-Date: Sun, 16 Aug 2026 19:08:49 +0200
+ d=1e100.net; s=20251104; t=1786900130; x=1787504930;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=SP2wb4V/ypsjOyENnQjhQISPT75bcf+KFoXHsbQSvE4=;
+ b=APqu5oSD4cs+aRHXzMBTQfQjGZ+OuZimTpERTD/MiF2UZ/OdvsY7eJn+aPFUF+gdic
+ pV3yAHMZEeQJIzhS4Vh7rQWF9LyP/wtw+NyQhfLzW2dD1yT2eMDSm6k9SWSQE4HA+bIx
+ dfZ5N9njO54ccaFymz+WWAAokfXvD8WF07IwfX7tN1ObZXBS4ZMOTVAuGA+nkVgLF3cZ
+ MmIJkSP47e6T4Pd8WbhzQjn3ldPhaVdNdplUGIGVg0c7+rMO7JLlmLeyRrYY8kyGXFqS
+ kuNgQUyw8dR7fSrlm+G50sUSfoHw2beifN/G9XEBFjLMeg7/OtPLgO/pUVo+1ryATYgR
+ DW0Q==
+X-Gm-Message-State: AOJu0YwJ5k/d39pWffcWgYDeh/WdpnVQRN/Aj54ao/EDYoC7HIWsZQpn
+ VyY+wqiyohYSaW14UXn4JDsz9hooEb0ejG++/TjvLApLPybIDMgOFjGeE6nNlkk5AmOY3w1uwLH
+ rr3GsIo8kA1XQnXgvh3Zl7z2OnOxcCJU=
+X-Gm-Gg: AR+sD11ThHKTHMvk+ad3gt8bGyC2t0bi4Vl+D8B8KooAd9UQZbObEmBxTIhuTYigG/G
+ qfgdhKvBF4Ra2TBM9PfarPn075RbERtZqKTsOTbDubM3ZLF6h+ammyKaPiVzXX0E06QFshB1g1i
+ XNzSi3MqvHgZATXK4sf85pslObK5PwaILcd6kl1QPFPZfVn7CvL8gm+j2dxrnKEoFeL1t3wOGkJ
+ 3g9I9Um83FGcdilTMVADCecANu0uP3f3v8POAKBmwCou8PJQHCYcwTray5mhhoU9Zz646DAlvI9
+ XANW1Quq3pqlswkTNTlsXc3UCJjXiNRVnQVcCvpujhREQPRZBUO8ejBd8o1/2u7CwWlEo6uMm2B
+ HfXJNMjzbHHI/KxmZ09UU/PPh+CBfgwPb
+X-Received: by 2002:a2e:bc24:0:b0:39f:e8a5:2d76 with SMTP id
+ 38308e7fff4ca-3a1323be4b3mr17539331fa.1.1786900129570; Sun, 16 Aug 2026
+ 10:08:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] target/riscv: Add Zihintpause support
-To: qemu-devel@nongnu.org, "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-Cc: Dao Lu <daolu@rivosinc.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Heiko Stuebner <heiko@sntech.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-References: <20220725034728.2620750-1-daolu@rivosinc.com>
- <20220725034728.2620750-2-daolu@rivosinc.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20220725034728.2620750-2-daolu@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDEzOCBTYWx0ZWRfX0C7c4aK0hoU7
- sfUEMSeDAIeIlIClXoN+N6CYxPdHzGIgSCbStjBkEYURH9xAobyyjloKsTL7oNczsLA2IQHgprh
- wux/Mtb3XN/vCMG3NX6FlSpChEJ2Pp8=
-X-Proofpoint-ORIG-GUID: dhTHB_1Y4ujKhjFrYneIlBIr8LwnuUXK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDEzOCBTYWx0ZWRfX7skjTtqa06sl
- SzXdgN43BHUeUyP/zfwbsiW8pYQ1er+QHkNym9Yr+cSavFPS5q85arnzgZPy3wjzVrDTWipys12
- u6BElMcDWbZp74LHnjOmV+bzTy6RmeTqLUS4LLiyXC/1gFtxna7gDKrWzWdbMBoDUwVRr7+petK
- YQOJQVx944UTrPVuI0P/QPuY5Ud7eoUb3h/06TqT4YikwDoBNs7y5x7z9TvvdmzH2tkA6FmXV/t
- mEv/+n5Ky+QtZnMRC1TVosmvdGcgLIXJCjIo2ygpTpC5VfBIrrKOJEk1uMX2OaxKDsWsPkNK3Rn
- EttsHdqE/T27xQnoQS8bqc+UEgVufLaNzoPdEA4lMohQe+nXVhQrAqZNF4CnDAoLzQtIJehjfgt
- o0gTt1ON7m0PLlpGLfw6jyuRSHZqconm176HGfhADJ0rk/ekP3pK7JFo7lniiPYRPoQTWKe3LkF
- WOzI1yO8FRsxwnFnShA==
-X-Authority-Analysis: v=2.4 cv=TMJ1jVla c=1 sm=1 tr=0 ts=6a81eeac cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=/bviTfK1dmy+WGcHzWQ0gg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=JF9118EUAAAA:8 a=h0uksLzaAAAA:8 a=mHwnvXAwzdtxKzu_xlgA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=xVlTc564ipvMDusKsbsT:22 a=MSi_79tMYmZZG2gvAgS0:22
-X-Proofpoint-GUID: dhTHB_1Y4ujKhjFrYneIlBIr8LwnuUXK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 phishscore=0 clxscore=1015 bulkscore=0
- spamscore=0 suspectscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608160138
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260813005031.518387-1-richard.henderson@linaro.org>
+In-Reply-To: <20260813005031.518387-1-richard.henderson@linaro.org>
+From: Yogesh Vyas <yvyas1991@gmail.com>
+Date: Sun, 16 Aug 2026 22:38:36 +0530
+X-Gm-Features: AcwNN1U9-4jHuduYnx1FIZoqPj6-JXtLI5g486J_uC-m9TW1xbPLma85YWpLTb4
+Message-ID: <CAJOT6qOr+YL=Z_uVzPNtz5=8+gjLhg0dQ=99pwADZb5XEgKGag@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] tcg: Defer tb_flush when initial thread region
+ alloc fails
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, rathc@linux.ibm.com, 
+ anushree.mathur@linux.ibm.com, npiggin@gmail.com, harshpb@linux.ibm.com
+Content-Type: multipart/alternative; boundary="00000000000078e26e06592d1b8f"
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=yvyas1991@gmail.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,71 +117,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(now committed as 4696f0ab5c436ed53567ce6baec67c921d9b70ae)
+--00000000000078e26e06592d1b8f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2022-07-25 5:47, Dao Lu wrote:
-> Added support for RISC-V PAUSE instruction from Zihintpause extension,
-> enabled by default.
-> 
-> Tested-by: Heiko Stuebner <heiko@sntech.de>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Dao Lu <daolu@rivosinc.com>
-> ---
->   target/riscv/cpu.c                      |  2 ++
->   target/riscv/cpu.h                      |  1 +
->   target/riscv/insn32.decode              |  7 ++++++-
->   target/riscv/insn_trans/trans_rvi.c.inc | 16 ++++++++++++++++
->   4 files changed, 25 insertions(+), 1 deletion(-)
+Hi Richard,
+Thank you for improvising on the initial patch shared.
+
+On Thu, Aug 13, 2026 at 6:20=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
+
+> Hi Yogesh,
+>
+> The main problem with your patch is where you've placed the change:
+> tcg_region_initial_alloc__locked is also used by tcg_region_reset_all,
+> used by tb_flush.  Along that path, we really can't have a failure.
+> The path on which we can defer allocation is via tcg_register_thread.
+>
+> The second change I made is to use code_buf_ptr =3D=3D NULL to signal
+> reallocation is required.  In addition, tcg_tb_alloc doesn't need
+> to immediately fail: in the interim since thread creation, we may
+> well have performed a tb_flush already.
+>
+> Please have a try vs your hotplug test case.
+>
+I tried testing these patches on my x86 host running qemu-system-ppc64 by
+initially hotpluging 400 vCPUs.
+While the response was relatively slower than the initial patch that I had
+shared, I also observed the VM is as slow as stuck when I retried
+hotplugging upto 1024.
+I will share more feedback if I have any.
+
+Regards,
+Yogesh
 
 
-> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-> index ca8e3d1ea1..c49dbec0eb 100644
-> --- a/target/riscv/insn_trans/trans_rvi.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
-> @@ -792,6 +792,22 @@ static bool trans_srad(DisasContext *ctx, arg_srad *a)
->       return gen_shift(ctx, a, EXT_SIGN, tcg_gen_sar_tl, NULL);
->   }
->   
-> +static bool trans_pause(DisasContext *ctx, arg_pause *a)
-> +{
-> +    if (!ctx->cfg_ptr->ext_zihintpause) {
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * PAUSE is a no-op in QEMU,
-> +     * end the TB and return to main loop
-> +     */
-> +    gen_set_pc_imm(ctx, ctx->pc_succ_insn);
-> +    tcg_gen_exit_tb(NULL, 0);
+>
+> r~
+>
+>
+> Richard Henderson (3):
+>   tcg: Return success from tcg_region_alloc__locked
+>   tcg: Return success from tcg_region_alloc
+>   tcg: Defer tb_flush when initial thread region alloc fails
+>
+>  tcg/tcg-internal.h |  2 +-
+>  tcg/region.c       | 40 ++++++++++++++++++++++++++++++----------
+>  tcg/tcg.c          | 24 +++++++++++++++---------
+>  3 files changed, 46 insertions(+), 20 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
 
-Looking at this because I'm auditing the overall exception scheduling.
+--00000000000078e26e06592d1b8f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is a clever way to quickly return the inner vcpu dispatch loop,
-but doing so we can not reach the outter loop to yield to another vcpu,
-so I wonder if we shouldn't use EXCP_YIELD here. The problem has be
-unnoticed because most of us use MTTCG (the default) where EXCP_YIELD
-is irrelevant, but I expect this to be problematic on single threaded
-round robin TCG (although not reproduced). I noticed that when working
-on the hybrid accelerator project -- which is not merged yet -- where
-we use MTTCG and EXCP_YIELD is returned by hw accelerators. I'm happy
-using this simpler helper, but since this is a big logical change and
-I'm not familiar with RISCV I'm am not certain:
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Hi Richard,</div></div>Thank you for=
+ improvising on the initial=C2=A0patch shared.<div><br><div class=3D"gmail_=
+quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, =
+Aug 13, 2026 at 6:20=E2=80=AFAM Richard Henderson &lt;<a href=3D"mailto:ric=
+hard.henderson@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Yogesh,<br>
+<br>
+The main problem with your patch is where you&#39;ve placed the change:<br>
+tcg_region_initial_alloc__locked is also used by tcg_region_reset_all,<br>
+used by tb_flush.=C2=A0 Along that path, we really can&#39;t have a failure=
+.<br>
+The path on which we can defer allocation is via tcg_register_thread.<br>
+<br>
+The second change I made is to use code_buf_ptr =3D=3D NULL to signal<br>
+reallocation is required.=C2=A0 In addition, tcg_tb_alloc doesn&#39;t need<=
+br>
+to immediately fail: in the interim since thread creation, we may<br>
+well have performed a tb_flush already.<br>
+<br>
+Please have a try vs your hotplug test case.<br></blockquote><div>I tried t=
+esting these patches on my x86 host running qemu-system-ppc64 by initially =
+hotpluging 400 vCPUs.</div><div>While the response was relatively slower th=
+an the initial=C2=A0patch that I had shared, I also observed the VM is as s=
+low as=C2=A0stuck when I retried hotplugging=C2=A0upto 1024.</div><div>I wi=
+ll share more feedback if I have any.</div><div><br></div><div>Regards,</di=
+v><div>Yogesh</div><div><br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+<br>
+r~<br>
+<br>
+<br>
+Richard Henderson (3):<br>
+=C2=A0 tcg: Return success from tcg_region_alloc__locked<br>
+=C2=A0 tcg: Return success from tcg_region_alloc<br>
+=C2=A0 tcg: Defer tb_flush when initial thread region alloc fails<br>
+<br>
+=C2=A0tcg/tcg-internal.h |=C2=A0 2 +-<br>
+=C2=A0tcg/region.c=C2=A0 =C2=A0 =C2=A0 =C2=A0| 40 +++++++++++++++++++++++++=
++++++----------<br>
+=C2=A0tcg/tcg.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 24 +++++++++++++++-----=
+----<br>
+=C2=A03 files changed, 46 insertions(+), 20 deletions(-)<br>
+<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div></div></div>
 
-   +void helper_pause(CPURISCVState *env)
-   +{
-   +    CPUState *cs = env_cpu(env);
-   +
-   +    cs->exception_index = EXCP_YIELD;
-   +    cpu_loop_exit(cs);
-   +}
-
-> +    ctx->base.is_jmp = DISAS_NORETURN;
-> +
-> +    return true;
-> +}
->   
->   static bool trans_fence(DisasContext *ctx, arg_fence *a)
->   {
-
+--00000000000078e26e06592d1b8f--
 
