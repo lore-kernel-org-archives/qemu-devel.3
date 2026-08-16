@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CBDC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D803BC5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgLF-0000yp-QQ; Sun, 16 Aug 2026 15:16:21 -0400
+	id 1wvgLF-0000vy-Kd; Sun, 16 Aug 2026 15:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgL6-0000im-7e
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wvgL1-0000fe-Bi
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgL1-00005J-4Q
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:10 -0400
+ id 1wvgKv-0008VP-6b
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907765;
+ s=mimecast20190719; t=1786907760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FLwgnSlKKMFuHc26/oQfXNw9b6Fj/UncUjHSA7gZHgI=;
- b=ZrMJzt56tNIHOUEjm60rslB4ZK8zI4TG6l72lQWr8nvv3UwY5AG657yX85t4KKZqJ4Y95j
- ojYT6yFH5hpP4in7XHreFnEZwrEsvOfrbkDyrVVOzQ3lCu/S0jjICdBVGuobYz7xW3+py9
- u5A/R3St08HwJwdsiwcXSoKc1+a7c6E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=XFHHFC49LxHjezmRyp2lGkPpsiNGuulJJm9UR6atnL8=;
+ b=feOCmJwetiw4eqzWb8Ux4SROGvD7Qy5nMrWC3MbKz8EWFGHlD59qr0aieiwIHu60q89znf
+ SQdupft72wea20vV9qYcFT2hOEBezHasLU5ZVOveEF2oA6eYY+PxEx0E/9ezXTm4fWMzzw
+ 0QcfsTSAA3fW+bSo7pgD2vXkOo8Icc0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-heZxIm8dM2Cyh_6In4bZ-w-1; Sun,
- 16 Aug 2026 15:16:02 -0400
-X-MC-Unique: heZxIm8dM2Cyh_6In4bZ-w-1
-X-Mimecast-MFC-AGG-ID: heZxIm8dM2Cyh_6In4bZ-w_1786907761
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-8NpM777bPlOpQKjBY0iP9Q-1; Sun,
+ 16 Aug 2026 15:15:51 -0400
+X-MC-Unique: 8NpM777bPlOpQKjBY0iP9Q-1
+X-Mimecast-MFC-AGG-ID: 8NpM777bPlOpQKjBY0iP9Q_1786907750
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B321195606C; Sun, 16 Aug 2026 19:16:01 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9604319560A2; Sun, 16 Aug 2026 19:15:50 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37206197750F; Sun, 16 Aug 2026 19:15:59 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F9FE30001A2; Sun, 16 Aug 2026 19:15:48 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:13:15 +0400
-Subject: [PATCH v3 48/49] monitor: move HMP-specific to monitor-hmp-internal.h
+Date: Sun, 16 Aug 2026 23:13:12 +0400
+Subject: [PATCH v3 45/49] build-sys: make HMP source files conditional on
+ have_hmp
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-48-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-45-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=15341;
+ Markus Armbruster <armbru@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Jason Wang <jasowangio@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Laurent Vivier <lvivier@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ qemu-block@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12922;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bzckYqwXk+/d6tgi6ncL6jp0fJlBKKnsXP/akd8yT3A=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu1NZYrLxwDVHCfRM1So+VFV5kHueunI9BfS
- SYtEm0LyESJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtQAKCRDa6OEJdZac
- 5dyFD/9vAp5WOAaZEwNp6covCSQUk5PaVtUgp9IOHOw02ckkHtO2ZOfOiOndVaAexDq4WOjqs/t
- VChw8lZ4iBLPP87HXavy22SF6BRa0dYSBcuku8Lw01cJK6tG5Fri/ke/1bneGLD0YF/fUQynugR
- FvZkkJ3Qi85ZLvhpszAPlDIRuoPhrYj3Qpu21V5IBbJFYahYH3wOdMrWOR2UrhEq0IyKikSwrtU
- XMFFj5iKLMJInqSskIzW/CLs365c0rVZRLGrgySx3rciwAFh6rQEWVBgQEZK+BDOsfx388nyKCQ
- hjLZdq+MMNpfzbHCy6la0Q+5kM7pXk4I1e0L+rGvw9tNyX21tg/64D+042qHVyhPIQxTVtRxo84
- hB1ALPEhv4nGtJv3WUyBThVVCrLJXlC03g5vqUhcMRpKl41qJIaiOgEXm2dtHhCXW/V3zWyeqXc
- dd+SD3q4Mf1RGmdZzv1NBpHz11LikIXnwOBfp1L6ewIvyBFmY7XgSSGQZgqxB3xNh15lqIbOA5N
- SJMgpFGXYkS+I8Fk7wrAGQW3vuldhiJ5FUpQbTS71o83XhTFIYHs8RMw4la8MGcC3QGKpKUIUej
- 1zCyJ9x0WXEPvN0CiiVYX94Bv4m0L9IKRWW9cvnvdUrI5j8W43DwHdCHh+UpvjlY/UiZavl77YT
- ejSTt413eJf1knQ==
+ bh=KAwOhO6Ht0qoLbpPq+lQ8H0gvqEc2eImo2afap6ISy8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu0n5E/NhEBwcOLmRFWp5nAvGZLHastj4SK9
+ UBfGV5eDLmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtAAKCRDa6OEJdZac
+ 5cdQD/0UOhSiwVYFtN3V4JqUuaDF0FxWDz0+YfzDSOgu+CsaXxRBilsjw+O4KUO1o81nrNhyNXL
+ oaalpY9Pr+mGr3ewPj3E1OZrYggoFqkr4YrZ80nVHBTqz8toNHPKb7q0P3AX4C9OxEoilP6aSZV
+ 9hBemr4SNMkZg8xkdcMRp8TtIi+YrL8+BtMvx9My73+ndGgKmzcBACOAR5SyZyfDeDWSaYPtYg+
+ fxsBRV1QsI5mP0d+kPAy7V0w4y7wpt1LqsT4FfnGLUsaDVdaKHO6Wpk6TmqODc/4lSba4I0ha/Q
+ YG723K9ByN81HojJ8mcdb9G2kzxwjLcc7o2kM6i2mgoPPOLUyWXrS0mBqO+OLZe/J3QAzKmHasc
+ sqzxaNn5WWRhAK0HksfxxpdIsREOYZoL+cLLpV94UOK82AJel8J5n6PK9RiE66m+hNeIX347se9
+ QBI+bzEO37AMerDcEmT3Rgmc2/qP6wjD5zboaXp6wmaC5z51+OemVEIWNwT+lhwpywENg204I4D
+ GAAIfpy2Kbr7n0K41nK8tGPkfB470AWLky9PSb8NRmBcdDPyiMnQ5rvSOsQ3K19U9vFKxcDdy2j
+ L6Wu33rAT/li9/iHgBlEXrpQ3QR0DnsYptoaI7iBG2i6Z0jB/SUE51oXKGuXLT3VPlZR6SFY0I/
+ pVdNkfo5CV/OjtA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -90,9 +99,8 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,438 +116,435 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move HMP-specific declarations to its own CONFIG_HMP guarded header.
+Exclude all *-hmp-cmds.c files and HMP-only source files from the
+build when HMP is disabled.
+
+Also conditionalise the hmp-commands.hx header generation and the
+test-hmp qtest.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/monitor/hmp.h          |   8 +++-
- migration/migration-hmp-cmds.c |   1 +
- monitor/hmp-cmds.c             |   1 +
- monitor/hmp.c                  |   1 +
- monitor/monitor-hmp-internal.h | 106 +++++++++++++++++++++++++++++++++++++++++
- monitor/monitor-internal.h     |  99 --------------------------------------
- monitor/monitor.c              |   1 +
- monitor/qmp-cmds.c             |   1 +
- stubs/monitor-core.c           |   2 +
- stubs/monitor-internal.c       |   2 +
- tests/unit/test-util-sockets.c |   2 -
- tools/qemu-vnc/stubs.c         |   6 ---
- 12 files changed, 121 insertions(+), 109 deletions(-)
+ audio/meson.build         |  4 +++-
+ backends/meson.build      |  5 ++++-
+ block/monitor/meson.build |  4 +++-
+ chardev/meson.build       |  5 ++++-
+ disas/meson.build         |  4 +++-
+ dump/meson.build          |  5 ++++-
+ hw/core/meson.build       |  5 +++--
+ hw/i386/meson.build       |  4 +++-
+ hw/net/meson.build        |  4 +++-
+ hw/pci/meson.build        |  4 +++-
+ hw/virtio/meson.build     |  4 +++-
+ meson.build               |  2 +-
+ migration/meson.build     |  4 +++-
+ monitor/hmp.c             |  2 --
+ monitor/meson.build       |  9 +++++++--
+ net/meson.build           |  4 +++-
+ qom/meson.build           |  4 +++-
+ stats/meson.build         |  5 ++++-
+ stubs/meson.build         | 12 +++++++-----
+ system/meson.build        | 11 ++++++++---
+ tests/qtest/meson.build   |  8 +++++++-
+ trace/meson.build         |  5 ++++-
+ ui/meson.build            |  4 +++-
+ 23 files changed, 86 insertions(+), 32 deletions(-)
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index f10bf83df86d..ef53e87f7608 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -21,6 +21,10 @@
- #define TYPE_MONITOR_HMP "monitor-hmp"
- OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
+diff --git a/audio/meson.build b/audio/meson.build
+index 0e33b6f9836e..6655f601b115 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -9,7 +9,9 @@ audio_ss.add(files(
+ ))
  
-+MonitorHMP *monitor_cur_hmp(void);
-+
-+#ifdef CONFIG_HMP
-+
- #define HMP_STUB(cmd) \
-     void hmp_##cmd(MonitorHMP *hmp, const QDict *qdict) \
-     { \
-@@ -36,8 +40,6 @@ struct MonitorDef {
- void monitor_new_hmp(const char *id, const char *chardev_id,
-                      bool use_readline, Error **errp);
+ # deprecated since v10.2, to be removed
+-system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++if have_hmp
++  system_ss.add(files('audio-hmp-cmds.c', 'wavcapture.c'))
++endif
  
--MonitorHMP *monitor_cur_hmp(void);
+ audio_modules = {}
+ foreach m : [
+diff --git a/backends/meson.build b/backends/meson.build
+index 8792c58c361f..224e96753527 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add([files(
+   'cryptodev-builtin.c',
+-  'cryptodev-hmp-cmds.c',
+   'cryptodev.c',
+   'hostmem-ram.c',
+   'hostmem.c',
+@@ -10,6 +9,10 @@ system_ss.add([files(
+   'confidential-guest-support.c',
+ ), numa])
+ 
++if have_hmp
++  system_ss.add(files('cryptodev-hmp-cmds.c'))
++endif
++
+ if host_os != 'windows'
+   system_ss.add(files('rng-random.c'))
+   if host_os != 'emscripten'
+diff --git a/block/monitor/meson.build b/block/monitor/meson.build
+index 74faced9e17f..2d5c157a7391 100644
+--- a/block/monitor/meson.build
++++ b/block/monitor/meson.build
+@@ -1,3 +1,5 @@
+-system_ss.add(files('block-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('block-hmp-cmds.c'))
++endif
+ block_ss.add(files('bitmap-qmp-cmds.c'))
+ system_ss.add(files('qmp-cmds.c'))
+diff --git a/chardev/meson.build b/chardev/meson.build
+index 56ee39ac0b01..031b6d7238c1 100644
+--- a/chardev/meson.build
++++ b/chardev/meson.build
+@@ -30,11 +30,14 @@ endif
+ chardev_ss = chardev_ss.apply({})
+ 
+ system_ss.add(files(
+-    'char-hmp-cmds.c',
+     'msmouse.c',
+     'wctablet.c',
+     'testdev.c'))
+ 
++if have_hmp
++    system_ss.add(files('char-hmp-cmds.c'))
++endif
++
+ chardev_modules = {}
+ 
+ if brlapi.found()
+diff --git a/disas/meson.build b/disas/meson.build
+index 42977a1f74dd..b382550e41f8 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -20,5 +20,7 @@ common_ss.add(when: 'CONFIG_TCG', if_true: files(
+     'objdump.c'
+ ))
+ common_ss.add(files('disas-common.c'))
+-system_ss.add(files('disas-mon.c'))
++if have_hmp
++  system_ss.add(files('disas-mon.c'))
++endif
+ specific_ss.add(capstone)
+diff --git a/dump/meson.build b/dump/meson.build
+index 26e1561ed486..bef8276aa5ad 100644
+--- a/dump/meson.build
++++ b/dump/meson.build
+@@ -1,3 +1,6 @@
+-system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
++system_ss.add([files('dump.c'), snappy, lzo])
++if have_hmp
++  system_ss.add(files('dump-hmp-cmds.c'))
++endif
+ specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
+ system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 8a96567de8f2..8fe776d2c86b 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -26,13 +26,11 @@ system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq.c'))
+ system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c'))
+ system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus-fdt.c'))
+ system_ss.add(when: 'CONFIG_EIF', if_true: [files('eif.c'), zlib, libcbor, gnutls])
 -
- int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
-     G_GNUC_PRINTF(2, 0);
- int monitor_hmp_printf(MonitorHMP *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
-@@ -218,4 +220,6 @@ void hmp_info_skeys(MonitorHMP *hmp, const QDict *qdict);
- void hmp_info_cmma(MonitorHMP *hmp, const QDict *qdict);
- void hmp_migrationmode(MonitorHMP *hmp, const QDict *qdict);
+ system_ss.add(files(
+   'cpu-system.c',
+   'fw-path-provider.c',
+   'hotplug.c',
+   'loader.c',
+-  'machine-hmp-cmds.c',
+   'machine-qmp-cmds.c',
+   'machine.c',
+   'nmi.c',
+@@ -46,6 +44,9 @@ system_ss.add(files(
+   'vm-change-state-handler.c',
+   'clock-vmstate.c',
+ ))
++if have_hmp
++  system_ss.add(files('machine-hmp-cmds.c'))
++endif
+ user_ss.add(files(
+   'cpu-user.c',
+   'qdev-user.c',
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index b611fbb5a7fb..125f4ce894ca 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -24,7 +24,9 @@ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
+-stub_ss.add(files('sgx-hmp-stub.c'))
++if have_hmp
++  stub_ss.add(files('sgx-hmp-stub.c'))
++endif
  
-+#endif /* CONFIG_HMP */
-+
- #endif
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 6fe189471899..27b38d0e5f85 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -21,6 +21,7 @@
- #include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "monitor/monitor-internal.h"
-+#include "monitor/monitor-hmp-internal.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 3ac70c3f1123..91701ddf331b 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -25,6 +25,7 @@
- #include "monitor/hmp.h"
- #include "monitor/hmp-completion.h"
- #include "monitor/monitor-internal.h"
-+#include "monitor/monitor-hmp-internal.h"
- #include "monitor/qdev.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-control.h"
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index 84f142df222a..df3373be03bf 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -67,6 +67,8 @@ system_ss.add(when: 'CONFIG_ROCKER', if_true: files(
+   'rocker/rocker_world.c',
+ ))
+ stub_ss.add(files('rocker/rocker-stubs.c'))
+-system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('rocker/rocker-hmp-cmds.c'))
++endif
+ 
+ subdir('can')
+diff --git a/hw/pci/meson.build b/hw/pci/meson.build
+index a6cbd89c0a38..984c7327e5d0 100644
+--- a/hw/pci/meson.build
++++ b/hw/pci/meson.build
+@@ -5,12 +5,14 @@ pci_ss.add(files(
+   'pci.c',
+   'pci_bridge.c',
+   'pci_host.c',
+-  'pci-hmp-cmds.c',
+   'pci-qmp-cmds.c',
+   'pcie_sriov.c',
+   'shpc.c',
+   'slotid_cap.c'
+ ))
++if have_hmp
++  pci_ss.add(files('pci-hmp-cmds.c'))
++endif
+ # The functions in these modules can be used by devices too.  Since we
+ # allow plugging PCIe devices into PCI buses, include them even if
+ # CONFIG_PCI_EXPRESS=n.
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 0e023235164b..b59f455a5114 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -100,6 +100,8 @@ stub_ss.add(files('vhost-user-stub.c'))
+ stub_ss.add(files('virtio-stub.c'))
+ stub_ss.add(files('virtio-md-stubs.c'))
+ 
+-system_ss.add(files('virtio-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('virtio-hmp-cmds.c'))
++endif
+ 
+ system_ss.add(when: 'CONFIG_ACPI', if_true: files('virtio-acpi.c'))
+diff --git a/meson.build b/meson.build
+index 03b334549f23..8ac35151604b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3549,7 +3549,7 @@ hx_headers = [
+   ['qemu-options.hx', 'qemu-options.def'],
+   ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
+ ]
+-if have_system
++if have_system and have_hmp
+   hx_headers += [
+     ['hmp-commands.hx', 'hmp-commands.h'],
+     ['hmp-commands-info.hx', 'hmp-commands-info.h'],
+diff --git a/migration/meson.build b/migration/meson.build
+index 0a9a5d0d3746..4ab9d99cea62 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -36,7 +36,9 @@ system_ss.add(files(
+   'socket.c',
+   'tls.c',
+ ), gnutls, zlib)
+-system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++if have_hmp
++  system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
++endif
+ 
+ if get_option('replication').allowed()
+   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index e3fc05f521a8..488ec23937df 100644
+index 3c70adcd35bb..10bcbe2a33cb 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -27,6 +27,7 @@
- #include "hw/core/qdev.h"
- #include "hw/core/sysemu-cpu-ops.h"
- #include "monitor-internal.h"
-+#include "monitor-hmp-internal.h"
- #include "monitor/hmp.h"
- #include "qobject/qdict.h"
- #include "qobject/qnum.h"
-diff --git a/monitor/monitor-hmp-internal.h b/monitor/monitor-hmp-internal.h
-new file mode 100644
-index 000000000000..4e2430551abf
---- /dev/null
-+++ b/monitor/monitor-hmp-internal.h
-@@ -0,0 +1,106 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef MONITOR_HMP_INTERNAL_H
-+#define MONITOR_HMP_INTERNAL_H
-+
-+#ifdef CONFIG_HMP
-+#include "monitor/hmp.h"
-+/*
-+ * Supported types:
-+ *
-+ * 'F'          filename
-+ * 'B'          block device name
-+ * 's'          string (accept optional quote)
-+ * 'S'          it just appends the rest of the string (accept optional quote)
-+ * 'O'          option string of the form NAME=VALUE,...
-+ *              parsed according to QemuOptsList given by its name
-+ *              Example: 'device:O' uses qemu_device_opts.
-+ *              Restriction: only lists with empty desc are supported
-+ *              TODO lift the restriction
-+ * 'i'          32 bit integer
-+ * 'l'          target long (32 or 64 bit)
-+ * 'M'          Non-negative target long (32 or 64 bit), in user mode the
-+ *              value is multiplied by 2^20 (think Mebibyte)
-+ * 'o'          octets (aka bytes)
-+ *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
-+ *              K, k suffix, which multiplies the value by 2^60 for suffixes E
-+ *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
-+ *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
-+ * 'T'          double
-+ *              user mode accepts an optional ms, us, ns suffix,
-+ *              which divides the value by 1e3, 1e6, 1e9, respectively
-+ * '/'          optional gdb-like print format (like "/10x")
-+ *
-+ * '?'          optional type (for all types, except '/')
-+ * '.'          other form of optional type (for 'i' and 'l')
-+ * 'b'          boolean
-+ *              user mode accepts "on" or "off"
-+ * '-'          optional parameter (eg. '-f'); if followed by a 's', it
-+ *              specifies an optional string param (e.g. '-fs' allows '-f foo')
-+ *
-+ */
-+
-+typedef struct HMPCommand {
-+    const char *name;
-+    const char *args_type;
-+    const char *params;
-+    const char *help;
-+    const char *flags; /* p=preconfig */
-+    void (*cmd)(MonitorHMP *hmp, const QDict *qdict);
-+    /*
-+     * If implementing a command that takes no arguments and simply
-+     * prints formatted data, then leave @cmd NULL, and then set
-+     * @cmd_info_hrt to the corresponding QMP handler that returns
-+     * the formatted text.
-+     */
-+    HumanReadableText *(*cmd_info_hrt)(Error **errp);
-+    /*
-+     * @sub_table is a list of 2nd level of commands. If it does not exist,
-+     * cmd should be used. If it exists, sub_table[?].cmd should be
-+     * used, and cmd of 1st level plays the role of help function.
-+     */
-+    struct HMPCommand *sub_table;
-+    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
-+
-+    /* Keep non-pointer data at the end to minimize holes. */
-+
-+    /**
-+     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
-+     *     Allow to restrict the command for a particular set of
-+     *     target architectures.
-+     */
-+    uint32_t arch_bitmask;
-+    bool coroutine;
-+} HMPCommand;
-+
-+struct MonitorHMPClass {
-+    MonitorClass parent_class;
-+};
-+
-+struct MonitorHMP {
-+    Monitor parent_obj;
-+    bool use_readline;
-+    /*
-+     * State used only in the thread "owning" the monitor.
-+     * This is currently always the main thread, since
-+     * HMP does not allow use of the I/O thread at this time.
-+     * These members can be safely accessed without locks.
-+     */
-+    ReadLineState *rs;
-+    char *mon_cpu_path;
-+    int reset_seen;
-+};
-+
-+int monitor_hmp_set_cpu(MonitorHMP *hmp, int cpu_index);
-+void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
-+int hmp_compare_cmd(const char *name, const char *list);
-+
-+/*
-+ * hmp_cmds_for_target: Return array of HMPCommand entries
-+ *
-+ * If @info_command is true, return the particular 'info foo' commands array.
-+ */
-+HMPCommand *hmp_cmds_for_target(bool info_command);
-+
-+#endif /* CONFIG_HMP */
-+#endif
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index c198c12eaa00..822a66d06d00 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -27,7 +27,6 @@
- 
- #include "chardev/char-fe.h"
- #include "monitor/monitor.h"
--#include "monitor/hmp.h"
- #include "qapi/qapi-emit-events.h"
- #include "qapi/qapi-types-control.h"
- #include "qapi/qapi-types-qom.h"
-@@ -36,75 +35,6 @@
- #include "qemu/readline.h"
- #include "system/iothread.h"
- 
--/*
-- * Supported types:
-- *
-- * 'F'          filename
-- * 'B'          block device name
-- * 's'          string (accept optional quote)
-- * 'S'          it just appends the rest of the string (accept optional quote)
-- * 'O'          option string of the form NAME=VALUE,...
-- *              parsed according to QemuOptsList given by its name
-- *              Example: 'device:O' uses qemu_device_opts.
-- *              Restriction: only lists with empty desc are supported
-- *              TODO lift the restriction
-- * 'i'          32 bit integer
-- * 'l'          target long (32 or 64 bit)
-- * 'M'          Non-negative target long (32 or 64 bit), in user mode the
-- *              value is multiplied by 2^20 (think Mebibyte)
-- * 'o'          octets (aka bytes)
-- *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
-- *              K, k suffix, which multiplies the value by 2^60 for suffixes E
-- *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
-- *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
-- * 'T'          double
-- *              user mode accepts an optional ms, us, ns suffix,
-- *              which divides the value by 1e3, 1e6, 1e9, respectively
-- * '/'          optional gdb-like print format (like "/10x")
-- *
-- * '?'          optional type (for all types, except '/')
-- * '.'          other form of optional type (for 'i' and 'l')
-- * 'b'          boolean
-- *              user mode accepts "on" or "off"
-- * '-'          optional parameter (eg. '-f'); if followed by a 's', it
-- *              specifies an optional string param (e.g. '-fs' allows '-f foo')
-- *
-- */
--
--typedef struct HMPCommand {
--    const char *name;
--    const char *args_type;
--    const char *params;
--    const char *help;
--    const char *flags; /* p=preconfig */
--    void (*cmd)(MonitorHMP *mon, const QDict *qdict);
--    /*
--     * If implementing a command that takes no arguments and simply
--     * prints formatted data, then leave @cmd NULL, and then set
--     * @cmd_info_hrt to the corresponding QMP handler that returns
--     * the formatted text.
--     */
--    HumanReadableText *(*cmd_info_hrt)(Error **errp);
--    /*
--     * @sub_table is a list of 2nd level of commands. If it does not exist,
--     * cmd should be used. If it exists, sub_table[?].cmd should be
--     * used, and cmd of 1st level plays the role of help function.
--     */
--    struct HMPCommand *sub_table;
--    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
--
--    /* Keep non-pointer data at the end to minimize holes. */
--
--    /**
--     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
--     *     Allow to restrict the command for a particular set of
--     *     target architectures.
--     */
--    uint32_t arch_bitmask;
--    bool coroutine;
--} HMPCommand;
--
--
- struct MonitorClass {
-     ObjectClass parent_class;
- 
-@@ -149,24 +79,6 @@ struct Monitor {
-     int mux_out;
- };
- 
--struct MonitorHMPClass {
--    MonitorClass parent_class;
--};
--
--struct MonitorHMP {
--    Monitor parent_obj;
--    bool use_readline;
--    /*
--     * State used only in the thread "owning" the monitor.
--     * This is currently always the main thread, since
--     * HMP does not allow use of the I/O thread at this time.
--     * These members can be safely accessed without locks.
--     */
--    ReadLineState *rs;
--    char *mon_cpu_path;
--    int reset_seen;
--};
--
- struct MonitorQMPClass {
-     MonitorClass parent_class;
- };
-@@ -209,21 +121,10 @@ int monitor_can_read(void *opaque);
- void monitor_cancel_out_watch(Monitor *mon);
- void monitor_list_append(Monitor *mon);
- void monitor_fdsets_cleanup(void);
--int monitor_hmp_set_cpu(MonitorHMP *mon, int cpu_index);
- 
- void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
- void monitor_data_destroy_qmp(MonitorQMP *mon);
- void coroutine_fn monitor_qmp_dispatcher_co(void *data);
- void qmp_dispatcher_co_wake(void);
- 
--void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
--int hmp_compare_cmd(const char *name, const char *list);
--
--/*
-- * hmp_cmds_for_target: Return array of HMPCommand entries
-- *
-- * If @info_command is true, return the particular 'info foo' commands array.
-- */
--HMPCommand *hmp_cmds_for_target(bool info_command);
--
- #endif
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 7979cd1cbcfd..6ba06280e023 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -24,6 +24,7 @@
- 
- #include "qemu/osdep.h"
- #include "monitor-internal.h"
-+#include "monitor-hmp-internal.h"
- #include "qapi/error.h"
- #include "qapi/opts-visitor.h"
- #include "qapi/qapi-emit-events.h"
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index c9f24febdc96..7525a88e0494 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -16,6 +16,7 @@
- #include "qemu/osdep.h"
- #include "qemu/sockets.h"
- #include "monitor-internal.h"
-+#include "monitor-hmp-internal.h"
- #include "monitor/qdev.h"
- #include "monitor/qmp-helpers.h"
- #include "system/system.h"
-diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
-index 0e74d78d52e4..8dfd46d2a8a3 100644
---- a/stubs/monitor-core.c
-+++ b/stubs/monitor-core.c
-@@ -1,6 +1,7 @@
- #include "qemu/osdep.h"
- #include "monitor/hmp.h"
- 
-+#ifdef CONFIG_HMP
- int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
- {
-     /*
-@@ -17,3 +18,4 @@ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+@@ -1731,9 +1731,7 @@ static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
+     if (cs == NULL) {
+         return -1;
      }
-     return -1;
- }
-+#endif
-diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
-index 6f69f1f14ae4..4483ca25557f 100644
---- a/stubs/monitor-internal.c
-+++ b/stubs/monitor-internal.c
-@@ -8,8 +8,10 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
-     return -1;
- }
+-#ifdef CONFIG_HMP
+     md = cs->cc->sysemu_ops->monitor_defs;
+-#endif
+     if (md == NULL) {
+         return -1;
+     }
+diff --git a/monitor/meson.build b/monitor/meson.build
+index 4c58dd148c04..f67e0291a42a 100644
+--- a/monitor/meson.build
++++ b/monitor/meson.build
+@@ -2,8 +2,13 @@ qmp_ss.add(files('monitor.c', 'qmp.c', 'qmp-cmds-control.c'))
  
-+#ifdef CONFIG_HMP
- void monitor_new_hmp(const char *id, const char *chardev_id,
-                      bool use_readline, Error **errp)
- {
-     g_assert_not_reached();
- }
-+#endif
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index 530a3fee3c13..006f5e579c6b 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -24,7 +24,6 @@
- #include "qapi/error.h"
- #include "socket-helpers.h"
- #include "monitor/monitor.h"
--#include "monitor/hmp.h"
+ system_ss.add(files(
+   'fds.c',
+-  'hmp-cmds.c',
+-  'hmp.c',
+   'qemu-config-qmp.c',
+   'qmp-cmds.c',
+ ))
++
++if have_hmp
++  system_ss.add(files(
++    'hmp-cmds.c',
++    'hmp.c',
++  ))
++endif
+diff --git a/net/meson.build b/net/meson.build
+index 9c8068b06d1f..5bb76d136491 100644
+--- a/net/meson.build
++++ b/net/meson.build
+@@ -8,7 +8,6 @@ system_ss.add(files(
+   'filter-mirror.c',
+   'filter.c',
+   'hub.c',
+-  'net-hmp-cmds.c',
+   'net.c',
+   'queue.c',
+   'socket.c',
+@@ -16,6 +15,9 @@ system_ss.add(files(
+   'stream_data.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('net-hmp-cmds.c'))
++endif
  
- static void test_fd_is_socket_bad(void)
- {
-@@ -75,7 +74,6 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-  */
- Monitor *monitor_cur(void) { return cur_mon; }
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
--int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap) { abort(); }
+ if get_option('replication').allowed() or \
+     get_option('colo_proxy').allowed()
+diff --git a/qom/meson.build b/qom/meson.build
+index bd6f4aadd78a..022d3ad5c8f1 100644
+--- a/qom/meson.build
++++ b/qom/meson.build
+@@ -10,4 +10,6 @@ if have_system
+ endif
  
- #ifndef _WIN32
- static void test_socket_fd_pass_name_good(void)
-diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
-index 0aa50a901d37..1e4c14913b56 100644
---- a/tools/qemu-vnc/stubs.c
-+++ b/tools/qemu-vnc/stubs.c
-@@ -9,7 +9,6 @@
- #include "system/runstate.h"
- #include "hw/core/qdev.h"
- #include "monitor/monitor.h"
--#include "monitor/hmp.h"
- #include "migration/vmstate.h"
+ qmp_ss.add(files('qom-qmp-cmds.c'))
+-system_ss.add(files('qom-hmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('qom-hmp-cmds.c'))
++endif
+diff --git a/stats/meson.build b/stats/meson.build
+index 0728dafcd1c7..b5f68a94052e 100644
+--- a/stats/meson.build
++++ b/stats/meson.build
+@@ -1 +1,4 @@
+-system_ss.add(files('stats-hmp-cmds.c', 'stats-qmp-cmds.c'))
++system_ss.add(files('stats-qmp-cmds.c'))
++if have_hmp
++  system_ss.add(files('stats-hmp-cmds.c'))
++endif
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 7e15687a62b7..93df8ea94f57 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -86,11 +86,13 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+-  stub_ss.add(files('hmp-cmd-info_mem.c'))
+-  stub_ss.add(files('hmp-cmd-info_sev.c'))
+-  stub_ss.add(files('hmp-cmd-info_tlb.c'))
+-  stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+-  stub_ss.add(files('hmp-cmds-target-i386.c'))
++  if have_hmp
++    stub_ss.add(files('hmp-cmd-info_mem.c'))
++    stub_ss.add(files('hmp-cmd-info_sev.c'))
++    stub_ss.add(files('hmp-cmd-info_tlb.c'))
++    stub_ss.add(files('hmp-cmds-hw-s390x.c'))
++    stub_ss.add(files('hmp-cmds-target-i386.c'))
++  endif
+ endif
  
- bool runstate_is_running(void)
-@@ -42,11 +41,6 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
-     return NULL;
- }
+ if have_system or have_user
+diff --git a/system/meson.build b/system/meson.build
+index 64e06e7abcc3..41e2e4a292d1 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -9,7 +9,6 @@ system_ss.add(files(
+   'cpus.c',
+   'cpu-timers.c',
+   'dirtylimit.c',
+-  'dirtylimit-hmp-cmds.c',
+   'dma-helpers.c',
+   'exit-with-parent.c',
+   'globals.c',
+@@ -24,12 +23,18 @@ system_ss.add(files(
+   'qtest.c',
+   'rtc.c',
+   'runstate-action.c',
+-  'runstate-hmp-cmds.c',
+   'runstate.c',
+-  'tpm-hmp-cmds.c',
+   'watchpoint.c',
+ ))
  
--int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
--{
--    return -1;
--}
--
- /*
-  * Link-time stubs for VMState symbols referenced by VNC code.
-  * The standalone binary never performs migration, so these are
++if have_hmp
++  system_ss.add(files(
++    'dirtylimit-hmp-cmds.c',
++    'runstate-hmp-cmds.c',
++    'tpm-hmp-cmds.c',
++  ))
++endif
++
+ if have_tpm
+   system_ss.add(files('tpm.c'))
+ endif
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f7c7d06620ea..4cf4407c2bd0 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -26,7 +26,13 @@ qtests_generic = [
+   'qmp-test',
+   'qmp-cmd-test',
+   'qom-test',
+-  'test-hmp',
++]
++if have_hmp
++  qtests_generic += [
++    'test-hmp',
++  ]
++endif
++qtests_generic += [
+   'qos-test',
+   'readconfig-test',
+   'netdev-socket',
+diff --git a/trace/meson.build b/trace/meson.build
+index d89a0db82a14..4e5681c44cae 100644
+--- a/trace/meson.build
++++ b/trace/meson.build
+@@ -1,4 +1,7 @@
+-system_ss.add(files('control-target.c', 'trace-hmp-cmds.c'))
++system_ss.add(files('control-target.c'))
++if have_hmp
++  system_ss.add(files('trace-hmp-cmds.c'))
++endif
+ trace_rs_targets = []
+ trace_events_files = []
+ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+diff --git a/ui/meson.build b/ui/meson.build
+index d345f6c70d6a..39829a2c6e23 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -56,10 +56,12 @@ system_ss.add(png)
+ system_ss.add(files(
+   'input-barrier.c',
+   'input.c',
+-  'ui-hmp-cmds.c',
+   'ui-qmp-cmds.c',
+   'util.c',
+ ))
++if have_hmp
++  system_ss.add(files('ui-hmp-cmds.c'))
++endif
+ system_ss.add(ui)
+ system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
+ if dbus_display
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
