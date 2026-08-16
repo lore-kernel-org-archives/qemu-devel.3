@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C47B9C5DF6E
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 13:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E90C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 13:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvai7-0001b1-Ay; Sun, 16 Aug 2026 09:15:35 -0400
+	id 1wvaio-0001zD-6R; Sun, 16 Aug 2026 09:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wvaht-0001V0-Pw; Sun, 16 Aug 2026 09:15:22 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ id 1wvaiT-0001jx-53; Sun, 16 Aug 2026 09:16:00 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wvahs-0005TH-5s; Sun, 16 Aug 2026 09:15:21 -0400
+ id 1wvaiR-0005Xo-LB; Sun, 16 Aug 2026 09:15:56 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cEQ/YutSbdwSiA62c72mkw4RioHAcRbyRiC6/feUzcmtGYvarSiUvFfgdqv3Dpb49kLxr270+KyO412MciRDFwt43UqlxLtpeLwQVzxAoOVE0+lEg4+6eQOtfG5Qv0rxFuvIlMyGWaUCa0rY8DEcdy81W3MPlddkDi6V/KcWRpVfdET4+LnHit817fnQ/zzcSzwstG2WpXxLWotb5roZIRI0sUtnYi8g1xAhsR8tbA71izyn0kBJ/66IocW+Ar4+d0moDLL45lrwuJ7HCK4BO+0yCbN57IE4az/dcnMWECaKFLaI2l5buDBa9lsPzuJ8DKwUI/KtWfNpgcsvkvpN7A==
+ b=pQ9qVLOg8z8D9k4qa4kx4nsqaxmj0shMCSOS+XIR+ofjY1s1+GIOtQ3ybtjFG9h0EBbTnozTAbZYpFX3onRREQ/v/R3FQO6AZrX+BYQ2OuogpWtLoKp0cObeFfhgHx+WeWNHrVLod5jdq16VqjKkEoYXuV1ShxxPllEPvhuLIcvzgHUhgyZFTVktaCWibZ6NAPMvO5OMsANl+EIv6MOaMZE19XWujAvrZbjcu1c0l6+D18jJaA4zx5Tdsti9AJFq6zLFm1cBc3XRQuDcI/vhhSAF3Z2Rncv9Cka2mD2lEeCsJ6QPhNXfBaA/rV1xfJqkLI4XZy1HfQMeVXTJ7k+K/g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NmlEv9nl1xY0eIcRl4LqtEwxfCVmFK4/Oq+FFSCYM2o=;
- b=IRFhl2pGTUAvdzG0WX5P3JOrxNG4wzoVIcOGTgdGDRCPc+zIeApGu0I82mOKOq7HIYBC8SlNJq9VETCA1oNtk4U6hB/aDRRGdYLh7uxjN055QtGV63l/J3d+Q+8ayQLt4uHT1fq6H/nQeKLKPwuqaWFeocV3Krik2tc+mLd9skChmy1VyWUSMWeJGZCrHU0o2CGaUENiK0ZiJ4uGzQp5oNNLtlqGNo292CfgLds4EiEMGAXMOgnwsQ6vZLJG9nqZdTFbYJrlS0OYRdc8eQ/z01/yhAiuxrB8HJqjinTnPgJLoEyhrgBDWUC3cJsfqUxkOwODXkwaqot8V2m2eU6Jqw==
+ bh=cXGQMNH87wIyWu8NNZq1mO1VhHN+s6MFjqExH0RjmBU=;
+ b=knB5NHGt7OI3X3HKRUhoE3FYDWDxPT/BT3YAK/FHFYIi2Jy6PO21CTDcs8b9vrYi7wW42UD/7HJ9OyqCyvaheRkf/KhIe5kDmpqicMubTQwztYPxY/JqOhpc0VTHalaWzYXSUw7PrcNz4BJ8H0Vgh3FTUVj6iqiMIhOPZFO2/QU6PvfJeVw4tBBXelqoPIdH8GK3WM+FysL5y8gacoFzoo55aS5zd8jTNgzoiO5hUwBH2vWDCa/nZGdIoeaWMjpoK1LZ9WalMzVNWSgkNdnFoP981OP4/dKE2cCa8zXvZsmliYCFSCu9OCXBGtLU/u+HlnjiFzbxFWMlhycw54dPDQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -33,32 +33,27 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NmlEv9nl1xY0eIcRl4LqtEwxfCVmFK4/Oq+FFSCYM2o=;
- b=FAxZi8aUFwCq7OZiD+ywf08ev8zDIWERSJlxDSDOblewoALs8O1BFsM8a/7px8jo6cdtvACBAr6xmp4pFpr73rsiSJ5MydMInFJvw/z+mR7XisN+MDdy0n8b8MUN+8uy8wMdX4ZqX1q6WoBvsfCmmWLBl0Pb9quiiHSSLTgrSIdV1Q05qfDpi7pAMo8oPOkMSBCChQOvT1QuqeqLlvt2FxAfofxsJx4RHv6RqFYKozbM68laCSEV3QvsnF55JubRbCYMmQ7h21LgSpL9yPEBrD2x9bGL+QHI9EF8UB7N5w7N78BUD5saJKpnfG8K51kfPGrxpIywrqPGaRXBfVQ50A==
+ bh=cXGQMNH87wIyWu8NNZq1mO1VhHN+s6MFjqExH0RjmBU=;
+ b=jU86PaMHrEblQnTUdeU8jpQQtBODYed1OgAzZjZUKKM9meX6BeC/07Gk3KTr3BWTVxu9Jx8SHovVTK5etAfpKazGo29dZLyonNTsF1TQ9NW5NLbUnAVo3gdc2Azy82WzD7fTQQdMzqQO1X4xQOXWq++u9MuiAvgLOk3MRComMHsUYyijke+BPV6HcsJ0DUT+y+z0DOgr4OnzS8BsKCzFUWqPr5hxDrpH558Sm1Ktp04ggLTssQzhus1BauqJzSR6tIziQmAfJShInIg+UNIViuSBL5dbgmFpG9JO5B9hr9B5Pf/ldyK4dFyjoUXp0zUG7/XMLaukD/KXwflMg2XlYw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by KUXPR02MB9310.apcprd02.prod.outlook.com (2603:1096:d10:9f::13) with
+ by TYZPR02MB5475.apcprd02.prod.outlook.com (2603:1096:400:1cd::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Sun, 16 Aug
- 2026 13:15:11 +0000
+ 2026 13:15:42 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.016; Sun, 16 Aug 2026
- 13:15:11 +0000
+ 13:15:42 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org
-Subject: [PATCH v2 02/20] hw/arm: aspeed_ast27x0-fc: Store boot info in the
- machine state
-Date: Sun, 16 Aug 2026 21:12:32 +0800
-Message-ID: <20260816131300.51799-3-bin.meng@processmission.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-arm@nongnu.org
+Subject: [PATCH v2 19/20] hw/arm: versatilepb: Store boot info in the machine
+ state
+Date: Sun, 16 Aug 2026 21:12:49 +0800
+Message-ID: <20260816131300.51799-20-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816131300.51799-1-bin.meng@processmission.com>
 References: <20260816131300.51799-1-bin.meng@processmission.com>
@@ -69,66 +64,67 @@ X-ClientProxiedBy: TY6P301CA0004.JPNP301.PROD.OUTLOOK.COM
  (2603:1096:820:71::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KUXPR02MB9310:EE_
-X-MS-Office365-Filtering-Correlation-Id: 52a06fc7-75ed-4a2e-11ab-08defb98671b
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB5475:EE_
+X-MS-Office365-Filtering-Correlation-Id: d3abc333-6cdb-4848-40df-08defb98796c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|23010399003|376014|1800799024|366016|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 2QEbw5iWp9W3+M8r2uBgcpC8iDvNeVh7pcDKh4J0gFTIIcrOz0ZXPA5CXJ+Q/FxUdATHk5pAoJK7nOQ7dVAwZCdz4HIHE8uFpGp8+BWUYP7+SfDBPXl2Md0savbssLpYXw9ZbUPkzqUXLQ7D1R7KUFwGpOufIK0ujUklTbkdrGlIQFC228AuX5/Jqsh9TnhPiTPVaJpb2yJQ++J0DQAj2rBFvXAlDWGiMaXcb3+sAx3hqyWPNaBIF8RxXnP/bt4bbljiTt2SlZdlikOrLj1FRO9pkU12zZmEVzeFBvBNtsjry5R8bD4dbl5Dyng3KHIQGTHSNQO3z1Zg57aSprS4tLEOpvyOLkazHDcz7auJtA06GBjWLcUzdEivEe5U7YGXVDzfXjaSPFjn7Q/yaP5G+ElojqkbbNdp/YclmZBq4mvcqsw2bvhziXBOIL5TKBPmhcAbzJnioaDYWB0IOHA8ajxuFHJEH/3m2kch8m42WoKJCQuppR2LQkU3cAXKdoFPow4aYTIKQ0Rtc/FUIkY7N0GyjbunWyBH93EmbfN2fd8GROEIiXQNZB3p0Sh4IcHcbiGIKC//zV0dDDHoUFt9JZ+PGgR6wwmg3zM8L8pRriLdSP2iYkBxSCEmYYliKPNHQeQIoohFhoh+iw3i5UgfdVnRU+JAMan7z73NtaUxiuo=
+ ARA:13230040|23010399003|1800799024|376014|366016|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: lWnk3slLiibl9Y0xNW6lOYTxCkEllz7dSruNMzQNxbrtsTxzbfT6XzhauuE9DmaxsoWISgwSw0swqUx9QSBGWRHAtr3BB7LNnUeSXJ/kJQTaZsHVes6NUygsnRVa0VAwrbMph4yuPYEPDUvWW9ArKa8UJkrB+2BB1F8ras56Rwhs3JhitfECVpPdmMalCQYS5DmjS+TUfydB7gvHcSha+ljYjb5hhNImOJ53eBSl+6g12INa8acnXfeBjtI++wNLkmvKkhe7daLaDCUqdZMOD+QN3jCAetYe27eoNsb2/wYeGrxvBctF0ZQj0Be2yzPGusime/y7CDdZfViecdXU8uvCjxKnZI0S1GzJK/6EyNYrWI5NPGxfHgERUbyetrvDZZp/5QmIBs4uRzEmqnhh60f/Sj9lF14/uws/2o98wVnKh2A3QvHyHenDjDQ7SN4hdjm1TBnRRpHZJYV1UNPAF1y5oOv3zuJ/WthFcXyBxNpMvkv63ZEtZYIheXhwqw9brnRVR7/5+irDLm19tcxoAy3yOA52E3DGgs/QGq/E4RKwBKECKDmIzQm5Okq1p1jXIZUJCVLhba2ZquE5mgpNk0xCPAXoBChR8lcf4K2oa3SCSbQ/K/Koq/1OFly7riiUXPYpnFWo+sP3p8dYdP74MW5Q08EntXI+r/VTHFOShCY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(23010399003)(376014)(1800799024)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zNtP3JMU8Io38oEM2iw3rKz1yseXIas7RTpmP/uGHXgB+xOJyMkLBvDydcXh?=
- =?us-ascii?Q?6Yq9+31zVGeufzwC7oQAQCpCmM5qrnouC/asTHfxc97huz/DquMKaHlf2/zi?=
- =?us-ascii?Q?fs4I6vkBStAwf5iG2k9XOu7cSIMaKzMOhmqujjJGXRGHlNnxxUa2mP4UVpKj?=
- =?us-ascii?Q?JlYgEDGiyWEROjMZKmO8FuHJ/x79fYoy/WsQX8+O+lVTF+d4Gwvh7aYv2PYf?=
- =?us-ascii?Q?7tSCjHuvOSqYDHGPrlUsKuW32PLEBgX4FVQ9/i8JleTC+Ls+p37hP+aRohGU?=
- =?us-ascii?Q?dwylSGIwhbkMeAWupVLeyTBkXnDkFVRO76QS1fgdgt2Kf3jh28CCE8t1O3Ur?=
- =?us-ascii?Q?biU2HaGxNaa1ejUvbXVA8g+JemD9Ei6XfvCH23mbBhxzqDBl5KfwhC3T80qy?=
- =?us-ascii?Q?YNBzcb/X6OyRjP+6GIp99oQsYqiV8CQQsKPOb/i/6V2dI7vjC6iMnglFecn4?=
- =?us-ascii?Q?jsfi9S4j0ODzYq4K9GeUNLO/xpx1hKQ+OJCsdWEAn0tRkWRAljQfew0536Ft?=
- =?us-ascii?Q?gaxIVSPRuzqY10HKwqzLOt4kOsd643p4fLFC5OlVzWT+53h75GDQaiJO1UAf?=
- =?us-ascii?Q?0Le78AjLnE6oPxfU6JHSNbNAzgvHOubAIxLFQmGQpIMGJaKgWGtSM54qdWly?=
- =?us-ascii?Q?FalRrSFPFzWjelYJX7xSDUY9RQOclBin+Wp8Z4vEmSNY9g3kFHPTJj+BcONh?=
- =?us-ascii?Q?/2vajrGkVLxdewGZXeySNEU1jFrApD7p+GMDIAyMLmrJE6RkVyU560ipvzC5?=
- =?us-ascii?Q?5TUExgKRMsl/B7PaFyPPyt+5/NMsCjJMHDZ+xwr/+/PuV9mNBJWtHAEDm5wa?=
- =?us-ascii?Q?ZNC0phw5MJyKgwn2RaKrkTOtq3wMh6CC0ydjuc8OMMdrByyfcFO8n1/8EhNg?=
- =?us-ascii?Q?3rSNikLMSaQtSI9XRi+m0ANByt/e6MQrqxz3lQQGLwzCdT2vgXMoQOlEPaq1?=
- =?us-ascii?Q?uTukeO0pk9fSIZ2pQuoaE2D7WAEWTj2bdyKaoWZinjbMJr3ncD6Q//siLhWz?=
- =?us-ascii?Q?1qvdyAEPwsELQOwO+m6lcma/7NMdYDAQUBrlaFdNcYwvkFzbZxNYI2SMjZSm?=
- =?us-ascii?Q?DJSI5CsHgBY87LJhhMPeVUBCXFetaotcoRrx6sDIU1LfGiDPaQeRqudfcnoj?=
- =?us-ascii?Q?SiZsv9GJQQDfmz0e7dMbYFfEtC37j5zyYZKhvsBKTFlBSv0V27Ba0U+3ZZSq?=
- =?us-ascii?Q?0wi2vzxAcTOAz+eO9ZTnquQ5Bgq2msPWHAqreABDsQMVSyrmTfivHHPC03sf?=
- =?us-ascii?Q?wPyyPtDLgkZou0+fbYZxWiBlnUxMitj0TC9nFiRYn70q71CnqRIoQIT2lh8h?=
- =?us-ascii?Q?8KwNGnDChoIEFbMfxKtZk7SWl/rWMdqbp4BhHpCQueHDWCohmx3gvTd4Rrad?=
- =?us-ascii?Q?Tt2kVCH9SL6E59zKsDNC/tQlvCihs63f8F2MEY2OTRkO3ywLOGR01xz+lLBD?=
- =?us-ascii?Q?eud/mD9rn8QtRau9p4dVo2Ey1kmriuJ/Dsqp+LraYPhLG2ZhNKlNr8m5I6VU?=
- =?us-ascii?Q?l1xsF/92tl6GExnvJvoaLD0YzCHBxvzMLHQY6EtAxAMzyCVzY10o5V5lR8Q3?=
- =?us-ascii?Q?AsNjXD2VBLtnk6j3RkY3GyBO8JTriGuM7lknuAH0vObGdZsmV/tXeQYTzXx0?=
- =?us-ascii?Q?IpDzdQJ1tHw5UiuwqP814ZBd/oeUojdF0LduAgQIVB4ZPmoZevHj2gvcPjpS?=
- =?us-ascii?Q?AOdj50AApWhTHBNSF35bFpTkujXyXFjMQ/ftqxAjK3b5xoo/ZsKcp8H/aXHQ?=
- =?us-ascii?Q?ImOmGEHBQpCPlVgpGgSo5Ocv2/5/ig4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vM4To2ZRSkt6aZ8k5OoOMNNmup1i/lv9n7AdbItKxurcBi4agg4Otli1SbiB?=
+ =?us-ascii?Q?kPuXurJKXkAzU1rWBcic11TgUq0t5pGIOaxJGgFXiqPruV8RBvorijIQ4Ty9?=
+ =?us-ascii?Q?HhHeLuCfFKIgyIbu+z497QMSSnYYL/InMnGfymnwoF/+PiLDvD1tpQELaDwC?=
+ =?us-ascii?Q?9Cu/F37BLzQpJuoJojeaawhzqDIIkLcsavWtnhIwUuY+/f4BeNIi3wKqq4IN?=
+ =?us-ascii?Q?bzf6ywkMaW12r2Px+B3UiiFiVPeSxXKopXvQvDnqU2rNcVk/QEyL8afvSG3/?=
+ =?us-ascii?Q?UuZPhB3hBmcA/vjGpCCdOknq6kqlwuWJQUGHJuBpxBpkM3ddvYZcE3g+2qiF?=
+ =?us-ascii?Q?GK/QK6eXOEEdJI0sUBD2KnFaXriYgNP/m7AXljRcgj8kt5vJOuY/KD978wMr?=
+ =?us-ascii?Q?bTAtuBPws+RJnyipeQ3VQyTLP4O2NoUOxUIQ2QVDR8SUcianOJst2I8AMQpC?=
+ =?us-ascii?Q?zBGczbBqmALwQHurXiHW360USsxUNfnoh4LScf6NBMxF2HaRKNoCdATBO42Y?=
+ =?us-ascii?Q?62Bbv9zoi9f1r9Ii0YU6JEYFDl0GUyBB06VH85lZnUbjHP/7zaca0ZBM9Wcs?=
+ =?us-ascii?Q?x9pkN/N24Y9D7xMoEYDZDW68hqD6xCqsmchlrzRuy9sKP+CNaL0fjO01f+uo?=
+ =?us-ascii?Q?2DEUAeGzJwEpSFFZN2CZwTkh2uXH9uta+ny8bnNPbnLXY1IDXFw7aeAu1HWA?=
+ =?us-ascii?Q?cHkZqHZOaRfH7bEsyaZr0NMvlvKCu3KQbbim5Kthgtic5CUl/wtufCHUZtA8?=
+ =?us-ascii?Q?8jtbGqtgGqT82UvjA9PBzJQs6Bn+EtB55ysrR40N5bQITQwc2ufmR2Dps/aj?=
+ =?us-ascii?Q?95iMqc+vq10S0OlsZMPzuDK7nDlz3jbxDtj3rMOSAlphzsq9WQDmJ+PQr5Nk?=
+ =?us-ascii?Q?7xho4jMa3/v3JHHhgml/NuHx8OA/BBogtHrfKx0J6mWiVPn8ntIADkpJOwuR?=
+ =?us-ascii?Q?hXIAqOJRmPW5zlTT27AaSpNloZ34gIWDOMqwYfARKAhKHoO5wATn28y1F//o?=
+ =?us-ascii?Q?3l9W9Buz//gCeQeBibh84Ek1tHKsmnpmrsBxDUeBK7YgcxAXF9mpkEOZIxCv?=
+ =?us-ascii?Q?KngObyY6wbj0SN4vh4ddWg0lIAAX9efpBA1L8yTZiOTL4Cr0OC54bM5CA+N6?=
+ =?us-ascii?Q?St2/zjifozgPJl+wBYL0ETY/mgCXmnBVjStm+pknjRmKQ/G6k6wDbpK0B5VJ?=
+ =?us-ascii?Q?n7gc7JyFPkZzUgDYcM3qPI1ZMFgqYbcXLfBWxjvzxLRm299MwXn66T7ljtFA?=
+ =?us-ascii?Q?EEa/O2Ih8IOc961RzwW2r5qlBK5ZM7UqzKaq1hHchJSYy/NW0EbO5QhTnou6?=
+ =?us-ascii?Q?IZ/YfPmjGa/58ZECMYmMvrQOGJMRe+2mHB3ldC9HBxwpEsH9Kavf5TxDPxPL?=
+ =?us-ascii?Q?M/HRvJMwfdsX0DSzv3P52zEfg2V1WsTR1XflRt2oGBhXECvLJfUUTdANJR6X?=
+ =?us-ascii?Q?j3O/5iqbuSvscmML0JLIrKbnAaxUXK00A+QuBXHW0S2qJi4F6YoL4G2ut3rY?=
+ =?us-ascii?Q?rMBDITw5op+L7jyo8KoYdxlYrrXqh+cso4gfbdueVgvaajtZWFlq8q18RT4t?=
+ =?us-ascii?Q?V94g9D7W9SW3imet8DNmEuSCEEtnviKJ6DUHxBDqVId3wjnFGVHSYdVE70Rt?=
+ =?us-ascii?Q?lIm9CgP4YCZfleVvJE7n3kgauj0YYJED+YzeAIXMllDjJfwd9uUZizwTH0FZ?=
+ =?us-ascii?Q?fx7Sx+OUNsesoPHSsHxL0iwLOZFBHHQAwx8PJMrGVyZNGnJ00m8hnMy5haFN?=
+ =?us-ascii?Q?8Dgxkldff3Qk2FtwVQF5BmPjD2VI/tk=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52a06fc7-75ed-4a2e-11ab-08defb98671b
+X-MS-Exchange-CrossTenant-Network-Message-Id: d3abc333-6cdb-4848-40df-08defb98796c
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 13:15:11.7233 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 13:15:42.5244 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nAqBe7x8FzhjDxRAn+VBN/liTLv38+eHFI3VrYW92JXLg9TNLN++jpZluX8FzwDINPF/sdo/1Hjg5ga5vvQkwPnaYvNlfI8zwdvGUEPsJ0g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB9310
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+X-MS-Exchange-CrossTenant-UserPrincipalName: zECgjyZSoP6bij6bgk2OiatlCyXqMJiPIbGbg/5r/Fx075dwKJoqBjRxHKRKSvwP1nvEeBzJy9mWYjkqtQ5Ew0GxpC17rSap5eeBT6S1DUU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB5475
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,7 +145,8 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move the boot info into the existing Ast2700FCState.
+Give both machine types the same VersatileMachineState instance struct
+and store the boot info there.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -160,54 +157,60 @@ the machine rather than to a static object:
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
 ---
 
- hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ hw/arm/versatilepb.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 058cea42ed..ceeae336df 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -27,10 +27,6 @@
- #define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
- OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index c6991a52e6..520af79c80 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -182,10 +182,16 @@ static void vpb_sic_init(Object *obj)
+    peripherals and expansion busses.  For now we emulate a subset of the
+    PB peripherals and just change the board ID.  */
  
--static struct arm_boot_info ast2700fc_board_info = {
--    .board_id = -1, /* device-tree-only board */
--};
--
- struct Ast2700FCState {
-     MachineState parent_obj;
- 
-@@ -46,6 +42,8 @@ struct Ast2700FCState {
-     Aspeed27x0SoCState ca35;
-     Aspeed27x0CoprocessorState ssp;
-     Aspeed27x0CoprocessorState tsp;
+-static struct arm_boot_info versatile_binfo;
++typedef struct VersatileMachineState {
++    MachineState parent;
 +
 +    struct arm_boot_info bootinfo;
++} VersatileMachineState;
+ 
+ static void versatile_init(MachineState *machine, int board_id)
+ {
++    /* versatilepb and versatileab embed the same state as first member */
++    VersatileMachineState *vms = (VersatileMachineState *)machine;
+     Object *cpuobj;
+     ARMCPU *cpu;
+     MemoryRegion *sysmem = get_system_memory();
+@@ -397,9 +403,9 @@ static void versatile_init(MachineState *machine, int board_id)
+                           VERSATILE_FLASH_SECT_SIZE,
+                           4, 0x0089, 0x0018, 0x0000, 0x0, 0);
+ 
+-    versatile_binfo.ram_size = machine->ram_size;
+-    versatile_binfo.board_id = board_id;
+-    arm_load_kernel(cpu, machine, &versatile_binfo);
++    vms->bootinfo.ram_size = machine->ram_size;
++    vms->bootinfo.board_id = board_id;
++    arm_load_kernel(cpu, machine, &vms->bootinfo);
+ }
+ 
+ static void vpb_init(MachineState *machine)
+@@ -431,6 +437,7 @@ static const TypeInfo versatilepb_type = {
+     .name = MACHINE_TYPE_NAME("versatilepb"),
+     .parent = TYPE_MACHINE,
+     .class_init = versatilepb_class_init,
++    .instance_size = sizeof(VersatileMachineState),
+     .interfaces = arm_machine_interfaces,
  };
  
- #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-@@ -114,8 +112,9 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
-     aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
+@@ -453,6 +460,7 @@ static const TypeInfo versatileab_type = {
+     .name = MACHINE_TYPE_NAME("versatileab"),
+     .parent = TYPE_MACHINE,
+     .class_init = versatileab_class_init,
++    .instance_size = sizeof(VersatileMachineState),
+     .interfaces = arm_machine_interfaces,
+ };
  
--    ast2700fc_board_info.ram_size = machine->ram_size;
--    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.board_id = -1; /* device-tree-only board */
- 
-     dev = ssi_get_cs(soc->fmc.spi, 0);
-     fmc0 = dev ? m25p80_get_blk(dev) : NULL;
-@@ -129,7 +128,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-     aspeed_load_vbootrom(soc, bios_name, errp);
- 
--    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &s->bootinfo);
- 
-     return true;
- }
 -- 
 2.53.0
 
