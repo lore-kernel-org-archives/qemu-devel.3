@@ -4,127 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7815DC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08C1C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcEb-0002Mz-MP; Sun, 16 Aug 2026 10:53:16 -0400
+	id 1wvcEg-0002VU-AU; Sun, 16 Aug 2026 10:53:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcEU-0002Cy-Ud
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:08 -0400
+ id 1wvcEd-0002OU-KL
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:16 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcES-0002Cp-UA
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:06 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wvcEb-0002OR-Hk
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:15 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDlA6x3533416
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:04 GMT
+ 67GDlfU03215986
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ekAhsfwKJ5maIu+35xZAK4X0xH7ZJuguxCqmpYcflHE=; b=mqVbaJbQYTGd83DQ
- cljMRkRd4NlSIa52KAdhzuomNpQNYltVwuImo7OjHTEWn4u1PwqQKYvgfGUT+Zp7
- O4UUH3JPc0+iH83hf7I3kD4GjvYDt36mM9QNemx+Fzw4TmzFWH4XlsW6gasII2GH
- OfeHrDWaNqsLEsUJPndBVQiOI95wmsj4fxQEa4wGThtaL32e3BpEC+H4f8dk+tt6
- LtthREDT2fSVMGbqOItH4NskGMr7vNXEyAuSgB0h2xraB7ey6RXqRlF+EXWiFZGT
- EkEFGdYrnuIZR8VFml5yHpLS1hvs2Gdpvy09Dp0WloG/REA6GITUVxSGf7GOM/WS
- bcjylw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghf3mqa-1
+ y08fCN7Tzn5n0sn65TpnLdI9L9dwvew7wRgc5Ixvhf4=; b=K4Y6015a+g0fPWKO
+ q1m2uw3T1En8cLXqwSHbWsoPSvvJcnGbOjcna0jZEqpUJsujTVpg82C7e/98vloJ
+ YawgBajJQJPzBG6wmljD5tUR9iFBp34Ef4jlOoCI3jdvwFsF6XQJsAdOj/7XOhDU
+ orIM/absvwUb9gjh1ItO/ZDKcSINaBkJ54ZEHwCbtxQ/FzZF5t4G5RX3KWjB/4gk
+ nl5g99n+lUzepikDAUIjKCadEYoqA0vYN94Ohg+p5rOxV0S6ivcIlOtt/L1UyG9U
+ tGB3vInn2vv+mXZxbdx072u6/8q0hW804EG0MvdNUaiJCICow22ah8YnEUr8uC7P
+ jCWuDw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfbngy-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:03 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0e702df8so31797641cf.2
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:53:03 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:12 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-9087f2fe592so13862506d6.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891983; x=1787496783; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891992; x=1787496792; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ekAhsfwKJ5maIu+35xZAK4X0xH7ZJuguxCqmpYcflHE=;
- b=PpxcvbfXEGVYMcs5dQfiHGNqEJ0qc7PXBBga41glGISnXNyL7aIun/Y8m8S0fa1wXP
- CVpI8w76pu4UD9/SnyTuiFlkJJp5VeNM27oUobSxTstA7fpSXZORmgP2okX2Dm7BqB05
- QXIQLTTPGNAnz8vNNM9o1scZjTnFtqo7lk/sYe+3dBQ1Qf7DA83et7jiFxIz3hgc9vUG
- x9yAzlgUMp8QilJOoLegQheC+UjjgQQ7vNYRn/MsCYVLUVmI2CeHAoVhIp8E+D+UinuJ
- rQWFTaDT3pkBw+Ab67HltoZOfHsT/nMKSAbGvEcu4PwpPaaFlpxpTSU8P+o5Sf8CM87B
- NjeQ==
+ bh=y08fCN7Tzn5n0sn65TpnLdI9L9dwvew7wRgc5Ixvhf4=;
+ b=HFicMqrUT4dPlC0gax03+9MYxjCYJ0Yv4EC8CoiMM3TAYDU7wmS5byAYgugnevQv33
+ 0EUnk98aoOWPjUPsQDUehyOXSREnDmiqcZuHPvE7tJ9Gmd5hniH4yFkiqhtRgSPbe/O3
+ cjyVH1s0jTMBFdmcqfbwGetmqrihKWeBL6avWNgLMt4TPoRSEuXNYqK9cz70UOHXdGvk
+ V8IM5tzeKaBZuT8nYu+7j2RznnFev58Y6ku9nZttAsoFBkY1etnY3QSprFaJrDaiCSRI
+ CwRnDyQyaNoMGv1T5ttY1mXDoq8ygOkE8CB3TAOUyol49d3SMcKlAHLyZeCdy63+B3q7
+ qJWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891983; x=1787496783;
+ d=1e100.net; s=20251104; t=1786891992; x=1787496792;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ekAhsfwKJ5maIu+35xZAK4X0xH7ZJuguxCqmpYcflHE=;
- b=qNBss7CNBK2c9V+owCDRpsz+1uoTnH9FTFrtS/KC3nx4LhMKCNhF/eXYz07YtyDE/k
- 3sZnFF7uWf8pkBuMNmoIB47u0ZFsCt0zdD8tcdbJe59hmBWD4wElRbZNq7Hv8yLsh1Pm
- KUagAwi7cbUpDVyy2KZPUYy12Fdnh+vNao7cCCvUHCMRvHqLy1CRfdREqADEbOkfTUaa
- cqe8ebwWrKKyYuI1dOTH3f1SZ/iPdOdbS9zprjVhPK/Hju/9ev7oKuxaDAh4j7UqrN7p
- 6Lmv6xhJ96lOOJmJhoZUko01zRbhU5OfUkiv4RWIt/C6CgS18ozXrovJvGZsJenzkg5D
- /EnA==
-X-Gm-Message-State: AOJu0Yys1l0B3sFZ6KYpNVyitie5H/0yxvzXbf9oz7tMHzFEAlbheFf2
- MZhEGvpGWQl4wXehO2s/6Ql80B976U6lPnUsFaNvuKmyVKFxiUmlomPye70kbeiFC0oSZbdNwyG
- aFZkUfVvWX4oIgxHIbsfe74ELuBAQuPZh05dLDI9xvg10NAaCP9Lf2ASNEyJKqKyINA==
-X-Gm-Gg: AR+sD12xb2+GKqOelypGF018JzaYbbTfqLfx1hAfCIBUZX+zs3Es70hMuvpbhBVLKrP
- 6D1lWEobwmXs/8qWS8rSJVHGFPhDOvalIktUw2aiDY01CuAtw9vdcACpge1rOlP1K7Q0WWBegIp
- ciTSNubKxRHA4V8TrEWR/fpE+JcPLBOAPft0xKC+5rpBA8oH8fmA7PDc4Ycjx0N6Jcv3KKyrCip
- J3D7K9xJijlEnGJduQHKP7cCKIpvwFihz6Caw4a0e61dlqySJK9XS7/Zd5Z7vafcvjP9og23U++
- 3/nVjOVhrEYAnyYYwMfHdbAFW8V6CcIk+H19XQNgP3XVSAn2ZvobyXSgaVLv3P9nUCm3wsLkwdu
- tx+orDrpxBekulMlwFOsZ+9pdMR20+EEWTXQ5OSXKzQ==
-X-Received: by 2002:a05:622a:349:b0:52d:8256:ac33 with SMTP id
- d75a77b69052e-52d8542058cmr193139951cf.28.1786891983320; 
- Sun, 16 Aug 2026 07:53:03 -0700 (PDT)
-X-Received: by 2002:a05:622a:349:b0:52d:8256:ac33 with SMTP id
- d75a77b69052e-52d8542058cmr193139571cf.28.1786891982837; 
- Sun, 16 Aug 2026 07:53:02 -0700 (PDT)
+ bh=y08fCN7Tzn5n0sn65TpnLdI9L9dwvew7wRgc5Ixvhf4=;
+ b=dXiOTAN0+nMQqS3rduJpT3K9nV4816TJf3OLYsuICLZO9jTrFKVQEbCMyTsznfUWSh
+ EUr8U18gg4Wr4hVzEc41sRAXlgJI29LhIYZmmt8bD7MsM1+1Wp6BIA3vI2I7vQQyhio3
+ xsBHZGiuCa0VJuW3XkRiooPce9CsA56FjpPb8vv0gBbech7MzDHvUGeZk//GZYXxoOMH
+ kWx1+YYrrzEhKA6Vwm3zUDOK2IpDTQ1xZvU0kUeMStKeFKrEHRGiSWPqFwRbL/KfKk4E
+ bAW1h/25s/gyfoc5XA3ev3nit6SceAnfHSB3yql09Be+kw2mmQyVltP+17uvQhRcL23R
+ J+2w==
+X-Gm-Message-State: AOJu0YwIs679Me61Pa0/Hm4Rz13u9j//3nY0ucl4Ha+jwkq7bD/bSG8z
+ rhJYI4bzNrOwwCpQB0HpFj6GWg2qb9FaPArJcxH8Zc2WyVH0nRxVaFVGQbf0Hys+cU0a0qewWGc
+ h+dGd4qPnDywQB0C1jBass7PNCShX/zbSUkcMGcdhH5uCyrRGUBZgxY3XzsQn0NEU3Q==
+X-Gm-Gg: AR+sD11Q7v9TLEKPt/Kd5YRyO4zq/lIdbbltyyYwssSTMr2cgSex54fcz48JhDi1tIs
+ H8g42QCcP7P5a1g1PzEPbBsahSKPpY5cCA1AM4w/DQTIJl34VrWclhjFyhxYITo54N220MIecMX
+ V3U/VA4NHEsVf+xtO2mQmfp8AJNLX3MlDtigkDJVlehWnye/06eYishldtjheeY+Fts0DPfvPar
+ jzR/Ms1+hd4N9vinD5984BxFr7yUmU3aPeM2fUQwkHnwaw6gUTZEONWqb5959X/HJLO3ry3ukVT
+ IadYVHShyZakuAKLw93nlc48qjWe2/sp9nxVkaKCnpJLYs9g+94D0cZ4EP2eUYOswk8PaYwTN3H
+ d+Lqw/VSrF6dMcj+oZktLvtY4MAzhAYVELiN1cF8bpw==
+X-Received: by 2002:a05:622a:4c15:b0:51c:805:1be3 with SMTP id
+ d75a77b69052e-52d8556685bmr229490351cf.31.1786891991867; 
+ Sun, 16 Aug 2026 07:53:11 -0700 (PDT)
+X-Received: by 2002:a05:622a:4c15:b0:51c:805:1be3 with SMTP id
+ d75a77b69052e-52d8556685bmr229489681cf.31.1786891991260; 
+ Sun, 16 Aug 2026 07:53:11 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-481626fd0f0sm16539978f8f.28.2026.08.16.07.53.01
+ 5b1f17b1804b1-49996108141sm47159255e9.6.2026.08.16.07.53.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:53:02 -0700 (PDT)
+ Sun, 16 Aug 2026 07:53:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 50/56] system: Extract QMP memsave/pmemsave commands to
- physmem-qmp-cmds.c
-Date: Sun, 16 Aug 2026 16:45:49 +0200
-Message-ID: <20260816144556.69009-51-philmd@oss.qualcomm.com>
+Subject: [PULL 51/56] system: Move runstate-related code from cpus.c to
+ runstate.c
+Date: Sun, 16 Aug 2026 16:45:50 +0200
+Message-ID: <20260816144556.69009-52-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=QsVuG1yd c=1 sm=1 tr=0 ts=6a81cecf cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX0ftN0W+OTr+J
+ NUvMN5XD7/0e3vAk2W2QqNKajeUe4p5Lvaci4BwpGAs+XrIdzYJGCKOR0nyccrL70pHgx41DpGk
+ lRJItOTNK5A257IFZBOnur0SK/UtXcY=
+X-Proofpoint-ORIG-GUID: 9stavbOdDDbyAGDqydVIq08wECC3CSFD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX9Q2P4empzvKt
+ PL/wXz/Qd4QFY7t1x7kSo+CmzQML0Ji86l3QaJKlbXVFJVLvicpbPVVI79YHmwd1qd/6KePu8lZ
+ b3AvLAWLziYtUrfoOjYuuXvG0ViAdKN9juU69DQX1yZB/6gTrdPHnmaDknQI30Ks+W5ABwiMqPo
+ s2u5FKivC0su05BiG7wsXfawF8dxIXe4GmR59YimNA6QBKtPZF1nKqgRgqHQ7/VLSTmJoDpebVb
+ DZXQjuk3jJHr4sbAvpnoS2hI374yuaZwTVHT8oEMgE18ZUH0Yn8zk+lWQB4XjZU4TqpgP0KOxDy
+ DXg2rmt1riJLLWdHHlxi28Kanb4hGL9pVuFsuQyiLKr+XtOEN4gD9re+chskLePBsYo/ABrPiY1
+ 0Jdyrgq5A74K9hRWzShnBeigPBVyzgUG+np8smV0Vj7MgJL4U3FYOXLJ4WWGw486GolVwBoWfyF
+ Qbe+2qT3Y0mnikXJQkw==
+X-Proofpoint-GUID: 9stavbOdDDbyAGDqydVIq08wECC3CSFD
+X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=6a81ced8 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=7DZkrcYYXL7zIbTVLmcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: zz3cPwpVYNrvhj0cEAoUA1IOo6tpHKzB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX2QXC7kuBMwt6
- Yuw8XL1PhA9/2M7K7j/ifsJy1X2QLLtQNKvFmAojnqVkGLM/KpkW/8jtTWJkFgp+F7MksJQo5vS
- 5OISuP454085xHhJmrySxHfG/Ei8HuWBOLXE1A7IExZtzTI03cEjZUVGVJOkzt8ijQp1VkJ1TTy
- ErJcXRy7mSBcQoeCgWZ9haFsMDPDy5Svvgxs4D72Mg+carGZ+orze1Q8W9PWyigCUzvF7ZfBnUP
- rCdSyP0W1PDsVVTNrFQHEGYtdeOM5D8NSW2+QbDPsCKLOr2LNXGKkfLDxvYlXvJJbpCSz9ezCsm
- LxsCxT3CmAS/tLtgxpg67Q7dXL027Od0AcEsDTKjDVPjScTRF/V/lSoUE4oW8g8WoAMW57P4DIP
- W3fwRS5BQnkSGw02oItblT1jbZyQM4N51TBvg0/6ITLOO24JHqIKkoRqcTX8Tg/XV3ooSdr9Qf4
- O0/T11CQa6Lnykm0WKQ==
-X-Proofpoint-ORIG-GUID: zz3cPwpVYNrvhj0cEAoUA1IOo6tpHKzB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX/nX4yfdU0E6i
- S7lgUPn3+17Vj3nl0E69dx7UBtWzl15hlzOhkwVMKD7lx2NOmC0wrpcEbxtfHrYlGzdimKD+izl
- jzLIAl5gBsAuwwoSAQu1VEapx1fZ8ss=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=QK4PlI00PMcCPjLnJOMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- malwarescore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160119
 Received-SPF: pass client-ip=205.220.180.131;
@@ -151,278 +151,366 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep cpus.c related to vCPU scheduling, move the QMP handlers
-related to dumping physical memory to file to their own unit.
-Fix a pair of checkpatch.pl errors doing so:
+Keep cpus.c focused on vCPUs handling, move code related to
+VM state to runstate.c where similar code lives.
 
-  ERROR: braces {} are necessary for all arms of this statement
-  #185: FILE: system/physmem-qmp-cmds.c:51:
-  +        if (l > size)
-  [...]
+Fix few checkpatch.pl warnings:
+
+  WARNING: Block comments use a leading /* on a separate line
+  WARNING: Block comments use * on subsequent lines
+  #327: FILE: system/runstate.c:541:
+  +/* does a state transition even if the VM is already stopped,
+  +   current state is forgotten forever */
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260812211708.92824-16-philmd@oss.qualcomm.com>
+Message-Id: <20260812211708.92824-17-philmd@oss.qualcomm.com>
 ---
- MAINTAINERS               |   1 +
- system/cpus.c             |  92 --------------------------------
- system/physmem-qmp-cmds.c | 107 ++++++++++++++++++++++++++++++++++++++
- system/meson.build        |   1 +
- 4 files changed, 109 insertions(+), 92 deletions(-)
- create mode 100644 system/physmem-qmp-cmds.c
+ system/cpus.c     | 147 -------------------------------------------
+ system/runstate.c | 154 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 154 insertions(+), 147 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index bad65aeda50..b51f5c3e602 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3436,6 +3436,7 @@ F: system/ioport.c
- F: system/memory.c
- F: system/memory_mapping.c
- F: system/physmem.c
-+F: system/physmem-qmp-cmds.c
- F: system/memory_ldst*
- F: system/memory-internal.h
- F: system/ram-block-attributes.c
 diff --git a/system/cpus.c b/system/cpus.c
-index aa2510bf8fc..43ff10cf008 100644
+index 43ff10cf008..f37e215c586 100644
 --- a/system/cpus.c
 +++ b/system/cpus.c
-@@ -25,9 +25,7 @@
+@@ -25,7 +25,6 @@
  #include "qemu/osdep.h"
  #include "qemu/coroutine-tls.h"
  #include "qapi/error.h"
--#include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-events-run-state.h"
--#include "qapi/qmp/qerror.h"
+-#include "qapi/qapi-events-run-state.h"
  #include "exec/gdbstub.h"
  #include "accel/accel-cpu-ops.h"
  #include "system/hw_accel.h"
-@@ -40,7 +38,6 @@
- #include "system/physmem.h"
- #include "system/replay.h"
- #include "system/runstate.h"
--#include "migration/misc.h"
- #include "system/cpu-timers.h"
- #include "system/whpx.h"
- #include "hw/core/boards.h"
-@@ -831,92 +828,3 @@ int vm_stop_force_state(RunState state)
-         return ret;
+@@ -272,58 +271,6 @@ void cpu_interrupt(CPUState *cpu, int mask)
+     cpus_accel->handle_interrupt(cpu, mask);
+ }
+ 
+-/*
+- * True if the vm was previously suspended, and has not been woken or reset.
+- */
+-static int vm_was_suspended;
+-
+-void vm_set_suspended(bool suspended)
+-{
+-    vm_was_suspended = suspended;
+-}
+-
+-bool vm_get_suspended(void)
+-{
+-    return vm_was_suspended;
+-}
+-
+-static int do_vm_stop(RunState state, bool send_stop)
+-{
+-    int ret = 0;
+-    RunState oldstate = runstate_get();
+-
+-    if (runstate_is_live(oldstate)) {
+-        vm_was_suspended = (oldstate == RUN_STATE_SUSPENDED);
+-        runstate_set(state);
+-        cpu_disable_ticks();
+-        if (oldstate == RUN_STATE_RUNNING) {
+-            pause_all_vcpus();
+-        }
+-        ret = vm_state_notify(0, state);
+-        if (send_stop) {
+-            qapi_event_send_stop();
+-        }
+-    }
+-
+-    bdrv_drain_all();
+-    /*
+-     * Even if vm_state_notify() return failure,
+-     * it would be better to flush as before.
+-     */
+-    ret |= bdrv_flush_all();
+-    trace_vm_stop_flush_all(ret);
+-
+-    return ret;
+-}
+-
+-/* Special vm_stop() variant for terminating the process.  Historically clients
+- * did not expect a QMP STOP event and so we need to retain compatibility.
+- */
+-int vm_shutdown(void)
+-{
+-    return do_vm_stop(RUN_STATE_SHUTDOWN, false);
+-}
+-
+ bool cpu_can_run(CPUState *cpu)
+ {
+     if (cpu->stop) {
+@@ -734,97 +681,3 @@ void cpu_stop_current(void)
+         cpu_exit(current_cpu);
      }
  }
 -
--void qmp_memsave(uint64_t addr, uint64_t size, const char *filename,
--                 bool has_cpu, int64_t cpu_index, Error **errp)
+-int vm_stop(RunState state)
 -{
--    FILE *f;
--    uint64_t l;
--    CPUState *cpu;
--    uint8_t buf[1024];
--    uint64_t orig_addr = addr, orig_size = size;
--
--    if (migration_guest_ram_loading()) {
--        error_setg(errp, "Guest memory access not allowed during migration");
--        return;
+-    if (qemu_in_vcpu_thread()) {
+-        qemu_system_vmstop_request_prepare();
+-        qemu_system_vmstop_request(state);
+-        /*
+-         * FIXME: should not return to device code in case
+-         * vm_stop() has been requested.
+-         */
+-        cpu_stop_current();
+-        return 0;
 -    }
 -
--    if (!has_cpu) {
--        cpu_index = 0;
--    }
--
--    cpu = qemu_get_cpu(cpu_index);
--    if (cpu == NULL) {
--        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
--                   "a CPU number");
--        return;
--    }
--
--    f = fopen(filename, "wb");
--    if (!f) {
--        error_setg_file_open(errp, errno, filename);
--        return;
--    }
--
--    while (size != 0) {
--        l = sizeof(buf);
--        if (l > size)
--            l = size;
--        if (cpu_memory_rw_debug(cpu, addr, buf, l, 0) != 0) {
--            error_setg(errp, "Invalid addr 0x%016" PRIx64 "/size %" PRIu64
--                             " specified", orig_addr, orig_size);
--            goto exit;
--        }
--        if (fwrite(buf, 1, l, f) != l) {
--            error_setg(errp, "writing memory to '%s' failed",
--                       filename);
--            goto exit;
--        }
--        addr += l;
--        size -= l;
--    }
--
--exit:
--    fclose(f);
+-    return do_vm_stop(state, true);
 -}
 -
--void qmp_pmemsave(uint64_t addr, uint64_t size, const char *filename,
--                  Error **errp)
+-/**
+- * Prepare for (re)starting the VM.
+- * Returns 0 if the vCPUs should be restarted, -1 on an error condition,
+- * and 1 otherwise.
+- */
+-int vm_prepare_start(bool step_pending)
 -{
--    FILE *f;
--    uint64_t l;
--    uint8_t buf[1024];
+-    int ret = vm_was_suspended ? 1 : 0;
+-    RunState state = vm_was_suspended ? RUN_STATE_SUSPENDED : RUN_STATE_RUNNING;
+-    RunState requested;
 -
--    if (migration_guest_ram_loading()) {
--        error_setg(errp, "Guest memory access not allowed during migration");
--        return;
+-    qemu_vmstop_requested(&requested);
+-    if (runstate_is_running() && requested == RUN_STATE__MAX) {
+-        return -1;
 -    }
 -
--    f = fopen(filename, "wb");
--    if (!f) {
--        error_setg_file_open(errp, errno, filename);
--        return;
+-    /* Ensure that a STOP/RESUME pair of events is emitted if a
+-     * vmstop request was pending.  The BLOCK_IO_ERROR event, for
+-     * example, according to documentation is always followed by
+-     * the STOP event.
+-     */
+-    if (runstate_is_running()) {
+-        qapi_event_send_stop();
+-        qapi_event_send_resume();
+-        return -1;
 -    }
 -
--    while (size != 0) {
--        l = sizeof(buf);
--        if (l > size)
--            l = size;
--        physical_memory_read(addr, buf, l);
--        if (fwrite(buf, 1, l, f) != l) {
--            error_setg(errp, "writing memory to '%s' failed",
--                       filename);
--            goto exit;
--        }
--        addr += l;
--        size -= l;
--    }
+-    /*
+-     * WHPX accelerator needs to know whether we are going to step
+-     * any CPUs, before starting the first one.
+-     */
+-    accel_pre_resume(MACHINE(qdev_get_machine()), step_pending);
 -
--exit:
--    fclose(f);
+-    /* We are sending this now, but the CPUs will be resumed shortly later */
+-    qapi_event_send_resume();
+-
+-    cpu_enable_ticks();
+-    runstate_set(state);
+-    vm_state_notify(1, state);
+-    vm_was_suspended = false;
+-    return ret;
 -}
-diff --git a/system/physmem-qmp-cmds.c b/system/physmem-qmp-cmds.c
-new file mode 100644
-index 00000000000..d85430357d5
---- /dev/null
-+++ b/system/physmem-qmp-cmds.c
-@@ -0,0 +1,107 @@
+-
+-void vm_start(void)
+-{
+-    if (!vm_prepare_start(false)) {
+-        resume_all_vcpus();
+-    }
+-}
+-
+-void vm_resume(RunState state)
+-{
+-    if (runstate_is_live(state)) {
+-        vm_start();
+-    } else {
+-        runstate_set(state);
+-    }
+-}
+-
+-/* does a state transition even if the VM is already stopped,
+-   current state is forgotten forever */
+-int vm_stop_force_state(RunState state)
+-{
+-    if (runstate_is_live(runstate_get())) {
+-        return vm_stop(state);
+-    } else {
+-        int ret;
+-        runstate_set(state);
+-
+-        bdrv_drain_all();
+-        /* Make sure to return an error if the flush in a previous vm_stop()
+-         * failed. */
+-        ret = bdrv_flush_all();
+-        trace_vm_stop_flush_all(ret);
+-        return ret;
+-    }
+-}
+diff --git a/system/runstate.c b/system/runstate.c
+index 08acf801b0e..d3e64d2b625 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -52,6 +52,7 @@
+ #include "qemu/thread.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
++#include "system/cpu-timers.h"
+ #include "system/cpus.h"
+ #include "system/qtest.h"
+ #include "system/replay.h"
+@@ -408,6 +409,159 @@ int vm_state_notify(bool running, RunState state)
+     return ret;
+ }
+ 
 +/*
-+ * QMP commands to dump physical memory
-+ *
-+ * Copyright (c) 2003-2008 Fabrice Bellard
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * True if the vm was previously suspended, and has not been woken or reset.
 + */
++static int vm_was_suspended;
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-commands-machine.h"
-+#include "qapi/qmp/qerror.h"
-+#include "hw/core/cpu.h"
-+#include "system/physmem.h"
-+#include "migration/misc.h"
-+
-+void qmp_memsave(uint64_t addr, uint64_t size, const char *filename,
-+                 bool has_cpu, int64_t cpu_index, Error **errp)
++void vm_set_suspended(bool suspended)
 +{
-+    FILE *f;
-+    uint64_t l;
-+    CPUState *cpu;
-+    uint8_t buf[1024];
-+    uint64_t orig_addr = addr, orig_size = size;
-+
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-+    if (!has_cpu) {
-+        cpu_index = 0;
-+    }
-+
-+    cpu = qemu_get_cpu(cpu_index);
-+    if (cpu == NULL) {
-+        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
-+                   "a CPU number");
-+        return;
-+    }
-+
-+    f = fopen(filename, "wb");
-+    if (!f) {
-+        error_setg_file_open(errp, errno, filename);
-+        return;
-+    }
-+
-+    while (size != 0) {
-+        l = sizeof(buf);
-+        if (l > size) {
-+            l = size;
-+        }
-+        if (cpu_memory_rw_debug(cpu, addr, buf, l, 0) != 0) {
-+            error_setg(errp, "Invalid addr 0x%016" PRIx64 "/size %" PRIu64
-+                             " specified", orig_addr, orig_size);
-+            goto exit;
-+        }
-+        if (fwrite(buf, 1, l, f) != l) {
-+            error_setg(errp, "writing memory to '%s' failed",
-+                       filename);
-+            goto exit;
-+        }
-+        addr += l;
-+        size -= l;
-+    }
-+
-+exit:
-+    fclose(f);
++    vm_was_suspended = suspended;
 +}
 +
-+void qmp_pmemsave(uint64_t addr, uint64_t size, const char *filename,
-+                  Error **errp)
++bool vm_get_suspended(void)
 +{
-+    FILE *f;
-+    uint64_t l;
-+    uint8_t buf[1024];
-+
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-+    f = fopen(filename, "wb");
-+    if (!f) {
-+        error_setg_file_open(errp, errno, filename);
-+        return;
-+    }
-+
-+    while (size != 0) {
-+        l = sizeof(buf);
-+        if (l > size) {
-+            l = size;
-+        }
-+        physical_memory_read(addr, buf, l);
-+        if (fwrite(buf, 1, l, f) != l) {
-+            error_setg(errp, "writing memory to '%s' failed",
-+                       filename);
-+            goto exit;
-+        }
-+        addr += l;
-+        size -= l;
-+    }
-+
-+exit:
-+    fclose(f);
++    return vm_was_suspended;
 +}
-diff --git a/system/meson.build b/system/meson.build
-index 377adce8035..64e06e7abcc 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -19,6 +19,7 @@ system_ss.add(files(
-   'memory_mapping.c',
-   'memory.c',
-   'physmem.c',
-+  'physmem-qmp-cmds.c',
-   'qdev-monitor.c',
-   'qtest.c',
-   'rtc.c',
++
++static int do_vm_stop(RunState state, bool send_stop)
++{
++    int ret = 0;
++    RunState oldstate = runstate_get();
++
++    if (runstate_is_live(oldstate)) {
++        vm_was_suspended = (oldstate == RUN_STATE_SUSPENDED);
++        runstate_set(state);
++        cpu_disable_ticks();
++        if (oldstate == RUN_STATE_RUNNING) {
++            pause_all_vcpus();
++        }
++        ret = vm_state_notify(0, state);
++        if (send_stop) {
++            qapi_event_send_stop();
++        }
++    }
++
++    bdrv_drain_all();
++    /*
++     * Even if vm_state_notify() return failure,
++     * it would be better to flush as before.
++     */
++    ret |= bdrv_flush_all();
++    trace_vm_stop_flush_all(ret);
++
++    return ret;
++}
++
++/*
++ * Special vm_stop() variant for terminating the process.  Historically clients
++ * did not expect a QMP STOP event and so we need to retain compatibility.
++ */
++int vm_shutdown(void)
++{
++    return do_vm_stop(RUN_STATE_SHUTDOWN, false);
++}
++
++
++int vm_stop(RunState state)
++{
++    if (qemu_in_vcpu_thread()) {
++        qemu_system_vmstop_request_prepare();
++        qemu_system_vmstop_request(state);
++        /*
++         * FIXME: should not return to device code in case
++         * vm_stop() has been requested.
++         */
++        cpu_stop_current();
++        return 0;
++    }
++
++    return do_vm_stop(state, true);
++}
++
++/**
++ * Prepare for (re)starting the VM.
++ * Returns 0 if the vCPUs should be restarted, -1 on an error condition,
++ * and 1 otherwise.
++ */
++int vm_prepare_start(bool step_pending)
++{
++    int ret = vm_was_suspended ? 1 : 0;
++    RunState state = vm_was_suspended ? RUN_STATE_SUSPENDED : RUN_STATE_RUNNING;
++    RunState requested;
++
++    qemu_vmstop_requested(&requested);
++    if (runstate_is_running() && requested == RUN_STATE__MAX) {
++        return -1;
++    }
++
++    /*
++     * Ensure that a STOP/RESUME pair of events is emitted if a
++     * vmstop request was pending.  The BLOCK_IO_ERROR event, for
++     * example, according to documentation is always followed by
++     * the STOP event.
++     */
++    if (runstate_is_running()) {
++        qapi_event_send_stop();
++        qapi_event_send_resume();
++        return -1;
++    }
++
++    /*
++     * WHPX accelerator needs to know whether we are going to step
++     * any CPUs, before starting the first one.
++     */
++    accel_pre_resume(MACHINE(qdev_get_machine()), step_pending);
++
++    /* We are sending this now, but the CPUs will be resumed shortly later */
++    qapi_event_send_resume();
++
++    cpu_enable_ticks();
++    runstate_set(state);
++    vm_state_notify(1, state);
++    vm_was_suspended = false;
++    return ret;
++}
++
++void vm_start(void)
++{
++    if (!vm_prepare_start(false)) {
++        resume_all_vcpus();
++    }
++}
++
++void vm_resume(RunState state)
++{
++    if (runstate_is_live(state)) {
++        vm_start();
++    } else {
++        runstate_set(state);
++    }
++}
++
++/*
++ * does a state transition even if the VM is already stopped,
++ * current state is forgotten forever
++ */
++int vm_stop_force_state(RunState state)
++{
++    if (runstate_is_live(runstate_get())) {
++        return vm_stop(state);
++    } else {
++        int ret;
++        runstate_set(state);
++
++        bdrv_drain_all();
++        /*
++         * Make sure to return an error if the flush in a previous vm_stop()
++         * failed.
++         */
++        ret = bdrv_flush_all();
++        trace_vm_stop_flush_all(ret);
++        return ret;
++    }
++}
++
+ static ShutdownCause reset_requested;
+ static ShutdownCause shutdown_requested;
+ static int shutdown_exit_code = EXIT_SUCCESS;
 -- 
 2.53.0
 
