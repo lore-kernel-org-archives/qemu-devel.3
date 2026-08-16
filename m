@@ -4,104 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10DAC5DF70
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CBDC5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgKB-0006Ju-It; Sun, 16 Aug 2026 15:15:15 -0400
+	id 1wvgLF-0000yp-QQ; Sun, 16 Aug 2026 15:16:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgK8-00067J-Nm
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:12 -0400
+ id 1wvgL6-0000im-7e
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgK2-00083l-4r
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:15:12 -0400
+ id 1wvgL1-00005J-4Q
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907705;
+ s=mimecast20190719; t=1786907765;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EHX3WiPkh26mDzR0mCzMtdWQSfICNfYUpElQ5OUUU9U=;
- b=Q4HpG86JK66YQv2RFopd0qqCj09qm/AP+JIbU9aL9z1orkzU1EvCu5ybibm8HZ2qktl3PK
- nklF0iYClO5jFO1vyR+1YsAI29OiHiC1YotaSvnIZb0rXugARPhoQ5VaLC7m5Y6Q2sxU1b
- slP03x53nQzoKqSH42TTnRNAr+O2aMM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=FLwgnSlKKMFuHc26/oQfXNw9b6Fj/UncUjHSA7gZHgI=;
+ b=ZrMJzt56tNIHOUEjm60rslB4ZK8zI4TG6l72lQWr8nvv3UwY5AG657yX85t4KKZqJ4Y95j
+ ojYT6yFH5hpP4in7XHreFnEZwrEsvOfrbkDyrVVOzQ3lCu/S0jjICdBVGuobYz7xW3+py9
+ u5A/R3St08HwJwdsiwcXSoKc1+a7c6E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-rP9V1gptPJGN0t63mPIP4A-1; Sun,
- 16 Aug 2026 15:15:01 -0400
-X-MC-Unique: rP9V1gptPJGN0t63mPIP4A-1
-X-Mimecast-MFC-AGG-ID: rP9V1gptPJGN0t63mPIP4A_1786907699
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-heZxIm8dM2Cyh_6In4bZ-w-1; Sun,
+ 16 Aug 2026 15:16:02 -0400
+X-MC-Unique: heZxIm8dM2Cyh_6In4bZ-w-1
+X-Mimecast-MFC-AGG-ID: heZxIm8dM2Cyh_6In4bZ-w_1786907761
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 849371800990; Sun, 16 Aug 2026 19:14:59 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B321195606C; Sun, 16 Aug 2026 19:16:01 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8C341800347; Sun, 16 Aug 2026 19:14:56 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 37206197750F; Sun, 16 Aug 2026 19:15:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:59 +0400
-Subject: [PATCH v3 32/49] monitor: make hmp_handle_error() take MonitorHMP
+Date: Sun, 16 Aug 2026 23:13:15 +0400
+Subject: [PATCH v3 48/49] monitor: move HMP-specific to monitor-hmp-internal.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-32-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-48-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, David Woodhouse <dwmw2@infradead.org>, 
- Paul Durrant <paul@xen.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowangio@gmail.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Hyman Huang <infra.ai.cloud@bitdeer.com>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>, 
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=44405;
+ Markus Armbruster <armbru@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15341;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=iFCBLQGN+NjgsMfMxsSnm0z1iTGrutu/OlMNKgZrzDI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguz973RXB/inviIhs8vU476b+zRLdr/wcMoB
- nuLpePDsKOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILswAKCRDa6OEJdZac
- 5RqkD/wMdKF6yhuFnbYGa8rJ/kgEO6egcvmoQ5NCikjh7t5ibfW4jQrzLBqgtNNVQIr0NpuMDBP
- rn9tZ9OlLraIUYGVsz3jIMtXRs9MJ4++KRlUyukpwR3+3jVNxKeEOCo0/U/CCUNtvG+0LDimci0
- SjqHy13opdjYUm2+sYmwuXCQSSJhFHdOna4irqEl/BunpCgfSICukJrUAwGUVKwqgj5h+TKLQQG
- HdmgNVRod4vFlrR+l5PzPKkw7CmXzmlEnazHpmMd9u+FZ8woMtoD7Ygwn0n7AiDdG4CqQ1nYl6Z
- +BdOz9N+LD5oKU+Yl2ZpYPocx98i3m1UrgHdbwRt9TAwEXH+F95Ei1hvzihsuZaMQvKj5vTX70e
- CBifhBKDFMESeq0a1PrpPvP3jFZ2s1fSZgmB255ibWHSHfjyhblLUoWZXR/1bWYShEaTvumnUqV
- SoeXSC2IY/Sa5CImRBGhJ+JhEMG1jEHH2YAS5gxMa0ko0E+04xL1WOwq3skIsVlB+fnPOW86SrR
- 8ZEDoCzUtWvjd2VacqO7Pifjrqf2gOOnFoNhZTS+LbAMGCkvEc4S4M+VNnOE93qNp3RMW9kzzlh
- TcG2SjfmN96Evimv3vqYEoljEgU/vwoXNQym21r1xBTeFFECEiR9aJRXJbbkgJkW7UtKRgP+vDW
- vbLJATv7WqaB0yQ==
+ bh=bzckYqwXk+/d6tgi6ncL6jp0fJlBKKnsXP/akd8yT3A=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu1NZYrLxwDVHCfRM1So+VFV5kHueunI9BfS
+ SYtEm0LyESJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtQAKCRDa6OEJdZac
+ 5dyFD/9vAp5WOAaZEwNp6covCSQUk5PaVtUgp9IOHOw02ckkHtO2ZOfOiOndVaAexDq4WOjqs/t
+ VChw8lZ4iBLPP87HXavy22SF6BRa0dYSBcuku8Lw01cJK6tG5Fri/ke/1bneGLD0YF/fUQynugR
+ FvZkkJ3Qi85ZLvhpszAPlDIRuoPhrYj3Qpu21V5IBbJFYahYH3wOdMrWOR2UrhEq0IyKikSwrtU
+ XMFFj5iKLMJInqSskIzW/CLs365c0rVZRLGrgySx3rciwAFh6rQEWVBgQEZK+BDOsfx388nyKCQ
+ hjLZdq+MMNpfzbHCy6la0Q+5kM7pXk4I1e0L+rGvw9tNyX21tg/64D+042qHVyhPIQxTVtRxo84
+ hB1ALPEhv4nGtJv3WUyBThVVCrLJXlC03g5vqUhcMRpKl41qJIaiOgEXm2dtHhCXW/V3zWyeqXc
+ dd+SD3q4Mf1RGmdZzv1NBpHz11LikIXnwOBfp1L6ewIvyBFmY7XgSSGQZgqxB3xNh15lqIbOA5N
+ SJMgpFGXYkS+I8Fk7wrAGQW3vuldhiJ5FUpQbTS71o83XhTFIYHs8RMw4la8MGcC3QGKpKUIUej
+ 1zCyJ9x0WXEPvN0CiiVYX94Bv4m0L9IKRWW9cvnvdUrI5j8W43DwHdCHh+UpvjlY/UiZavl77YT
+ ejSTt413eJf1knQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,1376 +108,438 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mostly mechanical, with a few adjustments around it.
+Move HMP-specific declarations to its own CONFIG_HMP guarded header.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/monitor/block-hmp-cmds.c  | 73 +++++++++++++++--------------------------
- chardev/char-hmp-cmds.c         | 17 ++++------
- dump/dump-hmp-cmds.c            |  5 ++-
- hw/core/machine-hmp-cmds.c      | 26 +++++++--------
- hw/i386/kvm/xen_evtchn.c        |  4 +--
- hw/misc/mos6522.c               |  2 +-
- hw/net/rocker/rocker-hmp-cmds.c |  8 ++---
- hw/pci/pci-hmp-cmds.c           |  2 +-
- hw/uefi/ovmf-log.c              |  2 +-
- hw/virtio/virtio-hmp-cmds.c     | 10 +++---
- include/monitor/hmp.h           |  2 +-
- migration/dirtyrate.c           |  2 +-
- migration/migration-hmp-cmds.c  | 37 ++++++++-------------
- monitor/hmp-cmds.c              | 23 +++++--------
- monitor/hmp.c                   | 12 +++----
- net/net-hmp-cmds.c              | 11 +++----
- qom/qom-hmp-cmds.c              | 13 +++-----
- system/dirtylimit-hmp-cmds.c    |  7 ++--
- system/qdev-monitor.c           |  6 ++--
- system/runstate-hmp-cmds.c      |  3 +-
- target/i386/monitor.c           |  3 +-
- ui/ui-hmp-cmds.c                | 19 ++++-------
- 22 files changed, 112 insertions(+), 175 deletions(-)
+ include/monitor/hmp.h          |   8 +++-
+ migration/migration-hmp-cmds.c |   1 +
+ monitor/hmp-cmds.c             |   1 +
+ monitor/hmp.c                  |   1 +
+ monitor/monitor-hmp-internal.h | 106 +++++++++++++++++++++++++++++++++++++++++
+ monitor/monitor-internal.h     |  99 --------------------------------------
+ monitor/monitor.c              |   1 +
+ monitor/qmp-cmds.c             |   1 +
+ stubs/monitor-core.c           |   2 +
+ stubs/monitor-internal.c       |   2 +
+ tests/unit/test-util-sockets.c |   2 -
+ tools/qemu-vnc/stubs.c         |   6 ---
+ 12 files changed, 121 insertions(+), 109 deletions(-)
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 3914b5189d56..a2666e2f1b9b 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -57,7 +57,7 @@
- #include "block/block_int.h"
- #include "block/block-hmp-cmds.h"
- 
--static void hmp_drive_add_node(Monitor *mon, const char *optstr)
-+static void hmp_drive_add_node(MonitorHMP *hmp, const char *optstr)
- {
-     QemuOpts *opts;
-     QDict *qdict;
-@@ -84,7 +84,7 @@ static void hmp_drive_add_node(Monitor *mon, const char *optstr)
-     bdrv_set_monitor_owned(bs);
- out:
-     qemu_opts_del(opts);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_drive_add(MonitorHMP *hmp, const QDict *qdict)
-@@ -98,7 +98,7 @@ void hmp_drive_add(MonitorHMP *hmp, const QDict *qdict)
-     bool node = qdict_get_try_bool(qdict, "node", false);
- 
-     if (node) {
--        hmp_drive_add_node(mon, optstr);
-+        hmp_drive_add_node(hmp, optstr);
-         return;
-     }
- 
-@@ -133,12 +133,11 @@ err:
-         monitor_remove_blk(blk);
-         blk_unref(blk);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_drive_del(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *id = qdict_get_str(qdict, "id");
-     BlockBackend *blk;
-     BlockDriverState *bs;
-@@ -193,12 +192,11 @@ void hmp_drive_del(MonitorHMP *hmp, const QDict *qdict)
- 
- unlock:
-     bdrv_graph_rdunlock_main_loop();
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_commit(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     BlockBackend *blk;
-     int ret;
-@@ -232,12 +230,11 @@ void hmp_commit(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_drive_mirror(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *filename = qdict_get_str(qdict, "target");
-     const char *format = qdict_get_try_str(qdict, "format");
-     bool reuse = qdict_get_try_bool(qdict, "reuse", false);
-@@ -259,12 +256,11 @@ void hmp_drive_mirror(MonitorHMP *hmp, const QDict *qdict)
-     }
-     qmp_drive_mirror(&mirror, &err);
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_drive_backup(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *filename = qdict_get_str(qdict, "target");
-     const char *format = qdict_get_try_str(qdict, "format");
-@@ -290,69 +286,63 @@ void hmp_drive_backup(MonitorHMP *hmp, const QDict *qdict)
- 
-     qmp_drive_backup(&backup, &err);
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_block_job_set_speed(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
-     int64_t value = qdict_get_int(qdict, "speed");
- 
-     qmp_block_job_set_speed(device, value, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_block_job_cancel(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
-     bool force = qdict_get_try_bool(qdict, "force", false);
- 
-     qmp_block_job_cancel(device, true, force, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_block_job_pause(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
- 
-     qmp_block_job_pause(device, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_block_job_resume(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
- 
-     qmp_block_job_resume(device, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_block_job_complete(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
- 
-     qmp_block_job_complete(device, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_snapshot_blkdev(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *filename = qdict_get_str(qdict, "snapshot-file");
-     const char *format = qdict_get_try_str(qdict, "format");
-@@ -363,35 +353,32 @@ void hmp_snapshot_blkdev(MonitorHMP *hmp, const QDict *qdict)
-     mode = reuse ? NEW_IMAGE_MODE_EXISTING : NEW_IMAGE_MODE_ABSOLUTE_PATHS;
-     qmp_blockdev_snapshot_sync(device, NULL, filename, NULL, format,
-                                true, mode, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_snapshot_blkdev_internal(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *name = qdict_get_str(qdict, "name");
-     Error *err = NULL;
- 
-     qmp_blockdev_snapshot_internal_sync(device, name, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_snapshot_delete_blkdev_internal(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *name = qdict_get_str(qdict, "name");
-     const char *id = qdict_get_try_str(qdict, "id");
-     Error *err = NULL;
- 
-     qmp_blockdev_snapshot_delete_internal_sync(device, id, name, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_nbd_server_start(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *uri = qdict_get_str(qdict, "uri");
-     bool writable = qdict_get_try_bool(qdict, "writable", false);
-     bool all = qdict_get_try_bool(qdict, "all", false);
-@@ -449,12 +436,11 @@ void hmp_nbd_server_start(MonitorHMP *hmp, const QDict *qdict)
-     qapi_free_BlockInfoList(block_list);
- 
- exit:
--    hmp_handle_error(mon, local_err);
-+    hmp_handle_error(hmp, local_err);
- }
- 
- void hmp_nbd_server_add(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *name = qdict_get_try_str(qdict, "name");
-     bool writable = qdict_get_try_bool(qdict, "writable", false);
-@@ -468,44 +454,40 @@ void hmp_nbd_server_add(MonitorHMP *hmp, const QDict *qdict)
-     };
- 
-     qmp_nbd_server_add(&export, &local_err);
--    hmp_handle_error(mon, local_err);
-+    hmp_handle_error(hmp, local_err);
- }
- 
- void hmp_nbd_server_remove(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *name = qdict_get_str(qdict, "name");
-     bool force = qdict_get_try_bool(qdict, "force", false);
-     Error *err = NULL;
- 
-     /* Rely on BLOCK_EXPORT_REMOVE_MODE_SAFE being the default */
-     qmp_nbd_server_remove(name, force, BLOCK_EXPORT_REMOVE_MODE_HARD, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_nbd_server_stop(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_nbd_server_stop(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void coroutine_fn hmp_block_resize(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *device = qdict_get_str(qdict, "device");
-     int64_t size = qdict_get_int(qdict, "size");
-     Error *err = NULL;
- 
-     qmp_block_resize(device, NULL, size, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_block_stream(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *error = NULL;
-     const char *device = qdict_get_str(qdict, "device");
-     const char *base = qdict_get_try_str(qdict, "base");
-@@ -516,12 +498,11 @@ void hmp_block_stream(MonitorHMP *hmp, const QDict *qdict)
-                      true, BLOCKDEV_ON_ERROR_REPORT, NULL,
-                      false, false, false, false, &error);
- 
--    hmp_handle_error(mon, error);
-+    hmp_handle_error(hmp, error);
- }
- 
- void hmp_block_set_io_throttle(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     char *device = (char *) qdict_get_str(qdict, "device");
-     BlockIOThrottle throttle = {
-@@ -545,23 +526,21 @@ void hmp_block_set_io_throttle(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qmp_block_set_io_throttle(&throttle, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_eject(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     bool force = qdict_get_try_bool(qdict, "force", false);
-     const char *device = qdict_get_str(qdict, "device");
-     Error *err = NULL;
- 
-     qmp_eject(device, NULL, true, force, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_qemu_io(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     bool qdev = qdict_get_try_bool(qdict, "qdev", false);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *command = qdict_get_str(qdict, "command");
-@@ -570,7 +549,7 @@ void hmp_qemu_io(MonitorHMP *hmp, const QDict *qdict)
-     qmp_x_qemu_io(qdev ? NULL : device,
-                   qdev ? device : NULL,
-                   command, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- static void print_block_info(Monitor *mon, BlockInfo *info,
-@@ -851,7 +830,7 @@ void hmp_info_snapshots(MonitorHMP *hmp, const QDict *qdict)
- 
-     bs = bdrv_all_find_vmstate_bs(NULL, false, NULL, &err);
-     if (!bs) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-diff --git a/chardev/char-hmp-cmds.c b/chardev/char-hmp-cmds.c
-index d4a5a3a255a5..71017fd2d19e 100644
---- a/chardev/char-hmp-cmds.c
-+++ b/chardev/char-hmp-cmds.c
-@@ -40,14 +40,13 @@ void hmp_info_chardev(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_ringbuf_write(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *chardev = qdict_get_str(qdict, "device");
-     const char *data = qdict_get_str(qdict, "data");
-     Error *err = NULL;
- 
-     qmp_ringbuf_write(chardev, data, false, 0, &err);
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_ringbuf_read(MonitorHMP *hmp, const QDict *qdict)
-@@ -60,7 +59,7 @@ void hmp_ringbuf_read(MonitorHMP *hmp, const QDict *qdict)
-     int i;
- 
-     data = qmp_ringbuf_read(chardev, size, false, 0, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -82,7 +81,6 @@ void hmp_ringbuf_read(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_chardev_add(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *args = qdict_get_str(qdict, "args");
-     Error *err = NULL;
-     QemuOpts *opts;
-@@ -94,12 +92,11 @@ void hmp_chardev_add(MonitorHMP *hmp, const QDict *qdict)
-         qemu_chr_new_from_opts(opts, NULL, &err);
-         qemu_opts_del(opts);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_chardev_change(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *args = qdict_get_str(qdict, "args");
-     const char *id;
-     Error *err = NULL;
-@@ -129,25 +126,23 @@ end:
-     qapi_free_ChardevReturn(ret);
-     qapi_free_ChardevBackend(backend);
-     qemu_opts_del(opts);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_chardev_remove(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *local_err = NULL;
- 
-     qmp_chardev_remove(qdict_get_str(qdict, "id"), &local_err);
--    hmp_handle_error(mon, local_err);
-+    hmp_handle_error(hmp, local_err);
- }
- 
- void hmp_chardev_send_break(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *local_err = NULL;
- 
-     qmp_chardev_send_break(qdict_get_str(qdict, "id"), &local_err);
--    hmp_handle_error(mon, local_err);
-+    hmp_handle_error(hmp, local_err);
- }
- 
- void chardev_add_completion(ReadLineState *rs, int nb_args, const char *str)
-diff --git a/dump/dump-hmp-cmds.c b/dump/dump-hmp-cmds.c
-index ba78ad026f1e..104ab5d2a53a 100644
---- a/dump/dump-hmp-cmds.c
-+++ b/dump/dump-hmp-cmds.c
-@@ -14,7 +14,6 @@
- 
- void hmp_dump_guest_memory(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     bool win_dmp = qdict_get_try_bool(qdict, "windmp", false);
-     bool paging = qdict_get_try_bool(qdict, "paging", false);
-@@ -34,7 +33,7 @@ void hmp_dump_guest_memory(MonitorHMP *hmp, const QDict *qdict)
- 
-     if (zlib + lzo + snappy + win_dmp > 1) {
-         error_setg(&err, "only one of '-z|-l|-s|-w' can be set");
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -80,7 +79,7 @@ void hmp_dump_guest_memory(MonitorHMP *hmp, const QDict *qdict)
- 
-     qmp_dump_guest_memory(paging, prot, true, detach, has_begin, begin,
-                           has_length, length, true, dump_format, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
-     g_free(prot);
- }
- 
-diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-index 48fa27f12705..4e2f0c212b0d 100644
---- a/hw/core/machine-hmp-cmds.c
-+++ b/hw/core/machine-hmp-cmds.c
-@@ -57,7 +57,7 @@ void hmp_hotpluggable_cpus(MonitorHMP *hmp, const QDict *qdict)
-     HotpluggableCPUList *saved = l;
-     CpuInstanceProperties *c;
- 
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -147,7 +147,7 @@ void hmp_info_memdev(MonitorHMP *hmp, const QDict *qdict)
-     monitor_printf(mon, "\n");
- 
-     qapi_free_MemdevList(memdev_list);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_kvm(MonitorHMP *hmp, const QDict *qdict)
-@@ -202,7 +202,7 @@ void hmp_info_balloon(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
- 
-     info = qmp_query_balloon(&err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -236,47 +236,43 @@ void hmp_memsave(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qmp_memsave(addr, size, filename, true, cpu_index, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_pmemsave(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     uint32_t size = qdict_get_int(qdict, "size");
-     const char *filename = qdict_get_str(qdict, "filename");
-     uint64_t addr = qdict_get_int(qdict, "val");
-     Error *err = NULL;
- 
-     qmp_pmemsave(addr, size, filename, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_system_wakeup(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_system_wakeup(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_nmi(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_inject_nmi(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_balloon(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     int64_t value = qdict_get_int(qdict, "value");
-     Error *err = NULL;
- 
-     qmp_balloon(value, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_memory_devices(MonitorHMP *hmp, const QDict *qdict)
-@@ -380,7 +376,7 @@ void hmp_info_memory_devices(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qapi_free_MemoryDeviceInfoList(info_list);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_vm_generation_id(MonitorHMP *hmp, const QDict *qdict)
-@@ -391,7 +387,7 @@ void hmp_info_vm_generation_id(MonitorHMP *hmp, const QDict *qdict)
-     if (info) {
-         monitor_printf(mon, "%s\n", info->guid);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
-     qapi_free_GuidInfo(info);
- }
- 
-@@ -411,5 +407,5 @@ void hmp_info_memory_size_summary(MonitorHMP *hmp, const QDict *qdict)
- 
-         qapi_free_MemoryInfo(info);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
-diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-index 845838c372d5..00dff6ee8760 100644
---- a/hw/i386/kvm/xen_evtchn.c
-+++ b/hw/i386/kvm/xen_evtchn.c
-@@ -2352,7 +2352,7 @@ void hmp_xen_event_list(MonitorHMP *hmp, const QDict *qdict)
- 
-     info_list = qmp_xen_event_list(&err);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -2388,7 +2388,7 @@ void hmp_xen_event_inject(MonitorHMP *hmp, const QDict *qdict)
- 
-     qmp_xen_event_inject(port, &err);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-     } else {
-         monitor_printf(mon, "Delivered port %d\n", port);
-     }
-diff --git a/hw/misc/mos6522.c b/hw/misc/mos6522.c
-index 15a6a1a75745..1c20c7582c34 100644
---- a/hw/misc/mos6522.c
-+++ b/hw/misc/mos6522.c
-@@ -592,7 +592,7 @@ void hmp_info_via(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
-     g_autoptr(HumanReadableText) info = qmp_x_query_via(&err);
- 
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
-     monitor_puts(mon, info->human_readable_text);
-diff --git a/hw/net/rocker/rocker-hmp-cmds.c b/hw/net/rocker/rocker-hmp-cmds.c
-index 856aaef5e210..6405ce26dd65 100644
---- a/hw/net/rocker/rocker-hmp-cmds.c
-+++ b/hw/net/rocker/rocker-hmp-cmds.c
-@@ -28,7 +28,7 @@ void hmp_rocker(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
- 
-     rocker = qmp_query_rocker(name, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -47,7 +47,7 @@ void hmp_rocker_ports(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
- 
-     list = qmp_query_rocker_ports(name, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -76,7 +76,7 @@ void hmp_rocker_of_dpa_flows(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
- 
-     list = qmp_query_rocker_of_dpa_flows(name, tbl_id != -1, tbl_id, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -226,7 +226,7 @@ void hmp_rocker_of_dpa_groups(MonitorHMP *hmp, const QDict *qdict)
-     Error *err = NULL;
- 
-     list = qmp_query_rocker_of_dpa_groups(name, type != 9, type, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
-index be24aecc8ac8..51d95d76620e 100644
---- a/hw/pci/pci-hmp-cmds.c
-+++ b/hw/pci/pci-hmp-cmds.c
-@@ -247,5 +247,5 @@ void hmp_pcie_aer_inject_error(MonitorHMP *hmp, const QDict *qdict)
-                    PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
- 
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
-diff --git a/hw/uefi/ovmf-log.c b/hw/uefi/ovmf-log.c
-index c97622b2aad6..0d59a74ad60e 100644
---- a/hw/uefi/ovmf-log.c
-+++ b/hw/uefi/ovmf-log.c
-@@ -269,7 +269,7 @@ void hmp_info_firmware_log(MonitorHMP *hmp, const QDict *qdict)
-     maxsize = qdict_get_try_int(qdict, "max-size", -1);
-     log = qmp_query_firmware_log(maxsize != -1, (uint64_t)maxsize, &err);
-     if (err)  {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 49f3367785ba..fb36c8b9274c 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -88,7 +88,7 @@ void hmp_virtio_query(MonitorHMP *hmp, const QDict *qdict)
-     VirtioInfoList *node;
- 
-     if (err != NULL) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -114,7 +114,7 @@ void hmp_virtio_status(MonitorHMP *hmp, const QDict *qdict)
-     VirtioStatus *s = qmp_x_query_virtio_status(path, &err);
- 
-     if (err != NULL) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -195,7 +195,7 @@ void hmp_vhost_queue_status(MonitorHMP *hmp, const QDict *qdict)
-         qmp_x_query_virtio_vhost_queue_status(path, queue, &err);
- 
-     if (err != NULL) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -228,7 +228,7 @@ void hmp_virtio_queue_status(MonitorHMP *hmp, const QDict *qdict)
-     VirtQueueStatus *s = qmp_x_query_virtio_queue_status(path, queue, &err);
- 
-     if (err != NULL) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -278,7 +278,7 @@ void hmp_virtio_queue_element(MonitorHMP *hmp, const QDict *qdict)
-     e = qmp_x_query_virtio_queue_element(path, queue, index != -1,
-                                          index, &err);
-     if (err != NULL) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
 diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 7a270ad3f25c..827a56144824 100644
+index f10bf83df86d..ef53e87f7608 100644
 --- a/include/monitor/hmp.h
 +++ b/include/monitor/hmp.h
-@@ -54,7 +54,7 @@ void monitor_register_hmp_info_hrt(const char *name,
- CPUArchState *mon_get_cpu_env(Monitor *mon);
- CPUState *mon_get_cpu(Monitor *mon);
+@@ -21,6 +21,10 @@
+ #define TYPE_MONITOR_HMP "monitor-hmp"
+ OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
  
--bool hmp_handle_error(Monitor *mon, Error *err);
-+bool hmp_handle_error(MonitorHMP *hmp, Error *err);
- void hmp_help_cmd(Monitor *mon, const char *name);
- strList *hmp_split_at_comma(const char *str);
++MonitorHMP *monitor_cur_hmp(void);
++
++#ifdef CONFIG_HMP
++
+ #define HMP_STUB(cmd) \
+     void hmp_##cmd(MonitorHMP *hmp, const QDict *qdict) \
+     { \
+@@ -36,8 +40,6 @@ struct MonitorDef {
+ void monitor_new_hmp(const char *id, const char *chardev_id,
+                      bool use_readline, Error **errp);
  
-diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
-index 567abab321cc..3c0931796ce2 100644
---- a/migration/dirtyrate.c
-+++ b/migration/dirtyrate.c
-@@ -926,7 +926,7 @@ void hmp_calc_dirty_rate(MonitorHMP *hmp, const QDict *qdict)
-                         true, mode,
-                         &err);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
+-MonitorHMP *monitor_cur_hmp(void);
+-
+ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+     G_GNUC_PRINTF(2, 0);
+ int monitor_hmp_printf(MonitorHMP *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+@@ -218,4 +220,6 @@ void hmp_info_skeys(MonitorHMP *hmp, const QDict *qdict);
+ void hmp_info_cmma(MonitorHMP *hmp, const QDict *qdict);
+ void hmp_migrationmode(MonitorHMP *hmp, const QDict *qdict);
  
++#endif /* CONFIG_HMP */
++
+ #endif
 diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 8d2e8735277e..73a974259478 100644
+index 6fe189471899..27b38d0e5f85 100644
 --- a/migration/migration-hmp-cmds.c
 +++ b/migration/migration-hmp-cmds.c
-@@ -478,7 +478,6 @@ void hmp_info_migrate_parameters(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_loadvm(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     RunState saved_state = runstate_get();
- 
-     const char *name = qdict_get_str(qdict, "name");
-@@ -490,27 +489,25 @@ void hmp_loadvm(MonitorHMP *hmp, const QDict *qdict)
-         load_snapshot_resume(saved_state);
-     }
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_savevm(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     save_snapshot(qdict_get_try_str(qdict, "name"),
-                   true, NULL, false, NULL, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_delvm(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     const char *name = qdict_get_str(qdict, "name");
- 
-     delete_snapshot(name, false, NULL, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_cancel(MonitorHMP *hmp, const QDict *qdict)
-@@ -520,7 +517,6 @@ void hmp_migrate_cancel(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_migrate_continue(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     const char *state = qdict_get_str(qdict, "state");
-     int val = qapi_enum_parse(&MigrationStatus_lookup, state, -1, &err);
-@@ -529,12 +525,11 @@ void hmp_migrate_continue(MonitorHMP *hmp, const QDict *qdict)
-         qmp_migrate_continue(val, &err);
-     }
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_incoming(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     const char *uri = qdict_get_str(qdict, "uri");
-     MigrationChannelList *caps = NULL;
-@@ -549,34 +544,31 @@ void hmp_migrate_incoming(MonitorHMP *hmp, const QDict *qdict)
-     qapi_free_MigrationChannelList(caps);
- 
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_recover(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     const char *uri = qdict_get_str(qdict, "uri");
- 
-     qmp_migrate_recover(uri, &err);
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_pause(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_migrate_pause(&err);
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- 
- void hmp_migrate_set_capability(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *cap = qdict_get_str(qdict, "capability");
-     bool state = qdict_get_bool(qdict, "state");
-     Error *err = NULL;
-@@ -597,12 +589,11 @@ void hmp_migrate_set_capability(MonitorHMP *hmp, const QDict *qdict)
-     qapi_free_MigrationCapabilityStatusList(caps);
- 
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *param = qdict_get_str(qdict, "parameter");
-     const char *valuestr = qdict_get_str(qdict, "value");
-     Visitor *v = string_input_visitor_new(valuestr);
-@@ -799,25 +790,23 @@ void hmp_migrate_set_parameter(MonitorHMP *hmp, const QDict *qdict)
-  cleanup:
-     qapi_free_MigrationParameters(p);
-     visit_free(v);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_migrate_start_postcopy(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     qmp_migrate_start_postcopy(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- #ifdef CONFIG_REPLICATION
- void hmp_x_colo_lost_heartbeat(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_x_colo_lost_heartbeat(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- #endif
- 
-@@ -860,7 +849,7 @@ void hmp_migrate(MonitorHMP *hmp, const QDict *qdict)
-     g_autoptr(MigrationChannel) channel_cpr = NULL;
- 
-     if (!migrate_uri_parse(uri, &channel, &err)) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
-     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
-@@ -882,7 +871,7 @@ void hmp_migrate(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qmp_migrate(NULL, true, caps, true, resume, &err);
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
+@@ -21,6 +21,7 @@
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "monitor/monitor-internal.h"
++#include "monitor/monitor-hmp-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
 diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index afe4817b4056..d1e7e4de6585 100644
+index 3ac70c3f1123..91701ddf331b 100644
 --- a/monitor/hmp-cmds.c
 +++ b/monitor/hmp-cmds.c
-@@ -75,7 +75,7 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
-           compare_mon_cmd);
- }
- 
--bool hmp_handle_error(Monitor *mon, Error *err)
-+bool hmp_handle_error(MonitorHMP *hmp, Error *err)
- {
-     if (err) {
-         error_reportf_err(err, "Error: ");
-@@ -165,17 +165,16 @@ void hmp_sync_profile(MonitorHMP *hmp, const QDict *qdict)
- 
-         error_setg(&err, "invalid parameter '%s',"
-                    " expecting 'on', 'off', or 'reset'", op);
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-     }
- }
- 
- void hmp_exit_preconfig(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_x_exit_preconfig(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_cpu(MonitorHMP *hmp, const QDict *qdict)
-@@ -193,11 +192,10 @@ void hmp_cpu(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_cont(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qmp_cont(&err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_change(MonitorHMP *hmp, const QDict *qdict)
-@@ -219,29 +217,27 @@ void hmp_change(MonitorHMP *hmp, const QDict *qdict)
-         hmp_change_medium(mon, device, target, arg, read_only, force, &err);
-     }
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- #ifdef CONFIG_POSIX
- void hmp_getfd(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *fdname = qdict_get_str(qdict, "fdname");
-     Error *err = NULL;
- 
-     qmp_getfd(fdname, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- #endif
- 
- void hmp_closefd(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *fdname = qdict_get_str(qdict, "fdname");
-     Error *err = NULL;
- 
-     qmp_closefd(fdname, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_iothreads(MonitorHMP *hmp, const QDict *qdict)
-@@ -502,17 +498,16 @@ void hmp_info_mtree(MonitorHMP *hmp, const QDict *qdict)
- #if defined(CONFIG_FDT)
- void hmp_dumpdtb(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *filename = qdict_get_str(qdict, "filename");
-     Error *local_err = NULL;
- 
-     qmp_dumpdtb(filename, &local_err);
- 
--    if (hmp_handle_error(mon, local_err)) {
-+    if (hmp_handle_error(hmp, local_err)) {
-         return;
-     }
- 
--    monitor_printf(mon, "DTB dumped to '%s'\n", filename);
-+    monitor_printf(MONITOR(hmp), "DTB dumped to '%s'\n", filename);
- }
- #endif
- 
+@@ -25,6 +25,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor-internal.h"
++#include "monitor/monitor-hmp-internal.h"
+ #include "monitor/qdev.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 6e6334b64685..57c4127641ac 100644
+index e3fc05f521a8..488ec23937df 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -1215,28 +1215,28 @@ fail:
+@@ -27,6 +27,7 @@
+ #include "hw/core/qdev.h"
+ #include "hw/core/sysemu-cpu-ops.h"
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "monitor/hmp.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qnum.h"
+diff --git a/monitor/monitor-hmp-internal.h b/monitor/monitor-hmp-internal.h
+new file mode 100644
+index 000000000000..4e2430551abf
+--- /dev/null
++++ b/monitor/monitor-hmp-internal.h
+@@ -0,0 +1,106 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef MONITOR_HMP_INTERNAL_H
++#define MONITOR_HMP_INTERNAL_H
++
++#ifdef CONFIG_HMP
++#include "monitor/hmp.h"
++/*
++ * Supported types:
++ *
++ * 'F'          filename
++ * 'B'          block device name
++ * 's'          string (accept optional quote)
++ * 'S'          it just appends the rest of the string (accept optional quote)
++ * 'O'          option string of the form NAME=VALUE,...
++ *              parsed according to QemuOptsList given by its name
++ *              Example: 'device:O' uses qemu_device_opts.
++ *              Restriction: only lists with empty desc are supported
++ *              TODO lift the restriction
++ * 'i'          32 bit integer
++ * 'l'          target long (32 or 64 bit)
++ * 'M'          Non-negative target long (32 or 64 bit), in user mode the
++ *              value is multiplied by 2^20 (think Mebibyte)
++ * 'o'          octets (aka bytes)
++ *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
++ *              K, k suffix, which multiplies the value by 2^60 for suffixes E
++ *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
++ *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
++ * 'T'          double
++ *              user mode accepts an optional ms, us, ns suffix,
++ *              which divides the value by 1e3, 1e6, 1e9, respectively
++ * '/'          optional gdb-like print format (like "/10x")
++ *
++ * '?'          optional type (for all types, except '/')
++ * '.'          other form of optional type (for 'i' and 'l')
++ * 'b'          boolean
++ *              user mode accepts "on" or "off"
++ * '-'          optional parameter (eg. '-f'); if followed by a 's', it
++ *              specifies an optional string param (e.g. '-fs' allows '-f foo')
++ *
++ */
++
++typedef struct HMPCommand {
++    const char *name;
++    const char *args_type;
++    const char *params;
++    const char *help;
++    const char *flags; /* p=preconfig */
++    void (*cmd)(MonitorHMP *hmp, const QDict *qdict);
++    /*
++     * If implementing a command that takes no arguments and simply
++     * prints formatted data, then leave @cmd NULL, and then set
++     * @cmd_info_hrt to the corresponding QMP handler that returns
++     * the formatted text.
++     */
++    HumanReadableText *(*cmd_info_hrt)(Error **errp);
++    /*
++     * @sub_table is a list of 2nd level of commands. If it does not exist,
++     * cmd should be used. If it exists, sub_table[?].cmd should be
++     * used, and cmd of 1st level plays the role of help function.
++     */
++    struct HMPCommand *sub_table;
++    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
++
++    /* Keep non-pointer data at the end to minimize holes. */
++
++    /**
++     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
++     *     Allow to restrict the command for a particular set of
++     *     target architectures.
++     */
++    uint32_t arch_bitmask;
++    bool coroutine;
++} HMPCommand;
++
++struct MonitorHMPClass {
++    MonitorClass parent_class;
++};
++
++struct MonitorHMP {
++    Monitor parent_obj;
++    bool use_readline;
++    /*
++     * State used only in the thread "owning" the monitor.
++     * This is currently always the main thread, since
++     * HMP does not allow use of the I/O thread at this time.
++     * These members can be safely accessed without locks.
++     */
++    ReadLineState *rs;
++    char *mon_cpu_path;
++    int reset_seen;
++};
++
++int monitor_hmp_set_cpu(MonitorHMP *hmp, int cpu_index);
++void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
++int hmp_compare_cmd(const char *name, const char *list);
++
++/*
++ * hmp_cmds_for_target: Return array of HMPCommand entries
++ *
++ * If @info_command is true, return the particular 'info foo' commands array.
++ */
++HMPCommand *hmp_cmds_for_target(bool info_command);
++
++#endif /* CONFIG_HMP */
++#endif
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index c198c12eaa00..822a66d06d00 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -27,7 +27,6 @@
+ 
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ #include "qapi/qapi-emit-events.h"
+ #include "qapi/qapi-types-control.h"
+ #include "qapi/qapi-types-qom.h"
+@@ -36,75 +35,6 @@
+ #include "qemu/readline.h"
+ #include "system/iothread.h"
+ 
+-/*
+- * Supported types:
+- *
+- * 'F'          filename
+- * 'B'          block device name
+- * 's'          string (accept optional quote)
+- * 'S'          it just appends the rest of the string (accept optional quote)
+- * 'O'          option string of the form NAME=VALUE,...
+- *              parsed according to QemuOptsList given by its name
+- *              Example: 'device:O' uses qemu_device_opts.
+- *              Restriction: only lists with empty desc are supported
+- *              TODO lift the restriction
+- * 'i'          32 bit integer
+- * 'l'          target long (32 or 64 bit)
+- * 'M'          Non-negative target long (32 or 64 bit), in user mode the
+- *              value is multiplied by 2^20 (think Mebibyte)
+- * 'o'          octets (aka bytes)
+- *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
+- *              K, k suffix, which multiplies the value by 2^60 for suffixes E
+- *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
+- *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
+- * 'T'          double
+- *              user mode accepts an optional ms, us, ns suffix,
+- *              which divides the value by 1e3, 1e6, 1e9, respectively
+- * '/'          optional gdb-like print format (like "/10x")
+- *
+- * '?'          optional type (for all types, except '/')
+- * '.'          other form of optional type (for 'i' and 'l')
+- * 'b'          boolean
+- *              user mode accepts "on" or "off"
+- * '-'          optional parameter (eg. '-f'); if followed by a 's', it
+- *              specifies an optional string param (e.g. '-fs' allows '-f foo')
+- *
+- */
+-
+-typedef struct HMPCommand {
+-    const char *name;
+-    const char *args_type;
+-    const char *params;
+-    const char *help;
+-    const char *flags; /* p=preconfig */
+-    void (*cmd)(MonitorHMP *mon, const QDict *qdict);
+-    /*
+-     * If implementing a command that takes no arguments and simply
+-     * prints formatted data, then leave @cmd NULL, and then set
+-     * @cmd_info_hrt to the corresponding QMP handler that returns
+-     * the formatted text.
+-     */
+-    HumanReadableText *(*cmd_info_hrt)(Error **errp);
+-    /*
+-     * @sub_table is a list of 2nd level of commands. If it does not exist,
+-     * cmd should be used. If it exists, sub_table[?].cmd should be
+-     * used, and cmd of 1st level plays the role of help function.
+-     */
+-    struct HMPCommand *sub_table;
+-    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
+-
+-    /* Keep non-pointer data at the end to minimize holes. */
+-
+-    /**
+-     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
+-     *     Allow to restrict the command for a particular set of
+-     *     target architectures.
+-     */
+-    uint32_t arch_bitmask;
+-    bool coroutine;
+-} HMPCommand;
+-
+-
+ struct MonitorClass {
+     ObjectClass parent_class;
+ 
+@@ -149,24 +79,6 @@ struct Monitor {
+     int mux_out;
+ };
+ 
+-struct MonitorHMPClass {
+-    MonitorClass parent_class;
+-};
+-
+-struct MonitorHMP {
+-    Monitor parent_obj;
+-    bool use_readline;
+-    /*
+-     * State used only in the thread "owning" the monitor.
+-     * This is currently always the main thread, since
+-     * HMP does not allow use of the I/O thread at this time.
+-     * These members can be safely accessed without locks.
+-     */
+-    ReadLineState *rs;
+-    char *mon_cpu_path;
+-    int reset_seen;
+-};
+-
+ struct MonitorQMPClass {
+     MonitorClass parent_class;
+ };
+@@ -209,21 +121,10 @@ int monitor_can_read(void *opaque);
+ void monitor_cancel_out_watch(Monitor *mon);
+ void monitor_list_append(Monitor *mon);
+ void monitor_fdsets_cleanup(void);
+-int monitor_hmp_set_cpu(MonitorHMP *mon, int cpu_index);
+ 
+ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
+-void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
+-int hmp_compare_cmd(const char *name, const char *list);
+-
+-/*
+- * hmp_cmds_for_target: Return array of HMPCommand entries
+- *
+- * If @info_command is true, return the particular 'info foo' commands array.
+- */
+-HMPCommand *hmp_cmds_for_target(bool info_command);
+-
+ #endif
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 7979cd1cbcfd..6ba06280e023 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -24,6 +24,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/opts-visitor.h"
+ #include "qapi/qapi-emit-events.h"
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index c9f24febdc96..7525a88e0494 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/sockets.h"
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "monitor/qdev.h"
+ #include "monitor/qmp-helpers.h"
+ #include "system/system.h"
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index 0e74d78d52e4..8dfd46d2a8a3 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -1,6 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "monitor/hmp.h"
+ 
++#ifdef CONFIG_HMP
+ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+ {
+     /*
+@@ -17,3 +18,4 @@ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+     }
+     return -1;
+ }
++#endif
+diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+index 6f69f1f14ae4..4483ca25557f 100644
+--- a/stubs/monitor-internal.c
++++ b/stubs/monitor-internal.c
+@@ -8,8 +8,10 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+     return -1;
+ }
+ 
++#ifdef CONFIG_HMP
+ void monitor_new_hmp(const char *id, const char *chardev_id,
+                      bool use_readline, Error **errp)
+ {
+     g_assert_not_reached();
+ }
++#endif
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index 530a3fee3c13..006f5e579c6b 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -24,7 +24,6 @@
+ #include "qapi/error.h"
+ #include "socket-helpers.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ 
+ static void test_fd_is_socket_bad(void)
+ {
+@@ -75,7 +74,6 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+  */
+ Monitor *monitor_cur(void) { return cur_mon; }
+ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+-int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap) { abort(); }
+ 
+ #ifndef _WIN32
+ static void test_socket_fd_pass_name_good(void)
+diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
+index 0aa50a901d37..1e4c14913b56 100644
+--- a/tools/qemu-vnc/stubs.c
++++ b/tools/qemu-vnc/stubs.c
+@@ -9,7 +9,6 @@
+ #include "system/runstate.h"
+ #include "hw/core/qdev.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ #include "migration/vmstate.h"
+ 
+ bool runstate_is_running(void)
+@@ -42,11 +41,6 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
      return NULL;
  }
  
--static void hmp_info_human_readable_text(Monitor *mon,
-+static void hmp_info_human_readable_text(MonitorHMP *hmp,
-                                          HumanReadableText *(*handler)(Error **))
- {
-     Error *err = NULL;
-     g_autoptr(HumanReadableText) info = handler(&err);
- 
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
--    monitor_puts(mon, info->human_readable_text);
-+    monitor_puts(MONITOR(hmp), info->human_readable_text);
- }
- 
--static void handle_hmp_command_exec(MonitorHMP *mon,
-+static void handle_hmp_command_exec(MonitorHMP *hmp,
-                                     const HMPCommand *cmd,
-                                     QDict *qdict)
- {
-     if (cmd->cmd_info_hrt) {
--        hmp_info_human_readable_text(MONITOR(mon),
-+        hmp_info_human_readable_text(hmp,
-                                      cmd->cmd_info_hrt);
-     } else {
--        cmd->cmd(mon, qdict);
-+        cmd->cmd(hmp, qdict);
-     }
- }
- 
-diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
-index 702103b6a920..5b1c678f5d89 100644
---- a/net/net-hmp-cmds.c
-+++ b/net/net-hmp-cmds.c
-@@ -53,7 +53,7 @@ void hmp_info_network(MonitorHMP *hmp, const QDict *qdict)
-     NetHubInfoList *h;
-     NetworkClientInfoList *entry;
- 
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
- 
-@@ -86,13 +86,12 @@ void hmp_info_network(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_set_link(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *name = qdict_get_str(qdict, "name");
-     bool up = qdict_get_bool(qdict, "up");
-     Error *err = NULL;
- 
-     qmp_set_link(name, up, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- 
-@@ -113,7 +112,6 @@ void hmp_announce_self(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_netdev_add(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     QemuOpts *opts;
-     const char *type = qdict_get_try_str(qdict, "type");
-@@ -133,17 +131,16 @@ void hmp_netdev_add(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_netdev_del(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *id = qdict_get_str(qdict, "id");
-     Error *err = NULL;
- 
-     qmp_netdev_del(id, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- 
-diff --git a/qom/qom-hmp-cmds.c b/qom/qom-hmp-cmds.c
-index 16847d1ce261..2e2eb33371e2 100644
---- a/qom/qom-hmp-cmds.c
-+++ b/qom/qom-hmp-cmds.c
-@@ -42,12 +42,11 @@ void hmp_qom_list(MonitorHMP *hmp, const QDict *qdict)
-         }
-         qapi_free_ObjectPropertyInfoList(start);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_qom_set(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const bool json = qdict_get_try_bool(qdict, "json", false);
-     const char *path = qdict_get_str(qdict, "path");
-     const char *property = qdict_get_str(qdict, "property");
-@@ -71,7 +70,7 @@ void hmp_qom_set(MonitorHMP *hmp, const QDict *qdict)
-         }
-     }
- 
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_qom_get(MonitorHMP *hmp, const QDict *qdict)
-@@ -89,7 +88,7 @@ void hmp_qom_get(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qobject_unref(obj);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- typedef struct QOMCompositionState {
-@@ -160,22 +159,20 @@ void hmp_info_qom_tree(MonitorHMP *hmp, const QDict *dict)
- 
- void hmp_object_add(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *options = qdict_get_str(qdict, "object");
-     Error *err = NULL;
- 
-     user_creatable_add_from_str(options, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_object_del(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *id = qdict_get_str(qdict, "id");
-     Error *err = NULL;
- 
-     user_creatable_del(id, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void object_add_completion(ReadLineState *rs, int nb_args, const char *str)
-diff --git a/system/dirtylimit-hmp-cmds.c b/system/dirtylimit-hmp-cmds.c
-index 4c100783778f..75194add7931 100644
---- a/system/dirtylimit-hmp-cmds.c
-+++ b/system/dirtylimit-hmp-cmds.c
-@@ -23,7 +23,7 @@ void hmp_cancel_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
- 
-     qmp_cancel_vcpu_dirty_limit(!!(cpu_index != -1), cpu_index, &err);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-@@ -33,7 +33,6 @@ void hmp_cancel_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_set_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     int64_t dirty_rate = qdict_get_int(qdict, "dirty_rate");
-     int64_t cpu_index = qdict_get_try_int(qdict, "cpu_index", -1);
-     Error *err = NULL;
-@@ -46,7 +45,7 @@ void hmp_set_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
-     qmp_set_vcpu_dirty_limit(!!(cpu_index != -1), cpu_index, dirty_rate, &err);
- 
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
-@@ -63,7 +62,7 @@ void hmp_info_vcpu_dirty_limit(MonitorHMP *hmp, const QDict *qdict)
- 
-     head = qmp_query_vcpu_dirty_limit(&err);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index e27b9724867a..5c2de2f53cc9 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -1004,7 +1004,6 @@ void qmp_device_sync_config(const char *id, Error **errp)
- 
- void hmp_device_add(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     QemuOpts *opts;
-     DeviceState *dev;
-@@ -1034,17 +1033,16 @@ void hmp_device_add(MonitorHMP *hmp, const QDict *qdict)
-     }
-     object_unref(dev);
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_device_del(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *id = qdict_get_str(qdict, "id");
-     Error *err = NULL;
- 
-     qmp_device_del(id, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void device_add_completion(ReadLineState *rs, int nb_args, const char *str)
-diff --git a/system/runstate-hmp-cmds.c b/system/runstate-hmp-cmds.c
-index 834b95835339..051ee45ee74c 100644
---- a/system/runstate-hmp-cmds.c
-+++ b/system/runstate-hmp-cmds.c
-@@ -70,7 +70,6 @@ void hmp_one_insn_per_tb(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_watchdog_action(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     WatchdogAction action;
-     char *qapi_value;
-@@ -79,7 +78,7 @@ void hmp_watchdog_action(MonitorHMP *hmp, const QDict *qdict)
-     action = qapi_enum_parse(&WatchdogAction_lookup, qapi_value, -1, &err);
-     g_free(qapi_value);
-     if (err) {
--        hmp_handle_error(mon, err);
-+        hmp_handle_error(hmp, err);
-         return;
-     }
-     qmp_watchdog_set_action(action, &error_abort);
-diff --git a/target/i386/monitor.c b/target/i386/monitor.c
-index f1d2a327ddad..f68dd38ac225 100644
---- a/target/i386/monitor.c
-+++ b/target/i386/monitor.c
-@@ -573,7 +573,6 @@ void hmp_info_mem(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_mce(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     X86CPU *cpu;
-     CPUState *cs;
-     int cpu_index = qdict_get_int(qdict, "cpu_index");
-@@ -596,5 +595,5 @@ void hmp_mce(MonitorHMP *hmp, const QDict *qdict)
-     } else {
-         error_setg(&err, "Invalid CPU %d", cpu_index);
-     }
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
-diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
-index 5f3522943c56..186209fd0234 100644
---- a/ui/ui-hmp-cmds.c
-+++ b/ui/ui-hmp-cmds.c
-@@ -73,11 +73,10 @@ void hmp_mouse_button(MonitorHMP *hmp, const QDict *qdict)
- 
- void hmp_mouse_set(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
- 
-     qemu_mouse_set(qdict_get_int(qdict, "index"), &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_info_mice(MonitorHMP *hmp, const QDict *qdict)
-@@ -158,7 +157,7 @@ void hmp_info_vnc(MonitorHMP *hmp, const QDict *qdict)
- 
-     info2l = qmp_query_vnc_servers(&err);
-     info2l_head = info2l;
--    if (hmp_handle_error(mon, err)) {
-+    if (hmp_handle_error(hmp, err)) {
-         return;
-     }
-     if (!info2l) {
-@@ -266,7 +265,6 @@ out:
- 
- void hmp_set_password(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *protocol  = qdict_get_str(qdict, "protocol");
-     const char *password  = qdict_get_str(qdict, "password");
-     const char *display = qdict_get_try_str(qdict, "display");
-@@ -297,12 +295,11 @@ void hmp_set_password(MonitorHMP *hmp, const QDict *qdict)
-     qmp_set_password(&opts, &err);
- 
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- void hmp_expire_password(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *protocol  = qdict_get_str(qdict, "protocol");
-     const char *whenstr = qdict_get_str(qdict, "time");
-     const char *display = qdict_get_try_str(qdict, "display");
-@@ -325,7 +322,7 @@ void hmp_expire_password(MonitorHMP *hmp, const QDict *qdict)
-     qmp_expire_password(&opts, &err);
- 
- out:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- 
- #ifdef CONFIG_VNC
-@@ -427,7 +424,7 @@ void hmp_sendkey(MonitorHMP *hmp, const QDict *qdict)
-     }
- 
-     qmp_send_key(head, has_hold_time, hold_time, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- 
- out:
-     qapi_free_KeyValue(v);
-@@ -465,7 +462,6 @@ void sendkey_completion(ReadLineState *rs, int nb_args, const char *str)
- void coroutine_fn
- hmp_screendump(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     const char *filename = qdict_get_str(qdict, "filename");
-     const char *id = qdict_get_try_str(qdict, "device");
-     int64_t head = qdict_get_try_int(qdict, "head", 0);
-@@ -482,13 +478,12 @@ hmp_screendump(MonitorHMP *hmp, const QDict *qdict)
-     qmp_screendump(filename, id, id != NULL, head,
-                    input_format != NULL, format, &err);
- end:
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
- #endif
- 
- void hmp_client_migrate_info(MonitorHMP *hmp, const QDict *qdict)
- {
--    Monitor *mon = MONITOR(hmp);
-     Error *err = NULL;
-     const char *protocol = qdict_get_str(qdict, "protocol");
-     const char *hostname = qdict_get_str(qdict, "hostname");
-@@ -501,5 +496,5 @@ void hmp_client_migrate_info(MonitorHMP *hmp, const QDict *qdict)
-     qmp_client_migrate_info(protocol, hostname,
-                             has_port, port, has_tls_port, tls_port,
-                             cert_subject, &err);
--    hmp_handle_error(mon, err);
-+    hmp_handle_error(hmp, err);
- }
+-int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+-{
+-    return -1;
+-}
+-
+ /*
+  * Link-time stubs for VMState symbols referenced by VNC code.
+  * The standalone binary never performs migration, so these are
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
