@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E35AC5DF6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F207C5DF70
 	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 17:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvewx-0007mq-MX; Sun, 16 Aug 2026 13:47:11 -0400
+	id 1wvexg-0000JO-3q; Sun, 16 Aug 2026 13:47:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvews-0007jY-3C
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:06 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1wvexe-00009X-Ca
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:54 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvewq-00033R-0v
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:05 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2caced6038eso29366595ad.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:47:03 -0700 (PDT)
+ id 1wvexc-0003DC-PR
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:54 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2cc7e86e7aeso28528265ad.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786902423; x=1787507223; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786902471; x=1787507271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5hDxxdLFArNy/AE5beLWIrhBgzeK81RdKFWGUs0EIlo=;
- b=BcciLmolnRtVci6+K/xKWPoZGMh4MMRkueI2SiZcM3KXZdZ4EEhcrNLe0UqFNlJ661
- if82vPP2VRlltVLoVGMVwm2g6pa5TX4tyvmKTExhpTvxbbrYF+wKn3cwcsGZg5AZ+/ON
- OAcRaYC/Kl3naFdPgngqGWkXbgeL0WZh7X4Q5wDO6Idr/QrQ3jbvW5dINXntYJHybyP5
- vqs2ogw1tvnyvNrvcP3uM1/7js+04X0JGXEpQtILOMhepxFmyBPKPwmLoHKiy+236w5t
- PUE9z4JLyk3OmFDmGfb7zpVkO1ggPm8QVqUrPVbHhH0/aXfPIbJgnGrgVjnf3NF6z0Xg
- 9kpA==
+ bh=u3GrUm1TBcvSPpyf6hmkJd1nY4lbRyzlWNa4cSw3wVA=;
+ b=sOgYhwToriny31lZXMUwVzK/zV5qn6Nt5cxFpGKibcJOddNueXzEaQApOXFLZyvIBw
+ OXyiTvhQvBANLd71djDhOyNls+BER8uk33oTO4SkDU2A9UZ669fyp2qBT4plHRvKgbtk
+ GvxGcj/kuucA7oyWF9U+7yNEQqOfBsJi+NQ3wqSWJbmD6cxBX2++qZhZqxBjWWmO3T4W
+ /vgD0XRRj2tDrO39ODtId5vEUX3Pac07jI76RJrVc1/CJsS4xggJqr7J/rtUMeokeAnF
+ eUysxbIad2ZYyy6jiaDC/Fo0PTmpNN0HkEI6w6vaMc/rl0+sr9GoN8/TtOpbYL88pYaL
+ Ei1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786902423; x=1787507223;
+ d=1e100.net; s=20251104; t=1786902471; x=1787507271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5hDxxdLFArNy/AE5beLWIrhBgzeK81RdKFWGUs0EIlo=;
- b=dhc26EScf+PGsw963dinRkErZqyVSulNRXwS+X+x3hOS0NkP17XizjGRqxH2JtKsE/
- Yifb4PhdTqA1AyyQEwQa6bK5fMGD2Vih/dH1U5lD7mlihA5zHbAoGChieL54WYPZsk1s
- HCsFdNQP0kK57cVkJbXPFICWBwuOUjU5nutH7/bXtVwdh7/8k8Vhven5CiJq38Hwmn1j
- xetpm89hfSM5KSUxZAsuosNS5X2CSJmmCiUoYVuaCGUCk14X/gsdnsnBfhJY7/8kLch2
- Ag8DHAeXdpvrhGimG5LcTCNfXQaFtUoltde9KtZqobnAWWETx3Z/r09UXWeCc+MPduAQ
- t80w==
-X-Gm-Message-State: AOJu0Yy2y0Ia1qhcRhPXDTcSt3p8Spes8MrLC2kD87bRorL4A7lprCvm
- 2FLCOvmCI65ZRqBetulqV3M/mr5XK3A/hbe6AGoUSk7LG1XBqu+i+tSeg1Pp3go3
-X-Gm-Gg: AR+sD13hyOVneHkmjbq4xc/HsUUzrFbASGUZF5UE9JTT9UMJs3x+QOC9xxZfkw95bvb
- wwokyYzUhbXsJWRp6vaOIxOZDLin93hGmFdixFR+vEi6jDkEwfqs3bEdspgmDbDgAVZPLlCVJ6U
- gpTbCJMLSCiIO3Ou/2/1KKqLfEzGEr1JkTsA2FWBy90sD9UF5DTJ7ivb0WKkw8KZ7qEpze+Sx0S
- JGw12B2AtgwGf4rTWvD9xzkshNDeQIAW9gfdGtj6PP0/Vy3sBVm5iczFHWLVH3w4svp9N7DZv27
- 9vPaZ+lNRLQnIu6BL2Qg5PrlYbQCNxRjoWNYY361x6nirCpkrKO2WSf7Ia4byhNxwDUqQ58Znac
- v5g9e7fJx0u6MM/W1f0o6T6er3cQ2MXQaK0LH5T3NKgk26cS9xj486y7x9g2PX9+VnutagAEHqn
- MkzOQQ458JhrLRVpB16cx567WDieaMpy28Fp1+jIL0RobPb99wVzawh6ZZrHVmL47d/moOWUJj3
- RlX07KouDrbsmg=
-X-Received: by 2002:a17:902:f64e:b0:2cf:70d2:da7c with SMTP id
- d9443c01a7336-2d37f77fdfemr287252555ad.12.1786902422575; 
- Sun, 16 Aug 2026 10:47:02 -0700 (PDT)
+ bh=u3GrUm1TBcvSPpyf6hmkJd1nY4lbRyzlWNa4cSw3wVA=;
+ b=Xn7zhPig3dPA/I6FTVEXiTwVwkPQpuWKCpTfdoJsuLyvg4rFHf83ViWZN9G9TbqSzm
+ 823hhi8Ptar94m7LqmOXkIHigekPGPuD3J7AQKL2J3XyPMHmmX5xgapD2UGgJC/SnYMV
+ gPArvrBAzmi4d2Hah5KWbi4BVYLQXDs/w/nmttkg1u3vqOnKlP5PGl2TLfmiAgT0iGcX
+ v/y108o7G6AZttyx9J7Nzw48UOSVoHPO0c4KacmR8YD6/35OZDgWae1Me3IMQpSv9Uoe
+ kQNPGYizXSEnbZDVTo3Oks8A51B844dURzDJNPTNOS/nwoY+Euu+BEmSWWThbxNtjMS4
+ GPOg==
+X-Gm-Message-State: AOJu0YxLR/aXhZz4inwsixDeuHaR3fveQRuPmlj5OozNJCoQYzg20feG
+ dzybtM99OhoVwEjWEqUpwNMP0bp+4G54Aym82N/O8c8XTvPh43Iwmw2XKMKNng==
+X-Gm-Gg: AR+sD10RGSL1ZbhVAoB6YPqc2Ni4Zwv60WekksULGDjhR3WB1S8MoooZYMEQlLwYl9r
+ nD6tHqy4vP8cgFAc4xuiJMQxpD2c+2wQaNo6C0xOw/WmRJiqfaT9625CB9C52LYaUQzDtqniY1w
+ B4RKWbtRjjCB5yQwvyxqDO6S17vmPFcCo/FRQJGTD9pUAplko0ulyVg2Dk3ePFpaSIERs29qqgA
+ Twh19cj8+OJeCg/Vhai1CvtLhYMXEnTxloYy+AiFrhDqACWF/mH29Hv3nu2+RP6Zr4hnzcIB0YP
+ dixorLrnDOyq6INHJYDmBVM74MiuxGaggqQu1iwjTj6ySSDmeSoiEBvTzQluSZ75IwtdOPF0uXm
+ EXrM3RSR2soXEGbTbql1apeVSsaWCPfNQTF5/dueIxsVhd4N9icDlZKxzJZRdpgugBuMK3VuUzZ
+ 1EAG93j+eMQIIr54/YOTDl5Z9uCARr34vskc2/HcPcDDumXVQAqqWw1inN4pmm1bYLwFBF+GL18
+ 4VlJ6hgT/3bwpo=
+X-Received: by 2002:a17:902:ce86:b0:2c8:f34c:82c0 with SMTP id
+ d9443c01a7336-2d3b0aeeb6cmr200501005ad.2.1786902471338; 
+ Sun, 16 Aug 2026 10:47:51 -0700 (PDT)
 Received: from setun ([223.228.54.80]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-320ead105a9sm28343674eec.31.2026.08.16.10.46.57
+ 5a478bee46e88-320ead105a9sm28343674eec.31.2026.08.16.10.47.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Aug 2026 10:47:01 -0700 (PDT)
+ Sun, 16 Aug 2026 10:47:50 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
- Aadeshveer Singh <aadeshveer07@gmail.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v5 01/11] migration: Propagate error in postcopy setup
- functions
-Date: Sun, 16 Aug 2026 23:16:21 +0530
-Message-ID: <20260816174631.1547811-2-aadeshveer07@gmail.com>
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PATCH v5 11/11] docs/migration: Add documentation for fast snapshot
+ load feature
+Date: Sun, 16 Aug 2026 23:16:31 +0530
+Message-ID: <20260816174631.1547811-12-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260816174631.1547811-1-aadeshveer07@gmail.com>
 References: <20260816174631.1547811-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,148 +103,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modernize error handling in postcopy_ram_incoming_setup() and
-postcopy_temp_pages_setup() by replacing error_reports and local error
-handling with standard Error propagation.
-
-Replace use of strerror() on errno with error_setg_errno() for modular
-handling of errors and change return values to -1 on failure as no
-caller checks the actual return value.
+Add documenatation for fast snapshot load covering an overview, the
+architecture, usage and limitations.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 ---
- migration/postcopy-ram.c | 41 +++++++++++++++++-----------------------
- migration/postcopy-ram.h |  2 +-
- 2 files changed, 18 insertions(+), 25 deletions(-)
+ docs/devel/migration/fast-snapshot-load.rst | 82 +++++++++++++++++++++
+ docs/devel/migration/features.rst           |  1 +
+ 2 files changed, 83 insertions(+)
+ create mode 100644 docs/devel/migration/fast-snapshot-load.rst
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index f5ef93f193..96a65aa976 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -1464,10 +1464,9 @@ retry:
-     return NULL;
- }
- 
--static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
-+static int postcopy_temp_pages_setup(MigrationIncomingState *mis, Error **errp)
- {
-     PostcopyTmpPage *tmp_page;
--    int err;
-     unsigned i, channels;
-     void *temp_page;
- 
-@@ -1487,11 +1486,11 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
-         temp_page = mmap(NULL, mis->largest_page_size, PROT_READ | PROT_WRITE,
-                          MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-         if (temp_page == MAP_FAILED) {
--            err = errno;
--            error_report("%s: Failed to map postcopy_tmp_pages[%d]: %s",
--                         __func__, i, strerror(err));
-+            error_setg_errno(errp, errno,
-+                             "%s: Failed to map postcopy_tmp_pages[%d]",
-+                             __func__, i);
-             /* Clean up will be done later */
--            return -err;
-+            return -1;
-         }
-         tmp_page->tmp_huge_page = temp_page;
-         /* Initialize default states for each tmp page */
-@@ -1505,11 +1504,10 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
-                                        PROT_READ | PROT_WRITE,
-                                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-     if (mis->postcopy_tmp_zero_page == MAP_FAILED) {
--        err = errno;
-         mis->postcopy_tmp_zero_page = NULL;
--        error_report("%s: Failed to map large zero page %s",
--                     __func__, strerror(err));
--        return -err;
-+        error_setg_errno(errp, errno, "%s: Failed to map large zero page",
-+                         __func__);
-+        return -1;
-     }
- 
-     memset(mis->postcopy_tmp_zero_page, '\0', mis->largest_page_size);
-@@ -1517,15 +1515,13 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
-     return 0;
- }
- 
--int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
-+int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp)
- {
--    Error *local_err = NULL;
--
-     /* Open the fd for the kernel to give us userfaults */
-     mis->userfault_fd = uffd_open(O_CLOEXEC | O_NONBLOCK);
-     if (mis->userfault_fd == -1) {
--        error_report("%s: Failed to open userfault fd: %s", __func__,
--                     strerror(errno));
-+        error_setg_errno(errp, errno, "%s: Failed to open userfault fd",
-+                         __func__);
-         return -1;
-     }
- 
-@@ -1533,8 +1529,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
-      * Although the host check already tested the API, we need to
-      * do the check again as an ABI handshake on the new fd.
-      */
--    if (!ufd_check_and_apply(mis->userfault_fd, mis, &local_err)) {
--        error_report_err(local_err);
-+    if (!ufd_check_and_apply(mis->userfault_fd, mis, errp)) {
-         return -1;
-     }
- 
-@@ -1546,8 +1541,8 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
-     /* Now an eventfd we use to tell the fault-thread to quit */
-     mis->userfault_event_fd = eventfd(0, EFD_CLOEXEC);
-     if (mis->userfault_event_fd == -1) {
--        error_report("%s: Opening userfault_event_fd: %s", __func__,
--                     strerror(errno));
-+        error_setg_errno(errp, errno, "%s: Opening userfault_event_fd",
-+                         __func__);
-         close(mis->userfault_fd);
-         return -1;
-     }
-@@ -1559,12 +1554,11 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
- 
-     /* Mark so that we get notified of accesses to unwritten areas */
-     if (foreach_not_ignored_block(ram_block_enable_notify, mis)) {
--        error_report("ram_block_enable_notify failed");
-+        error_setg(errp, "ram_block_enable_notify failed");
-         return -1;
-     }
- 
--    if (postcopy_temp_pages_setup(mis)) {
--        /* Error dumped in the sub-function */
-+    if (postcopy_temp_pages_setup(mis, errp)) {
-         return -1;
-     }
- 
-@@ -2201,9 +2195,8 @@ int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp)
-      * shouldn't be doing anything yet so don't actually expect requests
-      */
-     if (migrate_postcopy_ram()) {
--        if (postcopy_ram_incoming_setup(mis)) {
-+        if (postcopy_ram_incoming_setup(mis, errp)) {
-             postcopy_ram_incoming_cleanup(mis);
--            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
-             return -1;
-         }
-     }
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index a080dd65a7..98d918713f 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -23,7 +23,7 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
-  * Make all of RAM sensitive to accesses to areas that haven't yet been written
-  * and wire up anything necessary to deal with it.
-  */
--int postcopy_ram_incoming_setup(MigrationIncomingState *mis);
-+int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp);
- 
- /*
-  * Initialise postcopy-ram, setting the RAM to a state where we can go into
+diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
+new file mode 100644
+index 0000000000..fe2361d6fe
+--- /dev/null
++++ b/docs/devel/migration/fast-snapshot-load.rst
+@@ -0,0 +1,82 @@
++==================
++Fast Snapshot Load
++==================
++
++Overview
++========
++Fast snapshot load is an extension of the postcopy migration feature
++to disk loads.
++
++Unlike a usual snapshot load, which requires all VM data (RAM as well
++as device states) to be loaded into host RAM from the snapshot file
++for the guest to run, fast snapshot load uses postcopy infrastructure
++to load in only the required device states and allows RAM pages to
++be loaded after the guest starts execution. The idea is to start the
++guest and serve its page faults on the go, reducing the perceived
++resume time for large snapshots.
++
++Architecture
++============
++This feature combines postcopy migration and mapped-ram capabilities
++to load RAM pages on demand. It is done by catching guest faults using
++Linux ``userfaultfd`` and loading the page by calculating the offset
++of its location in the snapshot file using mapped-ram capabilities.
++
++Fault Thread
++------------
++The fault thread uses Linux ``userfaultfd`` to catch page faults caused
++by guest and directly load the page from the snapshot file. It is
++very similar to network postcopy fault thread, with primary difference
++being it loads pages directly by reading from the snapshot file.
++
++Eager Thread
++------------
++Eager thread iterates over all pages in RAM and loads each page not
++yet loaded by fault thread. It is required as unlike network postcopy
++where majority of RAM has already been loaded via precopy, here entire
++RAM is waiting to be loaded. If there is no eager loading thread each
++page will only be loaded when it is required by guest. In case there
++are some background pages that are never/rarely accessed by guest,
++the system will be locked in migration state indefinitely.
++
++Synchronization
++---------------
++In order to make sure both of these threads do not load the same page
++twice potentially overwriting and corrupting user RAM, a bitmap is
++used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
++be loaded by threads. This prevents race condition when one thread
++is loading the page and other one tries to do the same.
++
++Usage
++=====
++
++Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
++the destination:
++
++.. code-block:: text
++
++    migrate_set_capability mapped-ram on
++    migrate_set_capability postcopy-ram on
++
++Use a ``file:`` URI for migration:
++
++.. code-block:: text
++
++    migrate_incoming file:/path/to/snapshot/file
++
++Limitations
++===========
++
++ - Multifd
++    Fast snapshot load is currently incompatible with ``multifd``
++    capability. While ``mapped-ram`` allows for parallel disk I/O,
++    coupling it with ``postcopy`` capability requires additional
++    infrastructure.
++
++ - Host OS support
++    Because this feautre essentially depends on ``userfaultfd``
++    to trap page faults, it is supported only on Linux hosts.
++
++ - vhost-user
++    Fast snapshot load does not currently support ``vhost-user``
++    backends.
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 9aef79e7fa..23c2a93173 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
+    vfio
+    virtio
+    mapped-ram
++   fast-snapshot-load
+    CPR
+    qpl-compression
+    uadk-compression
 -- 
 2.55.0
 
