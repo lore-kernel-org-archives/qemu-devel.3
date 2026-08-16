@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E7DC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2254FC5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgId-0008PZ-F4; Sun, 16 Aug 2026 15:13:39 -0400
+	id 1wvgJA-0000Uh-9S; Sun, 16 Aug 2026 15:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgIO-0008Kk-FM
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:25 -0400
+ id 1wvgIy-0000BL-El
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgII-0007EA-Qm
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:23 -0400
+ id 1wvgIv-0007Tl-48
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907584;
+ s=mimecast20190719; t=1786907636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JHUWUIlV1L88EuNWpXBRzIO9zHPWAXRW9+Hdx8pgeCk=;
- b=f1zdj52CkvY0OWPJ3k1g7bGmC5DpLl+Bi7r5JjvoonhZive5PEnfAJZOdnoV9nr55gs37q
- L18o5rSTqJRCPinqIzLZd8lte6PpQeEojVVj4w/iKiHUAddvnD4UEnfWkGP3OUJy9Qkzo5
- KBiboGI6+HgrZvJCLfGEJ3RlK99E6fA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hUCHRq2Ok04LdmPe7Y32jbNNusp9xmvBIAs7AR4+PV8=;
+ b=O0dZ0A1TkcP7VvuXqLIX6+NPZ5tqajNhDkKaVeoWY9J3BDU3hQ9w6Q/z0kj1/OIh+Mq5Ci
+ yCUfFfJrp4CebkYzk+EZYdBQOCzPd4KWHmHSYCZklvW7pshVYvF5AhbUwjDlRAijPKCErx
+ DNVuDDcDBNQRe+xbKjl59827n3AM/fc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-qdTL-OdPNCeDIVnFyWGogQ-1; Sun,
- 16 Aug 2026 15:13:02 -0400
-X-MC-Unique: qdTL-OdPNCeDIVnFyWGogQ-1
-X-Mimecast-MFC-AGG-ID: qdTL-OdPNCeDIVnFyWGogQ_1786907582
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-R0UlX5KaM1GWaUzbWm2kyw-1; Sun,
+ 16 Aug 2026 15:13:53 -0400
+X-MC-Unique: R0UlX5KaM1GWaUzbWm2kyw-1
+X-Mimecast-MFC-AGG-ID: R0UlX5KaM1GWaUzbWm2kyw_1786907632
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7BB941956080; Sun, 16 Aug 2026 19:13:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFEDE195608B; Sun, 16 Aug 2026 19:13:51 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 314FF30001A2; Sun, 16 Aug 2026 19:12:59 +0000 (UTC)
+ id EE01F30001A2; Sun, 16 Aug 2026 19:13:50 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:28 +0400
-Subject: [PATCH v3 01/49] vl: fix -monitor none prefix matching
+Date: Sun, 16 Aug 2026 23:12:42 +0400
+Subject: [PATCH v3 15/49] tests/qtest/cdrom-test: replace HMP "info block"
+ with QMP query-block
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-1-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-15-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=937;
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>, 
+ "Denis V. Lunev" <den@openvz.org>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-block@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2255;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=3iiRReSd94lLGBmuGE+7JzjtOZA9/s2KBjEkNLxXG5k=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguv3dVdsIPiywaCP8/+YKQQp+he4LmMAWzRo
- NOHvmYA3p2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILrwAKCRDa6OEJdZac
- 5czZD/9XOIzzMt3YF6dJj7V8Wi8JGFJND5a3UFxv7tVn5RDF37mxwjZbQ2kkaDi36PZAZ5x3NNd
- Q1WZXVIMqOCoW0Ito0BG6SX48B53Fs1nviJF0TgJMWu43ziUyS4gRxBGSHOijqct2b/yRXz4Q2R
- aVD7ZQsy0h5EdGhxnE/RCrGhmRBMndtI0LJukSNCD7Bbx6d8Gt9M1E0CfTV4qFozE3x9bebU3wY
- xmcZWkupQk9o6NYs8k/w9+voIUIGWBWBqbwAgie692atim8cHj+0gLT2jEh6ffxVtff7krPVY5S
- zm6MNjz/vCeSdYgXtGejKWV4OtwogDvy+QHehk5SpWtfsqLYbfd2wvNFqYQ98fEvgvrYq7aHPcv
- DM9iHeLB7EBN4Waxe+6WZwKob/mnjmiNJ/3pbF4rsdUHx277QhBt5SXqb/FsFc63JG91xPJ2ZKn
- 1+WD++7lJg2zglDYIJ2SVXlHsnms8bo67o6rJlGOt1a4kD0qZ8FrFAFcYRf40YmsSzLY3bQ0TA8
- Zb04/xNhDEjwk/B+n3KFVSukFuKum3vW0eoCIQFcPTCjFvXaKGSspQaSbaEdsFwSRvBLFU9umgz
- wjZ8OmkAe6L3piBcmjWFoasPO9gR9UWslz+cv39NNCuJiY8WrxrUv4MVZhUoxUIZILu7YRsVsGi
- Ojl5MYS80XvJdvQ==
+ bh=T/T/dWIHE7tVy83U045hqtVQSWYIwyZRSt/Bfc8zxxU=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGqCC7Gja6NvFIRm6AlpWRm1UzZyf6JmPNM7+E5Hxqr2YwySM
+ IkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJqgguxAAoJENro4Ql1lpzliIMP/0fd
+ LgWZjQJFufEMyhfGeGkSz5CF7cXN21S5M4fkMyUEBUrhw80APTsgYkpTELItnQmCWLsA7T2fCPc
+ vw6O6yWxsDYptCpN8nAC6AfV0kSxRBVY7VA1tqm4/xnlwg4GQOTil3wtCIg1MRpebjtkv62iuPT
+ ROUiRp5/BwAEYX9Ftip3gGl/uD4pjX9AGDHQNze3ve3zOZPvwmdjMTLdX4nLsDClpAJkaFfvVz9
+ MN9WwFF09nEgvZgiZ6lIdgBMRKAg8rV98c+60U1h9IcIqC8OXLv1PJzkdrbcI1ojIaDLqRYSzMS
+ gK0BniM/XIwsNT9UiqSeo86+euSzVGKnGweI6jBU+w20iuLk8job+MkTW9jUpqff6QlB+OR/i5e
+ w30JQ8GHaabceCUm67ZX0OBrTaJl3OYTDPAjbTscQ/LMP+vYntUrX/R6y26Q+3FXg09DZWFM8D2
+ xfeDOSSrO5pXilTSdoLdX/P9rS8MDH3TRCQqFxe7jc9DxDw0YxGpa09vgq0dn9TJJ93nxBdP7Bz
+ fgVmt7kXrNCPm2XGpI44jzns0SFFfgbgR6+dDBBNdf1cFdBLxVC7rtKzX0ye8YDCavwlW5qOjEq
+ Te+XeTABfi+t9X7E97gq8LDGE1QPopaskzqH7/qED56xSSIqyT+2losSf7Zz5/9rrNGgRd39rGn
+ KDzri
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -105,30 +110,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use g_strcmp0() for exact match instead of strncmp() which would
-incorrectly treat any string starting with "none" as disabling
-the monitor.
+The test_cdrom_param() function uses qtest_hmp() to run "info block",
+which depends on the human-monitor-command QMP endpoint. Replace it
+with the QMP query-block command so the test works when HMP is
+disabled (-Dhmp=disabled).
 
-Fixes: 70e098af88f ("monitor: allow to disable the default monitor")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/vl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/cdrom-test.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 061cbdf860bf..5ccc19282ba2 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3226,7 +3226,7 @@ void qemu_init(int argc, char **argv)
-                 }
-             case QEMU_OPTION_monitor:
-                 default_monitor = 0;
--                if (strncmp(optarg, "none", 4)) {
-+                if (g_strcmp0(optarg, "none")) {
-                     monitor_parse(optarg, "readline", false);
-                 }
-                 break;
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index a65854d2bc53..bf997be6d690 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -14,6 +14,7 @@
+ #include "libqtest.h"
+ #include "boot-sector.h"
+ #include "qobject/qdict.h"
++#include "qobject/qlist.h"
+ 
+ static char isoimage[] = "cdrom-boot-iso-XXXXXX";
+ 
+@@ -92,17 +93,35 @@ cleanup:
+ 
+ /**
+  * Check that at least the -cdrom parameter is basically working, i.e. we can
+- * see the filename of the ISO image in the output of "info block" afterwards
++ * see the filename of the ISO image in the output of "query-block" afterwards
+  */
+ static void test_cdrom_param(gconstpointer data)
+ {
+     QTestState *qts;
+-    char *resp;
++    QDict *response;
++    QList *ret;
++    QListEntry *entry;
++    bool found = false;
+ 
+     qts = qtest_initf("-M %s -cdrom %s", (const char *)data, isoimage);
+-    resp = qtest_hmp(qts, "info block");
+-    g_assert(strstr(resp, isoimage) != 0);
+-    g_free(resp);
++    response = qtest_qmp(qts, "{'execute': 'query-block'}");
++    g_assert(response && qdict_haskey(response, "return"));
++    ret = qdict_get_qlist(response, "return");
++
++    QLIST_FOREACH_ENTRY(ret, entry) {
++        QDict *entry_dict = qobject_to(QDict, entry->value);
++        QDict *inserted = qdict_get_qdict(entry_dict, "inserted");
++        if (inserted) {
++            const char *file = qdict_get_str(inserted, "file");
++            if (file && strstr(file, isoimage)) {
++                found = true;
++                break;
++            }
++        }
++    }
++
++    g_assert(found);
++    qobject_unref(response);
+     qtest_quit(qts);
+ }
+ 
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
