@@ -4,128 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B99C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A53C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvc8f-0001ya-J1; Sun, 16 Aug 2026 10:47:05 -0400
+	id 1wvc92-0002zH-63; Sun, 16 Aug 2026 10:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc8e-0001y3-6l
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:47:04 -0400
+ id 1wvc90-0002yY-48
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:47:26 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc8c-0000gC-GF
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:47:03 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wvc8y-0000jn-F5
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:47:25 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDlbU92761832
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:47:01 GMT
+ 67GDki2W4142901
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:47:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F1o0vnS4K1J5CTBWre/XReXN3J0PT4Fz7RBqYUYDRoQ=; b=X5O9OS2JazrusWVU
- nyW9De2enRhZcWJJviZQvy++fcRLaO+IAX8+AmKgeda/kVgtku7oVoGt04ppnpX+
- IEcx589jpPdD33B5PAjiDlNy5TNb7+vU1nqq3n4kvTAxYlmYQW6+mmD/iAO2k+Uc
- w1VuOjMAj3lcSl58ueAr0MRZNB33a0KvG9kjvjDdsuURFNRShAh7FZU85GGMsmkI
- dYusrngAFhreFosfwRlujvrDbyUJ6vawHjMbVz0H60QDVknx3SiJwljYCOWtLFys
- K2F7pxxrkpdrnPJciD4Z8myowXezELIYZV6yY1gHMKuFIJRk3bnePTjlE+oNeoA3
- 4X8hbQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gkh0n-1
+ xLTsNF4Soh7q8ru9VGONHPuB7j85hRYLW7glkBkqV5Q=; b=I9xrfZxnz7O1Yz6P
+ NYc+XP+2IWOCUYB4cKFz/f8dpA3yy18eY/CUGhbG+OjosN7Jhh3pKmVpy7KrmXA4
+ vX5HS2Y/xcZcQDmH/fDeKRISOrUUPYKyWc2PqGKNqmDgL2xw78DKaQbrG72pWnLD
+ 3hdKE9gnLauvIehw4q854p/JUlIgFN8wd9Y1xLSBDE0CREL5A688WB+KAExn63zk
+ Xc0SUCmVAqhuTUYPc7WzviMXqZbrTAob8n7spsqzySReFwONST1ZO5GHjB/+1UFN
+ QLVr/YCIZrPyj2l1+7V+cizqdmGjljXmuOuaBgrrnaZ7GLMLz/iF8vR3ZZFl2TSJ
+ GfW6RA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghwkkb0-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:47:00 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8f0f45415cfso25628836d6.2
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:47:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:47:22 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-52d7b3adda4so25645181cf.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891620; x=1787496420; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891642; x=1787496442; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=F1o0vnS4K1J5CTBWre/XReXN3J0PT4Fz7RBqYUYDRoQ=;
- b=aawyFptfFatiCyc1ceHiDR2XQTCh0pcwk3eiJw62W5KgPNGyY2pf0oiZE4Hz2NUHYL
- qMmgyt3lm3GYP5MYgQCh3jvjIYNQWn+gJPFu4ldn2eTCJhYiA52NI6MfU2ox7Ay+pCr9
- xjtqDg//VccIu1cEeXw+d9ktIwqGGywSh15kndWqD+28efXax1Vh0BwfmadT1tVw7KVT
- KC7Mw9V3MTHf7hZcSwgwfio4ZwLhAynIsgyLNnzdDpd8wX1kdIpTs/Ne7imLaykfL/Oe
- HqAjM3r6SPec8qkVPUewvHAuqdLeGpd5RsY4giVNIfEfT0SgDA69nrIkDLt3IGrntoyv
- 0htQ==
+ bh=xLTsNF4Soh7q8ru9VGONHPuB7j85hRYLW7glkBkqV5Q=;
+ b=E16NIW0m9ZPnWPZ9rsdUh+YlywpD9izugtxtxHNXX4ED638i4IgJuvAknFm4m1Hfi+
+ CdPkisdH7OOwSS+yLe6FJdjFnlL+zfvNzX+YEE7NMgQGn6oQngypN/0mG4Hye/lP6kMC
+ X7tR2BWpVcB9BPf7n1gI7gD9P1ihLxpi7+0+vaXmae9/85lJFNY/6Xm2007KNY6iZWru
+ 5JL68mEd5SP1OrrXEN8IVnvyQyOoEyvWg4kI0G5NZenRFxlu7I+lazZpIitBMtjvaczz
+ qAtfuCf05WZ2eZDRhJ0WHRmMNPawfOg8XIKV6xTiTY7/r5Eyt8fFSpFnbaILttwAG0mz
+ 6m9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891620; x=1787496420;
+ d=1e100.net; s=20251104; t=1786891642; x=1787496442;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=F1o0vnS4K1J5CTBWre/XReXN3J0PT4Fz7RBqYUYDRoQ=;
- b=fuMbHephU5DYtKf9nWo5xfKsi+o0LEn+iLJSXSCN29fnHWXy7XgLJWhjEAuDJUZQUC
- ADxr2Nx6br6OclGmiD7ucHv5x0Ww8ipHG+ImHn6xBzsAkzRXebWpEgVJif8Gp2FSQk9z
- EjRYupuKvysu1UZ5YHaP5RKu4wKVCyZaq7KCIyPZoG0JQCjkBnzXV1xW9lC0jyMLR5NN
- TEtHIPKzyJmmcqtbevocJH2/2dH0a9YjO4rI/k+jWeoVf591syPBvJlknBAq+uN911i4
- YQK5qhSVUDga8U3swLJHgqGUOna9f5bIRJL7TfVtQYJjIX5OEyUMXrebpZhtxCWUq/W5
- tiSQ==
-X-Gm-Message-State: AOJu0Yw2p9ooyF31r226olcEPGTdI3z3YtMiuD5kwHK3B2Y3wMnzrBuw
- wD6bu1/ZjUlowgdWaltK/a2CTbBzXVjnhKR1dJwzqeckbc1Nbtox1lY5Bgeqoqg1/TshX+/P5cs
- 01CVzkOjf7ANbuBPe5f4igmEx40W9OahveiO8PUtmcrGv0IBXs9cIMsFstpggd8lqKw==
-X-Gm-Gg: AR+sD12yrujVhQxAt6Hbf46sStMdDhcIFo96ywkevI8B3C+cVjlE2hrRvKG4lJOGnRG
- 5TIKZlH8yinodpl9xmA16dj4/6fjbBHbBX4APH4Oqszi60E2/1CuseA8OlBxCDR5zd+Xn0/t/vo
- G+0UHcbL39s8i9SS1ccgNrgnX3KBeaEYY8bcyRIRGkJyj7WlRV1jWvoquCFUk9Jj1WK5nKcZvxl
- NXQTFN0m0tKQRttfKjddIwT7ACjiby0fDRosSMbp3y56c0hRJb5NPdTkwPHZJnXJtoA4RU9lajj
- tAVJlUZ4ot/RNbIY37uIcxjX3ktWE9d+7dAqO+t5da8Aj16o0kt4CGL+yyBcHIJOmIF9QWvkE4W
- QM9beAyrkmKeuDLpdZOfyWDmcv5ERb9Cd19CRVch5Iw==
-X-Received: by 2002:a05:620a:170f:b0:92e:603f:1f20 with SMTP id
- af79cd13be357-936d2145adamr1574470185a.2.1786891619892; 
- Sun, 16 Aug 2026 07:46:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:170f:b0:92e:603f:1f20 with SMTP id
- af79cd13be357-936d2145adamr1574468485a.2.1786891619463; 
- Sun, 16 Aug 2026 07:46:59 -0700 (PDT)
+ bh=xLTsNF4Soh7q8ru9VGONHPuB7j85hRYLW7glkBkqV5Q=;
+ b=HjQNkq2GEgtXi4usuaQCwWfO0FEkVNL5X7aWp5SqA2E8jez89GW2oN/T5NGcyfpcGJ
+ 4tC928Ex9C0Qk+cSXcpzCqA83nU/NZlwE3WqFr+5Lq4WjJ9e7uVHrPbnOXDJ1SdBIi5N
+ f3OBZRW7gp5ZOz+vjP23nX+++Nnn+f3VGDI/R3RhL45hxJCO9zRp5uSKbmbwnwaaUDJn
+ 3k0Y3xrMjzSHb7p0hGX4YSQ35kIixZIV8DWdbsVXcr4goFipo+EtS3CuT3UJ9MXEDag8
+ uVGVOOKcm9NNT2jw/Tzdw4qiInp3J4qea86p6jdZiZBj1EmKaWZH0nnQA/CSr6PsZIca
+ mjzg==
+X-Gm-Message-State: AOJu0Yy4yFNaggN3mJZpg4gSOcZ/d9jnzbSo54ZBMYbQuLI6cMG2XxdK
+ V4R2wpq6UyJnzg/gy5gTSS2P6t97gXvhYfgnoiX1NQlpcVvsdycxZodzByNRp2OYj3B2ZAHXfyr
+ i2HSKDj9q9AotPQYdnHeN4TilSxg5gSLYTcxJLlXrYb4EFSYmQXRI4KImVX2OpSrL6w==
+X-Gm-Gg: AR+sD12dOwQgMH3IklrJH8CFweBu7m+cBarh6P1MwkDjjJAWGstG5eT2eLZQgGQR5ct
+ k55brQ7JtO+hetQwT27Jn92551aYjJ+bfC2AkE2joW0dhTdlRVHLw9R5jnFMkv6aSrr5YnkqGpp
+ D0uvJ2pOb3RVk5+8rN24IQvxhjEYByB/gXUGgc5PGJdQ1RX/Ee8e9es8xuVG2PlaLDQwyigpnj9
+ p9SpqPFNFmTVKfaDzPn+rcBhjUpxWOZ6ozVCMb1jDTxG0tYW9CJNDdMBECvTbtTSIaWHNZdzGGp
+ sMJZixwmjaVlpBih6QSAusFRlQnivKt6Ir+ZKHEp+PjQfL0C9oZGCL4yG0DD0x3kvQsoz1se1Bb
+ iVXhjOxB2mf0CxcCLbLAQruW2rtPZ37KQK7jZo6Ubdw==
+X-Received: by 2002:a05:622a:2308:b0:528:3882:3869 with SMTP id
+ d75a77b69052e-52d85341082mr209639491cf.13.1786891641796; 
+ Sun, 16 Aug 2026 07:47:21 -0700 (PDT)
+X-Received: by 2002:a05:622a:2308:b0:528:3882:3869 with SMTP id
+ d75a77b69052e-52d85341082mr209639131cf.13.1786891641377; 
+ Sun, 16 Aug 2026 07:47:21 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999610e18fsm45234755e9.8.2026.08.16.07.46.58
+ ffacd0b85a97d-4815f2c0a75sm24564583f8f.25.2026.08.16.07.47.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:46:58 -0700 (PDT)
+ Sun, 16 Aug 2026 07:47:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/56] hw/nvram: Use qdev_is_realized()
-Date: Sun, 16 Aug 2026 16:45:07 +0200
-Message-ID: <20260816144556.69009-9-philmd@oss.qualcomm.com>
+Subject: [PULL 10/56] hw/vfio: Use qdev_is_realized()
+Date: Sun, 16 Aug 2026 16:45:09 +0200
+Message-ID: <20260816144556.69009-11-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: uvJvuTtzaZ2T3K4G_TpG5QGrFFArVrZ8
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX1TOvPFg+tMbx
- 2puscaK/Y0oClEWX6/vh1eblRc4+8nW4ycDTpcecTCNiJYwf0mXAcgpdz8DMVt85twS5GpoSp55
- ki0EA73pBVnrNa8iEAhNAjAXc2FD1EI=
-X-Proofpoint-GUID: uvJvuTtzaZ2T3K4G_TpG5QGrFFArVrZ8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX+cr1UuaqLzOX
- rmZ4kLCOPcqZqM40dnp8Qr/YcdAElS0G0jYSsaI8PS1/a45ye50zx6P1O1jzk0faJA+8uqyuhPY
- 2t50s3/gLVT/5o5+2glUfADqvNniQDl3dzCVkgXOV79tUX+61Gn+HY3OqYhM48/2VNX0Dx/V0D5
- 4giKz8ClleMaEdlUGYUdmnBcVALxdKZom/+ayR3AQF3B0Msq0EyBx3JK2nZD7p+/LZhaOuJ9x/q
- X1UaKb6+IJZOC3dYqcr7N07Cc0HzEVwgeoM58coip5VANmiR/u3Cf/GW392JlMUwE9w0hhPkJKL
- OMQRFCDPv9ivkvIXPfsJOVLrtdMP74YS9nWZos0RHuJWhCRSyy4/wlJ/DCKn1MJ6OlVWkHxCD2Q
- 3obYCrjZx//RxEgkPtRoLiS8/jvdmdTktsZMUcOG3qjEWK3zP4e1Z/+Y8I8/+BNRgok5YG0KXO4
- uD/8W0wH1gjJP7Q4grQ==
-X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a81cd64 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: jcpDGOAYd2TtYB8DGPmVp1XimWvClCt_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX0Cbgr2jWAkRh
+ ub4Jl4n7dsPo1xrOUNdgovCcZFbPrFZNlELiXfwJluMB8uT5lGVtisoIVUxYKe5B+n0WaGfTQWP
+ /W4psTSGfvYVrwfOBSbbSF7RqRdwenklw6Fx7B8U0oZVmoWIX2wPBzwdw4jjyoG3rvgoGKvUxQS
+ hnMsTNFTNqHkH+l4SO6eIPYCejglBdiI4N6KRrNgLlsVna+nlvTR15NHnnp5roN8S2Sloi5mG6h
+ ua/ZGyI8uf1OAzvIBhlESmTJ3nndiNJNw8jYdLsyviKiR1b1dmoGP+pcaFmv4ziZrPmKdx8te3U
+ JHlqn5DUwzwN8X5iQDjwFJmEFsudnODzOJ2HtF6ti/bn+XoLoz6/BMJ1Qp9YPEzF6GK+q7SCbAm
+ ZbgKa7ADkHdMEHgvR+jIoqrK64CUdrl0Ey6AYJ8DL0sb2uekfWmJwKjKr1+slr9tkSRyTM9C3Dx
+ PGe4jQyibJmTHeLIaLA==
+X-Proofpoint-GUID: jcpDGOAYd2TtYB8DGPmVp1XimWvClCt_
+X-Authority-Analysis: v=2.4 cv=DdknbPtW c=1 sm=1 tr=0 ts=6a81cd7a cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=uRxLgUfnyXHAhkBXUOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=bExcGYys6cyJo6IKf0YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfXzmc/sld7HpPG
+ Pz9MLXOm9kA8liecTMVrBQ4sWCjZ4os3u1J6ts9tOINC1xnEymTZG+zKwCadbHTK0elPzfNhcA1
+ 1adcCw+EX4NsFcUif5mNeWG8OWCkaUM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160118
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608160118
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -159,38 +160,68 @@ DeviceState::realized directly.
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260721-qdev-v3-7-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260721-qdev-v3-9-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/nvram/xlnx-bbram.c | 2 +-
- hw/nvram/xlnx-efuse.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/vfio/container-legacy.c | 4 ++--
+ hw/vfio/device.c           | 4 ++--
+ hw/vfio/iommufd.c          | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
-index edfb592a5ec..e336874bdef 100644
---- a/hw/nvram/xlnx-bbram.c
-+++ b/hw/nvram/xlnx-bbram.c
-@@ -468,7 +468,7 @@ static void bbram_prop_set_drive(Object *obj, Visitor *v, const char *name,
-     qdev_prop_drive.set(obj, v, name, opaque, errp);
+diff --git a/hw/vfio/container-legacy.c b/hw/vfio/container-legacy.c
+index d301b27aa65..7ac7b372145 100644
+--- a/hw/vfio/container-legacy.c
++++ b/hw/vfio/container-legacy.c
+@@ -1075,7 +1075,7 @@ static int vfio_legacy_pci_hot_reset(VFIODevice *vbasedev, bool single)
  
-     /* Fill initial data if backend is attached after realized */
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         bbram_bdrv_read(XLNX_BBRAM(obj), errp);
-     }
- }
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index 1a9650ba128..03c9fbc0d07 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -233,7 +233,7 @@ static void efuse_prop_set_drive(Object *obj, Visitor *v, const char *name,
-     qdev_prop_drive.set(obj, v, name, opaque, errp);
+         /* Prep dependent devices for reset and clear our marker. */
+         QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
+-            if (!vbasedev_iter->dev->realized ||
++            if (!qdev_is_realized(vbasedev_iter->dev) ||
+                 !vfio_pci_from_vfio_device(vbasedev_iter)) {
+                 continue;
+             }
+@@ -1160,7 +1160,7 @@ out:
+         }
  
-     /* Fill initial data if backend is attached after realized */
--    if (dev->realized) {
-+    if (qdev_is_realized(dev)) {
-         efuse_bdrv_read(XLNX_EFUSE(obj), errp);
+         QLIST_FOREACH(vbasedev_iter, &group->device_list, next) {
+-            if (!vbasedev_iter->dev->realized ||
++            if (!qdev_is_realized(vbasedev_iter->dev) ||
+                 !vfio_pci_from_vfio_device(vbasedev_iter)) {
+                 continue;
+             }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 1a7f8088aad..4f119596336 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -59,13 +59,13 @@ void vfio_device_reset_handler(void *opaque)
+ 
+     trace_vfio_device_reset_handler();
+     QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
+-        if (vbasedev->dev->realized) {
++        if (qdev_is_realized(vbasedev->dev)) {
+             vbasedev->ops->vfio_compute_needs_reset(vbasedev);
+         }
      }
- }
+ 
+     QLIST_FOREACH(vbasedev, &vfio_device_list, global_next) {
+-        if (vbasedev->dev->realized && vbasedev->needs_reset) {
++        if (qdev_is_realized(vbasedev->dev) && vbasedev->needs_reset) {
+             vbasedev->ops->vfio_hot_reset_multi(vbasedev);
+         }
+     }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6ff668d2597..242644aa001 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -829,7 +829,7 @@ iommufd_cdev_dep_get_realized_vpdev(struct vfio_pci_dependent_device *dep_dev,
+ 
+     vbasedev_tmp = iommufd_cdev_pci_find_by_devid(dep_dev->devid);
+     if (!vfio_pci_from_vfio_device(vbasedev_tmp) ||
+-        !vbasedev_tmp->dev->realized) {
++        !qdev_is_realized(vbasedev_tmp->dev)) {
+         return NULL;
+     }
+ 
 -- 
 2.53.0
 
