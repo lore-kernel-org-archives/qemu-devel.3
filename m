@@ -4,90 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A6EC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 11:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6371EC5DF6E
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 13:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvZMo-0001ig-1M; Sun, 16 Aug 2026 07:49:30 -0400
+	id 1wvahz-0001Vl-Gm; Sun, 16 Aug 2026 09:15:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
- id 1wvSav-0000ko-I8
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 00:35:37 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <narimansayed28@gmail.com>)
- id 1wvSat-0003FT-Qg
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 00:35:37 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4954a32cf1eso11711115e9.3
- for <qemu-devel@nongnu.org>; Sat, 15 Aug 2026 21:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786854934; x=1787459734; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=5Ltu2h4mQNH63wNh6b4t2KW06UJSusNDf0EeH5Va9VI=;
- b=aUGjGWRdMxG/cXb8oqVt6jzbf/otpKMJqjiltTL4/w2mF9AqD7qCg0cyV7fYiwkmGj
- /kWO1iehE/7tww44HokCG07HoTl9cuKliHWNP9jC9r+DclfKuq0Sqc7fOfW7tndM0hBX
- uRN/MNQJS2Z2ZcQlQ9RBEwYDPtvPWcMdlRR5FloEcnNtMcy0Y7QFfAXD4TjB5nUlqvXB
- A7Bo4Xw8re0WfKx2rls/11DIoYE9lJHVeKYwyBKfoLyHDjhSf175MZAoixiP/KS16+dz
- YKGTcpm5JjwpeXxR8lOLo+fJ5h2ABGe3vNtJgrWewQOPFmtqKcQ3Mdl9Nm9v/64Oi2FW
- j0Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786854934; x=1787459734;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5Ltu2h4mQNH63wNh6b4t2KW06UJSusNDf0EeH5Va9VI=;
- b=pA/fQsqJw6zJG07EzeJbbMs5E6nQabXcGJUmiKw9u5hekG5EB7TYLY5LesBRb3GNQC
- +mj1mbIqAnfKFpDtTrn4jn79AFHLkov9iNFUttjSMTM93iGChOcfHg3/yulBYSEoV7yJ
- opcdhp1FA3NClpXTohuvT3aE4ymYfUlLpISHgoQrlmr/EF38UkCa322og25EErJoB4PT
- UDXARucCEpnFhB64TJlhvwODFYpiKat8DkgHEgbALV4j5vYxaKfANTh6vYn9KfXXZ+3N
- Bqc/HNZcFdVhKTLhKTxOfTvuZTxQkVZQa1EGgWJoUgkgcHM4Mgj4wBPSof9SQcAe3sQq
- w1cw==
-X-Gm-Message-State: AOJu0YwEwZM9ZRwC/XchJ1vW60SXX81Gpls3pRNgVejUDEOy+Onx/QNT
- N0rW1NfaLja4tLmeP3NIPpAFmCeXgnz0xE+L1zzew5viDBJvcedLtTMBkcmsPgNA
-X-Gm-Gg: AR+sD13MAxxflPLnufkYlpQrr+275MczYaPj1heKWEVoOFA3eeX8cq0JwFxoVWleadt
- YxYzaQJPwGq0Py5GfgYOh5ijgAwxkOMSFvZR+kl9uMF+Act5RAeh7mPzDpG5sJP3qFtF93/UzZF
- +ZChFYV+a0Gw8wT+GawCRy5NvM09Usy9XGUX706XWKe2p+Inn3gNi34FF8C4tMAQnPPQxH+oa6H
- UPVIUUBgRVF1L5X7x1Oup7w+qOuFKiAB5Fri/IIwzDb3xc/JB336TgSHPiaRfw5N5lqYGnZ30eI
- 5lg1T1YX/Woz4mqybs85DTpVRMRKF1RFc+m5wk8nXR3YnlX1y9UxuomwUahqcbZfr2zUm3AqdTy
- Umy7mP586J14jk/UF1pjW0Q7fQwlqvSxv05Qt1jqnjMFsEpmYydap3DI16ZyoHa44Y7VLOBakOn
- b/eVcHnTjhvEeMmeMBirCGExmsimqQY/niHi9ltZ7ndvgQC/4S7aeqfKtnshUjP8vyysQyDe99U
- A9WkTn29ST80A==
-X-Received: by 2002:adf:f791:0:b0:460:70ae:f1af with SMTP id
- ffacd0b85a97d-481607630f2mr18681836f8f.27.1786854933574; 
- Sat, 15 Aug 2026 21:35:33 -0700 (PDT)
-Received: from DESKTOP-2SK3BJA.localdomain ([197.49.67.128])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815f2b27bfsm22971471f8f.23.2026.08.15.21.35.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Aug 2026 21:35:32 -0700 (PDT)
-From: Nariman Sayed <narimansayed28@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nariman Sayed <narimansayed28@gmail.com>
-Subject: [PATCH 1/3] net/tap: add tap_fd_get_mtu() to query host tap MTU
-Date: Sun, 16 Aug 2026 07:34:49 +0300
-Message-Id: <20260816043451.2547-2-narimansayed28@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260816043451.2547-1-narimansayed28@gmail.com>
-References: <20260816043451.2547-1-narimansayed28@gmail.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wvahr-0001Uv-CY; Sun, 16 Aug 2026 09:15:20 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wvahp-0005TH-FK; Sun, 16 Aug 2026 09:15:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BUeWSc/QBo+fWzjOO52yfgEpr7ZpajF8d+zZiymSkRTyQ8c8IokGI3FPVpl1l6aLze/mkzJxvqvrjy5PqgFK9qsTHLoagIsjSqelIQCr6j1ss+akqTkL3VJh6c3LVxXKoDw/+XWmNTc8duTmnt3ZgU123yzhlYxkbDy9GwkLa/n+6mT4U7ADtD0Yuod7Fba4pxnoycNyUaIv+4cqgn3OZrCNtURuT6+uyE55h7yIZFiRo9tB4ZkQn3I0xmegYdHrNzeUZ0PHiDBOkmN/ybL+jApnDNk7JbLHZMJ9/i6z4NOS0VZqWPhBXo1s0dtz41yGsz93sw8ywgLmmSg08lCT5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vCHTKbou4BSA2qbdBvnvattjKgEBgjPUyLaVqTwhw6I=;
+ b=IGw68Sx0CcGxy/ouzmHFAH00ppn4Fog5NU4UYIYTcZNEBYlhVvdcGNjc/Du9Hel9xXXnPhQCNRVIPuQARhrU0O3tviN/o4A5xK/MzME8/nR4zPg0XTtkfx2EZCar1AK7NCli+BOtST3iGb6ikjIy+8aGDmsEbkrNMSBI3ZiFI47qqCPe0hblcaHP3c2svFW0g7GGqLUp7Ui+Lr5h2cTEnSlPkzWlVey0msq/EyiqPFeRIGb+0dY2CKRarq1kscn8Ma0JQ9CpCWsZHpfRxXMaQpQusyvcLEHEfDkPSFOKUDzHFXiMFeWfCmqNSt0eqtCgbXFXOETQrjSXXwmKEbf79Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vCHTKbou4BSA2qbdBvnvattjKgEBgjPUyLaVqTwhw6I=;
+ b=XV+Dh4Hih11PC4s2TcgQ4aX44qGz/CTJQvlQYWEwSle/EBxwpfib/NeqARES3wnlvOlqdPVpY19ZUD94eL9WK3esXZMvypcmsWg4qQONfNmWpwWJ8dUkyrm9dXTQNlRa5inkwkP5Ul3DlQGIPmBrQIG5dv8mUXYn5rtiudkgrj/DhGVNA/JS+eRebnzLkBYWh5nMpr+18V6OP77MWxDdpCZhpnOO5fYkkGY969DptfCm848IVzRckODj3XCtzXR/UKLGSWGdQ6Tjb3oOyejWX2kYR9FxUvML/hh1ygJgQmbh/9tScDTBOSmPLs0+lcNxLGt8l8mZM+tbmR5wVlBQ4A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by KUXPR02MB9310.apcprd02.prod.outlook.com (2603:1096:d10:9f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Sun, 16 Aug
+ 2026 13:15:06 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0315.016; Sun, 16 Aug 2026
+ 13:15:05 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, Hao Wu <wuhaotsh@google.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Troy Lee <leetroy@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
+ qemu-arm@nongnu.org
+Subject: [PATCH v2 00/20] hw/arm: Store the ARM boot info in the machine state
+Date: Sun, 16 Aug 2026 21:12:30 +0800
+Message-ID: <20260816131300.51799-1-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=narimansayed28@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: TY6P301CA0004.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:405:3be::8) To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|KUXPR02MB9310:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5ee0cb96-c37e-47d7-0609-08defb98637a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|23010399003|376014|1800799024|366016|10067099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: M2gk43R7/GyQNznRSUACT11O9wxvtNRkJFoDbxV1vkO4q2hmwC/WdrKgXKQRX05WCPmvoTKE+PMcdKMq/N0BDTDTyHxgQAS4X1bwX9ka8PdAzDvbR11JtkoY1ZVELnEoMptBMCrnKwHaJs//MxYPsHtQUuUzouOlxeQF+wokzEpuZSQ7Qwyxax9J1vcXmoUhWvUXV41za6zCf+9yGTmfQBXpVGLGUWuahmEvSlNmjGzgeSKKZ1Ht8KhYozrGC5WtpXeYdCVcZEYDlhd/fUXVzT/mgs1A7Gh2Ro3vU3I1khMYDWc0sq16c52S/ntL2Q7BqTvETWS0QyoSILOhXrj4NoXwTXZiqYRG+LrQOJeRuj76H5USDUKCcebaKv0CCEdLEDPPFf5HEDq+F5njJxATjHfzPn06D2PgoYUCAhy7muMlR2Ti1TLB8Ud4GOMTDBwd1vLbI+XLSx5TmAPXTfEaB5icpi++7D9aNQsab13sZdFMIMT2v2lKrs0JYOZZX3jAoNa5vXXnKWsG+F6txA7TSE2FFc0ikFySbioFqbabMvbqm191KrpC4QEQmvrTJmUTkCXRKFzfgzgTXwT1r/pXTCMgzbDQ/HaU4e3ljXWqcnUOoS8qE7X0JGcIIWiBLJUT/N3aH4dDwD7tOMOIP30wmmUg8gCqzaWYOor/1VxSvYk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(23010399003)(376014)(1800799024)(366016)(10067099003)(56012099006)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LEseYNC8AP9JcDe9rNC/k5ku/w8nvkrMs3PF29VkpSfCAyxa9eLxjozw/BNd?=
+ =?us-ascii?Q?sFkvBJIukqPPNBbmbU6vUNAcyVms8zaFaqNZbPaqkezWuw2tOsKONKlTVJXT?=
+ =?us-ascii?Q?Hajr2AMjworcEmr3E50s990H1vB3nejGjsElxwlt4MSm9DegIhp6h1Uv0RbM?=
+ =?us-ascii?Q?LeJO5zlE0IfIoAE7P7df5c7iIbqVDrWkk7rxWyk1AVkRYMj7lw4QazKODpVb?=
+ =?us-ascii?Q?bOYbbvv7YULNXzHfUaaaHLkNZgMngwPukILIRQIxBu1giGnz99UvnKjKSVHW?=
+ =?us-ascii?Q?oeZOUvFvzayf+iRo77rayFviVQ7uXK242KJw9sf++cqxVCRhSm/TFtOjVkJ0?=
+ =?us-ascii?Q?Jpk54AgdAifLc20egyWJ1TRP0PM0cFRFe8JxgWPG57Mp6Lor8l+aRPJGznDv?=
+ =?us-ascii?Q?b+19a4eRIu7DZVwUR2d5Twqm1VawbFB8TOmfMBqgQlYrhtxdcl8jwPwx5Ip7?=
+ =?us-ascii?Q?CTjFhekGX9gtsEi2QQtgCtRwhc+d67on151yFCS3K78kaK/2FuTXbWaCrgOn?=
+ =?us-ascii?Q?w3GJ8pSRFQC6yaUdVoZO9uOBIR0PFhFaRRHa2FsnyljIkjMWzEQZSZfe0wy2?=
+ =?us-ascii?Q?c/z48hq9qNU9w59kFzCJLd6WPpKqO2HV91y0p0STHQCshBxTQCgNSmRm10Hm?=
+ =?us-ascii?Q?szj0fEtmurAFMWJ8am2bD/SkFNsCDue272SsGu8jhZea1c9Bz5lK2Q/s2Ff3?=
+ =?us-ascii?Q?QQoI/DMNkWUXqrLsm3SlFYZRSacpmEL1h0MbY9k1I3Tl1LIKDLfj6EePDBFP?=
+ =?us-ascii?Q?nVrcY5E1GhzcZJYIU/5khj+RPyyTOle0A38fu2uchIbL/gWS6zVFk+eAymli?=
+ =?us-ascii?Q?etvD9FAbrJxKOI+Vsr0tBQwgQu3sGNZzr5lTtU8xiZ3Eb9A+cSXtjeHHYUzy?=
+ =?us-ascii?Q?cJycf/Y7nauhf+v2jocOSqsVUnb+46zUcCPh9SUiQNRvrqnYAl6dqVjCdaIb?=
+ =?us-ascii?Q?+b5lw/iOUkTY03hMGPlPE5a6WLAS0Dynhkset4UWMOQOvSAhQPATc+AFlPhq?=
+ =?us-ascii?Q?6eYxhFwALfAiC9AKixUsLh7FVcqqNig9+A8G691BEz9brFMR07UG/rkNth31?=
+ =?us-ascii?Q?pVOl0f0F0CzufekGhMd/3zHwVEEqTv7CXRBd/Z1lx1QhwQRewp9JJgrGDFK7?=
+ =?us-ascii?Q?q8wj4k+4M6a+Bxrx2oaa8xdUJ9acLbWAFe9rmsMtkEadDLzviH23tmZoVliI?=
+ =?us-ascii?Q?Wkgpgy9fuYw2z87SS5BGw9EWEfW5LYDkyfo7PxfaPsYjQxo1QELG3o01Jrd6?=
+ =?us-ascii?Q?yqh+iaqdPswPQT+lXX96KscVAdgwznq5oyv9NaiSeLRqUoewpJQ8cxCdQC3N?=
+ =?us-ascii?Q?cxe8Gayeda2dC+8Kz4j03ZNGgYEUCEStC/6vbsrkjNZg+6Q2aMoZONuAvlAA?=
+ =?us-ascii?Q?ouJNWI70ALNGLKk4Epkqmxn5y8IoSHq3RvGB0o02dsRsVNi08MMgId5VgoWu?=
+ =?us-ascii?Q?szRTbttOsI0Jq3AStEZ0e4oo5WgZ48Zc+j5WfpyLu2QjhBT4rTN6s7mwiQsc?=
+ =?us-ascii?Q?HbT0mecu62m4VnhM0UCyBZV8Kr8hk1RpwxOzHHGQHcb/nBBKhmdQkjPl7wHu?=
+ =?us-ascii?Q?RhMTzDhZpFdEeqnEmyiP//s+pr1yErbY8MEhsw3+kUrhXAzT0nUrh+MYFwwB?=
+ =?us-ascii?Q?HeumuXLp4nFGZzygZ28kDw1VQRQpyAaVs4PPjS0DExVtd2Ajr387+8NEEKcg?=
+ =?us-ascii?Q?L7J85I1GO96LR2RWu8U/6OF/25iXzpo6E0yJCAQ5LSRRjPyIr+HTQkQ57xs2?=
+ =?us-ascii?Q?hL9gmn4W82ZQjbM1QDb4xT8yGZG8ap0=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ee0cb96-c37e-47d7-0609-08defb98637a
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 13:15:05.7299 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OpYgFgZc3wnCmpeSVtlrlRqZQOOX5WwFG+sN8msVc7KdgeL3JM45Z04l/0VsAKtJe9xOGBg5BYD0W2OQoSGKBqHt8wCY+06PPPhSyryuJ60=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR02MB9310
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=bin.meng@processmission.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 16 Aug 2026 07:49:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,138 +149,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper function to read the host tap device's configured
-MTU via SIOCGIFMTU. Since this ioctl requires a socket rather than
-the tap character device fd itself, a separate control socket is
-opened to perform the query, following the same pattern used by
-net/can/can_socketcan.c.
 
-This is implemented for Linux only, with stub implementations
-returning -1 for BSD, Solaris, and the tap-stub backend, matching
-the existing pattern used by tap_fd_get_ifname() and
-tap_fd_set_steering_ebpf() in those files.
+Most ARM board files declare their struct arm_boot_info as a static
+object at file scope (or, occasionally, as a function-local static
+inside the machine init function). arm_load_kernel() stashes a pointer
+to that struct in every CPU and dereferences it from do_cpu_reset() on
+each reset, so the boot info conceptually belongs to the machine for the
+lifetime of the VM, not to a static object whose ownership is left
+implicit.
 
-This is a preparatory patch; the function is not yet called from
-anywhere.
+This is a longstanding leftover pattern: modern machines such as virt,
+raspi and xlnx-zcu102 already keep the boot info in their MachineState
+subclass. This series converts the remaining machines that still use
+a static object, moving the struct into their machine state so that its
+lifetime and ownership match how arm_load_kernel() actually uses it.
 
-Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
+Changes in v2:
+
+Addressed 2 review comments from Peter:
+
+- All assignments now use individual field writes (e.g.:
+  bpms->bootinfo.loader_start = ...). This applies to: collie, cubieboard,
+  exynos4, imx8mm-evk, integratorcp, kzm, mcimx7d-sabre, musicpal, npcm7xx,
+  npcm8xx, omap_sx1, realview, sabrelite
+- The following boards that previously used DEFINE_MACHINE_ARM/AARCH64 now
+  use the macro DEFINE_MACHINE_EXTENDED() instead: bananapi_m2u,
+  cubieboard, imx8mm-evk, integratorcp, mcimx7d-sabre, musicpal,
+  orangepi-pc
+
+Bin Meng (20):
+  hw/arm: aspeed: Store boot info in the machine state
+  hw/arm: aspeed_ast27x0-fc: Store boot info in the machine state
+  hw/arm: bananapi_m2u: Store boot info in the machine state
+  hw/arm: collie: Store boot info in the machine state
+  hw/arm: cubieboard: Store boot info in the machine state
+  hw/arm: exynos4_boards: Store boot info in the board state
+  hw/arm: imx25_pdk: Store boot info in the board state
+  hw/arm: imx8mm-evk: Store boot info in the machine state
+  hw/arm: integratorcp: Store boot info in the machine state
+  hw/arm: kzm: Store boot info in the board state
+  hw/arm: mcimx7d-sabre: Store boot info in the machine state
+  hw/arm: musicpal: Store boot info in the machine state
+  hw/arm: npcm7xx: Store boot info in the machine state
+  hw/arm: npcm8xx: Store boot info in the machine state
+  hw/arm: omap_sx1: Store boot info in the machine state
+  hw/arm: orangepi: Store boot info in the machine state
+  hw/arm: realview: Store boot info in the machine state
+  hw/arm: sabrelite: Store boot info in the machine state
+  hw/arm: versatilepb: Store boot info in the machine state
+  hw/arm: xilinx_zynq: Store boot info in the machine state
+
+ hw/arm/aspeed.c              | 17 +++++++----------
+ hw/arm/aspeed_ast27x0-fc.c   | 13 ++++++-------
+ hw/arm/bananapi_m2u.c        | 21 +++++++++++++++------
+ hw/arm/collie.c              | 12 +++++-------
+ hw/arm/cubieboard.c          | 21 +++++++++++++++------
+ hw/arm/exynos4_boards.c      | 26 +++++++++++---------------
+ hw/arm/imx25_pdk.c           | 11 +++++------
+ hw/arm/imx8mm-evk.c          | 29 +++++++++++++++++++----------
+ hw/arm/integratorcp.c        | 22 ++++++++++++++++------
+ hw/arm/kzm.c                 | 12 +++++-------
+ hw/arm/mcimx7d-sabre.c       | 28 +++++++++++++++++++---------
+ hw/arm/musicpal.c            | 21 +++++++++++++++------
+ hw/arm/npcm7xx.c             | 28 +++++++++++++---------------
+ hw/arm/npcm7xx_boards.c      | 10 +++++-----
+ hw/arm/npcm8xx.c             | 28 +++++++++++++---------------
+ hw/arm/npcm8xx_boards.c      |  2 +-
+ hw/arm/omap_sx1.c            | 19 +++++++++++++------
+ hw/arm/orangepi.c            | 22 ++++++++++++++++------
+ hw/arm/realview.c            | 27 ++++++++++++++++++---------
+ hw/arm/sabrelite.c           | 22 ++++++++++------------
+ hw/arm/versatilepb.c         | 16 ++++++++++++----
+ hw/arm/xilinx_zynq.c         | 17 ++++++++---------
+ include/hw/arm/aspeed.h      |  2 ++
+ include/hw/arm/npcm7xx.h     | 10 ++++++++--
+ include/hw/arm/npcm8xx.h     | 10 ++++++++--
+ include/hw/arm/xilinx_zynq.h |  2 ++
+ 26 files changed, 267 insertions(+), 181 deletions(-)
+
 ---
- net/tap-bsd.c     |  5 +++++
- net/tap-linux.c   | 30 ++++++++++++++++++++++++++++++
- net/tap-solaris.c |  5 +++++
- net/tap-stub.c    |  5 +++++
- net/tap_int.h     |  1 +
- 5 files changed, 46 insertions(+)
+base-commit: af06b5df2610fe5de6c02d17c17bced9e9f0d47d
+branch: cleanup-arm-static-boot-info
 
-diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-index c39daf9385..17cedccf9e 100644
---- a/net/tap-bsd.c
-+++ b/net/tap-bsd.c
-@@ -264,6 +264,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
- }
- 
-+int tap_fd_get_mtu(int fd)
-+{
-+    return -1;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 3cd7d26710..23a10151c1 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -34,6 +34,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/cutils.h"
-+#include "qemu/sockets.h"
- 
- #define PATH_NET_TUN "/dev/net/tun"
- 
-@@ -346,6 +347,35 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return 0;
- }
- 
-+int tap_fd_get_mtu(int fd)
-+{
-+    struct ifreq ifr;
-+    int s, ret, mtu;
-+
-+    memset(&ifr, 0, sizeof(ifr));
-+    if (tap_fd_get_ifname(fd, ifr.ifr_name) != 0) {
-+        return -1;
-+    }
-+
-+    s = qemu_socket(AF_INET, SOCK_DGRAM, 0);
-+    if (s < 0) {
-+        error_report("could not create control socket: %s",
-+                      strerror(errno));
-+        return -1;
-+    }
-+
-+    ret = ioctl(s, SIOCGIFMTU, &ifr);
-+    if (ret != 0) {
-+        error_report("SIOCGIFMTU ioctl() failed: %s", strerror(errno));
-+        close(s);
-+        return -1;
-+    }
-+
-+    mtu = ifr.ifr_mtu;
-+    close(s);
-+    return mtu;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     if (ioctl(fd, TUNSETSTEERINGEBPF, (void *) &prog_fd) != 0) {
-diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-index 8704b1084b..d3bd6e6b48 100644
---- a/net/tap-solaris.c
-+++ b/net/tap-solaris.c
-@@ -266,6 +266,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
- }
- 
-+int tap_fd_get_mtu(int fd)
-+{
-+    return -1;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap-stub.c b/net/tap-stub.c
-index 6aa60d96ad..756ce882a7 100644
---- a/net/tap-stub.c
-+++ b/net/tap-stub.c
-@@ -91,6 +91,11 @@ int tap_fd_get_ifname(int fd, char *ifname)
-     return -1;
- }
- 
-+int tap_fd_get_mtu(int fd)
-+{
-+    return -1;
-+}
-+
- int tap_fd_set_steering_ebpf(int fd, int prog_fd)
- {
-     return -1;
-diff --git a/net/tap_int.h b/net/tap_int.h
-index dc4f484006..360d61c889 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -45,6 +45,7 @@ int tap_fd_set_vnet_be(int fd, int vnet_is_be);
- int tap_fd_enable(int fd);
- int tap_fd_disable(int fd);
- int tap_fd_get_ifname(int fd, char *ifname);
-+int tap_fd_get_mtu(int fd);
- int tap_fd_set_steering_ebpf(int fd, int prog_fd);
- 
- #endif /* NET_TAP_INT_H */
 -- 
-2.34.1
+2.53.0
 
 
