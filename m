@@ -4,130 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FEEC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9591AC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcDl-0008JN-3m; Sun, 16 Aug 2026 10:52:21 -0400
+	id 1wvcE8-0000kH-7l; Sun, 16 Aug 2026 10:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcDj-0008DT-Da
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:19 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wvcDy-0000Zq-W7
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:36 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcDh-0001yG-QZ
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:19 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wvcDw-00020S-Jf
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:34 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDkreC2760527
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:16 GMT
+ 67GDl7vt2398177
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=; b=TYr/dmsgZj+1R6Fe
- EvlouOMZQx4V1XkvAjldmaDYD7hb7CkSIFmJWk+O7LurDTyMK2BLU/Jld+6ikhtG
- /nVicMeW6Xl/qlS7jnUgjWaybgWYcHye9edz7VGPVapUHzBP3+/sUk+LzCTjsTLo
- MLyP8H9RoumfOQPajg2bCOjkc+tzCrzFSebYZRQ3UHvpN7sCEPOrPbzS8kb6Qu6v
- SB30eSkDVSQMLe1D2Zhq3gcINXoAFCgV9kOE8jHwasQS2j7VmLwDkqx7HP+yfQx5
- Mf+O1BIjJAo6t8DMO9LniNMpc3/1RZRBFgCqQEz1GJw0YnbfNKXxjbIdYIdKWZYy
- SL5uRw==
+ 9+WqiaNjbQjH52OWtiPMQB3boxmC+X78TDrAgIexTRo=; b=b6ri+u4GKdYJaTL+
+ N7dXCa5XmuUxOSXLk6WZM3pjaPYbTGqGBd//7zHiB45swRqRPI+HmoUjSEJYRDa0
+ r++o6lp75Fkf8EIZUCqbnmr3LEf5p+XQiDCliWMI2my5BGuXNq36UbJUCkN9O4N8
+ GeHuTzEEh8fWSfJFYb54rPhmnSyqqwZZfQPh66sgIxfcgd9Ragx+BOs3Ak6pgfI1
+ rL0p9bpXa5zbeRsN1sAroXfuxahC0Wys7d5/+kV6uXzS0ocmVclh4N/REc16hBOu
+ 3ue4rImQTrwGe2gwzFZ68kiavD5avmD36YwRyEzuh6GgZN6X3YvL57gyUoXx0Vfh
+ QutQ3A==
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gkhaw-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghq3nwm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:16 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:31 +0000 (GMT)
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-52cd0374265so55869211cf.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:52:16 -0700 (PDT)
+ d75a77b69052e-52d91cc174aso35868921cf.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891935; x=1787496735; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891951; x=1787496751; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=;
- b=A9qKsIGdmDYoxlaF55L6YmTEzpmse7Piw3v2kTifY/AoS8ME7wdYsJBBVoiAL+sJ4R
- CneWwX5hisdpGcz2wmpP3nqK/bILrj1N1vJHrejfmmdHd12BYZtCnfIXFFLNitLYYXCg
- 5TIG/LLDQGUMgkIzkzcn02z51ZbTPdifE2M/LBysfLImvSeWVaek3y7LFT7Z/oU73+yt
- FmN6D1YBC6ARaxrE8NNiRH9+DQdF5kOfJH5UuvYxksitUtWczeuAvwPcsC4kAhTkSTH7
- /bFfgmoZ7pRfbI3xZ+JDm2hcvh2y1XFu4G1HNberq+uXke4ytf3sUwYY2AqtFOeuXOVU
- HxuQ==
+ bh=9+WqiaNjbQjH52OWtiPMQB3boxmC+X78TDrAgIexTRo=;
+ b=AxYKWtRpjYaaauqgSy8hQFoXRcOkht0/bdV6R8cA+13H+prP45HH/SovP++riANa0o
+ 9uwW/8QM9P00jpv3iY0RSnk7KXoov78L3alDZFnrT8xGK8PUXdfzHJflF0jBARh0tCB3
+ rwJ5v1W3cjtrQdqJOENr208DqfWv6C1Lx0cZUYK3OmgyZiJShCT2+yCqbXJzBJzyoe+i
+ cj89Nnvxx1ldzOHLhySQLwRnFTf0KeJL3jXgwNrPWwrFqqQC3Im8OKdNykl2U3S5y2q5
+ RibHVDoEyWx9W9hwKEG9TqO12/JBXZUuYGeL1rRoMlSpfP3+U3+uakguh/q7M4+O9VpB
+ u18Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891935; x=1787496735;
+ d=1e100.net; s=20251104; t=1786891951; x=1787496751;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=;
- b=EydPuFN7yoySEAj0wsSub8q+1Our/fNdn+aWF2AyqeA5pD9gaVotM3UgitjDcc3LvD
- fSUDVFhtBnBNA7h9n9BAtDMlfh6Z+l5HD77KshP5dIQAC0oJubm73M0lm7KxsjW5khQE
- RrKPj6nK4ZnON2/SQN4a1uYQMPxIR5K33kCH2PPWNY+ITnuVsruHDAnQS+0jmU6ISCVI
- uoJC6Ut9Fd5hoCe2uDFwdaiVtoJsQsSWFYRikgUbHD2nVuFQubXkA5xr7FlwjXnVGSl/
- CwTm5AuADyWbHyw7g126TEJqP86gLMTTKfShOzirVOfuG39bgXyt9zVgAPbaCpfXgwyo
- 1tBg==
-X-Gm-Message-State: AOJu0YzTgdVFbFABU1m4upKGHkTSOXtMuGdC5cXMI4BuQx0Ube7B6dUh
- S7bfahLBI2ITyZMhcVPwNuZQr40f+yyyA3mi1FgNFBdvTgB7ztRgBvZIqLejg6qZfAuY4OhHVYr
- SUo/frxtyf8uG2hHLCYWFI7AP3nDuI7uuH2dvv9pHOC0r6UeTt7CtklE7lh0yqVcYCw==
-X-Gm-Gg: AR+sD124DQqhL3z42yBNfKS1jDYGeY/JY6EeTOJQv74G5CDJFbN/bFMFc080Z8IHLK0
- Jjqe9ySpWFlPUtdi4l1uf2CFL90Cj4inGtybV6h5ht7lKObk9mgMMARGNXRnLB6x1UnoeXollxx
- Z4DasdTDtXQpC2oGDzZMawvm1wvSYspR81s1Iu1uQ8QNIEHFeI+FyVULfDrSESC/5oGj+eBox7n
- YxTQf7xcvbjOHSKl2cCaAooFauPPYxd49enSDEqkii9u8CJR6nQw74+RsvFHv5+ZQlVz+b78+aq
- ubMymWt9SQYeeYVQtZpSt6XsGQaX4gLF6EduCPrvJqPIrC69nYFdjYo2+XgcDlhsRl/rzR4JhEI
- c53hhSL37eB/phTiAQvKMyJy3sWAh1BGajcTIkA4NyQ==
-X-Received: by 2002:a05:622a:244d:b0:52d:7b2a:93f with SMTP id
- d75a77b69052e-52d85374547mr208332681cf.3.1786891935397; 
- Sun, 16 Aug 2026 07:52:15 -0700 (PDT)
-X-Received: by 2002:a05:622a:244d:b0:52d:7b2a:93f with SMTP id
- d75a77b69052e-52d85374547mr208332361cf.3.1786891934845; 
- Sun, 16 Aug 2026 07:52:14 -0700 (PDT)
+ bh=9+WqiaNjbQjH52OWtiPMQB3boxmC+X78TDrAgIexTRo=;
+ b=UKF3MMcW1TKJeHKrRdC1IQZzDatoZIaetm6Ve/StZDWLC4t4+xKfmwJFEx2cbvhIwi
+ HXPC+qiASiJKhGsA606ceSoJea94MtAL8ZEkxpw9ZlvWe0IN2uQqiS/I8kkTIDQ5HL3I
+ 9mOiqvuHAGs4iwv6ZshGG55aGV6/yKhJ8ynHs33u9T9YnJPXfrMOtSgheRlrYcAXf+RW
+ Cx1DU8bqhXGAOrSfaaMtjBXPvtPH2vAD9CVE9bjf4haq6CGnMP+hbNk6SP9DatHV0eeZ
+ cChPGq2uwm5+WYYBgJRq6Y8/NSEDi6oxMqJSCSJSIq/xBjtqmDZfj1BZXo2j6FV9qveB
+ 7xbw==
+X-Gm-Message-State: AOJu0YypaNxX8d08a7d7EJLDvlVmQhLpEY0qrD5ikYSoNQC+QA+DJZwA
+ NJ0/mXDB4VxjiWAb3LFzPi2RJhnizr6JICVMm06NhqMwL3qtcvugP5L7C4jGPKtbb1slsx6vUQ4
+ shLawr0O0Ni83S2b+QyZedho7JFm/MruOluHjklN7BWbD2c7OsiQLuWDQ+hIpTojn5g==
+X-Gm-Gg: AR+sD12KH7/q7/5UOuB+0gsSfx9OucWFbyOW3ajsaos6VpHp6z4ETW6OtonwwdhXu3a
+ BcQQb0TA3i16M6K/GeIiYeH4J1c/cOp7fHFHZdo0wp4yRzK3lXraNmskYQfpo4VZQyBGchMYO7k
+ hFExX+AKwafrjbG3hLAP6pwhmR4IYfo1R19hjn7Jpd1B+bYSdC7yQct1dakD5acWrLfBmMgmDIy
+ q5tju5h6AMMTnbU9QNJO/Po/+Fed9sapPjpCS6Do2XQUS9SihOKBj00krvBWSo03W5HgbYT8oQj
+ g4c+jIfvLo0JDF+m7HwL4n+JlPbwkpALxRdVpXWVc/jAJZZ9e8ne+G5M2HxMb+0Vy5AVD/0cjJs
+ qaJdFqihbfxkyHN8LV7Nf7Te6QJwXANLWzhORu14tiw==
+X-Received: by 2002:ac8:5cd4:0:b0:51a:6feb:dc8a with SMTP id
+ d75a77b69052e-52d8534fa81mr234300761cf.18.1786891951129; 
+ Sun, 16 Aug 2026 07:52:31 -0700 (PDT)
+X-Received: by 2002:ac8:5cd4:0:b0:51a:6feb:dc8a with SMTP id
+ d75a77b69052e-52d8534fa81mr234300441cf.18.1786891950747; 
+ Sun, 16 Aug 2026 07:52:30 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999610966dsm76986135e9.5.2026.08.16.07.52.14
+ 5b1f17b1804b1-499961098cdsm66810015e9.6.2026.08.16.07.52.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:52:14 -0700 (PDT)
+ Sun, 16 Aug 2026 07:52:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 44/56] monitor: Include missing 'qemu/coroutine-core.h' header
-Date: Sun, 16 Aug 2026 16:45:43 +0200
-Message-ID: <20260816144556.69009-45-philmd@oss.qualcomm.com>
+Subject: [PULL 46/56] monitor: Remove unnecessary 'block/block.h' header
+Date: Sun, 16 Aug 2026 16:45:45 +0200
+Message-ID: <20260816144556.69009-47-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: OlWpu7VpaVE27l3k4NvXhFdoVA9Y8iXx
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX0x6VBxJFSh80
- sc1qMZ1X5nukVSV+pe8rWP6DGHGj12lFisAntd6pqV10c9Gfb2SJwrV9Cbyr0i5chFkx2EFEuX3
- ObIBChRGkPH2tfodsb+py/X80autbWM=
-X-Proofpoint-GUID: OlWpu7VpaVE27l3k4NvXhFdoVA9Y8iXx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX0GF2dg2wbW/V
- xzIw4ooV+3/5hPIIn0GR5e1t9iSSixUfdBzMB3qTe+V9I01WntsfXHeWLedF1H126GuK47q3+qB
- 770DcGKHQzxp3Znaaq/6o54EZLAYxRqDFMNLVCli4aSChjoKzjvmuSHp9AR/8hSI6r8fJShtBXX
- /vHaVdJe2iPxQR4DaxYfUJEYQHSBZJ94s90zyG2BURo7ej+6BaV/nxyzXquenmzcTJxBuUymGB9
- uvKjQyh9Qotlr4v48p2gTfioM4/8RVYt+r9aXhAjKRTUYxlaAWkWzxrC0dTl+FCF73msq/5o6nr
- J4V77/jSO/mCM/wbrkvjIwtyOh8LWVZ1865D1YKiZIthg1X0ODX9ud72HvoLe8J7lx6eIUSnx6W
- NWg/zmSOPASZGczYTrQ2YJUgRfHAU34V3njU6PiETAwqJEFQozNH71+Z/s8wimbbMxY51EfUdBs
- 5g0EWAyRDV81+JKDJsQ==
-X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a81cea0 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfXwbSq7CB2/QqY
+ WvekK3dEsSBiHINj5ogqrQu5CF0JVsfeI5cbL+gm585Wy4Wwp7fBTvcoqdrTIF/c3DbkYAcp9Za
+ UHz9hA557PQH2cUEkM1fnx6s0DuwFw6aQNcCR9qNaQuLyeUrLKk0bvHZjPtIUzF6hBKgyS1v+wo
+ 0GBeW0rx9qBtFZTpCanlitBvJdSk9f+wf45K0JC4U5LoDApikVvfXiyAc+y0szS92nqstvreM5s
+ ZKjnVGT6h6oWvcVKMdd0N+b3zYGXk7t6OqUK1vHRh5ors69P2DjrK179NNwF7SzsTZhNNqtippv
+ Acaq+nFwUVNI8MQel207zo6ZNFuvjDW6GX1S7GJcj+h8AJa//KyMy04CJN996/okDuzwmiKCW0+
+ Ty8HrGGqsur8qqqqNjxk+5xoiHsB3+TObNSRT4EcFHuccO00BiclXAk2aDHtyLdtUSVall0qqwt
+ ANXTV2uxC8ogyAb5L5w==
+X-Proofpoint-ORIG-GUID: ozW30WdICWR16ONzfeMBMOv48daDujV_
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX862TfZgwYXyg
+ 3QpIDI7xE/XUg5QTSSTfx+iCKATmw7EzwUst+QoI1MVVj/Cj69vYGjWYF3ILSJFHFSY7a9ia1wo
+ R46A+VrmohesiJ8nWkROqUqUZxEao0I=
+X-Proofpoint-GUID: ozW30WdICWR16ONzfeMBMOv48daDujV_
+X-Authority-Analysis: v=2.4 cv=dvHrzVg4 c=1 sm=1 tr=0 ts=6a81ceaf cx=c_pps
  a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=tlxghdvPRZsVr19qFskA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=hs6llZlkumWZFO0I0y4A:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160119
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,35 +150,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"monitor/monitor.h" declares monitor_set_cur() which use the
-'Coroutine' type, itself declared in "qemu/coroutine-core.h".
-Include the latter to avoid when refactoring unrelated headers:
+Nothing here requires declarations from "block/block.h" anymore.
 
-  In file included from ../../target/sh4/monitor.c:26:
-  qemu/include/monitor/monitor.h:32:26: error: unknown type name 'Coroutine'
-     32 | Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
-        |                          ^
-
-Fixes: e69ee454b5f ("monitor: Make current monitor a per-coroutine property")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260812211708.92824-10-philmd@oss.qualcomm.com>
+Message-Id: <20260812211708.92824-12-philmd@oss.qualcomm.com>
 ---
- include/monitor/monitor.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/monitor/monitor.h | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 890497b0d22..efdd2165aa9 100644
+index fa9f4a8a75a..fd98ee2c71d 100644
 --- a/include/monitor/monitor.h
 +++ b/include/monitor/monitor.h
-@@ -4,6 +4,7 @@
- #include "block/block.h"
+@@ -1,7 +1,6 @@
+ #ifndef MONITOR_H
+ #define MONITOR_H
+ 
+-#include "block/block.h"
  #include "qapi/qapi-types-misc.h"
- #include "qapi/qapi-emit-events.h"
-+#include "qemu/coroutine-core.h"
+ #include "qemu/coroutine-core.h"
  #include "qemu/readline.h"
- #include "exec/hwaddr.h"
- #include "qom/object.h"
 -- 
 2.53.0
 
