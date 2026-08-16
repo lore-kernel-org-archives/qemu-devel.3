@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA87CC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9E6C5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgJb-0002GG-NA; Sun, 16 Aug 2026 15:14:39 -0400
+	id 1wvgJ6-0000O2-4u; Sun, 16 Aug 2026 15:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJZ-0001yo-LY
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wvgIz-0000Cl-1p
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgJX-0007fh-Cs
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:37 -0400
+ id 1wvgIw-0007W2-Tz
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:14:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907674;
+ s=mimecast20190719; t=1786907638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xio5ek/DtZoSh6Qdxkpsfo2CpELN36wjvQz9OIm/oog=;
- b=OsLYw8IRdlMENcubdrzNeWNpQB63iT6NU6a7ZyDwnhKBZg/1qy8We37oP/utUZLWRQjcT1
- kWfNpzNoxkD4Hp0yaLCmauZ40EctBQklhRIDLIi7qc/LSA47ZfQAovIrfBJJaaTAUryiTV
- yFsx2CdvFX//L0Mfn69gc2Hl/VkSqHg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=UZRz3EkbKUI26MlQnyuxQXcUyNkJElc5W8Guw6Tk6gI=;
+ b=VgskfFo9tMkdfLqp49wh/OdlTcH4yAilPFjiRUnKL46IcY4eoia73J/jd5dfm4ImHaYVO/
+ zxjMGKNeqckCxdeH9392p07AY17sN4oYi2BFKm/ubs6HpWtM91OHs5D0mFCS9EVDJaiZjD
+ 2uBmjFvzxk1/3UDn/spucN1J42Gh0NQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-5aWXx9BvPCWJI8buowCAAQ-1; Sun,
- 16 Aug 2026 15:14:32 -0400
-X-MC-Unique: 5aWXx9BvPCWJI8buowCAAQ-1
-X-Mimecast-MFC-AGG-ID: 5aWXx9BvPCWJI8buowCAAQ_1786907671
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-OOEjt81mPLqDF6_m7TskMw-1; Sun,
+ 16 Aug 2026 15:13:56 -0400
+X-MC-Unique: OOEjt81mPLqDF6_m7TskMw-1
+X-Mimecast-MFC-AGG-ID: OOEjt81mPLqDF6_m7TskMw_1786907635
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7FDD1800471; Sun, 16 Aug 2026 19:14:31 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 867B8180049D; Sun, 16 Aug 2026 19:13:55 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A42A31956041; Sun, 16 Aug 2026 19:14:30 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8D2B71800347; Sun, 16 Aug 2026 19:13:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:53 +0400
-Subject: [PATCH v3 26/49] build-sys: add 'hmp' option
+Date: Sun, 16 Aug 2026 23:12:43 +0400
+Subject: [PATCH v3 16/49] tests/qtest/device-introspect-test: fix test
+ without HMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-26-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-16-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3106;
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7518;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=GN8UARHzBp9ZPX0/G1E3GbVjjCI7VPL7U4mo31Lr1Pc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguy/fx+Y4rUEZFW3W7pOnvWUfb08jkQ1Ope1
- eeWRyK/e1iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsgAKCRDa6OEJdZac
- 5ZrWEACrN7AJNtRGbFfjOoB9VpPRt/viosgi+XGNrvIflQvj0OzUy6hSZjK19Qz6iG/qcI+cMTU
- hegE3R74GasdSJlGrLRG47Q3FaFy7AuELRDirhvc+OMIzcMUAvdViCDj2/69+htXb8KyuMaPl+/
- Q8K3X4RSx0Wqh9Erd3VCT9NhfJE0othalqDIJ4F+M7EH4pH2L8UXpqX+71eHkap1+FarLD6QB6d
- BMpDMzPjPIE59TroyOlvYW7mevDqNb15WFnU/14l6tQHVBMtkhpDTU4nmUQs936P4aqlNrEBXDG
- 9R9cIdiCYdDy0+oHkUPE16GZ/gg51lfhowiYAOkeEobdbhS+nfrMynZEzEZwzLh7GZGbXzt8rEi
- qSRg5JgaeakC5DjUMghrmNcCD6G/H5VrinFMy08rgxBROAB05yDr0nEUNRvD/JPWglMbXLbh9YH
- gHn3T/bLJkQRNvN3wF51N70Rad1hsKGPOC4UEy9xJRvmtSMDbYV/8LY6/Zskt7qcYvcbl+G3k2P
- mY0et2O98un9Hu3D5TpvfLpD29WaKaJbUr/cNbduFk2MjjEvq8b95TfI8vWa3VpFoRFudFG9eUD
- uP1nDRHezK1C5U0mFqJfSxrMao0I3D1TbgAdoxcEzZ+UEv8MB21uCc3R1A3pBxAT2y4quUyz4nY
- NJY4lFF5rIYrbYg==
+ bh=9Kj/FtbaZbFHg5LizU23usl5iX+58YVJ4JW3Ey5xlPk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguxNeTVUYD655MqOz1Kg8mK9s7pm7TUKZ70p
+ m0heNaCtVGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsQAKCRDa6OEJdZac
+ 5YYaEACZINcvIXIgTSGEe2HPVGA6lPkxDjfXZ9dDLnQPTrQvcEy3X24UimiM4DYqgTzwnphTgY9
+ YKRAZuwg0LpW+sI+UbDTDGSPNRc/lA/7+yikliBrUg/opfye6jpOlvUFIoIIW+pNjjBM9GsR72Z
+ 3Mlkq1toHGUmTTI0ZwFG/8Y20lnBchP8bthL6TYH+PD74aXVVajZrKHL5w0Yf29LsnAifWVOnRp
+ GNKV1HzOYkfHVjmJS3jpyCJ/AEHobG6rbl2/dxE0g3En01a7+rdbL+letaz7ylJXBovjBSy026N
+ eWTH0Be9HbMjUVCMId5KfLfQQHVYns/+u+cCt2+AeQ7xZvhLcnZE/qaAbVPn+ajzFn3SaWZhvbn
+ Gg/q1XJ0KUlRCd+BPWLqxMs/YCnU+rlI5ZguaZTuSywVwrdDCDqsAxOIzBKqWI8ddi/FmHq+7EG
+ +yfrW7eH/ZFFLMTbuC2yG0nOYrDMArppkiEvn7ZXq7BYfbMfM+eItWmEzxETtBF6oj5lkxN47WX
+ KgBaZFbl+QCjJXgMk2uTOe9WK1SPKfHPOcpHipAuwjClErKhMKXFdVhF8iiecj9pyzCHrT4N4/I
+ 9xUUBBjOwcsDNfg2vBu9sd9tZZ+i3t1TVMDHtSbhB4oA/BHck0i1eDIAynJTOq0+2QqTqcKOMzP
+ fyeZ6NaAU3w6cAg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -90,8 +90,8 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,73 +107,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an option to enable/disable HMP support, default to true. The
-following commits are going to make --disable-hmp gradually work.
+Replace "info qom-tree" with recursive qom-list walk.
+Disable HMP-only code paths, info qtree, kinda duplicating the test.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build                   | 4 ++++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 3 +++
- 3 files changed, 9 insertions(+)
+ tests/qtest/device-introspect-test.c | 111 +++++++++++++++++++++++++++--------
+ 1 file changed, 88 insertions(+), 23 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 49a5baf5b52f..03b334549f23 100644
---- a/meson.build
-+++ b/meson.build
-@@ -247,6 +247,9 @@ have_vhost_net = have_vhost_net_kernel or have_vhost_net_user or have_vhost_net_
+diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
+index f84cec51dc2e..f6eca2c8eb7e 100644
+--- a/tests/qtest/device-introspect-test.c
++++ b/tests/qtest/device-introspect-test.c
+@@ -11,10 +11,10 @@
+  */
  
- have_tcg = get_option('tcg').allowed() and (have_system or have_user)
+ /*
+- * Covers QMP device-list-properties and HMP device_add help.  We
+- * currently don't check that their output makes sense, only that QEMU
+- * survives.  Useful since we've had an astounding number of crash
+- * bugs around here.
++ * Covers QMP device-list-properties and HMP device_add help (if
++ * CONFIG_HMP).  We currently don't check that the output makes sense,
++ * only that QEMU survives.  Useful since we've had an astounding
++ * number of crash bugs around here.
+  */
  
-+have_hmp = get_option('hmp') \
-+  .disable_auto_if(not have_system) \
-+  .allowed()
- have_tools = get_option('tools') \
-   .disable_auto_if(not have_system) \
-   .allowed()
-@@ -2266,6 +2269,7 @@ endif
- config_host_data = configuration_data()
+ #include "qemu/osdep.h"
+@@ -100,11 +100,60 @@ static QList *device_type_list(QTestState *qts, bool abstract)
+     return qom_list_types(qts, "device", abstract);
+ }
  
- config_host_data.set('CONFIG_HAVE_RUST', have_rust)
-+config_host_data.set('CONFIG_HMP', have_hmp)
- audio_drivers_selected = []
- if have_system
-   audio_drivers_available = {
-diff --git a/meson_options.txt b/meson_options.txt
-index a07cb47d35e9..d8f59cf92cae 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -111,6 +111,8 @@ option('cfi', type: 'boolean', value: false,
-        description: 'Control-Flow Integrity (CFI)')
- option('cfi_debug', type: 'boolean', value: false,
-        description: 'Verbose errors in case of CFI violation')
-+option('hmp', type : 'feature', value : 'auto',
-+       description: 'HMP monitor support')
- option('multiprocess', type: 'feature', value: 'auto',
-        description: 'Out of process device emulation support')
- option('relocatable', type : 'boolean', value : true,
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index c003985047c0..5a67e59a1671 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -125,6 +125,7 @@ meson_options_help() {
-   printf "%s\n" '  gtk             GTK+ user interface'
-   printf "%s\n" '  guest-agent     Build QEMU Guest Agent'
-   printf "%s\n" '  guest-agent-msi Build MSI package for the QEMU Guest Agent'
-+  printf "%s\n" '  hmp             HMP monitor support'
-   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
-   printf "%s\n" '  hvf             HVF acceleration support'
-   printf "%s\n" '  iconv           Font glyph conversion support'
-@@ -339,6 +340,8 @@ _meson_option_parse() {
-     --disable-guest-agent-msi) printf "%s" -Dguest_agent_msi=disabled ;;
-     --enable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=true ;;
-     --disable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=false ;;
-+    --enable-hmp) printf "%s" -Dhmp=enabled ;;
-+    --disable-hmp) printf "%s" -Dhmp=disabled ;;
-     --enable-hv-balloon) printf "%s" -Dhv_balloon=enabled ;;
-     --disable-hv-balloon) printf "%s" -Dhv_balloon=disabled ;;
-     --enable-hvf) printf "%s" -Dhvf=enabled ;;
++/*
++ * Recursively walk the QOM composition tree via qom-list and build a
++ * string representation.  This serves two purposes: detecting dangling
++ * pointers (qom-list would crash QEMU) and detecting leaked objects
++ * (by comparing the output before and after device introspection).
++ */
++static void qom_tree_walk(QTestState *qts, const char *path, GString *result)
++{
++    QDict *resp;
++    QList *list;
++    QListEntry *e;
++    GList *children = NULL;
++
++    resp = qtest_qmp(qts, "{'execute': 'qom-list',"
++                     " 'arguments': {'path': %s}}", path);
++    g_assert(qdict_haskey(resp, "return"));
++    list = qdict_get_qlist(resp, "return");
++
++    QLIST_FOREACH_ENTRY(list, e) {
++        QDict *prop = qobject_to(QDict, qlist_entry_obj(e));
++        const char *type = qdict_get_str(prop, "type");
++        if (g_str_has_prefix(type, "child<")) {
++            const char *name = qdict_get_str(prop, "name");
++            children = g_list_prepend(children, g_strdup(name));
++        }
++    }
++
++    children = g_list_sort_with_data(children, (GCompareDataFunc)g_strcmp0,
++                                     NULL);
++
++    for (GList *l = children; l; l = l->next) {
++        const char *name = l->data;
++        g_autofree char *child_path = (!strcmp(path, "/"))
++            ? g_strdup_printf("/%s", name)
++            : g_strdup_printf("%s/%s", path, name);
++
++        g_string_append_printf(result, "%s\n", child_path);
++        qom_tree_walk(qts, child_path, result);
++    }
++
++    g_list_free_full(children, g_free);
++    qobject_unref(resp);
++}
++
++static char *qom_tree_str(QTestState *qts)
++{
++    GString *result = g_string_new("");
++    qom_tree_walk(qts, "/", result);
++    return g_string_free(result, FALSE);
++}
++
+ static void test_one_device(QTestState *qts, const char *type)
+ {
+     QDict *resp;
+-    char *help, *escaped;
+-    GRegex *comma;
+ 
+     g_test_message("Testing device '%s'", type);
+ 
+@@ -113,19 +162,21 @@ static void test_one_device(QTestState *qts, const char *type)
+                type);
+     qobject_unref(resp);
+ 
+-    comma = g_regex_new(",", 0, 0, NULL);
+-    escaped = g_regex_replace_literal(comma, type, -1, 0, ",,", 0, NULL);
+-    g_regex_unref(comma);
++#ifdef CONFIG_HMP
++    {
++        g_autofree char *escaped = NULL;
++        g_autoptr(GRegex) comma = NULL;
+ 
+-    help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
+-    g_free(help);
+-    g_free(escaped);
++        comma = g_regex_new(",", 0, 0, NULL);
++        escaped = g_regex_replace_literal(comma, type, -1, 0, ",,", 0, NULL);
++        g_free(qtest_hmp(qts, "device_add \"%s,help\"", escaped));
++    }
++#endif
+ }
+ 
+ static void test_device_intro_list(void)
+ {
+     QList *types;
+-    char *help;
+     QTestState *qts;
+ 
+     qts = qtest_init(common_args);
+@@ -133,8 +184,11 @@ static void test_device_intro_list(void)
+     types = device_type_list(qts, true);
+     qobject_unref(types);
+ 
+-    help = qtest_hmp(qts, "device_add help");
+-    g_free(help);
++#ifdef CONFIG_HMP
++    {
++        g_free(qtest_hmp(qts, "device_add help"));
++    }
++#endif
+ 
+     qtest_quit(qts);
+ }
+@@ -198,18 +252,22 @@ static void test_qom_list_fields(void)
+ static void test_device_intro_none(void)
+ {
+     QTestState *qts = qtest_init(common_args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
++#ifdef CONFIG_HMP
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
++#endif
+ 
+     test_one_device(qts, "nonexistent");
+ 
+     /* Make sure that really nothing changed in the trees */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
++#ifdef CONFIG_HMP
+     qtree_end = qtest_hmp(qts, "info qtree");
+     g_assert_cmpstr(qtree_start, ==, qtree_end);
++#endif
+ 
+     qtest_quit(qts);
+ }
+@@ -217,18 +275,22 @@ static void test_device_intro_none(void)
+ static void test_device_intro_abstract(void)
+ {
+     QTestState *qts = qtest_init(common_args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
++#ifdef CONFIG_HMP
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
++#endif
+ 
+     test_one_device(qts, "device");
+ 
+     /* Make sure that really nothing changed in the trees */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
++#ifdef CONFIG_HMP
+     qtree_end = qtest_hmp(qts, "info qtree");
+     g_assert_cmpstr(qtree_start, ==, qtree_end);
++#endif
+ 
+     qtest_quit(qts);
+ }
+@@ -239,10 +301,12 @@ static void test_device_intro_concrete(const void *args)
+     QListEntry *entry;
+     const char *type;
+     QTestState *qts = qtest_init(args);
+-    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
++    g_autofree char *qom_tree_start = qom_tree_str(qts);
+     g_autofree char *qom_tree_end = NULL;
++#ifdef CONFIG_HMP
+     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
+     g_autofree char *qtree_end = NULL;
++#endif
+ 
+     types = device_type_list(qts, false);
+ 
+@@ -255,14 +319,15 @@ static void test_device_intro_concrete(const void *args)
+ 
+     /*
+      * Some devices leave dangling pointers in QOM behind.
+-     * "info qom-tree" or "info qtree" have a good chance at crashing then.
++     * Walking the QOM tree via qom-list has a good chance at crashing then.
+      * Also make sure that the tree did not change.
+      */
+-    qom_tree_end = qtest_hmp(qts, "info qom-tree");
++    qom_tree_end = qom_tree_str(qts);
+     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
+-
++#ifdef CONFIG_HMP
+     qtree_end = qtest_hmp(qts, "info qtree");
+     g_assert_cmpstr(qtree_start, ==, qtree_end);
++#endif
+ 
+     qobject_unref(types);
+     qtest_quit(qts);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
