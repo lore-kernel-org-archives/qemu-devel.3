@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B18C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 17:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF08C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 17:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvexa-0008PO-IE; Sun, 16 Aug 2026 13:47:50 -0400
+	id 1wvexE-00086N-M9; Sun, 16 Aug 2026 13:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvexZ-0008Nq-Lb
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:49 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1wvexC-000801-EE
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:26 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wvexY-0003Cd-6T
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:49 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-cbeea240819so1369551a12.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:47:47 -0700 (PDT)
+ id 1wvexA-00038y-Kc
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 13:47:26 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-38759bcd877so3015480a91.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 10:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786902467; x=1787507267; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786902443; x=1787507243; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6naBanft5dzX6viSmmU3Uw6eq1ZNfugHG1TUba3f5YE=;
- b=UCj2BuwBHuVRpl37UJAKBNKdSMLb7tw8OrLuE0fsEWSZHqlpQv6LiAlEjrJcVjZWJM
- He1qAu7nkE1Cp5E6p/4M9XX81oo7MkgDWwwBloKVHI8Q0UwwKiMOgmBUHrEzH6q9NYoO
- MPiAzHct30PUe6uYBEfq8HAv4Px/qOpEvgkTWJEj0BIWDsbZdiBff4fxkWuO1W6csYIt
- 7E08X2OozuEmGTAID3IofiQS/shhA90G9rbVK1bmVwpd17OppIHuPfdYsnuHQp6XxuHi
- c6mnB4a6j5VZEaCV9C7IbCf6v2qSup6gU44vCL6IOv0JNyOC1/U74lMz8ngKoyGP7835
- L5gQ==
+ bh=LEb4IeU8xhFAOEs1BVpDht8XPPtt6nino35RRBxs/u4=;
+ b=R2HUu3Mb1BlMdIwuMD/uBm4BQ+xdCFoALR1rMo6DhaLiHaoJgSX3kWtfyuzBl/sJOL
+ 7W/jmaFn6ppOX4fBo6Y8N2Y6VzluUCp0iX6jaYxkJC73pFMO7NfUiFfm92tq5B7koc+R
+ sCe1pEo3oeUGIX8VjCwBqiqYJgdUqHOmY41KJpSTCgErxINagBPk2ORjb6U/hr08G75o
+ kNDzFaqsTqfq7i+q8rKLJnRP00QJAo/Z4VehVrJD350W2w/mwn4xn4+s7AafvikmKjux
+ QRfUBGxNp09sRw7H8k8UP8eF+LfOqMgcwo/9VaGMhHhe/3do8eWQqj9hc+0ODS0WK7wh
+ F2NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786902467; x=1787507267;
+ d=1e100.net; s=20251104; t=1786902443; x=1787507243;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6naBanft5dzX6viSmmU3Uw6eq1ZNfugHG1TUba3f5YE=;
- b=NcbGb3eZDGFaYPZv3Qft3xBtEZ5Z1GcNDH/3h/y5wLxovXc5HEWRLY4Pph49gguLmE
- gQca02JxapWVF5UEFKztA9j0BWGbrdZIRIoRgGPKfP7b6uHMkJBCCjZ4UTtGZl0g9g+N
- glX82WnLHcDsI16n2P8TevPQRxj8xNkuZHd5OPyy8mRR2/xT5i/yOilZ2FVqhWkbg/OK
- XJt95j4x8lc/bQRvelFFjVc3ZeCHTWl5xO7riOqDf/w98ULZUPHbRpHwDAAW0jN6/VvI
- +NxkktUtycG+m8Xz/qOBmTuT8V6zpzeNOQMLid3GoDqQZSfkeGdDoQT8md6grwMOoGr9
- OAXQ==
-X-Gm-Message-State: AOJu0YxNoPyid896KrSI+tYBpTnhxbqFchXGtHYVqxkUNRfvKKGk1pPj
- r5ds2s1qm1x98fmfrEfA9UmoEXEfX5Md5z+Ni9ryeVO156f6/caFM+R2b/QNRQ==
-X-Gm-Gg: AR+sD12XTUzj/08KZelAAbwVOeJax0YquhptC6obglg2POQ76l5Bcj8eY4QIarmQWLH
- hwJFPVahBPLtoiSyAGHa3nPdwAA1gD35w/yfgKNcpchQ+DT5csCqP0/NPUKZb5Dqi0uQh0bI7dX
- LvqcuNRrlIOXyn3b6Vkut31VO4trpJ1RjbWeOaQSSmnflhkwym0iW2cE8sDTWiMA+zo22jODOnv
- FdsN6m4Vj45q0AMsELBFSvXCkLBePwezrElAX2dv5ElBww28glclUeHvkjEJkMPtV2V/2n3hHCz
- X5BRL/kRijQrtcugUvK56Vj5+ab6s6qehrVc13OzsEV6wlt5bWfPL7fbvufW/qa845G2j8kGgcH
- /rTdSD5HK3/Ow0pc3H34vNQ5Z18eB5beyT4cZkiX/VJpdWYwRgUN8co4xq+Et33V3FAImYOk/yK
- 4Sga4+faKzsS8QPAF9hTtQoKcaLgMPAItLtRFyZ+48MFtO6bKPs3FwR5ORmqDROPPIdvI5QBE5G
- AbU9YhIR7WE+8o=
-X-Received: by 2002:a05:6a20:9183:b0:3b4:870e:6f44 with SMTP id
- adf61e73a8af0-3cc71de5b86mr21332452637.35.1786902466786; 
- Sun, 16 Aug 2026 10:47:46 -0700 (PDT)
+ bh=LEb4IeU8xhFAOEs1BVpDht8XPPtt6nino35RRBxs/u4=;
+ b=hFiohO+00KX+uYKYzebexLHSYH3ZzD5e65gvUL3sWhdXGX8q/+xSMBNKqDHmU67+2j
+ aY2IjXL8NM1IC/+W1CQXpNkFmUvMDzuxzZINWTNJZMm7XGorfLnB3fqmJ9lNmslYBfw2
+ YixtYyU5Wgy19IK9QnGxXd3ubxikIUDIT9AbeEd8xQR5dDdfbDVzRs1i7T/ohrQOZn0g
+ gP4JIyKIlcWyRdLL7t/rOXDnBu26saMEeyOY6Fi09FMGdA+yuFXhnwCcgkszpZbKwm1M
+ 8kWZ7xZi3PWP4UZNbVR++UvOiMo5ygveBneuyFohJQdXo15Kz99yE8PHu6mwWfvn+qXG
+ j7Xw==
+X-Gm-Message-State: AOJu0YzIpgoColtW4+ZCjZ0abgB8Oc4SPg5rOeeSkXzUy5JLs861ZtZG
+ 6N8Jf4L4CZIrUnWWoMxn5sBC1Za6gQn5QMtK9BvOwfsg0PCCtHnMKGBnr+NfWAAr
+X-Gm-Gg: AR+sD10IdeNGFQxrlk4Qi3eCNbt/e6CDrbMorsBWQy5bBRtIYdWCdtJZWa/DdSZYIOI
+ QHWFp1fLXcaiuM4y4JT8/0xm5L4yUgQ/oLLvLuZMd1CtQ6nFGfJtEz62fSvTqaxHFJuJ2WjXxPX
+ UKlfwi/L9pEHFCg7uYXSa+oCYRsCV7c+ppOXVWfLtvlrb7vHS4X2kjQ6VHXmePp6Nl6BLtboe0h
+ fGE8XKfXF+xGSi/GUZs+HRy2G6ZtMhMCT2EYs9yGdFDMY30BNBpaG3pPybVBS/E5RET5qCdClxK
+ KJOw17510+1OeXoGPa/vatQO8bxk3t5F/PdQFhAembnJ2GJP8PYyGXCbvPKpXDgPmVlF0ZSzK2a
+ WeAVysWEFM7R0fskv3r02FxkbP7dNx10vP+SQrkmneyxgGK5MDRxzt4KoHH2zA+OKxYEC6kBAKt
+ IR8uucp5fOix3PV09wkzkkkPQtaEUV9bz1kCO2P5prQKtngwzL9U+USuhUwXnEHuzfTWq3yCnkD
+ kDa+pkbECh2TjY=
+X-Received: by 2002:a17:90b:384f:b0:390:b41a:b92f with SMTP id
+ 98e67ed59e1d1-3933e648702mr19122496a91.18.1786902442753; 
+ Sun, 16 Aug 2026 10:47:22 -0700 (PDT)
 Received: from setun ([223.228.54.80]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-320ead105a9sm28343674eec.31.2026.08.16.10.47.42
+ 5a478bee46e88-320ead105a9sm28343674eec.31.2026.08.16.10.47.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Aug 2026 10:47:46 -0700 (PDT)
+ Sun, 16 Aug 2026 10:47:22 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com, pierrick.bouvier@oss.qualcomm.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v5 10/11] migration/tests: Add test for fast snapshot load
-Date: Sun, 16 Aug 2026 23:16:30 +0530
-Message-ID: <20260816174631.1547811-11-aadeshveer07@gmail.com>
+Subject: [PATCH v5 05/11] migration: Make qemu_get_buffer_at() thread-safe
+Date: Sun, 16 Aug 2026 23:16:25 +0530
+Message-ID: <20260816174631.1547811-6-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260816174631.1547811-1-aadeshveer07@gmail.com>
 References: <20260816174631.1547811-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,61 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_postcopy_file_mapped_ram() to test for saving a snapshot in
-mapped ram format and loading it using postcopy/fast snapshot load.
+Remove the internal QEMUFile error state modification from
+qemu_get_buffer_at(). This function is called by two functions, both of
+which already check for unexpected return values and handle their own
+error reporting.
 
-Test is similar to test_precopy_file_mapped_ram() with additional
-start_hook to set postcopy capabilities on the receiving end.
+Removing this shared state modification makes qemu_get_buffer_at()
+strictly thread-safe for concurrent disk reads, serving as a
+preparatory change for the upcoming fast snapshot load feature.
+
+Removed local error by passing errp to improve on error handling,
+consequently also change caller to use error_prevent and not error_setg.
+
+Set errp in case of f->last_error as function should set errp in case it
+fails, and caller can simply use error_prepend without checking errp in
+case of error.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 ---
- tests/qtest/migration/file-tests.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ migration/qemu-file.c | 11 +++++------
+ migration/qemu-file.h |  4 ++--
+ migration/ram.c       |  6 +++---
+ 3 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
-index 5118d9dec9..c7e4b05c61 100644
---- a/tests/qtest/migration/file-tests.c
-+++ b/tests/qtest/migration/file-tests.c
-@@ -190,6 +190,25 @@ static void test_multifd_file_mapped_ram_dio(char *name, MigrateCommon *args)
-     test_file_common(args, true);
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index d5a48115bd..2feaeb8982 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -550,17 +550,16 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
  }
  
-+static void *migrate_hook_start_postcopy_mapped_ram(QTestState *from,
-+                                                    QTestState *to)
-+{
-+    migrate_set_capability(
-+        to, MigrationCapability_lookup.array[MIGRATION_CAPABILITY_POSTCOPY_RAM],
-+        true);
-+
-+    return NULL;
-+}
-+
-+static void test_postcopy_file_mapped_ram(char *name, MigrateCommon *args)
-+{
-+    args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-+
-+    args->start_hook = migrate_hook_start_postcopy_mapped_ram;
-+
-+    test_file_common(args, false);
-+}
-+
- #ifndef _WIN32
- static void migrate_hook_end_multifd_mapped_ram_fdset(QTestState *from,
-                                                       QTestState *to,
-@@ -330,6 +349,11 @@ void migration_test_add_file(MigrationTestEnv *env)
-     migration_test_add("/migration/multifd/file/mapped-ram/live",
-                        test_multifd_file_mapped_ram_live);
  
-+    if (env->has_uffd) {
-+        migration_test_add("/migration/postcopy/file/mapped-ram",
-+                           test_postcopy_file_mapped_ram);
-+    }
-+
- #ifndef _WIN32
-     migration_test_add("/migration/multifd/file/mapped-ram/fdset",
-                        test_multifd_file_mapped_ram_fdset);
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos)
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp)
+ {
+-    Error *err = NULL;
+-
+     if (f->last_error) {
++        error_setg(errp, "Cannot read from file: stream is in error state %d",
++                   f->last_error);
+         return 0;
+     }
+ 
+-    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
+-        qemu_file_set_error_obj(f, -EIO, err);
++    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, errp) < 0) {
+         return 0;
+     }
+ 
+diff --git a/migration/qemu-file.h b/migration/qemu-file.h
+index 8f824c124d..966766788d 100644
+--- a/migration/qemu-file.h
++++ b/migration/qemu-file.h
+@@ -76,8 +76,8 @@ void qemu_set_offset(QEMUFile *f, off_t off, int whence);
+ off_t qemu_get_offset(QEMUFile *f);
+ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+                         off_t pos);
+-size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+-                          off_t pos);
++size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen, off_t pos,
++                          Error **errp);
+ 
+ QIOChannel *qemu_file_get_ioc(QEMUFile *file);
+ int qemu_file_put_fd(QEMUFile *f, int fd);
+diff --git a/migration/ram.c b/migration/ram.c
+index 4728f14d73..967db7c0db 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4127,7 +4127,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+                                               block->pages_offset + offset);
+             } else {
+                 read = qemu_get_buffer_at(f, host, size,
+-                                          block->pages_offset + offset);
++                                          block->pages_offset + offset, errp);
+             }
+ 
+             if (!read) {
+@@ -4196,8 +4196,8 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+     if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
+-                           header.bitmap_offset) != bitmap_size) {
+-        error_setg(errp, "Error reading dirty bitmap");
++                           header.bitmap_offset, errp) != bitmap_size) {
++        error_prepend(errp, "Error reading dirty bitmap");
+         return;
+     }
+ 
 -- 
 2.55.0
 
