@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3089CC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E537C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgIV-0008NL-Cz; Sun, 16 Aug 2026 15:13:33 -0400
+	id 1wvgLE-0000oY-Mf; Sun, 16 Aug 2026 15:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgIO-0008Kj-F9
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:25 -0400
+ id 1wvgKw-0000eM-VP
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wvgII-0007GV-Qh
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:13:23 -0400
+ id 1wvgKu-0008UX-3T
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 15:16:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786907593;
+ s=mimecast20190719; t=1786907758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xwqJgBYcOrqzsn6Uz+zENbJ1dQ1zJzkv1tuTOfCGPRI=;
- b=MEhCX9VVA+c5wENfOXEy3haC52ZBDqg3PtcORBShjcui86B5DWWpUMbzQxx+NQ2W09OusI
- 868spDL3PCNZHCS53hfRZTDQTBAJx0u3JfTYtKSzfPtx/B5K4SEmWcHn/qDQQKol8FUzF+
- C4vAGzu8TmqU+x709e6R7kWnT67ylGs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lEHcK7z4lsrjo+b0nnSXK3UE3eXILpOvD/vKXVIjWIU=;
+ b=SvvFiVmcEeJifwheQn+Y2fdC1fhkttsNBiSJxmRTNafPXj9NMHzw13im9LTYxNvkHmpPYN
+ zdfv74vi1PlruZztmPvJBZyg187Qb7AOWHIzF/82dCWj8mXzqKsAq6aFpmVD5N6Vk8eDoS
+ eCHg3OH1ZwSnhRtgKyfgQ5ROTcgt5Ws=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-h3M1YAErNkKbH5dqVFvgRw-1; Sun,
- 16 Aug 2026 15:13:10 -0400
-X-MC-Unique: h3M1YAErNkKbH5dqVFvgRw-1
-X-Mimecast-MFC-AGG-ID: h3M1YAErNkKbH5dqVFvgRw_1786907589
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-0D44Qhn8O3iTge3kEqClLg-1; Sun,
+ 16 Aug 2026 15:15:55 -0400
+X-MC-Unique: 0D44Qhn8O3iTge3kEqClLg-1
+X-Mimecast-MFC-AGG-ID: 0D44Qhn8O3iTge3kEqClLg_1786907754
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD6731800366; Sun, 16 Aug 2026 19:13:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DBDE19560B5; Sun, 16 Aug 2026 19:15:54 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C3FC423; Sun, 16 Aug 2026 19:13:07 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 34CB2195608A; Sun, 16 Aug 2026 19:15:52 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 16 Aug 2026 23:12:30 +0400
-Subject: [PATCH v3 03/49] hmp: fix snapshot_blkdev argument type
+Date: Sun, 16 Aug 2026 23:13:13 +0400
+Subject: [PATCH v3 46/49] stubs: split monitor-core stubs into separate
+ compilation units
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260816-qemu-no-hmp-v3-3-e53fc35bc550@redhat.com>
+Message-Id: <20260816-qemu-no-hmp-v3-46-e53fc35bc550@redhat.com>
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 In-Reply-To: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2272;
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2638;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2agSZFonX9AReo2U/44kc7VY3Ymspa6PTHpu0NPMtnE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgguw3d4F2iYCXZDV9q3UE4CMospkPv2f2CATQ
- aIVl5HzSwOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILsAAKCRDa6OEJdZac
- 5Rw3EACPuy3PH1G7tRtCGh37AX3Z3xT62uqT08cjvt+6ZK7ln/fbQ3mWr7HkoxbfskEJCAdQ+NF
- 6t8uyLjCVNgyEz7rys/7DeosJbgtMkIlfFf23lQihn+F4UD9t/ap2GumCxx+ySa3B3XFrN0ZfiK
- ZShQSXBp+LbTs37useOAzgfddzKKRbSFsMNuiLWVWZEy1HG4v761NsOIfy0VEF4MD0b9WoA6bzf
- ogQ51A3Ylq0+HSP0gnVe/DxqPpH/rBXkQL4dYPZZzSnM2qQsDvGNQZQcXap6PxkVn2DH1kexXEQ
- PP08/KY2k4Y4aQ87ZLOlr5UVG1EPDbsv352fECXq7rwa18deH/Hvbwn0Gx6sxIdf78qUfsbkPoC
- DvZEFAvfbh4JxWQHdZEHodyDQX2hpsmVH1zCk7SdEWPql61An/K/xNlDvnTMW/oM1JOhmV4BvcO
- QBbWWWpK+JAmTWBoUOmLBxDSNQBhLZSbfDGqBJr86q7U8OzCS7j79aBD3kMP4A3GFbSxBBYCGvj
- pWRiNCwLvPAl90yQatfE4H2JmzFja9B5cFOh/qomAL9u8oy+dMipYqBNNyBN9iEWPoHJt+lx8qp
- 02Dre4CjXhmxtTqvJfppNladzkwuR0lfEm4RrpgJXVxZ4uF9TvnWZANC4TSwvc6skDEOoXtknM/
- usL2SVagSFnFGag==
+ bh=2XvwU4FzVi+iQ75+LAQigV0q9d5xv2A741epbvOZt8c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqggu0ygSaq5NDA7ihCFPjDn9Io9xkrDlAPQ/Zm
+ 4WbxPIn8YWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoILtAAKCRDa6OEJdZac
+ 5ZjhD/94r88iG6jUbs0mQww5+E3lTCc+EfTl3QbQuLV6mFX0cVy/P8LaqyNhObP2n26M2gzd9SJ
+ 8Ntn6EX0NKCsvEcRlLGjmJmQdQR39trC9+/LCO0NlFyBxQ+BEUQ4fFve/CMMdqrw+3dWaAlk2My
+ wU5kqIL/KDgUOtXVfXaLZ9XLfoHtNEMagmtGeLtRCNLj1bYbbZrew3Ygp0VoAbJEzunhQ8oGs7b
+ 7o93TqjW/OQZO0LnLB/iMuwRMdz6V9YMQHsmjiydrJBJmqnB+lHFbrPvdJF/dmmtHhCzXVz++mY
+ ya02DvjojOR+1Imt9lo9vzsTrqVEnIiRd5BG3JrpoyZkLjWZWLdLEGXNE0/iCgHRayIeaLjXvOk
+ sAZ+HqFU304fAZ602Zs6BIo8i0RvQhaDYl8cNuLHTbyJam1dI6eaFvXXT/s87ip+zpfUfNwd4Xx
+ esxdKWGToI4ZrY2bU+51mnxRtbbfsE5j0aA9WmdDT1yQ66/8kZzjzOuntDqhGq4W5ym2QU2xCNh
+ L/Vs1suB9KpZ2+vPABJujPIEIljT67BpIx6coVI4PYgmdqpVPSTxgGKg+T7VVoW4ouGaBN/87ud
+ 8FVSHApnXa+Sixjtx7pFwElcAk3/zaiCB2Ff+L7xDJ94y7sFqe151DCsM8PNVtUpr8C6H4SM5zZ
+ greoKvER7SkXfgw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,60 +107,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The `snapshot-file` argument for `snapshot_blkdev` is mandatory. Correct
-the `args_type` definition to reflect this.
+The wild linker rejects duplicate symbols even from archive members.
+When qemu-storage-daemon links both libqmp (with monitor/monitor.c)
+and libqemuutil (with stubs/monitor-core.c), all symbols from the
+stub .o are pulled in, causing duplicates for monitor_cur,
+monitor_set_cur, and qapi_event_emit.
 
-Fixes: 6106e2492fe ("qapi: Convert blockdev_snapshot_sync")
+Split each stub group into its own file so the linker only pulls in
+archive members whose symbols are actually needed.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/monitor/block-hmp-cmds.c | 12 +-----------
- hmp-commands.hx                |  2 +-
- 2 files changed, 2 insertions(+), 12 deletions(-)
+ stubs/meson.build       |  2 ++
+ stubs/monitor-core.c    | 16 ----------------
+ stubs/monitor-cur.c     | 14 ++++++++++++++
+ stubs/qapi-event-emit.c |  8 ++++++++
+ 4 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 69ade0534f1c..39b82e8ef501 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -344,25 +344,15 @@ void hmp_block_job_complete(Monitor *mon, const QDict *qdict)
- void hmp_snapshot_blkdev(Monitor *mon, const QDict *qdict)
- {
-     const char *device = qdict_get_str(qdict, "device");
--    const char *filename = qdict_get_try_str(qdict, "snapshot-file");
-+    const char *filename = qdict_get_str(qdict, "snapshot-file");
-     const char *format = qdict_get_try_str(qdict, "format");
-     bool reuse = qdict_get_try_bool(qdict, "reuse", false);
-     enum NewImageMode mode;
-     Error *err = NULL;
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 93df8ea94f57..29b6644b2549 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -7,7 +7,9 @@ stub_ss.add(files('fdset.c'))
+ stub_ss.add(files('iothread-lock.c'))
+ stub_ss.add(files('is-daemonized.c'))
+ stub_ss.add(files('monitor-core.c'))
++stub_ss.add(files('monitor-cur.c'))
+ stub_ss.add(files('monitor-hmp.c'))
++stub_ss.add(files('qapi-event-emit.c'))
+ stub_ss.add(files('replay-mode.c'))
+ stub_ss.add(files('trace-control.c'))
  
--    if (!filename) {
--        /*
--         * In the future, if 'snapshot-file' is not specified, the snapshot
--         * will be taken internally. Today it's actually required.
--         */
--        error_setg(&err, QERR_MISSING_PARAMETER, "snapshot-file");
--        goto end;
--    }
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index 094b80721003..0e74d78d52e4 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -1,21 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "qapi/qapi-emit-events.h"
 -
-     mode = reuse ? NEW_IMAGE_MODE_EXISTING : NEW_IMAGE_MODE_ABSOLUTE_PATHS;
-     qmp_blockdev_snapshot_sync(device, NULL, filename, NULL, format,
-                                true, mode, &err);
--end:
-     hmp_handle_error(mon, err);
- }
+-Monitor *monitor_cur(void)
+-{
+-    return NULL;
+-}
+-
+-Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+-{
+-    return NULL;
+-}
+-
+-void qapi_event_emit(QAPIEvent event, QDict *qdict)
+-{
+-}
  
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index ea4a1db78f18..f0b8d8914c98 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1173,7 +1173,7 @@ ERST
- 
-     {
-         .name       = "snapshot_blkdev",
--        .args_type  = "reuse:-n,device:B,snapshot-file:s?,format:s?",
-+        .args_type  = "reuse:-n,device:B,snapshot-file:s,format:s?",
-         .params     = "[-n] device [new-image-file] [format]",
-         .help       = "initiates a live snapshot\n\t\t\t"
-                       "of device. If a new image file is specified, the\n\t\t\t"
+ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+ {
+diff --git a/stubs/monitor-cur.c b/stubs/monitor-cur.c
+new file mode 100644
+index 000000000000..93966a16b855
+--- /dev/null
++++ b/stubs/monitor-cur.c
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "monitor/monitor.h"
++
++Monitor *monitor_cur(void)
++{
++    return NULL;
++}
++
++Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
++{
++    return NULL;
++}
+diff --git a/stubs/qapi-event-emit.c b/stubs/qapi-event-emit.c
+new file mode 100644
+index 000000000000..70b2719d714b
+--- /dev/null
++++ b/stubs/qapi-event-emit.c
+@@ -0,0 +1,8 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "qapi/qapi-emit-events.h"
++
++void qapi_event_emit(QAPIEvent event, QDict *qdict)
++{
++}
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
