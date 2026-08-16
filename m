@@ -4,121 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F8AC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FEEC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcDw-0000UV-N9; Sun, 16 Aug 2026 10:52:32 -0400
+	id 1wvcDl-0008JN-3m; Sun, 16 Aug 2026 10:52:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcDs-0000Ih-CL
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:29 -0400
+ id 1wvcDj-0008DT-Da
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:19 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcDp-0001yw-OG
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:28 -0400
+ id 1wvcDh-0001yG-QZ
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:52:19 -0400
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDkmcS2760393
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:24 GMT
+ 67GDkreC2760527
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EVTMZJKsYTIXB0uIpj4jwnCmJ3xCFkAx7TnXI4n4Elg=; b=Ge0GTyp5y7ZgSjA0
- eJ54km56kKVaMZhsN2YqPzhJ7Wqy7ZGQ09JpjhCwsLxbomk7m4rFEuRGkKOQF51K
- LfWyhV4IvfCNQZy4K/K++xpzzjSaKRK/Z0m2o0d+jwRgjwR56b2Pv4nam5oiMZiM
- 6VwuXORZq7JZZ5tLEe5Pd3hUH5QFH4HzfvzfOE/XP2GkK3RgZryeshK5dBs4IVsd
- oBrhf7aKV85ttHC8vQVl8QKS+MsJVYxnoD23HCpw0srIaL5/NUWsWF6RPsXdF3k+
- 1ifikf/L75497/Zm8avxfVBEt8cQZuNAREYaIIkk3lKyvu5e68iJJN7odJeZ5P3v
- Ia9/Fw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gkhb4-1
+ thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=; b=TYr/dmsgZj+1R6Fe
+ EvlouOMZQx4V1XkvAjldmaDYD7hb7CkSIFmJWk+O7LurDTyMK2BLU/Jld+6ikhtG
+ /nVicMeW6Xl/qlS7jnUgjWaybgWYcHye9edz7VGPVapUHzBP3+/sUk+LzCTjsTLo
+ MLyP8H9RoumfOQPajg2bCOjkc+tzCrzFSebYZRQ3UHvpN7sCEPOrPbzS8kb6Qu6v
+ SB30eSkDVSQMLe1D2Zhq3gcINXoAFCgV9kOE8jHwasQS2j7VmLwDkqx7HP+yfQx5
+ Mf+O1BIjJAo6t8DMO9LniNMpc3/1RZRBFgCqQEz1GJw0YnbfNKXxjbIdYIdKWZYy
+ SL5uRw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gkhaw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:24 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c1c7f135bso45131221cf.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:52:24 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:52:16 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-52cd0374265so55869211cf.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891943; x=1787496743; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891935; x=1787496735; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=EVTMZJKsYTIXB0uIpj4jwnCmJ3xCFkAx7TnXI4n4Elg=;
- b=Uw/WOaPfvF5GceVhKttanbRCcT4eS6QKN5CAZ5nQOc26g3AZOGL14egLbMFgevxIv1
- wj5bgdSFS2i3Li+jnZ7anD7GsbndKueY30EiQJk1csgPrte8+6XRA3VkhCmZaRRZ9YLh
- 4iOnd7UVTUnFcooO3GlLcvzjkFRFEm59SepdUrqjUGiNFDjhtQ+dSjaPqyWdaiJUvbiX
- D7IjdfYBkQn3XxC/pOC4x1gB1gqndiSLISBwybx3jLU78ocDPI4JjPuVefdpQ6mblu50
- 4rtRmfuwlxdUD3jrMdbsIIVSsgcFRXcgIE/dyIleK8L/3WNIMf1/YcFV5ikjtwRwmT5a
- rxQA==
+ bh=thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=;
+ b=A9qKsIGdmDYoxlaF55L6YmTEzpmse7Piw3v2kTifY/AoS8ME7wdYsJBBVoiAL+sJ4R
+ CneWwX5hisdpGcz2wmpP3nqK/bILrj1N1vJHrejfmmdHd12BYZtCnfIXFFLNitLYYXCg
+ 5TIG/LLDQGUMgkIzkzcn02z51ZbTPdifE2M/LBysfLImvSeWVaek3y7LFT7Z/oU73+yt
+ FmN6D1YBC6ARaxrE8NNiRH9+DQdF5kOfJH5UuvYxksitUtWczeuAvwPcsC4kAhTkSTH7
+ /bFfgmoZ7pRfbI3xZ+JDm2hcvh2y1XFu4G1HNberq+uXke4ytf3sUwYY2AqtFOeuXOVU
+ HxuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891943; x=1787496743;
+ d=1e100.net; s=20251104; t=1786891935; x=1787496735;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=EVTMZJKsYTIXB0uIpj4jwnCmJ3xCFkAx7TnXI4n4Elg=;
- b=rc5k6MkqYg8B0zAZLGRL7z7EwGt82+nQ29d/vHWURck/XXll72t0LwDBLKk9G7ft2m
- zd9TlAScmo6OnbtXOgm3BqHTxEqy2HgOu7GsOnY0kIZVZobRG7LkjKXPdX81zN7CIMO9
- tcg3mjPFiIkjanZIcJFgo9iy3goN8htaeFZAYkvIYNJKxFHeDjTLA32MtnX1R+cSdG71
- FMIMUB7xt/484RjUUPigVX3cLj7JyIXZXcXNOkMpWPetYcj0l8gWIUvQXLG6kS1jsf4L
- M1DeBbuH4LxPCLfBt+AOXEfPs8hYzQoJn2QShoNv3MBOLHoXTNh2RUwXW4RiD6EGekDZ
- bqfQ==
-X-Gm-Message-State: AOJu0Yy2Sz0pNABigrTtstYDj66xRO4AcUh6C7ZVCxTFy1aM35N9D26f
- VweA/9fXOBCPCw6GlV7jUrsAJuhtbgV/4IfjaMF9Z6rhNg+T81i9ojsgW8OLegEXQXTyW6l6p4x
- oFwmJo1fz94AOJu4VXZ21uflHQEBuMGazzuDBsoLdkaH+zlqfEW6ABox70ICS79j/Qg==
-X-Gm-Gg: AR+sD10ksAbpSRsmCThCOdu39DA46zuIFmY0NkS0ILB0pLcT6MNi9vSkIw6OGjBY65M
- 51CMR1C+Gos5gyQyicNwTzRcvLmZ3tfTB3G37NgJlLEL8zuZ3s6ypPePMwsoaqCqaB2HyYCQap4
- nXvWyv3TwhEGLRSe5z9mqdPDWZNeqvQQiVqcTXF+98fPa+PYWDlNwVk0Q06uq/bmvAmOU8Fe56u
- Dey+C1pJA5CDo5+221GwgVznP41POECILSDFyQnfwePli2eRIHX4i28Iz9QnTeW1ksu6O4pOX1x
- TZmeEZndREweDn4K1qJwcOaXg6BWqS9t3zYYE+TCgcFk0YT8+j+/Xscurcbw8tthQ4ZMgFu9nzS
- e6p7QKKBuaelutjjWg+I7SJ5Jlf7e0gH7nhz8HQBl0Q==
-X-Received: by 2002:a05:622a:1445:b0:528:3471:9390 with SMTP id
- d75a77b69052e-52d8535dc23mr166721001cf.10.1786891943450; 
- Sun, 16 Aug 2026 07:52:23 -0700 (PDT)
-X-Received: by 2002:a05:622a:1445:b0:528:3471:9390 with SMTP id
- d75a77b69052e-52d8535dc23mr166720801cf.10.1786891943006; 
- Sun, 16 Aug 2026 07:52:23 -0700 (PDT)
+ bh=thqyj3sMPrnVALSr8jLtNV2ILSSUcEatI3pY945uaJA=;
+ b=EydPuFN7yoySEAj0wsSub8q+1Our/fNdn+aWF2AyqeA5pD9gaVotM3UgitjDcc3LvD
+ fSUDVFhtBnBNA7h9n9BAtDMlfh6Z+l5HD77KshP5dIQAC0oJubm73M0lm7KxsjW5khQE
+ RrKPj6nK4ZnON2/SQN4a1uYQMPxIR5K33kCH2PPWNY+ITnuVsruHDAnQS+0jmU6ISCVI
+ uoJC6Ut9Fd5hoCe2uDFwdaiVtoJsQsSWFYRikgUbHD2nVuFQubXkA5xr7FlwjXnVGSl/
+ CwTm5AuADyWbHyw7g126TEJqP86gLMTTKfShOzirVOfuG39bgXyt9zVgAPbaCpfXgwyo
+ 1tBg==
+X-Gm-Message-State: AOJu0YzTgdVFbFABU1m4upKGHkTSOXtMuGdC5cXMI4BuQx0Ube7B6dUh
+ S7bfahLBI2ITyZMhcVPwNuZQr40f+yyyA3mi1FgNFBdvTgB7ztRgBvZIqLejg6qZfAuY4OhHVYr
+ SUo/frxtyf8uG2hHLCYWFI7AP3nDuI7uuH2dvv9pHOC0r6UeTt7CtklE7lh0yqVcYCw==
+X-Gm-Gg: AR+sD124DQqhL3z42yBNfKS1jDYGeY/JY6EeTOJQv74G5CDJFbN/bFMFc080Z8IHLK0
+ Jjqe9ySpWFlPUtdi4l1uf2CFL90Cj4inGtybV6h5ht7lKObk9mgMMARGNXRnLB6x1UnoeXollxx
+ Z4DasdTDtXQpC2oGDzZMawvm1wvSYspR81s1Iu1uQ8QNIEHFeI+FyVULfDrSESC/5oGj+eBox7n
+ YxTQf7xcvbjOHSKl2cCaAooFauPPYxd49enSDEqkii9u8CJR6nQw74+RsvFHv5+ZQlVz+b78+aq
+ ubMymWt9SQYeeYVQtZpSt6XsGQaX4gLF6EduCPrvJqPIrC69nYFdjYo2+XgcDlhsRl/rzR4JhEI
+ c53hhSL37eB/phTiAQvKMyJy3sWAh1BGajcTIkA4NyQ==
+X-Received: by 2002:a05:622a:244d:b0:52d:7b2a:93f with SMTP id
+ d75a77b69052e-52d85374547mr208332681cf.3.1786891935397; 
+ Sun, 16 Aug 2026 07:52:15 -0700 (PDT)
+X-Received: by 2002:a05:622a:244d:b0:52d:7b2a:93f with SMTP id
+ d75a77b69052e-52d85374547mr208332361cf.3.1786891934845; 
+ Sun, 16 Aug 2026 07:52:14 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996183b89sm67527395e9.12.2026.08.16.07.52.22
+ 5b1f17b1804b1-4999610966dsm76986135e9.5.2026.08.16.07.52.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:52:22 -0700 (PDT)
+ Sun, 16 Aug 2026 07:52:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 45/56] monitor: Reduce inclusion of 'qapi/qapi-emit-events.h'
- header
-Date: Sun, 16 Aug 2026 16:45:44 +0200
-Message-ID: <20260816144556.69009-46-philmd@oss.qualcomm.com>
+Subject: [PULL 44/56] monitor: Include missing 'qemu/coroutine-core.h' header
+Date: Sun, 16 Aug 2026 16:45:43 +0200
+Message-ID: <20260816144556.69009-45-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: AcdOtkz_MhjbDhlCQwt38F5Q0x9vd16p
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX/OFicLS63PHO
- VS1/OFwRZnTshxEIQYZ17CkfhyBK0puOx17sTBAZl0Mk1AlzVRAr8Pd/PlekMY5VuQuNo98vLLs
- HpXFAITL+mDjM4Z2UOAwE0MDgnw4uMc=
-X-Proofpoint-GUID: AcdOtkz_MhjbDhlCQwt38F5Q0x9vd16p
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX2SGkbQ1mIpJQ
- miJnIEysO5WwS20Mu9w8NbChDXqJMWbL3LT6sTkOgxbAPDsVy7SNDRBN/1EdVe4O0zuvp0Z4Qjp
- Ea/ni9BffOifeotx/gNZoSr8pVNNYNAJgfyygOVVSwZk+dhuqTD+mrkqlW7lYXpDGXu39PsK/fm
- 6P5tlgSRyBlUsHOZ+Q1no2P/K4P3Bbvpoie5sxwBGlKBcJFOoLIggNz3lBfreVUJqe+NOMYDqCl
- f/xOcNFGPnM+ep9499y8qqBfty2l454b//GTrTvDVJjQJ1sDzrv/qqgftIbuEhIPW6IoGmseSqu
- gYY7LMsV/e8Bwy/33Iz7/6kirIjzVin7hIpl4pWvZNTBKXIlaBrtJwrhknVylthx96AyUhoL6cu
- Ku9HIiZBZM1DFjHNghW/VkMTstJiFWcQEbEzJ2TDRafpdoJmw0esPDLN1EiY9s2WE07ORBkz6mG
- ObdKOXemjSuReonVLCw==
-X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a81cea8 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: OlWpu7VpaVE27l3k4NvXhFdoVA9Y8iXx
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX0x6VBxJFSh80
+ sc1qMZ1X5nukVSV+pe8rWP6DGHGj12lFisAntd6pqV10c9Gfb2SJwrV9Cbyr0i5chFkx2EFEuX3
+ ObIBChRGkPH2tfodsb+py/X80autbWM=
+X-Proofpoint-GUID: OlWpu7VpaVE27l3k4NvXhFdoVA9Y8iXx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX0GF2dg2wbW/V
+ xzIw4ooV+3/5hPIIn0GR5e1t9iSSixUfdBzMB3qTe+V9I01WntsfXHeWLedF1H126GuK47q3+qB
+ 770DcGKHQzxp3Znaaq/6o54EZLAYxRqDFMNLVCli4aSChjoKzjvmuSHp9AR/8hSI6r8fJShtBXX
+ /vHaVdJe2iPxQR4DaxYfUJEYQHSBZJ94s90zyG2BURo7ej+6BaV/nxyzXquenmzcTJxBuUymGB9
+ uvKjQyh9Qotlr4v48p2gTfioM4/8RVYt+r9aXhAjKRTUYxlaAWkWzxrC0dTl+FCF73msq/5o6nr
+ J4V77/jSO/mCM/wbrkvjIwtyOh8LWVZ1865D1YKiZIthg1X0ODX9ud72HvoLe8J7lx6eIUSnx6W
+ NWg/zmSOPASZGczYTrQ2YJUgRfHAU34V3njU6PiETAwqJEFQozNH71+Z/s8wimbbMxY51EfUdBs
+ 5g0EWAyRDV81+JKDJsQ==
+X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a81cea0 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
  a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=tlxghdvPRZsVr19qFskA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
@@ -151,55 +150,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"monitor/monitor.h" don't use anything declared in the generated
-"qapi/qapi-emit-events.h" header.
-However the "monitor/monitor-internal.h" do:
+"monitor/monitor.h" declares monitor_set_cur() which use the
+'Coroutine' type, itself declared in "qemu/coroutine-core.h".
+Include the latter to avoid when refactoring unrelated headers:
 
-  107 struct MonitorClass {
-  ...
-  116     /*
-  117      * If non-NULL, the monitor is able to send event
-  118      * notifications back to the client
-  119      */
-  120     void (*emit_event)(Monitor *mon, QAPIEvent event, QDict *qdict);
-                                           ^^^^^^^^^
+  In file included from ../../target/sh4/monitor.c:26:
+  qemu/include/monitor/monitor.h:32:26: error: unknown type name 'Coroutine'
+     32 | Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
+        |                          ^
 
-Move the header inclusion to "monitor/monitor-internal.h" to
-avoid including / re-exposing unnecessary declarations in the
-global "monitor/monitor.h" header.
-
+Fixes: e69ee454b5f ("monitor: Make current monitor a per-coroutine property")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260812211708.92824-11-philmd@oss.qualcomm.com>
+Message-Id: <20260812211708.92824-10-philmd@oss.qualcomm.com>
 ---
- include/monitor/monitor.h  | 1 -
- monitor/monitor-internal.h | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ include/monitor/monitor.h | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index efdd2165aa9..fa9f4a8a75a 100644
+index 890497b0d22..efdd2165aa9 100644
 --- a/include/monitor/monitor.h
 +++ b/include/monitor/monitor.h
-@@ -3,7 +3,6 @@
- 
+@@ -4,6 +4,7 @@
  #include "block/block.h"
  #include "qapi/qapi-types-misc.h"
--#include "qapi/qapi-emit-events.h"
- #include "qemu/coroutine-core.h"
+ #include "qapi/qapi-emit-events.h"
++#include "qemu/coroutine-core.h"
  #include "qemu/readline.h"
  #include "exec/hwaddr.h"
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 23829f32f9a..bc0932c425a 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -27,6 +27,7 @@
- 
- #include "chardev/char-fe.h"
- #include "monitor/monitor.h"
-+#include "qapi/qapi-emit-events.h"
- #include "qapi/qapi-types-control.h"
- #include "qapi/qapi-types-qom.h"
- #include "qapi/qmp-registry.h"
+ #include "qom/object.h"
 -- 
 2.53.0
 
