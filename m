@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA983C5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85983C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 19:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvgvc-0007di-RJ; Sun, 16 Aug 2026 15:53:57 -0400
+	id 1wvgw2-0007fU-Jp; Sun, 16 Aug 2026 15:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wvgvV-0007dN-8U; Sun, 16 Aug 2026 15:53:49 -0400
-Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ id 1wvgw0-0007fI-4U; Sun, 16 Aug 2026 15:54:20 -0400
+Received: from mail-westeuropeazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::6] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wvgvR-0001FG-S9; Sun, 16 Aug 2026 15:53:47 -0400
+ id 1wvgvy-0001NH-Kf; Sun, 16 Aug 2026 15:54:19 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hz/Xa6faKgkibtAHHmAzXNgpkWaAhfiG7e6BzeOKDThnuzd0HwBriowFJxfxsYl5RYx89uRnr0LABNbcYyT6nvpgSpdQLZPlok9DXa9MSp5Kb+VAZl7KDtMKj/q6lXWGhagJUAbQzKRutVBNTWRD2UqAI3G15b/Sm4IAhy6PJ+icaKto22bBCOdSBWqej5A7OCNqESPzNTLUlttMmcVF1F32Mk0zM0DHc7ZKIVVbZie+0+ShKnwf9aYCGf9K/9ojxqj6uGT2w5uzQJ1oQWzAtEk9ygkpoVNLpYOBzhhBxWn3d5IsQfAizFPj5NuFOrogT+1XwhgMGmAOaQJa7OTpOw==
+ b=h0qQgrh2bmk167E6CysRmQbwCap+CZU2pzE0oJHhPNZR71DSQ5cs8jxazPmhOpkPGu7LczV4kPkKC7zuMSidOj8HqwOajULRv+PdyP/9kkpwQ/OWMAcEfp8BWWU6nKbwJDmKdbKvdZtJbmUHsnwZohkQZebsHEExUSpti093A+Sj/aWJX4qqAVEM716EiJZbCUM6kKR+NJ7GvlryXq3tSIFbCIAniU2T1RZ6D/rcPFWjqaP9RzeiFdqoQ01gxt23ZeIOntPsBWqjM2P4U/RJ164QGYQMzOly4meLMTpkz1IX7e4ukCiPetNdTbDXNEMsqfFr7YgVDcP0ymGZ6saeIQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TL8PbE8xk2D0M9kt5sI0fLB5g+UJZj99rqO+u4FG7+0=;
- b=GEsFWcwEXn3eCA7U/KofwEwNpa39YbdIf3naEq907KibO/2R/lWpd+tPOWSTSfjO8Q/mQHneE8X4ielk0cHERkLj7gQzo1d//0VBmOEaoCdliQmVdhSZ7qVtg6RZ4A2A/Qcv0asmAk5piPq0RUuC+N+sMRkrOOpuh79W7TS6nbghxg3hV+7m4ejjlOjOq2CVSWZXstKTOtjpJoNae6X/dtRxBzjCG7lOFEiPV8+TMmcZJSrKf535PBWQOgePqG+FvtgGTKLDTwA5bNRqlpmGgF0woKzoVjaUCofEbN3Zo9YpfSv2nvyCZ1jxyzz3r/07hTGTKDMfCYhGnACH5UZBtA==
+ bh=UrfMC3i4iKYyECHZmBWjxqoircJekmRSec7E4i4O12c=;
+ b=DGrOu2IZAYjJEWBsWhsSgxIvX6gS11hk8otYkX8+lgP2Vzkze7HWJeeCNqWa6LaYjA0f+o7KdCanYMjjT/oA9x7os/mrbTdLLIxG87d2gy7MG+ps7MLptuii6+HKXgIZr5BFy0xy6HiG6JLBmZtwqpyWr5X3jx13/VCOiCFLMEMmMvBvSk3T2CgHuvUUyFEkZASngRoU5selmhYY9ag9UHUGajHMV4/AH+aNPb5Ia0rPvLHAtmLB/szxUmxlT95rdZ0z2ewwAvSviv82Ylm6Ige8QJ6rW6vOKNELbG5q5Deb0+VYGfqF1cVjKTpJzQQ6+TuLpDdgl+lye3TRabrk3A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TL8PbE8xk2D0M9kt5sI0fLB5g+UJZj99rqO+u4FG7+0=;
- b=n+GtwZrI3c+qc7ZoyLpX9bKvVN1yWrfy3Af9LAwPpCD21V9Fw8tEwz2PYj2cyku0eqpeDMVy44aX0Jq90vS8o3NDjV3lMk+Xgs6dfpYPY2XFWxERU3hmfrqvid2bELRAM2dDhE0YBTH9niT0Bx2RbBAVayrn4YBOWPuqQEzGy9elEI0fHgCpJPrXBkIycAmWT7GEyJubB9sExeCaA3ubz4nSSLmfFZ5Rz5l5lESpl/Q+8oCiHa+PRbWIxrIDET5/7TFpJsZPlfTUhcp0HkbXrgX5QeZLDSAUHTgp0O0cKjS7fPdw8+cVT+dgz1Epg6Cg0WT2slbHuVIate9pbFA1og==
+ bh=UrfMC3i4iKYyECHZmBWjxqoircJekmRSec7E4i4O12c=;
+ b=mwWZmIIUQBwSXrrpT50KzPt0vubCcvNHReVYiAQNIXCC2jueaoIyO0TVsX6x6XFbzc1TdpBvjkwEcshCCynYDNN6h63tR4tVksrQhpZH0BAQFbfQBrblJlltO3N2D/7B0BCZD4qWH+QMD3ZxBsGXysp60lMIAzntlJQtfbJiaQfO9KsQlyNMnJ/H1I2BERyba+hiCyenL/rydJF/8Zvtj9DRzg38+q7um+I27dCfZNUVavghOHQgBpZXOaqv1VknN1pgNbwcQfcBIY7EpLeWpLJQ3/oPUCPzzfocnqVfGaJWPcEONvkqSmwpqzlaXqHISP0h+KQ+80JphyxYc78lXg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
  by AMBPR08MB532816.eurprd08.prod.outlook.com (2603:10a6:20b:788::24)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Sun, 16 Aug
- 2026 19:53:41 +0000
+ 2026 19:54:15 +0000
 Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
  ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0315.016; Sun, 16 Aug 2026
- 19:53:40 +0000
-Message-ID: <39157e0a-9ca5-462d-835e-2e666e27a946@virtuozzo.com>
-Date: Sun, 16 Aug 2026 21:53:00 +0200
+ 19:54:15 +0000
+Message-ID: <6e9a480e-4926-4c11-9323-9104c4576d89@virtuozzo.com>
+Date: Sun, 16 Aug 2026 21:54:13 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/49] tests/qtest/cdrom-test: replace HMP "info block"
- with QMP query-block
+Subject: Re: [PATCH v3 23/49] qtest/ide-test: convert to use qtest qemu-io
+ command
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -59,83 +59,82 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org
 References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-15-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-23-e53fc35bc550@redhat.com>
 Content-Language: en-US
 From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260816-qemu-no-hmp-v3-15-e53fc35bc550@redhat.com>
+In-Reply-To: <20260816-qemu-no-hmp-v3-23-e53fc35bc550@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI4PEPF0000013F.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:808:1::889) To AM9PR08MB5892.eurprd08.prod.outlook.com
+X-ClientProxiedBy: VI4PEPF00000138.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:808:1::897) To AM9PR08MB5892.eurprd08.prod.outlook.com
  (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AMBPR08MB532816:EE_
-X-MS-Office365-Filtering-Correlation-Id: 33ad60a6-a8ad-45d7-a0ae-08defbd011ff
+X-MS-Office365-Filtering-Correlation-Id: 7d15ac51-7bac-49dc-372b-08defbd02667
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|10070799003|376014|7416014|23010399003|366016|1800799024|10067099003|4143699003|56012099006|6133799003|18002099003|22082099003|3023799007|18056099003;
-X-Microsoft-Antispam-Message-Info: aqEij4UU0a5A5l7sZN2CLRBcFb0fgsJ+Lx4gueD7gSFg55XJiZKf+w9EubG94Xhkr1vRwX5Ct5cmauX9fr4pB4YGHWXlg4HJb+Tr5gCZrqcpgRX3UCGgdnxnlKLPtrn8DvMVUtASrdmiJjERD17ayJrOKylizu9B371XMpBzeGfKDzNbcpPMJwoPAF2NIW9Y7ycyYcSO28jKO9EtG78y4nyWXsHDU/IELk2vCCdNy6Z18VweAvNcrC/qo7LWieMXQRfw+GRBY59Vd4ggqBgGxpFzcYYQ8NjzjDN8XDMcNF2J7hFG9Q9bwhrVVCq46XgzNtpsCNJnC5E/MJv2bcFCuMRwSktjuqjp9RAC4jZRDa010GJtqlGyMPDrfAMXg2qOE1dJbOqo0Flt0xt847MGwhPerq/HZfgDBlBtUG4dpeIRf1BQ46Nt9vWIXn+GQHp33axjR0d0UKsEZUud8rX1JAd1DPFirSyw+TcbisMyWYlGiRz8fI90V+ZWxW5UDBEtZqNmAx6FfATXyEXQjNmFNay239TXEzmDav9Bq55l7Nu3WCVXAxFVVtr/i8w4hbAeqxGZC2fJRvw11pC3Jye6kT08tG4ToUPxzmxo8SFglxsYZb8LeQLl7nIvZ8kuLqkLi3UqdC5uo88TbrOn92uijHiBfwJrx/M4Dt+Y1XafxbY=
+ ARA:13230040|10070799003|376014|7416014|23010399003|366016|1800799024|10067099003|4143699003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: TazQFdK5+bNxsqQv8S/T/oMcoMpCR2hWXYBXxwjXEtorFK2P279YbURwpI2yXEgoIfWRu1qb3B538wyedEKDG8R540tp5r49dePbiaKOGh55plw6891JIdOHXbq2khsGBt9/s5AvhggG25GNYgTHkrfyFe0m2tdsLLI5pr58iVs6897aWcr135iArZPEFk89nZch34N6Ij8yyswpcpH2WIZdeD6hPXn9mNH/dhP9CUfQZDUvLWTwjkqpFC25r3yywvyZ0xeI6OKgjV66pGc8THpYOiRYpwFWci17rVkS9vAT25lnlBNk8d9HqHBXQeZq/LqAg7Wuec5J6FtJx6kf/Cq9X02d+aTefFfMRhQEDK9I23q4fbbNIhyRH6BB7fPvOlMplqdq6RZLSRW0ux/4s+tTUge9mTMFVYA1z5tyEkVGtGhZ62oYMQmcWxK6vrTyNL3A+TZ6kbZNQRznZi/nvufe/nKvr/Dkn8VMuUsaOr7cO+yi79nUA0kYzVF3ceAN0tGgUEhVVOxe3+kNhYmBDA3XqI48Fnfim723JDO56EJa8ZuVDKp6MUPAKmTcQjePR0sLCE4cn3CiIWi2yq/iffiv/AnrrevGh/G63ZSDYYxW7b73Uwbbh1sK/BMFg833mBjSBZ6D/ce/YdqiCbuBRc59kXAe+zQHYoiSy6THuoo=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(10070799003)(376014)(7416014)(23010399003)(366016)(1800799024)(10067099003)(4143699003)(56012099006)(6133799003)(18002099003)(22082099003)(3023799007)(18056099003);
+ SFS:(13230040)(10070799003)(376014)(7416014)(23010399003)(366016)(1800799024)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z2NuOTRCNFJmRWtxU1VEZXV4SU91elNaYmYwUVV6NThSUTFpYnJnbkxlcFI1?=
- =?utf-8?B?ZVUzR29tcXBlR1J4UWhhNTNpd3V4ZkJPUUtxb2EvdzRnTTBtVWVWMUQ4ZzJU?=
- =?utf-8?B?ZzJsUVpMaFl0MkJQVUY2ajZZYzZTODZqUE1tK2duQThIbkVXeG1CUndCTWxh?=
- =?utf-8?B?ak1XK0ZyNWU1VkowS2xxRXpBS3NuaVJwZDVoMC9PRG9BcTNaSmFleWZhUjV6?=
- =?utf-8?B?cmpmUEErQ3dBTzFIYVUrUzlVU1ZDWlFmZUlSdWNaSVNaa203Y1dCREVJZWJC?=
- =?utf-8?B?QWp4YVI0QXhSN2x1aDhXWWl5Nm9uWHB6aWQwYnJkUHF3T1IxbTdsU0tSODNx?=
- =?utf-8?B?a0EvVVBRN1BwV0ZLRmxnZlE2R3NnUHBiV0FoUGVWSTg3SmNIbXV5SUNoU3Rv?=
- =?utf-8?B?N3MyQXVObFpzaHM0QU9YRCtaY2V5T2hZYUN0bHhiMW5YMlkyV2YveDVESDBu?=
- =?utf-8?B?dFhzbEVJSktmWE9zcHZiUGRIam80VCtST0pwL1pyZ2dmeFRQcUN0ZFdNMVhM?=
- =?utf-8?B?bzZUOWdZWStuZVhNbnVib1Y0K2RJWmV1Q2FOVHVPdGR2VFZheGVrRWNnR0tK?=
- =?utf-8?B?SjROU0Y2NVdJZjNSTS9zWWs4ZWxlUTZvSVRpeHIzZnh5M0pqNy9la1ZTZ3JZ?=
- =?utf-8?B?TGtmMjc0ZnE3WG5SYlp0MVFKSldGKzJOUS9DMURqTU5MWTZPNTVzTTdaNm5L?=
- =?utf-8?B?YlUrM2tWdDhGbmRDaGozSWNER1l0NThqZVE5YmV2aHd6UHZCeWgxMmkvMDZo?=
- =?utf-8?B?RHQrSFJMQXZzRGlwMk9YeE01aGx6LzcwcWRTRkNpRHpNSXhXcFk5UUcwZ0Qr?=
- =?utf-8?B?Z21ZOC8vakcvamw2TVBwLzVlQjB1QUcyTGlObXJtdHlGYW5vdFNrZUxmMi8x?=
- =?utf-8?B?SkJBRUpUaG1EcGVlQ29HQStUWWt2WW9vQnppSjNCc2ZZTStTZFM4a2dWTFpq?=
- =?utf-8?B?ck9NYWxRendMM1pPUXV1T0lJTlVvRlYvUzBhRFpoQ3VJRmdsNEVKMFEzakxH?=
- =?utf-8?B?cmd5eFNCcWx3c1ppVTVIa0xFNEdtM3A4UGZMTXZUeWc5YXh6clRTQU1GU3No?=
- =?utf-8?B?aCtYaVhONVU3d1lNK25BbElSTGRPVmUxOElJeWt4MHZoVTQ4N0tQTEFCeFlV?=
- =?utf-8?B?YURCYkc5MUErRUJxOUdXNXpkakJTUmVVaGNhT25MT1J6REk0akZONTZWQkt2?=
- =?utf-8?B?UGdCV2FabzQwa0I5WUhDdEVhRWR4b0x3bEVQcHhVcVhRUjErNTNZY0p2cElz?=
- =?utf-8?B?M0hCb1Q4QWtqdHRnNDErblZhTXY1SE5lRW9UdENjck8zL0s3TjkzQUZ5bEh0?=
- =?utf-8?B?VjVjdlBoL2RaWmNKNkIzTGlFbHRSKzhzU1c5WkVFTmhyVFUxOHoxcFRhaGJx?=
- =?utf-8?B?Q1laNTJlcU5Td3VjQzhJa3hmYkJpTWk3MmRBM0hTYVNZaXRMS3RIN3gwWkpE?=
- =?utf-8?B?SGNyLzg4MzMvZG9Jb2lyeEgvQUx5UlZFcWdyZjJxb3FEeWJlWVNSWDAxRmN1?=
- =?utf-8?B?QzBEam5VTEl2MDdESi9YdktVNTV3ckUzZnpUM29kTGZZanhDN29rT0MzRThr?=
- =?utf-8?B?V3V6a3ZtelJqYUtlQXd4RU9KVXZvZ2ZPTHlVaXk0Y01qYjlEME5lQXRNeHRv?=
- =?utf-8?B?RmJGeTVNNVZhOGZFNVZCZTVZUWxwSTl6cnJGY2d3MUMyUm1QZ3FBbTVKZmZN?=
- =?utf-8?B?aEZseVJiVEhJeFBLLzFMaHY4RzFFMEQzMThydXl4WjlmYzB0UjRybDEvQ045?=
- =?utf-8?B?SDFnalNHTkN6L0VXeWhoQnovVzRHKzlaZGczSGc5VGd5SDdyNnNDZHFMd1V6?=
- =?utf-8?B?d0trelVENnoyY2lsN053czJuNWRWWFMvS09lYnNseUVFcjY0QlU4NDVXNUZz?=
- =?utf-8?B?ajdjSTZPSjJXU1BqWGpLM0phcmJuV1ZpQ1ZZbjcvZXlpdU9UaG1KMDVmS2FF?=
- =?utf-8?B?b2xTWWFmYjV5ajcwdGlqa1RmKytjMDRPbjByQ3FDOVRaemxJUG9GTFMxTzBk?=
- =?utf-8?B?ZDErSmJSQlFtUjBURTJyVFdSR09taTlNNERhSW82b09HQTlhcDA4RjNOQk1C?=
- =?utf-8?B?ZDkvVmJwcjVKcDlvaGdkanV0bGt4T2lLZmlTbXdLT0FIRXRFK2gwa0MvRW5W?=
- =?utf-8?B?WGh0djBhYXlvTi9ZT08xcnJlYWF5anA0MjBIdWM4ckg2TUl5M3VmNmNWS2VB?=
- =?utf-8?B?UkhyQmNIdDJ5cUNNNnJXVXl0c0EyQ0RFSllOaHFyWlowZHlSelNVZE1TelR1?=
- =?utf-8?B?amwwbkVLN2hOZCtTeXg5alBhTlVIRXF6RWtUVWZqdkZHZVIrUWdXclY3cnZh?=
- =?utf-8?B?aHBuVWRhRXBwbDNvVk43c0ljd09seGtnQVdHZlpxVkdLOFAxMU82RWJIZnBD?=
- =?utf-8?Q?w/vkkhZLrqpMd17UKNMqN9VEIXuOlQ0kFU52S4vfyI4Ft?=
-X-MS-Exchange-AntiSpam-MessageData-1: 66A0X3L1nKT1DQ==
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VU5MZ3B3K1IvOW56LzBaa1owSzExanV1b01DTitsMlQrTjFHOXl6SytrOG03?=
+ =?utf-8?B?NEdTZEVIbkd4TWdQVkdiS0dPazNWcDYySUtWZ3I5anQ0NVZNZHlra0ZhZWF6?=
+ =?utf-8?B?VmlRR0phU0d5RFp2bkxseXdvZkVUQTRjK0dHVnB2U0FRaXZwd0hodkJEZmho?=
+ =?utf-8?B?TkZ5TXNZOTNlV2xTN3dsOEtOU3I3RGluU3pMVmFXZ1FoT0paUmF4RzFCRXU5?=
+ =?utf-8?B?OUw0djJ6ZFhRNnpPVjhwK2krZ2NpMGRYUU5HQVJtamM1b2VGS2Q4d1kwckRx?=
+ =?utf-8?B?anJLby8zdnZDYkRkU0d1eCtXQ1FMQ0VXQ3F5b0V2clp5amdYOUwxSzVEVG8z?=
+ =?utf-8?B?dFE5OWU1N2hjTk5FRzRtTzZ0dXJ4OC83UGorc2VtQmJKSGRhVHJuL0g1eXhS?=
+ =?utf-8?B?QXF2OVM1TGtaczd6SHR3Wk5aZjFiY2pnQnFKQVBwZXlhNjRLRWJsdFo1bEY5?=
+ =?utf-8?B?Mk9zQXJnbzN1RkkwVVdLOVdpRFlUTXJ2U1hUNFVyOFJ1a2RqbGNESFZLekZo?=
+ =?utf-8?B?SUFiUTh2Z2pvYkk5eG5xcEEzWThUdlJnMU0rNFVibWhqOG1EZDl2aERCL2ps?=
+ =?utf-8?B?eFdySUp1NlVOK2RKQVBNU25sSDdRZlo4alBBMTMxVXc5d3NlZ09mdUEyTkFv?=
+ =?utf-8?B?QWxDdm9FV3JmUWJqMHM3OFB0MjBlL1pKdFhUczRKZjNldkpmUGtKQVlHLzJR?=
+ =?utf-8?B?N0NyQVZBOUxzMFFJRnpPb1lQMDR6Ly9yTzJPN0lDMXVCZkJSZ21EUXp2cHRI?=
+ =?utf-8?B?L2doUmR1TG02TDI1RUhWbWM5bGszY3BmR1NWcktvWWpITzY4TzVNWTBENUFW?=
+ =?utf-8?B?QW5pZkVYT2ZnQXVvcXpNMENGNE1UWXdSbVdGNml0TFI5SDMxekRmN1NYTGlO?=
+ =?utf-8?B?OG02dVREVkFHRmFnbkR6N1BpK2FUd3ZTNlR2UnJIMTRMT0h0ZllaMjdOM011?=
+ =?utf-8?B?MXRxTmlneTl3Y2cvM3ZnVXBDcjBlUmRPaFRTdjBOM25RZzI3Y1VkdjJuK3pX?=
+ =?utf-8?B?ZkdXSldVMU44NHd6dHZNUjE5N1AwTTJSUXJWU1Q0TSt3bXRDc3lMazVaNzd4?=
+ =?utf-8?B?UzBPcXNCa3RTY1VHTkRkZktNLytheUlDYmNQWGdXVjl3b3lVY2J6UjRNckdj?=
+ =?utf-8?B?dWlDbUdySWRqZ1FwN28wT2wxalhkbllldWtZM0lDd3BaaldkWEtXVnVrZHRn?=
+ =?utf-8?B?Vk9iRnVVNzBVMXZpNlUyVHFlWmVaKzRXR3N5UldGQWE3WDhnYWk3YnY3WU5V?=
+ =?utf-8?B?WjJYbGJ1cFVlZEtrZFZndHc1NDROb3l5dUxjUGNOOGlibEx5MEViSnhtc3NK?=
+ =?utf-8?B?VHc2Tys4cGZ6d2h1RnMvbHNma2pHNHpxUmR0R013TWc0NUNmR3FuLy9rMjVW?=
+ =?utf-8?B?YUlmTEw3RVR5cnZEUW9RczBkSkZyUEJjcktTL01NaEJnbWs1T09ZdGRMclZJ?=
+ =?utf-8?B?ZnZ2SFRzam9naHhBWE1qV1o1R2xUVkZCUEEyNmxrUWtyaFVVWGtZQjRNQ3lR?=
+ =?utf-8?B?cGR5ZWRiVWozQVl4U253Mk5wdGJmc056N3R6MVVBY0gzNHB3R2psUC9lYlFa?=
+ =?utf-8?B?V0hsM2N3bGkvRFlIOXBwNmJaMW05ZFlNSUN5VTNZSy9rRGViRjdyV1FsbjlM?=
+ =?utf-8?B?NTBzbDJZd0hhL05Vclp4YXpSeGRmOUthUFN2anVBTnA4eXdzRVZWOXFHV2VQ?=
+ =?utf-8?B?Rkk5Q0VGUnY2UTIyOEhRb1FJOWVCaWl5ZjNXdUNMbzlSdEhZSWZ6endCQnRG?=
+ =?utf-8?B?KzZzd3B6MGRKMlNCUktCMFBCMEhienUrWnFHUXpkcG9TTU9KTjd1eU5QNjlS?=
+ =?utf-8?B?YUx0RGxscHZBKytOZGV1aE9NSThUSVc1MkMrU2plZGYxdGlweW5hVU1EU3Z6?=
+ =?utf-8?B?YlFEYzl1T0ZRa2lWWWJBMUFlTXFTQlhjTmdLVmt1a3BxNWUrOWpFMXR1aFZQ?=
+ =?utf-8?B?c3h1MjlGY0lxTXEzcTV5akpDUU5OOHpzYkpHT1pHNlMwNzYxcTB4TWRUWGVa?=
+ =?utf-8?B?dit4NU5xNWJCQjY5ZHdlNnUxUTFPcTBGaVlCb2h2N2srTXJpSkp3SVNNanpO?=
+ =?utf-8?B?NEUwQ2tQbms2QnVqS2c0QVV6ZVJ5YjZyVWEvL0Mzd2paV0JoWTk3SlBMQ1g5?=
+ =?utf-8?B?MllrYmVQN1N5aWF5LzJaN3pFU3JrOG5UQjNPNVowRmVPR1llQzBhRWJjNlR5?=
+ =?utf-8?B?bzNQcm9NRC8yVCs2TUY3a2Y5YXF0dG1hcEszNGIzV1FZS0hnVnFuRlRvWnRS?=
+ =?utf-8?B?Qm1XMzBTd2NsSDRCS2FOYjJGVEwxMUhQVnBSd0NNNUZVNkcxUUFrYzRZOE9q?=
+ =?utf-8?B?VWVRY3IwY0IwbjJodHVTeHlpblhMbGZkeVVWejJuK3dnUzVQVTIwWU83a0N1?=
+ =?utf-8?Q?gQeUR/+hC9q+yaG2Ov8ZO2vEZSA9qfU6CuTjn?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33ad60a6-a8ad-45d7-a0ae-08defbd011ff
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d15ac51-7bac-49dc-372b-08defbd02667
 X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 19:53:40.8633 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2026 19:54:15.0049 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: cm+no+aciLyn9qtsaZMaVYQgNvF2dSwIMWTMiHqcQHteBGJ3luufesOKdc6154ILN+asY2kbZFBLtW2bVI4z1g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: OkaP5s5sTuqGY7ldoVR7rU2lB9ry4SqrM5hz3O+Gv/qYUtiY4fWMz3Klapb/l7eH/80/+zEtISFSQYzbrCGvFQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMBPR08MB532816
-Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+Received-SPF: pass client-ip=2a01:111:f403:c201::6;
  envelope-from=den@virtuozzo.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
+ helo=AM0PR02CU008.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -159,71 +158,58 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/16/26 21:12, Marc-André Lureau wrote:
-> The test_cdrom_param() function uses qtest_hmp() to run "info block",
-> which depends on the human-monitor-command QMP endpoint. Replace it
-> with the QMP query-block command so the test works when HMP is
-> disabled (-Dhmp=disabled).
->
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  tests/qtest/cdrom-test.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
+>  tests/qtest/ahci-test.c | 5 ++---
+>  tests/qtest/ide-test.c  | 4 ++--
+>  2 files changed, 4 insertions(+), 5 deletions(-)
 >
-> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-> index a65854d2bc53..bf997be6d690 100644
-> --- a/tests/qtest/cdrom-test.c
-> +++ b/tests/qtest/cdrom-test.c
-> @@ -14,6 +14,7 @@
->  #include "libqtest.h"
->  #include "boot-sector.h"
->  #include "qobject/qdict.h"
-> +#include "qobject/qlist.h"
+> diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+> index 71d23fe56af7..0528a422fafc 100644
+> --- a/tests/qtest/ahci-test.c
+> +++ b/tests/qtest/ahci-test.c
+> @@ -1719,8 +1719,7 @@ static void test_atapi_engine_restart_in_flight(bool dma)
+>      qtest_memset(ahci->parent->qts, buffer, 0x00, ATAPI_SECTOR_SIZE);
 >  
->  static char isoimage[] = "cdrom-boot-iso-XXXXXX";
+>      /* Suspend the next backend read so the ATAPI read stays in flight. */
+> -    g_free(qtest_hmp(ahci->parent->qts,
+> -                     "qemu-io drive0 \"break read_aio rd\""));
+> +    qtest_qemu_io(ahci->parent->qts, "drive0", "break read_aio rd");
 >  
-> @@ -92,17 +93,35 @@ cleanup:
+>      cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, ATAPI_SECTOR_SIZE,
+>                                      dma);
+> @@ -1732,7 +1731,7 @@ static void test_atapi_engine_restart_in_flight(bool dma)
+>      ahci_px_clr(ahci, port, AHCI_PX_CMD, AHCI_PX_CMD_ST);
+>      ahci_px_set(ahci, port, AHCI_PX_CMD, AHCI_PX_CMD_ST);
 >  
->  /**
->   * Check that at least the -cdrom parameter is basically working, i.e. we can
-> - * see the filename of the ISO image in the output of "info block" afterwards
-> + * see the filename of the ISO image in the output of "query-block" afterwards
->   */
->  static void test_cdrom_param(gconstpointer data)
->  {
->      QTestState *qts;
-> -    char *resp;
-> +    QDict *response;
-> +    QList *ret;
-> +    QListEntry *entry;
-> +    bool found = false;
+> -    g_free(qtest_hmp(ahci->parent->qts, "qemu-io drive0 \"resume rd\""));
+> +    qtest_qemu_io(ahci->parent->qts, "drive0", "resume rd");
 >  
->      qts = qtest_initf("-M %s -cdrom %s", (const char *)data, isoimage);
-> -    resp = qtest_hmp(qts, "info block");
-> -    g_assert(strstr(resp, isoimage) != 0);
-> -    g_free(resp);
-> +    response = qtest_qmp(qts, "{'execute': 'query-block'}");
-> +    g_assert(response && qdict_haskey(response, "return"));
-> +    ret = qdict_get_qlist(response, "return");
-> +
-> +    QLIST_FOREACH_ENTRY(ret, entry) {
-> +        QDict *entry_dict = qobject_to(QDict, entry->value);
-> +        QDict *inserted = qdict_get_qdict(entry_dict, "inserted");
-> +        if (inserted) {
-> +            const char *file = qdict_get_str(inserted, "file");
-> +            if (file && strstr(file, isoimage)) {
-> +                found = true;
-> +                break;
-> +            }
-> +        }
-> +    }
-> +
-> +    g_assert(found);
-> +    qobject_unref(response);
->      qtest_quit(qts);
->  }
+>      /* Round-trip through the device to confirm qemu is still alive. */
+>      ahci_px_rreg(ahci, port, AHCI_PX_TFD);
+> diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+> index b36b0f8875b2..31692f6925ac 100644
+> --- a/tests/qtest/ide-test.c
+> +++ b/tests/qtest/ide-test.c
+> @@ -836,7 +836,7 @@ static void test_flush(void)
+>      make_dirty(qts, 0);
 >  
+>      /* Delay the completion of the flush request until we explicitly do it */
+> -    g_free(qtest_hmp(qts, "qemu-io ide0-hd0 \"break flush_to_os A\""));
+> +    qtest_qemu_io(qts, "ide0-hd0", "break flush_to_os A");
+>  
+>      /* FLUSH CACHE command on device 0*/
+>      qpci_io_writeb(dev, ide_bar, reg_device, 0);
+> @@ -848,7 +848,7 @@ static void test_flush(void)
+>      assert_bit_clear(data, DF | ERR | DRQ);
+>  
+>      /* Complete the command */
+> -    g_free(qtest_hmp(qts, "qemu-io ide0-hd0 \"resume A\""));
+> +    qtest_qemu_io(qts, "ide0-hd0", "resume A");
+>  
+>      /* Check registers */
+>      data = qpci_io_readb(dev, ide_bar, reg_device);
 >
 Reviewed-by: Denis V. Lunev <den@openvz.org>
 
