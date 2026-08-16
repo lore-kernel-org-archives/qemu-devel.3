@@ -4,130 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06ADFC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2D8C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcAl-0004dK-SE; Sun, 16 Aug 2026 10:49:15 -0400
+	id 1wvcBg-00005q-7U; Sun, 16 Aug 2026 10:50:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc9i-0003o5-N6
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wvcBO-0008Ge-5V
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:49:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc9g-0000op-PD
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:48:10 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wvcBM-0001MI-Im
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:49:53 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDl09k3532565
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:08 GMT
+ 67GDklPj3226330
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:49:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4urKzUAK7zcqqmt/YphZ0AATkO45ouEjNEl3ivUIsm0=; b=aQ2+0lkhFxQISUk4
- 28D1/autiS/GZE1S/AT1eFJhgxYvEIBGJtD1R3pyT1n+cuhk2Tzf4Sd3fKc6Ss+N
- AMNVtkUimbHlvyF1ssdS4Lqm8wn55G4KPDqU7Crfz73LQt3Z1PPTU/+Xv6PqJu6Q
- kcddA/OXxIHqg7UkCOVLB+Y3mrqt0OHIOZTI0frD0Ou+pJJkLqU6LgELQUPQ3lmG
- iIvyuN8t2xeP+C2DzyRGHyIGvdTuVR/e0LonkP9nZSPdtJhWoPH6+Xo1Xl0RSVCx
- cvQCtMrtfng9DN3gU4yvBexjuJZ/IwgKv8eLIsVPUnjRWZCKQiBqY/nWM3Wst8wv
- q9Mu2Q==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghf3mfq-1
+ XvmSsw6RFZVExmETaa1Y4Yhn6lHhVX5/670/OVLoUdM=; b=EKqxcIk5OwS/0eRX
+ 2kJHuc8RL052+qDF95jZnPpsOVGXm8ONDqM39Uap2KBqj2puldd7onotOurUpbB6
+ H731qFls5luX/3TdGBKT9Ox55JuzuzxnKzLlVn83M66P7PqM0x4nZ+CNr02Qio/o
+ KERyqZjqf4vU58AcW5kHPczG3ofIqWQVtd525Dm7KyD5W/Kg5vDY7L83/SMG78U/
+ GdUUFB5XfCurJKoRzAuWaydQqhNo0rjh9bT9exBuQAI+ixj7jww4PylvlA4hZ2Ow
+ e4ZHzh7fA+/6PBORdi0AYKNamfwTkKszxTcyTx702/aHyuZ1Qdq8n9zqGz/wdb/b
+ 9x8nbA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g322q99aw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:48:07 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c1b4d961dso23443381cf.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:48:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:49:51 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-52769fc3f2eso32724381cf.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891687; x=1787496487; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891790; x=1787496590; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4urKzUAK7zcqqmt/YphZ0AATkO45ouEjNEl3ivUIsm0=;
- b=Pm+0+j8m7TTYVPW0VpkphRUk4QAyTTzGfs/BU1K8eTPfctrFVk/xnjF5lTHFm3Dc3s
- YTUCQs9Xht9VhJyRIuvO1CAygiL9loUR21AZEEneKDvphXrfp80Y8n/0H6DMglcHTAgM
- WXPMSGJI2Shin+5yzQznLK5IKKgrrZg2LewPtc8mCXmW/rTCjyYV5AJHE8bQiJSX2PY3
- 9/m53v2TGU5C8Uz6Edy66IuyFq2iDFuRqRZc/+B2OqCBi7wcd8sCUYd6e+vObJSCkuht
- 8p0DTyvRsDHPtXlzXwkBlDOYi4VgKIjUm3Czej0685v3HW5SJylONDleIHYfZq0tfMm7
- bBKA==
+ bh=XvmSsw6RFZVExmETaa1Y4Yhn6lHhVX5/670/OVLoUdM=;
+ b=Lw6gnl5yatyg0KnSePqZnQhX8EKsQwbVE5hcGeDdbpAf6LrJPKUd+g4kBXYkt8VT9h
+ j3v1z7MzPTWu8sTEUCKZIVmi4ro9GoDYea6PdkpvZWPakpVMl66FFbB6BqSYHainggtA
+ fWp06lr8Be4jJz0GtAIbaXAscBV37Q1la3hb3UOUZArasTT+rYFULR4ku7v7LN1eSQCL
+ yMPTMnIXlkmGHR7NyPNEkfbctnweVQvOCuqFYWwKMJi7wF92E8Wq+kX7I1TsAhL5LzKN
+ pcUJ5034wuSDaP4+u1686KHB2jUsRWW8rh0SsNDfapt3WY+mbt7eicT0lFmwrRKYJ849
+ Va2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891687; x=1787496487;
+ d=1e100.net; s=20251104; t=1786891790; x=1787496590;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=4urKzUAK7zcqqmt/YphZ0AATkO45ouEjNEl3ivUIsm0=;
- b=IZkTbWUK8oxrq+qAGrobAgETvepyCNQ5iUZhK9ApP4JmTu+/A2XFP16DHw9Pkz8sVL
- ooL728YUhDKrni55fMACgrga/imdGLOys11nBic7huwJP38K21FeCK3D2ngT+WcXCr82
- 6ZS/O0bQEsuUCRAZ8oXMTZKGyqY9Lq3nIvfGEGSeLHi08kz/EfzLlJg6kW7EUKgrVLmP
- UfwFr6Ba+QhQXEq5biIebFZzMBdZQpeEf6EsgjE4a0HeXPyjjDH6sShgZE+xmcdDP6G7
- 6rbm80T3ppeZH9X6ZBIKo83rSdTDo8vuMIUlV+uOO8K9bdK78z6+0ynhw0S9t7Am8dpY
- DIQA==
-X-Gm-Message-State: AOJu0YxwhXdVHaAVF7n14ctE+vSJIkJsMFkkuo6bDmahe05lTgqvc4+O
- voBSeS2Rl0DwnVf3uPR8Fyt0KNFoEOT2c2FxkPWnlH6WV8oUt0zcKi9t3ECplAbODWzZs09x9+z
- Y3GWXkf+KRLH07GiBHj0nd/sDAh4leTK4Oq6VcVYzLLPwVBgEWobCrQ4s1zimjBqp6g==
-X-Gm-Gg: AR+sD12KBhYJ0qsh+vButEOGbJMFZYUUE09ipv04bEr/MugzVOn1CVetVbVWWi+qI6m
- CVb4Cytr+NLLBwoXzKQs32gDl/TAr415oJYVtPkqc05BMdzQH3usaKF+cTHgdJFbFGiMAklNIUR
- 6fXhdeE4kYE8WOSwSQa119Qe4gPN2VpbTAmQ3cpV2x549kXFLABmc/IXX6IdircHI1Also+MsRj
- tuFORVK9Psm5KxVm6vWz+NL4BY8UnxKfr3SL7MfGoFPE93Yi2G76N9L8yjWS1SuqhvUQqgqMDpJ
- b11FVXS11uDnLqEoquyQDt+otZr/vhH5rgq7GqQopHmUuYRC0EqlKo0WeaF7U5jGA8b58UgEv3E
- iRq8AZlQUgBxSHJ9eRLvjR65dVFD+QzTVTz8IXlBszQ==
-X-Received: by 2002:a05:622a:250a:b0:517:c65c:4987 with SMTP id
- d75a77b69052e-52d74baa1femr319052291cf.22.1786891686869; 
- Sun, 16 Aug 2026 07:48:06 -0700 (PDT)
-X-Received: by 2002:a05:622a:250a:b0:517:c65c:4987 with SMTP id
- d75a77b69052e-52d74baa1femr319051921cf.22.1786891686398; 
- Sun, 16 Aug 2026 07:48:06 -0700 (PDT)
+ bh=XvmSsw6RFZVExmETaa1Y4Yhn6lHhVX5/670/OVLoUdM=;
+ b=rDl9Lxn4UYghKPzVfgp8pceMVNyv8fTFRzNp6LrL50LaPVdbxkGCavkwBx/K7rhEDo
+ E99FFlCSMD4jEIxAJ1zjH2rwJebYvEuCt9pSjUgSgxT2j0B6ZCtWPgGpfJBARJwWu5pF
+ E7U2OYAmzL62Tvl88E4bQCzVeoRd1hjgrigFcSsJCaHSohvuO+/aVjRMLbVqqcRy7qd7
+ VhEqRU3UB4ZosQiGe/qbE07sOhS/s40Dp63+he4J8Rz4jufsS3qBCZo7+4FWlR1pi5Gq
+ EQmwcVRFtpjXzAoUWz9kF47apPF9DrSQnvMTBfgfj33gV1jVXa/aPEgswgThhONik8Qf
+ sv0g==
+X-Gm-Message-State: AOJu0YzRT0Mq1wRoco1t6GMKrXw+xt5RKsVYWySHHQNNnkFRNTXnpGK6
+ dTazMAVYtNcAeN0stE/W0Ht8RPF7YFj2Ai/Jv81MvCeHahqu76O9VDXU79GmKD/YEIafWUojWLc
+ xmO/aTvK0QiQdF8yauZxI0EIfIXKjka+lI5E/8KaaLpPQr3bbO3A70llfezAidxXKhA==
+X-Gm-Gg: AR+sD13cyfeIiXDfVmZGf3AqOGtiq5Q/mR3g2GL1rPVgJyL3pi/AtXeJhJglBRuBN4G
+ /r1euHvL/iSTj6fc10ap0bPHmmVXzWW/JmU0FlmSEyCxrhi84ipd16iO3md1xV0AsYUI1QYYSb7
+ Ze7CXZt/fZCjOnyZeSLYC3nX60xcT5/ioH5XQjLxDxjuXm5IVQcPKChD8v+NwImboMeDZLnAjN/
+ qnmfMzEbQ9p39lYTNzYBiMPpwT/5bQvgBdV5nKNO73Fnu99e5zeZGBnuBXPiorIGWfcZujDGVT4
+ Alqx1j+SZIHoknlHDr4NQzBpt02oCj6AwsDe5Uzotb9BzfWuLDDfvy4uq5TqQlq3EeDZ/d1sIsk
+ Loj+bWEsV3oXHZ1ywBILwlNYniBRXCxB4xvfC90v6TA==
+X-Received: by 2002:a05:622a:908:b0:51c:1a17:eba0 with SMTP id
+ d75a77b69052e-52d852f1f15mr223845451cf.2.1786891790165; 
+ Sun, 16 Aug 2026 07:49:50 -0700 (PDT)
+X-Received: by 2002:a05:622a:908:b0:51c:1a17:eba0 with SMTP id
+ d75a77b69052e-52d852f1f15mr223845121cf.2.1786891789772; 
+ Sun, 16 Aug 2026 07:49:49 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999611bf65sm47666255e9.13.2026.08.16.07.48.05
+ ffacd0b85a97d-4815f229681sm21097763f8f.16.2026.08.16.07.49.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:48:05 -0700 (PDT)
+ Sun, 16 Aug 2026 07:49:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/56] hw/qdev: Parent device before setting parent bus
-Date: Sun, 16 Aug 2026 16:45:14 +0200
-Message-ID: <20260816144556.69009-16-philmd@oss.qualcomm.com>
+Subject: [PULL 27/56] hw/cpu: Extract cpu_exec_realize() out of
+ cpu_common_realizefn()
+Date: Sun, 16 Aug 2026 16:45:26 +0200
+Message-ID: <20260816144556.69009-28-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=QsVuG1yd c=1 sm=1 tr=0 ts=6a81cda7 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfXwrzuDvTynYfA
+ FIAQt2hhx9War9cl2rwZoacp594m9cTVTcTNNBJDAwZI7qpfUcuDjwFay9xaqPJxicS9xBZC7Xo
+ tpBATI8D1ktMXWeHtNP/nkEcfPrrVBw=
+X-Proofpoint-GUID: OALFlbVPOirW5hIy64ehpNawzjN8pFqx
+X-Authority-Analysis: v=2.4 cv=C5PZDwP+ c=1 sm=1 tr=0 ts=6a81ce0f cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=jOmSDqYlwVm5XPtxtUUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: 26-2n9bmBylwry_-kh1TAdPBiO6TFrzd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX+8FvqX0A7XCd
- HNYI8VdPN0FkeaONvHLyY+Lo/WwIdPrMEp4jcAv9Gje4KIiy9QeRcPdiPrH/LQfztqaA8Np2ew1
- qjx5iz3bkvTCinVsxC0lDNkvdvyNIL/Jr9+6qWk7W92vFCMdvCphjqTKjltlceo+FAA0Qgz2XRq
- oEz4RjFsOTUAyA/g7W4L18XpLTSD1/26YoV3piIifuHrxzj3rdoX/gEB4dlKU3ZcX6bXHbOoqNH
- cDeqgbrSiLLZlPfc0HIrn4cukLsmu+EioBvRfaDi+4zxKJ/Hn+4OgQuL1q0N9fBQbp9ZaBRXSqw
- 39PTSrrT121IFf3BJ8/LPa86lHYpkxfGmZlnqFYeT7p9w9zIG6RRLwTmDHSAngUyzSqLsN8mARz
- Ltcx0eG8sDSNFou5fKVMmHQHYNl5qNKetr/YhR/eAZc0g9dLTEtz58WKUaCu2ELV4QUEDnihauZ
- ZvYdo+iLAtN1wEZpHEg==
-X-Proofpoint-ORIG-GUID: 26-2n9bmBylwry_-kh1TAdPBiO6TFrzd
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX12y+v/rNTrRK
- +2aL7WEhZ9eKCNw/Orf79u3P/PTXjPMu5GtLUOLbOyZbfIhZeSLU7Eg5kDylmsY7ew7M71K+lW3
- lYJedniPKTjgevJ6Gtz/eBQyc+saLgs=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=3ZqzEhZVOs4yraokUgkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX+ejxq+MTTtEx
+ 3VuNF5HCAsu/WTiSlREMWvxKw3k7q9Oall33J8+UX8sZCszfRrdZrrmub081V/wDUo8bLkpkRfI
+ Bme/arP45LIT5gTLkgt0FPlNhX3A+5lA8l1BcFOwKOxCDD1xABu7nnCKhhNRB74/65rrEBqDCZZ
+ n8YPHMXYoFnTWqPI1oL4iRzYslu1xO0hADrofzVvOSatQL3WWcma2k+e/tSOpBdB8ta5Def00nB
+ rFUhyMXKZAgMwG3Ar/o4x9glVE2YVoCmBApa3NbffNmSrN1BRfaPbFejLiTvD5zRbkXJRldcq7H
+ /HQRUuWC8a6BdH15LMHxamM41bX8PU4FM3oBPE7AwjBf8fb8FeM8PE5H+xtxQPGMnlbwkny45UB
+ MNJSB4HrP0/SrwnP9pG+7/TXoia6CkgiCl6mmzUhK655nqZTsEPWdamy7wZauqJDRjsWsr+spnO
+ cMCDaLFwki98jgFnpsw==
+X-Proofpoint-ORIG-GUID: OALFlbVPOirW5hIy64ehpNawzjN8pFqx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- malwarescore=0 phishscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ adultscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160118
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,171 +151,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+cpu_common_realizefn() contains code only used by system mode
+emulation. Extract it to a new cpu_exec_realize() helper. In
+the next commit this helper will be moved to cpu-system.c where
+it belongs.
 
-Commit 9940b2cfbc05 ("qdev: New qdev_new(), qdev_realize(), etc.") says
-"device state 'no QOM parent, but plugged into bus' is dangerous". In
-such a case, unrealizing the bus will hang in bus_unparent():
-
-    while ((kid = QTAILQ_FIRST(&bus->children)) != NULL) {
-        DeviceState *dev = kid->child;
-        object_unparent(OBJECT(dev));
-    }
-
-object_unparent() does nothing when its argument has no QOM parent,
-and the loop spins forever.
-
-However, that commit did not completely eliminate such a situation.
-When the device is not parented, device_set_realized() lets
-/machine/unattached parent it, but it happens after setting parent bus.
-Therefore, any failure between the two operations can leave the device
-in a dangerous state.
-
-qdev_realize() at least asserts that the device is not already realized
-and prevents one realization failure pattern, but it is not
-comprehensive. Besides, it will trip with a command line like the
-following:
-
-    qemu-system-x86_64 -M none -nodefaults -nographic \
-        -device ipmi-bmc-sim,realized=on
-
-Eliminate the dangerous state by ensuring that the device is parented
-before calling qdev_set_parent_bus(). Also, stop asserting that the
-device is not already realized in qdev_realize(); it is broken and
-no longer serves any purpose.
-
-Fixes: 9940b2cfbc05 ("qdev: New qdev_new(), qdev_realize(), etc.")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260721-qdev-v3-14-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260811183410.22428-8-philmd@oss.qualcomm.com>
 ---
- hw/core/qdev.c         | 51 ++++++++++++++++++++++++------------------
- tests/unit/test-qdev.c | 13 +++++++++++
- 2 files changed, 42 insertions(+), 22 deletions(-)
+ hw/core/cpu-common.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index e2aab3d1fc6..0b0f2f47fa7 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -264,17 +264,43 @@ static void device_reset_child_foreach(Object *obj, ResettableChildCallback cb,
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 59cd489b713..cd7c8763cf5 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -246,9 +246,8 @@ bool cpu_common_realize(CPUState *cpu, Error **errp)
+     return true;
+ }
  
- bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp)
+-static void cpu_exec_realize(DeviceState *dev, Error **errp)
++static void cpu_exec_realize(CPUState *cpu, Error **errp)
  {
--    assert(!dev->realized && !dev->parent_bus);
-+    static int unattached_count;
-+    bool unattached_parent = false;
-+
-+    assert(!dev->parent_bus);
-+
-+    if (!OBJECT(dev)->parent) {
-+        gchar *name = g_strdup_printf("device[%d]", unattached_count++);
-+
-+        object_property_add_child(machine_get_container("unattached"),
-+                                  name, OBJECT(dev));
-+        unattached_parent = true;
-+        g_free(name);
-+    }
+-    CPUState *cpu = CPU(dev);
+     Object *machine = qdev_get_machine();
  
-     if (bus) {
-         if (!qdev_set_parent_bus(dev, bus, errp)) {
--            return false;
-+            goto fail;
+     /* qdev_get_machine() can return something that's not TYPE_MACHINE
+@@ -264,10 +263,15 @@ static void cpu_exec_realize(DeviceState *dev, Error **errp)
          }
-     } else {
-         assert(!DEVICE_GET_CLASS(dev)->bus_type);
      }
  
--    return object_property_set_bool(OBJECT(dev), "realized", true, errp);
-+    if (object_property_set_bool(OBJECT(dev), "realized", true, errp)) {
-+        return true;
-+    }
-+
-+fail:
-+    if (unattached_parent) {
-+        /*
-+         * Beware, this doesn't just revert
-+         * object_property_add_child(), it also runs bus_remove()!
-+         */
-+        object_unparent(OBJECT(dev));
-+        unattached_count--;
-+    }
-+
-+    return false;
- }
- 
- bool qdev_realize_and_unref(DeviceState *dev, BusState *bus, Error **errp)
-@@ -479,8 +505,6 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-     BusState *bus;
-     NamedClockList *ncl;
-     Error *local_err = NULL;
--    bool unattached_parent = false;
--    static int unattached_count;
- 
-     if (dev->hotplugged && !dc->hotpluggable) {
-         error_setg(errp, "Device '%s' does not support hotplugging",
-@@ -493,15 +517,6 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
-             goto fail;
-         }
- 
--        if (!obj->parent) {
--            gchar *name = g_strdup_printf("device[%d]", unattached_count++);
--
--            object_property_add_child(machine_get_container("unattached"),
--                                      name, obj);
--            unattached_parent = true;
--            g_free(name);
--        }
--
-         hotplug_ctrl = qdev_get_hotplug_handler(dev);
-         if (hotplug_ctrl) {
-             hotplug_handler_pre_plug(hotplug_ctrl, dev, &local_err);
-@@ -627,14 +642,6 @@ post_realize_fail:
- 
- fail:
-     error_propagate(errp, local_err);
--    if (unattached_parent) {
--        /*
--         * Beware, this doesn't just revert
--         * object_property_add_child(), it also runs bus_remove()!
--         */
--        object_unparent(OBJECT(dev));
--        unattached_count--;
--    }
- }
- 
- static bool device_get_hotpluggable(Object *obj, Error **errp)
-diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
-index 20eae38e03f..77c3eee7171 100644
---- a/tests/unit/test-qdev.c
-+++ b/tests/unit/test-qdev.c
-@@ -78,6 +78,16 @@ static void test_qdev_free_properties(void)
-     object_unref(mt);
- }
- 
-+static void test_qdev_double_realization(void)
-+{
-+    MyDev *mt = STATIC_TYPE(object_new(TYPE_MY_DEV));
-+
-+    qdev_realize(DEVICE(mt), NULL, &error_fatal);
-+    qdev_realize(DEVICE(mt), NULL, &error_fatal);
-+    object_unparent(OBJECT(mt));
-+    object_unref(OBJECT(mt));
+-    if (dev->hotplugged) {
++    if (DEVICE(cpu)->hotplugged) {
+         cpu_synchronize_post_init(cpu);
+         cpu_resume(cpu);
+     }
 +}
 +
++static void cpu_common_realizefn(DeviceState *dev, Error **errp)
++{
++    cpu_exec_realize(CPU(dev), errp);
  
- int main(int argc, char **argv)
- {
-@@ -90,6 +100,9 @@ int main(int argc, char **argv)
-     g_test_add_func("/qdev/free-properties",
-                     test_qdev_free_properties);
- 
-+    g_test_add_func("/qdev/double-realization",
-+                    test_qdev_double_realization);
-+
-     g_test_run();
- 
-     return 0;
+     /* NOTE: latest generic point where the cpu is fully realized */
+ }
+@@ -379,7 +383,7 @@ static void cpu_common_class_init(ObjectClass *klass, const void *data)
+     k->gdb_read_register = cpu_common_gdb_read_register;
+     k->gdb_write_register = cpu_common_gdb_write_register;
+     set_bit(DEVICE_CATEGORY_CPU, dc->categories);
+-    dc->realize = cpu_exec_realize;
++    dc->realize = cpu_common_realizefn;
+     dc->unrealize = cpu_common_unrealizefn;
+     rc->phases.hold = cpu_common_reset_hold;
+     rc->phases.exit = cpu_common_reset_exit;
 -- 
 2.53.0
 
