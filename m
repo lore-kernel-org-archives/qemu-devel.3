@@ -4,136 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D612C5DF66
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 09:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE4BC5DF66
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 09:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvX0O-0006tl-L1; Sun, 16 Aug 2026 05:18:12 -0400
+	id 1wvX1L-0007B3-PL; Sun, 16 Aug 2026 05:19:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvX0M-0006sS-5X
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 05:18:10 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wvX1B-00077S-6J
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 05:19:05 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvX0K-0002I0-1q
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 05:18:09 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wvX19-0002Nd-Pt
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 05:19:00 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67G72DiG2810821
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 09:18:06 GMT
+ 67G71fI13319338
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 09:18:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7RTG1hWtdZCwI55uStqWT0Wn3l+D8+TrqBtstTu3HKM=; b=KGqvvBdB/TS3Fxaq
- +L/0duWBM0FPECxNFpqtk5u6PofIjJ8DJDSemu4urCdJCEY6z/Z5jBpeEJ021cp8
- b7OPh1iWKM4vQqFtMKIZWDNRZ/Z106fgsbxBD6clM0hA71+8MXP1Bwpdzh/Tk/C+
- 8Xbq2wOJSwOt5IdO0DmP75yz2e8JVe9PAwaRE9SVV4YbMAW8iWrd4zbQhCvmLGyC
- 5JtGcr9jD/ElImBYqx6rHtRKsp3nsgkhn2HO1W1PXJFizBSYvAJhtsHI1Q921B6F
- 03iqgaeCYrHrODimAXzkrsqAYLYiO3zVFnPVacvtCO/9wVGZwCYx1yjtdo3iKNrF
- 1aNlgQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghek763-1
+ TxJbK1Jx5j1SAJ/XVnxEVC6s/YuoULEmD2jLDkXYyxg=; b=FN+clObHHz71CuOi
+ hDOo7HPRP09ySlOlOhh7SCbTCxEqhmSVrNvp1ndk8Z/IBWhpsdw2RkzYmVlTe7Ud
+ SD01KG1G6qAIoAtLI3GjMFKEdgFAao4BHKNNpgB9yVmHpVsSF2y9t9hBKKowyBic
+ Dh5t+u9HjL2s6kaETdelWaypG4xNPdFd9ts4ynZU/A3nK9lWXjpnQKaG4bCm4teg
+ EKNceO4zpGSXYhXQEVmNEZGoR1rehjX8K+MOiexSFEdqVraJ1SQdB9PL+2j+pQrD
+ f/rsDxWOLxwEAV0yi+Vz/myLySGdJVL/BlblvuGyNf5KQRyXSHCfHiX0gOuPu+Av
+ Gd045A==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghwk4j2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 09:18:06 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c0408254aso50554891cf.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 02:18:06 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 09:18:58 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52ce3c7cb2eso43839491cf.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 02:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786871885; x=1787476685; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786871937; x=1787476737; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7RTG1hWtdZCwI55uStqWT0Wn3l+D8+TrqBtstTu3HKM=;
- b=SjhWXjNuUwiItKhvFRaI2WhWPUP76dVZYbDBlNaH8YR9pNCexC+8Tu8pqnBP63yYpN
- Eew3C3guazWpWa4ejv075UZeLnN05glXYnngjhiHNtFsPEPNOipUkI279189s0ZQCckv
- UXP/nCJB60C5idfPcO1Zpwt5QLrA6cPxJEmmw2+UBtk86YOUp/svlOxJJgMYhGnGAXgB
- OWwVoR1M4goVcxcwLnIw6F0N650QexbsnqKo+i2DHeVU04jXOiq0broizsxcF9dMb8Nn
- m0j52ytnL1MbMOoPIjioZOPJ+qcdUf1LQF3pgom5nP/GyxLNhoJUoFwiAcsj0m7xfC3t
- pwSA==
+ bh=TxJbK1Jx5j1SAJ/XVnxEVC6s/YuoULEmD2jLDkXYyxg=;
+ b=Kqus/8/vo39rUrhSLm2vWbtHp4fIE/WqKP6gNpFXJnxQLFlsVeb/gBf+bswgHhcTkE
+ kaNZDiMUUzrW08UZdnY3rd8aogX5qIv5RQ7AcIoweHA7SgHQKIcEylhg5wagxFOq+CEM
+ TIKR8apcT+ynOS1FCAGQ274KMaTVfYyM0UPcpmVPj0BecqCXqIYVYEoK0YEN6ypdPOzh
+ V0VUzQ5mETQestlimdD2LBb9Yx5AVhy8p4KWunpAAEGxUv199EvHzpKpR1qPeEeXPJZ3
+ qapmOiMqRMHtSfItd6YVizHsNchKpE1UCXtVuwzfAiTcY5hkRzMvmvA5bKwGe+mBoPen
+ tzeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786871885; x=1787476685;
+ d=1e100.net; s=20251104; t=1786871937; x=1787476737;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=7RTG1hWtdZCwI55uStqWT0Wn3l+D8+TrqBtstTu3HKM=;
- b=Dyhm19L9avlVfzrdUeJ+ydjeBx85qbyr/pummzBhcBHuhbihuXkz/z+77B3Jhf5cjo
- K4D8C92/xwJ+oKJQuOL4AyP5vMHG2tcUCJhQRzRp8lYyDTqREoCQyTuYm9Qrkkj1x1iW
- VSAA/mBy/2SgE4HmrYav72bV7/kwmxRz3j5LL8lG2fpCbl6Evd/EA6QFKejKNgIIWi13
- krGE8vK3lkeoZwUeNQ63i4VJ3xB9t/XjnHsh0GEwT1KfIYPQe/SuaqPMRFNbzpNEunE0
- QRSvZ0gBCgQc78gDGoz4blhx1QnZMkMc02equgB/uqXzXx1EIy2Mi9ivgD0X8CCm7u6K
- Odmw==
+ bh=TxJbK1Jx5j1SAJ/XVnxEVC6s/YuoULEmD2jLDkXYyxg=;
+ b=N7ikE0y35m3wKYefLPzJEM9rxzSC0+sV85a+YeNqVQLWoOXPhcZmSHdqpxShJCSFzz
+ 7AXVBvz3m1Y7TjgPwUKs7D6spiycxmbdciGQc91GjvvNymsEHG0UdKJlPXbiXTSpc9ZG
+ 1vUtb34wRRycF79jNRy2hX98novANOx2fOfXJo7/Unz9JRN2St/cXrdPV+bUucQoFWK0
+ Mf1H//R87AQMyuvqWrfJP6sx/z/O6aM1tZzPgF5kTJgGSecWnEJFxprttw8lpAC9UjH/
+ H4pa+ELfFkIP18s2YQsLKuE0n1ZuB6gr8sQOA1/JB0h1+KsN8fHM+afPPLvBPz6R9q81
+ K7bw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rqt8C/gmXBa/LIav6+cOymq+JXUKNa88MAck9XECCXjj6WganFhFU/v3Pbg46FulYnlFXdPj1P3Q4kX@nongnu.org
-X-Gm-Message-State: AOJu0YzpuUFc+Lej8i193H9dTqp4uzFVMvtpE1xfammq4b8spP5dXZ1l
- EOs/vtbRrqqKOr73yFipHEloSfuDNHBtmFhjGbzqE17pSazpqB7jyn6YXf9hURQ0FjgcFlihzDK
- /xbyKvpe9vyuGhgDWHMYcOHRNwWCwrLMAzm2YdN+7aMYnkbOv6dgWSc0d4Q==
-X-Gm-Gg: AR+sD128bSMtomGblJ3gqOq+XW5xoUsF0dFqDzHtJRD3rswxxDTYvfyHMBI3CbKJAGq
- RovsPCtzfeBJbp390IazH56846RV6slC4dFWeJ9zP9T5XqclMaIW27eAGxfh8xP3E3BXjjgRVDr
- khimPA6hZ4ubDSpXhKFidKpiuT/ZxWRv4Rbag7tWMs34zduf59Xl3VG6Yk8LO6yELPyWyA5uszs
- 0Nqm5JrhKZnUPbWYQ9pVtZFVvydeO9q2PpDOvL4/ntUITJFv21LH27ewxu0uLIpC+5ovhdKFNrN
- e8q7/dKbAn+zXy3R8ArQfRT3ZDfnkdedlgZ1I2xMBkjFZzGrmxqz3GKK7Yv5PUif15AFHCYvCFi
- zRySNEHM6e+rDJBQZN3PVUgjwAHsnbTEv8T8=
-X-Received: by 2002:ac8:59d6:0:b0:51c:d1c:10e2 with SMTP id
- d75a77b69052e-52d74b470f7mr240097621cf.12.1786871885612; 
- Sun, 16 Aug 2026 02:18:05 -0700 (PDT)
-X-Received: by 2002:ac8:59d6:0:b0:51c:d1c:10e2 with SMTP id
- d75a77b69052e-52d74b470f7mr240097351cf.12.1786871885128; 
- Sun, 16 Aug 2026 02:18:05 -0700 (PDT)
+ AHgh+RobX57mkqvQbBQzzsW0NQ21BB9Od/opnL3Zj2I+fsFP7vREm2loEb+mofZF02sEpoDBHmVMY6ktg5VN@nongnu.org
+X-Gm-Message-State: AOJu0YzM3T4SigNMb9mkoVwyIoA7Amhv57AXz/5TS/w0QM1gCePXiTp8
+ lUze+uX3R7XkYpo8iLvrPkVAMH3FtUk5D22WO57VdP5X2Xk5gKl6v7GhEEilybkm2T8dluMKXCT
+ n7NVgEuoBJW4kXV4JWX/21u4knKHXeHTiGd40y9QuLJtPQ4j7xuKcQeBkyA==
+X-Gm-Gg: AR+sD13UviJBrLd2b61rbrGMzo+NM4tS5Bvl/zgIglwvYp7uEAQE7lhNbAl5+CP7Ir+
+ t85U6hT1LSrHqMOrSXCwW8xxWWjm5Jo6FmZhyA2UOQL8ONlEjy3BypMrsY8BT6EEt7Rarg87325
+ gHKpo9emDAEFP593UfMWy2/K/lJ7MST6Pc9ns0Iz1QrSNV/1t0bNqlkS32eJ79z/WmUPnjftis1
+ xivXMaDfuk16WLRpI5YDqFLRIHqiYvsM4KvA3Fs/LLqAkX4QP/+d0sPwRu7gEiKUigCt1vzsJLk
+ FgxsI9SE4R4Zc97FdVVKG1OgMp5PA8ZfFzEkpMLXvPbbvZ7BkadB7OwJ7UUlBc4NJAIugjxTm4l
+ b7aJle8w9TICB+bePfGnFZxHNAd2xv88LAVE=
+X-Received: by 2002:a05:622a:14b:b0:52b:4e1f:941d with SMTP id
+ d75a77b69052e-52d8530dbc7mr187279421cf.6.1786871937035; 
+ Sun, 16 Aug 2026 02:18:57 -0700 (PDT)
+X-Received: by 2002:a05:622a:14b:b0:52b:4e1f:941d with SMTP id
+ d75a77b69052e-52d8530dbc7mr187279191cf.6.1786871936690; 
+ Sun, 16 Aug 2026 02:18:56 -0700 (PDT)
 Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815f2b1a91sm21977413f8f.21.2026.08.16.02.18.02
+ 5b1f17b1804b1-49996100082sm45762395e9.2.2026.08.16.02.18.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Aug 2026 02:18:03 -0700 (PDT)
-Message-ID: <8f347a98-8b6d-4d1c-83a9-d767760f54f1@oss.qualcomm.com>
-Date: Sun, 16 Aug 2026 11:18:02 +0200
+ Sun, 16 Aug 2026 02:18:56 -0700 (PDT)
+Message-ID: <942483b0-8009-4e23-b192-f36a10b40e1a@oss.qualcomm.com>
+Date: Sun, 16 Aug 2026 11:18:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 08/18] accel/tcg: Replace size with first/last in
+Subject: Re: [RFC PATCH 09/18] accel/tcg: Allow phost to be NULL in
  probe_access_flags
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org
 References: <20260815203730.1468365-1-richard.henderson@linaro.org>
- <20260815203730.1468365-9-richard.henderson@linaro.org>
+ <20260815203730.1468365-10-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260815203730.1468365-9-richard.henderson@linaro.org>
+In-Reply-To: <20260815203730.1468365-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=EKc2FVZC c=1 sm=1 tr=0 ts=6a81804e cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: yKfTWNZpCwAY360axgUuR83oH8Zteqon
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDA2OSBTYWx0ZWRfX+a/7ajV1owRD
+ wUvIr3AVLcnr7rwR8t6MBusGhYq4WXNIXsmF3XhRV48KsIIqYQFaUBQdod+88/25qxwan9+9CMH
+ V1qEa+LDkEni87Xgr5fEx2axVXQmJ2O9r3cFd5f8aSuWRMAvU23k0l1PzBBK7cv+MfN8o89Lz79
+ 7fCKyue3Bkk5wHyEUVJW++m6x/5vLta/lPUqcf+lOSe1fi7RmBHsVP749yj/eLydc/VepS1dPPk
+ alhKyaUJveXMkmr249L9uTI39qWwcCWKbVQ05WIPkdzqNcgOnDaLuSglKOOznpi4HuyVyC+zYpq
+ hv3l3eL+0uJ13j/JmOfHYkdOWCXkNf26iyfEP0vHHxJ42Ah8SwbPowWDiS0KovdIQs87d57qhHP
+ t4Glu+eRuyMZDPDWkxe/Dub9ieLLhmGsZQOLLdUXb44NHtovaLsBC73mDHRSwqhz4vg1ieII1fF
+ Sjrr5BCU8OdspAMji2Q==
+X-Proofpoint-GUID: yKfTWNZpCwAY360axgUuR83oH8Zteqon
+X-Authority-Analysis: v=2.4 cv=DdknbPtW c=1 sm=1 tr=0 ts=6a818082 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=RUurspf9fpIRbrhlMEsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDA2OSBTYWx0ZWRfX8awk672lHSNl
- u60BtmzN6yjBhi6zLxgHSRB+iIbdBI+83fBCM+D042DpVGrlUt+FJGj9IgEA/GIleEOijHpBE+Q
- v36dym6HUFlryiNZOnd8rA+SItzzoV0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDA2OSBTYWx0ZWRfXzQ/007X6T+rB
- e3j+PvL4zH5AjcXXhfzcOxAehTo0yQUC+T6q3AxleK2t1SiS0B3dXN/wWRnhSp7NdDha5ypPiQb
- 7kD4Ao+A+kePNTx9vUTcPcrX64rwTgZyVe7M6IdiHJXXf4obhBRw5Nonj8QB+LFyeYH2QYsH4sw
- UKxKQXn5yk11LdWQGDxWzlhN5Lfn8SYy8CwBa7/GfqclzpRsJj1L97rTdDlGSx2q0j+mFFmWldn
- f2oylP4wkgRfJrMjk5VNGiABK//Nay4ipUOuOIfAsqRC74o4tAgVmTrWKHlxnW+k8IlLecFO5Dy
- XX1TCzptKM6sTqWQ3k8gQvZXLxwAw6/9HkpUl7tJYLAVyo4nzA060dTUS2KmMRRtHjflegod5VZ
- bOym7yD8kGcXPQic1q7aHlkYoW3L8TCvX6C5Zl8mSe7VmNTW1sUnM486ND2a4v0Fa+yoYQRZgBl
- zM2awKSIrIGgsG0wMAw==
-X-Proofpoint-GUID: UHM2tWBeq1ZHq-d7Q_Durfq3XgQl4WAn
-X-Proofpoint-ORIG-GUID: UHM2tWBeq1ZHq-d7Q_Durfq3XgQl4WAn
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDA2OSBTYWx0ZWRfX8C/2a2FdAqow
+ oc9UauVwjsibEoMYu4TrYxVKzEuwhbPKtXfkPlHDAFqZ3GKFv36SOYMoNwMk5TB7Sjq/HeFJll9
+ wsHnx4wA7v2QabYAkpEBrgsdFs0AP6E=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_02,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160069
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608160069
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -157,124 +157,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/8/26 22:37, Richard Henderson wrote:
+> Do not require the caller to create a dummy variable.
+> The one instance so far is riscv check_zicbom_access.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/accel/tcg/probe.h        | 24 +++++++++++++++++-------
->   accel/tcg/cputlb.c               | 15 ++++++++-------
->   accel/tcg/user-exec.c            |  7 +++++--
->   semihosting/uaccess.c            | 10 ++++------
->   target/arm/tcg/sve_helper.c      |  5 ++++-
->   target/riscv/tcg/op_helper.c     |  4 ++--
->   target/riscv/tcg/vector_helper.c | 21 ++++++++++++---------
->   target/s390x/tcg/mem_helper.c    |  4 ++--
->   8 files changed, 54 insertions(+), 36 deletions(-)
-> 
-> diff --git a/include/accel/tcg/probe.h b/include/accel/tcg/probe.h
-> index e3068a79de..06faf1269d 100644
-> --- a/include/accel/tcg/probe.h
-> +++ b/include/accel/tcg/probe.h
-> @@ -49,23 +49,33 @@ static inline void *probe_read(CPUArchState *env, vaddr addr, int size,
->   /**
->    * probe_access_flags:
->    * @env: CPUArchState
-> - * @addr: guest virtual address to look up
-> - * @size: size of the access
-> + * @addr: virtual address
-> + * @first: beginning of virtual address range
-> + * @last: end of virtual address range
->    * @access_type: read, write or execute permission
->    * @mmu_idx: MMU index to use for lookup
->    * @nonfault: suppress the fault
->    * @phost: return value for host address
->    * @retaddr: return address for unwinding
->    *
-> - * Similar to probe_access, loosely returning the TLB_FLAGS_MASK for
-> - * the page, and storing the host address for RAM in @phost.
-> + * Probe an access for [@first, @last], where @addr is somewhere
-> + * in that range.  Normally @addr == @first, but some targets have
-> + * accesses which are forcibly aligned after an initial fault for an
-> + * inaccessible page (e.g. Arm DC_ZVA, where [@first, @last] will be
-> + * the bounds of the cacheline containing @addr).
-> + *
-> + * If the access does not satisfy @access_type:
-> + *   - if @nonfault is false, raise an exception at @addr
-> + *   - otherwise return TLB_INVALID_MASK.
-> + *
-> + * Otherwise, return the TLB_FLAGS_MASK for the page, and set @phost:
-> + *   - host address for @addr, if direct host accesses are allowed,
-> + *   - otherwise NULL.
-
-This If/Otherwise block sounds like implementation detail leaking into
-documentation API contract, but I don't mind.
-
->    *
-> - * If @nonfault is set, do not raise an exception but return TLB_INVALID_MASK.
->    * Do not handle watchpoints, but include TLB_WATCHPOINT in the returned flags.
->    * Do handle clean pages, so exclude TLB_NOTDIRY from the returned flags.
-> - * For simplicity, all "mmio-like" flags are folded to TLB_MMIO.
->    */
-> -int probe_access_flags(CPUArchState *env, vaddr addr, int size,
-> +int probe_access_flags(CPUArchState *env, vaddr addr, vaddr first, vaddr last,
->                          MMUAccessType access_type, int mmu_idx,
->                          bool nonfault, void **phost, uintptr_t retaddr);
-
-
-> diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-> index b7b3805a6d..87f2196bc7 100644
-> --- a/target/riscv/tcg/vector_helper.c
-> +++ b/target/riscv/tcg/vector_helper.c
-> @@ -704,7 +704,7 @@ vext_ldff(void *vd, target_ulong base, CPURISCVState *env,
->       uint32_t esz = 1 << log2_esz;
->       uint32_t msize = nf * esz;
->       uint32_t vma = vext_vma(desc);
-> -    target_ulong addr, last, last_in_page, page_split, elems;
-> +    target_ulong addr, last, last_in_page, page_split, elems, adj, adj_last;
->       MemOpIdx oi = vext_oi(desc, log2_esz);
->       int mmu_index = get_mmuidx(oi);
->       bool first_active;
-> @@ -759,10 +759,10 @@ vext_ldff(void *vd, target_ulong base, CPURISCVState *env,
->        * Test whether the first page is accessible.
->        * If the first element is active, it must succeed.
->        */
-> -    flags = probe_access_flags(env, adjust_addr(env, addr),
-> -                               MIN(last, last_in_page) - addr + 1,
-> -                               MMU_DATA_LOAD, mmu_index, !first_active,
-> -                               &host, ra);
-> +    adj = adjust_addr(env, addr);
-> +    adj_last = MIN(last, last_in_page) - (addr - adj);
-> +    flags = probe_access_flags(env, adj, adj, adj_last, MMU_DATA_LOAD,
-> +                               mmu_index, !first_active, &host, ra);
-
-Something in this function (on the pre-existing code) bugged me,
-confirmed by your cover letter (I haven't looked at the RISCV
-preliminary series).
-
->       /* Get number of complete elements in the first page. */
->       elems = MIN(page_split / msize, vl - i);
-> @@ -853,8 +853,10 @@ vext_ldff(void *vd, target_ulong base, CPURISCVState *env,
->            * We have not yet advanced addr to the next page.
->            */
->           target_ulong next_page = addr + page_split;
-> -        flags |= probe_access_flags(env, adjust_addr(env, next_page),
-> -                                    last - next_page + 1, MMU_DATA_LOAD,
-> +
-> +        adj = adjust_addr(env, next_page);
-> +        adj_last = last - (next_page - adj);
-> +        flags |= probe_access_flags(env, adj, adj, adj_last, MMU_DATA_LOAD,
->                                       mmu_index, true, &host, ra);
->   
->           /* Stop if invalid (unmapped) or mmio (transaction may fail). */
-> @@ -873,8 +875,9 @@ vext_ldff(void *vd, target_ulong base, CPURISCVState *env,
->               host += addr - next_page;
->           }
->       } else {
-> -        flags = probe_access_flags(env, adjust_addr(env, addr),
-> -                                   last - addr + 1, MMU_DATA_LOAD,
-> +        adj = adjust_addr(env, addr);
-> +        adj_last = last - (addr - adj);
-> +        flags = probe_access_flags(env, adj, adj, adj_last, MMU_DATA_LOAD,
->                                      mmu_index, true, &host, ra);
+>   include/accel/tcg/probe.h    | 3 ++-
+>   accel/tcg/cputlb.c           | 4 +++-
+>   accel/tcg/user-exec.c        | 5 ++++-
+>   target/riscv/tcg/op_helper.c | 3 +--
+>   4 files changed, 10 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
 
