@@ -4,99 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3028C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 16:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07518C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 16:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvdmo-0003ap-Rm; Sun, 16 Aug 2026 12:32:38 -0400
+	id 1wvdpZ-0004LB-JO; Sun, 16 Aug 2026 12:35:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wvdmm-0003aJ-5x
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 12:32:36 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wvdmk-0005zi-Cr
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 12:32:35 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38e07ebd263so1746744a91.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 09:32:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1786897953; x=1787502753; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jMFvOe0vkNMMUB827U3MP9hJbYJr+1uRJkuSiYxxd3o=;
- b=JEO9r+WLPjATBBcSMJI27TaKGr9SVkelinOpyim2xq8ZpMy9BoqMU60DCzdKeTACTA
- jv5R7ify6z+mAe7wPFp5NNolBJctjGjLkopM9p5TqqWvE9cxkqw8S+0o/EVDTAi/JFYo
- DJqDGt3iIJQQ/by3WOKCJteKcaUmOkVcWfAu4/Po/mmoxK0Xas3Y547sbHeD7c+ncJEo
- kRkjVfJdBfiZ9QFF9862S+qTj6AKnTiR4YKi0ZpC2+UkxrYTVoD4QkJXk4AtfrHBdhJX
- AtVKgz8atADpKm9R3Cri8MLekcEJQR+UZ+RZ+lI6ltcfC2fxmrp2p6yBLSJv1kt/i/8O
- OlYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786897953; x=1787502753;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jMFvOe0vkNMMUB827U3MP9hJbYJr+1uRJkuSiYxxd3o=;
- b=qI4X4LXk49shs8/Ws/CCdpkjGPoAOQJxhJg4QyCkc2bNxc+vGvnHQyAKguFceNaOFl
- 47DMrXwwU2QagtZWjf+aTVIxhflvZDBaWb4G0GwBcTbV7q3stSpEp5aOazF1p0JuS3Pf
- df0qoLwvteC+wWkoZYWVTjNQBP5O2paA5OKaIcRtgsFs7Wiz3fIjw3cXF7mHqQjQ1Kco
- L9O5eYzVfNKLm8DxLIMo8zkN5JMYz7tqVXfdBQOgjzItPNcSvyRGZYz2lVYediEe6oDz
- dDirXvtStkYJ7XkR94hXBXuJWxz3YaTXjRlayvUmqL1kWGrlbaM//1R6xU0gV93zuk6g
- lPoQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+Robi6aLfSKL2NsuxFSBdd1Fe5OFgI5J5Oo4J8KSNGsQX2NdnpiSvSlyeGvn/ag5EnSu+AZPUoHeTVOB@nongnu.org
-X-Gm-Message-State: AOJu0YztBTs+/0r4w8Y47broCHVYFhsZSwJTXeeTRtqgtAueAcaEFMjS
- Sogg/SboODjLZtXzK0tuaDNvZVdFU1muKkSTYWiE3O5obQrpQH/83Mvqa/G7OhCUrr8=
-X-Gm-Gg: AR+sD11YmbPClgBYExzEhfYauC6rbvYuxsGFmJtt8CEmJCdidWAhhC6jxGKs9XqJUIe
- S5Ip0qTF0bwTagqlDticKHifu79ohYu4wCRrohwxJFA8VrIjMwkBAx6GE/ZV2JMr66re5Qy2gYL
- IxjwJJBQ0ssXtpqilfh7SoudO3MXin45DhcEHp67WjdY5KK2JwczzNXMM+ByPJ0eScYuf+t47H2
- t1qd/dKToIrL107d2sxe1LZW1uvkksotnkYEK8uWYbZD/XV28LB8CDm7oLEd7nNEKKlknO0d9x8
- vsH1j4ngZ+SH3gM0X3o8p2PN+r6seNB46+Djn/ww4djpVZOVqEpUa2vL1Rn7rYNkfgx8wRlF9tl
- bnMstpsWeEFZqzg/dAPFLl8HRXzsAuDWZbNurb/ugSLCidmKnaK0pvNBGFDu2UnnQnYkyz6ac29
- BOOhTNF1VPCqMa5lxERGnDtbdMKLg8TSajf+kS1TJNOgsIk0UlFwgOAwm+yT1BXcZvJrw8INXr9
- 065cGrz3dDYKuicwXES2axzEMfOp+wPAfilB7WZvyWFkzQ=
-X-Received: by 2002:a17:90b:3c02:b0:380:f389:447b with SMTP id
- 98e67ed59e1d1-3933b8938f9mr21172274a91.11.1786897952611; 
- Sun, 16 Aug 2026 09:32:32 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39531e8418bsm1952661a91.7.2026.08.16.09.32.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Aug 2026 09:32:32 -0700 (PDT)
-Date: Mon, 17 Aug 2026 00:32:28 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Molly Chen <xiaoou@iscas.ac.cn>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 03/18] target/riscv: Add packed SIMD arithmetic
- instructions
-Message-ID: <aoHkpCy_H-vhfcFY@sifive.com>
-References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
- <3935baa46fdc44f7b68e2b740c7bedf8b7c0b974.1784280142.git.xiaoou@iscas.ac.cn>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wvdpW-0004Kv-VY
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 12:35:26 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wvdpV-0006TJ-1u
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 12:35:26 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 51CFB3F5EB
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 16:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1786898123;
+ bh=Tz3Sd3sdn/Xk7I6sdwlOPg93N3PZX25BYMTc2aJHnoQ=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=LEAkNrteFneu49hdbLEUfinS4QvBIrfqFnqFMbulrCbpjH1oDywBZfxgokhD/UwdS
+ dS7wOHWwoFoeflowV3xppfKMozhOfnUtXtloGVngobU3q6rM6KpiP9TAo4G0zhQFfD
+ I50uv4ORW7wfWuhMvjPtLMt2Y3LtWgQIfDL5Po1FvRQEmVcdvGcqXBm25PQYkhyq9x
+ DgSPsIv9CET+zphCOM1wdQxNF9myG30MTwSfFwKkrKU/HJF9zB3ipHwt1wybGjEWqC
+ hLe7Zz6vxfBLc+uaZBN/p6nQ0FiSEXCigBMSMg/rXlwBmRtkrhNbsEX+x+fO7s3AUm
+ f/CDj06fan4Kg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 2F5D77F313
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 16:35:23 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3935baa46fdc44f7b68e2b740c7bedf8b7c0b974.1784280142.git.xiaoou@iscas.ac.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 16 Aug 2026 16:29:46 -0000
+From: Ken Sharp <2163604@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Unknown; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux-hwe-6.11;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug-Tags: amd64 apport-bug noble
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: kennybobs
+X-Launchpad-Bug-Reporter: Ken Sharp (kennybobs)
+X-Launchpad-Bug-Modifier: Ken Sharp (kennybobs)
+References: <178689637290.2447309.1476538072834918294.malonedeb@juju-98d295-prod-launchpad-55>
+Message-Id: <178689778631.752917.10578007844737676850.malone@juju-98d295-prod-launchpad-61>
+Subject: [Bug 2163604] Re: Wine's ntdll:exception test causes GPF in KVM
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="1f3f5e18eeb078b421219d9c98ba0dd1171ead1a";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 82eaa20c3e68f4e46d2dbbf6299e84060359d2cb
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -105,88 +89,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2163604 <2163604@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-07-17 10:06, Molly Chen wrote:
-> Signed-off-by: Molly Chen <xiaoou@iscas.ac.cn>
-> ---
->  target/riscv/helper.h                       |  41 ++
->  target/riscv/insn32.decode                  |  63 +++
->  target/riscv/tcg/insn_trans/trans_rvp.c.inc | 547 ++++++++++++++++++++
->  target/riscv/tcg/psimd_helper.c             | 114 ++++
->  target/riscv/tcg/translate.c                |   4 +
->  5 files changed, 769 insertions(+)
->  create mode 100644 target/riscv/tcg/insn_trans/trans_rvp.c.inc
-...
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-> new file mode 100644
-> index 00000000000..056ccfb486e
-> --- /dev/null
-> +++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-...
-> +#if defined(TARGET_RISCV32)
-> +#define GEN_SIMD_TRANS_REG_PAIR_LANE_SCALAR_OP(INSN, HELPER, VXSAT)     \
-> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
-> +{                                                              \
-> +    REQUIRE_32BIT(ctx);                                        \
-> +    REQUIRE_RVP(ctx);                                          \
-> +    if (VXSAT && !prepare_rvp_vxsat(ctx)) {                    \
-> +        return false;                                          \
-> +    }                                                          \
-> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);        \
-> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
-> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
-> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
-> +    TCGv src2   = get_gpr(ctx, a->rs2, EXT_NONE);              \
-> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
-> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2);        \
-> +    gen_set_gpr(ctx, (a->rd) * 2, dest_0);                     \
-> +    gen_set_gpr(ctx, (a->rd) * 2 + 1, dest_1);                 \
-> +    return true;                                              \
-> +}
+Workaround:
 
-There is a read-after-write hazard on src2 when the destination pair
-overlaps rs2.
+$ echo 1 | sudo tee /sys/module/kvm/parameters/ignore_msrs
 
-get_gpr(*, EXT_NONE) returns cpu_gpr[n] itself (EXT_NONE takes no
-snapshot). And dest_gpr(ctx, rd) also returns cpu_gpr[rd] itself.
-So if rd*2 == a->rs2 (or rd*2 + 1 == a->rs2), dest_0/dest_1 and src2
-are the same TCG global, and the first gen_helper call op writes it
-before the second call op reads it as its source.
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2163604
 
-I suggest that we could fix it by snapshot rs2:
+Title:
+  Wine's ntdll:exception test causes GPF in KVM
 
-       TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);              \
-  -    TCGv src2   = get_gpr(ctx, a->rs2, EXT_NONE);              \
-  +    TCGv src2 = tcg_temp_new();                                \
-  +    tcg_gen_mov_tl(src2, get_gpr(ctx, a->rs2, EXT_NONE));      \
-       gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
+Status in QEMU:
+  Unknown
+Status in linux-hwe-6.11 package in Ubuntu:
+  New
+Status in qemu package in Ubuntu:
+  New
 
-> +#if defined(TARGET_RISCV32)
-> +#define GEN_SIMD_TRANS_PN_OP(NAME, SRC2, VXSAT)            \
-> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-> +{                                                           \
-> +    REQUIRE_32BIT(ctx);                                     \
-> +    REQUIRE_RVP(ctx);                                       \
-> +    if (VXSAT && !prepare_rvp_vxsat(ctx)) {                 \
-> +        return false;                                       \
-> +    }                                                       \
-> +    TCGv_i64 s1 = tcg_temp_new_i64();                       \
-> +    if (a->rs1 == 0) {                                      \
-> +        tcg_gen_mov_i64(s1, 0);                             \
+Bug description:
+  Wine's winetest.exe is used to test various components of Wine
+  (WineHQ.org), and can be run on a Windows VM. When it gets to the
+  ntdll:exception test, Qemu exits silently.
 
-I think that we should use tcg_gen_movi_i64 here.
+  [Aug16 16:36] kvm_intel: kvm [23609]: vcpu2, guest rIP: 0xfffff8058f0f954=
+2 Unhandled WRMSR(0x1d9) =3D 0x1
+  [  +0.000128] qemu-system-x86[23609]: segfault at 594ae11c0760 ip 0000594=
+ae11c0760 sp 00007fffe472fd08 error 15 likely on CPU 0 (core 0, socket 0)
+  [  +0.000014] Code: 00 00 20 3b 20 5a b0 7f 00 00 00 00 00 00 00 00 00 00=
+ 00 00 00 00 00 00 00 00 cb ce 55 01 00 00 00 00 97 00 00 00 00 00 00 00 <2=
+0> 00 0a 6c 69 62 73 63 41 00 00 00 00 00 00 00 30 52 60 e1 4a>
 
-rnax
+  Qemu should handle this gracefully, but then so should KVM.
+  I tested Qemu 11.1.0 and the exact same happens. Will report to Qemu.
 
-> +    } else {                                                \
-> +        get_pair_regs(ctx, s1, a->rs1 * 2);                 \
-> +    }                                                       \
-> +    TCGv src2 = SRC2;                                       \
-> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
-> +    gen_helper_##NAME(dest, tcg_env, s1, src2);             \
-> +    gen_set_gpr(ctx, a->rd, dest);                          \
-> +    return true;                                            \
-> +}
+  Kernel testing is difficult as I rely on old Nvidia drivers, and
+  they're broken in newer kernels with no chance of them being fixed.
+
+  Attaching the specific binary from today's daily build.
+
+  ProblemType: Bug
+  DistroRelease: Ubuntu 24.04
+  Package: linux-image-6.11.0-29-generic 6.11.0-29.29~24.04.1
+  ProcVersionSignature: Ubuntu 6.11.0-29.29~24.04.1-generic 6.11.11
+  Uname: Linux 6.11.0-29-generic x86_64
+  NonfreeKernelModules: nvidia_modeset nvidia
+  ApportVersion: 2.28.3-0ubuntu0.1
+  Architecture: amd64
+  AudioDevicesInUse:
+   USER        PID ACCESS COMMAND
+   /dev/snd/controlC0:  ken        3933 F.... wireplumber
+   /dev/snd/controlC1:  ken        3933 F.... wireplumber
+   /dev/snd/seq:        ken        3929 F.... pipewire
+  CasperMD5CheckResult: unknown
+  CurrentDesktop: MATE
+  Date: Sun Aug 16 16:57:54 2026
+  MachineType: LENOVO 0606AD5
+  ProcFB: 0 simpledrmdrmfb
+  ProcKernelCmdLine: BOOT_IMAGE=3D/vmlinuz-6.11.0-29-generic root=3DUUID=3D=
+83ed7b7f-ef51-49d7-a6be-a8efee1cdd32 ro rootflags=3Dsubvol=3D@ vt.handoff=
+=3D7 zswap.enabled=3D1 zswap.shrinker_enabled=3D1 zswap.max_pool_percent=3D=
+20 zswap.zpool=3Dzsmalloc zswap.compressor=3Dlz4 resume=3DUUID=3Dafb35822-b=
+a94-455b-839e-a91d503b9608 intel_iommu=3Don iommu=3Dpt video=3D1920x1080@60
+  PulseList: Error: command ['pacmd', 'list'] failed with exit code 1: No P=
+ulseAudio daemon running, or not running as session daemon.
+  RelatedPackageVersions:
+   linux-restricted-modules-6.11.0-29-generic N/A
+   linux-backports-modules-6.11.0-29-generic  N/A
+   linux-firmware                             20240318.git3b128b60-0ubuntu2=
+.29
+  RfKill:
+  =20
+  SourcePackage: linux-hwe-6.11
+  UpgradeStatus: Upgraded to noble on 2026-05-15 (93 days ago)
+  dmi.bios.date: 12/15/2016
+  dmi.bios.release: 0.60
+  dmi.bios.vendor: LENOVO
+  dmi.bios.version: A0KT60AUS
+  dmi.board.asset.tag: To be filled by O.E.M.
+  dmi.board.name: LENOVO
+  dmi.board.vendor: LENOVO
+  dmi.board.version: NONE
+  dmi.chassis.type: 7
+  dmi.chassis.vendor: LENOVO
+  dmi.chassis.version: NONE
+  dmi.modalias: dmi:bvnLENOVO:bvrA0KT60AUS:bd12/15/2016:br0.60:svnLENOVO:pn=
+0606AD5:pvrThinkStationS30:rvnLENOVO:rnLENOVO:rvrNONE:cvnLENOVO:ct7:cvrNONE=
+:skuLENOVO_BI_A0:
+  dmi.product.family: To be filled by O.E.M.
+  dmi.product.name: 0606AD5
+  dmi.product.sku: LENOVO_BI_A0
+  dmi.product.version: ThinkStation S30
+  dmi.sys.vendor: LENOVO
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2163604/+subscriptions
+
 
