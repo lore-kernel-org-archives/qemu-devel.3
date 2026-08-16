@@ -4,131 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B0EC5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FCEC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvcFB-0003iN-GB; Sun, 16 Aug 2026 10:53:49 -0400
+	id 1wvcFJ-00042g-2y; Sun, 16 Aug 2026 10:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcFA-0003g2-IU
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:48 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wvcFH-0003og-6B
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvcF8-0002Zz-QD
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:48 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wvcFF-0002b3-N2
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:53:54 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDkn9K2760476
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:45 GMT
+ 67GDlOdo2399229
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- s6bPi+RFkQqSYlbr8FSTtHoAF6m9DnNo7b6G/QSiEVU=; b=FWBBucZ2/WC5LXau
- B17b51d48mDzzE6DyjeFFOvez2hX3cLyco8ryBDuWdbnIfxcRarQ2hTqlwkkcRND
- vswjsJVL7Z2Wz0w02TAh9h5aAZ6S5owqnuAHSwZ2C7QVFVD2Yq3EL93SWWPgVy5V
- 2sy7uk+tSOtKRCzKleoimxfKf8W93DxfpUfN1xoQwr+1BGaelnHeCJS8MasqQ3KJ
- FzpgLbEW3QC8W4z+1re8A/5tFScKGjcyNRyfbM3MWmscrJN9TDzXbqAm87GqsS+i
- YuuvEXE8c4l6UIZ9SizfMCQBOOOwxX3dsu7moZ1ncmgMQJK4RohD09dfe86xuw45
- I2FwnA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gkhe5-1
+ OPwRUFKMsLE4Q9u2udZy/naPOPsDOQ/vP4GmRlNYAAg=; b=OfYkQFiXOILm7bZ4
+ P8uaVTiigT2yeBBr732xzN5LqjNJHLVE+KNhq+VT3l1ElttCrlZv8VGs5sUp4q5A
+ bGUFkwpnZ0f1Kh4BbEKcWR6DZX5U1VuFFJvgkXk0mZoTqQP/2eK7kKyJLBxRm5hd
+ /kztGp1J+Vl7EJkaeUyRMFTMKahV5SMlYzaf3eyD4nD8gwHec/L4lDmPbaxjzlzc
+ xGIK0vatefS6k66K6FqRl+Q3ju8xJPK5hdidEvpEp9FGjnpLYg6bv5gJSvgW2QHg
+ rToV0HlgjVsPLboy4BmAhEIkYuvLJkSTMI1poygBVf6FfSdcgKnQNCmjj81NBXoS
+ gwlt4w==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghq3p0p-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:45 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-526da7e3c9dso24415771cf.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:53:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:53:52 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51c1c7f135bso45140271cf.0
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786892024; x=1787496824; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786892032; x=1787496832; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=s6bPi+RFkQqSYlbr8FSTtHoAF6m9DnNo7b6G/QSiEVU=;
- b=gVewCSJO7UVU3SMTaCaN8hCS4DYl6CuUkLh7yLh1LVLAHWG9Oq4xULnOIziYOyZ+O4
- yeJFgkwOn0jNTu4WFvDBYIsBGCXWZBOMLcmLWmhPVCOhYHNSMuXCmrL+IZqAHXBpX+ir
- NaapPn2xlmu7LOtEa8kgJUKTUThqVgsrxoKDCuGnIjZaIOxZ/Yixs+xN18y3lhKEeB8p
- NcOR6hqg0PA18GBHLIIlVXOTvJXjJyfrJM3kRIe9z2YIXYaZQEepoal156GqSy6cCm09
- vw8aNTJrmPBvNUdTk6n1678lZY0UhvyUpKpBDlo7nwXqC7pHu7auITS8kEnXIjT02z2g
- 4JhA==
+ bh=OPwRUFKMsLE4Q9u2udZy/naPOPsDOQ/vP4GmRlNYAAg=;
+ b=Rd59lLQruDWXEQ5eulgzU4pup+0zG6xVIVz0edaKAbmqi8XetvdvlYOXFMSKZaW4If
+ MwsUlkdQua4cUq1z5EAtdx+wyX4alkKGGn1OECrJvX5sn7vIWmX8T5NJZwGy58LS3Xtv
+ g6kh9/pQoBTYkjZY4jexSYE/RD9c5i+NI1oqLQjjye4NtTSMp3U/N17wTuJHwVLFl+on
+ gPVjRXjO3eJE6b2IyNj2WKRaTk/iy5G5Bx/u6j0xatsUKphib8jAHeSpXy/hlRgDOzYq
+ f1xmc/lg5oSlprLG0NTUrl2VfTtDCh1CS2JycDmfS58UalmGkwBpvyHM19cegSHA5oc0
+ bYZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786892024; x=1787496824;
+ d=1e100.net; s=20251104; t=1786892032; x=1787496832;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=s6bPi+RFkQqSYlbr8FSTtHoAF6m9DnNo7b6G/QSiEVU=;
- b=brPUf/lDgfux+0g8dJ7HYSO5L2/jsyf3JKJbS8l2y9UbSKzwgemoc5a6Q653Vru43e
- D3NS16oegohkd1O8zWp6qqkrCbqEwvt1TaNy6IokJr6F8iCCumCp3Ihq/IGjOrVH9wBU
- +IxXPUTxjjRWaIHZMTVHeaq96OxP3jN8DFrrp6HIF2TjLBY38v+E29rHMqc0VXCJ2INP
- ij3SzmMx7dwJIm5LRfcMgMCh/2XYPuxPAVO8iXROFFZFfVaDpM0Rww68TZdwApQV1kw7
- zcI6kS3EUVAYAD81Xqpd6Qx/+bYE3v8tX/YbrsXPja5hvl5+SFKeI1AGkThwiOwEc2bD
- 4zNw==
-X-Gm-Message-State: AOJu0YzkWuVuB05LsEjCJiHginNi0KT8igiHLC/E2+3pP/GfENN+7lr4
- dHSjBJ9b6ZAeOyGcTkMrB1gWeNdWKMG9lQvo6nR/bxEyv8CcL/grK47cuoYdFAK3lIs4uGTZOC3
- QJRwBJC3AI5xmS1eq2K75SFoTBpfmkHbdHitl4gwTmqG1pOrWoOtd5ht5gDL3dpFKeg==
-X-Gm-Gg: AR+sD132LogqV2GZ++DKVK3wirKFPUMWIt8qunzl4sbJ/jsBRBfek+mScPdR/CWkwLR
- sShvNOaFF5pZb70gmBci2AwuacBXHMvw5mGaZjby/LItNFpEA1hkusp+M7+tW6r+uC/rZo4NWCT
- AXG/AB6IhpoCM79nXNz4go28Yb+I8KEXphlm2U1TmxV4oLZjTNI5TmRX6br7Me/RLoCX1ePj1yw
- Bvs8mTwuz4vVprhhhHgK6S4dL1uO3Pg7f2YPQ59Zk3jGAlgNuYAXnwJ1WHsDOnbUGjnxe9aKoU5
- P9dD63ZyQdRw6ohMYSRkq67FQd+uATjxn1mM+doIKMY5r15aueGOPvFu+wAimlYlPOylf3VCk/9
- YDY/LEzMHysNu0rOak2/FigPCZVF0L/1Uj9qTDEd6aQ==
-X-Received: by 2002:a05:622a:1308:b0:517:6508:e1f4 with SMTP id
- d75a77b69052e-52d8551f3famr189640341cf.42.1786892024283; 
- Sun, 16 Aug 2026 07:53:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:1308:b0:517:6508:e1f4 with SMTP id
- d75a77b69052e-52d8551f3famr189639951cf.42.1786892023672; 
- Sun, 16 Aug 2026 07:53:43 -0700 (PDT)
+ bh=OPwRUFKMsLE4Q9u2udZy/naPOPsDOQ/vP4GmRlNYAAg=;
+ b=Z+qYZqbbgEFFOK6m/6PObj+fZ9qBhwpRd8mw1RncMku7Ab1yO8aUbS7CeGUQ2Yi6OX
+ tFU2XJ2+nySKRyTLkgyS9qlesVE6ncnM21jMxX9eqwF3wMw0NuokBYooY+b3p8xZkajg
+ Tu2VuLuJYU41BfP4N+n1wpFwYyQybVVgMQ24KcKmE3zEvwEcXUp3eSUeRigH1YOocAWr
+ MCHsS8sRa32/8axTdVeZLbPdPGiC+ch8X3pI7sT/KoGT2r1OEPjciycEqC/5wm6J8Koi
+ yCLmGWrWw+eBRd2MUoTBfyug6B7qvv3vYp4bdHtKuxfVVkx1wwshfWhv053KQf78yxRS
+ J6Sw==
+X-Gm-Message-State: AOJu0Ywyd1oH5XVYXmpW+LqppK/5Pea6QM3X+KYiRGaYRSxgBHAF93Qf
+ pcDoLeKTeuhi9BJOFR2KJ+4ZcAoUmm/33bMemi3Hk1zAaRSngYbvZSbkBnpItmBSztYplYqA4jr
+ HXO2zQpLHgrTVMiKNSvdbvJ6CwEdkY5xU2llNQrXkiiWtH62T0xUv/Vu1O26K/RR36Q==
+X-Gm-Gg: AR+sD12VHGUd1Z6n4GHAMjFfErOtZfAGtFWU+LGMyseuGnyGEM4WyRk21y+5oBxFW6I
+ l7w0F+UVuHdgEWQLhEbWtVQn2a5WkeEGTsuV9d+gV0GrUcPits8p0TfHzDAeH1JF66FKCXPwtRv
+ RxZcUBmgCNbfbkHtTFU2QhNhgD2LBtvTCI8+gLprUEitTr28IvBBsWY77IM2LyANxasfKojWzac
+ fEAx8/xc8D76MLPqvKERTcGl3EazJuoPv2Y5UY+gsGiPHxG5F2PC51iDUwaXqc2TXtTV1FgIMxT
+ McdYYcEogRHWf+gad+G00JByKOJI2cqPzYYhR9zwztWZN5BbCTJdBuGSrOpFflF3yUonYvv97yj
+ x6O70UN922+AGrH+fedMyJwNp8gVog1Hei0nClR91Pw==
+X-Received: by 2002:a05:622a:588e:b0:52d:2ddd:27c with SMTP id
+ d75a77b69052e-52d854b4aeemr213767141cf.31.1786892032209; 
+ Sun, 16 Aug 2026 07:53:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:588e:b0:52d:2ddd:27c with SMTP id
+ d75a77b69052e-52d854b4aeemr213766791cf.31.1786892031775; 
+ Sun, 16 Aug 2026 07:53:51 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4815f2b27bfsm26061411f8f.23.2026.08.16.07.53.42
+ 5b1f17b1804b1-499960fef95sm63064565e9.1.2026.08.16.07.53.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:53:43 -0700 (PDT)
+ Sun, 16 Aug 2026 07:53:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 55/56] hw/elf_ops: defend against weird elf headers
-Date: Sun, 16 Aug 2026 16:45:54 +0200
-Message-ID: <20260816144556.69009-56-philmd@oss.qualcomm.com>
+Subject: [PULL 56/56] hw/core/machine: Move EHCI migration compat properties
+ to 11.1
+Date: Sun, 16 Aug 2026 16:45:55 +0200
+Message-ID: <20260816144556.69009-57-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: B7l9bupwziQz6KQ-qx4iN1C8CmAJzVVe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX7BX3j7X8EpyZ
- Wg+LE2NPWIo/C0OUdNfqQaCV9huqkIK3fRIJneo+lKt1B9RUg1GrvaCx0Zzx+3ljLyXAPbGDa3n
- HUEChQoLNoM6pjbh77ztPXmsx751itI=
-X-Proofpoint-GUID: B7l9bupwziQz6KQ-qx4iN1C8CmAJzVVe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX5Z0orF+g0KdO
- w/Mt2HBp0BMJzn/joCbExCznoD7311SBVUab+STq1Dj9Sf9SOtLEUP4irOxuvYFSMEBdHmiQoM0
- 8auIk6y3SS5n2pAc5Db+s5pmdFHKtLPvWA7GciUA8v0avotnuAGTQECTkUj8UmKPBBNPsBejEup
- 2UnR9FTDvU+/i/KuRUdxTVJMbe7siqyO7TpkSABXJr09otnBgSkDicX1pD+1wGYXbCsO9lJMo7t
- ozUEYPIihgI6JjPhmQvaXMOYGlPYobGCG9G+q1ECRM5VlfaNtFLPyFrEMCmiVZMb9WBkqyyLK7o
- 9Y1FqczXwwJAfV0dgzzj+1C4q7xhr7SKSH5c8YjbzGakcyLi/2+t0ySCbYoGzg2eC/Q3WklAR3B
- 1Ja2PvVElu0qoBGeqhUanYLFFDqe8bBVGCtnSjUPCf6D9oX/kKxUALhBsdXsJuJDa73knvoA0YO
- LTTqLN/GHxHUqOjskFg==
-X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a81cef9 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX9cDri2zsfYif
+ WFiWUHS7I9mw5kT0ni86W0wSTuS6Hypzg/7p0FlRKkqM/lBvjNvfc6eNoVxMCpqwvz5zCUenU3f
+ HROn2DMGGt6ki4buL8aLIKOdK6ZFrMuHrgLhIbKGYxnMG0IhSqltbh5E/74BHKEZufSpq8Ex9OU
+ K2ahQtsFkscXFsbV0UHJoKa65HvOYuwpqnzB77OtwmL7zCFRGe7uYQ37FhNL5SC/dhOb1ibpUNP
+ 7Tw41ezcf1VERCksKNXyl19kHm/NzNlEhG9VUN2MLNZCTvcmOByXh0Hotjjp/uTlqPiS96eJwtw
+ 6XnEj2/YZs91VvuTaXFt0jAbRdDFcCYdTHk8RZF3Dw5amVII/oeiXMb7CkUYlj08Hw+yFFGweTt
+ J7Io/dOo0oj93UEcnSP2cP7CkU7sijhSKaljzWRgkTex5ymm/2EMCAbSuyPJ1AZAs52fSLN4quJ
+ mT3VfCFcG1YOag7YeVw==
+X-Proofpoint-ORIG-GUID: TsEyXBY5xxyFJI2wuuXMv6A9wgj04zi7
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOSBTYWx0ZWRfX+MwYX6Tm18dk
+ CxxebU8tYibEk9RusDKV83+cnx6CmpTNAtCSUZKq0P2BK1bOxx2XyT7fF0ZTzvIBUpJxy9X2BqH
+ AFt8uHt1q6gX4wOzKJJFZb0s/MvNGkg=
+X-Proofpoint-GUID: TsEyXBY5xxyFJI2wuuXMv6A9wgj04zi7
+X-Authority-Analysis: v=2.4 cv=dvHrzVg4 c=1 sm=1 tr=0 ts=6a81cf00 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8
- a=OFwHzJbXOuJeDGjhX8AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=V2NxCb60AAAA:8 a=EUspDBNiAAAA:8 a=-BVnA0jUmpH98zYowaUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=3L6qF29SlnrayQqPM2jZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160119
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -151,60 +151,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-According to the ELF spec:
+The x-migrate-fetch-addr-64bit compatibility properties for
+sysbus-ehci-usb and pci-ehci-usb were reviewed before the QEMU 11.1
+release and were therefore initially added to hw_compat_11_0.
 
-  PT_LOAD
+However, the EHCI migration change was merged after the QEMU 11.1
+release. As a result, these compatibility properties belong in
+hw_compat_11_1 rather than hw_compat_11_0.
 
-  The array element specifies a loadable segment, described by
-  p_filesz and p_memsz. The bytes from the file are mapped to the
-  beginning of the memory segment. If the segment's memory
-  size (p_memsz) is larger than the file size (p_filesz), the
-  ``extra'' bytes are defined to hold the value 0 and to follow the
-  segment's initialized area. The file size may not be larger than the
-  memory size. Loadable segment entries in the program header table
-  appear in ascending order, sorted on the p_vaddr member.
+Move both properties to hw_compat_11_1 so that migration compatibility
+is associated with the correct machine version.
 
-which implies while both p_filesz and p_memsz can be zero we should
-never see a case where p_filesz is greater than the in memory size.
-Indeed it has been reported such a hand crafted ELF can blow up, for
-example during rom_reset():
-
-  address_space_set(rom->as, rom->addr + rom->datasize, 0,
-                    rom->romsize - rom->datasize,
-                    MEMTXATTRS_UNSPECIFIED);
-
-which could trigger and underflow leaving QEMU slowly filling a very
-large buffer.
-
-Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 38ed803aebb2 ("usb/hcd-ehci: Change descriptor addresses to 64-bit")
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260812081405.3811787-1-alex.bennee@linaro.org>
+Message-ID: <20260814032559.3381363-1-jamin_lin@aspeedtech.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/hw/elf_ops.h.inc | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/core/machine.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-index 9c35d1b9da6..044e72de2a2 100644
---- a/include/hw/elf_ops.h.inc
-+++ b/include/hw/elf_ops.h.inc
-@@ -427,6 +427,11 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 4e551194465..e617f7804d4 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -40,7 +40,10 @@
+ #include "qemu/audio.h"
+ #include "hw/arm/smmuv3.h"
  
-+            if (file_size > mem_size) {
-+                ret = ELF_LOAD_TOO_BIG;
-+                goto fail;
-+            }
-+
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
+-GlobalProperty hw_compat_11_1[] = {};
++GlobalProperty hw_compat_11_1[] = {
++    { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
++    { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
++};
+ const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
+ 
+ GlobalProperty hw_compat_11_0[] = {
+@@ -54,8 +57,6 @@ GlobalProperty hw_compat_11_0[] = {
+     { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+     { TYPE_ARM_SMMUV3, "oas", "44" },
+     { "migration", "switchover-ack-legacy", "on" },
+-    { "sysbus-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+-    { "pci-ehci-usb", "x-migrate-fetch-addr-64bit", "off" },
+ };
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+ 
 -- 
 2.53.0
 
