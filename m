@@ -4,129 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85834C5B572
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B46C5B572
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Aug 2026 14:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvc7y-0000NC-9G; Sun, 16 Aug 2026 10:46:22 -0400
+	id 1wvc8A-0000be-66; Sun, 16 Aug 2026 10:46:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc7n-0000BC-3k
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:12 -0400
+ id 1wvc89-0000ax-BF
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:33 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvc7k-0000bP-Hy
- for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:09 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wvc87-0000dh-SA
+ for qemu-devel@nongnu.org; Sun, 16 Aug 2026 10:46:33 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GDlKgO3215381
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:07 GMT
+ 67GDknIH3631363
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=; b=R7KyYi/66giORQFv
- BSVKts61J9D/3I2nJDoyELtIxdsrIlqkwry0L3m2gtDOeDGmn1OXox+5f8zScx+3
- rb6Xub/q49Vu57diNLdIcRUfMt28EG+Uz/Hb5xmSm0vawbgz4j4rGQzqbxPasJZ4
- BhrPWI9J7FJWCQ34IJv/5yGqroUvAUwZnfTWWurtf1bDyABXn/n+hUwe80RQfuUW
- vdLLg4aR7l+dKBjZKs4D5o9wEmHdxz6dWDjEIUX5wfpxE09zanNp3dzzSuWDh6G2
- KSA8SmmAn4Uf32219IFTWehuB94L7MT9A6VpJHkH9ezYFZJSHcJXNjA1Qja2ORVG
- cd7cBA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfbn3q-1
+ PyVVkPq+vWQ95qLp+r7QgINem/ADI6tAGQamAcld+mg=; b=keSBYE+45ot9tHzg
+ 93AvPgZhoWk2OiB2nMiI19hffISLLMpOxXXtQPc407LjDgLqK56nAZ/tm+NH0tHd
+ r2fRCk68m4ma+BXrc+tqgZffquEwTalf56dQWs74IouwiLwbxXhewRZsro+yRX05
+ fjp8ixt8/YxkLZiOdq+yNkLLW3UIPG+bUiT/bAKWmB5ndGyhpL96StxRZmZ9vQro
+ NZxejAzpS2B7kt35tSPVnuOBW1I3IEn2nj/Dp0DhtAQkMgl0METpAOBlAu1ygR+1
+ jYi39AaJmH5q4cBUfrx55DkELDOYTz9bvm0feIHEyq/8xyHmSFGVgT2koOLEBhik
+ DUCECg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghekpxq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:07 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-936d067836eso255733785a.0
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:46:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 14:46:30 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e5e38fbc5so270100385a.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 07:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786891567; x=1787496367; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786891590; x=1787496390; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=;
- b=MlCT/ocZQ87b7bDmEcf1E5zXDjP2j6ZHGOowZTRB1vLvHNKXHislX3Jy3pFQEAv1b/
- sjyTFcN07zvvHDwnRYduddbdOHs/f7ffo7gPjJNwl5US+41EMi22VOJ2zxDliY1MbhWr
- oVJwye9HPanrktF9ZHUUJeoeQHq8gRMbyQEMS3Suo2Ts9kKQbwqjHYDTBe0P3lj52S3d
- LxTFDMK/+0FSi5bYGGYAscBNqf4LQv8g1LK7+IOZmKCkJ0XiBP7uPJaWHfDVAmIqH1kX
- XgFSP7Xo2cJbpTAQxGF/I5FSflUit9BYEZfij3q/XMW7MoZQ1XUuHaOoRhg3PP3uq8wf
- +hkg==
+ bh=PyVVkPq+vWQ95qLp+r7QgINem/ADI6tAGQamAcld+mg=;
+ b=I6K5x8g9qVtlRGyWgBikzuAB+oA6NZPz5IwATogrEuindwz/w5SU2LUzkd5/DQA0Pw
+ 5tfRDe8P/UdjE+IgoroKS8YNvk7fHTQei4QaFutrnJm4+3MWehd+wJ4n7i3qwFQIPemK
+ 20HmAVN/EbwR6sOhdI3LpR8s2TRscECo7Btnfd6zOxvlfwW3GhCiSM34XnNKyN3WD0+5
+ dQQ3vB8iTp3SbnoYzYIYWMAqInlkoY3XVVm0H20SGVaQD/K9MSCnqFdRu8NbkRD/qutK
+ SlgpKrsSjE3KBGK4Ur4JoI+4Qbl3zLF4ASxZqmcloVveabheQgS3h5qmSYuuZ0O3pLKv
+ yNWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786891567; x=1787496367;
+ d=1e100.net; s=20251104; t=1786891590; x=1787496390;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=g4REnGqu8ycIztFn7FSAwvmzN93LAzmsn5+R5Xus7/M=;
- b=YhDtmIJ9ntqEMcHPSkyk20HyerWLK8R0mZ/8uPtTTP+bfNwKMBL2ovwBi7cgj7tXqA
- mFaaVmouI+BEuv93SGLJqc/MG3L6hMZsPEcZZJpZvKWPtIYjfXmddmdErSd0m44rK9Bt
- PMg6re6gA0GQRmPm8JZB2+9k0sC3zw3qYv0MGrcKABOIui2X5Nw+bCIdWLfUnzwJvyWk
- usQFrSf9CFvpWWKHtQvFfp0UgMtX6eNpv2J/D4xcJyQ9oaqou+EibUhqsI6QKRPPCg67
- 7P0Uw9vC8S63Ja8SliH4h2+KW0vCNYnD1Ele/zd7iUuYBvMBuw1L2B16hfLqaNN/hvEB
- No0w==
-X-Gm-Message-State: AOJu0Yynz51vh0q3z21k3DByMVmjjV3zHYrFk5JMSxM6ORqg+ivg76Oc
- Ocwo6MXg6N8m4OXr6eHp6spY5ZwHVBw5Y5bSH7J9RjY03fZg+mXHZ081n/a7vVRP7VkAjEDgFGF
- ou6z/YdN9oDS3lxFgtFpPZi828ni3rO/Xd+QkbZUEy2XDCg+wtQZar7/u8Jl+3T3+Bg==
-X-Gm-Gg: AR+sD10sZRFlh3AUW3bYs2LW/5fAOGcaa+UKdi+PlkO4CQIM/rBwieZRiG+byeEuhoP
- neMd0NaaR56NZpbISax3lGWdATN2WpS/+Jvw4TkYZwgwx9Z4R5dhLmv/6OWu5t7sPtBWUW/PR0w
- 32MXIVI8UGJEVGlG8eSoKgEMfHmMnEnpOABnyTDL1+9EcplHERLJXG23YLMp7bnyhLiYbsVXK8Z
- sqgOmUJTsUBySLlV31bO+oiPkbUvIlaqVxi8fIYHEm8g6reU4nC5fBuluK1eBfs/Hg4h3oDvJdq
- DPynB6SfA6753+Vjp2eztXaDcIcbdUVgQPx9qn0blNbuC+ondgeh+Ngdlex97sryW2dDWF8J9q6
- WDSlWhufpbsTMzn7eBKjvArKUz2J5mOXBVRJURrFoLw==
-X-Received: by 2002:a05:620a:8812:b0:936:d2a2:5fe with SMTP id
- af79cd13be357-936d2a24ffemr2037459985a.6.1786891566975; 
- Sun, 16 Aug 2026 07:46:06 -0700 (PDT)
-X-Received: by 2002:a05:620a:8812:b0:936:d2a2:5fe with SMTP id
- af79cd13be357-936d2a24ffemr2037455685a.6.1786891566437; 
- Sun, 16 Aug 2026 07:46:06 -0700 (PDT)
+ bh=PyVVkPq+vWQ95qLp+r7QgINem/ADI6tAGQamAcld+mg=;
+ b=N83Mly5oDcmJigLizAvy2uDbbcsVJCnJaX6xu0N2W+hPWDNJPH4BIuHGEhIBT+G/e9
+ z1egumj0CPUIcXSjp4I+9nXd2NiMzIpXfRdDgXyM8O0R433vVa0zUW3j9AH3TS6kbjgL
+ DLLH+9rN+uwOiYRdAwCWst671/7pUEP8okV6OxFQjbXhz/zxWrjV1l/+u3A1t5rPhc8D
+ TD+qAw1mzABwRHTIr3fF0G/opvGW/P7SwpOkLedjKdpsKKzJPzIG+rwXiArYyInYQa7D
+ q+HsU5007wcQSwNLf2Fs6HTJKhFf5lUr0a16yWM9b3/jGe8uEl1WrUstjYUqWVsJanNB
+ iX/A==
+X-Gm-Message-State: AOJu0YzJ/Zbcwdk7fs+B++iSNZU+xCGL/DLm9UsEZ/9SH9L4WPKIOsXK
+ pxde/Ucnc1CqOuKtwXHmatmkwl2GFQeWFz88qI73KMrTebbysvcdpRyHLPb8nb41ca3ZKvnYSF8
+ 1iI823ksMwmi/SyaLSQwtaD/S/H9gbXQ8k5jqwtqRFkcB6yERaBMBaWfUxKmaLyV5uw==
+X-Gm-Gg: AR+sD13/SRRQvGXcjsH3voQ6I/ocDbE3siEd3n/X49KN1jkBDHX1T1Nep72AoyzH++Q
+ 4aAsiuj0vU/0vLQRUNkBTW20V7nVIts7cym55klXlG/Un6YOVd0FGlBZOr8NgOHATJ+3cCiMMFa
+ 206zupVLRWTMcANFH7JsNfxhLh76rvZ29IHCacUWPJuGRJk88mOElw+7ykSTUMfDcwIR1Knz//m
+ 2z1+PM680YMdG81EVloDSY7kTCRHYQwct5b7GcjK+WVt2ZjpXS/4UoBdZ2Hgt5nIEDuZdPUQRrC
+ qoq52ZB7UtjVdxlwQOv8lLx0B73W8Vsazv7nPh8xb7slOokNtnLz5U0x7seAgeBdOD79JLwQ2Xy
+ QVueDNh1+qoNsqBkh5MAzkieQdkrW2atKCT9V0cxofA==
+X-Received: by 2002:a05:620a:6f88:20b0:936:a407:98bb with SMTP id
+ af79cd13be357-936d2278950mr1451679685a.9.1786891590284; 
+ Sun, 16 Aug 2026 07:46:30 -0700 (PDT)
+X-Received: by 2002:a05:620a:6f88:20b0:936:a407:98bb with SMTP id
+ af79cd13be357-936d2278950mr1451676385a.9.1786891589673; 
+ Sun, 16 Aug 2026 07:46:29 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499960fef95sm62372555e9.1.2026.08.16.07.46.05
+ 5b1f17b1804b1-499877d5548sm172078745e9.1.2026.08.16.07.46.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 16 Aug 2026 07:46:05 -0700 (PDT)
+ Sun, 16 Aug 2026 07:46:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/56] hw/qdev: Remove DEFINE_PROP_DMAADDR() and 'hw/qdev-dma.h'
-Date: Sun, 16 Aug 2026 16:45:00 +0200
-Message-ID: <20260816144556.69009-2-philmd@oss.qualcomm.com>
+Subject: [PULL 04/56] hw/hyperv/balloon: Use qdev_is_realized()
+Date: Sun, 16 Aug 2026 16:45:03 +0200
+Message-ID: <20260816144556.69009-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 References: <20260816144556.69009-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfX/DKFBFnBSJPT
- BbGpWLp58EvqtEITNklLwH34OgnGEDwr96p3TD/faNaYwwYajwdIewVbt5nEAKW97zokqBwlX/h
- dmOjgHJbGZlTnXUjha1mPlYqRPlaw+k=
-X-Proofpoint-ORIG-GUID: Fd9QdIiNFeh4YOvqT4L9ZNidi92P9U-4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExNyBTYWx0ZWRfXz0Tu7rG5Fd0C
- YH9XtCHe6UDDpwJevgQe1SkXaXV75UIDxMEqM2FYqgmzBZD9LFJC/+032HwqcyIeNfhhuyw1DbH
- GNJgXX1vKpUqqQzKbFc8z7qnpd8RMSiKMwwtdXyF6jc52e7anXpvEtmeUm8gc7VRdatTT/5xQGm
- SnpbTXvvXVEslh278PnKbKXfkpwt6wuQYOM5Gt5iopgCMhPK6uQSX8bqmO671eToo1Q2XJXazZ2
- h9uCJiycxttgh3WSO0sf6TbW6HraS7B6vwzMWPsnSHqjE+OKSWTnkPqSsRPKT/0zgWJm2BTVooi
- Q7Z9Q0WBy5C0yJNutIpfGICK5nwRuKwKALbK9YuNtbGzWa7H6igtZu0l4cxod59Ru37OF5Xazmf
- Hr0X55Jh84T6t5wXj8b1q+l2SFXXlKgaN53HQuELfEtb/I4eFtMGuhNPUaAlnrbMmImZP3HcR97
- y/W7caGWsBZjKB0HQrg==
-X-Proofpoint-GUID: Fd9QdIiNFeh4YOvqT4L9ZNidi92P9U-4
-X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=6a81cd2f cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=EKc2FVZC c=1 sm=1 tr=0 ts=6a81cd46 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=ofTg0gqHf28Bx6alXq0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=uRxLgUfnyXHAhkBXUOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX8mrfyjssQk9i
+ 5tJcsdHe7G2pd21DY7NKaeLbk0eWNshjYUBqNeQxRyeAq4xKFPGRgapAUW18gnjr+i2jjWcOx7b
+ FiRX3SdYnPOCBPQ1MdpYhlodLKqEdkc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE2MDExOCBTYWx0ZWRfX5OnFhoLG+aM7
+ FwKeEMHKUyXBOu2+ybFr4OONNYCkPUACMqcyAkzORmPQya0JlgpyG7f4JQczTuSq1ecrOgO+GIa
+ z7Zmz2nj/TauvE0bSIjruPM9apU24NAGMNVX3NLwo2/d2E1+fn6/GN5gbugfB6Q1thkvT0Uec6X
+ iv8v8kTytOeBxwphPihsbuNEBAxtlWO+8meojO7uQSAtrNWToUsFXjB1lKIwNwj4q9KpA2TiBnc
+ BArNBJCv7R4V/w3wSBJYpQQ5B4mti/07Ds9FbP1P0XAwXQbfGkbWyZeJYhdBZzm1+wqmxZh9pXN
+ UmnorYFeILhwcGHO+yKNwe5Y9tXVxQjgYbDLbeCUa9PvePbdXSnjEH0/DRwELHiWMJqYpo5HLdQ
+ TQJJyhCydQwU0VPU9qY8tmlGxmOYTxZOxjdRG+ln+zoeVSfxhqdF6A6N32sTF38lamuDWYgAo6U
+ XOZAMgToKv+3NcX8/Dw==
+X-Proofpoint-GUID: wJWaFOjwTrFTVCtFb5Pj3901i6oqBNwr
+X-Proofpoint-ORIG-GUID: wJWaFOjwTrFTVCtFb5Pj3901i6oqBNwr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
- suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
+ phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160117
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608160118
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -151,91 +150,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-DEFINE_PROP_DMAADDR() is only used once. Since it doesn't
-add much value, simply remove it, along with the header
-defining it.
+DeviceState fields should be accessed through qdev helpers rather than
+directly. Use qdev_is_realized() instead of reading
+DeviceState::realized directly.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20230203145536.17585-14-philmd@linaro.org>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260721-qdev-v3-3-d2e226fa002e@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/hw/core/qdev-dma.h | 16 ----------------
- hw/usb/hcd-ohci-pci.c      |  1 -
- hw/usb/hcd-ohci-sysbus.c   |  3 +--
- hw/usb/hcd-ohci.c          |  1 -
- 4 files changed, 1 insertion(+), 20 deletions(-)
- delete mode 100644 include/hw/core/qdev-dma.h
+ hw/hyperv/hv-balloon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/core/qdev-dma.h b/include/hw/core/qdev-dma.h
-deleted file mode 100644
-index b00391aa0c3..00000000000
---- a/include/hw/core/qdev-dma.h
-+++ /dev/null
-@@ -1,16 +0,0 @@
--/*
-- * Support for dma_addr_t typed properties
-- *
-- * Copyright (C) 2012 David Gibson, IBM Corporation.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef HW_QDEV_DMA_H
--#define HW_QDEV_DMA_H
--
--#define DEFINE_PROP_DMAADDR(_n, _s, _f, _d)                               \
--    DEFINE_PROP_UINT64(_n, _s, _f, _d)
--
--#endif
-diff --git a/hw/usb/hcd-ohci-pci.c b/hw/usb/hcd-ohci-pci.c
-index 18b58f5fcbc..70c9e9ac4f5 100644
---- a/hw/usb/hcd-ohci-pci.c
-+++ b/hw/usb/hcd-ohci-pci.c
-@@ -25,7 +25,6 @@
- #include "migration/vmstate.h"
- #include "hw/pci/pci_device.h"
- #include "hw/core/sysbus.h"
--#include "hw/core/qdev-dma.h"
- #include "hw/core/qdev-properties.h"
- #include "trace.h"
- #include "hcd-ohci.h"
-diff --git a/hw/usb/hcd-ohci-sysbus.c b/hw/usb/hcd-ohci-sysbus.c
-index 1a2cf29bed8..4f51eebccb2 100644
---- a/hw/usb/hcd-ohci-sysbus.c
-+++ b/hw/usb/hcd-ohci-sysbus.c
-@@ -26,7 +26,6 @@
- #include "hw/usb/usb.h"
- #include "migration/vmstate.h"
- #include "hw/core/sysbus.h"
--#include "hw/core/qdev-dma.h"
- #include "hw/core/qdev-properties.h"
- #include "trace.h"
- #include "hcd-ohci.h"
-@@ -61,7 +60,7 @@ static const Property ohci_sysbus_properties[] = {
-     DEFINE_PROP_STRING("masterbus", OHCISysBusState, masterbus),
-     DEFINE_PROP_UINT32("num-ports", OHCISysBusState, num_ports, 3),
-     DEFINE_PROP_UINT32("firstport", OHCISysBusState, firstport, 0),
--    DEFINE_PROP_DMAADDR("dma-offset", OHCISysBusState, dma_offset, 0),
-+    DEFINE_PROP_UINT64("dma-offset", OHCISysBusState, dma_offset, 0),
- };
+diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
+index 9dd759f11e8..b8664a246b4 100644
+--- a/hw/hyperv/hv-balloon.c
++++ b/hw/hyperv/hv-balloon.c
+@@ -197,7 +197,7 @@ static int build_dimm_list(Object *obj, void *opaque)
  
- static void ohci_sysbus_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index c4a9741bd42..23990115abe 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -34,7 +34,6 @@
- #include "hw/usb/usb.h"
- #include "migration/vmstate.h"
- #include "hw/core/sysbus.h"
--#include "hw/core/qdev-dma.h"
- #include "hw/core/qdev-properties.h"
- #include "trace.h"
- #include "hcd-ohci.h"
+     if (object_dynamic_cast(obj, TYPE_PC_DIMM)) {
+         DeviceState *dev = DEVICE(obj);
+-        if (dev->realized) { /* only realized DIMMs matter */
++        if (qdev_is_realized(dev)) { /* only realized DIMMs matter */
+             *list = g_slist_prepend(*list, dev);
+         }
+     }
 -- 
 2.53.0
 
