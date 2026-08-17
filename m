@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50679C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B9DC5DF74
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:37:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxVe-0003Fg-Hf; Mon, 17 Aug 2026 09:36:14 -0400
+	id 1wvxVe-0003FU-1C; Mon, 17 Aug 2026 09:36:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVP-00036T-PJ; Mon, 17 Aug 2026 09:36:01 -0400
+ id 1wvxVS-000375-7n; Mon, 17 Aug 2026 09:36:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVN-0007JU-Vk; Mon, 17 Aug 2026 09:35:59 -0400
+ id 1wvxVQ-0007K7-MR; Mon, 17 Aug 2026 09:36:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=q44llB35Ltz/01CjSFu3R4zrapC8fKPsV2bIO3JuWNw=;
+ t=1786973727; bh=mOtCXnAeH1Fll/qjHPYWZ7OaP8aGrGDfZUMNX7SqHfw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uU1r/8HgGDGUHz45TYHa0QpJmKo9u9P2v9s/LDY7KIaBspKOHsdJUxJcFEPMKQHsV
- Xb4vJeKWWAaaWfKhTcIsqm8c3DfRHi9rla/AnrS2C/9IhYSFEQN+wkKX030f2rsXCB
- h61vfax//NaqkJfvt/1XOyMs5+2WwySub8HfpdLIfC2naYahDGFJrkUevAbf0CwcOO
- qYhnwfmr9CINBGgxpLUpXjnpg6oA8mCjAny5Jd+6/7McQR9I98gnvANsbpXHq57OR5
- m+WLrLJUdPuou830mDRJfAFTT0n2TSYbf+ju/cG/8LSGTpF5mZlmoTTuMGr227wXgh
- q2AiKB3+wnmCg==
+ b=nx7zgzFajlEDa2t831D01/2bX9DwOQurFMR05Vuog0WNXHtSlrrrPwYyzGZ+M5it9
+ l1D6eCjsIzQ2SDopsAOWf4Iy+4CJt+CJkuYraEGTOEEGblKDazvk7BbF+WNwyt9dht
+ x6XFZipJHjCelnGDyDEbJrPJKB45sOVHmMwpd+yw5p6TC0uk9Jd81JAUudS2jnTIBq
+ OFeB4E5rxNqSPDCsN07YdV2AFYHBJOcKMKEPjHvb1D2JfNE/LOR4/kClT/PNiWXYXc
+ Txlqnwe3q41LToqPE9PFdzd3VHE9fuuLRbJyqvuvZs6LN+1dxekY1CneQtgrQqESVN
+ qHnC+jGyAbdkg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 189FB1CBCBB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C7521CBCBC;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5234340D418;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 574CC40D419;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9830530F80; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id 9B11530F82; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 108/135] target/s390x: Fix DR/D INT64_MIN / -1
- host crash
-Date: Mon, 17 Aug 2026 16:34:18 +0300
-Message-ID: <20260817133451.2384630-6-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 109/135] tests/tcg/s390x: Test DR overflow
+ (INT64_MIN / -1)
+Date: Mon, 17 Aug 2026 16:34:19 +0300
+Message-ID: <20260817133451.2384630-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -75,41 +74,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-helper_divs32() divides the 64-bit dividend by the 32-bit divisor as a 64-bit
-host operation, guarding only against a zero divisor. INT64_MIN / -1 therefore
-overflows the host division before the representability check runs; on hosts
-that trap this, QEMU is killed with SIGFPE instead of raising the
-fixed-point-divide exception the guest expects:
+Check that DR with a non-representable quotient raises SIGFPE rather than
+crashing the emulator.
 
-    qemu-s390x: QEMU internal SIGFPE {code=INTDIV, addr=...}
-
-helper_divs64() already guards the same case; add the missing check to
-helper_divs32().
-
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: b4e2bd3563af ("target-s390: Send signals for divide")
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-2-iii@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-3-iii@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 0103cb1cd175a070f52ed0ca4fe0712c2ba2befc)
+(cherry picked from commit aa5d03bc93514ceed8d94f38dbdf951f6cb19d23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/int_helper.c b/target/s390x/tcg/int_helper.c
-index 2af970f2c8b..b3fe572e546 100644
---- a/target/s390x/tcg/int_helper.c
-+++ b/target/s390x/tcg/int_helper.c
-@@ -40,7 +40,8 @@ uint64_t HELPER(divs32)(CPUS390XState *env, int64_t a, int64_t b64)
-     int32_t b = b64;
-     int64_t q, r;
+diff --git a/tests/tcg/s390x/div.c b/tests/tcg/s390x/div.c
+index 6ad9900e082..124c9ecc339 100644
+--- a/tests/tcg/s390x/div.c
++++ b/tests/tcg/s390x/div.c
+@@ -1,6 +1,15 @@
+ #include <assert.h>
++#include <signal.h>
+ #include <stdint.h>
  
--    if (b == 0) {
-+    /* Catch divide by zero, and non-representable quotient (MIN / -1).  */
-+    if (b == 0 || (b == -1 && a == (1ll << 63))) {
-         tcg_s390_program_interrupt(env, PGM_FIXPT_DIVIDE, GETPC());
-     }
++/* Set asynchronously by the signal handler. */
++static volatile int signum;
++
++static void signal_handler(int n)
++{
++    signum = n;
++}
++
+ static void test_dr(void)
+ {
+     register int32_t r0 asm("r0") = -1;
+@@ -65,11 +74,39 @@ static void test_dlgr(void)
+     assert(r == 1);
+ }
  
++/*
++ * The most negative dividend divided by -1 yields a quotient that does not
++ * fit into 32 bits, so DR must raise a fixed-point-divide exception.
++ */
++static void test_dr_overflow(void)
++{
++    struct sigaction act = { .sa_handler = signal_handler };
++    register int32_t r0 asm("r0");
++    register int32_t r1 asm("r1");
++    int32_t b = -1;
++    int err;
++
++    err = sigaction(SIGFPE, &act, NULL);
++    assert(err == 0);
++    signum = -1;
++
++    r0 = 0x80000000;
++    r1 = 0;
++    asm volatile("dr %[r0],%[b]"
++                 : [r0] "+r" (r0), [r1] "+r" (r1)
++                 : [b] "r" (b)
++                 : "cc");
++    assert(signum == SIGFPE);
++
++    signal(SIGFPE, SIG_DFL);
++}
++
+ int main(void)
+ {
+     test_dr();
+     test_dlr();
+     test_dsgr();
+     test_dlgr();
++    test_dr_overflow();
+     return 0;
+ }
 -- 
 2.47.3
 
