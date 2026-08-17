@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661EAC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293A5C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxYB-00014t-Up; Mon, 17 Aug 2026 09:38:52 -0400
+	id 1wvxVf-0003Gq-PE; Mon, 17 Aug 2026 09:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxY5-0000wh-Pq; Mon, 17 Aug 2026 09:38:46 -0400
+ id 1wvxVX-00039w-Ek; Mon, 17 Aug 2026 09:36:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxY3-0007pQ-JH; Mon, 17 Aug 2026 09:38:45 -0400
+ id 1wvxVV-0007Kw-HF; Mon, 17 Aug 2026 09:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=gw5UnqPna+YOEY0GgTk+3Fgv1fAWX7NyXwvM/Slqhlw=;
+ t=1786973727; bh=VM85tcHNEPJILu1VeTV+Xhjo5J9r//WM948HOGwzcQE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZHCDSRF9Tdf4BCJFXBJIrTwCGJ42J16xFFaVAuSGU7aGY/JjBLKPf2v8LLhdMgC9S
- dH8CML8Z9vay5+gL79Kr4IoCHwIppej6cF/FJqrp+91u8PPrNTDbjZWTUvz2WTFfsN
- n067Cw/zgxLMDinBpH+56L/YT0N7ZAAFOrXvqENuFrikO/lQEDyECBGV/fQQkFTdBh
- 1rrPkGFrluF3GA3w6cT17ltJsFGXS2QuVt4Eka4uAErrfBuudEcSUDYK9imao0tofy
- PhlA4F9K+BG8pwjBr2bQaGDRIsi3n3fAUZJJ4QG1AFFsnSGVNzQkJcK/C6YzaFb79G
- le+NXA0C8E+Yg==
+ b=OUEcqnFIxMvPD10zY8gAhKbkvuJhRd9ynlnZod57/uLJuaWSmadYrfwQn8NM5ZBQd
+ v3wrWQyaC5kPy1pkKtV62mqRMKGL88PPcUcPD5OCXkgWv7RcJbCvJ9AiWqU6Z2n9al
+ gzw0AdJLgAmWeUby7fZc83ljs15JwHSGASpqkHC67fCI2sh3J3eIt4KQUBmQgUl7YQ
+ wabtdiWNx8TW4p59sv5sfI1N9xnmTLYSZ7rdYQKB9TPt5W+YingDg90Uc9KY97R6w+
+ w7cPg799VFbK3gz3GGXLu/d057SaEmxXcEXL3Z+USsOOprNEPvlnOw91jR+pcXlUjr
+ Gb/684iGl/fEw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F3401CBCD6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C3891CBCBF;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA5DC40D433;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6744340D41C;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E853A30FB6; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id A415430F88; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 135/135] hw/elf_ops: defend against weird elf
- headers
-Date: Mon, 17 Aug 2026 16:34:45 +0300
-Message-ID: <20260817133451.2384630-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 112/135] pc-bios/s390-ccw: fix out-of-bounds read
+ in iso_get_file_size()
+Date: Mon, 17 Aug 2026 16:34:22 +0300
+Message-ID: <20260817133451.2384630-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,59 +73,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-According to the ELF spec:
+In the dir_rem[level] == 0 case, level is decremented, then
+a virtio_read() is issued on sec_loc[level]. If level is -1, then the
+4 bytes before the static sec_loc array are read, and the virtio_read()
+is issued on that garbage block number.
 
-  PT_LOAD
+Guard the call to virtio_read() against the value of level to prevent
+this.
 
-  The array element specifies a loadable segment, described by
-  p_filesz and p_memsz. The bytes from the file are mapped to the
-  beginning of the memory segment. If the segment's memory
-  size (p_memsz) is larger than the file size (p_filesz), the
-  ``extra'' bytes are defined to hold the value 0 and to follow the
-  segment's initialized area. The file size may not be larger than the
-  memory size. Loadable segment entries in the program header table
-  appear in ascending order, sorted on the p_vaddr member.
-
-which implies while both p_filesz and p_memsz can be zero we should
-never see a case where p_filesz is greater than the in memory size.
-Indeed it has been reported such a hand crafted ELF can blow up, for
-example during rom_reset():
-
-  address_space_set(rom->as, rom->addr + rom->datasize, 0,
-                    rom->romsize - rom->datasize,
-                    MEMTXATTRS_UNSPECIFIED);
-
-which could trigger and underflow leaving QEMU slowly filling a very
-large buffer.
-
+Fixes: 869648e87eeb ("pc-bios/s390-ccw: El Torito 16-bit boot image size field workaround")
 Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260812081405.3811787-1-alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 260d49d8e28378b1f4f6c255c15cc20617726920)
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-4-borntraeger@linux.ibm.com
+[farman@linux.ibm.com: Fixed typo on Christian's tag, added qemu-stable]
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit a9f1e84c6b8213fb1bfc664b1ffa1a8d975a69b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-index 9c35d1b9da6..044e72de2a2 100644
---- a/include/hw/elf_ops.h.inc
-+++ b/include/hw/elf_ops.h.inc
-@@ -427,6 +427,11 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
- 
-+            if (file_size > mem_size) {
-+                ret = ELF_LOAD_TOO_BIG;
-+                goto fail;
-+            }
-+
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 0f8baa01985..0286b2e5245 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -902,7 +902,7 @@ static inline long iso_get_file_size(uint32_t load_rba)
+         if (dir_rem[level] == 0) {
+             /* Nothing remaining */
+             level--;
+-            if (virtio_read(sec_loc[level], temp)) {
++            if (level >= 0 && virtio_read(sec_loc[level], temp)) {
+                 puts("Failed to read ISO directory");
+                 return -EIO;
+             }
 -- 
 2.47.3
 
