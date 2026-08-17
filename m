@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 426B4C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FA6C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxXp-0000KW-Db; Mon, 17 Aug 2026 09:38:29 -0400
+	id 1wvxWl-0006F9-2y; Mon, 17 Aug 2026 09:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXi-00008o-6f; Mon, 17 Aug 2026 09:38:26 -0400
+ id 1wvxWa-0005sj-9z; Mon, 17 Aug 2026 09:37:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXg-0007og-Av; Mon, 17 Aug 2026 09:38:21 -0400
+ id 1wvxWY-0007W3-Cg; Mon, 17 Aug 2026 09:37:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=4+WEB+LQy0Tc32kqtCUaVfnGSocnc7jKnrircHxryB4=;
+ t=1786973727; bh=KMUgJ4sxsfcbYiy/tXF8P4uKaKSoFRZAMvYxhW1rKa8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=R2Nuert05EYiXeR/JaJg4gRh9NmeOpuoCZF0r0dw4lSrrxBcOyv/eLuHxKuP/FTd9
- 02aNp+2pejzgoNIIXDj24CA4vHLLF1RtSL1y60zaD8gM7td0jlVVm3zIIEokTQmm+I
- ZkmMroIL/Nlm75LXAS2vuymWvwfurN+nkwRq0ZpLQ73Y4k6QUl0xQRjEjMXwKquWEP
- o22GvgLdnt5nBj14c7hC4n5B4lIOuSeoWoppiXAKFKRu3Ox8aoyYM42yS0NOtD1yJn
- laeiJBPBR370AF3B/REXd2kVp+tLWEGIGHY93rxmQMRXFgdZhyy7zCBMxa3XI0vEv9
- 2wRQNPoo+tpug==
+ b=D0vBGTDnePRMGDiCcrnK5JKEcXRGCcSYE9G98jAl5rDWu1UAqSlKFiqeXM00KzFTS
+ mJLrpF8txcJ9G5+Ad+wckTsXUbQ2KgP3NZ2N9RLbAvO4qmDJOFv0S5kkqNF6tOW+8X
+ D/KVsgRiAD8hDovN7SJWXPqVY/JZd14MzJcGHkG0B9mFQkEmUMcro2tWRYfT0kSOe4
+ Eir4RZZNLu4G5thncE/redOvMAQiIIRm/Ef+0Pq4xHyBoAaVrS05muH4l59IuSeq62
+ 9qn7wleSQwD9rZ+tO2yo+/8LO/7I6TvuW3CFca5C96C9JVhI6RweYroWWh5h79i7yS
+ K2+LkVgaadl0g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95E7B1CBCD4;
+ by isrv.corpit.ru (Postfix) with ESMTP id 630B61CBCCA;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D093E40D431;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D19640D427;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E24FE30FB2; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id C4A3930F9E; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 133/135] hw/block/pflash_cfi01: Restore ROMD mode
- after migration
-Date: Mon, 17 Aug 2026 16:34:43 +0300
-Message-ID: <20260817133451.2384630-31-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 123/135] hw/net/vmxnet3: Do not abort if guest
+ provides bad interrupt numbers
+Date: Mon, 17 Aug 2026 16:34:33 +0300
+Message-ID: <20260817133451.2384630-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -74,68 +73,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Thomas Huth <thuth@redhat.com>
 
-pflash_post_load() did not restore the ROMD mode of the memory region.
-Although cmd and wcycle are migrated, the destination retains the
-default ROMD = true from realize.  When the source was in a non-array
-mode (e.g. ID read, cmd = 0x90), reads on the destination bypass
-pflash_read() via the ROM fast path and return raw storage bytes
-instead of the command-specific response.
+vmxnet3_validate_interrupts() currently aborts via hw_error() if
+the guest provided bad interrupt numbers. This should not happen,
+QEMU should rather refuse to activate the device in this case instead.
+Thus propagate the error to the callers to handle it more gracefully
+there.
 
-Derive ROMD from the migrated cmd/wcycle in pflash_post_load.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4042
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMD: Including review comments from
- https://lore.kernel.org/qemu-devel/CAFEAcA-P6RH7nJK0KQ1H8576ULFA7nocB0EkhhZf6Rw3g0WCag@mail.gmail.com/
-
- Confirming that this is correct is a bit tricky. It relies on:
-  * when we set romd mode to true we also set wcycle = 0, cmd = 0
-    (which we do, in reset and in the mode_read_array code)
-  * when we set romd mode to false at the top of pflash_write(),
-    all paths out of that function either go through the
-    mode_read_array path, or else update pfl->cmd to something
-    non-zero
-  * nowhere outside pflash_write() udpates cmd or wcycle except
-    for the "clear them to 0 and set romd mode" places
-
- This is almost but not quite true. In pflash_read(), the default
- case for the pfl->cmd switch sets wcycle = 0 cmd = 0 but doesn't
- change the romd state. Luckily the "this should never happen"
- comment is true -- there's no way to get a pfl->cmd that falls
- into the default (except for being deliberately fed a bogus value
- via inbound migration).
-]
-Message-ID: <20260803041808.58174-1-guobin@linux.alibaba.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-(cherry picked from commit 60d010f66f2ad7c15388a605e6f1a2114dc60185)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260731113352.189066-1-thuth@redhat.com>
+(cherry picked from commit 46099d99005588b25eb07957cd9cdd688c4fc476)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index b5ea927f360..72b29708fff 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -1038,6 +1038,16 @@ static int pflash_post_load(void *opaque, int version_id)
- {
-     PFlashCFI01 *pfl = opaque;
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index c15e179fb44..30a178d34e9 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1352,32 +1352,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
+         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
+ }
  
-+    /*
-+     * ROMD mode is not in the VMState; derive it from the migrated
-+     * cmd and wcycle.  Only (wcycle == 0, cmd == 0x00) is read-array.
-+     */
-+    if (pfl->wcycle == 0 && pfl->cmd == 0x00) {
-+        memory_region_rom_device_set_romd(&pfl->mem, true);
-+    } else {
-+        memory_region_rom_device_set_romd(&pfl->mem, false);
-+    }
+-static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
++static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
+ {
+     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
 +
-     if (!pfl->ro) {
-         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
-                                                         pfl);
+     if (idx >= max_ints) {
+-        hw_error("Bad interrupt index: %d\n", idx);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "vmxnet3: Bad %s queue interrupt index: %d\n",
++                      type, idx);
++        return false;
+     }
++
++    return true;
+ }
+ 
+-static void vmxnet3_validate_interrupts(VMXNET3State *s)
++static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+ {
+     int i;
+ 
+     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
+-    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
++    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
++        return false;
++    }
+ 
+     for (i = 0; i < s->txq_num; i++) {
+         int idx = s->txq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
++            return false;
++        }
+     }
+ 
+     for (i = 0; i < s->rxq_num; i++) {
+         int idx = s->rxq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
++            return false;
++        }
+     }
++
++    return true;
+ }
+ 
+ static bool vmxnet3_validate_queues(VMXNET3State *s)
+@@ -1570,7 +1584,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
+                sizeof(s->rxq_descr[i].rxq_stats));
+     }
+ 
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return;
++    }
+ 
+     /* Make sure everything is in place before device activation */
+     smp_wmb();
+@@ -2407,7 +2423,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
+     if (!vmxnet3_validate_queues(s)) {
+         return -1;
+     }
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return -1;
++    }
+ 
+     return 0;
+ }
 -- 
 2.47.3
 
