@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F37CC5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF78C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvus4-0004QU-4F; Mon, 17 Aug 2026 06:47:12 -0400
+	id 1wvus9-0004k6-HC; Mon, 17 Aug 2026 06:47:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurb-0003xm-AP; Mon, 17 Aug 2026 06:46:45 -0400
+ id 1wvurz-0004AA-CZ; Mon, 17 Aug 2026 06:47:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurY-0004Ci-Nl; Mon, 17 Aug 2026 06:46:42 -0400
+ id 1wvurw-0004Db-M4; Mon, 17 Aug 2026 06:47:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=urBK1WUMaHrZlXSjyZiHZSmhJ1ntd7WvJ1vjr4pFCXo=;
+ t=1786963486; bh=nLOBd6qmhI9qHAWdEEcaXA/9sF1TdPCH8cF+8kL5n54=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=izxkYWBZZ+HB9fWoH8AGtkPf4BrylUPDal3MGneEDp9b9hmYKYYVIezr2qhGQrwYb
- vudZFLv+bgdfkyXmWBeELIheI+elqZJgZ5huonOm6ftyD1O8NsDLA6C5aZDo1ByXhb
- MAdxZto7mC5ZNnCAdZT2Q1pfAh/hr2WFGlSfJvgY4g0aQBzW/QhXluzCesL4/J0HFG
- 6qtNVX0sZJn5TZ3UEAldPAA6jfnK6k3u6JryTJlb89S13LupPA9AmUr5Tsndm2bj83
- 5leTyNtQhX1Idikv0h0GkVDb1MGDqatdZ3rXe6NUYlrpY9236enU5fXDbxd3bQ5wYt
- qJEo6FL19DLiA==
+ b=fpODZfqcnP51KCmDLci99CyU39XZDSmOkYiHDz4O8yhkP/rBw2p8NusSdCGVrhgUs
+ gPVat7sbscxzi0oLlXmUOXEfvPZ8F2BU9HFzV6OR1AX51irk4XlwzoEZkV2Da+b2cE
+ W7XS/PAPWB/Eg/81CWc3VD9o+Qm+thN/4GFNm1XSfzCiDE+3SOf8ltFioejzieCYst
+ a8ay491iPJ0cCErLLMi5hBD7foTCeuR5DHCUt+Ub8hxI0Ugxa0KkJrK4HWdTS20d9i
+ 7hxRIxvsC6M3BK+WdywW6kYXygOYtgQYGjIG8an35HBsHPIL/WStSg2MlFsJDsTGuu
+ l5uLPDByWOi9g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B918A1CBB7E;
+ by isrv.corpit.ru (Postfix) with ESMTP id BD9BA1CBB7F;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA74840D20F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BEECA40D210;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 39BF230E74; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 3CDEF30E76; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Yuan Liu <yuan1.liu@intel.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 145/161] migration/multifd: Replace assert() with
- error_setg() in recv paths
-Date: Mon, 17 Aug 2026 13:42:59 +0300
-Message-ID: <20260817104344.2047346-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 146/161] hw/intc/loongarch_pch_pic: Validate
+ htmsi_vector before indexing parent_irq
+Date: Mon, 17 Aug 2026 13:43:00 +0300
+Message-ID: <20260817104344.2047346-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -72,144 +71,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-QPL and UADK multifd backends use assert() to validate wire-controlled
-fields like per-page compressed lengths and packet size consistency.  These
-asserts will stop working with -DNDEBUG builds, so may stop working.
+pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
+index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
+the array, but only 32 are used by the virt machine) causes an out-of-bounds
+read and a guest-triggerable QEMU crash.
 
-Replace all assert() calls in the receive path with proper error_setg() so
-validation failures are reported gracefully rather than crashing or
-silently ignored.
+Validate the vector before calling qemu_set_irq() in both the raise and lower
+paths and log a guest error if it is out of range.
 
-While at it, touch up an assert() in qatzip recv path too.
-
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Cc: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260728210417.1925078-4-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit cf45083edc2b760a952836187aba7ec4139418c0)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+(cherry picked from commit 80776c4df92c3d58f89608b61e355092a7d524ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
-index 7419e5dc0d0..0262e81eac9 100644
---- a/migration/multifd-qatzip.c
-+++ b/migration/multifd-qatzip.c
-@@ -348,7 +348,10 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 82e16be3918..e87c7497c11 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+ {
+     uint64_t val;
+     int irq;
++    uint8_t vector;
  
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
+     if (level) {
+         val = mask & s->intirr & ~s->int_mask;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr |= MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            qemu_set_irq(s->parent_irq[vector], 1);
+         }
+     } else {
+         /*
+@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+         val = mask & s->intisr & ~s->intirr;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            qemu_set_irq(s->parent_irq[vector], 0);
+         }
      }
- 
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 52902eb00cc..3826e7f3403 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -664,26 +664,42 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
-     }
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed page lengths */
-     len = p->normal_num * sizeof(uint32_t);
--    assert(len < in_size);
-+    if (len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, len, in_size);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zlen, len, errp);
-     if (ret != 0) {
-         return ret;
-     }
-     for (int i = 0; i < p->normal_num; i++) {
-         qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
--        assert(qpl->zlen[i] <= multifd_ram_page_size());
-+        if (qpl->zlen[i] > multifd_ram_page_size()) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"
-+                       PRIu32" too large", p->id, i, qpl->zlen[i]);
-+            return -1;
-+        }
-         zbuf_len += qpl->zlen[i];
-         ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
-     }
- 
-     /* read compressed pages */
--    assert(in_size == len + zbuf_len);
-+    if (in_size != len + zbuf_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, len, zbuf_len);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, zbuf_len, errp);
-     if (ret != 0) {
-         return ret;
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index fd7cd9b5e8e..d373615ba8d 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -245,12 +245,19 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
- 
-     multifd_recv_zero_page_process(p);
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-     /* read compressed data lengths */
--    assert(hdr_len < in_size);
-+    if (hdr_len >= in_size) {
-+        error_setg(errp, "multifd %u: header len %"PRIu32
-+                   " >= packet size %"PRIu32, p->id, hdr_len, in_size);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
-                                hdr_len, errp);
-     if (ret != 0) {
-@@ -259,12 +266,21 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
- 
-     for (int i = 0; i < p->normal_num; i++) {
-         uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
-+        if (uadk_data->buf_hdr[i] > page_size) {
-+            error_setg(errp, "multifd %u: page %d compressed len %"PRIu32
-+                       " too large", p->id, i, uadk_data->buf_hdr[i]);
-+            return -1;
-+        }
-         data_len += uadk_data->buf_hdr[i];
--        assert(uadk_data->buf_hdr[i] <= page_size);
-     }
- 
-     /* read compressed data */
--    assert(in_size == hdr_len + data_len);
-+    if (in_size != hdr_len + data_len) {
-+        error_setg(errp, "multifd %u: packet size %"PRIu32
-+                   " != header %"PRIu32" + data %"PRIu32,
-+                   p->id, in_size, hdr_len, data_len);
-+        return -1;
-+    }
-     ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
-     if (ret != 0) {
-         return ret;
+ }
 -- 
 2.47.3
 
