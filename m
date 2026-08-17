@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB2CC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C335C5DF7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww4Kb-0006cQ-7Z; Mon, 17 Aug 2026 16:53:19 -0400
+	id 1ww4KK-0006XP-Bu; Mon, 17 Aug 2026 16:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KI-0006X0-Gx
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:59 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4K9-0006Vd-RJ
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:50 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KE-0006et-0i
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:56 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4980fe6b3beso2297635e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:52:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4K7-0006dx-7i
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:49 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-47362928f65so3736225f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:52:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786999970; x=1787604770; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tV4WIYxXJUBI3Dbou01c42prXSCR/C3ZLm99S9w6d1c=;
- b=jUaWfZQrpWSz8aY3jVcdruh4pfENyAX6RXIkUbSZOOa4DFCFt+EFELpWQKGsPk9364
- VoKqBGL0li2k63GpJ8u/lQf5bk3xe3mY+3Yyy8DYQRnd8IHPnYvqC5gseNH+7jXQYYG5
- qj/uH4TR+QrGP1n68W15Uv2EehhjUnaL8LSAmRplFQxwrBpqqvv5LjKbJi5smJDXAD7C
- 3oBaW/4+f8oY7Md/p0+3soNs92AdcmhXCl/JLosU32g3iePDTG9b1/Szh+uWnUvytdPQ
- iviQSwXRiYnTZ3FzHcgfTWJVtiO2kMAMT8ILedCbQqSPsFhirsLLr5GiCbJ3t0oG8JnJ
- v1qQ==
+ d=openvz.org; s=google; t=1786999965; x=1787604765; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YvUPaKQQgjPVD+IsTphAHv+sRXoPnww2/iJNAC6pq3s=;
+ b=gZ+B7/zSLlgY2cQCFFXnOipz2Z55cmMvtCTw2s5FIIACtQ839S2xiUoSNig8GVTHyk
+ 4ZIT5dibRo2n536XawgctMkab+LeUlQUzT1r3xYtrG4uJb76cIaJnpBvQuPvzmym/uCA
+ UlCiC9ShqPKao9h138L8M0GNaWiXXjSWHzWmcXOBhDyEpfYo/QjvXOf9TtHuKm6p5kBV
+ kQnRuzMBu4mukLtqyZjdCeDHFzA4yzPe/fUJR0iqfuEBGQ3cz9vItDyPvwSF1scdt4Hn
+ qsWS0RTyheEu8HlYBIEAu5BMpnz5Boc/uya6SWNt69wKiivBclmBVYqr4SveOKWqpuoq
+ O/Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786999970; x=1787604770;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=tV4WIYxXJUBI3Dbou01c42prXSCR/C3ZLm99S9w6d1c=;
- b=nukcy2o7RVT3dFS/7RTuTBSZ87eqw9ZtyofRZICKrnbkjYFjJh6Sr+A/6q7y1gBldR
- o2aE/+ky7mMsZ9OSt70nirZ7/loYH7VOB/JtPRbX7qo4G6DBmgrlz+i9QygxqL14How2
- aE+1hItGEj8DzQtpQPBKRr8ApMDQgZnTNCWBQCs0wWw94nb4tCHbcVyrLxc2p5ufqhpS
- oSCAGFVGfGAnu1W/yFAsSJobihZDTa2AI3ZKdMQwjQjH1PuLnm3hXL0yWd5fEnDNXz70
- S9kokyRa27cyOYyht5KFXOKeWTqGoK8RpNkppBKz+56T1WNvYb6MBJLNjI5Gy5jj7aSR
- a8kQ==
-X-Gm-Message-State: AOJu0Yx3dwWJ5LDhhAuKKSjUO6O8Wb+RKnU+SokvnCjMgz8MALVkcaL5
- po5MUgCD54nm84Ez3f+JsWd4nZm7plRRlJJYe6mUI6MpMJ4oTQ+Rg7pALp1V9Veb9MHgRjP4ojK
- F/fhb
-X-Gm-Gg: AR+sD13WcQfy/d9HSs8dfW71OCujISA2ZB0A8KpcVUp47D12tEL65WdiTaQQXcEh0bP
- 1jz4xvn53IEqglb1weHHVEiTx0DeB12gIVsdY5UknP1pthZO/Gb6vX4iylxsglhTS4D8UfiT8MR
- py1m0k4GIZpGT18V7jbtcHhippCPqxmhvzz5Ygwsup78764+82cE8h9Hfnayr1si9jIjBCf9K3N
- 7lNPej9V2ZQtFNIQnYHpp6k83Z0H+htyQSfWOCHVDHfPratFBZQ5oP6dbOdal0Sl2FoserYEw7d
- sIvcJG2bFzk4ZJya+SbIBQs5dI0b9bs5vwsH29ZF+yZnw+diRgGWOmp4vTOlffxU4Wa8gbbCVGZ
- 3lmiZFHo9wijck3IikvADB7s+rePw4r6+VfrPKLRLwxpCjmqymBfodf18haoiRKWQyBUV5kIdC4
- rDfQcoaW70PB4o6PKBWBb/DLLD9M7vUfaJg62Xsf7UxhYCc/xygQ==
-X-Received: by 2002:a05:600c:1394:b0:499:8d9b:832c with SMTP id
- 5b1f17b1804b1-499a2060a14mr4684175e9.4.1786999970205; 
- Mon, 17 Aug 2026 13:52:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786999965; x=1787604765;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YvUPaKQQgjPVD+IsTphAHv+sRXoPnww2/iJNAC6pq3s=;
+ b=eyxBidBd9tpdJaM9WHqK6cyGCItoZ1yzv5V0CdheLW6vgsFMla66JDWHa6tJyX7kU5
+ KoB1Cw+pT1YJJnTQl8wFo6ltEflQNaBfOuknhucBF4a0hnpqOoJMBu7et1zTvRKfKm6y
+ 7fmxx7gy7XerEl3UFcnMnYYAZ4hGXojhXRQel/CZYB/ZyITloqWgIeP0p8itCxy1TuCw
+ 2npv+5F8LX4QXj3yhD4+Ya9MTxVQpTixD161Fqd+ScXsAV8D8GaNdHaZXZ/E/kM+Nhux
+ KRMmvo1DMFLetmZEZsKBbDu5KMMY6dFhNMKUopT7QqwKKffW1enegaqfgyRU836OqekM
+ rrpg==
+X-Gm-Message-State: AOJu0YxUii/AbnfJqswUj+OYKECljDdbEqCAw1SKPj6JjLhQ2FZjH1QS
+ 9eYgJv6KjASxUvENMlIax2cfHtZhMjmtDgoRsBsboG+HYxlz0gSCxyEZg7q+b/X5CwdWt5AL+uj
+ L/70p
+X-Gm-Gg: AR+sD10CaWbbBV3TbQWu1KULjyhdDGQAz9Yb5lCi5ryxTT/74ba6fD2Ci8nNvJv7PKh
+ cxcj0fGBkyxW8jfd3E1cD8gRTg1+cE52yQAP1Nf8BynfIbEDkdy7M4rjKmc2qrKJB89KxU3Xft3
+ KfNZP4O21LbdoRnYayuV7Zqf6LxozPjeKWmOE87O+4zoR4r/Ukwy+gwcs85mANCbezxSc1BbOAO
+ WxcqyVEXMCJdO5FRM/DBQstdVwz3KCy8SRaDuIGJLf/fT+wEiPuRMLYWVpueGt3q13MSPnQC4fP
+ dRkpjbEYtBmSN1qfZfDJtVk+XlSjw2jOdc01FnAJjGudUiC1qj+QHHHjP8e2YdTvQvW1LrsMJgb
+ onIl6LdHR2CSg8oTUEDXtZJeR3p391XbMM6ukJPoOm1/Mi9bXBMX3r+3wUKCQMTRnWaW/j6VcNj
+ qqMYiRFvKvMa0EdksycxtNjqFgIU5jE1nGtrwMYq1HZNPNRGLkj+s=
+X-Received: by 2002:a05:600c:468c:b0:495:52a5:8829 with SMTP id
+ 5b1f17b1804b1-4999fb6d4d8mr35187345e9.11.1786999965252; 
+ Mon, 17 Aug 2026 13:52:45 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499961098cdsm202573365e9.6.2026.08.17.13.52.49
+ 5b1f17b1804b1-499961098cdsm202573365e9.6.2026.08.17.13.52.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 13:52:49 -0700 (PDT)
+ Mon, 17 Aug 2026 13:52:44 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 04/15] tests/qtest/ahci: cover the sector count of INITIALIZE
- DEVICE PARAMETERS
-Date: Mon, 17 Aug 2026 22:52:31 +0200
-Message-ID: <20260817205242.1199851-5-den@openvz.org>
+Subject: [PATCH 00/15] hw/ide: fix the logical CHS translation a guest selects
+Date: Mon, 17 Aug 2026 22:52:27 +0200
+Message-ID: <20260817205242.1199851-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260817205242.1199851-1-den@openvz.org>
-References: <20260817205242.1199851-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=den@openvz.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,90 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+INITIALIZE DEVICE PARAMETERS lets a guest replace the logical CHS
+translation that turns the CHS registers into an LBA. cmd_specify() has
+implemented it since 176e4961bb33, released in v7.2, and the geometry it
+stores is mishandled four ways.
 
-The sector count register of a legacy port is eight bits wide, so
-ide-test can only reach the lower end of the range the command has to
-refuse. A register FIS carries a 16 bit count, which leaves AHCI as the
-only way to ask for a translation of 256 sectors per logical track or
-more.
+It is not validated: zero sectors per logical track kills QEMU with SIGFPE
+in ide_set_sector(), which is issue 2399, and since handle_cmd() takes the
+count from a 16 bit field of the register FIS, an AHCI guest can drive
+ide_get_sector() into an int overflow as well. It is not reported:
+IDENTIFY DEVICE is built once and cached, so both the words describing the
+default geometry and the words describing the current one go wrong. It
+does not travel, leaving a migrated guest addressing the disk in a
+translation the destination does not have. And it does not revert on a
+hardware reset, which ATA-5 9.1 requires, so it outlives the reset of the
+machine it was selected on.
 
-Ask for 0, 256 and 65535 sectors and expect each to be aborted, then ask
-for 32 and expect it to be accepted, so that the check cannot pass by
-refusing everything.
+The two subsections patches 8 and 9 add are the only change to the
+migration stream, and both are sent only when the guest replaced the
+default geometry. An unaffected guest migrates to an older QEMU as before;
+an affected one now fails the load on the unknown subsection instead of
+silently addressing the wrong sectors.
 
+Tested with ide-test (25 cases), ahci-test (74), a full make check, a
+clang build, and real guests on both controllers: FreeDOS reading a FAT16
+disk through INT 13h CHS, Red Hat Linux 9 whose 2.4 IDE driver prints the
+geometry it read, and Ubuntu 26.04 over libata, each with a CD and a disk,
+plus a machine reset in the middle.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- tests/qtest/ahci-test.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 71d23fe56a..30d7005626 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -905,6 +905,30 @@ static void ahci_test_flush(AHCIQState *ahci)
-     ahci_test_nondata(ahci, CMD_FLUSH_CACHE);
- }
- 
-+static void ahci_test_specify(AHCIQState *ahci, uint16_t sectors,
-+                              bool supported)
-+{
-+    AHCICommand *cmd;
-+    uint8_t port;
-+
-+    port = ahci_port_select(ahci);
-+    ahci_port_clear(ahci, port);
-+
-+    cmd = ahci_command_create(CMD_INIT_DP);
-+    ahci_command_set_count(cmd, sectors);
-+    if (!supported) {
-+        ahci_command_expect_error(cmd, ATA_ERR_ABRT);
-+    }
-+    ahci_command_commit(ahci, cmd, port);
-+    ahci_command_issue(ahci, cmd);
-+    if (!supported) {
-+        ASSERT_BIT_SET(ahci_px_rreg(ahci, port, AHCI_PX_TFD),
-+                       AHCI_PX_TFD_STS_ERR);
-+    }
-+    ahci_command_verify(ahci, cmd);
-+    ahci_command_free(cmd);
-+}
-+
- static void ahci_test_max(AHCIQState *ahci)
- {
-     RegD2HFIS *d2h = g_malloc0(0x20);
-@@ -1012,6 +1036,21 @@ static void test_identify(void)
-     ahci_shutdown(ahci);
- }
- 
-+static void test_specify(void)
-+{
-+    AHCIQState *ahci;
-+
-+    ahci = ahci_boot_and_enable(NULL);
-+
-+    /* A register FIS carries 16 bits of count, the legacy ports only eight */
-+    ahci_test_specify(ahci, 0, false);
-+    ahci_test_specify(ahci, 256, false);
-+    ahci_test_specify(ahci, 0xffff, false);
-+    ahci_test_specify(ahci, 32, true);
-+
-+    ahci_shutdown(ahci);
-+}
-+
- /**
-  * Fragmented DMA test: Perform a standard 4K DMA read/write
-  * test, but make sure the physical regions are fragmented to
-@@ -2220,6 +2259,7 @@ int main(int argc, char **argv)
-     qtest_add_func("/ahci/migrate/dma/halted", test_migrate_halted_dma);
- 
-     qtest_add_func("/ahci/max", test_max);
-+    qtest_add_func("/ahci/specify", test_specify);
-     qtest_add_func("/ahci/reset/simple", test_reset);
-     qtest_add_func("/ahci/reset/pending_callback", test_reset_pending_callback);
- 
+Denis V. Lunev (15):
+  hw/ide: reject an unsupported CHS translation
+  tests/qtest/ide-test: cover a CHS translation with zero sectors
+  tests/qtest/libqos/ahci: allow a count and an expected error
+  tests/qtest/ahci: cover the sector count of INITIALIZE DEVICE
+    PARAMETERS
+  hw/ide: report the default CHS translation in IDENTIFY DEVICE
+  hw/ide: keep the IDENTIFY DEVICE current geometry in sync
+  hw/ide: restore the power-on device state before loading
+  hw/ide: migrate the logical CHS translation
+  hw/ide: migrate the power-on defaults revert flag
+  tests/qtest/ide-test: cover the CHS translation across migration
+  tests/qtest/ide-test: cover a rejected CHS translation in the stream
+  tests/qtest/ide-test: cover the IDENTIFY DEVICE geometry words
+  hw/ide: revert the CHS translation on a hardware reset
+  tests/qtest/ide-test: cover the CHS translation across resets
+  hw/ide: drop a redundant interrupt from INITIALIZE DEVICE PARAMETERS
+
+ hw/ide/ahci.c             |  12 +-
+ hw/ide/cmd646.c           |   2 +-
+ hw/ide/core.c             | 141 ++++++++---
+ hw/ide/ide-internal.h     |   7 +-
+ hw/ide/isa.c              |   2 +-
+ hw/ide/macio.c            |   2 +-
+ hw/ide/mmio.c             |   2 +-
+ hw/ide/piix.c             |   2 +-
+ hw/ide/sii3112.c          |   6 +-
+ hw/ide/via.c              |   2 +-
+ tests/qtest/ahci-test.c   |  40 +++
+ tests/qtest/ide-test.c    | 499 ++++++++++++++++++++++++++++++++++++++
+ tests/qtest/libqos/ahci.c |  14 ++
+ tests/qtest/libqos/ahci.h |   6 +
+ 14 files changed, 687 insertions(+), 50 deletions(-)
+
+
+base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
 -- 
 2.53.0
 
