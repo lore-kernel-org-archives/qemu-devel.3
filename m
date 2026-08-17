@@ -1,55 +1,54 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists1p.gnu.org (unknown [209.51.188.17])
+Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E8DC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7C5C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqH-00019C-Op; Mon, 17 Aug 2026 06:45:23 -0400
+	id 1wvuqM-0001MH-Tx; Mon, 17 Aug 2026 06:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuq7-00013v-Kt; Mon, 17 Aug 2026 06:45:13 -0400
+ id 1wvuqG-0001A2-05; Mon, 17 Aug 2026 06:45:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuq5-0003wU-UL; Mon, 17 Aug 2026 06:45:11 -0400
+ id 1wvuqD-0003yC-Ia; Mon, 17 Aug 2026 06:45:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=IYiy3GsreTeO/2Exd9FS+S6nYOcfi1PKqDJtEVIRBBc=;
+ t=1786963486; bh=z24j5fUvbF6FMuah81uaPJqujR3AO1r6+MwUxCj2UbU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FSSp/xWZBTWL2++3ZxouRzTTz7ZGkS8ftq4r9SJeeLNqfpBQmVuyfudBZkilgkYN7
- mK/c6fr4A/1sqMLokw5yULzUJJg1w+HA9+pFbU/xxx2UIETz+Yz3GycmzMK5fXCC/n
- qnY0yMbonNwnsWNJbNgOvTiqK2xMlDYhN/NH+8Hb/e0xYkIglH05PEyvtqhbD3fZrQ
- ebq5lCm8CctSIgfG9EhnkeQhI25pjb9I1RhYqaPTBR+Bzvo/0KwafJovTNTGw3QVis
- 4NqDzxrcsp9bYs+Ehzb5wxQ2Ipj5/bnpab90Hr8AvnhU+Cqp4YHibSXu9EJ4sdHu2Y
- d+Yer/3w+HKhA==
+ b=c0U3z2QDr6kruOdGQHiUZKxG0DFOJ9mXdXyXI1HuyrD9DuwtjLR7ut8DSC32ETjY4
+ 7fQegf6tfgq5PNZ9qZYQnULAN3wmdXv5YKIEFBwCJaXc/im4/5Ad1vCaL273zo0gj1
+ Kgm4BzsyGG7gllndDoobDY/GX1uPzNF9qreX8wPQ3nznXex2PxMUAP5hEVeB2mT7y1
+ qm3WUuh8Cbc/h5ZRQSE0oNDDpmdn1d7WA+9GEsvbJ7y+XZmqEUd5XE/6t6LYLQjtBD
+ 3G52nRWdxQaiHmIKhzh7BvNutZ3BFq/AJIe0n6+9by+Z8nIveJUyt2CmDk/CuwxmXO
+ 5xYxQFdp5pdWg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4EC1D1CBB67;
+ by isrv.corpit.ru (Postfix) with ESMTP id 69D551CBB6C;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5032140D1F5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6AF9F40D1FD;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E51AC30E46; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
+ id 00D9530E50; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 122/161] hw/arm/aspeed: Add missing PCI_EXPRESS ->
- PCIE_PORT Kconfig dependency
-Date: Mon, 17 Aug 2026 13:42:36 +0300
-Message-ID: <20260817104344.2047346-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 127/161] target/s390x: Fix DR/D INT64_MIN / -1 host
+ crash
+Date: Mon, 17 Aug 2026 13:42:41 +0300
+Message-ID: <20260817104344.2047346-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,49 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Add the missing Kconfig dependency on PCIE_PORT to avoid the
-following runtime error:
+helper_divs32() divides the 64-bit dividend by the 32-bit divisor as a 64-bit
+host operation, guarding only against a zero divisor. INT64_MIN / -1 therefore
+overflows the host division before the representability check runs; on hosts
+that trap this, QEMU is killed with SIGFPE instead of raising the
+fixed-point-divide exception the guest expects:
 
-  Type 'aspeed.pcie-root-port' is missing its parent 'pcie-root-port-base'
+    qemu-s390x: QEMU internal SIGFPE {code=INTDIV, addr=...}
 
-No need to have ASPEED_SOC select PCI_EXPRESS since it is
-already selected by PCI_EXPRESS_ASPEED.
+helper_divs64() already guards the same case; add the missing check to
+helper_divs32().
 
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: b4e2bd3563af ("target-s390: Send signals for divide")
 Cc: qemu-stable@nongnu.org
-Fixes: 2af56518fa9 ("hw/pci-host/aspeed: Add AST2600 PCIe Root Port and make address configurable")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260709164103.37614-2-philmd@oss.qualcomm.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 2fad751ed6b14ef02b8c728b1b88c6c809f767d3)
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-2-iii@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 0103cb1cd175a070f52ed0ca4fe0712c2ba2befc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 4e50fb1111f..e3331563f19 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -554,7 +554,6 @@ config ASPEED_SOC
-     select MAX31785
-     select FSI_APB2OPB_ASPEED
-     select AT24C
--    select PCI_EXPRESS
-     select PCI_EXPRESS_ASPEED
+diff --git a/target/s390x/tcg/int_helper.c b/target/s390x/tcg/int_helper.c
+index fbda396f5b4..5aedd1405bf 100644
+--- a/target/s390x/tcg/int_helper.c
++++ b/target/s390x/tcg/int_helper.c
+@@ -39,7 +39,8 @@ uint64_t HELPER(divs32)(CPUS390XState *env, int64_t a, int64_t b64)
+     int32_t b = b64;
+     int64_t q, r;
  
- config MPS2
-diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
-index 8cbb8304a3f..bda6e161f1c 100644
---- a/hw/pci-host/Kconfig
-+++ b/hw/pci-host/Kconfig
-@@ -49,6 +49,7 @@ config PCI_I440FX
- config PCI_EXPRESS_ASPEED
-     bool
-     select PCI_EXPRESS
-+    select PCIE_PORT
+-    if (b == 0) {
++    /* Catch divide by zero, and non-representable quotient (MIN / -1).  */
++    if (b == 0 || (b == -1 && a == (1ll << 63))) {
+         tcg_s390_program_interrupt(env, PGM_FIXPT_DIVIDE, GETPC());
+     }
  
- config PCI_EXPRESS_Q35
-     bool
 -- 
 2.47.3
 
