@@ -4,109 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6771AC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B11C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvyD4-0000Cr-9e; Mon, 17 Aug 2026 10:21:06 -0400
+	id 1wvyFk-0005C6-57; Mon, 17 Aug 2026 10:23:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wvyD2-0000Cb-US
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:21:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wvyFi-00059e-P7; Mon, 17 Aug 2026 10:23:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wvyD0-0002j6-Gq
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:21:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786976461;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VmwdFZQfIlNc7FJ8WapT4cJBgdbwAVRb/TGVA52OOFU=;
- b=DIK0N7eYRJ7C4d4RSPpThYp/J/cb1MYYLGbya7H0vDRpCLJzEXKotyVbL3Khg+AsKWkaT7
- wjPaJpCqzzvNEA83rJcnzO17YbNd/xD12cOPoHYX4L78C3UiYKt6jTswl8pxVsUM8THz8G
- JvGmqRTirGo+uaIm0CLgsXq6dSUBJtc=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-MfqO1GkOP_evsB8XtR8Lkg-1; Mon, 17 Aug 2026 10:21:00 -0400
-X-MC-Unique: MfqO1GkOP_evsB8XtR8Lkg-1
-X-Mimecast-MFC-AGG-ID: MfqO1GkOP_evsB8XtR8Lkg_1786976459
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2cce14a21faso53223105ad.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:20:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786976459; x=1787581259; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=VmwdFZQfIlNc7FJ8WapT4cJBgdbwAVRb/TGVA52OOFU=;
- b=JjtKXUD/wfldgYTuT+8SVzAd6f4qa7ZH5tE/JjodYFMSXBj+kLXU+9jxKfTBky0t+6
- TzgkeuIoIpHHM2Dttl4mCLhS6jEkjbvFW2xNn690IAET8OIiIA37psHwrRoDECUEJMV1
- oYCjkRzGWJhLX19BlfGMlUl5APefYv59ROFbrvnE665AqzEWOx4aYVMBoH3ePAbYK62s
- sc8kFZz2Bhd8hIUSgDViqsJTQiDRvFphAEnE7o3lqJ0Gf7fDiar2Nif91zBXa+YGLs0W
- vJ05c/IHP7DnDModaFwECGrgnUVeb87555MeNFaFMXkKWqHRT/loc8b5wgu5NcQSp7hG
- npdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786976459; x=1787581259;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=VmwdFZQfIlNc7FJ8WapT4cJBgdbwAVRb/TGVA52OOFU=;
- b=EDE+QN/OFvRDatdbKixaU9k0p1UxWGuBThQmNxZYjqqPI/av5tLRn0hMETpHtqDVNe
- pZXLq7god6mThkRy/9fv9syEJD5UYTRgybhOS//7iLDXd/X5nExY60aloLN8BXjU5akp
- 9aUh6spiLVlIm23mJG5lj352um76Hx5oiRVfdcuDresHsaUkC+GzuqliEFtLBWY8oYR0
- Vu7Q+GmMX57OzsWrQHz155U/zgpLEMud9t0P8F5ijVqUXnc8fNnR0T69RRWnEUWfJQ+w
- ij7PsKkxQxc+58tQZ5dKlv2CXZOFhEuVEqyCDtVP5nZSX3Y4BNKxndcXxPJTNkmO14sG
- o48g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqjXCm97BkGPEvLB0cXgvo+TsIPt4DDqmqLw6cAxnoeqxgCPEvDFNk93b4ahqvoeBgBtkUX/szaJ/w1@nongnu.org
-X-Gm-Message-State: AOJu0YzpATYeSu6V3p3HuHG02bRa1ilPtV9NOsjLDNbmJuxGxdxsUnYZ
- Qry5B3472NSum07NUQLtgBQWyr74TnYF1qz3FFMvelqE866DAPJHmA0Xa2um37R3m02FFlg1yPZ
- I7uQ89kZKq2xqGsPlwQK/JjQP1XIFsGVYgRXZXcvc5ek7+OnOcCrtjcRC
-X-Gm-Gg: AR+sD117beFbUl6vxu/zWHOYk8RGHFtMRjD356shJmZiYGIUh6rOZG2HPPWdK0XkeoC
- 8MkHBNK5t/QAQA6RRhCZ9Z8dFyP97KWtkhz1ObrKqKZJGHea76Lu9fm9DFC+esqlqCla6wd+dJw
- IhIdg0WERhlCt7Ox4aJWg78QMq2t8SVzOlC0UF0upLP+Y3S+e2zs2ZlnAaXb52pzar5MPOHwUth
- exxEyld25SXNegzcWhMot6+2vaRpFGbv81SP7lPsWXz6qj1s/ZY4lU5EzpBXZKVstESfOVIAVfr
- PGDLCDKP8Qn2VLLMQ+kHebVo5VB+OahzDR85Ju17DLpX8BO2kzHgMfN0+erd2y1vmk/wjhYAmKy
- w9r3A1ImJE/mqzXLNGbj6/rbzPuF4BG+Zmg==
-X-Received: by 2002:a17:903:1a0d:b0:2d2:72b6:556b with SMTP id
- d9443c01a7336-2d37f7b7ca7mr345582675ad.13.1786976458646; 
- Mon, 17 Aug 2026 07:20:58 -0700 (PDT)
-X-Received: by 2002:a17:903:1a0d:b0:2d2:72b6:556b with SMTP id
- d9443c01a7336-2d37f7b7ca7mr345582095ad.13.1786976457992; 
- Mon, 17 Aug 2026 07:20:57 -0700 (PDT)
-Received: from rhel9-box.lan ([106.219.133.98])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-2d5c1efd10fsm3705105ad.81.2026.08.17.07.20.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 07:20:57 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>,
-	Gerd Hoffman <kraxel@redhat.com>
-Cc: ani@anisinha.ca, agraf@csgraf.de, graf@amazon.com, qemu-devel@nongnu.org
-Subject: [PATCH v6 07/11] hw/misc/vmlaunchupdate: Introduce hypervisor fw-cfg
- interface support
-Date: Mon, 17 Aug 2026 19:50:02 +0530
-Message-ID: <20260817142010.80693-8-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260817142010.80693-1-anisinha@redhat.com>
-References: <20260817142010.80693-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wvyFU-0003Ni-I1; Mon, 17 Aug 2026 10:23:38 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HCW2PK288077; Mon, 17 Aug 2026 14:23:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=X2HPiCjnVt1tLMxk372INQiyxrvemgL4OP55VEzkYws=; b=ZhMfpvtujK1N
+ D3IroGYYscjeKiCccZ8FqGSOwbdnfsfq0rVn0Gx2ceQ8zvGyfu+2QA04PJxixImc
+ VQRaR3L4nYUpu1LyHcD6R4DmbXOkEGwsjBjx6eJ23lQqaK1NTUSvfLY7Ob0ny8Hy
+ P1wVlwlLz2Vu8dLye8Y8Ap8W1x5xyPFwGqimM8Y8jT950vlQId3j9RaTsmAvrQV5
+ +O/b+qW5e6xHX3Dc9chqohgR/pID1pmDguRCQo+JZ/UsLLfKjHfqMB02zY0nAwB7
+ Eg2lBt1vy9H90oN/4CJcPhKL5HfP9R0WpqLFMIxiHE1QeuA6xHodsUI1zQ39HD9U
+ sl1Uzmmtlg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2ehe2ft7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 14:23:29 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HEBJ2q023436;
+ Mon, 17 Aug 2026 14:23:29 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejxccf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 14:23:28 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67HENRgg24904236
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Aug 2026 14:23:27 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BAE4F58065;
+ Mon, 17 Aug 2026 14:23:27 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 361D75805F;
+ Mon, 17 Aug 2026 14:23:27 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Aug 2026 14:23:27 +0000 (GMT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Date: Mon, 17 Aug 2026 16:23:26 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
+ instruction
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <e95ee364-3e48-44c4-8c7b-5d306f417c16@linux.ibm.com>
+References: <20260806151302.26846-1-freude@linux.ibm.com>
+ <20260806151302.26846-8-freude@linux.ibm.com>
+ <e95ee364-3e48-44c4-8c7b-5d306f417c16@linux.ibm.com>
+Message-ID: <192e2ce59d17947e5556dc54e3b3c781@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEwNyBTYWx0ZWRfX2OlIqyz08nhC
+ hYZ4CTCaBDvobkLYuKD6C9qB04lzHpxzdIJFTX/MS+fPMHSOVBCN9xuxaiI2eYwmXICkBfXffYY
+ C3FAkrzlwGeU69WlOHC3VMfzhMiZvb6XHA3nmmIhUHeakWsL3HEbefEAymSVeGhIF1D4lS4ZKce
+ K3p8Hf4Y2kA8S33Hjw8/ntKtZt18Sx1dg2SEE5GlJAfoQBmCVLtvoBV2cAyO/maXRohBQCCCNmu
+ jv2e6IZSOkP2PlL0i2Tu8QBUwnDtFYNYsY82WIWFw59Nrot96u5E14/7NlfiTCXbNw/iRgw2VsY
+ ItKT3ZCMnYdN265WDLYU1yK9CePHHWfC2o10rDrH+2lMIeyrCEZKs5MBcxsVBE8vpOm1yIEoIMA
+ EipsLxTVXlYUs6EB/ZpssYQjy0eC5ZogSWwjBbNXK6gTFoJMieV991oJKOwF+c12WsacE7QTL6y
+ L3Ho0gVoOJbu6HcYLDA==
+X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a831961 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=IOLgoV1oOz-xrUi0nb4A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: vUHXDkZI7QuNjZg0GXxSpMY1qkFcCqS8
+X-Proofpoint-GUID: vUHXDkZI7QuNjZg0GXxSpMY1qkFcCqS8
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEwNyBTYWx0ZWRfX9fMMbBW82A6a
+ k1aj7HX5InvpmFv2+wdlYqE7OBEVmRb385NkavG+9uoVqLCL9l0p8bt6J3wqb66YYzYMqhMuuQ5
+ vtmwm5M7F/uC3/XI3D32OvoZGGULVhQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_01,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 spamscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170107
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,470 +126,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VM launch update is a mechanism where the virtual machines can use IGVM
-file bundle to boot into a trusted execution environment without
-having to depend on a untrusted party to provide the IGVM bundle or firmware
-image. This is particularly useful for confidential virtual machines that
-are deployed in the cloud where the tenant and the cloud provider are two
-different entities. In this scenario, virtual machines can bring their own
-trusted IGVM file containing a trusted firmware image
-bundled as a part of their filesystem and then use this hypervisor interface
-to update to a trusted and deterministic boot state.
-This also allows the guests to have a consistent measurements on the firmware
-image.
+On 2026-08-17 11:17, Ilya Leoshkevich wrote:
+> On 8/6/26 17:12, Harald Freudenberger wrote:
+>> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
+>> and CPACF_KM_AES_256 for the cpacf km instruction.
+>> 
+>> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+>> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>> ---
+>>   target/s390x/gen-features.c      |   3 +
+>>   target/s390x/tcg/cpacf.h         |   6 ++
+>>   target/s390x/tcg/cpacf_aes.c     | 107 
+>> +++++++++++++++++++++++++++++++
+>>   target/s390x/tcg/crypto_helper.c |  24 +++++++
+>>   target/s390x/tcg/meson.build     |   1 +
+>>   5 files changed, 141 insertions(+)
+>>   create mode 100644 target/s390x/tcg/cpacf_aes.c
+> 
+> [...]
+> 
+>> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t 
+>> ra,
+>> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
+>> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+>> +                  uint32_t type, uint8_t fc, uint8_t mod)
+>> +{
+>> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+>> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
+>> +    uint64_t len = *src_len_reg, done = 0;
+>> +    int i, keysize, addr_reg_size = 64;
+>> +    uint8_t key[32];
+>> +    AES_KEY exkey;
+>> +
+>> +    g_assert(type == S390_FEAT_TYPE_KM);
+>> +    switch (fc) {
+>> +    case CPACF_KM_AES_128:
+>> +        keysize = 16;
+>> +        break;
+>> +    case CPACF_KM_AES_192:
+>> +        keysize = 24;
+>> +        break;
+>> +    case CPACF_KM_AES_256:
+>> +        keysize = 32;
+>> +        break;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    if (!(env->psw.mask & PSW_MASK_64)) {
+>> +        len = (uint32_t)len;
+>> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+>> +    }
+> 
+> Just noticed something, here and in all other patches. POp says:
+> 
+> 
+> In the 24-bit addressing mode, the contents of bit
+> positions 40-63 of general registers R1 and R2 consti-
+> tute the addresses of the first and second operands,
+> respectively, and the contents of bit positions 0-39
+> are ignored; bits 40-63 of the updated addresses
+> replace the corresponding bits in general registers R1
+> and R2, carries out of bit position 40 of the updated
+> address are ignored, and the contents of bit positions
+> 32-39 of general registers R1 and R 2 are set to zeros.
+> 
+> 
+> Seems like we are not zeroing out bits 32-39?
+> 
 
-Currently, this mechanism only works if the VM was started with IGVM in the
-first place.
+Do we support 24 bit mode? Isn't that ditched some years ago?
+At least we definitely do not support s390 kernel in 24 bit mode.
+Maybe userspace is valid.
 
-This change introduces support for the fw-cfg based hypervisor interface
-and the corresponding device. The interface is made generic
-enough so that guests are free to use their own ABI to pass required
-information between initial and trusted execution contexts (where they are
-running their own trusted boot state) without the hypervisor getting
-involved in between.
+>> +
+>> +    /* length has to be properly aligned. */
+>> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
+>> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+>> +    }
+>> +
+>> +    /* fetch key from param block */
+>> +    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
+> 
+> Another weird nit, also here and everywhere else. POp says:
+> 
+> 
+> When the second-operand length is initially zero, the
+> following occurs. The parameter block, first, and sec-
+> ond operands are not accessed, and general regis-
+> ters R1, R2, and R2 + 1 are not changed.
+> 
+> 
+> I guess we need to bail early if length is 0.
 
-Currently, this device is only supported for x86_64 machines. Presence of
-IGVM host libraries is also required for parsing IGVM files. Hence, the device
-cannot be initialized for other machine types or hosts where IGVM support
-is not present. Trying to initialize it for arm for example will lead to failure:
+I'll fix this.
 
-$ ./qemu-system-arm -device vm-launch-update -machine virt
-qemu-system-arm: -device vm-launch-update: This machine does not support vm-launch-update device
-
-A document detailing the specification is added in a subsequent patch. Please
-see docs/specs/vmlaunchupdate.rst.
-Functional and qtests are added in a subsequent patch.
-
-CC: Alex Graf <graf@amazon.com>
-CC: Gerd Hoffman <kraxel@redhat.com>
-
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- hw/misc/meson.build              |   3 +
- hw/misc/trace-events             |   6 +
- hw/misc/vmlaunchupdate.c         | 333 +++++++++++++++++++++++++++++++
- include/hw/misc/vmlaunchupdate.h |  38 ++++
- 4 files changed, 380 insertions(+)
- create mode 100644 hw/misc/vmlaunchupdate.c
- create mode 100644 include/hw/misc/vmlaunchupdate.h
-
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e86d9ad6b3..858ca845a2 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -164,6 +164,9 @@ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
- 
- specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
- specific_ss.add(when: 'CONFIG_RISCV_MIPS_CPC', if_true: files('riscv_cpc.c'))
-+if igvm.found()
-+   specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmlaunchupdate.c'))
-+endif
- 
- system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index c9a868b3ef..2d6d2238c5 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -442,3 +442,9 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
- iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
- iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
- iommu_testdev_dma_armed(bool armed) "armed=%d"
-+
-+# vmlaunchupdate.c
-+launch_update_write(void) ""
-+vmlaunch_reset_enter(void) ""
-+vm_launchupdate_finalize(void) ""
-+restore_host_x86_igvm(void) ""
-diff --git a/hw/misc/vmlaunchupdate.c b/hw/misc/vmlaunchupdate.c
-new file mode 100644
-index 0000000000..afa2d278ae
---- /dev/null
-+++ b/hw/misc/vmlaunchupdate.c
-@@ -0,0 +1,333 @@
-+/*
-+ * Guest driven VM launch component update (using IGVM) device
-+ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-+ *
-+ * Copyright (C) 2026 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "system/physmem.h"
-+#include "system/reset.h"
-+#include "qemu/target-info-qapi.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/i386/pc.h"
-+#include "exec/cpu-common.h"
-+#include "hw/misc/vmlaunchupdate.h"
-+#include "system/igvm.h"
-+#include "system/igvm-internal.h"
-+#include "qemu/error-report.h"
-+#include "trace.h"
-+
-+/* returns NULL unless there is exactly one device */
-+static VMLaunchUpdateState *vm_launchupdate_find(void)
-+{
-+    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
-+
-+    return o ? VMLAUNCHUPDATE(o) : NULL;
-+}
-+
-+static bool vmlaunchupdate_supported(void)
-+{
-+    return target_arch() == SYS_EMU_TARGET_X86_64;
-+}
-+
-+static void init_vm_launch_update(VMLaunchUpdateState *s)
-+{
-+    s->launch_update.capabilities = VM_LAUNCHUPDATE_FORMAT_IGVM;
-+    s->launch_update.control = 0;
-+
-+    if (s->disabled) {
-+        s->launch_update.control |= VM_LAUNCHUPDATE_CTL_DISABLE;
-+    }
-+
-+    s->launch_update.version = VM_LAUNCHUPDATE_VERSION;
-+    return;
-+}
-+
-+static void clear_init_vm_launch_update(VMLaunchUpdateState *s)
-+{
-+    memset(&s->launch_update, 0, sizeof(s->launch_update));
-+    init_vm_launch_update(s);
-+}
-+
-+static bool no_igvmcfg(X86MachineState *x86m)
-+{
-+    IgvmCfg *igvmc;
-+
-+    if (!x86m) {
-+        return true;
-+    }
-+
-+    igvmc = x86m->igvm;
-+
-+    if (!igvmc) {
-+        /* The VM was not started with an IGVM, bail */
-+        info_report("guest was not initially started with IGVM, "
-+                    "not changing launch state.");
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static int process_x86_igvm(VMLaunchUpdateState *s,
-+                            uint64_t fw_image_addr, uint64_t fw_image_size)
-+{
-+    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+    IgvmCfg *igvmc = x86machine->igvm;
-+    IgvmHandle igvm;
-+    void *image_addr_ptr;
-+    hwaddr len;
-+
-+    if (no_igvmcfg(x86machine)) {
-+        return -2;
-+    }
-+
-+    if (!fw_image_addr || !fw_image_size) {
-+        return -1;
-+    }
-+
-+    len = (hwaddr) fw_image_size;
-+    image_addr_ptr = physical_memory_map((hwaddr) fw_image_addr,
-+                                         (hwaddr *) &len, 0);
-+
-+    if (!image_addr_ptr || (len < fw_image_size)) {
-+        warn_report("vmlaunchupdate: Invalid guest addresses.");
-+        goto err;
-+    }
-+
-+    igvm = igvm_new_from_binary(image_addr_ptr, fw_image_size);
-+    if (igvm < 0) {
-+        warn_report("vmlaunchupdate: Unable to parse IGVM file %"
-+                    PRIx64 ": %" PRIx64, fw_image_addr, fw_image_size);
-+        goto err;
-+    }
-+
-+    /* free previous file context */
-+    if (igvmc->file >= 0) {
-+        igvm_free(igvmc->file);
-+    }
-+    /* set new context */
-+    igvmc->file = igvm;
-+
-+    physical_memory_unmap(image_addr_ptr, len, 0, 0);
-+    info_report("vmlaunchupdate: new IGVM context set.");
-+
-+    return 0;
-+ err:
-+    if (image_addr_ptr) {
-+        physical_memory_unmap(image_addr_ptr, len, 0, 0);
-+    }
-+    return -1;
-+}
-+
-+static void restore_host_x86_igvm(void)
-+{
-+    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+    IgvmCfg *igvmc = x86machine->igvm;
-+    Error *errp = NULL;
-+
-+    if (no_igvmcfg(x86machine)) {
-+        return;
-+    }
-+
-+    /* free previous file context */
-+    if (igvmc->file >= 0) {
-+        igvm_free(igvmc->file);
-+    }
-+
-+    info_report("restoring original host IGVM: %s", igvmc->filename);
-+    igvmc->file = qigvm_file_init(igvmc->filename, &errp);
-+    assert(!errp);
-+
-+    info_report("vmlaunchupdate: host IGVM context set.");
-+
-+    trace_restore_host_x86_igvm();
-+
-+    return;
-+}
-+
-+static bool fw_address_cleared(VMLaunchUpdateState *s)
-+{
-+    return !s->launch_update.fw_image_addr &&
-+        !s->launch_update.fw_image_size;
-+}
-+
-+static void launch_update_write(void *dev, off_t offset, size_t len)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    uint64_t addr;
-+    uint64_t size;
-+    int rc;
-+
-+    s->launch_update.status = VM_LAUNCHUPDATE_SUCCESS;
-+
-+    if (s->disabled) {
-+        goto end;
-+    }
-+
-+    if (s->launch_update.control & VM_LAUNCHUPDATE_CTL_DISABLE) {
-+        s->disabled = true;
-+        goto end;
-+    }
-+
-+    if (fw_address_cleared(s) &&
-+        (s->launch_update.control & VM_LAUNCHUPDATE_CTL_HOST_IGVM)) {
-+        /* restore host IGVM on immediate next reset */
-+        s->host_igvm_on_reset = true;
-+        goto end;
-+    }
-+
-+    if (!(s->launch_update.control & VM_LAUNCHUPDATE_FORMAT_IGVM) &&
-+        !fw_address_cleared(s)) {
-+        /* at least one address provided but the format is not IGVM */
-+        s->launch_update.status = VM_LAUNCHUPDATE_LOAD_FAIL;
-+        goto end;
-+    }
-+
-+    /* process guest provided IGVM image */
-+    if (s->launch_update.control & VM_LAUNCHUPDATE_FORMAT_IGVM) {
-+        if (target_arch() == SYS_EMU_TARGET_X86_64) {
-+            addr = le64_to_cpu(s->launch_update.fw_image_addr);
-+            size = le64_to_cpu(s->launch_update.fw_image_size);
-+            rc = process_x86_igvm(s, addr, size);
-+            if (rc < 0) {
-+                switch (rc) {
-+                case -2:
-+                    s->launch_update.status = VM_LAUNCHUPDATE_NOT_IGVM_INIT;
-+                    break;
-+                default:
-+                    s->launch_update.status = VM_LAUNCHUPDATE_LOAD_FAIL;
-+                }
-+                goto end;
-+            }
-+        }
-+        /* process other machines here when support is added */
-+    }
-+
-+    /* clear the addresses */
-+    s->launch_update.fw_image_addr = 0x0;
-+    s->launch_update.fw_image_size = 0x0;
-+
-+ end:
-+    trace_launch_update_write();
-+    return;
-+}
-+
-+static void launch_update_select(void *dev)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    init_vm_launch_update(s);
-+}
-+
-+static void vmlaunch_reset_enter(Object *obj, ResetType type)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(obj);
-+
-+    if (target_arch() != SYS_EMU_TARGET_X86_64) {
-+        return;
-+    }
-+
-+    if (s->host_igvm_on_reset) {
-+        restore_host_x86_igvm();
-+        s->host_igvm_on_reset = false;
-+        /* restoring host igvm enables the interface again */
-+        s->disabled = false;
-+        /* clear the host IGVM ctrl bit */
-+        s->launch_update.control &= ~VM_LAUNCHUPDATE_CTL_HOST_IGVM;
-+    }
-+
-+    if ((s->launch_update.control & VM_LAUNCHUPDATE_CTL_HOST_IGVM) &&
-+        (s->launch_update.status == VM_LAUNCHUPDATE_SUCCESS)) {
-+        info_report("vmlaunchupdate: next reset will use host igvm");
-+        s->host_igvm_on_reset = true;
-+    }
-+
-+    trace_vmlaunch_reset_enter();
-+}
-+
-+static ResettableState *vmlaunch_reset_state(Object *obj)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(obj);
-+
-+    return &s->reset_state;
-+}
-+
-+static void vm_launchupdate_realize(DeviceState *dev, Error **errp)
-+{
-+    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
-+    FWCfgState *fw_cfg = fw_cfg_find();
-+
-+    /* multiple devices are not supported */
-+    if (!vm_launchupdate_find()) {
-+        error_setg(errp, "at most one %s device is permitted",
-+                   TYPE_VMLAUNCHUPDATE);
-+        return;
-+    }
-+
-+    /* if current machine is not supported, do not initialize */
-+    if (!vmlaunchupdate_supported()) {
-+        error_setg(errp,
-+                   "This machine does not support vm-launch-update device");
-+        return;
-+    }
-+
-+    /* fw_cfg with DMA support is necessary to support this device */
-+    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
-+        error_setg(errp, "%s device requires fw_cfg",
-+                   TYPE_VMLAUNCHUPDATE);
-+        return;
-+    }
-+
-+    fw_cfg_add_file_callback(fw_cfg, FILE_VMLAUNCHUPDATE,
-+                             launch_update_select, launch_update_write, s,
-+                             &s->launch_update,
-+                             sizeof(s->launch_update),
-+                             false);
-+
-+    clear_init_vm_launch_update(s);
-+    /*
-+     * This device requires to register a global reset because it is
-+     * not plugged to a bus (which, as its QOM parent, would reset it).
-+     */
-+    qemu_register_resettable(OBJECT(s));
-+}
-+
-+static void vm_launchupdate_finalize(Object *obj)
-+{
-+    qemu_unregister_resettable(obj);
-+    trace_vm_launchupdate_finalize();
-+}
-+
-+static void vmlaunchupdate_device_class_init(ObjectClass *klass,
-+                                             const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    /* we are not interested in migration - so no need to populate dc->vmsd */
-+    dc->desc = "VM launch state update device";
-+    dc->realize = vm_launchupdate_realize;
-+    dc->hotpluggable = false;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    rc->phases.enter = vmlaunch_reset_enter;
-+    rc->get_state = vmlaunch_reset_state;
-+}
-+
-+static const TypeInfo vmlaunchupdate_device_types[] = {
-+    {
-+        .name              = TYPE_VMLAUNCHUPDATE,
-+        .parent            = TYPE_DEVICE,
-+        .instance_size     = sizeof(VMLaunchUpdateState),
-+        .class_init        = vmlaunchupdate_device_class_init,
-+        .instance_finalize = vm_launchupdate_finalize,
-+    },
-+};
-+
-+DEFINE_TYPES(vmlaunchupdate_device_types)
-diff --git a/include/hw/misc/vmlaunchupdate.h b/include/hw/misc/vmlaunchupdate.h
-new file mode 100644
-index 0000000000..02f96cebdc
---- /dev/null
-+++ b/include/hw/misc/vmlaunchupdate.h
-@@ -0,0 +1,38 @@
-+/*
-+ * Guest driven VM launch state update device via IGVM.
-+ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-+ *
-+ * Copyright (C) 2026 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+#ifndef VMLAUNCHUPDATE_H
-+#define VMLAUNCHUPDATE_H
-+
-+#include "hw/core/qdev.h"
-+#include "qom/object.h"
-+#include "qemu/units.h"
-+#include "system/igvm-cfg.h"
-+#include "standard-headers/misc/vmlaunchupdate.h"
-+
-+#define TYPE_VMLAUNCHUPDATE "vm-launch-update"
-+
-+typedef struct VMLaunchUpdateState {
-+    DeviceState parent_obj;
-+    VMLaunchUpdate launch_update;
-+    bool disabled;
-+    bool host_igvm_on_reset;
-+    ResettableState reset_state;
-+} VMLaunchUpdateState;
-+
-+
-+typedef struct VMLaunchUpdateStateClass {
-+    ObjectClass parent_class;
-+} VMLaunchUpdateStateClass;
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VMLaunchUpdateState, VMLAUNCHUPDATE);
-+
-+#endif
--- 
-2.42.0
-
+> 
+> [...]
 
