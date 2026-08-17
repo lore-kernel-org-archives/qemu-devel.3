@@ -4,120 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76635C5DF77
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68597C5B572
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvzlF-00076x-Me; Mon, 17 Aug 2026 12:00:29 -0400
+	id 1wvzlE-00076i-L7; Mon, 17 Aug 2026 12:00:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvzl5-00074h-41
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvzl2-00065r-C6
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786982415;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZNBa70HCry/p3vwQzl6rX4JuyCu0T1pkLpYj9wtLirA=;
- b=KxkLj1PWkL6iGNNFqtoFvIpniafQWn2dpe9GKsiQT4UD1rO5G/RJuzzldlolCQ97dFcvRa
- gjXH2JT7xIB4vrKROxrKEpb4c9yp2gL3dc1EbsfFEwAbW/Q4FKj4+LlDL1XjQIthb04ZaZ
- sreSHk4sdTLp/pUaaU9jD1LMfyocp4U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-OtzTCRPgMr2QHUMKyw4kuQ-1; Mon,
- 17 Aug 2026 12:00:08 -0400
-X-MC-Unique: OtzTCRPgMr2QHUMKyw4kuQ-1
-X-Mimecast-MFC-AGG-ID: OtzTCRPgMr2QHUMKyw4kuQ_1786982406
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 126F51800651; Mon, 17 Aug 2026 16:00:05 +0000 (UTC)
-Received: from [100.90.56.12] (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 692ED1800347; Mon, 17 Aug 2026 15:59:59 +0000 (UTC)
-Message-ID: <55cc8357-daeb-4315-9f3a-8be7a59c355b@redhat.com>
-Date: Mon, 17 Aug 2026 17:59:57 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvzl3-00074e-BR
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:23 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvzl1-00065T-5v
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:16 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-836c4474028so34925827b3.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 09:00:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786982413; cv=none;
+ d=google.com; s=arc-20260327;
+ b=aQ2/WsILpYUVqFiHNR170ZXisCp1mvu+qWRSSW37xZlw3uTk11OfroTbLyral9pUNT
+ 54mUsrb4q7umN2hrYXat11c+gOroTj5E/eABZKinH5JvqWUNt8q5DFZDM0C1JySTMQBC
+ NmFThk+vMraUrn9rVTFSQcxPYesJxS8L8/hB0bfGQPX5bWxI3mQWRJMSOSKEBP+AyWV+
+ 2RumVCPdkV6ahwjk/FIDelSv8W+MfBiLZmsCAoibN/cAX7MW91p98U6zqzpD5Beom+kp
+ 9MO6/Z0FllPunnFGg4XEKB3YQi1yTiPASbJrPnasvDloPMJ7yibihNDkw2ZR5TOB+7Te
+ +1yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
+ fh=VKhT/ROQfPaxqvsqCO+NJenwE/mNmOPRDLNy9Z8TYvw=;
+ b=VKimqEJohjvIZr6LNvsUSH5RSYudkh4ryOoH95d+eh55XXQFv3aIjK6A6E2+iT4Sax
+ CdLQOqaS0igcuNQy4DcWKXutAc5PVyYAqWaPZtQYqk/pJROvNaAgM059rmCK/XBHcOkc
+ P83kl0MMfA96chuGFkrnhRp8kSHe4nLhlD1srq1eovt1VUSpKMFSd1YxIDX0JUp3NW54
+ +aKAJ9oREMNkL6q/2hD9XP/k+rlLX/IXOS5/6TOl6AOH6k/5tNaIssrxycgy7SE5I6DU
+ J8VeZoCkc1rDoyVfnnpHhtlvbIuebB8rq6wrfx8lDrHqXnoTRMohpoT5SjyZPlN+35EO
+ OvhA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786982413; x=1787587213; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
+ b=TcOVyzQx/A4fKoxi2qiQmKdqpiqqJ0jt5yoivbPIis5mhs3vBRGJAF9nQjJVQ+LlXH
+ N0/MmiCeRQT/uC66ghiJGCpFNKBQukXlI5uq/nRZGf2rIdbAvTU5gb5TMAGGUHmGnr4Q
+ InFyePsAMsEktTAuaL40BQYWXGDt5n8H4JdoF1ntwPkDP8hDVWHzeoHBqrzTTLM42VDM
+ DlEeoUrdYS0T70Befcioyj9vuYV7J9NS4cudlcZh9E1XrUtJCC/GHSIkg4+rD9eXXtEf
+ gqX3pMv6Wizaj19/9q5su5Qjite/GaH1mWWD5rtP3NqGlsCSg1Ct09ugScfqSesu1coa
+ u4JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786982413; x=1787587213;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
+ b=dabB3K88AixqTQiiSNP+edf3psf+eDiLHQFZ5r8QChF+PsLpNHvm59y6d90kmBnp5e
+ guwkMf/3HzLl5ZWmDgXHfmnqYwCpaalcqP3RS+I6toLqOVM4EuO0xvSF26C5DS+WrCXf
+ kyRpPrNHl0ES4l/BV8dowA/MRVdhj9ZBu8dqT94191F9yXA9HNv8xMb2GDaWm0PpeABB
+ SJxeaPqImEBn8Jz6zT6Cu8ngI/TdUstetLYt70kYAtSCbYDdxvIqmpFh7wH+tDXrscNi
+ BWmNl4ELfw2CCo+IBkA7Pw7fcRQlHcRxcNnPwT4qYXNtLjIVdXmRg8ZqdBXfzx0rX5RC
+ FSRQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrAyWC4I43v8EQWHLmG/Sc26RxgBjfuB6pxNazvJNO/SfgkQgEalrRd8K+5zhj7p3YtuQybWG/XNZJB@nongnu.org
+X-Gm-Message-State: AOJu0YyCQ8gu0CpcSAR/Q1wmtp4ecp9wLKK9Dhawkrsj2V2h2dK2JXX+
+ f3LTxcgQ+o80Wvro+Ysv/WChTYBJH/7he0MJw7qDINxhcaHCGJ8Y+FdGxfkw4J1dKeNVIbL7XHx
+ W/8WUlaIzngxMm+wCLsiX/QHn4cyLJxq7LeEjscdkpw==
+X-Gm-Gg: AR+sD12nIdUHR0327v/Fe9wHQJ3yx9+IpPinhtnaLYJn1LzmfzS2qQhGDa/ZKY9aMXN
+ ClWeNndEsW8xVcq6RCxVjFDNXwVC5vnICe+UIRC64stn3SCQE0HymM/0aVcu2pJdMU+ppKmcxEo
+ 9jAU5VXT6nzoBBFnbrhEtWxqkbA8V3GYywewFRjCGswCDo3ehGQcL/vnGVnPsYYARRAgaNyWfdu
+ F0IYYyDjrMLrtsvh9CraAHcne7BY8hWUhCYr/I4OWSaqma63xoo8blsmTwQ5Pk7tDMdgAuedz43
+ WyNgJYTIAKFaFfQnN7jymLYEcHdeRRFIA0oOksQWX0YgRMd+tYiRqZGdhFlrM2hARl2hFRGgpAV
+ AqsPsUuln0VmODE7ahkRR4CHryNAd
+X-Received: by 2002:a05:690c:a4c8:b0:81d:a1e5:a4d7 with SMTP id
+ 00721157ae682-8370c93d31amr76988627b3.5.1786982413325; Mon, 17 Aug 2026
+ 09:00:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/16] accel/kvm: Consistently return CPU halt state from
- process_async_events
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, Alexander Graf
- <agraf@csgraf.de>, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- kvm@vger.kernel.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-arm@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
 References: <20260813181640.6537-1-philmd@oss.qualcomm.com>
- <20260813181640.6537-12-philmd@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260813181640.6537-12-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ <20260813181640.6537-9-philmd@oss.qualcomm.com>
+ <0143f26e-eb64-4924-8e76-3b6ce66fe6db@redhat.com>
+In-Reply-To: <0143f26e-eb64-4924-8e76-3b6ce66fe6db@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Aug 2026 17:00:01 +0100
+X-Gm-Features: AcwNN1WKg9kcvA4JNKRjNxIc1m-gB0o4nyQG1KVRXlHPNyw8dOI79_GwpnDCC_k
+Message-ID: <CAFEAcA9CzSeOKHiPdwUcowYhiSs2tcT0OR_j6mnyvykgMoaZLw@mail.gmail.com>
+Subject: Re: [PATCH 08/16] cpus: Slightly improve *run_on_cpu() docstrings
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, Alexander Graf <agraf@csgraf.de>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, kvm@vger.kernel.org, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,69 +130,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/26 20:16, Philippe Mathieu-Daudé wrote:
-> When comparing the KVM implementations, RISCV and ARM differ
-> from S390x / PPC and LoongArch. The caller expects a non-zero
-> value to return pausing execution with the EXCP_HLT exception:
-> 
->    3427 int kvm_cpu_exec(CPUState *cpu)
->    3428 {
->    ...
->    3434     if (kvm_arch_process_async_events(cpu)) {
->    3435         return EXCP_HLT;
->    3436     }
->    3437
->    3438     bql_unlock();
->    3439     cpu_exec_start(cpu);
->    3440
->    3441     /* Inner vCPU loop */
->    3442     do {
->    ...
+On Mon, 17 Aug 2026 at 16:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> On 8/13/26 20:16, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Be a bit more precise mentioning BQL use and blocking calls.
+> >
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> > ---
+> >   include/hw/core/cpu.h | 36 ++++++++++++++++++++----------------
+> >   1 file changed, 20 insertions(+), 16 deletions(-)
+> >
+> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+> > index 183ef9f4ef2..d610f87abd3 100644
+> > --- a/include/hw/core/cpu.h
+> > +++ b/include/hw/core/cpu.h
+> > @@ -908,36 +908,40 @@ void do_run_on_cpu(CPUState *cpu, run_on_cpu_func=
+ func, run_on_cpu_data data,
+> >                      QemuMutex *mutex);
+> >
+> >   /**
+> > - * run_on_cpu:
+> > + * run_on_cpu - Execute a function on a vCPU and wait for completion
+> >    * @cpu: The vCPU to run on.
+> >    * @func: The function to be executed.
+> >    * @data: Data to pass to the function.
+> >    *
+> > - * Schedules the function @func for execution on the vCPU @cpu.
+> > + * Schedules the function @func for execution on the vCPU @cpu and
+> > + * block until it completes.
+> > + *
+> > + * Note: The caller must hold the BQL.
+> >    */
+> >   void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data =
+data);
 
-Your patch is correct because, even if cpu_thread_is_idle() sees 
-cpu->halted == false, the flag could become true during 
-process_queued_cpu_work() because it releases the BQL.
 
-However, I think the better fix is to remove the return code, and check 
-cpu->halted in kvm_cpu_exec().
 
-Thanks,
+> > +/**
+> > + * async_safe_run_on_cpu - Queue a function to run with other vCPUs pa=
+used
+> > + * @cpu: The vCPU to run on.
+> > + * @func: The function to be executed.
+> > + * @data: Data to pass to the function.
+> > + *
+> > + * Schedules the function @func for execution on the vCPU @cpu asynchr=
+onously.
+> > + * Unlike async_run_on_cpu(), all other vCPUs are paused while @func e=
+xecutes,
+> > + * ensuring @cpu has exclusive access to shared state.
+>
+> Might as well mention that @func is run without the BQL taken and in
+> fact must not take it (see comment in process_queued_cpu_work()).
 
-Paolo
+We should also mention the massive bear-trap in the run_on_cpu()
+function, which is that (a) you must call it with the BQL and
+(b) it will *drop the BQL* during the course of execution, so the
+caller must be prepared for other threads etc to be able to
+reenter it, update state, etc between when it calls run_on_cpu()
+and when it returns.
 
-> Change ARM and RISC-V to return cs->halted for consistent behavior.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   target/arm/kvm.c           | 2 +-
->   target/riscv/kvm/kvm-cpu.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index d40a6a98591..5caabfab63f 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1575,7 +1575,7 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
->   
->   int kvm_arch_process_async_events(CPUState *cs)
->   {
-> -    return 0;
-> +    return cs->halted;
->   }
->   
->   /**
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 97069bf597a..1a61cd5ef37 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1568,7 +1568,7 @@ int kvm_arch_irqchip_create(KVMState *s)
->   
->   int kvm_arch_process_async_events(CPUState *cs)
->   {
-> -    return 0;
-> +    return cs->halted;
->   }
->   
->   void kvm_arch_pre_run(CPUState *cs, struct kvm_run *run)
+(cf https://gitlab.com/qemu-project/qemu/-/work_items/1109 where
+we can segfault in the raspi display device, because
+memory_region_snapshot_and_clear_dirty() drops the BQL and allows
+the device code to be re-entered, much to its surprise.)
 
+thanks
+-- PMM
 
