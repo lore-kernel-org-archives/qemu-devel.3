@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A51C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1800C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqw-0001uz-Sq; Mon, 17 Aug 2026 06:46:03 -0400
+	id 1wvuqK-0001Dn-U5; Mon, 17 Aug 2026 06:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqk-0001o6-Az; Mon, 17 Aug 2026 06:45:51 -0400
+ id 1wvuqD-00015j-G0; Mon, 17 Aug 2026 06:45:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqh-00040o-L4; Mon, 17 Aug 2026 06:45:49 -0400
+ id 1wvuqB-0003xv-8g; Mon, 17 Aug 2026 06:45:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=5PAbTQM9n14IAh7vv7hdAprQh2tsKs6uvQyLKkIHKYA=;
+ t=1786963486; bh=wYUETFF1LQO8SvgC6w5ZcuhX3jpAWcfrMpU6PRcjqp8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MLiYv+8PHzRZfu/w3oB8d1tx+5EeTRNfMr51QmszUtuEw+ULPoGPJ0zlHlBLjrhGw
- 1MP3hJQ+2yOYNAAzTvRYiYy6dx7TmXWCqgHq9XTKeW0dpF5TCLZJLWagy7cwaVczIF
- zmxHNrmTxWhKSiinSrMSzU0xCZ0mpnyzVrsa4f3V9PdXYrzI08cNyyY/fYzpdZ7gIh
- MNPxGl812P5Hr8+/H5g4efIRZtbW9KUhvMWmEJse1g4ktakan0p0ZOx2j6XnX9crBf
- nofnuyyf67VKNKLI8zrp51QIJb+0KYBVnzJ5t0jiaQXbFWGKMAL9c+enkgzvgqxWLB
- 1IprVxE/RDvsA==
+ b=WjETkO08Cddv6rqLO3g2ahwINsU/+UKozno0VGBHSYUEa1YHToNFaVBm7ALWkW5eI
+ SDyzJMdjfWMrwUPm2ByuYJFjhY1GGot1DruR//EGX3iX8B9KfgQMr8FpflnmG9pJxf
+ M/PCaj4TZhndR3Fg9nKV8fubCr/GS1a7vgmj7oZ+3BIkIAJNHeZ85pz8eXZzdvVR2h
+ Yy4ayRK7U/MrVAAWEytzuMoR1Bp3x3e7pa8k5YnriAX25EJOJUXV0Zc3Cy6OYwo7/M
+ c2XOv0x3KObKyi/yXuDz1epOQpvi7UGg7KWFvmYP/bEtWaGTFCqt+Qfu85BT35QhyI
+ 03w9fJaQImrBg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 84B121CBB72;
+ by isrv.corpit.ru (Postfix) with ESMTP id 657871CBB6B;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 85A0640D203;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 66F8840D1FB;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1443930E5C; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id F1E6330E4E; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zhuoying Cai <zycai@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 133/161] pc-bios/s390-ccw: Add per-queue
- notification offset for multi-queue virtio configurations
-Date: Mon, 17 Aug 2026 13:42:47 +0300
-Message-ID: <20260817104344.2047346-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 126/161] tests/tcg/s390x: Test PRNO TRNG
+ interruptibility
+Date: Mon, 17 Aug 2026 13:42:40 +0300
+Message-ID: <20260817104344.2047346-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -73,154 +72,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhuoying Cai <zycai@linux.ibm.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
-other device types require multiple queues, and for PCI device types this also
-requires a per-queue notification offset.
+Add a small test that issues a large PRNO TRNG request while a timer is
+running, and checks that the timer interrupts it several times.
 
-Add a PCI notify field to the VRing struct so that each queue has a unique
-notify offset as defined in the virtio spec.
-
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20260630141917.673995-4-jrossi@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 084feb909808d542c789dcbbf0f1ad01350a90ce)
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-3-iii@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit abe1d893f41d5fcbdabc22f46ec148069a4ef319)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-index 53bdb52e76a..2c83ec4f131 100644
---- a/pc-bios/s390-ccw/virtio-pci.c
-+++ b/pc-bios/s390-ccw/virtio-pci.c
-@@ -21,7 +21,6 @@ VirtioPciCap c_cap; /* Common capabilities  */
- VirtioPciCap d_cap; /* Device capabilities  */
- VirtioPciCap n_cap; /* Notify capabilities  */
- uint32_t notify_mult;
--uint16_t q_notify_offset;
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index 0ca030ded01..48cba4cdfa4 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
+ Z13_TESTS+=vstl
+ Z13_TESTS+=vrep
+ Z13_TESTS+=precise-smc-user
++Z13_TESTS+=prno-trng
+ $(Z13_TESTS): CFLAGS+=-march=z13 -O2
+ TESTS+=$(Z13_TESTS)
  
- static int virtio_pci_set_status(uint8_t status)
- {
-@@ -74,10 +73,10 @@ int virtio_pci_reset(VDev *vdev)
-     return 0;
- }
- 
--long virtio_pci_notify(int vq_id)
-+long virtio_pci_notify(VRing *vr)
- {
--    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
--    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
-+    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
-+    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
- }
- 
- /*
-@@ -301,8 +300,7 @@ static int virtio_pci_read_pci_cap_config(void)
-     }
- 
-     rc = vpci_read_bswap32(pos + VPCI_N_CAP_MULT, PCI_CFGBAR, &notify_mult);
--    if (rc || vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar,
--                                &q_notify_offset)) {
-+    if (rc) {
-         puts("Failed to read notification queue configuration");
-         return -EIO;
-     }
-@@ -332,7 +330,6 @@ int virtio_pci_setup(VDev *vdev)
-     VRing *vr;
-     int rc;
-     uint8_t status;
--    uint16_t vq_size;
-     int i = 0;
- 
-     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-@@ -380,28 +377,39 @@ int virtio_pci_setup(VDev *vdev)
-         return -EIO;
-     }
- 
--    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
--        puts("Failed to read virt-queue configuration");
--        return -EIO;
--    }
--
-     /* Configure virt-queues for pci */
-     for (i = 0; i < vdev->nr_vqs; i++) {
-+        uint16_t vq_size;
-+        uint16_t vq_notify;
-         VqInfo info = {
-             .queue = (unsigned long long) virtio_get_ring_area(i),
-             .align = KVM_S390_VIRTIO_RING_ALIGN,
-             .index = i,
--            .num = vq_size,
-+            .num = 0,
-         };
- 
-         vr = &vdev->vrings[i];
--        vring_init(vr, &info);
- 
--        if (vpci_set_selected_vq(vr->id)) {
-+        if (vpci_set_selected_vq(i)) {
-             puts("Failed to set selected virt-queue");
-             return -EIO;
-         }
- 
-+        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
-+            printf("Failed to read virt-queue %d size\n", i);
-+            return -EIO;
-+        }
+diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
+new file mode 100644
+index 00000000000..43eea5db1dc
+--- /dev/null
++++ b/tests/tcg/s390x/prno-trng.c
+@@ -0,0 +1,67 @@
++/*
++ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/time.h>
++#include <asm/ucontext.h>
 +
-+        info.num = vq_size;
++static unsigned char buf1[16 * 1024 * 1024];
++static unsigned char buf2[16 * 1024 * 1024];
 +
-+        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
-+            printf("Failed to read virt-queue %d notify offset\n", i);
-+            return -EIO;
-+        }
++static volatile sig_atomic_t interrupted;
 +
-+        vr->pci_notify = vq_notify;
-+        vring_init(vr, &info);
++static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
++{
++    struct ucontext *uc = ucontext;
++    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
 +
-         rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
-         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
-         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
-diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
-index 90d07cb9a76..2494df16198 100644
---- a/pc-bios/s390-ccw/virtio-pci.h
-+++ b/pc-bios/s390-ccw/virtio-pci.h
-@@ -64,7 +64,7 @@ typedef struct VirtioPciCap  VirtioPciCap;
- 
- void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
- int virtio_pci_reset(VDev *vdev);
--long virtio_pci_notify(int vq_id);
-+long virtio_pci_notify(VRing *vr);
- int virtio_pci_setup(VDev *vdev);
- int virtio_pci_setup_device(void);
- 
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index 7883871033c..df04479aa69 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -114,7 +114,7 @@ bool vring_notify(VRing *vr)
-         vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
-         break;
-     case S390_IPL_TYPE_PCI:
--        vr->cookie = virtio_pci_notify(vr->id);
-+        vr->cookie = virtio_pci_notify(vr);
-         break;
-     default:
-         return 1;
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index d32a4830cad..75ae5bdbc22 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -107,6 +107,7 @@ struct VRing {
-     VRingUsed *used;
-     long cookie;
-     int id;
-+    uint16_t pci_notify;
- };
- typedef struct VRing VRing;
- 
++    if (*(unsigned short *)(addr - 4) == 0xb93c) {
++        interrupted++;
++    }
++}
++
++static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
++{
++    register unsigned long r0 asm("r0") = 114;  /* TRNG */
++    register unsigned long r2 asm("r2") = (unsigned long)b1;
++    register unsigned long r3 asm("r3") = l1;
++    register unsigned long r4 asm("r4") = (unsigned long)b2;
++    register unsigned long r5 asm("r5") = l2;
++
++    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
++                 "   jo 0b"
++                 : [r2] "+r" (r2), [r3] "+r" (r3)
++                 , [r4] "+r" (r4), [r5] "+r" (r5)
++                 : "r" (r0)
++                 : "cc", "memory");
++}
++
++int main(void)
++{
++    struct itimerval it = {
++        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
++        .it_value = { .tv_usec = 10000 },
++    };
++    struct sigaction act = {
++        .sa_sigaction = sigprof_handler,
++        .sa_flags = SA_SIGINFO,
++    };
++    int err;
++
++    err = sigaction(SIGPROF, &act, NULL);
++    assert(err == 0);
++    err = setitimer(ITIMER_PROF, &it, NULL);
++    assert(err == 0);
++
++    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
++    printf("interrupted %d times\n", interrupted);
++    assert(interrupted >= 3);
++
++    return EXIT_SUCCESS;
++}
 -- 
 2.47.3
 
