@@ -4,103 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B1AC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816B3C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvwtp-0001yT-HS; Mon, 17 Aug 2026 08:57:09 -0400
+	id 1wvwvM-0002aH-0u; Mon, 17 Aug 2026 08:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1wvwto-0001yD-3U
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:57:08 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
- id 1wvwtm-00066L-I4
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:57:07 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-8487b7b3fc8so3592035b3a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 05:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786971424; x=1787576224; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=VwhgCcZfQ10p7+mRK801X1VAVUGrzuWIcII2z0LM2Ho=;
- b=Gtc5aKogeb9Kcv7bTHZohNuR4L2w0CWFP22C6fZMuWcVEDzL9MvaZkEKQi3zAtV9Ms
- s5An5LTQGwr3Sa8cZjQiKYoQviMJlvAM1NuHY95jhxvQ0qsyQNZDt0UgKIdxLaCiakLc
- kVVy9lfKq7a4v/jX9A0tdn7ItLRt18qVY4v/80AKLHIxN1Mzlq1xl4ylj9Y0Msk2XD8l
- MDcnbuh/LQ9XqOLwtPa8l3dj2HJgxhDfEE/GUmFFUZnbFK/sslnvWlrZyB8q8I+sXnuR
- hEqFZvOvgcf3OZTv+EdF+baMXOMXHHGU4eMyISOGN855zUul/aeukfZje+gK5b/ScGUe
- UvVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786971424; x=1787576224;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=VwhgCcZfQ10p7+mRK801X1VAVUGrzuWIcII2z0LM2Ho=;
- b=TaLqQkPDKSIg6UfQTzhGFWAsGj9lZ+6a4DY1KcEeLSdNaJcSJFTYxwc+ohNlxo/8YL
- uzBiym/qI8E58ymTeLGZCe5hSBdEqucBvHWWr4B9N4QZeM6+AlEkmCWB+GN2yvYQZKIM
- 5A4MNunUXW0g8SS2k3o1l8ifyN4HDNEzpm8Q5cK9VlnzOqJb+v81gDrCBZAm2uR3iw5R
- wkGx7MlP+e/rLjuI/bdJ2XcpAVVltE3WjwfHbZlfUvzwttR26x8FU+c1PgixEphsJfcS
- g8mu5VbHz6x+TgXHY/eZTuoVOh9UiPwOlLUwtqCS5ndB5td7Neu0I6bInv7Y5TP1k89v
- F8Vw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqXujJh8e4QE6f/BHT4Y6T7YcU2s61Zq5qClCv4ZJiRvX8L5aFXmXI6wZWGUkI2nezf1ePuG+CRi7d3@nongnu.org
-X-Gm-Message-State: AOJu0YxN6+BeOway9mj/4wQJ+XGBfEQTSyUHOxB2h95MgvdS6au7NjWh
- C1uiALDpUknakZ3XOim9Tnh2/ANaKjNl5LyZdJvulr0Dz7ma6teT1tvp
-X-Gm-Gg: AR+sD11ocOTChP0iqrzroXG//IjIAoR2/2ZWw0YYld7QrTucoYlK4RiKLOoNtPWxRYX
- gT8gmd0PecfWMSweHtseCVrhIXuvEayBpTKmKHGaeRzuynAPNxRrY1VDzjKWmaqShD3iN7iI409
- 1HqGsQxWBozLR6K/XdxB3OLWOEUDC6C3JBFR0sMeSg/HCoKy3oJWJd5JxctUovko2umRP8juN6F
- xvuEl20T6Jy6hmsrlN5NxC0lrJDB+lO5AvP043cgctN4VNBooGsTp6hnREP3Mb0X9hkPrDN+eUQ
- FMiYcnJ3wjiw6vjht/1N6ZU/y0AhpUNZhzFaoNsNS0RLYT8lFyHggxDCPwaqOzyaWtTjjWUCcuo
- J04Fy2WGUgSadVj5hITIzES0VbipJozLMDfV3e5FPP/ZWYOtqsO4ubYsECUXdXfwrIV2JnLWqHh
- T/xm6XsqReAZHWASKHt04cK/LD8JZgoJr2MI/OvyPI6sTmDj52dfQ04dhSbJYCIig=
-X-Received: by 2002:a05:6a00:ab8a:b0:851:804c:f4eb with SMTP id
- d2e1a72fcca58-851b87eae5dmr550593b3a.4.1786971424194; 
- Mon, 17 Aug 2026 05:57:04 -0700 (PDT)
-Received: from [192.168.0.111] ([14.19.46.155])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b6fc0158sm240039b3a.40.2026.08.17.05.56.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Aug 2026 05:57:03 -0700 (PDT)
-Message-ID: <995765d3-4c5c-4988-ac2b-ad8c97187ad9@gmail.com>
-Date: Mon, 17 Aug 2026 20:56:57 +0800
+ (Exim 4.90_1) (envelope-from <tasmiya@linux.ibm.com>)
+ id 1wvvYB-0006Kx-JC; Mon, 17 Aug 2026 07:31:05 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tasmiya@linux.ibm.com>)
+ id 1wvvY9-0004sR-NF; Mon, 17 Aug 2026 07:30:43 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HBA1nB3685351; Mon, 17 Aug 2026 11:30:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=d0Qk79J7x78ch+ZEgVNnp9klfeeXmh
+ fZcuDfGlemCHA=; b=cxe1fkPtmSUIruyNPlESaopI7bD23dYxVxvSXYxa0QaJS6
+ Mp8VgH49BVEPF2lSU3gwEfCyWhp36MnFzl4Vtgs3YT+9HkN/fl2XC8gRq2RLFlOY
+ zwDcq8RllbKBMk4IM1m5uvcxOrW+SeLaW8O8achjD1yAps3Fny81k72BGZED4FU+
+ 51MTDoGWJdMSWaz8sIl2bIZ4Uqp05grwy4w1PV96P1UhftXDw2maO0obWM1NcNbq
+ pp2pB7xqqFH+cBo742p1/5Y6NrkE49TUs/FmWTVTVlneDqKUhz/5lcoTJcezSgIg
+ n8xOpi6zd97L/fdLsnPIZ2lGECFVvthF0blHHajA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fm3hypy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 11:30:33 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HBQNjQ032694;
+ Mon, 17 Aug 2026 11:30:32 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tvwwvf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 11:30:32 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67HBUSfO46793106
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Aug 2026 11:30:28 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6647B2004B;
+ Mon, 17 Aug 2026 11:30:28 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CE6C20040;
+ Mon, 17 Aug 2026 11:30:24 +0000 (GMT)
+Received: from [9.61.253.76] (unknown [9.61.253.76])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Aug 2026 11:30:23 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------JzPKCB9A3JpqCa5IjS1335Jp"
+Message-ID: <d528bed4-fa37-490c-8562-cdf7e0d609af@linux.ibm.com>
+Date: Mon, 17 Aug 2026 17:00:21 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/char: add K230 DW 8250-compatible UART
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
- <20260808-feat-k230-uart-v3-v3-1-d73b31f0034b@gmail.com>
- <0ccb0d65-b185-4700-af98-faa27a806aa4@oss.qualcomm.com>
+From: tasmiya <tasmiya@linux.ibm.com>
+Subject: Re: [PATCH 7/7] target/ppc: Add ICBT support for ISA version 2.07
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ tommusta@gmail.com
+Cc: richard.henderson@linaro.org, milesg@linux.ibm.com, shivangu@linux.ibm.com
+References: <20260715125634.2107320-1-rathc@linux.ibm.com>
+ <20260715125634.2107320-8-rathc@linux.ibm.com>
 Content-Language: en-US
-From: WX Chen <wxchen0913@gmail.com>
-In-Reply-To: <0ccb0d65-b185-4700-af98-faa27a806aa4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=wxchen0913@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260715125634.2107320-8-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 5zPltG9T0yVXgwR4KnkHbXmvIRQgwO8z
+X-Proofpoint-ORIG-GUID: JoUe8kOaTFyJIcYQwEH3e1p0uuh-qx4p
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA4MiBTYWx0ZWRfX2wyTO+5OX9HH
+ hqKhXt/Jt/w1cAlEY11XcvkJQlAwVrfuNJJ95lUOJH/KjRaMEacf4EPUuDaeEaD4Ik1mSPIEf+i
+ uvLHCOVZ8PIHrnkcTSX55c0KCtQpe0U=
+X-Authority-Analysis: v=2.4 cv=WtQb99fv c=1 sm=1 tr=0 ts=6a82f0d9 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
+ a=Pp8WnITD-ZstDvzC6fAA:9 a=QEXdDO2ut3YA:10 a=OnGLaWPSZAZnKT-RGIgA:9
+ a=73M0mSZGDu8vpsm-:21 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA4MiBTYWx0ZWRfX9SI/AM5oHs8Y
+ j4PUru86ChvYtcipWNYn1+L5PXl0ShswWAulUMEeNp3AYZdBzYAnMrIA+N7SwOCbV9td3iTWLEd
+ HDjEi7f2VqjNCKjsSgiftO9CbFQ4AY0n4NAr14Kgrw3KO6BnDtUkzNLPebBRPTwU6xeSQhqy8c5
+ igoxktvDlnF9GGxopDkKVX0ful+TSuCtESHpz9B6zx1qUl0e/J0fmPn3VVrRA3tx3IK+vJ0UKmt
+ wcomUgW3DnYRSM1IStLeNnOcSykEDmhcjfPU2Bv3GkfpJRqaOg07qP3dA2ZtQJqJHJM+tieRMjR
+ kHSbH2YjulxsbBvffDITia7a2zcHnJcD4zodBv25OOa5nTxxriA5ALskG8BXskTrWbiDiZp0u1H
+ SdqRK3LZDfvT9B66vEq6BnLGwRnMtt4uqXI3MuNXNxKaxyHLHxT/JIicBHGFTsVUf7ftu7iyTAF
+ 0oOk3CtGYqqlreolk7A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1011 adultscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608170082
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=tasmiya@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 17 Aug 2026 08:58:42 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,53 +128,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a multi-part message in MIME format.
+--------------JzPKCB9A3JpqCa5IjS1335Jp
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 8/15/26 21:57, Philippe Mathieu-Daudé wrote:
-> How much this diverges of the generic 8250 model we have?
+Greetings,
+
+I tested the patch on my setup and can confirm it fixes the "illegal 
+instruction" issue I was seeing with HTX mdt.all on a KVM guest.
+
+*Issue observed (before patch) :*
+With HTX mdt.all running on the guest, hxecpu would crash with:
+
+/"hxecpu[7487]: illegal instruction (4) at 7fffbc401054 nip 7fffbc401054 
+lr 7fffbc400adc code 1"/
+
+*After applying this patch:*
+The illegal instruction errors are no longer seen in dmesg, and hxecpu 
+runs cleanly through HTX.
+
+
+Tested-by: Tasmiya Nalatwad <tasmiya@linux.ibm.com>
+
+
+
+On 15/07/26 6:26 pm, Chinmay Rath wrote:
+> The summary of changes in Power ISA version 2.07B mentions :
+> "ICBT instruction has been moved from the Embedded category
+> to the Base category".
+> Updating ICBT flag for the same.
 >
-> In order to reduce maintenance burden with duplicated code, the
-> project preference is to use the inheritance pattern of oriented
-> bject programming, in particular with QOM APIs.
+> While we are at it, correct the invalid mask as per the ISA as well.
 >
-> This model could inherit from our generic model with:
+> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+> ---
+>   target/ppc/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 >
->   TypeInfo::parent = TYPE_SERIAL
->
-> then override its specific methods.
->
-> Could you have a look and justify the full rewrite? 
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 8dab54ccee..3cd849c706 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -4559,8 +4559,8 @@ GEN_HANDLER2_E(tlbilx_booke206, "tlbilx", 0x1F, 0x12, 0x00, 0x03800001,
+>   GEN_HANDLER(wrtee, 0x1F, 0x03, 0x04, 0x000FFC01, PPC_WRTEE),
+>   GEN_HANDLER(wrteei, 0x1F, 0x03, 0x05, 0x000E7C01, PPC_WRTEE),
+>   GEN_HANDLER(dlmzb, 0x1F, 0x0E, 0x02, 0x00000000, PPC_440_SPEC),
+> -GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x03E00001,
+> -               PPC_BOOKE, PPC2_BOOKE206),
+> +GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x02000001,
+> +               PPC_BOOKE, (PPC2_BOOKE206 | PPC2_ISA207)),
+>   GEN_HANDLER2(icbt_440, "icbt", 0x1F, 0x06, 0x08, 0x03E00001,
+>                PPC_440_SPEC),
+>   GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
+--------------JzPKCB9A3JpqCa5IjS1335Jp
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Phil,
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Greetings,</p>
+    <p>I tested the patch on my setup and can confirm it fixes the
+      "illegal instruction" issue I was seeing with HTX mdt.all on a KVM
+      guest.</p>
+    <p><b>Issue observed (before patch) :</b><br>
+      With HTX mdt.all running on the guest, hxecpu would crash with:<br>
+      <br>
+      <i>"hxecpu[7487]: illegal instruction (4) at 7fffbc401054 nip
+        7fffbc401054 lr 7fffbc400adc code 1"</i></p>
+    <b>After applying this patch:</b><br>
+    The illegal instruction errors are no longer seen in dmesg, and
+    hxecpu runs cleanly through HTX.
+    <p><br>
+    </p>
+    <p>Tested-by: Tasmiya Nalatwad <a class="moz-txt-link-rfc2396E" href="mailto:tasmiya@linux.ibm.com">&lt;tasmiya@linux.ibm.com&gt;</a></p>
+    <p><br>
+    </p>
+    <br>
+    <div class="moz-cite-prefix">On 15/07/26 6:26 pm, Chinmay Rath
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20260715125634.2107320-8-rathc@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">The summary of changes in Power ISA version 2.07B mentions :
+"ICBT instruction has been moved from the Embedded category
+to the Base category".
+Updating ICBT flag for the same.
 
-Thanks for the review.
+While we are at it, correct the invalid mask as per the ISA as well.
 
-The rewrite was not meant as a replacement for the generic 8250. I
-was following the K230 TRM as closely as I could, and I did not
-realize the preferred approach was to reuse the in-tree 8250 via
-QOM rather than reimplement the 16550 core.
+Signed-off-by: Chinmay Rath <a class="moz-txt-link-rfc2396E"
+      href="mailto:rathc@linux.ibm.com">&lt;rathc@linux.ibm.com&gt;</a>
+---
+ target/ppc/translate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I agree the duplication is not justified. I will respin this to
-inherit from / reuse the generic serial model as you suggested,
-and keep the DesignWare probe window that Linux 8250_dw needs
-(UCV/CPR/CTR/DLF/USR).
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 8dab54ccee..3cd849c706 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -4559,8 +4559,8 @@ GEN_HANDLER2_E(tlbilx_booke206, "tlbilx", 0x1F, 0x12, 0x00, 0x03800001,
+ GEN_HANDLER(wrtee, 0x1F, 0x03, 0x04, 0x000FFC01, PPC_WRTEE),
+ GEN_HANDLER(wrteei, 0x1F, 0x03, 0x05, 0x000E7C01, PPC_WRTEE),
+ GEN_HANDLER(dlmzb, 0x1F, 0x0E, 0x02, 0x00000000, PPC_440_SPEC),
+-GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x03E00001,
+-               PPC_BOOKE, PPC2_BOOKE206),
++GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x02000001,
++               PPC_BOOKE, (PPC2_BOOKE206 | PPC2_ISA207)),
+ GEN_HANDLER2(icbt_440, "icbt", 0x1F, 0x06, 0x08, 0x03E00001,
+              PPC_440_SPEC),
+ GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
+</pre>
+    </blockquote>
+  </body>
+</html>
 
-One open question: the TRM (and CPR) advertise some DesignWare
-extras beyond a plain 16550 — for example a 32-byte FIFO, THRE
-mode, shadow registers, and USR busy-detect. The first version
-implemented several of these, which is why it grew into a full
-rewrite. For the respin, should I:
-
-   1) keep only the minimal probe window (CPR not advertising
-      features the generic model does not implement), or
-   2) plan follow-up work to model some of those DW extras?
-
-I am happy either way; I mainly want to know which level of
-fidelity is good.
-
-If the pending generic dw8250 lands first, I can also switch the
-K230 board over to that type instead of keeping a parallel model.
-
-Thanks,
-WX Chen
+--------------JzPKCB9A3JpqCa5IjS1335Jp--
 
 
