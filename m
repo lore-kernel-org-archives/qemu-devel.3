@@ -4,114 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152BFC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9092EC5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtTX-0005Nu-Hg; Mon, 17 Aug 2026 05:17:47 -0400
+	id 1wvtUK-0005mP-VE; Mon, 17 Aug 2026 05:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvtTV-0005NO-7W; Mon, 17 Aug 2026 05:17:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvtTT-0003o3-73; Mon, 17 Aug 2026 05:17:44 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLW4NY3637430; Mon, 17 Aug 2026 09:17:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=EjDS1l
- kzE6S/WfWJ85GdmcWr+iJ90WgA6tq4CZ1WjAw=; b=Usye1Yss50Oc+Kk42e4MHd
- kdItTRA5O5ABgV6vHpwsUA8aVRtTBLty8mlw0/+NuXbblzuJKT1yBSrB6po+zfXW
- /TspH/rUmSJymRM/AHWi9siZMsrqjw/iLA5yfwaFwTxeq6cFyaNWmXyygw8Mry+U
- OxB0bZWgi1snPuoMOAj9YE0Q/oUU9BbMnOz3DPLfksLu99laJmPFLRPCFR6amC0B
- +Poh8mbwnea/1lZLxSLOjyddGn1sfMTAgNXywKBESf3D7RfgB+Jfxs3IqUCAfXqA
- g8WdJyb1MwBnLZO9TbPKPWDSuvIHnuncP1Zk0i+lg73l+J3ywMAYCTv94uZXl2rQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhksfjy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 09:17:38 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67H9BJ3O003662;
- Mon, 17 Aug 2026 09:17:38 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tvwfve-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 09:17:37 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67H9HYSn48169362
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 09:17:34 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ECE5620049;
- Mon, 17 Aug 2026 09:17:33 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 64ABD20040;
- Mon, 17 Aug 2026 09:17:33 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.12.156])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 09:17:33 +0000 (GMT)
-Message-ID: <e95ee364-3e48-44c4-8c7b-5d306f417c16@linux.ibm.com>
-Date: Mon, 17 Aug 2026 11:17:33 +0200
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wvtUJ-0005mE-LX
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 05:18:35 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wvtUH-0003r9-EO
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 05:18:35 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4955aa106b1so27941555e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 02:18:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1786958311; x=1787563111; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=hbkYtSJwMzBKBO/qIaZ9S5VqcBP390ZyMFSdmF8cAK0=;
+ b=ccj3ToIfAbFLQWp7TOvv+KlGOrc1q1aaElpaTfe/Eioj926O8n4Xz40WTK8X3bCpg0
+ xocO2VdAb30QqsKoUgqLEabJTnRbE41e2hjJ2fRl3vMGW+NpMwdQJ2KXMIDvl7CJuBFq
+ bU5IIJq5pEM8TbCdx0NBtu8qyDuNKYgVy46DkVQEN6qW8VIksZ5ufQ/qRfhxGWX4oINa
+ O+9jk9HyObbFoD2mEhNE/1MhqmAOBJ4ufqHvJ0iZPMakHhLQiBOcAeVazQ/Bf5Q5jqcY
+ PKc//av6iycHuSDKCTrlpiqKqZPKfuk9kpR63kbmZWbFP6flCHHNFtYo8DV9oaGJXTbz
+ VfrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786958311; x=1787563111;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hbkYtSJwMzBKBO/qIaZ9S5VqcBP390ZyMFSdmF8cAK0=;
+ b=k2vE4DxEnQO2ikth+lmeq+Ucmuw5yTkBVO6+aesvUx/LgQyAKBRgJsODJlP7KBrQTV
+ rY2KXBhG5hr3Q77RhjzreQz1amd54liDu2JwQLcf1gqY9ZgoMkzo+vKv7HWujRSop9YP
+ 3OyBbtY+49RDZXbUAuHMmDEu88UlXynvxoialhWg5FM7K+1grXKg6/vjaqgt9bjxCyKl
+ p7tBodswtquyL+CfFPtjaQ2u8zK9hBekB08h4B03Dm0tNxfKWwff5j3xA9GOUTliVVsE
+ ABd4y80nRL7VAJkj2q2sOy3N7QvPrjNLXO9nSJ4VL1WcQIizzxT9nRe1HjQ8hKP0bBZ3
+ ywzw==
+X-Gm-Message-State: AOJu0YxbEwW1e+4bPObXfsEyNWc7of/yglyxIRuqzWmDMSa0aSXa0cSU
+ dp0JEBNrUPb/gFI3eVIQ14NsdKNZ/RiGQPYrYG3h0sL2mdv5NY2JgdEJeQKYD/AZig==
+X-Gm-Gg: AR+sD13SSpCJTzre0aK1qieUiLpGxWpow0Zb92EOjJ7CFfCTBGwEBM3juhhMt2Qgk5d
+ nRlkyFU02XqQeAM0QSJRvp3rABpBsFA2DU4s/mAJJe4d5//jj+AJq4O6/54MGYOjxuaRrW9yg8u
+ SxmPYEmi16T4bG3+smjX4ypR8eaC+E1EVsCSDI7D6pmgwoTDtxsF32LfUxsQnblQHDqIPPCb7KK
+ fuvSNqgrjj7kbsGpc0qZRltcUy5mAo9Kerl45/dRc1o+EhfTMPV+IxhyOtTPPKd8U1QkiWSuYBc
+ oAxec8eXCtWklA29MDXreQEq4TuyRzKLjHOKwKK+VQbLUiltaK+7ODBSCVLVv0QAsBTufQKzLUl
+ MmKiNkJ4uDRoVYMy1HOZ42qNiTy9zuiK3yITLDJIZ2YQCQkXlO6qCamoQgI/v9QVo4ms279trBQ
+ 9uGZZzZFEvNQVGky8krkGDqVRKFYnn45S0FsuCp/dKQUN05pFerm3x8WHvIR2HfA4X9KvgUPMlp
+ tDN9+3YMh9Uzpv6dfxOPDjyuhJBCLr6ByueX7UWGKi6GX2ueFM3zMFZZNIza1Y=
+X-Received: by 2002:a05:600c:871b:b0:499:8b00:5261 with SMTP id
+ 5b1f17b1804b1-4998b0052cdmr336753065e9.8.1786958311160; 
+ Mon, 17 Aug 2026 02:18:31 -0700 (PDT)
+Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
+ [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4999d0876b8sm33985065e9.8.2026.08.17.02.18.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 02:18:30 -0700 (PDT)
+Message-ID: <0086d141-f434-41ef-8048-078882bf3818@suse.com>
+Date: Mon, 17 Aug 2026 11:18:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
- instruction
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260806151302.26846-1-freude@linux.ibm.com>
- <20260806151302.26846-8-freude@linux.ibm.com>
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Chuck Zmudzinski <brchuckz@aol.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel@lists.xenproject.org, Anthony PERARD <anthony.perard@vates.tech>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <20260802050824.10554-1-brchuckz@aol.com>
+ <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
+ <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
+ <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
+ <a98b7e5f-240b-4642-b488-fac69846b3f8@aol.com>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260806151302.26846-8-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Jan Beulich <jbeulich@suse.com>
+Autocrypt: addr=jbeulich@suse.com; keydata=
+ xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
+ hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
+ 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
+ /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
+ O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
+ MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
+ nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
+ 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
+ Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
+ AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
+ e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
+ hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
+ IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
+ FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
+ t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
+ AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
+ HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
+ mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
+ m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
+ EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
+ wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
+ nAuWpQkjM1ASeQwSHEeAWPgskBQL
+In-Reply-To: <a98b7e5f-240b-4642-b488-fac69846b3f8@aol.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA2NyBTYWx0ZWRfX6jWave4D3pPY
- zBW7jpS9objlkJWlCiihk5RK8G6V6AJh6tYaSkGaUtqGttJOQr8pPDFVgX2lMmFdjYo+FQ6zbVb
- aM+B3O9uy/J8JfOw5hArKBA1p6WA0ocaKRUgfL5sbyB5FUl/uroCw1zeHX7xpF0x6ON7H98RQaS
- Drr7FqS+w2GOyh2/5Rn1nR6wERC6gX3ZhsVEIs0iALO/F8NZGjXx973HZqbw54t2ggoV53oMOzz
- ZufdtEzzIcNuQcYOTAnQqw4xh2WdCudrGfPm62Iz5JhdbO9DDj4I9cybWEkFlnDilrKUXDle/VD
- 3K0f9eK+HD6J+GI2uDBbHNCxvFbZ3cVUF9NhK9aABz8dV2SVEM5ynm35LX38IwhRFnElve8nwem
- TbXmm84zgcr3LMEZRBhnD7NlO+CCTS6/zoV8p8zpanMdlhjLqWdHUQY0ZcUd4RZrrBLBXf4AtxA
- crq1VtHNyknv+QJxlIw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA2NyBTYWx0ZWRfXx12/CiI7MZqP
- aw80M1dX54yAPwmwTipxnaZsnITsj09HwiLiYO/mUYk4+n5+2UQF+ug7l3fZFdLtssgMGcTPU04
- eqKTU7jP0A5I4Bil/WwXPsH7iM9Y6e4=
-X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a82d1b2 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=66JXINVWjWM9bfsnM3kA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: FlMzTpB0HA6FEADzy_U0jKf9lL428_Hq
-X-Proofpoint-GUID: FlMzTpB0HA6FEADzy_U0jKf9lL428_Hq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608170067
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=jbeulich@suse.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,93 +133,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/6/26 17:12, Harald Freudenberger wrote:
-> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
-> and CPACF_KM_AES_256 for the cpacf km instruction.
+On 16.08.2026 18:38, Chuck Zmudzinski wrote:
+> On 8/14/2026 3:35 AM, Jan Beulich wrote:
+>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
+>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
+>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
+>>>>> -- snip --
+>>>>> +    /*
+>>>>> +     * Read the value the device model is initialized with.
+>>>>> +     * If the device model supports OpRegion 2, it will
+>>>>> +     * return the host IGD OpRegion address. If not, it
+>>>>> +     * will return 0. If the device model does not support
+>>>>> +     * OpRegion 2, the device model expects us to give it
+>>>>> +     * the address to which it will map the OpRegion in the
+>>>>> +     * guest and then expects us to do nothing more to setup
+>>>>> +     * the OpRegion, so that is all we will do in that case.
+>>>>> +     */
+>>>>
+>>>> Hmm, exposing the host opregion to a guest certainly feels like an issue.
+>>>
+>>> Well, that is how it is now. I am only retaining it to maintain backward
+>>> compatiblily with DM versions that do not support the extended VBT and
+>>> OpRegion 2+. My previous comment about backward compatibilty and DM
+>>> compatibility also applies here. If we don't worry about that, we can do
+>>> away with any cases where we are permanently mapping the host opregion to
+>>> the guest and implement this new approach of always exposing a copy of
+>>> the OpRegion and VBT to the guest instead.
+>>
+>> How does "permanently mapping" matter? hvmloader runs inside the guest, so
+>> exposure just to copy the data isn't any better in terms of this being a
+>> layering violation. The more correct thing to do might be for the DM to
+>> put in place a copy before the guest (i.e. hvmloader) even gains control.
+>> (How in turn the DM would learn of the contents of the opregion is a
+>> separate question then.)
 > 
-> Tested-by: Holger Dengler <dengler@linux.ibm.com>
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> ---
->   target/s390x/gen-features.c      |   3 +
->   target/s390x/tcg/cpacf.h         |   6 ++
->   target/s390x/tcg/cpacf_aes.c     | 107 +++++++++++++++++++++++++++++++
->   target/s390x/tcg/crypto_helper.c |  24 +++++++
->   target/s390x/tcg/meson.build     |   1 +
->   5 files changed, 141 insertions(+)
->   create mode 100644 target/s390x/tcg/cpacf_aes.c
+> I am working on v3 of this patch and I want v3 to address this problem of a
+> "layering violation" that you mentioned here, but I do not understand exactly
+> what you mean. Do you mean to say that the current code we have in place and
+> have had in place for over the past 10 years [1] in the Qemu DM that traps and
+> maps the OpRegion into the guest is a "layering violation?"
+> 
+> [1] https://xenbits.xen.org/gitweb/?p=qemu-xen.git;a=commitdiff;h=5cec8aa38cc
+> ("xen, gfx passthrough: add opregion mapping")
 
-[...]
+All I can say is that this at least smells like a layering violation. It maybe
+wouldn't have if, in your patch, you didn't demonstrate that the machine page
+range doesn't really need mapping, as copying the data and providing that to
+the guest is sufficient. In such a case, the machine range should (imo) never
+have been exposed. After all the guest then can fiddle with it, potentially
+breaking later guests that are to also use the region.
 
-> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
-> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-> +                  uint32_t type, uint8_t fc, uint8_t mod)
-> +{
-> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-> +    uint64_t len = *src_len_reg, done = 0;
-> +    int i, keysize, addr_reg_size = 64;
-> +    uint8_t key[32];
-> +    AES_KEY exkey;
-> +
-> +    g_assert(type == S390_FEAT_TYPE_KM);
-> +    switch (fc) {
-> +    case CPACF_KM_AES_128:
-> +        keysize = 16;
-> +        break;
-> +    case CPACF_KM_AES_192:
-> +        keysize = 24;
-> +        break;
-> +    case CPACF_KM_AES_256:
-> +        keysize = 32;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    if (!(env->psw.mask & PSW_MASK_64)) {
-> +        len = (uint32_t)len;
-> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-> +    }
+>>>>> +    /*
+>>>>> +     * Write rvda_host as 2 successive 32-bit values
+>>>>> +     * to communicate location of the VBT to the device
+>>>>> +     * model. If rvda_host is not 0, The device model
+>>>>> +     * unmaps the OpRegion and eventually maps the VBT
+>>>>> +     * after we also write the guest address where the
+>>>>> +     * VBT will be mapped.
+>>>>> +     *
+>>>>> +     * If we send rvda_host = 0 to the device model, it
+>>>>> +     * will assume we do not need OpRegion 2 support and
+>>>>> +     * it will not unmap the OpRegion.
+>>>>> +     */
+>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
+>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
+>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>> +               (uint32_t)rvda_host_upper_32);
+>>>>
+>>>> Why would you need to communicate a host property to the DM?
+>>>
+>>> The DM cannot access the host rvda value because it is only accessible
+>>> from the host kernel, and the DM is only a user-space process on the host.
+>>
+>> I don't follow this: Anything the guest can access should also be accessible
+>> by its DM.
+> 
+> I also don't follow your comment here so permit me to comment and ask some
+> questions for clarification.
+> 
+> I was thinking it is enough for the domain the DM is running in to have
+> access to the resource for it to be legitimate for the DM to map the resource
+> into the guest. So I also think that whether or not the DM itself can access
+> the resource is irrelevant to the question. But you seem to be saying, no,
+> that is not enough, the DM itself should be able to access the resource
+> before it can be allowed to map the resource to its guest. Is that what you
+> are saying?
 
-Just noticed something, here and in all other patches. POp says:
+That depends on what you mean by "access": The prereq is that the DM have
+permission to access the pages. It may not have an active mapping thereof.
 
+> Perhaps your comment here is related to the concept of a "layering violation"
+> mentioned above. Are you saying it is a layering violation for the DM to
+> map an MMIO resource to its guest unless it actually has access to that
+> resource? If so, what kind of access to those device resources should the
+> DM have? Read access? Read/Write access?
 
-In the 24-bit addressing mode, the contents of bit
-positions 40-63 of general registers R1 and R2 consti-
-tute the addresses of the first and second operands,
-respectively, and the contents of bit positions 0-39
-are ignored; bits 40-63 of the updated addresses
-replace the corresponding bits in general registers R1
-and R2, carries out of bit position 40 of the updated
-address are ignored, and the contents of bit positions
-32-39 of general registers R1 and R 2 are set to zeros.
+No, I'm trying to bring across that (as said above) access to machine pages
+should not be granted when that isn't necessary. As in here: A copy of the
+pages looks to suffice, so simply give the guest access to a copy.
 
+> If the specs only say the DM "should" have access to the resources it maps
+> into its guest, then I would think it would not be a layering violation.
+> But if the specs say the DM "must" have access before it asks the hypervisor
+> to map the resource to the guest, then I would admit that yes, we have a
+> layering violation because the DM is mapping the OpRegion to the guest
+> even though it does not have access to the OpRegion.
+> 
+> So, where are the specs for what the DM can and cannot do? Are they publicly
+> available, or are they proprietary or only available to members of the Linux
+> Foundation and/or the Xen Project?
 
-Seems like we are not zeroing out bits 32-39?
+Sadly the source code (of Xen and/or qemu) is the spec.
 
-> +
-> +    /* length has to be properly aligned. */
-> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
-> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +    }
-> +
-> +    /* fetch key from param block */
-> +    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
-
-Another weird nit, also here and everywhere else. POp says:
-
-
-When the second-operand length is initially zero, the
-following occurs. The parameter block, first, and sec-
-ond operands are not accessed, and general regis-
-ters R1, R2, and R2 + 1 are not changed.
-
-
-I guess we need to bail early if length is 0.
-
-[...]
+Jan
 
