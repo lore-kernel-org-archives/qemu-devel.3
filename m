@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67CFC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59262C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtKY-0007Yj-15; Mon, 17 Aug 2026 05:08:30 -0400
+	id 1wvtJl-0005CB-LB; Mon, 17 Aug 2026 05:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJg-0004rM-Jx; Mon, 17 Aug 2026 05:07:36 -0400
+ id 1wvtJd-0004kP-F0; Mon, 17 Aug 2026 05:07:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJe-0001wq-TI; Mon, 17 Aug 2026 05:07:36 -0400
+ id 1wvtJb-0001w2-LE; Mon, 17 Aug 2026 05:07:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=nLOBd6qmhI9qHAWdEEcaXA/9sF1TdPCH8cF+8kL5n54=;
+ t=1786957506; bh=KlIQqABdyaS4e9YH8nCF2RnZQdBZWf2veFXtmUj2i8A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XAJsQWaEe8XUvHDvIRmTkJRGI/TbVGVVGxU+ZnkiKyysmX/QigVsWDpcwS3cGi74C
- G6VE0OCd7+fB8NhKKnx0E5QAidTfzLMXDCeWTw0snUu8GImAuh7vqAnGdcEvHv5Rhg
- pDEBJnaEJ6ukYHvOo7GZTluMviWaUJxjqtrX7tHfutONmzxMqS8JOJDa2P6k/ROHoI
- feqS7vDlvpyKa+M1KxcstM0XGV37kNTH2IaIzqUfGckZFvk9krYRmfSLjqL6PcR0R0
- edOrze+GTozwZZtWKPeWTkvAQmFBtvKM8UuJFF3+S+psjYqAc56L/aO8RyYzCxSzAF
- AT9hVkpksSznA==
+ b=cleoQbDb05iIFN32++fKGNBZXdZVgFIDF0+Rd15e/BOquF1NRSdeAy3jcPAdOtKeL
+ dDgZx6ArkYvwLr/n3NmPlfy1elqZcrqKWbQIjkQ988Ammr7NCIuNiSFYmzN2P5gG4H
+ UbTsgljN4A0wBzViZzCU7QzMAlqIkJX3Bo619hPaUzTFLcjeC7/4DCwHeGwDniR4O3
+ QQCC7/EQisnz9i7RbOZnPhBS0fBpNeYoKiUIAQXc4ps924WQ2h3geGJ7EIYv0WyJQc
+ 4SVO1mEvmjSzkxSWl5AVn1vwISGXvhmm/b22zHcEmRjcDsjXsZD7qLichqgR8vk+xv
+ aUJnd1o+muM0g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 73CAA1CBA4F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B5691CBA4D;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5328640D031;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49F5A40D02F;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EF7C030D16; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id E952430D12; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 27/42] hw/intc/loongarch_pch_pic: Validate
- htmsi_vector before indexing parent_irq
-Date: Mon, 17 Aug 2026 12:04:32 +0300
-Message-ID: <20260817090453.2034156-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ xlabai <xlabai@tencent.com>, Jules Denardou <jules.denardou@datadoghq.com>,
+ Tristan Madani <tristan@talencesecurity.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 25/42] migration/multifd: Validate next_packet_size in
+ zlib/zstd recv
+Date: Mon, 17 Aug 2026 12:04:30 +0300
+Message-ID: <20260817090453.2034156-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -71,68 +73,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Peter Xu <peterx@redhat.com>
 
-pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
-index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
-the array, but only 32 are used by the virt machine) causes an out-of-bounds
-read and a guest-triggerable QEMU crash.
+The zlib and zstd multifd compression backends read next_packet_size from
+the incoming migration stream and use it directly as the read length into a
+fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
+source can set next_packet_size bigger than allocated, causing a heap
+buffer overflow write on the destination.
 
-Validate the vector before calling qemu_set_irq() in both the raise and lower
-paths and log a guest error if it is out of range.
+Add a check against zbuff_len before reading, matching what the qatzip
+backend already does.  Also replace the assert(in_size == 0) for empty
+packets with proper error reporting, since the value is wire-controlled,
+meanwhile assert() stops working with -DNDEBUG builds.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 80776c4df92c3d58f89608b61e355092a7d524ed)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
+Reported-by: xlabai <xlabai@tencent.com>
+Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
+Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Reported-by: david korczynski (@david1766)
+Reported-by: huntr bubble (@bubblehuntr)
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260728210417.1925078-3-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit ac7fa2e9d457ff9c777be32617f3c46548c4cadf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 82e16be3918..e87c7497c11 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
- {
-     uint64_t val;
-     int irq;
-+    uint8_t vector;
- 
-     if (level) {
-         val = mask & s->intirr & ~s->int_mask;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr |= MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
-+            qemu_set_irq(s->parent_irq[vector], 1);
-         }
-     } else {
-         /*
-@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
-         val = mask & s->intisr & ~s->intirr;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
-+            qemu_set_irq(s->parent_irq[vector], 0);
-         }
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 8820b2a787c..400146566e1 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -216,10 +216,19 @@ static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
      }
- }
+ 
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
+ 
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index 3c2dcf76b0f..69ef1a5f386 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -210,10 +210,19 @@ static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
+     }
+ 
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
+ 
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
 -- 
 2.47.3
 
