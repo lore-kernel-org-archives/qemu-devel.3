@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC51C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26500C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2Z2-00062V-GX; Mon, 17 Aug 2026 15:00:08 -0400
+	id 1ww2Z7-00063W-R9; Mon, 17 Aug 2026 15:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yp-0005zi-Fw
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yr-0005zm-6d
  for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:54 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Ym-0006M7-Ky
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:51 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4954f5e8020so19821835e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:59:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yn-0006MJ-40
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:52 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so35286085e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993186; x=1787597986; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786993187; x=1787597987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AUPnthLnZv0HXOGLcjECWuJuRRQZL1kc6hOnrSo+zaA=;
- b=lkRWq6d2Spbda9GOmt7lgnylBnxjCfGxKOl4nvINx+zu2SzAiUs7z4JWDK7h54HEAz
- WLlpW0IEdlQxBPCygNbpWsRVpqapRYzKmEjtKJzjffM55AN32+Za/uJyC6BXoDiM6LVe
- TUU76II0QlEVefsFq+O8CEhv6vjgL/3T0I2xYFgQXpJMcYDhLcekAKLm5xfwYQjOEiBw
- 5yf43IuWMedRR0nCslDpgt7qgoT/bDJkkUWNl0FPT+AQwvmhQK+3JzofEVAHdpa6LTaS
- ru2ExdSo3Kv6SJ0LLEvAa0PUaDVw1DvZjEbb9gyD85gBMpKtZorqGmpefqnd6RGHpfeT
- 3w7A==
+ bh=Ge1jeswhVctr5Jsow25jpgxpoGxNOiJ1+3Iq4dhUSxM=;
+ b=XhsmBffP54nyKnIDG2jftfIDEeBFfhZsNC1Z2f2IhhQ5wautog60HiN08uQxxciV0S
+ /NKIEla0u9vVW5sXIDDWn3ceLORU2Pv4fB3elw9KBbDqejTY/YxpMobQAgyCP6nWcehL
+ 4nPsYQeVKXhI19xbxiGILFP1p3HMvWDXRylQJwC1fGfmU4w5qIdq5PWy2w+y4wD63ZtD
+ jJIGD/GtgE2uQnW5B85CztanJXIxpdOf4W1z7mj/U/pwM6vFy2PdsaSFDGtAERHxcYCr
+ d/49+ZDjvqp6nU2mhkhk4cYOgyMBKogXXSq5XLiP/m+DSU6tns9uf25d2mcPB4N2nfzd
+ eZBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993186; x=1787597986;
+ d=1e100.net; s=20251104; t=1786993187; x=1787597987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=AUPnthLnZv0HXOGLcjECWuJuRRQZL1kc6hOnrSo+zaA=;
- b=f1oCRsPdAINUr0mtd9T5LWacvvZXwilIE9zjCz/HRCfXxrhWTQzLsUVQKKRku/SKth
- uBsEmo04bENBB4/jJFctpMlFyy1akGnA8od8FwM2sERBtG+OzoWO7EG2eccaDOK7UuS4
- 8S0IOHdmiFe8UUUMmAGj1vX8642blbYQtr3pR75gpO928HJeGfj1CnZ+3TSu7WYDyMtt
- qt4wlNIl7wRA5GKuKSSaKVlpCGwzp7zxXzssRwV4okSVZfOmo7Zjqz2drvnv+xJ/gyv5
- UCxgaMVvk8ACLFounZCFOI4iWL5HWd9uPjEarfMT46rcrYNnndiv2DmpkAp6FXKpJARk
- k7BQ==
-X-Gm-Message-State: AOJu0Yw31iu+0OSbsvLK6iSDVgy+XArxcZRu28qma+FinYUahuCgCBII
- UmgEHinjKJ7CCb6757gMoUVI9MeF7d5WBF9fN15QQzYBw4VZ4eFCX4aQMfsreWbkZKWix7bv99W
- lOzfZ
-X-Gm-Gg: AR+sD12cWL12V9F82kRdaWKOHtH7XX21bsXoUQOEjMZ87T6hdoStx6Txwd6/Vmfl9t+
- rjMQIaY4u3hSdbQxRZA49L6RgMpfRwvbebMbzK0bhAEEubMCDQrAKFDIdiWAFshB1KuBxyDBoAt
- 4sVVHZmpmSyTATqhEdqhXY+LEUHIIAjOg2kr68MSSq5OTs04FExsJ5QHl3BWkM588aF5vW+r1vg
- nSo2ddRaApqlUTqM/ihrQEOaNirKlbk8U71NM0bX5lEtT4mhb7z+sRfa1ZgR1c5eWWE7+buEUs6
- 875OKuqI53Hliu+p+83EjP4MOIppnCyV6VLoYWHtOjYAnU3YsTQs2uk1X7oFof0o5O/uav6rciq
- Bd3lfLGqSKOWHakX/rWpzfdeDPte3Js9XOEubXeAXdWm7m9+9u2rfO4FUidWxgNJL9Eb5PXsJxx
- vUBmZ6w2cJqwUo9cfwuJNSEywHIDXH5d2hf+Uc63UsgXSj0foWFTTQVl3fPjV1
-X-Received: by 2002:a05:600c:1988:b0:496:c93d:e2f with SMTP id
- 5b1f17b1804b1-4998798dc17mr405865395e9.15.1786993186129; 
- Mon, 17 Aug 2026 11:59:46 -0700 (PDT)
+ bh=Ge1jeswhVctr5Jsow25jpgxpoGxNOiJ1+3Iq4dhUSxM=;
+ b=l1AbYaSMJ/CUBfUtngFFAdL1lKsMOvKd3p/UdNWXPEQnhTcAQTXbF6rU39z+nmDvXJ
+ O0Z2d4vgyWODTElSqo8QsyxjiheVea55XMRbMYxrCVw/i84DqA5ysbkF2xIiNofDDHU1
+ LQXcc5K/bGwYy/Y9C6hx6x8NzRn5w6IQlNQRcGeYJMVjh9ClPoD3woAWrVQo4Qbf82vK
+ /aK9nQZUFSNudp1TAKa6mGTbSlpnYlyMc/1ukuZB4m8ZAyQjbseoy+7IteyLx5phkpLs
+ GuwzERoXZphbZ9NLQk4Z9E/xJ/SHvepvoNmJ6EteQIOZcdJZwOPwpNuOCXA7ZqA98I1Z
+ tU8w==
+X-Gm-Message-State: AOJu0Yz0iqM2Ont8DXKC86L5yWVSHGvghJrGukYmVKKToZl2xFqh48Sk
+ ILL/4RRcW/n28PVd+ME1+nC63jB0efbPNDCdSOy4cdIPwOEUPmc6n467gH8iB1rvofOqlIKWNhC
+ ApQPl
+X-Gm-Gg: AR+sD12/PX3bLQqqa/REvqn9LfJ8yXz233luFLjKe4++i6Q+HBbBV3fjfDvy/RMZ849
+ 77w0mak72dpwYOxi32DpGfIae2s5PDh4A31KuxY1BYZCy7e/w4ALt2mpQwPIiTpFSaEKVAQsGDn
+ uEPlxStgbmToMR04Nijnksiyba9z0FrzaGwZoQqm+5H9Zv+WVM7GzyC9J1BQNKMyWqG6N1TDMxf
+ ES9R/uuiP55l/6/9Y/nFwjt9DN1ium5kqmmoY+9bjuS+Fp/41rjV2YPPcFaNKQ+v8S4P5xTo/6L
+ +bN/sj15ZfRxU3CGWvnfpAs9arYZnboOe4e9GMlR5//Sn/mIdJ0g7slNaZf3+XsiVQ739b4oVMm
+ ttzzmje4aaYsc9bSll8jNbX4LqUJ0ETJlfsD+DPK/aM58aM7cnQIvzseJoU17/BVK3sgH40RshM
+ aXMwCTP8jn+SA79Aiu4drEYELI9RrL5dgFLdU/0WS9eWRmpigJyjJiaaxezPhg
+X-Received: by 2002:a05:600c:1387:b0:499:81ae:1020 with SMTP id
+ 5b1f17b1804b1-49987971c60mr305940965e9.11.1786993187240; 
+ Mon, 17 Aug 2026 11:59:47 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.11.59.45
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.11.59.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 11:59:45 -0700 (PDT)
+ Mon, 17 Aug 2026 11:59:46 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Subject: [PATCH v6 01/25] parallels: Set s->used_bmap to NULL in
- parallels_free_used_bitmap()
-Date: Mon, 17 Aug 2026 20:59:18 +0200
-Message-ID: <20260817185942.1065143-2-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v6 02/25] parallels: split inactivation out and add the
+ activation counterpart
+Date: Mon, 17 Aug 2026 20:59:19 +0200
+Message-ID: <20260817185942.1065143-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
 References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +100,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+From: Denis V. Lunev <den@openvz.org>
 
-After used bitmap freeng s->used_bmap points to the freed memory. If we try
-to free used bitmap one more time it leads to double free error.
+We are going to add parallels image extensions storage and need a
+separate function for the inactivation code, which parallels_close()
+carries inline today. Move it into parallels_inactivate() and register
+it as .bdrv_inactivate, so the image is written out when the node is
+inactivated and not only when it is closed.
 
-Set s->used_bmap to NULL to exclude double free error.
+The condition guarding the old call moves inside, as the handler is now
+reached for any node: bdrv_inactivate_recurse() calls it and
+blockdev-set-active can ask for it at any time. There is nothing to
+write out for a node we can not write to, and trying turns a request
+which has nothing to do into "Failed to inactivate node:
+Operation not permitted".
+
+Clearing the in use flag now needs someone to set it again.
+parallels_open() is the only place doing that, and it does not run when
+a node is made active again, which would leave an image whose header
+says it was closed correctly while it is open for writing: a crash then
+looks like a clean shutdown and the repair on open is skipped. Add
+parallels_co_invalidate_cache(), the counterpart of the above, which
+arms the flag again and reports through errp when it can not.
+
+The flag may only be cleared once everything which can still fail has
+succeeded, as a failed inactivation leaves the node writable and the
+image has to keep saying so. The order is therefore the reverse of the
+code being moved: truncate first, write the header last and answer with
+the result of that write instead of ignoring it.
+
+The migration blocker stays, though its comment asks for it to go once
+an activate method exists. An activated node needs more than the in use
+flag to be correct, as the used cluster bitmap describes the image as
+it was before the handover.
+
+Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/parallels.c | 46 ++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 8 deletions(-)
 
 diff --git a/block/parallels.c b/block/parallels.c
-index 50748d1415..94692275c9 100644
+index 94692275c9..f02ad7a0be 100644
 --- a/block/parallels.c
 +++ b/block/parallels.c
-@@ -254,6 +254,7 @@ static void parallels_free_used_bitmap(BlockDriverState *bs)
-     BDRVParallelsState *s = bs->opaque;
-     s->used_bmap_size = 0;
-     g_free(s->used_bmap);
-+    s->used_bmap = NULL;
+@@ -1481,6 +1481,41 @@ fail:
+     return ret;
  }
  
- static int64_t coroutine_fn GRAPH_RDLOCK
++static int GRAPH_RDLOCK parallels_inactivate(BlockDriverState *bs)
++{
++    BDRVParallelsState *s = bs->opaque;
++    int ret;
++
++    if (!(bs->open_flags & BDRV_O_RDWR) || (bs->open_flags & BDRV_O_INACTIVE)) {
++        return 0;
++    }
++
++    ret = bdrv_truncate(bs->file, s->data_end << BDRV_SECTOR_BITS, true,
++                        PREALLOC_MODE_OFF, 0, NULL);
++    if (ret < 0) {
++        return ret;
++    }
++
++    s->header->inuse = 0;
++    return parallels_update_header(bs);
++}
++
++static void coroutine_fn GRAPH_RDLOCK
++parallels_co_invalidate_cache(BlockDriverState *bs, Error **errp)
++{
++    BDRVParallelsState *s = bs->opaque;
++    int ret;
++
++    if (!(bs->open_flags & BDRV_O_RDWR)) {
++        return;
++    }
++
++    s->header->inuse = cpu_to_le32(HEADER_INUSE_MAGIC);
++    ret = parallels_update_header(bs);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Failed to mark the image in use");
++    }
++}
+ 
+ static void parallels_close(BlockDriverState *bs)
+ {
+@@ -1488,14 +1523,7 @@ static void parallels_close(BlockDriverState *bs)
+ 
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
+-    if ((bs->open_flags & BDRV_O_RDWR) && !(bs->open_flags & BDRV_O_INACTIVE)) {
+-        s->header->inuse = 0;
+-        parallels_update_header(bs);
+-
+-        /* errors are ignored, so we might as well pass exact=true */
+-        bdrv_truncate(bs->file, s->data_end << BDRV_SECTOR_BITS, true,
+-                      PREALLOC_MODE_OFF, 0, NULL);
+-    }
++    parallels_inactivate(bs);
+ 
+     parallels_free_used_bitmap(bs);
+ 
+@@ -1533,6 +1561,8 @@ static BlockDriver bdrv_parallels = {
+     .bdrv_co_check              = parallels_co_check,
+     .bdrv_co_pdiscard           = parallels_co_pdiscard,
+     .bdrv_co_pwrite_zeroes      = parallels_co_pwrite_zeroes,
++    .bdrv_co_invalidate_cache   = parallels_co_invalidate_cache,
++    .bdrv_inactivate            = parallels_inactivate,
+ };
+ 
+ static void bdrv_parallels_init(void)
 -- 
 2.53.0
 
