@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2674C5DF7A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A263AC5DF74
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxVV-000373-98; Mon, 17 Aug 2026 09:36:05 -0400
+	id 1wvxWW-0005VP-Jc; Mon, 17 Aug 2026 09:37:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVP-00036F-94; Mon, 17 Aug 2026 09:35:59 -0400
+ id 1wvxWV-0005PC-0M; Mon, 17 Aug 2026 09:37:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVN-0007JE-6J; Mon, 17 Aug 2026 09:35:59 -0400
+ id 1wvxWT-0007Rw-2w; Mon, 17 Aug 2026 09:37:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=QPmgQRxRUU/VLjIvlJovmyydZwNP/RAzOOgZF8r44DU=;
+ t=1786973727; bh=2ouC61ctOyoSBSyOt4PVzXQEzhdWrdRyILRRjg0KjG8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mEMxupK0/C8rpJkQJizTbpTJP2oLretwPXe9N7NvB1wGiXgF9pmlSW1MON+xCDFJj
- 6FpVFQDIaeiORQhY06V3UUq4aMC95tZJMAoEReHtpjlBn2+ulHV0O7vA3eCrougn51
- 9xcWBwKtjo35iPGcy1/mFyaj5cW4l8Ugq8Q7vzXDewHGMmB+exVMTU/Z+D7jcUkNE+
- 6bHzj0ILnczAAMtaF4BJbAi7Bc92gwFBUMuCkDJimreKCBtdKR6OJuD1HVq+7K7w1s
- eUgqyXCXYR/pHPqpqfjSg+0fSEIvKvG8qHV+lLWCIhlRlrzzrlr2HzjXY+UXxO3SaV
- GBgOxa6AMnrHA==
+ b=OR8OZTPjXnMaoJWLgqNyctQywWwo1/7yMkgMUqnBGZvFJGsb9cCIdw3hcFVmgDxPD
+ HzN4rjQMw/KoOiOBNtDMaboFtbj6JmaSrf6+Bw7bFB2Nwvj7isrpkjRyPa6WPC7zX8
+ jkSSfaW2A6fp+OIL3vIEK+CbwMIzQcf3yB+DNx3KjTn1lBXlJ25SYlFmZPgJc/7+bm
+ H1OXio/91LN6SCK8bwomCyFWys/OdV/HcERYo9lcOyF6RshzecBNPcZkYLD0b8GVi/
+ x9gvz5f8SM/NVFgKungHw+wXBEYwE42W2t1t77ChcGt3EE145nouzP5qANBNjAYuoh
+ NrZnj0tgZtvRw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 13F9C1CBCBA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 537591CBCC7;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4D27840D417;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8E6C340D424;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9550130F7E; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id BBE8030F98; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Harald Freudenberger <freude@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 107/135] tests/tcg/s390x: Test PRNO TRNG
- interruptibility
-Date: Mon, 17 Aug 2026 16:34:17 +0300
-Message-ID: <20260817133451.2384630-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Yuan Liu <yuan1.liu@intel.com>, Yichen Wang <yichen.wang@bytedance.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 120/135] migration/multifd: Replace assert() with
+ error_setg() in recv paths
+Date: Mon, 17 Aug 2026 16:34:30 +0300
+Message-ID: <20260817133451.2384630-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -72,103 +72,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Peter Xu <peterx@redhat.com>
 
-Add a small test that issues a large PRNO TRNG request while a timer is
-running, and checks that the timer interrupts it several times.
+QPL and UADK multifd backends use assert() to validate wire-controlled
+fields like per-page compressed lengths and packet size consistency.  These
+asserts will stop working with -DNDEBUG builds, so may stop working.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-3-iii@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit abe1d893f41d5fcbdabc22f46ec148069a4ef319)
+Replace all assert() calls in the receive path with proper error_setg() so
+validation failures are reported gracefully rather than crashing or
+silently ignored.
+
+While at it, touch up an assert() in qatzip recv path too.
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Cc: Yuan Liu <yuan1.liu@intel.com>
+Cc: Yichen Wang <yichen.wang@bytedance.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260728210417.1925078-4-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit cf45083edc2b760a952836187aba7ec4139418c0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index da5fe71a407..e5fa30da845 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -70,6 +70,7 @@ Z13_TESTS+=vcksm
- Z13_TESTS+=vstl
- Z13_TESTS+=vrep
- Z13_TESTS+=precise-smc-user
-+Z13_TESTS+=prno-trng
- $(Z13_TESTS): CFLAGS+=-march=z13 -O2
- TESTS+=$(Z13_TESTS)
+diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+index 6a0e989fae8..2f9b573e292 100644
+--- a/migration/multifd-qatzip.c
++++ b/migration/multifd-qatzip.c
+@@ -348,7 +348,10 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
  
-diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
-new file mode 100644
-index 00000000000..43eea5db1dc
---- /dev/null
-+++ b/tests/tcg/s390x/prno-trng.c
-@@ -0,0 +1,67 @@
-+/*
-+ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/time.h>
-+#include <asm/ucontext.h>
-+
-+static unsigned char buf1[16 * 1024 * 1024];
-+static unsigned char buf2[16 * 1024 * 1024];
-+
-+static volatile sig_atomic_t interrupted;
-+
-+static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
-+{
-+    struct ucontext *uc = ucontext;
-+    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
-+
-+    if (*(unsigned short *)(addr - 4) == 0xb93c) {
-+        interrupted++;
+     multifd_recv_zero_page_process(p);
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+index 88e2344af2f..ea2fd1b9f95 100644
+--- a/migration/multifd-qpl.c
++++ b/migration/multifd-qpl.c
+@@ -664,26 +664,42 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
+     }
+     multifd_recv_zero_page_process(p);
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+     /* read compressed page lengths */
+     len = p->normal_num * sizeof(uint32_t);
+-    assert(len < in_size);
++    if (len >= in_size) {
++        error_setg(errp, "multifd %u: header len %"PRIu32
++                   " >= packet size %"PRIu32, p->id, len, in_size);
++        return -1;
 +    }
-+}
-+
-+static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
-+{
-+    register unsigned long r0 asm("r0") = 114;  /* TRNG */
-+    register unsigned long r2 asm("r2") = (unsigned long)b1;
-+    register unsigned long r3 asm("r3") = l1;
-+    register unsigned long r4 asm("r4") = (unsigned long)b2;
-+    register unsigned long r5 asm("r5") = l2;
-+
-+    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
-+                 "   jo 0b"
-+                 : [r2] "+r" (r2), [r3] "+r" (r3)
-+                 , [r4] "+r" (r4), [r5] "+r" (r5)
-+                 : "r" (r0)
-+                 : "cc", "memory");
-+}
-+
-+int main(void)
-+{
-+    struct itimerval it = {
-+        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
-+        .it_value = { .tv_usec = 10000 },
-+    };
-+    struct sigaction act = {
-+        .sa_sigaction = sigprof_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
-+
-+    err = sigaction(SIGPROF, &act, NULL);
-+    assert(err == 0);
-+    err = setitimer(ITIMER_PROF, &it, NULL);
-+    assert(err == 0);
-+
-+    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
-+    printf("interrupted %d times\n", interrupted);
-+    assert(interrupted >= 3);
-+
-+    return EXIT_SUCCESS;
-+}
+     ret = qio_channel_read_all(p->c, (void *) qpl->zlen, len, errp);
+     if (ret != 0) {
+         return ret;
+     }
+     for (int i = 0; i < p->normal_num; i++) {
+         qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
+-        assert(qpl->zlen[i] <= multifd_ram_page_size());
++        if (qpl->zlen[i] > multifd_ram_page_size()) {
++            error_setg(errp, "multifd %u: page %d compressed len %"
++                       PRIu32" too large", p->id, i, qpl->zlen[i]);
++            return -1;
++        }
+         zbuf_len += qpl->zlen[i];
+         ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
+     }
+ 
+     /* read compressed pages */
+-    assert(in_size == len + zbuf_len);
++    if (in_size != len + zbuf_len) {
++        error_setg(errp, "multifd %u: packet size %"PRIu32
++                   " != header %"PRIu32" + data %"PRIu32,
++                   p->id, in_size, len, zbuf_len);
++        return -1;
++    }
+     ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, zbuf_len, errp);
+     if (ret != 0) {
+         return ret;
+diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
+index 6895c1f65ab..75a9ffcf44f 100644
+--- a/migration/multifd-uadk.c
++++ b/migration/multifd-uadk.c
+@@ -245,12 +245,19 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+ 
+     multifd_recv_zero_page_process(p);
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+     /* read compressed data lengths */
+-    assert(hdr_len < in_size);
++    if (hdr_len >= in_size) {
++        error_setg(errp, "multifd %u: header len %"PRIu32
++                   " >= packet size %"PRIu32, p->id, hdr_len, in_size);
++        return -1;
++    }
+     ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
+                                hdr_len, errp);
+     if (ret != 0) {
+@@ -259,12 +266,21 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+ 
+     for (int i = 0; i < p->normal_num; i++) {
+         uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
++        if (uadk_data->buf_hdr[i] > page_size) {
++            error_setg(errp, "multifd %u: page %d compressed len %"PRIu32
++                       " too large", p->id, i, uadk_data->buf_hdr[i]);
++            return -1;
++        }
+         data_len += uadk_data->buf_hdr[i];
+-        assert(uadk_data->buf_hdr[i] <= page_size);
+     }
+ 
+     /* read compressed data */
+-    assert(in_size == hdr_len + data_len);
++    if (in_size != hdr_len + data_len) {
++        error_setg(errp, "multifd %u: packet size %"PRIu32
++                   " != header %"PRIu32" + data %"PRIu32,
++                   p->id, in_size, hdr_len, data_len);
++        return -1;
++    }
+     ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
+     if (ret != 0) {
+         return ret;
 -- 
 2.47.3
 
