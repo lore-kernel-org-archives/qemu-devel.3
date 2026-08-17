@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BEFC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D964CC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtLL-0000Xk-PP; Mon, 17 Aug 2026 05:09:20 -0400
+	id 1wvtKb-00084p-R7; Mon, 17 Aug 2026 05:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKb-00082W-BB; Mon, 17 Aug 2026 05:08:33 -0400
+ id 1wvtKU-0007I6-46; Mon, 17 Aug 2026 05:08:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKZ-00029a-Ax; Mon, 17 Aug 2026 05:08:32 -0400
+ id 1wvtKS-000229-DG; Mon, 17 Aug 2026 05:08:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=aeVqwZDYR8in3AsS7dcZFP/bkX0h7xx7YfnL2FW+WSE=;
+ t=1786957506; bh=PuGyth0maI/b4y4DeiSqPw+A+mfTPcrszkcFVxZiEjM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l3Gq/hfp0AL29m0xeUmoNJPwljVLznaXR02Yc5ZJtMZXWSXNBXFZLQc9ug9la0dmV
- mkp6kHsSwkkFD4pnVJfXCy2S0mkbrKdmi4kGMrtw4SAJQlkSRPxJqy6H8i7lR/Yy4Y
- 7QRi51IaYAzn3q2Im6oB8n/ZLG660qXKJgaX4J6HTHuYDpuaO37ggWSSQZSFIjEOhX
- mKx+sgGqnpmPY4XHnF2pWW3tsimqZBUDXAwTNZvBH9OrQ8pXCIqDNDnk8ocnDmytPG
- Dz0WynEtIJmHCFFCTSv+Et3jQsCOEm5v5YbqrxkXbiVdkqmilXjT+nyVmcoqcmMG8Z
- 5xULevRiU9hVg==
+ b=XHXHVwsbhTSYrHXuNGY/JVLTDn58V8BBZbVPijQDrDEB7ElefCt/uFWYQiTLsa8lw
+ 3jJPgva6T7bpCy0k151lVvls5enkZ8ZgXo8oix36nDfr0gflkNqUo9m2Fzpjqr7nzX
+ a1ARparEM6po2xMjckuVg8casf22Y7THnt6po3V/gAE0gI5NCgMzjxcpTwbhTy3xJq
+ C3MdgKMCQga4LzdovrXJ2UuX+9qWGkcH1mW1nP7KqUOMYdPfrme/YhSPqvm9D2XgcV
+ uXJMYj3zlmBVuS2Tl3H/TOyU4bH+gSRlT1wikrYtW0WAsvDm8rxxQIGATmLuZlE8Ms
+ EL0XOiyap8RGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C7101CBA58;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E36F1CBA55;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7BC2340D03A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6DFBD40D037;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1530330D28; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
+ id 0C7D330D22; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 36/42] tests/qtest/ahci: regression test for ATAPI
- read vs. drain
-Date: Mon, 17 Aug 2026 12:04:41 +0300
-Message-ID: <20260817090453.2034156-36-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 33/42] tests/qtest/libqos/ahci: support raw
+ (2352-byte) READ CD
+Date: Mon, 17 Aug 2026 12:04:38 +0300
+Message-ID: <20260817090453.2034156-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -73,105 +73,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-Add /ahci/cdrom/drain/{pio,dma}: issue a multi-sector ATAPI read whose
-byte-count limit spans two sectors so the device must rebuffer in the
-middle of the DRQ burst, hold the backend read in flight with a
-blkdebug delay, and fire x-blockdev-set-iothread -- which runs
-bdrv_drain_all_begin() exactly like a guest reset does through
-virtio_blk_stop_ioeventfd().
-
-On the unfixed PIO path the nested sector fetch is queued behind the
-drain and the main loop wedges, so the test hangs. The DMA variant
-never rebuffers and serves as a sanity twin.
+ahci_exec() always builds ATAPI commands with a 2048-byte logical
+sector size, so it cannot drive a READ CD that returns full 2352-byte
+raw sectors. Add an atapi_raw option that sets the READ CD
+field-selector to 0xf8 and the command's sector size to 2352 before
+the transfer is sized, so the derived block count stays correct while
+the buffer and byte counts cover the raw sectors.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit be1ee6a8f6e3b7192d57e900497b81a048f8d193)
+(cherry picked from commit de86ef3dfd337ec5a74b43d7d042ab937d0166bf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 58bc04b3efb..71d23fe56af 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1754,6 +1754,70 @@ static void test_atapi_engine_restart_dma(void)
-     test_atapi_engine_restart_in_flight(true);
- }
+diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+index 0621a6c4775..e3019a1ecad 100644
+--- a/tests/qtest/libqos/ahci.c
++++ b/tests/qtest/libqos/ahci.c
+@@ -707,6 +707,11 @@ void ahci_exec(AHCIQState *ahci, uint8_t port,
+     if (opts->atapi) {
+         uint16_t bcl = opts->set_bcl ? opts->bcl : ATAPI_SECTOR_SIZE;
+         cmd = ahci_atapi_command_create(op, bcl, opts->atapi_dma);
++        if (opts->atapi_raw) {
++            /* request full 2352-byte raw sectors; sector_size must match */
++            cmd->atapi_cmd[9] = 0xf8;
++            cmd->sector_size = ATAPI_RAW_SECTOR_SIZE;
++        }
+     } else {
+         cmd = ahci_command_create(op);
+     }
+diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
+index a0487a1557d..2a48a7523df 100644
+--- a/tests/qtest/libqos/ahci.h
++++ b/tests/qtest/libqos/ahci.h
+@@ -242,6 +242,7 @@
  
-+/*
-+ * Regression test: a multi-sector ATAPI read fetches its later sectors from
-+ * inside the first read's completion; a concurrent drain (as a guest reset
-+ * triggers via bdrv_drain_all_begin) must not wedge on that nested read.
-+ * blkdebug keeps the read in flight across x-blockdev-set-iothread.
-+ */
-+static void test_atapi_drain_in_flight(bool dma)
-+{
-+    AHCIQState *ahci;
-+    AHCICommand *cmd;
-+    unsigned char *tx;
-+    char *iso;
-+    int fd;
-+    uint8_t port;
-+    uint64_t buffer;
-+    uint16_t bcl = ATAPI_SECTOR_SIZE * 2;
-+    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * 3;
-+
-+    fd = prepare_iso(iso_size, &tx, &iso);
-+
-+    /* 1s read delay: a wide margin so the drain starts before it completes */
-+    ahci = ahci_boot_and_enable(
-+        "-blockdev driver=file,node-name=file0,filename=%s,read-only=on "
-+        "-blockdev driver=blkdebug,node-name=cd0,image=file0,read-only=on,"
-+        "inject-error.0.event=none,inject-error.0.iotype=read,"
-+        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000000 "
-+        "-M q35 "
-+        "-device ide-cd,drive=cd0 ", iso);
-+    port = ahci_port_select(ahci);
-+
-+    buffer = ahci_alloc(ahci, bcl);
-+    qtest_memset(ahci->parent->qts, buffer, 0x00, bcl);
-+
-+    cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, bcl, dma);
-+    ahci_command_adjust(cmd, 0, buffer, bcl, 0);
-+    ahci_command_commit(ahci, cmd, port);
-+    ahci_command_issue_async(ahci, cmd);
-+
-+    /* Drain (all nodes) while the delayed read is still in flight. */
-+    qtest_qmp_assert_success(ahci->parent->qts,
-+        "{ 'execute': 'x-blockdev-set-iothread',"
-+        "  'arguments': { 'node-name': 'cd0', 'iothread': null,"
-+        "                 'force': true } }");
-+
-+    /* Round-trip through the device to confirm qemu is still alive. */
-+    ahci_px_rreg(ahci, port, AHCI_PX_TFD);
-+
-+    ahci_command_free(cmd);
-+    ahci_free(ahci, buffer);
-+    g_free(tx);
-+    ahci_shutdown(ahci);
-+    remove_iso(fd, iso);
-+}
-+
-+static void test_atapi_drain_pio(void)
-+{
-+    test_atapi_drain_in_flight(false);
-+}
-+
-+static void test_atapi_drain_dma(void)
-+{
-+    test_atapi_drain_in_flight(true);
-+}
-+
- /* Regression test: Test that a READ_CD command with a BCL of 0 but a size of 0
-  * completes as a NOP instead of erroring out. */
- static void test_atapi_bcl(void)
-@@ -2177,6 +2241,8 @@ int main(int argc, char **argv)
-                    test_atapi_engine_restart_pio);
-     qtest_add_func("/ahci/cdrom/engine_restart/dma",
-                    test_atapi_engine_restart_dma);
-+    qtest_add_func("/ahci/cdrom/drain/pio", test_atapi_drain_pio);
-+    qtest_add_func("/ahci/cdrom/drain/dma", test_atapi_drain_dma);
+ #define AHCI_SECTOR_SIZE                (512)
+ #define ATAPI_SECTOR_SIZE              (2048)
++#define ATAPI_RAW_SECTOR_SIZE          (2352)
  
-     ret = g_test_run();
- 
+ #define AHCI_SIGNATURE_CDROM     (0xeb140101)
+ #define AHCI_SIGNATURE_DISK      (0x00000101)
+@@ -485,6 +486,7 @@ typedef struct AHCIOpts {
+     uint64_t buffer;    /* Pointer to source or destination guest buffer */
+     bool atapi;         /* ATAPI command? */
+     bool atapi_dma;     /* Use DMA for ATAPI? */
++    bool atapi_raw;     /* READ CD returning 2352-byte raw sectors */
+     bool error;
+     int (*pre_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
+     int (*mid_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
 -- 
 2.47.3
 
