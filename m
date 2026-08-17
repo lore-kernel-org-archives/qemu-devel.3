@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E8FC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62493C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvwc5-0003cY-DT; Mon, 17 Aug 2026 08:38:49 -0400
+	id 1wvwc8-0003dW-CC; Mon, 17 Aug 2026 08:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvwc3-0003aE-Oq
+ id 1wvwc3-0003aD-Oo
  for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:38:47 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvwc0-0001DQ-MY
+ id 1wvwc0-0001Dp-VR
  for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:38:47 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49802c418b5so35306545e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 05:38:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493b966dd74so22233365e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 05:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786970321; x=1787575121; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I52uwiyvCbvrhl3pxQjwG0o0BiUPMBUp8SjEJskHeyE=;
- b=kTc8N3hNRnaBdpRa6Q6gumwNPS19tlVoixGYgKDlV3g39ouVdeOLftsKmoh0dWjZTK
- ShX9U7k8ODFwn3/MvEhvg8d37F6SZVqQMr3C0W8pKz5XHBTeNwCeCIrMjtNv6Yps2HPZ
- RP5FIMBCWQkbiBbWeeBILnCoUPhy2G68AqMoWIcWXhVi5s19wb5hOkbWoMmjGiHFN0zX
- W5mjkYT1Cc4tFnraEC+c91fMNssZY5W5ztOR15JyB0HmLmedaIzEg+9xNQKLzWr5UuDH
- Ko4B8E5H6GwKimAciH7HNKqXVfTUNRdr8PInNYBk39/lQTfWZTqCyhpJhFni0CmawYLZ
- OLiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786970321; x=1787575121;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1786970323; x=1787575123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=I52uwiyvCbvrhl3pxQjwG0o0BiUPMBUp8SjEJskHeyE=;
- b=OidplMCCWgNDCQTLdyuLxC4I9LX4FqkgVEf5xt5n0/7zzBbGq0EtLjTZ8dZH8+thRF
- kWqi19Z9HkyKTnUvr5hFU0HPMpD/9Xd3nzUlTCKpVlVP6Ssm/zZrPO3oA+0RD0IRqN9H
- u7vjLtYNEaM5DhzVfY1oUWyxQw71xKOmvM//sWfyJ8XA3XOp2ss0ulqn5YarwbM4GQYV
- DxQgIuWruD9G5EdsXZyqMx65TqQb1cDTJLA0+XZPeQ6xVhe3RwPpTcvrl6T+IfJbmFqb
- CuC/ONUxOrAE45KsBY//6KiLG/VLfRRXUXMMYdIcivPmPlL9yEqQyPkm6QX0KQXjLQhx
- l9pA==
+ bh=7nyxP8W5LjRSPbBSNMAxPKnH8NiTOVebwIwRWOdohFA=;
+ b=U5O4UmboaWm57HmhJLGfa3bkAzX61iqcce2QMnV/OgE1V/mvYlVsh304IHLgMiBV4S
+ +4m30U4fG7VEewPQCk1O3saoQUhl1R9SHZfieHiDPlfiTqF5neDEHLuREEXSn/rIL5I3
+ CBGiPJl4SavGMXuVl9yCCcp03A6k0WB6srBbhHNTydXNJmlxFEHhdZr+rJXo6/MQ4LSG
+ etZQBcX8r7cZ/avhDxMqelc4rrgtjlR9u3YcYtCzpig4siKsybwSJFOc2Y0ONK3+2mCy
+ mXB899DbJmbd+M5RsVM6aQu8ehPeH03zNGnOjR5MjKL3VCar6jPSGiKIe/HN3pYot/hy
+ OF0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786970323; x=1787575123;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7nyxP8W5LjRSPbBSNMAxPKnH8NiTOVebwIwRWOdohFA=;
+ b=E+3yslCEHxa6uNKMPOdSE0KXg9/cciv0USpZvBZz1XSbbSBQ2LglTO4l/7YbKDsZLW
+ B6aBHwR64umzch4mBR+wjFEPG+Oq5GDAI1Czho0edRsM2Qb98GSfALxb+cRsO3sh9AhT
+ 94eZuZ7kEd6NNKvJARwLOXQ1JlD661YA3QjFLkXG4AQZgzNy/1CO7q6CHYxxDC8o1M4M
+ X8mkG+PRDn0yOnEUHjId3L8+/8Hs1xi5fT+apxAnS0QwlaUNnm9QwuFrNMIBEamBWZbi
+ JXDconXHb0BVn2yWIiZGzn0IextRSGV7GXE0fm2l2RAWrp4lYml21REoF9f8LO1teeLH
+ jdyg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoSdtZ4Ouk1Bk7mlg2VJ8qdwqObKwIT26mhM1KsK5XgQ0clMggQ3Vw+cud5mz644nxZQkn4nTdlWaRm@nongnu.org
-X-Gm-Message-State: AOJu0YwO3HThMJPy4WJp/C3Rzhi/tb2Cg88GeNrsFMHyh9JA3F+O223A
- mQ1Y+c1a+CfE1uKHwYq3EtHxQgy+Z53yRm4ewSTpTXEVugw63oWyPh2LcIuVx4Ror+U=
-X-Gm-Gg: AR+sD13UE1nEITEByml4gYZLyvEc9UkM3QcVvrU6O08GlUuORlG1+RbMq2Eue/gsEvj
- bcFM+Erzaf0Lt7Vl4t3it/8uIgpLy0p4ZRVyGBjM3f3oXeUz70t1CIvehBe+yXZNHd6KUM8kFzq
- C7cpmwxfw1cBIkafkyXOnKfbzGpdkPJZfn+bUPq9MLIYsdCjNe7uRSmxZx8rokKnMSWnx9P75sP
- N6LK/EnJpqkrl0pPuYHqxQv1ffhahoV5IfH6joBAS7LG7OMq0n/vz32PsxRHNupohdcWWRTy/uO
- uO1QV/GDwS50FAAvbMd16aN5OA6If9TVWEequN4OnuPvbqd/21MHXm3wogR6GIfVEiZwP7DNqZ5
- rYbjfZqNm++Rrefgm7pC+f+ETR2r9vn6lEVq2p3FJ+1yDr/S0gIXlyDK0amV5NltqacOO0d4M5j
- bX8xFJxwHJlBa+DHcXKXo9mt/WBW/OafCr0HrHAHWMFvoOqtdt4Qye5GTOd1l21TVRIEX/BomJ9
- aVvCjM61EgbOqbt7hG34WtgsJXh8wEtLr7k+nC2S5+pbh74tTlKOBytJA0pWzYjqK9B7A==
-X-Received: by 2002:a05:600c:3495:b0:499:873b:471c with SMTP id
- 5b1f17b1804b1-4998794fafdmr421865545e9.6.1786970321242; 
- Mon, 17 Aug 2026 05:38:41 -0700 (PDT)
+ AHgh+RrxWPsD1WK/1o4lj32HsLpIEnvfBRTBVLWDOeOU8m/rm3YTlb04m2xeqtaPgOJljBWxCnv58cvAGaO/@nongnu.org
+X-Gm-Message-State: AOJu0Yy+MgFavnW+On4OdJdM38yGzOw6nqYGm0pIQGKpdGKiQhUZPDSP
+ m4OPWZSithgyOwfQy30qMoxHcCOkQZip1OYakS7yOLwZ8GW9IKhIrSue1wKmLFgOKAM=
+X-Gm-Gg: AR+sD10AYsTcuR64r4vIrhxIFH9vyMVffRv8AjUHyOl5hGyV2py0LPPq7JciBdOSk7e
+ V0AyLWgAbyh2TPh+VlJAimBICHiFc6JomuDCdXK8sBl/6AQVUADl8XVAvb3FbZGfuMu59ASvDuB
+ 6+G6spmml92/IQHgCVPReYQRpiwP+t+ctUEO7Y+54rLDPVXLBnvhr/JW1PDg5ppi7qI4wWlTdvy
+ QVOXesls/yGD0kDhcW+jnR5vtr1qNaie/PPlovAq+ojtpNW62R5+1kYGgjW3gzPh5tB/KMP+FNF
+ kV8rleRs3TCr+8zqAIJZkMF+5ZN8v1HbrKbt8FS/amqSxYBtmRCdjqgejwbVokWgVnMxVxC0Wzf
+ 9RpfGpz/gw2NeGvHxad5Q+uASqDgW1gscYET76j1KEhtW3CKbN9y0eU09mw6VUhNi3NYMxtPNZm
+ SivwL2586SMJva2LO1LRqPpL7twoCgr6nq0BZHftNJ3QB/ysCfvK9PwtHNSzu5t96H6l+AR1LwI
+ ysotxMwFiHjOoAjuZpmyvqGFt0YXCYEu632lKB1nOl2Op2bnLEK5Dlla5WxPUGt8FnPdw==
+X-Received: by 2002:a05:600c:1395:b0:499:872b:abd4 with SMTP id
+ 5b1f17b1804b1-4998797684cmr344877825e9.6.1786970323416; 
+ Mon, 17 Aug 2026 05:38:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4998780397dsm120415055e9.3.2026.08.17.05.38.39
+ 5b1f17b1804b1-4998780397dsm120415055e9.3.2026.08.17.05.38.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 05:38:39 -0700 (PDT)
+ Mon, 17 Aug 2026 05:38:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 0/8] target/arm: Fix some Neon trapping corner cases
-Date: Mon, 17 Aug 2026 13:38:30 +0100
-Message-ID: <20260817123838.1578060-1-peter.maydell@linaro.org>
+Subject: [PATCH v2 2/8] target/arm: Handle NSACR.NSASEDIS in HCPTR accesses
+Date: Mon, 17 Aug 2026 13:38:32 +0100
+Message-ID: <20260817123838.1578060-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260817123838.1578060-1-peter.maydell@linaro.org>
+References: <20260817123838.1578060-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,52 +103,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v2 of a patchset which originally did three things (fix a bug
-in syndrome info for VFP/Neon trapped insns; support the "trap Neon
-insns" trap bits; support trapping VFP D16-D32 accesses). The first
-of those is already upstream, so here we have just the patches for
-the trap controls.
+In cptr_el2_read() and cptr_el2_write()  we have code that implements the
+"HCPTR.{TCP10,TCP11} behave as RAO/WI from NonSecure when NSACR.cp10 is
+0" behaviour.  There is a similar requirement for HCPTR.TASE: if
+NSACR.NSASEDIS is 1 then CPACR.ASEDIS behaves as RAO/WI in NS.
 
-Changes v1->v2:
+This doesn't matter to us yet because we don't currently implement
+ASEDIS or NSASEDIS. But we're about to do that, so add the handling
+to cptr_el2_read() and cptr_el2_write().
 
- * the first 4 patches of v1 have already been upstreamed
- * patches 1, 2, 3 in this v2 have already been reviewed
- * patch 4: switch to a positive ARM_FEATURE_NEON_TRAPS from
-   the previous negative NO_NEON_TRAPS one
- * patch 5: fixed a missing check for EL1 being AArch64, and
-   slightly rearranged things and improved the comments. I opted
-   not to take the rearrangement suggested by RTH in review on v1
- * patches 6 and 7: refactored to use a vfp_dregs_ok() function
-   as suggested by RTH
- * patch 8: new, makes the neon code use a similar neon_dregs_ok()
-   purely as a cleanup and to make it match the vfp code
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/helper.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-thanks
--- PMM
-
-Peter Maydell (8):
-  target/arm: Handle NSACR.NSASEDIS in CPACR accesses
-  target/arm: Handle NSACR.NSASEDIS in HCPTR accesses
-  target/arm: Update confusing comment in cpacr_write()
-  target/arm: Add new feature ARM_FEATURE_NEON_TRAPS
-  target/arm: Implement CPACR.ASEDIS and HCPTR.TASE
-  target/arm: Pull VFP dregs checks out into a function
-  target/arm: Implement CPACR.D32DIS
-  target/arm: Pull Neon dregs checks out into a function
-
- target/arm/cpu-max.c            |   1 +
- target/arm/cpu.h                |  17 +++++
- target/arm/cpu64.c              |   1 +
- target/arm/helper.c             |  91 ++++++++++++++++++++----
- target/arm/tcg/cpu32.c          |  10 +++
- target/arm/tcg/cpu64.c          |  10 +++
- target/arm/tcg/hflags.c         | 102 +++++++++++++++++++++++++++
- target/arm/tcg/translate-neon.c | 118 ++++++++++++++------------------
- target/arm/tcg/translate-vfp.c  |  83 +++++++++++++---------
- target/arm/tcg/translate.c      |   8 +++
- target/arm/tcg/translate.h      |   3 +
- 11 files changed, 332 insertions(+), 112 deletions(-)
-
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index c33de9c5d4..e6d269b09d 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4117,11 +4117,18 @@ static void cptr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     /*
+      * For A-profile AArch32 EL3, if NSACR.CP10
+      * is 0 then HCPTR.{TCP11,TCP10} ignore writes and read as 1.
++     * Similarly, if NSACR.NSASEDIS is 1 then HCPTR.TASE behaves as RAO/WI.
+      */
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        uint64_t mask = R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
+-        value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            uint64_t mask = R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++            value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        }
++        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            uint64_t mask = R_HCPTR_TASE_MASK;
++            value = (value & ~mask) | (env->cp15.cptr_el[2] & mask);
++        }
+     }
+     env->cp15.cptr_el[2] = value;
+ }
+@@ -4131,12 +4138,18 @@ static uint64_t cptr_el2_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     /*
+      * For A-profile AArch32 EL3, if NSACR.CP10
+      * is 0 then HCPTR.{TCP11,TCP10} ignore writes and read as 1.
++     * Similarly, if NSACR.NSASEDIS is 1 then HCPTR.TASE behaves as RAO/WI.
+      */
+     uint64_t value = env->cp15.cptr_el[2];
+ 
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        value |= R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            value |= R_HCPTR_TCP11_MASK | R_HCPTR_TCP10_MASK;
++        }
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            value |= R_HCPTR_TASE_MASK;
++        }
+     }
+     return value;
+ }
 -- 
 2.43.0
 
