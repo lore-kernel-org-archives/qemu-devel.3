@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A345C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96EE1C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtL8-00005H-4G; Mon, 17 Aug 2026 05:09:10 -0400
+	id 1wvtIm-0003xn-Rd; Mon, 17 Aug 2026 05:06:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKw-0008ME-2u; Mon, 17 Aug 2026 05:08:57 -0400
+ id 1wvtIY-0003ms-HD; Mon, 17 Aug 2026 05:06:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKu-0002A1-7g; Mon, 17 Aug 2026 05:08:53 -0400
+ id 1wvtIT-0001ga-Fu; Mon, 17 Aug 2026 05:06:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=yZr1yv/lJD43Mayf3E66TZSwnMwAN7Ucv7/7kbHHI7s=;
+ t=1786957506; bh=wYUETFF1LQO8SvgC6w5ZcuhX3jpAWcfrMpU6PRcjqp8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=J9vbxoMDFPZ5YYo9Kq45rwhQ/l7YBAewT8kRe52GyThsq61r0IGhCwbASOpkrD0Gp
- nJg22K4bYzIujaEZ6ZdXfcnWSyBXdLENEHIPHK4nnFLtzEoW60SxdeRpn1T9LL+RIi
- dMWz8rr6l6xjzuwD4EWA8pyCbjCZhbMU4K1P8DjDA7ciG/moOsKarqmnrdZdgK9m9A
- QxCOyo/1PstfB4kBYqQpbbAfKcAH1VHESHFeinTmWIixFDLqbPw61mGQnNbzbT88LQ
- prRJ7o7gN7VrWzZ/MOS+kP5cwl+7F2RlewbRhOgWT9SnDKMPn+9HScJaS4SU+PgYFL
- VEVxDv7OLr/cg==
+ b=t1GXYYgclCcVyDnpYLST/f6zRfs6pKYrKp3d7kKXgNFtZLfMWjIz723wjxaA2b7kP
+ 8zrwaqP+iej1it4L8BtXUoUsaUQbMN0RgfDgiRdBu0bIqdU7BjTMUk08Q+wGVrqs/T
+ RlyBgNQbpnRqDFG/QtPYiriqnTG+CsmEq7AKCA6SXUHiew4/eCxfep0NrnguXuaWSa
+ nPK6xUteNkfvHm/HHMZK3PlFMPXnmsLRa5okKws8EfYgwwZZcwiqXMefq8PPdXQjih
+ PHZ0fiq3Za9JuzWwQuUCluYovMZx/ysH86KF91Rk1Ixiqp6ofhjmZbSQCUPPrVrbTj
+ iTDLJkpqSd0zA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A7EC81CBA5A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 38EAD1CBA41;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 87B3740D03C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1662B40D023;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1B27B30D2C; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
+ id C477930CFA; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 38/42] hw/net/rtl8139: Fix handling of VLAN tags on
- incoming short packets
-Date: Mon, 17 Aug 2026 12:04:43 +0300
-Message-ID: <20260817090453.2034156-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 13/42] tests/tcg/s390x: Test PRNO TRNG interruptibility
+Date: Mon, 17 Aug 2026 12:04:18 +0300
+Message-ID: <20260817090453.2034156-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,70 +71,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-The rtl8139 receive code handles VLAN tags in incoming packets by
-copying the VLAN tag to a special field in the receive descriptor,
-and copying only the actual payload data to the receive buffer.  This
-code tries to ensure that it pads out the payload to at least
-MIN_BUF_SIZE bytes.
+Add a small test that issues a large PRNO TRNG request while a timer is
+running, and checks that the timer interrupts it several times.
 
-In commit 63b901bfd30 we removed the main "pad short frames" code
-from this device because we switched to requiring net backends to do
-the padding.  However we didn't notice that this broke the VLAN tag
-handling, which relied on the old code making the buffer at least
-MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
-bytes into the receive buffer even after removing the VLAN tag.  The
-result is that the guest can make us read 4 bytes off the end of a
-buffer by feeding itself a suitable short packet in loopback mode.
-
-The old behaviour is actually not correct, because the IEEE802.1Q
-standard says that the minimum ethernet frame size remains 64 bytes
-including the 4 checksum bytes, and so when a tag is present the
-payload data only needs to be 56 bytes.  (A bridge implementation can
-choose to pad tagged frames out to 68 bytes, but it doesn't have to,
-and so all devices have to correctly handle incoming tagged frames
-that are 64 bytes long.)
-
-The RTL8139 datasheet isn't very communicative on this topic, but
-there's nothing that suggests it adds extra padding on receive that
-didn't exist in the incoming packet.
-
-Drop the last remnants of the padding handling from this device;
-this avoids overcopying into the guest when we receive a short
-VLAN tagged packet.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Message-ID: <20260731093618.2961031-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 59fc7b747d56652e09708adff3afaca326e85a2a)
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-3-iii@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit abe1d893f41d5fcbdabc22f46ec148069a4ef319)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 424af73a18f..2b61c171f2a 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -778,7 +778,6 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
-     s->RxBufAddr += size;
- }
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index 0ca030ded01..48cba4cdfa4 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
+ Z13_TESTS+=vstl
+ Z13_TESTS+=vrep
+ Z13_TESTS+=precise-smc-user
++Z13_TESTS+=prno-trng
+ $(Z13_TESTS): CFLAGS+=-march=z13 -O2
+ TESTS+=$(Z13_TESTS)
  
--#define MIN_BUF_SIZE 60
- static inline dma_addr_t rtl8139_addr64(uint32_t low, uint32_t high)
- {
-     return low | ((uint64_t)high << 32);
-@@ -1007,10 +1006,6 @@ static ssize_t rtl8139_receive(NetClientState *nc,
-             lduw_be_p(&buf[ETH_ALEN * 2]) == ETH_P_VLAN) {
-             dot1q_buf = &buf[ETH_ALEN * 2];
-             size -= VLAN_HLEN;
--            /* if too small buffer, use the tailroom added duing expansion */
--            if (size < MIN_BUF_SIZE) {
--                size = MIN_BUF_SIZE;
--            }
- 
-             rxdw1 &= ~CP_RX_VLAN_TAG_MASK;
-             /* BE + ~le_to_cpu()~ + cpu_to_le() = BE */
+diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
+new file mode 100644
+index 00000000000..43eea5db1dc
+--- /dev/null
++++ b/tests/tcg/s390x/prno-trng.c
+@@ -0,0 +1,67 @@
++/*
++ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/time.h>
++#include <asm/ucontext.h>
++
++static unsigned char buf1[16 * 1024 * 1024];
++static unsigned char buf2[16 * 1024 * 1024];
++
++static volatile sig_atomic_t interrupted;
++
++static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
++{
++    struct ucontext *uc = ucontext;
++    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
++
++    if (*(unsigned short *)(addr - 4) == 0xb93c) {
++        interrupted++;
++    }
++}
++
++static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
++{
++    register unsigned long r0 asm("r0") = 114;  /* TRNG */
++    register unsigned long r2 asm("r2") = (unsigned long)b1;
++    register unsigned long r3 asm("r3") = l1;
++    register unsigned long r4 asm("r4") = (unsigned long)b2;
++    register unsigned long r5 asm("r5") = l2;
++
++    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
++                 "   jo 0b"
++                 : [r2] "+r" (r2), [r3] "+r" (r3)
++                 , [r4] "+r" (r4), [r5] "+r" (r5)
++                 : "r" (r0)
++                 : "cc", "memory");
++}
++
++int main(void)
++{
++    struct itimerval it = {
++        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
++        .it_value = { .tv_usec = 10000 },
++    };
++    struct sigaction act = {
++        .sa_sigaction = sigprof_handler,
++        .sa_flags = SA_SIGINFO,
++    };
++    int err;
++
++    err = sigaction(SIGPROF, &act, NULL);
++    assert(err == 0);
++    err = setitimer(ITIMER_PROF, &it, NULL);
++    assert(err == 0);
++
++    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
++    printf("interrupted %d times\n", interrupted);
++    assert(interrupted >= 3);
++
++    return EXIT_SUCCESS;
++}
 -- 
 2.47.3
 
