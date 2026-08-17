@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18422C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3A2C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxWT-0005JH-QP; Mon, 17 Aug 2026 09:37:05 -0400
+	id 1wvxVK-00032O-Tf; Mon, 17 Aug 2026 09:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWS-0005EP-Jk; Mon, 17 Aug 2026 09:37:04 -0400
+ id 1wvxVJ-00031Z-82; Mon, 17 Aug 2026 09:35:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWQ-0007RP-Nj; Mon, 17 Aug 2026 09:37:04 -0400
+ id 1wvxVG-0007Hj-0g; Mon, 17 Aug 2026 09:35:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=BWHY8o6xrl6e1ap9LZwcnM3sr0pQXKpoyyI8I86dzew=;
+ t=1786973727; bh=HfcZ0YrE6yr9MQH23RE+o9+6mm0/3ccx/5EjUF+ykXQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=avW/G4QOVdqEqE5MR9auPUyfzlbF1L/JWNhw9UksNUJH3SbJcwc/8DhXlvit7EXYG
- S9RE/hzPl2zd0ra0KWtDQOeUnZIf6Z+1exrTZnzqprt4EShekQ1qqzOWHCdPxwBmwF
- jSZUuGauAy4DyDBQGPHiO2lOLwWQkvj/8SQxY5W9Ch8Ofg66NQ2gwqrPD0vDEQevLD
- GqypKYG4Ru4AUzzSORoIJEq+ztBlSZ78/SE3EsF0R7IW4l121CLjcwOZNegYeWZ1VQ
- djGutVfK5vs0cCZpDGxqA74uPfdIDD9qxwwEsdCoTUbNSLeuAQrXojX0F12OwDW70a
- BHT4OCIv3Jytw==
+ b=CrE7Ussny7IviUXzi0e4DGL1ogYxscRIeCLlG5apFseSgjHcKXUHpWZwWxv2JeLQ/
+ bfC7TOPEy61jL5OPgk+TeseUsHpwyycvV6f3w6YvYA/HFLvIGhhbc1vuSpUUGpr8RT
+ Xw3YgowocL+V9t0ImnJyHTFWENBMFxOKJ+nlu+R3JcCOQUoAo+vh5U/5IQLegVyZrf
+ APDBNQD7UOgB25+BBF5+U9fmO7/a0K0heVQYeO+F6cdZlc7sL9207erOrF1/B7MUYo
+ x8dx8aD6oPQ6/7t/TL0EnNHC6qFD6xc18pqgAO1BTmzyp25rHjYMMn1pwAHGZK2Twa
+ CebaukZQXIkiw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4E7041CBCC6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 02BC01CBCB7;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 88F8540D423;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3DD7640D414;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B8C0D30F96; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id 8C4D230F78; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- xlabai <xlabai@tencent.com>, Jules Denardou <jules.denardou@datadoghq.com>,
- Tristan Madani <tristan@talencesecurity.com>,
- Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 119/135] migration/multifd: Validate
- next_packet_size in zlib/zstd recv
-Date: Mon, 17 Aug 2026 16:34:29 +0300
-Message-ID: <20260817133451.2384630-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 104/135] hw/arm/aspeed: Add missing Kconfig
+ dependencies on required components
+Date: Mon, 17 Aug 2026 16:34:14 +0300
+Message-ID: <20260817133451.2384630-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,82 +74,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-The zlib and zstd multifd compression backends read next_packet_size from
-the incoming migration stream and use it directly as the read length into a
-fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
-source can set next_packet_size bigger than allocated, causing a heap
-buffer overflow write on the destination.
+Add various missing Kconfig dependencies of the Aspeed SoCs:
 
-Add a check against zbuff_len before reading, matching what the qatzip
-backend already does.  Also replace the assert(in_size == 0) for empty
-packets with proper error reporting, since the value is wire-controlled,
-meanwhile assert() stops working with -DNDEBUG builds.
+- USB EHCI (commit bfdd34f1caa "hw/arm: ast2400/ast2500: Wire up
+  EHCI controllers")
+- OR-IRQ (commit d831c5fd868 "aspeed/intc: Add AST2700 support")
+- SDHCI (commit 2bea128c3d0 "hw/sd/aspeed_sdhci: New device"
+  and f25c0ae1079 "aspeed/soc: Add AST2600 support")
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
-Reported-by: xlabai <xlabai@tencent.com>
-Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
-Reported-by: Tristan Madani <tristan@talencesecurity.com>
-Reported-by: david korczynski (@david1766)
-Reported-by: huntr bubble (@bubblehuntr)
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260728210417.1925078-3-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit ac7fa2e9d457ff9c777be32617f3c46548c4cadf)
+This fixes the following runtime issues:
+
+  qemu-system-aarch64: unknown type 'platform-ehci-usb'
+  qemu-system-aarch64: unknown type 'or-irq'
+  qemu-system-aarch64: unknown type 'generic-sdhci'
+
+Cc: qemu-stable@nongnu.org
+Fixes: 2bea128c3d0 ("hw/sd/aspeed_sdhci: New device")
+Fixes: f25c0ae1079 ("aspeed/soc: Add AST2600 support")
+Fixes: d831c5fd868 ("aspeed/intc: Add AST2700 support")
+Fixes: bfdd34f1caa ("hw/arm: ast2400/ast2500: Wire up EHCI controllers")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260709164103.37614-3-philmd@oss.qualcomm.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 6440880ed371f74b3019462acfb2cd7709372db7)
+(Mjt: context fixup across v10.1.0-770-g303e8dc29ffe
+ "hw/pci-host/aspeed: Add AST2600 PCIe PHY model")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 8cf8a26bb42..2158a2128b6 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -216,10 +216,19 @@ static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index a55b44d7bde..c62a866d78e 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -541,12 +541,15 @@ config ASPEED_SOC
+     select TMP105
+     select TMP421
+     select EMC141X
++    select OR_IRQ
+     select UNIMP
+     select LED
+     select PMBUS
+     select MAX31785
+     select FSI_APB2OPB_ASPEED
+     select AT24C
++    select USB_EHCI_SYSBUS
++    select SDHCI
  
-+    if (in_size > z->zbuff_len) {
-+        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
-+                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
-+        return -1;
-+    }
-+
-     multifd_recv_zero_page_process(p);
- 
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index abed140855c..140d36e90f7 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -210,10 +210,19 @@ static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
-         return -1;
-     }
- 
-+    if (in_size > z->zbuff_len) {
-+        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
-+                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
-+        return -1;
-+    }
-+
-     multifd_recv_zero_page_process(p);
- 
-     if (!p->normal_num) {
--        assert(in_size == 0);
-+        if (in_size != 0) {
-+            error_setg(errp, "multifd %u: expected empty packet", p->id);
-+            return -1;
-+        }
-         return 0;
-     }
- 
+ config MPS2
+     bool
 -- 
 2.47.3
 
