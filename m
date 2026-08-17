@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64A9C5DF7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98951C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvurb-0003tX-4E; Mon, 17 Aug 2026 06:46:43 -0400
+	id 1wvur3-00025R-T8; Mon, 17 Aug 2026 06:46:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurU-0003bc-8T; Mon, 17 Aug 2026 06:46:36 -0400
+ id 1wvuqk-0001oD-Kk; Mon, 17 Aug 2026 06:45:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurS-0004BA-8O; Mon, 17 Aug 2026 06:46:35 -0400
+ id 1wvuqi-000416-UQ; Mon, 17 Aug 2026 06:45:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=sU29FaoWz6BaQ91t5jxo6rXdQueIAxi80BoVYsgyPFM=;
+ t=1786963486; bh=+4hn4aatShBTFP6o/8vjIBfyTfTNgd8tzEKoiCGIsgE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=afF0cbdc27P/QmgBF8YGxr1fMAG48vJdSqfTnp0rPzeJTq0DKwT265860ZrOqTIII
- wJjHvCu3RNzhuYDxIO+ZjTKBQD3HQAMZhk/hF8SNOwavAP0zx5IHb98U7pW6m+rAft
- vMj42LW0T6xdzPfrlr+4vH878Ht15DPrwHu6FtoPNnjMPJpcgrEXm7QZaRmd6I0I6q
- AipF+ujZvx0c02KldwSavhEBfWyVQt0nlLfioHkvvLykouZMqrR0NSutziCZ5ldAIm
- obEIsqlPnPrLR5SaJD6SivQWemowKiiIlDap5yrIu7us2AchC/2ZbjgdCqsFTONeR0
- I2LT8HuPbAg2A==
+ b=SjhgC/rPdRqTsE3DmlgvdA/JuZ5mjZaIzxcb2gputB/JpwEhHkCA3MMcnCiUZtlTK
+ tXxyyrUO6AOJutO/Yxst+ZFNziVCPouBFjjg5IUKazMBC5RG8sE0o8cWmi4rgaWJNI
+ PBXdKBAdQx5KXb49bFPy08R1muPise28JWlVu/pFRpZJ1rQkYXqsfATrEIkqSJLQNZ
+ N8aKE2q4LHUpVmpNFslNtnBdRF6gJke8sGAUPcd3l8kjIp0rxQxHi26w7maNltcA/t
+ zwAQncPjqFRVs2Vc310mUb1XX5OEvVTcbMKNA9vFP9O3eZBoa3qW+5LsMp8cgPvLGD
+ yMazThPL9QOaQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFF9F1CBB7C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8902C1CBB73;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B159240D20D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A4A840D204;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3348F30E70; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 1774830E5E; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 143/161] tests/tcg/s390x: Test STCKF condition code
- on a faulting store
-Date: Mon, 17 Aug 2026 13:42:57 +0300
-Message-ID: <20260817104344.2047346-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 134/161] pc-bios/s390-ccw: Verify virtio support
+ when booting from virtio PCI device on s390x
+Date: Mon, 17 Aug 2026 13:42:48 +0300
+Message-ID: <20260817104344.2047346-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -71,79 +73,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Add a small test to prevent regressions.
+The virtio specification requires that each PCI device has a vendor ID of
+0x1af4.  Verify this value before continuing with boot process.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714203206.363028-3-iii@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit e79ea4472691fd7f7b3436dafbabd17c78fc8bf4)
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Message-ID: <20260630141917.673995-5-jrossi@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit e26dafb207bc6218582fe18a1386026adb4620d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 48cba4cdfa4..97c0f021902 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -50,6 +50,7 @@ TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
- TESTS+=divide-to-integer
-+TESTS+=stckf
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 26287cfd811..fb47d29bb1f 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -163,6 +163,7 @@ static bool find_fid(uint32_t fid)
+     }
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/stckf.c b/tests/tcg/s390x/stckf.c
-new file mode 100644
-index 00000000000..51c8c9df9f8
---- /dev/null
-+++ b/tests/tcg/s390x/stckf.c
-@@ -0,0 +1,44 @@
-+/*
-+ * Test that a faulting STORE CLOCK FAST does not clobber the condition code.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+static void handle_sigsegv(int sig, siginfo_t *info, void *ucontext)
+     vdev->pci_fh = entry.fh;
++    vdev->vendor_id = entry.vendor_id;
+     virtio_pci_id2type(vdev, entry.device_id);
+ 
+     return vdev->dev_type != 0;
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index 2c83ec4f131..f501252c819 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -325,6 +325,20 @@ static int enable_pci_bus_master(void)
+     return 0;
+ }
+ 
++bool virtio_pci_is_supported(VDev *vdev)
 +{
-+    mcontext_t *mcontext = &((ucontext_t *)ucontext)->uc_mcontext;
++    if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
++        switch (vdev->dev_type) {
++        case VIRTIO_ID_BLOCK:
++            return true;
++        default:
++            return false;
++        }
++    }
 +
-+    /* The condition code must be the one set by SLGR, not garbage. */
-+    _exit(((mcontext->psw.mask >> 44) & 3) == 3 ? EXIT_SUCCESS : EXIT_FAILURE);
++    return false;
 +}
 +
-+int main(void)
-+{
-+    struct sigaction act = {
-+        .sa_sigaction = handle_sigsegv,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
+ int virtio_pci_setup(VDev *vdev)
+ {
+     VRing *vr;
+@@ -335,6 +349,11 @@ int virtio_pci_setup(VDev *vdev)
+     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+     vdev->cmd_vr_idx = 0;
+ 
++    if (!virtio_pci_is_supported(vdev)) {
++        puts("Virtio PCI unsupported for this device ID");
++        return -ENODEV;
++    }
 +
-+    err = sigaction(SIGSEGV, &act, NULL);
-+    assert(err == 0);
+     if (virtio_pci_read_pci_cap_config()) {
+         puts("Invalid virtio PCI capabilities");
+         return -EIO;
+diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+index 2494df16198..33b683bd922 100644
+--- a/pc-bios/s390-ccw/virtio-pci.h
++++ b/pc-bios/s390-ccw/virtio-pci.h
+@@ -56,6 +56,8 @@
+ 
+ #define VIRTIO_F_VERSION_1          1   /* Feature bit 32 */
+ 
++#define PCI_VENDOR_VIRTIO           0x1af4
 +
-+    asm volatile(
-+        "lghi %%r1,100\n"
-+        "lghi %%r2,0\n"
-+        "clgr %%r1,%%r2\n"  /* CC_OP_LTUGTU_64 */
-+                            /* cc_src=100 is not valid for CC_OP_SUBU */
-+        "ipm %%r0\n"        /* force cc_src to env */
-+        "lghi %%r3,5\n"
-+        "lghi %%r4,3\n"
-+        "slgr %%r3,%%r4\n"  /* CC_OP_SUBU, cc=3 */
-+        "lghi %%r5,0\n"
-+        "stckf 0(%%r5)\n"   /* faults; cc must stay 3 */
-+        : : : "r0", "r1", "r2", "r3", "r4", "r5", "cc", "memory");
-+
-+    return EXIT_FAILURE;
-+}
+ struct VirtioPciCap {
+     uint8_t bar;     /* Which PCIAS it's in */
+     uint32_t off;    /* Offset within bar */
+@@ -65,6 +67,7 @@ typedef struct VirtioPciCap  VirtioPciCap;
+ void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+ int virtio_pci_reset(VDev *vdev);
+ long virtio_pci_notify(VRing *vr);
++bool virtio_pci_is_supported(VDev *vdev);
+ int virtio_pci_setup(VDev *vdev);
+ int virtio_pci_setup_device(void);
+ 
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index df04479aa69..a0d249db240 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -247,6 +247,8 @@ bool virtio_is_supported(VDev *vdev)
+     case S390_IPL_TYPE_QEMU_SCSI:
+     case S390_IPL_TYPE_CCW:
+         return virtio_ccw_is_supported(vdev);
++    case S390_IPL_TYPE_PCI:
++        return virtio_pci_is_supported(vdev);
+     default:
+         return false;
+     }
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 75ae5bdbc22..aa307025e0f 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -259,6 +259,7 @@ struct VDev {
+     bool scsi_device_selected;
+     ScsiDevice selected_scsi_device;
+     uint32_t pci_fh;
++    uint16_t vendor_id;
+     uint32_t max_transfer;
+     uint32_t guest_features[2];
+ };
 -- 
 2.47.3
 
