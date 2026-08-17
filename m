@@ -1,50 +1,50 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
+Received: from lists1p.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7C5C5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B75EC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqM-0001MH-Tx; Mon, 17 Aug 2026 06:45:27 -0400
+	id 1wvuqQ-0001YW-JR; Mon, 17 Aug 2026 06:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqG-0001A2-05; Mon, 17 Aug 2026 06:45:21 -0400
+ id 1wvuqK-0001D8-DS; Mon, 17 Aug 2026 06:45:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqD-0003yC-Ia; Mon, 17 Aug 2026 06:45:18 -0400
+ id 1wvuqI-0003zY-Nh; Mon, 17 Aug 2026 06:45:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=z24j5fUvbF6FMuah81uaPJqujR3AO1r6+MwUxCj2UbU=;
+ t=1786963486; bh=EYMdg8baSzdlaR6RUorC7XrNe/N+/5fOYuS2YyKgJms=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=c0U3z2QDr6kruOdGQHiUZKxG0DFOJ9mXdXyXI1HuyrD9DuwtjLR7ut8DSC32ETjY4
- 7fQegf6tfgq5PNZ9qZYQnULAN3wmdXv5YKIEFBwCJaXc/im4/5Ad1vCaL273zo0gj1
- Kgm4BzsyGG7gllndDoobDY/GX1uPzNF9qreX8wPQ3nznXex2PxMUAP5hEVeB2mT7y1
- qm3WUuh8Cbc/h5ZRQSE0oNDDpmdn1d7WA+9GEsvbJ7y+XZmqEUd5XE/6t6LYLQjtBD
- 3G52nRWdxQaiHmIKhzh7BvNutZ3BFq/AJIe0n6+9by+Z8nIveJUyt2CmDk/CuwxmXO
- 5xYxQFdp5pdWg==
+ b=wEs4/MwRk8sY/dSyNWH741xq7qy0cQsr/tLzhYyZ+T0dRlfQl2Q7HR29o5Kgvw7Sa
+ TPo7E6tpgltI8cabfzFg/e+RyKWigpy10obPhO+4ED/mBbp3Jfs2wEB0BYHqIjZPb7
+ f/nb1tr8MXLgScxe4IF1+ZpoxL7UplYWfg6b/7hb66HzlA/Zz6j598zz0XihFxqOo4
+ bi+Qe70HMCoLNlUWsVIYurdtB3CVhRMWm0rR6twWfZlsWxIj8Dpr+r1snRywahc7hL
+ h1W7fOnH5Tm9aToh0wlEWz6193mtd7Zf6AKwWCCb2vp6DAceNjRmtFG6YFhrENTU3F
+ 42PZlTmMbG3/g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 69D551CBB6C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 777471CBB6F;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6AF9F40D1FD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7821140D200;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 00D9530E50; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
+ id 0A94130E56; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 127/161] target/s390x: Fix DR/D INT64_MIN / -1 host
- crash
-Date: Mon, 17 Aug 2026 13:42:41 +0300
-Message-ID: <20260817104344.2047346-7-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 130/161] s390x/ipl: validate num_comp against iplb
+ length before iterating
+Date: Mon, 17 Aug 2026 13:42:44 +0300
+Message-ID: <20260817104344.2047346-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -73,43 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-helper_divs32() divides the 64-bit dividend by the 32-bit divisor as a 64-bit
-host operation, guarding only against a zero divisor. INT64_MIN / -1 therefore
-overflows the host division before the representability check runs; on hosts
-that trap this, QEMU is killed with SIGFPE instead of raising the
-fixed-point-divide exception the guest expects:
+In ipl_valid_pv_components(), the upper bound of the for loop,
+ipib_pv->num_comp, is read from guest memory. Before iterating, verify
+that its value will not cause a read beyond the end of the
+IplParameterBlock.
 
-    qemu-s390x: QEMU internal SIGFPE {code=INTDIV, addr=...}
-
-helper_divs64() already guards the same case; add the missing check to
-helper_divs32().
-
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: b4e2bd3563af ("target-s390: Send signals for divide")
+Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-2-iii@linux.ibm.com
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-3-borntraeger@linux.ibm.com
+[farman@linux.ibm.com: Added qemu-stable]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 0103cb1cd175a070f52ed0ca4fe0712c2ba2befc)
+(cherry picked from commit df607fd056044e40352a43f0b4422b9a5cb015c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/int_helper.c b/target/s390x/tcg/int_helper.c
-index fbda396f5b4..5aedd1405bf 100644
---- a/target/s390x/tcg/int_helper.c
-+++ b/target/s390x/tcg/int_helper.c
-@@ -39,7 +39,8 @@ uint64_t HELPER(divs32)(CPUS390XState *env, int64_t a, int64_t b64)
-     int32_t b = b64;
-     int64_t q, r;
- 
--    if (b == 0) {
-+    /* Catch divide by zero, and non-representable quotient (MIN / -1).  */
-+    if (b == 0 || (b == -1 && a == (1ll << 63))) {
-         tcg_s390_program_interrupt(env, PGM_FIXPT_DIVIDE, GETPC());
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 403cd08450d..33729d4be5a 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
+         return false;
      }
  
++    if (offsetof(IplParameterBlock, pv.components) +
++        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
++        be32_to_cpu(iplb->len)) {
++        return false;
++    }
++
+     for (i = 0; i < ipib_pv->num_comp; i++) {
+         /* Addr must be 4k aligned */
+         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
 -- 
 2.47.3
 
