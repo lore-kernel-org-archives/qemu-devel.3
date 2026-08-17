@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEE4C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3F8C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvzpI-0004Jh-Ig; Mon, 17 Aug 2026 12:04:40 -0400
+	id 1wvzpN-0004KP-24; Mon, 17 Aug 2026 12:04:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wvzpF-0004Ig-PI; Mon, 17 Aug 2026 12:04:37 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wvzpD-00077a-Nx; Mon, 17 Aug 2026 12:04:37 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67HFgHG01710898; Mon, 17 Aug 2026 16:04:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=222NOp
- qCek1mbSWsG8Co63Ze5w3i21LR/46kVBMMo0Q=; b=oHODi+arAhguL200pvqP/H
- /eucsggLqCuqwt8cIiNuqEKqakaZ4qpoyxxARJV90AoHJwoSBeg6Y3Uf5y6AOjDb
- 1B5IR+BM9Ipek5Hm12ZPx56Xuj130+i/M+RB8marfWNDleX5HB338y4DC2e10PZF
- 3QB1pwhbaYyYjLzrSXSKl9jngsfhmlpnLQ2PKa8ZvFtz8kRgsqfUPDaGvf6pSymI
- capVkQdO85zUbdK1wwAoP3cpMVzasIBg8qFSwAK8z1FFT8ruUzA7t70ElRP4zpXr
- jb0ve3zeVkZVS+E/0A4qPrtbGdu3NeSN3BNpa7aH6eAb7dvEjLVJGBJSJ74a3O/w
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhku36s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 16:04:33 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HFuHnt031617;
- Mon, 17 Aug 2026 16:04:32 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32epxux4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 16:04:32 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HG3qAJ29557380
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 16:03:52 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 048ED58059;
- Mon, 17 Aug 2026 16:04:31 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 64B5D58043;
- Mon, 17 Aug 2026 16:04:28 +0000 (GMT)
-Received: from [9.124.209.96] (unknown [9.124.209.96])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 16:04:28 +0000 (GMT)
-Message-ID: <1f4678b8-ef26-4b00-96b6-2e201d5c9148@linux.ibm.com>
-Date: Mon, 17 Aug 2026 21:34:26 +0530
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wvzpK-0004Jx-Bn
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:04:42 -0400
+Received: from sonic309-21.consmr.mail.gq1.yahoo.com ([98.137.65.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wvzpI-00078C-AK
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:04:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
+ t=1786982676; bh=kW5c3iq1F6UiN1+G4AWz6LGpAojyDpS6Xdqm9qTL/OM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
+ b=hpAxfWv6Gb2a8QcO+Dte9x4fOxzG5Pr6Fdd024s/I/OEywi4AUJh8ee2qNIOX4Vyt7ba95h7ZooSZ9oj42o4ZjCdhmpQAEJtEVRNJGN3EsRd28lgttmNT9ES9nyP/GQlfZ8sXW6FVwPvHwDxpV63bSJleeMkaSI5Np1rfHs3v9M13Ir1ABlg2X8cozpnfeKHHIERZMuOIM1PO58KKjV5ywL9Aqwm/jyPtS5kC5GoORzf2XRw+yiYj3+QGADZ9LmiTS7RIK3c2yRebDe4ezzWGs12cCxc496qLBSW8tYl6qMYyi3jjboBhG7O/+A/90WZV9le5AolpooakRHU3blKPw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1786982676; bh=NsuSy2jgaze1RNyCPmJ/TICjkp37hf9r0mtC19/DrcU=;
+ h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
+ b=FctgtNKRR6HKWoLV9khJk2Xy29ZVlR1klnaG0sAWnPeO4HSgFMBS8MF6vMyIz5mxZm/69tYKiv9ulYqv0rhHZcCAJV/5dQDz9G3yD2oquOgxpvfS06J0hM8aP7Tqxl9GU5Uh9ITP4XG7oIPUypePyonwe98zaTN7ka9OuyGg8GYGNJRl7gTcUIXmqn+Z/0APlQYdq0tJMeJveoppbiO0Zlp02eBV908wI+8Cco9wyk98w93eLdbweJLH8C85ygjp8a99rKQzp1/4ecfq7bMKfgCL6phMPB+t1Pp8X49PkbGLd5uwCmulmIgR/1AfLIn4bkLPfustdow+CzredzAjIg==
+X-YMail-OSG: nsFWtHQVM1maVCM_WIfpU.FdUWH6_7poqfjBjmtUjJ2ahZXT3SB_cCwkxZM1Kt1
+ wtvgbJomoUQRNV5VfGii5S95KNhfu96JiB7mxBWYfjqIpgUwy.6O9iZCwrKcASSYVGJbBU9fcSBW
+ eawx4vQKgAnn31bRI3vQuG3ES8iPqbpCJWCho3sqwmLWe6LpONtke59cMYlfSXAD.K.BReNsucwF
+ iYTZk4uSep3mWkW.E0PWNWI_mJptAgLjID1dMdncOmxDwaDSjIF.qBsZcb_be5AaPhxcmyRQkwb5
+ QkXmbGK9W6dYf0nz18EzlQJjU.cOhoYCVN7l._DOw9i0n1KN.YBIo.qBPy6RuNsBtiuvSaNNXsxx
+ DqWZmYyq6rDsqKVlIQpKnXGMQULsO2QYh1nN8dGBVQ_c4YyLCcbE7RDe5yh.SSBikDU_b0TglDGH
+ 1ksIXUz5dnWwsvSmzzl2C2ZT5bKB13aysIo9n0b1I5Yysc.KKoAe85jy7_lKXgPy9rZmpJkj80cN
+ jrKZo_gTp0xu9SMRlYlHF4lRjH9tb4sS1g1xxSoeAPDEC6Gh7n9TVwOXVZsxb04vdcySNZ57QyoP
+ FQHw86V9PFxgjSPY1mGeyRJCmwxtkMBHos.m41_AIi_swP_apTuFF2KjKryO2benBSh.EVI3hHzL
+ NoP2zUPYn8r1APrC6FapsWIH_SQiP6W4T7MDbKqAKY9e8IV4.YX4NpjSv9nFyecg.52m.FNXM2tr
+ ol.lWOexVwkV1Ym.tIM4syT3x0BcVwfEdyJhxXM08.r0.dW_fn3aPGIoz0j7C32uEVCbnHbO.TdA
+ 27DIJNowBUNfhgQOgQ2Y3Tvc5.75yMAMz0MPIdmolfmzftjQh4jqRcKtH8X3zRZMM7i7Q5mRp_Ml
+ eyQ3t9b4kFn1FyyTPWKniqGi7LpSL60u7ZGBhOrPQWoPjYYjpwNyud94Ka4EEq.UjkjigaLS_yjm
+ pZ2W0bND50gO10mMbcE1KYIXGzqcLRpPMrZSYSwBgiImtKhbpawYq1wXk2OWhd_bKsVpWjFR1S7Z
+ EZdqbh7rfxISnCrsxRMJHUJYDYBvGPUMmG8pUrdVb9meoI1C1pN_Z2Gry2_Kq9lUhRMgjhvxRxmq
+ iggm8j8FoIRxrAvHVb7uBOAcu76g_I5vIJoIJFi5aEDm3DN6gA9QdIdQXUgfY1jFxEWTQubtpZxC
+ p_sOyf4ICjlwio45.Njcn9gzVYSLOgQeXo4z0czae2Liq.wDcTowWSe6Q5BHNZrIqAVupyzPYgBM
+ MViQTPDxNu6PIcY8bGUJ3rspCef054DI82gk0inGuiT2T1IXoJqci587ymIjuGEJLz3QEyUflk6r
+ 4WZ3ebEoMtaiouOrglzqetR.HuhwuWhTHSyo3gm5_BuBqRuRlkqBOEh2nyvjFiMEUxrEgFWHtAlv
+ 1c4BcHduZqEgcG5BKyzTErGE0lJKq4QRSdiMdaab57iV9aFs2G1VXXpvmgDQ8svEV7C5a_5xNYJp
+ FslFWjyl9LqDgO0bPrKxfTcZT1vQV.OZDhNt4HnuQTFOXpMpsNtHjORZh_jlmp7vXXOC8s_i6ODR
+ g7cLRX0cdoiuYctPaAGIS153rM5Z4lpSjy_hFJFgGr322J_wRqa8Q6lzL4Stk5HwVQmzjuiPAVO.
+ _OfjRSMJtRCwn.ByPM9YNCy..Zwo1qul7XemewH2wt7IEEtPeX1qdG8zESxSB_TayGIbxV3aj4Be
+ 7swS_R.pfWZHTFb_SZsb1XDrvBE958BNeZsSZ3FjHaJdGrFbEXTGhxRk7hWigBnqNCYNn8klWMdV
+ mReNf.nzN0dE2RfIN5t.MExj4InVnHZAuRLkLNUPb2UIO8k_mPPD0uaR0m1GQmSpw5fR58jAkbHC
+ E_5OCfB1zA5fVIogAERWK2VwUxq.26uWMikobRvpoR28QuBdrBBeEtfgJcJr47A3tWCNgGk7eVXX
+ j2HYk6.bAE2Us98mjPjTKlyMTICJiDzMfx8Lf98bQPcYxkwaLiRnQCw1tAwAeiyu1JRs4RnQrx71
+ ZgMGFYS_QJKA0pdyXwkVZNDfa7hfhE_sPQ8_PafKsvkW6hjk8UFhX9GXfeRDZVvedpcdoYr4Mdz2
+ GK4AH9xDWNwyFI5ZrNBTj74pGuOXmFOjC3vPv6RF1x7LhNbmXVyfJGPgaIOs4s4d7tOpGS5cZXjg
+ MhjQ.XTVAR8FOWhO7F_wNQpRWI407GM7zWS6qgseeTxnKjOs1AedIcvtS.lrPUlUooOpgqIFQoHH
+ BXsHEwZM09egMih1R.jCd92ovEqXw3JamRf96KIpTKbE-
+X-Sonic-MF: <brchuckz@aol.com>
+X-Sonic-ID: 9e1a9e8c-efa5-495a-a07f-bf24d83300bf
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic309.consmr.mail.gq1.yahoo.com with HTTP; Mon, 17 Aug 2026 16:04:36 +0000
+Received: by hermes--production-ne1-6dbcb84f44-46rwf (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID 98ae4e748b194883b83f02ba26d804c6; 
+ Mon, 17 Aug 2026 16:04:34 +0000 (UTC)
+Message-ID: <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
+Date: Mon, 17 Aug 2026 12:04:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Add lower bound check for watchdogNumber
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, aik@ozlabs.ru, amachhiw@linux.ibm.com
-References: <20260817105854.437724-1-rathc@linux.ibm.com>
- <20260817165901.b9ff4441-8a-amachhiw@linux.ibm.com>
- <a759da8e-9ee6-4144-b593-c019310c9af3@linux.ibm.com>
- <20260817173922.db7772a5-0c-amachhiw@linux.ibm.com>
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Jan Beulich <jbeulich@suse.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <20260802050824.10554-1-brchuckz@aol.com>
+ <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
+ <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
+ <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
+ <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+ <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260817173922.db7772a5-0c-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfX6mHDnoy4on5O
- BZSekok0u1MRFZLyYESmBuiQuVfcilmQ7STpQAeD+58QVuNkW1QAZS6AUVOU/KBsRJVVfGrrUa5
- Hdz5fkGZ/DlCLBj01uwRaEFJS19eikA5dqDWlG4K+7kiiIulRFdR2aJ1dgfOKmsK2bkAQje/yCC
- ipTS1Ad5Hw3Bbv31VQ7iwU6vNMzWvuxnDf5KJsYLoF4iTuMj9xov00lOBxbcUK/kPq1Xc3YlIaD
- wjUf9sa3WUXAkuI1vbmzE+rxNhWkEVT7TAFKRcnw6Bq8IgBx2xF5ysJnyl3fT14yVmE/+bJd4VT
- SfrwQzrcFLIY+YcTI76rCumEgVueGXeHTozzDnfQLfagDm5LERYZDybeZWLHwb3FBA5pPvr64iN
- 87ZYSQq+rl/QeLmGLcaoZ1SXVF6GG4z9y3c3jCzNDjcEPN2yR+mM8e1+Jrn/59b8eb48eUDIDe/
- yDBpjYUfjZoPLChzCTw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfXwbFSCg6ezX6x
- WuG5LgpiEf1lu/LQKsrJQxYW9LXiVGSgP16fVX6AUrzMj63G+x1QlwVMxPb5bcsbr2Jsh20O5Dr
- EU9U5uAjOCR6DXTivf8KO/15CA3g58U=
-X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a833111 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
- a=VnNF1IyMAAAA:8 a=AJhdjOHtEmRdEUaYv5kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: wQ5uK0ffwMJ3dR_CKJR6lpaTTNEeKK9V
-X-Proofpoint-GUID: kGYldjD3TDe6N-X7Slzk3a7dKptFsWkB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-17_02,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608170123
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Chuck Zmudzinski <brchuckz@aol.com>
+In-Reply-To: <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.26254
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
+Received-SPF: pass client-ip=98.137.65.147; envelope-from=brchuckz@aol.com;
+ helo=sonic309-21.consmr.mail.gq1.yahoo.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,108 +115,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/17/2026 4:42 AM, Jan Beulich wrote:
+> On 14.08.2026 17:23, Chuck Zmudzinski wrote:
+>> On 8/14/2026 9:46 AM, Jan Beulich wrote:
+>>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
+>>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
+>>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
+>>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
+>>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
+>>>>>>>> -- snip --
+>>>>>>>> +    /*
+>>>>>>>> +     * Write rvda_host as 2 successive 32-bit values
+>>>>>>>> +     * to communicate location of the VBT to the device
+>>>>>>>> +     * model. If rvda_host is not 0, The device model
+>>>>>>>> +     * unmaps the OpRegion and eventually maps the VBT
+>>>>>>>> +     * after we also write the guest address where the
+>>>>>>>> +     * VBT will be mapped.
+>>>>>>>> +     *
+>>>>>>>> +     * If we send rvda_host = 0 to the device model, it
+>>>>>>>> +     * will assume we do not need OpRegion 2 support and
+>>>>>>>> +     * it will not unmap the OpRegion.
+>>>>>>>> +     */
+>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
+>>>>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
+>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>>>>> +               (uint32_t)rvda_host_upper_32);
+>>>>>>>
+>>>>>>> Why would you need to communicate a host property to the DM?
+>>>>>>
+>>>>>> The DM cannot access the host rvda value because it is only accessible
+>>>>>> from the host kernel, and the DM is only a user-space process on the host.
+>>>>>
+>>>>> I don't follow this: Anything the guest can access should also be accessible
+>>>>> by its DM.
+>>>>
+>>>> I think the host OpRegion is not currently accessible by the DM.
+>>>
+>>> Can you explain to me how the region becomes accessible to the guest?
+>>> That would then (hopefully) help me understand why the DM would not have
+>>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
+>>> guest are also assigned to its DM.
+>> 
+>> Currently, in the device model (Qemu) we have:
+>> 
+>>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
+>>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
+>>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
+>>             XEN_PCI_INTEL_OPREGION_PAGES,
+>>             DPCI_ADD_MAPPING);
+>> 
+>> That statement is in the igd_write_opregion(...) function in the
+>> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
+>> 
+>> If I understand our current implementation correctly, this statement
+>> is what gives the guest access to the host OpRegion (3 pages as defined
+>> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
+>> in hvmloader code).
+> 
+> No, it introduces mappings of those pages into the guest's P2M.
+> 
+>> I don't think this statement makes the host OpRegion
+>> accessible to the device model, though, so I think, if I understand your
+>> comment in an earlier about my patch resulting in what you called a "layering
+>> violation" correctly, that our current implementation is also guilty of this
+>> same kind of "layering violation."
+> 
+> That code, if it can be successfully executed, indeed doesn't grant any
+> permissions (to the DM or the guest). Instead it proves that the DM has the
+> needed permissions to access the pages itself.
 
-On 8/17/26 17:42, Amit Machhiwal wrote:
-> On 2026/08/17 05:27 PM, Chinmay Rath wrote:
->> On 8/17/26 17:03, Amit Machhiwal wrote:
->>> On 2026/08/17 04:28 PM, Chinmay Rath wrote:
->>>> Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
->>>> as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
->>>>
->>>> Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
->>>>
->>> Nit: This newline is not needed.
->>>
->>>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
->>>> ---
->>>>    hw/watchdog/spapr_watchdog.c | 7 ++++---
->>>>    1 file changed, 4 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
->>>> index 5b3f50de3a..5d7478e833 100644
->>>> --- a/hw/watchdog/spapr_watchdog.c
->>>> +++ b/hw/watchdog/spapr_watchdog.c
->>>> @@ -145,7 +145,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
->>>>        switch (operation) {
->>>>        case PSERIES_WDTF_OP_START:
->>>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
->>>> +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
->>>>                return H_P2;
->>>>            }
->>>>            if (timeoutInMs <= WDT_MIN_TIMEOUT) {
->>>> @@ -170,7 +170,8 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
->>>>        case PSERIES_WDTF_OP_STOP:
->>>>            if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
->>>>                ret = watchdog_stop_all(spapr);
->>>> -        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
->>>> +        } else if (watchdogNumber > 0 &&
->>>> +                   watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
->>>>                ret = watchdog_stop(watchdogNumber,
->>>>                                    &spapr->wds[watchdogNumber - 1]);
->>>>            } else {
->>> Nit: The bounds check in OP_STOP uses a positive-selection guard
->>> (watchdogNumber > 0 && watchdogNumber <= ARRAY_SIZE(...)) with the error
->>> in the trailing else, which reads differently from the negative guards
->>> used in OP_START and OP_QUERY_LPM. Consider flipping it to match:
->>>
->>>     } else if (watchdogNumber < 1 ||
->>>                watchdogNumber > ARRAY_SIZE(spapr->wds)) {
->>>         return H_P2;
->>>     } else {
->>>         ret = watchdog_stop(watchdogNumber,
->>>                             &spapr->wds[watchdogNumber - 1]);
->>>     }
->>>
->>>> @@ -184,7 +185,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
->>>>            trace_spapr_watchdog_query(args[0]);
->>>>            break;
->>>>        case PSERIES_WDTF_OP_QUERY_LPM:
->>>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
->>>> +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
->>>>                return H_P2;
->>>>            }
->>> Suggestion (follow-up patch): After this fix lands, it may be worth
->>> extracting a small helper to avoid the repeated bounds expression across
->>> OP_START, OP_STOP, and OP_QUERY_LPM:
->>>
->>>     static inline bool watchdog_number_valid(target_ulong n,
->>>                                              SpaprMachineState *spapr)
->>>     {
->>>         return n >= 1 && n <= ARRAY_SIZE(spapr->wds);
->>>     }
->>>
->>> The three call sites then become a uniform !watchdog_number_valid(...)
->>> or watchdog_number_valid(...) expression, the bounds are defined in
->>> exactly one place, and any future change to the valid range (e.g. a
->>> dynamic wds size) has a single point of update. Not a blocker for this
->>> patch — just a clean-up worth a separate patch.
->> Hey Amit,
->> Thanks for the suggestion. I actually did think of this. But, this common
->> check would only be used by 2 operations : Start and LPM requirement. Stop
->> operation's watchdogNumber validation works differently in the sense that
->> unlike others, it can take a specific negative value, that is -1, which is
-> Thanks for the explanation, Chinmay. Just a small correction though —
-> PSERIES_WDT_STOP_ALL is not -1. It is defined as:
->
->    #define PSERIES_WDT_STOP_ALL  ((uint64_t)~0)
->
-> Since watchdogNumber is target_ulong (an unsigned type), this is
-> 0xFFFFFFFFFFFFFFFF — the maximum value of a 64-bit unsigned integer, not
-> a negative value. -1 would only be the interpretation if the bit pattern
-> were read through a signed type, which never happens here.
-Oooh right, I missed this. Thanks ! Will send a v2 right away.
->> used to indicate stopping all watchdogs. (This is also the reason why the
->> bound check flow is different for stop operation as you have already pointed
->> out above).
->>
->> Due to this, I decided not to consolidate. However we can definitely pass
->> the operation type to the validator function and check accordingly though.
-> This actually reinforces the case for the shared helper. Since
-> watchdogNumber is unsigned, watchdogNumber < 1 can never be true for
-> PSERIES_WDT_STOP_ALL — 0xFFFFFFFFFFFFFFFF < 1 is false for an unsigned
-> comparison. More importantly, STOP_ALL is caught by the explicit ==
-> PSERIES_WDT_STOP_ALL arm before the bounds check is ever reached, so it
-> would never interact with watchdog_number_valid() at all.
->
-> ~Amit
+So, are you saying it should be possible, without any patches to either Xen or
+the Linux kernel, for Qemu to get a pointer to the OpRegion? If so, how?
+
+I think I could implement what you proposed in an earlier message and do
+all (or most) of this in the DM instead of here in hvmloader:
+
+> The more correct thing to do might be for the DM to
+> put in place a copy before the guest (i.e. hvmloader) even gains control.
+> (How in turn the DM would learn of the contents of the opregion is a
+> separate question then.)
+
+Actually, when I was developing this patch, I tried first to do it that
+way, but the problem was, I could not find a way to get a pointer to the
+host OpRegion in Qemu.
+
+So, how can I get a pointer to the host OpRegion in Qemu?
+
+This is what the handling of
+> XEN_DOMCTL_memory_mapping has in this regard:
+> 
+>         ret = -EPERM;
+>         if ( !iomem_access_permitted(current->domain, mfn, mfn_end) )
+>             /* Nothing. */;
+> 
+> Subsequently we check that the guest is also permitted access:
+> 
+>         else if ( iomem_access_permitted(d, mfn, mfn_end) )
+
+
+
+
+
+> 
+> Jan
+
 
