@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3A7C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB7AC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtJi-0004qv-2R; Mon, 17 Aug 2026 05:07:39 -0400
+	id 1wvtKW-0007JX-C5; Mon, 17 Aug 2026 05:08:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJ6-0004GR-Kb; Mon, 17 Aug 2026 05:07:01 -0400
+ id 1wvtK4-0006yg-2j; Mon, 17 Aug 2026 05:08:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJ4-0001kr-2C; Mon, 17 Aug 2026 05:06:59 -0400
+ id 1wvtK2-0001xc-6h; Mon, 17 Aug 2026 05:07:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=1uaIgH1dHlEwIOZwPFoHH37BrF6gsXh0iPrQYkqC4II=;
+ t=1786957506; bh=4OBnDQXmrE3v0dK3bOMHR7fSYamM1UPiyrQk9pQg2TA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EDzWei/95F9aHYBqqsmuaqlIjwHP3JxPk3nRyt37tN+WABfr/O7cZNY8KoAgC6gwR
- qumrzkkOEmDt5kKpz34pnHlgt0VqUczW76kjGRnkG1Q9wN8BHQp0KdiI5gTQ31pXJv
- bgotAaDwfknVaAOtFh7Pn0p1Rv/Wxg31LPlmethDPoF/fQniOQKSTjINGq+rFkk68K
- U2si9Ocy01bo/iemFp1nxl/FdKb8ex3wYzIATo8JSqFMnxk84fFzKe1L8ybKZP9sL6
- agyioCuCwcXUT/sXEvmmB45flFHdIqbLUB0P8qw3MWl6vo2m4Qaw+GKeLCnB1Ycj33
- EDUYPo/zBCglg==
+ b=MAZVdFJDkNUCrhEiaYq8UWXFLSVdss5p9jJf7r7YOWcHvUFyoxNELEJAPdK889Hv4
+ exmj3JcC+s02XYvskfo62lddZ47TLX1sh/OH8I2XpdnD1AxNF+zRtWK3AmYcAtkmnF
+ ofIdDZVBdBVmbmDChMhMuaGj/0YjUsAt4VK3h3/LJa1S+oorJgMUJ4pK3XnvimKntm
+ uT9YynhScGmKkKHN6mrJyYdClm8a2DlpTtktPunZfG4L5o8xNFhg5rcbWS4uvE4F8I
+ RMSHGKoYKxW1fIKDxqUCZ07VF6fPffsZa7HqAjZZYlRkdSFQoqOkV3zl0cxMbDu2KY
+ fUh64ETiFPRgA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 47AAF1CBA45;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7C8931CBA51;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 26E8F40D027;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5C08840D033;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D0EA830D02; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id 011AE30D1A; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 17/42] s390x/ipl: validate num_comp against iplb
- length before iterating
-Date: Mon, 17 Aug 2026 12:04:22 +0300
-Message-ID: <20260817090453.2034156-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 29/42] hw/net/vmxnet3: Do not abort if guest provides
+ bad interrupt numbers
+Date: Mon, 17 Aug 2026 12:04:34 +0300
+Message-ID: <20260817090453.2034156-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,42 +73,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 
-In ipl_valid_pv_components(), the upper bound of the for loop,
-ipib_pv->num_comp, is read from guest memory. Before iterating, verify
-that its value will not cause a read beyond the end of the
-IplParameterBlock.
+vmxnet3_validate_interrupts() currently aborts via hw_error() if
+the guest provided bad interrupt numbers. This should not happen,
+QEMU should rather refuse to activate the device in this case instead.
+Thus propagate the error to the callers to handle it more gracefully
+there.
 
-Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-3-borntraeger@linux.ibm.com
-[farman@linux.ibm.com: Added qemu-stable]
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit df607fd056044e40352a43f0b4422b9a5cb015c8)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260731113352.189066-1-thuth@redhat.com>
+(cherry picked from commit 46099d99005588b25eb07957cd9cdd688c4fc476)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index fac30763df2..ef9c063d904 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
-         return false;
-     }
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index 8569484b2f2..24c551a0547 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1336,32 +1336,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
+         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
+ }
  
-+    if (offsetof(IplParameterBlock, pv.components) +
-+        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
-+        be32_to_cpu(iplb->len)) {
+-static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
++static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
+ {
+     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
++
+     if (idx >= max_ints) {
+-        hw_error("Bad interrupt index: %d\n", idx);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "vmxnet3: Bad %s queue interrupt index: %d\n",
++                      type, idx);
++        return false;
+     }
++
++    return true;
+ }
+ 
+-static void vmxnet3_validate_interrupts(VMXNET3State *s)
++static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+ {
+     int i;
+ 
+     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
+-    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
++    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
 +        return false;
 +    }
+ 
+     for (i = 0; i < s->txq_num; i++) {
+         int idx = s->txq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
++            return false;
++        }
+     }
+ 
+     for (i = 0; i < s->rxq_num; i++) {
+         int idx = s->rxq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
++            return false;
++        }
+     }
 +
-     for (i = 0; i < ipib_pv->num_comp; i++) {
-         /* Addr must be 4k aligned */
-         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
++    return true;
+ }
+ 
+ static bool vmxnet3_validate_queues(VMXNET3State *s)
+@@ -1554,7 +1568,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
+                sizeof(s->rxq_descr[i].rxq_stats));
+     }
+ 
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return;
++    }
+ 
+     /* Make sure everything is in place before device activation */
+     smp_wmb();
+@@ -2392,7 +2408,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
+     if (!vmxnet3_validate_queues(s)) {
+         return -1;
+     }
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return -1;
++    }
+ 
+     return 0;
+ }
 -- 
 2.47.3
 
