@@ -4,106 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE9BC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7948C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 11:02:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvv3s-0008Mc-BG; Mon, 17 Aug 2026 06:59:24 -0400
+	id 1wvv6U-0001DN-OO; Mon, 17 Aug 2026 07:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wvv3i-0008J7-L8; Mon, 17 Aug 2026 06:59:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wvv6R-0001Ct-Vm
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 07:02:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wvv3g-0006cm-Ue; Mon, 17 Aug 2026 06:59:14 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67H9qLCb3727949; Mon, 17 Aug 2026 10:59:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=l2CGPw3G4c7ghCHnSIskkOQcSuNH4mJi+htyyL/o2
- 38=; b=f7Y+TiGkUfY8OHj/fHC+AXD3qGeQvoZWSIFfxz6+06N49EPs3Z3QnRqEe
- ZzeQGfawR9LsRkd6rWM0ZZw9lVAWLaW/+RpGBa9ptGaPUFwknTUlWQg6KMGEq5X6
- SQDmUNaIfdwkLk4JOOb628zxsOOyxySECEnBDv8yBYDSxeF5j3dEnNvAJ44zM3Xw
- 8LJL7SaGEt7THfrgi+v1ZY+zIesb3qQgfFsBaVsYihplcQRLZQRGxu2b16rnr0qj
- cqetPZ1uDZVGqJ7V3UnEql3bNycJENjl3vKOVUoChQn7xy5PrfbafmdmYgBXwJYD
- eyHOPPxgb4IGru+Ccxelvqu0wMX+A==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4hurq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:59:08 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HAuI3G002929;
- Mon, 17 Aug 2026 10:59:08 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ng5gxn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:59:07 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HAx4n036045292
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 10:59:04 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AD862004B;
- Mon, 17 Aug 2026 10:59:04 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCA6020040;
- Mon, 17 Aug 2026 10:59:01 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.39.17.52]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 10:59:01 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, aik@ozlabs.ru,
- amachhiw@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH] target/ppc: Add lower bound check for watchdogNumber
-Date: Mon, 17 Aug 2026 16:28:54 +0530
-Message-ID: <20260817105854.437724-1-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wvv6P-0007Oc-61
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 07:02:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786964519;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=p3fKo06NzUUBJhpRc+0P5xMHEgMjJkbsJhtpK6DUMo8=;
+ b=I/UKH9yjCJraOcTnyqZPns4ec2ZCs3L86iLEL5Gdcqg5WjHaY3/e3vIbYjYynb8+g/ElTN
+ FhdAfPOCeJ0IWdGAjdCx+7ed/OUtAi94U8BbxtNcVKe2qd2xhG0n/WU6OONkMUHA9jBv1Z
+ 1gnOrfpRvntdUro47QS6Nk71b0H+vOA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-448-kvZgqk_dO82-i9Z369V8WQ-1; Mon, 17 Aug 2026 07:01:58 -0400
+X-MC-Unique: kvZgqk_dO82-i9Z369V8WQ-1
+X-Mimecast-MFC-AGG-ID: kvZgqk_dO82-i9Z369V8WQ_1786964517
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso1925615f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:01:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786964517; x=1787569317; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=p3fKo06NzUUBJhpRc+0P5xMHEgMjJkbsJhtpK6DUMo8=;
+ b=t4g0p7QBRAE189SJLOiei3Lfc4Ag1WBkXoojD33+JHrHw4svXeUvtgPk4NBjt6XeEh
+ d7pMv7WJTFmBi4I04AnAFUt2kPJT7LBri+yOBaswxTo/loOEhEFQO6iuqOzTG6xRNFbA
+ s+qnAuNH8nrgXZvvUvIqyX9VHScleG7SGNieGGj90zwjQPA/BcDYLYd9WES7WRoVIHt+
+ qhAiDHS5/uILWSirJV0W4k8IgS6T2Lqdo5kqu7HuhfFWd7yQSX3R3REpEwFAICvGjiKg
+ mERFeCjS79cKxzPPUmtsCA36PksAZDnIw1eEyZLA31TTza9jN1xgq/dW0079QSskUpAQ
+ 74dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786964517; x=1787569317;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=p3fKo06NzUUBJhpRc+0P5xMHEgMjJkbsJhtpK6DUMo8=;
+ b=QN2J+8H+pYV7OCjMw77gdA5cwcSENgXbaG95TrYNDEAkXPpRdF+Hy7r3SD8Jyn8wiB
+ vbGJVLvxAOSPT9rC9YC3jTdDXJgEwnq/NYhWsUkGu8awg7C0yns36ejhge0UdPE+k6HL
+ DxRe4K2dZFxP8SeO2/rL8+GWYB4GPC1E6mV7nvlRE7n3ODlWuZ9LHZvE4pxXRzBhVnt3
+ mkyEjZqwoOJ9kYypyD343/OWZXP4iIxacdkkOvTsi5PN8GetO2qHraw1Uv8qIydNIxJR
+ cQtaf580pyGEnlb8AWmcLutGpKXkIWPkj8/DwpVjLI4rwQCM+TcaQhNOFHqNwmMc/I/j
+ 2ihA==
+X-Gm-Message-State: AOJu0YzfKAjCPYk3JsmUAUAdfHSnIObDJd1jfdQB9qowmaVpZ/leoWrv
+ 9wsRYtr/A1itiKa5gdpwyT9YeQHNvet37DkzkC80oaf9Sm8pKBQLIkwzEPjndosrMS/YCl29SMC
+ Ov5Vcd/lvOUEFHn3fj+N/99NVUj5qcvrQu/VFa1rNaeldBhD1TZU1Zagb
+X-Gm-Gg: AR+sD13pNsQq6VQi0rHYF9u7BZI/Een1kEKsyHMC7TiXK1ClzsyVwwo9b7mpdm/mo2+
+ wPw0ajDCSeeQXtENbnh3FbMHcV9OLZVfi5b+5FUTxN+fdfHewHms380f9s2FGYW/8BHpmzzkDy0
+ odAK62hkAvxem4YoWxbMMxL8VW41IHMUs4L8zzOi+mtkjWjJ4ae7kcT7LdV4iHbK3BScZbXaEJ8
+ P2mHNugCYt9v7gu+kbZVwHdTq2rP1xSAJjiSoAsuUAtXqXRvND5m+VNVgxkvfAg4W1/OWWH37/3
+ erAJCwz0hc64HlThmTfTxAJ6zNrImV5ai/KZtm+59OFFas2zFD/PUA/R436RNuFCYGBgfRk0
+X-Received: by 2002:a05:6000:220d:b0:481:4fa4:f9e5 with SMTP id
+ ffacd0b85a97d-48160771860mr35842379f8f.14.1786964517122; 
+ Mon, 17 Aug 2026 04:01:57 -0700 (PDT)
+X-Received: by 2002:a05:6000:220d:b0:481:4fa4:f9e5 with SMTP id
+ ffacd0b85a97d-48160771860mr35842318f8f.14.1786964516619; 
+ Mon, 17 Aug 2026 04:01:56 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.115.27]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482a5a31396sm3101373f8f.2.2026.08.17.04.01.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 04:01:55 -0700 (PDT)
+Message-ID: <d6fa2176-7cf2-4955-8dc8-a79ca34ef568@redhat.com>
+Date: Mon, 17 Aug 2026 13:01:54 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: fix pylint false positives for cv2
+ module
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260815072421.4117291-1-marcandre.lureau@redhat.com>
+ <54495516-9f01-4077-860a-a4c9cc612a73@redhat.com>
+ <CAMxuvaz3yrNkTnYOHtDcqGgKjW=9B-v82dGHpvSYUjzgrBYmDg@mail.gmail.com>
+ <225b9367-f343-4690-ac37-d2bbd57680a7@redhat.com>
+ <CAJ+F1CL7VVXBa5jJKxaKQ-ZV4Yf=uoz3SSLPCcxmRH6duvnYMQ@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAJ+F1CL7VVXBa5jJKxaKQ-ZV4Yf=uoz3SSLPCcxmRH6duvnYMQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 9XQCjn7HCt5CMkhNCGrN0AffPBFktJBp
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a82e97d cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8 a=VnNF1IyMAAAA:8
- a=Mx9oKPrOMzdSx9n7BPAA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3OCBTYWx0ZWRfXxRhkIwdGg6Ii
- Gu63nf4CZeF0HiLX5jREpyuLnU2/8dF3QADHc2iT0xHf5plSlo3H7pD1EaoDe4HfOBMto5jZQ8z
- FyJDGnNLj+av2I0vRUl94tigiabKsHs=
-X-Proofpoint-ORIG-GUID: GLDDIkUj753cm9V4nizqhWWGByVNHEZA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3OCBTYWx0ZWRfX6Zcc7ktrJ4q4
- 4GXk4p1Jy1CPBUlYP3SUMrQujLCMXVylurX6ybZbMZda7bt7wKuFd2FeqX2lBWy6G6sShOb87xn
- rONoMeJeVU6NGcU+1ptGCs68+9Z79smJpE4qd6ooPkpLnJ5q6+Iyw+Q5GWsOB1nwktjaS4IrPOr
- o1OVdtYLNaR5dOOdVwsImdBF1Ik2kdL7c1PeH9OD7LCRlmjx9+Uqb8F7MxCr/5Vu+MOoY7DoiTC
- JRV34fjtWghiZ2avnwEFWs4qxFAx/lfDAu9tFkgTXO/h8CeNr9h4z3GONPIC2cjiXWNzvQltO96
- mKOn0Cj/Cqso7UqERb6F5cpMiiyfskribIowG7+9CJCNeCJ46+L3tZfMcsHbawd4qC6LDulrQp7
- svw3/svbGosdITb60KLwYrPcWugXaNbyyTWkTJMCiqN7RZf+c4nTRS3Z2sPqLYirPliyvz9ypY8
- BsqjFgjPU1lY6FeAuMA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1011 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170078
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,49 +165,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
-as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+On 17/08/2026 12.54, Marc-André Lureau wrote:
+> Hi
+> 
+> On Mon, Aug 17, 2026 at 12:39 PM Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> On 17/08/2026 09.57, Marc-André Lureau wrote:
+>>> Hi
+>>>
+>>> On Mon, Aug 17, 2026 at 11:19 AM Thomas Huth <thuth@redhat.com> wrote:
+>>>>
+>>>> On 15/08/2026 09.24, marcandre.lureau@redhat.com wrote:
+>>>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>>
+>>>>> Add generated-members=cv2.* to pylintrc so pylint skips member
+>>>>> checking on the cv2 C extension module, whose members are not
+>>>>> visible to static analysis.
+>>>>>
+>>>>> Silence:
+>>>>> 2026-08-15 10:42:08,710 - INFO: qemu-test.test_pylint Checking files in /home/elmarco/src/qemu.qom-qapi/tests/functional/arm with pylint
+>>>>> 2026-08-15 10:42:10,941 - ERROR: qemu-test.test_pylint "/home/elmarco/src/qemu.qom-qapi/tests/functional/arm/test_integratorcp.py:83: E1101: Module 'cv2' has no 'imread' member (no-member)"
+>>>>
+>>>> Alex recently already sent a patch for that error here:
+>>>>
+>>>>     https://gitlab.com/qemu-project/qemu/-/commit/dd14a21b9dc1
+>>>>
+>>>> Didn't that help to silence the message in your case, too?
+>>>
+>>> Ah I missed that, but it doesn't help:
+>>>
+>>> pylint --rcfile ../tests/functional/pylintrc ../tests/functional/arm/
+>>> ************* Module test_integratorcp
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:83:25:
+>>> E1101: Module 'cv2' has no 'imread' member (no-member)
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:26:
+>>> E1101: Module 'cv2' has no 'cvtColor' member (no-member)
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:55:
+>>> E1101: Module 'cv2' has no 'COLOR_BGR2GRAY' member (no-member)
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:17:
+>>> E1101: Module 'cv2' has no 'matchTemplate' member (no-member)
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:52:
+>>> E1101: Module 'cv2' has no 'imread' member (no-member)
+>>> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:86:35:
+>>> E1101: Module 'cv2' has no 'TM_CCOEFF_NORMED' member (no-member)
+>>>
+>>> My understanding:
+>>>
+>>> I1101 (c-extension-no-member) - disable: silence if pylint can't
+>>> introspect the module
+>>>
+>>> E1101 (no-member) - but we need to tell pylint to trust any member
+>>> access on cv2 if it can
+>> Ok, but could you then add it to the "disable=..." list instead, so that we
+>> disable this for all other modules, too? ... otherwise we'll be busy adding
+>> an entry for all other modules where this pops up in the course of time.
+>>
+> 
+> I see your point, but disabling "no-member" globally means pylint
+> won't catch typos like self.naem or obj.nonexistent_method() anywhere.
+Ok, then let's go with your patch here.
 
-Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
-
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
----
- hw/watchdog/spapr_watchdog.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
-index 5b3f50de3a..5d7478e833 100644
---- a/hw/watchdog/spapr_watchdog.c
-+++ b/hw/watchdog/spapr_watchdog.c
-@@ -145,7 +145,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
- 
-     switch (operation) {
-     case PSERIES_WDTF_OP_START:
--        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-+        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-             return H_P2;
-         }
-         if (timeoutInMs <= WDT_MIN_TIMEOUT) {
-@@ -170,7 +170,8 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
-     case PSERIES_WDTF_OP_STOP:
-         if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
-             ret = watchdog_stop_all(spapr);
--        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
-+        } else if (watchdogNumber > 0 &&
-+                   watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
-             ret = watchdog_stop(watchdogNumber,
-                                 &spapr->wds[watchdogNumber - 1]);
-         } else {
-@@ -184,7 +185,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
-         trace_spapr_watchdog_query(args[0]);
-         break;
-     case PSERIES_WDTF_OP_QUERY_LPM:
--        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-+        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-             return H_P2;
-         }
-         args[0] = PSERIES_WDTQL_QUERY_NOT_STOPPED;
--- 
-2.55.0
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
