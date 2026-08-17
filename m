@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C34C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB191C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqM-0001KL-7r; Mon, 17 Aug 2026 06:45:26 -0400
+	id 1wvur6-0002Gb-LT; Mon, 17 Aug 2026 06:46:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuq6-00010D-Lp; Mon, 17 Aug 2026 06:45:13 -0400
+ id 1wvuqs-0001wi-4r; Mon, 17 Aug 2026 06:46:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuq4-0003wS-TO; Mon, 17 Aug 2026 06:45:10 -0400
+ id 1wvuqq-00044o-Hz; Mon, 17 Aug 2026 06:45:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=D2YeA560b4MVOhO0//AQ3+Ylgiz0yPiHoMGwp/0cbIg=;
+ t=1786963486; bh=yVnDzgJxHRKLs1AbfBa6eDRrhVWVnNWtrTUWSLOlkbA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bWBYVrrgTrsbUnEaYmV2RkYu/BAUz55Jsi0pjz2SXb7RRj3tqubzGIQm82915RNwn
- 3idlmfezWslzN2T69LmRbnw6NI98TyLVddyZAGPoxi8eTDsOWQ5c3T86EmAshK5Y1n
- h4pRO8OFAbbVy8I/D+2q0hR/3PfaNea5JIqnGfvyou56g9db9W/7TdbB3tqQJRBX5o
- qhVJI2ez8n0qLKMjDdTjAjROMrKNFPLyws/o9VN4TvZY/UOmdgB6INRDwU1yX4xwVV
- WT9GqTJ/+bCeUDulcylhRYyx8Qb1n/Ay6HMfACJo3V4KPvAt3djW4DLg/ldA5H7azh
- KcWsKG6iSmmzg==
+ b=ImbdxZo8t2QTgtAFmfrdYWy5y+MawYasNqs2Vln1nwMnYBbofDls9ie0okS4e6Acb
+ whCbZNubwFS8noO8zuVthYwrV+FCXNt7/Tf4BI46GbXYobEMnrAQWlqmdibFj5aWu4
+ boZlcHk6XTa8ZHlozrbZctYcKx9KIXqmtSrr4RRplnitBU+xm7ImdN9Yejqt/rr7Ij
+ KFMCR7/wQkl033KLl/sIVSIn8YbIrpPfjaEQD4b3UhinLsYh67Cy2ENqemxk2XVuid
+ KER6pYbbkHjFGNXPUseLtj2nDLX7ogcQ9VV+BCyNOJTufIFNx49fRbrIsBGYoFT/5Y
+ Sd96xM/nakFMQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 46C451CBB66;
+ by isrv.corpit.ru (Postfix) with ESMTP id 95AE01CBB76;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 47EF040D1F4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 974F940D207;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E1B1E30E44; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
+ id 20C4C30E64; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 121/161] linux-user: implement mount_setattr(2)
-Date: Mon, 17 Aug 2026 13:42:35 +0300
-Message-ID: <20260817104344.2047346-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 137/161] pc-bios/s390-ccw: fix out-of-bounds read
+ in iso_get_file_size()
+Date: Mon, 17 Aug 2026 13:42:51 +0300
+Message-ID: <20260817104344.2047346-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -70,121 +73,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-mount_setattr() was in the syscall tables but had no implementation, so
-guests always got -ENOSYS. systemd uses it when setting up per-unit
-credential mounts, which fails the affected units with EXIT_CREDENTIALS.
+In the dir_rem[level] == 0 case, level is decremented, then
+a virtio_read() is issued on sec_loc[level]. If level is -1, then the
+4 bytes before the static sec_loc array are read, and the virtio_read()
+is issued on that garbage block number.
 
-struct mount_attr is an extensible struct like open_how, so handle it the
-same way openat2() does: reject sizes smaller than the ver0 struct and
-require any unknown trailing bytes to be zero. All of its fields are
-64-bit, and the MOUNT_ATTR_* and MS_* propagation values are identical on
-every target, so only the byte order needs fixing up.
+Guard the call to virtio_read() against the value of level to prevent
+this.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 4713988da1c3ed7150014c87c2429d7a940b77c8)
+Fixes: 869648e87eeb ("pc-bios/s390-ccw: El Torito 16-bit boot image size field workaround")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-4-borntraeger@linux.ibm.com
+[farman@linux.ibm.com: Fixed typo on Christian's tag, added qemu-stable]
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit a9f1e84c6b8213fb1bfc664b1ffa1a8d975a69b6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 25ace05187a..e952f15d20d 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1737,3 +1737,6 @@
- #ifdef TARGET_NR_fspick
- { TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_mount_setattr
-+{ TARGET_NR_mount_setattr, "mount_setattr", "%s(%d,%s,%d,%p,%d)", NULL, NULL },
-+#endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 85ef8261e63..bac13aebec0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9675,6 +9675,13 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
- 
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+#define __NR_sys_mount_setattr __NR_mount_setattr
-+_syscall5(int, sys_mount_setattr, int, dfd, const char *, path,
-+          unsigned int, flags, struct mount_attr_ver0 *, uattr,
-+          size_t, usize)
-+#endif
-+
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
-@@ -14416,6 +14423,43 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
- #endif
- 
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+    case TARGET_NR_mount_setattr:
-+        {
-+            struct mount_attr_ver0 attr = {};
-+            abi_ulong usize = arg5;
-+
-+            if (usize < sizeof(struct target_mount_attr_ver0)) {
-+                return -TARGET_EINVAL;
-+            }
-+            ret = copy_struct_from_user(&attr, sizeof(attr), arg4, usize);
-+            if (ret) {
-+                if (ret == -TARGET_E2BIG) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "Unimplemented mount_setattr mount_attr "
-+                                  "size: " TARGET_ABI_FMT_lu "\n", usize);
-+                }
-+                return ret;
-+            }
-+            /*
-+             * MOUNT_ATTR_* and the MS_* propagation flags have the same
-+             * values on all targets, so only byte order needs fixing up.
-+             */
-+            attr.attr_set = tswap64(attr.attr_set);
-+            attr.attr_clr = tswap64(attr.attr_clr);
-+            attr.propagation = tswap64(attr.propagation);
-+            attr.userns_fd = tswap64(attr.userns_fd);
-+
-+            p = lock_user_string(arg2);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(sys_mount_setattr(arg1, p, arg3, &attr,
-+                                              sizeof(attr)));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index e033c7db341..e28853c93b0 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2770,6 +2770,19 @@ struct target_open_how_ver0 {
-     abi_ullong mode;
-     abi_ullong resolve;
- };
-+/* from kernel's include/uapi/linux/mount.h */
-+struct mount_attr_ver0 {
-+    uint64_t attr_set;
-+    uint64_t attr_clr;
-+    uint64_t propagation;
-+    uint64_t userns_fd;
-+};
-+struct target_mount_attr_ver0 {
-+    abi_ullong attr_set;
-+    abi_ullong attr_clr;
-+    abi_ullong propagation;
-+    abi_ullong userns_fd;
-+};
- #ifndef RESOLVE_NO_MAGICLINKS
- #define RESOLVE_NO_MAGICLINKS   0x02
- #endif
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 420ee32eff8..ed6e8cbbc78 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -902,7 +902,7 @@ static inline long iso_get_file_size(uint32_t load_rba)
+         if (dir_rem[level] == 0) {
+             /* Nothing remaining */
+             level--;
+-            if (virtio_read(sec_loc[level], temp)) {
++            if (level >= 0 && virtio_read(sec_loc[level], temp)) {
+                 puts("Failed to read ISO directory");
+                 return -EIO;
+             }
 -- 
 2.47.3
 
