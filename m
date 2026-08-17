@@ -4,119 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9092EC5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E791C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtUK-0005mP-VE; Mon, 17 Aug 2026 05:18:36 -0400
+	id 1wvtZO-0006r4-DI; Mon, 17 Aug 2026 05:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wvtUJ-0005mE-LX
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 05:18:35 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wvtUH-0003r9-EO
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 05:18:35 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4955aa106b1so27941555e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 02:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1786958311; x=1787563111; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=hbkYtSJwMzBKBO/qIaZ9S5VqcBP390ZyMFSdmF8cAK0=;
- b=ccj3ToIfAbFLQWp7TOvv+KlGOrc1q1aaElpaTfe/Eioj926O8n4Xz40WTK8X3bCpg0
- xocO2VdAb30QqsKoUgqLEabJTnRbE41e2hjJ2fRl3vMGW+NpMwdQJ2KXMIDvl7CJuBFq
- bU5IIJq5pEM8TbCdx0NBtu8qyDuNKYgVy46DkVQEN6qW8VIksZ5ufQ/qRfhxGWX4oINa
- O+9jk9HyObbFoD2mEhNE/1MhqmAOBJ4ufqHvJ0iZPMakHhLQiBOcAeVazQ/Bf5Q5jqcY
- PKc//av6iycHuSDKCTrlpiqKqZPKfuk9kpR63kbmZWbFP6flCHHNFtYo8DV9oaGJXTbz
- VfrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786958311; x=1787563111;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hbkYtSJwMzBKBO/qIaZ9S5VqcBP390ZyMFSdmF8cAK0=;
- b=k2vE4DxEnQO2ikth+lmeq+Ucmuw5yTkBVO6+aesvUx/LgQyAKBRgJsODJlP7KBrQTV
- rY2KXBhG5hr3Q77RhjzreQz1amd54liDu2JwQLcf1gqY9ZgoMkzo+vKv7HWujRSop9YP
- 3OyBbtY+49RDZXbUAuHMmDEu88UlXynvxoialhWg5FM7K+1grXKg6/vjaqgt9bjxCyKl
- p7tBodswtquyL+CfFPtjaQ2u8zK9hBekB08h4B03Dm0tNxfKWwff5j3xA9GOUTliVVsE
- ABd4y80nRL7VAJkj2q2sOy3N7QvPrjNLXO9nSJ4VL1WcQIizzxT9nRe1HjQ8hKP0bBZ3
- ywzw==
-X-Gm-Message-State: AOJu0YxbEwW1e+4bPObXfsEyNWc7of/yglyxIRuqzWmDMSa0aSXa0cSU
- dp0JEBNrUPb/gFI3eVIQ14NsdKNZ/RiGQPYrYG3h0sL2mdv5NY2JgdEJeQKYD/AZig==
-X-Gm-Gg: AR+sD13SSpCJTzre0aK1qieUiLpGxWpow0Zb92EOjJ7CFfCTBGwEBM3juhhMt2Qgk5d
- nRlkyFU02XqQeAM0QSJRvp3rABpBsFA2DU4s/mAJJe4d5//jj+AJq4O6/54MGYOjxuaRrW9yg8u
- SxmPYEmi16T4bG3+smjX4ypR8eaC+E1EVsCSDI7D6pmgwoTDtxsF32LfUxsQnblQHDqIPPCb7KK
- fuvSNqgrjj7kbsGpc0qZRltcUy5mAo9Kerl45/dRc1o+EhfTMPV+IxhyOtTPPKd8U1QkiWSuYBc
- oAxec8eXCtWklA29MDXreQEq4TuyRzKLjHOKwKK+VQbLUiltaK+7ODBSCVLVv0QAsBTufQKzLUl
- MmKiNkJ4uDRoVYMy1HOZ42qNiTy9zuiK3yITLDJIZ2YQCQkXlO6qCamoQgI/v9QVo4ms279trBQ
- 9uGZZzZFEvNQVGky8krkGDqVRKFYnn45S0FsuCp/dKQUN05pFerm3x8WHvIR2HfA4X9KvgUPMlp
- tDN9+3YMh9Uzpv6dfxOPDjyuhJBCLr6ByueX7UWGKi6GX2ueFM3zMFZZNIza1Y=
-X-Received: by 2002:a05:600c:871b:b0:499:8b00:5261 with SMTP id
- 5b1f17b1804b1-4998b0052cdmr336753065e9.8.1786958311160; 
- Mon, 17 Aug 2026 02:18:31 -0700 (PDT)
-Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
- [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999d0876b8sm33985065e9.8.2026.08.17.02.18.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Aug 2026 02:18:30 -0700 (PDT)
-Message-ID: <0086d141-f434-41ef-8048-078882bf3818@suse.com>
-Date: Mon, 17 Aug 2026 11:18:32 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wvtZC-0006qW-Bt; Mon, 17 Aug 2026 05:23:38 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wvtZA-0004db-4X; Mon, 17 Aug 2026 05:23:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1786958589; bh=+Pjgp90N6I86pD6EI0chwHGWHpknZUnMxQXk2s0ChMw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Dw4fvPCpK2p3Vz7xtj6ItYauR0QqvxFN53tY824L7ELbSg/y1JKhauL5apdVbiaHh
+ gEmwjsGU01NzB4Xqw7kKy1jgBXjFtDOuvlIU4C8lyQzdQ6I7ujiHZYmjYdvkHy+Zc4
+ Tl/yyoyG5Y2ws9goRJhDOh1fl9tIVykHz+e2PyBZ9wmRAO59wbwAu/0Nl9CjGbIC8X
+ ghcrPV8uCA+lX+Hzlps2K9eMbD0pvkRc78Xy1K76kuDqEdDRO/gzHtbZuhMb0zv6gA
+ 2Hk7gUKUDGl/pw/IheeHaqXja92Umf0ihb5eMsCKADB6Yz7p6QZP75Gu404uTbQEfA
+ t45ekjZzX6G4Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F008B1CBAB0;
+ Mon, 17 Aug 2026 12:23:09 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id C39AC40D144;
+ Mon, 17 Aug 2026 12:23:30 +0300 (MSK)
+Message-ID: <472281bc-f26b-47c2-8cc9-e42357d484f2@tls.msk.ru>
+Date: Mon, 17 Aug 2026 12:23:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Chuck Zmudzinski <brchuckz@aol.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel@lists.xenproject.org, Anthony PERARD <anthony.perard@vates.tech>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <a98b7e5f-240b-4642-b488-fac69846b3f8@aol.com>
-Content-Language: en-US
-From: Jan Beulich <jbeulich@suse.com>
-Autocrypt: addr=jbeulich@suse.com; keydata=
- xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
- hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
- 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
- /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
- O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
- MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
- nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
- 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
- Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
- AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
- e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
- hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
- IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
- FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
- t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
- AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
- HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
- mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
- m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
- EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
- wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
- nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <a98b7e5f-240b-4642-b488-fac69846b3f8@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=jbeulich@suse.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
+To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20260812171707.1605637-1-farman@linux.ibm.com>
+ <20260812171707.1605637-16-farman@linux.ibm.com>
+ <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
+ <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,118 +116,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.08.2026 18:38, Chuck Zmudzinski wrote:
-> On 8/14/2026 3:35 AM, Jan Beulich wrote:
->> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
->>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
->>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
->>>>> -- snip --
->>>>> +    /*
->>>>> +     * Read the value the device model is initialized with.
->>>>> +     * If the device model supports OpRegion 2, it will
->>>>> +     * return the host IGD OpRegion address. If not, it
->>>>> +     * will return 0. If the device model does not support
->>>>> +     * OpRegion 2, the device model expects us to give it
->>>>> +     * the address to which it will map the OpRegion in the
->>>>> +     * guest and then expects us to do nothing more to setup
->>>>> +     * the OpRegion, so that is all we will do in that case.
->>>>> +     */
->>>>
->>>> Hmm, exposing the host opregion to a guest certainly feels like an issue.
->>>
->>> Well, that is how it is now. I am only retaining it to maintain backward
->>> compatiblily with DM versions that do not support the extended VBT and
->>> OpRegion 2+. My previous comment about backward compatibilty and DM
->>> compatibility also applies here. If we don't worry about that, we can do
->>> away with any cases where we are permanently mapping the host opregion to
->>> the guest and implement this new approach of always exposing a copy of
->>> the OpRegion and VBT to the guest instead.
+On 8/14/26 19:07, Eric Farman wrote:
+..
+>> Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
+>> building the image?
+> 
+> I should think so. But if it doesn't work, let's look into why.
+
+When building for the official debian archives, the images are built
+by the compilers available on official debian archives, so that's
+gcc-14, and hopefully the resulting images works :)  But honestly I
+don't know if anyone/anything is actually using these images on
+debian.
+
+I just never tried to build the images for the official qemu git tree
+and tarballs.
+
+>> Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
+>> here's the list:
 >>
->> How does "permanently mapping" matter? hvmloader runs inside the guest, so
->> exposure just to copy the data isn't any better in terms of this being a
->> layering violation. The more correct thing to do might be for the DM to
->> put in place a copy before the guest (i.e. hvmloader) even gains control.
->> (How in turn the DM would learn of the contents of the opregion is a
->> separate question then.)
-> 
-> I am working on v3 of this patch and I want v3 to address this problem of a
-> "layering violation" that you mentioned here, but I do not understand exactly
-> what you mean. Do you mean to say that the current code we have in place and
-> have had in place for over the past 10 years [1] in the Qemu DM that traps and
-> maps the OpRegion into the guest is a "layering violation?"
-> 
-> [1] https://xenbits.xen.org/gitweb/?p=qemu-xen.git;a=commitdiff;h=5cec8aa38cc
-> ("xen, gfx passthrough: add opregion mapping")
-
-All I can say is that this at least smells like a layering violation. It maybe
-wouldn't have if, in your patch, you didn't demonstrate that the machine page
-range doesn't really need mapping, as copying the data and providing that to
-the guest is sufficient. In such a case, the machine range should (imo) never
-have been exposed. After all the guest then can fiddle with it, potentially
-breaking later guests that are to also use the region.
-
->>>>> +    /*
->>>>> +     * Write rvda_host as 2 successive 32-bit values
->>>>> +     * to communicate location of the VBT to the device
->>>>> +     * model. If rvda_host is not 0, The device model
->>>>> +     * unmaps the OpRegion and eventually maps the VBT
->>>>> +     * after we also write the guest address where the
->>>>> +     * VBT will be mapped.
->>>>> +     *
->>>>> +     * If we send rvda_host = 0 to the device model, it
->>>>> +     * will assume we do not need OpRegion 2 support and
->>>>> +     * it will not unmap the OpRegion.
->>>>> +     */
->>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
->>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
->>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>> +               (uint32_t)rvda_host_upper_32);
->>>>
->>>> Why would you need to communicate a host property to the DM?
->>>
->>> The DM cannot access the host rvda value because it is only accessible
->>> from the host kernel, and the DM is only a user-space process on the host.
+>>   b2b5dec9295 s390x: Enable boot menu for virtio pci device
+>>   d0473643803 pc-bios/s390-ccw: write IPLB location for non-net virtio devices
+>>   e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI device on s390x
+>>   084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for multi-queue virtio configurations
+>>   730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
+>>   c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
 >>
->> I don't follow this: Anything the guest can access should also be accessible
->> by its DM.
+>> I think I can pick all that stuff for 11.0.x series just fine, to avoid
+>> (re)building the image for 11.0.x series.
+>>
+>> For 10.0.x, things are really much larger:
+>>
+>>   14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling with DEBUG enabled
+>>   d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
+>>   40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
+>>   5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
+>>   d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
+>>   4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
+>>   ada7a60056c pc-bios/s390-ccw: Store device type independent of sense data
+>>   4228a92b2a3 s390x: Remove duplicate definitions of IPL types
+>>   dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed boot attempt
+>>   5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
+>>   1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
+>>   acb00a7aae4 pc-bios/s390-ccw: link statically
+>>   fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via pxelinux.cfg
+>>   47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
+>>   108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
+>>   a4adf071dc7 pc-bios/s390-ccw: Allow to select a different pxelinux.cfg entry via loadparm
+>>
+>> basically it's whole virtio and pci support added, which might be too much?
+>> Please note that 10.0.x is an LTS series, also used in current debian stable
+>> (trixie), so maybe it is also okay to pick everything up to this series, to
+>> bring the image in-line with current development.
+>>
+>> In this case I'll just pick the commits updating the image too :)
+>>
+>> What do you think?
 > 
-> I also don't follow your comment here so permit me to comment and ask some
-> questions for clarification.
+> Yeah, might be a bit much. The smaller fixes were contained enough that targeting them for stable made sense. Of the four fixes that were in this 
+> rebuild, three of the blamed commits date to the v2/v3 days. The fourth went in in 9.2.
 > 
-> I was thinking it is enough for the domain the DM is running in to have
-> access to the resource for it to be legitimate for the DM to map the resource
-> into the guest. So I also think that whether or not the DM itself can access
-> the resource is irrelevant to the question. But you seem to be saying, no,
-> that is not enough, the DM itself should be able to access the resource
-> before it can be allowed to map the resource to its guest. Is that what you
-> are saying?
+> Everything else in your lists is new function and whatnot, so my gut says leave it there.
 
-That depends on what you mean by "access": The prereq is that the DM have
-permission to access the pages. It may not have an active mapping thereof.
+Um.  It's kinda difficult for me to guess what did you mean by all this :)
 
-> Perhaps your comment here is related to the concept of a "layering violation"
-> mentioned above. Are you saying it is a layering violation for the DM to
-> map an MMIO resource to its guest unless it actually has access to that
-> resource? If so, what kind of access to those device resources should the
-> DM have? Read access? Read/Write access?
+For 11.0.x stable series, I'm picking all commits in s390x-ccw which were
+made after 11.0.0 release -- that would be 6 commits from the first list
+above, plus all the changes which went into this pull request.  This way,
+s390-ccw.img image will be the same in 11.0.x and in 11.1.x and in the
+master branch, - the binary which you made on your system.
 
-No, I'm trying to bring across that (as said above) access to machine pages
-should not be granted when that isn't necessary. As in here: A copy of the
-pages looks to suffice, so simply give the guest access to a copy.
+For 10.0.x though (which is an LTS series), I'm picking just the fixes
+from this pull request, and will rebuild the image using the tools available
+on debian.  At the time of qemu 10.0.0, I think you used older gcc too, so
+everything should match.
 
-> If the specs only say the DM "should" have access to the resources it maps
-> into its guest, then I would think it would not be a layering violation.
-> But if the specs say the DM "must" have access before it asks the hypervisor
-> to map the resource to the guest, then I would admit that yes, we have a
-> layering violation because the DM is mapping the OpRegion to the guest
-> even though it does not have access to the OpRegion.
-> 
-> So, where are the specs for what the DM can and cannot do? Are they publicly
-> available, or are they proprietary or only available to members of the Linux
-> Foundation and/or the Xen Project?
+Thanks,
 
-Sadly the source code (of Xen and/or qemu) is the spec.
-
-Jan
+/mjt
 
