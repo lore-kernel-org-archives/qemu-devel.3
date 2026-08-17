@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7959C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706A1C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:01:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2ZT-0006Ku-Dj; Mon, 17 Aug 2026 15:00:33 -0400
+	id 1ww2Zm-0006T3-9X; Mon, 17 Aug 2026 15:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yw-00062O-TW
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:00 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yr-0005zl-6H
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:54 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Ys-0006O5-Sc
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:58 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4998b5a63e2so30996585e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:59:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yn-0006MS-Pl
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:59:52 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4998590d392so40036145e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993193; x=1787597993; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786993188; x=1787597988; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MvawrBNstr38t9qdVqlJQ3pT802/IPUF8hZaymEalgQ=;
- b=NS+XjIORujf9eZgXPxWa1DcIkmGY3QO4Hxyv7aNUEdTSP0bzIYbdD2GTyFa57PFTPg
- TSsqU5xJrC6GNnbbFv0AEA8nyWSvfO618/fJ0fDYrbk7VSEMZA1Rup9hIhb/kHNdTn1p
- hQcAgZhrp/1ybG+zwtuuKBdWqdN4blVx1ntxOtbFjKf//jMgaTcCKoRQ1/wGo2Fdq1Pc
- v3saDCOjnfGg5ovNtOThlEfseaerDN9igrxT6aLsPdTtIE8+QuOn7LhHgRxQxm2tpR4v
- +Si8qC4vqrXj7bx2SZHfv5dKc3THiSp/6VUWS5KU9TuevpdMNGdT4pf4PvQWhun9BUra
- WQ0w==
+ bh=jTB1V7zK+/ipDCsWgoyaofGyDwKvbgfAmLyT+QMpPvA=;
+ b=lDcn8LmZphGItvDxf4/RfS6I3rbvzZDXrFug6M/fjaYUG+5X6i1V4yE8pbrr4UulUi
+ 2p80qa1JbVnsIYUMCC67COHWRXxnVa65m+EZEFBvDIYBTWcBToEBLiEZp9NLi1LLqO8i
+ dyH0egO94eB0/5nvQQAjf1YAcGQFUDc6vHDvJ9LNDJyc4ES149n55dFLFO0MjdiQH/4v
+ 2nxu+W+LDxlyPBci5LXRh/9tHP7upfypCULfkyXfbkPXV0OUEdXcvlGFioVIxwfQD5jA
+ bgPEP3Q6jW9Ra4HpG3Xsvbeg6DgVYAUWmyzLEEVNvE1tUYYzLdTciaDMs4PnnvTYnqBu
+ fEAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993193; x=1787597993;
+ d=1e100.net; s=20251104; t=1786993188; x=1787597988;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MvawrBNstr38t9qdVqlJQ3pT802/IPUF8hZaymEalgQ=;
- b=TOwcTWuKSW8YiU9T9iOlFU5YsAhkS7GzHymp5RYZlEOtEPTkly7f1hrspOcCIGlIHa
- kQ/qC4KnCbfzs+JH+kdYkMIjNKnJEmL3djGkix1ltbWO3lameRBELtXEqLfZC96qgJsI
- tsZQIoJBMpKFNlA1OUgv+RYKKennOz4cpIlmQjFuoZYo5/tcWI78S+Zj6FLDUcLJhDm2
- F/LFNDl8VHqsSnaAJwv/Kso3LgJY4MOvqSS62UREnecOjsInpoiS2mZsV2PqONF5/E0K
- pDyc/7758jIMM9RG+l16Hv2H3YaFn1uHZIal3d59uogq4M+M89C1XUaSbu827OfikuGK
- 6uCA==
-X-Gm-Message-State: AOJu0YxHintFsD4YE70wzOrAck/VgClJZptc/927RAS6cHUejwDLLfWY
- E5LgQrqlCX+kwoKMiaatB/JWkn7ZYYQvUPcS3cngbsDxk7ZtX9guszTrB5y5quS33T+5SeINM8Q
- BxvWs
-X-Gm-Gg: AR+sD12ZC/n79i+EatnWvGg0vyukECQ58FUunarptFyxf9+/eQrghuw6W9lQFN1ibBw
- 1TXzMnPtaWy522zlUXx/sPBSLI6mRLE+ZNSuT9UZFuqWNixH9X/DY6S3zgeB/HhiMauPBqF82Ad
- MXlDf+4fXFCgj9RwjOyJL+iTCDQiEUZgbZZPS1jCG4EfsShCBCsB1eGhJlb7y78myagEkblIfpa
- EGmL6RTFelYn2Hov2x7ULc0z8GIbirm1zpDkKcRVbhXARaen/PmFWWdr347NwtnKPurmoJ8IC/d
- vjLyMuNlUj2aMLRvpb1+nfHRNaLULCFViMHNtn/9A2DhdB+C5CMkuSMTHUjSuM9GBjx2Aw/FH4N
- w3R9KkAIOgdAAC2MG3b9izYyeH93h74S4tpo0qK9F6I5QSkijoG+8A15HafZeg4bM2BjNqyYr0A
- 787UHO6C7puTr4ZRApP6j4AIBhYIPx4RG24t7EtcbDQuFnJUn8zWViv1t5A+2s
-X-Received: by 2002:a05:600c:5392:b0:495:48d7:f178 with SMTP id
- 5b1f17b1804b1-4998795d6bemr432472575e9.11.1786993193014; 
- Mon, 17 Aug 2026 11:59:53 -0700 (PDT)
+ bh=jTB1V7zK+/ipDCsWgoyaofGyDwKvbgfAmLyT+QMpPvA=;
+ b=mEuyEDydHuTw68mtHK3uvNYrgW7dbQUTuNGLGcGcIM9226vOElmYMa8TNmfA43NKEt
+ 9Ub79jSU22I/tH+/XBUKeFH5c39SObNQXRbbet2YdEWwoCf4EcRDPH7wHHKJjz32X3DR
+ oEGFOXeAAGJbUNcUXVfO8vFXGs8lYHoYtzY9MIYkfRiwK8h769jEDnhvPriUHWD8NSZJ
+ Vn3LmeKnYFlZ1uYSW2KYLRUVp/dmCnYK6eQNvihkk1dEVp9p9ouDyJWHN0q4P7igv0tl
+ gJJC/J2dUD8WzMos7Vf9M3YRQGLto3wKfw1p3jacbbi/pSFtjbWymbOJC3olL+VLlyQW
+ Mpog==
+X-Gm-Message-State: AOJu0Yxf4Q1dNgBB+3fmqquaemG2P/GGRSnnKpH+aLT5GgfU5mUmgUjF
+ aIlWKJIRyerf+PdHUUqeDHdtzjx7ztVoe+6t109ch5B1xAO+LVqu7ONqCDJFmsrNlpRXAHcekWH
+ IPqd3
+X-Gm-Gg: AR+sD11FRpggOPiWyTZ2w7MKW5nU3f1tejYLJv3l4/wPG7kjVvTOtiyT46tBdIDq2gf
+ JP1v6g09mOjl0YWhFG9emQmdp/vNDurtX+0+OAcEq5lUQF9AvLhCCA8WWPPRBtwVjIUk7/onsgK
+ t4FC6UJpCu+PPyj8eLXr311+FJtxN1G6h/+gk74tPRi+DixjT/m9g6C8Z3HqwvdiepK6gD+Jneg
+ /ohh7yzfgCuSWnS65KXxESaypCjQ4Sbxur2fmbDfvnWOCnRpDMGoNZyrCMgMwG+dn0fJiuNtPhj
+ QsCPTnXWdKp2CoWtzz87NldzU9wiiPHsovWSm+5okFkGFr1b9K9T9qRjJ3CR5OioFW3CXc7oFg/
+ z2jSxOLmpbSqRHbDgd+H+wc6LzeQuXZE92xRyM9xNZJP7PbBVaurw2uQFisU4W/wVLiMcOXxEj6
+ xXpt8re6nl/aa5oUCH1hnxsnIHWViz+EStqifVggRJsStSbFLQyg==
+X-Received: by 2002:a05:600c:6089:b0:499:7a15:fcec with SMTP id
+ 5b1f17b1804b1-4999fb847b5mr43101955e9.13.1786993188308; 
+ Mon, 17 Aug 2026 11:59:48 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.11.59.52
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.11.59.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 11:59:52 -0700 (PDT)
+ Mon, 17 Aug 2026 11:59:47 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v6 07/25] parallels: do not let the check die on what it is
- meant to report
-Date: Mon, 17 Aug 2026 20:59:24 +0200
-Message-ID: <20260817185942.1065143-8-den@openvz.org>
+Subject: [PATCH v6 03/25] iotests: cover inactivating a read-only node
+Date: Mon, 17 Aug 2026 20:59:20 +0200
+Message-ID: <20260817185942.1065143-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
 References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,169 +101,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-parallels_check_duplicate() sizes its local bitmap by the end of the
-payload and asserts that every BAT entry fits into it. An entry
-pointing at a cluster which runs past the end of the image file does
-not fit, so a plain 'qemu-img check' on such an image dies:
+A driver which writes something out on .bdrv_inactivate has nothing to
+write for a node it can not write to, and has to answer such a request
+with success rather than with the error its refused write produces.
+The test inactivates nodes in several ways and never a read-only one,
+so nothing caught that.
 
-    qemu-img: block/parallels.c:843: parallels_check_duplicate:
-    Assertion `ret != -E2BIG' failed.
+Add a read-only node and take it through a deactivation and back. The
+case is generic, as every driver implementing the handler has to answer
+the same way.
 
-A repairing check survives by accident, as
-parallels_check_outside_image() clears the entry before the duplicate
-check gets to see it. There is nothing for the duplicate check to do
-with such a cluster anyway, as the corruption has already been
-reported, so skip it.
-
-The answer parallels_mark_used() gives has to stay out of ret, which is
-what the function returns once the loop is over. -EBUSY for the
-duplicate this function exists to find is left in ret whenever the last
-allocated BAT entry is the duplicated one and the check is not
-repairing. 'qemu-img check' then ends with
-
-    ERROR duplicate offset in BAT entry 1
-    qemu-img: Check failed: Device or resource busy
-
-and prints no summary at all, so the corruption it just found is
-reported as a failure to look. Keep the answer in a variable of its
-own, as the only errors worth returning from here are the I/O ones,
-and those leave the loop where they happen.
-
-The tests write two clusters and damage the second entry, one by
-cutting the cluster in half so that it no longer fits the file, one by
-pointing it at the first cluster.
-
-Fixes: a398275e88 ("parallels: create mark_used() helper which sets bit in used bitmap")
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c                             | 12 ++++---
- tests/qemu-iotests/tests/parallels-checks     | 33 ++++++++++++++++++
- tests/qemu-iotests/tests/parallels-checks.out | 34 +++++++++++++++++++
- 3 files changed, 74 insertions(+), 5 deletions(-)
+ tests/qemu-iotests/tests/inactive-node-nbd     | 14 ++++++++++++++
+ tests/qemu-iotests/tests/inactive-node-nbd.out |  8 ++++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index c96bed5ed3..cacf23143b 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -872,14 +872,16 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
-     buf = qemu_blockalign(bs, s->cluster_size);
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+index 664157bfd0..24242265b1 100755
+--- a/tests/qemu-iotests/tests/inactive-node-nbd
++++ b/tests/qemu-iotests/tests/inactive-node-nbd
+@@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
+     return node['active']
  
-     for (i = 0; i < s->bat_size; i++) {
-+        int used;
-+
-         host_off = bat2sect(s, i) << BDRV_SECTOR_BITS;
-         if (host_off == 0) {
-             continue;
-         }
+ with iotests.FilePath('disk.img') as path, \
++     iotests.FilePath('ro.img') as ro_path, \
+      iotests.FilePath('snap.qcow2') as snap_path, \
+      iotests.FilePath('snap2.qcow2') as snap2_path, \
+      iotests.FilePath('target.img') as target_path, \
+@@ -58,6 +59,7 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('Preparing disk...')
+     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
++    iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
  
--        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
--        assert(ret != -E2BIG);
--        if (ret == 0) {
-+        used = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
-+        if (used == 0 || used == -E2BIG) {
-+            /* parallels_check_outside_image() reports the -E2BIG one */
-             continue;
-         }
+     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+                             snap_path)
+@@ -70,6 +72,9 @@ with iotests.FilePath('disk.img') as path, \
+                      'active=off')
+     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
++    vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
++    vm.add_blockdev(f'{iotests.imgfmt},file=ro-file,node-name=ro-fmt,'
++                     'read-only=on')
+     vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
+     vm.add_blockdev(f'file,node-name=snap2-file,filename={snap2_path}')
  
-@@ -937,8 +939,8 @@ parallels_check_duplicate(BlockDriverState *bs, BdrvCheckResult *res,
-          * considered, and the bitmap size doesn't change. This specifically
-          * means that -E2BIG is OK.
-          */
--        ret = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
--        if (ret == -EBUSY) {
-+        used = parallels_mark_used(bs, bitmap, bitmap_size, host_off, 1);
-+        if (used == -EBUSY) {
-             res->check_errors++;
-             goto out_repair_bat;
-         }
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index 99af4c5f52..cf90eaf152 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -335,6 +335,39 @@ echo "== both of them survive the close =="
-               -c "read -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-               "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
+@@ -289,6 +294,15 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log(qemu_io.cmd('map'), filters=[filter_qemu_io])
+     qemu_io.close()
  
-+# Clear image
-+_make_test_img $SIZE
++    iotests.log('\n=== Inactivating a read-only node ===')
 +
-+echo "== TEST A CLUSTER WHICH RUNS PAST THE END OF THE FILE =="
++    # A driver which writes something out on inactivation has nothing to
++    # write for a node it can not write to, and must not fail the request
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=False)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=True)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
 +
-+echo "== write two clusters =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" \
-+           -c "write -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+           "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
+     iotests.log('\n=== Resuming VM activates all images ===')
+     vm.qmp_log('cont')
+ 
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index a458b4fc05..3c43020053 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -227,6 +227,14 @@ discard failed: Operation not permitted
+ qemu-io: Failed to get allocation status: Operation not permitted
+ 
+ 
++=== Inactivating a read-only node ===
++{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: False
++{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: True
 +
-+echo "== cut the second one in half =="
-+file_size=`stat --printf="%s" "$TEST_IMG"`
-+truncate -s $((file_size - CLUSTER_SIZE / 2)) "$TEST_IMG"
-+
-+echo "== the check completes and reports the cluster =="
-+_check_test_img
-+
-+# Clear image
-+_make_test_img $SIZE
-+
-+echo "== TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY =="
-+
-+echo "== write two clusters =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" \
-+           -c "write -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+           "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== point the second entry at the first cluster =="
-+poke_file "$TEST_IMG" "$(($BAT_OFFSET + 4))" "\x01\x00\x00\x00"
-+
-+echo "== the check completes and reports the duplicate =="
-+_check_test_img
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index 51eb3f1ef1..645c4b3679 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -199,4 +199,38 @@ read 1048576/1048576 bytes at offset 0
- 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 1048576/1048576 bytes at offset 1048576
- 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST A CLUSTER WHICH RUNS PAST THE END OF THE FILE ==
-+== write two clusters ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== cut the second one in half ==
-+== the check completes and reports the cluster ==
-+ERROR cluster 1 is outside image
-+ERROR space leaked at the end of the image 524288
-+
-+1 errors were found on the image.
-+Data may be corrupted, or further writes to the image may corrupt it.
-+
-+1 leaked clusters were found on the image.
-+This means waste of disk space, but no harm to data.
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
-+== write two clusters ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== point the second entry at the first cluster ==
-+== the check completes and reports the duplicate ==
-+ERROR space leaked at the end of the image 1048576
-+ERROR duplicate offset in BAT entry 1
-+
-+1 errors were found on the image.
-+Data may be corrupted, or further writes to the image may corrupt it.
-+
-+1 leaked clusters were found on the image.
-+This means waste of disk space, but no harm to data.
- *** done
+ === Resuming VM activates all images ===
+ {"execute": "cont", "arguments": {}}
+ {"return": {}}
 -- 
 2.53.0
 
