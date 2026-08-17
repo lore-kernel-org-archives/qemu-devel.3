@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F16DC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5344DC5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtLN-0000cT-1j; Mon, 17 Aug 2026 05:09:21 -0400
+	id 1wvtI2-0003IG-EV; Mon, 17 Aug 2026 05:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtL4-00007v-Hj; Mon, 17 Aug 2026 05:09:04 -0400
+ id 1wvtHo-0003Er-DD; Mon, 17 Aug 2026 05:05:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtL2-0002Ei-PT; Mon, 17 Aug 2026 05:09:02 -0400
+ id 1wvtHk-0001cK-PC; Mon, 17 Aug 2026 05:05:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=gw5UnqPna+YOEY0GgTk+3Fgv1fAWX7NyXwvM/Slqhlw=;
+ t=1786957506; bh=YTI+OSziWNCvE0kFhsSMYplW9R3tAXytFe27FSTdG0o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jwaQ+vsZr1yxrU0e8f8jNaW3CC5+u6KtChdKVnKwfQe+QKF+kswNjA+0iivWjEP2z
- jHyMFaqwwoyuR5RQw/3LabX0AuKpawYAZ3DHFj1ys4uxlvN6vZlTFh642K4Ti2dIVp
- +sJwqWu9QKhjyeguwUJxuzmERMYHQdrAPChZUahYnuJWzqO6oz+rHrY9pWJjSHRgZC
- EQZkzU5Q5PZNJoKk6sHAE/TfSJsqQwuFPr9QjxBNMpbP+gkB+fJEFsOEE03I7WrvxE
- qHWw8S8YINWnYXQ34gFsD5ayuMhp+wA/MMpzVRluAhME7oAlrnCBpEGxyLXMp7u8ah
- qU4WWqdqxCUVQ==
+ b=uQiNtPq7Ac7ICB/nMzIVifE6ZCd8lvxZzp4yGuKxVlex4DgjFc/FBp+d03KPThFys
+ Nu2YfxcbHzWU/2nTZ8adgBan4FBff8fee1WTbYr/Yct4neybc+rNYIcscexkgrP0nn
+ H6TzTRj/VEp5ZiKVJjpnXXmScDTKHQPlWSVJTgjDzvQLhQp2MQ6FTj+emYc33Uj42L
+ nNZFgOL7pc2UtSzXPTztXJnyHQIxpVPudIEYnsPYC3wOUmL3EZ14S7F9mhzNskZVwB
+ 8yXwsVaMbkqpBm4tPOuDrn8jwMZyEl7ttqkymJLQvKkNlKwjczKeRlPF5LbZ0Tjv+Q
+ p9qoWfd/Y3QHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B962B1CBA5E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B22B1CBA37;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9935840D043;
- Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DE3E340D019;
+ Mon, 17 Aug 2026 12:05:26 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2731130D34; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
+ id A726830CE6; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 42/42] hw/elf_ops: defend against weird elf headers
-Date: Mon, 17 Aug 2026 12:04:47 +0300
-Message-ID: <20260817090453.2034156-42-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 03/42] linux-user/sh4: Fix crashes on signal delivery
+ in conditional delay slot
+Date: Mon, 17 Aug 2026 12:04:08 +0300
+Message-ID: <20260817090453.2034156-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,59 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-According to the ELF spec:
+If we get a signal in the delay slot, we must roll-back the PC to the
+jump instruction. This was already fixed by the commit 3b894b699c9a
+("linux-user/sh4: Fix crashes on signal delivery"), however this fix
+omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
+by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
+the PC in this case, resulting in incorrect program execution.
 
-  PT_LOAD
-
-  The array element specifies a loadable segment, described by
-  p_filesz and p_memsz. The bytes from the file are mapped to the
-  beginning of the memory segment. If the segment's memory
-  size (p_memsz) is larger than the file size (p_filesz), the
-  ``extra'' bytes are defined to hold the value 0 and to follow the
-  segment's initialized area. The file size may not be larger than the
-  memory size. Loadable segment entries in the program header table
-  appear in ascending order, sorted on the p_vaddr member.
-
-which implies while both p_filesz and p_memsz can be zero we should
-never see a case where p_filesz is greater than the in memory size.
-Indeed it has been reported such a hand crafted ELF can blow up, for
-example during rom_reset():
-
-  address_space_set(rom->as, rom->addr + rom->datasize, 0,
-                    rom->romsize - rom->datasize,
-                    MEMTXATTRS_UNSPECIFIED);
-
-which could trigger and underflow leaving QEMU slowly filling a very
-large buffer.
+This patch fixes it.
 
 Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/4056
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260812081405.3811787-1-alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 260d49d8e28378b1f4f6c255c15cc20617726920)
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-index 9c35d1b9da6..044e72de2a2 100644
---- a/include/hw/elf_ops.h.inc
-+++ b/include/hw/elf_ops.h.inc
-@@ -427,6 +427,11 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             file_size = ph->p_filesz; /* Size of the allocated data */
-             data_offset = ph->p_offset; /* Offset where the data is located */
- 
-+            if (file_size > mem_size) {
-+                ret = ELF_LOAD_TOO_BIG;
-+                goto fail;
-+            }
-+
-             if (file_size > 0) {
-                 if (g_mapped_file_get_length(mapped_file) <
-                     file_size + data_offset) {
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index 7f246e750d0..047174ac8f3 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
+            the SP, otherwise we would be pushing the signal context to
+            invalid memory.  */
+         regs->gregs[15] = regs->gregs[1];
+-    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
++    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
+         /* If we are in a delay slot, push the previous instruction.  */
+         regs->pc -= 2;
+     }
 -- 
 2.47.3
 
