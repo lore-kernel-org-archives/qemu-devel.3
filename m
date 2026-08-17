@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7793CC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D224EC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww33N-0003Il-M1; Mon, 17 Aug 2026 15:31:41 -0400
+	id 1ww33N-0003Ij-Lt; Mon, 17 Aug 2026 15:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ww331-0003E6-Hn; Mon, 17 Aug 2026 15:31:03 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1ww330-0003E2-Fz; Mon, 17 Aug 2026 15:31:03 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1ww32y-00032i-IB; Mon, 17 Aug 2026 15:31:03 -0400
+ id 1ww32x-00032G-Rv; Mon, 17 Aug 2026 15:31:01 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 31C5A80B0F;
- Mon, 17 Aug 2026 22:30:58 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id F258D80669;
+ Mon, 17 Aug 2026 22:30:55 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:d2f::1:33])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id rUaw3t0XVW20-rL4r7NGk; Mon, 17 Aug 2026 22:30:57 +0300
+ id rUaw3t0XVW20-i4pnX9CA; Mon, 17 Aug 2026 22:30:55 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1786995057;
- bh=3OpG9sABXUmzwyfNcO80xtzm/M5/oFBiNMWndqUczu0=;
+ s=default; t=1786995055;
+ bh=IhnY7dl5HPtxi/v1FI9u4iSL+biA3nduueZ/yMxFM8o=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=jZQgv3OWB/UZa4UX0cunod557MH57CMQeMMK18hbPGiR6HRzB3PmtCd1RZLkfujxw
- 5Mh9YoHCvZtMFnKSLnT+yD3J/XhcRFcJB5GZkieNETY0kkmWytnHrM+MJKsfvFaHO8
- e3ltgTG/V8NpsNz3Qyd3cUzsnKcMPKLJeOALjwN4=
+ b=F4npuaIjoSvN4FCq4uMGGWlxIJRRpTQVW44HIgE1/S1gy4bRjWTc/FmHnshqFKrlV
+ OVhSglolbXxi7yFy9ibTKj+lGroyWSvbR1KpIfnUs+y2APfLc5SCfBtMKst4DEvm2N
+ 6mYnrWhhDaZ2x0yn+h65kVxzqWBQZJtNshJmEgss=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, den@openvz.org, vsementsov@yandex-team.ru,
- Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PULL 5/6] block/monitor: allow dropping a bitmap never stored on disk
-Date: Mon, 17 Aug 2026 22:29:47 +0300
-Message-ID: <20260817192948.1743452-6-vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,
+	den@openvz.org,
+	vsementsov@yandex-team.ru
+Subject: [PULL 2/6] tests/unit/test-blockjob: cover keeping a job paused while
+ a pause is pending
+Date: Mon, 17 Aug 2026 22:29:44 +0300
+Message-ID: <20260817192948.1743452-3-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
 References: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -75,84 +75,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Denis V. Lunev" <den@openvz.org>
 
-block-dirty-bitmap-remove refuses any readonly bitmap outright, via
-the generic BDRV_BITMAP_RO check in bdrv_dirty_bitmap_check(). That
-check cannot tell whether the bitmap is actually on disk, so it also
-blocks dropping one that only ever existed in memory, which needs no
-write at all.
+Add a regression test for the previous commit. A job that has reached
+its pause point is spuriously re-entered (job_enter()) while a pause is
+still pending (pause_count > 0), reproducing what an overlapping drain
+does: one drain's job_resume() wakes the job while the next drain's
+job_pause() is already counted. The job must stay parked - it must not
+run job code or clear job->paused, or job_set_aio_context() could
+observe paused == false and abort.
 
-Drop the blanket check and let qcow2 decide: bdrv_remove_persistent_
-dirty_bitmap() already treats an absent on-disk entry as a no-op, so
-such a bitmap is now released with no write attempted. For one that
-is genuinely stored, qcow2_co_remove_persistent_dirty_bitmap_locked()
-now checks can_write() before it would update the on-disk directory,
-so removal still fails there, with a message naming the actual
-reason instead of just the bitmap's readonly flag.
+The test counts the job's run-loop iterations: without the fix the
+re-entered job clears job->paused, runs one iteration and re-pauses, so
+the counter advances; with the fix it stays parked and the counter is
+unchanged. It runs in the main AioContext, so job_enter() is synchronous
+and the check is deterministic.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Eric Blake <eblake@redhat.com>
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: John Snow <jsnow@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Message-ID: <20260716112242.3000035-4-den@openvz.org>
+Message-ID: <20260623152406.1180235-3-den@openvz.org>
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/monitor/bitmap-qmp-cmds.c                         | 4 ++--
- block/qcow2-bitmap.c                                    | 9 +++++++++
- tests/qemu-iotests/tests/remove-bitmap-from-backing.out | 2 +-
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ tests/unit/test-blockjob.c | 100 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/block/monitor/bitmap-qmp-cmds.c b/block/monitor/bitmap-qmp-cmds.c
-index d87ca982aa9..aabf2790b67 100644
---- a/block/monitor/bitmap-qmp-cmds.c
-+++ b/block/monitor/bitmap-qmp-cmds.c
-@@ -165,11 +165,11 @@ BdrvDirtyBitmap *block_dirty_bitmap_remove(const char *node, const char *name,
-         return NULL;
-     }
+diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
+index abdbe4b8350..3b77d19b911 100644
+--- a/tests/unit/test-blockjob.c
++++ b/tests/unit/test-blockjob.c
+@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
+     cancel_common(s);
+ }
  
--    if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_BUSY | BDRV_BITMAP_RO,
--                                errp)) {
-+    if (bdrv_dirty_bitmap_check(bitmap, BDRV_BITMAP_BUSY, errp)) {
-         return NULL;
-     }
- 
-+    /* Dropping a bitmap needs no write access unless it is actually stored. */
-     if (bdrv_dirty_bitmap_get_persistence(bitmap) &&
-         bdrv_remove_persistent_dirty_bitmap(bs, name, errp) < 0)
-     {
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index 256ec998788..ac5a7245885 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -1487,6 +1487,15 @@ int coroutine_fn qcow2_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
-         goto out;
-     }
- 
-+    if (!can_write(bs)) {
-+        error_setg(errp, "Cannot remove persistent bitmap '%s': "
-+                   "no write access to node '%s'", name,
-+                   bdrv_get_node_name(bs));
-+        ret = -EACCES;
-+        bm = NULL;
-+        goto out;
++typedef struct PauseCountJob {
++    BlockJob common;
++    int n;
++    bool should_complete;
++} PauseCountJob;
++
++static void pause_count_job_complete(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++    s->should_complete = true;
++}
++
++static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
++{
++    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
++
++    while (!s->should_complete) {
++        if (job_is_cancelled(&s->common.job)) {
++            return 0;
++        }
++        s->n++;
++        /*
++         * Yields; while a pause is pending the yield is skipped and the job
++         * parks in job_pause_point() instead.
++         */
++        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
 +    }
 +
-     QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
- 
-     ret = update_ext_header_and_dir(bs, bm_list);
-diff --git a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-index fe105fe0a38..628fa737d97 100644
---- a/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-+++ b/tests/qemu-iotests/tests/remove-bitmap-from-backing.out
-@@ -1,6 +1,6 @@
- Trying to remove persistent bitmap from r-o base node, should fail:
- {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
--{"error": {"class": "GenericError", "desc": "Bitmap 'bitmap0' is readonly and cannot be modified"}}
-+{"error": {"class": "GenericError", "desc": "Cannot remove persistent bitmap 'bitmap0': no write access to node 'base'"}}
- Remove persistent bitmap from base node reopened to RW:
- {"execute": "block-dirty-bitmap-remove", "arguments": {"name": "bitmap0", "node": "base"}}
- {"return": {}}
++    return 0;
++}
++
++static const BlockJobDriver pause_count_job_driver = {
++    .job_driver = {
++        .instance_size = sizeof(PauseCountJob),
++        .free          = block_job_free,
++        .user_resume   = block_job_user_resume,
++        .run           = pause_count_job_run,
++        .complete      = pause_count_job_complete,
++    },
++};
++
++/*
++ * A job that has reached its pause point must stay paused while a pause is
++ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
++ * drain's job_resume() wakes it while the next drain's job_pause() is already
++ * counted); the job must not run or clear job->paused, otherwise
++ * job_set_aio_context() can observe paused == false and abort.
++ */
++static void test_pause_keeps_paused(void)
++{
++    BlockBackend *blk;
++    BlockJob *bjob;
++    PauseCountJob *s;
++    Job *job;
++    int n0;
++
++    blk = create_blk(NULL);
++    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
++                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
++    s = container_of(bjob, PauseCountJob, common);
++    job = &bjob->job;
++    WITH_JOB_LOCK_GUARD() {
++        job_ref_locked(job);
++    }
++
++    job_start(job);
++
++    /* Pause the running job; it parks in job_pause_point() with paused set. */
++    WITH_JOB_LOCK_GUARD() {
++        job_pause_locked(job);
++        g_assert_true(job->paused);
++        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
++    }
++    n0 = s->n;
++
++    /*
++     * Spurious wake while the pause is still pending. The job must stay parked:
++     * the bug clears job->paused, runs an iteration (s->n advances) and
++     * re-pauses, exposing a paused == false window.
++     */
++    job_enter(job);
++    WITH_JOB_LOCK_GUARD() {
++        g_assert_true(job->paused);
++    }
++    g_assert_cmpint(s->n, ==, n0);
++
++    /* Resume and tear down. */
++    WITH_JOB_LOCK_GUARD() {
++        job_resume_locked(job);
++    }
++    job_cancel_sync(job, true);
++    WITH_JOB_LOCK_GUARD() {
++        Job *dummy = job;
++        job_dismiss_locked(&dummy, &error_abort);
++        job_unref_locked(job);
++    }
++    destroy_blk(blk);
++}
++
+ int main(int argc, char **argv)
+ {
+     qemu_init_main_loop(&error_abort);
+@@ -402,5 +501,6 @@ int main(int argc, char **argv)
+     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
+     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
+     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
++    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
+     return g_test_run();
+ }
 -- 
 2.43.0
 
