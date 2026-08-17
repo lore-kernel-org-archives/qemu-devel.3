@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A25AC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADF5C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxWx-00073n-86; Mon, 17 Aug 2026 09:37:35 -0400
+	id 1wvxVf-0003GW-6O; Mon, 17 Aug 2026 09:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWw-0006yK-1C; Mon, 17 Aug 2026 09:37:34 -0400
+ id 1wvxVX-00039x-Ev; Mon, 17 Aug 2026 09:36:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWt-0007WP-VQ; Mon, 17 Aug 2026 09:37:33 -0400
+ id 1wvxVT-0007Kl-Lk; Mon, 17 Aug 2026 09:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=THciDd/3eLARWQspA4cv3ZApM1cAxPYj6scmbN7XejA=;
+ t=1786973727; bh=+pcGxmCDcd4vtwUJSLy+BZ2nzEcn7wspnH9snwbDcAw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=yLL9NAdYiTVS2MEfdLr/US2yO6pk4UEihjztEYQ45TuyoiAIXFnRx3CZdKleUUQ8K
- 1Hq/4fU0ZdZ8jnGeyiUIDdq/eyj5+zEvpDO89JvvY4O2WXvUnx+Rf+PkM2WvE1XPqV
- QCdNAijNlZEOEB6MCEBEbmfHQd9jnFK+5WmthXHcQNGW6TJaTnQlQ2hh9FdLV44ckO
- 9Vlk8k5jkdGCgGQYiquzDgJdO/nuBfE0JsuEec2NoHD1Tecuy2rUj9ZQcQmtceMpvw
- 3+x6BjmmoPDQFoAGn8yOhddAYU4GCQBrvVDX5M9hwoTO1T+SucwotC+rROHUCj4Mbh
- fInr7fzhxAxJA==
+ b=VjpxOUtB9GKUe3pt1Vz46dtlejqKp+hIpPus+Bv6oDqYbxjhts122R7mK94HLceC9
+ Atv8Yv/+/tomBqpRJ88g4iU798CRSZVu5XOQwwHLWZoIpOaPAPfvkwNpsddsk89iLF
+ fFBevZplagNxISbLqisW7ZGbbgck1wRRBLQtyxp06xb8Gg6afdIv+3d+WZfAaY8gpn
+ 0pKh88YfOPIJO9yoB9j/jSgofllXe1O4SPcMMajD6BSmaJVNtgcVKnjSXmNCFnUVs+
+ uQs5L7amQ7PkWhP9x2qhw1c55Vxgi19/XLFuaQZ9lcBYliIIsNtZi+7M2tCKZMaTBC
+ 70f2eHiECkorg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 683361CBCCB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 288941CBCBE;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A22A840D428;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 620E840D41B;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C7D9230FA0; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id A111330F86; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 124/135] tests/qtest/ide-test: parametrize the
- ATAPI CD-ROM read test
-Date: Mon, 17 Aug 2026 16:34:34 +0300
-Message-ID: <20260817133451.2384630-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 111/135] s390x/ipl: validate num_comp against iplb
+ length before iterating
+Date: Mon, 17 Aug 2026 16:34:21 +0300
+Message-ID: <20260817133451.2384630-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -71,211 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-cdrom_pio_impl() and test_cdrom_dma() duplicate the same image setup
-and data-integrity check around two different transfer mechanisms.
-Fold them into a single cdrom_read_impl(nblocks, flags) helper, with a
-CDROM_PIO/CDROM_DMA flag selecting the transfer, so further read
-coverage can be added once for both paths.
+In ipl_valid_pv_components(), the upper bound of the for loop,
+ipib_pv->num_comp, is read from guest memory. Before iterating, verify
+that its value will not cause a read beyond the end of the
+IplParameterBlock.
 
-No functional change: /ide/cdrom/pio, pio_large and dma run exactly
-as before.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit ebec7c73229831c6574c70fec3cc28c778566277)
+Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-3-borntraeger@linux.ibm.com
+[farman@linux.ibm.com: Added qemu-stable]
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit df607fd056044e40352a43f0b4422b9a5cb015c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index 721e78170bc..c97bc17b677 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -1034,8 +1034,12 @@ static void ide_wait_intr(QTestState *qts, int irq)
-     g_assert_not_reached();
- }
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 8e3882d5063..1a029e0e5c0 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
+         return false;
+     }
  
--static void cdrom_pio_impl(int nblocks)
-+#define CDROM_PIO 0
-+#define CDROM_DMA (1 << 0)
-+
-+static void cdrom_read_impl(int nblocks, unsigned flags)
- {
-+    bool dma = flags & CDROM_DMA;
-     QTestState *qts;
-     QPCIDevice *dev;
-     QPCIBar bmdma_bar, ide_bar;
-@@ -1063,57 +1067,75 @@ static void cdrom_pio_impl(int nblocks)
-     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-     qtest_irq_intercept_in(qts, "ioapic");
- 
--    /* PACKET command on device 0 */
--    qpci_io_writeb(dev, ide_bar, reg_device, 0);
--    qpci_io_writeb(dev, ide_bar, reg_lba_middle, BYTE_COUNT_LIMIT & 0xFF);
--    qpci_io_writeb(dev, ide_bar, reg_lba_high, (BYTE_COUNT_LIMIT >> 8 & 0xFF));
--    qpci_io_writeb(dev, ide_bar, reg_command, CMD_PACKET);
--    /* HP0: Check_Status_A State */
--    nsleep(qts, 400);
--    data = ide_wait_clear(qts, BSY);
--    /* HP1: Send_Packet State */
--    assert_bit_set(data, DRQ | DRDY);
--    assert_bit_clear(data, ERR | DF | BSY);
--
--    /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
--    send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
--
--    /* Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
--     * If BYTE_COUNT_LIMIT is odd, we transfer BYTE_COUNT_LIMIT - 1 bytes.
--     * We allow an odd limit only when the remaining transfer size is
--     * less than BYTE_COUNT_LIMIT. However, SCSI's read10 command can only
--     * request n blocks, so our request size is always even.
--     * For this reason, we assume there is never a hanging byte to fetch. */
--    g_assert(!(rxsize & 1));
--    limit = BYTE_COUNT_LIMIT & ~1;
--    for (i = 0; i < DIV_ROUND_UP(rxsize, limit); i++) {
--        size_t offset = i * (limit / 2);
--        size_t rem = (rxsize / 2) - offset;
--
--        /* HP3: INTRQ_Wait */
--        ide_wait_intr(qts, IDE_PRIMARY_IRQ);
-+    if (dma) {
-+        uintptr_t guest_buf = guest_alloc(&guest_malloc, rxsize);
-+        PrdtEntry prdt[1];
-+
-+        prdt[0].addr = cpu_to_le32(guest_buf);
-+        prdt[0].size = cpu_to_le32(rxsize | PRDT_EOT);
-+
-+        send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_PACKET, 0,
-+                             nblocks, prdt, ARRAY_SIZE(prdt),
-+                             send_scsi_cdb_read10);
- 
--        /* HP2: Check_Status_B (and clear IRQ) */
-+        qtest_memread(qts, guest_buf, rx, rxsize);
-+    } else {
-+        /* PACKET command on device 0 */
-+        qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+        qpci_io_writeb(dev, ide_bar, reg_lba_middle, BYTE_COUNT_LIMIT & 0xFF);
-+        qpci_io_writeb(dev, ide_bar, reg_lba_high,
-+                       (BYTE_COUNT_LIMIT >> 8 & 0xFF));
-+        qpci_io_writeb(dev, ide_bar, reg_command, CMD_PACKET);
-+        /* HP0: Check_Status_A State */
-+        nsleep(qts, 400);
-         data = ide_wait_clear(qts, BSY);
-+        /* HP1: Send_Packet State */
-         assert_bit_set(data, DRQ | DRDY);
-         assert_bit_clear(data, ERR | DF | BSY);
- 
--        /* HP4: Transfer_Data */
--        for (j = 0; j < MIN((limit / 2), rem); j++) {
--            rx[offset + j] = cpu_to_le16(qpci_io_readw(dev, ide_bar,
--                                                       reg_data));
-+        /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
-+        send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
-+
-+        /*
-+         * Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
-+         * If BYTE_COUNT_LIMIT is odd, we transfer BYTE_COUNT_LIMIT - 1 bytes.
-+         * We allow an odd limit only when the remaining transfer size is
-+         * less than BYTE_COUNT_LIMIT. However, SCSI's read10 command can only
-+         * request n blocks, so our request size is always even.
-+         * For this reason, we assume there is never a hanging byte to fetch.
-+         */
-+        g_assert(!(rxsize & 1));
-+        limit = BYTE_COUNT_LIMIT & ~1;
-+        for (i = 0; i < DIV_ROUND_UP(rxsize, limit); i++) {
-+            size_t offset = i * (limit / 2);
-+            size_t rem = (rxsize / 2) - offset;
-+
-+            /* HP3: INTRQ_Wait */
-+            ide_wait_intr(qts, IDE_PRIMARY_IRQ);
-+
-+            /* HP2: Check_Status_B (and clear IRQ) */
-+            data = ide_wait_clear(qts, BSY);
-+            assert_bit_set(data, DRQ | DRDY);
-+            assert_bit_clear(data, ERR | DF | BSY);
-+
-+            /* HP4: Transfer_Data */
-+            for (j = 0; j < MIN((limit / 2), rem); j++) {
-+                rx[offset + j] = cpu_to_le16(qpci_io_readw(dev, ide_bar,
-+                                                           reg_data));
-+            }
-         }
--    }
- 
--    /* Check for final completion IRQ */
--    ide_wait_intr(qts, IDE_PRIMARY_IRQ);
-+        /* Check for final completion IRQ */
-+        ide_wait_intr(qts, IDE_PRIMARY_IRQ);
- 
--    /* Sanity check final state */
--    data = ide_wait_clear(qts, DRQ);
--    assert_bit_set(data, DRDY);
--    assert_bit_clear(data, DRQ | ERR | DF | BSY);
-+        /* Sanity check final state */
-+        data = ide_wait_clear(qts, DRQ);
-+        assert_bit_set(data, DRDY);
-+        assert_bit_clear(data, DRQ | ERR | DF | BSY);
++    if (offsetof(IplParameterBlock, pv.components) +
++        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
++        be32_to_cpu(iplb->len)) {
++        return false;
 +    }
- 
-     g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
 +
-     g_free(pattern);
-     g_free(rx);
-     test_bmdma_teardown(qts);
-@@ -1122,51 +1144,18 @@ static void cdrom_pio_impl(int nblocks)
- 
- static void test_cdrom_pio(void)
- {
--    cdrom_pio_impl(1);
-+    cdrom_read_impl(1, CDROM_PIO);
- }
- 
- static void test_cdrom_pio_large(void)
- {
-     /* Test a few loops of the PIO DRQ mechanism. */
--    cdrom_pio_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE);
-+    cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_PIO);
- }
- 
--
- static void test_cdrom_dma(void)
- {
--    QTestState *qts;
--    static const size_t len = ATAPI_BLOCK_SIZE;
--    size_t ret;
--    char *pattern = g_malloc(ATAPI_BLOCK_SIZE * 16);
--    char *rx = g_malloc0(len);
--    uintptr_t guest_buf;
--    PrdtEntry prdt[1];
--    FILE *fh;
--
--    qts = ide_test_start(
--            "-drive if=none,file=%s,media=cdrom,format=raw,id=sr0,index=0 "
--            "-device ide-cd,drive=sr0,bus=ide.0", tmp_path[0]);
--    qtest_irq_intercept_in(qts, "ioapic");
--
--    guest_buf = guest_alloc(&guest_malloc, len);
--    prdt[0].addr = cpu_to_le32(guest_buf);
--    prdt[0].size = cpu_to_le32(len | PRDT_EOT);
--
--    generate_pattern(pattern, ATAPI_BLOCK_SIZE * 16, ATAPI_BLOCK_SIZE);
--    fh = fopen(tmp_path[0], "wb+");
--    ret = fwrite(pattern, ATAPI_BLOCK_SIZE, 16, fh);
--    g_assert_cmpint(ret, ==, 16);
--    fclose(fh);
--
--    send_dma_request(qts, CMD_PACKET, 0, 1, prdt, 1, send_scsi_cdb_read10);
--
--    /* Read back data from guest memory into local qtest memory */
--    qtest_memread(qts, guest_buf, rx, len);
--    g_assert_cmpint(memcmp(pattern, rx, len), ==, 0);
--
--    g_free(pattern);
--    g_free(rx);
--    test_bmdma_teardown(qts);
-+    cdrom_read_impl(1, CDROM_DMA);
- }
- 
- int main(int argc, char **argv)
+     for (i = 0; i < ipib_pv->num_comp; i++) {
+         /* Addr must be 4k aligned */
+         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
 -- 
 2.47.3
 
