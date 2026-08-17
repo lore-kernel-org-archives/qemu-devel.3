@@ -1,50 +1,50 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists1p.gnu.org (unknown [209.51.188.17])
+Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B75EC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A51C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqQ-0001YW-JR; Mon, 17 Aug 2026 06:45:30 -0400
+	id 1wvuqw-0001uz-Sq; Mon, 17 Aug 2026 06:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqK-0001D8-DS; Mon, 17 Aug 2026 06:45:24 -0400
+ id 1wvuqk-0001o6-Az; Mon, 17 Aug 2026 06:45:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqI-0003zY-Nh; Mon, 17 Aug 2026 06:45:24 -0400
+ id 1wvuqh-00040o-L4; Mon, 17 Aug 2026 06:45:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=EYMdg8baSzdlaR6RUorC7XrNe/N+/5fOYuS2YyKgJms=;
+ t=1786963486; bh=5PAbTQM9n14IAh7vv7hdAprQh2tsKs6uvQyLKkIHKYA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wEs4/MwRk8sY/dSyNWH741xq7qy0cQsr/tLzhYyZ+T0dRlfQl2Q7HR29o5Kgvw7Sa
- TPo7E6tpgltI8cabfzFg/e+RyKWigpy10obPhO+4ED/mBbp3Jfs2wEB0BYHqIjZPb7
- f/nb1tr8MXLgScxe4IF1+ZpoxL7UplYWfg6b/7hb66HzlA/Zz6j598zz0XihFxqOo4
- bi+Qe70HMCoLNlUWsVIYurdtB3CVhRMWm0rR6twWfZlsWxIj8Dpr+r1snRywahc7hL
- h1W7fOnH5Tm9aToh0wlEWz6193mtd7Zf6AKwWCCb2vp6DAceNjRmtFG6YFhrENTU3F
- 42PZlTmMbG3/g==
+ b=MLiYv+8PHzRZfu/w3oB8d1tx+5EeTRNfMr51QmszUtuEw+ULPoGPJ0zlHlBLjrhGw
+ 1MP3hJQ+2yOYNAAzTvRYiYy6dx7TmXWCqgHq9XTKeW0dpF5TCLZJLWagy7cwaVczIF
+ zmxHNrmTxWhKSiinSrMSzU0xCZ0mpnyzVrsa4f3V9PdXYrzI08cNyyY/fYzpdZ7gIh
+ MNPxGl812P5Hr8+/H5g4efIRZtbW9KUhvMWmEJse1g4ktakan0p0ZOx2j6XnX9crBf
+ nofnuyyf67VKNKLI8zrp51QIJb+0KYBVnzJ5t0jiaQXbFWGKMAL9c+enkgzvgqxWLB
+ 1IprVxE/RDvsA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 777471CBB6F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 84B121CBB72;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7821140D200;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 85A0640D203;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0A94130E56; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 1443930E5C; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 130/161] s390x/ipl: validate num_comp against iplb
- length before iterating
-Date: Mon, 17 Aug 2026 13:42:44 +0300
-Message-ID: <20260817104344.2047346-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zhuoying Cai <zycai@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 133/161] pc-bios/s390-ccw: Add per-queue
+ notification offset for multi-queue virtio configurations
+Date: Mon, 17 Aug 2026 13:42:47 +0300
+Message-ID: <20260817104344.2047346-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -73,42 +73,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
 
-In ipl_valid_pv_components(), the upper bound of the for loop,
-ipib_pv->num_comp, is read from guest memory. Before iterating, verify
-that its value will not cause a read beyond the end of the
-IplParameterBlock.
+The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
+other device types require multiple queues, and for PCI device types this also
+requires a per-queue notification offset.
 
-Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Add a PCI notify field to the VRing struct so that each queue has a unique
+notify offset as defined in the virtio spec.
+
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-3-borntraeger@linux.ibm.com
-[farman@linux.ibm.com: Added qemu-stable]
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit df607fd056044e40352a43f0b4422b9a5cb015c8)
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Message-ID: <20260630141917.673995-4-jrossi@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 084feb909808d542c789dcbbf0f1ad01350a90ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 403cd08450d..33729d4be5a 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
-         return false;
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index 53bdb52e76a..2c83ec4f131 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -21,7 +21,6 @@ VirtioPciCap c_cap; /* Common capabilities  */
+ VirtioPciCap d_cap; /* Device capabilities  */
+ VirtioPciCap n_cap; /* Notify capabilities  */
+ uint32_t notify_mult;
+-uint16_t q_notify_offset;
+ 
+ static int virtio_pci_set_status(uint8_t status)
+ {
+@@ -74,10 +73,10 @@ int virtio_pci_reset(VDev *vdev)
+     return 0;
+ }
+ 
+-long virtio_pci_notify(int vq_id)
++long virtio_pci_notify(VRing *vr)
+ {
+-    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
+-    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
++    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
++    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
+ }
+ 
+ /*
+@@ -301,8 +300,7 @@ static int virtio_pci_read_pci_cap_config(void)
      }
  
-+    if (offsetof(IplParameterBlock, pv.components) +
-+        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
-+        be32_to_cpu(iplb->len)) {
-+        return false;
-+    }
+     rc = vpci_read_bswap32(pos + VPCI_N_CAP_MULT, PCI_CFGBAR, &notify_mult);
+-    if (rc || vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar,
+-                                &q_notify_offset)) {
++    if (rc) {
+         puts("Failed to read notification queue configuration");
+         return -EIO;
+     }
+@@ -332,7 +330,6 @@ int virtio_pci_setup(VDev *vdev)
+     VRing *vr;
+     int rc;
+     uint8_t status;
+-    uint16_t vq_size;
+     int i = 0;
+ 
+     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+@@ -380,28 +377,39 @@ int virtio_pci_setup(VDev *vdev)
+         return -EIO;
+     }
+ 
+-    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+-        puts("Failed to read virt-queue configuration");
+-        return -EIO;
+-    }
+-
+     /* Configure virt-queues for pci */
+     for (i = 0; i < vdev->nr_vqs; i++) {
++        uint16_t vq_size;
++        uint16_t vq_notify;
+         VqInfo info = {
+             .queue = (unsigned long long) virtio_get_ring_area(i),
+             .align = KVM_S390_VIRTIO_RING_ALIGN,
+             .index = i,
+-            .num = vq_size,
++            .num = 0,
+         };
+ 
+         vr = &vdev->vrings[i];
+-        vring_init(vr, &info);
+ 
+-        if (vpci_set_selected_vq(vr->id)) {
++        if (vpci_set_selected_vq(i)) {
+             puts("Failed to set selected virt-queue");
+             return -EIO;
+         }
+ 
++        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
++            printf("Failed to read virt-queue %d size\n", i);
++            return -EIO;
++        }
 +
-     for (i = 0; i < ipib_pv->num_comp; i++) {
-         /* Addr must be 4k aligned */
-         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
++        info.num = vq_size;
++
++        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
++            printf("Failed to read virt-queue %d notify offset\n", i);
++            return -EIO;
++        }
++
++        vr->pci_notify = vq_notify;
++        vring_init(vr, &info);
++
+         rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
+         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
+         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
+diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+index 90d07cb9a76..2494df16198 100644
+--- a/pc-bios/s390-ccw/virtio-pci.h
++++ b/pc-bios/s390-ccw/virtio-pci.h
+@@ -64,7 +64,7 @@ typedef struct VirtioPciCap  VirtioPciCap;
+ 
+ void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+ int virtio_pci_reset(VDev *vdev);
+-long virtio_pci_notify(int vq_id);
++long virtio_pci_notify(VRing *vr);
+ int virtio_pci_setup(VDev *vdev);
+ int virtio_pci_setup_device(void);
+ 
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index 7883871033c..df04479aa69 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -114,7 +114,7 @@ bool vring_notify(VRing *vr)
+         vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
+         break;
+     case S390_IPL_TYPE_PCI:
+-        vr->cookie = virtio_pci_notify(vr->id);
++        vr->cookie = virtio_pci_notify(vr);
+         break;
+     default:
+         return 1;
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index d32a4830cad..75ae5bdbc22 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -107,6 +107,7 @@ struct VRing {
+     VRingUsed *used;
+     long cookie;
+     int id;
++    uint16_t pci_notify;
+ };
+ typedef struct VRing VRing;
+ 
 -- 
 2.47.3
 
