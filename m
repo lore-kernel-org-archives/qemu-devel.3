@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23696C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDF1C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww3t9-0003tP-Vp; Mon, 17 Aug 2026 16:24:56 -0400
+	id 1ww3tF-0003vM-7c; Mon, 17 Aug 2026 16:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3t8-0003t5-Ci
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3tD-0003uj-Am
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3t6-0002oh-L9
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:54 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3tB-0002pn-MN
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786998292;
+ s=mimecast20190719; t=1786998297;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HwPNBAsVyZnQYazdHmHIZ1jujVvi0DPnF4lKOqhqlLk=;
- b=GAe1GyBgjaUHR2t3m9lAbGCRvkTbIH+aUh3XzLKeXsNnUugIAXXLuaSrvldeVH2rkk8l99
- OyuIEutRXmvzxdQAze3sQB6Kh32NWnHy+rP0BbN26Jz7uj5W4//gRAKSX5QIh57QrCwv6U
- 9/ZQJQkeOWLQzFhjgc022y4I1a0s2yA=
+ bh=/RDemstICwUKjxsppJmK9PMzf+f0kzlTt3c0ZIH3UWA=;
+ b=IIGnwAYJgfjEX0duyjE6FeyRveeIWdavMqyixx6Wqec2t78WAkI7c78X2U4hber0zMyCv6
+ P1oWbFjvVNxVZxv9elOVb32MRVpbeGeZVestm9KkPA946fP4aVLgEuRtH/ngYL8rs66mQ9
+ tb7lxL1Oz51EqeWT4VRID6/y8PAcfaw=
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-5pCqHLvoMVuJWe6rDMPIxA-1; Mon, 17 Aug 2026 16:24:50 -0400
-X-MC-Unique: 5pCqHLvoMVuJWe6rDMPIxA-1
-X-Mimecast-MFC-AGG-ID: 5pCqHLvoMVuJWe6rDMPIxA_1786998290
+ us-mta-634-0ZsZ6owmOhKL435AwNegZw-1; Mon, 17 Aug 2026 16:24:55 -0400
+X-MC-Unique: 0ZsZ6owmOhKL435AwNegZw-1
+X-Mimecast-MFC-AGG-ID: 0ZsZ6owmOhKL435AwNegZw_1786998295
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1d137a68so35699191cf.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:24:50 -0700 (PDT)
+ d75a77b69052e-52d91cc174aso59848261cf.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786998290; x=1787603090; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786998295; x=1787603095; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HwPNBAsVyZnQYazdHmHIZ1jujVvi0DPnF4lKOqhqlLk=;
- b=SwlP6H2wBW7dNrx4t2z7YJxmQmTs8XPUu8ar5xOKmsrYHbirdfuJqTUsahBpOjJldF
- KepU46UqctGH4xZHeSo19txubTJe+K7cujDfVhbF6A7trGssczMGrXLsNCi9MFl5xnvr
- V2KKnROHDJxbnqRl6uVKc0iGP5vCaziIUn1VJPrmY2mgfabEnVMbb/rqDA6PAgOb7N3+
- 7dtq5dCEWMSttM84WSwuDY9LEUWqE3w8/w8vzwt4bIRe9jqU+HjdoTRtvoFn//wIMJsg
- 7ZYiZc7QzF7/PzR/oSvYMbUlHyE/zKCDIFpp1psv8kdr0gsXSUQAX+6VN1yZh26UQbQL
- mV3Q==
+ bh=/RDemstICwUKjxsppJmK9PMzf+f0kzlTt3c0ZIH3UWA=;
+ b=PJAW6vHynWCm6SZyQB1/sHzDM1vWTd59Uhm2xZv0ecfzZ5sEe1RbH+YCy8/uJL0Dht
+ 0riWDxseyjsTDKvsoUh65Kviuj5CKJfg7ur9w+nTB9h7DKqhqiWCZoB3FQdDCkbp0aQT
+ 7dybj7zKQ0rAPlaRAxje2Q6pe8u87lwExY1kU51Hidxk+VmKazGdwJYVHSXHtLyO4ERm
+ rtlIIb0Vyz9UEiLnIyDotBXaeSygN4raAs3Q0ZVo/tRhfL5R2X2CoaX9tMsqGboB6ztU
+ LNz5AcVHyNRsbWVCHRDUz9QB787y5jbNJkhlrTATB32jawuuSSzA1XtKRyVeh4i/mKHR
+ e67g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786998290; x=1787603090;
+ d=1e100.net; s=20251104; t=1786998295; x=1787603095;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HwPNBAsVyZnQYazdHmHIZ1jujVvi0DPnF4lKOqhqlLk=;
- b=W7sPDJV4c54187kYunJAuyw2w9sibTDbpcYpuNnkF1DZg060Fr7kfh5ImD3qrTKT4g
- GOMlQg30t++JaDa0NMF4oBNZYZE+J2jOcEPnIhm/3Fa+X4Fptf3x631L2l6pRQW16mKS
- dXYw5W89ygJ1rotV5qEG2AEhPdbeiliZbhTx4nf2nW3b90mWXzHd/FWrZxNcbPs1l2Tm
- p1gi5hEQKnv025+vfexncAaMCUHDkI/nO9GdeANfi2qAj3U4ZtL8ZuQFVKDdtrfmSJ7K
- b2YEqrPArEg/n5LA24UMZoxqhbrfOU9fEh4BOrrcWN2OdJUchsnS94m+oNbR/i7+hVHc
- +Z9A==
-X-Gm-Message-State: AOJu0YzlG9LvqQtzGt+lZhss8scgrPJ9qgPpNA+iWa/HU1GUle0Lhia+
- RthnyqDV/0WOwOsxMa3XtrGhqUaF5xY2RBZzHiBXEa0A77Ft9ljNjJBYtyHVO6nt6HeL7mPuvSO
- h4X14xJxgJEKAMGxmdeO+dImfNcw0CzdQhaP1gFGDJS9DiPpzeXXr8OejFhsfummt82wOnY0j6R
- C6oetSTLQpLu1MISB5m4eG1QTsFh+e74WL65lMcg==
-X-Gm-Gg: AR+sD12NO4tMm2jb+XRsJmtf/8bDLKUqb4FtLFELlChTHJSL9iWqknYGGWZTF3kb6pk
- WTriVdw7Q5g742TZvpxiUcvweKWNa+MGrno/p3GIndSIqoP1PalbtiphLG2QILktRfGPBed9bj+
- R5UWgc/dIzwk4wIXNOmK8kWRktYtumKqS3Ol/oIqh4vSNS6P9J6PkoHOlMaxdLeRd8aPP6Qpd2L
- e0z42ywG1ax1Nq/JuZbTGe8KpsoGgtAWCGYEORx9laWcVlpPwHGPqOm/+yC3KfBLaje480uGSD/
- BN4kPBMcU50VH3vsJV/kcHZr7q6ImBZBcey/7mvZ6z+Lz/DuAKQUcLFYMY3NpnxW3g==
-X-Received: by 2002:a05:622a:58cf:b0:517:9570:c1bd with SMTP id
- d75a77b69052e-52d854c2d90mr322450631cf.25.1786998289888; 
- Mon, 17 Aug 2026 13:24:49 -0700 (PDT)
-X-Received: by 2002:a05:622a:58cf:b0:517:9570:c1bd with SMTP id
- d75a77b69052e-52d854c2d90mr322449901cf.25.1786998289306; 
- Mon, 17 Aug 2026 13:24:49 -0700 (PDT)
+ bh=/RDemstICwUKjxsppJmK9PMzf+f0kzlTt3c0ZIH3UWA=;
+ b=WOz5BxxCYLRnpB1b5Ep8Oat/dhKlnVMSxFMUIHpV6b6D2juHIj8340XxuHWA7U6FZO
+ VTmllIB2TtMhy1jlBRq0NVPWNa8NGKjN7tR/r/jKfaQ4aZeg9jBi4BUCNCZQNpyptBKd
+ h+W45wG9JcAxLtQ5Q2V0F1DF3CHYaPpt6KpMkjBshGrWD2iak32VyorsmDjtzaPtac0o
+ Ml17Yqdl/i4bFND0Xz+gdednEH0LIiwoIm7VgOO4NYKrbry3B6FYPV6QBJXMME/ulPdO
+ 7z3qbMLa2K4d6ViiM5n5A2+C8WG8sYwlIQfLLWJ1tAJS9/4jtjUL22XZ6nV8UfWnXECr
+ 5R0A==
+X-Gm-Message-State: AOJu0Yw3vN4K8PC4KgAVK5h/KnZEfbqU0qAXLvH7IgizB4tvcgkW+ylC
+ /bs48ToXh0eGS7RxT2cwRSU2ANttaClpSkHs5cQ3LQvL6egLNTOUNQLeLczKFE8dCR4M/XEnfWy
+ S/360iMgNj3wJeNLgD+1B+3HfCIHoUUQvBvTICeOKc+FsRgaqmReONZfv8+ahZfq4OWFvKW3/Tl
+ 1DDn/FCwm9pS3wZI69k/MAc5HWFVDUfyugYjeh2Q==
+X-Gm-Gg: AR+sD13fEKgHyBn7ozUr2BWMZTWypn/cOBcFHxmFQn6l0/VcsVlO1ASH3x72sCmAJlX
+ NsFMK1v653Dh/SQSTwgmZ81m/VwrukXUzUPwNPQ/3IjLQCQwa3n0ZuiSgrC5LFxFo8lD+9Rr7NU
+ mj1NDaojkX016ibhqEal9e2E+FZZub3TCSDvK16eUs+BsZZU+wa3+TrBwYNBFFlKh3L1uFK2kkK
+ 5Shf/9VV3JnkxdTpaPxjwMPNFf0hWwhdyziv4hsh/nhCnY/0LZ+hu/r/jDKxo8FvBEMG+RmnKsb
+ PA/yWZjsAaUlhDbIm2GxbqScodoFgUFbuyOi8unq8bommEXG9g7sHHHRagU4FZcOeA==
+X-Received: by 2002:a05:622a:1789:b0:51c:981:94a6 with SMTP id
+ d75a77b69052e-52d8542c250mr285285911cf.23.1786998295115; 
+ Mon, 17 Aug 2026 13:24:55 -0700 (PDT)
+X-Received: by 2002:a05:622a:1789:b0:51c:981:94a6 with SMTP id
+ d75a77b69052e-52d8542c250mr285284631cf.23.1786998293687; 
+ Mon, 17 Aug 2026 13:24:53 -0700 (PDT)
 Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52db6136569sm22865761cf.12.2026.08.17.13.24.47
+ d75a77b69052e-52db6136569sm22865761cf.12.2026.08.17.13.24.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 13:24:48 -0700 (PDT)
+ Mon, 17 Aug 2026 13:24:53 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li Zhijian <lizhijian@fujitsu.com>, Samuel Zhang <guoqing.zhang@amd.com>,
  Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  Jack Wang <jinpu.wang@ionos.com>, Juraj Marcin <jmarcin@redhat.com>,
  Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: [PATCH 07/10] migration/rdma: Sanity check
- RDMA_CONTROL_REGISTER_REQUEST on buflen
-Date: Mon, 17 Aug 2026 16:24:21 -0400
-Message-ID: <20260817202424.2901438-8-peterx@redhat.com>
+Subject: [PATCH 10/10] migration/rdma: Sanity check compress request ranges
+Date: Mon, 17 Aug 2026 16:24:24 -0400
+Message-ID: <20260817202424.2901438-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260817202424.2901438-1-peterx@redhat.com>
 References: <20260817202424.2901438-1-peterx@redhat.com>
@@ -119,47 +118,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RDMA header supports head.repeat on RDMA_CONTROL_REGISTER_REQUEST, which
-can include >1 memory registrations.  The current code did check over
-head.repeat to guard against RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE, however
-it didn't further check the buffer size (head.len) to make sure the
-received data is large enough to include the repeated entries.  Check it.
-
-This is almost only to harden this piece of code, in reality on source side
-QEMU never uses repeat>1..  However since it's a protocol, still keep it.
-Check the buffer size instead.
-
-In case it's not obvious to new RDMA readers: head.len should be the size
-RDMA has last received, as qemu_rdma_exchange_get_response() checked on it
-against byte_len (which was further fetched from ibv_wc.byte_len in
-qemu_rdma_poll()).
+The offset/length ranges are not sanity checked in RDMA requests, add the
+checks.
 
 Reported-by: Tristan (@TristanInSec)
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4028
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4005
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/rdma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ migration/rdma.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index f64bcee418..5ce8b06818 100644
+index 13dd60c11b..699aaa9903 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -3362,6 +3362,14 @@ int rdma_registration_handle(QEMUFile *f)
-             reg_resp.repeat = head.repeat;
-             registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
+@@ -3200,6 +3200,28 @@ static int dest_ram_sort_func(const void *a, const void *b)
+     return (a_index < b_index) ? -1 : (a_index != b_index);
+ }
  
-+            /* Making sure the register buffers to read are valid */
-+            if (head.len != head.repeat * sizeof(RDMARegister)) {
-+                error_report("%s: Invalid RDMA_CONTROL_REGISTER_REQUEST "
-+                             "(head.repeat=%"PRIu32", head.len=%"PRIu32")",
-+                             __func__, head.repeat, head.len);
++static bool rdma_compress_range_check(RDMALocalBlock *block,
++                                      RDMACompress *comp)
++{
++    uint64_t block_end = block->offset + block->length;
++    uint64_t comp_end;
++
++    if (uadd64_overflow(comp->offset, comp->length, &comp_end)) {
++        goto fail;
++    }
++
++    if (comp->offset < block->offset || comp_end > block_end) {
++        goto fail;
++    }
++
++    return true;
++fail:
++    error_report("%s: compress request range outside range"
++                 " (block=%s, offset=%"PRIu64", length=%"PRIu64")",
++                 __func__, block->block_name, comp->offset, comp->length);
++    return false;
++}
++
+ /*
+  * During each iteration of the migration, we listen for instructions
+  * by the source VM to perform dynamic page registrations before they
+@@ -3279,7 +3301,9 @@ int rdma_registration_handle(QEMUFile *f)
+                 goto err;
+             }
+             block = &(rdma->local_ram_blocks.block[comp->block_idx]);
+-
++            if (!rdma_compress_range_check(block, comp)) {
 +                goto err;
 +            }
-+
-             for (int count = 0; count < head.repeat; count++) {
-                 uint64_t chunk;
-                 uint8_t *chunk_start, *chunk_end;
+             host_addr = block->local_host_addr +
+                             (comp->offset - block->offset);
+             if (comp->value) {
 -- 
 2.54.0
 
