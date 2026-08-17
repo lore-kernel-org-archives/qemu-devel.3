@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49281C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E72EFC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvwDI-0006oI-0k; Mon, 17 Aug 2026 08:13:12 -0400
+	id 1wvwcA-0003e3-ST; Mon, 17 Aug 2026 08:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wvwD6-0006mZ-Vy; Mon, 17 Aug 2026 08:13:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wvwD5-0003PX-1t; Mon, 17 Aug 2026 08:13:00 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67HBxSqH3636255; Mon, 17 Aug 2026 12:12:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=PkX7bW
- KJvShr3Z3k50AUUJ7hSMZEd++nU5fHGu1eu6Y=; b=nR78vBG+fDv1DduWtCFEvn
- g2/U+jutQ8wAnWI0znyvi3gqHrrtfuX9pgCez3JvGkn5w3IJVJ11Een29op1hVmM
- EZ53Kc3LUPeWUuatCUg58P1uKE+utHa0qCN+74J2b1cWIz7cv+n13w0XGn9ilZDP
- CHNg2NiNY/8cP7vc/9pR8Cx9KwiPz5oDmMTtAgg2z9rPvx0rvDFru99lCkqjHACL
- NyihNCucyaToLsf9HfJYN63h3K4ktHr9dTtjJeRdMXIyYVSvFexK7ufnI4VgDPgh
- bR7T0/HY7Ixg2YMHD+OOI4q4mt6aDe+wwM51kaSOp20q4EjbkQ5MkeyijF07/z4g
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhkt47y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 12:12:56 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HCC3aB021339;
- Mon, 17 Aug 2026 12:12:55 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354y5p81-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 12:12:55 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HCCpoq36962636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 12:12:52 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF92B2004B;
- Mon, 17 Aug 2026 12:12:51 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6107820049;
- Mon, 17 Aug 2026 12:12:50 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 17 Aug 2026 12:12:50 +0000 (GMT)
-Date: Mon, 17 Aug 2026 17:42:26 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- harshpb@linux.ibm.com, aik@ozlabs.ru, amachhiw@linux.ibm.com
-Subject: Re: [PATCH] target/ppc: Add lower bound check for watchdogNumber
-Message-ID: <20260817173922.db7772a5-0c-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org, 
- qemu-devel@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com, aik@ozlabs.ru
-References: <20260817105854.437724-1-rathc@linux.ibm.com>
- <20260817165901.b9ff4441-8a-amachhiw@linux.ibm.com>
- <a759da8e-9ee6-4144-b593-c019310c9af3@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvwc6-0003cz-5L
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:38:50 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvwc3-0001EZ-V0
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:38:49 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4954a2e73a9so23696745e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 05:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786970326; x=1787575126; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=biHckXIZVXmOqgIJA8hHhBtu9umfyOhyxqSHPZkFM3U=;
+ b=LhzN220n3eQDOGfOWdJ9dOhyzIhVd0gbamsxQ8ha8/HiM7kawe8ISQzfIm5j6J0cSj
+ zSdkFqFMkh6iyQF8OQ22dQ8MmJpahO9ruExr5kpfJGIFq90CBMQdED696ssGiez5RZ2p
+ VV5vyFY3uWWkxSYltGoieUALiF/WF/TUH6/vLX9AEqxT2CHTrRsnzigDWNsTSqYDJnha
+ YPHRbYVrDeoh+iw/Kpylq7F2wl7zsT/sENbQpHORiGx8IwVLxWThqoF6aL0Cbyh2SO/3
+ abP3xasImtDOxtrWVFl++i5WF7AUtHxTp4q1UUpJdW1cIZ3L9OpkjhMAmaHe3tEMtI8E
+ FP6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786970326; x=1787575126;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=biHckXIZVXmOqgIJA8hHhBtu9umfyOhyxqSHPZkFM3U=;
+ b=nAm7p8l7D1buV4OZksS1R2dmij6w7okNylsML9fuGqUO/QssaD3YpTC9QuZsFgmZfC
+ jI/cdcDHCkHYuK1OAzh16tkMJe9NLGw8cwZUVkhQBhz8chcZGL9eaI80RcmyszbsAfwl
+ KTcTy08HunCVeThmQWXYJ35YEn5Bk0k1r1bChaWXonHRS1I1pnXM7yV3DgS41IRLW32s
+ lul7AVUnGlmZ+2JZeAWrfpJ65+L32kUwDeDZPx3gughlB5IFkECsJ0/H+MdMtPw5hHMp
+ rveMTo0qta/AH3TG6XbjcT3hjAcFW/P+Wifjer5KRv0MsvfJJHWtVL+ShAo8Itq72WKf
+ zYeg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpEO2iq0uSE2eGAbljlf4dFeRZUJWmE+SrHW2xLhIMbD+vsmwx35KIkpgnMrPIVpahVHhPYlzZRrrKc@nongnu.org
+X-Gm-Message-State: AOJu0YxFX1Ldxh7lL0tjtMGi4A+UGxJyxsi0RKlnSQA+Muxx5cur7CtE
+ LaZzPjB1aiLPEG9DvPyV3zS3z+ZmTtIv0xinUH9DQCWMz6sQqoXF3oMK2R8WWlwjv48=
+X-Gm-Gg: AR+sD13Ns7337CnQIx0rumPNVvabVNs6bbq6WCfLG3EYlIt1G/YAo/Ix/kWPreMMCOB
+ d8GaizdVyPPfQu8PHvxPbt+mOtk72H1ZMKbj6oScaMYIURZZjcAOpyhL0EHdXAh2w/VCNzzXBzi
+ WOZdzK1FaB5uuT2Qg1WTSaBFgd22iwJzZ1NN/pQ/HQqAsNWx2OJbwfKOcD6gnc6otoqWZ3EvXZx
+ f4BMXNgWpUubHLmzQ9HQ6rU4e5KYSZWaZWXS+pTgZhfWU388fOSIjODimZYavenXlTZxFRmuJLk
+ Mozs9yA7mF8oJqQckQchRXNmmNEJ0S9qMB3rQAKuimLFKg/5yvEuKjZs9TGxq2/2joex7wnm2Q6
+ Hlh5TepqwlgTH8NDDPNIWLN0B6gsZnyMFJ25gszPxH8EfowSHvEPrC8RELq2nH8gzLEBAMAvbqI
+ YiLAhd/yozN5NrwqGJ+O7HXTgT8YUAbWcI8sf/uBImcw72cx16/EzN5V7areuGYug0+hkToT75s
+ OEszq3o0MkMIzpVAvo3ZLPlzl3R8R+MbGEw9yP4oUlnZjMIWHCp+ugmvaTwVHl1SgbHOA==
+X-Received: by 2002:a05:600c:5754:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-49987951a06mr234226565e9.7.1786970326419; 
+ Mon, 17 Aug 2026 05:38:46 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4998780397dsm120415055e9.3.2026.08.17.05.38.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Aug 2026 05:38:45 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 4/8] target/arm: Add new feature ARM_FEATURE_NEON_TRAPS
+Date: Mon, 17 Aug 2026 13:38:34 +0100
+Message-ID: <20260817123838.1578060-5-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260817123838.1578060-1-peter.maydell@linaro.org>
+References: <20260817123838.1578060-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a759da8e-9ee6-4144-b593-c019310c9af3@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA5MSBTYWx0ZWRfX3sieT2TYo4Xp
- e7FfnEIHxPVegqmU79fMSuD84Dtm5soOSKAixL9mj9uE1TxhLLolcx5UnK6xCVtXuQc/RJztEhD
- Y9ptOZya5GyP53vHnFckosxofnK7XbtXs/8EFn8PB4/u5sco6afpqblnFm6GY5djMiuPAUgWPAg
- 1Ov4kmgwaL+GNg0iFuv5CYbJJ2w+e6yWJmL9bqDw0FczwJJ1LHTIcpBtMcLrNkAwwPzR3HD1/K7
- vfQmLQr56UfWqQX2eInblQ1ohO9a2K0FzdRLf/lHBJuRqbOHkZqBEM3YrsdmoKbaS4WJYdnIe7L
- 7aoldg6FfmAmLbhMe+6IipCBXtJ+D1rIFRYxDX58fbVY3v25sPprx4MSTdz3yHC7NvlANu0zI1X
- 2ubCJRYfnSxxitx3SR1RZ5Gi2N31s7UHUTibS32kUOqjnDxYjiFMIeHODbc7plfoCyX415wVtt3
- MqnOzW09YtHJi/lG96Q==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA5MSBTYWx0ZWRfX2TqGnN6jAGru
- GnZmdqujBtOSoAa+58/Cb0z2mIfGgDgtvEgCIXQsefe4kdz5mmQaGyGqjUicQjDcWdG1OoXbBET
- Me0BzP6CUK/W4FygxNS4obIQin2beto=
-X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a82fac8 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
- a=VnNF1IyMAAAA:8 a=3U7okIbIGF24toqnTSQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: F__oaEKERFloO-lGoagTjgGmL64uA4wC
-X-Proofpoint-GUID: MRKkPwP-KBCMgaF5uwub0jupl5aulDi1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608170091
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,109 +103,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/17 05:27 PM, Chinmay Rath wrote:
-> 
-> On 8/17/26 17:03, Amit Machhiwal wrote:
-> > On 2026/08/17 04:28 PM, Chinmay Rath wrote:
-> > > Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
-> > > as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
-> > > 
-> > > Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
-> > > 
-> > Nit: This newline is not needed.
-> > 
-> > > Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> > > ---
-> > >   hw/watchdog/spapr_watchdog.c | 7 ++++---
-> > >   1 file changed, 4 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
-> > > index 5b3f50de3a..5d7478e833 100644
-> > > --- a/hw/watchdog/spapr_watchdog.c
-> > > +++ b/hw/watchdog/spapr_watchdog.c
-> > > @@ -145,7 +145,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
-> > >       switch (operation) {
-> > >       case PSERIES_WDTF_OP_START:
-> > > -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-> > > +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-> > >               return H_P2;
-> > >           }
-> > >           if (timeoutInMs <= WDT_MIN_TIMEOUT) {
-> > > @@ -170,7 +170,8 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
-> > >       case PSERIES_WDTF_OP_STOP:
-> > >           if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
-> > >               ret = watchdog_stop_all(spapr);
-> > > -        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
-> > > +        } else if (watchdogNumber > 0 &&
-> > > +                   watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
-> > >               ret = watchdog_stop(watchdogNumber,
-> > >                                   &spapr->wds[watchdogNumber - 1]);
-> > >           } else {
-> > Nit: The bounds check in OP_STOP uses a positive-selection guard
-> > (watchdogNumber > 0 && watchdogNumber <= ARRAY_SIZE(...)) with the error
-> > in the trailing else, which reads differently from the negative guards
-> > used in OP_START and OP_QUERY_LPM. Consider flipping it to match:
-> > 
-> >    } else if (watchdogNumber < 1 ||
-> >               watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-> >        return H_P2;
-> >    } else {
-> >        ret = watchdog_stop(watchdogNumber,
-> >                            &spapr->wds[watchdogNumber - 1]);
-> >    }
-> > 
-> > > @@ -184,7 +185,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
-> > >           trace_spapr_watchdog_query(args[0]);
-> > >           break;
-> > >       case PSERIES_WDTF_OP_QUERY_LPM:
-> > > -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-> > > +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
-> > >               return H_P2;
-> > >           }
-> > Suggestion (follow-up patch): After this fix lands, it may be worth
-> > extracting a small helper to avoid the repeated bounds expression across
-> > OP_START, OP_STOP, and OP_QUERY_LPM:
-> > 
-> >    static inline bool watchdog_number_valid(target_ulong n,
-> >                                             SpaprMachineState *spapr)
-> >    {
-> >        return n >= 1 && n <= ARRAY_SIZE(spapr->wds);
-> >    }
-> > 
-> > The three call sites then become a uniform !watchdog_number_valid(...)
-> > or watchdog_number_valid(...) expression, the bounds are defined in
-> > exactly one place, and any future change to the valid range (e.g. a
-> > dynamic wds size) has a single point of update. Not a blocker for this
-> > patch — just a clean-up worth a separate patch.
-> Hey Amit,
-> Thanks for the suggestion. I actually did think of this. But, this common
-> check would only be used by 2 operations : Start and LPM requirement. Stop
-> operation's watchdogNumber validation works differently in the sense that
-> unlike others, it can take a specific negative value, that is -1, which is
+The traps configurable via CPACR.ASEDIS and HCPTR.TASE that trap only
+Neon instructions are unfortunately IMPDEF about whether they are
+implemented or not, and there is no ID register field that identifies
+whether they are present.  In practice, they are present on every
+implementation I have checked except for the Cortex-A8 (which was the
+first CPU with Neon).
 
-Thanks for the explanation, Chinmay. Just a small correction though —
-PSERIES_WDT_STOP_ALL is not -1. It is defined as:
+Add a new feature ARM_FEATURE_NEON_TRAPS which we set on every
+ARM_FEATURE_NEON CPU except the Cortex-A8, and make the CPACR.ASEDIS
+and HCPTR.TASE bits RAZ/WI unless the CPU has ARM_FEATURE_NEON and
+ARM_FEATURE_NEON_TRAPS.
 
-  #define PSERIES_WDT_STOP_ALL  ((uint64_t)~0)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+We seem to be a little confused about whether ARM_FEATURE_NEON
+means "AArch32 Neon" or "AArch32 Neon or AArch64 ASIMD". I have
+not attempted to unpick that here. I have also not gone so far
+as to set NEON_TRAPS for the accelerator CPUs, since they won't
+be using the sysreg access functions anyway and (other than KVM)
+they don't support AArch32.
+---
+ target/arm/cpu-max.c   |  1 +
+ target/arm/cpu.h       |  7 +++++++
+ target/arm/cpu64.c     |  1 +
+ target/arm/helper.c    | 17 +++++++++++++++--
+ target/arm/tcg/cpu32.c |  8 ++++++++
+ target/arm/tcg/cpu64.c | 10 ++++++++++
+ 6 files changed, 42 insertions(+), 2 deletions(-)
 
-Since watchdogNumber is target_ulong (an unsigned type), this is
-0xFFFFFFFFFFFFFFFF — the maximum value of a 64-bit unsigned integer, not
-a negative value. -1 would only be the interpretation if the bit pattern
-were read through a signed type, which never happens here.
+diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
+index 88b7c04633..84fdd64c18 100644
+--- a/target/arm/cpu-max.c
++++ b/target/arm/cpu-max.c
+@@ -25,6 +25,7 @@ void aarch64_aa32_a57_init(Object *obj, bool aa32_only)
+     cpu->dtb_compatible = "arm,cortex-a57";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     if (aarch64_enabled) {
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index c0492c8dfb..4f07332543 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2177,6 +2177,13 @@ enum arm_features {
+      * CPU types added in future.
+      */
+     ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
++    /*
++     * ARM_FEATURE_NEON_TRAPS should be set if the CPU implements the
++     * CPACR.ASEDIS and HCPTR.TASE bits for trapping A32 Neon.  This
++     * is architecturally IMPDEF, but seems to be implemented by all
++     * ARM_FEATURE_NEON CPUs except the Cortex-A8.
++     */
++    ARM_FEATURE_NEON_TRAPS,
+ };
+ 
+ static inline int arm_feature(const CPUARMState *env, int feature)
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 2816735577..65998d3c64 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -699,6 +699,7 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a53";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 91b872dc77..6f33b1ef5e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -573,14 +573,20 @@ static void cpacr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+          */
+         if (cpu_isar_feature(aa32_vfp_simd, env_archcpu(env))) {
+             /* VFP coprocessor: cp10 & cp11 [23:20] */
+-            mask |= R_CPACR_ASEDIS_MASK |
+-                    R_CPACR_D32DIS_MASK |
++            mask |= R_CPACR_D32DIS_MASK |
+                     R_CPACR_CP11_MASK |
+                     R_CPACR_CP10_MASK;
+ 
+             if (!arm_feature(env, ARM_FEATURE_NEON)) {
+                 /* ASEDIS [31] bit is RAO/WI */
+                 value |= R_CPACR_ASEDIS_MASK;
++                mask |= R_CPACR_ASEDIS_MASK;
++            } else if (arm_feature(env, ARM_FEATURE_NEON_TRAPS)) {
++                /*
++                 * bit is present unless CPU doesn't implement ASEDIS
++                 * (in which case it is RAZ/WI; this is the Cortex-A8)
++                 */
++                mask |= R_CPACR_ASEDIS_MASK;
+             }
+ 
+             /*
+@@ -4124,6 +4130,13 @@ uint64_t arm_hcrx_el2_eff(CPUARMState *env)
+ static void cptr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                            uint64_t value)
+ {
++    if (!arm_feature(env, ARM_FEATURE_NEON_TRAPS)) {
++        /*
++         * If CPU doesn't implement HCPTR.TASE it's RAZ/WI.  Note that
++         * NSACR.NSASEDIS being 1 overrides this.
++         */
++        value &= ~R_HCPTR_TASE_MASK;
++    }
+     /*
+      * For A-profile AArch32 EL3, if NSACR.CP10
+      * is 0 then HCPTR.{TCP11,TCP10} ignore writes and read as 1.
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 8220d785f5..3df3ca38d6 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -251,6 +251,10 @@ static void cortex_a8_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a8";
+     set_feature(&cpu->env, ARM_FEATURE_V7);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    /*
++     * The Cortex-A8 doesn't have CPACR.ASEDIS and HCPTR.TASE,
++     * so don't set ARM_FEATURE_NEON_TRAPS.
++     */
+     set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+     set_feature(&cpu->env, ARM_FEATURE_DUMMY_C15_REGS);
+     set_feature(&cpu->env, ARM_FEATURE_EL3);
+@@ -321,6 +325,7 @@ static void cortex_a9_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a9";
+     set_feature(&cpu->env, ARM_FEATURE_V7);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+     set_feature(&cpu->env, ARM_FEATURE_EL3);
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+@@ -389,6 +394,7 @@ static void cortex_a7_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a7";
+     set_feature(&cpu->env, ARM_FEATURE_V7VE);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+@@ -439,6 +445,7 @@ static void cortex_a15_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a15";
+     set_feature(&cpu->env, ARM_FEATURE_V7VE);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_THUMB2EE);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+@@ -634,6 +641,7 @@ static void cortex_r52_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_EL2);
+     set_feature(&cpu->env, ARM_FEATURE_PMSA);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 24f34947ec..820248cb9b 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -37,6 +37,7 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a35";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -208,6 +209,7 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a55";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -281,6 +283,7 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a72";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -341,6 +344,7 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a76";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -415,6 +419,7 @@ static void aarch64_a78ae_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a78ae";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+     set_feature(&cpu->env, ARM_FEATURE_EL2);
+@@ -488,6 +493,7 @@ static void aarch64_a64fx_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,a64fx";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -662,6 +668,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,neoverse-n1";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -738,6 +745,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,neoverse-v1";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -965,6 +973,7 @@ static void aarch64_a710_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,cortex-a710";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+@@ -1067,6 +1076,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     cpu->dtb_compatible = "arm,neoverse-n2";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
++    set_feature(&cpu->env, ARM_FEATURE_NEON_TRAPS);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+     set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+-- 
+2.43.0
 
-> used to indicate stopping all watchdogs. (This is also the reason why the
-> bound check flow is different for stop operation as you have already pointed
-> out above).
-> 
-> Due to this, I decided not to consolidate. However we can definitely pass
-> the operation type to the validator function and check accordingly though.
-
-This actually reinforces the case for the shared helper. Since
-watchdogNumber is unsigned, watchdogNumber < 1 can never be true for
-PSERIES_WDT_STOP_ALL — 0xFFFFFFFFFFFFFFFF < 1 is false for an unsigned
-comparison. More importantly, STOP_ALL is caught by the explicit ==
-PSERIES_WDT_STOP_ALL arm before the bounds check is ever reached, so it
-would never interact with watchdog_number_valid() at all.
-
-~Amit
 
