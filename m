@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F0EC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9419BC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvutW-0007kS-Kd; Mon, 17 Aug 2026 06:48:42 -0400
+	id 1wvut0-00068q-OH; Mon, 17 Aug 2026 06:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvut3-0006Cl-9p; Mon, 17 Aug 2026 06:48:14 -0400
+ id 1wvusV-0005W8-Ab; Mon, 17 Aug 2026 06:47:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvut1-0004Pv-Ej; Mon, 17 Aug 2026 06:48:13 -0400
+ id 1wvusP-0004Hg-9y; Mon, 17 Aug 2026 06:47:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963487; bh=Q/pOI3gQRVs3KJS9Ts0jAqhVv25PGyWRzT/j/+QjoVc=;
+ t=1786963486; bh=sQhQob8k3fPIVVPZtxB4njf9ANw96/9GJcBbpx5lEdg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TPpxRb5iZtjJNhQlJswbwWberdBe/Aq2kswEiFiml+Qo6J1z24eso9GztDvKPfJSM
- Z7Zc7WgvqE9elv4yDjfXGHQr2Uy8b48dDchxRnkQiBKFsgelkzpMxP6RHseYVWfHl9
- NC3Z0178kKgJs9vbmsOaLe++N2JHXZTMNC4RMp+GLVbOY6CwI/3nlHHRclgXi47taz
- jtOzrxtfsQV1mTavq7LaNZjJZhwM4Z1fzpBC7tkfhoNYB7Ms2EX6MJwE8F37mlps9p
- aOm91x8/YYA8adk/AatOHnPF9hSA1FiCXB6sDzvOSot5Ltgapayexc0riZR0xwLeCe
- zvVbbUGOI9/6w==
+ b=LlbCBx3DUdiHpT+Q41DOLhO2jgta2TB6Ekipph5Jnwvc2pUx6oyPTzw/QRGEO6qyM
+ EtriSp4tvPf7K8td3X+OBbPfepxLwfyj5mGDJ8DL8zLIF5DPMYtAi+SCCZjvr4IB2g
+ OxULnHoi3bolCwKHuDZ/B2Loz7X/68ZfMamCZc5cKX3OsFQ0Sqf3DapFYbEEwMEpK8
+ YyQS/6yIJjHI1pHwuHKokk+9QKbktfmAws+qGVKKK1JkNi5r8ELmxwZLxo9wjC0Q1N
+ 3gR+ZGhq7fKgBymu5cFpn7UnzR2uinrtVyNMnfKa2wLghtsN17bsNCx9tVKg7Eq2TP
+ PDGNgt2Tp7p8A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05B181CBB8C;
- Mon, 17 Aug 2026 13:44:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CEA001CBB83;
+ Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0608540D220;
- Mon, 17 Aug 2026 13:45:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D05FF40D214;
+ Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 64DF330E90; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 4945E30E7E; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 159/161] hw/block/pflash_cfi01: Restore ROMD mode
- after migration
-Date: Mon, 17 Aug 2026 13:43:13 +0300
-Message-ID: <20260817104344.2047346-39-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 150/161] tests/qtest/ide-test: add a multi-sector
+ ATAPI DMA read test
+Date: Mon, 17 Aug 2026 13:43:04 +0300
+Message-ID: <20260817104344.2047346-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,68 +71,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-pflash_post_load() did not restore the ROMD mode of the memory region.
-Although cmd and wcycle are migrated, the destination retains the
-default ROMD = true from realize.  When the source was in a non-array
-mode (e.g. ID read, cmd = 0x90), reads on the destination bypass
-pflash_read() via the ROM fast path and return raw storage bytes
-instead of the command-specific response.
+test_cdrom_pio_large() already exercises a multi-sector PIO read.
+Add the DMA counterpart through the same cdrom_read_impl() helper so
+the multi-block ATAPI DMA read path gets equivalent coverage.
 
-Derive ROMD from the migrated cmd/wcycle in pflash_post_load.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4042
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMD: Including review comments from
- https://lore.kernel.org/qemu-devel/CAFEAcA-P6RH7nJK0KQ1H8576ULFA7nocB0EkhhZf6Rw3g0WCag@mail.gmail.com/
-
- Confirming that this is correct is a bit tricky. It relies on:
-  * when we set romd mode to true we also set wcycle = 0, cmd = 0
-    (which we do, in reset and in the mode_read_array code)
-  * when we set romd mode to false at the top of pflash_write(),
-    all paths out of that function either go through the
-    mode_read_array path, or else update pfl->cmd to something
-    non-zero
-  * nowhere outside pflash_write() udpates cmd or wcycle except
-    for the "clear them to 0 and set romd mode" places
-
- This is almost but not quite true. In pflash_read(), the default
- case for the pfl->cmd switch sets wcycle = 0 cmd = 0 but doesn't
- change the romd state. Luckily the "this should never happen"
- comment is true -- there's no way to get a pfl->cmd that falls
- into the default (except for being deliberately fed a bogus value
- via inbound migration).
-]
-Message-ID: <20260803041808.58174-1-guobin@linux.alibaba.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-(cherry picked from commit 60d010f66f2ad7c15388a605e6f1a2114dc60185)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit fe543c2d787a611f1efa34107818a8eee90bb5dc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 5b9ddb20b18..a13b91967ed 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -1030,6 +1030,16 @@ static int pflash_post_load(void *opaque, int version_id)
- {
-     PFlashCFI01 *pfl = opaque;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index c97bc17b677..6e59197566c 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -1158,6 +1158,11 @@ static void test_cdrom_dma(void)
+     cdrom_read_impl(1, CDROM_DMA);
+ }
  
-+    /*
-+     * ROMD mode is not in the VMState; derive it from the migrated
-+     * cmd and wcycle.  Only (wcycle == 0, cmd == 0x00) is read-array.
-+     */
-+    if (pfl->wcycle == 0 && pfl->cmd == 0x00) {
-+        memory_region_rom_device_set_romd(&pfl->mem, true);
-+    } else {
-+        memory_region_rom_device_set_romd(&pfl->mem, false);
-+    }
++static void test_cdrom_dma_large(void)
++{
++    cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_DMA);
++}
 +
-     if (!pfl->ro) {
-         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
-                                                         pfl);
+ int main(int argc, char **argv)
+ {
+     const char *base;
+@@ -1217,6 +1222,7 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/cdrom/pio", test_cdrom_pio);
+     qtest_add_func("/ide/cdrom/pio_large", test_cdrom_pio_large);
+     qtest_add_func("/ide/cdrom/dma", test_cdrom_dma);
++    qtest_add_func("/ide/cdrom/dma_large", test_cdrom_dma_large);
+ 
+     ret = g_test_run();
+ 
 -- 
 2.47.3
 
