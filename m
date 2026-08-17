@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD3BC5DF7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71599C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuai-0001BA-Am; Mon, 17 Aug 2026 06:29:16 -0400
+	id 1wvube-0003Ei-Ds; Mon, 17 Aug 2026 06:30:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wvuah-0001A0-7S; Mon, 17 Aug 2026 06:29:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wvub1-0001r5-C0; Mon, 17 Aug 2026 06:29:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wvuaf-0008O9-Bp; Mon, 17 Aug 2026 06:29:14 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wvuax-0008UK-20; Mon, 17 Aug 2026 06:29:34 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLVuiI2629279; Mon, 17 Aug 2026 10:29:02 GMT
+ 67GLW8TL3685569; Mon, 17 Aug 2026 10:29:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=lWDTYqjxZ6k2JMMKR
- D4C+jLc/xxIgx2Zk2wj3sojIaI=; b=VjqfOjCDvehkyjFc3BHLD5lpEZToK7KHK
- NOyPzEMijDq6jkZLuZIa1mU4qTWbgoAka0+AqhZUM/GVmye09AsFfGMGvQVLQPLi
- EYhVqFCa428P9IMzvBGN3VQ+MNY88GnIXK9HF/FqaJLVI/90jYMo9xN73nyiylWZ
- uI/IDCvn0Eiweh9gUxo/wLIoJrbYYz65+WvXccc8+v2Pz7x3zkzWxDwydIfWfzaO
- 0Ru9ZCh+ej5fnZ6sYwpwDzsYLe4LvFHjvPEgnKdACusvC8Id/iBxGtCSlqmIQLnw
- q5lyBs4egeJ3EwQG9h+y+9a26gKgdzjHOAQXpx3XWjwKCknkwRu4A==
+ :mime-version:references:subject:to; s=pp1; bh=OHg96fluuMUvfLYTx
+ HtOZrorm0qoK32ztsh6mIDQGIo=; b=JeAya4uzAHXAXLvPMX4G6b8oQFypRAN2G
+ IpxGyXibe2IrloyO2hYemnE2+tlXG+kjg3C+F2viblOplRlz2XOe17OJx1vtEZYW
+ zyaAaxZsYtljyqJC8aqFnrhjSlYaeLktNpMtWiLD+y0ecSLiNZXhGayJ24KRlTVc
+ 24tt+o21Qfj77lsBXQ+bgDiMSsMcGD3SPsIBfl8HZHkGDXe5NWVWTSxnwCVK8Z1U
+ xTM5cj9S4VMlGqyXGHwW83601adx94WWJOPfMuy3QRHATzkAMLiRcsZvMdBF0jFx
+ Emwpt/lKnHKaYjm04cxhEe2vQ9VRMmjk2t6GH/1IKpWxrWgvCm49w==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2ehe1jg1-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fm3hrnp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:29:01 +0000 (GMT)
+ Mon, 17 Aug 2026 10:29:24 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HAQURb019302;
- Mon, 17 Aug 2026 10:29:00 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejwmq7-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HAQURg019302;
+ Mon, 17 Aug 2026 10:29:23 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejwmr9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:29:00 +0000 (GMT)
+ Mon, 17 Aug 2026 10:29:23 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HASwx518547418
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67HATMs930999110
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 10:28:59 GMT
+ Mon, 17 Aug 2026 10:29:22 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9CC745805C;
- Mon, 17 Aug 2026 10:28:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3C5875805B;
+ Mon, 17 Aug 2026 10:29:22 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8AE065805B;
- Mon, 17 Aug 2026 10:28:51 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2A86658058;
+ Mon, 17 Aug 2026 10:29:15 +0000 (GMT)
 Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
  [9.124.212.152])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 10:28:51 +0000 (GMT)
+ Mon, 17 Aug 2026 10:29:14 +0000 (GMT)
 From: uverma@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@ozlabs.ru
 Cc: pbonzini@redhat.com, th.huth@posteo.eu, nnmlinux@linux.ibm.com,
@@ -65,10 +65,10 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, nnmlinux@linux.ibm.com,
  rathc@linux.ibm.com, balaton@eik.bme.hu, philmd@oss.qualcomm.com,
  npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net,
  Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [RFC PATCH 5/8] ppc/spapr: add block device backend to VOF
- open/read/write/seek services
-Date: Mon, 17 Aug 2026 15:57:22 +0530
-Message-ID: <20260817102733.605346-6-uverma@linux.ibm.com>
+Subject: [RFC PATCH 8/8] ppc/spapr: implement vscsi-report-luns call-method
+ for PAPR vSCSI
+Date: Mon, 17 Aug 2026 15:57:25 +0530
+Message-ID: <20260817102733.605346-9-uverma@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260817102733.605346-1-uverma@linux.ibm.com>
 References: <20260817102733.605346-1-uverma@linux.ibm.com>
@@ -76,39 +76,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX/BT6kqAH1swn
- dlMpn0Fc6lsQayb42sP9IlO58FvIiM/tMmUxfP4xSu4+7cblhqI6bFHw8RMGU6weqNeAuu3Qj4z
- 9LZs5qgFsWPNuiRnQXBJQJVTe8VM+mNlTVEEjBTf7tsdpvjXKiP+9XmqjsIWNGpAaKY7D8XKM40
- XV8OpXYlFYOCYHBvOa503Bnru8/cK4spkhM3oUfbqVoXo62MHYSMPAogN8oZQE8hzu6qWiTQAUb
- Vu3LB+hjwDWl1/w2zqehfMM4TQdOstxl+ctL51CLH5m3v7fnOkBEr8BH2Foln6Uc0inrGWKfR7+
- 0GEUUlNbDutD3JwOzOnLAqR1B+9LDgWrKhJvjnzrCVrfsdVrfcF/zMREeh4c5vN8aCNifiW6Fv1
- midRb2yorU2gipWj/Rmku7J/Eg/nAfkgbXMny0wnA67i1E2amuL+r5eMbXazLNZpiZKxf3+CTHo
- rjKpSkZ8OBTVh+/pIHg==
-X-Authority-Analysis: v=2.4 cv=DY8nbPtW c=1 sm=1 tr=0 ts=6a82e26d cx=c_pps
+X-Proofpoint-GUID: rj3Gmq1nGhDkUoScYYo0Ogi4L_tio3O9
+X-Proofpoint-ORIG-GUID: Qr72eLA6ZRfFh4mcSCREuCcmfS8TNi1s
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX1gRcJGbPa6VE
+ g0aHdgat200R4HEM0p6+LhBc7VPOx54qMqnmkMZJ9tGV/WjbqfLmJ/VQ8kZKADXCsaETZUB0Fiq
+ JcKd6RYA7sYIUcPLE7Cfo8CrcXAsWXg=
+X-Authority-Analysis: v=2.4 cv=WtQb99fv c=1 sm=1 tr=0 ts=6a82e285 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=jPRefoL-jKG6ujQr-m8A:9
-X-Proofpoint-ORIG-GUID: V_M1pHA6abwW27VH8Gbvm8peTe0r9IuE
-X-Proofpoint-GUID: ki9wzESAlgj5le6iiTzVzwzJ_zrV3AnG
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX9rPr4wtv2W3d
- EMAh33G6OS9tyxxMJ5npOJH19Qqu6BsBiBC+gQDF/Ckr3/FTgmgrE+R2IQRGL2Y2sf9qJEV4ena
- 6SFfgwAr5FGfNiF3C3vdogXUFXkEWQc=
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=rYZidSWV3caZqrqzPaQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX46GMQPOTVe2r
+ X4w6hiRiLw5xG9V+XhHzn/3vCQYDgaOjzBZXZsLLcechFC/1xIkTTW0LoYvX58kfAUJC/kxRNPB
+ qotWvj+XngcDAvkiS4BKNqBJbHFPOs31nKDVOmtb9/M3d71DbFK6KxnBkLbj07C1cGScZB7BGjH
+ lYwBs0ZjzrMAaWys8tIDIGwy3CGX4hNOsArzW0riTBT3agOGjxTCQFn+NQpaqmsTATbn6i4Ln69
+ w/aq26W0PcgdMV0zAhydr58hKpdtOvy9d1RDW1k+UWcrFMLXUGKeMr7UZBZwi4JgDqm4l3MU9J/
+ BbHgeVOGbtCaU4ObRHCLfcNxca46MYlAWKwsmHwksituA5Z6DxX87T25+3dXibgd2gAgn243WZR
+ rvG4SyQn5zP/u3cAXblo0Gz6YglCQysEvMmN6nISSu2VvGMv+01bXK1janpqsN9wDuvRYm9aW4B
+ +myt1WEM/fLRfOuHOUA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1011 spamscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170074
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1011 adultscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608170074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,234 +128,256 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Utkarsh Verma <uverma@linux.ibm.com>
 
-Extend the VOF client interface to support block device I/O through the
-sPAPR SCSI disk, which is needed by bootloaders such as GRUB during VOF
-disk boot.
+GRUB (grub-core/disk/ieee1275/ofdisk.c) calls "vscsi-report-luns" on
+any PAPR virtual SCSI controller ihandle to enumerate attached LUNs
+before attempting to boot from disk. Without this method VOF returns
+PROM_ERROR and GRUB cannot find vSCSI disks.
 
-Add BlockBackend and position tracking fields to OfInstance and use them
-in vof_seek(), vof_write() and vof_read() to extend their functionality
-to handle block devices as well.
+Add vof_find_vscsi_bus() to locate the SCSIBus from a v-scsi@<reg>
+instance path, and vof_vscsi_report_luns() to build the response table
+in the VOF firmware region (0..fw_size), which GRUB never claims.
 
-In vof_do_open(), detect FDT nodes named "disk@<srp-lun>" and resolve
-the SRP LUN encoding to the matching SCSIDevice/BlockBackend by scanning
-id/channel/lun.
-
-Add vof_seek() to implement the OpenFirmware "seek" client service,
-which was previously missing.
+The table layout and SRP LUN encoding follow SLOF (vio-vscsi.fs
+dev-generate-srplun) each entry is an 8-byte big-endian cell whose
+low 4 bytes hold a guest pointer to a null-terminated list of SRP LUNs
+for that target; GRUB reads the pointer at offset table + 4 + 8*i.
 
 AI-used-for: code
 Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
 ---
- hw/ppc/trace-events |   2 +
- hw/ppc/vof.c        | 116 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 117 insertions(+), 1 deletion(-)
+ hw/ppc/vof.c | 212 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 212 insertions(+)
 
-diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
-index dbdcfada26..a61398ecb2 100644
---- a/hw/ppc/trace-events
-+++ b/hw/ppc/trace-events
-@@ -78,6 +78,7 @@ vof_error_unknown_service(const char *service, int nargs, int nret) "\"%s\" args
- vof_error_unknown_method(const char *method) "\"%s\""
- vof_error_unknown_ihandle_close(uint32_t ih) "ih=0x%x"
- vof_error_unknown_path(const char *path) "\"%s\""
-+vof_error_seek(uint32_t ih) "ih=0x%x"
- vof_error_write(uint32_t ih) "ih=0x%x"
- vof_error_read(uint32_t ih) "ih=0x%x"
- vof_finddevice(const char *path, uint32_t ph) "\"%s\" => ph=0x%x"
-@@ -92,6 +93,7 @@ vof_interpret(const char *cmd, uint32_t param1, uint32_t param2, uint32_t ret, u
- vof_package_to_path(uint32_t ph, const char *tmp, int ret) "ph=0x%x => %s len=%d"
- vof_instance_to_path(uint32_t ih, uint32_t ph, const char *tmp, int ret) "ih=0x%x ph=0x%x => %s len=%d"
- vof_instance_to_package(uint32_t ih, uint32_t ph) "ih=0x%x => ph=0x%x"
-+vof_seek(uint32_t ih, uint64_t pos) "ih=0x%x pos=0x%"PRIx64
- vof_write(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
- vof_read(uint32_t ih, unsigned cb, const char *msg) "ih=0x%x [%u] \"%s\""
- vof_avail(uint64_t start, uint64_t end, uint64_t size) "0x%"PRIx64"..0x%"PRIx64" size=0x%"PRIx64
 diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index 45c197df9f..b1c574aabf 100644
+index d3b0df30e4..b1bf5b1af0 100644
 --- a/hw/ppc/vof.c
 +++ b/hw/ppc/vof.c
-@@ -11,6 +11,7 @@
- 
- #include CONFIG_DEVICES /* CONFIG_PSERIES */
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
- #include "qemu/timer.h"
- #include "qemu/range.h"
- #include "qemu/units.h"
-@@ -24,6 +25,8 @@
- #include "trace.h"
- 
- #include "hw/ppc/spapr_vio.h"
-+#include "hw/scsi/scsi.h"
-+#include "system/block-backend.h"
- #include <libfdt.h>
- 
- /*
-@@ -46,6 +49,8 @@ typedef struct {
- typedef struct {
-     char *path; /* the path used to open the instance */
-     uint32_t phandle;
-+    BlockBackend *blk;
-+    uint64_t pos; /* current position for seek operations */
-     void *vty;
- } OfInstance;
- 
-@@ -449,6 +454,7 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
- {
-     uint32_t ret = PROM_ERROR;
-     OfInstance *inst = NULL;
-+    const char *node_name;
- 
-     if (vof->of_instance_last == 0xFFFFFFFF) {
-         /* We do not recycle ihandles yet */
-@@ -461,10 +467,42 @@ static uint32_t vof_do_open(void *fdt, Vof *vof, int offset, const char *path)
-     ++vof->of_instance_last;
- 
-     inst->path = g_strdup(path);
-+    inst->blk = NULL;
-+    inst->pos = 0;
-     inst->vty = NULL;
- 
-+    node_name = fdt_get_name(fdt, offset, NULL);
-+
-+    if (node_name && strncmp(node_name, "disk@", 5) == 0) {
-+        uint64_t srp_lun;
-+        uint32_t id, channel, lun;
-+        BlockBackend *blk;
-+
-+        if (qemu_strtou64(node_name + 5, NULL, 16, &srp_lun) == 0) {
-+            id      = (srp_lun >> 56) & 0x3f;
-+            channel = (srp_lun >> 53) & 0x7;
-+            lun     = (srp_lun >> 48) & 0x1f;
-+
-+            for (blk = blk_next(NULL); blk; blk = blk_next(blk)) {
-+                DeviceState *attached = blk_get_attached_dev(blk);
-+                SCSIDevice *sdev;
-+
-+                if (!attached) {
-+                    continue;
-+                }
-+                sdev = (SCSIDevice *)object_dynamic_cast(OBJECT(attached),
-+                                                         TYPE_SCSI_DEVICE);
-+                if (sdev && sdev->id == (int)id &&
-+                    sdev->channel == (int)channel &&
-+                    sdev->lun == (int)lun) {
-+                    inst->blk = blk;
-+                    break;
-+                }
-+            }
-+        }
-+    }
-+
- #ifdef CONFIG_PSERIES
--    const char *node_name = fdt_get_name(fdt, offset, NULL);
-     if (node_name && strncmp(node_name, "vty", 3) == 0) {
-         uint8_t discard_buf[VOF_VTY_BUF_SIZE];
-         MachineState *ms = MACHINE(qdev_get_machine());
-@@ -601,6 +639,25 @@ static uint32_t vof_write(Vof *vof, uint32_t ihandle, uint32_t buf,
-         return PROM_ERROR;
-     }
- 
-+    if (inst->blk) {
-+        g_autofree uint8_t *blkbuf = g_malloc(len);
-+        int ret;
-+
-+        if (VOF_MEM_READ(buf, blkbuf, len) != MEMTX_OK) {
-+            trace_vof_error_write(ihandle);
-+            return PROM_ERROR;
-+        }
-+        ret = blk_pwrite(inst->blk, inst->pos, len, blkbuf, 0);
-+        if (ret < 0) {
-+            trace_vof_error_write(ihandle);
-+            return PROM_ERROR;
-+        }
-+        blk_flush(inst->blk);
-+        inst->pos += len;
-+        trace_vof_write(ihandle, len, "(disk)");
-+        return len;
-+    }
-+
- #ifdef CONFIG_PSERIES
-     if (inst->vty) {
-         uint32_t total_written = 0;
-@@ -646,6 +703,26 @@ static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
-         return PROM_ERROR;
-     }
- 
-+    if (inst->blk) {
-+        g_autofree uint8_t *tmp = g_malloc(len);
-+        int ret;
-+
-+        ret = blk_pread(inst->blk, inst->pos, len, tmp, 0);
-+        if (ret < 0) {
-+            trace_vof_error_read(ihandle);
-+            return PROM_ERROR;
-+        }
-+
-+        if (VOF_MEM_WRITE(buf, tmp, len) != MEMTX_OK) {
-+            trace_vof_error_read(ihandle);
-+            return PROM_ERROR;
-+        }
-+
-+        inst->pos += len;
-+        trace_vof_read(ihandle, len, "(disk)");
-+        return len;
-+    }
-+
- #ifdef CONFIG_PSERIES
-     if (inst->vty) {
-         uint8_t tmp[VOF_VTY_BUF_SIZE];
-@@ -675,6 +752,41 @@ static uint32_t vof_read(Vof *vof, uint32_t ihandle, uint32_t buf,
-     return 0;
+@@ -991,6 +991,198 @@ static void vof_instantiate_rtas(Error **errp)
+     error_setg(errp, "The firmware should have instantiated RTAS");
  }
  
-+static uint32_t vof_seek(Vof *vof, uint32_t ihandle, uint32_t pos_hi,
-+                         uint32_t pos_lo)
-+{
-+    OfInstance *inst = (OfInstance *)
-+        g_hash_table_lookup(vof->of_instances, GINT_TO_POINTER(ihandle));
-+    uint64_t pos = ((uint64_t)pos_hi << 32) | pos_lo;
++#ifdef CONFIG_PSERIES
++/* Combined (channel<<6)|id index space, matches SLOF dev-max-target. */
++#define VSCSI_MAX_TARGETS 512
 +
-+    if (!inst) {
-+        trace_vof_error_seek(ihandle);
-+        return PROM_ERROR;
++/*
++ * Build the vscsi-report-luns response in guest memory.
++ *
++ * Returns catch_result (0 = success).  On success, *nentries_out and
++ * *table_addr_out describe the result table written into the VOF firmware
++ * region (0..fw_size), which GRUB never claims.
++ *
++ * Table layout (big-endian, 8 bytes per entry):
++ *   [table_addr + 8*i + 0..3] : 0x00000000
++ *   [table_addr + 8*i + 4..7] : guest pointer to null-terminated SRP LUN list
++ *
++ * GRUB reads each pointer as: *(uint32_t *)(table + 4 + 8 * i)
++ *
++ * SRP LUN encoding (SLOF dev-generate-srplun):
++ *   srplun = (0x8000 | bus | target | lun) << 48
++ *   where bus    = (combined_target >> 1) & 0x70
++ *         target = (combined_target & 0x3f) << 8
++ *         combined_target = (channel << 6) | id
++ */
++static uint32_t vof_vscsi_report_luns(Vof *vof,
++                                       SCSIBus *sbus,
++                                       uint32_t *nentries_out,
++                                       uint32_t *table_addr_out)
++{
++    uint64_t *lun_lists[VSCSI_MAX_TARGETS];
++    int lun_counts[VSCSI_MAX_TARGETS];
++    uint32_t ptr_table_size;
++    uint32_t lun_data_size;
++    uint32_t total_size;
++    uint32_t base_addr;
++    uint32_t lun_data_base;
++    uint32_t lun_data_off;
++    uint32_t table_idx;
++    uint32_t table_addr;
++    BusChild *kid;
++    int nentries = 0;
++    int t;
++
++    memset(lun_lists, 0, sizeof(lun_lists));
++    memset(lun_counts, 0, sizeof(lun_counts));
++
++    QTAILQ_FOREACH(kid, &sbus->qbus.children, sibling) {
++        SCSIDevice *dev = SCSI_DEVICE(kid->child);
++        int combined_target;
++        uint64_t bus_field;
++        uint64_t target_field;
++        uint64_t lun_field;
++        uint64_t srplun;
++        int cnt;
++
++        /* combined_target = (channel << 6) | id, matching SLOF bus+target */
++        combined_target = ((dev->channel & 0x7) << 6) | (dev->id & 0x3f);
++        if (combined_target >= VSCSI_MAX_TARGETS) {
++            continue;
++        }
++
++        bus_field    = ((uint64_t)combined_target >> 1) & 0x70ULL;
++        target_field = ((uint64_t)combined_target & 0x3fULL) << 8;
++        lun_field    = (uint64_t)(dev->lun & 0x1f);
++        srplun = (0x8000ULL | bus_field | target_field | lun_field) << 48;
++
++        cnt = lun_counts[combined_target];
++        lun_lists[combined_target] = g_realloc(lun_lists[combined_target],
++                                               (cnt + 2) * sizeof(uint64_t));
++        lun_lists[combined_target][cnt]     = cpu_to_be64(srplun);
++        lun_lists[combined_target][cnt + 1] = 0;
++        lun_counts[combined_target]++;
++        if (cnt == 0) {
++            nentries++;
++        }
 +    }
 +
-+    if (inst->blk) {
-+        int64_t size = blk_getlength(inst->blk);
-+
-+        if (size < 0) {
-+            trace_vof_error_seek(ihandle);
-+            return PROM_ERROR;
-+        }
-+
-+        if (pos > (uint64_t)size) {
-+            trace_vof_error_seek(ihandle);
-+            return PROM_ERROR;
-+        }
-+
-+        inst->pos = pos;
-+        trace_vof_seek(ihandle, pos);
++    if (nentries == 0) {
++        *nentries_out   = 0;
++        *table_addr_out = 0;
 +        return 0;
 +    }
 +
-+    /* VTY and other devices don't support seek */
-+    trace_vof_error_seek(ihandle);
++    ptr_table_size = nentries * sizeof(uint64_t);
++    lun_data_size  = 0;
++    for (t = 0; t < VSCSI_MAX_TARGETS; t++) {
++        if (lun_lists[t]) {
++            lun_data_size += (lun_counts[t] + 1) * sizeof(uint64_t);
++        }
++    }
++    total_size = ptr_table_size + lun_data_size;
++
++    /*
++     * Place the table in the VOF firmware region (0..fw_size), which GRUB
++     * never claims.  Fit into the top of the first 4 KB page, 8-byte aligned.
++     */
++    if (total_size <= 0x1000 - (uint32_t)vof->fw_size) {
++        base_addr = (0x1000 - total_size) & ~7U;
++    } else {
++        base_addr = 0x800;
++    }
++
++    table_addr    = base_addr;
++    lun_data_base = base_addr + ptr_table_size;
++    lun_data_off  = 0;
++    table_idx     = 0;
++
++    for (t = 0; t < VSCSI_MAX_TARGETS; t++) {
++        uint32_t lun_buf_size;
++        uint32_t lun_buf_addr;
++        uint64_t cell_be64;
++
++        if (!lun_lists[t]) {
++            continue;
++        }
++
++        lun_buf_size = (lun_counts[t] + 1) * sizeof(uint64_t);
++        lun_buf_addr = lun_data_base + lun_data_off;
++
++        if (VOF_MEM_WRITE(lun_buf_addr, lun_lists[t], lun_buf_size)
++                != MEMTX_OK) {
++            goto write_err;
++        }
++
++        cell_be64 = cpu_to_be64((uint64_t)lun_buf_addr);
++        if (VOF_MEM_WRITE(table_addr + table_idx * sizeof(uint64_t),
++                          &cell_be64, sizeof(cell_be64)) != MEMTX_OK) {
++            goto write_err;
++        }
++
++        lun_data_off += lun_buf_size;
++        table_idx++;
++    }
++
++    *nentries_out   = table_idx;
++    *table_addr_out = table_addr;
++
++    for (t = 0; t < VSCSI_MAX_TARGETS; t++) {
++        g_free(lun_lists[t]);
++    }
++    return 0;
++
++write_err:
++    for (t = 0; t < VSCSI_MAX_TARGETS; t++) {
++        g_free(lun_lists[t]);
++    }
 +    return PROM_ERROR;
 +}
 +
- static void vof_claimed_dump(GArray *claimed)
- {
-     int i;
-@@ -985,6 +1097,8 @@ static uint32_t vof_client_handle(MachineState *ms, void *fdt, Vof *vof,
-         ret = vof_package_to_path(fdt, args[0], args[1], args[2]);
-     } else if (cmpserv("instance-to-path", 3, 1)) {
-         ret = vof_instance_to_path(fdt, vof, args[0], args[1], args[2]);
-+    } else if (cmpserv("seek", 3, 1)) {
-+        ret = vof_seek(vof, args[0], args[1], args[2]);
-     } else if (cmpserv("write", 3, 1)) {
-         ret = vof_write(vof, args[0], args[1], args[2]);
-     } else if (cmpserv("read", 3, 1)) {
++/*
++ * Return the SCSIBus for a v-scsi@<reg> path, or NULL if not found.
++ * Handles both "/vdevice/v-scsi@<reg>" and ".../v-scsi@<reg>/disk@..." paths.
++ */
++static SCSIBus *vof_find_vscsi_bus(MachineState *ms, const char *path)
++{
++    SpaprMachineState *spapr = SPAPR_MACHINE(ms);
++    const char *at;
++    const char *endptr;
++    unsigned long reg;
++    SpaprVioDevice *vdev;
++    BusState *bus;
++
++    if (!spapr || !spapr->vio_bus) {
++        return NULL;
++    }
++
++    at = strstr(path, "v-scsi@");
++    if (!at) {
++        return NULL;
++    }
++    at = strchr(at, '@');
++    if (!at) {
++        return NULL;
++    }
++
++    if (qemu_strtoul(at + 1, &endptr, 16, &reg) || endptr == at + 1) {
++        return NULL;
++    }
++
++    vdev = spapr_vio_find_by_reg(spapr->vio_bus, (uint32_t)reg);
++    if (!vdev) {
++        return NULL;
++    }
++
++    QLIST_FOREACH(bus, &vdev->qdev.child_bus, sibling) {
++        if (object_dynamic_cast(OBJECT(bus), TYPE_SCSI_BUS)) {
++            return SCSI_BUS(bus);
++        }
++    }
++    return NULL;
++}
++#endif /* CONFIG_PSERIES */
++
+ static uint32_t vof_call_method(MachineState *ms, Vof *vof, uint32_t methodaddr,
+                                 uint32_t ihandle, uint32_t param1,
+                                 uint32_t param2, uint32_t param3,
+@@ -1014,6 +1206,26 @@ static uint32_t vof_call_method(MachineState *ms, Vof *vof, uint32_t methodaddr,
+         goto trace_exit;
+     }
+ 
++#ifdef CONFIG_PSERIES
++    /* vscsi-report-luns: enumerate LUNs for GRUB */
++    if (strcmp(method, "vscsi-report-luns") == 0) {
++        SCSIBus *sbus = vof_find_vscsi_bus(ms, inst->path);
++
++        if (sbus) {
++            uint32_t nentries = 0, table_addr = 0;
++            ret = vof_vscsi_report_luns(vof, sbus, &nentries, &table_addr);
++            ret2[0] = nentries;
++            ret2[1] = table_addr;
++        } else {
++            ret = 1;
++            ret2[0] = 0;
++            ret2[1] = 0;
++        }
++        trace_vof_method(ihandle, method, param1, ret, ret2[0]);
++        goto trace_exit;
++    }
++#endif /* CONFIG_PSERIES */
++
+     if (strcmp(inst->path, "/") == 0) {
+         if (strcmp(method, "ibm,client-architecture-support") == 0) {
+             Object *vmo = object_dynamic_cast(OBJECT(ms), TYPE_VOF_MACHINE_IF);
 -- 
 2.54.0
 
