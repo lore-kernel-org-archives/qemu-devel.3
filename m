@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A741C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76325C5DF7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxg4-0003tH-WC; Mon, 17 Aug 2026 09:47:01 -0400
+	id 1wvxgl-0004Pn-PW; Mon, 17 Aug 2026 09:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvxfA-0003TR-Uj
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 09:46:04 -0400
+ id 1wvxfG-0003Tp-93
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 09:46:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvxf6-00020h-Os
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 09:46:04 -0400
+ id 1wvxfE-00022t-GT
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 09:46:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786974360;
+ s=mimecast20190719; t=1786974367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T5NQR7xkASRwvvKG7oH/qmnNxWNFEQLNk1IRM5AsHOQ=;
- b=PBGPLN+3+eAzusylBuuMhY5QwNKwYJMbTTuef1Fxh2pYhza7YbhweD7ZT6eeZjmlrF8axr
- SRdUsHWBzujvkpkKbbmKOnf4QP8yd2zRRRJWxdFhwbyPPJfFr8ZN3ZvCtyO43eRUKoeEJr
- 5WRJL++K067NzqFe7Ba1mxPROqsS0og=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I+OTC0ftwFJ9HNITLsopCas1KJp8rOV8DJe4NKhlpn0=;
+ b=GCCczurLmwExewGDj9pezsJ56FWKMNIq27dpKKtN9cfglVwBKfyC5uQDg95152mZooC0O8
+ SG1qY8su5fvGcr+u88THcFJwl+7ThTdVFKnCxZG5MfyRZvoS2lBwPkmGDg0wCAEJ0p/WnC
+ SDzu3iAUY/N7nEq6Rqaa9c9GIqa2CoE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-SRPAlZfNN6CLNvF0IdfDZA-1; Mon, 17 Aug 2026 09:45:54 -0400
-X-MC-Unique: SRPAlZfNN6CLNvF0IdfDZA-1
-X-Mimecast-MFC-AGG-ID: SRPAlZfNN6CLNvF0IdfDZA_1786974354
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-473ac08a6a4so2364657f8f.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 06:45:54 -0700 (PDT)
+ us-mta-312-KimEmbIKMEm6urqGlVbkkw-1; Mon, 17 Aug 2026 09:46:06 -0400
+X-MC-Unique: KimEmbIKMEm6urqGlVbkkw-1
+X-Mimecast-MFC-AGG-ID: KimEmbIKMEm6urqGlVbkkw_1786974365
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-482a5e9400eso444730f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 06:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786974353; x=1787579153; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786974365; x=1787579165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=T5NQR7xkASRwvvKG7oH/qmnNxWNFEQLNk1IRM5AsHOQ=;
- b=S93NPPJhKwfgpBs8MVnscfNPolABcIKQyzpXtl/wUPSyP3DeeMZG7KWqEhfmFOZdNX
- LHf7KhkJc8fU7bTgbUzX0YP5YewUEkbcvSeqAFIBE5HUMtip1U5KfSoUVQAGQ+zXcQU3
- Z8h9PRCg0Y7BcpOD7OszgNS2wHBMWLbr24ImwoiuteW4+zhg1Jxd61IEHTzB6rozo9zY
- Iz0OQW21Ryh2KBDmouUI7DJVg8RzXJaiKjrn9B8EUGWDCKSOSim2PkQvaR4W7Sm2TZvd
- QzzndilsKvAd2/6j7vJUo6w3bJ+HunbPlKS3RBNfPACJDQWpv0M6WfdD5bpabwMmmfkr
- b+bg==
+ bh=I+OTC0ftwFJ9HNITLsopCas1KJp8rOV8DJe4NKhlpn0=;
+ b=PWTEP1DwNcs++tRdCmloQyroXKFZdxSjaQ8lkh+8VxE2ViP7yvyC23FkE4mFMNMoPt
+ 5W0R/uFixjkXqR+4luLZXy64zrdZLip8/vQo7cnxgU8KXs7OjRK7hoJYsD/GVD7XyH6g
+ lA0QcOt3JvrTKpgVEVwNbWOo0tTZj6couOw/sEzirvblU3cS5zhB7eb0swDf92aD4nMR
+ IwWCSyqmLQYG5LAU+9AWqlMXgI3izSHTghpHGndNxJk1GNbmfPrF6WZJVDv2LslWeflB
+ 24Reqj8QNf+jUvOkLfp/2rruKxCAIh0ADnPbyaPqNb4aZzwKNCriJ2BFFu8c3nYiJK48
+ x7zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786974353; x=1787579153;
+ d=1e100.net; s=20251104; t=1786974365; x=1787579165;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=T5NQR7xkASRwvvKG7oH/qmnNxWNFEQLNk1IRM5AsHOQ=;
- b=n6M1z053q8EM2OVAo5Sj2dcwsN6n55G/u+zXW+Kh2meUkl0sd6LiHjMlDYozXGmTh6
- jHHVbhIp/T//F7y1CIPUY5QUV4cDee7pjwuxeD2KCFqurdb1ZxNv7NKJ57PAhBMe/mep
- twfTtp2XHBeK3jgF0eqStkk9CUzdXhMPEZbTBLRI+GccUnY6TGpTpsEw/pUsAj+TIb4Q
- aTxZzf4+Z+wCfqIRmtabr7guClyu27/jqldoR58rmdoFs2mUqlwWHVYxreVgr44+EMte
- lqf59eLiGEDtH1DQC6gerW7dokkauaFlSWbNNnkkbzCrfY+3zJAnJbR9JSmWNC7PlFeD
- Su0w==
-X-Gm-Message-State: AOJu0YycV766S1rFny5ensaptrxitd0gFn4LAjXhiH1w28Ltnem9PPwn
- RliEjoNLJp3eOC9B6OWXQudOlZRLQxzEk39lrYctELcl3QAaWatR33yAMhIwN7AqQ3dlkZcZUnc
- 8vfXwH1elvENBG1pSZOHQRVN2Ekfcu4Ze0dd0MkBRDCenx/Lyd4EGCRRjgGqyBwJPKQFU/5HOUf
- UUnrBXpKJYE2REKmtnI8GglPfghDcl341GUSzR/KwH
-X-Gm-Gg: AR+sD10sG8+rkRtqPTc8Vg62n8P+uETSoeaGHtnkICI9CU6eR0EUHmbUc5n7zzqn/2Q
- lF+RyJC3S5vqiZlMijhZzPN/HLWXsqReGtIrQaos0KXma91wcaH5+NWWRm5Rfd5regAjxlC9ueZ
- 5eMoGmdQhe0Up7XNuK48LH9PE84YtHU5qUj+edy/u8FJBYF6DhveA1IYcLO1p2EUMSc0HNrodrN
- EWlfTSr6HieeZxS1I9RnypCIBFyZB44V+Fwjt989yoDVegGGTCK6F/qm5qMecXjdp96h6K0FbjW
- xCdR0gBMsQcb/T5femsDkSLHQ0ZuE3/l+g16hA+8VU3HRsHqiYfRAMHnq0yaHSGQLondjzrbsIe
- /8u6BhcWPZVLXnoElIUFAMYL+ssgFTTaVNaLrKG6VJEygweX6fnIagsUzDAkVHqeOmArg8VRyti
- cIYKw=
-X-Received: by 2002:a05:600c:3acf:b0:499:728c:4704 with SMTP id
- 5b1f17b1804b1-49987979c41mr421874355e9.12.1786974352756; 
- Mon, 17 Aug 2026 06:45:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:3acf:b0:499:728c:4704 with SMTP id
- 5b1f17b1804b1-49987979c41mr421871205e9.12.1786974351136; 
- Mon, 17 Aug 2026 06:45:51 -0700 (PDT)
+ bh=I+OTC0ftwFJ9HNITLsopCas1KJp8rOV8DJe4NKhlpn0=;
+ b=ACeA4zPqvOo7RxGTKq5SuQdQ5QwhImck20c7YdAW13KrtqPndCs7pUctCvCDBgm5WE
+ 8EJmFD5QsKK3tsrYa3Ju095dtlNyWsFHVhgpeiDf0oSPp5i5nTYnGH/3VWVqO34Mtje1
+ psj2IVe5GFDLiW2VJ5zmjMxUjQTj/rPOCuN0zFQwxcNeRYVmPvAg978HOyO6bTUSrZmw
+ GeoKRcpwZ2cv5umd1Lbivm4Hhc95fvCCvMLKiZCpmDh9ypMVCTiPCSKOAtr0S4+NJ2sO
+ v0xlgbuaCPMUIRwndAPUhkBd5LY6FrkOCfCsfxFp2WbPIiNcaaQnTgwKyZNylxN6mxTk
+ i43A==
+X-Gm-Message-State: AOJu0YyrRWg5Ar5ICExg0FRPNE0Zj63oTu0zG62W4Yk/ZiquLkBtbtKj
+ qP/0MxwZFGzlgKhuHQB/Nm3y0m+cLdzXHlwY7Mfq+SA0ZWGyoFwB1kPRGuYSvCeZctV6rKD+kTj
+ sG5HYJRgeJ9K+aW9qBpzFnokkGM+JPNZh19cLuKvjlt3i5FBxvL5IPHrXMdJxiKLuX5CzgpOusQ
+ ZthNYACZhfGXe83ONi/b/Fh6M1GNHQV+s8fa59MNR0
+X-Gm-Gg: AR+sD124Hj/WJ5SgvnVQutQNr94sDLKcUdH99sUfD7/lsXVTOFngjWyzIPYM07zrJw2
+ Oh1Ow+bLvf+F0MDp4/+koKizSuFF0RnPldill25T8RKoImGKMm+DhZa9p+GcMpxeAUxtfSZgGgb
+ WBGxNIU6Oe5yxY1fH90zdfyfmjuuKO0DW4DLsEgA3T+qe9nTRAa0XCaKcFP3drpI1nqhbMgwFQk
+ NSU6WgyrM5+knGagkT7kTbtmcp6KfINnl+hsWvlXlKagvSfsRakHyYACwOulccYVnkADbZjW6h1
+ tAiHageV8slY7fV5OrNdfT6nzBOmWc17REEiGufxRdxdH3ZZUAqB+ddIz2oV99W3opgHp5MGCmy
+ nZpCbA5ZSg31L18im8lXUck+7uBya8a8UXIpFjMwWvPqocDThccir3mcUFPkzDe9X6hiAs41BDn
+ Gz7jg=
+X-Received: by 2002:a05:6000:480c:b0:47f:9283:1fbe with SMTP id
+ ffacd0b85a97d-482a8fde687mr759359f8f.0.1786974365052; 
+ Mon, 17 Aug 2026 06:46:05 -0700 (PDT)
+X-Received: by 2002:a05:6000:480c:b0:47f:9283:1fbe with SMTP id
+ ffacd0b85a97d-482a8fde687mr759238f8f.0.1786974364572; 
+ Mon, 17 Aug 2026 06:46:04 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999d11f073sm49114825e9.15.2026.08.17.06.45.49
+ ffacd0b85a97d-482a5a3158asm4218880f8f.7.2026.08.17.06.46.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 06:45:49 -0700 (PDT)
+ Mon, 17 Aug 2026 06:46:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 4/9] rust: switch to autogenerated meson rules
-Date: Mon, 17 Aug 2026 15:45:32 +0200
-Message-ID: <20260817134538.924615-5-pbonzini@redhat.com>
+Subject: [PATCH 9/9] rust: update Cargo dependencies
+Date: Mon, 17 Aug 2026 15:45:37 +0200
+Message-ID: <20260817134538.924615-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817134538.924615-1-pbonzini@redhat.com>
 References: <20260817134538.924615-1-pbonzini@redhat.com>
@@ -104,7 +104,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,996 +120,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Meson can automatically generate most of the build rules for
-subprojects, based on the contents of their Cargo.toml.  Handwritten
-snippets can be placed in meson/meson.build to replace build.rs.
-
-Disable Meson's use of the nightly-only option "--env-set".  It is
-buggy and anyway it should not be there in future version.
+Update dependencies that are not used by meson, only by Cargo.
+Several packages have now reached v1 and therefore updates may
+be less intrusive in the future.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                                   |  3 +-
- scripts/get-wraps-from-cargo-registry.py      |  6 ---
- subprojects/anyhow-1-rs.wrap                  |  3 ++
- subprojects/arbitrary-int-1-rs.wrap           |  1 -
- subprojects/attrs-0.2-rs.wrap                 |  1 -
- subprojects/bilge-0.2-rs.wrap                 |  1 -
- subprojects/bilge-impl-0.2-rs.wrap            |  1 -
- subprojects/either-1-rs.wrap                  |  1 -
- subprojects/foreign-0.3-rs.wrap               |  1 -
- subprojects/glib-sys-0.21-rs.wrap             |  1 -
- subprojects/itertools-0.11-rs.wrap            |  1 -
- subprojects/libc-0.2-rs.wrap                  |  3 ++
- .../packagefiles/anyhow-1-rs/meson.build      | 33 --------------
- .../anyhow-1-rs/meson/meson.build             |  9 ++++
- .../arbitrary-int-1-rs/meson.build            | 21 ---------
- .../packagefiles/attrs-0.2-rs/meson.build     | 33 --------------
- .../packagefiles/bilge-0.2-rs/meson.build     | 31 -------------
- .../bilge-impl-0.2-rs/meson.build             | 44 -------------------
- .../packagefiles/either-1-rs/meson.build      | 26 -----------
- .../packagefiles/foreign-0.3-rs/meson.build   | 26 -----------
- .../packagefiles/glib-sys-0.21-rs/meson.build | 33 --------------
- .../itertools-0.11-rs/meson.build             | 32 --------------
- .../packagefiles/libc-0.2-rs/meson.build      | 37 ----------------
- .../libc-0.2-rs/meson/meson.build             | 16 +++++++
- .../packagefiles/probe-0.5-rs/meson.build     | 22 ----------
- .../proc-macro-error-1-rs/meson.build         | 41 -----------------
- .../proc-macro-error-1-rs/meson/meson.build   |  3 ++
- .../proc-macro-error-attr-1-rs/meson.build    | 31 -------------
- .../packagefiles/proc-macro2-1-rs/meson.build | 35 ---------------
- .../proc-macro2-1-rs/meson/meson.build        |  6 +++
- .../packagefiles/quote-1-rs/meson.build       | 31 -------------
- subprojects/packagefiles/syn-2-rs/meson.build | 43 ------------------
- .../unicode-ident-1-rs/meson.build            | 22 ----------
- subprojects/probe-0.5-rs.wrap                 |  1 -
- subprojects/proc-macro-error-1-rs.wrap        |  2 +-
- subprojects/proc-macro-error-attr-1-rs.wrap   |  1 -
- subprojects/proc-macro2-1-rs.wrap             |  2 +-
- subprojects/quote-1-rs.wrap                   |  1 -
- subprojects/syn-2-rs.wrap                     |  1 -
- subprojects/unicode-ident-1-rs.wrap           |  1 -
- 40 files changed, 44 insertions(+), 563 deletions(-)
- delete mode 100644 subprojects/packagefiles/anyhow-1-rs/meson.build
- create mode 100644 subprojects/packagefiles/anyhow-1-rs/meson/meson.build
- delete mode 100644 subprojects/packagefiles/arbitrary-int-1-rs/meson.build
- delete mode 100644 subprojects/packagefiles/attrs-0.2-rs/meson.build
- delete mode 100644 subprojects/packagefiles/bilge-0.2-rs/meson.build
- delete mode 100644 subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
- delete mode 100644 subprojects/packagefiles/either-1-rs/meson.build
- delete mode 100644 subprojects/packagefiles/foreign-0.3-rs/meson.build
- delete mode 100644 subprojects/packagefiles/glib-sys-0.21-rs/meson.build
- delete mode 100644 subprojects/packagefiles/itertools-0.11-rs/meson.build
- delete mode 100644 subprojects/packagefiles/libc-0.2-rs/meson.build
- create mode 100644 subprojects/packagefiles/libc-0.2-rs/meson/meson.build
- delete mode 100644 subprojects/packagefiles/probe-0.5-rs/meson.build
- delete mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson.build
- create mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
- delete mode 100644 subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
- delete mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson.build
- create mode 100644 subprojects/packagefiles/proc-macro2-1-rs/meson/meson.build
- delete mode 100644 subprojects/packagefiles/quote-1-rs/meson.build
- delete mode 100644 subprojects/packagefiles/syn-2-rs/meson.build
- delete mode 100644 subprojects/packagefiles/unicode-ident-1-rs/meson.build
+ Cargo.lock | 85 +++++++++++++++++++++++-------------------------------
+ 1 file changed, 36 insertions(+), 49 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 2a289960ee8..2139dfc7ce8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4,7 +4,8 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
+diff --git a/Cargo.lock b/Cargo.lock
+index c94c2386d94..66f684098d3 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -136,9 +136,9 @@ dependencies = [
  
-                           # build.rust_std breaks with older meson, but Rust does not
-                           # support old meson anyway
--                          (meson.version().version_compare('>= 1.9') ? ['rust_std=2021', 'build.rust_std=2021'] : []),
-+                          (meson.version().version_compare('>= 1.9') ? ['rust_std=2021', 'build.rust_std=2021',
-+                                                                        'rust_nightly=disabled'] : []),
+ [[package]]
+ name = "hashbrown"
+-version = "0.16.0"
++version = "0.17.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5419bdc4f6a9207fbeba6d11b604d481addf78ecd10c11ad51e76c2f6482748d"
++checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
  
-         version: files('VERSION'))
+ [[package]]
+ name = "heck"
+@@ -189,9 +189,9 @@ dependencies = [
  
-diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps-from-cargo-registry.py
-index 31eed5c2dd4..78b6f1f7ae2 100755
---- a/scripts/get-wraps-from-cargo-registry.py
-+++ b/scripts/get-wraps-from-cargo-registry.py
-@@ -116,12 +116,6 @@ def update_subproject(self, wrap_file: str, registry_namever: str) -> None:
-             patch_dir = config["wrap-file"]["patch_directory"]
-             patch_dir = os.path.join("packagefiles", patch_dir)
-             _, ver = registry_namever.rsplit("-", 1)
--            subprocess.run(
--                ["meson", "rewrite", "kwargs", "set", "project", "/", "version", ver],
--                cwd=patch_dir,
--                env=env,
--                check=True,
--            )
+ [[package]]
+ name = "indexmap"
+-version = "2.11.4"
++version = "2.14.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4b0f83760fb341a774ed326568e19f5a863af4a952def8c39f9ab92fd95b88e5"
++checksum = "d466e9454f08e4a911e14806c24e16fba1b4c121d1ea474396f396069cf949d9"
+ dependencies = [
+  "equivalent",
+  "hashbrown",
+@@ -212,12 +212,6 @@ version = "0.2.162"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398"
  
-         subprocess.run(
-             ["meson", "subprojects", "download", wrap_name],
-diff --git a/subprojects/anyhow-1-rs.wrap b/subprojects/anyhow-1-rs.wrap
-index fb4603e74c8..dbb28f4133b 100644
---- a/subprojects/anyhow-1-rs.wrap
-+++ b/subprojects/anyhow-1-rs.wrap
-@@ -5,3 +5,6 @@ source_filename = anyhow-1.0.98.tar.gz
- source_hash = e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487
- method = cargo
- patch_directory = anyhow-1-rs
+-[[package]]
+-name = "memchr"
+-version = "2.7.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
+-
+ [[package]]
+ name = "migration"
+ version = "0.1.0"
+@@ -342,29 +336,20 @@ dependencies = [
+  "proc-macro2",
+ ]
+ 
+-[[package]]
+-name = "serde"
+-version = "1.0.226"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0dca6411025b24b60bfa7ec1fe1f8e710ac09782dca409ee8237ba74b51295fd"
+-dependencies = [
+- "serde_core",
+-]
+-
+ [[package]]
+ name = "serde_core"
+-version = "1.0.226"
++version = "1.0.228"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ba2ba63999edb9dac981fb34b3e5c0d111a69b0924e253ed29d83f7c99e966a4"
++checksum = "41d385c7d4ca58e59fc732af25c3983b67ac852c1a25000afe1175de458b67ad"
+ dependencies = [
+  "serde_derive",
+ ]
+ 
+ [[package]]
+ name = "serde_derive"
+-version = "1.0.226"
++version = "1.0.228"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8db53ae22f34573731bafa1db20f04027b2d25e02d8205921b569171699cdb33"
++checksum = "d540f220d3187173da220f885ab66608367b6574e925011a9353e4badda91d79"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -373,18 +358,18 @@ dependencies = [
+ 
+ [[package]]
+ name = "serde_spanned"
+-version = "0.6.9"
++version = "1.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bf41e0cfaf7226dca15e8197172c295a782857fcb97fad1808a166870dee75a3"
++checksum = "6662b5879511e06e8999a8a235d848113e942c9124f211511b16466ee2995f26"
+ dependencies = [
+- "serde",
++ "serde_core",
+ ]
+ 
+ [[package]]
+ name = "smallvec"
+-version = "1.15.1"
++version = "1.15.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
++checksum = "8ed6a63f02c8539c91a8685a86f4099661ba3da017932f6ebbea6de3f0fa7c90"
+ 
+ [[package]]
+ name = "syn"
+@@ -413,9 +398,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "system-deps"
+-version = "7.0.5"
++version = "7.0.8"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e4be53aa0cba896d2dc615bd42bbc130acdcffa239e0a2d965ea5b3b2a86ffdb"
++checksum = "396a35feb67335377e0251fcbc1092fc85c484bd4e3a7a54319399da127796e7"
+ dependencies = [
+  "cfg-expr",
+  "heck",
+@@ -458,38 +443,43 @@ dependencies = [
+ 
+ [[package]]
+ name = "toml"
+-version = "0.8.23"
++version = "1.1.3+spec-1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc1beb996b9d83529a9e75c17a1686767d148d70663143c7854d8b4a09ced362"
++checksum = "53c96ecdfa941c8fc4fcaed14f99ada8ebed502eef533015095a07e3301d4c3c"
+ dependencies = [
+- "serde",
++ "indexmap",
++ "serde_core",
+  "serde_spanned",
+  "toml_datetime",
+- "toml_edit",
++ "toml_parser",
++ "toml_writer",
++ "winnow",
+ ]
+ 
+ [[package]]
+ name = "toml_datetime"
+-version = "0.6.11"
++version = "1.1.1+spec-1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "22cddaf88f4fbc13c51aebbf5f8eceb5c7c5a9da2ac40a13519eb5b0a0e8f11c"
++checksum = "3165f65f62e28e0115a00b2ebdd37eb6f3b641855f9d636d3cd4103767159ad7"
+ dependencies = [
+- "serde",
++ "serde_core",
+ ]
+ 
+ [[package]]
+-name = "toml_edit"
+-version = "0.22.27"
++name = "toml_parser"
++version = "1.1.2+spec-1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "41fe8c660ae4257887cf66394862d21dbca4a6ddd26f04a3560410406a2f819a"
++checksum = "a2abe9b86193656635d2411dc43050282ca48aa31c2451210f4202550afb7526"
+ dependencies = [
+- "indexmap",
+- "serde",
+- "serde_spanned",
+- "toml_datetime",
+  "winnow",
+ ]
+ 
++[[package]]
++name = "toml_writer"
++version = "1.1.2+spec-1.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "7d56353a2a665ad0f41a421187180aab746c8c325620617ad883a99a1cbe66d2"
 +
-+# bump this version number on every change to meson.build or the patches:
-+# v1
-diff --git a/subprojects/arbitrary-int-1-rs.wrap b/subprojects/arbitrary-int-1-rs.wrap
-index f8d7c68da64..5cf4b11e4a3 100644
---- a/subprojects/arbitrary-int-1-rs.wrap
-+++ b/subprojects/arbitrary-int-1-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/arbitrary-int/1.2.7/download
- source_filename = arbitrary-int-1.2.7.tar.gz
- source_hash = c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d
- method = cargo
--patch_directory = arbitrary-int-1-rs
+ [[package]]
+ name = "trace"
+ version = "0.1.0"
+@@ -537,9 +527,6 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
  
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/attrs-0.2-rs.wrap b/subprojects/attrs-0.2-rs.wrap
-index 4ff4c424e6b..fef89ea9368 100644
---- a/subprojects/attrs-0.2-rs.wrap
-+++ b/subprojects/attrs-0.2-rs.wrap
-@@ -4,4 +4,3 @@ source_url = https://crates.io/api/v1/crates/attrs/0.2.9/download
- source_filename = attrs-0.2.9.tar.gz
- source_hash = 2a207d40f43de65285f3de0509bb6cb16bc46098864fce957122bbacce327e5f
- method = cargo
--patch_directory = attrs-0.2-rs
-diff --git a/subprojects/bilge-0.2-rs.wrap b/subprojects/bilge-0.2-rs.wrap
-index cb202cfd9fe..cff10f6710d 100644
---- a/subprojects/bilge-0.2-rs.wrap
-+++ b/subprojects/bilge-0.2-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/bilge/0.2.0/download
- source_filename = bilge-0.2.0.tar.gz
- source_hash = dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57
- method = cargo
--patch_directory = bilge-0.2-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
-index b3dbfafb265..f8963eba73f 100644
---- a/subprojects/bilge-impl-0.2-rs.wrap
-+++ b/subprojects/bilge-impl-0.2-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
- source_filename = bilge-impl-0.2.0.tar.gz
- source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
- method = cargo
--patch_directory = bilge-impl-0.2-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/either-1-rs.wrap b/subprojects/either-1-rs.wrap
-index 1c74a95645f..51c97df1531 100644
---- a/subprojects/either-1-rs.wrap
-+++ b/subprojects/either-1-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/either/1.12.0/download
- source_filename = either-1.12.0.tar.gz
- source_hash = 3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b
- method = cargo
--patch_directory = either-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/foreign-0.3-rs.wrap b/subprojects/foreign-0.3-rs.wrap
-index a5fec6c09df..95d450397ee 100644
---- a/subprojects/foreign-0.3-rs.wrap
-+++ b/subprojects/foreign-0.3-rs.wrap
-@@ -4,4 +4,3 @@ source_url = https://crates.io/api/v1/crates/foreign/0.3.1/download
- source_filename = foreign-0.3.1.tar.gz
- source_hash = 17ca1b5be8c9d320daf386f1809c7acc0cb09accbae795c2001953fa50585846
- method = cargo
--patch_directory = foreign-0.3-rs
-diff --git a/subprojects/glib-sys-0.21-rs.wrap b/subprojects/glib-sys-0.21-rs.wrap
-index f4e1514af57..ea4d5f66a58 100644
---- a/subprojects/glib-sys-0.21-rs.wrap
-+++ b/subprojects/glib-sys-0.21-rs.wrap
-@@ -4,4 +4,3 @@ source_url = https://crates.io/api/v1/crates/glib-sys/0.21.2/download
- source_filename = glib-sys-0.21.2.tar.gz
- source_hash = d09d3d0fddf7239521674e57b0465dfbd844632fec54f059f7f56112e3f927e1
- method = cargo
--patch_directory = glib-sys-0.21-rs
-diff --git a/subprojects/itertools-0.11-rs.wrap b/subprojects/itertools-0.11-rs.wrap
-index 6fe89d17caa..e123ab389a2 100644
---- a/subprojects/itertools-0.11-rs.wrap
-+++ b/subprojects/itertools-0.11-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/itertools/0.11.0/download
- source_filename = itertools-0.11.0.tar.gz
- source_hash = b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57
- method = cargo
--patch_directory = itertools-0.11-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/libc-0.2-rs.wrap b/subprojects/libc-0.2-rs.wrap
-index 488330178ed..6e225579795 100644
---- a/subprojects/libc-0.2-rs.wrap
-+++ b/subprojects/libc-0.2-rs.wrap
-@@ -5,3 +5,6 @@ source_filename = libc-0.2.162.tar.gz
- source_hash = 18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398
- method = cargo
- patch_directory = libc-0.2-rs
-+
-+# bump this version number on every change to meson.build or the patches:
-+# v1
-diff --git a/subprojects/packagefiles/anyhow-1-rs/meson.build b/subprojects/packagefiles/anyhow-1-rs/meson.build
-deleted file mode 100644
-index 348bab98b9f..00000000000
---- a/subprojects/packagefiles/anyhow-1-rs/meson.build
-+++ /dev/null
-@@ -1,33 +0,0 @@
--project('anyhow-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.0.98',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--rustc = meson.get_compiler('rust')
--
--rust_args = ['--cap-lints', 'allow']
--rust_args += ['--cfg', 'feature="std"']
--if rustc.version().version_compare('<1.65.0')
--  error('rustc version ' + rustc.version() + ' is unsupported. Please upgrade to at least 1.65.0')
--endif
--rust_args += [ '--cfg', 'std_backtrace' ] # >= 1.65.0
--if rustc.version().version_compare('<1.81.0')
--  rust_args += [ '--cfg', 'anyhow_no_core_error' ]
--endif
--
--_anyhow_rs = static_library(
--  'anyhow',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2018', 'build.rust_std=2018'],
--  rust_abi: 'rust',
--  rust_args: rust_args,
--  dependencies: [],
--)
--
--anyhow_dep = declare_dependency(
--  link_with: _anyhow_rs,
--)
--
--meson.override_dependency('anyhow-1-rs', anyhow_dep)
-diff --git a/subprojects/packagefiles/anyhow-1-rs/meson/meson.build b/subprojects/packagefiles/anyhow-1-rs/meson/meson.build
-new file mode 100644
-index 00000000000..91c46539c31
---- /dev/null
-+++ b/subprojects/packagefiles/anyhow-1-rs/meson/meson.build
-@@ -0,0 +1,9 @@
-+rustc = meson.get_compiler('rust')
-+
-+if rustc.version().version_compare('<1.65.0')
-+  error('rustc version ' + rustc.version() + ' is unsupported. Please upgrade to at least 1.65.0')
-+endif
-+extra_args += [ '--cfg', 'std_backtrace' ] # >= 1.65.0
-+if rustc.version().version_compare('<1.81.0')
-+  extra_args += [ '--cfg', 'anyhow_no_core_error' ]
-+endif
-diff --git a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build b/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-deleted file mode 100644
-index 00733d1faab..00000000000
---- a/subprojects/packagefiles/arbitrary-int-1-rs/meson.build
-+++ /dev/null
-@@ -1,21 +0,0 @@
--project('arbitrary-int-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.2.7',
--  license: 'MIT',
--  default_options: [])
--
--_arbitrary_int_rs = static_library(
--  'arbitrary_int',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_args: ['--cap-lints', 'allow'],
--  rust_abi: 'rust',
--  dependencies: [],
--)
--
--arbitrary_int_dep = declare_dependency(
--  link_with: _arbitrary_int_rs,
--)
--
--meson.override_dependency('arbitrary-int-1-rs', arbitrary_int_dep)
-diff --git a/subprojects/packagefiles/attrs-0.2-rs/meson.build b/subprojects/packagefiles/attrs-0.2-rs/meson.build
-deleted file mode 100644
-index ee575476cb2..00000000000
---- a/subprojects/packagefiles/attrs-0.2-rs/meson.build
-+++ /dev/null
-@@ -1,33 +0,0 @@
--project('attrs-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.2.9',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('proc-macro2-1-rs', required: true)
--subproject('syn-2-rs', required: true)
--
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--syn_dep = dependency('syn-2-rs', native: true)
--
--_attrs_rs = static_library(
--  'attrs',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--  ],
--  dependencies: [
--    proc_macro2_dep,
--    syn_dep,
--  ],
--  native: true,
--)
--
--attrs_dep = declare_dependency(
--  link_with: _attrs_rs,
--)
--
--meson.override_dependency('attrs-0.2-rs', attrs_dep, native: true)
-diff --git a/subprojects/packagefiles/bilge-0.2-rs/meson.build b/subprojects/packagefiles/bilge-0.2-rs/meson.build
-deleted file mode 100644
-index ce13d0fe80f..00000000000
---- a/subprojects/packagefiles/bilge-0.2-rs/meson.build
-+++ /dev/null
-@@ -1,31 +0,0 @@
--project(
--  'bilge-0.2-rs',
--  'rust',
--  meson_version: '>=1.5.0',
--  version : '0.2.0',
--  license : 'MIT or Apache-2.0',
--)
--
--subproject('arbitrary-int-1-rs', required: true)
--subproject('bilge-impl-0.2-rs', required: true)
--
--arbitrary_int_dep = dependency('arbitrary-int-1-rs')
--bilge_impl_dep = dependency('bilge-impl-0.2-rs')
--
--lib = static_library(
--  'bilge',
--  'src/lib.rs',
--  override_options : ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi : 'rust',
--  rust_args: ['--cap-lints', 'allow'],
--  dependencies: [
--    arbitrary_int_dep,
--    bilge_impl_dep,
--  ],
--)
--
--bilge_dep = declare_dependency(
--  link_with : [lib],
--)
--
--meson.override_dependency('bilge-0.2-rs', bilge_dep)
-diff --git a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build b/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-deleted file mode 100644
-index 04617b875c5..00000000000
---- a/subprojects/packagefiles/bilge-impl-0.2-rs/meson.build
-+++ /dev/null
-@@ -1,44 +0,0 @@
--project('bilge-impl-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.2.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('itertools-0.11-rs', required: true)
--subproject('proc-macro-error-attr-1-rs', required: true)
--subproject('proc-macro-error-1-rs', required: true)
--subproject('quote-1-rs', required: true)
--subproject('syn-2-rs', required: true)
--subproject('proc-macro2-1-rs', required: true)
--
--itertools_dep = dependency('itertools-0.11-rs', native: true)
--proc_macro_error_attr_dep = dependency('proc-macro-error-attr-1-rs', native: true)
--proc_macro_error_dep = dependency('proc-macro-error-1-rs', native: true)
--quote_dep = dependency('quote-1-rs', native: true)
--syn_dep = dependency('syn-2-rs', native: true)
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--
--rust = import('rust')
--
--_bilge_impl_rs = rust.proc_macro(
--  'bilge_impl',
--  files('src/lib.rs'),
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_args: [
--    '--cap-lints', 'allow',
--  ],
--  dependencies: [
--    itertools_dep,
--    proc_macro_error_attr_dep,
--    proc_macro_error_dep,
--    quote_dep,
--    syn_dep,
--    proc_macro2_dep,
--  ],
--)
--
--bilge_impl_dep = declare_dependency(
--  link_with: _bilge_impl_rs,
--)
--
--meson.override_dependency('bilge-impl-0.2-rs', bilge_impl_dep)
-diff --git a/subprojects/packagefiles/either-1-rs/meson.build b/subprojects/packagefiles/either-1-rs/meson.build
-deleted file mode 100644
-index 04c96cc5fb3..00000000000
---- a/subprojects/packagefiles/either-1-rs/meson.build
-+++ /dev/null
-@@ -1,26 +0,0 @@
--project('either-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.12.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--_either_rs = static_library(
--  'either',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2018', 'build.rust_std=2018'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="use_std"',
--    '--cfg', 'feature="use_alloc"',
--  ],
--  dependencies: [],
--  native: true,
--)
--
--either_dep = declare_dependency(
--  link_with: _either_rs,
--)
--
--meson.override_dependency('either-1-rs', either_dep, native: true)
-diff --git a/subprojects/packagefiles/foreign-0.3-rs/meson.build b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-deleted file mode 100644
-index 0901c02c527..00000000000
---- a/subprojects/packagefiles/foreign-0.3-rs/meson.build
-+++ /dev/null
-@@ -1,26 +0,0 @@
--project('foreign-0.3-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.2.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('libc-0.2-rs', required: true)
--libc_rs = dependency('libc-0.2-rs')
--
--_foreign_rs = static_library(
--  'foreign',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--  ],
--  dependencies: [libc_rs],
--)
--
--foreign_dep = declare_dependency(
--  link_with: _foreign_rs,
--)
--
--meson.override_dependency('foreign-0.3-rs', foreign_dep)
-diff --git a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build b/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-deleted file mode 100644
-index 8c5483311ed..00000000000
---- a/subprojects/packagefiles/glib-sys-0.21-rs/meson.build
-+++ /dev/null
-@@ -1,33 +0,0 @@
--project('glib-sys-0.21-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.21.2',
--  license: 'MIT',
--  default_options: [])
--
--subproject('libc-0.2-rs', required: true)
--libc_rs = dependency('libc-0.2-rs')
--
--_glib_sys_rs = static_library(
--  'glib_sys',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="v2_66"',
--    '--cfg', 'feature="v2_64"',
--    '--cfg', 'feature="v2_62"',
--    '--cfg', 'feature="v2_60"',
--    '--cfg', 'feature="v2_58"',
--  ],
--  # should also link with glib; don't bother doing it here since all
--  # QEMU targets have it
--  dependencies: [libc_rs],
--)
--
--glib_sys_dep = declare_dependency(
--  link_with: _glib_sys_rs,
--)
--
--meson.override_dependency('glib-sys-0.21-rs', glib_sys_dep)
-diff --git a/subprojects/packagefiles/itertools-0.11-rs/meson.build b/subprojects/packagefiles/itertools-0.11-rs/meson.build
-deleted file mode 100644
-index 2a3fbe9ee5a..00000000000
---- a/subprojects/packagefiles/itertools-0.11-rs/meson.build
-+++ /dev/null
-@@ -1,32 +0,0 @@
--project('itertools-0.11-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.11.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('either-1-rs', required: true)
--
--either_dep = dependency('either-1-rs', native: true)
--
--_itertools_rs = static_library(
--  'itertools',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2018', 'build.rust_std=2018'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="use_std"',
--    '--cfg', 'feature="use_alloc"',
--  ],
--  dependencies: [
--    either_dep,
--  ],
--  native: true,
--)
--
--itertools_dep = declare_dependency(
--  link_with: _itertools_rs,
--)
--
--meson.override_dependency('itertools-0.11-rs', itertools_dep, native: true)
-diff --git a/subprojects/packagefiles/libc-0.2-rs/meson.build b/subprojects/packagefiles/libc-0.2-rs/meson.build
-deleted file mode 100644
-index ac4f80dba98..00000000000
---- a/subprojects/packagefiles/libc-0.2-rs/meson.build
-+++ /dev/null
-@@ -1,37 +0,0 @@
--project('libc-0.2-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.2.162',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--_libc_rs = static_library(
--  'libc',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2015', 'build.rust_std=2015'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'freebsd11',
--    '--cfg', 'libc_priv_mod_use',
--    '--cfg', 'libc_union',
--    '--cfg', 'libc_const_size_of',
--    '--cfg', 'libc_align',
--    '--cfg', 'libc_int128',
--    '--cfg', 'libc_core_cvoid',
--    '--cfg', 'libc_packedN',
--    '--cfg', 'libc_cfg_target_vendor',
--    '--cfg', 'libc_non_exhaustive',
--    '--cfg', 'libc_long_array',
--    '--cfg', 'libc_ptr_addr_of',
--    '--cfg', 'libc_underscore_const_names',
--    '--cfg', 'libc_const_extern_fn',
--  ],
--  dependencies: [],
--)
--
--libc_dep = declare_dependency(
--  link_with: _libc_rs,
--)
--
--meson.override_dependency('libc-0.2-rs', libc_dep)
-diff --git a/subprojects/packagefiles/libc-0.2-rs/meson/meson.build b/subprojects/packagefiles/libc-0.2-rs/meson/meson.build
-new file mode 100644
-index 00000000000..db9480ada1c
---- /dev/null
-+++ b/subprojects/packagefiles/libc-0.2-rs/meson/meson.build
-@@ -0,0 +1,16 @@
-+extra_args += [
-+    '--cfg', 'freebsd11',
-+    '--cfg', 'libc_priv_mod_use',
-+    '--cfg', 'libc_union',
-+    '--cfg', 'libc_const_size_of',
-+    '--cfg', 'libc_align',
-+    '--cfg', 'libc_int128',
-+    '--cfg', 'libc_core_cvoid',
-+    '--cfg', 'libc_packedN',
-+    '--cfg', 'libc_cfg_target_vendor',
-+    '--cfg', 'libc_non_exhaustive',
-+    '--cfg', 'libc_long_array',
-+    '--cfg', 'libc_ptr_addr_of',
-+    '--cfg', 'libc_underscore_const_names',
-+    '--cfg', 'libc_const_extern_fn',
-+]
-diff --git a/subprojects/packagefiles/probe-0.5-rs/meson.build b/subprojects/packagefiles/probe-0.5-rs/meson.build
-deleted file mode 100644
-index e6ea69533b7..00000000000
---- a/subprojects/packagefiles/probe-0.5-rs/meson.build
-+++ /dev/null
-@@ -1,22 +0,0 @@
--project('probe-0.5-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '0.5.2',
--  license: 'Apache-2.0 OR MIT',
--  default_options: [])
--
--_probe_rs = static_library(
--  'probe',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--  ],
--)
--
--probe_deps = declare_dependency(
--  link_with: _probe_rs,
--)
--
--meson.override_dependency('probe-0.5-rs', probe_deps)
-diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-deleted file mode 100644
-index 8ba558e1330..00000000000
---- a/subprojects/packagefiles/proc-macro-error-1-rs/meson.build
-+++ /dev/null
-@@ -1,41 +0,0 @@
--project('proc-macro-error-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.0.4',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('proc-macro-error-attr-1-rs', required: true)
--subproject('quote-1-rs', required: true)
--subproject('syn-2-rs', required: true)
--subproject('proc-macro2-1-rs', required: true)
--
--proc_macro_error_attr_dep = dependency('proc-macro-error-attr-1-rs', native: true)
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--quote_dep = dependency('quote-1-rs', native: true)
--syn_dep = dependency('syn-2-rs', native: true)
--
--_proc_macro_error_rs = static_library(
--  'proc_macro_error',
--  files('src/lib.rs'),
--  override_options: ['rust_std=2018', 'build.rust_std=2018'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'use_fallback',
--    '--cfg', 'feature="syn-error"',
--    '-A', 'non_fmt_panics'
--  ],
--  dependencies: [
--    proc_macro_error_attr_dep,
--    proc_macro2_dep,
--    quote_dep,
--    syn_dep,
--  ],
--  native: true,
--)
--
--proc_macro_error_dep = declare_dependency(
--  link_with: _proc_macro_error_rs,
--)
--
--meson.override_dependency('proc-macro-error-1-rs', proc_macro_error_dep, native: true)
-diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
-new file mode 100644
-index 00000000000..52a244d2b16
---- /dev/null
-+++ b/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
-@@ -0,0 +1,3 @@
-+extra_args = [
-+    '--cfg', 'use_fallback',
-+]
-diff --git a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build b/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-deleted file mode 100644
-index a85d7c07143..00000000000
---- a/subprojects/packagefiles/proc-macro-error-attr-1-rs/meson.build
-+++ /dev/null
-@@ -1,31 +0,0 @@
--project('proc-macro-error-attr-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.12.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('proc-macro2-1-rs', required: true)
--subproject('quote-1-rs', required: true)
--
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--quote_dep = dependency('quote-1-rs', native: true)
--
--rust = import('rust')
--_proc_macro_error_attr_rs = rust.proc_macro(
--  'proc_macro_error_attr',
--  files('src/lib.rs'),
--  override_options: ['rust_std=2018', 'build.rust_std=2018'],
--  rust_args: [
--    '--cap-lints', 'allow',
--  ],
--  dependencies: [
--    proc_macro2_dep,
--    quote_dep,
--  ],
--)
--
--proc_macro_error_attr_dep = declare_dependency(
--  link_with: _proc_macro_error_attr_rs,
--)
--
--meson.override_dependency('proc-macro-error-attr-1-rs', proc_macro_error_attr_dep, native: true)
-diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-deleted file mode 100644
-index ba7de070292..00000000000
---- a/subprojects/packagefiles/proc-macro2-1-rs/meson.build
-+++ /dev/null
-@@ -1,35 +0,0 @@
--project('proc-macro2-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.0.95',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('unicode-ident-1-rs', required: true)
--
--unicode_ident_dep = dependency('unicode-ident-1-rs', native: true)
--
--_proc_macro2_rs = static_library(
--  'proc_macro2',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="proc-macro"',
--    '--cfg', 'no_literal_byte_character',
--    '--cfg', 'no_literal_c_string',
--    '--cfg', 'no_source_text',
--    '--cfg', 'wrap_proc_macro',
--  ],
--  dependencies: [
--    unicode_ident_dep,
--  ],
--  native: true,
--)
--
--proc_macro2_dep = declare_dependency(
--  link_with: _proc_macro2_rs,
--)
--
--meson.override_dependency('proc-macro2-1-rs', proc_macro2_dep, native: true)
-diff --git a/subprojects/packagefiles/proc-macro2-1-rs/meson/meson.build b/subprojects/packagefiles/proc-macro2-1-rs/meson/meson.build
-new file mode 100644
-index 00000000000..09712bb0b0e
---- /dev/null
-+++ b/subprojects/packagefiles/proc-macro2-1-rs/meson/meson.build
-@@ -0,0 +1,6 @@
-+extra_args = [
-+    '--cfg', 'no_literal_byte_character',
-+    '--cfg', 'no_literal_c_string',
-+    '--cfg', 'no_source_text',
-+    '--cfg', 'wrap_proc_macro',
-+]
-diff --git a/subprojects/packagefiles/quote-1-rs/meson.build b/subprojects/packagefiles/quote-1-rs/meson.build
-deleted file mode 100644
-index bf41fad99bb..00000000000
---- a/subprojects/packagefiles/quote-1-rs/meson.build
-+++ /dev/null
-@@ -1,31 +0,0 @@
--project('quote-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.12.0',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('proc-macro2-1-rs', required: true)
--
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--
--_quote_rs = static_library(
--  'quote',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="proc-macro"',
--  ],
--  dependencies: [
--    proc_macro2_dep,
--  ],
--  native: true,
--)
--
--quote_dep = declare_dependency(
--  link_with: _quote_rs,
--)
--
--meson.override_dependency('quote-1-rs', quote_dep, native: true)
-diff --git a/subprojects/packagefiles/syn-2-rs/meson.build b/subprojects/packagefiles/syn-2-rs/meson.build
-deleted file mode 100644
-index 3e6dc318a9c..00000000000
---- a/subprojects/packagefiles/syn-2-rs/meson.build
-+++ /dev/null
-@@ -1,43 +0,0 @@
--project('syn-2-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '2.0.104',
--  license: 'MIT OR Apache-2.0',
--  default_options: [])
--
--subproject('proc-macro2-1-rs', required: true)
--subproject('quote-1-rs', required: true)
--subproject('unicode-ident-1-rs', required: true)
--
--proc_macro2_dep = dependency('proc-macro2-1-rs', native: true)
--quote_dep = dependency('quote-1-rs', native: true)
--unicode_ident_dep = dependency('unicode-ident-1-rs', native: true)
--
--_syn_rs = static_library(
--  'syn',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: [
--    '--cap-lints', 'allow',
--    '--cfg', 'feature="full"',
--    '--cfg', 'feature="derive"',
--    '--cfg', 'feature="parsing"',
--    '--cfg', 'feature="printing"',
--    '--cfg', 'feature="clone-impls"',
--    '--cfg', 'feature="proc-macro"',
--    '--cfg', 'feature="extra-traits"',
--  ],
--  dependencies: [
--    quote_dep,
--    proc_macro2_dep,
--    unicode_ident_dep,
--  ],
--  native: true,
--)
--
--syn_dep = declare_dependency(
--  link_with: _syn_rs,
--)
--
--meson.override_dependency('syn-2-rs', syn_dep, native: true)
-diff --git a/subprojects/packagefiles/unicode-ident-1-rs/meson.build b/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-deleted file mode 100644
-index 11a5dab97df..00000000000
---- a/subprojects/packagefiles/unicode-ident-1-rs/meson.build
-+++ /dev/null
-@@ -1,22 +0,0 @@
--project('unicode-ident-1-rs', 'rust',
--  meson_version: '>=1.5.0',
--  version: '1.0.12',
--  license: '(MIT OR Apache-2.0) AND Unicode-DFS-2016',
--  default_options: [])
--
--_unicode_ident_rs = static_library(
--  'unicode_ident',
--  files('src/lib.rs'),
--  gnu_symbol_visibility: 'hidden',
--  override_options: ['rust_std=2021', 'build.rust_std=2021'],
--  rust_abi: 'rust',
--  rust_args: ['--cap-lints', 'allow'],
--  dependencies: [],
--  native: true,
--)
--
--unicode_ident_dep = declare_dependency(
--  link_with: _unicode_ident_rs,
--)
--
--meson.override_dependency('unicode-ident-1-rs', unicode_ident_dep, native: true)
-diff --git a/subprojects/probe-0.5-rs.wrap b/subprojects/probe-0.5-rs.wrap
-index d3c6b187244..72e771ec787 100644
---- a/subprojects/probe-0.5-rs.wrap
-+++ b/subprojects/probe-0.5-rs.wrap
-@@ -4,4 +4,3 @@ source_url = https://crates.io/api/v1/crates/probe/0.5.2/download
- source_filename = probe-0.5.2.tar.gz
- source_hash = 136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e
- method = cargo
--patch_directory = probe-0.5-rs
-diff --git a/subprojects/proc-macro-error-1-rs.wrap b/subprojects/proc-macro-error-1-rs.wrap
-index 4f300c3ac41..e57921bfadc 100644
---- a/subprojects/proc-macro-error-1-rs.wrap
-+++ b/subprojects/proc-macro-error-1-rs.wrap
-@@ -7,4 +7,4 @@ method = cargo
- patch_directory = proc-macro-error-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
--# v2
-+# v3
-diff --git a/subprojects/proc-macro-error-attr-1-rs.wrap b/subprojects/proc-macro-error-attr-1-rs.wrap
-index 739e451c37b..456d2c2b6d4 100644
---- a/subprojects/proc-macro-error-attr-1-rs.wrap
-+++ b/subprojects/proc-macro-error-attr-1-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/proc-macro-error-attr/1.0.4/downloa
- source_filename = proc-macro-error-attr-1.0.4.tar.gz
- source_hash = a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869
- method = cargo
--patch_directory = proc-macro-error-attr-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
-index 3600f4eb191..676d1a3a8ca 100644
---- a/subprojects/proc-macro2-1-rs.wrap
-+++ b/subprojects/proc-macro2-1-rs.wrap
-@@ -7,4 +7,4 @@ method = cargo
- patch_directory = proc-macro2-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
--# v2
-+# v3
-diff --git a/subprojects/quote-1-rs.wrap b/subprojects/quote-1-rs.wrap
-index 10626be6521..5f38f56499e 100644
---- a/subprojects/quote-1-rs.wrap
-+++ b/subprojects/quote-1-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/quote/1.0.36/download
- source_filename = quote-1.0.36.0.tar.gz
- source_hash = 0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7
- method = cargo
--patch_directory = quote-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
-index db6576f5812..4b97bed258f 100644
---- a/subprojects/syn-2-rs.wrap
-+++ b/subprojects/syn-2-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/syn/2.0.104/download
- source_filename = syn-2.0.104.0.tar.gz
- source_hash = 17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40
- method = cargo
--patch_directory = syn-2-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/unicode-ident-1-rs.wrap b/subprojects/unicode-ident-1-rs.wrap
-index b420ebfe1f4..90aae02ba0a 100644
---- a/subprojects/unicode-ident-1-rs.wrap
-+++ b/subprojects/unicode-ident-1-rs.wrap
-@@ -4,7 +4,6 @@ source_url = https://crates.io/api/v1/crates/unicode-ident/1.0.12/download
- source_filename = unicode-ident-1.0.12.tar.gz
- source_hash = 3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b
- method = cargo
--patch_directory = unicode-ident-1-rs
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
+ [[package]]
+ name = "winnow"
+-version = "0.7.13"
++version = "1.0.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "21a0236b59786fed61e2a80582dd500fe61f18b5dca67a4a067d0bc9039339cf"
+-dependencies = [
+- "memchr",
+-]
++checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
 -- 
 2.55.0
 
