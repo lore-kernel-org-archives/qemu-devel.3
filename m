@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC1EC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A46D1C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtK3-0006x4-Sy; Mon, 17 Aug 2026 05:08:00 -0400
+	id 1wvtLJ-0000RN-Ml; Mon, 17 Aug 2026 05:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtK2-0006oT-Dk; Mon, 17 Aug 2026 05:07:58 -0400
+ id 1wvtL0-0008Pj-QY; Mon, 17 Aug 2026 05:08:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtK0-0001xK-Ms; Mon, 17 Aug 2026 05:07:58 -0400
+ id 1wvtKx-0002Df-J5; Mon, 17 Aug 2026 05:08:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=0mvljEviK/qU62YuDBcBfLcAnJ/2jXQoPe2rKdlTi3U=;
+ t=1786957506; bh=Q/pOI3gQRVs3KJS9Ts0jAqhVv25PGyWRzT/j/+QjoVc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kut/MCPslmbaNsVwMVuziFdpJTQiIjzWtleqVlxSLBSngEe5bi1HNY7SpidU+1Uko
- brZg32PG3InANdt50Vg8yv37Lp3CNINIWT32J2Qusel9iujc7W7wAPRN+MEN+r1R0o
- CRv1zRsR3aJjkKELCHX+qJM8cwYptwnfsh97eDzx7EJHp2I1yRezezzbbzyclzUPm3
- hZsthm8y+O1ciu5E528GAonY0uWBowA59PAn+rjJ1yp0nIEA40nWWJsrFiXM+6g4jR
- AAgl2vUX+7gthycvOTH3XEJLc+V8uVRE7j34E5evvL5vpdpuK5S2xWDdwcC37hBhfL
- GcVzNcrG5+hZg==
+ b=cQz6+tCfyzKkSxsc3gQmS4szCj/2TUMpkdH3KOHB9KRbV/BASZNc468ShrCN/Z1xI
+ 0rstgog16TAiVefRs15U+FK/rYtWCBgpPk2tMqgEiAgPtJA13tPqvAybUdhQz9zku8
+ +nCezpJneedgk3pSG85bGksPSqYHjlJNHvkap4SgnjK5lcQvh5sMglcq8nLNQEobl4
+ ZcfieOp8O0bUaypcC9a2wSoBNqZwfVp3SxU7IdJ4i7UkI+VPsvSjCGcrVlqQqs+KsO
+ W3ojEY3oR/bbe3Pso66xL6idg57PnWEU7WMkG6nQ9jSjf3+zYD4B9q8YOwjCOgp5zE
+ zRIvt73obffpQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 783371CBA50;
+ by isrv.corpit.ru (Postfix) with ESMTP id B07E21CBA5C;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5792D40D032;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9048140D041;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F258930D18; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id 2128130D30; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 28/42] hw/usb/dev-uas: Don't abort if guest provided
- an undersized buffer for status
-Date: Mon, 17 Aug 2026 12:04:33 +0300
-Message-ID: <20260817090453.2034156-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 40/42] hw/block/pflash_cfi01: Restore ROMD mode after
+ migration
+Date: Mon, 17 Aug 2026 12:04:45 +0300
+Message-ID: <20260817090453.2034156-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,70 +74,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-QEMU currently aborts if the guest provides an undersized buffer
-for the status packet (8 bytes):
+pflash_post_load() did not restore the ROMD mode of the memory region.
+Although cmd and wcycle are migrated, the destination retains the
+default ROMD = true from realize.  When the source was in a non-array
+mode (e.g. ID read, cmd = 0x90), reads on the destination bypass
+pflash_read() via the ROM fast path and return raw storage bytes
+instead of the command-specific response.
 
- hw/usb/core.c:623: usb_packet_copy:
-  Assertion `p->actual_length + bytes <= iov->size' failed.
+Derive ROMD from the migrated cmd/wcycle in pflash_post_load.
 
-If we hit this situation, log a guest error and continue by simply
-only providing the bytes that the guest asked for.
-(Note: This is e.g. similar to the UAS_PIPE_ID_COMMAND case that
-also clamps the length with: length = MIN(sizeof(iu), p->iov.size))
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4042
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMD: Including review comments from
+ https://lore.kernel.org/qemu-devel/CAFEAcA-P6RH7nJK0KQ1H8576ULFA7nocB0EkhhZf6Rw3g0WCag@mail.gmail.com/
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3900
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260730163901.1154791-1-thuth@redhat.com>
-(cherry picked from commit 15700a66ecb53c52717c913c2c4501372c0115ab)
+ Confirming that this is correct is a bit tricky. It relies on:
+  * when we set romd mode to true we also set wcycle = 0, cmd = 0
+    (which we do, in reset and in the mode_read_array code)
+  * when we set romd mode to false at the top of pflash_write(),
+    all paths out of that function either go through the
+    mode_read_array path, or else update pfl->cmd to something
+    non-zero
+  * nowhere outside pflash_write() udpates cmd or wcycle except
+    for the "clear them to 0 and set romd mode" places
+
+ This is almost but not quite true. In pflash_read(), the default
+ case for the pfl->cmd switch sets wcycle = 0 cmd = 0 but doesn't
+ change the romd state. Luckily the "this should never happen"
+ comment is true -- there's no way to get a pfl->cmd that falls
+ into the default (except for being deliberately fed a bogus value
+ via inbound migration).
+]
+Message-ID: <20260803041808.58174-1-guobin@linux.alibaba.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+(cherry picked from commit 60d010f66f2ad7c15388a605e6f1a2114dc60185)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
-index 963c0433b38..be8c3667e83 100644
---- a/hw/usb/dev-uas.c
-+++ b/hw/usb/dev-uas.c
-@@ -359,6 +359,7 @@ static void usb_uas_send_status_bh(void *opaque)
-     UASDevice *uas = opaque;
-     UASStatus *st;
-     USBPacket *p;
-+    uint32_t length;
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 5b9ddb20b18..a13b91967ed 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -1030,6 +1030,16 @@ static int pflash_post_load(void *opaque, int version_id)
+ {
+     PFlashCFI01 *pfl = opaque;
  
-     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
-         if (uas_using_streams(uas)) {
-@@ -373,7 +374,14 @@ static void usb_uas_send_status_bh(void *opaque)
-             break;
-         }
- 
--        usb_packet_copy(p, &st->status, st->length);
-+        length = st->length;
-+        if (length > p->iov.size) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "usb uas: packet (%zd) too small for status (%d)\n",
-+                          p->iov.size, length);
-+            length = p->iov.size;
-+        }
-+        usb_packet_copy(p, &st->status, length);
-         QTAILQ_REMOVE(&uas->results, st, next);
-         g_free(st);
- 
-@@ -875,7 +883,14 @@ static void usb_uas_handle_data(USBDevice *dev, USBPacket *p)
-                 break;
-             }
-         }
--        usb_packet_copy(p, &st->status, st->length);
-+        length = st->length;
-+        if (length > p->iov.size) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "usb uas: packet (%zd) too small for status (%d)\n",
-+                          p->iov.size, length);
-+            length = p->iov.size;
-+        }
-+        usb_packet_copy(p, &st->status, length);
-         QTAILQ_REMOVE(&uas->results, st, next);
-         g_free(st);
-         break;
++    /*
++     * ROMD mode is not in the VMState; derive it from the migrated
++     * cmd and wcycle.  Only (wcycle == 0, cmd == 0x00) is read-array.
++     */
++    if (pfl->wcycle == 0 && pfl->cmd == 0x00) {
++        memory_region_rom_device_set_romd(&pfl->mem, true);
++    } else {
++        memory_region_rom_device_set_romd(&pfl->mem, false);
++    }
++
+     if (!pfl->ro) {
+         pfl->vmstate = qemu_add_vm_change_state_handler(postload_update_cb,
+                                                         pfl);
 -- 
 2.47.3
 
