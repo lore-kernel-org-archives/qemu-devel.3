@@ -4,141 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55025C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D1CAC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvyT4-0006lv-8C; Mon, 17 Aug 2026 10:37:38 -0400
+	id 1wvyUd-0008Qh-9j; Mon, 17 Aug 2026 10:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wvyT2-0006kr-Oo; Mon, 17 Aug 2026 10:37:36 -0400
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wvyUV-0008MH-Sg
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:39:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wvyT0-0000GD-Tl; Mon, 17 Aug 2026 10:37:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dqz0uioPZB7Av2gv0R50Ra5RjJlGxCQy1ACMAo4OZEKayFHPr7v1eOaHVKgzNs23YOc69hIif65+46QIeEMmamttn9OaxvdWg+4Hv4+oWKjxy0wh3CfO+kAWfEbecd8ne5QdXyFStIG+zYLQzVhvWg5gIkqueDKyqWjZuMEetbJkc6yvW+Y27JiiNY2PwTGZJRU7fArVyM/QiOSgA31rjo00xwctVYu3kzugWWL6FuFVlEi5FutXs6T3pUUqL7mb6Rd8d3B7vL8Lr9FP8759nY3DGtcdj68D8/mftuV+7zYQadgn1QG6WzZEzz/ESE++FRTaV0ikyR094iNnYJ2VFQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IIYWrkFtZ4RKmfTV4Q/ouYVu7BJ4v8STfCPDVEtbnJU=;
- b=NMsBZLt2ckNAvEISR8aiCFFg+eYj/0k/8is3iqUijX0s0B/CHNqsOkvpOIWElQQLz0ZZ9mcOLyOtDluT9fifN/Fa5DilFT53oliypDIwp26/GSBj8xNO6cpVOde0chCF005eWFm7NKSmi4lD2JUHtEgO6FLRee/GMdT1m0A6m5R0OmCgmJWMtpoH0qPSo1gnejhpwwXpOT3RgVF6W/WSoVu43l4eg6/VpiYoRqL5hAimsq8cGrpf/wVA7LD9TLoWLp5bWk0b9m8qZXEouO91Sn3quh4Ht9c++en+nAKFoG1OqznAKS6RMR+GGwMc5DEq9vJLhdw+hOhLXtcPmR3zRA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IIYWrkFtZ4RKmfTV4Q/ouYVu7BJ4v8STfCPDVEtbnJU=;
- b=nucN2Pcl0BBEbNJ1D5G9IkUaduVhcJVYW+Ns8jpmiJC0dxAv8U3o3+P0eXIreB0hbmHkhfqX6pWnd4ZqIrF/6l9g+vPQioYtTY0d71LcwBIxPWYZVxwb/q1mkMi13rGb8XmvHQepW2wTIUIHdDLfQEwSY0fj61C/rpDcuajhiZ4P/v11uMDhGJk77ULpvI+p3jT70RECY06AmYVwaQm+iFjGa/5pRN1sTpVODvLFWk5650E7tWKiDUUIqc4q6wHarQWo31sWNI3Tgh0LvyfotAjICkn8ziWQWMp/NcKnnDxhe0Z/+wi3uCA9V3fyOGVtCKMmIljhuHUYrh4Iga6BLQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by PAWPR08MB8813.eurprd08.prod.outlook.com (2603:10a6:102:335::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 14:37:28 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 14:37:27 +0000
-Message-ID: <d64158df-c1b0-4501-9fd4-7f28135b8dad@virtuozzo.com>
-Date: Mon, 17 Aug 2026 16:37:26 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] dirty-bitmap: fix integer overflow in serialization
- coverage
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20260811173857.396571-1-den@openvz.org>
- <20260811173857.396571-4-den@openvz.org>
- <183c3455-caf3-4132-a99d-ce6d6c7585dc@yandex-team.ru>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <183c3455-caf3-4132-a99d-ce6d6c7585dc@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR0202CA0028.eurprd02.prod.outlook.com
- (2603:10a6:803:14::41) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wvyUT-0000V5-Tx
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:39:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786977543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=Invtzk0McabAkEKys5fxUd5/tmYCf6w6gFuWQ+D0Ta7D3AlKnI70rfDMP8MKpzR2ME0yHf
+ 3uauxwQwEU6xGOUzkeKWHxuJlQNEiaVFsD+xH1+ocdiUftC//FktZQT2Zc3bB3CNH9+JBw
+ R/bJM3yLEFRtmvfJhNpVM6IqozvQosI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-163-myStvcp-PCekZPoAIVMOiw-1; Mon, 17 Aug 2026 10:38:52 -0400
+X-MC-Unique: myStvcp-PCekZPoAIVMOiw-1
+X-Mimecast-MFC-AGG-ID: myStvcp-PCekZPoAIVMOiw_1786977531
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-482a5e9400eso487180f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786977531; x=1787582331; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=NPy6hiEKDbSL5ldKE9ZJ2MaE60cVe2qK79AeuXNpUhjJkJzCRLJQ/9wuM170Oz1yc+
+ QtuovzuR41e0OyUm6t/6u7GgzDzCbUd+i+/KAQzPpo2tRi9uU4nET5SAd2tJilXLHlBn
+ Jt2E1FsULSz2qdoq7nUROYiKJabBE65FwMi+LU+fE514ldkzMVPMrAF8wWpqv6gkKCa2
+ qI89r/wKr8n9vrb/BjvtYc9yL0JXEjRvJxtsBn14JtZeiIjttyyFFMo5/Jq7CVZ+LHnp
+ Mbhe8iLlVHa071FvskqwYBOYNypOv8RxUhKiFBi2OpmZJkY2XL9VljxJrDWHJaB/YOgD
+ YeEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786977531; x=1787582331;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=EBvXESZvKBMgv3sjpQtpN273IP6LIHezxABy9Ff5hscOyqk5EMTlohyOyty8Zf6rn3
+ o2aVe9Tvs8KXIncNveDSygwllFUCCxJPSJHPJoSVfdCEF1EnX1rOp6QNHxRCZ4a6gZ0i
+ WCgf68s0X/+M4Vh3G31Yeb8CwikM9AlLuPpCzbL99t+0apeVQKZFIEttjkhr660KLrbJ
+ tml8xHw7RQNHZN1kjNLQ/sR4qnJodV8dI2IX6lqA4hMLzBTPO2Z/Ipnmq/Lv7iM75B/F
+ ScrZIsjX1o4pmEc5uJpW3vpndGr2jzYH4RkAFM2otH6RcaWYbvEvoUjzzM6dLfF5fbaD
+ fRKQ==
+X-Gm-Message-State: AOJu0YxpCRH741+YbaHyxoeZfFBnQ6y38jyX8cF4heRJUZeDHICQoiGp
+ lyXHuWwXZlb5lGHXnvDoWp6Il7Im1Pd3nD6MmRUgwTN1eVU3hrIMY0ROPqYlwc9ZQq8VQUmuch3
+ 27uk0iz8CGauoe2faJHSxtGiIV+0JZdReAJ0GvhZ0FpAFFegevTafI55b6K/m4myFslOOSqUv+0
+ +R4GMuPttysBF7qqgC0eTblKqEdgDkYjED6lPTPsX/
+X-Gm-Gg: AR+sD13Dl2zjLUnVOW73raRYIx8OdJEWSMbm+BlBlcWuq6JFRaETjH4NXl/j/FfK6ek
+ J7l+MpoKrQ55UpzukYblp0S85gMoWDgL9q02VCPrZBdB0elYi9cyD8PYDIqiYmXxELw1t7C+sYA
+ 1Kinltjf8hjEStVWLkZUJHBtWMihTI4f9VnTiktA1Bwro7hmOZT9l6cN0OKogo+y9efeL8Ze/+D
+ wrWPdKXfxaZPOH/ajFjMnYm07eFugUeAlnEKHIftVm1gkPAJb3qflQ+g9Knw+45rfK99ZoUkLLj
+ WX+AaFwYIcIv/+zPOggCS1N7Y5ol8jolOUlx47imP5xPGLFsFCuFOmNS+BxQp5M6gC2PXafzSB3
+ NyfUY0G24Sx998RzaS8TWAhh+o74EKRi4+SpYLRXXx+LacNRuMCVmM08ZVW3lGk1URZaHtys4wq
+ UuQM8=
+X-Received: by 2002:adf:f2c6:0:b0:47f:97e9:fe60 with SMTP id
+ ffacd0b85a97d-482a90c53e6mr939282f8f.15.1786977530714; 
+ Mon, 17 Aug 2026 07:38:50 -0700 (PDT)
+X-Received: by 2002:adf:f2c6:0:b0:47f:97e9:fe60 with SMTP id
+ ffacd0b85a97d-482a90c53e6mr939176f8f.15.1786977530113; 
+ Mon, 17 Aug 2026 07:38:50 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.34.92])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482a5b816c0sm3700857f8f.33.2026.08.17.07.38.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Aug 2026 07:38:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mohamed@unpredictable.fr
+Subject: [PATCH] target/i386: emulate: stop torturing cc_src into carrying
+ SF/PF
+Date: Mon, 17 Aug 2026 16:38:48 +0200
+Message-ID: <20260817143848.953284-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAWPR08MB8813:EE_
-X-MS-Office365-Filtering-Correlation-Id: ae8fb40c-1071-4760-cbbd-08defc6d0f9a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|10070799003|23010399003|1800799024|376014|10067099003|56012099006|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: 8JgD6adPn4BcOqX7FsbiuOTg7qAY5oz5nLAo22GNdbOovc1WckL3kWLKaKVj3Y6BlkglkzCgClWlWZkG3nWom+wnwpoXhdhpdIDJ6fgy4dDw/1EALVCxrDTXJtaTz8nyBqYAd8gtjIhw+OHacbv4hojwVW4AEnktLv0VGkhyaPgTXQGS3s+eIIbOYPDmfndzevrZqsexGd2/xbokkIftlbu0tv1AZs+UxKMN/wzoUGghvdLNmrX+cq0u+fzX9gZ1YNksqklQ654GZq2aGLoz4soCbd+5us9Xmqx4wUKYQ5JomfGHe/l2U/+xfOUXRwydHDSdU43SuzYQTdLUh9sHyO1XhMhRr9PmfVLyu6wA5FkiKqbBEqvRAS7tq3C36ZKdxBOKQUW2pZkkAufGFl4VYRq0mmJdAopXl8asfm79LpIH7vnaKJuQg5n7b9zXhe8IQ5wFITDCZnfo8Gv6gzjcslHCKxLuiV3osZ7OAT/pGxByKGDGCwcxQZGWT16OXAFJdG0e65khnfIieTv236YhVwiNojAQmIefzkSKu5fg6PLpcro5ogcP05AuC4zRCbIB8elwVZNmDQUtwrOwr5d0ZlmN8vUi7J7QFTsHl7OaDhnmRsHx07ixP7LD1sSVRUjflRRmoNLeBNS43nlsX/7pf1WBdVXnAnjua/w4gEC+W1U=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(10070799003)(23010399003)(1800799024)(376014)(10067099003)(56012099006)(4143699003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bFc0N0hyZ3k4RkxYMHBxQ0JpV25mWmRrUWkvaHRYZ0VkRnVlMjgvN2FybXFy?=
- =?utf-8?B?aEhzbXdGUzdkVW1TcDlaM3dodjF2MEFzY2RVSTQ5dFZKcnZHRHlRWXRJZk1K?=
- =?utf-8?B?cG5hZTRmZ0xmWVZRc09ZSGcxS3R3NUFGcGRQamJEUExrU2JuRmxjUFhNOTRN?=
- =?utf-8?B?MG9NNHBTVXpmY0s1eFZLR0FPbzYyUHRqUmhxb0hhV24ydTJYdTFpYWVkdlhp?=
- =?utf-8?B?dTBTZWk0K0UvVzgyNGVVUDZmUy8rSEYyUDgzWDZOQ05PcDZ3TW9qNTBvMUx2?=
- =?utf-8?B?dFprNis0eXdkVkxsc1JZWUZOM04rcVhIMjVGWG5UU1ZTQUwwUFBoSEtZUnNU?=
- =?utf-8?B?Z0ZNdCtlRGhlTVpLU1Q0NnVxL0ZVS1RKLzIvYlVobnBYaklQZGRiSlhPM3Iz?=
- =?utf-8?B?UHdiQzFTQkc4WTVXRmJCK01mb3BHYTEwbThMbkxPbUZwOGt0UGJha2NleGp2?=
- =?utf-8?B?bE8rZ0RvSjdhczU2blBvR1Njb29tcm9GOUtwYmI3bXhUVVNONThIVzlTWThi?=
- =?utf-8?B?TFFBOFliM25RTE00ell1NmZtcWQzZlJoTkh2Z2hJVjcyWC9nUEUycG5jbDJU?=
- =?utf-8?B?aEc0ZVcwT3kxVUVkemMyejFLWTNQU3lFaDZmMkJQZytLRlpzS2dSUmdkRG8y?=
- =?utf-8?B?N3JiUldtd0Rod1BPbklVbUJrZWpnOExIU1V4d2wyS080ajNMYjFDV21ER3JW?=
- =?utf-8?B?ZnpVVlpEUHVrdUdPTmlYMmRST0ozMVBJM2Q5SFRxc05xTlhSd1Z5UXpid2U0?=
- =?utf-8?B?ajVtUkNSbWdya2c5Z2tQREpZQjg3VWQvbFduUFA5OHF6UHpHWGlxTnNVYmNy?=
- =?utf-8?B?VkxzZkI0Nmd1c3UwamFIZStUQXpOSy9mU05JMzhUaHo4VDA1aHFRTzRXbGZs?=
- =?utf-8?B?ZllSZGowdHYwYmNmQUs4UWVIZk5JQTl0REtKQ1NHSGxPY2tvUlNGVTdDcDZY?=
- =?utf-8?B?eFJqbkFRbC9ZWCtWcW9KS2ZQL1Vadjg3end5R2pnYlhoQW1SZ2dRZFMweXN3?=
- =?utf-8?B?MUZLVk45Uk5BS3M3OVpTKzhONUlTK0lZa2FaMTR0NDUyVWplT05pWkdyQkFZ?=
- =?utf-8?B?RWE1VWsrK0xrK0w4alB0dlN0MHJlQ3NvWkJCVXhIZUtuMnRrRGVYdnUzbHNF?=
- =?utf-8?B?TG80QUV2OTFkS2ZKMDUvMG1UdFhZMUlBcTJraC9GalpiZVRhbGdpdXluT1c2?=
- =?utf-8?B?TG5XUVd2U2ZWRXlsVkdxdW8zZ3psa0Q4akZLd3VZU0pGWGJ6cllOYUlUTWxH?=
- =?utf-8?B?bCtCWW4vdUhvalFSYlVITVFCNm92K2NOdDNhZWFXSnZEcTFnOGZYa2pQVWRo?=
- =?utf-8?B?Wkh6YWZTT0JJOWJGamd3T01xSEZNQkpONEFzSWhGd0gwbGhNTEtrb1RCUmZy?=
- =?utf-8?B?RXkyUmsxcWxQaFExclZ5cFErVThRT1l3TXc3UWo4aGJsY0I3TkdQbDJFMmlQ?=
- =?utf-8?B?WDdpTnRJNFdET1RXQVZGUmVicVdLeGtGZ3lpQ2ExdDM4RjU0aGM1cUsrUzFD?=
- =?utf-8?B?cXdSMldhVVV4ZkU3U2ZDQ2pubjd5WFAyd3lTUEVXekZKNHlHSkNBYXNzLzQy?=
- =?utf-8?B?SC9zM3RrRGFQanV5cEdLdGlIVTRoZ1hiUmNZVXNDblJzS1dYK3FIVTVoYnhk?=
- =?utf-8?B?NzZOR2lZRWp3Nko3T29DZ0ZvMGR2eWVkYXdyL09XbU1sUHptQmpoUUphVG1M?=
- =?utf-8?B?Q3hlMUx2bE5zTUJoYjlvMUlCVWJ6MHVhVzhZWXVvTnB1dzdCMXc0YWNYcTUw?=
- =?utf-8?B?b1MzeVBFd3J2QndDS1RXSzRTZDNyU0l1SENUTEZ3VW4rR0IzaWNJYUtZZkV2?=
- =?utf-8?B?cmkxd0VkSzNma3R0NXBhUE1yWjRGYTBlT2k0TXNrYVFIbXZ6cXlnTUROLzVt?=
- =?utf-8?B?UHVZUmlOWm9wMVFYQ2RGd25qRDl0dmIwb3gxY0o0ZkY3c1NIRkxDdURpZ3BU?=
- =?utf-8?B?Z29kZzBHMjBCVDFLbHZUenFDN1NzZ2E0Sy8wUXZtQlVIUVFmbkFpNSttWXU4?=
- =?utf-8?B?QTlCaWNjOU55U0VPTjM5b0NxdjZrYThLdVdaai9mRlBqTmVvejVHMEVGL2FF?=
- =?utf-8?B?RjFuOHRxWkYxNEh5dTZua1A0SVp6NUx0TEoxdHkvbktyMFpNSXp5NEtlUEVM?=
- =?utf-8?B?UmRScmd0NmFYNTdoUVF3ZlN6Y1FqTEkyWEgvVTRQdTUxT1pBM1lFMnRoQmlj?=
- =?utf-8?B?TnkwYnJvWklMOEhKdCs1dnNiR0VnQStzODZRakN3NlVCMW5FS3Y0RlFLZWhE?=
- =?utf-8?B?OUFtU2U3YjhFSHVNY0RwR2hMMkVmdmdOck9MK2ZWSjViMnFmekpaZFlZM3BP?=
- =?utf-8?B?U3phT2ZYb0RkcW9zQU03cjc5R2pOUmRlSVNSNmw4ZjZzTDVJeEh1d2p0a1RU?=
- =?utf-8?Q?PpTfa0yiLbdnvpA8dy2jd+ccwV68ubcYi1xLr2Tt86bdC?=
-X-MS-Exchange-AntiSpam-MessageData-1: o2bu+VDHVrMG7A==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae8fb40c-1071-4760-cbbd-08defc6d0f9a
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 14:37:27.7818 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fdBkpDEWVSTaJzJ8ERcIwQtgTLJCkviVQXfkOrsUwntu23SdtKHSryn6r2D3ORZnLMhk9+jC/34CTB0etHJX7w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB8813
-Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
- envelope-from=den@virtuozzo.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,54 +117,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/26 16:17, Vladimir Sementsov-Ogievskiy wrote:
-> On 11.08.26 20:38, Denis V. Lunev wrote:
->> The chunk size is an int and is shifted left by 3 before the result is
->> widened, so a chunk size of 1 << 28 or above overflows.
->>
->> parallels passes s->cluster_size, which parallels_open() lets reach
->> 2 GiB. With a bitmap needing two L1 entries the bogus limit makes the
->> "bm_size - offset" in parallels_load_bitmap_data() underflow; both
->> wrong values slip past the assertions in serialization_chunk() and the
->> resulting index lands outside the hbitmap, so a 128 KiB image memsets
->> unrelated memory through hbitmap_deserialize_ones().
->>
->> Widen the shift. qcow2, the only other caller, never exceeds a 2 MiB
->> cluster.
->>
->> Fixes: 35f428ba3971 ("qcow2-bitmap: make bytes_covered_by_bitmap_cluster() public")
->> Cc: Eric Blake <eblake@redhat.com>
->> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Cc: Stefan Hajnoczi <stefanha@redhat.com>
->> Cc: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Denis V. Lunev <den@openvz.org>
->> ---
->>   block/dirty-bitmap.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/block/dirty-bitmap.c b/block/dirty-bitmap.c
->> index 13a1979755..9fda3a4b98 100644
->> --- a/block/dirty-bitmap.c
->> +++ b/block/dirty-bitmap.c
->> @@ -612,7 +612,7 @@ uint64_t bdrv_dirty_bitmap_serialization_coverage(int serialized_chunk_size,
->>                                                     const BdrvDirtyBitmap *bitmap)
->>   {
->>       uint64_t granularity = bdrv_dirty_bitmap_granularity(bitmap);
->> -    uint64_t limit = granularity * (serialized_chunk_size << 3);
->> +    uint64_t limit = granularity * ((uint64_t)serialized_chunk_size << 3);
->>   
->>       assert(QEMU_IS_ALIGNED(limit,
->>                              bdrv_dirty_bitmap_serialization_align(bitmap)));
->
-> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->
-> I think, it's good to pick this one for my next pull request with another
-> bitmap-related fixes.
->
-> Thanks, applied to my block branch (this one 3/8 patch).
->
->
-Great. Will remove it from pull request.
+x86_flags.c encodes the flags into cc_dst and cc_src with algorithms
+essentially derived from Bochs; the exact details have changed but cc_dst
+is Bochs result and cc_src is very close to Bochs auxbits.  However,
+using only two words is unnecessarily limiting because it splits SF/PF
+between the two words even though *ZF* is the real nuisance (ZF=1 implies
+SF=PF=0) and the one that commands usage of PD/SD delta bits.
 
-Thanks!
+Within TCG, the CCMP instruction would have a similar need of efficiently
+encoding an arithmetic result or an EFLAGS value; it is not implemented,
+but there are plans (see commit message for 5dcdbd07125, "target/i386:
+tcg: use cout to commonize add/adc/sub/sbb cases", 2025-04-17) to use
+an algorithm very similar to target/i386/emulate's, but with *three* words.
+Then SF and PF live together in harmony, because SF can be encoded with
+either parity and PF does not use the high bit where SF is stored; by
+placing them in a third word their computation is isolated from ZF's
+and everything becomes simpler.
+
+In fact I'm not even sure why Bochs did it like that, and did not just
+give SF/PF their own home in a third word as well; the developers believe
+that the extra store is too expensive.  I am not really sure about that,
+but as far as QEMU is concerned, emulation proceeds one instruction at a
+time so using SRC2 should actually be faster, not just easier.  To convert
+from the output of arithmetic operations, PD and SD disappear and DST
+simply has to be stored in two places; to convert to RFLAGS, SF/PF are
+easily computed from SRC2 as if PD=SD=0; conversion to LFLAGS encodes
+parity in bit 0 and mixes in SF as an even-parity value with the right
+sign bit.
+
+Unlike TCG, there is a single meaning for all operand lengths, which
+corresponds to either CCMPL or CCMPQ depending on sizeof(target_ulong).
+So the carry-out value still needs to be split---with AF in bit 3
+and CF/PO in the higher bits of the target_ulong-sized env->cc_src.
+This is an acceptable tradeoff for the interpreter, in order to optimize
+lflags_to_rflags.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/emulate/x86_flags.c | 65 +++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 40 deletions(-)
+
+diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
+index 3c4270a14c1..c49d8bb836a 100644
+--- a/target/i386/emulate/x86_flags.c
++++ b/target/i386/emulate/x86_flags.c
+@@ -30,28 +30,24 @@
+ 
+ 
+ /*
+- * The algorithms here are similar to those in Bochs.  After an ALU
+- * operation, CC_DST can be used to compute ZF, SF and PF, whereas
+- * CC_SRC is used to compute AF, CF and OF.  In reality, SF and PF are the
+- * XOR of the value computed from CC_DST and the value found in bits 7 and 2
+- * of CC_SRC; this way the same logic can be used to compute the flags
+- * both before and after an ALU operation.
++ * The emulator always encodes flags in the same way as CC_OP_CCMPB + MO_TL.
++ * While for arithmetic operations ZF/SF/PF are computed from the same value,
++ * ZF=1 may be inconsistent with PF/SF for arbitrary RFLAGS values so CC_SRC2
++ * is used for SF and PF.  CC_SRC holds a carry-out vector that is used to
++ * compute AF, CF and OF.
+  *
+  * Compared to the TCG CC_OP codes, this avoids conditionals when converting
+  * to and from the RFLAGS representation.
++ *
++ * The underlying ideas ultimately descend from Bochs, but with significant
++ * simplifications obtained by storing flags in three words rather than two.
+  */
+ 
+ #define LF_SIGN_BIT    (TARGET_LONG_BITS - 1)
+ 
+-#define LF_BIT_PD      (2)          /* lazy Parity Delta, same bit as PF */
+-#define LF_BIT_AF      (3)          /* lazy Adjust flag */
+-#define LF_BIT_SD      (7)          /* lazy Sign Flag Delta, same bit as SF */
+ #define LF_BIT_CF      (TARGET_LONG_BITS - 1) /* lazy Carry Flag */
+ #define LF_BIT_PO      (TARGET_LONG_BITS - 2) /* lazy Partial Overflow = CF ^ OF */
+ 
+-#define LF_MASK_PD     ((target_ulong)0x01 << LF_BIT_PD)
+-#define LF_MASK_AF     ((target_ulong)0x01 << LF_BIT_AF)
+-#define LF_MASK_SD     ((target_ulong)0x01 << LF_BIT_SD)
+ #define LF_MASK_CF     ((target_ulong)0x01 << LF_BIT_CF)
+ #define LF_MASK_PO     ((target_ulong)0x01 << LF_BIT_PO)
+ 
+@@ -59,19 +55,15 @@
+ /* OSZAPC */
+ /* ******************* */
+ 
+-/* use carries to fill in AF, PO and CF, while ensuring PD and SD are clear.
+- * for full-word operations just clear PD and SD; for smaller operand
+- * sizes only keep AF in the low byte and shift the carries left to
+- * place PO and CF in the top two bits.
++/*
++ * For arithmetic operations ZF/SF/PF are consistent so DST == SRC2.
++ * For operations that are not full-word, keep AF in the low byte and shift
++ * the carries left to place PO and CF in the top two bits.
+  */
+ #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
+-    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
+-    target_ulong temp = (lf_carries); \
+-    if ((size) == TARGET_LONG_BITS) { \
+-        temp = temp & ~(LF_MASK_PD | LF_MASK_SD); \
+-    } else { \
+-        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
+-    } \
++    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
++    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
++    temp |= temp << (TARGET_LONG_BITS - (size)); \
+     env->cc_src = temp; \
+ }
+ 
+@@ -93,13 +85,9 @@
+ /* same as setting OSZAPC, but preserve CF and flip PO if the old value of CF
+  * did not match the high bit of lf_carries. */
+ #define SET_FLAGS_OSZAP_SIZE(size, lf_carries, lf_result) { \
+-    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
+-    target_ulong temp = (lf_carries); \
+-    if ((size) == TARGET_LONG_BITS) { \
+-        temp = (temp & ~(LF_MASK_PD | LF_MASK_SD)); \
+-    } else { \
+-        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
+-    } \
++    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
++    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
++    temp |= temp << (TARGET_LONG_BITS - (size)); \
+     target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0; \
+     env->cc_src = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
+ }
+@@ -255,7 +243,7 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
+ 
+ static inline uint32_t get_PF(CPUX86State *env)
+ {
+-    return ((parity8(env->cc_dst) - 1) ^ env->cc_src) & CC_P;
++    return (parity8(env->cc_src2) - 1) & CC_P;
+ }
+ 
+ static inline uint32_t get_OF(CPUX86State *env)
+@@ -283,8 +271,7 @@ static inline uint32_t get_ZF(CPUX86State *env)
+ 
+ static inline uint32_t get_SF(CPUX86State *env)
+ {
+-    return ((env->cc_dst >> (LF_SIGN_BIT - LF_BIT_SD)) ^
+-            env->cc_src) & CC_S;
++    return (target_long)env->cc_src2 < 0 ? CC_S : 0;
+ }
+ 
+ void lflags_to_rflags(CPUX86State *env)
+@@ -304,16 +291,14 @@ void rflags_to_lflags(CPUX86State *env)
+ {
+     target_ulong cf_af, cf_xor_of;
+ 
+-    /* Leave the low byte zero so that parity is always even...  */
+-    env->cc_dst = !(env->eflags & CC_Z) << 8;
+-
+-    /* ... and therefore cc_src always uses opposite polarity.  */
+-    env->cc_src = CC_P;
+-    env->cc_src ^= env->eflags & (CC_S | CC_P);
++    /* compute DST and SRC2 that reconstruct ZF/SF/PF.  */
++    env->cc_dst = ~env->eflags & CC_Z;     /* DST = 0 if ZF=1 */
++    env->cc_src2 = ~env->eflags & CC_P;    /* odd parity if PF=0 */
++    env->cc_src2 ^= -!!(env->eflags & CC_S);
+ 
+     /* rotate right by one to move CF and AF into the carry-out positions */
+     cf_af = env->eflags & (CC_C | CC_A);
+-    env->cc_src |= ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
++    env->cc_src = ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
+ 
+     cf_xor_of = ((env->eflags & (CC_C | CC_O)) + (CC_O - CC_C)) & CC_O;
+     env->cc_src |= -cf_xor_of & LF_MASK_PO;
+-- 
+2.55.0
+
 
