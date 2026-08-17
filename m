@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72034C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB109C5DF7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww4KT-0006aO-41; Mon, 17 Aug 2026 16:53:09 -0400
+	id 1ww4Kn-0006jb-5I; Mon, 17 Aug 2026 16:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KI-0006Wz-H8
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:59 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KP-0006ZU-QQ
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:53:07 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KE-0006fw-HR
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:52:57 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww4KL-0006jD-PW
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:53:04 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-49987fb18c0so20346505e9.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:52:54 -0700 (PDT)
+ 5b1f17b1804b1-499840a2575so29443925e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786999973; x=1787604773; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786999980; x=1787604780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=lVttNXKS42d+wwl+Slu+idpuvTC5n4P/eF4nwzzHM7E=;
- b=iZt6tHwABdPxowQcEwJkSUSpHNkw5ocBKWwBFsp/PKbGYVA4CTxrqQ5bvFcvPBWwh5
- CVKPlM4MA3nemh1IPuackndz5msEHWCl81gFclv3aJXLbDQnP0irpWz13FT11Gc8vmdq
- 2Yj7tdEwD2qNXmW2b5M1p7n57JnAFzvEZ6RIXX9CMm3VOSORdZ3rVk59w3cooPriNmpx
- q/GWnkewDWf4y+Re6WBJQP8ncPrJUUuIczsdLO0dY8mPF2QbfUMw3Dq+senjwTdN8pg3
- rkDA0YFg6MT3Q+Lw/cB0hcGuMTLfBTntbgP/cnxQmzkZmCyMbNxmOqTFzaU/KhMvv3So
- RPwg==
+ bh=ih6WBmLbxMIFAynHL/+kBFl+c1Otlb088ghzMEF0/zk=;
+ b=jqjtm98pa6ffER54ulPp7UEcn9AxJX/9FCCRls5MKmXTrduCL42adBhrsAPV036Ctg
+ g89BKAHEaIoMg8IoLbojdcXU9c/laZtJ/4NbTciQcIVezk0Gz/zWc6FUhwXgWpXwQjjK
+ g3pUAzYL2FM2KsvYo4yi9QcZiDVKBJaEFPsvGcI1hOspNu7AuycU7OoLW9YccfKI9nyx
+ IWPk/gBA2d+ucyT/k65a7jipf3o894hf64kvuv0OTnKzFiTDLupeyT/48DHWdPTOzqFf
+ 0+6VG7yxoaLUrbzEHEseGdv5BpT6i/TtWdbGFtmlTz1KGQXTR/MBj5hOjQXhaRNMpzrz
+ NPmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786999973; x=1787604773;
+ d=1e100.net; s=20251104; t=1786999980; x=1787604780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=lVttNXKS42d+wwl+Slu+idpuvTC5n4P/eF4nwzzHM7E=;
- b=aNFa5fbCR3H+PhI91PsSdSHmex+SmPIIK2+HY+PACeIoYUD0NtCdoBK/lVxnGv79a3
- t8Zm4TVgRoKCbDoKmvuz67HTjhTc+xN/hhUx/HBSG0LJbMrc5LRQ9EP++QjijcP5CpZC
- JAsCuLsebkKFNqDioYSw0pXSS3benUEt9HJcCx00svmxZziCSC8Q9eCpf8V8OW7cQtFR
- GHNm8m2fF6/zAelKgGxg33WRjZrKKig/M5lInMIfzpJpi7eI3ZQyG/SXJPt0uWTVUiMV
- iu7eKJoR0gi7/Kq/HWBTlB3AB7/wYSXO7+PanADGSaCO6M4M4huKRWeJFvQVLUW+mXed
- PNqw==
-X-Gm-Message-State: AOJu0YwbiUfuM61loA2qyM7xh3QbqIFszj+5t2gO78X7YBa1TBO5FEla
- /5HUhr6kPopyBLnuvj6gqhfcieYO43Um5KuWLpEhtYYyJCtSjIQOzqLZZtLYvctzbLlHLoYlYwd
- aNeKQ
-X-Gm-Gg: AR+sD13arxwa2AWxXEobVSXMb2zd50PnXpZ0MWVm1FlDsiGZM04RHMlLva2GvON6cCo
- oeaZ7S/LgW4j1a7eM9rpDoDwzT2gXP0EMwsoIJmXFKeHwFhiPBLKkCNdyht4yua+8vArJY2uLBo
- +A3PEbePo8hnsXV810m+GkP4dYNWSkA+J9UFIz+upumO7EXupEHvZk2NRlZOsBg9yp1Y7EywocO
- fMmkESNcF05P0P5N3fu8UNuUhDg+zBni9NeU7CZrrXctMp2LnTJF5zVic4MGqR927GQg/X/OpbU
- JCkNA01rWhOfPCxUkF+XH+QnqWhMZ+M/dO8gS9bdlgoagvJG8icSR+w/VDzvrDWhp3hVv/qmBMo
- BsVe+yPUZaEDEUGbROLDxQslqj9j3VdAUr4lgM7bab6LbYgsHkcaWGjXuxSLBh/d3Oj7kBdvzdx
- BEIq8aIE+Cchrn7ZoUoQmrI6Y0fwESPWqVO+XmWLP8JIL+Iht72w==
-X-Received: by 2002:a05:600c:3b2a:b0:499:9240:9a1c with SMTP id
- 5b1f17b1804b1-4999fb4f219mr46730245e9.15.1786999973071; 
- Mon, 17 Aug 2026 13:52:53 -0700 (PDT)
+ bh=ih6WBmLbxMIFAynHL/+kBFl+c1Otlb088ghzMEF0/zk=;
+ b=etdDg9j4CBHhmjRxnVlmzr9n4oCdFIqkPHyfxieqzXfPyT29X6V2pY9mpmAKlccftW
+ 3GECdKuSvGbgYDMSSEtWQU6837zQH7I5FaMIVeD45zeAcW0u1miAmFCT+kSfe9PW6x1c
+ fI9D8OJCbmNt3fO/vBFDr32UbDJWXDnH7dCKwiz/WNJXSVgf2JKrBKk6iS8GftmpBaOx
+ Xqmh/cDL7U+gYS26oIoYbbvBEDKlMuM/eMUIWnAd6TizOJrAkkclKglwMQ717GyfnVJt
+ 76IADjVVovtv+aEoB7wPUUdBV2R34v0xUpXhlDDG3DyNqMXECpBEGQsKfYBe1unt+Yr5
+ mmNQ==
+X-Gm-Message-State: AOJu0Yy6CAunaB/Zc86f5ciFbrfyS10xV9wK9mVCrRAOuexCEt04rPPx
+ en8JY627K/Rfx+c/g+pfiF73kEz2W7XPg/SpxUwxOoZ559Ry0nP2q0Z+mE3ILBNlZikJNqdhMZ2
+ XC4Lv
+X-Gm-Gg: AR+sD10zd5/EU7+cFPb00Hibu0Ei4g/MTa7aCkcQisihoaPGbpO1dB1fROM9PWteOl6
+ Lp5P4M7el/uuHKinSUVPNQG9SI4nVyrT5dFdRbWgknpHgZUwo0uJQ0qP0fa2DPh4jgwUSvqw9Mf
+ VXv2nWlW8ySHL1s1fIqDNcDFqwa+mQ5IxstTcmOe3ovWzvL64te6HbnEqZ++TaMvlZEyr2eao2f
+ fmKK+wFDWbz4lopaocm2TeF1yZJQYl15r66URgVHKr61hySWHGLAm+DXldsCbxbx34g2i63Za32
+ wtkUV2gkjxotZ4zzFSwi7N52xyU3gWCYdkiupk9Bfckx1Nqx9JNtbJ5VATrB/u+6x8k/dlUOnud
+ Qk4cm6ejdolnBoP+tarA+XTh0yI2BV92ACUOO9ElhWbaRsF0JlYryAvnhfh3U+KrOST69q0qgTy
+ JHz/b+7C/9y4CfVVx2zna384HFjh2Bs0XrDroNcwe3hdevyyMU0w==
+X-Received: by 2002:a05:600c:608a:b0:493:bd2a:93be with SMTP id
+ 5b1f17b1804b1-499a202cb4cmr8589945e9.6.1786999980385; 
+ Mon, 17 Aug 2026 13:53:00 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499961098cdsm202573365e9.6.2026.08.17.13.52.52
+ 5b1f17b1804b1-499961098cdsm202573365e9.6.2026.08.17.13.52.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 13:52:52 -0700 (PDT)
+ Mon, 17 Aug 2026 13:52:59 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 06/15] hw/ide: keep the IDENTIFY DEVICE current geometry in
- sync
-Date: Mon, 17 Aug 2026 22:52:33 +0200
-Message-ID: <20260817205242.1199851-7-den@openvz.org>
+Subject: [PATCH 11/15] tests/qtest/ide-test: cover a rejected CHS translation
+ in the stream
+Date: Mon, 17 Aug 2026 22:52:38 +0200
+Message-ID: <20260817205242.1199851-12-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260817205242.1199851-1-den@openvz.org>
 References: <20260817205242.1199851-1-den@openvz.org>
@@ -102,129 +102,123 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Bit 0 of IDENTIFY DEVICE word 53 says that words 54 to 58 describe the CHS
-translation in effect, and ATA-5 8.16.8 has INITIALIZE DEVICE PARAMETERS
-set words 55 and 56 to the heads and sectors per track it was given. The
-data is built once and then cached, so those words kept describing
-whatever was in effect when a guest first asked for IDENTIFY DEVICE: the
-device reported one geometry while addressing the medium with another, and
-nothing reported an error. The revert SET FEATURES 0xCC asks for on the
-next reset left the same disagreement.
+ide_drive_post_load() refuses a logical CHS translation that no command
+could have selected, as the fields are a divisor in ide_set_sector() and a
+factor in ide_get_sector(). Nothing exercised that, a fixed QEMU having no
+way to produce such a stream.
 
-Do not drop the cached data on a change, as parts of it are guest state
-rather than a description of the drive: SET FEATURES records the write
-cache setting in word 85, which ide_drive_post_load() reads back after
-migration. Update the affected words in place instead, the way
-ide_identify_size() does for the capacity words, and share the code with
-the two places that build the data.
-
-An ATAPI device has no translation but does take SET FEATURES 0xCC, so
-leave its IDENTIFY PACKET DEVICE data alone, where those words differ.
+Migrate a guest that selected a translation to a file, replace the number
+of sectors per logical track in the subsection with a zero, and let a
+destination read the result back. The load has to fail rather than take
+the value, so the destination is asked not to exit on a failed incoming
+migration and its migration status is what the test looks at.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- hw/ide/core.c | 36 +++++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ tests/qtest/ide-test.c | 81 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index befbab9486..9959437a63 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -110,6 +110,18 @@ static void put_le16(uint16_t *p, unsigned int v)
-     *p = cpu_to_le16(v);
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 19e9734d3c..4fa58ac525 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -1483,6 +1483,86 @@ static void test_migrate_chs_snapshot(void)
+     unlink(img);
  }
  
-+static void ide_identify_chs(IDEState *s)
++/* A migration stream holds NUL bytes, so this cannot be a string search */
++static char *ide_stream_find(char *stream, gsize len, const char *name)
 +{
-+    uint16_t *p = (uint16_t *)s->identify_data;
-+    unsigned int cur_sec = s->cylinders * s->heads * s->sectors;
++    gsize name_len = strlen(name);
++    gsize i;
 +
-+    put_le16(p + 54, s->cylinders);
-+    put_le16(p + 55, s->heads);
-+    put_le16(p + 56, s->sectors);
-+    put_le16(p + 57, cur_sec);
-+    put_le16(p + 58, cur_sec >> 16);
++    if (len < name_len) {
++        return NULL;
++    }
++    for (i = 0; i <= len - name_len; i++) {
++        if (memcmp(stream + i, name, name_len) == 0) {
++            return stream + i;
++        }
++    }
++
++    return NULL;
 +}
 +
- static void ide_identify_size(IDEState *s)
++/* A translation no command could have selected has to be refused on load */
++static void test_migrate_chs_rejected(void)
++{
++    const char *name = "ide_drive/chs_translation";
++    QTestState *src, *dst;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    g_autofree char *path = NULL;
++    g_autofree char *uri = NULL;
++    g_autofree char *dst_args = NULL;
++    g_autofree char *stream = NULL;
++    char *subsection;
++    gsize len;
++    int fd;
++
++    fd = g_file_open_tmp("qtest-ide-stream.XXXXXX", &path, NULL);
++    g_assert(fd >= 0);
++    close(fd);
++    uri = g_strdup_printf("file:%s", path);
++
++    src = ide_test_start(
++        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
++        tmp_path[0]);
++    dev = get_pci_device(src, &bmdma_bar, &ide_bar);
++
++    ide_set_translation(dev, ide_bar, 8, 32);
++    qtest_qmp_assert_success(src, "{ 'execute': 'migrate',"
++                             " 'arguments': { 'uri': %s } }", uri);
++    qtest_qmp_eventwait(src, "STOP");
++    ide_migration_wait(src, "completed");
++    free_pci_device(dev);
++    ide_test_quit(src);
++
++    /*
++     * Behind the name come version, heads and sectors, each big endian 32 bit.
++     * The name recurs in the description at the end of the stream, so the
++     * first match is the one carrying data.
++     */
++    g_assert(g_file_get_contents(path, &stream, &len, NULL));
++    subsection = ide_stream_find(stream, len, name);
++    g_assert(subsection);
++    g_assert_cmpint(subsection - stream + strlen(name) + 12, <=, len);
++    memset(subsection + strlen(name) + 8, 0, 4);
++    g_assert(g_file_set_contents(path, stream, len, NULL));
++
++    dst_args = g_strdup_printf(
++        "-machine pc "
++        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 -incoming defer",
++        tmp_path[0]);
++    dst = qtest_init(dst_args);
++
++    qtest_qmp_assert_success(dst, "{ 'execute': 'migrate-incoming',"
++                             " 'arguments': { 'uri': %s,"
++                             " 'exit-on-error': false } }", uri);
++    ide_migration_wait(dst, "failed");
++
++    qtest_quit(dst);
++    unlink(path);
++}
++
+ static void test_cdrom_pio(void)
  {
-     uint16_t *p = (uint16_t *)s->identify_data;
-@@ -128,7 +140,6 @@ static void ide_identify_size(IDEState *s)
- static void ide_identify(IDEState *s)
- {
-     uint16_t *p;
--    unsigned int oldsize;
-     IDEDevice *dev = s->unit ? s->bus->slave : s->bus->master;
+     cdrom_read_impl(1, CDROM_PIO);
+@@ -1558,6 +1638,7 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/migration/chs_translation",
+                    test_migrate_chs_translation);
+     qtest_add_func("/ide/migration/chs_snapshot", test_migrate_chs_snapshot);
++    qtest_add_func("/ide/migration/chs_rejected", test_migrate_chs_rejected);
  
-     p = (uint16_t *)s->identify_data;
-@@ -158,12 +169,7 @@ static void ide_identify(IDEState *s)
-     put_le16(p + 51, 0x200); /* PIO transfer cycle */
-     put_le16(p + 52, 0x200); /* DMA transfer cycle */
-     put_le16(p + 53, 1 | (1 << 1) | (1 << 2)); /* words 54-58,64-70,88 are valid */
--    put_le16(p + 54, s->cylinders);
--    put_le16(p + 55, s->heads);
--    put_le16(p + 56, s->sectors);
--    oldsize = s->cylinders * s->heads * s->sectors;
--    put_le16(p + 57, oldsize);
--    put_le16(p + 58, oldsize >> 16);
-+    ide_identify_chs(s);
-     if (s->mult_sectors)
-         put_le16(p + 59, 0x100 | s->mult_sectors);
-     /* *(p + 60) := nb_sectors       -- see ide_identify_size */
-@@ -321,7 +327,6 @@ static void ide_cfata_identify_size(IDEState *s)
- static void ide_cfata_identify(IDEState *s)
- {
-     uint16_t *p;
--    uint32_t cur_sec;
+     qtest_add_func("/ide/identify", test_identify);
  
-     p = (uint16_t *)s->identify_data;
-     if (s->identify_set) {
-@@ -329,8 +334,6 @@ static void ide_cfata_identify(IDEState *s)
-     }
-     memset(p, 0, sizeof(s->identify_data));
- 
--    cur_sec = s->cylinders * s->heads * s->sectors;
--
-     put_le16(p + 0, 0x848a);                    /* CF Storage Card signature */
-     put_le16(p + 1, s->cylinders);              /* Default cylinders */
-     put_le16(p + 3, s->drive_heads);            /* Default heads */
-@@ -350,11 +353,7 @@ static void ide_cfata_identify(IDEState *s)
-     put_le16(p + 51, 0x0002);                   /* PIO cycle timing mode */
-     put_le16(p + 52, 0x0001);                   /* DMA cycle timing mode */
-     put_le16(p + 53, 0x0003);                   /* Translation params valid */
--    put_le16(p + 54, s->cylinders);             /* Current cylinders */
--    put_le16(p + 55, s->heads);                 /* Current heads */
--    put_le16(p + 56, s->sectors);               /* Current sectors */
--    put_le16(p + 57, cur_sec);                  /* Current capacity */
--    put_le16(p + 58, cur_sec >> 16);            /* Current capacity */
-+    ide_identify_chs(s);                        /* Current C/H/S and capacity */
-     if (s->mult_sectors)                        /* Multiple sector setting */
-         put_le16(p + 59, 0x100 | s->mult_sectors);
-     /* *(p + 60) := nb_sectors       -- see ide_cfata_identify_size */
-@@ -1361,6 +1360,10 @@ static void ide_reset(IDEState *s)
-         s->reset_reverts = false;
-         s->heads         = s->drive_heads;
-         s->sectors       = s->drive_sectors;
-+        /* An ATAPI device takes SET FEATURES 0xCC but has no translation */
-+        if (s->identify_set && s->drive_kind != IDE_CD) {
-+            ide_identify_chs(s);
-+        }
-     }
-     if (s->drive_kind == IDE_CFATA)
-         s->mult_sectors = 0;
-@@ -1669,6 +1672,9 @@ static bool cmd_specify(IDEState *s, uint8_t cmd)
- 
-     s->heads = (s->select & (ATA_DEV_HS)) + 1;
-     s->sectors = s->nsector;
-+    if (s->identify_set) {
-+        ide_identify_chs(s);
-+    }
-     ide_bus_set_irq(s->bus);
- 
-     return true;
 -- 
 2.53.0
 
