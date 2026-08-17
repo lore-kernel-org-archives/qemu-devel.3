@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0201C5DF66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB231C5DF7A
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvua3-0000lX-4o; Mon, 17 Aug 2026 06:28:35 -0400
+	id 1wvua5-0000mZ-VJ; Mon, 17 Aug 2026 06:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wvua1-0000l3-Fj; Mon, 17 Aug 2026 06:28:33 -0400
+ id 1wvua4-0000lp-Bw; Mon, 17 Aug 2026 06:28:36 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wvuZz-0008D0-03; Mon, 17 Aug 2026 06:28:33 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wvua2-0008DN-9x; Mon, 17 Aug 2026 06:28:36 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLW3iR1866406; Mon, 17 Aug 2026 10:28:17 GMT
+ 67GLVukN3728188; Mon, 17 Aug 2026 10:28:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=mF4Jwag5c9dLJmt6oICHI6HdodSoYg+d/+3mi0HOT
- Fw=; b=PdBvY40EBFgtmuyFeg4yq/9g8AJF34aSMV4uIzxg9XsoMLqHyYmUdwEd0
- 11scgrqlhQpybZeLLshRZE31KLmzQU+zrmZTTOGiQc89mxuhOcwX9MW9tdh6hVWR
- 1J4IMKDe2mcLfYW7Hc3C7eeQZR0tXvPHpZIO8iFdUqy0GuDAOHRf2Yod7xkM3z70
- qDRstWbz4q7+/5aCrQDUnRtzk74ihcSGuK9TM3+uIfrV7a42i+nWha/zP5wVUOEY
- LvuPEQCrrH+l9NXy1NjIoE/b6mpShJeglHIB+ehvWb/QOBKsNfGf2MuZPpV3KQnK
- CZt2shOxTlwV6TrE9z5fTR0lCElcA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqhqfw-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=GD1yJKTR4btE5T37d
+ Xl/pRGrEOAy80pZdSV8FuS1//0=; b=bLT10nbafocfZ3Rzp3Dc9kOhG8/h11VkW
+ SfsaG6JxMhGBSl0e0btuLEB0ISCMMBjx0yiJ8YIVaQtcuPFVutcT0ezGyzjkb4Cq
+ P+ZzA27UBdt7KfEAtB/QU0/2Jx5RDzErSvxiI4t+DSRo5SNwDJxKDyn4+S/unaEk
+ umKU4NGBwZNTXMgrxv5lVPHm99GTyexgYW2ZPZj6qQNSeH8z1FvNnMS8BLr7VV/x
+ Xik7a7VchJ3/qoA+hUiDZspzB0y9xfpack752vmpSGCvkqF6NTkfu5lGj/gBGsfb
+ zxZJY2U4Eev9pSL5iZ6Qk5L7eFHBL2u8SIyBfcOfapOxQqc2nHeUw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4hraa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:28:16 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HAQKC3025411;
- Mon, 17 Aug 2026 10:28:15 GMT
+ Mon, 17 Aug 2026 10:28:29 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HAQRq8019280;
+ Mon, 17 Aug 2026 10:28:28 GMT
 Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xgwjws-1
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejwmny-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:28:15 +0000 (GMT)
+ Mon, 17 Aug 2026 10:28:28 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
  by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HASE6O26149478
+ 67HASRcM55050602
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 10:28:14 GMT
+ Mon, 17 Aug 2026 10:28:27 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 60E7A5805B;
- Mon, 17 Aug 2026 10:28:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1B1E658058;
+ Mon, 17 Aug 2026 10:28:27 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A8CC5805F;
- Mon, 17 Aug 2026 10:28:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id F25B15805B;
+ Mon, 17 Aug 2026 10:28:19 +0000 (GMT)
 Received: from li-bd0dea4c-2912-11b2-a85c-e84940f94d2e.ibmuc.com (unknown
  [9.124.212.152])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 10:28:06 +0000 (GMT)
+ Mon, 17 Aug 2026 10:28:19 +0000 (GMT)
 From: uverma@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@ozlabs.ru
 Cc: pbonzini@redhat.com, th.huth@posteo.eu, nnmlinux@linux.ibm.com,
@@ -65,38 +65,39 @@ Cc: pbonzini@redhat.com, th.huth@posteo.eu, nnmlinux@linux.ibm.com,
  rathc@linux.ibm.com, balaton@eik.bme.hu, philmd@oss.qualcomm.com,
  npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net,
  Utkarsh Verma <uverma@linux.ibm.com>
-Subject: [RFC PATCH 0/8] ppc/spapr: VOF disk image (qcow2) boot support
-Date: Mon, 17 Aug 2026 15:57:17 +0530
-Message-ID: <20260817102733.605346-1-uverma@linux.ibm.com>
+Subject: [RFC PATCH 1/8] ppc/spapr: add PReP boot partition detection
+Date: Mon, 17 Aug 2026 15:57:18 +0530
+Message-ID: <20260817102733.605346-2-uverma@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260817102733.605346-1-uverma@linux.ibm.com>
+References: <20260817102733.605346-1-uverma@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX3XnPj1ObW3sU
- op9ReCl73ftDTIQmjU0ICN0Lz/H3n7I9i+RdOOFFzzPE461mVHyFs1PoGvJWkalz07Ft55RuI+C
- mPJ5EemB22fSoWhrQQT+at9yKfkxqSlzVsIO9NjXG/z/yWWqUb/+FLBu/N07pQRpuyAy/Tqjldb
- 2pLvp5NTtzqdagGiFNt4rd0zVA3PctjWesJobPmjDtq7wJJ3yrNPUsAoK1FCt7suHJw/sAod1uz
- ibIodk5eEb9IjR3CGmEOxwbwMnWzwjv0i67BTghD9OaB07qVaEpf56mSsVfQhgpzvB2v9oqn6h9
- NC9D5uPXK/kHtYgRZZxPZRRVoD/2M1n5xMHiTO/iQG/8u0jM0BEMAtn9S3WHjGe54RDNUMfHxGk
- 5DUqF/9DVqscRXyUt0kZRSfv3k8odoHidFZbifoj2OBp9JijWCnSYEmpPrHXt19vo27TqUY/MOe
- g48Mv2aXEctqdd6r7Mg==
-X-Proofpoint-ORIG-GUID: E4nsSL8X61EZJj6ao0jenxyYIR0KfIsO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX50DFXfnvTu/3
- VUMZtYF50OKvptSehHxLemflTd/Ki8CEp7z92/8FRbnr18X4EekR5CVNOR0adzIsGOUSaEpK5vq
- 5VCrBO9MI5C/x6tJWWkna6uteFVrURI=
-X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a82e241 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-GUID: oV-KZKqb55rdEi1UHhTrI0bRexn5d_xu
+X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a82e24d cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=EGYj-OwPAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=HOy1Y6y1zDih3GdxJHoA:9 a=xQyHFheebwQZ3wMG2Lhb:22
-X-Proofpoint-GUID: i4XLeKs5bXobAnGPxiZvH1cDrJxkLP0H
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=n8BdF2ktrfXooMQ4x7UA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfXxnhpCZKN69gc
+ byjMPGSKyGU4nmYb//z0PO6Yw7x4JsPM/XE1TSWYRMKPznJTfa8KBb+6GY8qZihSIdYMbY5QwnM
+ bgHa2+89szfUwWiFsaSwpILUUlfgrZs=
+X-Proofpoint-ORIG-GUID: Iznyn5DlN3nFkBPy-K-5UqTYgWvz7Jk6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX2WLLbm2JU38z
+ k4mvIeT09YsI6698ikSUNS+St++oj84My4x4sb/bkdCXFI0Iay1gGbPie3qKrLr2RZkm2VzFI1A
+ +69wRvU+Y2PkywTABcBNVBrZMkBDbhGYXZ4itHFRncQhiX/EYmiG2580cHi8Qh8+6CGo1SAkKZH
+ qHVJJE4ExNuFO/lBLqGMd099hWzFLBKb7sGPm1fycsSLi1bXwnQYHeBQt9yoGCzNc9g+D7sSkGo
+ edHY0OHJ2jc6fgy8ec+Ou01R0LGeNONEnEecCu+UsuFzhawwDWP8f7l7HTMkpjElszfH4a+nxXy
+ E23xcURfTxbO5NQG54DTjaF4uhBWBhm51Ku1Yqc41sthA3OlnkUKxpZlCY5XaKbb8kKMGCl+Mp8
+ HYgs493p/DX551hVdVLTbveHCVzMGrc/YFJPVPJSo09UA877dZuOquj6fCsIvHfVL4jOrbEQvBe
+ VGBOyps7du5kHniEiZg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1011 bulkscore=0
- suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 clxscore=1011 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170074
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=uverma@linux.ibm.com;
@@ -125,155 +126,236 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Utkarsh Verma <uverma@linux.ibm.com>
 
-This series adds support for booting from a disk image under the Virtual Open
-Firmware (VOF) path for sPAPR/pseries machines in QEMU.
+Add spapr_vof_partition.c which implements basic MBR and GPT partition
+table scanning to locate the PReP boot partition during VOF enabled boot.
 
-The most common use case for pseries VMs is booting from a distro qcow2 disk
-image. These images carry a PReP boot partition containing GRUB2, which in turn
-loads the kernel and initrd via IEEE 1275 client interface calls.
-VOF currently only supports direct -kernel/-initrd boot; there is no
-firmware-mediated path to hand off to a bootloader on disk. This series
-implements that missing path, making VOF capable of handling the standard
-distro qcow2 boot flow without requiring SLOF.
-
-This series takes reference from an earlier implementation by Alexey
-Kardashevskiy [1] which explored the same concept but was not carried forward at
-the time.
-
-The existing load_elf function works on a file, whereas in the VOF the PReP
-partition (GRUB) is read from the disk image and loaded in the memory, also
-on loading the PReP partition in the guest memory the /memory@0/available FDT
-needs to be properly updated for each PT_LOAD segment of the core.elf file
-of the GRUB (PReP partition).
-
-Implemented a new public elf loader API load_elf_ram_sym_buf() to resolve both
-these issues. load_elf_ram_sym_buf() accepts a caller-supplied memory buffer
-instead of a filename. Internally it writes the buffer to an anonymous memfd
-and delegates to the existing load_elf32/load_elf64 paths, so all existing
-behaviour is preserved. Also, added optional segment_fn_t callback in
-load_elf_ram_sym_buf() through the internal elf_ops.h.inc template; it is
-invoked once per PT_LOAD segment after the load address is resolved, allowing
-callers to perform per-segment work such as VOF memory claims.
-
-When no -kernel is given, spapr_vof_reset() calls a newly implemented function
-spapr_vof_try_prep_boot() which iterates attached block backends, scans
-partitions for a PReP boot partition, reads the partition contents into a
-host buffer, calls load_elf_ram_sym_buf() to load the GRUB in the guest memory,
-and on success stores the ELF entry point in spapr->kernel_addr.
-spapr_vof_client_dt_finalize() then writes the entry point into
-/chosen/qemu,boot-kernel so VOF then transfers control to GRUB.
-
-- Partition scanner (spapr_vof_partition.c): scans MBR and GPT partition tables
-  on a BlockBackend to locate the PReP boot partition.
-
-- Core loader extension (hw/core/loader.c): new load_elf_ram_sym_buf() API loads
-  a 32/64-bit ELF binary from a caller-supplied memory buffer, reusing the
-  existing load_elf32/load_elf64 paths via a memfd. A new segment_fn_t callback
-  in elf_ops.h.inc lets callers act on each PT_LOAD segment as it is resolved.
-
-- read, seek OF services: two previously unimplemented IEEE 1275 client
-  services, covering block device I/O needed by GRUB.
-
-- vscsi-report-luns method: walks the SCSIBus and builds the LUN report table
-  in guest memory in the format expected by GRUB's ofdisk driver, matching
-  SLOF's dev-generate-srplun encoding.
-
-- VTY write/read routing: routes console I/O through the VTY chardev backend;
-  promotes vty_getchars to external linkage.
-
-- FDT disk@<lun> child nodes (spapr_vscsi.c): emits a child FDT node per
-  attached SCSI disk in VOF mode, giving GRUB a fully-qualified OF path to open.
-  Gated on spapr->vof so SLOF boots are unaffected.
-
-We used AI to build prototype with manual changes incorporated as identified
-during debugging multiple issues faced while making it work, hence using below
-tag as suggested in [2].
-AI-used-for: Code
-
-Testing:
-
-The series has been tested end-to-end by booting a RHEL9.7 qcow2 image on a
-pseries machine with VOF enabled (no SLOF).
-
-build$ ./qemu-system-ppc64 -M pseries,x-vof=on -cpu power9 -m 2G \
--hda ../../rhel-guest-image-9.7-20251021.0.ppc64le.qcow2 -nographic
-qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-cfpc=workaround
-qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ibs=workaround
-qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ccf-assist=on
-Welcome to GRUB!
-<snip>
-                               GRUB version 2.06
-
- +----------------------------------------------------------------------------+
- |*Red Hat Enterprise Linux (5.14.0-611.5.1.el9_7.ppc64le) 9.7 (Plow)         | 
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            |
- |                                                                            | 
- +----------------------------------------------------------------------------+
-
-      Use the ^ and v keys to select which entry is highlighted.          
-      Press enter to boot the selected OS, `e' to edit the commands       
-      before booting or `c' for a command-line.                           
-
-<snip>
-
-Red Hat Enterprise Linux 9.7 (Plow)
-Kernel 5.14.0-611.5.1.el9_7.ppc64le on an ppc64le
-
-Activate the web console with: systemctl enable --now cockpit.socket
-
-localhost login: root
-Password: 
-Last login: Fri Jul 10 01:45:44 on hvc0
-[root@localhost ~]# 
-[root@localhost ~]# ls /
-afs  boot  etc	 lib	media  opt   root  sbin  sys  usr
-bin  dev   home  lib64	mnt    proc  run   srv	 tmp  var
-[root@localhost ~]# 
-[root@localhost ~]# echo "Hello, World!" > hello.txt
-[root@localhost ~]# cat hello.txt 
-Hello, World!
-[root@localhost ~]# 
-
-[1] https://lore.kernel.org/qemu-devel/20200203032943.121178-1-aik@ozlabs.ru/#t
-[2] https://lore.kernel.org/qemu-devel/20260529094619.1034458-1-pbonzini@redhat.com/
-
-Utkarsh Verma (8):
-  ppc/spapr: add PReP boot partition detection
-  hw/loader: add load_elf_ram_sym_buf() for in-memory ELF loading
-  ppc/spapr: add baseline VOF disk boot support
-  ppc/spapr: add VTY backend support to OF read/write/open services
-  ppc/spapr: add block device backend to VOF open/read/write/seek
-    services
-  spapr_vscsi: add VOF disk nodes to the device tree
-  ppc/spapr: strip OF path argument suffix in path_offset
-  ppc/spapr: implement vscsi-report-luns call-method for PAPR vSCSI
-
- hw/char/spapr_vty.c          |   2 +-
- hw/core/loader.c             |  77 ++++++-
+AI-used-for: code
+Signed-off-by: Utkarsh Verma <uverma@linux.ibm.com>
+---
  hw/ppc/meson.build           |   5 +-
- hw/ppc/spapr_vof.c           | 144 +++++++++++-
- hw/ppc/spapr_vof_partition.c | 176 ++++++++++++++
- hw/ppc/trace-events          |   4 +
- hw/ppc/vof.c                 | 429 +++++++++++++++++++++++++++++++++++
- hw/scsi/spapr_vscsi.c        |  40 ++++
- include/hw/core/loader.h     |  30 +++
- include/hw/elf_ops.h.inc     |  12 +-
- include/hw/ppc/spapr_vio.h   |   1 +
- include/hw/ppc/spapr_vof.h   |  14 ++
- include/hw/ppc/vof.h         |   2 +
- 13 files changed, 923 insertions(+), 13 deletions(-)
+ hw/ppc/spapr_vof_partition.c | 176 +++++++++++++++++++++++++++++++++++
+ include/hw/ppc/spapr_vof.h   |  14 +++
+ 3 files changed, 194 insertions(+), 1 deletion(-)
  create mode 100644 hw/ppc/spapr_vof_partition.c
  create mode 100644 include/hw/ppc/spapr_vof.h
 
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 37aa535db2..68a5d2622f 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -93,6 +93,9 @@ ppc_ss.add(when: 'CONFIG_AMIGAONE', if_true: files('amigaone.c'))
+ ppc_ss.add(when: 'CONFIG_PEGASOS', if_true: files('pegasos.c'))
+ 
+ ppc_ss.add(when: 'CONFIG_VOF', if_true: files('vof.c'))
+-ppc_ss.add(when: ['CONFIG_VOF', 'CONFIG_PSERIES'], if_true: files('spapr_vof.c'))
++ppc_ss.add(when: ['CONFIG_VOF', 'CONFIG_PSERIES'], if_true: files(
++  'spapr_vof.c',
++  'spapr_vof_partition.c',
++))
+ 
+ hw_arch += {'ppc': ppc_ss}
+diff --git a/hw/ppc/spapr_vof_partition.c b/hw/ppc/spapr_vof_partition.c
+new file mode 100644
+index 0000000000..ced2818998
+--- /dev/null
++++ b/hw/ppc/spapr_vof_partition.c
+@@ -0,0 +1,176 @@
++/*
++ * QEMU PowerPC sPAPR VOF Partition Table Support.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This implements partition table detection for VOF boot,
++ * supporting MBR and GPT partition tables with focus on PReP boot partition.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/bswap.h"
++#include "qemu/error-report.h"
++#include "system/block-backend-io.h"
++#include "hw/ppc/spapr_vof.h"
++
++#define SECTOR_SIZE              512
++#define MBR_PARTITION_ENTRY_SIZE 16
++#define MBR_PARTITION_TABLE_OFFSET 446
++#define MBR_NUM_PARTITIONS       4
++
++#define PARTITION_TYPE_PREP      0x41  /* PReP Boot partition */
++#define PARTITION_TYPE_GPT       0xEE
++
++#define GPT_SIGNATURE            "EFI PART"
++#define GPT_SIGNATURE_SIZE       8
++
++/* PReP Boot: 9E1A2D38-C612-4316-AA26-8B49521E5A8B */
++static const uint8_t GUID_PREP_BOOT[16] = {
++    0x38, 0x2D, 0x1A, 0x9E, 0x12, 0xC6, 0x16, 0x43,
++    0xAA, 0x26, 0x8B, 0x49, 0x52, 0x1E, 0x5A, 0x8B
++};
++
++typedef struct MBRPartitionEntry {
++    uint8_t  boot_flag;
++    uint8_t  start_chs[3];
++    uint8_t  type;
++    uint8_t  end_chs[3];
++    uint32_t start_lba;
++    uint32_t num_sectors;
++} QEMU_PACKED MBRPartitionEntry;
++
++typedef struct GPTHeader {
++    char     signature[8];
++    uint32_t revision;
++    uint32_t header_size;
++    uint32_t header_crc32;
++    uint32_t reserved;
++    uint64_t current_lba;
++    uint64_t backup_lba;
++    uint64_t first_usable_lba;
++    uint64_t last_usable_lba;
++    uint8_t  disk_guid[16];
++    uint64_t partition_entries_lba;
++    uint32_t num_partition_entries;
++    uint32_t partition_entry_size;
++    uint32_t partition_array_crc32;
++} QEMU_PACKED GPTHeader;
++
++typedef struct GPTPartitionEntry {
++    uint8_t  type_guid[16];
++    uint8_t  partition_guid[16];
++    uint64_t first_lba;
++    uint64_t last_lba;
++    uint64_t attributes;
++    uint16_t name[36];
++} QEMU_PACKED GPTPartitionEntry;
++
++static bool find_prep_partition_gpt(BlockBackend *blk,
++                                    uint64_t *offset, uint64_t *size)
++{
++    uint8_t lba1[SECTOR_SIZE];
++    GPTHeader *header;
++    uint64_t entries_lba;
++    uint32_t num_entries;
++    uint32_t entry_size;
++    uint64_t current_entry_offset;
++    uint8_t *buf;
++    GPTPartitionEntry *current_entry;
++    uint32_t i;
++    int ret;
++
++    ret = blk_pread(blk, SECTOR_SIZE, SECTOR_SIZE, lba1, 0);
++    if (ret < 0) {
++        warn_report("GPT: failed to read LBA1 (ret=%d)", ret);
++        return false;
++    }
++
++    header = (GPTHeader *)lba1;
++
++    if (memcmp(header->signature, GPT_SIGNATURE, GPT_SIGNATURE_SIZE) != 0) {
++        return false;
++    }
++
++    entries_lba = le64_to_cpu(header->partition_entries_lba);
++    num_entries = le32_to_cpu(header->num_partition_entries);
++    entry_size = le32_to_cpu(header->partition_entry_size);
++
++    if (num_entries > 128) {
++        num_entries = 128;
++    }
++
++    if (entry_size < 128) {
++        return false;
++    }
++
++    buf = g_malloc(entry_size);
++    for (i = 0; i < num_entries; i++) {
++        current_entry_offset = (entries_lba * SECTOR_SIZE) +
++                               ((uint64_t)i * entry_size);
++
++        ret = blk_pread(blk, current_entry_offset, entry_size, buf, 0);
++        if (ret < 0) {
++            warn_report("GPT: failed to read partition entry %u "
++                        "(ret=%d)", i, ret);
++            g_free(buf);
++            return false;
++        }
++
++        current_entry = (GPTPartitionEntry *)buf;
++        if (memcmp(current_entry->type_guid, GUID_PREP_BOOT,
++                   sizeof(GUID_PREP_BOOT)) == 0) {
++            *offset = le64_to_cpu(current_entry->first_lba) * SECTOR_SIZE;
++            *size = (le64_to_cpu(current_entry->last_lba) -
++                     le64_to_cpu(current_entry->first_lba) + 1) * SECTOR_SIZE;
++            g_free(buf);
++            return true;
++        }
++    }
++    g_free(buf);
++    return false;
++}
++
++static bool find_prep_partition_mbr(BlockBackend *blk,
++                                    uint64_t *offset, uint64_t *size)
++{
++    uint8_t mbr[SECTOR_SIZE];
++    MBRPartitionEntry *entry;
++    int ret;
++    int i;
++
++    ret = blk_pread(blk, 0, SECTOR_SIZE, mbr, 0);
++    if (ret < 0) {
++        warn_report("MBR: failed to read MBR sector (ret=%d)", ret);
++        return false;
++    }
++
++    /* MBR boot signature: byte 510 = 0x55, byte 511 = 0xAA */
++    if (mbr[510] != 0x55 || mbr[511] != 0xAA) {
++        return false;
++    }
++
++    for (i = 0; i < MBR_NUM_PARTITIONS; i++) {
++        entry = (MBRPartitionEntry *)&mbr[MBR_PARTITION_TABLE_OFFSET +
++                                          i * MBR_PARTITION_ENTRY_SIZE];
++
++        if (entry->type == PARTITION_TYPE_GPT) {
++            return find_prep_partition_gpt(blk, offset, size);
++        }
++
++        if (entry->type == PARTITION_TYPE_PREP) {
++            *offset = (uint64_t)le32_to_cpu(entry->start_lba) * SECTOR_SIZE;
++            *size = (uint64_t)le32_to_cpu(entry->num_sectors) * SECTOR_SIZE;
++            return true;
++        }
++    }
++    return false;
++}
++
++bool spapr_vof_find_prep_partition(BlockBackend *blk,
++                                   uint64_t *offset, uint64_t *size)
++{
++    if (!blk) {
++        return false;
++    }
++    return find_prep_partition_mbr(blk, offset, size);
++}
+diff --git a/include/hw/ppc/spapr_vof.h b/include/hw/ppc/spapr_vof.h
+new file mode 100644
+index 0000000000..08787d2aeb
+--- /dev/null
++++ b/include/hw/ppc/spapr_vof.h
+@@ -0,0 +1,14 @@
++/*
++ * QEMU PowerPC sPAPR VOF Support
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef HW_SPAPR_VOF_H
++#define HW_SPAPR_VOF_H
++
++typedef struct BlockBackend BlockBackend;
++
++bool spapr_vof_find_prep_partition(BlockBackend *blk,
++                                   uint64_t *offset, uint64_t *size);
++
++#endif /* HW_SPAPR_VOF_H */
 -- 
 2.54.0
 
