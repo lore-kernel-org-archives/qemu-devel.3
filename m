@@ -4,118 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E53BC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 06:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D936FC5CFC1
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 06:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvqul-0005xK-Jr; Mon, 17 Aug 2026 02:33:43 -0400
+	id 1wvr4u-0007s7-8R; Mon, 17 Aug 2026 02:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wvquB-0005ti-0A
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:33:28 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wvqu7-0004UN-W3
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:33:05 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-8111c0c7561so36629017b3.3
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 23:33:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786948382; cv=none;
- d=google.com; s=arc-20260327;
- b=WtqwnWokRqeb0obIo0IeBa8YF65yn9LZnDQFLW9/PrlTgz0zezY2s94HgbN62JymnH
- R5c7pEh1Uz68lJm/eb1m6QiP0rMH3onizqUEND0u+9104doFSPqjgcb17LBUa5lOiUYq
- d4qSVp+feqGPupmReN0bUL/9qfU79JyAi82lh2CnL886hB/+cETAvCuMwuakvbqG+pqy
- 3sKSzVGVGzRo/Wh+gIqZPby4sBKQpTHEui32V97RR25K2Fo962z02pBaWGrfEs/bJWqQ
- fNV6HxByk1V6krfR2oATzkobG9K1cE+VsbrZiszUu82trJ6SePp9qndlqMZcqIi3Y4dR
- sLAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
- fh=EBO+ewaBzcwICwNeTItCWUiUAR27teQwQEsktwcbdbI=;
- b=rRVXUThvkDMbcGBEmEjKYBJuAOkSonMGAL8ouDTcQ6MQ3hx2H3RjrFwgQtRs4Qo4xS
- FIwNrGyYnUWr6MD9P+TwfLJBzUZ+pt9DaShFjwQTzg9SVGKOJfAXnBj7PReORXpYlNdM
- Ozvjdnlku5Jt9lrfE45L1kUqZ9spsPhrFTwkNot2iOcBttgyHrtoiuVlWIQoAwv9e9dY
- SF8CL6/KuaHHo5Dl/QxGJBkDfYzqxtlc5K3IXIz2+e0WM1QZdygQYVim0d6wx788A4eQ
- BZeQJ/92SQD7uzOqa8Ont6xvlfb7M7Ujkqs+ZgzhjDCRHbUXYtTKFN+XKtvj9gZfvBPa
- 0OQw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wvr4p-0007rf-UR
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:44:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wvr4m-0006ig-0a
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:44:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786949041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dKgThnxQZPCTNgHr+TklIfGEqv4mPn08WOSgMz5t0P4=;
+ b=Wovh3zXyvAOC9f7LGjLtmXkf/3ZJKjgbb/yIE7Ex0TqHnMYnFtNB7A6bOykSKyL2GKRv4U
+ 2CoqWoyFZdBDAmr1FbfTUuPlbqqxA2XEYIfjjvT0o99iXPmLA9FvSnztn+HluUDNkn6/My
+ jUHOqFtYx+hsiFQbAIHUFR9/66SvPIc=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-226-6BPv0-2BPi6fCU66k5CgaQ-1; Mon, 17 Aug 2026 02:43:59 -0400
+X-MC-Unique: 6BPv0-2BPi6fCU66k5CgaQ-1
+X-Mimecast-MFC-AGG-ID: 6BPv0-2BPi6fCU66k5CgaQ_1786949038
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-8484ba00601so3036571b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 23:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786948382; x=1787553182; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
- b=XQu2/IB1DDhQGaENKJWHOO3mYqwxV6S0tSq1KEGWT01SUBCGajrqKvVDpWmmtuwTNO
- BonxfNxvZJbbdlpOFR9HwF7mIwNjk4kk7IPnMy984kAeHa6VhGBMnRJCyEqWOlgPO88t
- RrrS26VIx2aanLVpbo1vtKPizRth+16SuTg+0pw/tziCZt8KwfW4XVmeqCqgJzywamkl
- GUF0H3z1VR9R8q3UlgucpJQClyAhOUPQWt5F3vfjqtZcT2YSUe6bdajvnTX86UsIuNAy
- ojgNk19cjx1o7ri7uXp1Ea7j+0f14DN564D2f2lyO/K+yCXs9b7o4fACSIvfYNO9fV8J
- lBhw==
+ d=redhat.com; s=google; t=1786949038; x=1787553838; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=dKgThnxQZPCTNgHr+TklIfGEqv4mPn08WOSgMz5t0P4=;
+ b=goMUVx7uGo2FWDmXcx2tv2eCV5H6x5i3QRCtoI0E8wutxuCwQ+DIxjeiC4vJDt29WW
+ 6qh7WxNe9SUoacYPokKhVNj3fMDpNTFW50IM1JN7JbgSdAvbA2NCXF3NNa23M5pTTEXT
+ 6Av1Dl15csZmordw+lly7iAsZ/t3fB4xr1BNUIqoTnbUnRznn0VfdPzmzkxxzNkGw/Jm
+ I+o6QvqovZb81ki39wO0x+/M5S3u040P7HhUTZ50Sa3eYVqSc73Qp3z2EFTpzqNlXsqy
+ 6LWptDaTtZQ54CB8orcghmZbn8Yu4k4OrAgOAgMv8XFHaeo30j1t/2KvG8QGy+vkGnoX
+ lqMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786948382; x=1787553182;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1786949038; x=1787553838;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
- b=rO0X3pknSWU/l5nSspBE/fQLl8HViDHOq9fNuusHppNFpscPpGrE0ivf7sL9BYuIhD
- ETxw2AyjiHoskYO3vguA5pyQUt2adaMcW4znLcdO0kOyggn8pfZoKFvcH2KE8uc1XdEN
- 5iGttmdb2c747uipET60XlnJzzxQDUgK6XgK3YvsFPKa2zEwMr30Hbjqzmyn67OPc3UX
- eqEB+qKY9C6iGAnsbfwHvgEEQjRyMseze9HJIYwqvVy2GuUOEbWIDfvfi9H1hVQGHe+j
- KjG+7mLMtPCOtJqpL10fzAT1qITRgg0PQEelMypf3Cwpy1KITDvFPLZFMd9Aqo2xwnlr
- 3KZA==
-X-Gm-Message-State: AOJu0Yw7njzSzJe3oFeaMQdzvjTwWOmOy/+vRqqRuWC3zJQrPC7P5bgM
- 1fAbAnTZAglrNzdRz7X53zdtEciQsVTjlSX8EkPS/lQkNJVku3xizHEOYRhc34OPFrq97gZWt8y
- eNGhZnJbFQGe+WLpAOWmhfo+aAYgLaoA=
-X-Gm-Gg: AR+sD13u1qX602euCCTUPHnrJobYDNeRw8Qs19LHN7AS+QPnrH6AnfCpPXfCeqFo7Pg
- INVOhLik5UvNiHwrrQLu+/8X05bwx6DsMs/zCRLS7qNEIDd6LZ40pIYR9C8z69e83VjjJUmpgm8
- 7lkdTIfp6tR+zrk7+VvrTtGdXFCAZuG13naY07uJWEqPjItIxmlahKMs1oco3qIii+njNZPGyDn
- L7sDYKxkfGMS4U+kvPqFSp7pnkyfGter0G/9EFpFfk8c9LEbfet7v2qaptQd4XjR1iTETNLZBMb
- x8o6VOUC6B9LAaRhX+nVTjRT1w/czLS0ZxnTJVTnUJk=
-X-Received: by 2002:a05:690e:1906:b0:668:172a:47a7 with SMTP id
- 956f58d0204a3-66c72c7653dmr7681677d50.25.1786948382345; Sun, 16 Aug 2026
- 23:33:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260808182956.290561-1-flamboyant.h.01@gmail.com>
- <20260808182956.290561-2-flamboyant.h.01@gmail.com>
- <CAEUhbmV5hOJuoGjCgLGhMo+BVXNo+RY30D7hP7L9FpdU1Kt5Sw@mail.gmail.com>
-In-Reply-To: <CAEUhbmV5hOJuoGjCgLGhMo+BVXNo+RY30D7hP7L9FpdU1Kt5Sw@mail.gmail.com>
-From: Kangjie Huang <flamboyant.h.01@gmail.com>
-Date: Mon, 17 Aug 2026 14:32:51 +0800
-X-Gm-Features: AcwNN1Vk-mQnnGPY2YUST1tDf1C86ujxBLpx3KrBHaWcihQlEIvjC8WGOMG1f9g
-Message-ID: <CAAW0U4afZ9Y6_dcypihVTSTWLpe0yVqfndWCOD15jU5xKZQk1g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] hw/ssi: Add Synopsys DWC SSI standard PIO
- controller
-To: Bin Meng <bmeng.cn@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Chao Liu <chao.liu@processmission.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Alistair Francis <alistair@alistair23.me>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Kangjie Huang <flamboyant.h.01@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ bh=dKgThnxQZPCTNgHr+TklIfGEqv4mPn08WOSgMz5t0P4=;
+ b=sSk4RBRSIqkelcZ8ksuq6becb3/n7PVqr0ZKHbsqw5w7BVDE1400MvfPrjM+mj1dD6
+ X0Jxv5qbDKm5vHlID6m094iT74ALURZTxHd0lGRxX4Io6LDB1egyc87bQODSzLT4+hNR
+ fW9Y2tzyh3CW8698CowMhpPSHyuzdshPVtpKk+HTLTQBxUKYnQwPlf0juIOfH+vM57qK
+ eXZ/O3kSq8sgUGSphYjZvmg3GUu4K7ntv0j4l/NC45EDv1O/7zNm9nZTFxKTPkq6lyeC
+ FuYr/imgyqFluBGg++H80l/F7JAQIlpxIoNzhMJGECZL/HQitPZopqMuglaG+y6x4BZj
+ Xwvw==
+X-Gm-Message-State: AOJu0YxN8y8kocIKZ+r/Lj1EkfawedmHhYGpT8P/T0Y2EPTANm+qka0N
+ 2MpN8ixaTe5dUrfUIbIl/C7zen4Qmn13oOp4PRTzrdOBH1YPiVG/rNt5HRiDjMILiekLHBLg50Z
+ Uso7W3fmn78ggiePwjquEOO4CXGkiIHuOkBs540adUyQ5yGBCV7GDa5Vn
+X-Gm-Gg: AR+sD10e3mTgMdc03SWASVDJsL6llJ6pV5uzIuMRvGS9imqLqINs3609OLmyGNsLV/3
+ A7pjNXFVfEkB7lxRKLDAnYqaGo8xGl9paK59/Sid6YnU/M6XfsmCN4l973k382Gin/0j6lKkksT
+ 0Y0Lhd8kvEoueV5pLJYr6z+VU6Rs1bhxG5kL+PB2MeW1odnGXp8CzjzqMykYyv58H2SzfcQqHJX
+ eTQtk/1E6ZoF+qtBwQCX3yNZPZWWl/hciqrXh11TPNq4SvnRnSzpjaUQavhEJ/r8rDIiTV6zeny
+ juHmtScOWsHmtoHCmVGamNbQYdNl7reksdQ65EGB4Quhm6gkGyUTxsXlDgQrlwN2IqgFrEjFcB6
+ 7f5BsPdubFBUZUAj6M5d/Q041/vGBYaLxdYyZYl7dJ6lThfrRnAdWrw==
+X-Received: by 2002:a05:6a21:6494:b0:3bf:a0e5:999f with SMTP id
+ adf61e73a8af0-3cc71c93b3fmr27203786637.22.1786949038118; 
+ Sun, 16 Aug 2026 23:43:58 -0700 (PDT)
+X-Received: by 2002:a05:6a21:6494:b0:3bf:a0e5:999f with SMTP id
+ adf61e73a8af0-3cc71c93b3fmr27203723637.22.1786949037568; 
+ Sun, 16 Aug 2026 23:43:57 -0700 (PDT)
+Received: from smtpclient.apple ([106.219.133.98])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3267be8e272sm2608416eec.17.2026.08.16.23.43.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Sun, 16 Aug 2026 23:43:57 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.700.51.1.1\))
+Subject: Re: [PATCH] test/qtest/launchupdate: add another test to exercise
+ load and set host igvm
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <CAK3XEhO3d1C02AkywDoU1OvbMJGyDPmprYcfJk0LQa+agpG_Ow@mail.gmail.com>
+Date: Mon, 17 Aug 2026 12:13:42 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <D1CE7121-3EFF-4A2D-B501-4AB19660244C@redhat.com>
+References: <20260815042845.184329-1-anisinha@redhat.com>
+ <CAK3XEhO3d1C02AkywDoU1OvbMJGyDPmprYcfJk0LQa+agpG_Ow@mail.gmail.com>
+To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: Apple Mail (2.3864.700.51.1.1)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,110 +125,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Meng <bmeng.cn@gmail.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=8816=E6=97=A5=
-=E5=91=A8=E6=97=A5 23:28=E5=86=99=E9=81=93=EF=BC=9A
-> > +    case A_TXFLR:
-> > +        value =3D fifo32_num_used(&s->tx_fifo);
-> > +        if (s->phase =3D=3D DWC_SSI_PHASE_STANDARD_TX_ONLY) {
-> > +            dwc_ssi_run_transfer(s);
-> > +        }
->
-> The modeling of transferring data from TX FIFO needs to be reconsidered.
->
-> IIUC, currently the TX-only transfer advances in 64-frame batches
-> (DWC_SSI_PIO_TX_BATCH) and, once the phase is
-> DWC_SSI_PHASE_STANDARD_TX_ONLY, dwc_ssi_push_tx() deliberately skips
-> dwc_ssi_run_transfer(). The remaining FIFO entries only reach the wire
-> when the guest reads TXFLR or SR (see below).
->
-> What if an interrupt-driven guest that waits for TXE without reading
-> those registers stalls once TXFTHR > 0: the FIFO stays above the
-> threshold, TXE never asserts, and nothing drains it.
->
-> I suggest draining on DR write, like sifive_spi model does. No other
-> hw/ssi model advances its TX FIFO on status-register reads. sifive_spi
-> flushes the whole TX FIFO synchronously on the TXDATA write
-> (sifive_spi_flush_txfifo()), and with a FIFO depth of at most 256
-> entries that is cheap. I'd drop DWC_SSI_PIO_TX_BATCH and have every DR
-> write run the transfer until the FIFO drains. That also removes the
-> asymmetry with the TR path, which already drains fully.
->
-> > +        break;
-> > +    case A_SR:
-> > +        value =3D dwc_ssi_status(s);
-> > +        if (s->phase =3D=3D DWC_SSI_PHASE_STANDARD_TX_ONLY) {
-> > +            dwc_ssi_run_transfer(s);
-> > +        }
-> > +        break;
 
-Hi Bin,
 
-Thank you for reviewing the V3 patch. I agree that these issues need to be
-fixed. For the TX-only FIFO progress issue, the current 64-frame batching
-depends on reads from TXFLR/SR. In IRQ mode, the transfer may stop because =
-TXE
-is never raised.
+> On 15 Aug 2026, at 10:39=E2=80=AFAM, Ani Sinha <anisinha@redhat.com> =
+wrote:
+>=20
+> On Sat, Aug 15, 2026 at 9:59=E2=80=AFAM Ani Sinha =
+<anisinha@redhat.com> wrote:
+>>=20
+>> A new test is added that loads a new IGVM bundle and sets host igvm
+>> ctrl at the same time. The expected behavior is that first reset will =
+load
+>> the passed IGVM. The second reset will restore the original host =
+provided IGVM.
+>> This test exercizes this functionality.
+>>=20
+>> Some refactoring is also done at the same time to re-use common =
+operations from
+>> within multiple test routines.
+>=20
+> This applies on top of the v5 patchset here
+> https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg02509.html
 
-While preparing, I found another issue in the K230 vendor Linux native-CS
-SPI-mem path. The driver first fills the TX FIFO before enabling SER. It th=
-en
-reads TXFLR before writing the remaining data:
-K230 SDK source:
-https://github.com/kendryte/k230_sdk/blob/v2.0/src/little/linux/drivers/spi=
-/spi-dw-core-k230.c#L709-L742
-    len =3D min(dws->fifo_len, dws->tx_len);
-    while (len--)
-        dw_write_io_reg(dws, DW_SPI_DR, *buf++);
+Tested this patch on CoCo and the test runs fine there =E2=80=A6
 
-    len =3D dws->tx_len - ((void *)buf - dws->tx);
-    k230_dw_spi_set_cs(spi, false);
-    while (len) {
-        entries =3D readl_relaxed(dws->regs + DW_SPI_TXFLR);
-        if (!entries) {
-            dev_err(&dws->master->dev,
-                    "CS de-assertion on Tx\n");
-            return -EIO;
-        }
-        room =3D min(dws->fifo_len - entries, len);
-        ... write remaining frames to DR ...
-    }
+serial console file is /tmp/launchupdate-qtest-serial-sKLAJU3
+# starting QEMU: exec ./qemu-system-x86_64 -qtest =
+unix:/tmp/qtest-896542.sock -qtest-log /dev/null -chardev =
+socket,path=3D/tmp/qtest-896542.qmp,id=3Dchar0 -object =
+monitor-qmp,id=3Dqmp0,chardev=3Dchar0 -display none -audio none =
+-run-with exit-with-parent=3Don -machine =
+q35,igvm-cfg=3Digvm0,confidential-guest-support=3Dlsec0 -m 1G -accel kvm =
+-device vm-launch-update -chardev =
+file,id=3Dserial0,path=3D/tmp/launchupdate-qtest-serial-sKLAJU3 -serial =
+chardev:serial0 -object =
+igvm-cfg,id=3Digvm0,file=3Dtests/data/igvm/snptest-nohello.igvm -object =
+'{"qom-type":"sev-snp-guest","id":"lsec0","cbitpos":51,"reduced-phys-bits"=
+:1,"policy":196608}'  -accel qtest
+initially booted with host igvm
+guest paddr: 100000  igvm size: 195048
+writing igvm file into the guest memory
+tell hypervisor where igvm is loaded in guest memory
+qemu-system-x86_64: info: vmlaunchupdate: new IGVM context set.
+resetting the virtual machine. This should load user provided igvm.
+qemu-system-x86_64: info: virtual machine state has been rebuilt with =
+new guest file handle.
+qemu-system-x86_64: info: vmlaunchupdate: next reset will use host igvm
+hello world found on console
+Now resetting again in order to reset to host igvm
+qemu-system-x86_64: info: virtual machine state has been rebuilt with =
+new guest file handle.
+qemu-system-x86_64: info: restoring original host IGVM: =
+tests/data/igvm/snptest-nohello.igvm
+qemu-system-x86_64: info: vmlaunchupdate: host IGVM context set.
+booted with host igvm
+ok 5 /vm-launch-update/ctrl_set_once
+# slow test /vm-launch-update/ctrl_set_once executed in 4.81 secs
+# End of vm-launch-update tests
 
-For the current K230 profile, fifo_len is 256. When i test a 260-byte
-TX-only transfer has
-4 bytes left after the first fill. If we remove the 64-frame limit and drai=
-n the
-FIFO immediately when SER starts the transfer, TXFLR may become zero before
-the driver writes these 4 bytes. The driver then returns "CS de-assertion o=
-n
-Tx". If only DR writes can advance the model, TXFLR may stay full and the
-driver will not issue a DR write to create room.
 
-The SDK also says that native CS is controlled automatically: when the TX F=
-IFO
-has no data left, the controller de-asserts native CS. If the driver refill=
-s
-the FIFO too late, the transaction may end early.
+>=20
+>>=20
+>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>> ---
+>> tests/qtest/launchupdate-test.c | 245 =
++++++++++++++++++++++++++++-----
+>> 1 file changed, 210 insertions(+), 35 deletions(-)
+>>=20
+>> diff --git a/tests/qtest/launchupdate-test.c =
+b/tests/qtest/launchupdate-test.c
+>> index 89a117dfe4..de780eac62 100644
+>> --- a/tests/qtest/launchupdate-test.c
+>> +++ b/tests/qtest/launchupdate-test.c
+>> @@ -248,6 +248,68 @@ static int wait_for_match(char *serial_f,
+>>     return ret;
+>> }
+>>=20
+>> +static void set_test_params(const char **igvm_f, const char =
+**igvm_init,
+>> +                            const char **snp, const char **cgs)
+>> +{
+>> +    if (confidential) {
+>> +        *snp =3D "-object =
+\'{\"qom-type\":\"sev-snp-guest\",\"id\":\"lsec0\","
+>> +            =
+"\"cbitpos\":51,\"reduced-phys-bits\":1,\"policy\":196608}\'";
+>> +        *cgs =3D "confidential-guest-support=3Dlsec0";
+>> +        /*
+>> +         * The following two IGVM files can be built from the source
+>> +         * present in https://gitlab.com/anisinha/virt-firmware-rs .
+>> +         * Typing 'make' from the top of this repository will build =
+the
+>> +         * IGVM files for both confidential and
+>> +         * non-confidential tests. The IGVM files for the non-coco
+>> +         * case has been checked-in into the QEMU repository for
+>> +         * convenience and easy CI pipeline testing.
+>> +         */
+>> +        *igvm_f =3D "tests/data/igvm/snptest.igvm"; /* prints 'hello =
+world' */
+>> +        *igvm_init =3D "tests/data/igvm/snptest-nohello.igvm";
+>> +    } else {
+>> +        *igvm_f =3D "tests/data/igvm/hello.igvm";
+>> +        *igvm_init =3D "tests/data/igvm/qemuinit.igvm";
+>> +        *snp =3D "";
+>> +        *cgs =3D "";
+>> +    }
+>> +
+>> +    return;
+>> +}
+>> +
+>> +static void set_expected_out(const char **exp_out, const char =
+**exp_out2,
+>> +                             const char **exp_out3)
+>> +{
+>> +    *exp_out =3D "Hello world!";
+>> +    *exp_out2 =3D "Test succeeded!";
+>> +    *exp_out3 =3D "boot process complete with initial igvm";
+>> +
+>> +    return;
+>> +}
+>> +
+>> +static QOSState *set_qemu_args(const char *cgs, const char *tp, char =
+*serialf,
+>> +                               const char *igvm_init, const char =
+*snp)
+>> +{
+>> +    QOSState *qs;
+>> +
+>> +    if (tp) {
+>> +        qs =3D qtest_pc_boot("-machine q35,igvm-cfg=3Digvm0,%s -m 1G =
+-accel kvm "
+>> +                           "-device vm-launch-update %s "
+>> +                           "-chardev file,id=3Dserial0,path=3D%s "
+>> +                           "-serial chardev:serial0 "
+>> +                           "-object igvm-cfg,id=3Digvm0,file=3D%s =
+%s",
+>> +                           cgs, tp, serialf, igvm_init, snp);
+>> +    } else {
+>> +        qs =3D qtest_pc_boot("-machine q35,igvm-cfg=3Digvm0,%s -m 1G =
+-accel kvm "
+>> +                           "-device vm-launch-update "
+>> +                           "-chardev file,id=3Dserial0,path=3D%s "
+>> +                           "-serial chardev:serial0 "
+>> +                           "-object igvm-cfg,id=3Digvm0,file=3D%s =
+%s",
+>> +                           cgs, serialf, igvm_init, snp);
+>> +    }
+>> +
+>> +    return qs;
+>> +}
+>> +
+>> static void test_load_igvm(void)
+>> {
+>>     const char *igvm_f;
+>> @@ -255,9 +317,9 @@ static void test_load_igvm(void)
+>>     int ser_fd;
+>>     g_autofree void *igvm_blob =3D NULL;
+>>     g_autofree char *serialtmp =3D NULL;
+>> -    const char exp_out[] =3D "Hello world!";
+>> -    const char exp_out2[] =3D "Test succeeded!";
+>> -    const char exp_out3[] =3D "boot process complete with initial =
+igvm";
+>> +    const char *exp_out;
+>> +    const char *exp_out2;
+>> +    const char *exp_out3;
+>>     const char *tracepoints =3D "--trace memory_region_finalize "
+>>         "--trace qigvm_cleanup_memory -D /tmp/qemu-debug.log ";
+>>     const char *snp, *cgs;
+>> @@ -268,35 +330,13 @@ static void test_load_igvm(void)
+>>     QOSState *qs;
+>>     VMLaunchUpdate launch_update;
+>>=20
+>> -    if (confidential) {
+>> -        snp =3D "-object =
+\'{\"qom-type\":\"sev-snp-guest\",\"id\":\"lsec0\","
+>> -            =
+"\"cbitpos\":51,\"reduced-phys-bits\":1,\"policy\":196608}\'";
+>> -        cgs =3D "confidential-guest-support=3Dlsec0";
+>> -        /*
+>> -         * The following two IGVM files can be built from the source
+>> -         * present in https://gitlab.com/anisinha/virt-firmware-rs .
+>> -         * Typing 'make' from the top of this repository will build =
+the
+>> -         * IGVM files for both confidential and
+>> -         * non-confidential tests. The IGVM files for the non-coco
+>> -         * case has been checked-in into the QEMU repository for
+>> -         * convenience and easy CI pipeline testing.
+>> -         */
+>> -        igvm_f =3D "tests/data/igvm/snptest.igvm"; /*
+>> -                                                  * this prints =
+'hello world'
+>> -                                                  * on console
+>> -                                                  */
+>> -        igvm_init =3D "tests/data/igvm/snptest-nohello.igvm";
+>> -    } else {
+>> -        igvm_f =3D "tests/data/igvm/hello.igvm";
+>> -        igvm_init =3D "tests/data/igvm/qemuinit.igvm";
+>> -        snp =3D "";
+>> -        cgs =3D "";
+>> -    }
+>> -
+>>     if (!trace) {
+>>         tracepoints =3D "";
+>>     }
+>>=20
+>> +    set_test_params(&igvm_f, &igvm_init, &snp, &cgs);
+>> +    set_expected_out(&exp_out, &exp_out2, &exp_out3);
+>> +
+>>     if (!g_file_test(igvm_f, G_FILE_TEST_EXISTS) ||
+>>         !g_file_test(igvm_init, G_FILE_TEST_EXISTS)) {
+>>         g_test_skip("igvm file bundle(s) does not exist!");
+>> @@ -326,12 +366,7 @@ static void test_load_igvm(void)
+>>         fprintf(stderr, "serial console file is %s\n", serialtmp);
+>>     }
+>>=20
+>> -    qs =3D qtest_pc_boot("-machine q35,igvm-cfg=3Digvm0,%s -m 1G =
+-accel kvm "
+>> -                       "-device vm-launch-update %s "
+>> -                       "-chardev file,id=3Dserial0,path=3D%s "
+>> -                       "-serial chardev:serial0 "
+>> -                       "-object igvm-cfg,id=3Digvm0,file=3D%s %s",
+>> -                       cgs, tracepoints, serialtmp, igvm_init, snp);
+>> +    qs =3D set_qemu_args(cgs, tracepoints, serialtmp, igvm_init, =
+snp);
+>>=20
+>>     fw_cfg =3D pc_fw_cfg_init(qs->qts);
+>>=20
+>> @@ -342,6 +377,11 @@ static void test_load_igvm(void)
+>>=20
+>>     /* exp_out3 should be printed once from initial boot */
+>>     g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 1) =3D=3D=
+ 0);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "initially booted with host igvm\n");
+>> +    }
+>> +
+>>     g_assert_true(load_image(igvm_f, &igvm_blob, &igvm_sz) =3D=3D =
+igvm_sz);
+>>=20
+>>     /* create a data buffer in guest memory */
+>> @@ -389,7 +429,7 @@ static void test_load_igvm(void)
+>>=20
+>>     /* check if VM_LAUNCHUPDATE_CTL_HOST_IGVM function works */
+>>=20
+>> -    /* set VM_LAUNCHUPDATE_CTL_HOST_IGVM control */
+>> +    /* set only VM_LAUNCHUPDATE_CTL_HOST_IGVM control without IGVM =
+bundle */
+>>     memset(&launch_update, 0, sizeof(launch_update));
+>>     launch_update.control |=3D VM_LAUNCHUPDATE_CTL_HOST_IGVM;
+>>=20
+>> @@ -410,6 +450,139 @@ static void test_load_igvm(void)
+>>      */
+>>     g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 2) =3D=3D=
+ 0);
+>>=20
+>> +    if (debug) {
+>> +        fprintf(stderr, "booted with host igvm again\n");
+>> +    }
+>> +
+>> +    close(ser_fd);
+>> +    guest_free(&qs->alloc, gaddr);
+>> +    pc_fw_cfg_uninit(fw_cfg);
+>> +    /* qtest_quit() kils QEMU, first by sending SIGTERM, then =
+SIGKILL */
+>> +    qtest_quit(qs->qts);
+>> +}
+>> +
+>> +static void test_set_ctrl_once_and_reset_to_host_igvm(void)
+>> +{
+>> +    const char *igvm_f;
+>> +    const char *igvm_init;
+>> +    int ser_fd;
+>> +    g_autofree void *igvm_blob =3D NULL;
+>> +    g_autofree char *serialtmp =3D NULL;
+>> +    const char *exp_out;
+>> +    const char *exp_out2;
+>> +    const char *exp_out3;
+>> +    const char *snp, *cgs;
+>> +    uint64_t gaddr;
+>> +    size_t igvm_sz;
+>> +    size_t filesize;
+>> +    QFWCFG *fw_cfg;
+>> +    QOSState *qs;
+>> +    VMLaunchUpdate launch_update;
+>> +
+>> +    set_test_params(&igvm_f, &igvm_init, &snp, &cgs);
+>> +    set_expected_out(&exp_out, &exp_out2, &exp_out3);
+>> +
+>> +    if (!g_file_test(igvm_f, G_FILE_TEST_EXISTS) ||
+>> +        !g_file_test(igvm_init, G_FILE_TEST_EXISTS)) {
+>> +        g_test_skip("igvm file bundle(s) does not exist!");
+>> +        return;
+>> +    }
+>> +
+>> +    if (!qtest_has_machine("q35")) {
+>> +        g_test_skip("q35 machine not available");
+>> +        return;
+>> +    }
+>> +
+>> +    if (!qtest_has_accel("kvm")) {
+>> +        g_test_skip("No KVM accelerator available");
+>> +        return;
+>> +    }
+>> +
+>> +    if (!qtest_has_device("vm-launch-update")) {
+>> +        g_test_skip("Device vm-launch-update is not available");
+>> +        return;
+>> +    }
+>> +
+>> +    ser_fd =3D g_file_open_tmp("launchupdate-qtest-serial-sXXXXXX",
+>> +                             &serialtmp, NULL);
+>> +    g_assert_true(ser_fd !=3D -1);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "serial console file is %s\n", serialtmp);
+>> +    }
+>> +
+>> +    qs =3D set_qemu_args(cgs, NULL, serialtmp, igvm_init, snp);
+>> +
+>> +    fw_cfg =3D pc_fw_cfg_init(qs->qts);
+>> +
+>> +    g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 1) =
+=3D=3D 0);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "initially booted with host igvm\n");
+>> +    }
+>> +
+>> +    g_assert_true(load_image(igvm_f, &igvm_blob, &igvm_sz) =3D=3D =
+igvm_sz);
+>> +
+>> +    /* create a data buffer in guest memory */
+>> +    gaddr =3D guest_alloc(&qs->alloc, igvm_sz);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "guest paddr: %"PRIx64 "  igvm size: %lu\n",
+>> +                gaddr, igvm_sz);
+>> +    }
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "writing igvm file into the guest =
+memory\n");
+>> +    }
+>> +
+>> +    qtest_bufwrite(qs->qts, gaddr, igvm_blob, igvm_sz);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr,
+>> +                "tell hypervisor where igvm is loaded in guest =
+memory\n");
+>> +    }
+>> +
+>> +    /* now tell hypervisor where we loaded the bios */
+>> +    memset(&launch_update, 0, sizeof(launch_update));
+>> +    launch_update.fw_image_size =3D cpu_to_le64(igvm_sz);
+>> +    launch_update.fw_image_addr =3D cpu_to_le64(gaddr);
+>> +
+>> +    /* set both host ctrl and format_igvm ctrl once */
+>> +    launch_update.control |=3D VM_LAUNCHUPDATE_FORMAT_IGVM;
+>> +    launch_update.control |=3D VM_LAUNCHUPDATE_CTL_HOST_IGVM;
+>> +
+>> +    filesize =3D qfw_cfg_write_file(fw_cfg, qs, FILE_VMLAUNCHUPDATE,
+>> +                                  &launch_update, =
+sizeof(launch_update));
+>> +    g_assert_cmpint(filesize, =3D=3D, sizeof(launch_update));
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "resetting the virtual machine. This should =
+load "
+>> +                "user provided igvm.\n");
+>> +    }
+>> +
+>> +    qtest_system_reset(qs->qts);
+>> +
+>> +    /* expected string should be printed on the console */
+>> +    g_assert_true(wait_for_match(serialtmp, exp_out, WAIT_SEC, 1) =3D=3D=
+ 0);
+>> +    g_assert_true(wait_for_match(serialtmp, exp_out2, WAIT_SEC, 1) =
+=3D=3D 0);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "hello world found on console\n");
+>> +        fprintf(stderr, "Now resetting again in order to reset to =
+host igvm\n");
+>> +    }
+>> +
+>> +    qtest_system_reset(qs->qts);
+>> +
+>> +    /*
+>> +     * exp_out3 should be printed twice, once from initial boot,
+>> +     * once from restoring host igvm.
+>> +     */
+>> +    g_assert_true(wait_for_match(serialtmp, exp_out3, WAIT_SEC, 2) =
+=3D=3D 0);
+>> +
+>> +    if (debug) {
+>> +        fprintf(stderr, "booted with host igvm\n");
+>> +    }
+>> +
+>>     close(ser_fd);
+>>     guest_free(&qs->alloc, gaddr);
+>>     pc_fw_cfg_uninit(fw_cfg);
+>> @@ -435,6 +608,8 @@ int main(int argc, char **argv)
+>>     g_test_add_func("/vm-launch-update/errorcheck", check_error);
+>>     g_test_add_func("/vm-launch-update/load_igvm",
+>>                     test_load_igvm);
+>> +    g_test_add_func("/vm-launch-update/ctrl_set_once",
+>> +                    test_set_ctrl_once_and_reset_to_host_igvm);
+>>=20
+>>     if (getenv("LAUNCHUPDATE_DEBUG")) {
+>>         debug =3D true;
+>> --
+>> 2.54.0
+>>=20
 
-The K230-specific DWC SSI driver also comments out the generic SPI IRQ setu=
-p,
-so its standard transfer path uses polling. The generic DWC SSI driver stil=
-l
-uses IRQ mode when an IRQ is available.
-
-K230 DWC SSI driver:
-https://github.com/kendryte/k230_sdk/blob/v2.0/src/little/linux/drivers/spi=
-/spi-dw-core-k230.c#L589-L597
-Generic DWC SSI driver:
-https://github.com/torvalds/linux/blob/8d3ae59288f1e7d58d76558a6ee96d533bc5=
-019f/drivers/spi/spi-dw-core.c#L416-L465
-
-We need to fix the FIFO stall in IRQ mode, but the native-CS path must not =
-see
-TXFLR=3D0 too early. I am not sure how to handle both cases. Could you plea=
-se
-advise whether we need another way to advance the FIFO=EF=BC=8C
-such as a QEMU timer or another mechanism?
-
-Regards,
-Kangjie
 
