@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642C0C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A67CFC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtLH-0000NK-GU; Mon, 17 Aug 2026 05:09:15 -0400
+	id 1wvtKY-0007Yj-15; Mon, 17 Aug 2026 05:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKY-0007eY-Cm; Mon, 17 Aug 2026 05:08:30 -0400
+ id 1wvtJg-0004rM-Jx; Mon, 17 Aug 2026 05:07:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKV-00026c-Sp; Mon, 17 Aug 2026 05:08:30 -0400
+ id 1wvtJe-0001wq-TI; Mon, 17 Aug 2026 05:07:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=SKkxQ1ldOP8XDl4IWBN/X7wNd3UJkmrXr1ASx2GfKK0=;
+ t=1786957506; bh=nLOBd6qmhI9qHAWdEEcaXA/9sF1TdPCH8cF+8kL5n54=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AomHWcmmeui+mgi+bPT8DM1UoZKzhamO9FhpoZIpyPImFUi41hSY0sCj+Xa1Tcenn
- yaz6pL+0ipI/UZcs4b7kShZgScg2Br3YcMBcO7dbuomJr5UE9DW17VMtGoKdJ4PO/h
- GDAkdWNKykRTUelF1ez6DC+xktuKtOVt+WtzahVofJAEvDTSVOrHjrRAF69+mmOckK
- U5C0uSzUot8W8ofwKqAgQDQD7yrAA7dU4hs/VfIdHJHoGeht4WzZw/mPJpCj9TUIqr
- QCdvNjla8W2BWTWDQJ39AgjGgiQIJskmgKN9KPAGnEbe/+/8VRB3R5xorlJ7rGbr/I
- OMaZuPkEzWkzQ==
+ b=XAJsQWaEe8XUvHDvIRmTkJRGI/TbVGVVGxU+ZnkiKyysmX/QigVsWDpcwS3cGi74C
+ G6VE0OCd7+fB8NhKKnx0E5QAidTfzLMXDCeWTw0snUu8GImAuh7vqAnGdcEvHv5Rhg
+ pDEBJnaEJ6ukYHvOo7GZTluMviWaUJxjqtrX7tHfutONmzxMqS8JOJDa2P6k/ROHoI
+ feqS7vDlvpyKa+M1KxcstM0XGV37kNTH2IaIzqUfGckZFvk9krYRmfSLjqL6PcR0R0
+ edOrze+GTozwZZtWKPeWTkvAQmFBtvKM8UuJFF3+S+psjYqAc56L/aO8RyYzCxSzAF
+ AT9hVkpksSznA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 97BC01CBA57;
+ by isrv.corpit.ru (Postfix) with ESMTP id 73CAA1CBA4F;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7669C40D039;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5328640D031;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1250330D26; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
+ id EF7C030D16; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 35/42] hw/ide/atapi: read the whole elementary
- transfer asynchronously
-Date: Mon, 17 Aug 2026 12:04:40 +0300
-Message-ID: <20260817090453.2034156-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 27/42] hw/intc/loongarch_pch_pic: Validate
+ htmsi_vector before indexing parent_irq
+Date: Mon, 17 Aug 2026 12:04:32 +0300
+Message-ID: <20260817090453.2034156-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -71,272 +71,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-An ATAPI PIO read whose byte-count limit spans more than one CD sector
-must fetch the later sectors of a DRQ burst from inside the completion
-of the first, asynchronous read. cd_read_sector_sync() did this with a
-synchronous blk_pread(), which runs blk_wait_while_drained() before
-issuing the request.
+pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
+index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
+the array, but only 32 are used by the virt machine) causes an out-of-bounds
+read and a guest-triggerable QEMU crash.
 
-If a drain is in progress when that completion runs -- as happens when
-a guest reset reaches virtio_blk_stop_ioeventfd() ->
-bdrv_drain_all_begin() while an ATAPI read is in flight on the same
-QEMU -- the nested read is queued until the drained section ends while
-the outer completion still holds blk->in_flight. bdrv_drain_all_begin()
-then waits forever for that in_flight count to drop: the main loop is
-wedged in the drain with the BQL held, and every other QMP/monitor
-operation blocks behind it.
+Validate the vector before calling qemu_set_irq() in both the raise and lower
+paths and log a guest error if it is out of range.
 
-Read the whole elementary transfer in a single asynchronous request up
-front instead, so no read is ever issued in the middle of a burst.
-cd_read_sector() now reads all the sectors a burst spans (the raw
-2352-byte case is unpacked in place on completion) and
-cd_read_sector_sync() is removed. The DMA path already batched its
-reads and is unchanged.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit 12289dc700d910bca4b79bb8de71acff06097489)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+(cherry picked from commit 80776c4df92c3d58f89608b61e355092a7d524ed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-index a42b7485218..0ea149ad8c6 100644
---- a/hw/ide/atapi.c
-+++ b/hw/ide/atapi.c
-@@ -88,46 +88,14 @@ static void cd_data_to_raw(uint8_t *buf, int lba)
-     memset(buf, 0, 288);
- }
- 
--static int
--cd_read_sector_sync(IDEState *s)
--{
--    int ret;
--    block_acct_start(blk_get_stats(s->blk), &s->acct,
--                     ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
--
--    trace_cd_read_sector_sync(s->lba);
--
--    switch (s->cd_sector_size) {
--    case 2048:
--        ret = blk_pread(s->blk, (int64_t)s->lba << ATAPI_SECTOR_BITS,
--                        ATAPI_SECTOR_SIZE, s->io_buffer, 0);
--        break;
--    case 2352:
--        ret = blk_pread(s->blk, (int64_t)s->lba << ATAPI_SECTOR_BITS,
--                        ATAPI_SECTOR_SIZE, s->io_buffer + 16, 0);
--        if (ret >= 0) {
--            cd_data_to_raw(s->io_buffer, s->lba);
--        }
--        break;
--    default:
--        block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_READ);
--        return -EIO;
--    }
--
--    if (ret < 0) {
--        block_acct_failed(blk_get_stats(s->blk), &s->acct);
--    } else {
--        block_acct_done(blk_get_stats(s->blk), &s->acct);
--        s->lba++;
--        s->io_buffer_index = 0;
--    }
--
--    return ret;
--}
--
- static void cd_read_sector_cb(void *opaque, int ret)
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 82e16be3918..e87c7497c11 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
  {
-     IDEState *s = opaque;
-+    int et = s->elementary_transfer_size;
-+    int skip = s->io_buffer_index;
-+    int nsec = DIV_ROUND_UP(skip + et, s->cd_sector_size);
-+    uint8_t *buf;
-+    int i;
+     uint64_t val;
+     int irq;
++    uint8_t vector;
  
-     trace_cd_read_sector_cb(s->lba, ret);
- 
-@@ -140,34 +108,64 @@ static void cd_read_sector_cb(void *opaque, int ret)
-     block_acct_done(blk_get_stats(s->blk), &s->acct);
- 
-     if (s->cd_sector_size == 2352) {
--        cd_data_to_raw(s->io_buffer, s->lba);
-+        /* unpack back-to-front so a sector never clobbers an unmoved one */
-+        for (i = nsec - 1; i >= 0; i--) {
-+            memmove(s->io_buffer + i * 2352 + 16, s->io_buffer + i * 2048,
-+                    ATAPI_SECTOR_SIZE);
-+            cd_data_to_raw(s->io_buffer + i * 2352, s->lba + i);
-+        }
-     }
- 
--    s->lba++;
--    s->io_buffer_index = 0;
-     s->status &= ~BUSY_STAT;
- 
--    ide_atapi_cmd_reply_end(s);
-+    s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
-+    s->lcyl = et & 0xff;
-+    s->hcyl = (et >> 8) & 0xff;
-+    ide_bus_set_irq(s->bus);
-+
-+    /* a boundary sector shared with the next burst is re-read there */
-+    buf = s->io_buffer + skip;
-+    s->packet_transfer_size -= et;
-+    s->lba += (skip + et) / s->cd_sector_size;
-+    s->io_buffer_index = (skip + et) % s->cd_sector_size;
-+    s->elementary_transfer_size = 0;
-+
-+    if (ide_transfer_start_norecurse(s, buf, et, ide_atapi_cmd_reply_end)) {
-+        ide_atapi_cmd_reply_end(s);
-+    }
- }
- 
-+/*
-+ * Read the whole elementary transfer (one DRQ burst) in a single async
-+ * request. No read is issued mid-burst, so unlike the old synchronous
-+ * rebuffer it cannot deadlock against a concurrent drain.
-+ */
- static int cd_read_sector(IDEState *s)
- {
--    void *buf;
-+    int et = s->elementary_transfer_size;
-+    int skip = s->io_buffer_index;
-+    int nsec = DIV_ROUND_UP(skip + et, s->cd_sector_size);
- 
-     if (s->cd_sector_size != 2048 && s->cd_sector_size != 2352) {
-         block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_READ);
-         return -EINVAL;
-     }
- 
--    buf = (s->cd_sector_size == 2352) ? s->io_buffer + 16 : s->io_buffer;
--    qemu_iovec_init_buf(&s->qiov, buf, ATAPI_SECTOR_SIZE);
-+    /* a burst is bounded by the byte count limit, so it fits io_buffer */
-+    assert(nsec * s->cd_sector_size <= s->io_buffer_total_len);
-+
-+    /*
-+     * Read the payload packed at the front of io_buffer; the 2352 raw case is
-+     * unpacked into place on completion.
-+     */
-+    qemu_iovec_init_buf(&s->qiov, s->io_buffer, nsec * ATAPI_SECTOR_SIZE);
- 
-     trace_cd_read_sector(s->lba);
- 
-     block_acct_start(blk_get_stats(s->blk), &s->acct,
--                     ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
-+                     nsec * ATAPI_SECTOR_SIZE, BLOCK_ACCT_READ);
- 
--    ide_buffered_readv(s, (int64_t)s->lba << 2, &s->qiov, 4,
-+    ide_buffered_readv(s, (int64_t)s->lba << 2, &s->qiov, nsec * 4,
-                        cd_read_sector_cb, s);
- 
-     s->status |= BUSY_STAT;
-@@ -222,59 +220,49 @@ static uint16_t atapi_byte_count_limit(IDEState *s)
- void ide_atapi_cmd_reply_end(IDEState *s)
- {
-     int byte_count_limit, size, ret;
--    while (s->packet_transfer_size > 0) {
--        trace_ide_atapi_cmd_reply_end(s, s->packet_transfer_size,
--                                      s->elementary_transfer_size,
--                                      s->io_buffer_index);
--
--        /* see if a new sector must be read */
--        if (s->lba != -1 && s->io_buffer_index >= s->cd_sector_size) {
--            if (!s->elementary_transfer_size) {
--                ret = cd_read_sector(s);
--                if (ret < 0) {
--                    ide_atapi_io_error(s, ret);
--                }
--                return;
--            } else {
--                /* rebuffering within an elementary transfer is
--                 * only possible with a sync request because we
--                 * end up with a race condition otherwise */
--                ret = cd_read_sector_sync(s);
--                if (ret < 0) {
--                    ide_atapi_io_error(s, ret);
--                    return;
--                }
-+
-+    trace_ide_atapi_cmd_reply_end(s, s->packet_transfer_size,
-+                                  s->elementary_transfer_size,
-+                                  s->io_buffer_index);
-+
-+    if (s->lba != -1 && s->packet_transfer_size > 0) {
-+        byte_count_limit = atapi_byte_count_limit(s);
-+        trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
-+        size = s->packet_transfer_size;
-+        if (size > byte_count_limit) {
-+            /* byte count limit must be even if this case */
-+            if (byte_count_limit & 1) {
-+                byte_count_limit--;
-             }
-+            size = byte_count_limit;
+     if (level) {
+         val = mask & s->intirr & ~s->int_mask;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr |= MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            qemu_set_irq(s->parent_irq[vector], 1);
          }
--        if (s->elementary_transfer_size > 0) {
--            /* there are some data left to transmit in this elementary
--               transfer */
--            size = s->cd_sector_size - s->io_buffer_index;
--            if (size > s->elementary_transfer_size)
--                size = s->elementary_transfer_size;
--        } else {
--            /* a new transfer is needed */
--            s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
--            ide_bus_set_irq(s->bus);
--            byte_count_limit = atapi_byte_count_limit(s);
--            trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
--            size = s->packet_transfer_size;
--            if (size > byte_count_limit) {
--                /* byte count limit must be even if this case */
--                if (byte_count_limit & 1)
--                    byte_count_limit--;
--                size = byte_count_limit;
--            }
--            s->lcyl = size & 0xff;
--            s->hcyl = size >> 8;
--            s->elementary_transfer_size = size;
--            /* we cannot transmit more than one sector at a time */
--            if (s->lba != -1) {
--                if (size > (s->cd_sector_size - s->io_buffer_index))
--                    size = (s->cd_sector_size - s->io_buffer_index);
-+        s->elementary_transfer_size = size;
-+        ret = cd_read_sector(s);
-+        if (ret < 0) {
-+            ide_atapi_io_error(s, ret);
-+        }
-+        return;
-+    }
-+
-+    while (s->packet_transfer_size > 0) {
-+        /* a new transfer is needed */
-+        s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
-+        ide_bus_set_irq(s->bus);
-+        byte_count_limit = atapi_byte_count_limit(s);
-+        trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
-+        size = s->packet_transfer_size;
-+        if (size > byte_count_limit) {
-+            /* byte count limit must be even if this case */
-+            if (byte_count_limit & 1) {
-+                byte_count_limit--;
-             }
--            trace_ide_atapi_cmd_reply_end_new(s, s->status);
-+            size = byte_count_limit;
+     } else {
+         /*
+@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+         val = mask & s->intisr & ~s->intirr;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            qemu_set_irq(s->parent_irq[vector], 0);
          }
-+        s->lcyl = size & 0xff;
-+        s->hcyl = size >> 8;
-+        s->elementary_transfer_size = size;
-+        trace_ide_atapi_cmd_reply_end_new(s, s->status);
-+
-         s->packet_transfer_size -= size;
-         s->elementary_transfer_size -= size;
-         s->io_buffer_index += size;
-@@ -329,7 +317,7 @@ static void ide_atapi_cmd_read_pio(IDEState *s, int lba, int nb_sectors,
-     s->lba = lba;
-     s->packet_transfer_size = nb_sectors * sector_size;
-     s->elementary_transfer_size = 0;
--    s->io_buffer_index = sector_size;
-+    s->io_buffer_index = 0;
-     s->cd_sector_size = sector_size;
- 
-     ide_atapi_cmd_reply_end(s);
+     }
+ }
 -- 
 2.47.3
 
