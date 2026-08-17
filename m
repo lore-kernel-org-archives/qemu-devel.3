@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146A5C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED2CC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2al-0000C6-5x; Mon, 17 Aug 2026 15:01:51 -0400
+	id 1ww2b1-0002QZ-TZ; Mon, 17 Aug 2026 15:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZA-0006HF-F0
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:13 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2Zs-0006h8-VB
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:11 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Z6-0006Sb-1H
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:11 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4954f5e8020so19824165e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2Zp-0006kh-Te
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:56 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-81ea0b7d137so31286837b3.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993205; x=1787598005; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786993252; x=1787598052; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=bnodjSAzjDULOoHrxt/3zq90Ldw0LIHvEoopbIGCwKk=;
- b=jCeEXwSG0umwEjaipDtmeMhtq7I/k923OTWWsPs0BSTrnou6UXdeJGNwqMKLJ06byx
- Pfem3j1DhOxxru0YNhproDk+h6FvlCMXieHE5n0R9cCHbOmvJGrJfM3/K3GeslC2Y4+7
- +qXjJAIp6eNzcO5aXxhwl/bBOP3UylVxAqkVelo5rz96VKQvIuR4iHz3D1tSjRkLt/Pi
- fqI5/oDf8INweSvXqMSy/K29rS0Xx65bV1Rzefnm5qJeoNBeOVKq5WsPjOT8OBk8CLtR
- aNQR1wn3ntrYpi863SOlLHwF8nB/8RYHd4ocByLLzcFidAKBz+iYUrfeb7yaXG5eLRc0
- cSgQ==
+ bh=KpvUL1chzZkJ6/YikyruA6kEN75GfHYu2PKgo1YZbyA=;
+ b=PEetXr7lP03kZgsqxOYxiHWmce38/5yCva8IDHp7PuL4JFjLs4+6ZJVHzTb7zZg4ww
+ 2obSoOXoqDw6JsL1Oa4WgbC0H/huCPlIlULz8TzAXsGYQ4yapE1NAEQSsFk4RFMVyafd
+ 2zxxq5+/dvaYD+WjYF/y8n8ck/0xjEeubZTKKhdTZo7M8FahKrGZrG0mLBFGaNBYcTOm
+ LxV+ezfnXfC93go1WHZQtt5XXO5cAJFl88axet/AOiGo74te5INfR2za2IkUgR5gW+J6
+ dsF4/A7Bp8onbtFkRst8N2ZmxdRfkzJfgyp9gup1zzagXmT/HYEZRsduYPclYf9CisRL
+ rslQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993205; x=1787598005;
+ d=1e100.net; s=20251104; t=1786993252; x=1787598052;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=bnodjSAzjDULOoHrxt/3zq90Ldw0LIHvEoopbIGCwKk=;
- b=Wn/zIy/ja3aG0pTkjsHAYAOZOHVzU6U4OCHil8dfcOJz8Re5GiWKwhVVMTkWCdobPr
- jlfRuR6aSgno3YgZoJIjFxg+Dn8TlVH5BB7sJgcMLtpVZxja6E0c0w4c1T0PxYhBGtYS
- DEqkuuMN7weY0ybFGs9ax/4gw6aKhOa7aNZV7qb4vvBAmh9N5SuLgBUl7QyZrXvMAq8F
- ialh75xw+Knt1ly0qrUbzJksEFRDIcKWt5Uz6MSj2ply+kv05QAVxRhXgtchTRkJkpGy
- V1A4tmmISqPyorPvdbkE/+hQBEvRFvaHAfkVmwCzgLz/J6mb76fFM9Qxy4Vz+pVjGGBZ
- E8vA==
-X-Gm-Message-State: AOJu0YzmuXnHwmA20Jni/hUTvEoTqRGqc41f3bUpwEbS/on3w5pJNSml
- Gy/YLjPX3fl63CTs2caAk4BEmKP8+Q/NzZMZV5fhsRNIu1LzwIOzXdNUvPrpqO/W5WGGmd2aDUB
- dRIKV
-X-Gm-Gg: AR+sD110E+h74VF7BfGLnqA2N6R1FQJRxG6zjsOGlZDWafLCeapnCAdq93XYsbQyFOG
- zEZLn9v8w1DoKxmnk+EVvgwxMsQoiplo15Yx7dSulCJ6qTnV79wMFfUl1w9tHy9Zn4RTAy+p2V9
- s5d+ly50kh8aS5iMngJAhYTPw2OBLgPocL9t6pxxYJWnkpoD5AlIOOB5fiFWk3joL9/F79uIST2
- 3gLNPyps3ufcF/NJh4lSITt/NkdUrnpLjM3D/Thco6CNOLXKbpaPG+Rvwl1cdTYa+VBzuKaU7Hu
- V5hx5v+N1pPGvWXpw3xxkz4i/7Um8vX3nRmLoDMU6dgSy5eo09bxoUebkUhVmpfKhBKoYlIY662
- w6Fw99iW8T+7jCgEmSvB3WW1N01Zi625aAaW1IHCirO/JoFBQuNDlLcEXIgz9qe9LziNN/PYqZU
- B48XN0p268l7OO+w3btv/OEJtfDy9a6DDbiOJ/yAL7lXoJAra4Sg==
-X-Received: by 2002:a05:600c:8509:b0:496:c9cd:e7ab with SMTP id
- 5b1f17b1804b1-499879337acmr489135255e9.5.1786993205196; 
- Mon, 17 Aug 2026 12:00:05 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
+ bh=KpvUL1chzZkJ6/YikyruA6kEN75GfHYu2PKgo1YZbyA=;
+ b=DpGbxV90o9mHLfzt4gndqxIXFryBOVYsv/1NK+aieBaY0Spv9FvSFkZQ3TJKkio+q8
+ FGuknRbGfGK1L3ntVjVAIORSzZTpEli8mijtBX2L69R8dTMFig6p+Sp9hiSBNHbb86Sy
+ PER+N35RA1/aHbaTxtbT1PyIPwJN9rFsrQ1I86mv+FIDuVcIkD2XbVuCg8+UvtUo+l6d
+ UO64AV/txQ9A7m558hBID0FFwCM2AX3s9EJStN0K38W13fFArdaTRQmcN+GaeNTRAy5Q
+ zgP274ruIUvz4eXJBX4RHmtYmNbeyhSn0smmO+X0KtQwe8WCzyKKb1wcPIRuTiOsMtN/
+ G3Ew==
+X-Gm-Message-State: AOJu0YxG7ZqpTZTN5fHrfGrghOZZyzH2PbeyqljYWjbPt6EIKT/wongw
+ XnP+CjzTL2wt94x23PSZqMj2NgeUQi4145XesdbOiR4Xt4dRaPS+xVpJhE2VzMNTwus=
+X-Gm-Gg: AR+sD11G7PVAQ61+PSbzfPpnhaJ22tXLQfmh02g3589ZWlwmKMSuLhFIf3uyy0IR5vz
+ +bFY2Brpofk6v+L0uYJoxII3Qu/BpmFkIufO4SdNr3ZOv7fq4PnbP0EFHi1B5TtV6j17sGdSUd3
+ 92NcrQuuDO+LNpbBFvD3/KhLkjkgyIR6Gev6RDIVmDTaFLvegW4hEw/nSe0ZcfXPp4klzZ6F/JX
+ 4zw+FILT2mJzZVOobbpVsRAzWrKdPHeuX9tI454fogN4Gjqx9bfzjdHQXMkIIsbk4XbRiJX8Vck
+ Wg5ehB0FmmNq5kvnk6zSWaolMbz0aSWulTenXIhRGDVnrrJRzJbgWdjuEn8jeaJkPEgbuelxJfF
+ jajhrGJ3JHhVuQlncTYb4aAWU/ObdCZwByw3+pjWlctcF672JwRntnnKAAKSDuoEAyJCTYTkPGf
+ rrFSghQ06YsB942DiRIWXekWBL1+LYpImmcTQeG1klXyh2psJbBq+Y/fmTAeGw
+X-Received: by 2002:a05:690c:c511:b0:81e:6cdf:b2f5 with SMTP id
+ 00721157ae682-837077121e3mr103551117b3.0.1786993251718; 
+ Mon, 17 Aug 2026 12:00:51 -0700 (PDT)
+Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.04
+ 00721157ae682-840f3264142sm8242527b3.38.2026.08.17.12.00.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:04 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
+ Mon, 17 Aug 2026 12:00:49 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v6 17/25] parallels: do not trust the bitmaps of an image
- which was not closed
-Date: Mon, 17 Aug 2026 20:59:34 +0200
-Message-ID: <20260817185942.1065143-18-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
-References: <20260817185942.1065143-1-den@openvz.org>
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
+ zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
+Subject: [RFC PATCH 3/8] accel/tcg: skip the can_do_io stores in user-only
+ builds
+Date: Mon, 17 Aug 2026 15:00:33 -0400
+Message-ID: <20260817190038.580257-4-mattst88@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260817190038.580257-1-mattst88@gmail.com>
+References: <20260817190038.580257-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=den@openvz.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,136 +103,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Every translation block stores to cpu->neg.can_do_io twice: false before
+the first instruction, true before the last one. Nothing reads it in a
+user-only build. There is no memory-mapped I/O in linux-user, and every
+reader is in system_ss: cputlb.c, watchpoint.c, icount-common.c and
+tcg-accel-ops-icount.c.
 
-The inuse magic in the header says that the image was not closed
-correctly. The bitmaps stored in the Format Extension are then stale by
-definition: they were written by the last inactivation, and every write
-which happened after it is missing from them. Nothing said so, the
-bitmaps were loaded and handed out as valid, and an incremental backup
-taken from one of them would silently miss the data written after the
-last clean close.
+Two stores per TB is not much on its own, but TBs are short. An emulated
+alpha gcc 16.2.0 compiling the SQLite 3.45.1 amalgamation (255k lines,
+-O2) executes 34.2 billion TBs at 6.04 guest instructions each, so this is
+68 billion stores for nothing.
 
-Mark them inconsistent, as qcow2 does for a bitmap whose in-use flag
-survived a crash. Using such a bitmap fails with an error naming it, so
-the loss is reported to whoever tries to rely on it instead of being
-discovered later in a backup.
+Measured on an x86-64 host, LTO build, on top of the preceding two
+patches:
 
-parallels_save_bitmap() already skips an inconsistent bitmap, so it is
-not written back. The format has no per bitmap flag to record that the
-contents are unusable, so keeping it would present it as valid again on
-the next open. Say what happens, as the bitmap disappears from the image
-and 'qemu-img bitmap --remove' would report it as missing afterwards.
+    before: 1,469,729,281,442 instructions
+    after:  1,402,816,253,499 instructions   -4.55%
 
-The image data itself is unaffected: it is repaired at open as before,
-and only the bitmaps are dropped.
+    before: 120.97s wall clock
+    after:  115.75s wall clock              -4.32%
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+The emulated compiler produces byte-identical output.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- block/parallels-ext.c                         | 13 +++++++--
- tests/qemu-iotests/tests/parallels-checks     | 27 +++++++++++++++++++
- tests/qemu-iotests/tests/parallels-checks.out | 17 ++++++++++++
- 3 files changed, 55 insertions(+), 2 deletions(-)
+ accel/tcg/translator.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-index 17445d183b..b7fac2514a 100644
---- a/block/parallels-ext.c
-+++ b/block/parallels-ext.c
-@@ -335,6 +335,9 @@ parallels_parse_format_extension(BlockDriverState *bs, uint8_t *ext_cluster,
-                 goto fail;
-             }
-             bdrv_dirty_bitmap_set_persistence(bitmap, true);
-+            if (s->header_unclean) {
-+                bdrv_dirty_bitmap_set_inconsistent(bitmap);
-+            }
-             bitmaps = g_slist_append(bitmaps, bitmap);
-             break;
+diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
+index cd7d079fe0..29e609b2ec 100644
+--- ./accel/tcg/translator.c
++++ ./accel/tcg/translator.c
+@@ -21,12 +21,14 @@
+ #include "disas/disas.h"
+ #include "tb-internal.h"
  
-@@ -417,8 +420,14 @@ static int GRAPH_RDLOCK parallels_save_bitmap(BlockDriverState *bs,
-     QemuUUID uuid;
-     int ret = 0;
++#ifndef CONFIG_USER_ONLY
+ static void set_can_do_io(DisasContextBase *db, bool val)
+ {
+     QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
+     tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
+                     offsetof(CPUState, neg.can_do_io) - sizeof(CPUState));
+ }
++#endif
  
--    if (!bdrv_dirty_bitmap_get_persistence(bitmap) ||
--        bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+    if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
-+        return 0;
-+    }
-+
-+    /* The format has no way to mark a stored bitmap unusable */
-+    if (bdrv_dirty_bitmap_inconsistent(bitmap)) {
-+        warn_report("Dropping inconsistent bitmap %s",
-+                    bdrv_dirty_bitmap_name(bitmap));
-         return 0;
+ bool translator_io_start(DisasContextBase *db)
+ {
+@@ -210,17 +212,25 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+     /*
+      * Manage can_do_io for the translation block: set to false before
+      * the first insn and set to true before the last insn.
++     *
++     * Nothing reads can_do_io in user-only builds.  There is no MMIO
++     * there, and every reader (cputlb.c, watchpoint.c, icount) is in
++     * system_ss, so skip the two stores per TB entirely.
+      */
+     if (db->num_insns == 1) {
+         tcg_debug_assert(first_insn_start == db->insn_start);
+     } else {
+         tcg_debug_assert(first_insn_start != db->insn_start);
++#ifndef CONFIG_USER_ONLY
+         tcg_ctx->emit_before_op = first_insn_start;
+         set_can_do_io(db, false);
++#endif
      }
++#ifndef CONFIG_USER_ONLY
+     tcg_ctx->emit_before_op = db->insn_start;
+     set_can_do_io(db, true);
+     tcg_ctx->emit_before_op = NULL;
++#endif
  
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index 6f60fda62b..916d423a64 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -414,6 +414,33 @@ _check_test_img
- # Clear image
- _make_test_img $SIZE
- 
-+echo "== TEST BITMAP OF AN IMAGE WHICH WAS NOT CLOSED =="
-+
-+INUSE_OFFSET=44
-+
-+echo "== add a persistent dirty bitmap and dirty it =="
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+{ $QEMU_IO -c "write -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== pretend the image was not closed correctly =="
-+poke_file "$TEST_IMG" "$INUSE_OFFSET" "\x59\x6e\x6f\x74"
-+
-+echo "== a read-only open still reports it, it is only inconsistent =="
-+$QEMU_IMG info -f $IMGFMT "$TEST_IMG" | grep -q "$BITMAP" \
-+    && echo "still reported"
-+
-+echo "== the bitmap is stale, so it can not be used and is dropped =="
-+$QEMU_IMG bitmap --clear -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+
-+echo "== the name is free again =="
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+
-+echo "== guest data was never in doubt =="
-+{ $QEMU_IO -r -c "read -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+# Clear image
-+_make_test_img $SIZE
-+
- echo "== TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY =="
- 
- echo "== write two clusters =="
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index d40f865868..4dfadd68d6 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -268,6 +268,23 @@ read 65536/65536 bytes at offset 0
- file size: 2097152
- No errors were found on the image.
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST BITMAP OF AN IMAGE WHICH WAS NOT CLOSED ==
-+== add a persistent dirty bitmap and dirty it ==
-+wrote 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== pretend the image was not closed correctly ==
-+== a read-only open still reports it, it is only inconsistent ==
-+still reported
-+== the bitmap is stale, so it can not be used and is dropped ==
-+Repairing image was not closed correctly
-+qemu-img: Operation clear on bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45 failed: Bitmap 'b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45' is inconsistent and cannot be used
-+Try block-dirty-bitmap-remove to delete this bitmap from disk
-+qemu-img: warning: Dropping inconsistent bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-+== the name is free again ==
-+== guest data was never in doubt ==
-+read 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
- == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
- == write two clusters ==
- wrote 1048576/1048576 bytes at offset 0
+     /* May be used by disas_log or plugin callbacks. */
+     tb->size = db->pc_next - db->pc_first;
 -- 
-2.53.0
+2.54.0
 
 
