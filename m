@@ -4,117 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA9DC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 15:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA74C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 15:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvzGp-0001mm-BL; Mon, 17 Aug 2026 11:29:03 -0400
+	id 1wvzJF-00037R-U2; Mon, 17 Aug 2026 11:31:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvzGo-0001mL-F5
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:29:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvzGn-0005Qk-4Q
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:29:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786980540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hMWMpqY7U+yBS98kJTZTBwbMYW3Q6uYNAhTdK26I5tU=;
- b=SggFKRqb+ebBEIpH9SRaCra0WRkdXPoal3FMiHF/JxY198ASLs1WYTrGAIA8+iwVx/Et8D
- 26iWPQ/eXfxZLwu6R/V/ODVIr2m84T6YMNmEyZgAC48vqO+Qdz1s+Q5lfcKYS7D3D2+g9B
- 3TzVeVvl/Sey0Gf9IaKhsRiZmqzv5Ik=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-jRR9KvSKMYK5UjC3WdXpdw-1; Mon,
- 17 Aug 2026 11:28:55 -0400
-X-MC-Unique: jRR9KvSKMYK5UjC3WdXpdw-1
-X-Mimecast-MFC-AGG-ID: jRR9KvSKMYK5UjC3WdXpdw_1786980533
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 462841955DE1; Mon, 17 Aug 2026 15:28:51 +0000 (UTC)
-Received: from [100.90.56.12] (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5367C1956042; Mon, 17 Aug 2026 15:28:46 +0000 (UTC)
-Message-ID: <13c02cbb-79db-4ebd-9fa1-63ffeb0b43f4@redhat.com>
-Date: Mon, 17 Aug 2026 17:28:43 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvzIu-00035Q-Uz
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:31:15 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wvzIt-0006Mp-9l
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:31:12 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-7dbcb505578so32844897b3.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 08:31:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786980670; cv=none;
+ d=google.com; s=arc-20260327;
+ b=kzRmrxES2nTYIZHoWVPogbJy4fqqLi5fVpeVHVIW3+gpqT29E5zChRAMylxMjb1Q7A
+ WgdP5kxeX9g+kEluY/wtaaYGaB+nIppPITk7yBa6Rl4T3i77pYXZgOnV88tCCStge0uG
+ FMY4E9vVjCjlnLcZtVtf4tO91A+Bl3GHElE6zyynyJAe6YhwN2MkXOXDZ4CPIs7rYEZv
+ orNI8IdOqRrbAofE67upDo8YiEwFVyT6jJqS+bL1Dhrhqh3LH5TlAzwI0irViYQhb6LV
+ sXX3i8kMYUtc6YW/p9NTn8GQhRfbt+lOJCzPxNERAGwYVcJsmmNFdjjYurQ1cS7GaT2G
+ EEmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=S6wGBVU06qe/b4pIsOtBQkIo7D1P6Ei01iPcP21zDQ4=;
+ fh=xChv7ieWS1sj6jE9IHpGYXOFSuW+3i48YUpPGYmP/DA=;
+ b=UO3GaaFfvdAEvdwZ3ftaRw2L8M3zIH78dKltBx/TAixIgTfLjbicc+NFEFl6IKIqFQ
+ xCV02zDnAwSPPvG7oi4zRNFExTA3oUlbuWPMfAF8xvyP9390B6+lYEWa2tcgCVVhOb2d
+ vW9z7XvTeln7W0z6sYBknSxA3OgCo5AWJIbVTceR0aw6qwrdyTSOcDD0YeFjvQGzJ6Xx
+ J36uOn8iczAqJmyEQgmL/bt2azb57uw/ee132M2oTjQKlGuRTxnLvJSTeEq157a6EOsJ
+ TuWGrV50mYIgozupVYVhIaWaLnBHH+cRpuh+TZ6hx8NaVYcvB/oAqwnanoHVs9o3r3p/
+ Pq5g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1786980670; x=1787585470; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=S6wGBVU06qe/b4pIsOtBQkIo7D1P6Ei01iPcP21zDQ4=;
+ b=BctK1wiDBGc4UaFIkXXqQMdT5/x5/0BafuFVPYBPOwkxLxDbpg0/JcKgtnpRiVhZ7J
+ QXyJ8/9FrP2zZhxg357n7b2z0RZPIjmWIvZouTUVTlyeNzKjCxy+wezsNkzLc2zD8VlX
+ WKuepTLdtHIj3KCG6tDBdRX1edGtvoH+3lAeEeNLRsNyCGE5EXvuuVPiXSt7gI8cb5mG
+ mobqcmM1nq+awzIsD0kez2qHOa7iABDvjuTvcJcCcq+rj7PuX9bOWfSLAFrHqf12ZHfX
+ +40IBvHBBeDZqsIoV9yp8N5RU8XqY/oCcyI81cdDzU0eeQ6Da6oKbJlDE1sLHId93/2z
+ l65A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786980670; x=1787585470;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=S6wGBVU06qe/b4pIsOtBQkIo7D1P6Ei01iPcP21zDQ4=;
+ b=nXsWHjhuY8wM0wVdwNUgS+ITKz2sbIEKk2Hfd0R6QqlhbPaZ7F2V/jXyM0ld//ab0p
+ 9brAbCGcgL2jLoKjs0iHiz4byphbp2YrcMa7q4QL8suqfpi8eDLiMxGfm8kpunBxewih
+ KKzuE4WbF53aJqRi441CtWymK3ipBD8IkWHlTA8FyxhJkael6fs0vbLvVdIalrmoJyRK
+ cH/MFDxVAof5+CJAp1wzsRgGjYo33YVJbQLm5CvjLx3BfwGMTLLifcEWFhsr1Who+KsQ
+ gQ3/57hQFWa04SB6HNI7+fe5NHZ2tiEhWjOp9nnyE6Hq76469L1OoHlPErwzO6xRcD53
+ tGtw==
+X-Gm-Message-State: AOJu0Yz7SYJGZ/+02wDgGE7Q1LuJ4KIs9PxvYS4mI3InpPOzSg7Mpzy3
+ FYe802j5RPM1LRdD6A3bSZjxMxwAl2QPlu4J1K0qT/x1a/4GYd0Sjr5xVDOuZL5DeTdbYp0j3SI
+ TCH4yJP80K/mrXL7myHuGpjtWv+JzEvMjoICA8on2IQ==
+X-Gm-Gg: AR+sD10ekKvMvi+cJOV3TmKf+afYUygaCRHapyCiW+ju1kvrkzyIl3QXfr1CTs9Mgr0
+ 3R6kQoZ62ZJnKzcMSQfiFQuTAyksCuFua/Bd3QJXxZreAn4FM475PqX8LaMkTlOm+ULftFRm/Z3
+ BXbetHft5yYLV6O2UFXy4hDUcRkMJf2keXG9nXOJ3MhHeFnE9YTbUiDjRQ2KOJ0SZZUFdi/bPPZ
+ 26Z59cO1OX7APXPEcMazTG6JLXqi1sW+OPftJAMhwkxPMwHp11zT7l9wzYnichSy9sp0VXKnT+s
+ E2ZwWsNLR0MTLPPm4WMc2AXvsO/hpR+IlATmM5GrRqAxJygyP9bqJyaMgGQ/GvcnrEpOae0fa4L
+ muW37SAbIOKHA+rXE2TfcljhpdsnH
+X-Received: by 2002:a05:690c:6893:b0:812:996f:176d with SMTP id
+ 00721157ae682-8370d40c556mr80311837b3.9.1786980669460; Mon, 17 Aug 2026
+ 08:31:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/16] cpus: Improve qemu_cpu_kick_self() docstring
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, Alexander Graf
- <agraf@csgraf.de>, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- kvm@vger.kernel.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-arm@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260813181640.6537-1-philmd@oss.qualcomm.com>
- <20260813181640.6537-3-philmd@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260813181640.6537-3-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260805153005.9989-1-simonxhy0404@gmail.com>
+ <20260805153005.9989-4-simonxhy0404@gmail.com>
+In-Reply-To: <20260805153005.9989-4-simonxhy0404@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 17 Aug 2026 16:30:57 +0100
+X-Gm-Features: AcwNN1XszKOs2g9pjFMLJkd0BoYPwf2SNBrcIcQ9MFVlPDArd6FUb87k52Jg0O0
+Message-ID: <CAFEAcA-jYZz1Ak4w5vgWGuzJnP4N=ikthmxRswY5=ZZzXWiRzw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/9] hw/misc/iotkit-sysctl.c: add SSE-310 support
+To: Simon Xu <simonxhy0404@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Owen Giles <owen.giles@hpe.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Robert Elliott <elliott@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,68 +118,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/26 20:16, Philippe Mathieu-Daudé wrote:
-> Be a bit more descriptive than "Unblock cpu" :)
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Wed, 5 Aug 2026 at 16:30, Simon Xu <simonxhy0404@gmail.com> wrote:
+>
+> Add SSE-310 case statements for reads and writes.
+> Add new SSE-310 PIDR and CLIDR values.
+> Add new SSE-310 PPUINTSTAT register as RAZ with LOG_UMIMP on reads and
+> RO on writes.
+>
+> Reviewed-by: Owen Giles <owen.giles@hpe.com>
+> Reviewed-by: Robert Elliott <elliott@hpe.com>
+> Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
 > ---
->   include/system/cpus.h | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/system/cpus.h b/include/system/cpus.h
-> index 508444ccf1c..ade13e068eb 100644
-> --- a/include/system/cpus.h
-> +++ b/include/system/cpus.h
-> @@ -30,7 +30,15 @@ void resume_all_vcpus(void);
->   void pause_all_vcpus(void);
->   void cpu_stop_current(void);
->   
-> -/* Unblock cpu */
-> +/**
-> + * qemu_cpu_kick_self - Force vCPU to re-enter to its inner main loop
-> + *
-> + * Signal the current vCPU thread to exit any blocking operations and
-> + * re-enter its inner execution loop to process pending requests,
-> + * possibly returning to its outer execution loop.
-> + *
-> + * Must be called from within the vCPU thread itself.
-> + */
+> v1 -> v2
+>         Add PPUINTSTAT register
+>         Make sure comments don't separate case statements
 
-Neither is correct.  What it does is force the vCPU not to enter the
-accelerator, and immediately exit again to process events.  This is only
-needed because KVM doesn't want you to process events because KVM allows
-you to do so.
+>  static const VMStateDescription iotkit_sysctl_sse300_vmstate = {
+> diff --git a/include/hw/misc/iotkit-sysctl.h b/include/hw/misc/iotkit-sysctl.h
+> index ce72258a84..8e1cf0012d 100644
+> --- a/include/hw/misc/iotkit-sysctl.h
+> +++ b/include/hw/misc/iotkit-sysctl.h
+> @@ -53,6 +53,7 @@ struct IoTKitSysCtl {
+>      uint32_t initsvtor1;
+>      uint32_t nmi_enable;
+>      uint32_t ewctrl;
+> +    uint32_t ppuintstat;
+>      uint32_t pwrctrl;
+>      uint32_t pdcm_pd_sys_sense;
+>      uint32_t pdcm_pd_sram0_sense;
 
-I'd rather have something like:
+If we add a new field to the state struct here, we need to
+add it to the vmstate data structures for migration. That
+means a new subsection with an sse310_needed() function
+so we migrate the field for SSE310 only.
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 83cbd120a84..e5d068e341f 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3292,7 +3292,7 @@ static void kvm_cpu_kick_self(void)
-      if (kvm_immediate_exit) {
-          kvm_cpu_kick(current_cpu);
-      } else {
--        qemu_cpu_kick_self();
-+        cpus_kick_thread(current_cpu);
-      }
-  }
-  
-diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-index 8a1af35ed32..b9b1ee39850 100644
---- a/target/i386/nvmm/nvmm-all.c
-+++ b/target/i386/nvmm/nvmm-all.c
-@@ -753,7 +753,7 @@ nvmm_vcpu_loop(CPUState *cpu)
-  #if NVMM_USER_VERSION >= 2
-              nvmm_vcpu_stop(vcpu);
-  #else
--            qemu_cpu_kick_self();
-+            cpus_kick_thread(current_cpu);
-  #endif
-          }
-  
-and get rid of qemu_cpu_kick_self() completely.
+But since this field is only ever zero because the register
+is read-only, I think it's simpler to just have "r = 0;" in the
+register-read codepath, and drop the field entirely. If anybody
+ever needs to implement the register to have real functionality
+they can add whatever fields/migration handling they need for it
+then; we don't need to try to guess now what that will be.
 
-Paolo
-
+thanks
+-- PMM
 
