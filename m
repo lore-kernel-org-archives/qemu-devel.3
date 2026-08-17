@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB89C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07756C5DF7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvutR-0006mb-DA; Mon, 17 Aug 2026 06:48:37 -0400
+	id 1wvutQ-0006hw-4m; Mon, 17 Aug 2026 06:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvusy-00068f-Ju; Mon, 17 Aug 2026 06:48:08 -0400
+ id 1wvut5-0006GM-58; Mon, 17 Aug 2026 06:48:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvusw-0004MS-3A; Mon, 17 Aug 2026 06:48:07 -0400
+ id 1wvut3-0004QL-11; Mon, 17 Aug 2026 06:48:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=aeVqwZDYR8in3AsS7dcZFP/bkX0h7xx7YfnL2FW+WSE=;
+ t=1786963487; bh=VmzP4cwG8y5g3NtV0tq+9+rh6fizh+WXwZl0J9kgTLY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uDhhVcRWUA74ghb8ze/Juyx7sLoKF60Urn1bo9SKIQZiEstOMkH+UvveLmA01n/5j
- t2K677UmM/Y7roBzXM0FWU+YJb+vFsyC5YEU9EJ5CGj3ZskFiX8905Pl5DlaenA84Q
- vfCOGs65hXuvZ75kClCqU/m7Hoi4wSth2BMsq8PxnH9uQoNYFIN8CJXSpwk81rEF3+
- 7kGAd2c7mnY8N7hEahlx32lennQLMuvRamXZUFW8Ryd81/6xgL24nc729X58QKLpNA
- D8ApYv0BFx9Liiu2ko2Uwx9MlqGHC9vJkZxeWPKQra1gEL68tu8yWZR7VbrF5ntFBQ
- ZrT3Vrsyikb7A==
+ b=PNmsxjWIs4Ysuq7T5SCcMJsUd63UwFY0IvkyjD5Pce1m9gDdHL2XxAU7N0H6QF1Ok
+ VlEcBOPx4EXpvdNHlEJD6xTNXeGa7QoErPHzdjLupYMsEmdOS8VAln+1NaA2pUWMw+
+ dd5Rjabh4Z5Phhc7TOvzVYvo7OYExGR3LeN7L+yfAvGFWsC+TyUk7YY/OWhFKAgmax
+ 3ALk4w9XB/6O58no07yIjlDZVgvj4TrVYJtplt4Yn1+1ORhCqSuVnBxEIzwHNBE2ze
+ /SgHxKZUEUN+0gZ6FXkk9bl9lE7Dn+efcfaKdcWgprDjJZM199UHh6+duudWdPRi9y
+ w9F6OoH6veb2w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E70CB1CBB88;
- Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 09EE21CBB8D;
+ Mon, 17 Aug 2026 13:44:47 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E8B2B40D219;
- Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B8EE40D221;
+ Mon, 17 Aug 2026 13:45:08 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 58A0F30E88; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 67D5A30E92; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Klaus Jensen <k.jensen@samsung.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 155/161] tests/qtest/ahci: regression test for
- ATAPI read vs. drain
-Date: Mon, 17 Aug 2026 13:43:09 +0300
-Message-ID: <20260817104344.2047346-35-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 160/161] hw/nvme: add SPDM_SOCKET Kconfig dependency
+Date: Mon, 17 Aug 2026 13:43:14 +0300
+Message-ID: <20260817104344.2047346-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,107 +73,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Add /ahci/cdrom/drain/{pio,dma}: issue a multi-sector ATAPI read whose
-byte-count limit spans two sectors so the device must rebuffer in the
-middle of the DRQ burst, hold the backend read in flight with a
-blkdebug delay, and fire x-blockdev-set-iothread -- which runs
-bdrv_drain_all_begin() exactly like a guest reset does through
-virtio_blk_stop_ioeventfd().
+The NVMe emulation code unconditionally calls spdm_socket_*() APIs. Add
+a Kconfig dependency to avoid build errors when NVME_PCI is enabled
+without SPDM_SOCKET.
 
-On the unfixed PIO path the nested sector fetch is queued behind the
-drain and the main loop wedges, so the test hangs. The DMA variant
-never rebuffers and serves as a sanity twin.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit be1ee6a8f6e3b7192d57e900497b81a048f8d193)
+Fixes: 4f947b10d52 ("hw/nvme: Add SPDM over DOE support")
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260810214846.76805-1-stefanha@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 6dab35f5492b04083f70726a3048d89d8deb4a32)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 58bc04b3efb..71d23fe56af 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1754,6 +1754,70 @@ static void test_atapi_engine_restart_dma(void)
-     test_atapi_engine_restart_in_flight(true);
- }
- 
-+/*
-+ * Regression test: a multi-sector ATAPI read fetches its later sectors from
-+ * inside the first read's completion; a concurrent drain (as a guest reset
-+ * triggers via bdrv_drain_all_begin) must not wedge on that nested read.
-+ * blkdebug keeps the read in flight across x-blockdev-set-iothread.
-+ */
-+static void test_atapi_drain_in_flight(bool dma)
-+{
-+    AHCIQState *ahci;
-+    AHCICommand *cmd;
-+    unsigned char *tx;
-+    char *iso;
-+    int fd;
-+    uint8_t port;
-+    uint64_t buffer;
-+    uint16_t bcl = ATAPI_SECTOR_SIZE * 2;
-+    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * 3;
-+
-+    fd = prepare_iso(iso_size, &tx, &iso);
-+
-+    /* 1s read delay: a wide margin so the drain starts before it completes */
-+    ahci = ahci_boot_and_enable(
-+        "-blockdev driver=file,node-name=file0,filename=%s,read-only=on "
-+        "-blockdev driver=blkdebug,node-name=cd0,image=file0,read-only=on,"
-+        "inject-error.0.event=none,inject-error.0.iotype=read,"
-+        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000000 "
-+        "-M q35 "
-+        "-device ide-cd,drive=cd0 ", iso);
-+    port = ahci_port_select(ahci);
-+
-+    buffer = ahci_alloc(ahci, bcl);
-+    qtest_memset(ahci->parent->qts, buffer, 0x00, bcl);
-+
-+    cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, bcl, dma);
-+    ahci_command_adjust(cmd, 0, buffer, bcl, 0);
-+    ahci_command_commit(ahci, cmd, port);
-+    ahci_command_issue_async(ahci, cmd);
-+
-+    /* Drain (all nodes) while the delayed read is still in flight. */
-+    qtest_qmp_assert_success(ahci->parent->qts,
-+        "{ 'execute': 'x-blockdev-set-iothread',"
-+        "  'arguments': { 'node-name': 'cd0', 'iothread': null,"
-+        "                 'force': true } }");
-+
-+    /* Round-trip through the device to confirm qemu is still alive. */
-+    ahci_px_rreg(ahci, port, AHCI_PX_TFD);
-+
-+    ahci_command_free(cmd);
-+    ahci_free(ahci, buffer);
-+    g_free(tx);
-+    ahci_shutdown(ahci);
-+    remove_iso(fd, iso);
-+}
-+
-+static void test_atapi_drain_pio(void)
-+{
-+    test_atapi_drain_in_flight(false);
-+}
-+
-+static void test_atapi_drain_dma(void)
-+{
-+    test_atapi_drain_in_flight(true);
-+}
-+
- /* Regression test: Test that a READ_CD command with a BCL of 0 but a size of 0
-  * completes as a NOP instead of erroring out. */
- static void test_atapi_bcl(void)
-@@ -2177,6 +2241,8 @@ int main(int argc, char **argv)
-                    test_atapi_engine_restart_pio);
-     qtest_add_func("/ahci/cdrom/engine_restart/dma",
-                    test_atapi_engine_restart_dma);
-+    qtest_add_func("/ahci/cdrom/drain/pio", test_atapi_drain_pio);
-+    qtest_add_func("/ahci/cdrom/drain/dma", test_atapi_drain_dma);
- 
-     ret = g_test_run();
- 
+diff --git a/hw/nvme/Kconfig b/hw/nvme/Kconfig
+index cfa2ab0f9d5..cfeeed64cd7 100644
+--- a/hw/nvme/Kconfig
++++ b/hw/nvme/Kconfig
+@@ -2,3 +2,4 @@ config NVME_PCI
+     bool
+     default y if PCI_DEVICES || PCIE_DEVICES
+     depends on PCI
++    select SPDM_SOCKET
 -- 
 2.47.3
 
