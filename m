@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4092C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D45C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqL-0001If-NJ; Mon, 17 Aug 2026 06:45:25 -0400
+	id 1wvusL-0005AO-6V; Mon, 17 Aug 2026 06:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqB-000155-AM; Mon, 17 Aug 2026 06:45:15 -0400
+ id 1wvus3-0004S9-My; Mon, 17 Aug 2026 06:47:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuq9-0003xL-FV; Mon, 17 Aug 2026 06:45:15 -0400
+ id 1wvus1-0004Gr-Se; Mon, 17 Aug 2026 06:47:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=QWvE6AmpBInK6lbFSuehZkneRr61b7k0Z7b3bjFEr/E=;
+ t=1786963486; bh=4OBnDQXmrE3v0dK3bOMHR7fSYamM1UPiyrQk9pQg2TA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gqyg+hmyiGXX7XQpKd8BxEhySCXGfrsevvXkzjW6TjXC8SZdpTkDQRFKVp3G50ueH
- 7lK0h1F0vGCyu9xtissIO+PhHfQVx3OCJYh9KfGNKgJ0019HOXD6se3VnWLKQd19l9
- 6ijS7VluEfVhL69Vwsj0c/IXI4e/+mUol2dCMA1XzpBG/NDXJRwLYlERj5avQTgQ0s
- 54QO6A6465ZnueAbgBcQTSp5Dc2FSIC49cZSkVsLFck7RbshAv6tfonZV5hmq/JD8S
- QIAPin/0YDwoL68Vt7ZcEMrJBsQtyp1ODxm0xzhRf22hBBIdSfJPPJXDKWDx5Mtjh0
- BvELs0vvha5WA==
+ b=Ps3FgWBN84UGs5YPTsZxieq37Td2isX8m9FltmkrPDSJwl+BiVaYuU3teD7VOWowz
+ z2aGSdxbsi/FUVZ3xvyURGM2lzBUehJnCc6Bwti8cDz5JyRHThRWyTOYm7ea+0sg9P
+ b8WFSK+sruOrDNr0rMwPQZ9k/nRS+KZ+ykdI2DSKrs6shh/eQFwvKGTqHiRLZlVGME
+ N716BMmG/393RlqgjctcOsFE+xgiEB3/Xq4G6+ltVcK9VBXwbEYfXznlrnHj2GCW14
+ 1UtXVt/fZ2miEEXl0WCX1ZrDTessK6OVw3NvYy8LWfoqR73i6lMJbY/3UxWPDgaZWq
+ JbRUGm9xqNcCg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 60F5A1CBB6A;
+ by isrv.corpit.ru (Postfix) with ESMTP id C631E1CBB81;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6214840D1F8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C7DA740D212;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EEB3D30E4C; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
+ id 4304A30E7A; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Harald Freudenberger <freude@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 125/161] target/s390x: Make PRNO TRNG interruptible
-Date: Mon, 17 Aug 2026 13:42:39 +0300
-Message-ID: <20260817104344.2047346-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 148/161] hw/net/vmxnet3: Do not abort if guest
+ provides bad interrupt numbers
+Date: Mon, 17 Aug 2026 13:43:02 +0300
+Message-ID: <20260817104344.2047346-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,92 +73,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 
-fill_buf_random() writes the entire guest-requested amount of random
-bytes in one go. Since the length is a full 64-bit value, a guest can
-request several gigabytes and keep the vCPU spinning inside the helper,
-without a chance to react to interrupts.
+vmxnet3_validate_interrupts() currently aborts via hw_error() if
+the guest provided bad interrupt numbers. This should not happen,
+QEMU should rather refuse to activate the device in this case instead.
+Thus propagate the error to the callers to handle it more gracefully
+there.
 
-Do the same thing as HELPER(mvcl): check cpu_loop_exit_requested() at the
-bottom of the loop, and when a return to the main loop is pending, stop
-and report partial completion with condition code 3.
-
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: 3dbc5fdacb5a ("target/s390x: support PRNO_TRNG instruction")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-2-iii@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit aae77f5dddef62da7e1479c257d99d2ab574df56)
-(Mjt: context fixup for v11.0.0-713-gde96db79aa58
- "target/s390x: Compile crypto_helper.c as common unit")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260731113352.189066-1-thuth@redhat.com>
+(cherry picked from commit 46099d99005588b25eb07957cd9cdd688c4fc476)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 074d745eb3f..2a947a88c97 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -16,6 +16,7 @@
- #include "qemu/guest-random.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
-+#include "exec/cpu-common.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-mmu-index.h"
-@@ -245,8 +246,8 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     return !len ? 0 : 3;
+diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+index 8569484b2f2..24c551a0547 100644
+--- a/hw/net/vmxnet3.c
++++ b/hw/net/vmxnet3.c
+@@ -1336,32 +1336,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
+         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
  }
  
--static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
--                            uint64_t *buf_reg, uint64_t *len_reg)
-+static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                           uint64_t *buf_reg, uint64_t *len_reg)
+-static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
++static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
  {
-     uint8_t tmp[256];
-     uint64_t len = *len_reg;
-@@ -267,7 +268,13 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-             --*len_reg;
-         }
-         len -= block;
+     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
 +
-+        if (cpu_loop_exit_requested(env_cpu(env))) {
-+            break;
+     if (idx >= max_ints) {
+-        hw_error("Bad interrupt index: %d\n", idx);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "vmxnet3: Bad %s queue interrupt index: %d\n",
++                      type, idx);
++        return false;
+     }
++
++    return true;
+ }
+ 
+-static void vmxnet3_validate_interrupts(VMXNET3State *s)
++static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+ {
+     int i;
+ 
+     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
+-    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
++    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
++        return false;
++    }
+ 
+     for (i = 0; i < s->txq_num; i++) {
+         int idx = s->txq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
++            return false;
++        }
+     }
+ 
+     for (i = 0; i < s->rxq_num; i++) {
+         int idx = s->rxq_descr[i].intr_idx;
+         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
+-        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
++        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
++            return false;
 +        }
      }
 +
-+    return len == 0 ? 0 : 3;
++    return true;
  }
  
- uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-@@ -280,6 +287,7 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     uint8_t subfunc[16] = { 0 };
-     uint64_t param_addr;
-     int i;
-+    int cc;
+ static bool vmxnet3_validate_queues(VMXNET3State *s)
+@@ -1554,7 +1568,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
+                sizeof(s->rxq_descr[i].rxq_stats));
+     }
  
-     switch (type) {
-     case S390_FEAT_TYPE_KMAC:
-@@ -309,9 +317,13 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-         return cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
-                             &env->regs[r2 + 1], type);
-     case 114: /* CPACF_PRNO_TRNG */
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r1], &env->regs[r1 + 1]);
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r2], &env->regs[r2 + 1]);
--        break;
-+        cc = fill_buf_random(env, mmu_idx, ra,
-+                             &env->regs[r1], &env->regs[r1 + 1]);
-+        if (cc == 0) {
-+            cc = fill_buf_random(env, mmu_idx, ra,
-+                                 &env->regs[r2], &env->regs[r2 + 1]);
-+        }
-+        return cc;
-     default:
-         /* we don't implement any other subfunction yet */
-         g_assert_not_reached();
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return;
++    }
+ 
+     /* Make sure everything is in place before device activation */
+     smp_wmb();
+@@ -2392,7 +2408,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
+     if (!vmxnet3_validate_queues(s)) {
+         return -1;
+     }
+-    vmxnet3_validate_interrupts(s);
++    if (!vmxnet3_validate_interrupts(s)) {
++        return -1;
++    }
+ 
+     return 0;
+ }
 -- 
 2.47.3
 
