@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5344DC5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC1EC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtI2-0003IG-EV; Mon, 17 Aug 2026 05:05:54 -0400
+	id 1wvtK3-0006x4-Sy; Mon, 17 Aug 2026 05:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtHo-0003Er-DD; Mon, 17 Aug 2026 05:05:42 -0400
+ id 1wvtK2-0006oT-Dk; Mon, 17 Aug 2026 05:07:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtHk-0001cK-PC; Mon, 17 Aug 2026 05:05:39 -0400
+ id 1wvtK0-0001xK-Ms; Mon, 17 Aug 2026 05:07:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=YTI+OSziWNCvE0kFhsSMYplW9R3tAXytFe27FSTdG0o=;
+ t=1786957506; bh=0mvljEviK/qU62YuDBcBfLcAnJ/2jXQoPe2rKdlTi3U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uQiNtPq7Ac7ICB/nMzIVifE6ZCd8lvxZzp4yGuKxVlex4DgjFc/FBp+d03KPThFys
- Nu2YfxcbHzWU/2nTZ8adgBan4FBff8fee1WTbYr/Yct4neybc+rNYIcscexkgrP0nn
- H6TzTRj/VEp5ZiKVJjpnXXmScDTKHQPlWSVJTgjDzvQLhQp2MQ6FTj+emYc33Uj42L
- nNZFgOL7pc2UtSzXPTztXJnyHQIxpVPudIEYnsPYC3wOUmL3EZ14S7F9mhzNskZVwB
- 8yXwsVaMbkqpBm4tPOuDrn8jwMZyEl7ttqkymJLQvKkNlKwjczKeRlPF5LbZ0Tjv+Q
- p9qoWfd/Y3QHQ==
+ b=kut/MCPslmbaNsVwMVuziFdpJTQiIjzWtleqVlxSLBSngEe5bi1HNY7SpidU+1Uko
+ brZg32PG3InANdt50Vg8yv37Lp3CNINIWT32J2Qusel9iujc7W7wAPRN+MEN+r1R0o
+ CRv1zRsR3aJjkKELCHX+qJM8cwYptwnfsh97eDzx7EJHp2I1yRezezzbbzyclzUPm3
+ hZsthm8y+O1ciu5E528GAonY0uWBowA59PAn+rjJ1yp0nIEA40nWWJsrFiXM+6g4jR
+ AAgl2vUX+7gthycvOTH3XEJLc+V8uVRE7j34E5evvL5vpdpuK5S2xWDdwcC37hBhfL
+ GcVzNcrG5+hZg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B22B1CBA37;
+ by isrv.corpit.ru (Postfix) with ESMTP id 783371CBA50;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DE3E340D019;
- Mon, 17 Aug 2026 12:05:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5792D40D032;
+ Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A726830CE6; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id F258930D18; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mikulas Patocka <mpatocka@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Helge Deller <deller@gmx.de>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 03/42] linux-user/sh4: Fix crashes on signal delivery
- in conditional delay slot
-Date: Mon, 17 Aug 2026 12:04:08 +0300
-Message-ID: <20260817090453.2034156-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 28/42] hw/usb/dev-uas: Don't abort if guest provided
+ an undersized buffer for status
+Date: Mon, 17 Aug 2026 12:04:33 +0300
+Message-ID: <20260817090453.2034156-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -72,37 +71,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-If we get a signal in the delay slot, we must roll-back the PC to the
-jump instruction. This was already fixed by the commit 3b894b699c9a
-("linux-user/sh4: Fix crashes on signal delivery"), however this fix
-omits a test for TB_FLAG_DELAY_SLOT_COND. TB_FLAG_DELAY_SLOT_COND is set
-by the conditional delayed branches bf/s and bt/s. Qemu did not roll-back
-the PC in this case, resulting in incorrect program execution.
+QEMU currently aborts if the guest provides an undersized buffer
+for the status packet (8 bytes):
 
-This patch fixes it.
+ hw/usb/core.c:623: usb_packet_copy:
+  Assertion `p->actual_length + bytes <= iov->size' failed.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit f7ad7b1f8c8148f39bc1f2c984bfc7b7c9c59041)
+If we hit this situation, log a guest error and continue by simply
+only providing the bytes that the guest asked for.
+(Note: This is e.g. similar to the UAS_PIPE_ID_COMMAND case that
+also clamps the length with: length = MIN(sizeof(iu), p->iov.size))
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3900
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260730163901.1154791-1-thuth@redhat.com>
+(cherry picked from commit 15700a66ecb53c52717c913c2c4501372c0115ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index 7f246e750d0..047174ac8f3 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -109,7 +109,7 @@ static void unwind_gusa(CPUSH4State *regs)
-            the SP, otherwise we would be pushing the signal context to
-            invalid memory.  */
-         regs->gregs[15] = regs->gregs[1];
--    } else if (regs->flags & TB_FLAG_DELAY_SLOT) {
-+    } else if (regs->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND)) {
-         /* If we are in a delay slot, push the previous instruction.  */
-         regs->pc -= 2;
-     }
+diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+index 963c0433b38..be8c3667e83 100644
+--- a/hw/usb/dev-uas.c
++++ b/hw/usb/dev-uas.c
+@@ -359,6 +359,7 @@ static void usb_uas_send_status_bh(void *opaque)
+     UASDevice *uas = opaque;
+     UASStatus *st;
+     USBPacket *p;
++    uint32_t length;
+ 
+     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
+         if (uas_using_streams(uas)) {
+@@ -373,7 +374,14 @@ static void usb_uas_send_status_bh(void *opaque)
+             break;
+         }
+ 
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
+ 
+@@ -875,7 +883,14 @@ static void usb_uas_handle_data(USBDevice *dev, USBPacket *p)
+                 break;
+             }
+         }
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
+         break;
 -- 
 2.47.3
 
