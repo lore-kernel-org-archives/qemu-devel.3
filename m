@@ -4,102 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F72FC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30E1C5DF77
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww0U2-0004li-E4; Mon, 17 Aug 2026 12:46:46 -0400
+	id 1ww0dc-0006Vw-QF; Mon, 17 Aug 2026 12:56:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ww0Tv-0004i8-GX
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:46:40 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ww0Tu-0000bs-4O
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:46:39 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c15d47266baso408646466b.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 09:46:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786985195; cv=none;
- d=google.com; s=arc-20260327;
- b=nIZDzu1IR2KZNcJmCV+1qvrKtbeUkdheIiggD/Avz4+7SM8x5v0M6LldMtkAh1aJB5
- B081tP1/1IeiVR08rkYn2AAc/n7JihwIRM1d7+gKM4AFJPFOT+7UpU5zWlFWMi52Vj2/
- sspi4+7r0GJQMIGjxZEq8hWYAcSsshdew7UFw2STtOFNI6uA1KWW5FcvuV292PXXkAdF
- BnQIS2Ph9ZDDuruw+5W5F91Ug44iDheLCj0Y+8xhjaZo9KWgEDlImMxP6zSu2xbYht7a
- EPiaXCFFxWt5+DC9tYmL0ZP6kYMBFOzgG8V887qtJ5UbAr2YTmt6xbWAHii1K26YIXe1
- luYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AV6goHSKGsE3VVTq5jrrNh8OWghK6XxWxIOBN/w6kL4=;
- fh=rRwEAwPkSZ0I452N0nR2YVKCsQWVAiaKmLym9qGnx7I=;
- b=jeVOBWZq0liKuUI8/dbZj8HoCGMiXsxrAvUvS+0GoJ1t0+qml+Yyfeu7gmO3ZMx78T
- wt/HROI1NKNiQ8+gWVE3DwaR+xVHhQZxVrpcZy7vdYlccX29by8eD67t96CUtj18Lvt3
- mpYr0d46kfF3RG/4jy9klfVcV9al3xC6BycdPFwY8l7O+KJaC+ePUoSNtDgnvGYLh6Uh
- 5R0cX2RhYueg1IoUyCQLcdSmv10TZfVrhIAyzVHDT9bYvzDWj9GTUhyVNKYB9cDT+/Od
- Kjm+PDcxoSCevd7eUhDKkW7iKCEBRM8Z40WRgmB4zn6AbzgIOcX38r+LjC/tTjnT4ymN
- I+eg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786985195; x=1787589995; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=AV6goHSKGsE3VVTq5jrrNh8OWghK6XxWxIOBN/w6kL4=;
- b=Tg7td4ZfornlkPUXuHjNCDOckFmQPGGJR1Bbqcz4BRWeI8+AgSuH2IZaEZZoLFTuQN
- dgTQSvEf0b4W2Lk1NAlFOmfvFqrLqiHwYHo8zrrZY4/tcQGMbguFuSjLsYFIhc7xkmKN
- RtgoRJZEPDoRHlP4V51PukJVS5mN6xW/OFOHXXovDbxpdSuQIbrhnI5zRqEohn5yjPh3
- wxSQIfE8fsNM1eDAc86sJQ+i09YvJmJVvIIc6QYORkLN6tgA+WShZ7U+S+bKeqhnW1Nz
- ygjbDAXOhGsPJVp3/DzP9GfAZGT1hgZij6bWjn4nA21rb6hoUkOupa7E5KbCsRJq0RrP
- pJ/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786985195; x=1787589995;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=AV6goHSKGsE3VVTq5jrrNh8OWghK6XxWxIOBN/w6kL4=;
- b=dHE0JwMhIX38J2kKGOSkld9KDcOTgKCt9RT4StHEaZcsCWlPXXxoQhhO1t1beb/hi3
- TPjvU6Sh4mhF7uK/fnu/pXCgsnZkbO2BJBbDTygCj6t5e5DmcVU6gTjYSqbt4p7cPTgH
- cdGxxtJlwTIWUckZI6+IWhCmYcmxsTTeF0RSPEFPqr2md7+X1T+eyc8P2uLbJVYBLzu5
- SJ8KtqxUD9QrxYAsFaTplHhoxXTLPnbgrZgYW80pUgXwmJqB/9Ibbm32+AG6h2tt+9A/
- +Mav/mRUgZ4Hm5uGMkS9s3JJAHopU0j1tOUXFXr/gGiH0tYQU3/iBSA1QJVMt5baeY5d
- gVJw==
-X-Gm-Message-State: AOJu0Yx+0sFTgKQGSPbHpxIgkcgmudqXX4qL33G11XHIjneBTtgSAoBR
- GrxphaLMMBjfqw2+3jlHn1AbF5NAQym8/JMBbv1H0LnHcXigXAP3Ug6WujWJChlioMwKSgu8zgg
- XC1kjaVWJs/d2RtdfWJEmx07cHgmt2jVqIWvDFQKGZw==
-X-Gm-Gg: AR+sD11MAzPgM5kIU2HudO7M1XHfWXpnDJ/6ELhaMF1lTy4lj46z1T4F0FXdC79a8SM
- U9csOxcItEYzwCk9xfGqeimdggXvM8JTeI8ChnQ1j35QgZ+LWqZTl51pDHM2shRIsSofpqwYQxB
- nUJ35CkBmPl7HcyZ9ViLrJuRqaa6T3O2XjGq6NqBRIbL3Wf/HttweUxtCyXcnI42KS+JCTEpvga
- kp7dPuEVJMxbS34Y83r/uKWH/ns7CBFWot8bKojBd/fXRXDENFNy7mEVngYg6vj7XjmlYuBDETc
- zd74uRMTeuT9xRacz8oapHGMRJP78FMDxjhGPhZX4fqzqBrITDGNWtbTwg/mHeZo40NO16qh7le
- bAJDRRUxa/SguzDgkX3XS5qM00PaP
-X-Received: by 2002:a17:907:928b:b0:c16:4e5:944a with SMTP id
- a640c23a62f3a-c212a1d6bf2mr1218417866b.21.1786985195282; Mon, 17 Aug 2026
- 09:46:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ww0dV-0006VY-D1
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:56:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1ww0dT-0003CM-4Q
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:56:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786985788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iu75ejBCh/Vb99XucBV8D8PbW/yNnSvZAWg/EYrCEj4=;
+ b=LL4RnIH2yiPr1rX0/Fw1ZekYYWnDk/dxcsxx3cPFvtTJ1+UEu4ExRuejzaknISa89J/1tY
+ Sy70BA2VS6NGRIGFfLGZ/04zCO5sBnMnl55qqJNTaCFFzHIi/r0opELHocReOMmmF4iSNA
+ fq9MqbVuOgOo1chplO7ubme9iQGgWhc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-IDKnUkEMNP-OR5H7g0hb4A-1; Mon,
+ 17 Aug 2026 12:56:27 -0400
+X-MC-Unique: IDKnUkEMNP-OR5H7g0hb4A-1
+X-Mimecast-MFC-AGG-ID: IDKnUkEMNP-OR5H7g0hb4A_1786985786
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED23A19560A2; Mon, 17 Aug 2026 16:56:25 +0000 (UTC)
+Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C05BD180034C; Mon, 17 Aug 2026 16:56:24 +0000 (UTC)
 MIME-Version: 1.0
-References: <20260811191540.79882-1-richard.henderson@linaro.org>
-In-Reply-To: <20260811191540.79882-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Aug 2026 17:46:21 +0100
-X-Gm-Features: AcwNN1Xe53c6TAmOJb9lfsZLZ4m_quFlY6T5mqrZYlWgXwPrMYhO73vZZI3FaWU
-Message-ID: <CAFEAcA_7dF4EjcpkjhxwG24J4W7ST4eVVLM0YBOeFK097+GpAA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] target/arm: Fix SVE2 WHILEWR/WHILERW zero diff
- boundary case
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, yang.yanjun1@sanechips.com.cn, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 2/3] dockerfiles: remove packages required by Avocado
+From: marcandre.lureau@redhat.com
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru, alex.bennee@linaro.org
+In-Reply-To: <20260817134313.922754-3-pbonzini@redhat.com>
+References: <20260817134313.922754-1-pbonzini@redhat.com>
+ <20260817134313.922754-3-pbonzini@redhat.com>
+Date: Mon, 17 Aug 2026 20:56:16 +0400
+Message-Id: <178698577646.3397024.1572319898181775412.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=326;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=hmOG7pT6raVy6Pwbp7LL5ZneG/Em8zTdM6JRBunwqqE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqgz0yftRbGTyBjApJPS+eGdOJdnEGfemFlyySy
+ Cl6W4LCSaiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoM9MgAKCRDa6OEJdZac
+ 5RQbD/9Ur93+c6SoahFwKVTbV9Oy9TAodfBp7mxBz/PaYAtxfF06QpjNzfXhxageMsiEbuWw9Xn
+ S2DLmrg/kTWc413vz9AquohtvZTJERvYN9VqOva0xm9FAPWMFp1Zh2akw0LBLwtCwFzqILXn7i8
+ rmsK8ZycRkNSm23ZzWWWD60u+GPBCG/eQsJ4lYjOpZ+cyB43OXDm9hYXF8WDaicBa3k/D1QXN6G
+ xubhnTT9/I+PrFFEGBqxmB/59nZScc6v8gAlIp9DolTwHLM5p2UR1KnWla4b8WYBUeS02YXJR1a
+ BCkVlx/MjZrBJrCStjYmkz7OhiqHtJvUnPOguv6glfHUYRWU8k3HoVIo4cZllfn/nWu0i+6Z9DN
+ MzPb7wZkZm0wnxl1bNBD6cfhtYjOz9pRDV7qWmQDNS6HmaGC8X42CQ7+r6yrJ+pTqpL93vAI/If
+ c9XF764m04sPUmRxRMjyVOXanKCuSmJxIDGw4fYsd9GDZ6JGptjYQ0doe6CDQCSiWhr96HtrvDn
+ Dhx1wSR446Y5y4g8ijEj5ir/RlV9zippyV2XG5He1OlFPRzIfJgiXkdZx2rRughN6K6d+F3o39F
+ LrFAENDJ0X9l29WvmukNNXHczy0N00lPH5L+IixnFGhN3yPZJjZlNngFHBDqY5sGV3V2/aUhaT8
+ JNKlPHALiJ/EkFg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,17 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Aug 2026 at 20:15, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Use tcg_gen_ussub_i64 for WHILEWR.
-> Merge diff == 0 test with bounds check.
->
-> r~
->
+On Mon, 17 Aug 2026 15:43:12 +0200, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> Make our CI containers smaller, by removing a handful of packages that
+> were only included as dependencies of Avocado.
 
-I guess we should have a Fixes: <whatever> and a cc: stable ?
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-thanks
--- PMM
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
