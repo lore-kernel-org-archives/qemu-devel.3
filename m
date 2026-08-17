@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86897C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E3BC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2az-00025Z-NK; Mon, 17 Aug 2026 15:02:05 -0400
+	id 1ww2bN-00031J-Sq; Mon, 17 Aug 2026 15:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZF-0006OO-Tp
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:20 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2a6-0006oU-3u
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:15 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZB-0006UW-0F
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:17 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so30520975e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2a2-0006mL-OM
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:08 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-81f3b227a4aso55321577b3.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:01:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993211; x=1787598011; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786993265; x=1787598065; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1I9KPDeH4n9Og1iKxEsMFcR+jZAbO/7dXYA5zvlc4Gg=;
- b=kI0/wn5mlq3Cop2X/NCWmt4MYrgEv/n8FfG3D/mT10nsEz28lCOglcDXioBLL77SEX
- 2ULG07v7I4LL1r1NPpEAM3G0pyPIjL+ZVxdIOCAUEK960ywElkTzg4dvCC00R4DzEfDV
- Cr3Qg94pM/1Ymgzn5SmpR6301z74TM0P579tn3nc2YryDj1Oaj/8hakI4CWsgq4Vhmlr
- ZqQgc6ayp7BjUuQCRLtM+l8yx1szfLcb2VsiPcfPTZFv5c1SBTIRrtoHqZDvxaNpgYK4
- LiWn5ujf07jPMdP7DT4DCKGRDZhIWhJwsOcJeCE6U7tvI4LYlGXKoCnO2Eiiny0kd2OA
- CDkA==
+ bh=BjxyEeK8365VbqkIEoqsYg/DoU9ewvIYcbSIMSbaWL4=;
+ b=mcFORbx64v9MNiluuHU/U/VINQwjvjU+B3NhWFS2iLiuM+p/Ok4nZNAHb5ZUgUPbCw
+ 5vT0+QE9mWDWvEhswAn7GLswVbI6ontcXItBmjbUuJjsEiOfd8Lq21wBYwebwRywG/g6
+ FVmeEOLFuhzSjarI7YPr4hbj8UeMO7oALPb4rCPL7lP23SbCfOIJJvMNJRHj8iLLLkg5
+ rqQyv46oKl79tV8aRATyPqrGGXD/PRr7YW5WplU0TD1RiI706o1ZSitHiJ9pTshO3fyJ
+ /7Nu3y1EphucmMo+10s2JuKx2m9A+D8ShKCKWATbdlvufPJfVTo0hg4SL2Ma1/e56Z4K
+ 3gMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993211; x=1787598011;
+ d=1e100.net; s=20251104; t=1786993265; x=1787598065;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1I9KPDeH4n9Og1iKxEsMFcR+jZAbO/7dXYA5zvlc4Gg=;
- b=U795JZmh2KUEJefTQvFYXUZZtYaFbtk7BwdfMtVeUapxSB5+vcZagneuEJ3TJOZnme
- b+iaA7KxKUr9UmOjSAwqVrMm4lMEPTRlYvkRgzuqhgKj7qhekks48IuKIlJ0W8hqlpEJ
- fndXfJHjpDeMADuaRbg24zVMmTo8IBtee2j9qvHBTGcfXvWxWMnVGy/ci0h54sZgGuVe
- x0u+OWMPTWWWsbicH/hFFEwzE3ai3wr6+sT9MuH39XZK17wuIuv6Wq5JHWSJdZUKgNiq
- yJD6FRm9mlq7w6o8QIFJJD7j8lm9hfuOIooRhSQKL6WRWgXsEYUjY7p6cz+ZM+cBkFEH
- 3JrQ==
-X-Gm-Message-State: AOJu0YxlJWeiMdphGAFNdqDozlwL73QWsXYgL8xNZ6kg1rxTL8OlpQNS
- OuUt35sVcq+nWVfgIjZFx4fCBNNzZkZexth3Rz4NBYXweizgZl3YLWkxNewLLyQvfCKAzGmv/qB
- xKA4s
-X-Gm-Gg: AR+sD10vtIjBlMvYeUN8IakAovO3ugXK0OKfpNfDjPPy4xavIwMOjhaUwkl8H/acYMR
- 222Ex0dNdFqcRRpCzu5YjPXXzrinS/bal8zucLms9TigFYEVpFA1v9/H6+NX1Z7eMrO0+/bIT8+
- cj0E34JYOeZ22/bmUN0E68V2eKN6zIW+idVmU/JKxhhp/NLT6zwyxZfJRCbeB6sbWnPPNLSr1bH
- 0QOQt08BrjxUoqxl7PpRcmSo4oiFK71iHopAXTtgxh7pPN1Xc5ASzJUFDEp0ceG3a2/WhKJvzLb
- nnN5399Sh3EDkPIwjfH9jzLlvF+4oIjwV+tnwwZFfE/Cm9ukqagfmnTP4yhmq8xDD/fTJddauxZ
- u1JDrhCpLURqwBz1LKsSBtPfBd009hcWBxTIVzgDtw22bHhgQUJshQ2AQuU9AAHPbISNgyU/sDV
- s8wSUe/nqflgCIfWMKxXPzgFqJ7vC0jEttGW6B3DtCkGLYTWa0pg==
-X-Received: by 2002:a05:600c:4e11:b0:495:6bc9:62b0 with SMTP id
- 5b1f17b1804b1-4999fb5be5amr42157765e9.17.1786993211382; 
- Mon, 17 Aug 2026 12:00:11 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
+ bh=BjxyEeK8365VbqkIEoqsYg/DoU9ewvIYcbSIMSbaWL4=;
+ b=lfb/2XxAgM0wHe5FUFvZHudLRxTkBK9cfoFgo6CydxlyXBBmfLSYn5F0UZqWD7O5bE
+ Pepq68y8ra83AsNltPRDgY1J7bdJpNItfgpnAukfByWOIcH3Of0LktMgeLsKEa82zqrS
+ LyF6ZmWz9Le96RoYLITftrHaSVLzlnhITyLawyuJHNLcxDItfVaSbSEFgBBAzjWfr2qL
+ 5tUGj2pzR98RMZI+PvAaGEFNiYSaB8JungFKTjKgDKJgCBqCvdjmNUdKot1lx0gID95S
+ 1MlURee2drXSKoI03p0d/ULGehsd2JjOQ6WRImoqDVI2PkZz1lE3RYfnpovRTtdluchK
+ 51+g==
+X-Gm-Message-State: AOJu0YzyZbAuYXk20YQmTr58rl5y5XRipsbBd62R8C9u25n3ZMZqnCRw
+ rHpneDXcB/3FYPsOitpdhhFkQiVjgYgHvLUnBaP28LJ0bMa00QNUBMdiQCNnIrnyHWQ=
+X-Gm-Gg: AR+sD11+cihCg5IpmoMpCDUJi/JOUWAxWIz16CUrfto7pW52xqo6AZrzidYd+VmZHw5
+ lkJp8AUksKElStKTwsbfepLnAgi1pOjbQ6BNWss8B5tuSVCxQHGTYvsTYxdaUaqmHFYcDrw3RBl
+ T7MLOFGCEjIG0YOsNxv0eMJsZiBmMdgde3MtelAmLjj27aWGjl80AhUU6yvyG1fzMKEWcAVtqnZ
+ oS1wJpVs9uUW6ba8mSSvbHVy1hLL8nk3UKS8SZ++Ux6a0DCfjgTz0ojLBjehT0SZgho6Zm2gQSE
+ QctOd4cWP0uu/xrYHiQi3TsWNQPoOuUeJGBsp+6gBq7nSEIp4uHRgQaY6bc4NKGhcTywFRX7Bp6
+ yMLnIQvDZ2viz9dlos9/GmdvATJEHliRigfcqNl2iIHQm+8DMKlaEuuu6UCsX8WOmw83CyI9vaj
+ VQ0ZA9WI+15D5WQajbrguCBz4nMHrRUCWo2313/5n1rREn1/mpWlUZ7oq/3IYz
+X-Received: by 2002:a05:690c:c383:b0:820:dd2:3c84 with SMTP id
+ 00721157ae682-837118357bemr82731077b3.22.1786993265354; 
+ Mon, 17 Aug 2026 12:01:05 -0700 (PDT)
+Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.10
+ 00721157ae682-840f325cce8sm8265967b3.37.2026.08.17.12.01.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:11 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
+ Mon, 17 Aug 2026 12:01:03 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v6 23/25] iotests: cover a broken Format Extension and a
- combined repair
-Date: Mon, 17 Aug 2026 20:59:40 +0200
-Message-ID: <20260817185942.1065143-24-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
-References: <20260817185942.1065143-1-den@openvz.org>
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
+ zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
+Subject: [RFC PATCH 8/8] RFC: tcg: fold a guest displacement into the host
+ addressing mode
+Date: Mon, 17 Aug 2026 15:00:38 -0400
+Message-ID: <20260817190038.580257-9-mattst88@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260817190038.580257-1-mattst88@gmail.com>
+References: <20260817190038.580257-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=den@openvz.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,193 +103,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Nothing in the TCG frontend interface can express a based memory access.
+tcg_gen_qemu_ld/st take an address and nothing else, so a target with a
+displacement in its load and store encodings -- which is most of them --
+has to materialise the address first:
 
-An image which was not closed correctly may have had its Format
-Extension cluster reused by a guest write, which is what the reuse of
-those clusters is for. It has to open anyway, as the payload is intact,
-and it has to stop pointing at what is no longer an extension.
+    ldq a1,8(a0)  ->  mov 0x80(%rbp),%rbx      reload a0
+                      lea 0x8(%rbx),%r12       address
+                      mov (%r12),%r12          the load
+                      mov %r12,0x88(%rbp)      spill a1
 
-The same damage in an image which was closed correctly is what an older
-qemu leaves behind, as it ignores the extension in read-write mode and
-truncates the file to the end of the payload on close. Both shapes of
-it are covered: the cluster overwritten with something which is not an
-extension, and the cluster truncated away with the header still
-pointing past the end of the file. Neither keeps the image shut, and
-qemu-img info is enough to tell, as it opens the image on its own.
+The lea is pure loss on a host whose addressing mode has a displacement
+field sitting empty. It also needs a register, at the point in a block
+where pressure is highest.
 
-Rebuilding the used bitmap after a leak is repaired reports the errors
-which come with a BAT pointing a cluster twice, and those are the ones
-qemu-img check is there to fix, so a duplicate entry next to a leak is
-covered too.
+Fold it. After optimisation, look for an add of a constant immediately
+before a guest access, defining that access's address operand, and move the
+constant into a new second constant argument on the op. The add is left for
+liveness to remove, so nothing breaks if its result has another use. Only
+the immediately preceding op is examined: that is what the frontends emit,
+and a window of one op means the pass does not have to reason about what
+could have happened in between. The one thing it does check is that the add
+did not clobber the base it read, since the access now reads that base
+directly.
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+Targets opt in with TCG_TARGET_HAS_ldst_disp and an out_disp member on
+TCGOutOpQemuLdSt. Without it the pass does not run, the displacement stays
+zero and the existing out member is called exactly as before, so no other
+backend changes behaviour or needs touching.
+
+For x86_64 the displacement goes in the disp32 that prepare_host_addr()
+already fills in for guest_base. The fold is refused unless there is no
+slow path at all, which means user-only -- softmmu compares the unadjusted
+address against the TLB -- and an access needing no alignment test, since
+the slow path hands addr_reg to the helper and that register no longer
+holds the full guest address. It is also refused if guest_base plus the
+displacement leaves disp32.
+
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
+SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO build,
+on top of the preceding patches, against a control measured in the same
+session:
+
+    before: 787,483,360,681 instructions, 78.250s
+    after:  738,020,161,466 instructions, 75.679s
+                                          -6.29% instructions, -3.29% wall
+
+Emitted code shrinks from 46.29MB to 44.53MB over the run, 153.3 to 147.5
+bytes per block. Per Alpha opcode, the host bytes emitted for an access
+fall as expected and nothing else moves:
+
+    ldq   17.2 -> 14.3    ldah  16.9 -> 16.9
+    ldl   14.1 -> 11.6    lda   12.6 -> 12.6
+    stq   12.7 ->  9.7    mov    9.7 ->  9.7
+
+The emulated compiler produces byte-identical output and the alpha tests
+still pass, including with a non-zero guest_base forced via -B.
+
+RFC because:
+
+- Only wired up for x86_64, and only for qemu_ld and qemu_st; the i128
+  qemu_ld2 and qemu_st2 pairs are left alone.
+- Requiring that no slow path exists is stricter than necessary. Recording
+  the displacement in TCGLabelQemuLdst and emitting one lea on the slow
+  path would cover alignment-checked accesses too, at no fast path cost.
+- Softmmu wants the displacement folded into the TLB comparison as well,
+  which is a bigger change than this one.
+- A one op window catches everything the frontends emit today but is
+  trivially defeated by anything scheduled in between.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- tests/qemu-iotests/tests/parallels-checks     | 80 +++++++++++++++++++
- tests/qemu-iotests/tests/parallels-checks.out | 57 +++++++++++++
- 2 files changed, 137 insertions(+)
+ include/tcg/tcg-opc.h       |  9 +++-
+ tcg/tcg-op-ldst.c           |  3 +-
+ tcg/tcg.c                   | 86 ++++++++++++++++++++++++++++++++++++-
+ tcg/x86_64/tcg-target.c.inc | 61 ++++++++++++++++++++++++++
+ tcg/x86_64/tcg-target.h     |  3 ++
+ 5 files changed, 158 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-index 4c8fc17fa9..084eded89d 100755
---- a/tests/qemu-iotests/tests/parallels-checks
-+++ b/tests/qemu-iotests/tests/parallels-checks
-@@ -444,6 +444,86 @@ echo "== guest data was never in doubt =="
- # Clear image
- _make_test_img $SIZE
+diff --git ./include/tcg/tcg-opc.h ./include/tcg/tcg-opc.h
+index 61f1c28858..0a3b4330f1 100644
+--- ./include/tcg/tcg-opc.h
++++ ./include/tcg/tcg-opc.h
+@@ -118,8 +118,13 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+ DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+ DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
  
-+echo "== TEST BROKEN EXTENSION OF AN IMAGE WHICH WAS NOT CLOSED =="
-+
-+EXT_OFF_OFFSET=56
-+
-+echo "== add a persistent dirty bitmap =="
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+
-+ext_off=$(peek_file_le "$TEST_IMG" $EXT_OFF_OFFSET 8)
-+
-+echo "== a guest write may reuse the extension cluster, so clobber it =="
-+poke_file "$TEST_IMG" $((ext_off * 512)) "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
-+
-+echo "== pretend the image was not closed correctly =="
-+poke_file "$TEST_IMG" "$INUSE_OFFSET" "\x59\x6e\x6f\x74"
-+
-+echo "== the image opens, the extension is dropped =="
-+{ $QEMU_IO -c "write -P 0x11 0 64k" "$TEST_IMG"; } 2>&1 | _filter_qemu_io |
-+    _filter_testdir | _filter_generated_node_ids
-+
-+echo "== and it stopped pointing at the broken extension =="
-+echo "ext_off: $(peek_file_le "$TEST_IMG" $EXT_OFF_OFFSET 8)"
-+
-+echo "== an older qemu leaves the same damage behind a clean close =="
-+_make_test_img $SIZE
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+ext_off=$(peek_file_le "$TEST_IMG" $EXT_OFF_OFFSET 8)
-+poke_file "$TEST_IMG" $((ext_off * 512)) "\xaa\xaa\xaa\xaa\xaa\xaa\xaa\xaa"
-+_img_info | _filter_generated_node_ids
-+
-+echo "== truncating the extension away is dropped as well =="
-+_make_test_img $SIZE
-+$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
-+ext_off=$(peek_file_le "$TEST_IMG" $EXT_OFF_OFFSET 8)
-+truncate -s $((ext_off * 512)) "$TEST_IMG"
-+_img_info | _filter_generated_node_ids
-+
-+# Clear image
-+_make_test_img $SIZE
-+
-+echo "== TEST REPAIR OF A DUPLICATE ENTRY NEXT TO A LEAK =="
-+
-+echo "== write two clusters =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" \
-+           -c "write -P 0x22 $CLUSTER_SIZE $CLUSTER_SIZE" \
-+           "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== point the second BAT entry at the first cluster =="
-+first=$(peek_file_le "$TEST_IMG" $BAT_OFFSET 4)
-+poke_file_le "$TEST_IMG" $(($BAT_OFFSET + 4)) 4 $first
-+
-+echo "== leak a cluster at the end of the image =="
-+file_size=`stat --printf="%s" "$TEST_IMG"`
-+fallocate -xl $((file_size + CLUSTER_SIZE)) "$TEST_IMG"
-+
-+echo "== both are repaired in one go =="
-+_check_test_img -r all
-+
-+echo "== and the image opens read-write afterwards =="
-+{ $QEMU_IO -c "read -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+# Clear image
-+_make_test_img $SIZE
-+
-+echo "== TEST A LEAK WHICH DOES NOT FIT AN INT =="
-+
-+echo "== write one cluster =="
-+{ $QEMU_IO -c "write -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+echo "== leave 3 GiB of unused space behind it =="
-+truncate -s $((3 * 1024 * 1024 * 1024)) "$TEST_IMG"
-+
-+echo "== closing the image truncates it without complaining =="
-+{ $QEMU_IO -c "read -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
-+
-+file_size=`stat --printf="%s" "$TEST_IMG"`
-+echo "file size: $file_size"
-+
-+# Clear image
-+_make_test_img $SIZE
-+
- echo "== TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY =="
+-DEF(qemu_ld, 1, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
+-DEF(qemu_st, 0, 2, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
++/*
++ * The second constant argument is a displacement to add to the address,
++ * zero unless a target advertises TCG_TARGET_HAS_ldst_disp and the fold in
++ * fold_ldst_disp() applied.
++ */
++DEF(qemu_ld, 1, 1, 2, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
++DEF(qemu_st, 0, 2, 2, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
+ DEF(qemu_ld2, 2, 1, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
+ DEF(qemu_st2, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT)
  
- echo "== write two clusters =="
-diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-index 7aaa4636d7..5dc2963a98 100644
---- a/tests/qemu-iotests/tests/parallels-checks.out
-+++ b/tests/qemu-iotests/tests/parallels-checks.out
-@@ -294,6 +294,63 @@ qemu-img: warning: Dropping inconsistent bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b
- read 65536/65536 bytes at offset 0
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST BROKEN EXTENSION OF AN IMAGE WHICH WAS NOT CLOSED ==
-+== add a persistent dirty bitmap ==
-+== a guest write may reuse the extension cluster, so clobber it ==
-+== pretend the image was not closed correctly ==
-+== the image opens, the extension is dropped ==
-+qemu-io: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong parallels Format Extension magic: 0xaaaaaaaaaaaaaaaa, expected: 0xab234cef23dcea87
-+Repairing image was not closed correctly
-+Repairing space leaked at the end of the image 1048576
-+wrote 65536/65536 bytes at offset 0
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== and it stopped pointing at the broken extension ==
-+ext_off: 0
-+== an older qemu leaves the same damage behind a clean close ==
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Wrong IMGFMT Format Extension magic: 0xaaaaaaaaaaaaaaaa, expected: 0xab234cef23dcea87
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 4 MiB (4194304 bytes)
-+== truncating the extension away is dropped as well ==
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+qemu-img: warning: Dropping the Format Extension of node 'NODE_NAME', which does not look like one: Format Extension is outside the image file
-+image: TEST_DIR/t.IMGFMT
-+file format: IMGFMT
-+virtual size: 4 MiB (4194304 bytes)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST REPAIR OF A DUPLICATE ENTRY NEXT TO A LEAK ==
-+== write two clusters ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 1048576/1048576 bytes at offset 1048576
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== point the second BAT entry at the first cluster ==
-+== leak a cluster at the end of the image ==
-+== both are repaired in one go ==
-+Repairing space leaked at the end of the image 2097152
-+Repairing duplicate offset in BAT entry 1
-+The following inconsistencies were found and repaired:
+diff --git ./tcg/tcg-op-ldst.c ./tcg/tcg-op-ldst.c
+index 22211ccb45..ffc5e651a6 100644
+--- ./tcg/tcg-op-ldst.c
++++ ./tcg/tcg-op-ldst.c
+@@ -92,7 +92,8 @@ static MemOp tcg_canonicalize_memop(MemOp op, bool is64, bool st)
+ static void gen_ldst1(TCGOpcode opc, TCGType type, TCGTemp *v,
+                       TCGTemp *addr, MemOpIdx oi)
+ {
+-    TCGOp *op = tcg_gen_op3(opc, type, temp_arg(v), temp_arg(addr), oi);
++    /* The trailing zero is the address displacement; see fold_ldst_disp(). */
++    TCGOp *op = tcg_gen_op4(opc, type, temp_arg(v), temp_arg(addr), oi, 0);
+     TCGOP_FLAGS(op) = get_memop(oi) & MO_SIZE;
+ }
+ 
+diff --git ./tcg/tcg.c ./tcg/tcg.c
+index 1e77f2365a..bdd95304ea 100644
+--- ./tcg/tcg.c
++++ ./tcg/tcg.c
+@@ -1058,6 +1058,13 @@ typedef struct TCGOutOpQemuLdSt {
+     TCGOutOp base;
+     void (*out)(TCGContext *s, TCGType type, TCGReg dest,
+                 TCGReg addr, MemOpIdx oi);
++    /*
++     * As out(), for an access at addr + disp. Only required of targets that
++     * define TCG_TARGET_HAS_ldst_disp; for everyone else fold_ldst_disp()
++     * never runs and the displacement is always zero.
++     */
++    void (*out_disp)(TCGContext *s, TCGType type, TCGReg dest,
++                     TCGReg addr, MemOpIdx oi, int32_t disp);
+ } TCGOutOpQemuLdSt;
+ 
+ typedef struct TCGOutOpQemuLdSt2 {
+@@ -3560,6 +3567,77 @@ static void move_label_uses(TCGLabel *to, TCGLabel *from)
+     QSIMPLEQ_CONCAT(&to->branches, &from->branches);
+ }
+ 
++#ifndef TCG_TARGET_HAS_ldst_disp
++#define TCG_TARGET_HAS_ldst_disp  0
++static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOpIdx oi, int64_t disp)
++{
++    return false;
++}
++#endif
 +
-+    2 leaked clusters
-+    1 corruptions
++/*
++ * Fold "add addr, base, $disp" into the guest access that follows it, so
++ * that the displacement becomes part of the host addressing mode instead of
++ * a separate instruction. Frontends have no way to express this: there is
++ * no displacement operand on tcg_gen_qemu_ld/st, so a based access always
++ * costs an extra add, and an extra register to hold its result.
++ *
++ * Only an add in the op immediately before the access is recognised. That
++ * is what the frontends emit, and a window of one op means no analysis is
++ * needed of what might have happened in between. The add is left in place;
++ * liveness removes it if its result has no other use.
++ */
++static void __attribute__((noinline))
++fold_ldst_disp(TCGContext *s)
++{
++    TCGOp *op;
 +
-+Double checking the fixed image now...
-+No errors were found on the image.
-+== and the image opens read-write afterwards ==
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
-+== TEST A LEAK WHICH DOES NOT FIT AN INT ==
-+== write one cluster ==
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+== leave 3 GiB of unused space behind it ==
-+== closing the image truncates it without complaining ==
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+file size: 2097152
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
- == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
- == write two clusters ==
- wrote 1048576/1048576 bytes at offset 0
++    if (!TCG_TARGET_HAS_ldst_disp) {
++        return;
++    }
++
++    QTAILQ_FOREACH(op, &s->ops, link) {
++        TCGOp *prev;
++        TCGTemp *cts;
++        int64_t disp;
++
++        switch (op->opc) {
++        case INDEX_op_qemu_ld:
++        case INDEX_op_qemu_st:
++            break;
++        default:
++            continue;
++        }
++
++        prev = QTAILQ_PREV(op, link);
++        if (prev == NULL || prev->opc != INDEX_op_add ||
++            TCGOP_TYPE(prev) != s->addr_type) {
++            continue;
++        }
++
++        /*
++         * The add must define the address operand, and must not have
++         * clobbered the base it read: after the fold the access reads the
++         * base directly, so the base has to still hold its original value.
++         */
++        if (prev->args[0] != op->args[1] || prev->args[0] == prev->args[1]) {
++            continue;
++        }
++
++        cts = arg_temp(prev->args[2]);
++        if (cts->kind != TEMP_CONST) {
++            continue;
++        }
++        disp = cts->val;
++        if (disp == 0 || !tcg_target_ldst_disp_ok(s, op->args[2], disp)) {
++            continue;
++        }
++
++        op->args[1] = prev->args[1];
++        op->args[3] = disp;
++    }
++}
++
+ /* Reachable analysis : remove unreachable code.  */
+ static void __attribute__((noinline))
+ reachable_code_pass(TCGContext *s)
+@@ -5707,7 +5785,12 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+             const TCGOutOpQemuLdSt *out =
+                 container_of(all_outop[op->opc], TCGOutOpQemuLdSt, base);
+ 
+-            out->out(s, type, new_args[0], new_args[1], new_args[2]);
++            if (new_args[3]) {
++                out->out_disp(s, type, new_args[0], new_args[1],
++                              new_args[2], new_args[3]);
++            } else {
++                out->out(s, type, new_args[0], new_args[1], new_args[2]);
++            }
+         }
+         break;
+ 
+@@ -6590,6 +6673,7 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+     tcg_temp_ebb_reset_freed(s);
+ 
+     tcg_optimize(s);
++    fold_ldst_disp(s);
+ 
+     reachable_code_pass(s);
+     liveness_pass_0(s);
+diff --git ./tcg/x86_64/tcg-target.c.inc ./tcg/x86_64/tcg-target.c.inc
+index 1fc45e4ec6..d3bde91816 100644
+--- ./tcg/x86_64/tcg-target.c.inc
++++ ./tcg/x86_64/tcg-target.c.inc
+@@ -2015,6 +2015,39 @@ static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+     return ldst;
+ }
+ 
++/*
++ * Whether the displacement of a guest access can be folded into the host
++ * addressing mode rather than materialised by a separate lea.
++ *
++ * Folding rewrites the access to use base + disp, so nothing may need a
++ * register holding the complete guest address. The softmmu TLB comparison
++ * does, and so does any slow path, which hands addr_reg to the helper. In
++ * user-only mode prepare_host_addr() creates a slow path only for an
++ * alignment test, so requiring that none is needed rules it out. What is
++ * left to check is guest_base, which shares the disp32 field.
++ */
++static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOpIdx oi, int64_t disp)
++{
++#ifdef CONFIG_USER_ONLY
++    MemOp opc = get_memop(oi);
++    TCGAtomAlign aa;
++    int64_t ofs;
++
++    if (tcg_use_softmmu || s->addr_type != TCG_TYPE_I64) {
++        return false;
++    }
++    aa = atom_and_align_for_opc(s, opc, MO_ATOM_WITHIN16,
++                                (opc & MO_SIZE) == MO_128);
++    if (aa.align) {
++        return false;
++    }
++    ofs = (int64_t)x86_guest_base.ofs + disp;
++    return ofs == (int32_t)ofs;
++#else
++    return false;
++#endif
++}
++
+ static void tcg_out_qemu_ld_direct(TCGContext *s, TCGReg datalo, TCGReg datahi,
+                                    HostAddress h, TCGType type, MemOp memop)
+ {
+@@ -2171,9 +2204,23 @@ static void tgen_qemu_ld(TCGContext *s, TCGType type, TCGReg data,
+     }
+ }
+ 
++static void tgen_qemu_ld_disp(TCGContext *s, TCGType type, TCGReg data,
++                              TCGReg addr, MemOpIdx oi, int32_t disp)
++{
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    ldst = prepare_host_addr(s, &h, addr, oi, true);
++    /* tcg_target_ldst_disp_ok() has ruled out every slow path. */
++    tcg_debug_assert(ldst == NULL);
++    h.ofs += disp;
++    tcg_out_qemu_ld_direct(s, data, -1, h, type, get_memop(oi));
++}
++
+ static const TCGOutOpQemuLdSt outop_qemu_ld = {
+     .base.static_constraint = C_O1_I1(r, L),
+     .out = tgen_qemu_ld,
++    .out_disp = tgen_qemu_ld_disp,
+ };
+ 
+ static void tgen_qemu_ld2(TCGContext *s, TCGType type, TCGReg datalo,
+@@ -2309,9 +2356,23 @@ static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
+     }
+ }
+ 
++static void tgen_qemu_st_disp(TCGContext *s, TCGType type, TCGReg data,
++                              TCGReg addr, MemOpIdx oi, int32_t disp)
++{
++    TCGLabelQemuLdst *ldst;
++    HostAddress h;
++
++    ldst = prepare_host_addr(s, &h, addr, oi, false);
++    /* tcg_target_ldst_disp_ok() has ruled out every slow path. */
++    tcg_debug_assert(ldst == NULL);
++    h.ofs += disp;
++    tcg_out_qemu_st_direct(s, data, -1, h, get_memop(oi));
++}
++
+ static const TCGOutOpQemuLdSt outop_qemu_st = {
+     .base.static_constraint = C_O0_I2(L, L),
+     .out = tgen_qemu_st,
++    .out_disp = tgen_qemu_st_disp,
+ };
+ 
+ static void tgen_qemu_st2(TCGContext *s, TCGType type, TCGReg datalo,
+diff --git ./tcg/x86_64/tcg-target.h ./tcg/x86_64/tcg-target.h
+index 7ebae56a7d..8f2315c15e 100644
+--- ./tcg/x86_64/tcg-target.h
++++ ./tcg/x86_64/tcg-target.h
+@@ -30,6 +30,9 @@
+ #define TCG_TARGET_NB_REGS   32
+ #define MAX_CODE_GEN_BUFFER_SIZE  (2 * GiB)
+ 
++/* A guest displacement can go in the disp32 of the addressing mode. */
++#define TCG_TARGET_HAS_ldst_disp  1
++
+ typedef enum {
+     TCG_REG_EAX = 0,
+     TCG_REG_ECX,
 -- 
-2.53.0
+2.54.0
 
 
