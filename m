@@ -4,167 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63F4C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 17:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D82AC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 18:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww1MT-0007Y3-11; Mon, 17 Aug 2026 13:43:01 -0400
+	id 1ww1iO-000443-9I; Mon, 17 Aug 2026 14:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1ww1Lh-0007JZ-Gr; Mon, 17 Aug 2026 13:42:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1ww1iG-00041r-6c
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:05:33 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1ww1Ld-0003kN-AI; Mon, 17 Aug 2026 13:42:11 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67HFfbUH1758721; Mon, 17 Aug 2026 17:42:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UvQqUL
- 57UpKzJ9BzQSjr5+h9r4XbDGDUBMyMlipK3Rc=; b=hbMjv4aNBWIAUxIWnlwOZm
- 5o+1p6oTNyKiWZ/InLiNKLElJebhiH6yIeem8u3bzTmt+sB9V4JLfelqyfhe4gvs
- dF2qMXjC3Fk3Z/X135RXDs7xoXFFfUJres7WygaQH8UQNVeSiVORdRUPZnclhNCQ
- 8uAY8v4Aq2BPnLKI5G1tsu7ziZLILkLJ1/5d8R7epWtvRE0g3D9Tw/oFpjzpyFYV
- zBx6PjTctCCGnwWiAY7A+YhW5QJ0SPa9ikq1tJzqPEH4J3Qk/RLOKXy1cM0Lv4R6
- z7Gy8A5vYHzANrBMmC9kRSZKK2RIxgCKJPUi20qhYNDtJPrz4vJHve+LgC8gx/qA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fm3kke4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 17:42:03 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HHfPTM024659;
- Mon, 17 Aug 2026 17:42:01 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tvy655-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 17:42:01 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HHg0sZ1180590
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 17:42:00 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 600535805E;
- Mon, 17 Aug 2026 17:42:00 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3F2658051;
- Mon, 17 Aug 2026 17:41:58 +0000 (GMT)
-Received: from [9.61.78.161] (unknown [9.61.78.161])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 17:41:58 +0000 (GMT)
-Message-ID: <a6f70e91-8561-4bbc-a799-c51425df3eab@linux.ibm.com>
-Date: Mon, 17 Aug 2026 13:41:58 -0400
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1ww1iC-0006nv-SZ
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:05:31 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 19D1B3F278
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 18:05:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1786989925;
+ bh=lfIbWMOa2iOZ6J33kzt73K4djN83o/D+I8rF5ESlWlI=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=mCE42aPOurqc1ZJCVvq/ZKFtQjQVESjkFpcbPWYKTwEsVKU2yC/dhx4BP4cQcYWsf
+ yRMxJEOWucL/OMLVmhNp7zkVXxjDgtY7y5K6hJfwHQIn9qU7Gyptowhj0ueBNpznB+
+ feN3dt4IjiYQ/hoSG8XkBItJjRhX/xvk9DK8uJjDhXlsR7JqtnLP5X1BUMpLFZ8SKG
+ dwK9OtbeoiKLnGkfSzZGswLmrVjlRRSvZ71pzT0FOxcvsz4+ovGyPZAXLWxIuHf6+e
+ N3LadKDK5iBGSr7U79FoI0O5aDH0Qf+C0Ofn37SN2NAw1yYQw/wq12Y0TqQ4SMnJUm
+ wjuThw0u6VXQg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id E4EFF7F342
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 18:05:24 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 34/34] MAINTAINERS: Add secure IPL files to S390-ccw
- boot group
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260730214624.2328883-1-zycai@linux.ibm.com>
- <20260730214624.2328883-35-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260730214624.2328883-35-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: PrsoRAhuZIl7Ih1c8yXQL-rTgmnQCwSj
-X-Proofpoint-ORIG-GUID: PrsoRAhuZIl7Ih1c8yXQL-rTgmnQCwSj
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEzNCBTYWx0ZWRfX4peCkHMWL9Qw
- SFBwHvUHtmiT0xsM0g4qt5OvPhGGqcbHAuFIs+gBUZkburGCezZZdBFarlsXx1zBR36+YZ1MZtP
- 0npHNY8jxZ/+j1Bsn/clR0l2pOHub/I=
-X-Authority-Analysis: v=2.4 cv=WtQb99fv c=1 sm=1 tr=0 ts=6a8347eb cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=jZOY1T4vawHwXQVYJRMA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEzNCBTYWx0ZWRfX7gfepXwht7pC
- /5ImygJqLGFpWFKnv/cmwZBjP/gjNQmSpPZCksqjTyBSZ9biKaWx3W8npjM5ypzwTrQplibkUAy
- fMPN/rvmartXE6yzGjYdQZN12s5GU2MegvoDLdo5VhkhLabbrxf6VVAGzTnum9C1tAzHeuPFoB6
- wDFJqgODSzyjs9c2Fy1ReI/7Q3xdkm3PaR3XO/8wVEkHiyzsUmNTO8Gl+gS9Da5aP2Sryvh6zdD
- 7MaWg2UqPK81/ow7UYCDRyR1DHuQSqwxRkGftG/q76z/9QUt6Eht3Qt9yqDY4z8nS9GCuDghCki
- 0ZjAsGgJSR8N2QIYpXv74avokiGzspatYVXWoUS+P9oXjlSLWnmQykynrrMZ6RjC3cCnpyAp7IW
- tEUkJKSA+VCkf7jQO7fntOxYhLwEo4a9I5lQssRPUcAREyTcs/jN6WiW1P7Im3IiTnz+RA2PF7d
- VF04gpuEdytLqfAmxXA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-17_02,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608170134
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Aug 2026 17:57:30 -0000
+From: Renan Rodrigo <2163604@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=linux-hwe-6.11;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug-Tags: amd64 apport-bug kernel-daily-bug noble
+ server-triage-discuss
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: kennybobs
+X-Launchpad-Bug-Reporter: Ken Sharp (kennybobs)
+X-Launchpad-Bug-Modifier: Renan Rodrigo (rr)
+References: <178689637290.2447309.1476538072834918294.malonedeb@juju-98d295-prod-launchpad-55>
+Message-Id: <178698945136.2114449.1903516413480778370.launchpad@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2163604] Re: Wine's ntdll:exception test causes GPF in KVM
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="1f3f5e18eeb078b421219d9c98ba0dd1171ead1a";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 00e89c8515b86f1660f9422ac3c422089a1c5010
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -173,43 +89,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2163604 <2163604@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+** Tags added: server-triage-discuss
 
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2163604
 
-On 7/30/26 5:46 PM, Zhuoying Cai wrote:
-> Add entries for the files introduced by the secure IPL series (cert-store,
-> diag headers, documentation, and functional test) to the S390-ccw boot
-> maintainer group.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->   MAINTAINERS | 5 +++++
->   1 file changed, 5 insertions(+)
+Title:
+  Wine's ntdll:exception test causes GPF in KVM
 
-Acked-by: Eric Farman <farman@linux.ibm.com>
+Status in QEMU:
+  New
+Status in linux-hwe-6.11 package in Ubuntu:
+  New
+Status in qemu package in Ubuntu:
+  New
 
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 902db77218..0742076861 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1926,10 +1926,15 @@ R: Christian Borntraeger <borntraeger@linux.ibm.com>
->   R: Jason Herne <jjherne@linux.ibm.com>
->   S: Supported
->   F: hw/s390x/ipl.*
-> +F: hw/s390x/cert-store.[ch]
-> +F: include/hw/s390x/ipl/
->   F: pc-bios/s390-ccw/
->   F: pc-bios/s390-ccw.img
->   F: docs/devel/s390-dasd-ipl.rst
-> +F: docs/specs/s390x-secure-ipl.rst
-> +F: docs/system/s390x/secure-ipl.rst
->   F: tests/functional/s390x/test_pxelinux.py
-> +F: tests/functional/s390x/test_secure_ipl.py
->   L: qemu-s390x@nongnu.org
->   
->   S390 PCI
+Bug description:
+  Wine's winetest.exe is used to test various components of Wine
+  (WineHQ.org), and can be run on a Windows VM. When it gets to the
+  ntdll:exception test, Qemu exits silently.
+
+  [Aug16 16:36] kvm_intel: kvm [23609]: vcpu2, guest rIP: 0xfffff8058f0f954=
+2 Unhandled WRMSR(0x1d9) =3D 0x1
+  [  +0.000128] qemu-system-x86[23609]: segfault at 594ae11c0760 ip 0000594=
+ae11c0760 sp 00007fffe472fd08 error 15 likely on CPU 0 (core 0, socket 0)
+  [  +0.000014] Code: 00 00 20 3b 20 5a b0 7f 00 00 00 00 00 00 00 00 00 00=
+ 00 00 00 00 00 00 00 00 cb ce 55 01 00 00 00 00 97 00 00 00 00 00 00 00 <2=
+0> 00 0a 6c 69 62 73 63 41 00 00 00 00 00 00 00 30 52 60 e1 4a>
+
+  Qemu should handle this gracefully, but then so should KVM.
+  I tested Qemu 11.1.0 and the exact same happens. Will report to Qemu.
+
+  Kernel testing is difficult as I rely on old Nvidia drivers, and
+  they're broken in newer kernels with no chance of them being fixed.
+
+  Attaching the specific binary from today's daily build.
+
+  ProblemType: Bug
+  DistroRelease: Ubuntu 24.04
+  Package: linux-image-6.11.0-29-generic 6.11.0-29.29~24.04.1
+  ProcVersionSignature: Ubuntu 6.11.0-29.29~24.04.1-generic 6.11.11
+  Uname: Linux 6.11.0-29-generic x86_64
+  NonfreeKernelModules: nvidia_modeset nvidia
+  ApportVersion: 2.28.3-0ubuntu0.1
+  Architecture: amd64
+  AudioDevicesInUse:
+   USER        PID ACCESS COMMAND
+   /dev/snd/controlC0:  ken        3933 F.... wireplumber
+   /dev/snd/controlC1:  ken        3933 F.... wireplumber
+   /dev/snd/seq:        ken        3929 F.... pipewire
+  CasperMD5CheckResult: unknown
+  CurrentDesktop: MATE
+  Date: Sun Aug 16 16:57:54 2026
+  MachineType: LENOVO 0606AD5
+  ProcFB: 0 simpledrmdrmfb
+  ProcKernelCmdLine: BOOT_IMAGE=3D/vmlinuz-6.11.0-29-generic root=3DUUID=3D=
+83ed7b7f-ef51-49d7-a6be-a8efee1cdd32 ro rootflags=3Dsubvol=3D@ vt.handoff=
+=3D7 zswap.enabled=3D1 zswap.shrinker_enabled=3D1 zswap.max_pool_percent=3D=
+20 zswap.zpool=3Dzsmalloc zswap.compressor=3Dlz4 resume=3DUUID=3Dafb35822-b=
+a94-455b-839e-a91d503b9608 intel_iommu=3Don iommu=3Dpt video=3D1920x1080@60
+  PulseList: Error: command ['pacmd', 'list'] failed with exit code 1: No P=
+ulseAudio daemon running, or not running as session daemon.
+  RelatedPackageVersions:
+   linux-restricted-modules-6.11.0-29-generic N/A
+   linux-backports-modules-6.11.0-29-generic  N/A
+   linux-firmware                             20240318.git3b128b60-0ubuntu2=
+.29
+  RfKill:
+  =20
+  SourcePackage: linux-hwe-6.11
+  UpgradeStatus: Upgraded to noble on 2026-05-15 (93 days ago)
+  dmi.bios.date: 12/15/2016
+  dmi.bios.release: 0.60
+  dmi.bios.vendor: LENOVO
+  dmi.bios.version: A0KT60AUS
+  dmi.board.asset.tag: To be filled by O.E.M.
+  dmi.board.name: LENOVO
+  dmi.board.vendor: LENOVO
+  dmi.board.version: NONE
+  dmi.chassis.type: 7
+  dmi.chassis.vendor: LENOVO
+  dmi.chassis.version: NONE
+  dmi.modalias: dmi:bvnLENOVO:bvrA0KT60AUS:bd12/15/2016:br0.60:svnLENOVO:pn=
+0606AD5:pvrThinkStationS30:rvnLENOVO:rnLENOVO:rvrNONE:cvnLENOVO:ct7:cvrNONE=
+:skuLENOVO_BI_A0:
+  dmi.product.family: To be filled by O.E.M.
+  dmi.product.name: 0606AD5
+  dmi.product.sku: LENOVO_BI_A0
+  dmi.product.version: ThinkStation S30
+  dmi.sys.vendor: LENOVO
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2163604/+subscriptions
 
 
