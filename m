@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3738CC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29648C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtJr-0005g4-K0; Mon, 17 Aug 2026 05:07:47 -0400
+	id 1wvtJs-0005la-8t; Mon, 17 Aug 2026 05:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJa-0004gk-6k; Mon, 17 Aug 2026 05:07:30 -0400
+ id 1wvtJA-0004Hs-0d; Mon, 17 Aug 2026 05:07:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtJY-0001r3-Cs; Mon, 17 Aug 2026 05:07:29 -0400
+ id 1wvtJ8-0001nQ-2h; Mon, 17 Aug 2026 05:07:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=sU29FaoWz6BaQ91t5jxo6rXdQueIAxi80BoVYsgyPFM=;
+ t=1786957506; bh=+IMeWjoGpbxb8rykSNMkWNN77BDc/364nFvwo0YqxKg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XjHoNEtr/dAEg2ThV/QbbVVzGwTYbH1sfwzKAefbuB+lcNPgk2/eep2KmWEExSANY
- OZh20tqZ6rq0fVrDGYACGTkdsOkoBJQ/fR/7hXSSpZ0eOlTiJoxhqvyWkgtJqYFiPu
- JGEWNPENVaBRBtkBPT4OA8swOtBh+KArNE3hACvdTdUFPbrMI/izllKMT833YmrOoa
- 39i3vGAbdW2X04Y4wNfiEveYNKrC60jjlBtITCLpF2EVelnm3To+jGJBYSBAqq7XuP
- UNkXWdCS7IqsGfNxrFGiUJXvsjXJVpiGOyeXKf8k3NPBJHXYwkmmZgrtStHXLnNFwN
- 9/iE9UHOFuEOQ==
+ b=GLlrcz+NVwfMWaeVqusCmFUdIB+WPEdRKXu4tgBMA/pQBTnFjN4nmCuwXtVy+mbl7
+ wiI2/Kba+VrF1pcFYKtw6944bi5QO6YYHIWPFxQfaFmFlgKM3ZVCcZhB5UMEU0VinE
+ 9rJvLze+LL7mVbsT7r6TrA2qA1uE46tdGQIGIvlwONWKSBX3Pk5jSHGynT2XErKCeY
+ HVczeRu4R6EIo/Uu4FIyxBvn4l7mhVJExogOgGaKPy+n2Sl0mQ9/rZJtR17ISmCH+n
+ aH+PI0Ida3hR7D4XAg1SQSA6b/09gHosxHiKQmjttPS5Xn2/kVmAOWICrVR19bTV7A
+ 2pWTHp4XVwI/g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 662ED1CBA4C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5512B1CBA48;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 45D5740D02E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 34ADB40D02A;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E5F4630D10; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id DA1FE30D08; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 24/42] tests/tcg/s390x: Test STCKF condition code on a
- faulting store
-Date: Mon, 17 Aug 2026 12:04:29 +0300
-Message-ID: <20260817090453.2034156-24-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 20/42] pc-bios/s390-ccw: bound zipl menu strlen and
+ replace VLA in zipl_print_entry
+Date: Mon, 17 Aug 2026 12:04:25 +0300
+Message-ID: <20260817090453.2034156-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -71,79 +72,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-Add a small test to prevent regressions.
+menu_get_zipl_boot_index() calls strlen() on a pointer into the middle
+of _s2 with no upper bound, so a stage-2 image whose blocks contain no
+NUL bytes causes strlen() to walk beyond _s2. The resulting length
+is then used to size a stack VLA in zipl_print_entry(), risking a stack
+overflow.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714203206.363028-3-iii@linux.ibm.com
+Fix by:
+
+- Implementing strnlen(), a bounded version of strlen(). s390-ccw uses
+  libc from SLOF, which includes strlen() but does not have an
+  implementation of strnlen(), so we must implement our own.
+
+- Adding a menu_data_end parameter to menu_get_zipl_boot_index() and
+  replacing both strlen() calls with strnlen() bounded by the remaining
+  buffer space. The loop guard also checks that the pointer has not
+  reached menu_data_end. The function returns 0 (boot default) if
+  somehow menu_data reaches menu_data_end before printing any entries.
+
+- Replacing the VLA char buf[len + 2] in zipl_print_entry() with a fixed
+  ZIPL_ENTRY_MAX + 2 (82-byte) buffer and truncating len before use.
+
+- Passing s2_end (_s2 + sizeof(_s2)) as menu_data_end at the one call
+  site in eckd_get_boot_menu_index(), so the bound is exactly the end of
+  the buffer.
+
+Fixes: f7178910845a ("s390-ccw: print zipl boot menu")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260728134704.2924005-2-jdaley@linux.ibm.com
+[farman@linux.ibm.com: Per list, add strnlen rationale to commit message
+ and added cc stable]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit e79ea4472691fd7f7b3436dafbabd17c78fc8bf4)
+(cherry picked from commit a3856a7ba44ba1b740eee7759b03079e2f5f637b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 48cba4cdfa4..97c0f021902 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -50,6 +50,7 @@ TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
- TESTS+=divide-to-integer
-+TESTS+=stckf
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index ed6e8cbbc78..81512265cea 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -61,6 +61,7 @@ static uint8_t _s2[MAX_SECTOR_SIZE * 3] __attribute__((__aligned__(PAGE_SIZE)));
+ static void *s2_prev_blk = _s2;
+ static void *s2_cur_blk = _s2 + MAX_SECTOR_SIZE;
+ static void *s2_next_blk = _s2 + MAX_SECTOR_SIZE * 2;
++static void *s2_end = _s2 + sizeof(_s2);
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/stckf.c b/tests/tcg/s390x/stckf.c
-new file mode 100644
-index 00000000000..51c8c9df9f8
---- /dev/null
-+++ b/tests/tcg/s390x/stckf.c
-@@ -0,0 +1,44 @@
-+/*
-+ * Test that a faulting STORE CLOCK FAST does not clobber the condition code.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+static void handle_sigsegv(int sig, siginfo_t *info, void *ucontext)
+ static inline int verify_boot_info(BootInfo *bip)
+ {
+@@ -308,7 +309,8 @@ static int eckd_get_boot_menu_index(block_number_t s1b_block_nr)
+                 }
+             }
+ 
+-            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset);
++            return menu_get_zipl_boot_index(s2_cur_blk + banner_offset,
++                                            s2_end);
+         }
+ 
+         prev_block_nr = cur_block_nr;
+diff --git a/pc-bios/s390-ccw/helper.h b/pc-bios/s390-ccw/helper.h
+index 8e3dfcb6d6c..d9b7da444a5 100644
+--- a/pc-bios/s390-ccw/helper.h
++++ b/pc-bios/s390-ccw/helper.h
+@@ -45,4 +45,14 @@ static inline void sleep(unsigned int seconds)
+     }
+ }
+ 
++static inline size_t strnlen(const char *s, size_t maxlen)
 +{
-+    mcontext_t *mcontext = &((ucontext_t *)ucontext)->uc_mcontext;
++    size_t len = 0;
 +
-+    /* The condition code must be the one set by SLGR, not garbage. */
-+    _exit(((mcontext->psw.mask >> 44) & 3) == 3 ? EXIT_SUCCESS : EXIT_FAILURE);
++    while (len < maxlen && s[len]) {
++        len++;
++    }
++    return len;
 +}
 +
-+int main(void)
-+{
-+    struct sigaction act = {
-+        .sa_sigaction = handle_sigsegv,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
+ #endif
+diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
+index b6a9a56d462..9b81154b0ec 100644
+--- a/pc-bios/s390-ccw/menu.c
++++ b/pc-bios/s390-ccw/menu.c
+@@ -16,6 +16,7 @@
+ #include "s390-ccw.h"
+ #include "sclp.h"
+ #include "s390-time.h"
++#include "helper.h"
+ 
+ #define KEYCODE_NO_INP '\0'
+ #define KEYCODE_ESCAPE '\033'
+@@ -26,6 +27,9 @@
+ #define ZIPL_TIMEOUT_OFFSET 138
+ #define ZIPL_FLAG_OFFSET    140
+ 
++/* Max printable chars for a zipl boot menu entry */
++#define ZIPL_ENTRY_MAX 80
 +
-+    err = sigaction(SIGSEGV, &act, NULL);
-+    assert(err == 0);
+ #define TOD_CLOCK_MILLISECOND   0x3e8000
+ 
+ #define LOW_CORE_EXTERNAL_INT_ADDR   0x86
+@@ -179,9 +183,13 @@ int menu_get_boot_index(bool *valid_entries)
+ /* Returns the entry number that was printed, or -1 on invalid entry */
+ static int zipl_print_entry(const char *data, size_t len)
+ {
+-    char buf[len + 2];
++    char buf[ZIPL_ENTRY_MAX + 2];
+     const char *p;
+ 
++    if (len > ZIPL_ENTRY_MAX) {
++        len = ZIPL_ENTRY_MAX;
++    }
 +
-+    asm volatile(
-+        "lghi %%r1,100\n"
-+        "lghi %%r2,0\n"
-+        "clgr %%r1,%%r2\n"  /* CC_OP_LTUGTU_64 */
-+                            /* cc_src=100 is not valid for CC_OP_SUBU */
-+        "ipm %%r0\n"        /* force cc_src to env */
-+        "lghi %%r3,5\n"
-+        "lghi %%r4,3\n"
-+        "slgr %%r3,%%r4\n"  /* CC_OP_SUBU, cc=3 */
-+        "lghi %%r5,0\n"
-+        "stckf 0(%%r5)\n"   /* faults; cc must stay 3 */
-+        : : : "r0", "r1", "r2", "r3", "r4", "r5", "cc", "memory");
+     ebcdic_to_ascii(data, buf, len);
+     buf[len] = '\n';
+     buf[len + 1] = '\0';
+@@ -196,7 +204,7 @@ static int zipl_print_entry(const char *data, size_t len)
+     return atoi(p);
+ }
+ 
+-int menu_get_zipl_boot_index(const char *menu_data)
++int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end)
+ {
+     size_t len;
+     int entry;
+@@ -212,13 +220,22 @@ int menu_get_zipl_boot_index(const char *menu_data)
+         timeout = zipl_timeout * 1000;
+     }
+ 
+-    /* Print banner */
++    if (menu_data >= menu_data_end) {
++        return 0; /* Boot default */
++    }
 +
-+    return EXIT_FAILURE;
-+}
++    /* Skip banner */
++    len = strnlen(menu_data, menu_data_end - menu_data);
++    menu_data += len + 1;
++    if (menu_data >= menu_data_end || !(*menu_data)) {
++        return 0; /* No entries, boot default */
++    }
++
+     puts("s390-ccw zIPL Boot Menu\n");
+-    menu_data += strlen(menu_data) + 1;
+ 
+     /* Print entries */
+-    while (*menu_data) {
+-        len = strlen(menu_data);
++    while (menu_data < menu_data_end && *menu_data) {
++        len = strnlen(menu_data, menu_data_end - menu_data);
+         entry = zipl_print_entry(menu_data, len);
+         menu_data += len + 1;
+ 
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 1e1f71775ec..f6030a60710 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -76,7 +76,7 @@ void jump_to_low_kernel(void);
+ 
+ /* menu.c */
+ void menu_set_parms(uint8_t boot_menu_flag, uint32_t boot_menu_timeout);
+-int menu_get_zipl_boot_index(const char *menu_data);
++int menu_get_zipl_boot_index(const char *menu_data, const char *menu_data_end);
+ bool menu_is_enabled_zipl(void);
+ int menu_get_enum_boot_index(bool *valid_entries);
+ bool menu_is_enabled_enum(void);
 -- 
 2.47.3
 
