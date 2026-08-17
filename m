@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49932C5DF7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56A9C5DF80
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2ar-00018o-Fe; Mon, 17 Aug 2026 15:01:57 -0400
+	id 1ww2ao-0000j1-7o; Mon, 17 Aug 2026 15:01:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZB-0006I0-Hr
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZG-0006Of-Lz
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:31 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Z7-0006TD-UX
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:13 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4954dff6536so27776715e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZD-0006Vv-Q2
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:18 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4994c49f588so2365185e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993208; x=1787598008; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786993214; x=1787598014; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nDL9CAOnygcQr6TXGuqu4JiUlKl3duwzZkyPxwmpAVE=;
- b=k+6UNobgedDTRaW7t6LSBltypDzRGoo/VjrLD6eXUkP9W24ika0Xk+suXm/eNzrZNr
- zSNK7Ss5y5VXCNLbgwfhqNKkuxNGO+2zsOGotHeU2Um3DeNlrODx/MfDecUG0Z6c+oxz
- nSaWLUTVxE6dAHJRPqcEkpM6FfvZJjMP7ePCDu/FfSqqbapuN+K7dbAWyOBSyTFYkz77
- 29BM0bQEcjG8/eEIOwg7XQPwe76Y/8D69LvXqb1wW3dUL4FYB/5B07UGwJ3R4wcny6Wn
- vZ5qwvwYWn9F+ROoxeIbCEid5PA1hkB2Q9RYykiHhqdM2nJZy8IEttvtn3kaerid9g+y
- 5bvA==
+ bh=Ja0e38s/qENhcuVZ7qPwvVptslecPabtUXFO8ATqnYI=;
+ b=Nll/cPDkKfPDGvMj5IAcK/ae2H0PXJxcJjF5krjcjwxIPJXu1j4q2KGVVYl1eEZ7km
+ RWzwIywb4Ddautoa+Hc9STiNRtXIx3ENUtZLhuVeoX6STUo6IB7KD5DxjNdDJhK7FolV
+ eC7FXs3gqk3Qp6NGrBar6Dk0O3FcnfJwQm4JYa5skgPOcd7K5y3lYhmCf8UFk0Euoi7e
+ TBLgcZAmACT0jqcewMG+9fhjX4L939DT77THhkYMrfv8Tyv9UKgM/+ZleuVZ5J0vVGqq
+ pFjt11wNwevXQTt20nNY/m21Y4psuAx+0K5G+/tNtpyLjLaTwW4RXYeygSbblCqkcpkk
+ cY+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993208; x=1787598008;
+ d=1e100.net; s=20251104; t=1786993214; x=1787598014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=nDL9CAOnygcQr6TXGuqu4JiUlKl3duwzZkyPxwmpAVE=;
- b=EW+IZpicc7yI0cWfsbP6LmfeUdp+NE4epASVIpCMH7bHqD/0NUts/qjEC9oWKDNqDj
- TEUD5FiVaUdiVS8HsxK9f/uTqBZI6ABZRzQlz67cEof+Qz2kIc6SXwPOKGzlo/AiHYnu
- KuauVupFY8eolZlyj+HJg7wx2bgGFBLOw7yYMPf0MohDWcDpElAGTyefGfRklweru+Xd
- itQ6f5U0sfPFhcBlOvWwvNsfJg5s0Z7sqp+8jwajiPseilK95q2/ETiMA81K9i65Ntba
- CGw+zd2cKXQi8T9aIF7LfX3purx9BEfuhqhiSjw7kiMfQnccaN5eTpgN5yawuxqCSuy7
- MT5w==
-X-Gm-Message-State: AOJu0Yz8x5Jfd/UR7RwocUQQAI0UcFdP8DkJK1bZCkZAvmpo7RwVEas7
- bh94UODHBo30DMaUGaKSwTTPp1ALCGSpjzjZxrOelRM34F7gVbix//sAGzztbAggAIlg1tc8B4f
- bdDOu
-X-Gm-Gg: AR+sD12YTkL9CjYSda7MgKv1Gxk8GzeM6W9BgydUGn2e52vXJUs86EE5GjTj3sDhE1Z
- AV3jx8O0x3zpyfdqI+WYXewCH6JGZww+cFIg4Pu8o5zjZ7HCGJgvL50aHW4dpXtOlYTVD6jnpbB
- Uvy/SdAFJXQMvAjXJxicZbnbQOVYSeBN5vACkHvU00FW76jGfd5f50hTWpUtBMqTOnzQ0wGcQBn
- nI0Ta5nYmNMgHz4WCXiK/NiwH9aDPbvewhFEczBVo5ianebXtcRW8GpPOrRZHsTvI512LZ91mXo
- mHNeSpNIo5ZzJIC42zEy0wUgX/pK/TREJTVSHdMvy6IdzYGV+Jq3WU9pMRYygAchwGqOWCKqSXb
- 7jSwU/i/7gK+yxw9sybqi1qb/Y4ehE18C/65LrC9Mz0qSlg1H/R1Ec+PYEXVp6Rwd9QvhlbNoKz
- Ao1Jvu8ov9W2zKQyAkCB0V4z7R80CUXe7ZbNegVoYvPmcq/ddTig==
-X-Received: by 2002:a05:600c:5392:b0:495:48d7:f178 with SMTP id
- 5b1f17b1804b1-4998795d6bemr432495255e9.11.1786993208089; 
- Mon, 17 Aug 2026 12:00:08 -0700 (PDT)
+ bh=Ja0e38s/qENhcuVZ7qPwvVptslecPabtUXFO8ATqnYI=;
+ b=K5WSVfhc9VlYR7Iu5EqREyvMl47IqaF6PIBQu4awc8QnXtPs2zFBNHVcPDeKpU1ctp
+ lN99MXZ40UDJKiHPVRGp+zhTMXBz50KTJSFC41pyuO+F2fGl0+Ll3b+bPWVde1zgW+Gj
+ xzg7SXM//zJNDZQ61QhB8e61sg4eZgClVcb6MKIUrxXkkoHcuAFi+6mfHYjnBNvPy1I2
+ eNaLRe6O/zrLYBNpQmygcy3aUg3kOM06ZpLfL6L505IiyY4AWgtyiZAd6T6lwR0lE4RX
+ dC/TeiXdm9CkNiFrgMix2ruQ1Ax+k0gZbT3ZIIO5/sI4DXJTlZOIZARfffzcfciNo1G0
+ VQLw==
+X-Gm-Message-State: AOJu0Ywm0Kuxj1bZb1Di6k2gjCnFU72ZWZUGGwAAJSA90fEyurMqk0BN
+ S7iUAXxvccVZOCaCh2JNbEU3E1xWGqnJUTMKqqoHLv+YdjMDrHKVyc8gR3JS2C69fimxMJflOjU
+ IkWeq
+X-Gm-Gg: AR+sD13zTVrS6UD3SY/zkntfF0rS5UOHZZdpxGFp/hAVibdwBeh68LE+12WrZ2pMAaO
+ oVhMtTpeVimzGK6o05YMyuIUT1lMs7B/NxsRiLh6yS2NxkjNYn2TVDANXaS9Us46o5YUVvI7Kxk
+ J/KMwkR5RQLLK4B87U0ZBFDNBQ6pgMjFEO9ZfIMnzY6ienv12ayKwzS6ZtohLN6CfVrBE18xg2E
+ 4RU9yV57uuVJQOSOK5R8Fz7qVEpxE7KZbcbas/tsiex978Q1DMu1nA6AZyPyH5k0DUVtnIT9cii
+ zCEi6CoRGur8J9pgzhBNueB2kAiOP+v9DmmE20dvx3zaHn9JuZmSXw0nOa/2pJowZDUXLaxxwnW
+ vFNFjcpKfqYYex2ojyB9i/Ub1p69yaYsZD5tEmvOKHsvpt3bhwX1JpH3c+/k+jAeix6zDJAbpxu
+ vxsh0A71d/GPTgqre+a/dXMV0Gx/T9w8IOd3XROIXASBPlkS8YeE4=
+X-Received: by 2002:a05:600c:4fcc:b0:493:f783:c46a with SMTP id
+ 5b1f17b1804b1-499a1f56bbfmr426865e9.6.1786993213725; 
+ Mon, 17 Aug 2026 12:00:13 -0700 (PDT)
 Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.07
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:07 -0700 (PDT)
+ Mon, 17 Aug 2026 12:00:13 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v6 20/25] iotests: rename parallels-read-bitmap to
- parallels-bitmap
-Date: Mon, 17 Aug 2026 20:59:37 +0200
-Message-ID: <20260817185942.1065143-21-den@openvz.org>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v6 25/25] tests: Add parallels format support to image-fleecing
+Date: Mon, 17 Aug 2026 20:59:42 +0200
+Message-ID: <20260817185942.1065143-26-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
 References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,38 +102,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-The test is about to cover storing a bitmap as well, so its name stops
-being accurate. Rename it on its own, as the patch which changes what a
-test does should not be the one which moves it.
+Use a different bitmap name for parallels images, as the format has its
+own ID format and can not hold an arbitrary string.
+
+Replace the hardcoded 'qcow2' target format with iotests.imgfmt.
+
+Add 'parallels' to the supported formats.
+
+Based on the original work from Alexander Ivanov.
 
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- .../tests/{parallels-read-bitmap => parallels-bitmap}           | 2 +-
- .../tests/{parallels-read-bitmap.out => parallels-bitmap.out}   | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tests/qemu-iotests/tests/{parallels-read-bitmap => parallels-bitmap} (99%)
- rename tests/qemu-iotests/tests/{parallels-read-bitmap.out => parallels-bitmap.out} (100%)
+ tests/qemu-iotests/tests/image-fleecing | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap b/tests/qemu-iotests/tests/parallels-bitmap
-similarity index 99%
-rename from tests/qemu-iotests/tests/parallels-read-bitmap
-rename to tests/qemu-iotests/tests/parallels-bitmap
-index ee071714a5..601bfc5228 100755
---- a/tests/qemu-iotests/tests/parallels-read-bitmap
-+++ b/tests/qemu-iotests/tests/parallels-bitmap
-@@ -1,6 +1,6 @@
- #!/usr/bin/env python3
- #
--# Test parallels load bitmap
-+# Test parallels dirty bitmaps
- #
- # Copyright (c) 2021 Virtuozzo International GmbH.
- #
-diff --git a/tests/qemu-iotests/tests/parallels-read-bitmap.out b/tests/qemu-iotests/tests/parallels-bitmap.out
-similarity index 100%
-rename from tests/qemu-iotests/tests/parallels-read-bitmap.out
-rename to tests/qemu-iotests/tests/parallels-bitmap.out
+diff --git a/tests/qemu-iotests/tests/image-fleecing b/tests/qemu-iotests/tests/image-fleecing
+index 5e3b2c7e46..7e7dafcf19 100755
+--- a/tests/qemu-iotests/tests/image-fleecing
++++ b/tests/qemu-iotests/tests/image-fleecing
+@@ -28,7 +28,7 @@ import iotests
+ from iotests import log, qemu_img, qemu_io
+ 
+ iotests.script_initialize(
+-    supported_fmts=['qcow2'],
++    supported_fmts=['qcow2', 'parallels'],
+     supported_platforms=['linux'],
+     required_fmts=['copy-before-write'],
+     unsupported_imgopts=['compat']
+@@ -61,12 +61,18 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
+     if push_backup:
+         assert use_cbw
+ 
++    # parallels stores a bitmap name as the UUID identifying it in the image
++    if iotests.imgfmt == 'parallels':
++        bitmap_name = '00000000-0000-0000-0000-000000000000'
++    else:
++        bitmap_name = 'bitmap0'
++
+     log('--- Setting up images ---')
+     log('')
+ 
+     qemu_img('create', '-f', iotests.imgfmt, base_img_path, '64M')
+     if bitmap:
+-        qemu_img('bitmap', '--add', base_img_path, 'bitmap0')
++        qemu_img('bitmap', '--add', base_img_path, bitmap_name)
+ 
+     if use_snapshot_access_filter:
+         assert use_cbw
+@@ -75,7 +81,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
+         qemu_img('create', '-f', 'qcow2', fleece_img_path, '64M')
+ 
+     if push_backup:
+-        qemu_img('create', '-f', 'qcow2', target_img_path, '64M')
++        qemu_img('create', '-f', iotests.imgfmt, target_img_path, '64M')
+ 
+     for p in patterns:
+         qemu_io('-f', iotests.imgfmt,
+@@ -130,7 +136,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
+         }
+ 
+         if bitmap:
+-            fl_cbw['bitmap'] = {'node': src_node, 'name': 'bitmap0'}
++            fl_cbw['bitmap'] = {'node': src_node, 'name': bitmap_name}
+ 
+         log(vm.qmp('blockdev-add', fl_cbw))
+ 
 -- 
 2.53.0
 
