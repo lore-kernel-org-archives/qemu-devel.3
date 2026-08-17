@@ -4,132 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4571BC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 05:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E53BC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 06:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvqHt-0004WE-Iv; Mon, 17 Aug 2026 01:53:33 -0400
+	id 1wvqul-0005xK-Jr; Mon, 17 Aug 2026 02:33:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHq-0004Vy-0v
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:31 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHn-0004hN-IR
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=O1F1a89xIehDsoZTUiH7N7cqa3yJDRFmvddw3/xQhI62Rak9+hPOWQAZDcEo0WzI5HzylmzKzXih0p2bONe+OnKJ6gYeRyWhcQMhm5LJgU5ff7L9bp3xA8cOG9AfBWT+QYld5NHhQif3B8gOFtuQfJx3Cq4/Ut9dSjgL9KzJFdA64M51MK+Kfc3Fi3pMBLRP6BgMzfvUY8XbAwxy2fm5Wa9fgFsaf0n11r8xw8A3zf++xr4NVlKIaHjppOjVDxzfoZTxGdmBkHd9wiMkqXdxCbG0/o0PL40OMg0bKbNaLTXCm5DpHpmudSh5zZNeHzPQlCeSkDpOkzwVdqTCCt6CXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZkMCqUMMZ3IT0PRtLA+CNPNcUNo5IgeLgF2EaJyQ5ns=;
- b=AMNboRDPIs1FwN44OC4RFWjRESPzPenYPxdSPIr9S7V7l0FqRq+VyYmmqSsroFDmG3NAuBx+w5GQspQ7PcLb7/YdujWwxFSp+kaZxoJYpUYWxgVcfOB3dyptAyZOcAu+qOJHy00wNFJ6zAspikGoVUNrZJPFIwihFnxGhSxrQQgDaqzJ5KWMzvz83v7NUOLthiWf40++XAspJYugeCy0cyvydsJIYQ7zenTT2lauzjlJRL2ywa1+LxdVtevnywfMCiGrqpNW3baQHN/4pI9EWdw0/H77ha1smdvcO/C8SOdevX1OP7RP5NR8md0LzetdFre8h+SV8867n6ySxM6ZiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZkMCqUMMZ3IT0PRtLA+CNPNcUNo5IgeLgF2EaJyQ5ns=;
- b=jWZAJUrqOTAxi5zNx2snMsWiPVLg8qAZvZpiETlAc+rCxcvAKTqFiy/3zSqG/R31JXwMAa9/6bmI3RnHhkWCsAG980XwTiP/qotBSAnSb00ZCZhcp9+QQpuIPFxq4dMAnzQbGVCb/1uZS2fDv2DbO6mFrgg2hXM2AvXZnBf6yENJWf3+vOnmA6eRs8YEhxA/AeVTt1HY4YAsFCShLK8baOG5wSh7sUjJjzJPpPuXky5o25NfGSQ0gFuC2PJjATCCcSFJK/6f7vNEGr7kDWob4O9zjjb23qePkxgD4gWJXdl/+D6jOvSbOt6avtQK3u/kb8k9GzeDcHJIIQ1Oe6+UmA==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TYNPR06MB8880.apcprd06.prod.outlook.com (2603:1096:405:3c3::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 05:53:19 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 05:53:19 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "philmd@oss.qualcomm.com"
- <philmd@oss.qualcomm.com>, "clg@kaod.org" <clg@kaod.org>, "clg@redhat.com"
- <clg@redhat.com>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
- <philmd@mailo.com>, "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 0/3] hw/usb/hcd-ehci: Fix Coverity CID 1685236 and check
- DMA errors
-Thread-Topic: [PATCH v3 0/3] hw/usb/hcd-ehci: Fix Coverity CID 1685236 and
- check DMA errors
-Thread-Index: AQHdLgy0wYrhLdAIm0eFVUnT+/YE8w==
-Date: Mon, 17 Aug 2026 05:53:19 +0000
-Message-ID: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYNPR06MB8880:EE_
-x-ms-office365-filtering-correlation-id: bea0e6fe-8750-4935-2808-08defc23d726
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|23010399003|18002099003|56012099006|38070700021|10067099003;
-x-microsoft-antispam-message-info: 3anxB2WZRW0tyUSZqQMJsnYpJRO/SWgyt201vi8yHmr9zR9Hp1nVdfwqoOfOUyc6QHUtio0XAT3DNgeu/pT4IMN+VpTHTSsRZHVidrmcrtEbNiA8cr05jWuwT/sFwXm5Y//gp8tiSwFABie4MuYUPg80Bltfc1TRm+CODEFL8xRndzSMw7lq0lIvsXia0jpyBVn0I65wXJXRe7faQa0qsL4PshX5prWzkNXMepaih91ECtkTUyWZyZdiuUtmVzBzCleXBcJIy/am8WNWy6tS0o8bwDbbV6X0OdLIL0TyNDiK0CkvWCrcxU5wWQy0RH/eTJNQNueVgDYffTFJf5WYiDOVYLt9v+Y5kIbzTxkOqJ7GayZjkWqw5Xou81sS6TLsFp6AmxKboVSnJMjeeAKnsquopLnxTRMVFuRHToLHtGB4ZlCWJpG5IgjjHrGI6pqmy4A/SfXFk8iQ3To5YAs5gGMgvYyFYe9HYPF1/6X9NxSAPZEepY3x3X3Jzul99+usZ52xGXJZYCYbKkq2GYcEzTa6KzBoaw+vqXcwcMQvA11+qme+ISs2dwyTzYr2X4iE47HBl6P/pwDtYLfSGYC2nWO79aDjK46YFfUD/2X49yfoT23NrjxlNDhgpdNpuMkFylVu7NdHpYBji2NW3G00/I+9iRAmBaFwFOFx1ypdQDMB0tWIYUZmIXpiElo846NXs6JtJnbCPnu/C9rwkM58fMeK2itvLTsYFv6u4xectTg=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(56012099006)(38070700021)(10067099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ygeM3R2KgAz2Cz9/5qwBk+ojqslXidnj9ogoBvPNAo2i3UXADm17RRPdmp?=
- =?iso-8859-1?Q?tovMJIogbCJJAsq2xrbZ3nXBakzCiAnvgaRnWqDI6+L0NshFh+K//gizJg?=
- =?iso-8859-1?Q?ApwRHR6F7+aKFelWxnE7k/TNWC4JnWoc0NaChSj7hbOonpI8AWLBJM6gXc?=
- =?iso-8859-1?Q?msI0nCKxWTxCRiaBN3cjN4ScNlrgvKLsNKiztb4z+fLEtbYf1Bwygs5bZB?=
- =?iso-8859-1?Q?paKpzEvfOj98RCqMAAihmZ7N+VW4rNVqbOxDsD0xkHvR7cVbox0XYfJ743?=
- =?iso-8859-1?Q?uMZYzkAwYZKyPaze8fcA4qRHWdq5ZT9JgUYrL/BDJoUpw7lIgMB+7iARNH?=
- =?iso-8859-1?Q?1m4265afOMPdAMsjwyFzM/fg8qfLrWyhW1TcohGCL86iFrmamEIwutVvM/?=
- =?iso-8859-1?Q?Jgwg6ZIjpH3uNc7rCyMpaomjQcXVb8g57WxFg0EVo+xF/1BpMOgKxaPOd/?=
- =?iso-8859-1?Q?rHfXHK+IOFeK2TlfefeRz6ZQjs86GW9Z4ZgJFh5Z2YMRU92rV04sqjkRb+?=
- =?iso-8859-1?Q?HPu5B3+12qwPXsLRPMkpUusi7+SKmHMGz32Bz403ds3yknTWdFmx3tp26Z?=
- =?iso-8859-1?Q?CH3v7yqP2pb3g4c7LocDLiTl5T92JF26GVKIJNe8eq02P0I7dbd3jK0MUa?=
- =?iso-8859-1?Q?Dxg1nQtjrAA6nMp9JS5uL+JXe0DxQGDaWhilz0MpjKti+EZUlznmd4piOV?=
- =?iso-8859-1?Q?RHJv/TxjN1ZRw+HwqrbeQyhUetuwvyCdoGy4tjbC9tSvWeX5SIeqJpznEj?=
- =?iso-8859-1?Q?r5uPVs18OoE4id6GY8e/dK+/bdx/AiLTO00zmek8BhhzSjr55hm5shYlUi?=
- =?iso-8859-1?Q?o/0DOb5FPB9RbYHiOsqSa6DrAHgr183OguX7u27pADU3VWVvjUILtGfkox?=
- =?iso-8859-1?Q?yiSpCIDN6hwwiWbaf4knrOx3ITuGoFQoQO9B2fPIocSwB9AF4L2wd4L5Qb?=
- =?iso-8859-1?Q?LPDy36iI+3r/+LH3sf/knlDi7s9N43YM34V0sW1tEXogGo8daWAkvMJdNM?=
- =?iso-8859-1?Q?SMij7m9dLiVRX3umoJrXAeRp/lmQ2Osk+31/wZI/3ulWvetWbb2/Wpsg6z?=
- =?iso-8859-1?Q?9BJQikrfx0GRUoOuMuZap/tZv1adjm0BuAspn7d/SKq9yiMYDfStZY3iAZ?=
- =?iso-8859-1?Q?AU1pqyJlSJy82nd3XdRAORvT5LTfaG/VEBGscHOkKzAFNWtVStekEqPeWB?=
- =?iso-8859-1?Q?hjzQXlukWSBLUGARUk8tI6XPzmluY4UPqBCPBQdmIFJwvvvVQ/2XGlO+IT?=
- =?iso-8859-1?Q?EMnc7cnnBvhIHZWZedvUkbW7Ed54O8GxVSf+atEMPhqdK4NvsfiedRnz/U?=
- =?iso-8859-1?Q?EvF4k4ku5L9bm/uiHrRf6zyQ69JYUetTd2qqsKmgTDRHGnnv84Yj7KTGqc?=
- =?iso-8859-1?Q?PAmPgR/IOjfZ5LlXNiXdD5oJD8SwMphTN3GZt0UQ6LBDiD4B26clbp/D98?=
- =?iso-8859-1?Q?LtkT0DoWadgxYBvnmJj39ax/pHW7ziOVO85m09PeKYeeXyRHQE3iJAcZ4H?=
- =?iso-8859-1?Q?cOT5S8XWZ8bJkYCATepeyhsm9hkSOBSkuMjqRmANbRsiBQmuRQszwqfAap?=
- =?iso-8859-1?Q?WBsX4QgD2AdS2C/RCsAbJVQpmplBNb0K4nqNQ+jJ4CwYb9vASxyl3cYo7w?=
- =?iso-8859-1?Q?uqlZ04tQhVNluzkg3c49IH1leFEsGjOmUTYY1mabCM2OqmVeU0TI1bqcPq?=
- =?iso-8859-1?Q?bngW0eyFOwJcxcX/GjQWhy9gG1IKv6BRwQL3UdG2imd3QLqhpOuoM/uKx5?=
- =?iso-8859-1?Q?DqjQUTYVMIyt4208Ko8lh2VNt7oNyRLtEVQw/2n+JcCopDiPKW+qK4FMfV?=
- =?iso-8859-1?Q?sn2H0i9ClQ=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wvquB-0005ti-0A
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:33:28 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
+ id 1wvqu7-0004UN-W3
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 02:33:05 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8111c0c7561so36629017b3.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 23:33:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786948382; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WtqwnWokRqeb0obIo0IeBa8YF65yn9LZnDQFLW9/PrlTgz0zezY2s94HgbN62JymnH
+ R5c7pEh1Uz68lJm/eb1m6QiP0rMH3onizqUEND0u+9104doFSPqjgcb17LBUa5lOiUYq
+ d4qSVp+feqGPupmReN0bUL/9qfU79JyAi82lh2CnL886hB/+cETAvCuMwuakvbqG+pqy
+ 3sKSzVGVGzRo/Wh+gIqZPby4sBKQpTHEui32V97RR25K2Fo962z02pBaWGrfEs/bJWqQ
+ fNV6HxByk1V6krfR2oATzkobG9K1cE+VsbrZiszUu82trJ6SePp9qndlqMZcqIi3Y4dR
+ sLAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
+ fh=EBO+ewaBzcwICwNeTItCWUiUAR27teQwQEsktwcbdbI=;
+ b=rRVXUThvkDMbcGBEmEjKYBJuAOkSonMGAL8ouDTcQ6MQ3hx2H3RjrFwgQtRs4Qo4xS
+ FIwNrGyYnUWr6MD9P+TwfLJBzUZ+pt9DaShFjwQTzg9SVGKOJfAXnBj7PReORXpYlNdM
+ Ozvjdnlku5Jt9lrfE45L1kUqZ9spsPhrFTwkNot2iOcBttgyHrtoiuVlWIQoAwv9e9dY
+ SF8CL6/KuaHHo5Dl/QxGJBkDfYzqxtlc5K3IXIz2+e0WM1QZdygQYVim0d6wx788A4eQ
+ BZeQJ/92SQD7uzOqa8Ont6xvlfb7M7Ujkqs+ZgzhjDCRHbUXYtTKFN+XKtvj9gZfvBPa
+ 0OQw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786948382; x=1787553182; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
+ b=XQu2/IB1DDhQGaENKJWHOO3mYqwxV6S0tSq1KEGWT01SUBCGajrqKvVDpWmmtuwTNO
+ BonxfNxvZJbbdlpOFR9HwF7mIwNjk4kk7IPnMy984kAeHa6VhGBMnRJCyEqWOlgPO88t
+ RrrS26VIx2aanLVpbo1vtKPizRth+16SuTg+0pw/tziCZt8KwfW4XVmeqCqgJzywamkl
+ GUF0H3z1VR9R8q3UlgucpJQClyAhOUPQWt5F3vfjqtZcT2YSUe6bdajvnTX86UsIuNAy
+ ojgNk19cjx1o7ri7uXp1Ea7j+0f14DN564D2f2lyO/K+yCXs9b7o4fACSIvfYNO9fV8J
+ lBhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786948382; x=1787553182;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FcD7iQMxaEVitjqsnWLDUbih8s3iM++atuzz8mv4FPs=;
+ b=rO0X3pknSWU/l5nSspBE/fQLl8HViDHOq9fNuusHppNFpscPpGrE0ivf7sL9BYuIhD
+ ETxw2AyjiHoskYO3vguA5pyQUt2adaMcW4znLcdO0kOyggn8pfZoKFvcH2KE8uc1XdEN
+ 5iGttmdb2c747uipET60XlnJzzxQDUgK6XgK3YvsFPKa2zEwMr30Hbjqzmyn67OPc3UX
+ eqEB+qKY9C6iGAnsbfwHvgEEQjRyMseze9HJIYwqvVy2GuUOEbWIDfvfi9H1hVQGHe+j
+ KjG+7mLMtPCOtJqpL10fzAT1qITRgg0PQEelMypf3Cwpy1KITDvFPLZFMd9Aqo2xwnlr
+ 3KZA==
+X-Gm-Message-State: AOJu0Yw7njzSzJe3oFeaMQdzvjTwWOmOy/+vRqqRuWC3zJQrPC7P5bgM
+ 1fAbAnTZAglrNzdRz7X53zdtEciQsVTjlSX8EkPS/lQkNJVku3xizHEOYRhc34OPFrq97gZWt8y
+ eNGhZnJbFQGe+WLpAOWmhfo+aAYgLaoA=
+X-Gm-Gg: AR+sD13u1qX602euCCTUPHnrJobYDNeRw8Qs19LHN7AS+QPnrH6AnfCpPXfCeqFo7Pg
+ INVOhLik5UvNiHwrrQLu+/8X05bwx6DsMs/zCRLS7qNEIDd6LZ40pIYR9C8z69e83VjjJUmpgm8
+ 7lkdTIfp6tR+zrk7+VvrTtGdXFCAZuG13naY07uJWEqPjItIxmlahKMs1oco3qIii+njNZPGyDn
+ L7sDYKxkfGMS4U+kvPqFSp7pnkyfGter0G/9EFpFfk8c9LEbfet7v2qaptQd4XjR1iTETNLZBMb
+ x8o6VOUC6B9LAaRhX+nVTjRT1w/czLS0ZxnTJVTnUJk=
+X-Received: by 2002:a05:690e:1906:b0:668:172a:47a7 with SMTP id
+ 956f58d0204a3-66c72c7653dmr7681677d50.25.1786948382345; Sun, 16 Aug 2026
+ 23:33:02 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bea0e6fe-8750-4935-2808-08defc23d726
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2026 05:53:19.6164 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WojVTARelMQV4JcaHW7D9uIqQ7JDwvQ1BLGh6eF0B57EeGtk7VsupZen0ETYZcstH4LSH8I6pi6D1nOCJzbCNbO2WIfVELYfpDXpPkkYWXQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8880
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+References: <20260808182956.290561-1-flamboyant.h.01@gmail.com>
+ <20260808182956.290561-2-flamboyant.h.01@gmail.com>
+ <CAEUhbmV5hOJuoGjCgLGhMo+BVXNo+RY30D7hP7L9FpdU1Kt5Sw@mail.gmail.com>
+In-Reply-To: <CAEUhbmV5hOJuoGjCgLGhMo+BVXNo+RY30D7hP7L9FpdU1Kt5Sw@mail.gmail.com>
+From: Kangjie Huang <flamboyant.h.01@gmail.com>
+Date: Mon, 17 Aug 2026 14:32:51 +0800
+X-Gm-Features: AcwNN1Vk-mQnnGPY2YUST1tDf1C86ujxBLpx3KrBHaWcihQlEIvjC8WGOMG1f9g
+Message-ID: <CAAW0U4afZ9Y6_dcypihVTSTWLpe0yVqfndWCOD15jU5xKZQk1g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] hw/ssi: Add Synopsys DWC SSI standard PIO
+ controller
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Alistair Francis <alistair@alistair23.me>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Kangjie Huang <flamboyant.h.01@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=flamboyant.h.01@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,25 +131,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:=0A=
- 1. Fix Fix Coverity CID 1685236=0A=
- =0A=
-v2:=0A=
- 1. Drops the dead NULL test and checks the actual accesses instead, and ma=
-kes put_dwords() return void=0A=
-    since no caller can act on a failed writeback.=0A=
-=0A=
-v3:=0A=
- 1. Make get_dwords() return bool=0A=
-=0A=
-Jamin Lin (3):=0A=
-  hw/usb/hcd-ehci: Check for DMA errors in get_dwords()/put_dwords()=0A=
-  hw/usb/hcd-ehci: Make get_dwords() return bool=0A=
-  hw/usb/hcd-ehci: Handle get_dwords() failures in async writeback=0A=
-=0A=
- hw/usb/hcd-ehci.c | 90 ++++++++++++++++++++++-------------------------=0A=
- 1 file changed, 42 insertions(+), 48 deletions(-)=0A=
-=0A=
--- =0A=
-2.53.0=0A=
+Bin Meng <bmeng.cn@gmail.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=8816=E6=97=A5=
+=E5=91=A8=E6=97=A5 23:28=E5=86=99=E9=81=93=EF=BC=9A
+> > +    case A_TXFLR:
+> > +        value =3D fifo32_num_used(&s->tx_fifo);
+> > +        if (s->phase =3D=3D DWC_SSI_PHASE_STANDARD_TX_ONLY) {
+> > +            dwc_ssi_run_transfer(s);
+> > +        }
+>
+> The modeling of transferring data from TX FIFO needs to be reconsidered.
+>
+> IIUC, currently the TX-only transfer advances in 64-frame batches
+> (DWC_SSI_PIO_TX_BATCH) and, once the phase is
+> DWC_SSI_PHASE_STANDARD_TX_ONLY, dwc_ssi_push_tx() deliberately skips
+> dwc_ssi_run_transfer(). The remaining FIFO entries only reach the wire
+> when the guest reads TXFLR or SR (see below).
+>
+> What if an interrupt-driven guest that waits for TXE without reading
+> those registers stalls once TXFTHR > 0: the FIFO stays above the
+> threshold, TXE never asserts, and nothing drains it.
+>
+> I suggest draining on DR write, like sifive_spi model does. No other
+> hw/ssi model advances its TX FIFO on status-register reads. sifive_spi
+> flushes the whole TX FIFO synchronously on the TXDATA write
+> (sifive_spi_flush_txfifo()), and with a FIFO depth of at most 256
+> entries that is cheap. I'd drop DWC_SSI_PIO_TX_BATCH and have every DR
+> write run the transfer until the FIFO drains. That also removes the
+> asymmetry with the TR path, which already drains fully.
+>
+> > +        break;
+> > +    case A_SR:
+> > +        value =3D dwc_ssi_status(s);
+> > +        if (s->phase =3D=3D DWC_SSI_PHASE_STANDARD_TX_ONLY) {
+> > +            dwc_ssi_run_transfer(s);
+> > +        }
+> > +        break;
+
+Hi Bin,
+
+Thank you for reviewing the V3 patch. I agree that these issues need to be
+fixed. For the TX-only FIFO progress issue, the current 64-frame batching
+depends on reads from TXFLR/SR. In IRQ mode, the transfer may stop because =
+TXE
+is never raised.
+
+While preparing, I found another issue in the K230 vendor Linux native-CS
+SPI-mem path. The driver first fills the TX FIFO before enabling SER. It th=
+en
+reads TXFLR before writing the remaining data:
+K230 SDK source:
+https://github.com/kendryte/k230_sdk/blob/v2.0/src/little/linux/drivers/spi=
+/spi-dw-core-k230.c#L709-L742
+    len =3D min(dws->fifo_len, dws->tx_len);
+    while (len--)
+        dw_write_io_reg(dws, DW_SPI_DR, *buf++);
+
+    len =3D dws->tx_len - ((void *)buf - dws->tx);
+    k230_dw_spi_set_cs(spi, false);
+    while (len) {
+        entries =3D readl_relaxed(dws->regs + DW_SPI_TXFLR);
+        if (!entries) {
+            dev_err(&dws->master->dev,
+                    "CS de-assertion on Tx\n");
+            return -EIO;
+        }
+        room =3D min(dws->fifo_len - entries, len);
+        ... write remaining frames to DR ...
+    }
+
+For the current K230 profile, fifo_len is 256. When i test a 260-byte
+TX-only transfer has
+4 bytes left after the first fill. If we remove the 64-frame limit and drai=
+n the
+FIFO immediately when SER starts the transfer, TXFLR may become zero before
+the driver writes these 4 bytes. The driver then returns "CS de-assertion o=
+n
+Tx". If only DR writes can advance the model, TXFLR may stay full and the
+driver will not issue a DR write to create room.
+
+The SDK also says that native CS is controlled automatically: when the TX F=
+IFO
+has no data left, the controller de-asserts native CS. If the driver refill=
+s
+the FIFO too late, the transaction may end early.
+
+The K230-specific DWC SSI driver also comments out the generic SPI IRQ setu=
+p,
+so its standard transfer path uses polling. The generic DWC SSI driver stil=
+l
+uses IRQ mode when an IRQ is available.
+
+K230 DWC SSI driver:
+https://github.com/kendryte/k230_sdk/blob/v2.0/src/little/linux/drivers/spi=
+/spi-dw-core-k230.c#L589-L597
+Generic DWC SSI driver:
+https://github.com/torvalds/linux/blob/8d3ae59288f1e7d58d76558a6ee96d533bc5=
+019f/drivers/spi/spi-dw-core.c#L416-L465
+
+We need to fix the FIFO stall in IRQ mode, but the native-CS path must not =
+see
+TXFLR=3D0 too early. I am not sure how to handle both cases. Could you plea=
+se
+advise whether we need another way to advance the FIFO=EF=BC=8C
+such as a QEMU timer or another mechanism?
+
+Regards,
+Kangjie
 
