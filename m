@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56A9C5DF80
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0842C5DF66
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2ao-0000j1-7o; Mon, 17 Aug 2026 15:01:54 -0400
+	id 1ww2bJ-0002rP-CN; Mon, 17 Aug 2026 15:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZG-0006Of-Lz
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:31 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2Zw-0006mB-Ob
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:10 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZD-0006Vv-Q2
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:18 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4994c49f588so2365185e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1ww2Zu-0006lB-A8
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:00 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-66c70e2904dso4085464d50.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1786993214; x=1787598014; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1786993257; x=1787598057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Ja0e38s/qENhcuVZ7qPwvVptslecPabtUXFO8ATqnYI=;
- b=Nll/cPDkKfPDGvMj5IAcK/ae2H0PXJxcJjF5krjcjwxIPJXu1j4q2KGVVYl1eEZ7km
- RWzwIywb4Ddautoa+Hc9STiNRtXIx3ENUtZLhuVeoX6STUo6IB7KD5DxjNdDJhK7FolV
- eC7FXs3gqk3Qp6NGrBar6Dk0O3FcnfJwQm4JYa5skgPOcd7K5y3lYhmCf8UFk0Euoi7e
- TBLgcZAmACT0jqcewMG+9fhjX4L939DT77THhkYMrfv8Tyv9UKgM/+ZleuVZ5J0vVGqq
- pFjt11wNwevXQTt20nNY/m21Y4psuAx+0K5G+/tNtpyLjLaTwW4RXYeygSbblCqkcpkk
- cY+w==
+ bh=Tc0VjzEQDHo8/Dm/bwwN45pmK61wlymDtBgaGkTeofs=;
+ b=MWMvpT2HMRpSqo7CR6cUcsdq1lzhvJ3xCCC7YKSJpl31epID+LPI8VzDmd5is6lsLp
+ aVpjZG/s8oVV8+tR3nrefK1uL2EaWThK11pJeu/xPEh2Z+F/UXmab3BSY2X9vVpH31c+
+ z6Hs4gdnw4CE0pExF6M13h4sGO2PV0+j4e5gr/pPdcZ/aoFnT/+NVze7Z1vhoemCpTN0
+ K8Eg2OIVN5stCzftx0vKZe4/tCc0WVzto9VGdRr7UXmVKbsHzlpSvON0MEVKlJQerQr5
+ sRyvPV6WM/CPN8Uxv6eaRetv7SMSsS2RWU9kt9Y1egt4q7x8y/8ef49QastYGcZhoQ0J
+ YSFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993214; x=1787598014;
+ d=1e100.net; s=20251104; t=1786993257; x=1787598057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Ja0e38s/qENhcuVZ7qPwvVptslecPabtUXFO8ATqnYI=;
- b=K5WSVfhc9VlYR7Iu5EqREyvMl47IqaF6PIBQu4awc8QnXtPs2zFBNHVcPDeKpU1ctp
- lN99MXZ40UDJKiHPVRGp+zhTMXBz50KTJSFC41pyuO+F2fGl0+Ll3b+bPWVde1zgW+Gj
- xzg7SXM//zJNDZQ61QhB8e61sg4eZgClVcb6MKIUrxXkkoHcuAFi+6mfHYjnBNvPy1I2
- eNaLRe6O/zrLYBNpQmygcy3aUg3kOM06ZpLfL6L505IiyY4AWgtyiZAd6T6lwR0lE4RX
- dC/TeiXdm9CkNiFrgMix2ruQ1Ax+k0gZbT3ZIIO5/sI4DXJTlZOIZARfffzcfciNo1G0
- VQLw==
-X-Gm-Message-State: AOJu0Ywm0Kuxj1bZb1Di6k2gjCnFU72ZWZUGGwAAJSA90fEyurMqk0BN
- S7iUAXxvccVZOCaCh2JNbEU3E1xWGqnJUTMKqqoHLv+YdjMDrHKVyc8gR3JS2C69fimxMJflOjU
- IkWeq
-X-Gm-Gg: AR+sD13zTVrS6UD3SY/zkntfF0rS5UOHZZdpxGFp/hAVibdwBeh68LE+12WrZ2pMAaO
- oVhMtTpeVimzGK6o05YMyuIUT1lMs7B/NxsRiLh6yS2NxkjNYn2TVDANXaS9Us46o5YUVvI7Kxk
- J/KMwkR5RQLLK4B87U0ZBFDNBQ6pgMjFEO9ZfIMnzY6ienv12ayKwzS6ZtohLN6CfVrBE18xg2E
- 4RU9yV57uuVJQOSOK5R8Fz7qVEpxE7KZbcbas/tsiex978Q1DMu1nA6AZyPyH5k0DUVtnIT9cii
- zCEi6CoRGur8J9pgzhBNueB2kAiOP+v9DmmE20dvx3zaHn9JuZmSXw0nOa/2pJowZDUXLaxxwnW
- vFNFjcpKfqYYex2ojyB9i/Ub1p69yaYsZD5tEmvOKHsvpt3bhwX1JpH3c+/k+jAeix6zDJAbpxu
- vxsh0A71d/GPTgqre+a/dXMV0Gx/T9w8IOd3XROIXASBPlkS8YeE4=
-X-Received: by 2002:a05:600c:4fcc:b0:493:f783:c46a with SMTP id
- 5b1f17b1804b1-499a1f56bbfmr426865e9.6.1786993213725; 
- Mon, 17 Aug 2026 12:00:13 -0700 (PDT)
-Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
+ bh=Tc0VjzEQDHo8/Dm/bwwN45pmK61wlymDtBgaGkTeofs=;
+ b=A/UQYMy6k1lodNzGnnR2B7NnlyoSt4F5dLjDViWtAIliARlq5EzaeY8ZgtdqgJLIDf
+ b4SbZLkPZs8JR/uwtBs6sGiknQ0Nrmrw45D6HOZrMV7XVPtBJ2lZbZKGMrtvFDtsfohm
+ uxFZEUQnjKP4i1yk49rNbmrefK8k2ixbvCmuutKI4YJv/e5OY73WS40zykdt10bcmUNS
+ LhLVlt421ZyEdB8thDdrYdzICuOddguvARix+wdcL3WnWRn2bi5hV7e1kO+9g4cSIBIv
+ LI8zWHp9WHeYsRqQJM7Ri8WeiRSoo/10Hl57OVcPWD1KICAL13lVp84YCnNqABrbJZAR
+ do4w==
+X-Gm-Message-State: AOJu0YzPD7eunYeXKHJ/43gmA+JTdrkITzE4tpf41mrzObJfkgnU/Ior
+ CiBGnmphAuDE6G8msQx4iLberQvflZb6R4SsBvAC26Fv2yxEXIGVBWi8Y2UYvvWiWIs=
+X-Gm-Gg: AR+sD10KFuXXDfbYP7qTkhHF6EwkJXoCou/YL9PoScN2x5Tx6DIiHs7aRUA06MgnoY+
+ S2bwVNfu/TrAzJzj0gJLLN60mJFx12sxQ+bcmk261h3LARYMmTdeM1vKrTY0ggIiu4PC8uzP6bB
+ YMxrsXDnTWluh596NiEZqgqGyjLSso29JayLUXQvuxeAxfegrPGMzf8sUWKbeLFT5KdoXw9fuLQ
+ Dxm7jEikqzfd3GMedWU632DwUnGxZJLQQYVevQbLOjHZMlL1GP3AscrbkvwIrs4ezosi/qJgVjn
+ VfYe4lwPYZCpLSWnjLE8XpY6bg6+iTAz3mMn6NTqq1hqdFLJRWX6BmtZLrsYedNI2UNaF9HYJvQ
+ qJ05aLDJpOzZ9IuBbNSp3qUdoqRFjOJb4rGCYx1gEfWva5yqIyqzSfXw4zhVjKMdkxanTJxYmBT
+ SFs6sYq6gGuEdgItJpJw/L25LX1UmZJuRcLpwQviGXPOTkXVR+iyGDgDv1SJkd
+X-Received: by 2002:a05:690e:b89:b0:66b:354e:5202 with SMTP id
+ 956f58d0204a3-66c72b18b52mr8631640d50.7.1786993256866; 
+ Mon, 17 Aug 2026 12:00:56 -0700 (PDT)
+Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.12
+ 956f58d0204a3-66cb4780b7asm1261880d50.12.2026.08.17.12.00.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:13 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
+ Mon, 17 Aug 2026 12:00:55 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v6 25/25] tests: Add parallels format support to image-fleecing
-Date: Mon, 17 Aug 2026 20:59:42 +0200
-Message-ID: <20260817185942.1065143-26-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
-References: <20260817185942.1065143-1-den@openvz.org>
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
+ zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
+Subject: [RFC PATCH 5/8] RFC: accel/tcg: allow cross-page goto_tb chaining in
+ user-only builds
+Date: Mon, 17 Aug 2026 15:00:35 -0400
+Message-ID: <20260817190038.580257-6-mattst88@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260817190038.580257-1-mattst88@gmail.com>
+References: <20260817190038.580257-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,76 +103,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+translator_use_goto_tb() refuses to chain unless the destination is on the
+same page as the start of the TB. For guests whose text is much larger than
+a page this is expensive: an emulated alpha gcc compiling a 255k line
+translation unit takes the indirect dispatch path for 8.4 billion of its
+34.2 billion TB exits, and a large share of those are ordinary direct
+branches that simply crossed an 8 KiB page boundary.
 
-Use a different bitmap name for parallels images, as the format has its
-own ID format and can not hold an arbitrary string.
+The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
+Introduce translator_use_goto_tb"), whose rationale was:
 
-Replace the hardcoded 'qcow2' target format with iotests.imgfmt.
+    Various targets avoid the page crossing test for CONFIG_USER_ONLY,
+    but that is wrong: mmap and mprotect can change page permissions.
 
-Add 'parallels' to the supported formats.
+That is true, but in user-only builds the invalidation path already covers
+it. There are no page tables: every mmap, mprotect and munmap reaches
+page_set_flags(), which calls tb_invalidate_phys_range() whenever the flags
+actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to reset
+incoming jumps. A chained cross-page jump is therefore broken whenever the
+destination page's permissions change. This is not true in system mode,
+where TBs are keyed by physical address and a page table change invalidates
+nothing, so the restriction is kept there.
 
-Based on the original work from Alexander Ivanov.
+Add tests/tcg/alpha/test-xpage-chain.c to cover the hazard directly. It
+places a direct branch near the end of one page targeting the next page,
+runs it 200000 times so the chain is established, then checks that
+mprotect(PROT_NONE) makes the next call fault, and that remapping the page
+with different code runs the new code rather than a stale translation.
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+The test detects the hazard it is meant to detect: with the
+tb_invalidate_phys_range() call in page_set_flags() commented out, it fails
+both phases, executing page B after PROT_NONE and returning the stale
+result.
+
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
+SQLite 3.45.1 amalgamation on an x86-64 host, LTO build, on top of the
+preceding patches:
+
+    before: 890,713,633,237 instructions
+    after:  869,178,598,378 instructions   -2.42%
+
+    before: 84.44s wall clock
+    after:  80.49s wall clock              -4.68%
+
+Note that this is worth more in time than in instructions, the reverse of
+the preceding patch: a chained jump replaces a cache probe whose loads can
+miss, so the instructions it removes are more expensive than average.
+
+Measured before the inline jump cache probe, when a missed chain cost a
+helper call rather than an inline probe, the same change was worth -7.9%.
+
+RFC because this reverses a deliberate decision and the reasoning above
+wants review from someone who knows the invalidation paths better than I
+do.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- tests/qemu-iotests/tests/image-fleecing | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ accel/tcg/translator.c             |  12 ++++
+ tests/tcg/alpha/Makefile.target    |   2 +-
+ tests/tcg/alpha/test-xpage-chain.c | 111 +++++++++++++++++++++++++++++
+ 3 files changed, 124 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/alpha/test-xpage-chain.c
 
-diff --git a/tests/qemu-iotests/tests/image-fleecing b/tests/qemu-iotests/tests/image-fleecing
-index 5e3b2c7e46..7e7dafcf19 100755
---- a/tests/qemu-iotests/tests/image-fleecing
-+++ b/tests/qemu-iotests/tests/image-fleecing
-@@ -28,7 +28,7 @@ import iotests
- from iotests import log, qemu_img, qemu_io
+diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
+index 29e609b2ec..4921bf978c 100644
+--- ./accel/tcg/translator.c
++++ ./accel/tcg/translator.c
+@@ -117,8 +117,20 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
+         return false;
+     }
  
- iotests.script_initialize(
--    supported_fmts=['qcow2'],
-+    supported_fmts=['qcow2', 'parallels'],
-     supported_platforms=['linux'],
-     required_fmts=['copy-before-write'],
-     unsupported_imgopts=['compat']
-@@ -61,12 +61,18 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
-     if push_backup:
-         assert use_cbw
++#ifdef CONFIG_USER_ONLY
++    /*
++     * There are no page tables in user-only mode.  Every mmap, mprotect and
++     * munmap goes through page_set_flags(), which calls
++     * tb_invalidate_phys_range() whenever the flags actually change, and
++     * tb_phys_invalidate() unlinks incoming jumps.  A chained cross-page
++     * jump is therefore broken whenever the destination page's permissions
++     * change, so the same-page restriction is not needed here.
++     */
++    return true;
++#else
+     /* Check for the dest on the same page as the start of the TB.  */
+     return translator_is_same_page(db, dest);
++#endif
+ }
  
-+    # parallels stores a bitmap name as the UUID identifying it in the image
-+    if iotests.imgfmt == 'parallels':
-+        bitmap_name = '00000000-0000-0000-0000-000000000000'
-+    else:
-+        bitmap_name = 'bitmap0'
+ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+diff --git ./tests/tcg/alpha/Makefile.target ./tests/tcg/alpha/Makefile.target
+index 36d8ed1eae..eee986bab6 100644
+--- ./tests/tcg/alpha/Makefile.target
++++ ./tests/tcg/alpha/Makefile.target
+@@ -5,7 +5,7 @@
+ ALPHA_SRC=$(SRC_PATH)/tests/tcg/alpha
+ VPATH+=$(ALPHA_SRC)
+ 
+-ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq
++ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-xpage-chain
+ TESTS+=$(ALPHA_TESTS)
+ 
+ test-cmov: EXTRA_CFLAGS=-DTEST_CMOV
+diff --git ./tests/tcg/alpha/test-xpage-chain.c ./tests/tcg/alpha/test-xpage-chain.c
+new file mode 100644
+index 0000000000..7916d544af
+--- /dev/null
++++ ./tests/tcg/alpha/test-xpage-chain.c
+@@ -0,0 +1,111 @@
++/*
++ * Cross-page TB chaining hazard test.
++ *
++ * Phase 1: a direct branch (br) near the end of page A targets page B.
++ *          Run it enough times that QEMU chains TB_A -> TB_B.
++ * Phase 2: mprotect page B away. Re-running must fault.
++ * Phase 3: remap page B with different code. Re-running must execute the
++ *          NEW code, not a stale chained translation of the old code.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <setjmp.h>
++#include <signal.h>
++#include <sys/mman.h>
++#include <unistd.h>
 +
-     log('--- Setting up images ---')
-     log('')
- 
-     qemu_img('create', '-f', iotests.imgfmt, base_img_path, '64M')
-     if bitmap:
--        qemu_img('bitmap', '--add', base_img_path, 'bitmap0')
-+        qemu_img('bitmap', '--add', base_img_path, bitmap_name)
- 
-     if use_snapshot_access_filter:
-         assert use_cbw
-@@ -75,7 +81,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
-         qemu_img('create', '-f', 'qcow2', fleece_img_path, '64M')
- 
-     if push_backup:
--        qemu_img('create', '-f', 'qcow2', target_img_path, '64M')
-+        qemu_img('create', '-f', iotests.imgfmt, target_img_path, '64M')
- 
-     for p in patterns:
-         qemu_io('-f', iotests.imgfmt,
-@@ -130,7 +136,7 @@ def do_test(vm, use_cbw, use_snapshot_access_filter, base_img_path,
-         }
- 
-         if bitmap:
--            fl_cbw['bitmap'] = {'node': src_node, 'name': 'bitmap0'}
-+            fl_cbw['bitmap'] = {'node': src_node, 'name': bitmap_name}
- 
-         log(vm.qmp('blockdev-add', fl_cbw))
- 
++#define PS 8192
++
++static sigjmp_buf jb;
++/*
++ * Written by the SIGSEGV handler and read by main(), so it must not be
++ * cached in a register across the faulting call.
++ */
++static volatile sig_atomic_t caught;
++
++static void segv(int sig)
++{
++    caught = 1;
++    siglongjmp(jb, 1);
++}
++
++/* lda $0, imm($31)  -> v0 = imm */
++static unsigned int lda_v0(int imm)
++{
++    return 0x201F0000u | (unsigned short)imm;
++}
++
++int main(void)
++{
++    struct sigaction sa;
++    int rc = 0;
++    unsigned char *m = mmap(NULL, 2 * PS, PROT_READ | PROT_WRITE | PROT_EXEC,
++                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    if (m == MAP_FAILED) {
++        perror("mmap");
++        return 2;
++    }
++
++    unsigned char *pa = m, *pb = m + PS;
++    unsigned int *entry = (unsigned int *)(pa + PS - 64);
++    unsigned int *tgt = (unsigned int *)(pb + 16);
++
++    entry[0] = lda_v0(1);
++    long disp = ((long)tgt - ((long)&entry[1] + 4)) / 4;
++    entry[1] = 0xC3E00000u | (unsigned int)(disp & 0x1FFFFF);  /* br $31,tgt */
++    tgt[0] = 0x6BFA8001u;                                      /* ret        */
++    __builtin___clear_cache((char *)m, (char *)m + 2 * PS);
++
++    long (*fn)(void) = (long (*)(void))entry;
++
++    for (int i = 0; i < 200000; i++) {
++        if (fn() != 1) {
++            printf("FAIL: phase 1 wrong result\n");
++            return 1;
++        }
++    }
++    printf("phase 1 ok (chained)\n");
++
++    memset(&sa, 0, sizeof(sa));
++    sa.sa_handler = segv;
++    sigemptyset(&sa.sa_mask);
++    if (sigaction(SIGSEGV, &sa, NULL) != 0) {
++        perror("sigaction");
++        return 2;
++    }
++    if (mprotect(pb, PS, PROT_NONE) != 0) {
++        perror("mprotect");
++        return 2;
++    }
++    if (sigsetjmp(jb, 1) == 0) {
++        fn();
++        printf("FAIL: phase 2 executed page B after mprotect(PROT_NONE)\n");
++        rc = 1;
++    } else if (!caught) {
++        printf("FAIL: phase 2 longjmp without entering the handler\n");
++        rc = 1;
++    } else {
++        printf("phase 2 ok (faulted)\n");
++    }
++
++    /* Phase 3: remap with different code, expect the new code to run. */
++    if (mprotect(pb, PS, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
++        perror("mprotect back");
++        return 2;
++    }
++    tgt[0] = lda_v0(2);
++    tgt[1] = 0x6BFA8001u;
++    __builtin___clear_cache((char *)pb, (char *)pb + PS);
++
++    long r = fn();
++    if (r != 2) {
++        printf("FAIL: phase 3 returned %ld, expected 2 (stale chain)\n", r);
++        rc = 1;
++    } else {
++        printf("phase 3 ok (new code ran)\n");
++    }
++    return rc;
++}
 -- 
-2.53.0
+2.54.0
 
 
