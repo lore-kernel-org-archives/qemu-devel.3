@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B02C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A4FC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvutL-0006MC-SA; Mon, 17 Aug 2026 06:48:32 -0400
+	id 1wvutQ-0006jl-Kk; Mon, 17 Aug 2026 06:48:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvusa-0005a1-3C; Mon, 17 Aug 2026 06:47:45 -0400
+ id 1wvut1-0006AP-I8; Mon, 17 Aug 2026 06:48:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvusY-0004Lr-C6; Mon, 17 Aug 2026 06:47:43 -0400
+ id 1wvut0-0004PP-1x; Mon, 17 Aug 2026 06:48:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=wpJ4qwOWfLctFNt+c0h25wbMLhJ2gqRgoIhDsjkq738=;
+ t=1786963487; bh=UrqwxMUMMrvwHKCTUku21FwXYH8d2xuorC4NJMHxYT0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=s0JIXSLyyTGwYQ3YQIV1KuiE5g3D45xNFHAA/JhHkjRNcJnGYYxg/1aMiBEGensJ9
- 6iHWS68UAjpCeWms2oZU47FTGuQleEGJPAaqbmizeQyNYyOk7O1mk8IcioPu4BwEpj
- QFLuqy/U/ogYbEfLnqVCdggl0EtQlAN58W8YWErCSj+LD5p6y9XwfPR02ZMNUcLMJm
- kqEDc6mkipRE+KTZ/di34lxLKPtAycUZcFebVe/abx1rxC0yHcIoUQ4sjQQIvt46TA
- zLUPBD9KyJvib4QabigZ/usPvnVar8sj4crqerB2orWWgP6TVGP0fgAYuOxfACb9dl
- 4hHFpN1FG6cPQ==
+ b=s+RUzZkQQYVjXZ+9rp3dRwX6Nf17GJ9bXB2tNP/fODSDarn3+ag/CvMI9Aw2ARY+r
+ 5uO25ossqxeRoZ49HHYT9o9zbfmDQN9bYwrTnK2Bjxcb/x0dYYkjy0E/357GYJ4aBA
+ XHARnxGQ0zsrnd3NwmJQii/pvmFKcLcqPBiej2JnT8MwTJ1pedKMxybEa4CANR1XC7
+ GgevoacXeRrvLRWCxkRrRNJyenVu8A2+g1WWlvm2XQdoMwQyzE/uSjvQm7iM3NwQgf
+ a8E8ki1hmVSaBlXGHpSRYUGizbM0Fh1AG9pGqrcqNndtrxLSXGod/5fzmYl4u9Y7Ho
+ 5qNF1mt0P37Zg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC14F1CBB86;
+ by isrv.corpit.ru (Postfix) with ESMTP id F3C881CBB8B;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DCFAB40D217;
- Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0163840D21F;
+ Mon, 17 Aug 2026 13:45:08 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 524BA30E84; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 61D9430E8E; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 153/161] tests/qtest/ahci: cover raw (2352-byte)
- ATAPI CD reads
-Date: Mon, 17 Aug 2026 13:43:07 +0300
-Message-ID: <20260817104344.2047346-33-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 158/161] hw/net/rtl8139: Send whole of vlan-tagged
+ packet when doing loopback
+Date: Mon, 17 Aug 2026 13:43:12 +0300
+Message-ID: <20260817104344.2047346-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,116 +74,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Add /ahci/cdrom/{pio,dma}/raw: read several sectors with READ CD in
-raw mode (atapi_raw), so the ATAPI 2352-byte unpack path is exercised
-through the AHCI delivery, which IDE coverage does not reach. Each
-sector's 2048-byte payload is verified at its in-sector offset.
+In rtl8139_transfer_frame(), if we are transmitting a frame over
+loopback then we do this by calling qemu_receive_packet().  If we
+have an iovec rather than a simple buffer (which happens only when
+we're sending a packet where we are inserting a vlan tag), we have to
+convert this into a simple buffer first using iov_to_buf().  However,
+when we do this we forget to also update the 'size' local variable to
+the size of the new simple buffer, so we will truncate the packet by
+4 bytes (the size of the vlan tag).
 
-The PIO case uses a byte-count limit of one raw sector per DRQ burst:
-libqos asserts a one-sector PIO transfer, and the multi-sector unpack
-loop is already covered by the IDE raw test.
+Correct the logic so we don't truncate vlan-tagged packets when
+sending them over loopback.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit 31f13e71afd1cfb55b02c6977c829f0813ab439c)
+Cc: qemu-stable@nongnu.org
+Reported-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Message-ID: <20260731093618.2961031-3-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit f3a10c1c454789ad6bb0633118019f4c6544b4b3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 44799eea153..58bc04b3efb 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1565,6 +1565,31 @@ static int ahci_cb_cmp_buff(AHCIQState *ahci, AHCICommand *cmd,
-     return 0;
- }
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 2b61c171f2a..16479284eea 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -1765,6 +1765,7 @@ static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
+             buf2 = g_malloc(buf2_size);
+             iov_to_buf(iov, 3, 0, buf2, buf2_size);
+             buf = buf2;
++            size = buf2_size;
+         }
  
-+static int ahci_cb_cmp_raw(AHCIQState *ahci, AHCICommand *cmd,
-+                           const AHCIOpts *opts)
-+{
-+    unsigned char *tx = opts->opaque;
-+    unsigned char *rx;
-+    unsigned i, nsectors;
-+
-+    if (!opts->size) {
-+        return 0;
-+    }
-+
-+    nsectors = opts->size / ATAPI_RAW_SECTOR_SIZE;
-+    rx = g_malloc0(opts->size);
-+    qtest_bufread(ahci->parent->qts, opts->buffer, rx, opts->size);
-+    /* Each raw sector carries its 2048-byte payload past a 16-byte header. */
-+    for (i = 0; i < nsectors; i++) {
-+        g_assert_cmphex(memcmp(rx + i * ATAPI_RAW_SECTOR_SIZE + 16,
-+                               tx + i * ATAPI_SECTOR_SIZE,
-+                               ATAPI_SECTOR_SIZE), ==, 0);
-+    }
-+    g_free(rx);
-+
-+    return 0;
-+}
-+
- static void ahci_test_cdrom(int nsectors, bool dma, uint8_t cmd,
-                             bool override_bcl, uint16_t bcl)
- {
-@@ -1625,6 +1650,47 @@ static void test_cdrom_pio_multi(void)
-     ahci_test_cdrom_read10(3, false);
- }
- 
-+static void ahci_test_cdrom_raw(int nsectors, bool dma)
-+{
-+    AHCIQState *ahci;
-+    unsigned char *tx;
-+    char *iso;
-+    int fd;
-+    AHCIOpts opts = {
-+        .size = (uint64_t)ATAPI_RAW_SECTOR_SIZE * nsectors,
-+        .atapi = true,
-+        .atapi_dma = dma,
-+        .atapi_raw = true,
-+        .set_bcl = true,
-+        .bcl = ATAPI_RAW_SECTOR_SIZE, /* one raw sector per DRQ burst */
-+        .post_cb = ahci_cb_cmp_raw,
-+    };
-+    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * (nsectors + 1);
-+
-+    fd = prepare_iso(iso_size, &tx, &iso);
-+    opts.opaque = tx;
-+
-+    ahci = ahci_boot_and_enable("-drive if=none,id=drive0,file=%s,format=raw "
-+                                "-M q35 "
-+                                "-device ide-cd,drive=drive0 ", iso);
-+
-+    ahci_exec(ahci, ahci_port_select(ahci), CMD_ATAPI_READ_CD, &opts);
-+
-+    g_free(tx);
-+    ahci_shutdown(ahci);
-+    remove_iso(fd, iso);
-+}
-+
-+static void test_cdrom_dma_raw(void)
-+{
-+    ahci_test_cdrom_raw(3, true);
-+}
-+
-+static void test_cdrom_pio_raw(void)
-+{
-+    ahci_test_cdrom_raw(3, false);
-+}
-+
- /*
-  * Regression test: a buffered ATAPI read completing after a command
-  * engine restart must not dereference the cleared cur_cmd. Cover both
-@@ -2100,8 +2166,10 @@ int main(int argc, char **argv)
- 
-     qtest_add_func("/ahci/cdrom/dma/single", test_cdrom_dma);
-     qtest_add_func("/ahci/cdrom/dma/multi", test_cdrom_dma_multi);
-+    qtest_add_func("/ahci/cdrom/dma/raw", test_cdrom_dma_raw);
-     qtest_add_func("/ahci/cdrom/pio/single", test_cdrom_pio);
-     qtest_add_func("/ahci/cdrom/pio/multi", test_cdrom_pio_multi);
-+    qtest_add_func("/ahci/cdrom/pio/raw", test_cdrom_pio_raw);
- 
-     qtest_add_func("/ahci/cdrom/pio/bcl", test_atapi_bcl);
-     qtest_add_func("/ahci/cdrom/eject", test_atapi_tray);
+         DPRINTF("+++ transmit loopback mode\n");
 -- 
 2.47.3
 
