@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E791C5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EACC5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtZO-0006r4-DI; Mon, 17 Aug 2026 05:23:51 -0400
+	id 1wvu7W-0003QF-PF; Mon, 17 Aug 2026 05:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtZC-0006qW-Bt; Mon, 17 Aug 2026 05:23:38 -0400
+ id 1wvu7U-0003Pt-LD; Mon, 17 Aug 2026 05:59:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtZA-0004db-4X; Mon, 17 Aug 2026 05:23:38 -0400
+ id 1wvu7S-0001sk-Et; Mon, 17 Aug 2026 05:59:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786958589; bh=+Pjgp90N6I86pD6EI0chwHGWHpknZUnMxQXk2s0ChMw=;
+ t=1786960717; bh=GNxEk2H/mU4dbTcTnsNwida5ojR7xYD95mQHVXATucA=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Dw4fvPCpK2p3Vz7xtj6ItYauR0QqvxFN53tY824L7ELbSg/y1JKhauL5apdVbiaHh
- gEmwjsGU01NzB4Xqw7kKy1jgBXjFtDOuvlIU4C8lyQzdQ6I7ujiHZYmjYdvkHy+Zc4
- Tl/yyoyG5Y2ws9goRJhDOh1fl9tIVykHz+e2PyBZ9wmRAO59wbwAu/0Nl9CjGbIC8X
- ghcrPV8uCA+lX+Hzlps2K9eMbD0pvkRc78Xy1K76kuDqEdDRO/gzHtbZuhMb0zv6gA
- 2Hk7gUKUDGl/pw/IheeHaqXja92Umf0ihb5eMsCKADB6Yz7p6QZP75Gu404uTbQEfA
- t45ekjZzX6G4Q==
+ b=Kz2Q8z98PZILT1cG7pDyaZWptlRpAI/lAjgFZIbtm0vKf8UhHMxOn95TyNNFhYfOD
+ WzHdYjg2COdsRu04Ey4qLvxtuJuPAAQAb7oDeukus60v+AzslN8/t9EPrEfs0whio9
+ fl7SKMgPeKI2WYERhMA8j3CVPdUc29nxDxdoKN9RCNGRT4Q9CEXeau6slKirKIRA47
+ Dpufvx1iWq+bT95CVku4RSwV5C/8/fP+fGc1DAP/fqdGaW+1B1Smo37ZpwSO6WauU+
+ uD8iA4ZkhFkL+hx1z6aVwDzvqV3o8o4468AOG9BFe1R1AWQoN8N2paje8T+l3zDpNh
+ M3Uuowj3VxeYQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F008B1CBAB0;
- Mon, 17 Aug 2026 12:23:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 72C121CBACF;
+ Mon, 17 Aug 2026 12:58:37 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C39AC40D144;
- Mon, 17 Aug 2026 12:23:30 +0300 (MSK)
-Message-ID: <472281bc-f26b-47c2-8cc9-e42357d484f2@tls.msk.ru>
-Date: Mon, 17 Aug 2026 12:23:04 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 450C940D16D;
+ Mon, 17 Aug 2026 12:58:58 +0300 (MSK)
+Message-ID: <6d153b74-265a-462b-934d-cd46b2dd2088@tls.msk.ru>
+Date: Mon, 17 Aug 2026 12:58:31 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
-To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20260812171707.1605637-1-farman@linux.ibm.com>
- <20260812171707.1605637-16-farman@linux.ibm.com>
- <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
- <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
+Subject: Re: [PATCH qemu] pc-bios/s390-ccw: Fix off-by-one errors with
+ loadparm and boot entries
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com, mjrosato@linux.ibm.com
+Cc: farman@linux.ibm.com, zycai@linux.ibm.com, jjherne@linux.ibm.com,
+ borntraeger@linux.ibm.com, jdaley@linux.ibm.com, qemu-stable@nongnu.org
+References: <20260728223013.4047042-1-jrossi@linux.ibm.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -90,9 +89,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
+In-Reply-To: <20260728223013.4047042-1-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -116,82 +115,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/26 19:07, Eric Farman wrote:
-..
->> Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
->> building the image?
+On 7/29/26 01:30, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> I should think so. But if it doesn't work, let's look into why.
-
-When building for the official debian archives, the images are built
-by the compilers available on official debian archives, so that's
-gcc-14, and hopefully the resulting images works :)  But honestly I
-don't know if anyone/anything is actually using these images on
-debian.
-
-I just never tried to build the images for the official qemu git tree
-and tarballs.
-
->> Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
->> here's the list:
->>
->>   b2b5dec9295 s390x: Enable boot menu for virtio pci device
->>   d0473643803 pc-bios/s390-ccw: write IPLB location for non-net virtio devices
->>   e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting from virtio PCI device on s390x
->>   084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for multi-queue virtio configurations
->>   730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI notifications
->>   c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
->>
->> I think I can pick all that stuff for 11.0.x series just fine, to avoid
->> (re)building the image for 11.0.x series.
->>
->> For 10.0.x, things are really much larger:
->>
->>   14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling with DEBUG enabled
->>   d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
->>   40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
->>   5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
->>   d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
->>   4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
->>   ada7a60056c pc-bios/s390-ccw: Store device type independent of sense data
->>   4228a92b2a3 s390x: Remove duplicate definitions of IPL types
->>   dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed boot attempt
->>   5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
->>   1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
->>   acb00a7aae4 pc-bios/s390-ccw: link statically
->>   fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via pxelinux.cfg
->>   47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
->>   108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
->>   a4adf071dc7 pc-bios/s390-ccw: Allow to select a different pxelinux.cfg entry via loadparm
->>
->> basically it's whole virtio and pci support added, which might be too much?
->> Please note that 10.0.x is an LTS series, also used in current debian stable
->> (trixie), so maybe it is also okay to pick everything up to this series, to
->> bring the image in-line with current development.
->>
->> In this case I'll just pick the commits updating the image too :)
->>
->> What do you think?
+> The loadparm may optionally be used to select a boot entry, with the
+> intended range being 0 through 31 inclusive, for a total of 32 entries.
+> Previously, MAX_BOOT_ENTRIES was defined as 31, indicating that it was
+> intended to correspond to the index of the boot entry rather than the
+> count; however, some guards also used MAX_BOOT_ENTRIES as a count of the
+> maximum allowed entries, which resulted in a mismatch between the intended
+> and actual range such that index 31 could never be used in practice.
 > 
-> Yeah, might be a bit much. The smaller fixes were contained enough that targeting them for stable made sense. Of the four fixes that were in this 
-> rebuild, three of the blamed commits date to the v2/v3 days. The fourth went in in 9.2.
+> Move the definition of MAX_BOOT_ENTRIES to qipl.h so it is shared and
+> change the value to 32, representing a count of the maximum number of
+> allowed boot entries and allowing the loadparm to accept values 0 through
+> 31 as intended.  Update some instances in the netboot code where
+> MAX_BOOT_ENTRIES was used as the max index so that all guards treat
+> MAX_BOOT_ENTRIES as a count across all boot methods.
 > 
-> Everything else in your lists is new function and whatnot, so my gut says leave it there.
+> Cc: qemu-stable@nongnu.org
+> Fixes: 806315279d5c ("pc-bios/s390-ccw: Remove panics from ECKD IPL path")
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 
-Um.  It's kinda difficult for me to guess what did you mean by all this :)
+While this commit suggests that the original issue were introduced in
+806315279d5c (which is qemu v9.2.0), it looks like actual bug has
+become possible only after a different commit, a4adf071dc7
+("pc-bios/s390-ccw: Allow to select a different pxelinux.cfg entry via loadparm"),
+which is only qemu v11.0.0.
 
-For 11.0.x stable series, I'm picking all commits in s390x-ccw which were
-made after 11.0.0 release -- that would be 6 commits from the first list
-above, plus all the changes which went into this pull request.  This way,
-s390-ccw.img image will be the same in 11.0.x and in 11.1.x and in the
-master branch, - the binary which you made on your system.
+So I'm not picking this change to 10.0.x stable series (at least not until
+a4adf071dc7 is there too, which I don't think is necessary).
 
-For 10.0.x though (which is an LTS series), I'm picking just the fixes
-from this pull request, and will rebuild the image using the tools available
-on debian.  At the time of qemu 10.0.0, I think you used older gcc too, so
-everything should match.
+Please let me know if I should, instead, pick both of the commits to
+10.0.x, or should rework this change to work on 10.0.x instead (which -
+it seems - is not necessary).
 
 Thanks,
 
 /mjt
+
+>   include/hw/s390x/ipl/qipl.h |  2 ++
+>   pc-bios/s390-ccw/netmain.c  | 11 +++++++----
+>   pc-bios/s390-ccw/s390-ccw.h |  2 --
+>   3 files changed, 9 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+> index 8d3c83a80b..b390f2f112 100644
+> --- a/include/hw/s390x/ipl/qipl.h
+> +++ b/include/hw/s390x/ipl/qipl.h
+> @@ -20,6 +20,8 @@
+>   #define LOADPARM_LEN    8
+>   #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
+>   
+> +#define MAX_BOOT_ENTRIES  32
+> +
+>   enum S390IplType {
+>       S390_IPL_TYPE_FCP = 0x00,
+>       S390_IPL_TYPE_CCW = 0x02,
+> diff --git a/pc-bios/s390-ccw/netmain.c b/pc-bios/s390-ccw/netmain.c
+> index 651cedf6ef..791854fce0 100644
+> --- a/pc-bios/s390-ccw/netmain.c
+> +++ b/pc-bios/s390-ccw/netmain.c
+> @@ -40,6 +40,9 @@
+>   #define DEFAULT_BOOT_RETRIES 10
+>   #define DEFAULT_TFTP_RETRIES 20
+>   
+> +/* Index 0 is reserved for default alias, start PXE cfg indices at 1 */
+> +#define PXECFG_MAX              (MAX_BOOT_ENTRIES - 1)
+> +
+>   extern char _start[];
+>   
+>   #define KERNEL_ADDR             ((void *)0L)
+> @@ -381,13 +384,13 @@ static int net_select_and_load_kernel(filename_ip_t *fn_ip,
+>   
+>   static int net_try_pxelinux_cfg(filename_ip_t *fn_ip)
+>   {
+> -    struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
+> +    struct pl_cfg_entry entries[PXECFG_MAX];
+>       int num_ent, def_ent = 0;
+>   
+>       num_ent = pxelinux_load_parse_cfg(fn_ip, mac, get_uuid(),
+>                                         DEFAULT_TFTP_RETRIES,
+>                                         cfgbuf, sizeof(cfgbuf),
+> -                                      entries, MAX_BOOT_ENTRIES, &def_ent);
+> +                                      entries, PXECFG_MAX, &def_ent);
+>   
+>       return net_select_and_load_kernel(fn_ip, num_ent, def_ent, entries);
+>   }
+> @@ -470,11 +473,11 @@ static int net_try_direct_tftp_load(filename_ip_t *fn_ip)
+>            * a magic comment string.
+>            */
+>           if (!strncasecmp("# pxelinux", cfgbuf, 10)) {
+> -            struct pl_cfg_entry entries[MAX_BOOT_ENTRIES];
+> +            struct pl_cfg_entry entries[PXECFG_MAX];
+>               int num_ent, def_ent = 0;
+>   
+>               num_ent = pxelinux_parse_cfg(cfgbuf, sizeof(cfgbuf), entries,
+> -                                         MAX_BOOT_ENTRIES, &def_ent);
+> +                                         PXECFG_MAX, &def_ent);
+>               return net_select_and_load_kernel(fn_ip, num_ent, def_ent,
+>                                                 entries);
+>           }
+> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+> index 1e1f71775e..d0498e2944 100644
+> --- a/pc-bios/s390-ccw/s390-ccw.h
+> +++ b/pc-bios/s390-ccw/s390-ccw.h
+> @@ -82,8 +82,6 @@ int menu_get_enum_boot_index(bool *valid_entries);
+>   bool menu_is_enabled_enum(void);
+>   int menu_get_boot_index(bool *valid_entries);
+>   
+> -#define MAX_BOOT_ENTRIES  31
+> -
+>   __attribute__ ((__noreturn__))
+>   static inline void panic(const char *string)
+>   {
+
 
