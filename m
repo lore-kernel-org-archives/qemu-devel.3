@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07756C5DF7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A73C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:51:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvutQ-0006hw-4m; Mon, 17 Aug 2026 06:48:36 -0400
+	id 1wvusL-0005D2-TS; Mon, 17 Aug 2026 06:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvut5-0006GM-58; Mon, 17 Aug 2026 06:48:20 -0400
+ id 1wvus3-0004SY-OX; Mon, 17 Aug 2026 06:47:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvut3-0004QL-11; Mon, 17 Aug 2026 06:48:14 -0400
+ id 1wvus1-0004Gp-Sd; Mon, 17 Aug 2026 06:47:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963487; bh=VmzP4cwG8y5g3NtV0tq+9+rh6fizh+WXwZl0J9kgTLY=;
+ t=1786963486; bh=0mvljEviK/qU62YuDBcBfLcAnJ/2jXQoPe2rKdlTi3U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PNmsxjWIs4Ysuq7T5SCcMJsUd63UwFY0IvkyjD5Pce1m9gDdHL2XxAU7N0H6QF1Ok
- VlEcBOPx4EXpvdNHlEJD6xTNXeGa7QoErPHzdjLupYMsEmdOS8VAln+1NaA2pUWMw+
- dd5Rjabh4Z5Phhc7TOvzVYvo7OYExGR3LeN7L+yfAvGFWsC+TyUk7YY/OWhFKAgmax
- 3ALk4w9XB/6O58no07yIjlDZVgvj4TrVYJtplt4Yn1+1ORhCqSuVnBxEIzwHNBE2ze
- /SgHxKZUEUN+0gZ6FXkk9bl9lE7Dn+efcfaKdcWgprDjJZM199UHh6+duudWdPRi9y
- w9F6OoH6veb2w==
+ b=sdCkRufbAMyr94aMdTqNyNUmd6nIJ0EsreovBqY8UMdsX2vqSSoSnjjRZk/NhJKiP
+ YvsiXEaKkYQR3z9ZPwitnoM9MR3QrlZrCG34Q4zN3TZTqiWsbRnFhGHNxUaB71YnR6
+ t2EjDKfNhcdUASFKxrYmq+UMkF6PkehLGoQT53JL0lTMM8qBzv6qVB3YK1iAasohco
+ qpU7Nt5J6J72KdbnSsys/caXPWR+P0voFL5IAIGhq6Wev8hgtlvy/6l6GrwSuWu5vS
+ Di6bN8uta874kuLgLHXgIUI1rn4AQIhEmkaibwRuFwP8eaJPrwx+lwNwOdqlJOh6O+
+ spGDAzsXd8BIw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 09EE21CBB8D;
- Mon, 17 Aug 2026 13:44:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C21EA1CBB80;
+ Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0B8EE40D221;
- Mon, 17 Aug 2026 13:45:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C377F40D211;
+ Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 67D5A30E92; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 3FF6F30E78; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Klaus Jensen <k.jensen@samsung.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 160/161] hw/nvme: add SPDM_SOCKET Kconfig dependency
-Date: Mon, 17 Aug 2026 13:43:14 +0300
-Message-ID: <20260817104344.2047346-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 147/161] hw/usb/dev-uas: Don't abort if guest
+ provided an undersized buffer for status
+Date: Mon, 17 Aug 2026 13:43:01 +0300
+Message-ID: <20260817104344.2047346-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,30 +71,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The NVMe emulation code unconditionally calls spdm_socket_*() APIs. Add
-a Kconfig dependency to avoid build errors when NVME_PCI is enabled
-without SPDM_SOCKET.
+QEMU currently aborts if the guest provides an undersized buffer
+for the status packet (8 bytes):
 
-Fixes: 4f947b10d52 ("hw/nvme: Add SPDM over DOE support")
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260810214846.76805-1-stefanha@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 6dab35f5492b04083f70726a3048d89d8deb4a32)
+ hw/usb/core.c:623: usb_packet_copy:
+  Assertion `p->actual_length + bytes <= iov->size' failed.
+
+If we hit this situation, log a guest error and continue by simply
+only providing the bytes that the guest asked for.
+(Note: This is e.g. similar to the UAS_PIPE_ID_COMMAND case that
+also clamps the length with: length = MIN(sizeof(iu), p->iov.size))
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3900
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260730163901.1154791-1-thuth@redhat.com>
+(cherry picked from commit 15700a66ecb53c52717c913c2c4501372c0115ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/Kconfig b/hw/nvme/Kconfig
-index cfa2ab0f9d5..cfeeed64cd7 100644
---- a/hw/nvme/Kconfig
-+++ b/hw/nvme/Kconfig
-@@ -2,3 +2,4 @@ config NVME_PCI
-     bool
-     default y if PCI_DEVICES || PCIE_DEVICES
-     depends on PCI
-+    select SPDM_SOCKET
+diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+index 963c0433b38..be8c3667e83 100644
+--- a/hw/usb/dev-uas.c
++++ b/hw/usb/dev-uas.c
+@@ -359,6 +359,7 @@ static void usb_uas_send_status_bh(void *opaque)
+     UASDevice *uas = opaque;
+     UASStatus *st;
+     USBPacket *p;
++    uint32_t length;
+ 
+     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
+         if (uas_using_streams(uas)) {
+@@ -373,7 +374,14 @@ static void usb_uas_send_status_bh(void *opaque)
+             break;
+         }
+ 
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
+ 
+@@ -875,7 +883,14 @@ static void usb_uas_handle_data(USBDevice *dev, USBPacket *p)
+                 break;
+             }
+         }
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
+         break;
 -- 
 2.47.3
 
