@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E518C5DF6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B47EC5B572
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 05:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvqHw-0004X5-Ou; Mon, 17 Aug 2026 01:53:36 -0400
+	id 1wvqHu-0004Wn-3s; Mon, 17 Aug 2026 01:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHu-0004Wp-5m
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:34 -0400
+ id 1wvqHs-0004W6-1g
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:32 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHs-0004hN-HJ
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:33 -0400
+ id 1wvqHq-0004hN-Gq
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CuTXy8hby4AYV4QiqnY52MK6OxphVTn3wVXueL1Sm69JxI6aUMD4n1aULKGEhDtVK43Dh7GKoWkXjcMoP2Iw5L9coXEl516O3aAUYravm67Wr9djrIp78y+QNEo6Gz2HjqY1FqOwXooXKdqDZCryjxXJg0cc2xsE7gGlnIuy7cpfoHRRnRP5t6tBIY77dzFEu4O7d5MPukXJCqLEbjht27HQhzYM+nZ1GxFVr3i4OiF6kBTfuBEN4ZkZUeXM1Ychx/x4vBtdc1zqzplEERLI8zHR3IHjnHi+sBbg49KZR4xS/FcFDmC6tv1XJH2OV12h57quMTlH8EmXP4quKHlnRA==
+ b=ATNQKT/yciJmPra+NdppadUgsG+wa9lEjgnmGnOrDt6+5gyQoczc05xgqThcobFQFdeeDJpYkx2SRF/agXZPkSGsrif9KI3XTdE/tGOGMypH0wMkYLasjq1qm73rgvM+Ddz9neoj2ha1jrYaAkzlV5O/1/mQXLjWmoByMMyYPFDl8+nmN+Hq3OWhZXzLMWNYtjS3eNPDo4UoC5a9QUkceFkgCUzWpgxnKbsk2cYJpQtNBzGPqwdewEnX5EEqISHj/M0c351ftJtW+DDos6GV4CxBibDklU+CotStlrZ5u9gVQE+lfDEIxhup02jViL1eFLWcaIQPi3o+YH8pfSu1Vg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hqaOSv8APDmD76zyY37DuQv6k8/L00ykrKomk2zzV08=;
- b=xLuX99fhSQc4jl+tebP5fC5wrKPgeDE8VukzeWmImVZ8jBAjWp2xKkW6piceJ1yseyKa2iXSqrc3sGxe2Y5+t4Hpolg88w0PXup4WqDAX4O7D4x03SaHCxsHyViQ5hdx2N9lIDUw6ogPUxbp7drtgu4nzO3zPUfOTDSNmwTkmInyP49ajNuSDkW9RqrjKohWNoCcH+m7ZmNRug+QMZFaQrdfSxhuQBM9Qjh8+zwjZdoqhca7diwWoVAMRMN6neG4RIgPh8QVPnj3MxW7L7xCEKj1Gu3TW8zJFTuK/xz3YuGgsLLVXVzBgphNVTgcTaRhUHZN9jBvm0WXE3WbAmJQZQ==
+ bh=7DLeXM+G1qY1bWjLPPwjWyDiZl8GD+QWTkJQU2inY3I=;
+ b=E/fjAsrUhRqtdYsBMrlHhotiYvfz98nq0M51DXVudtSfZmoHg/rcRZoM2OWLx3LbNWcuPxmvBp7axSWmPPKojf4fHQixkNEY+eGAzl2Etq9n4Yiqy6vg42TMW6NDhMvdPOgKFi4TJsbRzfib0cwO0owCcZe/ygd4Yo0GzUbjbBnvsixe+lvmVyPkMzsRh9Utqb42kwUuNbYKOOtmGtq0kbJ3rIQIJkN8tNhByI+zCVImp3Ecbt9BHXMFYMUoRAxdj89BQMuyspJ57/cgvxGK46KBw65RYZKofQF+tGyDxvoG2H8kPn9cTN3gAs2DgGlyew5m6UotJSXcbFitmihXUA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hqaOSv8APDmD76zyY37DuQv6k8/L00ykrKomk2zzV08=;
- b=OfJpldZGgC8wZZHqJ0euS6k4D+meZtMT6OqDJ/kqeIjCQeSplNBRV1DQr0+CsHCW4TSNBwqfm1K1ihWeHCWsm1ut4kCDaZQxGI3SseN3yPXhHIGNqpQJqrmhjpwiq5Uvf2VsMsqXCxt3+fYuptXx/7nnipAVPuwrmKbzp0SF6ng3DJi2pIbgB4MtnDqWFbV6DfWxpvr31vLeC3ToIr9LskVeMGISOkshDjrIpxRZhbBchhq2jWv36WIS7CoZKjpEfdNAjkF847p++Uqt2cJycW7n1Oqw1UoGbXDWXKLWTFSIrzEiZSOGOwy0PCiV+i7w/hN8yKDrfsJ5pmsTJtlv0g==
+ bh=7DLeXM+G1qY1bWjLPPwjWyDiZl8GD+QWTkJQU2inY3I=;
+ b=GVymVjlAGIaHgNxQFxgMo4EKQHfx/TXlQ5v3ppZRM8jsMAiLxcshTSNYm43ed7XZEXENVxvxI4nqd0tR+q7dozQ5ZmQBqCm3L2PxJ3NXz2WN2HeEaIG+YOAKnwe6PbuwN/SetRij/LUbAJQo4JAaDaQ45UX1607LuWhCo7Ex6fjkB6H+gPxISYrw5zwF/fBIl2lF2KfkdZve4vP+3KL3D8G97jkrd5J+WLx9w66sommygOfuKbhJN5JnwZkGX5zUS6o3sg2MApk/Bssg854AyKlKMypvXM/st33cVcCJ4uTCYlsbg073oxf1AYB8LOY/+HdJKlKlhldFdh0OJ8QYAw==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by TYNPR06MB8880.apcprd06.prod.outlook.com (2603:1096:405:3c3::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 05:53:22 +0000
+ 2026 05:53:21 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 05:53:22 +0000
+ 05:53:21 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
  <peter.maydell@linaro.org>, "philmd@oss.qualcomm.com"
@@ -52,11 +52,13 @@ To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
  <clg@redhat.com>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
  <philmd@mailo.com>, "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 2/3] hw/usb/hcd-ehci: Make get_dwords() return bool
-Thread-Topic: [PATCH v3 2/3] hw/usb/hcd-ehci: Make get_dwords() return bool
-Thread-Index: AQHdLgy2mE9HtWpWl0CbusN9qOdK6A==
-Date: Mon, 17 Aug 2026 05:53:22 +0000
-Message-ID: <20260817055318.3826428-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 1/3] hw/usb/hcd-ehci: Check for DMA errors in
+ get_dwords()/put_dwords()
+Thread-Topic: [PATCH v3 1/3] hw/usb/hcd-ehci: Check for DMA errors in
+ get_dwords()/put_dwords()
+Thread-Index: AQHdLgy1biN793ldtkyOFv8LJrNurA==
+Date: Mon, 17 Aug 2026 05:53:20 +0000
+Message-ID: <20260817055318.3826428-2-jamin_lin@aspeedtech.com>
 References: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -67,60 +69,60 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYNPR06MB8880:EE_
-x-ms-office365-filtering-correlation-id: e8b242f8-5dbc-4e4b-b2c3-08defc23d8bb
+x-ms-office365-filtering-correlation-id: 892f3624-6419-4fb7-4403-08defc23d7e7
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|1800799024|366016|376014|23010399003|22082099003|18002099003|56012099006|38070700021|10067099003;
-x-microsoft-antispam-message-info: 6Y5p+LAA4V1NRp/gNZ4T8wdubR0Y4fDfAHN+4qfQ1+a+6qEAPtU7hBNFJKiDwXoqTdUUvPlFSOifS2QyApqyF6ApcZTENFirXEhUnkrBUc03FQdfHdBdKfzevFVJcJeyTmf07tkCJMHfkiJ4fVJeLMIZ2hFI76AyiQwR+Xe0On11x2gxtQ5j405WOP/zETBa6d09wAGEiobOkbTgIB63RIDhK8GL78nl/rCd7IjwbPBdb3bpM/sJuuM9i1hVWe7Li9gexc826r/hoQ3iSy8fm+4YPDXujd2I8CPJ8HDEGacy9YXCZtFYJveo9AzTfcF1E4J+Cf9WS3RanmfiOGZIQZ5tocERc9wNUIMANX/FNUXi3l5cSmAhH/OpjwdNvlxJ96iM0zholvF3IpxLDhxbozWiGxdKO+lV+n/RzKGSIK5b7mfI8IkjE7p6oETHm6eV5OyXTSLMcDQj4xDDLHJH59wemhm6Lle43drXCE+E+z+ydBrsvvKiIiy7GVqxcvhbHXmEuxs3XpiPCdw6P59y/4zxQv34IwHY6yb25JVZp2L0ODy+pzzB7ORd9RP0TLZqMv9WdTlFpyrGikw5ZrvN1QwcRjjlCa0mTa/ar/laj9t6ncRFdcoT8GMQLgbG7a0itfMbxtASe310PdJVemZ4+oq2inc4Fwod5xEZc1nGzb3QM+vwiccTYdKsBDHVsn6O6IL05568oA6zw5VZpMA+p+PbRCbyLyZGt8Kxd/cx6EY=
+x-microsoft-antispam-message-info: IC7m76xhnWXPrZae7KPjBghJwGD6WPGuX4yJiU/4admWpNfkC4ecYZl0bqlI5LTeHd2TWP7lo3iosWZVcmcSI/OgntY4PZwXsPtnq5siPNH0yMt1hDEuKtNnE++EhAa5Fr1Kaq7XSp9+WUJ3kKM+A1Czw4efn9owUgF3dzUplZvB1tqk7qZI7sWwZcXkAgm3u4XJSY/IxCWb2cxYEThvi30O47rziLyrs3wK53N/NxI6ZP2ivbvkW4eOL+Kbs7XYdjhnsIbZx+VTHtcybXSTPJXmnHm0XrEH89Dzz61H1uXizc2K1FzazvW/4rM26ui9Qe3ZfZOShYD0o5jkM61808C7Aw3arTOSn/sthoF5yS6Hz3v2OzNXQhRhv3DdIt5QAfmyWCxWFYPlhmG9DUajjnvzWqtlajCeGKyIVipa364bH/4EJMDrhLeTSM632BuImnpNTr2O1u9JX+WUX/w/EQRpIkm+Jd44gfh/FBOMNLb6EynT9Nxoio0uOzQK4CWrDR/UxkUfizvuxGr/Z6JNxhcj09Km1Cl+N+ouGokO5jWMXq07CKrpCQtxsGXiFEED32cVQf5BSP++XHCtXnl95b3NovWj+bsk30+uaV8gIHaH66dzsJqepd15Hztf4TeO6HB+/HOBfod0UHshjUDs4fy5mZJOIGWKGezZWQPKbfbJQbw31LdRh9XweJqKOKMPKtNQ3/u2ufH+G8UvS7UJT+8P4W61euwBSF/dPGVrdMM=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(18002099003)(56012099006)(38070700021)(10067099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?VxX4BB7pgBVQB6Thg01+YiucgENm5DkK+dFsn/6lNQza+B2BOQxlXH+vUa?=
- =?iso-8859-1?Q?P8PZ2P2E7PTyboRBAanwoEDsy/n1BUTL35ENc62eqsQGQz48s/RTi1wKQU?=
- =?iso-8859-1?Q?G+WU70vxBodKdOryRfvCQdvj8eKkdYsgBNZUzTmzZ8th7B3zvpbxNbhx/u?=
- =?iso-8859-1?Q?Bp9yyOCc+fX1OIcw775uinfd+vjBblbPSzrSSSPk/Qt2dkGMbSgw3GFb7u?=
- =?iso-8859-1?Q?AvzZfQlcgABc0aJiKFRm+/327TlZhzWDwk+3MDuZAWUEmfl+7aGD0Xh3e/?=
- =?iso-8859-1?Q?J3HcdmQQ2lvWWQUhQIZpck/4qlEVt3X9lpInndF318pyOwEeQmZ2M1lhCW?=
- =?iso-8859-1?Q?lZZjVvMp2vuLJ69jhu70xKXYVnmrNQRHKLU/EvNs2Egt/s0wJSxrlQv45n?=
- =?iso-8859-1?Q?QKb+2jP0pXIHDF7MURXj9m2dUc2lGpyaygobJjoIY1PpdKP+B0VG8IZFu6?=
- =?iso-8859-1?Q?lWFz5TmGmtiaVxIhhB4pY8JMdV2olP8ZaTSBsxOXhheB0QVYsIe1Unqki/?=
- =?iso-8859-1?Q?WnG1NVRc5jiY5F58PU9HIbV42uxPn12izzskZN3eEmgoqYgUmjcO116yhJ?=
- =?iso-8859-1?Q?PEe9eC9jAx/hG/m0GbO1mRlUL1wzKwMFYzh6M6pRhhQdbpzO+57RACOnoE?=
- =?iso-8859-1?Q?KxVjJ0GbE/ZYXQNEcd3cPd3J8vBesRuYnRnVB15SuAYyj0qxJm6HLYIF2J?=
- =?iso-8859-1?Q?fZuQv/yemPVFEbssaw18tyya9H3idMpv0LZ/itk6KCo1Z/GcNNhIZ2TWzk?=
- =?iso-8859-1?Q?8xT5mi5mYoX8l3YHL5iI3DNSTR5MPKT5C8hcu/TwDk86u9nOIbS84YP1+L?=
- =?iso-8859-1?Q?3Y6xdA++xa4CBsQFz8INFv56mpxS+4nCwgMUxizk3AH9Vp1ewAQGoTF6Oh?=
- =?iso-8859-1?Q?XrdLpirn+fWMex0GH7c+NUSvo1OYyaSspuIDBNkNQT6k0ZhXVBI26CVjWL?=
- =?iso-8859-1?Q?VzzjTLXDNuH8t35TWMXL1IL0K/NQKb4nlm0fJAfLTw+ndexlQzRoXZ60Cv?=
- =?iso-8859-1?Q?10hXcwc5Wivilvt7OGgwEQXMz274lKmGAx6YSD6wEe2mEAS4G4VQ/czUi9?=
- =?iso-8859-1?Q?Acbe3lyn9NRiGwxiSZaSQ+vIb6oNYIgiHbqeiTHLGc/BsuFEJj+TBzzWx0?=
- =?iso-8859-1?Q?+sWGKNDoNdfjl919qn0PrwzstIeZGVgW2RJbWHuy1lUrf6Eamvr5gXWHDR?=
- =?iso-8859-1?Q?SMgm7fhbnH8zEwU9fBA6np3CnqnYiJpknKCcoCCBJUYD6prF20XmYB78hr?=
- =?iso-8859-1?Q?5N8pRirr/bOJFJGWWTDxbY6e5gwiVfYmvr83C3cIQBmYs0vVOtPtF1QMNe?=
- =?iso-8859-1?Q?MA4+zguvTCjFXXCV8nZr1J6sRRNnYnoaiZuZLqCiMYlG8hbQ5o4GzPemsa?=
- =?iso-8859-1?Q?YcgBrtcThwyh0owXpm0VOY2fkud054gtlcpHnGER3jy7eYi2VOsq5B5PAk?=
- =?iso-8859-1?Q?29wl6MlOmgGTo6uI2fimWyQNAPgQ+eEbsf/7mDOlf1s2bTTzPnF6NPzOe1?=
- =?iso-8859-1?Q?v3Wq3xWMcRx6ThkaaPkPlt9vj4wiaU5CIpmcPnQdKP5zNv5Jizq0cWN5Wx?=
- =?iso-8859-1?Q?OFJB2ZkJKs/NHkAM5ShfdNxaGr3wyaWZXw4kqbqkPMfU+QZuwx2FxwRQxd?=
- =?iso-8859-1?Q?KyEdVOFUhs05mvzx6/PPdaYdD6owIxNpMDO5s5RulCtESNjCpLx+evOEli?=
- =?iso-8859-1?Q?gs0lyma1QTL6+MtnEbtpQ7RlFGBjHy73K857pYdO9fORgw1WYExoTSAO7l?=
- =?iso-8859-1?Q?lAtVPWHUZgjyppCfmIT7XLgDUaXB1JmVXgfxKPjkTt+fwLkaJ42yucuVhm?=
- =?iso-8859-1?Q?+/iNrPfEUg=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?kkfV2LK7mzxgewveGyE+WPADznDLT5W1RcDi9PtMKe0LBJUYKN6erf7qnn?=
+ =?iso-8859-1?Q?ld0FMIL7s35iZ8TUZd/SBOhNmRpwR+DukkU6E8BMPLtBGJs7SEBpfZSR+k?=
+ =?iso-8859-1?Q?7tyv/+gBUm4JxeQbF8DcYUUeQ8HO2entCcb1vAjGxWhYrKSdqCaOObuSWq?=
+ =?iso-8859-1?Q?6svDofhVcgcMvRu1OVY4eRJGgNcp7Ymf+jZojCdXSTXigxE0R9VN2rAmzj?=
+ =?iso-8859-1?Q?vD0RJ0Gfgh/GgiDUfMX7gcE3ha4Hq530B4+nNVOn/VnM7Z72M77jGDbWqd?=
+ =?iso-8859-1?Q?DyZe9PMnK4NXugaPf6NS+ir2/04onm9qyj2r56k/CgMItjP0cOpu7mKe9+?=
+ =?iso-8859-1?Q?i7idSDzOf9afGw2vlCvbtwDYQPHC8CWwPQZ7WeSBPTXsNltOGpS6WIrH/8?=
+ =?iso-8859-1?Q?2Sgg/7Lg0QBr25blfguNXl52c9aGFEzpxxOaY1l/YH9+BkJCRHi9Z9tP4B?=
+ =?iso-8859-1?Q?zHLqdJBOxXKfux/NOty4/nAeeS1JjZ9sH6UvpVlEJg9cCVkPsKBZFpakXf?=
+ =?iso-8859-1?Q?g44j4wkcleN1MYkGBMJbREU7kWIdrericCt8pOPuWwQu2ziDVz1RJwQPSu?=
+ =?iso-8859-1?Q?O+hKTPvx0ri76ZU2VZwyB/r53hcrkgsMdxicl5Xw5e0zkUjIFPBOXjIPfW?=
+ =?iso-8859-1?Q?cN5dfPyG2ie06XNDUf3PO4En87cDuDHHT9u8pObjw4eUaG5i5uZ0ByKKN2?=
+ =?iso-8859-1?Q?Lxhe/rCepaIFcdckKKSmXfNHE2GzMzSSKexjsZIOUJY6PAmjy+3yGT9K4p?=
+ =?iso-8859-1?Q?Q5OdLOQt4lUwQooVa/9zVffx8zohKhdbMRzFukq/vzbIAdC4vYqVTtcinr?=
+ =?iso-8859-1?Q?kTBlMI4t7oSTNQPcDB61xq6I2uPepDeScfwur+SC6DY0s2Iq/pVvpFtgZa?=
+ =?iso-8859-1?Q?ljb1Clx1O+N83ryRtXPuSVrGOpyuobkqaaBy6rLbgO5r06k6OAJRvAisrF?=
+ =?iso-8859-1?Q?u0MquwPkpnzYoBiAMmS19H6lt0uhZONamzMnhoukPtjxub8j4eT4PInGkU?=
+ =?iso-8859-1?Q?6dj9iWmYWw9/GLJ2juFXt5s9ksw09WQiG8ZN1kbl+6a2YZNc0YTzHzFUNJ?=
+ =?iso-8859-1?Q?1B14Eqd6OTImHvwBrfc47uD+L19/S0jaAfnvRgdztXzNxnwoIcRwFlzHaF?=
+ =?iso-8859-1?Q?Ce0QlWCD0/i5iHrTUTYpgB6gzvFYcGOoGRFFWPGIYi4m53Nk9rzt+zYRQS?=
+ =?iso-8859-1?Q?kKz/zdKjA1TZG1F51GhWyaFuyjxkGuIWLQv3O5GXqtUmSAT35wjtyFfenh?=
+ =?iso-8859-1?Q?pv0A3l8Q9/q4Hptmc+Gk1Qo5EoRYFJ8o217fFKUgK+Kze6MQQ5gzNSkJa1?=
+ =?iso-8859-1?Q?5/mh+OY6UCxXP/i6cKWbZ1jJ44KMcHBHV8DqyGaf/+hbFZI7buyDOLygjx?=
+ =?iso-8859-1?Q?inz0zfvsNmdLX9Q3ig8a1UrFFnecvGrIHSAwjDZUcYhTh1RvAuJwBnY2KH?=
+ =?iso-8859-1?Q?aAd78tHauVOuYJWLo2Q4649wmjBEnmcRW3zpL8cbEEZNql4CaHYitGj+F9?=
+ =?iso-8859-1?Q?XxClyC7/J+j1wnXgQsE6Sf2bmBG1vqYTieFN7lbvFzx2W2RAHUqg7RFCZ+?=
+ =?iso-8859-1?Q?9H+rk8DTKPYiUnGzi4ro5c52POEoHYOOmGS7aCpCXU1LMlmsJiv1XyH2LS?=
+ =?iso-8859-1?Q?cOkU7OxxyJEQEjFwF7f84gAVUL8aknhFRRNTwwO3MaEZ9mTdz94IIgb2KE?=
+ =?iso-8859-1?Q?k683il9w27EYDh/VD89bQY7XhetdfjjW02bjX4eQRBpHrQjvZ6qDs9/Adk?=
+ =?iso-8859-1?Q?EFblRVUJ7zLeUxws+6FSEkRAWPTVt185nljXlca/ZbxMsjlRf8yqbtSR4s?=
+ =?iso-8859-1?Q?VmMRMrk1wA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e8b242f8-5dbc-4e4b-b2c3-08defc23d8bb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2026 05:53:22.3394 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 892f3624-6419-4fb7-4403-08defc23d7e7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2026 05:53:20.9088 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: b7TK4bF8OXSrzCciOVJc39Ajb1W7oqpXCXV3iv2qHR//T97+SJNJmuuZQ50kvYl7UgiH1t5rMrxJYve7MLLlJnHZewOpoYE1O8oMhZ1a7oU=
+X-MS-Exchange-CrossTenant-userprincipalname: n2jgpTnBeseJPbDjP+3YkhrBeLmdQhj4c79l8u03BKXsQh8+7tRDrY/w3C8gEyJQNf7sR71FuP1XkJfIOCreGq3663NDKy/BiGFjUMCFzjw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8880
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -146,144 +148,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-get_dwords() returns the number of dwords it read, but every caller only=0A=
-tests it for failure and none of them uses the count. Return a plain=0A=
-bool instead, which matches how the function is actually used.=0A=
+get_dwords() and put_dwords() return -1 when ehci->as is NULL, but that=0A=
+can no longer happen. The sysbus variants set it in instance_init=0A=
+(ehci_sysbus_init()), the PCI variant sets it in realize=0A=
+(usb_ehci_pci_realize()), and usb_ehci_pci_write_config() only switches=0A=
+between the bus master address space and address_space_memory.=0A=
 =0A=
-Suggested-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
+Meanwhile the results of dma_memory_read() and dma_memory_write() are=0A=
+ignored, so a failed guest memory access is silently treated as success.=0A=
+=0A=
+Drop the dead NULL test and check the MemTxResult of each access=0A=
+instead, so that the existing -1 error path reports real DMA errors:=0A=
+raise USBSTS_HSE, clear USBCMD_RUNSTOP and stop processing the=0A=
+descriptor, as the NULL path used to do. All 11 get_dwords() callers=0A=
+already check the return value.=0A=
+=0A=
+put_dwords() now returns void: none of its four callers (ehci_flush_qh(),=
+=0A=
+ehci_state_fetchitd() and twice in ehci_state_writeback()) looks at the=0A=
+status.=0A=
+=0A=
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>=0A=
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
 ---=0A=
- hw/usb/hcd-ehci.c | 44 ++++++++++++++++++++++----------------------=0A=
- 1 file changed, 22 insertions(+), 22 deletions(-)=0A=
+ hw/usb/hcd-ehci.c | 38 ++++++++++++++++----------------------=0A=
+ 1 file changed, 16 insertions(+), 22 deletions(-)=0A=
 =0A=
 diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index ecf98c4e19..5187ecc7e4 100644=0A=
+index 451a918e9f..ecf98c4e19 100644=0A=
 --- a/hw/usb/hcd-ehci.c=0A=
 +++ b/hw/usb/hcd-ehci.c=0A=
-@@ -416,8 +416,8 @@ static inline bool ehci_periodic_enabled(EHCIState *s)=
-=0A=
+@@ -421,16 +421,14 @@ static inline int get_dwords(EHCIState *ehci, uint64_=
+t addr,=0A=
+ {=0A=
+     int i;=0A=
+ =0A=
+-    if (!ehci->as) {=0A=
+-        ehci_raise_irq(ehci, USBSTS_HSE);=0A=
+-        ehci->usbcmd &=3D ~USBCMD_RUNSTOP;=0A=
+-        trace_usb_ehci_dma_error();=0A=
+-        return -1;=0A=
+-    }=0A=
+-=0A=
+     for (i =3D 0; i < num; i++, buf++, addr +=3D sizeof(*buf)) {=0A=
+-        dma_memory_read(ehci->as, addr, buf, sizeof(*buf),=0A=
+-                        MEMTXATTRS_UNSPECIFIED);=0A=
++        if (dma_memory_read(ehci->as, addr, buf, sizeof(*buf),=0A=
++                            MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {=0A=
++            ehci_raise_irq(ehci, USBSTS_HSE);=0A=
++            ehci->usbcmd &=3D ~USBCMD_RUNSTOP;=0A=
++            trace_usb_ehci_dma_error();=0A=
++            return -1;=0A=
++        }=0A=
+         *buf =3D le32_to_cpu(*buf);=0A=
+     }=0A=
+ =0A=
+@@ -438,25 +436,21 @@ static inline int get_dwords(EHCIState *ehci, uint64_=
+t addr,=0A=
  }=0A=
  =0A=
- /* Get an array of dwords from main memory */=0A=
--static inline int get_dwords(EHCIState *ehci, uint64_t addr,=0A=
+ /* Put an array of dwords in to main memory */=0A=
+-static inline int put_dwords(EHCIState *ehci, uint64_t addr,=0A=
 -                             uint32_t *buf, int num)=0A=
-+static inline bool get_dwords(EHCIState *ehci, uint64_t addr,=0A=
++static inline void put_dwords(EHCIState *ehci, uint64_t addr,=0A=
 +                              uint32_t *buf, int num)=0A=
  {=0A=
      int i;=0A=
  =0A=
-@@ -427,12 +427,12 @@ static inline int get_dwords(EHCIState *ehci, uint64_=
-t addr,=0A=
-             ehci_raise_irq(ehci, USBSTS_HSE);=0A=
-             ehci->usbcmd &=3D ~USBCMD_RUNSTOP;=0A=
-             trace_usb_ehci_dma_error();=0A=
--            return -1;=0A=
-+            return false;=0A=
-         }=0A=
-         *buf =3D le32_to_cpu(*buf);=0A=
+-    if (!ehci->as) {=0A=
+-        ehci_raise_irq(ehci, USBSTS_HSE);=0A=
+-        ehci->usbcmd &=3D ~USBCMD_RUNSTOP;=0A=
+-        trace_usb_ehci_dma_error();=0A=
+-        return -1;=0A=
+-    }=0A=
+-=0A=
+     for (i =3D 0; i < num; i++, buf++, addr +=3D sizeof(*buf)) {=0A=
+         uint32_t tmp =3D cpu_to_le32(*buf);=0A=
+-        dma_memory_write(ehci->as, addr, &tmp, sizeof(tmp),=0A=
+-                         MEMTXATTRS_UNSPECIFIED);=0A=
++        if (dma_memory_write(ehci->as, addr, &tmp, sizeof(tmp),=0A=
++                             MEMTXATTRS_UNSPECIFIED) !=3D MEMTX_OK) {=0A=
++            ehci_raise_irq(ehci, USBSTS_HSE);=0A=
++            ehci->usbcmd &=3D ~USBCMD_RUNSTOP;=0A=
++            trace_usb_ehci_dma_error();=0A=
++            return;=0A=
++        }=0A=
      }=0A=
- =0A=
+-=0A=
 -    return num;=0A=
-+    return true;=0A=
  }=0A=
  =0A=
- /* Put an array of dwords in to main memory */=0A=
-@@ -1598,8 +1598,8 @@ static int ehci_state_waitlisthead(EHCIState *ehci,  =
-int async)=0A=
-     /*  Find the head of the list (4.9.1.1) */=0A=
-     memset(&qh, 0, sizeof(qh));=0A=
-     for (i =3D 0; i < MAX_QH; i++) {=0A=
--        if (get_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &qh,=0A=
--                       ehci_qh_dwords(ehci)) < 0) {=0A=
-+        if (!get_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &qh,=0A=
-+                        ehci_qh_dwords(ehci))) {=0A=
-             return 0;=0A=
-         }=0A=
-         ehci_trace_qh(NULL, NLPTR_GET(entry), &qh);=0A=
-@@ -1701,8 +1701,8 @@ static EHCIQueue *ehci_state_fetchqh(EHCIState *ehci,=
- int async)=0A=
-     }=0A=
- =0A=
-     memset(&qh, 0, sizeof(qh));=0A=
--    if (get_dwords(ehci, NLPTR_GET(q->qhaddr),=0A=
--                   (uint32_t *) &qh, ehci_qh_dwords(ehci)) < 0) {=0A=
-+    if (!get_dwords(ehci, NLPTR_GET(q->qhaddr),=0A=
-+                    (uint32_t *) &qh, ehci_qh_dwords(ehci))) {=0A=
-         q =3D NULL;=0A=
-         goto out;=0A=
-     }=0A=
-@@ -1779,8 +1779,8 @@ static int ehci_state_fetchitd(EHCIState *ehci, int a=
-sync)=0A=
-     entry =3D ehci_get_fetch_addr(ehci, async);=0A=
- =0A=
-     memset(&itd, 0, sizeof(itd));=0A=
--    if (get_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &itd,=0A=
--                   ehci_itd_dwords(ehci)) < 0) {=0A=
-+    if (!get_dwords(ehci, NLPTR_GET(entry), (uint32_t *) &itd,=0A=
-+                    ehci_itd_dwords(ehci))) {=0A=
-         return -1;=0A=
-     }=0A=
-     ehci_trace_itd(ehci, entry, &itd);=0A=
-@@ -1805,8 +1805,8 @@ static int ehci_state_fetchsitd(EHCIState *ehci, int =
-async)=0A=
-     assert(!async);=0A=
-     entry =3D ehci_get_fetch_addr(ehci, async);=0A=
- =0A=
--    if (get_dwords(ehci, NLPTR_GET(entry), (uint32_t *)&sitd,=0A=
--                   sizeof(EHCIsitd) >> 2) < 0) {=0A=
-+    if (!get_dwords(ehci, NLPTR_GET(entry), (uint32_t *)&sitd,=0A=
-+                    sizeof(EHCIsitd) >> 2)) {=0A=
-         return 0;=0A=
-     }=0A=
-     ehci_trace_sitd(ehci, entry, &sitd);=0A=
-@@ -1866,18 +1866,18 @@ static int ehci_state_fetchqtd(EHCIQueue *q)=0A=
-     uint64_t addr;=0A=
- =0A=
-     addr =3D NLPTR_GET(q->qtdaddr);=0A=
--    if (get_dwords(q->ehci, addr +  8, &qtd.token,   1) < 0) {=0A=
-+    if (!get_dwords(q->ehci, addr +  8, &qtd.token,   1)) {=0A=
-         return 0;=0A=
-     }=0A=
-     barrier();=0A=
-     memset(qtd.bufptr_hi, 0, sizeof(qtd.bufptr_hi));=0A=
--    if (get_dwords(q->ehci, addr +  0, &qtd.next,    1) < 0 ||=0A=
--        get_dwords(q->ehci, addr +  4, &qtd.altnext, 1) < 0 ||=0A=
--        get_dwords(q->ehci, addr + 12, qtd.bufptr,=0A=
--                   ARRAY_SIZE(qtd.bufptr)) < 0 ||=0A=
-+    if (!get_dwords(q->ehci, addr +  0, &qtd.next,    1) ||=0A=
-+        !get_dwords(q->ehci, addr +  4, &qtd.altnext, 1) ||=0A=
-+        !get_dwords(q->ehci, addr + 12, qtd.bufptr,=0A=
-+                    ARRAY_SIZE(qtd.bufptr)) ||=0A=
-         (q->ehci->caps_64bit_addr &&=0A=
--         get_dwords(q->ehci, addr + offsetof(EHCIqtd, bufptr_hi),=0A=
--                    qtd.bufptr_hi, ARRAY_SIZE(qtd.bufptr_hi)) < 0)) {=0A=
-+         !get_dwords(q->ehci, addr + offsetof(EHCIqtd, bufptr_hi),=0A=
-+                     qtd.bufptr_hi, ARRAY_SIZE(qtd.bufptr_hi)))) {=0A=
-         return 0;=0A=
-     }=0A=
-     ehci_trace_qtd(q, NLPTR_GET(q->qtdaddr), &qtd);=0A=
-@@ -1969,8 +1969,8 @@ static int ehci_fill_queue(EHCIPacket *p)=0A=
-             }=0A=
-         }=0A=
-         memset(qtd.bufptr_hi, 0, sizeof(qtd.bufptr_hi));=0A=
--        if (get_dwords(q->ehci, NLPTR_GET(qtdaddr),=0A=
--                       (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci)) < 0) {=
-=0A=
-+        if (!get_dwords(q->ehci, NLPTR_GET(qtdaddr),=0A=
-+                        (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci))) {=0A=
-             return -1;=0A=
-         }=0A=
-         ehci_trace_qtd(q, NLPTR_GET(qtdaddr), &qtd);=0A=
-@@ -2290,7 +2290,7 @@ static void ehci_advance_periodic_state(EHCIState *eh=
-ci)=0A=
-         }=0A=
-         list |=3D ((ehci->frindex & 0x1ff8) >> 1);=0A=
-         list64 =3D ehci_get_desc_addr(ehci, list);=0A=
--        if (get_dwords(ehci, list64, &entry, 1) < 0) {=0A=
-+        if (!get_dwords(ehci, list64, &entry, 1)) {=0A=
-             break;=0A=
-         }=0A=
-         entry64 =3D ehci_get_desc_addr(ehci, entry);=0A=
+ static int ehci_get_pid(EHCIqtd *qtd)=0A=
 -- =0A=
 2.53.0=0A=
 
