@@ -4,160 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D378AC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04872C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvsqc-0005Yn-9c; Mon, 17 Aug 2026 04:37:34 -0400
+	id 1wvsrp-0006Hu-Af; Mon, 17 Aug 2026 04:38:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1wvsqa-0005VV-Pr
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:37:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wvsrf-0006Fa-Q6
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:38:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunil.laxminarasimha@oss.qualcomm.com>)
- id 1wvsqZ-0005LR-6r
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:37:32 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67H6wHuh1386269
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 08:37:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=
- qcppdkim1; bh=lxtxCOms/qw4ckxVhbvPV81LeBCTu10QqoCU1NXaTQQ=; b=U1
- tsot9kLH0mzbBEYBEW5mkzPYg5DE60s/jboeF/uXqmdsFFrH7Zd9fbrG4DZKb9Kr
- UwHiW38ZS7o72VAwD9SFDovhlxRjfD0KWr/VUFW1qEjy36MCdqJQ78SpEfWcIi7b
- Klqld5ObVrnAsAuAEet7GHrZ8IXNRqrOdPJspIfWDvLrqXwOXdJ8ju+2+580JOZq
- 4Afxo3XCTcj7weEIXcXAtfWFfJ5De2sHx9l7fIRQweh3rbvSbKwIi8xc9wcSpeqi
- yNGKN7/0WvCpiU44SFipjdp4ukMWDBpsjAAGSvAWvBt3GTz5NSxIwnN9kvDiiygu
- adHEa7+nuS5QKPd+GN4A==
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g3mx4sptx-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 08:37:28 +0000 (GMT)
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-66c70f4b830so7772215d50.1
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 01:37:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786955848; cv=none;
- d=google.com; s=arc-20260327;
- b=KsBKWrb9TBSjUTl551fcu4bT2pME5p5Nh7uxiwPfolSd3TOrIqMYdKCwiGY0BPHai3
- x3Ognw7XqBZAzQsB/8IxFSqabWOq5UXfoMhXvVy/8WmBEId3g0ukMq39EkRyvZIETpv+
- 7TmZ5KYs+t9HXUk39u1xWJbL2AtSPTf5yGAv6Ueh+MZ6/3lMCLA4CRYWavWJfbxDAbpi
- FY6kKvi4w/oYXXxFl3NRa3gXnhcjHGtIBNj63NbEUGPtl5+vvAtoNgEHVnLjhFmYa/Nl
- VbajeMdCNzcQK5udutOV4TBiB+ajHqtxjaeverwoUXQ/jX6u0gd64g5enoJErx7m0xxz
- 5Lew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=lxtxCOms/qw4ckxVhbvPV81LeBCTu10QqoCU1NXaTQQ=;
- fh=Epza5gLQlpBTythoycb376yGxJ+M0R8zAkmRRW0crpY=;
- b=mUr52WlLMiJLxYA6K3mFglmCseAbBQH6i89F11xJrvekdpYrQ2H/F2w0AeJbkX0KUW
- kwvIEk/0/RpZQ+UfgBZh9HWYYda9IigNXyeJnNiRG1w9F/WfOAAjEJ99B50yok2ogSg4
- 3gvLPmgf7lpbpnJHcvBI4ppU8daD87OCaXJekZL+MdT682Xu5WD5ko6R5SeKbOZxlvA0
- +tqUVdftApTw2I+jRT9Fmf9CS5KMiOmE09SrqJxeF2oqOtyzAtoUkcp1GiQkmZNFt3mE
- Lpe+L+7sNdZqzq/32zudWruuWq/22gIPdCnHQ/Xtkjgc9ecire4MbVvAGiybwT12qSGs
- Vd3A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wvsre-0005Wv-4M
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:38:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786955916;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3l1UTFcsBTEmTmRtxGliwLn++/bWyQxsBReluhxdXWQ=;
+ b=FWmCagZVbWOtrx/XNPAZ+aqrShXPEkv+RmtiGyOH+/++O1Eow+hyqBm+Nhx7pvUhhF6+bP
+ fPQMZQXS+LyF8BmivojcqJlCEa3eqYl8we/mnz98U7e5NSqT+G4Wl6RdcRI7+lXxnBH9Cs
+ tgisBX/SyMWfU4g3cyX/ZodwGsoJv3c=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-183-MG2_gVEfMHyYQKSS993BGw-1; Mon, 17 Aug 2026 04:38:34 -0400
+X-MC-Unique: MG2_gVEfMHyYQKSS993BGw-1
+X-Mimecast-MFC-AGG-ID: MG2_gVEfMHyYQKSS993BGw_1786955913
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-493bfc3b84aso17495355e9.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 01:38:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786955848; x=1787560648; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=lxtxCOms/qw4ckxVhbvPV81LeBCTu10QqoCU1NXaTQQ=;
- b=GxSn+Hr6ITuEPpgfrCrwzyjyAZcWXa0zlCanksQbH/at+/PnFFY7ggiGxs/C6qPLPW
- YJZku+tB05ApbV1pfSerDytux2dospeuysxGNjYbCVYL9YePAZ8UY6JT/GfQfvMghrre
- 5T/H1z4k4+WNdTK72rPIQK/gq9WC3rUUAzsEBOag8XLX0+D2ZHu7jKOFmZ8ApeNAeGQT
- Pri5RdLOeU7DFWsmriR0HXYDLb/TZBR2c+ffxdZXfGT+R3CX9kkj364oFarhRunjC6Nn
- vyQi5l5aX5V+vpMZ761OiePqZtAjiVWQHLXy4bqdbRP8fO9ZN03uSV8SA8qqd/8IF7l8
- U26Q==
+ d=redhat.com; s=google; t=1786955913; x=1787560713; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3l1UTFcsBTEmTmRtxGliwLn++/bWyQxsBReluhxdXWQ=;
+ b=sjelAPFRMrxxK9b3tZobKQT/N7GYsTd5mq3fBJ+r3X3fehs7BVWK+Ghe1PTBsG1MZc
+ wR8NrF873MTUzqP/6cpzjy0YATNcbQdkdkSqCgXoBnyy/cFA4TOB68jUdFDOQ/bQoS+e
+ BPC5AXZHzBGJs/jbpq2+i79MYSItmXoTQ3dzRqY6TY5Ho43zcFNB0eRaDkaOjDiZ/WCk
+ Gwf4wFCWognyJvABMLoWOB6MN/Vex6ieORjsx8oggFaKeGn0IVZCG+P4nsnAxu2kADXA
+ 31K2pR1gOLoz5VFxTrtlnaSCn9i03j5QxBPS+rMVf1X7SG/3xEKu3Tn/gyD5CjwBTM2N
+ gPRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786955848; x=1787560648;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=lxtxCOms/qw4ckxVhbvPV81LeBCTu10QqoCU1NXaTQQ=;
- b=nHg4Pv1nltMMZrsD3+26RBBYBQhRc+8dVCCjBrJTAbI0txS+CY4k1eBsmje1CVr8fz
- 6el8uGF5ipz3hvH+SOJvYiMNs9rMqiGeFc6JiHxpsRj2sRFswgOy/yZG5Pax/xH45I7u
- E7WGM1NdyY3Km669Z/b/gSuX6nnz61+iChB5Nj5jorank6nasBvCYMwjXQVLuFyYg5EW
- Ln51T1yEv5yeDC90iW/MUNg6qwzafMqjfpp/oYwY+JkELSgbvRBaJ3ufTFoOsw0tXTgl
- N9nRkcD5UZYXMs+3oeiGOmFTE6e8rDB+C6mldhh1Zdq1q0kFkMi9+XJ0KyMyixnmeeGh
- +Bjw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoorUWToLLbDnfFsuc+HnO3e+sUGu8Fbp6NSeUNK/hf6sDczvSoyVoKD7jYLU3M462xJRDWgwUAz8Yy@nongnu.org
-X-Gm-Message-State: AOJu0Yx32FN0hmtMViD+TDRhrGMXylkyw11dFvLsxGMyx+O0bgN7Tyyb
- WXp8VjkjuYgQxwX2FhQGFrAkqHYpuEH4TE1CVb+TBIDpksg0CZYVixuvdJMoagM3VwpAmjPk/KJ
- uP7oqYMhCvmxRliv5lp/QMsx+LUjk0HZXPmPkzerCc+hvwSnE4KNpkYeoytMZPC5V5NDTUBdukx
- fDPbxAK0hvEplxtXbYcCRvuuvsi+/sLq6s
-X-Gm-Gg: AR+sD11V+Td5tDYL/0yFoCraOOJf46++metJKZdUC1wbPMZkA1NbbWqBHrmD+ZV52K7
- w78OglRz+AI56Y5x6wUYz+uPk3eR6DJ+Iw/+sQ9MNC/0I+3pEBOujFsZjtO9jFb3r4KwegBmhYQ
- U0LWi3NzjMTkyvnO0Su0bvR/nChIpDcH8CCTNbP9qF1uSxhUTHKC7SqaBpkvo=
-X-Received: by 2002:a05:690e:169a:b0:667:e04a:8a42 with SMTP id
- 956f58d0204a3-66c72d0449cmr8634676d50.46.1786955847684; 
- Mon, 17 Aug 2026 01:37:27 -0700 (PDT)
-X-Received: by 2002:a05:690e:169a:b0:667:e04a:8a42 with SMTP id
- 956f58d0204a3-66c72d0449cmr8634663d50.46.1786955847336; Mon, 17 Aug 2026
- 01:37:27 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786955913; x=1787560713;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=3l1UTFcsBTEmTmRtxGliwLn++/bWyQxsBReluhxdXWQ=;
+ b=kBANcuCE7zz0X1p2iFv4+CkCg49aDIaHty/e7xWMf4DsDctdRRZp8ZH8mJ+4o/u4jT
+ PkBQpEhMZamsT8W2Cjn+d4i+uMlnhOHsy33VMe8pilTJqIlaRp7ZxVRjsxsL//uoTmmS
+ ghyOEb2nSRnLo+u/1o/Jmp98cKTRNXlOCPYWT57T2+0Vg4vsnxt50dXRrLbH9NAMiBbw
+ /6Wzn8faNS3+aIElrnHBDfPTR1F1HeT4TzHIe3Vt56JOOkS3CJ9GtQbfOE3cgoBC0nv3
+ f2GUYMDW4VWHUVKxBzYUOSQ4sqhascQluzLD3KZ7aK476cAxSLvVQ9Tcghtnu/v61EI9
+ QQ2Q==
+X-Gm-Message-State: AOJu0YwUAEShFKdNeNbf3+kGngHNQZaR42AJfeeGJO+xqHmDT2OPuqJa
+ Syx4Hp+wC75BuqzJr+4Z9nVCgSdPtu2OMeC079mAD16Fg4GmkLSxiGQ++S/xQgXH/Rm5Pix7D86
+ uj51UEEstfZkS4a0TIBOpRtyHWgYbUbuzIeTfpv4pVwNtYnpQFHTj/dtC
+X-Gm-Gg: AR+sD132tccXix+Bb63nNEvUJl1KmlLI/QmFUqJ6/qc662heTDZNFmPJKh4653xgKkt
+ I7QW1iCgLGgPYFpciWahXFneCbQfwfEgzShXOLNS5AT0oVcchPM6S6kmSxzXJxjTaZqoV1WQCSq
+ CKbqzmO/8HB5A8IuSpj3mcctVFiiNs5jOOW19eK1DIFZ4BaEe4EaH5ODJMf5ZuMITjYqozUjs2Q
+ vuV/7RBzgrLcGZSBtnas0aP0oUxHqQ/aSijAkdOlpRqtKuS5VzUmiehWkMcA1CY76YwD5MFSLzB
+ BdVX+/J/UfXVLLhGlnAr5fxy/jC007Rsl6d19osTh4V+nnh2xREb2goAJZOGQORDleAOD1JJ
+X-Received: by 2002:a05:600c:a4b:b0:493:e451:a9e1 with SMTP id
+ 5b1f17b1804b1-49987944162mr382759355e9.2.1786955913302; 
+ Mon, 17 Aug 2026 01:38:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:a4b:b0:493:e451:a9e1 with SMTP id
+ 5b1f17b1804b1-49987944162mr382758565e9.2.1786955912896; 
+ Mon, 17 Aug 2026 01:38:32 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.115.27]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482a5a3158asm2115511f8f.7.2026.08.17.01.38.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 01:38:32 -0700 (PDT)
+Message-ID: <225b9367-f343-4690-ac37-d2bbd57680a7@redhat.com>
+Date: Mon, 17 Aug 2026 10:38:31 +0200
 MIME-Version: 1.0
-References: <20260814045315.3416169-1-subrahmanya.lingappa@oss.qualcomm.com>
- <20260814045315.3416169-5-subrahmanya.lingappa@oss.qualcomm.com>
-In-Reply-To: <20260814045315.3416169-5-subrahmanya.lingappa@oss.qualcomm.com>
-From: Sunil V L <sunilvl@oss.qualcomm.com>
-Date: Mon, 17 Aug 2026 14:07:15 +0530
-X-Gm-Features: AcwNN1WLKMQAnaxCiqTkvSkvqRqJyAj8ou0hWj5nypmLFHzPHFDs5efWjE2LKws
-Message-ID: <CAB19ukGHNA7KwDpgeucPoy0h2OThHGL7LqESDeY8f_moxPGyUQ@mail.gmail.com>
-Subject: Re: [PATCH v8 04/10] hw/riscv/virt: add opt-in RPMI base support
-To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: wDfDlqpo5D3pBv3PFUU8waoq0pt68RzS
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA2NCBTYWx0ZWRfXzmULDlE8k82q
- M9lrMCAVewupFjQnyF3GsmZ4cgmmt3qw9yzMAGTZhLe87Yw3xdoJjSQW/0NXBRvZbwvKmauAoXb
- HmiA1pahnA+rj3UaczNlEHuSgbSWpLc=
-X-Proofpoint-GUID: wDfDlqpo5D3pBv3PFUU8waoq0pt68RzS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA2NCBTYWx0ZWRfX/10iTFoLcW2I
- OTqm9MJ08Ij+kZAJf9BRTeiiY695Ggpje3OEcLvhqbWMjwQ5qDJdZXgBHg4sTJ36qhmicByJirL
- q0xSbZ0tUYhPVVLxcdbAYU5MPfirfsOaGnCjEqePYXfYttGCnE8D7MYGA8bAJ60dC9RIBnOVcMZ
- 4A3tfHVz4g1t/9ECFsW+5utuviG3yOzkO1qNTgpLVzFE/im0Gkb+jjbV0QYAlAfHnA4tciKJbmt
- o5sHyquZlz3ShMshbvGl6OsBQzMswPznVl7YNeSHs1wb88JTQM125VSzCDOgkuxF6XEsOAVkl5M
- fDFo4nGmZmvn+OA9eCAlJgsN9HAxkypbeTdushf0sKJV4LotbaZOcbf8IbdV20LmR/1AWpFiURk
- 1/y5w6Yy9zV59ZNk5TJr2kOj35/6o/MP4Q2GMVHQ0PEbOq3LJ0CanWGAjL0jGB4bH9E+wwAzHRb
- pxQHnoggfOq0erA+jng==
-X-Authority-Analysis: v=2.4 cv=Y6XIdBeN c=1 sm=1 tr=0 ts=6a82c848 cx=c_pps
- a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8 a=JmizWh1dmgbBdfpdsmoA:9
- a=QEXdDO2ut3YA:10 a=Epx66wHExT0cjJnnR-oj:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 bulkscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170064
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=sunil.laxminarasimha@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: fix pylint false positives for cv2
+ module
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260815072421.4117291-1-marcandre.lureau@redhat.com>
+ <54495516-9f01-4077-860a-a4c9cc612a73@redhat.com>
+ <CAMxuvaz3yrNkTnYOHtDcqGgKjW=9B-v82dGHpvSYUjzgrBYmDg@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAMxuvaz3yrNkTnYOHtDcqGgKjW=9B-v82dGHpvSYUjzgrBYmDg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,59 +160,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: sunilvl@oss.qualcomm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 10:25=E2=80=AFAM Subrahmanya Lingappa
-<subrahmanya.lingappa@oss.qualcomm.com> wrote:
->
-> Add the virt machine rpmi=3Don/off option and wire the initial RPMI Base
-> transport into machine realization.
->
-> The option remains disabled by default and requires TCG plus librpmi.
-> Invalid accelerator/build combinations fail during machine
-> initialization. When enabled, virt allocates the RPMI shared-memory
-> transport, creates the RPMI device, configures Base service metadata,
-> and emits the corresponding device-tree nodes for firmware discovery.
->
-> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.co=
-m>
-> ---
->  hw/misc/meson.build       |  2 +-
->  hw/misc/riscv_rpmi-stub.c | 16 +++++++
->  hw/riscv/Kconfig          |  1 +
->  hw/riscv/meson.build      |  4 +-
->  hw/riscv/rpmi-fdt-stub.c  | 37 +++++++++++++++
->  hw/riscv/virt.c           | 96 +++++++++++++++++++++++++++++++++++++++
->  include/hw/riscv/virt.h   |  3 ++
->  7 files changed, 157 insertions(+), 2 deletions(-)
->  create mode 100644 hw/misc/riscv_rpmi-stub.c
->  create mode 100644 hw/riscv/rpmi-fdt-stub.c
->
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index e7c2ebe28f..92c9cd6064 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -170,4 +170,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files=
-('sbsa_ec.c'))
->  system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
->  system_ss.add(when: 'CONFIG_RISCV_RPMI', if_true: [files(
->    'riscv_rpmi.c',
-> -), librpmi])
-> +), librpmi], if_false: files('riscv_rpmi-stub.c'))
-> diff --git a/hw/misc/riscv_rpmi-stub.c b/hw/misc/riscv_rpmi-stub.c
-> new file mode 100644
-> index 0000000000..dc32b43227
-> --- /dev/null
-> +++ b/hw/misc/riscv_rpmi-stub.c
-> @@ -0,0 +1,16 @@
-> +/*
-> + * RISC-V RPMI stubs.
->
-Shouldn't these changes which are outside of the virt, be in a separate pat=
-ch?
+On 17/08/2026 09.57, Marc-André Lureau wrote:
+> Hi
+> 
+> On Mon, Aug 17, 2026 at 11:19 AM Thomas Huth <thuth@redhat.com> wrote:
+>>
+>> On 15/08/2026 09.24, marcandre.lureau@redhat.com wrote:
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> Add generated-members=cv2.* to pylintrc so pylint skips member
+>>> checking on the cv2 C extension module, whose members are not
+>>> visible to static analysis.
+>>>
+>>> Silence:
+>>> 2026-08-15 10:42:08,710 - INFO: qemu-test.test_pylint Checking files in /home/elmarco/src/qemu.qom-qapi/tests/functional/arm with pylint
+>>> 2026-08-15 10:42:10,941 - ERROR: qemu-test.test_pylint "/home/elmarco/src/qemu.qom-qapi/tests/functional/arm/test_integratorcp.py:83: E1101: Module 'cv2' has no 'imread' member (no-member)"
+>>
+>> Alex recently already sent a patch for that error here:
+>>
+>>    https://gitlab.com/qemu-project/qemu/-/commit/dd14a21b9dc1
+>>
+>> Didn't that help to silence the message in your case, too?
+> 
+> Ah I missed that, but it doesn't help:
+> 
+> pylint --rcfile ../tests/functional/pylintrc ../tests/functional/arm/
+> ************* Module test_integratorcp
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:83:25:
+> E1101: Module 'cv2' has no 'imread' member (no-member)
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:26:
+> E1101: Module 'cv2' has no 'cvtColor' member (no-member)
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:55:
+> E1101: Module 'cv2' has no 'COLOR_BGR2GRAY' member (no-member)
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:17:
+> E1101: Module 'cv2' has no 'matchTemplate' member (no-member)
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:52:
+> E1101: Module 'cv2' has no 'imread' member (no-member)
+> /home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:86:35:
+> E1101: Module 'cv2' has no 'TM_CCOEFF_NORMED' member (no-member)
+> 
+> My understanding:
+> 
+> I1101 (c-extension-no-member) - disable: silence if pylint can't
+> introspect the module
+> 
+> E1101 (no-member) - but we need to tell pylint to trust any member
+> access on cv2 if it can
+Ok, but could you then add it to the "disable=..." list instead, so that we 
+disable this for all other modules, too? ... otherwise we'll be busy adding 
+an entry for all other modules where this pops up in the course of time.
 
-Thanks,
-Sunil
+  Thanks,
+   Thomas
+
 
