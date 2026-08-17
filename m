@@ -4,145 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E637C5DF7A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEE4C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvzoX-0002CF-KV; Mon, 17 Aug 2026 12:03:53 -0400
+	id 1wvzpI-0004Jh-Ig; Mon, 17 Aug 2026 12:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mayuresh.chitale@oss.qualcomm.com>)
- id 1wvzoO-0001vV-Bi
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:03:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wvzpF-0004Ig-PI; Mon, 17 Aug 2026 12:04:37 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mayuresh.chitale@oss.qualcomm.com>)
- id 1wvzoK-0006xB-No
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:03:43 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67HFYwOZ1530602
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 16:03:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=IN5d9diPA+5
- gtrEwQvCPi+67EjQ5+TqAioWBC9q16SA=; b=dWudoXbeTu15o58jemUaNumu6lj
- R0F5zWc5BD8RHQFCRi4n93hlf2hVhyC7ztk+ZwUGAU58I3G0NzErF0FP0cwKZI2b
- zlLfSfU8WEARh02yzHi5aeE6otqMDcAow0iAXjKzPRUMqGkQQrckrJabIicQg2AA
- t4dDmV7xyH2HRwO3aGLRNrVuJUMInucvn17Z6aeyemMIIAA1I1Yxx9XBuLmkKgM5
- 2/tvxaBcvIaPmG1EzcgTwtW70rXG37fNg4x8DmzPABa3aD1Wq3TIJUIXf/jwj9cu
- AdHfEaE6I2QWTwOUeNaV9d3b16ft96AYgRbr9i6q67w0dXD7xkDwJBvYoeQ==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g3wke258m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 16:03:39 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-84e048a801dso4794105b3a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 09:03:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786982619; x=1787587419; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=IN5d9diPA+5gtrEwQvCPi+67EjQ5+TqAioWBC9q16SA=;
- b=ihGU1k+icd6mwYq5KgXV4Eae65MaQyKIzUhZGyrUlKTydphWQPf3J8uQ5iXpLwbpPC
- u4Hrucw5smVcBXC3EUQDmIN0d957oEhXrd0CQUuSXZAsWKGNEMxSF1isBNprFTR/xmKC
- g/GcE0fhdn+jcs+S7JPNxQZeyU51SaAOV1Mlf6jAtCTThxJeiACsMuIpfUU3BzCUQyq2
- G0HnL4AdYrry17oaRnbbbhlphXz3Q4iV3nl8SRutuLiLT3OVVFjxPgQMlHhliVFYymUg
- +YPfgRgpPr2ogE+Es2WaDyxjB3izYNgS0U1NlZpaoN7KXHoxNMrr2X+VCib2EssKE+wW
- l01Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786982619; x=1787587419;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IN5d9diPA+5gtrEwQvCPi+67EjQ5+TqAioWBC9q16SA=;
- b=oZjIDr+gPyj8MoJTE8BSua7d+Hir16cm5PV6JvfBR5AcZywbKpryhyo4OO57DC7chr
- KdrNb636p10WF8Os4O2R3+w/naKbVT1giv2P4dd+CcsrIxMwunf79LMLC/xcGz1rQjFD
- EgHOcS6Jn1cXQvkaPMZLUb5IxdXxcYRN23lYkN4H/8ooL27jdPkzXt31l8JC/jwQU0Jd
- 6/5yFZj2L+Zes/6/DS4h4Q4doV30rbGqV6NxC3xcUVoJyh27dqFDY6RRdO0xOHkM3mXS
- 4zsbhQBateiABGa/3oI2KhLUtc+1yVqoKmrDgajXUC+1keTZPMcoA7a0z5tgQeDrZS67
- fQVg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RphWLouX8FjUlgMVqaVUAnniiEZCiWVmVpFkHMEHOhm4aPfVSKID1y/43fXLUbBUimi+NU9wMA0ZCqH@nongnu.org
-X-Gm-Message-State: AOJu0Yz4GsZeNR9RLCIO2oxAokmiRx5gY2JvrYbeLGT4Xst3KacxteSP
- qHptDxlgq2vL6K9PiME7l0B+xzkvfuz08YQtH0wTLSoT7YiDM8IXmSBOJNPTEId4imU6eHw8+/h
- 4OsSuekiIHHKy4CweC4JEDwGQC68V2HyKVGZ/RX310JOpPgTaTIOd7rtvkoM0XioNLw==
-X-Gm-Gg: AR+sD11hNa+2k27O2vfqqKub6okM+5AkkUh6aQbNHUGfQxFiwduRl4lqhvAJw8C1g7u
- znp4U2jfzMkblH7ADNccSCQw7w63U08QlEjBCaRFQ0gPuCZdUIt/z4Rz6SFUq1k4+8U5hnrBEMT
- YD9wRmEQ5etYMaxYG6ezPEDhr+pFq/I8JlkjfYZ14VJ1xPZtl7FfviyNO9547BI46xTKTiLhLOS
- 5tKpgkExSRLONmcSzbiOJ4LWCo8BE+7hGEnRPuUAJq9OKCUoBn1baInIsHAXOHLMC6hp4HSATNA
- TVqnigOctHMbKrREPmHWOq6+sCXNyuuUkuMfziDlv5GbREpWOnpCTxiIgHvfEopbbbdal1zs2Uv
- ocvYEHrPJIGq1LmgvWMEDgb9CLPOb8hc+L3yPrKahNWo1vwQGYQsv1YQ0K4OhH3MZ2xLPOPK99a
- Z+Au15X+Rzb5MzFjOO1I9yI+Mlmw==
-X-Received: by 2002:a05:6a00:10cd:b0:847:982e:cca0 with SMTP id
- d2e1a72fcca58-84fde1fd916mr24445359b3a.19.1786982618329; 
- Mon, 17 Aug 2026 09:03:38 -0700 (PDT)
-X-Received: by 2002:a05:6a00:10cd:b0:847:982e:cca0 with SMTP id
- d2e1a72fcca58-84fde1fd916mr24445287b3a.19.1786982617735; 
- Mon, 17 Aug 2026 09:03:37 -0700 (PDT)
-Received: from hu-mchitale-blr.qualcomm.com
- (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
- by smtp.googlemail.com with ESMTPSA id
- d2e1a72fcca58-851b6f8c0f6sm545923b3a.39.2026.08.17.09.03.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 09:03:37 -0700 (PDT)
-From: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Cc: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [RFC PATCH 2/2] target/riscv: Capture Sspesa sample PC and counter ID
- on overflow
-Date: Mon, 17 Aug 2026 21:33:17 +0530
-Message-ID: <20260817160321.3313698-3-mayuresh.chitale@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260817160321.3313698-1-mayuresh.chitale@oss.qualcomm.com>
-References: <20260817160321.3313698-1-mayuresh.chitale@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wvzpD-00077a-Nx; Mon, 17 Aug 2026 12:04:37 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HFgHG01710898; Mon, 17 Aug 2026 16:04:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=222NOp
+ qCek1mbSWsG8Co63Ze5w3i21LR/46kVBMMo0Q=; b=oHODi+arAhguL200pvqP/H
+ /eucsggLqCuqwt8cIiNuqEKqakaZ4qpoyxxARJV90AoHJwoSBeg6Y3Uf5y6AOjDb
+ 1B5IR+BM9Ipek5Hm12ZPx56Xuj130+i/M+RB8marfWNDleX5HB338y4DC2e10PZF
+ 3QB1pwhbaYyYjLzrSXSKl9jngsfhmlpnLQ2PKa8ZvFtz8kRgsqfUPDaGvf6pSymI
+ capVkQdO85zUbdK1wwAoP3cpMVzasIBg8qFSwAK8z1FFT8ruUzA7t70ElRP4zpXr
+ jb0ve3zeVkZVS+E/0A4qPrtbGdu3NeSN3BNpa7aH6eAb7dvEjLVJGBJSJ74a3O/w
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhku36s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 16:04:33 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67HFuHnt031617;
+ Mon, 17 Aug 2026 16:04:32 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32epxux4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 16:04:32 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67HG3qAJ29557380
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Aug 2026 16:03:52 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 048ED58059;
+ Mon, 17 Aug 2026 16:04:31 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 64B5D58043;
+ Mon, 17 Aug 2026 16:04:28 +0000 (GMT)
+Received: from [9.124.209.96] (unknown [9.124.209.96])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Aug 2026 16:04:28 +0000 (GMT)
+Message-ID: <1f4678b8-ef26-4b00-96b6-2e201d5c9148@linux.ibm.com>
+Date: Mon, 17 Aug 2026 21:34:26 +0530
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc: Add lower bound check for watchdogNumber
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, aik@ozlabs.ru, amachhiw@linux.ibm.com
+References: <20260817105854.437724-1-rathc@linux.ibm.com>
+ <20260817165901.b9ff4441-8a-amachhiw@linux.ibm.com>
+ <a759da8e-9ee6-4144-b593-c019310c9af3@linux.ibm.com>
+ <20260817173922.db7772a5-0c-amachhiw@linux.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20260817173922.db7772a5-0c-amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfX7d2Nwr1OjW37
- TDc5wAiF+NDkHRbFpSzjTAxIu8QpJ/5tD/4PHCj3yenKeKbNf72qMwhHrpVQ7GKZ7cOiseEo0ry
- 6wT93gP9j57OUrUjR6+U8UEt7i7EVBD5tMxrDj9TFiJQ1MVWJeOWZ2jA52CirL+czKiTnZYSfQd
- XG1z75dbXQnxhvhp90idr75juYcbU8cRhgp2cyj0Rt6MR5Tv3orISxDuTEy9L6B7ykc8H06h46l
- 2i548BxrwiG9PvvNGZDMnsoBV4WnAT4nKYqXbRHELv535hwvKOdkbME5YGV/kRmuyFYwtYHLyMo
- pj/OblY7q1v0VhA8qkuBZFlkCrj2w6R8TOBDYLRJWr6p9tbnkiGDUGMYv4PqMyG24cxhEE6l72o
- KCVng9+Yx/3Xsk29W4NiuaHjjdXFHXwRq230WAAwHiy1WiTR7V4qOoO1elbYFw1vVkom8O0FUYl
- lhaGtY58dHaflBR5KWw==
-X-Authority-Analysis: v=2.4 cv=QetWeMbv c=1 sm=1 tr=0 ts=6a8330db cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8
- a=DHycWIkPxntEYEsfrQ0A:9 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-ORIG-GUID: vvqH8HDF1RGU3CwpQsq6HqmLZ5IiCs10
-X-Proofpoint-GUID: vvqH8HDF1RGU3CwpQsq6HqmLZ5IiCs10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfXyTxmLSo/AZdV
- C37UxaIqN1ZhguOw9wkUkucEh4oks+f1sUQx8MFcG2o+Nr2dQc2ZRQU07+SlFoYjKhAPZ+9dBab
- Lsk1UxYUdaJNhrJ+dW28rbPJATR7qNQ=
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfX6mHDnoy4on5O
+ BZSekok0u1MRFZLyYESmBuiQuVfcilmQ7STpQAeD+58QVuNkW1QAZS6AUVOU/KBsRJVVfGrrUa5
+ Hdz5fkGZ/DlCLBj01uwRaEFJS19eikA5dqDWlG4K+7kiiIulRFdR2aJ1dgfOKmsK2bkAQje/yCC
+ ipTS1Ad5Hw3Bbv31VQ7iwU6vNMzWvuxnDf5KJsYLoF4iTuMj9xov00lOBxbcUK/kPq1Xc3YlIaD
+ wjUf9sa3WUXAkuI1vbmzE+rxNhWkEVT7TAFKRcnw6Bq8IgBx2xF5ysJnyl3fT14yVmE/+bJd4VT
+ SfrwQzrcFLIY+YcTI76rCumEgVueGXeHTozzDnfQLfagDm5LERYZDybeZWLHwb3FBA5pPvr64iN
+ 87ZYSQq+rl/QeLmGLcaoZ1SXVF6GG4z9y3c3jCzNDjcEPN2yR+mM8e1+Jrn/59b8eb48eUDIDe/
+ yDBpjYUfjZoPLChzCTw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfXwbFSCg6ezX6x
+ WuG5LgpiEf1lu/LQKsrJQxYW9LXiVGSgP16fVX6AUrzMj63G+x1QlwVMxPb5bcsbr2Jsh20O5Dr
+ EU9U5uAjOCR6DXTivf8KO/15CA3g58U=
+X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a833111 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=AJhdjOHtEmRdEUaYv5kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: wQ5uK0ffwMJ3dR_CKJR6lpaTTNEeKK9V
+X-Proofpoint-GUID: kGYldjD3TDe6N-X7Slzk3a7dKptFsWkB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-17_02,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 adultscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170123
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=mayuresh.chitale@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608170123
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,154 +127,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On a Zihpm counter overflow and with LCOFIP asserted, record the
-overflowing counter ID in shpmsdata and arm a capture. When the LCOFI is
-actually delivered, the shpmspc register is populated with the address of
-the interrupted instruction.
-Capturing shpmspc at LCOFI delivery (rather than at overflow time)
-ensures the sample PC reflects the correct interrupted instruction.
 
-Signed-off-by: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
----
- target/riscv/cpu.h            |  2 ++
- target/riscv/tcg/cpu_helper.c |  6 ++++++
- target/riscv/tcg/csr.c        | 25 +++++++++++++++++++++++++
- target/riscv/tcg/pmu.c        | 27 +++++++++++++++++++++++++++
- 4 files changed, 60 insertions(+)
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index fe56a6afd1..36425c3605 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -473,6 +473,8 @@ struct CPUArchState {
-     /* Sspesa CSRs */
-     target_ulong shpmspc;
-     target_ulong shpmsdata;
-+    /* Capture shpmspc/shpmsdata only on the first overflow */
-+    bool sspesa_capture_pending;
- 
-     /* Sstc CSRs */
-     uint64_t stimecmp;
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 07d9222652..15af3262ed 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -2255,6 +2255,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         sxlen = 16 << riscv_cpu_sxl(env);
-         env->scause = cause | ((target_ulong)async << (sxlen - 1));
-         env->sepc = env->pc;
-+        /* On LCOFI delivery, latch the sample PC to the interrupted PC. */
-+        if (riscv_cpu_cfg(env)->ext_sspesa && env->sspesa_capture_pending) {
-+            if (async && cause == IRQ_PMU_OVF) {
-+                env->shpmspc = env->pc;
-+            }
-+        }
-         env->stval = tval;
-         env->htval = htval;
-         env->htinst = tinst;
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index ea49d28aae..e48c954359 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -1228,6 +1228,15 @@ static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static bool sspesa_is_captured_ctr(CPURISCVState *env, uint32_t evt_index)
-+{
-+    if (!riscv_cpu_cfg(env)->ext_sspesa || !env->sspesa_capture_pending) {
-+        return false;
-+    }
-+
-+    return (env->shpmsdata & SHPMSDATA_CNTRID) == evt_index;
-+}
-+
- static RISCVException read_mhpmevent(CPURISCVState *env, int csrno,
-                                      target_ulong *val)
- {
-@@ -1259,6 +1268,14 @@ static RISCVException write_mhpmevent(CPURISCVState *env, int csrno,
-         mhpmevt_val = val & inh_avail_mask;
-     }
- 
-+    /* Enable the sample capture when OF is cleared for the captured counter. */
-+    if (sspesa_is_captured_ctr(env, evt_index)) {
-+        if ((env->mhpmevent_val[evt_index] & MHPMEVENT_BIT_OF) &&
-+            !(mhpmevt_val & MHPMEVENT_BIT_OF)) {
-+            env->sspesa_capture_pending = false;
-+        }
-+    }
-+
-     env->mhpmevent_val[evt_index] = mhpmevt_val;
-     riscv_pmu_update_event_map(env, mhpmevt_val, evt_index);
- 
-@@ -1289,6 +1306,14 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
-     inh_avail_mask |= (riscv_has_ext(env, RVH) &&
-                        riscv_has_ext(env, RVS)) ? MHPMEVENTH_BIT_VSINH : 0;
- 
-+    /* Enable the sample capture when OF is cleared for the captured counter. */
-+    if (sspesa_is_captured_ctr(env, evt_index)) {
-+        if ((env->mhpmevent_val[evt_index] & MHPMEVENT_BIT_OF) &&
-+            !((val & inh_avail_mask) & MHPMEVENTH_BIT_OF)) {
-+            env->sspesa_capture_pending = false;
-+        }
-+    }
-+
-     env->mhpmevent_val[evt_index] = deposit64(env->mhpmevent_val[evt_index],
-                                               32, 32, val & inh_avail_mask);
- 
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 38ad2737e1..337e255da4 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -147,6 +147,31 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
-     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
- }
- 
-+static void riscv_pmu_sspesa_capture(CPURISCVState *env, uint32_t ctr_idx)
-+{
-+    RISCVCPU *cpu = env_archcpu(env);
-+
-+    if (!cpu->cfg.ext_sspesa) {
-+        return;
-+    }
-+
-+    /*
-+     * Only the first overflow updates the sample CSRs. While a capture is
-+     * pending, keep the lowest counter ID as required by the spec.
-+     */
-+    if (env->sspesa_capture_pending) {
-+        if ((ctr_idx & SHPMSDATA_CNTRID) <
-+            (env->shpmsdata & SHPMSDATA_CNTRID)) {
-+            env->shpmsdata = ctr_idx & SHPMSDATA_CNTRID;
-+        }
-+        return;
-+    }
-+
-+    /* shpmspc is latched later, on LCOFI delivery. */
-+    env->shpmsdata = ctr_idx & SHPMSDATA_CNTRID;
-+    env->sspesa_capture_pending = true;
-+}
-+
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
- {
-     uint32_t ctr_idx;
-@@ -191,6 +216,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         /* Generate interrupt only if OF bit is clear */
-         if (!(env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_OF)) {
-             env->mhpmevent_val[ctr_idx] |= MHPMEVENT_BIT_OF;
-+            riscv_pmu_sspesa_capture(env, ctr_idx);
-             riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
-         }
-     } else {
-@@ -383,6 +409,7 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
- 
-     if (cpu->pmu_avail_ctrs & BIT(ctr_idx)) {
-         if (pmu_hpmevent_set_of_if_clear(env, ctr_idx)) {
-+            riscv_pmu_sspesa_capture(env, ctr_idx);
-             riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
-         }
-     }
--- 
-2.43.0
-
+On 8/17/26 17:42, Amit Machhiwal wrote:
+> On 2026/08/17 05:27 PM, Chinmay Rath wrote:
+>> On 8/17/26 17:03, Amit Machhiwal wrote:
+>>> On 2026/08/17 04:28 PM, Chinmay Rath wrote:
+>>>> Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
+>>>> as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+>>>>
+>>>> Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+>>>>
+>>> Nit: This newline is not needed.
+>>>
+>>>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+>>>> ---
+>>>>    hw/watchdog/spapr_watchdog.c | 7 ++++---
+>>>>    1 file changed, 4 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+>>>> index 5b3f50de3a..5d7478e833 100644
+>>>> --- a/hw/watchdog/spapr_watchdog.c
+>>>> +++ b/hw/watchdog/spapr_watchdog.c
+>>>> @@ -145,7 +145,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>>>        switch (operation) {
+>>>>        case PSERIES_WDTF_OP_START:
+>>>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>>>> +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>>>>                return H_P2;
+>>>>            }
+>>>>            if (timeoutInMs <= WDT_MIN_TIMEOUT) {
+>>>> @@ -170,7 +170,8 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>>>        case PSERIES_WDTF_OP_STOP:
+>>>>            if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
+>>>>                ret = watchdog_stop_all(spapr);
+>>>> -        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
+>>>> +        } else if (watchdogNumber > 0 &&
+>>>> +                   watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
+>>>>                ret = watchdog_stop(watchdogNumber,
+>>>>                                    &spapr->wds[watchdogNumber - 1]);
+>>>>            } else {
+>>> Nit: The bounds check in OP_STOP uses a positive-selection guard
+>>> (watchdogNumber > 0 && watchdogNumber <= ARRAY_SIZE(...)) with the error
+>>> in the trailing else, which reads differently from the negative guards
+>>> used in OP_START and OP_QUERY_LPM. Consider flipping it to match:
+>>>
+>>>     } else if (watchdogNumber < 1 ||
+>>>                watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>>>         return H_P2;
+>>>     } else {
+>>>         ret = watchdog_stop(watchdogNumber,
+>>>                             &spapr->wds[watchdogNumber - 1]);
+>>>     }
+>>>
+>>>> @@ -184,7 +185,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>>>            trace_spapr_watchdog_query(args[0]);
+>>>>            break;
+>>>>        case PSERIES_WDTF_OP_QUERY_LPM:
+>>>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>>>> +        if (watchdogNumber < 1 || watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>>>>                return H_P2;
+>>>>            }
+>>> Suggestion (follow-up patch): After this fix lands, it may be worth
+>>> extracting a small helper to avoid the repeated bounds expression across
+>>> OP_START, OP_STOP, and OP_QUERY_LPM:
+>>>
+>>>     static inline bool watchdog_number_valid(target_ulong n,
+>>>                                              SpaprMachineState *spapr)
+>>>     {
+>>>         return n >= 1 && n <= ARRAY_SIZE(spapr->wds);
+>>>     }
+>>>
+>>> The three call sites then become a uniform !watchdog_number_valid(...)
+>>> or watchdog_number_valid(...) expression, the bounds are defined in
+>>> exactly one place, and any future change to the valid range (e.g. a
+>>> dynamic wds size) has a single point of update. Not a blocker for this
+>>> patch — just a clean-up worth a separate patch.
+>> Hey Amit,
+>> Thanks for the suggestion. I actually did think of this. But, this common
+>> check would only be used by 2 operations : Start and LPM requirement. Stop
+>> operation's watchdogNumber validation works differently in the sense that
+>> unlike others, it can take a specific negative value, that is -1, which is
+> Thanks for the explanation, Chinmay. Just a small correction though —
+> PSERIES_WDT_STOP_ALL is not -1. It is defined as:
+>
+>    #define PSERIES_WDT_STOP_ALL  ((uint64_t)~0)
+>
+> Since watchdogNumber is target_ulong (an unsigned type), this is
+> 0xFFFFFFFFFFFFFFFF — the maximum value of a 64-bit unsigned integer, not
+> a negative value. -1 would only be the interpretation if the bit pattern
+> were read through a signed type, which never happens here.
+Oooh right, I missed this. Thanks ! Will send a v2 right away.
+>> used to indicate stopping all watchdogs. (This is also the reason why the
+>> bound check flow is different for stop operation as you have already pointed
+>> out above).
+>>
+>> Due to this, I decided not to consolidate. However we can definitely pass
+>> the operation type to the validator function and check accordingly though.
+> This actually reinforces the case for the shared helper. Since
+> watchdogNumber is unsigned, watchdogNumber < 1 can never be true for
+> PSERIES_WDT_STOP_ALL — 0xFFFFFFFFFFFFFFFF < 1 is false for an unsigned
+> comparison. More importantly, STOP_ALL is caught by the explicit ==
+> PSERIES_WDT_STOP_ALL arm before the bounds check is ever reached, so it
+> would never interact with watchdog_number_valid() at all.
+>
+> ~Amit
 
