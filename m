@@ -4,114 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD517C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C931C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvsNt-0005iA-Sx; Mon, 17 Aug 2026 04:07:55 -0400
+	id 1wvsRa-0006kN-F4; Mon, 17 Aug 2026 04:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wvsNa-0005h6-RP
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:07:34 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wvsNZ-0007MX-63
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:07:34 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-ca88130e09aso1779209a12.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 01:07:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786954051; cv=none;
- d=google.com; s=arc-20260327;
- b=kkPM4v9gZqOQ9LNXKCcAxGOAhClLrA/AxtLIZ90kKPf9Q9I6GNYbJWevIsTC0NLLrC
- l5W88uXS4v/gUfQyRc/7mnJbNsMwyxCOSPLcce3BWHllij4/QYQTjQALmmbz9s1DtqJQ
- p0SP8cm/4a3DDAJMJpag39//wzGnRXQUQwYBiMSRhbdb6Z6Ajk/KbHwabSg8WwLpbUI7
- 6dROuIRUFzEQHGv+rroCB7tNW/CKmFM+3kXaiy6UhDDzxZbBkPtZShiHS9BReptdPcyM
- KdV+AzzixAlO6lKJ9GRaRo7vO/U+N76NTgsV+FwnXwnn39yMUYrylPBkOIsqpcAPtKeU
- T2iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9P7sq1R4F9/RL0UXsVvl0jR6q2poIwVaI/su6o8ImM8=;
- fh=ThhFgrYixJkIgYSqLgA55gUpVE6zAy+ETaevrM1xZ+w=;
- b=fVGavxBH15kx5g31p4sKgZ8BId7aqMuv7tyV4sH78pYYuCsYYTNXa48DwnXg19iKcY
- AEPH7hyXPmwZDjQsc1XcJ3erOebPJaxVlLdrGbf+csVSc9rtaDpZpQIMChsdhjPMvJ0w
- 57PAgsCBU+qmSD5p+axuoSmyfNgs+rjS4fQe4OKhGQLoHuN/fHkTk7S7dF5rYHS6evGI
- MMCdi/A5+zyTnUbhj2sfrTUH9N+x3VPdcnaTierU9WUEY0tV/O7Jagszov1rihqR/Me0
- WD2LFxD5QfNTd6FYdeyKFGiQEeXYtu0pVBfVa5jR0rRBUo9lPuAmuSzfLcKd6NIatg94
- 8Ydw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786954051; x=1787558851; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9P7sq1R4F9/RL0UXsVvl0jR6q2poIwVaI/su6o8ImM8=;
- b=Z0x7OUKgUxqCXY3Z7Yw+xxBJ5HiiG68kofnSKHKROpVicDSFRWtNsl16/YFoVohQU7
- CFr30srG9jwrf4g7Q0Z4yYe6VoPRMpXsbh0hu0m0Puz9hF9TqCAq+I0CU4aojb3N8QfF
- Tid4w8ucy5n740f6lom3tu/Dl48qaaulLXBdwWcxsw/5f7Fv2sm/Cn8tnSrNrJOP3oV1
- 3UUOrOs1z0bxoMOvTszbLdLaUzNsa/5LfWkkW5TWpVQEIK5JcYTwkt3499d+c9U70W8v
- IRrShUrC69N/QHBPAneeySARfPzTd9aBwspmJRhVb7E7Zrog1AxqhTcVBgMXbhxjXnFc
- WYag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786954051; x=1787558851;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9P7sq1R4F9/RL0UXsVvl0jR6q2poIwVaI/su6o8ImM8=;
- b=gpJPpZtoKUDgsGUZasdNb9a2u3vRJzfaxY+JRhWIu8v9SnpaZuNjYFOaGt3AY72CZZ
- U2ZIdKHQcb5//eAGh7ZjkZJ/ujaq0GYSdoDgB4DV8bBdTeXogrgoqI5P/pWfjGWoINXj
- zHhaFGNVXEa3T2bvCcUMTJnb7G7h5PWXksYuRFmmVcUHCKzS+HauJacDSx0oMJNrcatu
- r7fKepb0z+QnwHV/yMmilMQjCginIf2dWklAS3gjAhudiuTg0S2oofgl4gt2cU+xzpUt
- JhdqADuVttj4avflBzNRWHN8eEIl8m4u7nLUj1dl32f0PYktRHrdiFqGU/t77yecnnbp
- /mCQ==
-X-Gm-Message-State: AOJu0Yz0OK9CtcR5PEf9ido/i22p5bld3Zgdq7ladfDiX3/41rMXgXre
- RhQkbvCBRe4oUkCAUU4yMK0fq9inhcdDNvN0DQp6LjcNw/BLU3jk5MMxt6RAv7dwxOoUaOXx5Cp
- 3aYdBhEFX1WNFiul9Xl6Vd4nDdl21Pvk=
-X-Gm-Gg: AR+sD13AvhA0fE8O2iEXjpVJinywngv8lFP6PY4YMq6Ibuqc9VKbCsrXRPmfW4ld7mk
- cCKCO9M1utWGoxMAnTYi0W4D4xEJJYjePsY/u3doJiVceGymBGiOHDQZiqX9Nsf+s/XRV/ewK5Z
- fID8uhJoD3hqsG4/C6yJhWeV19B12r2U/BhwyYRLgLjd04KWpRUFwO4GTsJhlzvVnfXi+0028gX
- hq8kLwUXk5NJIskWhhrZN+boNHaG7vdnSN0RwP2TewEB4A8cgS1WmJ77IQl+NV36G1iH+buhC/K
- ktX60na9Qi1ma6/VYJX9ucaXXOwUSSA7s1QuNk2muvjNuvHWKNmKajGK8QZFngogoMMK0BfhJeg
- G/Qd4p3megMY=
-X-Received: by 2002:a05:6a21:920e:b0:398:c0ba:9ceb with SMTP id
- adf61e73a8af0-3cc71a40f7cmr27716208637.12.1786954050634; Mon, 17 Aug 2026
- 01:07:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wvsRY-0006jh-9g; Mon, 17 Aug 2026 04:11:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1wvsRW-0008Ej-I3; Mon, 17 Aug 2026 04:11:40 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67GLXFUK3639647; Mon, 17 Aug 2026 08:11:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kuwNDD
+ th6j8+felH+XDP2fO6rCZBfVAZdDW/QyiXz6k=; b=Tg8G2Y+RKvayasTYpSo0PE
+ rX+E54LUFE4/1l8HuGwFwiMZcToYBY9W4zG0C1SiXyNKPUd6QoHpuDxJZ1fC3UQH
+ yRXiJ9I8cQ0W0DapgFT64U0HRVBuqIvDMbphWu/YmRPLuonI+HdhSm+8m2VxOIHr
+ YqSG8bbR61Rd0gCyR2ZTj1EXinomAWxrv6qD9XQD/qpfIpa6491k7BLlihF7iW0Z
+ yMbOEFEdgcQ8WPZ6ymQBBnMI5z1K2Wi53JPHnhfI53+U3sq5+Vn6+lvanlvJ7rZK
+ RPm2H6lC518mwO7gpBbGW3LU+rnZGeoJOmL+bikwBYAZ2/4z1me9ipZQIBoqqXnA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhks5b6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 08:11:33 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67H8BMtQ015616;
+ Mon, 17 Aug 2026 08:11:33 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejw2hj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Aug 2026 08:11:32 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67H8BSlV40305014
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Aug 2026 08:11:28 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B76AA20043;
+ Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C98320040;
+ Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.12.156])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
+Message-ID: <6621b094-e536-4f47-8b69-c9c0ad4132f8@linux.ibm.com>
+Date: Mon, 17 Aug 2026 10:11:27 +0200
 MIME-Version: 1.0
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-11-e53fc35bc550@redhat.com>
- <8105c239-3730-4131-8f17-20de1bd85599@posteo.de>
-In-Reply-To: <8105c239-3730-4131-8f17-20de1bd85599@posteo.de>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 17 Aug 2026 12:07:18 +0400
-X-Gm-Features: AcwNN1WhxlzR4IqZW74GVQ0X7w-6F3Svu6N4TnYh26tEB5EUnIYI73rS9tpPhl4
-Message-ID: <CAJ+F1CJeiAygk5Qn8EFeiuY=dXkKDdQBzkMpdYVreKFO0jKj2A@mail.gmail.com>
-Subject: Re: [PATCH v3 11/49] python, tests: switch usernet queries from HMP
- to QMP
-To: Thomas Huth <th.huth@posteo.de>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
+ instruction
+To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
+ david@kernel.org, thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260806151302.26846-1-freude@linux.ibm.com>
+ <20260806151302.26846-8-freude@linux.ibm.com>
+Content-Language: en-US
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <20260806151302.26846-8-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA1OSBTYWx0ZWRfX6trn85hmGeOf
+ JKY3V2dhp5y9mv1mVOdXXJPPH8h7TSZBS7g434DE0dSxkfNiiDSb8OmNhEeKUaiAoF7VeRiHmbK
+ rPo9PfHzfHBBud1+C0aRLxFwTo6VKJJ8lVxA3XcwcGXVDTnGjzQnRk9Znp9FzwhCCcDRXUlzwPz
+ T9mDkVHqU32o0oYX/+8dyloNVcCZPo6EC1xJXeFFrA2C+AVSykkLWr9wM8g+H3JxPBTSxlxZzdl
+ iC3NsAr2LAYp0vkEjQtkaTuHNKgwUurSJYhdC/ZqfIUisDnNKD2ZzAdHpznaysE2g8y/P8mAWdB
+ Fyne4MHuaDblxIuH+bXg0TlyiM5YnAj2FAwWlTnwKvWNnmOFFoQO16ZCkX89q3HuXvxwFncZYOo
+ lKVdJn953JCL6g02eaEke8ohJGpCxzuOK07fo3T6hrbsx9URc3QDd2cmLkhsn2l8xaaIKrWNGT5
+ RVOCV2sADw2mHPHMLzg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA1OSBTYWx0ZWRfX3cPm4/MPF4iq
+ eToAPF4WrwXRTBcQz64S2189OhVUyHRp3yq+JHd46whWX/VDn8xVoGgDVi0Cg1DSzaOD0U5uzvG
+ C6zbpqbWWv5+0tCSJBvxoraM/d487tg=
+X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a82c235 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=ZLLi-ALZ7FbK3oftqOwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 19yIMRWkActMedI-Od12TrN0Mo2wDeyu
+X-Proofpoint-GUID: 19yIMRWkActMedI-Od12TrN0Mo2wDeyu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608170059
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,108 +128,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Mon, Aug 17, 2026 at 11:31=E2=80=AFAM Thomas Huth <th.huth@posteo.de> wr=
-ote:
->
-> On 16/08/2026 21.12, Marc-Andr=C3=A9 Lureau wrote:
-> > Replace human-monitor-command "info usernet" calls with the structured
-> > x-query-usernet QMP command in get_usernet_hostfwd_port() and the VM
-> > test runner boot path.
-> >
-> > Since x-query-usernet returns a list of UsernetInfo entries, callers
-> > now iterate over the result and extract the port from each entry's
-> > "info" field. Also switch get_info_usernet_hostfwd_port() from
-> > split('\r\n') to splitlines(), since QMP strings use \n rather than
-> > the HMP monitor's \r\n line endings.
-> >
-> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> > Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   python/qemu/utils/__init__.py       |  5 +++--
-> >   tests/functional/qemu_test/utils.py |  8 ++++++--
-> >   tests/vm/basevm.py                  | 13 ++++++++-----
-> >   3 files changed, 17 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/python/qemu/utils/__init__.py b/python/qemu/utils/__init__=
-.py
-> > index be5daa836340..e32911d4c6df 100644
-> > --- a/python/qemu/utils/__init__.py
-> > +++ b/python/qemu/utils/__init__.py
-> > @@ -46,10 +46,11 @@ def get_info_usernet_hostfwd_port(info_usernet_outp=
-ut: str) -> Optional[int]:
-> >       """
-> >       Returns the port given to the hostfwd parameter via info usernet
-> >
-> > -    :param info_usernet_output: output generated by hmp command "info =
-usernet"
-> > +    :param info_usernet_output: output generated by "info usernet" or
-> > +        the "info" field from x-query-usernet
-> >       :return: the port number allocated by the hostfwd option
-> >       """
-> > -    for line in info_usernet_output.split('\r\n'):
-> > +    for line in info_usernet_output.splitlines():
-> >           regex =3D r'TCP.HOST_FORWARD.*127\.0\.0\.1\s+(\d+)\s+10\.'
-> >           match =3D re.search(regex, line)
-> >           if match is not None:
-> > diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qem=
-u_test/utils.py
-> > index 826c267785bd..0992db49ab28 100644
-> > --- a/tests/functional/qemu_test/utils.py
-> > +++ b/tests/functional/qemu_test/utils.py
-> > @@ -14,8 +14,12 @@
-> >
-> >
-> >   def get_usernet_hostfwd_port(vm):
-> > -    res =3D vm.cmd('human-monitor-command', command_line=3D'info usern=
-et')
-> > -    return get_info_usernet_hostfwd_port(res)
-> > +    res =3D vm.cmd('x-query-usernet')
-> > +    for entry in res:
-> > +        port =3D get_info_usernet_hostfwd_port(entry['info'])
-> > +        if port is not None:
-> > +            return port
-> > +    return None
-> >
-> >   def pow2ceil(x):
-> >       """
-> > diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-> > index 9e879e966a36..198b04e8c375 100644
-> > --- a/tests/vm/basevm.py
-> > +++ b/tests/vm/basevm.py
-> > @@ -312,12 +312,15 @@ def boot(self, img, extra_args=3D[]):
-> >           self._guest =3D guest
-> >           # Init console so we can start consuming the chars.
-> >           self.console_init()
-> > -        usernet_info =3D guest.cmd("human-monitor-command",
-> > -                                 command_line=3D"info usernet")
-> > -        self.ssh_port =3D get_info_usernet_hostfwd_port(usernet_info)
-> > +        res =3D guest.cmd("x-query-usernet")
-> > +        for entry in res:
-> > +            port =3D get_info_usernet_hostfwd_port(entry['info'])
-> > +            if port is not None:
-> > +                self.ssh_port =3D port
-> > +                break
-> >           if not self.ssh_port:
-> > -            raise Exception("Cannot find ssh port from 'info usernet':=
-\n%s" % \
-> > -                            usernet_info)
-> > +            raise Exception("Cannot find ssh port from"
-> > +                            " 'x-query-usernet': %s" % res)
-> >
-> >       def console_init(self, timeout =3D None):
-> >           if timeout =3D=3D None:
-> While you're at it, may I suggest to move the cmd('x-query-usernet') into
-> the get_info_usernet_hostfwd_port() function in
-> python/qemu/utils/__init__.py, too, so that the callers don't have to tak=
-e
-> care about this anymore? Also just return the port number from there, so
-> that the callers don't have to take care about the parsing. WDYT?
 
-Good idea, but not so simple. qemu/utils doesn't depend on any VM/QMP
-types.. we could use duck typing or other solution. I would rather
-defer this for now
+On 8/6/26 17:12, Harald Freudenberger wrote:
+> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
+> and CPACF_KM_AES_256 for the cpacf km instruction.
+> 
+> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> ---
+>   target/s390x/gen-features.c      |   3 +
+>   target/s390x/tcg/cpacf.h         |   6 ++
+>   target/s390x/tcg/cpacf_aes.c     | 107 +++++++++++++++++++++++++++++++
+>   target/s390x/tcg/crypto_helper.c |  24 +++++++
+>   target/s390x/tcg/meson.build     |   1 +
+>   5 files changed, 141 insertions(+)
+>   create mode 100644 target/s390x/tcg/cpacf_aes.c
+> 
 
-thanks
+[...]
+
+> +/*
+> + * read exactly one AES block from guest memory into a local buffer
+> + */
+> +static inline void aes_read_block(CPUS390XState *env, const int mmu_idx,
+> +                                  const uintptr_t ra, uint64_t guest_addr,
+> +                                  uint8_t *buf)
+> +{
+> +    read_guest_wrap_u8(env, mmu_idx, ra, guest_addr, buf, AES_BLOCK_SIZE);
+> +}
+> +
+> +/*
+> + * write exactly one AES block from local buffer to guest memory
+> + */
+> +static void aes_write_block(CPUS390XState *env, const int mmu_idx,
+> +                            const uintptr_t ra, uint64_t guest_addr,
+> +                            uint8_t *buf)
+> +{
+> +    write_guest_wrap_u8(env, mmu_idx, ra, guest_addr, buf, AES_BLOCK_SIZE);
+> +}
+
+nit: I would these two functions, I don't think they deserve a wrapper.
+
+> +
+> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
+> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+> +                  uint32_t type, uint8_t fc, uint8_t mod)
+> +{
+> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
+> +    uint64_t len = *src_len_reg, done = 0;
+> +    int i, keysize, addr_reg_size = 64;
+> +    uint8_t key[32];
+> +    AES_KEY exkey;
+> +
+> +    g_assert(type == S390_FEAT_TYPE_KM);
+> +    switch (fc) {
+> +    case CPACF_KM_AES_128:
+> +        keysize = 16;
+> +        break;
+> +    case CPACF_KM_AES_192:
+> +        keysize = 24;
+> +        break;
+> +    case CPACF_KM_AES_256:
+> +        keysize = 32;
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    if (!(env->psw.mask & PSW_MASK_64)) {
+> +        len = (uint32_t)len;
+> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+> +    }
+> +
+> +    /* length has to be properly aligned. */
+> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
+> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +    }
+> +
+> +    /* fetch key from param block */
+> +    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
+> +
+> +    /* expand key */
+> +    if (mod) {
+> +        AES_set_decrypt_key(key, keysize * 8, &exkey);
+> +    } else {
+> +        AES_set_encrypt_key(key, keysize * 8, &exkey);
+> +    }
+> +
+> +    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
+> +    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
+> +        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
+> +        if (mod) {
+> +            AES_decrypt(in, out, &exkey);
+> +        } else {
+> +            AES_encrypt(in, out, &exkey);
+> +        }
+> +        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
+> +        len -= AES_BLOCK_SIZE;
+> +        done += AES_BLOCK_SIZE;
+> +    }
+> +
+> +    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
+> +                             *src_ptr_reg + done);
+> +    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
+> +                             *dst_ptr_reg + done);
+> +    *src_len_reg -= done;
+> +
+> +    return !len ? 0 : 3;
+> +}
+
+The issue with writing memory, but not registers, on fault is still
+there, but I think today's behavior is good enough for emulating real
+sane code.
+
+
+With our without the above addressed:
+
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
