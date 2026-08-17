@@ -4,114 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC98AC5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29CA7C5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:56:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvszA-0007qz-OR; Mon, 17 Aug 2026 04:46:24 -0400
+	id 1wvt8J-00014V-70; Mon, 17 Aug 2026 04:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvsz8-0007qI-NV; Mon, 17 Aug 2026 04:46:22 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvsz7-00078n-77; Mon, 17 Aug 2026 04:46:22 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLVdvH3727923; Mon, 17 Aug 2026 08:46:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SuS5zr
- hOdVR2kcdMkzR49E9LTt+MnFeMzeh6X/TpiDY=; b=GDQiZo9PF7caBqG9T6MNfh
- V0koLWjeeVIjC7AUUrkuammMhsDNW0KNTm1qycZm2UqixMR4fFpey0VbFOjDBwxo
- cQmWwMej22Lr0HG0okBLPdol5qMM2IqkMgd/KGTM9hXmwjWWZHO1lIdw6aj5bDVM
- 7nz0qBldCqs2OPqrKh7kIFWKs/NSl0CVe309n9aAj+2jITHD+thaOiXjic6+SILF
- 0HFu2f6CoHQjwItCtP2PTLcWLWIPbSXDxqD4gY5CcCz9DdEVP+NqnQM8eYXb+Oj1
- ztq8fDq8lSRraP0DO7mJXCxr0jlyHas+7rzOvGq5ZRc+LgbzelXE6WggXHS3suYg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4h9tr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 08:46:17 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67H8fMmt029634;
- Mon, 17 Aug 2026 08:46:16 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tvwah9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 08:46:16 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67H8kCVP49676586
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 08:46:12 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43F7B2004B;
- Mon, 17 Aug 2026 08:46:12 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B38C620040;
- Mon, 17 Aug 2026 08:46:11 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.12.156])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 08:46:11 +0000 (GMT)
-Message-ID: <86b9b530-063a-4797-9cf7-ff2d62e42b73@linux.ibm.com>
-Date: Mon, 17 Aug 2026 10:46:11 +0200
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wvt88-00013D-GB
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:55:41 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wvt86-0000Pn-Uw
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:55:40 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2d032846c95so45485615ad.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 01:55:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786956937; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lLmEOF8L7Kn9BRaOLZ2qKAXVMZ/80qU6gUqcS0O2fcW1DVZihBGralPgf7iDZWKqbz
+ 2RufO2aykw6e+rJECfl6xkmnVBFkgueSCstoFrkJlha8xEh6KW4Lo5LZu7snSDm9a54o
+ PVssUm6vZ26rW0efw4CDXkYHXHngbN4vzED1mGfVYPhiYqy/l16GlpnXgnqT95mxP8hJ
+ gvWwNsfds3wpcQEqHrJhHFeejo+LGp9/DH/AFmKQG0ilbaMeMk7IS6bb8jSO9bFSWTpk
+ 1JvsRUhc+uYUNnU5iqW19of9XVqT1rER3B8n1cdjn2G2vs/wX5UDfvD2Ja5vHV43O0JI
+ ERlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HsjnM4/zRylQ8X2Az69flzz59FcYSXgM2qgQK6wlzlA=;
+ fh=4NHrb4yf5yK8gOyX/Jlmwzuu+YYuiTUM1ajJu3tCRgM=;
+ b=LYBOT/DnMRbrfrxTtmau5X2oEykNPRX6vsrsu2nq2TGQYkuw8w2OokKNldTCUxp1k7
+ HYrR0Rw8XJjZWWlkEdZqbpjaU4TmZwDLc0vxzw0gChBsdZcntfZrSE64GuApEevU9LNA
+ 6koz4C3/8Re7VLKEr4G/XI0IdCgNjfgv+6NkYY2g9HCxmSZG3nOmp/YklWdZXbqyhIOC
+ 1Jjt/J7+eDMDHomjhVIw1Fslw3qFQg+iFlL0bH1XF3bwuUOOTrMETVxWf0PIGRUZGgOF
+ vNDDQK4pHsMYevuoXCGvty0d97N1coB+TxDzrLRhXKEvWb7APdR27jB8yft3SDaykfDG
+ fYkA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786956937; x=1787561737; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HsjnM4/zRylQ8X2Az69flzz59FcYSXgM2qgQK6wlzlA=;
+ b=oTzZ3OawT3SW+KBeN46yGaPuXakZal/6htXw5S4GRDPNNX+gaZ6MDjArXW90YmZE2h
+ CoD4gzkRE93Az2p/C7Rr9kKcopkZuhx7yT7V2wUHCPYiIOD+t6uvy0rwvbf/EjoorF7x
+ SbS2PFRysv/iEyywnLAkJ5to6yeJRT7EP2D8rz1hc5pxhfRYmUCPEFofGC5lWB6DL697
+ B+dLP+cSisdQHFarddWz1hOPAJZs+fGxpHwU3+jFmNus42BzHfPIRIe9y9Vo1zXnunOs
+ hOmwPWETaaN0tDh9nkc4Fkj0qbS3v/IqO8Tw6BdxG6uy6GjTzlDeSRqco4GUhsSTwlmR
+ Z8Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786956937; x=1787561737;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HsjnM4/zRylQ8X2Az69flzz59FcYSXgM2qgQK6wlzlA=;
+ b=kXylxBNVc7EhDG3hW/k/P3KELa9K974fOTjAiovhxQ0WQ5yuiYiwro8XBhUPEjnEde
+ 2Fn+cvJUwJCBZ/9Pf5BBOpilNUNdM6anX9BWi6ZPfRvz+w4FdRZMupkwxz/pa6BaXYXM
+ +C+klp/D5XvGmPlUbstWxYt3QgX1pqmLNm1jxiVIrY6zinwdlB5JvdPyXHc+sw1RJFKA
+ n06ZfE81/PyCcqLwoqZfAuTz6VtfEFAksCnlHMEi9RIfdyk4MyB8AWrTZ6Ht4JuPIL2u
+ XzoEcGzkbmxqz/ztVzyDnGORHildW3hRtcIk7Qnv/5LNABdsl2vSorpDEdp2a0z0QDTf
+ 7W6w==
+X-Gm-Message-State: AOJu0Yzli/sRpLNQKNvFJGrV+BmpILeokTYTc+vPYZzEBT67bPoDVfD/
+ cGhff+ZJAzDXkBlrQVl82tNFCspSHhc90QmQCXol+DJFtixR1dB//dWb16yKq2hnS7VW8A5+hyy
+ mrXhsSKWmSUdUAKIjt7zDvOS+0yh+l/Q=
+X-Gm-Gg: AR+sD12qrEvzaJ9LarPJy72qK61ipaa/85RczTjTOD90nzkky+l282f1kwREiYgUhCt
+ Y6rvQ1os5XaDQRsxpaG/7Xn4AambdgWO1qDtdkQgo19hvTjTaTKSA9Wv8C8Bat+hj74aF65wnfI
+ lLmKxmX82CcTjU9BxhZXHb6ZdQcjXIbf26j8ytoZoYryH23V/WO3pain1a007MoqhJp5xgohjvd
+ 92v5iVAiN9/tPSgSOw6WZNUbP17WyH8HJXQzD8XcPABQLR4BwaC6JCOIQNx+uCh5v1za4qHVI46
+ +dtzOHJY5gUqhicRX8hqZuB/EpcfxZ+ocjgA9aio8/4PkA==
+X-Received: by 2002:a05:6a20:728c:b0:3cc:2c74:a0 with SMTP id
+ adf61e73a8af0-3cc71d78433mr23489068637.21.1786956936942; Mon, 17 Aug 2026
+ 01:55:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 16/19] target/s390x: Minimal protected key AES XTS
- support for cpacf pcc instruction
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260806151302.26846-1-freude@linux.ibm.com>
- <20260806151302.26846-17-freude@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260806151302.26846-17-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 1dxkNKevGT0Kz66zKAcCcmuzGAyv249k
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a82ca59 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=WiiJXzFiPMjYteBh_hQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA2MyBTYWx0ZWRfX6KXS5CY8D3Ke
- GaSncUpw6DP/tPUPJG9y7oL9ab9efHNHzrSVYb/8WHvy+NirjGC+1zzjgOARq5a977DFWgNQXsy
- S1Iw4HDG3zOPk7pgid1oHkeJhI3Mg5I=
-X-Proofpoint-ORIG-GUID: 1dxkNKevGT0Kz66zKAcCcmuzGAyv249k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA2MyBTYWx0ZWRfX74NQWWV/Ar76
- 8q8XbqX6f2mFKR29aahcw5ho3R4fcpCdDZ/tI7OFaFmLEiQKxYmwawhSpAuGeNUl1PaSfun8c5r
- Cm/yUikN+1QMp6f6ufjrk0wWqgj05DGzglf1YycE21VzclIX7UkpNgLHUc4uCs2jEHSbKDQbg9K
- 9N9nbJZbzVmrGOKeKUPmwwD4GZ1tQ9Rd5bIYIoLk02GNew4kLN4WiVpd86DORftY+/Mmh4N96yY
- PZ4PFYnU3+5u4tImJJtTYx0bG1fgSwDTlxtFDK34SnGsOF64e2z3Elg0DCFcvdQVVDAog34XALX
- fMSD4BoS2/ceZi67M4ftUawRj8ggorg7p21aLpV9OVIB9iSouo/z6dRuAIeKf+WRgO6Iz1D6kwH
- lHMHUxBOKTM1D1Qk0nBOSkXw05wteqsee1ENFZWYXIZR3sNCLuq4SG43KbAvFIzW2DRr0vUxLyr
- Yu4qihEflQG5pTuy8Fg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170063
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260809-feat-k230-cmu-v1-0-8792982c446c@gmail.com>
+ <CAEUhbmVQid5yboTQzDTANT-zMEzLiJkom0qLfKRV-nP3nq5uaw@mail.gmail.com>
+In-Reply-To: <CAEUhbmVQid5yboTQzDTANT-zMEzLiJkom0qLfKRV-nP3nq5uaw@mail.gmail.com>
+From: Niel Law <0860734llx@gmail.com>
+Date: Mon, 17 Aug 2026 16:55:24 +0800
+X-Gm-Features: AcwNN1VB8FpM0cK7uiZZQ45tQzkPmMO4MdvY01k4e5VvpHRBjTJ2cXB04c7fsso
+Message-ID: <CAPWGWA7eg75vptnzQTCVP5tN_DxTh4_01ZrCHa7eDMBdqrm5OQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Kendryte K230 CMU register model
+To: Bin Meng <bmeng.cn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu@processmission.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ pierrick.bouvier@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=0860734llx@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,24 +120,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+Thanks for your reply.
+The clock model is not a must-have for the Linux build from the K230
+SDK. the vendor clock driver allows PLL unlock:
+[    0.093353] thermal_sys: Registered thermal governor 'step_wise'^M^M
+[    0.409760] [ERROR K230_CLK]:pll pll0 is unlock.^M^M
+[    0.414011] [ERROR K230_CLK]:pll pll1 is unlock.^M^M
+[    0.417540] [ERROR K230_CLK]:pll pll2 is unlock.^M^M
+[    0.421088] [ERROR K230_CLK]:pll pll3 is unlock.^M^M
+[    0.456215] k230-powerdomain 91103000.sysctl_power: powerdomain init ok^=
+M^M
 
+But Linux mainline will boot fail, it poll STAT.bit0 of PLL forever.
+From drivers/clk/clk-k230.c:
+#define K230_PLL_LOCK_TIMEOUT 0
+static int k230_pll_prepare(struct clk_hw *hw)
+{
+        struct k230_pll *pll =3D hw_to_k230_pll(hw);
+        u32 reg;
 
-On 8/6/26 17:12, Harald Freudenberger wrote:
-> Support CPACF pcc subfunctions PCC-Compute-XTS-Parameter-Encrypted-AES-128
-> and PCC-Compute-XTS-Parameter-Encrypted-AES-128 but only for the special
-> case block sequential number is 0. However, this covers the s390 PAES XTS
-> implementation in the Linux kernel.
-> 
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> Tested-by: Holger Dengler <dengler@linux.ibm.com>
-> ---
->   target/s390x/gen-features.c      |  2 +
->   target/s390x/tcg/cpacf.h         |  2 +
->   target/s390x/tcg/cpacf_aes.c     | 65 ++++++++++++++++++++++++++++++++
->   target/s390x/tcg/crypto_helper.c |  4 ++
->   4 files changed, 73 insertions(+)
+        /* wait for PLL lock until it reaches lock status */
+        return readl_poll_timeout(K230_PLLX_LOCK_ADDR(pll->reg, pll->id), r=
+eg,
+                                  reg & K230_PLL_LOCK_STATUS_MASK,
+                                  K230_PLL_LOCK_TIME_DELAY,
+K230_PLL_LOCK_TIMEOUT);
+}
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Furthermore, SDHCI/USB PHY/SPI flash driver require valid clock
+config, else causes fatal error.
 
+Best regard,
+Simon
 
+On Fri, Aug 14, 2026 at 3:53=E2=80=AFPM Bin Meng <bmeng.cn@gmail.com> wrote=
+:
+>
+> Hello,
+>
+> On Sun, Aug 9, 2026 at 7:47=E2=80=AFPM Simon Law <0860734llx@gmail.com> w=
+rote:
+> >
+> > The Kendryte K230 machine currently lacks the Clock Management Unit (CM=
+U)
+> >   register interface required by the K230 SDK U-Boot and the Linux K230=
+ clock
+> >   driver. As a result, software probing the PLL and sysclk providers ca=
+nnot
+> >   observe the expected reset values or register update semantics.
+> >
+> >   This series adds a minimal, deterministic K230 CMU model.
+> >
+> >   The model covers:
+> >
+> >   - four PLL register blocks at 0x91102000..0x9110203f;
+> >   - the defined sysclk registers in the 0x91100000 window;
+> >   - the software-visible SPI2AXI_CLK_DIV register at sysclk offset 0x10=
+8;
+> >   - reset values and writable/reserved/read-only masks;
+> >   - PLL control write-enable semantics;
+> >   - write-one-to-trigger update behavior;
+> >   - deterministic PLL lock and initialization status;
+> >   - VMState for stable PLL and sysclk register state;
+> >   - qtest coverage for reset, masks, write-enable, W1T, status, sysclk
+> >     updates, unknown offsets, and system reset;
+> >   - K230 machine wiring and user-facing documentation.
+> >
+> >   The model intentionally does not propagate clock frequencies to QEMU =
+devices or
+> >   change CPU execution speed. Peripheral reset, power control, and the
+> >   guest-initiated K230 reboot backend remain outside the scope of this =
+series.
+> >   Those functions require separate reset/power models and a matching Op=
+enSBI
+> >   backend.
+> >
+> >   The implementation is based only on the existing K230 machine and doe=
+s not
+> >   depend on unmerged RMU, Timer, SPI, or SDHCI device series.
+> >
+> >   Testing:
+> >   - QTEST_QEMU_BINARY=3D/workspace/qemu/build/qemu-system-riscv64
+> >     /workspace/qemu/build/tests/qtest/k230-cmu-test
+> >     (10/10 subtests passed)
+> >   - QTEST_QEMU_BINARY=3D/workspace/qemu/build/qemu-system-riscv64
+> >     /workspace/qemu/build/tests/qtest/k230-wdt-test
+> >     (7/7 subtests passed)
+> >   - K230 direct Linux boot and K230 U-Boot boot
+> >   - Linux K230 clock probe and clk_summary validation
+> >   - CMU source/destination migration smoke
+> >
+> > Signed-off-by: Simon Law <0860734llx@gmail.com>
+>
+> Is this clock modeling a must-have to make U-Boot or Linux boot on the
+> QEMU k230 machine?
+>
+> Is an unimplemented region enough to make the software happy?
+>
+> Regards,
+> Bin
 
