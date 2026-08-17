@@ -4,68 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8932C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 07:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADE72C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 07:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvrqn-0008MZ-Kp; Mon, 17 Aug 2026 03:33:41 -0400
+	id 1wvsDz-0003Nq-5P; Mon, 17 Aug 2026 03:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wvrql-0008M4-JR; Mon, 17 Aug 2026 03:33:39 -0400
-Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wvrqi-00089G-Cj; Mon, 17 Aug 2026 03:33:39 -0400
-Received: from [10.213.18.251] (unknown [36.110.52.2])
- by APP-05 (Coremail) with SMTP id zQCowAB34DpIuYJqDkD6BQ--.38540S3;
- Mon, 17 Aug 2026 15:33:28 +0800 (CST)
-Content-Type: multipart/alternative;
- boundary="------------5McWMhQUrrCWO309DCobSNE2"
-Message-ID: <77a43a16-cd89-4145-bedf-f7128dd186d8@iscas.ac.cn>
-Date: Mon, 17 Aug 2026 15:33:27 +0800
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wvsDy-0003Ne-4N
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 03:57:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wvsDw-0004eC-AU
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 03:57:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1786953454;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pVdedIG3dICHHST3i1ISNXU0ZvrFNTAnyIKTWWED3vA=;
+ b=S14PZmHlAzaG3uFS8rf5QCCukXnxdRu9ZCusXvzBzNHGS+kRJ2qadOag/1P2OTnaQoMRna
+ WvDADAuTucliWekNfmnrFPOJXdAfIJpJ9m7LX6jIyek1FeepRnek4tHTmW1VUj/KylIrsL
+ gie4S+Nc/nhF/5FKif60XyaG9pcgeYY=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-345-Oqb9yyFFOBqH0PikZoU3uA-1; Mon, 17 Aug 2026 03:57:32 -0400
+X-MC-Unique: Oqb9yyFFOBqH0PikZoU3uA-1
+X-Mimecast-MFC-AGG-ID: Oqb9yyFFOBqH0PikZoU3uA_1786953452
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cfa55c9430so33088385ad.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 00:57:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786953452; cv=none;
+ d=google.com; s=arc-20260327;
+ b=jLE5aYfTXJJUDQUESNhW2HW8QNJCsRAVu92gUqVMJtP3b6AUJbT9WezEtgluG2wm/A
+ NrynTdh4ctVkKRaTIkOpQFe05uFK5X2aBY7a0HweBnIb+RavnYWa2b3fUtipD1DwpXo/
+ /lrO2+J4A7MLUvgLYSWrUOA52fJluWW6eMDwWAxW5jVYw7nzBaVyMGM2HD8Vx5dGqcxC
+ 7GYSJNZ1tX5XLYE8fCL2nXPyJnr8cp8qYFEYWfJxY+Uvbajon1+6Bz2BCfVbpLWOMVUO
+ NAmCnXHLASlsc+sMXlTAGwyVvfxKnToKvM56uCQOGK3GAIBvSOTYSVYRHgVKMbdOHYWS
+ UTcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=pVdedIG3dICHHST3i1ISNXU0ZvrFNTAnyIKTWWED3vA=;
+ fh=yzuPFCXn95f7Fhvrva6X/+0hsZsG4fiyHsfM9iTNouY=;
+ b=LCfXLz8QXGfor2jrgsPEoEIXQH68N+RkXY3sVmzKtYdITM2o4bW5/mh6bFfWxnmJ3y
+ UOVIlm/iqHK/zcpKfH+k12fnZTW8ZCVnTEb5cyGmlf2zaoIMr862dKdOqg1TZ56HBtoY
+ TUml0hkocU9swNoaqqYcP4rdhfPzqmIOHsP8IN4IzHyUvSja/kmPrs63cpP0IrAC7ZZq
+ FJkQiP3u+qrzk5Qje2JNQYa7zVsnCD6yiFSySjrLU9WV19yMn9hAQSrv/iaOGEFwpSll
+ jvfimZ5IdyPYN+0QuVELTivAhmVMPGukrxocjgt3OCp9ByuI+h1H/2AkG3RqwiP16oQA
+ KFVA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786953452; x=1787558252; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pVdedIG3dICHHST3i1ISNXU0ZvrFNTAnyIKTWWED3vA=;
+ b=OUc+R17mQHT/FamCSQsLa75E1a5SmfnLZMcTSLk6vX5dbYQXLAHCLLUUhwTrVLfAB6
+ VdkyD+5zoD+faJ6RK/dDkCbklfKxlARywiC3ly7BVIyVqnNyTgHGAQw0bK+QgTZac3Rl
+ wr22A6v62etu9LN6XTFD9rvp4M468RRVc//nTyqutprGYW9Od4eVMvky6C4fe0fdL4Hw
+ BGXjqq+3ksNkA7JyUrCCBl2xEQBjunkv1GkrFoGDjKS9UkI4RZOLOzavX2brpu9ddo1P
+ vRvgLR9GaVvX4Cvt6UgRt3MIcC1+9fAFLL8b5YM06KYZtLC3Kzct8zvqhIFz8iY33C9v
+ pErg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786953452; x=1787558252;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pVdedIG3dICHHST3i1ISNXU0ZvrFNTAnyIKTWWED3vA=;
+ b=TGJr0mTCmxb9wRQrXx+Xy7m+5tlHCD2CwN6KkOrv068TW+eG/h0yCACeykjvZq1Q+f
+ t4W68NALkRdyuUNo7FgkOFhSEJzOG9h14jEF4RCW79D1sA0UkG/dDCPL45TCoRfzWNdb
+ CLD7FzdriKIm8LfmWUS+z0bxe7qp2Hw+eKPtKo9UbPDAAP1VZY368T9iwQDy/FysGquE
+ uRHhDh6jOldB78rivIVbjp9VicIbylFO6KDPqbLBIbiBgG4I/AKGyLgZv6NXpU3Oiaip
+ p007XHYrS8U5GSwAViPNN2UxyByPa5niT+KHiPW+G0wYtuKNxz4rRjcFY9iKBaTOGVoJ
+ kP7Q==
+X-Gm-Message-State: AOJu0Yy4rgqs5e7Bn4xihyY+pqMfQysWfjUj+XVDXnT8PvW/ugrKP3h7
+ /ZM+3VT4pUVYL5apMU87MXr7v1CzapOc3Sfu26t+GQNkAI41i/chB5D52laEre/NasJ1d/ErCJe
+ xAJ1FUZs/lgreJkpHEp7oHJO/sFe58h+eOBWrl+HRzNk7X/JBbBoRS23W8hfHyYPbkkiGOH2tX7
+ oH4bLnA/p/qForO13gAxawalTzOk/IjCU=
+X-Gm-Gg: AR+sD13RbbHaSx/wuylHyEhxuhG6+salxH6fYLUByaL43nYb/sRbrtJZfrOtXiFXIvn
+ 14xgXO6omQcFMad+37xEbR5r445eJVrWxpB0Uj4Ln+gZ0wUYPo8yEjHyv/Wj/sG8det4G/wmOZM
+ I+h143mSs3A/1vfRVcNfhVzoyUa3AA7nn5+729fLAn3YaS8Kr8I6flqHJosT8TKoSC+YgN/MoL6
+ UtMpOHjv+sBdPPQmbMOxi1aoRCMHyyKOZKh6kxlyr+PoUws7jiRFdV3PwTEa95qtujY2ojKMqFZ
+ fA==
+X-Received: by 2002:a17:90b:35c6:b0:392:6638:2e6a with SMTP id
+ 98e67ed59e1d1-3933b95d5e1mr23463445a91.13.1786953451519; 
+ Mon, 17 Aug 2026 00:57:31 -0700 (PDT)
+X-Received: by 2002:a17:90b:35c6:b0:392:6638:2e6a with SMTP id
+ 98e67ed59e1d1-3933b95d5e1mr23463425a91.13.1786953450979; Mon, 17 Aug 2026
+ 00:57:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/18] target/riscv: Add packed SIMD arithmetic
- instructions
-To: Max Chou <max.chou@sifive.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
- <3935baa46fdc44f7b68e2b740c7bedf8b7c0b974.1784280142.git.xiaoou@iscas.ac.cn>
- <aoHkpCy_H-vhfcFY@sifive.com>
-From: MOLLY CHEN <xiaoou@iscas.ac.cn>
-In-Reply-To: <aoHkpCy_H-vhfcFY@sifive.com>
-X-CM-TRANSID: zQCowAB34DpIuYJqDkD6BQ--.38540S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxWFWxWw1fGF1xCFW8WFWkXrb_yoW5Ar4fpF
- 18KrWrGr48ArWSy3WSvF1Uur13ZF4fCF4UW3s3XwsYvan8JrZ3AFsrK3yakryUAFZ5WFWY
- kaySka4UZ3y5A3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvvb7Iv0xC_Zr1lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwV
- C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487McIj6xIIjxv2
- 0xvE14v26r1q6rW5McIj6I8E87Iv67AKxVW8Jr0_Cr1UMcvjeVCFs4IE7xkEbVWUJVW8Jw
- ACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCjr7xvwVCIw2I0I7xG6c02F41l
- c7CjxVAaw2AFwI0_Jw0_GFyl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
- 1lx2IqxVAqx4xG67AKxVWUGVWUWwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
- 14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
- IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
- 87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73Uj
- IFyTuYvjxU70PfDUUUU
-X-Originating-IP: [36.110.52.2]
-X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.25; envelope-from=xiaoou@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.424,
- HK_RANDOM_FROM=0.999, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260815072421.4117291-1-marcandre.lureau@redhat.com>
+ <54495516-9f01-4077-860a-a4c9cc612a73@redhat.com>
+In-Reply-To: <54495516-9f01-4077-860a-a4c9cc612a73@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 17 Aug 2026 11:57:18 +0400
+X-Gm-Features: AcwNN1VqGmAo0yJrOb_5TJhjnJnTATkGVc70pa7gOLx5PD55OOJppmxUK2Zqbng
+Message-ID: <CAMxuvaz3yrNkTnYOHtDcqGgKjW=9B-v82dGHpvSYUjzgrBYmDg@mail.gmail.com>
+Subject: Re: [PATCH] tests/functional: fix pylint false positives for cv2
+ module
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.342,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,216 +139,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------5McWMhQUrrCWO309DCobSNE2
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi
 
-|Thanks for catching these too. I will fix these in the next version. 
-Thanks, Molly|
-
-在 2026/8/17 0:32, Max Chou 写道:
-> On 2026-07-17 10:06, Molly Chen wrote:
->> Signed-off-by: Molly Chen<xiaoou@iscas.ac.cn>
->> ---
->>   target/riscv/helper.h                       |  41 ++
->>   target/riscv/insn32.decode                  |  63 +++
->>   target/riscv/tcg/insn_trans/trans_rvp.c.inc | 547 ++++++++++++++++++++
->>   target/riscv/tcg/psimd_helper.c             | 114 ++++
->>   target/riscv/tcg/translate.c                |   4 +
->>   5 files changed, 769 insertions(+)
->>   create mode 100644 target/riscv/tcg/insn_trans/trans_rvp.c.inc
-> ...
->> diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
->> new file mode 100644
->> index 00000000000..056ccfb486e
->> --- /dev/null
->> +++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-> ...
->> +#if defined(TARGET_RISCV32)
->> +#define GEN_SIMD_TRANS_REG_PAIR_LANE_SCALAR_OP(INSN, HELPER, VXSAT)     \
->> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
->> +{                                                              \
->> +    REQUIRE_32BIT(ctx);                                        \
->> +    REQUIRE_RVP(ctx);                                          \
->> +    if (VXSAT && !prepare_rvp_vxsat(ctx)) {                    \
->> +        return false;                                          \
->> +    }                                                          \
->> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);        \
->> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
->> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
->> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
->> +    TCGv src2   = get_gpr(ctx, a->rs2, EXT_NONE);              \
->> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
->> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2);        \
->> +    gen_set_gpr(ctx, (a->rd) * 2, dest_0);                     \
->> +    gen_set_gpr(ctx, (a->rd) * 2 + 1, dest_1);                 \
->> +    return true;                                              \
->> +}
-> There is a read-after-write hazard on src2 when the destination pair
-> overlaps rs2.
+On Mon, Aug 17, 2026 at 11:19=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
+te:
 >
-> get_gpr(*, EXT_NONE) returns cpu_gpr[n] itself (EXT_NONE takes no
-> snapshot). And dest_gpr(ctx, rd) also returns cpu_gpr[rd] itself.
-> So if rd*2 == a->rs2 (or rd*2 + 1 == a->rs2), dest_0/dest_1 and src2
-> are the same TCG global, and the first gen_helper call op writes it
-> before the second call op reads it as its source.
+> On 15/08/2026 09.24, marcandre.lureau@redhat.com wrote:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > Add generated-members=3Dcv2.* to pylintrc so pylint skips member
+> > checking on the cv2 C extension module, whose members are not
+> > visible to static analysis.
+> >
+> > Silence:
+> > 2026-08-15 10:42:08,710 - INFO: qemu-test.test_pylint Checking files in=
+ /home/elmarco/src/qemu.qom-qapi/tests/functional/arm with pylint
+> > 2026-08-15 10:42:10,941 - ERROR: qemu-test.test_pylint "/home/elmarco/s=
+rc/qemu.qom-qapi/tests/functional/arm/test_integratorcp.py:83: E1101: Modul=
+e 'cv2' has no 'imread' member (no-member)"
 >
-> I suggest that we could fix it by snapshot rs2:
+> Alex recently already sent a patch for that error here:
 >
->         TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);              \
->    -    TCGv src2   = get_gpr(ctx, a->rs2, EXT_NONE);              \
->    +    TCGv src2 = tcg_temp_new();                                \
->    +    tcg_gen_mov_tl(src2, get_gpr(ctx, a->rs2, EXT_NONE));      \
->         gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
+>   https://gitlab.com/qemu-project/qemu/-/commit/dd14a21b9dc1
 >
->> +#if defined(TARGET_RISCV32)
->> +#define GEN_SIMD_TRANS_PN_OP(NAME, SRC2, VXSAT)            \
->> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
->> +{                                                           \
->> +    REQUIRE_32BIT(ctx);                                     \
->> +    REQUIRE_RVP(ctx);                                       \
->> +    if (VXSAT && !prepare_rvp_vxsat(ctx)) {                 \
->> +        return false;                                       \
->> +    }                                                       \
->> +    TCGv_i64 s1 = tcg_temp_new_i64();                       \
->> +    if (a->rs1 == 0) {                                      \
->> +        tcg_gen_mov_i64(s1, 0);                             \
-> I think that we should use tcg_gen_movi_i64 here.
+> Didn't that help to silence the message in your case, too?
+
+Ah I missed that, but it doesn't help:
+
+pylint --rcfile ../tests/functional/pylintrc ../tests/functional/arm/
+************* Module test_integratorcp
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:83:2=
+5:
+E1101: Module 'cv2' has no 'imread' member (no-member)
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:2=
+6:
+E1101: Module 'cv2' has no 'cvtColor' member (no-member)
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:84:5=
+5:
+E1101: Module 'cv2' has no 'COLOR_BGR2GRAY' member (no-member)
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:1=
+7:
+E1101: Module 'cv2' has no 'matchTemplate' member (no-member)
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:85:5=
+2:
+E1101: Module 'cv2' has no 'imread' member (no-member)
+/home/elmarco/src/qemu.nohmp/tests/functional/arm/test_integratorcp.py:86:3=
+5:
+E1101: Module 'cv2' has no 'TM_CCOEFF_NORMED' member (no-member)
+
+My understanding:
+
+I1101 (c-extension-no-member) - disable: silence if pylint can't
+introspect the module
+
+E1101 (no-member) - but we need to tell pylint to trust any member
+access on cv2 if it can
+
 >
-> rnax
+>   Thomas
 >
->> +    } else {                                                \
->> +        get_pair_regs(ctx, s1, a->rs1 * 2);                 \
->> +    }                                                       \
->> +    TCGv src2 = SRC2;                                       \
->> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
->> +    gen_helper_##NAME(dest, tcg_env, s1, src2);             \
->> +    gen_set_gpr(ctx, a->rd, dest);                          \
->> +    return true;                                            \
->> +}
---------------5McWMhQUrrCWO309DCobSNE2
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <pre dir="ltr"><code>Thanks for catching these too. I will fix these in the next version.
-
-Thanks,
-Molly</code></pre>
-    <div class="moz-cite-prefix">在 2026/8/17 0:32, Max Chou 写道:<br>
-    </div>
-    <blockquote type="cite" cite="mid:aoHkpCy_H-vhfcFY@sifive.com">
-      <pre wrap="" class="moz-quote-pre">On 2026-07-17 10:06, Molly Chen wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Signed-off-by: Molly Chen <a class="moz-txt-link-rfc2396E" href="mailto:xiaoou@iscas.ac.cn">&lt;xiaoou@iscas.ac.cn&gt;</a>
----
- target/riscv/helper.h                       |  41 ++
- target/riscv/insn32.decode                  |  63 +++
- target/riscv/tcg/insn_trans/trans_rvp.c.inc | 547 ++++++++++++++++++++
- target/riscv/tcg/psimd_helper.c             | 114 ++++
- target/riscv/tcg/translate.c                |   4 +
- 5 files changed, 769 insertions(+)
- create mode 100644 target/riscv/tcg/insn_trans/trans_rvp.c.inc
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">...
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">diff --git a/target/riscv/tcg/insn_trans/trans_rvp.c.inc b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-new file mode 100644
-index 00000000000..056ccfb486e
---- /dev/null
-+++ b/target/riscv/tcg/insn_trans/trans_rvp.c.inc
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">...
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+#if defined(TARGET_RISCV32)
-+#define GEN_SIMD_TRANS_REG_PAIR_LANE_SCALAR_OP(INSN, HELPER, VXSAT)     \
-+static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
-+{                                                              \
-+    REQUIRE_32BIT(ctx);                                        \
-+    REQUIRE_RVP(ctx);                                          \
-+    if (VXSAT &amp;&amp; !prepare_rvp_vxsat(ctx)) {                    \
-+        return false;                                          \
-+    }                                                          \
-+    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);        \
-+    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
-+    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
-+    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
-+    TCGv src2   = get_gpr(ctx, a-&gt;rs2, EXT_NONE);              \
-+    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
-+    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2);        \
-+    gen_set_gpr(ctx, (a-&gt;rd) * 2, dest_0);                     \
-+    gen_set_gpr(ctx, (a-&gt;rd) * 2 + 1, dest_1);                 \
-+    return true;                                              \
-+}
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-There is a read-after-write hazard on src2 when the destination pair
-overlaps rs2.
-
-get_gpr(*, EXT_NONE) returns cpu_gpr[n] itself (EXT_NONE takes no
-snapshot). And dest_gpr(ctx, rd) also returns cpu_gpr[rd] itself.
-So if rd*2 == a-&gt;rs2 (or rd*2 + 1 == a-&gt;rs2), dest_0/dest_1 and src2
-are the same TCG global, and the first gen_helper call op writes it
-before the second call op reads it as its source.
-
-I suggest that we could fix it by snapshot rs2:
-
-       TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);              \
-  -    TCGv src2   = get_gpr(ctx, a-&gt;rs2, EXT_NONE);              \
-  +    TCGv src2 = tcg_temp_new();                                \
-  +    tcg_gen_mov_tl(src2, get_gpr(ctx, a-&gt;rs2, EXT_NONE));      \
-       gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+#if defined(TARGET_RISCV32)
-+#define GEN_SIMD_TRANS_PN_OP(NAME, SRC2, VXSAT)            \
-+static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
-+{                                                           \
-+    REQUIRE_32BIT(ctx);                                     \
-+    REQUIRE_RVP(ctx);                                       \
-+    if (VXSAT &amp;&amp; !prepare_rvp_vxsat(ctx)) {                 \
-+        return false;                                       \
-+    }                                                       \
-+    TCGv_i64 s1 = tcg_temp_new_i64();                       \
-+    if (a-&gt;rs1 == 0) {                                      \
-+        tcg_gen_mov_i64(s1, 0);                             \
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-I think that we should use tcg_gen_movi_i64 here.
-
-rnax
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+    } else {                                                \
-+        get_pair_regs(ctx, s1, a-&gt;rs1 * 2);                 \
-+    }                                                       \
-+    TCGv src2 = SRC2;                                       \
-+    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
-+    gen_helper_##NAME(dest, tcg_env, s1, src2);             \
-+    gen_set_gpr(ctx, a-&gt;rd, dest);                          \
-+    return true;                                            \
-+}
-</pre>
-      </blockquote>
-    </blockquote>
-  </body>
-</html>
-
---------------5McWMhQUrrCWO309DCobSNE2--
+>
+>
+> > Note: I also tried with extension-pkg-allow-list, but that didn't work
+> > for some reason.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   tests/functional/pylintrc | 6 ++++++
+> >   1 file changed, 6 insertions(+)
+> >
+> > diff --git a/tests/functional/pylintrc b/tests/functional/pylintrc
+> > index 949bea611fe4..373aabd6ca3f 100644
+> > --- a/tests/functional/pylintrc
+> > +++ b/tests/functional/pylintrc
+> > @@ -79,6 +79,12 @@ disable=3Dbad-inline-option,
+> >           useless-suppression,
+> >
+> >
+> > +[TYPECHECK]
+> > +
+> > +# cv2 is a C extension module whose members are not visible to pylint
+> > +generated-members=3Dcv2.*
+> > +
+> > +
+> >   [SIMILARITIES]
+> >
+> >   # Minimum lines number of a similarity.
+>
 
 
