@@ -4,158 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2826C5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B0A3C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:14:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuIY-00063X-ID; Mon, 17 Aug 2026 06:10:30 -0400
+	id 1wvuLP-0006Zg-E3; Mon, 17 Aug 2026 06:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wvuIU-000632-0G; Mon, 17 Aug 2026 06:10:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wvuLI-0006Yw-Bt
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 06:13:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wvuIS-0004FO-35; Mon, 17 Aug 2026 06:10:25 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLW2uV3728646; Mon, 17 Aug 2026 10:10:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jE5019
- ZefVhgi0SeCetvwxVHUFYVm8wqShRaujub+nM=; b=C00Vgl12qfUaBYPx/u5kdz
- hXcLpPxUQ55og7w9EzVnO83hd9HwVxp9vPzD8cZYwjlFhxvpaRkRMsp8Gw0YStzE
- pg3WwTA2gD34v3JDkjdJ1qAEOayUFPSn+6EbUVmlbS7mfe5Lyr7fNDFxCAk3F3Ju
- 71urtwNBOEUA6unAgR7aIcrCjcfgF286lxsV1EZdehWkp/I/IwcpI3eDMGycdJbj
- dKejLZcqA5Wu4kJiuRSCXQ3HfLGx35CH3ZHHhK9LxjnU7cS3PXSjyy3emcIFidYx
- 7oZ9JRHUV9oI83t7GUmK6ReU7/naURXFknQ/ghOdpCNnZAcMy1FWKQV0Bjl+U1yA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4hp94-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:10:20 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67H9uNNH026660;
- Mon, 17 Aug 2026 10:10:19 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tvwpft-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 10:10:19 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67HAAIMI40829642
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 10:10:19 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CBEF458063;
- Mon, 17 Aug 2026 10:10:18 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 61B275803F;
- Mon, 17 Aug 2026 10:10:18 +0000 (GMT)
-Received: from [9.61.136.224] (unknown [9.61.136.224])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 10:10:18 +0000 (GMT)
-Message-ID: <050e397c-ccd8-4aa8-9273-3550e91dc78b@linux.ibm.com>
-Date: Mon, 17 Aug 2026 06:10:17 -0400
+ (Exim 4.90_1) (envelope-from <subrahmanya.lingappa@oss.qualcomm.com>)
+ id 1wvuLG-0004as-AZ
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 06:13:20 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67H9e1k81467804
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 10:13:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qGLH8lZmQRn2gHViVJmyCdYIQSMzFwTKzZI1GtGJPbs=; b=nvBTKEgAFyxl/aeX
+ Vcn0tYVBgySjBoZWdbF1vSm30358MR8iObBqnSMHyC6RGeLLfDxLxjcDEoxENniW
+ E9T9cCNpEJbTUD2zzkuayV6SXpl7NHFit8pDBtzfLyyMwGgIZIh3/TJ5ieHZaWvN
+ QvynnntK7UR4YxUwIn6wmECO23zfdXn+wTc4K2YxYDVzLdecyWis2T0Qc63RHKWB
+ WidY0GJNOSSSreCI720sJtpyG85Fq+9zNkPb3drythSusqnnm0oY0GAEEFFW9vrJ
+ dnbj026kf+nM5dxu5RmSnE6aSogn4QSLuwOVcXSUJ6ljEbcqJEnnhC2aZz7A1V7U
+ knMrBA==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g3xx7gc1a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 10:13:14 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-97a2a39fde8so32446241.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 03:13:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786961593; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WSJxfIv1m/JOxH4ZzV14JAIbVHczUhvErTbF7TdGx4vaAOoJo650VlMmIK5n+AgMOQ
+ t4KF16rFRJuvFQrIxDet1Ic95Ma2WoqbFPwLyu2rgOtMC15338QHzETZF3w005lKBcZU
+ t/GLvs+ZP6DnBWZbgXRNnIPj1Xogbajn/QcyZ9tBtOv63Xa/RvMRqlusgWJe29UOpWkK
+ HCxjA7v5LVQknYfkFHAg6VDefmuu9bV5fm3kG/QHvboP1HJ/ApByAWUQc4dqqQTlVOtk
+ 8PERwUczTrP1qoiImeQANL/Le1ab9l1r0jtVoLcb0iMNdGQqoBTv86PEVqf61JA8z68f
+ cKMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qGLH8lZmQRn2gHViVJmyCdYIQSMzFwTKzZI1GtGJPbs=;
+ fh=nlXRy6yptQINawOETWISdi4nRCIEv8U62qiCgLl/Bkw=;
+ b=WcEsgM30eOZieGh5+p5qAzJEfTeMkI2vZD3YSgYPjM5+HmUsd1IKk8ewSt4/O3TCVS
+ aVlxd3pYeB0EM+zvKorxn8goBDfYEIM/N3+d6+CB4qRXd8nJpjWdmonnKCLZqEAG4/7E
+ xYH1eO7FkKUT+ZEr0HDn043RkH0Ko/cZB1ixi7z4osJ7yKRHTIKybKEEuYHGtx8EC3G9
+ 973/IrEqK/U5XcEie3dnQsiVieK9O9wFRLvRtilGfKZGpeS82DtrXAXqCedY9zCRoEcz
+ iE5IQIpofxVAJCtt2RKOJATt+h7X30WzEJ2wyQDMJHjnBVWHHjC/I3ed0VKk/qL9juR7
+ TL2Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1786961593; x=1787566393; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=qGLH8lZmQRn2gHViVJmyCdYIQSMzFwTKzZI1GtGJPbs=;
+ b=YvwGCxyvfH6myzcBUwT/Nto9E+qHL7Pe5dWZINSbuVkolVYP4Am08ozdCsicuHxczv
+ bonDB+6D0pCCp8T8+kdJ5yVsZK6UFXfs1Jd8RrbyGig1fr9d8THgJfOrfV0epyNYdMZb
+ sFbpW0aZ5Gc0UJwEzErAKT93kX+OlV0xXyL3Y8YXReYbxz0ROuIQJv19JIqRaobnDl8D
+ b2vig+p7ve1oNW9GYKk3x7Hq1jkyqSOt8Q0yHmSd+nnc3jvsPbfpGWYIL3U2jZ4jHFuT
+ R+BX6rFA3wCCvVgZaBsJcGBH8vraQX6TgRvl5JgrGBeZBvgJdjIKH/6GSOpliSrSE3ek
+ 9Weg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786961593; x=1787566393;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=qGLH8lZmQRn2gHViVJmyCdYIQSMzFwTKzZI1GtGJPbs=;
+ b=grqaie/JNsI0G0CsWqX/52GC1Dd2IOp8yESBt++aPSMs6R3sJ7B/Q+2TnkguUuARIS
+ 8BhuoBA5HKhcmj444/fJSxae7+/vE8Le2k2OFe0ordc8/FA6aZyqW2iqFNv100ia4kHs
+ pQPspRqjpeubS8hHFDK7nGuafcbKoyl8juC8S74bTjdePjBVjaJ3GELHTeCxljPMUfY4
+ 8uMyYb0GIe3sOq6/qoeCgroJR/dhfBmrFd5Xb2co/EIJ+FxcDJM/XZOZbA4IXT5If0Gl
+ YPrJuxbdus53ywyhZmOSBZQZZmIYC2sQZaZ7HmIFanKeZY+OW6MrDcv1O/9BzrDVv7Tm
+ 3QOQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Roopmq35A6BttNPtUHvzbVjPeXgVvtqkbISZNH4mOlfHGPOAmyJqdTcq268Uy8sZdZXVc0wNFl0QiT4@nongnu.org
+X-Gm-Message-State: AOJu0YxJz/0+NBaHGbR2SaUqKbxraLFwKMoA5Lvx7zm8eCWidNc5pXq3
+ JU0JgQWTd7OgeXkQRq6tr2U3F31U1F4gRuwfpPBhtnaC3CTveGwIlXLLz6d2JqMiDh9idR0nBXL
+ XYgDI75ZY7+k3Sp/gaNCJnWV7ojdgsdqrS/oVktxgksWg7pBD7c0QdAgHSqEUKHUW9m2cv9UNSd
+ p7rt0nGWHe+hdOK0nzilv+OMVmFeXk5GtR
+X-Gm-Gg: AR+sD12tPhw1HchP3QD8ORLmMRAguzEaLPYd8b7PYMlFsaXC/E9UYXVZ76EXeWWG//+
+ 68lT95TQ4TPqvsw1I4ehfK3Taxc1gcNuhBktBoykqXdnjPiCOdM+M/gKZGwoNQNLXkguXUTIj7r
+ GTi8+eHn0KZ0NqGDxI0GnuhtBweeCeJjmZI0sUoQXQT2sUo5cURnY4NMFsZH8=
+X-Received: by 2002:a05:6123:4d6:20b0:5c5:b3c1:1fc3 with SMTP id
+ 71dfb90a1353d-5c5b3c153e3mr469131e0c.0.1786961593539; 
+ Mon, 17 Aug 2026 03:13:13 -0700 (PDT)
+X-Received: by 2002:a05:6123:4d6:20b0:5c5:b3c1:1fc3 with SMTP id
+ 71dfb90a1353d-5c5b3c153e3mr469125e0c.0.1786961593175; Mon, 17 Aug 2026
+ 03:13:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/15] pc-bios/s390-ccw.img: update s390x bios
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20260812171707.1605637-1-farman@linux.ibm.com>
- <20260812171707.1605637-16-farman@linux.ibm.com>
- <4aecc479-d63e-4b84-8278-44db0e6d82ee@tls.msk.ru>
- <591fcc50-05ee-40e2-a94e-003fef7b9c79@linux.ibm.com>
- <472281bc-f26b-47c2-8cc9-e42357d484f2@tls.msk.ru>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <472281bc-f26b-47c2-8cc9-e42357d484f2@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: b85fDcQw4Nv-f5LUzsohs1BtegzttcSL
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a82de0c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=MCzG4bebeZUzpmfMPbMA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfX5U8YuOXtx8OS
- iOvFsi4wFW8BmisAnMga3TBLDR4zOeZQbXZBQNdjNeKy0t5+fh3jvY5S4LVebtDTwO5bAGbUEbf
- dPRz0U8M+F8p8/aeXcEicc8nxFJ/Zzs=
-X-Proofpoint-ORIG-GUID: b85fDcQw4Nv-f5LUzsohs1BtegzttcSL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NCBTYWx0ZWRfXxUnnO/HW9g8D
- TyzbYcAJM3R0/ux+bcA5CCe0tiMudOxTlZ7992l+5Sp/Z1K/S3VSyoH+FbPnh+uyZ+FoMa2eGXM
- uqQFrdbMCp1LV9yDvbtq4jtsQvzfvGYH4ZMMYlXY/l15G9qtgGPOhBZgB4qFeft/yDsyH1kk2KM
- 2Hq1NPGSL7b+wtsn5AzFerfljTYSWl62DF7d5xwoNYwgKplgl3QhwqbI1qsqsCO5z6Jwc1c8yiv
- KxR/QX/hg9OPKxmYb8SsMDXTIne0N63JytCQ9LH7ipNThI7bMG6HQ3HHWJGvkjN8PT3iFXLbrgg
- IYaVt2TgFIcTjmjDBkeCYrAFe1H/MBQhZ880wVwJbn6RtF/meNUNLDAnCOM+QAotQPyIs1+eTqQ
- BrGOHuESe9UiYUMX3RwutyH4d1axiysX8DNizzU82uX9/c6OgwpUPW1M8WMFMmPRv80IONc+WwT
- 5L6oIkz9kVrKyBDcgLA==
+References: <20260814045315.3416169-1-subrahmanya.lingappa@oss.qualcomm.com>
+ <20260814045315.3416169-2-subrahmanya.lingappa@oss.qualcomm.com>
+ <7c5a0b1d-12db-4be2-b20c-9d132b027a76@oss.qualcomm.com>
+ <CAPxK-6c5ucsJttV6WVTQSe=O3s+q-tL=-Mv42iJPUBftFAXFhA@mail.gmail.com>
+ <f54d8c2f-3d30-47f5-809a-ddb60c8df03d@oss.qualcomm.com>
+In-Reply-To: <f54d8c2f-3d30-47f5-809a-ddb60c8df03d@oss.qualcomm.com>
+From: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
+Date: Mon, 17 Aug 2026 15:43:01 +0530
+X-Gm-Features: AcwNN1V_ACrCG3KTU64icogQ7wJKF8dYJ8w-vEpg73BIorjvG_FHr8pRW5SinbI
+Message-ID: <CAPxK-6d5YcqNSsjBkYrwxm-p5VT=nX5e3P=XjcwdZRZC7ePGhQ@mail.gmail.com>
+Subject: Re: [PATCH v8 01/10] build: add optional librpmi dependency
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA3NSBTYWx0ZWRfX8SuJiMNznlpo
+ me6hY15On35sZeQUu/qKdFgROD6J2Egt2w62Bi7eJ2dAohZWx9Hyd9roe+SQE78hQsyXrzTsd0D
+ mIug7yOQyTmDM8aR/Cq+sg9V386I1Ic=
+X-Authority-Analysis: v=2.4 cv=TK91jVla c=1 sm=1 tr=0 ts=6a82deba cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=YMgV9FUhrdKAYTUUvYB2:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=gC699ZJ_JV_s38HN3AEA:9 a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22
+X-Proofpoint-GUID: LmLddN3LaE1l-5EDdcRT9SqzxnTJFj9V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA3NSBTYWx0ZWRfX5Ihu0RHzg8bt
+ s//2VKuxL0YQZKM/YJjSHznHp8pgMr8ZxxrwFh5tQ68OGilw9k5bJRkucNTcqKMScZrxZnJX+A9
+ HKTGI1/YFqR0eevB2gwSej9wSXCfnQDR7pnhXfnDioOr8kvJS61+eLrXcYGdLLKwu3SaxZpTTh6
+ Uax98vI+6Vmnhj/t4zu7KLSDdFetJD+TyNo6X+Kceol5g4EY09j0qVTcBvYHHApTiGGKBQ9AKW6
+ oaYHEWjDvdwxqjRglF/EtnsRdIQZN7x0k1IaxkwXqDj9ptAy4noNeDf+yfShGEniEZMwtz4/m3O
+ SEFb7UXbKffZNoQcXjryxU064eJTNNFFv+wq2gAjf3nq5ZUEP62DpRE5N1ghT8bKoBJwVIerxEp
+ ioBeMqQBZLscn6C7F5KVxYvIZVl6apfSLAb0ahU3FdfmwpfBwnx8B/0ZdnwROjMnZzg9zo00mgz
+ cDQJxQfgQKpMDRI1eXw==
+X-Proofpoint-ORIG-GUID: LmLddN3LaE1l-5EDdcRT9SqzxnTJFj9V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ malwarescore=0 phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170074
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170075
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=subrahmanya.lingappa@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,106 +178,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Philippe,
 
+On Mon, Aug 17, 2026 at 9:31=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 14/8/26 20:34, Subrahmanya Lingappa wrote:
+> > Philippe,
+> >
+> > On Fri, Aug 14, 2026 at 11:14=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+> > <philmd@oss.qualcomm.com> wrote:
+> >>
+> >> Hi,
+> >>
+> >> On 14/8/26 06:53, Subrahmanya Lingappa wrote:
+> >>> Add a meson option and config probe for librpmi so RISC-V machines ca=
+n
+> >>> opt into RPMI support when the library is available. Keep the depende=
+ncy
+> >>> optional so default builds without librpmi continue to work.
+> >>>
+> >>> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcom=
+m.com>
+> >>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com=
+>
+> >>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> >>> ---
+> >>>    Kconfig.host                  |  3 +++
+> >>>    meson.build                   | 14 ++++++++++++++
+> >>>    meson_options.txt             |  2 ++
+> >>>    scripts/meson-buildoptions.sh |  3 +++
+> >>>    4 files changed, 22 insertions(+)
+> >>
+> >> Could you provide a cover letter so we can understand the changes
+> >> with the previous versions? It is hard to figure out why we are
+> >> at v8 and what we have to review again.
+> >>
+> > I was incrementally fixing issues and sending out versions.
+> >
+> > This mail with subject line has the change logs from previous few
+> > versions, you might have missed;
+> >   as it was with all the previous versions' cover letters.
+> > "[PATCH v8 00/10] riscv: add initial RPMI virt support"
+>
+> Apparently neither the mailing list nor myself received it:
+> https://lore.kernel.org/qemu-devel/7c5a0b1d-12db-4be2-b20c-9d132b027a76@o=
+ss.qualcomm.com/
+>
+> But indeed it is on the riscv@ list...
+> https://lore.kernel.org/qemu-devel/20260814045315.3416169-1-subrahmanya.l=
+ingappa@oss.qualcomm.com/
+> >
+> > Please let me know if you'd like it to list change log from all the
+> > previous versions instead.
+>
+> You could have proactively done it directly, saving time to all
+> readers ;) Not needed anymore, I'll import it from riscv@, thanks.
 
-On 8/17/26 5:23 AM, Michael Tokarev wrote:
-> On 8/14/26 19:07, Eric Farman wrote:
-> ..
->>> Anyway, on debian stable we have gcc-14.2.0, -- is it okay to use it for
->>> building the image?
->>
->> I should think so. But if it doesn't work, let's look into why.
-> 
-> When building for the official debian archives, the images are built
-> by the compilers available on official debian archives, so that's
-> gcc-14, and hopefully the resulting images works :)  But honestly I
-> don't know if anyone/anything is actually using these images on
-> debian.
-> 
-> I just never tried to build the images for the official qemu git tree
-> and tarballs.
-> 
->>> Also, there's little changes in s390-ccw.img between qemu 11.0 and 11.1,
->>> here's the list:
->>>
->>>   b2b5dec9295 s390x: Enable boot menu for virtio pci device
->>>   d0473643803 pc-bios/s390-ccw: write IPLB location for non-net 
->>> virtio devices
->>>   e26dafb207b pc-bios/s390-ccw: Verify virtio support when booting 
->>> from virtio PCI device on s390x
->>>   084feb90980 pc-bios/s390-ccw: Add per-queue notification offset for 
->>> multi-queue virtio configurations
->>>   730173107a9 pc-bios/s390-ccw/virtio.c: Fix missing break for PCI 
->>> notifications
->>>   c12bb74fd57 pc-bios/s390-ccw: Refactor byte swapping
->>>
->>> I think I can pick all that stuff for 11.0.x series just fine, to avoid
->>> (re)building the image for 11.0.x series.
->>>
->>> For 10.0.x, things are really much larger:
->>>
->>>   14c29f29064 pc-bios/s390-ccw: Fix compiler warning when compiling 
->>> with DEBUG enabled
->>>   d72fb5e6b2e pc-bios/s390-ccw: Add support for virtio-blk-pci IPL
->>>   40d80aedd5a pc-bios/s390-ccw: Introduce virtio-pci functions
->>>   5ed17bb32ab pc-bios/s390-ccw: Introduce PCI device
->>>   d3da8afd1dd pc-bios/s390-ccw: Introduce CLP Architecture
->>>   4ff1499adab pc-bios/s390-ccw: Split virtio-ccw and generic virtio
->>>   ada7a60056c pc-bios/s390-ccw: Store device type independent of 
->>> sense data
->>>   4228a92b2a3 s390x: Remove duplicate definitions of IPL types
->>>   dd8c8f16c02 pc-bios/s390-ccw: Always reset virtio device on failed 
->>> boot attempt
->>>   5dbabcfee89 pc-bios/s390-ccw: Remove redundant vring schid attribute
->>>   1ef532cbcfc pc-bios/s390-ccw: Fix misattributed function prototypes
->>>   acb00a7aae4 pc-bios/s390-ccw: link statically
->>>   fc24fd9342e pc-bios/s390-ccw: Add a boot menu for booting via 
->>> pxelinux.cfg
->>>   47d68f7475f pc-bios/s390-ccw: Make get_boot_index() from menu.c global
->>>   108977796fb pc-bios/s390-ccw: Allow up to 31 entries for pxelinux.cfg
->>>   a4adf071dc7 pc-bios/s390-ccw: Allow to select a different 
->>> pxelinux.cfg entry via loadparm
->>>
->>> basically it's whole virtio and pci support added, which might be too 
->>> much?
->>> Please note that 10.0.x is an LTS series, also used in current debian 
->>> stable
->>> (trixie), so maybe it is also okay to pick everything up to this 
->>> series, to
->>> bring the image in-line with current development.
->>>
->>> In this case I'll just pick the commits updating the image too :)
->>>
->>> What do you think?
->>
->> Yeah, might be a bit much. The smaller fixes were contained enough 
->> that targeting them for stable made sense. Of the four fixes that were 
->> in this rebuild, three of the blamed commits date to the v2/v3 days. 
->> The fourth went in in 9.2.
->>
->> Everything else in your lists is new function and whatnot, so my gut 
->> says leave it there.
-> 
-> Um.  It's kinda difficult for me to guess what did you mean by all this :)
-> 
-> For 11.0.x stable series, I'm picking all commits in s390x-ccw which were
-> made after 11.0.0 release -- that would be 6 commits from the first list
-> above, plus all the changes which went into this pull request.  This way,
-> s390-ccw.img image will be the same in 11.0.x and in 11.1.x and in the
-> master branch, - the binary which you made on your system.
-> 
-> For 10.0.x though (which is an LTS series), I'm picking just the fixes
-> from this pull request, and will rebuild the image using the tools 
-> available
-> on debian.  At the time of qemu 10.0.0, I think you used older gcc too, so
-> everything should match.
+My bad, I'll keep that in mind for the following versions.
 
-I think we're saying the same thing. :)
-
-Certainly picking the smaller set of fixes for 11.0.x is fine, while 
-leaving out the larger list for 10.0.x makes sense to me because of the 
-scope of changes.
-
-Thank you!
-Eric
+Thanks,
+subbu
 
