@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7ABC5DF66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D2BC5DF7D
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 20:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww3t3-0003rt-4a; Mon, 17 Aug 2026 16:24:49 -0400
+	id 1ww3tB-0003tz-89; Mon, 17 Aug 2026 16:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3t1-0003rR-Bf
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3tA-0003tg-F3
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3t0-0002nX-12
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww3t8-0002ox-7N
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 16:24:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786998285;
+ s=mimecast20190719; t=1786998293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=108l7THhgpe6cHYXpok4mx1AU2dSOtOrPe6nKfAK15I=;
- b=HPMVWrpOFwzk6D24mkqU3ii8RIyJIjN+gBAE471eNbjKe2Ni6fXdinpw4H4jAT4ElyunNz
- LMskR64kl/qFl9y321eXl2gBuHFVYsOIxbBsfx9VH4qzPS1nZyuy01SDKZC8hA+7ndMd19
- RaRCVB2V+IwU6gMW7ixh3tmtS/jYef8=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f3ohXdIr8fhrUcLg1b1Cl433ZNfz2EPC8poOBiY/Wac=;
+ b=hFZ0BPULkrOsMZPtXT/asct+UvMDRSyl1xFo2JcwptINEMeuiHePOV8rx3e7BB/Jbicl7f
+ cLAIOzogY/pKrxcQqRGugFbxaaNiAt84GDV32kU9tKi/DTvmf3fl0RtevswY0GHR1BPWVT
+ KGBh0KNWnlamextXDS1TUOIX5Qb/jYw=
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-xlzZqcOGNA-5VrGx9zbUkA-1; Mon, 17 Aug 2026 16:24:38 -0400
-X-MC-Unique: xlzZqcOGNA-5VrGx9zbUkA-1
-X-Mimecast-MFC-AGG-ID: xlzZqcOGNA-5VrGx9zbUkA_1786998278
+ us-mta-645-YO1HpuwdObqz5RbGzXyrOQ-1; Mon, 17 Aug 2026 16:24:52 -0400
+X-MC-Unique: YO1HpuwdObqz5RbGzXyrOQ-1
+X-Mimecast-MFC-AGG-ID: YO1HpuwdObqz5RbGzXyrOQ_1786998291
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-51c21c01cf3so71166981cf.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:24:38 -0700 (PDT)
+ d75a77b69052e-52b4f6ac06aso69794281cf.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 13:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786998278; x=1787603078; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=108l7THhgpe6cHYXpok4mx1AU2dSOtOrPe6nKfAK15I=;
- b=GOrC5zewqrLT+vyuPMCH5HwE1WyK6jNmF3LS85femZCHLd0zxjilV8l7cQ3yA89j9Z
- OWg85BXwDlMlkCnBGC1rxzTUipRd0YXMby/pcHy9+bd03XMfVGVXomlcuB8EnwXTZO5D
- YC0kstz4QWgr+Kf5HoQufzJlZyg2c8WQjLz9yy4PF+Cf6jYH/Vpx2/kdAAKZ25LyHFPO
- TpZX9oieVyGXVr7LDiG7KMHTPy9Vj5vzm6LLtF8eQSTOa/3q2OG2+claeAqns0bbMksy
- WZZyF8EuDWg7nvYX0vUseTNlrHSrHokNlQYhVgKxiZdK5pUsR9ceuMDYUH5JKUesT7X7
- 6ddg==
+ d=redhat.com; s=google; t=1786998291; x=1787603091; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=f3ohXdIr8fhrUcLg1b1Cl433ZNfz2EPC8poOBiY/Wac=;
+ b=OZS+b/7UnlLt3nPZVUccNJXAJYOVwySLMhDVcHmXnV7yIqLuBcYGt2kkeKLB59tUke
+ F8QFUoskrUwuh1Ltfub9W0cph4krArIsBZMKT8hQEHJgYOmA3sx1UzexzTx2c0VbinOH
+ KTNHKrr/DiKmg6AzfidygMPSPOvRECkWorBTrymhSTSk6WMBGoPKHwXKu8U0QWeFFhtY
+ 7gBMZGUce6L/DCcskGADS0x/VzDfYtUQEOP4zOaoUJe7N/6ZjkcuHJxx5mQMvJMaUHvi
+ BWaAqxsTL2NxAQjvbyry9CLPWseJ+wKv6DZqIKtzH07RkDNz0ek49PWLFiTDZtTmgY0B
+ Fl3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786998278; x=1787603078;
- h=content-transfer-encoding:mime-version:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=108l7THhgpe6cHYXpok4mx1AU2dSOtOrPe6nKfAK15I=;
- b=pE30ddG8kNImHSczX8SNHouPv7V1FqOITp+cU3NLpsbGRtTvZyFe79wjnRbUxWjxKy
- isq0J4A++pIwas9DMuqBqOaH7gLXAuivd/QGinLBwwPGZq+xkh0LtW8ztAvpMsUcdwV2
- CGT0cRZHvQMmLAaZkxSoR81PzbsGxyHTX78fBy8tcgWs8zZJiD4CvCXP5dFvdcGKJMGZ
- 9nWcYYXgffDYt9LAMrD50SVxqKz+Tq+/zi/zh8qWketWAUXXQgu3bnYAJYlPJLu2X300
- Kr314kIaNTNdXqT3RNjl1MVnTV9zIjIiLVVRKDNsTaqZFKGBY1UZQKA/eXWlyQDWj+ry
- blzA==
-X-Gm-Message-State: AOJu0Yw86pcMTvTc4V7ax/R3QFdLRhpHU4jZCXupSxtEZ/8wWaNLH8GH
- tnowoYsydBHBx7jKptCQl8UoqNRvuTIRC+aQPynlSr3laA9+CQzEh97aKakWsoenK88OjvCHN/5
- mk4jh8oCTod23xAmnY+Bx1Rzqu3ZwR6/rOwnhKyOm7afXUttqd6wEgz3ss1SghzZBv6s3Usmec6
- QmtFvteedadkqCbColhtG0QP1r6phWlYoAKi7WXA==
-X-Gm-Gg: AR+sD13+hzUGArAMuWK/Vc2N3Nv/9CddGfAaxvVLp2qt/DPdcUhYI6Akgqx6sNXy7Zf
- PNIgLBY1xXVDAqR81HsvuiG6k5GXn5aa+o5k5VxSsrjLuSoRp+Ev/dNkGBLdSMD8ltDR+ILHH5H
- xG5W+7ysmUFIbg4wsBD50LntzCiwBinJI7PUN7LN88TcV8I5H7Xg0xPu3Jot3G03olcjsJ9ahQ/
- oAQ54LtlvkldDC0wwi2tS375SMeSKHOe4AEi1Eg6lZ+x2LXh3BtaC9L9GAUuTNTBOEvrJIjhOoQ
- Q6LanfVK8gcv4LReD7xKeXnNYpI6WIUNaapssh5tSJbZc5uPe7KokJyX5vsGgyH93Q==
-X-Received: by 2002:a05:622a:e0db:20b0:52d:9c42:f326 with SMTP id
- d75a77b69052e-52d9c42f545mr111901451cf.42.1786998278205; 
- Mon, 17 Aug 2026 13:24:38 -0700 (PDT)
-X-Received: by 2002:a05:622a:e0db:20b0:52d:9c42:f326 with SMTP id
- d75a77b69052e-52d9c42f545mr111901081cf.42.1786998277603; 
- Mon, 17 Aug 2026 13:24:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786998291; x=1787603091;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=f3ohXdIr8fhrUcLg1b1Cl433ZNfz2EPC8poOBiY/Wac=;
+ b=d4jzzJWQ8uysWyJF2WEkMeAuAkaH16so3vnG71qr/R6RBTiv366wGL9OkF2QK46/9V
+ weQsWa4v4S2Mf88k97Mjoa0AZ8fJOjunAHqPHDgGnEkFrvaNbU/+qifc44qHUwPQMXGV
+ 2OrsDLWBW+GUMp2pbS3qPHfSapNycyVLGrr3JFXI0DXcUGFwQJkuxzy7L16FjufervoG
+ rcPRDyiEb6iZoPJhV8yBeuuLY+4eKTWLCBaozz6IuaTk/3kX+UFwk2NhDi4ihbnRGhKZ
+ 29jUhs2znJtrpw/geXKtoI28RdQawsAC8W9qxoQvoHVCZT6QF9bYEk2yVuN+om5vFxpO
+ dxFg==
+X-Gm-Message-State: AOJu0YyD7hNrp6ZzYkobAAt/jUukmIo8RDG458bDbylu7VotSIpuCdY/
+ t1aGM7+aaWJ449oFpMxpf0dFybHPLfTn8EbKNaz/WHB6O2QZ+w8ior+cHI7ALK2DadfCzds13JX
+ gNhSiZNjXOOLRw2qNbRbZJtGOOaTd63kzJalqNMhgQBPg0YoDFgLQR1SboRibNFWFwB6cMBJTyi
+ h/qmSueCnLlWp24P9UMxD9W1cA8YPSq7ImNzCPFw==
+X-Gm-Gg: AR+sD101ytFUrgyhyxZPTQ0Sp7yqcrRH5mR10cRDcj+mVzghy+y7XVf7b2fqeDnYCuQ
+ 17Wd3ovm0ZXRJPgW/MZOBZgHEyEomTopBEsamPcqnUd/DJM8QAdxMoCxiZKGZoFAlm/2/BQV08T
+ rgfMBrLsN5JdxTMuUPle/NG6A6jOCkP0Wg1CESOhFvQZu1YkEPar+nT3SoUwdAueVjB6zSsTnad
+ QI+INK5HZykwknAvr8QACjIIRLjVZ1n/oBJHJHiG5T/eXk5XN5zi716IrRhZgIieExTvJqArMMk
+ 95zSDleX6w1hIq4SCtybaF4xMB78f71CoYrihm5F9R3+vEkmj3y/K92IFEDdPyzI0A==
+X-Received: by 2002:ac8:58c1:0:b0:51c:2068:a9f8 with SMTP id
+ d75a77b69052e-52d8530d77dmr261827051cf.5.1786998291317; 
+ Mon, 17 Aug 2026 13:24:51 -0700 (PDT)
+X-Received: by 2002:ac8:58c1:0:b0:51c:2068:a9f8 with SMTP id
+ d75a77b69052e-52d8530d77dmr261826611cf.5.1786998290778; 
+ Mon, 17 Aug 2026 13:24:50 -0700 (PDT)
 Received: from x1.com ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52db6136569sm22865761cf.12.2026.08.17.13.24.36
+ d75a77b69052e-52db6136569sm22865761cf.12.2026.08.17.13.24.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 13:24:37 -0700 (PDT)
+ Mon, 17 Aug 2026 13:24:49 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Li Zhijian <lizhijian@fujitsu.com>, Samuel Zhang <guoqing.zhang@amd.com>,
  Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
  Jack Wang <jinpu.wang@ionos.com>, Juraj Marcin <jmarcin@redhat.com>,
  Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: [PATCH 00/10] migration/rdma: Fixes or drops
-Date: Mon, 17 Aug 2026 16:24:14 -0400
-Message-ID: <20260817202424.2901438-1-peterx@redhat.com>
+Subject: [PATCH 08/10] migration/rdma: Sanity check
+ RDMA_CONTROL_REGISTER_REQUEST chunks
+Date: Mon, 17 Aug 2026 16:24:22 -0400
+Message-ID: <20260817202424.2901438-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260817202424.2901438-1-peterx@redhat.com>
+References: <20260817202424.2901438-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -115,28 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series includes some RDMA changes, either to drop some dead code, or
-to harden some checks for the incoming data stream, or both.
+The value received on wire for head.chunks when registering new RDMA
+regions is not correctly checked.  Logically the value can still make
+ram_chunk_start() (of ram_chunk_end()) to overflow, having a result pointer
+very small, smaller than RDMALocalBlock.local_host_addr.
 
-Please have a look, this should close all RDMA recent AI reports (none of
-them are real security issues), thanks.
+Add the sanity check.
 
-Peter Xu (10):
-  migration/rdma: Introduce RDMA_CONTROL_NUM
-  migration/rdma: Remove unregister code
-  migration/rdma: Stick with rdma_ prefix for all tracepoints
-  migration/rdma: Drop RDMALocalBlock.is_ram_block
-  migration/rdma: Drop RDMALocalBlock.unregister_bitmap
-  migration/rdma: Drop RDMARegister.key.chunk
-  migration/rdma: Sanity check RDMA_CONTROL_REGISTER_REQUEST on buflen
-  migration/rdma: Sanity check RDMA_CONTROL_REGISTER_REQUEST chunks
-  migration/rdma: Sanity check upper bound of register MR address
-  migration/rdma: Sanity check compress request ranges
+Reported-by: Tristan (@TristanInSec)
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4011
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/rdma.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
- migration/rdma.c       | 344 +++++++++++++----------------------------
- migration/trace-events |  83 +++++-----
- 2 files changed, 144 insertions(+), 283 deletions(-)
-
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 5ce8b06818..bbbc40ea3b 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3401,6 +3401,13 @@ int rdma_registration_handle(QEMUFile *f)
+                 chunk = ram_chunk_index(block->local_host_addr,
+                                         (uint8_t *) host_addr);
+                 chunk_start = ram_chunk_start(block, chunk);
++                if (chunk + reg->chunks > block->nb_chunks) {
++                    error_report("%s: head.chunks contains illegal value"
++                                 " (chunk=%"PRIu64", chunks=%"PRIu64", "
++                                 "nb_chunks=%d)", __func__, chunk,
++                                 reg->chunks, block->nb_chunks);
++                    goto err;
++                }
+                 chunk_end = ram_chunk_end(block, chunk + reg->chunks);
+                 /* avoid "-Waddress-of-packed-member" warning */
+                 uint32_t tmp_rkey = 0;
 -- 
 2.54.0
 
