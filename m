@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADF5C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E44C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:41:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxVf-0003GW-6O; Mon, 17 Aug 2026 09:36:15 -0400
+	id 1wvxXq-0000Ph-QU; Mon, 17 Aug 2026 09:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVX-00039x-Ev; Mon, 17 Aug 2026 09:36:09 -0400
+ id 1wvxXj-00008p-U2; Mon, 17 Aug 2026 09:38:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVT-0007Kl-Lk; Mon, 17 Aug 2026 09:36:06 -0400
+ id 1wvxXi-0007p1-9Y; Mon, 17 Aug 2026 09:38:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=+pcGxmCDcd4vtwUJSLy+BZ2nzEcn7wspnH9snwbDcAw=;
+ t=1786973727; bh=VmzP4cwG8y5g3NtV0tq+9+rh6fizh+WXwZl0J9kgTLY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VjpxOUtB9GKUe3pt1Vz46dtlejqKp+hIpPus+Bv6oDqYbxjhts122R7mK94HLceC9
- Atv8Yv/+/tomBqpRJ88g4iU798CRSZVu5XOQwwHLWZoIpOaPAPfvkwNpsddsk89iLF
- fFBevZplagNxISbLqisW7ZGbbgck1wRRBLQtyxp06xb8Gg6afdIv+3d+WZfAaY8gpn
- 0pKh88YfOPIJO9yoB9j/jSgofllXe1O4SPcMMajD6BSmaJVNtgcVKnjSXmNCFnUVs+
- uQs5L7amQ7PkWhP9x2qhw1c55Vxgi19/XLFuaQZ9lcBYliIIsNtZi+7M2tCKZMaTBC
- 70f2eHiECkorg==
+ b=MTYkWi8ZU5l5vWefM9PK5B9Pu0oyWlr4ghoVJG2jIzQsjZDiEksiQuY5bF/NDiwzq
+ cuvP0+Qgq6sefSEJ4q8DeON0e2ajNN388oGr2qiL3YHDxi1P6tyjoJX3v0R4/2cLCz
+ sePHgzQ35j3zWEiF4Zb0/uBpMatBVgOk8tBpkm24Ebbta2uarzpbze/jwQ1lTXhFlZ
+ cY8P7X51o1AlfFTHY+p0P3u2hcm2S/jHDXyYUQo3ivq5EOItvEjE6OzTR8paMvVLxM
+ ITnzfMhqzJtAPvn3aZEZ1CFJvzABfItVACSz8lYTGKW2SrL33LHsWlV63llWIRxqhy
+ K1p6wfJM4Yxbw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 288941CBCBE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A5E61CBCD5;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 620E840D41B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D57DE40D432;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A111330F86; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id E538B30FB4; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 111/135] s390x/ipl: validate num_comp against iplb
- length before iterating
-Date: Mon, 17 Aug 2026 16:34:21 +0300
-Message-ID: <20260817133451.2384630-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Klaus Jensen <k.jensen@samsung.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 134/135] hw/nvme: add SPDM_SOCKET Kconfig
+ dependency
+Date: Mon, 17 Aug 2026 16:34:44 +0300
+Message-ID: <20260817133451.2384630-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,42 +74,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-In ipl_valid_pv_components(), the upper bound of the for loop,
-ipib_pv->num_comp, is read from guest memory. Before iterating, verify
-that its value will not cause a read beyond the end of the
-IplParameterBlock.
+The NVMe emulation code unconditionally calls spdm_socket_*() APIs. Add
+a Kconfig dependency to avoid build errors when NVME_PCI is enabled
+without SPDM_SOCKET.
 
-Fixes: c3347ed0d2ee42a7 ("s390x: protvirt: Support unpack facility")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-3-borntraeger@linux.ibm.com
-[farman@linux.ibm.com: Added qemu-stable]
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit df607fd056044e40352a43f0b4422b9a5cb015c8)
+Fixes: 4f947b10d52 ("hw/nvme: Add SPDM over DOE support")
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20260810214846.76805-1-stefanha@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 6dab35f5492b04083f70726a3048d89d8deb4a32)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 8e3882d5063..1a029e0e5c0 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -124,6 +124,12 @@ static inline bool ipl_valid_pv_components(IplParameterBlock *iplb)
-         return false;
-     }
- 
-+    if (offsetof(IplParameterBlock, pv.components) +
-+        ipib_pv->num_comp * sizeof(IPLBlockPVComp) >
-+        be32_to_cpu(iplb->len)) {
-+        return false;
-+    }
-+
-     for (i = 0; i < ipib_pv->num_comp; i++) {
-         /* Addr must be 4k aligned */
-         if (ipib_pv->components[i].addr & ~TARGET_PAGE_MASK) {
+diff --git a/hw/nvme/Kconfig b/hw/nvme/Kconfig
+index cfa2ab0f9d5..cfeeed64cd7 100644
+--- a/hw/nvme/Kconfig
++++ b/hw/nvme/Kconfig
+@@ -2,3 +2,4 @@ config NVME_PCI
+     bool
+     default y if PCI_DEVICES || PCIE_DEVICES
+     depends on PCI
++    select SPDM_SOCKET
 -- 
 2.47.3
 
