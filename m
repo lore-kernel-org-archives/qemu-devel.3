@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D45C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA4C7C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvusL-0005AO-6V; Mon, 17 Aug 2026 06:47:29 -0400
+	id 1wvutH-0006Gh-CB; Mon, 17 Aug 2026 06:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvus3-0004S9-My; Mon, 17 Aug 2026 06:47:11 -0400
+ id 1wvusW-0005WD-Tl; Mon, 17 Aug 2026 06:47:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvus1-0004Gr-Se; Mon, 17 Aug 2026 06:47:11 -0400
+ id 1wvusT-0004IL-Ha; Mon, 17 Aug 2026 06:47:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=4OBnDQXmrE3v0dK3bOMHR7fSYamM1UPiyrQk9pQg2TA=;
+ t=1786963486; bh=/AivCAJzVHHIwM7Ich4GKCuYDzoXBR9wL0S1Bfvgdo4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ps3FgWBN84UGs5YPTsZxieq37Td2isX8m9FltmkrPDSJwl+BiVaYuU3teD7VOWowz
- z2aGSdxbsi/FUVZ3xvyURGM2lzBUehJnCc6Bwti8cDz5JyRHThRWyTOYm7ea+0sg9P
- b8WFSK+sruOrDNr0rMwPQZ9k/nRS+KZ+ykdI2DSKrs6shh/eQFwvKGTqHiRLZlVGME
- N716BMmG/393RlqgjctcOsFE+xgiEB3/Xq4G6+ltVcK9VBXwbEYfXznlrnHj2GCW14
- 1UtXVt/fZ2miEEXl0WCX1ZrDTessK6OVw3NvYy8LWfoqR73i6lMJbY/3UxWPDgaZWq
- JbRUGm9xqNcCg==
+ b=P0uYykktJyErB7WNpUT74t2fhGSkNn7ihYhz8ZcK5IXfcJCPerOIHfCfQWkIV8NFe
+ rF4sSybnLH8VlcqWyRonG6Yz+OppDaM/yroMpnp+tRjIONM6AZV2EIPoFD9RwRoUs9
+ RogfHgb2k/ouklN1+lnwujwP8jdPQNK5hPVJcNuVtcJ7E3vTUGJtwC/82HNT0uyxVX
+ pdLwC4+gBh9UReknGdUhc6S70ppEXbWfQItQK9Jmg3BHmYyuozqTx0lUzAnBlRCVDv
+ cSjKg3bRuPWLMdDYOaeWJU3dsH5sQj9irXq3ZVrRe/LN477ajHMhFYQr4P0NyIBwkI
+ PUO3dWDy2oNRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C631E1CBB81;
+ by isrv.corpit.ru (Postfix) with ESMTP id D2F7F1CBB84;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C7DA740D212;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D48F040D215;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 4304A30E7A; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 4C48A30E80; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 148/161] hw/net/vmxnet3: Do not abort if guest
- provides bad interrupt numbers
-Date: Mon, 17 Aug 2026 13:43:02 +0300
-Message-ID: <20260817104344.2047346-28-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 151/161] tests/qtest/ide-test: cover raw
+ (2352-byte) ATAPI CD reads
+Date: Mon, 17 Aug 2026 13:43:05 +0300
+Message-ID: <20260817104344.2047346-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,100 +71,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-vmxnet3_validate_interrupts() currently aborts via hw_error() if
-the guest provided bad interrupt numbers. This should not happen,
-QEMU should rather refuse to activate the device in this case instead.
-Thus propagate the error to the callers to handle it more gracefully
-there.
+READ CD with the field-selector set to 0xf8 returns full 2352-byte
+raw sectors (sync + header + 2048 data + EDC/ECC), driving the ATAPI
+raw read path that READ10 never touches. Add a send_scsi_cdb_read_cd()
+helper and a CDROM_RAW flag to cdrom_read_impl(), then exercise both
+PIO and DMA. The PIO case uses a byte-count limit spanning several
+raw sectors so the device must rebuffer mid-burst, and each sector's
+2048-byte payload is verified at its in-sector offset.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260731113352.189066-1-thuth@redhat.com>
-(cherry picked from commit 46099d99005588b25eb07957cd9cdd688c4fc476)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit 502dbdfd9687e967dfe5eefce7123ecf9baa798c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 8569484b2f2..24c551a0547 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1336,32 +1336,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
-         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 6e59197566c..b36b0f8875b 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -48,6 +48,10 @@
+ 
+ #define ATAPI_BLOCK_SIZE 2048
+ 
++/* Raw READ CD sector: 12 sync + 4 header + 2048 data + 288 EDC/ECC. */
++#define ATAPI_RAW_SIZE   2352
++#define ATAPI_RAW_DATA   16
++
+ /* How many bytes to receive via ATAPI PIO at one time.
+  * Must be less than 0xFFFF. */
+ #define BYTE_COUNT_LIMIT 5120
+@@ -982,6 +986,41 @@ static void send_scsi_cdb_read10(QPCIDevice *dev, QPCIBar ide_bar,
+     }
  }
  
--static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
-+static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
++typedef struct ReadCDCDB {
++    uint8_t opcode;
++    uint8_t sector_type;
++    uint32_t lba;
++    uint8_t length[3];
++    uint8_t main_channel;
++    uint8_t sub_channel;
++    uint8_t control;
++} __attribute__((__packed__)) ReadCDCDB;
++
++static void send_scsi_cdb_read_cd(QPCIDevice *dev, QPCIBar ide_bar,
++                                  uint64_t lba, int nblocks)
++{
++    ReadCDCDB pkt = { };
++    int i;
++
++    g_assert_cmpint(lba, <=, UINT32_MAX);
++    g_assert_cmpint(nblocks, >=, 0);
++    g_assert_cmpint(nblocks, <=, 0xffffff);
++
++    /* Construct SCSI CDB packet */
++    pkt.opcode = 0xbe;
++    pkt.lba = cpu_to_be32(lba);
++    pkt.length[0] = (nblocks >> 16) & 0xff;
++    pkt.length[1] = (nblocks >> 8) & 0xff;
++    pkt.length[2] = nblocks & 0xff;
++    pkt.main_channel = 0xf8; /* sync + headers + user data + EDC/ECC: 2352 */
++
++    /* Send Packet */
++    for (i = 0; i < sizeof(ReadCDCDB) / 2; i++) {
++        qpci_io_writew(dev, ide_bar, reg_data,
++                       le16_to_cpu(((uint16_t *)&pkt)[i]));
++    }
++}
++
+ static void nsleep(QTestState *qts, int64_t nsecs)
  {
-     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
-+
-     if (idx >= max_ints) {
--        hw_error("Bad interrupt index: %d\n", idx);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "vmxnet3: Bad %s queue interrupt index: %d\n",
-+                      type, idx);
-+        return false;
-     }
-+
-+    return true;
- }
+     const struct timespec val = { .tv_nsec = nsecs };
+@@ -1036,10 +1075,12 @@ static void ide_wait_intr(QTestState *qts, int irq)
  
--static void vmxnet3_validate_interrupts(VMXNET3State *s)
-+static bool vmxnet3_validate_interrupts(VMXNET3State *s)
+ #define CDROM_PIO 0
+ #define CDROM_DMA (1 << 0)
++#define CDROM_RAW (1 << 1)
+ 
+ static void cdrom_read_impl(int nblocks, unsigned flags)
  {
-     int i;
+     bool dma = flags & CDROM_DMA;
++    bool raw = flags & CDROM_RAW;
+     QTestState *qts;
+     QPCIDevice *dev;
+     QPCIBar bmdma_bar, ide_bar;
+@@ -1047,8 +1088,11 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+     int patt_blocks = MAX(16, nblocks);
+     size_t patt_len = ATAPI_BLOCK_SIZE * patt_blocks;
+     char *pattern = g_malloc(patt_len);
+-    size_t rxsize = ATAPI_BLOCK_SIZE * nblocks;
++    unsigned xfer = raw ? ATAPI_RAW_SIZE : ATAPI_BLOCK_SIZE;
++    size_t rxsize = xfer * nblocks;
+     uint16_t *rx = g_malloc0(rxsize);
++    void (*send_cdb)(QPCIDevice *, QPCIBar, uint64_t, int) =
++        raw ? send_scsi_cdb_read_cd : send_scsi_cdb_read10;
+     int i, j;
+     uint8_t data;
+     uint16_t limit;
+@@ -1075,8 +1119,7 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         prdt[0].size = cpu_to_le32(rxsize | PRDT_EOT);
  
-     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
--    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
-+    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
-+        return false;
-+    }
+         send_dma_request_dev(qts, dev, bmdma_bar, ide_bar, CMD_PACKET, 0,
+-                             nblocks, prdt, ARRAY_SIZE(prdt),
+-                             send_scsi_cdb_read10);
++                             nblocks, prdt, ARRAY_SIZE(prdt), send_cdb);
  
-     for (i = 0; i < s->txq_num; i++) {
-         int idx = s->txq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
-+            return false;
-+        }
+         qtest_memread(qts, guest_buf, rx, rxsize);
+     } else {
+@@ -1093,8 +1136,7 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         assert_bit_set(data, DRQ | DRDY);
+         assert_bit_clear(data, ERR | DF | BSY);
+ 
+-        /* SCSI CDB (READ10) -- read n*2048 bytes from block 0 */
+-        send_scsi_cdb_read10(dev, ide_bar, 0, nblocks);
++        send_cdb(dev, ide_bar, 0, nblocks);
+ 
+         /*
+          * Read data back: occurs in bursts of 'BYTE_COUNT_LIMIT' bytes.
+@@ -1134,7 +1176,17 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+         assert_bit_clear(data, DRQ | ERR | DF | BSY);
      }
  
-     for (i = 0; i < s->rxq_num; i++) {
-         int idx = s->rxq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
-+            return false;
-+        }
-     }
+-    g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
++    if (raw) {
++        /* The 2048-byte payload of each raw sector sits past its header. */
++        for (i = 0; i < nblocks; i++) {
++            uint8_t *sec = (uint8_t *)rx + i * ATAPI_RAW_SIZE + ATAPI_RAW_DATA;
 +
-+    return true;
- }
- 
- static bool vmxnet3_validate_queues(VMXNET3State *s)
-@@ -1554,7 +1568,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
-                sizeof(s->rxq_descr[i].rxq_stats));
-     }
- 
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        return;
++            g_assert_cmpint(memcmp(sec, pattern + i * ATAPI_BLOCK_SIZE,
++                                   ATAPI_BLOCK_SIZE), ==, 0);
++        }
++    } else {
++        g_assert_cmpint(memcmp(pattern, rx, rxsize), ==, 0);
 +    }
  
-     /* Make sure everything is in place before device activation */
-     smp_wmb();
-@@ -2392,7 +2408,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
-     if (!vmxnet3_validate_queues(s)) {
-         return -1;
-     }
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        return -1;
-+    }
- 
-     return 0;
+     g_free(pattern);
+     g_free(rx);
+@@ -1163,6 +1215,16 @@ static void test_cdrom_dma_large(void)
+     cdrom_read_impl(BYTE_COUNT_LIMIT * 4 / ATAPI_BLOCK_SIZE, CDROM_DMA);
  }
+ 
++static void test_cdrom_pio_raw(void)
++{
++    cdrom_read_impl(4, CDROM_RAW);
++}
++
++static void test_cdrom_dma_raw(void)
++{
++    cdrom_read_impl(4, CDROM_DMA | CDROM_RAW);
++}
++
+ int main(int argc, char **argv)
+ {
+     const char *base;
+@@ -1223,6 +1285,8 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/cdrom/pio_large", test_cdrom_pio_large);
+     qtest_add_func("/ide/cdrom/dma", test_cdrom_dma);
+     qtest_add_func("/ide/cdrom/dma_large", test_cdrom_dma_large);
++    qtest_add_func("/ide/cdrom/pio_raw", test_cdrom_pio_raw);
++    qtest_add_func("/ide/cdrom/dma_raw", test_cdrom_dma_raw);
+ 
+     ret = g_test_run();
+ 
 -- 
 2.47.3
 
