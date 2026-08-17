@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E49ECC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2674C5DF7A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxWE-0004Jv-Ci; Mon, 17 Aug 2026 09:36:50 -0400
+	id 1wvxVV-000373-98; Mon, 17 Aug 2026 09:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxW6-0004E2-PY; Mon, 17 Aug 2026 09:36:42 -0400
+ id 1wvxVP-00036F-94; Mon, 17 Aug 2026 09:35:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxW2-0007Qi-Pe; Mon, 17 Aug 2026 09:36:41 -0400
+ id 1wvxVN-0007JE-6J; Mon, 17 Aug 2026 09:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=auui/cjvOi9HU+1/WhOB3jz6kcr7EoQpfLfmv5n7Iqs=;
+ t=1786973727; bh=QPmgQRxRUU/VLjIvlJovmyydZwNP/RAzOOgZF8r44DU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OKmTMLJnqrO8uogwQVnz94PV3P/doxMdR6Wdtzhhq0opamVBUWc1h90IL+SJR+raf
- oCWG0nY0i3zWevMOr8Myj5i4Jjk8gmD2SgypQ3lHY+bhlV3L3cGVHJm6NVuwuiU5C+
- HTtyvt0+92B2rF2Op2XFxBkfcWdR36cSHE8jpyNUgQZql+Y5HZ898bHB+HjOX9pN/S
- FPWHqDgbIghjIlLwgLrdM/PP8Bmd/DB9ubYgNPCUUFbyPobyVFWKNABHBMmZlCFXLa
- dEvjhaGcG4McgABZPf8S+rOqeJuWA5cRx11WGXrTiXbkRc7V29c7shg1lD0x8NjeNI
- om37TXfb/3UZA==
+ b=mEMxupK0/C8rpJkQJizTbpTJP2oLretwPXe9N7NvB1wGiXgF9pmlSW1MON+xCDFJj
+ 6FpVFQDIaeiORQhY06V3UUq4aMC95tZJMAoEReHtpjlBn2+ulHV0O7vA3eCrougn51
+ 9xcWBwKtjo35iPGcy1/mFyaj5cW4l8Ugq8Q7vzXDewHGMmB+exVMTU/Z+D7jcUkNE+
+ 6bHzj0ILnczAAMtaF4BJbAi7Bc92gwFBUMuCkDJimreKCBtdKR6OJuD1HVq+7K7w1s
+ eUgqyXCXYR/pHPqpqfjSg+0fSEIvKvG8qHV+lLWCIhlRlrzzrlr2HzjXY+UXxO3SaV
+ GBgOxa6AMnrHA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 48D501CBCC5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 13F9C1CBCBA;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 840BA40D422;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4D27840D417;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B5A2530F94; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id 9550130F7E; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 118/135] tests/tcg/s390x: Test STCKF condition
- code on a faulting store
-Date: Mon, 17 Aug 2026 16:34:28 +0300
-Message-ID: <20260817133451.2384630-16-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 107/135] tests/tcg/s390x: Test PRNO TRNG
+ interruptibility
+Date: Mon, 17 Aug 2026 16:34:17 +0300
+Message-ID: <20260817133451.2384630-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -73,77 +74,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Add a small test to prevent regressions.
+Add a small test that issues a large PRNO TRNG request while a timer is
+running, and checks that the timer interrupts it several times.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714203206.363028-3-iii@linux.ibm.com
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-3-iii@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit e79ea4472691fd7f7b3436dafbabd17c78fc8bf4)
-(Mjt: context fix in tests/tcg/s390x/Makefile.target)
+(cherry picked from commit abe1d893f41d5fcbdabc22f46ec148069a4ef319)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index e5fa30da845..ff165f05eb1 100644
+index da5fe71a407..e5fa30da845 100644
 --- a/tests/tcg/s390x/Makefile.target
 +++ b/tests/tcg/s390x/Makefile.target
-@@ -49,6 +49,7 @@ TESTS+=cvd
- TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
-+TESTS+=stckf
+@@ -70,6 +70,7 @@ Z13_TESTS+=vcksm
+ Z13_TESTS+=vstl
+ Z13_TESTS+=vrep
+ Z13_TESTS+=precise-smc-user
++Z13_TESTS+=prno-trng
+ $(Z13_TESTS): CFLAGS+=-march=z13 -O2
+ TESTS+=$(Z13_TESTS)
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/stckf.c b/tests/tcg/s390x/stckf.c
+diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
 new file mode 100644
-index 00000000000..51c8c9df9f8
+index 00000000000..43eea5db1dc
 --- /dev/null
-+++ b/tests/tcg/s390x/stckf.c
-@@ -0,0 +1,44 @@
++++ b/tests/tcg/s390x/prno-trng.c
+@@ -0,0 +1,67 @@
 +/*
-+ * Test that a faulting STORE CLOCK FAST does not clobber the condition code.
++ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +#include <assert.h>
 +#include <signal.h>
++#include <stdio.h>
 +#include <stdlib.h>
-+#include <unistd.h>
++#include <string.h>
++#include <sys/time.h>
++#include <asm/ucontext.h>
 +
-+static void handle_sigsegv(int sig, siginfo_t *info, void *ucontext)
++static unsigned char buf1[16 * 1024 * 1024];
++static unsigned char buf2[16 * 1024 * 1024];
++
++static volatile sig_atomic_t interrupted;
++
++static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
 +{
-+    mcontext_t *mcontext = &((ucontext_t *)ucontext)->uc_mcontext;
++    struct ucontext *uc = ucontext;
++    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
 +
-+    /* The condition code must be the one set by SLGR, not garbage. */
-+    _exit(((mcontext->psw.mask >> 44) & 3) == 3 ? EXIT_SUCCESS : EXIT_FAILURE);
++    if (*(unsigned short *)(addr - 4) == 0xb93c) {
++        interrupted++;
++    }
++}
++
++static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
++{
++    register unsigned long r0 asm("r0") = 114;  /* TRNG */
++    register unsigned long r2 asm("r2") = (unsigned long)b1;
++    register unsigned long r3 asm("r3") = l1;
++    register unsigned long r4 asm("r4") = (unsigned long)b2;
++    register unsigned long r5 asm("r5") = l2;
++
++    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
++                 "   jo 0b"
++                 : [r2] "+r" (r2), [r3] "+r" (r3)
++                 , [r4] "+r" (r4), [r5] "+r" (r5)
++                 : "r" (r0)
++                 : "cc", "memory");
 +}
 +
 +int main(void)
 +{
++    struct itimerval it = {
++        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
++        .it_value = { .tv_usec = 10000 },
++    };
 +    struct sigaction act = {
-+        .sa_sigaction = handle_sigsegv,
++        .sa_sigaction = sigprof_handler,
 +        .sa_flags = SA_SIGINFO,
 +    };
 +    int err;
 +
-+    err = sigaction(SIGSEGV, &act, NULL);
++    err = sigaction(SIGPROF, &act, NULL);
++    assert(err == 0);
++    err = setitimer(ITIMER_PROF, &it, NULL);
 +    assert(err == 0);
 +
-+    asm volatile(
-+        "lghi %%r1,100\n"
-+        "lghi %%r2,0\n"
-+        "clgr %%r1,%%r2\n"  /* CC_OP_LTUGTU_64 */
-+                            /* cc_src=100 is not valid for CC_OP_SUBU */
-+        "ipm %%r0\n"        /* force cc_src to env */
-+        "lghi %%r3,5\n"
-+        "lghi %%r4,3\n"
-+        "slgr %%r3,%%r4\n"  /* CC_OP_SUBU, cc=3 */
-+        "lghi %%r5,0\n"
-+        "stckf 0(%%r5)\n"   /* faults; cc must stay 3 */
-+        : : : "r0", "r1", "r2", "r3", "r4", "r5", "cc", "memory");
++    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
++    printf("interrupted %d times\n", interrupted);
++    assert(interrupted >= 3);
 +
-+    return EXIT_FAILURE;
++    return EXIT_SUCCESS;
 +}
 -- 
 2.47.3
