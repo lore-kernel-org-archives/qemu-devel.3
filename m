@@ -4,142 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B87A9C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 04:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65927C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 04:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvoXw-0001L1-2H; Mon, 17 Aug 2026 00:02:01 -0400
+	id 1wvodk-0002S8-K8; Mon, 17 Aug 2026 00:08:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvoXS-0001Ie-JV
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:01:32 -0400
+ id 1wvobj-0002M0-Ol
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:05:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvoXM-0000I3-QL
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:01:30 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wvobg-0000fk-Dl
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:05:53 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLCbt04058363
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:01:21 GMT
+ 67GLCN0c3656967
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:05:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- V6GQ9fb2Dxqi354smc5sS84D22sNRgosJmQi3+m8/Yo=; b=L51Xbf5pKvQ+xS/3
- ALnJnQWB6j6E8eMIJfK4vcfYVVnHC8MdswKnBResiwqF3BKyXfoQb31IebxEWWMa
- 6oqtIQgLRWuPoX8ef3AZONXsd778zUkEm7t5FD75GrO62/Fv080rV2KyiFerqQ6C
- Hwt8lM+U3lhIHYnVtMDc/Y4w2dvVjjNrQUpUbqcULOT4oud+tbLaPZL5dsnarUyl
- en1vnywDXjN5iMPOp4scRRltLFQr9MCsHFZmZRqAqy7wyC6Zld1dARv4vms6bW3c
- rA0MP7pazBx3sp4eLoYbKkHifA/wCJRh4fEfG4Iyo0jdTS1Qoi/ZE7c3o7zf1EO2
- AGK6WQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2hd7vxc8-1
+ k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=; b=EIHn/dLWtLiFiZdl
+ V8cvYEpZB5Ywh5iCkPtO9RcfV94ACnpsSulTxpsmY4MfYS/1Pr+oifL82FSsUdyU
+ hSRSaPJe02bcJCDknhp3k0jiw+Q4CPk+7E2N2WJENdsCYsT+1QEaFWVtBbTxAFFz
+ f0q236cMwrksdp4AG4500+NuHbqN0DOTVZgh3TCgdHh4pjn+pIBL1ObPEiL4VUiu
+ fgNzG/vC0OLvXBOZgQMvS6jPxPupKHrHe+9lMHo5lxEDjQI4XN4cGs62gLGe5ayR
+ i7nCH1HMfenECepXwJva5i3UYxjNq7O67AMVEUZjgkn5ARn+vYyjkTPi/FJiZv85
+ KX6SRw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gn0hc-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:01:20 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e5e38fbc5so305539285a.2
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 21:01:20 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:05:48 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e695a3b28so401570985a.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 21:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786939279; x=1787544079; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786939547; x=1787544347; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=V6GQ9fb2Dxqi354smc5sS84D22sNRgosJmQi3+m8/Yo=;
- b=MUzDYIChndZyTL0S/Y9O7UfWtn6ssZXLu0dg/wE5AJq8v1S8IwqdW/ngcrJ2Za8oVs
- vz8TAiZteWsU5JJnD0PpNLOGUhCF04KAyIxkVFoq6LY/22IwVRC2rmZpm84BvPSK3zt+
- LcswqE8g0Rwf+wCH9ZFkpvUClnHhuia0UOPkd9wOyeGm4PtUWPuSvvBMDs102C/UbMAs
- UYpTR+NtmNmcowH7stbWSZhEcsSu5ppyLLcm0mfSRVY6/Ais+ULlfgbsewFSFmZOyYXE
- Q6yeXKEbsoac3vGSkgPHNR+mVTm0FBdZu9FfzPEA+jc/0XwkuGe05vNo61d/5D91Y2vr
- bZyQ==
+ bh=k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=;
+ b=X+h8/cKRruuVZVS5fgoyexMsqqfaxd/zbjG010CToHxDb7X0nevFw4AIGvoaWAviEO
+ 9//O9cmb7q2sHcLCKxNbq/ScI6bJMs6CAdn8ZsLxThfiiWXpvHTvH8NGXIxuXlA99Nr/
+ TzrFNYb5F0mVKvrfJBrDLHS/i/LDDMO0+p+7OH5L5lqOuMwS95pX52lt3HKz7DztwBIs
+ rQeg06tszdZOhuyO5C18qXe912tpsi/55nQN46NE4OrkwC/G0dgsPqH+wknHiN+bxILx
+ tgReS0Ntan+vCKnrVlyWQ1iBHSZ7vzztry7bYcZredRH1+UEH2k18UKl/1SLM/5XhY/N
+ B+lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786939279; x=1787544079;
+ d=1e100.net; s=20251104; t=1786939547; x=1787544347;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=V6GQ9fb2Dxqi354smc5sS84D22sNRgosJmQi3+m8/Yo=;
- b=m2eol5ycjsDsNwsZw/iO2b8OJwskKatAqHOBS7h0FDWlFEq3PLsElScSxoU+SeOExS
- q+K0B/Ufzo4vysuIHhki6X/BSHfdvh85NEdFn7CaWG2GcWpC0hPSdHh0uuonj7r250Mr
- XsyLIUprIbDL7F4df7D0Hq2DKu2iNXkXFu9c/vKpJAtninumiWhYT4qmFUpmH9T2wEyF
- h+BEaeSXXr7uINdUuyRGi2xmEvi/ixUJcVY3JUYficb7G5gV8+nCUhwU58A+hr+GdkmO
- c+j3JSluuyMT/O6WTlgRpJS4bc45xzOd1Id9uwGf4jD0aGxJe4PuuUL6Do23NMBql/f1
- cdzQ==
+ bh=k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=;
+ b=qqnL73iVvkc6dXeKp/mM+53I9iELbvHhpUj5LqOOE5OUTqXPRA6sEhlKhEmSaIZITt
+ oE9s2WDb+jZEhstq+vxp/oIwDMMxmr54DpKQk8rXOmsbDlcCM+IDwV3eDc7RmrtsSbwW
+ ydSKkJhpxb4oL57rehvmDq6l9NTLJxAazT2hNkiVRaoCN2p6fQYMGXNrwoIBq7HxXT4r
+ JtELUL8GULIjn0faHs9HkLQVG2EEdsTwSm7TW59o3HMzJabWgus4g/RevPGQj95Pa7MH
+ IjUmFpvB7+Lk7xtX9CIGjgEhquylsf0tT4nOCIPZhczxmrEAsUHJwTQq2mxo2lse3iMm
+ pG9w==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqmT3EGAbfzmIm/Wqx+Dv+u42IvNvIKWnqhvVp1hmJfl+1lYJM59W6eIcyCUXq67h4wZ7X/6il6xzd6@nongnu.org
-X-Gm-Message-State: AOJu0YxpRJyrhHd+4Wm5hO8xDpK59EkqkF7ZnVlnW2klQ1TFYlpMEkzx
- KvyuE82xFwnfGW5+Qsc2lpGmgn/6tPw7LGc6bXyZUjxneIU6HZ9XEYA07l/iA7O+NUPSlUaxQT/
- /74IJNpTKlVlgtZhnCSSWWNZF93h7oTdtCIUhUyF45emE8WG13Be1ue98/A==
-X-Gm-Gg: AR+sD10qMcf11Sh2HRqNNYqIGXpwoA9DyIlpgG2AP6w0Elmb2L3doQE4Ko6VUWfya3J
- d+buM5NJISLl8rVJXtZ4Om3eSNdi1/rAghIwDUMHZlLCr3/gaVVjsaOxZ0UeArexcAVCA5G1JRb
- PFzMnKpwXksYKturZ8Ng+po9abnaBcTmjIwjMFNxyQ0hCDFAWlI3CIv8EC2iuNS0rMQG9JZIBJD
- H1MvgqJQESqg9LuT3v7EQ8WMUffF6Gvmqvofm0rOdy6xYwPRziDpN1/DAasD67+czT2pwJugjtT
- aVuqovLusTCeijnsodt6xxeHhvaDxsTRewxmmJVpibulbxmYSjRqwqu2u8KNSvgwfSOI0ZQwXlD
- OGtc41M5E0tvz9B+oDD0MKUp4HKflOUsc+Ug=
-X-Received: by 2002:a05:620a:f06:b0:92e:7d53:8e8d with SMTP id
- af79cd13be357-936d236395cmr2143328685a.27.1786939279257; 
- Sun, 16 Aug 2026 21:01:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:f06:b0:92e:7d53:8e8d with SMTP id
- af79cd13be357-936d236395cmr2143325485a.27.1786939278872; 
- Sun, 16 Aug 2026 21:01:18 -0700 (PDT)
+ AHgh+Rpc88piCK6XwA+jE/hGbdG/D4SqkU9WL8xpUG7Nr32LMLfYDLp3BGjY8E2LgsS4xjZNasuyahyaAbsT@nongnu.org
+X-Gm-Message-State: AOJu0Yw17d7DRVjT2f0AsX7wk4A1X7p7C0ROpMiB4THf47w+gbvFTHjR
+ aZjVPjuZ1+OwqtvXbkJNqa47Y9oNV2I7UziBtrN0/VSYhl6owHUl87O0bHgd4+ZTBPYQBgMLu/g
+ pL/xMGAxjaRrpsR71tcJ9XykSNtecmdP73d965Lb9cjYzMERYdLERjyib+w==
+X-Gm-Gg: AR+sD12RFm7lx9lqzxB8T/PejCg+oTMUINF1boVmOo/VyfuNBYGUJvftbujTIvF508F
+ eUsRSYWBfe0FJtweuGOJKYki4JkSIsTozk7sUafUwejImhusmUcC3k+TxnOTn3hDKiSgU9icrhX
+ /XBFWOSe77wY+UoJYrQl4mlQ8TXx1G5rVCk1tZXzlIPlZLXhLQn6ALUpuSahzf+be/HKt20Pem1
+ Sf7MXSbsgSGLIpNozWJgRUyuHJLMrxTY3idBYVJYSmkCKu5/k3JUmbKob3SRlojbHr+Laj18KvP
+ 2l4NQUQ1FAp231Nejmefb+G0IkUceNnVyYgxyRka7KYfG40KoJCCDdgDD9Vo2TU8VetgDTgPNND
+ eFjpFNLflKRXZQYg62yK9xx9Fz+yDK/on+e8=
+X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
+ af79cd13be357-936c07231e8mr2899432185a.15.1786939547133; 
+ Sun, 16 Aug 2026 21:05:47 -0700 (PDT)
+X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
+ af79cd13be357-936c07231e8mr2899430285a.15.1786939546749; 
+ Sun, 16 Aug 2026 21:05:46 -0700 (PDT)
 Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482a5a3158asm428662f8f.7.2026.08.16.21.01.17
+ 5b1f17b1804b1-4999d06167csm5127035e9.3.2026.08.16.21.05.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Aug 2026 21:01:18 -0700 (PDT)
-Message-ID: <f54d8c2f-3d30-47f5-809a-ddb60c8df03d@oss.qualcomm.com>
-Date: Mon, 17 Aug 2026 06:01:17 +0200
+ Sun, 16 Aug 2026 21:05:46 -0700 (PDT)
+Message-ID: <8e376be3-446c-4783-9081-a633ddbc7a74@oss.qualcomm.com>
+Date: Mon, 17 Aug 2026 06:05:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/10] build: add optional librpmi dependency
+Subject: Re: [PATCH v4 03/12] kvm: Provide explicit error for
+ kvm_create_guest_memfd()
 Content-Language: en-US
-To: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-References: <20260814045315.3416169-1-subrahmanya.lingappa@oss.qualcomm.com>
- <20260814045315.3416169-2-subrahmanya.lingappa@oss.qualcomm.com>
- <7c5a0b1d-12db-4be2-b20c-9d132b027a76@oss.qualcomm.com>
- <CAPxK-6c5ucsJttV6WVTQSe=O3s+q-tL=-Mv42iJPUBftFAXFhA@mail.gmail.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ jmarcin@redhat.com, david@kernel.org, pbonzini@redhat.com,
+ chenyi.qiang@intel.com, farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
+References: <20260812201938.198915-1-michael.roth@amd.com>
+ <20260812201938.198915-4-michael.roth@amd.com>
+ <cc83a207-c89f-4ec7-864a-db0115c4f641@oss.qualcomm.com>
+ <an8Nn5cb52ev4MF2@x1.local>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAPxK-6c5ucsJttV6WVTQSe=O3s+q-tL=-Mv42iJPUBftFAXFhA@mail.gmail.com>
+In-Reply-To: <an8Nn5cb52ev4MF2@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDAyNyBTYWx0ZWRfXy3BuQEtqhxag
- tmc+v9sMeltrnxHo4yrjIrIjH7C0NaoyZMueGSYOteC1Lk4u46VP+GzrnmjPzisaanjM9d6dMPU
- 9KE2gYz5vk3PiPYgkCGOw7Td+Ye3s4LAjToIz+HCNOA54gyR5usnqvoXbkMeEa6zR9slc+fW3tX
- 2TZ+6jNmrPwuuCwWWFDDNdWjOgXix3kZwdQyvz5SumNDXgp0lWTwfTyZvSIvVIYy3TqUxxNDRi9
- 7M51YttSEexNtWE60ycp70l++VhySKjChh2eC2W8qCjjVPLyNySWBnpdkD9nKQqb2kCttI+Co/X
- O0cFvfK/9UQ+JoSEkvKE6X2jA8c1ee0eSTJMR8jixZCsLZO1kRaF98B3zhxk3sCmR5Vj+4GToqH
- 0mM4b+kep6o1lgGUXaQ4ybVK5WlU00m17m1zAi/e1DP3OHPrtg5HV6E8y77yZHyHItmhC+uVqnm
- ROqYOMBhH3Appz2XkMw==
-X-Proofpoint-GUID: gKjo61huZH2vsSK7BWPqchxCkQHKQSEy
-X-Authority-Analysis: v=2.4 cv=Ja2Ma0KV c=1 sm=1 tr=0 ts=6a828790 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: HR1Nqc18c1Bsv3Y7IxD5_q8sEYP2T6AP
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDAyOCBTYWx0ZWRfX7Ika4SDAuF9B
+ vHp8PEK2FJ7L3SSUKZSaAx9okHHW9g4p+4hGAJi3iKsR7Irt5eq7kARG+vYle0lVIou3rNperYN
+ mRNCcipzxpD/mqNLU0dJEVehwpkOPdY=
+X-Proofpoint-GUID: HR1Nqc18c1Bsv3Y7IxD5_q8sEYP2T6AP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDAyOCBTYWx0ZWRfX8nbyvIH0H8yW
+ CLz86F75AYb+dkpzblN2U6npi09XAfJmQICPRT2imMAqbfl27rGPBk6KHzQqfsxUqo43VpZr2BQ
+ lUhvG/vlvF32ks2H6EkdUfTDc3yq2mC8WxQ7y4/JayH8jmtL14IIRu+hNoLckJvr0h7jR1Mp4zJ
+ 5A7SYtRGsWOwGpawymZ91I2PC10vXXnrUJAvha4BAM5nD2M0bA03HdCS6ksMOrIZQVLoQ/xypy7
+ sIdVvSoNCW/4s9LpPoi5r/mODtCk8HJYKEygrh4fiuX24IZvnUrqkARI5LjWlxE4SDYdIXxSXtG
+ tDiEWwbjAmzA0OjK1YkziYNWIqeYBCtfRy7ni2x8oJ48ZWtcbnsNWGE31tww5RjtpaFKJCMbWxi
+ r9G7tCIBSkuyTtoQLKPNGXLMyedY2Wx7EgJino5zMOzylPXH5KxJzEz1gROrUARY03ecti33+bt
+ wAQXmeTr5g+qilQf4BA==
+X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a82889c cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=kmPEfuMoTeVt9x6YpBYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: gKjo61huZH2vsSK7BWPqchxCkQHKQSEy
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDAyNyBTYWx0ZWRfX8Hy2Nb4VJCXj
- ow/X7uEdZQ8fpQiO8deopfzZd+y8xs7N9cWX0lSh1+mB6N8QOOfpbPnOL8CBhoJdCwOtzGxl4bW
- /LDt7yutmldDxk1FIukmOwuNA9zijRA=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8 a=zd2uoN0lAAAA:8 a=R0W7oxC2TBocBvmClHUA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 adultscore=0
- bulkscore=0 impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
+ priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170027
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170028
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -164,49 +159,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/8/26 20:34, Subrahmanya Lingappa wrote:
-> Philippe,
-> 
-> On Fri, Aug 14, 2026 at 11:14 AM Philippe Mathieu-Daudé
-> <philmd@oss.qualcomm.com> wrote:
+On 14/8/26 14:44, Peter Xu wrote:
+> On Fri, Aug 14, 2026 at 07:56:42AM +0200, Philippe Mathieu-Daudé wrote:
+>> Hi Peter, Michael,
 >>
->> Hi,
->>
->> On 14/8/26 06:53, Subrahmanya Lingappa wrote:
->>> Add a meson option and config probe for librpmi so RISC-V machines can
->>> opt into RPMI support when the library is available. Keep the dependency
->>> optional so default builds without librpmi continue to work.
+>> On 12/8/26 22:16, Michael Roth wrote:
+>>> From: Peter Xu <peterx@redhat.com>
 >>>
->>> Signed-off-by: Subrahmanya Lingappa <subrahmanya.lingappa@oss.qualcomm.com>
->>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>>> So that there will be a verbal string returned when kvm not enabled, or
+>>> kvm not compiled.
+>>>
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>>> Reviewed-by: Michael Roth <michael.roth@amd.com>
+>>> Signed-off-by: Michael Roth <michael.roth@amd.com>
 >>> ---
->>>    Kconfig.host                  |  3 +++
->>>    meson.build                   | 14 ++++++++++++++
->>>    meson_options.txt             |  2 ++
->>>    scripts/meson-buildoptions.sh |  3 +++
->>>    4 files changed, 22 insertions(+)
+>>>    accel/kvm/kvm-all.c    | 5 +++++
+>>>    accel/stubs/kvm-stub.c | 1 +
+>>>    2 files changed, 6 insertions(+)
+
+
+>> So maybe what we want is:
 >>
->> Could you provide a cover letter so we can understand the changes
->> with the previous versions? It is hard to figure out why we are
->> at v8 and what we have to review again.
+>> -- >8 --
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index b97016b1303..66ff74541aa 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -2824,6 +2824,8 @@ int ram_block_rebind(Error **errp)
+>>   {
+>>       RAMBlock *block;
 >>
-> I was incrementally fixing issues and sending out versions.
+>> +    assert(kvm_enabled()); /* Only supported by KVM so far */
+>> +
+>>       qemu_mutex_lock_ramlist();
+>>
+>>       RAMBLOCK_FOREACH(block) {
+>> ---
+>>
+>> Or less aggressive:
+>>
+>> -- >8 --
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index b97016b1303..2988d1dd6c9 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -2824,6 +2824,11 @@ int ram_block_rebind(Error **errp)
+>>   {
+>>       RAMBlock *block;
+>>
+>> +    if (!kvm_enabled()) {
+>> +        error_setg(errp, "guest-memfd requires KVM accelerator");
+>> +        return -1;
+>> +    }
+>> +
+>>       qemu_mutex_lock_ramlist();
+>>
+>>       RAMBLOCK_FOREACH(block) {
+>> ---
+>>
+>> WDYT?
 > 
-> This mail with subject line has the change logs from previous few
-> versions, you might have missed;
->   as it was with all the previous versions' cover letters.
-> "[PATCH v8 00/10] riscv: add initial RPMI virt support"
-
-Apparently neither the mailing list nor myself received it:
-https://lore.kernel.org/qemu-devel/7c5a0b1d-12db-4be2-b20c-9d132b027a76@oss.qualcomm.com/
-
-But indeed it is on the riscv@ list...
-https://lore.kernel.org/qemu-devel/20260814045315.3416169-1-subrahmanya.lingappa@oss.qualcomm.com/
+> Fine by me.
 > 
-> Please let me know if you'd like it to list change log from all the
-> previous versions instead.
+> IMHO it's normally more of an issue the other way round, if we used an
+> assert() where we should use error_setg() (hence, user triggerable
+> assert()s).  Here we expect it to never happen, so either way should not
+> happen..
+> 
+> If so, we could also assert() in ram_block_rebind(), as it's only used in
+> kvm_reset_vmfd() only, so I don't see how it can be reached if KVM is not
+> enabled first..
 
-You could have proactively done it directly, saving time to all
-readers ;) Not needed anymore, I'll import it from riscv@, thanks.
+I'd rather avoid kvm_enabled() checks in kvm-specific API (accel/kvm/).
+
+If ram_block_rebind() is KVM-specific, why expose it as RAMBlock API?
 
