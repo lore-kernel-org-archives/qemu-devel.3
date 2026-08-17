@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0842C5DF66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A299C5DF7E
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2bJ-0002rP-CN; Mon, 17 Aug 2026 15:02:28 -0400
+	id 1ww2av-0001Xt-2R; Mon, 17 Aug 2026 15:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2Zw-0006mB-Ob
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:10 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Z0-00063S-9d
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:06 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2Zu-0006lB-A8
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:00 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-66c70e2904dso4085464d50.1
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Yw-0006Ou-M2
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:00 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-495437bb891so1863435e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786993257; x=1787598057; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786993196; x=1787597996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Tc0VjzEQDHo8/Dm/bwwN45pmK61wlymDtBgaGkTeofs=;
- b=MWMvpT2HMRpSqo7CR6cUcsdq1lzhvJ3xCCC7YKSJpl31epID+LPI8VzDmd5is6lsLp
- aVpjZG/s8oVV8+tR3nrefK1uL2EaWThK11pJeu/xPEh2Z+F/UXmab3BSY2X9vVpH31c+
- z6Hs4gdnw4CE0pExF6M13h4sGO2PV0+j4e5gr/pPdcZ/aoFnT/+NVze7Z1vhoemCpTN0
- K8Eg2OIVN5stCzftx0vKZe4/tCc0WVzto9VGdRr7UXmVKbsHzlpSvON0MEVKlJQerQr5
- sRyvPV6WM/CPN8Uxv6eaRetv7SMSsS2RWU9kt9Y1egt4q7x8y/8ef49QastYGcZhoQ0J
- YSFg==
+ bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
+ b=czSdcy7VawBAY+8QUhr+suVHlzUok+Q2kgOtliCqWfQcUCW9k/rROhbvLgd7Hg91BV
+ iWuHp7p9PxsHjJaFZ8dbwX+RRTyVuJzFUUONj2t9Fk2dLmTIg3F4ODvUoFS0HF6aSrLe
+ 510vzOrTaJme6NrX102cfBfXrYI3D4Zviy0BTj1Zspx1qzJkd7QkKJwglkFovm+6rnvm
+ 1sniqM0NgJNXnvN9E97eRizDyzXC0l1CoMmyJTA5i+zJGiAe8+jljItfZXiY5m8fQTjl
+ XIUIyG+EVSfzjfrBj2Z2kDQ79Y5/UJ7XSfheMZlTgjJvEGqqm9SJHsDlWkn0NjbOa76R
+ f2Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993257; x=1787598057;
+ d=1e100.net; s=20251104; t=1786993196; x=1787597996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Tc0VjzEQDHo8/Dm/bwwN45pmK61wlymDtBgaGkTeofs=;
- b=A/UQYMy6k1lodNzGnnR2B7NnlyoSt4F5dLjDViWtAIliARlq5EzaeY8ZgtdqgJLIDf
- b4SbZLkPZs8JR/uwtBs6sGiknQ0Nrmrw45D6HOZrMV7XVPtBJ2lZbZKGMrtvFDtsfohm
- uxFZEUQnjKP4i1yk49rNbmrefK8k2ixbvCmuutKI4YJv/e5OY73WS40zykdt10bcmUNS
- LhLVlt421ZyEdB8thDdrYdzICuOddguvARix+wdcL3WnWRn2bi5hV7e1kO+9g4cSIBIv
- LI8zWHp9WHeYsRqQJM7Ri8WeiRSoo/10Hl57OVcPWD1KICAL13lVp84YCnNqABrbJZAR
- do4w==
-X-Gm-Message-State: AOJu0YzPD7eunYeXKHJ/43gmA+JTdrkITzE4tpf41mrzObJfkgnU/Ior
- CiBGnmphAuDE6G8msQx4iLberQvflZb6R4SsBvAC26Fv2yxEXIGVBWi8Y2UYvvWiWIs=
-X-Gm-Gg: AR+sD10KFuXXDfbYP7qTkhHF6EwkJXoCou/YL9PoScN2x5Tx6DIiHs7aRUA06MgnoY+
- S2bwVNfu/TrAzJzj0gJLLN60mJFx12sxQ+bcmk261h3LARYMmTdeM1vKrTY0ggIiu4PC8uzP6bB
- YMxrsXDnTWluh596NiEZqgqGyjLSso29JayLUXQvuxeAxfegrPGMzf8sUWKbeLFT5KdoXw9fuLQ
- Dxm7jEikqzfd3GMedWU632DwUnGxZJLQQYVevQbLOjHZMlL1GP3AscrbkvwIrs4ezosi/qJgVjn
- VfYe4lwPYZCpLSWnjLE8XpY6bg6+iTAz3mMn6NTqq1hqdFLJRWX6BmtZLrsYedNI2UNaF9HYJvQ
- qJ05aLDJpOzZ9IuBbNSp3qUdoqRFjOJb4rGCYx1gEfWva5yqIyqzSfXw4zhVjKMdkxanTJxYmBT
- SFs6sYq6gGuEdgItJpJw/L25LX1UmZJuRcLpwQviGXPOTkXVR+iyGDgDv1SJkd
-X-Received: by 2002:a05:690e:b89:b0:66b:354e:5202 with SMTP id
- 956f58d0204a3-66c72b18b52mr8631640d50.7.1786993256866; 
- Mon, 17 Aug 2026 12:00:56 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
+ bh=kJQhdOKNjR/0ShebFeeadPAu9Q3JSbfvQxQRJTWAOqo=;
+ b=js7jy3kAVGAeyvi9Z8h3qXunvoWzX7c8S2AN38ph6Bw43y7jsnJwJ96sPn3+OeutON
+ DTPD5S9g+7P8E9Yv4fgwrSJ74YDmG6UsUjmsSq/oHR3/OcN1ERUVygSAu5tkkNbp1foa
+ WmJQ61iX7kYmneNxXZ6xzjWNf90HaskE0SlM71bYUig3Ib8gwwRps2sn227B2/iKsOSv
+ FUXGDsVhY0EL7VILFnGoEuJxEkKXx/IaB4copxn48WtOLsXi5R0SW1KU5sFLFDtoWfxa
+ RAbAs7hFe++MTUzqtOmQgNXt53Mc7hjk4S4Bkck8wPR87YbQGsh5bdbScRPc50BqLiR/
+ ICXA==
+X-Gm-Message-State: AOJu0YwqDRum1efbGdqm/uxmrXrIhUKwsYIm+VfFrHOv5xkdxPMUpnoR
+ 4KB7RiBI+F0uDHB6kiiYMq35Y/YOWnZubhyXw1+1I3apyyLJ56R6K8uubpFjmOEduy7CFMin7PQ
+ HtLPO
+X-Gm-Gg: AR+sD129kplY1tizAz+FelI5S+cCSYmHo3yHKtczi14tfZqlK2l559TsZOZeT1j20VU
+ fXUk2L1dKcolBmc7LO3U1+sqOEukveZpUudZGBnuoKgPyRaaSFhvYYucjrEJYDUkFdOiLRz0VrA
+ Vl2ov2pJJZ8AB0gXyjH0qsR9ax3Dx4A11M2qQbk3/QGNEXnU0XG6AgojsfKSa+0xYkRE5LDUOOY
+ pncNLl5XdCefoW0jYRMJzGPV43+ck/h2nJnD0f8zO68T1IpEJtBPvKGj6vvmcdwNQSxjVGrtqII
+ fjhBvFvGIV0buJ+8AFJx1MbQ4QyamagAYrEpMOCrKuA5I7t2Xv2ND1R9wLVJlEHUrVgO26MIyJK
+ n69W1tB2NshJgZe13h8V9bYljXMmkfaNgOsmUDqdEtRB9e2TGT9q/mGe5P6BKQchg6AhVP2T+V/
+ hwunpguMcc5aFzSWaQScYMfBWVVyY2tv0Ey2yi71iO0Ue46VTWCMI=
+X-Received: by 2002:a05:600c:348b:b0:499:77ba:4b6 with SMTP id
+ 5b1f17b1804b1-499a1f65e40mr515655e9.9.1786993196390; 
+ Mon, 17 Aug 2026 11:59:56 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66cb4780b7asm1261880d50.12.2026.08.17.12.00.55
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.11.59.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:55 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
+ Mon, 17 Aug 2026 11:59:55 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
- zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
-Subject: [RFC PATCH 5/8] RFC: accel/tcg: allow cross-page goto_tb chaining in
- user-only builds
-Date: Mon, 17 Aug 2026 15:00:35 -0400
-Message-ID: <20260817190038.580257-6-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260817190038.580257-1-mattst88@gmail.com>
-References: <20260817190038.580257-1-mattst88@gmail.com>
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v6 10/25] parallels: Remove unnecessary data_end field
+Date: Mon, 17 Aug 2026 20:59:27 +0200
+Message-ID: <20260817185942.1065143-11-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
+References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,224 +99,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-translator_use_goto_tb() refuses to chain unless the destination is on the
-same page as the start of the TB. For guests whose text is much larger than
-a page this is expensive: an emulated alpha gcc compiling a 255k line
-translation unit takes the indirect dispatch path for 8.4 billion of its
-34.2 billion TB exits, and a large share of those are ordinary direct
-branches that simply crossed an 8 KiB page boundary.
+From: Denis V. Lunev <den@openvz.org>
 
-The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
-Introduce translator_use_goto_tb"), whose rationale was:
+Since we have used bitmap, field data_end in BDRVParallelsState is
+redundant and can be removed.
 
-    Various targets avoid the page crossing test for CONFIG_USER_ONLY,
-    but that is wrong: mmap and mprotect can change page permissions.
+Add parallels_data_end() helper and remove data_end handling.
 
-That is true, but in user-only builds the invalidation path already covers
-it. There are no page tables: every mmap, mprotect and munmap reaches
-page_set_flags(), which calls tb_invalidate_phys_range() whenever the flags
-actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to reset
-incoming jumps. A chained cross-page jump is therefore broken whenever the
-destination page's permissions change. This is not true in system mode,
-where TBs are keyed by physical address and a page table change invalidates
-nothing, so the restriction is kept there.
+The two are not equivalent, which is why this comes before the Format
+Extension is stored. data_end is the highest extent seen in the BAT,
+while the helper derives the end of the payload from the image file. A
+cluster which belongs to the image without being referenced by the BAT,
+as the Format Extension and its bitmap data clusters are, stays
+invisible to the field: parallels_allocate_host_clusters() appends at
+data_end, so it would hand out an offset which is already occupied and
+parallels_mark_used() would refuse it with -EBUSY, failing the guest
+write.
 
-Add tests/tcg/alpha/test-xpage-chain.c to cover the hazard directly. It
-places a direct branch near the end of one page targeting the next page,
-runs it 200000 times so the chain is established, then checks that
-mprotect(PROT_NONE) makes the next call fault, and that remapping the page
-with different code runs the new code rather than a stale translation.
+seek_to_sector() validates a BAT entry against data_end, so it becomes
+a user of the new helper, which suits that check better as well: a
+cluster has to live inside the image file, while the field could grow
+to whatever extent a corrupted BAT entry claimed.
 
-The test detects the hazard it is meant to detect: with the
-tb_invalidate_phys_range() call in page_set_flags() commented out, it fails
-both phases, executing page B after PROT_NONE and returning the stale
-result.
+The BAT scan in parallels_open() no longer tracks the maximum extent,
+but it keeps rejecting entries below data_start or beyond the end of the
+file, so need_check is still set when an entry is out of bounds. Nothing
+is accumulated any more, so the scan stops at the first such entry.
+high_off in parallels_check_outside_image() only fed the
+image_end_offset which the helper now provides, so it goes away with
+the field.
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
-SQLite 3.45.1 amalgamation on an x86-64 host, LTO build, on top of the
-preceding patches:
+The bdrv_pwrite_zeroes() of the branch which reuses a hole goes as well.
+It was guarded by data_end, and it is redundant: the space was already
+fallocated when the image grew over it. The 'bytes' variable goes with
+it, as the used bitmap grows by the preallocated size rather than the
+requested one.
 
-    before: 890,713,633,237 instructions
-    after:  869,178,598,378 instructions   -2.42%
+Based on the original work from Alexander Ivanov.
 
-    before: 84.44s wall clock
-    after:  80.49s wall clock              -4.68%
-
-Note that this is worth more in time than in instructions, the reverse of
-the preceding patch: a chained jump replaces a cache probe whose loads can
-miss, so the instructions it removes are more expensive than average.
-
-Measured before the inline jump cache probe, when a missed chain cost a
-helper call rather than an inline probe, the same change was worth -7.9%.
-
-RFC because this reverses a deliberate decision and the reasoning above
-wants review from someone who knows the invalidation paths better than I
-do.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- accel/tcg/translator.c             |  12 ++++
- tests/tcg/alpha/Makefile.target    |   2 +-
- tests/tcg/alpha/test-xpage-chain.c | 111 +++++++++++++++++++++++++++++
- 3 files changed, 124 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/alpha/test-xpage-chain.c
+ block/parallels.c | 57 +++++++++++++----------------------------------
+ block/parallels.h |  1 -
+ 2 files changed, 15 insertions(+), 43 deletions(-)
 
-diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
-index 29e609b2ec..4921bf978c 100644
---- ./accel/tcg/translator.c
-+++ ./accel/tcg/translator.c
-@@ -117,8 +117,20 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
-         return false;
-     }
- 
-+#ifdef CONFIG_USER_ONLY
-+    /*
-+     * There are no page tables in user-only mode.  Every mmap, mprotect and
-+     * munmap goes through page_set_flags(), which calls
-+     * tb_invalidate_phys_range() whenever the flags actually change, and
-+     * tb_phys_invalidate() unlinks incoming jumps.  A chained cross-page
-+     * jump is therefore broken whenever the destination page's permissions
-+     * change, so the same-page restriction is not needed here.
-+     */
-+    return true;
-+#else
-     /* Check for the dest on the same page as the start of the TB.  */
-     return translator_is_same_page(db, dest);
-+#endif
+diff --git a/block/parallels.c b/block/parallels.c
+index 2be7c20338..ace79ad968 100644
+--- a/block/parallels.c
++++ b/block/parallels.c
+@@ -116,6 +116,13 @@ static uint32_t bat_entry_off(uint32_t idx)
+     return sizeof(ParallelsHeader) + sizeof(uint32_t) * idx;
  }
  
- void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
-diff --git ./tests/tcg/alpha/Makefile.target ./tests/tcg/alpha/Makefile.target
-index 36d8ed1eae..eee986bab6 100644
---- ./tests/tcg/alpha/Makefile.target
-+++ ./tests/tcg/alpha/Makefile.target
-@@ -5,7 +5,7 @@
- ALPHA_SRC=$(SRC_PATH)/tests/tcg/alpha
- VPATH+=$(ALPHA_SRC)
++static int64_t parallels_data_end(BDRVParallelsState *s)
++{
++    int64_t data_end = s->data_start * BDRV_SECTOR_SIZE;
++    data_end += s->used_bmap_size * s->cluster_size;
++    return data_end;
++}
++
+ static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
+ {
+     uint32_t index, offset;
+@@ -130,7 +137,8 @@ static int64_t seek_to_sector(BDRVParallelsState *s, int64_t sector_num)
+     }
  
--ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq
-+ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-xpage-chain
- TESTS+=$(ALPHA_TESTS)
+     cluster_off = bat2sect(s, index);
+-    if (cluster_off < s->data_start || cluster_off + s->tracks > s->data_end) {
++    if (cluster_off < s->data_start ||
++        cluster_off + s->tracks > parallels_data_end(s) >> BDRV_SECTOR_BITS) {
+         /* Cluster is outside of the image file or overlaps the header. */
+         return -1;
+     }
+@@ -284,15 +292,14 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
+ {
+     BDRVParallelsState *s = bs->opaque;
+     int64_t first_free, next_used, host_off, prealloc_clusters;
+-    int64_t bytes, prealloc_bytes;
++    int64_t prealloc_bytes;
+     uint32_t new_usedsize;
+     int ret = 0;
  
- test-cmov: EXTRA_CFLAGS=-DTEST_CMOV
-diff --git ./tests/tcg/alpha/test-xpage-chain.c ./tests/tcg/alpha/test-xpage-chain.c
-new file mode 100644
-index 0000000000..7916d544af
---- /dev/null
-+++ ./tests/tcg/alpha/test-xpage-chain.c
-@@ -0,0 +1,111 @@
-+/*
-+ * Cross-page TB chaining hazard test.
-+ *
-+ * Phase 1: a direct branch (br) near the end of page A targets page B.
-+ *          Run it enough times that QEMU chains TB_A -> TB_B.
-+ * Phase 2: mprotect page B away. Re-running must fault.
-+ * Phase 3: remap page B with different code. Re-running must execute the
-+ *          NEW code, not a stale chained translation of the old code.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <setjmp.h>
-+#include <signal.h>
-+#include <sys/mman.h>
-+#include <unistd.h>
-+
-+#define PS 8192
-+
-+static sigjmp_buf jb;
-+/*
-+ * Written by the SIGSEGV handler and read by main(), so it must not be
-+ * cached in a register across the faulting call.
-+ */
-+static volatile sig_atomic_t caught;
-+
-+static void segv(int sig)
-+{
-+    caught = 1;
-+    siglongjmp(jb, 1);
-+}
-+
-+/* lda $0, imm($31)  -> v0 = imm */
-+static unsigned int lda_v0(int imm)
-+{
-+    return 0x201F0000u | (unsigned short)imm;
-+}
-+
-+int main(void)
-+{
-+    struct sigaction sa;
-+    int rc = 0;
-+    unsigned char *m = mmap(NULL, 2 * PS, PROT_READ | PROT_WRITE | PROT_EXEC,
-+                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    if (m == MAP_FAILED) {
-+        perror("mmap");
-+        return 2;
-+    }
-+
-+    unsigned char *pa = m, *pb = m + PS;
-+    unsigned int *entry = (unsigned int *)(pa + PS - 64);
-+    unsigned int *tgt = (unsigned int *)(pb + 16);
-+
-+    entry[0] = lda_v0(1);
-+    long disp = ((long)tgt - ((long)&entry[1] + 4)) / 4;
-+    entry[1] = 0xC3E00000u | (unsigned int)(disp & 0x1FFFFF);  /* br $31,tgt */
-+    tgt[0] = 0x6BFA8001u;                                      /* ret        */
-+    __builtin___clear_cache((char *)m, (char *)m + 2 * PS);
-+
-+    long (*fn)(void) = (long (*)(void))entry;
-+
-+    for (int i = 0; i < 200000; i++) {
-+        if (fn() != 1) {
-+            printf("FAIL: phase 1 wrong result\n");
-+            return 1;
-+        }
-+    }
-+    printf("phase 1 ok (chained)\n");
-+
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_handler = segv;
-+    sigemptyset(&sa.sa_mask);
-+    if (sigaction(SIGSEGV, &sa, NULL) != 0) {
-+        perror("sigaction");
-+        return 2;
-+    }
-+    if (mprotect(pb, PS, PROT_NONE) != 0) {
-+        perror("mprotect");
-+        return 2;
-+    }
-+    if (sigsetjmp(jb, 1) == 0) {
-+        fn();
-+        printf("FAIL: phase 2 executed page B after mprotect(PROT_NONE)\n");
-+        rc = 1;
-+    } else if (!caught) {
-+        printf("FAIL: phase 2 longjmp without entering the handler\n");
-+        rc = 1;
-+    } else {
-+        printf("phase 2 ok (faulted)\n");
-+    }
-+
-+    /* Phase 3: remap with different code, expect the new code to run. */
-+    if (mprotect(pb, PS, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
-+        perror("mprotect back");
-+        return 2;
-+    }
-+    tgt[0] = lda_v0(2);
-+    tgt[1] = 0x6BFA8001u;
-+    __builtin___clear_cache((char *)pb, (char *)pb + PS);
-+
-+    long r = fn();
-+    if (r != 2) {
-+        printf("FAIL: phase 3 returned %ld, expected 2 (stale chain)\n", r);
-+        rc = 1;
-+    } else {
-+        printf("phase 3 ok (new code ran)\n");
-+    }
-+    return rc;
-+}
+     first_free = find_first_zero_bit(s->used_bmap, s->used_bmap_size);
+     if (first_free == s->used_bmap_size) {
+-        host_off = s->data_end * BDRV_SECTOR_SIZE;
++        host_off = parallels_data_end(s);
+         prealloc_clusters = *clusters + s->prealloc_size / s->tracks;
+-        bytes = *clusters * s->cluster_size;
+         prealloc_bytes = prealloc_clusters * s->cluster_size;
+ 
+         /*
+@@ -323,27 +330,9 @@ int64_t GRAPH_RDLOCK parallels_allocate_host_clusters(BlockDriverState *bs,
+ 
+         /* Not enough continuous clusters in the middle, adjust the size */
+         *clusters = MIN(*clusters, next_used - first_free);
+-        bytes = *clusters * s->cluster_size;
+ 
+         host_off = s->data_start * BDRV_SECTOR_SIZE;
+         host_off += first_free * s->cluster_size;
+-
+-        /*
+-         * No need to preallocate if we are using tail area from the above
+-         * branch. In the other case we are likely re-using hole. Preallocate
+-         * the space if required by the prealloc_mode.
+-         */
+-        if (s->prealloc_mode == PRL_PREALLOC_MODE_FALLOCATE &&
+-                host_off < s->data_end * BDRV_SECTOR_SIZE) {
+-            ret = bdrv_pwrite_zeroes(bs->file, host_off, bytes, 0);
+-            if (ret < 0) {
+-                return ret;
+-            }
+-        }
+-    }
+-
+-    if (host_off + bytes > s->data_end * BDRV_SECTOR_SIZE) {
+-        s->data_end = (host_off + bytes) / BDRV_SECTOR_SIZE;
+     }
+ 
+     ret = parallels_mark_used(bs, s->used_bmap, s->used_bmap_size,
+@@ -749,7 +738,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+ {
+     BDRVParallelsState *s = bs->opaque;
+     uint32_t i;
+-    int64_t off, high_off, size, data_start_off;
++    int64_t off, size, data_start_off;
+     bool fixed = false;
+ 
+     size = bdrv_co_getlength(bs->file->bs);
+@@ -759,7 +748,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+     }
+     data_start_off = s->data_start << BDRV_SECTOR_BITS;
+ 
+-    high_off = 0;
+     for (i = 0; i < s->bat_size; i++) {
+         off = bat2sect(s, i) << BDRV_SECTOR_BITS;
+         if (off == 0) {
+@@ -774,10 +762,6 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+                 res->corruptions_fixed++;
+                 fixed = true;
+             }
+-            continue;
+-        }
+-        if (high_off < off) {
+-            high_off = off;
+         }
+     }
+ 
+@@ -792,14 +776,7 @@ parallels_check_outside_image(BlockDriverState *bs, BdrvCheckResult *res,
+         }
+     }
+ 
+-    if (high_off == 0) {
+-        res->image_end_offset = s->data_end << BDRV_SECTOR_BITS;
+-    } else {
+-        res->image_end_offset = high_off + s->cluster_size;
+-        s->data_end = res->image_end_offset >> BDRV_SECTOR_BITS;
+-    }
+-
+-
++    res->image_end_offset = parallels_data_end(s);
+     return 0;
+ }
+ 
+@@ -1466,8 +1443,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+     }
+ 
+     s->data_start = data_start;
+-    s->data_end = s->data_start;
+-    if (s->data_end < (s->header_size >> BDRV_SECTOR_BITS)) {
++    if (s->data_start < (s->header_size >> BDRV_SECTOR_BITS)) {
+         /*
+          * There is not enough unused space to fit to block align between BAT
+          * and actual data. We can't avoid read-modify-write...
+@@ -1530,10 +1506,7 @@ static int parallels_open(BlockDriverState *bs, QDict *options, int flags,
+         if (sector < data_start || sector + s->tracks > file_nb_sectors) {
+             /* Cluster is outside of the image file or overlaps the header. */
+             need_check = true;
+-            continue;
+-        }
+-        if (sector + s->tracks > s->data_end) {
+-            s->data_end = sector + s->tracks;
++            break;
+         }
+     }
+ 
+diff --git a/block/parallels.h b/block/parallels.h
+index 493c89e976..eb90aeea81 100644
+--- a/block/parallels.h
++++ b/block/parallels.h
+@@ -79,7 +79,6 @@ typedef struct BDRVParallelsState {
+     unsigned int bat_size;
+ 
+     int64_t  data_start;
+-    int64_t  data_end;
+     uint64_t prealloc_size;
+     ParallelsPreallocMode prealloc_mode;
+ 
 -- 
-2.54.0
+2.53.0
 
 
