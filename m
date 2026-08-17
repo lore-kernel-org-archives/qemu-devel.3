@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC822C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD4BC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxXp-0000Jo-6h; Mon, 17 Aug 2026 09:38:29 -0400
+	id 1wvxWa-0005u3-TF; Mon, 17 Aug 2026 09:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXV-0008W1-GJ; Mon, 17 Aug 2026 09:38:11 -0400
+ id 1wvxWY-0005ik-Ik; Mon, 17 Aug 2026 09:37:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXR-0007fX-JG; Mon, 17 Aug 2026 09:38:07 -0400
+ id 1wvxWW-0007VW-JW; Mon, 17 Aug 2026 09:37:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=J9ITiFEPFTJZJURJunu7vgxyqlGrbiW/MZGDKHdaIGY=;
+ t=1786973727; bh=6oZ0U5XXJDCa6VjZZTl5ebos4MAoPCvu/HghL0zqG9s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ahNhRzJm0tmEwSaSvf2/6ZUWVCbNDKO8LX1Ax0rzgD/sm8xfZHiWGWiBvpAlzLvGU
- q2Q3f/U9BdLX/PyZcAEJtKopyKwdN9QhTCCdVwelCcomnRrQRNeZIxENqaKIXkvmcm
- U4jBqCEWd/StpM3fW77Nr+WyZT2hq+7k4RKWMG7TEQWewiRzu3FZnVIjchK13x6klp
- UmoIJ+5XhR/ld2aELqbPyBRU+e7CC5uPQ/iBoRtlMN9i6lyPKBJQi2KS3tp+/64l6S
- Q43I3ZAr0/fjl91QnWxJjLi3ZEVD9dGMonv55rxpxWRiawvEU3wTKAaamoMn7WGnYC
- dXk8RXYApzAaA==
+ b=Lx+kKUQTE1Vx1TsrWhQ/Cg3iKortFzCh0Gpd89JSrR3GppI1D6XcLmPslUA1MfG/h
+ cTLSu6wwhoxddMr4DFzRXJX+zyGyY3PjJKlfrmsHdLyuJypfaU0CQbBa1S3avnxNbm
+ 4MGBloUZUkUFcdINasXIy3Dc/apdgzChVAjL3vraCfuqsvbaZ1EFtFgVW1SbiwHfrT
+ nJ+78021VA8Y3L/wRxZbtAX4XAEgUyFzpxCM/zXJyEWyrC3XXi4c2ompq48kJb/UGQ
+ GexUfcJgY5SScqGNAv9EaGyOxfaaYO691sd5zsSXqzfjhJ2HbwLhropLUMVxRpkiDn
+ Xi4E9bcSErXfg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 85C7D1CBCD1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D3061CBCC9;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C0EB540D42E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 984C640D426;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D963730FAC; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id C1B3E30F9C; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 130/135] tests/qtest/ahci: regression test for
- ATAPI read vs. drain
-Date: Mon, 17 Aug 2026 16:34:40 +0300
-Message-ID: <20260817133451.2384630-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 122/135] hw/usb/dev-uas: Don't abort if guest
+ provided an undersized buffer for status
+Date: Mon, 17 Aug 2026 16:34:32 +0300
+Message-ID: <20260817133451.2384630-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -71,107 +71,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Thomas Huth <thuth@redhat.com>
 
-Add /ahci/cdrom/drain/{pio,dma}: issue a multi-sector ATAPI read whose
-byte-count limit spans two sectors so the device must rebuffer in the
-middle of the DRQ burst, hold the backend read in flight with a
-blkdebug delay, and fire x-blockdev-set-iothread -- which runs
-bdrv_drain_all_begin() exactly like a guest reset does through
-virtio_blk_stop_ioeventfd().
+QEMU currently aborts if the guest provides an undersized buffer
+for the status packet (8 bytes):
 
-On the unfixed PIO path the nested sector fetch is queued behind the
-drain and the main loop wedges, so the test hangs. The DMA variant
-never rebuffers and serves as a sanity twin.
+ hw/usb/core.c:623: usb_packet_copy:
+  Assertion `p->actual_length + bytes <= iov->size' failed.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit be1ee6a8f6e3b7192d57e900497b81a048f8d193)
+If we hit this situation, log a guest error and continue by simply
+only providing the bytes that the guest asked for.
+(Note: This is e.g. similar to the UAS_PIPE_ID_COMMAND case that
+also clamps the length with: length = MIN(sizeof(iu), p->iov.size))
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3900
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260730163901.1154791-1-thuth@redhat.com>
+(cherry picked from commit 15700a66ecb53c52717c913c2c4501372c0115ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index 74e665da358..0daa6c6d369 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -1754,6 +1754,70 @@ static void test_atapi_engine_restart_dma(void)
-     test_atapi_engine_restart_in_flight(true);
- }
+diff --git a/hw/usb/dev-uas.c b/hw/usb/dev-uas.c
+index eea687cb821..757e340711b 100644
+--- a/hw/usb/dev-uas.c
++++ b/hw/usb/dev-uas.c
+@@ -360,6 +360,7 @@ static void usb_uas_send_status_bh(void *opaque)
+     UASDevice *uas = opaque;
+     UASStatus *st;
+     USBPacket *p;
++    uint32_t length;
  
-+/*
-+ * Regression test: a multi-sector ATAPI read fetches its later sectors from
-+ * inside the first read's completion; a concurrent drain (as a guest reset
-+ * triggers via bdrv_drain_all_begin) must not wedge on that nested read.
-+ * blkdebug keeps the read in flight across x-blockdev-set-iothread.
-+ */
-+static void test_atapi_drain_in_flight(bool dma)
-+{
-+    AHCIQState *ahci;
-+    AHCICommand *cmd;
-+    unsigned char *tx;
-+    char *iso;
-+    int fd;
-+    uint8_t port;
-+    uint64_t buffer;
-+    uint16_t bcl = ATAPI_SECTOR_SIZE * 2;
-+    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * 3;
-+
-+    fd = prepare_iso(iso_size, &tx, &iso);
-+
-+    /* 1s read delay: a wide margin so the drain starts before it completes */
-+    ahci = ahci_boot_and_enable(
-+        "-blockdev driver=file,node-name=file0,filename=%s,read-only=on "
-+        "-blockdev driver=blkdebug,node-name=cd0,image=file0,read-only=on,"
-+        "inject-error.0.event=none,inject-error.0.iotype=read,"
-+        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000000 "
-+        "-M q35 "
-+        "-device ide-cd,drive=cd0 ", iso);
-+    port = ahci_port_select(ahci);
-+
-+    buffer = ahci_alloc(ahci, bcl);
-+    qtest_memset(ahci->parent->qts, buffer, 0x00, bcl);
-+
-+    cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, bcl, dma);
-+    ahci_command_adjust(cmd, 0, buffer, bcl, 0);
-+    ahci_command_commit(ahci, cmd, port);
-+    ahci_command_issue_async(ahci, cmd);
-+
-+    /* Drain (all nodes) while the delayed read is still in flight. */
-+    qtest_qmp_assert_success(ahci->parent->qts,
-+        "{ 'execute': 'x-blockdev-set-iothread',"
-+        "  'arguments': { 'node-name': 'cd0', 'iothread': null,"
-+        "                 'force': true } }");
-+
-+    /* Round-trip through the device to confirm qemu is still alive. */
-+    ahci_px_rreg(ahci, port, AHCI_PX_TFD);
-+
-+    ahci_command_free(cmd);
-+    ahci_free(ahci, buffer);
-+    g_free(tx);
-+    ahci_shutdown(ahci);
-+    remove_iso(fd, iso);
-+}
-+
-+static void test_atapi_drain_pio(void)
-+{
-+    test_atapi_drain_in_flight(false);
-+}
-+
-+static void test_atapi_drain_dma(void)
-+{
-+    test_atapi_drain_in_flight(true);
-+}
-+
- /* Regression test: Test that a READ_CD command with a BCL of 0 but a size of 0
-  * completes as a NOP instead of erroring out. */
- static void test_atapi_bcl(void)
-@@ -2178,6 +2242,8 @@ int main(int argc, char **argv)
-                    test_atapi_engine_restart_pio);
-     qtest_add_func("/ahci/cdrom/engine_restart/dma",
-                    test_atapi_engine_restart_dma);
-+    qtest_add_func("/ahci/cdrom/drain/pio", test_atapi_drain_pio);
-+    qtest_add_func("/ahci/cdrom/drain/dma", test_atapi_drain_dma);
+     while ((st = QTAILQ_FIRST(&uas->results)) != NULL) {
+         if (uas_using_streams(uas)) {
+@@ -374,7 +375,14 @@ static void usb_uas_send_status_bh(void *opaque)
+             break;
+         }
  
-     ret = g_test_run();
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
  
+@@ -876,7 +884,14 @@ static void usb_uas_handle_data(USBDevice *dev, USBPacket *p)
+                 break;
+             }
+         }
+-        usb_packet_copy(p, &st->status, st->length);
++        length = st->length;
++        if (length > p->iov.size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "usb uas: packet (%zd) too small for status (%d)\n",
++                          p->iov.size, length);
++            length = p->iov.size;
++        }
++        usb_packet_copy(p, &st->status, length);
+         QTAILQ_REMOVE(&uas->results, st, next);
+         g_free(st);
+         break;
 -- 
 2.47.3
 
