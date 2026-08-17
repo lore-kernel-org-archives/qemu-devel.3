@@ -4,115 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C931C5DF70
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771E2C5B572
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 08:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvsRa-0006kN-F4; Mon, 17 Aug 2026 04:11:42 -0400
+	id 1wvsRX-0006jV-JW; Mon, 17 Aug 2026 04:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvsRY-0006jh-9g; Mon, 17 Aug 2026 04:11:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wvsRW-0008Ej-I3; Mon, 17 Aug 2026 04:11:40 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLXFUK3639647; Mon, 17 Aug 2026 08:11:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kuwNDD
- th6j8+felH+XDP2fO6rCZBfVAZdDW/QyiXz6k=; b=Tg8G2Y+RKvayasTYpSo0PE
- rX+E54LUFE4/1l8HuGwFwiMZcToYBY9W4zG0C1SiXyNKPUd6QoHpuDxJZ1fC3UQH
- yRXiJ9I8cQ0W0DapgFT64U0HRVBuqIvDMbphWu/YmRPLuonI+HdhSm+8m2VxOIHr
- YqSG8bbR61Rd0gCyR2ZTj1EXinomAWxrv6qD9XQD/qpfIpa6491k7BLlihF7iW0Z
- yMbOEFEdgcQ8WPZ6ymQBBnMI5z1K2Wi53JPHnhfI53+U3sq5+Vn6+lvanlvJ7rZK
- RPm2H6lC518mwO7gpBbGW3LU+rnZGeoJOmL+bikwBYAZ2/4z1me9ipZQIBoqqXnA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhks5b6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 08:11:33 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67H8BMtQ015616;
- Mon, 17 Aug 2026 08:11:33 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ejw2hj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Aug 2026 08:11:32 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67H8BSlV40305014
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Aug 2026 08:11:28 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B76AA20043;
- Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C98320040;
- Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.12.156])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Aug 2026 08:11:28 +0000 (GMT)
-Message-ID: <6621b094-e536-4f47-8b69-c9c0ad4132f8@linux.ibm.com>
-Date: Mon, 17 Aug 2026 10:11:27 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wvsRW-0006jN-R1
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:11:38 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wvsRV-0008Ei-CO
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 04:11:38 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c9aea40d799so1703853a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 01:11:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1786954296; cv=none;
+ d=google.com; s=arc-20260327;
+ b=boMHzuRpVC/6cjd84iaBfQ5RFX5GlnqVKpWonQEV3f0/64ZWOhQlNtFlaTlJGP4WNA
+ hBoXjYUQS6GFMc0Ttcpiu5FMYWFKBFq01g6ezqZKW19uJm+7P+bLjdI6ZF9ODqb9V3Iv
+ docCdiRUG8og7pw9o+O5EZulJRvdrEwD0rxsrj34LMt0Ro9fkdQDWguC1H4C6f8PRwiV
+ XXwXm9qGmVHjlvZIR+Sq8jUUedFJ95u1tGVdlWKLQaiuRnIlapNZ1/G7wMOJGVRSVh+4
+ cdYka2Z+jY1bhDqSN7OreiKFyvBvwQeIxGnnsImDzQ/C5VyUmbsRlgDn+pgDxC0WjaD0
+ xyAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=O0t1wXvKytESlmD7qXaQ366CeoYlfo9g4r+9dxpl9qk=;
+ fh=xgTexhWpyEwgOWLYa8K9ylcdTJCdzsb5EHWbzq8pvQ4=;
+ b=GMMR+x3eQMG3/KS3WEZDhlNqeY69oOSQApFZUFMytKZP9/HsHkzcSvnFJbv0dxiiGN
+ etMrKwQL26i85r2Efa28LgAbUXIcUYY1vCUZ9CInr4XIz4HEe5VKiWq6TYdbNv7T1W0J
+ bczDDhtDpbNO6XLQXvnf39IVb/2lbweKUme0JN+KX9QyZH5SPIBOPRj9vGiHsxpzQrJR
+ zNXnBd7Kp5kQn6SA4URoMupFGit0yIoU+KqEd2yaPqnYM6nqNHJP1/xFyTGMkxw2yrlX
+ m0Eubwg7LlPbwlTsiL+P87r/SN+TlMOsm6X16c6Qpq3OrC+jLQEBfb8nsArOrHc/+NGn
+ qJ8g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1786954296; x=1787559096; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=O0t1wXvKytESlmD7qXaQ366CeoYlfo9g4r+9dxpl9qk=;
+ b=cW4NPK71oKo4LcJRW3qtutYfTM0W+08H+arnROKieojKwdntOZgZG/KSUg8ZarQLoq
+ OO4O+bacp9lmP910bcMxIUIWCW6okmUita3D4+bgrR7lUR0Mjk3+Gx8WPPYmFNK7vzH4
+ LHtEkJdnRK5IjfiwDLjOpT5kzlsqYMuEcOsYpxmWxxJN5B6dpHcdcS9iEEwOQpdg10OI
+ wFher0bTqqO5cia1DYp8vH1INQAwZg5g5gB6SCysrZAVY2LAf1DwUC7ogqZLxrRnPkY/
+ Rp6rlXU6KYZoA+HHohXY8FCa0zNnP55uPaR27T/jaGfhVjE5V0Ynw0sHHhKpQXuHuPP3
+ d9sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786954296; x=1787559096;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=O0t1wXvKytESlmD7qXaQ366CeoYlfo9g4r+9dxpl9qk=;
+ b=UJSaqmf2jVdNlKVtV3Qz1oyN/xGypLUT3xxjP8XdqGJRCFabcMrE7kkHKb4FxbwnTS
+ NRcf6rGobC5bxD7kLtt3rdIuw3Xt2J51Nk5lFafGR4XJxagAJvJvFT90CyXuqWWACvoJ
+ KPxXAzjN93K3W2VSal5/jRvcvkRfurA4lRlr3qRUhEaeOTaqyEI9IGBk+nKKchgI+PBP
+ Rkg34RVdrN6VXE4gifONiE7yiccUsZKqVNC3cQLisD/EA+khmDzjk6n37ywutTzFNq5W
+ axnFlfCQmmuApBSC2VCsf+6QzvC+/9m+PNKFB3e4QRUp2dGe+yPjXzL+lyIJeTwBKAgV
+ fSzw==
+X-Gm-Message-State: AOJu0Yw65bSsx8Mw+R+9ieK3YAYwWka4XwULtiYlvPUPYJyLALtgriIV
+ LK1OXgVRh9Vu8y92AXmrcUCWMHbOdGPaSm4PtrIHulT00fa4Dgfvwr2UGF3w1OIDolMugDPT7GR
+ muXUiOm+vecwOXbY1cZXuVP6QAQ05OSM=
+X-Gm-Gg: AR+sD105cwF4oulI7Af0UAu6WaOkMwJiUSSVJaN6HI6ZFcNoUaSUM967YUD8vibCjFa
+ /TsHt6GF5ieZ0NuXYtO3UqB7ql7TXhSn575VzGBlGntclV+O/TtbgKkbHf3XXBl4YMwbPTpTgxz
+ ehtTD1wVc5wlq0ALzRvMS20oDP3vYmuSk9LAMuNWuZBSjMp7W/wrdn0R8eHQGqjIahZ6e2VmfwO
+ bVLv/bplzBT0EAwmzc9rhaCY/k2WKcJoXZ2x5EVFOhATQ+2KAzzD3/oZeujS0IW1/n4HMRLnKBM
+ kMEwv+irhgH/5bOYdFwBrwiQ9uBs5Ko3XNAB6HPnAVANXZ6ZuLWIQ6M5S703RkcoG7jVjsQ5u9o
+ Y
+X-Received: by 2002:a05:6a20:9143:b0:3c3:76a8:c0f with SMTP id
+ adf61e73a8af0-3cc7196e809mr21977099637.4.1786954295522; Mon, 17 Aug 2026
+ 01:11:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
- instruction
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260806151302.26846-1-freude@linux.ibm.com>
- <20260806151302.26846-8-freude@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260806151302.26846-8-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDA1OSBTYWx0ZWRfX6trn85hmGeOf
- JKY3V2dhp5y9mv1mVOdXXJPPH8h7TSZBS7g434DE0dSxkfNiiDSb8OmNhEeKUaiAoF7VeRiHmbK
- rPo9PfHzfHBBud1+C0aRLxFwTo6VKJJ8lVxA3XcwcGXVDTnGjzQnRk9Znp9FzwhCCcDRXUlzwPz
- T9mDkVHqU32o0oYX/+8dyloNVcCZPo6EC1xJXeFFrA2C+AVSykkLWr9wM8g+H3JxPBTSxlxZzdl
- iC3NsAr2LAYp0vkEjQtkaTuHNKgwUurSJYhdC/ZqfIUisDnNKD2ZzAdHpznaysE2g8y/P8mAWdB
- Fyne4MHuaDblxIuH+bXg0TlyiM5YnAj2FAwWlTnwKvWNnmOFFoQO16ZCkX89q3HuXvxwFncZYOo
- lKVdJn953JCL6g02eaEke8ohJGpCxzuOK07fo3T6hrbsx9URc3QDd2cmLkhsn2l8xaaIKrWNGT5
- RVOCV2sADw2mHPHMLzg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDA1OSBTYWx0ZWRfX3cPm4/MPF4iq
- eToAPF4WrwXRTBcQz64S2189OhVUyHRp3yq+JHd46whWX/VDn8xVoGgDVi0Cg1DSzaOD0U5uzvG
- C6zbpqbWWv5+0tCSJBvxoraM/d487tg=
-X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a82c235 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=ZLLi-ALZ7FbK3oftqOwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 19yIMRWkActMedI-Od12TrN0Mo2wDeyu
-X-Proofpoint-GUID: 19yIMRWkActMedI-Od12TrN0Mo2wDeyu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608170059
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-13-e53fc35bc550@redhat.com>
+ <d7121bfe-a2be-45fe-b933-70190e6a369c@oss.qualcomm.com>
+In-Reply-To: <d7121bfe-a2be-45fe-b933-70190e6a369c@oss.qualcomm.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 17 Aug 2026 12:11:23 +0400
+X-Gm-Features: AcwNN1Uc-rr3ngzzQTek4XCITnh2PQoE8Xxl3N0fiVsX8yiEiuGMgAondaxDBIs
+Message-ID: <CAJ+F1CLhPJiWQR5JsYPCfKpugx3zvKAXDZkM=5vjSdAbNr3+4w@mail.gmail.com>
+Subject: Re: [PATCH v3 13/49] tests/qtest/qmp-test: don't depend on
+ human-monitor-command
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,125 +125,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
+On Mon, Aug 17, 2026 at 7:56=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 16/8/26 21:12, Marc-Andr=C3=83=C2=A9 Lureau wrote:
+> > The test was using 'human-monitor-command' (which requires HMP) to
+> > verify that an integer 'id' is echoed back on failure. Replace with
+> > 'query-name' for the success case and 'block_resize' (missing
+> > required args) for the failure case, so the test works regardless of
+> > HMP availability.
+> >
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   tests/qtest/qmp-test.c | 13 +++++++++++--
+> >   1 file changed, 11 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
+> > index 3a325a04e07b..927ab053f8ab 100644
+> > --- a/tests/qtest/qmp-test.c
+> > +++ b/tests/qtest/qmp-test.c
+> > @@ -151,9 +151,14 @@ static void test_qmp_protocol(void)
+> >       g_assert_cmpstr(qdict_get_try_str(resp, "id"), =3D=3D, "cookie#1"=
+);
+> >       qobject_unref(resp);
+> >
+> > -    /* Test command failure with 'id' */
+> > -    resp =3D qtest_qmp(qts, "{ 'execute': 'human-monitor-command', 'id=
+': 2 }");
+> > +    /* Test integer 'id' is echoed back on success */
+> > +    resp =3D qtest_qmp(qts, "{ 'execute': 'query-name', 'id': 2 }");
+> >       g_assert_cmpint(qdict_get_int(resp, "id"), =3D=3D, 2);
+> > +    qobject_unref(resp);
+> > +
+> > +    /* Test integer 'id' is echoed back on failure */
+> > +    resp =3D qtest_qmp(qts, "{ 'execute': 'block_resize', 'id': 3 }");
+> > +    g_assert_cmpint(qdict_get_int(resp, "id"), =3D=3D, 3);
+> >       qmp_expect_error_and_unref(resp, "GenericError");
+> >
+> >       qtest_quit(qts);
+> > @@ -487,6 +492,7 @@ static void test_qmp_monitor_remove_cli(void)
+> >       qtest_quit(qts);
+> >   }
+> >
+> > +#ifdef CONFIG_HMP
+> >   static void test_qmp_monitor_remove_hmp(void)
+> >   {
+> >       QTestState *qts;
+> > @@ -504,6 +510,7 @@ static void test_qmp_monitor_remove_hmp(void)
+> >
+> >       qtest_quit(qts);
+> >   }
+> > +#endif
+> >
+> >   int main(int argc, char *argv[])
+> >   {
+> > @@ -521,7 +528,9 @@ int main(int argc, char *argv[])
+> >       qtest_add_func("qmp/monitor-chardev-in-use",
+> >                       test_qmp_monitor_chardev_in_use);
+> >       qtest_add_func("qmp/monitor-remove-cli", test_qmp_monitor_remove_=
+cli);
+> > +#ifdef CONFIG_HMP
+> >       qtest_add_func("qmp/monitor-remove-hmp", test_qmp_monitor_remove_=
+hmp);
+> > +#endif
+>
+> Should we re-order #26 "build-sys: add 'hmp' option" or add a temporary
+> #define CONFIG_HMP?
 
-On 8/6/26 17:12, Harald Freudenberger wrote:
-> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
-> and CPACF_KM_AES_256 for the cpacf km instruction.
-> 
-> Tested-by: Holger Dengler <dengler@linux.ibm.com>
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> ---
->   target/s390x/gen-features.c      |   3 +
->   target/s390x/tcg/cpacf.h         |   6 ++
->   target/s390x/tcg/cpacf_aes.c     | 107 +++++++++++++++++++++++++++++++
->   target/s390x/tcg/crypto_helper.c |  24 +++++++
->   target/s390x/tcg/meson.build     |   1 +
->   5 files changed, 141 insertions(+)
->   create mode 100644 target/s390x/tcg/cpacf_aes.c
-> 
-
-[...]
-
-> +/*
-> + * read exactly one AES block from guest memory into a local buffer
-> + */
-> +static inline void aes_read_block(CPUS390XState *env, const int mmu_idx,
-> +                                  const uintptr_t ra, uint64_t guest_addr,
-> +                                  uint8_t *buf)
-> +{
-> +    read_guest_wrap_u8(env, mmu_idx, ra, guest_addr, buf, AES_BLOCK_SIZE);
-> +}
-> +
-> +/*
-> + * write exactly one AES block from local buffer to guest memory
-> + */
-> +static void aes_write_block(CPUS390XState *env, const int mmu_idx,
-> +                            const uintptr_t ra, uint64_t guest_addr,
-> +                            uint8_t *buf)
-> +{
-> +    write_guest_wrap_u8(env, mmu_idx, ra, guest_addr, buf, AES_BLOCK_SIZE);
-> +}
-
-nit: I would these two functions, I don't think they deserve a wrapper.
-
-> +
-> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
-> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-> +                  uint32_t type, uint8_t fc, uint8_t mod)
-> +{
-> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-> +    uint64_t len = *src_len_reg, done = 0;
-> +    int i, keysize, addr_reg_size = 64;
-> +    uint8_t key[32];
-> +    AES_KEY exkey;
-> +
-> +    g_assert(type == S390_FEAT_TYPE_KM);
-> +    switch (fc) {
-> +    case CPACF_KM_AES_128:
-> +        keysize = 16;
-> +        break;
-> +    case CPACF_KM_AES_192:
-> +        keysize = 24;
-> +        break;
-> +    case CPACF_KM_AES_256:
-> +        keysize = 32;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    if (!(env->psw.mask & PSW_MASK_64)) {
-> +        len = (uint32_t)len;
-> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-> +    }
-> +
-> +    /* length has to be properly aligned. */
-> +    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
-> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +    }
-> +
-> +    /* fetch key from param block */
-> +    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
-> +
-> +    /* expand key */
-> +    if (mod) {
-> +        AES_set_decrypt_key(key, keysize * 8, &exkey);
-> +    } else {
-> +        AES_set_encrypt_key(key, keysize * 8, &exkey);
-> +    }
-> +
-> +    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
-> +    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
-> +        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
-> +        if (mod) {
-> +            AES_decrypt(in, out, &exkey);
-> +        } else {
-> +            AES_encrypt(in, out, &exkey);
-> +        }
-> +        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
-> +        len -= AES_BLOCK_SIZE;
-> +        done += AES_BLOCK_SIZE;
-> +    }
-> +
-> +    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
-> +                             *src_ptr_reg + done);
-> +    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
-> +                             *dst_ptr_reg + done);
-> +    *src_len_reg -= done;
-> +
-> +    return !len ? 0 : 3;
-> +}
-
-The issue with writing memory, but not registers, on fault is still
-there, but I think today's behavior is good enough for emulating real
-sane code.
-
-
-With our without the above addressed:
-
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Let's add a temporary CONFIG_HMP, rather than a temporary non-working
+--disable-hmp. That should also help with ordering of other later
+patches which may not be optimal.
 
