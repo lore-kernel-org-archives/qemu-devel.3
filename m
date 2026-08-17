@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D964CC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6ABC5DF70
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtKb-00084p-R7; Mon, 17 Aug 2026 05:08:33 -0400
+	id 1wvtIe-0003qr-JP; Mon, 17 Aug 2026 05:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKU-0007I6-46; Mon, 17 Aug 2026 05:08:27 -0400
+ id 1wvtIY-0003mt-GG; Mon, 17 Aug 2026 05:06:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtKS-000229-DG; Mon, 17 Aug 2026 05:08:25 -0400
+ id 1wvtIU-0001ij-1Y; Mon, 17 Aug 2026 05:06:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=PuGyth0maI/b4y4DeiSqPw+A+mfTPcrszkcFVxZiEjM=;
+ t=1786957506; bh=z24j5fUvbF6FMuah81uaPJqujR3AO1r6+MwUxCj2UbU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XHXHVwsbhTSYrHXuNGY/JVLTDn58V8BBZbVPijQDrDEB7ElefCt/uFWYQiTLsa8lw
- 3jJPgva6T7bpCy0k151lVvls5enkZ8ZgXo8oix36nDfr0gflkNqUo9m2Fzpjqr7nzX
- a1ARparEM6po2xMjckuVg8casf22Y7THnt6po3V/gAE0gI5NCgMzjxcpTwbhTy3xJq
- C3MdgKMCQga4LzdovrXJ2UuX+9qWGkcH1mW1nP7KqUOMYdPfrme/YhSPqvm9D2XgcV
- uXJMYj3zlmBVuS2Tl3H/TOyU4bH+gSRlT1wikrYtW0WAsvDm8rxxQIGATmLuZlE8Ms
- EL0XOiyap8RGA==
+ b=qrFYvDAyQPrg/OVn/yXUxbve+3hogtogXWDRRl9vN1sL+yPf5ZF2ZEZBonGyowWBB
+ BXgyZD8ss3kNPakSE7E4ZGbEgbba7Fo/caTvhdBSP7B8W2C5ZnR51gEpkkIvh0kRET
+ 9m1m3jz1vuqTx2loOCpI4uG5DzNnZng6yKe8YZd5zO29HWqv9tRuD0+ktwBQMFKAWp
+ S3h2GgDRcgEKkTIhXXfqQm+vOoZLF4z2Me8pdtWJx3PBawQ2hiUtWJPrUzt35WP0xM
+ 8ZehvXc/RexmYVJLBq7V4BJk8+pWX8YPgyg6xjgahdAjhC7i7dn85ZGyiFsVe71cko
+ qyQOZLDXjMoEA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E36F1CBA55;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A86E1CBA42;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6DFBD40D037;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A77940D024;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0C7D330D22; Mon, 17 Aug 2026 12:05:01 +0300 (MSK)
+ id C774430CFC; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 33/42] tests/qtest/libqos/ahci: support raw
- (2352-byte) READ CD
-Date: Mon, 17 Aug 2026 12:04:38 +0300
-Message-ID: <20260817090453.2034156-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 14/42] target/s390x: Fix DR/D INT64_MIN / -1 host crash
+Date: Mon, 17 Aug 2026 12:04:19 +0300
+Message-ID: <20260817090453.2034156-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -71,55 +72,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-ahci_exec() always builds ATAPI commands with a 2048-byte logical
-sector size, so it cannot drive a READ CD that returns full 2352-byte
-raw sectors. Add an atapi_raw option that sets the READ CD
-field-selector to 0xf8 and the command's sector size to 2352 before
-the transfer is sized, so the derived block count stays correct while
-the buffer and byte counts cover the raw sectors.
+helper_divs32() divides the 64-bit dividend by the 32-bit divisor as a 64-bit
+host operation, guarding only against a zero divisor. INT64_MIN / -1 therefore
+overflows the host division before the representability check runs; on hosts
+that trap this, QEMU is killed with SIGFPE instead of raising the
+fixed-point-divide exception the guest expects:
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit de86ef3dfd337ec5a74b43d7d042ab937d0166bf)
+    qemu-s390x: QEMU internal SIGFPE {code=INTDIV, addr=...}
+
+helper_divs64() already guards the same case; add the missing check to
+helper_divs32().
+
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: b4e2bd3563af ("target-s390: Send signals for divide")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-2-iii@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 0103cb1cd175a070f52ed0ca4fe0712c2ba2befc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 0621a6c4775..e3019a1ecad 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -707,6 +707,11 @@ void ahci_exec(AHCIQState *ahci, uint8_t port,
-     if (opts->atapi) {
-         uint16_t bcl = opts->set_bcl ? opts->bcl : ATAPI_SECTOR_SIZE;
-         cmd = ahci_atapi_command_create(op, bcl, opts->atapi_dma);
-+        if (opts->atapi_raw) {
-+            /* request full 2352-byte raw sectors; sector_size must match */
-+            cmd->atapi_cmd[9] = 0xf8;
-+            cmd->sector_size = ATAPI_RAW_SECTOR_SIZE;
-+        }
-     } else {
-         cmd = ahci_command_create(op);
+diff --git a/target/s390x/tcg/int_helper.c b/target/s390x/tcg/int_helper.c
+index fbda396f5b4..5aedd1405bf 100644
+--- a/target/s390x/tcg/int_helper.c
++++ b/target/s390x/tcg/int_helper.c
+@@ -39,7 +39,8 @@ uint64_t HELPER(divs32)(CPUS390XState *env, int64_t a, int64_t b64)
+     int32_t b = b64;
+     int64_t q, r;
+ 
+-    if (b == 0) {
++    /* Catch divide by zero, and non-representable quotient (MIN / -1).  */
++    if (b == 0 || (b == -1 && a == (1ll << 63))) {
+         tcg_s390_program_interrupt(env, PGM_FIXPT_DIVIDE, GETPC());
      }
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index a0487a1557d..2a48a7523df 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -242,6 +242,7 @@
  
- #define AHCI_SECTOR_SIZE                (512)
- #define ATAPI_SECTOR_SIZE              (2048)
-+#define ATAPI_RAW_SECTOR_SIZE          (2352)
- 
- #define AHCI_SIGNATURE_CDROM     (0xeb140101)
- #define AHCI_SIGNATURE_DISK      (0x00000101)
-@@ -485,6 +486,7 @@ typedef struct AHCIOpts {
-     uint64_t buffer;    /* Pointer to source or destination guest buffer */
-     bool atapi;         /* ATAPI command? */
-     bool atapi_dma;     /* Use DMA for ATAPI? */
-+    bool atapi_raw;     /* READ CD returning 2352-byte raw sectors */
-     bool error;
-     int (*pre_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
-     int (*mid_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
 -- 
 2.47.3
 
