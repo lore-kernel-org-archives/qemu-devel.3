@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AAAC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71573C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxXo-0000Dz-0n; Mon, 17 Aug 2026 09:38:28 -0400
+	id 1wvxWa-0005om-2I; Mon, 17 Aug 2026 09:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXe-00005M-Oh; Mon, 17 Aug 2026 09:38:26 -0400
+ id 1wvxWW-0005Xm-RX; Mon, 17 Aug 2026 09:37:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxXV-0007mp-Ie; Mon, 17 Aug 2026 09:38:11 -0400
+ id 1wvxWU-0007V3-24; Mon, 17 Aug 2026 09:37:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=o5SosBKHdHzyqQqD8OysfU0fn/md8/76TZPc1P04/7w=;
+ t=1786973727; bh=6s1dX4JLzRa5YICFQNYAUP0tiAizlgQE5XGFgK3/oNU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BmRO0UabGpe3Uh96UVKVljiG1EQUusvyNV0m/3C/peyMIibZ7rwyKvs4w6RMSsEy4
- uRex+G8MCq4OqdA1MUo3jKj2FFw0YaYBLHDzAJYdO2lhGXHBkxTc98RqjWcXWDJ73S
- DFNnVW+YxDQ0gqa7f4UDydSCH4pH5ozZRsPqvyP0kaVItblzN6CQvEQK2QMNzjuir2
- 8SleORW5YSby4LNIpcrR3rMFRItvq4hSdhZRNaJnlPP+mv3voWyHNu206Jo+IRC5da
- Dx/zMahU8EiY+LEEOORnKnnAZKjuyWH6n8mDzICs+VDWlZHiOWlp5OqTtWIyK7dIcA
- Lgm52M1JQGXGw==
+ b=ODUTEVeDBf6W5tzGBaWYrtG8v6xF9Ur+UXPe8xmtubGSXRKGrIQ0vTMatwmLbG5Om
+ diTC+gvnowkUpr34+8EUL5nBLPEzjOwZ7LlYf5g6K9XB/FAPdajGaq4re2aHEGqWyB
+ 70z7szydq1IE+Es8vcSmUP9mqDwuZurq1mGsm8Wp7MVGL67PlgLbP2RHF103cNK0SQ
+ Hp7YwnKTuVaSNGzKhsmBcgPeMkgISo6TYf8e/FvuIissLK0bTswIiQBjdHDcD5Xnml
+ Ba8o0U7M7+S1tmL6B38llrsbIrdXI1CQTHRlnZyJu5v2nEq4nVbD9PtPrFt6GAzEzz
+ dKG3+xpdQDGHA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8C1101CBCD2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 581211CBCC8;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C5F8640D42F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9341540D425;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DC6B230FAE; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id BEDB930F9A; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 131/135] hw/net/rtl8139: Fix handling of VLAN tags
- on incoming short packets
-Date: Mon, 17 Aug 2026 16:34:41 +0300
-Message-ID: <20260817133451.2384630-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
+ Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 121/135] hw/intc/loongarch_pch_pic: Validate
+ htmsi_vector before indexing parent_irq
+Date: Mon, 17 Aug 2026 16:34:31 +0300
+Message-ID: <20260817133451.2384630-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,70 +71,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-The rtl8139 receive code handles VLAN tags in incoming packets by
-copying the VLAN tag to a special field in the receive descriptor,
-and copying only the actual payload data to the receive buffer.  This
-code tries to ensure that it pads out the payload to at least
-MIN_BUF_SIZE bytes.
+pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
+index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
+the array, but only 32 are used by the virt machine) causes an out-of-bounds
+read and a guest-triggerable QEMU crash.
 
-In commit 63b901bfd30 we removed the main "pad short frames" code
-from this device because we switched to requiring net backends to do
-the padding.  However we didn't notice that this broke the VLAN tag
-handling, which relied on the old code making the buffer at least
-MIN_BUF_SIZE + VLAN_HLEN bytes so that it could copy MIN_BUF_SIZE
-bytes into the receive buffer even after removing the VLAN tag.  The
-result is that the guest can make us read 4 bytes off the end of a
-buffer by feeding itself a suitable short packet in loopback mode.
+Validate the vector before calling qemu_set_irq() in both the raise and lower
+paths and log a guest error if it is out of range.
 
-The old behaviour is actually not correct, because the IEEE802.1Q
-standard says that the minimum ethernet frame size remains 64 bytes
-including the 4 checksum bytes, and so when a tag is present the
-payload data only needs to be 56 bytes.  (A bridge implementation can
-choose to pad tagged frames out to 68 bytes, but it doesn't have to,
-and so all devices have to correctly handle incoming tagged frames
-that are 64 bytes long.)
-
-The RTL8139 datasheet isn't very communicative on this topic, but
-there's nothing that suggests it adds extra padding on receive that
-didn't exist in the incoming packet.
-
-Drop the last remnants of the padding handling from this device;
-this avoids overcopying into the guest when we receive a short
-VLAN tagged packet.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3518
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bin Meng <bin.meng@processmission.com>
-Message-ID: <20260731093618.2961031-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 59fc7b747d56652e09708adff3afaca326e85a2a)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+(cherry picked from commit 80776c4df92c3d58f89608b61e355092a7d524ed)
+(Mjt: #include qemu/log.h)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index fb78b1184f8..e00201991ae 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -777,7 +777,6 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
-     s->RxBufAddr += size;
- }
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index acd75ccb0c0..5bcb77065c9 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -7,6 +7,7 @@
  
--#define MIN_BUF_SIZE 60
- static inline dma_addr_t rtl8139_addr64(uint32_t low, uint32_t high)
+ #include "qemu/osdep.h"
+ #include "qemu/bitops.h"
++#include "qemu/log.h"
+ #include "hw/irq.h"
+ #include "hw/intc/loongarch_pch_pic.h"
+ #include "trace.h"
+@@ -17,13 +18,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
  {
-     return low | ((uint64_t)high << 32);
-@@ -1005,10 +1004,6 @@ static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
-             lduw_be_p(&buf[ETH_ALEN * 2]) == ETH_P_VLAN) {
-             dot1q_buf = &buf[ETH_ALEN * 2];
-             size -= VLAN_HLEN;
--            /* if too small buffer, use the tailroom added duing expansion */
--            if (size < MIN_BUF_SIZE) {
--                size = MIN_BUF_SIZE;
--            }
+     uint64_t val;
+     int irq;
++    uint8_t vector;
  
-             rxdw1 &= ~CP_RX_VLAN_TAG_MASK;
-             /* BE + ~le_to_cpu()~ + cpu_to_le() = BE */
+     if (level) {
+         val = mask & s->intirr & ~s->int_mask;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr |= MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
++            qemu_set_irq(s->parent_irq[vector], 1);
+         }
+     } else {
+         /*
+@@ -33,8 +42,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
+         val = mask & s->intisr & ~s->intirr;
+         if (val) {
+             irq = ctz64(val);
++            vector = s->htmsi_vector[irq];
++            if (vector >= s->irq_num) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: htmsi_vector[%d]=%u out of range\n",
++                              __func__, irq, vector);
++                return;
++            }
+             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
+-            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
++            qemu_set_irq(s->parent_irq[vector], 0);
+         }
+     }
+ }
 -- 
 2.47.3
 
