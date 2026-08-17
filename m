@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E24CC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18422C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxX4-0007Pr-0h; Mon, 17 Aug 2026 09:37:42 -0400
+	id 1wvxWT-0005JH-QP; Mon, 17 Aug 2026 09:37:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxX0-0007Ly-OX; Mon, 17 Aug 2026 09:37:38 -0400
+ id 1wvxWS-0005EP-Jk; Mon, 17 Aug 2026 09:37:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWz-0007cz-05; Mon, 17 Aug 2026 09:37:38 -0400
+ id 1wvxWQ-0007RP-Nj; Mon, 17 Aug 2026 09:37:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=RLw/WnDVVURhjmUzrcL9IlClOKQxaLMyIjUHZKnlkJ0=;
+ t=1786973727; bh=BWHY8o6xrl6e1ap9LZwcnM3sr0pQXKpoyyI8I86dzew=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ebpMYAIa61m8lwsitSmrqrl/XUe/8ZSErBfJOYq+VuTqTKYGzo5xwrjzBps8fRt39
- smOtxWakvB3k2wAXr0yF+caLGnvW4Na3Yet7BTrbWQih+oME1qoqDZ2i++bbofsFSI
- clMJJ/eclIWP52BUTaFXNCvdulWegUPkvF110D5b8aYheu9msYNom5qHGudmCZMB/X
- arr5geKj7MQfKDXUpc9ynwqZ4mCf+/EJ/IrYxALPPPUA+P9iOWtwPYs67dvRRaNmiO
- 2igpAFLEWW5N8jWNx32u6QpnY2i3y9eZfRjl+exyNd+zDrq4tamSWPeieRaOtu2oMp
- zDU88aKY5/xBg==
+ b=avW/G4QOVdqEqE5MR9auPUyfzlbF1L/JWNhw9UksNUJH3SbJcwc/8DhXlvit7EXYG
+ S9RE/hzPl2zd0ra0KWtDQOeUnZIf6Z+1exrTZnzqprt4EShekQ1qqzOWHCdPxwBmwF
+ jSZUuGauAy4DyDBQGPHiO2lOLwWQkvj/8SQxY5W9Ch8Ofg66NQ2gwqrPD0vDEQevLD
+ GqypKYG4Ru4AUzzSORoIJEq+ztBlSZ78/SE3EsF0R7IW4l121CLjcwOZNegYeWZ1VQ
+ djGutVfK5vs0cCZpDGxqA74uPfdIDD9qxwwEsdCoTUbNSLeuAQrXojX0F12OwDW70a
+ BHT4OCIv3Jytw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 76E8A1CBCCE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E7041CBCC6;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B131C40D42B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 88F8540D423;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D0A1830FA6; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id B8C0D30F96; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 127/135] tests/qtest/libqos/ahci: support raw
- (2352-byte) READ CD
-Date: Mon, 17 Aug 2026 16:34:37 +0300
-Message-ID: <20260817133451.2384630-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ xlabai <xlabai@tencent.com>, Jules Denardou <jules.denardou@datadoghq.com>,
+ Tristan Madani <tristan@talencesecurity.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 119/135] migration/multifd: Validate
+ next_packet_size in zlib/zstd recv
+Date: Mon, 17 Aug 2026 16:34:29 +0300
+Message-ID: <20260817133451.2384630-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
@@ -71,55 +73,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Peter Xu <peterx@redhat.com>
 
-ahci_exec() always builds ATAPI commands with a 2048-byte logical
-sector size, so it cannot drive a READ CD that returns full 2352-byte
-raw sectors. Add an atapi_raw option that sets the READ CD
-field-selector to 0xf8 and the command's sector size to 2352 before
-the transfer is sized, so the derived block count stays correct while
-the buffer and byte counts cover the raw sectors.
+The zlib and zstd multifd compression backends read next_packet_size from
+the incoming migration stream and use it directly as the read length into a
+fixed-size buffer (MULTIFD_PACKET_SIZE * 2 = 1MB).  A malicious migration
+source can set next_packet_size bigger than allocated, causing a heap
+buffer overflow write on the destination.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-(cherry picked from commit de86ef3dfd337ec5a74b43d7d042ab937d0166bf)
+Add a check against zbuff_len before reading, matching what the qatzip
+backend already does.  Also replace the assert(in_size == 0) for empty
+packets with proper error reporting, since the value is wire-controlled,
+meanwhile assert() stops working with -DNDEBUG builds.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3737
+Reported-by: xlabai <xlabai@tencent.com>
+Reported-by: Jules Denardou <jules.denardou@datadoghq.com>
+Reported-by: Tristan Madani <tristan@talencesecurity.com>
+Reported-by: david korczynski (@david1766)
+Reported-by: huntr bubble (@bubblehuntr)
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260728210417.1925078-3-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit ac7fa2e9d457ff9c777be32617f3c46548c4cadf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 34a75b7f43b..0677f2055d6 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -707,6 +707,11 @@ void ahci_exec(AHCIQState *ahci, uint8_t port,
-     if (opts->atapi) {
-         uint16_t bcl = opts->set_bcl ? opts->bcl : ATAPI_SECTOR_SIZE;
-         cmd = ahci_atapi_command_create(op, bcl, opts->atapi_dma);
-+        if (opts->atapi_raw) {
-+            /* request full 2352-byte raw sectors; sector_size must match */
-+            cmd->atapi_cmd[9] = 0xf8;
-+            cmd->sector_size = ATAPI_RAW_SECTOR_SIZE;
-+        }
-     } else {
-         cmd = ahci_command_create(op);
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 8cf8a26bb42..2158a2128b6 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -216,10 +216,19 @@ static int multifd_zlib_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
      }
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index a0487a1557d..2a48a7523df 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -242,6 +242,7 @@
  
- #define AHCI_SECTOR_SIZE                (512)
- #define ATAPI_SECTOR_SIZE              (2048)
-+#define ATAPI_RAW_SECTOR_SIZE          (2352)
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
  
- #define AHCI_SIGNATURE_CDROM     (0xeb140101)
- #define AHCI_SIGNATURE_DISK      (0x00000101)
-@@ -485,6 +486,7 @@ typedef struct AHCIOpts {
-     uint64_t buffer;    /* Pointer to source or destination guest buffer */
-     bool atapi;         /* ATAPI command? */
-     bool atapi_dma;     /* Use DMA for ATAPI? */
-+    bool atapi_raw;     /* READ CD returning 2352-byte raw sectors */
-     bool error;
-     int (*pre_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
-     int (*mid_cb)(AHCIQState*, AHCICommand*, const struct AHCIOpts *);
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index abed140855c..140d36e90f7 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -210,10 +210,19 @@ static int multifd_zstd_recv(MultiFDRecvParams *p, Error **errp)
+         return -1;
+     }
+ 
++    if (in_size > z->zbuff_len) {
++        error_setg(errp, "multifd %u: next_packet_size %"PRIu32
++                   " exceeds allocated %"PRIu32, p->id, in_size, z->zbuff_len);
++        return -1;
++    }
++
+     multifd_recv_zero_page_process(p);
+ 
+     if (!p->normal_num) {
+-        assert(in_size == 0);
++        if (in_size != 0) {
++            error_setg(errp, "multifd %u: expected empty packet", p->id);
++            return -1;
++        }
+         return 0;
+     }
+ 
 -- 
 2.47.3
 
