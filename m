@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1800C5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BB6C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqK-0001Dn-U5; Mon, 17 Aug 2026 06:45:25 -0400
+	id 1wvuqK-0001DJ-Qw; Mon, 17 Aug 2026 06:45:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqD-00015j-G0; Mon, 17 Aug 2026 06:45:19 -0400
+ id 1wvuq9-00014t-S1; Mon, 17 Aug 2026 06:45:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqB-0003xv-8g; Mon, 17 Aug 2026 06:45:16 -0400
+ id 1wvuq8-0003x4-3i; Mon, 17 Aug 2026 06:45:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=wYUETFF1LQO8SvgC6w5ZcuhX3jpAWcfrMpU6PRcjqp8=;
+ t=1786963486; bh=+6eKVzWfpYp6DQEI60ZuROXxrpWceMO0k7TzOkGPscY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WjETkO08Cddv6rqLO3g2ahwINsU/+UKozno0VGBHSYUEa1YHToNFaVBm7ALWkW5eI
- SDyzJMdjfWMrwUPm2ByuYJFjhY1GGot1DruR//EGX3iX8B9KfgQMr8FpflnmG9pJxf
- M/PCaj4TZhndR3Fg9nKV8fubCr/GS1a7vgmj7oZ+3BIkIAJNHeZ85pz8eXZzdvVR2h
- Yy4ayRK7U/MrVAAWEytzuMoR1Bp3x3e7pa8k5YnriAX25EJOJUXV0Zc3Cy6OYwo7/M
- c2XOv0x3KObKyi/yXuDz1epOQpvi7UGg7KWFvmYP/bEtWaGTFCqt+Qfu85BT35QhyI
- 03w9fJaQImrBg==
+ b=RnBZPEB4yuDYdRpGOjEOpnyLYuD3VyOk4R8F4UZeaNkVoxjrfJRRQOY8P+5Slii+z
+ 7GDjneE81vhdKu/3NKNUJ+PiCdZUIC50NHn9ETWfkKz64EB2bonSwGABVHPnsn+0Tg
+ J9NgeDowRqPT0fYV66cYShpI7+CN+TL3DoUCifvxesYsaNt5XDV7Q0+XpwFRvIlKLm
+ cC5Dy1FDIN9JE7llE5KBwvbyHhvhvDO7ataVnswLajybmtW6rCx1ZxO8HEXo1wq1lT
+ A1b5fmYVp1bXmChTDu69W11Xop2zrt7A1EnIEefLuZVQZxuGGgj5gulby7EnHwt4MW
+ 4dyf6rG4O7ldg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 657871CBB6B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 52F251CBB68;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 66F8840D1FB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 549CA40D1F6;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id F1E6330E4E; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
+ id E86FD30E48; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Harald Freudenberger <freude@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 126/161] tests/tcg/s390x: Test PRNO TRNG
- interruptibility
-Date: Mon, 17 Aug 2026 13:42:40 +0300
-Message-ID: <20260817104344.2047346-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 123/161] hw/arm/aspeed: Add missing Kconfig
+ dependencies on required components
+Date: Mon, 17 Aug 2026 13:42:37 +0300
+Message-ID: <20260817104344.2047346-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,103 +74,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Add a small test that issues a large PRNO TRNG request while a timer is
-running, and checks that the timer interrupts it several times.
+Add various missing Kconfig dependencies of the Aspeed SoCs:
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-3-iii@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit abe1d893f41d5fcbdabc22f46ec148069a4ef319)
+- USB EHCI (commit bfdd34f1caa "hw/arm: ast2400/ast2500: Wire up
+  EHCI controllers")
+- OR-IRQ (commit d831c5fd868 "aspeed/intc: Add AST2700 support")
+- SDHCI (commit 2bea128c3d0 "hw/sd/aspeed_sdhci: New device"
+  and f25c0ae1079 "aspeed/soc: Add AST2600 support")
+
+This fixes the following runtime issues:
+
+  qemu-system-aarch64: unknown type 'platform-ehci-usb'
+  qemu-system-aarch64: unknown type 'or-irq'
+  qemu-system-aarch64: unknown type 'generic-sdhci'
+
+Cc: qemu-stable@nongnu.org
+Fixes: 2bea128c3d0 ("hw/sd/aspeed_sdhci: New device")
+Fixes: f25c0ae1079 ("aspeed/soc: Add AST2600 support")
+Fixes: d831c5fd868 ("aspeed/intc: Add AST2700 support")
+Fixes: bfdd34f1caa ("hw/arm: ast2400/ast2500: Wire up EHCI controllers")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260709164103.37614-3-philmd@oss.qualcomm.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 6440880ed371f74b3019462acfb2cd7709372db7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index 0ca030ded01..48cba4cdfa4 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -75,6 +75,7 @@ Z13_TESTS+=vcksm
- Z13_TESTS+=vstl
- Z13_TESTS+=vrep
- Z13_TESTS+=precise-smc-user
-+Z13_TESTS+=prno-trng
- $(Z13_TESTS): CFLAGS+=-march=z13 -O2
- TESTS+=$(Z13_TESTS)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index e3331563f19..a4ecc77c74a 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -548,6 +548,7 @@ config ASPEED_SOC
+     select TMP105
+     select TMP421
+     select EMC141X
++    select OR_IRQ
+     select UNIMP
+     select LED
+     select PMBUS
+@@ -555,6 +556,8 @@ config ASPEED_SOC
+     select FSI_APB2OPB_ASPEED
+     select AT24C
+     select PCI_EXPRESS_ASPEED
++    select USB_EHCI_SYSBUS
++    select SDHCI
  
-diff --git a/tests/tcg/s390x/prno-trng.c b/tests/tcg/s390x/prno-trng.c
-new file mode 100644
-index 00000000000..43eea5db1dc
---- /dev/null
-+++ b/tests/tcg/s390x/prno-trng.c
-@@ -0,0 +1,67 @@
-+/*
-+ * Test that PERFORM RANDOM NUMBER OPERATION TRNG is interruptible.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/time.h>
-+#include <asm/ucontext.h>
-+
-+static unsigned char buf1[16 * 1024 * 1024];
-+static unsigned char buf2[16 * 1024 * 1024];
-+
-+static volatile sig_atomic_t interrupted;
-+
-+static void sigprof_handler(int sig, siginfo_t *info, void *ucontext)
-+{
-+    struct ucontext *uc = ucontext;
-+    unsigned long addr = uc->uc_mcontext.regs.psw.addr;
-+
-+    if (*(unsigned short *)(addr - 4) == 0xb93c) {
-+        interrupted++;
-+    }
-+}
-+
-+static void prno_trng(void *b1, unsigned long l1, void *b2, unsigned long l2)
-+{
-+    register unsigned long r0 asm("r0") = 114;  /* TRNG */
-+    register unsigned long r2 asm("r2") = (unsigned long)b1;
-+    register unsigned long r3 asm("r3") = l1;
-+    register unsigned long r4 asm("r4") = (unsigned long)b2;
-+    register unsigned long r5 asm("r5") = l2;
-+
-+    asm volatile("0: ppno %[r2],%[r4]\n"  /* prno alias for old toolchains */
-+                 "   jo 0b"
-+                 : [r2] "+r" (r2), [r3] "+r" (r3)
-+                 , [r4] "+r" (r4), [r5] "+r" (r5)
-+                 : "r" (r0)
-+                 : "cc", "memory");
-+}
-+
-+int main(void)
-+{
-+    struct itimerval it = {
-+        .it_interval = { .tv_usec = 10000 },  /* 0.01s */
-+        .it_value = { .tv_usec = 10000 },
-+    };
-+    struct sigaction act = {
-+        .sa_sigaction = sigprof_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err;
-+
-+    err = sigaction(SIGPROF, &act, NULL);
-+    assert(err == 0);
-+    err = setitimer(ITIMER_PROF, &it, NULL);
-+    assert(err == 0);
-+
-+    prno_trng(buf1, sizeof(buf1), buf2, sizeof(buf2));
-+    printf("interrupted %d times\n", interrupted);
-+    assert(interrupted >= 3);
-+
-+    return EXIT_SUCCESS;
-+}
+ config MPS2
+     bool
 -- 
 2.47.3
 
