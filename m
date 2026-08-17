@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A86FC5DF74
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3707DC5DF66
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxVJ-00031V-CS; Mon, 17 Aug 2026 09:35:53 -0400
+	id 1wvxUx-0002pj-D7; Mon, 17 Aug 2026 09:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVH-000319-W6; Mon, 17 Aug 2026 09:35:52 -0400
+ id 1wvxUv-0002ou-V4; Mon, 17 Aug 2026 09:35:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxVF-0007Hh-T3; Mon, 17 Aug 2026 09:35:51 -0400
+ id 1wvxUr-0006tr-Ik; Mon, 17 Aug 2026 09:35:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973726; bh=lI+N3wX8OPq/r0Gn2MTxHOm1c1hbN5JDTVOPzN+TTDA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=m4O59w16jVQ1VZD70diml3l4RCCp0BAxWkpUHVzrrojQeZmmeMrJiIQ7T4OweJvLk
- ztpElIo6UjkDhkAfMiYGNxhKCVGxZi2l/hI4sx7gwhmXlM8OK+X1+s/BDvtp7Ef8dq
- FXRv29tz5lM4krKCklvXFFEgIsUD9JI4ZAj3ILOg3pK6fRErVbUqGqFht15TVhbxHS
- wbKgNOPqBl5AaSRKw6ihz7kQRNXfJpSCy2Dw4ZMZQeNOj1oHml9P6LJavSclXJQcn/
- rgxej3f3hXlHt5OgEhYDLG6XOzEEZYW5nflAoSJRH9o0Vi8+oyEYKNLlqLs1xjcBDo
- dRTv/enJkUZzg==
+ t=1786973697; bh=/BVktb07Bw7RujsuuepUhzg81HGx1F/xQuQkxQqSDWU=;
+ h=From:To:Cc:Subject:Date;
+ b=LSnyr/Z+Vkr06jXlKNPcsDXE7SitKm5UZyDJjAc2p18QO16wjBC9y4So2L6eoYWed
+ Z9iVtCrU4Aay9YQmMFkh1MhMVMheYOzGiLnh9xxqxZnPohE0ysrkhaEiwMkeYzLMSs
+ lFWlOvqu/c1jbIP9r3UfKGbO3pgdAQMkg2T4mAkXpIuebNQmiLEus3dcKMBu1Y46Jz
+ lkCqVWETgk6U5SiX6+lPtAXEJGLu9KhpqDgUn5pMOYoTfhKPTzoCTHNf6sWRjK0SBz
+ n4xkuhxZslXTXCK10UkuyRmLTHVUVvNfaWfuFqumchdYnrlL6dzPxiW/8rn8+8NYT5
+ vWKFLTnxquSXA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EE8851CBCB6;
- Mon, 17 Aug 2026 16:35:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C6F21CBCB5;
+ Mon, 17 Aug 2026 16:34:57 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3526140D413;
- Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 768B440D412;
+ Mon, 17 Aug 2026 16:35:18 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8910130F76; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id C55FD30F74; Mon, 17 Aug 2026 16:34:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 103/135] linux-user: implement mount_setattr(2)
-Date: Mon, 17 Aug 2026 16:34:13 +0300
-Message-ID: <20260817133451.2384630-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 000/135] Patch Round-up for stable 10.0.13,
+ freeze on 2026-08-24
+Date: Mon, 17 Aug 2026 16:34:12 +0300
+Message-ID: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
-References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,124 +70,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+The following patches are queued for QEMU stable v10.0.13:
 
-mount_setattr() was in the syscall tables but had no implementation, so
-guests always got -ENOSYS. systemd uses it when setting up per-unit
-credential mounts, which fails the affected units with EXIT_CREDENTIALS.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
-struct mount_attr is an extensible struct like open_how, so handle it the
-same way openat2() does: reject sizes smaller than the ver0 struct and
-require any unknown trailing bytes to be zero. All of its fields are
-64-bit, and the MOUNT_ATTR_* and MS_* propagation values are identical on
-every target, so only the byte order needs fixing up.
+Patch freeze is 2026-08-24, and the release is planned for 2026-08-26:
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 4713988da1c3ed7150014c87c2429d7a940b77c8)
-(Mjt: context fixup across v10.1.0-1292-gad1afe433fa
- "linux-user/aarch64: Implement map_shadow_stack syscall")
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  https://wiki.qemu.org/Planning/10.0
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index e496bd4cab8..21a4519c04a 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1737,3 +1737,6 @@
- #ifdef TARGET_NR_fspick
- { TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_mount_setattr
-+{ TARGET_NR_mount_setattr, "mount_setattr", "%s(%d,%s,%d,%p,%d)", NULL, NULL },
-+#endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 9a58d0a2175..5e742f55b82 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -9452,6 +9452,13 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
-            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
- #endif
- 
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+#define __NR_sys_mount_setattr __NR_mount_setattr
-+_syscall5(int, sys_mount_setattr, int, dfd, const char *, path,
-+          unsigned int, flags, struct mount_attr_ver0 *, uattr,
-+          size_t, usize)
-+#endif
-+
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
- #define __NR_sys_fsopen __NR_fsopen
- _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
-@@ -14178,6 +14185,43 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         return do_riscv_hwprobe(cpu_env, arg1, arg2, arg3, arg4, arg5);
- #endif
- 
-+#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
-+    case TARGET_NR_mount_setattr:
-+        {
-+            struct mount_attr_ver0 attr = {};
-+            abi_ulong usize = arg5;
-+
-+            if (usize < sizeof(struct target_mount_attr_ver0)) {
-+                return -TARGET_EINVAL;
-+            }
-+            ret = copy_struct_from_user(&attr, sizeof(attr), arg4, usize);
-+            if (ret) {
-+                if (ret == -TARGET_E2BIG) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "Unimplemented mount_setattr mount_attr "
-+                                  "size: " TARGET_ABI_FMT_lu "\n", usize);
-+                }
-+                return ret;
-+            }
-+            /*
-+             * MOUNT_ATTR_* and the MS_* propagation flags have the same
-+             * values on all targets, so only byte order needs fixing up.
-+             */
-+            attr.attr_set = tswap64(attr.attr_set);
-+            attr.attr_clr = tswap64(attr.attr_clr);
-+            attr.propagation = tswap64(attr.propagation);
-+            attr.userns_fd = tswap64(attr.userns_fd);
-+
-+            p = lock_user_string(arg2);
-+            if (!p) {
-+                return -TARGET_EFAULT;
-+            }
-+            ret = get_errno(sys_mount_setattr(arg1, p, arg3, &attr,
-+                                              sizeof(attr)));
-+            unlock_user(p, arg2, 0);
-+        }
-+        return ret;
-+#endif
- #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
-     case TARGET_NR_fsopen:
-         {
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 01f5d47b6ac..4d610490c98 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2767,6 +2767,19 @@ struct target_open_how_ver0 {
-     abi_ullong mode;
-     abi_ullong resolve;
- };
-+/* from kernel's include/uapi/linux/mount.h */
-+struct mount_attr_ver0 {
-+    uint64_t attr_set;
-+    uint64_t attr_clr;
-+    uint64_t propagation;
-+    uint64_t userns_fd;
-+};
-+struct target_mount_attr_ver0 {
-+    abi_ullong attr_set;
-+    abi_ullong attr_clr;
-+    abi_ullong propagation;
-+    abi_ullong userns_fd;
-+};
- #ifndef RESOLVE_NO_MAGICLINKS
- #define RESOLVE_NO_MAGICLINKS   0x02
- #endif
--- 
-2.47.3
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* 702216619e2a Gerd Hoffmann:
+   hw/uefi: add sanity check
+02* ff5a9eb13c86 Gerd Hoffmann:
+   hw/uefi: remove debug function
+03* 647ba95eda5a Gerd Hoffmann:
+   hw/uefi: check lower limit for signature list size
+04* 8e0ddb4a6ebd Gerd Hoffmann:
+   hw/uefi: account variable policy entries against storage size
+05* acba2d78176d Gerd Hoffmann:
+   hw/uefi: add post_load checks
+06* bd9b3c50f458 Gerd Hoffmann:
+   hw/uefi: make SetupMode read-only
+07* c822ecd80661 Mario Casquero:
+   vfio/pci: Initialize rom_read_failed in vfio_pci_load_rom()
+08* 256229e8f9b9 Tomita Moeko:
+   vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
+09* dff528657fc1 Denis V. Lunev:
+   vfio/pci: don't narrow a failed config read to a plausible value
+10* 86abb10256a5 Denis V. Lunev:
+   vfio/pci: reject invalid PCI_INTERRUPT_PIN values
+11* 51aa3f3e0577 Andrey Polivoda:
+   target/i386: helper_sysret(): Check that RCX contains a canonical address 
+   when emulating an Intel CPU
+12* d149a11c6c82 Paolo Bonzini:
+   scsi-disk: protect against guest sending truncated data for MODE SELECT 
+   commands
+13* e2da3d92744d Paolo Bonzini:
+   scsi-disk: fix off by one in assertion
+14* 443e02410695 Artem Nasonov:
+   hw/ide: replace assert with proper error handling
+15* f604b807a55a Thomas Huth:
+   hw/display/vmware_vga: Don't allow guest to trigger long running loop in 
+   host
+16* a0414545a212 Christian Schoenebeck:
+   hw/9pfs: fix O_TRUNC bypass on read-only export
+17* 210701c82e30 Jia Jia:
+   hw/9pfs/virtio: drain in-flight PDUs before virtio-9p unrealize
+18* 1de8aea061b9 Christian Schoenebeck:
+   hw/9pfs/xen: drain in-flight PDUs before xen-9p disconnect
+19* b7520c9a5912 Thomas Huth:
+   hw/usb/dev-uas: Fix guest-triggerable heap OOB access
+20* 9b899ddb2706 Thomas Huth:
+   hw/ide/core: Fix possible crash via NULL pointer in ide_cancel_dma_sync()
+21* 68809288c7e5 Thomas Huth:
+   hw/usb/core: Avoid possible assert() in do_parameter() --> 
+   usb_packet_copy()
+22* 92abc3c51ebb Thomas Huth:
+   hw/usb/hcd-xhci: Check return value of xhci_xfer_create_sgl() for errors
+23* 861372428b05 Marc-André Lureau:
+   hw/display/virtio-gpu: validate stride against width on scanout
+24* 9c724426f519 Akihiko Odaki:
+   hw/display/virtio-gpu: reject strides exceeding INT_MAX
+25* 76dcc0832c5c Akihiko Odaki:
+   hw/display/virtio-gpu: Remove the bytes_pp field
+26* 1c1232c2ee07 Marc-André Lureau:
+   hw/display/vhost-user-gpu: validate message payload sizes
+27* efa7244b2a0b Marc-André Lureau:
+   ui/vnc: remove redundant rows computation
+28* 4727cc883b7e Haotian Jiang:
+   hw/display/qxl: unregister vm_change_state handler and BHs
+29* b28778131fad Marc-André Lureau:
+   net/colo: fix g_hash_table_destroy assertion on uninitialized filter
+30* 415f2759d7b3 Marc-André Lureau:
+   target/i386/sev: fix MemoryRegion reference leaks in gpa2hva callers
+31* 8ac0a1c7b98e Haotian Jiang:
+   virtio-gpu: fix NULL deref in rutabaga set_scanout
+32* 0fa3e1823b9b Akihiko Odaki:
+   hw/display/virtio-gpu: Fix empty blob discrimination
+33* 4ae1c5c7d6f3 Akihiko Odaki:
+   hw/display/virtio-gpu: Initialize blob mapping for ATTACH_BACKING
+34* 5322889f07b5 Marc-André Lureau:
+   rutabaga: improve error handling, fix potential crash during init
+35* 5c9ef661a60a Akihiko Odaki:
+   hw/display/virtio-gpu: Block Rutabaga migration
+36* 52c7bb369b23 Michael S. Tsirkin:
+   virtio-net: fix OOB read in RSC receive path
+37* 772488562053 Michael S. Tsirkin:
+   virtio-net: fix short frame OOB read in receive_filter()
+38* fbdfdbb9920c Michael S. Tsirkin:
+   libvhost-user: protect against OOB writes in vu_set_inflight_fd
+39* 758ef96a2dba Michael S. Tsirkin:
+   libvhost-user: protect against OOB vring queue access
+40* 6dbdc271f56b Laurent Vivier:
+   hw/virtio: reject zero-length packed indirect descriptor table
+41* 27806d2ddba2 Michael S. Tsirkin:
+   vhost: do not crash on ring map failure
+42* f404bf0e6504 Michael S. Tsirkin:
+   virtio-scsi: fix SCSIRequest leak on a bad request
+43* 665c854390e0 Michael S. Tsirkin:
+   virtio: fail early on bad config_len in migration
+44* cf89b769cdd1 Michael S. Tsirkin:
+   vhost-user: assert nregions within limit
+45* 5cc182ba39a3 Michael S. Tsirkin:
+   virtio-pmem: wait for flush requests on unrealize
+46* bf21298c082c Michael S. Tsirkin:
+   libvhost-user: validate last_batch_head in vu_check_queue_inflights
+47* b9d248dfaca5 Michael S. Tsirkin:
+   libvhost-user: fix heap overflow in vu_check_queue_inflights
+48* 733a98a552e4 Michael S. Tsirkin:
+   libvduse: validate vq size
+49* 67550d65b4bf Michael S. Tsirkin:
+   virtio-iommu: fix OOM due to unbounded call_rcu
+50* 7ea56dcc9406 Peter Maydell:
+   hw/pci-host/q35.c: Always initialize smram-region even if SMM disabled
+51* a90fcf0080da Peter Maydell:
+   hw/pci-host/q35.c: Factor out creation of SMRAM MRs
+52* e07c67584c69 Peter Maydell:
+   hw/pci-host/q35.c: Avoid early return in mch_write_config()
+53* 421f45d03f32 GuoHan Zhao:
+   hw/virtio/vdpa-dev: pass set_config buffer to vhost backend
+54* 292902ae4e93 Haotian Jiang:
+   hw/cxl: fix OOB access in cxl_doe_cdat_rsp via entry_handle
+55* 0691bb257a7c Clément MATHIEU--DRIF:
+   intel_iommu: Check address mask before using it in pasid-based iotlb 
+   invalidation
+56* df12999cc813 Laurent Vivier:
+   hw/net/virtio-net: Protect from DMA re-entrancy bugs
+57* 0be94d8d9c28 Laurent Vivier:
+   hw/virtio-rng: Fix host use-after-free (CVE-2026-50624)
+58* 70074cc48f45 Laurent Vivier:
+   backends/rng: cap request size to avoid oversized allocation
+59* 6682ea339127 Stefan Hajnoczi:
+   virtio: avoid packed vring virtio_queue_empty() infinite loops 
+   (CVE-2026-16457)
+60* 8268d216a004 Cédric Le Goater:
+   linux-user: Guard local FUTEX_CMD_MASK definition
+61* 8cbcf7579355 Peter Maydell:
+   hw/net/xilinx_axienet: Don't write checksums off end of packet
+62* aba80ad9d853 Matt Turner:
+   linux-user: fix guards for the fsmount(2) syscall series
+63* b395a655ae0e Laurent Vivier:
+   hw/net/e1000e: recalculate rx_desc_len on migration load
+64* 1e5efe6d9370 Laurent Vivier:
+   hw/net/igb: recalculate rx_desc_len on migration load
+65* d8813fdc4bdf Mark Cave-Ayland:
+   target/sparc: set reg window data structures currently after vmstate load
+66* db3abd36e4c7 Laurent Vivier:
+   linux-user/sh4: allow full 32-bit address space
+67* c4580a3a6d1c botszhuang:
+   hw/i2c/bcm2835_i2c: Correct CLKT register offset
+68* 4f635bddf50c Peter Maydell:
+   hw/display/exynos4210_fimd: Factor out finding screen width/height
+69* 7dd1e2218835 Peter Maydell:
+   hw/display/exynos4210_fimd: Pass width to draw_line functions
+70* a5f8d33682be Peter Maydell:
+   hw/display/exynos4210_fimd: Clamp windows to screen size
+71* a5cff318f06c Michael S. Tsirkin:
+   virtio-mmio: fix QUEUE_NUM_MAX
+72* df67805ee9b1 Klaus Jensen:
+   hw/nvme: fix cross-namespace copy dif buffer overflow
+73* c39e05af439a Klaus Jensen:
+   hw/nvme: fix unintentional integer overflow in shift
+74* 6e5ca34f3870 Daniel Paziyski:
+   hw/nvme: fix assertion failure on subregion removal
+75* 9e3df3019d21 Helge Deller:
+   linux-user: Fix msqid_ds struct wrt 32-bit big endian architectures
+76* 518a4aa01b88 no92:
+   linux-user: fix incorrect msg_l[sr]pid members of target_msqid_ds
+77* 0d3db94a8866 malike:
+   block/cloop: fix integer overflow in total_sectors calculation
+78* a55402d5c3a8 Kevin Wolf:
+   block: Fix crash after setting latency historygram with single bin
+79* 5b0ba385a024 Denis V. Lunev:
+   block/accounting: take stats->lock in latency histogram setters
+80* 16f94ef4c6ce Denis V. Lunev:
+   block/qapi: take stats->lock when reading BlockAcctStats for 
+   query-blockstats
+81* 842c89281a20 Denis V. Lunev:
+   tests/unit: add reproducer for BlockAcctStats histogram locking race
+82* 0c43f801c0d7 Stefan Hajnoczi:
+   dmg: fix out-of-bounds load in search_chunk() (CVE-2026-65929)
+83* ab7b872f0c38 Stefan Hajnoczi:
+   dmg: refuse to open files with no chunks
+84* 370882d08695 Stefan Hajnoczi:
+   dmg: reject inconsistent UDRW chunk sector count and length 
+   (CVE-2026-65928)
+85* fe0f9e3ab2a8 Denis V. Lunev:
+   qcow2: do not try to clear the dirty bit on a read-only node
+86* 43e4791d99ab Denis V. Lunev:
+   iotests: run the test pool with the 'fork' start method
+87* e554413bd2b4 Denis V. Lunev:
+   coroutine: fix lost wakeup in qemu_co_sleep_wake()
+88* 241095547a5d Marc-André Lureau:
+   hw/display/virtio-gpu: validate blob iov size
+89* 95687639e647 Marc-André Lureau:
+   hw/display/vga: fix panning_buf OOB after text/graphics switch
+90* a113e0c53fb5 Marc-André Lureau:
+   vhost-user-gpu: fix integer overflow in buffer allocation
+91* b8ef970532c3 Marc-André Lureau:
+   hw/display/virtio-gpu: fix offset wraparound in scanout_blob_to_fb
+92* 1f24066fc88d Ankur Saini:
+   virtio-gpu: reject requests with short/truncated control headers
+93* d513c644b893 Akihiko Odaki:
+   hw/display/virtio-gpu: Always reject invalid scanout bounds
+94* 5ce01c92389a Bin Guo:
+   hw/display/virtio-gpu: Unmap DMA regions on reset
+95* 1d5e53df1674 Minwoo Im:
+   hw/nvme: drop AER requests without aiocb in nvme_del_sq()
+96* 849ea354ddc1 Minwoo Im:
+   hw/nvme: factor out nvme_sq_cancel_inflight()
+97* 86f938333e2f Minwoo Im:
+   hw/nvme: cancel inflight requests on controller reset
+98* 7a34f7b8794b Klaus Jensen:
+   hw/nvme: fix leak on copy ranges
+99* 923222000443 Stefan Hajnoczi:
+   gitlab: disable provenance attestations to work around CI bug
+100* bc4681990bb6 Mikulas Patocka:
+   linux-user/sh4: Deliver SIGILL on invalid instruction
+101* 668d571bf0c2 Mikulas Patocka:
+   linux-user/sh4: Initialize the FPSCR register on signal
+102* f7ad7b1f8c81 Mikulas Patocka:
+   linux-user/sh4: Fix crashes on signal delivery in conditional delay slot
+103 4713988da1c3 Matt Turner:
+   linux-user: implement mount_setattr(2)
+104 6440880ed371 Philippe Mathieu-Daudé:
+   hw/arm/aspeed: Add missing Kconfig dependencies on required components
+105 fcc2699d41ed Philippe Mathieu-Daudé:
+   target/s390x: Have MSA helper pass a mmu_idx argument
+106 aae77f5dddef Ilya Leoshkevich:
+   target/s390x: Make PRNO TRNG interruptible
+107 abe1d893f41d Ilya Leoshkevich:
+   tests/tcg/s390x: Test PRNO TRNG interruptibility
+108 0103cb1cd175 Ilya Leoshkevich:
+   target/s390x: Fix DR/D INT64_MIN / -1 host crash
+109 aa5d03bc9351 Ilya Leoshkevich:
+   tests/tcg/s390x: Test DR overflow (INT64_MIN / -1)
+110 4e994ebb0144 Christian Borntraeger:
+   hw/char/sclpconsole-lm: avoid guest triggerable assert
+111 df607fd05604 Joshua Daley:
+   s390x/ipl: validate num_comp against iplb length before iterating
+112 a9f1e84c6b82 Joshua Daley:
+   pc-bios/s390-ccw: fix out-of-bounds read in iso_get_file_size()
+113 33909d4ebd5c Joshua Daley:
+   pc-bios/s390-ccw: bounds-check zipl menu entry index before array write
+114 a3856a7ba44b Joshua Daley:
+   pc-bios/s390-ccw: bound zipl menu strlen and replace VLA in 
+   zipl_print_entry
+115 27ad1a030fa Michael Tokarev:
+   pc-bios/s390-ccw.img: update s390x bios
+116 4228a92b2a3a Jared Rossi:
+   s390x: Remove duplicate definitions of IPL types
+117 2c32c273da6d Ilya Leoshkevich:
+   target/s390x/tcg: Set STCK/STCKF condition code after the store
+118 e79ea4472691 Ilya Leoshkevich:
+   tests/tcg/s390x: Test STCKF condition code on a faulting store
+119 ac7fa2e9d457 Peter Xu:
+   migration/multifd: Validate next_packet_size in zlib/zstd recv
+120 cf45083edc2b Peter Xu:
+   migration/multifd: Replace assert() with error_setg() in recv paths
+121 80776c4df92c Bin Guo:
+   hw/intc/loongarch_pch_pic: Validate htmsi_vector before indexing 
+   parent_irq
+122 15700a66ecb5 Thomas Huth:
+   hw/usb/dev-uas: Don't abort if guest provided an undersized buffer for 
+   status
+123 46099d990055 Thomas Huth:
+   hw/net/vmxnet3: Do not abort if guest provides bad interrupt numbers
+124 ebec7c732298 Denis V. Lunev:
+   tests/qtest/ide-test: parametrize the ATAPI CD-ROM read test
+125 fe543c2d787a Denis V. Lunev:
+   tests/qtest/ide-test: add a multi-sector ATAPI DMA read test
+126 502dbdfd9687 Denis V. Lunev:
+   tests/qtest/ide-test: cover raw (2352-byte) ATAPI CD reads
+127 de86ef3dfd33 Denis V. Lunev:
+   tests/qtest/libqos/ahci: support raw (2352-byte) READ CD
+128 31f13e71afd1 Denis V. Lunev:
+   tests/qtest/ahci: cover raw (2352-byte) ATAPI CD reads
+129 12289dc700d9 Denis V. Lunev:
+   hw/ide/atapi: read the whole elementary transfer asynchronously
+130 be1ee6a8f6e3 Denis V. Lunev:
+   tests/qtest/ahci: regression test for ATAPI read vs. drain
+131 59fc7b747d56 Peter Maydell:
+   hw/net/rtl8139: Fix handling of VLAN tags on incoming short packets
+132 f3a10c1c4547 Peter Maydell:
+   hw/net/rtl8139: Send whole of vlan-tagged packet when doing loopback
+133 60d010f66f2a Bin Guo:
+   hw/block/pflash_cfi01: Restore ROMD mode after migration
+134 6dab35f5492b Stefan Hajnoczi:
+   hw/nvme: add SPDM_SOCKET Kconfig dependency
+135 260d49d8e283 Alex Bennée:
+   hw/elf_ops: defend against weird elf headers
+
+(commit(s) marked with * were in previous series and are not resent)
 
