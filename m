@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83585C5DF70
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B69AC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 09:08:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvtIY-0003lN-H9; Mon, 17 Aug 2026 05:06:26 -0400
+	id 1wvtJk-000582-RE; Mon, 17 Aug 2026 05:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtIS-0003jb-Hz; Mon, 17 Aug 2026 05:06:20 -0400
+ id 1wvtJ8-0004Hj-Ep; Mon, 17 Aug 2026 05:07:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvtIQ-0001g9-N7; Mon, 17 Aug 2026 05:06:20 -0400
+ id 1wvtJ6-0001l7-3W; Mon, 17 Aug 2026 05:07:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786957506; bh=p44cuJx7NgQiFU+zh+pX2RncKBGLocA7Lkf2DsNsCww=;
+ t=1786957506; bh=dECS50UYWkzGL6+TmBTaHHU/+jJq6n59k7QIxvmZwCo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=P2n3ysnGBrSRIu6tT0jHX+HhD3PMrhLMd3vbgU21Tif325UOzdVEDHPnQJGu2bEnU
- /3onErTFgoOL9mZQ3gJ0XM2GG2WAsyoIwgH/wtWP0Bd0BHYNx51HstDLuH/9uM1YAu
- a9Y+ZtK6R9f05aUOhZT/aYtWlinT6imWNaiSFLd5UWWlsjDPO0vVL2/tJS4EA7u7jp
- DTlVNW7dj4LSzBow+McE+MoC+NtOlb0fIuRcnRAecTIci5BSACT7zPkHKsff2hIvOq
- UNxI65zrPdFag5IFq6ScBAJCPtzQVhnGgOOZaeurne2bckhNEOMNTLjwS41tR6kjPa
- bE+5dilHmkRIQ==
+ b=NhZq0OTT9Q0xwXYWXkbZJymp2O4Cm2Tpaxx9Hwmcoql0HNZWQXtwKGisTU5IIc5nr
+ BUWEh4fj8h+25cdAtnZ1xTQ2ZMNGAgsWsz9Hqrj+zZAvGa4Qs/k/haaRkzaJ+dLv4d
+ xuqPZMpvhiy363yZGcCNymp65JoeHJVxIS8PTbYr9CJibadYcU6w7arqZd4+xoTLNX
+ BwwZDsAkdjpmgcGVVSQ9qbKStzRTevxLlEp+ZMU/HCWUarQgalLGaSXXRwLBZM7/U9
+ ybFqrVQo7solTmSbdJRZeej8qT57wQeY2MLZVPmxcG5gCYTyfv02TEPUSE+DmJrsW+
+ THPvbTabo2Gbg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 33ECB1CBA40;
+ by isrv.corpit.ru (Postfix) with ESMTP id 509921CBA47;
  Mon, 17 Aug 2026 12:05:06 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 11B6140D022;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3075240D029;
  Mon, 17 Aug 2026 12:05:27 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C19BF30CF8; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
+ id D720A30D06; Mon, 17 Aug 2026 12:05:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Harald Freudenberger <freude@linux.ibm.com>,
+Cc: qemu-stable@nongnu.org, Joshua Daley <jdaley@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 12/42] target/s390x: Make PRNO TRNG interruptible
-Date: Mon, 17 Aug 2026 12:04:17 +0300
-Message-ID: <20260817090453.2034156-12-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 19/42] pc-bios/s390-ccw: bounds-check zipl menu entry
+ index before array write
+Date: Mon, 17 Aug 2026 12:04:24 +0300
+Message-ID: <20260817090453.2034156-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260817111826@cover.tls.msk.ru>
@@ -73,90 +72,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Joshua Daley <jdaley@linux.ibm.com>
 
-fill_buf_random() writes the entire guest-requested amount of random
-bytes in one go. Since the length is a full 64-bit value, a guest can
-request several gigabytes and keep the vCPU spinning inside the helper,
-without a chance to react to interrupts.
+menu_get_zipl_boot_index() iterates NUL-separated strings from the
+zipl stage-2 boot-menu block, passes each to zipl_print_entry() which
+converts EBCDIC to ASCII and returns atoi(), then writes true into
+valid_entries[entry]. valid_entries is a MAX_BOOT_ENTRIES element
+stack array, but entry was never bounds-checked, so a crafted on-disk
+value could index arbitrarily beyond the array.
 
-Do the same thing as HELPER(mvcl): check cpu_loop_exit_requested() at the
-bottom of the loop, and when a return to the main loop is pending, stop
-and report partial completion with condition code 3.
+Fix this in two places:
 
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Fixes: 3dbc5fdacb5a ("target/s390x: support PRNO_TRNG instruction")
+- zipl_print_entry() now validates that the first significant character
+  (after an optional leading space) is a digit. Entries that fail this
+  check return -1 without printing.
+
+- menu_get_zipl_boot_index() skips any entry whose index is outside
+  [0, MAX_BOOT_ENTRIES) before writing to valid_entries[].
+
+Fixes: 7385e947fc65 ("pc-bios/s390-ccw: fix non-sequential boot entries (eckd)")
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260714191948.342204-2-iii@linux.ibm.com
+Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260727115052.24289-5-borntraeger@linux.ibm.com
+[farman@linux.ibm.com: Added qemu-stable]
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit aae77f5dddef62da7e1479c257d99d2ab574df56)
+(cherry picked from commit 33909d4ebd5c197626c3142550ee11f4bdb1df48)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 8fe0a222198..6a5dbe1cafa 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -16,6 +16,7 @@
- #include "qemu/guest-random.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
-+#include "exec/cpu-common.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
-@@ -242,8 +243,8 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     return !len ? 0 : 3;
+diff --git a/pc-bios/s390-ccw/menu.c b/pc-bios/s390-ccw/menu.c
+index eeaff78f870..b6a9a56d462 100644
+--- a/pc-bios/s390-ccw/menu.c
++++ b/pc-bios/s390-ccw/menu.c
+@@ -176,18 +176,24 @@ int menu_get_boot_index(bool *valid_entries)
+     return boot_index;
  }
  
--static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
--                            uint64_t *buf_reg, uint64_t *len_reg)
-+static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                           uint64_t *buf_reg, uint64_t *len_reg)
+-/* Returns the entry number that was printed */
++/* Returns the entry number that was printed, or -1 on invalid entry */
+ static int zipl_print_entry(const char *data, size_t len)
  {
-     const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-     uint8_t tmp[256];
-@@ -265,7 +266,13 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-             --*len_reg;
-         }
-         len -= block;
+     char buf[len + 2];
++    const char *p;
+ 
+     ebcdic_to_ascii(data, buf, len);
+     buf[len] = '\n';
+     buf[len + 1] = '\0';
+ 
++    p = (buf[0] == ' ') ? buf + 1 : buf;
++    if (!isdigit((unsigned char)*p)) {
++        return -1;
++    }
 +
-+        if (cpu_loop_exit_requested(env_cpu(env))) {
-+            break;
-+        }
-     }
-+
-+    return len == 0 ? 0 : 3;
+     printf("%s", buf);
+ 
+-    return buf[0] == ' ' ? atoi(buf + 1) : atoi(buf);
++    return atoi(p);
  }
  
- uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-@@ -278,6 +285,7 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     uint8_t subfunc[16] = { 0 };
-     uint64_t param_addr;
-     MemOpIdx oi;
-+    int cc;
+ int menu_get_zipl_boot_index(const char *menu_data)
+@@ -216,6 +222,9 @@ int menu_get_zipl_boot_index(const char *menu_data)
+         entry = zipl_print_entry(menu_data, len);
+         menu_data += len + 1;
  
-     switch (type) {
-     case S390_FEAT_TYPE_KMAC:
-@@ -308,9 +316,13 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-         return cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
-                             &env->regs[r2 + 1], type);
-     case 114: /* CPACF_PRNO_TRNG */
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r1], &env->regs[r1 + 1]);
--        fill_buf_random(env, mmu_idx, ra, &env->regs[r2], &env->regs[r2 + 1]);
--        break;
-+        cc = fill_buf_random(env, mmu_idx, ra,
-+                             &env->regs[r1], &env->regs[r1 + 1]);
-+        if (cc == 0) {
-+            cc = fill_buf_random(env, mmu_idx, ra,
-+                                 &env->regs[r2], &env->regs[r2 + 1]);
++        if (entry < 0 || entry >= MAX_BOOT_ENTRIES) {
++            continue;
 +        }
-+        return cc;
-     default:
-         /* we don't implement any other subfunction yet */
-         g_assert_not_reached();
+         valid_entries[entry] = true;
+ 
+         if (entry == 0) {
 -- 
 2.47.3
 
