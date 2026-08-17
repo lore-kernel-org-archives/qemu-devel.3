@@ -4,144 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C06EC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B1AC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 12:57:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvwkD-0000PQ-6H; Mon, 17 Aug 2026 08:47:13 -0400
+	id 1wvwtp-0001yT-HS; Mon, 17 Aug 2026 08:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1wvwkA-0000PI-NC
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:47:11 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1wvwk8-0004G7-Ev
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:47:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EkdCUqi2c3riUf96KSKo2fcWjNjUHnXKHMZT49t6gfpD4m6dn6egZeElIzP6VJoV2OxTMZB2TjT6db8dMmm5SdMBUJ2F2l02g88y6vtV333+JQ3V5dEqJwxBrbr79cY+S+Fp0m2lrd/iDiR3HKWiYxuhAeJcpMsuIwk5W/fMoUU8g/x9NAREEoLvOlS6lasUxcvzibALffxZ9em5bosXkiFDkbWfPLNUwgJF8/wbb0I0FDscSsufTUmLB0T/+S7vfCgtcucQyP5v+15sxsifFndDD+TjrqLMTcdZQ3lyZtwA/lFYgkEYTbFTMHMC2LRhFXK5ovHCGjyVyU+10XfuJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rZ/LqbYnInl2xnTvevUiedD/vAhonPCyGPUBy7NIjt0=;
- b=xbf2LLK/hAquVNRRtXUB0BbomNGwsDcgso2lPX47ltNbpCCNlRXmXv6n3tS8LE4LyFKVoTp5ibrzzOBfOQnGvF18TqkjDCzZcNa8cak4QhMntXXj1YPr9ivs2nrN90ppuLGir3HVNe2Ud49XNm9gA3v09h9IlN9ZlSqnVeDbiLvMMLIIEfbpQmicpW7GSnJq2Nwoxh2+kkRniQ7fKP0g/HPXytmf/gDqwcCetCky8Qvibwom7q1gWeysm8Fdvu0bn93AuvcTry2FGvGmRO1Im1fT65istKErNs1aZ3MFllFnloLe/GYUR3Ojgs/2eayJoWEVdtMrkHpRZYNzrTQPuw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rZ/LqbYnInl2xnTvevUiedD/vAhonPCyGPUBy7NIjt0=;
- b=YxzNcjClkKsZA0pzz2gInQd3IuLmCtejTS+Zo9gRNyVrS416V8pC1dpvY782VTQAQsq0MAfLujIWr+Dy0NFMs/H8EjSdRBmo9P+8bOqywQW/tWEi+EsB3PVoqTpipKPF0ZQvA5HIhK9K5qaCFLG5FWtXPVHGjRfirfw2jEP/QP0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY8PR12MB7170.namprd12.prod.outlook.com (2603:10b6:930:5a::18)
- by DM6PR12MB4354.namprd12.prod.outlook.com (2603:10b6:5:28f::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 12:47:02 +0000
-Received: from CY8PR12MB7170.namprd12.prod.outlook.com
- ([fe80::7565:bdd3:383a:de5f]) by CY8PR12MB7170.namprd12.prod.outlook.com
- ([fe80::7565:bdd3:383a:de5f%6]) with mapi id 15.21.0315.014; Mon, 17 Aug 2026
- 12:47:02 +0000
-Message-ID: <4673d669-b350-4723-b74e-6e1ea5f09c22@amd.com>
-Date: Mon, 17 Aug 2026 20:46:51 +0800
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1wvwto-0001yD-3U
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:57:08 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wxchen0913@gmail.com>)
+ id 1wvwtm-00066L-I4
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 08:57:07 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-8487b7b3fc8so3592035b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 05:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1786971424; x=1787576224; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=VwhgCcZfQ10p7+mRK801X1VAVUGrzuWIcII2z0LM2Ho=;
+ b=Gtc5aKogeb9Kcv7bTHZohNuR4L2w0CWFP22C6fZMuWcVEDzL9MvaZkEKQi3zAtV9Ms
+ s5An5LTQGwr3Sa8cZjQiKYoQviMJlvAM1NuHY95jhxvQ0qsyQNZDt0UgKIdxLaCiakLc
+ kVVy9lfKq7a4v/jX9A0tdn7ItLRt18qVY4v/80AKLHIxN1Mzlq1xl4ylj9Y0Msk2XD8l
+ MDcnbuh/LQ9XqOLwtPa8l3dj2HJgxhDfEE/GUmFFUZnbFK/sslnvWlrZyB8q8I+sXnuR
+ hEqFZvOvgcf3OZTv+EdF+baMXOMXHHGU4eMyISOGN855zUul/aeukfZje+gK5b/ScGUe
+ UvVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786971424; x=1787576224;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=VwhgCcZfQ10p7+mRK801X1VAVUGrzuWIcII2z0LM2Ho=;
+ b=TaLqQkPDKSIg6UfQTzhGFWAsGj9lZ+6a4DY1KcEeLSdNaJcSJFTYxwc+ohNlxo/8YL
+ uzBiym/qI8E58ymTeLGZCe5hSBdEqucBvHWWr4B9N4QZeM6+AlEkmCWB+GN2yvYQZKIM
+ 5A4MNunUXW0g8SS2k3o1l8ifyN4HDNEzpm8Q5cK9VlnzOqJb+v81gDrCBZAm2uR3iw5R
+ wkGx7MlP+e/rLjuI/bdJ2XcpAVVltE3WjwfHbZlfUvzwttR26x8FU+c1PgixEphsJfcS
+ g8mu5VbHz6x+TgXHY/eZTuoVOh9UiPwOlLUwtqCS5ndB5td7Neu0I6bInv7Y5TP1k89v
+ F8Vw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqXujJh8e4QE6f/BHT4Y6T7YcU2s61Zq5qClCv4ZJiRvX8L5aFXmXI6wZWGUkI2nezf1ePuG+CRi7d3@nongnu.org
+X-Gm-Message-State: AOJu0YxN6+BeOway9mj/4wQJ+XGBfEQTSyUHOxB2h95MgvdS6au7NjWh
+ C1uiALDpUknakZ3XOim9Tnh2/ANaKjNl5LyZdJvulr0Dz7ma6teT1tvp
+X-Gm-Gg: AR+sD11ocOTChP0iqrzroXG//IjIAoR2/2ZWw0YYld7QrTucoYlK4RiKLOoNtPWxRYX
+ gT8gmd0PecfWMSweHtseCVrhIXuvEayBpTKmKHGaeRzuynAPNxRrY1VDzjKWmaqShD3iN7iI409
+ 1HqGsQxWBozLR6K/XdxB3OLWOEUDC6C3JBFR0sMeSg/HCoKy3oJWJd5JxctUovko2umRP8juN6F
+ xvuEl20T6Jy6hmsrlN5NxC0lrJDB+lO5AvP043cgctN4VNBooGsTp6hnREP3Mb0X9hkPrDN+eUQ
+ FMiYcnJ3wjiw6vjht/1N6ZU/y0AhpUNZhzFaoNsNS0RLYT8lFyHggxDCPwaqOzyaWtTjjWUCcuo
+ J04Fy2WGUgSadVj5hITIzES0VbipJozLMDfV3e5FPP/ZWYOtqsO4ubYsECUXdXfwrIV2JnLWqHh
+ T/xm6XsqReAZHWASKHt04cK/LD8JZgoJr2MI/OvyPI6sTmDj52dfQ04dhSbJYCIig=
+X-Received: by 2002:a05:6a00:ab8a:b0:851:804c:f4eb with SMTP id
+ d2e1a72fcca58-851b87eae5dmr550593b3a.4.1786971424194; 
+ Mon, 17 Aug 2026 05:57:04 -0700 (PDT)
+Received: from [192.168.0.111] ([14.19.46.155])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-851b6fc0158sm240039b3a.40.2026.08.17.05.56.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 05:57:03 -0700 (PDT)
+Message-ID: <995765d3-4c5c-4988-ac2b-ad8c97187ad9@gmail.com>
+Date: Mon, 17 Aug 2026 20:56:57 +0800
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: About new backend for GPU compute ROCm in qemu
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+Subject: Re: [PATCH v3 1/3] hw/char: add K230 DW 8250-compatible UART
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- David Airlie <airlied@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-devel@nongnu.org, virtio-comment@lists.oasis-open.org,
- dri-devel@lists.freedesktop.org, virtualization@lists.linux.dev,
- Honglei Huang <honglei1.huang@amd.com>, Huang Rui <Ray.Huang@amd.com>
-References: <ba0b1bbf-5ebf-4ac3-9f7b-8740e3bc283b@amd.com>
- <87v799ru8w.fsf@draig.linaro.org>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <20260808-feat-k230-uart-v3-v3-0-d73b31f0034b@gmail.com>
+ <20260808-feat-k230-uart-v3-v3-1-d73b31f0034b@gmail.com>
+ <0ccb0d65-b185-4700-af98-faa27a806aa4@oss.qualcomm.com>
 Content-Language: en-US
-From: "Huang, Honglei" <honghuan@amd.com>
-In-Reply-To: <87v799ru8w.fsf@draig.linaro.org>
+From: WX Chen <wxchen0913@gmail.com>
+In-Reply-To: <0ccb0d65-b185-4700-af98-faa27a806aa4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0006.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:2::6)
- To CY8PR12MB7170.namprd12.prod.outlook.com
- (2603:10b6:930:5a::18)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY8PR12MB7170:EE_|DM6PR12MB4354:EE_
-X-MS-Office365-Filtering-Correlation-Id: a070d88a-d929-4111-7636-08defc5da27b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|23010399003|376014|22082099003|18002099003|56012099006|3023799007|5023799004|11063799006|10067099003|4143699003;
-X-Microsoft-Antispam-Message-Info: gOnmMOpN/PZlFTDyvRi4OHs9f54oovh3Q6/BHjYPTac6P07zwxXOlZ15qBFagjghqwIcWNafr8aYQhYiksdB7SHovUzSV4cuJ/dDt6eXuflTIL8/jLCfcqDg/9qLNibU6ltDzK/Ku9q+1Ox4DTwsxF5Fqiw0eiptsCxUVDtjqaSK+4Ks/PtXAm0LrdFSGm04jv3Lx6O+cdhDIugquck3Vc7QrO+RxHp3ZqCME0DG8rGXJn2uZnzNWwhZbQ52VnK6Xk1Y5cuoVo6o2VeAoEXfTRsCSxkqRLzLMK2H8m0qV3NmIOv7yp33ZPzOEiII7WhXIxMkqj6yQSostyS9Z0ySYqEEzukbao7wTq/oVcm/YgwNPNNERC1PBwknzd+zmu45Y/oPw2NryB1AQpAH+yofSn+LiVh92akdzghJti3NeKvpCvZw5GCJjJlgEHnQToEcAUFccpzntRj16Wk2QunQQble43Ar4KuA8LZR8qfWc/z6qGekfLZuOjd86U6dAw2YYXzZ9UskTrR4sPUG2DBd9zlDCLQ8kRJ9M3Np6ITaRCg4TS+OAJn7j0xVvTi+q5g9ZfLxYO52kbYtOOCKgAioDbXEMYBdA4Uutwe6EcYEX3Oipof1C/UyrmUDpoC8gQQP
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY8PR12MB7170.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(23010399003)(376014)(22082099003)(18002099003)(56012099006)(3023799007)(5023799004)(11063799006)(10067099003)(4143699003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dWZNdDdQNHNwSzduWXhVaFBza2x6UGIxZkZTUkhBQXhsWkFaWjJDbVduVmF0?=
- =?utf-8?B?dUgwRUJjVU1FTzNpdHAyUzh0My82STJ4VDIwY1lQSTFRZi80a3BqdjRURHdh?=
- =?utf-8?B?dGlkem5mZGFSbkFkWW81czE1MmJGSlEwU2RUdjBDRzFjU29wcHBZeDUrOHZI?=
- =?utf-8?B?dFh5T3QvVHdrb3l2SGoxQzJmOFZrWEdWc09oR1JsU2N0dGh6MXdrenU2TEtT?=
- =?utf-8?B?ckRyS2dGVVFDS3BkaTh1ZG1ySmpEZCtFN0VQdGNmNkdHV2xyekViZWRpaDZL?=
- =?utf-8?B?ckJjZFgzZEhmT21xUUcvOTBLZEMrUWNCam1CZVVlZnNtZVRGOVlGbjNXU3J6?=
- =?utf-8?B?bjRRZkVjT3pRazBMYnY2RlEvdnk3M1B4Z2xrcWhFdkpIQTl6NlZuVm9VYlpI?=
- =?utf-8?B?eTEzcHhhcklZYUcrcUkzNkhwU2JmQ1BCQkpsNEkwdlk4aUJHbDV3UU8ySzRN?=
- =?utf-8?B?R05CTm01NnVYR2FLOHZIcUxLL0t3WUlLL0tLaCtpYzV0NWozaUlST29KbWtU?=
- =?utf-8?B?cG01Yi9MZ1F6a0FhSGk2NzUrZGk5cW83aEVMdDNUTlVqcllzRWMwaXJCRmtu?=
- =?utf-8?B?ejQ2K1lGSDhsWXJxc3VVTlZlcmdKb1FUUVNHS1R1dHowZnl3bWJSUGpoSXUw?=
- =?utf-8?B?aXZwUzkvRWg2Mlc4aGw5OWhZQlB1d2lpQWpNbWtsNXU0NXFKNkRCaFhHT2Fl?=
- =?utf-8?B?TjhicjRXQ2tJaG5KbG1ydWxLZTlFN29Mb2hPMkhpclZ3a29PaTNUODZkYlRG?=
- =?utf-8?B?cE0yWFRCdUsvSW90cGRkWVpjRkpvOXY1aEhGTkFxai9UTk1BWCtaaXozTnZO?=
- =?utf-8?B?eUdxVi9wUkE4a2padWw3RHZwbkNlZjVueERWbHJlV2RiNTBVMjZDZi9HYU44?=
- =?utf-8?B?TmhqbjRiTk5pd2hwdXRvWUdiY0pldFJISzFtOFNBVC9iZDVHM21vSnNEdkZW?=
- =?utf-8?B?d3l6MTRqQjEvNUdleDc0ZTBhMXF2Z1hQeTNkR1Rlb1VXVUNnelRvNXFSWWY0?=
- =?utf-8?B?Uk5qSnlVVzlxaWladnI4OVRSOC9tMCtZbGxDNkozenB3UzJDNm9FeURwTmVC?=
- =?utf-8?B?b3BBblliZ2NrUXdmR2J2SmRyYzA0NUowVi9HNUptMVcxeHJkd1hVa3B1c0tu?=
- =?utf-8?B?UDA5Q1gyY2RMaWZ3c1NkdEh1a3JrcGZBT3ZOalVhakwxM3ZqVGRaalBIb1Fa?=
- =?utf-8?B?ekRjTGFycGs0UzhjQXJRZytia2lndHVjOEhrd0hoS2YybTdKTG4xSFZmdCtB?=
- =?utf-8?B?RHhRSmhXMEZiWkdqUWVIbE5ZN01JRDZGVEI1ZXh2ZjBKTWZ3VmdFMEFDMk9q?=
- =?utf-8?B?Y0tsNHJvNDBsbHJIT2R0b3pVSDJFTGdFcVdmSmxNYnhZMm9oRWpiZ0xVRXl2?=
- =?utf-8?B?RVhucG9ua0lKRjJZa2JMQlZEUWJaemlhOG80eC9UR0tlYUhpL1JBVDRlK3Qx?=
- =?utf-8?B?YWw1WHp1TTI4Njc3WVlHMFlVc0hWSDNva2RCdXIzMGZVZzgwWm4wNGllcGIy?=
- =?utf-8?B?ZklYSlFmSm1uWkhOQ3lXUzVwa0U4dzdSbFVyOUkzS3RGRTd5VkwzRkJwc0NZ?=
- =?utf-8?B?ZXJWTGxWUm9ZN2ozU1RCTVp3VWRKZTRJaFk4bDhlMUFCc1c4Mm9yOUhjN0RF?=
- =?utf-8?B?V21McFdnUEJuOHYzYVZSWVg0RFAva1Z4QlNpbHJCZGljdCt4bFJldis0NmRw?=
- =?utf-8?B?RWZ4Vm9JdDZZNmI2NnI5Zk1UeWN1VDkvMWU4bjZjTFZQaWRyVHlrR2txa3hO?=
- =?utf-8?B?M1pma3RZQzdIYjhWb0ZsTGljVE9pNWtYMWd5LzJxa0s5TUxwZU5scXNEcnM1?=
- =?utf-8?B?QTU0RHpxc244ZUpKODhTMjRnTFpTVHIyQXlFWWJ2NCtLMDhsdE5XN2o1M09h?=
- =?utf-8?B?aG1ZV1I3T2grSFZMOExqSnowU0dHNE9GdTNMc2RSUmdOTHdlK21PTUczR2tB?=
- =?utf-8?B?NFdLZGI5ckFERUp0MnRmUzFKWHlZbThwQWN0bmwzendiRlVBS2d6aGpjaTFG?=
- =?utf-8?B?OFNBSnJ5S0dpbmJlcUJWNmtLSFFTTnVYSTJNOGEyVUZja21RaDJGbmdCUDRI?=
- =?utf-8?B?dGp4VnBmU0xjZUw1aTN1aVJjVmNFMXNKTmNqSHdpdmhMZ3BBM2c2M1I1Uml5?=
- =?utf-8?B?NXJpbzQ0Q1RQUDJPTTVRL2tQOUx4L1Q2dnVReDFmb2E3VzRRMXgycmxlUGwr?=
- =?utf-8?B?czlzaXU1MCs1RVd2SndsOXpyeUx0YmRKeUx1clkyWURzdnJhU0Y2WStTTUU0?=
- =?utf-8?B?ZEtEeE1Na3poYUphUkZoYWQ1NHd0NWhKRDNZQWZmc2RRU1VXZHMxWVM4QmVp?=
- =?utf-8?B?NnBTZlVTa0VLY2c3KzNYWm4vQk1pSzUrbjF2RFo1TnJoN0NhVllNQT09?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a070d88a-d929-4111-7636-08defc5da27b
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB7170.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2026 12:47:02.3229 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3PalKmoz2QphR3zr1PH4x2DD9DMc1sDBnDbEjTehPgQj4ZdFwP6Gjj0XFprqKMgrULH+WcO/Qq2/2yJJmmpqnw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4354
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
- envelope-from=Honglei1.Huang@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=wxchen0913@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,118 +116,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 8/15/26 21:57, Philippe Mathieu-Daudé wrote:
+> How much this diverges of the generic 8250 model we have?
+>
+> In order to reduce maintenance burden with duplicated code, the
+> project preference is to use the inheritance pattern of oriented
+> bject programming, in particular with QOM APIs.
+>
+> This model could inherit from our generic model with:
+>
+>   TypeInfo::parent = TYPE_SERIAL
+>
+> then override its specific methods.
+>
+> Could you have a look and justify the full rewrite? 
 
-On 8/17/2026 5:06 PM, Alex Bennée wrote:
-> "Huang, Honglei" <honghuan@amd.com> writes:
-> 
->> Hi Michael, Alex, Dmitry, Akihiko,
->>
->> I'm bringing AMD GPU compute ROCm based on virtio. I posted a ROCm
->> over virtio
->> implementation to virglrenderer nine months ago (MR !1568 [1]). The
->> ROCm side has
->> been supportted by ROCm offical.
->>
->> Current implementation is a virtio gpu context type capset handled inside
->> virglrenderer, sharing the display path. That's an awkward fit, many
->> compute GPUs have no display engine at all.
->>
->> Beyond that, sharing the display path is increasingly painful:
->>
->>    - Compute hammers the queues more than graphics, so sharing
->>      virtio gpu's single control queue with display/virgl causes contention
->>      and display stutter.
-> 
-> Is this just due to iteration? From a layman's point of view I'm curious
-> as to what the queues are doing.
+Hi Phil,
 
-Really thanks for the reply.
+Thanks for the review.
 
-The load is mostly memory management. Running an AI model allocates and 
-frees a large number of blobs. We already did some optimization release 
-them asynchronously, but the host processing is a single queue one
-process_cmdq, this is where the main bottleneck in my debugging work / 
-my understanding so far. I'm not certain it's the whole picture, so 
-please correct if I am wrong.
+The rewrite was not meant as a replacement for the generic 8250. I
+was following the K230 TRM as closely as I could, and I did not
+realize the preferred approach was to reuse the in-tree 8250 via
+QOM rather than reimplement the 16550 core.
 
-A model load or unload frees a large batch of BOs and allocates another. 
-Some of those commands are async in the virtio-gpu guest driver, but 
-QEMU still has to work through them on the one queue, which takes time; 
-so even though any single command is quick, there are simply too many of 
-them, the single queue backs up, and everything behind it, gets delayed.
+I agree the duplication is not justified. I will respin this to
+inherit from / reuse the generic serial model as you suggested,
+and keep the DesignWare probe window that Linux 8250_dw needs
+(UCV/CPR/CTR/DLF/USR).
 
-real work load (a few downstream customisations): loading one 16 GB 
-model (gemm4 e4b), drives ~1200 blob creates, a burst of
-~1400 resource frees at teardown, ~3700 submits and ~6000 virtqueue 
-notifies, caused a 22 s guest soft lockup. And the behavior of memory 
-operations are controlled by upper layer like pytorch / HIP / runtime,
-we can not control it.
+One open question: the TRM (and CPR) advertise some DesignWare
+extras beyond a plain 16550 — for example a 32-byte FIFO, THRE
+mode, shadow registers, and USR busy-detect. The first version
+implemented several of these, which is why it grew into a full
+rewrite. For the respin, should I:
 
-To be honest, a separate backend won't fix this. But the real solution 
-maybe is compute specific. That logic is only useful to the compute 
-path, and folding it into the shared display device / renderer would 
-mean churning code that is mature and stable for graphics, with 
-regression risk. Keeping compute on its own instance and backend lets us 
-iterate on these compute only optimisations.
+   1) keep only the minimal probe window (CPR not advertising
+      features the generic model does not implement), or
+   2) plan follow-up work to model some of those DW extras?
 
-> 
->>    - Compute contexts need far more blob / shared memory than a display
->>    one.
-> 
-> I guess weights and context are long lived blobs compared to rendering assets?
+I am happy either way; I mainly want to know which level of
+fidelity is good.
 
-Exactly, weights, KV caches, scratch heaps and the userptr/SVM arenas 
-are large and long-lived, unlike per frame rendering assets, so an AI 
-context maps far more memory than a display one.
+If the pending generic dw8250 lands first, I can also switch the
+K230 board over to that type instead of keeping a parallel model.
 
-> 
->>    - Maybe needs a wider ROCm / compute stack, cause the render model
->>      fits poorly:
->>      rocprofiler (PC sampling, SQTT/SPM, counters, high bandwidth streams)
->>      and ROCgdb (wave control, address watch, async exceptions an
->>      out of band channel that must not block display).
->>    - Events, faults and GPU reset/SMI are async and don't map onto fences.
->>    - All of this is hard to extend cleanly inside a display capset.
->>
->> On the QEMU/host side, would something like this be OK? One step, two parts:
->>
->>    - a dedicated headless virtio gpu instance for compute.
-> 
-> An oft-asked for VirtIO model is virtio-npu but I wonder if there is
-> enough commonality for a virtio-compute device with the same sort native
-> context type handling to deal with the those that want to have guests
-> targeting specific hardware rather than going through an abstraction
-> like Vulkan Computer or OpenGL CL.
-
-Agreed there's likely enough commonality. The idea would be for the 
-device to provide mechanism, not hardware policy. And actually the 
-current ROCm implementation is doing like this, it can also support 
-OPENCL and HIP.
-
-> 
->>    - that instance served by a separate ROCm backend library loaded
->>      in-process by QEMU.
-> 
-> Is this library a binary blob or open source? The last time I looked at
-> ROCm I had to give up as my AMD card was in an Aarch64 AVA machine.
-
-It is open source, we are planing put it into ROCm stack, let it be a 
-part of ROCm.
-
-Regards,
-Honglei
-
-> 
->> That reuses the existing pluggable backend model, a second virtio gpu + a
->> backend library. It doesn't add dedicated queues for debug/profiling
->> currently.
->>
->> Waiting for reply and  happy to share more detail. Thanks!
->>
->> [1] https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1568
->>
->> Regards,
->> Honglei
-> 
+Thanks,
+WX Chen
 
 
