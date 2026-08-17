@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E4A4C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 18:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63126C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 18:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2PE-0007MX-OO; Mon, 17 Aug 2026 14:49:56 -0400
+	id 1ww2Pt-0007dX-PY; Mon, 17 Aug 2026 14:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww2PB-0007L4-FP
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:49:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1ww2Pt-0007dO-2d
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:50:37 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ww2P9-00051X-Ot
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:49:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786992589;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JfpP/5gGcIzLfnvgQuKmPtsXfaxrCfwf+s3VC6maenI=;
- b=ZbSqBqznC/ZN/7vw+2S65vUSflK0JWnyCHDx2FyzVtm6IGQvrLHD32eqYWVWHrRjAaS6E3
- NoSB4u+oIyupLLJmPD+Z0qE9PsQSFEV8dcyYVBGofG8KkE12ChYnOdhYHeg7ABK0tEDa6V
- 1BRTcVuZNG3lJLZeeDGj6QbcFOfqLtY=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-4qQFif7_NT2QDE8ffFZ3UA-1; Mon, 17 Aug 2026 14:49:46 -0400
-X-MC-Unique: 4qQFif7_NT2QDE8ffFZ3UA-1
-X-Mimecast-MFC-AGG-ID: 4qQFif7_NT2QDE8ffFZ3UA_1786992586
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8e934385db1so42024846d6.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
+ id 1ww2Pr-0005GC-F3
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 14:50:36 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HIR5r83143191
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 18:50:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=MuSoWf3Prau
+ VYCh1RrzW0SfSnmrxqS63sPsmRV8N+Gg=; b=eEu6MDeXxVe550QblDWcpY7S0mQ
+ tDSP5zB/e6cQ8SWZMRNm+YnACWn2w6TIUtMZqLCkIAj10VyU3LGs1GoDk3MFnLfD
+ NzG8aBlkfLGtprGqwARJqAtTucynJ403NF1X6VXW0pYqf/+L+sA+pMCNvzUJ9ZVL
+ UmxW4iDAOhl85oWcCozHz62PBDcVcw2fYYlsZcgDhl2LIY6+TVhI1GK9Jzj2NTry
+ nzyag05nP1d4Wq4ihq+ybD6SMMPw8QvewSOGrBf1rozBb80/PDt5/QNYCDjulUfa
+ Y6+WfSGYFUuTK33L08RWrQutS2Z04HhoWrGLAdPu6/MyC8oEgNi3vF4odbw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g3wrejtue-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 18:50:32 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2cfc52ddc55so59569555ad.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 11:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786992586; x=1787597386; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JfpP/5gGcIzLfnvgQuKmPtsXfaxrCfwf+s3VC6maenI=;
- b=QEAcyubnnldUmCJDHawyh3+jWyf0XFiY79/JjXHCKNQlyqLWpZJ2r0y9CCNwjfKYe2
- yRXBuyH1uKmnomGXHGU+DeahrwcUXXufVVYLkNZ3lrG3AO/q1OJJFOCYT5atlQpKE9MX
- pQrR4o1VlwS3VqEWOLLnwvT/ZoZMZFPSnodseEsl9vA1nD0rxKBWZtYXkXPNJ11SI4uF
- f8Gepmsz49OMax6X+En+rreKNKfo11xT73E2/CBb6jWi7p1Aa24dHDLYSepSntfvMR0v
- JoXcT2vm69+466d0focElPZOXu5XT3ooQsL1gSwLXCX/jWd5bCPF1R1JndkYpLe8ebhd
- yklw==
+ d=oss.qualcomm.com; s=google; t=1786992631; x=1787597431; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MuSoWf3PrauVYCh1RrzW0SfSnmrxqS63sPsmRV8N+Gg=;
+ b=IIYlm2tn2IIHbIhkOyKQxw83SjKWX8O76UjnCALDWGMHhviVA4TziYQvjaLrcsP4Dw
+ 8srS9VamUPc8IOtPABQRGgX/Dx1IxewqAp12IGYuGFt9djZtg8fuKDJltqLgHlyRRBwm
+ rzq0VjW+ZqORpmOPrO/+O3NzCv73JMW/we1igXYxocxTdRxPQPI5KrXZqNfwsN7S2/JN
+ PBzeu/51ItoYIKQoCz9c6rnVWt9Wccf94eURURMbshjxZsH8LUa1HnUg4tQyHwv8dHvb
+ OzfBmwX0OHhjLoqXonOb3Z4uE/JLdBCb9y97/dPxrHB9K1Sy+JU/sTxFOYQuQ0J+nTzk
+ +r/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786992586; x=1787597386;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=JfpP/5gGcIzLfnvgQuKmPtsXfaxrCfwf+s3VC6maenI=;
- b=HH2Atj6i8tI8xmYR+ESlZyJKdAB4cw7I3mGUgIITO9xCpHN0Zk38APt+ZRjEohKOCs
- eVmUhcCYjBRtxvc5zubYp+erNDPKJSYAtpTS9skw6BocsESPp5rQVDb/ek/cEhAtILne
- 2Hpdiza0Xs34eJVUJiRhqYkWIxwN2dlvu+EaqhDJQGzRj0Sl43albUpF/Ql2PGQeGME8
- qy8bG4myjyiK35GBOEdSlh8qNEcHHtMvsNkERye51vL8UmiEZiGUP00AS1zM8y70pyaC
- S5uYL9F37DS+XqWOBJ72Son/FHcHWTAowVxUY/4SZeGqgDGWStJ5eSloRUrEK0jzlQhM
- HMMQ==
+ d=1e100.net; s=20251104; t=1786992631; x=1787597431;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=MuSoWf3PrauVYCh1RrzW0SfSnmrxqS63sPsmRV8N+Gg=;
+ b=Er2s7WLiqlmLLnx+HOSZcUZBFi2CnmqyvGQ8oxuC2rvrx0EtYN6/3IPZZ95PC2FiVn
+ kk6lcspsS8X0C+oE9xGu2uOLCH6HDj6UK8wwTzBPHU1Zo91f23kI49g7Nx2SbESlPFGd
+ GN4EG5V0eJXDK+Qvd7ZNYJpvHHAe6tGAF+6b7CCdMwO6/0sF4qdJzk5EQQU0WYV63BNN
+ GvueCU3sJHjJ2TVDItznbp3tfinyqDloZOxhK1snHIuVnangzN6bUAuvuQDQeP3AXndQ
+ uOjOU+hP0kUaLYpSw1f399IHTphGVEORrCGKw2CqnUcuH2XkbqS7YIlkOfNMmhz8UR3J
+ PMtw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrxRhHZsKNC1pol4oXlf6WKkdDjMV11PT8GT0tKgx0hny04oyU39FuJnmnYCzruIorU3X/+eWbFUTrH@nongnu.org
-X-Gm-Message-State: AOJu0YxZJyEn5ej9d3fhfH0e92EwpNfAfV505BMCEsgNuBpKVMvSJK90
- 6b+mZSrE0fonKJ7b6ncVl5oU/X+YYIufIdGI/uVPbDJaxDJb98raBhf+PilY3MmpInVZ5yX+lhF
- lOmQVF1eehi7C73yPM7izfvcbioueZV7AeILuLVAk8SKFzGanycl2UJ8B
-X-Gm-Gg: AR+sD10148wGYeA3cwBQ3XIqpXmN+xe47HihLVrJERkC1VVNhZCjl3+jZJq27uPxPd6
- dDFNiT4oKY4ycIXkXlna4lr3Vra6MkO8WXc9GEMV8XaHfa3qQaNBBtsAPxVaR9eniT620i/Dr6S
- oxmGr7UuHklme9nwarIHFsXwQabQMKVkKHvTPCQjIZBeLgQNwDuvmbgjTr7Ct1V4IUgKbpHYeuu
- vq8It4mjy0LfUno7z2e21lDaulUTlACGbwunpJ3z0Hi/eFTgQvoDGCyC3abXLPGuehgrQnPFBXE
- SfaOiVX3C5mG8TK79+uXqIk8T1C/r3S4IGZYM+Udy0XqMIedgdjYZIe+1NuRz/+jXhtY/gF3Lhc
- YGzYvjTZPpv9Y4Yu4yK8jUkEyjo+3eopOWd+XbMv0Ij4pyP52ga7EO5BAXbw=
-X-Received: by 2002:a05:6214:4808:b0:908:a729:73a4 with SMTP id
- 6a1803df08f44-90c4b2d8589mr33238116d6.5.1786992585751; 
- Mon, 17 Aug 2026 11:49:45 -0700 (PDT)
-X-Received: by 2002:a05:6214:4808:b0:908:a729:73a4 with SMTP id
- 6a1803df08f44-90c4b2d8589mr33237716d6.5.1786992585326; 
- Mon, 17 Aug 2026 11:49:45 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c4594db55sm15566736d6.34.2026.08.17.11.49.44
+ AHgh+RqOzJW70H6pZ8dRRERtrwTAsktzxgI+D3mhcTr9AKv2+J7/2KMWNAHBNyUeKbLZy4e85t2/z5Fkyukd@nongnu.org
+X-Gm-Message-State: AOJu0YytHWsc9FyNhE24TcWRmCDKCdZsX78N1wCWo+Exd2kqXb5IXIgf
+ vUCfJDtj1Gg66i4XkfKE9GaPFSgiajmSHYVNGMBmsNRmDVAe7dksq4xsjmmiHAaKSPqGCpGWq61
+ 0zoQ1nY9pV6oqun2d5l0COnC81ZhkAxpYh+Kz8o41/75VMdj+FFD7VLaBLA==
+X-Gm-Gg: AR+sD10MMFuaSl9aKaXsFD6tzVcHrQFIPdjWbfBA+6vgP/ZcHUViGjAicxAIpMQ4DNV
+ 7su30Ce1Ua8tLzSyIUss8+1kqXSvc+R25wG7Ggg6aS4fJa5HEw0b99iColZ8bJhneDCmZsbKU9+
+ urFOHAXTXUXGTxdDHvt/aVIuPQD3q2A6sZEe5ZrKOdfsWg/1iHxIMS/ZuALrOWemSVi5JFBSEx1
+ qxFW9smzP3r3weTLmraN8zWtYgGnpORLnX42iXPdBmQcbx+t5JcsfedkQQPh7Xhcum0nmcdLnwQ
+ BAClLf3KB6LpP5MC0SqfK4pLjntHpYrUVkxbyMRnelvEceD6C8pOXHTKXaP00QvjawcFeF6ZgXq
+ OxCiCFumUqzj6kevLNU6bKz3VJeMJ6r5RV4EabfZOUzoyuDpX63Dv1sr7S38vfqU=
+X-Received: by 2002:a17:903:22ca:b0:2b2:67ca:5ff9 with SMTP id
+ d9443c01a7336-2d3b06e91c4mr300711495ad.0.1786992631120; 
+ Mon, 17 Aug 2026 11:50:31 -0700 (PDT)
+X-Received: by 2002:a17:903:22ca:b0:2b2:67ca:5ff9 with SMTP id
+ d9443c01a7336-2d3b06e91c4mr300710855ad.0.1786992630614; 
+ Mon, 17 Aug 2026 11:50:30 -0700 (PDT)
+Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3267c898ce3sm8697657eec.27.2026.08.17.11.50.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 11:49:44 -0700 (PDT)
-Date: Mon, 17 Aug 2026 14:49:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com, farosas@suse.de,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com
-Subject: Re: [PATCH v20 10/15] migration/channel: check that transfer is UNIX
- socket when "local" set
-Message-ID: <aoNXx0cjLgIP7RBg@x1.local>
-References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
- <20260729091334.1863155-11-vsementsov@yandex-team.ru>
- <amoJoAyhymPgvyTR@x1.local>
- <b9957dda-c0ee-4081-8938-ecc5a50aae3c@yandex-team.ru>
+ Mon, 17 Aug 2026 11:50:30 -0700 (PDT)
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+To: philmd@oss.qualcomm.com
+Cc: matheus.bernardino@oss.qualcomm.com, qemu-devel@nongnu.org,
+ brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, pbonzini@redhat.com
+Subject: Re: [PATCH v3 07/13] target/hexagon: add semihosting support
+Date: Mon, 17 Aug 2026 11:50:28 -0700
+Message-Id: <20260817185028.3215488-1-matheus.bernardino@oss.qualcomm.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <bfe5d191-734a-43e2-9c2e-96196c4e2aa8@oss.qualcomm.com>
+References: <bfe5d191-734a-43e2-9c2e-96196c4e2aa8@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b9957dda-c0ee-4081-8938-ecc5a50aae3c@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=FqI1OWrq c=1 sm=1 tr=0 ts=6a8357f8 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=2BDBtiAS9YdESnSQLKsA:9 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: z8L9oyDVToJn6rHuuZy5tXL_v-qUys-H
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDE0NCBTYWx0ZWRfX1shtjl8ma5sQ
+ Cu9gaWTvJTXeOraG8Bh8945kSFEuNOjrxa20qsTduVMbZ+wZQdIJ74867ys0LSoStVV0r7iCv2E
+ R7jFNRMTCQelhWUksqKlyJ9IefkRrHRyGdf712jx8JjAmEeCsX6uLmZLZSyq74/lBjZhbPYIiPt
+ ODVhN+ilAyky5IFVLHw+jv6jkufDckfKJ180Le0U93OOHvdNEJxSqp6cBoYU5EgwFQ3pPa6W5Eo
+ VovKF/iQZ7TB3S5BoNV1Bke/mS08OQVxjaC+1UNzQwxiVl0E0R5gVbEBaPEs33ReqrAD9lx5+Ba
+ EZM3wzScpBopzvfHE7hSPtGlCGpWyFncm+yirV8WasRbhpA0fOJnjLaIsFyIdE4G398CJVu8RB3
+ F9/1SNm3m+mZMfRqOjUguVi/pRb8uN4aGp7F4ILyJOr3OchdJIP2vHwrD6eFGVmF2kfqpCCI/qn
+ oeExCVriABA7j1LZPQA==
+X-Proofpoint-GUID: z8L9oyDVToJn6rHuuZy5tXL_v-qUys-H
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDE0NCBTYWx0ZWRfXzVwCmSL9YZXA
+ d1A7aDSTOZUDi50ph/UVcpBWOQczwBNjPcIqNduWev855W26sYyAMdfpEMfSC6TCRKvWjB0xtqQ
+ dWbKKFNDTae0zJFpWqiGzcNZC5yYXU4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_03,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170144
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=matheus.bernardino@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,23 +151,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 17, 2026 at 09:15:17PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > We only need to touch migration_capabilities_and_transport_compatible()?
-> > It should work for both, and fail QMP commands directly might also be
-> > slightly better.
+On Mon, 17 Aug 2026 06:23:03 +0200 =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com> wrote:
+>
+> Hi Matheus,
+> 
+> On 20/7/26 19:41, Matheus Tavares Bernardino wrote:
+> >
+> > diff --git a/hw/hexagon/Kconfig b/hw/hexagon/Kconfig
+> > index 52065ab3b22..3a8ff17812b 100644
+> > --- a/hw/hexagon/Kconfig
+> > +++ b/hw/hexagon/Kconfig
+> > @@ -2,6 +2,7 @@ config HEX_DSP
+> >       bool
+> >       default y
+> >       depends on HEXAGON
+> > +    select ARM_COMPATIBLE_SEMIHOSTING
+> 
+> Here we select explicitly ...
+> 
+> >   
+> >   config HEX_VIRT
+> >       bool
 > 
 > 
-> Hm. Actually, migration_capabilities_and_transport_compatible() only sees
-> the parsed MigrationAddress, before any QIOChannel is created. At that
-> point we can't call qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS),
-> because there is no ioc yet..
+> > diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+> > index 59cb09c1070..69f01bd2f70 100644
+> > --- a/target/hexagon/meson.build
+> > +++ b/target/hexagon/meson.build
+> > @@ -262,6 +262,9 @@ hexagon_softmmu_ss.add(files(
+> >       'machine.c',
+> >   ))
+> >   
+> > +hexagon_softmmu_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
+> > +                       if_true: files('common-semi-target.c'))
 > 
-> So, at least, we can't check, is passed from user fd is a UNIX socket
-> for SOCKET_ADDRESS_TYPE_FD case.
+> ... so optionally including this file is odd. If we still want it
+> optional, then we need stubs for symbols with external linkage.
 
-Maybe have one extra step for FD with socket_sockaddr_to_address()?
-
--- 
-Peter Xu
-
+Oops, this was likely a copy-paste error from target/arm/meson.build. I'll
+include the file unconditionally instead, thanks for the heads up.
 
