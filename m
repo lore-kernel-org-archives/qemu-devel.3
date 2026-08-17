@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DCDC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470E1C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2an-0000dX-Q0; Mon, 17 Aug 2026 15:01:53 -0400
+	id 1ww2al-0000FG-SK; Mon, 17 Aug 2026 15:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2a2-0006mq-WB
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:15 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZE-0006LW-RN
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:19 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2a0-0006m1-D9
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:01:06 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-836c43641baso59944047b3.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:01:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2ZA-0006U8-3n
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:16 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4956242332dso39996295e9.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786993263; x=1787598063; darn=nongnu.org;
+ d=openvz.org; s=google; t=1786993210; x=1787598010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IrAKrcFvyVNCybtfLdnOXlgFLKcEEo0o2+JIi5u2YZ8=;
- b=VvnPp96xbxMym2260URqWgOzpW8w5HYVwSufAUN686mI4WopAL4Og84wHTHvcgCRqB
- TOwBIMUPCWsMXjmCvFT7oCLultUQuWRY77wjQkV/Z2qWcNC4IBzQmwPG39OWYbxg3MAN
- OZuOtOvjHH99VwIxrh2CW9wNieg80mWjE0FaSOpNN1QN7pAaJJquLqIsuDdWfOgwtrAM
- ka2hf2CIceGJH+Q6LuvGh5d9lPfw/kvDMdUfRr44/OFmJWfz7BXcLPCNo9u8/YyY6yER
- lizA2+HrdNi3pKn1iQtYGWMg4zJtCKV15H2ZPRp0qCnR2kexWYRFFwKK8WXxlXSorsav
- nsfQ==
+ bh=CvpNndt5UQYV0DMSUg/YxV83XuMVe1Vd7A60QVj55t0=;
+ b=EzLxsQ7h7PKMvxqnybAEcm1h1BMhqlr2usywChhukH6xlamvkKYO+AMpHXkAPEJhvW
+ p0sLQIcI9/JzyadGYsnrXTVsSug+UrjsVWst4N8XloFIAXUyWnWiQJckYldeWuCnrk3d
+ 0hP/q8Y24dH4cxF58A63GMf4pR+K0ShrXRthNPQqnhpQ9NWeQPYo91WGV2A18QzL0H+X
+ sxotWaczrutgug7ot1mROoKNcmEeodN/8WLZpZAGsBM9oA9IDMtcROMBdkFVhg4bJyao
+ LNIrUJK/jP0bw2BSksByy3g071Od56IwCzn6qpPwVgRLw00aWCHgQe0BklJhQkxI68rO
+ qjJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993263; x=1787598063;
+ d=1e100.net; s=20251104; t=1786993210; x=1787598010;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IrAKrcFvyVNCybtfLdnOXlgFLKcEEo0o2+JIi5u2YZ8=;
- b=kI1BT+1toZ2ZPJBKZk1Yq6CXOH7BayGM3DXJMrECeHtfl7dlGGUdilZQ+3M321nwcA
- 33o4FXGK+gFGVPARNVgBD1SCodF2Uvs+kz3BDxVM8FPdEKPZHbsTMBO0uFpYmEJ/DYAd
- zC3ZNyu2F6/11tB2WJqBCaXhSwfgEmbcgoRz2r+XKjLeibjPIbX4gx/kuUwE6twUv4YI
- 9NkpEtgGmASsDw/8ree//U1scLZ9VQlyp8L9hDLdcTpNCLciNauXxjvfMM5uvi2sM70Y
- rsYyBiUGSwOJWW/KDWyssRQ9BGmpHVFvkq6GXEyP4M//pLz2Dxkt3BoGvjYckMfwJIFi
- ovlw==
-X-Gm-Message-State: AOJu0YzDi/a80saQxpm12PUU0wzCiXDLdCnkxXM+eOVi+TLQ0XX+W64o
- ks9sCemer6OS0JEwcWGbO9jv5ntqOT1xyGJdiEiNx5xS9Sb/MvMTwSpTmUFp8hJgCMU=
-X-Gm-Gg: AR+sD13rqlEtqbqpBUvbT+2FTRrZbJG2XKKUNF+cdaY++Xa3JmT234KBdXB/FuJ5oS/
- MjsUlhC2NUlEpOAdet9LMssMvHY+RkZ4L88wA3SBoQZh1G9zrojJM3TFxskhGCqpgFaPH9hAvZE
- B0scbAOcxf/nqcQ85W3++Sp7OxzoahJebbic0xBzZ8/kTi/uhjO/wzX/FVU+EPd0jSz0nEzB3WN
- QmDpSp1vAs8sM5kAPSgVv72ZHQWjbrqYJWyp/VQYGWz3edtT0+o0RvHHcis5DQ1KWuqcAFkEasM
- WYVqxL25GHa46m/RAGbC1seH4uNYuXnyHWU8LrfjgZh5emXg8RUzbJS9u8H1bI6psfAAoREgo2d
- wx0QUCXTIHfdecTez6afHPzR2lgWYjMGAxJWnJHB8hX2s5v9OLeHLV6Ii4a8G0BToT4+PUOoqNr
- eIn6R2paZZiqMWjFNeJJbVf0GVmzScGlzV+kh4NL8CczBbzAwYo2smtlsho+YE
-X-Received: by 2002:a05:690c:1b:b0:81e:8ccc:cd59 with SMTP id
- 00721157ae682-841304da1f5mr12547737b3.22.1786993262697; 
- Mon, 17 Aug 2026 12:01:02 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
+ bh=CvpNndt5UQYV0DMSUg/YxV83XuMVe1Vd7A60QVj55t0=;
+ b=jRqJX8hNHsmQD+FdQWrMvR6N4YRjuL734+BLQDOvfvz8hJ3/DlS08EvbdcJGJPdoKf
+ QbDeNa5/3rI2ZbgGrI4eZyIa3uHTFWLCzhAGFTPCOdcf56r6JVuyk1/6LfruHaga0vqY
+ iMeLBA5XbWYgmJMxthahXwmYxlEc+xbvSuaw/HYhik2f3mJEcK6+WwYs6xqc9k9TV9yy
+ rW2xvhM4hWeuYeBj23A+5eO1124CSHGKS0z/oEijo4x3BUrnIMwJurQ0CjASwYzuCXZL
+ PVy+MLRSlS+wWFLywX3Ki33ubSZ5P8S44YEF3onDSFl78GGYVprdcwdLEBsDehNXgrmo
+ brdA==
+X-Gm-Message-State: AOJu0Yyl/0sjyDkAQCfL0zeTRmYQlOVmFUu/DK9hKTV99xzzqCs289+T
+ pqQ57IpaHMz9saTFLthiVryNtWBXwUmCc4ZScQ7vAyaTCEQcfGtnKV6QRe0erLIpjNk8UMkP1Ub
+ U94YU
+X-Gm-Gg: AR+sD13hIoaC4wP1BWnj7COJW1uFLMpsL1ZC5sAH9DL3JKx8fAJNiwN02T6afHyKlWu
+ qhytwdB6HZREaBai7BUxxrNxoqYfcHCQwVnuK9QTY/7DDVuuAjylqEYfPd+F3elIDCdEE8g8cOF
+ l01KJrt4ln8gBWRHc8i5f4KfVrZ7s5DO9NOEaIuySb4jAC82ql9yw/bNzogJojCw/+xtfC913To
+ lEjoOj3pASdMhqDLydts/nrKnqZEsxKBVglauB0EbkJIZbLPuSvmifY/3E1StcM1qiezD43prW3
+ R1eeOFLC5Jg8tCVcQBfhVOcJxp66hB6R/T7JN4ZVfkjhzApdyOAAps+U7c++M/Ib86ZqEASxxt/
+ IUgFjnRZVzaSgoGy8+dz1tca31RCygALq7zLGgYT5AD+YSRmJb9vPLQmPm5w8BDd3gg7tYhEzHk
+ z77Y7DamjwfiC6RTZKyZPxf1iZ0Ibzrl4Re4ho4UZ3IqgLtZUjyQ==
+X-Received: by 2002:a05:600c:8b6b:b0:499:8f9f:e9ee with SMTP id
+ 5b1f17b1804b1-4998f9febbdmr348902645e9.7.1786993210441; 
+ Mon, 17 Aug 2026 12:00:10 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-840f306cbdesm8186087b3.34.2026.08.17.12.01.00
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:01:01 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
+ Mon, 17 Aug 2026 12:00:09 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
- zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
-Subject: [RFC PATCH 7/8] RFC: accel/tcg: poison the jump cache instead of
- polling for indirect exits
-Date: Mon, 17 Aug 2026 15:00:37 -0400
-Message-ID: <20260817190038.580257-8-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260817190038.580257-1-mattst88@gmail.com>
-References: <20260817190038.580257-1-mattst88@gmail.com>
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v6 22/25] iotests: cover the qemu-img bitmap operations on
+ parallels
+Date: Mon, 17 Aug 2026 20:59:39 +0200
+Message-ID: <20260817185942.1065143-23-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
+References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,392 +100,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-f799aeecff dropped the icount_decr poll from blocks that cannot close a
-control flow cycle. What is left is dominated by blocks that end in an
-indirect branch: tcg_gen_lookup_and_goto_ptr{,_inline}() set
-exit_check_needed, because the destination is unknown at translation time
-and so the block might be part of a cycle. For the emulated compiler that
-is still 55.5% of translated blocks and 51.2% of generated-code cycles, and
-the two leading instructions of those blocks
+From: Denis V. Lunev <den@openvz.org>
 
-    mov  -0x10(%rbp),%ebx
-    test %ebx,%ebx
+qemu-img-bitmaps drives convert --bitmaps and every qemu-img bitmap
+sub-command, but for qcow2 alone. It is built on a backing chain and a
+rebase, which parallels has neither of, so half of it could not run
+there and the format is left with no coverage of any of this.
 
-carry 5.01% of all cycles spent in generated code, measured with cycles:pp
-so that the figure is not just skid from the dispatch that jumped there.
+Cover what applies in the parallels test instead. A copy made with
+--bitmaps has to carry them, and raw has to refuse them. --merge and
+--clear leave the bitmap count alone, --remove-all sweeps it to zero,
+and --remove-all --add in one invocation leaves only the bitmap which
+was just added.
 
-A block dispatching indirectly does not need to poll, because the dispatch
-itself can be made to notice. The out-of-line path already calls
-helper_lookup_tb_ptr() every time, so it only needs the helper to return the
-epilogue while an exit is pending. The inline probe added by 14c3e5a1f3 is
-the interesting case: it already loads the jump cache base from
-CPUState and already branches to the slow path when the entry it finds has
-a NULL tb. Pointing that base at a page of zeroes therefore turns every
-indirect dispatch into a miss, and a miss lands in the same helper. The poll
-becomes a pointer swap on the exit request path and costs the fast path
-nothing.
+An image which was not closed correctly is left out. parallels-checks
+covers that already, next to the code which drops the bitmaps.
 
-So give the probe its own base pointer, tb_jmp_cache_probe, that nothing
-else reads. The two places that set icount_decr.u16.high poison it; the
-place that clears the flag restores it. The real tb_jmp_cache is untouched
-throughout, so no cache contents are lost and the recovery is one store.
-
-Blocks with a backward goto_tb edge still poll. Interrupt latency is
-unchanged in kind: an exit is noticed at the next cycle-closing edge, which
-is now either a poll or a dispatch, rather than only a poll.
-
-Measured on an x86-64 host, LTO build, on top of the preceding patches. The
-control was measured in the same session, because the host's all-core turbo
-varies by ~3% between sessions and swamps the effect otherwise:
-
-    before: 810,079,619,264 instructions, 79.563s
-    after:  787,483,360,681 instructions, 78.019s
-                                          -2.79% instructions, -1.94% wall
-
-Forcing the check off entirely, which is incorrect but is the ceiling, gives
--5.64% instructions and -2.55% wall. So this takes half the instructions and
-three quarters of the time: what it removes sits directly after an indirect
-branch, where the poll's dependent load was the most expensive place a poll
-could be.
-
-In a jitdump profile of the same workload, blocks opening with the poll fall
-from 55.5% to 25.9%, cycles in blocks that poll from 51.2% to 18.5%, and
-cycles on the two poll instructions from 5.01% to 1.50%.
-
-tests/tcg/alpha/test-indirect-irq.c is added for this: a loop whose only back
-edge is an indirect branch, under alarm(1). It passes before and after, and
-hangs if the check is simply deleted, which is what makes it a test of the
-new mechanism rather than of the old poll. The other alpha tests still pass
-and the emulated compiler still produces byte-identical output.
-
-RFC because:
-
-- The restore in cpu_handle_interrupt() races a concurrent poison from
-  another thread. The existing barrier around icount_decr.u16.high covers
-  it -- a poison that lands after the restore also re-set the flag, and
-  exit_request was stored before it -- but this deserves more eyes than the
-  single-threaded user-mode testing I have given it.
-- Only the inline probe needs the poison, and only alpha uses the inline
-  probe today. Targets on the out-of-line path are covered by the helper
-  check alone, but that has not been measured.
-- The shared zero-filled CPUJumpCache is a 1MB allocation that is never
-  written. A read-only mapping would express that better.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- accel/tcg/cpu-exec.c                | 54 +++++++++++++++++++++++++++++
- accel/tcg/internal-common.h         |  3 ++
- accel/tcg/tcg-accel-ops.c           |  2 ++
- accel/tcg/translator.c              |  4 +--
- include/hw/core/cpu.h               | 10 ++++++
- include/tcg/tcg.h                   |  2 --
- tcg/tcg-op.c                        | 13 +++++--
- tests/tcg/alpha/Makefile.target     |  3 +-
- tests/tcg/alpha/test-indirect-irq.c | 53 ++++++++++++++++++++++++++++
- 9 files changed, 135 insertions(+), 9 deletions(-)
- create mode 100644 tests/tcg/alpha/test-indirect-irq.c
+ tests/qemu-iotests/tests/parallels-bitmap     | 39 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-bitmap.out | 12 ++++++
+ 2 files changed, 51 insertions(+)
 
-diff --git ./accel/tcg/cpu-exec.c ./accel/tcg/cpu-exec.c
-index 257211235d..af466ca14e 100644
---- ./accel/tcg/cpu-exec.c
-+++ ./accel/tcg/cpu-exec.c
-@@ -388,6 +388,16 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
-      */
-     cpu->neg.can_do_io = true;
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap b/tests/qemu-iotests/tests/parallels-bitmap
+index 1cf2fd2add..37367defa6 100755
+--- a/tests/qemu-iotests/tests/parallels-bitmap
++++ b/tests/qemu-iotests/tests/parallels-bitmap
+@@ -273,6 +273,7 @@ stored = file_path('stored')
+ copy = file_path('copy')
+ STORED = '9b7b8b2e-1c4a-4d3f-8e6a-1f2d3c4b5a69'
+ OTHER = '11111111-2222-3333-4444-555555555555'
++MERGED = '22222222-3333-4444-5555-666666666666'
  
-+    /*
-+     * A block that dispatches indirectly does not emit the icount_decr poll,
-+     * so this is where a pending exit is noticed for that path: either the
-+     * probe was poisoned and every dispatch arrives here, or the target uses
-+     * the out-of-line lookup and always did.
-+     */
-+    if (unlikely(cpu_loop_exit_requested(cpu))) {
-+        return tcg_code_gen_epilogue;
-+    }
+ 
+ def read_header(off, fmt):
+@@ -430,3 +431,41 @@ log('--- and the image is still readable')
+ res = qemu_img('info', '-f', iotests.imgfmt, stored, check=False)
+ log('image opened' if res.returncode == 0
+     else iotests.filter_testfiles(res.stdout).strip())
 +
-     TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
-     s.cflags = curr_cflags(cpu);
- 
-@@ -752,6 +762,44 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-     return false;
- }
- 
-+/*
-+ * The inline jump cache probe reads cpu->tb_jmp_cache_probe and takes the
-+ * slow path when the entry it finds has a NULL tb. Pointing the probe at a
-+ * region that is all zeroes therefore forces every indirect dispatch into
-+ * helper_lookup_tb_ptr(), which returns to the main loop while an exit is
-+ * pending. That is what lets a block ending in an indirect branch skip the
-+ * icount_decr poll: the poll's job is done by a pointer swap that costs the
-+ * fast path nothing.
-+ *
-+ * Only ever read from, and only the tb field of one entry per dispatch, so
-+ * one shared zero-filled cache is enough for every CPU.
-+ */
-+static const CPUJumpCache *tb_jmp_cache_poison(void)
-+{
-+    static CPUJumpCache *poison;
 +
-+    if (unlikely(poison == NULL)) {
-+        /* Raced allocations are harmless: both are all zeroes. */
-+        qatomic_cmpxchg(&poison, NULL, g_new0(CPUJumpCache, 1));
-+    }
-+    return poison;
-+}
++# qemu-img-bitmaps drives these for qcow2 alone, as it is built on a
++# backing chain and a rebase, which parallels has neither of.
 +
-+void tcg_cpu_poison_jmp_cache(CPUState *cpu)
-+{
-+    if (qatomic_read(&cpu->tb_jmp_cache_probe) != NULL) {
-+        qatomic_set(&cpu->tb_jmp_cache_probe,
-+                    (CPUJumpCache *)tb_jmp_cache_poison());
-+    }
-+}
++log('--- bitmaps can not be preserved into raw')
++make_image(STORED)
++res = qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O', 'raw',
++               stored, copy, check=False)
++log('    ' + iotests.filter_testfiles(res.stdout).strip())
 +
-+void tcg_cpu_restore_jmp_cache(CPUState *cpu)
-+{
-+    if (qatomic_read(&cpu->tb_jmp_cache_probe) != NULL) {
-+        qatomic_set(&cpu->tb_jmp_cache_probe, cpu->tb_jmp_cache);
-+    }
-+}
++log('--- convert --bitmaps carries the bitmaps into the copy')
++make_image(STORED, OTHER)
++qemu_io('-f', iotests.imgfmt, '-c', 'write -P 0x11 1M 64k', stored)
++qemu_img('convert', '--bitmaps', '-f', iotests.imgfmt, '-O', iotests.imgfmt,
++         stored, copy)
++info = iotests.qemu_img_info('-f', iotests.imgfmt, copy)
++data = info.get('format-specific', {}).get('data', {})
++log('    %d bitmaps in the copy' % len(data.get('bitmaps', [])))
 +
- void tcg_kick_vcpu_thread(CPUState *cpu)
- {
-     /*
-@@ -764,6 +812,9 @@ void tcg_kick_vcpu_thread(CPUState *cpu)
- 
-     /* Ensure cpu_exec will see the exit request after TCG has exited.  */
-     qatomic_store_release(&cpu->neg.icount_decr.u16.high, -1);
++log('--- merging one bitmap into a new one')
++qemu_img('bitmap', '--add', '--merge', STORED, '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
 +
-+    /* Blocks that only dispatch indirectly do not poll; stop them chaining. */
-+    tcg_cpu_poison_jmp_cache(cpu);
- }
- 
- static inline bool icount_exit_request(CPUState *cpu)
-@@ -796,6 +847,7 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
-      * tcg_kick_vcpu_thread())
-      */
-     qatomic_set_mb(&cpu->neg.icount_decr.u16.high, 0);
-+    tcg_cpu_restore_jmp_cache(cpu);
- 
- #ifdef CONFIG_USER_ONLY
-     assert(!cpu_test_interrupt(cpu, ~0));
-@@ -1069,6 +1121,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-     }
- 
-     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
-+    qatomic_set(&cpu->tb_jmp_cache_probe, cpu->tb_jmp_cache);
-     tlb_init(cpu);
- #ifndef CONFIG_USER_ONLY
-     tcg_iommu_init_notifier_list(cpu);
-@@ -1086,5 +1139,6 @@ void tcg_exec_unrealizefn(CPUState *cpu)
- #endif /* !CONFIG_USER_ONLY */
- 
-     tlb_destroy(cpu);
-+    qatomic_set(&cpu->tb_jmp_cache_probe, NULL);
-     g_free_rcu(cpu->tb_jmp_cache, rcu);
- }
-diff --git ./accel/tcg/internal-common.h ./accel/tcg/internal-common.h
-index dc713a6e1a..6007223285 100644
---- ./accel/tcg/internal-common.h
-+++ ./accel/tcg/internal-common.h
-@@ -154,6 +154,9 @@ void page_table_config_init(void);
- G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
- #endif /* CONFIG_USER_ONLY */
- 
-+void tcg_cpu_poison_jmp_cache(CPUState *cpu);
-+void tcg_cpu_restore_jmp_cache(CPUState *cpu);
++log('--- clearing a bitmap keeps it in the image')
++qemu_img('bitmap', '--clear', '-f', iotests.imgfmt, stored, STORED)
++log('    %d bitmaps stored' % len(bitmaps_reported()))
 +
- void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
- void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
- 
-diff --git ./accel/tcg/tcg-accel-ops.c ./accel/tcg/tcg-accel-ops.c
-index 560fe2554b..fc134c48d9 100644
---- ./accel/tcg/tcg-accel-ops.c
-+++ ./accel/tcg/tcg-accel-ops.c
-@@ -44,6 +44,7 @@
- 
- #include "hw/core/cpu.h"
- 
-+#include "internal-common.h"
- #include "tcg-accel-ops.h"
- #include "tcg-accel-ops-mttcg.h"
- #include "tcg-accel-ops-rr.h"
-@@ -106,6 +107,7 @@ void tcg_handle_interrupt(CPUState *cpu, int mask)
-         qemu_cpu_kick(cpu);
-     } else {
-         qatomic_set(&cpu->neg.icount_decr.u16.high, -1);
-+        tcg_cpu_poison_jmp_cache(cpu);
-     }
- }
- 
-diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
-index ee61dec1c6..aab2b2b1a5 100644
---- ./accel/tcg/translator.c
-+++ ./accel/tcg/translator.c
-@@ -61,8 +61,6 @@ static TCGOp *gen_tb_start(DisasContextBase *db, uint32_t cflags)
-     TCGv_i32 count = NULL;
-     TCGOp *icount_start_insn = NULL;
- 
--    tcg_ctx->exit_check_needed = false;
--
-     if ((cflags & CF_USE_ICOUNT) ||
-         (!(cflags & CF_NOIRQ) && !defer_exit_check(cflags))) {
-         count = tcg_temp_new_i32();
-@@ -125,7 +123,7 @@ static void gen_tb_end(const TranslationBlock *tb, uint32_t cflags,
- 
-     if (tcg_ctx->exitreq_label && defer_exit_check(cflags) &&
-         !(cflags & CF_NOIRQ)) {
--        if (db->needs_exit_check || tcg_ctx->exit_check_needed) {
-+        if (db->needs_exit_check) {
-             TCGv_i32 count = tcg_temp_new_i32();
-             TCGOp *save = tcg_ctx->emit_before_op;
- 
-diff --git ./include/hw/core/cpu.h ./include/hw/core/cpu.h
-index 172872d005..0aacd35f64 100644
---- ./include/hw/core/cpu.h
-+++ ./include/hw/core/cpu.h
-@@ -526,6 +526,16 @@ struct CPUState {
- 
-     struct CPUJumpCache *tb_jmp_cache;
- 
-+    /*
-+     * What the inline jump cache probe emitted by
-+     * tcg_gen_lookup_and_goto_ptr_inline() reads. Normally equal to
-+     * tb_jmp_cache; pointed at a page of zeroes while an exit is pending, so
-+     * that every indirect dispatch misses and lands in the helper, which
-+     * returns to the main loop. Only generated code and the two accessors in
-+     * cpu-exec.c may touch it.
-+     */
-+    struct CPUJumpCache *tb_jmp_cache_probe;
++log('--- remove-all sweeps every bitmap of the image')
++qemu_img('bitmap', '--remove-all', '-f', iotests.imgfmt, stored)
++log('    %d bitmaps after remove-all' % len(bitmaps_reported()))
 +
-     GArray *gdb_regs;
-     int gdb_num_regs;
-     int gdb_num_g_regs;
-diff --git ./include/tcg/tcg.h ./include/tcg/tcg.h
-index be9ce7a0e2..7669dc1c2d 100644
---- ./include/tcg/tcg.h
-+++ ./include/tcg/tcg.h
-@@ -389,8 +389,6 @@ struct TCGContext {
-     struct TCGLabelPoolData *pool_labels;
- 
-     TCGLabel *exitreq_label;
--    /* Set by goto_ptr emission: destination is not known statically. */
--    bool exit_check_needed;
- 
- #ifdef CONFIG_PLUGIN
-     /*
-diff --git ./tcg/tcg-op.c ./tcg/tcg-op.c
-index 367e96627c..446a34d5ed 100644
---- ./tcg/tcg-op.c
-+++ ./tcg/tcg-op.c
-@@ -2616,7 +2616,10 @@ void tcg_gen_lookup_and_goto_ptr(void)
-         return;
-     }
- 
--    tcg_ctx->exit_check_needed = true;
-+    /*
-+     * No icount_decr poll is needed for this exit: the helper is called on
-+     * every dispatch and returns to the main loop while an exit is pending.
-+     */
-     plugin_gen_disable_mem_helpers();
-     ptr = tcg_temp_ebb_new_ptr();
-     gen_helper_lookup_tb_ptr(ptr, tcg_env);
-@@ -2643,7 +2646,11 @@ void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc, uint32_t flags,
-         return;
-     }
- 
--    tcg_ctx->exit_check_needed = true;
-+    /*
-+     * No icount_decr poll is needed for this exit either. A pending exit
-+     * poisons tb_jmp_cache_probe, so the guarded load below finds a NULL tb,
-+     * takes the slow path, and the helper returns to the main loop.
-+     */
-     plugin_gen_disable_mem_helpers();
- 
-     QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) != 16);
-@@ -2665,7 +2672,7 @@ void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc, uint32_t flags,
-     tcg_gen_shli_i64(h, h, 4);
- 
-     tcg_gen_ld_ptr(jc, tcg_env,
--                   offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
-+                   offsetof(CPUState, tb_jmp_cache_probe) - sizeof(CPUState));
-     tcg_gen_trunc_i64_ptr(ent, h);
-     tcg_gen_add_ptr(ent, jc, ent);
- 
-diff --git ./tests/tcg/alpha/Makefile.target ./tests/tcg/alpha/Makefile.target
-index eee986bab6..f9f135fc2f 100644
---- ./tests/tcg/alpha/Makefile.target
-+++ ./tests/tcg/alpha/Makefile.target
-@@ -5,7 +5,8 @@
- ALPHA_SRC=$(SRC_PATH)/tests/tcg/alpha
- VPATH+=$(ALPHA_SRC)
- 
--ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-xpage-chain
-+ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-xpage-chain \
-+	test-indirect-irq
- TESTS+=$(ALPHA_TESTS)
- 
- test-cmov: EXTRA_CFLAGS=-DTEST_CMOV
-diff --git ./tests/tcg/alpha/test-indirect-irq.c ./tests/tcg/alpha/test-indirect-irq.c
-new file mode 100644
-index 0000000000..bef2844fd9
---- /dev/null
-+++ ./tests/tcg/alpha/test-indirect-irq.c
-@@ -0,0 +1,53 @@
-+/*
-+ * A loop whose only back edge is an indirect branch must still be
-+ * interruptible.
-+ *
-+ * Blocks that dispatch indirectly do not emit the icount_decr poll; a pending
-+ * exit instead poisons the inline jump cache probe so that the dispatch falls
-+ * into helper_lookup_tb_ptr(), which returns to the main loop. If that
-+ * mechanism breaks, this program never leaves the loop and the test times
-+ * out rather than failing an assertion.
-+ *
-+ * A computed goto is used deliberately: a plain while(1) closes the cycle
-+ * with a direct backward branch, which is still polled, and so would not
-+ * exercise the path under test.
-+ */
-+#include <assert.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+static volatile sig_atomic_t fired;
-+static volatile unsigned long iterations;
-+
-+static void handler(int sig)
-+{
-+    fired = 1;
-+}
-+
-+int main(void)
-+{
-+    /*
-+     * Indexing a table with a volatile index, rather than jumping through a
-+     * volatile pointer: gcc happily proves a single-valued pointer constant
-+     * and emits a direct branch, which is the case this test is not about.
-+     */
-+    void *target[2];
-+    volatile int idx = 0;
-+
-+    assert(signal(SIGALRM, handler) != SIG_ERR);
-+    alarm(1);
-+
-+    target[0] = &&spin;
-+    target[1] = &&out;
-+spin:
-+    iterations++;
-+    if (!fired) {
-+        goto *target[idx];
-+    }
-+out:
-+
-+    printf("interrupted after %lu iterations\n", iterations);
-+    return 0;
-+}
++log('--- remove-all with --add leaves only the new bitmap')
++make_image(STORED, OTHER)
++qemu_img('bitmap', '--remove-all', '--add', '-f', iotests.imgfmt,
++         stored, MERGED)
++log('    ' + ' '.join(bitmaps_reported()))
+diff --git a/tests/qemu-iotests/tests/parallels-bitmap.out b/tests/qemu-iotests/tests/parallels-bitmap.out
+index 994c67390e..df6f676106 100644
+--- a/tests/qemu-iotests/tests/parallels-bitmap.out
++++ b/tests/qemu-iotests/tests/parallels-bitmap.out
+@@ -92,3 +92,15 @@ read 65536/65536 bytes at offset 0
+     0 bitmaps stored
+ --- and the image is still readable
+ image opened
++--- bitmaps can not be preserved into raw
++    qemu-img: Format driver 'raw' does not support bitmaps
++--- convert --bitmaps carries the bitmaps into the copy
++    2 bitmaps in the copy
++--- merging one bitmap into a new one
++    3 bitmaps stored
++--- clearing a bitmap keeps it in the image
++    3 bitmaps stored
++--- remove-all sweeps every bitmap of the image
++    0 bitmaps after remove-all
++--- remove-all with --add leaves only the new bitmap
++    22222222-3333-4444-5555-666666666666
 -- 
-2.54.0
+2.53.0
 
 
