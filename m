@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19AEEC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 15:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EF7C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 15:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvyvt-00049T-7L; Mon, 17 Aug 2026 11:07:25 -0400
+	id 1wvyvj-00047c-N8; Mon, 17 Aug 2026 11:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvyvs-00049D-GJ
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:07:24 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <vvisaev@gmail.com>) id 1wvyvj-00047U-1Z
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:07:15 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvyvr-0007Ot-3z
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:07:24 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-80cebd41372so51804117b3.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 08:07:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786979242; cv=none;
- d=google.com; s=arc-20260327;
- b=HTnplOgcE/SNYviOVCab/vjBFyvl+Qlr0tFY8bzS/moH7IjELyuAic6npP/v0R4xrl
- z5bfrcTtwXtR6Ijv4sAQkzNFMAANz3os9xRiqlTe4a5hLDXLgjuBVLqB0Ab8fMvpzzhA
- tyEk1jXQ/6cWzRCkczqQH4NPCiQ/bmpoB3/IdOTbbsjV1OVnC9vIHiDc22CpBxg8WHdG
- 5k8NKQcVKH6dc+nVvEtxU1IhiIgRHqx/G1TRwY0yRt7s/jQjfjp+6OTQ93qiyzpN889r
- +hVm0mHa9ztdSmOQPYtqQoWWnRF/V/+JrVHT6qCT9ESNhJbR4dm1veoCX/bWCAxP+0Of
- hRWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=eKmBegf8fZE2l/hyagB4w+ITWbNMFMbHGZPlbexBH4Q=;
- fh=XtBGW/VyvE63GThaZ7ifB4zEv4I6SKtzcqxYHMbJry4=;
- b=cANYwx2epBiITih3SHq1Uo4nWPiuoaqJUu6KOtDbZsWlwP8N4Efu0UUWF372SkjZWl
- 5FsMpV4f43OTQkOs/cD8kXcpbVhK0L7segTrbDcwVVLyOcppp5ztUFoWqko3guE0DpRw
- cezSNPk6XPAjqdf2J1n4wIvqhPi+Mrl29CJECjfBCFUCqhhH0BW/EN00YvpDuQWdd6ds
- 8qjTdMld5sGDM2rT1wQkh4FNn2REGfXkE2+n1LCJJ2bHDEyS1zs/UjDcmAUyRx/RZZqi
- myixsqT7m+XMEbvdKmXgIfGtxwAZn7rlN+PfAllkvy3UWorveQWBoQ5AR/Z5G+iOD/u/
- Zt7A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <vvisaev@gmail.com>) id 1wvyvg-0007Bv-R3
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 11:07:14 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c9aea40d799so1973402a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 08:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786979242; x=1787584042; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=eKmBegf8fZE2l/hyagB4w+ITWbNMFMbHGZPlbexBH4Q=;
- b=HCX6S1HZxb16qeDghsRR+hm9765uNDLY2rAL4epw72IcWfPkxtJOs4NoA+pex3Lnfs
- skkgd9xqwcfYb33QlCpEBV8L19HXmbcmiqUORM//UMy+PQAS8KrxKaZjqtXpC5sbZJkm
- c9r3gbNVfZzVN2KNaBjCMEPyOPGPh3w4wWSbrGaHSEsaUnYRRco9zFPwfhZm7Avg29rd
- MPEUOZKg6DYpKwFI3fo+NeAVWsbWDOHlINau03VS+vZ5bh9ugEsmW1g3IYR4/Ubx7ohn
- HjpBPf3Tce7/7s0NAH1GfeI8Tqpd1PDGXZnT4JIBLGwlxOYhARh0lTMDF/FLb93S1rFn
- wAiw==
+ d=gmail.com; s=20251104; t=1786979231; x=1787584031; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=jtD8y+oQJMTO5l25pUgh2yZ5hsiIXFvmFgX0Y8ILNUg=;
+ b=FDoZZr6BceIUVORmqqCFjw58xdx1IlKfYvf7sJkRw1EK4dFE/zLOOotjrPBHmRDhvN
+ Yo/AHCF2GdPw2jFzdru2m+VQnk/p8IOziydmBwTRC2qitDfXNaYrKKuCI/jcXMpaGhZr
+ jIAukINyIe77j2olwFt3jRfQDvc+rUW6XsWRg6UWRmkntqfq+PcGFKvqhH3HNtEOGDZk
+ 2uMR3PRJyLn3IhwWVIArHCtx1bh1ewhjm0YiwEVcR5em+iWFap5ZuugSfnumRYaslMBZ
+ iK/nB5KukfpMPDwb5TOHT9AYcbnMWDSYjB8wIurOFK0tbpn5PrREvIwuBsd5jLxiUbu0
+ 5Q1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786979242; x=1787584042;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=eKmBegf8fZE2l/hyagB4w+ITWbNMFMbHGZPlbexBH4Q=;
- b=kftZjNfwuOuQ8jycFvAAzFMb9v674UmkR78YJes+gKz0TBvtoThAqN7OjpFHqdbAn5
- QMliWsLT42W7rfQBKRI+0zUWROURGodnLsQRzwhecgs9t6Z4jTGjiNJJYRAAQchcJLJO
- UREvm+4yPNn+QIFZhfLL1vJZwR93bEZaAYzgkpEhfb1137gU6EiS4tsbrbO6Q1n42pXg
- 3+nfvhNstOO7VsE63bC3bgZi1naNVLscY/jBNHEUaUM0rmBlQ8nZp5kAxIcbcGDv5MZq
- BKFNKWwjs6/rtTGVfgK8BSe3PTr7aYcMaI8JBaDvpLAnFVkZ7zuxzqrKMeYYn+yUFove
- ZpmQ==
-X-Gm-Message-State: AOJu0YyjEpUDW9mCvIwSnUTyaRkvLzNjT4+lchglsPOgXZrdNXja++Sr
- BUEKp9skYl5xZu06IiH0drVdw2kAr5pH0qOER1ar7FSIoY8vcpTvLYUZprC4pETReBGaJIyTVeD
- EI4sKUDh6eVOO8BPIBHiI38km+JXCIuahONV4Zngmmw==
-X-Gm-Gg: AR+sD11mlMb6x0Vt3bM/emArKVabDFW5looLvgc9S19pcu6BlApsy9U9x023H9jLT4A
- I0990xnSRl+VDJhVui0+hYhoLIB2/rs8WnaqbMrJBe9dxnrD0BsOCNHG+MGEh1YOQQkLyOVzPvs
- OnhpMxAI83HZ/xMwAGU2nSZrZ58S4Frs2fb2Nvp9vN5cxgJCHRMhFwF/COCLDfZDVicbrRKi/gD
- j/CTSF22SltsU7b9AZf5qxQKspEBs9M/VD9CnhnDb+ghsCqgvBA7FU694LfKxDH91mu829kXL2O
- R58OaDR8Akmzi6hobJXf9Xd0rHtSsKfJVWq9nOUZ3ZrDM5bXfmaJep+7fGEAbT+CreFyMvvGPzg
- vbC06U6dPuRCa+0c8ZonHFiC1EnwU
-X-Received: by 2002:a05:690c:c3a6:b0:833:968e:c223 with SMTP id
- 00721157ae682-83710a93e86mr66950627b3.21.1786979241822; Mon, 17 Aug 2026
- 08:07:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1786979231; x=1787584031;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jtD8y+oQJMTO5l25pUgh2yZ5hsiIXFvmFgX0Y8ILNUg=;
+ b=LZxzTdW2BKZKIXMN9LfL8z7fvm/QbZD/kRDJfJClfWNRPYtwGSFEF52J0jOWWmN0DH
+ Jd7oIb0UbIBxYwMe6EIbyydyYSFs/M5k/YdOQP9lXohzSKzkmsUARIg+prenvDK0StEw
+ Z4YEzoFHBGw0QboodoeCTh5xjP0fmbD2ZECG3c4rJbrHDA63BWymGKmJFc3UvaTO7fMv
+ NX0HHcQguIq1rmQF8DkwDEPXZICQmBR4XzzurpBxswnWDYSWAi8+5ivkD7MeEuTOVy0h
+ qxkRTB4DDduhYX7w7MWeOVzLi1P76Zgrg/AGYhrhD3N05BCX1U+TWuiUfwUfMfyTCskh
+ i9OA==
+X-Gm-Message-State: AOJu0YyjSKNHb75rD0iICRvi7mcRplaXeCo9GlMkuf05Jy6tjdWDrGyp
+ cqaUvEpsRNPHw6t0MRL1tJfgSUDmUFGPlFajjYZS14Q6ma4ietPCb7cTXWlRuGvIarAxHQ==
+X-Gm-Gg: AR+sD118Spo9pLMKTAFWae6omw7beaUCCHF/fv5u7QVhNrqUTwTGwk1ReWe9Gx0EcDy
+ KRo3lSjmep1MdutWfqELoaAlKQxWyAYV4xEkDIj6uPDJSEFBEwlKF0e/RqqehWLvewKVKFkywJw
+ VVT+ctxlrd9D4LH6ad4kIIE4jx5K5YH8ejOtGzY4PP8fkwS4lnNjlQzS2zs+llNNufovixmhJaz
+ c9JcLDfFqDr5OtVH8CqYKIZlzPvMLh/a8j/9XfGGxYNr7+BIUo4xM2onshz0pdiUiTxHB80/Ow8
+ Hucf9GN+FqH2m3paVLSgwUI9XAQm3vN+eIGYb5yzLySSHUmyuYqEjPIYR0JuxoE81rvAdkdbLOF
+ BQ371ET/n2Qac1/r0CpKC8veH7eYCTkETcKwsiOkf6B/uL+mg/gl0DcytOYiLUPjW8OfdzyfjqI
+ EFZjVmkftR7OkWcf1Q4b8q2EhqZ+p6CQqh+2EFkZJZn0E=
+X-Received: by 2002:a05:6a21:998c:b0:3c3:6cfb:4ed7 with SMTP id
+ adf61e73a8af0-3cc71d3bd15mr25784308637.30.1786979230683; 
+ Mon, 17 Aug 2026 08:07:10 -0700 (PDT)
+Received: from X1 ([178.66.48.90]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc13bf05584sm900775a12.4.2026.08.17.08.07.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Aug 2026 08:07:09 -0700 (PDT)
+From: Vladimir Isaev <vvisaev@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, qemu-riscv@nongnu.org, joel@jms.id.au,
+ npiggin@gmail.com, Vladimir Isaev <vvisaev@gmail.com>
+Subject: [PATCH v2 0/2] Fix alignment check for misa write
+Date: Mon, 17 Aug 2026 18:06:36 +0300
+Message-ID: <20260817150653.40357-1-vvisaev@gmail.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-References: <20260812200308.289238-1-richard.henderson@linaro.org>
-In-Reply-To: <20260812200308.289238-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Aug 2026 16:07:10 +0100
-X-Gm-Features: AcwNN1Ul1ks14Qa_lI_pvTFwLCdvqe98gz4PU7VRwSOlajCMVOwYjhHhBJ-emCU
-Message-ID: <CAFEAcA9wqo3tqC=GU2vmGJZowRfrLQZL=US+1vnf6pJsZ18DDg@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc: Fix arm kvm gicv3 selection
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=vvisaev@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,25 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Aug 2026 at 21:03, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> While 39a8c3941e may have fixed WHPX, it certainly didn't help KVM:
->
->   $ QTEST_QEMU_BINARY=./qemu-system-aarch64 ./tests/qtest/arm-cpu-features
->   ...
->   qemu-system-aarch64: unknown type 'kvm-arm-gicv3'
->
-> That patch did remove a test for TARGET_AARCH64, which is fine because
-> it has been a long time since we supported KVM for AArch32.
->
-> Fixes: 39a8c3941e ("hw/intc/arm_gicv3: Fix ARM_GICV3 dependency for KVM / WHPX")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+Current version disable misa.C on misa write when next instruciton is
+not aligned, fix it and add test.
 
+Changes from v1:
+  - Use the test from https://lore.kernel.org/r/20260321144554.606417-2-npiggin@gmail.com,
+    since it is much more comprehensive than mine.
+  - Add GUEST_ERROR_LOG on a bad write attempt.
 
+Vladimir Isaev (2):
+  riscv: csr: do not drop C bit on misa write
+  tests/tcg/riscv64: add misa write test
 
-Applied to target-arm.next, thanks.
+ target/riscv/tcg/csr.c                    | 10 ++-
+ tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
+ tests/tcg/riscv64/test-misa-w.S           | 88 +++++++++++++++++++++++
+ 3 files changed, 99 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-misa-w.S
 
--- PMM
+-- 
+2.55.0
+
 
