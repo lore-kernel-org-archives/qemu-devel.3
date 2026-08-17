@@ -4,66 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1202DC5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D27BC5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxqX-0001ff-9D; Mon, 17 Aug 2026 09:57:49 -0400
+	id 1wvy7J-0005h5-8e; Mon, 17 Aug 2026 10:15:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wvxqT-0001bo-VR; Mon, 17 Aug 2026 09:57:46 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1wvy7G-0005gn-U5; Mon, 17 Aug 2026 10:15:07 -0400
+Received: from air.basealt.ru ([193.43.8.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wvxqR-0004fQ-PS; Mon, 17 Aug 2026 09:57:45 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:86a0:0:640:75de:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 9FA4180D3E;
- Mon, 17 Aug 2026 16:57:38 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d2f::1:33] (unknown
- [2a02:6bf:8080:d2f::1:33])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id bvUDYv0WMCg0-XJEfkWEp; Mon, 17 Aug 2026 16:57:38 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1786975058;
- bh=S7jTxQ8JQLpZ0vsJiXCdaFMNrwq1i09Zjb4XF0BR1OI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=zb6o1ChDHWn/Sbvdsmx/x7qu7Z13ZA2sZUz9UxJNept5DTrBZWQfsy7SlCkFQBSTp
- ++AT0kSalw3qQW5aFJ0wWDnf7y+wnwqBsEsAoNj6U8pM5A/KfcF8819/JphzVNNvWO
- 6NwMxiMdFZMQNDYVTJzgk2hyWQ5m287Tj7nUTubo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <60a6748b-1914-4c11-98db-22639028185c@yandex-team.ru>
-Date: Mon, 17 Aug 2026 16:57:37 +0300
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1wvy7E-0000jU-W2; Mon, 17 Aug 2026 10:15:06 -0400
+Received: from boringlust.malta.altlinux.ru (unknown [217.177.47.51])
+ (Authenticated sender: rastyoginds)
+ by air.basealt.ru (Postfix) with ESMTPSA id 6A0732337E;
+ Mon, 17 Aug 2026 17:14:58 +0300 (MSK)
+From: gerben@altlinux.org
+To: qemu-block@nongnu.org,
+	fam@euphon.net
+Cc: qemu-devel@nongnu.org,
+	sdl.qemu@linuxtesting.org
+Subject: [PATCH] block/vmdk: prevent division by zero with zero cluster sectors
+Date: Mon, 17 Aug 2026 17:14:56 +0300
+Message-ID: <20260817141456.59418-1-gerben@altlinux.org>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] block: reject persistent bitmaps a node can never
- store
-To: "Denis V. Lunev" <den@virtuozzo.com>, "Denis V. Lunev" <den@openvz.org>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-References: <20260716112242.3000035-1-den@openvz.org>
- <cb21314c-f664-444e-a446-f613a40b3151@virtuozzo.com>
- <148de3a9-6d9c-4511-80a0-2367e3b6b48d@yandex-team.ru>
- <7477733d-f51f-4ccc-8732-b03a395b635c@virtuozzo.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <7477733d-f51f-4ccc-8732-b03a395b635c@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
+ helo=air.basealt.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,72 +55,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.08.26 22:03, Denis V. Lunev wrote:
-> On 7/29/26 21:17, Vladimir Sementsov-Ogievskiy wrote:
->> On 27.07.26 15:05, Denis V. Lunev wrote:
->>> On 7/16/26 13:22, Denis V. Lunev wrote:
->>>> This email originated from an IP that might not be authorized by the domain it was sent from.
->>>> Do not click links or open attachments unless it is an email you expected to receive.
->>>> qmp_block_dirty_bitmap_add() and the incoming-migration bitmap loader
->>>> both create a persistent bitmap with bdrv_create_dirty_bitmap(), which
->>>> always creates it writable, without checking whether the node can
->>>> actually be written to. A persistent bitmap added to an already
->>>> read-only or inactive node stays writable in memory on a node that
->>>> can never store it, and the next global inactivation (migration
->>>> completion, save, or any other bdrv_inactivate_all() caller) fails
->>>> trying to flush it back:
->>>>
->>>>     Lost persistent bitmaps during inactivation of node '<node>': No write access
->>>>     migration_block_inactivate: bdrv_inactivate_all() failed: -22
->>>>
->>>> Patch 1 rejects this at block-dirty-bitmap-add (and, wrapped in a
->>>> transaction, denies the whole transaction). Patch 2 closes the same
->>>> hole on the incoming-migration path. Patch 3 fixes a knock-on
->>>> regression from patch 1's approach: a bitmap that was rejected from
->>>> ever being written can still exist in memory read-only and must
->>>> remain removable without requiring write access.
->>>>
->>>> v1 -> v2
->>>> * approach changed to deny rather than adopt (Vladimir)
->>>> * added patch to add permission check on migration path
->>>> * added patch to change permissions check on bitmap drop to more natural
->>>>
->>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
->>>> CC: Eric Blake <eblake@redhat.com>
->>>> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> CC: John Snow <jsnow@redhat.com>
->>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>>>
->>>> Denis V. Lunev (3):
->>>>     block/monitor: reject persistent bitmap add on a read-only node
->>>>     migration/block-dirty-bitmap: reject bitmap load onto ro node
->>>>     block/monitor: allow dropping a bitmap never stored on disk
->>>>
->>>>    block/monitor/bitmap-qmp-cmds.c               | 19 +++++++----
->>>>    block/qcow2-bitmap.c                          |  9 +++++
->>>>    migration/block-dirty-bitmap.c                | 22 +++++++++----
->>>>    qapi/block-core.json                          |  4 ++-
->>>>    tests/qemu-iotests/tests/migrate-bitmaps-test | 33 +++++++++++++++++++
->>>>    .../tests/migrate-bitmaps-test.out            |  4 +--
->>>>    .../tests/remove-bitmap-from-backing          | 29 +++++++++++++++-
->>>>    .../tests/remove-bitmap-from-backing.out      | 22 ++++++++++++-
->>>>    8 files changed, 124 insertions(+), 18 deletions(-)
->>>>
->>> Hi, Vladimir!
->>>
->>> Will this go through your tree? It is looking like nobody else cares.
->>>
->> Yes, seems so. Thanks, applied to my block branch.
->>
->> There's still a chance to stop me within 2-3 weeks before 11.2 cycle opens.
->>
-> Hmmm :-)
-> 
-> 11.2 seems opened. Is it right time to push?
-> 
-Was on vacation :). Will do this week.
+From: Denis Rastyogin <gerben@altlinux.org>
 
+A zero cluster_sectors value passes the existing upper-bound check
+and later causes a division-by-zero in get_cluster_offset().
+
+UBSan reports:
+
+../block/vmdk.c:1608:30: runtime error: division by zero
+    #0 0x5562d3b3b63b in get_cluster_offset ../block/vmdk.c:1608
+    #1 0x5562d3db9aa7 in vmdk_co_block_status ../block/vmdk.c:1796
+    #2 0x5562d3c48bb3 in bdrv_co_do_block_status ../block/io.c:2494
+    #3 0x5562d3c55a3d in bdrv_co_common_block_status_above ../block/io.c:2672
+    #4 0x5562d3c5630e in bdrv_co_block_status_above ../block/io.c:2752
+    #5 0x5562d3ec5a3d in bdrv_co_block_status_above_entry block/block-gen.c:386
+    #6 0x5562d40ab573 in coroutine_trampoline ../util/coroutine-ucontext.c:175
+
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+---
+ block/vmdk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/vmdk.c b/block/vmdk.c
+index cd8b4ec7c8..7a7935b25a 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -537,7 +537,7 @@ static int vmdk_add_extent(BlockDriverState *bs,
+     BDRVVmdkState *s = bs->opaque;
+     int64_t nb_sectors;
+ 
+-    if (cluster_sectors > 0x200000) {
++    if (cluster_sectors == 0 || cluster_sectors > 0x200000) {
+         /* 0x200000 * 512Bytes = 1GB for one cluster is unrealistic */
+         error_setg(errp, "Invalid granularity, image may be corrupt");
+         return -EFBIG;
 -- 
-Best regards,
-Vladimir
+2.50.1
+
 
