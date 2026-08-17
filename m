@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D1CAC5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA64C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvyUd-0008Qh-9j; Mon, 17 Aug 2026 10:39:15 -0400
+	id 1wvyYL-0001Cz-IK; Mon, 17 Aug 2026 10:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvyUV-0008MH-Sg
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:39:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvyUT-0000V5-Tx
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:39:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786977543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
- b=Invtzk0McabAkEKys5fxUd5/tmYCf6w6gFuWQ+D0Ta7D3AlKnI70rfDMP8MKpzR2ME0yHf
- 3uauxwQwEU6xGOUzkeKWHxuJlQNEiaVFsD+xH1+ocdiUftC//FktZQT2Zc3bB3CNH9+JBw
- R/bJM3yLEFRtmvfJhNpVM6IqozvQosI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-myStvcp-PCekZPoAIVMOiw-1; Mon, 17 Aug 2026 10:38:52 -0400
-X-MC-Unique: myStvcp-PCekZPoAIVMOiw-1
-X-Mimecast-MFC-AGG-ID: myStvcp-PCekZPoAIVMOiw_1786977531
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-482a5e9400eso487180f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:38:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wvyYF-0001AJ-4G
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:43:00 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <asrinivasan@tenstorrent.com>)
+ id 1wvyYC-0001Lv-89
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:42:57 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-66b3803ef19so5828278d50.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:42:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786977531; x=1787582331; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
- b=NPy6hiEKDbSL5ldKE9ZJ2MaE60cVe2qK79AeuXNpUhjJkJzCRLJQ/9wuM170Oz1yc+
- QtuovzuR41e0OyUm6t/6u7GgzDzCbUd+i+/KAQzPpo2tRi9uU4nET5SAd2tJilXLHlBn
- Jt2E1FsULSz2qdoq7nUROYiKJabBE65FwMi+LU+fE514ldkzMVPMrAF8wWpqv6gkKCa2
- qI89r/wKr8n9vrb/BjvtYc9yL0JXEjRvJxtsBn14JtZeiIjttyyFFMo5/Jq7CVZ+LHnp
- Mbhe8iLlVHa071FvskqwYBOYNypOv8RxUhKiFBi2OpmZJkY2XL9VljxJrDWHJaB/YOgD
- YeEg==
+ d=tenstorrent.com; s=google; t=1786977774; x=1787582574; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=S3TM5L+qmZZCn6pYKyHl43Pn4nMf7PNXQDIr08eAAQQ=;
+ b=G3ecnbP1h56XYWVD4vQTk7sCOKWtnn4Gx3qOD/3+WTtxxczdFoMzB9Mr7W0FtfogtO
+ BoXsaG3TRGYs3AzhrovGYm8RY/wMsMu0MW1HbPtvHBrBNTzUtKiZ6dJgRpOiYlHW1FYG
+ jYWX0xmjUBf1HcrimLbotLy+Aw2Sggv5RduyPVVMMwxURa2KILt4iBMetlAIHl15wTGx
+ 3xFfxaeiqIe0cIixXKafqdE8C3zF2j0ExilDJqQeXeE1uO190TeN4X2RYUpKHe/Qa0GF
+ 0Te0XCajwL++YHVFb0fPE2milEFSv6Qe8F9y8Uw1ua5Y+tST5Av2a86dKCRFEZjmOI63
+ 1qgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786977531; x=1787582331;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
- b=EBvXESZvKBMgv3sjpQtpN273IP6LIHezxABy9Ff5hscOyqk5EMTlohyOyty8Zf6rn3
- o2aVe9Tvs8KXIncNveDSygwllFUCCxJPSJHPJoSVfdCEF1EnX1rOp6QNHxRCZ4a6gZ0i
- WCgf68s0X/+M4Vh3G31Yeb8CwikM9AlLuPpCzbL99t+0apeVQKZFIEttjkhr660KLrbJ
- tml8xHw7RQNHZN1kjNLQ/sR4qnJodV8dI2IX6lqA4hMLzBTPO2Z/Ipnmq/Lv7iM75B/F
- ScrZIsjX1o4pmEc5uJpW3vpndGr2jzYH4RkAFM2otH6RcaWYbvEvoUjzzM6dLfF5fbaD
- fRKQ==
-X-Gm-Message-State: AOJu0YxpCRH741+YbaHyxoeZfFBnQ6y38jyX8cF4heRJUZeDHICQoiGp
- lyXHuWwXZlb5lGHXnvDoWp6Il7Im1Pd3nD6MmRUgwTN1eVU3hrIMY0ROPqYlwc9ZQq8VQUmuch3
- 27uk0iz8CGauoe2faJHSxtGiIV+0JZdReAJ0GvhZ0FpAFFegevTafI55b6K/m4myFslOOSqUv+0
- +R4GMuPttysBF7qqgC0eTblKqEdgDkYjED6lPTPsX/
-X-Gm-Gg: AR+sD13Dl2zjLUnVOW73raRYIx8OdJEWSMbm+BlBlcWuq6JFRaETjH4NXl/j/FfK6ek
- J7l+MpoKrQ55UpzukYblp0S85gMoWDgL9q02VCPrZBdB0elYi9cyD8PYDIqiYmXxELw1t7C+sYA
- 1Kinltjf8hjEStVWLkZUJHBtWMihTI4f9VnTiktA1Bwro7hmOZT9l6cN0OKogo+y9efeL8Ze/+D
- wrWPdKXfxaZPOH/ajFjMnYm07eFugUeAlnEKHIftVm1gkPAJb3qflQ+g9Knw+45rfK99ZoUkLLj
- WX+AaFwYIcIv/+zPOggCS1N7Y5ol8jolOUlx47imP5xPGLFsFCuFOmNS+BxQp5M6gC2PXafzSB3
- NyfUY0G24Sx998RzaS8TWAhh+o74EKRi4+SpYLRXXx+LacNRuMCVmM08ZVW3lGk1URZaHtys4wq
- UuQM8=
-X-Received: by 2002:adf:f2c6:0:b0:47f:97e9:fe60 with SMTP id
- ffacd0b85a97d-482a90c53e6mr939282f8f.15.1786977530714; 
- Mon, 17 Aug 2026 07:38:50 -0700 (PDT)
-X-Received: by 2002:adf:f2c6:0:b0:47f:97e9:fe60 with SMTP id
- ffacd0b85a97d-482a90c53e6mr939176f8f.15.1786977530113; 
- Mon, 17 Aug 2026 07:38:50 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.34.92])
+ d=1e100.net; s=20251104; t=1786977774; x=1787582574;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=S3TM5L+qmZZCn6pYKyHl43Pn4nMf7PNXQDIr08eAAQQ=;
+ b=dyWfLARRhPRwDPuPfF0FQ757nmsX5yAzWe+SKaylsJloc41qD/8OtmQ8DsCW14yJLa
+ q/tQjbcHQEej2lhV5qurWzs1OhLq4MRsoHeDgieJt7c2OirQpOmbJG8WweedulDtNl9A
+ vSi/ODoin7OLQCBGWjw6Ly1c0ycWYIFgU/dYeVbaahlpCtUDN/tMhUxCo0XZ6GmJE7nO
+ CJ3IubFcqKnl9Ym6kzQG2jHjqRF/DdRhH/to2b7mi/s8z42YpQTsKXkizAYecAGfdFiB
+ aCXpCMweAXocUvpq7yD7OLTFR+XxvBB/za+NKdgFyqEVVg70IcQM8ZVWd64HXDFDDqqU
+ nE3g==
+X-Gm-Message-State: AOJu0YyjngB3ik7XbI/zPYrGctoAv1cJaopP48j+YGOQHTI+AZEXt6AI
+ X+9vYVoHVzklINcawJXWJr8omrtdRHMO/HRA4TwWekTVS7Ljyo8njAKC3OzDTVXugZ8=
+X-Gm-Gg: AR+sD12Gl5gknOq+yFiXbrYXxTM37MWR84P2jIr3wJTvfkWF3XOFHdtY55tK95OINr8
+ ltcjzQuAoD0lNCxRyiolCVPKRWPNevFUGaefHDP6y1Rf7auZZ3vBVLH8MZhdNxunyqGetAz75Ck
+ TfHYoXd4MqypuGqhBuXncHSQzRnnq6K8JWlf1pBhVesRU2OnvvZ5xCE+SCpNvLIcckVtHQ5YBfd
+ LCgoCVAJOe3ys+SLsH2wlk08sCn5OerNbMA2Vy+lyRyvz0agI6quyoNE9RCLO6uCjToqT+5XQLi
+ hUkXR3L9i0DwLpJ7/mIiNg2GoJCK0cCpkp3odN2CLLqW27R1Fa/F/qFRSs44KyQSgLK0oI2IY9h
+ dBoFvYNiIWLO6AZTk5ZKuCgTnmUyFNrHZy2BeSCvm9ppB/F6Tj/FiteFdOkgykEfj4J92tnBnVh
+ PALSPM77lew9v2B2tx/2Tp6Z7ZSXax1IdPPYYSCKz0wyHFT6hbtiv3VDsRvkbiR7FWJU/pTDQuM
+ sh9aVdqdEs6dK97Jyp90e4WeOvpab7yzzp/tupU
+X-Received: by 2002:a05:690e:10:b0:666:396e:bf59 with SMTP id
+ 956f58d0204a3-66cb9d4a184mr328205d50.1.1786977774388; 
+ Mon, 17 Aug 2026 07:42:54 -0700 (PDT)
+Received: from [10.200.24.109] ([12.55.13.134])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482a5b816c0sm3700857f8f.33.2026.08.17.07.38.49
+ 956f58d0204a3-66cb47809d1sm904104d50.13.2026.08.17.07.42.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 07:38:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mohamed@unpredictable.fr
-Subject: [PATCH] target/i386: emulate: stop torturing cc_src into carrying
- SF/PF
-Date: Mon, 17 Aug 2026 16:38:48 +0200
-Message-ID: <20260817143848.953284-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
+ Mon, 17 Aug 2026 07:42:54 -0700 (PDT)
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Subject: [PATCH v2 0/2] Add Model for Tenstorrent Atlantis PRCM
+Date: Mon, 17 Aug 2026 09:42:43 -0500
+Message-Id: <20260817-atlantis_prcm-v2-0-ffba0b944419@oss.tenstorrent.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOMdg2oC/13NQQ6CMBCF4auQri0pg1Bw5T0MMbQMUiMt6VSiI
+ dxdinHj8k/efLMwQm+Q2ClZmMfZkHF2CzgkTA+tvSE33dYMBJRCguRteLQ2GLpOXo9clUfQvcp
+ lV0i23Uwee/PavUvzbXqqO+oQkbgYDAXn3/vDOYu7n13/2XPGBS8EVBXUeY5FdnZEaUAbAY82p
+ NqNrFnX9QP4IKVAxgAAAA==
+X-Change-ID: 20260727-atlantis_prcm-b642cfb37d57
+To: qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+X-Mailer: b4 0.15.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=asrinivasan@tenstorrent.com; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,173 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_flags.c encodes the flags into cc_dst and cc_src with algorithms
-essentially derived from Bochs; the exact details have changed but cc_dst
-is Bochs result and cc_src is very close to Bochs auxbits.  However,
-using only two words is unnecessarily limiting because it splits SF/PF
-between the two words even though *ZF* is the real nuisance (ZF=1 implies
-SF=PF=0) and the one that commands usage of PD/SD delta bits.
+This series adds a qemu model for the PRCM blocks present in Tenstorrent
+Atlantis. This block controls clock, reset and other misc functionality
+in the SoC. Linux support for the Clocks/Resets served by the RCPU PRCM
+was added in [1]. This PRCM model has been tested with a linux DT that
+enables the PRCM and sets the UART clk to the one provided by the PRCM.
+This DT will be sent out shortly.
 
-Within TCG, the CCMP instruction would have a similar need of efficiently
-encoding an arithmetic result or an EFLAGS value; it is not implemented,
-but there are plans (see commit message for 5dcdbd07125, "target/i386:
-tcg: use cout to commonize add/adc/sub/sbb cases", 2025-04-17) to use
-an algorithm very similar to target/i386/emulate's, but with *three* words.
-Then SF and PF live together in harmony, because SF can be encoded with
-either parity and PF does not use the high bit where SF is stored; by
-placing them in a third word their computation is isolated from ZF's
-and everything becomes simpler.
+[1] https://lore.kernel.org/linux-riscv/20260306-atlantis-clocks-v8-0-6c9b14a4aa8e@oss.tenstorrent.com/
 
-In fact I'm not even sure why Bochs did it like that, and did not just
-give SF/PF their own home in a third word as well; the developers believe
-that the extra store is too expensive.  I am not really sure about that,
-but as far as QEMU is concerned, emulation proceeds one instruction at a
-time so using SRC2 should actually be faster, not just easier.  To convert
-from the output of arithmetic operations, PD and SD disappear and DST
-simply has to be stored in two places; to convert to RFLAGS, SF/PF are
-easily computed from SRC2 as if PD=SD=0; conversion to LFLAGS encodes
-parity in bit 0 and mixes in SF as an even-parity value with the right
-sign bit.
-
-Unlike TCG, there is a single meaning for all operand lengths, which
-corresponds to either CCMPL or CCMPQ depending on sizeof(target_ulong).
-So the carry-out value still needs to be split---with AF in bit 3
-and CF/PO in the higher bits of the target_ulong-sized env->cc_src.
-This is an acceptable tradeoff for the interpreter, in order to optimize
-lflags_to_rflags.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 ---
- target/i386/emulate/x86_flags.c | 65 +++++++++++++--------------------
- 1 file changed, 25 insertions(+), 40 deletions(-)
+Changes in v2:
+- Coding style edits based on Chao Liu's feedback
+- Changed prcm to use Resettable inferface instead of legacy reset
+- Edits requested by Daniel related to tracing, pll_en logic and unnecessary switch/case statement
+- Added comments to some of the magic numbers in the reset values for PRCM registers
+- Link to v1: https://lore.kernel.org/qemu-devel/20260729-atlantis_prcm-v1-0-502882933e51@oss.tenstorrent.com
 
-diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
-index 3c4270a14c1..c49d8bb836a 100644
---- a/target/i386/emulate/x86_flags.c
-+++ b/target/i386/emulate/x86_flags.c
-@@ -30,28 +30,24 @@
- 
- 
- /*
-- * The algorithms here are similar to those in Bochs.  After an ALU
-- * operation, CC_DST can be used to compute ZF, SF and PF, whereas
-- * CC_SRC is used to compute AF, CF and OF.  In reality, SF and PF are the
-- * XOR of the value computed from CC_DST and the value found in bits 7 and 2
-- * of CC_SRC; this way the same logic can be used to compute the flags
-- * both before and after an ALU operation.
-+ * The emulator always encodes flags in the same way as CC_OP_CCMPB + MO_TL.
-+ * While for arithmetic operations ZF/SF/PF are computed from the same value,
-+ * ZF=1 may be inconsistent with PF/SF for arbitrary RFLAGS values so CC_SRC2
-+ * is used for SF and PF.  CC_SRC holds a carry-out vector that is used to
-+ * compute AF, CF and OF.
-  *
-  * Compared to the TCG CC_OP codes, this avoids conditionals when converting
-  * to and from the RFLAGS representation.
-+ *
-+ * The underlying ideas ultimately descend from Bochs, but with significant
-+ * simplifications obtained by storing flags in three words rather than two.
-  */
- 
- #define LF_SIGN_BIT    (TARGET_LONG_BITS - 1)
- 
--#define LF_BIT_PD      (2)          /* lazy Parity Delta, same bit as PF */
--#define LF_BIT_AF      (3)          /* lazy Adjust flag */
--#define LF_BIT_SD      (7)          /* lazy Sign Flag Delta, same bit as SF */
- #define LF_BIT_CF      (TARGET_LONG_BITS - 1) /* lazy Carry Flag */
- #define LF_BIT_PO      (TARGET_LONG_BITS - 2) /* lazy Partial Overflow = CF ^ OF */
- 
--#define LF_MASK_PD     ((target_ulong)0x01 << LF_BIT_PD)
--#define LF_MASK_AF     ((target_ulong)0x01 << LF_BIT_AF)
--#define LF_MASK_SD     ((target_ulong)0x01 << LF_BIT_SD)
- #define LF_MASK_CF     ((target_ulong)0x01 << LF_BIT_CF)
- #define LF_MASK_PO     ((target_ulong)0x01 << LF_BIT_PO)
- 
-@@ -59,19 +55,15 @@
- /* OSZAPC */
- /* ******************* */
- 
--/* use carries to fill in AF, PO and CF, while ensuring PD and SD are clear.
-- * for full-word operations just clear PD and SD; for smaller operand
-- * sizes only keep AF in the low byte and shift the carries left to
-- * place PO and CF in the top two bits.
-+/*
-+ * For arithmetic operations ZF/SF/PF are consistent so DST == SRC2.
-+ * For operations that are not full-word, keep AF in the low byte and shift
-+ * the carries left to place PO and CF in the top two bits.
-  */
- #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
--    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
--    target_ulong temp = (lf_carries); \
--    if ((size) == TARGET_LONG_BITS) { \
--        temp = temp & ~(LF_MASK_PD | LF_MASK_SD); \
--    } else { \
--        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
--    } \
-+    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
-+    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
-+    temp |= temp << (TARGET_LONG_BITS - (size)); \
-     env->cc_src = temp; \
- }
- 
-@@ -93,13 +85,9 @@
- /* same as setting OSZAPC, but preserve CF and flip PO if the old value of CF
-  * did not match the high bit of lf_carries. */
- #define SET_FLAGS_OSZAP_SIZE(size, lf_carries, lf_result) { \
--    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
--    target_ulong temp = (lf_carries); \
--    if ((size) == TARGET_LONG_BITS) { \
--        temp = (temp & ~(LF_MASK_PD | LF_MASK_SD)); \
--    } else { \
--        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
--    } \
-+    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
-+    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
-+    temp |= temp << (TARGET_LONG_BITS - (size)); \
-     target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0; \
-     env->cc_src = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
- }
-@@ -255,7 +243,7 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
- 
- static inline uint32_t get_PF(CPUX86State *env)
- {
--    return ((parity8(env->cc_dst) - 1) ^ env->cc_src) & CC_P;
-+    return (parity8(env->cc_src2) - 1) & CC_P;
- }
- 
- static inline uint32_t get_OF(CPUX86State *env)
-@@ -283,8 +271,7 @@ static inline uint32_t get_ZF(CPUX86State *env)
- 
- static inline uint32_t get_SF(CPUX86State *env)
- {
--    return ((env->cc_dst >> (LF_SIGN_BIT - LF_BIT_SD)) ^
--            env->cc_src) & CC_S;
-+    return (target_long)env->cc_src2 < 0 ? CC_S : 0;
- }
- 
- void lflags_to_rflags(CPUX86State *env)
-@@ -304,16 +291,14 @@ void rflags_to_lflags(CPUX86State *env)
- {
-     target_ulong cf_af, cf_xor_of;
- 
--    /* Leave the low byte zero so that parity is always even...  */
--    env->cc_dst = !(env->eflags & CC_Z) << 8;
--
--    /* ... and therefore cc_src always uses opposite polarity.  */
--    env->cc_src = CC_P;
--    env->cc_src ^= env->eflags & (CC_S | CC_P);
-+    /* compute DST and SRC2 that reconstruct ZF/SF/PF.  */
-+    env->cc_dst = ~env->eflags & CC_Z;     /* DST = 0 if ZF=1 */
-+    env->cc_src2 = ~env->eflags & CC_P;    /* odd parity if PF=0 */
-+    env->cc_src2 ^= -!!(env->eflags & CC_S);
- 
-     /* rotate right by one to move CF and AF into the carry-out positions */
-     cf_af = env->eflags & (CC_C | CC_A);
--    env->cc_src |= ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
-+    env->cc_src = ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
- 
-     cf_xor_of = ((env->eflags & (CC_C | CC_O)) + (CC_O - CC_C)) & CC_O;
-     env->cc_src |= -cf_xor_of & LF_MASK_PO;
--- 
-2.55.0
+---
+Anirudh Srinivasan (2):
+      hw/misc: Add Tenstorrent Atlantis PRCM model
+      hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis model
+
+ MAINTAINERS                        |   2 +
+ docs/system/riscv/tt_atlantis.rst  |   1 +
+ hw/misc/meson.build                |   1 +
+ hw/misc/trace-events               |   4 +
+ hw/misc/tt_atlantis_prcm.c         | 442 +++++++++++++++++++++++++++++++++++++
+ hw/riscv/tt_atlantis.c             |  94 ++++++++
+ include/hw/misc/tt_atlantis_prcm.h |  51 +++++
+ include/hw/riscv/tt_atlantis.h     |  19 ++
+ 8 files changed, 614 insertions(+)
+---
+base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+change-id: 20260727-atlantis_prcm-b642cfb37d57
+
+Best regards,
+--  
+Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
 
