@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9498BC5CFC1
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 05:54:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4571BC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 05:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvqHx-0004X6-KR; Mon, 17 Aug 2026 01:53:37 -0400
+	id 1wvqHt-0004WE-Iv; Mon, 17 Aug 2026 01:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHw-0004Wx-41
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:36 -0400
+ id 1wvqHq-0004Vy-0v
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:31 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wvqHu-0004hN-KQ
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:35 -0400
+ id 1wvqHn-0004hN-IR
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 01:53:29 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TPRBh4gdogrVIxXCUm1Ri542473ZO77hKWM0xtKzcLl6VdtkofxEeRDascKzCQy/iRIVTEHdiTtSZaDnY5+JFQtGLLLJtZbi8kRdL8tmkv/BIIW1FLDDeahxddeLRMc09p+jmzAuPFLCbyw9okWwTrJGU+t1ZeXxFI1IVVZfO87dWj1/cnOBSvaj2BsDHj37B75ISuM+Ap9FozTeLNw2dhiKgdQeZJfgyLE1ruCfDUTs1A+G9s4mWpCMM9zUVlcCO6IBJLoEWHUvDKNRDXXmdVJjmpJX2p4eTL0NZ2cjC6sPH1plUllWYyatHSTXEZ+7xqvrgLVQB/8DGkDQMCB+sw==
+ b=O1F1a89xIehDsoZTUiH7N7cqa3yJDRFmvddw3/xQhI62Rak9+hPOWQAZDcEo0WzI5HzylmzKzXih0p2bONe+OnKJ6gYeRyWhcQMhm5LJgU5ff7L9bp3xA8cOG9AfBWT+QYld5NHhQif3B8gOFtuQfJx3Cq4/Ut9dSjgL9KzJFdA64M51MK+Kfc3Fi3pMBLRP6BgMzfvUY8XbAwxy2fm5Wa9fgFsaf0n11r8xw8A3zf++xr4NVlKIaHjppOjVDxzfoZTxGdmBkHd9wiMkqXdxCbG0/o0PL40OMg0bKbNaLTXCm5DpHpmudSh5zZNeHzPQlCeSkDpOkzwVdqTCCt6CXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IixTtTuFJ+H5+YkNDoahBQ5GeFJerO7SWIVvMW8jrg8=;
- b=Pf8mDVMBgTF/7quJC5B1v7YsH2TFnyG5W1ZOE2AigiIt+FGPTERUrwekZQhitxGd3DuBY1y5DKH3dzgm22SNZXIay+sKE9GphO9I8h3771S3FqyfpXvVXaKuu80Oc9YzE0WOFnIALy7UYRvaNMZ8dg5WwGgapuFYLh4xaCHgt6JklOIHVZfzs4mHG9PR6vYdcq/fM2/ODKaTVANSJqYGh8BWB8uc4T92wqQC3+IjKaArWtpDRXswo9rT4LYWZVRxIZvcbBqMnJbSJ4JckYLQ6to/mBMBO4RQcnHMO5ZxM45lVTCzkCdRjKmKNhwWQA2yI1T6uq9vMxUTYZjfeaj2pg==
+ bh=ZkMCqUMMZ3IT0PRtLA+CNPNcUNo5IgeLgF2EaJyQ5ns=;
+ b=AMNboRDPIs1FwN44OC4RFWjRESPzPenYPxdSPIr9S7V7l0FqRq+VyYmmqSsroFDmG3NAuBx+w5GQspQ7PcLb7/YdujWwxFSp+kaZxoJYpUYWxgVcfOB3dyptAyZOcAu+qOJHy00wNFJ6zAspikGoVUNrZJPFIwihFnxGhSxrQQgDaqzJ5KWMzvz83v7NUOLthiWf40++XAspJYugeCy0cyvydsJIYQ7zenTT2lauzjlJRL2ywa1+LxdVtevnywfMCiGrqpNW3baQHN/4pI9EWdw0/H77ha1smdvcO/C8SOdevX1OP7RP5NR8md0LzetdFre8h+SV8867n6ySxM6ZiA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IixTtTuFJ+H5+YkNDoahBQ5GeFJerO7SWIVvMW8jrg8=;
- b=gWBIT/lTq3ZuM0TvjDYwnfs4aA+ca5LCmbC21gERhi9mKEABxbVY8p3rr21LvVr1MVli6Zv7azg5SDXE55+dih4338gyTiA4RxaFH/kDxyKg3TigDODAIqRmHRZo7pYNzu5SfVKOyA3PvBkk/4d7Uprk0x2t/ZGmt+ZsMW/kvd3PgjdYHioX9YFwrQ7kuelFgg0c7pWZIs6UtRUsqGr99ZSGHR69euplFhkEtgx3f6lrlHZBxui2sKa2Mvrgvzixci9TLdJ0dYQQJy/R5PHVcqtSe/vzj0v9zO3oYXL9LfrbtHeWWfKVNcJj3UJQjKcqlovqRNlr3A0GsD07XpaNhw==
+ bh=ZkMCqUMMZ3IT0PRtLA+CNPNcUNo5IgeLgF2EaJyQ5ns=;
+ b=jWZAJUrqOTAxi5zNx2snMsWiPVLg8qAZvZpiETlAc+rCxcvAKTqFiy/3zSqG/R31JXwMAa9/6bmI3RnHhkWCsAG980XwTiP/qotBSAnSb00ZCZhcp9+QQpuIPFxq4dMAnzQbGVCb/1uZS2fDv2DbO6mFrgg2hXM2AvXZnBf6yENJWf3+vOnmA6eRs8YEhxA/AeVTt1HY4YAsFCShLK8baOG5wSh7sUjJjzJPpPuXky5o25NfGSQ0gFuC2PJjATCCcSFJK/6f7vNEGr7kDWob4O9zjjb23qePkxgD4gWJXdl/+D6jOvSbOt6avtQK3u/kb8k9GzeDcHJIIQ1Oe6+UmA==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by TYNPR06MB8880.apcprd06.prod.outlook.com (2603:1096:405:3c3::13)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Mon, 17 Aug
- 2026 05:53:23 +0000
+ 2026 05:53:19 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.016; Mon, 17 Aug 2026
- 05:53:23 +0000
+ 05:53:19 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
  <peter.maydell@linaro.org>, "philmd@oss.qualcomm.com"
@@ -52,15 +52,13 @@ To: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
  <clg@redhat.com>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
  <philmd@mailo.com>, "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 3/3] hw/usb/hcd-ehci: Handle get_dwords() failures in async
- writeback
-Thread-Topic: [PATCH v3 3/3] hw/usb/hcd-ehci: Handle get_dwords() failures in
- async writeback
-Thread-Index: AQHdLgy3ggyolHsi+ke7Ezp2a5QZpg==
-Date: Mon, 17 Aug 2026 05:53:23 +0000
-Message-ID: <20260817055318.3826428-4-jamin_lin@aspeedtech.com>
-References: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 0/3] hw/usb/hcd-ehci: Fix Coverity CID 1685236 and check
+ DMA errors
+Thread-Topic: [PATCH v3 0/3] hw/usb/hcd-ehci: Fix Coverity CID 1685236 and
+ check DMA errors
+Thread-Index: AQHdLgy0wYrhLdAIm0eFVUnT+/YE8w==
+Date: Mon, 17 Aug 2026 05:53:19 +0000
+Message-ID: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -69,60 +67,60 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYNPR06MB8880:EE_
-x-ms-office365-filtering-correlation-id: 11126d72-9f4d-4078-8b5f-08defc23d97d
+x-ms-office365-filtering-correlation-id: bea0e6fe-8750-4935-2808-08defc23d726
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|23010399003|22082099003|18002099003|56012099006|38070700021|10067099003;
-x-microsoft-antispam-message-info: pWSn499r3P5kFlcjy13HnYl/tr8V/EhaI+ABWQ6kC6C/p/K33EidqgiMRpvgogUa9JIABsNR2dtSM0QRo1LM3xweRavdVFcaNMpN80iYRCwFaxRI7Pfm2Vekthmms3eyvEi1yY0F/zYgsg7yddcRuBq0iyje8zW520rEWI3b19Phd+3rYbo/Nzq0zYKh4uVDR+Mc6CuXSyASkKXJfMldyN/OzgkQdhI2oAWbTqJ+j+fCM1QzUowqkAWEUFmCQ9ou5G2KcRZUlvmVkT0oDLJ8ljrZOiAjclpo2olHXV8CncZkaHfjWx5lIYDLj8NA6BZD2Pb9PTkWrwO2ESEFVZTfZc7yhVZPAL0AV1DVQGMjzZkHiMUFzSAjFG3T3RVvNcUwg6JoXTIVV+8b31P2U1Q7cvb4CcbMOq4O0T3BZuep1iW2ymUr9Ess+AFx+CrjvW5yXjsp6qJ6sZzLcNYdPip4F5ZW+g13pUld70YXgnykq6oC6h5/bpzsBUwM9d6xXh5EQJR75RgwIgDKOXI9aFP5A5xiFbnF4NlkIFrSRvkI1/wMLETJV6+p7eY8IhVFo0RA/1qDitTMG02QFqy31uWbANNZKOfw9kiRYc1E86xfXxv2DYUO1mIBf5PfymyjPhnSRuCfS9XvjS+Df+LWpY3tIHg5MkxNBVTUwEl6YP0cyReHBt2JfvRgyTIPu496EWto3dXNqJusKAemR8JVKb6ejD2l+f1/AFqLgP1uXb0A1o0=
+ ARA:13230040|1800799024|366016|376014|23010399003|18002099003|56012099006|38070700021|10067099003;
+x-microsoft-antispam-message-info: 3anxB2WZRW0tyUSZqQMJsnYpJRO/SWgyt201vi8yHmr9zR9Hp1nVdfwqoOfOUyc6QHUtio0XAT3DNgeu/pT4IMN+VpTHTSsRZHVidrmcrtEbNiA8cr05jWuwT/sFwXm5Y//gp8tiSwFABie4MuYUPg80Bltfc1TRm+CODEFL8xRndzSMw7lq0lIvsXia0jpyBVn0I65wXJXRe7faQa0qsL4PshX5prWzkNXMepaih91ECtkTUyWZyZdiuUtmVzBzCleXBcJIy/am8WNWy6tS0o8bwDbbV6X0OdLIL0TyNDiK0CkvWCrcxU5wWQy0RH/eTJNQNueVgDYffTFJf5WYiDOVYLt9v+Y5kIbzTxkOqJ7GayZjkWqw5Xou81sS6TLsFp6AmxKboVSnJMjeeAKnsquopLnxTRMVFuRHToLHtGB4ZlCWJpG5IgjjHrGI6pqmy4A/SfXFk8iQ3To5YAs5gGMgvYyFYe9HYPF1/6X9NxSAPZEepY3x3X3Jzul99+usZ52xGXJZYCYbKkq2GYcEzTa6KzBoaw+vqXcwcMQvA11+qme+ISs2dwyTzYr2X4iE47HBl6P/pwDtYLfSGYC2nWO79aDjK46YFfUD/2X49yfoT23NrjxlNDhgpdNpuMkFylVu7NdHpYBji2NW3G00/I+9iRAmBaFwFOFx1ypdQDMB0tWIYUZmIXpiElo846NXs6JtJnbCPnu/C9rwkM58fMeK2itvLTsYFv6u4xectTg=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(22082099003)(18002099003)(56012099006)(38070700021)(10067099003);
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(56012099006)(38070700021)(10067099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mimmo3nAX37qbOuBEtJNtkWHC1CKmzGw8ptYrndq+dntVUnc4w+489S7zn?=
- =?iso-8859-1?Q?HeOkAdRirpxdayOGnjFGlq3GI8rP6ZX+oPgJ6tX8xAl59QkbZFlw3ZpALE?=
- =?iso-8859-1?Q?arc16I3+JF+XJwFPjL8sAXbvrSpv4ATq8UwSNR+Kl9Vvq/Piq/aUwkEeuZ?=
- =?iso-8859-1?Q?443VZCJbsPshYUHeDXxM3YkaOX8eFrxb698IuATrQL7PXL1oHZYhn3kqvW?=
- =?iso-8859-1?Q?/teMHZYvjN41v9M3u79ivscReuW671EAUa8SiCXvjt9Kgt4iNHy+jyTn3G?=
- =?iso-8859-1?Q?DNVsiPrmAuv9daVO/vjeeVACQlkaRcDaG3zBDYPbbQ9d600f/0ZEHOTeuF?=
- =?iso-8859-1?Q?8f4hw0v7nLp4nJtmL4MClecfvV2V8lzn7iT7nsiWqE/e1NKkQPhNDRKexd?=
- =?iso-8859-1?Q?ivSzvw43zLw3Vz0mpzWH1h4rc20iGfo94RXks/bLSS7IGpW5A3M4q0qYYp?=
- =?iso-8859-1?Q?4WgFW93k5sH48fepxGQvVlQeljhjBPWmrrPQCL8AY4UBFyZX+A8LqELr8n?=
- =?iso-8859-1?Q?7VD4yOvfnCr05lGjbdA0tN/4r6HpJMfXz5yIJFhYo3WOIk7tbFb0c9WBuu?=
- =?iso-8859-1?Q?5tZDRJ1m8BhowsxWUZBWcXg/fTUQSNZSsUtt+kTaTVtPkpqZ8EjFXUMgsI?=
- =?iso-8859-1?Q?jDB9eoonJ9oWBui00ztYO9ut0fFR+NICoW0RXDTVNBdNyLrbkjqvbpll9i?=
- =?iso-8859-1?Q?GDh5UXSAOjlMqCVvFCOu3ZAKn2fUC6RtmX5BN34P6MvCEWFnxacZx6WGq8?=
- =?iso-8859-1?Q?UfWqLvX1wxRwTzeAStUdmsCxCP4nN2YS9M7kPLpwBPOhPvgHrPDYX44dsF?=
- =?iso-8859-1?Q?DeDwatMFJ71tqmEO5NrpCdROwfBBW6Zstx0+OV6MDW0icZ1SxQ9KLJ4S/W?=
- =?iso-8859-1?Q?Qx0BDQURnI9EkxyLXz9qIxd3B2PhYj7DAlu6NdmNdvnn2Fy/Rl5srgraFB?=
- =?iso-8859-1?Q?a8iFoCSKjs/8jBjQYnIbZCLFbpHI1ROF85txn4H8trPjegnB2JTfe12lAv?=
- =?iso-8859-1?Q?IR7G471bpJlU2vcJZuuYe0lU6i6axjIjputUiT69XAalQLTZkXqYH/egVp?=
- =?iso-8859-1?Q?cp5fA0nYv8xkm0nESF6OxYKV08y6CQHkbSBJKqn3aKEuBvHTXcXoKpR+c2?=
- =?iso-8859-1?Q?l4TzbkEb33I3V/hYzqiGU15ouxlaUIRXwWB/cNiLEMPQL7crdgsPw5G2r+?=
- =?iso-8859-1?Q?inVyHU9Wc9GUbwjL0TawHgHlduN/OaSfMqxYzqQ37Emj72tUSsZ8HWRzQt?=
- =?iso-8859-1?Q?wSk5OXIZ7Kz+XR/hGP/dF/miQ2aI9gX6t970Oq+Z+ghjAXwkZMFfrsFrUo?=
- =?iso-8859-1?Q?/Yf29b0OjLOVDuZ6a5M9MLpWO+uZw8e7mzcRWX1/ZTsR3hNY8RoUGIA8qw?=
- =?iso-8859-1?Q?voz3lbZlp3T4I+AlbxWY/grv6j/4MOn5kQWUW9M2+Rxfi4VTlF5PMZp6TQ?=
- =?iso-8859-1?Q?QnXMTP/izhyOfHldva7NS4l3cL0kZsQlBEfV97rh7gdoECoAdTepcMlD16?=
- =?iso-8859-1?Q?RHkUGWMWLk/r0l5eLRPZKERHTJznsFRpm0jYSdCiW9SoWttxx06Jw97TLA?=
- =?iso-8859-1?Q?T6OUFkLQu6gtXotHOJAMIl7Su2bDDe18H2xIbU77UfagqIDF/av+7FJTl+?=
- =?iso-8859-1?Q?r63L1hNYzGCefSYwdtXwRm1A0/0/GmVI7hrM+IzTsK2YbRRN/Snuwexf1g?=
- =?iso-8859-1?Q?g2Y1QL8ijxLwuovmV/M8vr95VNmWsDXKMvdDGzugn2qk2tyhJqxToBbXJB?=
- =?iso-8859-1?Q?KJGU1A2LECY7og69kcxi5X5gXGv4g8b973l4kkU3puEnoq+h0bfhBHzjnG?=
- =?iso-8859-1?Q?kloxFWIHaA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ygeM3R2KgAz2Cz9/5qwBk+ojqslXidnj9ogoBvPNAo2i3UXADm17RRPdmp?=
+ =?iso-8859-1?Q?tovMJIogbCJJAsq2xrbZ3nXBakzCiAnvgaRnWqDI6+L0NshFh+K//gizJg?=
+ =?iso-8859-1?Q?ApwRHR6F7+aKFelWxnE7k/TNWC4JnWoc0NaChSj7hbOonpI8AWLBJM6gXc?=
+ =?iso-8859-1?Q?msI0nCKxWTxCRiaBN3cjN4ScNlrgvKLsNKiztb4z+fLEtbYf1Bwygs5bZB?=
+ =?iso-8859-1?Q?paKpzEvfOj98RCqMAAihmZ7N+VW4rNVqbOxDsD0xkHvR7cVbox0XYfJ743?=
+ =?iso-8859-1?Q?uMZYzkAwYZKyPaze8fcA4qRHWdq5ZT9JgUYrL/BDJoUpw7lIgMB+7iARNH?=
+ =?iso-8859-1?Q?1m4265afOMPdAMsjwyFzM/fg8qfLrWyhW1TcohGCL86iFrmamEIwutVvM/?=
+ =?iso-8859-1?Q?Jgwg6ZIjpH3uNc7rCyMpaomjQcXVb8g57WxFg0EVo+xF/1BpMOgKxaPOd/?=
+ =?iso-8859-1?Q?rHfXHK+IOFeK2TlfefeRz6ZQjs86GW9Z4ZgJFh5Z2YMRU92rV04sqjkRb+?=
+ =?iso-8859-1?Q?HPu5B3+12qwPXsLRPMkpUusi7+SKmHMGz32Bz403ds3yknTWdFmx3tp26Z?=
+ =?iso-8859-1?Q?CH3v7yqP2pb3g4c7LocDLiTl5T92JF26GVKIJNe8eq02P0I7dbd3jK0MUa?=
+ =?iso-8859-1?Q?Dxg1nQtjrAA6nMp9JS5uL+JXe0DxQGDaWhilz0MpjKti+EZUlznmd4piOV?=
+ =?iso-8859-1?Q?RHJv/TxjN1ZRw+HwqrbeQyhUetuwvyCdoGy4tjbC9tSvWeX5SIeqJpznEj?=
+ =?iso-8859-1?Q?r5uPVs18OoE4id6GY8e/dK+/bdx/AiLTO00zmek8BhhzSjr55hm5shYlUi?=
+ =?iso-8859-1?Q?o/0DOb5FPB9RbYHiOsqSa6DrAHgr183OguX7u27pADU3VWVvjUILtGfkox?=
+ =?iso-8859-1?Q?yiSpCIDN6hwwiWbaf4knrOx3ITuGoFQoQO9B2fPIocSwB9AF4L2wd4L5Qb?=
+ =?iso-8859-1?Q?LPDy36iI+3r/+LH3sf/knlDi7s9N43YM34V0sW1tEXogGo8daWAkvMJdNM?=
+ =?iso-8859-1?Q?SMij7m9dLiVRX3umoJrXAeRp/lmQ2Osk+31/wZI/3ulWvetWbb2/Wpsg6z?=
+ =?iso-8859-1?Q?9BJQikrfx0GRUoOuMuZap/tZv1adjm0BuAspn7d/SKq9yiMYDfStZY3iAZ?=
+ =?iso-8859-1?Q?AU1pqyJlSJy82nd3XdRAORvT5LTfaG/VEBGscHOkKzAFNWtVStekEqPeWB?=
+ =?iso-8859-1?Q?hjzQXlukWSBLUGARUk8tI6XPzmluY4UPqBCPBQdmIFJwvvvVQ/2XGlO+IT?=
+ =?iso-8859-1?Q?EMnc7cnnBvhIHZWZedvUkbW7Ed54O8GxVSf+atEMPhqdK4NvsfiedRnz/U?=
+ =?iso-8859-1?Q?EvF4k4ku5L9bm/uiHrRf6zyQ69JYUetTd2qqsKmgTDRHGnnv84Yj7KTGqc?=
+ =?iso-8859-1?Q?PAmPgR/IOjfZ5LlXNiXdD5oJD8SwMphTN3GZt0UQ6LBDiD4B26clbp/D98?=
+ =?iso-8859-1?Q?LtkT0DoWadgxYBvnmJj39ax/pHW7ziOVO85m09PeKYeeXyRHQE3iJAcZ4H?=
+ =?iso-8859-1?Q?cOT5S8XWZ8bJkYCATepeyhsm9hkSOBSkuMjqRmANbRsiBQmuRQszwqfAap?=
+ =?iso-8859-1?Q?WBsX4QgD2AdS2C/RCsAbJVQpmplBNb0K4nqNQ+jJ4CwYb9vASxyl3cYo7w?=
+ =?iso-8859-1?Q?uqlZ04tQhVNluzkg3c49IH1leFEsGjOmUTYY1mabCM2OqmVeU0TI1bqcPq?=
+ =?iso-8859-1?Q?bngW0eyFOwJcxcX/GjQWhy9gG1IKv6BRwQL3UdG2imd3QLqhpOuoM/uKx5?=
+ =?iso-8859-1?Q?DqjQUTYVMIyt4208Ko8lh2VNt7oNyRLtEVQw/2n+JcCopDiPKW+qK4FMfV?=
+ =?iso-8859-1?Q?sn2H0i9ClQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11126d72-9f4d-4078-8b5f-08defc23d97d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2026 05:53:23.5934 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bea0e6fe-8750-4935-2808-08defc23d726
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Aug 2026 05:53:19.6164 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ixSRJtIGtV1+qcADz1lpDCUZhR8sDOfVI5dtACVzSan7o2Gk45atvNqSQz6XIFgB4pq9vdQeD8olwUET1d/9jxKZOlBZ5Ey5Rm3vfZ5m5g8=
+X-MS-Exchange-CrossTenant-userprincipalname: WojVTARelMQV4JcaHW7D9uIqQ7JDwvQ1BLGh6eF0B57EeGtk7VsupZen0ETYZcstH4LSH8I6pi6D1nOCJzbCNbO2WIfVELYfpDXpPkkYWXQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYNPR06MB8880
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -148,44 +146,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reports that ehci_writeback_async_complete_packet() ignores=0A=
-the return value of get_dwords() when reading the QH and qTD.=0A=
+v1:=0A=
+ 1. Fix Fix Coverity CID 1685236=0A=
+ =0A=
+v2:=0A=
+ 1. Drops the dead NULL test and checks the actual accesses instead, and ma=
+kes put_dwords() return void=0A=
+    since no caller can act on a failed writeback.=0A=
 =0A=
-Handle read failures in the same way as QH and qTD verification=0A=
-failures by freeing the packet and returning early.=0A=
+v3:=0A=
+ 1. Make get_dwords() return bool=0A=
 =0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
-Resolves: Coverity CID 1685236=0A=
-Fixes: 2b3de6ada5d ("ehci: writeback_async_complete_packet: verify qh and q=
-td")=0A=
-Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>=0A=
----=0A=
- hw/usb/hcd-ehci.c | 10 +++++-----=0A=
- 1 file changed, 5 insertions(+), 5 deletions(-)=0A=
+Jamin Lin (3):=0A=
+  hw/usb/hcd-ehci: Check for DMA errors in get_dwords()/put_dwords()=0A=
+  hw/usb/hcd-ehci: Make get_dwords() return bool=0A=
+  hw/usb/hcd-ehci: Handle get_dwords() failures in async writeback=0A=
 =0A=
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index 5187ecc7e4..f371e567f3 100644=0A=
---- a/hw/usb/hcd-ehci.c=0A=
-+++ b/hw/usb/hcd-ehci.c=0A=
-@@ -527,11 +527,11 @@ static void ehci_writeback_async_complete_packet(EHCI=
-Packet *p)=0A=
-     /* Verify the qh + qtd, like we do when going through fetchqh & fetchq=
-td */=0A=
-     memset(&qh, 0, sizeof(qh));=0A=
-     memset(&qtd, 0, sizeof(qtd));=0A=
--    get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
--               (uint32_t *) &qh, ehci_qh_dwords(q->ehci));=0A=
--    get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
--               (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci));=0A=
--    if (!ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
-+    if (!get_dwords(q->ehci, NLPTR_GET(q->qhaddr),=0A=
-+                    (uint32_t *) &qh, ehci_qh_dwords(q->ehci)) ||=0A=
-+        !get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),=0A=
-+                    (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci)) ||=0A=
-+        !ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {=0A=
-         p->async =3D EHCI_ASYNC_INITIALIZED;=0A=
-         ehci_free_packet(p);=0A=
-         return;=0A=
+ hw/usb/hcd-ehci.c | 90 ++++++++++++++++++++++-------------------------=0A=
+ 1 file changed, 42 insertions(+), 48 deletions(-)=0A=
+=0A=
 -- =0A=
 2.53.0=0A=
 
