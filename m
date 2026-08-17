@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C532C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C20C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 19:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww2ar-00019R-Lt; Mon, 17 Aug 2026 15:01:57 -0400
+	id 1ww2ar-00019H-Iu; Mon, 17 Aug 2026 15:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2Zk-0006XK-Jc
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:50 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Z8-0006CZ-CT
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:13 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1ww2Zi-0006k0-Ff
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:48 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-66c2d726650so5571953d50.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1ww2Z2-0006Qw-AL
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 15:00:09 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49558ce01afso29055385e9.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 12:00:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1786993244; x=1787598044; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xl4pZZkibzAwOAwfGMWHQiwLvca4uGByR3vJ7CSBIek=;
- b=UKhyMybLf/UFezYNR/QPnRExiGXqhZXY74mD3WxjvUEFWbKt0MibBUTcWv2pZVwyxh
- 3c+cQ3UzNN3/GnCDdQde93vZ+xdn0mcG+wt7/uStZ71uYWqPZzJG2kpD7/ptQ/oVjgRk
- tQqgJa7y0dxfpAqoXDBgSxy/fQnz+35ImmrRTaRuKsIUKw1vzhJefLOWWpoU08k36FCo
- QO/NFoXmkNKnI2eBtYVlec1l5Ia9b2QMMToMUcihjgDRwr4FaVsZd+E+leC9OoN8yHoD
- p8JD8ndvnBS/DLacX8E3BOXlIGdVzGrLkd4VsHX053EMh5RrCQk2P8jC73jQv2rhEjgr
- cXag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786993244; x=1787598044;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=openvz.org; s=google; t=1786993201; x=1787598001; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xl4pZZkibzAwOAwfGMWHQiwLvca4uGByR3vJ7CSBIek=;
- b=a8LHVtzu62JArJfHynUvNBVt+OVRIqplxGwWxZxK0Y76dbqFDpX8YxTxREsDOI2Ed8
- OIw4JFJTotAua6c2B0kDQzuxDUC1gN/WiWS7LsAuKYpCwMY+B16oov0fVwXUzhz8LoKg
- JaIGdgOqbVadxnksSvJr7iFiW18PC4889/Fc/FEnVeJ98WlWhzppMdps5Ykcd9tcXQJY
- mmXAN4VasAKPz5IdGdhrj3simBvasiQQVoF3bot7GtuzdM9FpJUhCAb94mA3rPV+cSef
- HJ4KzspvbbA50mPiCf/sa62F+xUj06L1VfpUyoR0OXk+mKoFsQ063C+IFJklYhh+jQGD
- h4tA==
-X-Gm-Message-State: AOJu0YwkljSlOQrxeFNEzfZWoiOURrgWlhIADrqzTQtBC3gxKyQD6X+h
- PT7yrv5/wZiQoP/BMuj+x8/XArfNsqZWUSHlebYTjy42K7XpXkTeL7P0qHFK2HFGYdA=
-X-Gm-Gg: AR+sD12vj9NX1158ODnsQmAV2IMDp8wEv5ikeSPpzaF6N4SRUVA4w9yJTbeHRija49c
- rX7MfK4f7OCHrNrRUQvV0BUEvprA55uxpxBBOKUuBAMSLcTGGH/iwrL9ZWeR/UfYsNjJ89wYOWt
- 1fDJnOF+b4yTQlWFhE7EYO0aoWCO1TkJ7pMG6akMp/PiPa43Tvk9o+RZzLMvNOHK3VhXtuZpMQi
- mSkEbSwOYQ1wkgfMT9d0v3H8R3aH+jpvsY799Zczjz3ginhdjjdXEXx8gbdGSICnC674MoKz3w1
- WGP3NVsqpHeRqcLKEljsosAMTYhfTSYR9UPH4ASqfFvaHuH/wQo1NtO7mQw91rtGxVTI2QMZcsN
- 0oAtD/eXd4bQu2sbv1ZvvkEN7tuchqAaH58u1tx8yXJSB9ScLnA9Gy5VeRhZ7e7TNtyRGhJpuqR
- Dew1ku7Rk9Dz28BO4darroDNErzmrY4r7B0Sf+ezTgvQ1JshA/XBKeLkLGZBh3
-X-Received: by 2002:a05:690e:4501:20b0:667:e8a3:ebd4 with SMTP id
- 956f58d0204a3-66cb9c6e85fmr911983d50.4.1786993244082; 
- Mon, 17 Aug 2026 12:00:44 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
+ bh=mGHyHtBjiaIzmCNt57RsevzZuH4XsgPjyN0SdYM+JtQ=;
+ b=Q/0zM8npu7fjZ7EDKB2hq2u6Qd6FT+5RlAmHucRBWs859u46Vn6xdnSRzpAFu1v79c
+ xX6TPzWENjQ1HWrw9dSsN5hAO8eNlTNKelrL0are71SDisTYCOx+Dl++WpJWOptd5sOn
+ rp6QqzIYnv2Idfac/h+QFQ9e7D4Cz7brxK5y/+8X+NWbTmDGMGddCdPy+0TS2WKD6zlo
+ 70O7jeszrlaqOi63mXXT/7GJfYE1PfhiE4lrKAS5RSJqR1lBqWj/5ZbsCsMUaAWy6Qh7
+ ZHzYv+IQZgxFPZimawXzk8JOzghINm6mHpND/xRNN67rh0JPk8JBGQ3q8XdTJtg2jf03
+ j4eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1786993201; x=1787598001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=mGHyHtBjiaIzmCNt57RsevzZuH4XsgPjyN0SdYM+JtQ=;
+ b=F8fSol2uyr6ir6xASm4WtVKGNWV6gTUbsEEOHB4YNtSn0tEACwjxrUcUJdJFVbV1wI
+ ELXzR1M8GRhKaA2zRWneCfpSA52LEbyvP9dqJ0AX9c+sED4VtY+cXhzLhgsnQrVUX3f4
+ RIo49ucFwtzUlAxa8TraVrWVxj56sUPG5h+DEn8jYUQBVI8Wolt773YpPAIUtUrIaqC1
+ 1B4dmg1ARyQSwLA4NK5GouFP8DsNRYLgkhMfwD3wZ598NMXaJTs4GOznaYa8m65cp9d6
+ 72Riz7v12LQ2F3lA8KntAgebTRqzk6SN8ZBv4r5vgu+bbneYE3k1aLbnixe4z+D3Pm+j
+ 1DeA==
+X-Gm-Message-State: AOJu0YwOCHORL/gqfipySs7pJotnzWyl8Cs5VQyNNwysoMwPq4uJBnoq
+ FtSE7vfgsBfeTlO+GpYcZ4KNPNXrYAJlfSYacGYS1JF77FttQUWvp5dg0ZB7zXSXZQ2Wc2Tjacz
+ 9YXlO
+X-Gm-Gg: AR+sD11cIgcd6b2RcRzF+hMMK7pxFPdr07hJyBlLsv32gV5iCOXxH43y3zzKHnfXRt0
+ Kt7aT2zYj/Rr2vVeIQDMIZGvunpJNAZSotiKsGWK/cpnzKURVHBU+7nIuOnMMDTOk0X5B8jEyxI
+ DX7Y11RMl4mx6PwwvOMVs1oBDWlkBw8oQjou2fSk5Oc2yZA1IHG+GtSSIGpyu5LDZioGbLtYbFt
+ O8jBLpVEFCdDSQuVu9ytK4imbWv20dGU7Q4xCYKupTtCJ6Vvx4q5kTpJDOc2dJXEcJMh0GuzB2y
+ mjGLI//WM/vEuzZxENTEsDp5FOnmaWzAyljqX+nEvM/7NauXGavWMvbcDE3KyVZpKV4J48ZzH8b
+ P4hEh6uKeS5a1jdD/pdY6vz2OgxpgcO2nywBktF1VB2Ej9zBG/LLniPiVxn5k0N81L/U4GCLS1u
+ RcCGCTYVuWbrkCbaedj7O59pFYmlW9FTGj1XlcUoN7UjKegKjS+w==
+X-Received: by 2002:a05:600d:8654:10b0:499:a07d:a482 with SMTP id
+ 5b1f17b1804b1-499a07da4ebmr20208615e9.10.1786993201380; 
+ Mon, 17 Aug 2026 12:00:01 -0700 (PDT)
+Received: from athena ([2a06:5b06:b600:300:f6f8:884c:b162:eaeb])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-84068c24d45sm10615767b3.16.2026.08.17.12.00.42
+ 5b1f17b1804b1-49996188217sm381011085e9.13.2026.08.17.12.00.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 12:00:42 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
+ Mon, 17 Aug 2026 12:00:00 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
- zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
-Subject: [RFC PATCH 0/8] accel/tcg: cut per-block dispatch overhead
-Date: Mon, 17 Aug 2026 15:00:30 -0400
-Message-ID: <20260817190038.580257-1-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v6 14/25] iotests: cover the Format Extension against the leak
+ check
+Date: Mon, 17 Aug 2026 20:59:31 +0200
+Message-ID: <20260817185942.1065143-15-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260817185942.1065143-1-den@openvz.org>
+References: <20260817185942.1065143-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,192 +100,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For guests running large amounts of code, most of what TCG executes is not
-translated guest work but the fixed overhead around it. Blocks are short and
-there are a great many of them, so the constant cost at each end of a block
-(the interrupt poll and the can_do_io stores on entry, the dispatch on
-exit) ends up dominating everything else.
+From: Denis V. Lunev <den@openvz.org>
 
-The workload throughout is qemu-alpha running an emulated alpha gcc 16.2.0
-compiling the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64
-host, in a --static --enable-lto --target-list=alpha-linux-user build. It
-executes 34.2 billion TBs at 6.04 guest instructions each, and 24.6% of its
-TB exits cannot use goto_tb. That is a representative shape for any guest
-whose text is much larger than a page: indirect calls and returns
-everywhere, plus direct branches that merely crossed a page boundary.
+The Format Extension and the bitmap data clusters it points to are
+absent from used_bmap, so the leak check has to be told about them
+through s->ext_end or it reports the space they occupy as leaked and
+'qemu-img check -r leaks' truncates it away while the header still
+points at it.
 
-The first three patches are ordinary cleanups that stand on their own. The
-remaining five are marked RFC individually and are where the interesting
-questions are.
+The leak coverage in parallels-checks grows a persistent bitmap, dirtied
+one granule at a time so that parallels_save_bitmap() stores a bitmap
+data cluster rather than the all ones L1 entry and the extension spans
+two clusters. It asserts that neither is a leak, that a genuine leak
+appended after them is still reported and repaired, that the bitmap and
+the guest data survive the repair, and that dropping the bitmap makes
+the space reclaimable. Without s->ext_end the check reports two leaked
+clusters where there should be none.
 
-  1  accel/tcg: cache the result of curr_cflags()
+A name which is not a UUID is covered there too, as the refusal belongs
+to the same command.
 
-     Recomputed on every one of the run's 8.4 billion dispatches, from
-     state that changes only when gdb enables single-step or a log mask
-     moves. Cache it in CPUState and recompute from the four places that
-     can change an input.                                        -5.10%
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+---
+ tests/qemu-iotests/tests/parallels-checks     | 48 +++++++++++++++++++
+ tests/qemu-iotests/tests/parallels-checks.out | 35 ++++++++++++++
+ 2 files changed, 83 insertions(+)
 
-  2  accel/tcg: enlarge the TB jump cache to 64K entries
-
-     4096 entries is too small for a guest running a large program;
-     tb_htable_lookup() is 5.73% of samples. 16 bits is the knee of the
-     sizing curve, at 1 MiB per vCPU.                            -6.02%
-
-  3  accel/tcg: skip the can_do_io stores in user-only builds
-
-     Two stores per TB that nothing in a user-only build reads: 68 billion
-     of them over the run.                              -4.55%, -4.32% wall
-
-  4  RFC: tcg: probe the TB jump cache inline instead of calling a helper
-
-     95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the jump
-     cache. Emit the probe inline (hash, three guarded loads, goto_ptr)
-     and call the helper only on a miss.               -36.51%, -27.05% wall
-
-  5  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
-
-     translator_use_goto_tb() refuses to chain across a page. In user-only
-     builds the invalidation path already covers what that was protecting
-     against: every mmap/mprotect/munmap reaches page_set_flags(), which
-     invalidates and unlinks. Lift it there, keep it for system mode.
-                                                        -2.42%, -4.68% wall
-
-  6  RFC: accel/tcg: only poll for interrupts in blocks that can close a
-     cycle
-
-     The icount_decr poll needs to happen once per cycle in the guest CFG,
-     not once per block, and any cycle must contain either a backward edge
-     or an indirect one. Record both during translation and emit the check
-     only for blocks that have one.                     -6.81%, -3.10% wall
-
-  7  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-     exits
-
-     What patch 6 leaves behind is mostly blocks flagged for an indirect
-     exit. Give the inline probe its own jump cache base pointer and point
-     it at zeroes when an exit is requested: every dispatch then misses
-     into the helper, which returns the epilogue. The poll becomes a
-     pointer swap on the request path.                  -2.79%, -1.94% wall
-
-  8  RFC: tcg: fold a guest displacement into the host addressing mode
-
-     tcg_gen_qemu_ld/st cannot express a based access, so a target with a
-     displacement in its encodings materializes the address with an lea
-     that the host addressing mode would have done for free. Fold a
-     preceding constant add into a new argument on the op, opt-in per
-     backend, wired up for x86_64 user-only.            -6.29%, -3.29% wall
-
-Each percentage is against the patch before it. End to end, measuring an
-unmodified build of the same base against the full series, five runs each,
-interleaved in one session so that host clock drift is shared rather than
-attributed (mean, with the run-to-run spread):
-
-    instructions retired: 1,646,129,294,236 -> 738,003,153,831   -55.17%
-                                    (0.16%)           (0.03%)
-    wall clock:                    134.934s ->          75.189s   -44.28%
-                                    (0.30%)           (0.99%)
-
-Both endpoints ran at the same 4.782 GHz effective clock, and the .s files
-they produced are identical.
-
-The two figures do not track each other, and that is the interesting part:
-what the series removes is cheap, well-predicted, highly pipelined work, so
-it retires far more instructions than it saves time. IPC falls from 2.55 to
-2.05 as the remaining work gets less regular. Patch 4 also cuts
-L1-icache load misses by 39.1%, because a dispatch no longer jumps into
-qemu's .text and evicts translated code; qemu's own .text falls from 38.9%
-to 5.4% of profile samples over the series.
-
-Every revision was built and measured separately, so the series bisects, and
-the emulated compiler produces byte-identical assembly output at every step,
-which is the correctness check these patches most need. Two new alpha
-tests cover the hazards the series creates: tests/tcg/alpha/test-xpage-chain.c
-(patch 5) and test-indirect-irq.c (patch 7). Both fail or hang if the
-mechanism they cover is removed, which is what makes them tests of the new
-behavior rather than of the old.
-
-The RFC patches need eyes I cannot supply myself. In rough order of how much
-I would like someone to look at them:
-
-  - Patch 5 reverses a deliberate decision made in d3a2a1d803 on the
-    strength of an argument about the user-only invalidation paths.
-
-  - Patch 6 moves system-mode interrupt latency from "bounded by block
-    count" to "bounded by guest control flow". The bound is one
-    straight-line run between cycles, but timer-driven guests want a closer
-    look than I can give them. Its soundness also assumes every goto_tb
-    destination passes through translator_use_goto_tb(); no target in the
-    tree bypasses it today, but nothing enforces that.
-
-  - Patch 4 treats cpu flags and cflags as translation-time constants in
-    its guards, reads a jump cache entry without qatomic_read(), and puts
-    knowledge of the CPUJumpCache layout in tcg/tcg-op.c, where it does not
-    belong.
-
-  - Patch 7's restore in cpu_handle_interrupt() races a concurrent poison
-    from another thread. I believe the existing barrier around
-    icount_decr.u16.high covers it, but my testing was single-threaded user
-    mode.
-
-  - Patch 8 only examines the immediately preceding op, refuses any access
-    with a slow path (so user-only, and no alignment check), and leaves the
-    i128 pairs alone.
-
-  - Patch 2's 1 MiB per vCPU is easy to justify for a single-vCPU
-    linux-user process and less obvious for system emulation with many
-    vCPUs. It may want to be sized per target or made tunable rather than
-    raised unconditionally.
-
-Patches 4 and 8 are wired up for alpha and x86_64 respectively; everything
-else is target-independent, and no other backend changes behavior or needs
-touching.
-
-Matt Turner (8):
-  accel/tcg: cache the result of curr_cflags()
-  accel/tcg: enlarge the TB jump cache to 64K entries
-  accel/tcg: skip the can_do_io stores in user-only builds
-  RFC: tcg: probe the TB jump cache inline instead of calling a helper
-  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
-  RFC: accel/tcg: only poll for interrupts in blocks that can close a
-    cycle
-  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-    exits
-  RFC: tcg: fold a guest displacement into the host addressing mode
-
- accel/tcg/cpu-exec-common.c         |  48 +++++++++++-
- accel/tcg/cpu-exec.c                |  54 ++++++++++++++
- accel/tcg/internal-common.h         |  22 +++++-
- accel/tcg/tb-jmp-cache.h            |   2 +-
- accel/tcg/tcg-accel-ops.c           |   2 +
- accel/tcg/tcg-all.c                 |   1 +
- accel/tcg/translator.c              |  77 ++++++++++++++++++-
- cpu-target.c                        |   3 +
- include/exec/translation-block.h    |   6 ++
- include/exec/translator.h           |   2 +
- include/hw/core/cpu.h               |  23 +++++-
- include/system/tcg.h                |   9 +++
- include/tcg/tcg-op-common.h         |   2 +
- include/tcg/tcg-opc.h               |   9 ++-
- linux-user/main.c                   |   2 +-
- stubs/meson.build                   |   1 +
- stubs/tcg-cflags.c                  |  16 ++++
- target/alpha/cpu.c                  |   2 +-
- target/alpha/translate.c            |   6 +-
- tcg/tcg-op-ldst.c                   |   3 +-
- tcg/tcg-op.c                        |  86 +++++++++++++++++++++
- tcg/tcg.c                           |  86 ++++++++++++++++++++-
- tcg/x86_64/tcg-target.c.inc         |  61 +++++++++++++++
- tcg/x86_64/tcg-target.h             |   3 +
- tests/tcg/alpha/Makefile.target     |   3 +-
- tests/tcg/alpha/test-indirect-irq.c |  53 +++++++++++++
- tests/tcg/alpha/test-xpage-chain.c  | 111 ++++++++++++++++++++++++++++
- util/log.c                          |   4 +
- 28 files changed, 676 insertions(+), 21 deletions(-)
- create mode 100644 stubs/tcg-cflags.c
- create mode 100644 tests/tcg/alpha/test-indirect-irq.c
- create mode 100644 tests/tcg/alpha/test-xpage-chain.c
-
+diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
+index c9dcd715ac..6f60fda62b 100755
+--- a/tests/qemu-iotests/tests/parallels-checks
++++ b/tests/qemu-iotests/tests/parallels-checks
+@@ -362,6 +362,54 @@ echo "file size: `stat --printf="%s" "$TEST_IMG"`"
+ 
+ echo "== the first cluster survived =="
+ { $QEMU_IO -c "read -P 0x11 0 $CLUSTER_SIZE" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++_make_test_img $SIZE
++
++echo "== TEST FORMAT EXTENSION IS NOT LEAKED SPACE =="
++
++BITMAP=b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
++
++echo "== a name which is not a UUID can not be stored, so refuse it =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" bitmap0 2>&1 | _filter_testdir
++
++echo "== add a persistent dirty bitmap =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++# A dirty run shorter than a cluster is stored as a bitmap data cluster
++# instead of the all-ones L1 entry, so the extension spans two clusters.
++echo "== dirty a single granule of the bitmap =="
++{ $QEMU_IO -c "write -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++echo "== the extension and its bitmap data are not a leak =="
++_check_test_img
++
++echo "== extend image by 1 cluster =="
++fallocate -xl $((file_size + CLUSTER_SIZE)) "$TEST_IMG"
++
++echo "== a real leak is still reported =="
++_check_test_img
++
++echo "== repair reclaims the leak only =="
++_check_test_img -r leaks
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++echo "== the bitmap survived the repair =="
++$QEMU_IMG bitmap --add -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++echo "== data survived the repair =="
++{ $QEMU_IO -r -c "read -P 0x11 0 65536" "$TEST_IMG"; } 2>&1 | _filter_qemu_io | _filter_testdir
++
++echo "== dropping the bitmap makes the space reclaimable again =="
++$QEMU_IMG bitmap --remove -f $IMGFMT "$TEST_IMG" $BITMAP 2>&1 | _filter_testdir
++
++file_size=`stat --printf="%s" "$TEST_IMG"`
++echo "file size: $file_size"
++
++_check_test_img
+ 
+ # Clear image
+ _make_test_img $SIZE
+diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
+index 6699848996..d40f865868 100644
+--- a/tests/qemu-iotests/tests/parallels-checks.out
++++ b/tests/qemu-iotests/tests/parallels-checks.out
+@@ -233,6 +233,41 @@ file size: 2097152
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
++== TEST FORMAT EXTENSION IS NOT LEAKED SPACE ==
++== a name which is not a UUID can not be stored, so refuse it ==
++qemu-img: Operation add on bitmap bitmap0 failed: Bitmap name must be a UUID to be stored in a parallels image: bitmap0
++== add a persistent dirty bitmap ==
++== dirty a single granule of the bitmap ==
++wrote 65536/65536 bytes at offset 0
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++file size: 4194304
++== the extension and its bitmap data are not a leak ==
++No errors were found on the image.
++== extend image by 1 cluster ==
++== a real leak is still reported ==
++ERROR space leaked at the end of the image 1048576
++
++1 leaked clusters were found on the image.
++This means waste of disk space, but no harm to data.
++== repair reclaims the leak only ==
++Repairing space leaked at the end of the image 1048576
++The following inconsistencies were found and repaired:
++
++    1 leaked clusters
++    0 corruptions
++
++Double checking the fixed image now...
++No errors were found on the image.
++file size: 4194304
++== the bitmap survived the repair ==
++qemu-img: Operation add on bitmap b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45 failed: Bitmap already exists: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
++== data survived the repair ==
++read 65536/65536 bytes at offset 0
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++== dropping the bitmap makes the space reclaimable again ==
++file size: 2097152
++No errors were found on the image.
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4194304
+ == TEST A DUPLICATE IN THE LAST ALLOCATED BAT ENTRY ==
+ == write two clusters ==
+ wrote 1048576/1048576 bytes at offset 0
 -- 
-2.54.0
+2.53.0
 
 
