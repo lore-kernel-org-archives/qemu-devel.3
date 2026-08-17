@@ -4,139 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65927C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 04:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C15AC5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 04:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvodk-0002S8-K8; Mon, 17 Aug 2026 00:08:01 -0400
+	id 1wvoey-0002fL-QO; Mon, 17 Aug 2026 00:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvobj-0002M0-Ol
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:05:55 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wvoel-0002dg-HF
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:09:06 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wvobg-0000fk-Dl
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:05:53 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wvoej-0000lM-Ue
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 00:09:03 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67GLCN0c3656967
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:05:48 GMT
+ 67GLComx4118770
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:09:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=; b=EIHn/dLWtLiFiZdl
- V8cvYEpZB5Ywh5iCkPtO9RcfV94ACnpsSulTxpsmY4MfYS/1Pr+oifL82FSsUdyU
- hSRSaPJe02bcJCDknhp3k0jiw+Q4CPk+7E2N2WJENdsCYsT+1QEaFWVtBbTxAFFz
- f0q236cMwrksdp4AG4500+NuHbqN0DOTVZgh3TCgdHh4pjn+pIBL1ObPEiL4VUiu
- fgNzG/vC0OLvXBOZgQMvS6jPxPupKHrHe+9lMHo5lxEDjQI4XN4cGs62gLGe5ayR
- i7nCH1HMfenECepXwJva5i3UYxjNq7O67AMVEUZjgkn5ARn+vYyjkTPi/FJiZv85
- KX6SRw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2h9gn0hc-1
+ o7AV7fAGcKDql50aWKCJIQLfwBIcT31pwhRf+Et+8qM=; b=TGDN8X1jUOeaZMgl
+ 4s5Ae74Cu+lUZuSZtPfRX+febaRQ0IR3/mHHBB9tnSyhL+tyyKDDHMCPLRJr5Nw1
+ DIARKlhq8hKzQPtOL7945S/+MtkQ1ta+hje+gGk2d74e4BYHQ8A2YPi08DDSRwzZ
+ 7gzo7vVw6FVv3G6odeceQoC+zOA6otiYn3UzdAwPGtYNjTVGFci5VdRmCEM/Cfoe
+ 6Wl2Td78bJ+DP766WyGf28cbviOIK3wfON9e1ofc//OXjNY9p24JT9z+EBwT7Vsw
+ Jtf9DUksER63kb0UZR90e1RYoCdthXU+oaXJ7WOuogJIzBj8d3SMQ/JQeS1SphZ7
+ zquElQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g2ghfd55d-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:05:48 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e695a3b28so401570985a.1
- for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 21:05:48 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 04:09:00 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-52d7b3adda4so29073961cf.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Aug 2026 21:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1786939547; x=1787544347; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1786939740; x=1787544540; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=;
- b=X+h8/cKRruuVZVS5fgoyexMsqqfaxd/zbjG010CToHxDb7X0nevFw4AIGvoaWAviEO
- 9//O9cmb7q2sHcLCKxNbq/ScI6bJMs6CAdn8ZsLxThfiiWXpvHTvH8NGXIxuXlA99Nr/
- TzrFNYb5F0mVKvrfJBrDLHS/i/LDDMO0+p+7OH5L5lqOuMwS95pX52lt3HKz7DztwBIs
- rQeg06tszdZOhuyO5C18qXe912tpsi/55nQN46NE4OrkwC/G0dgsPqH+wknHiN+bxILx
- tgReS0Ntan+vCKnrVlyWQ1iBHSZ7vzztry7bYcZredRH1+UEH2k18UKl/1SLM/5XhY/N
- B+lg==
+ bh=o7AV7fAGcKDql50aWKCJIQLfwBIcT31pwhRf+Et+8qM=;
+ b=fFyS0Nc8H2G+HE7f5ZysONlia3dRxDrbT+eYWYIpbWxg8pbMPVxt6GcbVY16PfhwQx
+ OhTbL2/g6iMl1fPIytZSh1uPQcgvGqrySsKqI5t6Mj5s3h/mMB8mOCp6dvhV5QgsgHtd
+ Y83LrVlgpDMKcIb7JpePQGv34TCXKSN8Sq/jtEvmYiqmfhtwxjbULDWtcch1P4raUFAD
+ PPp0nIgBah4SGTf/47AcgKUbvAes6FMw39kAJQMCimytZx4t6fxKVgs3n6iqvmO/O0y9
+ 5AhVK3s8entnDDLSGdDeTdWoyzHE+W5AHlS74lzA3tM4PpJV0uuWhO35oe+8EPhZeIrW
+ AU3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786939547; x=1787544347;
+ d=1e100.net; s=20251104; t=1786939740; x=1787544540;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=k3WqcSAfnmBzh1piLTC1XHxZVUXHJPKltMbs6+hn7n4=;
- b=qqnL73iVvkc6dXeKp/mM+53I9iELbvHhpUj5LqOOE5OUTqXPRA6sEhlKhEmSaIZITt
- oE9s2WDb+jZEhstq+vxp/oIwDMMxmr54DpKQk8rXOmsbDlcCM+IDwV3eDc7RmrtsSbwW
- ydSKkJhpxb4oL57rehvmDq6l9NTLJxAazT2hNkiVRaoCN2p6fQYMGXNrwoIBq7HxXT4r
- JtELUL8GULIjn0faHs9HkLQVG2EEdsTwSm7TW59o3HMzJabWgus4g/RevPGQj95Pa7MH
- IjUmFpvB7+Lk7xtX9CIGjgEhquylsf0tT4nOCIPZhczxmrEAsUHJwTQq2mxo2lse3iMm
- pG9w==
+ bh=o7AV7fAGcKDql50aWKCJIQLfwBIcT31pwhRf+Et+8qM=;
+ b=HMd7/JZ7OZh3VXj9fe9GMCgITfy3is25QF70yDgknMtQKi0dug2pmsGDUCmLwmkPhU
+ sFWUdHJQ3Nzj2+3PTC+u7K7GOCsjsybi8ZF3vyjen1u3UcYVTcGJN45DDHVGs2kazZBD
+ Ldy8Xvs7S5HQpLehWPjXmwWjgdEwOs4xI1b8pdxu1uATlUc4hljBlyJh+8bmEnlagige
+ M1pLxeCtNdQhymFTo69QmuufknqVg70JgfN9vgFKVd2NTvAHfmalqeSNIlpD3OBoSeFk
+ FiAdal/Y/FqHFqQtJ7f5EwtU8i2Y48TsUg0QW8Y0dvFl1ZWlDbhvDa3cxLrbm53N1S8R
+ x5mw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rpc88piCK6XwA+jE/hGbdG/D4SqkU9WL8xpUG7Nr32LMLfYDLp3BGjY8E2LgsS4xjZNasuyahyaAbsT@nongnu.org
-X-Gm-Message-State: AOJu0Yw17d7DRVjT2f0AsX7wk4A1X7p7C0ROpMiB4THf47w+gbvFTHjR
- aZjVPjuZ1+OwqtvXbkJNqa47Y9oNV2I7UziBtrN0/VSYhl6owHUl87O0bHgd4+ZTBPYQBgMLu/g
- pL/xMGAxjaRrpsR71tcJ9XykSNtecmdP73d965Lb9cjYzMERYdLERjyib+w==
-X-Gm-Gg: AR+sD12RFm7lx9lqzxB8T/PejCg+oTMUINF1boVmOo/VyfuNBYGUJvftbujTIvF508F
- eUsRSYWBfe0FJtweuGOJKYki4JkSIsTozk7sUafUwejImhusmUcC3k+TxnOTn3hDKiSgU9icrhX
- /XBFWOSe77wY+UoJYrQl4mlQ8TXx1G5rVCk1tZXzlIPlZLXhLQn6ALUpuSahzf+be/HKt20Pem1
- Sf7MXSbsgSGLIpNozWJgRUyuHJLMrxTY3idBYVJYSmkCKu5/k3JUmbKob3SRlojbHr+Laj18KvP
- 2l4NQUQ1FAp231Nejmefb+G0IkUceNnVyYgxyRka7KYfG40KoJCCDdgDD9Vo2TU8VetgDTgPNND
- eFjpFNLflKRXZQYg62yK9xx9Fz+yDK/on+e8=
-X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
- af79cd13be357-936c07231e8mr2899432185a.15.1786939547133; 
- Sun, 16 Aug 2026 21:05:47 -0700 (PDT)
-X-Received: by 2002:a05:620a:4442:b0:936:a8a0:cdf0 with SMTP id
- af79cd13be357-936c07231e8mr2899430285a.15.1786939546749; 
- Sun, 16 Aug 2026 21:05:46 -0700 (PDT)
+ AHgh+RrRmztoadX1ZniJj2emXS+P0JV8NeL4jK+kUe49H1s5agWSE6qt9s2P8On7iDrbbIrOAR6Zoj8RLldd@nongnu.org
+X-Gm-Message-State: AOJu0YxMfSj2e3bNIG2RLtE2nT96RyjwWwQdA+UgHzux1oaKHNTWF7V/
+ LoMOLxy+gKa6s0fuSJopXfCIOTfU8bEKda4kpaKT5ouyi8j+jPERwhzcadfV60qELSpm3pImjP3
+ 4UnW7pEqcH/z9ImohOoq43lrhIZ+TueDJxvoro5FRnWlbnQMB5zR8AhCZjw==
+X-Gm-Gg: AR+sD137P4Y0nLZRTlivgXIWJ8g9FxGmvhGMhZyoCSbVAZKMQLVKLaUr2xlglR9MZY2
+ EwRdp+8Pdrs7m+nhW3ol/ytoT25/65Vvmb80nUgxz9SsYCjF4SjA3ue4ZFqpxKPuAnF7UqKjIw9
+ ZxDUA33CFgXeH+D0w3SmQKHawIrZT7K0NhKzRsil+VM+eMjR7alNzQqpHFm5AjCuYATiN5lt9lM
+ 1pA4yM59gxsR4TbBQ9lAP5T8GfqRceg89YCUMF9Lbn7CdZs3Ni84YM+Ob7M1jxrAw7FVnq1fKZ/
+ VZE98xjPspC9DeMG9oxA3rYF6gGZ1TCmfhKyRgH+MZhHdcoYq76om+LVG7hpLauhKEa5P3vA+KB
+ HGSglNM1gadug5ztQKhuHVpGKBI15HHjPGe4=
+X-Received: by 2002:a05:622a:428b:b0:50d:e471:2d1e with SMTP id
+ d75a77b69052e-52d854c5450mr245313831cf.35.1786939739948; 
+ Sun, 16 Aug 2026 21:08:59 -0700 (PDT)
+X-Received: by 2002:a05:622a:428b:b0:50d:e471:2d1e with SMTP id
+ d75a77b69052e-52d854c5450mr245313551cf.35.1786939739535; 
+ Sun, 16 Aug 2026 21:08:59 -0700 (PDT)
 Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4999d06167csm5127035e9.3.2026.08.16.21.05.45
+ 5b1f17b1804b1-4999619a7c3sm101154665e9.15.2026.08.16.21.08.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Aug 2026 21:05:46 -0700 (PDT)
-Message-ID: <8e376be3-446c-4783-9081-a633ddbc7a74@oss.qualcomm.com>
-Date: Mon, 17 Aug 2026 06:05:45 +0200
+ Sun, 16 Aug 2026 21:08:58 -0700 (PDT)
+Message-ID: <bd4d82cf-918c-4d1a-998b-eaa8d81f956c@oss.qualcomm.com>
+Date: Mon, 17 Aug 2026 06:08:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/12] kvm: Provide explicit error for
- kvm_create_guest_memfd()
+Subject: Re: [PATCH v1] hw/usb/hcd-ehci: Handle get_dwords() failures in async
+ writeback
 Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- jmarcin@redhat.com, david@kernel.org, pbonzini@redhat.com,
- chenyi.qiang@intel.com, farosas@suse.de, aik@amd.com, xiaoyao.li@intel.com
-References: <20260812201938.198915-1-michael.roth@amd.com>
- <20260812201938.198915-4-michael.roth@amd.com>
- <cc83a207-c89f-4ec7-864a-db0115c4f641@oss.qualcomm.com>
- <an8Nn5cb52ev4MF2@x1.local>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: "clg@redhat.com" <clg@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260813072340.637657-1-jamin_lin@aspeedtech.com>
+ <CAFEAcA-kKC0WPU2Tqa8Oc9A-1H9LhVr5ibGrksBOc3ZNr54iMA@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <an8Nn5cb52ev4MF2@x1.local>
+In-Reply-To: <CAFEAcA-kKC0WPU2Tqa8Oc9A-1H9LhVr5ibGrksBOc3ZNr54iMA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: HR1Nqc18c1Bsv3Y7IxD5_q8sEYP2T6AP
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDAyOCBTYWx0ZWRfX7Ika4SDAuF9B
- vHp8PEK2FJ7L3SSUKZSaAx9okHHW9g4p+4hGAJi3iKsR7Irt5eq7kARG+vYle0lVIou3rNperYN
- mRNCcipzxpD/mqNLU0dJEVehwpkOPdY=
-X-Proofpoint-GUID: HR1Nqc18c1Bsv3Y7IxD5_q8sEYP2T6AP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDAyOCBTYWx0ZWRfX8nbyvIH0H8yW
- CLz86F75AYb+dkpzblN2U6npi09XAfJmQICPRT2imMAqbfl27rGPBk6KHzQqfsxUqo43VpZr2BQ
- lUhvG/vlvF32ks2H6EkdUfTDc3yq2mC8WxQ7y4/JayH8jmtL14IIRu+hNoLckJvr0h7jR1Mp4zJ
- 5A7SYtRGsWOwGpawymZ91I2PC10vXXnrUJAvha4BAM5nD2M0bA03HdCS6ksMOrIZQVLoQ/xypy7
- sIdVvSoNCW/4s9LpPoi5r/mODtCk8HJYKEygrh4fiuX24IZvnUrqkARI5LjWlxE4SDYdIXxSXtG
- tDiEWwbjAmzA0OjK1YkziYNWIqeYBCtfRy7ni2x8oJ48ZWtcbnsNWGE31tww5RjtpaFKJCMbWxi
- r9G7tCIBSkuyTtoQLKPNGXLMyedY2Wx7EgJino5zMOzylPXH5KxJzEz1gROrUARY03ecti33+bt
- wAQXmeTr5g+qilQf4BA==
-X-Authority-Analysis: v=2.4 cv=XM4AjwhE c=1 sm=1 tr=0 ts=6a82889c cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDAyOSBTYWx0ZWRfX0czwRvwzWVTM
+ H+cBsw29N/B0TzksOjVuTbQfKGZ/Xfqmc5659owvsQHnyRcRhzvogDFTdwGDuSTVj7etCktB+37
+ jv9CHdmZrOtbA0s6rP0WRLaXIuYA9o8=
+X-Proofpoint-ORIG-GUID: bhmSL2N1IktQL5qxCCW8Noa3XuqYWFBV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDAyOSBTYWx0ZWRfX5w1juW3Mw6rO
+ JMSa3YAor03d9RLtr6mMKT7RniqoG1a/PyOgmE80Y1ldIoujAE4lPqiNdsuCOOZidjk6SU+mu5U
+ nLcv6i/JH2vNZRM7Gd6Amm7BU391+fsNrhfFVQvbVmJZj+JtGv4gKRZjeMDymMoY9zjNyD2E7Se
+ 7vxJaepQ+5NK+DcsAuV/DufLKrnHR0FfDEobYpOZtafHBlJT/8rJ5QdJAOYj1BwWweLaa0T1XRa
+ aEhQhouLOjvaRMgKGeHVHYO1Lsdyjcm3hjco+RwEQYa6GL1MMZR6upVq7Lw1g4TPNtF1583zE2L
+ NPmr8ITmmBXmj0+bn2BnNyGwY9kf3xMe9dIiNgF9+GpEmzI7dPk5iWCixEJhWA47QAG/AImXcte
+ Gwua36zmMcgBMq+uSNaLcwVlcOwHTgbfGjP8EMV6/pl+IW+XehGPmPIN/+CHWL2RjW0weWPJ8eT
+ /l79fTGRBnA5C3T2/Mw==
+X-Proofpoint-GUID: bhmSL2N1IktQL5qxCCW8Noa3XuqYWFBV
+X-Authority-Analysis: v=2.4 cv=I/dVgtgg c=1 sm=1 tr=0 ts=6a82895c cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8 a=zd2uoN0lAAAA:8 a=R0W7oxC2TBocBvmClHUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=V2NxCb60AAAA:8 a=vaYj5ixRZCNqTi54SiQA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=3L6qF29SlnrayQqPM2jZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-16_06,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0
+ spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170028
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608170029
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,80 +161,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/8/26 14:44, Peter Xu wrote:
-> On Fri, Aug 14, 2026 at 07:56:42AM +0200, Philippe Mathieu-Daudé wrote:
->> Hi Peter, Michael,
+On 14/8/26 11:06, Peter Maydell wrote:
+> On Thu, 13 Aug 2026 at 08:24, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
 >>
->> On 12/8/26 22:16, Michael Roth wrote:
->>> From: Peter Xu <peterx@redhat.com>
->>>
->>> So that there will be a verbal string returned when kvm not enabled, or
->>> kvm not compiled.
->>>
->>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->>> Reviewed-by: Michael Roth <michael.roth@amd.com>
->>> Signed-off-by: Michael Roth <michael.roth@amd.com>
->>> ---
->>>    accel/kvm/kvm-all.c    | 5 +++++
->>>    accel/stubs/kvm-stub.c | 1 +
->>>    2 files changed, 6 insertions(+)
-
-
->> So maybe what we want is:
+>> Coverity reports that ehci_writeback_async_complete_packet() ignores
+>> the return value of get_dwords() when reading the QH and qTD.
 >>
->> -- >8 --
->> diff --git a/system/physmem.c b/system/physmem.c
->> index b97016b1303..66ff74541aa 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -2824,6 +2824,8 @@ int ram_block_rebind(Error **errp)
->>   {
->>       RAMBlock *block;
+>> Handle read failures in the same way as QH and qTD verification
+>> failures by freeing the packet and returning early.
 >>
->> +    assert(kvm_enabled()); /* Only supported by KVM so far */
->> +
->>       qemu_mutex_lock_ramlist();
->>
->>       RAMBLOCK_FOREACH(block) {
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 >> ---
+>>   hw/usb/hcd-ehci.c | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
 >>
->> Or less aggressive:
->>
->> -- >8 --
->> diff --git a/system/physmem.c b/system/physmem.c
->> index b97016b1303..2988d1dd6c9 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -2824,6 +2824,11 @@ int ram_block_rebind(Error **errp)
->>   {
->>       RAMBlock *block;
->>
->> +    if (!kvm_enabled()) {
->> +        error_setg(errp, "guest-memfd requires KVM accelerator");
->> +        return -1;
->> +    }
->> +
->>       qemu_mutex_lock_ramlist();
->>
->>       RAMBLOCK_FOREACH(block) {
->> ---
->>
->> WDYT?
+>> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+>> index 451a918e9f..d43951975a 100644
+>> --- a/hw/usb/hcd-ehci.c
+>> +++ b/hw/usb/hcd-ehci.c
+>> @@ -533,11 +533,11 @@ static void ehci_writeback_async_complete_packet(EHCIPacket *p)
+>>       /* Verify the qh + qtd, like we do when going through fetchqh & fetchqtd */
+>>       memset(&qh, 0, sizeof(qh));
+>>       memset(&qtd, 0, sizeof(qtd));
+>> -    get_dwords(q->ehci, NLPTR_GET(q->qhaddr),
+>> -               (uint32_t *) &qh, ehci_qh_dwords(q->ehci));
+>> -    get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),
+>> -               (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci));
+>> -    if (!ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {
+>> +    if (get_dwords(q->ehci, NLPTR_GET(q->qhaddr),
+>> +                   (uint32_t *) &qh, ehci_qh_dwords(q->ehci)) < 0 ||
+>> +        get_dwords(q->ehci, NLPTR_GET(q->qtdaddr),
+>> +                   (uint32_t *) &qtd, ehci_qtd_dwords(q->ehci)) < 0 ||
+>> +        !ehci_verify_qh(q, &qh) || !ehci_verify_qtd(p, &qtd)) {
+>>           p->async = EHCI_ASYNC_INITIALIZED;
+>>           ehci_free_packet(p);
+>>           return;
 > 
-> Fine by me.
+> Looking at the coverity report, my question is whether echi->as
+> can ever actually be NULL. This is the address space we use to
+> do DMA, so it feels like every EHCI device must set that up
+> somehow. ehci_sysbus_init() does. So does usb_ehci_pci_realize().
+> usb_ehci_pci_write_config() can change it, but never to NULL.
 > 
-> IMHO it's normally more of an issue the other way round, if we used an
-> assert() where we should use error_setg() (hence, user triggerable
-> assert()s).  Here we expect it to never happen, so either way should not
-> happen..
+> If echi->as is always non-NULL then we could change get_dwords()
+> and put_dwords() to return "void".
 > 
-> If so, we could also assert() in ram_block_rebind(), as it's only used in
-> kvm_reset_vmfd() only, so I don't see how it can be reached if KVM is not
-> enabled first..
+> Alternatively, maybe get_dwords() and put_dwords() should be
+> checking the return value from dma_memory_write() and
+> dma_memory_read() so that they fail if the DMA fails...
 
-I'd rather avoid kvm_enabled() checks in kvm-specific API (accel/kvm/).
+Oh good point, I missed that. We really should qualify
+dma_memory_write() & co with G_GNUC_WARN_UNUSED_RESULT, that'd
+help us preventing such mistakes.
 
-If ram_block_rebind() is KVM-specific, why expose it as RAMBlock API?
 
