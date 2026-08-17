@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FA6C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC822C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 13:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvxWl-0006F9-2y; Mon, 17 Aug 2026 09:37:23 -0400
+	id 1wvxXp-0000Jo-6h; Mon, 17 Aug 2026 09:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWa-0005sj-9z; Mon, 17 Aug 2026 09:37:12 -0400
+ id 1wvxXV-0008W1-GJ; Mon, 17 Aug 2026 09:38:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvxWY-0007W3-Cg; Mon, 17 Aug 2026 09:37:11 -0400
+ id 1wvxXR-0007fX-JG; Mon, 17 Aug 2026 09:38:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786973727; bh=KMUgJ4sxsfcbYiy/tXF8P4uKaKSoFRZAMvYxhW1rKa8=;
+ t=1786973727; bh=J9ITiFEPFTJZJURJunu7vgxyqlGrbiW/MZGDKHdaIGY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=D0vBGTDnePRMGDiCcrnK5JKEcXRGCcSYE9G98jAl5rDWu1UAqSlKFiqeXM00KzFTS
- mJLrpF8txcJ9G5+Ad+wckTsXUbQ2KgP3NZ2N9RLbAvO4qmDJOFv0S5kkqNF6tOW+8X
- D/KVsgRiAD8hDovN7SJWXPqVY/JZd14MzJcGHkG0B9mFQkEmUMcro2tWRYfT0kSOe4
- Eir4RZZNLu4G5thncE/redOvMAQiIIRm/Ef+0Pq4xHyBoAaVrS05muH4l59IuSeq62
- 9qn7wleSQwD9rZ+tO2yo+/8LO/7I6TvuW3CFca5C96C9JVhI6RweYroWWh5h79i7yS
- K2+LkVgaadl0g==
+ b=ahNhRzJm0tmEwSaSvf2/6ZUWVCbNDKO8LX1Ax0rzgD/sm8xfZHiWGWiBvpAlzLvGU
+ q2Q3f/U9BdLX/PyZcAEJtKopyKwdN9QhTCCdVwelCcomnRrQRNeZIxENqaKIXkvmcm
+ U4jBqCEWd/StpM3fW77Nr+WyZT2hq+7k4RKWMG7TEQWewiRzu3FZnVIjchK13x6klp
+ UmoIJ+5XhR/ld2aELqbPyBRU+e7CC5uPQ/iBoRtlMN9i6lyPKBJQi2KS3tp+/64l6S
+ Q43I3ZAr0/fjl91QnWxJjLi3ZEVD9dGMonv55rxpxWRiawvEU3wTKAaamoMn7WGnYC
+ dXk8RXYApzAaA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 630B61CBCCA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 85C7D1CBCD1;
  Mon, 17 Aug 2026 16:35:27 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9D19640D427;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0EB540D42E;
  Mon, 17 Aug 2026 16:35:48 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C4A3930F9E; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
+ id D963730FAC; Mon, 17 Aug 2026 16:35:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v2 123/135] hw/net/vmxnet3: Do not abort if guest
- provides bad interrupt numbers
-Date: Mon, 17 Aug 2026 16:34:33 +0300
-Message-ID: <20260817133451.2384630-21-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v2 130/135] tests/qtest/ahci: regression test for
+ ATAPI read vs. drain
+Date: Mon, 17 Aug 2026 16:34:40 +0300
+Message-ID: <20260817133451.2384630-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260817151855@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,100 +71,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-vmxnet3_validate_interrupts() currently aborts via hw_error() if
-the guest provided bad interrupt numbers. This should not happen,
-QEMU should rather refuse to activate the device in this case instead.
-Thus propagate the error to the callers to handle it more gracefully
-there.
+Add /ahci/cdrom/drain/{pio,dma}: issue a multi-sector ATAPI read whose
+byte-count limit spans two sectors so the device must rebuffer in the
+middle of the DRQ burst, hold the backend read in flight with a
+blkdebug delay, and fire x-blockdev-set-iothread -- which runs
+bdrv_drain_all_begin() exactly like a guest reset does through
+virtio_blk_stop_ioeventfd().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/539
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260731113352.189066-1-thuth@redhat.com>
-(cherry picked from commit 46099d99005588b25eb07957cd9cdd688c4fc476)
+On the unfixed PIO path the nested sector fetch is queued behind the
+drain and the main loop wedges, so the test hangs. The DMA variant
+never rebuffers and serves as a sanity twin.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit be1ee6a8f6e3b7192d57e900497b81a048f8d193)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index c15e179fb44..30a178d34e9 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -1352,32 +1352,46 @@ static bool vmxnet3_verify_intx(VMXNET3State *s, int intx)
-         || intx == pci_get_byte(s->parent_obj.config + PCI_INTERRUPT_PIN) - 1;
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index 74e665da358..0daa6c6d369 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -1754,6 +1754,70 @@ static void test_atapi_engine_restart_dma(void)
+     test_atapi_engine_restart_in_flight(true);
  }
  
--static void vmxnet3_validate_interrupt_idx(bool is_msix, int idx)
-+static bool vmxnet3_validate_irq_idx(const char *type, bool is_msix, int idx)
- {
-     int max_ints = is_msix ? VMXNET3_MAX_INTRS : VMXNET3_MAX_NMSIX_INTRS;
++/*
++ * Regression test: a multi-sector ATAPI read fetches its later sectors from
++ * inside the first read's completion; a concurrent drain (as a guest reset
++ * triggers via bdrv_drain_all_begin) must not wedge on that nested read.
++ * blkdebug keeps the read in flight across x-blockdev-set-iothread.
++ */
++static void test_atapi_drain_in_flight(bool dma)
++{
++    AHCIQState *ahci;
++    AHCICommand *cmd;
++    unsigned char *tx;
++    char *iso;
++    int fd;
++    uint8_t port;
++    uint64_t buffer;
++    uint16_t bcl = ATAPI_SECTOR_SIZE * 2;
++    uint64_t iso_size = (uint64_t)ATAPI_SECTOR_SIZE * 3;
 +
-     if (idx >= max_ints) {
--        hw_error("Bad interrupt index: %d\n", idx);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "vmxnet3: Bad %s queue interrupt index: %d\n",
-+                      type, idx);
-+        return false;
-     }
++    fd = prepare_iso(iso_size, &tx, &iso);
 +
-+    return true;
- }
- 
--static void vmxnet3_validate_interrupts(VMXNET3State *s)
-+static bool vmxnet3_validate_interrupts(VMXNET3State *s)
- {
-     int i;
- 
-     VMW_CFPRN("Verifying event interrupt index (%d)", s->event_int_idx);
--    vmxnet3_validate_interrupt_idx(s->msix_used, s->event_int_idx);
-+    if (!vmxnet3_validate_irq_idx("event", s->msix_used, s->event_int_idx)) {
-+        return false;
-+    }
- 
-     for (i = 0; i < s->txq_num; i++) {
-         int idx = s->txq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying TX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("TX", s->msix_used, idx)) {
-+            return false;
-+        }
-     }
- 
-     for (i = 0; i < s->rxq_num; i++) {
-         int idx = s->rxq_descr[i].intr_idx;
-         VMW_CFPRN("Verifying RX queue %d interrupt index (%d)", i, idx);
--        vmxnet3_validate_interrupt_idx(s->msix_used, idx);
-+        if (!vmxnet3_validate_irq_idx("RX", s->msix_used, idx)) {
-+            return false;
-+        }
-     }
++    /* 1s read delay: a wide margin so the drain starts before it completes */
++    ahci = ahci_boot_and_enable(
++        "-blockdev driver=file,node-name=file0,filename=%s,read-only=on "
++        "-blockdev driver=blkdebug,node-name=cd0,image=file0,read-only=on,"
++        "inject-error.0.event=none,inject-error.0.iotype=read,"
++        "inject-error.0.errno=0,inject-error.0.delay-ns=1000000000 "
++        "-M q35 "
++        "-device ide-cd,drive=cd0 ", iso);
++    port = ahci_port_select(ahci);
 +
-+    return true;
- }
++    buffer = ahci_alloc(ahci, bcl);
++    qtest_memset(ahci->parent->qts, buffer, 0x00, bcl);
++
++    cmd = ahci_atapi_command_create(CMD_ATAPI_READ_10, bcl, dma);
++    ahci_command_adjust(cmd, 0, buffer, bcl, 0);
++    ahci_command_commit(ahci, cmd, port);
++    ahci_command_issue_async(ahci, cmd);
++
++    /* Drain (all nodes) while the delayed read is still in flight. */
++    qtest_qmp_assert_success(ahci->parent->qts,
++        "{ 'execute': 'x-blockdev-set-iothread',"
++        "  'arguments': { 'node-name': 'cd0', 'iothread': null,"
++        "                 'force': true } }");
++
++    /* Round-trip through the device to confirm qemu is still alive. */
++    ahci_px_rreg(ahci, port, AHCI_PX_TFD);
++
++    ahci_command_free(cmd);
++    ahci_free(ahci, buffer);
++    g_free(tx);
++    ahci_shutdown(ahci);
++    remove_iso(fd, iso);
++}
++
++static void test_atapi_drain_pio(void)
++{
++    test_atapi_drain_in_flight(false);
++}
++
++static void test_atapi_drain_dma(void)
++{
++    test_atapi_drain_in_flight(true);
++}
++
+ /* Regression test: Test that a READ_CD command with a BCL of 0 but a size of 0
+  * completes as a NOP instead of erroring out. */
+ static void test_atapi_bcl(void)
+@@ -2178,6 +2242,8 @@ int main(int argc, char **argv)
+                    test_atapi_engine_restart_pio);
+     qtest_add_func("/ahci/cdrom/engine_restart/dma",
+                    test_atapi_engine_restart_dma);
++    qtest_add_func("/ahci/cdrom/drain/pio", test_atapi_drain_pio);
++    qtest_add_func("/ahci/cdrom/drain/dma", test_atapi_drain_dma);
  
- static bool vmxnet3_validate_queues(VMXNET3State *s)
-@@ -1570,7 +1584,9 @@ static void vmxnet3_activate_device(VMXNET3State *s)
-                sizeof(s->rxq_descr[i].rxq_stats));
-     }
+     ret = g_test_run();
  
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        return;
-+    }
- 
-     /* Make sure everything is in place before device activation */
-     smp_wmb();
-@@ -2407,7 +2423,9 @@ static int vmxnet3_post_load(void *opaque, int version_id)
-     if (!vmxnet3_validate_queues(s)) {
-         return -1;
-     }
--    vmxnet3_validate_interrupts(s);
-+    if (!vmxnet3_validate_interrupts(s)) {
-+        return -1;
-+    }
- 
-     return 0;
- }
 -- 
 2.47.3
 
