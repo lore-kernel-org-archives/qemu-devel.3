@@ -4,86 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1B3C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3ACC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwItI-0006H0-Bb; Tue, 18 Aug 2026 08:26:04 -0400
+	id 1wwJ0x-0000pc-9p; Tue, 18 Aug 2026 08:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hsubrianhsu@gmail.com>)
- id 1wwItH-0006Gj-7r
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:26:03 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hsubrianhsu@gmail.com>)
- id 1wwItF-0004XU-Hk
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:26:02 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2cab973140bso68835755ad.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787055960; x=1787660760; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xPPzVus9SZEhqmyrbL21mtA0fNEg5Q9cNShGtr+qeYE=;
- b=BcG1uRLDKitXuhuiXingQNOYOpnlb0b6ZChgoZaL7ihAG1Wwk+AAHfGmbTEywlkFH6
- leBhNy02PUeSnKsmhZCEYHes9lFh4xDX+tZA/d7mQrh74Ff3IDtUQ4+H02wKzA5q3pwT
- gWgau7cKLPab+I/+T6ByMJBaHNuWpaoDpZxa49jgFpW+B7NmEPAhiIJqYhm3oRSbBoEp
- NqcGyuimsUopP2BM0LkLm7HYaesOBPb6MJ6GrNqDRlYoxCvaPKPlyUc+ijBlP5t6/xHB
- C6trzSqkZEHLtIY7XflNFikR5q1BzPCE1+X4bTXHZXor1tivjDY+Mi/DdVoPDriCOZbQ
- yl9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787055960; x=1787660760;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=xPPzVus9SZEhqmyrbL21mtA0fNEg5Q9cNShGtr+qeYE=;
- b=I/PSuaqRD02n5JrOaEPvIhftaIA75SzX8GTFqcHnqUltrMMF4KjfSTnOVazEV0VtZg
- 3ZRzM+L9yM7wk69wuNMYbUaOhTzGypi5OJ+pzhUKx/s0lNaaPx0f0PGmYvroEeOLfy1M
- Wa8NH2gQrs+8L5a8nc79uO8Ut01aObcaSMA8M+KdQhlKe+GEZAZPpDTuw1dzqW9tQumX
- gQMIBC+X12HcRfvw47h5bjm4MQ2LIYuTgfUgurOruBdGPPziN4RRy0om0SQ6EnAjvjpS
- hxaJuVqw+xALnE8H1nJYN9xBDIKVsIpb/XXRpcW6+oP3QbNWqRE+f56/F8bjfC3Bpyk1
- X4ZQ==
-X-Gm-Message-State: AOJu0Yyfp3DVVynK/k2rbrsWia3wSjnfB/8FLpNm8koWZeCbomVXZuKc
- UEpL3EH5sKaWUkhAqviVCmpWXLBLh/U9qo8ql5s1tO7mtPdtOOmYJ/PqaIimaEAzR+8=
-X-Gm-Gg: AR+sD13h7QGIcUhUB2LgqAXF/otXpriEifMnY3EvsBqfRHOXl0cedY0pJgBS/hz7Yqv
- lxdjq4LcuUKTpHb9Bt4ljffFEo0v9BwV20Yy3UpAr+wY37GNJmBRSEVOCjU8XYOmrus882FJuY9
- WAZzo6RpfbRL9piN0FmA1T/1SyvMYXcxuxENIrdQqUHtSgz9gYkQ35hZc1u5+WeKAnhdSeMLSD/
- VCkQus/mqr1bnpt3+lZuKSBF/cTtbrt9WPJcskFMAWcgkXIUN4gxHw5hvzYuuzqPcBtPI0YGFha
- QJF54dx4KfcQOZOx9961YWj61Gg/18EfgNEU0RS0TgteFys3zMxX3pqj7lfuNFs4eRefVVfYk+1
- zoYLbqAz2RkGSiNGJocJ1vf6+VBoRwRKqF67Mtql6UDcFsKfTvPGG4910pDq/OzvSppDvoBCbic
- ybc3dAo5o/k6mgHdpPlFVCX+blRWTDF06lGli4FZk4c2bKCu3xwbQvXpUbXEV1D/k6O9daYb+iU
- JC4P8w1jXDP/A==
-X-Received: by 2002:a17:902:ce05:b0:2cf:82e6:a5 with SMTP id
- d9443c01a7336-2d3b0c68338mr394414415ad.13.1787055959547; 
- Tue, 18 Aug 2026 05:25:59 -0700 (PDT)
-Received: from brian-ThinkPad-T15-Gen-2i..
- ([2402:7500:5e8:72b9:108d:adf4:bbd3:73e6])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d5c1e93ca0sm14087645ad.63.2026.08.18.05.25.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 05:25:59 -0700 (PDT)
-From: Brian Hsu <hsubrianhsu@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
-	Brian Hsu <hsubrianhsu@gmail.com>
-Subject: [PATCH] po: Add Traditional Chinese (zh_TW) translation
-Date: Tue, 18 Aug 2026 20:25:51 +0800
-Message-ID: <20260818122552.661003-1-hsubrianhsu@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wwJ0v-0000o2-Jb; Tue, 18 Aug 2026 08:33:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wwJ0u-0006WZ-60; Tue, 18 Aug 2026 08:33:57 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IAVemZ069954; Tue, 18 Aug 2026 12:31:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=OVrVAH
+ poCf/BmBSpErJpQ/RLzWgLb76r8JlqJTLkKus=; b=QkqSMCOG3VpgwNIYMnc00Y
+ STZW6sRTh4bjLZD1yyzWsfpPpestmCZVeuwt/vNBiXHuG0H5zzJFooXoIL3Wp2M1
+ hBNgHzI56cJmCj6syQ+JcwL5JZYPWQEfpkI4CSKRTjePP3AoUDkwTLlNYhwO11ks
+ eKyYxBCuegurEiZhAVYwvjyDgXmE9gF5AKwmMF3KPGU9KGVaZrYbQ326TZLRRILZ
+ 8eiLFvjWHh9QWAwF0DR3JBpCCDxC2esBFCblzcQhF5EbiiFE6T181MPyZs/wJLx4
+ SOss8KhatLInh/QuxbFlSW9Cp+PSO+7ZFbPGHuNZwVAzz69sB1feu2VQhQuS79BQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2frt7m33-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 12:31:35 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ICQJ19022995;
+ Tue, 18 Aug 2026 12:31:34 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yaww7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 12:31:34 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67ICUrpU20906588
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 12:30:53 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D5385805D;
+ Tue, 18 Aug 2026 12:31:32 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F19455805C;
+ Tue, 18 Aug 2026 12:31:27 +0000 (GMT)
+Received: from [9.61.88.99] (unknown [9.61.88.99])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 12:31:27 +0000 (GMT)
+Message-ID: <3c4cc077-ffe4-44af-9bcb-1c0c0a7a0531@linux.ibm.com>
+Date: Mon, 17 Aug 2026 14:11:14 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 41/49] Guard HMP command implementations with CONFIG_HMP
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Hyman Huang <infra.ai.cloud@bitdeer.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, "Dr. David Alan Gilbert"
+ <dave@treblig.org>, Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ Jason Wang <jasowangio@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-s390x@nongnu.org, qemu-riscv@nongnu.org
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-41-e53fc35bc550@redhat.com>
+Content-Language: en-US
+From: "Jason J. Herne" <jjherne@linux.ibm.com>
+In-Reply-To: <20260816-qemu-no-hmp-v3-41-e53fc35bc550@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=hsubrianhsu@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=OfaoyBTY c=1 sm=1 tr=0 ts=6a8450a7 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=6vjvu8HhQ4Mt8ipGFg0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA5MiBTYWx0ZWRfX+VhBvebHoSgA
+ bdcBt0hUMx2u3qzgtd1xVcohZkWYklfgUPDdgR7rZy7Ov9aplI0vfbF/yFds6jFpAV5jaXsD9r5
+ vLFuPnnMgBhpt73IxxiWYe1P/1VypCk=
+X-Proofpoint-GUID: yTn3FZ6qFt7CciM6GCDlfTK-glHalj1s
+X-Proofpoint-ORIG-GUID: _zrDuqqnAULRzyly31YofOxyJFNp9p2i
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA5MiBTYWx0ZWRfX//3f8rgbsedR
+ eR4KjqWFae+GjlIG+s/6t5LB7iABK/UnLTK9tR9eEXE20dEZQTTjuB0Z+99eZR30uLMI+h8XSmQ
+ kvaJxl3Pifo7SK5JWjLTmwpnpdQtRFayZLVlXrrOPAuE1HgZxS1/8QtCBqN6WZ54IsMo7SGyqUq
+ 1Zt7+tdQ1ntHUm5PQsrP8ZjubIw2Y2vcQKDt3mGYU2Wkt5tDSbKJE2pvJLaqdcA52ZU5tQcSmpS
+ Ykin8+uHFX4eIpOPiR4zlPtJ/fg4obtxU8wcEEdMPbUCW6KiBCfTcD8GYsFSkCG7Tk/K7SAU1po
+ BxHkDT8u/UqmxAcZNucYkRlf0h71UANwH1sLFnJZjl2apo6S1F/o2GDOzIgzkc3L2nWPfirPpFS
+ d2nPgqO7zuGoPx4XS6RU5ZCwSCA7/f2J5JrCGAySZeh3Dd7wAw6RIFCM2G1DN5H6xE/iqWBkIMf
+ nrXzrOttlJ1NKrR2tnQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180092
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,135 +158,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, this is my first contribution to QEMU, and I'm still getting
-familiar with the mailing-list workflow, so corrections are very
-welcome.
 
-I noticed the po/ directory has a Simplified Chinese translation but no
-Traditional Chinese one. Traditional and Simplified Chinese look similar
-but are not the same, and their user bases differ too. In Taiwan, almost
-everyone (close to 100%) uses Traditional Chinese, so I adapted the
-Simplified version into a Traditional one, partly as a contribution and
-partly as practice (however trivial).
 
-I also changed the Language field in zh_CN.po from "zh" to "zh_CN",
-following the naming used in /etc/locale.gen, and used "zh_TW" for the
-Traditional Chinese file.
-
-Finally, since this addition is quite simple and the po/ directory does
-not appear to have a dedicated maintainer, I've CC'd qemu-trivial.
-
-Signed-off-by: Brian Hsu <hsubrianhsu@gmail.com>
----
- po/LINGUAS  |  1 +
- po/zh_CN.po |  2 +-
- po/zh_TW.po | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 76 insertions(+), 1 deletion(-)
- create mode 100644 po/zh_TW.po
-
-diff --git a/po/LINGUAS b/po/LINGUAS
-index 9b33a3659f..08163e8d5f 100644
---- a/po/LINGUAS
-+++ b/po/LINGUAS
-@@ -7,3 +7,4 @@ sv
- tr
- uk
- zh_CN
-+zh_TW
-diff --git a/po/zh_CN.po b/po/zh_CN.po
-index 38de6a4f2a..5eb8cee3e3 100644
---- a/po/zh_CN.po
-+++ b/po/zh_CN.po
-@@ -10,7 +10,7 @@ msgstr ""
- "PO-Revision-Date: 2014-07-31 10:00+0800\n"
- "Last-Translator: Fam Zheng <famz@redhat.com>\n"
- "Language-Team: Chinese <zh@li.org>\n"
--"Language: zh\n"
-+"Language: zh_CN\n"
- "MIME-Version: 1.0\n"
- "Content-Type: text/plain; charset=UTF-8\n"
- "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/zh_TW.po b/po/zh_TW.po
-new file mode 100644
-index 0000000000..925c952134
---- /dev/null
-+++ b/po/zh_TW.po
-@@ -0,0 +1,74 @@
-+# Traditional Chinese translation for QEMU.
-+# This file is put in the public domain.
-+#
-+# Brian Hsu <hsubrianhsu@gmail.com>, 2026
-+msgid ""
-+msgstr ""
-+"Project-Id-Version: QEMU 11.1.50\n"
-+"Report-Msgid-Bugs-To: qemu-devel@nongnu.org\n"
-+"POT-Creation-Date: 2026-08-18 19:00+0800\n"
-+"PO-Revision-Date: 2026-08-18 19:00+0800\n"
-+"Last-Translator: Brian Hsu <hsubrianhsu@gmail.com>\n"
-+"Language-Team: Traditional Chinese\n"
-+"Language: zh_TW\n"
-+"MIME-Version: 1.0\n"
-+"Content-Type: text/plain; charset=UTF-8\n"
-+"Content-Transfer-Encoding: 8bit\n"
-+"Plural-Forms: nplurals=2; plural=n != 1;\n"
-+
-+msgid " - Press Ctrl+Alt+G to release grab"
-+msgstr " - 按下 Ctrl+Alt+G 釋放輸入捕捉"
-+
-+msgid " [Paused]"
-+msgstr " [已暫停]"
-+
-+msgid "_Pause"
-+msgstr "暫停(_P)"
-+
-+msgid "_Reset"
-+msgstr "重置(_R)"
-+
-+msgid "Power _Down"
-+msgstr "關閉電源(_D)"
-+
-+msgid "_Quit"
-+msgstr "結束(_Q)"
-+
-+msgid "_Fullscreen"
-+msgstr "全螢幕(_F)"
-+
-+msgid "_Copy"
-+msgstr "複製(_C)"
-+
-+msgid "Zoom _In"
-+msgstr "放大(_I)"
-+
-+msgid "Zoom _Out"
-+msgstr "縮小(_O)"
-+
-+msgid "Best _Fit"
-+msgstr "最適大小(_F)"
-+
-+msgid "Zoom To _Fit"
-+msgstr "縮放至適當大小(_F)"
-+
-+msgid "Grab On _Hover"
-+msgstr "懸停時捕捉(_H)"
-+
-+msgid "_Grab Input"
-+msgstr "捕捉輸入(_G)"
-+
-+msgid "Show _Tabs"
-+msgstr "顯示分頁(_T)"
-+
-+msgid "Detach Tab"
-+msgstr "分離分頁"
-+
-+msgid "Show Menubar"
-+msgstr "選單列"
-+
-+msgid "_Machine"
-+msgstr "虛擬機器(_M)"
-+
-+msgid "_View"
-+msgstr "檢視(_V)"
--- 
-2.43.0
-
+On 8/16/26 3:13 PM, Marc-André Lureau wrote:
+> Add #ifdef CONFIG_HMP around all hmp_* function implementations and
+> their HMP-only helpers across subsystems.
+> 
+> This covers monitor_register_hmp* callers, hmp_info_* handlers, and
+> HMP-only helper functions like slirp_lookup.
+> 
+> To link succesfully, use empty cmds tables in hmp-cmds.c (to be removed
+> once meson build-sys is updated with !hmp support later in the series)
+> 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+> ...
+>   hw/s390x/s390-skeys.c     | 2 ++
+>   hw/s390x/s390-stattrib.c  | 4 ++++
+Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
 
