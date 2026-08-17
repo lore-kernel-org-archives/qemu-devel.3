@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF78C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A36C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvus9-0004k6-HC; Mon, 17 Aug 2026 06:47:19 -0400
+	id 1wvuqP-0001TV-DL; Mon, 17 Aug 2026 06:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurz-0004AA-CZ; Mon, 17 Aug 2026 06:47:10 -0400
+ id 1wvuqH-0001A6-AR; Mon, 17 Aug 2026 06:45:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvurw-0004Db-M4; Mon, 17 Aug 2026 06:47:06 -0400
+ id 1wvuqE-0003yj-Se; Mon, 17 Aug 2026 06:45:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=nLOBd6qmhI9qHAWdEEcaXA/9sF1TdPCH8cF+8kL5n54=;
+ t=1786963486; bh=mOtCXnAeH1Fll/qjHPYWZ7OaP8aGrGDfZUMNX7SqHfw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fpODZfqcnP51KCmDLci99CyU39XZDSmOkYiHDz4O8yhkP/rBw2p8NusSdCGVrhgUs
- gPVat7sbscxzi0oLlXmUOXEfvPZ8F2BU9HFzV6OR1AX51irk4XlwzoEZkV2Da+b2cE
- W7XS/PAPWB/Eg/81CWc3VD9o+Qm+thN/4GFNm1XSfzCiDE+3SOf8ltFioejzieCYst
- a8ay491iPJ0cCErLLMi5hBD7foTCeuR5DHCUt+Ub8hxI0Ugxa0KkJrK4HWdTS20d9i
- 7hxRIxvsC6M3BK+WdywW6kYXygOYtgQYGjIG8an35HBsHPIL/WStSg2MlFsJDsTGuu
- l5uLPDByWOi9g==
+ b=WWFinLIMtiQaRxM/m9jeLBx8KehFFyAl6BRIOUN1hdtbe41NTVuLwwgRCfEVoOWum
+ v7ESbHzYAlNKvQmaD/twkFW2Nc3TsIxjDX/UZvjr/xuhaqvdrgVyQpSz+mxsAw+JKv
+ tN+X1ApxcRkwvw/ivNzUrNVAZnjCRz86DLHRE8ay+Z+8PfIfcEwVIsxl0Xe1m42EWi
+ NexNjgsEoECLvxvdOJrTt86gKBgpJfiL5mMCqILALMEyQmiUKN5Dpd/y0AO3JDKe4m
+ 1eEvNEqi7UsKjvLk2toNEyk6+1eM3exZqzxotrH+vCvN3rdPJWnv0egX8EsPfQi41K
+ QDP7zptlLHJzQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD9BA1CBB7F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E2DD1CBB6D;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BEECA40D210;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6F7CA40D1FE;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 3CDEF30E76; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id 03F0830E52; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bin Guo <guobin@linux.alibaba.com>,
- Bibo Mao <maobibo@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 146/161] hw/intc/loongarch_pch_pic: Validate
- htmsi_vector before indexing parent_irq
-Date: Mon, 17 Aug 2026 13:43:00 +0300
-Message-ID: <20260817104344.2047346-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 128/161] tests/tcg/s390x: Test DR overflow
+ (INT64_MIN / -1)
+Date: Mon, 17 Aug 2026 13:42:42 +0300
+Message-ID: <20260817104344.2047346-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -71,67 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-pch_pic_update_irq() used the guest-writable htmsi_vector[irq] value as an
-index into parent_irq[] without checking bounds.  A value >= irq_num (64 in
-the array, but only 32 are used by the virt machine) causes an out-of-bounds
-read and a guest-triggerable QEMU crash.
+Check that DR with a non-representable quotient raises SIGFPE rather than
+crashing the emulator.
 
-Validate the vector before calling qemu_set_irq() in both the raise and lower
-paths and log a guest error if it is out of range.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4114
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-(cherry picked from commit 80776c4df92c3d58f89608b61e355092a7d524ed)
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260714190351.337923-3-iii@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit aa5d03bc93514ceed8d94f38dbdf951f6cb19d23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 82e16be3918..e87c7497c11 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -19,13 +19,21 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
- {
-     uint64_t val;
-     int irq;
-+    uint8_t vector;
+diff --git a/tests/tcg/s390x/div.c b/tests/tcg/s390x/div.c
+index 6ad9900e082..124c9ecc339 100644
+--- a/tests/tcg/s390x/div.c
++++ b/tests/tcg/s390x/div.c
+@@ -1,6 +1,15 @@
+ #include <assert.h>
++#include <signal.h>
+ #include <stdint.h>
  
-     if (level) {
-         val = mask & s->intirr & ~s->int_mask;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr |= MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 1);
-+            qemu_set_irq(s->parent_irq[vector], 1);
-         }
-     } else {
-         /*
-@@ -35,8 +43,15 @@ static void pch_pic_update_irq(LoongArchPICCommonState *s, uint64_t mask,
-         val = mask & s->intisr & ~s->intirr;
-         if (val) {
-             irq = ctz64(val);
-+            vector = s->htmsi_vector[irq];
-+            if (vector >= s->irq_num) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "%s: htmsi_vector[%d]=%u out of range\n",
-+                              __func__, irq, vector);
-+                return;
-+            }
-             s->intisr &= ~MAKE_64BIT_MASK(irq, 1);
--            qemu_set_irq(s->parent_irq[s->htmsi_vector[irq]], 0);
-+            qemu_set_irq(s->parent_irq[vector], 0);
-         }
-     }
++/* Set asynchronously by the signal handler. */
++static volatile int signum;
++
++static void signal_handler(int n)
++{
++    signum = n;
++}
++
+ static void test_dr(void)
+ {
+     register int32_t r0 asm("r0") = -1;
+@@ -65,11 +74,39 @@ static void test_dlgr(void)
+     assert(r == 1);
+ }
+ 
++/*
++ * The most negative dividend divided by -1 yields a quotient that does not
++ * fit into 32 bits, so DR must raise a fixed-point-divide exception.
++ */
++static void test_dr_overflow(void)
++{
++    struct sigaction act = { .sa_handler = signal_handler };
++    register int32_t r0 asm("r0");
++    register int32_t r1 asm("r1");
++    int32_t b = -1;
++    int err;
++
++    err = sigaction(SIGFPE, &act, NULL);
++    assert(err == 0);
++    signum = -1;
++
++    r0 = 0x80000000;
++    r1 = 0;
++    asm volatile("dr %[r0],%[b]"
++                 : [r0] "+r" (r0), [r1] "+r" (r1)
++                 : [b] "r" (b)
++                 : "cc");
++    assert(signum == SIGFPE);
++
++    signal(SIGFPE, SIG_DFL);
++}
++
+ int main(void)
+ {
+     test_dr();
+     test_dlr();
+     test_dsgr();
+     test_dlgr();
++    test_dr_overflow();
+     return 0;
  }
 -- 
 2.47.3
