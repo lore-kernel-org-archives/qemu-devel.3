@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912D4C5DF66
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBE54C5B572
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 14:16:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvy8V-0006Dk-NY; Mon, 17 Aug 2026 10:16:24 -0400
+	id 1wvy8U-0006BJ-6J; Mon, 17 Aug 2026 10:16:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvy8Q-00065W-Qi
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:16:20 -0400
+ id 1wvy8J-00061l-GI
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:16:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wvy8O-000192-FY
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:16:18 -0400
+ id 1wvy8G-00016l-B8
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 10:16:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1786976175;
+ s=mimecast20190719; t=1786976167;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aZPsNPFmHtvTsKWdH9GHwqOhSlL4pfLFM9GK7NJV20U=;
- b=LCdeeMjxieas4O4aa8j/UTtQ8oMsxiFVmzJn0TYK2X0oc/6KX+TNJpcxHReVb4LQe59jBx
- 1Qcoka3yIwqc0NUhU3YgnGbpiQ7LrDsqxK8onHYxAzrvVg3Ob2Dz493paoxOmCHtMt75co
- 9NjOdkeraSPz99u7rk/fW4Atj0hOpKo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jbqFiy7I4xAg01/d1DScZpj+8zUcgvtqLa+XEwrJ0fQ=;
+ b=JUY7FMx+x5RX16ue5hcCadn5MeR2qqaetGhqF8Tg4X8Bt3tN/CJYekEEkzLYi7ERH80A3d
+ xJS0x3jYpkpbr60e6pGzEJuW7uWtB5XB5+qxaN9ZpCI2GSgk8d2wOytV2+YfttMlXEqKuc
+ j1CIPVrSR0h201y3bmtivqUhF1b0n9c=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-360-pts3PyohMrqlwCEmXyyH1Q-1; Mon, 17 Aug 2026 10:16:09 -0400
-X-MC-Unique: pts3PyohMrqlwCEmXyyH1Q-1
-X-Mimecast-MFC-AGG-ID: pts3PyohMrqlwCEmXyyH1Q_1786976168
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-482a5e9400eso469273f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:16:09 -0700 (PDT)
+ us-mta-136-ogGoenT6PbWm4uilDhjpQw-1; Mon, 17 Aug 2026 10:16:05 -0400
+X-MC-Unique: ogGoenT6PbWm4uilDhjpQw-1
+X-Mimecast-MFC-AGG-ID: ogGoenT6PbWm4uilDhjpQw_1786976165
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47d81cf0c4cso2080366f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 07:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1786976168; x=1787580968; darn=nongnu.org;
+ d=redhat.com; s=google; t=1786976164; x=1787580964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aZPsNPFmHtvTsKWdH9GHwqOhSlL4pfLFM9GK7NJV20U=;
- b=JgrmcW8x8GgAiIDu3vNWucZMKEjwcN/p79yO43a02Lb6Cm2AU9FUpABn9cYEn1WWiP
- Xfn9MENGbBNoRcYMUG8aH+Rf4Pf5RrONNH4+CG5Be9WwQsNJ2SNzKh9Q9HEr58v9EzzM
- i3MX5JcDmkXoRxZKMT2PmzcRCKKH53PDr/e+xSj5z/XEqbHgluQBQleushgKrBPUh/CQ
- kzSeJN9fNQsVKu3moRd9I5QBfcJcSfgr1X7S8Ll6Sxx9/FK/5ow7uVxXWYGyo5ao1tNb
- UGxvBj0eBm8nCHw31h0SGd31NhFs2borj9DBl3Vf/T7W3oPSusjKymLaNl7CuDItE1NK
- AKjw==
+ bh=jbqFiy7I4xAg01/d1DScZpj+8zUcgvtqLa+XEwrJ0fQ=;
+ b=qP3gEcsGzvgAHZNayAUKqZNmXA0QdfAa8+A/ee0bne2+OtK4LV31iddEub1F1yQXj4
+ wcRVIAKKUOvH4dfnSvAPOJIDZcExprR7IbmdxXgc8NgSBg8Zvu3mxBmLSRueOOcnSMll
+ 9ufncNlltP6+OEKhLo4gCmDUggKcrqS4lyEnYwNGU4XHDozIG8t4W6bG4zsS9AXaYmM6
+ C6Qni88SKo0HvcFCP5olEJzwktZAtqsIB3QamiMUxFxFyS3OlGUq5wJ0NN7df98hQbAV
+ FjxUaMxppjxi0jJHrUJAOXitGfswI8NNrjmVX3H1MTzZsMimJvRi1AetDLVCsQoBEjxS
+ RoYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786976168; x=1787580968;
+ d=1e100.net; s=20251104; t=1786976164; x=1787580964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aZPsNPFmHtvTsKWdH9GHwqOhSlL4pfLFM9GK7NJV20U=;
- b=VYddIZDyujH4MljxttchFOuah8bKQfGxKlo5bnsAspFBpB0geKKlpe2OmJP9itiID1
- /ltiIFgMjhRpvf9U8dDmKK3dxMVUtkq2mLgbLAQWsp5XE+GwbTC0qhuT5ZhiDKqC0W/D
- L5yyU3xizcNjjPnFhmgikb/D7Q43Vqu9BTrfnqDV+B5sGvhmgnu5dmdylGGfflRcnLVj
- rb5Om6Wn2S/h0LHkuhwDh2ujbEwkfOiCjlQdSG6nmroDhWavBR5HavHU2Sq8ZRFzDzR3
- Lqd/gtjfzomc3ekGMPUQ514m69da+ucUHiC9GO3i3ATWEJJTPQ6sNRfPTRYO3oFFj1WT
- cnYQ==
-X-Gm-Message-State: AOJu0YwamKSD//9mXFeFiP8Lk6sdmNiInOf+Kf88jX31NODbXLa19mTo
- F6DqJ/lvzh6R5t4OesCvVkbMSBiKDAxUqOMg4BgA5JE8+524YLJv2MboqCl6KSYn3/FPAGrvNQS
- Z2zzrgPqb/pupiYoMAMplaCDr6t6KzR2u0A9BHJZrRy0qax20bXCmLuFdfVgJzampl3grJve0uQ
- P3R5qMyGwXt0d6Dg66xdXAufZTldR2rpzoxUo1Cpt6
-X-Gm-Gg: AR+sD12u4mBgAqqrBtq3k5h2d29AFLACTZBmnRlJ7VqNVthcMVzZhiwzk0CgSHXChjX
- d/zWkfQNxjBJajNCUueCU9MlqeJI8MF2BWX8tIQ2JzhI6t6KgssejneRpfNyxCAXQcWsyuEvi98
- BEdk4/k3EyvZh4lMyyXMSRMwdt/YsQyPtXHYwTRA1jDHEyZZF0EWKJbX5lrowYjhgG9tB4Ho08X
- 7a0Psaz+d+nRnRWZYuCjQRzVpcwYIbK5q+Tot+eEaQdt4vdQXoS8hp9bzWuM8H39bHmk6dI38Mn
- KFVW5E8fO1cDCANI5HzfhHJIxla7JAA9DTik5Jj30UZUAHB23AQbZZWuuEsX7X8LwVsMsanaYoV
- pBrSUxkrK4+ItEz88hZ7mY6DhrZjY5SM2ebYDQMCevu6rndVHSVUZnFYX5lwe/2ferO+OmnxUFc
- 5gdSE=
-X-Received: by 2002:a05:600c:848e:b0:499:8156:cd3f with SMTP id
- 5b1f17b1804b1-4999fb3f78bmr8070905e9.8.1786976166506; 
- Mon, 17 Aug 2026 07:16:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:848e:b0:499:8156:cd3f with SMTP id
- 5b1f17b1804b1-4999fb3f78bmr8059985e9.8.1786976161723; 
- Mon, 17 Aug 2026 07:16:01 -0700 (PDT)
+ bh=jbqFiy7I4xAg01/d1DScZpj+8zUcgvtqLa+XEwrJ0fQ=;
+ b=MtMzlM/7b6I3osNtqCAf8ar2+vFYJenVuMWkFXPypfyNwNJgMVTE5Y/K+6kP5ZnolC
+ cs1TSOZ9LUUTKPfh1pipWF/grrQ6ReYKBdA8eb5K/XSHKooWMDYxP+LPY+5o5oLRdeJ3
+ KGG2StDB/kXLLuNpSL98i+Ie0nkhxXYugs0J3k1HB1l2lY14z777y4nswuGnY/bxjxkW
+ WsajUmBU+C8cXfCG1ZsOrHEBSdJ8xl5RcXDDzfmNEZFzlxH7nMIUGXci2XLnZ96XMOSG
+ sNEn6FmSc4V7Luttq2G1fzks7JckEnhCIXvSwd4wz8kFPSPv4ceT1We5j7p+Z6fhNh2L
+ WFjA==
+X-Gm-Message-State: AOJu0Yx7sSid/LnSHP7E4msjAIPbZKOlYiriyrLlxnnPoatf8JBM30OE
+ C1NnVzeRSjCb4Td+tVrmNif20g8zBOGcPMg53yl9DjdJ4NsnisKgwj2JlAz1hTvj5jc5JmLQNBE
+ uUEKxouMssRu/blD9JRoi5BoHdpW5fdFZHwerK6+iAQ+/GGes7+9gXm0dZaBIeAjrxNwdIxaqrd
+ 7Cbutfirrl2RPpjr9WY6mtBbIPf1cMQQDW//9T+AWG
+X-Gm-Gg: AR+sD11eo0FtWHcbvQTHxuI0tyMvVigUgZsdeQTnDeJN15Pu3XqkBQ8wNVu9ovmPv97
+ IRh5qNch81Nmwlb3Mzjv5SecmCTsrxiC3DbnlK4iMJL0EF5e1ff+dmxceEJB9WsYpj9rxo7f5My
+ Q2j1ESyIz7LwU91WkrZYSK5HrBdWusAgvORAcCrGU8ym2Hzsa6A1jTsyE/TRMTQpxLtMxqHBf0/
+ /yyC7ETXKO21B6XhNtPpwpvEdgEIlkKVcCwdJjycZWFnXccoGsGjGjaBADZA6MOno4/3jHBXaKg
+ jIL/VcvXuM2pqtnO/FOLEySlGYjVJVIxryPc8iqcpSD6zsSq5ukxkPvVgNiM3eGv/1Ut9dWHcKG
+ 81X62UnSIpXCmF7x6Uy1utlwBVkbBIwE3AOlI1yOhuTtW0MczyRy6baIoGSuVSU/E2cwYMQ9Cps
+ keTo4=
+X-Received: by 2002:adf:ffca:0:b0:481:568e:d6ed with SMTP id
+ ffacd0b85a97d-482a903aef6mr673583f8f.15.1786976164468; 
+ Mon, 17 Aug 2026 07:16:04 -0700 (PDT)
+X-Received: by 2002:adf:ffca:0:b0:481:568e:d6ed with SMTP id
+ ffacd0b85a97d-482a903aef6mr673491f8f.15.1786976163920; 
+ Mon, 17 Aug 2026 07:16:03 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482a5b7834dsm4022289f8f.28.2026.08.17.07.16.00
+ ffacd0b85a97d-482a5b783c6sm4439602f8f.31.2026.08.17.07.16.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 07:16:00 -0700 (PDT)
+ Mon, 17 Aug 2026 07:16:02 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 1/2] rust: pl011: switch from bilge to bitfield-struct
-Date: Mon, 17 Aug 2026 16:15:58 +0200
-Message-ID: <20260817141559.940844-2-pbonzini@redhat.com>
+Subject: [PATCH 2/2] rust: remove bilge crate
+Date: Mon, 17 Aug 2026 16:15:59 +0200
+Message-ID: <20260817141559.940844-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817141559.940844-1-pbonzini@redhat.com>
 References: <20260817141559.940844-1-pbonzini@redhat.com>
@@ -104,7 +104,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,407 +120,406 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The bilge crate is heavily reliant on traits and, because trait functions
-are never const, bilge and const mix about as well as water and oil.
-In addition, it has support for the zerocopy crate that only works for an
-older version, and is hard to update because the implementation doesn't
-like that zerocopy::FromBits and bilge::FromBits are the same name.
-zerocopy is definitely something that QEMU could use in the future.
-
-The bitfield-struct crate, instead, is built from the ground up to
-support const.  Its use is pretty much the same (device code does not
-change at all, only register declarations do), with some things being
-more verbose and others being simpler.  The code for the crate itself
-is much smaller, too.
-
-It does have two disadvantages: it does not let you annotate enums
-as bitfields, and it does not integrate with arbitrary-int.  Thus, it
-requires manual size annotations for anything that is not a bool, iNN
-or uNN.  Lack of support for arbitrary-int is a very small deal, while
-enums are a bit more annoying because they require some repetition
-and an implementation of two functions from_bits() and into_bits().
-However, the latter is already provided by the "bits!"  and
-"#[derive(common::TryInto)]" utilities, and thus is not manual
-in QEMU's case.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- Cargo.lock                               |  14 ++-
- Cargo.toml                               |   1 +
- rust/hw/char/pl011/Cargo.toml            |   3 +-
- rust/hw/char/pl011/src/registers.rs      | 108 +++++++++++------------
- scripts/archive-source.sh                |   1 +
- scripts/make-release                     |   1 +
- subprojects/.gitignore                   |   1 +
- subprojects/bitfield-struct-0.13-rs.wrap |   6 ++
- 8 files changed, 75 insertions(+), 60 deletions(-)
- create mode 100644 subprojects/bitfield-struct-0.13-rs.wrap
+ Cargo.lock                                    | 73 -------------------
+ rust/migration/src/vmstate.rs                 | 45 +-----------
+ scripts/archive-source.sh                     |  6 --
+ scripts/make-release                          |  5 +-
+ subprojects/.gitignore                        |  7 --
+ subprojects/arbitrary-int-1-rs.wrap           |  9 ---
+ subprojects/bilge-0.2-rs.wrap                 |  9 ---
+ subprojects/bilge-impl-0.2-rs.wrap            |  9 ---
+ subprojects/either-1-rs.wrap                  |  9 ---
+ subprojects/itertools-0.11-rs.wrap            |  9 ---
+ .../proc-macro-error-1-rs/meson/meson.build   |  3 -
+ subprojects/proc-macro-error-1-rs.wrap        | 10 ---
+ subprojects/proc-macro-error-attr-1-rs.wrap   |  9 ---
+ 13 files changed, 5 insertions(+), 198 deletions(-)
+ delete mode 100644 subprojects/arbitrary-int-1-rs.wrap
+ delete mode 100644 subprojects/bilge-0.2-rs.wrap
+ delete mode 100644 subprojects/bilge-impl-0.2-rs.wrap
+ delete mode 100644 subprojects/either-1-rs.wrap
+ delete mode 100644 subprojects/itertools-0.11-rs.wrap
+ delete mode 100644 subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
+ delete mode 100644 subprojects/proc-macro-error-1-rs.wrap
+ delete mode 100644 subprojects/proc-macro-error-attr-1-rs.wrap
 
 diff --git a/Cargo.lock b/Cargo.lock
-index 66f684098d3..6f683e8bb1e 100644
+index 6f683e8bb1e..ad664a812d2 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -24,6 +24,17 @@ dependencies = [
+@@ -8,12 +8,6 @@ version = "1.0.98"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
+ 
+-[[package]]
+-name = "arbitrary-int"
+-version = "1.2.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d"
+-
+ [[package]]
+ name = "attrs"
+ version = "0.2.9"
+@@ -35,29 +29,6 @@ dependencies = [
   "syn",
  ]
  
-+[[package]]
-+name = "bitfield-struct"
-+version = "0.13.0"
-+source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "3ca6739863c590881f038d033a146c51ddae239186a4327014839fd864f44ed5"
-+dependencies = [
-+ "proc-macro2",
-+ "quote",
-+ "syn",
-+]
-+
- [[package]]
- name = "bilge"
- version = "0.2.0"
-@@ -243,8 +254,7 @@ checksum = "7edddbd0b52d732b21ad9a5fab5c704c14cd949e5e9a1ec5929a24fded1b904c"
- name = "pl011"
- version = "0.1.0"
- dependencies = [
-- "bilge",
+-[[package]]
+-name = "bilge"
+-version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57"
+-dependencies = [
+- "arbitrary-int",
 - "bilge-impl",
-+ "bitfield-struct",
-  "bits",
-  "bql",
-  "chardev",
-diff --git a/Cargo.toml b/Cargo.toml
-index 0566850ecef..b35704faabe 100644
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -101,5 +101,6 @@ used_underscore_binding = "deny"
- #wildcard_imports = "deny"   # still have many bindings::* imports
+-]
+-
+-[[package]]
+-name = "bilge-impl"
+-version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8"
+-dependencies = [
+- "itertools",
+- "proc-macro-error",
+- "proc-macro2",
+- "quote",
+- "syn",
+-]
+-
+ [[package]]
+ name = "bits"
+ version = "0.1.0"
+@@ -114,12 +85,6 @@ dependencies = [
+  "qemu_macros",
+ ]
  
- # these may have false positives
-+enum_variant_names = "allow"
- #option_if_let_else = "deny"
- cognitive_complexity = "deny"
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index 5b319455ee3..d303c241e4f 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -14,8 +14,7 @@ rust-version.workspace = true
+-[[package]]
+-name = "either"
+-version = "1.12.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b"
+-
+ [[package]]
+ name = "equivalent"
+ version = "1.0.2"
+@@ -208,15 +173,6 @@ dependencies = [
+  "hashbrown",
+ ]
  
- [dependencies]
- glib-sys.workspace = true
--bilge = { version = "0.2.0" }
--bilge-impl = { version = "0.2.0" }
-+bitfield-struct = { version = "0.13" }
- bits = { path = "../../../bits" }
- common = { path = "../../../common" }
- util = { path = "../../../util" }
-diff --git a/rust/hw/char/pl011/src/registers.rs b/rust/hw/char/pl011/src/registers.rs
-index fa572811b29..a8ab8ad93dc 100644
---- a/rust/hw/char/pl011/src/registers.rs
-+++ b/rust/hw/char/pl011/src/registers.rs
-@@ -5,12 +5,16 @@
- //! Device registers exposed as typed structs which are backed by arbitrary
- //! integer bitmaps. [`Data`], [`Control`], [`LineControl`], etc.
+-[[package]]
+-name = "itertools"
+-version = "0.11.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+-dependencies = [
+- "either",
+-]
+-
+ [[package]]
+ name = "libc"
+ version = "0.2.162"
+@@ -274,29 +230,6 @@ version = "0.5.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e"
  
-+// rustc prefers "constant-like" enums to use upper case names, but that
-+// is inconsistent in its own way.
-+#![allow(non_upper_case_globals)]
-+
- // For more detail see the PL011 Technical Reference Manual DDI0183:
- // https://developer.arm.com/documentation/ddi0183/latest/
+-[[package]]
+-name = "proc-macro-error"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c"
+-dependencies = [
+- "proc-macro-error-attr",
+- "proc-macro2",
+- "quote",
+- "version_check",
+-]
+-
+-[[package]]
+-name = "proc-macro-error-attr"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "version_check",
+-]
+-
+ [[package]]
+ name = "proc-macro2"
+ version = "1.0.95"
+@@ -529,12 +462,6 @@ version = "0.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "852e951cb7832cb45cb1169900d19760cfa39b82bc0ea9c0e5a14ae88411c98b"
  
--use bilge::prelude::*;
-+use bitfield_struct::bitfield;
- use bits::bits;
--use migration::{impl_vmstate_bitsized, impl_vmstate_forward};
-+use migration::impl_vmstate_forward;
+-[[package]]
+-name = "version_check"
+-version = "0.9.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
+-
+ [[package]]
+ name = "winnow"
+ version = "1.0.4"
+diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
+index 63d78b4f275..7409b592a2c 100644
+--- a/rust/migration/src/vmstate.rs
++++ b/rust/migration/src/vmstate.rs
+@@ -11,8 +11,7 @@
+ //!   migration format for a struct.  This is based on the [`VMState`] trait,
+ //!   which is defined by all migratable types.
+ //!
+-//! * [`impl_vmstate_forward`](crate::impl_vmstate_forward),
+-//!   [`impl_vmstate_bitsized`](crate::impl_vmstate_bitsized), and
++//! * [`impl_vmstate_forward`](crate::impl_vmstate_forward) and
+ //!   [`impl_vmstate_struct`](crate::impl_vmstate_struct), which help with the
+ //!   definition of the [`VMState`] trait (respectively for transparent structs,
+ //!   nested structs and `bilge`-defined types)
+@@ -90,7 +89,7 @@ const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> { ::core::marker:
+ /// The contents of this trait go straight into structs that are parsed by C
+ /// code and used to introspect into other structs.  Generally, you don't need
+ /// to implement it except via macros that do it for you, such as
+-/// `impl_vmstate_bitsized!`.
++/// `impl_vmstate_forward!`.
+ pub unsafe trait VMState {
+     /// The base contents of a `VMStateField` (minus the name and offset) for
+     /// the type that is implementing the trait.
+@@ -133,9 +132,8 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
+ /// * an array of any of the above
+ ///
+ /// In order to support other types, the trait `VMState` must be implemented
+-/// for them.  The macros [`impl_vmstate_forward`](crate::impl_vmstate_forward),
+-/// [`impl_vmstate_bitsized`](crate::impl_vmstate_bitsized), and
+-/// [`impl_vmstate_struct`](crate::impl_vmstate_struct) help with this.
++/// for them.  The macros [`impl_vmstate_forward`](crate::impl_vmstate_forward)
++/// and [`impl_vmstate_struct`](crate::impl_vmstate_struct) help with this.
+ ///
+ /// [`BqlCell`]: ../../bql/cell/struct.BqlCell.html
+ /// [`BqlRefCell`]: ../../bql/cell/struct.BqlRefCell.html
+@@ -211,41 +209,6 @@ unsafe impl<$base> $crate::vmstate::VMState for $type where $base: $crate::vmsta
+ impl_vmstate_transparent!(common::Opaque<T> where T: VMState);
+ impl_vmstate_transparent!(std::mem::ManuallyDrop<T> where T: VMState);
  
- /// Offset of each register from the base memory address of the device.
- #[doc(alias = "offset")]
-@@ -78,14 +82,18 @@ pub enum RegisterOffset {
- /// The `UARTRSR` register is updated only when a read occurs
- /// from the `UARTDR` register with the same status information
- /// that can also be obtained by reading the `UARTDR` register
--#[bitsize(8)]
--#[derive(Clone, Copy, Default, DebugBits, FromBits)]
-+#[bitfield(u8)]
- pub struct Errors {
-     pub framing_error: bool,
-     pub parity_error: bool,
-     pub break_error: bool,
-     pub overrun_error: bool,
--    _reserved_unpredictable: u4,
-+    #[bits(4)]
-+    _reserved_unpredictable: u8,
-+}
-+
-+impl Errors {
-+    pub const BREAK: Self = Errors::new().with_break_error(true);
- }
- 
- /// Data Register, `UARTDR`
-@@ -93,19 +101,18 @@ pub struct Errors {
- /// The `UARTDR` register is the data register; write for TX and
- /// read for RX. It is a 12-bit register, where bits 7..0 are the
- /// character and bits 11..8 are error bits.
--#[bitsize(32)]
--#[derive(Clone, Copy, Default, DebugBits, FromBits)]
-+#[bitfield(u32)]
- #[doc(alias = "UARTDR")]
- pub struct Data {
-     pub data: u8,
-+    #[bits(8)]
-     pub errors: Errors,
-     _reserved: u16,
- }
--impl_vmstate_bitsized!(Data);
-+impl_vmstate_forward!(Data);
- 
- impl Data {
--    // bilge is not very const-friendly, unfortunately
--    pub const BREAK: Self = Self { value: 1 << 10 };
-+    pub const BREAK: Self = Self::new().with_errors(Errors::BREAK);
- }
- 
- /// Receive Status Register / Error Clear Register, `UARTRSR/UARTECR`
-@@ -119,13 +126,14 @@ impl Data {
- /// and UARTECR for writes, but really it's a single error status
- /// register where writing anything to the register clears the error
- /// bits.
--#[bitsize(32)]
--#[derive(Clone, Copy, DebugBits, FromBits)]
-+#[bitfield(u32)]
- pub struct ReceiveStatusErrorClear {
-+    #[bits(8)]
-     pub errors: Errors,
--    _reserved_unpredictable: u24,
-+    #[bits(24)]
-+    _reserved_unpredictable: u32,
- }
--impl_vmstate_bitsized!(ReceiveStatusErrorClear);
-+impl_vmstate_forward!(ReceiveStatusErrorClear);
- 
- impl ReceiveStatusErrorClear {
-     pub fn set_from_data(&mut self, data: Data) {
-@@ -138,14 +146,7 @@ pub fn reset(&mut self) {
-     }
- }
- 
--impl Default for ReceiveStatusErrorClear {
--    fn default() -> Self {
--        0.into()
--    }
+-#[macro_export]
+-macro_rules! impl_vmstate_bitsized {
+-    ($type:ty) => {
+-        unsafe impl $crate::vmstate::VMState for $type {
+-            const BASE: $crate::bindings::VMStateField =
+-                                        <<<$type as ::bilge::prelude::Bitsized>::ArbitraryInt
+-                                          as ::bilge::prelude::Number>::UnderlyingType
+-                                         as $crate::vmstate::VMState>::BASE;
+-            const VARRAY_FLAG: $crate::bindings::VMStateFlags =
+-                                        <<<$type as ::bilge::prelude::Bitsized>::ArbitraryInt
+-                                          as ::bilge::prelude::Number>::UnderlyingType
+-                                         as $crate::vmstate::VMState>::VARRAY_FLAG;
+-        }
+-
+-        impl $crate::migratable::ToMigrationState for $type {
+-            type Migrated = <<$type as ::bilge::prelude::Bitsized>::ArbitraryInt
+-                                          as ::bilge::prelude::Number>::UnderlyingType;
+-
+-            fn snapshot_migration_state(&self, target: &mut Self::Migrated) -> Result<(), $crate::InvalidError> {
+-                *target = Self::Migrated::from(*self);
+-                Ok(())
+-            }
+-
+-            fn restore_migrated_state_mut(
+-                &mut self,
+-                source: Self::Migrated,
+-                version_id: u8,
+-            ) -> Result<(), $crate::InvalidError> {
+-                *self = Self::from(source);
+-                Ok(())
+-            }
+-        }
+-    };
 -}
 -
--#[bitsize(32)]
--#[derive(Clone, Copy, DebugBits, FromBits)]
-+#[bitfield(u32, default = false)]
- /// Flag Register, `UARTFR`
- ///
- /// This has the usual inbound RS232 modem-control signals, plus flags
-@@ -171,9 +172,10 @@ pub struct Flags {
-     pub transmit_fifo_empty: bool,
-     /// RI: Ring indicator
-     pub ring_indicator: bool,
--    _reserved_zero_no_modify: u23,
-+    #[bits(23)]
-+    _reserved_zero_no_modify: u32,
- }
--impl_vmstate_bitsized!(Flags);
-+impl_vmstate_forward!(Flags);
+ // Scalar types using predefined VMStateInfos
  
- impl Flags {
-     pub fn reset(&mut self) {
-@@ -183,16 +185,14 @@ pub fn reset(&mut self) {
- 
- impl Default for Flags {
-     fn default() -> Self {
--        let mut ret: Self = 0.into();
-         // After reset TXFF, RXFF, and BUSY are 0, and TXFE and RXFE are 1
--        ret.set_receive_fifo_empty(true);
--        ret.set_transmit_fifo_empty(true);
--        ret
-+        Self::from(0)
-+            .with_receive_fifo_empty(true)
-+            .with_transmit_fifo_empty(true)
-     }
- }
- 
--#[bitsize(32)]
--#[derive(Clone, Copy, DebugBits, FromBits)]
-+#[bitfield(u32)]
- /// Line Control Register, `UARTLCR_H`
- #[doc(alias = "UARTLCR_H")]
- pub struct LineControl {
-@@ -201,48 +201,46 @@ pub struct LineControl {
-     /// PEN: Parity enable
-     pub parity_enabled: bool,
-     /// EPS: Even parity select
-+    #[bits(1)]
-     pub parity: Parity,
-     /// STP2: Two stop bits select
-     pub two_stops_bits: bool,
-     /// FEN: Enable FIFOs
-+    #[bits(1)]
-     pub fifos_enabled: Mode,
-     /// WLEN: Word length in bits
-     /// b11 = 8 bits
-     /// b10 = 7 bits
-     /// b01 = 6 bits
-     /// b00 = 5 bits.
-+    #[bits(2)]
-     pub word_length: WordLength,
-     /// SPS Stick parity select
-     pub sticky_parity: bool,
-     /// 31:8 - Reserved, do not modify, read as zero.
--    _reserved_zero_no_modify: u24,
-+    #[bits(24)]
-+    _reserved_zero_no_modify: u32,
- }
--impl_vmstate_bitsized!(LineControl);
-+impl_vmstate_forward!(LineControl);
- 
- impl LineControl {
-     pub fn reset(&mut self) {
-         // All the bits are cleared to 0 when reset.
--        *self = 0.into();
-+        *self = Self::default();
-     }
- }
- 
--impl Default for LineControl {
--    fn default() -> Self {
--        0.into()
--    }
--}
--
--#[bitsize(1)]
--#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
- /// `EPS` "Even parity select", field of [Line Control
- /// register](LineControl).
-+#[repr(u8)]
-+#[derive(Clone, Copy, Debug, Eq, PartialEq, common::TryInto)]
- pub enum Parity {
-     Odd = 0,
-     Even = 1,
- }
- 
--#[bitsize(1)]
--#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-+#[repr(u8)]
-+#[derive(Clone, Copy, Debug, Eq, PartialEq, common::TryInto)]
- /// `FEN` "Enable FIFOs" or Device mode, field of [Line Control
- /// register](LineControl).
- pub enum Mode {
-@@ -253,8 +251,8 @@ pub enum Mode {
-     FIFO = 1,
- }
- 
--#[bitsize(2)]
--#[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-+#[repr(u8)]
-+#[derive(Clone, Copy, Debug, Eq, PartialEq, common::TryInto)]
- #[allow(clippy::enum_variant_names)]
- /// `WLEN` Word length, field of [Line Control register](LineControl).
- ///
-@@ -276,9 +274,8 @@ pub enum WordLength {
- /// The `UARTCR` register is the control register. It contains various
- /// enable bits, and the bits to write to set the usual outbound RS232
- /// modem control signals. All bits reset to 0 except TXE and RXE.
--#[bitsize(32)]
-+#[bitfield(u32, default = false)]
- #[doc(alias = "UARTCR")]
--#[derive(Clone, Copy, DebugBits, FromBits)]
- pub struct Control {
-     /// `UARTEN` UART enable: 0 = UART is disabled.
-     pub enable_uart: bool,
-@@ -286,9 +283,10 @@ pub struct Control {
-     /// QEMU does not model this.
-     pub enable_sir: bool,
-     /// `SIRLP` SIR low-power IrDA mode. QEMU does not model this.
--    pub sir_lowpower_irda_mode: u1,
-+    pub sir_lowpower_irda_mode: bool,
-     /// Reserved, do not modify, read as zero.
--    _reserved_zero_no_modify: u4,
-+    #[bits(4)]
-+    _reserved_zero_no_modify: u8,
-     /// `LBE` Loopback enable: feed UART output back to the input
-     pub enable_loopback: bool,
-     /// `TXE` Transmit enable
-@@ -310,21 +308,19 @@ pub struct Control {
-     /// 31:16 - Reserved, do not modify, read as zero.
-     _reserved_zero_no_modify2: u16,
- }
--impl_vmstate_bitsized!(Control);
-+impl_vmstate_forward!(Control);
- 
- impl Control {
-     pub fn reset(&mut self) {
--        *self = 0.into();
--        self.set_enable_receive(true);
--        self.set_enable_transmit(true);
-+        *self = Self::default();
-     }
- }
- 
- impl Default for Control {
-     fn default() -> Self {
--        let mut ret: Self = 0.into();
--        ret.reset();
--        ret
-+        Self::from(0)
-+            .with_enable_receive(true)
-+            .with_enable_transmit(true)
-     }
- }
- 
+ macro_rules! impl_vmstate_scalar {
 diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index a37acab524e..5d52644df9c 100755
+index 5d52644df9c..399b2d99e83 100755
 --- a/scripts/archive-source.sh
 +++ b/scripts/archive-source.sh
-@@ -34,6 +34,7 @@ subprojects=(
+@@ -32,19 +32,13 @@ subprojects=(
+   attrs-0.2-rs
+   berkeley-softfloat-3
    berkeley-testfloat-3
-   bilge-0.2-rs
-   bilge-impl-0.2-rs
-+  bitfield-0.9-rs
-   either-1-rs
+-  bilge-0.2-rs
+-  bilge-impl-0.2-rs
+   bitfield-0.9-rs
+-  either-1-rs
    foreign-0.3-rs
    glib-sys-0.21-rs
+-  itertools-0.11-rs
+   keycodemapdb
+   libc-0.2-rs
+   libvfio-user
+   probe-0.5-rs
+-  proc-macro-error-1-rs
+-  proc-macro-error-attr-1-rs
+   proc-macro2-1-rs
+   quote-1-rs
+   syn-2-rs
 diff --git a/scripts/make-release b/scripts/make-release
-index 5f54b0e7939..fc0dc4bceb8 100755
+index fc0dc4bceb8..b5944d39286 100755
 --- a/scripts/make-release
 +++ b/scripts/make-release
-@@ -42,6 +42,7 @@ fi
+@@ -41,10 +41,7 @@ fi
+ # Only include wraps that are invoked with subproject()
  SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
    berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs attrs-0.2-rs bilge-0.2-rs
-   bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-+  bilge-impl-0.2-rs bitfield-0.9-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-   libc-0.2-rs probe-0.5-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
+-  bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
+-  bilge-impl-0.2-rs bitfield-0.9-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
+-  libc-0.2-rs probe-0.5-rs proc-macro2-1-rs
+-  proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
++  bitfield-0.9-rs foreign-0.3-rs libc-0.2-rs probe-0.5-rs proc-macro2-1-rs quote-1-rs
    syn-2-rs unicode-ident-1-rs"
+ 
+ src="$1"
 diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index 011ce4dc3b7..984f5865dc8 100644
+index 984f5865dc8..3559b2c758f 100644
 --- a/subprojects/.gitignore
 +++ b/subprojects/.gitignore
-@@ -11,6 +11,7 @@
+@@ -7,19 +7,12 @@
+ /libvfio-user
+ /slirp
+ /anyhow-*
+-/arbitrary-int-*
  /attrs-*
- /bilge-*
- /bilge-impl-*
-+/bitfield-struct-*
- /either-*
+-/bilge-*
+-/bilge-impl-*
+ /bitfield-struct-*
+-/either-*
  /foreign-*
  /glib-sys-*
-diff --git a/subprojects/bitfield-struct-0.13-rs.wrap b/subprojects/bitfield-struct-0.13-rs.wrap
-new file mode 100644
-index 00000000000..dcffe0abd83
---- /dev/null
-+++ b/subprojects/bitfield-struct-0.13-rs.wrap
-@@ -0,0 +1,6 @@
-+[wrap-file]
-+directory = bitfield-struct-0.13.0
-+source_url = https://crates.io/api/v1/crates/bitfield-struct/0.13.0/download
-+source_filename = bitfield-struct-0.13.0.tar.gz
-+source_hash = 3ca6739863c590881f038d033a146c51ddae239186a4327014839fd864f44ed5
-+method = cargo
+-/itertools-*
+ /libc-*
+ /probe-*
+-/proc-macro-error-*
+-/proc-macro-error-attr-*
+ /proc-macro*
+ /quote-*
+ /syn-*
+diff --git a/subprojects/arbitrary-int-1-rs.wrap b/subprojects/arbitrary-int-1-rs.wrap
+deleted file mode 100644
+index 5cf4b11e4a3..00000000000
+--- a/subprojects/arbitrary-int-1-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = arbitrary-int-1.2.7
+-source_url = https://crates.io/api/v1/crates/arbitrary-int/1.2.7/download
+-source_filename = arbitrary-int-1.2.7.tar.gz
+-source_hash = c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
+diff --git a/subprojects/bilge-0.2-rs.wrap b/subprojects/bilge-0.2-rs.wrap
+deleted file mode 100644
+index cff10f6710d..00000000000
+--- a/subprojects/bilge-0.2-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = bilge-0.2.0
+-source_url = https://crates.io/api/v1/crates/bilge/0.2.0/download
+-source_filename = bilge-0.2.0.tar.gz
+-source_hash = dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
+deleted file mode 100644
+index f8963eba73f..00000000000
+--- a/subprojects/bilge-impl-0.2-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = bilge-impl-0.2.0
+-source_url = https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
+-source_filename = bilge-impl-0.2.0.tar.gz
+-source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
+diff --git a/subprojects/either-1-rs.wrap b/subprojects/either-1-rs.wrap
+deleted file mode 100644
+index 51c97df1531..00000000000
+--- a/subprojects/either-1-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = either-1.12.0
+-source_url = https://crates.io/api/v1/crates/either/1.12.0/download
+-source_filename = either-1.12.0.tar.gz
+-source_hash = 3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
+diff --git a/subprojects/itertools-0.11-rs.wrap b/subprojects/itertools-0.11-rs.wrap
+deleted file mode 100644
+index e123ab389a2..00000000000
+--- a/subprojects/itertools-0.11-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = itertools-0.11.0
+-source_url = https://crates.io/api/v1/crates/itertools/0.11.0/download
+-source_filename = itertools-0.11.0.tar.gz
+-source_hash = b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
+diff --git a/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build b/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
+deleted file mode 100644
+index 52a244d2b16..00000000000
+--- a/subprojects/packagefiles/proc-macro-error-1-rs/meson/meson.build
++++ /dev/null
+@@ -1,3 +0,0 @@
+-extra_args = [
+-    '--cfg', 'use_fallback',
+-]
+diff --git a/subprojects/proc-macro-error-1-rs.wrap b/subprojects/proc-macro-error-1-rs.wrap
+deleted file mode 100644
+index e57921bfadc..00000000000
+--- a/subprojects/proc-macro-error-1-rs.wrap
++++ /dev/null
+@@ -1,10 +0,0 @@
+-[wrap-file]
+-directory = proc-macro-error-1.0.4
+-source_url = https://crates.io/api/v1/crates/proc-macro-error/1.0.4/download
+-source_filename = proc-macro-error-1.0.4.tar.gz
+-source_hash = da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c
+-method = cargo
+-patch_directory = proc-macro-error-1-rs
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v3
+diff --git a/subprojects/proc-macro-error-attr-1-rs.wrap b/subprojects/proc-macro-error-attr-1-rs.wrap
+deleted file mode 100644
+index 456d2c2b6d4..00000000000
+--- a/subprojects/proc-macro-error-attr-1-rs.wrap
++++ /dev/null
+@@ -1,9 +0,0 @@
+-[wrap-file]
+-directory = proc-macro-error-attr-1.0.4
+-source_url = https://crates.io/api/v1/crates/proc-macro-error-attr/1.0.4/download
+-source_filename = proc-macro-error-attr-1.0.4.tar.gz
+-source_hash = a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869
+-method = cargo
+-
+-# bump this version number on every change to meson.build or the patches:
+-# v2
 -- 
 2.55.0
 
