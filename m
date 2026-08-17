@@ -4,117 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68597C5B572
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F22C5DF66
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 16:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvzlE-00076i-L7; Mon, 17 Aug 2026 12:00:28 -0400
+	id 1wvzoS-0001tK-1j; Mon, 17 Aug 2026 12:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvzl3-00074e-BR
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:23 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wvzl1-00065T-5v
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:00:16 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-836c4474028so34925827b3.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 09:00:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786982413; cv=none;
- d=google.com; s=arc-20260327;
- b=aQ2/WsILpYUVqFiHNR170ZXisCp1mvu+qWRSSW37xZlw3uTk11OfroTbLyral9pUNT
- 54mUsrb4q7umN2hrYXat11c+gOroTj5E/eABZKinH5JvqWUNt8q5DFZDM0C1JySTMQBC
- NmFThk+vMraUrn9rVTFSQcxPYesJxS8L8/hB0bfGQPX5bWxI3mQWRJMSOSKEBP+AyWV+
- 2RumVCPdkV6ahwjk/FIDelSv8W+MfBiLZmsCAoibN/cAX7MW91p98U6zqzpD5Beom+kp
- 9MO6/Z0FllPunnFGg4XEKB3YQi1yTiPASbJrPnasvDloPMJ7yibihNDkw2ZR5TOB+7Te
- +1yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
- fh=VKhT/ROQfPaxqvsqCO+NJenwE/mNmOPRDLNy9Z8TYvw=;
- b=VKimqEJohjvIZr6LNvsUSH5RSYudkh4ryOoH95d+eh55XXQFv3aIjK6A6E2+iT4Sax
- CdLQOqaS0igcuNQy4DcWKXutAc5PVyYAqWaPZtQYqk/pJROvNaAgM059rmCK/XBHcOkc
- P83kl0MMfA96chuGFkrnhRp8kSHe4nLhlD1srq1eovt1VUSpKMFSd1YxIDX0JUp3NW54
- +aKAJ9oREMNkL6q/2hD9XP/k+rlLX/IXOS5/6TOl6AOH6k/5tNaIssrxycgy7SE5I6DU
- J8VeZoCkc1rDoyVfnnpHhtlvbIuebB8rq6wrfx8lDrHqXnoTRMohpoT5SjyZPlN+35EO
- OvhA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mayuresh.chitale@oss.qualcomm.com>)
+ id 1wvzoH-0001q0-4u
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:03:37 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mayuresh.chitale@oss.qualcomm.com>)
+ id 1wvzoF-0006uj-5j
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 12:03:36 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HFYpSC2666316
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 16:03:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=iUpfIZkbkjQh1GSKm3Neq9+gpYS9Taf5qFg
+ uVKBvvF8=; b=fqFBN15jzkvtGQH5/4FhHu/UJMJYtin5bZxFRt2ktkj4yhylY6K
+ 530QdN85uZWQUSC23nQSSHkT3V+H4YQh/UeVhgV7dt5GY1Z+vw0p2CUAjRKXn8uo
+ Nc4cr9WRIQK91P/9WWrS1zd/zl2BjuwmvLy/RXhfU0J7ntN9NBiaYh636BwXk5xX
+ z4gayHwkGEzdWceKZgIScPwjY4YGIWjO+J9oN7CWaFV3edGaRLZA2u5NN8K0z+89
+ nf09hz0r9lbPIj7qU5KosOr6rK8qa1eTy25BUcVjpu6gFHNeAwtbk35g5HfmHYNo
+ 71TXMH6Aafa3BMmQ3w/qorkrdBy+ZjT276A==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g3vghtgrt-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 16:03:31 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-84a251c2e3eso34389b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 09:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1786982413; x=1787587213; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
- b=TcOVyzQx/A4fKoxi2qiQmKdqpiqqJ0jt5yoivbPIis5mhs3vBRGJAF9nQjJVQ+LlXH
- N0/MmiCeRQT/uC66ghiJGCpFNKBQukXlI5uq/nRZGf2rIdbAvTU5gb5TMAGGUHmGnr4Q
- InFyePsAMsEktTAuaL40BQYWXGDt5n8H4JdoF1ntwPkDP8hDVWHzeoHBqrzTTLM42VDM
- DlEeoUrdYS0T70Befcioyj9vuYV7J9NS4cudlcZh9E1XrUtJCC/GHSIkg4+rD9eXXtEf
- gqX3pMv6Wizaj19/9q5su5Qjite/GaH1mWWD5rtP3NqGlsCSg1Ct09ugScfqSesu1coa
- u4JA==
+ d=oss.qualcomm.com; s=google; t=1786982611; x=1787587411; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iUpfIZkbkjQh1GSKm3Neq9+gpYS9Taf5qFguVKBvvF8=;
+ b=hDauSGU+ywfX2zJXugjRJmf55S9nA5kmtda5Wa6r9+L5q1i6ib1MwTbH2E1N2g2fGv
+ EIxQhKRiH+7Y7T662aZlK0k3UoOLX/DP1OB/6wz7D/tGBJcgrc5Iw9zID4sF/tC7Gtp+
+ Jo8e00r+d64FBzSWbw62dpFBT2ADIyu1cyXL4mXwiNI7iHdQQvWFzhhpoX2i22tZ+mNx
+ ImbYSax06R3oXhNtSauynOH6M5K2/lHN7HpMt7UEB7cswOJryw/z+GLCTSHcnbkrpua+
+ fEGSatBegTs6oex11TPIc4c6abTa5hGb4waVevIa8YsxFhdACdMAewMRrkTo5SwDr1pP
+ qZeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1786982413; x=1787587213;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=u0v20WHATN4inOkpw4dTSEM5J6s+dmnOJCNOR4bt+A0=;
- b=dabB3K88AixqTQiiSNP+edf3psf+eDiLHQFZ5r8QChF+PsLpNHvm59y6d90kmBnp5e
- guwkMf/3HzLl5ZWmDgXHfmnqYwCpaalcqP3RS+I6toLqOVM4EuO0xvSF26C5DS+WrCXf
- kyRpPrNHl0ES4l/BV8dowA/MRVdhj9ZBu8dqT94191F9yXA9HNv8xMb2GDaWm0PpeABB
- SJxeaPqImEBn8Jz6zT6Cu8ngI/TdUstetLYt70kYAtSCbYDdxvIqmpFh7wH+tDXrscNi
- BWmNl4ELfw2CCo+IBkA7Pw7fcRQlHcRxcNnPwT4qYXNtLjIVdXmRg8ZqdBXfzx0rX5RC
- FSRQ==
+ d=1e100.net; s=20251104; t=1786982611; x=1787587411;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iUpfIZkbkjQh1GSKm3Neq9+gpYS9Taf5qFguVKBvvF8=;
+ b=YDv3dfiSkgKRGki179AqP0J1fEVVbD8qqDBDlvEcKpZiizMrBmOf5YoTQW+de1iGgc
+ pGvnzLHofDFUW7dfXcNDgkx5fwy69D2ztJiK25VrdjJYWS9N4Ui1BiK1p4rtAx802rFX
+ RczD29QWUIWharb6tQLTAg2yf9AV6zvNC9vO0aTaVQ2BbiZD+gE+siA4tNPGxd++Uyrn
+ FHO5UO+GrJt2HJT/D/dUBCcsrMrJpydKyPv05Youx90MN5o3NAlHrABJFThdOCQwWUdn
+ yp0oaxYLAMGW/23ahAGgmnHZ4HAdiq9d6J553/yxjbakBaU8hpgIQiCUbBBad2FH0yCK
+ cqig==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrAyWC4I43v8EQWHLmG/Sc26RxgBjfuB6pxNazvJNO/SfgkQgEalrRd8K+5zhj7p3YtuQybWG/XNZJB@nongnu.org
-X-Gm-Message-State: AOJu0YyCQ8gu0CpcSAR/Q1wmtp4ecp9wLKK9Dhawkrsj2V2h2dK2JXX+
- f3LTxcgQ+o80Wvro+Ysv/WChTYBJH/7he0MJw7qDINxhcaHCGJ8Y+FdGxfkw4J1dKeNVIbL7XHx
- W/8WUlaIzngxMm+wCLsiX/QHn4cyLJxq7LeEjscdkpw==
-X-Gm-Gg: AR+sD12nIdUHR0327v/Fe9wHQJ3yx9+IpPinhtnaLYJn1LzmfzS2qQhGDa/ZKY9aMXN
- ClWeNndEsW8xVcq6RCxVjFDNXwVC5vnICe+UIRC64stn3SCQE0HymM/0aVcu2pJdMU+ppKmcxEo
- 9jAU5VXT6nzoBBFnbrhEtWxqkbA8V3GYywewFRjCGswCDo3ehGQcL/vnGVnPsYYARRAgaNyWfdu
- F0IYYyDjrMLrtsvh9CraAHcne7BY8hWUhCYr/I4OWSaqma63xoo8blsmTwQ5Pk7tDMdgAuedz43
- WyNgJYTIAKFaFfQnN7jymLYEcHdeRRFIA0oOksQWX0YgRMd+tYiRqZGdhFlrM2hARl2hFRGgpAV
- AqsPsUuln0VmODE7ahkRR4CHryNAd
-X-Received: by 2002:a05:690c:a4c8:b0:81d:a1e5:a4d7 with SMTP id
- 00721157ae682-8370c93d31amr76988627b3.5.1786982413325; Mon, 17 Aug 2026
- 09:00:13 -0700 (PDT)
+ AHgh+RokfNER4F6Z81a9d/xfBFifO6WWsFxYG4Xb2uZc7CMoj/lb1MJcwiVhKQGIJhKakYBwYNjEQcBN94EQ@nongnu.org
+X-Gm-Message-State: AOJu0YxUNZcvphJwhO7zWLrPNdiTQrXK5EY4+BqgE4IuXfJVCO113cro
+ OQUTygE1relGM1lr+pSVTe9oBGpVI96XRTTMmSL9e7PIsg7E9oTksYj17QxlNiscuLiwuOE0xNY
+ CoisanDwFLW59Fa5SiFBgblUoc+8WkFLDPPd5JugdU+7sLGclZ4fpAQ1Kcw==
+X-Gm-Gg: AR+sD10xg15r2bGQ+qQ7Ye0lVC81O9HLe1a0EpVDfy+YU0GjDckvbc5xUYVW9yia3Xx
+ jebYVvUJpepEcjBdl7msfglFkVnzXOW5HEU53MgzpryjhNE96/TqldokvVxCNlagHLbrq1FR2V/
+ PsSRfEshXnKxWjo2lY8iejw4xzTFm9dDqTGOy0pSHVV3o18+Xcn1HFtPI0ATFgpkpd6csaCDvZk
+ 5klP6lKuuBFTvz8MDVc1RjyE8948c9RzIjSdCIcnenVTh/Zd43yUcNPuKtOWWT4GjUKtQ6WsVyq
+ qaxPP7lL7fqYeAmZaBYJaFXe772GaLh0Lt4rvGjg2sc/JGONN7s4JMiD8h70Xo+T5npCv/Ajl/d
+ hjvEK7qOPB4OesdhxvN+DE3n0k4Gww6qeRuTBQcs4n4C6LmZQnl7laIDZN1lEtkHzLZdldOEsGX
+ 0SDYTNMAULGpcmwiroi9YzNgt4lg==
+X-Received: by 2002:a05:6a00:2314:b0:84f:df11:b78e with SMTP id
+ d2e1a72fcca58-851bc2351d9mr141444b3a.2.1786982610931; 
+ Mon, 17 Aug 2026 09:03:30 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2314:b0:84f:df11:b78e with SMTP id
+ d2e1a72fcca58-851bc2351d9mr141397b3a.2.1786982610415; 
+ Mon, 17 Aug 2026 09:03:30 -0700 (PDT)
+Received: from hu-mchitale-blr.qualcomm.com
+ (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+ by smtp.googlemail.com with ESMTPSA id
+ d2e1a72fcca58-851b6f8c0f6sm545923b3a.39.2026.08.17.09.03.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Aug 2026 09:03:29 -0700 (PDT)
+From: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>
+Cc: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: [RFC PATCH 0/2] RISC-V Sspesa: QEMU model support
+Date: Mon, 17 Aug 2026 21:33:15 +0530
+Message-ID: <20260817160321.3313698-1-mayuresh.chitale@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260813181640.6537-1-philmd@oss.qualcomm.com>
- <20260813181640.6537-9-philmd@oss.qualcomm.com>
- <0143f26e-eb64-4924-8e76-3b6ce66fe6db@redhat.com>
-In-Reply-To: <0143f26e-eb64-4924-8e76-3b6ce66fe6db@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 17 Aug 2026 17:00:01 +0100
-X-Gm-Features: AcwNN1WKg9kcvA4JNKRjNxIc1m-gB0o4nyQG1KVRXlHPNyw8dOI79_GwpnDCC_k
-Message-ID: <CAFEAcA9CzSeOKHiPdwUcowYhiSs2tcT0OR_j6mnyvykgMoaZLw@mail.gmail.com>
-Subject: Re: [PATCH 08/16] cpus: Slightly improve *run_on_cpu() docstrings
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>, Alexander Graf <agraf@csgraf.de>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, kvm@vger.kernel.org, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=P9gKQCAu c=1 sm=1 tr=0 ts=6a8330d3 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=NEAV23lmAAAA:8
+ a=OJFGyuVhfV-0zpwyQK8A:9 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfX94Wmaja15zxp
+ XtuWhTNfJC/vDe8eob+MP55GUbXmiUSaryLndXpy/J6bxJ19LJheCkFFee3pniMD2m2L3Nb76ed
+ IZBzBNFmM8Dw7+Sl0T6eXY2SNV1RFog=
+X-Proofpoint-ORIG-GUID: I8MLp0Mf3LwnbYzgsk2TTecOPOqxozUk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE3MDEyMyBTYWx0ZWRfXxviVi7yOufhS
+ mftGN0xHA1lgy2466axKW/7RMwnRecU1L3stHjMholqdaxXJVdbNwx254VZDxwimqMpFOx59Rcr
+ 9REj+gRB6XxqcI6JJnFXhp+XczUd/h+WuzrJOsgSEBcgS+BBLYdLRiH7g4O2O/NHMJuh5c+lc3W
+ 0NA8REkWPKJA3+DiC5tJGkh6EyO4sGgqSiKQBAsJWFjjr2lO735UkoKsEhSlsdb/404S7duznKB
+ LBEx8THZ0JPMssun8dQJ8SZRNNK7e9cIAarJm+tHnyoMq/GHR0ce/xrzg2VJOdt0iddllmk8nGM
+ bbijtHHtc3FTzv/51bO33a+84V4UXEs961BLn7KXkN7de5BqaPGaJm4UNSCLhcMReQkLySjLhI1
+ ci3xGWrxCkS1k7NWyY8BJsizryJ7srSB4kvzEKXWdpQBbvvNBmC6MicPytnIl3Xxx/xKmBwhG7d
+ +CzmXaHg7IrvoZfbytA==
+X-Proofpoint-GUID: I8MLp0Mf3LwnbYzgsk2TTecOPOqxozUk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_02,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 spamscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608170123
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=mayuresh.chitale@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,70 +154,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Aug 2026 at 16:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 8/13/26 20:16, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Be a bit more precise mentioning BQL use and blocking calls.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> > ---
-> >   include/hw/core/cpu.h | 36 ++++++++++++++++++++----------------
-> >   1 file changed, 20 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> > index 183ef9f4ef2..d610f87abd3 100644
-> > --- a/include/hw/core/cpu.h
-> > +++ b/include/hw/core/cpu.h
-> > @@ -908,36 +908,40 @@ void do_run_on_cpu(CPUState *cpu, run_on_cpu_func=
- func, run_on_cpu_data data,
-> >                      QemuMutex *mutex);
-> >
-> >   /**
-> > - * run_on_cpu:
-> > + * run_on_cpu - Execute a function on a vCPU and wait for completion
-> >    * @cpu: The vCPU to run on.
-> >    * @func: The function to be executed.
-> >    * @data: Data to pass to the function.
-> >    *
-> > - * Schedules the function @func for execution on the vCPU @cpu.
-> > + * Schedules the function @func for execution on the vCPU @cpu and
-> > + * block until it completes.
-> > + *
-> > + * Note: The caller must hold the BQL.
-> >    */
-> >   void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data =
-data);
+This QEMU series adds support for the Sspesa (Precise Event
+Sample Attribution) extension.
 
+The first patch adds the 'sspesa' CPU property, the ISA string/DT entry,
+and the shpmspc/shpmsdata CSRs. It also allows menvcfg.CDE to be set
+when Sspesa is enabled, and adds 'ssplcofi' which is implied by Sspesa
+so that it is advertised automatically. The second patch captures the
+overflowing counter ID in shpmsdata at overflow time and latches shpmspc
+with the interrupted instruction address at LCOFI delivery
 
+Note: this series applies on top of the previously posted fix
+"target/riscv: Fix LCOFI masking in sie/sip/mvip", which is required for
+counter-overflow interrupts to be delivered and cleared correctly.
 
-> > +/**
-> > + * async_safe_run_on_cpu - Queue a function to run with other vCPUs pa=
-used
-> > + * @cpu: The vCPU to run on.
-> > + * @func: The function to be executed.
-> > + * @data: Data to pass to the function.
-> > + *
-> > + * Schedules the function @func for execution on the vCPU @cpu asynchr=
-onously.
-> > + * Unlike async_run_on_cpu(), all other vCPUs are paused while @func e=
-xecutes,
-> > + * ensuring @cpu has exclusive access to shared state.
->
-> Might as well mention that @func is run without the BQL taken and in
-> fact must not take it (see comment in process_queued_cpu_work()).
+Reproducing the full setup:
 
-We should also mention the massive bear-trap in the run_on_cpu()
-function, which is that (a) you must call it with the BQL and
-(b) it will *drop the BQL* during the course of execution, so the
-caller must be prepared for other threads etc to be able to
-reenter it, update state, etc between when it calls run_on_cpu()
-and when it returns.
+Sspesa support requires three projects: OpenSBI, Linux and QEMU. The
+matching branches are:
 
-(cf https://gitlab.com/qemu-project/qemu/-/work_items/1109 where
-we can segfault in the raspi display device, because
-memory_region_snapshot_and_clear_dirty() drops the BQL and allows
-the device code to be re-entered, much to its surprise.)
+  OpenSBI: https://github.com/mdchitale/opensbi/tree/riscv_sspesa_rfc_v1
+  Linux:   https://github.com/mdchitale/linux/tree/riscv_sspesa_rfc_v1
+  QEMU:    https://github.com/mdchitale/qemu/tree/riscv_sspesa_rfc_v1
 
-thanks
--- PMM
+To test Sspesa, build OpenSBI, Linux and QEMU from the branches above,
+then boot Linux with:
+
+  qemu-system-riscv64 -nographic -machine virt -smp 2 -m 2G \
+    -cpu rv64,sscofpmf=on,sspesa=on \
+    -bios /path/to/fw_dynamic.bin -kernel /path/to/Image \
+    -drive file=/path/to/rootfs.img,id=hd0,format=raw,if=none \
+    -device virtio-blk-device,drive=hd0 \
+    -append "root=/dev/vda rw console=ttyS0 earlycon=sbi"
+
+With all three in place, a counter overflow (e.g. 'perf record -e
+cycles -c 1000000 -- <workload>') is attributed using the
+hardware-provided sample PC (shpmspc) and counter ID (shpmsdata)
+instead of falling back to epc.
+
+Mayuresh Chitale (2):
+  target/riscv: Add Sspesa extension and sample CSRs
+  target/riscv: Capture Sspesa sample PC and counter ID on overflow
+
+ target/riscv/cpu.c                | 13 ++++-
+ target/riscv/cpu.h                |  6 +++
+ target/riscv/cpu_bits.h           |  7 +++
+ target/riscv/cpu_cfg_fields.h.inc |  2 +
+ target/riscv/tcg/cpu_helper.c     |  6 +++
+ target/riscv/tcg/csr.c            | 84 ++++++++++++++++++++++++++++++-
+ target/riscv/tcg/pmu.c            | 27 ++++++++++
+ 7 files changed, 142 insertions(+), 3 deletions(-)
+
+-- 
+2.43.0
+
 
