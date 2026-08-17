@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A348C5DF70
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C34C5DF66
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 10:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wvuqS-0001cM-Sy; Mon, 17 Aug 2026 06:45:33 -0400
+	id 1wvuqM-0001KL-7r; Mon, 17 Aug 2026 06:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqN-0001OE-Gf; Mon, 17 Aug 2026 06:45:27 -0400
+ id 1wvuq6-00010D-Lp; Mon, 17 Aug 2026 06:45:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wvuqL-00040P-Sv; Mon, 17 Aug 2026 06:45:27 -0400
+ id 1wvuq4-0003wS-TO; Mon, 17 Aug 2026 06:45:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1786963486; bh=x58XvNA4QlpQVRhOcqfXXga1ciHkdl3rOqoKp2BxRek=;
+ t=1786963486; bh=D2YeA560b4MVOhO0//AQ3+Ylgiz0yPiHoMGwp/0cbIg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=omiTGsiw9/GZLepF6vg93DzMfX4ndKe23+HXlW96c9QOctKPACv7J5bieROI4axCb
- bUti/jzO3jlMeDn9BNcQqGCf4zkXxRBw03BdNsdHoLjcIqlSvDrkrQcXSXKoYtT9CO
- cWz1kQppBOuZp/0dxquW4NzNtwjYMC0IdeIhgI5gBSWHjE4GLDB4PK3AbGRWCsz+7n
- bkbLOtWeAXD9YdX7z8RXCJzGoOyHbOi+VKHko5T3apk/uAjoYepTBXFMiDfO1R/qee
- /jJvRVVocKhEHpAPWzmdH5R+NIvrOwERrgOxRQBcwhliWUHrg6xMkONn1sG++vqvil
- rh28EQg4rwDwQ==
+ b=bWBYVrrgTrsbUnEaYmV2RkYu/BAUz55Jsi0pjz2SXb7RRj3tqubzGIQm82915RNwn
+ 3idlmfezWslzN2T69LmRbnw6NI98TyLVddyZAGPoxi8eTDsOWQ5c3T86EmAshK5Y1n
+ h4pRO8OFAbbVy8I/D+2q0hR/3PfaNea5JIqnGfvyou56g9db9W/7TdbB3tqQJRBX5o
+ qhVJI2ez8n0qLKMjDdTjAjROMrKNFPLyws/o9VN4TvZY/UOmdgB6INRDwU1yX4xwVV
+ WT9GqTJ/+bCeUDulcylhRYyx8Qb1n/Ay6HMfACJo3V4KPvAt3djW4DLg/ldA5H7azh
+ KcWsKG6iSmmzg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FADD1CBB71;
+ by isrv.corpit.ru (Postfix) with ESMTP id 46C451CBB66;
  Mon, 17 Aug 2026 13:44:46 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 816D840D202;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 47EF040D1F4;
  Mon, 17 Aug 2026 13:45:07 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 10E1530E5A; Mon, 17 Aug 2026 13:44:41 +0300 (MSK)
+ id E1B1E30E44; Mon, 17 Aug 2026 13:44:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v2 132/161] pc-bios/s390-ccw/virtio.c: Fix missing
- break for PCI notifications
-Date: Mon, 17 Aug 2026 13:42:46 +0300
-Message-ID: <20260817104344.2047346-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v2 121/161] linux-user: implement mount_setattr(2)
+Date: Mon, 17 Aug 2026 13:42:35 +0300
+Message-ID: <20260817104344.2047346-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260817125055@cover.tls.msk.ru>
@@ -73,33 +70,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Add a break after calling the PCI specific notification function instead of
-falling through to the default case.
+mount_setattr() was in the syscall tables but had no implementation, so
+guests always got -ENOSYS. systemd uses it when setting up per-unit
+credential mounts, which fails the affected units with EXIT_CREDENTIALS.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Fixes: d72fb5e6b2 ("pc-bios/s390-ccw: Add support for virtio-blk-pci IPL")
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Message-ID: <20260630141917.673995-3-jrossi@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 730173107a9849be18130cf65ff5254e1a63f7ad)
+struct mount_attr is an extensible struct like open_how, so handle it the
+same way openat2() does: reject sizes smaller than the ver0 struct and
+require any unknown trailing bytes to be zero. All of its fields are
+64-bit, and the MOUNT_ATTR_* and MS_* propagation values are identical on
+every target, so only the byte order needs fixing up.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 4713988da1c3ed7150014c87c2429d7a940b77c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index a448dc96e26..7883871033c 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -115,6 +115,7 @@ bool vring_notify(VRing *vr)
-         break;
-     case S390_IPL_TYPE_PCI:
-         vr->cookie = virtio_pci_notify(vr->id);
-+        break;
-     default:
-         return 1;
-     }
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 25ace05187a..e952f15d20d 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1737,3 +1737,6 @@
+ #ifdef TARGET_NR_fspick
+ { TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
+ #endif
++#ifdef TARGET_NR_mount_setattr
++{ TARGET_NR_mount_setattr, "mount_setattr", "%s(%d,%s,%d,%p,%d)", NULL, NULL },
++#endif
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 85ef8261e63..bac13aebec0 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -9675,6 +9675,13 @@ _syscall5(int, sys_move_mount, int, __from_dfd, const char *, __from_pathname,
+            int, __to_dfd, const char *, __to_pathname, unsigned int, flag)
+ #endif
+ 
++#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
++#define __NR_sys_mount_setattr __NR_mount_setattr
++_syscall5(int, sys_mount_setattr, int, dfd, const char *, path,
++          unsigned int, flags, struct mount_attr_ver0 *, uattr,
++          size_t, usize)
++#endif
++
+ #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+ #define __NR_sys_fsopen __NR_fsopen
+ _syscall2(int, sys_fsopen, const char *, fs_name, unsigned int, flags);
+@@ -14416,6 +14423,43 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         return do_map_shadow_stack(cpu_env, arg1, arg2, arg3);
+ #endif
+ 
++#if defined(TARGET_NR_mount_setattr) && defined(__NR_mount_setattr)
++    case TARGET_NR_mount_setattr:
++        {
++            struct mount_attr_ver0 attr = {};
++            abi_ulong usize = arg5;
++
++            if (usize < sizeof(struct target_mount_attr_ver0)) {
++                return -TARGET_EINVAL;
++            }
++            ret = copy_struct_from_user(&attr, sizeof(attr), arg4, usize);
++            if (ret) {
++                if (ret == -TARGET_E2BIG) {
++                    qemu_log_mask(LOG_UNIMP,
++                                  "Unimplemented mount_setattr mount_attr "
++                                  "size: " TARGET_ABI_FMT_lu "\n", usize);
++                }
++                return ret;
++            }
++            /*
++             * MOUNT_ATTR_* and the MS_* propagation flags have the same
++             * values on all targets, so only byte order needs fixing up.
++             */
++            attr.attr_set = tswap64(attr.attr_set);
++            attr.attr_clr = tswap64(attr.attr_clr);
++            attr.propagation = tswap64(attr.propagation);
++            attr.userns_fd = tswap64(attr.userns_fd);
++
++            p = lock_user_string(arg2);
++            if (!p) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(sys_mount_setattr(arg1, p, arg3, &attr,
++                                              sizeof(attr)));
++            unlock_user(p, arg2, 0);
++        }
++        return ret;
++#endif
+ #if defined(TARGET_NR_fsopen) && defined(__NR_fsopen)
+     case TARGET_NR_fsopen:
+         {
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index e033c7db341..e28853c93b0 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2770,6 +2770,19 @@ struct target_open_how_ver0 {
+     abi_ullong mode;
+     abi_ullong resolve;
+ };
++/* from kernel's include/uapi/linux/mount.h */
++struct mount_attr_ver0 {
++    uint64_t attr_set;
++    uint64_t attr_clr;
++    uint64_t propagation;
++    uint64_t userns_fd;
++};
++struct target_mount_attr_ver0 {
++    abi_ullong attr_set;
++    abi_ullong attr_clr;
++    abi_ullong propagation;
++    abi_ullong userns_fd;
++};
+ #ifndef RESOLVE_NO_MAGICLINKS
+ #define RESOLVE_NO_MAGICLINKS   0x02
+ #endif
 -- 
 2.47.3
 
