@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5DBC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E3FC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwSYv-0006gA-Bp; Tue, 18 Aug 2026 18:45:41 -0400
+	id 1wwSZO-0006lq-Ac; Tue, 18 Aug 2026 18:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwSYm-0006fi-NN
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:45:34 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wwSZL-0006kI-Es
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:46:07 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwSYk-0002YU-AF
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:45:32 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2cf6d65d8a7so4593885ad.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:45:28 -0700 (PDT)
+ id 1wwSZK-0002mS-1f
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:46:07 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38759bcd877so575052a91.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787093127; x=1787697927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787093164; x=1787697964; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ECXgh/XGnYTaDhimmZJpfReEB9Qsfw0LsOi1GbJ+Sm0=;
- b=CVHPImX9PwWVpkLD0+DRJz1nHc1XeICr8eafaPyYkXZlpcne5wNd2g28Www67XTIHX
- Ulq89+/w9ojTVGjzlF5guYhih1Mb9R2t27vYXEI7N7nu24kdo5Dcl2InTNxwC4VFJv1H
- R/lHv1rONm7PAw2VCGvBhOSIc2CLDhjomin1G8isOCrFm+MN1D8P3FA9IkXZNwBgcVCn
- 5QtG8+8+TurUL6tkymMpQy8IDWonMo8WjmhYF74Tg+qoSKZ4o/yX+IrGJlmWYNxmlzcd
- IQQkkvmm870Qm0Gw3CuosvNL2oh3KIQ+3iCGehGn664LPVp8WJmHKWwikA7yzo7gHxop
- Q/pg==
+ bh=oGuf/XaNaWykShGTpezI/jND/2tJdqSSD0ArGH3BQL8=;
+ b=O7eSdj2KM2jEfXXUWOfcRxJdkps2UUmMOk1hYUzdHLUba5p8wwMkPgT5AV+AAxJgQg
+ poFSHCD0IMpupFhkqUMYKDlDOtQce6rWUcEqikHHdxbhF/nJdXAjAXd+BylKUY6Bi8Y1
+ cTFUmYZCVbNjS/cIlavKZAR/2qFvWNe5oXqXjHfNx0CgmXnwmY4Pmx+UB2l2WAvtbRF6
+ hUlwlbmcS20VuGtHYGa+qb/8biEH5zZjGyIye+dPSGu1d7pCHQsBRx5/nQgi4Yy+TZlm
+ gFWAIXewVbyqbuZfQMYdhcGPglErCYz9B1ikMN8uIJcX8LFbDL6Yf5unho+LV+qm0xBi
+ lnpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787093127; x=1787697927;
+ d=1e100.net; s=20251104; t=1787093164; x=1787697964;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ECXgh/XGnYTaDhimmZJpfReEB9Qsfw0LsOi1GbJ+Sm0=;
- b=P/zIamvywdvUZixeAyk1p8FxXH2SeOKfM6//qlJJ96PrENBkggje+IdpNGXtJI4oqv
- voQCDAFVZEqOqqADtzXQb/LPLoW1hWRtmic9RUGSF+fg5V+cRdoC+0RQXEdt7/SLVuJP
- 1j3xNzwpkP71bxaheEBnVeUBIlbkr+gP63M/XSybdUBOchGUGVHidPE4cpF9av+jczIo
- jm/Avb+9OS5f+UsnPFyYbfUhWgvOVSrvNMMRyDGb7CgsPZA26GiiAl6ZBNP6a7XfkHX8
- iMbkBeE04yLMql5MWxun4INfYBy+12hxvTNCBqcTs4o2m//AChA9I3B9C7iVh46aIlpI
- HBPg==
+ bh=oGuf/XaNaWykShGTpezI/jND/2tJdqSSD0ArGH3BQL8=;
+ b=Ell34nn1LA/bVwadHcRQukEl90B4VdAGe6GXpAcLodiRfI/iAZifM1u5penl7HLJ/D
+ +9gxrcVA7YehalpPHyErtI4MTr1t2XkRVF9LUR6kmAp0TAA6Lv35TrnNkyHq72butoVO
+ 7S7rr5UrAf/FIRDjLRiojumhJU9FMy+BESndkBGh8uNUS2R6o3msLXKcrjeXwRSGfWg8
+ 7CCAfux5DXmO+QXcGcdFgwMS6qn/5D8M8jhkHn/BhvZW6mAq0+AGeNjkz7pVu45YgSe6
+ r2Lm50lo+UGWmVEI7moPpykqrJO1NEqmP83YC+vzwPeQR7zCvFPNWt4rxQimy1rFP0u8
+ kZkw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrbFXMXuYj7QJ6+TXwqYY6r7Yz5h5VEAexsN0N+D3Y0kmf739BDYgSWiKSSXfLKm5981KXaqUufwktd@nongnu.org
-X-Gm-Message-State: AOJu0Ywl60Ngvmh9oAdy4hYsB5zZTBmGv0AIpkwC6l3EoEkbndrj5k8w
- Gs/o08CNuvMZ5hpR519DoatXrdwnnN8GVS/izbxEuh+PIA06HWjBzSlA+Gr4k6z++uE=
-X-Gm-Gg: AR+sD12BTL3FX1UMXpFP1Q408m7pqAHo27YvyAGM2tUfmkbLW0bzDlP9g9yRWMsCNym
- c99e4eZ0nzLZDlOT91ErcRW2c+S8JStJYe4DdNbrB7l+2Bej2CNuTAKuHbYH1/z3Yua+gYLHhT2
- Dii7YoOPu+ULHBtoQRcyIOv3jI5wO4RfqJv3Jm0wIqDxvfwiaBkwv3bV5cz6rr5CpvomAsAGxR3
- 9tog9Lgpr+cG9lcvHKC5U2xqC/XuHKVc6VBcQ+GnBRpIE6JDzkSxc6HmFf2wzH1ACoCRIexlimi
- u+GmeVX7rLqdfg+wwZzxmW+FKnCIfJEbaKaMiTF13dRvKJwVhvE5mFU7owFduqStUwwF2KmVNbq
- TourTSmELwlcti8MOPjd4gLxo26TaaalnMECvNxJBPtKjXUnEBtUDxxjf9zkEE17IlF7Lqey6J2
- 2KMuhCAKjDTr72wEkRYJlZ5kejM/YEQxGFpUoV5WTSm0LpfvVAshkPU1ROoConFGAWm6+/2Rr0Y
- PdQw5Nc
-X-Received: by 2002:a17:902:ec91:b0:2ca:d9b3:715e with SMTP id
- d9443c01a7336-2d6017642c5mr3044165ad.9.1787093127503; 
- Tue, 18 Aug 2026 15:45:27 -0700 (PDT)
+ AHgh+RqlAP69pWh99oqOnBAQVHbI7J+1wokXvDAeCspQPoBu2xEsKQ9EeBB4BM75daOcheeDwKxdUNwDcgcn@nongnu.org
+X-Gm-Message-State: AOJu0YzZLdU+/pKHEsEuGYccLxEjmM81EG8lktLh4+VQ9ICP27RlZ/35
+ sZ+JBkhRIPDcOFcSwJiLTwSrNeqIoCW9KhrYiU3/dAT7DujpdOCBgQ5hB6643UHc6ag=
+X-Gm-Gg: AR+sD10d/w6cVmnj8ViNIRZ0fUTgP4be68qte9l7YNRFaTuxyoXoLHq4stKtGsYuDr+
+ 0okAtu6IHqFkCGTg3dxKlMOcyF2OnzD07v5Vf5aHiU2PI1K3q2wR/dyKZuPzOwkcUmjluhmbRIJ
+ FTJwlb+ffjPYN1HxCjO5iwIjO8lumgEuoIX0/AptRX+MZx1wVWbQsWbkGB/2hfsUArdnROeTXQT
+ yAwazWcmoyvQc02XLCBaJanUXwQTX32mDUTe7skZ88X25GbmdabY50b1xfjdvi4GUwxw7EL2MXS
+ mNp0JRFE3cMfmaP5PcEI87j8PVEWh91jQ6psWYl+qPoiVWzTy4qoc8EM+yK9eHwN60jWyhq57qq
+ W69DQZxF4AksL7VQGsqEWNdq1gWHsRSDDveB1VfLaYc8gZm2Ka1r7DvTxyxZiiXgLdtui+H9OLn
+ UohI7OlGco3FaqqHgEZahSRbBq8iZLQUqj4V2zlnANlfc2wx56Pp8uZhoM+dYThy/edK9Mpmarc
+ f3Yt7Mj
+X-Received: by 2002:a17:90b:510d:b0:38f:18f9:785 with SMTP id
+ 98e67ed59e1d1-39580f2d498mr432611a91.8.1787093164482; 
+ Tue, 18 Aug 2026 15:46:04 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d5bb499d7bsm22460975ad.3.2026.08.18.15.45.24
+ 98e67ed59e1d1-3957f6b7543sm129841a91.1.2026.08.18.15.46.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 15:45:26 -0700 (PDT)
-Message-ID: <bd54b977-fb6c-4e94-9863-745ce8133f96@linaro.org>
-Date: Tue, 18 Aug 2026 15:45:23 -0700
+ Tue, 18 Aug 2026 15:46:03 -0700 (PDT)
+Message-ID: <8f7204f6-2341-432a-a8c6-806d35419375@linaro.org>
+Date: Tue, 18 Aug 2026 15:46:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] accel/tcg: cache the result of curr_cflags()
+Subject: Re: [PATCH 2/8] accel/tcg: enlarge the TB jump cache to 64K entries
 To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
  laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com
 References: <20260818174247.649526-1-mattst88@gmail.com>
- <20260818174247.649526-2-mattst88@gmail.com>
+ <20260818174247.649526-3-mattst88@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260818174247.649526-2-mattst88@gmail.com>
+In-Reply-To: <20260818174247.649526-3-mattst88@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,51 +108,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/18/26 10:42, Matt Turner wrote:
-> curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr()
-> and from the cpu_exec() loop. It recomputes the same value every time:
+> The per-CPU TB jump cache has held 4096 entries since it was introduced.
+> That is too small for guests running large programs: an emulated compiler
+> misses often enough that the fallback qht lookup shows up prominently in
+> a profile.
 > 
->      uint32_t cflags = cpu->tcg_cflags;
->      if (unlikely(cpu_single_stepping(cpu))) { ... }
->      else if (qatomic_read(&one_insn_per_tb)) { ... }
->      else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
+> Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+> the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host. The
+> compile performs 34.2 billion TB executions, of which 8.4 billion take
+> the indirect dispatch path.
 > 
-> That is three loads and three branches on the hottest path in the
-> interpreter, for state that changes only when gdb enables single-step,
-> when one-insn-per-tb is toggled, or when the log mask changes.
+> Sizing curve, on top of the preceding patch, instructions retired and
+> wall clock:
 > 
-> Compute the value once into CPUState::tcg_curr_cflags and recompute it
-> from the four places that can change an input: tcg_cflags_set(),
-> cpu_single_step(), tcg_set_one_insn_per_tb() and qemu_set_log_internal().
-> curr_cflags() becomes a single load.
-
-Certainly one_insn_per_tb can only be set from the command-line, so that should never have 
-been handled along this path.
-
-cpu_single_stepping is one load and test.  I agree it can be done along the path that sets 
-single stepping though.
-
-LOG_TB_NOCHAIN can be set from command-line or monitor.  The first obviously can be set up 
-before we get started.  The second can be handled via stop-the-world.
-
-> + * Catch a cached value that has gone stale because an input changed without
-> + * a matching tcg_update_curr_cflags().  Called from curr_cflags() on the
-> + * dispatch path, so it exists only in debug-tcg builds.
-> + */
-> +void tcg_assert_curr_cflags(CPUState *cpu)
-> +{
-> +    uint32_t cached = cpu->tcg_curr_cflags;
-> +    uint32_t fresh = compute_curr_cflags(cpu);
-> +
-> +    if (unlikely(cached != fresh)) {
-> +        fprintf(stderr, "stale tcg_curr_cflags on CPU %d: "
-> +                "cached 0x%08x, recomputed 0x%08x (differ in 0x%08x)\n",
-> +                cpu->cpu_index, cached, fresh, cached ^ fresh);
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +#endif
-
-But this seems like overkill.
+>      12 bits (  64 KiB): 1,563,829,403,943          133.13s
+>      14 bits ( 256 KiB): 1,493,865,985,972  -4.47%  124.89s  -6.19%
+>      16 bits (   1 MiB): 1,469,729,281,442  -6.02%  120.97s  -9.13%
+>      18 bits (   4 MiB): 1,462,262,363,257  -6.49%  120.16s  -9.74%
+Interesting.  Previously we had performance issues with the jump cache too big...
 
 
 r~
