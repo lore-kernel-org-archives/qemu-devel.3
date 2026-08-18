@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A4DDC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C38C5DF82
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwOUt-00087e-6h; Tue, 18 Aug 2026 14:25:15 -0400
+	id 1wwOUv-00089r-B5; Tue, 18 Aug 2026 14:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUp-00083p-Lz
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:11 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUt-00087r-Mr
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:15 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUm-0003Bv-Rr
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:11 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUr-0003D8-VU
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:15 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 69704846C1;
- Tue, 18 Aug 2026 18:24:59 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7F004846B9;
+ Tue, 18 Aug 2026 18:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787077503; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787077508; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bhZ0Jaa2LTaWO+2UdkFJyZ/kFzMlnQ9CTe18Ey4xy/A=;
- b=woA9YSiISCKjedoHYgAg8IWEem66a/kgIAs2PCEOP7sKrCO3s1ZEQ5ZhIToWUEgXKvp0e/
- OOdOJ3py7FVIhE5Q4URgtST9PcA1pqdLPo+r1JvGpvjkZOcNE5RO+Ofxj/6gvkrogZ9/xV
- 7njbvh/v7s9OyQy0rfUhfPYqNvM7vCI=
+ bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
+ b=CpN1+FYL5ScQ3VZQB3t623R2rCA68QBM630lLC1XQpS4g91LWkz5XdAscRXuiDb6dyWGgN
+ Nb2mg/7mo3amiS7cyiM4tx86t5SGl0uvsVRkjnG+EjtXacaQVGYqmk4UfMi/BM8GwoFiHG
+ qWr6U2EeTGxm0R5JL9AtiulmuKl35EA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787077503;
+ s=susede2_ed25519; t=1787077508;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bhZ0Jaa2LTaWO+2UdkFJyZ/kFzMlnQ9CTe18Ey4xy/A=;
- b=lBUU8hTWz4b0e2jwhqTtqnEHbX/kwaoWVx5vvYRduF+vzCNEr9e7tBBWb+/jyqmkJcnd9Z
- O2d6xfteNHj3gbAg==
+ bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
+ b=GSdL8i0wrVcpE+fRynU+hgbEjA+YdyYU5pGa+QdxyP/uaq87U8W4iNB2pH4UWGPa+cSRQF
+ KaMzmlaIKcW2AMCg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vEn97KIv;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Utw71iRd
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Iitygxvd;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9DZmdN9s
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787077499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787077504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bhZ0Jaa2LTaWO+2UdkFJyZ/kFzMlnQ9CTe18Ey4xy/A=;
- b=vEn97KIvYEeQuhDv0Y9Yf8mXpr65CqDCdYP4kiSM3fDBMQdFbTYv2H95Q5ueaLosMV2lxz
- ma0sqaMkqY5CnMPwTFJKxSoOMnzA8z9nnNYlByfu02kErEKZWd6R2//MWkJbhUahJKpPlP
- YeOKVJT3iix0Jocctrv3LoSKIgmwaHA=
+ bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
+ b=IitygxvdYHeeEC9pu/u6fEAG1ojQqH7JFkL49JSQUn1/rBvGUziwAQU5kNxJAxJrUw0I++
+ fCqMi+dX9c7K2x9sy1NSpo0L8HXhQyPFI1HeM1r1yrkfPxQjBDHJ9P9AXFMJgEGYTi194g
+ EWsm9oE4v0/o3FZhpKEiDv0EYFPf+QM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787077499;
+ s=susede2_ed25519; t=1787077504;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bhZ0Jaa2LTaWO+2UdkFJyZ/kFzMlnQ9CTe18Ey4xy/A=;
- b=Utw71iRdz4o5E/GaF6TEPoy0VQc0drkMOT7bW30URc5p3WW1A2nWgnJFPFz+oJ+dAgV5r5
- msOa+VtSbT78yXCw==
+ bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
+ b=9DZmdN9s9pJae8Ww7LZySVnnqfIEOF7Dd0Ntdm8irBvab6BSoKodsvWs0vPeUBOxJImYRM
+ VxvDUREpRGNoYxBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8BA6A367B;
- Tue, 18 Aug 2026 18:24:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3342A22BA;
+ Tue, 18 Aug 2026 18:25:03 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IDQhF3mjhGpYYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 18:24:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CG+HAX+jhGpYYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 18:25:03 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 5/8] migration: Add VMS_NO_STATE flag
-Date: Tue, 18 Aug 2026 15:24:38 -0300
-Message-ID: <20260818182441.404790-6-farosas@suse.de>
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 8/8] migration: Harden vmstate_size
+Date: Tue, 18 Aug 2026 15:24:41 -0300
+Message-ID: <20260818182441.404790-9-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260818182441.404790-1-farosas@suse.de>
 References: <20260818182441.404790-1-farosas@suse.de>
@@ -95,16 +93,15 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,suse.de:dkim];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_SEVEN(0.00)[8];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 69704846C1
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 7F004846B9
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
@@ -130,144 +127,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are a few special cases of vmstate usage:
-
-The vmstate_msix and vmstate_scsi_device have fields that contain no
-data, only a vmstate_info structure.
-
-The VMSTATE_VALIDATE macro serves only to invoke the .field_exists
-routine for validation.
-
-Regardless whether these scenarios are valid, add a separate flag to
-identify them so we can enforce common constraints for the normal
-vmstates such as having a size greater than zero.
-
-Note that n_elems is hardcoded to 1 for all vmstates, except
-VMS_[V]ARRAY, so VMSTATE_VALIDATE needed to set VMS_ARRAY to be able
-to force n_elems to 0. This patch now checks the flag at
-vmstate_n_elems().
+Protect vmstate_size against overflow of the on-stack 64bit integer
+during multiplication. The data at size_indirect.offset comes from the
+migration stream.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/pci/msix.c                     | 6 +-----
- hw/scsi/scsi-bus.c                | 6 +-----
- include/migration/vmstate.h       | 9 +++++++--
- migration/vmstate.c               | 6 +++++-
- rust/migration/src/vmstate.rs     | 2 +-
- rust/tests/tests/vmstate_tests.rs | 2 +-
- 6 files changed, 16 insertions(+), 15 deletions(-)
+ migration/vmstate.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index 1b23eaf1007..adf76b5bccc 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -711,12 +711,8 @@ const VMStateDescription vmstate_msix = {
-     .fields = (const VMStateField[]) {
-         {
-             .name         = "msix",
--            .version_id   = 0,
--            .field_exists = NULL,
--            .size         = 0,   /* ouch */
-             .info         = &vmstate_info_msix,
--            .flags        = VMS_SINGLE,
--            .offset       = 0,
-+            .flags        = VMS_SINGLE | VMS_NO_STATE,
-         },
-         VMSTATE_END_OF_LIST()
-     }
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index deb43d5560e..aa02ff631b7 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -1980,12 +1980,8 @@ const VMStateDescription vmstate_scsi_device = {
-         VMSTATE_UINT32(sense_len, SCSIDevice),
-         {
-             .name         = "requests",
--            .version_id   = 0,
--            .field_exists = NULL,
--            .size         = 0,   /* ouch */
-             .info         = &vmstate_info_scsi_requests,
--            .flags        = VMS_SINGLE,
--            .offset       = 0,
-+            .flags        = VMS_SINGLE | VMS_NO_STATE,
-         },
-         VMSTATE_END_OF_LIST()
-     },
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 4b6d52955ff..e72c3fae9a6 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -109,6 +109,12 @@ enum VMStateFlags {
-      */
-     VMS_ARRAY_OF_POINTER = 0x040,
- 
-+    /*
-+     * The field contains no data. Used for special cases such as
-+     * invoking a custom VMStateInfo.
-+     */
-+    VMS_NO_STATE = 0x080,
-+
-     /* The size of the individual entries (a single array entry if
-      * VMS_ARRAY or VMS_VARRAY are set, or the field itself if
-      * neither is set) is variable (i.e. not known at compile-time),
-@@ -454,8 +460,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VALIDATE(_name, _test) { \
-     .name         = (_name),                                         \
-     .field_exists = (_test),                                         \
--    .flags        = VMS_ARRAY | VMS_MUST_EXIST,                      \
--    .num          = 0, /* 0 elements: no data, only run _test */     \
-+    .flags        = VMS_MUST_EXIST | VMS_NO_STATE,                   \
- }
- 
- #define VMSTATE_POINTER(_field, _state, _version, _info, _type) {    \
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index bc5285bcea2..51d02b87e7e 100644
+index 1d028bfe009..08548ae7a1f 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -97,12 +97,16 @@ static uint64_t vmstate_read_from_offset(const VMStateStructMember *member,
+@@ -113,14 +113,20 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+     return n_elems;
+ }
  
- static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
+-static uint64_t vmstate_size(void *opaque, const VMStateField *field)
++static bool vmstate_size(void *opaque, const VMStateField *field,
++                         uint64_t *sz, Error **errp)
  {
--    uint64_t n_elems = 1;
-+    uint64_t n_elems;
+     uint64_t size;
  
-     if (field->flags & VMS_ARRAY) {
-         n_elems = field->num;
-     } else if (field->flags & VMS_VARRAY) {
-         n_elems = vmstate_read_from_offset(&field->num_indirect, opaque);
-+    } else if (field->flags & VMS_MUST_EXIST && field->flags & VMS_NO_STATE) {
-+        n_elems = 0;
-+    } else {
-+        n_elems = 1;
++    *sz = 0;
++
+     if (field->flags & VMS_VBUFFER) {
+         size = vmstate_read_from_offset(&field->size_indirect, opaque);
+-        if (field->flags & VMS_MULTIPLY) {
+-            size *= field->size;
++        if ((field->flags & VMS_MULTIPLY) &&
++            umul64_overflow(size, field->size, &size)) {
++            error_setg(errp, "%s: VMState field '%s' multiply overflow",
++                       __func__, field->name);
++            return false;
+         }
+     } else if (field->flags & VMS_ARRAY_OF_POINTER) {
+         /*
+@@ -132,7 +138,8 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
+         size = field->size;
      }
  
-     trace_vmstate_n_elems(field->name, n_elems);
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 4ec54097148..a3a710ab3ac 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -418,7 +418,7 @@ macro_rules! vmstate_validate {
-             field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),
-             flags: $crate::bindings::VMStateFlags(
-                 $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
--                    | $crate::bindings::VMStateFlags::VMS_ARRAY.0,
-+                    | $crate::bindings::VMStateFlags::VMS_NO_STATE.0,
-             ),
-             num: 0, // 0 elements: no data, only run test_fn callback
-             ..::common::zeroable::Zeroable::ZERO
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index 5f6dd8ae7f1..6578d54b37d 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -461,7 +461,7 @@ fn test_vmstate_validate() {
-     assert_eq!(foo_fields[0].num, 0);
-     assert_eq!(
-         foo_fields[0].flags.0,
--        VMStateFlags::VMS_ARRAY.0 | VMStateFlags::VMS_MUST_EXIST.0
-+        VMStateFlags::VMS_NO_STATE.0 | VMStateFlags::VMS_MUST_EXIST.0
-     );
-     assert!(foo_fields[0].vmsd.is_null());
-     assert!(unsafe { foo_fields[0].field_exists.unwrap()(foo_d_p, 0) });
+-    return size;
++    *sz = size;
++    return true;
+ }
+ 
+ static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
+@@ -364,7 +371,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i;
+             uint64_t n_elems = vmstate_n_elems(opaque, field);
+-            uint64_t size = vmstate_size(opaque, field);
++            uint64_t size;
++
++            if (!vmstate_size(opaque, field, &size, errp)) {
++                return false;
++            }
+ 
+             if (!vmstate_handle_alloc(first_elem, field, n_elems, size, errp)) {
+                 return false;
+@@ -682,9 +693,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i;
+             uint64_t n_elems = vmstate_n_elems(opaque, field);
+-            uint64_t size = vmstate_size(opaque, field);
++            uint64_t size;
+             JSONWriter *vmdesc_loop = vmdesc;
+             bool is_prev_null = false;
++
+             /*
+              * When this is enabled, it means we will always push a ptr
+              * marker first for each element saying if it's populated.
+@@ -692,6 +704,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             bool use_dynamic_array =
+                 field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
+ 
++            if (!vmstate_size(opaque, field, &size, errp)) {
++                return false;
++            }
++
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
 -- 
 2.53.0
 
