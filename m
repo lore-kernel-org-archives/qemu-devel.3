@@ -4,117 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2E1C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883C6C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwL3d-0007Eh-2b; Tue, 18 Aug 2026 10:44:53 -0400
+	id 1wwL5K-0007sy-Po; Tue, 18 Aug 2026 10:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wwL3b-0007EH-1A; Tue, 18 Aug 2026 10:44:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wwL3Y-0006sk-4o; Tue, 18 Aug 2026 10:44:49 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3ZIS505190; Tue, 18 Aug 2026 14:44:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NE1S/T
- vOlEJOYGM5tMBuRxTw45HlF9qj6q2qrt2T5G0=; b=oXAZ5MfqoTU/+VK7RdJIrX
- bQHMj/3eU4CVFW0uMG4NvQgrMsz/x/P66CWtna5iMDKCbvV8iXNg35UQMQS2MppW
- BqOTuZJ/Jx1J2rneoz9gORHhf9ymF29yU8PKPW9m9k/Zrj74hAWxvn9/u4mNUVsD
- yeXsUK27qf+SOsNX21xPCnbfA7i6M04UKE15GefuPCipv+eocvFe9yalpVvXKuQX
- 4eAMh2s3a7yZND7qikAHfewqs0LeSy9pIwyUSYXM69HdEThssLL8nIrkqsslqCxH
- yyhlhCpYAtL60PqgXYZWFhDtnovk+tciE3HGzOewCIVfkawjpgy2TfiS3dgb9XYQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4rw3b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 14:44:43 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IEfK8I029618;
- Tue, 18 Aug 2026 14:44:42 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngbgus-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 14:44:42 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IEifNm30933698
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 14:44:41 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EBFB65805A;
- Tue, 18 Aug 2026 14:44:40 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF29A58051;
- Tue, 18 Aug 2026 14:44:39 +0000 (GMT)
-Received: from [9.61.131.241] (unknown [9.61.131.241])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 14:44:39 +0000 (GMT)
-Message-ID: <fd9f6195-b597-49c0-846e-b3b20e92a243@linux.ibm.com>
-Date: Tue, 18 Aug 2026 10:44:39 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwL5J-0007sD-5s
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:46:37 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwL5H-0007Ng-Ju
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:46:36 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38dfe910e9dso4763269a91.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:46:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787064394; x=1787669194; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=rvnci27srpaHU+0zql/InTn5LYvBRiMkG3J7pdDpi4s=;
+ b=xPLlLbDkQ5RWvWZx84CUmEb+qFECJbOQDQ+4sJey9Wf3gF6udfV27QPA1Z2KzgJh1I
+ Sriky5bpdjAFOoWtbilk39+b1otKvnQrnbRYPK7u4mzlx5SmHs7V4BMziNNmu0PrvteG
+ 5DFUo///XJ9chgAtQnTevPcuvw54yz7UGuNmZGomY4gmkZQi0Y3s0S5zzdd6TRUBsVkX
+ e8ibHg0Dz8l1Yhk6kzJzhizCz/2qRNFAgd1bJ48dq4d6mtdvZ3f5Bp7ltYrfj12dO8Zh
+ IAXjGjWnrwMxI1PoeoMQfnk6PAZMC4DUFzBkIqk6nbuieV/WZy56DVd3c/CES3XG3GgH
+ M25A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787064394; x=1787669194;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=rvnci27srpaHU+0zql/InTn5LYvBRiMkG3J7pdDpi4s=;
+ b=pZUvJmntcrYWMa+m0V/m2eaA3ud2PFFmTk/sbfKNNDFTe/ZiwbHGNv5NFH6r/nKfnT
+ ana3X52uKvccE6rmXiI7lhSGhFnSBTXZCtq4oouMCJ/sFdbqakHVEAKjeFV9fEDZ8nNZ
+ 8WbRzXUTkPUZnhjlz8APudvyMy4meP8z57czKtYk6T+y+PrTfXIs3NZePPqieg5hSff0
+ mLcXFhImbh/+iL4I41AHtfP4u9IIjHAyrUdnEmY8yec8+xVgEBqac2spqA+nzRt9hvUX
+ VGpIYCbCJ29Ix+4YMYxWObKLPoG62EBA1GYNWYu5IyqvbHrL4+wJqbHL/CJO1Y6eRA05
+ Ywqg==
+X-Gm-Message-State: AOJu0YzJasItc3PolJ8NAz20qk19GEzMHX4vk5wYobHgZNYrkCIeR2dJ
+ hMeLSjQUROMFOIC6hJjGV9XZ0lOFwLoFIALoUY+GqG3JUh1e0BXDY+uKiAasj+ZGrHc=
+X-Gm-Gg: AR+sD10Fm0J+Pctw7lRe4xWHESMNxEV1YSox16YUliYwaT4JOI071LIvUrAqub5/9cf
+ x/FD97HaRpCsQH/HDJ2nzMb4yt5gD0MRkoiPAbw8hQAHaeLFnWTrBQKiqM5sd+21sQAln3vtlbJ
+ mTQoHy62FfIZyjmGEJalDR25Y+8pmQScK+aFdSZ5IAMggoED9FbREU3Clezv5PPEt4t9AkaK336
+ 45k0ik4ZiOS2kXDF1SISkF77yuwr7+jXPiTTpo1ITcXhhph3p2ikHhy/bfeiNS1coXNriQZDblN
+ e41KrSk26zcWz7vB+ZFz2GtQRBAKMDsKqP97ip9oGpD0vYFbdlmrkKiqEWjmF2fVTmy1M7J0n6i
+ nK33XRkhoD8JMmgIzkdEJFwZ9TPr4C9OgItCPa4cCFjo8jUopLMRSOIvc4VIrnk0FgfztQ/6psB
+ M4xRz00sEMeZYY+cNYUOpY7nhjfqc5LFtdl5rNGeEDp1ws6BpeeBHEm0BlP+++NFmIcww6wbhDU
+ x+IRQpEBOj2XgPF9Ek2P5U4lnOjrLfJpEJKDkxsK5xCp2U=
+X-Received: by 2002:a17:90b:1d8e:b0:395:4290:46e0 with SMTP id
+ 98e67ed59e1d1-3955a5de3e9mr10164023a91.5.1787064393743; 
+ Tue, 18 Aug 2026 07:46:33 -0700 (PDT)
+Received: from [10.213.131.227] (c-73-181-156-132.hsd1.wa.comcast.net.
+ [73.181.156.132]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-395320229f4sm8475571a91.15.2026.08.18.07.46.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 07:46:33 -0700 (PDT)
+Message-ID: <8bbe8781-7d25-4456-a41d-703e34d07e04@linaro.org>
+Date: Tue, 18 Aug 2026 07:46:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 34/34] MAINTAINERS: Add secure IPL files to S390-ccw
- boot group
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260730214624.2328883-1-zycai@linux.ibm.com>
- <20260730214624.2328883-35-zycai@linux.ibm.com>
+Subject: Re: [PATCH v2 10/10] target/arm: Separate cpu types max-v8 and max-v9
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260812204435.295067-1-richard.henderson@linaro.org>
+ <20260812204435.295067-11-richard.henderson@linaro.org>
+ <CAFEAcA-xY3cyQYCvwLeFj91pMnG5FkhbgJmAYoF2VGCqssLSKg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260730214624.2328883-35-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAFEAcA-xY3cyQYCvwLeFj91pMnG5FkhbgJmAYoF2VGCqssLSKg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: lmsi1BWt10Y4Wbf5UUVJW1u6ia9Sub8l
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a846fdb cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=a0ZOiI3JHlCJRT-QAOkA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX4lozVHX6dv9I
- e8cx7CtXbWZ5XRgigjnxwCmVr7johjp5b8nAQ6cfWl+udhJ+zTDU48RfdWUKL3Rgc5oqpLe38L4
- O0Lv/J7Ys7Gr6o7YJSnz0c0+kO2PUM0=
-X-Proofpoint-ORIG-GUID: lmsi1BWt10Y4Wbf5UUVJW1u6ia9Sub8l
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX6gn1PAZcAPhr
- jlF90LxSUsXga3BuPPy68jnfiXrmAdJUUDaea1JY5GePi2TlxG1+x9nkb6jS695neIoI+kHha5F
- ykK04kbQ0gUUUIEHZ+a8MLllYhZdHcV3LcFDkcYIRl190D792HoyRGhBNVU+/pIqguUSYigLvvf
- z0e2AQCnZmQnKq1CaQMSvlKn+cU98qe0fY5C33d4CcPntCnkwBCdz9G+QMvCqG3H2PRxIi01ig7
- wvnlsVB2DAMx2c52kVK04YvLNMWygXBQqqSL1Zc4Zs7p6ezzv1mrx1I6MU6X3ICq8UghKb6NTYx
- 5Kwm4+gMem8Lm5JO11DONsfwYQcVAWk//ILlvCfxIw4xmxtLPoI3uLaKvLbHbS2sMLkCrgg/8zv
- QZBaVTCJwY6PaoNTLagoIvG3FG+E3clwYWI5hfakHiJYXXtjLc9bJp+c31setTcYt5tP+KzaKxY
- nlCiT4FFWZv8ZmV9Jkg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180107
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,38 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/26 5:46 PM, Zhuoying Cai wrote:
-> Add entries for the files introduced by the secure IPL series (cert-store,
-> diag headers, documentation, and functional test) to the S390-ccw boot
-> maintainer group.
+On 8/17/26 06:56, Peter Maydell wrote:
+> On Wed, 12 Aug 2026 at 21:45, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Do not include v9-only features in "max-v8".
+>> Do not include the prohibited v8 features in "max-v9".
+>> In tcg mode, define "max" as "max-v9".
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-
-Acked-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
-> ---
->  MAINTAINERS | 5 +++++
->  1 file changed, 5 insertions(+)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 902db77218..0742076861 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1926,10 +1926,15 @@ R: Christian Borntraeger <borntraeger@linux.ibm.com>
->  R: Jason Herne <jjherne@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/ipl.*
-> +F: hw/s390x/cert-store.[ch]
-> +F: include/hw/s390x/ipl/
->  F: pc-bios/s390-ccw/
->  F: pc-bios/s390-ccw.img
->  F: docs/devel/s390-dasd-ipl.rst
-> +F: docs/specs/s390x-secure-ipl.rst
-> +F: docs/system/s390x/secure-ipl.rst
->  F: tests/functional/s390x/test_pxelinux.py
-> +F: tests/functional/s390x/test_secure_ipl.py
->  L: qemu-s390x@nongnu.org
->  
->  S390 PCI
+> 
+>> +/*
+>> + * -cpu max-v9: an ARMv9 CPU with as many features enabled as
+>> + * our emulation supports.
+>> + */
+>> +void aarch64_max_v9_tcg_initfn(Object *obj)
+>> +{
+>> +    ARMCPU *cpu = ARM_CPU(obj);
+>> +    ARMISARegisters *isar = &cpu->isar;
+>> +    uint64_t t;
+>> +
+>> +    /* Armv9.0 is based on a minimum of Armv8.5. */
+>> +    aarch64_max_v8_tcg_initfn(obj);
+>> +
+>> +    /*
+>> +     * Armv9.0 does not support AArch32 except at EL0,
+>> +     * therefore indicate EL1 through EL3 are AArch64-only.
+>> +     */
+>> +    t = GET_IDREG(isar, ID_AA64PFR0);
+>> +    t = FIELD_DP64(t, ID_AA64PFR0, EL1, 1);
+>> +    t = FIELD_DP64(t, ID_AA64PFR0, EL2, 1);
+>> +    t = FIELD_DP64(t, ID_AA64PFR0, EL3, 1);
+>> +    SET_IDREG(isar, ID_AA64PFR0, t);
+>> +
+>> +    /* v9.0 prohibits FEAT_DoubleLock. */
+>> +    FIELD_DP64_IDREG(isar, ID_AA64DFR0, DOUBLELOCK, -1);
+>> +    FIELD_DP64_IDREG(isar, ID_AA64PFR0, RAS, 1);
+> 
+> Don't these two lines need to go inside the relevant
+> GET_IDREG...SET_IDREG blocks ?
 
+I thought it was clearer to do all the DoubleLock stuff separately.
+
+>> +    isar->dbgdevid = FIELD_DP32(isar->dbgdevid, DBGDEVID, DOUBLELOCK, 0);
+> 
+> ...and this line is setting a field in DBGDEVID, which isn't
+> accessible unless we have AArch32 EL1, which v9 doesn't.
+
+True, but it's there and leaving it seems wrong.
+
+Do we want to explicitly zero all the isar regs that are supposed to be missing?  I know a 
+heap of them are still present, as the describe what is and is not available at EL0.
+
+> Testing, I see that qemu-arm and qemu-system-arm don't have
+> "max-v8" visible. I think they should.
+Ok.
+
+
+r~
 
