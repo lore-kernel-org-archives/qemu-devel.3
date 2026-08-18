@@ -4,105 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9376C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46F5BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPEg-0003Xm-JE; Tue, 18 Aug 2026 15:12:34 -0400
+	id 1wwPFA-0003cH-Lm; Tue, 18 Aug 2026 15:13:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwPEf-0003XQ-76
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:12:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwPF8-0003bX-Qc
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:13:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwPEd-0004sJ-Jc
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:12:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwPF7-0004vK-7H
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:13:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787080350;
+ s=mimecast20190719; t=1787080380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=r5vo9xrmKpGBQwHUEOBbi0HnDAyWxEZBR+dgMKDw8MU=;
- b=WgWAbfUCGPsuFr/xgft1D3+VwpTrUnCkCpC3ZxXxYU/ekPVKFXK4PZuKG1Lxpep6mJ/Uz4
- DDf+HufNbcquqdcXY7+GtOS8tXIo1jGJ9UZ0eS6V3ksnV3iwmhtaBQqRfPp0UgO1EPS8s4
- OLHVIlZgwykgyPxyyhrNqOe86PcBqoI=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SlXFld1p0JMuOreX0+mVfLzrL5jgBYTouIZTfdSh1sM=;
+ b=E4zVjLrYy/6fohp6flORUffL79DdC4B73y4M/c35GyQ1KjPbb0D+i9OOplOtSLmphr+Qof
+ wpOP0hyIqySvOWTllF4M4rWVwFjACD9uoVtsIzI5ZsZ3mBsFcDfHKeMmL3stHOqy+YhGze
+ EoJpJHKaqj8AF0/Grw6kdzLogfvz3Gc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-eBb9nFQuNBGQhizI9bBtsA-1; Tue, 18 Aug 2026 15:12:28 -0400
-X-MC-Unique: eBb9nFQuNBGQhizI9bBtsA-1
-X-Mimecast-MFC-AGG-ID: eBb9nFQuNBGQhizI9bBtsA_1787080348
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51c07f25de2so1218371cf.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:12:28 -0700 (PDT)
+ us-mta-391-NlyHuJd4PqSilOwlfh-lCg-1; Tue, 18 Aug 2026 15:12:58 -0400
+X-MC-Unique: NlyHuJd4PqSilOwlfh-lCg-1
+X-Mimecast-MFC-AGG-ID: NlyHuJd4PqSilOwlfh-lCg_1787080378
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-934979ee9f1so31484985a.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787080348; x=1787685148; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787080378; x=1787685178; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=r5vo9xrmKpGBQwHUEOBbi0HnDAyWxEZBR+dgMKDw8MU=;
- b=kUNEQI96ZSSuqBswsLlp1BF8a6+3yrxRS4niIwhrSurNJcYduTbkTvvZkdO52+Tfkn
- z06rh2PTzu3Kc38QCVWDBvxtrOMQ1aK0UU5/PiPO/Zn2ssugy6fWfy7txOT1ksSFxJ7g
- D4btXreTBgshMe1GBXR2wzVKhBa4xa90VIJlVyowA4l13dvZ0h+3C18HhfLyHfTciTaz
- WRNYWeR3O2DHA2hWxWJkBFwEDbVX+hmvRiLdxF2ZZvxNDyF5ZI20a8PxSrlR+ppHnw/L
- c3dSpXS/iSLEgEw9hI9szOvGkNm8woPX4hYgXebIAipwMMyiJly2C3sLGT7NeMgeXPQ3
- UFcw==
+ bh=SlXFld1p0JMuOreX0+mVfLzrL5jgBYTouIZTfdSh1sM=;
+ b=JRXbc7M50bKJhj1ef+ZHiUcJ3gWrUHDLfjR+yqAkd34aTzTNgu/tqacVgJ5gTL71FB
+ oteNxaL6fZNfDxdnLHFn+PLxtNcdDPaMImXJwN+4yGwAE3aG6Tk9UUlp+jlPh+53hG5G
+ AOY9/2x4XvltcGpVEYFXDlRoBNMb0YbG4fvPWylJ+brg4zpqgeQO4ho1OWtgdmZb+VIQ
+ SEEUU5hLqIp9X/EqzfF6EZa63Dv0padOmpBVsJBg1jXZizl9dQWU3mWHlF3nuHoRx/P3
+ rhbwn/aiK9ggPv0vG16HolCv1RaiH75cPQ1FgPXjG/pgB1n4zOuvnJ5V+aAIre9itqVR
+ vPow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787080348; x=1787685148;
+ d=1e100.net; s=20251104; t=1787080378; x=1787685178;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=r5vo9xrmKpGBQwHUEOBbi0HnDAyWxEZBR+dgMKDw8MU=;
- b=slQnCSOBsAjfCZ2OhWK8lUNJIMgyZph2qNR5zaaHk8eSj+qnvKpzgFZI0HakQzQF5F
- gKOlJUnvQF9nVCeP+mUoUz1H2xW8nhANWgRKhpKAPWkSt3LlMo7Xo00ie4r6kWk540QZ
- doM1TJKevYloGrsVkysdOXTVl8+yPYPnuYG0a/3Kslm50t0HLhbWOgI7gqlGviawU4KG
- ztNvfF42FQyBc75GLD1vGaOLx3AAQ96Pf0vsauP6a063/3b2CxpddfFjCbYTK75FzrgX
- VG47HYHBKJ/IDWgVI2bZUqwEPbA+qobSUkLk7SbaDz/SWBp5em0m8BvOMwwHvuOL8Yf8
- 1LKg==
-X-Gm-Message-State: AOJu0YxSJPibuEX160JMQDvYvwyAB5ajgULSO8OGOu5tAR8N/19jxMK+
- qVtQeskm9oCdjE/cH5i/JNgT4d5jYySF1GoWLFGwRBlxKEFVcmBrhxoG1a897Pp3oGFEaTIr0Ek
- 4+Lw8sNLXj+tbhhsFYg7dFkLW2aNOag90H6bna3oohT1efv+hTWbShl7X
-X-Gm-Gg: AR+sD13M2xDycSH0IHPcyujfYQihEoCsFUQjvYBjC+Lf/yBNdwl4KGSZ+JoL87saV9H
- j3ikP37YuReYGRZ2OelkBrMBRBcL+3SghfgfiNO3TzzoyJ9Uq1WKPajkP/z4Ml7jkx+mWWp48aH
- AbvOUnXmgsy62Zl2AxQ9DFH3brSpIsGvThHW4g+k5RHDIjG77vs1/OIC2gD9lK38gKwN9aXvNSY
- d/CNYNt6VBZ7qKsz2nEL/vWDnRirJ5rGYU7M9huo3a6IwIDX7Q8GL32r8n2K7Xz4sIe0uiIpvOm
- s/QeiNhmEdUWVJNqH8Gfd8FlZAUfqSPiNg9w5jqr/gHeid+dGo3Abm/D0pbSWXrzsG5Z
-X-Received: by 2002:a05:622a:581b:b0:51c:1bcd:5cc3 with SMTP id
- d75a77b69052e-52dd32553a9mr3148131cf.25.1787080348182; 
- Tue, 18 Aug 2026 12:12:28 -0700 (PDT)
-X-Received: by 2002:a05:622a:581b:b0:51c:1bcd:5cc3 with SMTP id
- d75a77b69052e-52dd32553a9mr3147141cf.25.1787080347582; 
- Tue, 18 Aug 2026 12:12:27 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c45934adbsm38949436d6.31.2026.08.18.12.12.26
+ bh=SlXFld1p0JMuOreX0+mVfLzrL5jgBYTouIZTfdSh1sM=;
+ b=agsVPybtM8kurtslLasjSedPccjW3vjnBfECG6pupbi4ANBAgwQPdic7HYNxHTuFmz
+ HqbTHNKjYJOCRovaLrvopYKDLpqjvFB26B3KfEZ9VBwER7nSiiu/F/fl8ysvXIPbMH9Y
+ QJVww7fYhOcTCMFxSR+HQKsBK0kCI7xAxsTDneZ48VEVucPjcwD7nKudTz36cj8E8UjQ
+ SpqKMAT/KRP032uqNrDgfMEDBHhuYEA39RP0kUJjX8oLZMa2zc1b7061n0v9TIM0xrk5
+ y+ICL5AP6sie637O7wbQ3aCP69cbi/YOj4rqKBTheMe+5Ys+E6+uoJ0qC/JXE9PieczL
+ x68A==
+X-Gm-Message-State: AOJu0YxFTsEiRUtNe7/IVizuMS+ciZ6+PZ62kcE2YHcIWRaA8sQdJXow
+ 833mrNt9v0WXivgJDEu8tQSuCy+C4U9VVTZqZl6P67Hu6SbQjLSJAbk/VGbF0zqm4bP5IxHm7v2
+ uXXmIDWAZvWaOGXH0aW5LBGVvh1jiDw9r2APP7xMhb9u5LFcfkx/vsnAl
+X-Gm-Gg: AR+sD12ybSRtLgY0aq0Wt3b4IgwqchnFCtU+t/7zV7r55/Ts6zgRA4E5y+LSsa/iGjd
+ 0aYTdm1oAP2ZaDUN7YNx3OK6xUb2CyGtAr8sbjCxz0MP53/VjlpOxDqyu9Zt0RCgf3M+E0rBz3M
+ lDMnNsYi9tCB3zJAy0MLtBfCPzrh+voGGOXPVLywhMDwhb1wMHjfAWIcdV2iTDsdL6bPQDPy8eK
+ h+21FXiea4zmFgH/+u2okJTP+We6eLti/E4eRnUoyfoLOjNeGhjRouTKusIlvkxfjDvhDFtKBxb
+ LWcHXdy7c7UvXvzNv/JnZOjTf8uqKQRKeb8YAHxm/SoofRfnFGri7cnvBC8XQRIEk9JzdHjHI46
+ yhoa0JVXWMHHLT43TzkTNsGLsOn6r/BwiJHT41Cg7thkuLLWSKzv1h/rjqbg=
+X-Received: by 2002:a05:620a:601b:b0:930:b19a:9d5e with SMTP id
+ af79cd13be357-936d1fd9f8bmr3944368685a.1.1787080378003; 
+ Tue, 18 Aug 2026 12:12:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:601b:b0:930:b19a:9d5e with SMTP id
+ af79cd13be357-936d1fd9f8bmr3944360585a.1.1787080377436; 
+ Tue, 18 Aug 2026 12:12:57 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-937010e801asm399578285a.18.2026.08.18.12.12.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:12:26 -0700 (PDT)
-Date: Tue, 18 Aug 2026 15:12:23 -0400
+ Tue, 18 Aug 2026 12:12:56 -0700 (PDT)
+Date: Tue, 18 Aug 2026 15:12:55 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 0/8] migration: Remove extra type-checking from
- vmstate macros
-Message-ID: <aoSul4i5M4LiqXAt@x1.local>
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Seungjung Kim <seungjung0711@gmail.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH v2 2/8] migration: Introduce VMStateStructMember
+Message-ID: <aoSut_FMo_ShRH9t@x1.local>
 References: <20260818182441.404790-1-farosas@suse.de>
+ <20260818182441.404790-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260818182441.404790-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260818182441.404790-3-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,70 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 03:24:33PM -0300, Fabiano Rosas wrote:
-> Changes in v2:
-> 
-> - Removed more unused vmstate macros
-> - Fixed the type check macro
-> - Renamed the new structure to something more explicit
-> - Added a new flag to indicate an empty vmstate
-> - Added the overflow and overallocation checks
-> 
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2769617319
-> Also tested:
-> - migration-test --full --thorough
-> - x86_64 compat run forward and backwards for previous 3 QEMU releases
-> - s390x compat run forward and backwards for previous 2 QEMU releases
-> - ppc64 compat run forward and backwards for previous QEMU release
-> - migration-test smoke ASAN/UBSAN run
-> 
-> v1:
-> https://lore.kernel.org/r/20260729225227.1170574-1-farosas@suse.de
-> 
-> Hi, this is basically what I ranted about in:
-> https://lore.kernel.org/r/87jyqeomqz.fsf@suse.de
-> 
-> I'm replacing the per-integer-size type checks with a single "int that
-> fits in 32bit" check. This allows several lines of duplicated code to
-> be removed.
-> 
-> I haven't changed the macro names in the device code yet. If this
-> series gets positive feedback then I'll send per-subsystem patches
-> doing that.
-> 
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2716814081
-> Also tested:
-> - migration-test --full --thorough
-> - x86_64 compat run forwards and backwards for previous 3 QEMU releases
-> - s390x compat run forwards and backwards for previous 2 QEMU releases
-> - ppc64 compat run forwards and backwards for previous QEMU release
-> - migration-test smoke ASAN/UBSAN run
-> 
-> Fabiano Rosas (8):
->   migration: Remove unused vmstate macros
->   migration: Introduce VMStateStructMember
->   migration: Remove redundant flags
->   migration: Remove duplicate vmstate macros
->   migration: Add VMS_NO_STATE flag
->   migration: Check more vmstate flags
->   migration: Harden vmstate_handle_alloc
->   migration: Harden vmstate_size
-> 
->  hw/pci/msix.c                      |   6 +-
->  hw/scsi/scsi-bus.c                 |   6 +-
->  include/migration/vmstate.h        | 388 +++++++++++++----------------
->  migration/savevm.c                 |  29 ++-
->  migration/vmstate.c                | 103 +++++---
->  rust/bindings/migration-sys/lib.rs |  17 +-
->  rust/migration/src/vmstate.rs      |  32 ++-
->  rust/tests/tests/vmstate_tests.rs  |  32 +--
->  8 files changed, 331 insertions(+), 282 deletions(-)
+On Tue, Aug 18, 2026 at 03:24:35PM -0300, Fabiano Rosas wrote:
+>      /*
+> -     * @size or @size_offset specifies the size of the element embeded in
+> -     * the field.  Only one of them should be present never both.  When
+> -     * @size_offset is used together with VMS_VBUFFER, it means the size is
+> -     * dynamic calculated instead of a constant.
+> +     * @size directly specifies the size of the element being
+> +     * migrated.
+>       *
+> -     * When the field is an array of any type, this stores the size of one
+> -     * element of the array.
+> +     * @size_indirect specifies the offset inside a struct where the
+> +     * size of the element is stored.
+>       *
+> -     * NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be specified,
+> -     * this parameter always reflects the real size of the objects that a
+> -     * pointer point to.
+> +     *   Only one of the above should be present (except for
+> +     *   VMSTATE_MULTIPLY which uses .size as a multiplier). When
 
-For anything that is non-Rust:
+VMS_MULTIPLY
 
-Acked-by: Peter Xu <peterx@redhat.com>
-
-One typo I'll comment inline, can be touched up when you queue.
+> +     *   @size_indirect is used together with VMS_VBUFFER, it means
+> +     *   the size is dynamic calculated instead of a constant.
+> +     *
+> +     *   When the field is an array of any type, these refer to the size
+> +     *   of one element of the array.
+> +     *
+> +     *   NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be
+> +     *   specified, these parameters always reflect the real size of the
+> +     *   objects that a pointer point to.
+> +     *
+> +     * @num_indirect specifies the offset inside a struct where the
+> +     * number of elements of an array is stored.
+>       */
 
 -- 
 Peter Xu
