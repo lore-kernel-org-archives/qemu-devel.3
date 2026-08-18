@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84533C5DF86
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 16:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE72CC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 16:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwMWO-0005UU-4G; Tue, 18 Aug 2026 12:18:40 -0400
+	id 1wwMWV-0005cV-07; Tue, 18 Aug 2026 12:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wwMWL-0005Sh-A0; Tue, 18 Aug 2026 12:18:37 -0400
+ id 1wwMWS-0005Zj-5m; Tue, 18 Aug 2026 12:18:44 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wwMWI-0007Oe-SJ; Tue, 18 Aug 2026 12:18:37 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wwMWN-0007Qh-Fv; Tue, 18 Aug 2026 12:18:43 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3R9k504608; Tue, 18 Aug 2026 16:18:30 GMT
+ 67IE3oHL2831697; Tue, 18 Aug 2026 16:18:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=roeaAOkcC7q/cgj+Z
- 4ZDTZJiebvKgyWnrLMfZyBkk74=; b=DgscfyzN0SHFcEIKKpyUxSaS+K91wcPYM
- w80ZdOWLarIQ+xOPP0SLE05xnyuH89vhK8UzXx2aTtjtuZBfRSn7wncs6TRqsQ4p
- WYIC6XU9ASpRwPN5iUWUVJNEo/OIaKa1tqj0/VzXNRnvW3S42zcpSSLH6P/DQN/I
- s1NpT2i/saQlXL/3LkzjcSDw5mVV0OXdpAN7kEEEdUXrjVgkA+A4+NtvcjEVdejo
- HAH//H90TnAfGpR4wpOrg9l7qiVOgbwc6ZrhN3vZcDHbZmZEJOewNKaIilOyLq4g
- zdBcP+3ztlgOEAKQ6zYiWlGU1x8wYm7giDWS4huWu+7aY+oVBy8uQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4sedc-1
+ :mime-version:references:subject:to; s=pp1; bh=tXUhasaY/5qap0fF2
+ 3qRfzzQxZ3bLjN4yF+zGsblRm0=; b=UOzt7MmbFw8kN5ThgqeQFllNf43n1B9M8
+ O5t+CpB6k9/SPLjYlwKfiYR+F3yTvvz2Zptrw+kMEgMEUb4IsN0KFf6RnrjwKXeb
+ WBUzwo1k7jlshAKfctn7TPkFf60gfYoOnwoif8/L/vVtO+s8Ba2Dgi2xQR2gFamu
+ zOL8oB2j3tA43C+p+tq4ZmM/3mb9fLlSr7D1XbcS7xIvbVcVtjqXm9p8h1qWpzc3
+ ghEu5vcCef8p86xDlcU3x8nvXG8Hxe5MUHWJ9NY0p9qlQO2IAisRJ1Fl0mCqiL6E
+ kgjieP3O+C60PrTlRqEjNU3Cr3qPhg4Tst4zWiQ7LowJegGCxenLA==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqsck5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 16:18:30 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IGBM3i002200;
- Tue, 18 Aug 2026 16:18:29 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ek4559-1
+ Tue, 18 Aug 2026 16:18:32 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IGBMUJ023737;
+ Tue, 18 Aug 2026 16:18:32 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eq49xg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 16:18:29 +0000 (GMT)
+ Tue, 18 Aug 2026 16:18:31 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IGIPeX41091420
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IGIS7s43581770
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 16:18:25 GMT
+ Tue, 18 Aug 2026 16:18:28 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E39720043;
- Tue, 18 Aug 2026 16:18:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 584922004B;
+ Tue, 18 Aug 2026 16:18:28 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1B112004B;
- Tue, 18 Aug 2026 16:18:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2DA8E20043;
+ Tue, 18 Aug 2026 16:18:28 +0000 (GMT)
 Received: from funtu2.ibm.com (unknown [9.111.161.134])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 16:18:24 +0000 (GMT)
+ Tue, 18 Aug 2026 16:18:28 +0000 (GMT)
 From: Harald Freudenberger <freude@linux.ibm.com>
 To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
  thuth@redhat.com, berrange@redhat.com
 Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
  dengler@linux.ibm.com, borntraeger@linux.ibm.com,
  fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v15 02/20] target/s390x: Rework s390 cpacf implementations
-Date: Tue, 18 Aug 2026 18:18:06 +0200
-Message-ID: <20260818161824.100746-3-freude@linux.ibm.com>
+Subject: [PATCH v15 16/20] target/s390x: Support protected key AES CTR for
+ cpacf kmctr instruction
+Date: Tue, 18 Aug 2026 18:18:20 +0200
+Message-ID: <20260818161824.100746-17-freude@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818161824.100746-1-freude@linux.ibm.com>
 References: <20260818161824.100746-1-freude@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: HMG0QvAGHDdt-MrKPza9udbzvCDnHJTh
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a8485d6 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDExOCBTYWx0ZWRfXw/P3uuMo2WPF
+ ugAATkHJVzE9mWycBHTpc14NtRhJ7OAM/WtvBgM7PfIZPi/7EZS2KQBV92F125ZAkiQWehj5iiN
+ +67qMNBSKs6tdwF+Ki3J+ZtF7+pL13i0/RIcaUIXRxxF6M1yrhHkv6bo64q80BdD6GJuSo3LqpA
+ p+s3GeUlBsLhupU/O8PvPrJNJponAEV1+116PjLomR6jIxLur+yqWRC/IW5+sSjeonqvA//29ax
+ yT5ESZS4FC8C0GZEZztepkZMvrFcqCtns6ume8yY2ELT01b+EcvEtjeE/Dc1txXwxLyaJEku8Hu
+ NF804vUIMcNRsfc8H6rCx9iEAyF6MbgHFU9TPeYN7/5ABfI+bYTSOPWgLKTmg4FvS8Z6adfyXHA
+ Qks5IbhoEfxejqtDtyd+5YcTd+WjxVmRxoVj1xIJlt8OmUavXX+ndDG7bHMKLiCH6V1svzkgXFK
+ v3BQMt/xg5MQlLkXjnA==
+X-Proofpoint-ORIG-GUID: Ap3AV2PLrKdx1BSa7ecL98V5VTbaoEv5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDExOCBTYWx0ZWRfX/3IzZdeRPM0f
+ CK4gPVjrz544iGeUQHTLIzXFzBDauLuBA73bF+pL5Yljh4ObswDsOM/TiVsX2BrG+n75Vph877o
+ L/LA4OveKtSkWk2vpDg+2/1eSNNghVo=
+X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a8485d8 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=4KKJp7DvKucWb6I3c-QA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDExOCBTYWx0ZWRfX7KRfI/kRoX/v
- LcrQDwMI4o6w7SddvyciiQ630AlVHQzfYPi68z8che6dDkbqJHCEaIORAIu1FdtBf5AbEcgWWlW
- 2aOKpAnt9fqDfKyl3f0+WV/TnQvWS3A=
-X-Proofpoint-ORIG-GUID: HMG0QvAGHDdt-MrKPza9udbzvCDnHJTh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDExOCBTYWx0ZWRfX3egtA60lwA2B
- S3WBGfVWARXe/rtJ/E0T1623rLBdhpY+BDOwi/czCqDZbEPKuJehIXOfAQS5N6W7qjI5sea/bQ+
- 8pf7wHg22v8gM1H15SYtfbIG8w3mvdrdzBzJu6D/WZvu56b6woG/YFjp6AxmDAu1aRkhoH8raqA
- 2nQ6vpum7pL9ktZUPBUVCg3Rs+fvqWJOZzNnfXcu4tybwOF01slAd4bfDj2FTFWRoOQepbxgiC1
- pKnoN7zxlzFH/CQ9OHLqqavNpQ+OEzBrFBAAerNWeoPwa2V4x6z/RnDpQ1QSfSIxYL8yvpSbAr5
- Oi3Uyxodgs0LrwdaFQrzgMqQTEWo+6N9p/C5loVNoGl/q5j5VRWE/wJsv4+TsZyc41pL5v5Sk68
- TPJVs0MBDFcq9ph2hJrzKIxOcSLzOUdxWfCipg2esHC+eyxZVXJBqkhmkLdlvwZjClE9dKPF2qS
- 0k2s5WudacUjOsDqidA==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=f59o6tnjY-_5Ge3baHwA:9
+X-Proofpoint-GUID: Ap3AV2PLrKdx1BSa7ecL98V5VTbaoEv5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180118
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
@@ -121,434 +122,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix missing parts for MSA 9 kdsa and rework the cpacf handling code
-so that further extensions can be made in a clean and structured way.
-
-Introduce a new header file cpacf-arch.h to hold defines, structs and
-function prototypes around s390 cpacf. Use the cpcaf function defines
-in the existing code.
+Support the subfunctions CPACF_KMCTR_PAES_128, CPACF_KMCTR_PAES_192
+and CPACF_KMCTR_PAES_256 for the cpacf kmctr instruction.
 
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Tested-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- target/s390x/tcg/cpacf-arch.h    | 226 +++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c | 101 +++++++++++---
- target/s390x/tcg/insn-data.h.inc |   1 +
- target/s390x/tcg/translate.c     |   2 +
- 4 files changed, 311 insertions(+), 19 deletions(-)
- create mode 100644 target/s390x/tcg/cpacf-arch.h
+ target/s390x/gen-features.c      |  3 ++
+ target/s390x/tcg/cpacf.h         |  5 ++
+ target/s390x/tcg/cpacf_aes.c     | 92 ++++++++++++++++++++++++++++++++
+ target/s390x/tcg/crypto_helper.c |  7 +++
+ 4 files changed, 107 insertions(+)
 
-diff --git a/target/s390x/tcg/cpacf-arch.h b/target/s390x/tcg/cpacf-arch.h
-new file mode 100644
-index 0000000000..f92e4b44e3
---- /dev/null
-+++ b/target/s390x/tcg/cpacf-arch.h
-@@ -0,0 +1,226 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * s390x cpacf-arch
-+ *
-+ */
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index d1fce9e00c..9898f880a6 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -939,6 +939,9 @@ static uint16_t qemu_MAX[] = {
+     S390_FEAT_KMCTR_AES_128,
+     S390_FEAT_KMCTR_AES_192,
+     S390_FEAT_KMCTR_AES_256,
++    S390_FEAT_KMCTR_EAES_128,
++    S390_FEAT_KMCTR_EAES_192,
++    S390_FEAT_KMCTR_EAES_256,
+     S390_FEAT_PCC_XTS_AES_128,
+     S390_FEAT_PCC_XTS_AES_256,
+     S390_FEAT_PCKMO_AES_128,
+diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
+index 73cb564c0b..15fd860e3a 100644
+--- a/target/s390x/tcg/cpacf.h
++++ b/target/s390x/tcg/cpacf.h
+@@ -48,5 +48,10 @@ int cpacf_paes_cbc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                    uint64_t param_addr, uint64_t *dst_ptr_reg,
+                    uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+                    uint32_t type, uint8_t fc, uint8_t mod);
++int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint64_t *ctr_ptr_reg, uint32_t type,
++                   uint8_t fc, uint8_t mod);
+ 
+ #endif /* S390X_CPACF_H */
+diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
+index e2a01b8bef..6208c7f27d 100644
+--- a/target/s390x/tcg/cpacf_aes.c
++++ b/target/s390x/tcg/cpacf_aes.c
+@@ -724,3 +724,95 @@ int cpacf_paes_cbc(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+     return !len ? 0 : 3;
+ }
 +
-+#ifndef S390X_CPACF_ARCH_H
-+#define S390X_CPACF_ARCH_H
++int cpacf_paes_ctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
++                   uint64_t param_addr, uint64_t *dst_ptr_reg,
++                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
++                   uint64_t *ctr_ptr_reg, uint32_t type,
++                   uint8_t fc, uint8_t mod)
++{
++    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
++    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
++    uint8_t ctr[AES_BLOCK_SIZE], key[32], wkvp[32];
++    uint64_t len = *src_len_reg, done = 0;
++    int i, keysize, addr_reg_size;
++    AES_KEY exkey;
 +
-+/*
-+ * Function codes for the KM instruction
-+ */
-+#define CPACF_KM_QUERY          0x00
-+#define CPACF_KM_DEA            0x01
-+#define CPACF_KM_TDEA_128       0x02
-+#define CPACF_KM_TDEA_192       0x03
-+#define CPACF_KM_AES_128        0x12
-+#define CPACF_KM_AES_192        0x13
-+#define CPACF_KM_AES_256        0x14
-+#define CPACF_KM_PAES_128       0x1a
-+#define CPACF_KM_PAES_192       0x1b
-+#define CPACF_KM_PAES_256       0x1c
-+#define CPACF_KM_XTS_128        0x32
-+#define CPACF_KM_XTS_256        0x34
-+#define CPACF_KM_PXTS_128       0x3a
-+#define CPACF_KM_PXTS_256       0x3c
-+#define CPACF_KM_FULL_XTS_128   0x52
-+#define CPACF_KM_FULL_XTS_256   0x54
-+#define CPACF_KM_FULL_PXTS_128  0x5a
-+#define CPACF_KM_FULL_PXTS_256  0x5c
++    g_assert(type == S390_FEAT_TYPE_KMCTR);
 +
-+/*
-+ * Function codes for the KMC instruction
-+ */
-+#define CPACF_KMC_QUERY         0x00
-+#define CPACF_KMC_DEA           0x01
-+#define CPACF_KMC_TDEA_128      0x02
-+#define CPACF_KMC_TDEA_192      0x03
-+#define CPACF_KMC_AES_128       0x12
-+#define CPACF_KMC_AES_192       0x13
-+#define CPACF_KMC_AES_256       0x14
-+#define CPACF_KMC_PAES_128      0x1a
-+#define CPACF_KMC_PAES_192      0x1b
-+#define CPACF_KMC_PAES_256      0x1c
-+#define CPACF_KMC_PRNG          0x43
++    switch (fc) {
++    case CPACF_KMCTR_PAES_128:
++        keysize = 16;
++        break;
++    case CPACF_KMCTR_PAES_192:
++        keysize = 24;
++        break;
++    case CPACF_KMCTR_PAES_256:
++        keysize = 32;
++        break;
++    default:
++        g_assert_not_reached();
++    }
 +
-+/*
-+ * Function codes for the KMCTR instruction
-+ */
-+#define CPACF_KMCTR_QUERY       0x00
-+#define CPACF_KMCTR_DEA         0x01
-+#define CPACF_KMCTR_TDEA_128    0x02
-+#define CPACF_KMCTR_TDEA_192    0x03
-+#define CPACF_KMCTR_AES_128     0x12
-+#define CPACF_KMCTR_AES_192     0x13
-+#define CPACF_KMCTR_AES_256     0x14
-+#define CPACF_KMCTR_PAES_128    0x1a
-+#define CPACF_KMCTR_PAES_192    0x1b
-+#define CPACF_KMCTR_PAES_256    0x1c
++    /* check addressing mode, raise exception if not supported here */
++    addr_reg_size = get_address_bitsize(env);
++    switch (addr_reg_size) {
++    case 64:
++        break;
++    case 32:
++        len = (uint32_t)len;
++        break;
++    default:
++        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++    }
 +
-+/*
-+ * Function codes for the KIMD instruction
-+ */
-+#define CPACF_KIMD_QUERY        0x00
-+#define CPACF_KIMD_SHA_1        0x01
-+#define CPACF_KIMD_SHA_256      0x02
-+#define CPACF_KIMD_SHA_512      0x03
-+#define CPACF_KIMD_SHA3_224     0x20
-+#define CPACF_KIMD_SHA3_256     0x21
-+#define CPACF_KIMD_SHA3_384     0x22
-+#define CPACF_KIMD_SHA3_512     0x23
-+#define CPACF_KIMD_SHAKE_128    0x24
-+#define CPACF_KIMD_SHAKE_256    0x25
-+#define CPACF_KIMD_GHASH        0x41
++    /* early bail out if length is zero */
++    if (!len) {
++            return 0;
++    }
 +
-+/*
-+ * Function codes for the KLMD instruction
-+ */
-+#define CPACF_KLMD_QUERY        0x00
-+#define CPACF_KLMD_SHA_1        0x01
-+#define CPACF_KLMD_SHA_256      0x02
-+#define CPACF_KLMD_SHA_512      0x03
-+#define CPACF_KLMD_SHA3_224     0x20
-+#define CPACF_KLMD_SHA3_256     0x21
-+#define CPACF_KLMD_SHA3_384     0x22
-+#define CPACF_KLMD_SHA3_512     0x23
-+#define CPACF_KLMD_SHAKE_128    0x24
-+#define CPACF_KLMD_SHAKE_256    0x25
++    /* length has to be properly aligned. */
++    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
++        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++    }
 +
-+/*
-+ * function codes for the KMAC instruction
-+ */
-+#define CPACF_KMAC_QUERY         0x00
-+#define CPACF_KMAC_DEA           0x01
-+#define CPACF_KMAC_TDEA_128      0x02
-+#define CPACF_KMAC_TDEA_192      0x03
-+#define CPACF_KMAC_AES_128       0x12
-+#define CPACF_KMAC_AES_192       0x13
-+#define CPACF_KMAC_AES_256       0x14
-+#define CPACF_KMAC_PAES_128      0x1A
-+#define CPACF_KMAC_PAES_192      0x1B
-+#define CPACF_KMAC_PAES_256      0x1C
-+#define CPACF_KMAC_HMAC_SHA_224  0x70
-+#define CPACF_KMAC_HMAC_SHA_256  0x71
-+#define CPACF_KMAC_HMAC_SHA_384  0x72
-+#define CPACF_KMAC_HMAC_SHA_512  0x73
-+#define CPACF_KMAC_PHMAC_SHA_224 0x78
-+#define CPACF_KMAC_PHMAC_SHA_256 0x79
-+#define CPACF_KMAC_PHMAC_SHA_384 0x7a
-+#define CPACF_KMAC_PHMAC_SHA_512 0x7b
++    /* fetch and check wkvp from param block */
++    read_guest_wrap_u8(env, mmu_idx, ra,
++                       param_addr + keysize, wkvp, sizeof(wkvp));
++    if (memcmp(wkvp, protkey_wkvp, sizeof(wkvp))) {
++        /* wkvp mismatch -> return with cc 1 */
++        return 1;
++    }
 +
-+/*
-+ * Function codes for the PCKMO instruction
-+ */
-+#define CPACF_PCKMO_QUERY                      0x00
-+#define CPACF_PCKMO_ENC_DES_KEY                0x01
-+#define CPACF_PCKMO_ENC_TDES_128_KEY           0x02
-+#define CPACF_PCKMO_ENC_TDES_192_KEY           0x03
-+#define CPACF_PCKMO_ENC_AES_128_KEY            0x12
-+#define CPACF_PCKMO_ENC_AES_192_KEY            0x13
-+#define CPACF_PCKMO_ENC_AES_256_KEY            0x14
-+#define CPACF_PCKMO_ENC_AES_XTS_128_DOUBLE_KEY 0x15
-+#define CPACF_PCKMO_ENC_AES_XTS_256_DOUBLE_KEY 0x16
-+#define CPACF_PCKMO_ENC_ECC_P256_KEY           0x20
-+#define CPACF_PCKMO_ENC_ECC_P384_KEY           0x21
-+#define CPACF_PCKMO_ENC_ECC_P521_KEY           0x22
-+#define CPACF_PCKMO_ENC_ECC_ED25519_KEY        0x28
-+#define CPACF_PCKMO_ENC_ECC_ED448_KEY          0x29
-+#define CPACF_PCKMO_ENC_HMAC_512_KEY           0x76
-+#define CPACF_PCKMO_ENC_HMAC_1024_KEY          0x7a
++    /* fetch protected key from param block */
++    read_guest_wrap_u8(env, mmu_idx, ra, param_addr, key, keysize);
++    /* decrypt the protected key */
++    decrypt_protkey(key, keysize);
 +
-+/*
-+ * Function codes for the PRNO instruction
-+ */
-+#define CPACF_PRNO_QUERY                0x00
-+#define CPACF_PRNO_SHA512_DRNG_GEN      0x03
-+#define CPACF_PRNO_SHA512_DRNG_SEED     0x83
-+#define CPACF_PRNO_TRNG_Q_R2C_RATIO     0x70
-+#define CPACF_PRNO_TRNG                 0x72
++    /* expand key */
++    AES_set_encrypt_key(key, keysize * 8, &exkey);
 +
-+/*
-+ * Function codes for the KMA instruction
-+ */
-+#define CPACF_KMA_QUERY         0x00
-+#define CPACF_KMA_GCM_AES_128   0x12
-+#define CPACF_KMA_GCM_AES_192   0x13
-+#define CPACF_KMA_GCM_AES_256   0x14
-+#define CPACF_KMA_GCM_PAES_128  0x1A
-+#define CPACF_KMA_GCM_PAES_192  0x1B
-+#define CPACF_KMA_GCM_PAES_256  0x1C
++    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
++    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
++        /* read in nonce/ctr => ctr */
++        aes_read_block(env, mmu_idx, ra, *ctr_ptr_reg + done, ctr);
++        /* read in one block of input data => in */
++        aes_read_block(env, mmu_idx, ra, *src_ptr_reg + done, in);
++        /* encrypt ctr and xor with in => out */
++        AES_ctr_encrypt(in, out, ctr, &exkey);
++        /* write out the processed block */
++        aes_write_block(env, mmu_idx, ra, *dst_ptr_reg + done, out);
++        len -= AES_BLOCK_SIZE;
++        done += AES_BLOCK_SIZE;
++    }
 +
-+/*
-+ * Function codes for the KMF instruction
-+ */
-+#define CPACF_KMF_QUERY      0
-+#define CPACF_KMF_DEA        1
-+#define CPACF_KMF_TDEA_128   2
-+#define CPACF_KMF_TDEA_192   3
-+#define CPACF_KMF_AES_128   18
-+#define CPACF_KMF_AES_192   19
-+#define CPACF_KMF_AES_256   20
-+#define CPACF_KMF_PAES_128  26
-+#define CPACF_KMF_PAES_192  27
-+#define CPACF_KMF_PAES_256  28
++    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
++                             *src_ptr_reg + done);
++    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
++                             *dst_ptr_reg + done);
++    *ctr_ptr_reg = deposit64(*ctr_ptr_reg, 0, addr_reg_size,
++                             *ctr_ptr_reg + done);
++    *src_len_reg -= done;
 +
-+/*
-+ * Function codes for the KMO instruction
-+ */
-+#define CPACF_KMO_QUERY      0
-+#define CPACF_KMO_DEA        1
-+#define CPACF_KMO_TDEA_128   2
-+#define CPACF_KMO_TDEA_192   3
-+#define CPACF_KMO_AES_128   18
-+#define CPACF_KMO_AES_192   19
-+#define CPACF_KMO_AES_256   20
-+#define CPACF_KMO_PAES_128  26
-+#define CPACF_KMO_PAES_192  27
-+#define CPACF_KMO_PAES_256  28
-+
-+/*
-+ * Function codes for the PCC instruction
-+ */
-+#define CPACF_PCC_QUERY            0
-+#define CPACF_PCC_CMAC_DEA         1
-+#define CPACF_PCC_CMAC_TDEA_128    2
-+#define CPACF_PCC_CMAC_TDEA_192    3
-+#define CPACF_PCC_CMAC_AES_128    18
-+#define CPACF_PCC_CMAC_AES_192    19
-+#define CPACF_PCC_CMAC_AES_256    20
-+#define CPACF_PCC_CMAC_PAES_128   26
-+#define CPACF_PCC_CMAC_PAES_192   27
-+#define CPACF_PCC_CMAC_PAES_256   28
-+#define CPACF_PCC_XTS_AES_128     50
-+#define CPACF_PCC_XTS_AES_256     52
-+#define CPACF_PCC_XTS_PAES_128    58
-+#define CPACF_PCC_XTS_PAES_256    60
-+#define CPACF_PCC_SM_P256         64
-+#define CPACF_PCC_SM_P384         65
-+#define CPACF_PCC_SM_P521         66
-+#define CPACF_PCC_SM_ED25519      72
-+#define CPACF_PCC_SM_ED448        73
-+#define CPACF_PCC_SM_X25519       80
-+#define CPACF_PCC_SM_X448         81
-+
-+/*
-+ * Function codes for the KDSA instruction
-+ */
-+#define CPACF_KDSA_QUERY            0
-+#define CPACF_KDSA_VERIFY_P256      1
-+#define CPACF_KDSA_VERIFY_P384      2
-+#define CPACF_KDSA_VERIFY_P521      3
-+#define CPACF_KDSA_SIGN_P256        9
-+#define CPACF_KDSA_SIGN_P384       10
-+#define CPACF_KDSA_SIGN_P521       11
-+#define CPACF_KDSA_PSIGN_P256      17
-+#define CPACF_KDSA_PSIGN_P384      18
-+#define CPACF_KDSA_PSIGN_P521      19
-+#define CPACF_KDSA_VERIFY_ED25519  32
-+#define CPACF_KDSA_VERIFY_ED448    36
-+#define CPACF_KDSA_SIGN_ED25519    40
-+#define CPACF_KDSA_SIGN_ED448      44
-+#define CPACF_KDSA_PSIGN_ED25519   48
-+#define CPACF_KDSA_PSIGN_ED448     52
-+
-+#endif /* S390X_CPACF_ARCH_H */
++    return !len ? 0 : 3;
++}
 diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 6a5dbe1caf..e39ad153a8 100644
+index 44c24c632c..e9344dbbd9 100644
 --- a/target/s390x/tcg/crypto_helper.c
 +++ b/target/s390x/tcg/crypto_helper.c
-@@ -20,6 +20,7 @@
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
-+#include "target/s390x/tcg/cpacf-arch.h"
- 
- static uint64_t R(uint64_t x, int c)
- {
-@@ -275,6 +276,61 @@ static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-     return len == 0 ? 0 : 3;
- }
- 
-+static int cpacf_kimd(CPUS390XState *env, const int mmu_idx, const uintptr_t ra,
-+                      uint32_t r1, uint32_t r2, uint32_t r3, uint8_t fc)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case CPACF_KIMD_SHA_512:
-+        rc = cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
-+                          &env->regs[r2 + 1], S390_FEAT_TYPE_KIMD);
+@@ -174,6 +174,13 @@ static int cpacf_kmctr(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
+                            &env->regs[r3], S390_FEAT_TYPE_KMCTR, fc, mod);
+         break;
++    case CPACF_KMCTR_PAES_128:
++    case CPACF_KMCTR_PAES_192:
++    case CPACF_KMCTR_PAES_256:
++        rc = cpacf_paes_ctr(env, mmu_idx, ra, env->regs[1],
++                            &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
++                            &env->regs[r3], S390_FEAT_TYPE_KMCTR, fc, mod);
 +        break;
-+    default:
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    return rc;
-+}
-+
-+static int cpacf_klmd(CPUS390XState *env, const int mmu_idx, const uintptr_t ra,
-+                      uint32_t r1, uint32_t r2, uint32_t r3, uint8_t fc)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case CPACF_KLMD_SHA_512:
-+        rc = cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
-+                          &env->regs[r2 + 1], S390_FEAT_TYPE_KLMD);
-+        break;
-+    default:
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    return rc;
-+}
-+
-+static int cpacf_ppno(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                      uint32_t r1, uint32_t r2, uint32_t r3, uint8_t fc)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case CPACF_PRNO_TRNG:
-+        rc = fill_buf_random(env, mmu_idx, ra,
-+                             &env->regs[r1], &env->regs[r1 + 1]);
-+        if (!rc) {
-+            rc = fill_buf_random(env, mmu_idx, ra,
-+                                 &env->regs[r2], &env->regs[r2 + 1]);
-+        }
-+        break;
-+    default:
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    return rc;
-+}
-+
- uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-                      uint32_t type)
- {
-@@ -285,14 +341,15 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     uint8_t subfunc[16] = { 0 };
-     uint64_t param_addr;
-     MemOpIdx oi;
--    int cc;
-+    int rc = 0;
- 
-     switch (type) {
--    case S390_FEAT_TYPE_KMAC:
-+    case S390_FEAT_TYPE_KDSA:
-     case S390_FEAT_TYPE_KIMD:
-     case S390_FEAT_TYPE_KLMD:
--    case S390_FEAT_TYPE_PCKMO:
-+    case S390_FEAT_TYPE_KMAC:
-     case S390_FEAT_TYPE_PCC:
-+    case S390_FEAT_TYPE_PCKMO:
-         if (mod) {
-             tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-         }
-@@ -304,29 +361,35 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
+     default:
          tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
      }
- 
--    switch (fc) {
--    case 0: /* query subfunction */
-+    /* handle query subfunction */
-+    if (fc == 0) {
-         oi = make_memop_idx(MO_8, mmu_idx);
--        for (int i = 0; i < 16; i++) {
-+        for (int i = 0; i < sizeof(subfunc); i++) {
-             param_addr = wrap_address(env, env->regs[1] + i);
-             cpu_stb_mmu(env, param_addr, subfunc[i], oi, ra);
-         }
-+        goto out;
-+    }
-+
-+    switch (type) {
-+    case S390_FEAT_TYPE_KIMD:
-+        rc = cpacf_kimd(env, mmu_idx, ra, r1, r2, r3, fc);
-+        break;
-+    case S390_FEAT_TYPE_KLMD:
-+        rc = cpacf_klmd(env, mmu_idx, ra, r1, r2, r3, fc);
-+        break;
-+    case S390_FEAT_TYPE_PPNO:
-+        rc = cpacf_ppno(env, mmu_idx, ra, r1, r2, r3, fc);
-+        break;
-+    case S390_FEAT_TYPE_KDSA:
-+    case S390_FEAT_TYPE_KMAC:
-+        /* subfunctions (other than query) are not implemented yet */
-+        tcg_s390_program_interrupt(env, PGM_OPERATION, ra);
-         break;
--    case 3: /* CPACF_*_SHA_512 */
--        return cpacf_sha512(env, mmu_idx, ra, env->regs[1], &env->regs[r2],
--                            &env->regs[r2 + 1], type);
--    case 114: /* CPACF_PRNO_TRNG */
--        cc = fill_buf_random(env, mmu_idx, ra,
--                             &env->regs[r1], &env->regs[r1 + 1]);
--        if (cc == 0) {
--            cc = fill_buf_random(env, mmu_idx, ra,
--                                 &env->regs[r2], &env->regs[r2 + 1]);
--        }
--        return cc;
-     default:
--        /* we don't implement any other subfunction yet */
-         g_assert_not_reached();
-     }
- 
--    return 0;
-+out:
-+    return rc;
- }
-diff --git a/target/s390x/tcg/insn-data.h.inc b/target/s390x/tcg/insn-data.h.inc
-index b2e402216b..f2d0a6c664 100644
---- a/target/s390x/tcg/insn-data.h.inc
-+++ b/target/s390x/tcg/insn-data.h.inc
-@@ -1015,6 +1015,7 @@
-     D(0xb92e, KM,      RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KM)
-     D(0xb92f, KMC,     RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMC)
-     D(0xb929, KMA,     RRF_b, MSA8, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KMA)
-+    D(0xb93a, KDSA,    RRE,   MSA9, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KDSA)
-     E(0xb93c, PPNO,    RRE,   MSA5, 0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_PPNO, IF_IO)
-     D(0xb93e, KIMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KIMD)
-     D(0xb93f, KLMD,    RRE,   MSA,  0, 0, 0, 0, msa, 0, S390_FEAT_TYPE_KLMD)
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 1b6023168b..6183ae76b6 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -2592,6 +2592,7 @@ static DisasJumpType op_msa(DisasContext *s, DisasOps *o)
-         /* FALL THROUGH */
-     case S390_FEAT_TYPE_PCKMO:
-     case S390_FEAT_TYPE_PCC:
-+    case S390_FEAT_TYPE_KDSA:
-         break;
-     default:
-         g_assert_not_reached();
-@@ -6048,6 +6049,7 @@ enum DisasInsnEnum {
- #define FAC_MSA4        S390_FEAT_MSA_EXT_4 /* msa-extension-4 facility */
- #define FAC_MSA5        S390_FEAT_MSA_EXT_5 /* msa-extension-5 facility */
- #define FAC_MSA8        S390_FEAT_MSA_EXT_8 /* msa-extension-8 facility */
-+#define FAC_MSA9        S390_FEAT_MSA_EXT_9 /* msa-extension-9 facility */
- #define FAC_ECT         S390_FEAT_EXTRACT_CPU_TIME
- #define FAC_PCI         S390_FEAT_ZPCI /* z/PCI facility */
- #define FAC_AIS         S390_FEAT_ADAPTER_INT_SUPPRESSION
 -- 
 2.43.0
 
