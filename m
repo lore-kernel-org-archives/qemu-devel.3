@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBF2C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485BAC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCy-0007l3-DP; Tue, 18 Aug 2026 13:02:40 -0400
+	id 1wwNCu-0007it-BY; Tue, 18 Aug 2026 13:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCw-0007kM-Mv
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:38 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1wwNCs-0007hl-G4
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:34 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCv-0004t2-7C
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:38 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-851cbd64814so79016b3a.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:36 -0700 (PDT)
+ id 1wwNCq-0004rm-Tk
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:34 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-84862b0d5f8so153537b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072556; x=1787677356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072552; x=1787677352; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=cm60cTHKSfIokrOsMkIE12y9wwPsvnpPsXy0HmIZSdM=;
- b=EtzZtT3qpFGNNRT2fwmhcKMYrtDTJ5uYym6tKZap0oRivpBvIWC4eODH70njlafH3a
- fqlCABGGJKI9N1Z+4L5+Xn4aH0sTQAcl/en1qB3GFTe1G9NBuBd9Xj1/YMqyDPe0y+jw
- gyOCEIykV5b6sZn4aW05eZ8R/tQB9ozWqpGgyESJ4IrYAGiE8rDHEfURVs8E8Q4bpZif
- viSY4GdaWh+u7a4lqHSkvlu6HO5o30vllZFzncLvvLKp4RQXeZEGutub+anatjK9xDAI
- XSwjrla0i2SBswpf9egVQJYa578zNFOdA2FGaNigMGBOyfQJmQFXFmR5sifRAHRGbD1z
- U1HA==
+ bh=vGVbCkOEIOeLT7VoAwDE/N9IP+ngx75+x/kjdK+zKf0=;
+ b=br6gsDs2CuhOhLKz8Vd6xjeDfRJM3GCrN8GefdizZXABXniH2K6tA9GDatMSXIsUDo
+ uzfYu61s/pmS7eq5BOPYl+Pk85zcyRqJ92kLAIiDTq9TrOz7Or66ZDTYfG7TZeH5tVeM
+ 3EpsEsKIh8sIYUGxcSf+MF9NijpgUQ6qKItMgUaannxeBSeVBD2/R7GjtRW1KoAqFCuh
+ TBCjoczL5jKwgqkoKYXf+doCu++Ag3TBJjJgaYEcKUcDXLgJEPmJfdmWD6vmrJSewQ1G
+ 6VhHVv81SbEJO7To7rtXLABoAJuZEx7pVXVa8w7JXeI7xBrCn/5HJcRalRbqqx15ouF4
+ WM/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072556; x=1787677356;
+ d=1e100.net; s=20251104; t=1787072552; x=1787677352;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=cm60cTHKSfIokrOsMkIE12y9wwPsvnpPsXy0HmIZSdM=;
- b=JPtqUpFpESpnhANdbnOx/DHPxvy0cgFFPYOdV4RkBOPj0F0di7uVThfUvCk3nZ/ZEX
- 0wx95Z/mcA60KSDhlgGBUnDEg+XNeMbrIGH/LFmi8z0b6napkwRyqYau8XNCGVj5Igeo
- EinfubQoiuBU9icYgmELDXlak3YBxxGTH07Wro0rvOpd2pjjTh6/11upwjDpj9HuVW3C
- auLCDV/lRP/2UAYq6twdD6DdxBlF/9pbsizcmt46oj3EXZfTOK+iLgtQgyiGOkcGd4Bu
- cGxJA3jfvjylK/cpH9JJd2s7oe9jMulMvPps8DS9QVkKL3FikfYROQT6rF+9EVJiGqim
- qSYw==
-X-Gm-Message-State: AOJu0Yw+zLEBoCT3VdgfhikQb3KrJLey76C6IARui2TAVAghZvvep0Yb
- tvi4dlNCBq1KieQ9md7CRO9JRzoEsON9T5Bwo06KL5Pjt1ZGOHza01p238wKICsYhv0U66Euo1U
- A9JtKdq8=
-X-Gm-Gg: AR+sD12fDEqcb+jSdWTU9I5A5+UBVeN/mZd3X89CSDDVxEKbeUZDb1qIStE+o6J1s2I
- u2uAMwjQnkFX6hF9olpOXe7MU18cRFwH4hMEFkj0r+4qQK/BKyq+lxe39fQ+zzZSLqRC3sqqZSP
- cLgWq1arWL3e6xEqgQ4fpSRaYvo3ZyfScuKW6iRvNRwpqHG2cgPlErjZhHpDkHmPqaZhfARHfOu
- qfThptln3iTZHgZLEaWQgPi8mNVfKfGDyuLn/jZyUSZH19c2/KtLHhDt71ciSQlqYDbaNFvq0Lj
- Zbov0+arBGH8J4h2DS23WsKgPjfPGjTb0xEn64CyaVl8G50NWRAchCgY2ZVglnYiQgWP+tan/3P
- nQptPM5hRpl4FZFB35WmpO1VxQpWn+fKdfnpw3VGbppQcHg6q5dSLmRhlOX36F4fPDmbWxVYEpG
- IpFgEkA3lyfh8lAeUOK2xGV3W9WOTnDLl+GLAu2LuTr3Bd0RcwE3cg76HHtG3KXJpTZxj1y/vbr
- VtjEKNcr4Hb4kczMssLL5yV/YJGKIgid8+Nkb0lau9ZBBM=
-X-Received: by 2002:a05:6a00:1ca6:b0:846:de21:3da4 with SMTP id
- d2e1a72fcca58-84fde367c8emr40648396b3a.3.1787072555832; 
- Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
+ bh=vGVbCkOEIOeLT7VoAwDE/N9IP+ngx75+x/kjdK+zKf0=;
+ b=kM6ADbT7pQrs/7T9CmerhxwhabhICBtKksNGqSVdEL91KyeG64lOrT1OkWG6+2TjN1
+ uWTtCz4404kA1VphT9MAljpqMT+V47KazGThzevgix89xIelIsK0PWQ8U/Vx3OH6u4rJ
+ t/w7FxAnXvw6vM7OYccUfqUMwoa1ZmADQhjmZ8mHgGJ50nPPzS/AbNiHDGNfRVLEyZJJ
+ rfyYXjNck9UbopEnsa5kvi37DEQGxS4HAIIPqyjMyJM7NzhNzy1You7IfDkwK3NaFWPL
+ Wk34te6lD6NhV3IRrk6mRldr21D6pg85YisPncs9eDBzNziJDkomnYZ8Lge3XP/dM+iI
+ 5TVg==
+X-Gm-Message-State: AOJu0YzHinFi5V/txZfq8mzwdb3zq+oct1H2pMnAeD+CY4NFwOzP2DfX
+ ucTpT3lrXOHDXJsCIzxUpn72Rpyh7kQ3qL2tknsVBIboZuOJ5hbaZ8sN0GdBRTGTwlqcx86Z6jX
+ K5tccef8=
+X-Gm-Gg: AR+sD12W1cRK7rE8NQjsBi6YYNeXEjyckSCkk2P+hd3LJm7oMDZuVng4r5e5MhQgNbQ
+ fw/zxStFngimBNE/8XClWzmgaEvmxCauUJQTkLIjZA1f1JSqgfd1Q+Dr1m3lpa8/YRdPTGY1ro0
+ eqODDYn8/uMuoB2Q5yZBibbgbDRlYrb2HIyBBgMX/OaukhgNhvHqSO+U8tWir8Ly4d9Q4haW6Ej
+ EmYcSsnXCVS14vcNe9XBLGEu9q6UWlWplpM6UfwJ7lReiF9a/yzyF19Oc/ZH/T66lGNbvi9FmOY
+ 0o0aYO8xMnu+cEa7FsFgPe5gPahsOqR1X8AEJD43Io7KGK4vHEteCJgS0phb5L3FQptjLKEu3Wj
+ EDtoaxNMI2iFRCh0M17Q7cagzS9ECnP8+31IIOEs3jnQvzHNMYRXeEYbgaoEvTkOkqsk4cOQT1J
+ tKhNdg/D2DRRWIlt28peL6HYxMnghCpb03HrvkKnhdOzGWdhChpgqKqxPBjNgJ1cwlH/226eX0/
+ KEcKe5OL6GuGpvqUzG4nj5NKwJxzHtb4rM=
+X-Received: by 2002:a05:6a00:3cca:b0:848:2c5e:305e with SMTP id
+ d2e1a72fcca58-84fddfbf1a9mr36322248b3a.6.1787072551480; 
+ Tue, 18 Aug 2026 10:02:31 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.34
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 33/38] target/sh4: Enable disassembly via capstone
-Date: Tue, 18 Aug 2026 10:01:50 -0700
-Message-ID: <20260818170155.1907006-34-richard.henderson@linaro.org>
+Subject: [PULL 29/38] tcg/aarch64: Use CTZ from FEAT_CSSC
+Date: Tue, 18 Aug 2026 10:01:46 -0700
+Message-ID: <20260818170155.1907006-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,65 +103,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We already have an expansion of CTZ using RBIT+CLZ,
+but use the new insn with FEAT_CSSC is present.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/disas/capstone.h |  7 +++++++
- target/sh4/cpu.c         | 14 ++++++++++++++
- 2 files changed, 21 insertions(+)
+ tcg/aarch64/tcg-target.c.inc | 43 +++++++++++++++++++++++++++---------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
-diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index 5c78824da2..788f90771a 100644
---- a/include/disas/capstone.h
-+++ b/include/disas/capstone.h
-@@ -71,4 +71,11 @@
- #define CS_MODE_RISCV_VENTANA    0
- #endif
+diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+index 1f784e8d46..ce5c039557 100644
+--- a/tcg/aarch64/tcg-target.c.inc
++++ b/tcg/aarch64/tcg-target.c.inc
+@@ -535,6 +535,7 @@ typedef enum {
  
-+#if CS_API_MAJOR < 5
-+#define CS_ARCH_SH              -1
-+#define CS_MODE_SHFPU            0
-+#define CS_MODE_SH4              0
-+#define CS_MODE_SH4A             0
-+#endif
-+
- #endif /* QEMU_CAPSTONE_H */
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index ad2ec28c1b..3bbdee301d 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -28,6 +28,7 @@
- #include "fpu/softfloat-helpers.h"
- #include "accel/tcg/cpu-ops.h"
- #include "tcg/tcg.h"
-+#include "disas/capstone.h"
+     /* Data-processing (1 source) instructions.  */
+     Irr_sf_CLZ         = 0x5ac01000,
++    Irr_sf_CTZ         = 0x5ac01800,
+     Irr_sf_CNT         = 0x5ac01c00,
+     Irr_sf_RBIT        = 0x5ac00000,
+     Irr_sf_REV         = 0x5ac00000, /* + size << 10 */
+@@ -2213,24 +2214,30 @@ static const TCGOutOpBinary outop_andc = {
+     .out_rrr = tgen_andc,
+ };
  
- static void superh_cpu_set_pc(CPUState *cs, vaddr value)
+-static void tgen_clz(TCGContext *s, TCGType type,
+-                     TCGReg a0, TCGReg a1, TCGReg a2)
++static void tgen_clzctz(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
++                        TCGReg a2, AArch64Insn insn)
  {
-@@ -167,10 +168,23 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
- static void superh_cpu_disas_set_info(const CPUState *cpu,
-                                       disassemble_info *info)
- {
-+    const CPUSH4State *env = cpu_env((CPUState *)cpu);
-+
-     info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
-                                      : BFD_ENDIAN_LITTLE;
-     info->mach = bfd_mach_sh4;
-     info->print_insn = print_insn_sh;
-+
-+    info->cap_arch = CS_ARCH_SH;
-+    info->cap_insn_unit = 2;
-+    info->cap_insn_split = 2;
-+    /*
-+     * Possible capstone bug: the isa levels are not additive:
-+     * least significant bit wins, so SH4 overrides SH4A.
-+     * Work around by setting one or the other but not both.
-+     */
-+    info->cap_mode = CS_MODE_SHFPU
-+        | (env->features & SH_FEATURE_SH4A ? CS_MODE_SH4A : CS_MODE_SH4);
+     tcg_out_cmp(s, type, TCG_COND_NE, a1, 0, true);
+-    tcg_out_insn(s, rr_sf, CLZ, type, TCG_REG_TMP0, a1);
++    tcg_out_insn_rr_sf(s, insn, type, TCG_REG_TMP0, a1);
+     tcg_out_insn(s, csel, CSEL, type, a0, TCG_REG_TMP0, a2, TCG_COND_NE);
  }
  
- static ObjectClass *superh_cpu_class_by_name(const char *cpu_model)
+-static void tgen_clzi(TCGContext *s, TCGType type,
+-                      TCGReg a0, TCGReg a1, tcg_target_long a2)
++static void tgen_clz(TCGContext *s, TCGType type,
++                     TCGReg a0, TCGReg a1, TCGReg a2)
++{
++    tgen_clzctz(s, type, a0, a1, a2, Irr_sf_CLZ);
++}
++
++static void tgen_clzctzi(TCGContext *s, TCGType type, TCGReg a0, TCGReg a1,
++                         tcg_target_long a2, AArch64Insn insn)
+ {
+     if (a2 == (type == TCG_TYPE_I32 ? 32 : 64)) {
+-        tcg_out_insn(s, rr_sf, CLZ, type, a0, a1);
++        tcg_out_insn_rr_sf(s, insn, type, a0, a1);
+         return;
+     }
+ 
+     tcg_out_cmp(s, type, TCG_COND_NE, a1, 0, true);
+-    tcg_out_insn(s, rr_sf, CLZ, type, a0, a1);
++    tcg_out_insn_rr_sf(s, insn, type, a0, a1);
+ 
+     switch (a2) {
+     case -1:
+@@ -2246,6 +2253,12 @@ static void tgen_clzi(TCGContext *s, TCGType type,
+     }
+ }
+ 
++static void tgen_clzi(TCGContext *s, TCGType type,
++                      TCGReg a0, TCGReg a1, tcg_target_long a2)
++{
++    tgen_clzctzi(s, type, a0, a1, a2, Irr_sf_CLZ);
++}
++
+ static const TCGOutOpBinary outop_clz = {
+     .base.static_constraint = C_O1_I2(r, r, rAL),
+     .out_rrr = tgen_clz,
+@@ -2271,15 +2284,23 @@ static const TCGOutOpUnary outop_ctpop = {
+ static void tgen_ctz(TCGContext *s, TCGType type,
+                      TCGReg a0, TCGReg a1, TCGReg a2)
+ {
+-    tcg_out_insn(s, rr_sf, RBIT, type, TCG_REG_TMP0, a1);
+-    tgen_clz(s, type, a0, TCG_REG_TMP0, a2);
++    if (cpuinfo & CPUINFO_CSSC) {
++        tgen_clzctz(s, type, a0, a1, a2, Irr_sf_CTZ);
++    } else {
++        tcg_out_insn(s, rr_sf, RBIT, type, TCG_REG_TMP0, a1);
++        tgen_clzctz(s, type, a0, TCG_REG_TMP0, a2, Irr_sf_CLZ);
++    }
+ }
+ 
+ static void tgen_ctzi(TCGContext *s, TCGType type,
+                       TCGReg a0, TCGReg a1, tcg_target_long a2)
+ {
+-    tcg_out_insn(s, rr_sf, RBIT, type, TCG_REG_TMP0, a1);
+-    tgen_clzi(s, type, a0, TCG_REG_TMP0, a2);
++    if (cpuinfo & CPUINFO_CSSC) {
++        tgen_clzctzi(s, type, a0, a1, a2, Irr_sf_CTZ);
++    } else {
++        tcg_out_insn(s, rr_sf, RBIT, type, TCG_REG_TMP0, a1);
++        tgen_clzctzi(s, type, a0, a1, a2, Irr_sf_CLZ);
++    }
+ }
+ 
+ static const TCGOutOpBinary outop_ctz = {
 -- 
 2.43.0
 
