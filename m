@@ -4,138 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9CCC5DF70
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5CBCC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwGDA-0007h8-Ft; Tue, 18 Aug 2026 05:34:24 -0400
+	id 1wwGHE-0000v4-RX; Tue, 18 Aug 2026 05:38:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wwGD9-0007gu-8Y
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 05:34:23 -0400
-Received: from mail-northeuropeazon11021084.outbound.protection.outlook.com
- ([52.101.65.84] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wwGHD-0000uO-C1; Tue, 18 Aug 2026 05:38:35 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wwGD7-0003lX-I1
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 05:34:23 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d/5c36zC/zorHxc3+4a+qvWHVLRAuw+FnDr5OZhBIxE20eRFrQhsrhmLNz3t4qRIVL0Dgenx2T/aELZDo/Za5K8jygJhhGgMYdzi3z+ZNehEQ0lcGxz3F2B5n7mLRYl0RKVfbpB1yD0BTspwCeN1CVjwHpGoeY3LPmrq6aRTrFfr+A1TwAOvWWD/krYbO9HYytPnZtbNq5mrMZ2peb6Y9DI/JDGBz65sylQK3ReIdv1pn1ArnhlipuQtZWVtpGiIZ9zPSY/agoXAMWaZXKtCMuITUHwz4uuk3OX10nHmSqOrzL335pUOFnCu5nwia9PCf94XGKrJ8RHf+z0Djv0Y/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zcoWAgLaQj+8UxzDcTUpvpMqGZxz9vRG3KOsOecGFR4=;
- b=dh9v8/XmTRc+AD89sHOwMisC9M3/S/DyYnncKDZm77vLvPKMEl+f+bnuYSpxvdr7s7XYDZV2xsRDRdYNN/y+3u1/cD2oOHLZsWbQTGEE0N0HfpGXAcKRY0kDzKOVdqC3jO3OoXG8+wbMfOZIlgNHFjLXugL8sc7tX0lxJIxyDtxHTsSZiuVTENGITkD9yl9QjfHjWGvRPDHvmtS+WcPMxUhmbUtFWEv65KV85vNREygqggqup3Mnoq72ODLzhc781mNi62fS0Jp4qPQTOhopJs+2N/rN2tD5WN8MCMBIYRFVrmwTGcUES+lbdGJcvUblLX8tImUPeNCHucz7UNtHnQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zcoWAgLaQj+8UxzDcTUpvpMqGZxz9vRG3KOsOecGFR4=;
- b=lcI0pacglfzA4+FOV7JNMW3P6gAAEbfTRM82g/vVBPCX1uThp9qw0sXb4lhVNIoiuz8MhGh1g26s+1J7qUYiXiDgjK0Ww0BuXHTUL2uy/GZLF1B2Du97Y2++kAhJJ/OkOKgNhUiqLHQl3fnCUngEccUWZ4l+1S2PVh6AQ2zPJLgaunRJ27/ba+ftAUf3wtKBuTAHPNsyx+GBGOQKewUHs22bp02ZIWuZu0EomfVCOFR3QyB4BwPqubCTdB7Epbez7F1UUWYMOc0LehRaNxTsx1Df0TdLgzqPageVJCsMUX2ZhLhm+R3hbu9F0YcwL4W6EhQvj3NpwNhNgTksyEIXIw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by DBBPR08MB6233.eurprd08.prod.outlook.com (2603:10a6:10:204::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Tue, 18 Aug
- 2026 09:29:17 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0315.016; Tue, 18 Aug 2026
- 09:29:16 +0000
-Message-ID: <299fa07a-9a40-4473-bfe7-38aab7248a79@virtuozzo.com>
-Date: Tue, 18 Aug 2026 11:29:15 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] checkpatch: warn about hunks which only add blank lines
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu@processmission.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Philippe Mathieu-Daude <philmd@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20260731134046.1015479-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260731134046.1015479-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VIXP296CA0032.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:36e::15) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wwGHA-0004Y3-QG; Tue, 18 Aug 2026 05:38:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1787045886; bh=JmfyJXkW3cYp5MdcGvzaRpYOC9KlLZA4jCCzQ4eQJRE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=E0R8GrqtaIQcGxhzWVGAtlCFjkFVRpDejeSkrpOGOlqZ9dACjQNQixjZRM3g4lnI3
+ Uny+2yqg/DZ3ajdYAM3WCkhLHn7G16Vvplx212VECmUk2MUTapHm9hbByk/JX+GGGM
+ PVTxwcII42U1MmXgh24efBfRdcDPsxTaulCfY5AAIiXxOAbUEb33oEjD6D5/ejLY6e
+ c7VACYz4B8prPFvVBoZmDPprWBlHRBvfgNREB3dDSQuFDgPQDYTFk/Yjn07VE+8haF
+ bZ+nbbnOquCsyhAKRE1kYNDE3QzPnpfqmMBqF5mPkJYOkK4onyUwjj48rM9kUrlQL/
+ jVkQPVxCuLavg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2AC921CC152;
+ Tue, 18 Aug 2026 12:38:06 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id F21AD40DC0C;
+ Tue, 18 Aug 2026 12:38:28 +0300 (MSK)
+Message-ID: <f0b5bad1-4652-4d20-9e5d-aa57f709ca93@tls.msk.ru>
+Date: Tue, 18 Aug 2026 12:38:02 +0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DBBPR08MB6233:EE_
-X-MS-Office365-Filtering-Correlation-Id: 38eeec72-33a2-44a2-77b9-08defd0b2c91
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|10070799003|1800799024|23010399003|18002099003|22082099003|56012099006|5023799004|10067099003;
-X-Microsoft-Antispam-Message-Info: +7vi+aYb7mKUxeimK3jzMCxogl2yEpwsWgfuOUbHZo61FLZQ+UA5dvdF3ZR0WyoTOwAVGpjys4yzlHdTX5JWpdw+qX4fbOjt0HBGji6VkI7N/gC+2j5GYygukti4xRyw9GDOujCmJoVgyjE7APsMK4P2VE8J+K2j9Qa99R2iEPsOA4hapYU2QI5c7c3Lrez64e0JYOcImVK/XMU4o3I/qQHKlkiaWgEzqUuskgcEdkWnE3dQvt0oCvibB2H5TvWQcgtKtRr/PdJPBzK3M7xpcAHE+eDK+osGxS607SSyda68uLYqOwFawnC0GdMi9Sfc4rGCVAZsN/yA4IQoRDAOm9Z/hdM73TTcXSC+r2Ao93L2IQqlIj9d1MauilXfkhtFWRqP1J9vkrj8OoVom5nbtVkYV8XYdNnm8/UnPxXoPS/qvlfvL71xa4972bC8+K9sY8W2I02Q42yh/O9Q/PoZkbc1v8ZVUsvm38tQrGYnMgbAsQSW50JZ4kEdqMaM4geGXRNSWPZkYdGoa6+NQhAngXBSKDjLIYQ+zDeYxU62ZjR+EJJLGvf72BEzxrevvfQYvl19QCANv3xWPsXaW4eDdwYxo2WlIsaBtqp9BJ+B9ZIVjAz5xzUrLv2NBdoW02XGYabyDSZGQ74TF+lTHtGKnjB3VanU3UJ8ZldQ224Rxq0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(23010399003)(18002099003)(22082099003)(56012099006)(5023799004)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N3J2K2N1RlFsQVdKM3lQTE5sUVJKTXpYT01ueEJoY1paemhHK0t2aXNGZ1Aw?=
- =?utf-8?B?c3NIbFJqM2RuRXR3MmRHYi9UU0JnN1Vrc1pseW4rOEdVZDQ5REliVWtyY0Jj?=
- =?utf-8?B?blFhWVhuUXdQK3JLM0lQN2hYSXpMZFpmWkptRi9aM3lUcW43Q2pOTEJ4RHpm?=
- =?utf-8?B?MGJEZnByTWpxVmx5dzdnRzFjV2VSdlJhQ1J0cWtGc2lpQ3lYQkYxRUI5RkYv?=
- =?utf-8?B?bHpNTHhjaWhiNiswZGtTUGx6QUhXTmF0VHZMOXNWTVNOcXVNWStFT045UWxQ?=
- =?utf-8?B?UHJhcERRVDcrSFJLUkFqREw0TFZ4QWl3ejNQUjlBeFZ5K2w1ZTY3WGoxTm9B?=
- =?utf-8?B?ZEE0dThzcDRXZW44cFlpUWg5SS94OHVrWTk2elBFamY1d0FZQ3kwWFVxei9p?=
- =?utf-8?B?Qy9OblNwVHBOK2g4S25xS1ZQUG9xNDMxeEpSTm5OTEVFVkZycER4NCtQTHBu?=
- =?utf-8?B?NW04c0xSRFUxUGhDQUprMURtaXcxSmdjaklNVktXZkRPTldibXRNVyt2VWZ4?=
- =?utf-8?B?WHg3ei9qVTdRWmpaOFdGS2lrRWlOaE92R0lHd3lnTzM0dTMzSm9xRXFEc3Y0?=
- =?utf-8?B?b2hUVVV4OCtUNG8xdGlVWnN0WTdmaCtZNzdTajN0Q0pLWDMyUGh3T1Q2cGZr?=
- =?utf-8?B?SzJhUzJuOGhxT0pOZEh4a1h2ZjBRR2FOSTRueXJDNGh0M0ZCaUtzYlJhWmlN?=
- =?utf-8?B?ZHZBQWNSYUxYRDJpUWdTS3lzYWVZUUc4ZENXRFNzbGFkWTJQZFJNZytMSTlp?=
- =?utf-8?B?ZzVJVDdrV2FtQlNyUXd3SndLYUlTcDM1SG9iSE94OER1Y0loYThnWG96bFVn?=
- =?utf-8?B?MExOd3dYTk5aWXQ2a3ljR3dNWHIzQ0pNVlVqcTh1WVkrT2NaNjdPN2kxSzBh?=
- =?utf-8?B?MHJLY29qY1ltNVM1eWhUWmpySG90WVhhcG5Ic2Q0WTR1Tzk1M3pkYjcwZ3JM?=
- =?utf-8?B?Q01rYzk0N0hucVJoOEVRemU2VXpkV2o4cEE2dU9VK0hYMDVFanRKeUttdTBq?=
- =?utf-8?B?L3NaV2dOT0tIQ2d5S1NheGhJVkVUT214WGtxb3JZNW1uR01rRTVTU0QxaVJ2?=
- =?utf-8?B?ekhjNHU3TlhINHVxcGp1MllxcHAvTGZ5OUh2ZFp6ckNWUnVxUXMrOHVxRFJs?=
- =?utf-8?B?c2pTbmNnMEpqbHFsdW9pd2tYMGMzQmphbFVhcGFEc0JxdHN5THd6eVlaNDNE?=
- =?utf-8?B?eUc2ZGlSZWdUc3dXWk80SUxWWnVxUHUxRmdIb2VBc01yYUNrUGpMYVMvT0xk?=
- =?utf-8?B?YUE2aXh5TEcrU1FKZFR4ZmRzWVNiVHBGTWJOdFlOeHZESVk3NjZkSHBBeExJ?=
- =?utf-8?B?VW5aNXF1ZTQ0Rm9Sbi9XMS9BV1hhVHpxVk9wRDlScmxacDI0R1ZodGhMd2hM?=
- =?utf-8?B?NjBlKzZqejRSRUlDQkhwMVRUYm1DSnNZeWJxc1ByN2xITFBVMENaeFlSbEVz?=
- =?utf-8?B?T0dWSGt4T0tobHQ4c292eGxXSDZiSjEwTjFMcmpCM3VsbDZBR083RGxKdHVB?=
- =?utf-8?B?Q2pKMUpDMDRzdmlNKzRlQVcwdUZpYW5sOGdtd0NNL0RsRjZ6S2tkbThYY2pG?=
- =?utf-8?B?RUxSR0dSbCtkRktpQVhkeDREYnBvNk1NN1hnNWxhY1F6TTM5Vyt1TlQzRWFM?=
- =?utf-8?B?NlA1Zk9UTXBjQTFlMzY5T0kvUkFFVDJjZTFrQ2l2N2RGQ2IvWFVKcTgxQytx?=
- =?utf-8?B?NmNlSm1kYkJHVDBSaVBWZ2lndFVJSnJTZGM0VGUrOUFESHMzNGw3a1Qvc2RU?=
- =?utf-8?B?cUFvRDdyaHY4bVNjL3BHL093cTZwUXFvaExjQzdaamNOTkZ6d2VpTWFMbTNJ?=
- =?utf-8?B?WDZYY0poNktQVGR3SUQvMnFUSmlkSTBRTEF3bCt2ZE04NWZMQVEyMVlyNHJk?=
- =?utf-8?B?Y0JWN1J1YnQwNGR2cDhBeERNRUZWbWdZVEkvdU9QV2N2ODNyNndzaTR2WXFT?=
- =?utf-8?B?MnA0NG5IYm5EZlRqM09BSHY0bTlxdHZVaUpzWkxMdEt0K2traHB6MW1velRM?=
- =?utf-8?B?aDhpeTF6TnRFUStvaHNydnlzYTRIN3NLcFBXVUI3S1o3Qmtwc0QrSGdCb0ZF?=
- =?utf-8?B?Z2lkc1NrS3QwbXp0QWFibldpNFBqL09jMDdKbG5tWmZKemV0WEJWenZXUWsr?=
- =?utf-8?B?eFNTY0lCUmp2Ykp6UVh0VzlkcHJLWGx5ZjdnbnlQMytsU1I4WUJ2ZG5kZk1X?=
- =?utf-8?B?aXlZVWNsNlFucm5HVkVEMk1HYjgvbGZGYVFTZlZZVDZHd0Y1ZXVjempqNnll?=
- =?utf-8?B?ZHdSWjJwWGJ5WnF1WW5LRTZHRkZCQmdTTU5CT1lBWWtTL1huOWYvMnRZdC8y?=
- =?utf-8?B?TktPUlR3TDdQa2VuUzFnckZFT0JZK01Ic1AvSTFRY3h6Sys2ZVgxZ1RoeXhn?=
- =?utf-8?Q?QUJz/QIBFXtLBndQTLxDrkBBHxgdDt3b6eRJQepkeQ47c?=
-X-MS-Exchange-AntiSpam-MessageData-1: cVA+2zK5Ls66eA==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 38eeec72-33a2-44a2-77b9-08defd0b2c91
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 09:29:16.9063 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: znK/OTQUW6I0dr5ikCQMmyDUiv95Mmxo8ik6bcrLBrD4oOpg7RzmKOoual7P7F2WEu2z9m+silkxBW2p7CkIhw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR08MB6233
-Received-SPF: pass client-ip=52.101.65.84; envelope-from=den@virtuozzo.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/loongarch: fix data race in CSR_ESTAT
+To: shankerwangmiao@gmail.com, qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Xi Ruoyao <xry111@xry111.site>, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260716-loong-race-v2-1-01e68e4b850f@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,98 +114,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/26 15:40, Denis V. Lunev wrote:
-> This email originated from an IP that might not be authorized by the domain it was sent from.
-> Do not click links or open attachments unless it is an email you expected to receive.
-> Patches sometimes carry a hunk whose entire content is one or two
-> added blank lines. It changes nothing, it makes the diff longer and
-> it survives review because nobody looks twice at a blank line. The
-> blank line itself is perfectly fine, the gratuitous hunk is not.
->
-> Tally the added blank lines and the other changes of every hunk in
-> the pre-scan loop which already walks the raw patch, and record the
-> hunks which only add blanks. Such a hunk is then reported at the
-> first blank line it adds, so the warning carries the usual file and
-> line context.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Chao Liu <chao.liu@processmission.com>
-> CC: "Daniel P. Berrange" <berrange@redhat.com>
-> CC: "Philippe Mathieu-Daude" <philmd@oss.qualcomm.com>
-> CC: Thomas Huth <thuth@redhat.com>
+Ping?
+
+This too, seems to be a qemu-stable material.
+
+Thanks,
+
+/mjt
+
+On 7/15/26 23:48, Miao Wang via B4 Relay wrote:
+> From: Miao Wang <shankerwangmiao@gmail.com>
+> 
+> The CSR_ESTAT register of a CPU can be read and written by both the
+> CPU thread and other threads (e.g., the interrupt controller thread).
+> Currently the possible readers and writers of CSR_ESTAT are:
+> 
+> - Readers
+>    - tcg generated by trans_csrrd(, CSR_ESTAT)
+>    - loongarch_cpu_has_work()
+> 
+> - Writers
+>    - tcg generated by trans_csrxchg(, CSR_ESTAT)
+>    - helper_csrwr_estat()
+>    - helper_csrrd_msgir()
+>    - loongarch_cpu_set_irq()
+>    - loongarch_cpu_do_interrupt()
+>    - loongarch_cpu_exec_interrupt()
+> 
+> The access from the CPU thread is not synchronized with the access from
+> other threads, which may lead to data races. The above readers and
+> writers shall all run on the corresponding CPU thread except for
+> loongarch_cpu_set_irq(). To fix this, the access to CSR_ESTAT in
+> loongarch_cpu_set_irq() is moved to the CPU thread by using
+> async_run_on_cpu().
+> 
+> The data race has been identified while running the test cases from
+> dracut, which is using QEMU to boot a LoongArch guest. By running the
+> tests repeatedly (about 30 times) in the following conditions, the
+> guest will hang in the middle of booting:
+> 
+> - Host architecture: LoongArch64 or Aarch64
+> - Guest kernel: 7.1.3+deb14-loong64
+> - Number of vCPUs: 1 or 2
+> - CPU Features: max, la464,msgint=off,ptw=off, or la464,msgint=off,ptw=on
+> - Accelerator: tcg
+> 
+> When the guest hangs, the guest kernel log shows various errors related
+> to RCU stalls or other Soft Lockup or Hard Lockup issues. When running
+> with 1 vCPU and the guest hangs, the guest kernel directly hangs without
+> any messages and stucks at idle_exit.
+> 
+> With this patch, the guest can boot successfully without any hangs
+> during repeated runs of the test cases.
+> 
+> Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
 > ---
-> Note: this patch is sent on behalf of the yesterday finding inside IDE
->       pull request. This should be found with a checkpatch.
->
->  scripts/checkpatch.pl | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
->
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 03f35e7501..dfa9878006 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -1567,6 +1567,10 @@ sub process {
->  	my $first_line = 0;
->  	my $p1_prefix = '';
->  
-> +	my %blank_only_hunk;
-> +	my $hunk_first_blank = 0;
-> +	my $hunk_has_change = 0;
+> Changes in v2:
+> - Simplify the changes to move the access to CSR_ESTAT from the only
+>    unsynchronized loongarch_cpu_set_irq() to the CPU thread using
+>    async_run_on_cpu() to avoid the race condition.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260714-loong-race-v1-1-54111549c95e@gmail.com
+> ---
+>   target/loongarch/cpu.c | 27 +++++++++++++++++++--------
+>   1 file changed, 19 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index fb03424ffa8cd5e5d250531cc2a36fa789fc25a9..126c3ad276cc44311942542e086bcabe41d91b63 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -57,12 +57,27 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+>   #ifndef CONFIG_USER_ONLY
+>   #include "hw/loongarch/virt.h"
+>   
+> +static void do_set_cpu_estat(CPUState *cs, run_on_cpu_data data)
+> +{
+> +    CPULoongArchState *env = cpu_env(cs);
+> +    CPUSysState *sys = env_sys(env);
 > +
->  	my $prev_values = 'E';
->  
->  	# suppression flags
-> @@ -1583,6 +1587,10 @@ sub process {
->  		$line = $rawline;
->  
->  		if ($rawline=~/^\@\@ -\d+(?:,\d+)? \+(\d+)(,(\d+))? \@\@/) {
-> +			$blank_only_hunk{$hunk_first_blank} = 1
-> +				if ($hunk_first_blank && !$hunk_has_change);
-> +			($hunk_first_blank, $hunk_has_change) = (0, 0);
+> +    int irq = data.host_int;
+> +    int level = irq >= 0 ? 1 : 0;
+> +    irq = level ? irq : -irq;
 > +
->  			$realline=$1-1;
->  			if (defined $2) {
->  				$realcnt=$3+1;
-> @@ -1633,6 +1641,13 @@ sub process {
->  		push(@lines, $line);
->  
->  		if ($realcnt > 1) {
-> +			if ($rawline =~ /^\+\s*$/) {
-> +				$hunk_first_blank = $linenr
-> +					if (!$hunk_first_blank);
-> +			} elsif ($rawline =~ /^[-+]/) {
-> +				$hunk_has_change = 1;
-> +			}
+> +    sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> +    if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+> +        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    } else {
+> +        cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> +    }
+> +}
 > +
->  			$realcnt-- if ($line =~ /^(?:\+| |$)/);
->  		} else {
->  			$realcnt = 0;
-> @@ -1641,6 +1656,8 @@ sub process {
->  		#print "==>$rawline\n";
->  		#print "-->$line\n";
->  	}
-> +	$blank_only_hunk{$hunk_first_blank} = 1
-> +		if ($hunk_first_blank && !$hunk_has_change);
->  
->  	$prefix = '';
->  
-> @@ -1780,6 +1797,10 @@ sub process {
->  
->  		$cnt_lines++ if ($realcnt != 0);
->  
-> +		if ($blank_only_hunk{$linenr}) {
-> +			WARN("this hunk only adds blank lines\n" . $herecurr);
-> +		}
-> +
->  # Only allow Python 3 interpreter
->  		if ($realline == 1 &&
->  			$line =~ /^\+#!\ *\/usr\/bin\/(?:env )?python$/) {
->
-> base-commit: e1705a25aff35635c360bbaba4c2731d019a422a
-Guys,
+>   void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>   {
+>       LoongArchCPU *cpu = opaque;
+> -    CPULoongArchState *env = &cpu->env;
+>       CPUState *cs = CPU(cpu);
+> -    CPUSysState *sys = env_sys(env);
+>   
+>       if (irq < 0 || irq >= N_IRQS) {
+>           return;
+> @@ -71,12 +86,8 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+>       if (kvm_enabled()) {
+>           kvm_loongarch_set_interrupt(cpu, irq, level);
+>       } else if (tcg_enabled()) {
+> -        sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
+> -        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
+> -            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+> -        } else {
+> -            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> -        }
+> +        async_run_on_cpu(cs, do_set_cpu_estat,
+> +                         RUN_ON_CPU_HOST_INT(level ? irq : -irq));
+>       }
+>   }
+>   
+> 
+> ---
+> base-commit: 499039798cdad7d86b787fec0eaf1da4151c0f05
+> change-id: 20260707-loong-race-63639e8f5afb
+> 
+> Best regards,
 
-does it make sense to continue discussion or this patch
-goes to /dev/null as nobody is interested in?
-
-Den
 
