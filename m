@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5680C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11373C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwSal-0001ZU-5a; Tue, 18 Aug 2026 18:47:35 -0400
+	id 1wwSfh-0003B3-1Q; Tue, 18 Aug 2026 18:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwSaj-0001St-Lt
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:47:33 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wwSfc-0003Av-5Z
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:52:36 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwSai-0002z7-6Y
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:47:33 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-381c51fde6bso600299a91.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:47:31 -0700 (PDT)
+ id 1wwSfZ-0003ua-W9
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:52:35 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ceab75934dso3960035ad.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:52:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787093251; x=1787698051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787093552; x=1787698352; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=U5rT7QAuswJzgtw7lqi6SXVFyH34DhDvNZqQHBEWI4Y=;
- b=xklJGyKb1oSvob2NshipxYaCLqKGbrrxcOS06nCtMfX2k1u+mUq9T49/hh+GMZKxrb
- B7fhZU8YC6pema29SIhzaC/fM77X0+g/I3yDVu9FMfcoKvvau7vFmsZuX9XPN/eJ73Qs
- 4mRUqj36V11xikr9m8pj/y17jhsrz6utM4/mNCfES6udvs73N0WMnVoNzxLjNV0DwPg+
- OCkExvzjdAr4zWnNKDAJTe4I+6ZK1/FMhev0wXR6z9bgJ6JZoYf371McrbB04heLdPAf
- 9ZCZAA1kBIDeqXxsOrhETpWWDZG3s5InVtdj3hneknV4tpckxI0XPeG/H503CqdqF5Kv
- wgww==
+ bh=s3JSDrG/Z/LbVmHmR/nySqSYEMQ1uYn/UZKZi9TDNW8=;
+ b=xmr5VfvC2Oy+aLtgwdYFBnBs+yk/kRAdlAxOmTDq8m8OnSWnKHanQvEojmw80XE0nF
+ LgUMJnA3RiRjx8jluvVFQJQSctRT1Tx4jqZJKicKT2FmkN7rjhzBQH8Gaq3VkwkUbvUa
+ vvAahxBxIXPBUDw2Uv92OShdfbieZLnSkHU9PTqzeGlsOIrBhnxE9ys6FAXEl6/g1brp
+ ElzngeKdTobOUC+b6jsZ14ZljDcZHwFKsJcFyT+20+ge2Jal7lkHJru1p7zDlDSoELtt
+ D6ksLNmmONMn0x9MCzHW1kBFpprHf+1C3hpqnG1rxc4DJqp8oht27kz7iVvE+rwJOT0s
+ D2QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787093251; x=1787698051;
+ d=1e100.net; s=20251104; t=1787093552; x=1787698352;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=U5rT7QAuswJzgtw7lqi6SXVFyH34DhDvNZqQHBEWI4Y=;
- b=Ry8uraFzAW/3qDjgOgPAV3ROwrCKE7lrU6wKvmFucmJWgirR8PVj9FJttw9hw9maKQ
- 9FJUZrXtn5mPyoZ1kdrYqi5lhXzb/uEZmjJKggGu/nDjt5qVwNIxbOYAtvDvupXAd1Xc
- i0IZw7wYChLQyx6t0R+MlUnRaYTpepkUv4FBwBH/jxHO10Gwj4o5SNDId44/zxx3iYqz
- u36a/dDf8OpM18k8hnkFLoGjYgNU183FviBXmDHA+MZKttSp3Ux39h9Q6hQ0HUhSYR98
- we8WV+naS0qBnfO52Uvkb1WeUW/e1SmRRk1LdVzb1m8SxdDWYvVTsSutYJbdKVm3WmyI
- 2N3g==
+ bh=s3JSDrG/Z/LbVmHmR/nySqSYEMQ1uYn/UZKZi9TDNW8=;
+ b=iuiDmhp8bddulm6E6h+ug762Wfqxz6cnxUeKp2S67lniwW0nJQ+HvbUuKetc+iqhyB
+ asqQBMv2G8PYAx8zP0WZPgazg25AWx8I5j4DJZFa6hVlYfSeF4wRh9i4lxsxaiN3BCfk
+ POiW/OlwXhQPsNpl3C/mewFm7FgiiQ3GdBBNw1asCgkoEJFCBrGZERn1Pg3NS5bcTOoz
+ rfKuvdWkhCuPQU5/PB+m8nLAsb/hcDXmETMfEl3nlO8c09ZMTgT7+P0wGe8nQtbIHBjd
+ XwO5AsRa6jMYvP7Aziw9+L6tbKNs5BAow97w3LJ6ACcQxI9+ClkbScGeHoCi1YW7Tomi
+ Sr3w==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqiZBr642VBITC2tpRQoW4ob9XgTN0xCt/eTw5vb+7B6xtkbF4XHjC96qejy2U9EKe1ndo0G42SRSNd@nongnu.org
-X-Gm-Message-State: AOJu0YxNO6+YQrQEMDOfaqhfQPa6UTkbRzJLW8whhG3yC55IWnh8dl+L
- rMGlDaM948TGV4h0wPrs6dqmHih0um+gTkEyHalKI0y+omk57mnH+TuoN/grxVNzXm8=
-X-Gm-Gg: AR+sD13kTUKeHQqhfJehE64sVE/SSwOZ3cHFG0te9e9BoTfnUqFbrq/KghJZ37qWFaw
- UWenNC9ygg1NMtT1s379h09q/XE9qLiM0OXOtGG2bct/2Sj/QNwGb0YNcwZliXJUzPK5djtYRc2
- F7Ru2Tl7/wf4LM+32873JWHibPrCtr7eBqqoroNq3XaMh4YjQEzwYrcouuQQeHeo521YAtQolnb
- maTUIpcquOpkw/MDKSDKXbnvvXCmkJNuSkC1MXOJ9vVi8O7QOcYCpOxwRjvUAtDj70PIVcmWdP3
- 4H1nCfXzn9gd12d+tH0lslsRr83XbuuBKqOytw9JFoh4+qMMI9S8SSwFheIJdjEPLjAbb9O6KcV
- pTy6+06HnKFX53Fzis/F2kf4zDwRHQZtEwrR5cJUmQBQsswz1SY4kMHsbPd5acm7D6q8W9nNmEO
- T0niQLNi8F6NKNBgRQ/Q9XoNJjjH9wSKl7B4j5cH2Xr1K4IHhrejjlaMIvHBNeQCyUaNeczLvBB
- nlxxtt3
-X-Received: by 2002:a17:90b:4c12:b0:393:1cf4:d972 with SMTP id
- 98e67ed59e1d1-39580a80649mr428226a91.3.1787093250631; 
- Tue, 18 Aug 2026 15:47:30 -0700 (PDT)
+ AHgh+RrEcRtmI4ZhnBObIAi2Zj4cidyndaS8DEF0LZdwA1OENsNQGztmY2zy0wDrBqG+vTq/FhyGm7qdha/l@nongnu.org
+X-Gm-Message-State: AOJu0Ywx+HKs9IN4y3MOB3LGL2FdxXQvmVy+DPSJSF3wxZBvX2RDoT6P
+ QM5N1+oqADeklNzsUX5ywk4NCWgAasG2M3KHuZU8UyurCYPI4th77IntTngcxZcIBLY=
+X-Gm-Gg: AR+sD118mSHSfAl9b9zcA5YsPoVYTVdQKE7UdMHOVigEiZxx6peRTm6uwBZ4gztV61p
+ 5Xo7ntV1F6fKHTNVwVh+cLw/viskLqjN1JsHLL24zNabc5e37CpVw+zx9DAA/GLRSnRsdgC3sT1
+ cY71fsU2G9lt+DO+nlImYptqR0YxnIzFoeqTfR13yN5W4ccTLYFunvPcNN4HtpDaSaGszJNfPAF
+ FsYZSVuG8pWvInsdIKkp+NmHAzAG7yAEJ+DJxk4cVz4o92xolbP6yWiHBv1kmkZxvBzEz06jRfe
+ kMZjgjS4RD8aJFDDpfvAmEFRTBeykx1Har/U1kGBClf7w8sQHDowemYCGm7Ld8q4Y0JbAlqH7jB
+ Ay2kUo4+VJzoW0Qv1RUS0Ozcv6OMvinTiQL17sZn1voZO2Umq3bGSS+00Vbyfopyb1o3r+c7++i
+ 6W4x7pEvlVeKUNuFu8HrCzV2HJ8+iIjuPEv44+p2+W9kfFPETOUFUgse1g22N67plSwTqh6BJz1
+ FvAEzvY
+X-Received: by 2002:a17:903:384c:b0:2ca:6c8:abd8 with SMTP id
+ d9443c01a7336-2d5fd6d812cmr5077435ad.12.1787093552302; 
+ Tue, 18 Aug 2026 15:52:32 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957faf596fsm250850a91.11.2026.08.18.15.47.29
+ d9443c01a7336-2d5c1eeb6f1sm18924685ad.76.2026.08.18.15.52.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 15:47:30 -0700 (PDT)
-Message-ID: <20f8c273-19e9-402a-9187-375afea214d5@linaro.org>
-Date: Tue, 18 Aug 2026 15:47:28 -0700
+ Tue, 18 Aug 2026 15:52:31 -0700 (PDT)
+Message-ID: <d0245a09-6643-4c87-86b4-be0ab2579e8f@linaro.org>
+Date: Tue, 18 Aug 2026 15:52:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] accel/tcg: skip the can_do_io stores in user-only
- builds
+Subject: Re: [RFC PATCH 0/8] accel/tcg: cut per-block dispatch overhead
 To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
  laurent@vivier.eu, deller@gmx.de, pierrick.bouvier@oss.qualcomm.com
 References: <20260818174247.649526-1-mattst88@gmail.com>
- <20260818174247.649526-4-mattst88@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260818174247.649526-4-mattst88@gmail.com>
+In-Reply-To: <20260818174247.649526-1-mattst88@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,36 +107,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/18/26 10:42, Matt Turner wrote:
-> Every translation block stores to cpu->neg.can_do_io twice: false before
-> the first instruction, true before the last one. Nothing reads it in a
-> user-only build. There is no memory-mapped I/O in linux-user, and every
-> reader is in system_ss: cputlb.c, watchpoint.c, icount-common.c and
-> tcg-accel-ops-icount.c.
+>    4  RFC: tcg: probe the TB jump cache inline instead of calling a helper
 > 
-> Two stores per TB is not much on its own, but TBs are short. An emulated
-> alpha gcc 16.2.0 compiling the SQLite 3.45.1 amalgamation (255k lines,
-> -O2) executes 34.2 billion TBs at 6.04 guest instructions each, so this is
-> 68 billion stores for nothing.
+>       95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the jump
+>       cache. Emit the probe inline (hash, three guarded loads, goto_ptr)
+>       and call the helper only on a miss.               -36.51%, -27.05% wall
 > 
-> Measured on an x86-64 host, LTO build, on top of the preceding two
-> patches:
+>    5  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
 > 
->      before: 1,469,729,281,442 instructions
->      after:  1,402,816,253,499 instructions   -4.55%
-> 
->      before: 120.97s wall clock
->      after:  115.75s wall clock              -4.32%
-> 
-> The emulated compiler produces byte-identical output.
-> 
-> Signed-off-by: Matt Turner<mattst88@gmail.com>
-> ---
->   accel/tcg/translator.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+>       translator_use_goto_tb() refuses to chain across a page. In user-only
+>       builds the invalidation path already covers what that was protecting
+>       against: every mmap/mprotect/munmap reaches page_set_flags(), which
+>       invalidates and unlinks. Lift it there, keep it for system mode.
+>                                                          -2.42%, -4.68% wall
 
-Good catch.
+Both of these will break breakpoints.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+However: for user-only, gdb can only be attached at startup.  So we can recognize that no 
+breakpoints are possible and make this optimization then.
 
 
 r~
