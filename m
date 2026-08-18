@@ -4,117 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA20C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B825FC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwI2r-0001Rt-NY; Tue, 18 Aug 2026 07:31:53 -0400
+	id 1wwI3W-0001sE-Bb; Tue, 18 Aug 2026 07:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wwI2p-0001Rd-Qr; Tue, 18 Aug 2026 07:31:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wwI3T-0001rc-PL; Tue, 18 Aug 2026 07:32:31 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wwI2n-0000gs-WF; Tue, 18 Aug 2026 07:31:51 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IAVdFQ028671; Tue, 18 Aug 2026 11:31:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=wY+2an
- M7Ppk+kUeUku3ZLhZJ+XWCOjSZzLxN8H15F0Q=; b=VtFnzjNyNKIjTulWe9ZGtx
- 65x2jOmEVoRRXDhybgKMXt3NYkJlNdwGmRfR3LPbzYTAUAXTneUBTMaorVPpAs23
- 8rIBHuN2CiXuEG3HtxaRLSfawnUqZPXEANQ5f+u1D1IiSefDubWPPECoGkqNFD5R
- 1actAzru1g9uZiiUs/5up5i86He60/zG87xnWa5JpKRLSYDb1Ozo/y119IeaxkL+
- CkI7axxJyqqWGlx2Df4Coi/7kaQS70jnpMKgrPXtgZYbrwocmDgXwHxTrkf15vWs
- 73Z5ccPg5qVx+qJ9C6s7UID8H6jaaVDrPlw2iZLmt/HvEbLSe/rOiG4gw8uX1sBQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4qv01-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 11:31:43 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IBQNVE005925;
- Tue, 18 Aug 2026 11:31:42 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xh2wg9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 11:31:42 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IBVcbY45875522
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 11:31:38 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9118020043;
- Tue, 18 Aug 2026 11:31:38 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3076620040;
- Tue, 18 Aug 2026 11:31:38 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.12.156])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 11:31:38 +0000 (GMT)
-Message-ID: <8452a841-9bb8-4a88-83ab-f97297401c13@linux.ibm.com>
-Date: Tue, 18 Aug 2026 13:31:37 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wwI3R-0000oJ-O6; Tue, 18 Aug 2026 07:32:31 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67IBVjKM069137
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 18 Aug 2026 20:31:45 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=HGztCwXSzmO+tRApV6D6qoPijGlMR+1m3KpNzRiLiyg=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1787052706; v=1;
+ b=GF1KW2ZAiNcjeYMqOfdLwnas2aCKru8PiNTPhri/o/0c/u9dCSs6q9h9o4HOLdOV
+ YosHhUxd1BO10huDkzOKgBuSvBFXFrS1dHWGdBNddUtAQ+++/S2ldfO3mv6/5oud
+ 1xYLZ+Os+tlSkxVLr07NSLTqJUZslvKhUnFOZ6kFlvabqg2ixXroptCQGA6Fadx3
+ 0SwGXpkn7o2YmpnsrJ7jQ5vln1fpjAphhBEbI+BaUZxkzEdosHS1xGdQzUc6WZaj
+ fjVB90U6LLdduvWfmy8DoBucOz+5vl7IOZdcQ1WMr9KGJmbXiqJVIUSl73gcv3qE
+ zdCjN4uB2RoM36ICPtn4+A==
+Message-ID: <7838ab96-38a7-48ea-8a4c-3f7784559e1d@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 18 Aug 2026 20:31:45 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
- instruction
-To: freude@linux.ibm.com
-Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
- berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260806151302.26846-1-freude@linux.ibm.com>
- <20260806151302.26846-8-freude@linux.ibm.com>
- <e95ee364-3e48-44c4-8c7b-5d306f417c16@linux.ibm.com>
- <192e2ce59d17947e5556dc54e3b3c781@linux.ibm.com>
- <145b0ed2-8b3b-48d5-97a7-a5addcdf6481@linux.ibm.com>
- <4dfa9e976a6485dd2b1ffa93f04e1bd7@linux.ibm.com>
+Subject: Re: [PATCH RFC v2 08/13] hw/virtio/vhost-user: send isolation regions
+ to device
+To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>,
+ 20260817233147.2867623-1-connorkite@gmail.com
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <4dfa9e976a6485dd2b1ffa93f04e1bd7@linux.ibm.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Pk00rHtvPe7yU1ZqTgUMjwyHsFGHEdA3
-X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a84429f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=W2MhfUumii-zuiLuurUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA4NSBTYWx0ZWRfX1ddaLIqMeZ8M
- b4A7QUQlGnmxIzVwqdvUtaCXo2IIlnDkSd8YDKYE62AhdSEnQQ4CodR6CLD5FVlT7aJ/bJ+ifYu
- xclHU52ICjqV+sJvuBjlxL2ppnhx9nM=
-X-Proofpoint-ORIG-GUID: Pk00rHtvPe7yU1ZqTgUMjwyHsFGHEdA3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA4NSBTYWx0ZWRfXz+WJtxHjJcsw
- T3afe7SQn5uTjx9lxfBJLnqP/KFtlJxpLH1zP/4VGAktSSz4Ivjp2i9hs5W41CJ7QRNvecGUovd
- 1VWH7xkzfFThyFIVBN+6q27kxmPPp3rNyqutldnoDRwniesvR6O/JBGM28ME9cJE10ZSL5dFQvr
- 0Rk7QlVtrPmhVLuKj8HsLPd0c0jL69/I9ky4jQMw6DNRkQ0xFUdFVaGrfh09mkkAYFAhaypHW7p
- UjSzPnNztqCodim1gktiu7DN9dQMxENGCUkpDykzw5EonMlmadm0LnTyWYPkxddC7FY+bZgTVYB
- 9ji7TjGEgthqQB2DmZCckun1RZNp1t+B0kdpvUAcOBFmSE/MkseTkg6xRhpw292fAUW4ngdjMfX
- Qp6cSUTbULKbZyxmbKlAffVGZa9owL0nGMln8fCpHQPM/mtnaDkGDTqpbOXeuvEAAEWdQWWTUwY
- evvu8Ot7SeXK5ZtKAFw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180085
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,116 +91,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/08/18 14:12, Connor Kite wrote:
+> Adds features to fill a vhost_user_set_mem_table message with the
+> addresses of isolation memory regions corresponding to bounce buffers
+> and vrings.
+> 
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+> ---
+>   hw/virtio/vhost-user.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 117 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index 7e9233e174..e1e5cba53d 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -1140,7 +1140,77 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
+>       }
+>   }
+>   
+> -__attribute__((unused))
+> +typedef struct {
+> +    VhostUserMsg *msg;
+> +    struct vhost_user *u;
+> +    int *fds;
+> +    size_t fds_size;
+> +    uint64_t vring_iova;
+> +    size_t vring_size;
+> +    bool vring_node_visited;
+> +    size_t *idx;
+> +} IOVATreeTraversalArgs;
+> +
+> +static gboolean vhost_user_fill_msg_reg_from_tree(gpointer key,
+> +                                                  gpointer value,
+> +                                                  gpointer data)
+> +{
+> +    IOVATreeTraversalArgs *args = data;
+> +    struct vhost_user *u;
+> +    VhostUserMsg *msg = args->msg;
+> +    DMAMap *map = key;
+> +    uint64_t offset;
+> +
+> +    assert(args && key && value);
+> +    if (!args->vring_node_visited) {
+> +        args->vring_node_visited = true;
+> +        return false;
+> +    }
+> +
+> +    u = args->u;
+> +    assert(*args->idx < args->fds_size);
+> +
+> +    args->fds[*args->idx] = args->u->iso_mem_ctx.fd;
+> +
+> +    /*
+> +     * If the number of regions is fixed, it would be wasteful to use one for
+> +     * only the vrings. The first vhost_iova_tree element is always
+> +     * reserved for the vrings, so we can simply combine the first and second
+> +     * elements, which are contiguous in IOVA space, when sending regions to
+> +     * the backend.
+> +     */
+> +    if (*args->idx == 0) {
+> +        offset = u->iso_mem_ctx.vring_hva_addr - u->iso_mem_ctx.shared_mem_addr;
+> +        msg->payload.memory.regions[*args->idx].userspace_addr =
+> +            args->vring_iova;
+> +        /*
+> +         * The size from the iova tree is inclusive, so 1 is added to it.
+> +         * args->vring_size is exclusive, so no addition is required.
+> +         */
+> +        msg->payload.memory.regions[*args->idx].memory_size =
+> +            args->vring_size + map->size + 1;
+> +        msg->payload.memory.regions[*args->idx].guest_phys_addr =
+> +            args->vring_iova;
+> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
+> +    } else {
+> +        /* Use 128 bit operation in unlikely case of negative iso_iova_offset */
+> +        offset = int128_get64(int128_add(int128_make64(map->iova),
+> +                                        u->iso_mem_ctx.iso_iova_offset)) -
+> +                (uint64_t)u->iso_mem_ctx.shared_mem_addr;
+> +
+> +        msg->payload.memory.regions[*args->idx].userspace_addr = map->iova;
+> +        msg->payload.memory.regions[*args->idx].memory_size = map->size + 1;
+> +        msg->payload.memory.regions[*args->idx].guest_phys_addr = map->iova;
+> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
+> +    }
+> +
+> +    assert(offset + msg->payload.memory.regions[*args->idx].memory_size <=
+> +        u->iso_mem_ctx.size);
+> +    (*args->idx)++;
+> +
+> +    return false;
+> +}
+> +
+>   static int init_isolation_regions(struct vhost_dev *dev,
+>                                     VhostUserMsg *msg,
+>                                     int *fds, size_t *fd_num)
+> @@ -1159,6 +1229,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
+>       DMAMap *map;
+>       DMAMap vring_map;
+>       int r;
+> +    IOVATreeTraversalArgs trav_args;
+>   
+>       msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
+>   
+> @@ -1244,6 +1315,27 @@ static int init_isolation_regions(struct vhost_dev *dev,
+>           }
+>       }
+>   
+> +    *fd_num = 0;
+> +    trav_args.idx = fd_num;
+> +    trav_args.fds = fds;
+> +    trav_args.msg = msg;
+> +    trav_args.u = u;
+> +    trav_args.vring_iova = vring_map.iova;
+> +    trav_args.vring_size = total_vring_size;
+> +    trav_args.fds_size = nregions;
+> +    trav_args.vring_node_visited = false;
+> +
+> +    vhost_iova_tree_foreach(u->iso_mem_ctx.tree,
+> +                            vhost_user_fill_msg_reg_from_tree, &trav_args);
+> +
+> +    msg->payload.memory.nregions = *fd_num;
+> +
+> +    assert(*fd_num == nregions);
+> +
+> +    msg->hdr.size = sizeof(msg->payload.memory.nregions);
+> +    msg->hdr.size += sizeof(msg->payload.memory.padding);
+> +    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
+> +
+>       return 0;
+>   }
+>   
+> @@ -1251,6 +1343,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+>                                       struct vhost_memory *mem)
+>   {
+>       struct vhost_user *u = dev->opaque;
+> +    bool memory_isolation = u->user->memory_isolation;
+>       int fds[VHOST_MEMORY_BASELINE_NREGIONS];
+>       size_t fd_num = 0;
+>       bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
+> @@ -1262,6 +1355,11 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+>       int ret;
+>   
+>       if (do_postcopy) {
+> +        /* Postcopy is not supported with memory isolation yet */
+> +        if (memory_isolation) {
+> +            return -1;
+> +        }
+> +
+>           /*
+>            * Postcopy has enough differences that it's best done in it's own
+>            * version
+> @@ -1278,6 +1376,24 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+>           msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
+>       }
+>   
+> +    if (memory_isolation) {
+> +        ret = init_isolation_regions(dev, &msg, fds, &fd_num);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +
+> +        ret = vhost_user_write(dev, &msg, fds, fd_num);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+> +
+> +        if (reply_supported) {
+> +            return process_message_reply(dev, &msg);
+> +        }
+> +
+> +        return 0;
+> +    }
+> +
 
+This bypasses vhost_user_fill_set_mem_table_msg() below and suppresses 
+the error saying: "Failed initializing vhost-user memory map, consider 
+using -object memory-backend-file share=on"
 
-On 8/18/26 12:34, Harald Freudenberger wrote:
-> On 2026-08-17 17:00, Ilya Leoshkevich wrote:
->> On 8/17/26 16:23, Harald Freudenberger wrote:
->>> On 2026-08-17 11:17, Ilya Leoshkevich wrote:
->>>> On 8/6/26 17:12, Harald Freudenberger wrote:
->>>>> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
->>>>> and CPACF_KM_AES_256 for the cpacf km instruction.
->>>>>
->>>>> Tested-by: Holger Dengler <dengler@linux.ibm.com>
->>>>> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
->>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
->>>>> ---
->>>>>   target/s390x/gen-features.c      |   3 +
->>>>>   target/s390x/tcg/cpacf.h         |   6 ++
->>>>>   target/s390x/tcg/cpacf_aes.c     | 107 ++++++++++++++++++++++++++ 
->>>>> +++++
->>>>>   target/s390x/tcg/crypto_helper.c |  24 +++++++
->>>>>   target/s390x/tcg/meson.build     |   1 +
->>>>>   5 files changed, 141 insertions(+)
->>>>>   create mode 100644 target/s390x/tcg/cpacf_aes.c
->>>>
->>>> [...]
->>>>
->>>>> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t 
->>>>> ra,
->>>>> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
->>>>> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
->>>>> +                  uint32_t type, uint8_t fc, uint8_t mod)
->>>>> +{
->>>>> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
->>>>> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
->>>>> +    uint64_t len = *src_len_reg, done = 0;
->>>>> +    int i, keysize, addr_reg_size = 64;
->>>>> +    uint8_t key[32];
->>>>> +    AES_KEY exkey;
->>>>> +
->>>>> +    g_assert(type == S390_FEAT_TYPE_KM);
->>>>> +    switch (fc) {
->>>>> +    case CPACF_KM_AES_128:
->>>>> +        keysize = 16;
->>>>> +        break;
->>>>> +    case CPACF_KM_AES_192:
->>>>> +        keysize = 24;
->>>>> +        break;
->>>>> +    case CPACF_KM_AES_256:
->>>>> +        keysize = 32;
->>>>> +        break;
->>>>> +    default:
->>>>> +        g_assert_not_reached();
->>>>> +    }
->>>>> +
->>>>> +    if (!(env->psw.mask & PSW_MASK_64)) {
->>>>> +        len = (uint32_t)len;
->>>>> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
->>>>> +    }
->>>>
->>>> Just noticed something, here and in all other patches. POp says:
->>>>
->>>>
->>>> In the 24-bit addressing mode, the contents of bit
->>>> positions 40-63 of general registers R1 and R2 consti-
->>>> tute the addresses of the first and second operands,
->>>> respectively, and the contents of bit positions 0-39
->>>> are ignored; bits 40-63 of the updated addresses
->>>> replace the corresponding bits in general registers R1
->>>> and R2, carries out of bit position 40 of the updated
->>>> address are ignored, and the contents of bit positions
->>>> 32-39 of general registers R1 and R 2 are set to zeros.
->>>>
->>>>
->>>> Seems like we are not zeroing out bits 32-39?
->>>>
->>>
->>> Do we support 24 bit mode? Isn't that ditched some years ago?
->>> At least we definitely do not support s390 kernel in 24 bit mode.
->>> Maybe userspace is valid.
->>
->> No, userspace doesn't support it either.
->> So neither qemu-user nor qemu-system + Linux will need it.
->> Some weird non-Linux setup might, I'm not sure if we want to go out of
->> our way to support them. I think we should either drop it or
->> implement it correctly.
->>
->> [...]
-> 
-> It it ok then to assume 32 bit mode if not 64 bit? Like this snippet:
-> 
-> int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->                    uint64_t param_addr, uint64_t *dst_ptr_reg,
->                    uint64_t *src_ptr_reg, uint64_t *src_len_reg,
->                    uint32_t type, uint8_t fc, uint8_t mod)
-> {
->      ...
->      int i, keysize, addr_reg_size = 64;
->      ...
-> 
->      ...
-> 
->      if (!(env->psw.mask & PSW_MASK_64)) {
->          len = (uint32_t)len;
->          addr_reg_size = 32;
->      }
-> 
->      ...
-> 
-> Or check for 32 bit and if that is also not the case abort() or something ?
+However, vhost-user doesn't work even with memory isolation in such a 
+case because vhost_user_no_private_memslots() always returns true and 
+that makes vhost_section() filter private memory out. This restriction 
+is unnecessary with memory isolation and can be removed instead of 
+restoring the error.
+
+This also lacks handling of VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS, 
+and will overflow fds and VhostUserMemory::regions when 
+VHOST_USER_GET_MAX_MEM_SLOTS is larger than VHOST_MEMORY_BASELINE_NREGIONS.
+
+Regards,
+Akihiko Odaki
+
+>       if (config_mem_slots) {
+>           ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
+>           if (ret < 0) {
 > 
 
-I would raise a program interrupt, like you already do for, for example,
-non-zero block number in one of your patches.
 
