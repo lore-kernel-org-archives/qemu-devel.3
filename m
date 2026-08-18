@@ -4,137 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8436C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 10:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879EAC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 10:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwH5b-0001UK-TT; Tue, 18 Aug 2026 06:30:39 -0400
+	id 1wwH94-0002rT-DP; Tue, 18 Aug 2026 06:34:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wwH5b-0001U5-2F
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 06:30:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wwH92-0002qu-UJ; Tue, 18 Aug 2026 06:34:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wwH5Z-0006f9-JV
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 06:30:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787049036;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6FufrT6QF5LjGVnfECdhMWiAuksb5oHrBpr4wzMjdAs=;
- b=hdO+vOuD9e64LB7fNrj+Wr+xYRwIjtb4FBFniR7GPQfRQsL16kpGJRIgW18T6s2o6t41Uo
- ffoR/DaJ3xElmuEqqoCa3reI8BN+5mz91DEclB0OCitiOlCfCmn9mop1mNe/N4QR4+tgKF
- 6sY5hJcWN8RZw1H7gNepC8L3rCRna9s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-byvoxw7hPVmOfOU0HBnIVA-1; Tue, 18 Aug 2026 06:30:30 -0400
-X-MC-Unique: byvoxw7hPVmOfOU0HBnIVA-1
-X-Mimecast-MFC-AGG-ID: byvoxw7hPVmOfOU0HBnIVA_1787049029
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47f726186c4so2546182f8f.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 03:30:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787049029; cv=none;
- d=google.com; s=arc-20260327;
- b=q8W59dQUbKMspsVyZMvjWLjTnA+zfN6GPmd79QpaUrk4lBRm5wob9bfsJQevw80PdQ
- cheoFUzSRTA8a0anb+HJCUAdyaYvLgsebVNNvhIzYlV8s7XYVRD4o6NylC1Z01uShp6Q
- VXnL45h65q7cVxMzspNzefOIL/f7RqdjCcCvzEG8/l8lm993HFdLTYhpgRVheEaISy5S
- OIrbWwcWNCSV2lOS9OiQP+PKS9PgZLHlCaDNMKRkSlX0M/VqxnRDYVS2/lF3/SbA48aJ
- 0B+++dM8mv78D4IQn4fFqxCAHVLYFL/sWUmB+hQBJzbIgkLvURZLbs6v+9yu+a1CyAjG
- j4VA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6FufrT6QF5LjGVnfECdhMWiAuksb5oHrBpr4wzMjdAs=;
- fh=MzsW4CNTaQg/nF8uXsJNtL8cHyz5A7gALAJCWlSUO3M=;
- b=ULX0Hbjvf1PCz85I1UiJzi1q8YGYyabpDSbCms7hQ8ELvIELZeb5PHhGkr8YI/ywrv
- JZKdoYtZJ8TZeW53kGT4kOQnSEP71qhzUsR0GjKnvMzz8bdlvHBIFWTeVEQVZp3EU/Om
- HjX5QpNdyC8mALoCoTgUvt0XFrs6f1BhLRJ+Zxjo5mMQOpOovoA0EtqlbEkG8kfL3sb9
- 6px/HrtUGj9QXwMqgpRGHSM/qd7UDSjMg9ITb9v0HxtL/1OQEmvZ9blLj6fBPpklIj7D
- Nad4aByMDHP4EmDlAlpf/3x86iTR6ED4d3gtGnh4WPqBDF46X4yhRSHz2P2Tcaruu+hG
- YENw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787049029; x=1787653829; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6FufrT6QF5LjGVnfECdhMWiAuksb5oHrBpr4wzMjdAs=;
- b=JUt/ZGEpU9tcID6hWzh5i1WGL8UC3bM0fIX8Wi84e3XDjEZ+tespVJ8UZiZxtWsoRk
- aFF9/5gRg2WutmnKLHE7GCjXYYD2rBst6mBvc26xjf8mnXScXZi0qQXGZ9qWPCEPEyf4
- pScUH68T0jLZmLrhzAHx5P1Dzh+WxA5lpk3oSB7FZRg+2BgjoQWRLGS5k7T0dmRPEZrd
- 3EiCqP57Iydx05Tm/3FjHd7uMDj7REg9MkfV5okAQIVpSH2nuuYNt3xbnglM2qRearDg
- 3ITfpjKMJ8wOKYKTMyh9frX8CZA4ANAD4ObBd0fUD6T3DAFHiS6e81v5FvT9PayiY2nm
- 4ECQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787049029; x=1787653829;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6FufrT6QF5LjGVnfECdhMWiAuksb5oHrBpr4wzMjdAs=;
- b=YLq7/g0cPIr+u2HM3bvPdnF7n/EmpTrSQHCCGpWlMhrk4sk34Ml8TTzZlrH5EIYsW8
- QQdI5Rdeis42R4OBJhBRRIjtSsAV10/mz56wuMZaevw6sCSFzYm8ubAWhPdCrxMuW9y1
- RhBZNB3xu25WT33NQ6odHpkVUOwt7JqHq41SnKD8RXekrM9NCS9reOX8Ee1ZHEF2/jo5
- thf0euRLQUsyRg+qxrJghVPGqx4u0AzMIThfDiUNGrUawX8JK3EzRI/m3F39Iyj3kyZb
- HQKQobYCv3QkRpQEGCK+oWUh1Ss0r50Ze3CelpJvnV6blY+JZVUljfWtJ6gld3VLJwig
- FDFQ==
-X-Gm-Message-State: AOJu0Yzjuk9waCps6zKmFjUmpQJDfc1icyLyBTaUXRYu+ndIEhE5ffAv
- WAZObHvCGnL+p41ZSa8rAiDoV56D7FnyOX7nYYN5KcZjA3dcqF0zmrDxo9WzCQtzsF5y46vUXXi
- E9qb6u07bru0HodXOvmzlNQYanWGNKWOVgVhMbaE8lrMRw8ypd6zH1rjAINE27TzKr8nqe7mS4p
- ixZyC0Ere5ZzCAeBU8Ru9n0opLIujptdSEb1i0s+s=
-X-Gm-Gg: AR+sD12LKFcUhg2zA4JangkRpBP4N3rEXsRz3dhUKAi7fvQWevlMm7KNgag0wxOJJBW
- mZC/ronNOgnyb/Z95rkj5axVby3kZlgbVUy+Mc8W0gkWhi4G3ham2PSJKVTymWyKhW0gf5VIbEe
- eDmXoJ8OAfkRBkjJimBamjZgCnLNumez2Ik+O1XMWxzvA7JtjFaNT38aEl7IHS7rvCK7nCZIfKP
- lGqFv6cJPWacqva6ae0urZSu++dGzasvtk56NfEXpGoXVFSkc57VRPzpO8=
-X-Received: by 2002:a05:6000:2891:b0:482:a909:53d3 with SMTP id
- ffacd0b85a97d-482a90953f4mr11113071f8f.2.1787049028816; 
- Tue, 18 Aug 2026 03:30:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:2891:b0:482:a909:53d3 with SMTP id
- ffacd0b85a97d-482a90953f4mr11112989f8f.2.1787049028385; Tue, 18 Aug 2026
- 03:30:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wwH91-0007EP-9y; Tue, 18 Aug 2026 06:34:12 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IAW4OA4122635; Tue, 18 Aug 2026 10:34:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=LwO4VjJ7lU0beL8ryNMY4sUfRMUeY3JOlTiJfzJ+7I0=; b=Hihfn5iKDTh8
+ Ln/Z2XA9i6GU5yN5yJqNu75xn4CbDw2ye8h8uotESSboPaIHZ1YbRDklYfvD6ISs
+ SlngbVa1IO1Dfm0nVdzOYZaecawfAgX4x5xJXl1zzpg0b3zyvmGtPoMsRZZi52T7
+ ovOhr5loLD89Gj/f2jqpR2pmu094Gpx4TmBS40Wv5mkHv4ZigHnJLP/GliDkgQIO
+ cWDTmz9JVaBEsXQlMXDEt5j1UfN09aXe7/pG4NDSbtKjVLQmsnOGzhnLNt2KJ/Tc
+ NvnhFp/K68wTvfS48dpHAkgoStGKdcR0r6Mfx7AuCm8EJqNAZKIXvyu3+vxbjAwM
+ G7L6tadkHw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhkyf0c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 10:34:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IAQLdo001061;
+ Tue, 18 Aug 2026 10:34:06 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngagub-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 10:34:06 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IAY4R612452566
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 10:34:05 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ABCFD5805A;
+ Tue, 18 Aug 2026 10:34:04 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2644958060;
+ Tue, 18 Aug 2026 10:34:04 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 10:34:04 +0000 (GMT)
 MIME-Version: 1.0
-References: <20260813181640.6537-1-philmd@oss.qualcomm.com>
- <20260813181640.6537-12-philmd@oss.qualcomm.com>
- <55cc8357-daeb-4315-9f3a-8be7a59c355b@redhat.com>
- <3ec603ff-65bb-440b-8ed8-72ae4e6c5a41@oss.qualcomm.com>
-In-Reply-To: <3ec603ff-65bb-440b-8ed8-72ae4e6c5a41@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 18 Aug 2026 12:30:16 +0200
-X-Gm-Features: AcwNN1U9FkNWmAq29kJzhpwyumQVJaYATOb2EskO-A53Cr-akB0nGwo0bt8h3t0
-Message-ID: <CABgObfaDAhrpnVqQaKgG6uxPQe1YDu77YOsUEx9nqrN=3M2cGw@mail.gmail.com>
-Subject: Re: [PATCH 11/16] accel/kvm: Consistently return CPU halt state from
- process_async_events
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>, Alexander Graf <agraf@csgraf.de>,
- qemu-ppc@nongnu.org, 
- qemu-riscv@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org, 
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Date: Tue, 18 Aug 2026 12:34:03 +0200
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: richard.henderson@linaro.org, david@kernel.org, thuth@redhat.com,
+ berrange@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: Re: [PATCH v14 07/19] target/s390x: Support AES ECB for cpacf km
+ instruction
+Mail-Reply-To: freude@linux.ibm.com
+In-Reply-To: <145b0ed2-8b3b-48d5-97a7-a5addcdf6481@linux.ibm.com>
+References: <20260806151302.26846-1-freude@linux.ibm.com>
+ <20260806151302.26846-8-freude@linux.ibm.com>
+ <e95ee364-3e48-44c4-8c7b-5d306f417c16@linux.ibm.com>
+ <192e2ce59d17947e5556dc54e3b3c781@linux.ibm.com>
+ <145b0ed2-8b3b-48d5-97a7-a5addcdf6481@linux.ibm.com>
+Message-ID: <4dfa9e976a6485dd2b1ffa93f04e1bd7@linux.ibm.com>
+X-Sender: freude@linux.ibm.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA3NyBTYWx0ZWRfXy9KYi9Hfhhtl
+ j8//wj6CzESVylIWq2Ssi1tmFpS33X0J1crvRfAPIVmYjMLE0EQquA7gpRXPHjwDu2ztxtCTtQ/
+ YQ1BeAg7DSzkstUfIrZkpC/VS1vIlIrQjCsVhW8FNBaxafmWDZlsLL3NyBLYh36JK3n3L66QHn9
+ jgynbh7tKC7uWcBnOpuN29KEN4Qd6tDfB5r3wnHBejrlqqd8zpYJGHiRIbFnVT3QEyekpjX3+/C
+ lrAuXgENdbG8QO2uU7i/upOHVfuqS/INpGq/8dkW+7r5y89aWRO0MIZn8urg9T2V9k+2+NFFh+k
+ 44+AocMCToijfYYXPWBgPEd8hDRWolsrgDuAECK6DSD7srKFu130/BxRbHP9e//9UJT0rRdAGlB
+ aceYoiDI3EPQIpEnBFpR0LKZW4/FdvazBa5VbBWVtj2MrexY/PV/2wE1XB32wmbVxksKJsBLpHn
+ Mv+wQpgM9JMsghfbhHQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA3NyBTYWx0ZWRfX/JUrvWLmMSbQ
+ vBD1tkT0l6kU7Dt4as52rlivqC/MrGwebRV4CAmq9rfZ2Bpo/ynaRClhCnFkNKMq2IVgoGaUv+c
+ 2BSCb2+IiBFKbgi2iYXE9zR0p9lIReA=
+X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a84351f cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=6fOq7FXWUXZ_nh3H2MkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: jMmM1AKY1jf25TbIyMo6leZTxtpjpMXb
+X-Proofpoint-GUID: jMmM1AKY1jf25TbIyMo6leZTxtpjpMXb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180077
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,27 +129,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 11:24=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
-> > Your patch is correct because, even if cpu_thread_is_idle() sees cpu-
-> >  >halted =3D=3D false, the flag could become true during
-> > process_queued_cpu_work() because it releases the BQL.
-> >
-> > However, I think the better fix is to remove the return code, and check
-> > cpu->halted in kvm_cpu_exec().
->
-> Looking at it, even better would be to move *process_async_events()
-> from inner loop to outer loop for all accelerators. For HW accels it
-> seems quite trivial; for TCG I need to figure if it is safe to call
-> icount_prepare_for_run() with the BQL taken, due to the replay_mutex
-> uses -- here the win is cpu_handle_halt() ends restricted to system
-> and we can remove the odd EXCP_HLT handling in user emulation.
+On 2026-08-17 17:00, Ilya Leoshkevich wrote:
+> On 8/17/26 16:23, Harald Freudenberger wrote:
+>> On 2026-08-17 11:17, Ilya Leoshkevich wrote:
+>>> On 8/6/26 17:12, Harald Freudenberger wrote:
+>>>> Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
+>>>> and CPACF_KM_AES_256 for the cpacf km instruction.
+>>>> 
+>>>> Tested-by: Holger Dengler <dengler@linux.ibm.com>
+>>>> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+>>>> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+>>>> ---
+>>>>   target/s390x/gen-features.c      |   3 +
+>>>>   target/s390x/tcg/cpacf.h         |   6 ++
+>>>>   target/s390x/tcg/cpacf_aes.c     | 107 
+>>>> +++++++++++++++++++++++++++++++
+>>>>   target/s390x/tcg/crypto_helper.c |  24 +++++++
+>>>>   target/s390x/tcg/meson.build     |   1 +
+>>>>   5 files changed, 141 insertions(+)
+>>>>   create mode 100644 target/s390x/tcg/cpacf_aes.c
+>>> 
+>>> [...]
+>>> 
+>>>> +int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t 
+>>>> ra,
+>>>> +                  uint64_t param_addr, uint64_t *dst_ptr_reg,
+>>>> +                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+>>>> +                  uint32_t type, uint8_t fc, uint8_t mod)
+>>>> +{
+>>>> +    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
+>>>> +    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
+>>>> +    uint64_t len = *src_len_reg, done = 0;
+>>>> +    int i, keysize, addr_reg_size = 64;
+>>>> +    uint8_t key[32];
+>>>> +    AES_KEY exkey;
+>>>> +
+>>>> +    g_assert(type == S390_FEAT_TYPE_KM);
+>>>> +    switch (fc) {
+>>>> +    case CPACF_KM_AES_128:
+>>>> +        keysize = 16;
+>>>> +        break;
+>>>> +    case CPACF_KM_AES_192:
+>>>> +        keysize = 24;
+>>>> +        break;
+>>>> +    case CPACF_KM_AES_256:
+>>>> +        keysize = 32;
+>>>> +        break;
+>>>> +    default:
+>>>> +        g_assert_not_reached();
+>>>> +    }
+>>>> +
+>>>> +    if (!(env->psw.mask & PSW_MASK_64)) {
+>>>> +        len = (uint32_t)len;
+>>>> +        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+>>>> +    }
+>>> 
+>>> Just noticed something, here and in all other patches. POp says:
+>>> 
+>>> 
+>>> In the 24-bit addressing mode, the contents of bit
+>>> positions 40-63 of general registers R1 and R2 consti-
+>>> tute the addresses of the first and second operands,
+>>> respectively, and the contents of bit positions 0-39
+>>> are ignored; bits 40-63 of the updated addresses
+>>> replace the corresponding bits in general registers R1
+>>> and R2, carries out of bit position 40 of the updated
+>>> address are ignored, and the contents of bit positions
+>>> 32-39 of general registers R1 and R 2 are set to zeros.
+>>> 
+>>> 
+>>> Seems like we are not zeroing out bits 32-39?
+>>> 
+>> 
+>> Do we support 24 bit mode? Isn't that ditched some years ago?
+>> At least we definitely do not support s390 kernel in 24 bit mode.
+>> Maybe userspace is valid.
+> 
+> No, userspace doesn't support it either.
+> So neither qemu-user nor qemu-system + Linux will need it.
+> Some weird non-Linux setup might, I'm not sure if we want to go out of
+> our way to support them. I think we should either drop it or
+> implement it correctly.
+> 
+> [...]
 
-Makes sense, but probably it would be a series of its own. :)
+It it ok then to assume 32 bit mode if not 64 bit? Like this snippet:
 
-Paolo
+int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                   uint64_t param_addr, uint64_t *dst_ptr_reg,
+                   uint64_t *src_ptr_reg, uint64_t *src_len_reg,
+                   uint32_t type, uint8_t fc, uint8_t mod)
+{
+     ...
+     int i, keysize, addr_reg_size = 64;
+     ...
 
+     ...
+
+     if (!(env->psw.mask & PSW_MASK_64)) {
+         len = (uint32_t)len;
+         addr_reg_size = 32;
+     }
+
+     ...
+
+Or check for 32 bit and if that is also not the case abort() or 
+something ?
 
