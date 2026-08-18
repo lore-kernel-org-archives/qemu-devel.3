@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69362C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC57C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHky-0003jn-Fw; Tue, 18 Aug 2026 07:13:24 -0400
+	id 1wwHlA-0003wI-Bm; Tue, 18 Aug 2026 07:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHkw-0003j8-8B
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:13:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wwHl9-0003se-2p
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:13:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHku-0004uQ-Hn
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:13:22 -0400
+ id 1wwHl7-0004vc-IJ
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787051599;
+ s=mimecast20190719; t=1787051612;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w8m95gEWA5U3jbTNceNdKWBzcxPjyCwUAePZf6sjHEs=;
- b=iNsEsZ9FU1zKDXJghWprprQ273l4+meAP2pmAFm8wTHf1+IYsNtcB5h9QcapXUUVdM+lLV
- AILIxlhlILiRJXgmoxOuG9/WFRjbiJcdUghIMo+cAOc01Gg9W95LybcYfLNUWSedRHzlF+
- fCALL1714Wgwx/uV1nG75uJqDgh/JPM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=yNEk1n7QaEsB/EokKQrQ90XI1es9YIJRLBYftwaIuBg=;
+ b=SZYH9ma/IQUiZs4YjwPWcQvx9ZQDZyuvOf3YyrnumB/I9g7YMbERK3yEjq3CfnfzPV7bEa
+ +dIU4nxsMKFv8ciglS9t6QhXOBMxgbBW9vAelPwyrrF2JIh8jNP4TARSJFazbVdcuefNEe
+ sGI3jvQNXpwM7t+9SsgilW9SAH8kH5Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-cuu_w6L6MjOrHtrz4EAYzA-1; Tue,
- 18 Aug 2026 07:13:06 -0400
-X-MC-Unique: cuu_w6L6MjOrHtrz4EAYzA-1
-X-Mimecast-MFC-AGG-ID: cuu_w6L6MjOrHtrz4EAYzA_1787051585
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-4ujubpflO2-_LaPadV0crg-1; Tue,
+ 18 Aug 2026 07:13:24 -0400
+X-MC-Unique: 4ujubpflO2-_LaPadV0crg-1
+X-Mimecast-MFC-AGG-ID: 4ujubpflO2-_LaPadV0crg_1787051603
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A2171955EB4; Tue, 18 Aug 2026 11:13:05 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F61119560AA; Tue, 18 Aug 2026 11:13:23 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0D061195608A; Tue, 18 Aug 2026 11:13:02 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 348F71944DD5; Tue, 18 Aug 2026 11:13:20 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:10:31 +0400
-Subject: [PATCH v3 04/74] qapi: register all introspectable types, not just
- QMP-reachable ones
+Date: Tue, 18 Aug 2026 15:10:33 +0400
+Subject: [PATCH v3 06/74] meson: add qapi-type-infos-*.c/h to build
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-4-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-6-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,26 +64,27 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7834;
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3917;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+ugXkl0/59jlcWQDIp9PvCnhUKa9x6JqLEfbZx+Dfds=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD22I5Ce6QS4qw6llQRH4segGsYDLOY2Dnrh/
- Vahz5dqDJuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9tgAKCRDa6OEJdZac
- 5eNGD/4gRzlSaZtiBEDTl757rOwp43apozYfhlvItycxgkZwS0xF3H8KijZN3Vc7qp5YETPMClb
- MoByMqX/AG3NGoXNB79SJ9bjz59shI4vuyo3IRdXU2cSTd+2GAxudpd0F7VVoGsQOUF9xbZMjx/
- FaN1AVJX6EdAevM93zlkoai+9ezFDAoEVHsr+kAXnUB/BxceYesmeEaYdVWHDa0mY8+rMORY5mw
- z6UGJtRfW1XjaIkeYXu8QLhI129dCu9KWSP7XbiY838xjCU0U9JnnUEhTgsmcIkjqGNLskkxMM7
- SH8jHHezFwUwywSDNcRyXtvwJWh+9ImIcUNMtxIGvhNFW3plDwOgK5QemjiKABBrRPKMZVn2bzu
- X0W4ITIXKjakKF/HgYozU2OFcao0bOWBugfQoo5xDIPeIfVLnAEeEKMhawVR+mmN5zhSToqFb8A
- i+1H38esRo7UKUb/NZRKuN9AemIdqRQuzltoFeKS+gR4/eOO1xOuP2zZPrMZ9OkMtjbKI5kWHTg
- shCVX6X8Wa+DyXWNjBtMQkMNNOMuOUHBxPe3T3caYdJHlBgURPAsWgKC/vkjgny5JohIDedPnzl
- 9tmT3/xwXZGO4jDFlk+d+gnjV/7tHZUOsjnoDTVu2ojk+CzAx98bGjeuy9FoSpIz+Sj5qFPE/ax
- qkv3uS1Ev3Fpexw==
+ bh=6uTNIwu4jC9miI8Tx4Z46QMi+uYbRrSCGCnWsQfZIEo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD23lP0Vc6DLb/RdleVCZg7bKIadVEWSJHn0e
+ SEUhe6rhW+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9twAKCRDa6OEJdZac
+ 5b2gEACidNg0PnZl1UEnfftn/Oj5EFZ1hnztIVh8UMkZwXa8oGFCYdGd3A4a8ddgeqTdF4cfBQN
+ ykRb+bhjXCA31GCC6jfa4ibM3Jk2gDmj5AZLtazqz/Z1eyZne6i1OQ6hbS60qCe88uAWdqCXC2G
+ vRL83g8zaAYmVCjSIji9S1pmEhY7FWw2bbIRqxNL/fbRk5rsFdb+GalPFnyuAmgaRzyFRsTgx7/
+ NhqGDKPnknIQvMNz88blxANuNGMYWXzMhGpR1641WLJ3wZCuc5fynJ+PT70EAZAntcqODW8QdZ9
+ t4VRthmtVOmqHC7gAAXQj0coaiuN6C8YjZwuPAmHu6MyTMtCg6N1j6/0hHjQVqCpWUcskGORgls
+ usT+muEZbSjS4kpXnUYTUpIflLquBIJEk622qd8mNAGCqS4sAZtHtXKg8GaCtVP1M/CgOL4gu24
+ ta8iJAudiMn2VlVGvV7LV9y+9TW4zkjY3COrsd62bDZbsXPxi7vyrM2Djw/VxeAFduu37mN2X6d
+ C56imC2OBXSqVlBvljElGeYJi6GDdZ2i7CvoSBFpsQ9Eyc/IZXlom3vpnnnwUt/7mHl8YqoqHs9
+ eTlp17ZmL9fvOqxDTXpqsP3iGW9/j4n3Z1Za0PKcB7f5TFs4GSbb0L7Op4gnSSeR0/8NuA4LGb6
+ Gch2hMqZUTIW/BA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -92,9 +92,8 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,193 +109,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename QAPISchemaUsedTypes to QAPISchemaTypeAnalysis and broaden type
-collection: instead of discovering types transitively from commands and
-events, register every non-implicit type upfront in visit_needed() and
-let visit_end() resolve their dependencies.
-
-This is needed so that QOM property types that are defined in the QAPI
-schema but not referenced by any command or event still appear in
-query-qmp-schema output, making them introspectable by management tools.
-
-Commands and events still register their (often implicit) argument and
-return types, which visit_needed() intentionally skips.
-
-This makes the x86-64 schema grow from 244K to 265K.
+Add the per-module type-infos output files so they are compiled into
+the build.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/qapi/backend.py         |  4 +--
- scripts/qapi/introspect.py      |  6 ++---
- scripts/qapi/schema_analysis.py | 55 +++++++++++++++++++++--------------------
- 3 files changed, 33 insertions(+), 32 deletions(-)
+ qapi/meson.build              | 4 ++++
+ qga/meson.build               | 2 ++
+ tests/include/meson.build     | 2 ++
+ tests/meson.build             | 6 ++++++
+ tests/qapi-schema/meson.build | 1 +
+ 5 files changed, 15 insertions(+)
 
-diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-index 59329965890f..24717be48c3c 100644
---- a/scripts/qapi/backend.py
-+++ b/scripts/qapi/backend.py
-@@ -8,7 +8,7 @@
- from .features import gen_features
- from .introspect import gen_introspect
- from .schema import QAPISchema
--from .schema_analysis import QAPISchemaUsedTypes
-+from .schema_analysis import QAPISchemaTypeAnalysis
- from .types import gen_types
- from .visit import gen_visit
+diff --git a/qapi/meson.build b/qapi/meson.build
+index a46269b5a0c9..7477953492ad 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -79,6 +79,7 @@ endif
  
-@@ -58,7 +58,7 @@ def generate(self,
+ qapi_nonmodule_outputs = [
+   'qapi-introspect.c', 'qapi-introspect.h',
++  'qapi-type-infos.c', 'qapi-type-infos.h',
+   'qapi-types.c', 'qapi-types.h',
+   'qapi-visit.h', 'qapi-visit.c',
+   'qapi-commands.h', 'qapi-commands.c',
+@@ -88,6 +89,7 @@ qapi_nonmodule_outputs = [
+ ]
  
-         :raise QAPIError: On failures.
-         """
--        schema_types = QAPISchemaUsedTypes(unmask)
-+        schema_types = QAPISchemaTypeAnalysis(unmask)
-         schema.visit(schema_types)
-         gen_types(schema, output_dir, prefix, builtins)
-         gen_features(schema, output_dir, prefix)
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-index 9e76e3aa38a9..77c29425c42d 100644
---- a/scripts/qapi/introspect.py
-+++ b/scripts/qapi/introspect.py
-@@ -38,7 +38,7 @@
-     QAPISchemaType,
-     QAPISchemaVariant,
- )
--from .schema_analysis import QAPISchemaUsedTypes
-+from .schema_analysis import QAPISchemaTypeAnalysis
- from .source import QAPISourceInfo
+ qapi_outputs = qapi_nonmodule_outputs + [
++  'qapi-builtin-type-infos.c', 'qapi-builtin-type-infos.h',
+   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
+   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
+ ]
+@@ -96,6 +98,8 @@ qapi_inputs = []
+ foreach module : qapi_all_modules
+   qapi_inputs += [ files(module + '.json') ]
+   qapi_module_outputs = [
++    'qapi-type-infos-@0@.c'.format(module),
++    'qapi-type-infos-@0@.h'.format(module),
+     'qapi-types-@0@.c'.format(module),
+     'qapi-types-@0@.h'.format(module),
+     'qapi-visit-@0@.c'.format(module),
+diff --git a/qga/meson.build b/qga/meson.build
+index cfa2157efb23..79163b7d8e93 100644
+--- a/qga/meson.build
++++ b/qga/meson.build
+@@ -39,6 +39,8 @@ qga_qapi_outputs = [
+   'qga-qapi-init-commands.h',
+   'qga-qapi-introspect.c',
+   'qga-qapi-introspect.h',
++  'qga-qapi-type-infos.c',
++  'qga-qapi-type-infos.h',
+   'qga-qapi-types.c',
+   'qga-qapi-types.h',
+   'qga-qapi-visit.c',
+diff --git a/tests/include/meson.build b/tests/include/meson.build
+index 8e8d1ec4e692..026480d96851 100644
+--- a/tests/include/meson.build
++++ b/tests/include/meson.build
+@@ -4,6 +4,8 @@ test_qapi_outputs_extra = [
+   'test-qapi-commands-sub-module.h',
+   'test-qapi-events-sub-module.c',
+   'test-qapi-events-sub-module.h',
++  'test-qapi-type-infos-sub-module.c',
++  'test-qapi-type-infos-sub-module.h',
+   'test-qapi-types-sub-module.c',
+   'test-qapi-types-sub-module.h',
+   'test-qapi-visit-sub-module.c',
+diff --git a/tests/meson.build b/tests/meson.build
+index 9ba04bbedd30..71dc4ac8bf99 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -2,6 +2,8 @@ subdir('bench')
+ subdir('qemu-iotests')
  
- 
-@@ -168,7 +168,7 @@ def to_c_string(string: str) -> str:
- 
- class QAPISchemaGenIntrospectVisitor(QAPISchemaMonolithicCVisitor):
- 
--    def __init__(self, prefix: str, schema_types: QAPISchemaUsedTypes):
-+    def __init__(self, prefix: str, schema_types: QAPISchemaTypeAnalysis):
-         super().__init__(
-             prefix, 'qapi-introspect',
-             ' * QAPI/QMP schema introspection', __doc__)
-@@ -187,7 +187,7 @@ def visit_begin(self, schema: QAPISchema) -> None:
- 
-     def visit_end(self) -> None:
-         # visit the types that are actually used
--        for typ in self._schema_types.used_types():
-+        for typ in self._schema_types.types():
-             typ.visit(self)
-         # generate C
-         name = c_name(self._prefix, protect=False) + 'qmp_schema_qlit'
-diff --git a/scripts/qapi/schema_analysis.py b/scripts/qapi/schema_analysis.py
-index 7e42abbc14e1..1d12306f61e2 100644
---- a/scripts/qapi/schema_analysis.py
-+++ b/scripts/qapi/schema_analysis.py
-@@ -35,37 +35,37 @@
- from .source import QAPISourceInfo
- 
- 
--class QAPISchemaUsedTypes(QAPISchemaVisitor):
--    """Collect the set of QMP-reachable types from a schema.
-+class QAPISchemaTypeAnalysis(QAPISchemaVisitor):
-+    """Analyze types from a QAPI schema.
- 
--    Types are discovered transitively starting from commands and events.
--    Each type is also given a masked introspection name (an integer
--    string).
-+    Every non-builtin, non-array type is given a masked introspection
-+    name (an integer string).
-     """
- 
-     def __init__(self, unmask: bool):
-         self._unmask = unmask
-         self._schema: Optional[QAPISchema] = None
-         # Ordered list + set: insert during iteration + O(1) check
--        self._used_types: List[QAPISchemaType] = []
--        self._used_types_set: Set[QAPISchemaType] = set()
-+        self._types: List[QAPISchemaType] = []
-+        self._types_set: Set[QAPISchemaType] = set()
-         self._name_map: Dict[str, str] = {}
- 
-     def visit_begin(self, schema: QAPISchema) -> None:
-         self._schema = schema
--        self._used_types = []
--        self._used_types_set = set()
-+        self._types = []
-+        self._types_set = set()
-         self._name_map = {}
- 
-     def visit_end(self) -> None:
-         assert self._schema is not None
--        # Discover transitively-used types; the list grows as
-+        # Discover type dependencies; the list grows as
-         # visiting each type registers the types it references.
--        for typ in self._used_types:
-+        for typ in self._types:
-             typ.visit(self)
--        # Assign stable masked names now that all types are known
-+
-+        # Assign masked names now that all introspected types are known.
-         counter = 0
--        for typ in self._used_types:
-+        for typ in self._types:
-             if isinstance(typ, (QAPISchemaBuiltinType, QAPISchemaArrayType)):
-                 continue
-             self._name_map[typ.name] = (
-@@ -73,8 +73,14 @@ def visit_end(self) -> None:
-             counter += 1
- 
-     def visit_needed(self, entity: QAPISchemaEntity) -> bool:
--        # Skip types during main traversal; visit_end() handles them
--        return not isinstance(entity, QAPISchemaType)
-+        # Side effect: register all introspectable types now, so that
-+        # visit_end() can traverse them to discover type dependencies.
-+        if isinstance(entity, QAPISchemaType):
-+            if (not entity.is_implicit() or
-+                    isinstance(entity, QAPISchemaArrayType)):
-+                self._register_type(entity)
-+            return False
-+        return True
- 
-     def visit_command(self, name: str, info: Optional[QAPISourceInfo],
-                       ifcond: QAPISchemaIfCond,
-@@ -107,11 +113,6 @@ def visit_object_type_flat(
-             for v in branches.variants:
-                 self._register_type(v.type)
- 
--    def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
--                         ifcond: QAPISchemaIfCond,
--                         element_type: QAPISchemaType) -> None:
--        self._register_type(element_type)
--
-     def visit_alternate_type(
-             self, name: str, info: Optional[QAPISourceInfo],
-             ifcond: QAPISchemaIfCond,
-@@ -121,11 +122,11 @@ def visit_alternate_type(
-             self._register_type(m.type)
- 
-     def _register_type(self, typ: QAPISchemaType) -> None:
--        """Record a type as QMP-reachable (idempotent)."""
-+        """Record a type for introspection (idempotent)."""
-         typ = self._canonicalize_type(typ)
--        if typ not in self._used_types_set:
--            self._used_types.append(typ)
--            self._used_types_set.add(typ)
-+        if typ not in self._types_set:
-+            self._types.append(typ)
-+            self._types_set.add(typ)
-             if isinstance(typ, QAPISchemaArrayType):
-                 self._register_type(typ.element_type)
- 
-@@ -156,9 +157,9 @@ def introspection_name(self, typ: QAPISchemaType) -> str:
-             return typ.name
-         if isinstance(typ, QAPISchemaArrayType):
-             return '[' + self.introspection_name(typ.element_type) + ']'
--        assert typ in self._used_types_set
-+        assert typ in self._types_set
-         return self.masked_name(typ.name)
- 
--    def used_types(self) -> Sequence[QAPISchemaType]:
-+    def types(self) -> Sequence[QAPISchemaType]:
-         """Return the types to include in QAPI introspection."""
--        return self._used_types
-+        return self._types
+ test_qapi_outputs = [
++  'qapi-builtin-type-infos.c',
++  'qapi-builtin-type-infos.h',
+   'qapi-builtin-types.c',
+   'qapi-builtin-types.h',
+   'qapi-builtin-visit.c',
+@@ -22,6 +24,10 @@ test_qapi_outputs = [
+   'test-qapi-init-commands.h',
+   'test-qapi-introspect.c',
+   'test-qapi-introspect.h',
++  'test-qapi-type-infos-sub-sub-module.c',
++  'test-qapi-type-infos-sub-sub-module.h',
++  'test-qapi-type-infos.c',
++  'test-qapi-type-infos.h',
+   'test-qapi-types-sub-sub-module.c',
+   'test-qapi-types-sub-sub-module.h',
+   'test-qapi-types.c',
+diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+index debff633ac17..392b59d8dccd 100644
+--- a/tests/qapi-schema/meson.build
++++ b/tests/qapi-schema/meson.build
+@@ -231,6 +231,7 @@ custom_target('QAPI doc',
+                        'doc-good-qapi-events.c', 'doc-good-qapi-events.h',
+                        'doc-good-qapi-init-commands.c', 'doc-good-qapi-init-commands.h',
+                        'doc-good-qapi-introspect.c', 'doc-good-qapi-introspect.h',
++                       'doc-good-qapi-type-infos.c', 'doc-good-qapi-type-infos.h',
+                        'doc-good-qapi-types.c', 'doc-good-qapi-types.h',
+                        'doc-good-qapi-visit.c', 'doc-good-qapi-visit.h' ],
+               input: files('doc-good.json'),
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
