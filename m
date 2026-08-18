@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB68AC5DF67
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:13:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C523C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwC80-0005Fb-TV; Tue, 18 Aug 2026 01:12:48 -0400
+	id 1wwC7k-00058N-8f; Tue, 18 Aug 2026 01:12:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7z-0005F1-J9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:47 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wwC7i-00057u-DP
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:30 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7x-0003o7-Kt
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:47 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-ca97d139d5fso3502087a12.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:45 -0700 (PDT)
+ id 1wwC7e-0003j4-CT
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:29 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-84fa3b14ee1so3080129b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787029964; x=1787634764; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787029945; x=1787634745; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=mm3IHLFoV1taMjKnzvr28Ku7UY4hQc5i3yvfG4WtmPU=;
- b=EXtHT12IUrlLdyDnPO0y8gc5+9B01nt6torrElwJjU/pXdt7ajyHTlhdqinV84UMse
- RiGc1zELT5gVGtZ++Y0RmRAyqWN3C7ChVovcqoTW51ZXcaej7xCn5WdWMaYm/FmooDss
- 45vQLBucXrhKbE9kjeVgVUp6pgQBDmcWILmhN77l0CF4AXbaUVUBMXx/YBcYVFp3mLCz
- JcpirdDHTF3d8yVLgDq8S9FLj2nJqDKNTTJblXAsSR0rV+zrArPhkmmCkUfCIphnEUFq
- 00WDihpnNFb7jsvH/LuZXvB2x62oXm7+oHOA4rSTifQaAyfLplD+bavRSdPp+83CWUS0
- oB5g==
+ bh=GF0FtzLMWaPpijge2pYmINjU8s3/LYKiLpVZpt8RABo=;
+ b=hvRFUd2uorLAIEJm9U+DnSe+8jChBs8OdAszu6zkd3Mo4dW4w8RoGOnSBnQn0rqMAY
+ o5bQFkvKNwJzeZyIQGTJCWD/JzSg7Rmqpz5xUqIwVMoOuDyHRR3oTv0U2LKueQRyKZjc
+ zvQQt8lg8BGXYeoA51GgobtGJVrrTBOugIGNYxPImE1x0ctH9SforNI/14vStlwRPFOH
+ Nx3JkA9MWdMCwG35tqBQGDo1iz4O3EdBeirfxt5a8uwtFpCzAWmlNjCB2z2qRO4r+10v
+ NElLxCcqDhY02gVq2hshcCbw/JlmkP3xLQD5XfPfm8IvjQHZR96fC8Mbk7bQ0pYRgKhm
+ 0IXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787029964; x=1787634764;
+ d=1e100.net; s=20251104; t=1787029945; x=1787634745;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mm3IHLFoV1taMjKnzvr28Ku7UY4hQc5i3yvfG4WtmPU=;
- b=cDkCQUfVDpDAdtKk4z4PN6XFOEhf3+GntD/yQ1/ZGK3Qb6lJE+la8ogLRje+1nKEG6
- 3DfRapQlsvh7nXyk934qE9YyrylURnhOp0TlX/Ku0p3cKj7zA/ADEADlZX4f/I3L50en
- fNae8mbpGLsVdZKH6XzrnRkjuioPWj+K/uryoSsVEixnxYYBT9odCO07NvKG6nSZN8vr
- UdwvNKy1Ds5ltn8IIBrkP8PVTA/P7E9X3M1biQp9fAM55bFsDFZYuSCR/fN3X3NY66vZ
- NDrh4Re9TGm+HwT7lDqB/1rETROGi0hJzlIwZpQbQRBX2nlZ7MFQ4RhiDjiR2tNNtJuZ
- XmEQ==
-X-Gm-Message-State: AOJu0Ywgvf4aPfD+JiiZzSJSEzZUx6oOTkSq/AesWV2GWM1h1KaMRzUK
- OYMc+vfmS++UgUuTpJPLVNnq3wZDNXTN+8Nv7VvhGjZGi3V0upTaHQte
-X-Gm-Gg: AR+sD12gu1rw7UU2iO3VdIlm9gf5J2NHSVFZHSoTJXQ4FFjQKpVQnlr/cTwqLZuUSXA
- +3TqgjvqoYD3MIhGQKn4OG+DT1ZDMoh6Q3fbSj6KXcPshbb8mtJnDtl/NIsaEeeGcQSeXykfAI+
- JTVoG/4ldB22r20in4zu8tn18fFKWRsPWpfVgnxdAVc36aG18qfJD9J2zJbChsT6G34Y/1GwqKU
- /UGT57PBCZ+zWytieS5FzmWCBfVZtP1B6lU0aRDuluAyS52JcaER3PSPNfJydMbZoVHVdC3ZFIz
- SvEunxciK8nroRMw2CJ8fPpeDiiNkNsR4mtmqkOAOyj7rBZaIE26xZ5bva/gD6ytui95ApGMHcA
- EG8OIX+pA5Mm85QYsPLQL/UoCCcFdacAz4BiNrm7GIeCEKBUHnmXhiVROv1pmn09VBC5MhIaVki
- U5BCdhoOG3JfRYcHR2Fo+JGekzv2DXcN6fU81WzZuVhnbwwBzgrw6RkUpU5qK9WfK9cA==
-X-Received: by 2002:a05:6a00:278b:b0:84e:2f2e:8c4f with SMTP id
- d2e1a72fcca58-851b877b568mr7241523b3a.10.1787029963893; 
- Mon, 17 Aug 2026 22:12:43 -0700 (PDT)
+ bh=GF0FtzLMWaPpijge2pYmINjU8s3/LYKiLpVZpt8RABo=;
+ b=hs9dQtHhsGS+3Zudh/SIIm1CHSIq6kvweHOD6B/6fq/Qy3yziTZ/KCXeNhumX93qXp
+ uvoM6wtVtJzSRAcTuYsBCdKoLdHbujvOuV26HNOmoEYkEIFDrdpwautxF8Cx1MOzyIiT
+ 8kpHUn9e2sU/RD9N44+Aapq94ey0qSEQjiBZyBr59wI+Ed+e/aLWde4PjVyCkuQdjSCa
+ zeMfjkG/yWnw0U0BsQ80F1s5wnYJCbOo3aqxVIQ9rvhEten3CEyL9T8kmZCQQZ8C/o5m
+ a6ck6R4fHRHxS+sIn4iBMb8F6ktJ/sVpT9Ciu71ih+Zl0QqhJEJXxCnVWqDWpgtzCwyk
+ Wsdw==
+X-Gm-Message-State: AOJu0YwMr3VxcbcEt8kSxAKAxaozXcrXodDuz9iACK8k+xAFCVrXjc5E
+ UArcpv36mHfwcoQ9zn772M9drEjS44E4/3A3G+sJ9wrB97Mn1sujhtO6
+X-Gm-Gg: AR+sD10KGXv7nEyfJxjNyfO2KkkkgqB1+j53OgmZq6tdhk2153YJgSwZ5WLZxDg4qXW
+ 97wCrzYgaRK3Z6bYuN2qo1wiGdZYn7KqN/dF6pUSnuV2db3gZZ3JiHgoFDhb0gPtVFXfjXvYE9+
+ K0E3xUKt0DFqLnTETVPM4LUD0RNDOTLXO/QQRd0q5sC/B5HtOkDMfPi5F6QbJf7KxQ3O8V1SH9L
+ nY/pHqLgpVTcW562QfWylULNRbaPlefXgE9cNDASsD/fLEA9WabEtg2qJP8OO2aJcdxT600W0B9
+ 6ZG7KCN2UbNN0Fov+jw/RXzvITnGcyk7TP2TkIDZ6snke9Qy2bTb+1QuNa6rYZJXvYjeLbjOG9V
+ YVnjy93ig2RnuMPVCtfVktrIHkVb2eHsRuKmZZKfVCogf44F4jE2wvv5uyplG7lvbz34AFlgr4K
+ mreTA7ikSEyhZsGE0M6jxc8we0Jcl8KH4wHy0rIDKCN0Y7MIFVHyUd8Z2yoY0tpFi+kg==
+X-Received: by 2002:a05:6a00:3763:b0:851:ba04:ca02 with SMTP id
+ d2e1a72fcca58-851ba04da9amr4656750b3a.16.1787029944848; 
+ Mon, 17 Aug 2026 22:12:24 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:d043:a40d:25c1:432c])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.41
+ d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 22:12:43 -0700 (PDT)
+ Mon, 17 Aug 2026 22:12:24 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Mon, 17 Aug 2026 22:12:24 -0700
-Subject: [PATCH RFC v2 09/13] hw/virtio/vhost-user: add shadow virtqueues
- and eventfd intercepts
+Date: Mon, 17 Aug 2026 22:12:17 -0700
+Subject: [PATCH RFC v2 02/13] util/iova-tree: g_tree_foreach wrapper
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260817-vhost-user-isolated-memory-v2-9-948aae960abb@gmail.com>
+Message-Id: <20260817-vhost-user-isolated-memory-v2-2-948aae960abb@gmail.com>
 References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 In-Reply-To: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 To: qemu-devel@nongnu.org
@@ -99,22 +98,22 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Connor Kite <connorkite@gmail.com>, 
  20260817233147.2867623-1-connorkite@gmail.com
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=9404;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=1906;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=EM/PjlQw++6DCEU0UaWG6Z1mgIImjSnvKqIHao8jzr4=;
- b=E3VPFG/PNlIUzUZxtU9++LwDFS+hH3gRp4CoQ/fnJjpf6gmv+Mx2dER69xXBhSKCU5v8SV8OS
- 0doaRJ/cXw4Di60Rr3WEWoV19lFWLVxLxPsIr7NjE/CpsNZSC8BZZA/
+ bh=o7eLAZfdtjRRWSqHEojyG/bzxtWRaxaRR5MzJJtbNk8=;
+ b=Z3tFhfEr1Omnp83Zy3bXpXXEiQIMkob68NNERZBNgm5EjVu9Ykqidco7cjuQ4gnEqs7pgUwhM
+ ELFXw7D56GGCzrXpmI7r68dyx5q3Ot2OBTpnrqhYAOCg7lgJmRrB5TA
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=connorkite@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=connorkite@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,273 +129,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds shadow virtqueues that will eventually be used to transfer data
-between device and host via bounce buffers when isolation mode is
-active.  The svqs are initalized, and eventfd assignments are
-intercepted so that notifications come to svqs first before
-the guest or backend receive them.
+Add a wrapper to iova-tree to call g_tree_foreach.  Provides a means
+to execute some function on each node of the iova-tree.
 
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Connor Kite <connorkite@gmail.com>
 ---
- hw/virtio/vhost-user.c | 136 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 119 insertions(+), 17 deletions(-)
+ include/qemu/iova-tree.h | 21 +++++++++++++++++++++
+ util/iova-tree.c         |  5 +++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index e1e5cba53d..ace328f5eb 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -18,6 +18,7 @@
- #include "hw/virtio/vhost-backend.h"
- #include "hw/virtio/virtio.h"
- #include "hw/virtio/virtio-net.h"
-+#include "hw/virtio/vhost-shadow-virtqueue.h"
- #include "hw/virtio/vhost-iova-tree.h"
- #include "chardev/char-fe.h"
- #include "io/channel-socket.h"
-@@ -331,6 +332,7 @@ typedef struct {
-     size_t size; /* size of the mapped shared memory */
-     int fd; /* descriptor of anonymous file backing shared iso region */
-     Int128 iso_iova_offset; /* translation from IOVA to hva of iso region */
-+    GPtrArray *shadow_vqs; /* shadow vqs with vrings in iso region*/
- } IsolationModeCtx;
+diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
+index 14e82a22d5..a1938e36a1 100644
+--- a/include/qemu/iova-tree.h
++++ b/include/qemu/iova-tree.h
+@@ -161,4 +161,25 @@ int iova_tree_alloc_map(IOVATree *tree, DMAMap *map, hwaddr iova_begin,
+  */
+ void iova_tree_destroy(IOVATree *tree);
  
- struct vhost_user {
-@@ -1128,15 +1130,38 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
-     return 0;
++/**
++ * iova_tree_foreach:
++ *
++ * @tree: the iova tree to traverse
++ * @func: the function called at every node. A true return value ends traversal.
++ *        Arguments:
++ *            gpointer key:   key of current node
++ *            gpointer value: value of current node
++ *            gpointer data:  data passed in at g_tree_foreach call
++ *        Return: gboolean
++ * @data: an argument passed to func
++ *
++ * Wrapper to call g_tree_foreach on the underlying g_tree. g_tree_foreach will
++ * traverse through every node of the tree, barring an early return. At each
++ * node, g_tree_foreach calls func with pointers to the node key, node value,
++ * and a pointer to data passed in by the caller.
++ *
++ * Return: None
++ */
++void iova_tree_foreach(IOVATree *tree, GTraverseFunc func, gpointer data);
++
+ #endif
+diff --git a/util/iova-tree.c b/util/iova-tree.c
+index 5b0c95ff15..2239bb6ae1 100644
+--- a/util/iova-tree.c
++++ b/util/iova-tree.c
+@@ -303,3 +303,8 @@ int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
+ 
+     return IOVA_OK;
  }
- 
--static void cleanup_isolation_regions(struct vhost_dev *dev)
-+static void vhost_user_svq_cleanup(struct vhost_user *u, bool reset)
++
++void iova_tree_foreach(IOVATree *tree, GTraverseFunc func, gpointer data)
 +{
-+    VhostShadowVirtqueue *svq;
-+    for (int i = 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
-+        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i);
-+        vhost_svq_stop(svq);
-+        event_notifier_cleanup(&svq->hdev_call);
-+        event_notifier_cleanup(&svq->hdev_kick);
-+    }
-+
-+    if (!reset) {
-+        g_ptr_array_free(u->iso_mem_ctx.shadow_vqs, true);
-+    }
++    g_tree_foreach(tree->tree, func, data);
 +}
-+
-+static void cleanup_isolation_regions(struct vhost_dev *dev, bool reset)
- {
-     struct vhost_user *u = dev->opaque;
-     if (u->iso_mem_ctx.shared_mem_addr) {
-+        vhost_user_svq_cleanup(u, reset);
-         vhost_iova_tree_delete(u->iso_mem_ctx.tree);
-         qemu_memfd_free(u->iso_mem_ctx.shared_mem_addr,
-                         u->iso_mem_ctx.size,
-                         u->iso_mem_ctx.fd);
-+
-+        GPtrArray *temp = u->iso_mem_ctx.shadow_vqs;
-         memset(&u->iso_mem_ctx, 0, sizeof(IsolationModeCtx));
-+
-+        if (!reset) {
-+            u->iso_mem_ctx.shadow_vqs = temp;
-+        }
-+
-     }
- }
- 
-@@ -1234,7 +1259,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
-     msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
- 
-     /* In case of reset, clear old regions */
--    cleanup_isolation_regions(dev);
-+    cleanup_isolation_regions(dev, true);
- 
-     /* Gather information for bounce buffers to be mapped */
-     for (u_int32_t i = 0; i < nregions; i++) {
-@@ -1267,7 +1292,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
- 
-     if (err) {
-         error_report_err(err);
--        cleanup_isolation_regions(dev);
-+        cleanup_isolation_regions(dev, false);
-         return -1;
-     }
- 
-@@ -1295,7 +1320,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
-                                   (hwaddr)u->iso_mem_ctx.shared_mem_addr);
- 
-     if (r != IOVA_OK) {
--        cleanup_isolation_regions(dev);
-+        cleanup_isolation_regions(dev, false);
-         return r;
-     }
- 
-@@ -1310,7 +1335,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
-                                           dev->mem->regions[i].guest_phys_addr);
- 
-         if (r != IOVA_OK) {
--            cleanup_isolation_regions(dev);
-+            cleanup_isolation_regions(dev, false);
-             return r;
-         }
-     }
-@@ -1738,11 +1763,49 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
-     return 0;
- }
- 
-+static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
-+{
-+    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-+
-+    return idx;
-+}
-+
- static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-                                      struct vhost_vring_file *file)
- {
--    int ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, file);
-+    struct vhost_user *u = dev->opaque;
-+    int svq_idx = file->index - dev->vq_index;
-+    VhostShadowVirtqueue *svq = NULL;
-+    struct vhost_vring_file vr_file = *file;
-+    int ret;
-+
-+    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-+
-+    if (u->user->memory_isolation) {
-+        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-+        vhost_svq_set_svq_kick_fd(svq, file->fd);
-+
-+        if (file->fd != -1) {
-+            if (!svq->hdev_kick.initialized) {
-+                ret = event_notifier_init(&svq->hdev_kick, 0);
-+                if (ret < 0) {
-+                    event_notifier_cleanup(&svq->hdev_kick);
-+                    error_report("Failed to create kick event notifier");
-+                    return ret;
-+                }
-+            }
-+
-+            vr_file.fd = event_notifier_get_fd(&svq->hdev_kick);
-+        } else {
-+            event_notifier_cleanup(&svq->hdev_kick);
-+        }
-+    }
-+
-+    ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, &vr_file);
-     if (ret < 0) {
-+        if (svq != NULL) {
-+            event_notifier_cleanup(&svq->hdev_kick);
-+        }
-         return ret;
-     }
- 
-@@ -1750,15 +1813,18 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-      * Inject a kick in case the back-end only starts vring processing upon
-      * receiving a kick. The spec suggests this to improve compatibility.
-      */
--    if (file->fd != -1) {
-+    if (vr_file.fd != -1) {
-         uint64_t val = 1;
-         ssize_t nwritten;
- 
-         do {
--            nwritten = write(file->fd, &val, sizeof(val));
-+            nwritten = write(vr_file.fd, &val, sizeof(val));
-         } while (nwritten < 0 && errno == EINTR);
- 
-         if (nwritten < 0 && errno != EAGAIN /* back-end can already read */) {
-+            if (svq != NULL) {
-+                event_notifier_cleanup(&svq->hdev_kick);
-+            }
-             return -errno;
-         }
-     }
-@@ -1769,7 +1835,35 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
- static int vhost_user_set_vring_call(struct vhost_dev *dev,
-                                      struct vhost_vring_file *file)
- {
--    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
-+    struct vhost_user *u = dev->opaque;
-+    int svq_idx = file->index - dev->vq_index;
-+    VhostShadowVirtqueue *svq = NULL;
-+    struct vhost_vring_file vr_file = *file;
-+    int ret;
-+
-+    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-+
-+    if (u->user->memory_isolation) {
-+        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-+        vhost_svq_set_svq_call_fd(svq, file->fd);
-+
-+        if (file->fd != -1) {
-+            if (!svq->hdev_call.initialized) {
-+                ret = event_notifier_init(&svq->hdev_call, 0);
-+                if (ret < 0) {
-+                    event_notifier_cleanup(&svq->hdev_call);
-+                    error_report("Failed to create call event notifier");
-+                    return ret;
-+                }
-+            }
-+
-+            vr_file.fd = event_notifier_get_fd(&svq->hdev_call);
-+        } else {
-+            event_notifier_cleanup(&svq->hdev_call);
-+        }
-+    }
-+
-+    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, &vr_file);
- }
- 
- static int vhost_user_set_vring_err(struct vhost_dev *dev,
-@@ -2763,6 +2857,17 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
-     return 0;
- }
- 
-+static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
-+{
-+    /*Modified from vhost-vdpa*/
-+    u->iso_mem_ctx.shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
-+    for (int i = 0; i < dev->nvqs; i++) {
-+        VhostShadowVirtqueue *svq;
-+        svq = vhost_svq_new(NULL, NULL);
-+        g_ptr_array_add(u->iso_mem_ctx.shadow_vqs, svq);
-+    }
-+}
-+
- static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-                                    Error **errp)
- {
-@@ -2907,6 +3012,10 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-     u->postcopy_notifier.notify = vhost_user_postcopy_notifier;
-     postcopy_add_notifier(&u->postcopy_notifier);
- 
-+    if (vus->memory_isolation) {
-+        vhost_user_init_svq(dev, u);
-+    }
-+
-     return 0;
- }
- 
-@@ -2935,20 +3044,13 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
-     g_free(u->region_rb_offset);
-     u->region_rb_offset = NULL;
-     u->region_rb_len = 0;
--    cleanup_isolation_regions(dev);
-+    cleanup_isolation_regions(dev, false);
-     g_free(u);
-     dev->opaque = 0;
- 
-     return 0;
- }
- 
--static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
--{
--    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
--
--    return idx;
--}
--
- static int vhost_user_memslots_limit(struct vhost_dev *dev)
- {
-     struct vhost_user *u = dev->opaque;
 
 -- 
 2.43.0
