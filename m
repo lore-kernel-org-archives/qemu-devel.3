@@ -4,106 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FF12C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA430C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwIxF-0007Wi-8U; Tue, 18 Aug 2026 08:30:09 -0400
+	id 1wwJsT-0002vP-9s; Tue, 18 Aug 2026 09:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwIxD-0007TL-2s
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:30:07 -0400
-Received: from sonic309-20.consmr.mail.gq1.yahoo.com ([98.137.65.146])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwIxA-0005gd-Cd
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:30:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1787056201; bh=jz0lsF7UaR5cFtfwz1uDrwFu8gHUr1wVACs9npDuP/I=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
- b=uL2qU2pLXjrDAW5zX4VClWEZ0aiLaXI/yO/XM4bHVUvsRJDmtfH5xQtYQPMN1ehzyMjQ5+wMDYe+KA9vww5fL9Ano0H5iDroljAe5pSpdxX+a/pDdx0Ti8lbsCyGyoueJ59hk5+W+ePqwuIsZbuYh67HPQy1YTSALsz08h3K1Gxb94VTbEen49f691UIjWKaZVdUSwscCsJd0dz20+aIG+9g1Cqy2R1hHxl73n0cOAGG462RgyOFMw89xH3jNBx9idtZgcoo3nixKPX2t4/oQSYDifID1RNPBalOyMZDBoNinbWPMez3nHGGFRuMR0CrS7wgSy/dQmOFqyROTXSoQg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1787056201; bh=DdppHNbovwvCrHmNHrOUpcghqG/ObVCcXyDuVFT/Mb0=;
- h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=GwOcGaT8YLWUmlvX0c6iR7IsCTDfnyL59TWHqpEiuZamceYZU4zCOYzH5MGBcb7oqbQxy9znU5KlshcwJQWpSB0U0O5R5AXzgzaaHVMopxzUzwRiHHr117KTYhPeFHjRGcdlmx8Hb/YYR11JJf1dtZZ40b0K5mHeYs24Bql2Z02CrxWh/lXBPzfd/GPCvaxCmeDwEisabSsgms9wtNHiSvbFMR0Lw4oBkFiDKJ/adrutDYuTqu9ZMquKtgqX+QME5O+T8ROx2MyQTlmGyR7BfBha/8/4kIlL/9onyibAdJoWzbVJk9yhvH/SoNapjJJqN0OMAvbT7IP0d+BwRgnv6g==
-X-YMail-OSG: _RgedzsVM1lCNngddMq0FFkG2OfsZ9VNbhI.CmnFjYpNxp47JVb9_CZs9bNI3mw
- 27LwFJWq77gMSgfTqDeURmQv.tTupW88MwtG2QVMeEayxoBl7oe3ZJ8Sk6N.jfCmLRQFOuVs.4n6
- idJeV9ByJiiEaVU8QXhuW.V.rd6DFJ4JM8ysVSVAoh.xSymCJ5sqh7ODlOb5yWi6IzAZEkhG2Djx
- MWdyMe9QNggu6zKmITmk9ezCB057wyyZBIME96r_nA1rX5jwcw_nqhLooPWHysV2k.cocJJz4qVf
- gXDdvbo.4kP4VjNJxBWC.DFaXhb9jdsf7xKhgcDoPozUfDC.pg.yWtKROyLOEQkqYD3Th8jmeNMM
- vqTuWRKWfRYBNhHvwUXMTUD.Ps2UgSZiIWrPtrgnmoHpfWUHJEFmWEKGrSQV5Y1TBeIEfzp6ylvi
- sPAl6dSNcvjI2WiC2f0ZtJQQhUKfmTrkzTEhJJWTnBO2HT7b9yCRt6A1D9OqTUYRIEkhxcPLSCDq
- viZPcQWeoZI3WxN.c_PS7ExCQsleEDJzVvlzvZSOmsG6cQ_qByCcLRUu8l7d5cPq21OUBzzr2Lyh
- V23bquTnBvWuGquWw9oqIBEJp1wsrFzAsk_JfJaDBAPrPoMBCi.W37isi9xQUai5JZZHlAGfSGeZ
- mczWFgp5ioFvDoG79Fq3lrMvQNl1dfk_O8EBzrpjh2hE6SXhy.NjElHq6GL86vbjP5XshcmpwGGq
- 6DT1dCabxtYuTyYGVslPMXqOg69KTF7XaK8afp0OYtMZK6y03us.32PsCTZwFcMnDCTVxAyg8FEg
- mxxOAZYVp1JqzePFISiDpoWtMTRwynl04YIMV2.1UQYjuhzMsl2U9q6oHXx6Q.ohYpVPk1vfRC1f
- 6aQYV4cM1rE3NleN.9LN3p5ZzkKKE3ogRxh6xklvvVFR.uBdHYdPQxYMguyMnmqPjTveuW7MFTCb
- WCpycdw35m_PhN1L876m60ALNGVktD8bhwFAwEe3dxw0zFJDixvRyFkGPrnf_eNGo2AbKRxOBTsq
- hT.2C3jTKVkJBiPoUdfUWfhJLrP0JFWnIIVNKmSwBv5Xy_eiWcFBG8mDPR7d5CjtlRpZAUMts7h5
- PFnWf83IqoAQl9i9Zb093NsOzWbycsdsqQusdnM4ny8r6a.HqzAJrJ6wLD9YXIbSSSS3vyn9pI41
- n.Ep.G7Cv1U1S4fBLR8cVodyTmwy2zh0Ih1Cvng.KGs1bXrilwg.c2tg_JdK15cYBXOlO4y1P0Fl
- bOyI8VFXWHM0ziKnShysmRZBQ8Jr28X4vOUZmRw1091Yzs0VU3CrOxObbOWNDjLPKD3XHuckNqo.
- _9fGJK.GI1rI7XEsL2Mkvz7bFQ82kj8E8bq8VFdelxDB5OczLkDTbL_gI09NhO2u3bBJExGV7ogo
- qkRGrMeKSbRYxcEh73h25iRvMqD8tKB.XzYsaPU97zG_U8R91xF5OOdGKnYdF7nf2qUXMpGfEtOl
- cIuZeXvQd1hvZT0IvpkKULakrgS3z939dhlvvN4nGXK7PMajY8pZH7BU7EudVQbF07cwQTe5iY0y
- EPZooGHDFejw8kBFgb_e.gI8O_avQT46l1dHlDy2GWuyT3WH8RzPK3n.sxnRjbAVao1EwFbPdd.I
- mQsqAdon8.Hn7QqXobT4lqLVcd0cchRMJAwqxFMz7ctWeLXBElKYo2lCilejE7V8.Ys8ZrEghPmz
- GpKApktwuAkNYZVDjuYhx6tsa3jed48DFfE3siACv.TzU7JAPM0xhFbJTWokEgLJyACaP8QviFyZ
- QAE.f8.tMAiWo3EZX10IQiy2G95dKZnA2nvuJycW74jdt4aEG.mb4EuQ_FToJObQcPRuooT.JWNG
- hwo5Eglarp9s6_MLIdFK9uG1r9Bvdk.j_cdOMg2C1Czv3J8ZhpgzwWlm6WNHH1LtuQ2OKiAzEN1O
- 16CJBgroC84WXR5USkvEcTEydb6xr1uZNIPvH2EvGBxX4qMw7e5xonVOUqVkVQAIdmI6Ah1TeoqF
- S6d3Po1TjZuKiYX0s9MfLlVwEMAGY9wkB14RJf1hMvzgSLwA3yyK22OGEM3YTgAWdBXWiinu5aNv
- 8VNYZnap0U5prYHd6v.ww3SPeu8W5lgYjCUnNTSrlKqMqhPFcT_YIcgBsXTVTASEX_O9TLVJiMnf
- QE7O4C1gGvgjP9pAWugQHb.6iSsWj52uyV2QXX7BF__WzdaxqCrKxD98buMRnd096kXEO3sqwplx
- oFHayQxcPsQ9fuyOKN40Hk9xPIH3rp4MWM5X.ABHSZTuS
-X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: c47e0327-5137-42a7-963d-da8cd16b4b6f
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic309.consmr.mail.gq1.yahoo.com with HTTP; Tue, 18 Aug 2026 12:30:01 +0000
-Received: by hermes--production-ne1-6dbcb84f44-9jslv (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID e5dc29c1a1be5ea329f6254e372ba29b; 
- Tue, 18 Aug 2026 12:29:58 +0000 (UTC)
-Message-ID: <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
-Date: Tue, 18 Aug 2026 08:29:59 -0400
+ (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wwJsR-0002uy-L7
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:29:15 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wwJsM-00080o-Im
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:29:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=wx
+ CIOboDKJXWE3HDHf0eZa/DjLj3h8IKdqUKSIaxTNA=; b=dUpOFgqDpPf3aHTEgF
+ fx0j7Tm8VcD8QYo7wefEHGuzy3bxfPhn1yr9UWAPbeeANs4bDf0nV2okIsMIbrd1
+ JdkqUihky74hb+9EiHidinHN+PyVaBYM4aL+p8jMNe6emTM2TtvtcU8gHUB0q6z+
+ xuTWxs8g8Oqp3W7CKBroRY5lk=
+Received: from alano.. (unknown [])
+ by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
+ _____wDX48dBXYRqcY8tQg--.39284S2; 
+ Tue, 18 Aug 2026 21:25:21 +0800 (CST)
+From: AlanoSong@163.com
+To: qemu-devel@nongnu.org
+Cc: dave@treblig.org, laurent@vivier.eu, zhao1.liu@intel.com,
+ atar4qemu@gmail.com, Alano Song <AlanoSong@163.com>
+Subject: [PATCH v3] monitor: Refine 'info tlb' command
+Date: Tue, 18 Aug 2026 21:25:19 +0800
+Message-ID: <20260818132519.186010-1-AlanoSong@163.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Jan Beulich <jbeulich@suse.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
-Content-Language: en-US
-From: Chuck Zmudzinski <brchuckz@aol.com>
-In-Reply-To: <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.26254
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.65.146; envelope-from=brchuckz@aol.com;
- helo=sonic309-20.consmr.mail.gq1.yahoo.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wDX48dBXYRqcY8tQg--.39284S2
+X-Coremail-Antispam: 1Uf129KBjvAXoW3urWDCr18XrW8uw15Zw13urg_yoW8Cw1xKo
+ Z2vF13Ww4kGw15ZrWvkr1jy34UXF10kayS9wsI9F15Wa9rZrn0yFWDtw4kAwsFvrWrCrW7
+ Za47ta4xtr48CF93n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjTRZqXmDUUUU
+X-Originating-IP: [240e:36f:15cf:e270:7d3c:1101:691e:f7df]
+X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbC0wEjN2qEXUHZ5gAA3L
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=alanosong@163.com;
+ helo=m16.mail.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,141 +70,630 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/2026 8:18 AM, Jan Beulich wrote:
-> On 18.08.2026 13:52, Chuck Zmudzinski wrote:
->> On 8/18/2026 3:17 AM, Jan Beulich wrote:
->>> On 17.08.2026 18:04, Chuck Zmudzinski wrote:
->>>> On 8/17/2026 4:42 AM, Jan Beulich wrote:
->>>>> On 14.08.2026 17:23, Chuck Zmudzinski wrote:
->>>>>> On 8/14/2026 9:46 AM, Jan Beulich wrote:
->>>>>>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
->>>>>>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
->>>>>>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
->>>>>>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
->>>>>>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
->>>>>>>>>>>> -- snip --
->>>>>>>>>>>> +    /*
->>>>>>>>>>>> +     * Write rvda_host as 2 successive 32-bit values
->>>>>>>>>>>> +     * to communicate location of the VBT to the device
->>>>>>>>>>>> +     * model. If rvda_host is not 0, The device model
->>>>>>>>>>>> +     * unmaps the OpRegion and eventually maps the VBT
->>>>>>>>>>>> +     * after we also write the guest address where the
->>>>>>>>>>>> +     * VBT will be mapped.
->>>>>>>>>>>> +     *
->>>>>>>>>>>> +     * If we send rvda_host = 0 to the device model, it
->>>>>>>>>>>> +     * will assume we do not need OpRegion 2 support and
->>>>>>>>>>>> +     * it will not unmap the OpRegion.
->>>>>>>>>>>> +     */
->>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
->>>>>>>>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
->>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>> +               (uint32_t)rvda_host_upper_32);
->>>>>>>>>>>
->>>>>>>>>>> Why would you need to communicate a host property to the DM?
->>>>>>>>>>
->>>>>>>>>> The DM cannot access the host rvda value because it is only accessible
->>>>>>>>>> from the host kernel, and the DM is only a user-space process on the host.
->>>>>>>>>
->>>>>>>>> I don't follow this: Anything the guest can access should also be accessible
->>>>>>>>> by its DM.
->>>>>>>>
->>>>>>>> I think the host OpRegion is not currently accessible by the DM.
->>>>>>>
->>>>>>> Can you explain to me how the region becomes accessible to the guest?
->>>>>>> That would then (hopefully) help me understand why the DM would not have
->>>>>>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
->>>>>>> guest are also assigned to its DM.
->>>>>>
->>>>>> Currently, in the device model (Qemu) we have:
->>>>>>
->>>>>>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
->>>>>>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
->>>>>>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
->>>>>>             XEN_PCI_INTEL_OPREGION_PAGES,
->>>>>>             DPCI_ADD_MAPPING);
->>>>>>
->>>>>> That statement is in the igd_write_opregion(...) function in the
->>>>>> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
->>>>>>
->>>>>> If I understand our current implementation correctly, this statement
->>>>>> is what gives the guest access to the host OpRegion (3 pages as defined
->>>>>> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
->>>>>> in hvmloader code).
->>>>>
->>>>> No, it introduces mappings of those pages into the guest's P2M.
->>>>>
->>>>>> I don't think this statement makes the host OpRegion
->>>>>> accessible to the device model, though, so I think, if I understand your
->>>>>> comment in an earlier about my patch resulting in what you called a "layering
->>>>>> violation" correctly, that our current implementation is also guilty of this
->>>>>> same kind of "layering violation."
->>>>>
->>>>> That code, if it can be successfully executed, indeed doesn't grant any
->>>>> permissions (to the DM or the guest). Instead it proves that the DM has the
->>>>> needed permissions to access the pages itself.
->>>>
->>>> So, are you saying it should be possible, without any patches to either Xen or
->>>> the Linux kernel, for Qemu to get a pointer to the OpRegion? If so, how?
->>>>
->>>> I think I could implement what you proposed in an earlier message and do
->>>> all (or most) of this in the DM instead of here in hvmloader:
->>>>
->>>>> The more correct thing to do might be for the DM to
->>>>> put in place a copy before the guest (i.e. hvmloader) even gains control.
->>>>> (How in turn the DM would learn of the contents of the opregion is a
->>>>> separate question then.)
->>>>
->>>> Actually, when I was developing this patch, I tried first to do it that
->>>> way, but the problem was, I could not find a way to get a pointer to the
->>>> host OpRegion in Qemu.
->>>>
->>>> So, how can I get a pointer to the host OpRegion in Qemu?
->>>
->>> You don't ask me this question, do you?
->> 
->> Are you offended I asked this question? If so, I am sorry. You make me
->> afraid to ask it again so I will not do so unless you permit to do so
->> again.
-> 
-> "Offended" is the wrong word; "very puzzled" may better get it. I'm not a
-> qemu person, and I never have been. I can't really help much there.
-> 
->> All I can say is that surely qemu
->>> has an existing way to map (host) physical memory; see e.g. how
->>> xen_pt_msix_init() (imo bogusly) maps the physical MSI-X table of a
->>> device. "Bogusly" there because that's another layering violation. Plus
->>> (independently) there and here there's the issue of how to accomplish
->>> things when not running in Dom0, or when running de-privileged in Dom0.
->> 
->> Well, that only proves Qemu *might* be able to access the MSI-X table of
->> a device, that is, if the calls to open /dev/mem and mmap it succeed.
->> Why is the MSI-X table all of the sudden relevant? Even if Qemu
->> can access the MSI-X table of some device, that does not prove that
->> Qemu can access the host OpRegion of an Intel IGD. So I think my point
->> still stands: I still don't see proof that it is possible for Qemu
->> to get a pointer to the host OpRegion without any patches to the current
->> implementations of Xen and the Linux kernel.
-> 
-> The MSI-X table (and it being accessible to qemu) is the best analogy I
-> could come up with, as that's one tiny area of qemu that I know at least
-> a little.
-> 
-> From a Xen perspective, this analogy should be sufficient: All you need
-> from Xen is for it to permit to establish mappings of the underlying page.
-> As I've pointed out when commenting on a code fragment you presented, the
-> DM (domain) looks to have permission. Everything else is a matter of
-> establishing such a mapping. There the MSI-X table code may also guide
-> you. (Sadly it may also misguide you, since (a) I don't know whether it's
-> appropriate to do things this way in qemu, and since (b) it is, as said,
-> imo a layering violation.)
+When booting an i386 target, the 'info tlb' command
+may walk the entire page table hierarchy and emit
+an enormous amount of output. It will take dozens of
+minutes to print all the info, and
+The same situation also occurred on sparc32 and
+m68k targets.
 
-I agree that accessing the host /dev/mem directly is cringy. I would not
-really want to do it that way for the host OpRegion.
+So this change do the following:
+1) Add a address range argument to help user control
+   the number of output items.
+2) Add warning note in help message that such address
+   range argument only supported on target i386,
+   sparc32 and m68k.
+3) Print ignore warning when user add such address
+   range argument on other targets (sh4, sparc64,
+   ppc and xtensa). Those targets only print limited
+   tlb info.
 
-Chuck
+Signed-off-by: Alano Song <AlanoSong@163.com>
+---
+ hmp-commands-info.hx      | 17 ++++++--
+ target/i386/monitor.c     | 92 ++++++++++++++++++++++++++++-----------
+ target/m68k/cpu.h         |  2 +-
+ target/m68k/helper.c      | 55 +++++++++++++++--------
+ target/m68k/monitor.c     | 15 ++++++-
+ target/ppc/monitor.c      |  6 +++
+ target/sh4/monitor.c      |  5 +++
+ target/sparc/cpu.h        |  3 ++
+ target/sparc/mmu_helper.c | 40 +++++++++++++----
+ target/sparc/monitor.c    | 23 ++++++++++
+ target/xtensa/monitor.c   |  6 +++
+ 11 files changed, 206 insertions(+), 58 deletions(-)
 
-> 
-> Jan
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 82134eb6c2..f907edf273 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -188,17 +188,26 @@ ERST
+ 
+     {
+         .name       = "tlb",
+-        .args_type  = "",
+-        .params     = "",
+-        .help       = "show virtual to physical memory mappings",
++        .args_type  = "start:l?,end:l?",
++        .params     = "[start [end]]",
++        .help       = "show virtual to physical memory mappings. "
++                      "output can be extremely large for i386, sparc32 "
++                      "and m68k targets. use 'info tlb [start [end]]' "
++                      "to show a range of entries. Note that the range "
++                      "argument is only supported on i386, sparc32 and "
++                      "m68k targets.",
+         .cmd        = hmp_info_tlb,
+         .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
+                         | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
+     },
+ 
+ SRST
+-  ``info tlb``
++  ``info tlb`` [*start* [*end*]]
+     Show virtual to physical memory mappings.
++    The output can be extremely large for i386, sparc32 and m68k targets.
++    Use *start* and *end* to print entries located in virtual address
++    range [start, end] (end is optional). Note that the range argument is
++    only supported on i386, sparc32 and m68k targets.
+ ERST
+ 
+     {
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index a536712c75..8db9ab0576 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -48,11 +48,9 @@ static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
+     return addr;
+ }
+ 
+-static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+-                      hwaddr pte, hwaddr mask)
++static void do_print_pte(Monitor *mon, hwaddr addr,
++                         hwaddr pte, hwaddr mask)
+ {
+-    addr = addr_canonical(env, addr);
+-
+     monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
+                    " %c%c%c%c%c%c%c%c%c\n",
+                    addr,
+@@ -68,7 +66,25 @@ static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+                    pte & PG_RW_MASK ? 'W' : '-');
+ }
+ 
+-static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
++static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
++                      hwaddr pte, hwaddr mask, hwaddr size,
++                      hwaddr start, hwaddr end)
++{
++    hwaddr addr_start = addr_canonical(env, addr);
++    hwaddr addr_end = addr_canonical(env, addr + size - 1);
++    /*
++     * Print current page [addr_start, addr_end] only if it overlaps the
++     * requested virtual address range [start, end].
++     */
++    if (addr_start > end || addr_end < start) {
++        return;
++    }
++
++    do_print_pte(mon, addr_start, pte, mask);
++}
++
++static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as,
++                        hwaddr start, hwaddr end)
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     unsigned int l1, l2;
+@@ -80,15 +96,16 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+         if (pde & PG_PRESENT_MASK) {
+             if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+                 /* 4M pages */
+-                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
++                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1),
++                          0x400000, start, end);
+             } else {
+                 for(l2 = 0; l2 < 1024; l2++) {
+                     pte = address_space_ldl_le(as, (pde & ~0xfff) + l2 * 4,
+                                                attrs, NULL);
+                     if (pte & PG_PRESENT_MASK) {
+                         print_pte(mon, env, (l1 << 22) + (l2 << 12),
+-                                  pte & ~PG_PSE_MASK,
+-                                  ~0xfff);
++                                  pte & ~PG_PSE_MASK, ~0xfff, 0x1000,
++                                  start, end);
+                     }
+                 }
+             }
+@@ -96,7 +113,8 @@ static void tlb_info_32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+     }
+ }
+ 
+-static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
++static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as,
++                           hwaddr start, hwaddr end)
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     unsigned int l1, l2, l3;
+@@ -114,17 +132,19 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+                     if (pde & PG_PSE_MASK) {
+                         /* 2M pages with PAE, CR4.PSE is ignored */
+                         print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
+-                                  ~((hwaddr)(1 << 20) - 1));
++                                  ~((hwaddr)(1 << 20) - 1), 0x200000,
++                                  start, end);
+                     } else {
+                         pt_addr = pde & 0x3fffffffff000ULL;
+                         for (l3 = 0; l3 < 512; l3++) {
+                             pte = address_space_ldq_le(as, pt_addr + l3 * 8,
+                                                        attrs, NULL);
+                             if (pte & PG_PRESENT_MASK) {
+-                                print_pte(mon, env, (l1 << 30) + (l2 << 21)
+-                                          + (l3 << 12),
++                                print_pte(mon, env,
++                                          (l1 << 30) + (l2 << 21) + (l3 << 12),
+                                           pte & ~PG_PSE_MASK,
+-                                          ~(hwaddr)0xfff);
++                                          ~(hwaddr)0xfff, 0x1000,
++                                          start, end);
+                             }
+                         }
+                     }
+@@ -136,7 +156,8 @@ static void tlb_info_pae32(Monitor *mon, CPUArchState *env, AddressSpace *as)
+ 
+ #ifdef TARGET_X86_64
+ static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+-        uint64_t l0, uint64_t pml4_addr)
++                          uint64_t l0, uint64_t pml4_addr, hwaddr start,
++                          hwaddr end)
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     uint64_t l1, l2, l3, l4;
+@@ -159,7 +180,7 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+             if (pdpe & PG_PSE_MASK) {
+                 /* 1G pages, CR4.PSE is ignored */
+                 print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
+-                        pdpe, 0x3ffffc0000000ULL);
++                          pdpe, 0x3ffffc0000000ULL, 0x40000000, start, end);
+                 continue;
+             }
+ 
+@@ -172,8 +193,9 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+ 
+                 if (pde & PG_PSE_MASK) {
+                     /* 2M pages, CR4.PSE is ignored */
+-                    print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
+-                            (l3 << 21), pde, 0x3ffffffe00000ULL);
++                    print_pte(mon, env,
++                              (l0 << 48) + (l1 << 39) + (l2 << 30) + (l3 << 21),
++                              pde, 0x3ffffffe00000ULL, 0x200000, start, end);
+                     continue;
+                 }
+ 
+@@ -182,9 +204,11 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+                     pte = address_space_ldq_le(as, pt_addr + l4 * 8,
+                                                attrs, NULL);
+                     if (pte & PG_PRESENT_MASK) {
+-                        print_pte(mon, env, (l0 << 48) + (l1 << 39) +
+-                                (l2 << 30) + (l3 << 21) + (l4 << 12),
+-                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
++                        print_pte(mon, env,
++                                  (l0 << 48) + (l1 << 39) + (l2 << 30) +
++                                  (l3 << 21) + (l4 << 12),
++                                  pte & ~PG_PSE_MASK,
++                                  0x3fffffffff000ULL, 0x1000, start, end);
+                     }
+                 }
+             }
+@@ -192,7 +216,8 @@ static void tlb_info_la48(Monitor *mon, CPUArchState *env, AddressSpace *as,
+     }
+ }
+ 
+-static void tlb_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
++static void tlb_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as,
++                          hwaddr start, hwaddr end)
+ {
+     const MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     uint64_t l0;
+@@ -203,7 +228,8 @@ static void tlb_info_la57(Monitor *mon, CPUArchState *env, AddressSpace *as)
+     for (l0 = 0; l0 < 512; l0++) {
+         pml5e = address_space_ldq_le(as, pml5_addr + l0 * 8, attrs, NULL);
+         if (pml5e & PG_PRESENT_MASK) {
+-            tlb_info_la48(mon, env, as, l0, pml5e & 0x3fffffffff000ULL);
++            tlb_info_la48(mon, env, as, l0, pml5e & 0x3fffffffff000ULL,
++                          start, end);
+         }
+     }
+ }
+@@ -213,6 +239,18 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+     CPUArchState *env;
+     AddressSpace *as;
++    hwaddr start = 0, end = HWADDR_MAX;
++
++    if (qdict_haskey(qdict, "start")) {
++        start = (hwaddr)qdict_get_int(qdict, "start");
++    }
++    if (qdict_haskey(qdict, "end")) {
++        end = (hwaddr)qdict_get_int(qdict, "end");
++    }
++    if (start > end) {
++        monitor_printf(mon, "Invalid address range: start > end.\n");
++        return;
++    }
+ 
+     env = mon_get_cpu_env(mon);
+     if (!env) {
+@@ -229,17 +267,19 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ #ifdef TARGET_X86_64
+         if (env->hflags & HF_LMA_MASK) {
+             if (env->cr[4] & CR4_LA57_MASK) {
+-                tlb_info_la57(mon, env, as);
++                tlb_info_la57(mon, env, as, start, end);
+             } else {
+-                tlb_info_la48(mon, env, as, 0, env->cr[3] & 0x3fffffffff000ULL);
++                tlb_info_la48(mon, env, as, 0,
++                              env->cr[3] & 0x3fffffffff000ULL,
++                              start, end);
+             }
+         } else
+ #endif
+         {
+-            tlb_info_pae32(mon, env, as);
++            tlb_info_pae32(mon, env, as, start, end);
+         }
+     } else {
+-        tlb_info_32(mon, env, as);
++        tlb_info_32(mon, env, as, start, end);
+     }
+ }
+ 
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 7cf3791108..b129cb150f 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -606,6 +606,6 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+ #define TB_FLAGS_TRACE          16
+ #define TB_FLAGS_TRACE_BIT      (1 << TB_FLAGS_TRACE)
+ 
+-void dump_mmu(CPUM68KState *env);
++void dump_mmu(CPUM68KState *env, hwaddr start, hwaddr end);
+ 
+ #endif
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 5f91d206f5..1b854c912b 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -461,27 +461,46 @@ void m68k_switch_sp(CPUM68KState *env)
+ /* MMU: 68040 only */
+ 
+ static void print_address_zone(uint32_t logical, uint32_t physical,
+-                               uint32_t size, int attr)
++                               uint32_t size, int attr,
++                               hwaddr start, hwaddr end)
+ {
++    uint64_t zone_start = logical;
++    uint64_t zone_end = zone_start + size - 1;
++    uint64_t zone_len;
++
++    /*
++     * Print current zone [zone_start, zone_end] only if it overlaps the
++     * requested virtual address range [start, end].
++     */
++    if (zone_end < start || zone_start > end) {
++        return;
++    }
++
++    physical += (uint32_t)(start > zone_start ? start - zone_start : 0);
++    zone_start = zone_start > start ? zone_start : start;
++    zone_end = zone_end < end ? zone_end : end;
++    zone_len = zone_end - zone_start + 1;
++
+     qemu_printf("%08x - %08x -> %08x - %08x %c ",
+-                logical, logical + size - 1,
+-                physical, physical + size - 1,
++                (uint32_t)zone_start, (uint32_t)zone_end,
++                physical, physical + (uint32_t)(zone_len - 1),
+                 attr & 4 ? 'W' : '-');
+-    size >>= 10;
+-    if (size < 1024) {
+-        qemu_printf("(%d KiB)\n", size);
++    zone_len >>= 10;
++    if (zone_len < 1024) {
++        qemu_printf("(%d KiB)\n", (int)zone_len);
+     } else {
+-        size >>= 10;
+-        if (size < 1024) {
+-            qemu_printf("(%d MiB)\n", size);
++        zone_len >>= 10;
++        if (zone_len < 1024) {
++            qemu_printf("(%d MiB)\n", (int)zone_len);
+         } else {
+-            size >>= 10;
+-            qemu_printf("(%d GiB)\n", size);
++            zone_len >>= 10;
++            qemu_printf("(%d GiB)\n", (int)zone_len);
+         }
+     }
+ }
+ 
+-static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
++static void dump_address_map(CPUM68KState *env, uint32_t root_pointer,
++                             hwaddr start, hwaddr end)
+ {
+     int tic_size, tic_shift;
+     uint32_t tib_mask;
+@@ -550,7 +569,8 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+                         size = last_logical + (1 << tic_shift) -
+                                first_logical;
+                         print_address_zone(first_logical,
+-                                           first_physical, size, last_attr);
++                                           first_physical, size, last_attr,
++                                           start, end);
+                     }
+                     first_logical = logical;
+                     first_physical = physical;
+@@ -560,7 +580,8 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+     }
+     if (first_logical != logical || (attr & 4) != (last_attr & 4)) {
+         size = logical + (1 << tic_shift) - first_logical;
+-        print_address_zone(first_logical, first_physical, size, last_attr);
++        print_address_zone(first_logical, first_physical, size, last_attr,
++                           start, end);
+     }
+ }
+ 
+@@ -610,7 +631,7 @@ static void dump_ttr(uint32_t ttr)
+                                M68K_DESC_USERATTR_SHIFT);
+ }
+ 
+-void dump_mmu(CPUM68KState *env)
++void dump_mmu(CPUM68KState *env, hwaddr start, hwaddr end)
+ {
+     if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
+         qemu_printf("Translation disabled\n");
+@@ -675,10 +696,10 @@ void dump_mmu(CPUM68KState *env)
+     dump_ttr(env->mmu.ttr[M68K_DTTR1]);
+ 
+     qemu_printf("SRP: 0x%08x\n", env->mmu.srp);
+-    dump_address_map(env, env->mmu.srp);
++    dump_address_map(env, env->mmu.srp, start, end);
+ 
+     qemu_printf("URP: 0x%08x\n", env->mmu.urp);
+-    dump_address_map(env, env->mmu.urp);
++    dump_address_map(env, env->mmu.urp, start, end);
+ }
+ 
+ static int check_TTR(uint32_t ttr, int *prot, target_ulong addr,
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 3e0df40a6b..bcb528d8e3 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -9,15 +9,28 @@
+ #include "cpu.h"
+ #include "monitor/hmp.h"
+ #include "monitor/monitor.h"
++#include "qobject/qdict.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+     CPUArchState *env1 = mon_get_cpu_env(mon);
++    hwaddr start = 0, end = HWADDR_MAX;
+ 
+     if (!env1) {
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
+ 
+-    dump_mmu(env1);
++    if (qdict_haskey(qdict, "start")) {
++        start = (hwaddr)qdict_get_int(qdict, "start");
++    }
++    if (qdict_haskey(qdict, "end")) {
++        end = (hwaddr)qdict_get_int(qdict, "end");
++    }
++    if (start > end) {
++        monitor_printf(mon, "Invalid address range: start > end.\n");
++        return;
++    }
++
++    dump_mmu(env1, start, end);
+ }
+diff --git a/target/ppc/monitor.c b/target/ppc/monitor.c
+index 7c88e0e2bd..753ed6b93d 100644
+--- a/target/ppc/monitor.c
++++ b/target/ppc/monitor.c
+@@ -10,6 +10,7 @@
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+ #include "cpu.h"
++#include "qobject/qdict.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+@@ -19,5 +20,10 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
++
++    if (qdict_haskey(qdict, "start") || qdict_haskey(qdict, "end")) {
++        monitor_printf(mon, "The range arguments will be ignored.\n");
++    }
++
+     dump_mmu(env1);
+ }
+diff --git a/target/sh4/monitor.c b/target/sh4/monitor.c
+index 50324d3600..c804824bab 100644
+--- a/target/sh4/monitor.c
++++ b/target/sh4/monitor.c
+@@ -25,6 +25,7 @@
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
++#include "qobject/qdict.h"
+ 
+ static void print_tlb(Monitor *mon, int idx, tlb_t *tlb)
+ {
+@@ -48,6 +49,10 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         return;
+     }
+ 
++    if (qdict_haskey(qdict, "start") || qdict_haskey(qdict, "end")) {
++        monitor_printf(mon, "The range arguments will be ignored.\n");
++    }
++
+     monitor_printf (mon, "ITLB:\n");
+     for (i = 0 ; i < ITLB_SIZE ; i++)
+         print_tlb (mon, i, &env->itlb[i]);
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 5f583ed9de..11f94b6bd8 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -601,6 +601,9 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         bool probe, uintptr_t retaddr);
+ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev);
+ void dump_mmu(CPUSPARCState *env);
++#ifndef TARGET_SPARC64
++void dump_mmu_range(CPUSPARCState *env, hwaddr start, hwaddr end);
++#endif
+ 
+ #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
+ int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index 07ba25dfce..65a30b438b 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -354,7 +354,32 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
+     return 0;
+ }
+ 
++static void print_tlb_entry(target_ulong va, hwaddr pa, uint32_t pde,
++                            const char *indent, const char *kind,
++                            hwaddr size, hwaddr start, hwaddr end)
++{
++    hwaddr va_hw_start = (hwaddr)va;
++    hwaddr va_hw_end = (hwaddr)(va + size - 1);
++
++    /*
++     * Print current region [va_hw_start, va_hw_end] only if it overlaps the
++     * requested virtual address range [start, end].
++     */
++    if (va_hw_start > end || va_hw_end < start) {
++        return;
++    }
++
++    qemu_printf("%sVA: " TARGET_FMT_lx ", PA: " HWADDR_FMT_plx
++                " %s: " TARGET_FMT_lx "\n",
++                indent, va, pa, kind, pde);
++}
++
+ void dump_mmu(CPUSPARCState *env)
++{
++    dump_mmu_range(env, 0, HWADDR_MAX);
++}
++
++void dump_mmu_range(CPUSPARCState *env, hwaddr start, hwaddr end)
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong va, va1, va2;
+@@ -373,8 +398,8 @@ void dump_mmu(CPUSPARCState *env)
+             } else {
+                 pa = tres.physaddr;
+             }
+-            qemu_printf("VA: " TARGET_FMT_lx ", PA: " HWADDR_FMT_plx
+-                        " PDE: " TARGET_FMT_lx "\n", va, pa, pde);
++            print_tlb_entry(va, pa, pde, "", "PDE", 16 * 1024 * 1024,
++                            start, end);
+             for (m = 0, va1 = va; m < 64; m++, va1 += 256 * 1024) {
+                 pde = mmu_probe(env, va1, 1);
+                 if (pde) {
+@@ -383,9 +408,8 @@ void dump_mmu(CPUSPARCState *env)
+                     } else {
+                         pa = tres.physaddr;
+                     }
+-                    qemu_printf(" VA: " TARGET_FMT_lx ", PA: "
+-                                HWADDR_FMT_plx " PDE: " TARGET_FMT_lx "\n",
+-                                va1, pa, pde);
++                    print_tlb_entry(va1, pa, pde, " ", "PDE", 256 * 1024,
++                                    start, end);
+                     for (o = 0, va2 = va1; o < 64; o++, va2 += 4 * 1024) {
+                         pde = mmu_probe(env, va2, 0);
+                         if (pde) {
+@@ -394,10 +418,8 @@ void dump_mmu(CPUSPARCState *env)
+                             } else {
+                                 pa = tres.physaddr;
+                             }
+-                            qemu_printf("  VA: " TARGET_FMT_lx ", PA: "
+-                                        HWADDR_FMT_plx " PTE: "
+-                                        TARGET_FMT_lx "\n",
+-                                        va2, pa, pde);
++                            print_tlb_entry(va2, pa, pde, "  ", "PTE",
++                                            4 * 1024, start, end);
+                         }
+                     }
+                 }
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 36f3d8d58e..993e411a37 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -25,6 +25,7 @@
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
++#include "qobject/qdict.h"
+ 
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+@@ -35,5 +36,27 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
++
++#ifdef TARGET_SPARC64
++    if (qdict_haskey(qdict, "start") || qdict_haskey(qdict, "end")) {
++        monitor_printf(mon, "The range arguments will be ignored.\n");
++    }
++
+     dump_mmu(env1);
++#else
++    hwaddr start = 0, end = HWADDR_MAX;
++
++    if (qdict_haskey(qdict, "start")) {
++        start = (hwaddr)qdict_get_int(qdict, "start");
++    }
++    if (qdict_haskey(qdict, "end")) {
++        end = (hwaddr)qdict_get_int(qdict, "end");
++    }
++    if (start > end) {
++        monitor_printf(mon, "Invalid address range: start > end.\n");
++        return;
++    }
++
++    dump_mmu_range(env1, start, end);
++#endif
+ }
+diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
+index 2af84934f8..df572cba42 100644
+--- a/target/xtensa/monitor.c
++++ b/target/xtensa/monitor.c
+@@ -25,6 +25,7 @@
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
++#include "qobject/qdict.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+@@ -34,5 +35,10 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
++
++    if (qdict_haskey(qdict, "start") || qdict_haskey(qdict, "end")) {
++        monitor_printf(mon, "The range arguments will be ignored.\n");
++    }
++
+     dump_mmu(env1);
+ }
+-- 
+2.43.0
 
 
