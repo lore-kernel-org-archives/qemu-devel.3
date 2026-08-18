@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7934C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B065AC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwINb-0001HF-Sj; Tue, 18 Aug 2026 07:53:19 -0400
+	id 1wwINk-0001JJ-4I; Tue, 18 Aug 2026 07:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1wwINa-0001GV-64
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:53:18 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1wwINi-0001Iw-7e
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:53:26 -0400
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <colazcyg@gmail.com>)
- id 1wwINY-0004qA-Re
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:53:17 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-6ae542c486eso2122622eaf.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 04:53:16 -0700 (PDT)
+ id 1wwINg-0004rI-GR
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:53:26 -0400
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-6aae90e595fso3086347eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 04:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787053995; x=1787658795; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=jWjcQ2AZ2KVojV3bnRB9n/hDeX7dh6xcsMreL3lpgl4=;
- b=qzZEKtQIgiVqunCnrCMLdsoDBIsIHT0wkA7NEiUs3tLRWvocIOSMXdRP6xs30VuHEH
- PF7YMukyDcNT4QZzAAfDqipDE0fjWgncv2t1vLKfjzn56PeVZF0e/V8r+2EmwUZZ8FdF
- o7LMJwNRj5Td3DI4seXhLz0wcIXRcktv+603rSAfDgk0d6cyKODhGcRN0rwaQgJHb4/Y
- 5GU5HNLMM/C6sMSP+QWVtff6fV4bBmxOv0Du/9rHzTLMSrYsD1ipVpQSzX18JRwfkB0d
- VtYY5azspUZK0i5QtAGqBujidsauzefY13l3u4HFYpry9T9nxuMOz7a98ngTj5hBX61Q
- 0SQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787053995; x=1787658795;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1787054003; x=1787658803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=jWjcQ2AZ2KVojV3bnRB9n/hDeX7dh6xcsMreL3lpgl4=;
- b=iQDH5AoP/gcJwbAsG+Xh0YGLhUJQQPtHzuR8XIop/ewKSohkXuF17R1j3M2dVBXpmx
- SA0+JmRsk5NgDuUJvKCrARB6PNkVBr2c291Nv5++VUD/B4bY8KdgfWTlvok03rxp2eJv
- 4YlHzwnduBa4ZHlM0lkAbE+J8EsZwWCHJvMF0FY7lO4MQk10ijxlm/XAOUfNJWcZa4j4
- sQQv74q7PSXQWngbnYtktN5Cwt/Wev9VToaK+VJDbsGwBZd0xEo+3hd2m57+SoIOHc4F
- v3ncOToBojXtCdTzLDMRu4ERm8GGrsQL4DwYRCLrZxk71Rbc8iOCgBhzo20SRhfVQ+CN
- kVHg==
-X-Gm-Message-State: AOJu0Yy3vf7V1zd77cfcBflyTtsIkqwSOo+WLZ44bYWMwiTlLP/jQoMG
- RXKqPtjCGDtQw1Qh+WIlSenN1CFI/8/XCscF1Znyfdk/V+TthpA38uMybilgDscAARs=
-X-Gm-Gg: AR+sD13q+p2+DQ6Z0kOGRYixhYuuftRdBpCRiBUB0N8+GsyWcU0+svOi6emPGC8lniA
- SFJ2W5/XLMdO3uOmm/m23L1uvUGQB70pwTFjbAzcfKeKX8REDwXWYiRQcm7vxI3E7IfhW9WmYzl
- mgn2/+s5+7YBszMiMEWo7b+LS2irFn4rM1hewKE2N54nlT4q6TSuyBi9EE7A+qhZjOmbOm6Ef9m
- AF3irPyNJ/1GyRQTVx1bi0qFhkBH831HItB1IPIgN2ynNWMONSbpH0jZKP/MYnGyo3x+s2jX6Zj
- PWRWs6JHmp3jZ1GbleghbQKp7kYrqP7dKMNhFLeSAOuVPka4UiNxrReS4URxSPI3uQO+VOOJ1yU
- Kp7VVuYO/Xt4oQFeNdnea7Vn0ZVJkkmcfXvpIqgxgqFeqGMsuXdDHrHEfaNKHmW3Qzgq5ZEOGmS
- XZsFVod/GPBqM9CTnR6uPVHJQigb6JR0tZjrA0NHPFmC0l5TrJXpiCX96SjWbSe3Cd
-X-Received: by 2002:a05:6820:1990:b0:6b0:40d9:8ac6 with SMTP id
- 006d021491bc7-6b0d60169eamr26006627eaf.9.1787053994808; 
- Tue, 18 Aug 2026 04:53:14 -0700 (PDT)
+ bh=U3LWr6P8Ku/lh3RxThq5whcRnXRSEiPxDQHrBsc656Q=;
+ b=KMw04Xv7K6QzzIQpSQe6STUoULQQBl3pogqaBFgoZE1Hf5Jptj3C+YtsCfonK9bngG
+ Ug/SpeLlM4DVD6usxZPYbsKu8WOPOfpwYMq3NnWPwxil+gdp2u2k5iXeKZShhYrY3QKH
+ jMAxOA9JPWiI+KJzW7SBi/dARudG94HzIWtEuJCa2IVvapo0rUgOkarAQGeVADjyEUjM
+ btrtIDsHaFTC+mET6uymshiuJuDtzPIWCAoQTnnxGQXbmCQ3YRRS4IUQ0dWRxPnd2sqX
+ sQ+UBVOEyPZ685vZFAUHTxVsXxRmls4VuhjbdB/x7lFtKWk3mWujOXqhRZ7Yyfyx27vb
+ wfrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787054003; x=1787658803;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=U3LWr6P8Ku/lh3RxThq5whcRnXRSEiPxDQHrBsc656Q=;
+ b=LYg+j0s6NauiRLhl6PPmuXz/AllNe2WG8xftxEx/KOr7SkXfG6617vQFwaTUC7k3AB
+ O+TkqUd0tKWv1o+vcMQrZQSfD+YhRSptG0EMstCFRdCcjwff0906xzBOsKwi5bhtOA6D
+ oftqJqiPCLIV5F3w1lnhU09zyzc1Xbj4MzxTO5z7M+EjebvcvHwC4ZWL2Yei5PFo2ORf
+ GIgmzA1ycywJXTc7yoR0rJUTdYFIuxsRIjUE/LoxcRVgeUzTWxukZrNKZfqa0lKsH0J9
+ wF0zX5o8gB+8AetAGIQgrIXHaV5IIFPX15AfDDFBVrVxVnfiQwefz5kRd7js7D0cP+kb
+ V2OQ==
+X-Gm-Message-State: AOJu0YwGSgPoDZm1P5xLs30EGKdb2O4thZH0lswh3q6SjCOsYDmONdSf
+ n0tFizkfzuPvHDD4vPFCW8ke4vJVytfxHO5RMdUq35tU/V1Fvni1IIlF2fmrYvi0TcA=
+X-Gm-Gg: AR+sD103RM0aQwrTEi4kryXFybIVBrYQ8nPZIE5WNjmcCu6yRLKbRATNP8t1a7IASxB
+ hXjbSGjf18hOHCpsQHMD5v5cOVgsJklVh0rGtaUnG63kE7zKEJamnca2KFUXcLbzNBsT5JE+3EU
+ a3Fceg6D5ulKi30fyQ9J5T0KBXZjsisqV2cmSOpvayhg0SLeT6pLctnJTGgKAVMm6P/nzHwj+7E
+ PXGaIk5m1H6zIpOo7IvlO+G2kLCNuJqe62Cc2bGGfWUvnLlaGbRtMf5oy4MxPVp88NSW+qhtZDm
+ R3Nnz+v2FZxszmbiQMdhcZYuZEtcQAu8+CObf9hK7W7G/OMbWcLwzKae9Gx4I3iMRobnsc1epEY
+ DjWLzrGgKcomh2hXqOcxdAK1lASw2O6YwJEmBeWIXnNmw1zWSt3xPdiXVIFh8LBEX+vikMDoM4O
+ tHK9gukpGW4n44dDysTG7dklT4imii7/aVmAuu65RBEoytaj8tBb/xvEnDtrUYAhWH
+X-Received: by 2002:a05:6820:2d09:b0:6b0:4c98:8e2b with SMTP id
+ 006d021491bc7-6b11dd5404fmr6251500eaf.9.1787054003233; 
+ Tue, 18 Aug 2026 04:53:23 -0700 (PDT)
 Received: from colazcyASUSlaptop ([104.28.213.39])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-45f226904b6sm3039002fac.0.2026.08.18.04.53.11
+ 586e51a60fabf-45f226904b6sm3039002fac.0.2026.08.18.04.53.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 04:53:14 -0700 (PDT)
+ Tue, 18 Aug 2026 04:53:22 -0700 (PDT)
 From: Chengyang Zhu <colazcyg@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com,
 	Chengyang Zhu <colazcyg@gmail.com>
-Subject: [PATCH RFC v2 0/1] the org.qemu.Display1.UIInfo interface design
-Date: Tue, 18 Aug 2026 19:52:57 +0800
-Message-ID: <20260818115258.429605-1-colazcyg@gmail.com>
+Subject: [PATCH RFC v2 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
+Date: Tue, 18 Aug 2026 19:52:58 +0800
+Message-ID: <20260818115258.429605-2-colazcyg@gmail.com>
 X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260818115258.429605-1-colazcyg@gmail.com>
+References: <20260818115258.429605-1-colazcyg@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=colazcyg@gmail.com; helo=mail-oo1-xc2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=colazcyg@gmail.com; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -97,35 +100,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the `SetUIInfo` method cannot set a refresh rate.
+Currently, the SetUIInfo method cannot set a refresh rate.
 Simply adding a refresh_rate argument would break the method signature.
 
-This RFC adds the `UIInfo` interface containing
+This patch adds the UIInfo interface containing
   * properties as staged display settings.
-  * the method Apply applying staged settings.
-  * the method Reload reloading settings from the console.
+  * the method `Apply` applying staged settings.
+  * the method `Reload` reloading settings from the console.
 
-This patch needs further discussion on:
-  * public API
-  * necessary test suite
-
-Changes since v1:
-  * redesigned public API
-
-Test results:
-  * qemu:qtest-x86_64/dbus-display-test passed
-  * qemu:qtest-x86_64/dbus-vmstate-test passed
-  * qemu:qtest-x86_64/dbus-vnc-test SKIP
-  * manually created a virtual machine
-    and successfully set its refresh rate and resolution via `UIInfo`
-
-Chengyang Zhu (1):
-  ui/dbus: add org.qemu.Display1.UIInfo interface
-
+Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
+---
  ui/dbus-console.c    | 86 ++++++++++++++++++++++++++++++++++++++++++++
  ui/dbus-display1.xml | 32 +++++++++++++++++
  2 files changed, 118 insertions(+)
 
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index e1ac06814b..dc5c991f80 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
+     guint last_x;
+     guint last_y;
+     Notifier mouse_mode_notifier;
++
++    QemuDBusDisplay1UIInfo *iface_ui_info;
+ };
+ 
+ G_DEFINE_TYPE(DBusDisplayConsole,
+@@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
+     qemu_input_led_notifier_remove(&ddc->led_notifier);
+     qemu_console_unregister_listener(&ddc->dcl);
+     qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
++    g_clear_object(&ddc->iface_ui_info);
+     g_clear_object(&ddc->iface_touch);
+     g_clear_object(&ddc->iface_mouse);
+     g_clear_object(&ddc->iface_kbd);
+@@ -528,6 +531,80 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
+     dbus_mouse_update_is_absolute(ddc);
+ }
+ 
++static gboolean
++dbus_ui_info_reload(DBusDisplayConsole *ddc,
++                    GDBusMethodInvocation *invocation)
++{
++    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
++        g_dbus_method_invocation_return_error(invocation,
++                                              DBUS_DISPLAY_ERROR,
++                                              DBUS_DISPLAY_ERROR_UNSUPPORTED,
++                                              "UIInfo is not supported");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    QemuUIInfo ui_info = *qemu_console_get_ui_info(ddc->dcl.con);
++
++    g_object_set(ddc->iface_ui_info,
++                "width-mm", ui_info.width_mm,
++                "height-mm", ui_info.height_mm,
++                "xoff", ui_info.xoff,
++                "yoff", ui_info.yoff,
++                "width", ui_info.width,
++                "height", ui_info.height,
++                "refresh-rate", ui_info.refresh_rate,
++                NULL);
++
++    qemu_dbus_display1_uiinfo_complete_reload(ddc->iface_ui_info, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++dbus_ui_info_apply(DBusDisplayConsole *ddc,
++                   GDBusMethodInvocation *invocation)
++{
++    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
++        g_dbus_method_invocation_return_error(invocation,
++                                              DBUS_DISPLAY_ERROR,
++                                              DBUS_DISPLAY_ERROR_UNSUPPORTED,
++                                              "UIInfo is not supported");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    guint width_mm;
++    guint height_mm;
++    gint xoff;
++    gint yoff;
++    guint width;
++    guint height;
++    guint refresh_rate;
++
++    g_object_get(G_OBJECT(ddc->iface_ui_info),
++                "width-mm", &width_mm,
++                "height-mm", &height_mm,
++                "xoff", &xoff,
++                "yoff", &yoff,
++                "width", &width,
++                "height", &height,
++                "refresh-rate", &refresh_rate,
++                NULL);
++
++    QemuUIInfo ui_info = {
++        .width_mm = (uint16_t)width_mm,
++        .height_mm = (uint16_t)height_mm,
++        .xoff = (int)xoff,
++        .yoff = (int)yoff,
++        .width = (uint32_t)width,
++        .height = (uint32_t)height,
++        .refresh_rate = (uint32_t)refresh_rate
++    };
++
++    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
++    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocation);
++
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
+ int dbus_display_console_get_index(DBusDisplayConsole *ddc)
+ {
+     return qemu_console_get_index(ddc->dcl.con);
+@@ -550,6 +627,7 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
+         "org.qemu.Display1.Keyboard",
+         "org.qemu.Display1.Mouse",
+         "org.qemu.Display1.MultiTouch",
++        "org.qemu.Display1.UIInfo",
+         NULL
+     };
+ 
+@@ -626,5 +704,13 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
+     qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+     dbus_mouse_update_is_absolute(ddc);
+ 
++    ddc->iface_ui_info = qemu_dbus_display1_uiinfo_skeleton_new();
++    g_object_connect(ddc->iface_ui_info,
++        "swapped-signal::handle-reload", dbus_ui_info_reload, ddc,
++        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
++        NULL);
++    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
++        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
++
+     return ddc;
+ }
+diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
+index d96bae2ed6..a766fd0862 100644
+--- a/ui/dbus-display1.xml
++++ b/ui/dbus-display1.xml
+@@ -1159,4 +1159,36 @@
+     -->
+     <property name="Encoding" type="s" access="read"/>
+   </interface>
++
++  <!--
++      org.qemu.Display1.UIInfo:
++
++        WidthMm: the physical display width in millimeters.
++        HeightMm: the physical display height in millimeters.
++        XOff: horizontal offset, in pixels.
++        YOff: vertical offset, in pixels.
++        Width: console width, in pixels.
++        Height: console height, in pixels.
++        RefreshRate: display refresh rate, in millihertz.
++
++      Reload:
++        Set the staged properties to the state of the display.
++      Apply:
++        Apply the staged properties to the display.
++  -->
++  <interface name="org.qemu.Display1.UIInfo">
++    <property name="WidthMm" type="q" access="readwrite"/>
++    <property name="HeightMm" type="q" access="readwrite"/>
++    <property name="XOff" type="i" access="readwrite"/>
++    <property name="YOff" type="i" access="readwrite"/>
++    <property name="Width" type="u" access="readwrite"/>
++    <property name="Height" type="u" access="readwrite"/>
++    <property name="RefreshRate" type="u" access="readwrite"/>
++
++    <method name="Reload">
++    </method>
++
++    <method name="Apply">
++    </method>
++  </interface>
+ </node>
 -- 
 2.55.0
 
