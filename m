@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF93C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC840C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCS-0007O3-CA; Tue, 18 Aug 2026 13:02:08 -0400
+	id 1wwNCW-0007Pi-M4; Tue, 18 Aug 2026 13:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCQ-0007Mq-Gs
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:06 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1wwNCU-0007Oe-8E
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:10 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCO-0004dd-AN
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:05 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-84862b0d5aeso173311b3a.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:03 -0700 (PDT)
+ id 1wwNCS-0004gC-QJ
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:09 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-84e84a6c4bfso1388054b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072523; x=1787677323; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=SWiOSCQHprs0gfSUIQ9TNVGn1jj3jaoW2kL+5yWHbRk=;
- b=IaGyoolHKsXKFc/1Q9WmSveLqJleLljPqJhcptWg01WPjx+1k62xdB1InjlyrLT3EV
- 9CYWOlP0c8kVc1xxIAirQRXupDKpyRdlwQDs1Rwj+WR3bhNnlNAqBitM2eSgiBsMujDt
- QbHrphtYN25Vf3i7MgKTgSWlEkL+Ven54CYrM+qAmLNKQCeTn0WQGBDWPZfp4x6sY9XQ
- CyvKiko0RKT6T38qsypcIizk6aLDAgpm11WhF5L0IVwqScbbmE7YZtln5wKXNrpLwVDp
- WTB0VZonYw+Po+ju1b4CRHCTXV0dcAnomh79/LpUAHbe55m59vLvlRhQfSmthuFr2AG+
- WUsg==
+ d=linaro.org; s=google; t=1787072527; x=1787677327; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=z0O2HTR3sNOKW6M0XOX2OWkfkppjEUkdIUvOoj0R6vo=;
+ b=eRo1KnhF5CpYxJff81M/GzvmZE5Zbhpx9Ctf0FxeU5RwzoDvbOEJnhZK28hEpUw379
+ ejMJwMKSoNnq45dnJJn4uaj+D271BZ/Dmzu3mjErP3if59b4sGLmSPND1u7kWx9vYEKn
+ ZlNSV2IFJ+gp99CUrr+67zNMt6++RafokEw0pNcJse1I8LHJLbgJwQFTbR8YqBDzHCpR
+ yxZbzozPRkMSo8Fe/w+rGE2NWd2NSY919i4iZf5BPk8NRwdUhP8qJmSbkUIyPfhicQf3
+ Pv8jindlDlyDn+ttIhpzLUUAL1D8Z+pRmRS4KAOStOvHK5Lim1M+9GVpWrcU1tG4UC5h
+ uMDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072523; x=1787677323;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SWiOSCQHprs0gfSUIQ9TNVGn1jj3jaoW2kL+5yWHbRk=;
- b=S7cnVObAoWKW/CRKtT/TNnMVgcrtVXQ90456+/AFGssiQTsK1F0bWrpaa4f77Ld70Q
- o2cjsi3ndP/5Q4vX230RETiV+QzQKtoMSmp3YekQXZzKHzN6BiMJPXdZWn+XwVA4X4x9
- CDYiTZLrcQXSUx4qi00UZUP6Fdanv9B4A2M2uLL8TlcImVnlP64I3msjcE2tzdMaKjhJ
- kS1QjAKlveGZxXRil0yjckZ53rWQ7ZlImTFiGhmlGQrq5KQXxlXRCoZC5PGqn/pUCVbn
- MF4lGqGh4FQ5xUTC1/5e51sgzAoaVO7QV0Ab8/kuOYe4AKwR6hG4tSv0/sO4kJELtKaf
- jAoQ==
-X-Gm-Message-State: AOJu0YxmCtza0Oqk2rD7cU5oR3ZSAxcsEzA2ZpWK3kVEHrcUZXVMshBZ
- oQ2NEKrIj6iL04UnPx07cZE0svSTPD/BQDRxCiyUzFgNdfJQpuFrRtu0CaSAeX5VFq5c4xDsPW0
- HRIshUuo=
-X-Gm-Gg: AR+sD12zDT7kpLyzG0Ko/xQGnD5WxVXFPOF6dwQvvWnmpU9WMjJCxYylHW+iKxBB458
- jA9hgE+J7M/lvvVnMl3l/JioFbeucwA6QaZlF/soNHf5fdPQ5QmpigjINkZJxWdKAIHANi9HRJa
- v5i61r7VstyZgz6Tn9y1aaGz7QQLxJatUOOhk9y6d2HRqrgedUYk1JN1tL8aW2BcumSBH//WY1v
- nU2JBXrIWF8K82PFKMd7b4nNaag3CQuQrb/XQnd+3P39c/ltYGQV4cNZKBla44h/jNrp0eGuaJl
- zgznon4xOgMh+R9F5/c5hFJL+6iuo54FiSluuALS0XCaoTd0+gBA7iadHXrv1/eA4ro3ou7rGxA
- qpK1ZZ6aHUkWVBbInL+MqIPzDBytFCI9CUP5Dx6rIe7q1MwNbVfKM/OWVlWWz1LwMcOfGV9nY2x
- F/8+RHkkaFtSroPafS16ckHM8CuDHN1A4VYIzGrRlzw5tCVyN5AVMZv2rt3NFuM7jbamlDCjiT2
- YNVVXgQr+HfJAJ9pu12jEPMebMPO6GAsjE=
-X-Received: by 2002:a05:6a00:448e:b0:848:42d0:bc91 with SMTP id
- d2e1a72fcca58-851b87d91a5mr14728823b3a.12.1787072522643; 
- Tue, 18 Aug 2026 10:02:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787072527; x=1787677327;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=z0O2HTR3sNOKW6M0XOX2OWkfkppjEUkdIUvOoj0R6vo=;
+ b=rFjmuxze9rlV5AyeY6VUITF3ID3/aZP2OmwCrq7umKo2lGsFGWcd6p9GcI9AiuP40j
+ ug6iK7nBdPYIq56djSzMlHfTL+yGRpL8M6qRohI1GQZGu8OaCB8JWCndu4D6+uto8nWF
+ H1t7EwAX/aQSpMHbZfFSAQBUuwj+BsZjV0C0sc0KKv9QqjXnc4uOdz01ofZYVVoiTTg3
+ L6BxFiSrzKSNcZNhX7rsDPq61xDQo1k7dYpuorwqflB6Eh1vjAJ2ZGZt4wupoVloFWWj
+ O1d9IZtr6QWWuaoC8one1tNN2NLsebpm2FnaPcAy4uavTsDk2bfnzcFw9l9J/n7HKYyr
+ U/7w==
+X-Gm-Message-State: AOJu0YwscM+59gbTmp9ols/F0ZVURN5WnutayaetwcwxVa6qkDnCib1S
+ 6REPl11U4U+woL5k44Drd1HLtPBoKPAbRWsDMgYE7gG7A2chyoqm9IgI2R/ZM/MzYe1eWAems9w
+ HLJnVYRE=
+X-Gm-Gg: AR+sD10PIm4MUwyxOAEJP3KrF5V2s4D2pD/vdvHUZyWd/gBYpUVDfAUS+MePuG7Dr3O
+ ZpRElT0WK9xV6rUjOvcPKn4dcB7R6Vh5Is0FqN3WqrsSi99QEDiNS6U0Jgu0ZxMwY6TJOEl7FsU
+ +rG+JuvbSOPvlOyFUxzeFkx6M7c6iGk1jtZ3CS5FjVQTQ6Z5rfGg81my4NpIIGW99o/MWC49/HS
+ Te6IV5CE/a+wkQiZwt+/YfoGuu4NugHs20c61esn7/Lcj5HbQbnlJ8JfW18SWPm0EZzyTWyFUo2
+ EKLXCnbjUgbPnEbH9Lofz5LmOovLhfDKpNWxNdROnIdIkjxBhb/Ot2Fd7i1MpZF8aeUU+bWu7PF
+ X/dHNanvVb3IDoFmZpaIwPN8UIGX7J/EHS5IXwm6JPjYUxd58I06zZ1T2EAKwGZIcXuYVfF0Vdc
+ DSdtZlxDScNRMSM8fr3HGyNIvrFZ5MQGhEJoSb6VFHYx7cWtl31YpqoYxxZbb9GR/9XThua+jlk
+ KJD3jlCVQzNiJEbs8Ox5tB62lbca6MZf5Q=
+X-Received: by 2002:a05:6a00:2314:b0:84f:df11:b78e with SMTP id
+ d2e1a72fcca58-851bc2351d9mr7237295b3a.2.1787072526962; 
+ Tue, 18 Aug 2026 10:02:06 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.01
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:02 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Chichkov <ilya.chichkov.dev@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 03/38] accel/tcg: Allow overlapping reads in record_save
-Date: Tue, 18 Aug 2026 10:01:20 -0700
-Message-ID: <20260818170155.1907006-4-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 07/38] tcg: Fix opcode dump for bswap
+Date: Tue, 18 Aug 2026 10:01:24 -0700
+Message-ID: <20260818170155.1907006-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+We use an array of char for bswap_flag_name, so some
+entries in the array are non-null but empty.  Check that.
 
-record_save() assumed that a target reads the bytes of an insn as a
-strictly ascending sequence of adjacent chunks, and asserted that each
-read begins exactly where the previous one ended.
-
-That assumption no longer holds for riscv.  Since f9eaa1542b
-("target/riscv: support atomic instruction fetch (Ziccif)"),
-decode_opc() loads a full aligned word whenever pc is 4-byte aligned,
-even when the insn turns out to be a 2-byte compressed one, so the
-record may already hold bytes past the end of the insn being
-translated.  When such a compressed insn sits at page offset 0xffc,
-pc_next becomes 0xffe, which is within MAX_INSN_LEN of the end of the
-page, and riscv_tr_translate_insn() probes the next insn to decide
-whether it would cross the page boundary.  That probe reads at offset
-2 while the record already covers [0,4), and the assert fires:
-
-  qemu-system-riscv32: accel/tcg/translator.c:395: record_save:
-  Assertion `offset == db->record_start + db->record_len' failed.
-
-record_save() is only reached when the insn is fetched from MMIO, so
-this is visible on boards that execute code from a region created with
-memory_region_init_io(), such as an XIP flash window mapped over a
-serial flash controller.
-
-Both sides of the collision are correct: the wide fetch is required for
-Ziccif atomicity, and the probe is required for correct fault reporting
-at a page boundary, per 00c07344fa ("target/riscv: Make translator stop
-before the end of a page").  Unlike a86d3352ab ("target/riscv: do not
-use translator_ldl in opcode_at"), where a non-translation caller had
-no business using translator_ld*, the probe here is a genuine
-translation read whose bytes must be recorded.
-
-Relax the invariant instead.  Keep requiring that a read neither moves
-backwards nor leaves a gap, but let a read overlapping the recorded
-range extend it only by the bytes past its end.
-
-Cc: qemu-stable@nongnu.org
-Fixes: f9eaa1542b ("target/riscv: support atomic instruction fetch (Ziccif)")
-Signed-off-by: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 587195bd590 ("tcg: Add flags argument to bswap opcodes")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260814142159.3800744-1-ilya.chichkov.dev@gmail.com>
 ---
- accel/tcg/translator.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ tcg/tcg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index cd7d079fe0..57daded60f 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -387,14 +387,22 @@ static void record_save(DisasContextBase *db, vaddr pc,
-      * Either the first or second page may be I/O.  If it is the second,
-      * then the first byte we need to record will be at a non-zero offset.
-      * In either case, we should not need to record but a single insn.
-+     *
-+     * A read may re-read bytes that are already recorded: a target may
-+     * fetch a whole aligned word to decode an insn (e.g. riscv Ziccif),
-+     * then probe the following insn, which lies within that same word.
-+     * Such a read extends the record only by the bytes past its end.
-      */
-     if (db->record_len == 0) {
-         db->record_start = offset;
-         db->record_len = size;
-     } else {
--        assert(offset == db->record_start + db->record_len);
--        assert(db->record_len + size <= sizeof(db->record));
--        db->record_len += size;
-+        int end = offset - db->record_start + size;
-+
-+        assert(offset >= db->record_start);
-+        assert(offset <= db->record_start + db->record_len);
-+        assert(end <= sizeof(db->record));
-+        db->record_len = MAX(db->record_len, end);
-     }
- 
-     memcpy(db->record + (offset - db->record_start), from, size);
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index db43589fa2..937d0c8fd7 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -2957,7 +2957,7 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+                     if (flags < ARRAY_SIZE(bswap_flag_name)) {
+                         name = bswap_flag_name[flags];
+                     }
+-                    if (name) {
++                    if (name && name[0]) {
+                         col += ne_fprintf(f, ",%s", name);
+                     } else {
+                         col += ne_fprintf(f, ",$0x%" TCG_PRIlx, flags);
 -- 
 2.43.0
 
