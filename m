@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B019C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260CCC5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJzc-0007ZR-Oz; Tue, 18 Aug 2026 09:36:42 -0400
+	id 1wwK09-00084k-ME; Tue, 18 Aug 2026 09:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJzR-0007Rj-7N
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wwJzq-0007qX-Rz
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJzO-0000jO-4Z
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:28 -0400
+ id 1wwJzp-0000l0-9y
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787060185;
+ s=mimecast20190719; t=1787060212;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7LpeINFUNTZ5koNm091QNo6sDDf+Ig7OOqg3hQ3pSY8=;
- b=MWGC/x+KLvaVS+dCboJmnL2qkHm1gr087U/pQovvMD9w0DGnFowyGkxnKK/bS7644sHLPN
- /1ECYSAqUiQwBlQv2AxQs2Q9jLW9RGMPRgObsvX3/yHu4C8x107Ukx2OfURaSaQo/msOMF
- qwtsDVpQgeAyjaEnGso6fF8KHIQXZBg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=tH/IVOUnn1QB2ho+AwTZr7qddaicqiut7xSXNWVfk8U=;
+ b=U8lcrhHpJkl635ojj1E8cgW9LsG4c9OppXYxQA1l7cxXxprFQQ3K2051ynvTmVYoKzA6wE
+ 0bTAzxGNXJ10h/F8A2xHXAP1c0OicYZ2eM96YFul0mWY4sQRrKy+YuXBLDawBc3UEndqCM
+ yVrue5SRSmNPa8cSB5WqzXnI/ifr43w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-Vb6me6ruP5qP4J9Ah4neLA-1; Tue,
- 18 Aug 2026 09:36:22 -0400
-X-MC-Unique: Vb6me6ruP5qP4J9Ah4neLA-1
-X-Mimecast-MFC-AGG-ID: Vb6me6ruP5qP4J9Ah4neLA_1787060180
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-btIdfDvbP4ydOPAob3vl6w-1; Tue,
+ 18 Aug 2026 09:36:49 -0400
+X-MC-Unique: btIdfDvbP4ydOPAob3vl6w-1
+X-Mimecast-MFC-AGG-ID: btIdfDvbP4ydOPAob3vl6w_1787060208
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3EA61800D88; Tue, 18 Aug 2026 13:36:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBF741955E79; Tue, 18 Aug 2026 13:36:47 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B4FCD1953948; Tue, 18 Aug 2026 13:36:07 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DED8E1800577; Tue, 18 Aug 2026 13:36:46 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 17:29:33 +0400
-Subject: [PATCH v3 67/74] qdev: introduce typed array PropertyInfos
+Date: Tue, 18 Aug 2026 17:29:35 +0400
+Subject: [PATCH v3 69/74] qdev: remove deprecated PropertyInfo.type and
+ .enum_table fields
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-67-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-69-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,34 +66,34 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14553;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5602;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=DNY5OZOHcpCb+SjkUHihp/hTEf88oXTox51j/sLmNQc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhF90B4LfSu4VFnZX03P4wkiaDdQwaMFQli8a0
- pkKdbYNZ5uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRfdAAKCRDa6OEJdZac
- 5ZwGEACxzYGc3Tjg6aOkTUZAiEbAJjDgT8UEZbs81Wa+fAXK5fYYiG4qfXbhLpQC5YT1qnM0THi
- tXF96DkagUzeWbrbnqQ8SBLDr++47lqgUar7B5M7fSIeYEtpDBU9B+9uoCjVX8ExF9wRNJ4cw5h
- zcfXKW6D33EknGH1Pl0naSoRnXpB2y4GwGC+9ERt/zWuALZR3yKECDkNk1/Lu8Thp7LyfG6MA17
- y6RqlJuzGo83Bh46+y+KsSDXjOrofld4ARFFcGZt7fUbqBKqRn27dLBLOf+YjXZS4qYsl8rVai3
- DvGxDFd9R7IKDtCIZycsdiAm+DMa23Pkt3mIAf4uDCKQusKIoezUuy3Twv2dhtrA5d/hG8k/A81
- lrMSpgeWvjzu+uTIbMuwbHa+Vu+bL22hfqeXIRMrE0Lmm1gCQk0xSi3s7KEvo+Sm1glYq72XAuO
- tNoc/CMk3SNLz5qmWZQAO5N4Y6o351AeLnMnZ+Fm3H1qac1kzew5YFs/q2+JjGo5M/qjzuAJtvq
- I0h0hk/i8cvJtECUWCNDSg9F78LNIvwlbYOJQaje0qXOfrp3LMxXrylxZb0HbK6v9D/jxLdd/0A
- LQddHYjnhcLQcF4g6PQ5k4OyX+UFDoCCKjSfn/gdpB97/f5dxnxizF/KNoUfyC6WSxp/n7sq0vi
- OpJ7TS5fXVEnEWA==
+ bh=sOu4pogNVK6NpFHufCV3RH9LgNGQmgLKUI48lJjnLyQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhF90dWdppFaDwBm3+iGMpaLyn1C2tn/h67RIq
+ pPaicntHuKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRfdAAKCRDa6OEJdZac
+ 5XeHEAClpChYW1DyMyyZiAhu3YAc2oR51wu23JnOWcELq5hnjpDQQE0KT5il4FC35Tsk1Kovaxx
+ ZG9glrM7VTHnSSectwbZ0t9tQIEmRnLS56H80uPFUdiBJ3d+uh/BFemOpUKG/p7xsDy0uBA2SAE
+ fO8x2BOJsTeJtZx3TLJ4N3BAVb/LHuP34KteqdtoKbody4YVkZR+cUR5l/XJ48ad1SORtivVXdU
+ XIsM9m0/i7C2SQ4VYkA6EUy1X/jpBLP23ZASnaPUe3gKIjjCISo6+N5pV0Rdf7AhIU0Me3VQ7Y6
+ x0b7nYo+VqGkED3bGBmDFZV6mJ6K3dS1Kh8lc5FAjWaBSn80bfz6WSS1ZScmnX591vUqdeIe7aM
+ uWPGJ1aMTSNX9m+0kAQHCMAnpY7xUVQNd8xwHOk7EPb6Mfbkljag+AK1QRDsnVJaoYLHtK9Y78Q
+ 7tWDn/SNvzWvEx8pmW7ZIXZrtwM190SpWGk91GymgurLfG1UvE+71i+xUTF/IcQ+t1B7P52ytA2
+ f2/DnpBQPeNRZsyNplOtJskfkj3qQTc4TkRA6RJKAB67i3S60mRfVJ1uqx5qPolMk3rEnRYzsB7
+ tHk9Py13zGJain6gx2gOXcr7jvSgsmBS1QTUcNQljMey2KmRfHLt5rIF5KUjgweXDn4WsQVqENW
+ unUJ1gUCpYIFYIA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,352 +109,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add element_info and element_size fields to PropertyInfo, and extend
-qdev_prop_qapi_type() to derive QAPI types for array properties via
-element_info->qapi_type->list.
+Now that all PropertyInfo definitions use .qapi_type, remove the
+legacy .type (string) and .enum_table fields from PropertyInfo, and
+the .arrayinfo/.arrayfieldsize fields from Property.
 
-Add typed list PropertyInfo definitions that replace the generic
-qdev_prop_array. Each typed list PropertyInfo knows its element type
-at compile time through the element_info and element_size fields,
-which allows the QAPI type to be derived automatically.
-
-Infrastructure changes:
-- Add prop_array_info() and prop_array_elem_size() helpers that
-  prefer the new element_info/element_size fields with fallback to
-  the old arrayinfo/arrayfieldsize fields for compatibility
-- Make get_prop_array, set_prop_array, release_prop_array, and
-  default_prop_array non-static so they can be used by
-  DEFINE_PROP_ARRAY_INFO in other translation units
-- Add DEFINE_PROP_ARRAY_INFO macro in qdev-prop-internal.h
-
-The array of links needs special care for its "full type name" to follow
-the "link<TYPE>List" pattern used by link properties ("link<TYPE>").
-
-The old qdev_prop_array and DEFINE_PROP_ARRAY macro are preserved
-for compatibility; they will be replaced in the next patch.
+Remove fallback branches in qdev_property_add_static() and
+qdev_class_add_property() that used object_property_add() with
+prop->info->type: these always use the QAPI-aware registration
+path now. Simplify qdev_propinfo_enum_lookup(), prop_array_info()
+and prop_array_elem_size() to use the new fields directly.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/qdev-prop-internal.h             |  18 ++++++
- hw/core/qdev-properties-system.c         |   5 ++
- hw/core/qdev-properties.c                | 103 ++++++++++++++++++++++++-------
- include/hw/core/qdev-properties-system.h |   2 +
- include/hw/core/qdev-properties.h        |   8 +++
- 5 files changed, 115 insertions(+), 21 deletions(-)
+ hw/core/qdev-properties.c         | 58 ++++++++++++---------------------------
+ include/hw/core/qdev-properties.h |  4 ---
+ 2 files changed, 17 insertions(+), 45 deletions(-)
 
-diff --git a/hw/core/qdev-prop-internal.h b/hw/core/qdev-prop-internal.h
-index c190b7b88cf4..b9d9812346d1 100644
---- a/hw/core/qdev-prop-internal.h
-+++ b/hw/core/qdev-prop-internal.h
-@@ -27,4 +27,22 @@ void qdev_propinfo_get_int32(Object *obj, Visitor *v, const char *name,
- void qdev_propinfo_get_size32(Object *obj, Visitor *v, const char *name,
-                               void *opaque, Error **errp);
- 
-+void get_prop_array(Object *obj, Visitor *v, const char *name,
-+                    void *opaque, Error **errp);
-+void set_prop_array(Object *obj, Visitor *v, const char *name,
-+                    void *opaque, Error **errp);
-+void release_prop_array(Object *obj, const char *name, void *opaque);
-+void default_prop_array(ObjectProperty *op, const Property *prop);
-+
-+/* .qapi_type is derived from element_info->qapi_type->list by qdev_prop_qapi_type() */
-+#define DEFINE_PROP_ARRAY_INFO(_elem_prop_info, _elem_type) \
-+    {                                                       \
-+        .element_info = &(_elem_prop_info),                 \
-+        .element_size = sizeof(_elem_type),                 \
-+        .get = get_prop_array,                              \
-+        .set = set_prop_array,                              \
-+        .release = release_prop_array,                      \
-+        .set_default_value = default_prop_array,            \
-+    }
-+
- #endif
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 8819a9a0b748..ad4a00f776e6 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -484,6 +484,8 @@ const PropertyInfo qdev_prop_netdev = {
-     .set   = set_netdev,
- };
- 
-+const PropertyInfo qdev_prop_netdev_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_netdev, NICPeers);
- 
- /* --- audiodev --- */
- static void get_audiodev(Object *obj, Visitor *v, const char* name,
-@@ -822,6 +824,9 @@ const PropertyInfo qdev_prop_reserved_region = {
-     .set   = set_reserved_region,
- };
- 
-+const PropertyInfo qdev_prop_reserved_region_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_reserved_region, ReservedRegion);
-+
- /* --- pci address --- */
- 
- /*
 diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index c2980c36afa2..a9ca8e4a03db 100644
+index b5a9eb97e7dd..585982f60f5a 100644
 --- a/hw/core/qdev-properties.c
 +++ b/hw/core/qdev-properties.c
-@@ -665,6 +665,22 @@ struct ArrayElementList {
-     void *value;
- };
+@@ -103,11 +103,8 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
  
-+static const PropertyInfo *prop_array_info(const Property *prop)
-+{
-+    if (prop->info->element_info) {
-+        return prop->info->element_info;
-+    }
-+    return prop->arrayinfo;
-+}
-+
-+static int prop_array_elem_size(const Property *prop)
-+{
-+    if (prop->info->element_size) {
-+        return prop->info->element_size;
-+    }
-+    return prop->arrayfieldsize;
-+}
-+
+ const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
+ {
+-    if (info->qapi_type) {
+-        assert(info->qapi_type->lookup);
+-        return info->qapi_type->lookup;
+-    }
+-    return info->enum_table;
++    assert(info->qapi_type->lookup);
++    return info->qapi_type->lookup;
+ }
+ 
+ void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
+@@ -667,18 +664,12 @@ struct ArrayElementList {
+ 
+ static const PropertyInfo *prop_array_info(const Property *prop)
+ {
+-    if (prop->info->element_info) {
+-        return prop->info->element_info;
+-    }
+-    return prop->arrayinfo;
++    return prop->info->element_info;
+ }
+ 
+ static int prop_array_elem_size(const Property *prop)
+ {
+-    if (prop->info->element_size) {
+-        return prop->info->element_size;
+-    }
+-    return prop->arrayfieldsize;
++    return prop->info->element_size;
+ }
+ 
  /*
-  * Given an array property @parent_prop in @obj, return a Property for a
-  * specific element of the array. Arrays are backed by an uint32_t length field
-@@ -674,7 +690,7 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
-                                 const char *name, char *elem)
- {
-     return (Property) {
--        .info = parent_prop->arrayinfo,
-+        .info = prop_array_info(parent_prop),
-         .name = name,
-         /*
-          * This ugly piece of pointer arithmetic sets up the offset so
-@@ -692,19 +708,21 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
-  * underlying element's property release hook for each element and free the
-  * property array.
-  */
--static void release_prop_array(Object *obj, const char *name, void *opaque)
-+void release_prop_array(Object *obj, const char *name, void *opaque)
- {
-     const Property *prop = opaque;
-     uint32_t *alenptr = object_field_prop_ptr(obj, prop);
-     void **arrayptr = (void *)obj + prop->arrayoffset;
-     char *elem = *arrayptr;
-     int i;
-+    const PropertyInfo *elem_info = prop_array_info(prop);
-+    int elem_size = prop_array_elem_size(prop);
+@@ -1222,20 +1213,13 @@ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+     const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
  
--    if (prop->arrayinfo->release) {
-+    if (elem_info->release) {
-         for (i = 0; i < *alenptr; i++) {
-             Property elem_prop = array_elem_prop(obj, prop, name, elem);
--            prop->arrayinfo->release(obj, NULL, &elem_prop);
--            elem += prop->arrayfieldsize;
-+            elem_info->release(obj, NULL, &elem_prop);
-+            elem += elem_size;
-         }
+     assert(!prop->info->create);
++    assert(qapi_type);
+ 
+-    if (qapi_type) {
+-        op = object_property_add_qapi(obj, prop->name, qapi_type,
+-                                      field_prop_getter(prop->info),
+-                                      field_prop_setter(prop->info),
+-                                      prop->info->release,
+-                                      (Property *)prop);
+-    } else {
+-        op = object_property_add(obj, prop->name, prop->info->type,
+-                                 field_prop_getter(prop->info),
+-                                 field_prop_setter(prop->info),
+-                                 prop->info->release,
+-                                 (Property *)prop);
+-    }
++    op = object_property_add_qapi(obj, prop->name, qapi_type,
++                                  field_prop_getter(prop->info),
++                                  field_prop_setter(prop->info),
++                                  prop->info->release,
++                                  (Property *)prop);
+ 
+     object_property_set_description(obj, prop->name,
+                                     prop->info->description);
+@@ -1259,21 +1243,13 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+     } else {
+         const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
+ 
+-        if (qapi_type) {
+-            op = object_class_property_add_qapi(oc,
+-                                               name, qapi_type,
+-                                               field_prop_getter(prop->info),
+-                                               field_prop_setter(prop->info),
+-                                               prop->info->release,
+-                                               (Property *)prop);
+-        } else {
+-            op = object_class_property_add(oc,
+-                                           name, prop->info->type,
+-                                           field_prop_getter(prop->info),
+-                                           field_prop_setter(prop->info),
+-                                           prop->info->release,
+-                                           (Property *)prop);
+-        }
++        assert(qapi_type);
++        op = object_class_property_add_qapi(oc,
++                                            name, qapi_type,
++                                            field_prop_getter(prop->info),
++                                            field_prop_setter(prop->info),
++                                            prop->info->release,
++                                            (Property *)prop);
      }
- 
-@@ -718,8 +736,8 @@ static void release_prop_array(Object *obj, const char *name, void *opaque)
-  * (a pointer to which is stored in the additional field described by
-  * prop->arrayoffset).
-  */
--static void set_prop_array(Object *obj, Visitor *v, const char *name,
--                           void *opaque, Error **errp)
-+void set_prop_array(Object *obj, Visitor *v, const char *name,
-+                    void *opaque, Error **errp)
- {
-     ERRP_GUARD();
-     const Property *prop = opaque;
-@@ -727,6 +745,8 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
-     void **arrayptr = (void *)obj + prop->arrayoffset;
-     ArrayElementList *list, *elem, *next;
-     const size_t size = sizeof(*list);
-+    const PropertyInfo *elem_info = prop_array_info(prop);
-+    int elem_size = prop_array_elem_size(prop);
-     char *elemptr;
-     bool ok = true;
- 
-@@ -745,9 +765,9 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
-     while (elem) {
-         Property elem_prop;
- 
--        elem->value = g_malloc0(prop->arrayfieldsize);
-+        elem->value = g_malloc0(elem_size);
-         elem_prop = array_elem_prop(obj, prop, name, elem->value);
--        prop->arrayinfo->set(obj, v, NULL, &elem_prop, errp);
-+        elem_info->set(obj, v, NULL, &elem_prop, errp);
-         if (*errp) {
-             ok = false;
-             goto out_obj;
-@@ -769,8 +789,8 @@ out_obj:
-         for (elem = list; elem; elem = next) {
-             Property elem_prop = array_elem_prop(obj, prop, name,
-                                                  elem->value);
--            if (prop->arrayinfo->release) {
--                prop->arrayinfo->release(obj, NULL, &elem_prop);
-+            if (elem_info->release) {
-+                elem_info->release(obj, NULL, &elem_prop);
-             }
-             next = elem->next;
-             g_free(elem->value);
-@@ -783,19 +803,19 @@ out_obj:
-      * Now that we know how big the array has to be, move the data over to a
-      * linear array and free the temporary list.
-      */
--    *arrayptr = g_malloc_n(*alenptr, prop->arrayfieldsize);
-+    *arrayptr = g_malloc_n(*alenptr, elem_size);
-     elemptr = *arrayptr;
-     for (elem = list; elem; elem = next) {
--        memcpy(elemptr, elem->value, prop->arrayfieldsize);
--        elemptr += prop->arrayfieldsize;
-+        memcpy(elemptr, elem->value, elem_size);
-+        elemptr += elem_size;
-         next = elem->next;
-         g_free(elem->value);
-         g_free(elem);
-     }
- }
- 
--static void get_prop_array(Object *obj, Visitor *v, const char *name,
--                           void *opaque, Error **errp)
-+void get_prop_array(Object *obj, Visitor *v, const char *name,
-+                    void *opaque, Error **errp)
- {
-     ERRP_GUARD();
-     const Property *prop = opaque;
-@@ -805,6 +825,8 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
-     ArrayElementList *list = NULL, *elem;
-     ArrayElementList **tail = &list;
-     const size_t size = sizeof(*list);
-+    const PropertyInfo *elem_info = prop_array_info(prop);
-+    int elem_size = prop_array_elem_size(prop);
-     int i;
-     bool ok;
- 
-@@ -812,7 +834,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
-     for (i = 0; i < *alenptr; i++) {
-         elem = g_new0(ArrayElementList, 1);
-         elem->value = elemptr;
--        elemptr += prop->arrayfieldsize;
-+        elemptr += elem_size;
- 
-         *tail = elem;
-         tail = &elem->next;
-@@ -825,7 +847,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
-     elem = list;
-     while (elem) {
-         Property elem_prop = array_elem_prop(obj, prop, name, elem->value);
--        prop->arrayinfo->get(obj, v, NULL, &elem_prop, errp);
-+        elem_info->get(obj, v, NULL, &elem_prop, errp);
-         if (*errp) {
-             goto out_obj;
-         }
-@@ -847,7 +869,7 @@ out_obj:
-     }
- }
- 
--static void default_prop_array(ObjectProperty *op, const Property *prop)
-+void default_prop_array(ObjectProperty *op, const Property *prop)
- {
-     object_property_set_default_list(op);
- }
-@@ -860,6 +882,38 @@ const PropertyInfo qdev_prop_array = {
-     .set_default_value = default_prop_array,
- };
- 
-+const PropertyInfo qdev_prop_uint8_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint8, uint8_t);
-+const PropertyInfo qdev_prop_uint16_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint16, uint16_t);
-+const PropertyInfo qdev_prop_uint32_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint32, uint32_t);
-+const PropertyInfo qdev_prop_uint64_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint64, uint64_t);
-+const PropertyInfo qdev_prop_string_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_string, char *);
-+
-+static ObjectProperty *create_link_list_property(ObjectClass *oc,
-+                                                  const char *name,
-+                                                  const Property *prop)
-+{
-+    g_autofree char *full_type = g_strdup_printf("link<%s>List", prop->link_type);
-+
-+    return object_class_property_add(oc, name, full_type,
-+                                     get_prop_array, set_prop_array,
-+                                     release_prop_array, (Property *)prop);
-+}
-+
-+const PropertyInfo qdev_prop_link_list = {
-+    .element_info = &qdev_prop_link,
-+    .element_size = sizeof(void *),
-+    .create = create_link_list_property,
-+    .get = get_prop_array,
-+    .set = set_prop_array,
-+    .release = release_prop_array,
-+    .set_default_value = default_prop_array,
-+};
-+
- /* --- public helpers --- */
- 
- static const Property *qdev_prop_walk(DeviceClass *cls, const char *name)
-@@ -1158,8 +1212,15 @@ const PropertyInfo qdev_prop_link = {
- 
- static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
- {
--    /* this will be later extended to cope with QAPI array properties */
--    return prop->info->qapi_type;
-+    if (prop->info->qapi_type) {
-+        return prop->info->qapi_type;
-+    }
-+    if (prop->info->element_info) {
-+        assert(prop->info->element_info->qapi_type);
-+        assert(prop->info->element_info->qapi_type->list);
-+        return prop->info->element_info->qapi_type->list;
-+    }
-+    return NULL;
- }
- 
- void qdev_property_add_static(DeviceState *dev, const Property *prop)
-diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
-index 2cbea16d615e..819dce7d5e5d 100644
---- a/include/hw/core/qdev-properties-system.h
-+++ b/include/hw/core/qdev-properties-system.h
-@@ -23,6 +23,8 @@ extern const PropertyInfo qdev_prop_fdc_drive_type;
- extern const PropertyInfo qdev_prop_drive;
- extern const PropertyInfo qdev_prop_drive_iothread;
- extern const PropertyInfo qdev_prop_netdev;
-+extern const PropertyInfo qdev_prop_netdev_list;
-+extern const PropertyInfo qdev_prop_reserved_region_list;
- extern const PropertyInfo qdev_prop_pci_devfn;
- extern const PropertyInfo qdev_prop_blocksize;
- extern const PropertyInfo qdev_prop_pci_host_devaddr;
+     if (prop->set_default) {
+         prop->info->set_default_value(op, prop);
 diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index 1ea2ba66bb37..0c067170079d 100644
+index 39f95ce7a3c6..2267e734d1fd 100644
 --- a/include/hw/core/qdev-properties.h
 +++ b/include/hw/core/qdev-properties.h
-@@ -35,6 +35,8 @@ struct PropertyInfo {
-     const char *description;
-     const QEnumLookup *enum_table;
-     const QAPITypeInfo *qapi_type;
-+    const struct PropertyInfo *element_info;
-+    int element_size;
-     bool realized_set_allowed; /* allow setting property on realized device */
-     char *(*print)(Object *obj, const Property *prop);
-     void (*set_default_value)(ObjectProperty *op, const Property *prop);
-@@ -75,7 +77,13 @@ extern const PropertyInfo qdev_prop_string;
- extern const PropertyInfo qdev_prop_on_off_auto;
- extern const PropertyInfo qdev_prop_size32;
- extern const PropertyInfo qdev_prop_array;
-+extern const PropertyInfo qdev_prop_uint8_list;
-+extern const PropertyInfo qdev_prop_uint16_list;
-+extern const PropertyInfo qdev_prop_uint32_list;
-+extern const PropertyInfo qdev_prop_uint64_list;
-+extern const PropertyInfo qdev_prop_string_list;
- extern const PropertyInfo qdev_prop_link;
-+extern const PropertyInfo qdev_prop_link_list;
+@@ -23,17 +23,13 @@ struct Property {
+         int64_t i;
+         uint64_t u;
+     } defval;
+-    const PropertyInfo *arrayinfo;
+     int          arrayoffset;
+-    int          arrayfieldsize;
+     uint8_t      bitnr;
+     bool         set_default;
+ };
  
- #define DEFINE_PROP(_name, _state, _field, _prop, _type, ...) {  \
-         .name      = (_name),                                    \
+ struct PropertyInfo {
+-    const char *type;
+     const char *description;
+-    const QEnumLookup *enum_table;
+     const QAPITypeInfo *qapi_type;
+     const struct PropertyInfo *element_info;
+     int element_size;
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
