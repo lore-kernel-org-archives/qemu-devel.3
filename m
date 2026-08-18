@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED22BC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B511C5DF70
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHt8-0001CG-AZ; Tue, 18 Aug 2026 07:21:50 -0400
+	id 1wwHtT-0001fr-PV; Tue, 18 Aug 2026 07:22:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHt5-00018x-4N
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:21:47 -0400
+ id 1wwHtN-0001b6-NE
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:22:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHt3-0006vL-Nq
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:21:46 -0400
+ id 1wwHtL-0006xQ-TB
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:22:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787052105;
+ s=mimecast20190719; t=1787052123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=41+zTX9PYewEXCgoj+8i1yGWshCEvT30KUKjAlCzF0c=;
- b=KH1T46EYesMMLkewW6Pivi0kR+VmXQiEFUsZkebKEEkKiLMLEwb2SCem5UXipyRqKgU5qA
- WNUS5Hs11kP4M+L+ft7UaPDcy3uVzY8tO9gP881bqU+S6ThCdwotyIb0CES5yRGCwuNUWO
- 10ABet/1F8pl3a3n9+jPov5TyH9bS4E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2y7ZoLqrQvj5JiO96UdrTHJb4VNDOERoPvd/37XGTss=;
+ b=BVZXoYbnFbTypHVoQtQ91m78ejsI5sxmBI7nkgdAqNi5ITjddhknL4pP52H4kmqecUhQXT
+ qXo5YMT34FSp2WaAS9ruDPTTR4XfeSELPR/KKB679XDMuANvEFmdPlmrzlfh0wai5bg+wm
+ A3lrbvIiBnwXR8AeqOiqRPwvD4t21Nw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-SCPr_m96OrqVDVyMjOLvtw-1; Tue,
- 18 Aug 2026 07:21:40 -0400
-X-MC-Unique: SCPr_m96OrqVDVyMjOLvtw-1
-X-Mimecast-MFC-AGG-ID: SCPr_m96OrqVDVyMjOLvtw_1787052099
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-zYNRnFPtPz6aRNxuyHaRig-1; Tue,
+ 18 Aug 2026 07:21:54 -0400
+X-MC-Unique: zYNRnFPtPz6aRNxuyHaRig-1
+X-Mimecast-MFC-AGG-ID: zYNRnFPtPz6aRNxuyHaRig_1787052113
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6ABA18001DE; Tue, 18 Aug 2026 11:21:39 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EAD4F18001CD; Tue, 18 Aug 2026 11:21:52 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34C363000239; Tue, 18 Aug 2026 11:21:38 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 262A61956042; Tue, 18 Aug 2026 11:21:48 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:11:05 +0400
-Subject: [PATCH v3 38/74] target/i386: fix CPUID version properties
- typename
+Date: Tue, 18 Aug 2026 15:11:06 +0400
+Subject: [PATCH v3 39/74] ppc/pnv: fix phb-id and chip-id properties typename
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-38-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-39-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,25 +65,27 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Zhao Liu <zhao1.liu@intel.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1408;
+ Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2194;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=583Lvb2dPvaGuNJ8Al1TkNvjTaOLls8qtGDI3WwoRPE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD26Yju7JmQaDh5z+b+hhhUQwi8gmk1ScJeLF
- wnp/WuOYi+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9ugAKCRDa6OEJdZac
- 5WHpEACQczrDSymzqfLyqC/nthj7Q7FerypqMZ3/TyxeFDQ7OXgDtAKGKCO3oyAoGw1BdhuN5Vz
- J39Mg+rXbx4r6H5DQq06nHc0W9ceT+inVk7AjQPtYll7lPES7WfSjYWPJOvtvt+XWxHgWrH9MNf
- qvVLExlk40q1/lxjPGcRxQBCIgRJ/G+Lc6T0E8Fv3t3ELKxnAyhX2qJwX/P9uziUVh+NDu6InRh
- S7fDBsPDD3gFvZyZOZvyo/G65TkmgGK/tPMudtzjBHG8jXxIDT9/8dOE8UWc0itAON2qj7DUTBW
- UriZiyz3X8COxKfNRnlEp1GPUQpEUnN+RgqzvrHm+Ads7emSrUisn/zpHYCkz02IeAcu92katxH
- mhlK82aDZI/88mMIZ7wmEovavJXIRRIxk5/DQ1keQbtKKS914MYX5zPGsVyZ9om+j6FShPTgCDr
- hYl6NWrYGGIgmqjgeRSsC8DCSQcwfKKV9yDz3QzWJ67gSa6/W1iX3FEqtXwpFTh4qo6sVa9a1ea
- xfaLNwvCFmEHpvEsVHlp/ylcMzX9IeDJtB9VFPqajGTftzyuZePE/Xi+t1BWPRN9YpJQDQH1xM8
- RKPzVwLiHNDJhw3v164eZRaS0qR1T3AYOGp8bULzWa3FVa/LCWIs9vLt2hN4UCQbKoEJYTsJ6ae
- dQZ28nXi/oGJqlg==
+ bh=KuOcq19I+P/sJeJ1xp8d6ZSTzh2ez12rQGMJ3NMg204=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD26OP8NHlU//glh6Y/TiS6C4LWMdM1Mp1PE4
+ N73VUTAjYCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9ugAKCRDa6OEJdZac
+ 5Z3zD/9gWU7pfMt92jOlAo2RZAEXkHDRGKqEx2ICdvTyWX8zleuysTpxTkfShdtSN6S9ztfTciS
+ SYmWsYMEAjGrRG15PVWwYDuP2aZvFF+BEprhAXUxt7sw3/kvto08o1uF3PQsywv3rKxgYVwRVeG
+ zVLCJ3YxelFRUJM3/4iOyKZz9cGcp2NHW5on7S930p64Eondnf2iDwKtGvcnqUkEw7PTFGTzJf7
+ qhn2p97AOH4bbAnliiEuZXHZtcHDZYGErAq/s04Id3Hb6btno10wKyS4GskHdIrzmCoFPOoXO1f
+ Af0dRZmrGsDNl/6TuAdl32BIGSmbWCbi0hbH5RHmMJz/1BkzzVbb6f2ZiRc4wnxJEJKwGq3btXE
+ /jDGGwRF3eOmxGacI0rGn9CysH1ZHhE3liF5Z24uVSbgKNXXO1DUEp5Ea4Y5TvRcjLOgTDXAiIQ
+ UULsnsFFqzvfvLkgg8sze0JCc0XKq3WLJgAM+MT8/Q9XFTIyj7VKJqi6zQvAR4QzMFLmEufd3cb
+ q0Ga2ftJJBd6/NwkwPpk0I3O8FMQJrSMcttRLEMuJOZnJGTcWybz8f12RnWGL1K6udGtbo2wO8F
+ +CbnHf4Vg4/klvHf0dzS9PZ51VjpnRKIb2wzMLAiqvNF3uft2oHkAA0FB7HDY+G+BnNE0LuiqHX
+ ikrh1I8Md22i/Sw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,35 +111,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The getter and setter use visit_type_uint64, not visit_type_int.
+The getter and setter use visit_type_size, not visit_type_int.
 
-Fixes: 3e0dceaf9450 ("i386: Register most CPU properties as class properties")
+Fixes: 8ec1e4f1ef97 ("ppc/pnv: add phb-id/chip-id PnvPHB3RootBus properties")
+Fixes: b7c1750dc440 ("ppc/pnv: add phb-id/chip-id PnvPHB4RootBus properties")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/pci-host/pnv_phb3.c | 4 ++--
+ hw/pci-host/pnv_phb4.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3b30ded0cc02..567cbf04ca75 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10947,13 +10947,13 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index 4ffdb4ce31ae..0471b009ec2f 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -1164,12 +1164,12 @@ static void pnv_phb3_root_bus_class_init(ObjectClass *klass, const void *data)
+ {
+     BusClass *k = BUS_CLASS(klass);
  
-     dc->user_creatable = true;
+-    object_class_property_add(klass, "phb-id", "int",
++    object_class_property_add(klass, "phb-id", "size",
+                               pnv_phb3_root_bus_get_prop,
+                               pnv_phb3_root_bus_set_prop,
+                               NULL, NULL);
  
--    object_class_property_add(oc, "family", "int",
-+    object_class_property_add(oc, "family", "uint64",
-                               x86_cpuid_version_get_family,
-                               x86_cpuid_version_set_family, NULL, NULL);
--    object_class_property_add(oc, "model", "int",
-+    object_class_property_add(oc, "model", "uint64",
-                               x86_cpuid_version_get_model,
-                               x86_cpuid_version_set_model, NULL, NULL);
--    object_class_property_add(oc, "stepping", "int",
-+    object_class_property_add(oc, "stepping", "uint64",
-                               x86_cpuid_version_get_stepping,
-                               x86_cpuid_version_set_stepping, NULL, NULL);
-     object_class_property_add_str(oc, "vendor",
+-    object_class_property_add(klass, "chip-id", "int",
++    object_class_property_add(klass, "chip-id", "size",
+                               pnv_phb3_root_bus_get_prop,
+                               pnv_phb3_root_bus_set_prop,
+                               NULL, NULL);
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 705a5bcf074f..510edebc40de 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -1761,12 +1761,12 @@ static void pnv_phb4_root_bus_class_init(ObjectClass *klass, const void *data)
+ {
+     BusClass *k = BUS_CLASS(klass);
+ 
+-    object_class_property_add(klass, "phb-id", "int",
++    object_class_property_add(klass, "phb-id", "size",
+                               pnv_phb4_root_bus_get_prop,
+                               pnv_phb4_root_bus_set_prop,
+                               NULL, NULL);
+ 
+-    object_class_property_add(klass, "chip-id", "int",
++    object_class_property_add(klass, "chip-id", "size",
+                               pnv_phb4_root_bus_get_prop,
+                               pnv_phb4_root_bus_set_prop,
+                               NULL, NULL);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
