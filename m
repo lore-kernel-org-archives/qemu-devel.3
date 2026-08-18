@@ -4,108 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7164DC5DF84
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17409C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJRe-0005IB-CX; Tue, 18 Aug 2026 09:01:34 -0400
+	id 1wwJSY-0005SV-Sz; Tue, 18 Aug 2026 09:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwJRd-0005I3-Ms
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:01:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwJSW-0005SJ-UO
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:02:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwJRc-0003Oc-16
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:01:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787058089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=m4SZw3Ax8GvyzVw8jCVvtD9wvdck5zknYigtMdDIGeA=;
- b=dpR2Eo6sW4H1a2xgtCxt0phg8qqw9gBEkFOZlI5t98kJxW9ipT/VRPV8LpHODWnEhmEs9M
- pq1hbX6QXfbLKYI41soY5f62s4cMYhw5lENgKafulRB2QOmJHVZF8uAMAmDqTNB37pRAqm
- zBU9l3WuJtdKLHrgR9BSGJs02Y7Y2nk=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-bd50TXTLPUiP6avGX6WjZw-1; Tue, 18 Aug 2026 09:01:28 -0400
-X-MC-Unique: bd50TXTLPUiP6avGX6WjZw-1
-X-Mimecast-MFC-AGG-ID: bd50TXTLPUiP6avGX6WjZw_1787058087
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8f0f45415cfso48342706d6.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:01:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwJSU-0003T5-CF
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:02:28 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IBgFIa1196469
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 13:02:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ tmFnaeabtACHoDFjqzcal9LftBrVpTlf876zuCaK9KE=; b=migWPyr5q0z3PaeO
+ fdHkretgh3gMb3IFpHN1pIt1v9fS4OPG/IOTloOrnpwfBhh3ViZ9IYd7U71lfGy9
+ o080f8HUYugYe0XagIWb27xplHxPaP8SnGhD0w6wZJrwsTfZA5psloSZ70/PnpMf
+ AhIhKgozJC16B8h+nOpepND56HE5gR5HTOJyOk+6KlIrtyBI9Zi5pe07eldjHlO0
+ 3GpVHynGGJHqWWgRiP1+3ye8IuCfQnSEsS0XLpg5mogTaRZpAe+1tIXkNfnSIdZf
+ CbxjRSKYytZTv+4GRyVXi671JL2D00tseLO89OAvcfEHmG6x9XZx3eSJ+wN6JYjJ
+ ysC/iQ==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4prn09cp-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 13:02:23 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-737f1f1e0e5so318109137.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787058087; x=1787662887; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=m4SZw3Ax8GvyzVw8jCVvtD9wvdck5zknYigtMdDIGeA=;
- b=Otzhbj9lI6SmZ/XYCucVXLQpjt8uBaLoKplfHyQyHn0RWROfZRcEkuJngSrbUf2qdT
- TKUX64gobOVdvX+HBq5TXqxD99bn7ZHnfscUDQcXu7siJsnIBpKSjqNVFvGwYAxbxRJA
- VpxAuK0uivtAKYxvq7T2/HwSXXg8nSIUz6PTg+ubFPR0VX9giU+lywUisKwRWWK1syEV
- /jFQxfUIEDtQU0bRlWk4QFTfvMbCRMLMqLGDV0Xw6zJCw3i2QeL7PNpjPGGkpwO6FhnB
- J5E3oFVk4ChDUSUKt7Hqyd0bRWqybXhk1VBTH/nHoR7+N4viaik6EgaaMfVlWE2j/xEn
- wS/Q==
+ d=oss.qualcomm.com; s=google; t=1787058142; x=1787662942; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tmFnaeabtACHoDFjqzcal9LftBrVpTlf876zuCaK9KE=;
+ b=d58k46VHD6KciD6apa1iIltLDxyP+vWv9sKf4nuyhA1Y7qUQBx2kAex/QzLIfcmyPG
+ w5nYunuRwLDfz4iry5ph8zdfvKqCcV+DtBD4lRN47awJC+8P5mg7dmWRVxbTvTFYFtJE
+ IgiSYawud65elys6+5A7V1VVkm077JoRuOjqBogyt3wNQHDDxcEx4ESH+twig5JYQQBf
+ 7OwRAWE91cfLWXcuSzpyUSauUtufS/wpn2L+sJqRUlIxEevUQw7Z5mpXNjsEKEbXobQ8
+ pOToB/M1ltnvZboWJhVQqhtqL3bih9NL8zlOyE3z0Bg7rPX9PIhXBNX/OnhszfNx1apq
+ ETAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787058087; x=1787662887;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=m4SZw3Ax8GvyzVw8jCVvtD9wvdck5zknYigtMdDIGeA=;
- b=Egv5F9TGdkqvhHvdyvyMG3+S7FgMXJABEKWH1jFCVYd5ztS0z7zGr3WvGJOFScWein
- iUNBVEwnz21JdFzO0Ud9YieLmn6WtSW+L1zI9BdvI2UHmJCuRiQ0E7pEMPsx9ordrHjG
- sAoR9QMngnpYeAqNTNqNskOZjNC7Keq58yC9cGbrMKniDxuHBZDGl2/r24cSGEXOQchp
- GkTAPVJ7Dd8mSFU8BlGI4vhcI6PBglCv3INmcOziyzcFr/34QBmK0Xt5lD/TXWA7S8xG
- oKleZf9E45V5b+sJomVnDNGMfZ1b1dGqDttP08KVfP4NDAGEvbANcc5y6TG33XxHrDJs
- YGQw==
-X-Gm-Message-State: AOJu0YynERs2jmRRz0yZttQ5DqfB9866lXLF6J6TTBMXyWY/dGNY8Drn
- WAuaCsW7ZoGiH3y84A/sKCV5nDL3EZxdQMACwKcVoSz3SGYL9ZPlk7AidRWy91PdSkSraYpNuvL
- CTSse1u5e2v4GG4WSpTizrtEyemZS0IJsJqnHysmTGDwTv1eBjbIojyaT
-X-Gm-Gg: AR+sD11QRrmCEaIisbH1SDHaUZ16w1KwpNbJuRYQPxNt6b/LTMQC30MRePCHXWdMR5A
- GP7oOcm0w+yvCiJfvEL38o7QtSFnAGrbpoW3NbX84C+GTT5cni0z8VwR9GxEB23628vTyhZtrHo
- K0741pnub7o8Q03jyaebWjSHaN6Hd7lVLR3enQXSHJcC2fBu8WPdMlWGBwSQNw2DTtMLXuYywsH
- oiF8I1k3klT0kF1426NQtBN2O5VcmDaCnXfpabU9B0vojs+jV52dO13DNvk7zYdC9Ree21Yd3dk
- HogJa74ufrIMcwL1Mjnkx1fmUhRaSLhlCrFng8bWYcozzXZp0fXvBTVfLFNni5/3eLmD
-X-Received: by 2002:a05:6214:c23:b0:90a:6c34:f8aa with SMTP id
- 6a1803df08f44-90a91dbc17amr379857866d6.27.1787058086311; 
- Tue, 18 Aug 2026 06:01:26 -0700 (PDT)
-X-Received: by 2002:a05:6214:c23:b0:90a:6c34:f8aa with SMTP id
- 6a1803df08f44-90a91dbc17amr379845826d6.27.1787058079558; 
- Tue, 18 Aug 2026 06:01:19 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c4580f90csm31587356d6.9.2026.08.18.06.01.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 06:01:19 -0700 (PDT)
-Date: Tue, 18 Aug 2026 09:01:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <isyanfei.xu@gmail.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Samuel Zhang <guoqing.zhang@amd.com>,
- Fabiano Rosas <farosas@suse.de>, Jack Wang <jinpu.wang@ionos.com>,
- Juraj Marcin <jmarcin@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: Re: [PATCH 02/10] migration/rdma: Remove unregister code
-Message-ID: <aoRXk0H1muF_gZJP@x1.local>
-References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-3-peterx@redhat.com>
- <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com>
+ d=1e100.net; s=20251104; t=1787058142; x=1787662942;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tmFnaeabtACHoDFjqzcal9LftBrVpTlf876zuCaK9KE=;
+ b=TI40q9ohF5QW2daQEd5m1CKC9/RjtdULVkAePmOWIlgOs6jLjmIfILxNjKk34Y3zoR
+ z/esPv0Yg7qCvTPQ3Vymed2nxZMjYbFactSG/dxqeK362TxZbUZlqm5PzVsE0DXlQq2O
+ f6w5Fp49CemCcjjOblRzvpgSFsmCYbw27/nx3xhi/Qi2eIK5/KaueJonYH8IbNNIQ3NJ
+ vXuEoeTLhM28hKYrwlyIZRF17OJI8yeWxPHZPibHdJ04IfiYy9j5ApCVAqx9VVp0F9jF
+ /mtiXhlt2Ync9Y9g9EB2ELMBJbYnFjL8FvkljlnTFHtGZWNMq6hO3O+h1EoGI2BPzhGZ
+ 0xow==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rqq+QHMaJ9eta03uMmxn5eaWIvv2kR6I7S139q5jrE4udNMppyBjZHE5brSMeyZ7CCvDaB9RUt9QFdX@nongnu.org
+X-Gm-Message-State: AOJu0Yy+x7MfPqH7gLY5uhNtJnmuK0DxpRvn3jpx4JrHof6Z7ZDA32y2
+ dXL5yujWWGLfak5DmdhS8Xkqw+F/5PTJRKixrAmGGLixqxDByDUywrdj/JBPAZKNVYrc8vOroHa
+ GyyOQ+tVEu63AoLO5lRvr1j/XamMYBVn+fgoSLEy1ba0sYzZ2NNX2usANCA==
+X-Gm-Gg: AR+sD1395QTG0S02tcmtSqf0UEtHHKvBu+7TUCjdDqZvgcP/HWnD985G4gK1ncEytP9
+ VYCNIWrSolccz0exhnN+WeWO7Qt/Afv1jUtqDTMsH96AY+15b7rR3MUKFjiZ+Hbi/N+W6N666fh
+ 0VGZrTmwVZpTF3ZnIqXw+6GvEVQNr00COcbaMUyvvX5KEH9NnCwrUTX1/8QS6gEUGE0I9cYGm2y
+ 0f7rdpG5yzJ2sZJKJUznJlfpY13lrh+VnUcRa6uYKsUtMFeap0WQF70TM9J2kg/IkU59Manvp39
+ OJRU1Xdmq0Qt+zzxnDC1BPQlFijOXfKpR5imypvRC4y9AG3L7z9uvjF8mTz96bzvhsFIeFkcVW6
+ cqlNtCUffQrvXyNok0XgthDE9GM3CtXx6COw=
+X-Received: by 2002:a05:6102:41ab:b0:760:418c:8a9f with SMTP id
+ ada2fe7eead31-76f2d5816f5mr5333859137.13.1787058141814; 
+ Tue, 18 Aug 2026 06:02:21 -0700 (PDT)
+X-Received: by 2002:a05:6102:41ab:b0:760:418c:8a9f with SMTP id
+ ada2fe7eead31-76f2d5816f5mr5333831137.13.1787058141205; 
+ Tue, 18 Aug 2026 06:02:21 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4999d078523sm131711575e9.6.2026.08.18.06.02.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 06:02:20 -0700 (PDT)
+Message-ID: <36e99f39-b769-44c1-b6b5-87b6d26b3d23@oss.qualcomm.com>
+Date: Tue, 18 Aug 2026 15:02:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/block/pflash_cfi01: Always set romd mode when clearing
+ wcycle and cmd
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+References: <20260818115742.2268257-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260818115742.2268257-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA5NiBTYWx0ZWRfXzjtPhbJ0jIa7
+ AUXlFr3e6aY+BKSDIy3jtgTN8OQPJsthFwdE/r7g+NR5pKjFtEM7MmcGKNl3BdW/kWkvDvei/8u
+ oSi7D92uSUeougtTfaLRlwS808rCSxg=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA5NiBTYWx0ZWRfXzGu3F/1yIJkC
+ 6AbzNhse8m+VysLJO6jl3sks1pzt8vkmUKacHn12Dnnqee9KKiTB9GzMsZBYfDta3WnwxTvXe4E
+ 49GomONuLkg6TCgdzOqUy9Q9DF9U95t2A9HGZKOchem7nZ3Zfd7tA10j6Sx+gIVceWALjG8q/1y
+ hgIAHe/0b+3UUybe90rJ86x4oMy8Ur5SjD4Vs9dDpgwLACIwJ9QkJs0gYWWU1G8stUGLUL/ZCRA
+ 4LTNHiY56xCv/EvdTmh/zOpENdccTp3XirEByC3pw+NyeKUJhlYsMSk2/tmDe15s3znJfFrfJGR
+ 15fqbE6CheZvt1vbTc0+m3kYQ+igMHhQFBq7MhR5XQym/v7O98CgfFzWxrS/5kO6Ki+yx74ck/s
+ 8JkxCGCjY+dd4Sea9ht3l975zyl+tS8OE8x262F/UomptzbZE1LczACmHbYQ5ued8OHqFUUycCG
+ 9wfTjXHIp+m0UMyH0ZA==
+X-Proofpoint-ORIG-GUID: AaIYLpNvZ_jfteB1BwwCQdZyQrvn_5Wr
+X-Authority-Analysis: v=2.4 cv=HNrz0Itv c=1 sm=1 tr=0 ts=6a8457df cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: AaIYLpNvZ_jfteB1BwwCQdZyQrvn_5Wr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 malwarescore=0 phishscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180096
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,50 +156,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 07:57:06PM +0800, Yanfei Xu wrote:
-> Hi Peter,
-
-Hi, Yanfei,
-
+On 18/8/26 13:57, Peter Maydell wrote:
+> The pflash_cfi01 code has an invariant that the MemoryRegion is in
+> ROMD mode if and only if wcycle == 0 && cmd == 0.  We rely on this
+> for setting ROMD mode on an inbound migration.
 > 
-> No objection to removing the dead code — it clearly never worked
+> There is one corner case where the code clears wcycle and cmd without
+> also setting ROMD mode on the MR: in the "should never happen" code
+> path in pflash_read().  As the comment notes, that code really is
+> unreachable (unless an inbound migration feeds us a bogus pfl->cmd
+> value), so this isn't a problem in practice.  But it does make the
+> code a little trickier to analyse.
 > 
-> I do have one question about the direction, though. The removed logic
-> was the only in-tree attempt at MR unregistration for the non-pin-all
-> path. Without it, registered MRs grow monotonically over a migration,
-> and with large, widely-spread dirty memory over chunks the accumulated
-> MR metadata (user + kernel) can cost more than pin-all and even perform
-> worse — which rather defeats the purpose of not pinning everything.
+> Pull out a function which does the "clear wcycle and cmd and set mode
+> to ROMD", and use it in the three places that need to do this.  This
+> makes it clearer that we are preserving our invariant, and tidies up
+> the loose end noted in the commit message of 60d010f66f2ad7
+> ("hw/block/pflash_cfi01: Restore ROMD mode after migration").
 > 
-> do we still intend to keep and improve the non-pin-all path going
-> forward? If so, some form of dynamic MR unregistration will eventually
-> be needed and it might be worth keeping this code，or at least leaving
-> a TODO to mark the gap?
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/block/pflash_cfi01.c | 31 +++++++++++++++----------------
+>   1 file changed, 15 insertions(+), 16 deletions(-)
 
-Thanks for taking a look.  This is a valid question to ask.
-
-Though it was there for 13 years without being "enhanced", it means the
-possibility we leverage it in the next couple of years is low.
-
-You also discussed the other side of things: I am not a frequent RDMA user,
-but my understanding is frequent MR reg operations already slow down
-migration quite a bit.  It means dynamic management including unregisters
-will be even worse.  AFAICT, it'll be a challenging task if we want to keep
-the performance in bar and add a hard throttle to pinned memory.
-
-Obviously, RDMA migration users care a bunch on performance.
-
-So I see no good reason to not drop it.  Even if someone will work out that
-problem, it's still not much code to add, and it'll likely be easier we
-design it from scratch with the demand, and without worry of breaking
-anyone.
-
-When that happens (if it ever will..), someone should also send an update
-to MAINTAINER file on RDMA migration to change it out of Odd Fixes stage..
-
-Thanks,
-
--- 
-Peter Xu
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
