@@ -4,114 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B058EC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6C2C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwLgI-00024I-Vs; Tue, 18 Aug 2026 11:24:51 -0400
+	id 1wwLjv-0002qw-Eo; Tue, 18 Aug 2026 11:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wwLgG-00023Y-LA; Tue, 18 Aug 2026 11:24:48 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLjt-0002qQ-4x
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:28:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wwLgE-0006xd-EB; Tue, 18 Aug 2026 11:24:48 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3kMx2831485; Tue, 18 Aug 2026 15:24:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=RqeLQtWEBKeWwEUkNHTZiytmiwSzfN6a+5UwbsFsFZ8=; b=UJwJAGpSTNcb
- 4Rh4bcuNBsP5mDa8+zkW982gAW5Vy2Zfi+8lVdzDHAefiSbPAJW81RgNQVJiaJTk
- jwVnNocTTpTkoxDefJLHQC1A55l1vQiC88iN1KlsME5WGYZc7xajSyjvzibcGiKo
- lS/sC9ksUk8/z/U2iuiKp0aE6oT9PtIxfABuhozocFXgufSkZ4DiAo/C8n9KNH0F
- IVijdz8DavKaoyEkPx6thlhqexfQwBL6GCRy9ird+4fRI4g1zs/YA9KQvuyT6/jF
- TD/7aep3iJT4PaS+R3AtVDVPnYoPPf1YPeIFwinTcEDjiXil9s6UmOvObKv0qkE6
- VVqm0dT6Ng==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqs35x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 15:24:41 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IFBJAq003006;
- Tue, 18 Aug 2026 15:24:40 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tw4130-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 15:24:40 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IFOcID28574394
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 15:24:39 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B171658052;
- Tue, 18 Aug 2026 15:24:38 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3C4D258056;
- Tue, 18 Aug 2026 15:24:38 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 15:24:38 +0000 (GMT)
-Message-ID: <beddd6b3bfaf489909dc907d19931b6e3376bdf9.camel@linux.ibm.com>
-Subject: Re: [PATCH 7/7] target/ppc: Add ICBT support for ISA version 2.07
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
- tommusta@gmail.com
-Cc: richard.henderson@linaro.org, shivangu@linux.ibm.com, tasmiya@linux.ibm.com
-Date: Tue, 18 Aug 2026 10:24:37 -0500
-In-Reply-To: <c51d7573-0555-4e66-84ec-c470ef176125@linux.ibm.com>
-References: <20260715125634.2107320-1-rathc@linux.ibm.com>
- <20260715125634.2107320-8-rathc@linux.ibm.com>
- <4131f802840910b277f6e0a681ce7e51e8a9dddb.camel@linux.ibm.com>
- <c51d7573-0555-4e66-84ec-c470ef176125@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDExMCBTYWx0ZWRfX/O3w1ArDQJ0e
- zHbecdno/zx50X4XWdQUL6t2czH9V1ZMR4U4danovJ+wjhNe6MIGefTmBxcI4kXtumptAig6B7P
- xLixCU/Ke4puqe/xkNSDvZZ0qtLY8QCYIzTtHrcknNoDTZ3G4WZcVswQqhsp0og+17IiEu3f/cP
- Ci+FJ81NLJaGd62n/LXojGPWxFWjcE3DiqCzDNLF5+FF7kcoLZvCN64CBbVDD2+DdWztk560jsr
- hNYxTlPPFJmhZNs05VYw8fbgyFtjll1gBiuoScLEaEDTsUAs5P8DqQnoAPgvAQWpHHSXvLsP9cV
- WYhqMDSCYFdZ7FzIbjQuIPSj7ux1rAJMNlTNoLnIif6ZYnOsgcOuhkw3bb9V0TAZPV2iK4nR48F
- dWdycMR9t+DwP4Mf9TgQp1jKjth1du88fHD+7O5D3wU/a3iMiy+qWyJVjvwA96s59TsaxSFdN50
- wV1xeaOGIG2HtNqcO9Q==
-X-Proofpoint-ORIG-GUID: CELu1WhUUy4KSPeUJFhZrxTtwZDGIjz7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDExMCBTYWx0ZWRfX5qgymDava6Nc
- THlVpmhKIWlcL+QIfd+LJ9PVqetCha6hNFGta2SQ1WNk7gCVzljC7docKSuYs0mqsRwKKlUZc1J
- PfPmZgjGID2HRuuSN9itFmqRa53Haak=
-X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a847939 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=qUNxuMBKM11VF0ggjTYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: TO5L94GRGkJr56AUoHm4GfuT0Iiu2Smc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
- suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180110
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLjr-00080a-Lw
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:28:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787066910;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
+ b=gtC4DjdoxUJgJ/nKt276pHtTBgCMvas/bLxUb8F72TTHLd3CF9QV9IZn2F0Ok3YMn177fh
+ hLhh7MuphpkzbKdg5zx8iizUr/xY+S8IKxd4LE1ut6qhIjNxn+2Q8RjKggHmYvn2Ezzv2s
+ t0mMxGdrsAa7gQgjTKV4xiqfD5sLems=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-KWJt3-uaNViJm2hMfQrmow-1; Tue, 18 Aug 2026 11:28:24 -0400
+X-MC-Unique: KWJt3-uaNViJm2hMfQrmow-1
+X-Mimecast-MFC-AGG-ID: KWJt3-uaNViJm2hMfQrmow_1787066903
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-8485b7e18b4so82259b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787066903; x=1787671703; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
+ b=PcOjLXyApsY2D4FTCyzVK2fTkgPjlc7SSaT7a7ZdNecJuMCA03qev3xfNF5j2IBUv1
+ VReAoaT+pbH/KmSVsMrrhIseWmvNVezqIScUps1CVZKDvTqu6ESEkfn9VE68L5ErzJ2x
+ gG3G2M83/CEsKeIvZ9ynyrCxzeIFKe+GmCVeTr1WOLJN6iCHOq64wdMXzshznhVR0vIB
+ nhST51IaLRKnPCYU+pq6pf+HNANdTFtJap/CKDMZwDGIjpgJRyjn0mgQh8elI918timg
+ qEQtCVnaCUI1wH5+o6JrpZuqsmgytWHitNpZYkX0HM1E+e9Y5DZkB97ISVqagVkAy8xR
+ QLvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787066903; x=1787671703;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
+ b=WAemjWhKFRllDup2hfZ6TgOGIGsvC6kXcyKKpTeBjv7qqvVoNoIBaHUuDsow5dQoTh
+ 8GMQGKt2gejW72FMC0b4NLM8QBRovv2l8GkO5wb601cP57Rmb39ujBkOVnFnM8TTuIbP
+ 9nYmWtldSDBBDfFTlff0pIrXjGzrTo5gbMTnc3ekvePxJ2uTnqTamPF0dmEILjjGrSzV
+ 4oT53MpyI3N1nuoO+MX7urcpKbUTQPbgtfC0zVLCW+xUupeVo3fH3Ny/STHCbIuruM96
+ XpeF1SEMGIgKHKKlLDXUXV0XFw+nM7TOH+RbSABOMMxt1IEaDl7e7HdjVvz3PSDxU4Nk
+ EPaw==
+X-Gm-Message-State: AOJu0YznZkPxANaErdcbb1eN1EDq+UD3JUqo5aLxB2UK56AgTBErNb2r
+ jZY3N514SXOOd91iuWfnv1fYMooy0AmNDKifhJ8UmimwqAJY4XY6zrJgFlx3NF8y5fiyJHYRqJ0
+ Zo1D3htuCrCFdYva4WSoJ/Y9pfkVGtTs3QCQu7d55lvW79oOESuazoRyC
+X-Gm-Gg: AR+sD12SMXN03CQ3MiiEux8s5/ZFmzGc1k+gpHr8Qds8JsZLIr3rdSqgFzidyFaPJWB
+ CmVanp7S4Urwc9aDGRrG9U4oVXYwDDn+AFWRzV/dJTR93EsksH+3rRTAYtXlbxDro0WyGWu3d3C
+ AWi25JKHGPplJ5Am3SItSw5TwQNhq6BM7hIyGTRH7srrOq/3MJmrkFSeSQWeQbPXako/mmwUCRR
+ LiNX/EkrkWcNMAWcHwyWRFYQ8TAZ0+hwf8jfJKMonoa5zw7GhNX61oxOjTO77woBTZ2AMdgNrTP
+ k9DLHdnnhwbcfjQt6tH9suFiGlQ55Y9smsRLBIz7zWfGEMHFlE/VNMQn7mUBzb3p1NEeRK9bl/n
+ xJ9R4KO6/1zkNspECjWCmk/2ehoV5Lbk68VOdxgmJ12/atQeCXfE3V48mldQ=
+X-Received: by 2002:a05:6a21:9981:b0:3c3:a140:9392 with SMTP id
+ adf61e73a8af0-3cc7177a8e5mr32089125637.0.1787066898325; 
+ Tue, 18 Aug 2026 08:28:18 -0700 (PDT)
+X-Received: by 2002:a05:6a21:9981:b0:3c3:a140:9392 with SMTP id
+ adf61e73a8af0-3cc7177a8e5mr32089054637.0.1787066897828; 
+ Tue, 18 Aug 2026 08:28:17 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc13bf26ad5sm2318940a12.11.2026.08.18.08.28.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 08:28:16 -0700 (PDT)
+Date: Tue, 18 Aug 2026 11:28:14 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] system: Define ram_addr_t to be always uint64_t
+Message-ID: <aoR6Dtwq3XrxC3Uu@x1.local>
+References: <20260814134035.2733355-1-peterx@redhat.com>
+ <CAFEAcA9xnJ1i541bLbKheVZkPvSFH1NTerUomWV4j4DyHhOPgg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9xnJ1i541bLbKheVZkPvSFH1NTerUomWV4j4DyHhOPgg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,66 +118,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Fri, Aug 14, 2026 at 03:48:32PM +0100, Peter Maydell wrote:
+> On Fri, 14 Aug 2026 at 14:41, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > QEMU's 32bit host support was deprecated since 10.0 and removed in 11.0, at
+> > least the system emulation part.  Now it's safe to move ram_addr_t
+> > completely over to uint64_t.
+> >
+> > It should be almost the same as uintptr_t as before for !Xen, except that
+> > on some systems (like MacOS) uintptr_t and uint64_t can be typed slightly
+> > differently, causing unnecessary compiler warnings when use them in a
+> > mixture way.
+> >
+> > Hopefully, this change also makes it clear that ram_addr_t is never used as
+> > a host pointer in any form, but only an internal QEMU integer based address
+> > space for allocating ramblocks.
+> 
+> I've thought for a while that we ought to do this even if we
+> hadn't dropped 32-bit host support. Having ram_addr_t be
+> 64-bit should work fine even on 32-bit hosts (as evidenced
+> by the fact that we forced it that way when Xen was compiled
+> in), it was just a performance thing to use 32-bit values here.
+> 
+> Having it be 32-bit sometimes was always an irritating source
+> of "whoops, doesn't compile on 32-bit hosts" bugs and other
+> oddities. There are likely various places we can clean up now
+> where we previously were working around this (e.g. in
+> hw/arm/vexpress.c:a15_daughterboard_init()).
+> 
+> There are also a few ifdefs on HOST_LONG_BITS == 32, which
+> (where they're not relevant to the tools or guest-agent)
+> I guess we could drop.
+
+Indeed.  Let me see whether I can touch those in one go.
+
+> 
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 Thanks,
 
-Glenn
-
-On Tue, 2026-08-18 at 12:33 +0530, Chinmay Rath wrote:
-> On 8/17/26 21:26, Miles Glenn wrote:
-> > Seems like you are fixing a bug here.  Does this require a "Fixes" tag?
-> Hi Glenn,
-> 
-> Thanks for reviewing the patches in the series !
-> 
-> I wouldn't consider this a bug since this particular patch does not fix 
-> any wrong or missing behavior from a specific commit. The new 
-> modifications to the ICBT instruction in the recent ISA versions were 
-> simply not incorporated in the qemu code. So no previous commit is truly 
-> at fault here.
-> 
-> Tasmiya had observed certain HTX workload being run in TCG env caused 
-> illegal instruction error, due to ICBT not supported as expected in the 
-> latest ISA; which brought this to our attention.
-> 
-> Regards,
-> Chinmay
-> > Thanks,
-> > 
-> > Glenn
-> > 
-> > On Wed, 2026-07-15 at 18:26 +0530, Chinmay Rath wrote:
-> > > The summary of changes in Power ISA version 2.07B mentions :
-> > > "ICBT instruction has been moved from the Embedded category
-> > > to the Base category".
-> > > Updating ICBT flag for the same.
-> > > 
-> > > While we are at it, correct the invalid mask as per the ISA as well.
-> > > 
-> > > Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> > > ---
-> > >   target/ppc/translate.c | 4 ++--
-> > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> > > index 8dab54ccee..3cd849c706 100644
-> > > --- a/target/ppc/translate.c
-> > > +++ b/target/ppc/translate.c
-> > > @@ -4559,8 +4559,8 @@ GEN_HANDLER2_E(tlbilx_booke206, "tlbilx", 0x1F, 0x12, 0x00, 0x03800001,
-> > >   GEN_HANDLER(wrtee, 0x1F, 0x03, 0x04, 0x000FFC01, PPC_WRTEE),
-> > >   GEN_HANDLER(wrteei, 0x1F, 0x03, 0x05, 0x000E7C01, PPC_WRTEE),
-> > >   GEN_HANDLER(dlmzb, 0x1F, 0x0E, 0x02, 0x00000000, PPC_440_SPEC),
-> > > -GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x03E00001,
-> > > -               PPC_BOOKE, PPC2_BOOKE206),
-> > > +GEN_HANDLER2_E(icbt_440, "icbt", 0x1F, 0x16, 0x00, 0x02000001,
-> > > +               PPC_BOOKE, (PPC2_BOOKE206 | PPC2_ISA207)),
-> > >   GEN_HANDLER2(icbt_440, "icbt", 0x1F, 0x06, 0x08, 0x03E00001,
-> > >                PPC_440_SPEC),
-> > >   GEN_HANDLER(mfvscr, 0x04, 0x2, 0x18, 0x001ff800, PPC_ALTIVEC),
+-- 
+Peter Xu
 
 
