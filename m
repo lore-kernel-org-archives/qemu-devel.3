@@ -4,160 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D381C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469BCC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwKK6-00061q-LE; Tue, 18 Aug 2026 09:57:50 -0400
+	id 1wwKKD-0006UT-7n; Tue, 18 Aug 2026 09:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucas.kornicki@nutanix.com>)
- id 1wwKK4-0005vK-Il
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:48 -0400
+ id 1wwKKB-0006Ja-9J
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:55 -0400
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucas.kornicki@nutanix.com>)
- id 1wwKK2-0004jL-IP
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:48 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ id 1wwKK9-0004kF-Hd
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:55 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IDuWrH1687653; Tue, 18 Aug 2026 06:57:44 -0700
+ 67IDullD1560700; Tue, 18 Aug 2026 06:57:52 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=proofpoint20171006; bh=0AWmvHF1nf7op
- PufjQWJ4QU47VIXkuwNznyF1Zb3d4o=; b=LJl9ABN2dEuSo63n6eJrPv48XNKrT
- a83J8fuTyQtKaqOm228+dhIjEFNoaDaOGeE8YksqGlnsjxp6VHrkQ/0sD13ngDf8
- PM7R8dfzvW4BmaRYx+QuqJTr0LCthf0T22E4pPJ7p343H6DlrwBchGKJL+ro06aI
- vis7WfxywY8h0Joss4cTDAMNb5OgMED1hcOuhmeri4qfXo1O0tRyJ4ZErzGUeRxO
- CaEP7VAr341NqK+Hbx/YKB5ZvIHbei0/bfM2ZIgYhREk266ZvgQsrTAqV02/6AoF
- I+ikW5izxBdABvIy0tK+07LUzUznknxa1gHAxrGZKQrbHBNC+4xRO9YPQ==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=GkN5MiXkfjtGOwQE+blVI6MACFEP9Z7RruF5XH0/R
+ 8U=; b=Qq1Gw5RsiklGbWt8NasSUGINFeivT3xZYSY4px0RTYReYPBpwDbk8ay/p
+ epMWTg2k+RmVppkzkc0h3L2Fh2GOaYj+ZgkJkjSuKkJLxb72sVX3DYLTvP4IcGSQ
+ 9IWFkAqh1Qhh4/tNfnCv2fPBEavQUJqVsD7DcfQcRQICh5YVEB4FEN4CVcP0e9sw
+ uNffciuR0jytR5ylLlADG107/6sSh6Yr4C31uZIU2v2nfk4bBC8rfB2sMOOUihw+
+ kxnU++uxbiO6GrhfXb0kfsgWSmiLuNAkn3f+kP/tHM9ia6pg/DKN3OENkB4ItwRg
+ 6IaZn1BnY8gzeYkJL2YXHmikhsACQ==
 Received: from ch1pr05cu001.outbound.protection.outlook.com
  (mail-northcentralusazon11020121.outbound.protection.outlook.com
  [52.101.193.121])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g2m156u9x-1
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g2q6cxnu3-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 06:57:44 -0700 (PDT)
+ Tue, 18 Aug 2026 06:57:52 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RrcEx55S+MX8uiBF8QNpix6bVciVEnNPsKgvMzMerm97ygZFmkLuBFh3HIRmNKoQIqsHARRhObINnNNK0YaJOg+1nSsLYnImD8l86GwKJh7Yy94OBjyFGajn0wS5oX9bpMGFrIB2iaWoWFaVwY8phsf0Jl9Za7PJOBzpCGlz6HyslSNDc4wIelmrGauenzCUsxPxAqdjJFHcASle07Kn+5Iv8FjopFTlczTZkQdpA/eSQtdWB//ltfAoAqqiM+npjgqUt94iAkSj8OnkMaM8ZY5j2QmAxwtRLY8Sm7onSaNi8PkRgdQ4i4FHuYZ57Go+gA/7Q1291EXQ0eV9gHUxkQ==
+ b=luAEk8naafp15B1hF3b0kfRRSKSZBKtaze4L/6gVRRHLwEsjv7o+KPcCu/nF5vlUzoA7pS5WD0PpG/w/Ge/uJVR5GXDrG7SmFsFGX7SbPCYulBupOVg63HQlKvXDY79/Hky6UI5bh//A3hLykCIJugTf/Z2u/GUO/EP2SfgTxeuT63Ky7G6uUJWgP1yQbtBbQCMc39hamJ1QGfmvxJkgXNg2gNh5VpYpaOUSTwOAc+Nsz3ZYZ8P7CizUTJvbSYE8GAYxUpnAFufE67auEbOMvCKjZA5grokvSwniW543uyoSBwucQ0tmlHVV0duXgJ7ewWk4sA4Rumad9fgILffgpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0AWmvHF1nf7opPufjQWJ4QU47VIXkuwNznyF1Zb3d4o=;
- b=Hk0X7attqRnRpeI/7aH2gWSQw+gGuniWU2ynglyvFC8tDGaxM0uvyh0z1HYz5nMaDl/v5sfko/y3ubktrFM3Rf7fZBP95AhaUla5OqIZuY3elH78fIU8diddJ2DpEKNSrdad20DW0AXMCr94i/ZCLYUA6GOeCAjIAAqUT9TkT24Te6jqa1UDMOK9bN4MrYlABnTupoIs6TbVZzXUifRDjpMzztfRxcbvf+Yb8FwACfNokRY5DEHIf54y2h5l3roVMU0bsMw/DpvO43mQUDbaBw8yXWV/CLOaNy9s+Wd7WW0GeeGCkTtNMDL4dAb4pWvOp6T7BiGMA+/Zgm7Jpca5ww==
+ bh=GkN5MiXkfjtGOwQE+blVI6MACFEP9Z7RruF5XH0/R8U=;
+ b=KC5HvmBtypTQ49QN+bkfuGAeAJtMlFiR50piQvSl2/LIH6YgI50R8/JliDzStlMUQhZYp+YJ4tP4d7TG5brOb5STLqiC35fgH+uq/2O7Gx2FAUxI8Y0j3PaTyVCGgEi86sTZhUiANeq60TpknXJDlhuNQb2HsgfyRZMFdX52InSUeFA3mKy1Ty4EF0iIzqCqQBhBHLz8ol6Y9TAF/wMchcYCzjqXC4hTxHmf5i95yuSaTKC6+FC8jCn/E3lBdcr4oam9jELOF+OYnrBw6jMTpRObvsyiZJUo1GUVtMmfb/TZJ4wp/86EeSXCoRXTFwGZhLlKWvDE9/VtlMbNS2sPxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0AWmvHF1nf7opPufjQWJ4QU47VIXkuwNznyF1Zb3d4o=;
- b=SqH0arU7s0ACWKOOwFfUkh6/J7VRY7mioazOcpHFLLVAV0K3zqKzxsqw4me9QPM2bg4ECuGsyus4rZf8RJSP/QwMa+Al91oUEqpvmQ1Hnqb/FhruV0L7XfxbBLMUaaSimPYT974N0KCB1BlsJnRP499zDPs1WhMxfQrq2+VU4T5aGhpLdsbR3kbF1WMtOcmjz6R48dre3547MRB5eTmexuSIaKxK/YuRdJK5kQODj53mmOCO+mWdbNhPhqH0YejATKQy2JWiWhfF0f4ZLbDVVtZTEnWIglqLYI68jzpnehRpPhnX1mhkCyVraljg1ReL/SzMwoGlQEsvHizy2w0eFg==
+ bh=GkN5MiXkfjtGOwQE+blVI6MACFEP9Z7RruF5XH0/R8U=;
+ b=FqBnBfrL6eIOCxWOVtG5OMbQgKKHD9KbfN7kuiVquEudzOJ0Bvn0YFeuZRw63nfXdIUoKB2XQnnkG8Uinj7U/um2Rwy3emxOiHrCzZHwBdC4WX1rkrPtQ96Vptuu7L4Y9BaR9a4c4sgIk3C2CIsjtbe4eBjKZwxSVaNEji1MrTV8QZLJmg4YTHJooDSk7ZMvz/eVQbSWvGABUOfOb14uDBuaXoGEv47RTxZJZ4uKEqz9QDc6PR5AP/T2U4enqtV1EyoNkzk4vQ8vLeMFDs0PdbWxYvEcRxJEL4qPofZ1rZzOi+KWzjFZiIYPnPrhU1z81GXTwpCp1DPp6L9NcHfuyw==
 Received: from BL0PR02MB3827.namprd02.prod.outlook.com (2603:10b6:207:42::26)
  by DS0PR02MB9103.namprd02.prod.outlook.com (2603:10b6:8:131::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Tue, 18 Aug
- 2026 13:57:40 +0000
+ 2026 13:57:50 +0000
 Received: from BL0PR02MB3827.namprd02.prod.outlook.com
  ([fe80::5f5f:bb6:29f7:afd]) by BL0PR02MB3827.namprd02.prod.outlook.com
  ([fe80::5f5f:bb6:29f7:afd%4]) with mapi id 15.21.0339.007; Tue, 18 Aug 2026
- 13:57:40 +0000
+ 13:57:50 +0000
 From: Lukasz Kornicki <lucas.kornicki@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 0/4] Add clipboard status notification to VNC
-Date: Tue, 18 Aug 2026 15:57:33 +0200
-Message-ID: <20260818135737.2679311-1-lucas.kornicki@nutanix.com>
+Subject: [PATCH v2 3/4] ui/vnc-clipboard: factor out clipboard peer
+ registration
+Date: Tue, 18 Aug 2026 15:57:36 +0200
+Message-ID: <20260818135737.2679311-4-lucas.kornicki@nutanix.com>
 X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260818135737.2679311-1-lucas.kornicki@nutanix.com>
+References: <20260818135737.2679311-1-lucas.kornicki@nutanix.com>
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM9P193CA0024.EURP193.PROD.OUTLOOK.COM
- (2603:10a6:20b:21e::29) To BL0PR02MB3827.namprd02.prod.outlook.com
+Content-Type: text/plain
+X-ClientProxiedBy: AS4P189CA0019.EURP189.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5db::10) To BL0PR02MB3827.namprd02.prod.outlook.com
  (2603:10b6:207:42::26)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BL0PR02MB3827:EE_|DS0PR02MB9103:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6452c14c-14fa-4b90-4415-08defd30ab25
+X-MS-Office365-Filtering-Correlation-Id: 5fdfbd49-77bd-49cc-c910-08defd30b0e5
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|23010399003|18002099003|56012099006|10067099003|6133799003;
-X-Microsoft-Antispam-Message-Info: VLnvaV3mUv6XJymMqQ9Of2hBvEhc+kfPVhGV5apoXz5l4u5gkhgCsY9+CYj05MwcpQdJgwZ/9+pyrru4ewMqZ4FtZo9Bl28Vxo0ZNyMT7rRaJfLqS+4ge5r+nIwF4PLehhQnracllGJhEeQDyVWN5rs3qJ/fweb9F83JWf/rn+3wyl70k5tV8xlGwDQfDLe9YJzljsv0eBWiP+AwW+98u8ut1ctcvanPNRE0DTMOjgOHh2pvSgdDQqih5hY+ATznCt7B6zwGteBwCdhVtDafVvFLwndGuwyCohWDFQ8TCVs8aKWuPeoaHJhUqv4o03SxbRKUvVbr6feDeeksJ50NdnvwGZZ2xbfwZW5eIS5tbXjl0RYAw9QaJ2mRv/uFVnxV8tzNHpKeLRbxoHVgOqoThwkS/OnZT4yMsC2ZgUfjSBDb0QkS8Sfxf9WDA4+11s04OoIwRVAnHdmYn/5uN2TDcq+WGd8q4vCxwear3yWwgYEw/W7fkc3hSfK47l6m9THa5QUdV8sH5GPNIIxg9fBKtsR4dE66o4VDe2mQPCvp3w0kAE4AR5Z4nveBs3Pg+Coua2PEY/4VA+rQDnEWpLbRgRdszkyp1KlQuLmlbtSPw4GOP2/8xyDuv9stY1NdXIaSMvsO4aIjLAEzGfsFbcgx7ZHlM/OGU2jh1tPy7OYSMKA=
+ ARA:13230040|376014|366016|1800799024|23010399003|18002099003|22082099003|56012099006|10067099003;
+X-Microsoft-Antispam-Message-Info: GVGJHB77cbLC+zaWzqkTbjQnpauzX64m1JwQIXUevpV8SVTrKfImnhJru9I2NGi0nXSgmUZjvdiREOD0KcX5f3OhWHdWA6XxIbvPlFsZvqQGWL3wCmrgmkK7s+RETVAGhiwcBHy41ASiNDMKSfcR164aSIDmrWXKLxteA1JZXEZm2Dgw5kWnjhEJp7sf4xSU9VVUry+QdgLaqi2tnEVND4XiZgObgHzdAsGH6au50h0jX6c6p5CroTDOYZf7kB46GO8UQ+0ZA0Of+iay3c9+8N1NQHB7QXst07MpE4q6+7ayPdqoDEbpsKk23DeBwF3522QRXumJgdvEYDv3eFUMNSv0NbSUU9b0QmJrSoQS9KYppzGGxyoQwbDuJ6WZGb4kdtSslllwq4MoCVFABDtPikN94Gs6VSCplNnnoWs1GkwQxhAPpC1LlS7bBraVNh3P6qbMuaAE024ByxTNMyjm6A37KxU8GmIGMG5NPBiTU5e6q33bSzdehYG9L/TQqJzmgrree95THUSKlp8TrFbysB6Mpjbx5eVXpBJVPefz4JtdEHobb8bhbnV03isi6TT0KBTX3p4J73OREVo3UouCXF5ZfP3kB/rzvhg1s710Xqa3mhqR9pxDtfcpVqc+0Bz8Lozm5zsFh+dH5v6GlLa6UthzZCpp3KGAjy8K7YsmVr8=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL0PR02MB3827.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(18002099003)(56012099006)(10067099003)(6133799003);
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(56012099006)(10067099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MkVVbmlqOUQyaWRIaHBwWTc5QWtGUUlsdHpaWTdTa3UwZUNhbkd3K043Z0RL?=
- =?utf-8?B?THphOC9rTjFueWVac25qUzdsM2J4L0ViWHd5c01wNWJwZXdqNnUveGNWRTMz?=
- =?utf-8?B?QVJnaVlYS0tlYXVPZUxlbUNpUWVxSk04SnM3VjgwdFBMdTdkK1dQUE8rVVlP?=
- =?utf-8?B?RmpzNkdsazM3UkFTcjBPcnFXOWlWdWJRTHFXd1k1c2Yyd2N1QWVHZHFrRkRR?=
- =?utf-8?B?VUFtVk5OVXplcmlYZUdxZEJ5eGZGclVOcTNObElTT3dybnZTUEZiZzdETTYx?=
- =?utf-8?B?anNTUlhLV1ovOEcrU0hrZW9uNTk0KzlDRlBmQlMwSHlJSTluVnB3T2luODJZ?=
- =?utf-8?B?MEQzdHVuL25PaUN6WkREekJ1Z2pjMlhtL01CKzhEb3NBSDk3KzdpMWlYSWpU?=
- =?utf-8?B?d2lGeklFaDcvQ3ZpcTZUN2ZnV0dub3d2RDRXUW9xckZHWjFBS0RiK2t3L3Bx?=
- =?utf-8?B?bXhoUGhJZkFvcGtrRlJ2SDlZeFBCc2MxemlCb0pWWTFOMk44ZDJIaUlTaHBV?=
- =?utf-8?B?VmZCUzBpbll5b0ZVaGZuM0I0b3VCY0JNRW9JN1ZLTFJHRzlVc2FuenZ0WkJh?=
- =?utf-8?B?OUVZUUVTTVdWN3Q5ZE81aFRoQ1RZdmlOaFlXM2ZmdFF5MVFkL0VCRTZLbWZ0?=
- =?utf-8?B?UHVRbXQ1Sktmdi9Ia1B2S1VpOGpNNnVTN1N1Y0lZclYrVGlxZmYwc2tMK05S?=
- =?utf-8?B?NmtNc084Rm5NVHF1cnpFeEFnMHBzZVVLNVphY0xZZk1ZaDF5QjIrSzZaSGNY?=
- =?utf-8?B?RHpZNXM0dTlDNnVLZ2NTeHl4Ti9XVUFYbXRPRGR4SzIzcnVZekxmMTU1eVM1?=
- =?utf-8?B?aElrQnM5eFpycEUyL3NnaGZUcEpYcjlDeWoxYnV5ZHI5SkVaYkpjR1NRTy9l?=
- =?utf-8?B?Q2d0YVd4bXlxenRiUnBzRzFQNlRLR2FYSXZIdUxWZlo5Zjk2TUFFeVBjVVdj?=
- =?utf-8?B?U0UvcFlNYWFnaXhkZ3ZjRnNWeXVKaTFTV1huV3pZYnZpR21tVjhlRXhzVXZ0?=
- =?utf-8?B?SG9CK0RsVDVPbHcvMXFCSFRZK3laZ3Uxb3IxQUV6UUpVNXNKZTBZOTJ3RGxE?=
- =?utf-8?B?am82bUtaUXJIVHdrTGNmMHEwMDU5MkdlS0ptc3l1L1RIb1dza0ViVG4xZ01X?=
- =?utf-8?B?dVNJcVdiNkRrUnRsc0diZGV1d2RURTVKNTQyeitwNGphZmlHcFhPdDhwdlYx?=
- =?utf-8?B?UEp0NWJjbmZrMzdyVWF2K1VWL3EzS1ZMOWpmNlp2dTNFM0ZEMll3ZUNyMVVM?=
- =?utf-8?B?SHhvTTd0S2QyYzUzTFJkcWxYQjRVa3p2cll0bllndEpWdk1UNDZJRXVIajc4?=
- =?utf-8?B?bGZ3YXN0ZzRJL29JQ0FCYUFkNkg3QTRJanFzZ2tmL01jbWlJRitKZkExWTQr?=
- =?utf-8?B?aVdONjhoWGNoTkxscEYvdk9hbDdQeDhIUnNNbWlVR1FLOFNRM29QMDNXU3BC?=
- =?utf-8?B?WXZvSnZWNVl5RGJ2Kzd6cHQwK2M5bVJkVU9xZGlhZmpBWVlLOFVpUzNocEov?=
- =?utf-8?B?ekEyOUUwM1JHUWg0WW5LOUdzSjJrOGtNOWZ6YmFCSGFBK1phQkdMQmJpNU0z?=
- =?utf-8?B?aXRyUmxzTDRyNjdzRVlaL1AwWkhmVy9mVUtnenMwd1FpbXFiVFZ3Rzd6VXdC?=
- =?utf-8?B?c0xlNzk4NDJQV0NsQ2xPWW5iNDRKR0JZczVMS1ozZnR6SFllZ2w2SkpYeGI1?=
- =?utf-8?B?Nmc4OVpnTUJ3eTI0TmZCbWxXMk5sY084UVozbTZsU3FnRDBhaVhRZG1zNGdJ?=
- =?utf-8?B?TVQvd3lPamRmVGwydzhnM0hKck1sOWZtT0Zxc3AzV1NYZWlmSXk1WE1LS2RO?=
- =?utf-8?B?U1g3L3kzZmVMZW94a05zRWJPU0RyOHN4RDhCTTVsZ0tHOGR1d0FCMHdETEd1?=
- =?utf-8?B?bVV4ZmtIKzl4TDJONTZGYzdpRlVYNmRYVXNBYnNFUWZVUTBBczlYblAxWnNj?=
- =?utf-8?B?N3FCc1lPSjZ2VkVoclQyekVCU2xKdTJ2T1ZuZUgzSkFoQkNKcjFNK2VFV3BZ?=
- =?utf-8?B?OE15ZFlRaGYvTTlyMkx2Kzh1Tmtid0tFdVBPNC90Z2lXWUdTTC95RXBVTjBC?=
- =?utf-8?B?aFpHdU1ScVpvWXlCR2Z5T2NVYTdHM0FSQVRqKzcrK0xvcm9XS3pwa1plK2s0?=
- =?utf-8?B?eWFwWmc2aFA4Qmp0RngraGtlNmJONlNpdTVxS1Zuc0M1bm9FVnpQK0xSY3hs?=
- =?utf-8?B?bnUwQ2JPVFlQSXFWekFJRVoxdUs3b3pkcHRqUGJ0Y2ZEaFNaRnJoRnhaT0pV?=
- =?utf-8?B?Qm1WSlEvbG1DUWNTd1NxUEJhVDdLcHpjMzgzaThmZ1RKeWM0bFR0WUt0cjBl?=
- =?utf-8?B?am40ckd3MDJrdk5ObzM4NkpKeExxSllGNVZEMVZFM05rc3pSYXlVdz09?=
-X-Exchange-RoutingPolicyChecked: tGOq2HmgpO/QkhI/RKXFnHZi9aqCSQRHQH7XJEbl/vBP81qSAE9KDL8LIqb7lbcyo4W8grc/GofR3W271qWb8+MjmBfliA4Kvd3J2UNdosj7gwn0RN2IavxSTwDosKVKecywWWuAe9UWZXEG5KQxwDc6RP4aVeVSaLsIOPJT/LHLM6VcixY+ajvZsm6x0ditp6p9vaVjv5a7W9k/OH5QiLAuiewvGgxBWStP+0h6eEWwCwfl4hai7SWiJYoQTahcGki4H407SU+IXORa7Q/NoozNL2YRNkhYbZvvKk5aYUMYLMn46xYJQXliuCySghNu09m0Xz2ZMUog4Mw6QQa6Lg==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6jLZxJV7fNpBAHpgGZEN6GgzwsWswLdMFBxteD01aOXIIwSBJJ4gk5a2oj6G?=
+ =?us-ascii?Q?A0u/bBJTGoUpA50OHVv6EqzMVeJCQliNkuVOyfdFUG3twp21wIMM09vVLCdj?=
+ =?us-ascii?Q?RlFXDV06U9Xus+XXyMsQW5dcvxGNVZsuqRk9RG7yY/ZguaRMuO84gNP2O6ve?=
+ =?us-ascii?Q?vKFcHqucs5PGG2+FGEPiaIuPEw4GERextpq7VdHck/zy+MwRk/Be4AQdvHSe?=
+ =?us-ascii?Q?uNoa4XnkBE6jhfVRL+6N5UmsUg3h8N+h2zqxcvmRHnGnzKsjLAzks0Pg46Pn?=
+ =?us-ascii?Q?ojSMP9cpERocpT841gdRUtUttxuf92i32kBUIDMYRh8bQJlsBslJIoBiCOtz?=
+ =?us-ascii?Q?oC0rEkWRBHmY4cRFekF8UB9JLuXgGS8s5tGQ5zjjUglop78rZZzM5pF5nAi7?=
+ =?us-ascii?Q?L3GR/gSS4CmBmdhsPe6c4V6RA0NgaYsxmfLIeuDcExUGJGWR5rNuzwHMpbJ9?=
+ =?us-ascii?Q?l5cW1H3UHv14F59wMJDVz/Ob4WHGHKQlbtErW4R+iMXHGdzmwvDNebOup9GL?=
+ =?us-ascii?Q?XD8LGbGE8ROHW5XRFbcCGDUYW8KGl6iSrPzUXAP2tDAQsJeCWYoYT7yRNySM?=
+ =?us-ascii?Q?bJiLqLhFpWkGUl6Kasj1byZ37H+NMsnjx8Jw/dr1rC39rOo0MSv/AN6K9xbM?=
+ =?us-ascii?Q?7e8HQd9sS8sNOVtSU2vmeSXwu5+l540xHU6zsbCPN8Z7Nu1GWP6OQ3gI0ha8?=
+ =?us-ascii?Q?5ka0I++TP1u+CyVmN3MLJ18nD0j1cHVphACVxlkvsOtkgHBHUo6B5SSEmE6P?=
+ =?us-ascii?Q?OiRlnOrDu4OkwjF4OmN5I9TE2pCzpyTd37BEQNYV0ZZ8pw5p91aeX4rnr9qp?=
+ =?us-ascii?Q?gwUGqQwv46NVKFZzytGTGJVUS0O1q1GiZu4zoSmx05jXJJghunHKMBXCoDpU?=
+ =?us-ascii?Q?0CH2rmDR/kNhHEFCukLVpSJlUU9VZ7kj/isQWkPamUBn0fTYHTWFo4Ask9ew?=
+ =?us-ascii?Q?pZusIgXihcHueQ41mF2Kj/x8R8ZloqjIj1FY8OhooO51YjaKzLB3gVjUcK7H?=
+ =?us-ascii?Q?GD43df9YALqwQGAURjqXVdCnPI+lHh19eQ0paXm2blNh8Ia4M9p+d0TwaCge?=
+ =?us-ascii?Q?Hs2WAlh0ye8FLJzjxxn4rmrPq/GN3U4rcP8YwCDWkoXe120nQdMEHKLxgwBc?=
+ =?us-ascii?Q?1py+wCRb/PwBwtaD0bd9G+sEJYk5/k6jbmNad7IOUZBeSdBrcRo2qLw8dTNT?=
+ =?us-ascii?Q?tv1+GEZsJbW6rPR4OBaaTFdtreSfHq3p96hRmzSLkxloBAaU1ycznGU0JMXP?=
+ =?us-ascii?Q?zmRiEqP47mBrDMOQahlP3UK1IH3dj+ZDCKHn2gX1C6otwpXsZoDqIjs7VL4n?=
+ =?us-ascii?Q?sQRaJkKN/aV/GY4PEbq4ZIugL6MUxBBFqC9AhxJbrT+e38iJcZic4/D1+iq2?=
+ =?us-ascii?Q?YPO9C++6oDmFyhdF4wOM/+aNdb+8mMqsLJhlg8RQxvfIFktFqmQOu0E6YZ00?=
+ =?us-ascii?Q?F3nRnVeGMfpjqm+4Q2CMtn+kgGCOdFP2PkYQvdSoWOHXvPLptMXiUTkqOcAF?=
+ =?us-ascii?Q?SyR6qxzcvB7iEDIfeht4Z/iESIdh8ETZHwNYiYuTeD1vp/ZwG8BWqKD1BUR0?=
+ =?us-ascii?Q?tNl2HDkDuj+rs+BR4RPEhAIdsxHRyrzJYkr/xLLtJfI1k11HKKFd8Zej8Xam?=
+ =?us-ascii?Q?iTiHSgSFvFYolC5YimfuSR4s0STslnQZ1paSXZ13BkXUa0J7bpypkjHhjs9D?=
+ =?us-ascii?Q?YaHBakdjfZQF2AOEaQXEXIt+CNC6TvtG8Bz7m9SdOaydmlZ1OKB7cqk21Jjs?=
+ =?us-ascii?Q?LmHDQUcrkA=3D=3D?=
+X-Exchange-RoutingPolicyChecked: Z6inbiO2B9KD2eWQYI0QWqreOXJB11fvXTWr3/PG9cl0ngfGcPkqJneUFJzruSltubA7aH60uesFaTcNdS5MKrNWagEceMGMh9Hq8gr6v6Ky+Ifq7kwZ6A1/fij/+Tx1pB2VaKH0MFXIHTb2tAmow16OKUMXzeTvhqGLdqgCVeKd5lgrPbbgXE1pxHwBnEfHMo834T/gfcJkBFfmw/1n25UwFbGkomdOrshdVZfCF7MQnWGGveitiF9U7H8mzMuw6LnhAAOaCyYtp3gE8nQKb8COpezpwkiOJwIJTGyLCWfAxGzh+PAnY4jG+q0GzUpPbZVQYmGXTnIJslCjrIij2g==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6452c14c-14fa-4b90-4415-08defd30ab25
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5fdfbd49-77bd-49cc-c910-08defd30b0e5
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR02MB3827.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 13:57:40.6101 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 13:57:50.2317 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4GDuSqOE2DJyKe+I41y6ehhY1xlJXQ9yWUQHzeBpyVIYhUfBpiqYVcB8UiU2EHjXo3n+RCOMfSOAI+JaO1pyNvGA8jefrTtZgGE4F3F6UrA=
+X-MS-Exchange-CrossTenant-UserPrincipalName: FxmHDGfC/Ms7z4ZbBEMtDvvWCl0tivhI4UC9JEBCYNuDGZLg0ya94QmG1qJEwcmDxW48i2l+9Ke6+nN6XLPYKh/dCKfH8nXwMnWTgdoj3hQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB9103
-X-Proofpoint-ORIG-GUID: OLJQ1guoC6q6aXvo8i95saLTjhpbgWR3
-X-Proofpoint-GUID: OLJQ1guoC6q6aXvo8i95saLTjhpbgWR3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfXy2Wfi/zl4KMi
- CCMEnocscUF70IcW9I7eyTBUV8hiPUZ8D2MvfG1e081DZ6/2aovLEXxIkUv6EIAcs49/qs30nip
- kMSM+nnVsZkdpbzNNV5qVYjo/CYmBVErvuIrJvBhX1TwwwMNxkALYNlHTLviKptmr6XfjwJX8N8
- uLTUULnXOPel46VGUtkmq99LVhDnHmJfzEkGHD9lZJ5cFrz1598nthA6eO5iAuY/q+uTqKJTZeT
- 6qO5p/jyK2Ax5wNq/9CvUvI8HFFj6J+p+tfjS4d4aHrIoojZ2k1eIPjrx1x+DviWyW+HRGUeBap
- ZHkDbdcmEAZB40uWTqnEMwXp59ogFDJx3U6iPuUMQ6fXKOipmf2LEgjVpT3+cXo9BqYSLuLiH4x
- 4rf9LvpFRtoTAcbJZPIP8oyRvhdI9PQ8DDqhSMC9SYAhWh1AuD7KdhtCxObg1aqa5gqHRLE5VKC
- n6oMr8rGY/EdBU8BXVw==
-X-Authority-Analysis: v=2.4 cv=RImD2Yi+ c=1 sm=1 tr=0 ts=6a8464d8 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfX4HD/8Lywn8Yk
+ oVFTft0JEiO2dg/Ar7Lo7Pu+RJYlsokE5SKkg9V04DQK6WWHJ05cQMIbSy65G7qaGk85Vuh7DKj
+ eX+JcpqBRGVsEJ9az6VoMkETGiv/m6doC9rRg/ri3N68ujUGWHcRB8xy503tT+Fq8QlQ3IBnl+c
+ ZhqZ6BTCJiTED9JB5urCzkedtziYHOAvO5cP6A+6nIoDYRdOMLYF1GeRXi7dIrMZzJMU4bdEZ7l
+ qhl/chr7sz14cBG6kbwGm17NZri+JpWYM3wywFMVVQP4MA/vx1SwZjxNZCizn+MP964E/anxyJL
+ hn5Gu9LwzBD7whGngfyFEgMILkRQlEodERsV1FDMS4z2aD41cfEBX96wW3h1H88V2VYJ78GPxb4
+ lIMbs9mpbfxLxcHJEpWLvWNJ40q5mSys3uVMpclsxUYqjO5N7LhV/jbF1O33KARSRwLBH1oltxm
+ /OfiO1ujn7uNFaRR1ZA==
+X-Proofpoint-ORIG-GUID: 0twUlcabviI4C58dIG9Ge7XqYL-C6qTX
+X-Proofpoint-GUID: 0twUlcabviI4C58dIG9Ge7XqYL-C6qTX
+X-Authority-Analysis: v=2.4 cv=X85i7mTe c=1 sm=1 tr=0 ts=6a8464e0 cx=c_pps
  a=EgIJVKDiB2rM9xu8Bbqf7A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=Ap8k9tRZuQ82DLYWQqG7:22
- a=scCNhTKc4am_9yREdVgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfX/sNT47VWtASu
- cUg4SG3REmrcTff44+HW8ebjTfBehyt8FxCLUEGvnTfB3d7zG/0invum0PIpaaFBzZNbaPwtOb8
- wHT9BSCFNWCeOM8tMQGfEI6LjQHAb/c=
+ a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=64Cc0HZtAAAA:8 a=PIACHJi0fWsG_2wZ9OsA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfX0qnkNKn9O9dn
+ DLDAMvBc/KLDN26KyzEWUuR/nmQMkJlhfmbk1OhjnWmFZAPvah5nKJipBh+jXkgR2/c5taGOb/Q
+ c2C6dPJp9DOXpGe/yYMh5OdM1Ns4zoQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
@@ -186,59 +181,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, a vnc client has no reliable way of determining if a
-guest side clipboard peer is present. Using VNC_ENCODING_CLIPBOARD_EXT
-allows the client to try and infer peer presence based on NOTIFY event,
-but this only works if the unregistering peer has ownership over the
-clipboard, otherwise the loss of peer is silent.
+VNC clipboard peer is registered inline from vnc_server_cut_text_caps.
 
-This series' goal is to enable vnc clients to determine if a guest side
-peer is present, and to be notified of changes to its presence.
+Move the registration logic into a function so a subsequent change can
+register the peer independently of extended clipboard capability.
 
-A new qemu submessage (VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS) used to
-carry the guest peer status was added to ui/vnc. It will be emitted
-when the server receives the pseudo-encoding enabling this feature
-and when a ClipboardPeer with .guest=true register or unregisters.
+No functional change.
 
-The commit adding the new vnc feature is preceeded by 3 commits adding the
-prerequisite functionality, making it 4 parts in total:
+Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
+---
+ ui/vnc-clipboard.c | 17 +++++++++++------
+ ui/vnc.h           |  1 +
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-1. Add PEER_UPDATE notification to ui/clipboard and call it on each
-    register/unregister.
-
-2. Add *guest* field to ClipboardPeer, which indicates that a peer is
-    guest side. Currently it's only set on vdagent's cbpeer.
-
-3. Factor out vnc peer registration into a separate function.
-    Currently it's inlined in vnc_server_cut_text_caps.
-
-4. Add the new vnc feature, register the clipboard peer for update
-    notifications, emit peer status message on set_encodings and
-    on peer updates.
-
-Changes from v1:
-- Removed spurious change ids from commit-msg hook
-- Added some missing context to cover letter
-
-Lukasz Kornicki (4):
-  ui/clipboard: add clipboard peer update notification
-  ui/clipboard: keep track of clipboard peer side
-  ui/vnc-clipboard: factor out clipboard peer registration
-  ui/vnc: notify client of clipboard peer status
-
- include/ui/clipboard.h     | 27 +++++++++++++++++++++
- tools/qemu-vnc/clipboard.c |  3 +++
- ui/clipboard.c             | 33 +++++++++++++++++++++++++
- ui/cocoa.m                 |  3 +++
- ui/dbus-clipboard.c        |  3 +++
- ui/gtk-clipboard.c         |  3 +++
- ui/trace-events            |  2 ++
- ui/vdagent.c               |  4 ++++
- ui/vnc-clipboard.c         | 49 +++++++++++++++++++++++++++++++++-----
- ui/vnc.c                   |  6 +++++
- ui/vnc.h                   |  9 +++++++
- 11 files changed, 136 insertions(+), 6 deletions(-)
-
+diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+index dfe830f819..67f710f6ed 100644
+--- a/ui/vnc-clipboard.c
++++ b/ui/vnc-clipboard.c
+@@ -325,6 +325,16 @@ void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text)
+     qemu_clipboard_info_unref(info);
+ }
+ 
++void vnc_clipboard_peer_register(VncState *vs)
++{
++    if (!vs->cbpeer.notifier.notify) {
++        vs->cbpeer.name = "vnc";
++        vs->cbpeer.notifier.notify = vnc_clipboard_notify;
++        vs->cbpeer.request = vnc_clipboard_request;
++        qemu_clipboard_peer_register(&vs->cbpeer);
++    }
++}
++
+ void vnc_server_cut_text_caps(VncState *vs)
+ {
+     uint32_t caps[2];
+@@ -341,10 +351,5 @@ void vnc_server_cut_text_caps(VncState *vs)
+     caps[1] = 0;
+     vnc_clipboard_send(vs, 2, caps);
+ 
+-    if (!vs->cbpeer.notifier.notify) {
+-        vs->cbpeer.name = "vnc";
+-        vs->cbpeer.notifier.notify = vnc_clipboard_notify;
+-        vs->cbpeer.request = vnc_clipboard_request;
+-        qemu_clipboard_peer_register(&vs->cbpeer);
+-    }
++    vnc_clipboard_peer_register(vs);
+ }
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 88293ef497..d8b0070396 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -636,6 +636,7 @@ int vnc_zywrle_send_framebuffer_update(VncState *vs, VncWorker *worker,
+ void vnc_zrle_clear(VncWorker *worker);
+ 
+ /* vnc-clipboard.c */
++void vnc_clipboard_peer_register(VncState *vs);
+ void vnc_server_cut_text_caps(VncState *vs);
+ void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t *data);
 -- 
 2.43.0
 
