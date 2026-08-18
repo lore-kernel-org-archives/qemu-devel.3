@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CE9C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 23:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7407C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 23:58:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTX8-0005nP-U4; Tue, 18 Aug 2026 19:47:54 -0400
+	id 1wwTgY-0001wv-88; Tue, 18 Aug 2026 19:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwTX6-0005mN-OM
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:47:52 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgW-0001we-Qh
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:36 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwTX5-0004At-81
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:47:52 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2cace91f112so4364525ad.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:47:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgV-0005DD-8F
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:36 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-455ee8f529dso147933fac.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787096870; x=1787701670; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=fc56p3k8uuRnc97EoofyEUOBaGfYaZmyJH4nBz5RWwg=;
- b=iwSgs1gxtvASv5VsQOeHUgqJ+ijL3AuzzpBoiFR7fjH3cedk2yTUZ2jmUCxgwebGl9
- lrJ1/trT5BoRKyRzqvke3IbqR/WXza16rT+jMuYgezbr6q4GYIVJy5TEfQjHTcVYigkQ
- xwrmXQDivo2ESOAAogldx6cBY6mPdbn2SNY3iC5TVOsG7fwJiYDRJ7E6r+nAna1pBJMP
- Kxn0GqjWm4u/UNzKlRSQwIJ6OZIUMsqkz0tx33Ges4UcQz3f+3fjMCtRuS/y1j3ZOn9x
- T7JIMNOXHFD+E8gvhLwsiBS4zWbaj++THW3XdGgF77cliROSyP70WvsTVCZ3yVWBXoHL
- Q+mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787096870; x=1787701670;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097454; x=1787702254;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fc56p3k8uuRnc97EoofyEUOBaGfYaZmyJH4nBz5RWwg=;
- b=lvVc60NyfcHS2UJqL8nY9uF0PfAHr/LSP2cwgcevfwhUNdsWbFsYz7uldQIjy19njQ
- W1OaGUdi+Q3DnOSqFKivzngIzUBJ9blVHgd5HddlMIdllNAHe8gC6fvRsq93SUD0OJks
- yKMVXh31+n74C3wY3j50FGSjTHc/QApIF36RXGkZNCl5MAD9PPTvndPz9JNFuxBgmmEg
- Ph3t4nPlzdwxHq22mFZfeooEAwBbcd9qfjtK4MXrxM2T01sAx+lFvb3nrmYvMCRQexZT
- P7jX+pYTKPbOnErinjng6FdzoyCx6p46eE4mD4eOep1mQlK+/ZFpKr+4STm28rP8QxTc
- MyqQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RppN11H3mncw4V9j93LMsTKzNDM7vrbAtMg9o9iFFMeoeMEHhnrhzJUihMENL7TKdZ9LGXkAENVAMma@nongnu.org
-X-Gm-Message-State: AOJu0Yz7/byzHfgiFjgNl9NrzM6M7Xcu9QUt6rJEPM70ZosedtMe/5uh
- c7QU7mry4THKTqErZv0Q5JTAONeY3GlXRhlYjwjjzKeFX52n6bXZS2QHaiI+Lcxtt3c=
-X-Gm-Gg: AR+sD10A7q+usfUMyksddiIfi8CykSDqylRe79zFj2T6S9OWWmb7q+2p7kpKLL3xWlh
- t1rpGBKGg2qpT1zQF07F/dj20DjuNr35cDnAr0H55W8rvr0fiekc/Ww0fCBEV79jMnz7PjwnaHZ
- s/33lytVtvzbdjhxIoLyxCoDEU9ij1ANpEJxwzfyfretYBnQjlY08MXSCG1nrq0Ye6DEJ291Irq
- pTLMcHv4+iCErFAE2/dky+1IOzBWHosbZGgP1YfFSo85/u5HDXaX4ZSObBBoRAvGSTyBTmJryLj
- mdunj3TmwFj3B+3aMDee3j5Paw/k0J7GtGqVFxYT0XWA7TKeuoFZkQE5+RCQIvGs73gYHhw/D4t
- 3jfo2onI2ZqzWiTsIKVE47JvE6A3MXoT42mMYCTnD/G5P0ILaj/LSGLYUlX2nQ8ErWx8S+89kGm
- gAMEJGHk2/FXbx0lnZZ9tClW24v1gSdk4U2cG1x9eYlbLCjczFKSqz+dVEA6hIw0M1VfdO9JHf6
- 5ZOZ2fKZP8tbUyrnTI=
-X-Received: by 2002:a17:90b:164c:b0:393:19a3:4e5 with SMTP id
- 98e67ed59e1d1-395812c6e07mr783639a91.16.1787096869446; 
- Tue, 18 Aug 2026 16:47:49 -0700 (PDT)
-Received: from [192.168.122.51] ([173.164.107.233])
+ bh=Xb+YdlNPBadeoze7HAOEC8N9fCWlgAmWnIBHdbTxjjg=;
+ b=pOEK2Zq738Nlr6swiwK3OQBZRhmk8adPvoLq7KM5dV86OFdFH2+7t9V5TXRp+MPZV9
+ HDe3jCIzqsPNF+jWLcTcA+be9tZFsLLz1J8ZClEDSMde7ucjOkoTnmFqW23RFHO7wbjl
+ jV+m2aHE2H3s3y6hpXcg6zVdmOOIKL/RPREGSu2YqyIEFOBihvbZBtQtHZ8JpX2Vd/4Q
+ i2IFbbyr4PdydfBavYu+sNvMKxPURlOfAbjgT7W6bLWAo5Ul+adJN8Dg7PqtEykapI6S
+ nDw4kCAom5hG037+MllePFryExkZxATiv8foBOIEbe+DD/zfhY2s6An3nmyXniPkiqS6
+ Z+Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787097454; x=1787702254;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Xb+YdlNPBadeoze7HAOEC8N9fCWlgAmWnIBHdbTxjjg=;
+ b=D1auRZSBfrMGHK4e5Lxf4eA1Fu1slzBf5db8XMv5n9U/3wu9CV1QhCx92L3Gh/gcID
+ a8LAIxfyyjtCk3JwW8fkulIp7+JJyiE1nE9cdfrHHhcDDV+/JGh2STtEqLEfm8kAdkHn
+ FqaU3zHGR7YSL9md7nA8zOrLKzL5FTwEBLRMuazGCdDvfjOXuT9LqyfOO/DMno9kzCNQ
+ QJ1/lYv4M7JDZC9KFO94a2An5b7/4pPK6fpAXW+Aosy0BkEFVkeAL+/61Ma+LD9Ioxzp
+ t3BzmAW3oFlQBFdj49c2MYHyofNz6sa2EY3L7QvlDcWKnU0APSJP0ZvYpMH1Q1reg+WZ
+ hZSA==
+X-Gm-Message-State: AOJu0Yzr7OlE2gTPfB87d8yWcsnrnHT/cHhc1uh76PkP31uFd/87qL36
+ 0HoqwwITAb381WfBHdl1/o2UUWDoAjVk61NzdPNjUm3qHL5ut9/MOCSl+msMvIlWyBjy2NyqmUv
+ foy1l5Fg=
+X-Gm-Gg: AR+sD10+WXoi9QYIhtSPi5rtlsW2zNHwsV7zn4/osTWKxDkCtOHWZbNCnJV8N2Og9Bt
+ Ec5I6bqCMaa1nbXLA1wFO7Jn0EAii566P0IdGXaiIxM+OgP/nDtUBtz1XlpXpLBIPEi65tNm394
+ GykNoAU13dPXx0h/YHSMsWZrpwddSuv21wz+wfsQiOJDfdkgfTgX7iVXXGEcwowghdo9v+s1ev+
+ hW9lN6Gk0wgMmeSK7PKYKpfuOIjE8GHZFKKoYbZSEd0ij/BdnsBJDVOx6wm7Bru2mmaDCr6rBsj
+ 9N6wrV3tuA/ujYNS+C/Y4RQJeGDxa2oOGHodu4GJ6dn6w/VfON3BOwl1j71vc5tCujeHJnChFcB
+ oBzDFgHyPOx4Y8k0tIKde239b3PuxjdUqG2ISmP4Wk3yXnoB8Ru5rMgWG1pX5RexZWS49R4YtDH
+ ZmjpnFY7z5fRc292yE5sP6qObQXGdCQNluIJDvS6UO2VYR6qw=
+X-Received: by 2002:a05:6808:4fe5:b0:4b2:69a1:26e0 with SMTP id
+ 5614622812f47-4b2bcacd70amr399948b6e.15.1787097454061; 
+ Tue, 18 Aug 2026 16:57:34 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957fb87174sm379525a91.12.2026.08.18.16.47.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 16:47:48 -0700 (PDT)
-Message-ID: <00df9c29-1bbb-41c2-958c-dd5d57c35564@linaro.org>
-Date: Tue, 18 Aug 2026 16:47:47 -0700
+ 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.57.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 16:57:32 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+Date: Tue, 18 Aug 2026 17:55:58 -0600
+Subject: [PATCH v4 05/40] bsd-user: Add signal system call dispatch
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 16/18] target/riscv: Recognize watchpoints with
- first/last
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org
-References: <20260815203730.1468365-1-richard.henderson@linaro.org>
- <20260815203730.1468365-17-richard.henderson@linaro.org>
- <c25aa359-4519-483e-aa7e-2ba69daa18c2@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <c25aa359-4519-483e-aa7e-2ba69daa18c2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260818-misc-2026q2-v4-5-09bf5647c98e@bsdimp.com>
+References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
+In-Reply-To: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Kyle Evans <kevans@FreeBSD.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2738; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=36BJktEl6AtJLhxPMlpnlHsCaLT7KBc84/1auyINFA0=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPEm2CQJtotXk19JVdMUKS4rjkvJ64IIsmCHN
+ 7XV5PmbXkiJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxJhsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBbyg/9EVUABfX/JTANAjb0m5xUsrDAAXUuhps
+ AZolyWGq1+e/uTUWqf9DqLnylE7xvq1QN0uNXCBks4CiZCBsnpGu3Mp7Ta0H0u5kl4/KfjMOlWe
+ ktaTdFEuk3xKWMIL+D8FAMVBicgPBCHSJm+jt0FJhjAWLgAqNrRg8VUq6tdorSPnOLlY1W6bNXr
+ ND99vwngI+EWj5o7SP0SFsH6VGfnOXMeh1r0iVXSU/PtvRahDJVKJiBHIOraBpp+K8kowi3iSlm
+ Ef1Z8IKJ0T5tdng7/CeDuHaVnloJXt1shbbFVFjodfr/dOfB4bgaJ99jBviLcFvQ0cfGDHnp8lc
+ FBoqhQP1qq3QkueETca7Q2AoqpYc+HPxpLtQceSusK9mfItMjljnD0TnO0xTX2GJmAdZexOsg7P
+ 0YelxDQ3XgGasT49up7HJz3NzKk6TyCbimM5mNDRbJoyXwn8NHSn6DPLdh6JpAestVaMk3XA0I5
+ I8GhQfnZ4+ZX88ZsXtQ10+S7XnAY2XTbAuyQiLnv3YVCMmoAcwSjyOpfIktGSgI72xwBPUIj/PJ
+ 3OgX0hXVhFsJ4fy6h9ILHxOhzUk8+6h55K63fSURlggfRy4B89DgB5+Z+QBeRMRVlzueCnNxGb+
+ LxnQmDxLuwgug5UbXDo6s0cnVpJGIiqU2UT7zQkUcR90LFCdI8to=
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2001:4860:4864:20::2a;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,39 +121,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/26 22:43, Philippe Mathieu-Daudé wrote:
-> On 15/8/26 22:37, Richard Henderson wrote:
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/riscv/tcg/cpu_helper.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
->> index 11f2654da1..3318e82ea7 100644
->> --- a/target/riscv/tcg/cpu_helper.c
->> +++ b/target/riscv/tcg/cpu_helper.c
->> @@ -1784,8 +1784,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, vaddr first, 
->> vaddr last,
->>            * Otherwise we'll throw a debug exception and execution
->>            * will continue elsewhere.
->>            */
->> -        cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
->> -                             wp_access, retaddr);
->> +        cpu_check_watchpoint(cs, first, last - first + 1,
->> +                             MEMTXATTRS_UNSPECIFIED, wp_access, retaddr);
-> 
-> Maybe squash in "accel/tcg: Replace size with first/last in TCGCPUOps.tlb_fill"
+Wire up the signal-related system calls in the FreeBSD syscall
+dispatcher: sigaction, sigprocmask, sigpending, sigsuspend, sigreturn,
+sigwait, sigwaitinfo, sigqueue, sigaltstack, kill, and pdkill.
 
-No, because that one explicitly makes no other code changes.
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/freebsd/os-syscall.c | 48 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 7fefdb569f..06148fe3ce 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -43,6 +43,7 @@
+ /* BSD dependent syscall shims */
+ #include "os-stat.h"
+ #include "os-proc.h"
++#include "os-signal.h"
+ #include "os-misc.h"
+ 
+ /* I/O */
+@@ -950,6 +951,53 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_getdtablesize();
+         break;
+ 
++        /*
++         * signal system calls
++         */
++    case TARGET_FREEBSD_NR_sigaction: /* sigaction(2) */
++        ret = do_bsd_sigaction(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigprocmask: /* sigprocmask(2) */
++        ret = do_bsd_sigprocmask(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigpending: /* sigpending(2) */
++        ret = do_bsd_sigpending(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sigsuspend: /* sigsuspend(2) */
++        ret = do_bsd_sigsuspend(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sigreturn: /* sigreturn(2) */
++        ret = do_bsd_sigreturn(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sigwait: /* sigwait(2) */
++        ret = do_bsd_sigwait(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigwaitinfo: /* sigwaitinfo(2) */
++        ret = do_bsd_sigwaitinfo(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sigqueue: /* sigqueue(2) */
++        ret = do_bsd_sigqueue(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sigaltstack: /* sigaltstack(2) */
++        ret = do_bsd_sigaltstack(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_kill: /* kill(2) */
++        ret = do_bsd_kill(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_pdkill: /* pdkill(2) */
++        ret = do_freebsd_pdkill(arg1, arg2);
++        break;
++
+         /*
+          * sys{ctl, arch, call}
+          */
 
-> or re-order just after?
+-- 
+2.55.0
 
-Ok.
-
-> I'm confused by this single WP change in middle of PMP API ones.
-It's just before the last use of size is removed.  :-/
-
-
-r~
 
