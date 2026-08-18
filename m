@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E43C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EA3C5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTgQ-0001oE-57; Tue, 18 Aug 2026 19:57:30 -0400
+	id 1wwThj-0005ne-Oj; Tue, 18 Aug 2026 19:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgO-0001nc-CE
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:28 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThh-0005e7-SX
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:49 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgL-0005Bt-CU
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:28 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7f3ece23165so324287a34.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:57:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThe-0005L4-Sq
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:49 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-495b27007d0so383718b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097443; x=1787702243;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097526; x=1787702326;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=vDzbWax6ejw0HlRC5cXJ6Ial9QpACKadKoRXkQg2aaw=;
- b=wN5tC+SPCYe+kzV/DKWSrl0uZa1vMCa1MJq9OlF7GnL5tnsLk6jLrs/unNVPrkA5c2
- 7eH6W7R8X/Nxl87Bf95ExuVST1tGj3P0hCvf9YQqP2n0eMzaCfxEFlOdrvu43VRvQEBg
- 9v50714z/rGqhIlcPOJXWtRy1L81dQDa4O596Q9gMVWVakxBMNMhv1MJ6RL3s2WOCJm2
- hfGchrAXh5v3hkYC3irxgHUzbpvokVnstm5BBiM2iypVLt2P+GCIcWGncaivFbUefx1Y
- aztm5euCQ7sLKNOuxDr6gzGkcRhY5xxi8yodVSVJpry5jXnCUBi9hPoelK4tNfgUYtly
- v7xA==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JJ7lZQiWgQ297FIda9/iIZxdLWWnVxz/oXcAsyVeWMU=;
+ b=cnYyERBI+2NvSUkQnb9+THvhSvX2uQ4G4CL7iBdsEpq+NS/cktxMI93sdiWj8lKSRK
+ U16tJK4xSTB0MXG9GiAGdF2dX720zEjPYdwLRtA15GUoGQ2SwkPHrgl+Tf0opaMX1Wgx
+ bPoirEguhI+9Cst9BHeZoXO1JbaWCj9lEls3S8WgZxcSLwQg6wLt7CmwebBocMzM3RLM
+ oxPRFo3QYLLtz5figDdmBO3QmdtzgGX29qEoI3DOgJISOphFILxZGpg8yNmCoqFMC8gp
+ 0AqGifhYuV8oFvK+LEK3OUa0kBeVU2iQHSbZmlx74cVFPjGg3KItnC+TLF0vNlfHIW0S
+ gXSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787097443; x=1787702243;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=vDzbWax6ejw0HlRC5cXJ6Ial9QpACKadKoRXkQg2aaw=;
- b=MYl9Q7BxFDpnIFqBgqTA8IfeS/FM74qcn8e24Lg4lTG+i7ya59yVaHfyV50KcCuP1N
- JlzPEn8Z/diHFDwszQm76Th0acfmrxy4M14JsAQUaHQBHAdwsfXTBS3O9WJ2PJwgZOx/
- 9Y9QQ2biw5jTg8J5jaagLRL4dK0gGp2RvjsCvdfBhxQb90dz6W8kkGX56OHNIa2jD3tz
- YdbgcYBDec76KoN49wRVXfDGRbiRLSZyBEAPg8hZkxnKHb0V15pwRYswrI6Cz0op1MW/
- mssMmeN8N0nEMUSSWjs1TmStUpAhuQ/eJ03mLS2uXoiOcmsCOsWAFsC9sC5LeQxZhR/D
- s/Eg==
-X-Gm-Message-State: AOJu0Yz/vV6iyZkXFM6l8MtWMKABojrvobDzR/Cj1hRWP1GVH56KrXNJ
- 6Sw0/db9urtoF0tpzmM0JZyy/bkGhxVk/EwNv87FKhsctWF3XeH0QEGfbTnFVORBGhc=
-X-Gm-Gg: AR+sD13cTgjOpBP4FjnmBnIKKyIiVMl9Q323mJa3M2bu/+n3N8HAsv1nev0hOmpubhS
- 29Lb47jZ7jyQAYvLJm5+eF5EsHrnQ29IGbcjNIq998VkwzZ3FOtUw9nfcPJkJfkgkHn+/jvLCkq
- p+bUzL/qYwOjUKEumTuTnqXkQICLE1KDvUx3RsvPoygQYzCuE5NUBU+6aFffsS8YTQpciBhVJ2d
- /J9YfkFnngy1CDwjf33DWMyu2owX/aMeAQoHJ9ZKNd4PEKkVsifbiMhdw9f2nsuulSCMNOmLdNt
- sUiRLPfKgkVkewczRhgn6i5EIE3a9htCPMPdatlXNYGE0T1exQM0kZc0FVHz6B5tmGxotK848YI
- HbCXJRbMYzR6etrzLLrQ/IBC58RrMadTfFcd6lqBy2K7y2Z7yvf1GWxqqYKojlCrL9+MA3djqzL
- IbqGMrtq5NKacgI5W1JJop9cJ+w2piWZeMVO7gCNkj7RWEJTpA8kTzmK3isA==
-X-Received: by 2002:a05:6808:1918:b0:4a4:c12:46f6 with SMTP id
- 5614622812f47-4b2bc8855a9mr449576b6e.2.1787097442858; 
- Tue, 18 Aug 2026 16:57:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787097526; x=1787702326;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=JJ7lZQiWgQ297FIda9/iIZxdLWWnVxz/oXcAsyVeWMU=;
+ b=eWrGE8eVMYGlpNczvfwl5VyTwrmI3vDdBLDiNqRA7aJrXZxT6tig8ADa5Ooz/9C0c9
+ 3Gl3J6SS4wDkbtiRVWDg5Nuby+v3uy26ICU1R4iprXzYS7oN4kB8IDz6F954UK/q7Y9K
+ uP/Xwx9w3cpkUPz3qRCK9EudQ3jprUuDN80Ym9Lh/7KUhCJO3lMJPo0MM7pHlCumHANa
+ UZH2nhPBvxaqZSCouUtfdolKNTZPWswwkv+ddV1gD4x1Cjqz50oylTrwtcvL6V7stcsR
+ CVDLbxauVU4rtjxJfJaBQ5HIuPPPO29EebZF7mc3a1EL3C/HBluwBhMT311M4FyOAFZP
+ fpNA==
+X-Gm-Message-State: AOJu0YxjfnweGscsxC8bZpEETgOw19puqNvCNBGqimW1R7gWet5nThhg
+ wkLNYDYXBo+oXR3jBSx8aaiGly339iVjYe9SMgJ8iBvJQj/Isx1qMmtEnQfCPPXDw0c=
+X-Gm-Gg: AR+sD138BWSgsEPAD2nUZYmlIv2/Svh6hx+yBrb00LVOBKDkBiSzMgtdvPyZbvoeBkE
+ jFj/Hm6aYQOMWvlBCTLuz5ssEmte5bKs/kld7ta6b+MUj2YrErmH50gQwaGMjfSeOKHgdtvpUjg
+ e0HUs+wncLy7OAELF+K7WOKyYhp5YwTpF8mPACXjm2bRvYJue6eok0m4txI9Zo/ZpnvVpfec4qv
+ hDeMBk/inax0mQ/K7ngEgpiBh8Ojitl3Vl+GkGDym2utyoF7jeypXFjFtskEfxHm4PbALaOhBCX
+ ERRO/ArtnkNb7knz+24aNDvEy3NAXH4dJqzj4PC20ARxkTlmavgzxFVMWFd6Jnx00jSneGlehlS
+ gX+1PeKLH5JyjbDHQKyHMN83mIlcspawkAP7zbh4DEpVNJ6J8bDJ1/+k/Epq16/ypRUBPO7bP1Z
+ QqVSFzg7cumfkMYuCLrSZHJn2C7zdkaeEId2rUAnr9pHr6LoO2oaR4hnuzEA==
+X-Received: by 2002:a05:6808:14c3:b0:4a4:88ab:126f with SMTP id
+ 5614622812f47-4b2bcc22492mr316307b6e.21.1787097525578; 
+ Tue, 18 Aug 2026 16:58:45 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.57.19
+ 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.58.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 16:57:20 -0700 (PDT)
+ Tue, 18 Aug 2026 16:58:44 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Subject: [PATCH v4 00/40] bsd-user: Upstream most of the remaining system calls
-Date: Tue, 18 Aug 2026 17:55:53 -0600
-Message-Id: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
+Date: Tue, 18 Aug 2026 17:56:31 -0600
+Subject: [PATCH v4 38/40] bsd-user: Add scheduler, cpuset, kmod, and misc
+ syscall dispatch
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAvxhGoC/2XNywrCMBCF4VeRrI0kk4vFle8hLqa52Cx6MZGgl
- L67aRE0uDwD3z8zSS4Gl8hpN5PockhhHMqQ+x0xHQ43R4MtmwADzRSTtA/J0HXdgaJCLzgaJgB
- JEVN0Pjy32uVadhfSY4yvLZ75ev10uKo6mVNGlRSNQclbOOK5TTb008GMPVlDGX5xU2MoWBuuv
- ZOyEYz/YfHFGliNRcFeGwcCbWNt/XlZljdzuUyTIQEAAA==
-X-Change-ID: 20260504-misc-2026q2-a5af31ac032a
+Message-Id: <20260818-misc-2026q2-v4-38-09bf5647c98e@bsdimp.com>
+References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
+In-Reply-To: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Kyle Evans <kevans@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>, 
- =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
- Michal Meloun <mmel@FreeBSD.org>, Sean Bruno <sbruno@FreeBSD.org>
+ Kyle Evans <kevans@FreeBSD.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11090; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=qqIyJ7MeI4iQBQMOF83O7alI/1djli3btMc3XjhnOqI=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPEXm6s02HvOn04A0ZH3vEt4cyml4lJtPB8t9
- 4QMwcG7baeJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxFxsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBZfw/+OdEHKeTHZ1qJZHy/Cn3z0hSYYlFgH6e
- 7/VJlKK8ZpalDqQA/JXCwFucFK4cNgBbznOLjZ4cgWB3eDbIHV+T10kk207kvEkqbVsvUBirlLI
- m68gBya8/frD41uRHG1e9766huP3ay2zGrO4/x/kuNxaQ2622F3f4kS7rGiVjd4rmWEcFbabw1V
- qhlstJblX5j2Qk/HyvYStTRnaB6cwey96DKWYZl/KsIW5Q0vRCTdm85ZsxRwrf78AU1XxL/0TSj
- je3hPGr12hUDRKgYch1E9v6BGaGSL4auOa350HxSmEzvwaF8W6VHEeQC4tPCokx0EA5cFMxnj7o
- 0MX8Ho0IBdHhYJcsK5JM4lVCxEZv9osCeUVrSzOyx/xVVi6X3UwTsJxgsantJQQfJaCL9Mq1ga8
- mvlj6Rpw2tvSgkCjECselLK2M3dLDQMymT451qoVBI6EK+MIr/ytRjAGH7kzoT1boAJ/IMtiZi8
- eCEreEoytOFRnbx9cNjpVsQ1iakuDk1NE4gFH1aJWdREbjvcq0ubSpSGfTEQQjVOl9SKOW6MAJv
- MvKm4MDqsmLcB9q+Nc+W6MHq8kxbWY8zG/0S7R5u8OF8cCaEpss0BaO21hRKwaBnRjUAuoV6GkB
- 1DPd/lhuRdnSctv3CP7CJypK9V/yfubFCLMhmMieGTx1XR/SIfOI=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=21220; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=vkgsrOokvMjouYq9sezU8+xmgEG6sjF6PgIvnbgZANo=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPFbY9k+il7pTTQ/458NnZwtBi/WXvJvAQ9jG
+ 84K/AfSsxyJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxWxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQB+9Q/8Cij258IlPbAWz5CO3Y4KuI+jJC/myfS
+ CZkaFZM8gbLXaVJWl3I93VL9xzWnkqBU7I2SJJuR1gHKssa8m7n6rJiDaZzTEfZulkk/kZ91Wuz
+ Iy596o0aB/CttWghXFgOYHt6nEa75pLTCDUVI3Ob855MAcSsOG3gGgS4CNeEPk8ZJ8HyvxBNIdI
+ CP69PpqosCjPU/9mw0vBQ6fL96MdmI7HcsPSayanWS3jNkiNraeZDJa+AK+aq70xIO9TOErMUGM
+ QtbHLHqV0c94Rh3AE6Qy5JYsY455m/wmnh2OjmyCaCnb5cSLJ0O06Oj9/16EB0L3QAkZ+zAGfva
+ t33PRBGUOdPyPy5gKw3u01CEH48rwJQAQPzsMtWDWTm5Gu4MIS63BhYpJXSuq/sCdcoQqySftBS
+ IIp79GsrC+Yv9B9+F4E494nLqIWV6ijaP0j3dndV9PIx7tlkUl7zM8GWg8ufQXPOAL9zT5ggNwp
+ o6w6WddMA2Zh8kViCLjVII3ghjPBmCVO7x2gKTnNFAKw+/2VvGZDemZi2ehiZgf173Nzt7+3Ivg
+ L0utLcQ4o1CG0bwAzOt8NGNIHqvw1jMXlAwNBLveeSm381i0QKdjwrn5KVpZuUFWp+ShE+W91he
+ iTOA1Vqp8r8y9g/fGfB23mE6q2AUF2E/jEtHGC6SZ+xCaUINRgjo=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -124,220 +121,640 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Upstream the file, thread, socket and remaining signal system calls (too
-numerous to list here).
+Wire up remaining system calls: sched_setparam, sched_getparam,
+sched_setscheduler, sched_getscheduler, sched_get_priority_max,
+sched_get_priority_min, sched_rr_get_interval, sched_yield,
+cpuset, cpuset_setid, cpuset_getid, cpuset_getaffinity,
+cpuset_setaffinity, modfnext, modfind, kldload, kldunload,
+kldunloadf, kldfind, kldnext, kldstat, kldfirstmod, kldsym,
+posix_fallocate, posix_openpt, getrandom, kenv, cap_rights_limit,
+cap_ioctls_limit, cap_fcntls_limit, cap_enter, syscall, and
+__syscall.
 
-This series is an ambitous use of claude to help me upstream all the
-remaining system calls. I've batched them together in what I think are
-reasonable chunks, and had claude do the grunt work of copying the code
-over and attributing the commits from our complex branching history. The
-chopping up was a bit arbitrary, but I think it's good. The commit
-messages may be a little weak, but may also be OK. I've also double
-checked the style and made fixes upstream for them as well. Claude also
-reviewed all these changes and found a few bugs that I've fixed. I've
-personally read through them all and haven't found anything glaring. I
-fixed all the bugs that were found, in most cases differently than
-claude's suggestions.
+We also reshuffle a few system calls here to match the blitz branch
+which adds some churn, but is the least bad way to deal with the issues.
 
-I've added 'Assisted-by: Claude...' to all these commits to reflect my
-leaning on Claude so hard. This use falls within the 'non-creative' use
-that the Qemu project has said is OK. If that's not the right thing to
-do, I can remove them.
-
-This leaves sysctl translation, the powerpc architecture support,
-coredumps and a transition to 'truss' based system call tracing. With
-these changes applied we'er down from a high of about 30k lines of diffs
-to only 5k (not counting genereted, but checked in files in blitz). The
-changes are 8k, so maybe a bit ambitious from that perspective as well.
-
-There's a few lines over 80 that I've not cleaned up. Let me know if
-that's a problem. The other warnings are about adding files, and there's
-no new MAINTAINERS entry needed. And the 'arch dependent defines should
-be avoided' are needed to cope with different FreeBSD build systems
-having different system calls.
-
-Note, this is called out below too, but in v2 I've folded back all the
-fixes based on some out-of-band feedback I recieved to do this the
-normal way and the qemu project isn't interested in the fixes to fixes.
-
-Note that in v3 I've added a rather long generated file. I generated it
-automatically looking at the type annocations in FreeBSD on the socket
-options in comments. I had to augment the annotations, so I can't just
-generate it within the build from the installed headers until it's
-merged from head and then merges to stable branches and then waiting for
-a release on each of them (6-9 months given FreeBSD's release schedule).
-Also note: there's a couple left over issues from v2, so if I've not
-taken care of them all, please gently remind me if you think action
-is still needed after my comments before.
-
-And in v3 I've added some random_seed fixes for fork/new threads
-since we're upstreaming those files. These should be correct now,
-but I'm looking for the correction.
-
-In v4, I've rebased to post 11.1.0 master, and fixed the issues that
-were highlighted in the last review. Some comments I rejected, for now,
-since they were refactoring code that's hard to test. I've also juggled
-many patch hunks between revisions so they all compile w/o warnings.
-
-I've created annotation in FreeBSD to allow us, in the future, to
-generate os-sockopt.h from the installed headers. It will take a while
-for that to work its way into all the supported releases, so in the mean
-time I'm committing the generated os-sockopt.h file. I've ignored the
-too-long-line warnings and errors for this file because there's no
-reason for this file to conform to style.
-
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
-Changes in v4:
-- Fix the rebase errors in v3.
-- Rebase to post 11.1.0.
-- Fix overly large chunking with syscalls-defs.h by breaking it up
-- Tweak syscalls-defs.h with an eye toward diff reduction to blitz
-- Break out realpath fix
-- Various chunks shuffled to make each patch compile w/o warnings
-- better get/setsockopt implementaiton
-- Link to v3: https://lore.kernel.org/qemu-devel/20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com
+ bsd-user/freebsd/os-syscall.c | 512 ++++++++++++++++++++++++++----------------
+ 1 file changed, 323 insertions(+), 189 deletions(-)
 
-Changes in v3:
-- refactor get/setsockopt, including new generated file
-- add random_seed fixes to fork
-- move adding of .c files to meson.build to where we add the file.
-- Fix acl bounds checking
-- Fix indentation and other misc nits
-- copy_to/from_user needs to be abi_long
-- Fix toggling of the _ at the end of BSD_PROC_H
-- Fix leak in error paths in do_freebsd_ktimer_create
-- Don't write back on ktimer_gettime errors
-- Be more careful about EINTR returns
-- do_freebsd_ntp_adjtime needs to return failures from h2t_freebsd_timex
-- do_freebsd_ktimer_gettime shouldn't writeback on error
-- t2h_freebsd_umtx_time needs to unlock_user on error path
-- Prefer abi_long for all pointers in extattr
-- Remove accidentally duplicated prototypes.
-- Don't writeback the eventlist, we're just reading it
-- Add missing 'do' to the macro
-- Byte swap sival_ptr in convertion
-- Add missing get_errno call to safe___umtx_op
-- Don't write back if getsockopt fails
-- Write back correct number of bytes for do_bsd_recvfrom
-- Loop through cnt, not maxcnt for acl conversion
-- Fix getsockopt size computation
-- Return ret, not errno, since do_freebsd_new_thr doesn't touch errno
-- Fixed off by one in connectat: we need the bug compat fix here too
-- Fixed error in preadv: copy params backwards
-- Link to v2: https://lore.kernel.org/qemu-devel/20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index a14efd3fd4..7e400c89bc 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -532,6 +532,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_closefrom(arg1);
+         break;
+ 
++    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
++        ret = do_freebsd_close_range(arg1, arg2, arg3);
++        break;
++
+     case TARGET_FREEBSD_NR_revoke: /* revoke(2) */
+         ret = do_bsd_revoke(arg1);
+         break;
+@@ -696,6 +700,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_chflags(arg1, arg2);
+         break;
+ 
++    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
++        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
++        break;
++
+     case TARGET_FREEBSD_NR_lchflags: /* lchflags(2) */
+         ret = do_bsd_lchflags(arg1, arg2);
+         break;
+@@ -740,6 +748,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_poll(arg1, arg2, arg3);
+         break;
+ 
++    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
++        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
++        break;
++
+     case TARGET_FREEBSD_NR_lseek: /* lseek(2) */
+         ret = do_bsd_lseek(env, arg1, arg2, arg3, arg4, arg5);
+         break;
+@@ -766,14 +778,6 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_swapoff(arg1, arg2);
+         break;
+ 
+-    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
+-        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
+-        ret = do_freebsd_close_range(arg1, arg2, arg3);
+-        break;
+-
+     case TARGET_FREEBSD_NR___realpathat:
+         /* __realpathat(2) (XXX no realpathat()) */
+         ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
+@@ -787,125 +791,12 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd___specialfd(arg1, arg2, arg3);
+         break;
+ 
+-        /*
+-         * ioctl(2)
+-         */
+-    case TARGET_FREEBSD_NR_ioctl: /* ioctl(2) */
+-        ret = do_bsd_ioctl(arg1, arg2, arg3);
+-        break;
+-
+-        /*
+-         * stat system calls
+-         */
+-    case TARGET_FREEBSD_NR_freebsd11_stat: /* stat(2) */
+-        ret = do_freebsd11_stat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_lstat: /* lstat(2) */
+-        ret = do_freebsd11_lstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_fstat: /* fstat(2) */
+-        ret = do_freebsd11_fstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fstat: /* fstat(2) */
+-        ret = do_freebsd_fstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_fstatat: /* fstatat(2) */
+-        ret = do_freebsd11_fstatat(arg1, arg2, arg3, arg4);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fstatat: /* fstatat(2) */
+-        ret = do_freebsd_fstatat(arg1, arg2, arg3, arg4);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_nstat: /* undocumented */
+-        ret = do_freebsd11_nstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_nfstat: /* undocumented */
+-        ret = do_freebsd11_nfstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_nlstat: /* undocumented */
+-        ret = do_freebsd11_nlstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_getfh: /* getfh(2) */
+-        ret = do_freebsd_getfh(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_lgetfh: /* lgetfh(2) */
+-        ret = do_freebsd_lgetfh(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fhopen: /* fhopen(2) */
+-        ret = do_freebsd_fhopen(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_fhstat: /* fhstat(2) */
+-        ret = do_freebsd11_fhstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fhstat: /* fhstat(2) */
+-        ret = do_freebsd_fhstat(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_fhstatfs: /* fhstatfs(2) */
+-        ret = do_freebsd11_fhstatfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fhstatfs: /* fhstatfs(2) */
+-        ret = do_freebsd_fhstatfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_statfs: /* statfs(2) */
+-        ret = do_freebsd11_statfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_statfs: /* statfs(2) */
+-        ret = do_freebsd_statfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_fstatfs: /* fstatfs(2) */
+-        ret = do_freebsd11_fstatfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_fstatfs: /* fstatfs(2) */
+-        ret = do_freebsd_fstatfs(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_getfsstat: /* getfsstat(2) */
+-        ret = do_freebsd11_getfsstat(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_getfsstat: /* getfsstat(2) */
+-        ret = do_freebsd_getfsstat(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_getdents: /* getdents(2) */
+-        ret = do_freebsd11_getdents(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_getdirentries: /* getdirentries(2) */
+-        ret = do_freebsd_getdirentries(arg1, arg2, arg3, arg4);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_freebsd11_getdirentries: /* getdirentries(2) */
+-        ret = do_freebsd11_getdirentries(arg1, arg2, arg3, arg4);
+-        break;
+-    case TARGET_FREEBSD_NR_fcntl: /* fcntl(2) */
+-        ret = do_freebsd_fcntl(arg1, arg2, arg3);
+-        break;
+-
+         /*
+          * Memory management system calls.
+          */
+     case TARGET_FREEBSD_NR_mmap: /* mmap(2) */
+         ret = do_bsd_mmap(env, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
+-                          arg8);
++           arg8);
+         break;
+ 
+     case TARGET_FREEBSD_NR_munmap: /* munmap(2) */
+@@ -952,17 +843,13 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_shm_open(arg1, arg2, arg3);
+         break;
+ 
+-#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300048
+     case TARGET_FREEBSD_NR_shm_open2: /* shm_open2(2) */
+         ret = do_freebsd_shm_open2(arg1, arg2, arg3, arg4, arg5);
+         break;
+-#endif
+ 
+-#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300049
+     case TARGET_FREEBSD_NR_shm_rename: /* shm_rename(2) */
+         ret = do_freebsd_shm_rename(arg1, arg2, arg3);
+         break;
+-#endif
+ 
+     case TARGET_FREEBSD_NR_shm_unlink: /* shm_unlink(2) */
+         ret = do_bsd_shm_unlink(arg1);
+@@ -984,68 +871,10 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_shmdt(arg1);
+         break;
+ 
+-        /*
+-         * System V Semaphores
+-         */
+-    case TARGET_FREEBSD_NR_semget: /* semget(2) */
+-        ret = do_bsd_semget(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_semop: /* semop(2) */
+-        ret = do_bsd_semop(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
+-        ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
+-        break;
+-    }
+-
+-        /*
+-         * System V Messages
+-         */
+-    case TARGET_FREEBSD_NR_msgctl: /* msgctl(2) */
+-        ret = do_bsd_msgctl(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_msgget: /* msgget(2) */
+-        ret = do_bsd_msgget(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_msgsnd: /* msgsnd(2) */
+-        ret = do_bsd_msgsnd(arg1, arg2, arg3, arg4);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_msgrcv: /* msgrcv(2) */
+-        ret = do_bsd_msgrcv(arg1, arg2, arg3, arg4, arg5);
+-        break;
+-
+     case TARGET_FREEBSD_NR_freebsd11_vadvise:
+         ret = do_bsd_vadvise();
+         break;
+ 
+-        /*
+-         * Misc
+-         */
+-    case TARGET_FREEBSD_NR_break:
+-        ret = do_obreak(arg1);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
+-        ret = do_bsd_quotactl(arg1, arg2, arg3);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
+-        ret = do_bsd_reboot(arg1);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
+-        ret = do_bsd_uuidgen(arg1, arg2);
+-        break;
+-
+-    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
+-        ret = do_bsd_getdtablesize();
+-        break;
+-
+         /*
+          * time related system calls.
+          */
+@@ -1133,10 +962,6 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd_pselect(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+-    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
+-        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
+-        break;
+-
+     case TARGET_FREEBSD_NR_kqueue: /* kqueue(2) */
+         ret = do_freebsd_kqueue();
+         break;
+@@ -1350,6 +1175,119 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd__umtx_op(arg1, arg2, arg3, arg4, arg5);
+         break;
+ 
++        /*
++         * ioctl(2)
++         */
++    case TARGET_FREEBSD_NR_ioctl: /* ioctl(2) */
++        ret = do_bsd_ioctl(arg1, arg2, arg3);
++        break;
++
++        /*
++         * stat system calls
++         */
++    case TARGET_FREEBSD_NR_freebsd11_stat: /* stat(2) */
++        ret = do_freebsd11_stat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_lstat: /* lstat(2) */
++        ret = do_freebsd11_lstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_fstat: /* fstat(2) */
++        ret = do_freebsd11_fstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_fstat: /* fstat(2) */
++        ret = do_freebsd_fstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_fstatat: /* fstatat(2) */
++        ret = do_freebsd11_fstatat(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_fstatat: /* fstatat(2) */
++        ret = do_freebsd_fstatat(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_nstat: /* undocumented */
++        ret = do_freebsd11_nstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_nfstat: /* undocumented */
++        ret = do_freebsd11_nfstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_nlstat: /* undocumented */
++        ret = do_freebsd11_nlstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_getfh: /* getfh(2) */
++        ret = do_freebsd_getfh(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_lgetfh: /* lgetfh(2) */
++        ret = do_freebsd_lgetfh(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_fhopen: /* fhopen(2) */
++        ret = do_freebsd_fhopen(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_fhstat: /* fhstat(2) */
++        ret = do_freebsd11_fhstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_fhstat: /* fhstat(2) */
++        ret = do_freebsd_fhstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_fhstatfs: /* fhstatfs(2) */
++        ret = do_freebsd11_fhstatfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_fhstatfs: /* fhstatfs(2) */
++        ret = do_freebsd_fhstatfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_statfs: /* statfs(2) */
++        ret = do_freebsd11_statfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_statfs: /* statfs(2) */
++        ret = do_freebsd_statfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_fstatfs: /* fstatfs(2) */
++        ret = do_freebsd11_fstatfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_fstatfs: /* fstatfs(2) */
++        ret = do_freebsd_fstatfs(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_getfsstat: /* getfsstat(2) */
++        ret = do_freebsd11_getfsstat(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_getfsstat: /* getfsstat(2) */
++        ret = do_freebsd_getfsstat(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_getdents: /* getdents(2) */
++        ret = do_freebsd11_getdents(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_getdirentries: /* getdirentries(2) */
++        ret = do_freebsd_getdirentries(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd11_getdirentries: /* getdirentries(2) */
++        ret = do_freebsd11_getdirentries(arg1, arg2, arg3, arg4);
++        break;
++    case TARGET_FREEBSD_NR_fcntl: /* fcntl(2) */
++        ret = do_freebsd_fcntl(arg1, arg2, arg3);
++        break;
++
+         /*
+          * sys{ctl, arch, call}
+          */
+@@ -1365,8 +1303,14 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd_sysarch(env, arg1, arg2);
+         break;
+ 
++    case TARGET_FREEBSD_NR_syscall: /* syscall(2) */
++    case TARGET_FREEBSD_NR___syscall: /* __syscall(2) */
++        ret = do_freebsd_syscall(env, arg1 & 0xffff, arg2, arg3, arg4,
++                arg5, arg6, arg7, arg8, 0);
++        break;
++
+         /*
+-         * extended attributes and ACL system calls
++         * extended attributes system calls
+          */
+     case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
+         ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
+@@ -1468,6 +1412,196 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
+         break;
+ 
++        /*
++         * System V Semaphores
++         */
++    case TARGET_FREEBSD_NR_semget: /* semget(2) */
++        ret = do_bsd_semget(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_semop: /* semop(2) */
++        ret = do_bsd_semop(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
++        ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
++        break;
++    }
++
++        /*
++         * System V Messages
++         */
++    case TARGET_FREEBSD_NR_msgctl: /* msgctl(2) */
++        ret = do_bsd_msgctl(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_msgget: /* msgget(2) */
++        ret = do_bsd_msgget(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_msgsnd: /* msgsnd(2) */
++        ret = do_bsd_msgsnd(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_msgrcv: /* msgrcv(2) */
++        ret = do_bsd_msgrcv(arg1, arg2, arg3, arg4, arg5);
++        break;
++
++        /*
++         * FreeBSD scheduler control
++         */
++    case TARGET_FREEBSD_NR_sched_setparam: /* sched_setparam(2) */
++        ret = do_freebsd_sched_setparam(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_getparam: /* sched_getparam(2) */
++        ret = do_freebsd_sched_getparam(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_setscheduler: /* sched_setscheduler(2) */
++        ret = do_freebsd_sched_setscheduler(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_getscheduler: /* sched_getscheduler(2) */
++        ret = do_freebsd_sched_getscheduler(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_get_priority_max: /* sched_get_priority_max(2)*/
++        ret = do_bsd_sched_get_priority_max(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_get_priority_min: /* sched_get_priority_min(2)*/
++        ret = do_bsd_sched_get_priority_min(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_rr_get_interval: /* sched_rr_get_interval(2) */
++        ret = do_freebsd_sched_rr_get_interval(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_sched_yield: /* sched_yield(2)*/
++        ret = do_bsd_sched_yield();
++        break;
++
++
++        /*
++         * FreeBSD CPU affinity sets management
++         */
++    case TARGET_FREEBSD_NR_cpuset: /* cpuset(2) */
++        ret = do_freebsd_cpuset(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_cpuset_setid: /* cpuset_setid(2) */
++        ret = do_freebsd_cpuset_setid(env, arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_cpuset_getid: /* cpuset_getid(2) */
++        ret = do_freebsd_cpuset_getid(arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_cpuset_getaffinity: /* cpuset_getaffinity(2) */
++        ret = do_freebsd_cpuset_getaffinity(arg1, arg2, arg3, arg4, arg5, arg6);
++        break;
++
++    case TARGET_FREEBSD_NR_cpuset_setaffinity: /* cpuset_setaffinity(2) */
++        ret = do_freebsd_cpuset_setaffinity(arg1, arg2, arg3, arg4, arg5, arg6);
++        break;
++
++        /*
++         * FreeBSD kernel module
++         */
++    case TARGET_FREEBSD_NR_modfnext: /* modfnext(2) */
++        ret = do_freebsd_modfnext(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_modfind: /* modfind(2) */
++        ret = do_freebsd_modfind(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldload: /* kldload(2) */
++        ret = do_freebsd_kldload(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldunload: /* kldunload(2) */
++        ret = do_freebsd_kldunload(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldunloadf: /* kldunloadf(2) */
++        ret = do_freebsd_kldunloadf(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_kldfind: /* kldfind(2) */
++        ret = do_freebsd_kldfind(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldnext: /* kldnext(2) */
++        ret = do_freebsd_kldnext(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldstat: /* kldstat(2) */
++        ret = do_freebsd_kldstat(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_kldfirstmod: /* kldfirstmod(2) */
++        ret = do_freebsd_kldfirstmod(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_kldsym: /* kldsym(2) */
++        ret = do_freebsd_kldsym(arg1, arg2, arg3);
++        break;
++
++        /*
++         * FreeBSD additional posix support
++         */
++    case TARGET_FREEBSD_NR_posix_fallocate: /* posix_fallocate(2) */
++        ret = do_freebsd_posix_fallocate(arg1, arg2, arg3, arg4, arg5, arg6);
++        break;
++
++    case TARGET_FREEBSD_NR_posix_openpt: /* posix_openpt(2) */
++        ret = do_freebsd_posix_openpt(arg1);
++        break;
++
++        /*
++         * Misc
++         */
++    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
++        ret = do_bsd_quotactl(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
++        ret = do_bsd_reboot(arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
++        ret = do_bsd_uuidgen(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
++        ret = do_bsd_getdtablesize();
++        break;
++
++    case TARGET_FREEBSD_NR_break:
++        ret = do_obreak(arg1);
++        break;
++
++#if defined(CONFIG_GETRANDOM)
++    case TARGET_FREEBSD_NR_getrandom:
++        ret = do_freebsd_getrandom(arg1, arg2, arg3);
++        break;
++#endif
++    case TARGET_FREEBSD_NR_kenv:
++        ret = do_freebsd_kenv(arg1, arg2, arg3, arg4);
++        break;
++
++    /* XXX */
++    case TARGET_FREEBSD_NR_cap_rights_limit:
++    case TARGET_FREEBSD_NR_cap_ioctls_limit:
++    case TARGET_FREEBSD_NR_cap_fcntls_limit:
++        ret = -TARGET_EINVAL;
++        break;
++    case TARGET_FREEBSD_NR_cap_enter:
++        ret = 0;
++        break;
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         ret = -TARGET_ENOSYS;
 
-Changes in v2:
-- don't write offsets on errors for copy_file_range
-- pipe2: Check the raw system call value directly
-- setsockopt: Check target_to_host_ip_mreq return value
-- <several places>: Check return value of host_to_target_sockaddr
-- do_bsd_setsockopt: Read in the socket option
-- ntp_gettime: write back time on non-errors, not just 0
-- do_freebsd_sigtimedwait check t2h_freebsd_timespec return
-- do_freebsd_swapcontext writing incorrectly, readonly data (0 to user_unlock)
-- do_thr_set_name needs get_errno()
-- Have ntp_adjtime write back the structure
-- kevent_freebsd11 no need to explicitly mask, datatypes do this for us
-- do_freebsd_setcontext just reads the mcontext, 0 in unlock_user
-- target_to_host_sigevent is read-only, so pass 0 in unlock_user
-- target_to_host_ip_mreq needs tswap32 for int32_t
-- use get_errno on kenv return values to report errors better
-- kevent: only copy the number of events returns, not whole buffer
-- Copy tolerance field of timex
-- freebsd_umtx_sem_wake use VERIFY_READ instead of write to read struct
-- Avoid double g2h_untagged mistakes in !_UMTX_OPTIMIZED
-- Fixed additional missing unlock in freebsd_rw_rdlock and freebsd_rw_wrlock in !_UMTX_OPTIMIZED
-- Squashed all the bug commit back to the appropriate earleir patch
-- Link to v1: https://lore.kernel.org/qemu-devel/20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com
-
----
-Warner Losh (40):
-      bsd-user: Rename cpu_env to env throughout bsd-user
-      bsd-user: Fix copy direciton in preadv
-      bsd-user: Add bsd-signal.h with sigaction through sigreturn
-      bsd-user: Add signal shims sigwait through kill and os-signal.h
-      bsd-user: Add signal system call dispatch
-      bsd-user: move sys/shm.h lines
-      bsd-user: Remove mmap defines
-      bsd-user: Use target_suseconds_t
-      bsd-user: Move sys/uuid.h defines
-      bsd-user: Fix realpathat for FreeBSD 15.0 and newer
-      bsd-user: Add os-file.h with chflagsat, close_range, and more
-      bsd-user: Add poll, poll2, lseek, pipe, and swap system call shims
-      bsd-user: Add FreeBSD socket helpers and sockaddr conversion
-      bsd-user: Add bsd-socket.h with bind through getsockname
-      bsd-user: Add socket shims socketpair through shutdown
-      bsd-user: Commit the generated os-sockopt.h files
-      bsd-user: Implement both getsockopt and setsockopt
-      bsd-user: Add FreeBSD socket system calls
-      bsd-user: Add os-socket.[ch] sendmsg, recvmsg and cmsg
-      bsd-user: Add socket system call dispatch
-      bsd-user: Add os-time.h with clock and time-of-day functions
-      bsd-user: Add utimes, futimes, and ktimer functions to os-time.h
-      bsd-user: Add select, pselect, and ppoll to os-time.h
-      bsd-user: Add kqueue and kevent functions to os-time.h
-      bsd-user: Add sigtimedwait, itimer, and futimens to os-time.h
-      bsd-user: Add os-time.c and time-related type definitions
-      bsd-user: Add time system call dispatch
-      bsd-user: Add cpu_copy and make init_task_state non-static
-      bsd-user: Add os-thread.h with thr and context functions
-      bsd-user: Add do_freebsd__umtx_op to os-thread.h
-      bsd-user: Add thread system call dispatch
-      bsd-user: Add os-extattr.h with file and fd extattr functions
-      bsd-user: Add link and list extattr functions to os-extattr.h
-      bsd-user: Add ACL system call shims to os-extattr.h
-      bsd-user: Add os-extattr.c with ACL conversion functions
-      bsd-user: Add extended attribute and ACL system call dispatch
-      bsd-user: Add scheduler and cpuset functions to os-misc.h
-      bsd-user: Add scheduler, cpuset, kmod, and misc syscall dispatch
-      bsd-user: Move qemu_guest_random_seed_main to same as linux-user
-      bsd-user Update random_seed on thread creation
-
- bsd-user/aarch64/target.h     |    2 +-
- bsd-user/arm/target.h         |    2 +-
- bsd-user/bsd-file.h           |  168 +++-
- bsd-user/bsd-mem.h            |    4 +-
- bsd-user/bsd-proc.h           |   26 +-
- bsd-user/bsd-signal.h         |  231 ++++++
- bsd-user/bsd-socket.c         |   98 +++
- bsd-user/bsd-socket.h         |  283 +++++++
- bsd-user/freebsd/meson.build  |    8 +-
- bsd-user/freebsd/os-extattr.c |  118 +++
- bsd-user/freebsd/os-extattr.h |  661 ++++++++++++++++
- bsd-user/freebsd/os-file.h    |  129 ++++
- bsd-user/freebsd/os-misc.h    |  466 +++++++++++-
- bsd-user/freebsd/os-proc.c    |    4 +-
- bsd-user/freebsd/os-proc.h    |   26 +-
- bsd-user/freebsd/os-signal.h  |   20 +
- bsd-user/freebsd/os-socket.c  |  239 ++++++
- bsd-user/freebsd/os-socket.h  |  428 +++++++++++
- bsd-user/freebsd/os-sockopt.h |  316 ++++++++
- bsd-user/freebsd/os-stat.h    |    8 +-
- bsd-user/freebsd/os-sys.c     |    4 +-
- bsd-user/freebsd/os-syscall.c |  790 +++++++++++++++++--
- bsd-user/freebsd/os-thread.c  | 1684 +++++++++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-thread.h  |  596 +++++++++++++++
- bsd-user/freebsd/os-time.c    |  347 +++++++++
- bsd-user/freebsd/os-time.h    |  989 ++++++++++++++++++++++++
- bsd-user/freebsd/qemu-os.h    |   48 ++
- bsd-user/i386/target.h        |    2 +-
- bsd-user/main.c               |   38 +-
- bsd-user/meson.build          |    1 +
- bsd-user/qemu-bsd.h           |    8 +
- bsd-user/qemu.h               |   48 +-
- bsd-user/riscv/target.h       |    2 +-
- bsd-user/signal-common.h      |    4 +
- bsd-user/signal.c             |   67 ++
- bsd-user/syscall_defs.h       |  449 +++++++++--
- bsd-user/x86_64/target.h      |    2 +-
- 37 files changed, 8110 insertions(+), 206 deletions(-)
----
-base-commit: fa19879df1658f96ac07365fca8835b7decd6995
-change-id: 20260504-misc-2026q2-a5af31ac032a
-
-Best regards,
 -- 
-Warner Losh <imp@bsdimp.com>
+2.55.0
 
 
