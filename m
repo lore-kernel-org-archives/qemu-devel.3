@@ -4,113 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC64C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA9DC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNPx-0007eH-Qp; Tue, 18 Aug 2026 13:16:05 -0400
+	id 1wwNUe-0002Sc-Ce; Tue, 18 Aug 2026 13:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wwNPv-0007cT-L1; Tue, 18 Aug 2026 13:16:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwNUU-0002Nx-5G
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:20:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wwNPu-0008Bp-4n; Tue, 18 Aug 2026 13:16:03 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3Zo3542373; Tue, 18 Aug 2026 17:16:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=V3LMoR
- IT9M8wFuxb1HPjHIlhwclcnZZPQqB5X7kX71g=; b=BwBmfxfPXm6CXNsk8Uunzg
- aTTTENTE7eTxDN4UYNPElhGefubB7T2ldbTld3X5Q/tJlHGmU8LgWH3TWjkB79cl
- AV+H+sElYGpCX0c3oc0sS61tPP5+c+r2i51wTOpnKMOM5BtTLPTogu0to6NY0ALr
- de5x11W9QRekW23Nlkp7N40Dxe2DmLGF1pZaAcp/XJvOSt6vELVLbRykTfMzYehL
- tinunEn3fU5lVEz92SttlE5Jnt78tEWC9Qcl2xaiBdRfyC23Ko4x6gainUJ8LT6R
- 5RvksqumEvX87ZDsmSX9FPeAkI9cTl8F9UvdAeUU0GZ3FQp8F7sS//ReCnpCCfvw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2frt94u3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 17:15:59 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IHDcP2008706;
- Tue, 18 Aug 2026 17:15:59 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eq4k2g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 17:15:59 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IHFtV335586458
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 17:15:55 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6C6222004B;
- Tue, 18 Aug 2026 17:15:55 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EC4C120040;
- Tue, 18 Aug 2026 17:15:51 +0000 (GMT)
-Received: from shivang.com (unknown [9.124.212.164])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 17:15:51 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: shivangu@linux.ibm.com, adityag@linux.ibm.com, harshpb@linux.ibm.com,
- hbathini@linux.ibm.com, mahesh@linux.ibm.com, npiggin@gmail.com,
- rathc@linux.ibm.com, sourabhjain@linux.ibm.com, vaibhav@linux.ibm.com
-Subject: [PATCH v2 1/2] MAINTAINERS: add dedicated PowerPC RAS section
-Date: Tue, 18 Aug 2026 22:45:32 +0530
-Message-ID: <20260818171541.903431-2-shivangu@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwNUQ-0001kn-8t
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:20:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787073636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oi6N2hpYi6TBcw8yaCUWHmVJhJUKVZayh9Rz5r7yfBY=;
+ b=S18qquHT1cpS7iBXDOCW/ImbpdecNgu6Smf3FhA6MFlmMBFJ+MMaV9LXO99EprkRRtBKWj
+ eOe29oUg7bgYTkkMRPcnC5+MeHUdr2icoT41rhQcF+Dylyl9NwV3P/xtdpQ33IYEco5kyk
+ gJN6kzfBKltuPAUqhx9HKt3EZTlSb64=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-442-zlAfiYGjMWipxi8ShILvxw-1; Tue, 18 Aug 2026 13:20:34 -0400
+X-MC-Unique: zlAfiYGjMWipxi8ShILvxw-1
+X-Mimecast-MFC-AGG-ID: zlAfiYGjMWipxi8ShILvxw_1787073634
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-90284139cceso13456426d6.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787073634; x=1787678434; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oi6N2hpYi6TBcw8yaCUWHmVJhJUKVZayh9Rz5r7yfBY=;
+ b=YLY4P4VFJhp75rCfNxZHU7dX5U0b04kNgSmuUbi4ghvQNf/9CT9tR2naGm7kv4XEr8
+ OCjyap4hsPRDDcDQAgN8O4ZRCR++X4szYjA3qQuo0gd6LT9lLyOlk+S/g/gx2wOBHwt0
+ snojOHfykjwgEQ4Vu9A9sQ6QrKE3RhpZCEMOqhZWpqAfIZWXnS11+wH9IpjvFevP1BH2
+ +fjfidWDMhl1KrThXZL4C3HVpETSeD7BdT84WltTx2CPof8Ix8tFSX/4JtUScHpCVBkZ
+ UxPEP7FgeGcUGNw7lggsBi9Dl8c43ui4LW7ZApI/Iddt8unyc2NTPBnRCo8zvBywttgA
+ 8U3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787073634; x=1787678434;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=oi6N2hpYi6TBcw8yaCUWHmVJhJUKVZayh9Rz5r7yfBY=;
+ b=JAFr/GOUpNEzoiV/1Cj4ZXcexyERX8qXgqSn9M0ev7XeGXt5s8KgLe+qZghNEq3WQS
+ itidQ4aVCCRaU36+W6naG+TX1HlunN7VyI4cUH5fHpUPYhsnTaXpkzatgijtx/vgEGdI
+ qQ/5RG5pelx33WEOpzj5CylygxRBudAfMzbI9zEroDYPP907MEcoLmeX0ilxZgC+EeZG
+ kzN6oLsTAXw2ujsjFbe8ekGltW1RUSmM4XXIXQZmG16O+JafbLMm77fjDJtaZ2ZXnrtb
+ uBKuhn3HsOkqmt2+EGBVzm1NJc6JdRP9ZckLAoMUmz6TvIOqjkow+Q4ojJA3B9Sg9Hnk
+ zjKw==
+X-Gm-Message-State: AOJu0YxhIBGMDJcWgMn0evH+jWWc9wLeJvdCUZ0CbKiOHSuEMsM0Vq95
+ EDQ3s1iOkvWmdp0rltDIahtSPAOgrsUws2DJWqK51yH4T6fgo3xbRMqtqhjVt8SllyTjZfyvFx/
+ ZyH96AXIX1rktLQ87t34BFerFck/RWZlUB/pM/E/oFk5yn821Hod0wVUzg663cv0arnu4Et3xFr
+ TUBHrrpw4W1w5DmSEPbw+xp5jj4fTNpcwrjIMQvQ==
+X-Gm-Gg: AR+sD106t6b9P+balOiAu9bNNg74z6GqaxQ/YMe2ukT8DfBKL/buquwZMPDAKGXNLCd
+ d9mf4w4MMtI30Hlfs3Fs7w8eIXHs+d9WkHAMi38NpJyefcJyRV48+3D9b1a2OFuCSDiipreA44P
+ vXAOEe1vijTYrrPa/c92unhNw/8GFU1kmeyZipZowATP+0cO37J+G4uATFV2Fc0FSODPz6axKCg
+ Clqt59bIgB9kX76p5y5Ns2p55hLFh7eMSUhXeZuNvqzNmXDWqAMmsK8bMKv/+pUS9gO04NzxXff
+ spbD2STa4RoW9/6LDq87hxv7dvc6FUaxs5Q+8UM8bLM4CVDr1D4eArjNiPITA2n7ZelRbW8431I
+ VFhTlopccvb9MJfiTSz2odvL/I9iULUK9DAKMZPv76HTE2U4a4usDVxz1
+X-Received: by 2002:ad4:5c42:0:b0:90c:225b:163e with SMTP id
+ 6a1803df08f44-90c4cec7675mr87785126d6.7.1787073633733; 
+ Tue, 18 Aug 2026 10:20:33 -0700 (PDT)
+X-Received: by 2002:ad4:5c42:0:b0:90c:225b:163e with SMTP id
+ 6a1803df08f44-90c4cec7675mr87783906d6.7.1787073633146; 
+ Tue, 18 Aug 2026 10:20:33 -0700 (PDT)
+Received: from x1.com
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-90c4584418bsm36560896d6.17.2026.08.18.10.20.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 10:20:32 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Peter Xu <peterx@redhat.com>
+Subject: [PATCH v2 6/9] linux-user: Remove 32bit host support in
+ thunk_convert|print()
+Date: Tue, 18 Aug 2026 13:20:09 -0400
+Message-ID: <20260818172012.3052821-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260818171541.903431-1-shivangu@linux.ibm.com>
-References: <20260818171541.903431-1-shivangu@linux.ibm.com>
+In-Reply-To: <20260818172012.3052821-1-peterx@redhat.com>
+References: <20260818172012.3052821-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=OfaoyBTY c=1 sm=1 tr=0 ts=6a849350 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=S56xvJB5AAAA:8 a=dmkjvbsFamE0tA2L3EsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22 a=MH9Ivq0PDQRhlrFuIVvX:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfXxnwrBeIeu3Zy
- WSkzPf+WpbLNPFMVXkdVVQaUHqYrkeSVPyEIVCMtpnCaDpxjwMs3+zfP9qcS6sRMQuXsm9YAhY6
- QLJcl+O/SnrxycBLW4CehSCECwmIMLE=
-X-Proofpoint-GUID: fQcHTY7rKXHBI0ntNzE557UmG1il7MWJ
-X-Proofpoint-ORIG-GUID: OA6t8xlJCXWKPd-WMG6V3cnBDDR2XIsO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfX8/Vygpov9N+/
- gx2eEVKaSyojHNbQVoY76SXK4JjKQyY5Asn4nM9mph/iT0zEktB8OfMKOce+8gKnVuwM9BHKPV0
- te+YyKnaI3WL0U4/EkFV9ba28RGDA8SUHpe3Lg3SD7IRaBf5S8V4+8ITLfskV9RI+EEsCD1XiFp
- L4RcIjB65jDpejScbDIhSGfoATRSLkBeLD1AwnLiAhHznXbP8HOH7a3UEtD3aGJIipUwhNniqgJ
- KcXuGjavczKhhb/1TkzrytJNwzSffCkr37IsU/05aAI/XdDTo8UGbl5uxH5Y9VJdvPyikvjPwOz
- 1CCLuEl5Dd9jV10lVXWmJZSqjn54J1d8VvtXCzKK9AxXZkac1Pvl1lFok5SaYVM6aIIoMnBEQC6
- Y1/sZnZjE8GSTnJ4jHME/+6765NQ9MchccmoX0UTkXIZozMK7BQOEjPbIGZIYlkx3qUWGto9bg+
- HX/TjiRhXvAkgSc05/g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180125
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,70 +123,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new "PowerPC RAS (Reliability, Availability and
-Serviceability)" entry in the PowerPC Machines block, replacing the
-existing Fadump/MPIPL sections. Retaining the maintainer and
-reviewer entries from Fadump/MPIPL sections for this broader umbrella.
+QEMU has switched to 64bit-only hosts for all system/user emulations.
 
-Additionally adding spapr_events.c, as it implements RTAS error logging
-infrastructure and spapr_pci_vfio.c, since its all EEH related code.
-
-Acked-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Acked-by: Aditya Gupta <adityag@linux.ibm.com>
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- MAINTAINERS | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ linux-user/thunk.c | 47 +++-------------------------------------------
+ 1 file changed, 3 insertions(+), 44 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b51f5c3e60..99e6585ca0 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1762,6 +1762,20 @@ F: include/hw/ppc/vof*
- F: pc-bios/vof/*
- F: pc-bios/vof*
- 
-+PowerPC RAS (Reliability, Availability and Serviceability)
-+M: Aditya Gupta <adityag@linux.ibm.com>
-+R: Sourabh Jain <sourabhjain@linux.ibm.com>
-+R: Hari Bathini <hbathini@linux.ibm.com>
-+L: qemu-ppc@nongnu.org
-+S: Maintained
-+F: hw/ppc/spapr_events.c
-+F: hw/ppc/spapr_fadump.c
-+F: hw/ppc/spapr_pci_vfio.c
-+F: hw/ppc/pnv_mpipl.c
-+F: include/hw/ppc/spapr_fadump.h
-+F: include/hw/ppc/pnv_mpipl.h
-+F: tests/functional/ppc64/test_fadump.py
-+
- RISC-V Machines
- ---------------
- OpenTitan
-@@ -3386,23 +3400,6 @@ F: scripts/coccinelle/remove_local_err.cocci
- F: scripts/coccinelle/use-error_fatal.cocci
- F: scripts/coccinelle/errp-guard.cocci
- 
--Firmware Assisted Dump (fadump) for sPAPR (pseries)
--M: Aditya Gupta <adityag@linux.ibm.com>
--R: Sourabh Jain <sourabhjain@linux.ibm.com>
--S: Maintained
--F: include/hw/ppc/spapr_fadump.h
--F: hw/ppc/spapr_fadump.c
--F: tests/functional/ppc64/test_fadump.py
--
--Memory-Preserving Initial Program Load (MPIPL) for PowerNV
--M: Aditya Gupta <adityag@linux.ibm.com>
--R: Hari Bathini <hbathini@linux.ibm.com>
--R: Sourabh <sourabhjain@linux.ibm.com>
--S: Maintained
--F: include/hw/ppc/pnv_mpipl.h
--F: hw/ppc/pnv_mpipl.c
--F: tests/functional/ppc64/test_fadump.py
--
- GDB stub
- M: Alex Bennée <alex.bennee@linaro.org>
- R: Philippe Mathieu-Daudé <philmd@mailo.com>
+diff --git a/linux-user/thunk.c b/linux-user/thunk.c
+index 3cd19e79c6..892ff3d154 100644
+--- a/linux-user/thunk.c
++++ b/linux-user/thunk.c
+@@ -145,13 +145,7 @@ const argtype *thunk_convert(void *dst, const void *src,
+     case TYPE_ULONGLONG:
+         *(uint64_t *)dst = tswap64(*(uint64_t *)src);
+         break;
+-#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
+-    case TYPE_LONG:
+-    case TYPE_ULONG:
+-    case TYPE_PTRVOID:
+-        *(uint32_t *)dst = tswap32(*(uint32_t *)src);
+-        break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++#if TARGET_ABI_BITS == 32
+     case TYPE_LONG:
+     case TYPE_ULONG:
+     case TYPE_PTRVOID:
+@@ -166,27 +160,12 @@ const argtype *thunk_convert(void *dst, const void *src,
+             *(uint32_t *)dst = tswap32(*(uint64_t *)src & 0xffffffff);
+         }
+         break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
++#elif TARGET_ABI_BITS == 64
+     case TYPE_LONG:
+     case TYPE_ULONG:
+     case TYPE_PTRVOID:
+         *(uint64_t *)dst = tswap64(*(uint64_t *)src);
+         break;
+-#elif HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 64
+-    case TYPE_LONG:
+-    case TYPE_ULONG:
+-    case TYPE_PTRVOID:
+-        if (to_host) {
+-            *(uint32_t *)dst = tswap64(*(uint64_t *)src);
+-        } else {
+-            if (type == TYPE_LONG) {
+-                /* sign extension */
+-                *(uint64_t *)dst = tswap64(*(int32_t *)src);
+-            } else {
+-                *(uint64_t *)dst = tswap64(*(uint32_t *)src);
+-            }
+-        }
+-        break;
+ #else
+ #warning unsupported conversion
+ #endif
+@@ -294,17 +273,7 @@ const argtype *thunk_print(void *arg, const argtype *type_ptr)
+     case TYPE_ULONGLONG:
+         qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
+         break;
+-#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
+-    case TYPE_PTRVOID:
+-        qemu_log("0x%" PRIx32, tswap32(*(uint32_t *)arg));
+-        break;
+-    case TYPE_LONG:
+-        qemu_log("%" PRId32, tswap32(*(uint32_t *)arg));
+-        break;
+-    case TYPE_ULONG:
+-        qemu_log("%" PRIu32, tswap32(*(uint32_t *)arg));
+-        break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++#if TARGET_ABI_BITS == 32
+     case TYPE_PTRVOID:
+         qemu_log("0x%" PRIx32, tswap32(*(uint64_t *)arg & 0xffffffff));
+         break;
+@@ -314,16 +283,6 @@ const argtype *thunk_print(void *arg, const argtype *type_ptr)
+     case TYPE_ULONG:
+         qemu_log("%" PRIu32, tswap32(*(uint64_t *)arg & 0xffffffff));
+         break;
+-#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
+-    case TYPE_PTRVOID:
+-        qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
+-        break;
+-    case TYPE_LONG:
+-        qemu_log("%" PRId64, tswap64(*(uint64_t *)arg));
+-        break;
+-    case TYPE_ULONG:
+-        qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
+-        break;
+ #else
+     case TYPE_PTRVOID:
+         qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
 -- 
 2.54.0
 
