@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C3DC5DF7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F01C5DF86
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNq2-0002sO-OQ; Tue, 18 Aug 2026 13:43:02 -0400
+	id 1wwNqN-0002vd-KK; Tue, 18 Aug 2026 13:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwNq0-0002s6-V0
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:00 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ id 1wwNqE-0002ub-T0
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:15 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwNpy-0007vF-Jh
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:00 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-66c70cff944so243729d50.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:42:58 -0700 (PDT)
+ id 1wwNq7-0007yk-TH
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:09 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-66807ba2f0fso312532d50.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787074977; x=1787679777; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xl4pZZkibzAwOAwfGMWHQiwLvca4uGByR3vJ7CSBIek=;
- b=cHR66JRE1CW8M6XpGqIxgf5rR6ld7tCs+7kdNtitLkLaNpS6deYQC9/5Ua0M0X4TfD
- T+lmORGya35LP4Hd37ttR36Js2CVYigYpKKl2UoM730vk4sqdnRFxA+T7MwdubbuymTi
- xc/QbH8MsAJeTpu7S+sY8W6xa9lyo3/OFUwFHeJZfDdHXip2Sc/Pz9MP2nw2izPc0glj
- 9zIs/vF7nupQAROWZVG4VWnPc7xFBgfZtEvIbZ6p2kag1DxoRg7HUla22fHU9TgyupN4
- QaCIUzGMj6xZpfom28grL3Yp49n9TXRKS5w0JrkRpQeydfpcPuImGqKmt0C8M6tREik5
- nAoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787074977; x=1787679777;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1787074986; x=1787679786; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xl4pZZkibzAwOAwfGMWHQiwLvca4uGByR3vJ7CSBIek=;
- b=AKNWWnGTHk6682mI10rrSIuarjQI+EW5v99bAyik7PfBZSmwFarlD7gVWYMctDJRMC
- W4vw0T+/VLOUDKoO//emModIqcwyuJhAkdS/gpbAA6kcvY8zTDhvfj4rCnr8fstkmLIt
- 9hcEwJDuP7J4MkHuWDyz8icq9dMZDsx5GLLnZ/wSoGgFzQHUsAq9X1TvrjRlKZ75JHgq
- zIkq+VGvL47HOAGnqsaUa+yNEfI14lTJgWaoj84aYjMfNmL1hZRG5owv0Uva2GyEevCu
- 6BlxA5DNxDCiDKK0poKVQ5jNz7P9QkwZmVFZQIRzTSLQ/xSmTXJoszZSYoobvFW+CSMD
- MzpQ==
-X-Gm-Message-State: AOJu0YxLDYqFsf9jwTJJvcHqNywdO1M5vMKmODfAo8ZSPLIPl2GJCdsK
- nwyoJg4hrEvogm4BEB7wmvM8LdOkQ3rwn6EQqNngFyV8Jrs26pW6nWWhOHkhVkryrnw=
-X-Gm-Gg: AR+sD12Eyje4hOap6g6k18m6CEperZn71BAem/XKnb6LQ4kUcQMGN2hSYEkOARkABuM
- lyMPLFqAKeT/B0SBlE0Su2rcVZpUC1M3kX+Qy5mLOMsy3qkhAU6suj85aBrzODSwTeJgvBf9S6t
- LqCWLp5DDMRhTpTAzlmRa/4ckmY0hwaZwWhgjDlCTTcBkIPSQTTgtb2XWkOUJogoVJP35wF1k7M
- P80iVKl/09vuKFSxs8BA6wrk0ergDMn0167nPv/b3kQ+TCkxDxpk4T1DzuudN2d54gUnclUKUOU
- 7qXrvRJf3a9pZcz0L5t4O+UjA1GZ87lOs4eQLU6Ku6zpudN7mTB7nWv+TFOX/jy7YTHm7V5LApM
- D/ij0iZM6FbABS440XtMqARfVxKUcvjk+oOMgloAYqJZNFAXeINe4atHcJ+loZeEqUfUMLxs3pM
- IfSHU+2RbFwJG/UraN8WJCmY/eh9pMLvm9wePg9QdHAPyzC972u9i+zsXyHg4C
-X-Received: by 2002:a05:690e:150e:b0:66c:484c:867f with SMTP id
- 956f58d0204a3-66c72d2c9d0mr11133344d50.45.1787074977127; 
- Tue, 18 Aug 2026 10:42:57 -0700 (PDT)
+ bh=FD6Ur+eg4ui02rsiunbrWHJ0I/7Mgp+cJLNtmLWUAGs=;
+ b=IXoy0YGTYsi45pJ++J46BeM0RcKT4fgIdG66obP86Umkl9TomV80qQaehuTp4EJS4C
+ N5nZwmXhh4a46JcS+F4XjoFT0rG5j7dsm4qe5b+NILM/2P99FQMckBHuYme12pOeFRyz
+ j7ymJ/ay4I4LN3fCwMYIpymniS+PpM+vKwCpxhB45sTL7Rj23V4sI13njej5CLkVkG6t
+ ftHJmD5C/abKDhysAWGowXwbBY4zsd415UszTp4cqi41a3xmfBHbdcioe2JTNb3nLoaE
+ gLb2fjwenO5XBb4erMQYDkTeCQclFIyHrqdl6cDUwWY9ohrIf1hQBq5p2YNvcBiiWKxf
+ W5iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787074986; x=1787679786;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=FD6Ur+eg4ui02rsiunbrWHJ0I/7Mgp+cJLNtmLWUAGs=;
+ b=mCK1f38CQNVEyvmpGiPynIYdUjAIclzft9lxAClb8E+B+nzSJKT6p7uV+8GS5fOIN4
+ +Ke6EZBJzmh1yAzMeJlac3mm+mKrcFeQy/n/WTmId/mCs7gPzPJ26B9vBb7X3gI68Zpx
+ MUZjSS1TcpMLXBjyNKeDkph064Bkp7Z6niZxFMzut+8Jjym2nz3jt2s5fZu5YZNxwxik
+ Qulzz7vjifjl3A15nPkpuwxZhXFVa/tzKT1lmQVb/nuw8o3GUzhuBTXbpAopqmo0bUw+
+ QcU8RbI0nBgf//oPDXgZ0t9a3/Gg6qupxJub9NyegQ4t5XR/eGIZl3oJpqEQUd2khIGC
+ AqAA==
+X-Gm-Message-State: AOJu0YwCYwTEtpwfP9JEkTvBPFUErJShJ7+7jAqxK9cUmB2WfewwkuZR
+ X2v3x8eSis2fLac78xdNw1cN/qaynJUuBsWrYkgHNNXnenYLS9SDD4+cQwK07w==
+X-Gm-Gg: AR+sD10QA5xYfviv+xGQMOaH6O64YczuOE3f/2AKw3Pexy7iVBKVb3FF+nnt0henvgE
+ 9jJRKXbeXaOwOXxfE64doC+RCSodVhRND+dX1n/pZEgdxHhVFNmXsrcCGYieXK+wbSWlPfkE9LW
+ JwqG1YRGNxVJVU7Xky9IIDCxZaWlxhEEHzIO+ftRvCmBHM63zC1H7pgJ/5TBXFPPCWTfc+/b2qD
+ pV86EafJ3WZmXaVwX6+gk9YLZyuzQqhOfKzFFbCKgJ5Dwz2aN59YvOMD3RHWXHrL08sC6aE6X2t
+ cwihjWVpCQr/Hwvk+27wLrqP2S8ajV5l9c2F/Iyt0Y9nV5vZoffkTg4BiZIxJkMXHI3yFMLDjbZ
+ L0IiaUL3kAu/Y0YmKv7Aepq+TxJId75F/rAudEio36CjcH+0yq8t/JOeud8+QYSSOh0gwVE6sVg
+ WShgfUO3JicMabTXvXNWv/3iD4j4YdYEYGi6ileoqfRw7916PEPROGzdW58WY9
+X-Received: by 2002:a05:690e:1441:b0:66b:2fe9:cd2 with SMTP id
+ 956f58d0204a3-66c72d2a100mr12487608d50.41.1787074986470; 
+ Tue, 18 Aug 2026 10:43:06 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66cb41e4389sm2617623d50.6.2026.08.18.10.42.55
+ 956f58d0204a3-66cb47c8cc5sm2682003d50.18.2026.08.18.10.43.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:42:55 -0700 (PDT)
+ Tue, 18 Aug 2026 10:43:05 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
  zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
  pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
-Subject: [RFC PATCH 0/8] accel/tcg: cut per-block dispatch overhead
-Date: Tue, 18 Aug 2026 13:42:39 -0400
-Message-ID: <20260818174247.649526-1-mattst88@gmail.com>
+Subject: [PATCH 5/8] RFC: accel/tcg: allow cross-page goto_tb chaining in
+ user-only builds
+Date: Tue, 18 Aug 2026 13:42:44 -0400
+Message-ID: <20260818174247.649526-6-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260818174247.649526-1-mattst88@gmail.com>
+References: <20260818174247.649526-1-mattst88@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,191 +103,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For guests running large amounts of code, most of what TCG executes is not
-translated guest work but the fixed overhead around it. Blocks are short and
-there are a great many of them, so the constant cost at each end of a block
-(the interrupt poll and the can_do_io stores on entry, the dispatch on
-exit) ends up dominating everything else.
+translator_use_goto_tb() refuses to chain unless the destination is on the
+same page as the start of the TB. For guests whose text is much larger than
+a page this is expensive: an emulated alpha gcc compiling a 255k line
+translation unit takes the indirect dispatch path for 8.4 billion of its
+34.2 billion TB exits, and a large share of those are ordinary direct
+branches that simply crossed an 8 KiB page boundary.
 
-The workload throughout is qemu-alpha running an emulated alpha gcc 16.2.0
-compiling the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64
-host, in a --static --enable-lto --target-list=alpha-linux-user build. It
-executes 34.2 billion TBs at 6.04 guest instructions each, and 24.6% of its
-TB exits cannot use goto_tb. That is a representative shape for any guest
-whose text is much larger than a page: indirect calls and returns
-everywhere, plus direct branches that merely crossed a page boundary.
+The restriction was made unconditional by d3a2a1d803 ("accel/tcg:
+Introduce translator_use_goto_tb"), whose rationale was:
 
-The first three patches are ordinary cleanups that stand on their own. The
-remaining five are marked RFC individually and are where the interesting
-questions are.
+    Various targets avoid the page crossing test for CONFIG_USER_ONLY,
+    but that is wrong: mmap and mprotect can change page permissions.
 
-  1  accel/tcg: cache the result of curr_cflags()
+That is true, but in user-only builds the invalidation path already covers
+it. There are no page tables: every mmap, mprotect and munmap reaches
+page_set_flags(), which calls tb_invalidate_phys_range() whenever the flags
+actually change, and tb_phys_invalidate() calls tb_jmp_unlink() to reset
+incoming jumps. A chained cross-page jump is therefore broken whenever the
+destination page's permissions change. This is not true in system mode,
+where TBs are keyed by physical address and a page table change invalidates
+nothing, so the restriction is kept there.
 
-     Recomputed on every one of the run's 8.4 billion dispatches, from
-     state that changes only when gdb enables single-step or a log mask
-     moves. Cache it in CPUState and recompute from the four places that
-     can change an input.                                        -5.10%
+Add tests/tcg/alpha/test-xpage-chain.c to cover the hazard directly. It
+places a direct branch near the end of one page targeting the next page,
+runs it 200000 times so the chain is established, then checks that
+mprotect(PROT_NONE) makes the next call fault, and that remapping the page
+with different code runs the new code rather than a stale translation.
 
-  2  accel/tcg: enlarge the TB jump cache to 64K entries
+The test detects the hazard it is meant to detect: with the
+tb_invalidate_phys_range() call in page_set_flags() commented out, it fails
+both phases, executing page B after PROT_NONE and returning the stale
+result.
 
-     4096 entries is too small for a guest running a large program;
-     tb_htable_lookup() is 5.73% of samples. 16 bits is the knee of the
-     sizing curve, at 1 MiB per vCPU.                            -6.02%
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling the
+SQLite 3.45.1 amalgamation on an x86-64 host, LTO build, on top of the
+preceding patches:
 
-  3  accel/tcg: skip the can_do_io stores in user-only builds
+    before: 890,713,633,237 instructions
+    after:  869,178,598,378 instructions   -2.42%
 
-     Two stores per TB that nothing in a user-only build reads: 68 billion
-     of them over the run.                              -4.55%, -4.32% wall
+    before: 84.44s wall clock
+    after:  80.49s wall clock              -4.68%
 
-  4  RFC: tcg: probe the TB jump cache inline instead of calling a helper
+Note that this is worth more in time than in instructions, the reverse of
+the preceding patch: a chained jump replaces a cache probe whose loads can
+miss, so the instructions it removes are more expensive than average.
 
-     95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the jump
-     cache. Emit the probe inline (hash, three guarded loads, goto_ptr)
-     and call the helper only on a miss.               -36.51%, -27.05% wall
+Measured before the inline jump cache probe, when a missed chain cost a
+helper call rather than an inline probe, the same change was worth -7.9%.
 
-  5  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
+RFC because this reverses a deliberate decision and the reasoning above
+wants review from someone who knows the invalidation paths better than I
+do.
 
-     translator_use_goto_tb() refuses to chain across a page. In user-only
-     builds the invalidation path already covers what that was protecting
-     against: every mmap/mprotect/munmap reaches page_set_flags(), which
-     invalidates and unlinks. Lift it there, keep it for system mode.
-                                                        -2.42%, -4.68% wall
-
-  6  RFC: accel/tcg: only poll for interrupts in blocks that can close a
-     cycle
-
-     The icount_decr poll needs to happen once per cycle in the guest CFG,
-     not once per block, and any cycle must contain either a backward edge
-     or an indirect one. Record both during translation and emit the check
-     only for blocks that have one.                     -6.81%, -3.10% wall
-
-  7  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-     exits
-
-     What patch 6 leaves behind is mostly blocks flagged for an indirect
-     exit. Give the inline probe its own jump cache base pointer and point
-     it at zeroes when an exit is requested: every dispatch then misses
-     into the helper, which returns the epilogue. The poll becomes a
-     pointer swap on the request path.                  -2.79%, -1.94% wall
-
-  8  RFC: tcg: fold a guest displacement into the host addressing mode
-
-     tcg_gen_qemu_ld/st cannot express a based access, so a target with a
-     displacement in its encodings materializes the address with an lea
-     that the host addressing mode would have done for free. Fold a
-     preceding constant add into a new argument on the op, opt-in per
-     backend, wired up for x86_64 user-only.            -6.29%, -3.29% wall
-
-Each percentage is against the patch before it. End to end, measuring an
-unmodified build of the same base against the full series, five runs each,
-interleaved in one session so that host clock drift is shared rather than
-attributed (mean, with the run-to-run spread):
-
-    instructions retired: 1,646,129,294,236 -> 738,003,153,831   -55.17%
-                                    (0.16%)           (0.03%)
-    wall clock:                    134.934s ->          75.189s   -44.28%
-                                    (0.30%)           (0.99%)
-
-Both endpoints ran at the same 4.782 GHz effective clock, and the .s files
-they produced are identical.
-
-The two figures do not track each other, and that is the interesting part:
-what the series removes is cheap, well-predicted, highly pipelined work, so
-it retires far more instructions than it saves time. IPC falls from 2.55 to
-2.05 as the remaining work gets less regular. Patch 4 also cuts
-L1-icache load misses by 39.1%, because a dispatch no longer jumps into
-qemu's .text and evicts translated code; qemu's own .text falls from 38.9%
-to 5.4% of profile samples over the series.
-
-Every revision was built and measured separately, so the series bisects, and
-the emulated compiler produces byte-identical assembly output at every step,
-which is the correctness check these patches most need. Two new alpha
-tests cover the hazards the series creates: tests/tcg/alpha/test-xpage-chain.c
-(patch 5) and test-indirect-irq.c (patch 7). Both fail or hang if the
-mechanism they cover is removed, which is what makes them tests of the new
-behavior rather than of the old.
-
-The RFC patches need eyes I cannot supply myself. In rough order of how much
-I would like someone to look at them:
-
-  - Patch 5 reverses a deliberate decision made in d3a2a1d803 on the
-    strength of an argument about the user-only invalidation paths.
-
-  - Patch 6 moves system-mode interrupt latency from "bounded by block
-    count" to "bounded by guest control flow". The bound is one
-    straight-line run between cycles, but timer-driven guests want a closer
-    look than I can give them. Its soundness also assumes every goto_tb
-    destination passes through translator_use_goto_tb(); no target in the
-    tree bypasses it today, but nothing enforces that.
-
-  - Patch 4 treats cpu flags and cflags as translation-time constants in
-    its guards, reads a jump cache entry without qatomic_read(), and puts
-    knowledge of the CPUJumpCache layout in tcg/tcg-op.c, where it does not
-    belong.
-
-  - Patch 7's restore in cpu_handle_interrupt() races a concurrent poison
-    from another thread. I believe the existing barrier around
-    icount_decr.u16.high covers it, but my testing was single-threaded user
-    mode.
-
-  - Patch 8 only examines the immediately preceding op, refuses any access
-    with a slow path (so user-only, and no alignment check), and leaves the
-    i128 pairs alone.
-
-  - Patch 2's 1 MiB per vCPU is easy to justify for a single-vCPU
-    linux-user process and less obvious for system emulation with many
-    vCPUs. It may want to be sized per target or made tunable rather than
-    raised unconditionally.
-
-Patches 4 and 8 are wired up for alpha and x86_64 respectively; everything
-else is target-independent, and no other backend changes behavior or needs
-touching.
-
-Matt Turner (8):
-  accel/tcg: cache the result of curr_cflags()
-  accel/tcg: enlarge the TB jump cache to 64K entries
-  accel/tcg: skip the can_do_io stores in user-only builds
-  RFC: tcg: probe the TB jump cache inline instead of calling a helper
-  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
-  RFC: accel/tcg: only poll for interrupts in blocks that can close a
-    cycle
-  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-    exits
-  RFC: tcg: fold a guest displacement into the host addressing mode
-
- accel/tcg/cpu-exec-common.c         |  48 +++++++++++-
- accel/tcg/cpu-exec.c                |  54 ++++++++++++++
- accel/tcg/internal-common.h         |  22 +++++-
- accel/tcg/tb-jmp-cache.h            |   2 +-
- accel/tcg/tcg-accel-ops.c           |   2 +
- accel/tcg/tcg-all.c                 |   1 +
- accel/tcg/translator.c              |  77 ++++++++++++++++++-
- cpu-target.c                        |   3 +
- include/exec/translation-block.h    |   6 ++
- include/exec/translator.h           |   2 +
- include/hw/core/cpu.h               |  23 +++++-
- include/system/tcg.h                |   9 +++
- include/tcg/tcg-op-common.h         |   2 +
- include/tcg/tcg-opc.h               |   9 ++-
- linux-user/main.c                   |   2 +-
- stubs/meson.build                   |   1 +
- stubs/tcg-cflags.c                  |  16 ++++
- target/alpha/cpu.c                  |   2 +-
- target/alpha/translate.c            |   6 +-
- tcg/tcg-op-ldst.c                   |   3 +-
- tcg/tcg-op.c                        |  86 +++++++++++++++++++++
- tcg/tcg.c                           |  86 ++++++++++++++++++++-
- tcg/x86_64/tcg-target.c.inc         |  61 +++++++++++++++
- tcg/x86_64/tcg-target.h             |   3 +
- tests/tcg/alpha/Makefile.target     |   3 +-
- tests/tcg/alpha/test-indirect-irq.c |  53 +++++++++++++
- tests/tcg/alpha/test-xpage-chain.c  | 111 ++++++++++++++++++++++++++++
- util/log.c                          |   4 +
- 28 files changed, 676 insertions(+), 21 deletions(-)
- create mode 100644 stubs/tcg-cflags.c
- create mode 100644 tests/tcg/alpha/test-indirect-irq.c
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ accel/tcg/translator.c             |  12 +++-
+ tests/tcg/alpha/Makefile.target    |   2 +-
+ tests/tcg/alpha/test-xpage-chain.c | 111 +++++++++++++++++++++++++++++
+ 3 files changed, 123 insertions(+), 2 deletions(-)
  create mode 100644 tests/tcg/alpha/test-xpage-chain.c
 
+diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
+index 85bb21e911..3eab9f570d 100644
+--- ./accel/tcg/translator.c
++++ ./accel/tcg/translator.c
+@@ -108,6 +108,17 @@ static void gen_tb_end(const TranslationBlock *tb, uint32_t cflags,
+ 
+ bool translator_is_same_page(const DisasContextBase *db, vaddr addr)
+ {
++    /*
++     * In user-only mode there are no page tables.  Every mmap, mprotect and
++     * munmap goes through page_set_flags(), which calls
++     * tb_invalidate_phys_range() whenever the flags actually change, and
++     * tb_phys_invalidate() unlinks incoming jumps.  A cross-page link is
++     * therefore broken whenever the destination page's permissions change,
++     * so the same-page restriction is not needed.
++     */
++    if (IS_ENABLED(CONFIG_USER_ONLY)) {
++        return true;
++    }
+     return ((addr ^ db->pc_first) & TARGET_PAGE_MASK) == 0;
+ }
+ 
+@@ -118,7 +129,6 @@ bool translator_use_goto_tb(DisasContextBase *db, vaddr dest)
+         return false;
+     }
+ 
+-    /* Check for the dest on the same page as the start of the TB.  */
+     return translator_is_same_page(db, dest);
+ }
+ 
+diff --git ./tests/tcg/alpha/Makefile.target ./tests/tcg/alpha/Makefile.target
+index 36d8ed1eae..eee986bab6 100644
+--- ./tests/tcg/alpha/Makefile.target
++++ ./tests/tcg/alpha/Makefile.target
+@@ -5,7 +5,7 @@
+ ALPHA_SRC=$(SRC_PATH)/tests/tcg/alpha
+ VPATH+=$(ALPHA_SRC)
+ 
+-ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq
++ALPHA_TESTS=hello-alpha test-cond test-cmov test-ovf test-cvttq test-xpage-chain
+ TESTS+=$(ALPHA_TESTS)
+ 
+ test-cmov: EXTRA_CFLAGS=-DTEST_CMOV
+diff --git ./tests/tcg/alpha/test-xpage-chain.c ./tests/tcg/alpha/test-xpage-chain.c
+new file mode 100644
+index 0000000000..7916d544af
+--- /dev/null
++++ ./tests/tcg/alpha/test-xpage-chain.c
+@@ -0,0 +1,111 @@
++/*
++ * Cross-page TB chaining hazard test.
++ *
++ * Phase 1: a direct branch (br) near the end of page A targets page B.
++ *          Run it enough times that QEMU chains TB_A -> TB_B.
++ * Phase 2: mprotect page B away. Re-running must fault.
++ * Phase 3: remap page B with different code. Re-running must execute the
++ *          NEW code, not a stale chained translation of the old code.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <setjmp.h>
++#include <signal.h>
++#include <sys/mman.h>
++#include <unistd.h>
++
++#define PS 8192
++
++static sigjmp_buf jb;
++/*
++ * Written by the SIGSEGV handler and read by main(), so it must not be
++ * cached in a register across the faulting call.
++ */
++static volatile sig_atomic_t caught;
++
++static void segv(int sig)
++{
++    caught = 1;
++    siglongjmp(jb, 1);
++}
++
++/* lda $0, imm($31)  -> v0 = imm */
++static unsigned int lda_v0(int imm)
++{
++    return 0x201F0000u | (unsigned short)imm;
++}
++
++int main(void)
++{
++    struct sigaction sa;
++    int rc = 0;
++    unsigned char *m = mmap(NULL, 2 * PS, PROT_READ | PROT_WRITE | PROT_EXEC,
++                            MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    if (m == MAP_FAILED) {
++        perror("mmap");
++        return 2;
++    }
++
++    unsigned char *pa = m, *pb = m + PS;
++    unsigned int *entry = (unsigned int *)(pa + PS - 64);
++    unsigned int *tgt = (unsigned int *)(pb + 16);
++
++    entry[0] = lda_v0(1);
++    long disp = ((long)tgt - ((long)&entry[1] + 4)) / 4;
++    entry[1] = 0xC3E00000u | (unsigned int)(disp & 0x1FFFFF);  /* br $31,tgt */
++    tgt[0] = 0x6BFA8001u;                                      /* ret        */
++    __builtin___clear_cache((char *)m, (char *)m + 2 * PS);
++
++    long (*fn)(void) = (long (*)(void))entry;
++
++    for (int i = 0; i < 200000; i++) {
++        if (fn() != 1) {
++            printf("FAIL: phase 1 wrong result\n");
++            return 1;
++        }
++    }
++    printf("phase 1 ok (chained)\n");
++
++    memset(&sa, 0, sizeof(sa));
++    sa.sa_handler = segv;
++    sigemptyset(&sa.sa_mask);
++    if (sigaction(SIGSEGV, &sa, NULL) != 0) {
++        perror("sigaction");
++        return 2;
++    }
++    if (mprotect(pb, PS, PROT_NONE) != 0) {
++        perror("mprotect");
++        return 2;
++    }
++    if (sigsetjmp(jb, 1) == 0) {
++        fn();
++        printf("FAIL: phase 2 executed page B after mprotect(PROT_NONE)\n");
++        rc = 1;
++    } else if (!caught) {
++        printf("FAIL: phase 2 longjmp without entering the handler\n");
++        rc = 1;
++    } else {
++        printf("phase 2 ok (faulted)\n");
++    }
++
++    /* Phase 3: remap with different code, expect the new code to run. */
++    if (mprotect(pb, PS, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
++        perror("mprotect back");
++        return 2;
++    }
++    tgt[0] = lda_v0(2);
++    tgt[1] = 0x6BFA8001u;
++    __builtin___clear_cache((char *)pb, (char *)pb + PS);
++
++    long r = fn();
++    if (r != 2) {
++        printf("FAIL: phase 3 returned %ld, expected 2 (stale chain)\n", r);
++        rc = 1;
++    } else {
++        printf("phase 3 ok (new code ran)\n");
++    }
++    return rc;
++}
 -- 
 2.54.0
 
