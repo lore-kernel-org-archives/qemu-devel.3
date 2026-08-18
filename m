@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524BBC5DF81
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3C9C5DF85
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPTu-0005WR-Cx; Tue, 18 Aug 2026 15:28:18 -0400
+	id 1wwPTo-0004fj-EF; Tue, 18 Aug 2026 15:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTr-00059F-KD
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wwPTm-0004TI-QA
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:10 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTp-0007V5-Jn
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:15 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wwPTk-0007Tv-72
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:10 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IHI1Oe1872785
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:12 GMT
+ 67IHGoSS1518225
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=UUk/EOMms+r
- HVnuEal2ydbDj9602AOphDWcGpVltqSU=; b=d9UhNH91qGdd8q6GQD/bIX2gBRU
- MZ/1WDQQ9N4e6FMk/QmX4odOGISuzVVksZyW8Y6sFjhcW+oTtfhpeSmMFFZPjYwC
- xnSR3IQBYRIIakIdkQyBhWIH4FaMwXrAtaV1n0nHXJ53oQA+t3Dz39lPCQEjEe9t
- OZwXXlcmrzTppueLI1WBggj0Ifvuy9ZWS3GDGJbs959KUm6tU4LZjgLHyiRLoL6o
- 5egAGUZUFuqrOGusB4VF5wFT1Acl4XCPcscN2UY3umhRCGMzMc8ZxrnapNpppqzN
- 0zoNuvnOBus6iobwksq8LVI38weCR95VCO0AqjRuXoeJdDaER4C9fyLZnyg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4nb1agqu-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=/1hhX6E7Hzy
+ Rx41/DWvjoJ10pQu2QiTgtGrKtZg7+5I=; b=hbcE5AmIKXOUu9u1OFTXmTJNAk9
+ nIXxFDGod7NEEYqC2E+B2gdTno5w+h4Nf0GuonEkd2eGH1gR+QHj3tvg2B7nuxuc
+ zwSFmbd1WoXWkJkoRtsHk3gaCHmll2sfKvOPLfbrCj0yj3CsuX2trOCg1HZCuUml
+ S7fCDuI/Fg8mmQHyRFJ67ELVJ6uvbFOu02IxTjWf3kd8lE7tpvLLc8Gq/RthsjM1
+ GDPVeBmg3Wt3AeJMbsRmXNdPOeFd9Fab5ARHnlpGSzl9FOYWlG1ho2K25CEV5W2P
+ qEUutKDcXciEidvRP1Ter55AXpMSiu9kQOfpvDtfIscHf1OcQ/lRCRhXTlg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4uab0nyj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:12 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38e4758ab46so400297a91.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:28:12 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:06 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2cd01a14e81so2397985ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787081291; x=1787686091; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787081285; x=1787686085; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=UUk/EOMms+rHVnuEal2ydbDj9602AOphDWcGpVltqSU=;
- b=PYPFVh5PMgPFejZbrnCRRReozDAlyQoQ46YO0WkM6H93ocKJphsOQsYsZAjyppfacv
- iBd3/LJW1k+nS8vLYNb7LqQ7Tu+j1mlc8NHuGqnYPd7l4U4wb0U2Tf2PDyhnH29/iNKY
- I0EP39jAvNAZ6DdgD+742CU7R5EQ5HN5VL7ziwutfkU+8jQvjCtXw/BZ95lG+vKPVbq1
- mzqLK7cHrP3+sEsiSQLE16ZPyaod6FgB60aeK+IObXHrSzuTZPG465lkk3Jdw3SBEE6W
- WpIEn4tkGvOkXjj9rwq35JXpl1NktNA4xA7tIAOYlPmrp57a6VAXlMd0k6oS9+Bv+1lJ
- cK6A==
+ bh=/1hhX6E7HzyRx41/DWvjoJ10pQu2QiTgtGrKtZg7+5I=;
+ b=DdBXglSbp9wldUobR+q3kyzK1oWwGCZjdmfISA/Z590itRw+1xBc9XOJc/Ttq5LXdB
+ XahiMpto6XwEwFfqxj9F81kMhPamNOce3LO/1M+zv0R7VZqTKvBE/eZj1cSOwe+qi+lq
+ gXcvL/JVfDfhD6+f+wk7KCKZmerx57xtX/zy8/y6ebeiaqixnLZoZdkF1t1gshe5Iubj
+ XZOvYKaUr1qlIPr3/FJN/hdy9Ld5Ees9XP00omr6dN4jXQkN27Ktc+n8euuhsWW48F1K
+ fO0rFhIh+l7XJBx+gwdiVtwUPQixfVFPH3eJRHrs4UgS9oGujtSnSXFUg/kamATFuJ5t
+ zAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787081291; x=1787686091;
+ d=1e100.net; s=20251104; t=1787081285; x=1787686085;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UUk/EOMms+rHVnuEal2ydbDj9602AOphDWcGpVltqSU=;
- b=lMWK9ZncMbk3WCaZd+KpTBdzXzzGiNzZm5zilCnZCba/jKV/j75gEQfh71w13Yvanh
- tuwb5g+RDn5808BrR3Z3oDafRPptgHp5A2c1fSNC6bfef+dX6VFdPSLqUs9kvzwYc0DN
- DAdA0cegWtmPKPTsES2k02dFypec9v2xp7A0PdP+d6twp2bprcFHozMtreazHOpvH4nX
- QMZOewLZfgma1Aev+tG4WiDGXePi77+0aESKUJGNQmTalj17oWHwOeEIzWNdx+z/Q5vO
- 9Fig2UwIEIneplz45IzGK3BsnyxS10RtMNSPC71l/+RhyCEE4/bU3QSNIogXM2qq2ege
- PqqA==
-X-Gm-Message-State: AOJu0YwnSWaJY10r8dLO6QURmjrNsCmJaN0kZyLRVPd00xRqRk9lCQUz
- jFyDVuk7gDSgD7Q1uFkDnyYdUhBHgMB34CNNOKNZ+63N8J6CARdncj59BITkOEzfvQEAtTBsVAt
- 6avwyX6Jzp9bpfMqewjMoEMmkeDWyKkD0NCB+pe/W1JrL0B+GErVMFbLF0LPQwPiXFA==
-X-Gm-Gg: AR+sD13n7jm/JNIDRDx7ihDjzyHG/49XG2teqmwi1dvRcGq2RJ7h5TMX4ucoaal8Y+R
- qu3rcQeKeN3Mvq564Ir0bQrQNPyXpZF+3hgikoH3RWsepxjj3fgauhYAprMyeNHJjBgRgcgvYzC
- JUh8kiwNM0lALFx6/Z19rlanLtWgWukc9ccNOJ7toHFIgRyWXHXYFWYWUg4st73tCku/6br09l5
- p+3AQFYlHVumdoEIEtiq90R+wAmiezpe/bAOJ8IYj/dEbiizLP4DGskIqv5MP6g+6+rPziAdnZ+
- 2KNRegDVPGzT7mDuuFH/Rjq4JxXNTHYGaE/FxjR2SfXi+aVAG+Hi3gkQBvFyqS2swZX1gDvLiOK
- cwH3IWWFILqzUtOzO89le3OTUIPwqVYb2DdR+cwR1m594HOPd7WIqh+BSk94=
-X-Received: by 2002:a17:90b:180e:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-3957b1c2415mr115409a91.3.1787081291380; 
- Tue, 18 Aug 2026 12:28:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:180e:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-3957b1c2415mr115329a91.3.1787081290901; 
- Tue, 18 Aug 2026 12:28:10 -0700 (PDT)
+ bh=/1hhX6E7HzyRx41/DWvjoJ10pQu2QiTgtGrKtZg7+5I=;
+ b=gWeB6EGYAef6K/wj0tMepf/9V7EyLO76p9N+uaVUc9oEN2AvaYe6bS5UsoiQ5bta5s
+ +bj5mzGntip19knfq9rPfdo4G0iEi1t3cLHxo0fe9aIHpYUGZQsmMAhm6p7biFuDSw77
+ 6knE7rN4NUUA8WQuy4K7HeVZxbqnNkEe/JZmWxJBKqV32hPsF4wafyPfMQ0ckpiwNdvU
+ xbusQ+RMNFejftVWsjGApA9oh1GcCRK4L1dDy+jrDJYOM4p8twE81K+PxKKMOMQ2e+v+
+ sGjdGLC0zh3AUspkhiR928hPtWGKySQIOPukZUtZjAIM8qaz1HipE+5SxQbYsRwhuJX8
+ xq1g==
+X-Gm-Message-State: AOJu0YxRveLD+CJzWvAJV8ckLaaz3iVS3oY0WeouMYDZecAJUZsXQE2d
+ aO+rXFNFncjcOdj4STQ5J5wEg/a4nOuJAvA92ZwuhVyHfOMVPj2KSsg5YeNyHYMFh06NJBBZav1
+ C0VZ8NzahuGR407bJ8w1wCqTT7U75lE722PDMRaTzS/QyJCF71mTULh5kFeHZCXJPSg==
+X-Gm-Gg: AR+sD10lG1tdEpbOk6w8fUmbP/OF0rBbgKVNUYh7BXnA3pYEbmmt6dImSWcYr9spJoK
+ 1PvjHs0Kun7AoH6EmwS/VGvUnav/wMZsVIgz5mi+OwrTBMzJjQShJhtSI5ovR8cFzd5No16KcEL
+ sfqqp2b71cSNwesxcYwL0HvDZd7/oIdJ6UY54OdbOwpSp9UOdzfEnjp+DVhduw8w42JlUIpvcU4
+ jv2CpqPPmbyrbQcmmQw7SrCtlIMUvqalF/gEOkdQ3MnsYKcNC2e1GYjRoHEl5cxzo6jXUvh8R1p
+ Rhd7yo+xwMjah92ywdwOLrth3Tb+1obFkmJ3kfj7bnM/VYi1EVCyJVm5vW+yd40CXBoBGFJkvL1
+ n97DuRbbPqD/vESjKm81xV3GO3E5f81P3vXe1p+wOsMpUFKdUU5z9Ayax2fM=
+X-Received: by 2002:a17:902:d483:b0:2d3:6fac:d67c with SMTP id
+ d9443c01a7336-2d5f6cb7623mr578875ad.10.1787081285181; 
+ Tue, 18 Aug 2026 12:28:05 -0700 (PDT)
+X-Received: by 2002:a17:902:d483:b0:2d3:6fac:d67c with SMTP id
+ d9443c01a7336-2d5f6cb7623mr578185ad.10.1787081284591; 
+ Tue, 18 Aug 2026 12:28:04 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.28.04
+ 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.28.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:28:05 -0700 (PDT)
+ Tue, 18 Aug 2026 12:28:04 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -98,49 +98,50 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v7 056/104] tests/tcg/i386: system tests
-Date: Tue, 18 Aug 2026 19:22:20 +0000
-Message-ID: <20260818192309.22169-57-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 055/104] tests/tcg/i386: user tests
+Date: Tue, 18 Aug 2026 19:22:19 +0000
+Message-ID: <20260818192309.22169-56-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX01rTadz1xqR7
- T4PoY2INcQbK29mu2POzWUxZhhhhLAMaC/KBpDsF4RBwVXTyEakSt2elOpkSh5ZhlmhUv3pLs0h
- yftfhIgVSQAfmzxbOD4WY11qjIPtLqxf7H/IMh/PdieOdQSLTELUJjKYH24fdaFjddDJspSaGYN
- a+7/kT6v/cuJlwf7Dm2S4TsX0bmrcwLaEzSHRzlMTgx7WwyzMO0YQ0p87ZFhusQYePIS45V4rWS
- 9DdMqCpXPV0aHmWboWSKzzhlZ6/ZwjRQ1UsfY4T4ORwGf/Hl41ywtDH1HWveiwC1TvCAIe3c2M+
- VYkZ4TnxZ3vzCZLIUev9EaiAp+14LhtBCurw/C2i7JPSNBB8XpcWjRmExxOISVF4OpVALaJqtee
- Hwq3Pej/5ToqeSij314yfwUPaGL7RuviYrjNipPbPYrvffC6XY4r7zEuxLGdfWX5xiaX9bNSTwY
- 3pEMRDfo81ug8jfbn1w==
-X-Proofpoint-GUID: ajf3yK9rTllWYOo6qRRbp2XEyymWQXmB
-X-Authority-Analysis: v=2.4 cv=Ze4t8MVA c=1 sm=1 tr=0 ts=6a84b24c cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX59ieUWlfpMMm
+ Uv0YDeSVi4jdzkG6F0w2bxl81ONKu2CW/otw9OWg9/lD4RZRb21ziLBm+gZevt5mJGE0ueybiU5
+ l6engL79M6tYokFN9ybQXvXRHy4X/0GOqjDPFmWXFmybbKapjMB3iw9FAovK8GjKykatysk15LO
+ g3YCFK7la7XwQTj5sgVUtfQjNzDvrvSDy7YWeaD9OoAHVbvR4Qwb2S/xdH3En04WfuV4aMJPQUw
+ qq7XfqEoL3fHj/E7Q9zJLe6naqEq9Jn70cJncAlqlCqnABnf5ZiGUrY996tj+BlazzBx4dBuyE1
+ WtJpesMPXygAsSXsRdg3MVaAkgq/RHz5ZGFoFb9FGoKUtLzRaE2sluJduuoGXxLlSPDboyPmH40
+ GEcb2Ch4atBI8YGL5Oyp5RkWM9wK7OqSZc8jgyUaMCXg6S3cssjn283ZIZz67O/RYI5kC3ZJ8DZ
+ lnGosOkxJOnl5eJx+sQ==
+X-Authority-Analysis: v=2.4 cv=BvitB4X5 c=1 sm=1 tr=0 ts=6a84b246 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=YfLzPEwJW_iPccEctz8A:9 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: ajf3yK9rTllWYOo6qRRbp2XEyymWQXmB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfXwRr3KJWBfop2
- TISrK7DPQY8AchbtHAIJbM6Ajp8Yu3ZRQXkL06gFT0kl/csoNVANtedF7EWkBsV+UQ4JAffis59
- N4ffA0Beaz2SeEI+6/kO/xJCCuwKlY0=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=ZWrafvs-fLamW44GisAA:9 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: UEPffl_bNxI31r2AZhh_r3hfY3HBTdga
+X-Proofpoint-GUID: UEPffl_bNxI31r2AZhh_r3hfY3HBTdga
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX32tyD/aV5EgK
+ 6Y3sJdu9kPTpR5ak4bj2ZkfHptpEXTC55AET7EVn8Z/ousttBjiRAHpjyKhNvTpeERTxNml0AQ1
+ Xn8MPdA6tdW9ROoa9zC8EplvNlcMpys=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_03,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
- adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180142
-Received-SPF: pass client-ip=205.220.180.131;
+ impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180142
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,127 +158,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Original test-i386-fprem was comparing qemu output and bare metal
+output. However, those files have differences for now, so remove this
+part.
+
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/i386/Makefile.softmmu-target | 37 -------------------
- tests/tcg/i386/meson.build             |  2 ++
- tests/tcg/i386/system/meson.build      | 49 ++++++++++++++++++++++++++
- 3 files changed, 51 insertions(+), 37 deletions(-)
- delete mode 100644 tests/tcg/i386/Makefile.softmmu-target
- create mode 100644 tests/tcg/i386/system/meson.build
+ tests/tcg/i386/Makefile.target   | 102 -------------------------------
+ tests/tcg/i386/meson.build       |  56 +++++++++++++++++
+ tests/tcg/meson.build            |   1 +
+ tests/tcg/x86_64/Makefile.target |  10 +--
+ 4 files changed, 62 insertions(+), 107 deletions(-)
+ delete mode 100644 tests/tcg/i386/Makefile.target
+ create mode 100644 tests/tcg/i386/meson.build
 
-diff --git a/tests/tcg/i386/Makefile.softmmu-target b/tests/tcg/i386/Makefile.softmmu-target
+diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
 deleted file mode 100644
-index 4096a1cf31f..00000000000
---- a/tests/tcg/i386/Makefile.softmmu-target
+index f1df40411b0..00000000000
+--- a/tests/tcg/i386/Makefile.target
 +++ /dev/null
-@@ -1,37 +0,0 @@
+@@ -1,102 +0,0 @@
+-# i386 cross compile notes
+-
+-I386_SRC=$(SRC_PATH)/tests/tcg/i386
+-
+-# Set search path for all sources
+-VPATH 		+= $(I386_SRC)
+-
+-config-cc.mak: Makefile
+-	$(quiet-@)( \
+-          $(call cc-option,-fno-pie, CROSS_CC_HAS_I386_NOPIE)) 3> config-cc.mak
+-
+--include config-cc.mak
+-
+-I386_SRCS=$(notdir $(wildcard $(I386_SRC)/*.c))
+-ALL_X86_TESTS=$(I386_SRCS:.c=)
+-SKIP_I386_TESTS=test-i386-ssse3 test-avx test-3dnow test-mmx test-flags
+-X86_64_TESTS:=$(filter test-i386-adcox test-i386-bmi2 $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+-
+-test-i386-sse-exceptions: CFLAGS += -msse4.1 -mfpmath=sse
+-run-test-i386-sse-exceptions: QEMU_OPTS += -cpu max
+-
+-test-i386-pcmpistri: CFLAGS += -msse4.2
+-run-test-i386-pcmpistri: QEMU_OPTS += -cpu max
+-
+-test-i386-bmi2: CFLAGS=-O2 -fwrapv
+-run-test-i386-bmi2: QEMU_OPTS += -cpu max
+-
+-test-i386-adcox: CFLAGS=-O2
+-run-test-i386-adcox: QEMU_OPTS += -cpu max
+-
+-test-aes: CFLAGS += -O -msse2 -maes
+-test-aes: test-aes-main.c.inc
+-run-test-aes: QEMU_OPTS += -cpu max
+-
 -#
--# x86 system tests
+-# hello-i386 is a barebones app
 -#
--# This currently builds only for i386. The common C code is built
--# with standard compiler flags however so we can support both by
--# adding additional boot files for x86_64.
--#
+-hello-i386: CFLAGS+=-ffreestanding -fno-stack-protector
+-hello-i386: LDFLAGS+=-nostdlib
 -
--I386_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/i386/system
--X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+-# test-386 includes a couple of additional objects that need to be
+-# linked together, we also need a no-pie capable compiler due to the
+-# non-pic calls into 16-bit mode
+-ifneq ($(CROSS_CC_HAS_I386_NOPIE),)
+-test-i386: CFLAGS += -fno-pie
 -
--# These objects provide the basic boot code and helper functions for all tests
--CRT_OBJS=boot.o
+-test-i386: test-i386.c test-i386-code16.S test-i386-vm86.S test-i386.h test-i386-shift.h test-i386-muldiv.h
+-	$(CC) $(CFLAGS) $(LDFLAGS) $(EXTRA_CFLAGS) -o $@ \
+-	   $(<D)/test-i386.c $(<D)/test-i386-code16.S $(<D)/test-i386-vm86.S -lm
+-else
+-test-i386:
+-	$(call skip-test, "BUILD of $@", "missing -no-pie compiler support")
+-run-test-i386:
+-	$(call skip-test, "RUN of test-i386", "not built")
+-endif
 -
--CRT_PATH=$(I386_SYSTEM_SRC)
--LINK_SCRIPT=$(I386_SYSTEM_SRC)/kernel.ld
--LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_i386
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+-ifeq ($(SPEED), slow)
 -
--TESTS+=$(MULTIARCH_TESTS)
--EXTRA_RUNS+=$(MULTIARCH_RUNS)
+-test-i386-fprem.ref: test-i386-fprem
+-	$(call quiet-command, ./$< > $@,"GENREF","generating $@")
 -
--# building head blobs
--.PRECIOUS: $(CRT_OBJS)
+-run-test-i386-fprem: TIMEOUT=60
+-run-test-i386-fprem: test-i386-fprem test-i386-fprem.ref
+-	$(call run-test,test-i386-fprem, $(QEMU) $<)
+-	$(call diff-out,test-i386-fprem, test-i386-fprem.ref)
+-else
+-SKIP_I386_TESTS+=test-i386-fprem
+-endif
 -
--%.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+-# Update TESTS
+-I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+-TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
 -
--# Build and link the tests
--%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-sha512-sse: CFLAGS=-msse4.1 -O3
+-sha512-sse: sha512.c
 -	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
 -
--memory: CFLAGS+=-DCHECK_UNALIGNED=1
+-run-sha512-sse: QEMU_OPTS+=-cpu max
 -
--# Running
--QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
+-TESTS+=sha512-sse
+-
+-CLEANFILES += test-avx.h test-mmx.h test-3dnow.h
+-test-3dnow.h: test-mmx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-mmx.py $(I386_SRC)/x86.csv $@ 3DNOW
+-
+-test-mmx.h: test-mmx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-mmx.py $(I386_SRC)/x86.csv $@ MMX SSE SSE2 SSE3 SSSE3
+-
+-test-avx.h: test-avx.py x86.csv
+-	$(PYTHON) $(I386_SRC)/test-avx.py $(I386_SRC)/x86.csv $@
+-
+-test-3dnow: CFLAGS += -masm=intel -O -I.
+-run-test-3dnow: QEMU_OPTS += -cpu max
+-test-3dnow: test-3dnow.h
+-
+-test-mmx: CFLAGS += -masm=intel -O -I.
+-run-test-mmx: QEMU_OPTS += -cpu max
+-test-mmx: test-mmx.h
+-
+-test-avx: CFLAGS += -mavx -masm=intel -O -I.
+-run-test-avx: QEMU_OPTS += -cpu max
+-test-avx: test-avx.h
 diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 62074b86c9e..5cda03655fa 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -2,6 +2,8 @@ cc = 'i686-linux-gnu-gcc'
- cc_dockerfile = 'debian-i686-cross'
- cc_docker_host_arch = ['x86_64']
- 
-+subdir('system')
-+
- tests = []
- 
- tests += tcg_tests['multiarch-linux-user']['tests']
-diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
 new file mode 100644
-index 00000000000..d3f73997c7f
+index 00000000000..62074b86c9e
 --- /dev/null
-+++ b/tests/tcg/i386/system/meson.build
-@@ -0,0 +1,49 @@
++++ b/tests/tcg/i386/meson.build
+@@ -0,0 +1,56 @@
++cc = 'i686-linux-gnu-gcc'
++cc_dockerfile = 'debian-i686-cross'
++cc_docker_host_arch = ['x86_64']
++
 +tests = []
 +
-+minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-+minilib_printf = files(minilib_dir / 'printf.c')[0]
-+link_script = files('kernel.ld')[0]
-+boot = files('boot.S')[0]
-+cflags = ['-nostdlib',
-+          '-ffreestanding',
-+          '-Wa,--noexecstack',
-+          '-I', minilib_dir, minilib_printf, boot,
-+          '-Wl,-T', link_script,
-+          '-Wl,-melf_i386',
-+          '-Wl,--no-warn-rwx-segments',
-+          '-lgcc']
-+qemu_def_args = ['-display', 'none',
-+                 '-device', 'isa-debugcon,chardev=stdio',
-+                 '-chardev', 'stdio,id=stdio',
-+                 '-device', 'isa-debug-exit,iobase=0xf4,iosize=0x4',
-+                 '-kernel']
++tests += tcg_tests['multiarch-linux-user']['tests']
 +
-+# Multi arch tests
-+multi_src = []
-+foreach t: tcg_tests['multiarch-softmmu']['tests']
-+  foreach src, setup: t
-+    new_cflags = cflags
-+    if fs.stem(src) == 'memory'
-+      new_cflags += '-DCHECK_UNALIGNED=1'
-+    endif
-+    if src not in multi_src
-+      setup += {'cflags': [new_cflags]}
-+      multi_src += src
-+    endif
-+    tests += {src: setup + {'qemu_args': qemu_def_args}}
-+  endforeach
-+endforeach
++tests += {
++  'hello-i386.c': {
++    'cflags': ['-ffreestanding', '-fno-stack-protector', '-nostdlib'],
++  },
++  'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
++  'test-i386-adcox.c': {'cflags': ['-O2']},
++  'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
++  'test-i386-f2xm1.c': {},
++  'test-i386-fbstp.c': {},
++  'test-i386-fisttp.c': {},
++  'test-i386-fldcst.c': {},
++  'test-i386-fp-exceptions.c': {},
++  # TODO: original test-i386-fprem test was comparing output between qemu and
++  # bare-metal. At the moment, files are not matching, so deactivate compare.
++  'test-i386-fprem.c': {},
++  'test-i386-fpatan.c': {},
++  'test-i386-fscale.c': {},
++  'test-i386-fxam.c': {},
++  'test-i386-fxtract.c': {},
++  'test-i386-fyl2x.c': {},
++  'test-i386-fyl2xp1.c': {},
++  'test-i386-pcmpistri.c': {'cflags': ['-msse4.2']},
++  'test-i386-pseudo-denormal.c': {},
++  'test-i386-snan-convert.c': {},
++  'test-i386-sse-exceptions.c': {'cflags': ['-msse4.1', '-mfpmath=sse']},
++  'test-i386.c': {
++    'cflags': [files('test-i386-code16.S'), files('test-i386-vm86.S'),
++               '-lm', '-fno-pie', '-Wl,--no-warn-rwx-segments'],
++  },
++  '../multiarch/sha512.c': {
++     'exe_name': 'sha512-sse',
++     'cflags': ['-msse4.1', '-O3'],
++  },
++}
 +
-+if 'qemu-system-i386' in emulators
++if 'qemu-i386' in emulators
 +  tcg_tests += {
-+    'i386-softmmu': {
++    'i386-linux-user': {
 +      'cc': cc,
 +      'cc_dockerfile': cc_dockerfile,
 +      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'i386/system',
++      'folder': 'i386',
 +      'gdb_arch': 'i386',
-+      'qemu': emulators['qemu-system-i386'],
++      'qemu': emulators['qemu-i386'],
 +      'tests': tests,
 +    }
 +  }
 +endif
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 878a391d8fd..4d74891a30b 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -142,6 +142,7 @@ subdir('alpha')
+ subdir('arm')
+ subdir('hexagon')
+ subdir('hppa')
++subdir('i386')
+ 
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index be20fc64e88..8ed44b08793 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -6,7 +6,7 @@
+ # $(SRC_PATH)/tests/tcg/i386/
+ #
+ 
+-include $(SRC_PATH)/tests/tcg/i386/Makefile.target
++#include $(SRC_PATH)/tests/tcg/i386/Makefile.target
+ 
+ X86_64_TESTS += test-2413
+ 
+@@ -19,7 +19,7 @@ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+ X86_64_TESTS += fma
+-TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
++TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) #test-x86_64
+ else
+ TESTS=$(MULTIARCH_TESTS)
+ endif
+@@ -32,9 +32,9 @@ run-plugin-test-i386-ssse3-%: QEMU_OPTS += -cpu max
+ cross-modifying-code: CFLAGS+=-pthread
+ cross-modifying-code: LDFLAGS+=-pthread
+ 
+-test-x86_64: LDFLAGS+=-lm -lc
+-test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
+-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
++#test-x86_64: LDFLAGS+=-lm -lc
++#test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.h
++#	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+ 
+ %: $(SRC_PATH)/tests/tcg/x86_64/%.c
+ 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
 -- 
 2.43.0
 
