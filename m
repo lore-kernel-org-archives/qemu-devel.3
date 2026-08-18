@@ -4,119 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108D3C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1549CC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwLDw-00019D-4j; Tue, 18 Aug 2026 10:55:32 -0400
+	id 1wwLH5-0001mq-Oy; Tue, 18 Aug 2026 10:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wwLDn-00011C-Ck; Tue, 18 Aug 2026 10:55:24 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wwLDl-0000NI-Qn; Tue, 18 Aug 2026 10:55:23 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3V1t455030; Tue, 18 Aug 2026 14:55:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=QKISus
- lf5S+89fB0v2+9SckDYm7pYiTv/IckFHNgX5Q=; b=j7A4DqXq03XQXXSHte3t+Q
- CSP02cubQI8lxmmSLEq71sI9zhJh7C9acMBy3awsTuoXimYv7zwo/whyL9/u48/u
- RhHhsbNpgtr+q/ba+RNqBhvKsA+310ZGnwKKA5DcyYhBj+boNswb1bJPCCIKGOGG
- Wyz1za6/dHW2oIpEGeQZrLzRBuIWkkHW65nPzwa1NIAUtdUM27ZX/8uySImUqped
- +vAggn20m587sqMXyrM2PgU/32NkbhB4D8y29KupYbCb7a0H+d3uP2Nk0RuH/v9q
- hUZSDsqcDbKGdIX5MltV2III2ODLTJRud82W3EkxKpttNDWwTbnyIm8ZXtl/hXfg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fm3rx7e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 14:55:17 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IEfPiY014779;
- Tue, 18 Aug 2026 14:55:16 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ek3s3c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 14:55:16 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IEtFnD36962616
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 14:55:15 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 21F1C5805F;
- Tue, 18 Aug 2026 14:55:15 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3253758054;
- Tue, 18 Aug 2026 14:55:13 +0000 (GMT)
-Received: from [9.61.69.254] (unknown [9.61.69.254])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 18 Aug 2026 14:55:13 +0000 (GMT)
-Message-ID: <ac7fd323-d338-4e67-b39c-f0a435e11aee@linux.ibm.com>
-Date: Tue, 18 Aug 2026 10:55:12 -0400
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wwLH3-0001mG-LN
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:58:45 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wwLH2-0001WR-4m
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:58:45 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5b015b2d792so4420664e87.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:58:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787065121; x=1787669921; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=okyVK+5iTTtti3irT3oD0GGgq2lms6vhAteHDMiQvqU=;
+ b=YTjQJm3rRn7Fcyd9KGN7pkhZhbWV0ZB+gxL5s9jXoEHXFfr8XRXYpTaxbPoubVZz5e
+ 2aQVp1vChZHAuQNBJcbW8DhcSghMHjg3vL5pHpRjpsS6ocvP/bo8gxRZkdykYPmbitjJ
+ 0aoxbTBexRRCH9eLd9e/CbOepVnYxIw9vlu28tgg/a/WoiWTbUNz9pcl8qUu+YTjQYeF
+ oLnLaaKaZGWq3r34mTLzOTb6WUyKDZhE6Se7KJoo84B5qPmpSglMCVRCDowpdn3yxEak
+ 4hJo3fzavf7XYOv9v1HBR+S98PudSeNv/cPt4MUi0XqVmlOKrmb35spIgb2IRF5/Ckdd
+ orIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787065121; x=1787669921;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=okyVK+5iTTtti3irT3oD0GGgq2lms6vhAteHDMiQvqU=;
+ b=WizzsChri0SaH16LMcLy/qjzIosZAhImfxehdkUhkElU1wQP8TYAZ2hQYrtjij1F8o
+ u4g8onLbyaBGQmm7TAKGbJVnO+vkdRnQVX0qbYj2DyDyDTUu0uYuxLSFq53JzBdp44L9
+ HaHWj3enx8a4qTSpTHV8/h+wWgAJp+Wv3xaIpZt4TmguEQJVrshMhL9t4mbDLDrp+w7Y
+ 9VTIG4cDSzLwUG06G5i/zj544qgU64uf8J2zPHhFY6B2+bguOXloh6aziTuC6Dhz6xBk
+ D3haw0ArEVrAXZ8sdf6ue+wMUiXOmiXa6VuSAMlGSnKqbqyJDHUjUxu7hBvbf1E6ectU
+ MhXQ==
+X-Gm-Message-State: AOJu0Yw9TjMKVv0mwLvZId6ajbod78qYNvftwdx8GGtoDUi2/41THPAq
+ BX5YeSmmztUt0lcs5NuN3/9H6fYHxPUFPERWCLG3ZrxMHVbAg/YZbuF0ZmwNGRquat8=
+X-Gm-Gg: AR+sD131JFgIvdo28gf06rYgvQeNj2XZJchH8sGXB+zENlMJaHC5WiWP5s+6MzxirOr
+ rCf4aXAsQu3xTj+04XDfjQ/DPhHjEOztc3M892TQ+4a3bNOXrbTGKKvrk5p8D57TDDWnCepelwy
+ wnJ/dafmFaIUJD5ujZP6OxAPcn2iOwV+0Q2O6j0tIymADQ3qxCngEKU3bSSYt8JW7GfbkijAZB1
+ hgpxOFvVYjgnQtd6Lqltx4opB3Xv7nDzP6YBfCGSVXIjK3h4CR92ecdN5KNVZwdLAAzkifQ/rwG
+ iYrgBB9X/dYdRXfnABt3UPXsQu3mPzBT2XuEeDFFyJZxaKWH8xMuWnGVipKyByoKfpzOpSP+HCX
+ Qd9GIpy8YcEsQvA1sqb2y5MHYc4dcWuahvmPitUBjCIHU2Jq7h9JtUEGZgGiot8RQtZMTnwcKDF
+ GqF2SqxsfUSU1CJvM0h984Ym6jaj/BuAQglTDeamTiPVj36kJL78S1dVhMPVpp8hOGzw==
+X-Received: by 2002:ac2:568e:0:b0:5b0:e6e:8a8c with SMTP id
+ 2adb3069b0e04-5b470679582mr2325054e87.19.1787065121012; 
+ Tue, 18 Aug 2026 07:58:41 -0700 (PDT)
+Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b46cf957e2sm1308207e87.3.2026.08.18.07.58.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 07:58:40 -0700 (PDT)
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/i386: Mark MOVNTI as not valid with prefixes 0x66, 0xF2,
+ 0xF3
+Date: Wed, 19 Aug 2026 00:58:37 +1000
+Message-ID: <20260818145837.550059-1-apolivodaa433@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v17 34/34] MAINTAINERS: Add secure IPL files to S390-ccw
- boot group
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: cohuck@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260730214624.2328883-1-zycai@linux.ibm.com>
- <20260730214624.2328883-35-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260730214624.2328883-35-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 730F7Qyy2Q1mFDf_z2n_GTFqjdAcZ6-s
-X-Proofpoint-ORIG-GUID: 730F7Qyy2Q1mFDf_z2n_GTFqjdAcZ6-s
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX0/BhyVsg+/dz
- TleoWGlh6Uksg0MmiqRy90TBbJ8rnNlOBPEhWq5g6GZDmlUJ5U1z631tz0p9xesvIgrue//WoyP
- NEeTmjMAj5H5GNNySEP052GuZ3DZjQc=
-X-Authority-Analysis: v=2.4 cv=WtQb99fv c=1 sm=1 tr=0 ts=6a847255 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=69wJf7TsAAAA:8 a=jZOY1T4vawHwXQVYJRMA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX2QuBoEiIJ5Wa
- 4JQYMym+D2A8lt+WKiWRyDpYJbeztGO9JAaLqa/T6TDXLBSzQyM1xV8Iu2lswPE0d7xtlnsXXcy
- N3WNWMykuBq7f8N3NCc8pT0D+gMO10J7ZO8tbv0K/oud+yX0PHP5CX2Ug2ct6DNs3CFIerin3G9
- 37xgzGA6fOrGzOpu16dAwkmXgB+t1bN45b4yt4cW0QAw6xeyvOez3I+7wATk5hqxb8kpaoE5qvX
- UcIG12mWZD7QK3hpOkxgJIa1eLCfX/UlBurvEDpvhO7GvBQue8q1uzfED7vA2sxO5gXRxPPFjE5
- DeKbk5WCUoyZxHRMVOg7ghS6Vs6/QNhnINo+0bLtSnVY1MbErTXxHx8Uc7xQpiTttyS86m+zI+a
- ED+WtM1TxSHcphZd+XFedrtwwXi8Y3j7sT2OHFzoRG982WnUL8DZv9QenbeutIYM/tMpv4TwJX7
- /Q1YoiXcyrJD0J5ATjg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608180107
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,38 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+According to both table A-3 in Volume 2 of Intel 64 and IA-32 Architectures
+Software Developer's Manual and table A-3 in Volume 3 of AMD64 Architecture
+Programmer's Manual, 0F C3 is decoded as MOVNTI only if the instruction is
+not preceded by prefixes 0x66, 0xF2, or 0xF3.
 
+Currently, QEMU does not check the presence of these prefixes when decoding 
+0F C3, which leads to QEMU happily executing 0F C3 as MOVNTI instead of raising
+an expected #UD when any of these prefixes are present, which does not match
+the behavior of the real hardware.
 
-On 7/30/26 5:46 PM, Zhuoying Cai wrote:
-> Add entries for the files introduced by the secure IPL series (cert-store,
-> diag headers, documentation, and functional test) to the S390-ccw boot
-> maintainer group.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Acked-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   MAINTAINERS | 5 +++++
->   1 file changed, 5 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 902db77218..0742076861 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1926,10 +1926,15 @@ R: Christian Borntraeger <borntraeger@linux.ibm.com>
->   R: Jason Herne <jjherne@linux.ibm.com>
->   S: Supported
->   F: hw/s390x/ipl.*
-> +F: hw/s390x/cert-store.[ch]
-> +F: include/hw/s390x/ipl/
->   F: pc-bios/s390-ccw/
->   F: pc-bios/s390-ccw.img
->   F: docs/devel/s390-dasd-ipl.rst
-> +F: docs/specs/s390x-secure-ipl.rst
-> +F: docs/system/s390x/secure-ipl.rst
->   F: tests/functional/s390x/test_pxelinux.py
-> +F: tests/functional/s390x/test_secure_ipl.py
->   L: qemu-s390x@nongnu.org
->   
->   S390 PCI
+This patch fixes this bug by correcting the decode table for MOVNTI so that
+it requires that none of the 0x66, 0xF2, and 0xF3 prefixes is present.
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 3519b813e1f1 ("target/i386: port extensions of one-byte opcodes to new decoder")
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+---
+Note: scripts/checkpatch.pl reports style errors. These are false positives,
+since the patch is not modifying the formatting of the affected part of 
+the decoder table entry.
+The error about the line being too long is also a false positive, because
+the length that exceeds 90 characters seems to be a normal thing in
+the decoder table.
+
+ target/i386/tcg/decode-new.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ac181308ca..cf8431e3f4 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1364,7 +1364,7 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xc0] = X86_OP_ENTRY2(XADD,       E,b, G,b,            lock),
+     [0xc1] = X86_OP_ENTRY2(XADD,       E,v, G,v,            lock),
+     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
+-    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
++    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2) p_00), /* MOVNTI */
+     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
+     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
+     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
+-- 
+2.53.0
 
 
