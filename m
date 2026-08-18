@@ -4,94 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34350C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6C2C5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:34:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJvr-0003nU-HA; Tue, 18 Aug 2026 09:32:47 -0400
+	id 1wwJxD-0005VT-Le; Tue, 18 Aug 2026 09:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvo-0003mO-DX
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:44 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wwJxC-0005VJ-CA
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:34:10 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvk-00008h-JZ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:44 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-499840a2575so35052785e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wwJxA-0000IU-9J
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:34:10 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-84e04df8c46so5108336b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:34:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787060047; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oD6CfubUASv2aACBRt0T7u/Mdj/zrLoJ14zLWGqDUNDqZK7BvtQxcPCIc/Z4rwSJbS
+ NNIE2OCwJp5Jw1g/M13feqIXgD0ZtWgcXtdgxzQG4Z38F9UwlbIbhdHK26pmavkAZTEy
+ xLec19tQv2H3SXw+PoQS/rg+bxcccagQaSBhk0ZyuXIFbE/PO7MY6cv56BUnwm0hnyRb
+ RFOfft8ewzJV7YN8cOPzLNJQclE1JQOmZgf7aErP1hgIqGyOrUZ7fJHobXv0mkRw75P7
+ v+eX0sxF0SdH8atG0gnSRJQB6GvDvzCVd2Qu3AQMDhAv7GxWVTCF4RuEgNCc648eelnP
+ +ztg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Pt7778UMRQpYpSMexEqMgP/RDHcMyRhuwc2KVhnFAeQ=;
+ fh=3Y4bGktH5ggMwpYRtZ21kBqAtp+bB/pZT/K2496c9g4=;
+ b=cjDamjhel6I1K5RB8XiAvNw3XuCJBtGNYKr8MjesqX7WW2rtsAuIghCfJghkZujJtp
+ Awtz2OJLcLWFBwyH/ufQvOmMrBjG8lPymYuqwtxq6QcRVeaPfk6I75AsRlZaH6WLmP3S
+ hyQuVZFJdlVFWarFPMgZkwHOAFjLf1bWFjRwieFrTsPawU6xE+Lswxaur3ViBGNH/X/F
+ 1o15uBih2xL1I+65ruQyd3A1wZS/56WUg9f1XVQAkXTXu+ekfqAeiNtegXj/UC5FStpG
+ MTXIyv2BIXWuq6eSMQuwe63xnGRxKJObBXGJqKte9wrFcwmHBoN6FGPdwEJW9DSHlEjj
+ Va1g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787059959; x=1787664759; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MaRWsfYXrPCYR0C2SN+evr+3/kSgvPxmaScaetm9/p4=;
- b=UQqzeIpkRTwfUFEgxrCZkKVrDmm+VGkQfED3MentPTAW42/ZXYneoIzZSrQNDOO13B
- YIsJ89ZZdaNypctS3zdvbKWY5o0XIJvHR90sB54lqtRCDsgQNRftyWEvjD2+d4WhSW/x
- R4r0uZGxC+ywvmfBD1Ofx5YjjL+GIMFDM/0wN5RyVgOEGhD27tLZSPFs8wHi2lDJktqS
- dLs6HzlqmnVKjv0nApYihr/azxcLrcl+TE3piVHUnQ446wg0XFvLwt7UxVoGsaWtB43+
- mkJ95kEN0Thb0JJkrzGapUxTMX9V4K9O0Ucs+joz/ZarKPQ9JU0lT4rvAk69I0Wtz95z
- gsjQ==
+ d=redhat.com; s=google; t=1787060047; x=1787664847; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Pt7778UMRQpYpSMexEqMgP/RDHcMyRhuwc2KVhnFAeQ=;
+ b=DfogusKuQxDpqwYqSh0SP3yuwRIPnaL2uc7RWciLMs1MOFibWQ6e4sQ6bIMtK7krOj
+ moGfySOM2Ewa209TCs/u4qokipsz3qG5MAcsPRLL05YYx2vZ4OHvjOBtO+cq4PA8DvIx
+ tZBlRTz5WFFEm2pb2YMEHpG2dwemXjNPC4YChpPJ4M82BjO6y6iseItb7Q5e/DMritmy
+ piSYzPrrtJj7rLOdcBrcsmmxJCcXX6LtFvQLyuaeEl38iMEsfI5r8YFebm2CDNbpps8R
+ BB+nQj/xm+KMMilWNZymTIE6cjTWsNtaLlVCk+ccR8qVLNA85a6nwB6pQOBZM0ic/rzV
+ U4Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787059959; x=1787664759;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1787060047; x=1787664847;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=MaRWsfYXrPCYR0C2SN+evr+3/kSgvPxmaScaetm9/p4=;
- b=d6rNGdtCdmQhEael6A1npOnlQMniOE58Ai10T5OdPSEockNiZA3te8JIS9akdCvVwF
- oqiZBvwDPJgHAtGF5zQZz7KfCQFhNidGRxyniUb28nv7DbG4JguXzKaCumRvpjJCaDe4
- 3CNJvkJful4mYrumM5S1vpZUqBchZWAI5sj0WEaDoiVSJyhqaF5v9vavNJOJlH8CRNdi
- DhPtC3fkQgshzMqIpVN9j5KdzZUI+2Sgjf9hSFmxKyVieEMAXlIxZODz/tpb3p4Am1sM
- lxv3YVlnA04Il3veoWzsK24Ueq/UwkLBWkttcCVNax1ZFoh16BQRxH/Ah9O08yMJqjk/
- F/nA==
-X-Gm-Message-State: AOJu0YzhMRPwcqhgjFhYUuoWJ81pPKDykD5lpmDOZZj068OXgVqYk2JO
- xf761h6K45WcSOl7b6xB/v579c5LiHNw7coegeQ2uk6GJljKbm63ZhlbevThuGqn2XUcUg2Y0Ay
- ikWbO6oE=
-X-Gm-Gg: AR+sD10egPNQPl66MoS/ex1tzBezRLeZr/xZqnwwuGYIe7SbSezzlxezZQi7orfMKZP
- PLkTna65EE8Xnol4lMCZQBArAtcOHJT/+vEroru3hNF9wWDK5eVmeZNMMx7ZaXGhPAaZdM4ccyJ
- 5KyNScM+8duR2Jt1aTAv4VaT5kZmut7dsTrMx4HrUjxjZE0m45ffqsUZAJjs7nG2xMNXdTEFZ62
- 2VT4EWmBFjOE2vEAadh9CSoHG5YNW0Fl7IjuugC9HiLPKMF4ZKYLt9x1713B7lAjPmNdBM2sI2f
- xpJQIEXy6E10uMBLbgW5pkjHshJcI8QwHA4IvB2V0lCkNpPTq0/w+XCxMajzftgUFJ50GfG/++m
- cYd6kvPyILZdRgyaik9GQvemYuOSvDpd5QQZRYIxddz0yAsDO2Gs0PpNQal8HlrFJFdjj/a64pb
- BZtsrkkMNHRvlwkrX4PsTeq0mJTUCSf1yZnZrcFQc0ezDVdKYMWMNTYNhjp5voYd48
-X-Received: by 2002:a05:600c:608a:b0:493:bd2a:93be with SMTP id
- 5b1f17b1804b1-499a202cb4cmr123021975e9.6.1787059959140; 
- Tue, 18 Aug 2026 06:32:39 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:c289:2687:e46c:f7e3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49987b203cfsm298360625e9.3.2026.08.18.06.32.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 06:32:38 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 18 Aug 2026 14:32:01 +0100
-Subject: [PATCH RFC 3/4] hw/pci: add DVSEC RMEDA capability to PCIe root port
+ bh=Pt7778UMRQpYpSMexEqMgP/RDHcMyRhuwc2KVhnFAeQ=;
+ b=nBim14yTmO+OXLx8VIhpsJMWfEcNMpaqUvdy/vx2K0UkqRlYPZxDGJlYI4bwUxYbQY
+ 069NCDGsVlXxNNc8xFD+4KxuHrKZUaQ9MlxHEPoOd5WwxiBOIcMiBd/j5uMLUXu8WrYR
+ 9Phxkgj7Hzpb3/teJ6MKJZToAgKbID6hU4QOtOt5QFrIEICzc8SR5sTFWF4g8VGFA8/i
+ IYRQ84iVGFM5mju5sBCKiONKId6GKocDguDGLQ5bmqIGwyoueMeVxLlyONMqaJchr6oe
+ n1DBjzKzbv/3otLna7lh0RFjfBGWypHnnLBdCckWmpkx5l42m295vX12b2y7XjTCM5jc
+ WNNQ==
+X-Gm-Message-State: AOJu0Yz3H7J/FWKSvS5gkMyiZPLvjn9L9vJ650zB7bAWGn36c5MueSYs
+ HF8pFy6bd3WC3bi3vZtFbet4g59R7kXDBaJiaJNrj7O8AgpI8qsWCRqJe29e/E76dtc2H67HSWr
+ GWw8oFYfvT7Bo85ojxj6j/DLoDAjXEYZDdM/vlF4=
+X-Gm-Gg: AR+sD13qUwypHmTVXRzofUXQNq9qtIbNvlFQAduoKwIY9sGclQkzQfH/v9Sz1gNe32D
+ uTBnk0KKweyaCyBX15uUFgPMRWHvpjUI2DUgyHLT911f9cO5Dz/YA4H7o/6VGxGI9axXfTgtoTk
+ lPGDt0CSiVj2bqm/NImb9GenivgkTkpWdRaeQk3jcxasONQAHQioUwbZ+hM+tpUs+E/l6qiooQO
+ Nf3BsGohJhbV9tjXgO6gF3AJDZ4fOHEMQENQrHk47MA/t0yZ4oWrF+/rCQU8kHQXy5zsZ5E9Ue2
+ twr215LtNM3OlhBA9glUcbQOnwqZgneEDv8tdz/pGhZGvZGvUq+defMNpvG1+SJ1eVyCdr+6ahy
+ J
+X-Received: by 2002:a05:6a21:3384:b0:3c3:64cb:9b99 with SMTP id
+ adf61e73a8af0-3cc719c78e4mr46409482637.6.1787060046431; Tue, 18 Aug 2026
+ 06:34:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-jmac-rme-da-prep-v1-3-30fab951bc75@linaro.org>
-References: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
-In-Reply-To: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>, 
- "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org, 
- Jim MacArthur <jim.macarthur@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Viresh Kumar <viresh.kumar@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260818121413.2660786-1-lucas.kornicki@nutanix.com>
+ <20260818121413.2660786-5-lucas.kornicki@nutanix.com>
+In-Reply-To: <20260818121413.2660786-5-lucas.kornicki@nutanix.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 18 Aug 2026 17:33:54 +0400
+X-Gm-Features: AcwNN1V4Akh5t-8OiIHssrJi-yCbG8vUDZSABuSebarA-k5PbGfjGveDRPlUb5M
+Message-ID: <CAJ+F1CKuDAzTz2iC+acOKf2j1vW3iFE6jinTKL=AwWCu3-1KGg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ui/vnc: notify client of clipboard peer status
+To: Lukasz Kornicki <lucas.kornicki@nutanix.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,118 +119,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Hi Lukasz
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+On Tue, Aug 18, 2026 at 4:15=E2=80=AFPM Lukasz Kornicki
+<lucas.kornicki@nutanix.com> wrote:
+>
+> Introduce a new vnc message (VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS) and
+> the corresponding feature/encoding.
+>
+> When a client requests this feature, the server will inform the client
+> whether a guest clipboard peer is present. The server will repeat the
+> notification each time availability of a guest clipboard peer changes.
+>
+> This change enables the VNC client to determine if a guest side
+> clipboard peer is available for clipboard exchange and react to
+> changes of its availability.
+>
+> Until now the VNC clipboard peer was only registered when
+> VNC_FEATURE_CLIPBOARD_EXT was enabled. With this change the VNC peer
+> can be registered just for the purpose of receiving peer status
+> updates. This requires introducing a VNC_FEATURE_CLIPBOARD_EXT guard
+> before the QEMU_CLIPBOARD_UPDATE_INFO handler which previously only ran
+> if VNC_FEATURE_CLIPBOARD_EXT was enabled.
+>
 
-After this we can see all the capabilities listed for the PCIe bridge:
+The series looks good, but this extension is not documented afaict.
+Can you make a PR for it?
+https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst
 
-00:05.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port (prog-if 00 [Normal decode])
 
-	...
+> Change-Id: Id0897a24fae103288c399f73e808ed6c07018359
 
-	Capabilities: [54] Express (v2) Root Port (Slot+), IntMsgNum 0
+What is this? Is it a gerrit thing?
 
-	...
-
-	Capabilities: [48] MSI-X: Enable+ Count=1 Masked-
-		Vector table: BAR=0 offset=00000000
-		PBA: BAR=0 offset=00000800
-	Capabilities: [40] Subsystem: Red Hat, Inc. Device 0000
-	Capabilities: [100 v2] Advanced Error Reporting
-		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
-			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
-			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr+
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+
-			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
-			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
-		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
-		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr+ HeaderOF+
-		AERCap:	First Error Pointer: 00, ECRCGenCap+ ECRCGenEn- ECRCChkCap+ ECRCChkEn-
-			MultHdrRecCap+ MultHdrRecEn- TLPPfxPres- HdrLogCap-
-		HeaderLog: 00000000 00000000 00000000 00000000
-		RootCmd: CERptEn+ NFERptEn+ FERptEn+
-		RootSta: CERcvd- MultCERcvd- UERcvd- MultUERcvd-
-			 FirstFatal- NonFatalMsg- FatalMsg- IntMsgNum 0
-		ErrorSrc: ERR_COR: 0000 ERR_FATAL/NONFATAL: 0000
-	Capabilities: [148 v1] Access Control Services
-		ACSCap:	SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
-		ACSCtl:	SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
-	Capabilities: [150 v1] Designated Vendor-Specific: Vendor=13b5 ID=ff01 Rev=0 Len=16 <?>
-	Capabilities: [164 v1] Integrity & Data Encryption
-		IDECap: Lnk=0 Sel=1 FlowThru- PartHdr- Aggr- PCPC- IDE_KM- Alg='AES-GCM-256-96b' TCs=1 TeeLim-
-		IDECtl: FTEn-
-		[170]SelectiveIDE#0 Cap: RID#=0
-		[174]SelectiveIDE#0 Ctl: En- NPR- PR- CPL- PCRC- CFG- HdrEnc=no Alg='AES-GCM-256-96b' TC0 ID0
-		[178]SelectiveIDE#0 Sta: insecure RecvChkFail-
-		[17c]SelectiveIDE#0 RID: Valid- Base=0 Limit=0 SegBase=0
-	Kernel driver in use: pcieport
----
- hw/pci-bridge/gen_pcie_root_port.c | 30 ++++++++++++++++++++++++++++++
- include/hw/pci/pcie_regs.h         |  4 ++++
- 2 files changed, 34 insertions(+)
-
-diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index 452ebf69b3..035212508d 100644
---- a/hw/pci-bridge/gen_pcie_root_port.c
-+++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -104,6 +104,36 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
-     }
- 
-     uint32_t offset = GEN_PCIE_ROOT_PORT_ACS_END;
-+    /*
-+     * dvsec rme-da
-+     * https://developer.arm.com/documentation/den0129/latest/
-+     * Arm RME System Architecture
-+     * 0x0000 RMEDA_ECH See B3.2.6.2.1 RME-DA Extended Capability Header
-+     * 0x0004 RMEDA_HEAD1 See B3.2.6.2.2 RME-DA DVSEC Header 1
-+     * 0x0008 RMEDA_HEAD2 See B3.2.6.2.3 RME-DA DVSEC Header 2
-+     * 0x000C RMEDA_CTL1 See B3.2.6.2.4 RME-DA Control register 1
-+     * 0x0010 RMEDA_CTL2 See B3.2.6.2.5 RME-DA Control register 2
-+     */
-+    pcie_add_capability(d, PCI_EXT_CAP_ID_DVSEC, PCI_RMEDA_VER, offset,
-+                        PCI_RMEDA_SIZEOF);
-+    const uint32_t header1 = 0x010013b5;
-+    const uint32_t header2 = 0xFF01;
-+    const uint32_t ctl1 = 0x1; /* support tdisp */
-+    const uint32_t ctl2 = 0x0; /* unlocked */
-+    pci_set_long(d->config + offset + 0x4, header1);
-+    pci_set_long(d->config + offset + 0x8, header2);
-+    pci_set_long(d->config + offset + 0xC, ctl1);
-+    pci_set_long(d->config + offset + 0x10, ctl2);
-+    d->wmask[offset + 0xC] = 0xff;
-+    d->wmask[offset + 0xC + 1] = 0xff;
-+    d->wmask[offset + 0xC + 2] = 0xff;
-+    d->wmask[offset + 0xC + 3] = 0xff;
-+    d->wmask[offset + 0x10] = 0xff;
-+    d->wmask[offset + 0x10 + 1] = 0xff;
-+    d->wmask[offset + 0x10 + 2] = 0xff;
-+    d->wmask[offset + 0x10 + 3] = 0xff;
-+    offset += PCI_RMEDA_SIZEOF;
-+
-     pcie_ide_init(d, offset);
-     offset += PCI_IDE_SIZEOF;
- 
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index aa21177411..233378fd79 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -186,4 +186,8 @@ typedef enum PCIExpLinkWidth {
- #define PCI_IDE_VER                     0x1
- #define PCI_IDE_SIZEOF                  12
- 
-+/* RME-DA */
-+#define PCI_RMEDA_VER                   0x1
-+#define PCI_RMEDA_SIZEOF                20
-+
- #endif /* QEMU_PCIE_REGS_H */
-
--- 
-2.43.0
-
+> Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
+> ---
+>  ui/trace-events    |  1 +
+>  ui/vnc-clipboard.c | 31 ++++++++++++++++++++++++++++++-
+>  ui/vnc.c           |  6 ++++++
+>  ui/vnc.h           |  8 ++++++++
+>  4 files changed, 45 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/trace-events b/ui/trace-events
+> index 917d116d90..d2fe153b7d 100644
+> --- a/ui/trace-events
+> +++ b/ui/trace-events
+> @@ -48,6 +48,7 @@ vnc_msg_server_ext_desktop_resize(void *state, void *io=
+c, int width, int height,
+>  vnc_msg_client_audio_enable(void *state, void *ioc) "VNC client msg audi=
+o enable state=3D%p ioc=3D%p"
+>  vnc_msg_client_audio_disable(void *state, void *ioc) "VNC client msg aud=
+io disable state=3D%p ioc=3D%p"
+>  vnc_msg_client_audio_format(void *state, void *ioc, int fmt, int channel=
+s, int freq) "VNC client msg audio format state=3D%p ioc=3D%p fmt=3D%d chan=
+nels=3D%d freq=3D%d"
+> +vnc_clipboard_peer_status_send(void *state, bool present) "VNC server cl=
+ipboard peer status state=3D%p present=3D%d"
+>  vnc_msg_client_cut_text(void *state, void *ioc, int len) "VNC client msg=
+ cut text state=3D%p ioc=3D%p len=3D%u"
+>  vnc_msg_client_cut_text_ext(void *state, void *ioc, int len, int flags) =
+"VNC client msg cut text state=3D%p ioc=3D%p len=3D%u flags=3D%u"
+>  vnc_msg_client_ext_key_event(void *state, void *ioc, int down, int sym, =
+int keycode) "VNC client msg ext key event state=3D%p ioc=3D%p down=3D%u sy=
+m=3D%u keycode=3D%u"
+> diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+> index 67f710f6ed..4ecc4489e4 100644
+> --- a/ui/vnc-clipboard.c
+> +++ b/ui/vnc-clipboard.c
+> @@ -26,6 +26,7 @@
+>  #include "qemu/error-report.h"
+>  #include "vnc.h"
+>  #include "vnc-jobs.h"
+> +#include "trace.h"
+>
+>  static uint8_t *inflate_buffer(uint8_t *in, uint32_t in_len, uint32_t *s=
+ize)
+>  {
+> @@ -224,6 +225,23 @@ static void vnc_clipboard_update_info(VncState *vs, =
+QemuClipboardInfo *info)
+>      }
+>  }
+>
+> +void vnc_clipboard_peer_status_send(VncState *vs, bool present)
+> +{
+> +    if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS)) {
+> +        return;
+> +    }
+> +
+> +    trace_vnc_clipboard_peer_status_send(vs, present);
+> +
+> +    vnc_lock_output(vs);
+> +    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU);
+> +    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS);
+> +    vnc_write_u16(vs, present ? VNC_CLIPBOARD_PEER_PRESENT
+> +                              : VNC_CLIPBOARD_PEER_ABSENT);
+> +    vnc_unlock_output(vs);
+> +    vnc_flush(vs);
+> +}
+> +
+>  static void vnc_clipboard_notify(Notifier *notifier, void *data)
+>  {
+>      VncState *vs =3D container_of(notifier, VncState, cbpeer.notifier);
+> @@ -231,13 +249,24 @@ static void vnc_clipboard_notify(Notifier *notifier=
+, void *data)
+>
+>      switch (notify->type) {
+>      case QEMU_CLIPBOARD_UPDATE_INFO:
+> +        /* ignore the update if client does not want ext messages */
+> +        if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_EXT)) {
+> +            return;
+> +        }
+> +
+>          vnc_clipboard_update_info(vs, notify->info);
+>          return;
+>      case QEMU_CLIPBOARD_RESET_SERIAL:
+>          /* ignore */
+>          return;
+>      case QEMU_CLIPBOARD_PEER_UPDATE:
+> -        /* ignore */
+> +        /* only guest side peers affect the status we relay to the clien=
+t */
+> +        if (!notify->peer_update.peer->guest) {
+> +            return;
+> +        }
+> +
+> +        vnc_clipboard_peer_status_send(vs,
+> +            qemu_clipboard_guest_peer_present());
+>          return;
+>      }
+>  }
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index 656768f9c9..9e44a20311 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -2191,6 +2191,12 @@ static void set_encodings(VncState *vs, int32_t *e=
+ncodings, size_t n_encodings)
+>              vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_EXT);
+>              vnc_server_cut_text_caps(vs);
+>              break;
+> +        case VNC_ENCODING_CLIPBOARD_STATUS:
+> +            vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS);
+> +            vnc_clipboard_peer_register(vs);
+> +            vnc_clipboard_peer_status_send(vs,
+> +                qemu_clipboard_guest_peer_present());
+> +            break;
+>          case VNC_ENCODING_COMPRESSLEVEL0 ... VNC_ENCODING_COMPRESSLEVEL0=
+ + 9:
+>              vc->worker.tight.compression =3D (enc & 0x0F);
+>              break;
+> diff --git a/ui/vnc.h b/ui/vnc.h
+> index d8b0070396..6e8fa66e9c 100644
+> --- a/ui/vnc.h
+> +++ b/ui/vnc.h
+> @@ -422,6 +422,7 @@ enum {
+>  #define VNC_ENCODING_DESKTOP_RESIZE_EXT   0XFFFFFECC /* -308 */
+>  #define VNC_ENCODING_XVP                  0XFFFFFECB /* -309 */
+>  #define VNC_ENCODING_ALPHA_CURSOR         0XFFFFFEC6 /* -314 */
+> +#define VNC_ENCODING_CLIPBOARD_STATUS     0XFFFFFEC5 /* -315 */
+>  #define VNC_ENCODING_WMVi                 0x574D5669
+>  #define VNC_ENCODING_CLIPBOARD_EXT        0xc0a1e5ce
+>
+> @@ -466,6 +467,7 @@ enum VncFeatures {
+>      VNC_FEATURE_LED_STATE,
+>      VNC_FEATURE_XVP,
+>      VNC_FEATURE_CLIPBOARD_EXT,
+> +    VNC_FEATURE_CLIPBOARD_STATUS,
+>      VNC_FEATURE_AUDIO,
+>  };
+>
+> @@ -507,6 +509,7 @@ enum VncFeatures {
+>
+>  /* QEMU server -> client message IDs */
+>  #define VNC_MSG_SERVER_QEMU_AUDIO                 1
+> +#define VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS      2
+>
+>
+>
+> @@ -541,6 +544,10 @@ enum VncFeatures {
+>  #define VNC_CLIPBOARD_NOTIFY   (1 << 27)
+>  #define VNC_CLIPBOARD_PROVIDE  (1 << 28)
+>
+> +/* guest side clipboard peer status */
+> +#define VNC_CLIPBOARD_PEER_ABSENT  0
+> +#define VNC_CLIPBOARD_PEER_PRESENT 1
+> +
+>  VncDisplay *vnc_display_new(const char *id, Error **errp);
+>  void vnc_display_free(VncDisplay *vd);
+>
+> @@ -637,6 +644,7 @@ void vnc_zrle_clear(VncWorker *worker);
+>
+>  /* vnc-clipboard.c */
+>  void vnc_clipboard_peer_register(VncState *vs);
+> +void vnc_clipboard_peer_status_send(VncState *vs, bool present);
+>  void vnc_server_cut_text_caps(VncState *vs);
+>  void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+>  void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, =
+uint8_t *data);
+> --
+> 2.43.0
+>
+>
 
