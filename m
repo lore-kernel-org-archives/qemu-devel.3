@@ -4,143 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B176EC5DF67
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 06:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C45BC5DF70
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 06:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwCxD-0002OX-4Z; Tue, 18 Aug 2026 02:05:43 -0400
+	id 1wwCx8-0002NY-P8; Tue, 18 Aug 2026 02:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwCxB-0002OM-US
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 02:05:41 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wwCx6-0002NH-Jr; Tue, 18 Aug 2026 02:05:36 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwCx9-0008QY-Ng
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 02:05:41 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67I12JYk297628
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:05:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- oIu2Xw0vTh6i5EKOC3/GXR3Ckc4snbnc0GuNmjitzrM=; b=UeT1q5nF+jdsIGsL
- zL9JwNm3MItUQHHeTWOuOFvddti1afnJBA32fW7115M7qED7EOiu0oZ4QhjF0exx
- HiEulqAvcpB3cp+TRC+SnWtigiKfo9R2t01GBN9QgCbHO5LwpNua0y+u8XARKCUY
- HP5lXgq61urCr46kAgE5/gNbUFkxBUN8sxsqFwcb1blR+ngHdzC9Y9m09S2N43Ql
- x4ivvMFE1q19YLDZ1R4R+TxkdGx2wv4XVu7rpFB/mYLy30Kgef9Ft3MJg+abBN5E
- r7VCpgsCK0xHpjf1/6IqE3NFJnoZOm+r/0OIARKHUG7ipF3CdWKQYIKi4Q4GNFwl
- pdjxAg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4dcn1457-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:05:37 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-52d91cc174aso66890421cf.2
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 23:05:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787033137; x=1787637937; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=oIu2Xw0vTh6i5EKOC3/GXR3Ckc4snbnc0GuNmjitzrM=;
- b=RZ8tfQGXwbqjnZkrac244O6N4D4TcIqjUjDET5b+hIusDsx5jUi9T+yMpQ+Wrtl8Gd
- 5NQ4Kx0WHb/1vib+F25vVY1wsUH1m3IZrAL7fSDt7vLM6nAyAso7ZOlCUO1xXUaOZdCi
- cxWmPLwMuMiU2WuRyb7oUW8MbUxwzQXqQIGiquNzqBfsKJwSVQtXpCes0LUVdVEbfQo2
- qFn/Z8QWS9gfIMkbW1Hs3zGAXNG4wC57F/Yr8KGDKDJeqbNuXQnowHsrRN8vcQcYmnMe
- G6KafMjO8tQYq1IFfr0AaUenXwHJZb9rOUo/vwF/hGzkWqwwwf7KeAyNqSQqON+5JXZo
- yGMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787033137; x=1787637937;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=oIu2Xw0vTh6i5EKOC3/GXR3Ckc4snbnc0GuNmjitzrM=;
- b=li73Q/pUndil+fWVg8/P/FSaJOwtDQlD/1iH7XG3cBC+8Mh5FYMsNw2fmHdXXpzpCy
- EvO/lX2PLBt0e+LLEz/bo9R23SGdjvbH79ngZXmIvBqrXlZ858LYZyFMBucjYXyBQo+Q
- Ipa9XJr7KJg56xehelWvLEnk6u8Efg2We9KfwSJGn7trGkjXOYIHuh7wgxXwAs5O3RD5
- 2cjWGLDRRYoVvTvbLLbUvXFA+PWhFXjGnyBfmRdvpEwamITKvqbcMHkJ7tprsdTEgjiM
- dB2uZ/aP4ZvG2vRaRnZNNrujbpZp3F+Sblz/Qgvh7Z2ftShGwby/PKbWyIrwX9ufJbss
- t5YQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpUon4hKqnvbSAtrM8U/tdxHT28C1YBQ2GZD7Rle7qWhpwzAcPvOKjyzTDmhMcZm6ISlfJqPjeJyQbt@nongnu.org
-X-Gm-Message-State: AOJu0Yy+1LqSQsPtlkoVADILJF1FxqIMEyU+TWJqAbBNNwOFAbfZQdGg
- ir/4zJAmK5cb4ZwdmclZ9k2H7DT8T3Xy+b7qMMCfncgRds1fUoLQInxCD3/dSgX4nL9Wx1wmYlg
- lH37o9BUvX0Nqaa1syzMD4gBZ8fde/0TavBcnvsqMNatEYkMTOGHQRIp70Q==
-X-Gm-Gg: AR+sD12692yXRGW9occmE4kHQNlaijNGd6I8PJjZJr/au//xwXb/1q9H2qPkyK0i8Ir
- ifc1yudg/rjoSXw1VN27u41RyU6JxiIct3GBOUhTm7Uo9mxfrg6eU8h10a12D2FyDnTBtL5CFcI
- oMBHBz5/RdYbTyOPTtzbD8VVq8LMqEXiCIyBY1/OkGEVZWdBxGMVzJhJxT9EKPNa7w3kQ0zVMz+
- +i4HU9Kq95sAoEtNdDH66qf7pyoVjrbDhfTu1+cplkzqxg1HTDo3BiHivmbYGjul8CLYprCnIt3
- NKTdqT8dx9Os+mSozUWJY6/NK0gx8CaJtPm8Sz+ESdmCBRD4rL1IfftUJj/8NFHyvsdJp5s4fw8
- 6BcVfbQVaCkkbeONROcW+wCg20PnVwYGMk1U=
-X-Received: by 2002:a05:622a:588e:b0:52d:6cf5:1c01 with SMTP id
- d75a77b69052e-52d854bd891mr324216241cf.36.1787033136606; 
- Mon, 17 Aug 2026 23:05:36 -0700 (PDT)
-X-Received: by 2002:a05:622a:588e:b0:52d:6cf5:1c01 with SMTP id
- d75a77b69052e-52d854bd891mr324215861cf.36.1787033136051; 
- Mon, 17 Aug 2026 23:05:36 -0700 (PDT)
-Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49996188217sm485646195e9.13.2026.08.17.23.05.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Aug 2026 23:05:35 -0700 (PDT)
-Message-ID: <0aac0ca5-2508-46d0-ba3f-fc9d0ff32100@oss.qualcomm.com>
-Date: Tue, 18 Aug 2026 08:05:34 +0200
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wwCx3-0008NO-N1; Tue, 18 Aug 2026 02:05:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x1+svMYLaIg54Y9yurWr+ZBGdXtRGL0AzFiVZmv7bFyzJ5SzA/9Vm49XPizoh74tptIvCeOXdVlwSxJ9GLtVFuvmesthnaPFpPoJtViT7AjUm5bOGJcgVqQqX/jFL19by5InWAtC917G4bua/8ydGLcu+UVJA7AvOBGiw//rRrEryqn7+1gogb3KEmBJiaV3BLgx0Sk+/Q1von3Ey04yhFGWM9sG3X/cPM5HbqwYSUCuZc/M36UXqK5uFBPVK4UOqLStzMFvDCWRIXxKSXASYVQnoS6plT6xFUahYK6/AjHZn/mVTQUhgt3XnJYpjGPFQPUz0qpk/vK5cQiNdRGZqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yf0Q7Q/deB+GYtnFe61MrTx88UvPL5DfOgCZDsyL5Ck=;
+ b=szMq/HVMGy/3+pp5lMyI8yxtnC9nI2K+xV8vIab7VLTZ0H2CJygc4m/ycMC7Ho/FJhkUjTqC45JAk8vJTk4PGV2zp71eWjpfB1YtdsT/JWZbQIqXDB/c1AmJEOWeGRzNqW/TnLMOHJGD2GWob3gWfQGsDzGHaILpLIjwZ5mTtRmnYnKGO8ibt7tqXxyWdiyC29BOCIJVtzoJX18FFB+456pLgez/GIqZ46zFzQqSshJv37YZlsGb4/HQHnGaRwWdEdG8CaPsSv15Z4NNgEXk4puLKeK6zAcDfKeE+LMf05JIVEdt5vIxUkvvO8oIONcLwCkzur+p7xMa828MuRG+bg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yf0Q7Q/deB+GYtnFe61MrTx88UvPL5DfOgCZDsyL5Ck=;
+ b=rLyvD7Pqr9Rdcorm4QQ4u+WOqko7w9xrAPH3m8cHpDdyN0UPSI6kdcX+xK5vQwXxTE6yZiUzGSJXs/x1W5tEt2Vg7ThVxvNk1sN1JmiSgwIvEORsC4yOo0dk3Hx64NxQpJpzhdKgWy2h1S9SGesnW398KLVEEkWInFJMFI5HRuarKH/Czw8qSGohEv702b8c0VzCnyJBQviCNvrsLI1WHuWdVSGnR7rV5yjeGn+BGAyplT/9wcpYCk+AwA81Th4A9T2ttlA4SzzBhod0FKHWjABNCyZZ6cmuT73AoVYibTI+EEA4MnT0s08Q3TU3I8ZvfJrLyr9+ZIB3L/kpdWLlkw==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by SEZPR06MB5590.apcprd06.prod.outlook.com (2603:1096:101:c8::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Tue, 18 Aug
+ 2026 06:05:22 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0315.016; Tue, 18 Aug 2026
+ 06:05:22 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Joel Stanley
+ <joel@jms.id.au>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+Subject: RE: [PATCH] hw/misc/aspeed_scu: Set both AST2600 protection key
+ registers on reset
+Thread-Topic: [PATCH] hw/misc/aspeed_scu: Set both AST2600 protection key
+ registers on reset
+Thread-Index: AQHdLrMRat2TJUrCjkmjy6zhdQRJNrajUTvg
+Date: Tue, 18 Aug 2026 06:05:21 +0000
+Message-ID: <TYZPR06MB49807501A1E666F8F5FD1BC8FCA62@TYZPR06MB4980.apcprd06.prod.outlook.com>
+References: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
+In-Reply-To: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|SEZPR06MB5590:EE_
+x-ms-office365-filtering-correlation-id: 99dba265-1b7b-412f-45a0-08defceeb023
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|23010399003|38070700021|6133799003|56012099006|10067099003|22082099003|18002099003;
+x-microsoft-antispam-message-info: B4d3XhYv30PTyNV58EFfcnCarUI3dLoVK9eYcnOdBrv4OBKs+WRqcjQa9t8u8s20bcryeShesqDIJduo7jlg0Cu+kp6XL3ZIgemfk1PdujNghCA9ItmhmgltNMHzDvL4E/IaEqiF25V6zUXLZK/FuNwrevFPLx4xnUz/JFpxBHGkMkP7IzUEkJ+itiv81HPokXSlijffysyQHHM2k/FD4yT6dJPqO5iGvl2TV/6TP+ZI1mkDHBdRidhglCUuTT/9oJH66z4SdG4vJ+sbvFxBS7cZ97NJk+AuRAO1xI2ef6vA7GpuxVPfANVrQRlHYfbTa1vu1l3aMhrbD6A4hc2tYRN84r5QbVPZM1SHnQe1HhjlMR4jzroWBwN5PN7NDQ5hCGpgeyHlcOnKn8wDC/LF52uJi+YSUHX74UCZ+rhkQkn6Oju+301hHhp3u7FuitiyPx3Ipg1APAuCLjMWSUpRqeBlHkvkQDwwaTUgVuCHwmIHp4XxqGXnUuAPFYkrxIzx0q49ERPq1fVj0syvG8m/aBp+OjmdqM2JKKHg9YAtc1OgEWlcHt7r8vWlMlgcvM47z++naVUjKXPUNs7lYEqHytMjtPQSk/fms6jwYzhI8uts23LRzFwx6yZUa5dFER+xp8dB8KVfT6TV5uT3BxkCbNbs7szsjv1hQNlpYDI8g1h/uxx6lbI34enOsRMPHz1jXtKGBL3MM8sJB+QKocLnV40tyl5HJthxUqI0IhyW92Q=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(23010399003)(38070700021)(6133799003)(56012099006)(10067099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SWJvRUhzbFJZVDhpZjRTNFV4TE9oUUlVR20ydGtjTFNkejNQOFl2V0lkYmpo?=
+ =?utf-8?B?OXdzNVNYU3preHBrMVMxTVRBTWtzZlhEb2JmaVFlejllMklBRmpDdjF1Vloy?=
+ =?utf-8?B?WGhPSWNTd0w1cTZER1N4VmsvK2YrYnBGcEFYbFlmU1NWekxuQzZQeFNmRE03?=
+ =?utf-8?B?OW84eWNZNytvMVVhKzJTYXJKRlZ4djErYnlQM0NLSlM2ZWpzR1VTRlFXODVr?=
+ =?utf-8?B?R0dydmVvYktRbVVJRUlTK2c0TjR6UDRETEYwL3EwT0pLNmdZWkdNTXZOWHRi?=
+ =?utf-8?B?Q29ZL2FoMHcrSzI4Ull3V0pIL25ZNmpqaHEzSC9meHEwaTFmSVJjZGp6NDJj?=
+ =?utf-8?B?cU0xdU1VK0x0azFsK0lSZG9DS1NXaHNETHJzNHFaa2lUdDZycnNhSm01Qlo1?=
+ =?utf-8?B?TGMvdHFzVHV5amI5Y3FFelV3VzRZbHhzeVlmVDhzYnlFSHpFYys5cWp4ZU5s?=
+ =?utf-8?B?REhqVjdyaGZES1NVekpMNVZNN0lIckI2N091U1hNVjhsVVlUNTRzVGFuSkk3?=
+ =?utf-8?B?aUpncFRPSUVrWldoVDU1WEFReVVDUU5NT3VLRGFFR1NHdWh1bEhVcHIvNjRN?=
+ =?utf-8?B?bFZWMVBnUDdlSC9XLzdEYUxXUGNpb3pqdXFUMUdJR0pQSTU1WUxDelBST2Zi?=
+ =?utf-8?B?NUtYQ2NVV3RwYnltSEREWkFwNVRTNkdwSGNzdm1Sb1N2bTcyZGxiU3E0NVhC?=
+ =?utf-8?B?S0s0QW1Tc1ZwelR0cE5CS3l1bzgya3J0YzlYQWhOazNFVmZhZktmdE80aGs3?=
+ =?utf-8?B?ekh3UzZuOFhQQXJySU5uOEplUlQ2eXRoWTVxN05KL0I0TkZuUlVkNUh4cWVQ?=
+ =?utf-8?B?RmhmVWdCZnFxN2lLTGdjZjN2NW5zR1ltYjZZZllMNFRocmpZdEJVMEN6b29z?=
+ =?utf-8?B?OThMRW55VlFhdTBVSTljdG8xeWEvTHI3aUlPZHVPcVBmc2VFMjYydUdyL3Ra?=
+ =?utf-8?B?MEZhSlNYS2NuM1FLanVReHA3UXhHa0dkbmgwZFFGVXF4QzB6dGhlVnhWSnNK?=
+ =?utf-8?B?UFYzS0c2OTQrUmRrZ1dBLzlNYm5nbWtKNzN4L05xSzBubHVYenhBSHhpMkJm?=
+ =?utf-8?B?TzZNOEdXaE14bkREL214OVhKNnFGZmlJYlBmZUpFNjAxSlVidDlNeUQ1a0xN?=
+ =?utf-8?B?YVJQWG5mMEphNFVPM0laS3F5alVvelpTck1GL0U0NWpFbW0rMUNSZVQ1SXlO?=
+ =?utf-8?B?WDQ2TkFPNW15aWxkTndtQzNod3JvaEhTWWtLbWRjQjFLdlFNYlB1VEN6NTVH?=
+ =?utf-8?B?TkpyZXlVMmIzWEFRS3JOK0RtWWsvcUlUSlhraE15T1FQYTRCQ1ZDS0tISU5K?=
+ =?utf-8?B?Y0FKb2VoV0Y0WW5nb1NFUm1RMldyU3lkeDRBMUJ6Z1VkNDB0aGE0eEFycDFv?=
+ =?utf-8?B?Vit1QXRRNGUwMXgxeTZNS2p2bTNxdk9IVC90MkdvVm12QnYyTTRsMzZwRXB4?=
+ =?utf-8?B?dDAwSW9vRXYzSG1JYVJYcWJjTElUSkhFZk9sN2FTem9qS2x0Zzg3TGwvbC9x?=
+ =?utf-8?B?NkdjWGdualRjSFI5TFBNUUdHL2VidTZKL2VtU1dSb0NLZ2JsVGhvYm5JZUJG?=
+ =?utf-8?B?SzZxLzFVS0hFb1phMGkwNFhla24ra3BxQ2crNzloODVKYzM2eUxWbFVJYW9O?=
+ =?utf-8?B?aWY2ZmNDdGJ2ZEl6cjJmbmN2L0dhQkU4dmdRcHFkTkg5TE9uNjdYNW9HVGxF?=
+ =?utf-8?B?L3RSblVvQ2VMY0JRQlFWSWR5YUxneE5adlBReXBzM0hRU05JTlRLT3JqbTRH?=
+ =?utf-8?B?Z0g5d2ZUQjlOclF5VEpaeWgwY3hPM2g1NDlidW92VlIzRVNubUYwWm9rUmYy?=
+ =?utf-8?B?ZGJWT3NJN0xWRTlMc0JCQVZzWWdFUXpzU002d2VJR3RzaThkTmZRYWNSSGpW?=
+ =?utf-8?B?cFNkQWJwZnVKbUZ6V0h0bnhoSkxXazJlQXRiWG1lSEJKbkJsTWpKd3VWSmRn?=
+ =?utf-8?B?QXFJZS9ZR3BFcDByd0dhY0FRM2FrMkNQaENjaW5CWUkrS0NqMjRXeitFRlZV?=
+ =?utf-8?B?UkhQSzB6aHNYZWxHbjN4RWoyR3Byc25NaTZaYzdvMjFwQ0c4ekhFKzFFMFhp?=
+ =?utf-8?B?LzNYdWh5UGRaekx5aHUvVTFXYXlTWHZrMStSRVRLeVVoRGpQL25OZGkvdi91?=
+ =?utf-8?B?cWRONXVpOUJ3RzVUYnhST3JxbTV0QWpvY0pTZ2ZtdnovTmhsazQyWklWWHly?=
+ =?utf-8?B?VjRhMC9FVzJZdUFwVERCMEVuZ25TOFc3ZjE0TG1rTzB6S1NiOUx4d09iQVJm?=
+ =?utf-8?B?eTFRZ3ZnUk50aGtLc3dvMWRseDI3WkFVbzZmRnByQnJVMGJBN3ppcERKb3ZU?=
+ =?utf-8?B?cHRWOGlRR0dhM2Q3Wm01ODBaMFBDbHFFd21VQlBPQk9MN25oSDJiQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead
- of calling a helper
-Content-Language: en-US
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
- zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com
-References: <20260817190038.580257-1-mattst88@gmail.com>
- <20260817190038.580257-5-mattst88@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260817190038.580257-5-mattst88@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: -zwtxujX8sDx1tUhhX1NzsbpqQzP213X
-X-Authority-Analysis: v=2.4 cv=Gs5yPE1C c=1 sm=1 tr=0 ts=6a83f631 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=pGLkceISAAAA:8 a=6KYHkuE4E4tEOf1rhe8A:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: -zwtxujX8sDx1tUhhX1NzsbpqQzP213X
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA0MyBTYWx0ZWRfX1BcpXsGP7K1j
- 9CJnNEC1wQQQza61LUCc5D+LW+3+SRdq7nKThqss88OrVfmk8AI5d/FCaT2S3PZQy99U4ZhIvkO
- 2YEvs2KiCFeG0gFQqtdz2p9Jax2ZEgnWmZFrnkU/puq/tpo/pmLxTx9idLB6d627fXwCurZ3/L3
- oqn5A78cD+JEN6KwVbqUfIIFgSbUtXXQ4bDc4l5uuNFFJUzZRNnbxR0qcc1RVDyNV27MGALP8rQ
- RDPuXI+BQt/0LUQWdzcvCST9ydoeospOk37qkHQjiH3d7zucu388iu8iYIdDekcFY1MejD0efqz
- irr1Yz4G8FSAOYylPYOmJvVLeCLtB3FTUIZulHwhY5oGQTm3ogXZbiPTC1j+MPzuG2YXs60Vods
- 7t1OFJ97p564glkWXRb/vnDbkwIojNoPj9JJz2pKKKxawuKUCT4IxcPILCVfUWGPlP7fXFjhSKB
- AlVaoNjIOAAslT6fI6g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA0MyBTYWx0ZWRfX1KvfzfRexnXO
- w3+MjJADKKEN61m/B/nvN06EjJ9u/TXa2IgDJQXKXlU9kIx73MuoAB/4NSHXaTCPAHZIB3OGDmE
- aWKHOWai1YGrPW48BNQLcglInh31j8Q=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- phishscore=0 adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180043
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Exchange-RoutingPolicyChecked: fnzncRYiofSR55sZCRNgwh3VYak4arq0D6aYaksIVAkmODL8yPgrDj+toF6nVHCZbrLRr9YsrURjhTGNaifWcmElZfBmF9Qk17RbZV3uHgJaEctuHGrDHOwMZHjWHPksW2iEcO+bx+Dgn58vu1fmxs/teHcDCfLD23uWAxY70eVdpcu1naEeCuwWRb4hA/KteIiq0gA2V2TP+b2rwzhlKug6qlyqORuOcJOf+iz4xWGwidJKOnztP2XJqS8sLcDitODnrptYVUnmx7UoFtFAL2KSeqqg1nYm02uRD7Nj//jNfaUZKGzWXpaEVaFq+7af3/O5yBJLhT3RCaWGn7H0Ig==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 99dba265-1b7b-412f-45a0-08defceeb023
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Aug 2026 06:05:22.0596 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: m0Imqgl0wUHZzfzEu1rL6wo40SD7pmEXDtEcY4DWbvb6WCkruBZrU306548drIqJhsen27iQVNK0IArJLEnGWO86SN9DED0JX2n19wGyUDs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5590
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,107 +156,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/8/26 21:00, Matt Turner wrote:
-> Every indirect branch that cannot use goto_tb ends in
-> tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For an
-> emulated compiler that is 8.4 billion helper calls in a single translation
-> unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
-> register destination and because goto_tb is restricted to same-page
-> targets.
-> 
-> The helper itself is already tight, but each call pays for a call frame,
-> the can_do_io store, the get_tb_cpu_state() indirect call through
-> TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
-> jump cache probe that almost always hits (95.8% for this workload).
-> 
-> Emit the probe inline instead. The destination PC is already in a TCG
-> temp, and the flags and cflags the destination must match are constants at
-> translation time, so the fast path is a hash, three guarded loads and a
-> goto_ptr. Only a miss calls the helper, which still owns filling the cache.
-> 
-> Two details matter for the generated code. The flags and cflags guards are
-> folded into a single aligned 64-bit load and compare, since the fields are
-> adjacent. And each path emits its own goto_ptr rather than branching to a
-> shared one: a temp live across the label is spilled and reloaded on every
-> dispatch, which cost 6.3% on its own.
-> 
-> Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-> the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
-> build, on top of the preceding three patches:
-> 
->      before: 1,402,816,253,499 instructions
->      after:    890,713,633,237 instructions   -36.51%
-> 
->      before: 115.75s wall clock
->      after:   84.44s wall clock               -27.05%
-> 
-> The gap between the two is the point at which this stops being a
-> straight-line win: the helper call was highly predictable work that the
-> host pipelined well, so removing it retires far fewer instructions than it
-> saves time. IPC falls from 2.48 to 2.15 across this patch for that reason.
-> 
-> Despite emitting more code, this also reduces instruction cache pressure,
-> because a dispatch no longer jumps into qemu's .text and evicts translated
-> code:
-> 
->      before: 11,476,318,964 L1-icache-load-misses
->      after:   6,990,186,701 L1-icache-load-misses   -39.1%
-> 
-> The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
-> falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
-> 38.9% to 5.4%, with the balance moving into generated code.
-> 
-> Combined with the three preceding patches, against an unmodified LTO
-> build, 1,647,901,588,726 instructions fall to 890,713,633,237, or -45.95%.
-> The emulated compiler produces byte-identical output throughout.
-> 
-> Open issues, hence RFC:
-> 
-> - The flags/cflags guards use the *current* TB's values as constants. That
->    assumes the CPU flags feeding get_tb_cpu_state() cannot change within a
->    TB, and that curr_cflags() cannot change under a running TB (gdb
->    attaching to enable single-step would). Both need to be established or
->    the values need to be loaded at runtime.
-> - tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
->    knowing the CPUJumpCache layout. The probe likely belongs in accel/tcg
->    with a small emit helper exported from tcg/.
-> - The jump cache entry is read without qatomic_read(); entries are
->    invalidated concurrently by setting tb to NULL.
-> - Only wired up for alpha so far, and only for 64-bit guest PCs.
-> 
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
-> ---
->   include/tcg/tcg-op-common.h |  2 +
->   target/alpha/translate.c    |  6 ++-
->   tcg/tcg-op.c                | 77 +++++++++++++++++++++++++++++++++++++
->   3 files changed, 83 insertions(+), 2 deletions(-)
-> 
-> diff --git ./include/tcg/tcg-op-common.h ./include/tcg/tcg-op-common.h
-> index 1fe342db0d..52cd0d3eab 100644
-> --- ./include/tcg/tcg-op-common.h
-> +++ ./include/tcg/tcg-op-common.h
-> @@ -84,6 +84,8 @@ void tcg_gen_goto_tb(unsigned idx);
->    * this op is equivalent to calling tcg_gen_exit_tb() with 0 as the argument.
->    */
->   void tcg_gen_lookup_and_goto_ptr(void);
-> +void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc, uint32_t flags,
-> +                                        uint32_t cflags);
-
-> +/*
-> + * As tcg_gen_lookup_and_goto_ptr(), but probe the TB jump cache inline
-> + * instead of calling helper_lookup_tb_ptr() unconditionally.  @pc must
-> + * hold the destination guest PC; @flags and @cflags are the values the
-> + * destination TB must have been translated with.
-
-Without looking at the body, this reads as these method arguments
-better fit:
-
-   void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc,
-                                           const TranslationBlock *tb);
-
-> + */
-> +void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc, uint32_t flags,
-> +                                        uint32_t cflags)
-
-
+PiBTdWJqZWN0OiBbUEFUQ0hdIGh3L21pc2MvYXNwZWVkX3NjdTogU2V0IGJvdGggQVNUMjYwMCBw
+cm90ZWN0aW9uIGtleQ0KPiByZWdpc3RlcnMgb24gcmVzZXQNCj4gDQo+IEN1cnJlbnRseSwgYm9v
+dGluZyBMaW51eCBvbiB0aGUgYXN0MjYwMC1ldmIgbWFjaGluZSB2aWEgLWtlcm5lbCByZXN1bHRz
+IGluIGEgbG90DQo+IG9mIHdhcm5pbmdzIGFib3V0IGZhaWxpbmcgdG8gYXBwbHkgcGlubXV4IGNv
+bmZpZ3VyYXRpb24gd2hlbiBiaW5kaW5nIGRyaXZlcnM6DQo+IA0KPiAgICAgWyAgICA3LjMzOTMw
+N11bICAgIFQxXSBDcmVhdGluZyA1IE1URCBwYXJ0aXRpb25zIG9uICJibWMiOg0KPiAgICAgWyAg
+ICA3LjM0MDQwMl1bICAgIFQxXSAweDAwMDAwMDAwMDAwMC0weDAwMDAwMDBlMDAwMCA6ICJ1LWJv
+b3QiDQo+ICAgICBbICAgIDcuNTEzNzU1XVsgICAgVDFdIDB4MDAwMDAwMGUwMDAwLTB4MDAwMDAw
+MTAwMDAwIDoNCj4gInUtYm9vdC1lbnYiDQo+ICAgICBbICAgIDcuNjY0MjE5XVsgICAgVDFdIDB4
+MDAwMDAwMTAwMDAwLTB4MDAwMDAwYTAwMDAwIDogImtlcm5lbCINCj4gICAgIFsgICAgNy44MjY5
+NzRdWyAgICBUMV0gMHgwMDAwMDBhMDAwMDAtMHgwMDAwMDJhMDAwMDAgOiAicm9mcyINCj4gICAg
+IFsgICAgOC4wMjY2NjZdWyAgICBUMV0gMHgwMDAwMDJhMDAwMDAtMHgwMDAwMDQwMDAwMDAgOiAi
+cndmcyINCj4gICAgIFsgICAgOC4yMDE2MTJdWyAgICBUMV0gc3BpLWFzcGVlZC1zbWMgMWU2MzAw
+MDAuc3BpOiBlcnJvciAtRVBFUk06DQo+IEVycm9yIGFwcGx5aW5nIHNldHRpbmcsIHJldmVyc2Ug
+dGhpbmdzIGJhY2sNCj4gICAgIFsgICAgOC4zNzA4MzVdWyAgICBUMV0gc3BpLWFzcGVlZC1zbWMg
+MWU2MzAwMDAuc3BpOiBDYWxpYnJhdGlvbiBhcmVhDQo+IHRvbyB1bmlmb3JtLCB1c2luZyBsb3cg
+c3BlZWQNCj4gICAgIFsgICAgOC4zNzExMzFdWyAgICBUMV0gc3BpLWFzcGVlZC1zbWMgMWU2MzAw
+MDAuc3BpOiBGb3JjZSB0byBkdHMNCj4gY29uZmlndXJhdGlvbiAxMDAwMDBrSHouDQo+ICAgICBb
+ICAgIDguMzcxNTAwXVsgICAgVDFdIHNwaS1hc3BlZWQtc21jIDFlNjMwMDAwLnNwaTogQ0UwIHJl
+YWQNCj4gYnVzd2lkdGg6NCBbMHg0MDZjMDc0MV0NCj4gICAgIFsgICAgOC43NjY3OTddWyAgICBU
+MV0gbWRpby1hc3BlZWQgMWU2NTAwMDAubWRpbzogZXJyb3IgLUVQRVJNOg0KPiBFcnJvciBhcHBs
+eWluZyBzZXR0aW5nLCByZXZlcnNlIHRoaW5ncyBiYWNrDQo+ICAgICBbICAgIDguOTA2MDA4XVsg
+ICAgVDFdIG1kaW8tYXNwZWVkIDFlNjUwMDA4Lm1kaW86IGVycm9yIC1FUEVSTToNCj4gRXJyb3Ig
+YXBwbHlpbmcgc2V0dGluZywgcmV2ZXJzZSB0aGluZ3MgYmFjaw0KPiAgICAgWyAgICA5LjAzOTI0
+MF1bICAgIFQxXSBtZGlvLWFzcGVlZCAxZTY1MDAxMC5tZGlvOiBlcnJvciAtRVBFUk06DQo+IEVy
+cm9yIGFwcGx5aW5nIHNldHRpbmcsIHJldmVyc2UgdGhpbmdzIGJhY2sNCj4gICAgIFsgICAgOS4x
+NDc5NDJdWyAgICBUMV0gbWRpby1hc3BlZWQgMWU2NTAwMTgubWRpbzogZXJyb3IgLUVQRVJNOg0K
+PiBFcnJvciBhcHBseWluZyBzZXR0aW5nLCByZXZlcnNlIHRoaW5ncyBiYWNrDQo+IA0KPiBUaGUg
+cGlubXV4IGNvbmZpZ3VyYXRpb24gZmFpbHMgYmVjYXVzZSB0aGUgU0NVIGlzIG5vdCB1bmxvY2tl
+ZC4NCj4gDQo+IFNldCBib3RoIFNDVSBwcm90ZWN0aW9uIGtleXMgZm9yIHRoZSBBU1QyNjAwLiBG
+dXJ0aGVyLCBzZXQgdGhlbSBzdWNoIHRoYXQgdGhleQ0KPiBiZWhhdmUgYWNjb3JkYW5jZSB3aXRo
+IHRoZSByZWFkIHZhbHVlIGRvY3VtZW50ZWQgYnkgdGhlIGRhdGFzaGVldC4gVGhlIG5ldw0KPiBh
+cnJhbmdlbWVudCBub3cgdXBob2xkcyB0aGUgY29tbWVudCBpbiBody9hcm0vYXNwZWVkLmMgcmVn
+YXJkaW5nIHBhc3NpbmcNCj4gLWtlcm5lbCBvbiB0aGUgcWVtdSBjb21tYW5kLWxpbmUuDQo+IA0K
+PiAgICAgWyAgICA3LjU2ODE3MF1bICAgIFQxXSBDcmVhdGluZyA1IE1URCBwYXJ0aXRpb25zIG9u
+ICJibWMiOg0KPiAgICAgWyAgICA3LjU2OTMzMF1bICAgIFQxXSAweDAwMDAwMDAwMDAwMC0weDAw
+MDAwMDBlMDAwMCA6ICJ1LWJvb3QiDQo+ICAgICBbICAgIDcuNzQwMzcyXVsgICAgVDFdIDB4MDAw
+MDAwMGUwMDAwLTB4MDAwMDAwMTAwMDAwIDoNCj4gInUtYm9vdC1lbnYiDQo+ICAgICBbICAgIDcu
+ODgzNTcwXVsgICAgVDFdIDB4MDAwMDAwMTAwMDAwLTB4MDAwMDAwYTAwMDAwIDogImtlcm5lbCIN
+Cj4gICAgIFsgICAgOC4wNDEwMDRdWyAgICBUMV0gMHgwMDAwMDBhMDAwMDAtMHgwMDAwMDJhMDAw
+MDAgOiAicm9mcyINCj4gICAgIFsgICAgOC4xOTY4MjRdWyAgICBUMV0gMHgwMDAwMDJhMDAwMDAt
+MHgwMDAwMDQwMDAwMDAgOiAicndmcyINCj4gICAgIFsgICAgOC41NDcwMzddWyAgICBUMV0gc3Bp
+LWFzcGVlZC1zbWMgMWU2MzAwMDAuc3BpOiBDYWxpYnJhdGlvbiBhcmVhDQo+IHRvbyB1bmlmb3Jt
+LCB1c2luZyBsb3cgc3BlZWQNCj4gICAgIFsgICAgOC41NDczMjBdWyAgICBUMV0gc3BpLWFzcGVl
+ZC1zbWMgMWU2MzAwMDAuc3BpOiBGb3JjZSB0byBkdHMNCj4gY29uZmlndXJhdGlvbiAxMDAwMDBr
+SHouDQo+ICAgICBbICAgIDguNTQ3NjQyXVsgICAgVDFdIHNwaS1hc3BlZWQtc21jIDFlNjMwMDAw
+LnNwaTogQ0UwIHJlYWQNCj4gYnVzd2lkdGg6NCBbMHg0MDZjMDc0MV0NCj4gICAgIFsgICAgOS40
+OTQyMzVdWyAgICBUMV0gZnRnbWFjMTAwIDFlNjYwMDAwLmV0aGVybmV0OiBSZWFkIE1BQw0KPiBh
+ZGRyZXNzIDUyOjU0OjAwOjEyOjM0OjU2IGZyb20gY2hpcA0KPiAgICAgWyAgICA5LjUzMTE4Nl1b
+ICAgIFQxXSBSVEw4MjExRSBHaWdhYml0IEV0aGVybmV0IDFlNjUwMDAwLm1kaW8tMTowMDoNCj4g
+YXR0YWNoZWQgUEhZIGRyaXZlciAobWlpX2J1czpwaHlfYWRkcj0xZTY1MDAwMC5tZGlvLTE6MDAs
+DQo+IA0KPiBGaXhlczogZTA5Y2YzNjMyMWY2ICgiaHc6IGFzcGVlZF9zY3U6IEFkZCBBU1QyNjAw
+IHN1cHBvcnQiKQ0KPiBTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3QGNvZGVj
+b25zdHJ1Y3QuY29tLmF1Pg0KPiAtLS0NCj4gSSByYW4gaW50byB0aGlzIGlzc3VlIHdoaWxlIGlt
+cHJvdmluZyB0ZXN0IGNvdmVyYWdlIGluIG15IHBhdGNoIHJldmlldyBwcm9jZXNzLg0KPiAtLS0N
+Cj4gIGh3L21pc2MvYXNwZWVkX3NjdS5jIHwgMyArKy0NCj4gIDEgZmlsZSBjaGFuZ2VkLCAyIGlu
+c2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9taXNjL2Fz
+cGVlZF9zY3UuYyBiL2h3L21pc2MvYXNwZWVkX3NjdS5jIGluZGV4DQo+IGNhOTNjMzY5OWQ4MS4u
+MWUzZGI2ZDAzZjkxIDEwMDY0NA0KPiAtLS0gYS9ody9taXNjL2FzcGVlZF9zY3UuYw0KPiArKysg
+Yi9ody9taXNjL2FzcGVlZF9zY3UuYw0KPiBAQCAtODIxLDcgKzgyMSw4IEBAIHN0YXRpYyB2b2lk
+IGFzcGVlZF9hc3QyNjAwX3NjdV9yZXNldF9ob2xkKE9iamVjdA0KPiAqb2JqLCBSZXNldFR5cGUg
+dHlwZSkNCj4gICAgICBzLT5yZWdzW0FTVDI2MDBfU0lMSUNPTl9SRVYyXSA9IHMtPnNpbGljb25f
+cmV2Ow0KPiAgICAgIHMtPnJlZ3NbQVNUMjYwMF9IV19TVFJBUDFdID0gcy0+aHdfc3RyYXAxOw0K
+PiAgICAgIHMtPnJlZ3NbQVNUMjYwMF9IV19TVFJBUDJdID0gcy0+aHdfc3RyYXAyOw0KPiAtICAg
+IHMtPnJlZ3NbUFJPVF9LRVldID0gcy0+aHdfcHJvdF9rZXk7DQo+ICsgICAgcy0+cmVnc1tBU1Qy
+NjAwX1BST1RfS0VZXSA9IHMtPmh3X3Byb3Rfa2V5ID09DQo+IEFTUEVFRF9TQ1VfUFJPVF9LRVk7
+DQo+ICsgICAgcy0+cmVnc1tBU1QyNjAwX1BST1RfS0VZMl0gPSBzLT5od19wcm90X2tleSA9PQ0K
+PiBBU1BFRURfU0NVX1BST1RfS0VZOw0KPiAgfQ0KPiANCj4gIHN0YXRpYyB2b2lkIGFzcGVlZF8y
+NjAwX3NjdV9jbGFzc19pbml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkN
+Cj4gDQo+IC0tLQ0KPiBiYXNlLWNvbW1pdDogOTY5NmJmNWRjNWE1YmYwYjRhOWQwNWI2Y2RmZTVm
+MTM5OTBmOTdhYQ0KPiBjaGFuZ2UtaWQ6IDIwMjYwODE4LWRldi1hc3QyNjAwLWh3LXByb3Qta2V5
+LXJlc2V0LWU2OGViOWY0OWVlOQ0KPiANCj4gQmVzdCByZWdhcmRzLA0KPiAtLQ0KPiBBbmRyZXcg
+SmVmZmVyeSA8YW5kcmV3QGNvZGVjb25zdHJ1Y3QuY29tLmF1Pg0KDQpSZXZpZXdlZC1ieTogSmFt
+aW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQoNClRoYW5rcywNCkphbWluDQoNCg==
 
