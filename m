@@ -4,73 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3728C5DF70
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C44CC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwGVz-0007uC-Hz; Tue, 18 Aug 2026 05:53:51 -0400
+	id 1wwGWF-0008Na-RB; Tue, 18 Aug 2026 05:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wwGVv-0007hm-4b; Tue, 18 Aug 2026 05:53:47 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wwGWE-0008M5-AB; Tue, 18 Aug 2026 05:54:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wwGVt-0007RY-Hd; Tue, 18 Aug 2026 05:53:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787046826; x=1818582826;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=4tKzRBHNuiiXS6U3nIlJrlS4L4QeqHHvuI6rLdfU2zk=;
- b=bEHa2Hhb6T9O/yl8Hgf4RKSLy6YL7fKJrGnGINJxk9QqY3cyckATx10Y
- oB3M7eNiD7nLpWxLbPr5qLCpgJeYnC3xvGLtItx4kz7KWOaZd+I6xoW+u
- aq9dyBVCC7NHWXt6g1L34e4jwvalzIxO9vtY17QpFR1bbCLH7Z+Dsvuqm
- f/OegNNQSakFqbjk+wI6ZID4krZlTLr3mXOt/ekojPHB+AIS9wBi/XC1Q
- Ogvhr9Pej6VIq7lM9p9DP81xe+pwCaki1evC/1gEkglCH5MmmwlDQFQd+
- lsJwnlPRd8vJMxSNQzRz+gbzmXSHyH/41bnMsjo3LQgIFzSwJuBaubu69 w==;
-X-CSE-ConnectionGUID: 6zCbntPOTOemZHBfbYvuXA==
-X-CSE-MsgGUID: rojGgJ1fTKmK7FuUbz9Snw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11878"; a="110321032"
-X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; d="scan'208";a="110321032"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 02:53:27 -0700
-X-CSE-ConnectionGUID: lg5iqsyqRmWCp/hy1nCJwQ==
-X-CSE-MsgGUID: gYx06Zo/Sgm6UJ3OdoHZ/Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; d="scan'208";a="258977063"
-Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 02:53:20 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Manish Honap <mhonap@nvidia.com>
-Cc: alex@shazbot.org, ankita@nvidia.com, jic23@kernel.org,
- dave.jiang@intel.com, alejandro.lucero-palau@amd.com, smadhavan@nvidia.com,
- pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, imammedo@redhat.com,
- anisinha@redhat.com, pbonzini@redhat.com, eric.auger@redhat.com,
- peter.maydell@linaro.org, richard.henderson@linaro.org, clg@redhat.com,
- cohuck@redhat.com, kjaju@nvidia.com, vsethi@nvidia.com, zhiw@nvidia.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH 10/10] hw/pci-host: Emit a _DSM on pxb-cxl to preserve
- firmware PCI config
-Date: Tue, 18 Aug 2026 17:53:17 +0800
-Message-ID: <20260818095318.252248-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260813130623.2499506-11-mhonap@nvidia.com>
-References: <20260813130623.2499506-11-mhonap@nvidia.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wwGWC-0007X3-Py; Tue, 18 Aug 2026 05:54:06 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67I9QWHr2526706; Tue, 18 Aug 2026 09:54:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EDLNXo
+ JK0un8bqsKkqUGtS9iMEoI0sujGifP1eA3dY4=; b=Nw1RIqMdDuIWXxiS7Q+iYl
+ fkLp5SUdZ5x2IuyerO/5tfi1rsswOUyZAzMAvf3gUWmxlPsGbbpirQijUx9pdVbD
+ gZ4dRi7cwGGvV7Tr3tCFRS9GsEu9I8XbBIrF2GOWpU7+SsZ/DDpylbhXvYSMcxz7
+ 9Vc+StV2nr5c4Qqw1smNKSwylK8H3nopN2ZbyOEJ7s1wOl+n+LArmdgvk6Lk3OrS
+ 9r0mlW1F9tEwBhYgllFmpBKcidaWju42YVml6rJf11lBxwNO+fEja6u69HmldCn7
+ caAiq0ahguc2hJvZu6s5z856s1Hl6SDLtR5Zj53Q+ohXTFIkxV/vkvjoL0yBLkpA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhky9cp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 09:54:02 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67I9fIMQ026309;
+ Tue, 18 Aug 2026 09:54:02 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ek2jm6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 09:54:02 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67I9rwue47382888
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 09:53:58 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 095BA2004D;
+ Tue, 18 Aug 2026 09:53:58 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E65120043;
+ Tue, 18 Aug 2026 09:53:56 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 18 Aug 2026 09:53:56 +0000 (GMT)
+Date: Tue, 18 Aug 2026 15:23:35 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, aik@ozlabs.ru, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v2] target/ppc: Add lower bound check for watchdogNumber
+Message-ID: <20260818145508.a2e068cb-0d-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org, 
+ qemu-devel@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com, aik@ozlabs.ru
+References: <20260818091019.51350-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260818091019.51350-1-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA3MCBTYWx0ZWRfX/kLs81coG8WE
+ JN/jldCYsRAyhgqoFuWpHFgzimDINAA9hQOnFdYwOyBG4xg6DEFyFM0IXINXFGxBHR6q40gkQK0
+ jwjTkXotj5Y/DJUtUeaBIsXobbymiiBxUGX6ZYL/ZfzVCUg8bwOP567eV39i0wJTfjzw89eYTAG
+ y+FLLuYq5yC2nVsF8oWb8Dc8USX/YZTB0ZpyLJ9qIEiT9tHbRBj8T0kozJRBCSkb89i0dSer57d
+ KgoTcKL32DeeBpvBarAHbOTkTNbkaVeHTctX1wWcW1/nUH09bgI0s3cb9iS1tsdtw3B1HsV55pf
+ jp91sfFYj67XSFp5kKIUgzhtIzg9eIsRc21BuqgPkm7KzEeQZu9HFbcRnCUxLVYYr+QipUQDWYf
+ EDhcFW2SRSLRnOyleqJ9mxuL1uR2G750SPIkc0KYsEhbu1h1oAGK1u0PT9bgZENR5lpZSW4w7/9
+ IgQrPoOVNw9xJieAQDw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA3MCBTYWx0ZWRfXzDgz3AW9CovI
+ nFsH2xx1VXaIpUZUJRtHh/h7UQ/6uVN6mekqtZEcrcceJKcxM120yVYBZoOf2ydrkuFUxVQAOlu
+ lUnYHRjv9YFQ/lu/JTpywI/kh30ZjyA=
+X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a842bbb cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=ZAIjEHVXlASqfd2alX0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 0ToInPwXJ1SBMiPKXuCOxTphE-jZytL0
+X-Proofpoint-GUID: 9nV4grGn1i_GZmtnX_yc2jz-ueKv3yP1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180070
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,36 +127,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manish,
+On 2026/08/18 02:40 PM, Chinmay Rath wrote:
+> Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
+> as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+> 
+> Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+> 
+> Changes from v1 : Incorporated changes suggested by Amit.
 
-On Thu, 13 Aug 2026 18:36:23 +0530, Manish Honap wrote:
-> -void build_cxl_osc_method(Aml *dev)
-> +void acpi_dsdt_add_cxl_host_bridge_methods(Aml *dev, bool preserve_config)
->  {
->      aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
->      aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
->      aml_append(dev, aml_name_decl("SUPC", aml_int(0)));
->      aml_append(dev, aml_name_decl("CTRC", aml_int(0)));
->      aml_append(dev, __build_cxl_osc_method());
-> +    aml_append(dev, build_pci_host_bridge_dsm_method(preserve_config));
+Thanks for the quick v2 — the helper and the OP_STOP restructuring look
+good. One remaining nit below.
 
-This is the bios-tables refresh the cover lists as pending:
-/x86_64/acpi/q35/cxl and /x86_64/acpi/q35/acpihmat-genericx both hit
-the all_tables_match assertion with a DSDT mismatch, and the asl diff
-is exactly this _DSM under the pxb-cxl device (12638 -> 12684 bytes on
-the acpihmat-generic-x variant). The g_assert aborts the test binary,
-so a full run only reports the first case.
+> v1 : https://lore.kernel.org/qemu-devel/20260817105854.437724-1-rathc@linux.ibm.com/
+> 
+>  hw/watchdog/spapr_watchdog.c | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+> index 5b3f50de3a..460b4457a6 100644
+> --- a/hw/watchdog/spapr_watchdog.c
+> +++ b/hw/watchdog/spapr_watchdog.c
+> @@ -127,6 +127,12 @@ static void watchdog_expired(void *pw)
+>      }
+>  }
+>  
+> +static inline bool watchdogNumber_valid(target_ulong watchdogNumber,
 
-With preserve_config=false the method advertises no functions and
-returns a zero buffer for every function, so the x86 half of the
-change is dead AML plus golden-table churn. Append the _DSM only when
-preserve_config is set: the x86 tables stay untouched and the pending
-refresh drops out. Otherwise the usual three-patch bios-tables update
-needs to ride in this series.
+The function name watchdogNumber_valid mixes camelCase with snake_case.
+Per the QEMU coding style (docs/devel/style.rst), CamelCase is reserved
+for structured type names and typedefs — regular function names follow
+lower_case_with_underscores. This should be watchdog_number_valid.
 
-aarch64/virt has no CXL golden files, so nothing catches the arm side
-either way.
+With that fixed:
 
-Many thanks,
-Junjie
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+Thanks,
+Amit
 
