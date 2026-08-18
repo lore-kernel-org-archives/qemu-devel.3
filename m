@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78572C5DF92
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E273C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwQKG-0001fY-5N; Tue, 18 Aug 2026 16:22:24 -0400
+	id 1wwQJy-0001cJ-JV; Tue, 18 Aug 2026 16:22:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwQKE-0001fA-Ek
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:22 -0400
+ id 1wwQJx-0001c7-5p
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwQKD-0001YT-1w
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:22 -0400
+ id 1wwQJv-0001V0-D4
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787084540;
+ s=mimecast20190719; t=1787084520;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ImMzd/CVxkW1LxVYTu03h7u30z5ZwSTt6inRaT8mj80=;
- b=gVVKv8ECfkgcYr9vUDi4HS5f+IMckPAS4hSXHpxVP1XEhuDfuk5mLcAqK56TMl1xbmYupA
- +58yRXvaHfY4uTbP6jCB9QIQT7FnVNy6NE+UYM94RHC6XNXgEn9unCJVqH9ht2ZSakUiV6
- cyoBNXonLKC7PM/iDDQ8FT1FRb8ipa0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cEUCv+K3v6EhozbZHUTtFQpBuSNARnGEGVf2YsbPnQg=;
+ b=ijXlBEJWAS38bfr+tNcZY5ZGY9RrWlu+XjShRp1lavehA4iJiJEyqBXKqzh75UreiDtdAo
+ DRJb18Gg+yHbDrgN/AnmNJQHkOJwwpHAgmgQGg2RlKChfNxuf2LuJTY2XxLs5QA+4DHtCb
+ +kA0LUZjqc0gFFvSWXp43ogVpQT09G8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-zPJuPG2RM_60FMzcYdHwsg-1; Tue,
- 18 Aug 2026 16:22:07 -0400
-X-MC-Unique: zPJuPG2RM_60FMzcYdHwsg-1
-X-Mimecast-MFC-AGG-ID: zPJuPG2RM_60FMzcYdHwsg_1787084527
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-567-dk5JJNapOIWARjZmtdQs8g-1; Tue,
+ 18 Aug 2026 16:21:57 -0400
+X-MC-Unique: dk5JJNapOIWARjZmtdQs8g-1
+X-Mimecast-MFC-AGG-ID: dk5JJNapOIWARjZmtdQs8g_1787084516
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF8AE195604C; Tue, 18 Aug 2026 20:22:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 303D41956057; Tue, 18 Aug 2026 20:21:56 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 26679195608A; Tue, 18 Aug 2026 20:22:05 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BFD2D423; Tue, 18 Aug 2026 20:21:54 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 06/32] system: check security for machine types
+Subject: Re: [PATCH v2 00/32] Encode object type security status in code
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
@@ -60,29 +60,28 @@ Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>
-In-Reply-To: <20250926140144.1998694-7-berrange@redhat.com>
+In-Reply-To: <20250926140144.1998694-1-berrange@redhat.com>
 References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-7-berrange@redhat.com>
 Date: Wed, 19 Aug 2026 00:21:49 +0400
-Message-Id: <178708450916.1320462.5283210372449603542.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=857;
+Message-Id: <178708450915.1320462.4853548767474440832.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4237;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=oect2DcMrHvV8w+BE6qUoO5yYGDL+AWpCFgUoOqX2hg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhL7f8OUZw7SuKwSWSaNve6n8Xhoeb9rAfHdTR
- 7v4o/Mnu8WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoS+3wAKCRDa6OEJdZac
- 5SwzEACUonSTrrz4MDQPrhoBujRR199aqgJmLzRC8eUXNlLwdMD2unyI6bLgeUK0k0a+r+cXq0g
- 0jqiwJlivb0iMOwoQYYpn6zJgXE5S09VdiQI4ifKlmaBhCGmWkMWAijDUaGu1dupxIGrugZ/wk/
- dQBLD49KNa8Xrqb+4j3sWTwpbvEqdzs5jCo9WzDPeLZAeC0k5so6VLLIoEpmwHHjl5WgDwvCeIR
- 7i8qS5SM1LjHaJ00nq37lEGdTbv63RuiUKWQs7LWOEhblAcjzqNR5Un99La3JXaqTJ7+tlfnTYi
- ZeMZKY3JkoNSwEs9rv2V87qFlR0v6hlQ97tD+j35EebBQNbI8XkM0ByaebCFDKLAzpsImRBUQ9q
- pf/FjaSCUyqC4MI1LbJee74lSuCMkpEnaR1YaDZvr+0MrdxzsHvvoHhz40U4MzjI6OPW4swA3jI
- 79TWG59KKC67W1Nm/rGI++bRXNrs6pPt/dRXqMhZ/zvdW4NdpOmbSHFFS5Zi/1OTKdX8qUY/6Qh
- +yKuy8hg/XYOR7CeHAHNT6CqiKIXXpiuNlAL4AS3s1IaDTcYBnJpumuZ2wQ5Hg8vS5q6QQhHSdT
- 30hY+i5Dxab/i5bUQr4DBi1QEivdyyEbVrBe6CxAI3gI4ToBIfzqAtQpATIjTLK7tKVp3qhdE/m
- 98C63ijOmwLR7eg==
+ bh=892WSDoQGVSENd9axX7+2MN9Aco+L1QBHzY+AqKz93U=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhL7fwZ+Oe9pYosvMZUNNVo9/vaKBeTG3K8AM4
+ yAFfGHbXu2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoS+3wAKCRDa6OEJdZac
+ 5c4bD/9at09nZ/eopJfXCh01Ibq6ZadiA0dSQEqv7pr8aN7Fi2Vd81W/kXG4RhMnCZBMlQAL7Nr
+ 7qakD0IEM/XmeCuuxf2063mqWi8mGU6eVXbINFKntx84vuNVXct+CrbrHgER6cyq9J3tyF0qwHO
+ 5T1tTwuQ5hdShZ/OaRZ/b0OG98kDMoIcKQY5djPVbbwYoi79+lo8RrbtNwcBpnqB/AauoQWafVo
+ 84luMBvoYCrB3bHL/zmIE1LmGrUWMHa8E28g/XKWMqcNQR+bMO2zdNrzkIutmKJZYqYmm4tuJTq
+ wDNbiM86oFogDwYwi2FWb6rPM9VcfFfN3G0uMRy5yuVNcXQntZq3QXRIbSmKgeT36geXVhBGIyv
+ 3Cj04rbi+I9rHCw7a5/FCxokUjkFMtmOEloA0uOOJXzKiGIX9idos7aU/WAdYO2BC5/ZKn/nq9s
+ NTbaFFLdqHxX7X4YI2ipZB2js+QO6WenNzqpcu3VeKFrjYWxFzVwXNJzLi4mT5qFDIt5V5jYVg5
+ U05GMlEZj41CLJWw4LA7mroLF/mldnZ/CYnOOx5788CHj9Pa2QApyX6umQ9j9xhLAwLKg0L0/nH
+ buapwXXt4EK4S+MdGZkUT1Dgtb6GAPz9A3EvvP+jxaxk4yczqV54MyaYk44JWlZ4tZsrgHx2+k2
+ FHihxdNQoBgOQRg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,30 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> This wires up the machine creation code to apply the compat policy
-> security check.
+> Our docs/system/security.rst file loosely classifies code into that
+> applicable for 'virtualization' vs 'non-virtualization' use cases.
+> Only code relevant to the former group is eligible for security
+> bug handling. Peter's recent proposal pointed out that we are
+> increasingly hitting the limits of such a crude classification
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20250926140144.1998694-7-berrange@redhat.com>
->
-> diff --git a/system/vl.c b/system/vl.c
-> index 38c6caf52467..716bf6d490a7 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2182,10 +2182,19 @@ static void qemu_create_machine_containers(Object *machine)
->      }
->  }
->  
-> -static void qemu_create_machine(QDict *qdict)
-> +static int qemu_create_machine(QDict *qdict)
+> Michael suggested that with the increased complexity, docs are not
+> going to be an effective way to convey the information, and we
+> need to re-consider embedding this info in code.  This also allows
+> users to validate a configuration's security status when starting
+> a guest, or modifying a running guest.
+> 
+> This series is an attempt to start the embedding process.
+> 
+> Probably I should split in multiple series. One introducing the
+> overall framework, and then multiple series doing type annotations,
+> as the latter really need to be CC'd to maintainers, but the CC
+> list would be way too huge on this combined series. At least this
+> combined series shows what the real world implictions of this code
+> approach will be though.
+> 
+> It starts with QOM, adding a "bool secure" property to the
+> TypeInfo struct, which get turned into a flag on the Type
+> struct. This enables querying any ObjectClass to ask whether or
+> not it is declared secure.
+> 
+> By only using a single boolean flag, at runtime we are unable
+> to distinguish between "marked insecure" and "no decision,
+> implicitly insecure". As such, all our existing code is
+> initially considered insecure, except for that which gets
+> explicit annotation.
+> 
+> The "-compat" argument gains a new parameter
+> 
+>   * insecure-types=accept|reject|warn
+> 
+>     The default 'accept' preserves historical behaviour of
+>     anything being permissible. The other two options both
+>     identify use of types that are not explicitly marked
+>     as secure.
+> 
+> The code annotations are useful immediately, but to make the
+> new -compat switch useful, we need to annotate as much as is
+> possible. This series makes a strong attempt to do that across
+> a large subset of the codebase. My guidance was to mark enough
+> as being 'secure', that a downstream RHEL build of QEMU would
+> have explicit anntation of most of its devices, with most being
+> secure given they target virtualization use cases.
+> 
+> This annotation is 90% complete for the x86 target, but more
+> work is needed to finish it and then address the arch specific
+> devices for arm, ppc, s390.
+> 
+> Example: TCG is explicitly insecure, KVM is explicitly secure:
+> 
+>   $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel tcg
+>   qemu-system-x86_64: -accel tcg: Type 'tcg-accel' does not provide a security boundary to protect against untrusted workloads
+>   $ qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
+>   ^C
+> 
+> Example: isapc machine type is explicitly insecure
+> 
+>   $ qemu-system-x86_64 -display none -compat insecure-types=reject -machine isapc
+>   qemu-system-x86_64: Type 'isapc-machine' does not provide a security boundary to protect against untrusted workloads
+> 
+> Example: checks also apply in HMP, ne2k_pci is insecure
+> 
+>   $ ./build/qemu-system-x86_64 -display none -compat insecure-types=reject -monitor stdio -accel kvm
+>   QEMU 10.1.50 monitor - type 'help' for more information
+>   (qemu) device_add ne2k_pci
+>   Error: Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads
+> 
+> Example: checks also apply in QMP:
+> 
+>   $ ./scripts/qmp/qmp-shell-wrap qemu-system-x86_64 -display none -compat insecure-types=reject -accel kvm
+>   Welcome to the QMP low-level shell!
+>   Connected
+>   (QEMU) device_add driver=ne2k_oci
+>   {"error": {"class": "GenericError", "desc": "Type 'ne2k_pci' does not provide a security boundary to protect against untrusted workloads"}}
+>   (QEMU) device_add driver=virtio-net
+>   {"return": {}}
+> 
 
+I'd really like to have this already to help us do some security triage!
+The framework looks fine to me. The annotations will require a bit of
+discussion, probably.
 
->  {
->      MachineClass *machine_class = select_machine(qdict, &error_fatal);
->      object_set_machine_compat_props(machine_class->compat_props);
-> +    Error *local_err;
-
-Move local_err decl one line before, and initialize it to NULL.
+please make a v3
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
