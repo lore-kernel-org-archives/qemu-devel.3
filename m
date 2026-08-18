@@ -4,119 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC70C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C26C5DF82
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNrL-0004gd-TL; Tue, 18 Aug 2026 13:44:23 -0400
+	id 1wwNqH-0002vE-Ks; Tue, 18 Aug 2026 13:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wwNrJ-0004ZB-Ip
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:44:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wwNrH-0008PZ-0F
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:44:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787075057;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
- b=co18Pl858J9WSDsG9mv1DIXcM7nx6MEIYyoaMtffO24QS+NXhs7r5eM1I1gWcwprn8uk/L
- SOykLgKDJS60tLrVKGcQkdLbgoyw3J9/K5S2VuPjaXIuavfybQJqwVqYCGGwRa7CRbcT//
- +4uIk1pWposkW7a2ti6tf5bv63nvau0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-dunzfPHQM6WUiVUsQfDUmw-1; Tue, 18 Aug 2026 13:44:15 -0400
-X-MC-Unique: dunzfPHQM6WUiVUsQfDUmw-1
-X-Mimecast-MFC-AGG-ID: dunzfPHQM6WUiVUsQfDUmw_1787075055
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47feac2021eso19336f8f.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:44:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787075054; cv=none;
- d=google.com; s=arc-20260327;
- b=Vw7gd7R898v+Tlnm8gd2Bbcy+DikW28pYSkUQ0eGefk23rlRxjoTKjmZcQ4Cx5JGFN
- j7ZRt1fOpzdrSg5i8dDlpTbzH1XppR279oVusfU81MkLlbCOIYpqZ5vWzTo2HRvj5Ond
- NQnMfhAHS7+l8jQkwHvuXgbic+3lXm4ez0xcODLD1I7Dl9wwumalDx8cjoMWb40h9fLt
- OWK1KOXEnVwLxkhWfJRhywZqBALnVF6+scLhJR1Am7ceB2AQQt0AFkHBzzhrcbtmeKch
- ltXaJWHOQsyJzgSpOkstqPW2UTFStJG5wp3aMHqu8bCof8nOQy7ioYEKaadpyu1XPXcH
- YOQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
- fh=qS+XlxfZEiyHDJVjYGATJqBgBx4KVTOneSG+muUkCzo=;
- b=qSpbFVFjkfVFxsg634hIdFWz13y+71h2S3JwiGygOxxlkhQvnid01tmD7ut2taCHWn
- g+SYAPY1cUTD9XyuaBg6mPv7yAanMsNU8l954ZW5vncYKz/3eOo7LhCcFiAy9L+9YBMB
- BSdWYcFUDlGCkL8wDkVcUW+cHxKHBH2Kk80SNk3xW8cFlNZaAj0bRPCuR/UKqfYlLK2i
- BsXabVzia52Eky2obpjEk3H179Zaf+kigf4wauaebEkTp6tElwhaxtgzG8l5mELZ+6ht
- rPVTc2Ke7zXdD8Y4hJqNkplvc4FKnMaiR/2PP7KF6PXkCq8z+c1yjztLHLqPK1ZaftmZ
- S56g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwNqE-0002uc-TQ
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:15 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwNq6-0007xR-9P
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:09 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-836c718715fso2777087b3.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787075054; x=1787679854; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
- b=lOFe4HIWz5J8D5Kj+8lLVhuGn6JTmzqJ4TV0D1wITkExEgu51fSq3jmmqOsAnuKES8
- G9sdU/Bben0plxkIhd4ooRFkvBtK49bAj4xFIPxEdAZl5hcI4AoJD/CTxPzTaDpawrXu
- qASljyBB+ssfd99llfiCzhk8S9fLcCmKjx0MAmzsQU9kyNli/oX0kOBi0ZFKFagxIGz6
- hsWZ2Cc3av20kmsRdXVxONdBz3c/gHErPP2NtVUyoI1j/eQ8dws+870owD4cTCgbJdEr
- i+XGQEnyjEBf2c1G3OAAj3Hn4LgGDzoBU+BhVrN9fffTKHz/KYiqj0sMBzXbfphvs0UZ
- wYtg==
+ d=gmail.com; s=20251104; t=1787074985; x=1787679785; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=8MikWi2ZkuQ48w4BbQpRaAViV4sVN9NaKK78tQU/xZ8=;
+ b=ZrVkZwidaHvKC2vDo+GiMtwkMDcTcWyEjFXB4voP7D1E61pGnmouikk+WnX8xEefct
+ /NR8oVncMXORnSObL4eeSzMGPE3D+ddFCQQC7EjKMBR+d5jwn8e36q/ZlkzT3DhOXqEU
+ 2Vs6QIRSlSUaSxlox4/w6/V82drUBJxV/XfissD58/1/O2IJn8R7VJE9eEFgaSLKlARQ
+ S0Wh8IZgKF73FxZ9kvKP2X6AxuhxDHgn+c2CQggcMe2SSnTu26jDqqaqYstv4xqpsQkv
+ 5kk/boRscRZLMTotYAKy2pihXX7sCMDWoRdvWsUVLMUo3EizIXEzVuP5uxdmZ3xkmrWx
+ BbHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787075054; x=1787679854;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
- b=N3g/cfjXsUQkv3cBgvhJh+glHLVkmEhHjR4qKYNy1id5PEhZuGhrfUAwpgB0sUf9Km
- mgYUIXF+yhIMxXXpL6mbhGb5Op7PBHxV1zBjS7kjTaQHwGEhhnI9nNZ9L5XVKu7SrHyJ
- IPVZ++twpzSuZYT/jVnWqYIEliXLL+AC+DBNI9LOGoSElnyCEbiJ9ORC+oqqELBw3B19
- fGOoVANLTiqAVQkitWhgVPCrvR1sbd880S/86/39QJlXG5gadS0o58heCoOx1whec68U
- gpOqtIkTVkcIsW3RSerFEeiSf45L3AmhPYLlndkuLlYWY/bMcjGDVhi/TXqYwajRT7Eu
- R1Nw==
-X-Gm-Message-State: AOJu0YxSSCsvpsNBBjUSubKa3XaQUnFkX2/8I0CYDZ+mViOWwkzOMgtO
- R9ZaOiCNjWAuH4HIgwNk0wpFg+ADJI/alFnh9XfPBmsjHGAWg+k5QCgxbfX4hiROoGh/miRQXyD
- HQRjrBUP4heBXzmZuX7mdlv9XBT+pyIA4MxmAApZzrcWlIJxFeVIjmsyrolRXBWmeXvtHfBU9Mj
- Ev4Jb+xW68M7ALgrkWnoXMkZvk+UV5XXAqkgMbRyE=
-X-Gm-Gg: AR+sD11RKPIUvYVcECrmd0X/gN9XWKayheHaK3UMRPCcHTNwxPBRPtG5SHT6a9X5LAv
- etXnZQB8lI/EGTvYD5tgysxRIMZ/qyP00ftjPrH9J3E30/DbNjInp5YIVLoWE6wwCDHYcI7N8g+
- 09jxkU8nZ48MqEld72/XnyNTby2FzXaslHkbgnIXpgEDAKJlKKO7cXipYkHm4jg0tnn//TePcX5
- TI+dqJ/9nDsfO6wnF1lBsUDwvobz8C5RxxaFzGqUafusRL8PQTXx/xYOtU=
-X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id
- ffacd0b85a97d-482a908a3ddmr14300698f8f.12.1787075054534; 
- Tue, 18 Aug 2026 10:44:14 -0700 (PDT)
-X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id
- ffacd0b85a97d-482a908a3ddmr14300630f8f.12.1787075054112; Tue, 18 Aug 2026
- 10:44:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787074985; x=1787679785;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8MikWi2ZkuQ48w4BbQpRaAViV4sVN9NaKK78tQU/xZ8=;
+ b=n1lsWw9rN65GTZ6uUWfC3gXYssaesKcR4+mWp4ktqjEP0OJTU3f8ual97sHskWwYgX
+ +PrwKJXbFASjDqRvGNLubjeWqrN1k4mn5303JG5CSaF8OvFQcxOJAR55723pR2jOWykN
+ 3S+/vcbW2Qd+Y4v1lkc0dyJGlMhGCh+KBfxa6AsKzEsLWagrMCCid6pUgH/Fn5MwoXxu
+ 9v7qunWBWmScNWlkHmo8ViD0rKNa3dRkBmVp4XW19KmtTM+0jxJftQxnboRZjTtH7hkB
+ L2XFcU1ghl+zjCnTp5VxDN5/CU7YebLDWmQOl05atBGZnlYC2fQ69YVW3E7IsJ4FAekj
+ TH2Q==
+X-Gm-Message-State: AOJu0YzXAB2HyOtge7CuL70VZdraGhNYKUFkzBjpq9aMNKp+CJxNJmt2
+ jQ/Qmho/4f0Rcv2Mpj5D+FebwN72JVQmYUlS4K8rskyWCCFjZoOyyQbeoxeL4B/yTb4=
+X-Gm-Gg: AR+sD10adPuBQxzlvUC7cFE/bPUojUEwOebfiiG4mjjWsTmFvW56jF7dIdy+pNEFCDP
+ UbOe1X3459yKAWR1DQ/wttFJuIN5fr+qsKBw/5hpyjZys8tOSUmpGL/nOmlYRpLCnUBM9EVvb34
+ P+QGP+1FqE0aXv5gTx1aJthWeKciQEh6TQMsys+p0I7gsxjykdnawu4t4uot7UWaV76xGn1ug9a
+ 5tonSay361MqMx8Rzhhi3mJridNCEiIZTd2M2CzRT709aNat1TDIrCU0S74rgEDtvF/N4sNRnX0
+ DGdjQGiC6FQmSAZQk9/PKERQNkDM4e/MkWVVsWmGwX1nPHhmKfgYP+yL1JGwqOH05d74yvCHj6z
+ PxelmlIWOnBAaBOmdwW0840oRwnz++Q2eWCEC29oJzjVNidlHd+YY6wErQAaghO1jX2lHWRgDqL
+ Dl2YlzdpHOSAJY7XP8FjM5JqPuYvCZuBfjO0778NPmQW3sRcdF2x5GN1jaX637CIO5YY5KtC7i
+X-Received: by 2002:a05:690c:103:b0:81d:bc5:4624 with SMTP id
+ 00721157ae682-83711e15d36mr125378377b3.25.1787074984961; 
+ Tue, 18 Aug 2026 10:43:04 -0700 (PDT)
+Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-84068d1eafasm25220817b3.19.2026.08.18.10.43.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 10:43:02 -0700 (PDT)
+From: Matt Turner <mattst88@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
+ zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
+Subject: [PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead of
+ calling a helper
+Date: Tue, 18 Aug 2026 13:42:43 -0400
+Message-ID: <20260818174247.649526-5-mattst88@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260818174247.649526-1-mattst88@gmail.com>
+References: <20260818174247.649526-1-mattst88@gmail.com>
 MIME-Version: 1.0
-References: <20260818142836.1664990-1-pbonzini@redhat.com>
- <CAJ+F1CKuBR9TWnCzTjyFC=6Xn8q9ZDiXRXSoD+6if=cJRDkPMw@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKuBR9TWnCzTjyFC=6Xn8q9ZDiXRXSoD+6if=cJRDkPMw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 18 Aug 2026 19:44:01 +0200
-X-Gm-Features: AcwNN1WbbrYLdnbkZoRYqpxjIOU5lCb2JFAtpX_pi_n3mrBtVo1i4xUbvDnW8XY
-Message-ID: <CABgObfauvyUoptW8GBizUu36S=CpYL7LQ582sPgoEHnnJYAzow@mail.gmail.com>
-Subject: Re: [PATCH] serial: clear transmit retry callback on unrealize
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000c9ad0d065955d5fe"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,131 +103,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c9ad0d065955d5fe
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Every indirect branch that cannot use goto_tb ends in
+tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For an
+emulated compiler that is 8.4 billion helper calls in a single translation
+unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
+register destination and because goto_tb is restricted to same-page
+targets.
 
-Il mar 18 ago 2026, 16:42 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.co=
-m> ha
-scritto:
+The helper itself is already tight, but each call pays for a call frame,
+the can_do_io store, the get_tb_cpu_state() indirect call through
+TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
+jump cache probe that almost always hits (95.8% for this workload).
 
-> Hi
->
-> On Tue, Aug 18, 2026 at 6:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
-m> wrote:
-> >
-> > The GSource is removed when resetting but remains active (and can
-> > cause use-after-free) on hot-unplug.  Remove it before the character
-> > device is disconnected.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->
-> it fixes a use-after-free, so
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> But should we care about flushing pending data?
->
+Emit the probe inline instead. The destination PC is already in a TCG
+temp, and the flags and cflags the destination must match are constants at
+translation time, so the fast path is a hash, three guarded loads and a
+goto_ptr. Only a miss calls the helper, which still owns filling the cache.
 
-To where, :) since the transmit channel was not ready?
+Two details matter for the generated code. The flags and cflags guards are
+folded into a single aligned 64-bit load and compare, since the fields are
+adjacent. And each path emits its own goto_ptr rather than branching to a
+shared one: a temp live across the label is spilled and reloaded on every
+dispatch, which cost 6.3% on its own.
 
-Paolo
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
+build, on top of the preceding three patches:
 
+    before: 1,402,816,253,499 instructions
+    after:    890,713,633,237 instructions   -36.51%
 
-> > ---
-> >  hw/char/serial.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/hw/char/serial.c b/hw/char/serial.c
-> > index 0729cd2ce9d..4339562ab00 100644
-> > --- a/hw/char/serial.c
-> > +++ b/hw/char/serial.c
-> > @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)
-> >  {
-> >      SerialState *s =3D SERIAL(dev);
-> >
-> > +    g_clear_handle_id(&s->watch_tag, g_source_remove);
-> >      qemu_chr_fe_deinit(&s->chr, false);
-> >
-> >      timer_free(s->modem_status_poll);
-> > --
-> > 2.55.0
-> >
-> >
->
->
-> --
-> Marc-Andr=C3=A9 Lureau
->
->
+    before: 115.75s wall clock
+    after:   84.44s wall clock               -27.05%
 
---000000000000c9ad0d065955d5fe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The gap between the two is the point at which this stops being a
+straight-line win: the helper call was highly predictable work that the
+host pipelined well, so removing it retires far fewer instructions than it
+saves time. IPC falls from 2.48 to 2.15 across this patch for that reason.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 18 ago 2026, 16:42 Marc-A=
-ndr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandr=
-e.lureau@gmail.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">Hi<br>
-<br>
-On Tue, Aug 18, 2026 at 6:29=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto=
-:pbonzini@redhat.com" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.=
-com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; The GSource is removed when resetting but remains active (and can<br>
-&gt; cause use-after-free) on hot-unplug.=C2=A0 Remove it before the charac=
-ter<br>
-&gt; device is disconnected.<br>
-&gt;<br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items=
-/4125" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/q=
-emu-project/qemu/-/work_items/4125</a><br>
-&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
-" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-<br>
-it fixes a use-after-free, so<br>
-Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@=
-redhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redhat.co=
-m</a>&gt;<br>
-<br>
-But should we care about flushing pending data?<br></blockquote></div></div=
-><div dir=3D"auto"><br></div><div dir=3D"auto">To where, :) since the trans=
-mit channel was not ready?</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
-mail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/char/serial.c | 1 +<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+)<br>
-&gt;<br>
-&gt; diff --git a/hw/char/serial.c b/hw/char/serial.c<br>
-&gt; index 0729cd2ce9d..4339562ab00 100644<br>
-&gt; --- a/hw/char/serial.c<br>
-&gt; +++ b/hw/char/serial.c<br>
-&gt; @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 SerialState *s =3D SERIAL(dev);<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 g_clear_handle_id(&amp;s-&gt;watch_tag, g_source_remove=
-);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qemu_chr_fe_deinit(&amp;s-&gt;chr, false);<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 timer_free(s-&gt;modem_status_poll);<br>
-&gt; --<br>
-&gt; 2.55.0<br>
-&gt;<br>
-&gt;<br>
-<br>
-<br>
--- <br>
-Marc-Andr=C3=A9 Lureau<br>
-<br>
-</blockquote></div></div></div>
+Despite emitting more code, this also reduces instruction cache pressure,
+because a dispatch no longer jumps into qemu's .text and evicts translated
+code:
 
---000000000000c9ad0d065955d5fe--
+    before: 11,476,318,964 L1-icache-load-misses
+    after:   6,990,186,701 L1-icache-load-misses   -39.1%
+
+The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
+falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
+38.9% to 5.4%, with the balance moving into generated code.
+
+Combined with the three preceding patches, against an unmodified LTO
+build, 1,647,901,588,726 instructions fall to 890,713,633,237, or -45.95%.
+The emulated compiler produces byte-identical output throughout.
+
+Open issues, hence RFC:
+
+- The flags/cflags guards use the *current* TB's values as constants. That
+  assumes the CPU flags feeding get_tb_cpu_state() cannot change within a
+  TB, and that curr_cflags() cannot change under a running TB (gdb
+  attaching to enable single-step would). Both need to be established or
+  the values need to be loaded at runtime.
+- tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
+  knowing the CPUJumpCache layout. The probe likely belongs in accel/tcg
+  with a small emit helper exported from tcg/.
+- The jump cache entry is read without qatomic_read(); entries are
+  invalidated concurrently by setting tb to NULL.
+- Only wired up for alpha so far, and only for 64-bit guest PCs.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ include/tcg/tcg-op-common.h |  2 +
+ target/alpha/translate.c    |  4 +-
+ tcg/tcg-op.c                | 79 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 83 insertions(+), 2 deletions(-)
+
+diff --git ./include/tcg/tcg-op-common.h ./include/tcg/tcg-op-common.h
+index 1fe342db0d..65084c38b9 100644
+--- ./include/tcg/tcg-op-common.h
++++ ./include/tcg/tcg-op-common.h
+@@ -84,6 +84,8 @@ void tcg_gen_goto_tb(unsigned idx);
+  * this op is equivalent to calling tcg_gen_exit_tb() with 0 as the argument.
+  */
+ void tcg_gen_lookup_and_goto_ptr(void);
++void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc,
++                                        const TranslationBlock *tb);
+ 
+ void tcg_gen_plugin_cb(unsigned from);
+ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+diff --git ./target/alpha/translate.c ./target/alpha/translate.c
+index c66e3f9c14..939170a28b 100644
+--- ./target/alpha/translate.c
++++ ./target/alpha/translate.c
+@@ -449,7 +449,7 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx, int32_t disp)
+         tcg_gen_exit_tb(ctx->base.tb, tb_slot_idx);
+     } else {
+         gen_pc_disp(ctx, cpu_pc, disp);
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_lookup_and_goto_ptr_inline(cpu_pc, ctx->base.tb);
+     }
+ }
+ 
+@@ -2917,7 +2917,7 @@ static void alpha_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+         gen_pc_disp(ctx, cpu_pc, 0);
+         /* FALLTHRU */
+     case DISAS_PC_UPDATED:
+-        tcg_gen_lookup_and_goto_ptr();
++        tcg_gen_lookup_and_goto_ptr_inline(cpu_pc, ctx->base.tb);
+         break;
+     case DISAS_PC_UPDATED_NOCHAIN:
+         tcg_gen_exit_tb(NULL, 0);
+diff --git ./tcg/tcg-op.c ./tcg/tcg-op.c
+index bbcb510c76..ab8d101871 100644
+--- ./tcg/tcg-op.c
++++ ./tcg/tcg-op.c
+@@ -28,6 +28,8 @@
+ #include "tcg/tcg-op-common.h"
+ #include "exec/translation-block.h"
+ #include "exec/plugin-gen.h"
++#include "hw/core/cpu.h"
++#include "../accel/tcg/tb-jmp-cache.h"
+ #include "tcg-internal.h"
+ #include "tcg-has.h"
+ 
+@@ -2620,3 +2622,80 @@ void tcg_gen_lookup_and_goto_ptr(void)
+     tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+     tcg_temp_free_ptr(ptr);
+ }
++
++/*
++ * As tcg_gen_lookup_and_goto_ptr(), but probe the TB jump cache inline
++ * instead of calling helper_lookup_tb_ptr() unconditionally.  @pc must
++ * hold the destination guest PC; @flags and @cflags are the values the
++ * destination TB must have been translated with.
++ */
++void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc,
++                                        const TranslationBlock *tb)
++{
++    uint32_t flags = tb->flags;
++    uint32_t cflags = tb->cflags;
++    TCGv_ptr jc, ent, tbp, ptr;
++    TCGv_i64 h, tmp;
++    TCGLabel *slow;
++    uint64_t fpair;
++
++    if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_PTR) {
++        tcg_gen_exit_tb(NULL, 0);
++        return;
++    }
++
++    plugin_gen_disable_mem_helpers();
++
++    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) != 16);
++    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=
++                      offsetof(TranslationBlock, flags) + 4);
++
++    jc = tcg_temp_ebb_new_ptr();
++    ent = tcg_temp_ebb_new_ptr();
++    tbp = tcg_temp_ebb_new_ptr();
++    ptr = tcg_temp_ebb_new_ptr();
++    h = tcg_temp_ebb_new_i64();
++    tmp = tcg_temp_ebb_new_i64();
++    slow = gen_new_label();
++
++    /* h = tb_jmp_cache_hash_func(pc) * sizeof(array[0]) */
++    tcg_gen_shri_i64(h, pc, TB_JMP_CACHE_BITS);
++    tcg_gen_xor_i64(h, h, pc);
++    tcg_gen_andi_i64(h, h, TB_JMP_CACHE_SIZE - 1);
++    tcg_gen_shli_i64(h, h, 4);
++
++    tcg_gen_ld_ptr(jc, tcg_env,
++                   offsetof(CPUState, tb_jmp_cache) - sizeof(CPUState));
++    tcg_gen_trunc_i64_ptr(ent, h);
++    tcg_gen_add_ptr(ent, jc, ent);
++
++    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
++    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
++
++    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
++    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
++
++    /*
++     * flags and cflags are adjacent uint32_t, so one aligned 64-bit load
++     * and compare covers both.
++     */
++#if HOST_BIG_ENDIAN
++    fpair = ((uint64_t)flags << 32) | cflags;
++#else
++    fpair = ((uint64_t)cflags << 32) | flags;
++#endif
++    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
++    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
++
++    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
++    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
++
++    /*
++     * Emit a second goto_ptr rather than branching to a shared one: a temp
++     * live across the label would be spilled and reloaded on every dispatch.
++     */
++    gen_set_label(slow);
++    ptr = tcg_temp_ebb_new_ptr();
++    gen_helper_lookup_tb_ptr(ptr, tcg_env);
++    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
++}
+-- 
+2.54.0
 
 
