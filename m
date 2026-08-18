@@ -4,89 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C43C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC70C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNq5-0002tS-74; Tue, 18 Aug 2026 13:43:05 -0400
+	id 1wwNrL-0004gd-TL; Tue, 18 Aug 2026 13:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwNq3-0002sn-JE
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:03 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwNq2-0007vv-3B
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:43:03 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-836c436a6b3so3001627b3.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:43:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wwNrJ-0004ZB-Ip
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:44:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wwNrH-0008PZ-0F
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:44:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787075057;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
+ b=co18Pl858J9WSDsG9mv1DIXcM7nx6MEIYyoaMtffO24QS+NXhs7r5eM1I1gWcwprn8uk/L
+ SOykLgKDJS60tLrVKGcQkdLbgoyw3J9/K5S2VuPjaXIuavfybQJqwVqYCGGwRa7CRbcT//
+ +4uIk1pWposkW7a2ti6tf5bv63nvau0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-dunzfPHQM6WUiVUsQfDUmw-1; Tue, 18 Aug 2026 13:44:15 -0400
+X-MC-Unique: dunzfPHQM6WUiVUsQfDUmw-1
+X-Mimecast-MFC-AGG-ID: dunzfPHQM6WUiVUsQfDUmw_1787075055
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-47feac2021eso19336f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:44:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787075054; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Vw7gd7R898v+Tlnm8gd2Bbcy+DikW28pYSkUQ0eGefk23rlRxjoTKjmZcQ4Cx5JGFN
+ j7ZRt1fOpzdrSg5i8dDlpTbzH1XppR279oVusfU81MkLlbCOIYpqZ5vWzTo2HRvj5Ond
+ NQnMfhAHS7+l8jQkwHvuXgbic+3lXm4ez0xcODLD1I7Dl9wwumalDx8cjoMWb40h9fLt
+ OWK1KOXEnVwLxkhWfJRhywZqBALnVF6+scLhJR1Am7ceB2AQQt0AFkHBzzhrcbtmeKch
+ ltXaJWHOQsyJzgSpOkstqPW2UTFStJG5wp3aMHqu8bCof8nOQy7ioYEKaadpyu1XPXcH
+ YOQA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
+ fh=qS+XlxfZEiyHDJVjYGATJqBgBx4KVTOneSG+muUkCzo=;
+ b=qSpbFVFjkfVFxsg634hIdFWz13y+71h2S3JwiGygOxxlkhQvnid01tmD7ut2taCHWn
+ g+SYAPY1cUTD9XyuaBg6mPv7yAanMsNU8l954ZW5vncYKz/3eOo7LhCcFiAy9L+9YBMB
+ BSdWYcFUDlGCkL8wDkVcUW+cHxKHBH2Kk80SNk3xW8cFlNZaAj0bRPCuR/UKqfYlLK2i
+ BsXabVzia52Eky2obpjEk3H179Zaf+kigf4wauaebEkTp6tElwhaxtgzG8l5mELZ+6ht
+ rPVTc2Ke7zXdD8Y4hJqNkplvc4FKnMaiR/2PP7KF6PXkCq8z+c1yjztLHLqPK1ZaftmZ
+ S56g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787074980; x=1787679780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=WM409keD7J89yEAgYdhBWa8aMMqXlnNUvLTfJiZti+8=;
- b=ftxhQEbFYU6nUPnMbqhb/s1yUFg0S+7mR2yvFkATzcsFCUtNVEn/HJM4ce8gjchaAh
- hZxIJ4ZkHlvGnS5qCS2+w0JZEuyd/j2TmN1WtVcd07BEhUC+cBLlKYos2JUj3bkduy/t
- ITbOagJLeRoFW/FdatU+7VDkpYkSZCNp33m2gA59OygPkKsZgSjCr6hScv65K86nkIqU
- a1Jui5pVCu/KnphHTiqSQFUQl+Z08NjlXliF2HebiV24sGvYO97Be14QOkpGzCTALxC/
- 2edsSlyZZACGNk4cc19zNYvCXtdE14dJKrxVItoYBzSlmtY9/WAfQ2k9E9LsYlSWXkEC
- hF5Q==
+ d=redhat.com; s=google; t=1787075054; x=1787679854; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
+ b=lOFe4HIWz5J8D5Kj+8lLVhuGn6JTmzqJ4TV0D1wITkExEgu51fSq3jmmqOsAnuKES8
+ G9sdU/Bben0plxkIhd4ooRFkvBtK49bAj4xFIPxEdAZl5hcI4AoJD/CTxPzTaDpawrXu
+ qASljyBB+ssfd99llfiCzhk8S9fLcCmKjx0MAmzsQU9kyNli/oX0kOBi0ZFKFagxIGz6
+ hsWZ2Cc3av20kmsRdXVxONdBz3c/gHErPP2NtVUyoI1j/eQ8dws+870owD4cTCgbJdEr
+ i+XGQEnyjEBf2c1G3OAAj3Hn4LgGDzoBU+BhVrN9fffTKHz/KYiqj0sMBzXbfphvs0UZ
+ wYtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787074980; x=1787679780;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=WM409keD7J89yEAgYdhBWa8aMMqXlnNUvLTfJiZti+8=;
- b=Eoe4sMzVaEjRrKMn1PZ45qVdx0FT19USkwwv3r5BzKh6mkzty7lJ2NsHmegj4lDXcH
- 3iiFsn5Cb7tz4nfswnjsRqC3ENNXAXyBl4j6md8/kbn+JcAFBV+Kl4yrU5T7t/PtH0TA
- E7Lca+VDbvDpZzmF1IcP/b9ASqLE0NrKWt0qNzEu/AY1gCEKWXmiGpbsx+vwvJWT5At+
- uhLWe+3w0MruMYIRdhjxHanXT1Ar5flaYwblSdEu6z6RvMtTcIxqDbyLU60P1JzfeoRH
- CPcsFz2DOuPiX9jnL4zIUe6HFBfzpLeRmzdD1vYHW6iiFQhPTdiBae8bKNk66o06yOgE
- fV6A==
-X-Gm-Message-State: AOJu0Yxttm4d6JjS0+U6w2PjnJUKW/A4P/0XV20gnydj0zH0ljYTlsvm
- nJwH0FyybU87hJi/jPrgZCXQF58qAvTurZtv7hnS6yOsBPRaHinWdRCCHryxFy0X3oU=
-X-Gm-Gg: AR+sD11p3gGIoTAs7b5Gg81jzi/Fun2gTc7jKzlnFeWnjIU8hrU6hFmNTvNfW45RqKS
- kHDAn31+JccHHjKI9wIFKwicNnhRO65vvauximK9JM4vm/dCQDotR5ZVOewdhWxEoGZgo6dTZFZ
- Avgl848kuPxHe/CmZGYQmqn0ZT7xxlPjp0CANs/VXenEnOA08KUaCAWORtcuBAHaaXJi6AQtAo+
- wqSfSMwng+UfD5HirM+9q0+U5zClY8wZPfx+P9sVKoa3aDWXQzHbR/9n43x85pOGLdNkq/JZrjz
- P2h5CccJygAye7cCu3N0eNXLH4XXoCTihY4Rb6v5CZHzgyD9OHFRB0G79oTxoXV/KxVV0vOM6df
- 9YdGn/xGKULGq3Lda0V30E/tSsphedEyTA+CubM/RpUJJBJuJkWHfACO/3Ui12em741Roy6TCw9
- 2AIFuIbJ1ulh8CiRUPLiU8l6VxPCWi3KpctnCigv1HYe/iu1KSa85oGbCT1jM3
-X-Received: by 2002:a05:690c:26c2:b0:814:5f5b:6378 with SMTP id
- 00721157ae682-8370dfb3aedmr146926227b3.12.1787074980454; 
- Tue, 18 Aug 2026 10:43:00 -0700 (PDT)
-Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-84068a3b800sm24907847b3.12.2026.08.18.10.42.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:42:59 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
- zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
- pierrick.bouvier@oss.qualcomm.com, Matt Turner <mattst88@gmail.com>
-Subject: [PATCH 2/8] accel/tcg: enlarge the TB jump cache to 64K entries
-Date: Tue, 18 Aug 2026 13:42:41 -0400
-Message-ID: <20260818174247.649526-3-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260818174247.649526-1-mattst88@gmail.com>
-References: <20260818174247.649526-1-mattst88@gmail.com>
+ d=1e100.net; s=20251104; t=1787075054; x=1787679854;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=KRNRdUsigN3fYihqJNVjQLMyHylRcTokEV0b8Up8PC8=;
+ b=N3g/cfjXsUQkv3cBgvhJh+glHLVkmEhHjR4qKYNy1id5PEhZuGhrfUAwpgB0sUf9Km
+ mgYUIXF+yhIMxXXpL6mbhGb5Op7PBHxV1zBjS7kjTaQHwGEhhnI9nNZ9L5XVKu7SrHyJ
+ IPVZ++twpzSuZYT/jVnWqYIEliXLL+AC+DBNI9LOGoSElnyCEbiJ9ORC+oqqELBw3B19
+ fGOoVANLTiqAVQkitWhgVPCrvR1sbd880S/86/39QJlXG5gadS0o58heCoOx1whec68U
+ gpOqtIkTVkcIsW3RSerFEeiSf45L3AmhPYLlndkuLlYWY/bMcjGDVhi/TXqYwajRT7Eu
+ R1Nw==
+X-Gm-Message-State: AOJu0YxSSCsvpsNBBjUSubKa3XaQUnFkX2/8I0CYDZ+mViOWwkzOMgtO
+ R9ZaOiCNjWAuH4HIgwNk0wpFg+ADJI/alFnh9XfPBmsjHGAWg+k5QCgxbfX4hiROoGh/miRQXyD
+ HQRjrBUP4heBXzmZuX7mdlv9XBT+pyIA4MxmAApZzrcWlIJxFeVIjmsyrolRXBWmeXvtHfBU9Mj
+ Ev4Jb+xW68M7ALgrkWnoXMkZvk+UV5XXAqkgMbRyE=
+X-Gm-Gg: AR+sD11RKPIUvYVcECrmd0X/gN9XWKayheHaK3UMRPCcHTNwxPBRPtG5SHT6a9X5LAv
+ etXnZQB8lI/EGTvYD5tgysxRIMZ/qyP00ftjPrH9J3E30/DbNjInp5YIVLoWE6wwCDHYcI7N8g+
+ 09jxkU8nZ48MqEld72/XnyNTby2FzXaslHkbgnIXpgEDAKJlKKO7cXipYkHm4jg0tnn//TePcX5
+ TI+dqJ/9nDsfO6wnF1lBsUDwvobz8C5RxxaFzGqUafusRL8PQTXx/xYOtU=
+X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id
+ ffacd0b85a97d-482a908a3ddmr14300698f8f.12.1787075054534; 
+ Tue, 18 Aug 2026 10:44:14 -0700 (PDT)
+X-Received: by 2002:a5d:4b45:0:b0:47f:8f8f:db74 with SMTP id
+ ffacd0b85a97d-482a908a3ddmr14300630f8f.12.1787075054112; Tue, 18 Aug 2026
+ 10:44:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260818142836.1664990-1-pbonzini@redhat.com>
+ <CAJ+F1CKuBR9TWnCzTjyFC=6Xn8q9ZDiXRXSoD+6if=cJRDkPMw@mail.gmail.com>
+In-Reply-To: <CAJ+F1CKuBR9TWnCzTjyFC=6Xn8q9ZDiXRXSoD+6if=cJRDkPMw@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 18 Aug 2026 19:44:01 +0200
+X-Gm-Features: AcwNN1WbbrYLdnbkZoRYqpxjIOU5lCb2JFAtpX_pi_n3mrBtVo1i4xUbvDnW8XY
+Message-ID: <CABgObfauvyUoptW8GBizUu36S=CpYL7LQ582sPgoEHnnJYAzow@mail.gmail.com>
+Subject: Re: [PATCH] serial: clear transmit retry callback on unrealize
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000c9ad0d065955d5fe"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,58 +132,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The per-CPU TB jump cache has held 4096 entries since it was introduced.
-That is too small for guests running large programs: an emulated compiler
-misses often enough that the fallback qht lookup shows up prominently in
-a profile.
+--000000000000c9ad0d065955d5fe
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host. The
-compile performs 34.2 billion TB executions, of which 8.4 billion take
-the indirect dispatch path.
+Il mar 18 ago 2026, 16:42 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.co=
+m> ha
+scritto:
 
-Sizing curve, on top of the preceding patch, instructions retired and
-wall clock:
+> Hi
+>
+> On Tue, Aug 18, 2026 at 6:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+> >
+> > The GSource is removed when resetting but remains active (and can
+> > cause use-after-free) on hot-unplug.  Remove it before the character
+> > device is disconnected.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>
+> it fixes a use-after-free, so
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> But should we care about flushing pending data?
+>
 
-    12 bits (  64 KiB): 1,563,829,403,943          133.13s
-    14 bits ( 256 KiB): 1,493,865,985,972  -4.47%  124.89s  -6.19%
-    16 bits (   1 MiB): 1,469,729,281,442  -6.02%  120.97s  -9.13%
-    18 bits (   4 MiB): 1,462,262,363,257  -6.49%  120.16s  -9.74%
+To where, :) since the transmit channel was not ready?
 
-16 bits is the knee. 18 buys another 0.47% of instructions for four times
-the memory, and since instructions retired does not account for the data
-cache pressure of a 4 MiB table, that 0.47% is probably not real: the
-wall clock difference between 16 and 18 bits is 0.67%, against a
-run-to-run spread of the same order.
+Paolo
 
-In a perf profile the mechanism is visible directly: tb_htable_lookup(),
-which is where qht_lookup_custom() lands once it is inlined in an LTO
-build, falls from 5.73% of samples to 1.52%.
 
-The cost is memory: the cache grows from 64 KiB to 1 MiB per vCPU. That
-is easy to justify for a single-vCPU linux-user process and less obvious
-for system emulation with many vCPUs, so this may want to be sized by
-target or made tunable rather than raised unconditionally.
+> > ---
+> >  hw/char/serial.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/hw/char/serial.c b/hw/char/serial.c
+> > index 0729cd2ce9d..4339562ab00 100644
+> > --- a/hw/char/serial.c
+> > +++ b/hw/char/serial.c
+> > @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)
+> >  {
+> >      SerialState *s =3D SERIAL(dev);
+> >
+> > +    g_clear_handle_id(&s->watch_tag, g_source_remove);
+> >      qemu_chr_fe_deinit(&s->chr, false);
+> >
+> >      timer_free(s->modem_status_poll);
+> > --
+> > 2.55.0
+> >
+> >
+>
+>
+> --
+> Marc-Andr=C3=A9 Lureau
+>
+>
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
----
- accel/tcg/tb-jmp-cache.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--000000000000c9ad0d065955d5fe
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git ./accel/tcg/tb-jmp-cache.h ./accel/tcg/tb-jmp-cache.h
-index c3a505e394..268dacd7ba 100644
---- ./accel/tcg/tb-jmp-cache.h
-+++ ./accel/tcg/tb-jmp-cache.h
-@@ -12,7 +12,7 @@
- #include "qemu/rcu.h"
- #include "exec/cpu-common.h"
- 
--#define TB_JMP_CACHE_BITS 12
-+#define TB_JMP_CACHE_BITS 16
- #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
- 
- /*
--- 
-2.54.0
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 18 ago 2026, 16:42 Marc-A=
+ndr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandr=
+e.lureau@gmail.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">Hi<br>
+<br>
+On Tue, Aug 18, 2026 at 6:29=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto=
+:pbonzini@redhat.com" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.=
+com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; The GSource is removed when resetting but remains active (and can<br>
+&gt; cause use-after-free) on hot-unplug.=C2=A0 Remove it before the charac=
+ter<br>
+&gt; device is disconnected.<br>
+&gt;<br>
+&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items=
+/4125" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/q=
+emu-project/qemu/-/work_items/4125</a><br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+<br>
+it fixes a use-after-free, so<br>
+Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@=
+redhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redhat.co=
+m</a>&gt;<br>
+<br>
+But should we care about flushing pending data?<br></blockquote></div></div=
+><div dir=3D"auto"><br></div><div dir=3D"auto">To where, :) since the trans=
+mit channel was not ready?</div><div dir=3D"auto"><br></div><div dir=3D"aut=
+o">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
+mail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/char/serial.c | 1 +<br>
+&gt;=C2=A0 1 file changed, 1 insertion(+)<br>
+&gt;<br>
+&gt; diff --git a/hw/char/serial.c b/hw/char/serial.c<br>
+&gt; index 0729cd2ce9d..4339562ab00 100644<br>
+&gt; --- a/hw/char/serial.c<br>
+&gt; +++ b/hw/char/serial.c<br>
+&gt; @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 SerialState *s =3D SERIAL(dev);<br>
+&gt;<br>
+&gt; +=C2=A0 =C2=A0 g_clear_handle_id(&amp;s-&gt;watch_tag, g_source_remove=
+);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 qemu_chr_fe_deinit(&amp;s-&gt;chr, false);<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 timer_free(s-&gt;modem_status_poll);<br>
+&gt; --<br>
+&gt; 2.55.0<br>
+&gt;<br>
+&gt;<br>
+<br>
+<br>
+-- <br>
+Marc-Andr=C3=A9 Lureau<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000c9ad0d065955d5fe--
 
 
