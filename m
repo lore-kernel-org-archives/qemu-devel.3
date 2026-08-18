@@ -4,109 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1628FC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:44:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2E1C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwL2q-0006ri-Cd; Tue, 18 Aug 2026 10:44:04 -0400
+	id 1wwL3d-0007Eh-2b; Tue, 18 Aug 2026 10:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwL2p-0006rU-Im
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:44:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wwL3b-0007EH-1A; Tue, 18 Aug 2026 10:44:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwL2n-0006ky-V6
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:44:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787064240;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
- b=csPdzDsUmxdtE0rNp76MRzW0knNyStZArrPwR2nklHlOwxDV8ODsLCrl9iYyDXcSIDUYub
- 6hXxkxIx7D03MAsR5lVxUhUlxpsB4wEpl+fccPeVkNK2Ql/rVFYj1twovBGxCHyiBFx9cj
- 7zuDt47cq67hb9rsF0MG2qLNs1TGf1g=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-oz757NMvNvKt4Bt157cp-g-1; Tue, 18 Aug 2026 10:43:58 -0400
-X-MC-Unique: oz757NMvNvKt4Bt157cp-g-1
-X-Mimecast-MFC-AGG-ID: oz757NMvNvKt4Bt157cp-g_1787064238
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8e934385db1so209456d6.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787064238; x=1787669038; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
- b=t/ZVqQuTaQpGx1Ed00nZ7KMLsfzGKp3NzqNFo9hayGGT13SbavzouwTKsFtWrwRseo
- yFVwhxuv0IhYjF8GonJg+QBJTPOEcIT7KQheqIK7Y7OoN5mmykZD+K3hArkwPS6ZZnEc
- 69FXOtWpbbUzDD6urDmfRLbCwK1cGuhUizXs1EWYF9WpSERQb0+l1a+3acvAk3gxiOWA
- w5KnFupFJdoRnGT0iqAR+NPvjuaBjXKRDoGVgkGMrETlUwD6k6aIsJpBPS/25wO8k7uL
- DIzuBkZMlxfF1i+l/w2A20oZW8ete/aGsJvvYLQujvNsPdiRK+OvG/tnnnSJ3/JBpnVe
- nreQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787064238; x=1787669038;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
- b=kJeYJeF6NAGWluXdkU5+vbVvEuA9N5pMw5SHCjIaGJkGNGrUQ0/7ZyJEvUKfq3PQRN
- 2KSCHPPX1Rr2tVT+eyjm40BOvT1s5bghNrpXqv9/AUgsMD4XEyMGgCilpm3XK3DrbnNM
- H0jXpzp9AjsPu6b6rIC+vcHz8iSWJ+EgY2/BGxAZVfgkaruafaMvFKKOI2KR73wLGQ70
- 0xuwUW+iwE6HVJdy0rgjQBUd+qdvOBEcOgrY+JNKGA+1CpZWflbYu+/CvjufZ5VUJOob
- 6GbcZXX1itUuHy3VAavCW1PGhhcuf/WVeKJ/lBqpX4YGWU4JYxg3Q3jnxdThX/eUa2xY
- 1kFw==
-X-Gm-Message-State: AOJu0Yy1W4Bz2jsNBb4iYxduvgtnBhbmOdoDyGCXi2fVYG4KY9FtTP0U
- qhY2KWgDGp28fXc0gqPVX47ieJQkc9NB8ySBa+0iIeuGTAadxs+S2GlzEYzWAxwODsw/88N3Pwf
- K6fdVKi+iOIlLs6o2ESmrrEDBQ8a04SWeJuQ1hoBLXeemUI1z5INqBVja
-X-Gm-Gg: AR+sD11uOkRboX3cEqn/Y07Fz3vU6K/AxidkELUp+eN5saPgeuUceeCS9VvOAuYMaUi
- pL8bd0wBLdzMKW+m1or01y6bN3srwCy7b7vILlL17/46fOUan0w1il/AbO1H76kfv7u+f4vd/RQ
- JgVwI/4d+f8+8+0K8rMsXEMQ5KCpe+u8q9UUbfvaWaux79fIVNt+hJLNG5Ff6Y2R5sqnwmZUBjO
- gSSG088zPyvQZ9ehghrg1axD5xwCinApsvssYkwKYP7r2YJ5UfOZx1exikkhaBaNYQWq5y6kb04
- 1+t5od8sbkfxZeSHUg5q1g23qtSwGIDhX/PXFY8XlzRvJBe3esScqEfsdKZRZvqTYd2K
-X-Received: by 2002:ad4:5746:0:b0:908:9c82:695e with SMTP id
- 6a1803df08f44-90c4b0c4c18mr94723976d6.0.1787064238050; 
- Tue, 18 Aug 2026 07:43:58 -0700 (PDT)
-X-Received: by 2002:ad4:5746:0:b0:908:9c82:695e with SMTP id
- 6a1803df08f44-90c4b0c4c18mr94722986d6.0.1787064237418; 
- Tue, 18 Aug 2026 07:43:57 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c5016c3a2sm16400346d6.37.2026.08.18.07.43.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 07:43:56 -0700 (PDT)
-Date: Tue, 18 Aug 2026 10:43:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <isyanfei.xu@gmail.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Samuel Zhang <guoqing.zhang@amd.com>,
- Fabiano Rosas <farosas@suse.de>, Jack Wang <jinpu.wang@ionos.com>,
- Juraj Marcin <jmarcin@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: Re: [PATCH 02/10] migration/rdma: Remove unregister code
-Message-ID: <aoRvobhlj6-YJsqT@x1.local>
-References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-3-peterx@redhat.com>
- <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com>
- <aoRXk0H1muF_gZJP@x1.local>
- <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wwL3Y-0006sk-4o; Tue, 18 Aug 2026 10:44:49 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IE3ZIS505190; Tue, 18 Aug 2026 14:44:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=NE1S/T
+ vOlEJOYGM5tMBuRxTw45HlF9qj6q2qrt2T5G0=; b=oXAZ5MfqoTU/+VK7RdJIrX
+ bQHMj/3eU4CVFW0uMG4NvQgrMsz/x/P66CWtna5iMDKCbvV8iXNg35UQMQS2MppW
+ BqOTuZJ/Jx1J2rneoz9gORHhf9ymF29yU8PKPW9m9k/Zrj74hAWxvn9/u4mNUVsD
+ yeXsUK27qf+SOsNX21xPCnbfA7i6M04UKE15GefuPCipv+eocvFe9yalpVvXKuQX
+ 4eAMh2s3a7yZND7qikAHfewqs0LeSy9pIwyUSYXM69HdEThssLL8nIrkqsslqCxH
+ yyhlhCpYAtL60PqgXYZWFhDtnovk+tciE3HGzOewCIVfkawjpgy2TfiS3dgb9XYQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4rw3b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 14:44:43 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IEfK8I029618;
+ Tue, 18 Aug 2026 14:44:42 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngbgus-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 14:44:42 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IEifNm30933698
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 14:44:41 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBFB65805A;
+ Tue, 18 Aug 2026 14:44:40 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AF29A58051;
+ Tue, 18 Aug 2026 14:44:39 +0000 (GMT)
+Received: from [9.61.131.241] (unknown [9.61.131.241])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 14:44:39 +0000 (GMT)
+Message-ID: <fd9f6195-b597-49c0-846e-b3b20e92a243@linux.ibm.com>
+Date: Tue, 18 Aug 2026 10:44:39 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v17 34/34] MAINTAINERS: Add secure IPL files to S390-ccw
+ boot group
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260730214624.2328883-1-zycai@linux.ibm.com>
+ <20260730214624.2328883-35-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260730214624.2328883-35-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: lmsi1BWt10Y4Wbf5UUVJW1u6ia9Sub8l
+X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a846fdb cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=a0ZOiI3JHlCJRT-QAOkA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX4lozVHX6dv9I
+ e8cx7CtXbWZ5XRgigjnxwCmVr7johjp5b8nAQ6cfWl+udhJ+zTDU48RfdWUKL3Rgc5oqpLe38L4
+ O0Lv/J7Ys7Gr6o7YJSnz0c0+kO2PUM0=
+X-Proofpoint-ORIG-GUID: lmsi1BWt10Y4Wbf5UUVJW1u6ia9Sub8l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwNyBTYWx0ZWRfX6gn1PAZcAPhr
+ jlF90LxSUsXga3BuPPy68jnfiXrmAdJUUDaea1JY5GePi2TlxG1+x9nkb6jS695neIoI+kHha5F
+ ykK04kbQ0gUUUIEHZ+a8MLllYhZdHcV3LcFDkcYIRl190D792HoyRGhBNVU+/pIqguUSYigLvvf
+ z0e2AQCnZmQnKq1CaQMSvlKn+cU98qe0fY5C33d4CcPntCnkwBCdz9G+QMvCqG3H2PRxIi01ig7
+ wvnlsVB2DAMx2c52kVK04YvLNMWygXBQqqSL1Zc4Zs7p6ezzv1mrx1I6MU6X3ICq8UghKb6NTYx
+ 5Kwm4+gMem8Lm5JO11DONsfwYQcVAWk//ILlvCfxIw4xmxtLPoI3uLaKvLbHbS2sMLkCrgg/8zv
+ QZBaVTCJwY6PaoNTLagoIvG3FG+E3clwYWI5hfakHiJYXXtjLc9bJp+c31setTcYt5tP+KzaKxY
+ nlCiT4FFWZv8ZmV9Jkg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180107
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,59 +131,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 09:57:12PM +0800, Yanfei Xu wrote:
+On 7/30/26 5:46 PM, Zhuoying Cai wrote:
+> Add entries for the files introduced by the secure IPL series (cert-store,
+> diag headers, documentation, and functional test) to the S390-ccw boot
+> maintainer group.
 > 
-> On 2026/8/18 21:01, Peter Xu wrote:
-> > On Tue, Aug 18, 2026 at 07:57:06PM +0800, Yanfei Xu wrote:
-> > > Hi Peter,
-> > Hi, Yanfei,
-> > 
-> > > No objection to removing the dead code — it clearly never worked
-> > > 
-> > > I do have one question about the direction, though. The removed logic
-> > > was the only in-tree attempt at MR unregistration for the non-pin-all
-> > > path. Without it, registered MRs grow monotonically over a migration,
-> > > and with large, widely-spread dirty memory over chunks the accumulated
-> > > MR metadata (user + kernel) can cost more than pin-all and even perform
-> > > worse — which rather defeats the purpose of not pinning everything.
-> > > 
-> > > do we still intend to keep and improve the non-pin-all path going
-> > > forward? If so, some form of dynamic MR unregistration will eventually
-> > > be needed and it might be worth keeping this code，or at least leaving
-> > > a TODO to mark the gap?
-> > Thanks for taking a look.  This is a valid question to ask.
-> > 
-> > Though it was there for 13 years without being "enhanced", it means the
-> > possibility we leverage it in the next couple of years is low.
-> > 
-> > You also discussed the other side of things: I am not a frequent RDMA user,
-> > but my understanding is frequent MR reg operations already slow down
-> > migration quite a bit.  It means dynamic management including unregisters
-> > will be even worse.  AFAICT, it'll be a challenging task if we want to keep
-> > the performance in bar and add a hard throttle to pinned memory.
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+
+Acked-by: Matthew Rosato <mjrosato@linux.ibm.com>
+
+> ---
+>  MAINTAINERS | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> One advantage of non-pin-all is that it neither sends the all-zero chunk
-> nor registers the corresponding MRs. For guests with a low dirty-page
-> workload and a large number of zero pages, this lets it migrate faster
-> than pin-all and pin less guest memory during the migration.
-
-I actually don't know why RDMA_CONTROL_COMPRESS is only used in !pin_all,
-do you know?
-
-I can only guess RDMA WRITEs were fast and need no round-robin chats, so
-it's faster than RDMA_CONTROL_COMPRESS, but you seem to say it's not true.
-
-Meanwhile, I would expect pin-all=off ultimately should meet the same perf
-over pin-all=on.. so I don't really know how needs pin-all=on...  maybe
-it's useful when one is looking for minimum total migration time when VMs
-are required to be evicted from one host?
-
-Feel free to share if you have more data points; I'm almost speaking from
-reading the code, so it could be wrong.
-
-Thanks,
-
--- 
-Peter Xu
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 902db77218..0742076861 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1926,10 +1926,15 @@ R: Christian Borntraeger <borntraeger@linux.ibm.com>
+>  R: Jason Herne <jjherne@linux.ibm.com>
+>  S: Supported
+>  F: hw/s390x/ipl.*
+> +F: hw/s390x/cert-store.[ch]
+> +F: include/hw/s390x/ipl/
+>  F: pc-bios/s390-ccw/
+>  F: pc-bios/s390-ccw.img
+>  F: docs/devel/s390-dasd-ipl.rst
+> +F: docs/specs/s390x-secure-ipl.rst
+> +F: docs/system/s390x/secure-ipl.rst
+>  F: tests/functional/s390x/test_pxelinux.py
+> +F: tests/functional/s390x/test_secure_ipl.py
+>  L: qemu-s390x@nongnu.org
+>  
+>  S390 PCI
 
 
