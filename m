@@ -4,145 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457F1C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C09FC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwQWq-0008RG-Uf; Tue, 18 Aug 2026 16:35:24 -0400
+	id 1wwQku-0006St-8M; Tue, 18 Aug 2026 16:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwQWi-0008Ny-Ps
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:35:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wwQkq-0006Sf-Nm
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:49:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwQWe-0004xr-4N
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:35:15 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IJZY3G2586781
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 20:35:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- nyi7sVDt/BLemwucOjma8srISQFBcZUB77EYg0daxS4=; b=n5uXpz6fxHeKsUFj
- 93J0HZYmoPbr/NYr5AC4MjkQC5yq99ycValj2/hDJqRLABdfLVVMxuGxPtGLcCM+
- h2vPHwlt5a4x3jEnQWwMBVkbm2jtM+ho43jku+/vJwtVTOQ/jwE/1YrGYQsDhURu
- HR3fLNVRPo6U6SdQVGss5dK17Wzs7yXMNuHUXO4pOFEAOJXeXKlKPRByN75XJmKn
- /cdn6QMVVOy+Xys61FmfWCZpJp/g4BJdcRSVRg4rAyqpmXKYZ8pfjOi7UtM3msky
- Sv4mBTh4x7pQJGpAPdPDUxo9v4ktHx40a+Sdg2fOSy4IkiQCk5TiARGfCF7DhXgf
- sPPqKw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4uhd1061-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 20:35:11 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-936d067836eso44325485a.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 13:35:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787085310; x=1787690110; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nyi7sVDt/BLemwucOjma8srISQFBcZUB77EYg0daxS4=;
- b=fD8gkdElazUtpzCsppW5TAW8psmhzzTBguCCvCNGXQHqeEtXwQy+ITPCyPrqvrL6jQ
- WTSOuEhulypvSsPcSeuOC7zUE7jNjXKDfx3iQr9lt9VImNJJShqRULK1//4OwJ273alN
- n4t1urhBF+hkzVvvReM5+nfLcE66SE4OTUNThmTr52vyARaTPjx7HczLWqxtxZ1zTvKG
- FOlu2yP9X7C9Li0c0wMAxBVABMPPZbtN4Z3JwDkaVlBCnvhgm6BzjMGm2+9GS977mfb5
- caS3ytvTj3IMPQUye++HMSh6pnVEpORelo+HLoRnBk9ch3U1WY+0z/O0uKhbkZGWqtlR
- qf1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787085310; x=1787690110;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nyi7sVDt/BLemwucOjma8srISQFBcZUB77EYg0daxS4=;
- b=fDyV9rMNUM2oJ54a+smmvtK15ASXwnvM/T+sWWUKB3FQLyZDsguMP8+LMxNfsnKxmH
- pMvsmvoooGr0gM5EZZ9AqTZM9YaAB5q64eV0rVAJtutjFKC5WtrtpHjrhx8L8xMoEyNw
- 0rjl71TOh1EniwB8uOEA/79j3mPIIJU9abC6cw0OsHa0oT9WfXr9RQ8Tg/IeHVRgH6wn
- uUAF8PmvznD48NmbKT3g9EuiXlDHvab3yB8EU8IpmlTaprn37X9UnI0XMgL3CtMfCJFx
- 6zWtG/bqwV0OURDpLWmVvQne7j/J8ToyUMeSDj0YZDw02i19pfwuAtO4t8B42xO4HKGD
- 2qpQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpSXFXSW6ELyKOOQ/l2EHdlHNjt3wH0P4sfjfe8Z5Kd3AXOBdwxoBg2Fy+xLba5ryZV+jV0XVc/pTN0@nongnu.org
-X-Gm-Message-State: AOJu0YwLcSrrxKLVzm/mviARmjVRGTWNSXqYFnhUFB3AbmHk5Pb0Hk2P
- ZxsEE9+9mVvlHuGk+h/43oJWsmF4h1CAkCh/cJFcajBm8r8hyRBGhSGvKTgKoh3UDFVm6/epgyB
- R8/5isgWr2dklnedHO3eGKXKzM/JVncNwmcntVONl0kxFwmY2GglMGEb7sXgNKqlpPg==
-X-Gm-Gg: AR+sD10E6qBuwNxwE8QqtUgmb4FA9OxDDKGjVgtQ7FXbc6st6y8OEo6RCZIGmJAOvCP
- MbpvUMQAIethLwD1KN+Oa8Z8W95SX7hOrrdrTLmvK1evc80nW5pUWQ0Buygr6kE8tG7wH1gU39Q
- b3bNPQS1u+GOIXcYtv+LqOxA35VPUQeRpOCBaxHR1PeA3pK3lkhMqHUbApDTsizPaHSGd3ogFSp
- KXd78DAatrTQ0/z9VO8VPSxqBUQZR5LK1kW4f1rJ696soyPGWs5cPaOsns8HKbN6ojD3tkfvplM
- QNXnTn/a+QrNPSn+MVTs8oEX3vjQ88gzmYZjvyqVU+3rvvEBWhQzkK+1Rx+DzwAGCcKN52A3Pef
- 7fKmtjRk8Zl7RMW54OcN6vr/gurfJcBFXOuPxrkmPhodkuQxVU4l99KWToQ==
-X-Received: by 2002:a05:620a:2985:b0:92e:5b45:b572 with SMTP id
- af79cd13be357-9371e2542a0mr4499085a.1.1787085310395; 
- Tue, 18 Aug 2026 13:35:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:2985:b0:92e:5b45:b572 with SMTP id
- af79cd13be357-9371e2542a0mr4495685a.1.1787085309934; 
- Tue, 18 Aug 2026 13:35:09 -0700 (PDT)
-Received: from [10.96.27.162] (246.sub-174-224-21.myvzw.com. [174.224.21.246])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-937034324d0sm378415785a.47.2026.08.18.13.35.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 13:35:09 -0700 (PDT)
-Message-ID: <d1b4c236-a284-44bf-97e3-0062d56aefd2@oss.qualcomm.com>
-Date: Tue, 18 Aug 2026 15:35:07 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 38/49] hexagon: make dump_mmu() take MonitorHMP
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wwQko-0008AH-5g
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:49:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787086186;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B0RWM+fbpc/flkF9UUpP6oMhh6+qg1GzzG9/fCj5TXA=;
+ b=Esz0MBp1mPWDRnGkfla5aYS/+dxt+MtIYmvIaN9Yhci3ePmFeckRRroriPpGXCVZC0aXhG
+ w4crWrxgGFFhY9xazYXRRGiZNtk9AKfkiK7fXOj944aU2nasXzMthGbei1coHNBFrQn26g
+ ncSLvhEPav8WjaouyK+eULZ53JUGeJI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-Y1qYaVbDOyKgpSa6VyWM5g-1; Tue,
+ 18 Aug 2026 16:49:43 -0400
+X-MC-Unique: Y1qYaVbDOyKgpSa6VyWM5g-1
+X-Mimecast-MFC-AGG-ID: Y1qYaVbDOyKgpSa6VyWM5g_1787086182
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4476318004BB; Tue, 18 Aug 2026 20:49:42 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 980791944DCD; Tue, 18 Aug 2026 20:49:41 +0000 (UTC)
+Date: Tue, 18 Aug 2026 16:49:39 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-38-e53fc35bc550@redhat.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260816-qemu-no-hmp-v3-38-e53fc35bc550@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE1MCBTYWx0ZWRfX+7fDgeGd4ZxB
- UbEGiFxRPBpjE3LkZD2EsXG/rmbEgEx/c3Gkzw4v1xCmwP7qWLwvA7dFHbWuBvgDoVnkhPacgtZ
- 5/RqbGBFK4I3TqmgUj/xpVqrg4BCyXVf6emwIfDdggIfUfRCC6rlzaGCyKMp3j9+KZ2vw0XYkWs
- gN+RBKpVV3xL0pvttiw/M6kChrZObbB2ZMRR9RGnx20gmCBGHZLw0LssBiUYN7sQUhyyKnb+jX8
- TxBDL6go0TB0/I8mNlXdUku7CDJdYRQ+Q1dK7FrP+b1PWdwcbz+DbjRNaUGLWh//WTnJz9HQvIy
- gol7mCIOMy2qu8lgEOizRfyxi30faFpRyDp7MRhbWKvUtcmI3ybx219m9xInJUp8PrYgeDgVVeh
- /iCspLFBgUc9aJgzz/OhrabUUpOqBzxyrRF3u2gRwUDoRLUg48B4smwkWPQ0Gqp2Pj0LJSV1FJG
- xwXfytHJ/v6bh3l4luA==
-X-Authority-Analysis: v=2.4 cv=bN0m5v+Z c=1 sm=1 tr=0 ts=6a84c1ff cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=zpb6me6fL2PcLasmGntylA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=gc6DyLOaUzCWpx2KdV4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 3knAT5Yn-y5173yVim51PTlBpJOs9rEw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE1MCBTYWx0ZWRfX4JrS7MM6hul5
- net0csPGqiF7zsxcbZtrAQYEZXsdYiPD2rfBBdQeiCaEjBS4GJglm6KviBVTuxVCXk9ReuxJO1S
- vO3fpaLbVW2gb1kyCiORHCseAlUbKf8=
-X-Proofpoint-GUID: 3knAT5Yn-y5173yVim51PTlBpJOs9rEw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_04,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 phishscore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180150
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ "'Michael S . Tsirkin'" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ 'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: Re: [PATCH V12 05/15] block/export: track IOThread references
+Message-ID: <20260818204938.GB222512@fedora>
+References: <20260814174830.1691540-1-zhangckid@gmail.com>
+ <20260814174830.1691540-6-zhangckid@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="YSaEYF0D1GDKdivT"
+Content-Disposition: inline
+In-Reply-To: <20260814174830.1691540-6-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,113 +90,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--YSaEYF0D1GDKdivT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/16/2026 2:13 PM, Marc-André Lureau wrote:
-> Avoid unsafe MONITOR_HMP() casts.
->
-> The function has no caller since its introduction and could
-> be dropped if it is not wired to a HMP command.
->
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Sat, Aug 15, 2026 at 01:48:19AM +0800, Zhang Chen wrote:
+> Track the IOThreads used by a block export and identify the holder
+> with the unique BlockExportOptions id.
+>=20
+> Acquire holder-aware references during export creation and release
+> them on error or export deletion.  Support both single- and
+> multi-iothread exports.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 > ---
+>  block/export/export.c  | 79 +++++++++++++++++++++++++++++++++++++-----
+>  include/block/export.h |  6 ++++
+>  2 files changed, 76 insertions(+), 9 deletions(-)
+>=20
+> diff --git a/block/export/export.c b/block/export/export.c
+> index b733f269f3..09136cda34 100644
+> --- a/block/export/export.c
+> +++ b/block/export/export.c
+> @@ -15,7 +15,6 @@
+> =20
+>  #include "block/block.h"
+>  #include "system/block-backend.h"
+> -#include "system/iothread.h"
+>  #include "block/export.h"
+>  #include "block/fuse.h"
+>  #include "block/nbd.h"
+> @@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Er=
+ror **errp)
+>      AioContext *ctx;
+>      AioContext **multithread_ctxs =3D NULL;
+>      size_t multithread_count =3D 0;
+> +    g_autofree IOThread **local_iothreads =3D NULL;
+> +    char *holder_id =3D NULL;
+>      uint64_t perm;
+>      int ret;
+> =20
+> @@ -139,7 +140,16 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
+ Error **errp)
+>              goto fail;
+>          }
+> =20
+> -        new_ctx =3D iothread_get_aio_context(iothread);
+> +        holder_id =3D export->id;
+> +        const IOThreadHolder holder =3D {
+> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
+> +            .u.block_export.export_id =3D holder_id,
+> +        };
+> +
+> +        new_ctx =3D iothread_ref_and_get_aio_context(iothread, &holder);
+> +        multithread_count =3D 1;
+> +        local_iothreads =3D g_new0(IOThread *, 1);
+> +        local_iothreads[0] =3D iothread;
+> =20
+>          /* Ignore errors with fixed-iothread=3Dfalse */
+>          set_context_errp =3D fixed_iothread ? errp : NULL;
+> @@ -163,8 +173,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
+ Error **errp)
+>              return NULL;
+>          }
+> =20
+> +        local_iothreads =3D g_new0(IOThread *, multithread_count);
+>          multithread_ctxs =3D g_new(AioContext *, multithread_count);
+>          i =3D 0;
+> +        holder_id =3D export->id;
+> +        const IOThreadHolder holder =3D {
+> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
+> +            .u.block_export.export_id =3D holder_id,
+> +        };
+> +
+>          for (strList *e =3D iothread_list; e; e =3D e->next) {
+>              IOThread *iothread =3D iothread_by_id(e->value);
+> =20
+> @@ -172,7 +189,9 @@ BlockExport *blk_exp_add(BlockExportOptions *export, =
+Error **errp)
+>                  error_setg(errp, "iothread \"%s\" not found", e->value);
+>                  goto fail;
+>              }
+> -            multithread_ctxs[i++] =3D iothread_get_aio_context(iothread);
+> +            local_iothreads[i] =3D iothread;
+> +            multithread_ctxs[i++] =3D iothread_ref_and_get_aio_context(i=
+othread,
+> +                                                                     &ho=
+lder);
+>          }
+>          assert(i =3D=3D multithread_count);
+>      }
+> @@ -225,12 +244,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
+, Error **errp)
+>      assert(drv->instance_size >=3D sizeof(BlockExport));
+>      exp =3D g_malloc0(drv->instance_size);
+>      *exp =3D (BlockExport) {
+> -        .drv        =3D drv,
+> -        .refcount   =3D 1,
+> -        .user_owned =3D true,
+> -        .id         =3D g_strdup(export->id),
+> -        .ctx        =3D ctx,
+> -        .blk        =3D blk,
+> +        .drv                  =3D drv,
+> +        .refcount             =3D 1,
+> +        .user_owned           =3D true,
+> +        .id                   =3D g_strdup(export->id),
+> +        .ctx                  =3D ctx,
+> +        .blk                  =3D blk,
+> +        .iothreads            =3D g_steal_pointer(&local_iothreads),
+> +        .iothread_count       =3D multithread_count,
+> +        .iothread_holder_id   =3D g_strdup(holder_id),
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Is this field necessary, it always seems to be the same as exp->id?
 
+>      };
+> =20
+>      ret =3D drv->create(exp, export, multithread_ctxs, multithread_count=
+, errp);
+> @@ -250,8 +272,33 @@ fail:
+>          blk_unref(blk);
+>      }
+>      if (exp) {
+> +        if (exp->iothreads) {
+> +            const IOThreadHolder holder =3D {
+> +                .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
+> +                .u.block_export.export_id =3D exp->iothread_holder_id,
+> +            };
+> +            for (size_t j =3D 0; j < exp->iothread_count; j++) {
+> +                if (exp->iothreads[j]) {
+> +                    iothread_unref_and_put_aio_context(exp->iothreads[j],
+> +                                                       &holder);
+> +                }
+> +            }
+> +            g_free(exp->iothreads);
+> +        }
+> +        g_free(exp->iothread_holder_id);
+>          g_free(exp->id);
+>          g_free(exp);
+> +    } else if (local_iothreads) {
+> +        const IOThreadHolder holder =3D {
+> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
+> +            .u.block_export.export_id =3D holder_id,
+> +        };
+> +
+> +        for (size_t j =3D 0; j < multithread_count; j++) {
+> +            if (local_iothreads[j]) {
+> +                iothread_unref_and_put_aio_context(local_iothreads[j], &=
+holder);
+> +            }
+> +        }
+>      }
+>      g_free(multithread_ctxs);
+>      return NULL;
+> @@ -273,6 +320,20 @@ static void blk_exp_delete_bh(void *opaque)
+>      exp->drv->delete(exp);
+>      blk_set_dev_ops(exp->blk, NULL, NULL);
+>      blk_unref(exp->blk);
+> +
+> +    if (exp->iothreads) {
+> +        const IOThreadHolder holder =3D {
+> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
+> +            .u.block_export.export_id =3D exp->iothread_holder_id,
+> +        };
+> +
+> +        for (size_t i =3D 0; i < exp->iothread_count; i++) {
+> +            iothread_unref_and_put_aio_context(exp->iothreads[i], &holde=
+r);
+> +        }
+> +        g_free(exp->iothreads);
+> +    }
+> +
+> +    g_free(exp->iothread_holder_id);
+>      qapi_event_send_block_export_deleted(exp->id);
+>      g_free(exp->id);
+>      g_free(exp);
 
->   hw/hexagon/hexagon_tlb.c         | 8 +++-----
->   include/hw/hexagon/hexagon_tlb.h | 5 +++--
->   target/hexagon/hex_mmu.c         | 4 ++--
->   target/hexagon/hex_mmu.h         | 3 ++-
->   4 files changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/hw/hexagon/hexagon_tlb.c b/hw/hexagon/hexagon_tlb.c
-> index 576929ff224b..584c606a22c5 100644
-> --- a/hw/hexagon/hexagon_tlb.c
-> +++ b/hw/hexagon/hexagon_tlb.c
-> @@ -122,10 +122,8 @@ static inline uint64_t hex_tlb_virt_addr(uint64_t entry)
->       return (uint64_t)GET_PTE_VPN(entry) << qemu_target_page_bits();
->   }
->   
-> -bool hexagon_tlb_dump_entry(Monitor *mon, uint64_t entry)
-> +bool hexagon_tlb_dump_entry(MonitorHMP *hmp, uint64_t entry)
->   {
-> -    MonitorHMP *hmp = MONITOR_HMP(mon);
-> -
->       if (GET_PTE_V(entry)) {
->           uint64_t PA = hex_tlb_phys_addr(entry);
->           uint64_t VA = hex_tlb_virt_addr(entry);
-> @@ -379,10 +377,10 @@ int hexagon_tlb_check_overlap(HexagonTLBState *tlb, uint64_t entry,
->       return -1;
->   }
->   
-> -void hexagon_tlb_dump(Monitor *mon, HexagonTLBState *tlb)
-> +void hexagon_tlb_dump(MonitorHMP *hmp, HexagonTLBState *tlb)
->   {
->       for (uint32_t i = 0; i < tlb->num_entries; i++) {
-> -        hexagon_tlb_dump_entry(mon, tlb->entries[i]);
-> +        hexagon_tlb_dump_entry(hmp, tlb->entries[i]);
->       }
->   }
->   
-> diff --git a/include/hw/hexagon/hexagon_tlb.h b/include/hw/hexagon/hexagon_tlb.h
-> index 760dc1ea811b..c3f0fc599fdd 100644
-> --- a/include/hw/hexagon/hexagon_tlb.h
-> +++ b/include/hw/hexagon/hexagon_tlb.h
-> @@ -12,6 +12,7 @@
->   #include "qom/object.h"
->   #include "exec/hwaddr.h"
->   #include "exec/mmu-access-type.h"
-> +#include "monitor/hmp.h"
->   
->   #define TYPE_HEXAGON_TLB "hexagon-tlb"
->   OBJECT_DECLARE_SIMPLE_TYPE(HexagonTLBState, HEXAGON_TLB)
-> @@ -37,9 +38,9 @@ uint32_t hexagon_tlb_lookup(HexagonTLBState *tlb, uint32_t asid,
->   int hexagon_tlb_check_overlap(HexagonTLBState *tlb, uint64_t entry,
->                                 uint64_t index);
->   
-> -void hexagon_tlb_dump(Monitor *mon, HexagonTLBState *tlb);
-> +void hexagon_tlb_dump(MonitorHMP *hmp, HexagonTLBState *tlb);
->   
-> -bool hexagon_tlb_dump_entry(Monitor *mon, uint64_t entry);
-> +bool hexagon_tlb_dump_entry(MonitorHMP *hmp, uint64_t entry);
->   
->   uint32_t hexagon_tlb_get_num_entries(HexagonTLBState *tlb);
->   
-> diff --git a/target/hexagon/hex_mmu.c b/target/hexagon/hex_mmu.c
-> index 81d64a6146cc..242de06eaad2 100644
-> --- a/target/hexagon/hex_mmu.c
-> +++ b/target/hexagon/hex_mmu.c
-> @@ -107,10 +107,10 @@ int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry, uint64_t index)
->       return hexagon_tlb_check_overlap(cpu->tlb, entry, index);
->   }
->   
-> -void dump_mmu(Monitor *mon, CPUHexagonState *env)
-> +void dump_mmu(MonitorHMP *hmp, CPUHexagonState *env)
->   {
->       HexagonCPU *cpu = env_archcpu(env);
-> -    hexagon_tlb_dump(mon, cpu->tlb);
-> +    hexagon_tlb_dump(hmp, cpu->tlb);
->   }
->   
->   static inline void print_thread(const char *str, CPUState *cs)
-> diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
-> index 6aa450b94136..56b2c4a89d0c 100644
-> --- a/target/hexagon/hex_mmu.h
-> +++ b/target/hexagon/hex_mmu.h
-> @@ -10,6 +10,7 @@
->   #include "exec/hwaddr.h"
->   #include "exec/mmu-access-type.h"
->   #include "cpu.h"
-> +#include "monitor/hmp.h"
->   
->   extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value);
->   extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA);
-> @@ -23,5 +24,5 @@ extern int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry,
->                                    uint64_t index);
->   extern void hex_tlb_lock(CPUHexagonState *env);
->   extern void hex_tlb_unlock(CPUHexagonState *env);
-> -void dump_mmu(Monitor *mon, CPUHexagonState *env);
-> +void dump_mmu(MonitorHMP *hmp, CPUHexagonState *env);
->   #endif
->
+There is quite a bit of code duplication with the loops that call
+iothread_ref_and_get_aio_context() or
+iothread_unref_and_put_aio_context().
+
+Two helper functions could avoid duplication:
+
+  static void init_iothreads(const char *holder_id,
+                             IOThread **iothreads,
+			     size_t num_iothreads,
+                             AioContext **aio_ctxs);
+
+  static void cleanup_iothreads(const char *holder_id,
+                                IOThread **iothreads,
+				size_t num_iothreads);
+
+> diff --git a/include/block/export.h b/include/block/export.h
+> index ca45da928c..a093dea0b6 100644
+> --- a/include/block/export.h
+> +++ b/include/block/export.h
+> @@ -16,6 +16,7 @@
+> =20
+>  #include "qapi/qapi-types-block-export.h"
+>  #include "qemu/queue.h"
+> +#include "system/iothread.h"
+> =20
+>  typedef struct BlockExport BlockExport;
+> =20
+> @@ -89,6 +90,11 @@ struct BlockExport {
+> =20
+>      /* List entry for block_exports */
+>      QLIST_ENTRY(BlockExport) next;
+> +
+> +    /* The IOThreads utilized by this specific block export */
+> +    IOThread **iothreads;
+> +    size_t iothread_count;
+> +    char *iothread_holder_id;
+>  };
+> =20
+>  BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
+> --=20
+> 2.54.0
+>=20
+
+--YSaEYF0D1GDKdivT
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqExWIACgkQnKSrs4Gr
+c8jEUwf/T3EPLitquBFcIhRGDbshdM4Z3eW7h6ani0ult1VjrMcRjtHtu2xTRSFa
+MRsA731C6KWySSGPWDtjEZNEHWaMMWuNGw9WJUFh/y4J6P49wDRBR/Ka9Kdcjeih
+qpmDnY6UwoJFAqPqtqLFsefu+4YENSAT4/zuL2DGA8wif+ijWh2NLeAiOxV3Bw1O
+sXoSTpM8PLld3hFjXxi4ZT9uC6xEUvPA9cacqMlIwal6k1Q5lYc2xj6A8qXLcL4z
+1jVODDAU74foBmSko0eLlua3rFHo5arHZ0114LdIIcp6tcQOXTr/Uj9O87uVVSnE
+h45yv/f3NbKgxXPbhSUvNKzz6DpkMw==
+=IDpz
+-----END PGP SIGNATURE-----
+
+--YSaEYF0D1GDKdivT--
+
 
