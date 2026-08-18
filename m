@@ -4,150 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C897C5DF86
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B76BC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwIz0-00081S-EJ; Tue, 18 Aug 2026 08:31:58 -0400
+	id 1wwJ3O-0002TW-Qf; Tue, 18 Aug 2026 08:36:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wwIyy-00080m-Gt; Tue, 18 Aug 2026 08:31:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJ3O-0002T9-0Z
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1wwIyw-00067X-Sx; Tue, 18 Aug 2026 08:31:56 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IAVWms2355706; Tue, 18 Aug 2026 12:31:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Xmv+01
- hznGjZgAA1YW+EuV/P3ZvDSfWfrdCOOtSJBZ4=; b=rVkiRI0UssS4pX/POE+jK8
- 75a8lE1wmYrHtad/g4RfPMSj185IknqxcVhJzxf8/e7UdpYLI9xdSCtiMh5hMLDv
- nEtHq4rab62tklif7hvkK0yLOcEVqCngTcD4+MAy4NhHPW/39VqEopM6+XnxUsn/
- ix+MvuIR1VobBAbg606U8tjXTQG6seghKPDOao7I2R5HMjHftQoSd0Wl7ugllG60
- iPR8SkwI0TF/RnnYf5ip96M306kLjc+ZZCzfBTbBeFonyxK8pr11Ci21NtmZS4vT
- pbb+0UxhSBXeSH3kH/ovYYDtW//fDIqpDlTFh5wme7HFcZNzJIIldRouAdiL8fEA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqr3un-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 12:31:24 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ICQKbY020416;
- Tue, 18 Aug 2026 12:31:22 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngay0k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 12:31:22 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67ICVLhB18678424
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 12:31:21 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4FA1658059;
- Tue, 18 Aug 2026 12:31:21 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AECB58058;
- Tue, 18 Aug 2026 12:31:16 +0000 (GMT)
-Received: from [9.61.88.99] (unknown [9.61.88.99])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 12:31:16 +0000 (GMT)
-Message-ID: <c03ecde4-100c-412e-91a7-e0b8eb7f6887@linux.ibm.com>
-Date: Mon, 17 Aug 2026 14:08:11 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJ3I-0006zB-L7
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787056584;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yIwJWaK8tsYw5DkqRZdnqVq9NraRNdS/e77Jdg6JGkY=;
+ b=MpRSh40YYjt+EkTl0KKeVYZjqH1kXBi/Ih71SzDSn2Y9lqYhl9GFZxQc5lgOlB+4D64dAj
+ 32uD+DSvPOc4bkzbqZJug0dBJAzFaAf/G6y3DkrtAfmIsJZapin0whql9NiviDqUQWigVQ
+ 9k4aAVz/9LURMnMBkP4BVXAbZYeyIOo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-csuIWPjUPm6yJk6cWZfMOw-1; Tue,
+ 18 Aug 2026 08:36:17 -0400
+X-MC-Unique: csuIWPjUPm6yJk6cWZfMOw-1
+X-Mimecast-MFC-AGG-ID: csuIWPjUPm6yJk6cWZfMOw_1787056576
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BCD91955E77; Tue, 18 Aug 2026 12:36:16 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2D4FE180049F; Tue, 18 Aug 2026 12:36:14 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 18 Aug 2026 16:36:39 +0400
+Subject: [PATCH v3 60/74] qdev: convert core PropertyInfo definitions to
+ use qapi_type
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 31/49] monitor: change HMPCommand cmd to take MonitorHMP
-To: "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Gonglei (Arei)"
- <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
- Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Jiri Pirko <jiri@resnulli.us>, Jason Wang <jasowangio@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- Hyman Huang <infra.ai.cloud@bitdeer.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
- kvm@vger.kernel.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-31-e53fc35bc550@redhat.com>
- <aoIw5i_T9xYZ32SV@gallifrey>
-Content-Language: en-US
-From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <aoIw5i_T9xYZ32SV@gallifrey>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA5MiBTYWx0ZWRfX9kbmt3jT1THI
- 1DTSxZz7PhXQulHeaLRj6pQ5taTy6aCctG7VUKiIvoC5sn8dWUveahtjlDHu8syAo5vZSmHIQRR
- musqzEkKKA555RcPNESgvuzeLUMUwLpyfLCzWz9wJnnnSD9YCeSgXZSwC3AYr3jBMx4WiPKyfwn
- sDVXwFwgDzri9YTYnaunez4Ft8QyIP1hZ/9O3OuCRHZBaz02hkMbPlTzNTsjs3H6+rdQ+hkp5Gw
- FVEjqUVdITctVKIUswGWGiGDe32ZFT/bJ1yEMyxsHg5YD7pHfnoZxj6WF29WVryH5m3Txl92Z/k
- MJDuLJDbYAvtwm2o0aVLNJSkVYPK4+UPQP49RxQjpaE7ssD5vrp7L5016oH34ZSyG0EkIQEXJWR
- 0dbwBC3vbJ7qxglCS9RbUqQPjPPUB30z6CsHWSRGQViWLVpmzx8TXM+tdfV9tEEezXqfoTtM9KP
- eUnX9imDoAwnIGqA3jg==
-X-Proofpoint-ORIG-GUID: wbG5QAZcn_8JPq7N2sJJMyuRn4dbOM1K
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA5MiBTYWx0ZWRfX6yd4Ng0ah684
- hqLLmDUefkN8j+1w/9O6OCVbU7QA3u9faIKbcpo3+Qmje54ej8TJpIXUnKfMQMlx96+3vc0VPu/
- PrvKyJthYmuPmK07wdItco007ZnkeSU=
-X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a84509c cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
- a=3WJfbomfAAAA:8 a=VnNF1IyMAAAA:8 a=6ru9w_5K15hS-t3OnE4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1cNuO-ABBywtgFSQhe9S:22 a=JSVlQr4fib6YhFFKv7Hz:22
-X-Proofpoint-GUID: Qnuhu8KQPs9FZttUWEPShqesQoGH2wRC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1011 bulkscore=0
- suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180092
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260818-qom-qapi-v3-60-24b8bbbe3d86@redhat.com>
+References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6905;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=uKd4YrvBJdVeN8+KEVzpNUXVhpVCSGsiMFoSt6/JX4Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhFGnYtzF+Hyeh2x0aGQdWSjXc+FZ5/95viYgc
+ uvFHz7fqLCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRRpwAKCRDa6OEJdZac
+ 5YrwD/9lqYwmZKYzsLVWG1jVKhTw8Ic9U34499mnR0iTWQ4mlPMrL8OWVg6qc7IfGoMqEYcZCIA
+ wCllSHptK05TjpyNDCflDYMv01+rx9c/gm7iSsw0Acxtgnio/K1B80z+pm98LAKU0ctw1GtHftz
+ iWkIbkAx9cjuOEXmi1yJbuZ0F7HUZftbzRoKRIaS2KErw4gJCBsbHqYdvrvWYG0q0C6gwDwcvQ9
+ DlLoJE8wMkqsygcVAlVj8K0nogu9q6dHL9tugjL8jrzPl3tM2IZ3z+Ydag4jgd04VrAFdD8Cqg5
+ XwEvQeqn173JaIn50s117iUQ4fx3mlhAwMStEZVESdcjoCJxG023PLjI4V476cVjQwGwjaIREzJ
+ vOj/E44vDFUmXSHvulImwSGSG54RvY7JKt51HialBS2vn6DTdI9DjevAzYFmCL7BPku5YCYLZSD
+ 7k0KHjyCYJhkxUqe088CJjxwJl7S7e1I91WTFkJl6fPvKPKslYyiHYRP1DwiG8+vc5cMXgVQEAZ
+ OCIrB5RJSxwXccqDedvZA3zqAS0F2i7BoZ/IRX9aRmJjBPQlrFGsCMd8YHXzEdungdLMv1intZ9
+ d/Fm1GQBZEtirJmi6TzsHMenH02VHAdENjtEPFyJiLzzcnodjSZ4X8rxUhbXoQVqN47Itl6+UQz
+ TMRqJMGX3sDKjPw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,24 +110,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/16/26 5:51 PM, Dr. David Alan Gilbert wrote:
-> * Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
->> HMP commands are specific to the HMP monitor, so make the cmd function
->> pointer in HMPCommand take MonitorHMP * instead of Monitor *. This
->> strengthens type safety and makes the HMP-specific nature of these
->> handlers explicit.
->>
->> Handler functions are renamed to take MonitorHMP *hmp, with a local
->> Monitor *mon = MONITOR(hmp) added where the body needs the base type.
->> Following patches will drop it, since most functions are HMP specific.
->>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> 
->> ---
->> ...
->>   hw/s390x/s390-skeys.c           |   5 +-
->>   hw/s390x/s390-stattrib.c        |   6 +-
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Replace .type string with .qapi_type pointer on all core PropertyInfo
+definitions in qdev-properties.c. Remove .enum_table from enum
+definitions, since the lookup is now accessed through .qapi_type->lookup
+via the qdev_propinfo_enum_lookup() fallback helper.
+
+Note that qdev_prop_usize now reports "uint32" or "uint64" depending on
+the host. If usize is worth preserving, it should be added as a QAPI
+builtin type. Or perhaps we should simply use "size" everywhere (u64)?
+
+It's also strange to use type "size" for both u32 (prop_size32) and u64
+(prop_size).
+
+Link property are actually strings. The "full type name" is set when
+the property is added, as "link<TYPE>".
+
+Array property will be refactored in a subsequent patch.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/core/qdev-properties.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
+
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index b3d5abd5053c..e924b040687b 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -12,6 +12,8 @@
+ #include "qdev-prop-internal.h"
+ #include "qom/compat-properties.h"
+ #include "qom/qom-qobject.h"
++#include "qapi/qapi-builtin-type-infos.h"
++#include "qapi/qapi-type-infos-common.h"
+ 
+ void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
+                                   Error **errp)
+@@ -180,7 +182,7 @@ static void set_default_value_bool(ObjectProperty *op, const Property *prop)
+ }
+ 
+ const PropertyInfo qdev_prop_bit = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = prop_get_bit,
+     .set   = prop_set_bit,
+@@ -230,7 +232,7 @@ static void prop_set_bit64(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_bit64 = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = prop_get_bit64,
+     .set   = prop_set_bit64,
+@@ -292,9 +294,8 @@ static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
+ }
+ 
+ const PropertyInfo qdev_prop_on_off_auto_bit64 = {
+-    .type = "OnOffAuto",
++    .qapi_type = &OnOffAuto_type_info,
+     .description = "on/off/auto",
+-    .enum_table = &OnOffAuto_lookup,
+     .get = prop_get_on_off_auto_bit64,
+     .set = prop_set_on_off_auto_bit64,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+@@ -321,7 +322,7 @@ static void set_bool(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_bool = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = get_bool,
+     .set   = set_bool,
+@@ -361,7 +362,7 @@ void qdev_propinfo_set_default_value_uint(ObjectProperty *op,
+ }
+ 
+ const PropertyInfo qdev_prop_uint8 = {
+-    .type  = "uint8",
++    .qapi_type = &uint8_type_info,
+     .get   = get_uint8,
+     .set   = set_uint8,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -388,7 +389,7 @@ static void set_uint16(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint16 = {
+-    .type  = "uint16",
++    .qapi_type = &uint16_type_info,
+     .get   = get_uint16,
+     .set   = set_uint16,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -433,14 +434,14 @@ static void set_int32(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_uint32 = {
+-    .type  = "uint32",
++    .qapi_type = &uint32_type_info,
+     .get   = get_uint32,
+     .set   = set_uint32,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+ };
+ 
+ const PropertyInfo qdev_prop_int32 = {
+-    .type  = "int32",
++    .qapi_type = &int32_type_info,
+     .get   = qdev_propinfo_get_int32,
+     .set   = set_int32,
+     .set_default_value = qdev_propinfo_set_default_value_int,
+@@ -485,14 +486,14 @@ static void set_int64(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint64 = {
+-    .type  = "uint64",
++    .qapi_type = &uint64_type_info,
+     .get   = get_uint64,
+     .set   = set_uint64,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+ };
+ 
+ const PropertyInfo qdev_prop_int64 = {
+-    .type  = "int64",
++    .qapi_type = &int64_type_info,
+     .get   = get_int64,
+     .set   = set_int64,
+     .set_default_value = qdev_propinfo_set_default_value_int,
+@@ -514,7 +515,7 @@ static void set_uint64_checkmask(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint64_checkmask = {
+-    .type  = "uint64",
++    .qapi_type = &uint64_type_info,
+     .get   = get_uint64,
+     .set   = set_uint64_checkmask,
+ };
+@@ -550,7 +551,11 @@ static void set_usize(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_usize = {
+-    .type  = "usize",
++#if HOST_LONG_BITS == 32
++    .qapi_type = &uint32_type_info,
++#else
++    .qapi_type = &uint64_type_info,
++#endif
+     .get   = get_usize,
+     .set   = set_usize,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -594,7 +599,7 @@ static void set_string(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_string = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .release = release_string,
+     .get   = get_string,
+     .set   = set_string,
+@@ -603,9 +608,8 @@ const PropertyInfo qdev_prop_string = {
+ /* --- on/off/auto --- */
+ 
+ const PropertyInfo qdev_prop_on_off_auto = {
+-    .type = "OnOffAuto",
++    .qapi_type = &OnOffAuto_type_info,
+     .description = "on/off/auto",
+-    .enum_table = &OnOffAuto_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+@@ -646,7 +650,7 @@ static void set_size32(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_size32 = {
+-    .type  = "size",
++    .qapi_type = &size_type_info,
+     .get = qdev_propinfo_get_size32,
+     .set = set_size32,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -1059,7 +1063,7 @@ static void set_size(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_size = {
+-    .type  = "size",
++    .qapi_type = &size_type_info,
+     .get = get_size,
+     .set = set_size,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -1141,7 +1145,7 @@ static void set_link(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_link = {
+-    .type = "link",
++    .qapi_type = &str_type_info,
+     .create = create_link_property,
+     /*
+      * Since we have a create method, the get and set are used
+
+-- 
+2.55.0.543.g5ebe2ebe4ea8
+
 
