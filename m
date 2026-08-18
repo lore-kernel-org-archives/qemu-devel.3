@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E6C2C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C02CC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwLjv-0002qw-Eo; Tue, 18 Aug 2026 11:28:35 -0400
+	id 1wwLkX-00037Q-Jr; Tue, 18 Aug 2026 11:29:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLjt-0002qQ-4x
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:28:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wwLkT-00033T-UJ
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:29:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLjr-00080a-Lw
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:28:32 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wwLkQ-0008Eq-ST
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:29:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787066910;
+ s=mimecast20190719; t=1787066946;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
- b=gtC4DjdoxUJgJ/nKt276pHtTBgCMvas/bLxUb8F72TTHLd3CF9QV9IZn2F0Ok3YMn177fh
- hLhh7MuphpkzbKdg5zx8iizUr/xY+S8IKxd4LE1ut6qhIjNxn+2Q8RjKggHmYvn2Ezzv2s
- t0mMxGdrsAa7gQgjTKV4xiqfD5sLems=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=L8yLcLPCD9WdOWWdy+BOj+UNQxTixVQsyb3QsCFg0LM=;
+ b=fuaYevhy9+sYx85rIdhqcQKJqqpnCvpfDBIZqeNFzAIDgi/dC3+u6mnOk97IKQ7/Sgg+qs
+ ndyEa3td/8d6dUXtSyEXvGWdEdeTAGUQIXD1HcDImMCZJw7RWubMNsOMhiuObJi4I/TUIi
+ 043NW8aT3vVMQmy88zh30vyqpiSVsF4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-161-KWJt3-uaNViJm2hMfQrmow-1; Tue, 18 Aug 2026 11:28:24 -0400
-X-MC-Unique: KWJt3-uaNViJm2hMfQrmow-1
-X-Mimecast-MFC-AGG-ID: KWJt3-uaNViJm2hMfQrmow_1787066903
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-8485b7e18b4so82259b3a.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:28:24 -0700 (PDT)
+ us-mta-214-5eO-8s0pPQ2YZO1xywjyNw-1; Tue, 18 Aug 2026 11:29:04 -0400
+X-MC-Unique: 5eO-8s0pPQ2YZO1xywjyNw-1
+X-Mimecast-MFC-AGG-ID: 5eO-8s0pPQ2YZO1xywjyNw_1787066943
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4994aebe932so50525135e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787066903; x=1787671703; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787066943; x=1787671743; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
- b=PcOjLXyApsY2D4FTCyzVK2fTkgPjlc7SSaT7a7ZdNecJuMCA03qev3xfNF5j2IBUv1
- VReAoaT+pbH/KmSVsMrrhIseWmvNVezqIScUps1CVZKDvTqu6ESEkfn9VE68L5ErzJ2x
- gG3G2M83/CEsKeIvZ9ynyrCxzeIFKe+GmCVeTr1WOLJN6iCHOq64wdMXzshznhVR0vIB
- nhST51IaLRKnPCYU+pq6pf+HNANdTFtJap/CKDMZwDGIjpgJRyjn0mgQh8elI918timg
- qEQtCVnaCUI1wH5+o6JrpZuqsmgytWHitNpZYkX0HM1E+e9Y5DZkB97ISVqagVkAy8xR
- QLvg==
+ bh=L8yLcLPCD9WdOWWdy+BOj+UNQxTixVQsyb3QsCFg0LM=;
+ b=Y9a2prISTjpAVcIX0SboLCYTa1Gec+fDf2hn37rGfa93E/iTTkVxb4z6EvfOUt+Unv
+ hzJVuvFy4p5ojJY0s1M6RTVaM6GqD8kEP8ukeewkKG0+jJ3SHwAFAPwhG1ycnYQHF+Ff
+ UBL089VKa4QEkc/d8RYmCE8BbMnrKXpvvTcwW0IKV3KT4OKt+++UhJDIR7lEU8iv+D48
+ Dtp55xUVlCwjcJh97PXwIjWmIgFGMsPelja07Bp4VmvmpZJtrn4JNwf9QzhROjzXIpqk
+ 2iJcQJu36jeawySqBg644/ds0S577TvfhH4JPefpJ9DoFyLXCvlTVlbGUbpd0eHq25MI
+ Bo3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787066903; x=1787671703;
+ d=1e100.net; s=20251104; t=1787066943; x=1787671743;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hc2ozsH4rcBASEMPINYYEWry0oGQh8OmzvWwba74o+U=;
- b=WAemjWhKFRllDup2hfZ6TgOGIGsvC6kXcyKKpTeBjv7qqvVoNoIBaHUuDsow5dQoTh
- 8GMQGKt2gejW72FMC0b4NLM8QBRovv2l8GkO5wb601cP57Rmb39ujBkOVnFnM8TTuIbP
- 9nYmWtldSDBBDfFTlff0pIrXjGzrTo5gbMTnc3ekvePxJ2uTnqTamPF0dmEILjjGrSzV
- 4oT53MpyI3N1nuoO+MX7urcpKbUTQPbgtfC0zVLCW+xUupeVo3fH3Ny/STHCbIuruM96
- XpeF1SEMGIgKHKKlLDXUXV0XFw+nM7TOH+RbSABOMMxt1IEaDl7e7HdjVvz3PSDxU4Nk
- EPaw==
-X-Gm-Message-State: AOJu0YznZkPxANaErdcbb1eN1EDq+UD3JUqo5aLxB2UK56AgTBErNb2r
- jZY3N514SXOOd91iuWfnv1fYMooy0AmNDKifhJ8UmimwqAJY4XY6zrJgFlx3NF8y5fiyJHYRqJ0
- Zo1D3htuCrCFdYva4WSoJ/Y9pfkVGtTs3QCQu7d55lvW79oOESuazoRyC
-X-Gm-Gg: AR+sD12SMXN03CQ3MiiEux8s5/ZFmzGc1k+gpHr8Qds8JsZLIr3rdSqgFzidyFaPJWB
- CmVanp7S4Urwc9aDGRrG9U4oVXYwDDn+AFWRzV/dJTR93EsksH+3rRTAYtXlbxDro0WyGWu3d3C
- AWi25JKHGPplJ5Am3SItSw5TwQNhq6BM7hIyGTRH7srrOq/3MJmrkFSeSQWeQbPXako/mmwUCRR
- LiNX/EkrkWcNMAWcHwyWRFYQ8TAZ0+hwf8jfJKMonoa5zw7GhNX61oxOjTO77woBTZ2AMdgNrTP
- k9DLHdnnhwbcfjQt6tH9suFiGlQ55Y9smsRLBIz7zWfGEMHFlE/VNMQn7mUBzb3p1NEeRK9bl/n
- xJ9R4KO6/1zkNspECjWCmk/2ehoV5Lbk68VOdxgmJ12/atQeCXfE3V48mldQ=
-X-Received: by 2002:a05:6a21:9981:b0:3c3:a140:9392 with SMTP id
- adf61e73a8af0-3cc7177a8e5mr32089125637.0.1787066898325; 
- Tue, 18 Aug 2026 08:28:18 -0700 (PDT)
-X-Received: by 2002:a05:6a21:9981:b0:3c3:a140:9392 with SMTP id
- adf61e73a8af0-3cc7177a8e5mr32089054637.0.1787066897828; 
- Tue, 18 Aug 2026 08:28:17 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc13bf26ad5sm2318940a12.11.2026.08.18.08.28.15
+ bh=L8yLcLPCD9WdOWWdy+BOj+UNQxTixVQsyb3QsCFg0LM=;
+ b=BFYzUe7eem8eBDBCe0YEmYHB9FB8NB3WtOkx8/HtLkRawc2tBsAwUaTh/zXu+gXhrJ
+ 2qPBxn0UZeKODXSp0CGjFNP4xfa/34KmW0BrsU7RZbKgaDvts8GedHe64NcC2OFKm8Zr
+ IRCKN59pdfv4V+AdyNAOwNh/4P98QAiIg2jEUwtR9vW4HTzCIddy499Iv835NmWGrtZ5
+ tPEVIwb+V2Q5vIopmxag7F3YK671+8SWUGU3tDvld0gj8MlOb/6FdMmbzXedbQu9OrX0
+ LJCFCh+XbvQwGsfLUxtsgOqMw40d8QZFQCOSG6tfjJTvcqK1hbCrpR2lm6a8enlZJxlp
+ u9tA==
+X-Gm-Message-State: AOJu0Yyr7nbzqrAHw5KZ6aqErV1yMdlh22fsuojRPM9ojhG2CqlPUMjq
+ bWoZ+ERrbEQsZKH+ttt+L2o1EY2JsqmwJmq1bruDm6uLvt2bMjQxpB2Ur2UABjyBKFHlcNZHdS5
+ TDDAZ4tx9QAnOu0fC0dFMxIKHy/bvPzYIbRSRuzARxDeplAO1MzCCt9M8
+X-Gm-Gg: AR+sD115ykbY4FVi4DO4eERzZbW7PKH4QYn/HoxvQd7aAwmuMrCr4Vd9hH/ndCH02dA
+ KfQsT1d+iDZ+np9A8zqsXwKz0L03rSRImfHg+O23OOTzLKDcOiwUdOAAd9+pysRQStqYR8bj63j
+ z1O299GGYwQyMTwI9p83CqOXpMfhA8ihQOdCMZ0ggOk2eUHJBHhcXrPh0kZf0y8Pry5olWLtCa9
+ NvJCKPUpRWLFhnugBaXj97a1FL5GHnGscf3OdVFbttbe8iK1aOVSCItkr3qzSe8I4T4bP9oGQpu
+ Z4ykkhz26ILsprrtQxa5YmUyQK14TEDKKCtULxk/YVkY5bN93ns7U6YzHpTpCtYJbdibl32HtvW
+ NONYYLdLyuZzRObwk1he5ySrBHKMsK1WobcUW9tmjOlBA8Poq3xeB
+X-Received: by 2002:a05:600c:1d0c:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-4999fb3953emr155879185e9.7.1787066943381; 
+ Tue, 18 Aug 2026 08:29:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d0c:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-4999fb3953emr155878215e9.7.1787066942967; 
+ Tue, 18 Aug 2026 08:29:02 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-135-154.retail.telecomitalia.it.
+ [82.53.135.154]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4999d086c6dsm134749185e9.7.2026.08.18.08.29.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 08:28:16 -0700 (PDT)
-Date: Tue, 18 Aug 2026 11:28:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH] system: Define ram_addr_t to be always uint64_t
-Message-ID: <aoR6Dtwq3XrxC3Uu@x1.local>
-References: <20260814134035.2733355-1-peterx@redhat.com>
- <CAFEAcA9xnJ1i541bLbKheVZkPvSFH1NTerUomWV4j4DyHhOPgg@mail.gmail.com>
+ Tue, 18 Aug 2026 08:29:02 -0700 (PDT)
+Date: Tue, 18 Aug 2026 17:29:00 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, farosas@suse.de, 
+ peterx@redhat.com, dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, 
+ bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
+Subject: Re: [PATCH v3 4/7] vhost-vsock: preserve vhost FD during CPR
+Message-ID: <aoRyAqduT4FRj9NV@sgarzare-redhat>
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+ <20260626164643.2526-5-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA9xnJ1i541bLbKheVZkPvSFH1NTerUomWV4j4DyHhOPgg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260626164643.2526-5-andrey.drobyshev@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,46 +121,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 03:48:32PM +0100, Peter Maydell wrote:
-> On Fri, 14 Aug 2026 at 14:41, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > QEMU's 32bit host support was deprecated since 10.0 and removed in 11.0, at
-> > least the system emulation part.  Now it's safe to move ram_addr_t
-> > completely over to uint64_t.
-> >
-> > It should be almost the same as uintptr_t as before for !Xen, except that
-> > on some systems (like MacOS) uintptr_t and uint64_t can be typed slightly
-> > differently, causing unnecessary compiler warnings when use them in a
-> > mixture way.
-> >
-> > Hopefully, this change also makes it clear that ram_addr_t is never used as
-> > a host pointer in any form, but only an internal QEMU integer based address
-> > space for allocating ramblocks.
-> 
-> I've thought for a while that we ought to do this even if we
-> hadn't dropped 32-bit host support. Having ram_addr_t be
-> 64-bit should work fine even on 32-bit hosts (as evidenced
-> by the fact that we forced it that way when Xen was compiled
-> in), it was just a performance thing to use 32-bit values here.
-> 
-> Having it be 32-bit sometimes was always an irritating source
-> of "whoops, doesn't compile on 32-bit hosts" bugs and other
-> oddities. There are likely various places we can clean up now
-> where we previously were working around this (e.g. in
-> hw/arm/vexpress.c:a15_daughterboard_init()).
-> 
-> There are also a few ifdefs on HOST_LONG_BITS == 32, which
-> (where they're not relevant to the tools or guest-agent)
-> I guess we could drop.
+On Fri, Jun 26, 2026 at 07:46:40PM +0300, Andrey Drobyshev wrote:
+>During CPR (checkpoint-restore) migration the guest keeps running on the
+>same host, so instead of reopening /dev/vhost-vsock on the destination,
+>we should reuse the FD from the source.  The FD is saved in the CPR
+>namespace (hash table) with cpr_save_fd() and then reclaimed on the
+>target via cpr_find_fd().
+>
+>Since the key in CPR hash table is device ID, CPR needs a unique ID.
+>Rather than make it mandatory for every vhost-vsock device, we add CPR
+>migration blocker which only fires once we attempt CPR with ID-less
+>vhost-vsock.
+>
+>vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
+>Deferring the ownership handoff to pre_save/post_load is done in a
+>following patch.
 
-Indeed.  Let me see whether I can touch those in one go.
-
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+So will this patch be bisectabale?
 
 Thanks,
+Stefano
 
--- 
-Peter Xu
+>
+>Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>---
+> hw/virtio/vhost-vsock.c         | 50 ++++++++++++++++++++++++++++++---
+> include/hw/virtio/vhost-vsock.h |  1 +
+> 2 files changed, 47 insertions(+), 4 deletions(-)
+>
+>diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+>index fd7ffa88990..7eacb608d07 100644
+>--- a/hw/virtio/vhost-vsock.c
+>+++ b/hw/virtio/vhost-vsock.c
+>@@ -21,6 +21,8 @@
+> #include "hw/virtio/vhost-vsock.h"
+> #include "monitor/monitor.h"
+> #include "migration/cpr.h"
+>+#include "migration/blocker.h"
+>+#include "migration/misc.h"
+>
+> static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
+> {
+>@@ -141,6 +143,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>     VHostVSock *vsock = VHOST_VSOCK(dev);
+>+    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
+>     int vhostfd;
+>     int ret;
+>
+>@@ -155,23 +158,49 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>         return;
+>     }
+>
+>-    if (vsock->conf.vhostfd) {
+>+    /*
+>+     * Having a unique ID is mandatory for FD preservation during CPR
+>+     * migration, thus we add migration blockers for CPR modes.
+>+     */
+>+    if (!proxy->id) {
+>+        error_setg(&vsock->migration_blocker,
+>+                   "vhost-vsock: device ID is required for CPR migration");
+>+        if (migrate_add_blocker_modes(&vsock->migration_blocker,
+>+                                      BIT(MIG_MODE_CPR_TRANSFER) |
+>+                                      BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
+>+            return;
+>+        }
+>+    }
+>+
+>+    if (cpr_is_incoming()) {
+>+        /* Reuse the fd handed over from the source QEMU. */
+>+        if (!proxy->id) {
+>+            error_setg(errp, "vhost-vsock: device ID is required for "
+>+                       "CPR migration");
+>+            goto err_blocker;
+>+        }
+>+        vhostfd = cpr_find_fd(proxy->id, 0);
+>+        if (vhostfd < 0) {
+>+            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
+>+            goto err_blocker;
+>+        }
+>+    } else if (vsock->conf.vhostfd) {
+>         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+>         if (vhostfd == -1) {
+>             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+>-            return;
+>+            goto err_blocker;
+>         }
+>     } else {
+>         vhostfd = open("/dev/vhost-vsock", O_RDWR);
+>         if (vhostfd < 0) {
+>             error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+>-            return;
+>+            goto err_blocker;
+>         }
+>     }
+>
+>     if (!qemu_set_blocking(vhostfd, false, errp)) {
+>         close(vhostfd);
+>-        return;
+>+        goto err_blocker;
+>     }
+>
+>     vhost_vsock_common_realize(vdev);
+>@@ -192,6 +221,11 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>         goto err_vhost_dev;
+>     }
+>
+>+    /* Register the fd for a future CPR after a fully successful realize */
+>+    if (proxy->id) {
+>+        cpr_save_fd(proxy->id, 0, vhostfd);
+>+    }
+>+
+>     return;
+>
+> err_vhost_dev:
+>@@ -199,16 +233,24 @@ err_vhost_dev:
+>     vhost_dev_cleanup(&vvc->vhost_dev);
+> err_virtio:
+>     vhost_vsock_common_unrealize(vdev);
+>+err_blocker:
+>+    migrate_del_blocker(&vsock->migration_blocker);
+> }
+>
+> static void vhost_vsock_device_unrealize(DeviceState *dev)
+> {
+>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>+    VHostVSock *vsock = VHOST_VSOCK(dev);
+>+    DeviceState *proxy = qdev_get_parent_bus(dev)->parent;
+>
+>     /* This will stop vhost backend if appropriate. */
+>     vhost_vsock_set_status(vdev, 0);
+>
+>+    if (proxy->id) {
+>+        cpr_delete_fd(proxy->id, 0);
+>+    }
+>+    migrate_del_blocker(&vsock->migration_blocker);
+>     vhost_dev_cleanup(&vvc->vhost_dev);
+>     vhost_vsock_common_unrealize(vdev);
+> }
+>diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
+>index 84f4e727c70..5ebc63afc5a 100644
+>--- a/include/hw/virtio/vhost-vsock.h
+>+++ b/include/hw/virtio/vhost-vsock.h
+>@@ -29,6 +29,7 @@ struct VHostVSock {
+>     /*< private >*/
+>     VHostVSockCommon parent;
+>     VHostVSockConf conf;
+>+    Error *migration_blocker;   /* set when the device has no ID */
+>
+>     /*< public >*/
+> };
+>-- 
+>2.47.1
+>
 
 
