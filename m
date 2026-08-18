@@ -4,87 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E1ECC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67445C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww9Tz-0007VK-Pm; Mon, 17 Aug 2026 22:23:19 -0400
+	id 1ww9Y6-0001sL-JI; Mon, 17 Aug 2026 22:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1ww9Ty-0007UV-0t
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:23:18 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1ww9Tt-0008L9-TV
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:23:15 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-38f0f132f56so430665a91.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 19:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787019792; x=1787624592; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=HhJoO4/xR3OHq4n8jQsS/DwR0a2h9k9Ytg5OxG8RSFI=;
- b=cP1g9hqt3tJAfOz5+Z0kd6FbKhrijhSPTqnhYZ8J2O9P4XptfvRyH0vsnOFpLntGID
- eOZ3M0dPOrOcbY/NRQWQGmGfI1tEr9KvGnxGB8J6smQK0pq99sGOB82/GMH5qvLtuhhF
- 0qTGDmad0/a/hm3hN32aJ4rdp8aHEcCzyPdE4izNc+U098/4VmD/LsXewA4vfhKupkKd
- Wm00nhU8fO0LY/ERcwBQrZ75YQz+89zMSGvzX3maDL2fHDGlDXTQzNDSpyljR+ECialM
- GWIW5pd+UAdUKUsn9rx9IcTIeUuuVcsMIygeHmxh7ywSySvbeiz5G++1ryPyMlYMq7jp
- NF1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787019792; x=1787624592;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=HhJoO4/xR3OHq4n8jQsS/DwR0a2h9k9Ytg5OxG8RSFI=;
- b=LkQTMlesWP2fkTWGfXKn2r7MkmHyxENXrU/HDqZDIN4UmHHIeg5X5S66zVf7o3jRdg
- THFs4C8561r3eHEyJC3BGzPeSIlQZBFuQLuRZMbLrzlBYQWK+vZWmVqBdOEYQm/qU08Q
- CdKTT0a/9cgjZo2z8f2VHSxmI9xGNuhmVFZjlDpwi4H/DrTFsVBHq5ciyonXqbO9bef8
- xnifTxzqkR2cXJFd7ifXVn178I8afCFVPy2FPy4S20QXeMs/BeCWUmNmVL9Rc96qYejA
- +T++d0sOGQqzjERmLBIy5MYrOqGPH9VCacCtBT3d25vc30ePpZGG/EZLWSV3RAMbb54L
- 35dg==
-X-Gm-Message-State: AOJu0YxabnLGFuMKZRSiRvBwOAJQbVaGNtnip50id+yTvb9wjbR9MSuU
- c7EkFA7ooQIUSIlRkr2EB1S4bmwQDMsubF4F1HI7ZBY2ulS3SM0v3x40H0gXCA==
-X-Gm-Gg: AR+sD12TK6ynEvRvn/PikbOtG0yt55ADpR8lX4zBJZQCGMXx/jE2oRF/nFxKGMuTXNR
- ERiFUtEKQW24Ehf9zWiEwWPrdV97x65SZqECP5ylbgzVQqa71qcxE+gawbIoNIgx5Z4HKN+j04p
- ProhvHBXfooKEPi/s6qQdAYs4puecyg/BAvpNjO558spbBhUsrnbo2UPFqnc1fXHM1X4m2snkPm
- Dv7M+JLhOTBTJkEUulxuNwc3rIMq1oIheekddOTTowaKv4K42Jz15aFX8YWZr7ZzeTZoSN0EBWj
- 8tMw9J36o0Op2Yg9yvfWW4qriTHd6OyK+dqf6CV7s17yoTy51GaXkYASyBql3YGPpJHp1t3gCvO
- RhFQA7C3ULTNm/LXTfWO/DYFqja/rIpWUqH1L1Dwmw63CJuoXr4WmNQBb5HtqsbtlFVIpZUoZ7e
- 2EH5WTpSLVEVmbWHpyJHkj++/BTKsed2IxB80/Xg70tFoU5ixjanAA56Ny64EPeGOF1y6E6RMIg
- Z3p
-X-Received: by 2002:a17:90b:2e42:b0:38f:657:6823 with SMTP id
- 98e67ed59e1d1-395638b424amr1821729a91.8.1787019792339; 
- Mon, 17 Aug 2026 19:23:12 -0700 (PDT)
-Received: from newsled.lan ([76.133.142.170]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3267c389363sm10897816eec.23.2026.08.17.19.23.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Aug 2026 19:23:12 -0700 (PDT)
-From: 54weasels <54weasels@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
-	54weasels <54weasels@gmail.com>
-Subject: [PATCH v4 4/6] target/m68k: Extract Function Codes during TLB fills
-Date: Mon, 17 Aug 2026 19:22:20 -0700
-Message-ID: <20260818022225.31801-5-54weasels@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260818022225.31801-1-54weasels@gmail.com>
-References: <20260818022225.31801-1-54weasels@gmail.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1ww9Y4-0001rW-UZ
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:33 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1ww9Y2-0000Q9-Md
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:32 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lm2yxW3pjw3qNmvjO8f80grpAjsHH6vZp/cigRRlF4gy+GNKQeDQIkC+vsRz01QQds9FPpSwmKx4YJIuR00o4qWdamMZtJkBchV8hooEVKzDjN8Rs4HjcbTAMQ0n8w94hQBky2n8Y1DScHDza/uEWktzLKNeh3PSkDNZWnfQi6v++tcrKCvHmeXg+Ub4egShNYLdSBswC+0Dv8fKhWfckx7HKSfnKraUYg4iIRABHfrQfA7KR9xyO6BzO07JKG0G4fK/S7gSGaD2oTPyE7lJliXU8aJTkApe0PyL6Iz4mu38p4aZeh9pOQf6wZl30sgEFROaixsU8ETnb6Uw42kLzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=b+Axb70i3Bfef/taM3rZOCmK4bHxcFXLUNjTc152p4Y=;
+ b=VRqEw91M5UxBPVuYnmWUjEpWLDd+R4Th4fV9TxclaHeEAk40DXCvpVGi8IKmwAyLj6Eh9dscVlpo/9RPBM1ToYr2m8LigUZkPMu9PiKQFNn9TTxZbts0IPcj7BSOJyr/ObR7dtc+nCKbLO3LDXDJp5YSM7Iuk1x00MuhuUTsBpynfbqB77SVDe4VH4Q2OwO9nlHuCgjLIuwRMI5dqFhH6f1G7UgxFWkWeRirjnvVDvodA2kczDzN5WwY/gtpQwDl8UibjPSf4lXG+yTGSc1hsX8jjWi7YAFAoUEOXJsKo7RGk6HYTjiaSRyVcuqZ9hfpC3h2NOYCDfg5RiLwbpkrXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b+Axb70i3Bfef/taM3rZOCmK4bHxcFXLUNjTc152p4Y=;
+ b=O3y6FsG1LW+3Ce2UG6A3jB/3hN2wLHbC7Vc0I2rcRcIg59i4LBwub83aiyH94HFTAMzdJvh9ZcMHHGj4G/KECRmROVBBcqZ04f6Pv/BxmsfrcQIHZ0tSzN6J1ajuhU2JjXMTd2yqZJtRjEvgAT1+/L9kxnldQ0SNsYw3MQCMIQA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CY8PR12MB7170.namprd12.prod.outlook.com (2603:10b6:930:5a::18)
+ by DS0PR12MB8814.namprd12.prod.outlook.com (2603:10b6:8:14e::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Tue, 18 Aug
+ 2026 02:27:23 +0000
+Received: from CY8PR12MB7170.namprd12.prod.outlook.com
+ ([fe80::7565:bdd3:383a:de5f]) by CY8PR12MB7170.namprd12.prod.outlook.com
+ ([fe80::7565:bdd3:383a:de5f%6]) with mapi id 15.21.0315.016; Tue, 18 Aug 2026
+ 02:27:23 +0000
+Message-ID: <0e223bf3-df75-4ebe-966d-44c13e273586@amd.com>
+Date: Tue, 18 Aug 2026 10:27:14 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: About new backend for GPU compute ROCm in qemu
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ virtio-comment@lists.oasis-open.org, dri-devel@lists.freedesktop.org,
+ virtualization@lists.linux.dev, Honglei Huang <honglei1.huang@amd.com>,
+ Huang Rui <Ray.Huang@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ David Airlie <airlied@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+References: <ba0b1bbf-5ebf-4ac3-9f7b-8740e3bc283b@amd.com>
+ <ea899a6b-0a59-4a9c-9e81-3ed70711da59@rsg.ci.i.u-tokyo.ac.jp>
+ <78f0583f-93c0-4374-ba37-fd36f6388f0e@amd.com>
+ <87pkzgsu2z.fsf@draig.linaro.org>
+Content-Language: en-US
+From: "Huang, Honglei" <honghuan@amd.com>
+In-Reply-To: <87pkzgsu2z.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=54weasels@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: TPYP295CA0042.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:7::20) To CY8PR12MB7170.namprd12.prod.outlook.com
+ (2603:10b6:930:5a::18)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY8PR12MB7170:EE_|DS0PR12MB8814:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68832a43-8f37-4029-88bf-08defcd03c2c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|7416014|376014|366016|1800799024|4143699003|3023799007|10067099003|6133799003|11063799006|5023799004|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: jkaMO/H8+rfuYhRCW3lF6w7zuaqM6CEG/6dWdQE1WvcoKCK5UJqobKj0mVXX/LGkSYZ/YmpEGCRyyT6vWhwNDXDugy+BKcjgNUKWNkLTSg3n3sm5zJ+h4WvP3MXEixhuVgRCPU3n/ss+Mad8lENXe5pP3L9iNoOSRaphNT3BOuVls8AQrfjm6dO5aiDvGKd7TxDMIZY2cRyxDjmCzKiijhcPWL6G2+2qqMUU/BVFQEwQO4CE6jTbBJkhiyPECGXlrAUWpUA+71u9uYwElQstqYpdhD3YXTvKB3xM+qCh6+Q5iLprSurbR/bfk3mhHd6wlMN2+PhX9zVGGFSxBTds2L2Wbt0UwQJkQ6orZSsWXVPsDuGzOHDjXIhzJAytSFQsHAOk8GlUs+c/bhErXu/BHvAWw3EW0W+TWZjFqw3kH5/sGiJ4U0/c3LNBna8sdj0seCc3nsmbzNCuC09hE89ysVF28ug46hiBe8lHnRpbEGC7mOINFx/iSj9MJVd8Te+RquW8MnYjF0PYjoiTE99HI4z3BlDUA2K9VeIZ1XizNXl9apMy2r2FxizghKxqDt3UX2s+Fxstfr6NrtRpnOzsDzPnzC6gtkxVWGtBF1qTjC3AMD4wKFOTOT5/xDvMOlKr
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY8PR12MB7170.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(4143699003)(3023799007)(10067099003)(6133799003)(11063799006)(5023799004)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UGRtallHalZDTkpTWlBDL1ZHTDAxd3hheFlXZ0loTDlybDRGSUdFWktxQ1ZG?=
+ =?utf-8?B?Tkk5MzNJMll5bWtvdk1Vc3ZqWTdPMXI5OGJEb1hheU1tZmQ2WUc2MmJMTTZt?=
+ =?utf-8?B?NUQ4bUYwK0JGM1Q0TEZsb3JnVldCZEdSMExubmFTczc2QUdLRUgzSzJENzZF?=
+ =?utf-8?B?WFFaVmhlNEEwdHVHMTMvdEhFNDdGT3dWNGtLTDUxZU5pZWd2dFlka05CeVcv?=
+ =?utf-8?B?SGJIaGtlU0Q4L2hMalpKRGxOQlUyRCtZWFhScTFUUkRyaFI4dy9neTFkdHpm?=
+ =?utf-8?B?U3hjQnYxRHVnMkhESCtZeTVvOWxmeVRYOGRUVU9XK3FTN3J1Q1daU2tkeURK?=
+ =?utf-8?B?bkUwODBFcEVKeitVUEVNOFFIVlJ6eCtQMVlKWmYyK1QrTXU1QVVkd1AySXg3?=
+ =?utf-8?B?NzB2MWlwTXo3RTNLMzh4eXJoRW10eTZOdDh0YUZsdXE2Tng1U2FMSXpCeXNJ?=
+ =?utf-8?B?OWd4eURxM1FMNTRHMWc4V2dTWWJOaDI4MklrQVRZZXpEeEFsK3B5WHJPUisz?=
+ =?utf-8?B?QzNBYXFNVTk3bE0rR3VMeERsSVBZdURlV1dYY3FHcStCZkdzelQzc2hnVzlW?=
+ =?utf-8?B?azcxTU8xSElJcGkxVVc0SlJ1cG5pRkdNVE9vK256Nk93RjV2d1FVT3RHVGlM?=
+ =?utf-8?B?RXdaamVJY3FiT25JdEE5M1VsT1hkaVBWMW9YWHF0NTFTN1RSQmZxRGpmTXAr?=
+ =?utf-8?B?OWwySzhPUTZQOERMZHdJY0I4NW1iLzBPMUtRdGNtSnpzM01LVS8wTThMZ3JQ?=
+ =?utf-8?B?UGkvdnZIUno2OTN1eWwyalJzODBFZno3cUdyVVYvWnhVbWhvajNFcW9BOHl4?=
+ =?utf-8?B?N0lZdmYrU1hWckpDQ1E0UXpOcktMMzZIVC9ES2xCenBHTFlyK3hDZGVvb3BJ?=
+ =?utf-8?B?NUs0L2sycEhLZ1ZFQ00rTTdFUmFlQmYxcGZCYTlva0tFbU9FMjVPa3NGMURF?=
+ =?utf-8?B?b1huVDVEUmlEeVBHTStiK2d3Qkd3R3d0MUhLSDZ1bStyV0U2MGJyaGJoTVpN?=
+ =?utf-8?B?Z01zMGlzcDlPS1BVYWxiRzJDMEFKZndGSzRLNGtEMTVBVjlSZmZQM1ZiWlVS?=
+ =?utf-8?B?L1VSQVFPOERMR05HNkVxaWdpVGI2RHF2SnZvTEFUV0lERXNyQ1BJVDZoZlhX?=
+ =?utf-8?B?a2ltQTY0RnN6UmJ0MytZTHZQVjVtZ1B2ZUNkMnlqWGhwcTVuVSszbTdvUkQz?=
+ =?utf-8?B?c3E4MFdkbFpoYllaTU5pVFBFS0UxZGM3WjdPQVd2RFZNbGc3Zm4raUIzNXEy?=
+ =?utf-8?B?ampKUUhZRmN2Y2hZOG0xNmJqbXRpM21DTVJxV0JRR2x2bEJsM1RCbmswNWNw?=
+ =?utf-8?B?TmV3RGVkSXF0RjBSaGg1dFpxa1N6YU8yOFJyaWFmNHJVdHNKbkVGSUsvNlpn?=
+ =?utf-8?B?MklzQjllT3hScU9wQmQ0aTU4WjhGMUJuaGN5aU8vWlp2NGFqSzNEMmQ1UWd2?=
+ =?utf-8?B?bm1jVDJyY0dUM0VTODRKU3FYZ2NWSlpPUzhtcmg3RlN4RUIyenRRajJTRmlD?=
+ =?utf-8?B?SXYyT05VVU1BcjBzRFhkUEpjOHM5c2RwR3J0NVZBdjVrNDFDQWsxOE9vSTB3?=
+ =?utf-8?B?bng5Rittb0xSU0dsV1lGaTRLSWUwS2ZYcFF5dDczZEJrT3FkQ25OeE45MHJS?=
+ =?utf-8?B?NHQzTFN4aGNiYVFpRjg3QkRTSHU5RU9mMDRGem9mK1dKZ09hVWV4VHpSMHI0?=
+ =?utf-8?B?d2tqN2dJWVZ5K05DbmF2YVBGUDdyQUx6ZnRQcytSd1NQNGNYbTVKS0k4d2Ir?=
+ =?utf-8?B?dTZjSWt4T2JaTHF0L1hNWTJhQkFoVmRpUFRWUWZBWm43NnBidmMxdjdCekhx?=
+ =?utf-8?B?VktVeWZRZnpyS251VEY4M2hicm1FT3BDclRHS0YrVXovL041WVdqNDI2Q1Fs?=
+ =?utf-8?B?emJlcDh0REtibElWWElRT3V2ZStVcXZxYlhpcFVmbWhJQTV1Y2dXQnYxb3ZP?=
+ =?utf-8?B?REZHcFZKNVg5MVBFTXp0dzBKa2tnVWo1MmU1Rmx0R3dmNHJKVzV0K0xlYURv?=
+ =?utf-8?B?RzV3aFZEWnZmRm5SOWN4bzkyZTljV3hqTkZQa0xwWkxGS29IR01HWHp5VVlm?=
+ =?utf-8?B?R2t6ZDFPVGsvLzFjeFNyeTkwRVByYzVOaHBNK3I1L2IrcW5wN05pV0VIK3RY?=
+ =?utf-8?B?MVdyRzlacHU3YUlpM1ZhaDU5K0VCYjdOZFFRVG9maTZXVUFTMlBscmlWcXFw?=
+ =?utf-8?B?eTdsL2RpamFaMGp2b3gvdFlNOVY0RG90dWl5NHFoNk9XMmlPUkZLbHc0VmJS?=
+ =?utf-8?B?eXIxbUVLOHozRDdZTkRJbUcrWE9URXp1dnhSRzFrZ0V3RmhaVGtsUHB0dmcx?=
+ =?utf-8?Q?tslHvv8XeZaMa4rtF2?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68832a43-8f37-4029-88bf-08defcd03c2c
+X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB7170.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 02:27:22.9103 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gHibdJzAsVmYZ31aPusH0hstAOSRZ1p+IKXHO/1nHTL7yb3+AsafoFXl3+OcMXO4bAunBvgbQvHzri8yrMl2sA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8814
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,117 +158,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-High level description:
-The Motorola 68020 architecture utilizes 3-bit Function Codes (FC0-FC2) to distinguish between User/Supervisor Data and Program memory spaces during MMU translation. Previously, QEMU's TLB fills did not explicitly extract or pass these codes down to the translation hooks. This patch extracts the explicit Function Codes (either natively or via the `moves` instruction) and packs them into the `access_type` field. This is required for the upcoming Sun-3 emulation, whose external MMU hardware maps entirely different physical address spaces depending on the Function Code asserted on the bus.
 
-Impact on existing functionality:
-This change introduces no functional impact to existing ColdFire or Mac/Quadra m68k emulation targets. The extraction logic gracefully defaults to standard mapping modes for platforms that do not implement a custom MMU intercept hook, preserving existing TLB behavior.
 
-Context: This patch was originally submitted as part of the monolithic Sun-3 Machine Emulation series (https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/) and has been split into atomic components.
----
- target/m68k/cpu.c       |  4 ++--
- target/m68k/cpu.h       | 10 ++++++----
- target/m68k/helper.c    | 26 ++++++++++++++++++++++++++
- target/m68k/translate.c | 10 ++++++----
- 4 files changed, 40 insertions(+), 10 deletions(-)
+On 8/17/2026 10:24 PM, Alex Bennée wrote:
+> "Huang, Honglei" <honghuan@amd.com> writes:
+> 
+>> On 8/17/2026 7:44 PM, Akihiko Odaki wrote:
+>>> On 2026/08/17 12:19, Huang, Honglei wrote:
+>>>>
+>>>> Hi Michael, Alex, Dmitry, Akihiko,
+>>> Hi Honglei,
+>>>
+>>>>
+>>>> I'm bringing AMD GPU compute ROCm based on virtio. I posted a ROCm
+>>>> over virtio
+>>>> implementation to virglrenderer nine months ago (MR !1568 [1]). The
+>>>> ROCm side has
+>>>> been supportted by ROCm offical.
+>>>>
+>>>> Current implementation is a virtio gpu context type capset handled inside
+>>>> virglrenderer, sharing the display path. That's an awkward fit, many
+>>>> compute GPUs have no display engine at all.
+> <snip>
+>>>>     - that instance served by a separate ROCm backend library loaded
+>>>>       in-process by QEMU.
+>>> First, I think we need to establish why ROCm cannot or should not
+>>> remain
+>>> in virglrenderer. The virglrenderer, Venus, and VCL maintainers are
+>>> likely better placed to advise on that boundary. Once the protocol
+>>> requirements and performance measurements are clear, we can assess the
+>>> appropriate QEMU integration.
+>>
+>> venus is borned for GFX.
+>> virCL not merged.
+>>
+>> To be clear, I'm not saying virglrenderer can't host a ROCm native
+>> context it clearly can. My hesitation is more about fit and direction:
+>> virglrenderer has grown up around GL/graphics, and I haven't yet found
+>> compute oriented plumbing there to build on, while ROCm moves very
+>> fast and I need something I can keep current with low friction.
+> 
+> I'm unsure what the current development status of virglrenderer is but
+> it does see a continuing stream of merges. However the threading model
+> does make things tricky for QEMU when we are sharing lifetime of blobs
+> between QEMU proper and the virglrenderer thread. Perhaps there is a
+> better way to organise things?
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index ce2707dee5..f97f20e999 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -52,8 +52,8 @@ static TCGTBCPUState m68k_get_tb_cpu_state(CPUState *cs)
-     flags = (env->macsr >> 4) & TB_FLAGS_MACSR;
-     if (env->sr & SR_S) {
-         flags |= TB_FLAGS_MSR_S;
--        flags |= (env->sfc << (TB_FLAGS_SFC_S_BIT - 2)) & TB_FLAGS_SFC_S;
--        flags |= (env->dfc << (TB_FLAGS_DFC_S_BIT - 2)) & TB_FLAGS_DFC_S;
-+        flags |= (env->sfc << TB_FLAGS_SFC_S_BIT) & TB_FLAGS_SFC_S;
-+        flags |= (env->dfc << TB_FLAGS_DFC_S_BIT) & TB_FLAGS_DFC_S;
-     }
-     if (M68K_SR_TRACE(env->sr) == M68K_SR_TRACE_ANY_INS) {
-         flags |= TB_FLAGS_TRACE;
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 058777b891..42d34502fc 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -601,12 +601,14 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
- #define TB_FLAGS_MSR_S_BIT      13
- #define TB_FLAGS_MSR_S          (1 << TB_FLAGS_MSR_S_BIT)
- #define TB_FLAGS_SFC_S_BIT      14
--#define TB_FLAGS_SFC_S          (1 << TB_FLAGS_SFC_S_BIT)
--#define TB_FLAGS_DFC_S_BIT      15
--#define TB_FLAGS_DFC_S          (1 << TB_FLAGS_DFC_S_BIT)
--#define TB_FLAGS_TRACE          16
-+#define TB_FLAGS_SFC_S          (7 << TB_FLAGS_SFC_S_BIT) /* 3 Bits reserved */
-+#define TB_FLAGS_DFC_S_BIT      17
-+#define TB_FLAGS_DFC_S          (7 << TB_FLAGS_DFC_S_BIT) /* 3 Bits reserved */
-+#define TB_FLAGS_TRACE          20
- #define TB_FLAGS_TRACE_BIT      (1 << TB_FLAGS_TRACE)
- 
-+#define MMU_MOVES_FC_BASE       2 /* mmu_idx 2-9 correspond to FC 0-7 */
-+
- void dump_mmu(CPUM68KState *env);
- 
- #endif
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 93739ccda7..f3ee95441a 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -975,6 +975,32 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     int ret;
-     target_ulong page_size;
- 
-+    if (qemu_access_type == MMU_INST_FETCH) {
-+        access_type = ACCESS_CODE;
-+    } else {
-+        access_type = ACCESS_DATA;
-+        if (qemu_access_type == MMU_DATA_STORE) {
-+            access_type |= ACCESS_STORE;
-+        }
-+    }
-+
-+    /* Decode explicit Function Codes from moves instructions */
-+    if (mmu_idx >= MMU_MOVES_FC_BASE) {
-+        uint8_t fc = mmu_idx - MMU_MOVES_FC_BASE;
-+        access_type |= (fc << 8); /* Pack explicit FC into access type */
-+        if (fc != 1 && fc != 2) {
-+            access_type |= ACCESS_SUPER;
-+        }
-+    } else {
-+        /* Standard memory accesses map logically to normal M68K FCs */
-+        if (mmu_idx == MMU_KERNEL_IDX) {
-+            access_type |= ACCESS_SUPER;
-+            access_type |= ((qemu_access_type == MMU_INST_FETCH ? 6 : 5) << 8);
-+        } else {
-+            access_type |= ((qemu_access_type == MMU_INST_FETCH ? 2 : 1) << 8);
-+        }
-+    }
-+
-     if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
-         /* MMU disabled */
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index bdf619883c..6aa4c5fafd 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -163,10 +163,12 @@ static void do_writebacks(DisasContext *s)
- #define IS_USER(s) 1
- #else
- #define IS_USER(s)   (!(s->base.tb->flags & TB_FLAGS_MSR_S))
--#define SFC_INDEX(s) ((s->base.tb->flags & TB_FLAGS_SFC_S) ? \
--                      MMU_KERNEL_IDX : MMU_USER_IDX)
--#define DFC_INDEX(s) ((s->base.tb->flags & TB_FLAGS_DFC_S) ? \
--                      MMU_KERNEL_IDX : MMU_USER_IDX)
-+#define SFC_INDEX(s) (MMU_MOVES_FC_BASE + \
-+                     (((s)->base.tb->flags & TB_FLAGS_SFC_S) >> \
-+                      TB_FLAGS_SFC_S_BIT))
-+#define DFC_INDEX(s) (MMU_MOVES_FC_BASE + \
-+                     (((s)->base.tb->flags & TB_FLAGS_DFC_S) >> \
-+                      TB_FLAGS_DFC_S_BIT))
- #endif
- 
- typedef void (*disas_proc)(CPUM68KState *env, DisasContext *s, uint16_t insn);
--- 
-2.50.1 (Apple Git-155)
+Yes, agreed. ROCm has no render thread of its own, it uses user-mode 
+queues So, I think there's a better organisation.
+
+> 
+> Could we do the marshalling of VirtIO GPU commands into ROCm directly
+> inside QEMU rather than going through additional plumbing? 
+
+Yes, by "additional plumbing" I take you to mean routing through a
+virglrenderer style renderer ( extra thread and blob coordination).
+Yes, I'd drop that. What I'd keep is only a thin in QEMU backend the 
+9pfs/cryptodev kind of pluggable backend, not a renderer layer which is 
+what lets QEMU own the blob lifetime directly.
+
+
+> Are the sequences we need to handle more or less complex than your general gfx
+> rendering? How might this work with other frameworks?
+
+Simpler, I think. ROCm has no render thread. It uses HSA user-mode 
+queues: the application writes AQL packets into an in memory ring and 
+rings a doorbell an MMIO page from the GPU's mapped straight into user 
+space and the GPU's hardware scheduler picks the work up. Nothing on the 
+host translates or dispatches a command stream the way a GL renderer 
+does. Completion is an signal: either an interrupt backed event wait, or 
+the CPU polling the signal value the GPU writes to memory. So the host 
+side is closer to an ioctl proxy (create/destroy queues, 
+alloc/map/register memory, signals, submit); the hard parts are the 
+memory stuff you raised and the async event/fault channel.
+
+For other frameworks, I think we can keep the device generic, user 
+queues, a shared memory, events with the framework specific marshalling 
+in a small pluggable backend. AMD is unifying queues in DRM, allowing 
+devices to use user queues and event like mechanisms, which will greatly 
+simplify device emulation. It also may affect the NPU. I think that 
+graphics may use the same mechanism in the future to avoid complex 
+synchronization issues.
+
+Regards,
+Honglei
+
+> 
+>>
+>> Regards,
+>> Honglei
+>>
+>>
+>>> [2]
+>>> https://developers.redhat.com/articles/2025/06/05/how-we-improved-
+>>> ai-inference-macos-podman-containers
+>>> [3] https://www.qualcomm.com/developer/blog/2024/10/vcl-virtio-gpu-
+>>> opencl-driver
+>>> Regards,
+>>> Akihiko Odaki
+>>>
+>>>>
+>>>> That reuses the existing pluggable backend model, a second virtio gpu + a
+>>>> backend library. It doesn't add dedicated queues for
+>>>> debug/profiling currently.
+>>>>
+>>>> Waiting for reply and  happy to share more detail. Thanks!
+>>>>
+>>>> [1] https://gitlab.freedesktop.org/virgl/virglrenderer/-/
+>>>> merge_requests/1568
+>>>>
+>>>> Regards,
+>>>> Honglei
+>>>
+> 
 
 
