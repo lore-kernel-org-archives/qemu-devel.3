@@ -4,119 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C46C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF4EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwRtr-0006vp-5G; Tue, 18 Aug 2026 18:03:15 -0400
+	id 1wwRvs-0007wH-TE; Tue, 18 Aug 2026 18:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.hansen@intel.com>)
- id 1wwRtp-0006ro-Dj
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:03:13 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.hansen@intel.com>)
- id 1wwRtm-0000qm-BP
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:03:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787090591; x=1818626591;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=vUKh1mlsUkzRfAed2U9Llr29EtT+t5xL2K9xChyV3KE=;
- b=F/r/twZx7kEGf6aE+FUbdO87Q3AwsihchJbID0bHxmrBmlOelbfCq5zO
- DXj4w7WdCQuTZXj9Gz6w/0u3wRLXWNBikvSqgRDI97NzdBPcY0IYjtyRV
- My/JtFjSYNmk7ajyyqGnSeYkNqyY/VkSJPQYslOcuEfavn2VtZegRyCOi
- hfX2to9sf1vDKqEk3n7BtfVoAMpPiB4MLAbVopkulWiLwdXqHYldcKhp4
- kURDlTbhpmQMg8o1TIJSN2ALKsaTAv49gW1nEVAPnlpIDwepPNWjuzqpn
- yCsVafTx/HBjLc3dchdwhsCSVOVirEvLVB0pweqwhkTgYXg5fFaL+j4i5 A==;
-X-CSE-ConnectionGUID: 1Tp4d3nPRduOzeIbgemfhA==
-X-CSE-MsgGUID: ORF1VoLkRkurHy2QeKnm0A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11879"; a="86712248"
-X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; d="scan'208";a="86712248"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 15:03:08 -0700
-X-CSE-ConnectionGUID: cSvvuIhMSCWhck4uYA3HRw==
-X-CSE-MsgGUID: EERLjiU7QWeMp1+3tDcS/Q==
-X-ExtLoop1: 1
-Received: from unknown (HELO [10.24.81.183]) ([10.24.81.183])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 15:03:06 -0700
-Message-ID: <ab4fc31d-8605-4556-a51c-f5180baa2d79@intel.com>
-Date: Tue, 18 Aug 2026 15:03:04 -0700
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1wwRvr-0007vw-Bb
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:05:19 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1wwRvp-0001FF-Qe
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:05:19 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5aeba09900bso333919e87.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787090715; x=1787695515; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=JcjEj0fhQ45OWXoFQJAAYO4zPjWPSV3jqes7kC7rXlc=;
+ b=HG7s8jc15QYJPyFd1NV5Kco7Rf8/v78QE/xgZX0sCxEDjh4joeBaR5uCwAaVG9obZr
+ vt0SXJT1Rc1+9L28gHHfFLEatUNYjTMn0ic9yx7XO4RJLYem9T8lIZYGVibos4RWwbTE
+ owd61Uh+a0icsNZSatAVT1pvZl9gejoj21agIrqZyTJk8g6X1c9mfehkXlQ40Pv6FU8q
+ dKvd275feWlHPVHfSJbHss90F/Ppc5NDPMzPV6Mzvilvu6qgt8PkxefVceW1gTCR0BWh
+ FtK+u0ZDJn/boeCM6/WEDeOP19BChm7N/NgYSQvl1tYlAuU2rOpxUuvWod3Xn+nRNNv2
+ BZtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787090715; x=1787695515;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=JcjEj0fhQ45OWXoFQJAAYO4zPjWPSV3jqes7kC7rXlc=;
+ b=SmULs3feaL7PPw+BKAY95Z+QZhDk+hBLkV8FKcim46fyaLTxqvzCjRuPG5sqLfzknA
+ 0Yf4bVCRVgpONv2Gdl30P1C5jxJWIvUy37uWUG2RJdx8/chve6J2AXes+21RXkaRlEAf
+ 8rJEJRxqASkZ64OKvUHxLv8TG5X8EcoojR/wuY84XzfUeIh6liSsKYV0TGftKlSjysEh
+ HUCKN17/lB75YrrUVmt0dbHJ8PKTvxN5s3r13g9w/dH8pDS01Extj4Y5gz6bxmKVSTvK
+ D9dM7sCuzjtInI0vuXzqon7wajkrvqEVlRNKUqgoeZtzM+afuHb7rMvX84aPBBbgXjLI
+ RUuQ==
+X-Gm-Message-State: AOJu0YzkceKRwYJo2OteF65Gpm440pjrhtUs98yoQfg3hnaW/J1CNcly
+ J1KVrhoG8gxHuiZRgI7iWrF2QO+z/7ntyO3ODjOXWsEVnPbYkDMeF6gW
+X-Gm-Gg: AR+sD11Gb8BKQEsCzwhDvtdlDYf/qmdBiMOJPn5q2GI/ux05j+Ye4YU4QU72RTK9qzJ
+ snZ+Ztow47GD9PZe34GbyDLWCwQFNEFv6dg2r9+PH+RFm/iMIz92+9DOcl3IhWZcATR7OddXpDK
+ 9+FlrfJjhGc27tpD5EGi2pfevT3zhj9VPe/IxKhuK1eztzWYl6h3kBzH3RwO3v3on33GoVNj1gP
+ Y7Cp3Qb6kd3p4AtzAuA62IK+E5A2JVSv6xtVmgCdiuIkB81mO3e/09BlSRcmvnTRot1UziGUqCc
+ 3wjPAcamphNrdowCu9rjhoMGihF7P4WtKa3OJG6IDNlLrwI91Tbs/pbVwvC8OJiojw8kXG+ntds
+ 0ZFAYFbSXyGgzQkULBmfAgMZ2ylVEGJizzfFc0REa1ux/I6AgDrkmO20t0vdo7eaaUzfa8f/TOA
+ XZSvbyk1NDuQFci8msp4mN4YiFOSclC7ykPAq6nMNQnI9bY+GZ6qL8itOWk3ASln0+wzERx4zW7
+ c6UoEu8MmaH/GEqj6xSiEtwWF1yo31zRjmt7cxB27BpNPy5
+X-Received: by 2002:a05:6512:1044:b0:5ae:b91d:b2ec with SMTP id
+ 2adb3069b0e04-5b478bc5be8mr16199e87.3.1787090715178; 
+ Tue, 18 Aug 2026 15:05:15 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b478853ae5sm21836e87.17.2026.08.18.15.05.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 15:05:14 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH 0/3] Allwinner A10 GPIO support
+Date: Wed, 19 Aug 2026 00:04:50 +0200
+Message-Id: <20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/6] kvm: Add guest memory Pkey initialization
-To: Jacky Li <jackyli@google.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- James Houghton <jthoughton@google.com>, Mingwei Zhang <mizhang@google.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- Brendan Jackman <jackmanb@google.com>, Reiji Watanabe <reijiw@google.com>
-References: <20260818-feature-pkey-dev-v1-0-8c0ef96a4da9@google.com>
- <20260818-feature-pkey-dev-v1-2-8c0ef96a4da9@google.com>
-From: Dave Hansen <dave.hansen@intel.com>
-Content-Language: en-US
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- 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
-In-Reply-To: <20260818-feature-pkey-dev-v1-2-8c0ef96a4da9@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.18;
- envelope-from=dave.hansen@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avErBOcCLOuEi2kRhuQKRQqCO+et
+ HyL/1/IlJgyTM0LiS7OfEgFtg2su5NAirdq6HRntEWrXIw3i1BS4eRDGXK2Rxw2P/ZQozOR5+c
+ fzkspH9zmvZBgAAAA
+X-Change-ID: 20260818-allwinner-gpio-6ea84117df94
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,29 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 13:44, Jacky Li wrote:
-> +__attribute__((target("pku"))) void qemu_init_guest_memory_pkey(void)
-> +{
-> +    if (guest_memory_pkey != -1) {
-> +        return;
-> +    }
-> +
-> +    const char *enable_pkey = getenv("QEMU_ENABLE_PKEY_GUEST_MEMORY");
-> +    if (enable_pkey && strcmp(enable_pkey, "1") == 0) {
-> +        int pkey = pkey_alloc(0, 0);
-> +        if (pkey == -1) {
-> +            error_report("pkey_alloc failed for guest memory: %s",
-> +                         strerror(errno));
-> +        } else {
-> +            guest_memory_pkey = pkey;
-> +        }
-> +    }
-> +}
+This patch series introduces GPIO support for Allwinner A10 and
+Cubieboard.
 
-Is an environment variable a normal way of enabling qemu features? It
-seems a bit unusual to me.
+The support is focused on input/output and interrupt functionality.
+The qtest suite is also updated with tests for implemented
+functionality.
 
-I would also guess that you might want some kind of an enabling mode
-that lets users opportunistically enable pkeys when running on
-pkey-enabled hardware, but not complain too loudly if they are unavailable.
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+---
+Strahinja Jankovic (3):
+      hw/gpio: Allwinner A10 GPIO emulation
+      hw/arm: Add GPIO to Allwinner A10 model
+      tests/qtest: Allwinner GPIO tests
+
+ MAINTAINERS                           |   3 +
+ docs/system/arm/cubieboard.rst        |   1 +
+ hw/arm/Kconfig                        |   1 +
+ hw/arm/allwinner-a10.c                |   8 +
+ hw/gpio/Kconfig                       |   3 +
+ hw/gpio/allwinner-gpio.c              | 465 +++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build                   |   1 +
+ hw/gpio/trace-events                  |   6 +
+ include/hw/arm/allwinner-a10.h        |   2 +
+ include/hw/gpio/allwinner-gpio-regs.h | 228 ++++++++++++++++
+ include/hw/gpio/allwinner-gpio.h      |  41 +++
+ tests/qtest/allwinner-gpio-test.c     | 474 ++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build               |   3 +-
+ 13 files changed, 1235 insertions(+), 1 deletion(-)
+---
+base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+change-id: 20260818-allwinner-gpio-6ea84117df94
+
+Best regards,
+-- 
+Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+
 
