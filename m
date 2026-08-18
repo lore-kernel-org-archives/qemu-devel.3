@@ -4,106 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A7EC5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7BDC5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwIiV-0000vw-Ft; Tue, 18 Aug 2026 08:14:55 -0400
+	id 1wwIm5-0004B7-5W; Tue, 18 Aug 2026 08:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wwIiS-0000vR-GL
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:14:52 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwIly-0004Ai-O3
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:18:32 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wwIiQ-0001P3-IY
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:14:52 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2cf6d65d8a7so58110065ad.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:14:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787055289; cv=none;
- d=google.com; s=arc-20260327;
- b=fuwrI24NSyxjPXS7DHIlgVfr0dW0elWt4q7taj+F3epFxM7ToBRRm0iID0r9CJB3lB
- 4TpTkKTjRqoWpYFM4elKCLkyXfG6QWMc3E0ZmQ9mvC99pRSFc7skj0rq0jRHEj8Ojnis
- xYZpAnxQXbgM6JlekKUsXCEjUwJCh74NGrTzm8RzCPnuYLeQvnH/Ge3qbyM517ZhShza
- mULQmG+C3IeBwgp7M8CZM9ZQ84JrAPvKfyxW28oJ2quBnuGAn1x757piCVC/Prwa9ehd
- V3zTHChky1LY27sHL6WaUsC49OCFKU6K8QjcG4uGXT4XJF6FG0iP91HvNHwfSqeWniSn
- z1YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7H1Rz0Je1rNqHjh5H2JQHC8UmH8MFo0qQsXzr2Z29rY=;
- fh=wNIBB09whFX4aqH2z8BcDR9CesbTcDsK1XevePNeRLw=;
- b=G4wi9WsLTU66lhWtsd6iDqiUFa9PBX1Uwmr6PyhBR7/9ip7DfplKRjDdDBOeyOs3vL
- BnKmCaq6HP137HJLQokG6F7tIUtOjlSP4/RXZJHziRxwTg5K3+mZHH7P+tO7IYvVOIXa
- FDeyyMbkYAzERQsZgF9n4f8ENYwbig4vViOmONOhStB3HlZsFeEud7Uyqph0IJiK/y2z
- QCR/6zYfEJflUEYL/m3gdX3XOts7FfNmbfYm38ULf1Q3jLsJlRl0oD2xOp/mDjcJXJhJ
- fEGq/G7UprNRvIm+pfw9dcagjBa7SnN+dze/97FoCuce4cvYhPPXcPJndmOuXmLlD6KW
- DUmQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwIlu-0002I6-Q0
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:18:28 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-47f84023916so4330639f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:18:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787055289; x=1787660089; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7H1Rz0Je1rNqHjh5H2JQHC8UmH8MFo0qQsXzr2Z29rY=;
- b=iOme79Ypg23SocprE/Ic5pG763kVPqOa/cTN483jaJDA4ojHX7Ctbly2DazhUnx4je
- Kgxp9lQCbLwxLxyispqvPNd6Zfoj4Oqem3rEFz/H5MbEJptSzP/Qp2EQCFrx16ywKp2X
- QRYtAhdk3OkCFXUHlLDChvwitwoT1QUvltfl12pkNcsCI9xEgQYCzCByGK17LFOkHtLv
- N8cLJDk3GJ/17O/h7b6ji6pWBzamkWcu9z5ghMd564IDV/Bb6VgjuqSKajnLNwMmcMnd
- 4OnohSq6wWuIjOnzWkVBAfsix7pE+pXFdJIm+vuXKgM20uMrAOylXwxIQGW86EYRg818
- xMiA==
+ d=suse.com; s=google; t=1787055503; x=1787660303; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=oI/+2/4qb6DsLorRhnoBURW6T2nMbZwNewNOhb3O8qk=;
+ b=FWQQxgcllpT2p4pBDg7cPaqo1vfgWvdbx4pf/LtkzeSwETrvspDiyycVP63PBHh4Lz
+ 02Us+zF0pxbw8ZiL7CVpUFDuHOKPHCxVzmuiBzWbWBBrcXj2gzpEk+DLPJon2FpBX5cI
+ qjx37MBJ3CeFcLdL0LIi915piAW06gFYCa+9P/Iq4GCwcdftPNRVfc+qP6lvJ6JucmO/
+ Wzqtl7mk+XnukpYVqcpK7P4niegwIRVx0Z/nSA6OH3t/LAuttn/DPEkjlUCV/zatCXiJ
+ DvVRjt7pom8QG+NU19EPkZAEaJwIQIpZsSxm9ST8u1BXYPOaYfBaiOb3umYdHmdIZ0xu
+ 9tKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787055289; x=1787660089;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7H1Rz0Je1rNqHjh5H2JQHC8UmH8MFo0qQsXzr2Z29rY=;
- b=Ol0q/daUAxiTyCRcaXV8WfD7R/2X/avY3tC2ywniR8Qnju0g3hDcfEbQSsAZVM+nEs
- PcB7TGoO/9MYH3ziQYsmCJrVsTt1hTCDVzwNyuhXauVzFby20rQl6sj5xlHxqLxgI4Sr
- OOCF/Jss5U/14kzQNapwvnQgSEXmTd9N2RiZkoXBcFwQD9CfC1/nD6lrb1SOyuxAX9WO
- SJap8FTmBtksvLMl3CfY+V6QRalWDSAG4ZIj2RLejJoVSNZy/AtN5n71/FhBnwMVjTsP
- hneg5kbUKNGILSIpIc6c2U1xBZfgEsTkS6MsZYmGUlw4j9d8qvPCh2/Y/Br+3qRXBp6d
- 2+lA==
-X-Gm-Message-State: AOJu0Yz17CicVPyj9Dmf8FhHmXsTJguw1qm7+PHc4tnAHTCegHVY8zqz
- /wdoV0trBdFoEU82uqzt+BZ/XKZ771ODbNz5QRSa6EE5HVtlM7RyejtquftpR7NY+l5nV7xZNMj
- qnXETaJl9F45uYxlFQ+026/Mfk/XbPJz9KvEpOnU=
-X-Gm-Gg: AR+sD10FUhKGBM3JJjpBxiOF1W5yW83yHEe6jjQBL11QoiZeBlbIhSGiYYuVMb2+5Ng
- 2iiIzSW8RJhddDYOeL28iaMR7sNunM+imKdYD3Og3M0T7+eoS4Q1KOZJn5g8Qk8T98x8zSQBD0S
- H1XSDsDYG40Ii2w4CoTwKwxin8ULNl87M5Yqs+sJsT5iVstb6OIotKfe31Pk1UAWywMPjLghFqY
- 6Sy4d0fHDEgM+yDj99UbIr2H3tm2uWmMM6tscmBs6vbA5e+3TGC7Mze76xCBIvB4Pjrl/mqyWxY
- XuS3f5wOeSElI4Q9nj9PH6LcsuZSNLIqpgH5nV+n2eZD+2F1FYoUDSkAJ4AMvYo4/0qpjVrKfTj
- q831DqWvhNfY=
-X-Received: by 2002:a17:903:22cb:b0:2ca:61bc:317c with SMTP id
- d9443c01a7336-2d3b0c5df17mr334333975ad.13.1787055288660; Tue, 18 Aug 2026
- 05:14:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787055503; x=1787660303;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oI/+2/4qb6DsLorRhnoBURW6T2nMbZwNewNOhb3O8qk=;
+ b=PjzVZi2t7AWCpdnTMEGrty+qLa04qOhZyx1UFvtw9OIgyfbx8D/tVFshYpsSUtntjt
+ WPn10HYo78XEE/e4oU8X4HC+WEHvDUeVm6EWGCJnFCa0wspKHSgFl3GpVmv/YvKBCiKk
+ khwlNjzsZwIxfrjLDWR/7JX+5t8ir0M7VwSX7+vV0fpLAiDGlXG6wdGn+JEspxCa/fcT
+ ikBEYUiXh+/6t1amJ7KfkusJx2qGBVXE/EvgpYu/r8J7R7e/x4eY3pRw/dNTr+VzVtsA
+ 22QxXsLcvY6IqX0EGacl54rQxN8+lb2WR/uYQatDLMxWWBCLmzbEJgMzxMUPBM7GzyUj
+ +1Pg==
+X-Gm-Message-State: AOJu0Yz4O1Y04qWdYEETr/M9QGKd3HkBmU7sxDzB+g0FSluhrN+9vYbX
+ N9DKgw6UsdRCh52qAcpoBmCn9ODW1imEAltVy+kMIglcML70BiOYGlLciW1wzzGcdw==
+X-Gm-Gg: AR+sD12EXLDb8+mT+Ag/BErU8fe3HVxfO6HbfWl/AiWoTPazaYsddL+G8WtCt9+F0xs
+ btRbeFdsCz90TzOHsQk8yt9AUkNjgtHJwXPhzyaKpRhfkCDdkXWQtA6XnnMX1fT94nwabEu5CZ7
+ k1k2xyh/RpdD0VdG5716/O1xlY3MQMjrIzdTqveT/iN1UBCc86GB43dtZFA010LJULtHN+MEPfu
+ 7dM6Z2PHLoDViBLUu4zrAnkSU8KdHzR2ezJqZLMx0peDLw/1ANGF1lFw4+qzopSYdd1B3mypSkT
+ WGbk8jzMgmmbiiGDT7wt3f0eCEaZV1r0fRJiKJNN73VM1wtpxwUlYO/cSO8Rflqjy1wBJPxdzPs
+ TcrYaJQkuBSTqs/KhsPEdc3qVSGTTYnEgE0GeCvcoC4T0KS/TVIKaF3GG/I1s1pzEIZcCbYwrOP
+ q8QjTN5c7AnkDA8kwY0ctQoPPvBEnfFYYCwKpQHFiDhYj0NkxRwmyXUWiqGpv+QfziJVUBv0ovG
+ dwLDgtIPOci8aRBPzmueUCr5pI+UlZAxmCsafYbYJvpMtQgrqu9XvAtssPO9i4=
+X-Received: by 2002:adf:ee06:0:b0:47f:9760:4d2e with SMTP id
+ ffacd0b85a97d-482a90f493cmr11769620f8f.24.1787055503210; 
+ Tue, 18 Aug 2026 05:18:23 -0700 (PDT)
+Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
+ [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482a5b783c6sm12282438f8f.31.2026.08.18.05.18.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 05:18:22 -0700 (PDT)
+Message-ID: <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
+Date: Tue, 18 Aug 2026 14:18:21 +0200
 MIME-Version: 1.0
-References: <20260818115258.429605-1-colazcyg@gmail.com>
- <20260818115258.429605-2-colazcyg@gmail.com>
-In-Reply-To: <20260818115258.429605-2-colazcyg@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 16:14:36 +0400
-X-Gm-Features: AcwNN1UFmpEGpB2VKZP0UWaFOTs-e4xnugZi56J4wKczzA0pg_HllOoD_Ao72jc
-Message-ID: <CAJ+F1C+BWmJ3svmx1OmJHvMZ45DTtqHaq1q9C_rD4jL=TTQOKg@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
-To: Chengyang Zhu <colazcyg@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Chuck Zmudzinski <brchuckz@aol.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <20260802050824.10554-1-brchuckz@aol.com>
+ <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
+ <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
+ <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
+ <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+ <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
+ <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
+ <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
+ <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
+Content-Language: en-US
+From: Jan Beulich <jbeulich@suse.com>
+Autocrypt: addr=jbeulich@suse.com; keydata=
+ xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
+ hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
+ 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
+ /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
+ O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
+ MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
+ nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
+ 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
+ Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
+ AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
+ e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
+ hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
+ IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
+ FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
+ t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
+ AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
+ HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
+ mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
+ m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
+ EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
+ wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
+ nAuWpQkjM1ASeQwSHEeAWPgskBQL
+In-Reply-To: <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=jbeulich@suse.com; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,220 +139,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 18.08.2026 13:52, Chuck Zmudzinski wrote:
+> On 8/18/2026 3:17 AM, Jan Beulich wrote:
+>> On 17.08.2026 18:04, Chuck Zmudzinski wrote:
+>>> On 8/17/2026 4:42 AM, Jan Beulich wrote:
+>>>> On 14.08.2026 17:23, Chuck Zmudzinski wrote:
+>>>>> On 8/14/2026 9:46 AM, Jan Beulich wrote:
+>>>>>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
+>>>>>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
+>>>>>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
+>>>>>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
+>>>>>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
+>>>>>>>>>>> -- snip --
+>>>>>>>>>>> +    /*
+>>>>>>>>>>> +     * Write rvda_host as 2 successive 32-bit values
+>>>>>>>>>>> +     * to communicate location of the VBT to the device
+>>>>>>>>>>> +     * model. If rvda_host is not 0, The device model
+>>>>>>>>>>> +     * unmaps the OpRegion and eventually maps the VBT
+>>>>>>>>>>> +     * after we also write the guest address where the
+>>>>>>>>>>> +     * VBT will be mapped.
+>>>>>>>>>>> +     *
+>>>>>>>>>>> +     * If we send rvda_host = 0 to the device model, it
+>>>>>>>>>>> +     * will assume we do not need OpRegion 2 support and
+>>>>>>>>>>> +     * it will not unmap the OpRegion.
+>>>>>>>>>>> +     */
+>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>>>>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
+>>>>>>>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
+>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
+>>>>>>>>>>> +               (uint32_t)rvda_host_upper_32);
+>>>>>>>>>>
+>>>>>>>>>> Why would you need to communicate a host property to the DM?
+>>>>>>>>>
+>>>>>>>>> The DM cannot access the host rvda value because it is only accessible
+>>>>>>>>> from the host kernel, and the DM is only a user-space process on the host.
+>>>>>>>>
+>>>>>>>> I don't follow this: Anything the guest can access should also be accessible
+>>>>>>>> by its DM.
+>>>>>>>
+>>>>>>> I think the host OpRegion is not currently accessible by the DM.
+>>>>>>
+>>>>>> Can you explain to me how the region becomes accessible to the guest?
+>>>>>> That would then (hopefully) help me understand why the DM would not have
+>>>>>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
+>>>>>> guest are also assigned to its DM.
+>>>>>
+>>>>> Currently, in the device model (Qemu) we have:
+>>>>>
+>>>>>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
+>>>>>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
+>>>>>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
+>>>>>             XEN_PCI_INTEL_OPREGION_PAGES,
+>>>>>             DPCI_ADD_MAPPING);
+>>>>>
+>>>>> That statement is in the igd_write_opregion(...) function in the
+>>>>> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
+>>>>>
+>>>>> If I understand our current implementation correctly, this statement
+>>>>> is what gives the guest access to the host OpRegion (3 pages as defined
+>>>>> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
+>>>>> in hvmloader code).
+>>>>
+>>>> No, it introduces mappings of those pages into the guest's P2M.
+>>>>
+>>>>> I don't think this statement makes the host OpRegion
+>>>>> accessible to the device model, though, so I think, if I understand your
+>>>>> comment in an earlier about my patch resulting in what you called a "layering
+>>>>> violation" correctly, that our current implementation is also guilty of this
+>>>>> same kind of "layering violation."
+>>>>
+>>>> That code, if it can be successfully executed, indeed doesn't grant any
+>>>> permissions (to the DM or the guest). Instead it proves that the DM has the
+>>>> needed permissions to access the pages itself.
+>>>
+>>> So, are you saying it should be possible, without any patches to either Xen or
+>>> the Linux kernel, for Qemu to get a pointer to the OpRegion? If so, how?
+>>>
+>>> I think I could implement what you proposed in an earlier message and do
+>>> all (or most) of this in the DM instead of here in hvmloader:
+>>>
+>>>> The more correct thing to do might be for the DM to
+>>>> put in place a copy before the guest (i.e. hvmloader) even gains control.
+>>>> (How in turn the DM would learn of the contents of the opregion is a
+>>>> separate question then.)
+>>>
+>>> Actually, when I was developing this patch, I tried first to do it that
+>>> way, but the problem was, I could not find a way to get a pointer to the
+>>> host OpRegion in Qemu.
+>>>
+>>> So, how can I get a pointer to the host OpRegion in Qemu?
+>>
+>> You don't ask me this question, do you?
+> 
+> Are you offended I asked this question? If so, I am sorry. You make me
+> afraid to ask it again so I will not do so unless you permit to do so
+> again.
 
-On Tue, Aug 18, 2026 at 3:53=E2=80=AFPM Chengyang Zhu <colazcyg@gmail.com> =
-wrote:
->
-> Currently, the SetUIInfo method cannot set a refresh rate.
-> Simply adding a refresh_rate argument would break the method signature.
->
-> This patch adds the UIInfo interface containing
->   * properties as staged display settings.
->   * the method `Apply` applying staged settings.
->   * the method `Reload` reloading settings from the console.
->
-> Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
-> ---
->  ui/dbus-console.c    | 86 ++++++++++++++++++++++++++++++++++++++++++++
->  ui/dbus-display1.xml | 32 +++++++++++++++++
->  2 files changed, 118 insertions(+)
->
-> diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-> index e1ac06814b..dc5c991f80 100644
-> --- a/ui/dbus-console.c
-> +++ b/ui/dbus-console.c
-> @@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
->      guint last_x;
->      guint last_y;
->      Notifier mouse_mode_notifier;
-> +
-> +    QemuDBusDisplay1UIInfo *iface_ui_info;
->  };
->
->  G_DEFINE_TYPE(DBusDisplayConsole,
-> @@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
->      qemu_input_led_notifier_remove(&ddc->led_notifier);
->      qemu_console_unregister_listener(&ddc->dcl);
->      qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-> +    g_clear_object(&ddc->iface_ui_info);
->      g_clear_object(&ddc->iface_touch);
->      g_clear_object(&ddc->iface_mouse);
->      g_clear_object(&ddc->iface_kbd);
-> @@ -528,6 +531,80 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
->      dbus_mouse_update_is_absolute(ddc);
->  }
->
-> +static gboolean
-> +dbus_ui_info_reload(DBusDisplayConsole *ddc,
-> +                    GDBusMethodInvocation *invocation)
-> +{
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    QemuUIInfo ui_info =3D *qemu_console_get_ui_info(ddc->dcl.con);
-> +
-> +    g_object_set(ddc->iface_ui_info,
-> +                "width-mm", ui_info.width_mm,
-> +                "height-mm", ui_info.height_mm,
-> +                "xoff", ui_info.xoff,
-> +                "yoff", ui_info.yoff,
-> +                "width", ui_info.width,
-> +                "height", ui_info.height,
-> +                "refresh-rate", ui_info.refresh_rate,
-> +                NULL);
+"Offended" is the wrong word; "very puzzled" may better get it. I'm not a
+qemu person, and I never have been. I can't really help much there.
 
-Let's use the qemu_dbus_display1_uiinfo_set.. setters if possible
+> All I can say is that surely qemu
+>> has an existing way to map (host) physical memory; see e.g. how
+>> xen_pt_msix_init() (imo bogusly) maps the physical MSI-X table of a
+>> device. "Bogusly" there because that's another layering violation. Plus
+>> (independently) there and here there's the issue of how to accomplish
+>> things when not running in Dom0, or when running de-privileged in Dom0.
+> 
+> Well, that only proves Qemu *might* be able to access the MSI-X table of
+> a device, that is, if the calls to open /dev/mem and mmap it succeed.
+> Why is the MSI-X table all of the sudden relevant? Even if Qemu
+> can access the MSI-X table of some device, that does not prove that
+> Qemu can access the host OpRegion of an Intel IGD. So I think my point
+> still stands: I still don't see proof that it is possible for Qemu
+> to get a pointer to the host OpRegion without any patches to the current
+> implementations of Xen and the Linux kernel.
 
-> +
-> +    qemu_dbus_display1_uiinfo_complete_reload(ddc->iface_ui_info, invoca=
-tion);
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
-> +static gboolean
-> +dbus_ui_info_apply(DBusDisplayConsole *ddc,
-> +                   GDBusMethodInvocation *invocation)
-> +{
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
+The MSI-X table (and it being accessible to qemu) is the best analogy I
+could come up with, as that's one tiny area of qemu that I know at least
+a little.
 
-Can we add a read-only bool property "supported" on the interface, so
-clients can check before?
+From a Xen perspective, this analogy should be sufficient: All you need
+from Xen is for it to permit to establish mappings of the underlying page.
+As I've pointed out when commenting on a code fragment you presented, the
+DM (domain) looks to have permission. Everything else is a matter of
+establishing such a mapping. There the MSI-X table code may also guide
+you. (Sadly it may also misguide you, since (a) I don't know whether it's
+appropriate to do things this way in qemu, and since (b) it is, as said,
+imo a layering violation.)
 
-
-> +
-> +    guint width_mm;
-> +    guint height_mm;
-> +    gint xoff;
-> +    gint yoff;
-> +    guint width;
-> +    guint height;
-> +    guint refresh_rate;
-> +
-> +    g_object_get(G_OBJECT(ddc->iface_ui_info),
-> +                "width-mm", &width_mm,
-> +                "height-mm", &height_mm,
-> +                "xoff", &xoff,
-> +                "yoff", &yoff,
-> +                "width", &width,
-> +                "height", &height,
-> +                "refresh-rate", &refresh_rate,
-> +                NULL);
-> +
-> +    QemuUIInfo ui_info =3D {
-> +        .width_mm =3D (uint16_t)width_mm,
-
-Can we call the accessors directly? qemu_dbus_display1_uiinfo_get_width_mm(=
-) etc
-
-That should avoid some extra variables and casting
-
-> +        .height_mm =3D (uint16_t)height_mm,
-> +        .xoff =3D (int)xoff,
-> +        .yoff =3D (int)yoff,
-> +        .width =3D (uint32_t)width,
-> +        .height =3D (uint32_t)height,
-> +        .refresh_rate =3D (uint32_t)refresh_rate
-> +    };
-> +
-> +    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
-> +    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocat=
-ion);
-> +
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
->  int dbus_display_console_get_index(DBusDisplayConsole *ddc)
->  {
->      return qemu_console_get_index(ddc->dcl.con);
-> @@ -550,6 +627,7 @@ dbus_display_console_new(DBusDisplay *display, QemuCo=
-nsole *con)
->          "org.qemu.Display1.Keyboard",
->          "org.qemu.Display1.Mouse",
->          "org.qemu.Display1.MultiTouch",
-> +        "org.qemu.Display1.UIInfo",
->          NULL
->      };
->
-> @@ -626,5 +704,13 @@ dbus_display_console_new(DBusDisplay *display, QemuC=
-onsole *con)
->      qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
->      dbus_mouse_update_is_absolute(ddc);
->
-> +    ddc->iface_ui_info =3D qemu_dbus_display1_uiinfo_skeleton_new();
-> +    g_object_connect(ddc->iface_ui_info,
-> +        "swapped-signal::handle-reload", dbus_ui_info_reload, ddc,
-> +        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
-> +        NULL);
-> +    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
-> +        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
-> +
->      return ddc;
->  }
-> diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
-> index d96bae2ed6..a766fd0862 100644
-> --- a/ui/dbus-display1.xml
-> +++ b/ui/dbus-display1.xml
-> @@ -1159,4 +1159,36 @@
->      -->
->      <property name=3D"Encoding" type=3D"s" access=3D"read"/>
->    </interface>
-> +
-> +  <!--
-> +      org.qemu.Display1.UIInfo:
-> +
-> +        WidthMm: the physical display width in millimeters.
-
-Document individually each property/method above its declaration, with
-@references. Check the doc build results.
-
-> +        HeightMm: the physical display height in millimeters.
-> +        XOff: horizontal offset, in pixels.
-> +        YOff: vertical offset, in pixels.
-> +        Width: console width, in pixels.
-> +        Height: console height, in pixels.
-> +        RefreshRate: display refresh rate, in millihertz.
-> +
-> +      Reload:
-> +        Set the staged properties to the state of the display.
-> +      Apply:
-> +        Apply the staged properties to the display.
-> +  -->
-> +  <interface name=3D"org.qemu.Display1.UIInfo">
-> +    <property name=3D"WidthMm" type=3D"q" access=3D"readwrite"/>
-> +    <property name=3D"HeightMm" type=3D"q" access=3D"readwrite"/>
-> +    <property name=3D"XOff" type=3D"i" access=3D"readwrite"/>
-> +    <property name=3D"YOff" type=3D"i" access=3D"readwrite"/>
-> +    <property name=3D"Width" type=3D"u" access=3D"readwrite"/>
-> +    <property name=3D"Height" type=3D"u" access=3D"readwrite"/>
-> +    <property name=3D"RefreshRate" type=3D"u" access=3D"readwrite"/>
-> +
-> +    <method name=3D"Reload">
-> +    </method>
-> +
-> +    <method name=3D"Apply">
-> +    </method>
-> +  </interface>
->  </node>
-> --
-> 2.55.0
->
->
-
-thanks
+Jan
 
