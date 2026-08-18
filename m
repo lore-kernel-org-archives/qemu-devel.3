@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E411C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05163C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwKgv-0007ED-Lg; Tue, 18 Aug 2026 10:21:25 -0400
+	id 1wwKnD-0000OJ-Ud; Tue, 18 Aug 2026 10:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwKgt-0007DB-9t
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:21:23 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwKnC-0000Nx-Ge
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:27:54 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwKgr-0000FV-GJ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:21:23 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4998590d392so48927155e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:21:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwKnA-0002IJ-S5
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:27:54 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-84a2c90e383so897351b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:27:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787062880; x=1787667680; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=iW1x2T4ow/KALArrlvmWQ5RLnDxMISOdqKzDbu4KUE4=;
- b=HHaqFC5Flv0sE/VYrqbwEyUB+bKZxb13QbWBoAmTRmiSSPYHTfzo72f7vELY0hGmY0
- fZXR+gLuGrF0A4G77c88t/uTcpAx5lwwRh//clIsYSDrwOUkismYbAxVd5WnfJLNH2SJ
- z0N9gWYDv1AuVQZ8tqQZVY4Mo8lLhExFfJRnx/iTOMt9GXcCGEBO5iXwRrWGGoMAZe8z
- HGtSTnjdihIWWQD6fSveMYV803aycIKhTBr65CYpIuPdkQvLuBOlZd94nK+l2ArdkzaX
- aBSdtgpMkWcAAENUAuPxV1yYwN/Q9yTyHsrBLpfer1+W2gkBs1lvMEmkJbhyBmYg4zYq
- Asuw==
+ d=linaro.org; s=google; t=1787063271; x=1787668071; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=tidpiLY8xOlHroccFPpSf1oUv/7Hp7O0PAyloc2Wj4s=;
+ b=ZZwFqMnEfb2ZJsdLpZ58zyk7nY+cMJn2ekz6kaKWP0U9mqTpLAMi9UvSj6OJWI4Nu0
+ RjFUZ3xgvwaRcY3izTKiCGdnTuTgiGAFZGaedtvkNDdt+MOZuo1kzvVXxbnuLXQO/UXD
+ xEnw5vD1ttKEgKxeLRqo8k2Kz+ZG2xEy3/HzFYx573OJzQLhmOQc3TS2YKJO6L0zn0T3
+ pr53vwnrrq48H48V0zVpZY3CqjSLwh/+/972DrykESsS9v2frhiAUj/r4iOzWHKj5MT7
+ fYXfnPjIpVQIIpF5wcOG3M/+6xqcQtOzcVPrZmR+V8hqwtHI7FZdptzRCKTPDJfdTBfm
+ xCOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787062880; x=1787667680;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iW1x2T4ow/KALArrlvmWQ5RLnDxMISOdqKzDbu4KUE4=;
- b=XZWIZwoyzxms4stvrNjValEftIFUsyKZ7j/2cFO37k0jozjey41dWxC+VSefdfio3o
- t1VDnrerfj9pZafSZbmk44LcjucR+Ym8+vRuMYX70vRSwX6fTTF+9OhcbWw5+ZQc6lqe
- qgVKZjm4W1Y/qqTxXL8R31FMgFTVszBUn7VoIx66ZC1j5ilJR6MBmgAqy+dgdvVNyJu0
- 5y9gzMHkZ/wRHoqQYLr99YVryGg7nutEmF5DpTiWlU64dDJnHhSjxOTrOaerXBRfYJPv
- +ciy2gPcNhDlrO2u5x38b8Iyne2WZAd6aDSHe6E8fQve8DAxPfTp3UvobC2HWCVUcRvF
- +jrA==
+ d=1e100.net; s=20251104; t=1787063271; x=1787668071;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=tidpiLY8xOlHroccFPpSf1oUv/7Hp7O0PAyloc2Wj4s=;
+ b=pgpNJrc/8TGnoAArSlN8zjDapz0Ej61V3fqq3GJPy/K3vh805jiC8bf5XkEHUf/RoX
+ s1ae3t2jqGr+YLQbk2Z94aWDXSYCoYza3mPoeoYVVambGAoZOmD8vOf9zi3ZcFiXJ1+2
+ q3psmUZWiqvUpqy3iWql9D58mfSyhK0Pbu5KJxh981R79yQMiI8YzX6rJ8chtq9uBSIt
+ lM4HAhoLwbKSshDL/n9kCrK75wksFAKh543lYc/ZnxNJtQpw6v13IlV3vBpKCZheZ4b7
+ FOSpO8I88JKTJ6Ki6B6lfFwikpX/QEJewrU6zovI3bh34tEwONsOdLW6O0NNqviBJux2
+ S9+A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoM0ZV0syK5wixfXX8mFIe1CiM1UKimZPRu5ugtwx/7YNb9izINvmRy1VexLM5wQZ9KHfw76ycEofJk@nongnu.org
-X-Gm-Message-State: AOJu0Yx6Q3/9Q28iBO4kUDeBhgJyxkDafKaIqb0MOKjeC0MD5t4p9z4V
- dZLG0CzAYloC71Q7kQ/o+8JbLbv35P43j0WuHuhJPUhxF9FWBtIU5xt7ruCmRuBUx+E=
-X-Gm-Gg: AR+sD12rD59mgykjwswpSgIKSzKxWObjOLGRk2wtY7FYm+EkPUS9NmJ9Ept84YSHNH0
- B98R6/wjgF//k+Z2SnitCIcdnW+ED6rdNPnG3y9iSUQKiYyYPrJfzUw4lkTJgoZG0Wfx9y8K3Fa
- i0804rn/qh4rHRpCq2AgHlXGVQU8xHNOFjYmeMiMo14aROZM8DKFQmEVszRSFwk1JfJKIxbskGv
- TUaAWQwUx261Yex1WQ5/NDTP6SwpspPlQEZ0UCfjw8+ngS4blsfkUAdxyYSjPLRa0B6kVgA15j9
- JUw93AlduHE3qwoSXsxJZXf78ytwyYxD1RvMW+HXfL1rH8h2o84ig1vO4iE8Z1C4b1oac8r1bWg
- kTPUCZ274sJm8MHyi+t1byrmurdRbcM1GnXI0jvJNNefKj18mOY+PnoN/2wfARl1j2ksIIzmvBU
- t31Svxzso7lmvJrxVSuKiV6FWFGUX+0tBCiXwRLXNTKkNirQw0ooTFGJuDEZUskw==
-X-Received: by 2002:a05:600c:848e:b0:499:8156:cd3f with SMTP id
- 5b1f17b1804b1-4999fb3f78bmr159851135e9.8.1787062879454; 
- Tue, 18 Aug 2026 07:21:19 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:c289:2687:e46c:f7e3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499961098cdsm284909685e9.6.2026.08.18.07.21.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 07:21:18 -0700 (PDT)
-Date: Tue, 18 Aug 2026 15:21:17 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [RFC v5 01/28] hw/arm/smmuv3: Introduce secure registers
-Message-ID: <aoRqXelVsDKu8xNM@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162410.2805113-1-tangtao1634@phytium.com.cn>
+ AHgh+RoA2FYhe7iP9vfkKTzht/XDBPyue2Px/pmlvpoLBPVn4JwIMmxyEXvEMxd/G80QSoEwPZQv7AxZOG3B@nongnu.org
+X-Gm-Message-State: AOJu0YyRoRpJcF5B6lMEka4Gc8H+ufdFZDS2MFT/jz8BiAYCv+o8df/i
+ Saf1V9spy0pzbBh0dUJFwkfGQsikHXUZtTGPCbuNzA8OFZTBGq0dIrpwi1CNCRZBLx0=
+X-Gm-Gg: AR+sD12HG0ihLidcVMsdnL1aZbWdv/2kEupgjEkVLqXfHkyFWmi4MpVH3gNQo8PRIpj
+ LodQmG3wOkVWUHHvebDXPXUE/OMMTbrw2h7wg1k2UOMH6edaDuMbOP6mo5eWzmFwn6WidCIty9V
+ yKYzyokor2LfDtZPvn/KJUg4UV/kWo/q/WhHCOOL7J1+4tqYpYxWNCbqYXKgmCWhiaoNLnITwrA
+ gNLaWI8DiJFKtaYdZuhw8M6xqdbTPjejJ0/tpWNJlzTHeKnaIXqfQccp45ifGcqku7AaQkeSJfy
+ Qri6tYH9MCgZYKpk03vWgU4VfVIK3yQ5NqHyC6gK8YfQPsISx+viwoDGOA3v6oqgB+Wu7CY8221
+ eHj9bPYjbO01VnQu6UngY2oz4A1IGUZlh1uvaOsQd23Vpa3KnGNtMvNAP8JgHMSfrGE9omz+55+
+ XkoJgqPwgYIRU6jPJMZiZEnYIEDtfk8AgGrq0qL4ZkddpJSoyjUIxIqRshI6uRGcriZ6F0fJ1ZR
+ caRi6S3gnZ1cXMWKze3ix/2oFkIiGgkWve55SyLCbf/iN8=
+X-Received: by 2002:a05:6a00:10cf:b0:847:9dd7:2683 with SMTP id
+ d2e1a72fcca58-851bc380e98mr6749756b3a.9.1787063270961; 
+ Tue, 18 Aug 2026 07:27:50 -0700 (PDT)
+Received: from [10.213.131.227] (c-73-181-156-132.hsd1.wa.comcast.net.
+ [73.181.156.132]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-851b4046f59sm1926435b3a.18.2026.08.18.07.27.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 07:27:50 -0700 (PDT)
+Message-ID: <890d66d1-826a-46c7-824f-e8ff8f84db69@linaro.org>
+Date: Tue, 18 Aug 2026 07:27:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813162410.2805113-1-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Allow overlapping reads in record_save
+To: Ilya Chichkov <ilya.chichkov.dev@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
+References: <20260814142159.3800744-1-ilya.chichkov.dev@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260814142159.3800744-1-ilya.chichkov.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,121 +106,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:24:06AM +0800, Tao Tang wrote:
-> The Arm SMMUv3 architecture defines a set of registers for managing
-> Secure transactions and contexts.
+On 8/14/26 07:21, Ilya Chichkov wrote:
+> record_save() assumed that a target reads the bytes of an insn as a
+> strictly ascending sequence of adjacent chunks, and asserted that each
+> read begins exactly where the previous one ended.
 > 
-> This patch introduces the definitions for these secure registers within
-> the SMMUv3 device model internal header.
+> That assumption no longer holds for riscv.  Since f9eaa1542b
+> ("target/riscv: support atomic instruction fetch (Ziccif)"),
+> decode_opc() loads a full aligned word whenever pc is 4-byte aligned,
+> even when the insn turns out to be a 2-byte compressed one, so the
+> record may already hold bytes past the end of the insn being
+> translated.  When such a compressed insn sits at page offset 0xffc,
+> pc_next becomes 0xffe, which is within MAX_INSN_LEN of the end of the
+> page, and riscv_tr_translate_insn() probes the next insn to decide
+> whether it would cross the page boundary.  That probe reads at offset
+> 2 while the record already covers [0,4), and the assert fires:
 > 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Mostafa Saleh <smostafa@google.com>
-> Link: https://lore.kernel.org/qemu-devel/759ec110-365f-488b-802d-c7bb1efe30bc@redhat.com/
+>    qemu-system-riscv32: accel/tcg/translator.c:395: record_save:
+>    Assertion `offset == db->record_start + db->record_len' failed.
+> 
+> record_save() is only reached when the insn is fetched from MMIO, so
+> this is visible on boards that execute code from a region created with
+> memory_region_init_io(), such as an XIP flash window mapped over a
+> serial flash controller.
+> 
+> Both sides of the collision are correct: the wide fetch is required for
+> Ziccif atomicity, and the probe is required for correct fault reporting
+> at a page boundary, per 00c07344fa ("target/riscv: Make translator stop
+> before the end of a page").  Unlike a86d3352ab ("target/riscv: do not
+> use translator_ldl in opcode_at"), where a non-translation caller had
+> no business using translator_ld*, the probe here is a genuine
+> translation read whose bytes must be recorded.
+> 
+> Relax the invariant instead.  Keep requiring that a read neither moves
+> backwards nor leaves a gap, but let a read overlapping the recorded
+> range extend it only by the bytes past its end.
+> 
+> Fixes: f9eaa1542b ("target/riscv: support atomic instruction fetch (Ziccif)")
+> Signed-off-by: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
 > ---
->  include/hw/arm/smmuv3-common.h | 71 +++++++++++++++++++++++++++++++++-
->  1 file changed, 70 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-> index 4609975edf9..ec442a85586 100644
-> --- a/include/hw/arm/smmuv3-common.h
-> +++ b/include/hw/arm/smmuv3-common.h
-> @@ -269,7 +269,7 @@ REG32(CD_5, 20)
->      ((sel) ? ((cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, NSCFG1, (v))) : \
->               ((cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, NSCFG0, (v))))
->  
-> -/* MMIO Registers */
-> +/* MMIO Registers. Shared by Non-secure/Realm/Root states. */
->  
->  REG32(IDR0,                0x0)
->      FIELD(IDR0, S2P,         0 , 1)
-> @@ -353,6 +353,7 @@ REG32(CR0,                 0x20)
->      FIELD(CR0, CMDQEN,        3, 1)
->  
->  #define SMMU_CR0_RESERVED 0xFFFFFA20
-> +#define SMMU_S_CR0_RESERVED 0xFFFFFC12
->  
->  REG32(CR0ACK,              0x24)
->  REG32(CR1,                 0x28)
-> @@ -411,6 +412,74 @@ REG32(EVENTQ_IRQ_CFG2,     0xbc)
->  
->  #define A_IDREGS           0xfd0
->  
-> +#define SMMU_SECURE_REG_START 0x8000 /* Start of secure-only registers */
-> +
-> +REG32(S_IDR0,               0x8000)
-> +    FIELD(S_IDR0, MSI,         13, 1)
-> +    FIELD(S_IDR0, STALL_MODEL, 24, 2)
-> +REG32(S_IDR1,               0x8004)
-> +    FIELD(S_IDR1, S_SIDSIZE,          0 , 6)
-> +    FIELD(S_IDR1, SEL2,               29, 1)
-> +    FIELD(S_IDR1, SECURE_IMPL,        31, 1)
-> +
-> +REG32(S_IDR2,               0x8008)
-> +REG32(S_IDR3,               0x800c)
-> +REG32(S_IDR4,               0x8010)
-> +
-> +REG32(S_CR0,                0x8020)
-> +    FIELD(S_CR0, SMMUEN,      0, 1)
-> +    FIELD(S_CR0, EVENTQEN,    2, 1)
-> +    FIELD(S_CR0, CMDQEN,      3, 1)
-> +
-> +REG32(S_CR0ACK,             0x8024)
-> +REG32(S_CR1,                0x8028)
-> +REG32(S_CR2,                0x802c)
-> +
-> +REG32(S_INIT,               0x803c)
-> +    FIELD(S_INIT, INV_ALL,    0, 1)
-> +
-> +REG32(S_GBPA,               0x8044)
-> +    FIELD(S_GBPA, ABORT,     20, 1)
-> +    FIELD(S_GBPA, UPDATE,    31, 1)
-> +
-> +REG32(S_IRQ_CTRL,           0x8050)
-> +    FIELD(S_IRQ_CTRL, GERROR_IRQEN,    0, 1)
-> +    FIELD(S_IRQ_CTRL, EVENTQ_IRQEN,    2, 1)
-> +
-> +REG32(S_IRQ_CTRLACK,        0x8054)
-> +
-> +REG32(S_GERROR,             0x8060)
-> +    FIELD(S_GERROR, CMDQ_ERR,          0, 1)
-> +
-> +#define SMMU_GERROR_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
-> +#define SMMU_GERROR_IRQ_CFG2_RESERVED   0x000000000000003F
-> +
-> +#define SMMU_STRTAB_BASE_RESERVED       0x40FFFFFFFFFFFFC0
-> +#define SMMU_QUEUE_BASE_RESERVED        0x40FFFFFFFFFFFFFF
-> +#define SMMU_EVENTQ_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
-> +
-> +REG32(S_GERRORN,            0x8064)
-> +REG64(S_GERROR_IRQ_CFG0,    0x8068)
-> +REG32(S_GERROR_IRQ_CFG1,    0x8070)
-> +REG32(S_GERROR_IRQ_CFG2,    0x8074)
-> +REG64(S_STRTAB_BASE,        0x8080)
-> +REG32(S_STRTAB_BASE_CFG,    0x8088)
-> +    FIELD(S_STRTAB_BASE_CFG, LOG2SIZE, 0, 6)
-> +    FIELD(S_STRTAB_BASE_CFG, SPLIT,    6, 5)
-> +    FIELD(S_STRTAB_BASE_CFG, FMT,     16, 2)
-> +
-> +REG64(S_CMDQ_BASE,          0x8090)
-> +REG32(S_CMDQ_PROD,          0x8098)
-> +REG32(S_CMDQ_CONS,          0x809c)
-> +    FIELD(S_CMDQ_CONS, ERR,           24, 7)
-> +
-> +REG64(S_EVENTQ_BASE,        0x80a0)
-> +REG32(S_EVENTQ_PROD,        0x80a8)
-> +REG32(S_EVENTQ_CONS,        0x80ac)
-> +REG64(S_EVENTQ_IRQ_CFG0,    0x80b0)
-> +REG32(S_EVENTQ_IRQ_CFG1,    0x80b8)
-> +REG32(S_EVENTQ_IRQ_CFG2,    0x80bc)
-> +
->  /* Commands */
->  
->  typedef enum SMMUCommandType {
-> -- 
-> 2.34.1
+>   accel/tcg/translator.c | 14 +++++++++++---
+>   1 file changed, 11 insertions(+), 3 deletions(-)
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Applied to tcg-next.
+
+r~
 
 
