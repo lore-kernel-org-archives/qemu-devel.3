@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459BEC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BC8C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCy-0007lH-V4; Tue, 18 Aug 2026 13:02:40 -0400
+	id 1wwNCu-0007ik-0a; Tue, 18 Aug 2026 13:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCx-0007kt-S1
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:39 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1wwNCt-0007iT-52
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:35 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCw-0004tR-Ch
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:39 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-84847482584so980000b3a.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:38 -0700 (PDT)
+ id 1wwNCr-0004s3-NW
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:34 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-84f77cc7302so82800b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072557; x=1787677357; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072552; x=1787677352; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=g33juf5c3dA6H2IeYYXITtBF1sk/zaL/b6eznyusN5k=;
- b=G8v6/j8kwKYtLRBWc59/ktqwcepeDc7/Lxvk9n+1OT6UOs8dL2sBZNr/877aAp9O4f
- onq/tPw3RiX7SIyz8lIK94PmKGmIGPyM9iDO4Pmr+Pla5W5N/aEfv1ap8EC1duCJCdEx
- a9K3oto3v604sPbHcFyYJD6pw+u0buHO9LaQUVJKyVUnn7jxR3Yhvh0uPzvvtynAaYh0
- 0s48OBCSas0YpeLZMAqmodNDODw4W1KXRBkbS5ESdBAwRhS3km8vHLpvSvKlwxua3/h5
- qgVjBSTzcRMnde7nfUtXZLeemLiPIk7Vui8PEMweuNQBh/lz9cwn9QGqfBNrku/8Q0C6
- nJ6A==
+ bh=oBDCpF9uwTYRnOatzskuzdRhioUauCCyls7pC+VzqP8=;
+ b=OIAzJ89YiW/PMg/OXLYTzhHbx/RUYCb904+UIU3VweyCA2vALUK+saplx3PzbSrKb1
+ 73qEVFp97wPdi7EHFZ9o8mRPLETWoElLrGmoznNv6ST8FYhfCXAbHj0oQ+UEvk31ErEL
+ BFUU3Xq6iuaK5urIckoWeQLjOCuQ+LmhNOUgjGpYobvbsfB29Oa0TZ3RT9ovp29YkRZP
+ p+daznSIBeGEtfTF/hJyb4Hn853ySePBFsBwNDm43CtKDBd1HOzjUYWJwHzmxIvjQNki
+ mVAb2NjNu69IkDeclY+Ccc9slE5AFBfcEf3wGgDxess+cfO2TlPGFSouj1fdal7Xo5aG
+ W8Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072557; x=1787677357;
+ d=1e100.net; s=20251104; t=1787072552; x=1787677352;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=g33juf5c3dA6H2IeYYXITtBF1sk/zaL/b6eznyusN5k=;
- b=mgTPKYCf229d9Ns8cha8zSj7z2b1qFQOzir93IQNT9yDU0zfvaXURlGUbBhF9sfXg8
- Ib3yowU5r+CwK5hARLe/uW/304h2PZt/DSgHzEKeQTljPpt+e28fORXTGAvVHw5H6922
- QKzpAwLAKoAgN1lpkqekLPfLyDRZneHxEt/8ejOhY27cPAvOIRhxJR6VTrKAJ3l8SZPl
- 9Bc3qdJRWlU+Bxj1iFu2wI12EGr4lZndVvvWHXHK187hq3JOjGxTfkOnd7NB71j5xvvh
- fzwPU30UdpkZKGJdOZ6sY/M2J5WD1L1z159pd7LPNy3ypcRqDYI6+mhG7Cgxa0F2oiJF
- 5tuQ==
-X-Gm-Message-State: AOJu0YwZaqXEY0WIyN7iLfJWA55zuuiO7Fd7JMOK4VH/tGZACM79WyqP
- rwEDElesHW8hHqcuHamsPP8lgo5huRuIORR3VZIGIOPrLr7FvTsu51hDI51lp5r+KlWn/lEmXnC
- vDEHxTK0=
-X-Gm-Gg: AR+sD11/WDVSFjnEdPNAdSmdcxW/0z6ARk/t+Oy7ddNItURvrAjtlHCIkVNT6PJYNLV
- 1zK2XW1FnRdUfPVAwno1xRX2qQTGMen3tzCuQjP+HPOzQ1UxR+JlsDQyb5l17kBpYXZTXlGVHaY
- p3AYPpqGnWAnkaoSiOFbPn3rGbNTad5c4Yoq+obIhJKmqBXjkEHUO8r3I48e/6HIol2srp3Ibb+
- eJX18YukO9+f+7nWDj44XTS9BrfyOJ7+kdLM+h+XkdCkF4V7cxFe1rt4MyxeC3C7/1XzTM4fk1L
- 4PDXSg8FY6kZmn2hHr2Y6s9P5yaxh1KOggpprNSbPQn/CRCMFU1Fu34KCNYBHij9gkisgK0V1Ni
- WueeCr5lEmv4R++TamhvFlJ0CLZylFMPIldotiB2036IXlfbzIc5cfxf5WIwbCCcLrIATXdoIzH
- SfCEXwMtoJk9Dx7RT9hOHZJByfCb6MBv4vYQQaxCoWg22cJmXmgdFeePLYeGss/mEEqUAHBGvM9
- j2b8oNefbIvAq+sCzK4MLCABSsi9sY4GFg=
-X-Received: by 2002:a05:6a00:9494:b0:851:c1f6:948 with SMTP id
- d2e1a72fcca58-851c1f60b26mr5261055b3a.16.1787072556832; 
- Tue, 18 Aug 2026 10:02:36 -0700 (PDT)
+ bh=oBDCpF9uwTYRnOatzskuzdRhioUauCCyls7pC+VzqP8=;
+ b=GMfJgceiZxLb259O8rSIqBz2bdkFC4YwKJnqUoaTgDREwSpqWrxnMlfGr9Hw2RDHEP
+ fgWixMF5e3InaPryNywbL8vOGXgIMwbzdTWZtW+Q67Myf/27SdzG0+l5sU87rbWhawlF
+ tBWghXlCVFpSk3JanGSzvglx0n5cPUYeu9mKGRkBOTTSEiAkIunsvDkKiE3i5l/LPUK5
+ +78eNK7niXwLV6DgMtWWirZWn9pawMKLjh2oDHXNkitnjFE4/oXm5KNSi/KuJDdevrRq
+ KKrwlWxVDrKvqDfTmbVkAPP7hqDPZId7u4um07YF0WjnPWSxfakkA15e8q/9G4yzGrhq
+ T6uA==
+X-Gm-Message-State: AOJu0YymEiNkjAjPqaRQ6y5XU06K0YSaVpkgMJMsugq7wOmWdwTSAleH
+ YkqyyclOUMVCHI2jnPE3YFiJmfmjMLefjqQ23YHkRUaORVc066oNbXn+pBKaYbBm4Nqg+Ur6Sek
+ vx+W/DbA=
+X-Gm-Gg: AR+sD11DLyclEtvpF44yfN1H8hEW2QcwIkKxyi0xYBXLDHZ+06R8Un4oBW0bDklelmM
+ 2J2f881tRthDJ3QDik0HQDbIg1sQaQdYeEoPF/rX4VhX82SK3eVFyYWxVDJijVJ5obOo/QPa3vg
+ joLB6rJlnxQovI4dp2WRiLH8KNXySPjDsqDl3jc6kWZrsM3um8MA26FSMvOWAosRLc5Jhgk5Ws9
+ kVZvC7sbUSjW1eiIt3pTJWIFc8T5rdnkLhtUHGM0mAeCdnok+U0QgbisR1z5Cak8LG2ISBRT2sY
+ 3jhTHYtKV13xOGS8LyD0+d9ncSfQUfHO2zSY/5KplUkgDTmjVAN/pqKaHyFWp8mt8rac0vyaZMu
+ b4lmHn2euBZfEyPIrHpS8dXUU4gsJlHoY4XWMWvIDJ77wA28ybhAW1tyCLZDrxXwOZW8/eSJFOJ
+ m3WvJFerX40U/A2a85gvHjNMdYeUg3YDFLmajanQijWj9oMcrhqabhNQytzbCxHKQt5aUAuhBLn
+ 1IorIkZTVuqIVOwEy/ukqkfZJ42KCn4xtHKHZe8lqk5GQ==
+X-Received: by 2002:a05:6a00:1489:b0:847:9aa8:d3ce with SMTP id
+ d2e1a72fcca58-84fde14ff2emr36152849b3a.2.1787072552356; 
+ Tue, 18 Aug 2026 10:02:32 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.36
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:36 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 34/38] target/tricore: Enable disassembly via capstone
-Date: Tue, 18 Aug 2026 10:01:51 -0700
-Message-ID: <20260818170155.1907006-35-richard.henderson@linaro.org>
+Subject: [PULL 30/38] target/riscv: Improve riscv_has_ext
+Date: Tue, 18 Aug 2026 10:01:47 -0700
+Message-ID: <20260818170155.1907006-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,89 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Constify the env pointer and return bool.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/disas/capstone.h | 11 +++++++++++
- target/tricore/cpu.c     | 31 +++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
+ target/riscv/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index 788f90771a..db1abe7f70 100644
---- a/include/disas/capstone.h
-+++ b/include/disas/capstone.h
-@@ -78,4 +78,15 @@
- #define CS_MODE_SH4A             0
- #endif
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index c9dfa7daff..376cff656f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -615,7 +615,7 @@ struct RISCVCPUClass {
+     RISCVCPUDef *def;
+ };
  
-+#if CS_API_MAJOR < 5
-+#define CS_ARCH_TRICORE         -1
-+#define CS_MODE_TRICORE_110      0
-+#define CS_MODE_TRICORE_120      0
-+#define CS_MODE_TRICORE_130      0
-+#define CS_MODE_TRICORE_131      0
-+#define CS_MODE_TRICORE_160      0
-+#define CS_MODE_TRICORE_161      0
-+#define CS_MODE_TRICORE_162      0
-+#endif
-+
- #endif /* QEMU_CAPSTONE_H */
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 96e2817dee..dcd5c5065b 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -24,6 +24,7 @@
- #include "qemu/error-report.h"
- #include "tcg/debug-assert.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "disas/capstone.h"
- 
- static inline void set_feature(CPUTriCoreState *env, int feature)
+-static inline int riscv_has_ext(CPURISCVState *env, uint32_t ext)
++static inline bool riscv_has_ext(const CPURISCVState *env, uint32_t ext)
  {
-@@ -35,6 +36,35 @@ static const gchar *tricore_gdb_arch_name(CPUState *cs)
-     return "tricore";
+     return (env->misa_ext & ext) != 0;
  }
- 
-+static void tricore_disas_set_info(const CPUState *cpu, disassemble_info *info)
-+{
-+    CPUTriCoreState *env = cpu_env((CPUState *)cpu);
-+
-+    info->endian = BFD_ENDIAN_LITTLE;
-+    info->cap_arch = CS_ARCH_TRICORE;
-+    info->cap_insn_unit = 4;
-+    info->cap_insn_split = 4;
-+
-+    /*
-+     * Possible capstone bug: the isa levels are not additive.
-+     * Work around by settiing only one.
-+     * Note that TriCore 1.3.0 is the earliest we support.
-+     */
-+    if (tricore_has_feature(env, TRICORE_FEATURE_162)) {
-+        info->cap_mode = CS_MODE_TRICORE_162;
-+    } else if (tricore_has_feature(env, TRICORE_FEATURE_161)) {
-+        info->cap_mode = CS_MODE_TRICORE_161;
-+    } else if (tricore_has_feature(env, TRICORE_FEATURE_16)) {
-+        info->cap_mode = CS_MODE_TRICORE_160;
-+    } else if (tricore_has_feature(env, TRICORE_FEATURE_131)) {
-+        info->cap_mode = CS_MODE_TRICORE_131;
-+    } else if (tricore_has_feature(env, TRICORE_FEATURE_13)) {
-+        info->cap_mode = CS_MODE_TRICORE_130;
-+    } else {
-+        g_assert_not_reached();
-+    }
-+}
-+
- static void tricore_cpu_set_pc(CPUState *cs, vaddr value)
- {
-     cpu_env(cs)->PC = value & ~1;
-@@ -214,6 +244,7 @@ static void tricore_cpu_class_init(ObjectClass *c, const void *data)
-     cc->gdb_write_register = tricore_cpu_gdb_write_register;
-     cc->gdb_num_core_regs = 44;
-     cc->gdb_arch_name = tricore_gdb_arch_name;
-+    cc->disas_set_info = tricore_disas_set_info;
- 
-     cc->dump_state = tricore_cpu_dump_state;
-     cc->set_pc = tricore_cpu_set_pc;
 -- 
 2.43.0
 
