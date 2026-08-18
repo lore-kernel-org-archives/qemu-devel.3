@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C18DC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A90C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCU-0007Og-BL; Tue, 18 Aug 2026 13:02:10 -0400
+	id 1wwNCq-0007g7-JT; Tue, 18 Aug 2026 13:02:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCS-0007O2-8K
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:08 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1wwNCo-0007eR-UH
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:30 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCQ-0004ey-ON
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:07 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-84eb992a881so148238b3a.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:06 -0700 (PDT)
+ id 1wwNCn-0004q1-Cl
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:30 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-848743155bcso78994b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072525; x=1787677325; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=x66uPrU0bLloSUoveL0+nDgF0rI02ucO41QzxqbHLgk=;
- b=Hegt/OVIcjmgqIBtlKNuwY58b0gBsUUWwUkhsT1NE6mYbnoHTAB6r7IABjdnmyAQ2p
- mPLyQjuHAgKNLSlBSoTQ7eLy49jJFHxgVBVV1hSTSmXCvaCGeIJziX/IZwrZ1JDkDGhH
- EtodIpVu7kZQ566jkDHebBhtEkhnL+4UZUhNuP8M79CSFgncmdDRfddoIYwoGhN4b1qc
- nU4UmRI+ggoAhIwdXoBImTisSYnrjwQJQW6wjBI0RsTDNnV47VxiVndNoAPVxKHV07bW
- z7moapxS+0gWgW8c7NVo+y0dG5B6N8V2/1Al6EQInIkM5ElGsIoM8EkwA/rTsz+QbBB6
- 13xA==
+ d=linaro.org; s=google; t=1787072548; x=1787677348; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=EhOF9jN/PD6V/ZU4mC7f/RoDc/u+gqWIwDoJ39rAJgo=;
+ b=wpJ3wgi2i2m2qT043PE5Junv0pNhvWu9r3Fyo+JbcA433+D5W6lsV7zpRWGPKZk7T2
+ nYtMvPAuf7GcFbDhQBqdOUJ+4PdTmoV0dZrr0DT9XV0ti4P/K8DdwZxBlpHN07o2QBXY
+ PSEQlHBI0Of3QL6dd2L+XoZ7w8xQOTi+cZd1QQur6o3j3jmUrsyoSuE80ZkM2XRfc0yn
+ ddNJ3QreVjvtnkPsYWnrxe2lZAs78hm/Ks59DT2bqcJ71IFWXbey+AhIZvXJhtVTN+eh
+ og0URhpaynyyeb6aYxC7KvVGSSKs74vVLgQdvPglfd6ZxmhNz9pTwKOeLVX5a27I4k5t
+ RVTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072525; x=1787677325;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=x66uPrU0bLloSUoveL0+nDgF0rI02ucO41QzxqbHLgk=;
- b=ioU/tpehmUu65c3MKeeQvv47G66HO7+YWFxgooEd5MDx7m5SivgA9b9EYCSmv17A2e
- 4Op//hVAc+hddeaAx/JhovciJDN+ztCPO4Hqg/1IxKWkyCxbNNpKEMJk81MlYfo4xxf4
- hFMRO0xEFsAcIIi3lS8qKP9FNJ0Zw8aesuX5sHmEFWhRrP14e6CSNY+aPnsUR433ILbs
- kiI/atGFSZi/BTWcovdDRIyGYOE7toQb+egvvF8FzxrYIwaFt7CY1K2hPmHw6LS2U+dR
- fJbQ8Pc5aZIUEWdV9vhGlQ9dcYcBpEGAdIuKnDVndAYzVgqTF0eUJ1e+Op96tCIaZcxS
- XXPA==
-X-Gm-Message-State: AOJu0YxMmbVDWAkXzdNTwCBl9WrpIZ+5l/MKZpToj3Es+3isdwp10g5k
- 2g2+IWKITKYL3KqgMFFpEZHfthZuU13e/sPy6EvvSs2olLZMAHU80TKKJGkWUFPFOBAX8HLniJe
- JMvMg044=
-X-Gm-Gg: AR+sD100DuijIh91oasWtZyaIr0gYED+5hOTR7bE13fck8d1Fix4G4hZUjXqSJwKa5Y
- 4pMfjv39WTvZxEbZi6vW9fS9MP71CSTLUMRVa2lMVcl3KbB0kY6OR22u3f6+0mSpb8V/3dINVFz
- 250ZMHCUqXwMo4gZt99PuI/rr4gKs0TaQigkmFxMWsnb+zv5gxBu/AC5ogB+WKIJU4Kdta37Ql6
- No6FGvSe9/t/hbBRQFTEB8uRmQeZoegyZEJEl2GYhce5bvZ5ChI3P1RHLdRIgVI+Apz2xDfVD+f
- hr04J65pJ2bRxq/wjEZB7QlG4ibH29JatbdgYJ3RugqQr+ConFQ7VYcXctomWM0dt4wEUaDfzTc
- Ck6uFdvLmd3lGvhOQgJWWDYJa8VqP+e0vZ70IomALtTaO4UVWKy3gi/5cyf+gy3nQs+LR7J5OAd
- dp/JUlOfgI6Vv4UuLh20z9PwkB1Gbl7PECdf2gzpajftqbnGaFp+wPNhbSXJahqE9y6Cw3x3qDh
- ncSDIyLYJVre2s9fIt5qTb0N1EnswO7qwY=
-X-Received: by 2002:a05:6a00:3981:b0:848:2eac:bfb2 with SMTP id
- d2e1a72fcca58-84fde004804mr37468594b3a.13.1787072525027; 
- Tue, 18 Aug 2026 10:02:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787072548; x=1787677348;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=EhOF9jN/PD6V/ZU4mC7f/RoDc/u+gqWIwDoJ39rAJgo=;
+ b=gG3mMxzMqzIPSSwrSi+brEvTSMgx1L+Ykk0TanCwrW/D+a3sAex9RdRQ4AmOEipLOV
+ 0L04tYLZigkcybKzdB0kEb9g9Sina2f4N6+rItAhi7Ehpj9lwkd5UeQNRTNoFLtQ9aFS
+ dyPgSqCaCm4Kjba2Q4TNO/4oOxWKbUnw/1AjJ8RirFDi/k2E9gPT71KV3Y13rfMNVVa2
+ Y+1HOs5Ts16LtyADaMXC7QliGrMebKy+rviRRjDAyuzr2aWWdiTO72fS4piqA+Kc0QZw
+ 3E72wbSG7tcYXBubDzLBGB/rPopQESyXxzHcit4mvJ9G2nlBvE+D8gIg66EPPAIRTnp0
+ tQug==
+X-Gm-Message-State: AOJu0YxF5By+7s10zXOT0VxNT1BM8uoGKDjHTd4sIvYZ7jtdiXao8ne/
+ xCgcaERbimVsw23aPTbOFInDkcnc5BFhjVL3VqJ9Kbe1XWgV4OyqmkfHPXCcuoQ+WIhHsS0N1jm
+ 1aSiauoc=
+X-Gm-Gg: AR+sD13nmuAFFxTIFbDqxxw+K5qQJb4g58GSf/ObvDEh07ICf8V0fWT8zUjavRCvBr9
+ 8rMi+77jeY0T558GxjhJ8o++K7/SRclKXf/DY+zo7ZOsF+AYJobCnTzVLm1YiC/ePNncJmO1Wnt
+ syoUfmUv2EcHBxVvDAIxSBLPQNHXq2euKrvTSdJK3oGAzhyDjH7EWN/7paUFfi4/XhQcVJtyt5Q
+ TOxlbMA+ojxlndjlsqIrzvZ/8i1BxQKtFqqElUcxSHkbw9NFNbFvmhCz6uknMoGf7p+9yRrGzss
+ f3TeVZHqDNu8yBlnVRb+OYFjJjpwqqWQzAB+xoPD19AfESCWOFxVlme/2jn+yJKKpjQGotGK/SY
+ BSVJ8aAAQkSP/bUFrBO20WqDeL0STT63fgPUHuoq2IWkKvpN3u3BnIqfkxk3CLvKwBEL9TDgrYs
+ 9aWGU1ceeEmpGs/EoMqAjWOQmR3CUiXPHJS7IUPPOJ8MNYpUr0kJ+4jRSyikraDOb/vu9ySAS36
+ 4d3CJmkQxJzIfqzqYeSBSguxY1gf/eboN2N
+X-Received: by 2002:a05:6a00:4501:b0:848:30c3:45dd with SMTP id
+ d2e1a72fcca58-84fde001b0amr42699770b3a.11.1787072547693; 
+ Tue, 18 Aug 2026 10:02:27 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.04
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.27
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:04 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 05/38] tcg: Return success from tcg_region_alloc
-Date: Tue, 18 Aug 2026 10:01:22 -0700
-Message-ID: <20260818170155.1907006-6-richard.henderson@linaro.org>
+Subject: [PULL 25/38] util/cpuinfo-aarch64: Detect FEAT_CSSC
+Date: Tue, 18 Aug 2026 10:01:42 -0700
+Message-ID: <20260818170155.1907006-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert the sense of the boolean result from 'error' to 'success'.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/region.c | 2 +-
- tcg/tcg.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ host/include/aarch64/host/cpuinfo.h | 1 +
+ util/cpuinfo-aarch64.c              | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 2161d961d9..8ee8c39c43 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -383,7 +383,7 @@ bool tcg_region_alloc(TCGContext *s)
-         region.agg_size_full += size_full - TCG_HIGHWATER;
-     }
-     qemu_mutex_unlock(&region.lock);
--    return !ok;
-+    return ok;
- }
+diff --git a/host/include/aarch64/host/cpuinfo.h b/host/include/aarch64/host/cpuinfo.h
+index fe671534e4..c32c04dade 100644
+--- a/host/include/aarch64/host/cpuinfo.h
++++ b/host/include/aarch64/host/cpuinfo.h
+@@ -12,6 +12,7 @@
+ #define CPUINFO_AES             (1u << 3)
+ #define CPUINFO_PMULL           (1u << 4)
+ #define CPUINFO_BTI             (1u << 5)
++#define CPUINFO_CSSC            (1u << 6)
  
- /*
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 1e77f2365a..af15c3d63e 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1835,7 +1835,7 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-     next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
+diff --git a/util/cpuinfo-aarch64.c b/util/cpuinfo-aarch64.c
+index 288074c08f..4ce6deb7c8 100644
+--- a/util/cpuinfo-aarch64.c
++++ b/util/cpuinfo-aarch64.c
+@@ -72,6 +72,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
  
-     if (unlikely(next > s->code_gen_highwater)) {
--        if (tcg_region_alloc(s)) {
-+        if (!tcg_region_alloc(s)) {
-             return NULL;
-         }
-         goto retry;
+     unsigned long hwcap2 = qemu_getauxval(AT_HWCAP2);
+     info |= (hwcap2 & HWCAP2_BTI ? CPUINFO_BTI : 0);
++    info |= (hwcap2 & HWCAP2_CSSC ? CPUINFO_CSSC : 0);
+ #endif
+ #ifdef CONFIG_DARWIN
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_LSE") * CPUINFO_LSE;
+@@ -79,6 +80,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_AES") * CPUINFO_AES;
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_PMULL") * CPUINFO_PMULL;
+     info |= sysctl_for_bool("hw.optional.arm.FEAT_BTI") * CPUINFO_BTI;
++    info |= sysctl_for_bool("hw.optional.arm.FEAT_CSSC") * CPUINFO_CSSC;
+ #endif
+ #if defined(__OpenBSD__) && !defined(CONFIG_ELF_AUX_INFO)
+     int mib[2];
 -- 
 2.43.0
 
